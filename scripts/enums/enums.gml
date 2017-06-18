@@ -1,4 +1,5 @@
 /// enums()
+/// @desc Define enumerators used in the project.
 
 // Menus
 enum e_menu
