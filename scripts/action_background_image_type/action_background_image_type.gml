@@ -4,13 +4,13 @@
 var type;
 
 if (history_undo)
-    type = history_data.oldval
+	type = history_data.oldval
 else if (history_redo)
-    type = history_data.newval
+	type = history_data.newval
 else
 {
-    type = argument0
-    history_set_var(action_background_image_type, background_image_type, type, false)
+	type = argument0
+	history_set_var(action_background_image_type, background_image_type, type, false)
 }
 
 background_image_type = type

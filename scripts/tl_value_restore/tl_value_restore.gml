@@ -10,14 +10,14 @@ newval = argument2
 
 if (vid = SOUNDOBJ && oldval)
 {
-    var obj = iid_find(oldval);
-    obj.count--
+	var obj = iid_find(oldval);
+	obj.count--
 }
 
 if (vid = ATTRACTOR || vid = TEXTUREOBJ || vid = SOUNDOBJ)
-    newval = iid_find(newval)
-    
+	newval = iid_find(newval)
+	
 if (vid = SOUNDOBJ && newval)
-    newval.count++
-    
+	newval.count++
+	
 return newval

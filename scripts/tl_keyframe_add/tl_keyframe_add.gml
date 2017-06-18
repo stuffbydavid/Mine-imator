@@ -13,19 +13,19 @@ else
 // Find index
 for (i = 0; i < keyframe_amount; i++)
 {
-    if (keyframe[i].pos = pos) // Find next empty slot
+	if (keyframe[i].pos = pos) // Find next empty slot
 	{
-        while (i < keyframe_amount)
+		while (i < keyframe_amount)
 		{
-            if (keyframe[i].pos != pos)
-                break
-            i++
-            pos++
-        }
-        break
-    }
-    if (keyframe[i].pos > pos)
-        break
+			if (keyframe[i].pos != pos)
+				break
+			i++
+			pos++
+		}
+		break
+	}
+	if (keyframe[i].pos > pos)
+		break
 }
 
 tl_keyframes_pushdown(i)
@@ -34,12 +34,12 @@ app.timeline_length = max(app.timeline_length, pos)
 // Set new keyframe
 if (kf < 0)
 {
-    kf = new(obj_keyframe)
-    kf.select = false
-    for (var v = 0; v < values; v++)
-        kf.value[v] = value[v] // Get current parameters
-    if (kf.value[SOUNDOBJ])
-        kf.value[SOUNDOBJ].count++
+	kf = new(obj_keyframe)
+	kf.select = false
+	for (var v = 0; v < values; v++)
+		kf.value[v] = value[v] // Get current parameters
+	if (kf.value[SOUNDOBJ])
+		kf.value[SOUNDOBJ].count++
 }
 kf.pos = pos
 kf.tl = id

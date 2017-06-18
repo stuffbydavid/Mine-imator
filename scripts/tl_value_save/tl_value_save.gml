@@ -7,6 +7,6 @@ vid = argument0
 val = argument1
 
 if (vid = ATTRACTOR || vid = TEXTUREOBJ || vid = SOUNDOBJ)
-    return iid_get(val)
-    
+	return iid_get(val)
+	
 return val

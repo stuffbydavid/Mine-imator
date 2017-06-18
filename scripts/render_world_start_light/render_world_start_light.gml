@@ -16,9 +16,9 @@ shader_light_far = argument[3]
 shader_light_fov = argument[4]
 shader_light_color = argument[5]
 if (argument_count > 6)
-    shader_light_fadesize = argument[6]
+	shader_light_fadesize = argument[6]
 if (argument_count > 7)
-    shader_light_spotsharpness = argument[7]
+	shader_light_spotsharpness = argument[7]
 
 gpu_set_ztestenable(true)
 gpu_set_zwriteenable(true)

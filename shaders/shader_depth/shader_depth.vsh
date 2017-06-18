@@ -31,8 +31,8 @@ vec3 getWind()
 
 void main()
 {
-    vTexCoord = in_TextureCoord;
-    
-    gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position + getWind(), 1.0);
-    vDepth = (gl_Position.z - uNear) / (uFar - uNear);
+	vTexCoord = in_TextureCoord;
+	
+	gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position + getWind(), 1.0);
+	vDepth = (gl_Position.z - uNear) / (uFar - uNear);
 }

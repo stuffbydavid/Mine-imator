@@ -2,6 +2,6 @@
 
 view_render = !view_render
 if (view_render)
-    view_render_real_time = true
+	view_render_real_time = true
 else
-    render_free()
+	render_free()

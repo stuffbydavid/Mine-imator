@@ -11,13 +11,13 @@ zsca = sqrt(mat[8] * mat[8] + mat[9] * mat[9] + mat[10] * mat[10])
 
 if (xsca * ysca * zsca > 0)
 {
-    mat[@ 0] /= xsca
-    mat[@ 1] /= xsca
-    mat[@ 2] /= xsca
-    mat[@ 4] /= ysca
-    mat[@ 5] /= ysca
-    mat[@ 6] /= ysca
-    mat[@ 8] /= zsca
-    mat[@ 9] /= zsca
-    mat[@ 10] /= zsca
+	mat[@ 0] /= xsca
+	mat[@ 1] /= xsca
+	mat[@ 2] /= xsca
+	mat[@ 4] /= ysca
+	mat[@ 5] /= ysca
+	mat[@ 6] /= ysca
+	mat[@ 8] /= zsca
+	mat[@ 9] /= zsca
+	mat[@ 10] /= zsca
 }

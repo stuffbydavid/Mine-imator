@@ -5,14 +5,14 @@ var dirname = setting_project_folder + popup_newproject.folder;
 
 if (popup_newproject.folder = "")
 {
-    error("errornewprojectinvalid")
-    return 0
+	error("errornewprojectinvalid")
+	return 0
 }
 
 if (directory_exists_lib(setting_project_folder + popup_newproject.folder))
 {
-    error("errornewprojectexists")
-    return 0
+	error("errornewprojectexists")
+	return 0
 }
 
 directory_create_lib(setting_project_folder)
@@ -20,8 +20,8 @@ directory_create_lib(dirname)
 
 if (!directory_exists_lib(dirname))
 {
-    error("errornewprojectaccess")
-    return 0
+	error("errornewprojectaccess")
+	return 0
 }
 
 log("Creating project", dirname)

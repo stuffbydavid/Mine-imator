@@ -12,22 +12,22 @@ gml_release_mode(!dev_mode) // TODO: Investigate speed boost
 // gml_pragma("forceinline") // TODO: Put in appropriate scripts
 
 if (!log_startup())
-    return false
+	return false
 
 lib_startup()
 
 if (!file_startup())
-    return false
-    
+	return false
+	
 if (!file_exists_lib(import_file))
 {
-    missing_file(import_file)
-    return false
+	missing_file(import_file)
+	return false
 }
 
 vertex_format_startup()
 if (!shader_startup())
-    return false
+	return false
 
 app_startup_globals()
 app_startup_lists()

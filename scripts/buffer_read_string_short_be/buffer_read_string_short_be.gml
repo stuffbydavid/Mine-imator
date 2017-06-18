@@ -3,5 +3,5 @@
 
 var str = "";
 repeat (buffer_read_short_be())
-    str += chr(buffer_read_byte())
+	str += chr(buffer_read_byte())
 return str

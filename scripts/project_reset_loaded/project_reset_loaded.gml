@@ -1,16 +1,16 @@
 /// project_reset_loaded()
 
 with (obj_template)
-    loaded = false
+	loaded = false
 
 with (obj_particle_type)
-    loaded = false
+	loaded = false
 
 with (obj_timeline)
-    loaded = false
+	loaded = false
 
 with (obj_resource)
-    loaded = false
+	loaded = false
 
 with (obj_keyframe)
-    loaded = false
+	loaded = false

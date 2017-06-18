@@ -46,4 +46,4 @@ to.text_font = text_font
 to.text_face_camera = text_face_camera
 
 if (type = "particles")
-    temp_particles_copy(to)
+	temp_particles_copy(to)

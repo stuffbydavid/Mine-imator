@@ -3,18 +3,18 @@
 
 with (obj_keyframe)
 {
-    if (!select)
-        continue
+	if (!select)
+		continue
 	
-    if (tl.type != "audio" || !value[SOUNDOBJ] || !value[SOUNDOBJ].ready) // Only affects sounds
+	if (tl.type != "audio" || !value[SOUNDOBJ] || !value[SOUNDOBJ].ready) // Only affects sounds
 	{
-        soundresizeindex = null
-        continue
-    }
+		soundresizeindex = null
+		continue
+	}
 	
-    soundresizeindex = index
-    soundresizepos = pos
-    soundresizestart = value[SOUNDSTART]
+	soundresizeindex = index
+	soundresizepos = pos
+	soundresizestart = value[SOUNDSTART]
 }
 
 timeline_sound_resize_mousepos = timeline_mouse_pos

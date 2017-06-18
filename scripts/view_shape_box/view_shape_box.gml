@@ -20,6 +20,6 @@ points = array(
 )
 
 if (argument_count > 2)
-    view_shape_draw(points, argument[2])
+	view_shape_draw(points, argument[2])
 else
-    view_shape_draw(points)
+	view_shape_draw(points)

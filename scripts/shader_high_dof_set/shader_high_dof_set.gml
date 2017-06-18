@@ -2,14 +2,14 @@
 /// @arg depthbuffer
 
 var uDepthBuffer = shader_get_sampler_index(shader_high_dof, "uDepthBuffer"), 
-    uScreenSize = shader_get_uniform(shader_high_dof, "uScreenSize"), 
-    uBlurSize = shader_get_uniform(shader_high_dof, "uBlurSize"), 
-    uDepth = shader_get_uniform(shader_high_dof, "uDepth"), 
-    uRange = shader_get_uniform(shader_high_dof, "uRange"), 
-    uFadeSize = shader_get_uniform(shader_high_dof, "uFadeSize"), 
-    uNear = shader_get_uniform(shader_high_dof, "uNear"), 
-    uFar = shader_get_uniform(shader_high_dof, "uFar");
-    
+	uScreenSize = shader_get_uniform(shader_high_dof, "uScreenSize"), 
+	uBlurSize = shader_get_uniform(shader_high_dof, "uBlurSize"), 
+	uDepth = shader_get_uniform(shader_high_dof, "uDepth"), 
+	uRange = shader_get_uniform(shader_high_dof, "uRange"), 
+	uFadeSize = shader_get_uniform(shader_high_dof, "uFadeSize"), 
+	uNear = shader_get_uniform(shader_high_dof, "uNear"), 
+	uFar = shader_get_uniform(shader_high_dof, "uFar");
+	
 shader_set(shader_high_dof)
 
 texture_set_stage(uDepthBuffer, surface_get_texture(argument0))

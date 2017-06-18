@@ -10,27 +10,27 @@ rootmap = null
 switch (load_stage)
 {
 	// Open file
-    case "open":
+	case "open":
 	{
-        if (!file_exists_lib(fname))
+		if (!file_exists_lib(fname))
 		{
 			with (app)
 				load_next()
-            return 0
-        }
+			return 0
+		}
 		
 		// Block file
-        if (filename_ext(fname) = ".blocks")
+		if (filename_ext(fname) = ".blocks")
 		{
 			log("Loading blocks", fname)
 			
-            buffer_current = buffer_import(fname)
+			buffer_current = buffer_import(fname)
 			with (mc_builder)
 			{
-	            file_map = buffer_read_string_short_be()
-	            build_size[Y] = buffer_read_short_be() // Derp
-	            build_size[X] = buffer_read_short_be()
-	            build_size[Z] = buffer_read_short_be()
+				file_map = buffer_read_string_short_be()
+				build_size[Y] = buffer_read_short_be() // Derp
+				build_size[X] = buffer_read_short_be()
+				build_size[Z] = buffer_read_short_be()
 			
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 				{
@@ -44,8 +44,8 @@ switch (load_stage)
 					}
 				}
 			}
-            app.popup_loading.caption = text_get("sceneryloadcaptionpieceof", mc_builder.file_map)
-        }
+			app.popup_loading.caption = text_get("sceneryloadcaptionpieceof", mc_builder.file_map)
+		}
 		
 		// Schematic file
 		else
@@ -53,9 +53,9 @@ switch (load_stage)
 			log("Loading schematic", fname)
 		
 			// Unzip
-	        file_delete_lib(temp_file)
-	        gzunzip(fname, temp_file)
-	        buffer_current = buffer_load(temp_file)
+			file_delete_lib(temp_file)
+			gzunzip(fname, temp_file)
+			buffer_current = buffer_load(temp_file)
 			openerr = true
 		
 			// Read NBT structure
@@ -144,7 +144,7 @@ switch (load_stage)
 		mc_builder.build_pos = point3D(0, 0, 0)
 		with (app)
 		{
-	        popup_loading.text = text_get("sceneryloadblocks")
+			popup_loading.text = text_get("sceneryloadblocks")
 			popup_loading.progress = 2 / 10
 		}
 		break
@@ -176,13 +176,13 @@ switch (load_stage)
 		}
 		else
 			with (app)
-		        popup_loading.progress = 2 / 10 + (2 / 10) * (mc_builder.build_pos[Z] / mc_builder.build_size[Z])
+				popup_loading.progress = 2 / 10 + (2 / 10) * (mc_builder.build_pos[Z] / mc_builder.build_size[Z])
 		
 		break
 	}
 		
 	// Generate model
-    case "model":
+	case "model":
 	{
 		with (mc_builder)
 		{
@@ -203,21 +203,21 @@ switch (load_stage)
 			// Put map name in resource name
 			if (mc_builder.file_map != "")
 			{
-	            display_name = text_get("sceneryloadpieceof", mc_builder.file_map)
-	            if (filename = "export.blocks") // Rename world import file
+				display_name = text_get("sceneryloadpieceof", mc_builder.file_map)
+				if (filename = "export.blocks") // Rename world import file
 				{
-	                var newname = filename_unique(app.project_folder + "\\" + display_name + ".blocks");
-	                filename = filename_name(newname)
-	                filename_out = filename
-	                display_name = filename_new_ext(filename, "")
-	                file_rename_lib(app.project_folder + "\\export.blocks", newname)
-	            }
-	        }
+					var newname = filename_unique(app.project_folder + "\\" + display_name + ".blocks");
+					filename = filename_name(newname)
+					filename_out = filename
+					display_name = filename_new_ext(filename, "")
+					file_rename_lib(app.project_folder + "\\export.blocks", newname)
+				}
+			}
 				
 			// Update rotation points
-            with (obj_template)
-                if (scenery = other.id)
-                    temp_update_rot_point()
+			with (obj_template)
+				if (scenery = other.id)
+					temp_update_rot_point()
 			
 			// Next
 			with (app)

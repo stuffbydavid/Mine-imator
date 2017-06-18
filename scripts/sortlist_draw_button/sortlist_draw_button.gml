@@ -29,9 +29,9 @@ mouseon = (app_mouse_box(xx, yy, w - 5, h) && content_mouseon && mouse_cursor = 
 pressed = highlight
 if (mouseon)
 {
-    if (mouse_left || mouse_left_released)
-        pressed = true
-    mouse_cursor = cr_handpoint
+	if (mouse_left || mouse_left_released)
+		pressed = true
+	mouse_cursor = cr_handpoint
 }
 
 // Box
@@ -40,23 +40,23 @@ draw_box_rounded(xx, yy, w, h, test(pressed, setting_color_buttons_pressed, sett
 // Separator
 if (!pressed && !isfirst)
 {
-    render_set_culling(false)
-    draw_line_width_color(xx - 2, yy + 6, xx - 2, yy + h-6, 2, setting_color_buttons_pressed, setting_color_buttons_pressed)
-    render_set_culling(true)
+	render_set_culling(false)
+	draw_line_width_color(xx - 2, yy + 6, xx - 2, yy + h-6, 2, setting_color_buttons_pressed, setting_color_buttons_pressed)
+	render_set_culling(true)
 }
 
 // Icon
 if (icon != null)
-    draw_image(spr_icons, icon, xx + w - h / 2, yy + h / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
-    
+	draw_image(spr_icons, icon, xx + w - h / 2, yy + h / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
+	
 // Text
 draw_label(string_limit(text_get(name), w - 4 - (icon != null) * 20), xx + floor(w / 2), yy + h / 2 + pressed, fa_center, fa_middle, setting_color_buttons_text, 1)
 
 // Check click
 if (mouseon && mouse_left_released)
 {
-    app_mouse_clear()
-    return true
+	app_mouse_clear()
+	return true
 }
 
 return false

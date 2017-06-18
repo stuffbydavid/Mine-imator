@@ -5,7 +5,7 @@ varying vec4 vColor;
 
 void main()
 {
-    gl_FragColor = vColor * texture2D(uTexture, vTexCoord);
+	gl_FragColor = vColor * texture2D(uTexture, vTexCoord);
 	
 	if (gl_FragColor.a == 0.0)
 		discard;

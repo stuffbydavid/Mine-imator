@@ -20,7 +20,7 @@ creditname = "David Norgren"
 draw_label(credittext, dx, dy)
 dx += string_width(credittext)
 if (draw_link("startupcredits1", creditname, dx, dy) && mouse_left_pressed)
-    open_url(link_david)
+	open_url(link_david)
 dx += string_width(creditname)
 
 // Mojang
@@ -29,7 +29,7 @@ creditname = "Mojang"
 draw_label(credittext, dx, dy)
 dx += string_width(credittext)
 if (draw_link("startupcredits2", creditname, dx, dy) && mouse_left_pressed)
-    open_url(link_mojang)
+	open_url(link_mojang)
 dx += string_width(creditname)
 
 // Buttons
@@ -41,34 +41,34 @@ dh = 48
 // New
 if (draw_button_normal("startupnewproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.newproject))
 {
-    popup_newproject_clear()
-    popup_switch(popup_newproject)
+	popup_newproject_clear()
+	popup_switch(popup_newproject)
 }
 dy += dh + 8
 
 // Open
 if (draw_button_normal("startupopenproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.openproject))
-    project_open("")
+	project_open("")
 dy += dh + 8
 
 // Upgrade
 if (trial_version)
 {
-    if (draw_button_normal("startupupgrade", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.upgradesmall))
-        popup_switch(popup_upgrade)
-    dy += dh + 8
+	if (draw_button_normal("startupupgrade", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.upgradesmall))
+		popup_switch(popup_upgrade)
+	dy += dh + 8
 }
 
 // Website
 dw = floor(dw / 2-5)
 dh = 32
 if (draw_button_normal("startupwebsite", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.websitesmall))
-    action_toolbar_website()
+	action_toolbar_website()
 
 // Forums
 dx += dw + 10
 if (draw_button_normal("startupforums", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.forumssmall))
-    action_toolbar_forums()
+	action_toolbar_forums()
    
 // Recent
 dx = content_x + 200 + 16

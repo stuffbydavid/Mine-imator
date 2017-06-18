@@ -11,40 +11,40 @@ replaced = false
 
 if (filename_ext(fn) = ".zip")
 {
-    if (type != "packunzipped")
-        type = "pack"
-    fnout = project_folder + "\\" + filename_new_ext(filename_name(fn), "")
+	if (type != "packunzipped")
+		type = "pack"
+	fnout = project_folder + "\\" + filename_new_ext(filename_name(fn), "")
 }
 else
-    fnout = project_folder + "\\" + filename_name(fn)
+	fnout = project_folder + "\\" + filename_name(fn)
 
 // Check replace
 with (obj_resource)
 {
-    if (id.type = type && filename = filename_name(fn))
+	if (id.type = type && filename = filename_name(fn))
 	{
-        res = id
-        break
-    }
+		res = id
+		break
+	}
 }
 
 if (res) // Existing resource found
 {
-    if (question(text_get("questionreplace")))
-        replaced = true
-    else
+	if (question(text_get("questionreplace")))
+		replaced = true
+	else
 	{
-        res = null
-        fnout = filename_unique(fnout)
-    }
+		res = null
+		fnout = filename_unique(fnout)
+	}
 }
 
 // Add new
 if (!res)
 {
-    res = new(obj_resource)
-    res.type = type
-    sortlist_add(res_list, res)
+	res = new(obj_resource)
+	res.type = type
+	sortlist_add(res_list, res)
 }
 
 res.filename = filename_name(fn)

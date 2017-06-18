@@ -13,7 +13,7 @@ buffer_write_short(bodypart)
 buffer_write_int(iid_get(part_of))
 buffer_write_short(part_amount)
 for (var p = 0; p < part_amount; p++)
-    buffer_write_int(iid_get(part[p]))
+	buffer_write_int(iid_get(part[p]))
 
 buffer_write_byte(hide)
 project_write_value_types(id)
@@ -22,11 +22,11 @@ project_write_values(id)
 buffer_write_int(keyframe_amount)
 for (var k = 0; k < keyframe_amount; k++)
 {
-    with (keyframe[k])
+	with (keyframe[k])
 	{
-        buffer_write_int(pos)
-        project_write_values(tl)
-    }
+		buffer_write_int(pos)
+		project_write_values(tl)
+	}
 }
 buffer_write_int(iid_get(parent))
 buffer_write_int(parent_pos)

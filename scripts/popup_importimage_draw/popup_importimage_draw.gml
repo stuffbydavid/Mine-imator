@@ -21,11 +21,11 @@ dx = content_x + content_width / 2 - dw - 4
 dy = content_y + content_height - 32
 if (draw_button_normal("importimageok", dx, dy, dw, 32))
 {
-    action_res_image_load(popup_importimage.type, popup_importimage.filename)
-    popup_close()
+	action_res_image_load(popup_importimage.type, popup_importimage.filename)
+	popup_close()
 }
 
 // Cancel
 dx = content_x + content_width / 2 + 4
 if (draw_button_normal("importimagecancel", dx, dy, dw, 32))
-    popup_close()
+	popup_close()

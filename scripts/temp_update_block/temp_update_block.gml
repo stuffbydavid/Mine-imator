@@ -14,13 +14,13 @@ with (mc_builder)
 	// Set models
 	for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
 		for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
-		    for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+			for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 				builder_set_models()
 				
 	// Generate
 	for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
 		for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
-		    for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+			for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 				builder_generate()
 }
 

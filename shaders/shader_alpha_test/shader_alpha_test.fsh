@@ -5,10 +5,10 @@ varying vec4 vColor;
 
 void main()
 {
-    vec4 baseColor = vColor * texture2D(uTexture, vTexCoord);
-    if (baseColor.a >= 1.0)
-        discard;
-    
-    gl_FragColor = baseColor;
+	vec4 baseColor = vColor * texture2D(uTexture, vTexCoord);
+	if (baseColor.a >= 1.0)
+		discard;
+	
+	gl_FragColor = baseColor;
 }
 

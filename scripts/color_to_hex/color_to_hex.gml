@@ -8,5 +8,5 @@ b = color_get_blue(argument0)
 hex = "0123456789ABCDEF"
 
 return string_char_at(hex, (r div 16) + 1) + string_char_at(hex, (r mod 16) + 1) +
-       string_char_at(hex, (g div 16) + 1) + string_char_at(hex, (g mod 16) + 1) +
-       string_char_at(hex, (b div 16) + 1) + string_char_at(hex, (b mod 16) + 1)
+	   string_char_at(hex, (g div 16) + 1) + string_char_at(hex, (g mod 16) + 1) +
+	   string_char_at(hex, (b div 16) + 1) + string_char_at(hex, (b mod 16) + 1)

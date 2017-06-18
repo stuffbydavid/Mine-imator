@@ -15,7 +15,7 @@ var p1, p2, p3, p4;
 var xptex, xntex, yptex, yntex, zptex, zntex;
 var xpadd, xnadd, ypadd, ynadd, zpadd, znadd;
 
-x1 = 0;       y1 = 0;       z1 = 0
+x1 = 0;	   y1 = 0;	   z1 = 0
 x2 = size[X]; y2 = size[Y]; z2 = size[Z]
 
 // Define texture coordinates to use (clockwise, starting at top-left)

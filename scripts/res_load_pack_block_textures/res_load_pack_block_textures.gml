@@ -51,15 +51,15 @@ if (blocksize = null)
 surf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
 surface_set_target(surf)
 {
-    gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+	gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 	draw_clear_alpha(c_black, 0)
 
 	for (var t = 0; t < ds_list_size(texlist); t++)
 	{
 		var tex, dx, dy;
 		tex = texlist[|t]
-	    dx = (t mod block_sheet_width) * blocksize
-	    dy = (t div block_sheet_width) * blocksize
+		dx = (t mod block_sheet_width) * blocksize
+		dy = (t div block_sheet_width) * blocksize
 	
 		if (tex != null)
 		{

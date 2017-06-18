@@ -7,8 +7,8 @@ varying float vBrightness;
 
 void main()
 {
-    vec4 baseColor = texture2D(uTexture, vTexCoord);
-    gl_FragColor = vec4(vec3(vBrightness + uBrightness), uAlpha * baseColor.a);
+	vec4 baseColor = texture2D(uTexture, vTexCoord);
+	gl_FragColor = vec4(vec3(vBrightness + uBrightness), uAlpha * baseColor.a);
 	
 	if (gl_FragColor.a == 0.0)
 		discard;

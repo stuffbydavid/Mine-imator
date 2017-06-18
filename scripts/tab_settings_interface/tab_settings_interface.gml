@@ -7,8 +7,8 @@ tab_control_dragger()
 draw_checkbox("settingstipshow", dx, dy + 2, setting_tip_show, action_setting_tip_show)
 if (setting_tip_show)
 {
-    tab.interface.tbx_tip_delay.suffix = " " + text_get("settingstipdelayseconds")
-    draw_dragger("settingstipdelay", dx + floor(dw * 0.5), dy, dw * 0.5, setting_tip_delay, 0.005, 0, no_limit, 0.25, 0, tab.interface.tbx_tip_delay, action_setting_tip_delay)
+	tab.interface.tbx_tip_delay.suffix = " " + text_get("settingstipdelayseconds")
+	draw_dragger("settingstipdelay", dx + floor(dw * 0.5), dy, dw * 0.5, setting_tip_delay, 0.005, 0, no_limit, 0.25, 0, tab.interface.tbx_tip_delay, action_setting_tip_delay)
 }
 tab_next()
 dy += 10
@@ -28,10 +28,10 @@ tab_next()
 
 if (setting_view_real_time_render)
 {
-    tab_control_dragger()
-    tab.interface.tbx_view_real_time_render_time.suffix = " " + text_get("settingsviewrealtimerendertimemilliseconds")
-    draw_dragger("settingsviewrealtimerendertime", dx, dy, dw, setting_view_real_time_render_time, 1, 0, no_limit, 100, 1, tab.interface.tbx_view_real_time_render_time, action_setting_view_real_time_render_time)
-    tab_next()
+	tab_control_dragger()
+	tab.interface.tbx_view_real_time_render_time.suffix = " " + text_get("settingsviewrealtimerendertimemilliseconds")
+	draw_dragger("settingsviewrealtimerendertime", dx, dy, dw, setting_view_real_time_render_time, 1, 0, no_limit, 100, 1, tab.interface.tbx_view_real_time_render_time, action_setting_view_real_time_render_time)
+	tab_next()
 }
 dy += 10
 
@@ -49,10 +49,10 @@ tab_next()
 tab_control(24)
 
 if (draw_button_normal("settingsfontopen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
-    action_setting_font_open()
+	action_setting_font_open()
 	
 if (draw_button_normal("settingsfontreset", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
-    action_setting_font_reset()
+	action_setting_font_reset()
 	
 tab_next()
 dy += 10
@@ -76,10 +76,10 @@ tab_next()
 tab_control(24)
 
 if (draw_button_normal("settingslanguageload", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
-    action_setting_language_load()
+	action_setting_language_load()
 	
 if (draw_button_normal("settingslanguagereload", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reload))
-    action_setting_language_reload()
+	action_setting_language_reload()
 	
 tab_next()
 dy += 10
@@ -125,14 +125,14 @@ tab_next()
 tab_control(24)
 
 if (draw_button_normal("settingscoloropen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
-    action_setting_color_open()
+	action_setting_color_open()
 	
 if (draw_button_normal("settingscolorsave", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.export))
-    action_setting_color_save()
+	action_setting_color_save()
 	
 wid = (dw - 54) / 2-2
 if (draw_button_normal("settingscolorreset", dx + 54, dy - 2, wid, 28))
-    action_setting_color_reset()
+	action_setting_color_reset()
 	
 tab_next()
 dy += 10

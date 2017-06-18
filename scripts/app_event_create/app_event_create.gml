@@ -3,16 +3,16 @@
 
 if (!app_startup())
 {
-    game_end()
-    return 0
+	game_end()
+	return 0
 }
 
 project_reset()
 
 if (dev_mode)
 {
-    popup_newproject_clear()
-    project_create()
+	popup_newproject_clear()
+	project_create()
 }
 else
-    popup_show(popup_startup)
+	popup_show(popup_startup)

@@ -2,12 +2,12 @@
 
 var fn = file_dialog_open_font();
 if (!file_exists_lib(fn))
-    return 0
+	return 0
 
 if (setting_font_filename != "")
 {
-    font_delete(setting_font)
-    font_delete(setting_font_bold)
+	font_delete(setting_font)
+	font_delete(setting_font_bold)
 }
 
 setting_font_filename = fn

@@ -12,45 +12,45 @@ render_ratio = content_width / content_height
 
 surface_set_target(surf)
 {
-    draw_clear(c_black)
-    render_world_start()
-    render_world("click")
-    render_world_done()
+	draw_clear(c_black)
+	render_world_start()
+	render_world("click")
+	render_world_done()
 }
 surface_reset_target()
 
 var tl = surface_getpixel(surf, mouse_x - content_x, mouse_y - content_y);
 if (tl > 0)
 {
-    // Find timeline to select
-    if (!tl_edit && !keyboard_check(vk_control))
-        while (tl.parent != app && !tl.parent.lock)
-            tl = tl.parent
-            
-    // Select
-    action_tl_select(tl)
-    
-    // Jump in list
-    if (setting_timeline_select_jump)
+	// Find timeline to select
+	if (!tl_edit && !keyboard_check(vk_control))
+		while (tl.parent != app && !tl.parent.lock)
+			tl = tl.parent
+			
+	// Select
+	action_tl_select(tl)
+	
+	// Jump in list
+	if (setting_timeline_select_jump)
 	{
-        // Find pos
+		// Find pos
 		var pos;
-        for (pos = 0; pos < tree_list_amount; pos++)
-            if (tree_list[pos] = tl)
-                break
-                
-        if (pos < timeline_list_first || pos >= timeline_list_first + timeline_list_visible)
+		for (pos = 0; pos < tree_list_amount; pos++)
+			if (tree_list[pos] = tl)
+				break
+				
+		if (pos < timeline_list_first || pos >= timeline_list_first + timeline_list_visible)
 		{
-            // Set scrollbar
-            var newval = pos - floor(timeline_list_visible / 2);
-            newval = min(newval, tree_list_amount - timeline_list_visible)
-            newval = max(0, newval)
-            timeline.ver_scroll.value = newval * timeline.ver_scroll.snap_value
-        }
-    }
+			// Set scrollbar
+			var newval = pos - floor(timeline_list_visible / 2);
+			newval = min(newval, tree_list_amount - timeline_list_visible)
+			newval = max(0, newval)
+			timeline.ver_scroll.value = newval * timeline.ver_scroll.snap_value
+		}
+	}
 }
 else
-    if (!keyboard_check(vk_shift))
-        action_tl_deselect_all()
-    
+	if (!keyboard_check(vk_shift))
+		action_tl_deselect_all()
+	
 surface_free(surf)

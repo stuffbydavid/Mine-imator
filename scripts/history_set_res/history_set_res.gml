@@ -26,11 +26,11 @@ hobj.replaced = false
 
 if (newres && newres.object_index = obj_resource) // Not camera
 {
-    hobj.type = newres.type
-    hobj.fnout = newres.filename_out
-    hobj.replaced = newres.replaced
+	hobj.type = newres.type
+	hobj.fnout = newres.filename_out
+	hobj.replaced = newres.replaced
 }
-    
+	
 history[0] = hobj
 
 return hobj

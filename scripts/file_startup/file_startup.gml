@@ -6,9 +6,9 @@ var surf, tmpfile1, tmpfile2, tex1, tex2;
 log("working_directory", working_directory)
 if (!directory_exists_lib(working_directory))
 {
-    log("directory broken")
-    access_error()
-    return 0
+	log("directory broken")
+	access_error()
+	return 0
 }
 
 // Write access
@@ -26,16 +26,16 @@ surface_free(surf)
 
 if (!file_exists_lib(tmpfile1))
 {
-    log("Couldn't save to file_directory")
-    access_error()
-    return 0
+	log("Couldn't save to file_directory")
+	access_error()
+	return 0
 }
 
 if (!file_exists_lib(tmpfile2))
 {
-    log("Couldn't save to data_directory")
-    access_error()
-    return 0
+	log("Couldn't save to data_directory")
+	access_error()
+	return 0
 }
 
 log("surface_save OK")
@@ -45,16 +45,16 @@ tex2 = texture_create(tmpfile2) // Can I load textures from installation folder?
 
 if (!tex1 || texture_width(tex1) != 32 || texture_height(tex1) != 32)
 {
-    log("Couldn't load texture from file_directory")
-    access_error()
-    return 0
+	log("Couldn't load texture from file_directory")
+	access_error()
+	return 0
 }
 
 if (!tex2 || texture_width(tex2) != 32 || texture_height(tex2) != 32)
 {
-    log("Couldn't load texture from data_directory")
-    access_error()
-    return 0
+	log("Couldn't load texture from data_directory")
+	access_error()
+	return 0
 }
 
 log("texture_create OK")
@@ -64,16 +64,16 @@ file_delete_lib(tmpfile2) // Can I delete from installation folder?
 
 if (file_exists_lib(tmpfile1))
 {
-    log("Couldn't delete from file_directory")
-    access_error()
-    return 0
+	log("Couldn't delete from file_directory")
+	access_error()
+	return 0
 }
 
 if (file_exists_lib(tmpfile1))
 {
-    log("Couldn't delete from data_directory")
-    access_error()
-    return 0
+	log("Couldn't delete from data_directory")
+	access_error()
+	return 0
 }
 
 log("file_delete_lib OK")

@@ -14,16 +14,16 @@ icon = argument[3]
 script = argument[4]
 
 if (argument_count > 5)
-    tip = argument[5]
+	tip = argument[5]
 else
-    tip = text_get(name + "tip")
+	tip = text_get(name + "tip")
 
 if (draw_button_normal(name, dx, dy, 28, 28, e_button.NO_TEXT, pressed, false, enabled, icon, c_white, tip))
-    script_execute(script)
+	script_execute(script)
 
 dx += 30
 if (dx + 30 > content_x + content_width)
 {
-    dx = content_x
-    dy += 30
+	dx = content_x
+	dy += 30
 }

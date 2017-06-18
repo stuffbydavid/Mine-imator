@@ -3,14 +3,14 @@
 
 var cam = argument0;
 var uBrightness = shader_get_uniform(shader_color_camera, "uBrightness"), 
-    uAlpha = shader_get_uniform(shader_color_camera, "uAlpha"), 
-    uRGBAdd = shader_get_uniform(shader_color_camera, "uRGBAdd"), 
-    uRGBSub = shader_get_uniform(shader_color_camera, "uRGBSub"), 
-    uRGBMul = shader_get_uniform(shader_color_camera, "uRGBMul"), 
-    uHSBAdd = shader_get_uniform(shader_color_camera, "uHSBAdd"), 
-    uHSBSub = shader_get_uniform(shader_color_camera, "uHSBSub"), 
-    uHSBMul = shader_get_uniform(shader_color_camera, "uHSBMul"), 
-    uMixColor = shader_get_uniform(shader_color_camera, "uMixColor");
+	uAlpha = shader_get_uniform(shader_color_camera, "uAlpha"), 
+	uRGBAdd = shader_get_uniform(shader_color_camera, "uRGBAdd"), 
+	uRGBSub = shader_get_uniform(shader_color_camera, "uRGBSub"), 
+	uRGBMul = shader_get_uniform(shader_color_camera, "uRGBMul"), 
+	uHSBAdd = shader_get_uniform(shader_color_camera, "uHSBAdd"), 
+	uHSBSub = shader_get_uniform(shader_color_camera, "uHSBSub"), 
+	uHSBMul = shader_get_uniform(shader_color_camera, "uHSBMul"), 
+	uMixColor = shader_get_uniform(shader_color_camera, "uMixColor");
 
 shader_set(shader_color_camera)
 

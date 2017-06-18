@@ -17,15 +17,15 @@ sh = max(1, h div slotsy)
 surf = surface_create(sw, sh)
 surface_set_target(surf)
 {
-    for (var i = 0; i < slotsx * slotsy; i++)
+	for (var i = 0; i < slotsx * slotsy; i++)
 	{
-        var dx, dy;
-        dx = (i mod slotsx) * sw
-        dy = (i div slotsy) * sh
-        draw_clear_alpha(c_black, 0)
-        draw_texture_part(tex, 0, 0, dx, dy, sw, sh)
-        newtex[i] = texture_surface(surf)
-    }
+		var dx, dy;
+		dx = (i mod slotsx) * sw
+		dy = (i div slotsy) * sh
+		draw_clear_alpha(c_black, 0)
+		draw_texture_part(tex, 0, 0, dx, dy, sw, sh)
+		newtex[i] = texture_surface(surf)
+	}
 }
 surface_reset_target()
 surface_free(surf)

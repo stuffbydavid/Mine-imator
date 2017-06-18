@@ -9,13 +9,13 @@ trans = argument1
 p = argument2
 
 if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-    val = tl_value_clamp(vid, tl_value_interpolate(vid, ease(trans, p), keyframe_current.value[vid], keyframe_next.value[vid]))
+	val = tl_value_clamp(vid, tl_value_interpolate(vid, ease(trans, p), keyframe_current.value[vid], keyframe_next.value[vid]))
 else if (keyframe_next)
-    val = keyframe_next.value[vid]
+	val = keyframe_next.value[vid]
 else
-    val = value_default[vid]
+	val = value_default[vid]
 
 if (value[vid] != val)
-    update_matrix = true
+	update_matrix = true
 
 value[vid] = val

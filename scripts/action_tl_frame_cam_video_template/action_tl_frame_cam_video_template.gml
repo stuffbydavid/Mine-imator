@@ -8,13 +8,13 @@ tid = argument0
 app.frame_editor.camera.video_template = tid
 if (tid > 0)
 {
-    tl_value_set(CAMSIZEUSEPROJECT, false, false)
-    tl_value_set(CAMWIDTH, tid.width, false)
-    tl_value_set(CAMHEIGHT, tid.height, false)
+	tl_value_set(CAMSIZEUSEPROJECT, false, false)
+	tl_value_set(CAMWIDTH, tid.width, false)
+	tl_value_set(CAMHEIGHT, tid.height, false)
 }
 else if (tid = 0) // Custom
-    tl_value_set(CAMSIZEUSEPROJECT, false, false)
+	tl_value_set(CAMSIZEUSEPROJECT, false, false)
 else // Inherit project size
-    tl_value_set(CAMSIZEUSEPROJECT, true, false)
+	tl_value_set(CAMSIZEUSEPROJECT, true, false)
 
 tl_value_set_done()

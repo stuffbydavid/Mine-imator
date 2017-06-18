@@ -1,14 +1,14 @@
 /// tab_settings_controls()
 
 var capwid, capwid2;
-    
+	
 // Interface
 capwid = text_caption_width("settingskeynew", "settingskeyopen", "settingskeysave", 
-                          "settingskeyundo", "settingskeyredo", 
-                          "settingskeyselecttimelines", "settingskeyduplicatetimelines", "settingskeyremovetimelines", 
-                          "settingskeycopykeyframes", "settingskeycutkeyframes", "settingskeypastekeyframes", "settingskeyremovekeyframes", 
-                          "settingskeyspawn", "settingskeyclear", 
-                          "settingskeyplay", "settingskeyplaybeginning")
+						  "settingskeyundo", "settingskeyredo", 
+						  "settingskeyselecttimelines", "settingskeyduplicatetimelines", "settingskeyremovetimelines", 
+						  "settingskeycopykeyframes", "settingskeycutkeyframes", "settingskeypastekeyframes", "settingskeyremovekeyframes", 
+						  "settingskeyspawn", "settingskeyclear", 
+						  "settingskeyplay", "settingskeyplaybeginning")
 
 capwid2 = text_caption_width("settingskeycontrol")
 
@@ -125,18 +125,18 @@ dy += 10
 
 // Cameras
 capwid = text_caption_width("settingskeyforward", 
-                            "settingskeyleft", 
-                            "settingskeydescend", 
-                            "settingskeyrollforward", 
-                            "settingskeyreset", 
-                            "settingskeyfast") - 10
+							"settingskeyleft", 
+							"settingskeydescend", 
+							"settingskeyrollforward", 
+							"settingskeyreset", 
+							"settingskeyfast") - 10
 
 capwid2 = text_caption_width("settingskeyback", 
-                             "settingskeyright", 
-                             "settingskeyascend", 
-                             "settingskeyrollback", 
-                             "settingskeyrollreset", 
-                             "settingskeyslow") - 10
+							 "settingskeyright", 
+							 "settingskeyascend", 
+							 "settingskeyrollback", 
+							 "settingskeyrollreset", 
+							 "settingskeyslow") - 10
 
 tab_control(16)
 draw_label(text_get("settingscameracontrols") + ":", dx, dy)

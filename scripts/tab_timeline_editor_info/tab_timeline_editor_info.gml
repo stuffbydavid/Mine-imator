@@ -10,11 +10,11 @@ tab_next()
 
 if (tl_edit.type = "text")
 {
-    // Text
-    tab_control(110)
-    tab.info.tbx_text.text = tl_edit.text
-    draw_inputbox("timelineeditortext", dx, dy, dw, "", tab.info.tbx_text, action_tl_text, capwid, 110)
-    tab_next()
+	// Text
+	tab_control(110)
+	tab.info.tbx_text.text = tl_edit.text
+	draw_inputbox("timelineeditortext", dx, dy, dw, "", tab.info.tbx_text, action_tl_text, capwid, 110)
+	tab_next()
 }
 
 // Type
@@ -26,66 +26,66 @@ tab_next()
 // Rotation point
 if (tl_edit.value_type[ROTPOINT])
 {
-    tab_control_checkbox()
-    draw_checkbox("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)
-    tab_next()
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)
+	tab_next()
 	
-    if (tl_edit.rot_point_custom)
+	if (tl_edit.rot_point_custom)
 	{
-        var snapval, mul, def;
-        snapval = tab.info.rot_point_snap * tab.info.rot_point_snap_size
-        mul = point_distance_3d(tl_edit.pos[X], tl_edit.pos[Y], tl_edit.pos[Z], cam_from[X], cam_from[Y], cam_from[Z]) / 500
-        if (tl_edit.temp)
-            def = tl_edit.temp.rot_point
-        else
-            def = point3D(0, 0, 0)
-        
-        tab.info.rot_point_mouseon = false
-        capwid = text_caption_width("timelineeditorrotpointx", "timelineeditorrotpointy", "timelineeditorrotpointz")
-        
-        axis_edit = X
-        tab_control_dragger()
-        if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
-            tab.info.rot_point_mouseon = true
-        draw_dragger("timelineeditorrotpointx", dx, dy, dw, tl_edit.rot_point[X], mul, -no_limit, no_limit, def[X], snapval, tab.info.tbx_rot_point_x, action_tl_rotpoint, capwid)
-        tab_next()
-        
-        axis_edit = test(setting_z_is_up, Y, Z)
-        tab_control_dragger()
-        if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
-            tab.info.rot_point_mouseon = true
-        draw_dragger("timelineeditorrotpointy", dx, dy, dw, tl_edit.rot_point[axis_edit], mul, -no_limit, no_limit, def[axis_edit], snapval, tab.info.tbx_rot_point_y, action_tl_rotpoint, capwid)
-        tab_next()
-        
-        axis_edit = test(setting_z_is_up, Z, Y)
-        tab_control_dragger()
-        if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
-            tab.info.rot_point_mouseon = true
-        draw_dragger("timelineeditorrotpointz", dx, dy, dw, tl_edit.rot_point[axis_edit], mul, -no_limit, no_limit, def[axis_edit], snapval, tab.info.tbx_rot_point_z, action_tl_rotpoint, capwid)
-        tab_next()
-        
-        // Tools
-        tab_control(24)
+		var snapval, mul, def;
+		snapval = tab.info.rot_point_snap * tab.info.rot_point_snap_size
+		mul = point_distance_3d(tl_edit.pos[X], tl_edit.pos[Y], tl_edit.pos[Z], cam_from[X], cam_from[Y], cam_from[Z]) / 500
+		if (tl_edit.temp)
+			def = tl_edit.temp.rot_point
+		else
+			def = point3D(0, 0, 0)
 		
-        if (draw_button_normal("timelineeditorrotpointreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
-            action_tl_rotpoint_all(def)
+		tab.info.rot_point_mouseon = false
+		capwid = text_caption_width("timelineeditorrotpointx", "timelineeditorrotpointy", "timelineeditorrotpointz")
+		
+		axis_edit = X
+		tab_control_dragger()
+		if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
+			tab.info.rot_point_mouseon = true
+		draw_dragger("timelineeditorrotpointx", dx, dy, dw, tl_edit.rot_point[X], mul, -no_limit, no_limit, def[X], snapval, tab.info.tbx_rot_point_x, action_tl_rotpoint, capwid)
+		tab_next()
+		
+		axis_edit = test(setting_z_is_up, Y, Z)
+		tab_control_dragger()
+		if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
+			tab.info.rot_point_mouseon = true
+		draw_dragger("timelineeditorrotpointy", dx, dy, dw, tl_edit.rot_point[axis_edit], mul, -no_limit, no_limit, def[axis_edit], snapval, tab.info.tbx_rot_point_y, action_tl_rotpoint, capwid)
+		tab_next()
+		
+		axis_edit = test(setting_z_is_up, Z, Y)
+		tab_control_dragger()
+		if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
+			tab.info.rot_point_mouseon = true
+		draw_dragger("timelineeditorrotpointz", dx, dy, dw, tl_edit.rot_point[axis_edit], mul, -no_limit, no_limit, def[axis_edit], snapval, tab.info.tbx_rot_point_z, action_tl_rotpoint, capwid)
+		tab_next()
+		
+		// Tools
+		tab_control(24)
+		
+		if (draw_button_normal("timelineeditorrotpointreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
+			action_tl_rotpoint_all(def)
 			
-        if (draw_button_normal("timelineeditorrotpointcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
-            tab.info.rot_point_copy = tl_edit.rot_point
+		if (draw_button_normal("timelineeditorrotpointcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
+			tab.info.rot_point_copy = tl_edit.rot_point
 			
-        if (draw_button_normal("timelineeditorrotpointpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.paste))
-            action_tl_rotpoint_all(tab.info.rot_point_copy)
+		if (draw_button_normal("timelineeditorrotpointpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.paste))
+			action_tl_rotpoint_all(tab.info.rot_point_copy)
 			
-        if (draw_button_normal("timelineeditorrotpointsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.info.rot_point_snap, false, true, icons.grid))
-            tab.info.rot_point_snap=!tab.info.rot_point_snap
+		if (draw_button_normal("timelineeditorrotpointsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.info.rot_point_snap, false, true, icons.grid))
+			tab.info.rot_point_snap=!tab.info.rot_point_snap
 			
-        if (tab.info.rot_point_snap)
+		if (tab.info.rot_point_snap)
 		{
-            capwid = text_caption_width("timelineeditorrotpointsnapsize")
-            if (draw_inputbox("timelineeditorrotpointsnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.info.tbx_rot_point_snap, null, capwid))
-                tab.info.rot_point_snap_size = string_get_real(tab.info.tbx_rot_point_snap.text, 0)
-        }
+			capwid = text_caption_width("timelineeditorrotpointsnapsize")
+			if (draw_inputbox("timelineeditorrotpointsnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.info.tbx_rot_point_snap, null, capwid))
+				tab.info.rot_point_snap_size = string_get_real(tab.info.tbx_rot_point_snap.text, 0)
+		}
 		
-        tab_next()
-    }
+		tab_next()
+	}
 }

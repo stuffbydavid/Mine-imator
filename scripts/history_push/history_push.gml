@@ -3,4 +3,4 @@
 
 history_amount++
 for (var h = history_amount; h > 0; h--)
-    history[h] = history[h - 1]
+	history[h] = history[h - 1]

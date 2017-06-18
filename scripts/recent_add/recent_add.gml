@@ -7,24 +7,24 @@ recent_add_wait = false
 
 // Find index
 for (n = 0; n < recent_amount; n++)
-    if (recent_filename[n] = project_file)
-        break
-        
+	if (recent_filename[n] = project_file)
+		break
+		
 // Remove old
 if (n < recent_amount)
-    recent_remove(n)
+	recent_remove(n)
 
 recent_amount++
 
 // Push up
 for (var r = recent_amount; r > 0; r--)
 {
-    recent_filename[r] = recent_filename[r - 1]
-    recent_name[r] = recent_name[r - 1]
-    recent_author[r] = recent_author[r - 1]
-    recent_description[r] = recent_description[r - 1]
-    recent_date[r] = recent_date[r - 1]
-    recent_thumbnail[r] = recent_thumbnail[r - 1]
+	recent_filename[r] = recent_filename[r - 1]
+	recent_name[r] = recent_name[r - 1]
+	recent_author[r] = recent_author[r - 1]
+	recent_description[r] = recent_description[r - 1]
+	recent_date[r] = recent_date[r - 1]
+	recent_thumbnail[r] = recent_thumbnail[r - 1]
 }
 
 // Create thumbnail

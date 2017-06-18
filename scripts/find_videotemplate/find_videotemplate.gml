@@ -3,7 +3,7 @@
 /// @arg height
 
 with (obj_videotemplate)
-    if (width = argument0 && height = argument1)
-        return id
-        
+	if (width = argument0 && height = argument1)
+		return id
+		
 return 0

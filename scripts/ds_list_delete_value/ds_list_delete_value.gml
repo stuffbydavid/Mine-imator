@@ -4,4 +4,4 @@
 
 var pos = ds_list_find_index(argument0, argument1)
 if (pos >= 0)
-    ds_list_delete(argument0, pos)
+	ds_list_delete(argument0, pos)

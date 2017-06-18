@@ -58,7 +58,7 @@ itemsy = ceil(slots / itemsx)
 
 for (var s = round(scroll.value / slotsize) * itemsx; s < slots; s++)
 {
-    var curtex, curslot, curslotsx, name, col;
+	var curtex, curslot, curslotsx, name, col;
 	
 	// Correct name and slot texture
 	if (s < ds_list_size(list))
@@ -78,36 +78,36 @@ for (var s = round(scroll.value / slotsize) * itemsx; s < slots; s++)
 	
 	// Texture color
 	col = c_white
-    if (res)
-        col = block_texture_get_blend(name, res)
-        
+	if (res)
+		col = block_texture_get_blend(name, res)
+		
 	// Highlight if selected
-    if (select = name)
-        draw_box(dx, dy, slotsize, slotsize, false, setting_color_highlight, 1)
-    
+	if (select = name)
+		draw_box(dx, dy, slotsize, slotsize, false, setting_color_highlight, 1)
+	
 	// Slot
-    draw_texture_slot(curtex, curslot, dx + off, dy + off, itemsize, curslotsx, col)
-    if (app_mouse_box(dx, dy, slotsize, slotsize) && content_mouseon)
+	draw_texture_slot(curtex, curslot, dx + off, dy + off, itemsize, curslotsx, col)
+	if (app_mouse_box(dx, dy, slotsize, slotsize) && content_mouseon)
 	{
-        mouse_cursor = cr_handpoint
-        if (mouse_left_pressed)
+		mouse_cursor = cr_handpoint
+		if (mouse_left_pressed)
 		{
-            script_execute(script, name)
-            window_focus = string(scroll)
-            select = name
-        }
-    }
-    
+			script_execute(script, name)
+			window_focus = string(scroll)
+			select = name
+		}
+	}
+	
 	// Advance
-    dx += slotsize
-    if (dx + slotsize > xx + itemsx * slotsize)
+	dx += slotsize
+	if (dx + slotsize > xx + itemsx * slotsize)
 	{
-        dx = xx
-        dy += slotsize
-        if (dy + slotsize > yy + hei)
-            break
-    }
-    
+		dx = xx
+		dy += slotsize
+		if (dy + slotsize > yy + hei)
+			break
+	}
+	
 }
 
 // Scrollbar

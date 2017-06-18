@@ -7,7 +7,7 @@
 var cap, timestr, valstr;
 
 if (!dev_mode)
-    return argument[argument_count - 1]
+	return argument[argument_count - 1]
 
 cap = string_repeat("\t", debug_indent) + string(argument[0])
 valstr = ""
@@ -18,13 +18,13 @@ timestr = date_time_string(date_current_datetime()) + " "
 // Values
 if (argument_count > 1)
 {
-    valstr = ": "
-    for (var a = 1; a < argument_count; a++)
+	valstr = ": "
+	for (var a = 1; a < argument_count; a++)
 	{
-        valstr += string(argument[a])
-        if (a < argument_count - 1)
-            valstr += ", "
-    }
+		valstr += string(argument[a])
+		if (a < argument_count - 1)
+			valstr += ", "
+	}
 }
 
 // Debug message

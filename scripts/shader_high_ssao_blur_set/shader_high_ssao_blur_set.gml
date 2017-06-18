@@ -5,10 +5,10 @@
 /// @arg checky
 
 var uDepthBuffer = shader_get_sampler_index(shader_high_ssao_blur, "uDepthBuffer"), 
-    uNormalBuffer = shader_get_sampler_index(shader_high_ssao_blur, "uNormalBuffer"), 
-    uScreenSize = shader_get_uniform(shader_high_ssao_blur, "uScreenSize"), 
-    uPixelCheck = shader_get_uniform(shader_high_ssao_blur, "uPixelCheck");
-    
+	uNormalBuffer = shader_get_sampler_index(shader_high_ssao_blur, "uNormalBuffer"), 
+	uScreenSize = shader_get_uniform(shader_high_ssao_blur, "uScreenSize"), 
+	uPixelCheck = shader_get_uniform(shader_high_ssao_blur, "uPixelCheck");
+	
 shader_set(shader_high_ssao_blur)
 
 texture_set_stage(uDepthBuffer, surface_get_texture(argument0))

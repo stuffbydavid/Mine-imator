@@ -3,10 +3,10 @@
 
 with (obj_keyframe)
 {
-    if (!select)
-        continue
-    moveindex = index
-    movepos = pos
+	if (!select)
+		continue
+	moveindex = index
+	movepos = pos
 }
 
 timeline_move_kf = argument0

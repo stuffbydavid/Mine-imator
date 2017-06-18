@@ -16,9 +16,9 @@ yy = argument[3]
 size = argument[4]
 slotsx = argument[5]
 if (argument_count > 6)
-    color = argument[6]
+	color = argument[6]
 else
-    color = c_white
+	color = c_white
 
 slotsize = max(1, texture_width(tex) / slotsx)
 sx = (slot mod slotsx) * slotsize

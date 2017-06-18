@@ -5,29 +5,29 @@ var res, fn;
 fn = ""
 
 if (history_undo)
-    res = history_undo_res()
+	res = history_undo_res()
 else if (history_redo)
-    res = history_redo_res()
+	res = history_redo_res()
 else
 {
-    res = argument0
-    if (res = e_option.BROWSE)
+	res = argument0
+	if (res = e_option.BROWSE)
 	{
-        fn = file_dialog_open_image_pack()
-        if (!file_exists_lib(fn))
-            return 0
-        
-        res = new_res("itemsheet", fn)
-        with (res)
-            res_load()
-    }
-    history_set_res(action_bench_item_tex, fn, bench_settings.item_tex, res)
+		fn = file_dialog_open_image_pack()
+		if (!file_exists_lib(fn))
+			return 0
+		
+		res = new_res("itemsheet", fn)
+		with (res)
+			res_load()
+	}
+	history_set_res(action_bench_item_tex, fn, bench_settings.item_tex, res)
 }
 
 with (bench_settings)
 {
-    item_tex = res
-    temp_update_item()
+	item_tex = res
+	temp_update_item()
 }
 
 bench_settings.preview.update = true

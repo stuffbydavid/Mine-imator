@@ -13,54 +13,54 @@ bench_draw()
 
 if (window_busy = "toolbarmove")
 {
-    offx = mouse_x - mouse_click_x
-    offy = mouse_y - mouse_click_y
-    draw_set_alpha(0.5)
+	offx = mouse_x - mouse_click_x
+	offy = mouse_y - mouse_click_y
+	draw_set_alpha(0.5)
 }
 else
 {
-    offx = 0
-    offy = 0
+	offx = 0
+	offy = 0
 }
 
 // Set dimensions
 switch (toolbar_location)
 {
-    case "top":
-    case "bottom":
-        boxw = window_width
-        boxh = toolbar_size
-        if (toolbar_location = "top")
+	case "top":
+	case "bottom":
+		boxw = window_width
+		boxh = toolbar_size
+		if (toolbar_location = "top")
 		{
-            boxx = offx
-            boxy = offy
-        }
+			boxx = offx
+			boxy = offy
+		}
 		else
 		{
-            boxx = offx
-            boxy = window_height - boxh + offy
-        }
-        boxsize = boxh
-        content_direction = e_scroll.HORIZONTAL
-        break
-    
-    case "right":
-    case "left":
-        boxw = toolbar_size
-        boxh = window_height
-        if (toolbar_location = "left")
+			boxx = offx
+			boxy = window_height - boxh + offy
+		}
+		boxsize = boxh
+		content_direction = e_scroll.HORIZONTAL
+		break
+	
+	case "right":
+	case "left":
+		boxw = toolbar_size
+		boxh = window_height
+		if (toolbar_location = "left")
 		{
-            boxx = offx
-            boxy = offy
-        }
+			boxx = offx
+			boxy = offy
+		}
 		else
 		{
-            boxx = window_width - boxw + offx
-            boxy = offy
-        }
-        boxsize = boxw
-        content_direction = e_scroll.VERTICAL
-        break
+			boxx = window_width - boxw + offx
+			boxy = offy
+		}
+		boxsize = boxw
+		content_direction = e_scroll.VERTICAL
+		break
 }
 
 
@@ -70,17 +70,17 @@ draw_box(boxx, boxy, boxw, boxh, false, setting_color_interface, 1)
 // Buttons
 if (content_direction = e_scroll.HORIZONTAL)
 {
-    content_x = boxx + boxsize + padding * 2
-    content_width = boxw - content_x - padding
-    content_height = ((boxh - padding * 2) div cellsize) * cellsize
-    content_y = boxy + floor(boxh / 2-content_height / 2)
+	content_x = boxx + boxsize + padding * 2
+	content_width = boxw - content_x - padding
+	content_height = ((boxh - padding * 2) div cellsize) * cellsize
+	content_y = boxy + floor(boxh / 2-content_height / 2)
 }
 else
 {
-    content_width = min(4, (boxw - padding * 2) div cellsize) * cellsize
-    content_x = boxx + floor(boxw / 2-content_width / 2)
-    content_y = boxy + boxsize + padding * 2
-    content_height = boxh - content_y - padding
+	content_width = min(4, (boxw - padding * 2) div cellsize) * cellsize
+	content_x = boxx + floor(boxw / 2-content_width / 2)
+	content_y = boxy + boxsize + padding * 2
+	content_height = boxh - content_y - padding
 }
 content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon)
 toolbar_rows = content_height div cellsize
@@ -121,84 +121,84 @@ toolbar_draw_button("toolbarrepeat", timeline_repeat, true, icons.loop, action_t
 // Timestamp
 if (content_width >= cellsize * 3)
 {
-    dx += 10
-    if (dx + 80 > content_x + content_width) 
+	dx += 10
+	if (dx + 80 > content_x + content_width) 
 	{
-        dx = content_x
-        dy += 30
-    }
-    tip_set(text_get("toolbartimestamptip"), dx, dy, 80, 30)
-    draw_label(string_time_seconds(timeline_marker / project_tempo), dx, dy)
-    draw_label(" / "+string_time_seconds(timeline_length / project_tempo), dx, dy + 12, fa_left, fa_top, null, 1, setting_font_bold)
+		dx = content_x
+		dy += 30
+	}
+	tip_set(text_get("toolbartimestamptip"), dx, dy, 80, 30)
+	draw_label(string_time_seconds(timeline_marker / project_tempo), dx, dy)
+	draw_label(" / "+string_time_seconds(timeline_length / project_tempo), dx, dy + 12, fa_left, fa_top, null, 1, setting_font_bold)
 }
 
 // Networking
 if (boxsize < 70)
 {
-    buttonsize = 30
-    buttonimage = 0
+	buttonsize = 30
+	buttonimage = 0
 }
 else if (boxsize < 100)
 {
-    buttonsize = 48
-    buttonimage = 1
+	buttonsize = 48
+	buttonimage = 1
 }
 else
 {
-    buttonsize = 64
-    buttonimage = 2
+	buttonsize = 64
+	buttonimage = 2
 }
 padding = 10
 
 if (content_direction = e_scroll.HORIZONTAL)
 {
-    content_width = 300 + (buttonsize + 2) * (2 + trial_version)
-    content_height = boxh - padding * 2
-    content_x = boxx + boxw - content_width - padding
-    content_y = boxy + padding
-    dx = content_x + content_width - buttonsize
-    dy = content_y + floor(content_height / 2) - buttonsize / 2
+	content_width = 300 + (buttonsize + 2) * (2 + trial_version)
+	content_height = boxh - padding * 2
+	content_x = boxx + boxw - content_width - padding
+	content_y = boxy + padding
+	dx = content_x + content_width - buttonsize
+	dy = content_y + floor(content_height / 2) - buttonsize / 2
 }
 else
 {
-    content_height = 70 + (buttonsize + 2) * (2 + trial_version)
-    content_width = boxw - padding * 2
-    content_x = boxx + padding
-    content_y = boxy + boxh - content_height - padding
-    dx = content_x + floor(content_width / 2) - buttonsize / 2
-    dy = content_y + content_height - buttonsize
+	content_height = 70 + (buttonsize + 2) * (2 + trial_version)
+	content_width = boxw - padding * 2
+	content_x = boxx + padding
+	content_y = boxy + boxh - content_height - padding
+	dx = content_x + floor(content_width / 2) - buttonsize / 2
+	dy = content_y + content_height - buttonsize
 }
 
 
 // Upgrade
 if (trial_version)
 {
-    if (draw_button_normal("toolbarupgrade", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.upgradesmall + buttonimage))
-        action_toolbar_upgrade()
+	if (draw_button_normal("toolbarupgrade", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.upgradesmall + buttonimage))
+		action_toolbar_upgrade()
 		
-    if (content_direction = e_scroll.HORIZONTAL)
-        dx -= buttonsize + 2
-    else
-        dy -= buttonsize + 2
+	if (content_direction = e_scroll.HORIZONTAL)
+		dx -= buttonsize + 2
+	else
+		dy -= buttonsize + 2
 }
 
 // Forums
 if (draw_button_normal("toolbarforums", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.forumssmall + buttonimage))
-    action_toolbar_forums()
+	action_toolbar_forums()
 
 if (content_direction = e_scroll.HORIZONTAL)
-    dx -= buttonsize + 2
+	dx -= buttonsize + 2
 else
-    dy -= buttonsize + 2
+	dy -= buttonsize + 2
 
 // Site
 if (draw_button_normal("toolbarwebsite", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.websitesmall + buttonimage))
-    action_toolbar_website()
+	action_toolbar_website()
 
 if (content_direction = e_scroll.HORIZONTAL)
-    dx -= padding
+	dx -= padding
 else
-    dy -= padding
+	dy -= padding
 
 // Alerts
 alert_x = content_x
@@ -206,22 +206,22 @@ alert_y = content_y
 alpha_alpha = draw_get_alpha()
 if (content_direction = e_scroll.HORIZONTAL)
 {
-    alert_width = dx - content_x
-    alert_height = content_height
+	alert_width = dx - content_x
+	alert_height = content_height
 }
 else
 {
-    alert_width = content_width
-    alert_height = dy - content_y
+	alert_width = content_width
+	alert_height = dy - content_y
 }
 
 // Bench
 benchx = boxx
 benchy = boxy
 if (content_direction = e_scroll.HORIZONTAL)
-    benchx += 5
+	benchx += 5
 else
-    benchy += 5
+	benchy += 5
 
 benchscale = 1 - 0.2 * ease("easeinexpo", bench_click_ani)
 benchrot = sin(bench_hover_ani * pi * 5) * (1 - abs(bench_hover_ani * 2 - 1)) * 10
@@ -238,150 +238,150 @@ draw_set_alpha(1)
 resizemouseon = false
 switch (toolbar_location)
 {
-    case "top":
-        draw_gradient(boxx, boxy + boxh, boxw, shadow_size, c_black, shadow_alpha, shadow_alpha, 0, 0)
-        if (app_mouse_box(boxx, boxy + boxh - 5, boxw, 5))
+	case "top":
+		draw_gradient(boxx, boxy + boxh, boxw, shadow_size, c_black, shadow_alpha, shadow_alpha, 0, 0)
+		if (app_mouse_box(boxx, boxy + boxh - 5, boxw, 5))
 		{
-            mouse_cursor = cr_size_ns
-            resizemouseon = true
-        }
-        break
-    
-    case "right":
-        draw_gradient(boxx - shadow_size, boxy, shadow_size, boxh, c_black, 0, shadow_alpha, shadow_alpha, 0)
-        if (app_mouse_box(boxx, boxy, 5, boxh))
+			mouse_cursor = cr_size_ns
+			resizemouseon = true
+		}
+		break
+	
+	case "right":
+		draw_gradient(boxx - shadow_size, boxy, shadow_size, boxh, c_black, 0, shadow_alpha, shadow_alpha, 0)
+		if (app_mouse_box(boxx, boxy, 5, boxh))
 		{
-            mouse_cursor = cr_size_we
-            resizemouseon = true
-        }
-        break
-    
-    case "bottom":
-        draw_gradient(boxx, boxy - shadow_size, boxw, shadow_size, c_black, 0, 0, shadow_alpha, shadow_alpha)
-        if (app_mouse_box(boxx, boxy, boxw, 5))
+			mouse_cursor = cr_size_we
+			resizemouseon = true
+		}
+		break
+	
+	case "bottom":
+		draw_gradient(boxx, boxy - shadow_size, boxw, shadow_size, c_black, 0, 0, shadow_alpha, shadow_alpha)
+		if (app_mouse_box(boxx, boxy, boxw, 5))
 		{
-            mouse_cursor = cr_size_ns
-            resizemouseon = true
-        }
-        break
-    
-    case "left":
-        draw_gradient(boxx + boxw, boxy, shadow_size, boxh, c_black, shadow_alpha, 0, 0, shadow_alpha)
-        if (app_mouse_box(boxx + boxw - 5, boxy, 5, boxh))
+			mouse_cursor = cr_size_ns
+			resizemouseon = true
+		}
+		break
+	
+	case "left":
+		draw_gradient(boxx + boxw, boxy, shadow_size, boxh, c_black, shadow_alpha, 0, 0, shadow_alpha)
+		if (app_mouse_box(boxx + boxw - 5, boxy, 5, boxh))
 		{
-            mouse_cursor = cr_size_we
-            resizemouseon = true
-        }
-        break
+			mouse_cursor = cr_size_we
+			resizemouseon = true
+		}
+		break
 }
 
 // Mouse on bench
 if (!resizemouseon && app_mouse_box(benchx, benchy, boxsize, boxsize - 5) && !popup_mouseon)
 {
-    mouse_cursor = cr_handpoint
-    if (bench_hover_ani = 0)
-        bench_hover_ani = 1
+	mouse_cursor = cr_handpoint
+	if (bench_hover_ani = 0)
+		bench_hover_ani = 1
 	
-    if (mouse_left_pressed)
+	if (mouse_left_pressed)
 	{
-        bench_hover_ani = 0
-        bench_click_ani = 1
-        bench_show_ani_type = "show"
-        window_busy = "bench"
-    }
+		bench_hover_ani = 0
+		bench_click_ani = 1
+		bench_show_ani_type = "show"
+		window_busy = "bench"
+	}
 }
 
 // Open
 if (bench_open)
 {
-    bench_open = false
-    bench_hover_ani = 0
-    bench_click_ani = 1
-    bench_show_ani_type = "show"
-    window_busy = "bench"
+	bench_open = false
+	bench_hover_ani = 0
+	bench_click_ani = 1
+	bench_show_ani_type = "show"
+	window_busy = "bench"
 }
 
 // Start resizing
 if (resizemouseon && mouse_left_pressed)
 {
-    window_busy = "toolbarresize"
-    toolbar_resize_size = toolbar_size
+	window_busy = "toolbarresize"
+	toolbar_resize_size = toolbar_size
 }
 
 // Start moving
 if (app_mouse_box(boxx, boxy, boxw, boxh) && !app_mouse_box(alert_x, alert_y, alert_width, alert_height) &&
 	mouse_cursor = cr_default && mouse_left_pressed && !popup_mouseon)
 {
-    window_busy = "toolbarclick"
+	window_busy = "toolbarclick"
 }
 
 if (window_busy = "toolbarclick")
 {
-    if (mouse_move > 10)
-        window_busy = "toolbarmove"
-    else if (!mouse_left)
-        window_busy = ""
+	if (mouse_move > 10)
+		window_busy = "toolbarmove"
+	else if (!mouse_left)
+		window_busy = ""
 }
 
 // Moving
 if (window_busy = "toolbarmove")
 {
-    var mouselocation    
-    if (mouse_y < window_height * 0.3)
+	var mouselocation	
+	if (mouse_y < window_height * 0.3)
 	{
-        mouselocation = "top"
-        window_glow_top = min(1, window_glow_top + 0.1 * delta)
-    }
+		mouselocation = "top"
+		window_glow_top = min(1, window_glow_top + 0.1 * delta)
+	}
 	else if (mouse_y > window_height * 0.7)
 	{
-        mouselocation = "bottom"
-        window_glow_bottom = min(1, window_glow_bottom + 0.1 * delta)
-    }
+		mouselocation = "bottom"
+		window_glow_bottom = min(1, window_glow_bottom + 0.1 * delta)
+	}
 	else if (mouse_x < window_width * 0.5)
 	{
-        mouselocation = "left"
-        window_glow_left = min(1, window_glow_left + 0.1 * delta)
-    }
+		mouselocation = "left"
+		window_glow_left = min(1, window_glow_left + 0.1 * delta)
+	}
 	else
 	{
-        mouselocation = "right"
-        window_glow_right = min(1, window_glow_right + 0.1 * delta)
-    }
-    
-    if (!mouse_left)
+		mouselocation = "right"
+		window_glow_right = min(1, window_glow_right + 0.1 * delta)
+	}
+	
+	if (!mouse_left)
 	{
-        toolbar_location = mouselocation
-        window_busy = ""
-    }
+		toolbar_location = mouselocation
+		window_busy = ""
+	}
 }
 
 // Resizing
 if (window_busy = "toolbarresize")
 {
-    switch (toolbar_location)
+	switch (toolbar_location)
 	{
-        case "top":
-            toolbar_size = toolbar_resize_size + (mouse_y - mouse_click_y)
-            mouse_cursor = cr_size_ns
-            break
-        
-        case "bottom":
-            toolbar_size = toolbar_resize_size - (mouse_y - mouse_click_y)
-            mouse_cursor = cr_size_ns
-            break
-            
-        case "left":
-            toolbar_size = toolbar_resize_size + (mouse_x - mouse_click_x)
-            mouse_cursor = cr_size_we
-            break
-            
-        case "right":
-            toolbar_size = toolbar_resize_size - (mouse_x - mouse_click_x)
-            mouse_cursor = cr_size_we
-            break
-    }
-    
-    toolbar_size = clamp(toolbar_size, 45, 160)
-    if (!mouse_left)
-        window_busy = ""
+		case "top":
+			toolbar_size = toolbar_resize_size + (mouse_y - mouse_click_y)
+			mouse_cursor = cr_size_ns
+			break
+		
+		case "bottom":
+			toolbar_size = toolbar_resize_size - (mouse_y - mouse_click_y)
+			mouse_cursor = cr_size_ns
+			break
+			
+		case "left":
+			toolbar_size = toolbar_resize_size + (mouse_x - mouse_click_x)
+			mouse_cursor = cr_size_we
+			break
+			
+		case "right":
+			toolbar_size = toolbar_resize_size - (mouse_x - mouse_click_x)
+			mouse_cursor = cr_size_we
+			break
+	}
+	
+	toolbar_size = clamp(toolbar_size, 45, 160)
+	if (!mouse_left)
+		window_busy = ""
 }

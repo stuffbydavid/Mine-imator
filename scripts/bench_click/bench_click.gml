@@ -8,16 +8,16 @@ with (bench_settings)
 	// Switch to character / body part from special block TODO!
 	/*if ((bench_settings.type = "char" || bench_settings.type = "bodypart") && bench_settings.char_model.index >= chest.index) 
 	{
-	    bench_settings.char_model = char_model_map[?"human"]
-	    bench_settings.char_skin = res_def
-	    bench_settings.char_bodypart = 0
+		bench_settings.char_model = char_model_map[?"human"]
+		bench_settings.char_skin = res_def
+		bench_settings.char_bodypart = 0
 	}
 
 	// Switch from character->special block
 	if (bench_settings.type = "spblock" && bench_settings.char_model.index < chest.index) 
 	{
-	    bench_settings.char_model = chest
-	    bench_settings.char_skin = res_def
+		bench_settings.char_model = chest
+		bench_settings.char_skin = res_def
 	}*/
 	
 	// Switch to block
@@ -35,13 +35,13 @@ with (bench_settings)
 
 // Switch to particles
 if (bench_settings.type = "particles")
-    bench_update_particles_list()
+	bench_update_particles_list()
 
 with (bench_settings.preview)
 {
-    particle_spawner_clear()
-    preview_reset_view()
-    update = true
+	particle_spawner_clear()
+	preview_reset_view()
+	update = true
 }
 
 bench_clear()

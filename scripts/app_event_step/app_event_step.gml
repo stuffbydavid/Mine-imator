@@ -10,12 +10,12 @@ app_update_keyboard()
 
 if (!exportmovie)
 {
-    app_update_play()
-    app_update_animate()
-    app_update_previews()
-    app_update_backup()
-    app_update_recent()
-    app_update_work_camera()
-    
-    current_step += 60 / room_speed
+	app_update_play()
+	app_update_animate()
+	app_update_previews()
+	app_update_backup()
+	app_update_recent()
+	app_update_work_camera()
+	
+	current_step += 60 / room_speed
 }

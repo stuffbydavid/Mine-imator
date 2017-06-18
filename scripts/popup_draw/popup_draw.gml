@@ -5,43 +5,43 @@ var boxx, boxy, boxw, boxh
 // Animate
 if (popup_ani_type = "show")
 {
-    popup_ani = min(1, popup_ani + 0.05 * delta)
-    if (popup_ani = 1)
-        popup_ani_type = ""
+	popup_ani = min(1, popup_ani + 0.05 * delta)
+	if (popup_ani = 1)
+		popup_ani_type = ""
 }
 else if (popup_ani_type = "hide")
 {
-    popup_ani = max(0, popup_ani - 0.1 * delta)
-    if (popup_ani = 0)
+	popup_ani = max(0, popup_ani - 0.1 * delta)
+	if (popup_ani = 0)
 	{
-        if (popup_switch_to)
+		if (popup_switch_to)
 		{
-            popup = popup_switch_to
-            popup_switch_to = null
-            popup_ani_type = "show"
-            window_busy = ""
-        }
+			popup = popup_switch_to
+			popup_switch_to = null
+			popup_ani_type = "show"
+			window_busy = ""
+		}
 		else
 		{
-            window_busy = ""
-            popup = null
-            popup_ani_type = ""
-            popup_switch_from = null
-        }
-    }
+			window_busy = ""
+			popup = null
+			popup_ani_type = ""
+			popup_switch_from = null
+		}
+	}
 }
 
 if (!popup)
 {
-    popup_mouseon = false
-    return 0
+	popup_mouseon = false
+	return 0
 }
 
 if (window_busy = "popupmove")
-    draw_set_alpha(0.5)
+	draw_set_alpha(0.5)
 
 if (window_busy = "popup" + popup.name)
-    window_busy = ""
+	window_busy = ""
 
 // Box
 boxw = popup.width
@@ -74,27 +74,27 @@ draw_separator_horizontal(boxx + 10, boxy + 25, boxw - 20)
 // Move
 if (window_busy = "popupclick")
 {
-    if (mouse_move > 10)
+	if (mouse_move > 10)
 	{
-        popup_move_offset_x = popup.offset_x
-        popup_move_offset_y = popup.offset_y
-        window_busy = "popupmove"
-    }
+		popup_move_offset_x = popup.offset_x
+		popup_move_offset_y = popup.offset_y
+		window_busy = "popupmove"
+	}
 	else if (!mouse_left)
-        window_busy = ""
+		window_busy = ""
 }
 
 if (window_busy = "popupmove")
 {
-    popup.offset_x = popup_move_offset_x + (mouse_x - mouse_click_x)
-    popup.offset_y = popup_move_offset_y + (mouse_y - mouse_click_y)
-    if (!mouse_left)
-        window_busy = ""
+	popup.offset_x = popup_move_offset_x + (mouse_x - mouse_click_x)
+	popup.offset_y = popup_move_offset_y + (mouse_y - mouse_click_y)
+	if (!mouse_left)
+		window_busy = ""
 }
 else
 {
-    popup.offset_x = clamp(popup.offset_x, -(window_width - boxw) / 2, (window_width - boxw) / 2)
-    popup.offset_y = clamp(popup.offset_y, -(window_height - boxh) / 2, (window_height - boxh) / 2)
+	popup.offset_x = clamp(popup.offset_x, -(window_width - boxw) / 2, (window_width - boxw) / 2)
+	popup.offset_y = clamp(popup.offset_y, -(window_height - boxh) / 2, (window_height - boxh) / 2)
 }
 
 // Draw contents
@@ -111,9 +111,9 @@ dh = content_height
 script_execute(popup.script)
 
 if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
-    window_busy = "popupclick"
+	window_busy = "popupclick"
 
 if (window_busy = "" && popup.block)
-    window_busy = "popup" + popup.name
+	window_busy = "popup" + popup.name
 
 draw_set_alpha(1)

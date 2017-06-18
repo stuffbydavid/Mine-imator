@@ -2,6 +2,6 @@
 /// @arg enable
 
 if (trial_version)
-    popup_show(popup_upgrade)
+	popup_show(popup_upgrade)
 else
-    setting_render_watermark = argument0
+	setting_render_watermark = argument0

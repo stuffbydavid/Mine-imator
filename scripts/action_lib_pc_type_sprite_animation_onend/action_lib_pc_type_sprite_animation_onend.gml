@@ -4,13 +4,13 @@
 var onend;
 
 if (history_undo)
-    onend = history_data.oldval
+	onend = history_data.oldval
 else if (history_redo)
-    onend = history_data.newval
+	onend = history_data.newval
 else
 {
-    onend = argument0
-    history_set_var(action_lib_pc_type_sprite_animation_onend, ptype_edit.sprite_animation_onend, onend, false)
+	onend = argument0
+	history_set_var(action_lib_pc_type_sprite_animation_onend, ptype_edit.sprite_animation_onend, onend, false)
 }
 
 ptype_edit.sprite_animation_onend = onend

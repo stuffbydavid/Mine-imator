@@ -3,6 +3,6 @@
 /// @arg newname
 
 if (argument0 = "" || argument0 = argument1)
-    return 0
+	return 0
 
 return external_call(lib_file_rename, argument0, argument1)

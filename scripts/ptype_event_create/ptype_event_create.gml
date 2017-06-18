@@ -39,7 +39,7 @@ spd_mul = vec3(1)
 spd_mul_israndom = vec3(false)
 spd_mul_random_min = vec3(0.75)
 spd_mul_random_max = vec3(0.9)
-    
+	
 rot = vec3(0)
 rot_israndom = vec3(true)
 rot_random_min = vec3(0)

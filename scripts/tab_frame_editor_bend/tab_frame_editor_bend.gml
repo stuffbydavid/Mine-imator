@@ -10,21 +10,21 @@ tab_next()
 tab_control(24)
 
 if (draw_button_normal("frameeditorbendreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
-    action_tl_frame_bend_angle(0, false)
+	action_tl_frame_bend_angle(0, false)
 	
 if (draw_button_normal("frameeditorbendcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
-    tab.bend.copy = tl_edit.value[BENDANGLE]
+	tab.bend.copy = tl_edit.value[BENDANGLE]
 	
 if (draw_button_normal("frameeditorbendpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.paste))
-    action_tl_frame_bend_angle(tab.bend.copy, false)
+	action_tl_frame_bend_angle(tab.bend.copy, false)
 	
 if (draw_button_normal("frameeditorbendsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.bend.snap_enabled, false, true, icons.grid))
-    tab.bend.snap_enabled=!tab.bend.snap_enabled
+	tab.bend.snap_enabled=!tab.bend.snap_enabled
 	
 if (tab.bend.snap_enabled)
 {
-    capwid = text_caption_width("frameeditorbendsnapsize")
-    if (draw_inputbox("frameeditorbendsnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.bend.tbx_snap, null))
-        tab.bend.snap_size = string_get_real(tab.bend.tbx_snap.text, 0)
+	capwid = text_caption_width("frameeditorbendsnapsize")
+	if (draw_inputbox("frameeditorbendsnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.bend.tbx_snap, null))
+		tab.bend.snap_size = string_get_real(tab.bend.tbx_snap.text, 0)
 }
 tab_next()

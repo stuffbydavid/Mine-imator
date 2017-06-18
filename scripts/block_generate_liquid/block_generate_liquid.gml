@@ -126,34 +126,34 @@ else
 	
 	// Set texture orientation
 	if ((!flow[e_dir.WEST] && !flow[e_dir.EAST] && !flow[e_dir.NORTH] && !flow[e_dir.SOUTH]) || 
-	    (flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH]) || 
-	    (flow[e_dir.WEST] && flow[e_dir.EAST] && !flow[e_dir.NORTH] && !flow[e_dir.SOUTH]) || 
-	    (!flow[e_dir.WEST] && !flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH]))
-	    topflow = false
+		(flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH]) || 
+		(flow[e_dir.WEST] && flow[e_dir.EAST] && !flow[e_dir.NORTH] && !flow[e_dir.SOUTH]) || 
+		(!flow[e_dir.WEST] && !flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH]))
+		topflow = false
 	else if (flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.SOUTH])
-	    angle = 0
+		angle = 0
 	else if (flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.NORTH])
-	    angle = 180
+		angle = 180
 	else if (flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH])
-	    angle = 90
+		angle = 90
 	else if (flow[e_dir.WEST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH])
-	    angle = 270
+		angle = 270
 	else if (flow[e_dir.WEST] && flow[e_dir.NORTH])
-	    angle = 180 + 45 + 10 * (flow[e_dir.WEST] - 1) - 10 * (flow[e_dir.NORTH] - 1)
+		angle = 180 + 45 + 10 * (flow[e_dir.WEST] - 1) - 10 * (flow[e_dir.NORTH] - 1)
 	else if (flow[e_dir.EAST] && flow[e_dir.NORTH])
-	    angle = 180 - 45 + 10 * (flow[e_dir.NORTH] - 1) - 10 * (flow[e_dir.EAST] - 1)
+		angle = 180 - 45 + 10 * (flow[e_dir.NORTH] - 1) - 10 * (flow[e_dir.EAST] - 1)
 	else if (flow[e_dir.WEST] && flow[e_dir.SOUTH])
-	    angle = 270 + 45 + 10 * (flow[e_dir.SOUTH] - 1) - 10 * (flow[e_dir.WEST] - 1)
+		angle = 270 + 45 + 10 * (flow[e_dir.SOUTH] - 1) - 10 * (flow[e_dir.WEST] - 1)
 	else if (flow[e_dir.EAST] && flow[e_dir.SOUTH])
-	    angle = 45 + 10 * (flow[e_dir.EAST] - 1) - 10 * (flow[e_dir.SOUTH] - 1)
+		angle = 45 + 10 * (flow[e_dir.EAST] - 1) - 10 * (flow[e_dir.SOUTH] - 1)
 	else if (flow[e_dir.SOUTH])
-	    angle = 0
+		angle = 0
 	else if (flow[e_dir.EAST])
-	    angle = 90
+		angle = 90
 	else if (flow[e_dir.NORTH])
-	    angle = 180
+		angle = 180
 	else if (flow[e_dir.WEST])
-	    angle = 270
+		angle = 270
 }
 
 // Add triangles

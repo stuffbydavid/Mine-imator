@@ -4,4 +4,4 @@ timeline_playing = false
 audio_stop_all()
 
 with (obj_keyframe)
-    sound_play_index = null
+	sound_play_index = null

@@ -12,7 +12,7 @@ yy = argument2
 surf = surface_create(texture_width(tex), texture_height(tex))
 surface_set_target(surf)
 {
-    draw_texture(tex, 0, 0)
+	draw_texture(tex, 0, 0)
 }
 surface_reset_target()
 col = surface_getpixel(surf, xx, yy)

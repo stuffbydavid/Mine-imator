@@ -23,24 +23,24 @@ h = argument[6]
 
 if (argument_count > 7)
 {
-    xsca = argument[7]
-    ysca = argument[8]
+	xsca = argument[7]
+	ysca = argument[8]
 }
 else
 {
-    xsca = 1
-    ysca = 1
+	xsca = 1
+	ysca = 1
 }
 
 if (argument_count > 9)
 {
-    color = argument[9]
-    alpha = draw_get_alpha() * argument[10]
+	color = argument[9]
+	alpha = draw_get_alpha() * argument[10]
 }
 else
 {
-    color = c_white
-    alpha = draw_get_alpha()
+	color = c_white
+	alpha = draw_get_alpha()
 }
 
 tw = texture_width(tex)

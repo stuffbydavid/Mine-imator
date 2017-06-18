@@ -16,36 +16,36 @@ log("Show alert", title, text, icon)
 
 if (argument_count > 3)
 {
-    button = argument[3]
-    buttonurl = argument[4]
+	button = argument[3]
+	buttonurl = argument[4]
 }
 else
 {
-    button = ""
-    buttonurl = ""
+	button = ""
+	buttonurl = ""
 }
 
 if (argument_count > 5)
-    fadetime = argument[5]
+	fadetime = argument[5]
 else
-    fadetime = null
-    
+	fadetime = null
+	
 if (argument_count > 6)
-    iid = argument[6]
+	iid = argument[6]
 else
-    iid = null
+	iid = null
 
 for (var a = alert_amount; a > 0; a--)
 {
-    alert_title[a] = alert_title[a - 1]
-    alert_text[a] = alert_text[a - 1]
-    alert_icon[a] = alert_icon[a - 1]
-    alert_button[a] = alert_button[a - 1]
-    alert_button_url[a] = alert_button_url[a - 1]
-    alert_fadetime[a] = alert_fadetime[a - 1]
-    alert_fadestart[a] = alert_fadestart[a - 1]
-    alert_created[a] = alert_created[a - 1]
-    alert_iid[a] = alert_iid[a - 1]
+	alert_title[a] = alert_title[a - 1]
+	alert_text[a] = alert_text[a - 1]
+	alert_icon[a] = alert_icon[a - 1]
+	alert_button[a] = alert_button[a - 1]
+	alert_button_url[a] = alert_button_url[a - 1]
+	alert_fadetime[a] = alert_fadetime[a - 1]
+	alert_fadestart[a] = alert_fadestart[a - 1]
+	alert_created[a] = alert_created[a - 1]
+	alert_iid[a] = alert_iid[a - 1]
 }
 alert_amount++
 

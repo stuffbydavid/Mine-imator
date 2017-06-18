@@ -4,21 +4,21 @@
 /// @arg brightnesssurf
 
 var uDepthBuffer = shader_get_sampler_index(shader_high_ssao, "uDepthBuffer"), 
-    uNormalBuffer = shader_get_sampler_index(shader_high_ssao, "uNormalBuffer"), 
-    uBrightnessBuffer = shader_get_sampler_index(shader_high_ssao, "uBrightnessBuffer"), 
-    uNoiseBuffer = shader_get_sampler_index(shader_high_ssao, "uNoiseBuffer"), 
-    uNear = shader_get_uniform(shader_high_ssao, "uNear"), 
-    uFar = shader_get_uniform(shader_high_ssao, "uFar"), 
-    uProjMatrix = shader_get_uniform(shader_high_ssao, "uProjMatrix"), 
-    uProjMatrixInv = shader_get_uniform(shader_high_ssao, "uProjMatrixInv"), 
-    uScreenSize = shader_get_uniform(shader_high_ssao, "uScreenSize"), 
-    uKernel = shader_get_uniform(shader_high_ssao, "uKernel"), 
-    uRadius = shader_get_uniform(shader_high_ssao, "uRadius"), 
-    uPower = shader_get_uniform(shader_high_ssao, "uPower"), 
-    uColor = shader_get_uniform(shader_high_ssao, "uColor");
-    
+	uNormalBuffer = shader_get_sampler_index(shader_high_ssao, "uNormalBuffer"), 
+	uBrightnessBuffer = shader_get_sampler_index(shader_high_ssao, "uBrightnessBuffer"), 
+	uNoiseBuffer = shader_get_sampler_index(shader_high_ssao, "uNoiseBuffer"), 
+	uNear = shader_get_uniform(shader_high_ssao, "uNear"), 
+	uFar = shader_get_uniform(shader_high_ssao, "uFar"), 
+	uProjMatrix = shader_get_uniform(shader_high_ssao, "uProjMatrix"), 
+	uProjMatrixInv = shader_get_uniform(shader_high_ssao, "uProjMatrixInv"), 
+	uScreenSize = shader_get_uniform(shader_high_ssao, "uScreenSize"), 
+	uKernel = shader_get_uniform(shader_high_ssao, "uKernel"), 
+	uRadius = shader_get_uniform(shader_high_ssao, "uRadius"), 
+	uPower = shader_get_uniform(shader_high_ssao, "uPower"), 
+	uColor = shader_get_uniform(shader_high_ssao, "uColor");
+	
 if (!surface_exists(render_ssao_noise))
-    render_ssao_noise = render_generate_noise(4, 4)
+	render_ssao_noise = render_generate_noise(4, 4)
 
 shader_set(shader_high_ssao)
 

@@ -4,13 +4,13 @@
 var fn = argument0;
 
 if (fn = "")
-    fn = project_file
-    
+	fn = project_file
+	
 if (fn = "")
-    return 0
-    
+	return 0
+	
 log("Saving project", fn)
-    
+	
 project_write_start(true)
 save_folder = project_folder
 load_folder = project_folder

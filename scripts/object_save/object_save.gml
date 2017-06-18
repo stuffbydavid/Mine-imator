@@ -4,7 +4,7 @@
 var fn = file_dialog_save_object(filename_valid(tl_edit.display_name));
 
 if (fn = "")
-    return 0
+	return 0
 
 fn = filename_new_ext(fn, ".object")
 
@@ -15,8 +15,8 @@ save_folder = filename_dir(fn)
 load_folder = project_folder
 
 with (obj_timeline)
-    if (select)
-        tl_save()
+	if (select)
+		tl_save()
 
 project_write_objects()
 

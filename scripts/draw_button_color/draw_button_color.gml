@@ -21,44 +21,44 @@ script = argument7
 
 if (draw_button_normal(name, xx, yy, wid, 32, e_button.TEXT, (popup = popup_colorpicker && popup_colorpicker.value_name = name), true, true, icons.color, test(hsbmode, rgb_to_hsb(color), color)))
 {
-    if (popup = popup_colorpicker && popup_colorpicker.value_script = script)
-        popup_close()
-    else
+	if (popup = popup_colorpicker && popup_colorpicker.value_script = script)
+		popup_close()
+	else
 	{
-        popup_show(popup_colorpicker)
-        popup_colorpicker.value_name = name
-        popup_colorpicker.value_script = script
+		popup_show(popup_colorpicker)
+		popup_colorpicker.value_name = name
+		popup_colorpicker.value_script = script
 		
-        if (text_exists(name + "caption"))
-            popup_colorpicker.caption = text_get(name + "caption")
-        else
-            popup_colorpicker.caption = text_get(name)
+		if (text_exists(name + "caption"))
+			popup_colorpicker.caption = text_get(name + "caption")
+		else
+			popup_colorpicker.caption = text_get(name)
 			
-        popup_colorpicker.def = def
-        popup_colorpicker.color = color
-        popup_colorpicker.red = color_get_red(color)
-        popup_colorpicker.green = color_get_green(color)
-        popup_colorpicker.blue = color_get_blue(color)
-        popup_colorpicker.hsb_mode = hsbmode
+		popup_colorpicker.def = def
+		popup_colorpicker.color = color
+		popup_colorpicker.red = color_get_red(color)
+		popup_colorpicker.green = color_get_green(color)
+		popup_colorpicker.blue = color_get_blue(color)
+		popup_colorpicker.hsb_mode = hsbmode
 		
-        if (hsbmode)
+		if (hsbmode)
 		{
-            popup_colorpicker.hue = popup_colorpicker.red
-            popup_colorpicker.saturation = popup_colorpicker.green
-            popup_colorpicker.brightness = popup_colorpicker.blue
-        }
+			popup_colorpicker.hue = popup_colorpicker.red
+			popup_colorpicker.saturation = popup_colorpicker.green
+			popup_colorpicker.brightness = popup_colorpicker.blue
+		}
 		else
 		{
-            popup_colorpicker.hue = color_get_hue(color)
-            popup_colorpicker.saturation = color_get_saturation(color)
-            popup_colorpicker.brightness = color_get_value(color)
-        }
-        popup_colorpicker.tbx_red.text = string(popup_colorpicker.red)
-        popup_colorpicker.tbx_green.text = string(popup_colorpicker.green)
-        popup_colorpicker.tbx_blue.text = string(popup_colorpicker.blue)
-        popup_colorpicker.tbx_hue.text = string(popup_colorpicker.hue)
-        popup_colorpicker.tbx_saturation.text = string(popup_colorpicker.saturation)
-        popup_colorpicker.tbx_brightness.text = string(popup_colorpicker.brightness)
-        popup_colorpicker.tbx_hexadecimal.text = color_to_hex(color)
-    }
+			popup_colorpicker.hue = color_get_hue(color)
+			popup_colorpicker.saturation = color_get_saturation(color)
+			popup_colorpicker.brightness = color_get_value(color)
+		}
+		popup_colorpicker.tbx_red.text = string(popup_colorpicker.red)
+		popup_colorpicker.tbx_green.text = string(popup_colorpicker.green)
+		popup_colorpicker.tbx_blue.text = string(popup_colorpicker.blue)
+		popup_colorpicker.tbx_hue.text = string(popup_colorpicker.hue)
+		popup_colorpicker.tbx_saturation.text = string(popup_colorpicker.saturation)
+		popup_colorpicker.tbx_brightness.text = string(popup_colorpicker.brightness)
+		popup_colorpicker.tbx_hexadecimal.text = color_to_hex(color)
+	}
 }

@@ -13,20 +13,20 @@ anispeed = argument3
 onend = argument4
 
 if (startframe = endframe) // No animation
-    return startframe
+	return startframe
 
 perc = (time * anispeed) / abs(startframe - endframe)
 
 if (onend = 0) // Stop
-    perc = min(perc, 1)
+	perc = min(perc, 1)
 else if (onend = 1) // Loop
-    perc = perc mod 1
+	perc = perc mod 1
 else if (onend = 2) // Reverse
 {
-    if (floor(perc mod 2))
-        perc = 1-(perc mod 1)
-    else
-        perc = perc mod 1
+	if (floor(perc mod 2))
+		perc = 1-(perc mod 1)
+	else
+		perc = perc mod 1
 }
 
 return perc

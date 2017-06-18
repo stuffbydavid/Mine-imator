@@ -1,7 +1,7 @@
 /// shader_high_aa_set()
 
 var uScreenSize = shader_get_uniform(shader_high_aa, "uScreenSize"), 
-    uPower = shader_get_uniform(shader_high_aa, "uPower");
+	uPower = shader_get_uniform(shader_high_aa, "uPower");
 
 shader_set(shader_high_aa)
 

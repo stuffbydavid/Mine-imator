@@ -7,11 +7,11 @@ var name, text;
 name = argument[0]
 
 if (!text_exists(name))
-    return "<No text found for \"" + name + "\">"
-    
+	return "<No text found for \"" + name + "\">"
+	
 text = ds_map_find_value(language_map, name)
 
 for (var a = 1; a < argument_count; a++)
-    text = string_replace(text, "%" + string(a), argument[a])
+	text = string_replace(text, "%" + string(a), argument[a])
 
 return text

@@ -6,7 +6,7 @@ var timeleftsecs, timeleftmins, timelefthours, timeleftstr;
 
 // Update rendering
 if (!action_toolbar_exportmovie_update())
-    return 0
+	return 0
 
 // Set dimensions
 totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.frame_rate)
@@ -30,7 +30,7 @@ framex = content_x + content_width / 2-framew / 2
 framey = content_y + 30
 
 draw_surface_box(exportmovie_surface, framex, framey, framew, frameh)
-    
+	
 // Time left
 timeleftsecs = ceil((exportmovie_start + (current_time - exportmovie_start) / perc - current_time) / 1000)
 timeleftmins = timeleftsecs div 60
@@ -40,9 +40,9 @@ timeleftmins = timeleftmins mod 60
 
 timeleftstr = ""
 if (timelefthours > 0)
-    timeleftstr += text_get(test(timelefthours = 1, "exportmovietimelefthour", "exportmovietimelefthours"), string(timelefthours)) + ", "
+	timeleftstr += text_get(test(timelefthours = 1, "exportmovietimelefthour", "exportmovietimelefthours"), string(timelefthours)) + ", "
 if (timeleftmins > 0)
-    timeleftstr += text_get(test(timeleftmins = 1, "exportmovietimeleftminute", "exportmovietimeleftminutes"), string(timeleftmins)) + " " + text_get("exportmovietimeleftand") + " "
+	timeleftstr += text_get(test(timeleftmins = 1, "exportmovietimeleftminute", "exportmovietimeleftminutes"), string(timeleftmins)) + " " + text_get("exportmovietimeleftand") + " "
 timeleftstr += text_get(test(timeleftsecs = 1, "exportmovietimeleftsecond", "exportmovietimeleftseconds"), string(timeleftsecs))
 
 draw_label(text_get("exportmovietimeleft", timeleftstr), content_x + content_width / 2, content_y + content_height - 80, fa_center, fa_middle, null, 1, setting_font_big)

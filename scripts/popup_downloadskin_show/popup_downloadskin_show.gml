@@ -2,7 +2,7 @@
 /// @arg script
 
 if (popup_downloadskin.texture) // Clear old
-    texture_free(popup_downloadskin.texture)
+	texture_free(popup_downloadskin.texture)
 
 file_delete_lib(download_file)
 

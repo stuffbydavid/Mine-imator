@@ -4,12 +4,12 @@
 var tl;
 
 if (history_undo || history_redo)
-    tl = iid_find(history_data.tl)
+	tl = iid_find(history_data.tl)
 else
 {
-    var hobj = history_set(action_tl_extend);
-    tl = argument0
-    hobj.tl = iid_get(tl)
+	var hobj = history_set(action_tl_extend);
+	tl = argument0
+	hobj.tl = iid_get(tl)
 }
 
 tl.tree_extend=!tl.tree_extend

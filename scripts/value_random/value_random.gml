@@ -5,5 +5,5 @@
 /// @arg randommax
 
 if (argument1)
-    return random_range(argument2, argument3)
+	return random_range(argument2, argument3)
 return argument0

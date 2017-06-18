@@ -18,23 +18,23 @@ text = argument5
 surfwid = floor(wid * perc)
 if (surfwid > 0)
 {
-    var col = draw_get_color();
-    surf = surface_create(surfwid, hei)
-    surface_set_target(surf)
+	var col = draw_get_color();
+	surf = surface_create(surfwid, hei)
+	surface_set_target(surf)
 	{
-        draw_clear(setting_color_buttons)
-        draw_set_color(setting_color_buttons_text)
-        draw_set_halign(fa_center)
-        draw_set_valign(fa_middle)
-        draw_text(floor(wid / 2), floor(hei / 2), text)
-        draw_set_valign(fa_top)
-        draw_set_halign(fa_left)
-        draw_set_color(col)
-    }
-    surface_reset_target()
+		draw_clear(setting_color_buttons)
+		draw_set_color(setting_color_buttons_text)
+		draw_set_halign(fa_center)
+		draw_set_valign(fa_middle)
+		draw_text(floor(wid / 2), floor(hei / 2), text)
+		draw_set_valign(fa_top)
+		draw_set_halign(fa_left)
+		draw_set_color(col)
+	}
+	surface_reset_target()
 }
 else
-    surf = null
+	surf = null
 
 draw_box(xx, yy, wid, hei, false, setting_color_background, 1)
 draw_label(text, xx + floor(wid / 2), yy + floor(hei / 2), fa_center, fa_middle)

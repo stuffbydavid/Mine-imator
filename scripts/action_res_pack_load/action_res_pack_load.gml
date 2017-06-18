@@ -3,36 +3,36 @@
 
 if (history_undo)
 {
-    with (history_data)
-        history_destroy_loaded()
+	with (history_data)
+		history_destroy_loaded()
 }
 else
 {
-    var fn, res;
-    if (history_redo)
+	var fn, res;
+	if (history_redo)
 	{
-        fn = history_data.fn 
-        res = new_res("pack", fn)
-    }
+		fn = history_data.fn 
+		res = new_res("pack", fn)
+	}
 	else
 	{
-        fn = argument0
-        res = new_res("packunzipped", fn)
-    }
-    
-    res.loaded = true
-    with (res)
-        res_load()
-        
-    if (!history_redo && !res.replaced)
+		fn = argument0
+		res = new_res("packunzipped", fn)
+	}
+	
+	res.loaded = true
+	with (res)
+		res_load()
+		
+	if (!history_redo && !res.replaced)
 	{
-        with (history_set(action_res_pack_load))
+		with (history_set(action_res_pack_load))
 		{
-            id.fn = fn
-            save_iid_current--
-            history_save_loaded()
-        }
-    }
+			id.fn = fn
+			save_iid_current--
+			history_save_loaded()
+		}
+	}
 }
 
 project_reset_loaded()

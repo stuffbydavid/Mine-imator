@@ -32,11 +32,11 @@ vec3 getWind()
 
 void main()
 {
-    vec3 off = getWind();
-    vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + off, 1.0)).xyz;
-    vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
-    vTexCoord = in_TextureCoord;
-    vBrightness = in_Wave.z * uBlockBrightness;
-    
-    gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position + off, 1.0);
+	vec3 off = getWind();
+	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + off, 1.0)).xyz;
+	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
+	vTexCoord = in_TextureCoord;
+	vBrightness = in_Wave.z * uBlockBrightness;
+	
+	gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position + off, 1.0);
 }

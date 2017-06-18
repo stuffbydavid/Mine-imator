@@ -11,11 +11,11 @@ invert = argument5
 model_start()
 
 if (invert) {
-    vertex_add_triangle(rad, 0, rad, -rad, 0, rad, rad, 0, -rad, tx2, ty1, tx1, ty1, tx2, ty2)
-    vertex_add_triangle(-rad, 0, rad, -rad, 0, -rad, rad, 0, -rad, tx1, ty1, tx1, ty2, tx2, ty2)
+	vertex_add_triangle(rad, 0, rad, -rad, 0, rad, rad, 0, -rad, tx2, ty1, tx1, ty1, tx2, ty2)
+	vertex_add_triangle(-rad, 0, rad, -rad, 0, -rad, rad, 0, -rad, tx1, ty1, tx1, ty2, tx2, ty2)
 } else {
-    vertex_add_triangle(-rad, 0, rad, rad, 0, rad, rad, 0, -rad, tx1, ty1, tx2, ty1, tx2, ty2)
-    vertex_add_triangle(-rad, 0, -rad, -rad, 0, rad, rad, 0, -rad, tx1, ty2, tx1, ty1, tx2, ty2)
+	vertex_add_triangle(-rad, 0, rad, rad, 0, rad, rad, 0, -rad, tx1, ty1, tx2, ty1, tx2, ty2)
+	vertex_add_triangle(-rad, 0, -rad, -rad, 0, rad, rad, 0, -rad, tx1, ty2, tx1, ty1, tx2, ty2)
 }
 
 return model_done()

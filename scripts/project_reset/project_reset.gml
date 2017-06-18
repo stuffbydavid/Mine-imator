@@ -31,21 +31,21 @@ cam_work_reset()
 log("Destroying instances")
 
 with (obj_template)
-    instance_destroy()
+	instance_destroy()
 	
 with (obj_timeline)
-    instance_destroy()
+	instance_destroy()
 	
 with (obj_resource)
-    if (id != res_def)
-        instance_destroy()
+	if (id != res_def)
+		instance_destroy()
 		
 with (obj_keyframe)
-    instance_destroy()
+	instance_destroy()
 
 background_biome = 0
 with (res_def)
-    res_update_colors()
+	res_update_colors()
 res_def.count = 0
 
 background_ground_show = true

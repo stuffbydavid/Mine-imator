@@ -1,7 +1,7 @@
 /// action_toolbar_redo()
 
 if (history_pos = 0)
-    return 0
+	return 0
 
 action_toolbar_play_break()
 

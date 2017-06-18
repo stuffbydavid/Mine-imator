@@ -11,12 +11,12 @@ treeobj = argument2
 
 for (var t = 0; t < treeobj.tree_amount; t++)
 {
-    var tl = treeobj.tree[t]
-    if (tl.temp = temp)
+	var tl = treeobj.tree[t]
+	if (tl.temp = temp)
 	{
-        save.usage_tl[save.usage_tl_amount] = history_save_tl(tl)
-        save.usage_tl_amount++
-    }
+		save.usage_tl[save.usage_tl_amount] = history_save_tl(tl)
+		save.usage_tl_amount++
+	}
 	else
-        history_save_temp_usage_tl(temp, save, tl)
+		history_save_temp_usage_tl(temp, save, tl)
 }

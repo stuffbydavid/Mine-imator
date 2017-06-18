@@ -3,27 +3,27 @@
 
 if (history_undo)
 {
-    with (history_data)
-        history_restore_tl_select()
+	with (history_data)
+		history_restore_tl_select()
 }
 else
 {
-    var tl;
-    
-    if (!history_redo)
+	var tl;
+	
+	if (!history_redo)
 	{
-        tl = argument0
-        with (history_set(action_tl_deselect))
+		tl = argument0
+		with (history_set(action_tl_deselect))
 		{
-            id.tl = tl
-            history_save_tl_select()
-        }
-    }
+			id.tl = tl
+			history_save_tl_select()
+		}
+	}
 	else
-        tl = history_data.tl
+		tl = history_data.tl
 
-    with (tl)
-        tl_deselect()
+	with (tl)
+		tl_deselect()
 }
-    
+	
 app_update_tl_edit()

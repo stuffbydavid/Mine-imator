@@ -2,14 +2,14 @@
 /// @desc Updates the ground sprite depending on the chosen tile and texture.
 
 if (!background_ground_tex.ready)
-    return 0
+	return 0
 
 // Clear old
 if (background_ground_ani)
 {
 	if (background_ground_ani_texture[0])
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-		    texture_free(background_ground_ani_texture[f])
+			texture_free(background_ground_ani_texture[f])
 }
 else if (background_ground_texture)
 	texture_free(background_ground_texture)
@@ -45,8 +45,8 @@ surface_set_target(surf)
 	{
 		for (var f = 0; f < block_sheet_ani_frames; f++)
 		{
-	        draw_clear_alpha(c_black, 0)
-	        draw_texture_part(background_ground_tex.block_sheet_ani_texture[f], 0, 0, bx, by, size, size)
+			draw_clear_alpha(c_black, 0)
+			draw_texture_part(background_ground_tex.block_sheet_ani_texture[f], 0, 0, bx, by, size, size)
 			background_ground_ani_texture[f] = texture_surface(surf)
 		}
 	}
@@ -54,8 +54,8 @@ surface_set_target(surf)
 	// Static
 	else
 	{
-        draw_clear_alpha(c_black, 0)
-        draw_texture_part(background_ground_tex.block_sheet_texture, 0, 0, bx, by, size, size)
+		draw_clear_alpha(c_black, 0)
+		draw_texture_part(background_ground_tex.block_sheet_texture, 0, 0, bx, by, size, size)
 		background_ground_texture = texture_surface(surf)
 	}
 }

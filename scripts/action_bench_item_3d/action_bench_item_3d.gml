@@ -3,8 +3,8 @@
 
 with (bench_settings)
 {
-    item_3d = argument0
-    temp_update_item()
+	item_3d = argument0
+	temp_update_item()
 }
 
 bench_settings.preview.update = true

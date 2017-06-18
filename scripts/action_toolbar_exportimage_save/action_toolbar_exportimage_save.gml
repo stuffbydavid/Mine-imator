@@ -4,8 +4,8 @@ var fn, surf;
 fn = file_dialog_save_image(project_name)
 
 if (fn = "")
-    return 0
-    
+	return 0
+	
 log("Export image", fn)
 
 // Render and save
@@ -22,9 +22,9 @@ log("Size", project_video_width, project_video_height)
 app_update_cameras(popup_exportimage.high_quality)
 render_start(null, timeline_camera)
 if (popup_exportimage.high_quality)
-    render_high()
+	render_high()
 else
-    render_low()
+	render_low()
 surf = render_done()
 surface_export(surf, fn)
 

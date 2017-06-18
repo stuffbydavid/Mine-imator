@@ -20,9 +20,9 @@ draw_label(str, xx, yy, fa_left, fa_top, setting_color_buttons, 1)
 tip_set(text_get(name + "tip"), xx, yy, wid, hei)
 if (app_mouse_box(xx, yy, wid, hei))
 {
-    mouse_cursor = cr_handpoint
-    if (mouse_left_pressed)
-        return true
+	mouse_cursor = cr_handpoint
+	if (mouse_left_pressed)
+		return true
 }
 
 return false

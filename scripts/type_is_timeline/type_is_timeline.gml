@@ -4,8 +4,8 @@
 var type = argument0;
 
 return (type = "camera" || 
-        type = "pointlight" || 
-        type = "spotlight" || 
-        type = "background" || 
-        type = "folder" || 
-        type = "audio")
+		type = "pointlight" || 
+		type = "spotlight" || 
+		type = "background" || 
+		type = "folder" || 
+		type = "audio")

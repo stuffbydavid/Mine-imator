@@ -7,12 +7,12 @@ if (type = "bodypart" && part_of)
 	with (bodypart)
 		dname = model_display_name()
 		
-    //if (bodypart < temp.char_model.part_amount)
+	//if (bodypart < temp.char_model.part_amount)
 		type_name = text_get("timelinebodypartof", dname, part_of.display_name)
-    /*else
-        type_name = text_get("timelinebodypartof", text_get("timelineunusedbodypart"), string_remove_newline(part_of.display_name))*/ // TODO
+	/*else
+		type_name = text_get("timelinebodypartof", text_get("timelineunusedbodypart"), string_remove_newline(part_of.display_name))*/ // TODO
 }
 else if (temp)
-    type_name = text_get("timelineinstanceof", temp.display_name)
+	type_name = text_get("timelineinstanceof", temp.display_name)
 else
-    type_name = text_get("type" + type)
+	type_name = text_get("type" + type)

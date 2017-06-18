@@ -23,73 +23,73 @@ var texsize = point2D(1 / 3, 1 / 2);
 // X+
 if (mapped)
 {
-    if (invert)
-        tex1[X] = texsize[X]
-    else
-        tex1[X] = texsize[X] * 2
+	if (invert)
+		tex1[X] = texsize[X]
+	else
+		tex1[X] = texsize[X] * 2
 		
-    tex1[Y] = 0
+	tex1[Y] = 0
 	tex2 = point2D_add(tex1, texsize)
 	
-    if (thflip < 0)
+	if (thflip < 0)
 	{
-        var tmp = tex1[X];
-        tex1[X] = tex2[X]
-        tex2[X] = tmp
-    }
-    if (tvflip < 0)
+		var tmp = tex1[X];
+		tex1[X] = tex2[X]
+		tex2[X] = tmp
+	}
+	if (tvflip < 0)
 	{
-        var tmp = tex1[Y];
-        tex1[Y] = tex2[Y]
-        tex2[Y] = tmp
-    }
+		var tmp = tex1[Y];
+		tex1[Y] = tex2[Y]
+		tex2[Y] = tmp
+	}
 }
 
 if (invert)
 {
-    vbuffer_add_triangle(rad, rad, rad, rad, rad, -rad, rad, -rad, rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex1[Y])
-    vbuffer_add_triangle(rad, -rad, rad, rad, rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
+	vbuffer_add_triangle(rad, rad, rad, rad, rad, -rad, rad, -rad, rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex1[Y])
+	vbuffer_add_triangle(rad, -rad, rad, rad, rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
 }
 else
 {
-    vbuffer_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex1[Y])
-    vbuffer_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tex1[X], tex2[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
+	vbuffer_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex1[Y])
+	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tex1[X], tex2[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
 }
 
 // X-
 if (mapped)
 {
-    if (invert)
-        tex1[X] = texsize[X] * 2
-    else
-        tex1[X] = texsize[X]
+	if (invert)
+		tex1[X] = texsize[X] * 2
+	else
+		tex1[X] = texsize[X]
 		
-    tex1[Y] = 0
+	tex1[Y] = 0
 	tex2 = point2D_add(tex1, texsize)
 	
-    if (thflip < 0)
+	if (thflip < 0)
 	{
-        var tmp = tex1[X];
-        tex1[X] = tex2[X]
-        tex2[X] = tmp
-    }
-    if (tvflip < 0)
+		var tmp = tex1[X];
+		tex1[X] = tex2[X]
+		tex2[X] = tmp
+	}
+	if (tvflip < 0)
 	{
-        var tmp = tex1[Y];
-        tex1[Y] = tex2[Y]
-        tex2[Y] = tmp
-    }
+		var tmp = tex1[Y];
+		tex1[Y] = tex2[Y]
+		tex2[Y] = tmp
+	}
 }
 
 if (invert)
 {
-    vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, -rad, -rad, rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex1[Y])
-    vbuffer_add_triangle(-rad, rad, -rad, -rad, -rad, rad, -rad, -rad, -rad, tex2[X], tex2[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, -rad, -rad, rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex1[Y])
+	vbuffer_add_triangle(-rad, rad, -rad, -rad, -rad, rad, -rad, -rad, -rad, tex2[X], tex2[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
 }
 else
 {
-    vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
-    vbuffer_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
+	vbuffer_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
 }
 
 // Y+
@@ -98,29 +98,29 @@ if (mapped)
 	tex1 = point2D(0, 0)
 	tex2 = point2D_add(tex1, texsize)
 	
-    if (thflip < 0)
+	if (thflip < 0)
 	{
-        var tmp = tex1[X];
-        tex1[X] = tex2[X]
-        tex2[X] = tmp
-    }
-    if (tvflip < 0)
+		var tmp = tex1[X];
+		tex1[X] = tex2[X]
+		tex2[X] = tmp
+	}
+	if (tvflip < 0)
 	{
-        var tmp = tex1[Y];
-        tex1[Y] = tex2[Y]
-        tex2[Y] = tmp
-    }
+		var tmp = tex1[Y];
+		tex1[Y] = tex2[Y]
+		tex2[Y] = tmp
+	}
 }
 
 if (invert)
 {
-    vbuffer_add_triangle(rad, rad, rad, -rad, rad, rad, rad, rad, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
-    vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, rad, rad, -rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
+	vbuffer_add_triangle(rad, rad, rad, -rad, rad, rad, rad, rad, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
+	vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, rad, rad, -rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
 }
 else
 {
-    vbuffer_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
-    vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
+	vbuffer_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
+	vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
 }
 
 // Y-
@@ -129,29 +129,29 @@ if (mapped)
 	tex1 = point2D(0, texsize[Y])
 	tex2 = point2D_add(tex1, texsize)
 	
-    if (thflip < 0)
+	if (thflip < 0)
 	{
-        var tmp = tex1[X];
-        tex1[X] = tex2[X]
-        tex2[X] = tmp
-    }
-    if (tvflip < 0)
+		var tmp = tex1[X];
+		tex1[X] = tex2[X]
+		tex2[X] = tmp
+	}
+	if (tvflip < 0)
 	{
-        var tmp = tex1[Y];
-        tex1[Y] = tex2[Y]
-        tex2[Y] = tmp
-    }
+		var tmp = tex1[Y];
+		tex1[Y] = tex2[Y]
+		tex2[Y] = tmp
+	}
 }
 
 if (invert)
 {
-    vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, rad, -rad, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
-    vbuffer_add_triangle(-rad, -rad, -rad, -rad, -rad, rad, rad, -rad, -rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, rad, -rad, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(-rad, -rad, -rad, -rad, -rad, rad, rad, -rad, -rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
 }
 else
 {
-    vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
-    vbuffer_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
 }
 
 // Z+
@@ -160,29 +160,29 @@ if (mapped)
 	tex1 = texsize
 	tex2 = point2D_add(tex1, texsize)
 	
-    if (thflip < 0)
+	if (thflip < 0)
 	{
-        var tmp = tex1[X];
-        tex1[X] = tex2[X]
-        tex2[X] = tmp
-    }
-    if (tvflip < 0)
+		var tmp = tex1[X];
+		tex1[X] = tex2[X]
+		tex2[X] = tmp
+	}
+	if (tvflip < 0)
 	{
-        var tmp = tex1[Y];
-        tex1[Y] = tex2[Y]
-        tex2[Y] = tmp
-    }
+		var tmp = tex1[Y];
+		tex1[Y] = tex2[Y]
+		tex2[Y] = tmp
+	}
 }
 
 if (invert)
 {
-    vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
-    vbuffer_add_triangle(rad, rad, rad, rad, -rad, rad, -rad, rad, rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(rad, rad, rad, rad, -rad, rad, -rad, rad, rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
 }
 else
 {
-    vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
-    vbuffer_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
+	vbuffer_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
 }
 
 // Z-
@@ -191,29 +191,29 @@ if (mapped)
 	tex1 = vec2_mul(texsize, 2)
 	tex2 = point2D_add(tex1, texsize)
 	
-    if (thflip < 0)
+	if (thflip < 0)
 	{
-        var tmp = tex1[X];
-        tex1[X] = tex2[X]
-        tex2[X] = tmp
-    }
-    if (tvflip < 0)
+		var tmp = tex1[X];
+		tex1[X] = tex2[X]
+		tex2[X] = tmp
+	}
+	if (tvflip < 0)
 	{
-        var tmp = tex1[Y];
-        tex1[Y] = tex2[Y]
-        tex2[Y] = tmp
-    }
+		var tmp = tex1[Y];
+		tex1[Y] = tex2[Y]
+		tex2[Y] = tmp
+	}
 }
 
 if (invert)
 {
-    vbuffer_add_triangle(-rad, -rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex1[X], tex2[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
-    vbuffer_add_triangle(rad, -rad, -rad, rad, rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex1[Y])
+	vbuffer_add_triangle(-rad, -rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex1[X], tex2[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
+	vbuffer_add_triangle(rad, -rad, -rad, rad, rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex1[Y])
 }
 else
 {
-    vbuffer_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex1[X], tex2[Y], tex1[X], tex1[Y])
-    vbuffer_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
+	vbuffer_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex1[X], tex2[Y], tex1[X], tex1[Y])
+	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
 }
 
 return vbuffer_done()

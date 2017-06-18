@@ -19,14 +19,14 @@ part[0] = null
 
 for (var v = 0; v < values; v++)
 {
-    value_default[v] = tl_value_default(v)
-    value_inherit[v] = 0
-    value[v] = value_default[v]
+	value_default[v] = tl_value_default(v)
+	value_inherit[v] = 0
+	value[v] = value_default[v]
 }
 for (var t = 0; t < value_types; t++)
 {
-    value_type[t] = false
-    value_type_show[t] = true
+	value_type[t] = false
+	value_type_show[t] = true
 }
 
 select = false

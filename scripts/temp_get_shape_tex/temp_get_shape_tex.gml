@@ -5,13 +5,13 @@ var texobj = argument0;
 
 if (texobj)
 {
-    if (texobj.type = "camera")
+	if (texobj.type = "camera")
 	{
-        shader_texture_gm = true
-        return surface_get_texture(texobj.cam_surf)
-    }
+		shader_texture_gm = true
+		return surface_get_texture(texobj.cam_surf)
+	}
 	else
-        return texobj.texture
+		return texobj.texture
 }
 
 shader_texture_gm = true

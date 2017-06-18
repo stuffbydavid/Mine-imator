@@ -2,17 +2,17 @@
 
 with (obj_keyframe) // Remove all selected
 {
-    if (!select)
-        continue
+	if (!select)
+		continue
 	
-    tl_keyframe_remove(id)
+	tl_keyframe_remove(id)
 }
 
 with (obj_timeline)
 {
-    if (!select || !keyframe_select)
-        continue
+	if (!select || !keyframe_select)
+		continue
 	
-    tl_deselect()
-    update_matrix = true
+	tl_deselect()
+	update_matrix = true
 }

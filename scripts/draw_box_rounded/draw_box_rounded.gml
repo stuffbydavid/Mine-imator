@@ -23,36 +23,36 @@ h = argument[3]
 
 if (argument_count > 4)
 {
-    oldcolor = draw_get_color()
-    oldalpha = draw_get_alpha()
-    draw_set_color(argument[4])
-    draw_set_alpha(oldalpha * argument[5])
+	oldcolor = draw_get_color()
+	oldalpha = draw_get_alpha()
+	draw_set_color(argument[4])
+	draw_set_alpha(oldalpha * argument[5])
 }
 
 if (argument_count > 6)
 {
-    roundlefttop = argument[6]
-    roundrighttop = argument[7]
-    roundrightbottom = argument[8]
-    roundleftbottom = argument[9]
+	roundlefttop = argument[6]
+	roundrighttop = argument[7]
+	roundrightbottom = argument[8]
+	roundleftbottom = argument[9]
 }
 else
 {
-    roundlefttop = true
-    roundrighttop = true
-    roundrightbottom = true
-    roundleftbottom = true
+	roundlefttop = true
+	roundrighttop = true
+	roundrightbottom = true
+	roundleftbottom = true
 }
 
 if (argument_count > 10)
 {
-    roundsize = argument[10]
-    roundsprite = argument[11]
+	roundsize = argument[10]
+	roundsprite = argument[11]
 }
 else
 {
-    roundsize = 2
-    roundsprite = spr_rounded_2
+	roundsize = 2
+	roundsprite = spr_rounded_2
 }
 
 draw_primitive_begin(pr_trianglefan)
@@ -62,52 +62,52 @@ draw_vertex(xx + w / 2, yy + h / 2)
 // Left top
 if (roundlefttop)
 {
-    draw_vertex(xx, yy + roundsize)
-    draw_vertex(xx + roundsize, yy + roundsize)
-    draw_vertex(xx + roundsize, yy)
-    draw_image(roundsprite, 0, xx + roundsize, yy + roundsize, 1, 1, draw_get_color(), 1)
+	draw_vertex(xx, yy + roundsize)
+	draw_vertex(xx + roundsize, yy + roundsize)
+	draw_vertex(xx + roundsize, yy)
+	draw_image(roundsprite, 0, xx + roundsize, yy + roundsize, 1, 1, draw_get_color(), 1)
 }
 else
-    draw_vertex(xx, yy)
-    
+	draw_vertex(xx, yy)
+	
 // Right top
 if (roundrighttop)
 {
-    draw_vertex(xx + w-roundsize, yy)
-    draw_vertex(xx + w-roundsize, yy + roundsize)
-    draw_vertex(xx + w, yy + roundsize)
-    draw_image(roundsprite, 0, xx + w-roundsize, yy + roundsize, 1, 1, draw_get_color(), 1, -90)
+	draw_vertex(xx + w-roundsize, yy)
+	draw_vertex(xx + w-roundsize, yy + roundsize)
+	draw_vertex(xx + w, yy + roundsize)
+	draw_image(roundsprite, 0, xx + w-roundsize, yy + roundsize, 1, 1, draw_get_color(), 1, -90)
 }
 else
-    draw_vertex(xx + w, yy)
-    
+	draw_vertex(xx + w, yy)
+	
 // Right bottom
 if (roundrightbottom)
 {
-    draw_vertex(xx + w, yy + h-roundsize)
-    draw_vertex(xx + w-roundsize, yy + h-roundsize)
-    draw_vertex(xx + w-roundsize, yy + h)
-    draw_image(roundsprite, 0, xx + w-roundsize, yy + h-roundsize, 1, 1, draw_get_color(), 1, -180)
+	draw_vertex(xx + w, yy + h-roundsize)
+	draw_vertex(xx + w-roundsize, yy + h-roundsize)
+	draw_vertex(xx + w-roundsize, yy + h)
+	draw_image(roundsprite, 0, xx + w-roundsize, yy + h-roundsize, 1, 1, draw_get_color(), 1, -180)
 }
 else
-    draw_vertex(xx + w, yy + h)
-    
+	draw_vertex(xx + w, yy + h)
+	
 // Left bottom
 if (roundleftbottom)
 {
-    draw_vertex(xx + roundsize, yy + h)
-    draw_vertex(xx + roundsize, yy + h-roundsize)
-    draw_vertex(xx, yy + h-roundsize)
-    draw_image(roundsprite, 0, xx + roundsize, yy + h-roundsize, 1, 1, draw_get_color(), 1, -270)
+	draw_vertex(xx + roundsize, yy + h)
+	draw_vertex(xx + roundsize, yy + h-roundsize)
+	draw_vertex(xx, yy + h-roundsize)
+	draw_image(roundsprite, 0, xx + roundsize, yy + h-roundsize, 1, 1, draw_get_color(), 1, -270)
 }
 else
-    draw_vertex(xx, yy + h)
-    
+	draw_vertex(xx, yy + h)
+	
 draw_vertex(xx, yy + roundsize * roundlefttop)
-    
+	
 draw_primitive_end()
 
 if (argument_count > 4) {
-    draw_set_color(oldcolor)
-    draw_set_alpha(oldalpha)
+	draw_set_color(oldcolor)
+	draw_set_alpha(oldalpha)
 }

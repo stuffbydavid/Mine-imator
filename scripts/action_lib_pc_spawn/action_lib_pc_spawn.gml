@@ -3,14 +3,14 @@
 
 with (obj_timeline)
 {
-    if (type != "particles")
-        continue
+	if (type != "particles")
+		continue
 	
-    if (temp = temp_edit || select)
+	if (temp = temp_edit || select)
 	{
-        if (temp.pc_spawn_constant)
-            spawn_active = true
-        else
-            fire = true
-    }
+		if (temp.pc_spawn_constant)
+			spawn_active = true
+		else
+			fire = true
+	}
 }

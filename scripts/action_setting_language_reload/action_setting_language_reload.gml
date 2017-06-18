@@ -3,7 +3,7 @@
 language_load(setting_language_filename, language_map)
 
 with (obj_template)
-    temp_update_display_name()
+	temp_update_display_name()
 
 with (obj_timeline)
-    tl_update_type_name()
+	tl_update_type_name()

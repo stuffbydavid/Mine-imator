@@ -4,4 +4,4 @@
 
 setting_bend_detail = setting_bend_detail * argument1 + argument0
 //with (obj_timeline) // TODO
-//    tl_update_bend(true)
+//	tl_update_bend(true)

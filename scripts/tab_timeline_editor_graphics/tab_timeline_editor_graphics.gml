@@ -1,17 +1,17 @@
 /// tab_timeline_editor_graphics()
-    
+	
 // Round bending
 /*if (tl_edit.type = "bodypart")
 {
-    if (tl_edit.bodypart < tl_edit.temp.char_model.part_amount)
+	if (tl_edit.bodypart < tl_edit.temp.char_model.part_amount)
 	{
-        if (tl_edit.temp.char_model.part_hasbend[tl_edit.bodypart])
+		if (tl_edit.temp.char_model.part_hasbend[tl_edit.bodypart])
 		{
-            tab_control_checkbox()
-            draw_checkbox("timelineeditorroundbending", dx, dy, tl_edit.round_bending, action_tl_round_bending)
-            tab_next()
-        }
-    }
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorroundbending", dx, dy, tl_edit.round_bending, action_tl_round_bending)
+			tab_next()
+		}
+	}
 }*/
 
 // Texture
@@ -34,11 +34,11 @@ tab_next()
 // Wind
 if (tl_edit.type = "scenery" || tl_edit.type = "block" || tl_edit.type = "particles" || tl_edit.type = "text" || type_is_shape(tl_edit.type))
 {
-    tab_control_checkbox()
-    draw_checkbox("timelineeditorwind", dx, dy, tl_edit.wind, action_tl_wind)
-    if (tl_edit.type != "text" && !type_is_shape(tl_edit.type))
-        draw_checkbox("timelineeditorwindterrain", dx + floor(dw * 0.5), dy, tl_edit.wind_terrain, action_tl_wind_terrain)
-    tab_next()
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorwind", dx, dy, tl_edit.wind, action_tl_wind)
+	if (tl_edit.type != "text" && !type_is_shape(tl_edit.type))
+		draw_checkbox("timelineeditorwindterrain", dx + floor(dw * 0.5), dy, tl_edit.wind_terrain, action_tl_wind_terrain)
+	tab_next()
 }
 
 // Depth

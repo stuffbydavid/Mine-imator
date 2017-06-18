@@ -8,18 +8,18 @@ points = argument[0]
 
 if (argument_count > 1)
 {
-    // Convert to world space
-    var mat = array_copy_1d(argument[1]);
-    matrix_remove_scale(mat)
-    for (var p = 0; p < 8; p++)
-        points[p] = point3D_mul_matrix(points[p], mat)
+	// Convert to world space
+	var mat = array_copy_1d(argument[1]);
+	matrix_remove_scale(mat)
+	for (var p = 0; p < 8; p++)
+		points[p] = point3D_mul_matrix(points[p], mat)
 }
 
 // Convert to screen space
 for (var p = 0; p < 8; p++)
 {
-    points2D[p] = view_shape_project(points[p])
-    pointserror[p] = point3D_project_error
+	points2D[p] = view_shape_project(points[p])
+	pointserror[p] = point3D_project_error
 }
 
 if (!pointserror[0] && !pointserror[1])

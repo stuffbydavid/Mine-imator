@@ -50,15 +50,15 @@ with (bench_settings)
 	height_custom = 0
 
 	// Default settings
-    iid = 0
-    temp_init()
-    temp_particles_init()
-    char_model = mc_version.char_model_map[?"human.model"]
-    char_skin = res_def
-    item_tex = res_def
-    block_tex = res_def
-    text_font = res_def
-    particle_preset = ""
+	iid = 0
+	temp_init()
+	temp_particles_init()
+	char_model = mc_version.char_model_map[?"human.model"]
+	char_skin = res_def
+	item_tex = res_def
+	block_tex = res_def
+	text_font = res_def
+	particle_preset = ""
 	
 	// Preview window
 	preview = new(obj_preview)
@@ -68,8 +68,8 @@ with (bench_settings)
 	char_list.script = action_bench_char_model
 	sortlist_column_add(char_list, "charname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-	    sortlist_add(char_list, mc_version.char_model_map[?mc_version.char_list[|c]])
-    
+		sortlist_add(char_list, mc_version.char_model_map[?mc_version.char_list[|c]])
+	
 	// Item list
 	item_scroll = new(obj_scrollbar)
 
@@ -88,15 +88,15 @@ with (bench_settings)
 	spblock_list.script = action_bench_char_model
 	sortlist_column_add(spblock_list, "spblockname", 0)
 	//for (var p = characters; p < characters + characters_blocks; p++)
-	//    sortlist_add(spblock_list, iget(obj_model, p))
-    
+	//	sortlist_add(spblock_list, iget(obj_model, p))
+	
 	// Bodypart list
 	bodypart_char_list = new(obj_sortlist)
 	bodypart_char_list.script = action_bench_char_model
 	sortlist_column_add(bodypart_char_list, "bodypartcharname", 0)
 	//for (var m = 0; m < characters + characters_blocks; m++)
-	//    sortlist_add(bodypart_char_list, iget(obj_model, m))
-    
+	//	sortlist_add(bodypart_char_list, iget(obj_model, m))
+	
 	// Particles list
 	particles_list = new(obj_sortlist)
 	particles_list.script = action_bench_particles

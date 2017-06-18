@@ -8,15 +8,15 @@ ww = texture_width(tex)
 hh = texture_height(tex)
 
 if (ww = hh)
-    return tex
+	return tex
 
 size = max(ww, hh)
 
 surf = surface_create(size, size)
 surface_set_target(surf)
 {
-    draw_clear_alpha(c_black, 0)
-    draw_texture(tex, 0, 0)
+	draw_clear_alpha(c_black, 0)
+	draw_texture(tex, 0, 0)
 }
 surface_reset_target()
 

@@ -3,8 +3,8 @@
 
 with (obj_timeline)
 {
-    keyframe_select = null
-    keyframe_select_amount = 0
+	keyframe_select = null
+	keyframe_select_amount = 0
 }
 with (obj_keyframe)
-    select = 0
+	select = 0

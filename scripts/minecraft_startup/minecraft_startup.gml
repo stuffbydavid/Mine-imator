@@ -10,8 +10,8 @@ mc_builder = new(obj_builder)
 
 if (!file_exists_lib(minecraft_version_file))
 {
-    missing_file(minecraft_version_file)
-    return false
+	missing_file(minecraft_version_file)
+	return false
 }
 
 if (!minecraft_version_load(minecraft_version))

@@ -12,19 +12,19 @@ starttime = current_time
 
 // First usage
 if (surf < 0)
-    surf = surface_create(w, h)
+	surf = surface_create(w, h)
 	
 // Corrupted
 else if (!surface_exists(surf) || surface_get_width(surf) < 0) 
 {
-    surface_free(surf)
-    surf = surface_create(w, h)
+	surface_free(surf)
+	surf = surface_create(w, h)
 }
 
 // Wrong size
 else if (surface_get_width(surf) != w || surface_get_height(surf) != h)
-    surface_resize(surf, w, h)
-    
+	surface_resize(surf, w, h)
+	
 render_surface_time += current_time - starttime
 
 return surf

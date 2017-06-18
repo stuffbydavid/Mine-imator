@@ -3,4 +3,4 @@
 
 popup.video_quality = argument0
 if (popup.video_quality > 0)
-    popup.bit_rate = popup.video_quality.bit_rate
+	popup.bit_rate = popup.video_quality.bit_rate

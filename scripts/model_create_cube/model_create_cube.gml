@@ -19,164 +19,164 @@ tys = 1/2
 
 // X+
 if (mapped) {
-    if (invert)
-        tx1 = txs
-    else
-        tx1 = txs * 2
-    ty1 = 0
-    tx2 = tx1 + txs
-    ty2 = ty1 + tys
-    if (thflip < 0) {
-        var tmp = tx1;
-        tx1 = tx2
-        tx2 = tmp
-    }
-    if (tvflip < 0) {
-        var tmp = ty1;
-        ty1 = ty2
-        ty2 = tmp
-    }
+	if (invert)
+		tx1 = txs
+	else
+		tx1 = txs * 2
+	ty1 = 0
+	tx2 = tx1 + txs
+	ty2 = ty1 + tys
+	if (thflip < 0) {
+		var tmp = tx1;
+		tx1 = tx2
+		tx2 = tmp
+	}
+	if (tvflip < 0) {
+		var tmp = ty1;
+		ty1 = ty2
+		ty2 = tmp
+	}
 }
 
 if (invert) {
-    vertex_add_triangle(rad, rad, rad, rad, rad, -rad, rad, -rad, rad, tx1, ty1, tx1, ty2, tx2, ty1)
-    vertex_add_triangle(rad, -rad, rad, rad, rad, -rad, rad, -rad, -rad, tx2, ty1, tx1, ty2, tx2, ty2)
+	vertex_add_triangle(rad, rad, rad, rad, rad, -rad, rad, -rad, rad, tx1, ty1, tx1, ty2, tx2, ty1)
+	vertex_add_triangle(rad, -rad, rad, rad, rad, -rad, rad, -rad, -rad, tx2, ty1, tx1, ty2, tx2, ty2)
 } else {
-    vertex_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tx1, ty2, tx1, ty1, tx2, ty1)
-    vertex_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tx1, ty2, tx2, ty1, tx2, ty2)
+	vertex_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tx1, ty2, tx1, ty1, tx2, ty1)
+	vertex_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tx1, ty2, tx2, ty1, tx2, ty2)
 }
 
 // X-
 if (mapped) {
-    if (invert)
-        tx1 = txs * 2
-    else
-        tx1 = txs
-    ty1 = 0
-    tx2 = tx1 + txs
-    ty2 = ty1 + tys
-    if (thflip < 0) {
-        var tmp = tx1;
-        tx1 = tx2
-        tx2 = tmp
-    }
-    if (tvflip < 0) {
-        var tmp = ty1;
-        ty1 = ty2
-        ty2 = tmp
-    }
+	if (invert)
+		tx1 = txs * 2
+	else
+		tx1 = txs
+	ty1 = 0
+	tx2 = tx1 + txs
+	ty2 = ty1 + tys
+	if (thflip < 0) {
+		var tmp = tx1;
+		tx1 = tx2
+		tx2 = tmp
+	}
+	if (tvflip < 0) {
+		var tmp = ty1;
+		ty1 = ty2
+		ty2 = tmp
+	}
 }
 
 if (invert) {
-    vertex_add_triangle(-rad, rad, -rad, -rad, rad, rad, -rad, -rad, rad, tx2, ty2, tx2, ty1, tx1, ty1)
-    vertex_add_triangle(-rad, rad, -rad, -rad, -rad, rad, -rad, -rad, -rad, tx2, ty2, tx1, ty1, tx1, ty2)
+	vertex_add_triangle(-rad, rad, -rad, -rad, rad, rad, -rad, -rad, rad, tx2, ty2, tx2, ty1, tx1, ty1)
+	vertex_add_triangle(-rad, rad, -rad, -rad, -rad, rad, -rad, -rad, -rad, tx2, ty2, tx1, ty1, tx1, ty2)
 } else {
-    vertex_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tx2, ty1, tx2, ty2, tx1, ty1)
-    vertex_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tx1, ty1, tx2, ty2, tx1, ty2)
+	vertex_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tx2, ty1, tx2, ty2, tx1, ty1)
+	vertex_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tx1, ty1, tx2, ty2, tx1, ty2)
 }
 
 // Y+
 if (mapped) {
-    tx1 = 0
-    ty1 = 0
-    tx2 = tx1 + txs
-    ty2 = ty1 + tys
-    if (thflip < 0) {
-        var tmp = tx1;
-        tx1 = tx2
-        tx2 = tmp
-    }
-    if (tvflip < 0) {
-        var tmp = ty1;
-        ty1 = ty2
-        ty2 = tmp
-    }
+	tx1 = 0
+	ty1 = 0
+	tx2 = tx1 + txs
+	ty2 = ty1 + tys
+	if (thflip < 0) {
+		var tmp = tx1;
+		tx1 = tx2
+		tx2 = tmp
+	}
+	if (tvflip < 0) {
+		var tmp = ty1;
+		ty1 = ty2
+		ty2 = tmp
+	}
 }
 
 if (invert) {
-    vertex_add_triangle(rad, rad, rad, -rad, rad, rad, rad, rad, -rad, tx2, ty1, tx1, ty1, tx2, ty2)
-    vertex_add_triangle(-rad, rad, rad, -rad, rad, -rad, rad, rad, -rad, tx1, ty1, tx1, ty2, tx2, ty2)
+	vertex_add_triangle(rad, rad, rad, -rad, rad, rad, rad, rad, -rad, tx2, ty1, tx1, ty1, tx2, ty2)
+	vertex_add_triangle(-rad, rad, rad, -rad, rad, -rad, rad, rad, -rad, tx1, ty1, tx1, ty2, tx2, ty2)
 } else {
-    vertex_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tx1, ty1, tx2, ty1, tx2, ty2)
-    vertex_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tx1, ty2, tx1, ty1, tx2, ty2)
+	vertex_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tx1, ty1, tx2, ty1, tx2, ty2)
+	vertex_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tx1, ty2, tx1, ty1, tx2, ty2)
 }
 
 // Y-
 if (mapped) {
-    tx1 = 0
-    ty1 = tys
-    tx2 = tx1 + txs
-    ty2 = ty1 + tys
-    if (thflip < 0) {
-        var tmp = tx1;
-        tx1 = tx2
-        tx2 = tmp
-    }
-    if (tvflip < 0) {
-        var tmp = ty1;
-        ty1 = ty2
-        ty2 = tmp
-    }
+	tx1 = 0
+	ty1 = tys
+	tx2 = tx1 + txs
+	ty2 = ty1 + tys
+	if (thflip < 0) {
+		var tmp = tx1;
+		tx1 = tx2
+		tx2 = tmp
+	}
+	if (tvflip < 0) {
+		var tmp = ty1;
+		ty1 = ty2
+		ty2 = tmp
+	}
 }
 
 if (invert) {
-    vertex_add_triangle(-rad, -rad, rad, rad, -rad, rad, rad, -rad, -rad, tx2, ty1, tx1, ty1, tx1, ty2)
-    vertex_add_triangle(-rad, -rad, -rad, -rad, -rad, rad, rad, -rad, -rad, tx2, ty2, tx2, ty1, tx1, ty2)
+	vertex_add_triangle(-rad, -rad, rad, rad, -rad, rad, rad, -rad, -rad, tx2, ty1, tx1, ty1, tx1, ty2)
+	vertex_add_triangle(-rad, -rad, -rad, -rad, -rad, rad, rad, -rad, -rad, tx2, ty2, tx2, ty1, tx1, ty2)
 } else {
-    vertex_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tx1, ty1, tx2, ty1, tx1, ty2)
-    vertex_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tx2, ty1, tx2, ty2, tx1, ty2)
+	vertex_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tx1, ty1, tx2, ty1, tx1, ty2)
+	vertex_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tx2, ty1, tx2, ty2, tx1, ty2)
 }
 
 // Z+
 if (mapped) {
-    tx1 = txs
-    ty1 = tys
-    tx2 = tx1 + txs
-    ty2 = ty1 + tys
-    if (thflip < 0) {
-        var tmp = tx1;
-        tx1 = tx2
-        tx2 = tmp
-    }
-    if (tvflip < 0) {
-        var tmp = ty1;
-        ty1 = ty2
-        ty2 = tmp
-    }
+	tx1 = txs
+	ty1 = tys
+	tx2 = tx1 + txs
+	ty2 = ty1 + tys
+	if (thflip < 0) {
+		var tmp = tx1;
+		tx1 = tx2
+		tx2 = tmp
+	}
+	if (tvflip < 0) {
+		var tmp = ty1;
+		ty1 = ty2
+		ty2 = tmp
+	}
 }
 
 if (invert) {
-    vertex_add_triangle(rad, -rad, rad, -rad, -rad, rad, -rad, rad, rad, tx2, ty1, tx1, ty1, tx1, ty2)
-    vertex_add_triangle(rad, rad, rad, rad, -rad, rad, -rad, rad, rad, tx2, ty2, tx2, ty1, tx1, ty2)
+	vertex_add_triangle(rad, -rad, rad, -rad, -rad, rad, -rad, rad, rad, tx2, ty1, tx1, ty1, tx1, ty2)
+	vertex_add_triangle(rad, rad, rad, rad, -rad, rad, -rad, rad, rad, tx2, ty2, tx2, ty1, tx1, ty2)
 } else {
-    vertex_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tx1, ty1, tx2, ty1, tx1, ty2)
-    vertex_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tx2, ty1, tx2, ty2, tx1, ty2)
+	vertex_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tx1, ty1, tx2, ty1, tx1, ty2)
+	vertex_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tx2, ty1, tx2, ty2, tx1, ty2)
 }
 
 // Z-
 if (mapped) {
-    tx1 = txs * 2
-    ty1 = tys
-    tx2 = tx1 + txs
-    ty2 = ty1 + tys
-    if (thflip < 0) {
-        var tmp = tx1;
-        tx1 = tx2
-        tx2 = tmp
-    }
-    if (tvflip < 0) {
-        var tmp = ty1;
-        ty1 = ty2
-        ty2 = tmp
-    }
+	tx1 = txs * 2
+	ty1 = tys
+	tx2 = tx1 + txs
+	ty2 = ty1 + tys
+	if (thflip < 0) {
+		var tmp = tx1;
+		tx1 = tx2
+		tx2 = tmp
+	}
+	if (tvflip < 0) {
+		var tmp = ty1;
+		ty1 = ty2
+		ty2 = tmp
+	}
 }
 
 if (invert) {
-    vertex_add_triangle(-rad, -rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tx1, ty2, tx2, ty2, tx1, ty1)
-    vertex_add_triangle(rad, -rad, -rad, rad, rad, -rad, -rad, rad, -rad, tx2, ty2, tx2, ty1, tx1, ty1)
+	vertex_add_triangle(-rad, -rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tx1, ty2, tx2, ty2, tx1, ty1)
+	vertex_add_triangle(rad, -rad, -rad, rad, rad, -rad, -rad, rad, -rad, tx2, ty2, tx2, ty1, tx1, ty1)
 } else {
-    vertex_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tx2, ty2, tx1, ty2, tx1, ty1)
-    vertex_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tx2, ty1, tx2, ty2, tx1, ty1)
+	vertex_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tx2, ty2, tx1, ty2, tx1, ty1)
+	vertex_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tx2, ty1, tx2, ty2, tx1, ty1)
 }
 
 return model_done()

@@ -23,21 +23,21 @@ tab_next()
 // Tools
 tab_control(24)
 if (draw_button_normal("frameeditorposreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
-    action_tl_frame_pos_xyz(point3D(tl_edit.value_default[XPOS], tl_edit.value_default[YPOS], tl_edit.value_default[ZPOS]))
+	action_tl_frame_pos_xyz(point3D(tl_edit.value_default[XPOS], tl_edit.value_default[YPOS], tl_edit.value_default[ZPOS]))
 	
 if (draw_button_normal("frameeditorposcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
-    tab.position.copy = point3D(tl_edit.value[XPOS], tl_edit.value[YPOS], tl_edit.value[ZPOS])
+	tab.position.copy = point3D(tl_edit.value[XPOS], tl_edit.value[YPOS], tl_edit.value[ZPOS])
 	
 if (draw_button_normal("frameeditorpospaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.paste))
-    action_tl_frame_pos_xyz(tab.position.copy)
+	action_tl_frame_pos_xyz(tab.position.copy)
 	
 if (draw_button_normal("frameeditorpossnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.position.snap_enabled, false, true, icons.grid))
-    tab.position.snap_enabled=!tab.position.snap_enabled
+	tab.position.snap_enabled=!tab.position.snap_enabled
 	
 if (tab.position.snap_enabled)
 {
-    capwid = text_caption_width("frameeditorpossnapsize")
-    if (draw_inputbox("frameeditorpossnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.position.tbx_snap, null))
-        tab.position.snap_size = string_get_real(tab.position.tbx_snap.text, 0)
+	capwid = text_caption_width("frameeditorpossnapsize")
+	if (draw_inputbox("frameeditorpossnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.position.tbx_snap, null))
+		tab.position.snap_size = string_get_real(tab.position.tbx_snap.text, 0)
 }
 tab_next()

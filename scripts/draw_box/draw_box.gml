@@ -18,8 +18,8 @@ alpha = draw_get_alpha()
 
 if (argument_count > 5)
 {
-    color = argument[5]
-    alpha *= argument[6]
+	color = argument[5]
+	alpha *= argument[6]
 }
 
 draw_primitive_begin(test(outline, pr_linestrip, pr_trianglefan))

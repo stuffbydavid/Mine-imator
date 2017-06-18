@@ -14,7 +14,7 @@ for (var p = 0; p < model.part_amount; p++)
 	{
 		with (res)
 			shader_texture = res_model_texture(model)
-	    shader_use()
+		shader_use()
 		matrix_set(matrix_world, part.default_matrix)
 		vbuffer_render(part.shape_vbuffer)
 		

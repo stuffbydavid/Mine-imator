@@ -7,6 +7,6 @@ var ind = argument0;
 keyframe_amount--
 for (var k = ind; k < keyframe_amount; k++)
 {
-    keyframe[k] = keyframe[k + 1]
-    keyframe[k].index--
+	keyframe[k] = keyframe[k + 1]
+	keyframe[k].index--
 }

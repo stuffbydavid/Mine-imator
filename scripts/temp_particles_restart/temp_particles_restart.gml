@@ -3,14 +3,14 @@
 
 with (obj_timeline)
 {
-    if (temp != other.id)
-        continue
-    particle_spawner_clear()
+	if (temp != other.id)
+		continue
+	particle_spawner_clear()
 }
 
 with (obj_preview)
 {
-    if (select != other.id)
-        continue
-    particle_spawner_clear()
+	if (select != other.id)
+		continue
+	particle_spawner_clear()
 }

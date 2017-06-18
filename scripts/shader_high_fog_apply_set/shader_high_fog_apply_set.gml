@@ -2,7 +2,7 @@
 /// @arg fogsurface
 
 var fogBuffer = shader_get_sampler_index(shader_high_fog_apply, "fogBuffer"), 
-    fogColor = shader_get_uniform(shader_high_fog_apply, "fogColor");
+	fogColor = shader_get_uniform(shader_high_fog_apply, "fogColor");
 
 shader_set(shader_high_fog_apply)
 

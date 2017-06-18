@@ -5,7 +5,7 @@ var fn = argument0;
 bench_settings.particle_preset = fn
 
 if (fn = "")
-    return 0
+	return 0
 
 temp_creator = bench_settings
 bench_clear()

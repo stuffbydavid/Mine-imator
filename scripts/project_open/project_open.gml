@@ -21,27 +21,27 @@ var fn, name, buf;
 fn = argument0
 
 if (fn = "")
-    fn = file_dialog_open_project()
+	fn = file_dialog_open_project()
 if (fn = "")
-    return 0
+	return 0
 
 name = filename_new_ext(filename_name(fn), "")
 
 if (filename_ext(fn) = ".zip") // Unzip
 {
-    zip_import(fn)
-    fn = file_find_single(unzip_directory, ".mproj;.mani")
-    if (!file_exists_lib(fn))
-        fn = file_find_single(unzip_directory + name + "\\", ".mproj;.mani")
-    if (!file_exists_lib(fn))
+	zip_import(fn)
+	fn = file_find_single(unzip_directory, ".mproj;.mani")
+	if (!file_exists_lib(fn))
+		fn = file_find_single(unzip_directory + name + "\\", ".mproj;.mani")
+	if (!file_exists_lib(fn))
 	{
-        error("erroropenprojectzip")
-        return 0
-    }
+		error("erroropenprojectzip")
+		return 0
+	}
 }
 
 if (!file_exists_lib(fn))
-    return 0
+	return 0
 
 log("Opening project", fn)
 
@@ -53,17 +53,17 @@ log("load_format", load_format)
 
 if (load_format > project_format) // Too new
 {
-    log("Too new")
-    error("erroropenprojectnewer")
-    buffer_delete(buffer_current)
-    return 0
+	log("Too new")
+	error("erroropenprojectnewer")
+	buffer_delete(buffer_current)
+	return 0
 }
 else if (load_format < project_05) // Too old
 {
-    log("Too old")
-    error("errorfilecorrupted")
-    buffer_delete(buffer_current)
-    return 0
+	log("Too old")
+	error("errorfilecorrupted")
+	buffer_delete(buffer_current)
+	return 0
 }
 
 project_reset()
@@ -77,15 +77,15 @@ log("save_folder", save_folder)
 
 if (load_format > project_07demo)
 {
-    project_read_start()
-    project_read_project()
-    project_read_objects()
-    project_read_background()
-    project_read_camera()
-    project_read_get_iids(false)
+	project_read_start()
+	project_read_project()
+	project_read_objects()
+	project_read_background()
+	project_read_camera()
+	project_read_get_iids(false)
 }
 else
-    project_read_old(false)
+	project_read_old(false)
 
 project_read_update()
 buffer_delete(buffer_current)
@@ -94,9 +94,9 @@ log("Project loaded")
 
 // Close popup
 if (ds_priority_size(res_load_queue) = 0)
-    popup_close()
+	popup_close()
 
 if (load_format < project_100demo2)
-    project_save("")
+	project_save("")
 
 recent_add_wait = true

@@ -60,9 +60,9 @@ external_call(lib_texture_init, window_device())
 
 if (startup_last_crash)
 {
-    if (show_question("Do you want to report the crash now via the Mine-imator forums? In your bug report, copy paste the log contents, along with instructions how to recreate the bug. If the issue concerns a specific animation, upload its folder as a .zip.")) 
+	if (show_question("Do you want to report the crash now via the Mine-imator forums? In your bug report, copy paste the log contents, along with instructions how to recreate the bug. If the issue concerns a specific animation, upload its folder as a .zip.")) 
 	{
-        open_url(link_forums_bugs)
-        open_url(log_previous_file)
-    }
+		open_url(link_forums_bugs)
+		open_url(log_previous_file)
+	}
 }

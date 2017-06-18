@@ -6,21 +6,21 @@ var val, add;
 add = false
 
 if (history_undo)
-    val = history_data.oldval
+	val = history_data.oldval
 else if (history_redo)
-    val = history_data.newval
+	val = history_data.newval
 else
 {
-    val = argument0
-    add = argument1
-    if (action_tl_select_single("background"))
+	val = argument0
+	add = argument1
+	if (action_tl_select_single("background"))
 	{
-        tl_value_set_start(action_background_fog_distance, true)
-        tl_value_set(BGFOGDISTANCE, val, add)
-        tl_value_set_done()
-        return 0
-    }
-    history_set_var(action_background_fog_distance, background_fog_distance, background_fog_distance * add + val, true)
+		tl_value_set_start(action_background_fog_distance, true)
+		tl_value_set(BGFOGDISTANCE, val, add)
+		tl_value_set_done()
+		return 0
+	}
+	history_set_var(action_background_fog_distance, background_fog_distance, background_fog_distance * add + val, true)
 }
 
 background_fog_distance = background_fog_distance * add + val

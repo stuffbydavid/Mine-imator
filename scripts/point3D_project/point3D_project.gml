@@ -13,8 +13,8 @@ h = argument3
 clipspace = point4D_mul_matrix(point4D(pnt[X], pnt[Y], pnt[Z], 1), mat)
 if (clipspace[W] <= 0)
 {
-    point3D_project_error = true
-    return point2D(0, 0)
+	point3D_project_error = true
+	return point2D(0, 0)
 }
 
 point3D_project_error = false

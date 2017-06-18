@@ -5,10 +5,10 @@ var capwid, text;
 capwid = text_caption_width("frameeditorsound", "frameeditorvolume", "frameeditorsoundstart", "frameeditorsoundend")
 
 if (tl_edit.value[SOUNDOBJ])
-    text = tl_edit.value[SOUNDOBJ].display_name
+	text = tl_edit.value[SOUNDOBJ].display_name
 else
-    text = text_get("listnone")
-    
+	text = text_get("listnone")
+	
 tab_control(32)
 draw_button_menu("frameeditorsound", e_menu.LIST, dx, dy, dw, 32, tl_edit.value[SOUNDOBJ], text, action_tl_frame_soundobj, null, null, capwid)
 tab_next()

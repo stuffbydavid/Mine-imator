@@ -21,40 +21,40 @@ while (len > 1 && string_char_at(str, len) == " ")
 state = 0
 for (var i = 1; i <= len; i++)
 {
-    var c = string_char_at(str, i)
-    if (c = " ") // Ignore white spaces at the beginning
+	var c = string_char_at(str, i)
+	if (c = " ") // Ignore white spaces at the beginning
 	{
-        if (state = 0)
+		if (state = 0)
 			continue
-        else
+		else
 			return inv
-    }
-    else if (c = "-" || c = "+") // A sign is allowed at the beginning or after 'E'
-    {
-        if (state = 0 || state = 5)
+	}
+	else if (c = "-" || c = "+") // A sign is allowed at the beginning or after 'E'
+	{
+		if (state = 0 || state = 5)
 			state++
-        else
+		else
 			return inv
-    }
-    else if (ord(c) >= ord("0") && ord(c) <= ord("9")) // A digit is allowed at serveral places...
+	}
+	else if (ord(c) >= ord("0") && ord(c) <= ord("9")) // A digit is allowed at serveral places...
 	{
-        if (state <= 2) // At the beginning, after a sign or another digit
+		if (state <= 2) // At the beginning, after a sign or another digit
 			state = 2
-        else if (state <= 4) // After a decimal point
+		else if (state <= 4) // After a decimal point
 			state = 4
-        else if (state <= 7) // After an exponent
+		else if (state <= 7) // After an exponent
 			state = 7
-        else // Not allowed in other places
+		else // Not allowed in other places
 			return inv
-    }
-    else if (c = ".") // A decimal point is allowed at the beginning, after a sign or a digit
+	}
+	else if (c = ".") // A decimal point is allowed at the beginning, after a sign or a digit
 	{
-        if (state <= 2)
+		if (state <= 2)
 			state = 3
-        else return inv
-    }
-    else // No other letters are allowed
-        return inv
+		else return inv
+	}
+	else // No other letters are allowed
+		return inv
 }
 
 // Finally, check that the string ends with at least one digit or a decimal point

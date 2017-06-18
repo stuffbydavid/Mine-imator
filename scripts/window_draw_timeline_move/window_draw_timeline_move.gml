@@ -1,7 +1,7 @@
 /// window_draw_timeline_move()
 
 if (window_busy != "timelinemove")
-    return 0
+	return 0
 
 content_x = 0
 content_y = 0

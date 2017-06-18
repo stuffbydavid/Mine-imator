@@ -7,7 +7,7 @@ vbuffer = argument0
 res = argument1
 
 if (!res.ready)
-    res = res_def
+	res = res_def
 
 tex = res.block_sheet_texture
 texani = null

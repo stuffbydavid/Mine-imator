@@ -6,6 +6,6 @@ var dname, num;
 dname = argument0
 num = 2
 while (directory_exists_lib(dname))
-    dname = argument0 + " " + string(num++)
+	dname = argument0 + " " + string(num++)
 
 return dname

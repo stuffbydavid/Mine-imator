@@ -3,8 +3,8 @@
 var str = "";
 
 if (!debug_info)
-    return 0
-    
+	return 0
+	
 str += "project_file: " + project_file + " \n"
 str += "project_folder: " + project_folder + " \n"
 str += "working_directory: " + working_directory + " \n"
@@ -16,9 +16,9 @@ str += "iid_current: " + string(iid_current) + " \n"
 str += "window_busy: " + window_busy + " \n"
 str += "window_focus: " + window_focus + " \n"
 if (popup)
-    str += "popup.name: " + popup.name + " \n"
+	str += "popup.name: " + popup.name + " \n"
 else
-    str += "popup.name: \n"
+	str += "popup.name: \n"
 str += "popup_ani_type: " + popup_ani_type + " \n"
 str += "popup_mouseon: " + string(popup_mouseon) + " \n"
 str += "delta: " + string(delta) + " \n"

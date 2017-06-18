@@ -5,14 +5,14 @@ var dirname = setting_project_folder + popup_saveas.folder;
 
 if (popup_saveas.folder = "")
 {
-    error("errornewprojectinvalid")
-    return 0
+	error("errornewprojectinvalid")
+	return 0
 }
 
 if (directory_exists_lib(setting_project_folder + popup_saveas.folder))
 {
-    error("errornewprojectexists")
-    return 0
+	error("errornewprojectexists")
+	return 0
 }
 
 directory_create_lib(setting_project_folder)
@@ -20,8 +20,8 @@ directory_create_lib(dirname)
 
 if (!directory_exists_lib(dirname))
 {
-    error("errornewprojectaccess")
-    return 0
+	error("errornewprojectaccess")
+	return 0
 }
 
 log("Saving project as new", dirname)
@@ -36,8 +36,8 @@ project_file = project_folder + "\\" + filename_valid(project_name) + ".mproj"
 save_folder = project_folder
 
 with (obj_resource)
-    if (id != res_def)
-        res_export()
+	if (id != res_def)
+		res_export()
 
 popup_close()
 

@@ -17,15 +17,15 @@ hp = h-padding * 2
 
 for (var t = 0; t < ds_list_size(transition_list); t++)
 {
-    draw_clear_alpha(c_black, 0)
-    for (var xx = 0; xx <= 1; xx += 1/wp)
+	draw_clear_alpha(c_black, 0)
+	for (var xx = 0; xx <= 1; xx += 1/wp)
 	{
-        draw_line(padding + floor((xx - 1/wp) * wp), 
-                  padding + floor((1 - ease(transition_list[|t], xx - 1/wp)) * hp), 
-                  padding + floor(xx * wp), 
-                  padding + floor((1 - ease(transition_list[|t], xx)) * hp))
+		draw_line(padding + floor((xx - 1/wp) * wp), 
+				  padding + floor((1 - ease(transition_list[|t], xx - 1/wp)) * hp), 
+				  padding + floor(xx * wp), 
+				  padding + floor((1 - ease(transition_list[|t], xx)) * hp))
 	}
-    tex[t] = texture_surface(surf)
+	tex[t] = texture_surface(surf)
 }
 
 surface_reset_target()

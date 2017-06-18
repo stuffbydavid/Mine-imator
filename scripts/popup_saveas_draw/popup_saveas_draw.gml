@@ -5,7 +5,7 @@ var capwid = text_caption_width("newprojectname", "newprojectauthor", "newprojec
 
 // Name
 if (draw_inputbox("newprojectname", dx, dy, dw, "", popup.tbx_name, null, capwid))
-    popup.folder = filename_valid(popup.tbx_name.text)
+	popup.folder = filename_valid(popup.tbx_name.text)
 dy += 30
 
 // Author
@@ -25,12 +25,12 @@ dw = text_caption_width("newprojectfolderchange")
 dx = content_x + content_width - dw
 if (draw_button_normal("newprojectfolderchange", dx, dy, dw, 24))
 {
-    var fn = file_dialog_save_project(popup.folder)
-    if (fn != "")
+	var fn = file_dialog_save_project(popup.folder)
+	if (fn != "")
 	{
-        popup.folder = filename_name(fn)
-        action_setting_project_folder(filename_path(fn))
-    }
+		popup.folder = filename_name(fn)
+		action_setting_project_folder(filename_path(fn))
+	}
 }
 
 // Create
@@ -39,9 +39,9 @@ dh = 32
 dx = content_x + content_width / 2-dw - 4
 dy = content_y + content_height - 32
 if (draw_button_normal("saveassave", dx, dy, dw, 32))
-    project_save_as()
+	project_save_as()
 
 // Cancel
 dx = content_x + content_width / 2+4
 if (draw_button_normal("saveascancel", dx, dy, dw, 32))
-    popup_close()
+	popup_close()

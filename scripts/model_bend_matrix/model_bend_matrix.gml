@@ -42,8 +42,8 @@ switch (part.bend_axis)
 	
 // Get scale
 if (angle != 0)
-    scale = vec3(app.setting_bend_scale)
+	scale = vec3(app.setting_bend_scale)
 else
-    scale = vec3(1)
+	scale = vec3(1)
 	
 return matrix_create(pos, rot, scale)

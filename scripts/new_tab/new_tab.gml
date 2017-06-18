@@ -11,6 +11,6 @@ tab.closeable=!tab.show
 tab.scroll = new(obj_scrollbar)
 
 if (tab.show)
-    panel_tab_list_add(tab.panel, tab.panel.tab_list_amount, tab)
+	panel_tab_list_add(tab.panel, tab.panel.tab_list_amount, tab)
 
 return tab

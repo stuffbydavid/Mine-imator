@@ -3,7 +3,7 @@
 var fn = file_dialog_save_color("");
 
 if (fn = "")
-    return 0
+	return 0
 
 fn = filename_new_ext(fn, ".mcolor")
 

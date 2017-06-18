@@ -6,8 +6,8 @@ var ptype = new(obj_particle_type);
 
 // Copy data
 with (argument0)
-    ptype_copy(ptype)
-    
+	ptype_copy(ptype)
+	
 // Insert
 ptype.creator_pos = pc_types
 pc_type[pc_types] = ptype
@@ -18,7 +18,7 @@ ptype.sprite_tex.count++
 
 // Update models
 with (ptype)
-    ptype_update_sprite_vbuffers()
+	ptype_update_sprite_vbuffers()
 
 // Update spawn %
 temp_particles_update_spawn_rate(ptype, ptype.spawn_rate)

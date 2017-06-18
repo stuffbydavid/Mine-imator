@@ -13,20 +13,20 @@ surface_set_target(surf)
 
 	for (var xx = 0; xx < w; xx++)
 	{
-	    for (var yy = 0; yy < h; yy++)
+		for (var yy = 0; yy < h; yy++)
 		{
-	        var r, g, b, mag;
-	        r = random(1)
-	        g = random(1)
-	        b = 0.5
-        
-	        mag = sqrt(r * r + g * g + b * b)
-	        r /= mag
-	        g /= mag
-	        b /= mag
-        
-	        draw_point_color(xx, yy, make_color_rgb(r * 255, g * 255, b * 255)) 
-	    }
+			var r, g, b, mag;
+			r = random(1)
+			g = random(1)
+			b = 0.5
+		
+			mag = sqrt(r * r + g * g + b * b)
+			r /= mag
+			g /= mag
+			b /= mag
+		
+			draw_point_color(xx, yy, make_color_rgb(r * 255, g * 255, b * 255)) 
+		}
 	}
 }
 surface_reset_target()

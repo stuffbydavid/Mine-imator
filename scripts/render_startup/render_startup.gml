@@ -1,8 +1,8 @@
 /// render_startup()
 
 globalvar render_mode, render_click_box, render_surface_time, 
-          render_list, render_lights, render_particles, render_hidden, render_background, render_watermark, 
-          proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far;
+		  render_list, render_lights, render_particles, render_hidden, render_background, render_watermark, 
+		  proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far;
 
 log("Render init")
 
@@ -33,11 +33,11 @@ render_surface[3] = null
 render_surface_sun_buffer = null
 render_surface_spot_buffer = null
 for (var d = 0; d < 6; d++)
-    render_surface_point_buffer[d] = null
-    
+	render_surface_point_buffer[d] = null
+	
 render_ssao_kernel = render_generate_sample_kernel(16)
 render_ssao_noise = null
-    
+	
 gpu_set_blendenable(true)
 gpu_set_alphatestenable(true)
 gpu_set_alphatestref(0)

@@ -4,15 +4,15 @@ log("Globals startup")
 
 // Program
 globalvar trial_version, current_step, minute_steps, delta,
-          buffer_current, vbuffer_current, load_format, load_folder, save_folder, load_iid_offset, 
-          debug_indent, debug_timer, history_data;
+		  buffer_current, vbuffer_current, load_format, load_folder, save_folder, load_iid_offset, 
+		  debug_indent, debug_timer, history_data;
 current_step = 0
 minute_steps = 60 * 60
 delta = 1
 
 // Assets
 globalvar temp_edit, ptype_edit, tl_edit_amount, tl_edit, res_edit, axis_edit,
-          temp_creator, res_creator, iid_current;
+		  temp_creator, res_creator, iid_current;
 temp_edit = null
 ptype_edit = null
 tl_edit = null
@@ -42,7 +42,7 @@ res_def.font_minecraft = true
 res_def.font = new_minecraft_font()
 res_def.font_preview = res_def.font
 with (res_def)
-    res_pack_load_folder(data_directory + "Textures")
+	res_pack_load_folder(data_directory + "Textures")
 
 /*res_def.block_frames = 32
 res_def.block_ani[32 * 16] = false
@@ -55,19 +55,19 @@ res_def.block_ani[19 + 3 * 32] = true // Portal*/
 
 // Schematic
 globalvar sch_load_queue, sch_load_stage, sch_load_z, sch_load_vbuffer, 
-          sch_load_xsize, sch_load_ysize, sch_load_zsize, 
-          sch_isblock, sch_value, sch_data, sch_edges, 
-          sch_file, sch_buffer, sch_buffer_schematic, 
-          sch_block_pos, sch_data_pos, 
-          sch_x, sch_y, sch_z, 
-          sch_bx, sch_by, sch_bz, 
-          sch_block_value, sch_block_data, sch_block_solid;
+		  sch_load_xsize, sch_load_ysize, sch_load_zsize, 
+		  sch_isblock, sch_value, sch_data, sch_edges, 
+		  sch_file, sch_buffer, sch_buffer_schematic, 
+		  sch_block_pos, sch_data_pos, 
+		  sch_x, sch_y, sch_z, 
+		  sch_bx, sch_by, sch_bz, 
+		  sch_block_value, sch_block_data, sch_block_solid;
 sch_load_queue = ds_queue_create()
 
 // Resource pack
 globalvar pack_load_queue, pack_load_stage, 
-          pack_load_amount, pack_load_texture, pack_load_name, 
-          pack_load_block_size, pack_load_item_size, pack_load_mob_size, 
-          block062newx, block062newy, 
-          block07newx, block07newy;
+		  pack_load_amount, pack_load_texture, pack_load_name, 
+		  pack_load_block_size, pack_load_item_size, pack_load_mob_size, 
+		  block062newx, block062newy, 
+		  block07newx, block07newy;
 pack_load_queue = ds_queue_create()

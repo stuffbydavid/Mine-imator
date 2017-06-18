@@ -10,7 +10,7 @@ tab = argument2
 
 // Push up
 for (var t = panel.tab_list_amount; t > pos; t--)
-    panel.tab_list[t] = panel.tab_list[t - 1]
+	panel.tab_list[t] = panel.tab_list[t - 1]
 
 // Insert
 panel.tab_list[pos] = tab

@@ -40,32 +40,32 @@ log("Shader init")
 // Supported?
 log("shaders_are_supported", yesno(shaders_are_supported()))
 if (!shaders_are_supported())
-    err = true
+	err = true
 
 // Compiled?
 if (!err)
 {
-    with (obj_shader)
+	with (obj_shader)
 	{
-        log(name + " compiled", yesno(shader_is_compiled(shader)))
+		log(name + " compiled", yesno(shader_is_compiled(shader)))
 		
-        if (!shader_is_compiled(shader))
+		if (!shader_is_compiled(shader))
 		{
-            err = true
-            break
-        }
-    }
+			err = true
+			break
+		}
+	}
 }
 
 if (err)
 {
-    log("Shader compilation failed")
-    log("Download DirectX runtime", link_directx)
-    if (show_question("Some shaders failed to compile.\nYour graphics drivers are outdated or DirectX runtime is missing. Download DirectX runtime now?"))
-        open_url(link_directx)
+	log("Shader compilation failed")
+	log("Download DirectX runtime", link_directx)
+	if (show_question("Some shaders failed to compile.\nYour graphics drivers are outdated or DirectX runtime is missing. Download DirectX runtime now?"))
+		open_url(link_directx)
 		
-    game_end()
-    return 0
+	game_end()
+	return 0
 }
 
 return 1

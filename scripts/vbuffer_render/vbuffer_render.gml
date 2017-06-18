@@ -28,4 +28,4 @@ if (argument_count > 1)
 vertex_submit(vbuf, pr_trianglelist, -1)
 
 if (argument_count > 1)
-    matrix_world_reset()
+	matrix_world_reset()

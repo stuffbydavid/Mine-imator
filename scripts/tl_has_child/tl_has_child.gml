@@ -3,10 +3,10 @@
 /// @desc Returns whether the timeline has the given object as a child.
 
 if (argument0 = app)
-    return false
+	return false
 
 with (argument0)
-    if (tl_has_parent(other.id))
-        return true
+	if (tl_has_parent(other.id))
+		return true
 
 return false

@@ -48,12 +48,12 @@ while (!buffer_is_eof())
 			var len = buffer_read_int_be();
 			map[?name] = buffer_tell(buffer_current)
 			map[?name + "_NBT_length"] = len
-	        buffer_skip(len)
+			buffer_skip(len)
 			break
 		
-	    case e_nbt.TAG_STRING:
-	        map[?name] = buffer_read_string_short_be()
-	        break
+		case e_nbt.TAG_STRING:
+			map[?name] = buffer_read_string_short_be()
+			break
 		
 		case e_nbt.TAG_LIST:
 		{
@@ -88,7 +88,7 @@ while (!buffer_is_eof())
 			var len = buffer_read_int_be();
 			map[?name] = buffer_tell(buffer_current)
 			map[?name + "_NBT_length"] = len
-	        buffer_skip(len * 4)
+			buffer_skip(len * 4)
 			break
 		}
 	}

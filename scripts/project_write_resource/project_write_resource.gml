@@ -8,8 +8,8 @@ buffer_write_string_int(pack_description)
 buffer_write_byte(block_frames)
 
 if (type = "pack" || type = "blocksheet")
-    for (var b = 0; b < 512; b++)
-        buffer_write_byte(block_ani[b])
+	for (var b = 0; b < 512; b++)
+		buffer_write_byte(block_ani[b])
 
 if (load_folder != save_folder)
-    res_export()
+	res_export()
