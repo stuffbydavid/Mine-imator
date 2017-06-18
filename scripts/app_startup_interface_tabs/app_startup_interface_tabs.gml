@@ -137,7 +137,7 @@ with (template_editor)
 	bodypart_char_list.script = action_lib_char_bodypart_model
 	sortlist_column_add(bodypart_char_list, "bodypartcharname", 0)
 	//for (var m = 0; m < characters + characters_blocks; m++)
-	 //   sortlist_add(bodypart_char_list, iget(obj_model, m))
+	//   sortlist_add(bodypart_char_list, iget(obj_model, m))
 		
 	// Particle editor
 	tbx_spawn_amount = new_textbox_integer()

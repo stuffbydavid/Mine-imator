@@ -37,11 +37,11 @@ else if (load_format < project_05) // Too old
 project_read_start()
 
 // Get info
-tlchar = buffer_read_byte()						   debug("tlchar", tlchar)
+tlchar = buffer_read_byte()							debug("tlchar", tlchar)
 tempo = buffer_read_byte()							debug("tempo", tempo)
 temposcale = (project_tempo / tempo)
-num = buffer_read_int()							   debug("num", num)
-len = max(1, round(temposcale * buffer_read_int()))   debug("len", len)
+num = buffer_read_int()								debug("num", num)
+len = max(1, round(temposcale * buffer_read_int())) debug("len", len)
 
 if (tlchar && tl.part_of)
 	tl = tl.part_of
@@ -51,7 +51,7 @@ repeat (num)
 {
 	var pos, bp, dummytypes, tladd;
 	debug("Keyframe") debug_indent++
-	pos = round(temposcale * buffer_read_int())	 debug("pos", pos)
+	pos = round(temposcale * buffer_read_int())		debug("pos", pos)
 	bp = buffer_read_int()							debug("bp", bp)
 	
 	// Dummy for storing keyframe value types

@@ -14,7 +14,7 @@ if (keyboard_check_pressed(vk_f11))
 	open_url(log_file)
 
 if (keyboard_check_pressed(vk_f12))
-	debug_info=!debug_info
+	debug_info = !debug_info
 
 if (window_busy = "" && !textbox_isediting)
 {

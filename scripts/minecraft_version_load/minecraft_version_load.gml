@@ -127,11 +127,22 @@ with (mc_version)
 		key = ds_map_find_next(block_texture_color_map, key)
 	}
 	
+	// Item textures
+	var itemtextureslist = versionmap[?"item_textures"];
+	if (is_undefined(itemtextureslist))
+	{
+		log("No animated block textures found")
+		break
+	}
+	
+	ds_list_copy(item_texture_list, itemtextureslist)
+	
 	// Create sheets and texture depth
 	with (res_def)
 	{
 		res_load_pack_model_textures()
 		res_load_pack_block_textures()
+		res_load_pack_item_textures()
 	}
 	
 	// Blocks

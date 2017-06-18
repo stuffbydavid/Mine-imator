@@ -12,9 +12,7 @@ debug_timer_start()
 texlist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_version.block_texture_list); t++)
 {
-	var name, fname;
-	name = mc_version.block_texture_list[|t]
-	fname = textures_directory + string_replace(mc_version.block_texture_list[|t], " opaque", "") + ".png"
+	var fname  = textures_directory + string_replace(mc_version.block_texture_list[|t], " opaque", "") + ".png";
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);

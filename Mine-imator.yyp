@@ -2655,6 +2655,14 @@
             }
         },
         {
+            "Key": "325aadc3-33a4-4f31-a433-9ed6295223ca",
+            "Value": {
+                "id": "ef36b31b-52a2-43cd-b5a6-63477087f4b8",
+                "resourcePath": "scripts\\res_load_pack_item_textures\\res_load_pack_item_textures.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "32883665-ba61-4248-9a11-48734292b807",
             "Value": {
                 "id": "bb3a0858-2e4e-4abd-adda-9219abf0ba1d",
@@ -14539,6 +14547,7 @@
         "89a0b20b-8a16-43bf-a8e6-d00ab6f8af40",
         "3070d448-c1d7-4203-b1e7-edbb935b555b",
         "94b2a149-3aa3-4750-9f13-e439c809476b",
+        "325aadc3-33a4-4f31-a433-9ed6295223ca",
         "f716150a-cd25-4013-8b5d-6a08f30cba6a",
         "8a60c663-7962-42ef-9ea1-e354ef255d48",
         "966dfa9d-379b-4488-84a9-fe8eeefe92fd",
