@@ -1,11 +1,11 @@
-/// draw_world_item(vbuffer, bounce, facecamera, resource)
+/// render_world_item(vbuffer, bounce, facecamera, resource)
 /// @arg vbuffer
 /// @arg bounce
 /// @arg facecamera
 /// @arg resource
 
 var vbuffer, bounce, facecamera, res;
-var rot, off;
+var rot, off, mipmap;
 vbuffer = argument0
 bounce = argument1
 facecamera = argument2
@@ -38,6 +38,11 @@ matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, vec3(1)))
 matrix_add_offset()
 matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
 
+mipmap = shader_texture_filter_mipmap
+shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
 shader_texture = res.item_texture
+
 shader_use()
 vbuffer_render(vbuffer)
+
+shader_texture_filter_mipmap = mipmap

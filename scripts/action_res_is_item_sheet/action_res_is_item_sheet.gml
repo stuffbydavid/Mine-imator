@@ -1,4 +1,4 @@
-/// action_lib_item_sheet(sheet)
+/// action_res_is_item_sheet(sheet)
 /// @arg sheet
 
 var sheet;
@@ -10,13 +10,10 @@ else if (history_redo)
 else
 {
 	sheet = argument0
-	history_set_var(action_lib_item_sheet, temp_edit.item_sheet, sheet, false)
+	history_set_var(action_res_is_item_sheet, res_edit.is_item_sheet, sheet, false)
 }
 
-with (temp_edit)
-{
-	item_sheet = sheet
-	temp_update_item()
-}
+with (res_edit)
+	is_item_sheet = sheet
 
 lib_preview.update = true

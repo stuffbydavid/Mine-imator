@@ -136,10 +136,10 @@ if (preview.update)
 			matrix_reset_offset()
 			
 			// Repeat
-			if (preview.select.object_index = obj_template && preview.select.repeat_toggle)
-				rep = vec3(preview.select.repeat_x, preview.select.repeat_y, preview.select.repeat_z)
+			if (preview.select.object_index = obj_template && preview.select.block_repeat_enable)
+				rep = preview.select.block_repeat
 			else
-				rep = vec3(1, 1, 1)
+				rep = vec3(1)
 			
 			// Set z and zoom for camera
 			switch (preview.select.type)
@@ -157,9 +157,9 @@ if (preview.update)
 					break
 					
 				case "block":
-					var displaysize = vec3_mul(rep, point3D(block_size, block_size, block_size));
+					var displaysize = vec3_mul(rep, vec3(block_size));
 					prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-					matrix_offset = vec3_mul(displaysize, point3D(-0.5, -0.5, -0.5))
+					matrix_offset = vec3_mul(displaysize, vec3(-1 / 2))
 					break
 					
 				case "scenery":
@@ -226,7 +226,7 @@ if (preview.update)
 						break
 					
 					if (preview.select.type = "scenery")
-						render_world_scenery(sch, preview.select.block_tex, preview.select.repeat_toggle, rep[X], rep[Y], rep[Z])
+						render_world_scenery(sch, preview.select.block_tex, preview.select.block_repeat_enable, preview.select.block_repeat)
 					else
 						render_world_block(sch.block_vbuffer, res_def)
 					

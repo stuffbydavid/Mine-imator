@@ -86,10 +86,10 @@ else
 	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.NORTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(1, -1, 0))), 2) = bid)
 		cornerdata[1] = array3D_get(block_data, point3D_add(build_pos, vec3(1, -1, 0)))
 		
-	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.SOUTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(1, 1, 0))), 2) = bid)
+	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.SOUTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(1, 1, 0))), 2) = bid)
 		cornerdata[2] = array3D_get(block_data, point3D_add(build_pos, vec3(1, 1, 0)))
 		
-	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.SOUTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(-1, 1, 0))), 2) = bid)
+	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.SOUTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(-1, 1, 0))), 2) = bid)
 		cornerdata[3] = array3D_get(block_data, point3D_add(build_pos, vec3(-1, 1, 0)))
 		
 	// Set Zs

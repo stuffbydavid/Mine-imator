@@ -234,7 +234,7 @@ with (new(obj_block_render_model))
 					relem.face_texture_color[f] = -1
 					
 					// Apply UVs to block sheet
-					var slot, slotpos, slotsize, sheetwidth, sheetheight;
+					var slot, slotpos, texsize, sheetwidth, sheetheight;
 					slot = -1
 					
 					if (opaque)
@@ -281,12 +281,12 @@ with (new(obj_block_render_model))
 						}
 					}
 					
-					slotpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) * block_size)
-					slotsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
+					slotpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
+					texsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
 					
 					// Apply to UV
 					for (var t = 0; t < 4; t++)
-						relem.face_uv[f, t] = vec2_mul(point2D_add(relem.face_uv[f, t], slotpos), slotsize)
+						relem.face_uv[f, t] = vec2_mul(point2D_add(relem.face_uv[f, t], slotpos), texsize)
 						
 					// For cull test
 					if (face_cullface[f] = null)

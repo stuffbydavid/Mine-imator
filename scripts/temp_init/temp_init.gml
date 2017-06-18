@@ -1,4 +1,5 @@
 /// temp_init()
+/// @desc Initializes the variables of a template.
 
 loaded = false
 creator = temp_creator
@@ -14,8 +15,7 @@ char_model = null
 char_bodypart = 0
 
 item_tex = null
-item_sheet = true
-item_n = 16 * 4 + 3 // Diamond sword
+item_name = "items/diamond_sword"
 item_vbuffer = null
 item_3d = true
 item_face_camera = false
@@ -27,10 +27,8 @@ block_tex = null
 block_vbuffer_reset()
 scenery = 0
 
-repeat_toggle = false
-repeat_x = 1
-repeat_y = 1
-repeat_z = 1
+block_repeat_enable = false
+block_repeat = vec3(1)
 
 shape_vbuffer = null
 shape_tex = 0

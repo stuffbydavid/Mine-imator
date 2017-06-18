@@ -1,4 +1,4 @@
-/// action_lib_repeat_x(value, add)
+/// action_lib_block_repeat(value, add)
 /// @arg value
 /// @arg add
 
@@ -13,12 +13,12 @@ else
 {
 	val = argument0
 	add = argument1
-	history_set_var(action_lib_repeat_x, temp_edit.repeat_x, temp_edit.repeat_x * add + val, true)
+	history_set_var(action_lib_block_repeat, temp_edit.block_repeat[axis_edit], temp_edit.block_repeat[axis_edit] * add + val, true)
 }
 
 with (temp_edit)
 {
-	repeat_x = repeat_x * add + val
+	block_repeat[axis_edit] = block_repeat[axis_edit] * add + val
 	temp_update_block()
 	temp_update_rot_point()
 }

@@ -35,12 +35,12 @@
         "8f1047e9-f4ba-400f-85be-764e407e725d",
         "ec44072a-2d58-4343-855a-4d064376db03",
         "16a1d35f-0096-4aa4-af47-066807b63257",
+        "a0c468ba-c1e3-48c6-a4a5-aeff0ae4474a",
         "45eb872d-a81f-467c-acc9-74c2f2aa1ff6",
         "06333152-b1d3-4372-8b3f-d32fe3688327",
         "6c730969-40db-41da-984f-b3dcc46e2428",
         "31000fe2-a92c-4c0e-a0be-4599d699bebd",
-        "86cffcf9-dd8e-410a-b707-d4d3d0a66db1",
-        "a0c468ba-c1e3-48c6-a4a5-aeff0ae4474a"
+        "86cffcf9-dd8e-410a-b707-d4d3d0a66db1"
     ],
     "filterType": "GMScript",
     "folderName": "Components",

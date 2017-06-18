@@ -21,17 +21,18 @@ switch (temp_edit.type)
 		break
 	
 	case "item":
-		if (!temp_edit.item_sheet)
+		var res = temp_edit.item_tex;
+		if (!res.ready)
+			res = res_def
+		
+		if (!res.is_item_sheet)
 		{
 			tab_close(tab)
 			return 0
 		}
-		
-		var res = temp_edit.item_tex;
-		if (!res.ready)
-			res = res_def
+			
 		draw_label(text_get("templateeditoritem") + ":", dx, dy)
-		draw_texture_picker(res.item_texture, dx, dy + 22, dw, dh - 65, temp_edit.item_n, null, 16, 16, tab.item_scroll, action_lib_item_n)
+		draw_texture_picker(temp_edit.item_name, res.item_texture, mc_version.item_texture_list, dx, dy + 22, dw, dh - 65, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item_scroll, action_lib_item_name)
 		break
 		
 	case "spblock":

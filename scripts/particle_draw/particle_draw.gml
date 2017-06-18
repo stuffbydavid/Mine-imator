@@ -11,10 +11,9 @@ shader_alpha *= alpha
 
 if (temp)
 {
-	var sch, repx, repy, repz;
-	repx = (temp.repeat_x - 1) * temp.repeat_toggle + 1
-	repy = (temp.repeat_y - 1) * temp.repeat_toggle + 1
-	repz = (temp.repeat_z - 1) * temp.repeat_toggle + 1
+	var sch, rep;
+	rep = test(temp.block_repeat_enable, temp.block_repeat, vec3(1))
+		
 	matrix_reset_offset()
 	
 	switch (temp.type) // Rotation point
@@ -28,11 +27,12 @@ if (temp)
 			/*sch = temp.scenery
 			if (!sch)
 				break
+				
 			matrix_offset = point3D(-sch.sch_xsize * repx * 8, -sch.sch_ysize * repy * 8, -sch.sch_zsize * repz * 8)*/
 			break
 			
 		case "block":
-			matrix_offset = point3D(-repx * 8, -repy * 8, -repz * 8)
+			matrix_offset = point3D_mul(rep, -block_size / 2)
 			break
 		
 		case "item":
@@ -75,7 +75,7 @@ if (temp)
 		case "scenery":
 			if (!sch)
 				break
-			render_world_scenery(sch, temp.block_tex, temp.repeat_toggle, repx, repy, repz)
+			render_world_scenery(sch, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
 			break
 			
 		case "item":

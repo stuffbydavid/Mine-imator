@@ -1,4 +1,4 @@
-/// draw_texture_picker(select, texture, list, x, y, width, height, slotsx, scrollbar, script, [anitexture, anilist, anislotsx, resource])
+/// draw_texture_picker(select, texture, list, x, y, width, height, slotsx, slotsy, scrollbar, script, [anitexture, anilist, anislotsx, anislotsy, resource])
 /// @arg select
 /// @arg texture
 /// @arg list
@@ -7,16 +7,18 @@
 /// @arg width
 /// @arg height
 /// @arg slotsx
+/// @arg slotsy
 /// @arg scrollbar
 /// @arg script
 /// @arg [anitexture
 /// @arg anilist
 /// @arg anislotsx
+/// @arg anislotsy
 /// @arg resource]
 /// @desc Draws a box for selecting between several images from a static and (optional) animated texture sheet.
 
-var select, tex, list, xx, yy, wid, hei, slotsx, scroll, script, anitex, anilist, anislotsx, res;
-var dx, dy, off, slots, itemsize, slotsize, itemsx, itemsy;
+var select, tex, list, xx, yy, wid, hei, slotsx, slotsy, scroll, script, anitex, anilist, anislotsx, anislotsy, res;
+var dx, dy, off, slotsize, items, itemsize, itemsx, itemsy;
 select = argument[0]
 tex = argument[1]
 list = argument[2]
@@ -25,15 +27,17 @@ yy = argument[4]
 wid = argument[5]
 hei = argument[6]
 slotsx = argument[7]
-scroll = argument[8]
-script = argument[9]
+slotsy = argument[8]
+scroll = argument[9]
+script = argument[10]
 
-if (argument_count > 10)
+if (argument_count > 11)
 {
-	anitex = argument[10]
-	anilist = argument[11]
-	anislotsx = argument[12]
-	res = argument[13]
+	anitex = argument[11]
+	anilist = argument[12]
+	anislotsx = argument[13]
+	anislotsy = argument[14]
+	res = argument[15]
 }
 else
 	res = null
@@ -45,34 +49,36 @@ dx = xx
 dy = yy
 off = 2
 
-// Number of slots
-slots = ds_list_size(list)
-if (argument_count > 10)
-	slots += ds_list_size(anilist)
+// Number of items
+items = ds_list_size(list)
+if (argument_count > 11)
+	items += ds_list_size(anilist)
 
 // Sizes
-itemsize = min(64, texture_width(tex) / slotsx)
-slotsize = itemsize + off * 2
-itemsx = floor((wid - 30 * scroll.needed) / slotsize)
-itemsy = ceil(slots / itemsx)
+slotsize = max(1, floor(texture_width(tex) / slotsx))
+itemsize = slotsize + off * 2
+itemsx = floor((wid - 30 * scroll.needed) / itemsize)
+itemsy = ceil(items / itemsx)
 
-for (var s = round(scroll.value / slotsize) * itemsx; s < slots; s++)
+for (var i = round(scroll.value / itemsize) * itemsx; i < items; i++)
 {
-	var curtex, curslot, curslotsx, name, col;
+	var curtex, curslot, curslotsx, curslotsy, name, col;
 	
 	// Correct name and slot texture
-	if (s < ds_list_size(list))
+	if (i < ds_list_size(list))
 	{
 		curtex = tex
-		curslot = s
+		curslot = i
 		curslotsx = slotsx
+		curslotsy = slotsy
 		name = list[|curslot]
 	}
 	else
 	{
 		curtex = anitex[block_texture_get_frame()]
-		curslot = s - ds_list_size(list)
+		curslot = i - ds_list_size(list)
 		curslotsx = anislotsx
+		curslotsy = anislotsy
 		name = anilist[|curslot]
 	}
 	
@@ -83,11 +89,11 @@ for (var s = round(scroll.value / slotsize) * itemsx; s < slots; s++)
 		
 	// Highlight if selected
 	if (select = name)
-		draw_box(dx, dy, slotsize, slotsize, false, setting_color_highlight, 1)
+		draw_box(dx, dy, itemsize, itemsize, false, setting_color_highlight, 1)
 	
-	// Slot
-	draw_texture_slot(curtex, curslot, dx + off, dy + off, itemsize, curslotsx, col)
-	if (app_mouse_box(dx, dy, slotsize, slotsize) && content_mouseon)
+	// Item
+	draw_texture_slot(curtex, curslot, dx + off, dy + off, slotsize, curslotsx, curslotsy, col)
+	if (app_mouse_box(dx, dy, itemsize, itemsize) && content_mouseon)
 	{
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
@@ -99,17 +105,17 @@ for (var s = round(scroll.value / slotsize) * itemsx; s < slots; s++)
 	}
 	
 	// Advance
-	dx += slotsize
-	if (dx + slotsize > xx + itemsx * slotsize)
+	dx += itemsize
+	if (dx + itemsize > xx + itemsx * itemsize)
 	{
 		dx = xx
-		dy += slotsize
-		if (dy + slotsize > yy + hei)
+		dy += itemsize
+		if (dy + itemsize > yy + hei)
 			break
 	}
 	
 }
 
 // Scrollbar
-scroll.snap_value = slotsize
-scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid-30, yy, floor(hei / slotsize) * slotsize, itemsy * slotsize, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+scroll.snap_value = itemsize
+scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid-30, yy, floor(hei / itemsize) * itemsize, itemsy * itemsize, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)

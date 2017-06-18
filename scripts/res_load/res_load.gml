@@ -48,7 +48,7 @@ switch (type)
 	case "itemsheet":
 		if (item_texture)
 			texture_free(item_texture)
-		item_texture = texture_create_square(fn)
+		item_texture = texture_create(fn)
 		break
 		
 	case "blocksheet":

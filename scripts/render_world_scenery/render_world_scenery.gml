@@ -1,10 +1,8 @@
-/// render_world_scenery(scenery, resource, repeat, repeatx, repeaty, repeatz)
+/// render_world_scenery(scenery, resource, repeatenable, repeat)
 /// @arg scenery
 /// @arg resource
+/// @arg repeatenable
 /// @arg repeat
-/// @arg repeatx
-/// @arg repeaty
-/// @arg repeatz
 
 var scenery, res;
 scenery = argument0
@@ -16,7 +14,7 @@ if (!scenery.ready)
 if (argument2) // Repeat
 {
 	var rep, mat, reppos;
-	rep = vec3(argument3, argument4, argument5)
+	rep = argument3
 	mat = matrix_get(matrix_world)
 	for (reppos[X] = 0; reppos[X] < rep[X]; reppos[X]++)
 	{

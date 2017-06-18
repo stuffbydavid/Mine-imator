@@ -111,24 +111,23 @@ switch (temp_edit.type)
 		// Item image
 		tab_control(24)
 		draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle)
-		if (temp_edit.item_sheet)
+		if (res.is_item_sheet)
 		{
-			draw_texture_slot(res.item_texture, temp_edit.item_n, dx + capwid, dy + 4, 16, 16)
+			var index = ds_list_find_index(mc_version.item_texture_list, temp_edit.item_name);
+			draw_texture_slot(res.item_texture, index, dx + capwid, dy + 4, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			if (draw_button_normal("libraryitemchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 				tab_toggle(template_editor)
 		}
 		else
-			draw_texture(res.item_texture, dx + capwid, dy + 2, 16 / texture_width(res.item_texture), 16 / texture_height(res.item_texture))
+		{
+			var scale = min(16 / texture_width(res.item_texture), 16 / texture_height(res.item_texture));
+			draw_texture(res.item_texture, dx + capwid, dy + 2, scale, scale)
+		}
 		tab_next()
 		
 		// Image
 		tab_control(40)
 		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 40, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, temp_edit.item_tex.block_preview_texture, null, capwid)
-		tab_next()
-		
-		// Sheet
-		tab_control_checkbox()
-		draw_checkbox("libraryitemsheet", dx, dy, temp_edit.item_sheet, action_lib_item_sheet)
 		tab_next()
 		
 		// Graphics
@@ -309,23 +308,26 @@ switch (temp_edit.type)
 if (temp_edit.type = "scenery" || temp_edit.type = "block")
 {
 	tab_control_checkbox()
-	draw_checkbox("libraryrepeattoggle", dx, dy, temp_edit.repeat_toggle, action_lib_repeat_toggle)
+	draw_checkbox("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)
 	tab_next()
 	
-	if (temp_edit.repeat_toggle)
+	if (temp_edit.block_repeat_enable)
 	{
 		capwid = text_caption_width("libraryrepeatx", "libraryrepeaty", "libraryrepeatz")
 		
+		axis_edit = X
 		tab_control_dragger()
-		draw_dragger("libraryrepeatx", dx, dy, dw, temp_edit.repeat_x, 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_x, action_lib_repeat_x, capwid)
+		draw_dragger("libraryrepeatx", dx, dy, dw, temp_edit.block_repeat[X], 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_x, action_lib_block_repeat, capwid)
 		tab_next()
 		
+		axis_edit = test(setting_z_is_up, Y, Z)
 		tab_control_dragger()
-		draw_dragger("libraryrepeaty", dx, dy, dw, test(setting_z_is_up, temp_edit.repeat_y, temp_edit.repeat_z), 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_y, test(setting_z_is_up, action_lib_repeat_y, action_lib_repeat_z), capwid)
+		draw_dragger("libraryrepeaty", dx, dy, dw, temp_edit.block_repeat[axis_edit], 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_y, action_lib_block_repeat, capwid)
 		tab_next()
 		
+		axis_edit = test(setting_z_is_up, Z, Y)
 		tab_control_dragger()
-		draw_dragger("libraryrepeatz", dx, dy, dw, test(setting_z_is_up, temp_edit.repeat_z, temp_edit.repeat_y), 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_z, test(setting_z_is_up, action_lib_repeat_z, action_lib_repeat_y), capwid)
+		draw_dragger("libraryrepeatz", dx, dy, dw, temp_edit.block_repeat[axis_edit], 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_z, action_lib_block_repeat, capwid)
 		tab_next()
 	}
 }

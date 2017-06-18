@@ -1,4 +1,4 @@
-/// pack_load_block_textures()
+/// res_load_pack_block_textures()
 /// @desc Creates a static and animated block sheet out of the list of block textures.
 
 var blocksize, texlist, texanilist, surf, anisurf, samplepos, sampleposamount, wid;
@@ -291,4 +291,4 @@ surface_free(surf)
 ds_list_destroy(texlist)
 ds_list_destroy(texanilist)
 
-debug_timer_stop("pack_load_block_textures")
+debug_timer_stop("res_load_pack_block_textures")

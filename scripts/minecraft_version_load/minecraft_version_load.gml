@@ -131,7 +131,7 @@ with (mc_version)
 	var itemtextureslist = versionmap[?"item_textures"];
 	if (is_undefined(itemtextureslist))
 	{
-		log("No animated block textures found")
+		log("No item textures found")
 		break
 	}
 	

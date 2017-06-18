@@ -22,7 +22,7 @@ else
 {
 	pos = point3D(argument[0], argument[1], argument[2])
 	normal = vec3(argument[3], argument[4], argument[5])
-	texcoord = point2D(argument[6], argument[7])
+	texcoord = vec2(argument[6], argument[7])
 	if (argument_count > 8)
 		color = argument[8]
 	else

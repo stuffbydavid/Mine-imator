@@ -1,5 +1,5 @@
-/// action_lib_repeat_toggle(repeat)
-/// @arg repeat
+/// action_lib_block_repeat_enable(enable)
+/// @arg enable
 
 var rep;
 
@@ -10,12 +10,12 @@ else if (history_redo)
 else
 {
 	rep = argument0
-	history_set_var(action_lib_repeat_toggle, temp_edit.repeat_toggle, rep, false)
+	history_set_var(action_lib_block_repeat_enable, temp_edit.block_repeat_enable, rep, false)
 }
 
 with (temp_edit)
 {
-	repeat_toggle = rep
+	block_repeat_enable = rep
 	temp_update_block()
 	temp_update_rot_point()
 }

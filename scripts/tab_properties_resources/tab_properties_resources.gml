@@ -76,6 +76,13 @@ if (res_edit.type = "pack")
 		}
 	}
 }
+else if (res_edit.type = "itemsheet")
+{
+	// Sheet
+	tab_control_checkbox()
+	draw_checkbox("resourcesisitemsheet", dx, dy, res_edit.is_item_sheet, action_res_is_item_sheet)
+	tab_next()
+}
 
 if (res_edit.filename != "") // Filename
 {

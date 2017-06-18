@@ -106,7 +106,7 @@ if (shader_alpha > 0)
 				if (type = "block")
 					render_world_block(temp.block_vbuffer, res)
 				else if (temp.scenery)
-					render_world_scenery(temp.scenery, res, temp.repeat_toggle, temp.repeat_x, temp.repeat_y, temp.repeat_z)
+					render_world_scenery(temp.scenery, res, temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			   

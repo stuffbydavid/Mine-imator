@@ -52,7 +52,7 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-item_sheet_texture = texture_surface(surf)
+item_texture = texture_surface(surf)
 
 surface_free(surf)
 ds_list_destroy(texlist)

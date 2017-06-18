@@ -1093,8 +1093,6 @@ libraryitemchange: Change
 libraryitemchangetip: Change the item image.
 libraryitemtex: Image
 libraryitemtextip: Choose a new grid of items from an image to use.
-libraryitemsheet: Use as sheet
-libraryitemsheettip: Use the selected image as a sheet of 16x16 items.
 libraryitem3d: 3D item
 libraryitem3dtip: Whether this is a flat or thick item.
 libraryitemfacecamera: Face camera
@@ -1113,8 +1111,8 @@ librarybodypartchange: Change
 librarybodypartchangetip: Change the character model or body part.
 librarybodypartskin: Texture
 librarybodypartskintip: Change the skin or texture the part uses.
-libraryrepeattoggle: Repeat
-libraryrepeattoggletip: Activate repeating in any direction.
+libraryrepeat: Repeat
+libraryrepeattip: Activate repeating in any direction.
 libraryrepeatx: X
 libraryrepeatxtip: The number of times the block or scenery should appear across the X axis.
 libraryrepeaty: Y
@@ -1600,6 +1598,8 @@ resourcespackparticlesheet: Particle sheet
 resourcespacksuntexture: Sun texture
 resourcespackmoontexture: Moon texture
 resourcespackcloudtexture: Cloud texture
+resourcesisitemsheet: Use as sheet
+resourcesisitemsheettip: Use the selected image as a sheet of multiple images.
 resourcesfilename: Filename
 resourcesfilenameopen: Open
 resourcesfilenameopentip: Open the file of this resource.

@@ -5,7 +5,7 @@ block_vbuffer_start()
 
 with (mc_builder)
 {
-	build_size = test(other.repeat_toggle, vec3(other.repeat_x, other.repeat_y, other.repeat_z), vec3(1, 1, 1))
+	build_size = test(other.block_repeat_enable, other.block_repeat, vec3(1))
 	
 	// Set blocks
 	array3D_fill(block_id, build_size, other.block_id)

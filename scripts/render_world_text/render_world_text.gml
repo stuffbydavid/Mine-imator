@@ -5,7 +5,7 @@
 /// @arg resource
 
 var vbuffer, tex, facecamera, res;
-var rot, sca;
+var rot, sca, mipmap;
 vbuffer = argument0
 tex = argument1
 facecamera = argument2
@@ -27,7 +27,11 @@ if (!res.font_minecraft)
 matrix_add_offset()
 matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, sca))
 
+mipmap = shader_texture_filter_mipmap
+shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
 shader_texture = tex
-shader_use()
 
+shader_use()
 vbuffer_render(vbuffer)
+
+shader_texture_filter_mipmap = mipmap

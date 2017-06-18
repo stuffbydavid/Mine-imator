@@ -12,8 +12,7 @@ to.char_model = char_model
 to.char_bodypart = char_bodypart
 
 to.item_tex = item_tex
-to.item_sheet = item_sheet
-to.item_n = item_n
+to.item_name = item_name
 to.item_3d = item_3d
 to.item_face_camera = item_face_camera
 to.item_bounce = item_bounce
@@ -24,10 +23,8 @@ to.block_tex = block_tex
 
 to.scenery = scenery
 
-to.repeat_toggle = repeat_toggle
-to.repeat_x = repeat_x
-to.repeat_y = repeat_y
-to.repeat_z = repeat_z
+to.block_repeat_enable = block_repeat_enable
+to.block_repeat = array_copy_1d(block_repeat)
 
 to.shape_tex = shape_tex
 to.shape_tex_mapped = shape_tex_mapped
