@@ -1,0 +1,1 @@
+minecraft_version_event_create()

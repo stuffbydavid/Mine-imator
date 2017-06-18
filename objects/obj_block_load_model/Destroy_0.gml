@@ -1,0 +1,1 @@
+block_load_model_event_destroy()
