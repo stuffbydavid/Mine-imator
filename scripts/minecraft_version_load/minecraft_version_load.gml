@@ -7,10 +7,13 @@
 
 var version, fname, err;
 version = argument0
-fname = versions_directory + version + ".version"
+fname = versions_directory + version + ".mcversion"
 
 if (!file_exists_lib(fname))
+{
+	log("Could not find version file", fname)
 	return false
+}
 	
 log("Loading version", version)
 
@@ -31,9 +34,12 @@ if (!file_exists_lib(versions_directory + pack))
 //zip_import(versions_directory + pack)
 
 var format = versionmap[?"format"];
-if (format > minecraft_load_format)
+if (!is_real(format))
+	format = minecraft_version_1
+
+if (format > minecraft_version_format)
 {
-	error("Too new")
+	error("Too new") // TODO
 	return false
 }
 

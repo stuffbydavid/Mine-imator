@@ -7074,7 +7074,7 @@
             "Key": "88e82aa6-468c-4fbe-9dca-852cf9243bd4",
             "Value": {
                 "id": "19aa5643-f687-4eb8-8580-2be0ff73ad8c",
-                "resourcePath": "datafiles_yy\\Data\\Languages\\english.txt.yy",
+                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milang.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -9123,6 +9123,14 @@
             "Value": {
                 "id": "4067b890-6798-4b2b-822b-ab4ea3fc3e71",
                 "resourcePath": "scripts\\temp_update_rot_point\\temp_update_rot_point.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "ab5871de-e7fc-4d29-9663-7d2484c48aa7",
+            "Value": {
+                "id": "011d27e4-c1b9-40b7-aeb5-09d2037eaa15",
+                "resourcePath": "scripts\\language_load_map\\language_load_map.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12058,7 +12066,7 @@
             "Key": "e55d2190-9ec0-4b90-8928-ac59ced9d21b",
             "Value": {
                 "id": "89877751-a7e5-4c4f-8302-9bd99b4502f2",
-                "resourcePath": "datafiles_yy\\Data\\Versions\\1.12.version.yy",
+                "resourcePath": "datafiles_yy\\Data\\Versions\\1.12.mcversion.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -14176,6 +14184,7 @@
         "4a394d43-a11b-48ed-86d2-ab2299bf8b66",
         "fa572432-87b7-47d1-8aa1-f0c2e5841038",
         "97297622-b963-4479-8f1d-2322e03ed7b0",
+        "ab5871de-e7fc-4d29-9663-7d2484c48aa7",
         "6c782a3f-296c-4caf-83c3-4288ebd1dbf9",
         "af7d160c-fe5b-4240-9c7e-d68e2268580d",
         "1320f297-eb21-46e7-90f8-54d3f3243eab",

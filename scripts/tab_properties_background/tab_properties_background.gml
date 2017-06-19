@@ -204,7 +204,7 @@ tab_next()
 
 // Show fog
 tab_control_checkbox()
-draw_checkbox("backgroundfogshow", dx, dy, background_fog_show, action_background_fog_show)
+draw_checkbox("backgroundfog", dx, dy, background_fog_show, action_background_fog_show)
 
 if (background_fog_show)
 {

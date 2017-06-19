@@ -2,11 +2,11 @@
 	"version": "1.12",
 	"pack": "1.12.zip",
 	"characters": [
-		"human.model",
-		"slime.model"
+		"human.mimodel",
+		"slime.mimodel"
 	],
 	"special_blocks": [
-		"chest.model"
+		"chest.mimodel"
 	],
 	"blocks": [
 		{
@@ -970,7 +970,7 @@
 		},
 		{
 			"id": 99,
-			"name": "brownmushroom",
+			"name": "brownmushroomblock",
 			"states": "brown_mushroom_block.json",
 			"set": "variant=all_inside",
 			"data": {
@@ -990,7 +990,7 @@
 		},
 		{
 			"id": 100,
-			"name": "redmushroom",
+			"name": "redmushroomblock",
 			"states": "red_mushroom_block.json",
 			"set": "variant=all_inside",
 			"data": {

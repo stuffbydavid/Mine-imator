@@ -12,6 +12,7 @@ else if (history_redo)
 else
 {
 	val = argument0
+	add = argument1
 	history_set_var(action_lib_pc_type_color_mix_time, ptype_edit.color_mix_time, ptype_edit.color_mix_time * add + val, true)
 }
 

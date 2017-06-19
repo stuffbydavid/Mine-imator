@@ -142,9 +142,8 @@ switch (temp_edit.type)
 	
 	case "block":
 	{
-		var wid = text_max_width("libraryblockchange") + 20;
-		
 		// Block
+		var wid = text_max_width("libraryblockchange") + 20;
 		tab_control(24)
 		draw_label(text_get("typeblock") + ":", dx, dy + 12, fa_left, fa_middle)
 		draw_label(block_get_name(temp_edit.block_id, temp_edit.block_data), dx + capwid, dy + 12, fa_left, fa_middle)
@@ -162,9 +161,8 @@ switch (temp_edit.type)
 	
 	case "bodypart":
 	{
-		var wid = text_max_width("librarybodypartchange") + 20;
-		
 		// Model
+		var wid = text_max_width("librarybodypartchange") + 20;
 		tab_control(24)
 		draw_label(text_get("typebodypart") + ":", dx, dy + 12, fa_left, fa_middle)
 		//draw_label(text_get("librarybodypartof", text_get(temp_edit.char_model.part_name[temp_edit.char_bodypart]), text_get(temp_edit.char_model.name)), dx + capwid, dy + 12, fa_left, fa_middle)
@@ -182,6 +180,7 @@ switch (temp_edit.type)
 	
 	case "particles":
 	{
+		// Open editor
 		var wid = text_max_width("libraryparticleeditoropen") + 20;
 		tab_control(24)
 		if (draw_button_normal("libraryparticleeditoropen", dx + floor(dw / 2-wid / 2), dy, wid, 24, e_button.TEXT, template_editor.show, true, true))

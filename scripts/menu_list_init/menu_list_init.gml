@@ -459,10 +459,10 @@ switch (menu_name)
 	case "projectvideosize":
 	case "exportmovievideosize":
 	case "exportimageimagesize":
-	case "frameeditorcamvideosize":
+	case "frameeditorcameravideosize":
 	{
-		if (menu_name = "frameeditorcamvideosize")
-			menu_add_item(null, text_get("frameeditorcamvideosizeuseproject"))
+		if (menu_name = "frameeditorcameravideosize")
+			menu_add_item(null, text_get("frameeditorcameravideosizeuseproject"))
 		with (obj_videotemplate)
 			menu_add_item(id, name + " (" + string(width) + "x" + string(height) + ")")
 		menu_add_item(0, text_get("projectvideosizecustom"))

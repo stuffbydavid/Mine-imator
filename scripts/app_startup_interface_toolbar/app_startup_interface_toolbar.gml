@@ -53,7 +53,7 @@ with (bench_settings)
 	iid = 0
 	temp_init()
 	temp_particles_init()
-	char_model = mc_version.char_model_map[?"human.model"]
+	char_model = mc_version.char_model_map[?"human.mimodel"]
 	char_skin = res_def
 	item_tex = res_def
 	block_tex = res_def

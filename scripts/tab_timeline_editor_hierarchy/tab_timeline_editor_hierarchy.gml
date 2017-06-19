@@ -34,7 +34,7 @@ if (!tl_edit.part_of)
 if (par != app)
 {
 	tab_control(18)
-	draw_label(text_get("timelineeditorinherit"), dx, dy)
+	draw_label(text_get("timelineeditorinheritinherit"), dx, dy)
 	tab_next()
 	
 	// Inherit position/rotation/scale

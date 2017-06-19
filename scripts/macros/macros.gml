@@ -13,8 +13,8 @@
 #macro minecraft_version			"1.12"
 
 // Minecraft version format
-#macro minecraft_load_1			1
-#macro minecraft_load_format	minecraft_load_1
+#macro minecraft_version_1			1
+#macro minecraft_version_format		minecraft_version_1
 
 // Directories
 #macro file_directory			game_save_id
@@ -25,10 +25,10 @@
 #macro particles_directory		working_directory + "Particles\\"
 #macro languages_directory		data_directory + "Languages\\"
 #macro versions_directory		data_directory + "Versions\\"
-#macro minecraft_version_file	versions_directory + minecraft_version + ".version"
+#macro minecraft_version_file	versions_directory + minecraft_version + ".mcversion"
 
 // Files
-#macro language_file			languages_directory + "english.txt"
+#macro language_file			languages_directory + "english.milang"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.file"
 #macro recent_file				data_directory + "recent.file"
