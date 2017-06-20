@@ -18,10 +18,7 @@ while (!is_undefined(key))
 	if (string_contains(key, "/"))
 		language_load_map(pre + string_replace(key, "/", ""), smap[?key], dmap)
 	else
-	{
 		dmap[?pre + key] = smap[?key]
-		log(pre+key, smap[?key])
-	}
 		
 	key = ds_map_find_next(smap, key)
 }

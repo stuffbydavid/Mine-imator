@@ -7,7 +7,7 @@
 
 var version, fname, err;
 version = argument0
-fname = versions_directory + version + ".mcversion"
+fname = minecraft_directory + version + ".mcversion"
 
 if (!file_exists_lib(fname))
 {
@@ -25,13 +25,13 @@ if (versionmap < 0)
 }
 
 var pack = versionmap[?"pack"];
-if (!file_exists_lib(versions_directory + pack))
+if (!file_exists_lib(minecraft_directory + pack))
 {
-	log("Could not find pack", versions_directory + pack)
+	log("Could not find pack", minecraft_directory + pack)
 	return false
 }
 
-//zip_import(versions_directory + pack)
+//zip_import(minecraft_directory + pack)
 
 var format = versionmap[?"format"];
 if (!is_real(format))

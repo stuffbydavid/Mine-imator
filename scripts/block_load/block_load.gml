@@ -5,11 +5,12 @@ var map = argument0;
 
 with (new(obj_block))
 {
-	var name, type, defaultname, states;
+	var name, type, defaultname, states, brightness;
 	name = ""
 	type = ""
 	defaultname = ""
 	states = ""
+	brightness = 0
 	vars = null
 	
 	if (is_string(map[?"name"]))
@@ -18,16 +19,36 @@ with (new(obj_block))
 	if (is_string(map[?"type"]))
 		type = map[?"type"]
 		
-	if (is_string(map[?"defaultname"]))
-		defaultname = map[?"defaultname"]
+	if (is_string(map[?"default_name"]))
+		defaultname = map[?"default_name"]
 	
 	if (is_string(map[?"states"]))
 		states = map[?"states"]
+	
+	if (is_real(map[?"brightness"]))
+		brightness = map[?"brightness"]
 	
 	if (is_string(map[?"set"]))
 	{
 		vars = ds_map_create()
 		block_load_vars(vars, map[?"set"])
+	}
+	
+	var windmap = map[?"wind"];
+	wind_axis = e_vertex_wave.NONE
+	wind_zroot = null
+	if (is_real(windmap) && ds_exists(windmap, ds_type_map))
+	{
+		if (is_string(windmap[?"axis"]))
+		{
+			if (windmap[?"axis"] = "y")
+				wind_axis = e_vertex_wave.Z_ONLY
+			else
+				wind_axis = e_vertex_wave.ALL
+		}
+		
+		if (is_real(windmap[?"yroot"]))
+			wind_zroot = windmap[?"yroot"]
 	}
 	
 	// Set data fields
@@ -37,6 +58,7 @@ with (new(obj_block))
 		data_type[d] = type
 		data_default_name[d] = defaultname
 		data_states[d] = states
+		data_brightness[d] = brightness
 		data_vars[d] = vars
 	}
 		

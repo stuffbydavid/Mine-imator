@@ -84,6 +84,14 @@ enum e_block_vbuffer
 	amount
 }
 
+// Vertex wave
+enum e_vertex_wave
+{
+	NONE,
+	Z_ONLY,
+	ALL,
+}
+
 // NBT
 enum e_nbt
 {

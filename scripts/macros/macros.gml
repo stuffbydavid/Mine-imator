@@ -24,8 +24,8 @@
 #macro skins_directory			working_directory + "Skins\\"
 #macro particles_directory		working_directory + "Particles\\"
 #macro languages_directory		data_directory + "Languages\\"
-#macro versions_directory		data_directory + "Versions\\"
-#macro minecraft_version_file	versions_directory + minecraft_version + ".mcversion"
+#macro minecraft_directory		data_directory + "Minecraft\\"
+#macro minecraft_version_file	minecraft_directory + minecraft_version + ".mcversion"
 
 // Files
 #macro language_file			languages_directory + "english.milang"
@@ -41,10 +41,10 @@
 #macro unzip_directory			file_directory + "unzip\\"
 
 // Minecraft structure
-#macro minecraft_directory		unzip_directory + "assets\\minecraft\\"
-#macro models_directory			minecraft_directory + "models\\"
-#macro blockstates_directory	minecraft_directory + "blockstates\\"
-#macro textures_directory		minecraft_directory + "textures\\"
+#macro assets_directory			unzip_directory + "assets\\minecraft\\"
+#macro models_directory			assets_directory + "models\\"
+#macro blockstates_directory	assets_directory + "blockstates\\"
+#macro textures_directory		assets_directory + "textures\\"
 #macro character_directory		models_directory + "character\\"
 #macro special_block_directory	models_directory + "special_block\\"
 #macro block_directory			models_directory + "block\\"

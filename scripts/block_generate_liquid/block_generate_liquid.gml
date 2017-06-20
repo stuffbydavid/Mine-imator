@@ -8,6 +8,9 @@ var cornerz, minz, averagez;
 bid = snap_floor(block_id_current, 2)
 name = mc_version.block_map[?bid].data_name[block_data_current]
 
+if (!app.setting_liquid_animation)
+	vertex_wave = e_vertex_wave.NONE
+
 topflow = true
 angle = 0
 
@@ -50,7 +53,14 @@ slotflowpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) 
 slotflowsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
 
 // Falling
-if (block_data_current div 8)
+var falling = (block_data_current div 8);
+if (!build_edge[e_dir.UP] && snap_floor(array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(e_dir.UP))), 2) = bid)
+{
+	falling = true
+	vertex_wave = e_vertex_wave.NONE
+}
+
+if (falling)
 {
 	for (var d = 0; d < 4; d++)
 		cornerz[d] = block_size

@@ -8,7 +8,7 @@
         "9b48ce10-ab9e-4f06-b9cc-6bebc14554b3"
     ],
     "filterType": "GMIncludedFile",
-    "folderName": "Versions",
+    "folderName": "Minecraft",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

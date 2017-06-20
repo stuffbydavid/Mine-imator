@@ -72,9 +72,8 @@
 				}
 			},
 			"wind": {
-				"xz": true,
-				"y": true,
-				"aty": 16
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -85,22 +84,40 @@
 		{
 			"id": 8,
 			"name": "water",
-			"type": "liquid"
+			"type": "liquid",
+			"wind": {
+				"axis": "y",
+				"yroot": 0
+			}
 		},
 		{
 			"id": 9,
 			"name": "stationarywater",
-			"type": "liquid"
+			"type": "liquid",
+			"wind": {
+				"axis": "y",
+				"yroot": 0
+			}
 		},
 		{
 			"id": 10,
 			"name": "lava",
-			"type": "liquid"
+			"type": "liquid",
+			"brightness": 1,
+			"wind": {
+				"axis": "y",
+				"yroot": 0
+			}
 		},
 		{
 			"id": 11,
 			"name": "stationarylava",
-			"type": "liquid"
+			"type": "liquid",
+			"brightness": 1,
+			"wind": {
+				"axis": "y",
+				"yroot": 0
+			}
 		},
 		{
 			"id": 12,
@@ -159,6 +176,9 @@
 					"2": { "name": "birchleaves", "states": "birch_leaves.json" },
 					"3": { "name": "jungleleaves", "states": "jungle_leaves.json" }
 				}
+			},
+			"wind": {
+				"axis": "all"
 			}
 		},
 		{
@@ -280,12 +300,20 @@
 			"data": {
 				"1": { "name": "tallgrass", "states": "tall_grass.json" },
 				"2": { "name": "fern", "states": "fern.json" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
 			"id": 32,
 			"name": "deadbush",
-			"states": "dead_bush.json"
+			"states": "dead_bush.json",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			}
 		},
 		{
 			"id": 33,
@@ -327,7 +355,11 @@
 		{
 			"id": 37,
 			"name": "dandelion",
-			"states": "dandelion.json"
+			"states": "dandelion.json",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			}
 		},
 		{
 			"id": 38,
@@ -342,6 +374,10 @@
 				"6": { "name": "whitetulip", "states": "white_tulip.json" },
 				"7": { "name": "pinktulip", "states": "pink_tulip.json" },
 				"8": { "name": "oxeyedaisy", "states": "oxeye_daisy.json" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -438,13 +474,15 @@
 				"2": { "set": "facing=west" },
 				"3": { "set": "facing=south" },
 				"4": { "set": "facing=north" }
-			}
+			},
+			"brightness": 1
 		},
 		{
 			"id": 51,
 			"name": "fire",
 			"type": "fire",
-			"states": "fire.json"
+			"states": "fire.json",
+			"brightness": 1
 		},
 		{
 			"id": 52,
@@ -504,6 +542,10 @@
 				"5": { "set": "age=5" },
 				"6": { "set": "age=6" },
 				"7": { "set": "age=7" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -700,7 +742,8 @@
 		{
 			"id": 74,
 			"name": "glowingredstoneore",
-			"states": "lit_redstone_ore.json"
+			"states": "lit_redstone_ore.json",
+			"brightness": 1
 		},
 		{
 			"id": 75,
@@ -726,7 +769,8 @@
 				"2": { "set": "facing=south" },
 				"3": { "set": "facing=west" },
 				"4": { "set": "facing=north" }
-			}
+			},
+			"brightness": 1
 		},
 		{
 			"id": 77,
@@ -826,7 +870,8 @@
 		{
 			"id": 89,
 			"name": "glowstone",
-			"states": "glowstone.json"
+			"states": "glowstone.json",
+			"brightness": 1
 		},
 		{
 			"id": 90,
@@ -848,7 +893,8 @@
 				"1": { "set": "facing=west" },
 				"2": { "set": "facing=north" },
 				"3": { "set": "facing=east" }
-			}
+			},
+			"brightness": 1
 		},
 		{
 			"id": 92,
@@ -902,7 +948,8 @@
 					"2": { "set": "delay=3" },
 					"3": { "set": "delay=4" }
 				}
-			}
+			},
+			"brightness": 1
 		},
 		{
 			"id": 95,
@@ -1040,6 +1087,10 @@
 				"4": { "set": "age=4" },
 				"5": { "set": "age=5" },
 				"6": { "set": "age=6" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -1055,6 +1106,10 @@
 				"4": { "set": "age=4" },
 				"5": { "set": "age=5" },
 				"6": { "set": "age=6" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -1185,6 +1240,10 @@
 				"0": { "set": "age=0" },
 				"1": { "set": "age=1" },
 				"2": { "set": "age=2" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -1486,6 +1545,10 @@
 				"4": { "set": "age=4" },
 				"5": { "set": "age=5" },
 				"6": { "set": "age=6" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -1501,6 +1564,10 @@
 				"4": { "set": "age=4" },
 				"5": { "set": "age=5" },
 				"6": { "set": "age=6" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -1625,11 +1692,11 @@
 				},
 				"0x4": {
 					"0": { "set": "mode=compare" },
-					"1": { "set": "mode=subtract" }
+					"1": { "set": "mode=subtract", "brightness": 1 }
 				},
 				"0x8": {
 					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"1": { "set": "powered=true", "brightness": 1 }
 				}
 			}
 		},
@@ -1659,7 +1726,8 @@
 		{
 			"id": 152,
 			"name": "blockofredstone",
-			"states": "redstone_block.json"
+			"states": "redstone_block.json",
+			"brightness": 1
 		},
 		{
 			"id": 153,
@@ -1797,6 +1865,9 @@
 					"0": { "name": "acacialeaves", "states": "acacia_leaves.json" },
 					"1": { "name": "darkoakleaves", "states": "dark_oak_leaves.json" }
 				}
+			},
+			"wind": {
+				"axis": "all"
 			}
 		},
 		{
@@ -1952,6 +2023,10 @@
 				"3": { "name": "largefern", "states": "double_fern.json" },
 				"4": { "name": "rosebush", "states": "double_rose.json" },
 				"5": { "name": "peony", "states": "paeonia.json" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -2286,7 +2361,8 @@
 				"3": { "set": "facing=south" },
 				"4": { "set": "facing=west" },
 				"5": { "set": "facing=north" }
-			}
+			},
+			"brightness": 1
 		},
 		{
 			"id": 199,
@@ -2375,6 +2451,10 @@
 				"0": { "set": "age=0" },
 				"1": { "set": "age=1" },
 				"2": { "set": "age=2" }
+			},
+			"wind": {
+				"axis": "all",
+				"yroot": 0
 			}
 		},
 		{
@@ -2432,7 +2512,8 @@
 		{
 			"id": 213,
 			"name": "magmablock",
-			"states": "magma.json"
+			"states": "magma.json",
+			"brightness": 1
 		},
 		{
 			"id": 214,

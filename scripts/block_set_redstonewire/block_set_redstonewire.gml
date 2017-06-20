@@ -9,6 +9,7 @@ else
 	red = 0.6 * pow + 0.4
 	
 block_color = make_color_rgb(red * 255, 0, 0)
+vertex_brightness = pow
 
 // Check each direction for connections
 for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)

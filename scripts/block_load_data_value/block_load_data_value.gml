@@ -9,11 +9,12 @@ map = argument1
 bitmask = argument2
 bitbase = argument3
 
-var dataname, datatype, datadefaultname, datastates, datavars;
+var dataname, datatype, datadefaultname, datastates, databrightness, datavars;
 dataname = ""
 datatype = ""
 datadefaultname = ""
-datastates = "" 
+datastates = ""
+databrightness = null
 datavars = null
 
 if (is_string(map[?"name"]))
@@ -22,11 +23,14 @@ if (is_string(map[?"name"]))
 if (is_string(map[?"type"]))
 	datatype = map[?"type"]
 		
-if (is_string(map[?"defaultname"]))
-	datadefaultname = map[?"defaultname"]
+if (is_string(map[?"default_name"]))
+	datadefaultname = map[?"default_name"]
 	
 if (is_string(map[?"states"]))
 	datastates = map[?"states"] // Store filename
+	
+if (is_real(map[?"brightness"]))
+	databrightness = map[?"brightness"]
 	
 if (is_string(map[?"set"]))
 {
@@ -45,12 +49,19 @@ if (bitmask > 0)
 		
 		if (dataname != "")
 			data_name[d] = dataname
+			
 		if (datatype != "")
 			data_type[d] = datatype
+			
 		if (datadefaultname != "")
 			data_default_name[d] = datadefaultname
+			
 		if (datastates != "")
 			data_states[d] = datastates
+			
+		if (databrightness != null)
+			data_brightness[d] = databrightness
+			
 		if (datavars != null)
 		{
 			if (data_vars[d] = vars)
@@ -67,12 +78,19 @@ else
 {
 	if (dataname != "")
 		data_name[value] = dataname
+		
 	if (datatype != "")
 		data_type[value] = datatype
+		
 	if (datadefaultname != "")
 		data_default_name[value] = datadefaultname
+		
 	if (datastates != "")
 		data_states[value] = datastates
+		
+	if (databrightness != null)
+		data_brightness[d] = databrightness
+			
 	if (datavars != null)
 	{
 		if (data_vars[value] = vars)

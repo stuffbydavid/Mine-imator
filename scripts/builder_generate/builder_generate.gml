@@ -5,6 +5,18 @@ block_id_current = array3D_get(block_id, build_pos)
 block_data_current = array3D_get(block_data, build_pos)
 block_pos = point3D_mul(build_pos, block_size)
 block_color = null
+
+var block = mc_version.block_map[?block_id_current];
+if (is_undefined(block))
+	return 0
+	
+// Set wind
+vertex_wave = block.wind_axis
+if (block.wind_zroot != null)
+	vertex_wave_minz = block_pos[Z] + block.wind_zroot
+	
+// Set brightness
+vertex_brightness = block.data_brightness[block_data_current]
 			
 // Check edges
 build_edge[e_dir.EAST]	= (build_pos[X] = build_size[X] - 1)
@@ -35,3 +47,8 @@ if (models != null)
 	else // Use script for triangles
 		script_execute(models)
 }
+
+// Reset wind and brightness
+vertex_wave = e_vertex_wave.NONE
+vertex_wave_minz = null
+vertex_brightness = 0
