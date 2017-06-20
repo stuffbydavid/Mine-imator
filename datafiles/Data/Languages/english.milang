@@ -1776,8 +1776,8 @@
 		"lockbendlowertip": "The object is locked to the lower half of the body part.",
 		"lockbendupper": "Upper half",
 		"lockbenduppertip": "The object is locked to the upper half of the body part.",
+		"inherit": "Inherit...",
 		"inherit/": {
-			"inherit": "Inherit...",
 			"position": "Position",
 			"positiontip": "Whether the object will inherit the position of the parent.",
 			"rotation": "Rotation",
