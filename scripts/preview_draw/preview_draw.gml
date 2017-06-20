@@ -177,7 +177,7 @@ if (preview.update)
 						
 					var displaysize = vec3_mul(vec3_mul(sch.scenery_size, rep), point3D(block_size, block_size, block_size));
 					prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-					matrix_offset = vec3_mul(displaysize, point3D(-0.5, -0.5, -0.5))
+					matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 					break
 					
 				case "bodypart":

@@ -39,7 +39,8 @@ var wavexy, wavez;
 wavexy = 0
 wavez = 0
 
-if (vertex_wave_minz = null || pos[@ Z] > vertex_wave_minz)
+if ((vertex_wave_minz = null || pos[@ Z] > vertex_wave_minz) &&
+	(vertex_wave_maxz = null || pos[@ Z] < vertex_wave_maxz))
 {
 	if (vertex_wave = e_vertex_wave.ALL)
 	{

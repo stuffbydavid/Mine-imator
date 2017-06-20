@@ -67,6 +67,31 @@ if (falling)
 	minz = block_size
 	averagez = block_size
 	topflow = false
+	
+	for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
+	{
+		if (build_edge[d])
+			continue
+			
+		// Check below and enable wave at bottom vertices
+		var lookpos = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.DOWN), dir_get_vec3(d)))
+		if (!build_edge[e_dir.DOWN] && snap_floor(array3D_get(block_id, lookpos), 2) = bid && array3D_get(block_data, lookpos) < 8)
+		{
+			vertex_wave = e_vertex_wave.Z_ONLY
+			vertex_wave_minz = null
+			vertex_wave_maxz = block_pos[Z] + 1
+			break
+		}
+		
+		// Check to side and enable wave at top vertices
+		lookpos = point3D_add(build_pos, dir_get_vec3(d));
+		if (snap_floor(array3D_get(block_id, lookpos), 2) = bid && array3D_get(block_data, lookpos) < 8)
+		{
+			vertex_wave = e_vertex_wave.Z_ONLY
+			vertex_wave_minz = block_pos[Z] + 1
+			break
+		}
+	}
 }
 else
 {
@@ -278,7 +303,7 @@ if (topflow)
 else
 	topmidtex = vec2_mul(point2D_add(topmidtex, slotstillpos), slotstillsize)
 
-mat = matrix_create(mc_builder.block_pos, vec3(0), vec3(1))
+mat = matrix_create(block_pos, vec3(0), vec3(1))
 
 vbuffer_current = vbuffer[dep, vbuf]
 

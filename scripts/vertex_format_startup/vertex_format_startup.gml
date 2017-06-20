@@ -1,6 +1,6 @@
 /// vertex_format_startup()
 
-globalvar vertex_format, vertex_wave, vertex_wave_minz, vertex_brightness;
+globalvar vertex_format, vertex_wave, vertex_wave_minz, vertex_wave_maxz, vertex_brightness;
 globalvar matrix_offset;
 
 log("Create vertex format")
@@ -14,4 +14,5 @@ vertex_format = vertex_format_end()
 
 vertex_wave = e_vertex_wave.NONE
 vertex_wave_minz = null
+vertex_wave_maxz = null
 vertex_brightness = 0

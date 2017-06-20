@@ -30,7 +30,12 @@ build_edge[e_dir.DOWN]	= (build_pos[Z] = 0)
 for (var f = 0; f < e_dir.amount; f++)
 {
 	if (build_edge[f])
-		block_render_models_dir[f] = null
+	{
+		if (app.setting_schematic_remove_edges && (build_size[X] > 10 && build_size[Y] > 10))
+			block_render_models_dir[f] = array(solid_model)
+		else
+			block_render_models_dir[f] = null
+	}
 	else
 		block_render_models_dir[f] = array3D_get(block_render_models, point3D_add(build_pos, dir_get_vec3(f)))
 }
