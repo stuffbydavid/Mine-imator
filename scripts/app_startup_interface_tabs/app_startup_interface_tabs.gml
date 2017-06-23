@@ -85,6 +85,9 @@ with (properties)
 		sortlist_column_add(list, "restype", 0.45)
 		sortlist_column_add(list, "rescount", 0.75)
 		sortlist_add(list, res_def)
+		
+		tbx_item_sheet_width = new_textbox_integer()
+		tbx_item_sheet_height = new_textbox_integer()
 	}
 }
 

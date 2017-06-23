@@ -82,6 +82,22 @@ else if (res_edit.type = "itemsheet")
 	tab_control_checkbox()
 	draw_checkbox("resourcesisitemsheet", dx, dy, res_edit.is_item_sheet, action_res_is_item_sheet)
 	tab_next()
+	
+	// Sheet size
+	if (res_edit.is_item_sheet)
+	{
+		capwid = text_caption_width("resourcesitemsheetsizewidth", "resourcesitemsheetsizeheight")
+		
+		axis_edit = X
+		tab_control_dragger()
+		draw_dragger("resourcesitemsheetsizewidth", dx, dy, dw, res_edit.item_sheet_size[X], 1 / 10, 1, no_limit, item_sheet_width, 1, tab.resources.tbx_item_sheet_width, action_res_item_sheet_size, capwid)
+		tab_next()
+		
+		axis_edit = Y
+		tab_control_dragger()
+		draw_dragger("resourcesitemsheetsizeheight", dx, dy, dw, res_edit.item_sheet_size[Y], 1 / 10, 1, no_limit, item_sheet_height, 1, tab.resources.tbx_item_sheet_height, action_res_item_sheet_size, capwid)
+		tab_next()
+	}
 }
 
 if (res_edit.filename != "") // Filename

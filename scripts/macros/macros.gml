@@ -9,7 +9,7 @@
 #macro mineimator_version			"1.1.0"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017"
-#macro gm_runtime					"2.0.6.96"
+#macro gm_runtime					"2.0.7.110"
 #macro minecraft_version			"1.12"
 
 // Minecraft version format

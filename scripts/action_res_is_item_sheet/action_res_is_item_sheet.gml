@@ -15,5 +15,9 @@ else
 
 with (res_edit)
 	is_item_sheet = sheet
+	
+with (obj_template)
+	if (item_tex = res_edit)
+		temp_update_item()
 
 lib_preview.update = true

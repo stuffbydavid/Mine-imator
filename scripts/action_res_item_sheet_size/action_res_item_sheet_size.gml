@@ -17,6 +17,10 @@ else
 }
 
 with (res_edit)
-	res_edit.item_sheet_size[axis_edit] = res_edit.item_sheet_size[axis_edit] * add + val
+	item_sheet_size[axis_edit] = item_sheet_size[axis_edit] * add + val
 
+with (obj_template)
+	if (item_tex = res_edit)
+		temp_update_item()
+	
 lib_preview.update = true

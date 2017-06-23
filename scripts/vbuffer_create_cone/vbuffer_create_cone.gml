@@ -35,7 +35,7 @@ while (i < 1)
 	ip = i
 	i += 1 / detail
 	texsize = point2D_sub(tex2, tex1)
-	texmid = point2D_add(tex1, vec3_mul(texsize, 1 / 2))
+	texmid = point2D_add(tex1, vec2_mul(texsize, 1 / 2))
 	
 	n1x = cos(ip * pi * 2)
 	n1y = -sin(ip * pi * 2)

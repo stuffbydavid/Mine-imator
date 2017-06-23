@@ -1,5 +1,5 @@
 /// temp_update_item()
-/// @desc Generates the item vbuffer of the vbuffer.
+/// @desc Generates the item vbuffer of the template from the selected resource.
 
 var texsize, itempos, slotsize, slottexsize, slottex, slotpixel, size, scale;
 var p1, p2, p3, p4;

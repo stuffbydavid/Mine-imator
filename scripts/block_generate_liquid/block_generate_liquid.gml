@@ -74,8 +74,10 @@ if (falling)
 			continue
 			
 		// Check below and enable wave at bottom vertices
-		var lookpos = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.DOWN), dir_get_vec3(d)))
-		if (!build_edge[e_dir.DOWN] && snap_floor(array3D_get(block_id, lookpos), 2) = bid && array3D_get(block_data, lookpos) < 8)
+		var looksidedown = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.DOWN), dir_get_vec3(d)));
+		var lookside = point3D_add(build_pos, dir_get_vec3(d));
+		if (!build_edge[e_dir.DOWN] && snap_floor(array3D_get(block_id, looksidedown), 2) = bid && array3D_get(block_data, looksidedown) < 8 &&
+			snap_floor(array3D_get(block_id, lookside), 2) != bid)
 		{
 			vertex_wave = e_vertex_wave.Z_ONLY
 			vertex_wave_minz = null
@@ -84,8 +86,9 @@ if (falling)
 		}
 		
 		// Check to side and enable wave at top vertices
-		lookpos = point3D_add(build_pos, dir_get_vec3(d));
-		if (snap_floor(array3D_get(block_id, lookpos), 2) = bid && array3D_get(block_data, lookpos) < 8)
+		var looksideup = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.UP), dir_get_vec3(d)));
+		if (snap_floor(array3D_get(block_id, lookside), 2) = bid && array3D_get(block_data, lookside) < 8 &&
+			(build_edge[e_dir.UP] || snap_floor(array3D_get(block_id, looksideup), 2) != bid))
 		{
 			vertex_wave = e_vertex_wave.Z_ONLY
 			vertex_wave_minz = block_pos[Z] + 1

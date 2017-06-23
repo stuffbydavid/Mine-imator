@@ -600,6 +600,33 @@
 			"spark": "Spark"
 		}
 	},
+	"importfromworld/": {
+		"info": "Select a world from the dropdown list, then left click to create a box around the wished area. Right/Middle click: Move view, Mouse wheel: Zoom.",
+		"topdownview": "Top down view",
+		"crosssectionview": "Cross section view",
+		"noworld": "No world loaded",
+		"world": "World",
+		"worldopened": "This world is used by another process, probably Minecraft or MCEdit. Close them and try again.",
+		"loadingregion": "Loading region",
+		"overworld": "Overworld",
+		"nether": "Nether",
+		"end": "End",
+		"done": "Done",
+		"filters": "Filters",
+		"filtersalert": "Some blocks will be filtered!",
+		"filters/": {
+			"activate": "Activate filters",
+			"remove": "Remove filtered",
+			"keep": "Keep filtered",
+			"blocksremove": "Choose blocks to remove from the selection",
+			"blockskeep": "Choose blocks to keep from the selection",
+			"add": "Add",
+			"Remove": "Remove",
+			"ok": "OK"
+		},
+		"size": "(%1x%2x%3 (%4 blocks)",
+		"cancel": "Cancel"
+	},
 	"block/": {
 		"stone": "Stone",
 		"granite": "Granite",
@@ -1679,6 +1706,10 @@
 		},
 		"isitemsheet": "Use as sheet",
 		"isitemsheettip": "Use the selected image as a sheet of multiple images.",
+		"itemsheetsizewidth": "Items horizontally",
+		"itemsheetsizewidthtip": "The number of items this sheet contains horizontally.",
+		"itemsheetsizeheight": "Items vertically",
+		"itemsheetsizeheighttip": "The number of items this sheet contains horizontally.",
 		"filename": "Filename",
 		"filenameopen": "Open",
 		"filenameopentip": "Open the file of this resource."
@@ -1743,7 +1774,7 @@
 		"removekeyframestip": "Remove the selected keyframes.",
 		"exportkeyframestip": "Export the selected keyframes."
 	},
-	"timelineditor/": {
+	"timelineeditor/": {
 		"info": "Info",
 		"infotip": "Modify the information about the object.",
 		"name": "Name",

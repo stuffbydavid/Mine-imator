@@ -53,6 +53,7 @@ if (window_focus != string(tbx))
 if (app_mouse_box(xx + capwid, yy, wid - capwid, hei) && content_mouseon && window_focus != string(tbx))
 {
 	mouse_cursor = cr_size_we
+	
 	if (mouse_left_pressed)
 	{
 		window_focus = name
@@ -71,12 +72,14 @@ if (app_mouse_box(xx + capwid, yy, wid - capwid, hei) && content_mouseon && wind
 if (window_busy = name + "press")
 { 
 	mouse_cursor = cr_size_we
+	
 	if (!mouse_left) // Type
 	{
 		tbx.text = string_decimals(value)
 		window_focus = string(tbx)
 		window_busy = ""
 	}
+	
 	if (mouse_dx != 0)
 	{
 		dragger_drag_value = value
