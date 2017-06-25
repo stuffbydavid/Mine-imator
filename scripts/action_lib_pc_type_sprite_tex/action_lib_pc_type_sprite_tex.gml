@@ -18,7 +18,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res("particlesheet", fn)
+		res = new_res(fn, "particlesheet")
 		with (res)
 			res_load()
 	}

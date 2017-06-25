@@ -1704,8 +1704,6 @@
 			"moontexture": "Moon texture",
 			"cloudtexture": "Cloud texture"
 		},
-		"isitemsheet": "Use as sheet",
-		"isitemsheettip": "Use the selected image as a sheet of multiple images.",
 		"itemsheetsizewidth": "Items horizontally",
 		"itemsheetsizewidthtip": "The number of items this sheet contains horizontally.",
 		"itemsheetsizeheight": "Items vertically",
@@ -1751,6 +1749,20 @@
 		"oktip": "Confirm setting and close this popup.",
 		"cancel": "Cancel",
 		"canceltip": "Close this popup without importing the image."
+	},
+	"importitemsheet/": {
+		"caption": "Import item sheet",
+		"issheet": "Is item sheet",
+		"issheettip": "Whether this image is a grid of multiple items",
+		"info": "Number of items in the image",
+		"width": "Items horizontally",
+		"widthtip": "The number of items in the image sheet horizontally.",
+		"height": "Items vertically",
+		"heighttip": "The number of items in the image sheet verically.",
+		"ok": "OK",
+		"oktip": "Confirm setting and close this popup.",
+		"cancel": "Cancel",
+		"canceltip": "Close this popup without importing the item sheet."
 	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",

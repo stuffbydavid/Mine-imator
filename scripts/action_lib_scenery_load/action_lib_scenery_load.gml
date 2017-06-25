@@ -18,7 +18,7 @@ else
 		hobj = history_set(action_lib_scenery_load)
 	}
 	
-	res = new_res("schematic", fn)
+	res = new_res(fn, "schematic")
 	res.loaded=!res.replaced
 	with (res)
 		res_load()

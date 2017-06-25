@@ -1,6 +1,6 @@
-/// action_res_image_load(type, filename)
-/// @arg type
+/// action_res_image_load(filename, type)
 /// @arg filename
+/// @arg type
 
 if (history_undo)
 {
@@ -9,22 +9,35 @@ if (history_undo)
 }
 else
 {
-	var type, fn, hobj, res;
+	var fn, type, itemsheetsize, hobj, res;
 	
 	if (history_redo)
 	{
-		type = history_data.type
 		fn = history_data.fn
+		type = history_data.type
+		if (type = "itemsheet")
+			itemsheetsize = history_data.item_sheet_size
 	}
 	else
 	{
-		type = argument0
-		fn = argument1
+		fn = argument0
+		type = argument1
 		hobj = history_set(action_res_image_load)
+		
+		if (type = "itemsheet")
+		{
+			if (popup_importitemsheet.is_sheet)
+				itemsheetsize = popup_importitemsheet.sheet_size
+			else
+				type = "texture"
+		}
 	}
 	
-	res = new_res(type, fn)
+	res = new_res(fn, type)
 	res.loaded = true
+	if (type = "itemsheet")
+		res.item_sheet_size = itemsheetsize
+	
 	with (res)
 		res_load()
 	
@@ -32,8 +45,9 @@ else
 	{
 		with (hobj)
 		{
-			id.type = type
 			id.fn = fn
+			id.type = type
+			id.item_sheet_size = res.item_sheet_size
 			history_save_loaded()
 		}
 	}

@@ -11,8 +11,8 @@ colormap_grass_texture=texture_create(dir+"color_grass.png")
 log("colormap_foliage_texture")
 colormap_foliage_texture=texture_create(dir+"color_foliage.png")
 
-log("item_texture")
-item_texture=texture_create(dir+"items.png")
+//log("item_sheet_texture")
+//item_sheet_texture=texture_create(dir+"items.png")
 
 log("particles_texture")
 particles_texture[0]=texture_create(dir+"particles_sheet1.png")

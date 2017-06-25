@@ -15,7 +15,7 @@ else
 	else
 		fn = argument0
 		
-	res = new_res("sound", fn)
+	res = new_res(fn, "sound")
 	res.loaded = true
 	with (res)
 		res_load()

@@ -40,7 +40,11 @@ matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
 
 mipmap = shader_texture_filter_mipmap
 shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
-shader_texture = res.item_texture
+
+if (res.item_sheet_texture != null)
+	shader_texture = res.item_sheet_texture
+else
+	shader_texture = res.texture
 
 shader_use()
 vbuffer_render(vbuffer)

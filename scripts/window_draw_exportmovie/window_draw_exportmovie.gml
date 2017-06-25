@@ -26,10 +26,10 @@ draw_label(text_get("exportmovieframe", string(exportmovie_frame), string(totalf
 // Current surface
 framew = 600
 frameh = max(10, content_height - 150)
-framex = content_x + content_width / 2-framew / 2
+framex = content_x + content_width / 2 - framew / 2
 framey = content_y + 30
 
-draw_surface_box(exportmovie_surface, framex, framey, framew, frameh)
+draw_surface_box_center(exportmovie_surface, framex, framey, framew, frameh)
 	
 // Time left
 timeleftsecs = ceil((exportmovie_start + (current_time - exportmovie_start) / perc - current_time) / 1000)

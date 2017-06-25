@@ -42,11 +42,9 @@ else
 	is3d = true
 }
 
-if (preview.select.type = "particles" && app_mouse_box(xx + size - butw, yy + size - 24, butw, 24))
-	mouseon = false
-if (playbutton && app_mouse_box(xx + size - 48, yy + size - 24, 24, 24))
-	mouseon = false
-if (exportbutton && app_mouse_box(xx + size - 24, yy + size - 24, 24, 24))
+if ((preview.select.type = "particles" && app_mouse_box(xx + size - butw, yy + size - 24, butw, 24)) ||
+	(playbutton && app_mouse_box(xx + size - 48, yy + size - 24, 24, 24)) ||
+	(exportbutton && app_mouse_box(xx + size - 24, yy + size - 24, 24, 24)))
 	mouseon = false
 
 // Dragging controls
@@ -112,9 +110,8 @@ if (window_focus = string(preview))
 	}
 }
 
-if (!surface_exists(preview.surface) || surface_get_width(preview.surface) < 0)
-	preview.update = true
-if (preview.select.type = "particles" || (preview.select.type = "item" && preview.select.item_bounce))
+if (!surface_exists(preview.surface) || surface_get_width(preview.surface) < 0 ||
+	preview.select.type = "particles" || (preview.select.type = "item" && preview.select.item_bounce))
 	preview.update = true
 
 preview.surface = surface_require(preview.surface, size, size)
@@ -197,9 +194,11 @@ if (preview.update)
 			
 			prevcam_zoom /= preview.zoom
 			
-			proj_from[X] = lengthdir_x(prevcam_zoom, preview.xyangle) * lengthdir_x(1, preview.zangle)
-			proj_from[Y] = lengthdir_y(prevcam_zoom, preview.xyangle) * lengthdir_x(1, preview.zangle)
-			proj_from[Z] = prevcam_z + lengthdir_z(prevcam_zoom, preview.zangle)
+			proj_from = point3D(
+				lengthdir_x(prevcam_zoom, preview.xyangle) * lengthdir_x(1, preview.zangle),
+				lengthdir_y(prevcam_zoom, preview.xyangle) * lengthdir_x(1, preview.zangle),
+				prevcam_z + lengthdir_z(prevcam_zoom, preview.zangle)
+			)
 			
 			render_update_text()
 			
@@ -357,7 +356,7 @@ if (preview.update)
 							break
 						
 						case "itemsheet":
-							tex = preview.select.item_texture
+							tex = preview.select.item_sheet_texture
 							break
 						
 						case "particlesheet":
@@ -385,7 +384,7 @@ if (preview.update)
 					break
 					
 				case "itemsheet":
-					tex = preview.select.item_texture
+					tex = preview.select.item_sheet_texture
 					break
 					
 				case "blocksheet":
@@ -401,7 +400,7 @@ if (preview.update)
 					break
 			}
 			
-			if (tex)
+			if (tex != null)
 			{
 				var padding, tw, th, dx, dy;
 				padding = 16

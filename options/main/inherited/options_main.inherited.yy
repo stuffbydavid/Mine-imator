@@ -2,7 +2,7 @@
     "option_author": "David Norgren",
     "option_gameguid": "{40DCB35F-9582-4EC8-B13B-6036C1B4BDB6}",
     "option_steam_app_id": "0",
-    "option_lastchanged": "03 April 2017 18:35:47",
+    "option_lastchanged": "24 June 2017 14:09:09",
     "option_sci_usesci": true
 }←be5f1418-b31b-48af-a023-f04cdf6e5121|{
     "textureGroups": {
@@ -18,6 +18,7 @@
                     "autocrop": true,
                     "border": 2,
                     "groupParent": "00000000-0000-0000-0000-000000000000",
+                    "mipsToGenerate": 0,
                     "scaled": false
                 }
             }

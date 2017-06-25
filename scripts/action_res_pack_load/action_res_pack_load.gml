@@ -12,12 +12,12 @@ else
 	if (history_redo)
 	{
 		fn = history_data.fn 
-		res = new_res("pack", fn)
+		res = new_res(fn, "pack")
 	}
 	else
 	{
 		fn = argument0
-		res = new_res("packunzipped", fn)
+		res = new_res(fn, "packunzipped")
 	}
 	
 	res.loaded = true

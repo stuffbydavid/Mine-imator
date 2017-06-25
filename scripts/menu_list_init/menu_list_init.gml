@@ -20,7 +20,7 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
 		
 		// Download from user
-		if (model.use_skin)
+		if (model.player_skin)
 			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("librarycharskindownload"), null, icons.downloadskin)
 		
 		// Default
@@ -102,7 +102,12 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && res.item_texture)
+			if (res = res_def)
+				continue
+				
+			if (res.type = "texture")
+				menu_add_item(res, res.display_name, res.texture)
+			else if (res.item_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		break

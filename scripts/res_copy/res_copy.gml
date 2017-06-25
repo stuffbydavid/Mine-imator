@@ -18,6 +18,4 @@ if (type = "pack")
 	for (var b = 0; b < 32 * 16; b++)
 		to.block_ani[b] = block_ani[b]
 to.block_format = block_format
-
-to.is_item_sheet = is_item_sheet
-to.item_sheet_size = array_copy_1d(item_sheet_size) // TODO save/load
+to.item_sheet_size = array_copy_1d(item_sheet_size)

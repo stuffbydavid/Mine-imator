@@ -28,7 +28,7 @@ else
 		hobj = history_set(action_new_tl_sound)
 	}
 	
-	res = new_res("sound", fn)
+	res = new_res(fn, "sound")
 	res.loaded=!res.replaced
 	with (res)
 		res_load()

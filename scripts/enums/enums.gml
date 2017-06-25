@@ -20,10 +20,11 @@ enum e_button
 // Options
 enum e_option
 {
-	BROWSE =				-1,
-	IMPORT_WORLD =			-2,
-	DOWNLOAD_SKIN =			-3,
-	DOWNLOAD_SKIN_DONE =	-4
+	BROWSE =					-1,
+	IMPORT_WORLD =				-2,
+	DOWNLOAD_SKIN =				-3,
+	DOWNLOAD_SKIN_DONE =		-4,
+	IMPORT_ITEM_SHEET_DONE =	-5
 }
 
 // Directions

@@ -111,17 +111,17 @@ switch (temp_edit.type)
 		// Item image
 		tab_control(24)
 		draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle)
-		if (res.is_item_sheet)
+		if (res.item_sheet_texture != null)
 		{
-			var index = ds_list_find_index(mc_version.item_texture_list, temp_edit.item_name);
-			draw_texture_slot(res.item_texture, index, dx + capwid, dy + 4, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+			var index = ds_list_find_index(mc_version.item_texture_list, temp_edit.item_index);
+			draw_texture_slot(res.item_sheet_texture, index, dx + capwid, dy + 4, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			if (draw_button_normal("libraryitemchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 				tab_toggle(template_editor)
 		}
 		else
 		{
-			var scale = min(16 / texture_width(res.item_texture), 16 / texture_height(res.item_texture));
-			draw_texture(res.item_texture, dx + capwid, dy + 2, scale, scale)
+			var scale = min(16 / texture_width(res.texture), 16 / texture_height(res.texture));
+			draw_texture(res.texture, dx + capwid, dy + 2, scale, scale)
 		}
 		tab_next()
 		

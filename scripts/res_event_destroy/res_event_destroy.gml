@@ -28,8 +28,8 @@ if (colormap_grass_texture)
 if (colormap_foliage_texture)
 	texture_free(colormap_foliage_texture)
 
-if (item_texture)
-	texture_free(item_texture)
+if (item_sheet_texture)
+	texture_free(item_sheet_texture)
 
 if (particles_texture[0])
 	texture_free(particles_texture[0])

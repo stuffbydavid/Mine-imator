@@ -84,23 +84,23 @@ else
 			
 			// Preview
 			draw_label(text_get("typeitem") + ":", dx, dy + 8, fa_left, fa_middle)
-			if (res.is_item_sheet)
+			if (res.item_sheet_texture != null)
 			{
-				var index = ds_list_find_index(mc_version.item_texture_list, bench_settings.item_name);
-				draw_texture_slot(res.item_texture, index, dx + capwid, dy, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+				var index = ds_list_find_index(mc_version.item_texture_list, bench_settings.item_index);
+				draw_texture_slot(res.item_sheet_texture, index, dx + capwid, dy, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			}
 			else
 			{
-				var scale = min(16 / texture_width(res.item_texture), 16 / texture_height(res.item_texture));
-				draw_texture(res.item_texture, dx + capwid, dy, scale, scale)
+				var scale = min(16 / texture_width(res.texture), 16 / texture_height(res.texture));
+				draw_texture(res.texture, dx + capwid, dy, scale, scale)
 			}
 			dy += 22
 			
 			// Item select
-			if (res.is_item_sheet)
+			if (res.item_sheet_texture != null)
 			{
 				var boxh = dh - 105;
-				draw_texture_picker(bench_settings.item_name, res.item_texture, mc_version.item_texture_list, dx, dy, dw, boxh, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_name)
+				draw_texture_picker(bench_settings.item_index, res.item_sheet_texture, null, dx, dy, dw, boxh, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_index)
 				dy += boxh + 8
 			}
 			

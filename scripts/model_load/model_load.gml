@@ -66,10 +66,10 @@ model_load_texture(map[?"texture"])
 var texturesizelist = map[?"texture_size"];
 texture_size = vec2(texturesizelist[|X], texturesizelist[|Y])
 
-// Use skin
-use_skin = false
-if (is_real(map[?"use_skin"]))
-	use_skin = map[?"use_skin"]
+// Player skin
+player_skin = false
+if (is_real(map[?"player_skin"]))
+	player_skin = map[?"player_skin"]
 	
 // Bounds in default position
 bounds_start = point3D(0, 0, 0)

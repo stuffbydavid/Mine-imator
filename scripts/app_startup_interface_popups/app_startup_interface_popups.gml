@@ -102,6 +102,20 @@ with (popup_importimage)
 	type = "skin"
 }
 
+// Import item sheet
+popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 500, 520, true)
+with (popup_importitemsheet)
+{
+	filename = ""
+	value_script = null
+	texture = null
+	is_sheet = true
+	sheet_size = vec2(item_sheet_width, item_sheet_height)
+	sheet_size_def = sheet_size
+	tbx_sheet_width = new_textbox_integer()
+	tbx_sheet_height = new_textbox_integer()
+}
+
 // Export movie
 popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 500, 380, true)
 with (popup_exportmovie)

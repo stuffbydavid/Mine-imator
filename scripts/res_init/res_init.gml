@@ -38,8 +38,7 @@ moonphases_texture = null
 moon_texture[8] = null
 clouds_texture = null
 
-item_texture = null
-is_item_sheet = true
+item_sheet_texture = null
 item_sheet_size = vec2(item_sheet_width, item_sheet_height)
 
 particles_texture[0] = null

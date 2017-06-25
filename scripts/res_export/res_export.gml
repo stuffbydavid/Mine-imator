@@ -1,11 +1,12 @@
 /// res_export()
 /// Saves the sprites into the given directory.
+// TODO
 
 var fnout = save_folder + "\\" + filename_out;
 
 debug("res_export", "Exporting to " + fnout)
 
-if (type = "pack")
+/*if (type = "pack")
 {
 	if (!ready)
 		return 0
@@ -36,7 +37,7 @@ if (type = "pack")
 	texture_export(moonphases_texture, path + "moonphases.png")
 	texture_export(clouds_texture, path + "clouds.png")
 }
-else
+else*/
 	file_copy_lib(load_folder + "\\" + filename, fnout)
 
 debug("res_export", "Done!")

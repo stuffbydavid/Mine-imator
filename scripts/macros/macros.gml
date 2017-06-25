@@ -25,9 +25,9 @@
 #macro particles_directory		working_directory + "Particles\\"
 #macro languages_directory		data_directory + "Languages\\"
 #macro minecraft_directory		data_directory + "Minecraft\\"
-#macro minecraft_version_file	minecraft_directory + minecraft_version + ".mcversion"
 
 // Files
+#macro minecraft_version_file	minecraft_directory + minecraft_version + ".mcversion"
 #macro language_file			languages_directory + "english.milang"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.file"
@@ -51,35 +51,35 @@
 #macro loops_directory			character_directory + "loops\\"
 
 // Links
-#macro link_skins			"http://skins.minecraft.net/MinecraftSkins/"
-#macro link_directx			"https://www.microsoft.com/en-us/download/details.aspx?DisplayLang=en&id=35" // TODO
-#macro link_download		"http://www.mineimator.com"
-#macro link_upgrade			"http://www.mineimator.com/upgrade"
-#macro link_news			"http://www.mineimator.com/news.php?version=" + mineimator_version
-#macro link_forums			"http://www.mineimatorforums.com"
-#macro link_forums_bugs		"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
-#macro link_mojang			"http://www.mojang.com"
-#macro link_david			"http://www.stuffbydavid.com"
+#macro link_skins				"http://skins.minecraft.net/MinecraftSkins/"
+#macro link_directx				"https://www.microsoft.com/en-us/download/details.aspx?DisplayLang=en&id=35" // TODO
+#macro link_download			"http://www.mineimator.com"
+#macro link_upgrade				"http://www.mineimator.com/upgrade"
+#macro link_news				"http://www.mineimator.com/news.php?version=" + mineimator_version
+#macro link_forums				"http://www.mineimatorforums.com"
+#macro link_forums_bugs			"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
+#macro link_mojang				"http://www.mojang.com"
+#macro link_david				"http://www.stuffbydavid.com"
 
 // Audio
-#macro sample_rate			44100
-#macro sample_size			4
-#macro sample_max			32767
-#macro sample_avg_per_sec	100
+#macro sample_rate				44100
+#macro sample_size				4
+#macro sample_max				32767
+#macro sample_avg_per_sec		100
 
 // Interface
-#macro glow_alpha			0.75
-#macro shadow_size			5
-#macro shadow_alpha			0.1
+#macro glow_alpha				0.75
+#macro shadow_size				5
+#macro shadow_alpha				0.1
 
 // Values
-#macro null					noone
-#macro no_limit				100000000
+#macro null						noone
+#macro no_limit					100000000
 
 // World
-#macro block_size			16
-#macro item_size			16
-#macro world_size			30000
+#macro block_size				16
+#macro item_size				16
+#macro world_size				30000
 
 // Textures
 #macro block_sheet_width		32

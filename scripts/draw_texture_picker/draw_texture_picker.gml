@@ -50,9 +50,14 @@ dy = yy
 off = 2
 
 // Number of items
-items = ds_list_size(list)
-if (argument_count > 11)
-	items += ds_list_size(anilist)
+if (list != null)
+{
+	items = ds_list_size(list)
+	if (argument_count > 11)
+		items += ds_list_size(anilist)
+}
+else
+	items = slotsx * slotsy
 
 // Sizes
 slotsize = max(1, floor(texture_width(tex) / slotsx))
@@ -62,16 +67,19 @@ itemsy = ceil(items / itemsx)
 
 for (var i = round(scroll.value / itemsize) * itemsx; i < items; i++)
 {
-	var curtex, curslot, curslotsx, curslotsy, name, col;
+	var curtex, curslot, curslotsx, curslotsy, curvalue, col;
 	
 	// Correct name and slot texture
-	if (i < ds_list_size(list))
+	if (list = null || i < ds_list_size(list))
 	{
 		curtex = tex
 		curslot = i
 		curslotsx = slotsx
 		curslotsy = slotsy
-		name = list[|curslot]
+		if (list = null)
+			curvalue = curslot
+		else
+			curvalue = list[|curslot]
 	}
 	else
 	{
@@ -79,16 +87,16 @@ for (var i = round(scroll.value / itemsize) * itemsx; i < items; i++)
 		curslot = i - ds_list_size(list)
 		curslotsx = anislotsx
 		curslotsy = anislotsy
-		name = anilist[|curslot]
+		curvalue = anilist[|curslot]
 	}
 	
 	// Texture color
 	col = c_white
 	if (res)
-		col = block_texture_get_blend(name, res)
+		col = block_texture_get_blend(curvalue, res)
 		
 	// Highlight if selected
-	if (select = name)
+	if (select = curvalue)
 		draw_box(dx, dy, itemsize, itemsize, false, setting_color_highlight, 1)
 	
 	// Item
@@ -98,9 +106,9 @@ for (var i = round(scroll.value / itemsize) * itemsx; i < items; i++)
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
 		{
-			script_execute(script, name)
+			script_execute(script, curvalue)
 			window_focus = string(scroll)
-			select = name
+			select = curvalue
 		}
 	}
 	

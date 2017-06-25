@@ -12,7 +12,7 @@ to.char_model = char_model
 to.char_bodypart = char_bodypart
 
 to.item_tex = item_tex
-to.item_name = item_name
+to.item_index = item_index
 to.item_3d = item_3d
 to.item_face_camera = item_face_camera
 to.item_bounce = item_bounce

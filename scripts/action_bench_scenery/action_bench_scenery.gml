@@ -21,7 +21,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res("schematic", fn)
+		res = new_res(fn, "schematic")
 		with (res)
 			res_load()
 	}
@@ -32,7 +32,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res("schematic", fn)
+		res = new_res(fn, "schematic")
 		with (res)
 			res_load()
 	}

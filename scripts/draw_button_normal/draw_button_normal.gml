@@ -1,4 +1,4 @@
-/// draw_button_normal(name, x, y, width, height, [type, pressed, frame, enabled, [ icon, [ iconblend, [tip]]]])
+/// draw_button_normal(name, x, y, width, height, [type, pressed, frame, enabled, [icon, [iconblend, [tip]]]])
 /// @arg name
 /// @arg x
 /// @arg y

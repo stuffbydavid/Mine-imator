@@ -1,9 +1,9 @@
-/// action_bench_item_name(name)
-/// @arg name
+/// action_bench_item_index(index)
+/// @arg index
 
 with (bench_settings)
 {
-	item_name = argument0
+	item_index = argument0
 	temp_update_item()
 }
 

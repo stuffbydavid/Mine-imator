@@ -1,4 +1,4 @@
-/// draw_surface_box(surface, x, y, width, height)
+/// draw_surface_box_center(surface, x, y, width, height)
 /// @arg surface
 /// @arg x
 /// @arg y

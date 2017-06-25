@@ -1,7 +1,6 @@
 /// tab_settings_graphics()
 
-var capwid, text;
-capwid = text_caption_width("settingsbenddetail", "settingsbendscale")
+var capwid = text_caption_width("settingsbenddetail", "settingsbendscale")
 
 // Bending
 tab_control_checkbox()

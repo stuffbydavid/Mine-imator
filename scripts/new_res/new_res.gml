@@ -1,11 +1,12 @@
-/// new_res(type, filename)
-/// @arg type
+/// new_res(filename, type)
 /// @arg filename
-/// Adds a new resource or replaces an existing one. Returns the new resource instance.
+/// @arg type
+/// @desc Adds a new resource or replaces an existing one. Returns the new resource instance.
 
-var type, fn, res, fnout, replaced;
-type = argument0
-fn = argument1
+var fn, type, res, fnout, replaced;
+fn = argument0
+type = argument1
+
 res = null
 replaced = false
 

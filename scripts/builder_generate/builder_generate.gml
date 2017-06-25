@@ -31,7 +31,7 @@ for (var f = 0; f < e_dir.amount; f++)
 {
 	if (build_edge[f])
 	{
-		if (app.setting_schematic_remove_edges && (build_size[X] > 10 && build_size[Y] > 10))
+		if (app.setting_schematic_remove_edges && (build_size[X] > 200 && build_size[Y] > 200))
 			block_render_models_dir[f] = array(solid_model)
 		else
 			block_render_models_dir[f] = null
