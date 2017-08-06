@@ -23,12 +23,8 @@ block_sheet_texture = null
 block_sheet_ani_texture = null
 block_sheet_depth_list = null
 block_sheet_ani_depth_list = null
-
-//block_frames = 0
-//block_ani[0] = 0
-block_texture[32] = 0
 block_preview_texture = null
-block_format = null
+
 colormap_grass_texture = null
 colormap_foliage_texture = null
 color_grass = null

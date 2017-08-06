@@ -1,8 +1,8 @@
 {
-    "id": "c468715e-119d-4320-a2d7-e97c57b5ba58",
+    "id": "d1123802-2406-486a-afdc-16e705166c17",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "action_background_ground_name",
+    "name": "action_lib_item_slot",
     "IsCompatibility": false,
     "IsDnD": false
 }

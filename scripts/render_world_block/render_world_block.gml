@@ -10,9 +10,10 @@ if (!res.ready)
 	res = res_def
 
 tex = res.block_sheet_texture
-texani = null
 if (is_array(res.block_sheet_ani_texture))
 	texani = res.block_sheet_ani_texture[block_texture_get_frame()]
+else
+	texani = res_def.block_sheet_ani_texture[block_texture_get_frame()]
 
 blend = shader_blend_color
 shader_texture = tex

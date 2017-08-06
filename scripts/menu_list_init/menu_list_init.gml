@@ -82,7 +82,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && res.block_texture)
+			if (res != res_def && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		
@@ -325,7 +325,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && res.block_texture[0])
+			if (res != res_def && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		break
@@ -387,7 +387,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != tl_edit.temp.block_tex && res.block_texture)
+			if (res != tl_edit.temp.block_tex && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		

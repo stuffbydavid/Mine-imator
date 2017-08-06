@@ -74,6 +74,7 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
+//surface_save(surf,"pack_load_block_textures_staticsurf.png")
 block_sheet_texture = texture_surface(surf)
 
 // Create surfaces for animated blocks

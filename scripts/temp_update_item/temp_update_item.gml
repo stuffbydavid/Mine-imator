@@ -1,7 +1,7 @@
 /// temp_update_item()
 /// @desc Generates the item vbuffer of the template from the selected resource.
 
-var itempos, texsize, slotsize, slottexsize, slottex, slotpixel, size, scale;
+var texpos, texsize, slotsize, slottexsize, slottex, slotpixel, size, scale;
 var p1, p2, p3, p4;
 var t1, t2, t3, t4;
 
@@ -16,17 +16,17 @@ item_vbuffer = vbuffer_start()
 // Calculate texture position and size
 if (item_tex.item_sheet_texture != null)
 {
-	itempos = point2D(item_index mod item_tex.item_sheet_size[X], item_index div item_tex.item_sheet_size[X])
+	texpos = point2D(item_slot mod item_tex.item_sheet_size[X], item_slot div item_tex.item_sheet_size[X])
 	texsize = vec2(texture_width(item_tex.item_sheet_texture), texture_height(item_tex.item_sheet_texture))
 	slotsize = vec2_div(texsize, item_tex.item_sheet_size)
 	slotsize[X] = max(1, floor(slotsize[X]))
 	slotsize[Y] = max(1, floor(slotsize[Y]))
 	slottexsize = vec2_div(vec2(1), item_tex.item_sheet_size)
-	slottex = point2D_mul(itempos, slottexsize)
+	slottex = point2D_mul(texpos, slottexsize)
 }
 else
 {
-	itempos = point2D(0, 0)
+	texpos = point2D(0, 0)
 	texsize = vec2(texture_width(item_tex.texture), texture_height(item_tex.texture))
 	slotsize = texsize
 	slottexsize = point2D(1, 1)
@@ -81,7 +81,7 @@ if (item_3d)
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
-		draw_texture_part(tex, 0, 0, itempos[X] * slotsize[X], itempos[Y] * slotsize[Y], slotsize[X], slotsize[Y])
+		draw_texture_part(tex, 0, 0, texpos[X] * slotsize[X], texpos[Y] * slotsize[Y], slotsize[X], slotsize[Y])
 	}
 	surface_reset_target()
 	
@@ -115,8 +115,8 @@ if (item_3d)
 				p2 = point3D((xx + 1) * scale[X], 0, (size[Z] - scale[Z]) - (yy - 1) * scale[Z])
 				p3 = point3D((xx + 1) * scale[X], 0, (size[Z] - scale[Z]) - yy * scale[Z])
 				p4 = point3D((xx + 1) * scale[X], 1, (size[Z] - scale[Z]) - yy * scale[Z])
-				vbuffer_add_triangle(p1, p2, p3, t1, t1, t4)
-				vbuffer_add_triangle(p3, p4, p1, t4, t4, t1)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
 			}
 			
 			// West
@@ -126,8 +126,8 @@ if (item_3d)
 				p2 = point3D(xx * scale[X], 1, (size[Z] - scale[Z]) - (yy - 1) * scale[Z])
 				p3 = point3D(xx * scale[X], 1, (size[Z] - scale[Z]) - yy * scale[Z])
 				p4 = point3D(xx * scale[X], 0, (size[Z] - scale[Z]) - yy * scale[Z])
-				vbuffer_add_triangle(p1, p2, p3, t1, t1, t4)
-				vbuffer_add_triangle(p3, p4, p1, t4, t4, t1)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
 			}
 			
 			// Up
@@ -137,8 +137,8 @@ if (item_3d)
 				p2 = point3D((xx + 1) * scale[X], 0, (size[Z] - scale[Z]) - (yy - 1) * scale[Z])
 				p3 = point3D((xx + 1) * scale[X], 1, (size[Z] - scale[Z]) - (yy - 1) * scale[Z])
 				p4 = point3D(xx * scale[X], 1, (size[Z] - scale[Z]) - (yy - 1) * scale[Z])
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t2)
-				vbuffer_add_triangle(p3, p4, p1, t2, t1, t1)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
 			}
 			
 			// Down
@@ -148,8 +148,8 @@ if (item_3d)
 				p2 = point3D((xx + 1) * scale[X], 1, (size[Z] - scale[Z]) - yy * scale[Z])
 				p3 = point3D((xx + 1) * scale[X], 0, (size[Z] - scale[Z]) - yy * scale[Z])
 				p4 = point3D(xx * scale[X], 0, (size[Z] - scale[Z]) - yy* scale[Z])
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t2)
-				vbuffer_add_triangle(p3, p4, p1, t2, t1, t1)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
 			}
 		}
 	}

@@ -86,8 +86,7 @@ else
 			draw_label(text_get("typeitem") + ":", dx, dy + 8, fa_left, fa_middle)
 			if (res.item_sheet_texture != null)
 			{
-				var index = ds_list_find_index(mc_version.item_texture_list, bench_settings.item_index);
-				draw_texture_slot(res.item_sheet_texture, index, dx + capwid, dy, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+				draw_texture_slot(res.item_sheet_texture, bench_settings.item_slot, dx + capwid, dy, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			}
 			else
 			{
@@ -99,8 +98,10 @@ else
 			// Item select
 			if (res.item_sheet_texture != null)
 			{
-				var boxh = dh - 105;
-				draw_texture_picker(bench_settings.item_index, res.item_sheet_texture, null, dx, dy, dw, boxh, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_index)
+				var slots, boxh;
+				slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
+				boxh = dh - 105
+				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, boxh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
 				dy += boxh + 8
 			}
 			

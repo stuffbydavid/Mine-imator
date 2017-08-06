@@ -8,6 +8,7 @@ debug("Loading " + type, fn)
 switch (type)
 {
 	case "packunzipped":
+	{
 		pack_zip = ""
 		pack_export = true
 		type = "pack"
@@ -15,9 +16,12 @@ switch (type)
 		//ds_queue_enqueue(pack_load_queue, id)
 		//with (app)
 		//	res_pack_load_start()
+		
 		break
+	}
 	
 	case "pack":
+	{
 		if (filename_ext(fn) = ".zip")
 		{
 			pack_zip = fn
@@ -32,10 +36,13 @@ switch (type)
 			//res_pack_load_folder(fn)
 			res_update_colors()
 		}
+		
 		break
+	}
 		
 	case "skin":
 	case "downloadskin":
+	{
 		if (model_texture)
 			texture_free(model_texture)
 		
@@ -43,48 +50,51 @@ switch (type)
 			model_texture = res_load_skin(fn)
 		else
 			model_texture = texture_create_square(fn)
+			
 		break
+	}
 		
 	case "itemsheet":
+	{
 		if (item_sheet_texture)
 			texture_free(item_sheet_texture)
-		item_sheet_texture = texture_create(fn)
-		break
-		
-	case "blocksheet":
-		/*block_ani[32 * 16] = false
-		
-		for (var b = 0; b < block_frames; b++)
-			if (block_texture[b])
-				texture_free(block_texture[b])
 			
-		block_frames = 1
-		block_texture[0] = texture_create(fn)
+		item_sheet_texture = texture_create(fn)
 		
-		if (block_format)
-		{
-			//block_texture[0] = res_load_blocks_convert(block_texture[0], block_format)
-			block_format = null
-		}
+		break
+	}
+	
+	case "blocksheet":
+	{
+		if (block_sheet_texture != null)
+			texture_free(block_sheet_texture)
+			
+		block_sheet_texture = texture_create(fn)
 		
 		colormap_grass_texture = texture_duplicate(res_def.colormap_grass_texture)
 		colormap_foliage_texture = texture_duplicate(res_def.colormap_foliage_texture)
-		
+			
 		res_update_colors()
-		res_update_block_preview()*/
+		res_update_block_preview()
 		
 		break
+	}
 		
 	case "schematic":
+	{
 		ready = false
+		
 		with (app)
 		{
 			ds_priority_add(load_queue, other.id, 2)
 			load_start(other.id, res_load_start)
 		}
+		
 		break
+	}
 	
 	case "particlesheet":
+	{
 		if (particles_texture[0])
 			texture_free(particles_texture[0])
 		if (particles_texture[1])
@@ -94,16 +104,23 @@ switch (type)
 		particles_texture[1] = particles_texture[0]
 		
 		break
+	}
 		
 	case "texture":
+	{
 		if (texture)
 			texture_free(texture)
+			
 		texture = texture_create(fn)
+		
 		break
+	}
 		
 	case "font":
+	{
 		if (font_exists(font))
 			font_exists(font)
+			
 		if (font_exists(font_preview))
 			font_exists(font_preview)
 			
@@ -116,9 +133,12 @@ switch (type)
 			font_preview = new_minecraft_font()
 			font_minecraft = true
 		}
+		
 		break
+	}
 		
 	case "sound":
+	{
 		audio_stop_all()
 		ready = false
 		
@@ -128,7 +148,9 @@ switch (type)
 			ds_priority_add(load_queue, other.id, 0)
 			load_start(other.id, res_load_start)
 		}
+		
 		break
+	}
 }
 
 if (load_folder != save_folder)

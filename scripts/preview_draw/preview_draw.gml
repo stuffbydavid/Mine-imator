@@ -23,6 +23,8 @@ draw_box(xx, yy, size, size, false, setting_color_background, 1)
 
 if (!instance_exists(preview.select))
 {
+	preview.last_type = ""
+	preview.last_pack_image = ""
 	preview.last_tex = null
 	return 0
 }
@@ -297,8 +299,8 @@ if (preview.update)
 						draw_set_font(preview.select.font_preview)
 						
 					var dx, dy;
-					dx = size / 2-preview.xoff * preview.zoom
-					dy = size / 2-preview.yoff * preview.zoom
+					dx = size / 2 - preview.xoff * preview.zoom
+					dy = size / 2 - preview.yoff * preview.zoom
 					draw_set_halign(fa_center)
 					draw_set_valign(fa_middle)
 					draw_text_transformed(dx, dy, "AaBbCc", preview.zoom, preview.zoom, 0)
@@ -348,7 +350,7 @@ if (preview.update)
 							break
 						
 						case "blocksheet":
-							tex = preview.select.block_texture[0]
+							tex = test(preview.pack_block_sheet_ani, preview.select.block_sheet_ani_texture[block_texture_get_frame()], preview.select.block_sheet_texture)
 							break
 						
 						case "colormap":
@@ -388,7 +390,7 @@ if (preview.update)
 					break
 					
 				case "blocksheet":
-					tex = preview.select.block_texture[0]
+					tex = preview.select.block_sheet_texture
 					break
 					
 				case "texture":
@@ -406,17 +408,19 @@ if (preview.update)
 				padding = 16
 				tw = texture_width(tex)
 				th = texture_height(tex)
-				if (preview.last_tex != tex)
+				if (preview.last_type != preview.select.type || preview.last_pack_image != preview.pack_image)
 				{
 					with (preview)
 						preview_reset_view()
 					preview.zoom = (size - padding * 2) / max(tw, th)
 					preview.goalzoom = preview.zoom
 				}
-				dx = size / 2-(tw / 2+preview.xoff) * preview.zoom
-				dy = size / 2-(th / 2+preview.yoff) * preview.zoom
+				dx = size / 2 - (tw / 2 + preview.xoff) * preview.zoom
+				dy = size / 2 - (th / 2 + preview.yoff) * preview.zoom
 				draw_texture(tex, dx, dy, preview.zoom, preview.zoom)
 			}
+			preview.last_type = preview.select.type
+			preview.last_pack_image = preview.pack_image
 			preview.last_tex = tex
 		}
 		
@@ -435,7 +439,7 @@ if (preview.select.type = "particles")
 	if (preview.select.pc_spawn_constant)
 	{
 		if (draw_button_normal("previewspawn", xx + size - butw, yy + size - 24, butw, 24, e_button.TEXT, preview.spawn_active, true, true))
-			preview.spawn_active=!preview.spawn_active
+			preview.spawn_active = !preview.spawn_active
 	}
 	else
 	{

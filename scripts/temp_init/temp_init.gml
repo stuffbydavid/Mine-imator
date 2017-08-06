@@ -15,7 +15,7 @@ char_model = null
 char_bodypart = 0
 
 item_tex = null
-item_index = ds_list_find_index(mc_version.item_texture_list, "items/diamond_sword")
+item_slot = ds_list_find_index(mc_version.item_texture_list, "items/diamond_sword")
 item_vbuffer = null
 item_3d = true
 item_face_camera = false

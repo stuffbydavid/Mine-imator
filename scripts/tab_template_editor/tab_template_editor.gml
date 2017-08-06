@@ -25,14 +25,16 @@ switch (temp_edit.type)
 		if (!res.ready)
 			res = res_def
 		
-		if (res.type != "itemsheet")
+		if (res.item_sheet_texture = null)
 		{
 			tab_close(tab)
 			return 0
 		}
 			
 		draw_label(text_get("templateeditoritem") + ":", dx, dy)
-		draw_texture_picker(temp_edit.item_index, res.item_sheet_texture, null, dx, dy + 22, dw, dh - 65, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item_scroll, action_lib_item_index)
+		
+		var slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
+		draw_texture_picker(temp_edit.item_slot, res.item_sheet_texture, dx, dy + 22, dw, dh - 65, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item_scroll, action_lib_item_slot)
 		break
 		
 	case "spblock":

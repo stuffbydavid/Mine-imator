@@ -12,45 +12,53 @@ if (model_texture_map)
 	ds_map_destroy(model_texture_map)
 }
 
-if (model_texture)
+if (model_texture != null)
 	texture_free(model_texture)
 		
-for (var b = 0; b < block_frames; b++)
-	if (block_texture[b])
-		texture_free(block_texture[b])
+if (block_sheet_texture != null)
+	texture_free(block_sheet_texture)
 	
-if (block_preview_texture)
+if (block_sheet_ani_texture != null)
+	texture_free(block_sheet_ani_texture)
+	
+if (block_sheet_depth_list != null)
+	ds_list_destroy(block_sheet_depth_list)
+	
+if (block_sheet_ani_depth_list != null)
+	ds_list_destroy(block_sheet_ani_depth_list)
+	
+if (block_preview_texture != null)
 	texture_free(block_preview_texture)
 
-if (colormap_grass_texture)
+if (colormap_grass_texture != null)
 	texture_free(colormap_grass_texture)
 
-if (colormap_foliage_texture)
+if (colormap_foliage_texture != null)
 	texture_free(colormap_foliage_texture)
 
-if (item_sheet_texture)
+if (item_sheet_texture != null)
 	texture_free(item_sheet_texture)
 
-if (particles_texture[0])
+if (particles_texture[0] != null)
 	texture_free(particles_texture[0])
 
-if (particles_texture[1])
+if (particles_texture[1] != null)
 	texture_free(particles_texture[1])
 
-if (texture)
+if (texture != null)
 	texture_free(texture)
 
-if (sun_texture)
+if (sun_texture != null)
 	texture_free(sun_texture)
 
-if (moonphases_texture)
+if (moonphases_texture != null)
 	texture_free(moonphases_texture)
 
-if (moon_texture[0])
+if (moon_texture[0] != null)
 	for (var t = 0; t < 8; t++)
 		texture_free(moon_texture[t])
 
-if (clouds_texture)
+if (clouds_texture != null)
 	texture_free(clouds_texture)
 
 if (font_exists(font))
@@ -59,10 +67,10 @@ if (font_exists(font))
 if (font_exists(font_preview))
 	font_delete(font_preview)
 
-if (sound_index)
+if (sound_index != null)
 	audio_free_buffer_sound(sound_index)
 
-if (sound_buffer)
+if (sound_buffer != null)
 	buffer_delete(sound_buffer)
 
 block_vbuffer_destroy()

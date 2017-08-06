@@ -23,7 +23,7 @@ switch (tl_edit.type)
 	case "block":
 	case "scenery":
 		name = "frameeditorblocktex"
-		if (!texobj || texobj.type = "camera" || !texobj.block_texture[0])
+		if (!texobj || texobj.type = "camera" || texobj.block_sheet_texture = null)
 			texobj = tl_edit.temp.block_tex
 		tex = texobj.block_preview_texture
 		break

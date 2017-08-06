@@ -56,6 +56,15 @@ if (res_edit.type = "pack")
 			tab_next()
 			break
 		}
+		case "blocksheet":
+		{
+			tab_control_checkbox()
+			draw_label(text_get("resourcespackimageblocksheet") + ":", dx, dy)
+			draw_radiobutton("resourcespackimageblocksheetstatic", dx + capwid, dy, 0, !res_preview.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)
+			draw_radiobutton("resourcespackimageblocksheetanimated", dx + capwid + floor((dw - capwid) * 0.5), dy, 1, res_preview.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)
+			tab_next()
+			break
+		}
 		case "colormap":
 		{
 			tab_control_checkbox()

@@ -96,7 +96,7 @@ if (shader_alpha > 0)
 				var res = temp.block_tex;
 				if (texobj)
 					if (texobj.type != "camera")
-						if (res.block_texture[0])
+						if (res.block_sheet_texture != null)
 							res = texobj
 					
 				if (!res.ready)

@@ -1,9 +1,9 @@
-/// action_bench_item_index(index)
+/// action_bench_item_slot(index)
 /// @arg index
 
 with (bench_settings)
 {
-	item_index = argument0
+	item_slot = argument0
 	temp_update_item()
 }
 
