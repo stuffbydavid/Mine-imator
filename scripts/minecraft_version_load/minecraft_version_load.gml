@@ -3,7 +3,6 @@
 /// @desc Loads Minecraft assets from a version specification and pack archive.
 
 // TODO: error check
-// TODO: Load pre-assembled textures(?`) & pre-unzipped
 
 var version, fname, err;
 version = argument0
@@ -31,7 +30,7 @@ if (!file_exists_lib(minecraft_directory + pack))
 	return false
 }
 
-//zip_import(minecraft_directory + pack)
+zip_import(minecraft_directory + pack)
 
 var format = versionmap[?"format"];
 if (!is_real(format))
@@ -149,6 +148,7 @@ with (mc_version)
 		res_load_pack_model_textures()
 		res_load_pack_block_textures()
 		res_load_pack_item_textures()
+		res_load_pack_misc()
 	}
 	
 	// Blocks

@@ -9,9 +9,7 @@ ready = true
 
 type = ""
 filename = ""
-filename_out = ""
 display_name = ""
-pack_description = ""
 count = 0
 
 model = null
@@ -31,7 +29,7 @@ color_grass = null
 color_foliage = null
 sun_texture = null
 moonphases_texture = null
-moon_texture[8] = null
+moon_texture[0] = null
 clouds_texture = null
 
 item_sheet_texture = null

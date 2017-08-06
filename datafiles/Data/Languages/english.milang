@@ -83,12 +83,12 @@
 		"openassetnewercaption": "Import object error",
 		"openkeyframes": "No timeline selected to put the keyframes in!",
 		"openkeyframescaption": "Import asset error",
-		"schematicload": "Could not read the schematic file. See the log for details.",
-		"schematicloadcaption": "Import schematic error",
-		"packload": "Could not unzip the archive.",
-		"packloadcaption": "Import texture pack error",
-		"audioload": "An error occurred when importing the audio file.",
-		"audioloadcaption": "Import audio error",
+		"loadschematic": "Could not read the schematic file. See the log for details.",
+		"loadschematiccaption": "Import schematic error",
+		"unzippack": "Could not unzip the archive.",
+		"unzippackcaption": "Import texture pack error",
+		"loadaudio": "An error occurred when importing the audio file.",
+		"loadaudiocaption": "Import audio error",
 		"exportmovie": "An error occured when exporting the movie. Check your render settings and make sure the target file isn't opened in another program. See the log for details.",
 		"exportmoviecaption": "Movie export error",
 		"upgrade": "Invalid key!",
@@ -398,7 +398,7 @@
 	},
 	"view/": {
 		"rendertip": "Render in high quality mode to enable shaders for added realism.",
-		"renderfps: Render FPS": "%1",
+		"renderfps": "Render FPS: %1",
 		"rendertime": "Rendered in %1 seconds",
 		"workcamera": "Work camera",
 		"activecamera": "Active camera (%1)",
@@ -1001,7 +1001,7 @@
 		"purpurslab": "Purpur Slab",
 		"endstonebricks": "End Stone Bricks",
 		"beetrootseeds": "Beetroot Seeds",
-		"grasspath": " Grass Path",
+		"grasspath": "Grass Path",
 		"endgateway": "End Gateway",
 		"repeatingcommandblock": "Repeating Command Block",
 		"chaincommandblock": "Chain Command Block",
@@ -1681,8 +1681,8 @@
 			"image": "Pack image to view",
 			"imagetip": "Choose the image to view in the preview window.",
 			"image/": {
-				"character": "Character to view",
-				"charactertip": "Choose the character to view the texture of in the preview window.",
+				"modeltexture": "Model texture to view",
+				"modeltexturetip": "Choose the model texture to view in the preview window.",
 				"blocksheet": "Sheet to view",
 				"blocksheetstatic": "Static",
 				"blocksheetstatictip": "View the block sheet for static block textures.",
@@ -1699,8 +1699,8 @@
 				"particlesimage2": "Sheet 2",
 				"particlesimage2tip": "View sheet 2 (explosions)."
 			},
-			"previewimage": "Pack image",
-			"mobtextures": "Mob textures",
+			"preview": "Pack image",
+			"modeltextures": "Model textures",
 			"blocksheet": "Block sheet",
 			"colormap": "Color map",
 			"itemsheet": "Item sheet",
@@ -1717,7 +1717,7 @@
 		"filenameopen": "Open",
 		"filenameopentip": "Open the file of this resource."
 	},
-	"sceneryload/": {
+	"loadscenery/": {
 		"caption": "Importing %1",
 		"captionpieceof": "Importing a piece of %1",
 		"open": "Opening file...",
@@ -1725,17 +1725,17 @@
 		"model": "Creating 3D model...",
 		"pieceof": "Piece of %1"
 	},
-	"packload/": {
+	"loadaudio/": {
+		"caption": "Importing %1",
+		"open": "Opening file...",
+		"buildingwaveforms": "Building waveforms..."
+	},
+	"loadpack/": {
 		"caption": "Importing %1",
 		"unzip": "Unzipping...",
-		"images": "Loading images...",
-		"blocksheet": "Creating block sheet...",
-		"itemsheet": "Creating item sheet...",
-		"mobtextures": "Creating mob textures..."
-	},
-	"audioload/": {
-		"caption": "Importing %1",
-		"buildingwaveforms": "Building waveforms..."
+		"modeltextures": "Loading model textures...",
+		"blocktextures": "Loading block textures...",
+		"itemtextures": "Loading item textures..."
 	},
 	"importimage/": {
 		"caption": "Import image",

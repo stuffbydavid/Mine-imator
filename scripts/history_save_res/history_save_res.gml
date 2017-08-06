@@ -37,26 +37,31 @@ with (obj_template)
 		save.usage_char_skin[save.usage_char_skin_amount] = iid
 		save.usage_char_skin_amount++
 	}
+	
 	if (item_tex = res)
 	{
 		save.usage_item_tex[save.usage_item_tex_amount] = iid
 		save.usage_item_tex_amount++
 	}
+	
 	if (block_tex = res)
 	{
 		save.usage_block_tex[save.usage_block_tex_amount] = iid
 		save.usage_block_tex_amount++
 	}
+	
 	if (scenery = res)
 	{
 		save.usage_scenery[save.usage_scenery_amount] = iid
 		save.usage_scenery_amount++
 	}
+	
 	if (shape_tex = res)
 	{
 		save.usage_shape_tex[save.usage_shape_tex_amount] = iid
 		save.usage_shape_tex_amount++
 	}
+	
 	if (text_font = res)
 	{
 		save.usage_text_font[save.usage_text_font_amount] = iid
@@ -81,6 +86,7 @@ with (obj_keyframe)
 		save.usage_kf_texture_index[save.usage_kf_texture_amount] = index
 		save.usage_kf_texture_amount++
 	}
+	
 	if (value[SOUNDOBJ] = res)
 	{
 		save.usage_kf_sound_tl[save.usage_kf_sound_amount] = iid_get(tl)
@@ -96,6 +102,7 @@ with (obj_timeline)
 		save.usage_tl_texture[save.usage_tl_texture_amount] = iid
 		save.usage_tl_texture_amount++
 	}
+	
 	if (value[SOUNDOBJ] = res)
 	{
 		save.usage_tl_sound[save.usage_tl_sound_amount] = iid
@@ -117,8 +124,8 @@ with (app)
 	if (background_sky_clouds_tex = res)
 		save.usage_background_sky_clouds_tex = true
 		
-	if (background_ground = res)
-		save.usage_background_ground = true
+	if (background_ground_tex = res)
+		save.usage_background_ground_tex = true
 }
 
 return save

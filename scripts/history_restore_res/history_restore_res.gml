@@ -111,12 +111,12 @@ with (res)
 		app.background_sky_clouds_tex = res
 	}
 		
-	if (save.usage_background_ground)
+	if (save.usage_background_ground_tex)
 	{
 		with (app)
 		{
-			background_ground.count--
-			background_ground = res
+			background_ground_tex.count--
+			background_ground_tex = res
 			background_ground_update_texture()
 		}
 	}

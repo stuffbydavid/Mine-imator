@@ -28,10 +28,6 @@ switch (type)
 if (file_exists_lib(fn))
 {
 	filename = filename_name(fn)
-	if (type = "pack")
-		filename_out = filename_new_ext(filename, "")
-	else
-		filename_out = filename
 	load_folder = filename_dir(fn)
 	save_folder = app.project_folder
 	if (type = "downloadskin")

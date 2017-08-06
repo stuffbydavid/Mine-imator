@@ -340,8 +340,8 @@ switch (menu_name)
 	
 	case "resourcespackimage": // Resource pack preview image
 	{
-		menu_add_item("previewimage", text_get("resourcespackpreviewimage"))
-		menu_add_item("mobtextures", text_get("resourcespackmobtextures"))
+		menu_add_item("preview", text_get("resourcespackpreview"))
+		menu_add_item("modeltextures", text_get("resourcespackmodeltextures"))
 		menu_add_item("blocksheet", text_get("resourcespackblocksheet"))
 		menu_add_item("colormap", text_get("resourcespackcolormap"))
 		menu_add_item("itemsheet", text_get("resourcespackitemsheet"))
@@ -352,11 +352,10 @@ switch (menu_name)
 		break
 	}
 	
-	case "resourcespackimagecharacter": // Resource pack preview skin
+	case "resourcespackimagemodeltexture": // Resource pack preview skin
 	{
-		/*for (var c = 0; c < iamount(obj_model); c++) TODO
-			with (iget(obj_model, c))
-				menu_add_item(id, text_get(name))*/
+		for (var t = 0; t < ds_list_size(mc_version.model_texture_list); t++)
+			menu_add_item(mc_version.model_texture_list[|t], mc_version.model_texture_list[|t])
 		break
 	}
 	

@@ -93,7 +93,7 @@ buffer_delete(buffer_current)
 log("Project loaded")
 
 // Close popup
-if (ds_priority_size(res_load_queue) = 0)
+if (ds_priority_size(load_queue) = 0)
 	popup_close()
 
 if (load_format < project_100demo2)

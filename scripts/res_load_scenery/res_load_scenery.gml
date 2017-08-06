@@ -44,7 +44,7 @@ switch (load_stage)
 					}
 				}
 			}
-			app.popup_loading.caption = text_get("sceneryloadcaptionpieceof", mc_builder.file_map)
+			app.popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
 		}
 		
 		// Schematic file
@@ -144,7 +144,7 @@ switch (load_stage)
 		mc_builder.build_pos = point3D(0, 0, 0)
 		with (app)
 		{
-			popup_loading.text = text_get("sceneryloadblocks")
+			popup_loading.text = text_get("loadsceneryblocks")
 			popup_loading.progress = 2 / 10
 		}
 		break
@@ -172,7 +172,7 @@ switch (load_stage)
 			mc_builder.build_pos[Z] = 0
 			
 			with (app)
-				popup_loading.text = text_get("sceneryloadmodel")
+				popup_loading.text = text_get("loadscenerymodel")
 		}
 		else
 			with (app)
@@ -203,12 +203,11 @@ switch (load_stage)
 			// Put map name in resource name
 			if (mc_builder.file_map != "")
 			{
-				display_name = text_get("sceneryloadpieceof", mc_builder.file_map)
+				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
 				if (filename = "export.blocks") // Rename world import file
 				{
 					var newname = filename_unique(app.project_folder + "\\" + display_name + ".blocks");
 					filename = filename_name(newname)
-					filename_out = filename
 					display_name = filename_new_ext(filename, "")
 					file_rename_lib(app.project_folder + "\\export.blocks", newname)
 				}
@@ -237,7 +236,7 @@ if (rootmap != null)
 // Schematic error
 if (openerr)
 {
-	error("errorschematicload")
+	error("errorloadschematic")
 	buffer_delete(buffer_current)
 	with (app)
 		load_next()

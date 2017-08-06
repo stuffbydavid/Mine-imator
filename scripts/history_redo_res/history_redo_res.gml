@@ -5,7 +5,6 @@ var res;
 if (history_data.fn != "" && !history_data.replaced)
 {
 	res = new_res(history_data.fn, history_data.type)
-	res.filename_out = history_data.fnout
 	res.iid = history_data.newres
 	
 	if (history_data.type = "skin")

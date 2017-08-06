@@ -5,36 +5,26 @@ var fn = load_folder + "\\" + filename;
 
 debug("Loading " + type, fn)
 
+// Load from file
 switch (type)
 {
+	case "pack":
 	case "packunzipped":
 	{
-		pack_zip = ""
-		pack_export = true
-		type = "pack"
-		ready = false
-		//ds_queue_enqueue(pack_load_queue, id)
-		//with (app)
-		//	res_pack_load_start()
-		
-		break
-	}
-	
-	case "pack":
-	{
-		if (filename_ext(fn) = ".zip")
+		if (type = "packunzipped") // Pre-unzipped pack (when loading assets)
 		{
-			pack_zip = fn
-			pack_export = (load_folder != save_folder)
-			ready = false
-			//ds_queue_enqueue(pack_load_queue, id)
-			//with (app)
-			//	res_pack_load_start()
+			pack_zip = ""
+			type = "pack"
 		}
 		else
+			pack_zip = fn
+			
+		ready = false
+		
+		with (app)
 		{
-			//res_pack_load_folder(fn)
-			res_update_colors()
+			ds_priority_add(load_queue, other.id, 0)
+			load_start(other.id, res_load_start)
 		}
 		
 		break
@@ -142,7 +132,6 @@ switch (type)
 		audio_stop_all()
 		ready = false
 		
-		ds_priority_add(res_load_queue, id, 0)
 		with (app)
 		{
 			ds_priority_add(load_queue, other.id, 0)
@@ -153,10 +142,7 @@ switch (type)
 	}
 }
 
-if (load_folder != save_folder)
-	res_export()
-	
-filename = filename_out
+// Set display name
 if (filename_ext(fn) = ".zip")
 	display_name = string_replace(filename, ".zip", "")
 else if (type != "pack")
@@ -166,5 +152,3 @@ else
 	
 if (type = "downloadskin")
 	display_name = text_get("downloadskinname", display_name)
-else if (type = "pack")
-	filename = display_name

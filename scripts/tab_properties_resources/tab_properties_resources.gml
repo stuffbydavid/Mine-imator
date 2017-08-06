@@ -49,10 +49,10 @@ if (res_edit.type = "pack")
 	
 	switch (res_preview.pack_image)
 	{
-		case "mobtextures":
+		case "modeltextures":
 		{
 			tab_control(24)
-			draw_button_menu("resourcespackimagecharacter", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_char, text_get(res_preview.pack_char.name), action_res_preview_pack_char, null, 0, capwid)
+			draw_button_menu("resourcespackimagemodeltexture", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_model_texture, res_preview.pack_model_texture, action_res_preview_pack_model_texture, null, 0, capwid)
 			tab_next()
 			break
 		}

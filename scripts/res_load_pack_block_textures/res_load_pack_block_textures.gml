@@ -1,10 +1,23 @@
 /// res_load_pack_block_textures()
 /// @desc Creates a static and animated block sheet out of the list of block textures.
 
+// Free old
+if (block_sheet_texture != null)
+	texture_free(block_sheet_texture)
+	
+if (block_sheet_ani_texture != null)
+	for (var f = 0; f < block_sheet_ani_frames; f++)
+		texture_free(block_sheet_ani_texture[f])
+		
+if (block_sheet_depth_list != null)
+	ds_list_destroy(block_sheet_depth_list)
+	
+if (block_sheet_ani_depth_list != null)
+	ds_list_destroy(block_sheet_ani_depth_list)
+		
+// Create new
 var blocksize, texlist, texanilist, surf, anisurf, samplepos, sampleposamount, wid;
 blocksize = null
-
-// TODO free old
 
 debug_timer_start()
 		

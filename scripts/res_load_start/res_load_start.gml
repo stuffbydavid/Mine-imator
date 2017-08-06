@@ -8,7 +8,7 @@ switch (type)
 		load_stage = "open"
 		with (app)
 		{
-			popup_loading.text = text_get("sceneryloadopen")
+			popup_loading.text = text_get("loadsceneryopen")
 			popup_loading.caption = ""
 			popup_loading.load_script = res_load_scenery
 		}
@@ -20,8 +20,8 @@ switch (type)
 		load_stage = "open"
 		with (app)
 		{
-			popup_loading.text = text_get("audioloadopen")
-			popup_loading.caption = text_get("audioloadcaption", other.filename)
+			popup_loading.text = text_get("loadaudioopen")
+			popup_loading.caption = text_get("loadaudiocaption", other.filename)
 			popup_loading.load_script = res_load_audio
 		}
 		break
@@ -32,8 +32,8 @@ switch (type)
 		load_stage = "unzip"
 		with (app)
 		{
-			popup_loading.text = text_get("packloadunzip")
-			popup_loading.caption = text_get("packloadcaption", other.filename)
+			popup_loading.text = text_get("loadpackunzip")
+			popup_loading.caption = text_get("loadpackcaption", other.filename)
 			popup_loading.load_script = res_load_pack
 		}
 		break

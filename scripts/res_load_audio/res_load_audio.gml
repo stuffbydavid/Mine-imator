@@ -21,7 +21,7 @@ switch (load_stage)
 		if (movie_audio_file_decode(fname, temp_file) < 0)
 		{
 			log("Error loading audio")
-			error("erroraudioload")
+			error("errorloadaudio")
 			with (app)
 				load_next()
 			return 0
@@ -46,7 +46,7 @@ switch (load_stage)
 		
 		with (app)
 		{
-			popup_loading.text = text_get("audioloadread")
+			popup_loading.text = text_get("loadaudioread")
 			popup_loading.progress = 1 / 5
 		}
 		break

@@ -8,3 +8,4 @@ with (res_edit)
 
 lib_preview.update = true
 res_preview.update = true
+res_preview.reset_view = true

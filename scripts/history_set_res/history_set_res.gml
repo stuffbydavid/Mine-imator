@@ -18,7 +18,6 @@ log("Action Load resource", script_get_name(script), fn)
 
 hobj = new_history(script)
 hobj.fn = fn
-hobj.fnout = ""
 hobj.type = ""
 hobj.oldres = iid_get(oldres)
 hobj.newres = iid_get(newres)
@@ -27,7 +26,6 @@ hobj.replaced = false
 if (newres && newres.object_index = obj_resource) // Not camera
 {
 	hobj.type = newres.type
-	hobj.fnout = newres.filename_out
 	hobj.replaced = newres.replaced
 }
 	

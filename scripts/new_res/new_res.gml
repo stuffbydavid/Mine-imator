@@ -3,21 +3,16 @@
 /// @arg type
 /// @desc Adds a new resource or replaces an existing one. Returns the new resource instance.
 
-var fn, type, res, fnout, replaced;
+var fn, type, res, newfn, replaced;
 fn = argument0
 type = argument1
 
+if (filename_ext(fn) = ".zip" && type != "packunzipped")
+	type = "pack"
+
 res = null
 replaced = false
-
-if (filename_ext(fn) = ".zip")
-{
-	if (type != "packunzipped")
-		type = "pack"
-	fnout = project_folder + "\\" + filename_new_ext(filename_name(fn), "")
-}
-else
-	fnout = project_folder + "\\" + filename_name(fn)
+newfn = project_folder + "\\" + filename_name(fn)
 
 // Check replace
 with (obj_resource)
@@ -36,7 +31,7 @@ if (res) // Existing resource found
 	else
 	{
 		res = null
-		fnout = filename_unique(fnout)
+		newfn = filename_unique(newfn)
 	}
 }
 
@@ -48,16 +43,15 @@ if (!res)
 	sortlist_add(res_list, res)
 }
 
-res.filename = filename_name(fn)
-res.filename_out = filename_name(fnout)
+res.filename = filename_name(newfn)
 res.replaced = replaced
 load_folder = filename_dir(fn)
 save_folder = project_folder
 
+with (res)
+	res_export()
+
 log("Add resource", type)
 log("filename", res.filename)
-log("filename_out", res.filename_out)
-log("load_folder", load_folder)
-log("save_folder", save_folder)
 
 return res

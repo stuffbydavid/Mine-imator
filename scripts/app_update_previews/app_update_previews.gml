@@ -10,6 +10,7 @@ with (obj_preview)
 	{
 		preview_reset_view()
 		particle_spawner_clear()
+		reset_view = true
 	}
 	last_select = select
 	

@@ -1,10 +1,13 @@
 /// res_load_pack_item_textures()
 /// @desc Creates a texture sheet for the items.
 
+// Free old
+if (item_sheet_texture != null)
+	texture_free(item_sheet_texture)
+
+// Create new
 var itemsize, texlist, surf;
 itemsize = null
-
-// TODO free old
 
 debug_timer_start()
 

@@ -6,7 +6,7 @@ if (res_edit.type = "pack")
 	if (fn = "")
 		return 0
 	fn = filename_new_ext(fn, ".png")
-	texture_export(res_preview.last_tex, fn)
+	texture_export(res_preview.texture, fn)
 }
 else
 {

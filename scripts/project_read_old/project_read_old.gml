@@ -195,7 +195,6 @@ for (a = 0; a < load.skin_amount; a++) { // Skins
 	res.loaded = 1
 	res.type = "skin"
 	res.filename = load.skin_name[a]
-	res.filename_out = load.skin_name[a]
 	for (b = 0; b < load.lib_amount; b++) // Is this used as a skin?
 		if (load.lib_char_skin[b] = a)
 			break
@@ -210,7 +209,6 @@ for (a = 0; a < load.item_amount; a++) { // Item sheets
 	res.loaded = 1
 	res.type = "itemsheet"
 	res.filename = load.item_name[a]
-	res.filename_out = load.item_name[a]
 	with (res)
 		res_load()
 	load.item_res[a] = res
@@ -221,7 +219,6 @@ for (a = 0; a < load.ter_amount; a++) { // Terrain sheets
 	res.loaded = 1
 	res.type = "blocksheet"
 	res.filename = load.ter_name[a]
-	res.filename_out = load.ter_name[a]
 	res.block_format = load_format
 	with (res)
 		res_load()
@@ -233,7 +230,6 @@ for (a = 0; a < load.bg_amount; a++) { // Background images
 	res.loaded = 1
 	res.type = "texture"
 	res.filename = load.bg_name[a]
-	res.filename_out = load.bg_name[a]
 	with (res)
 		res_load()
 	load.bg_res[a] = res
@@ -300,7 +296,6 @@ for (a = 0; a < load.lib_amount; a++) {
 				sch = filename_name(load.lib_scenery_source[a])
 				res.type = "schematic"
 				res.filename = sch
-				res.filename_out = sch
 				with (res)
 					res_load()
 				lib.scenery = res

@@ -22,7 +22,6 @@ if (type = "particles")
 debug("type", type)
 
 filename = buffer_read_string_int()				debug("filename", filename)
-filename_out = filename
 is_skin = buffer_read_byte()					debug("is_skin", is_skin)
 pack_description = buffer_read_string_int()		debug("pack_description", pack_description)
 if (load_format >= project_100debug)

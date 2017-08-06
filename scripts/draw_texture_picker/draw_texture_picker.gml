@@ -42,7 +42,7 @@ if (argument_count > 11)
 }
 else
 {
-	anislots = 0
+	anitex = null
 	res = null
 }
 
@@ -53,14 +53,15 @@ dx = xx
 dy = yy
 off = 2
 
-// Number of items
+// Get number of  active slots in the sheets
 if (anitex = null)
-	anislots = 0
-items = slots + anislots // Get the total number of active slots in the sheets
+	items = slots 
+else
+	items = slots + anislots
 
 // Sizes
-slotwid = max(1, floor(texture_width(tex) / slotsx))
-slothei = max(1, floor(texture_height(tex) / slotsy))
+slotwid = clamp(floor(texture_width(tex) / slotsx), 1, 64)
+slothei = clamp(floor(texture_height(tex) / slotsy), 1, 64)
 itemwid = slotwid + off * 2
 itemhei = slothei + off * 2
 itemsx = floor((wid - 30 * scroll.needed) / itemwid)
