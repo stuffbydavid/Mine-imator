@@ -15,7 +15,9 @@
         "95fda5ca-eb26-45b6-888e-214527325f0a",
         "642f1e7b-5da5-4588-87cc-8449dec73eae",
         "18d039e1-401b-49d1-916f-e29709dea485",
-        "d8a1cf2b-e54b-43d3-80bd-191da64ceb76"
+        "d8a1cf2b-e54b-43d3-80bd-191da64ceb76",
+        "d442a46a-cd01-4215-b1bf-f78fb858056e",
+        "70fac7ea-fa9e-4a5a-84c6-1a2cdedfb5ff"
     ],
     "filterType": "GMScript",
     "folderName": "Blocks",

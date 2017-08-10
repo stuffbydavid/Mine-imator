@@ -8,8 +8,8 @@ with (mc_builder)
 	build_size = test(other.block_repeat_enable, other.block_repeat, vec3(1))
 	
 	// Set blocks
-	array3D_fill(block_id, build_size, other.block_id)
-	array3D_fill(block_data, build_size, other.block_data)
+	array3D_fill(block_name, build_size, other.block_name)
+	array3D_fill(block_state, build_size, other.block_state)
 				
 	// Set models
 	for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)

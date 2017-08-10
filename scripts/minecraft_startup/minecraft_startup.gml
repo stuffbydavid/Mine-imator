@@ -3,7 +3,7 @@
 ///		  stored in mc_version, while the textures are put in mc_res.
 
 globalvar mc_version, mc_builder, res_def;
-globalvar mc_block_states_map, mc_block_models_map;
+globalvar mc_block_state_file_map, mc_block_model_file_map;
 mc_version = new(obj_minecraft_version)
 mc_builder = new(obj_builder)
 res_def = new(obj_resource)

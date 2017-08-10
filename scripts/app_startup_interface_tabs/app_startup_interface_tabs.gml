@@ -108,34 +108,32 @@ template_editor.script = tab_template_editor
 
 with (template_editor)
 {
-	// Character vbuffer
+	// Character list
 	char_list = new(obj_sortlist)
 	char_list.script = action_lib_char_model
 	sortlist_column_add(char_list, "charname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(char_list, mc_version.char_model_map[?mc_version.char_list[|c]])
+		sortlist_add(char_list, mc_version.char_list[|c])
 		
 	// Item
 	item_scroll = new(obj_scrollbar)
 	
 	// Block
 	block_list = new(obj_sortlist)
-	block_list.script = action_lib_block_id
-	sortlist_column_add(block_list, "blockid", 0)
-	sortlist_column_add(block_list, "blockname", 0.25)
-	for (var b = 0; b < 256; b++)
-		if (!is_undefined(mc_version.block_map[?b]))
-			sortlist_add(block_list, b)
+	block_list.script = action_lib_block_name
+	sortlist_column_add(block_list, "blockname", 0)
+	for (var b = 0; b < ds_list_size(mc_version.block_list); b++)
+		sortlist_add(block_list, mc_version.block_list[|b])
 	tbx_block_data = new_textbox_integer()
 	
-	// Special block vbuffer
+	// Special block list
 	spblock_list = new(obj_sortlist)
 	spblock_list.script = action_lib_char_model
 	sortlist_column_add(spblock_list, "spblockname", 0)
 	//for (var p = characters; p < characters + characters_blocks; p++)
 	//	sortlist_add(spblock_list, iget(obj_model, p))
 	
-	// Bodypart vbuffer
+	// Bodypart list
 	bodypart_char_list = new(obj_sortlist)
 	bodypart_char_list.script = action_lib_char_bodypart_model
 	sortlist_column_add(bodypart_char_list, "bodypartcharname", 0)

@@ -21,8 +21,9 @@ item_3d = true
 item_face_camera = false
 item_bounce = false
 
-block_id = 2
-block_data = 0
+block_name = "grass"
+block_state = mc_version.block_name_map[?block_name].default_state
+block_state_map = null
 block_tex = null
 block_vbuffer_reset()
 scenery = 0

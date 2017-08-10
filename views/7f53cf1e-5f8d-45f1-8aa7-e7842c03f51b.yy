@@ -10,8 +10,7 @@
         "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
         "b0954969-d77b-400a-888b-a47410e349ef",
         "8955cde0-61b3-4993-a04e-927841db0475",
-        "2b238e7e-054f-4d4a-abce-d6e273211309",
-        "ffac174c-5c53-469a-806a-b7786927e8f1"
+        "2b238e7e-054f-4d4a-abce-d6e273211309"
     ],
     "filterType": "GMScript",
     "folderName": "Minecraft",

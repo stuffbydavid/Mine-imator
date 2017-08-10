@@ -1,13 +1,9 @@
-/// block_get_name(id, data)
-/// @arg id
-/// @arg data
+/// block_get_name(block)
+/// @arg block
 
-var bid, bdata, name;
-bid = argument0
-bdata = argument1
-name = "block" + mc_version.block_map[?bid].data_name[bdata]
+var block = argument0;
 
-if (!text_exists(name))
-	return mc_version.block_map[?bid].data_default_name[bdata]
+if (text_exists("block" + block.name))
+	return text_get("block" + block.name)
 else
-	return text_get(name)
+	return string_format_snakecase(block.name)

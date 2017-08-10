@@ -17,8 +17,8 @@ to.item_3d = item_3d
 to.item_face_camera = item_face_camera
 to.item_bounce = item_bounce
 
-to.block_id = block_id
-to.block_data = block_data
+to.block_name = block_name
+to.block_state = block_state
 to.block_tex = block_tex
 
 to.scenery = scenery

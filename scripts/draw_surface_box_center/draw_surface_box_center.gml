@@ -21,7 +21,7 @@ sh = surface_get_height(surf)
 
 if (sw / sh < w / h)
 {
-	scale = h/sh
+	scale = h / sh
 	xx += (w - scale * sw) / 2
 	w = sw * scale
 }

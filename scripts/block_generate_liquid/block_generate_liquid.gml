@@ -1,12 +1,12 @@
 /// block_generate_liquid()
 /// @desc Creates a liquid mesh from the surrounding block data.
+// TODO replace non-flowing ids and names
 
-var bid, name, slot, sheetwidth, sheetheight, angle;
+var level, slot, sheetwidth, sheetheight, angle;
 var slotstillpos, slotstillsize, slotflowpos, slotflowsize, topflow, dep, vbuf;
 var cornerz, minz, averagez;
 
-bid = snap_floor(block_id_current, 2)
-name = mc_version.block_map[?bid].data_name[block_data_current]
+level = block_generate_liquid_get_level(build_pos)
 
 if (!app.setting_liquid_animation)
 	vertex_wave = e_vertex_wave.NONE
@@ -15,10 +15,10 @@ topflow = true
 angle = 0
 
 // Still texture
-slot = ds_list_find_index(mc_version.block_texture_list, "blocks/" + name + "_still")
+slot = ds_list_find_index(mc_version.block_texture_list, "blocks/" + block_name_current + "_still")
 if (slot < 0) // Animated
 {
-	slot = ds_list_find_index(mc_version.block_texture_ani_list, "blocks/" + name + "_still")
+	slot = ds_list_find_index(mc_version.block_texture_ani_list, "blocks/" + block_name_current + "_still")
 	if (slot < 0)
 		return 0
 	
@@ -39,22 +39,20 @@ slotstillpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth)
 slotstillsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
 
 // Flow texture
-slot = ds_list_find_index(mc_version.block_texture_list, "blocks/" + name + "_flow")
+slot = ds_list_find_index(mc_version.block_texture_list, "blocks/" + block_name_current + "_flow")
 if (slot < 0) // Animated
 {
-	slot = ds_list_find_index(mc_version.block_texture_ani_list, "blocks/" + name + "_flow")
-	if (slot < 0){
-		log(name,"not found")
+	slot = ds_list_find_index(mc_version.block_texture_ani_list, "blocks/" + block_name_current + "_flow")
+	if (slot < 0)
 		return 0
-	}
 }
 
 slotflowpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) * block_size)
 slotflowsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
 
 // Falling
-var falling = (block_data_current div 8);
-if (!build_edge[e_dir.UP] && snap_floor(array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(e_dir.UP))), 2) = bid)
+var falling = (level div 8);
+if (!build_edge[e_dir.UP] && array3D_get(block_name, point3D_add(build_pos, dir_get_vec3(e_dir.UP))) = block_name_current)
 {
 	falling = true
 	vertex_wave = e_vertex_wave.NONE
@@ -76,8 +74,8 @@ if (falling)
 		// Check below and enable wave at bottom vertices
 		var looksidedown = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.DOWN), dir_get_vec3(d)));
 		var lookside = point3D_add(build_pos, dir_get_vec3(d));
-		if (!build_edge[e_dir.DOWN] && snap_floor(array3D_get(block_id, looksidedown), 2) = bid && array3D_get(block_data, looksidedown) < 8 &&
-			snap_floor(array3D_get(block_id, lookside), 2) != bid)
+		if (!build_edge[e_dir.DOWN] && array3D_get(block_name, looksidedown) = block_name_current && block_generate_liquid_get_level(looksidedown) < 8 &&
+			array3D_get(block_name, lookside) != block_name_current)
 		{
 			vertex_wave = e_vertex_wave.Z_ONLY
 			vertex_wave_minz = null
@@ -87,8 +85,8 @@ if (falling)
 		
 		// Check to side and enable wave at top vertices
 		var looksideup = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.UP), dir_get_vec3(d)));
-		if (snap_floor(array3D_get(block_id, lookside), 2) = bid && array3D_get(block_data, lookside) < 8 &&
-			(build_edge[e_dir.UP] || snap_floor(array3D_get(block_id, looksideup), 2) != bid))
+		if (array3D_get(block_name, lookside) = block_name_current && block_generate_liquid_get_level(lookside) < 8 &&
+			(build_edge[e_dir.UP] || array3D_get(block_name, looksideup) != block_name_current))
 		{
 			vertex_wave = e_vertex_wave.Z_ONLY
 			vertex_wave_minz = block_pos[Z] + 1
@@ -98,53 +96,53 @@ if (falling)
 }
 else
 {
-	var flow, sidedata, cornerdata, myz, sidez, cornerz;
+	var flow, sidelevel, cornerlevel, myz, sidez, cornerz;
 	flow[e_dir.NORTH] = 0
 	
 	// Data at sides
 	for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 	{
-		sidedata[d] = 7
-		cornerdata[d] = 7
-		if (!build_edge[d] && snap_floor(array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(d))), 2) = bid)
+		sidelevel[d] = 7
+		cornerlevel[d] = 7
+		if (!build_edge[d] && array3D_get(block_name, point3D_add(build_pos, dir_get_vec3(d))) = block_name_current)
 		{
-			sidedata[d] = array3D_get(block_data, point3D_add(build_pos, dir_get_vec3(d)))
+			sidelevel[d] = block_generate_liquid_get_level(point3D_add(build_pos, dir_get_vec3(d)))
 			
-			if (sidedata[d] mod 8 < block_data_current)
+			if (sidelevel[d] mod 8 < level)
 				flow[dir_get_opposite(d)]++ 
-			else if (sidedata[d] mod 8 > block_data_current)
+			else if (sidelevel[d] mod 8 > level)
 				flow[d]++
 		}
 	}
 
 	// Data in corners
-	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.NORTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(-1, -1, 0))), 2) = bid)
-		cornerdata[0] = array3D_get(block_data, point3D_add(build_pos, vec3(-1, -1, 0)))
+	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.NORTH] && array3D_get(block_name, point3D_add(build_pos, vec3(-1, -1, 0))) = block_name_current)
+		cornerlevel[0] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(-1, -1, 0)))
 		
-	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.NORTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(1, -1, 0))), 2) = bid)
-		cornerdata[1] = array3D_get(block_data, point3D_add(build_pos, vec3(1, -1, 0)))
+	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.NORTH] && array3D_get(block_name, point3D_add(build_pos, vec3(1, -1, 0))) = block_name_current)
+		cornerlevel[1] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(1, -1, 0)))
 		
-	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.SOUTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(1, 1, 0))), 2) = bid)
-		cornerdata[2] = array3D_get(block_data, point3D_add(build_pos, vec3(1, 1, 0)))
+	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.SOUTH] && array3D_get(block_name, point3D_add(build_pos, vec3(1, 1, 0))) = block_name_current)
+		cornerlevel[2] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(1, 1, 0)))
 		
-	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.SOUTH] && snap_floor(array3D_get(block_id, point3D_add(build_pos, vec3(-1, 1, 0))), 2) = bid)
-		cornerdata[3] = array3D_get(block_data, point3D_add(build_pos, vec3(-1, 1, 0)))
+	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.SOUTH] && array3D_get(block_name, point3D_add(build_pos, vec3(-1, 1, 0))) = block_name_current)
+		cornerlevel[3] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(-1, 1, 0)))
 		
 	// Set Zs
-	myz = 14 - (block_data_current / 7) * 13.5
+	myz = 14 - (level / 7) * 13.5
 	for (var i = 0; i < 4; i++)
 	{
 		// Corner
-		if (cornerdata[i] div 8)
+		if (cornerlevel[i] div 8)
 			cornerz[i] = block_size
 		else
-			cornerz[i] = 14 - (cornerdata[i] / 7) * 13.5
+			cornerz[i] = 14 - (cornerlevel[i] / 7) * 13.5
 		
 		// Side
-		if (sidedata[i] div 8)
+		if (sidelevel[i] div 8)
 			sidez[i] = block_size
 		else
-			sidez[i] = 14 - (sidedata[i] / 7) * 13.5
+			sidez[i] = 14 - (sidelevel[i] / 7) * 13.5
 	}
 	
 	// Max corner levels
@@ -313,7 +311,7 @@ vbuffer_current = vbuffer[dep, vbuf]
 for (var d = 0; d < e_dir.amount; d++)
 {
 	// Cull
-	if (!build_edge[d] && (snap_floor(array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(d))), 2) = bid || 
+	if (!build_edge[d] && (array3D_get(block_name, point3D_add(build_pos, dir_get_vec3(d))) = block_name_current || 
 						   block_render_models_get_solid(block_render_models_dir[d])))
 		continue
 		

@@ -1,6 +1,6 @@
 /// particle_draw()
-/// Draws the particle.
-// TODO!
+/// @desc Draws the particle.
+
 var temp, prevalpha, prevcolor;
 temp = type.temp
 
@@ -12,7 +12,11 @@ shader_alpha *= alpha
 if (temp)
 {
 	var sch, rep;
-	rep = test(temp.block_repeat_enable, temp.block_repeat, vec3(1))
+	
+	if (temp.block_repeat_enable)
+		rep = temp.block_repeat
+	else
+		rep = vec3(1)
 		
 	matrix_reset_offset()
 	
@@ -20,15 +24,15 @@ if (temp)
 	{
 		case "char":
 		case "spblock":
-			//matrix_offset = point3D(0, 0, -temp.char_model.height / 2)
+			matrix_offset = point3D(0, 0, -(temp.char_model.bounds_end[Z] - temp.char_model.bounds_start[Z]) / 2)
 			break
 		
 		case "scenery":
-			/*sch = temp.scenery
+			sch = temp.scenery
 			if (!sch)
 				break
-				
-			matrix_offset = point3D(-sch.sch_xsize * repx * 8, -sch.sch_ysize * repy * 8, -sch.sch_zsize * repz * 8)*/
+			var displaysize = vec3_mul(vec3_mul(sch.scenery_size, rep), point3D(block_size, block_size, block_size));
+			matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 			break
 			
 		case "block":
@@ -41,35 +45,15 @@ if (temp)
 	}
 	
 	matrix_set(matrix_world, matrix_create(pos, rot, vec3(scale)))
+	
 	switch (temp.type)
 	{
 		case "char":
 		case "spblock":
-			/*var char, res, mat;
-			char = temp.char_model
-			res = temp.char_skin
+			var res = temp.char_skin;
 			if (!res.ready)
 				res = res_def
-			shader_texture = res.mob_texture[char.index]
-			shader_use()
-			mat = matrix_get(matrix_world)
-			
-			for (var p = 0; p < char.part_amount; p++)
-			{
-				if (char.part_vbuffer[p] = null)
-					continue
-				matrix_set(matrix_world, mat)
-				matrix_add_offset()
-				matrix_world_multiply_pre(char.part_matrix[p])
-				vbuffer_render(char.part_vbuffer[p])
-				if (char.part_hasbend[p]) // Draw bend half
-				{
-					matrix_set(matrix_world, mat)
-					matrix_add_offset()
-					matrix_world_multiply_pre(char.part_matrix_bend[p])
-					vbuffer_render(char.part_bendvbuffer[p])
-				}
-			}*/
+			render_world_model_parts(temp.char_model, res)
 			break
 			
 		case "scenery":

@@ -126,12 +126,11 @@ else
 			draw_label(text_get("benchblock") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
 			listh = dh - 140
-			bench_settings.block_list.block_data = bench_settings.block_data
-			sortlist_draw(bench_settings.block_list, dx, dy, dw, listh, bench_settings.block_id)
+			sortlist_draw(bench_settings.block_list, dx, dy, dw, listh, bench_settings.block_name)
 			dy += listh + 30
 			
 			// Data
-			draw_meter("benchblockdata", dx, dy, dw, bench_settings.block_data, 50, 0, 15, 0, 1, bench_settings.block_tbx_data, action_bench_block_data, capwid)
+			//draw_meter("benchblockdata", dx, dy, dw, bench_settings.block_data, 50, 0, 15, 0, 1, bench_settings.block_tbx_data, action_bench_block_data, capwid)
 			dy += 30 + 8
 		
 			// Texture

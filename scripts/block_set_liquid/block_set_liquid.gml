@@ -1,4 +1,4 @@
 /// block_set_liquid()
-/// @desc Returns a script for generating liquid blocks.
+/// @desc Returns the script for generating the liquid mesh.
 
 return block_generate_liquid

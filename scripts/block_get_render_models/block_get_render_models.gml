@@ -1,41 +1,75 @@
-/// builder_get_render_models(id, data, [ongenerate])
-/// @arg id
-/// @arg data
+/// builder_get_render_models(name, state, [ongenerate])
+/// @arg name
+/// @arg state
 /// @arg [ongenerate]
 /// @desc Returns an array of render models for the given block (null for no model, 0 to calculate on model generation).
 
-var bid, bdata, ongenerate;
-bid = argument[0]
-bdata = argument[1]
+var name, state, ongenerate;
+name = argument[0]
+state = argument[1]
 if (argument_count > 2)
 	ongenerate = argument[2]
 else
 	ongenerate = false
 
-if (!is_undefined(mc_version.block_map[?bid]))
+if (!is_undefined(mc_version.block_name_map[?name]))
 {
 	ds_map_clear(mc_builder.vars)
 	mc_builder.vars[?"normal"] = ""
+	block_vars_string_to_map(state, mc_builder.vars)
 	
-	with (mc_version.block_map[?bid])
+	with (mc_version.block_name_map[?name])
 	{
-		var datavars = data_vars[bdata];
+		// Requires render models
+		if (require_models && !ongenerate)
+			return 0
+			
+		// Get active file and properties
+		var curfile, curtype, curbrightness;
+		curfile = file
+		curtype = type
+		curbrightness = brightness
 		
-		if (datavars != null)
+		// Check states
+		if (states_map != null)
 		{
-			// Requires render models
-			if (!is_undefined(datavars[?"requiremodels"]) && datavars[?"requiremodels"] = "true" && !ongenerate)
-				return 0
-				
-			// Add builder variables
-			ds_map_merge(mc_builder.vars, datavars)
+			var curstate = ds_map_find_first(states_map);
+			while (!is_undefined(curstate))
+			{
+				if (!is_undefined(mc_builder.vars[?curstate]))
+				{
+					// This state has a set value, check if it matches any of the possibilities
+					with (states_map[?curstate])
+					{
+						for (var v = 0; v < value_amount; v++)
+						{
+							if (mc_builder.vars[?curstate] != value_name[v])
+								continue
+							
+							// Match found, get the properties and stop checking further values in this state
+							if (value_file[v] != null)
+								curfile = value_file[v]
+								
+							if (value_type[v] != "")
+								curtype = value_type[v]
+								
+							if (value_brightness[v] != null)
+								curbrightness = value_brightness[v]
+								
+							break
+						}
+					}
+				}
+				curstate = ds_map_find_next(states_map, curstate)
+			}
 		}
+		
 		
 		// Run a block specific script which returns either an array of models,
 		// a custom generation script, 0 to continue or null to not render.
-		if (data_type[bdata] != "")
+		if (curtype != "")
 		{
-			var script = asset_get_index("block_set_" + data_type[bdata]);
+			var script = asset_get_index("block_set_" + curtype);
 			if (script > -1)
 			{
 				with (mc_builder)
@@ -47,7 +81,7 @@ if (!is_undefined(mc_version.block_map[?bid]))
 			}
 		}
 		
-		with (data_states[bdata])
+		with (curfile)
 		{
 			// Variants
 			if (variant_amount > 0)
@@ -61,7 +95,7 @@ if (!is_undefined(mc_version.block_map[?bid]))
 				
 						// Check if match
 						if (is_undefined(vars[?"normal"]) || ds_map_size(vars) > 1)
-							if (!block_var_match(vars, mc_builder.vars))
+							if (!block_vars_match(vars, mc_builder.vars))
 								continue
 				
 						// Pick a random model from the list
@@ -95,7 +129,7 @@ if (!is_undefined(mc_version.block_map[?bid]))
 							var match = false;
 							for (var cd = 0; cd < condition_amount; cd++)
 							{
-								if (block_var_match(condition[cd], mc_builder.vars))
+								if (block_vars_match(condition[cd], mc_builder.vars))
 								{
 									match = true
 									break

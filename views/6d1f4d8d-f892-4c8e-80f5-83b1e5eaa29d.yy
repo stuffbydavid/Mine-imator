@@ -15,7 +15,8 @@
         "37ad5af1-9478-455f-af74-0bdec5502c92",
         "5766636e-e248-4e66-b621-9a86b9a6e364",
         "a21d0d37-23b8-47b8-8cf8-cc6980fb9b61",
-        "a684a12a-6c7b-4667-a624-60dafccda355"
+        "a684a12a-6c7b-4667-a624-60dafccda355",
+        "56a05a79-5034-4681-b12a-e405c0d177c9"
     ],
     "filterType": "GMScript",
     "folderName": "Strings",

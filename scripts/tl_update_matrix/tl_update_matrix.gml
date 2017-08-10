@@ -30,10 +30,10 @@ if (object_index != app && update_matrix)
 	// Create main matrix
 	matrix = matrix_multiply(matrix_create(pos, rot ,sca), matrix_parent)
 	
-	// No scale TODO
+	// No scale or "resize" mode
 	if (scale_resize || !inherit_scale)
 	{
-		/*// Actual scale
+		// Get actual scale
 		tl = id
 		while (1)
 		{
@@ -43,15 +43,18 @@ if (object_index != app && update_matrix)
 			sca = vec3_mul(sca, vec3(par.value[XSCA], par.value[YSCA], par.value[ZSCA]))
 			tl = par
 		}
+		
+		// Remove scale
 		matrix_remove_scale(matrix_parent)
-		matrix_remove_scale(matrix)
-		//var matrixnoscale = matrix_multiply(tl_base_matrix(true, true, false, true), matrix_parent);
-		//for (var p = 0; p < 11; p++)
-		//	matrix[p] = matrixnoscale[p]
+		var matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), matrix_parent);
+		for (var p = 0; p < 11; p++)
+			matrix[p] = matrixnoscale[p]
+		
+		// Re-add calculated or own scale
 		if (inherit_scale)
 			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), sca), matrix)
 		else
-			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[XSCA], value[YSCA], value[ZSCA])), matrix)*/ 
+			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[XSCA], value[YSCA], value[ZSCA])), matrix) 
 	}
 	
 	// Remove old rotation and re-add own

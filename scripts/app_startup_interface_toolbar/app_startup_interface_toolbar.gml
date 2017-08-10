@@ -68,19 +68,17 @@ with (bench_settings)
 	char_list.script = action_bench_char_model
 	sortlist_column_add(char_list, "charname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(char_list, mc_version.char_model_map[?mc_version.char_list[|c]])
+		sortlist_add(char_list, mc_version.char_list[|c])
 	
 	// Item list
 	item_scroll = new(obj_scrollbar)
 
 	// Block list
 	block_list = new(obj_sortlist)
-	block_list.script = action_bench_block_id
-	sortlist_column_add(block_list, "blockid", 0)
-	sortlist_column_add(block_list, "blockname", 0.25)
-	for (var b = 0; b < 256; b++) // TODO
-		if (!is_undefined(mc_version.block_map[?b]))
-			sortlist_add(block_list, b)
+	block_list.script = action_bench_block_name
+	sortlist_column_add(block_list, "blockname", 0)
+	for (var b = 0; b < ds_list_size(mc_version.block_list); b++)
+		sortlist_add(block_list, mc_version.block_list[|b].name)
 	block_tbx_data = new_textbox_integer()
 
 	// Special block list

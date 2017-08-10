@@ -1,4 +1,4 @@
-/// string_get_real(string, [invalid]):
+/// string_get_real(string, [invalid])
 /// @arg string
 /// @arg [invalid]
 /// @desc An acceptable real number takes the following form:

@@ -10,2800 +10,3733 @@
 	],
 	"blocks": [
 		{
-			"id": 1,
 			"name": "stone",
-			"states": "stone.json",
-			"data": {
-				"1": { "name": "granite", "states": "granite.json" },
-				"2": { "name": "polishedgranite", "states": "smooth_granite.json" },
-				"3": { "name": "diorite", "states": "diorite.json" },
-				"4": { "name": "polisheddiorite", "states": "smooth_diorite.json" },
-				"5": { "name": "andesite", "states": "andesite.json" },
-				"6": { "name": "polishedandesite", "states": "smooth_andesite.json" }
-			}
-		},
-		{
-			"id": 2,
-			"name": "grassblock",
-			"type": "snowy",
-			"states": "grass.json"
-		},
-		{
-			"id": 3,
-			"name": "dirt",
-			"states": "dirt.json",
-			"data": {
-				"1": { "name": "coarsedirt", "states": "coarse_dirt.json" },
-				"2": { "name": "podzol", "type": "snowy", "states": "podzol.json" }
-			}
-		},
-		{
-			"id": 4,
-			"name": "cobblestone",
-			"states": "cobblestone.json"
-		},
-		{
-			"id": 5,
-			"name": "oakwoodplanks",
-			"states": "oak_planks.json",
-			"data": {
-				"1": { "name": "sprucewoodplanks", "states": "spruce_planks.json"},
-				"2": { "name": "birchwoodplanks", "states": "birch_planks.json" },
-				"3": { "name": "junglewoodplanks", "states": "jungle_planks.json" },
-				"4": { "name": "acaciawoodplanks", "states": "acacia_planks.json" },
-				"5": { "name": "darkoakwoodplanks", "states": "dark_oak_planks.json" }
-			}
-		},
-		{
-			"id": 6,
-			"name": "oaksapling",
-			"states": "oak_sapling.json",
-			"data": {
-				"0x1+0x2+0x4": {
-					"1": { "name": "sprucesapling", "states": "spruce_sapling.json" },
-					"2": { "name": "birchsapling", "states": "birch_sapling.json" },
-					"3": { "name": "junglesapling", "states": "jungle_sapling.json" },
-					"4": { "name": "acaciasapling", "states": "acacia_sapling.json" },
-					"5": { "name": "darkoaksapling", "states": "dark_oak_sapling.json" }
-				},
-				"0x8": {
-					"0": { "set": "stage=0" },
-					"1": { "set": "stage=1" }
+			"states": {
+				"variant": {
+					"stone": { "file": "stone.json" },
+					"granite": { "file": "granite.json" },
+					"smooth_granite": { "file": "smooth_granite.json" },
+					"diorite": { "file": "diorite.json" },
+					"smooth_diorite": { "file": "smooth_diorite.json" },
+					"andesite": { "file": "andesite.json" },
+					"smooth_andesite": { "file": "smooth_andesite.json" }
 				}
 			},
+			"default_state": "variant=stone",
+			"legacy_id": 1,
+			"legacy_data": {
+				"0": "variant=stone",
+				"1": "variant=granite",
+				"2": "variant=smooth_granite",
+				"3": "variant=diorite",
+				"4": "variant=smooth_diorite",
+				"5": "variant=andesite",
+				"6": "variant=smooth_andesite"
+			}
+		},
+		{
+			"name": "grass",
+			"file": "grass.json",
+			"type": "snowy",
+			"states": {
+				"snowy": "true|false"
+			},
+			"default_state": "snowy=false",
+			"legacy_id": 2
+		},
+		{
+			"name": "dirt",
+			"states": {
+				"snowy": "true|false",
+				"variant": {
+					"dirt": { "file": "dirt.json" },
+					"coarse_dirt": { "file": "coarse_dirt.json" },
+					"podzol": { "file": "podzol.json", "type": "snowy" }
+				}
+			},
+			"default_state": "variant=dirt,snowy=false",
+			"legacy_id": 3,
+			"legacy_data": {
+				"0": "variant=dirt",
+				"1": "variant=coarsedirt",
+				"2": "variant=podzol"
+			}
+		},
+		{
+			"name": "cobblestone",
+			"file": "cobblestone.json",
+			"legacy_id": 4
+		},
+		{
+			"name": "planks",
+			"states": {
+				"variant": {
+					"oak": { "file": "oak_planks.json" },
+					"spruce": { "file": "spruce_planks.json" },
+					"birch": { "file": "birch_planks.json" },
+					"jungle": { "file": "jungle_planks.json" },
+					"acacia": { "file": "acacia_planks.json" },
+					"dark_oak": { "file": "dark_oak_planks.json" }
+				}	
+			},
+			"default_state": "variant=oak",
+			"legacy_id": 5,
+			"legacy_data": {
+				"0": "variant=oak",
+				"1": "variant=spruce",
+				"2": "variant=birch",
+				"3": "variant=jungle",
+				"4": "variant=acacia",
+				"5": "variant=dark_oak"
+			}
+		},
+		{
+			"name": "sapling",
+			"states": {
+				"type": {
+					"oak": { "file": "oak_sapling.json" },
+					"spruce": { "file": "spruce_sapling.json" },
+					"birch": { "file": "birch_sapling.json" },
+					"jungle": { "file": "jungle_sapling.json" },
+					"acacia": { "file": "acacia_sapling.json" },
+					"dark_oak": { "file": "dark_oak_sapling.json" }
+				}
+			},
+			"default_state": "type=oak,stage=0",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 6,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "type=oak",
+					"1": "type=spruce",
+					"2": "type=birch",
+					"3": "type=jungle",
+					"4": "type=acacia",
+					"5": "type=dark_oak"
+				}
 			}
 		},
 		{
-			"id": 7,
 			"name": "bedrock",
-			"states": "bedrock.json"
+			"file": "bedrock.json",
+			"legacy_id": 7
 		},
 		{
-			"id": 8,
 			"name": "water",
 			"type": "liquid",
+			"states": {
+				"level": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "level=0",
 			"wind": {
 				"axis": "y",
 				"yroot": 0
+			},
+			"legacy_id": 9,
+			"legacy_data": {
+				"0": "level=0",
+				"1": "level=1",
+				"2": "level=2",
+				"3": "level=3",
+				"4": "level=4",
+				"5": "level=5",
+				"6": "level=6",
+				"7": "level=7",
+				"8": "level=8",
+				"9": "level=9",
+				"10": "level=10",
+				"11": "level=11",
+				"12": "level=12",
+				"13": "level=13",
+				"14": "level=14",
+				"15": "level=15"
 			}
 		},
 		{
-			"id": 9,
-			"name": "stationarywater",
-			"type": "liquid",
-			"wind": {
-				"axis": "y",
-				"yroot": 0
-			}
-		},
-		{
-			"id": 10,
 			"name": "lava",
 			"type": "liquid",
+			"states": {
+				"level": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "level=0",
 			"brightness": 1,
 			"wind": {
 				"axis": "y",
 				"yroot": 0
+			},
+			"legacy_id": 11,
+			"legacy_data": {
+				"0": "level=0",
+				"1": "level=1",
+				"2": "level=2",
+				"3": "level=3",
+				"4": "level=4",
+				"5": "level=5",
+				"6": "level=6",
+				"7": "level=7",
+				"8": "level=8",
+				"9": "level=9",
+				"10": "level=10",
+				"11": "level=11",
+				"12": "level=12",
+				"13": "level=13",
+				"14": "level=14",
+				"15": "level=15"
 			}
 		},
 		{
-			"id": 11,
-			"name": "stationarylava",
-			"type": "liquid",
-			"brightness": 1,
-			"wind": {
-				"axis": "y",
-				"yroot": 0
-			}
-		},
-		{
-			"id": 12,
 			"name": "sand",
-			"states": "sand.json",
-			"data": {
-				"1": { "name": "redsand", "states": "red_sand.json" }
-			}
-		},
-		{
-			"id": 13,
-			"name": "gravel",
-			"states": "gravel.json"
-		},
-		{
-			"id": 14,
-			"name": "goldore",
-			"states": "gold_ore.json"
-		},
-		{
-			"id": 15,
-			"name": "ironore",
-			"states": "iron_ore.json"
-		},
-		{
-			"id": 16,
-			"name": "coalore",
-			"states": "coal_ore.json"
-		},
-		{
-			"id": 17,
-			"name": "oakwood",
-			"data": {
-				"0x1+0x2": {
-					"0": { "name": "oakwood", "states": "oak_log.json" },
-					"1": { "name": "sprucewood", "states": "spruce_log.json" },
-					"2": { "name": "birchwood", "states": "birch_log.json" },
-					"3": { "name": "junglewood", "states": "jungle_log.json" }
-				},
-				"0x4+0x8": {
-					"0": { "set": "axis=y" },
-					"1": { "set": "axis=x" },
-					"2": { "set": "axis=z" },
-					"3": { "set": "axis=none" }
-				}
-			}
-		},
-		{
-			"id": 18,
-			"name": "oakleaves",
-			"type": "leaves",
-			"data": {
-				"0x1+0x2": {
-					"0": { "name": "oakleaves", "states": "oak_leaves.json" },
-					"1": { "name": "spruceleaves", "states": "spruce_leaves.json" },
-					"2": { "name": "birchleaves", "states": "birch_leaves.json" },
-					"3": { "name": "jungleleaves", "states": "jungle_leaves.json" }
+			"states": {
+				"variant": {
+					"sand": { "file": "sand.json" },
+					"red_sand": { "file": "red_sand.json" }
 				}
 			},
+			"default_state": "variant=sand",
+			"legacy_id": 12,
+			"legacy_data": {
+				"0": "variant=sand",
+				"1": "variant=red_sand"
+			}
+		},
+		{
+			"name": "gravel",
+			"file": "gravel.json",
+			"legacy_id": 13
+		},
+		{
+			"name": "gold_ore",
+			"file": "gold_ore.json",
+			"legacy_id": 14
+		},
+		{
+			"name": "iron_ore",
+			"file": "iron_ore.json",
+			"legacy_id": 15
+		},
+		{
+			"name": "coal_ore",
+			"file": "coal_ore.json",
+			"legacy_id": 16
+		},
+		{
+			"name": "log",
+			"states": {
+				"variant": {
+					"oak": { "file": "oak_log.json" },
+					"spruce": { "file": "spruce_log.json" },
+					"birch": { "file": "birch_log.json" },
+					"jungle": { "file": "jungle_log.json" }
+				},
+				"axis": "none|x|y|z"
+			},
+			"default_state": "variant=oak,axis=y",
+			"legacy_id": 17,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "variant=oak",
+					"1": "variant=spruce",
+					"2": "variant=birch",
+					"3": "variant=jungle"
+				},
+				"0x4+0x8": {
+					"0": "axis=y",
+					"1": "axis=x",
+					"2": "axis=z",
+					"3": "axis=none"
+				}
+			}
+		},
+		{
+			"name": "leaves",
+			"type": "leaves",
+			"states": {
+				"variant": {
+					"oak": { "file": "oak_leaves.json" },
+					"spruce": { "file": "spruce_leaves.json" },
+					"birch": { "file": "birch_leaves.json" },
+					"jungle": { "file": "jungle_leaves.json" }
+				}
+			},
+			"default_state": "variant=oak",
 			"wind": {
 				"axis": "all"
+			},
+			"legacy_id": 18,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "variant=oak",
+					"1": "variant=spruce",
+					"2": "variant=birch",
+					"3": "variant=jungle"
+				}
 			}
 		},
 		{
-			"id": 19,
 			"name": "sponge",
-			"states": "sponge.json",
-			"set": "wet=false",
-			"data": {
-				"1": { "name": "wetsponge", "set": "wet=true" }
+			"file": "sponge.json",
+			"states": {
+				"wet": "true|false"
+			},
+			"default_state": "wet=false",
+			"legacy_id": 19,
+			"legacy_data": {
+				"0": "wet=false",
+				"1": "wet=true"
 			}
 		},
 		{
-			"id": 20,
 			"name": "glass",
-			"states": "glass.json"
+			"file": "glass.json",
+			"legacy_id": 20
 		},
 		{
-			"id": 21,
-			"name": "lapislazuliore",
-			"states": "lapis_ore.json"
+			"name": "lapis_ore",
+			"file": "lapis_ore.json",
+			"legacy_id": 21
 		},
 		{
-			"id": 22,
-			"name": "lapislazuliblock",
-			"states": "lapis_block.json"
+			"name": "lapis_block",
+			"file": "lapis_block.json",
+			"legacy_id": 22
 		},
 		{
-			"id": 23,
 			"name": "dispenser",
-			"states": "dispenser.json",
-			"data": {
+			"file": "dispenser.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 23,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" }
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 24,
 			"name": "sandstone",
-			"states": "sandstone.json",
-			"data": {
-				"1": { "name": "chiseledsandstone", "states": "chiseled_sandstone.json" },
-				"2": { "name": "smoothsandstone", "states": "smooth_sandstone.json" }
+			"states": {
+				"type": {
+					"sandstone": { "file": "sandstone.json" },
+					"chiseled_sandstone": { "file": "chiseled_sandstone.json" },
+					"smooth_sandstone": { "file": "smooth_sandstone.json" }
+				}
+			},
+			"default_state": "type=sandstone",
+			"legacy_id": 24,
+			"legacy_data": {
+				"0": "type=sandstone",
+				"1": "type=chiseled_sandstone",
+				"2": "type=smooth_sandstone"
 			}
 		},
 		{
-			"id": 25,
 			"name": "noteblock",
-			"states": "noteblock.json"
+			"file": "noteblock.json",
+			"legacy_id": 25
 		},
 		{
-			"id": 27,
-			"name": "poweredrail",
-			"states": "golden_rail.json",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "shape=north_south" },
-					"1": { "set": "shape=east_west" },
-					"2": { "set": "shape=ascending_east" },
-					"3": { "set": "shape=ascending_west" },
-					"4": { "set": "shape=ascending_north" },
-					"5": { "set": "shape=ascending_south" }
-				},
-				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
-				}
-			}
-		},
-		{
-			"id": 28,
-			"name": "detectorrail",
-			"states": "detector_rail.json",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "shape=north_south" },
-					"1": { "set": "shape=east_west" },
-					"2": { "set": "shape=ascending_east" },
-					"3": { "set": "shape=ascending_west" },
-					"4": { "set": "shape=ascending_north" },
-					"5": { "set": "shape=ascending_south" }
-				},
-				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
-				}
-			}
-		},
-		{
-			"id": 29,
-			"name": "stickypiston",
-			"states": "sticky_piston.json",
-			"set": "extended=false",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" }
-				}
-			}
-		},
-		{
-			"id": 30,
-			"name": "cobweb",
-			"states": "web.json"
-		},
-		{
-			"id": 31,
-			"name": "shrub",
-			"states": "dead_bush.json",
-			"data": {
-				"1": { "name": "tallgrass", "states": "tall_grass.json" },
-				"2": { "name": "fern", "states": "fern.json" }
+			"name": "golden_rail",
+			"file": "golden_rail.json",
+			"states": {
+				"powered": "true|false",
+				"shape": "north_south|east_west|ascending_north|ascending_south|ascending_east|ascending_west"
 			},
+			"default_state": "powered=false,shape=north_south",
+			"legacy_id": 27,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "detector_rail",
+			"file": "detector_rail.json",
+			"states": {
+				"powered": "true|false",
+				"shape": "north_south|east_west|ascending_north|ascending_south|ascending_east|ascending_west"
+			},
+			"default_state": "powered=false,shape=north_south",
+			"legacy_id": 28,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "sticky_piston",
+			"file": "sticky_piston.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=south,extended=false",
+			"legacy_id": 29,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "web",
+			"file": "web.json",
+			"legacy_id": 30
+		},
+		{
+			"name": "tallgrass",
+			"states": {
+				"type": {
+					"dead_bush": { "file": "dead_bush.json" },
+					"tall_grass": { "file": "tall_grass.json" },
+					"fern": { "file": "fern.json" }
+				}
+			},
+			"default_state": "type=tall_grass",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 31,
+			"legacy_data": {
+				"0": "type=dead_bush",
+				"1": "type=tall_grass",
+				"2": "type=fern"
 			}
 		},
 		{
-			"id": 32,
 			"name": "deadbush",
-			"states": "dead_bush.json",
+			"file": "dead_bush.json",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
-			}
+			},
+			"legacy_id": 32
 		},
 		{
-			"id": 33,
 			"name": "piston",
-			"states": "piston.json",
-			"set": "extended=false",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" }
-				}
-			}
-		},
-		{
-			"id": 35,
-			"data": {
-				"0": { "name": "whitewool", "states": "white_wool.json" },
-				"1": { "name": "orangewool", "states": "orange_wool.json" },
-				"2": { "name": "magentawool", "states": "magenta_wool.json" },
-				"3": { "name": "lightbluewool", "states": "light_blue_wool.json" },
-				"4": { "name": "yellowwool", "states": "yellow_wool.json" },
-				"5": { "name": "limewool", "states": "lime_wool.json" },
-				"6": { "name": "pinkwool", "states": "pink_wool.json" },
-				"7": { "name": "graywool", "states": "gray_wool.json" },
-				"8": { "name": "lightgraywool", "states": "silver_wool.json" },
-				"9": { "name": "cyanwool", "states": "cyan_wool.json" },
-				"10": { "name": "purplewool", "states": "purple_wool.json" },
-				"11": { "name": "bluewool", "states": "blue_wool.json" },
-				"12": { "name": "brownwool", "states": "brown_wool.json" },
-				"13": { "name": "greenwool", "states": "green_wool.json" },
-				"14": { "name": "redwool", "states": "red_wool.json" },
-				"15": { "name": "blackwool", "states": "black_wool.json" }
-			}
-		},
-		{
-			"id": 37,
-			"name": "dandelion",
-			"states": "dandelion.json",
-			"wind": {
-				"axis": "all",
-				"yroot": 0
-			}
-		},
-		{
-			"id": 38,
-			"name": "poppy",
-			"states": "poppy.json",
-			"data": {
-				"1": { "name": "blueorchid", "states": "blue_orchid.json" },
-				"2": { "name": "allium", "states": "allium.json" },
-				"3": { "name": "azurebluet", "states": "houstonia.json" },
-				"4": { "name": "redtulip", "states": "red_tulip.json" },
-				"5": { "name": "orangetulip", "states": "orange_tulip.json" },
-				"6": { "name": "whitetulip", "states": "white_tulip.json" },
-				"7": { "name": "pinktulip", "states": "pink_tulip.json" },
-				"8": { "name": "oxeyedaisy", "states": "oxeye_daisy.json" }
+			"file": "piston.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
 			},
+			"default_state": "facing=south,extended=false",
+			"legacy_id": 33,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "wool",
+			"states": {
+				"color": {
+					"white": { "file": "white_wool.json" },
+					"orange": { "file": "orange_wool.json" },
+					"magenta": { "file": "magenta_wool.json" },
+					"light_blue": { "file": "light_blue_wool.json" },
+					"yellow": { "file": "yellow_wool.json" },
+					"lime": { "file": "lime_wool.json" },
+					"pink": { "file": "pink_wool.json" },
+					"gray": { "file": "gray_wool.json" },
+					"silver": { "file": "silver_wool.json" },
+					"cyan": { "file": "cyan_wool.json" },
+					"purple": { "file": "purple_wool.json" },
+					"blue": { "file": "blue_wool.json" },
+					"brown": { "file": "brown_wool.json" },
+					"green": { "file": "green_wool.json" },
+					"red": { "file": "red_wool.json" },
+					"black": { "file": "black_wool.json" }
+				}
+			},
+			"default_state": "color=white",
+			"legacy_id": 35,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "yellow_flower",
+			"file": "dandelion.json",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 37
+		},
+		{
+			"name": "red_flower",
+			"states": {
+				"type": {
+					"poppy": { "file": "poppy.json" },
+					"blue_orchid": { "file": "blue_orchid.json" },
+					"allium": { "file": "allium.json" },
+					"houstonia": { "file": "houstonia.json" },
+					"red_tulip": { "file": "red_tulip.json" },
+					"orange_tulip": { "file": "orange_tulip.json" },
+					"white_tulip": { "file": "white_tulip.json" },
+					"pink_tulip": { "file": "pink_tulip.json" },
+					"oxeye_daisy": { "file": "oxeye_daisy.json" }
+				}
+			},
+			"default_state": "type=poppy",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 38,
+			"legacy_data": {
+				"0": "type=poppy",
+				"1": "type=blue_orchid",
+				"2": "type=allium",
+				"3": "type=houstonia",
+				"4": "type=red_tulip",
+				"5": "type=orange_tulip",
+				"6": "type=white_tulip",
+				"7": "type=pink_tulip",
+				"8": "type=oxeye_daisy"
 			}
 		},
 		{
-			"id": 39,
-			"name": "brownmushroom",
-			"states": "brown_mushroom.json"
+			"name": "brown_mushroom",
+			"file": "brown_mushroom.json",
+			"legacy_id": 39
 		},
 		{
-			"id": 40,
-			"name": "redmushroom",
-			"states": "red_mushroom.json"
+			"name": "red_mushroom",
+			"file": "red_mushroom.json",
+			"legacy_id": 40
 		},
 		{
-			"id": 41,
-			"name": "blockofgold",
-			"states": "gold_block.json"
+			"name": "gold_block",
+			"file": "gold_block.json",
+			"legacy_id": 41
 		},
 		{
-			"id": 42,
-			"name": "blockofiron",
-			"states": "iron_block.json"
+			"name": "iron_block",
+			"file": "iron_block.json",
+			"legacy_id": 42
 		},
 		{
-			"id": 43,
-			"name": "doublestoneslab",
-			"data": {
+			"name": "double_stone_slab",
+			"states": {
+				"variant": {
+					"stone": { "file": "stone_double_slab.json" },
+					"sandstone": { "file": "sandstone_double_slab.json" },
+					"wood_old": { "file": "oak_double_slab.json" },
+					"cobblestone": { "file": "cobblestone_double_slab.json" },
+					"brick": { "file": "brick_double_slab.json" },
+					"stone_brick": {  "file": "stone_brick_double_slab.json" },
+					"nether_brick": { "file": "nether_brick_double_slab.json" },
+					"quartz": { "file": "quartz_double_slab.json"}
+				}
+			},
+			"default_state": "variant=stone",
+			"legacy_id": 43,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "name": "doublestoneslab", "states": "stone_double_slab.json" },
-					"1": { "name": "doublesandstoneslab", "states": "sandstone_double_slab.json" },
-					"2": { "name": "doublewoodenslab", "states": "oak_double_slab.json" },
-					"3": { "name": "doublecobblestoneslb", "states": "cobblestone_double_slab.json" },
-					"4": { "name": "doublebrickslab", "states": "brick_double_slab.json" },
-					"5": { "name": "doublestonebrickslab", "states": "stone_brick_double_slab.json" },
-					"6": { "name": "doublenetherbrickslab", "states": "nether_brick_double_slab.json" },
-					"7": { "name": "doublequartzslab", "states": "quartz_double_slab.json"}
+					"0": "variant=stone",
+					"1": "variant=sandstone",
+					"2": "variant=wood_old",
+					"3": "variant=cobblestone",
+					"4": "variant=brick",
+					"5": "variant=stone_brick",
+					"6": "variant=nether_brick",
+					"7": "variant=quartz"
 				},
 				"0x8": {
-					"1": { "set": "all" }
+					"0": "normal",
+					"1": "all"
 				}
 			}
 		},
 		{
-			"id": 44,
-			"name": "stoneslab",
-			"data": {
+			"name": "stone_slab",
+			"states": {
+				"half": "top|bottom",
+				"variant": {
+					"stone": { "file": "stone_double_slab.json" },
+					"sandstone": { "file": "sandstone_double_slab.json" },
+					"wood_old": { "file": "oak_double_slab.json" },
+					"cobblestone": { "file": "cobblestone_double_slab.json" },
+					"brick": { "file": "brick_double_slab.json" },
+					"stone_brick": {  "file": "stone_brick_double_slab.json" },
+					"nether_brick": { "file": "nether_brick_double_slab.json" },
+					"quartz": { "file": "quartz_double_slab.json"}
+				}
+			},
+			"default_state": "variant=stone",
+			"legacy_id": 44,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "name": "stoneslab", "states": "stone_slab.json" },
-					"1": { "name": "sandstoneslab", "states": "sandstone_slab.json" },
-					"2": { "name": "woodenslab", "states": "oak_slab.json" },
-					"3": { "name": "cobblestoneslb", "states": "cobblestone_slab.json" },
-					"4": { "name": "brickslab", "states": "brick_slab.json" },
-					"5": { "name": "stonebrickslab", "states": "stone_brick_slab.json" },
-					"6": { "name": "netherbrickslab", "states": "nether_brick_slab.json" },
-					"7": { "name": "quartzslab", "states": "quartz_slab.json" }
+					"0": "variant=stone",
+					"1": "variant=sandstone",
+					"2": "variant=wood_old",
+					"3": "variant=cobblestone",
+					"4": "variant=brick",
+					"5": "variant=stone_brick",
+					"6": "variant=nether_brick",
+					"7": "variant=quartz"
 				},
 				"0x8": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 45,
-			"name": "bricks",
-			"states": "brick_block.json"
+			"name": "brick_block",
+			"file": "brick_block.json",
+			"legacy_id": 45
 		},
 		{
-			"id": 46,
 			"name": "tnt",
-			"states": "tnt.json"
+			"file": "tnt.json",
+			"legacy_id": 46
 		},
 		{
-			"id": 47,
 			"name": "bookshelf",
-			"states": "bookshelf.json"
+			"file": "bookshelf.json",
+			"legacy_id": 47
 		},
 		{
-			"id": 48,
-			"name": "mossstone",
-			"states": "mossy_cobblestone.json"
+			"name": "mossy_cobblestone",
+			"file": "mossy_cobblestone.json",
+			"legacy_id": 48
 		},
 		{
-			"id": 49,
 			"name": "obsidian",
-			"states": "obsidian.json"
+			"file": "obsidian.json",
+			"legacy_id": 49
 		},
 		{
-			"id": 50,
 			"name": "torch",
-			"states": "torch.json",
-			"set": "facing=up",
-			"data": {
-				"1": { "set": "facing=east" },
-				"2": { "set": "facing=west" },
-				"3": { "set": "facing=south" },
-				"4": { "set": "facing=north" }
+			"file": "torch.json",
+			"states": {
+				"facing": "up|north|east|south|west"
 			},
-			"brightness": 1
+			"default_state": "facing=up",
+			"brightness": 1,
+			"legacy_id": 50,
+			"legacy_data": {
+				"1": "facing=east",
+				"2": "facing=west",
+				"3": "facing=south",
+				"4": "facing=north",
+				"5": "facing=up"
+			}
 		},
 		{
-			"id": 51,
 			"name": "fire",
+			"file": "fire.json",
 			"type": "fire",
-			"states": "fire.json",
-			"brightness": 1
+			"brightness": 1,
+			"legacy_id": 51
 		},
 		{
-			"id": 52,
-			"name": "monsterspawner",
-			"states": "mob_spawner.json"
+			"name": "mob_spawner",
+			"file": "mob_spawner.json",
+			"legacy_id": 52
 		},
 		{
-			"id": 53,
-			"name": "oakwoodstairs",
-			"states": "oak_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "oak_stairs",
+			"file": "oak_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 53,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 55,
-			"name": "redstonewire",
-			"type": "redstonewire",
-			"states": "redstone_wire.json",
-			"set": "requiremodels=true"
+			"name": "redstone_wire",
+			"file": "redstone_wire.json",
+			"type": "redstone_wire",
+			"require_models": true,
+			"states": {
+				"north": "none|side|up",
+				"south": "none|side|up",
+				"east": "none|side|up",
+				"west": "none|side|up",
+				"power": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "north=none,south=none,east=none,west=none,power=0",
+			"legacy_id": 55
 		},
 		{
-			"id": 56,
-			"name": "diamondore",
-			"states": "diamond_ore.json"
+			"name": "diamond_ore",
+			"file": "diamond_ore.json",
+			"legacy_id": 56
 		},
 		{
-			"id": 57,
-			"name": "blockofdiamond",
-			"states": "diamond_block.json"
+			"name": "diamond_block",
+			"file": "diamond_block.json",
+			"legacy_id": 57
 		},
 		{
-			"id": 58,
-			"name": "craftingtable",
-			"states": "crafting_table.json"
+			"name": "crafting_table",
+			"file": "crafting_table.json",
+			"legacy_id": 58
 		},
 		{
-			"id": 59,
 			"name": "wheat",
-			"states": "wheat.json",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" },
-				"4": { "set": "age=4" },
-				"5": { "set": "age=5" },
-				"6": { "set": "age=6" },
-				"7": { "set": "age=7" }
+			"file": "wheat.json",
+			"states": {
+				"age": "0|1|2|3|4|5|6|7"
 			},
+			"default_state": "age=0",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 59,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6",
+				"7": "age=7"
 			}
 		},
 		{
-			"id": 60,
 			"name": "farmland",
-			"states": "farmland.json",
-			"data": {
-				"0": { "set": "moisture=0" },
-				"1": { "set": "moisture=1" },
-				"2": { "set": "moisture=2" },
-				"3": { "set": "moisture=3" },
-				"4": { "set": "moisture=4" },
-				"5": { "set": "moisture=5" },
-				"6": { "set": "moisture=6" },
-				"7": { "set": "moisture=7" }
+			"file": "farmland.json",
+			"states": {
+				"moisture": "0|1|2|3|4|5|6|7"
+			},
+			"default_state": "moisture=0",
+			"legacy_id": 60,
+			"legacy_data": {
+				"0": "moisture=0",
+				"1": "moisture=1",
+				"2": "moisture=2",
+				"3": "moisture=3",
+				"4": "moisture=4",
+				"5": "moisture=5",
+				"6": "moisture=6",
+				"7": "moisture=7"
 			}
 		},
 		{
-			"id": 61,
 			"name": "furnace",
-			"states": "furnace.json",
-			"set": "facing=south",
-			"data": {
-				"2": { "set": "facing=north" },
-				"3": { "set": "facing=south" },
-				"4": { "set": "facing=west" },
-				"5": { "set": "facing=east" }
+			"file": "furnace.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 61,
+			"legacy_data": {
+				"1": "facing=south",
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
 			}
 		},
 		{
-			"id": 62,
-			"name": "burningfurnace",
-			"states": "lit_furnace.json",
-			"set": "facing=south",
-			"data": {
-				"2": { "set": "facing=north" },
-				"3": { "set": "facing=south" },
-				"4": { "set": "facing=west" },
-				"5": { "set": "facing=east" }
+			"name": "lit_furnace",
+			"file": "lit_furnace.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 62,
+			"legacy_data": {
+				"1": "facing=south",
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
 			}
 		},
 		{
-			"id": 64,
-			"name": "oakdoor",
+			"name": "wooden_door",
+			"file": "wooden_door.json",
 			"type": "door",
-			"states": "wooden_door.json",
-			"data": {
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 64,
+			"legacy_data": {
 				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
+					"0": "hinge=left",
+					"1": "hinge=right"
 				},
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
+					"0": "open=false",	
+					"1": "open=true"
 				},
 				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
+					"0": "half=lower",
+					"1": "half=upper"
 				}
 			}
 		},
 		{
-			"id": 65,
 			"name": "ladder",
-			"states": "ladder.json",
-			"set": "facing=south",
-			"data": {
-				"2": { "set": "facing=north" },
-				"3": { "set": "facing=south" },
-				"4": { "set": "facing=west" },
-				"5": { "set": "facing=east" }
+			"file": "ladder.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 65,
+			"legacy_data": {
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
 			}
 		},
 		{
-			"id": 66,
 			"name": "rail",
-			"states": "rail.json",
-			"data": {
-				"0": { "set": "shape=north_south" },
-				"1": { "set": "shape=east_west" },
-				"2": { "set": "shape=ascending_east" },
-				"3": { "set": "shape=ascending_west" },
-				"4": { "set": "shape=ascending_north" },
-				"5": { "set": "shape=ascending_south" },
-				"8": { "set": "shape=north_south" },
-				"9": { "set": "shape=east_west" },
-				"10": { "set": "shape=ascending_east" },
-				"11": { "set": "shape=ascending_west" },
-				"12": { "set": "shape=ascending_north" },
-				"13": { "set": "shape=ascending_south" }
-			}
-		},
-		{
-			"id": 67,
-			"name": "cobblestonestairs",
-			"states": "stone_stairs.json",
-			"set": "shape=straight",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+			"file": "rail.json",
+			"states": {
+				"shape": "north_south|east_west|ascending_north|ascending_south|ascending_east|ascending_west"
+			},
+			"default_state": "facing=north_south",
+			"legacy_id": 66,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
 				}
 			}
 		},
 		{
-			"id": 69,
+			"name": "stone_stairs",
+			"file": "stone_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 67,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
 			"name": "lever",
-			"type": "redstoneconnect",
-			"states": "lever.json",
-			"data": {
+			"file": "lever.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": "north|south|east|west|up_x|down_x|up_z|down_z",
+				"powered": "true|false"
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 69,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down_x" },
-					"1": { "set": "facing=east" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=north" },
-					"5": { "set": "facing=up_z" },
-					"6": { "set": "facing=up_x" },
-					"7": { "set": "facing=down_z" }
+					"0": "facing=down_x",
+					"1": "facing=east",
+					"2": "facing=west",
+					"3": "facing=south",
+					"4": "facing=north",
+					"5": "facing=up_z",
+					"6": "facing=up_x",
+					"7": "facing=down_z"
 				},
 				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 70,
-			"name": "stonepressureplate",
-			"type": "redstoneconnect",
-			"states": "stone_pressure_plate.json",
-			"data": {
+			"name": "stone_pressure_plate",
+			"file": "stone_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"powered": "true|false"
+			},
+			"default_state": "powered=false",
+			"legacy_id": 70,
+			"legacy_data": {
 				"0x1": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 71,
-			"name": "irondoor",
+			"name": "iron_door",
+			"file": "iron_door.json",
 			"type": "door",
-			"states": "iron_door.json",
-			"data": {
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 71,
+			"legacy_data": {
 				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
+					"0": "hinge=left",
+					"1": "hinge=right"
 				},
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
+					"0": "open=false",	
+					"1": "open=true"
 				},
 				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
+					"0": "half=lower",
+					"1": "half=upper"
 				}
 			}
 		},
 		{
-			"id": 72,
-			"name": "woodenpressureplate",
-			"type": "redstoneconnect",
-			"states": "wooden_pressure_plate.json",
-			"data": {
-				"0x1": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
-				}
-			}
-		},
-		{
-			"id": 73,
-			"name": "redstoneore",
-			"states": "redstone_ore.json"
-		},
-		{
-			"id": 74,
-			"name": "glowingredstoneore",
-			"states": "lit_redstone_ore.json",
-			"brightness": 1
-		},
-		{
-			"id": 75,
-			"name": "redstonetorchinactive",
-			"type": "redstoneconnect",
-			"states": "unlit_redstone_torch.json",
-			"set": "facing=up",
-			"data": {
-				"1": { "set": "facing=east" },
-				"2": { "set": "facing=south" },
-				"3": { "set": "facing=west" },
-				"4": { "set": "facing=north" }
-			}
-		},
-		{
-			"id": 76,
-			"name": "redstonetorchactive",
-			"type": "redstoneconnect",
-			"states": "redstone_torch.json",
-			"set": "facing=up",
-			"data": {
-				"1": { "set": "facing=east" },
-				"2": { "set": "facing=south" },
-				"3": { "set": "facing=west" },
-				"4": { "set": "facing=north" }
+			"name": "wooden_pressure_plate",
+			"file": "wooden_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"powered": "true|false"
 			},
-			"brightness": 1
+			"default_state": "powered=false",
+			"legacy_id": 72,
+			"legacy_data": {
+				"0x1": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
 		},
 		{
-			"id": 77,
-			"name": "stonebutton",
-			"type": "redstoneconnect",
-			"states": "stone_button.json",
-			"data": {
+			"name": "redstone_ore",
+			"file": "redstone_ore.json",
+			"legacy_id": 73
+		},
+		{
+			"name": "lit_redstone_ore",
+			"file": "lit_redstone_ore.json",
+			"brightness": 1,
+			"legacy_id": 74
+		},
+		{
+			"name": "unlit_redstone_torch",
+			"file": "unlit_redstone_torch.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": "up|north|east|south|west"
+			},
+			"default_state": "facing=up",
+			"legacy_id": 75,
+			"legacy_data": {
+				"1": "facing=east",
+				"2": "facing=west",
+				"3": "facing=south",
+				"4": "facing=north",
+				"5": "facing=up"
+			}
+		},
+		{
+			"name": "redstone_torch",
+			"file": "redstone_torch.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": "up|north|east|south|west"
+			},
+			"default_state": "facing=up",
+			"brightness": 1,
+			"legacy_id": 76,
+			"legacy_data": {
+				"1": "facing=east",
+				"2": "facing=west",
+				"3": "facing=south",
+				"4": "facing=north",
+				"5": "facing=up"
+			}
+		},
+		{
+			"name": "stone_button",
+			"file": "stone_button.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": "north|south|east|west|up|down",
+				"powered": "true|false"
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 77,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=east" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=north" },
-					"5": { "set": "facing=up" }
+					"0": "facing=down",
+					"1": "facing=east",
+					"2": "facing=west",
+					"3": "facing=south",
+					"4": "facing=north",
+					"5": "facing=up"
 				},
 				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 78,
-			"name": "snowlayer",
+			"name": "snow_layer",
+			"file": "snow_layer.json",
 			"type": "snow",
-			"states": "snow_layer.json",
-			"set": "layers=8",
-			"data": {
-				"0": { "set": "layers=1" },
-				"1": { "set": "layers=2" },
-				"2": { "set": "layers=3" },
-				"3": { "set": "layers=4" },
-				"4": { "set": "layers=5" },
-				"5": { "set": "layers=6" },
-				"6": { "set": "layers=7" }
+			"states": {
+				"layers": "1|2|3|4|5|6|7|8"
+			},
+			"default_state": "layers=1",
+			"legacy_id": 78,
+			"legacy_data": {
+				"0": "layers=1",
+				"1": "layers=2",
+				"2": "layers=3",
+				"3": "layers=4",
+				"4": "layers=5",
+				"5": "layers=6",
+				"6": "layers=7",
+				"7": "layers=8"
 			}
 		},
 		{
-			"id": 79,
 			"name": "ice",
-			"states": "ice.json"
+			"file": "ice.json",
+			"legacy_id": 79
 		},
 		{
-			"id": 80,
 			"name": "snow",
+			"file": "snow.json",
 			"type": "snow",
-			"states": "snow.json"
+			"legacy_id": 80
 		},
 		{
-			"id": 81,
 			"name": "cactus",
-			"states": "cactus.json"
+			"file": "cactus.json",
+			"legacy_id": 81
 		},
 		{
-			"id": 82,
 			"name": "clay",
-			"states": "clay.json"
+			"file": "clay.json",
+			"legacy_id": 82
 		},
 		{
-			"id": 83,
-			"name": "sugarcane",
-			"states": "reeds.json"
+			"name": "reeds",
+			"file": "reeds.json",
+			"legacy_id": 83
 		},
 		{
-			"id": 84,
 			"name": "jukebox",
-			"states": "jukebox.json"
+			"file": "jukebox.json",
+			"legacy_id": 84
 		},
 		{
-			"id": 85,
 			"name": "fence",
+			"file": "fence.json",
 			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "fence.json"
+			"require_models": true,
+			"legacy_id": 85
 		},
 		{
-			"id": 86,
 			"name": "pumpkin",
-			"states": "pumpkin.json",
-			"data": {
-				"0": { "set": "facing=south" },
-				"1": { "set": "facing=west" },
-				"2": { "set": "facing=north" },
-				"3": { "set": "facing=east" }
+			"file": "pumpkin.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 86,
+			"legacy_data": {
+				"0": "facing=south",
+				"1": "facing=west",
+				"2": "facing=north",
+				"3": "facing=east"
 			}
 		},
 		{
-			"id": 87,
 			"name": "netherrack",
-			"states": "netherrack.json"
+			"file": "netherrack.json",
+			"legacy_id": 87
 		},
 		{
-			"id": 88,
-			"name": "soulsand",
-			"states": "soul_sand.json"
+			"name": "soul_sand",
+			"file": "soul_sand.json",
+			"legacy_id": 88
 		},
 		{
-			"id": 89,
 			"name": "glowstone",
-			"states": "glowstone.json",
-			"brightness": 1
+			"file": "glowstone.json",
+			"brightness": 1,
+			"legacy_id": 89
 		},
 		{
-			"id": 90,
-			"name": "netherportal",
-			"states": "portal.json",
-			"data": {
+			"name": "portal",
+			"file": "portal.json",
+			"states": {
+				"axis": "x|z"
+			},
+			"default_state": "axis=x",
+			"legacy_id": 90,
+			"legacy_data": {
 				"0x1": {
-					"0": { "set": "axis=z" },
-					"1": { "set": "axis=x" }
+					"0": "axis=z",
+					"1": "axis=x"
 				}
 			}
 		},
 		{
-			"id": 91,
-			"name": "jackolantern",
-			"states": "lit_pumpkin.json",
-			"data": {
-				"0": { "set": "facing=south" },
-				"1": { "set": "facing=west" },
-				"2": { "set": "facing=north" },
-				"3": { "set": "facing=east" }
+			"name": "lit_pumpkin",
+			"file": "lit_pumpkin.json",
+			"states": {
+				"facing": "north|south|east|west"
 			},
-			"brightness": 1
+			"default_state": "facing=south",
+			"brightness": 1,
+			"legacy_id": 91,
+			"legacy_data": {
+				"0": "facing=south",
+				"1": "facing=west",
+				"2": "facing=north",
+				"3": "facing=east"
+			}
 		},
 		{
-			"id": 92,
 			"name": "cake",
-			"states": "cake.json",
-			"data": {
-				"0": { "set": "bites=0" },
-				"1": { "set": "bites=1" },
-				"2": { "set": "bites=2" },
-				"3": { "set": "bites=3" },
-				"4": { "set": "bites=4" },
-				"5": { "set": "bites=5" },
-				"6": { "set": "bites=6" }
+			"file": "cake.json",
+			"states": {
+				"bites": "0|1|2|3|4|5|6"
+			},
+			"default_state": "bites=0",
+			"legacy_id": 92,
+			"legacy_data": {
+				"0": "bites=0",
+				"1": "bites=1",
+				"2": "bites=2",
+				"3": "bites=3",
+				"4": "bites=4",
+				"5": "bites=5",
+				"6": "bites=6"
 			}
 		},
 		{
-			"id": 93,
-			"name": "redstonerepeaterinactive",
-			"type": "redstonerepeater",
-			"states": "unpowered_repeater.json",
-			"data": {
+			"name": "unpowered_repeater",
+			"file": "unpowered_repeater.json",
+			"type": "redstone_repeater",
+			"variants": {
+				"facing": "north|south|east|west",
+				"delay": "1|2|3|4"
+			},
+			"default_state": "facing=south,delay=1",
+			"legacy_id": 93,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4+0x8": {
-					"0": { "set": "delay=1" },
-					"1": { "set": "delay=2" },
-					"2": { "set": "delay=3" },
-					"3": { "set": "delay=4" }
+					"0": "delay=1",
+					"1": "delay=2",
+					"2": "delay=3",
+					"3": "delay=4"
 				}
 			}
 		},
 		{
-			"id": 94,
-			"name": "redstonerepeateractive",
-			"type": "redstonerepeater",
-			"states": "powered_repeater.json",
-			"data": {
+			"name": "powered_repeater",
+			"file": "powered_repeater.json",
+			"type": "redstone_repeater",
+			"variants": {
+				"facing": "north|south|east|west",
+				"delay": "1|2|3|4"
+			},
+			"default_state": "facing=south,delay=1",
+			"brightness": 1,
+			"legacy_id": 94,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4+0x8": {
-					"0": { "set": "delay=1" },
-					"1": { "set": "delay=2" },
-					"2": { "set": "delay=3" },
-					"3": { "set": "delay=4" }
+					"0": "delay=1",
+					"1": "delay=2",
+					"2": "delay=3",
+					"3": "delay=4"
+				}
+			}
+		},
+		{
+			"name": "stained_glass",
+			"states": {
+				"color": {
+					"white": { "file": "white_stained_glass.json" },
+					"orange": { "file": "orange_stained_glass.json" },
+					"magenta": { "file": "magenta_stained_glass.json" },
+					"light_blue": { "file": "light_blue_stained_glass.json" },
+					"yellow": { "file": "yellow_stained_glass.json" },
+					"lime": { "file": "lime_stained_glass.json" },
+					"pink": { "file": "pink_stained_glass.json" },
+					"gray": { "file": "gray_stained_glass.json" },
+					"silver": { "file": "silver_stained_glass.json" },
+					"cyan": { "file": "cyan_stained_glass.json" },
+					"purple": { "file": "purple_stained_glass.json" },
+					"blue": { "file": "blue_stained_glass.json" },
+					"brown": { "file": "brown_stained_glass.json" },
+					"green": { "file": "green_stained_glass.json" },
+					"red": { "file": "red_stained_glass.json" },
+					"black": { "file": "black_stained_glass.json" }
 				}
 			},
-			"brightness": 1
-		},
-		{
-			"id": 95,
-			"data": {
-				"0": { "name": "whitestainedglass", "states": "white_stained_glass.json" },
-				"1": { "name": "orangestainedglass", "states": "orange_stained_glass.json" },
-				"2": { "name": "magentastainedglass", "states": "magenta_stained_glass.json" },
-				"3": { "name": "lightbluestainedglass", "states": "light_blue_stained_glass.json" },
-				"4": { "name": "yellowstainedglass", "states": "yellow_stained_glass.json" },
-				"5": { "name": "limestainedglass", "states": "lime_stained_glass.json" },
-				"6": { "name": "pinkstainedglass", "states": "pink_stained_glass.json" },
-				"7": { "name": "graystainedglass", "states": "gray_stained_glass.json" },
-				"8": { "name": "lightgraystainedglass", "states": "silver_stained_glass.json" },
-				"9": { "name": "cyanstainedglass", "states": "cyan_stained_glass.json" },
-				"10": { "name": "purplestainedglass", "states": "purple_stained_glass.json" },
-				"11": { "name": "bluestainedglass", "states": "blue_stained_glass.json" },
-				"12": { "name": "brownstainedglass", "states": "brown_stained_glass.json" },
-				"13": { "name": "greenstainedglass", "states": "green_stained_glass.json" },
-				"14": { "name": "redstainedglass", "states": "red_stained_glass.json" },
-				"15": { "name": "blackstainedglass", "states": "black_stained_glass.json" }
+			"default_state": "color=white",
+			"legacy_id": 95,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
 			}
 		},
 		{
-			"id": 96,
 			"name": "trapdoor",
-			"states": "trapdoor.json",
-			"data": {
+			"file": "trapdoor.json",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=south,open=false,half=bottom",
+			"legacy_id": 96,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=north" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=east" }
+					"0": "facing=north",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=east"
 				},
 				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
+					"0": "open=false",
+					"1": "open=true"
 				},
 				"0x8": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 97,
-			"name": "stonemonsteregg",
-			"states": "stone_monster_egg.json",
-			"data": {
-				"1": { "name": "stonebrickmonsteregg", "states": "stone_brick_monster_egg.json" },
-				"2": { "name": "cobblestonemonsteregg", "states": "cobblestone_monster_egg.json" },
-				"3": { "name": "mossystonebrickmonsteregg", "states": "mossy_brick_monster_egg.json" },
-				"4": { "name": "crackedstonebrickmonsteregg", "states": "cracked_brick_monster_egg.json" },
-				"5": { "name": "chiseledstonebrickmonsteregg", "states": "chiseled_brick_monster_egg.json" }
-			}
-		},
-		{
-			"id": 98,
-			"name": "stonebricks",
-			"states": "stonebrick.json",
-			"data": {
-				"1": { "states": "mossy_stonebrick.json" },
-				"2": { "states": "cracked_stonebrick.json" },
-				"3": { "states": "chiseled_stonebrick.json" }
-			}
-		},
-		{
-			"id": 99,
-			"name": "brownmushroomblock",
-			"states": "brown_mushroom_block.json",
-			"set": "variant=all_inside",
-			"data": {
-				"1": { "set": "variant=north_west" },
-				"2": { "set": "variant=north" },
-				"3": { "set": "variant=north_east" },
-				"4": { "set": "variant=west" },
-				"5": { "set": "variant=center" },
-				"6": { "set": "variant=east" },
-				"7": { "set": "variant=south_west" },
-				"8": { "set": "variant=south" },
-				"9": { "set": "variant=south_east" },
-				"10": { "set": "variant=stem" },
-				"14": { "set": "variant=all_outside" },
-				"15": { "set": "variant=all_stem" }
-			}
-		},
-		{
-			"id": 100,
-			"name": "redmushroomblock",
-			"states": "red_mushroom_block.json",
-			"set": "variant=all_inside",
-			"data": {
-				"1": { "set": "variant=north_west" },
-				"2": { "set": "variant=north" },
-				"3": { "set": "variant=north_east" },
-				"4": { "set": "variant=west" },
-				"5": { "set": "variant=center" },
-				"6": { "set": "variant=east" },
-				"7": { "set": "variant=south_west" },
-				"8": { "set": "variant=south" },
-				"9": { "set": "variant=south_east" },
-				"10": { "set": "variant=stem" },
-				"14": { "set": "variant=all_outside" },
-				"15": { "set": "variant=all_stem" }
-			}
-		},
-		{
-			"id": 101,
-			"name": "ironbars",
-			"type": "bars",
-			"states": "iron_bars.json",
-			"set": "requiremodels=true"
-		},
-		{
-			"id": 102,
-			"name": "glasspane",
-			"type": "bars",
-			"states": "glass_pane.json",
-			"set": "requiremodels=true"
-		},
-		{
-			"id": 103,
-			"name": "melon",
-			"states": "melon_block.json"
-		},
-		{
-			"id": 104,
-			"name": "pumpkinstem",
-			"states": "pumpkin_stem.json",
-			"set": "facing=up,age=7",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" },
-				"4": { "set": "age=4" },
-				"5": { "set": "age=5" },
-				"6": { "set": "age=6" }
+			"name": "monster_egg",
+			"states": {
+				"variant": {
+					"stone": { "file": "stone_monster_egg.json" },
+					"cobblestone": { "file": "cobblestone_monster_egg.json" },
+					"stone_brick": { "file": "stone_brick_monster_egg.json" },
+					"mossy_brick": { "file": "mossy_brick_monster_egg.json" },
+					"cracked_brick": { "file": "cracked_brick_monster_egg.json" },
+					"chiseled_brick": { "file": "chiseled_brick_monster_egg.json" }
+				}
 			},
+			"default_state": "variant=stone",
+			"legacy_id": 97,
+			"legacy_data": {
+				"0": "variant=stone",
+				"1": "variant=cobblestone",
+				"2": "variant=stone_brick",
+				"3": "variant=mossy_brick",
+				"4": "variant=cracked_brick",
+				"5": "variant=chiseled_brick"
+			}
+		},
+		{
+			"name": "stonebrick",
+			"states": {
+				"variant": {
+					"stonebrick": { "file": "stonebrick.json" },
+					"mossy_stonebrick": { "file": "mossy_stonebrick.json" },
+					"cracked_stonebrick": { "file": "cracked_stonebrick.json" },
+					"chiseled_stonebrick": { "file": "chiseled_stonebrick.json" }
+				}
+			},
+			"default_state": "variant=stonebrick",
+			"legacy_id": 98,
+			"legacy_data": {
+				"0": "variant=stonebrick",
+				"1": "variant=mossy_stonebrick",
+				"2": "variant=cracked_stonebrick",
+				"3": "variant=chiseled_stonebrick"
+			}
+		},
+		{
+			"name": "brown_mushroom_block",
+			"file": "brown_mushroom_block.json",
+			"states": {
+				"variant": "all_inside|north_west|north|north_east|west|center|east|south_west|south|south_east|stem|all_outside|all_stem"
+			},
+			"default_state": "variant=all_inside",
+			"legacy_id": 99,
+			"legacy_data": {
+				"0": "variant=all_inside",
+				"1": "variant=north_west",
+				"2": "variant=north",
+				"3": "variant=north_east",
+				"4": "variant=west",
+				"5": "variant=center",
+				"6": "variant=east",
+				"7": "variant=south_west",
+				"8": "variant=south",
+				"9": "variant=south_east",
+				"10": "variant=stem",
+				"14": "variant=all_outside",
+				"15": "variant=all_stem"
+			}
+		},
+		{
+			"name": "red_mushroom_block",
+			"file": "red_mushroom_block.json",
+			"states": {
+				"variant": "all_inside|north_west|north|north_east|west|center|east|south_west|south|south_east|stem|all_outside|all_stem"
+			},
+			"default_state": "variant=all_inside",
+			"legacy_id": 100,
+			"legacy_data": {
+				"0": "variant=all_inside",
+				"1": "variant=north_west",
+				"2": "variant=north",
+				"3": "variant=north_east",
+				"4": "variant=west",
+				"5": "variant=center",
+				"6": "variant=east",
+				"7": "variant=south_west",
+				"8": "variant=south",
+				"9": "variant=south_east",
+				"10": "variant=stem",
+				"14": "variant=all_outside",
+				"15": "variant=all_stem"
+			}
+		},
+		{
+			"name": "iron_bars",
+			"file": "iron_bars.json",
+			"type": "bars",
+			"require_models": true,
+			"legacy_id": 101
+		},
+		{
+			"name": "glass_pane",
+			"file": "glass_pane.json",
+			"type": "bars",
+			"require_models": true,
+			"legacy_id": 102
+		},
+		{
+			"name": "melon_block",
+			"file": "melon_block.json",
+			"legacy_id": 103
+		},
+		{
+			"name": "pumpkin_stem",
+			"file": "pumpkin_stem.json",
+			"states": {
+				"age": "0|1|2|3|4|5|6|7"
+			},
+			"default_state": "age=0,facing=up",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 104,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6"
 			}
 		},
 		{
-			"id": 105,
-			"name": "melonstem",
-			"states": "melon_stem.json",
-			"set": "facing=up,age=7",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" },
-				"4": { "set": "age=4" },
-				"5": { "set": "age=5" },
-				"6": { "set": "age=6" }
+			"name": "melon_stem",
+			"file": "melon_stem.json",
+			"states": {
+				"age": "0|1|2|3|4|5|6|7"
 			},
+			"default_state": "age=0,facing=up",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 105,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6"
 			}
 		},
 		{
-			"id": 106,
-			"name": "vines",
-			"type": "vines",
-			"states": "vine.json",
-			"data": {
+			"name": "vine",
+			"file": "vine.json",
+			"type": "vine",
+			"states": {
+				"south": "true|false",
+				"west": "true|false",
+				"north": "true|false",
+				"east": "true|false"
+			},
+			"default_state": "south=false,west=false,north=false,east=false",
+			"legacy_id": 106,
+			"legacy_data": {
 				"0x1": {
-					"0": { "set": "south=false" },
-					"1": { "set": "south=true" }
+					"0": "south=false",
+					"1": "south=true"
 				},
 				"0x2": {
-					"0": { "set": "west=false" },
-					"1": { "set": "west=true" }
+					"0": "west=false",
+					"1": "west=true"
 				},
 				"0x4": {
-					"0": { "set": "north=false" },
-					"1": { "set": "north=true" }
+					"0": "north=false",
+					"1": "north=true"
 				},
 				"0x8": {
-					"0": { "set": "east=false" },
-					"1": { "set": "east=true" }
+					"0": "east=false",
+					"1": "east=true"
 				}
 			}
 		},
 		{
-			"id": 107,
-			"name": "fencegate",
-			"type": "fencegate",
-			"states": "fence_gate.json",
-			"data": {
+			"name": "fence_gate",
+			"file": "fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false"
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 107,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
+					"0": "open=false",
+					"1": "open=true"
 				}
 			}
 		},
 		{
-			"id": 108,
-			"name": "brickstairs",
-			"states": "brick_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "brick_stairs",
+			"file": "brick_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 108,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 109,
-			"name": "stonebrickstairs",
-			"states": "stone_brick_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "stone_brick_stairs",
+			"file": "stone_brick_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 109,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 110,
 			"name": "mycelium",
+			"file": "mycelium.json",
 			"type": "snowy",
-			"states": "mycelium.json"
+			"states": {
+				"snowy": "true|false"
+			},
+			"default_state": "snowy=false",
+			"legacy_id": 110
 		},
 		{
-			"id": 111,
-			"name": "lilypad",
-			"states": "waterlily.json"
+			"name": "waterlily",
+			"file": "waterlily.json",
+			"legacy_id": 111
 		},
 		{
-			"id": 112,
-			"name": "netherbrick",
-			"states": "nether_brick.json"
+			"name": "nether_brick",
+			"file": "nether_brick.json",
+			"legacy_id": 112
 		},
 		{
-			"id": 113,
-			"name": "netherbrickfence",
+			"name": "nether_brick_fence",
+			"file": "nether_brick_fence.json",
 			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "nether_brick_fence.json"
+			"require_models": true,
+			"legacy_id": 113
 		},
 		{
-			"id": 114,
-			"name": "netherbrickstairs",
-			"states": "nether_brick_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "nether_brick_stairs",
+			"file": "nether_brick_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 114,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 115,
-			"name": "netherwart",
-			"states": "nether_wart.json",
-			"set": "age=3",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" }
+			"name": "nether_wart",
+			"file": "nether_wart.json",
+			"states": {
+				"age": "0|1|2|3"
 			},
+			"default_state": "age=0",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 115,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3"
 			}
 		},
 		{
-			"id": 116,
-			"name": "enchantmenttable",
-			"states": "enchanting_table.json"
+			"name": "enchanting_table",
+			"file": "enchanting_table.json",
+			"legacy_id": 116
 		},
 		{
-			"id": 117,
-			"name": "brewingstand",
-			"states": "brewing_stand.json",
-			"data": {
-				"0x1":{
-					"0": { "set": "has_bottle_0=false" },
-					"1": { "set": "has_bottle_0=true" }
+			"name": "brewing_stand",
+			"file": "brewing_stand.json",
+			"states": {
+				"has_bottle_0": "true|false",
+				"has_bottle_1": "true|false",
+				"has_bottle_2": "true|false"
+			},
+			"default_state": "has_bottle_0=true,has_bottle_1=true,has_bottle_2=true",
+			"legacy_id": 117,
+			"legacy_data": {
+				"0x1": {
+					"0": "has_bottle_0=false",
+					"1": "has_bottle_0=true"
 				},
-				"0x2":{
-					"0": { "set": "has_bottle_1=false" },
-					"1": { "set": "has_bottle_1=true" }
+				"0x2": {
+					"0": "has_bottle_1=false",
+					"1": "has_bottle_1=true"
 				},
-				"0x4":{
-					"0": { "set": "has_bottle_2=false" },
-					"1": { "set": "has_bottle_2=true" }
+				"0x4": {
+					"0": "has_bottle_2=false",
+					"1": "has_bottle_2=true"
 				}
 			}
 		},
 		{
-			"id": 118,
 			"name": "cauldron",
-			"states": "cauldron.json",
-			"set": "level=3",
-			"data": {
-				"0": { "set": "level=0" },
-				"1": { "set": "level=1" },
-				"2": { "set": "level=2" }
+			"file": "cauldron.json",
+			"states": {
+				"level": "0|1|2|3"
+			},
+			"default_state": "level=0",
+			"legacy_id": 118,
+			"legacy_data": {
+				"0": "level=0",
+				"1": "level=1",
+				"2": "level=2",
+				"3": "level=3"
 			}
 		},
 		{
-			"id": 120,
-			"name": "endportalframe",
-			"states": "end_portal_frame.json",
-			"data": {
+			"name": "end_portal_frame",
+			"file": "end_portal_frame.json",
+			"states": {
+				"facing": "north|south|east|west",
+				"eye": "true|false"
+			},
+			"default_state": "facing=south,eye=false",
+			"legacy_id": 120,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4": {
-					"0": { "set": "eye=false" },
-					"1": { "set": "eye=true" }
+					"0": "eye=false",
+					"1": "eye=true"
 				}
 			}
 		},
 		{
-			"id": 121,
-			"name": "endstone",
-			"states": "end_stone.json"
+			"name": "end_stone",
+			"file": "end_stone.json",
+			"legacy_id": 121
 		},
 		{
-			"id": 122,
-			"name": "dragonegg",
-			"states": "dragon_egg.json"
+			"name": "dragon_egg",
+			"file": "dragon_egg.json",
+			"legacy_id": 122
 		},
 		{
-			"id": 123,
-			"name": "redstonelampinactive",
-			"states": "redstone_lamp.json"
+			"name": "redstone_lamp",
+			"file": "redstone_lamp.json",
+			"legacy_id": 123
 		},
 		{
-			"id": 124,
-			"name": "redstonelampactive",
-			"states": "lit_redstone_lamp.json"
+			"name": "lit_redstone_lamp",
+			"file": "lit_redstone_lamp.json",
+			"legacy_id": 124
 		},
 		{
-			"id": 125,
-			"name": "doubleoakwoodslab",
-			"states": "oak_double_slab.json",
-			"data": {
-				"1": { "name": "doublesprucewoodslab", "states": "spruce_double_slab.json" },
-				"2": { "name": "doublebirchwoodslab", "states": "birch_double_slab.json" },
-				"3": { "name": "doublejunglewoodslab", "states": "jungle_double_slab.json" },
-				"4": { "name": "doubledarkoakwoodslab", "states": "dark_oak_double_slab.json" }
+			"name": "double_wooden_slab",
+			"states": {
+				"variant": {
+					"oak": { "file": "oak_double_slab.json" },
+					"spruce": { "file": "spruce_double_slab.json" },
+					"birch": { "file": "birch_double_slab.json" },
+					"jungle": { "file": "jungle_double_slab.json" },
+					"acacia": { "file": "acacia_double_slab.json" },
+					"dark_oak": { "file": "dark_oak_double_slab.json" }
+				}
+			},
+			"default_state": "variant=oak",
+			"legacy_id": 125,
+			"legacy_data": {
+				"0": "variant=oak",
+				"1": "variant=spruce",
+				"2": "variant=birch",
+				"3": "variant=jungle",
+				"4": "variant=acacia",
+				"5": "variant=dark_oak"
 			}
 		},
 		{
-			"id": 126,
-			"name": "oakwoodslab",
-			"states": "oak_slab.json",
-			"data": {
+			"name": "wooden_slab",
+			"states": {
+				"half": "top|bottom",
+				"variant": {
+					"oak": { "file": "oak_slab.json" },
+					"spruce": { "file": "spruce_slab.json" },
+					"birch": { "file": "birch_slab.json" },
+					"jungle": { "file": "jungle_slab.json" },
+					"acacia": { "file": "acacia_slab.json" },
+					"dark_oak": { "file": "dark_oak_slab.json" }
+				}
+			},
+			"default_state": "variant=oak",
+			"legacy_id": 126,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"1": { "name": "sprucewoodslab", "states": "spruce_slab.json" },
-					"2": { "name": "birchwoodslab", "states": "birch_slab.json" },
-					"3": { "name": "junglewoodslab", "states": "jungle_slab.json" },
-					"4": { "name": "darkoakwoodslab", "states": "dark_oak_slab.json" }
+					"0": "variant=oak",
+					"1": "variant=spruce",
+					"2": "variant=birch",
+					"3": "variant=jungle",
+					"4": "variant=acacia",
+					"5": "variant=dark_oak"
 				},
 				"0x8": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 127,
 			"name": "cocoa",
-			"states": "cocoa.json",
-			"data": {
+			"file": "cocoa.json",
+			"states": {
+				"facing": "north|south|east|west",
+				"age": "0|1|2"
+			},
+			"default_state": "facing=south,age=0",
+			"legacy_id": 127,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4+0x8": {
-					"0": { "set": "age=0" },
-					"1": { "set": "age=1" },
-					"2": { "set": "age=2" }
+					"0": "age=0",
+					"1": "age=1",
+					"2": "age=2"
 				}
 			}
 		},
 		{
-			"id": 128,
-			"name": "sandstonestairs",
-			"states": "sandstone_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "sandstone_stairs",
+			"file": "sandstone_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 128,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 129,
-			"name": "emeraldore",
-			"states": "emerald_ore.json"
+			"name": "emerald_ore",
+			"file": "emerald_ore.json",
+			"legacy_id": 129
 		},
 		{
-			"id": 131,
-			"name": "tripwirehook",
-			"states": "tripwire_hook.json",
-			"data": {
+			"name": "tripwire_hook",
+			"file": "tripwire_hook.json",
+			"states": {
+				"facing": "north|south|east|west",
+				"attached": "true|false",
+				"powered": "true|false"
+			},
+			"default_state": "facing=south,attached=false,powered=false",
+			"legacy_id": 131,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4": {
-					"0": { "set": "attached=false" },
-					"1": { "set": "attached=true" }
+					"0": "attached=false",
+					"1": "attached=true"
 				},
 				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 132,
 			"name": "tripwire",
+			"file": "tripwire.json",
 			"type": "tripwire",
-			"states": "tripwire.json",
-			"data":{
+			"states": {
+				"attached": "true|false"
+			},
+			"default_state": "attached=false",
+			"legacy_id": 132,
+			"legacy_data": {
 				"0x4": {
-					"0": { "set": "attached=false" },
-					"1": { "set": "attached=true" }
+					"0": "attached=false",
+					"1": "attached=true"
 				}
 			}
 		},
 		{
-			"id": 133,
-			"name": "blockofemerald",
-			"states": "emerald_block.json"
+			"name": "emerald_block",
+			"file": "emerald_block.json",
+			"legacy_id": 133
 		},
 		{
-			"id": 134,
-			"name": "sprucewoodstairs",
-			"states": "spruce_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "spruce_stairs",
+			"file": "spruce_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 134,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 135,
-			"name": "birchwoodstairs",
-			"states": "birch_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "birch_stairs",
+			"file": "birch_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 135,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 136,
-			"name": "junglewoodstairs",
-			"states": "jungle_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "jungle_stairs",
+			"file": "jungle_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 136,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 137,
-			"name": "commandblock",
-			"states": "command_block.json",
-			"set": "conditional=false",
-			"data": {
+			"name": "command_block",
+			"file": "command_block.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=south,conditional=false",
+			"legacy_id": 137,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" },
-					"6": { "set": "facing=down" },
-					"7": { "set": "facing=up" }
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east",
+					"6": "facing=down",
+					"7": "facing=up"
 				}
 			}
 		},
 		{
-			"id": 138,
 			"name": "beacon",
-			"states": "beacon.json"
+			"file": "beacon.json",
+			"legacy_id": 138
 		},
 		{
-			"id": 139,
-			"name": "cobblestonewall",
+			"name": "cobblestone_wall",
 			"type": "wall",
-			"states": "cobblestone_wall.json",
-			"data": {
-				"1": { "name": "mossycobblestonewall", "states": "mossy_cobblestone_wall.json" }
-			}
-		},
-		{
-			"id": 140,
-			"name": "emptyflowerpot",
-			"states": "flower_pot.json",
-			"set": "contents=empty",
-			"data": {
-				"1": { "name": "poppyflowerpot", "set": "contents=rose" },
-				"2": { "name": "dandelionflowerpot", "set": "contents=dandelion" },
-				"3": { "name": "oaksaplingflowerpot", "set": "contents=oak_sapling" },
-				"4": { "name": "sprucesaplingflowerpot", "set": "contents=spruce_sapling" },
-				"5": { "name": "birchsaplingflowerpot", "set": "contents=birch_sapling" },
-				"6": { "name": "junglesaplingflowerpot", "set": "contents=jungle_sapling" },
-				"7": { "name": "redmushroomflowerpot", "set": "contents=mushroom_red" },
-				"8": { "name": "brownmushroomflowerpot", "set": "contents=mushroom_brown" },
-				"9": { "name": "cactusflowerpot", "set": "contents=cactus" },
-				"10": { "name": "deadbushflowerpot", "set": "contents=dead_bush" },
-				"11": { "name": "fernflowerflowerpot", "set": "contents=fern" },
-				"12": { "name": "acaciasaplingflowerpot", "set": "contents=acacia_sapling" },
-				"13": { "name": "darkoaksaplingflowerpot", "set": "contents=dark_oak_sapling" }
-			}
-		},
-		{
-			"id": 141,
-			"name": "carrot",
-			"states": "carrots.json",
-			"set": "age=7",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" },
-				"4": { "set": "age=4" },
-				"5": { "set": "age=5" },
-				"6": { "set": "age=6" }
+			"states": {
+				"variant": {
+					"cobblestone": { "file": "cobblestone_wall.json" },
+					"mossy_cobblestone": { "file": "mossy_cobblestone_wall.json" }
+				}
 			},
+			"default_state": "variant=cobblestone",
+			"legacy_id": 139,
+			"legacy_data": {
+				"0": "variant=cobblestone",
+				"1": "variant=mossy_cobblestone"
+			}
+		},
+		{
+			"name": "flower_pot",
+			"file": "flower_pot.json",
+			"states": {
+				"contents": "empty|rose|blue_orchid|allium|houstonia|red_tulip|orange_tulip|white_tulip|pink_tulip|oxeye_daisy|dandelion|oak_sapling|spruce_sapling|birch_sapling|jungle_sapling|acacia_sapling|dark_oak_sapling|mushroom_red|mushroom_brown|dead_bush|fern|cactus"
+			},
+			"default_state": "contents=rose",
+			"legacy_id": 140,
+			"legacy_data": {
+				"0": "contents=empty",
+				"1": "contents=rose",
+				"2": "contents=dandelion",
+				"3": "contents=oak_sapling",
+				"4": "contents=spruce_sapling",
+				"5": "contents=birch_sapling",
+				"6": "contents=jungle_sapling",
+				"7": "contents=mushroom_red",
+				"8": "contents=mushroom_brown",
+				"9": "contents=cactus",
+				"10": "contents=dead_bush",
+				"11": "contents=fern",
+				"12": "contents=acacia_sapling",
+				"13": "contents=dark_oak_sapling"
+			}
+		},
+		{
+			"name": "carrots",
+			"file": "carrots.json",
+			"states": {
+				"age": "0|1|2|3|4|5|6|7"
+			},
+			"default_state": "age=0",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 141,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6",
+				"7": "age=7"
 			}
 		},
 		{
-			"id": 142,
-			"name": "potato",
-			"states": "potatoes.json",
-			"set": "age=7",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" },
-				"4": { "set": "age=4" },
-				"5": { "set": "age=5" },
-				"6": { "set": "age=6" }
+			"name": "potatoes",
+			"file": "potatoes.json",
+			"states": {
+				"age": "0|1|2|3|4|5|6|7"
 			},
+			"default_state": "age=0",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 142,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6",
+				"7": "age=7"
 			}
 		},
 		{
-			"id": 143,
-			"name": "woodenbutton",
-			"type": "redstoneconnect",
-			"states": "wooden_button.json",
-			"data": {
+			"name": "wooden_button",
+			"file": "wooden_button.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": "north|south|east|west|up|down",
+				"powered": "true|false"
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 143,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=east" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=north" },
-					"5": { "set": "facing=up" }
+					"0": "facing=down",
+					"1": "facing=east",
+					"2": "facing=west",
+					"3": "facing=south",
+					"4": "facing=north",
+					"5": "facing=up"
 				},
 				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 145,
 			"name": "anvil",
-			"states": "anvil.json",
-			"data": {
+			"file": "anvil.json",
+			"states": {
+				"facing": "north|south|east|west",
+				"damage": "0|1|2"
+			},
+			"default_state": "facing=south,damage=0",
+			"legacy_id": 145,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4+0x8": {
-					"0": { "set": "damage=0" },
-					"1": { "set": "damage=1" },
-					"2": { "set": "damage=2" }
+					"0": "damage=0",
+					"1": "damage=1",
+					"2": "damage=2"
 				}
 			}
 		},
 		{
-			"id": 147,
-			"name": "weightedpressureplatelight",
-			"type": "redstoneconnect",
-			"states": "light_weighted_pressure_plate.json",
-			"data": {
-				"0": { "set": "power=0" },
-				"1": { "set": "power=1" },
-				"2": { "set": "power=2" },
-				"3": { "set": "power=3" },
-				"4": { "set": "power=4" },
-				"5": { "set": "power=5" },
-				"6": { "set": "power=6" },
-				"7": { "set": "power=7" },
-				"8": { "set": "power=8" },
-				"9": { "set": "power=9" },
-				"10": { "set": "power=10" },
-				"11": { "set": "power=11" },
-				"12": { "set": "power=12" },
-				"13": { "set": "power=13" },
-				"14": { "set": "power=14" },
-				"15": { "set": "power=15" }
+			"name": "light_weighted_pressure_plate",
+			"file": "light_weighted_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"power": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "power=0",
+			"legacy_id": 147,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
 			}
 		},
 		{
-			"id": 148,
-			"name": "weightedpressureplateheavy",
-			"type": "redstoneconnect",
-			"states": "heavy_weighted_pressure_plate.json",
-			"data": {
-				"0": { "set": "power=0" },
-				"1": { "set": "power=1" },
-				"2": { "set": "power=2" },
-				"3": { "set": "power=3" },
-				"4": { "set": "power=4" },
-				"5": { "set": "power=5" },
-				"6": { "set": "power=6" },
-				"7": { "set": "power=7" },
-				"8": { "set": "power=8" },
-				"9": { "set": "power=9" },
-				"10": { "set": "power=10" },
-				"11": { "set": "power=11" },
-				"12": { "set": "power=12" },
-				"13": { "set": "power=13" },
-				"14": { "set": "power=14" },
-				"15": { "set": "power=15" }
+			"name": "heavy_weighted_pressure_plate",
+			"file": "heavy_weighted_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"power": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "power=0",
+			"legacy_id": 148,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
 			}
 		},
 		{
-			"id": 149,
-			"name": "redstonecomparatorinactive",
-			"type": "redstonecomparator",
-			"states": "unpowered_comparator.json",
-			"data": {
+			"name": "unpowered_comparator",
+			"file": "unpowered_comparator.json",
+			"type": "redstone_comparator",
+			"states": {
+				"facing": "north|south|east|west",
+				"mode": "compare|subtract",
+				"powered": "true|false"
+			},
+			"default_state": "facing=south,mode=compare,powered=false",
+			"legacy_id": 149,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				},
 				"0x4": {
-					"0": { "set": "mode=compare" },
-					"1": { "set": "mode=subtract" }
+					"0": "mode=compare",
+					"1": "mode=subtract"
 				},
 				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 150,
-			"name": "redstonecomparatoractive",
-			"type": "redstonecomparator",
-			"states": "powered_comparator.json",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+			"name": "powered_comparator",
+			"file": "powered_comparator.json",
+			"type": "redstone_comparator",
+			"states": {
+				"facing": "north|south|east|west",
+				"mode": {
+					"compare": { "brightness": 1 },
+					"subtract": { }
 				},
-				"0x4": {
-					"0": { "set": "mode=compare" },
-					"1": { "set": "mode=subtract", "brightness": 1 }
-				},
-				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true", "brightness": 1 }
-				}
-			}
-		},
-		{
-			"id": 151,
-			"name": "daylightsensor",
-			"states": "daylight_detector.json",
-			"data": {
-				"0": { "set": "power=0" },
-				"1": { "set": "power=1" },
-				"2": { "set": "power=2" },
-				"3": { "set": "power=3" },
-				"4": { "set": "power=4" },
-				"5": { "set": "power=5" },
-				"6": { "set": "power=6" },
-				"7": { "set": "power=7" },
-				"8": { "set": "power=8" },
-				"9": { "set": "power=9" },
-				"10": { "set": "power=10" },
-				"11": { "set": "power=11" },
-				"12": { "set": "power=12" },
-				"13": { "set": "power=13" },
-				"14": { "set": "power=14" },
-				"15": { "set": "power=15" }
-			}
-		},
-		{
-			"id": 152,
-			"name": "blockofredstone",
-			"states": "redstone_block.json",
-			"brightness": 1
-		},
-		{
-			"id": 153,
-			"name": "netherquartzore",
-			"states": "quartz_ore.json"
-		},
-		{
-			"id": 154,
-			"name": "hopper",
-			"states": "hopper.json",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=down" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" }
-				}
-			}
-		},
-		{
-			"id": 155,
-			"name": "blockofquartz",
-			"states": "quartz_block.json",
-			"data": {
-				"1": { "name": "chiseledquartzblock", "states": "chiseled_quartz_block.json" },
-				"2": { "name": "pillarquartzblock", "states": "quartz_column.json", "set": "axis=y" },
-				"3": { "name": "pillarquartzblock", "states": "quartz_column.json", "set": "axis=z" },
-				"4": { "name": "pillarquartzblock", "states": "quartz_column.json", "set": "axis=x" }
-			}
-		},
-		{
-			"id": 156,
-			"name": "quartzstairs",
-			"states": "quartz_stairs.json",
-			"set": "shape=straight",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
-				}
-			}
-		},
-		{
-			"id": 157,
-			"name": "activatorrail",
-			"states": "activator_rail.json",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "shape=north_south" },
-					"1": { "set": "shape=east_west" },
-					"2": { "set": "shape=ascending_east" },
-					"3": { "set": "shape=ascending_west" },
-					"4": { "set": "shape=ascending_north" },
-					"5": { "set": "shape=ascending_south" }
-				},
-				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
-				}
-			}
-		},
-		{
-			"id": 158,
-			"name": "dropper",
-			"states": "dropper.json",
-			"data": {
-				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" }
-				}
-			}
-		},
-		{
-			"id": 159,
-			"data": {
-				"0": { "name": "whitehardenedclay", "states": "white_stained_hardened_clay.json" },
-				"1": { "name": "orangehardenedclay", "states": "orange_stained_hardened_clay.json" },
-				"2": { "name": "magentahardenedclay", "states": "magenta_stained_hardened_clay.json" },
-				"3": { "name": "lightbluehardenedclay", "states": "light_blue_stained_hardened_clay.json" },
-				"4": { "name": "yellowhardenedclay", "states": "yellow_stained_hardened_clay.json" },
-				"5": { "name": "limehardenedclay", "states": "lime_stained_hardened_clay.json" },
-				"6": { "name": "pinkhardenedclay", "states": "pink_stained_hardened_clay.json" },
-				"7": { "name": "grayhardenedclay", "states": "gray_stained_hardened_clay.json" },
-				"8": { "name": "lightgrayhardenedclay", "states": "silver_stained_hardened_clay.json" },
-				"9": { "name": "cyanhardenedclay", "states": "cyan_stained_hardened_clay.json" },
-				"10": { "name": "purplehardenedclay", "states": "purple_stained_hardened_clay.json" },
-				"11": { "name": "bluehardenedclay", "states": "blue_stained_hardened_clay.json" },
-				"12": { "name": "brownhardenedclay", "states": "brown_stained_hardened_clay.json" },
-				"13": { "name": "greenhardenedclay", "states": "green_stained_hardened_clay.json" },
-				"14": { "name": "redhardenedclay", "states": "red_stained_hardened_clay.json" },
-				"15": { "name": "blackhardenedclay", "states": "black_stained_hardened_clay.json" }
-			}
-		},
-		{
-			"id": 160,
-			"type": "bars",
-			"set": "requiremodels=true",
-			"data": {
-				"0": { "name": "whitestainedglasspane", "states": "white_stained_glass_pane.json" },
-				"1": { "name": "orangestainedglasspane", "states": "orange_stained_glass_pane.json" },
-				"2": { "name": "magentastainedglasspane", "states": "magenta_stained_glass_pane.json" },
-				"3": { "name": "lightbluestainedglasspane", "states": "light_blue_stained_glass_pane.json" },
-				"4": { "name": "yellowstainedglasspane", "states": "yellow_stained_glass_pane.json" },
-				"5": { "name": "limestainedglasspane", "states": "lime_stained_glass_pane.json" },
-				"6": { "name": "pinkstainedglasspane", "states": "pink_stained_glass_pane.json" },
-				"7": { "name": "graystainedglasspane", "states": "gray_stained_glass_pane.json" },
-				"8": { "name": "lightgraystainedglasspane", "states": "silver_stained_glass_pane.json" },
-				"9": { "name": "cyanstainedglasspane", "states": "cyan_stained_glass_pane.json" },
-				"10": { "name": "purplestainedglasspane", "states": "purple_stained_glass_pane.json" },
-				"11": { "name": "bluestainedglasspane", "states": "blue_stained_glass_pane.json" },
-				"12": { "name": "brownstainedglasspane", "states": "brown_stained_glass_pane.json" },
-				"13": { "name": "greenstainedglasspane", "states": "green_stained_glass_pane.json" },
-				"14": { "name": "redstainedglasspane", "states": "red_stained_glass_pane.json" },
-				"15": { "name": "blackstainedglasspane", "states": "black_stained_glass_pane.json" }
-			}
-		},
-		{
-			"id": 161,
-			"name": "acacialeaves",
-			"type": "leaves",
-			"data": {
-				"0x1+0x2":{
-					"0": { "name": "acacialeaves", "states": "acacia_leaves.json" },
-					"1": { "name": "darkoakleaves", "states": "dark_oak_leaves.json" }
+				"powered": {
+					"true": { "brightness": 1 },
+					"false": { }
 				}
 			},
+			"default_state": "facing=south,mode=compare,powered=false",
+			"legacy_id": 150,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "mode=compare",
+					"1": "mode=subtract"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "daylight_detector",
+			"file": "daylight_detector.json",
+			"states": {
+				"power": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "power=0",
+			"legacy_id": 151,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
+		},
+		{
+			"name": "redstone_block",
+			"file": "redstone_block.json",
+			"brightness": 1,
+			"legacy_id": 152
+		},
+		{
+			"name": "quartz_ore",
+			"file": "quartz_ore.json",
+			"legacy_id": 153
+		},
+		{
+			"name": "hopper",
+			"file": "hopper.json",
+			"states": {
+				"facing": "north|south|east|west|down"
+			},
+			"default_state": "facing=down",
+			"legacy_id": 154,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=down",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "quartz_block",
+			"states": {
+				"variant": {
+					"default": { "file": "quartz_block.json" },
+					"chiseled": { "file": "chiseled_quartz_block.json" },
+					"lines_x": { "file": "quartz_column.json" },
+					"lines_y": { "file": "quartz_column.json" },
+					"lines_z": { "file": "quartz_column.json" }
+				},
+				"axis": "x|y|z"
+			},
+			"default_state": "variant=default,axis=y",
+			"legacy_id": 155,
+			"legacy_data": {
+				"0": "variant=default",
+				"1": "variant=chiseled",
+				"2": "variant=lines_y,axis=y",
+				"3": "variant=lines_z,axis=z",
+				"4": "variant=lines_x,axis=x"
+			}
+		},
+		{
+			"name": "quartz_stairs",
+			"file": "quartz_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 156,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "activator_rail",
+			"file": "activator_rail.json",
+			"states": {
+				"powered": "true|false",
+				"shape": "north_south|east_west|ascending_north|ascending_south|ascending_east|ascending_west"
+			},
+			"default_state": "powered=false,shape=north_south",
+			"legacy_id": 157,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "dropper",
+			"file": "dropper.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=down",
+			"legacy_id": 158,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "stained_hardened_clay",
+			"states": {
+				"color": {
+					"white": { "file": "white_stained_hardened_clay.json" },
+					"orange": { "file": "orange_stained_hardened_clay.json" },
+					"magenta": { "file": "magenta_stained_hardened_clay.json" },
+					"light_blue": { "file": "light_blue_stained_hardened_clay.json" },
+					"yellow": { "file": "yellow_stained_hardened_clay.json" },
+					"lime": { "file": "lime_stained_hardened_clay.json" },
+					"pink": { "file": "pink_stained_hardened_clay.json" },
+					"gray": { "file": "gray_stained_hardened_clay.json" },
+					"silver": { "file": "silver_stained_hardened_clay.json" },
+					"cyan": { "file": "cyan_stained_hardened_clay.json" },
+					"purple": { "file": "purple_stained_hardened_clay.json" },
+					"blue": { "file": "blue_stained_hardened_clay.json" },
+					"brown": { "file": "brown_stained_hardened_clay.json" },
+					"green": { "file": "green_stained_hardened_clay.json" },
+					"red": { "file": "red_stained_hardened_clay.json" },
+					"black": { "file": "black_stained_hardened_clay.json" }
+				}
+			},
+			"default_state": "color=white",
+			"legacy_id": 159,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "stained_glass_pane",
+			"type": "bars",
+			"require_models": true,
+			"states": {
+				"color": {
+					"white": { "file": "white_stained_glass_pane.json" },
+					"orange": { "file": "orange_stained_glass_pane.json" },
+					"magenta": { "file": "magenta_stained_glass_pane.json" },
+					"light_blue": { "file": "light_blue_stained_glass_pane.json" },
+					"yellow": { "file": "yellow_stained_glass_pane.json" },
+					"lime": { "file": "lime_stained_glass_pane.json" },
+					"pink": { "file": "pink_stained_glass_pane.json" },
+					"gray": { "file": "gray_stained_glass_pane.json" },
+					"silver": { "file": "silver_stained_glass_pane.json" },
+					"cyan": { "file": "cyan_stained_glass_pane.json" },
+					"purple": { "file": "purple_stained_glass_pane.json" },
+					"blue": { "file": "blue_stained_glass_pane.json" },
+					"brown": { "file": "brown_stained_glass_pane.json" },
+					"green": { "file": "green_stained_glass_pane.json" },
+					"red": { "file": "red_stained_glass_pane.json" },
+					"black": { "file": "black_stained_glass_pane.json" }
+				}
+			},
+			"default_state": "color=white",
+			"legacy_id": 160,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "leaves2",
+			"type": "leaves",
+			"states": {
+				"variant": {
+					"acacia": { "file": "acacia_leaves.json" },
+					"dark_oak": { "file": "dark_oak_leaves.json" }
+				}
+			},
+			"default_state": "variant=acacia",
 			"wind": {
 				"axis": "all"
+			},
+			"legacy_id": 161,
+			"legacy_data": {
+				"0x1+0x2":{
+					"0": "variant=acacia",
+					"1": "variant=dark_oak"
+				}
 			}
 		},
 		{
-			"id": 162,
-			"name": "acaciawood",
-			"data": {
+			"name": "log2",
+			"states": {
+				"variant": {
+					"acacia": { "file": "acacia_leaves.json" },
+					"dark_oak": { "file": "dark_oak_leaves.json" }
+				},
+				"axis": "none|x|y|z"
+			},
+			"default_state": "variant=acacia,axis=y",
+			"legacy_id": 162,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "axis=y" },
-					"1": { "set": "axis=x" },
-					"2": { "set": "axis=z" },
-					"3": { "set": "axis=none" }
+					"0": "variant=acacia",
+					"1": "variant=dark_oak"
 				},
 				"0x4+0x8": {
-					"0": { "name": "acaciawood", "states": "acacia_log.json" },
-					"1": { "name": "darkoakwood", "states": "dark_oak_log.json" }
+					"0": "axis=y",
+					"1": "axis=x",
+					"2": "axis=z",
+					"3": "axis=none"
 				}
 			}
 		},
 		{
-			"id": 163,
-			"name": "acaciawoodstairs",
-			"states": "acacia_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "acacia_stairs",
+			"file": "acacia_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 163,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 164,
-			"name": "darkoakwoodstairs",
-			"states": "dark_oak_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "dark_oak_stairs",
+			"file": "dark_oak_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 164,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 165,
-			"name": "slimeblock",
-			"states": "slime.json"
+			"name": "slime",
+			"file": "slime.json",
+			"legacy_id": 165
 		},
 		{
-			"id": 167,
-			"name": "irontrapdoor",
-			"states": "iron_trapdoor.json",
-			"data": {
+			"name": "iron_trapdoor",
+			"file": "iron_trapdoor.json",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=south,open=false,half=bottom",
+			"legacy_id": 167,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=north" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=east" }
+					"0": "facing=north",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=east"
 				},
 				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
+					"0": "open=false",
+					"1": "open=true"
 				},
 				"0x8": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 168,
 			"name": "prismarine",
-			"states": "prismarine.json",
-			"data": {
-				"1": { "name": "prismarinebricks", "states": "prismarine_bricks.json" },
-				"2": { "name": "darkprismarine", "states": "dark_prismarine.json" }
-			}
-		},
-		{
-			"id": 169,
-			"name": "sealantern",
-			"states": "sea_lantern.json"
-		},
-		{
-			"id": 170,
-			"name": "haybale",
-			"states": "hay_block.json",
-			"data": {
-				"0": { "set": "axis=y" },
-				"1": { "set": "axis=z" },
-				"2": { "set": "axis=x" }
-			}
-		},
-		{
-			"id": 171,
-			"data": {
-				"0": { "name": "whitecarpet", "states": "white_carpet.json" },
-				"1": { "name": "orangecarpet", "states": "orange_carpet.json" },
-				"2": { "name": "magentacarpet", "states": "magenta_carpet.json" },
-				"3": { "name": "lightbluecarpet", "states": "light_blue_carpet.json" },
-				"4": { "name": "yellowcarpet", "states": "yellow_carpet.json" },
-				"5": { "name": "limecarpet", "states": "lime_carpet.json" },
-				"6": { "name": "pinkcarpet", "states": "pink_carpet.json" },
-				"7": { "name": "graycarpet", "states": "gray_carpet.json" },
-				"8": { "name": "lightgraycarpet", "states": "silver_carpet.json" },
-				"9": { "name": "cyancarpet", "states": "cyan_carpet.json" },
-				"10": { "name": "purplecarpet", "states": "purple_carpet.json" },
-				"11": { "name": "bluecarpet", "states": "blue_carpet.json" },
-				"12": { "name": "browncarpet", "states": "brown_carpet.json" },
-				"13": { "name": "greencarpet", "states": "green_carpet.json" },
-				"14": { "name": "redcarpet", "states": "red_carpet.json" },
-				"15": { "name": "blackcarpet", "states": "black_carpet.json" }
-			}
-		},
-		{
-			"id": 172,
-			"name": "hardenedclay",
-			"states": "hardened_clay.json"
-		},
-		{
-			"id": 173,
-			"name": "blockofcoal",
-			"states": "coal_block.json"
-		},
-		{
-			"id": 174,
-			"name": "packedice",
-			"states": "packed_ice.json"
-		},
-		{
-			"id": 175,
-			"name": "sunflower",
-			"type": "doubleplant",
-			"data": {
-				"0x8": {
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
-				},
-				"0": { "name": "sunflower", "states": "sunflower.json" },
-				"1": { "name": "lilac", "states": "syringa.json" },
-				"2": { "name": "doubletallgrass", "states": "double_grass.json" },
-				"3": { "name": "largefern", "states": "double_fern.json" },
-				"4": { "name": "rosebush", "states": "double_rose.json" },
-				"5": { "name": "peony", "states": "paeonia.json" }
+			"states": {
+				"variant": {
+					"prismarine": { "file": "prismarine.json" },
+					"prismarine_bricks": { "file": "prismarine_bricks.json" },
+					"dark_prismarine": { "file": "dark_prismarine.json" }
+				}
 			},
+			"default_state": "variant=prismarine",
+			"legacy_id": 168,
+			"legacy_data": {
+				"0": "variant=prismarine",
+				"1": "variant=prismarine_bricks",
+				"2": "variant=dark_prismarine"
+			}
+		},
+		{
+			"name": "sea_lantern",
+			"file": "sea_lantern.json",
+			"legacy_id": 169
+		},
+		{
+			"name": "hay_block",
+			"file": "hay_block.json",
+			"states": {
+				"axis": "x|y|z"
+			},
+			"default_state": "axis=y",
+			"legacy_id": 170,
+			"legacy_data": {
+				"0": "axis=y",
+				"1": "axis=z",
+				"2": "axis=x"
+			}
+		},
+		{
+			"name": "carpet",
+			"states": {
+				"color": {
+					"white": { "file": "white_carpet.json" },
+					"orange": { "file": "orange_carpet.json" },
+					"magenta": { "file": "magenta_carpet.json" },
+					"light_blue": { "file": "light_blue_carpet.json" },
+					"yellow": { "file": "yellow_carpet.json" },
+					"lime": { "file": "lime_carpet.json" },
+					"pink": { "file": "pink_carpet.json" },
+					"gray": { "file": "gray_carpet.json" },
+					"silver": { "file": "silver_carpet.json" },
+					"cyan": { "file": "cyan_carpet.json" },
+					"purple": { "file": "purple_carpet.json" },
+					"blue": { "file": "blue_carpet.json" },
+					"brown": { "file": "brown_carpet.json" },
+					"green": { "file": "green_carpet.json" },
+					"red": { "file": "red_carpet.json" },
+					"black": { "file": "black_carpet.json" }
+				}
+			},
+			"default_state": "color=white",
+			"legacy_id": 171,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "hardened_clay",
+			"file": "hardened_clay.json",
+			"legacy_id": 172
+		},
+		{
+			"name": "coal_block",
+			"file": "coal_block.json",
+			"legacy_id": 173
+		},
+		{
+			"name": "packed_ice",
+			"file": "packed_ice.json",
+			"legacy_id": 174
+		},
+		{
+			"name": "double_plant",
+			"type": "double_plant",
+			"states": {
+				"variant": {
+					"sunflower": { "file": "sunflower.json" },
+					"syringa": { "file": "syringa.json" },
+					"double_grass": { "file": "double_grass.json" },
+					"double_fern": { "file": "double_fern.json" },
+					"double_rose": { "file": "double_rose.json" },
+					"paeonia": { "file": "paeonia.json" }
+				},
+				"half": "upper|lower"
+			},
+			"default_state": "variant=sunflower,half=lower",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
-			}
-		},
-		{
-			"id": 178,
-			"name": "inverteddaylightsensor",
-			"states": "daylight_detector_inverted.json",
-			"data": {
-				"0": { "set": "power=0" },
-				"1": { "set": "power=1" },
-				"2": { "set": "power=2" },
-				"3": { "set": "power=3" },
-				"4": { "set": "power=4" },
-				"5": { "set": "power=5" },
-				"6": { "set": "power=6" },
-				"7": { "set": "power=7" },
-				"8": { "set": "power=8" },
-				"9": { "set": "power=9" },
-				"10": { "set": "power=10" },
-				"11": { "set": "power=11" },
-				"12": { "set": "power=12" },
-				"13": { "set": "power=13" },
-				"14": { "set": "power=14" },
-				"15": { "set": "power=15" }
-			}
-		},
-		{
-			"id": 179,
-			"name": "redsandstone",
-			"states": "red_sandstone.json",
-			"data": {
-				"1": { "name": "chiseledredsandstone", "states": "chiseled_red_sandstone.json" },
-				"2": { "name": "smoothredsandstone", "states": "smooth_red_sandstone.json" }
-			}
-		},
-		{
-			"id": 180,
-			"name": "redsandstonestairs",
-			"states": "red_sandstone_stairs.json",
-			"set": "shape=straight",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
-				}
-			}
-		},
-		{
-			"id": 181,
-			"name": "redsandstonedoubleslab",
-			"states": "red_sandstone_double_slab.json"
-		},
-		{
-			"id": 182,
-			"name": "redsandstoneslab",
-			"states": "red_sandstone_slab.json",
-			"data": {
-				"0x8": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
-				}
-			}
-		},
-		{
-			"id": 183,
-			"name": "sprucefencegate",
-			"type": "fencegate",
-			"states": "spruce_fence_gate.json",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
-				}
-			}
-		},
-		{
-			"id": 184,
-			"name": "birchfencegate",
-			"type": "fencegate",
-			"states": "birch_fence_gate.json",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
-				}
-			}
-		},
-		{
-			"id": 185,
-			"name": "junglefencegate",
-			"type": "fencegate",
-			"states": "jungle_fence_gate.json",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
-				}
-			}
-		},
-		{
-			"id": 186,
-			"name": "darkoakfencegate",
-			"type": "fencegate",
-			"states": "dark_oak_fence_gate.json",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
-				}
-			}
-		},
-		{
-			"id": 187,
-			"name": "acaciafencegate",
-			"type": "fencegate",
-			"states": "acacia_fence_gate.json",
-			"data": {
-				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },
-					"1": { "set": "open=true" }
-				}
-			}
-		},
-		{
-			"id": 188,
-			"name": "sprucefence",
-			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "spruce_fence.json"
-		},
-		{
-			"id": 189,
-			"name": "birchfence",
-			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "birch_fence.json"
-		},
-		{
-			"id": 190,
-			"name": "junglefence",
-			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "jungle_fence.json"
-		},
-		{
-			"id": 191,
-			"name": "darkoakfence",
-			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "dark_oak_fence.json"
-		},
-		{
-			"id": 192,
-			"name": "acaciafence",
-			"type": "fence",
-			"set": "requiremodels=true",
-			"states": "acacia_fence.json"
-		},
-		{
-			"id": 193,
-			"name": "sprucedoor",
-			"type": "door",
-			"states": "spruce_door.json",
-			"data": {
-				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
-				},
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
-				},
-				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
-				}
-			}
-		},
-		{
-			"id": 194,
-			"name": "birchdoor",
-			"type": "door",
-			"states": "birch_door.json",
-			"data": {
-				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
-				},
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
-				},
-				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
-				}
-			}
-		},
-		{
-			"id": 195,
-			"name": "jungledoor",
-			"type": "door",
-			"states": "jungle_door.json",
-			"data": {
-				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
-				},
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
-				},
-				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
-				}
-			}
-		},
-		{
-			"id": 196,
-			"name": "acaciadoor",
-			"type": "door",
-			"states": "acacia_door.json",
-			"data": {
-				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
-				},
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
-				},
-				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
-				}
-			}
-		},
-		{
-			"id": 197,
-			"name": "darkoakdoor",
-			"type": "door",
-			"states": "dark_oak_door.json",
-			"data": {
-				"0x1": {
-					"0": { "set": "hinge=left" },
-					"1": { "set": "hinge=right" }
-				},
-				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=south" },
-					"2": { "set": "facing=west" },
-					"3": { "set": "facing=north" }
-				},
-				"0x4": {
-					"0": { "set": "open=false" },	
-					"1": { "set": "open=true" }
-				},
-				"0x8":{
-					"0": { "set": "half=lower" },
-					"1": { "set": "half=upper" }
-				}
-			}
-		},
-		{
-			"id": 198,
-			"name": "endrod",
-			"states": "end_rod.json",
-			"data": {
-				"0": { "set": "facing=up" },
-				"1": { "set": "facing=down" },
-				"2": { "set": "facing=east" },
-				"3": { "set": "facing=south" },
-				"4": { "set": "facing=west" },
-				"5": { "set": "facing=north" }
 			},
-			"brightness": 1
-		},
-		{
-			"id": 199,
-			"name": "chorusplant",
-			"type": "chorusplant",
-			"states": "chorus_plant.json",
-		},
-		{
-			"id": 200,
-			"name": "chorusflower",
-			"type": "chorusplantconnect",
-			"states": "chorus_flower.json",
-			"set": "age=0",
-			"data": {
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" },
-				"4": { "set": "age=4" },
-				"5": { "set": "age=5" }
+			"legacy_id": 175,
+			"legacy_data": {
+				"0x8": {
+					"0": "half=lower",
+					"1": "half=upper"
+				},
+				"0": "variant=sunflower",
+				"1": "variant=syringa",
+				"2": "variant=double_grass",
+				"3": "variant=double_fern",
+				"4": "variant=double_rose",
+				"5": "variant=paeonia"
 			}
 		},
 		{
-			"id": 201,
-			"name": "purpurblock",
-			"states": "purpur_block.json"
+			"name": "daylight_detector_inverted",
+			"file": "daylight_detector_inverted.json",
+			"states": {
+				"power": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+			},
+			"default_state": "power=0",
+			"legacy_id": 178,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
 		},
 		{
-			"id": 202,
-			"name": "purpurpillar",
-			"states": "purpur_pillar.json",
-			"data": {
+			"name": "red_sandstone",
+			"states": {
+				"type": {
+					"sandstone": { "file": "red_sandstone.json" },
+					"chiseled_sandstone": { "file": "chiseled_red_sandstone.json" },
+					"smooth_sandstone": { "file": "smooth_red_sandstone.json" }
+				}
+			},
+			"default_state": "type=sandstone",
+			"legacy_id": 179,
+			"legacy_data": {
+				"0": "type=sandstone",
+				"1": "type=chiseled_sandstone",
+				"2": "type=smooth_sandstone"
+			}
+		},
+		{
+			"name": "red_sandstone_stairs",
+			"file": "red_sandstone_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 180,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "double_stone_slab2",
+			"file": "red_sandstone_double_slab.json",
+			"legacy_id": 181,
+			"legacy_data": {
+				"0x8": {
+					"0": "normal",
+					"1": "all"
+				}
+			}
+		},
+		{
+			"name": "stone_slab2",
+			"file": "red_sandstone_slab.json",
+			"states": {
+				"half": "top|bottom"
+			},
+			"default_state": "half=bottom",
+			"legacy_id": 182,
+			"legacy_data": {
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "spruce_fence_gate",
+			"file": "spruce_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false"
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 183,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "birch_fence_gate",
+			"file": "birch_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false"
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 184,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "jungle_fence_gate",
+			"file": "jungle_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false"
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 185,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "dark_oak_fence_gate",
+			"file": "dark_oak_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false"
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 186,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "acacia_fence_gate",
+			"file": "acacia_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": "north|south|east|west",
+				"open": "true|false"
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 187,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "spruce_fence",
+			"file": "spruce_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 188
+		},
+		{
+			"name": "birch_fence",
+			"file": "birch_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 189
+		},
+		{
+			"name": "jungle_fence",
+			"file": "jungle_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 190
+		},
+		{
+			"name": "dark_oak_fence",
+			"file": "dark_oak_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 191
+		},
+		{
+			"name": "acacia_fence",
+			"file": "acacia_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 192
+		},
+		{
+			"name": "spruce_door",
+			"file": "spruce_door.json",
+			"type": "door",
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 193,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "birch_door",
+			"file": "birch_door.json",
+			"type": "door",
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 194,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "jungle_door",
+			"file": "jungle_door.json",
+			"type": "door",
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 195,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "acacia_door",
+			"file": "acacia_door.json",
+			"type": "door",
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 196,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "dark_oak_door",
+			"file": "dark_oak_door.json",
+			"type": "door",
+			"states": {
+				"hinge": "right|left",
+				"facing": "north|south|east|west",
+				"open": "true|false",
+				"half": "upper|lower"
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 197,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "end_rod",
+			"file": "end_rod.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=up",
+			"brightness": 1,
+			"legacy_id": 198,
+			"legacy_data": {
+				"0": "facing=up",
+				"1": "facing=down",
+				"2": "facing=east",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=north"
+			}
+		},
+		{
+			"name": "chorus_plant",
+			"file": "chorus_plant.json",
+			"type": "chorus_plant",
+			"legacy_id": 199
+		},
+		{
+			"name": "chorus_flower",
+			"file": "chorus_flower.json",
+			"type": "chorus_plant_connect",
+			"states": {
+				"age": "0|1|2|3|4|5"
+			},
+			"default_state": "age=0",
+			"legacy_id": 200,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5"
+			}
+		},
+		{
+			"name": "purpur_block",
+			"file": "purpur_block.json",
+			"legacy_id": 201
+		},
+		{
+			"name": "purpur_pillar",
+			"file": "purpur_pillar.json",
+			"states": {
+				"axis": "x|y|z"
+			},
+			"default_state": "axis=y",
+			"legacy_id": 202,
+			"legacy_data": {
 				"0x4+0x8": {
-					"0": { "set": "axis=y" },
-					"1": { "set": "axis=z" },
-					"2": { "set": "axis=x" }
+					"0": "axis=y",
+					"1": "axis=z",
+					"2": "axis=x"
 				}
 			}
 		},
 		{
-			"id": 203,
-			"name": "purpurstairs",
-			"states": "purpur_stairs.json",
-			"set": "shape=straight",
-			"data": {
+			"name": "purpur_stairs",
+			"file": "purpur_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": "north|south|east|west",
+				"half": "top|bottom"
+			},
+			"default_state": "facing=east,half=bottom,shape=straight",
+			"legacy_id": 203,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=east" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=south" },
-					"3": { "set": "facing=north" }
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
 				},
 				"0x4": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
+					"0": "half=bottom",
+					"1": "half=top"
 				}
 			}
 		},
 		{
-			"id": 204,
-			"name": "purpurdoubleslab",
-			"states": "purpur_double_slab.json",
-			"set": "variant=default"
-		},
-		{
-			"id": 205,
-			"name": "purpurslab",
-			"states": "purpur_slab.json",
-			"set": "variant=default",
-			"data": {
-				"0x8": {
-					"0": { "set": "half=bottom" },
-					"1": { "set": "half=top" }
-				}
-			}
-		},
-		{
-			"id": 206,
-			"name": "endstonebricks",
-			"states": "end_bricks.json"
-		},
-		{
-			"id": 207,
-			"name": "beetrootseeds",
-			"states": "beetroots.json",
-			"set": "age=3",
-			"data": {
-				"0": { "set": "age=0" },
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" }
+			"name": "purpur_double_slab",
+			"file": "purpur_double_slab.json",
+			"states": {
+				"variant": "default"
 			},
+			"legacy_id": 204
+		},
+		{
+			"name": "purpur_slab",
+			"file": "purpur_slab.json",
+			"states": {
+				"half": "top|bottom"
+			},
+			"default_state": "half=bottom,variant=default",
+			"legacy_id": 205,
+			"legacy_data": {
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "end_bricks",
+			"file": "end_bricks.json",
+			"legacy_id": 206
+		},
+		{
+			"name": "beetroots",
+			"file": "beetroots.json",
+			"states": {
+				"age": "0|1|2|3"
+			},
+			"default_state": "age=0",
 			"wind": {
 				"axis": "all",
 				"yroot": 0
+			},
+			"legacy_id": 207,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3"
 			}
 		},
 		{
-			"id": 208,
-			"name": "grasspath",
-			"states": "grass_path.json"
+			"name": "grass_path",
+			"file": "grass_path.json",
+			"legacy_id": 208
 		},
 		{
-			"id": 210,
-			"name": "repeatingcommandblock",
-			"states": "repeating_command_block.json",
-			"set": "conditional=false",
-			"data": {
+			"name": "repeating_command_block",
+			"file": "repeating_command_block.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=south,conditional=false",
+			"legacy_id": 210,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" },
-					"6": { "set": "facing=down" },
-					"7": { "set": "facing=up" }
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east",
+					"6": "facing=down",
+					"7": "facing=up"
 				}
 			}
 		},
 		{
-			"id": 211,
-			"name": "chaincommandblock",
-			"states": "chain_command_block.json",
-			"set": "conditional=false",
-			"data": {
+			"name": "chain_command_block",
+			"file": "chain_command_block.json",
+			"states": {
+				"facing": "north|south|east|west|up|down"
+			},
+			"default_state": "facing=south,conditional=false",
+			"legacy_id": 211,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=down" },
-					"1": { "set": "facing=up" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" },
-					"6": { "set": "facing=down" },
-					"7": { "set": "facing=up" }
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east",
+					"6": "facing=down",
+					"7": "facing=up"
 				}
 			}
 		},
 		{
-			"id": 212,
-			"name": "frostedice",
-			"states": "frosted_ice.json",
-			"set": "age=0",
-			"data": {
-				"1": { "set": "age=1" },
-				"2": { "set": "age=2" },
-				"3": { "set": "age=3" }
+			"name": "frosted_ice",
+			"file": "frosted_ice.json",
+			"states": {
+				"age": "0|1|2|3"
+			},
+			"default_state": "age=0",
+			"legacy_id": 212,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3"
 			}
 		},
 		{
-			"id": 213,
-			"name": "magmablock",
-			"states": "magma.json",
-			"brightness": 1
+			"name": "magma",
+			"file": "magma.json",
+			"brightness": 1,
+			"legacy_id": 213
 		},
 		{
-			"id": 214,
-			"name": "netherwartblock",
-			"states": "nether_wart_block.json"
+			"name": "nether_wart_block",
+			"file": "nether_wart_block.json",
+			"legacy_id": 214
 		},
 		{
-			"id": 215,
-			"name": "rednetherbrick",
-			"states": "red_nether_brick.json"
+			"name": "red_nether_brick",
+			"file": "red_nether_brick.json",
+			"legacy_id": 215
 		},
 		{
-			"id": 216,
-			"name": "boneblock",
-			"states": "bone_block.json",
-			"data": {
+			"name": "bone_block",
+			"file": "bone_block.json",
+			"states": {
+				"axis": "x|y|z"
+			},
+			"default_state": "axis=y",
+			"legacy_id": 216,
+			"legacy_data": {
 				"0x4+0x8": {
-					"0": { "set": "axis=y" },
-					"1": { "set": "axis=x" },
-					"2": { "set": "axis=z" }
+					"0": "axis=y",
+					"1": "axis=x",
+					"2": "axis=z"
 				}
 			}
 		},
 		{
-			"id": 218,
 			"name": "observer",
-			"states": "observer.json",
-			"data": {
+			"file": "observer.json",
+			"states": {
+				"facing": "north|south|east|west|up",
+				"powered": "true|false"
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 218,
+			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": { "set": "facing=up" },
-					"1": { "set": "facing=down" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=south" },
-					"4": { "set": "facing=west" },
-					"5": { "set": "facing=east" }
+					"0": "facing=up",
+					"1": "facing=down",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
 				},
 				"0x8": {
-					"0": { "set": "powered=false" },
-					"1": { "set": "powered=true" }
+					"0": "powered=false",
+					"1": "powered=true"
 				}
 			}
 		},
 		{
-			"id": 235,
-			"name": "whiteglazedterracotta",
-			"states": "white_glazed_terracotta.json",
-			"data": {
+			"name": "white_glazed_terracotta",
+			"file": "white_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 235,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 236,
-			"name": "orangeglazedterracotta",
-			"states": "orange_glazed_terracotta.json",
-			"data": {
+			"name": "orange_glazed_terracotta",
+			"file": "orange_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 236,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 237,
-			"name": "magentaglazedterracotta",
-			"states": "magenta_glazed_terracotta.json",
-			"data": {
+			"name": "magenta_glazed_terracotta",
+			"file": "magenta_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 237,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 238,
-			"name": "lightblueglazedterracotta",
-			"states": "light_blue_glazed_terracotta.json",
-			"data": {
+			"name": "light_blue_glazed_terracotta",
+			"file": "light_blue_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 238,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 239,
-			"name": "yellowglazedterracotta",
-			"states": "yellow_glazed_terracotta.json",
-			"data": {
+			"name": "yellow_glazed_terracotta",
+			"file": "yellow_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 239,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 240,
-			"name": "limeglazedterracotta",
-			"states": "lime_glazed_terracotta.json",
-			"data": {
+			"name": "lime_glazed_terracotta",
+			"file": "lime_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 240,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 241,
-			"name": "pinkglazedterracotta",
-			"states": "pink_glazed_terracotta.json",
-			"data": {
+			"name": "pink_glazed_terracotta",
+			"file": "pink_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 241,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 242,
-			"name": "grayglazedterracotta",
-			"states": "gray_glazed_terracotta.json",
-			"data": {
+			"name": "gray_glazed_terracotta",
+			"file": "gray_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 242,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 243,
-			"name": "lightgrayglazedterracotta",
-			"states": "silver_glazed_terracotta.json",
-			"data": {
+			"name": "silver_glazed_terracotta",
+			"file": "silver_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 243,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 244,
-			"name": "cyanglazedterracotta",
-			"states": "cyan_glazed_terracotta.json",
-			"data": {
+			"name": "cyan_glazed_terracotta",
+			"file": "cyan_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 244,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 245,
-			"name": "purpleglazedterracotta",
-			"states": "purple_glazed_terracotta.json",
-			"data": {
+			"name": "purple_glazed_terracotta",
+			"file": "purple_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 245,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 246,
-			"name": "blueglazedterracotta",
-			"states": "blue_glazed_terracotta.json",
-			"data": {
+			"name": "blue_glazed_terracotta",
+			"file": "blue_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 246,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 247,
-			"name": "brownglazedterracotta",
-			"states": "brown_glazed_terracotta.json",
-			"data": {
+			"name": "brown_glazed_terracotta",
+			"file": "brown_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 247,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 248,
-			"name": "greenglazedterracotta",
-			"states": "green_glazed_terracotta.json",
-			"data": {
+			"name": "green_glazed_terracotta",
+			"file": "green_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 248,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 249,
-			"name": "redglazedterracotta",
-			"states": "red_glazed_terracotta.json",
-			"data": {
+			"name": "red_glazed_terracotta",
+			"file": "red_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 249,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 250,
-			"name": "blackglazedterracotta",
-			"states": "black_glazed_terracotta.json",
-			"data": {
+			"name": "black_glazed_terracotta",
+			"file": "black_glazed_terracotta.json",
+			"states": {
+				"facing": "north|south|east|west"
+			},
+			"default_state": "facing=south",
+			"legacy_id": 250,
+			"legacy_data": {
 				"0x1+0x2": {
-					"0": { "set": "facing=south" },
-					"1": { "set": "facing=west" },
-					"2": { "set": "facing=north" },
-					"3": { "set": "facing=east" }
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
 				}
 			}
 		},
 		{
-			"id": 251,
-			"data": {
-				"0": { "name": "whiteconcrete", "states": "white_concrete.json" },
-				"1": { "name": "orangeconcrete", "states": "orange_concrete.json" },
-				"2": { "name": "magentaconcrete", "states": "magenta_concrete.json" },
-				"3": { "name": "lightblueconcrete", "states": "light_blue_concrete.json" },
-				"4": { "name": "yellowconcrete", "states": "yellow_concrete.json" },
-				"5": { "name": "limeconcrete", "states": "lime_concrete.json" },
-				"6": { "name": "pinkconcrete", "states": "pink_concrete.json" },
-				"7": { "name": "grayconcrete", "states": "gray_concrete.json" },
-				"8": { "name": "lightgrayconcrete", "states": "silver_concrete.json" },
-				"9": { "name": "cyanconcrete", "states": "cyan_concrete.json" },
-				"10": { "name": "purpleconcrete", "states": "purple_concrete.json" },
-				"11": { "name": "blueconcrete", "states": "blue_concrete.json" },
-				"12": { "name": "brownconcrete", "states": "brown_concrete.json" },
-				"13": { "name": "greenconcrete", "states": "green_concrete.json" },
-				"14": { "name": "redconcrete", "states": "red_concrete.json" },
-				"15": { "name": "blackconcrete", "states": "black_concrete.json" }
+			"name": "concrete",
+			"states": {
+				"color": {
+					"white": { "file": "white_concrete.json" },
+					"orange": { "file": "orange_concrete.json" },
+					"magenta": { "file": "magenta_concrete.json" },
+					"light_blue": { "file": "light_blue_concrete.json" },
+					"yellow": { "file": "yellow_concrete.json" },
+					"lime": { "file": "lime_concrete.json" },
+					"pink": { "file": "pink_concrete.json" },
+					"gray": { "file": "gray_concrete.json" },
+					"silver": { "file": "silver_concrete.json" },
+					"cyan": { "file": "cyan_concrete.json" },
+					"purple": { "file": "purple_concrete.json" },
+					"blue": { "file": "blue_concrete.json" },
+					"brown": { "file": "brown_concrete.json" },
+					"green": { "file": "green_concrete.json" },
+					"red": { "file": "red_concrete.json" },
+					"black": { "file": "black_concrete.json" }
+				}
+			},
+			"default_state": "color=white",
+			"legacy_id": 251,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
 			}
 		},
 		{
-			"id": 252,
-			"data": {
-				"0": { "name": "whiteconcretepowder", "states": "white_concrete_powder.json" },
-				"1": { "name": "orangeconcretepowder", "states": "orange_concrete_powder.json" },
-				"2": { "name": "magentaconcretepowder", "states": "magenta_concrete_powder.json" },
-				"3": { "name": "lightblueconcretepowder", "states": "light_blue_concrete_powder.json" },
-				"4": { "name": "yellowconcretepowder", "states": "yellow_concrete_powder.json" },
-				"5": { "name": "limeconcretepowder", "states": "lime_concrete_powder.json" },
-				"6": { "name": "pinkconcretepowder", "states": "pink_concrete_powder.json" },
-				"7": { "name": "grayconcretepowder", "states": "gray_concrete_powder.json" },
-				"8": { "name": "lightgrayconcretepowder", "states": "silver_concrete_powder.json" },
-				"9": { "name": "cyanconcretepowder", "states": "cyan_concrete_powder.json" },
-				"10": { "name": "purpleconcretepowder", "states": "purple_concrete_powder.json" },
-				"11": { "name": "blueconcretepowder", "states": "blue_concrete_powder.json" },
-				"12": { "name": "brownconcretepowder", "states": "brown_concrete_powder.json" },
-				"13": { "name": "greenconcretepowder", "states": "green_concrete_powder.json" },
-				"14": { "name": "redconcretepowder", "states": "red_concrete_powder.json" },
-				"15": { "name": "blackconcretepowder", "states": "black_concrete_powder.json" }
+			"name": "concrete_powder",
+			"states": {
+				"color": {
+					"white": { "file": "white_concrete_powder.json" },
+					"orange": { "file": "orange_concrete_powder.json" },
+					"magenta": { "file": "magenta_concrete_powder.json" },
+					"light_blue": { "file": "light_blue_concrete_powder.json" },
+					"yellow": { "file": "yellow_concrete_powder.json" },
+					"lime": { "file": "lime_concrete_powder.json" },
+					"pink": { "file": "pink_concrete_powder.json" },
+					"gray": { "file": "gray_concrete_powder.json" },
+					"silver": { "file": "silver_concrete_powder.json" },
+					"cyan": { "file": "cyan_concrete_powder.json" },
+					"purple": { "file": "purple_concrete_powder.json" },
+					"blue": { "file": "blue_concrete_powder.json" },
+					"brown": { "file": "brown_concrete_powder.json" },
+					"green": { "file": "green_concrete_powder.json" },
+					"red": { "file": "red_concrete_powder.json" },
+					"black": { "file": "black_concrete_powder.json" }
+				}
+			},
+			"default_state": "color=white",
+			"legacy_id": 252,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
 			}
 		}
 	],
@@ -3796,6 +4729,6 @@
 		"items/compass_28",
 		"items/compass_29",
 		"items/compass_30",
-		"items/compass_31",
+		"items/compass_31"
 	]
 }

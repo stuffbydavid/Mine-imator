@@ -42,8 +42,8 @@ if (format > minecraft_version_format)
 	return false
 }
 
-mc_block_states_map = ds_map_create() // filename -> states
-mc_block_models_map = ds_map_create() // filename -> model
+mc_block_state_file_map = ds_map_create() // filename -> states
+mc_block_model_file_map = ds_map_create() // filename -> model
 err = true
 
 with (mc_version)
@@ -58,8 +58,6 @@ with (mc_version)
 		break
 	}
 	
-	ds_list_copy(char_list, characterslist)
-	
 	for (var i = 0; i < ds_list_size(characterslist); i++)
 	{
 		var model = new_model(character_directory + characterslist[|i]);
@@ -71,6 +69,7 @@ with (mc_version)
 			break
 		}
 		char_model_map[?characterslist[|i]] = model
+		ds_list_add(char_list, model)
 	}
 	
 	// Special blocks
@@ -159,8 +158,6 @@ with (mc_version)
 		break
 	}
 	
-	ds_list_copy(block_list, blockslist)
-	
 	debug_timer_start()
 	for (var i = 0; i < ds_list_size(blockslist); i++)
 	{
@@ -168,26 +165,33 @@ with (mc_version)
 		blockmap = blockslist[|i]
 		block = block_load(blockmap)
 		if (!block)
-			return false
+			continue
 			
-		block_map[?blockmap[?"id"]] = block
+		// Save name in map
+		block_name_map[?block.name] = block
+			
+		// Save legacy ID in map if available
+		if (is_real(blockmap[?"legacy_id"]))
+			block_legacy_id_map[?blockmap[?"legacy_id"]] = block
+			
+		ds_list_add(block_list, block)
 	}
 	debug_timer_stop("Load blocks")
 	
 	// Clear up loaded models
-	key = ds_map_find_first(mc_block_models_map)
+	key = ds_map_find_first(mc_block_model_file_map)
 	while (!is_undefined(key))
 	{
-		with (mc_block_models_map[?key])
+		with (mc_block_model_file_map[?key])
 			instance_destroy()
-		key = ds_map_find_next(mc_block_models_map, key)
+		key = ds_map_find_next(mc_block_model_file_map, key)
 	}
 		
 	err = false
 }
 
-ds_map_destroy(mc_block_states_map)
-ds_map_destroy(mc_block_models_map)
+ds_map_destroy(mc_block_state_file_map)
+ds_map_destroy(mc_block_model_file_map)
 ds_map_destroy(versionmap)
 
 if (!err)

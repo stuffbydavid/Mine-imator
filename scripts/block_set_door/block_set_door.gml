@@ -31,7 +31,7 @@ with (block.data_states[block_data_current])
 	{
 		with (variant[v])
 		{
-			if (model_amount = 0 || !block_var_match(vars, mc_builder.vars))
+			if (model_amount = 0 || !block_vars_match(vars, mc_builder.vars))
 				break
 			
 			models[0] = model[0]
@@ -48,7 +48,7 @@ with (block.data_states[block_data_current])
 	{
 		with (variant[v])
 		{
-			if (model_amount = 0 || !block_var_match(vars, mc_builder.vars))
+			if (model_amount = 0 || !block_vars_match(vars, mc_builder.vars))
 				break
 			
 			model[0].offset[Z] = block_size

@@ -24,7 +24,7 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 	bdata = array3D_get(block_data, point3D_add(build_pos, dir_get_vec3(d)))
 	block = mc_version.block_map[?bid];
 	opp = dir_get_opposite(d)
-	if (!is_undefined(block) && block.data_type[bdata] = "fencegate")
+	if (!is_undefined(block) && block.data_type[bdata] = "fence_gate")
 	{
 		var datavars = block.data_vars[bdata];
 		if (datavars != null)

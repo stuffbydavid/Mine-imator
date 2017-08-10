@@ -19,7 +19,7 @@ if (name = "")
 			break
 		
 		case "block":
-			display_name = block_get_name(block_id, block_data)
+			display_name = ""//block_get_name(block_id, block_data) // TODO
 			break
 		
 		case "bodypart":
