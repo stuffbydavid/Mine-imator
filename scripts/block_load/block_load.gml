@@ -137,11 +137,24 @@ with (new(obj_block))
 	
 	// Legacy data
 	for (var d = 0; d < 16; d++)
+	{
 		legacy_data_state_map[d] = null
+		legacy_data_state[d] = ""
+	}
 		
-	// Read data list
+	// Read data list into maps
 	if (is_real(map[?"legacy_data"]) && ds_exists(map[?"legacy_data"], ds_type_map))
 		block_load_legacy_data_map(map[?"legacy_data"], 0, 1)
+	
+	// Convert maps to strings
+	for (var d = 0; d < 16; d++)
+	{
+		if (legacy_data_state_map[d] != null)
+		{
+			legacy_data_state[d] = block_vars_map_to_string(legacy_data_state_map[d])
+			ds_map_destroy(legacy_data_state_map[d])
+		}
+	}
 	
 	return id
 }

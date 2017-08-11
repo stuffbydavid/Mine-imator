@@ -11,6 +11,9 @@ if (argument_count > 1)
 	inv = argument[1]
 else
 	inv = undefined
+	
+if (is_undefined(str))
+	return inv
 
 // Trim white spaces at the end (to make it easier to check the final state)
 len = string_length(str)

@@ -1,8 +1,8 @@
 {
-    "id": "2fbd370f-4dc8-4e1b-bfbb-a801f4ec5732",
+    "id": "549545ea-f918-4cf4-a6aa-867bf60b077f",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "block_set_vines",
+    "name": "block_set_stairs",
     "IsCompatibility": false,
     "IsDnD": false
 }

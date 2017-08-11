@@ -13,4 +13,4 @@ switch (argument0)
 	case "down":	return e_dir.DOWN
 }
 
-return -1
+return null

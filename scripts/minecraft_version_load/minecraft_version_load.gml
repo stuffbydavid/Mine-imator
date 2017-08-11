@@ -176,6 +176,13 @@ with (mc_version)
 			
 		ds_list_add(block_list, block)
 	}
+	
+	// Flowing Water/Lava
+	block_name_map[?"flowing_water"] = block_name_map[?"water"]
+	block_name_map[?"flowing_lava"] = block_name_map[?"lava"]
+	block_legacy_id_map[?8] = block_legacy_id_map[?9]
+	block_legacy_id_map[?10] = block_legacy_id_map[?11]
+	
 	debug_timer_stop("Load blocks")
 	
 	// Clear up loaded models

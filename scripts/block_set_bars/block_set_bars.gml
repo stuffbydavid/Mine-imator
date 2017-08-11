@@ -10,19 +10,11 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		continue
 	
 	// Check for other bars
-	var bid = array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(d)));
-	if (bid = 0) // Skip air
-		continue
-		
-	var block = mc_version.block_map[?bid];
-	if (!is_undefined(block))
+	var block = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(d)));
+	if (!is_undefined(block) && block.type = "bars")
 	{
-		var bdata = array3D_get(block_data, point3D_add(build_pos, dir_get_vec3(d)));
-		if (block.data_type[bdata] = "bars")
-		{
-			vars[?dstr] = "true"
-			continue
-		}
+		vars[?dstr] = "true"
+		continue
 	}
 	
 	// Check for solid faces

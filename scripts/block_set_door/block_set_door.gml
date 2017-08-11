@@ -7,24 +7,20 @@ if (is_undefined(vars[?"half"]) || vars[?"half"] = "upper")
 // Fetch hinge value from upper half
 if (!build_edge[e_dir.UP])
 {
-	var aboveid, abovedata, aboveblock;
-	aboveid = array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(e_dir.UP)))
-	abovedata = array3D_get(block_data, point3D_add(build_pos, dir_get_vec3(e_dir.UP)))
-	aboveblock = mc_version.block_map[?aboveid]
-	
-	if (!is_undefined(aboveblock))
+	var aboveblock = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
+	if (aboveblock = block_current)
 	{
-		var abovedatavars = aboveblock.data_vars[abovedata];
-		vars[?"hinge"] = abovedatavars[?"hinge"]
+		var abovestate = array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
+		vars[?"hinge"] = block_vars_get_value(abovestate, "hinge")
 	}
 }
 else
 	vars[?"hinge"] = "left"
 
-var models, block;
+var models;
 models[1] = 0
-block = mc_version.block_map[?block_id_current]
-with (block.data_states[block_data_current])
+
+with (block_current.file)
 {
 	// Set lower model
 	for (var v = 0; v < variant_amount; v++)

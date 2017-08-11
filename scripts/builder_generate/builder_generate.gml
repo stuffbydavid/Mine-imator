@@ -1,19 +1,18 @@
 /// builder_generate()
 /// @desc Generate triangles from the block render models.
 
-block_name_current = array3D_get(block_name, build_pos)
+block_current = array3D_get(block_obj, build_pos)
+if (is_undefined(block_current))
+	return 0
+	
 block_state_current = array3D_get(block_state, build_pos)
 block_pos = point3D_mul(build_pos, block_size)
 block_color = null
-
-var block = mc_version.block_name_map[?block_name_current];
-if (is_undefined(block))
-	return 0
 	
 // Set wind
-vertex_wave = block.wind_axis
-if (block.wind_zroot != null)
-	vertex_wave_minz = block_pos[Z] + block.wind_zroot
+vertex_wave = block_current.wind_axis
+if (block_current.wind_zroot != null)
+	vertex_wave_minz = block_pos[Z] + block_current.wind_zroot
 	
 // Set brightness
 //vertex_brightness = block.data_brightness[block_data_current] // todo store with render model somehow, somewhere sometime
@@ -43,7 +42,7 @@ for (var f = 0; f < e_dir.amount; f++)
 // Get render models
 var models = array3D_get(block_render_models, build_pos);
 if (models = 0) // Requires other models
-	models = block_get_render_models(block_name_current, block_state_current, true)
+	models = block_get_render_models(block_current, block_state_current, true)
 
 if (models != null)
 {

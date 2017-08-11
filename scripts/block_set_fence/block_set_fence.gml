@@ -10,31 +10,24 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		continue
 		
 	// Check for same fence
-	var bid = array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(d)));
-	if (bid = block_id_current)
+	var block = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(d)));
+	if (is_undefined(block))
+		continue
+	
+	if (block = block_current)
 	{
 		vars[?dstr] = "true"
 		continue
 	}
-	else if (bid = 0) // Skip air
-		continue
 		
 	// Check for fence gate
-	var bdata, block, opp;
-	bdata = array3D_get(block_data, point3D_add(build_pos, dir_get_vec3(d)))
-	block = mc_version.block_map[?bid];
-	opp = dir_get_opposite(d)
-	if (!is_undefined(block) && block.data_type[bdata] = "fence_gate")
+	if (block.type = "fence_gate")
 	{
-		var datavars = block.data_vars[bdata];
-		if (datavars != null)
+		var facing = block_vars_get_value(array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(d))), "facing");
+		if (facing != dstr && facing != dir_get_string(dir_get_opposite(d)))
 		{
-			var facing = datavars[? "facing"];
-			if (!is_undefined(facing) && facing != dstr && facing != dir_get_string(opp))
-			{
-				vars[?dstr] = "true"
-				continue
-			}
+			vars[?dstr] = "true"
+			continue
 		}
 	}
 		

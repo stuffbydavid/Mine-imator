@@ -608,17 +608,17 @@
 			"states": {
 				"half": "top|bottom",
 				"variant": {
-					"stone": { "file": "stone_double_slab.json" },
-					"sandstone": { "file": "sandstone_double_slab.json" },
-					"wood_old": { "file": "oak_double_slab.json" },
-					"cobblestone": { "file": "cobblestone_double_slab.json" },
-					"brick": { "file": "brick_double_slab.json" },
-					"stone_brick": {  "file": "stone_brick_double_slab.json" },
-					"nether_brick": { "file": "nether_brick_double_slab.json" },
-					"quartz": { "file": "quartz_double_slab.json"}
+					"stone": { "file": "stone_slab.json" },
+					"sandstone": { "file": "sandstone_slab.json" },
+					"wood_old": { "file": "oak_slab.json" },
+					"cobblestone": { "file": "cobblestone_slab.json" },
+					"brick": { "file": "brick_slab.json" },
+					"stone_brick": {  "file": "stone_brick_slab.json" },
+					"nether_brick": { "file": "nether_brick_slab.json" },
+					"quartz": { "file": "quartz_slab.json"}
 				}
 			},
-			"default_state": "variant=stone",
+			"default_state": "variant=stone,half=bottom",
 			"legacy_id": 44,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -699,7 +699,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 53,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -727,7 +727,25 @@
 				"power": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
 			},
 			"default_state": "north=none,south=none,east=none,west=none,power=0",
-			"legacy_id": 55
+			"legacy_id": 55,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
 		},
 		{
 			"name": "diamond_ore",
@@ -872,7 +890,7 @@
 			"states": {
 				"shape": "north_south|east_west|ascending_north|ascending_south|ascending_east|ascending_west"
 			},
-			"default_state": "facing=north_south",
+			"default_state": "shape=north_south",
 			"legacy_id": 66,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -893,7 +911,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 67,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1378,7 +1396,7 @@
 			"states": {
 				"variant": "all_inside|north_west|north|north_east|west|center|east|south_west|south|south_east|stem|all_outside|all_stem"
 			},
-			"default_state": "variant=all_inside",
+			"default_state": "variant=all_outside",
 			"legacy_id": 99,
 			"legacy_data": {
 				"0": "variant=all_inside",
@@ -1402,7 +1420,7 @@
 			"states": {
 				"variant": "all_inside|north_west|north|north_east|west|center|east|south_west|south|south_east|stem|all_outside|all_stem"
 			},
-			"default_state": "variant=all_inside",
+			"default_state": "variant=all_outside",
 			"legacy_id": 100,
 			"legacy_data": {
 				"0": "variant=all_inside",
@@ -1545,7 +1563,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 108,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1568,7 +1586,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 109,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1618,7 +1636,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 114,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1775,7 +1793,7 @@
 					"dark_oak": { "file": "dark_oak_slab.json" }
 				}
 			},
-			"default_state": "variant=oak",
+			"default_state": "variant=oak,half=bottom",
 			"legacy_id": 126,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -1823,7 +1841,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 128,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1899,7 +1917,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 134,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1922,7 +1940,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 135,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -1945,7 +1963,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 136,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2326,7 +2344,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 156,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2497,8 +2515,8 @@
 			"name": "log2",
 			"states": {
 				"variant": {
-					"acacia": { "file": "acacia_leaves.json" },
-					"dark_oak": { "file": "dark_oak_leaves.json" }
+					"acacia": { "file": "acacia_log.json" },
+					"dark_oak": { "file": "dark_oak_log.json" }
 				},
 				"axis": "none|x|y|z"
 			},
@@ -2525,7 +2543,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 163,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2548,7 +2566,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 164,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2774,7 +2792,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 180,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3201,7 +3219,7 @@
 				"facing": "north|south|east|west",
 				"half": "top|bottom"
 			},
-			"default_state": "facing=east,half=bottom,shape=straight",
+			"default_state": "facing=north,half=bottom,shape=straight",
 			"legacy_id": 203,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3222,6 +3240,7 @@
 			"states": {
 				"variant": "default"
 			},
+			"default_state": "variant=default",
 			"legacy_id": 204
 		},
 		{

@@ -8,10 +8,10 @@ block_color = null
 file_map = ""
 
 block_pos = point3D(0, 0, 0)
-block_name[0] = 0
-block_name_current = 0
+block_obj[0] = 0
+block_current = 0
 block_state[0] = 0
-block_state_current = 0
+block_state_current = ""
 block_render_models[0] = 0
 block_render_models_dir[e_dir.amount] = 0
 

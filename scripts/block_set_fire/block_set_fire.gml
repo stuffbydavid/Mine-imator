@@ -10,7 +10,7 @@ for (var d = 0; d < e_dir.amount; d++)
 		continue
 		
 	// Check non-air block
-	var bid = array3D_get(block_id, point3D_add(build_pos, dir_get_vec3(d)));
-	if (bid > 0)
+	var block = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(d)));
+	if (!is_undefined(block))
 		vars[?dstr] = "true"
 }	

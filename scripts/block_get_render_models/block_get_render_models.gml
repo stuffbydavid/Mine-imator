@@ -1,24 +1,24 @@
-/// builder_get_render_models(name, state, [ongenerate])
-/// @arg name
+/// block_get_render_models(block, state, [ongenerate])
+/// @arg block
 /// @arg state
 /// @arg [ongenerate]
 /// @desc Returns an array of render models for the given block (null for no model, 0 to calculate on model generation).
 
-var name, state, ongenerate;
-name = argument[0]
+var block, state, ongenerate;
+block = argument[0]
 state = argument[1]
 if (argument_count > 2)
 	ongenerate = argument[2]
 else
 	ongenerate = false
 
-if (!is_undefined(mc_version.block_name_map[?name]))
+if (!is_undefined(block))
 {
 	ds_map_clear(mc_builder.vars)
 	mc_builder.vars[?"normal"] = ""
 	block_vars_string_to_map(state, mc_builder.vars)
 	
-	with (mc_version.block_name_map[?name])
+	with (block)
 	{
 		// Requires render models
 		if (require_models && !ongenerate)

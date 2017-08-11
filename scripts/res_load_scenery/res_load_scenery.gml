@@ -19,10 +19,10 @@ switch (load_stage)
 			return 0
 		}
 		
-		// Block file
+		// .blocks file (legacy)
 		if (filename_ext(fname) = ".blocks")
 		{
-			log("Loading blocks", fname)
+			log("Loading .blocks", fname)
 			
 			buffer_current = buffer_import(fname)
 			with (mc_builder)
@@ -38,8 +38,15 @@ switch (load_stage)
 					{
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
 						{
-							array3D_set(block_id, build_pos, buffer_read_byte())
-							array3D_set(block_data, build_pos, buffer_read_byte())
+							var bid, bdata, block;
+							bid = buffer_read_byte()
+							bdata = buffer_read_byte()
+							block = mc_version.block_legacy_id_map[?bid]
+							array3D_set(block_obj, build_pos, block)
+							if (is_undefined(block))
+								array3D_set(block_state, build_pos, "")
+							else
+								array3D_set(block_state, build_pos, block.legacy_data_state[bdata])
 						}
 					}
 				}
@@ -50,7 +57,7 @@ switch (load_stage)
 		// Schematic file
 		else
 		{
-			log("Loading schematic", fname)
+			log("Loading .schematic", fname)
 		
 			// Unzip
 			file_delete_lib(temp_file)
@@ -121,14 +128,25 @@ switch (load_stage)
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-							array3D_set(block_id, build_pos, buffer_read_byte())
+							array3D_set(block_obj, build_pos, mc_version.block_legacy_id_map[?buffer_read_byte()])
 						
 				// Data
 				buffer_seek(buffer_current, buffer_seek_start, dataarray)
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+				{
 					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
+					{
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-							array3D_set(block_data, build_pos, buffer_read_byte())
+						{
+							var block, data = buffer_read_byte();
+							block = array3D_get(block_obj, build_pos)
+							if (is_undefined(block))
+								array3D_set(block_state, build_pos, "")
+							else
+								array3D_set(block_state, build_pos, block.legacy_data_state[data])
+						}
+					}
+				}
 			}
 		}
 		
