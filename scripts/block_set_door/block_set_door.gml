@@ -4,18 +4,21 @@
 if (is_undefined(vars[?"half"]) || vars[?"half"] = "upper")
 	return null
 
-// Fetch hinge value from upper half
-if (!build_edge[e_dir.UP])
+// Fetch hinge value from upper half if not set by user
+if (is_undefined(vars[?"hinge"]))
 {
-	var aboveblock = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
-	if (aboveblock = block_current)
+	if (!build_edge[e_dir.UP])
 	{
-		var abovestate = array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
-		vars[?"hinge"] = block_vars_get_value(abovestate, "hinge")
+		var aboveblock = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
+		if (aboveblock = block_current)
+		{
+			var abovestate = array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
+			vars[?"hinge"] = block_vars_get_value(abovestate, "hinge")
+		}
 	}
+	else
+		vars[?"hinge"] = "left"
 }
-else
-	vars[?"hinge"] = "left"
 
 var models;
 models[1] = 0

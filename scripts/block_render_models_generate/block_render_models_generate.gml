@@ -10,6 +10,9 @@ for (var m = 0; m < array_length_1d(models); m++)
 	{
 		var off = point3D_add(mc_builder.block_pos, offset);
 		
+		// Set brightness
+		vertex_brightness = brightness
+		
 		// Create elements
 		for (var e = 0; e < element_amount; e++)
 		{

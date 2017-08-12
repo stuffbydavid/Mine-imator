@@ -37,6 +37,9 @@ with (new(obj_block_render_model))
 		model = model.parent
 	}
 	
+	// Reset brightness
+	brightness = 0
+	
 	// Reset offset
 	offset = point3D(0, 0, 0)
 	

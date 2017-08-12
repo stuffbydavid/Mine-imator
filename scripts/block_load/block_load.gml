@@ -30,7 +30,7 @@ with (new(obj_block))
 	if (is_real(map[?"brightness"]))
 		brightness = map[?"brightness"]
 	else
-		brightness = 1
+		brightness = 0
 	
 	// Read states and their possible values
 	states_map = null
@@ -42,53 +42,34 @@ with (new(obj_block))
 		{
 			with (new(obj_block_state))
 			{
-				var values_ = ds_map_find_value(map[?"states"], curstate);
-				value_amount = 0
+				name = curstate
+				var valuelist = ds_map_find_value(map[?"states"], curstate);
+				value_amount = ds_list_size(valuelist)
 				
-				// String of | separated values
-				if (is_string(values_))
+				for (var v = 0; v < value_amount; v++)
 				{
-					var valuesarr = string_split(values_, "|");
-					for (var v = 0; v < array_length_1d(valuesarr); v++)
+					var curvalue = valuelist[|v];
+					value_name[v] = curvalue
+					value_file[v] = null
+					value_type[v] = ""
+					value_brightness[v] = null
+					
+					if (!is_string(curvalue) && ds_exists(curvalue, ds_type_map))
 					{
-						value_name[v] = valuesarr[v]
-						value_file[v] = null
-						value_type[v] = ""
-						value_brightness[v] = null
-						value_amount++
-					}
-				}
-				
-				// Map with attributes for each value
-				else
-				{
-					var curvalue = ds_map_find_first(values_);
-					while (!is_undefined(curvalue))
-					{
-						var curvaluemap = values_[?curvalue];
+						// Name
+						value_name[v] = curvalue[?"value"]
 						
-						value_name[value_amount] = curvalue
-						value_file[value_amount] = null
-						value_type[value_amount] = ""
-						value_brightness[value_amount] = null
-						
-						if (ds_exists(curvaluemap, ds_type_map))
-						{
-							// File
-							if (!is_undefined(curvaluemap[?"file"]))
-								value_file[value_amount] = block_load_state_file(curvaluemap[?"file"], other.type)
+						// File
+						if (!is_undefined(curvalue[?"file"]))
+							value_file[v] = block_load_state_file(curvalue[?"file"], other.type)
 								
-							// Type
-							if (is_string(curvaluemap[?"type"]))
-								value_type[value_amount] = curvaluemap[?"type"]
+						// Type
+						if (is_string(curvalue[?"type"]))
+							value_type[v] = curvalue[?"type"]
 							
-							// Brightness
-							if (is_real(curvaluemap[?"brightness"]))
-								value_brightness[value_amount] = curvaluemap[?"brightness"]
-						}
-						
-						curvalue = ds_map_find_next(values_, curvalue)
-						value_amount++
+						// Brightness
+						if (is_real(curvalue[?"brightness"]))
+							value_brightness[v] = curvalue[?"brightness"]
 					}
 				}
 				
@@ -110,6 +91,12 @@ with (new(obj_block))
 		default_state = ""
 		default_state_map = null
 	}
+	
+	// Random offset
+	if (is_real(map[?"random_offset"]))
+		random_offset = map[?"random_offset"]
+	else
+		random_offset = false
 	
 	// Wind
 	var windmap = map[?"wind"];

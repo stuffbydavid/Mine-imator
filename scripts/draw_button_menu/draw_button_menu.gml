@@ -1,4 +1,4 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script, [texture, [icon, [captionwidth]]])
+/// draw_button_menu(name, type, x, y, width, height, value, text, script, [texture, [icon, [captionwidth, [tip]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -10,9 +10,10 @@
 /// @arg script
 /// @arg [texture
 /// @arg [icon
-/// @arg [captionwidth]]]
+/// @arg [captionwidth
+/// @arg [tip]]]]
 
-var name, type, xx, yy, wid, hei, value, text, script, tex, icon, capwid;
+var name, type, xx, yy, wid, hei, value, text, script, tex, icon, capwid, cap, tip;
 var flip, imgsize, mouseon, pressed, textoff, roundtop, roundbottom;
 name = argument[0]
 type = argument[1]
@@ -30,7 +31,7 @@ if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content
 if (argument_count > 9)
 	tex = argument[9]
 else
-	tex = 0
+	tex = null
 	
 if (argument_count > 10)
 	icon = argument[10]
@@ -40,16 +41,29 @@ else
 if (argument_count > 11)
 	capwid = argument[11]
 else
-	capwid = text_max_width(name) + 20
+	capwid = text_caption_width(name)
+	
+if (argument_count > 12)
+	tip = argument[12]
+else
+	tip = text_get(name + "tip")
 	
 flip = (yy + hei + hei * 4>window_height)
 imgsize = hei - 4
 
 // Tip
-tip_set(text_get(name + "tip"), xx, yy, wid, hei)
+tip_set(tip, xx, yy, wid, hei)
 
 // Caption
-draw_label(text_get(name) + ":", xx, yy + hei / 2, fa_left, fa_middle)
+if (menu_block_current != null)
+{
+	cap = block_get_name(name, "blockstate") + ":"
+	name = "blockstate" + name
+}
+else
+	cap = text_get(name) + ":"
+
+draw_label(cap, xx, yy + hei / 2, fa_left, fa_middle)
 
 // Mouse
 xx += capwid
@@ -77,9 +91,9 @@ roundbottom = (menu_name != name || menu_flip)
 draw_box_rounded(xx, yy, wid, hei, test(pressed, setting_color_buttons_pressed, setting_color_buttons), 1, roundtop, roundtop, roundbottom, roundbottom)
 
 // Sprite
-if (icon)
+if (icon != null)
 	draw_image(spr_icons, icon, xx + 2 + imgsize / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
-else if (tex)
+else if (tex != null)
 	draw_texture(tex, xx + 4, yy + 2 + pressed, imgsize / texture_width(tex), imgsize / texture_height(tex))
 
 // Text
@@ -118,7 +132,8 @@ if (mouseon && mouse_left_released)
 	menu_item_w = wid
 	menu_item_h = menu_button_h
 	menu_flip = flip
-	menu_include_tl_edit = (app.menu_name != "timelineeditorparent")
+	menu_include_tl_edit = (menu_name != "timelineeditorparent")
+	menu_block_state = menu_block_state_current
 	
 	// Init
 	menu_clear()

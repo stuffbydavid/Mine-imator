@@ -307,6 +307,7 @@ else
 mat = matrix_create(block_pos, vec3(0), vec3(1))
 
 vbuffer_current = vbuffer[dep, vbuf]
+vertex_brightness = block_current.brightness
 
 for (var d = 0; d < e_dir.amount; d++)
 {

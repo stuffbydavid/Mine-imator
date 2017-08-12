@@ -1,6 +1,15 @@
 /// menu_list_init()
 /// @desc Runs when a list menu is created.
 
+// Block state
+if (menu_block_current != null)
+{
+	for (var i = 0; i < menu_block_state.value_amount; i++)
+		menu_add_item(menu_block_state.value_name[i], block_get_name(menu_block_state.value_name[i], "blockstatevalue"))
+		
+	return 0
+}
+			
 switch (menu_name)
 {
 	case "benchcharskin":

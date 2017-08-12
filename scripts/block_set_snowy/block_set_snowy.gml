@@ -1,6 +1,9 @@
 /// block_set_snowy()
 /// @desc Check for a snow block above the current block.
 
+if (!is_undefined(vars[?"snowy"]))
+	return 0
+
 vars[?"snowy"] = "false"
 
 if (!build_edge[e_dir.UP])

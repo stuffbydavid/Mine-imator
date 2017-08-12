@@ -17,6 +17,7 @@ else
 with (temp_edit)
 {
 	block_name = block
+	temp_update_block_state()
 	temp_update_block()
 	temp_update_display_name()
 }

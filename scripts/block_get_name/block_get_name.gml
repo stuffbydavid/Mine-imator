@@ -1,9 +1,13 @@
-/// block_get_name(block)
-/// @arg block
+/// block_get_name(string, type)
+/// @arg string
+/// @arg type
+/// @desc Returns the name of a block, block state or block state value.
 
-var block = argument0;
+var str, type;
+str = argument0
+type = argument1
 
-if (text_exists("block" + block.name))
-	return text_get("block" + block.name)
+if (string_digits(str) = str || !text_exists(type + str))
+	return string_format_snakecase(str)
 else
-	return string_format_snakecase(block.name)
+	return text_get(type + str)

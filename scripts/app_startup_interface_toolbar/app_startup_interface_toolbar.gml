@@ -52,6 +52,7 @@ with (bench_settings)
 	// Default settings
 	iid = 0
 	temp_init()
+	temp_update_block_state()
 	temp_particles_init()
 	char_model = mc_version.char_model_map[?"human.mimodel"]
 	char_skin = res_def

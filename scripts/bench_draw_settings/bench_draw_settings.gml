@@ -4,28 +4,41 @@
 /// @arg width
 /// @arg height
 
-var height, type, buttony;
+var padding = 5;
+
 dx = argument0
 dy = argument1
 dw = argument2
 dh = argument3
-
 content_x = dx
 content_y = dy
 content_width = dw
 content_height = dh
 
-height = 0
+// Header
+draw_set_font(setting_font_bold)
+draw_text(dx + padding, dy + padding, text_get("type" + bench_settings.type))
+draw_set_font(setting_font)
+draw_separator_horizontal(dx + padding, dy + padding + 20, dw - padding * 2)
+
+// Settings
+var sdy, type, buttony, listh;
 type = bench_settings.type
+sdy = dy
+listh = 0
+
+dx += padding + 5
+dy += padding + 20 + 15
+dw -= padding * 2 + 10
+dh -= padding + 20 + 30
 
 if (type_is_timeline(type))
 {
-	buttony = dy + dh / 2-16
+	buttony = dy + dh / 2 - 16
 }
 else
 {
-	buttony = dy + dh - 35
-	dh -= 40
+	dh -= 32 + 5
 	
 	// Preview
 	preview_draw(bench_settings.preview, dx + floor(dw / 2) - 80, dy, 160)
@@ -37,28 +50,26 @@ else
 	{
 		case "char":
 		{
-			var text, texture, listh;
-			height = 540
-			
 			// Model
 			draw_label(text_get("benchcharmodel") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
-			listh = dh - 102
+			listh = 200 + bench_settings.height_custom
 			sortlist_draw(bench_settings.char_list, dx, dy, dw, listh, bench_settings.char_model)
 			dy += listh + 30
 			
 			// Skin
+			var text, texture;
 			text = bench_settings.char_skin.display_name
 			with (bench_settings.char_skin)
 				texture = res_model_texture(other.bench_settings.char_model)
 			draw_button_menu("benchcharskin", e_menu.LIST, dx, dy, dw, 40, bench_settings.char_skin, text, action_bench_char_skin, texture)
+			dy += 40
 			break
 		}
 		
 		case "scenery":
 		{
 			var capwid, text, tex;
-			height = 355
 			capwid = text_caption_width("benchschematic", "benchblocktex")
 			
 			// Schematic
@@ -70,13 +81,13 @@ else
 
 			// Texture
 			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 40, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, bench_settings.block_tex.block_preview_texture, null, capwid)
+			dy += 40
 			break
 		}
 		
 		case "item":
 		{
 			var capwid, res, text, sprite;
-			height = 550
 			capwid = text_caption_width("typeitem", "benchitemtex")
 			res = bench_settings.item_tex
 			if (!res.ready)
@@ -98,11 +109,10 @@ else
 			// Item select
 			if (res.item_sheet_texture != null)
 			{
-				var slots, boxh;
-				slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
-				boxh = dh - 105
-				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, boxh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
-				dy += boxh + 8
+				var slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
+				listh = 200 + bench_settings.height_custom
+				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, listh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
+				dy += listh + 8
 			}
 			
 			// Image
@@ -113,39 +123,55 @@ else
 			draw_checkbox("benchitem3d", dx, dy, bench_settings.item_3d, action_bench_item_3d)
 			draw_checkbox("benchitemfacecamera", dx + floor(dw * 0.3), dy, bench_settings.item_face_camera, action_bench_item_face_camera)
 			draw_checkbox("benchitembounce", dx + floor(dw * 0.7), dy, bench_settings.item_bounce, action_bench_item_bounce)
+			dy += 16
 			break
 		}
 		
 		case "block":
 		{
-			var capwid, text, sprite, listh;
-			height = 578
-			capwid = text_caption_width("benchblockdata", "benchblocktex")
+			var capwid, text, sprite;
+			capwid = text_caption_width("benchblocktex")
 			
 			// Block
 			draw_label(text_get("benchblock") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
-			listh = dh - 140
+			listh = 172 + bench_settings.height_custom
 			sortlist_draw(bench_settings.block_list, dx, dy, dw, listh, bench_settings.block_name)
 			dy += listh + 30
 			
-			// Data
-			//draw_meter("benchblockdata", dx, dy, dw, bench_settings.block_data, 50, 0, 15, 0, 1, bench_settings.block_tbx_data, action_bench_block_data, capwid)
-			dy += 30 + 8
-		
+			// States
+			var block, state;
+			block = mc_version.block_name_map[?bench_settings.block_name]
+			state = ds_map_find_first(bench_settings.block_state_map)
+			while (!is_undefined(state))
+			{
+				capwid = max(capwid, string_width(block_get_name(state, "blockstate") + ":") + 20)
+				state = ds_map_find_next(bench_settings.block_state_map, state)
+			}
+			
+			state = ds_map_find_first(bench_settings.block_state_map);
+			while (!is_undefined(state))
+			{
+				menu_block_current = block
+				menu_block_state_current = block.states_map[?state]
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state_map[?state], block_get_name(bench_settings.block_state_map[?state], "blockstatevalue"), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
+				state = ds_map_find_next(bench_settings.block_state_map, state)
+				dy += 24 + 8
+			}
+			menu_block_current = null
+			
 			// Texture
 			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 40, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, bench_settings.block_tex.block_preview_texture, null, capwid)
+			dy += 40
 			break
 		}
 		
 		case "spblock":
 		{
-			height = 540
-			
 			// Model
 			draw_label(text_get("benchspblockmodel") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
-			var listh = dh - 102;
+			listh = 200 + bench_settings.height_custom
 			sortlist_draw(bench_settings.spblock_list, dx, dy, dw, listh, bench_settings.char_model)
 			dy += listh + 30
 			
@@ -156,14 +182,12 @@ else
 		
 		case "bodypart":
 		{
-			var capwid, listh;
-			height = 572
-			capwid = text_caption_width("benchbodypart", "benchbodypartskin")
+			var capwid = text_caption_width("benchbodypart", "benchbodypartskin");
 			
 			// Model
 			draw_label(text_get("benchmodel") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
-			listh = dh - 134
+			listh = 200 + bench_settings.height_custom
 			sortlist_draw(bench_settings.bodypart_char_list, dx, dy, dw, listh, bench_settings.char_model)
 			dy += listh + 30
 			
@@ -178,32 +202,29 @@ else
 		
 		case "particles":
 		{
-			height = 490
-			
 			// Particles
 			draw_label(text_get("benchparticlespreset") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
-			sortlist_draw(bench_settings.particles_list, dx, dy, dw, dh - 22 - 30, bench_settings.particle_preset)
+			listh = 200 + bench_settings.height_custom
+			sortlist_draw(bench_settings.particles_list, dx, dy, dw, listh, bench_settings.particle_preset)
+			dy += listh + 20
 			break
 		}
 		
 		case "text":
 		{
-			height = 330
-			
 			// Font
 			draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, 32, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font)
 			dy += 32 + 8
 			
 			// Face camera
 			draw_checkbox("benchtextfacecamera", dx, dy, bench_settings.text_face_camera, action_bench_text_face_camera)
+			dy += 16
 			break
 		}
 		
 		default: // Shapes
 		{
-			height = 315
-		
 			// Texture
 			var text, tex;
 			text = text_get("listnone")
@@ -223,17 +244,20 @@ else
 				bench_settings.type = "cone")
 			{
 				draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map)
-				height += 16
+				dy += 16
 			}
 			else if (bench_settings.type = "surface")
 			{
 				draw_checkbox("benchshapefacecamera", dx, dy, bench_settings.shape_face_camera, action_bench_shape_face_camera)
-				height += 16
+				dy += 16
 			}
 			
 			break
 		}
 	}
+	dy += 10
+	buttony = dy
+	dy += 32 + padding * 2
 }
 
 if (draw_button_normal("benchcreate", dx + floor(dw / 2) - 50, floor(buttony), 100, 32))
@@ -243,4 +267,4 @@ if (draw_button_normal("benchcreate", dx + floor(dw / 2) - 50, floor(buttony), 1
 }
 
 bench_settings.width_goal = bench_settings.width_custom + 370
-bench_settings.height_goal = bench_settings.height_custom + max(bench_height, height)
+bench_settings.height_goal = bench_settings.height_custom + max(bench_height, dy - sdy - bench_settings.height_custom * (listh > 0))

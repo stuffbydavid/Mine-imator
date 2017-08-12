@@ -64,7 +64,6 @@ if (!is_undefined(block))
 			}
 		}
 		
-		
 		// Run a block specific script which returns either an array of models,
 		// a custom generation script, 0 to continue or null to not render.
 		if (curtype != "")
@@ -108,6 +107,7 @@ if (!is_undefined(block))
 						}
 			
 						// Return chosen model
+						model[m].brightness = curbrightness
 						return array(model[m])
 					}
 				}
@@ -149,6 +149,7 @@ if (!is_undefined(block))
 						}
 			
 						// Add chosen model to the return
+						model[m].brightness = curbrightness
 						models[modelsamount++] = model[m]
 					}
 				}

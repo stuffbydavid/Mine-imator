@@ -1,4 +1,8 @@
 /// block_set_stairs()
+/// @desc Defines logic for connecting adjacent stairs.
+
+if (!is_undefined(vars[?"shape"]))
+	return 0
 
 vars[?"shape"] = "straight"
 
@@ -10,6 +14,10 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 {
 	// Check in facing axis
 	if (d != facing && d != facingopp)
+		continue
+		
+	// Ignore edge
+	if (build_edge[d])
 		continue
 		
 	// Check for stairs

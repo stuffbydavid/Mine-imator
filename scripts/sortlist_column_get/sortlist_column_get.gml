@@ -27,7 +27,7 @@ switch (slist.column_name[col])
 			return model_display_name()
 		
 	case "blockname":
-		return block_get_name(mc_version.block_name_map[?value])
+		return block_get_name(mc_version.block_name_map[?value].name, "block")
 		
 	case "spblockname":
 		return text_get(value.name)

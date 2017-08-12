@@ -20,3 +20,6 @@ menu_item_w = 0
 menu_item_h = 0
 menu_scroll = new(obj_scrollbar)
 menu_include_tl_edit = true
+menu_block_current = null
+menu_block_state = null
+menu_block_state_current = null

@@ -8,14 +8,19 @@ if (is_undefined(block_current))
 block_state_current = array3D_get(block_state, build_pos)
 block_pos = point3D_mul(build_pos, block_size)
 block_color = null
+
+// Random X & Y offset
+if (block_current.random_offset && build_size[X] * build_size[Y] * build_size[Z] > 1)
+{
+	random_set_seed(build_pos[X] * build_size[Y] * build_size[Z] + build_pos[Y] * build_size[Z] + build_pos[Z])
+	block_pos[X] += irandom_range(-4, 4)
+	block_pos[Y] += irandom_range(-4, 4)
+}
 	
 // Set wind
 vertex_wave = block_current.wind_axis
 if (block_current.wind_zroot != null)
 	vertex_wave_minz = block_pos[Z] + block_current.wind_zroot
-	
-// Set brightness
-//vertex_brightness = block.data_brightness[block_data_current] // todo store with render model somehow, somewhere sometime
 			
 // Check edges
 build_edge[e_dir.EAST]	= (build_pos[X] = build_size[X] - 1)

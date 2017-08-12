@@ -40,8 +40,8 @@ if (window_busy = "bench")
 // Box
 bench_settings.width += (bench_settings.width_goal - bench_settings.width) / max(1, 3 / delta)
 bench_settings.height += (bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
-settingsw = ceil(bench_settings.width)
-settingsh = ceil(bench_settings.height)
+settingsw = round(bench_settings.width)
+settingsh = round(bench_settings.height)
 boxw = bench_width + settingsw
 boxh = max(bench_height, settingsh)
 
@@ -194,11 +194,7 @@ if (bench_settings.type != "")
 		}
 	}
 	
-	draw_set_font(setting_font_bold)
-	draw_text(settingsx + padding, settingsy + padding, text_get("type" + bench_settings.type))
-	draw_set_font(setting_font)
-	draw_separator_horizontal(settingsx + padding, settingsy + padding + 20, settingsw - padding * 2)
-	bench_draw_settings(settingsx + padding + 5, settingsy + padding + 20 + 15, settingsw - padding * 2-10, settingsh - padding - 20 - 30)
+	bench_draw_settings(settingsx, settingsy, settingsw, settingsh)
 }
 
 // Resize

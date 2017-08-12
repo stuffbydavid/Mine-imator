@@ -138,12 +138,12 @@ switch (load_stage)
 					{
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
 						{
-							var block, data = buffer_read_byte();
+							var block, bdata = buffer_read_byte();
 							block = array3D_get(block_obj, build_pos)
 							if (is_undefined(block))
 								array3D_set(block_state, build_pos, "")
 							else
-								array3D_set(block_state, build_pos, block.legacy_data_state[data])
+								array3D_set(block_state, build_pos, block.legacy_data_state[bdata])
 						}
 					}
 				}
