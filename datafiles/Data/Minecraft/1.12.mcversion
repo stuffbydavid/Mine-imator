@@ -3283,6 +3283,7 @@
 			"name": "purpur_slab",
 			"file": "purpur_slab.json",
 			"states": {
+				"variant": [ "default" ],
 				"half": [ "top", "bottom" ]
 			},
 			"default_state": "half=bottom,variant=default",

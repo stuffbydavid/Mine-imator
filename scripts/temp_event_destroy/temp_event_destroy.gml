@@ -24,6 +24,9 @@ if (temp_creator != app.bench_settings)
 
 if (item_vbuffer)
 	vbuffer_destroy(item_vbuffer)
+	
+if (block_state_map)
+	ds_map_destroy(block_state_map)
 
 block_vbuffer_destroy()
 	

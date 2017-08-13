@@ -1898,7 +1898,7 @@
             "Key": "24cd82e2-6f84-4a05-a376-f13f61031952",
             "Value": {
                 "id": "62306bc9-9537-4c66-908a-b6ec171d155a",
-                "resourcePath": "scripts\\temp_update_block_state\\temp_update_block_state.yy",
+                "resourcePath": "scripts\\temp_update_block_state_map\\temp_update_block_state_map.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5026,7 +5026,7 @@
             "Key": "6438822a-d57c-480b-8972-d01117f2f14d",
             "Value": {
                 "id": "b3acdace-0b9e-47a9-8713-310e1c3ea9f2",
-                "resourcePath": "scripts\\action_lib_block_data\\action_lib_block_data.yy",
+                "resourcePath": "scripts\\action_lib_block_state\\action_lib_block_state.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14089,12 +14089,12 @@
         "0d832974-c4cd-498e-b5cb-8578e83d3028",
         "5c2f2907-2726-439d-a0b7-1d661f749235",
         "b40a7d18-7c69-4b57-b5c0-19b521c5a8f6",
+        "24cd82e2-6f84-4a05-a376-f13f61031952",
         "848c3a36-0102-46a1-89dc-3a1c5f5723bf",
         "3bfcbcbd-80f0-484e-8d3d-f5496da407cd",
         "ba37b4e1-4673-410f-ac57-35372d8d87e9",
         "ab42e8a5-d964-4b54-81f3-433aff78d6d9",
         "9f24b340-c1d7-4382-80a4-d12614829e7b",
-        "24cd82e2-6f84-4a05-a376-f13f61031952",
         "28d9bfe6-3203-457b-9cbf-e3d56df22dee",
         "1607d7d9-5654-44a7-83bf-4a804c3114a6",
         "f3bbd03e-a06d-4a2f-b28c-0663f94af93a",

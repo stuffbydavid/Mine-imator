@@ -19,7 +19,7 @@ if (name = "")
 			break
 		
 		case "block":
-			display_name = ""//block_get_name(block_id, block_data) // TODO
+			display_name = block_get_name(mc_version.block_name_map[?block_name].name, "block")
 			break
 		
 		case "bodypart":

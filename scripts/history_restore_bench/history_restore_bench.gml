@@ -14,7 +14,10 @@ with (bench_settings)
 		temp_update_item()
 		
 	if (type = "block")
+	{
+		temp_update_block_state_map()
 		temp_update_block()
+	}
 		
 	if (type_is_shape(type))
 		temp_update_shape()
@@ -36,7 +39,10 @@ with (bench_settings)
 					temp_update_item()
 					
 				if (type = "block")
+				{
+					temp_update_block_state_map()
 					temp_update_block()
+				}
 					
 				if (type_is_shape(type))
 					temp_update_shape()

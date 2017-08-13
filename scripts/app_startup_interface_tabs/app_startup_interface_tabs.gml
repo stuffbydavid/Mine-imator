@@ -123,8 +123,7 @@ with (template_editor)
 	block_list.script = action_lib_block_name
 	sortlist_column_add(block_list, "blockname", 0)
 	for (var b = 0; b < ds_list_size(mc_version.block_list); b++)
-		sortlist_add(block_list, mc_version.block_list[|b])
-	tbx_block_data = new_textbox_integer()
+		sortlist_add(block_list, mc_version.block_list[|b].name)
 	
 	// Special block list
 	spblock_list = new(obj_sortlist)

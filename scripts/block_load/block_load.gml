@@ -81,16 +81,9 @@ with (new(obj_block))
 	
 	// Default state
 	if (is_string(map[?"default_state"]))
-	{
 		default_state = map[?"default_state"]
-		default_state_map = ds_map_create()
-		block_vars_string_to_map(default_state, default_state_map)
-	}
 	else
-	{
 		default_state = ""
-		default_state_map = null
-	}
 	
 	// Random offset
 	if (is_real(map[?"random_offset"]))

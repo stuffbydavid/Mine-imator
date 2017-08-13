@@ -30,6 +30,7 @@ else
 	{
 		if (temp != temp_edit || part_of)
 			continue
+		
 		for (var t = 0; t < tree_amount; t++) // Children of own tree
 		{
 			with (tree[t])
@@ -46,6 +47,7 @@ else
 				t--
 			}
 		}
+		
 		for (var p = 0; p < part_amount; p++) // Children of body parts
 		{
 			if (!part[p])
@@ -57,12 +59,14 @@ else
 				{
 					if (part_of)
 						continue
+					
 					if (hobj)
 					{
 						hobj.child[hobj.child_amount] = iid
 						hobj.child_parent[hobj.child_amount] = parent.iid
 						hobj.child_amount++
 					}
+					
 					tl_parent_set(other.parent, other.parent_pos)
 					t--
 				}
