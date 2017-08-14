@@ -11,7 +11,7 @@ shader_alpha *= alpha
 
 if (temp)
 {
-	var sch, rep;
+	var scenery, rep;
 	
 	if (temp.block_repeat_enable)
 		rep = temp.block_repeat
@@ -28,10 +28,10 @@ if (temp)
 			break
 		
 		case "scenery":
-			sch = temp.scenery
-			if (!sch)
+			scenery = temp.scenery
+			if (!scenery)
 				break
-			var displaysize = vec3_mul(vec3_mul(sch.scenery_size, rep), point3D(block_size, block_size, block_size));
+			var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), point3D(block_size, block_size, block_size));
 			matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 			break
 			
@@ -50,16 +50,22 @@ if (temp)
 	{
 		case "char":
 		case "spblock":
+		{
+			if (temp.char_model_file = null)
+				break
+			
 			var res = temp.char_skin;
 			if (!res.ready)
 				res = res_def
-			render_world_model_parts(temp.char_model, res)
+				
+			render_world_model_file_parts(temp.char_model_file, temp.char_model_file_texture_name, res)
 			break
+		}
 			
 		case "scenery":
-			if (!sch)
+			if (!scenery)
 				break
-			render_world_scenery(sch, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
+			render_world_scenery(scenery, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
 			break
 			
 		case "item":

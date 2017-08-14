@@ -72,7 +72,7 @@ tl_deselect_all()
 
 with (temp_edit)
 {
-	temp_set_char_model(model)
+	//temp_set_char_model(model)
 	if (type = "bodypart")
 		temp_update_bodypart()
 }

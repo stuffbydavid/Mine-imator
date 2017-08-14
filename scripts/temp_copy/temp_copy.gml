@@ -8,7 +8,8 @@ to.type = type
 to.name = name
 
 to.char_skin = char_skin
-to.char_model = char_model
+to.char_model_name = char_model_name
+to.char_model_state = char_model_state
 to.char_bodypart = char_bodypart
 
 to.item_tex = item_tex

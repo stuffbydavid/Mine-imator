@@ -60,15 +60,15 @@ with (mc_version)
 	
 	for (var i = 0; i < ds_list_size(characterslist); i++)
 	{
-		var model = new_model(character_directory + characterslist[|i]);
-		with (model)
-			model_load()
-		if (!model.loaded) // Something went wrong!
+		var model = model_load(characterslist[|i], character_directory);
+		if (!model) // Something went wrong!
 		{
-			log("Could not load model", characterslist[|i])
-			break
+			log("Could not load model")
+			continue
 		}
-		char_model_map[?characterslist[|i]] = model
+		
+		model_name_map[?model.name] = model
+		
 		ds_list_add(char_list, model)
 	}
 	
@@ -80,7 +80,19 @@ with (mc_version)
 		break
 	}
 	
-	special_block_map = ds_map_create()
+	for (var i = 0; i < ds_list_size(specialblockslist); i++)
+	{
+		var model = model_load(specialblockslist[|i], special_block_directory);
+		if (!model) // Something went wrong!
+		{
+			log("Could not load model")
+			continue
+		}
+		
+		model_name_map[?model.name] = model
+		
+		ds_list_add(special_block_list, model)
+	}
 	
 	// Model textures
 	var modeltextureslist = versionmap[?"model_textures"];
@@ -165,8 +177,11 @@ with (mc_version)
 		blockmap = blockslist[|i]
 		block = block_load(blockmap)
 		if (!block)
+		{
+			log("Could not load block")
 			continue
-			
+		}
+		
 		// Save name in map
 		block_name_map[?block.name] = block
 			

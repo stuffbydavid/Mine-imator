@@ -2,11 +2,10 @@
 
 version = ""
 
-char_list = ds_list_create()
-char_model_map = ds_map_create()
+model_name_map = ds_map_create()
 
-sp_block_list = ds_list_create()
-sp_block_model_map = ds_map_create()
+char_list = ds_list_create()
+special_block_list = ds_list_create()
 
 block_list = ds_list_create()
 block_name_map = ds_map_create()

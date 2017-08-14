@@ -6,7 +6,7 @@ if (name = "")
 	if (type = "bodypart" && part_of)
 	{
 		with (bodypart)
-			other.display_name = model_display_name()
+			other.display_name = minecraft_get_name("model", name)
 		//if (bodypart < temp.char_model.part_amount) TODO
 		//	display_name = text_get(temp.char_model.part_name[bodypart])
 		//else

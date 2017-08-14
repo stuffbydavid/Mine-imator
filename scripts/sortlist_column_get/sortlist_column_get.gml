@@ -23,14 +23,11 @@ switch (slist.column_name[col])
 		return value.count
 		
 	case "charname":
-		with (value)
-			return model_display_name()
+	case "spblockname":
+		return minecraft_get_name("model", mc_version.model_name_map[?value].name)
 		
 	case "blockname":
-		return block_get_name(mc_version.block_name_map[?value].name, "block")
-		
-	case "spblockname":
-		return text_get(value.name)
+		return minecraft_get_name("block", mc_version.block_name_map[?value].name)
 		
 	case "bodypartcharname":
 		return text_get(value.name)

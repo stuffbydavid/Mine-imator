@@ -2,11 +2,62 @@
 	"version": "1.12",
 	"pack": "1.12.zip",
 	"characters": [
-		"human.mimodel",
-		"slime.mimodel"
+		{
+			"name": "human",
+			"states": {
+				"variant": [
+					{ "value": "steve", "file": "steve.mimodel" },
+					{ "value": "alex", "file": "alex.mimodel" }
+				]
+			},
+			"default_state": "variant=steve"
+		},
+		{
+			"name": "slime",
+			"file": "slime.mimodel"
+		}
 	],
 	"special_blocks": [
-		"chest.mimodel"
+		{
+			"name": "chest",
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "chest.mimodel" },
+					{ "value": "normal_double", "file": "chest_double.mimodel" },
+					{ "value": "ender", "file": "chest.mimodel", "texture": "entity/chest/ender" },
+					{ "value": "trapped", "file": "chest.mimodel", "texture": "entity/chest/trapped" },
+					{ "value": "trapped_double", "file": "chest_double.mimodel", "texture": "entity/chest/trapped_double" },
+					{ "value": "christmas", "file": "chest.mimodel", "texture": "entity/chest/christmas" },
+					{ "value": "christmas_double", "file": "chest_double.mimodel", "texture": "entity/chest/christmas_double" }
+				]
+			},
+			"default_state": "variant=normal"
+		},
+		{
+			"name": "bed",
+			"file": "bed.mimodel",
+			"states": {
+				"color": [
+					{ "value": "white", "texture": "entity/bed/white" },
+					{ "value": "orange", "texture": "entity/bed/orange" },
+					{ "value": "magenta", "texture": "entity/bed/magenta" },
+					{ "value": "light_blue", "texture": "entity/bed/light_blue" },
+					{ "value": "yellow", "texture": "entity/bed/yellow" },
+					{ "value": "lime", "texture": "entity/bed/lime" },
+					{ "value": "pink", "texture": "entity/bed/pink" },
+					{ "value": "gray", "texture": "entity/bed/gray" },
+					{ "value": "silver", "texture": "entity/bed/silver" },
+					{ "value": "cyan", "texture": "entity/bed/cyan" },
+					{ "value": "purple", "texture": "entity/bed/purple" },
+					{ "value": "blue", "texture": "entity/bed/blue" },
+					{ "value": "brown", "texture": "entity/bed/brown" },
+					{ "value": "green", "texture": "entity/bed/green" },
+					{ "value": "red", "texture": "entity/bed/red" },
+					{ "value": "black", "texture": "entity/bed/black" }
+				]
+			},
+			"default_state": "color=white"
+		}
 	],
 	"blocks": [
 		{
@@ -734,6 +785,23 @@
 			}
 		},
 		{
+			"name": "chest",
+			"type": "chest",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 54,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				}
+			}
+		},
+		{
 			"name": "redstone_wire",
 			"file": "redstone_wire.json",
 			"type": "redstone_wire",
@@ -1340,6 +1408,7 @@
 		{
 			"name": "trapdoor",
 			"file": "trapdoor.json",
+			"type": "trapdoor",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
@@ -2362,8 +2431,8 @@
 				"0": "variant=default",
 				"1": "variant=chiseled",
 				"2": "variant=lines_y,axis=y",
-				"3": "variant=lines_z,axis=z",
-				"4": "variant=lines_x,axis=x"
+				"3": "variant=lines_x,axis=x",
+				"4": "variant=lines_z,axis=z"
 			}
 		},
 		{
@@ -2622,6 +2691,7 @@
 		{
 			"name": "iron_trapdoor",
 			"file": "iron_trapdoor.json",
+			"type": "trapdoor",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],

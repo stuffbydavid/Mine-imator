@@ -17,7 +17,7 @@ switch (tl_edit.type)
 		//if (!texobj || texobj.type = "camera" || (!texobj.mob_texture && !texobj.model_texture_map)) // TODO
 		//	texobj = tl_edit.temp.char_skin
 		with (texobj)
-			tex = res_model_texture(tl_edit.temp.char_model)
+			tex = res_get_model_texture(tl_edit.temp.char_model_texture_name)
 		break
 
 	case "block":

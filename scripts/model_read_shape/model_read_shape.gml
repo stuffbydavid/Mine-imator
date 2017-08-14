@@ -42,7 +42,7 @@ with (new(obj_model_shape))
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
 	{
-		model_load_texture(map[?"texture"])
+		texture = map[?"texture"]
 		
 		// Texture size
 		if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
@@ -57,7 +57,6 @@ with (new(obj_model_shape))
 	{
 		// Inherit
 		texture = other.texture
-		texture_minecraft = other.texture_minecraft
 		texture_size = other.texture_size
 	}
 	

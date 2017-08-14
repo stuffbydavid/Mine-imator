@@ -58,7 +58,7 @@ switch (temp_edit.type)
 	case "char":
 	case "spblock":
 	{
-		var text, wid, tex;
+		var text, wid, texture;
 		text = test(temp_edit.type = "spblock", "libraryspblockmodel", "librarycharmodel")
 		wid = text_max_width("librarycharmodelchange") + 20
 		
@@ -72,7 +72,7 @@ switch (temp_edit.type)
 		
 		// Skin
 		with (temp_edit.char_skin)
-			tex = res_model_texture(temp_edit.char_model)
+			texture = res_get_model_texture(temp_edit.char_model_texture_name)
 		tab_control(40)
 		draw_button_menu(test(temp_edit.type = "spblock", "libraryspblocktex", "librarycharskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.char_skin, temp_edit.char_skin.display_name, action_lib_char_skin, tex, null, capwid)
 		tab_next()
@@ -145,7 +145,7 @@ switch (temp_edit.type)
 		var wid = text_max_width("libraryblockchange") + 20;
 		tab_control(24)
 		draw_label(text_get("typeblock") + ":", dx, dy + 12, fa_left, fa_middle)
-		draw_label(block_get_name(mc_version.block_name_map[?temp_edit.block_name].name, "block"), dx + capwid, dy + 12, fa_left, fa_middle)
+		draw_label(minecraft_get_name("block", mc_version.block_name_map[?temp_edit.block_name].name), dx + capwid, dy + 12, fa_left, fa_middle)
 		if (draw_button_normal("libraryblockchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 			tab_toggle(template_editor)
 		tab_next()

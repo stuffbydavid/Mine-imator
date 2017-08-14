@@ -1,11 +1,20 @@
 /// menu_list_init()
 /// @desc Runs when a list menu is created.
 
+// Model state
+if (menu_model_current != null)
+{
+	for (var i = 0; i < menu_model_state.value_amount; i++)
+		menu_add_item(menu_model_state.value_name[i], minecraft_get_name("modelstatevalue", menu_model_state.value_name[i]))
+		
+	return 0
+}
+
 // Block state
 if (menu_block_current != null)
 {
 	for (var i = 0; i < menu_block_state.value_amount; i++)
-		menu_add_item(menu_block_state.value_name[i], block_get_name(menu_block_state.value_name[i], "blockstatevalue"))
+		menu_add_item(menu_block_state.value_name[i], minecraft_get_name("blockstatevalue", menu_block_state.value_name[i]))
 		
 	return 0
 }
@@ -19,11 +28,17 @@ switch (menu_name)
 	case "libraryspblocktex":
 	case "librarybodypartskin": // Character skin (library)
 	{
-		var model;
+		var model, texname;
 		if (string_contains(menu_name, "bench"))
+		{
 			model = bench_settings.char_model
+			texname = bench_settings.char_model_texture_name
+		}
 		else
+		{
 			model = temp_edit.char_model
+			texname = temp_edit.char_model_texture_name
+		}
 		
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
@@ -35,7 +50,7 @@ switch (menu_name)
 		// Default
 		var tex;
 		with (res_def)
-			tex = res_model_texture(model)
+			tex = res_get_model_texture(texname)
 		menu_add_item(res_def, res_def.display_name, tex)
 		
 		// Add existing resources
@@ -45,9 +60,8 @@ switch (menu_name)
 			if (res = res_def)
 				continue
 				
-			var tex;
 			with (res)
-				tex = res_model_texture(model)
+				tex = res_get_model_texture(texname)
 			
 			menu_add_item(res, res.display_name, tex)
 		}

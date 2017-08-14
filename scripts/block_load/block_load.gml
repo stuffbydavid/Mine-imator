@@ -22,7 +22,7 @@ with (new(obj_block))
 	
 	// File
 	if (is_string(map[?"file"]))
-		file = block_load_state_file(map[?"file"], type)
+		file = block_load_state_file(blockstates_directory + map[?"file"], type)
 	else
 		file = null
 			
@@ -61,7 +61,7 @@ with (new(obj_block))
 						
 						// File
 						if (!is_undefined(curvalue[?"file"]))
-							value_file[v] = block_load_state_file(curvalue[?"file"], other.type)
+							value_file[v] = block_load_state_file(blockstates_directory + curvalue[?"file"], other.type)
 								
 						// Type
 						if (is_string(curvalue[?"type"]))

@@ -73,8 +73,8 @@ if (shader_alpha > 0)
 					res = texobj
 				if (!res.ready)
 					res = res_def
-				with (res)
-					shader_texture = res_model_texture(other.bodypart)
+				//with (res)
+				//	shader_texture = res_get_model_texture(other.bodypart)
 				
 				shader_use()
 				vbuffer_render(bodypart.shape_vbuffer)

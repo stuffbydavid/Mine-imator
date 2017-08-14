@@ -49,20 +49,57 @@ else
 	switch (type)
 	{
 		case "char":
+		case "spblock":
 		{
+			var labeltext, list, texcap, capwid;
+			if (type = "char")
+			{
+				labeltext = text_get("benchcharmodel")
+				list = bench_settings.char_list
+				texcap = "benchcharskin"
+			}
+			else
+			{
+				labeltext = text_get("benchblock")
+				list = bench_settings.special_block_list
+				texcap = "benchspblocktex"
+			}
+			capwid  = text_caption_width(texcap)
+			
 			// Model
-			draw_label(text_get("benchcharmodel") + ":", dx, dy + 8, fa_left, fa_middle)
+			draw_label(labeltext + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
 			listh = 200 + bench_settings.height_custom
-			sortlist_draw(bench_settings.char_list, dx, dy, dw, listh, bench_settings.char_model)
+			sortlist_draw(list, dx, dy, dw, listh, bench_settings.char_model_name)
 			dy += listh + 30
+			
+			// States
+			var model, state;
+			model = mc_version.model_name_map[?bench_settings.char_model_name]
+			state = ds_map_find_first(bench_settings.char_model_state_map)
+			while (!is_undefined(state))
+			{
+				capwid = max(capwid, string_width(minecraft_get_name("modelstate", state) + ":") + 20)
+				state = ds_map_find_next(bench_settings.char_model_state_map, state)
+			}
+			
+			state = ds_map_find_first(bench_settings.char_model_state_map);
+			while (!is_undefined(state))
+			{
+				menu_model_current = model
+				menu_model_state_current = model.states_map[?state]
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.char_model_state_map[?state], minecraft_get_name("modelstatevalue", bench_settings.char_model_state_map[?state]), action_bench_char_model_state, null, null, capwid, text_get("benchmodelstatetip"))
+				state = ds_map_find_next(bench_settings.char_model_state_map, state)
+				dy += 24 + 8
+			}
+			menu_model_current = null
 			
 			// Skin
 			var text, texture;
 			text = bench_settings.char_skin.display_name
 			with (bench_settings.char_skin)
-				texture = res_model_texture(other.bench_settings.char_model)
-			draw_button_menu("benchcharskin", e_menu.LIST, dx, dy, dw, 40, bench_settings.char_skin, text, action_bench_char_skin, texture)
+				texture = res_get_model_texture(other.bench_settings.char_model_texture_name)
+			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.char_skin, text, action_bench_char_skin, texture, null, capwid)
 			dy += 40
 			break
 		}
@@ -145,7 +182,7 @@ else
 			state = ds_map_find_first(bench_settings.block_state_map)
 			while (!is_undefined(state))
 			{
-				capwid = max(capwid, string_width(block_get_name(state, "blockstate") + ":") + 20)
+				capwid = max(capwid, string_width(minecraft_get_name("blockstate", state) + ":") + 20)
 				state = ds_map_find_next(bench_settings.block_state_map, state)
 			}
 			
@@ -154,7 +191,7 @@ else
 			{
 				menu_block_current = block
 				menu_block_state_current = block.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state_map[?state], block_get_name(bench_settings.block_state_map[?state], "blockstatevalue"), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state_map[?state], minecraft_get_name("blockstatevalue", bench_settings.block_state_map[?state]), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
 				state = ds_map_find_next(bench_settings.block_state_map, state)
 				dy += 24 + 8
 			}
@@ -163,20 +200,6 @@ else
 			// Texture
 			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 40, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, bench_settings.block_tex.block_preview_texture, null, capwid)
 			dy += 40
-			break
-		}
-		
-		case "spblock":
-		{
-			// Model
-			draw_label(text_get("benchspblockmodel") + ":", dx, dy + 8, fa_left, fa_middle)
-			dy += 22
-			listh = 200 + bench_settings.height_custom
-			sortlist_draw(bench_settings.spblock_list, dx, dy, dw, listh, bench_settings.char_model)
-			dy += listh + 30
-			
-			// Texture
-			//draw_button_menu("benchspblocktex", e_menu.LIST, dx, dy, dw, 40, bench_settings.char_skin, bench_settings.char_skin.display_name, action_bench_char_skin, bench_settings.char_skin.mob_texture[bench_settings.char_model.index])
 			break
 		}
 		

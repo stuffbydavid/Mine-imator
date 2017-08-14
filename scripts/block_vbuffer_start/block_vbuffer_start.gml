@@ -6,6 +6,7 @@ for (var d = 0; d < e_block_depth.amount; d++)
 	{
 		if (block_vbuffer[d, vb] != null)
 			vbuffer_destroy(block_vbuffer[d, vb])
+			
 		block_vbuffer[d, vb] = vbuffer_start()
 		mc_builder.vbuffer[d, vb] = block_vbuffer[d, vb]
 	}

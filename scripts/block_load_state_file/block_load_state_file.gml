@@ -3,35 +3,36 @@
 /// @arg type
 /// @desc Loads the different block variants from the state file.
 
-var fname, type, fpath;
+var fname, type;
 fname = argument0
 type = argument1
-fpath = blockstates_directory + fname
 
 if (!is_undefined(mc_block_state_file_map[?fname])) // Previously loaded
 	return mc_block_state_file_map[?fname]
 	
-if (!file_exists_lib(fpath))
+if (!file_exists_lib(fname))
 {
 	log("Could not find state file", fname)
 	return null
 }
 
-var json = json_escape_bool(file_text_contents(fpath));
-var statesmap = json_decode(json);
-if (statesmap < 0)
+var json, map;
+json = json_escape_bool(file_text_contents(fname))
+map = json_decode(json)
+if (map < 0)
 {
 	log("Could not parse state file", fname)
 	return null
 }
 
 var variantsmap, multipartlist;
-variantsmap = statesmap[?"variants"]
-multipartlist = statesmap[?"multipart"]
+variantsmap = map[?"variants"]
+multipartlist = map[?"multipart"]
 
 if (is_undefined(variantsmap) && is_undefined(multipartlist))
 {
 	log("No models in the states file", fname)
+	ds_map_destroy(map)
 	return null
 }
 
@@ -76,8 +77,6 @@ with (new(obj_block_load_state_file))
 			}
 			variant = ds_map_find_next(variantsmap, variant)
 		}
-	
-		ds_map_destroy(statesmap)
 	}
 	
 	// Load multipart
@@ -151,5 +150,6 @@ with (new(obj_block_load_state_file))
 		}
 	}
 	
+	ds_map_destroy(map)
 	return id
 }

@@ -9,8 +9,8 @@ if (name = "")
 	{
 		case "char":
 		case "spblock":
-			with (char_model)
-				other.display_name = model_display_name()
+			with (char_model_file)
+				other.display_name = minecraft_get_name("model", name)
 			break
 		
 		case "scenery":
@@ -19,7 +19,7 @@ if (name = "")
 			break
 		
 		case "block":
-			display_name = block_get_name(mc_version.block_name_map[?block_name].name, "block")
+			display_name = minecraft_get_name("block", mc_version.block_name_map[?block_name].name)
 			break
 		
 		case "bodypart":

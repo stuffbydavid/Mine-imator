@@ -55,7 +55,10 @@ with (bench_settings)
 	block_state = mc_version.block_name_map[?block_name].default_state
 	temp_update_block_state_map()
 	temp_particles_init()
-	char_model = mc_version.char_model_map[?"human.mimodel"]
+	char_model_name = "human"
+	char_model_state = mc_version.model_name_map[?char_model_name].default_state
+	temp_update_char_model_state_map()
+	temp_update_char_model()
 	char_skin = res_def
 	item_tex = res_def
 	block_tex = res_def
@@ -70,7 +73,7 @@ with (bench_settings)
 	char_list.script = action_bench_char_model
 	sortlist_column_add(char_list, "charname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(char_list, mc_version.char_list[|c])
+		sortlist_add(char_list, mc_version.char_list[|c].name)
 	
 	// Item list
 	item_scroll = new(obj_scrollbar)
@@ -84,11 +87,11 @@ with (bench_settings)
 	block_tbx_data = new_textbox_integer()
 
 	// Special block list
-	spblock_list = new(obj_sortlist)
-	spblock_list.script = action_bench_char_model
-	sortlist_column_add(spblock_list, "spblockname", 0)
-	//for (var p = characters; p < characters + characters_blocks; p++)
-	//	sortlist_add(spblock_list, iget(obj_model, p))
+	special_block_list = new(obj_sortlist)
+	special_block_list.script = action_bench_char_model
+	sortlist_column_add(special_block_list, "spblockname", 0)
+	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
+		sortlist_add(special_block_list, mc_version.special_block_list[|c].name)
 	
 	// Bodypart list
 	bodypart_char_list = new(obj_sortlist)

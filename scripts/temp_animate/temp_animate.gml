@@ -14,7 +14,7 @@ with (new(obj_timeline))
 	{
 		case "char":
 		case "spblock":
-			new_tl_model_parts(id, other.char_model)
+			new_tl_model_file_parts(id, other.char_model_file)
 			break
 
 		case "block":
@@ -38,6 +38,7 @@ with (new(obj_timeline))
 	tl_update_type_name()
 	tl_update_display_name()
 	tl_update_depth()
+	
 	if (type = "particles")
 		particle_spawner_init()
 		

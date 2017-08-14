@@ -128,8 +128,7 @@ with (preview)
 		
 			if (is3d) // 3D view
 			{
-				var prevcam_z, prevcam_zoom, rep;
-				var model, bodypart, sch;
+				var prevcam_z, prevcam_zoom, rep, scenery;
 				prevcam_z = 0
 				prevcam_zoom = 32
 			
@@ -146,43 +145,50 @@ with (preview)
 				{
 					case "char":
 					case "spblock":
-						model = select.char_model
-						var displaysize = point3D_sub(model.bounds_end, model.bounds_start);
+					{
+						if (select.char_model_file = null)
+							break
+						
+						var displaysize = point3D_sub(select.char_model_file.bounds_end, select.char_model_file.bounds_start);
 						prevcam_z = displaysize[Z] / 2
 						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
 						break
+					}
 					
 					case "item":
 						matrix_offset = point3D(-8, -0.5 * bool_to_float(select.item_3d), -8)
 						break
 					
 					case "block":
+					{
 						var displaysize = vec3_mul(rep, vec3(block_size));
 						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
 						matrix_offset = vec3_mul(displaysize, vec3(-1 / 2))
 						break
+					}
 					
 					case "scenery":
 					case "schematic":
+					{
 						if (select.type = "schematic")
-							sch = select
+							scenery = select
 						else
-							sch = select.scenery
+							scenery = select.scenery
 						
-						if (sch && !sch.ready)
-							sch = null
+						if (scenery && !scenery.ready)
+							scenery = null
 						
-						if (!sch)
+						if (!scenery)
 							break
 						
-						var displaysize = vec3_mul(vec3_mul(sch.scenery_size, rep), point3D(block_size, block_size, block_size));
+						var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), point3D(block_size, block_size, block_size));
 						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
 						matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 						break
+					}
 					
 					case "bodypart":
-						model = select.char_model
-						bodypart = select.char_bodypart
+						//bodypart = select.char_bodypart
 						prevcam_zoom = 48
 						break
 					
@@ -215,24 +221,31 @@ with (preview)
 				{
 					case "char":
 					case "spblock":
+					{
+						if (select.char_model_file = null)
+							break
+						
 						var res = select.char_skin;
 						if (!res.ready)
 							res = res_def
 						
-						render_world_model_parts(model, res)
+						render_world_model_file_parts(select.char_model_file, select.char_model_texture_name, res)
 						break
+					}
 					
 					case "scenery":
 					case "schematic":
-						if (!sch)
+					{
+						if (!scenery)
 							break
 					
 						if (select.type = "scenery")
-							render_world_scenery(sch, select.block_tex, select.block_repeat_enable, select.block_repeat)
+							render_world_scenery(scenery, select.block_tex, select.block_repeat_enable, select.block_repeat)
 						else
-							render_world_block(sch.block_vbuffer, res_def)
+							render_world_block(scenery.block_vbuffer, res_def)
 					
 						break
+					}
 					
 					case "item":
 						render_world_item(select.item_vbuffer, select.item_bounce, select.item_face_camera, select.item_tex)

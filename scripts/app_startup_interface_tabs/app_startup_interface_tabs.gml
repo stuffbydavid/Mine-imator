@@ -126,11 +126,11 @@ with (template_editor)
 		sortlist_add(block_list, mc_version.block_list[|b].name)
 	
 	// Special block list
-	spblock_list = new(obj_sortlist)
-	spblock_list.script = action_lib_char_model
-	sortlist_column_add(spblock_list, "spblockname", 0)
-	//for (var p = characters; p < characters + characters_blocks; p++)
-	//	sortlist_add(spblock_list, iget(obj_model, p))
+	special_block_list = new(obj_sortlist)
+	special_block_list.script = action_lib_char_model
+	sortlist_column_add(special_block_list, "spblockname", 0)
+	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
+		sortlist_add(special_block_list, mc_version.special_block_list[|c])
 	
 	// Bodypart list
 	bodypart_char_list = new(obj_sortlist)

@@ -55,9 +55,14 @@ imgsize = hei - 4
 tip_set(tip, xx, yy, wid, hei)
 
 // Caption
-if (menu_block_current != null)
+if (menu_model_current != null)
 {
-	cap = block_get_name(name, "blockstate") + ":"
+	cap = minecraft_get_name("modelstate", name) + ":"
+	name = "modelstate" + name
+}
+else if (menu_block_current != null)
+{
+	cap = minecraft_get_name("blockstate", name) + ":"
 	name = "blockstate" + name
 }
 else
@@ -133,6 +138,7 @@ if (mouseon && mouse_left_released)
 	menu_item_h = menu_button_h
 	menu_flip = flip
 	menu_include_tl_edit = (menu_name != "timelineeditorparent")
+	menu_model_state = menu_model_state_current
 	menu_block_state = menu_block_state_current
 	
 	// Init

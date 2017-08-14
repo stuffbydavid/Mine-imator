@@ -1,92 +1,75 @@
-/// model_load()
-/// @desc Loads the parts and shapes from the selected filename into the model.
+/// model_load(map, directory)
+/// @arg map
+/// @arg directory
 
-if (loaded)
-	return 0
-	
-debug("Loading model", filename)
+var map, dir;
+map = argument0
+dir = argument1
 
-if (!file_exists_lib(filename))
+with (new(obj_model))
 {
-	log("Could not find model file")
-	return null
-}
-
-var json = file_text_contents(filename);
-if (json = "")
-{
-	log("Model file was empty")
-	return null
-}
-
-var map = json_decode(json);
-if (map < 0)
-{
-	log("Could not parse JSON")
-	return null
-}
-
-if (!is_string(map[?"name"]))
-{
-	log("Missing parameter \"name\"")
-	return null
-}
-
-if (!is_string(map[?"texture"]))
-{
-	log("Missing parameter \"texture\"")
-	return null
-}
-
-if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
-{
-	log("Missing array \"texture_size\"")
-	return null
-}
-
-if (!is_real(map[?"parts"]) || !ds_exists(map[?"parts"], ds_type_list))
-{
-	log("Missing array \"parts\"")
-	return null
-}
-
-// Name
-model_load_name(map[?"name"])
-	
-// Description (optional)
-if (is_string(map[?"description"]))
-	description = map[?"description"]
-else
-	description = ""
-		
-// Texture
-model_load_texture(map[?"texture"])
-	
-// Texture size
-var texturesizelist = map[?"texture_size"];
-texture_size = vec2(texturesizelist[|X], texturesizelist[|Y])
-
-// Player skin
-player_skin = false
-if (is_real(map[?"player_skin"]))
-	player_skin = map[?"player_skin"]
-	
-// Bounds in default position
-bounds_start = point3D(0, 0, 0)
-bounds_end = point3D(0, 0, 0)
-	
-// Read all the parts of the root
-var partlist = map[?"parts"]
-part_amount = ds_list_size(partlist)
-for (var p = 0; p < part_amount; p++)
-{
-	part[p] = model_read_part(partlist[|p])
-	if (part[p] = null)
+	// Name
+	if (is_string(map[?"name"]))
+		name = map[?"name"]
+	else
+	{
+		log("Could not find name for model")
 		return null
-}
+	}
 	
-ds_map_destroy(map)
-
-loaded = true
-
-return 0
+	// File
+	if (is_string(map[?"file"]))
+		file = model_file_load(dir + map[?"file"])
+	else
+		file = null
+		
+	// Texture
+	if (is_string(map[?"texture"]))
+		texture = map[?"texture"]
+	else
+		texture = ""
+		
+	// Read states and their possible values
+	states_map = null
+	if (is_real(map[?"states"]) && ds_exists(map[?"states"], ds_type_map))
+	{
+		states_map = ds_map_create()
+		var curstate = ds_map_find_first(map[?"states"]);
+		while (!is_undefined(curstate))
+		{
+			with (new(obj_model_state))
+			{
+				name = curstate
+				var valuelist = ds_map_find_value(map[?"states"], curstate);
+				value_amount = ds_list_size(valuelist)
+				
+				for (var v = 0; v < value_amount; v++)
+				{
+					var curvalue = valuelist[|v];
+					value_name[v] = curvalue[?"value"]
+					value_file[v] = null
+					value_texture[v] = ""
+					
+					// File
+					if (!is_undefined(curvalue[?"file"]))
+						value_file[v] = model_file_load(dir + curvalue[?"file"])
+								
+					// Texture
+					if (is_string(curvalue[?"texture"]))
+						value_texture[v] = curvalue[?"texture"]
+				}
+				
+				other.states_map[?curstate] = id
+				curstate = ds_map_find_next(map[?"states"], curstate)
+			}
+		}
+	}
+	
+	// Default state
+	if (is_string(map[?"default_state"]))
+		default_state = map[?"default_state"]
+	else
+		default_state = ""
+		
+	return id
+}

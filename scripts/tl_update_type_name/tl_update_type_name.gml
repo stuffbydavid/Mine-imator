@@ -5,7 +5,7 @@ if (type = "bodypart" && part_of)
 {
 	var dname;
 	with (bodypart)
-		dname = model_display_name()
+		dname = minecraft_get_name("model", name)
 		
 	//if (bodypart < temp.char_model.part_amount)
 		type_name = text_get("timelinebodypartof", dname, part_of.display_name)

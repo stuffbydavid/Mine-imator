@@ -29,7 +29,7 @@ switch (temp_edit.type)
 		capwid = 0
 		while (!is_undefined(state))
 		{
-			capwid = max(capwid, string_width(block_get_name(state, "blockstate") + ":") + 20)
+			capwid = max(capwid, string_width(minecraft_get_name("blockstate", state) + ":") + 20)
 			state = ds_map_find_next(temp_edit.block_state_map, state)
 		}
 			
@@ -40,7 +40,7 @@ switch (temp_edit.type)
 		{
 			menu_block_current = block
 			menu_block_state_current = block.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state_map[?state], block_get_name(temp_edit.block_state_map[?state], "blockstatevalue"), action_lib_block_state, null, null, capwid, text_get("templateeditorblockstatetip"))
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state_map[?state], minecraft_get_name("blockstatevalue", temp_edit.block_state_map[?state]), action_lib_block_state, null, null, capwid, text_get("templateeditorblockstatetip"))
 			state = ds_map_find_next(temp_edit.block_state_map, state)
 			dyy += 24 + 8
 		}
@@ -71,7 +71,7 @@ switch (temp_edit.type)
 	case "spblock":
 	{
 		draw_label(text_get("templateeditorblock") + ":", dx, dy)
-		sortlist_draw(tab.spblock_list, dx, dy + 22, dw, dh - 90, temp_edit.char_model)
+		sortlist_draw(tab.special_block_list, dx, dy + 22, dw, dh - 90, temp_edit.char_model)
 		break
 	}
 	

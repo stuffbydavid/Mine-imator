@@ -19,7 +19,7 @@ if (!is_real(map[?"position"]) || !ds_exists(map[?"position"], ds_type_list))
 with (new(obj_model_part))
 {
 	// Name
-	model_load_name(map[?"name"])
+	name = map[?"name"]
 	
 	// Description (optional)
 	if (is_string(map[?"description"]))
@@ -30,7 +30,7 @@ with (new(obj_model_part))
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
 	{
-		model_load_texture(map[?"texture"])
+		texture = map[?"texture"]
 		
 		// Texture size
 		if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
@@ -46,7 +46,6 @@ with (new(obj_model_part))
 	{
 		// Inherit
 		texture = other.texture
-		texture_minecraft = other.texture_minecraft
 		texture_size = other.texture_size
 	}
 	
@@ -192,6 +191,7 @@ with (new(obj_model_part))
 			shape[p] = model_read_shape(shapelist[|p])
 			if (shape[p] = null) // Something went wrong
 			{
+				log("Could not read shape list", name)
 				vbuffer_done(shape_vbuffer)
 				if (bend_part != null)
 					vbuffer_done(shape_bend_vbuffer)
@@ -218,7 +218,10 @@ with (new(obj_model_part))
 		{
 			part[p] = model_read_part(partlist[|p])
 			if (part[p] = null) // Something went wrong
+			{
+				log("Could not read part list", name)
 				return null
+			}
 		}
 	}
 	else

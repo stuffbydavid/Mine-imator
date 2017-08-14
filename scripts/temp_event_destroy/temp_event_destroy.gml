@@ -22,6 +22,9 @@ if (temp_creator != app.bench_settings)
 		text_font.count--
 }
 
+if (char_state_map)
+	ds_map_destroy(char_state_map)
+	
 if (item_vbuffer)
 	vbuffer_destroy(item_vbuffer)
 	

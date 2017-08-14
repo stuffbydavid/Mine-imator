@@ -13,6 +13,6 @@ with (bench_settings)
 	block_state_map[?state] = val
 	block_state = block_vars_map_to_string(block_state_map)
 	temp_update_block()
+	
+	preview.update = true
 }
-
-bench_settings.preview.update = true
