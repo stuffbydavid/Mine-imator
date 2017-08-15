@@ -56,7 +56,7 @@ with (new(obj_block_load_state_file))
 				// Name
 				name = variant
 				vars = ds_map_create()
-				block_vars_string_to_map(name, vars)
+				state_vars_string_to_map(name, vars)
 			
 				var variantlist, list;
 				variantlist = variantsmap[?name]
@@ -150,6 +150,6 @@ with (new(obj_block_load_state_file))
 		}
 	}
 	
-	ds_map_destroy(map)
+	//ds_map_destroy(map) // Error
 	return id
 }

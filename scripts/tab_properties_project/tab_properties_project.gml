@@ -57,7 +57,7 @@ if (project_video_template = 0)
 else
 	text = project_video_template.name + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 tab_control(24)
-draw_button_menu("projectvideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template, null, 0, capwid)
+draw_button_menu("projectvideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template, null, null, capwid)
 tab_next()
 
 // Custom

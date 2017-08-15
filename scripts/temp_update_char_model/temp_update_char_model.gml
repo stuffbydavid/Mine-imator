@@ -29,17 +29,13 @@ with (model)
 		var curstate = ds_map_find_first(states_map);
 		while (!is_undefined(curstate))
 		{
-			log("curstate",curstate)
 			if (!is_undefined(vars[?curstate]))
 			{
-				log("compare with vars")
 				// This state has a set value, check if it matches any of the possibilities
 				with (states_map[?curstate])
 				{
 					for (var v = 0; v < value_amount; v++)
 					{
-						log("value_name[v]",value_name[v])
-						log("vars[?curstate]",vars[?curstate])
 						if (vars[?curstate] != value_name[v])
 							continue
 							

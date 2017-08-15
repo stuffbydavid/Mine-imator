@@ -13,8 +13,11 @@ for (var i = 0; i < ds_list_size(list); i++)
 {
 	var modelmap = list[|i];
 	if (is_undefined(modelmap[?"model"]))
+	{
+		log("Missing parameter \"model\"")
 		return false
-				
+	}
+			
 	// Model
 	var blockmodel = block_load_model_file("block/" + modelmap[?"model"] + ".json")
 	if (!blockmodel)

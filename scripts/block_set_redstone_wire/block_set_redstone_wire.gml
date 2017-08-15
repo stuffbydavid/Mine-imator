@@ -33,7 +33,7 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 	// Check for input/outputs
 	else if (!is_undefined(block))
 	{
-		var facing = block_vars_get_value(array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(d))), "facing"),
+		var facing = state_vars_get_value(array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(d))), "facing"),
 			doppstr = dir_get_string(dir_get_opposite(d));
 		
 		// Check for a redstone powered block

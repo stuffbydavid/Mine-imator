@@ -12,4 +12,4 @@ if (block_state_map = null)
 ds_map_clear(block_state_map)
 
 if (block_state != "")
-	block_vars_string_to_map(block_state, block_state_map)
+	state_vars_string_to_map(block_state, block_state_map)

@@ -14,8 +14,8 @@ if (!file_exists_lib(fpath))
 	return null
 }
 
-var modelmap = json_decode(file_text_contents(fpath));
-if (modelmap < 0)
+var map = json_decode(file_text_contents(fpath));
+if (map < 0)
 {
 	log("Could not parse model file", fname)
 	return null
@@ -25,20 +25,20 @@ with (new(obj_block_load_model_file))
 {
 	// Parent
 	parent = null
-	if (is_string(modelmap[?"parent"]))
-		parent = block_load_model_file(modelmap[?"parent"] + ".json")
+	if (is_string(map[?"parent"]))
+		parent = block_load_model_file(map[?"parent"] + ".json")
 		
 	// Textures
-	textures = null
-	if (is_real(modelmap[?"textures"]) && ds_exists(modelmap[?"textures"], ds_type_map))
+	texture_map = null
+	if (is_real(map[?"textures"]) && ds_exists(map[?"textures"], ds_type_map))
 	{
-		textures = ds_map_create()
-		ds_map_copy(textures, modelmap[?"textures"])
+		texture_map = ds_map_create()
+		ds_map_copy(texture_map, map[?"textures"])
 	}
 	
 	// Element list
 	element_amount = 0
-	var elementslist = modelmap[?"elements"];
+	var elementslist = map[?"elements"];
 	if (!is_undefined(elementslist))
 	{
 		for (var i = 0; i < ds_list_size(elementslist); i++)
@@ -137,7 +137,7 @@ with (new(obj_block_load_model_file))
 	}
 	
 	mc_block_model_file_map[?fname] = id
-	ds_map_destroy(modelmap)
+	ds_map_destroy(map)
 	
 	return id
 }

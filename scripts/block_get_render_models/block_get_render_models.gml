@@ -16,7 +16,7 @@ if (!is_undefined(block))
 {
 	ds_map_clear(mc_builder.vars)
 	mc_builder.vars[?"normal"] = ""
-	block_vars_string_to_map(state, mc_builder.vars)
+	state_vars_string_to_map(state, mc_builder.vars)
 	
 	with (block)
 	{
@@ -94,7 +94,7 @@ if (!is_undefined(block))
 				
 						// Check if match
 						if (is_undefined(vars[?"normal"]) || ds_map_size(vars) > 1)
-							if (!block_vars_match(vars, mc_builder.vars))
+							if (!state_vars_match(vars, mc_builder.vars))
 								continue
 				
 						// Pick a random model from the list
@@ -129,7 +129,7 @@ if (!is_undefined(block))
 							var match = false;
 							for (var cd = 0; cd < condition_amount; cd++)
 							{
-								if (block_vars_match(condition[cd], mc_builder.vars))
+								if (state_vars_match(condition[cd], mc_builder.vars))
 								{
 									match = true
 									break

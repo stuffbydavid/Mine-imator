@@ -28,15 +28,15 @@ switch (menu_name)
 	case "libraryspblocktex":
 	case "librarybodypartskin": // Character skin (library)
 	{
-		var model, texname;
+		var modelfile, texname;
 		if (string_contains(menu_name, "bench"))
 		{
-			model = bench_settings.char_model
+			modelfile = bench_settings.char_model_file
 			texname = bench_settings.char_model_texture_name
 		}
 		else
 		{
-			model = temp_edit.char_model
+			modelfile = temp_edit.char_model_file
 			texname = temp_edit.char_model_texture_name
 		}
 		
@@ -44,7 +44,7 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
 		
 		// Download from user
-		if (model.player_skin)
+		if (modelfile.player_skin)
 			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("librarycharskindownload"), null, icons.downloadskin)
 		
 		// Default

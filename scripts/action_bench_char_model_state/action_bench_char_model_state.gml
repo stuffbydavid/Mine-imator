@@ -11,7 +11,7 @@ with (bench_settings)
 		return 0
 		
 	char_model_state_map[?state] = val
-	char_model_state = block_vars_map_to_string(char_model_state_map)
+	char_model_state = state_vars_map_to_string(char_model_state_map)
 	temp_update_char_model()
 	
 	preview.update = true

@@ -27,7 +27,7 @@ with (temp_edit)
 		return 0
 		
 	block_state_map[?state] = val
-	block_state = block_vars_map_to_string(block_state_map)
+	block_state = state_vars_map_to_string(block_state_map)
 	temp_update_block()
 }
 

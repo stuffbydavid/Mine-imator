@@ -10,7 +10,7 @@ with (new(obj_block))
 		name = map[?"name"]
 	else
 	{
-		log("Could not find name for block")
+		log("Missing parameter \"name\"")
 		return null
 	}
 	
@@ -131,7 +131,7 @@ with (new(obj_block))
 	{
 		if (legacy_data_state_map[d] != null)
 		{
-			legacy_data_state[d] = block_vars_map_to_string(legacy_data_state_map[d])
+			legacy_data_state[d] = state_vars_map_to_string(legacy_data_state_map[d])
 			ds_map_destroy(legacy_data_state_map[d])
 		}
 	}

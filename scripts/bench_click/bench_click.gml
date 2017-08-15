@@ -4,21 +4,24 @@
 with (bench_settings)
 {
 	type = argument0
-		
-	// Switch to character / body part from special block TODO!
-	/*if ((bench_settings.type = "char" || bench_settings.type = "bodypart") && bench_settings.char_model.index >= chest.index) 
-	{
-		bench_settings.char_model = char_model_map[?"human"]
-		bench_settings.char_skin = res_def
-		bench_settings.char_bodypart = 0
-	}
 
-	// Switch from character->special block
-	if (bench_settings.type = "spblock" && bench_settings.char_model.index < chest.index) 
+	// Switch to character
+	if (type = "char" && ds_list_find_index(mc_version.char_list, char_model_name) < 0)
 	{
-		bench_settings.char_model = chest
-		bench_settings.char_skin = res_def
-	}*/
+		char_model_name = "human"
+		char_model_state = mc_version.model_name_map[?char_model_name].default_state
+		temp_update_char_model_state_map()
+		temp_update_char_model()
+	}
+	
+	// Switch to special block
+	if (type = "spblock" && ds_list_find_index(mc_version.special_block_list, char_model_name) < 0)
+	{
+		char_model_name = "chest"
+		char_model_state = mc_version.model_name_map[?char_model_name].default_state
+		temp_update_char_model_state_map()
+		temp_update_char_model()
+	}
 	
 	// Switch to block
 	if (type = "block")

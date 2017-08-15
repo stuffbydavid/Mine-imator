@@ -27,10 +27,10 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		
 	// Check same half
 	var state = array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(d)));
-	if (vars[?"half"] != block_vars_get_value(state, "half"))
+	if (vars[?"half"] != state_vars_get_value(state, "half"))
 		continue
 		
-	var otherfacing = string_to_dir(block_vars_get_value(state, "facing"));
+	var otherfacing = string_to_dir(state_vars_get_value(state, "facing"));
 	
 	// Looking east
 	if (d = e_dir.EAST)

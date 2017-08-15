@@ -13,7 +13,7 @@ if (is_undefined(vars[?"hinge"]))
 		if (aboveblock = block_current)
 		{
 			var abovestate = array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
-			vars[?"hinge"] = block_vars_get_value(abovestate, "hinge")
+			vars[?"hinge"] = state_vars_get_value(abovestate, "hinge")
 		}
 	}
 	else
@@ -30,7 +30,7 @@ with (block_current.file)
 	{
 		with (variant[v])
 		{
-			if (model_amount = 0 || !block_vars_match(vars, mc_builder.vars))
+			if (model_amount = 0 || !state_vars_match(vars, mc_builder.vars))
 				break
 			
 			models[0] = model[0]
@@ -47,7 +47,7 @@ with (block_current.file)
 	{
 		with (variant[v])
 		{
-			if (model_amount = 0 || !block_vars_match(vars, mc_builder.vars))
+			if (model_amount = 0 || !state_vars_match(vars, mc_builder.vars))
 				break
 			
 			model[0].offset[Z] = block_size

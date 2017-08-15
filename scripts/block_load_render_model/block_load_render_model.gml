@@ -27,8 +27,8 @@ with (new(obj_block_render_model))
 	while (model != null)
 	{
 		// Add textures
-		if (model.textures != null)
-			ds_map_merge(texturemap, model.textures, false)
+		if (model.texture_map != null)
+			ds_map_merge(texturemap, model.texture_map, false)
 			
 		// Choose the first model that contains elements
 		if (elementmodel = null && model.element_amount > 0)

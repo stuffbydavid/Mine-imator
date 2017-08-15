@@ -58,7 +58,7 @@ if (temp)
 			if (!res.ready)
 				res = res_def
 				
-			render_world_model_file_parts(temp.char_model_file, temp.char_model_file_texture_name, res)
+			render_world_model_file_parts(temp.char_model_file, temp.char_model_texture_name, res)
 			break
 		}
 			

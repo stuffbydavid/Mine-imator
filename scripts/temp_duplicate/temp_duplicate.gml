@@ -25,6 +25,12 @@ with (temp)
 		
 	if (text_font)
 		text_font.count++
+		
+	if (type = "char" || type = "spblock")
+	{
+		temp_update_char_model_state_map()
+		temp_update_char_model()
+	}
 	
 	if (type = "item")
 		temp_update_item()

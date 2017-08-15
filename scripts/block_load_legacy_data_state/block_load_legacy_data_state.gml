@@ -21,7 +21,7 @@ if (bitmask > 0)
 		if (legacy_data_state_map[d] = null)
 			legacy_data_state_map[d] = ds_map_create()
 			
-		block_vars_string_to_map(state, legacy_data_state_map[d])
+		state_vars_string_to_map(state, legacy_data_state_map[d])
 	}
 }
 else
@@ -29,5 +29,5 @@ else
 	if (legacy_data_state_map[value] = null)
 		legacy_data_state_map[value] = ds_map_create()
 		
-	block_vars_string_to_map(state, legacy_data_state_map[value])
+	state_vars_string_to_map(state, legacy_data_state_map[value])
 }
