@@ -50,56 +50,72 @@ else
 	{
 		case "char":
 		case "spblock":
+		case "bodypart":
 		{
 			var labeltext, list, texcap, capwid;
 			if (type = "char")
 			{
-				labeltext = text_get("benchcharmodel")
+				labeltext = text_get("benchmodel")
 				list = bench_settings.char_list
-				texcap = "benchcharskin"
+				texcap = "benchskin"
+				capwid  = text_caption_width(texcap)
 			}
-			else
+			else if (type = "spblock")
 			{
 				labeltext = text_get("benchblock")
 				list = bench_settings.special_block_list
 				texcap = "benchspblocktex"
+				capwid  = text_caption_width(texcap)
 			}
-			capwid  = text_caption_width(texcap)
+			else if (type = "bodypart")
+			{
+				labeltext = text_get("benchmodel")
+				list = bench_settings.bodypart_model_list
+				texcap = "bodypartskin"
+				capwid  = text_caption_width("benchbodypart", texcap)
+			}
 			
 			// Model
 			draw_label(labeltext + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
 			listh = 200 + bench_settings.height_custom
-			sortlist_draw(list, dx, dy, dw, listh, bench_settings.char_model_name)
+			sortlist_draw(list, dx, dy, dw, listh, bench_settings.model_name)
 			dy += listh + 30
 			
 			// States
 			var model, state;
-			model = mc_version.model_name_map[?bench_settings.char_model_name]
-			state = ds_map_find_first(bench_settings.char_model_state_map)
+			model = mc_version.model_name_map[?bench_settings.model_name]
+			state = ds_map_find_first(bench_settings.model_state_map)
 			while (!is_undefined(state))
 			{
 				capwid = max(capwid, string_width(minecraft_get_name("modelstate", state) + ":") + 20)
-				state = ds_map_find_next(bench_settings.char_model_state_map, state)
+				state = ds_map_find_next(bench_settings.model_state_map, state)
 			}
 			
-			state = ds_map_find_first(bench_settings.char_model_state_map);
+			state = ds_map_find_first(bench_settings.model_state_map);
 			while (!is_undefined(state))
 			{
 				menu_model_current = model
 				menu_model_state_current = model.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.char_model_state_map[?state], minecraft_get_name("modelstatevalue", bench_settings.char_model_state_map[?state]), action_bench_char_model_state, null, null, capwid, text_get("benchmodelstatetip"))
-				state = ds_map_find_next(bench_settings.char_model_state_map, state)
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state_map[?state], minecraft_get_name("modelstatevalue", bench_settings.model_state_map[?state]), action_bench_model_state, null, null, capwid, text_get("benchmodelstatetip"))
+				state = ds_map_find_next(bench_settings.model_state_map, state)
 				dy += 24 + 8
 			}
 			menu_model_current = null
 			
+			// Bodypart
+			if (type = "bodypart")
+			{
+				draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, null, null, capwid)
+				dy += 24 + 8
+			}
+			
 			// Skin
 			var text, texture;
-			text = bench_settings.char_skin.display_name
-			with (bench_settings.char_skin)
-				texture = res_get_model_texture(other.bench_settings.char_model_texture_name)
-			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.char_skin, text, action_bench_char_skin, texture, null, capwid)
+			text = bench_settings.skin.display_name
+			with (bench_settings.skin)
+				texture = res_get_model_texture(other.bench_settings.model_texture_name)
+			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.skin, text, action_bench_skin, texture, null, capwid)
 			dy += 40
 			break
 		}
@@ -172,7 +188,7 @@ else
 			// Block
 			draw_label(text_get("benchblock") + ":", dx, dy + 8, fa_left, fa_middle)
 			dy += 22
-			listh = 172 + bench_settings.height_custom
+			listh = 200 + bench_settings.height_custom
 			sortlist_draw(bench_settings.block_list, dx, dy, dw, listh, bench_settings.block_name)
 			dy += listh + 30
 			
@@ -200,26 +216,6 @@ else
 			// Texture
 			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 40, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, bench_settings.block_tex.block_preview_texture, null, capwid)
 			dy += 40
-			break
-		}
-		
-		case "bodypart":
-		{
-			var capwid = text_caption_width("benchbodypart", "benchbodypartskin");
-			
-			// Model
-			draw_label(text_get("benchmodel") + ":", dx, dy + 8, fa_left, fa_middle)
-			dy += 22
-			listh = 200 + bench_settings.height_custom
-			sortlist_draw(bench_settings.bodypart_char_list, dx, dy, dw, listh, bench_settings.char_model)
-			dy += listh + 30
-			
-			// Bodypart
-			//draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.char_bodypart, text_get(bench_settings.char_model.part_name[bench_settings.char_bodypart]), action_bench_char_bodypart, null, 0, capwid)
-			dy += 24 + 8
-					
-			// Skin
-			//draw_button_menu("benchbodypartskin", e_menu.LIST, dx, dy, dw, 40, bench_settings.char_skin, bench_settings.char_skin.display_name, action_bench_char_skin, bench_settings.char_skin.mob_texture[bench_settings.char_model.index], null, capwid)
 			break
 		}
 		

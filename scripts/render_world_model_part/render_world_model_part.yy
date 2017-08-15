@@ -1,8 +1,8 @@
 {
-    "id": "3d1ab786-ded7-4fec-bd51-9cb609da4b45",
+    "id": "4a10ea44-91b9-40d4-8f9f-5d87d26d1994",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "action_bench_char_model_state",
+    "name": "render_world_model_part",
     "IsCompatibility": false,
     "IsDnD": false
 }

@@ -241,10 +241,10 @@
 		"cylindertip": "Create a cylinder.",
 		"surfacetip": "Create a flat surface.",
 		"audiotip": "Create a track for sound files.",
-		"charmodel": "Model",
+		"model": "Model",
 		"modelstatetip": "Choose between different values for this model state.",
-		"charskin": "Skin",
-		"charskintip": "Change the skin of the character.",
+		"skin": "Skin",
+		"skintip": "Change the skin of the character.",
 		"schematic": "Schematic",
 		"schematictip": "Load Minecraft terrain from a world or file.",
 		"blocktex": "Texture",
@@ -262,7 +262,6 @@
 		"spblockmodel": "Block",
 		"spblocktex": "Texture",
 		"spblocktextip": "Change the texture of the block.",
-		"model": "Model",
 		"bodypart": "Body part",
 		"bodypartskin": "Texture",
 		"bodypartskintip": "Change the skin or texture the part uses.",
@@ -475,13 +474,13 @@
 		"libcount": "Use count",
 		"libcounttip": "How many times this template is used in the project.",
 		"charname": "Name",
-		"charnametip": "The name of the mob.",
+		"charnametip": "The name of the model.",
 		"blockname": "Name",
 		"blocknametip": "The name of the block.",
 		"spblockname": "Name",
 		"spblocknametip": "The name of the block.",
-		"bodypartcharname": "Name",
-		"bodypartcharnametip": "The name of the mob.",
+		"bodypartmodelname": "Name",
+		"bodypartmodelnametip": "The name of the model.",
 		"particleeditortypename": "Name",
 		"particleeditortypenametip": "The name of the particle type.",
 		"particleeditortypekind": "Kind",
@@ -1063,8 +1062,6 @@
 				"paeonia": "Peony"
 			}
 		}
-	},
-	"specialblock/": {
 	},
 	"project": "Project",
 	"project/": {

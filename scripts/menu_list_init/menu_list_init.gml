@@ -31,13 +31,13 @@ switch (menu_name)
 		var modelfile, texname;
 		if (string_contains(menu_name, "bench"))
 		{
-			modelfile = bench_settings.char_model_file
-			texname = bench_settings.char_model_texture_name
+			modelfile = bench_settings.model_file
+			texname = bench_settings.model_texture_name
 		}
 		else
 		{
-			modelfile = temp_edit.char_model_file
-			texname = temp_edit.char_model_texture_name
+			modelfile = temp_edit.model_file
+			texname = temp_edit.model_texture_name
 		}
 		
 		// Import from file
@@ -138,8 +138,11 @@ switch (menu_name)
 	
 	case "benchbodypart": // Body part
 	{
-		//for (var p = 0; p < bench_settings.char_model.part_amount; p++)
-		//	menu_add_item(p, text_get(bench_settings.char_model.part_name[p]))
+		for (var p = 0; p < ds_list_size(bench_settings.model_file.file_part_list); p++)
+		{
+			var part = bench_settings.model_file.file_part_list[|p];
+			menu_add_item(part.name, minecraft_get_name("modelpart", part.name))
+		}
 		break
 	}
 		

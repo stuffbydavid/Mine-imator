@@ -7,10 +7,10 @@ var to = argument0;
 to.type = type
 to.name = name
 
-to.char_skin = char_skin
-to.char_model_name = char_model_name
-to.char_model_state = char_model_state
-to.char_bodypart = char_bodypart
+to.skin = skin
+to.model_name = model_name
+to.model_state = model_state
+to.model_part_name = model_part_name
 
 to.item_tex = item_tex
 to.item_slot = item_slot

@@ -1,15 +1,17 @@
-/// temp_update_char_model()
+/// temp_update_model()
 /// @desc Gets the correct file and texture from the name and state.
 ///		  Also updates the affected timelines.
 
-// TODO dont render missing models instead of errors
-
-var model = mc_version.model_name_map[?char_model_name];
+var model = mc_version.model_name_map[?model_name];
 
 if (is_undefined(model))
+{
+	model_file = null
+	model_texture_name = ""
 	return 0
+}
 	
-var vars = char_model_state_map;
+var vars = model_state_map;
 	
 // Set file and texture
 with (model)
@@ -59,8 +61,8 @@ with (model)
 		}
 	}
 	
-	other.char_model_file = curfile
-	other.char_model_texture_name = curtex
+	other.model_file = curfile
+	other.model_texture_name = curtex
 }
 
 // Re-arrange timelines TODO

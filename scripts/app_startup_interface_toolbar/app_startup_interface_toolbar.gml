@@ -52,14 +52,16 @@ with (bench_settings)
 	// Default settings
 	iid = 0
 	temp_init()
+	model_name = "human"
+	model_state = mc_version.model_name_map[?model_name].default_state
+	model_part_name = "head"
+	temp_update_model_state_map()
+	temp_update_model()
+	temp_update_model_part()
 	block_state = mc_version.block_name_map[?block_name].default_state
 	temp_update_block_state_map()
 	temp_particles_init()
-	char_model_name = "human"
-	char_model_state = mc_version.model_name_map[?char_model_name].default_state
-	temp_update_char_model_state_map()
-	temp_update_char_model()
-	char_skin = res_def
+	skin = res_def
 	item_tex = res_def
 	block_tex = res_def
 	text_font = res_def
@@ -70,7 +72,7 @@ with (bench_settings)
 
 	// Character list
 	char_list = new(obj_sortlist)
-	char_list.script = action_bench_char_model
+	char_list.script = action_bench_model_name
 	sortlist_column_add(char_list, "charname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
 		sortlist_add(char_list, mc_version.char_list[|c].name)
@@ -88,17 +90,19 @@ with (bench_settings)
 
 	// Special block list
 	special_block_list = new(obj_sortlist)
-	special_block_list.script = action_bench_char_model
+	special_block_list.script = action_bench_model_name
 	sortlist_column_add(special_block_list, "spblockname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
 		sortlist_add(special_block_list, mc_version.special_block_list[|c].name)
 	
 	// Bodypart list
-	bodypart_char_list = new(obj_sortlist)
-	bodypart_char_list.script = action_bench_char_model
-	sortlist_column_add(bodypart_char_list, "bodypartcharname", 0)
-	//for (var m = 0; m < characters + characters_blocks; m++)
-	//	sortlist_add(bodypart_char_list, iget(obj_model, m))
+	bodypart_model_list = new(obj_sortlist)
+	bodypart_model_list.script = action_bench_model_name
+	sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
+	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
+		sortlist_add(bodypart_model_list, mc_version.char_list[|c].name)
+	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
+		sortlist_add(bodypart_model_list, mc_version.special_block_list[|c].name)
 	
 	// Particles list
 	particles_list = new(obj_sortlist)

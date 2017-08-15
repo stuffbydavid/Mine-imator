@@ -1,4 +1,4 @@
-/// model_load(filename)
+/// model_file_load(filename)
 /// @arg filename
 /// @desc Loads the parts and shapes from the selected filename.
 
@@ -46,7 +46,13 @@ if (!is_real(map[?"parts"]) || !ds_exists(map[?"parts"], ds_type_list))
 with (new(obj_model_file))
 {
 	// Name
-	name = map[?"name"]
+	if (is_string(map[?"name"]))
+		name = map[?"name"]
+	else
+	{
+		log("Missing parameter \"name\"")
+		return null
+	}
 	
 	// Description (optional)
 	if (is_string(map[?"description"]))
@@ -73,12 +79,13 @@ with (new(obj_model_file))
 	// Read all the parts of the root
 	var partlist = map[?"parts"]
 	part_amount = ds_list_size(partlist)
+	file_part_list = ds_list_create()
 	for (var p = 0; p < part_amount; p++)
 	{
-		part[p] = model_read_part(partlist[|p])
+		part[p] = model_read_part(partlist[|p], id)
 		if (part[p] = null)
 		{
-			log("Could not read part list", name)
+			log("Could not read part", name)
 			return null
 		}
 	}

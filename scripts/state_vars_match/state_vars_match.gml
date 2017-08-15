@@ -1,4 +1,4 @@
-/// state_vars_match(vars, varscomp)
+/// block_vars_match(vars, varscomp)
 /// @arg vars
 /// @arg varscomp
 /// @desc Returns whether two collections of variables are matching.

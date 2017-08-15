@@ -30,7 +30,7 @@ if (!file_exists_lib(minecraft_directory + pack))
 	return false
 }
 
-zip_import(minecraft_directory + pack)
+//zip_import(minecraft_directory + pack)
 
 var format = versionmap[?"format"];
 if (!is_real(format))

@@ -1,4 +1,4 @@
-/// state_vars_string_to_map(string, map)
+/// block_vars_string_to_map(string, map)
 /// @arg string
 /// @arg map
 /// @desc Loads a string of comma-separated variables and their

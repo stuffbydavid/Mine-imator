@@ -1,8 +1,11 @@
-/// model_read_part(map)
+/// model_read_part(map, root)
 /// @arg map
+/// @arg root
 /// @desc Adds a part from the given map (JSON object), returns its instance
 
-var map = argument0;
+var map, root;
+map = argument0
+root = argument1
 
 if (!is_string(map[?"name"]))
 {
@@ -19,7 +22,13 @@ if (!is_real(map[?"position"]) || !ds_exists(map[?"position"], ds_type_list))
 with (new(obj_model_part))
 {
 	// Name
-	name = map[?"name"]
+	if (is_string(map[?"name"]))
+		name = map[?"name"]
+	else
+	{
+		log("Missing parameter \"name\"")
+		return null
+	}
 	
 	// Description (optional)
 	if (is_string(map[?"description"]))
@@ -216,7 +225,7 @@ with (new(obj_model_part))
 		part_amount = ds_list_size(partlist)
 		for (var p = 0; p < part_amount; p++)
 		{
-			part[p] = model_read_part(partlist[|p])
+			part[p] = model_read_part(partlist[|p], root)
 			if (part[p] = null) // Something went wrong
 			{
 				log("Could not read part list", name)
@@ -234,6 +243,9 @@ with (new(obj_model_part))
 	other.bounds_end[X] = max(other.bounds_end[X], bounds_end[X])
 	other.bounds_end[Y] = max(other.bounds_end[Y], bounds_end[Y])
 	other.bounds_end[Z] = max(other.bounds_end[Z], bounds_end[Z])
+	
+	// Add to file list
+	ds_list_add(root.file_part_list, id)
 		
 	return id
 }

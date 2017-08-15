@@ -48,8 +48,8 @@ else
 			{
 				if (type != "char" && type != "spblock" && type != "bodypart")
 				{
-					char_skin.count--
-					char_skin = null
+					skin.count--
+					skin = null
 					char_model = null
 				}
 				

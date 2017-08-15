@@ -146,10 +146,10 @@ with (preview)
 					case "char":
 					case "spblock":
 					{
-						if (select.char_model_file = null)
+						if (select.model_file = null)
 							break
 						
-						var displaysize = point3D_sub(select.char_model_file.bounds_end, select.char_model_file.bounds_start);
+						var displaysize = point3D_sub(select.model_file.bounds_end, select.model_file.bounds_start);
 						prevcam_z = displaysize[Z] / 2
 						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
 						break
@@ -188,7 +188,6 @@ with (preview)
 					}
 					
 					case "bodypart":
-						//bodypart = select.char_bodypart
 						prevcam_zoom = 48
 						break
 					
@@ -222,14 +221,14 @@ with (preview)
 					case "char":
 					case "spblock":
 					{
-						if (select.char_model_file = null)
+						if (select.model_file = null)
 							break
 						
-						var res = select.char_skin;
+						var res = select.skin;
 						if (!res.ready)
 							res = res_def
 						
-						render_world_model_file_parts(select.char_model_file, select.char_model_texture_name, res)
+						render_world_model_file_parts(select.model_file, select.model_texture_name, res)
 						break
 					}
 					
@@ -256,24 +255,16 @@ with (preview)
 						break
 					
 					case "bodypart":
-						/*var res;
-					
-						if (!char.part_vbuffer[bodypart])
+					{
+						if (select.model_part = null)
 							break
 						
-						res = select.char_skin
+						var res = select.skin;
 						if (!res.ready)
 							res = res_def
-					
-						shader_texture = res.mob_texture[char.index]
-						shader_use()
-						vbuffer_render(char.part_vbuffer[bodypart])
-						if (char.part_hasbend[bodypart])
-						{ // Draw bend half
-							matrix_set(matrix_world, tl_bend_matrix(0, char, bodypart))
-							vbuffer_render(char.part_bendvbuffer[bodypart])
-						}*/
+						render_world_model_part(select.model_part, select.model_texture_name, res, 0)
 						break
+					}
 					
 					case "text":
 						render_world_text(text_vbuffer, text_texture, select.text_face_camera, select.text_font)

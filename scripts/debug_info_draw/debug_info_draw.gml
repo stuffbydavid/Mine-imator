@@ -1,10 +1,9 @@
 /// debug_info_draw()
 
-var str = "";
-
 if (!debug_info)
 	return 0
 	
+var str = "";
 str += "project_file: " + project_file + " \n"
 str += "project_folder: " + project_folder + " \n"
 str += "working_directory: " + working_directory + " \n"
@@ -22,6 +21,7 @@ else
 str += "popup_ani_type: " + popup_ani_type + " \n"
 str += "popup_mouseon: " + string(popup_mouseon) + " \n"
 str += "delta: " + string(delta) + " \n"
+str += "DPI: " + string(display_get_dpi_x()) + "," + string(display_get_dpi_y()) + " \n"
 
 content_x = 0
 content_y = 0

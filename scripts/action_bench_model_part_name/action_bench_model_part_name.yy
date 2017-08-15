@@ -1,8 +1,8 @@
 {
-    "id": "aa235bf5-a688-4b12-a307-8b652733b3b0",
+    "id": "30759b33-35b4-4603-b37a-fbbacfd922dc",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "temp_update_char_model",
+    "name": "action_bench_model_part_name",
     "IsCompatibility": false,
     "IsDnD": false
 }

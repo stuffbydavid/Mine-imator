@@ -26,10 +26,12 @@ with (temp)
 	if (text_font)
 		text_font.count++
 		
-	if (type = "char" || type = "spblock")
+	if (type = "char" || type = "spblock" || type = "bodypart")
 	{
-		temp_update_char_model_state_map()
-		temp_update_char_model()
+		temp_update_model_state_map()
+		temp_update_model()
+		if (type = "bodypart")
+			temp_update_model_part()
 	}
 	
 	if (type = "item")

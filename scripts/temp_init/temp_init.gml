@@ -10,14 +10,14 @@ display_name = ""
 count = 0
 rot_point[Z] = 0
 
-char_skin = null
-char_model_name = "human"
-char_model_texture_name = ""
-char_model_file = null
-char_model_state = ""
-char_model_state_map = null
-char_model_part = "" // replace char_bodypart
-char_bodypart = 0
+skin = null
+model_name = "human"
+model_texture_name = ""
+model_file = null
+model_state = ""
+model_state_map = null
+model_part_name = ""
+model_part = null
 
 item_tex = null
 item_slot = ds_list_find_index(mc_version.item_texture_list, "items/diamond_sword")
