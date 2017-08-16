@@ -128,8 +128,7 @@ with (preview)
 		
 			if (is3d) // 3D view
 			{
-				var prevcam_z, prevcam_zoom, rep, scenery;
-				prevcam_z = 0
+				var prevcam_zoom, rep, scenery;
 				prevcam_zoom = 32
 			
 				matrix_reset_offset()
@@ -149,9 +148,9 @@ with (preview)
 						if (select.model_file = null)
 							break
 						
-						var displaysize = point3D_sub(select.model_file.bounds_end, select.model_file.bounds_start);
-						prevcam_z = displaysize[Z] / 2
+						var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
 						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
+						matrix_offset = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
 						break
 					}
 					
@@ -163,7 +162,7 @@ with (preview)
 					{
 						var displaysize = vec3_mul(rep, vec3(block_size));
 						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-						matrix_offset = vec3_mul(displaysize, vec3(-1 / 2))
+						matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 						break
 					}
 					
@@ -188,8 +187,15 @@ with (preview)
 					}
 					
 					case "bodypart":
-						prevcam_zoom = 48
+					{
+						if (select.model_part = null)
+							break
+							
+						var displaysize = point3D_sub(select.model_part.bounds_end, select.model_part.bounds_start);
+						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
+						matrix_offset = point3D_mul(point3D_add(select.model_part.bounds_start, vec3_mul(displaysize, 0.5)), -1)
 						break
+					}
 					
 					case "particles":
 						prevcam_zoom = 80
@@ -205,7 +211,7 @@ with (preview)
 				proj_from = point3D(
 					lengthdir_x(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
 					lengthdir_y(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
-					prevcam_z + lengthdir_z(prevcam_zoom, zangle)
+					lengthdir_z(prevcam_zoom, zangle)
 				)
 			
 				render_update_text()
@@ -213,7 +219,7 @@ with (preview)
 				gpu_set_ztestenable(true)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_render)
-				render_set_projection(proj_from, vec3(0, 0, prevcam_z), vec3(0, 0, 1), 60, 1, 1, 32000)
+				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), 60, 1, 1, 32000)
 				render_mode = "preview"
 			
 				switch (select.type)
@@ -228,6 +234,7 @@ with (preview)
 						if (!res.ready)
 							res = res_def
 						
+						matrix_add_offset()
 						render_world_model_file_parts(select.model_file, select.model_texture_name, res)
 						break
 					}
@@ -262,6 +269,8 @@ with (preview)
 						var res = select.skin;
 						if (!res.ready)
 							res = res_def
+						
+						matrix_add_offset()
 						render_world_model_part(select.model_part, select.model_texture_name, res, 0)
 						break
 					}
@@ -271,17 +280,21 @@ with (preview)
 						break
 					
 					case "particles":
+					{
 						for (var p = 0; p < ds_list_size(particles); p++)
 							with (particles[|p])
 								particle_draw()
 						break
+					}
 					
 					default: // Shapes
+					{
 						var tex;
 						with (select)
 							tex = temp_get_shape_tex(temp_get_shape_texobj(null))
 						render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, tex)
 						break
+					}
 				}
 			
 				matrix_world_reset()

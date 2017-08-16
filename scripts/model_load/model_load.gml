@@ -25,9 +25,9 @@ with (new(obj_model))
 		
 	// Texture
 	if (is_string(map[?"texture"]))
-		texture = map[?"texture"]
+		texture_name = map[?"texture"]
 	else
-		texture = ""
+		texture_name = ""
 		
 	// Read states and their possible values
 	states_map = null
@@ -48,7 +48,7 @@ with (new(obj_model))
 					var curvalue = valuelist[|v];
 					value_name[v] = curvalue[?"value"]
 					value_file[v] = null
-					value_texture[v] = ""
+					value_texture_name[v] = ""
 					
 					// File
 					if (!is_undefined(curvalue[?"file"]))
@@ -56,7 +56,7 @@ with (new(obj_model))
 								
 					// Texture
 					if (is_string(curvalue[?"texture"]))
-						value_texture[v] = curvalue[?"texture"]
+						value_texture_name[v] = curvalue[?"texture"]
 				}
 				
 				other.states_map[?curstate] = id

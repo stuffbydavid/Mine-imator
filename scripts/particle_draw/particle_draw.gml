@@ -24,7 +24,7 @@ if (temp)
 	{
 		case "char":
 		case "spblock":
-			matrix_offset = point3D(0, 0, -(temp.char_model.bounds_end[Z] - temp.char_model.bounds_start[Z]) / 2)
+			matrix_offset = point3D(0, 0, -(temp.model_file.bounds_end[Z] - temp.model_file.bounds_start[Z]) / 2)
 			break
 		
 		case "scenery":
@@ -58,7 +58,7 @@ if (temp)
 			if (!res.ready)
 				res = res_def
 				
-			render_world_model_file_parts(temp.char_model_file, temp.char_model_texture_name, res)
+			render_world_model_file_parts(temp.model_file, temp.model_texture_name, res)
 			break
 		}
 			

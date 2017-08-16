@@ -16,15 +16,15 @@ var vars = model_state_map;
 // Set file and texture
 with (model)
 {
-	var curfile, curtex;
+	var curfile, curtexname;
 	curfile = file
-	curtex = ""
+	curtexname = ""
 	
 	// Texture in file < Texture in root < Texture in state (< Texture by user)
 	if (file != null)
-		curtex = file.texture
-	if (texture != "")
-		curtex = texture
+		curtexname = file.texture_name
+	if (texture_name != "")
+		curtexname = texture_name
 	
 	if (states_map != null)
 	{
@@ -46,12 +46,12 @@ with (model)
 						if (value_file[v] != null)
 						{
 							curfile = value_file[v]
-							if (curtex = "")
-								curtex = curfile.texture
+							if (curtexname = "")
+								curtexname = curfile.texture_name
 						}
 								
-						if (value_texture[v] != "")
-							curtex = value_texture[v]
+						if (value_texture_name[v] != "")
+							curtexname = value_texture_name[v]
 								
 						break
 					}
@@ -62,7 +62,7 @@ with (model)
 	}
 	
 	other.model_file = curfile
-	other.model_texture_name = curtex
+	other.model_texture_name = curtexname
 }
 
 // Re-arrange timelines TODO

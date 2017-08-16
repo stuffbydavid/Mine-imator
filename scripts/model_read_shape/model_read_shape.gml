@@ -42,7 +42,7 @@ with (new(obj_model_shape))
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
 	{
-		texture = map[?"texture"]
+		texture_name = map[?"texture"]
 		
 		// Texture size
 		if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
@@ -56,7 +56,7 @@ with (new(obj_model_shape))
 	else
 	{
 		// Inherit
-		texture = other.texture
+		texture_name = other.texture_name
 		texture_size = other.texture_size
 	}
 	
@@ -94,10 +94,9 @@ with (new(obj_model_shape))
 	// Matrix applied to vertices
 	vertex_matrix = matrix_create(from, rotation, scale)
 	
-	// Default bounds and matrix
-	bounds_start = point3D(0, 0, 0)
-	bounds_end = point3D(0, 0, 0)
-	default_matrix = matrix_multiply(vertex_matrix, other.default_matrix)
+	// Default bounds
+	bounds_start = point3D(no_limit, no_limit, no_limit)
+	bounds_end = point3D(-no_limit, -no_limit, -no_limit)
 	
 	// Generate
 	if (type = "block")

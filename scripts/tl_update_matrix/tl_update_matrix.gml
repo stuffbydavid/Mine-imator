@@ -72,10 +72,6 @@ if (object_index != app && update_matrix)
 		matrix[MATZ] = value[ZPOS]
 	}
 	
-	// Create bend matrix
-	if (type = "bodypart")
-		matrix_bend = matrix_multiply(model_bend_matrix(bodypart, value[BENDANGLE]), matrix)
-	
 	// Create rotation point
 	if (type = "camera" && value[CAMROTATE])
 	{

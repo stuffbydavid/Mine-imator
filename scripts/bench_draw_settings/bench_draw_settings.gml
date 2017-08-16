@@ -71,7 +71,7 @@ else
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.bodypart_model_list
-				texcap = "bodypartskin"
+				texcap = "benchbodypartskin"
 				capwid  = text_caption_width("benchbodypart", texcap)
 			}
 			

@@ -1,4 +1,4 @@
-/// block_vars_get_value(vars, name)
+/// state_vars_get_value(vars, name)
 /// @arg vars
 /// @arg name
 /// @desc Gets a single (string) value from a variable, "" if not set.

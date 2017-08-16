@@ -39,7 +39,7 @@ with (new(obj_model_part))
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
 	{
-		texture = map[?"texture"]
+		texture_name = map[?"texture"]
 		
 		// Texture size
 		if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
@@ -54,7 +54,7 @@ with (new(obj_model_part))
 	else
 	{
 		// Inherit
-		texture = other.texture
+		texture_name = other.texture_name
 		texture_size = other.texture_size
 	}
 	
@@ -94,23 +94,13 @@ with (new(obj_model_part))
 			}
 		}
 	}
+	
 		
-	// Matrix used when rendering
-	matrix = matrix_create(position, rotation, scale)
-		
-	// Default bounds and matrix
-	bounds_start = point3D(0, 0, 0)
-	bounds_end = point3D(0, 0, 0)
-	if (other.object_index = obj_model_part)
-	{
-		if (lock_bend && other.bend_part != null)
-			default_matrix = matrix_multiply(matrix, matrix_multiply(model_bend_matrix(other.id, 0), other.default_matrix))
-		else
-			default_matrix = matrix_multiply(matrix, other.default_matrix)
-	}
-	else
-		default_matrix = matrix
-		
+	// Matrix used when rendering preview/particle
+	default_matrix = matrix_create(position, rotation, scale)
+	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
+		default_matrix = matrix_multiply(default_matrix, model_bend_matrix(other.id, 0))
+	
 	// Bend (optional)
 	if (!is_undefined(map[?"bend"]))
 	{
@@ -186,6 +176,10 @@ with (new(obj_model_part))
 		bend_offset = 0
 	}
 	
+	// Default bounds
+	bounds_start = point3D(no_limit, no_limit, no_limit)
+	bounds_end = point3D(-no_limit, -no_limit, -no_limit)
+	
 	// Add shapes (optional)
 	var shapelist = map[?"shapes"]
 	if (is_real(shapelist) && ds_exists(shapelist, ds_type_list))
@@ -218,6 +212,10 @@ with (new(obj_model_part))
 		shape_vbuffer = null
 	}
 	
+	// Default bounds (including parts)
+	bounds_parts_start = bounds_start
+	bounds_parts_end = bounds_end
+	
 	// Recursively add parts (optional)
 	var partlist = map[?"parts"]
 	if (is_real(partlist) && ds_exists(partlist, ds_type_list))
@@ -236,13 +234,16 @@ with (new(obj_model_part))
 	else
 		part_amount = 0
 		
-	// Update bounds
-	other.bounds_start[X] = min(other.bounds_start[X], bounds_start[X])
-	other.bounds_start[Y] = min(other.bounds_start[Y], bounds_start[Y])
-	other.bounds_start[Z] = min(other.bounds_start[Z], bounds_start[Z])
-	other.bounds_end[X] = max(other.bounds_end[X], bounds_end[X])
-	other.bounds_end[Y] = max(other.bounds_end[Y], bounds_end[Y])
-	other.bounds_end[Z] = max(other.bounds_end[Z], bounds_end[Z])
+	// Update bounds of parent
+	var boundsstartdef, boundsenddef;
+	boundsstartdef = point3D_mul_matrix(bounds_parts_start, default_matrix);
+	boundsenddef   = point3D_mul_matrix(bounds_parts_end, default_matrix);
+	other.bounds_parts_start[X] = min(other.bounds_parts_start[X], boundsstartdef[X])
+	other.bounds_parts_start[Y] = min(other.bounds_parts_start[Y], boundsstartdef[Y])
+	other.bounds_parts_start[Z] = min(other.bounds_parts_start[Z], boundsstartdef[Z])
+	other.bounds_parts_end[X]	= max(other.bounds_parts_end[X], boundsenddef[X])
+	other.bounds_parts_end[Y]	= max(other.bounds_parts_end[Y], boundsenddef[Y])
+	other.bounds_parts_end[Z]	= max(other.bounds_parts_end[Z], boundsenddef[Z])
 	
 	// Add to file list
 	ds_list_add(root.file_part_list, id)

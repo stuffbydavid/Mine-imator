@@ -68,26 +68,18 @@ if (shader_alpha > 0)
 					break
 					
 				// Get texture
-				var res = temp.char_skin;
+				var res, texname;
+				res = temp.char_skin
 				if (texobj && texobj.type != "camera")
 					res = texobj
 				if (!res.ready)
 					res = res_def
 				with (res)
-					shader_texture = res_get_model_texture(other.temp.char_model_texture_name)
+					tex = res_get_model_texture(other.temp.char_model_texture_name)
 				
-				shader_use()
-				vbuffer_render(bodypart.shape_vbuffer)
-		
-				if (bodypart.bend_part != null)
-				{
-					if (value[BENDANGLE] != 0 && bend_vbuffer)
-						vbuffer_render(bend_vbuffer)
-					matrix_set(matrix_world, matrix_bend)
-					vbuffer_render(bodypart.shape_bend_vbuffer)
-				}
+				render_world_model_part(bodypart, texname, res, value[BENDANGLE])
 				break
-			   }
+			}
 			   
 			case "scenery":
 			case "block":

@@ -61,20 +61,21 @@ with (new(obj_model_file))
 		description = ""
 		
 	// Texture
-	texture = map[?"texture"]
+	texture_name = map[?"texture"]
 	
 	// Texture size
 	var texturesizelist = map[?"texture_size"];
 	texture_size = vec2(texturesizelist[|X], texturesizelist[|Y])
 
 	// Player skin
-	player_skin = false
 	if (is_real(map[?"player_skin"]))
 		player_skin = map[?"player_skin"]
+	else
+		player_skin = false
 	
 	// Bounds in default position
-	bounds_start = point3D(0, 0, 0)
-	bounds_end = point3D(0, 0, 0)
+	bounds_parts_start = point3D(no_limit, no_limit, no_limit)
+	bounds_parts_end = point3D(-no_limit, -no_limit, -no_limit)
 	
 	// Read all the parts of the root
 	var partlist = map[?"parts"]

@@ -7,6 +7,7 @@ if (model_file = null)
 	return 0
 }
 
+model_part = null
 for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
 {
 	var part = model_file.file_part_list[|p];

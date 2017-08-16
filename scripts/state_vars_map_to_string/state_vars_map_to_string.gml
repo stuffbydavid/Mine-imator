@@ -1,4 +1,4 @@
-/// block_vars_map_to_string(map)
+/// state_vars_map_to_string(map)
 /// @arg map
 
 var map, vars, key;

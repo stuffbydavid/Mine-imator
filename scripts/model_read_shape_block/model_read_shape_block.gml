@@ -219,12 +219,12 @@ if (znadd)
 if (!bend)
 {
 	var startpos, endpos;
-	startpos = point3D_mul_matrix(point3D(0, 0, 0), default_matrix);
-	endpos   = point3D_mul_matrix(size, default_matrix);
+	startpos = point3D_mul_matrix(point3D(0, 0, 0), vertex_matrix);
+	endpos   = point3D_mul_matrix(size, vertex_matrix);
 	bounds_start[X] = min(bounds_start[X], startpos[X], endpos[X])
 	bounds_start[Y] = min(bounds_start[Y], startpos[Y], endpos[Y])
 	bounds_start[Z] = min(bounds_start[Z], startpos[Z], endpos[Z])
-	bounds_end[X] = max(bounds_end[X], startpos[X], endpos[X])
-	bounds_end[Y] = max(bounds_end[Y], startpos[Y], endpos[Y])
-	bounds_end[Z] = max(bounds_end[Z], startpos[Z], endpos[Z])
+	bounds_end[X]	= max(bounds_end[X], startpos[X], endpos[X])
+	bounds_end[Y]	= max(bounds_end[Y], startpos[Y], endpos[Y])
+	bounds_end[Z]	= max(bounds_end[Z], startpos[Z], endpos[Z])
 }

@@ -11,6 +11,19 @@ with (bench_settings)
 	temp_update_model_state_map()
 	temp_update_model()
 	
-	//bodypart = min(bench_settings.char_art, bench_settings.char_model_amount - 1)
-	preview.update = true
+	if (type = "bodypart")
+	{
+		temp_update_model_part()
+		if (model_file != null && model_part = null && model_file.part_amount > 0)
+		{
+			model_part = model_file.file_part_list[|0]
+			model_part_name = model_part.name
+		}
+	}
+	
+	with (preview)
+	{
+		preview_reset_view()
+		update = true
+	}
 }
