@@ -1,6 +1,6 @@
 /// iid_find(iid)
 /// @arg iid
-/// @desc Finds the instance with the given iid.
+/// @desc Finds the instance with the given save ID.
 
 var i = argument0;
 

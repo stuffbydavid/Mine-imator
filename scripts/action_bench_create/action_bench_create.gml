@@ -26,7 +26,7 @@ else
 		tl = new_tl(bench_settings.type)
 		with (hobj)
 		{
-			spawn[spawn_amount] = tl.iid
+			spawn_save_id[spawn_amount] = tl.save_id
 			spawn_amount++
 		}
 		
@@ -40,7 +40,7 @@ else
 			var temp = temp_duplicate();
 			with (hobj)
 			{
-				spawn[spawn_amount] = temp.iid
+				spawn_save_id[spawn_amount] = temp.save_id
 				spawn_amount++
 			}
 			
@@ -50,7 +50,8 @@ else
 				{
 					skin.count--
 					skin = null
-					char_model = null
+					model_file = null
+					model_part = null
 				}
 				
 				if (type != "item")
@@ -86,10 +87,13 @@ else
 				
 				tl = temp_animate()
 			}
+			
 			sortlist_add(app.lib_list, temp)
 			temp_edit = temp
 		}
-		with (obj_template) // Add templates connected to the bench
+		
+		// Add templates connected to the bench
+		with (obj_template)
 		{
 			if (creator != app.bench_settings)
 				continue
@@ -97,8 +101,8 @@ else
 			sortlist_add(app.lib_list, id)
 			creator = app
 			
-			if (char_skin)
-				char_skin.count++
+			if (skin)
+				skin.count++
 				
 			if (item_tex)
 				item_tex.count++
@@ -117,7 +121,7 @@ else
 				
 			with (hobj)
 			{
-				spawn[spawn_amount] = other.iid
+				spawn_save_id[spawn_amount] = other.save_id
 				spawn_amount++
 			}
 		}

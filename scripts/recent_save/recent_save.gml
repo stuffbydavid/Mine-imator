@@ -1,5 +1,6 @@
 /// recent_save()
-
+// TODO Json
+return 0
 buffer_current = buffer_create(8, buffer_grow, 1)
 debug("Saving recent", recent_file)
 

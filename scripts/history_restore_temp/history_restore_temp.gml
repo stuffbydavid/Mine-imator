@@ -12,10 +12,10 @@ with (save)
 with (temp)
 {
 	iid = save.iid
-	temp_find_iids()
+	temp_find_save_ids()
 	
-	if (char_skin)
-		char_skin.count++
+	if (skin)
+		skin.count++
 		
 	if (item_tex)
 		item_tex.count++
@@ -47,9 +47,8 @@ with (temp)
 	// Restore particle types
 	if (type = "particles")
 	{
-		pc_types = 0
-		for (var p = 0; p < save.pc_types; p++)
-			history_restore_ptype(save.pc_type[p], id)
+		for (var p = 0; p < ds_list_size(save.pc_type_list); p++)
+			history_restore_ptype(save.pc_type_list[|p], id)
 			
 		temp_particles_restart()
 	}

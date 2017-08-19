@@ -3,21 +3,23 @@
 
 var kf = argument0;
 
-if (!kf.select)
+if (!kf.selected)
 	return 0
 	
-kf.select = false
+kf.selected = false
 
 with (kf.tl)
 {
 	keyframe_select_amount--
+	
 	if (keyframe_select = kf)
 	{
 		keyframe_select = null
 		with (obj_keyframe)
-			if (select && tl = other.id)
+			if (selected && position = other.id)
 				other.keyframe_select = id
 	}
+	
 	if (!keyframe_select)
 		tl_deselect()
 }

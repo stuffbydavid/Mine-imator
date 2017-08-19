@@ -164,7 +164,7 @@ filterx = xx + w-tbxwid
 filtery = yy + h+5
 if (draw_button_normal("listsearch", filterx - 18, filtery + 2, 16, 16, e_button.NO_TEXT, slist.filter, false, true, icons.search)) 
 {
-	slist.filter=!slist.filter
+	slist.filter = !slist.filter
 	if (slist.filter)
 		window_focus = string(slist.filter_tbx)
 }

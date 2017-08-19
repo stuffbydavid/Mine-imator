@@ -6,14 +6,14 @@ par = argument0
 itemh = test(setting_timeline_compact, 18, 24)
 indent = 16
 
-for (var t = 0; t < par.tree_amount; t++)
+for (var t = 0; t < ds_list_size(par.tree_list); t++)
 {
 	var tl, px, xoff;
-	tl = par.tree[t]
+	tl = par.tree_list[|t]
 	px = dx
 	xoff = 0
 	
-	if (tl.tree_amount > 0)
+	if (ds_list_size(tl.tree_amount) > 0)
 	{
 		draw_image(spr_icons, test(tl.tree_extend, icons.arrowdowntiny, icons.arrowrighttiny), dx + 2, dy + itemh / 2, 1, 1, setting_color_text, 1)
 		xoff = 10

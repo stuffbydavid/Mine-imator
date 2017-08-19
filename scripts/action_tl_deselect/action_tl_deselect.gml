@@ -15,12 +15,12 @@ else
 		tl = argument0
 		with (history_set(action_tl_deselect))
 		{
-			id.tl = tl
+			tl_save_id = save_id_get(tl)
 			history_save_tl_select()
 		}
 	}
 	else
-		tl = history_data.tl
+		tl = save_id_find(history_data.tl_save_id)
 
 	with (tl)
 		tl_deselect()

@@ -13,6 +13,7 @@ with (bench_settings)
 	model_state_map[?state] = val
 	model_state = state_vars_map_to_string(model_state_map)
 	temp_update_model()
+	temp_update_model_part()
 	
 	preview.update = true
 }

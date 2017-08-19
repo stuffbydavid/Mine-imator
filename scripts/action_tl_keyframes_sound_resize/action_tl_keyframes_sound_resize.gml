@@ -1,35 +1,34 @@
 /// action_tl_keyframes_sound_resize()
 
-var movex = timeline_mouse_pos - timeline_sound_resize_mousepos;
+var movex = timeline_mouse_pos - timeline_sound_resize_mouse_pos;
 
 with (obj_keyframe)
 {
-	if (!select || soundresizeindex < 0)
+	if (!selected || sound_resize_index < 0)
 		continue
 	
 	// Calculate new position
-	newpos = max(0, soundresizepos + movex)
-	newstart = soundresizestart + movex / app.project_tempo
+	new_position = max(0, soundresizepos + movex)
+	new_start = sound_resize_start + movex / app.project_tempo
 	
-	if (newstart < 0 || pos = newpos)
+	if (new_start < 0 || position = new_position)
 		continue
 	
 	// Remove from old
-	with (tl)
-		tl_keyframes_pushup(other.index)
+	ds_list_delete_value(timeline.keyframe_list, id)
 }
 
-// Re - add to new positions
+// Re-add to new positions
 with (obj_keyframe)
 {
-	if (!select || soundresizeindex < 0 || newstart < 0 || pos = newpos)
+	if (!selected || sound_resize_index < 0 || new_start < 0 || position = new_position)
 		continue
 		
-	value[SOUNDSTART] = newstart
+	value[SOUNDSTART] = new_start
 
-	with (tl)
+	with (timeline)
 	{
-		tl_keyframe_add(other.newpos, other.id)
+		tl_keyframe_add(other.new_position, other.id)
 		update_matrix = true
 	}
 }

@@ -58,23 +58,25 @@ switch (temp_edit.type)
 	case "char":
 	case "spblock":
 	{
-		var text, wid, texture;
+		var text, wid, tex;
 		text = test(temp_edit.type = "char", "librarycharmodel", "libraryspblockmodel")
 		wid = text_max_width("librarycharmodelchange") + 20
 		
 		// Model
 		tab_control(24)
 		draw_label(text_get(text) + ":", dx, dy + 12, fa_left, fa_middle)
-		draw_label(minecraft_get_name("model", temp_edit.model_name), dx + capwid, dy + 12, fa_left, fa_middle)
+		draw_label(minecraft_get_name("model", temp_edit.model_file.name), dx + capwid, dy + 12, fa_left, fa_middle)
+		
+		// Change
 		if (draw_button_normal("librarycharmodelchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 			tab_toggle(template_editor)
 		tab_next()
 		
 		// Skin
 		with (temp_edit.skin)
-			texture = res_get_model_texture(temp_edit.model_texture_name)
+			tex = res_get_model_texture(temp_edit.model_texture_name)
 		tab_control(40)
-		draw_button_menu(test(temp_edit.type = "spblock", "libraryspblocktex", "librarycharskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.char_skin, temp_edit.char_skin.display_name, action_lib_char_skin, texture, null, capwid)
+		draw_button_menu(test(temp_edit.type = "spblock", "libraryspblocktex", "librarycharskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.skin, temp_edit.skin.display_name, action_lib_skin, tex, null, capwid)
 		tab_next()
 		
 		break
@@ -161,17 +163,26 @@ switch (temp_edit.type)
 	case "bodypart":
 	{
 		// Model
-		var wid = text_max_width("librarybodypartchange") + 20;
 		tab_control(24)
 		draw_label(text_get("typebodypart") + ":", dx, dy + 12, fa_left, fa_middle)
-		//draw_label(text_get("librarybodypartof", text_get(temp_edit.char_model.part_name[temp_edit.char_bodypart]), text_get(temp_edit.char_model.name)), dx + capwid, dy + 12, fa_left, fa_middle)
+		
+		if (temp_edit.model_part != null)
+			draw_label(text_get("librarybodypartof", minecraft_get_name("modelpart", temp_edit.model_part_name), minecraft_get_name("model", temp_edit.model_file.name)), dx + capwid, dy + 12, fa_left, fa_middle)
+		else
+			draw_label(text_get("librarybodypartunknown"), dx + capwid, dy + 12, fa_left, fa_middle)
+		
+		// Change
+		var wid = text_max_width("librarybodypartchange") + 20;
 		if (draw_button_normal("librarybodypartchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 			tab_toggle(template_editor)
 		tab_next()
 		
 		// Skin
+		var tex;
+		with (temp_edit.skin)
+			tex = res_get_model_texture(temp_edit.model_texture_name)
 		tab_control(40)
-		//draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 40, temp_edit.char_skin, temp_edit.char_skin.display_name, action_lib_char_skin, temp_edit.char_skin.mob_texture[temp_edit.char_model.index], null, capwid)
+		draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 40, temp_edit.skin, temp_edit.skin.display_name, action_lib_skin, tex, null, capwid)
 		tab_next()
 		
 		break
@@ -182,7 +193,7 @@ switch (temp_edit.type)
 		// Open editor
 		var wid = text_max_width("libraryparticleeditoropen") + 20;
 		tab_control(24)
-		if (draw_button_normal("libraryparticleeditoropen", dx + floor(dw / 2-wid / 2), dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
+		if (draw_button_normal("libraryparticleeditoropen", dx + floor(dw / 2 - wid / 2), dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 		{
 			tab_template_editor_update_ptype_list()
 			tab_toggle(template_editor)

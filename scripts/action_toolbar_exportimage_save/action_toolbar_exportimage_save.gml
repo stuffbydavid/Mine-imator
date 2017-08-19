@@ -10,7 +10,7 @@ log("Export image", fn)
 
 // Render and save
 render_hidden = popup_exportimage.include_hidden
-render_background=!popup_exportimage.remove_background
+render_background = !popup_exportimage.remove_background
 render_watermark = setting_render_watermark
 
 log("Hidden", yesno(render_hidden))

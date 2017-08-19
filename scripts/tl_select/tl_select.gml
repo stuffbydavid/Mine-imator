@@ -1,11 +1,11 @@
 /// tl_select()
 
-if (select)
+if (selected)
 	return 0
 
-select = true
+selected = true
 
 tl_edit_amount++
 tl_edit = id
 
-tl_update_parent_is_select()
+tl_update_parent_is_selected()

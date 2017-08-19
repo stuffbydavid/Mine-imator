@@ -2,7 +2,7 @@
 
 if (history_undo)
 {
-	with (iid_find(history_data.tl))
+	with (save_id_find(history_data.tl_save_id))
 		instance_destroy()
 }
 else
@@ -17,7 +17,7 @@ else
 		tl = temp_animate()
 		
 	with (hobj)
-		id.tl = iid_get(tl)
+		tl_save_id = save_id_get(tl)
 }
 
 tl_update_list()

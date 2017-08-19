@@ -6,38 +6,40 @@ tl_copy(copy)
 
 with (copy)
 {
-	rootcopy = null
+	root_copy = null
 	copy = null
 	
-	if (temp && !part_of)
+	if (temp && part_of = null)
 		temp.count++
 		
-	for (var k = 0; k < keyframe_amount; k++)
+	// Copy keyframes
+	for (var k = 0; k < ds_list_size(other.keyframe_list); k++)
 	{
 		var oldkf, newkf;
-		oldkf = other.keyframe[k]
+		oldkf = other.keyframe_list[|k]
 		newkf = new(obj_keyframe)
-		newkf.pos = oldkf.pos
-		newkf.tl = id
-		newkf.index = k
-		newkf.select = false
+		newkf.position = oldkf.position
+		newkf.timeline = id
+		newkf.selected = false
 		newkf.sound_play_index = null
 		for (var v = 0; v < values; v++)
 			newkf.value[v] = oldkf.value[v]
-		keyframe[k] = newkf
+		ds_list_add(keyframe_list, newkf)
 	}
 	
-	for (var t = 0; t < tree_amount; t++)
+	// Copy tree structure
+	for (var t = 0; t < ds_list_size(other.tree_list); t++)
 	{
-		with (other.tree[t])
-			other.tree[t] = tl_duplicate()
-		tree[t].parent = id
+		with (other.tree_list[|t])
+			ds_list_add(other.tree_list, tl_duplicate())
+		tree_list[|t].parent = id
 	}
 	
-	for (var p = 0; p < part_amount; p++)
+	// Copy body part references
+	for (var p = 0; p < ds_list_size(other.part_list); p++)
 	{
-		part[p] = other.part[p].copy
-		part[p].part_of = id
+		part_list[|p] = other.part[p].copy
+		part_list[|p].part_of = id
 	}
 	
 	tl_update_type_name()
@@ -49,6 +51,6 @@ with (copy)
 	
 	if (type = "particles")
 		particle_spawner_init()
+		
+	return id
 }
-
-return copy

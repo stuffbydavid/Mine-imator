@@ -1,18 +1,12 @@
 /// tab_timeline_editor_graphics()
 	
 // Round bending
-/*if (tl_edit.type = "bodypart")
+if (tl_edit.type = "bodypart" && tl_edit.model_part != null && tl_edit.model_part.bend_part != null)
 {
-	if (tl_edit.bodypart < tl_edit.temp.char_model.part_amount)
-	{
-		if (tl_edit.temp.char_model.part_hasbend[tl_edit.bodypart])
-		{
-			tab_control_checkbox()
-			draw_checkbox("timelineeditorroundbending", dx, dy, tl_edit.round_bending, action_tl_round_bending)
-			tab_next()
-		}
-	}
-}*/
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorroundbending", dx, dy, tl_edit.round_bending, action_tl_round_bending)
+	tab_next()
+}
 
 // Texture
 tab_control_checkbox()

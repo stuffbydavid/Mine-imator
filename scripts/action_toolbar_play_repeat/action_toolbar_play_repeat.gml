@@ -1,7 +1,7 @@
 /// action_toolbar_play_repeat()
 
 project_changed = true
-timeline_repeat=!timeline_repeat
+timeline_repeat = !timeline_repeat
 
 if (timeline_playing && timeline_length > 0)
 {

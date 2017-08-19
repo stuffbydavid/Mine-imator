@@ -19,8 +19,8 @@ else
 		copy_kf_tl = array_copy_1d(history_data.copy_kf_tl)
 		copy_kf_pos = array_copy_1d(history_data.copy_kf_pos)
 		copy_kf_value = array_copy_2d(history_data.copy_kf_value)
-		copy_kf_tl_bodypart_of = array_copy_1d(history_data.copy_kf_tl_bodypart_of)
-		copy_kf_tl_bodypart = array_copy_1d(history_data.copy_kf_tl_bodypart)
+		copy_kf_tl_part_of = array_copy_1d(history_data.copy_kf_tl_part_of)
+		copy_kf_tl_model_part_name = array_copy_1d(history_data.copy_kf_tl_model_part_name)
 	}
 	else
 	{
@@ -32,8 +32,8 @@ else
 			copy_kf_tl = array_copy_1d(app.copy_kf_tl)
 			copy_kf_pos = array_copy_1d(app.copy_kf_pos)
 			copy_kf_value = array_copy_2d(app.copy_kf_value)
-			copy_kf_tl_bodypart_of = array_copy_1d(app.copy_kf_tl_bodypart_of)
-			copy_kf_tl_bodypart = array_copy_1d(app.copy_kf_tl_bodypart)
+			copy_kf_tl_part_of = array_copy_1d(app.copy_kf_tl_part_of)
+			copy_kf_tl_model_part_name = array_copy_1d(app.copy_kf_tl_model_part_name)
 			history_save_tl_select()
 		}
 	}

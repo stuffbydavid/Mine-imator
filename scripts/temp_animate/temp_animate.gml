@@ -14,7 +14,8 @@ with (new(obj_timeline))
 	{
 		case "char":
 		case "spblock":
-			new_tl_model_file_parts(id, other.model_file)
+			if (other.model_file != null)
+				new_tl_model_file_parts(id, other.model_file)
 			break
 
 		case "block":
@@ -24,6 +25,10 @@ with (new(obj_timeline))
 		
 		case "bodypart":
 			model_part = temp.model_part 
+			if (model_part != null)
+				model_part_name = model_part.name
+			else
+				model_part_name = ""
 			break
 	
 		case "text":

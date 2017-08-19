@@ -110,10 +110,10 @@ with (template_editor)
 {
 	// Character list
 	char_list = new(obj_sortlist)
-	char_list.script = action_lib_char_model
+	char_list.script = action_lib_model_name
 	sortlist_column_add(char_list, "charname", 0)
 	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(char_list, mc_version.char_list[|c])
+		sortlist_add(char_list, mc_version.char_list[|c].name)
 		
 	// Item
 	item_scroll = new(obj_scrollbar)
@@ -127,17 +127,19 @@ with (template_editor)
 	
 	// Special block list
 	special_block_list = new(obj_sortlist)
-	special_block_list.script = action_lib_char_model
+	special_block_list.script = action_lib_model_name
 	sortlist_column_add(special_block_list, "spblockname", 0)
-	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
-		sortlist_add(special_block_list, mc_version.special_block_list[|c])
+	for (var b = 0; b < ds_list_size(mc_version.special_block_list); b++)
+		sortlist_add(special_block_list, mc_version.special_block_list[|b].name)
 	
 	// Bodypart list
-	bodypart_char_list = new(obj_sortlist)
-	bodypart_char_list.script = action_lib_char_bodypart_model
-	sortlist_column_add(bodypart_char_list, "bodypartcharname", 0)
-	//for (var m = 0; m < characters + characters_blocks; m++)
-	//   sortlist_add(bodypart_char_list, iget(obj_model, m))
+	bodypart_model_list = new(obj_sortlist)
+	bodypart_model_list.script = action_lib_bodypart_model_name
+	sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
+	for (var m = 0; m < ds_list_size(mc_version.char_list); m++)
+		sortlist_add(bodypart_model_list, mc_version.char_list[|m].name)
+	for (var m = 0; m < ds_list_size(mc_version.special_block_list); m++)
+		sortlist_add(bodypart_model_list, mc_version.special_block_list[|m].name)
 		
 	// Particle editor
 	tbx_spawn_amount = new_textbox_integer()

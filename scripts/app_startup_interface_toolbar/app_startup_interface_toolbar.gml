@@ -15,8 +15,8 @@ bench_show_ani = 0
 bench_width = 490
 bench_height = 250
 
-bench_list = ds_list_create()
-ds_list_add(bench_list,
+bench_type_list = ds_list_create()
+ds_list_add(bench_type_list,
 	"char",
 	"scenery",
 	"item",
@@ -50,8 +50,7 @@ with (bench_settings)
 	height_custom = 0
 
 	// Default settings
-	iid = 0
-	temp_init()
+	temp_event_create()
 	model_name = "human"
 	model_state = mc_version.model_name_map[?model_name].default_state
 	model_part_name = "head"
@@ -99,10 +98,10 @@ with (bench_settings)
 	bodypart_model_list = new(obj_sortlist)
 	bodypart_model_list.script = action_bench_model_name
 	sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
-	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(bodypart_model_list, mc_version.char_list[|c].name)
-	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
-		sortlist_add(bodypart_model_list, mc_version.special_block_list[|c].name)
+	for (var m = 0; m < ds_list_size(mc_version.char_list); m++)
+		sortlist_add(bodypart_model_list, mc_version.char_list[|m].name)
+	for (var m = 0; m < ds_list_size(mc_version.special_block_list); m++)
+		sortlist_add(bodypart_model_list, mc_version.special_block_list[|m].name)
 	
 	// Particles list
 	particles_list = new(obj_sortlist)

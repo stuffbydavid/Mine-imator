@@ -4,13 +4,12 @@
 var ptype = new(obj_particle_type);
 
 ptype.creator = id
-ptype.creator_pos = pc_types
+ptype.creator_pos = ds_list_size(pc_type_list)
 
-pc_type[pc_types] = ptype
-pc_types++
+ds_list_add(pc_type_list, ptype)
 
-ptype.name = text_get("particleeditortypedefault", string(pc_types))
-ptype.spawn_rate = 1/pc_types
+ptype.name = text_get("particleeditortypedefault", string(ds_list_size(pc_type_list)))
+ptype.spawn_rate = 1 / ds_list_size(pc_type_list)
 ptype.sprite_tex = res_def
 ptype.sprite_tex.count++
 

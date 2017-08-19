@@ -3,7 +3,7 @@
 if (history_undo)
 {
 	with (obj_timeline)
-		if (select && !part_of)
+		if (selected && part_of = null)
 			instance_destroy()
 		
 	with (history_data)
@@ -11,12 +11,12 @@ if (history_undo)
 }
 else
 {
-	if (!tl_edit)
+	if (tl_edit = null)
 		return 0
 		
 	with (obj_timeline)
 	{
-		rootcopy = null
+		root_copy = null
 		copy = null
 	}
 		
@@ -26,12 +26,12 @@ else
 	
 	with (obj_timeline)
 	{
-		if (!select || part_of || copy || parent_is_select)
+		if (!selected || part_of != null || copy != null || parent_is_selected)
 			continue
 		
 		tl_duplicate()
-		rootcopy = copy
-		with (rootcopy)
+		root_copy = copy
+		with (root_copy)
 			tl_parent_root()
 	}
 	
@@ -39,7 +39,7 @@ else
 	
 	with (obj_timeline)
 	{
-		with (rootcopy)
+		with (root_copy)
 		{
 			tl_select()
 			tl_parent_set(other.parent)

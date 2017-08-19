@@ -5,7 +5,6 @@ log("Resetting project")
 project_reset_backup()
 history_clear()
 
-iid_current = 2 // 1 = res_def
 temp_edit = null
 res_edit = null
 tl_edit = null
@@ -45,8 +44,10 @@ with (obj_keyframe)
 
 background_biome = 0
 with (res_def)
+{
 	res_update_colors()
-res_def.count = 0
+	count = 0
+}
 
 background_ground_show = true
 background_ground_tex = res_def
@@ -121,8 +122,8 @@ timeline_zoom_goal = 16
 timeline_camera = null
 copy_kf_amount = 0
 
-tree_amount = 0
-tree_list_amount = 0
+ds_list_clear(tree_list)
+ds_list_clear(tree_visible_list)
 app_update_tl_edit()
 
 log("Project resetted")

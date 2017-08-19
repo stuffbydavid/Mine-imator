@@ -1,10 +1,11 @@
 /// ptype_event_create()
 /// @desc Create event of obj_particle_type.
 
-iid = iid_current++
-
+save_id = ""
+save_id = save_id_create()
 creator = null
 creator_pos = null
+
 name = ""
 temp = null
 text = text_get("particleeditortypetextsample")

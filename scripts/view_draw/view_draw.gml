@@ -156,27 +156,27 @@ if (view = view_second)
 
 // Aspect ratio
 if (draw_button_normal("viewaspectratio", dx, dy, dw, dh, e_button.NO_TEXT, view.aspect_ratio, false, true, icons.aspectratio))
-	view.aspect_ratio=!view.aspect_ratio
+	view.aspect_ratio = !view.aspect_ratio
 dx -= dw + padding
 
 // Grid
 if (draw_button_normal("viewgrid", dx, dy, dw, dh, e_button.NO_TEXT, view.grid, false, true, icons.viewgrid))
-	view.grid=!view.grid
+	view.grid = !view.grid
 dx -= dw + padding
 
 // Particles
 if (draw_button_normal("viewparticles", dx, dy, dw, dh, e_button.NO_TEXT, view.particles, false, true, icons.particles))
-	view.particles=!view.particles
+	view.particles = !view.particles
 dx -= dw + padding
 
 // Lights
 if (draw_button_normal("viewlights", dx, dy, dw, dh, e_button.NO_TEXT, view.lights, false, true, icons.light))
-	view.lights=!view.lights
+	view.lights = !view.lights
 dx -= dw + padding
 
 // Controls
 if (draw_button_normal("viewcontrols", dx, dy, dw, dh, e_button.NO_TEXT, view.controls, false, true, icons.controls))
-	view.controls=!view.controls
+	view.controls = !view.controls
 dx -= dw + padding
    
 // Camera name

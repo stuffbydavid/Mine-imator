@@ -38,7 +38,7 @@ if (type != "particles" && type != "camera" && type != "pointlight" && type != "
 	value_type[SCALE] = true
 
 // Bend
-if (type = "bodypart" && bodypart.bend_part != null) //if (bodypart < temp.char_model.part_amount) TODO
+if (type = "bodypart" && model_part != null && model_part.bend_part != null)
 	value_type[BEND] = true
 
 // Color

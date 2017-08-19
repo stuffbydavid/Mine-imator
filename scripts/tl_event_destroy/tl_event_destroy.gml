@@ -5,17 +5,18 @@
 ds_list_delete_value(render_list, id)
 
 // Remove from parent
-tl_parent_remove()
+ds_list_delete_value(parent.tree_list, id)
 
 // Clear tree
-while (tree_amount > 0)
-	with (tree[0])
+while (ds_list_size(tree_list))
+	with (tree_list[|0])
 		instance_destroy()
+		
+ds_list_destroy(tree_list)
+ds_list_destroy(part_list)
 
 // Clear references
-if (part_of)
-	part_of.part[bodypart] = null
-else if (temp)
+if (part_of = null && temp != null)
 	temp.count--
 	
 with (obj_template)
@@ -49,9 +50,11 @@ with (obj_keyframe)
 if (app.timeline_camera = id)
 	app.timeline_camera = null
 
-for (var k = 0; k < keyframe_amount; k++)
-	with (keyframe[k])
+while (ds_list_size(keyframe_list))
+	with (keyframe_list[|0])
 		instance_destroy()
+	
+ds_list_destroy(keyframe_list)
 
 with (obj_particle)
 	if (creator = other.id)

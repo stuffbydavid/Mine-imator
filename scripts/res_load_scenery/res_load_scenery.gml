@@ -157,7 +157,6 @@ switch (load_stage)
 		// Free file buffer
 		buffer_delete(buffer_current)
 			
-		random_set_seed(0)
 		load_stage = "blocks"
 		mc_builder.build_pos = point3D(0, 0, 0)
 		with (app)

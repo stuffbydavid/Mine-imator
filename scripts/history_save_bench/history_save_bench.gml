@@ -8,7 +8,7 @@ with (bench_settings)
 	
 with (save)
 {
-	temp_get_iids()
+	temp_get_save_ids()
 	
 	// Save particle types
 	if (type = "particles")
@@ -31,7 +31,7 @@ with (save)
 		tsave.iid = iid
 		
 		with (tsave)
-			temp_get_iids()
+			temp_get_save_ids()
 			
 		save.temp[save.temp_amount] = tsave
 		save.temp_amount++

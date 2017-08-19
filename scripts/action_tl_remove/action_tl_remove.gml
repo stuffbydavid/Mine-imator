@@ -5,28 +5,28 @@ if (history_undo)
 {
 	with (history_data)
 	{
-		for (var t = 0; t < tl_amount; t++)
-			history_restore_tl(tl[t])
+		for (var t = 0; t < tl_save_amount; t++)
+			history_restore_tl(tl_save_obj[t])
 		history_restore_tl_select()
 	}
 }
 else
 {
-	if (!tl_edit)
+	if (tl_edit = null)
 		return 0
 	
 	if (!history_redo)
 	{
 		with (history_set(action_tl_remove))
 		{
-			tl_amount = 0
+			tl_save_amount = 0
 			history_save_tl_tree(app)
 			history_save_tl_select()
 		}
 	}
 	
 	with (obj_timeline)
-		if (select && !part_of)
+		if (selected && part_of = null)
 			instance_destroy()
 	
 	tl_deselect_all()

@@ -7,8 +7,8 @@ if (history_undo)
 	{
 		history_restore_tl_select()
 		for (var t = 0; t < extend_amount; t++)
-			with (iid_find(extend_tl[t]))
-				tree_extend = other.extend_val[t]
+			with (save_id_find(extend_save_id[t]))
+				tree_extend = other.extend_value[t]
 	}
 }
 else
@@ -18,7 +18,7 @@ else
 	
 	if (history_redo)
 	{
-		tl = iid_find(history_data.tl)
+		tl = save_id_find(history_data.tl_save_id)
 		shift = history_data.shift
 	}
 	else
@@ -28,7 +28,7 @@ else
 		hobj = history_set(action_tl_select)
 		with (hobj)
 		{
-			id.tl = iid_get(tl)
+			id.tl_save_id = save_id_get(tl)
 			id.shift = shift
 			history_save_tl_select()
 			extend_amount = 0
@@ -41,8 +41,8 @@ else
 	{
 		with (hobj)
 		{
-			extend_tl[extend_amount] = iid_get(par)
-			extend_val[extend_amount] = par.tree_extend
+			extend_save_id[extend_amount] = par.save_id
+			extend_value[extend_amount] = par.tree_extend
 			extend_amount++
 		}
 		par.tree_extend = true

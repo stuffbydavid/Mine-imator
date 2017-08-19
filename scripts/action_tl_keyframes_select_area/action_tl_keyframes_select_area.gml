@@ -28,21 +28,21 @@ else
 	
 	for (var t = stl; t <= etl; t++)
 	{
-		var tl = tree_list[t];
+		var tl = tree_visible_list[|t];
 		
 		if (tl.lock)
 			continue
 		
-		for (var k = 0; k < tl.keyframe_amount; k++)
+		for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
 		{
 			var kf, len;
-			kf = tl.keyframe[k]
+			kf = tl.keyframe_list[|k]
 			len = tl_keyframe_length(kf)
 			
-			if (kf.select || kf.pos + len < spos)
+			if (kf.selected || kf.position + len < spos)
 				continue
 				
-			if (kf.pos > epos)
+			if (kf.position > epos)
 				break
 				
 			tl_keyframe_select(kf)

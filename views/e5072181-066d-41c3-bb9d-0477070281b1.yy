@@ -21,7 +21,10 @@
         "5dfed6b8-3871-4c1a-b2be-36bf00b49727",
         "c923d18d-3ed8-4b05-a9df-8dd7345316b6",
         "a9217e98-0406-4ea6-92d6-99ff3ff7d8b7",
-        "6ac7ffe9-ec32-4626-a149-d2033a8e6cbb"
+        "6ac7ffe9-ec32-4626-a149-d2033a8e6cbb",
+        "dcb6b8e1-bd42-40d0-a4d1-b4f3a7681d4f",
+        "4a52b7ff-9189-4eba-8a5b-648d900ab3f5",
+        "9411b72e-96bd-49cf-8099-81fd2385a94d"
     ],
     "filterType": "GMScript",
     "folderName": "Project",

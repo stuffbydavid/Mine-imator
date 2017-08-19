@@ -13,7 +13,7 @@ switch (slist.column_name[col])
 {
 	case "libname":
 		if (dev_mode)
-			return string_remove_newline(value.display_name) + ", iid = "+string(value.iid)
+			return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 		return string_remove_newline(value.display_name)
 		
 	case "libtype":
@@ -32,7 +32,7 @@ switch (slist.column_name[col])
 		
 	case "particleeditortypename":
 		if (dev_mode)
-			return string_remove_newline(value.name) + ", iid = " + string(value.iid)
+			return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"
 		return string_remove_newline(value.name)
 		
 	case "particleeditortypekind":
@@ -46,7 +46,7 @@ switch (slist.column_name[col])
 		
 	case "resname":
 		if (dev_mode)
-			return string_remove_newline(value.display_name) + ", iid = " + string(value.iid)
+			return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 		return string_remove_newline(value.display_name)
 		
 	case "resfilename":

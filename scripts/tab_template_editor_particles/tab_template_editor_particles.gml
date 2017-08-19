@@ -244,10 +244,10 @@ draw_inputbox("particleeditortypename", dx, dy, dw, "", tab.tbx_type_name, actio
 tab_next()
 
 // Spawn rate
-if (temp_edit.pc_types > 1)
+if (ds_list_size(temp_edit.pc_type_list) > 1)
 {
 	tab_control_meter()
-	draw_meter("particleeditortypespawnrate", dx, dy, dw, ptype_edit.spawn_rate * 100, 50, 0, 100, 100 / temp_edit.pc_types, 1, tab.tbx_type_spawn_rate, action_lib_pc_type_spawn_rate)
+	draw_meter("particleeditortypespawnrate", dx, dy, dw, ptype_edit.spawn_rate * 100, 50, 0, 100, 100 / ds_list_size(temp_edit.pc_type_list), 1, tab.tbx_type_spawn_rate, action_lib_pc_type_spawn_rate)
 	tab_next()
 }
 

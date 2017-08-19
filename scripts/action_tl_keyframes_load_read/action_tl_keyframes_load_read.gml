@@ -4,6 +4,7 @@
 /// @arg insertposition
 /// @arg maxlength
 
+/// TODO
 var fn, tl, insertpos, maxlen;
 var tlchar, tempo, temposcale, num, len;
 fn = argument0

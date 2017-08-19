@@ -1127,6 +1127,7 @@
 		"bodypartchangetip": "Change the character model or body part.",
 		"bodypartskin": "Texture",
 		"bodypartskintip": "Change the skin or texture the part uses.",
+		"bodypartunknown": "Unknown body part",
 		"repeat": "Repeat",
 		"repeattip": "Activate repeating in any direction.",
 		"repeatx": "X",
@@ -1171,14 +1172,13 @@
 		}
 	},
 	"templateeditor/": {
-		"charmodel": "Character model",
-		"charmodeltip": "Choose between different values for this model state.",
+		"model": "Model",
+		"modelstatetip": "Choose between different values for this model state.",
 		"block": "Block",
 		"blockstatetip": "Choose between different values for this block state.",
 		"item": "Item",
-		"model": "Model",
 		"bodypart": "Body part",
-		"bodyparttip": "Choose the part of the chosen character model to use.",
+		"bodyparttip": "Choose the part of the chosen model to use.",
 		"ok": "OK",
 		"oktip": "Close this window."
 	},

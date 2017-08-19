@@ -9,9 +9,61 @@ if (!instance_exists(temp_edit))
 switch (temp_edit.type)
 {
 	case "char":
+	case "spblock":
+	case "bodypart":
 	{
-		draw_label(text_get("templateeditorcharmodel") + ":", dx, dy)
-		sortlist_draw(tab.char_list, dx, dy + 22, dw, dh - 90, temp_edit.char_model)
+		var labeltext, list, capwid;
+		if (temp_edit.type = "char")
+		{
+			labeltext = text_get("templateeditormodel")
+			list = tab.char_list
+			capwid  = 0
+		}
+		else if (temp_edit.type = "spblock")
+		{
+			labeltext = text_get("templateeditorblock")
+			list = tab.special_block_list
+			capwid  = 0
+		}
+		else if (temp_edit.type = "bodypart")
+		{
+			labeltext = text_get("templateeditormodel")
+			list = tab.bodypart_model_list
+			capwid  = text_caption_width("templateeditorbodypart")
+		}
+			
+		// Model
+		var statesh = 32 * ds_map_size(temp_edit.model_state_map) + test(temp_edit.type = "bodypart", 32, 0);
+		draw_label(labeltext + ":", dx, dy)
+		sortlist_draw(list, dx, dy + 22, dw, dh - 92 - statesh, temp_edit.model_name)
+			
+		// States
+		var model, state, dyy;
+		model = mc_version.model_name_map[?temp_edit.model_name]
+		state = ds_map_find_first(temp_edit.model_state_map)
+		while (!is_undefined(state))
+		{
+			capwid = max(capwid, string_width(minecraft_get_name("modelstate", state) + ":") + 20)
+			state = ds_map_find_next(temp_edit.model_state_map, state)
+		}
+			
+		state = ds_map_find_first(temp_edit.model_state_map)
+		statesh = 32 * ds_map_size(temp_edit.model_state_map) + test(temp_edit.type = "bodypart", 32, 0)
+		dyy = dy + dh - 42 - statesh
+		while (!is_undefined(state))
+		{
+			menu_model_current = model
+			menu_model_state_current = model.states_map[?state]
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state_map[?state], minecraft_get_name("modelstatevalue", temp_edit.model_state_map[?state]), test(temp_edit.type = "bodypart", action_lib_bodypart_model_state, action_lib_model_state), null, null, capwid, text_get("templateeditormodelstatetip"))
+			state = ds_map_find_next(temp_edit.model_state_map, state)
+			dyy += 24 + 8
+		}
+		menu_model_current = null
+			
+		// Bodypart
+		if (temp_edit.type = "bodypart")
+			draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, null, null, capwid)
+		
 		break
 	}
 	
@@ -65,21 +117,6 @@ switch (temp_edit.type)
 		
 		var slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
 		draw_texture_picker(temp_edit.item_slot, res.item_sheet_texture, dx, dy + 22, dw, dh - 65, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item_scroll, action_lib_item_slot)
-		break
-	}
-	
-	case "spblock":
-	{
-		draw_label(text_get("templateeditorblock") + ":", dx, dy)
-		sortlist_draw(tab.special_block_list, dx, dy + 22, dw, dh - 90, temp_edit.char_model)
-		break
-	}
-	
-	case "bodypart":
-	{
-		draw_label(text_get("templateeditormodel") + ":", dx, dy)
-		sortlist_draw(tab.bodypart_char_list, dx, dy + 22, dw, dh - 116, temp_edit.char_model)
-		//draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dy + dh - 65, dw, 24, temp_edit.char_bodypart, text_get(temp_edit.char_model.part_name[temp_edit.char_bodypart]), action_lib_char_bodypart) TODO
 		break
 	}
 	

@@ -3,7 +3,7 @@
 
 var to = argument0;
 
-to.iid = iid
+to.save_id = save_id
 to.type = type
 to.filename = filename
 to.display_name = display_name

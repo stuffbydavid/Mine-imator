@@ -15,7 +15,7 @@ scroll = argument4
 
 draw_box(xx, yy, wid, hei, false, setting_color_background, 1)
 
-if (recent_amount = 0)
+if (ds_list_size(recent_list) = 0)
 {
 	draw_label(text_get("recentnone"), xx + 10, yy + 10, fa_left, fa_top, null, 1, setting_font_bold)
 	return 0
@@ -25,10 +25,11 @@ dy = yy
 padding = 5
 itemh = recent_thumbnail_height + padding * 2
 
-for (var r = round(scroll.value / itemh); r < recent_amount; r++)
+for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 {
-	var dx, dw, name, author, desc;
+	var recent, dx, dw, name, author, desc;
 	var tip, ty, textcol, namewid;
+	recent = recent_list[|r]
 	dx = xx + padding
 	dw = wid-30 * scroll.needed
 	
@@ -36,19 +37,19 @@ for (var r = round(scroll.value / itemh); r < recent_amount; r++)
 		break
 		
 	// Name
-	name = recent_name[r]
+	name = recent.name
 	if (name = "")
-		name = filename_new_ext(filename_name(recent_filename[r]), "")
+		name = filename_new_ext(filename_name(recent.filename), "")
 	name = string_remove_newline(name)
-	author = string_remove_newline(recent_author[r])
-	desc = string_remove_newline(recent_description[r])
+	author = string_remove_newline(recent.author)
+	desc = string_remove_newline(recent.description)
 	
 	// Tip
 	tip = name
 	if (author != "")
 		tip += " " + text_get("recentauthor", author)
 	if (desc != "")
-		tip += "\n" + recent_description[r]
+		tip += "\n" + recent.description
 	tip_wrap = false
 	tip_set(tip, xx, dy, dw, itemh)
 		
@@ -61,7 +62,8 @@ for (var r = round(scroll.value / itemh); r < recent_amount; r++)
 		// Close button
 		if (draw_button_normal("recentremove", xx + dw - 24, dy + itemh / 2-10, 20, 20, e_button.NO_TEXT, false, false, true, icons.close))
 		{
-			recent_remove(r)
+			with (recent)
+				instance_destroy()
 			r--
 			continue
 		}
@@ -80,22 +82,22 @@ for (var r = round(scroll.value / itemh); r < recent_amount; r++)
 			
 			if (mouse_left_released)
 			{
-				if (!file_exists_lib(recent_filename[r]))
+				if (!file_exists_lib(recent.filename))
 					error("erroropenprojectexists")
 				else
-					project_open(recent_filename[r])
+					project_open(recent.filename)
 			}
 		}
 	}
 		
 	// Thumbnail
-	if (recent_thumbnail[r])
+	if (recent.thumbnail != null)
 	{
-		draw_texture(recent_thumbnail[r], dx, dy + padding)
+		draw_texture(recent.thumbnail, dx, dy + padding)
 		dx += recent_thumbnail_width + padding * 2
 	}
 	
-	ty = dy + itemh / 2 - 10 - 10 * (recent_description[r] != "")
+	ty = dy + itemh / 2 - 10 - 10 * (recent.description != "")
 	
 	// Name
 	draw_set_font(setting_font_bold)	
@@ -116,4 +118,4 @@ for (var r = round(scroll.value / itemh); r < recent_amount; r++)
 
 // Scrollbar
 scroll.snap_value = itemh
-scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid-30, yy, floor(hei / itemh) * itemh, recent_amount * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid-30, yy, floor(hei / itemh) * itemh, ds_list_size(recent_list) * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)

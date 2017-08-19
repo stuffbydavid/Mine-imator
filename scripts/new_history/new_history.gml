@@ -4,13 +4,13 @@
 with (new(obj_history))
 {
 	script = argument0
-	parscript = null
-	save_temp_edit = iid_get(temp_edit)
-	save_ptype_edit = iid_get(ptype_edit)
-	save_tl_edit = iid_get(tl_edit)
-	save_res_edit = iid_get(res_edit)
+	par_script = null
+	save_temp_edit = save_id_get(temp_edit)
+	save_ptype_edit = save_id_get(ptype_edit)
+	save_tl_edit = save_id_get(tl_edit)
+	save_res_edit = save_id_get(res_edit)
 	save_axis_edit = axis_edit
-	save_iid_current = iid_current
+	save_save_id_seed = save_id_seed
 	
 	return id
 }

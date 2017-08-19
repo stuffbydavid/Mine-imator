@@ -188,11 +188,11 @@ with (new(obj_model_part))
 		if (bend_part != null)
 			shape_bend_vbuffer = vbuffer_start()
 			
-		shape_amount = ds_list_size(shapelist)
-		for (var p = 0; p < shape_amount; p++)
+		shape_list = ds_list_create()
+		for (var p = 0; p < ds_list_size(shapelist); p++)
 		{
-			shape[p] = model_read_shape(shapelist[|p])
-			if (shape[p] = null) // Something went wrong
+			var shape = model_read_shape(shapelist[|p]);
+			if (shape = null) // Something went wrong
 			{
 				log("Could not read shape list", name)
 				vbuffer_done(shape_vbuffer)
@@ -201,6 +201,7 @@ with (new(obj_model_part))
 				shape_vbuffer = null
 				return null
 			}
+			ds_list_add(shape_list, shape)
 		}
 		vbuffer_done(shape_vbuffer)
 		if (bend_part != null)
@@ -208,7 +209,7 @@ with (new(obj_model_part))
 	}
 	else
 	{
-		shape_amount = 0
+		shape_list = null
 		shape_vbuffer = null
 	}
 	
@@ -220,19 +221,20 @@ with (new(obj_model_part))
 	var partlist = map[?"parts"]
 	if (is_real(partlist) && ds_exists(partlist, ds_type_list))
 	{
-		part_amount = ds_list_size(partlist)
-		for (var p = 0; p < part_amount; p++)
+		part_list = ds_list_create()
+		for (var p = 0; p < ds_list_size(partlist); p++)
 		{
-			part[p] = model_read_part(partlist[|p], root)
-			if (part[p] = null) // Something went wrong
+			var part = model_read_part(partlist[|p], root)
+			if (part = null) // Something went wrong
 			{
 				log("Could not read part list", name)
 				return null
 			}
+			ds_list_add(part_list, part)
 		}
 	}
 	else
-		part_amount = 0
+		part_list = null
 		
 	// Update bounds of parent
 	var boundsstartdef, boundsenddef;

@@ -4,8 +4,8 @@
 
 if (history_undo)
 {
-	with (iid_find(history_data.tl))
-		tl_keyframe_select(keyframe[history_data.kf_index])
+	with (save_id_find(history_data.tl_save_id))
+		tl_keyframe_select(keyframe_list[|history_data.kf_index])
 }
 else
 {
@@ -13,20 +13,21 @@ else
 
 	if (history_redo)
 	{
-		tl = iid_find(history_data.tl)
-		kf = tl.keyframe[history_data.kf_index]
+		tl = save_id_find(history_data.tl_save_id)
+		kf = tl.keyframe_list[|history_data.kf_index]
 	}
 	else
 	{
 		tl = argument0
 		kf = argument1
-		if (!kf.select)
+		
+		if (!kf.selected)
 			return 0
 		
 		with (history_set(action_tl_keyframe_deselect))
 		{
-			id.tl = iid_get(tl)
-			kf_index = kf.index
+			tl_save_id = save_id_get(tl)
+			kf_index = ds_list_find_index(tl.keyframe_list, kf)
 		}
 	}
 	

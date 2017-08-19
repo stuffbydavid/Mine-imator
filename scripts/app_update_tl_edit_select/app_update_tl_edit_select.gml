@@ -45,11 +45,11 @@ checkexportobj = null
 
 with (obj_timeline)
 {
-	if (!select)
+	if (!selected)
 		continue
 		
 	// Show duplicate & remove settings?
-	if (!part_of)
+	if (part_of = null)
 		app.timeline_settings = true
 		
 	if (keyframe_select)
@@ -75,7 +75,7 @@ with (obj_timeline)
 		// Show export button?
 		if (checkexport)
 		{
-			var obj = test(part_of, part_of, id);
+			var obj = test(part_of != null, part_of, id);
 			if (!checkexportobj)
 			{
 				checkexportobj = obj

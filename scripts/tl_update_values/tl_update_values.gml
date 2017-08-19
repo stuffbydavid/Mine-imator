@@ -8,12 +8,12 @@ keyframe_current = null
 keyframe_next = null
 
 // Find keyframes
-for (var k = 0; k < keyframe_amount; k++)
+for (var k = 0; k < ds_list_size(keyframe_list); k++)
 {
-	keyframe_next = keyframe[k]
-	if (keyframe[k].pos > app.timeline_marker)
+	keyframe_next = keyframe_list[|k]
+	if (keyframe_list[|k].position > app.timeline_marker)
 		break
-	keyframe_current = keyframe[k]
+	keyframe_current = keyframe_list[|k]
 }
 
 // Get progress

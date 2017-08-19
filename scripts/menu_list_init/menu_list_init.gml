@@ -148,8 +148,11 @@ switch (menu_name)
 		
 	case "templateeditorbodypart": // Body part
 	{
-		//for (var p = 0; p < temp_edit.char_model.part_amount; p++)
-		//	menu_add_item(p, text_get(temp_edit.char_model.part_name[p]))
+		for (var p = 0; p < ds_list_size(temp_edit.model_file.file_part_list); p++)
+		{
+			var part = temp_edit.model_file.file_part_list[|p];
+			menu_add_item(part.name, minecraft_get_name("modelpart", part.name))
+		}
 		break
 	}
 		

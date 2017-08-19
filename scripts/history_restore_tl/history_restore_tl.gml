@@ -1,6 +1,6 @@
 /// history_restore_tl(save)
 /// @arg save
-/// @desc Restores a saved timeline.
+/// @desc Restores a saved timeline from memory.
 
 var save, tl;
 save = argument0
@@ -11,49 +11,49 @@ with (save)
 	
 with (tl)
 {
-	iid = save.iid
-	temp = iid_find(temp)
-	if (temp && !part_of)
+	save_id = save.save_id
+	temp = save_id_find(temp)
+	if (temp && part_of = null)
 		temp.count++
 	
+	// Restore values
 	for (var v = 0; v < values; v++)
 		value_default[v] = save.value_default[v]
 	
-	for (var k = 0; k < keyframe_amount; k++)
+	// Restore keyframes
+	for (var k = 0; k < save.kf_amount; k++)
 	{
-		keyframe[k] = new(obj_keyframe)
-		with (keyframe[k])
+		with (new(obj_keyframe))
 		{
-			pos = save.kf_pos[k]
-			id.tl = tl
-			index = k
-			select = false
+			position = save.kf_pos[k]
+			timeline = tl
+			selected = false
 			sound_play_index = null
 			for (var v = 0; v < values; v++)
 				value[v] = tl_value_restore(v, null, save.kf_value[k, v])
+			ds_list_add(other.keyframe_list, id)
 		}
 	}
 	
-	parent = iid_find(parent)
-	tl_parent_add()
+	parent = save_id_find(parent)
+	ds_list_insert(parent.tree_list, parent_index, id)
 	
-	part_of = iid_find(part_of)
-	if (part_of)
-		part_of.part[bodypart] = id
+	part_of = save_id_find(part_of)
+	if (part_of != null)
+		ds_list_add(part_of.part_list, id)
 		
 	// Restore recursively
-	tree_amount = 0
 	for (var t = 0; t < save.tree_amount; t++)
-		history_restore_tl(save.tree[t])
+		history_restore_tl(save.tree_save_obj[t])
 		
 	// Restore references
 	for (var s = 0; s < save.usage_temp_shape_tex_amount; s++)
-		with (iid_find(save.usage_temp_shape_tex[s]))
+		with (save_id_find(save.usage_temp_shape_tex_save_id[s]))
 			shape_tex = tl
 		
 	for (var s = 0; s < save.usage_tl_texture_amount; s++)
 	{
-		with (iid_find(save.usage_tl_texture[s]))
+		with (save_id_find(save.usage_tl_texture_save_id[s]))
 		{
 			value[TEXTUREOBJ] = tl
 			update_matrix = true
@@ -62,7 +62,7 @@ with (tl)
 			
 	for (var s = 0; s < save.usage_tl_attractor_amount; s++)
 	{
-		with (iid_find(save.usage_tl_attractor[s]))
+		with (save_id_find(save.usage_tl_attractor_save_id[s]))
 		{
 			value[ATTRACTOR] = tl
 			update_matrix = true
@@ -70,11 +70,11 @@ with (tl)
 	}
 			
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
-		with (iid_find(save.usage_kf_texture_tl[s]))
+		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 			keyframe[save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = tl
 			
 	for (var s = 0; s < save.usage_kf_attractor_amount; s++)
-		with (iid_find(save.usage_kf_attractor_tl[s]))
+		with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))
 			keyframe[save.usage_kf_attractor_index[s]].value[ATTRACTOR] = tl
 
 	// Update

@@ -25,7 +25,6 @@ else
 		with (history_set(action_res_sound_load))
 		{
 			id.fn = fn
-			save_iid_current--
 			history_save_loaded()
 		}
 	}

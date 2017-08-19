@@ -11,8 +11,8 @@ else
 		with (history_set(action_tl_select_all))
 			history_save_tl_select()
 			
-	for (var t = 0; t < tree_amount; t++)
-		with (tree[t])
+	for (var t = 0; t < ds_list_size(tree_list); t++)
+		with (tree_list[|t])
 			tl_select()
 }
 

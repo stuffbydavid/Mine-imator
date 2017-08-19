@@ -110,7 +110,7 @@ with (obj_timeline)
 		if (parent.tree[parent_pos].parent_pos_read > parent_pos_read)
 			break
 			
-	tl_parent_add()
+	//tl_parent_add() // TODO ds_list_insert...
 }
 
 log("Reset read positions")

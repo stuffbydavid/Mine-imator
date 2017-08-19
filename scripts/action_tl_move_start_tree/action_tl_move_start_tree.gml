@@ -1,14 +1,14 @@
 /// action_tl_move_start_tree()
 
-for (var t = 0; t < tree_amount; t++)
+for (var t = 0; t < ds_list_size(tree_list); t++)
 {
-	with (tree[t])
+	with (tree_list[|t])
 	{
-		if (select && !part_of)
+		if (selected && part_of = null)
 		{
 			move_parent = parent
-			move_parent_pos = parent_pos
-			tl_parent_set(app.timeline_move_obj, app.timeline_move_obj.tree_amount)
+			move_parent_index = ds_list_find_index(parent.tree_list, id)
+			tl_parent_set(app.timeline_move_obj)
 			t--
 		}
 		action_tl_move_start_tree()

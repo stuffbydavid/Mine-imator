@@ -35,7 +35,7 @@ if (draw_button_normal("frameeditorscalereset", dx + 25 * 0, dy, 24, 24, e_butto
 	action_tl_frame_scale_xyz(point3D(1, 1, 1))
 	
 if (draw_button_normal("frameeditorscaleall", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, tab.scale.scale_all, false, true, icons.scaleall))
-	tab.scale.scale_all=!tab.scale.scale_all
+	tab.scale.scale_all = !tab.scale.scale_all
 	
 if (draw_button_normal("frameeditorscalecopy", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
 	tab.scale.copy = point3D(tl_edit.value[XSCA], tl_edit.value[YSCA], tl_edit.value[ZSCA])
@@ -44,7 +44,7 @@ if (draw_button_normal("frameeditorscalepaste", dx + 25 * 3, dy, 24, 24, e_butto
 	action_tl_frame_scale_xyz(tab.scale.copy)
 	
 if (draw_button_normal("frameeditorscalesnap", dx + 25 * 4, dy, 24, 24, e_button.NO_TEXT, tab.scale.snap_enabled, false, true, icons.grid))
-	tab.scale.snap_enabled=!tab.scale.snap_enabled
+	tab.scale.snap_enabled = !tab.scale.snap_enabled
 	
 if (tab.scale.snap_enabled)
 {

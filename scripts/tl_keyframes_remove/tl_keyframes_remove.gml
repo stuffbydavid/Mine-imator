@@ -1,16 +1,13 @@
 /// tl_keyframes_remove()
+/// @desc Remove all selected keyframes.
 
-with (obj_keyframe) // Remove all selected
-{
-	if (!select)
-		continue
-	
-	tl_keyframe_remove(id)
-}
+with (obj_keyframe) 
+	if (selected)
+		instance_destroy()
 
 with (obj_timeline)
 {
-	if (!select || !keyframe_select)
+	if (!selected || keyframe_select = null)
 		continue
 	
 	tl_deselect()

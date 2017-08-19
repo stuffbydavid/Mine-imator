@@ -8,6 +8,7 @@ startup_last_crash = false
 startup_error = true
 
 enums()
+randomize()
 gml_release_mode(!dev_mode) // TODO: Investigate speed boost
 // gml_pragma("forceinline") // TODO: Put in appropriate scripts
 
@@ -51,9 +52,7 @@ textbox_startup()
 trial_startup()
 settings_startup()
 recent_startup()
-load_startup()
 alert_startup()
-
 render_startup()
 background_ground_startup()
 background_sky_startup()

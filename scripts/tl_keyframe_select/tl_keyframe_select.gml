@@ -3,12 +3,12 @@
 
 var kf = argument0;
 
-if (kf.select)
+if (kf.selected)
 	return 0
 	
-kf.select = true
+kf.selected = true
 	
-with (kf.tl)
+with (kf.timeline)
 {
 	keyframe_select = kf
 	keyframe_select_amount++

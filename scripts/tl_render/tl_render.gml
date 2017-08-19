@@ -18,11 +18,11 @@ if (!shadows && (render_mode = "highlightsundepth" || render_mode = "highlightsp
 	return 0
 	
 // Already selected when clicking?
-if (render_mode = "click" && (select || lock))
+if (render_mode = "click" && (selected || lock))
 	return 0
 
 // Outlined?
-if (render_mode = "select" && !parent_is_select && !select)
+if (render_mode = "select" && !parent_is_selected && !selected)
 	return 0
 
 tl_set_shader()
@@ -63,21 +63,20 @@ if (shader_alpha > 0)
 		{
 			case "bodypart":
 			{
-				// TODO: Invalid bodypart
-				if (bodypart.shape_vbuffer = null)
+				if (model_part = null)
 					break
 					
 				// Get texture
 				var res, texname;
-				res = temp.char_skin
+				res = temp.skin
 				if (texobj && texobj.type != "camera")
 					res = texobj
 				if (!res.ready)
 					res = res_def
 				with (res)
-					tex = res_get_model_texture(other.temp.char_model_texture_name)
+					texname = other.temp.model_texture_name
 				
-				render_world_model_part(bodypart, texname, res, value[BENDANGLE])
+				render_world_model_part(model_part, texname, res, value[BENDANGLE])
 				break
 			}
 			   

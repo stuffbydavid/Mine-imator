@@ -2,18 +2,19 @@
 /// @desc Updates the animation length.
 
 var len = 0;
+
 with (obj_timeline)
 {
-	if (keyframe_amount = 0)
+	if (ds_list_size(keyframe_list) = 0)
 		continue
 		
 	if (type = "audio")
 	{
-		for (var k = 0; k < keyframe_amount; k++)
-			len = max(len, keyframe[k].pos + tl_keyframe_length(keyframe[k]))
+		for (var k = 0; k < ds_list_size(keyframe_list); k++)
+			len = max(len, keyframe_list[|k].position + tl_keyframe_length(keyframe_list[|k]))
 	}
 	else
-		len = max(len, keyframe[keyframe_amount - 1].pos)
+		len = max(len, keyframe_list[ds_list_size(keyframe_list) - 1].position)
 }
 
 app.timeline_length = len

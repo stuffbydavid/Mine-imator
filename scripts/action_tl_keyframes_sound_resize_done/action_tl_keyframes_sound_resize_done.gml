@@ -1,32 +1,30 @@
 /// action_tl_keyframes_sound_resize_done()
 
 with (obj_timeline)
-	updatevalues = false
+	update_values = false
 	
 if (history_undo)
 {
 	with (history_data) 
 	{
-		var new_index = kf_resize_new_index;
-		for (var k = 0; k < kf_resize_amount; k++) // Move back keyframes
+		// Move back keyframes
+		for (var k = 0; k < kf_resize_amount; k++) 
 		{
-			with (iid_find(kf_resize_tl[k]).keyframe[new_index[k]])
+			with (save_id_find(kf_resize_tl_save_id[k]).keyframe_list[|kf_resize_new_index[k]])
 			{
-				newpos = other.kf_resize_old_pos[k]
-				if (pos = newpos)
+				new_position = other.kf_resize_old_pos[k]
+				if (position = new_position)
 					continue
 				
 				value[SOUNDSTART] = other.kf_resize_old_start[k]
 			
-				with (tl)
-				{
-					tl_keyframes_pushup(other.index)
-					updatevalues = true
-				}
-				
-				for (var a = 0; a < other.kf_resize_amount; a++)  // Push down other indices of same timeline
-					if (iid_find(other.kf_resize_tl[a]) = tl && new_index[a] > index)
-						new_index[a]--
+				// Push down other indices of same timeline
+				for (var a = 0; a < other.kf_resize_amount; a++)  
+					if (save_id_find(other.kf_resize_tl_save_id[a]) = tl && other.kf_resize_new_index[a] > ds_list_find_index(timeline.keyframe_list, id))
+						other.kf_resize_new_index[a]--
+						
+				ds_list_delete_value(timeline.keyframe_list, id)
+				timeline.update_values = true
 			}
 		}
 	}
@@ -35,26 +33,24 @@ else if (history_redo)
 {
 	with (history_data)
 	{
-		var old_index = kf_resize_old_index;
-		for (var k = 0; k < kf_resize_amount; k++) // Move forward keyframes
+		// Move forward keyframes
+		for (var k = 0; k < kf_resize_amount; k++) 
 		{
-			with (iid_find(kf_resize_tl[k]).keyframe[old_index[k]])
+			with (save_id_find(kf_resize_tl_save_id[k]).keyframe_list[|kf_resize_old_index[k]])
 			{
-				newpos = other.kf_resize_new_pos[k]
-				if (pos = newpos)
+				new_position = other.kf_resize_new_pos[k]
+				if (position = new_position)
 					continue
 					
 				value[SOUNDSTART] = other.kf_resize_new_start[k]
 			
-				with (tl)
-				{
-					tl_keyframes_pushup(other.index)
-					updatevalues = true
-				}
-				
-				for (var a = 0; a < other.kf_resize_amount; a++)  // Push down other indices of same timeline
-					if (iid_find(other.kf_resize_tl[a]) = tl && old_index[a] > index)
-						old_index[a]--
+				// Push down other indices of same timeline
+				for (var a = 0; a < other.kf_resize_amount; a++)  
+					if (save_id_find(other.kf_resize_tl_save_id[a]) = tl && other.kf_resize_old_index[a] > ds_list_find_index(timeline.keyframe_list, id))
+						other.kf_resize_old_index[a]--
+					
+				ds_list_delete_value(timeline.keyframe_list, id)
+				timeline.update_values = true
 			}
 		}
 	}
@@ -66,18 +62,18 @@ else
 		kf_resize_amount = 0
 		with (obj_keyframe)
 		{
-			if (!select || soundresizeindex < 0)
+			if (!selected || sound_resize_index < 0)
 				continue
 				
-			other.kf_resize_tl[other.kf_resize_amount] = iid_get(tl)
-			other.kf_resize_old_index[other.kf_resize_amount] = soundresizeindex
-			other.kf_resize_old_pos[other.kf_resize_amount] = soundresizepos
-			other.kf_resize_old_start[other.kf_resize_amount] = soundresizestart
-			other.kf_resize_new_index[other.kf_resize_amount] = index
-			other.kf_resize_new_pos[other.kf_resize_amount] = pos
+			other.kf_resize_tl_save_id[other.kf_resize_amount] = save_id_get(timeline)
+			other.kf_resize_old_index[other.kf_resize_amount] = sound_resize_index
+			other.kf_resize_old_pos[other.kf_resize_amount] = sound_resize_pos
+			other.kf_resize_old_start[other.kf_resize_amount] = sound_resize_start
+			other.kf_resize_new_index[other.kf_resize_amount] = ds_list_find_index(timeline.keyframe_list, id)
+			other.kf_resize_new_pos[other.kf_resize_amount] = position
 			other.kf_resize_new_start[other.kf_resize_amount] = value[SOUNDSTART]
 			other.kf_resize_amount++
-			tl.updatevalues = true
+			tl.update_values = true
 		}
 	}
 	window_busy = ""
@@ -87,16 +83,16 @@ if (history_undo || history_redo)
 {
 	with (obj_keyframe)
 	{
-		if (!select || pos = newpos)
+		if (!selected || position = new_position)
 			continue
 		
-		with (tl)
-			tl_keyframe_add(other.newpos, other.id)
+		with (timeline)
+			tl_keyframe_add(other.new_position, other.id)
 	}
 }
 
 tl_update_length()
 
 with (obj_timeline)
-	if (updatevalues)
+	if (update_values)
 		tl_update_values()

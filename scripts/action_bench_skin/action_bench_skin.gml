@@ -52,7 +52,7 @@ else
 		}
 	}
 	
-	history_set_res(action_bench_char_skin, fn, bench_settings.skin, res)
+	history_set_res(action_bench_skin, fn, bench_settings.skin, res)
 }
 
 bench_settings.skin = res

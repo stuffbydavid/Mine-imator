@@ -12,8 +12,8 @@ with (temp)
 	
 with (save)
 {
-	iid = temp.iid
-	temp_get_iids()
+	save_id = temp.save_id
+	temp_get_save_ids()
 	
 	// Save particle types
 	if (type = "particles")
@@ -29,6 +29,7 @@ with (save)
 	{
 		if (id.temp != temp)
 			continue
+		
 		save.usage_ptype_temp[save.usage_ptype_temp_amount] = iid
 		save.usage_ptype_temp_amount++
 	}

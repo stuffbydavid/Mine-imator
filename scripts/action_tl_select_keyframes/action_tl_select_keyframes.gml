@@ -12,7 +12,7 @@ else
 	
 	if (history_redo)
 	{
-		tl = iid_find(history_data.tl)
+		tl = save_id_find(history_data.tl_save_id)
 		shift = history_data.shift
 	}
 	else
@@ -21,7 +21,7 @@ else
 		shift = keyboard_check(vk_shift)
 		with (history_set(action_tl_select_keyframes))
 		{
-			id.tl = iid_get(tl)
+			tl_save_id = save_id_get(tl)
 			id.shift = shift
 			history_save_tl_select()
 		}
@@ -33,12 +33,8 @@ else
 	with (tl)
 		tl_select()
 			
-	for (var k = 0; k < tl.keyframe_amount; k++)
-	{
-		if (tl.keyframe[k].select)
-			continue
-		tl_keyframe_select(tl.keyframe[k])
-	}
+	for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
+		tl_keyframe_select(tl.keyframe_list[|k])
 }
 
 app_update_tl_edit()

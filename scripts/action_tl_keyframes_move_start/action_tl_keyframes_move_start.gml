@@ -3,12 +3,13 @@
 
 with (obj_keyframe)
 {
-	if (!select)
+	if (!selected)
 		continue
-	moveindex = index
-	movepos = pos
+		
+	move_index = ds_list_find_index(timeline.keyframe_list, id)
+	move_pos = position
 }
 
 timeline_move_kf = argument0
-timeline_move_kf_mousepos = timeline_mouse_pos
+timeline_move_kf_mouse_pos = timeline_mouse_pos
 window_busy = "timelinemovekeyframes"

@@ -14,17 +14,17 @@ if (object_index != app && update_matrix)
 		matrix_parent = parent.matrix
 		
 		// Parent is a body part and we're locked to bended half
-		if (parent.type = "bodypart" && lock_bend)
-			matrix_parent = matrix_multiply(model_bend_matrix(parent.bodypart, parent.value[BENDANGLE]), matrix_parent)
+		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
+			matrix_parent = matrix_multiply(model_bend_matrix(parent.model_part, parent.value[BENDANGLE]), matrix_parent)
 	}
 	else
 		matrix_parent = IDENTITY
 	
 	// Add body part transformations
-	if (type = "bodypart")
+	if (type = "bodypart" && model_part != null)
 	{
-		matrix_parent = matrix_multiply(matrix_create(bodypart.position, vec3(0), bodypart.scale), matrix_parent)
-		rot = vec3_add(rot, bodypart.rotation)
+		matrix_parent = matrix_multiply(matrix_create(model_part.position, vec3(0), model_part.scale), matrix_parent)
+		rot = vec3_add(rot, model_part.rotation)
 	}
 		
 	// Create main matrix
@@ -94,9 +94,11 @@ if (object_index != app && update_matrix)
 		var par = tl.parent;
 		if (par = app)
 			break
+			
 		value_inherit[XSCA] *= par.value[XSCA]
 		value_inherit[YSCA] *= par.value[YSCA]
 		value_inherit[ZSCA] *= par.value[ZSCA]
+		
 		if (!par.inherit_scale)
 			break
 		tl = par
@@ -129,15 +131,19 @@ if (object_index != app && update_matrix)
 		
 		if (!tl.inherit_alpha)
 			inhalpha = false
+		
 		if (!tl.inherit_color)
 			inhcolor = false
+		
 		if (!tl.inherit_visibility)
 			inhvis = false
+		
 		if (!tl.inherit_texture || tl.value[TEXTUREOBJ] >= 0)
 			inhtex = false
 		
 		if (inhalpha)
 			value_inherit[ALPHA] *= par.value[ALPHA]
+			
 		if (inhcolor)
 		{
 			value_inherit[RGBADD] = color_add(value_inherit[RGBADD], par.value[RGBADD])
@@ -150,23 +156,27 @@ if (object_index != app && update_matrix)
 			value_inherit[MIXPERCENT] = clamp(value_inherit[MIXPERCENT] + par.value[MIXPERCENT], 0, 1)
 			value_inherit[BRIGHTNESS] = clamp(value_inherit[BRIGHTNESS] + par.value[BRIGHTNESS], 0, 1)
 		}
+		
 		if (inhvis)
 			value_inherit[VISIBLE] *= par.value[VISIBLE]
+			
 		if (inhtex)
 			value_inherit[TEXTUREOBJ] = par.value[TEXTUREOBJ]
+			
 		tl = par
 	}
 	
-	// Update bend vbuffer
+	// Update bend vbuffer TODO
 	//tl_update_bend(false)
 }
 
 // Update children
-for (var t = 0; t < tree_amount; t++)
+for (var t = 0; t < ds_list_size(tree_list); t++)
 {
 	if (object_index != app && update_matrix)
-		tree[t].update_matrix = true
-	with (tree[t])
+		tree_list[|t].update_matrix = true
+	
+	with (tree_list[|t])
 		tl_update_matrix()
 }
 

@@ -65,10 +65,45 @@ with (model)
 	other.model_texture_name = curtexname
 }
 
-// Re-arrange timelines TODO
-/*
-temp_update_display_name()
+	
+// Re-arrange timelines
 
+with (obj_timeline)
+{
+	if (temp != other.id || part_of != null)
+		continue
+		
+	// Set parent to root
+	for (var p = 0; p < ds_list_size(part_list); p++)
+		with (part[p])
+			tl_parent_set(other.id)
+			
+	// Remove unused
+	for (var p = 0; p < ds_list_size(part_list); p++)
+	{
+		with (part_list[|p])
+		{
+			if (keyframe_amount > 0)
+				continue
+			
+			var unused = true;
+			for (var i = 0; i < ds_list_size(temp.model_file.file_part_list); i++)
+			{
+				if (temp.model_file.file_part_list[|i].name = name)
+				{
+					unused = false
+					break
+				}
+			}
+			if (unused)
+			{
+				instance_destroy()
+				p--
+			}
+		}
+	}
+}
+/*
 with (obj_timeline) { // Rearrange hierarchy
 	if (temp != other.id || part_of)
 		continue
@@ -77,7 +112,7 @@ with (obj_timeline) { // Rearrange hierarchy
 		with (part[p])
 			tl_parent_set(other.id)
 			
-	for (var p = 0; p < part_amount; p++) // Remove unused with 0 keyframe_amount
+	for (var p = 0; p < part_amount; p++) // Remove unused with 0 keyframes
 		with (part[p])
 			if (p >= temp.char_model.part_amount && keyframe_amount = 0) 
 				instance_destroy()

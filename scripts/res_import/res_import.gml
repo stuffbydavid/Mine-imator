@@ -32,5 +32,6 @@ if (file_exists_lib(fn))
 	save_folder = app.project_folder
 	if (type = "downloadskin")
 		type = "skin"
+	
 	res_load()
 }

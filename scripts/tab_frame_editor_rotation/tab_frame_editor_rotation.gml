@@ -38,7 +38,7 @@ if (draw_button_normal("frameeditorrotationreset", dx + 25 * 0, dy, 24, 24, e_bu
 	action_tl_frame_rot_xyz(point3D(0, 0, 0))
 	
 if (draw_button_normal("frameeditorrotationloops", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, tab.rotation.loops, false, true, icons.loops))
-	tab.rotation.loops=!tab.rotation.loops
+	tab.rotation.loops = !tab.rotation.loops
 	
 if (draw_button_normal("frameeditorrotationcopy", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
 	tab.rotation.copy = point3D(tl_edit.value[XROT], tl_edit.value[YROT], tl_edit.value[ZROT])
@@ -47,7 +47,7 @@ if (draw_button_normal("frameeditorrotationpaste", dx + 25 * 3, dy, 24, 24, e_bu
 	action_tl_frame_rot_xyz(tab.rotation.copy)
 	
 if (draw_button_normal("frameeditorrotationsnap", dx + 25 * 4, dy, 24, 24, e_button.NO_TEXT, tab.rotation.snap_enabled, false, true, icons.grid))
-	tab.rotation.snap_enabled=!tab.rotation.snap_enabled
+	tab.rotation.snap_enabled = !tab.rotation.snap_enabled
 	
 if (tab.rotation.snap_enabled)
 {

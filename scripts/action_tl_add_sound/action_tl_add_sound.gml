@@ -4,7 +4,8 @@ if (history_undo)
 {
 	with (tl_edit)
 	{
-		tl_keyframe_remove(keyframe[history_data.kf_index])
+		with (keyframe_list[|history_data.kf_index])
+			instance_destroy()
 		tl_update_values()
 	}
 	with (history_data)
@@ -16,8 +17,8 @@ else
 	
 	if (history_redo)
 	{
-		fn = history_data.fn
-		pos = history_data.pos
+		fn = history_data.filename
+		pos = history_data.position
 	}
 	else
 	{
@@ -29,7 +30,7 @@ else
 	}
 	
 	res = new_res(fn, "sound")
-	res.loaded=!res.replaced
+	res.loaded = !res.replaced
 	with (res)
 		res_load()
 		
@@ -45,8 +46,8 @@ else
 	{
 		with (hobj)
 		{
-			id.fn = fn
-			id.pos = pos
+			id.filename = fn
+			id.position = pos
 			id.kf_index = kf.index
 			history_save_loaded()
 		}

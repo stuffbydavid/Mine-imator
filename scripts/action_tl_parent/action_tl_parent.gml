@@ -1,6 +1,6 @@
-/// action_tl_parent(parent, position)
+/// action_tl_parent(parent, index)
 /// @arg parent
-/// @arg position
+/// @arg index
 
 if (history_undo)
 {
@@ -8,9 +8,9 @@ if (history_undo)
 	{
 		for (var t = 0; t < tl_amount; t++)
 		{
-			with (iid_find(tl[t]))
+			with (save_id_find(tl_save_id[t]))
 			{
-				tl_parent_set(iid_find(other.tl_old_parent[t]), other.tl_old_parent_pos[t])
+				tl_parent_set(save_id_find(other.tl_old_parent[t]), other.tl_old_parent_index[t])
 				value[XPOS] = other.tl_old_x[t]
 				value[YPOS] = other.tl_old_y[t]
 				value[ZPOS] = other.tl_old_z[t]
@@ -20,30 +20,33 @@ if (history_undo)
 }
 else
 {
-	var hobj, par, pos;
+	var hobj, par, index;
 	hobj = null
 	
 	if (history_redo)
 	{
-		par = iid_find(history_data.newparent)
-		pos = history_data.newpos
+		par = save_id_find(history_data.new_parent)
+		index = history_data.new_index
 	}
 	else
 	{
 		par = argument0
-		pos = argument1
+		index = argument1
 		hobj = history_set(action_tl_parent)
-		hobj.newparent = iid_get(par)
-		hobj.newpos = pos
-		hobj.tl_amount = 0
+		with (hobj)
+		{
+			new_parent = save_id_get(par)
+			new_index = index
+			tl_amount = 0
+		}
 	}
 	
 	with (obj_timeline)
 		moved = false
 	
-	action_tl_parent_tree(hobj, par, pos)
+	action_tl_parent_tree(hobj, par, index)
 	with (timeline_move_obj)
-		action_tl_parent_tree(hobj, par, pos)
+		action_tl_parent_tree(hobj, par, index)
 }
 
 tl_update_list()

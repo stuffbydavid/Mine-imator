@@ -14,7 +14,7 @@ if (window_width != window_get_width() || window_height != window_get_height())
 	display_reset(0, false)
 	window_set_rectangle(xx, yy, ww, hh)
 	surface_resize(application_surface, ww, hh)
-	
+
 	camera_set_view_pos(cam_window, 0, 0)
 	camera_set_view_size(cam_window, ww, hh)
 	view_set_wport(0, ww);

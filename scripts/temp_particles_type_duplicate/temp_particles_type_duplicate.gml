@@ -9,11 +9,9 @@ with (argument0)
 	ptype_copy(ptype)
 	
 // Insert
-ptype.creator_pos = pc_types
-pc_type[pc_types] = ptype
-pc_types++
+ds_list_add(pc_type_list, ptype)
 
-ptype.spawn_rate = 1/pc_types
+ptype.spawn_rate = 1 / ds_list_size(pc_type_list)
 ptype.sprite_tex.count++
 
 // Update models

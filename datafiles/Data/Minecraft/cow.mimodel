@@ -1,0 +1,114 @@
+{
+	"name": "Cow",
+	"texture": "entity/cow/cow",
+	"texture_size": [ 64, 32 ],
+	"parts": [ 
+		{
+			"name": "body",
+			"position": [ -6, 12, -9 ],
+			"rotation": [ 90, 0, 0 ],
+			"shapes": [ 
+				{
+					"type": "block",
+					"from": [ 0, 0, -10 ],
+					"to": [ 12, 18, 0 ],
+					"scale": [ 1, 1, 1 ],
+					"uv": [ 28, 14 ]
+				}, 
+				{
+					"type": "block",
+					"from": [ 4, 0, 0 ],
+					"to": [ 8, 6, 1 ],
+					"scale": [ 1, 1, 1 ],
+					"uv": [ 53, 1 ]
+				}
+			],
+			"parts": [ 
+				{
+					"name": "leftbackleg",
+					"position": [ 10, 2, 0 ],
+					"rotation": [ -90, 0, 0 ],
+					"shapes": [ 
+						{
+							"type": "block",
+							"from": [ -2, -12, -2 ],
+							"to": [ 2, 0, 2 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 4, 20 ]
+						}
+					]
+				},
+				{
+					"name": "rightbackleg",
+					"position": [ 2, 2, 0 ],
+					"rotation": [ -90, 0, 0 ],
+					"shapes": [ 
+						{
+							"type": "block",
+							"from": [ -2, -12, -2 ],
+							"to": [ 2, 0, 2 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 4, 20 ]
+						}
+					]
+				},   
+				{
+					"name": "leftfrontleg",
+					"position": [ 10, 16, 0 ],
+					"rotation": [ -90, 0, 0 ],
+					"shapes": [ 
+						{
+							"type": "block",
+							"from": [ -2, -12, -2 ],
+							"to": [ 2, 0, 2 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 4, 20 ]
+						}
+					]
+				},
+				{
+					"name": "rightfrontleg",
+					"position": [ 2, 16, 0 ],
+					"rotation": [ -90, 0, 0 ],
+					"shapes": [ 
+						{
+							"type": "block",
+							"from": [ -2, -12, -2 ],
+							"to": [ 2, 0, 2 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 4, 20 ]
+						}
+					]
+				},
+				{
+					"name": "head",
+					"position": [ 6, 18, -8 ],
+					"rotation": [ -90, 0, 0 ],
+					"shapes": [ 
+						{
+							"type": "block",
+							"from": [ -4, -4, 0 ],
+							"to": [ 4, 4, 6 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 6, 6 ]
+						}, 
+						{
+							"type": "block",
+							"from": [ -5, 2, 3 ],
+							"to": [ -4, 5, 4 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 23, 1 ]
+						}, 
+						{
+							"type": "block",
+							"from": [ 4, 2, 3 ],
+							"to": [ 5, 5, 4 ],
+							"scale": [ 1, 1, 1 ],
+							"uv": [ 23, 1 ]
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -13,6 +13,14 @@
 			"default_state": "variant=steve"
 		},
 		{
+			"name": "cow",
+			"file": "cow.mimodel"
+		},
+		{
+			"name": "pig",
+			"file": "pig.mimodel"
+		},
+		{
 			"name": "slime",
 			"file": "slime.mimodel"
 		}

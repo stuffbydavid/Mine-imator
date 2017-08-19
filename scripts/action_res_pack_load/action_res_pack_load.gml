@@ -29,7 +29,6 @@ else
 		with (history_set(action_res_pack_load))
 		{
 			id.fn = fn
-			save_iid_current--
 			history_save_loaded()
 		}
 	}

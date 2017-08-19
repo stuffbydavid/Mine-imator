@@ -7,9 +7,9 @@ if (history_undo)
 	{
 		for (var t = 0; t < save_var_amount; t++)
 		{
-			with (iid_find(save_var_obj[t]))
+			with (save_id_find(save_var_save_id[t]))
 			{
-				inherit_rotation = other.save_var_oldval[t]
+				inherit_rotation = other.save_var_old_value[t]
 				update_matrix = true
 			}
 		}
@@ -21,9 +21,9 @@ else if (history_redo)
 	{
 		for (var t = 0; t < save_var_amount; t++)
 		{
-			with (iid_find(save_var_obj[t]))
+			with (save_id_find(save_var_save_id[t]))
 			{
-				inherit_rotation = other.save_var_newval[t]
+				inherit_rotation = other.save_var_new_value[t]
 				update_matrix = true
 			}
 		}
@@ -35,7 +35,7 @@ else
 	
 	with (obj_timeline)
 	{
-		if (!select)
+		if (!selected)
 			continue
 			
 		with (hobj)

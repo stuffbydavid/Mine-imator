@@ -2,12 +2,7 @@
 /// @desc Destroy event of obj_particle_type.
 
 // Remove from creator
-creator.pc_types--
-for (var i = creator_pos; i < creator.pc_types; i++) // Push down
-{
-	creator.pc_type[i] = creator.pc_type[i + 1]
-	creator.pc_type[i].creator_pos--
-}
+ds_list_delete_value(creator.pc_type_list, id)
 
 if (temp_creator != app.bench_settings)
 	sprite_tex.count--

@@ -77,7 +77,7 @@ if (tl_edit.value_type[ROTPOINT])
 			action_tl_rotpoint_all(tab.info.rot_point_copy)
 			
 		if (draw_button_normal("timelineeditorrotpointsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.info.rot_point_snap, false, true, icons.grid))
-			tab.info.rot_point_snap=!tab.info.rot_point_snap
+			tab.info.rot_point_snap = !tab.info.rot_point_snap
 			
 		if (tab.info.rot_point_snap)
 		{

@@ -5,9 +5,9 @@
 var ptype = argument0;
 
 // Add rate
-for (var t = 0; t < pc_types; t++)
-	if (pc_type[t] != ptype)
-		pc_type[t].spawn_rate += ptype.spawn_rate / (pc_types - 1)
+for (var t = 0; t < ds_list_size(pc_type_list); t++)
+	if (pc_type_list[|t] != ptype)
+		pc_type_list[|t].spawn_rate += ptype.spawn_rate / (ds_list_size(pc_type_list) - 1)
 
 // Destroy
 with (ptype)

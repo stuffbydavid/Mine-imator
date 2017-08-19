@@ -22,8 +22,7 @@ draw_set_font(setting_font)
 draw_separator_horizontal(dx + padding, dy + padding + 20, dw - padding * 2)
 
 // Settings
-var sdy, type, buttony, listh;
-type = bench_settings.type
+var sdy, listh, buttony;
 sdy = dy
 listh = 0
 
@@ -32,7 +31,7 @@ dy += padding + 20 + 15
 dw -= padding * 2 + 10
 dh -= padding + 20 + 30
 
-if (type_is_timeline(type))
+if (type_is_timeline(bench_settings.type))
 {
 	buttony = dy + dh / 2 - 16
 }
@@ -46,28 +45,28 @@ else
 	dh -= 160 + 10
 	
 	// Settings
-	switch (type)
+	switch (bench_settings.type)
 	{
 		case "char":
 		case "spblock":
 		case "bodypart":
 		{
 			var labeltext, list, texcap, capwid;
-			if (type = "char")
+			if (bench_settings.type = "char")
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.char_list
 				texcap = "benchskin"
 				capwid  = text_caption_width(texcap)
 			}
-			else if (type = "spblock")
+			else if (bench_settings.type = "spblock")
 			{
 				labeltext = text_get("benchblock")
 				list = bench_settings.special_block_list
 				texcap = "benchspblocktex"
 				capwid  = text_caption_width(texcap)
 			}
-			else if (type = "bodypart")
+			else if (bench_settings.type = "bodypart")
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.bodypart_model_list
@@ -104,7 +103,7 @@ else
 			menu_model_current = null
 			
 			// Bodypart
-			if (type = "bodypart")
+			if (bench_settings.type = "bodypart")
 			{
 				draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, null, null, capwid)
 				dy += 24 + 8
@@ -149,9 +148,7 @@ else
 			// Preview
 			draw_label(text_get("typeitem") + ":", dx, dy + 8, fa_left, fa_middle)
 			if (res.item_sheet_texture != null)
-			{
 				draw_texture_slot(res.item_sheet_texture, bench_settings.item_slot, dx + capwid, dy, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
-			}
 			else
 			{
 				var scale = min(16 / texture_width(res.texture), 16 / texture_height(res.texture));

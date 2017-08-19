@@ -9,7 +9,7 @@ if (name = "")
 	{
 		case "char":
 		case "spblock":
-			with (char_model_file)
+			with (model_file)
 				other.display_name = minecraft_get_name("model", name)
 			break
 		
@@ -23,7 +23,10 @@ if (name = "")
 			break
 		
 		case "bodypart":
-			//display_name = text_get("librarybodypartof", text_get(char_model.part_name[char_bodypart]), text_get(char_model.name)) TODO
+			if (model_part != null)
+				display_name = text_get("librarybodypartof", minecraft_get_name("modelpart", model_part.name), minecraft_get_name("model", model_file.name))
+			else
+				display_name = text_get("librarybodypartunknown")
 			break
 	}
 }

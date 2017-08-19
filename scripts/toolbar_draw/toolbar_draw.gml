@@ -227,7 +227,7 @@ benchscale = 1 - 0.2 * ease("easeinexpo", bench_click_ani)
 benchrot = sin(bench_hover_ani * pi * 5) * (1 - abs(bench_hover_ani * 2 - 1)) * 10
 bench_hover_ani = max(0, bench_hover_ani - 0.01 * delta)
 bench_click_ani = max(0, bench_click_ani - 0.05 * delta)
-content_mouseon=!popup_mouseon
+content_mouseon = !popup_mouseon
 
 tip_set(text_get("toolbarbenchtip"), benchx, benchy, boxsize, boxsize - 5)
 

@@ -7,9 +7,9 @@ if (history_undo)
 	{
 		for (var t = 0; t < save_var_amount; t++)
 		{
-			with (iid_find(save_var_obj[t]))
+			with (save_id_find(save_var_save_id[t]))
 			{
-				name = other.save_var_oldval[t]
+				name = other.save_var_old_value[t]
 				tl_update_display_name()
 			}
 		}
@@ -21,9 +21,9 @@ else if (history_redo)
 	{
 		for (var t = 0; t < save_var_amount; t++)
 		{
-			with (iid_find(save_var_obj[t]))
+			with (save_id_find(save_var_save_id[t]))
 			{
-				name = other.save_var_newval[t]
+				name = other.save_var_new_value[t]
 				tl_update_display_name()
 			}
 		}
@@ -35,7 +35,7 @@ else
 	
 	with (obj_timeline)
 	{
-		if (!select)
+		if (!selected)
 			continue
 			
 		with (hobj)

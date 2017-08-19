@@ -3,7 +3,7 @@
 
 if (history_undo)
 {
-	with (iid_find(history_data.temp))
+	with (save_id_find(history_data.temp_save_id))
 		instance_destroy()
 }
 else
@@ -18,7 +18,7 @@ else
 		temp = temp_duplicate()
 		
 	with (hobj)
-		id.temp = iid_get(temp)
+		temp_save_id = save_id_get(temp)
 	
 	sortlist_add(lib_list, temp)
 	temp_edit = temp

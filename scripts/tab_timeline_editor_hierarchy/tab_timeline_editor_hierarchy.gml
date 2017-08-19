@@ -22,11 +22,11 @@ if (!tl_edit.part_of)
 		return 0
 	
 	// Lock to bended half
-	if (par != app && par.type = "bodypart" && par.bodypart.bend_part != null)
+	if (par != app && par.type = "bodypart" && par.model_part != null && par.model_part.bend_part != null)
 	{
 		var partname = array("right", "left", "front", "back", "upper", "lower");
 		tab_control_checkbox()
-		draw_checkbox("timelineeditorlockbend" + partname[par.bodypart.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend)
+		draw_checkbox("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend)
 		tab_next()
 	}
 }

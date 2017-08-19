@@ -79,16 +79,17 @@ with (new(obj_model_file))
 	
 	// Read all the parts of the root
 	var partlist = map[?"parts"]
-	part_amount = ds_list_size(partlist)
 	file_part_list = ds_list_create()
-	for (var p = 0; p < part_amount; p++)
+	part_list = ds_list_create()
+	for (var p = 0; p < ds_list_size(partlist); p++)
 	{
-		part[p] = model_read_part(partlist[|p], id)
-		if (part[p] = null)
+		var part = model_read_part(partlist[|p], id)
+		if (part = null)
 		{
 			log("Could not read part", name)
 			return null
 		}
+		ds_list_add(part_list, part)
 	}
 	
 	ds_map_destroy(map)

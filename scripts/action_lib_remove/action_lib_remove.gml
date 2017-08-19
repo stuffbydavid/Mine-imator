@@ -1,5 +1,6 @@
 /// action_lib_remove()
 /// @desc Removes the template from the library.
+/// TODO
 
 if (history_undo)
 {

@@ -6,7 +6,7 @@ with (bench_settings)
 	type = argument0
 
 	// Switch to character
-	if (type = "char" && ds_list_find_index(mc_version.char_list, model_name) < 0)
+	if (type = "char" && ds_list_find_index(char_list.list, model_name) < 0)
 	{
 		model_name = "human"
 		model_state = mc_version.model_name_map[?model_name].default_state
@@ -15,13 +15,17 @@ with (bench_settings)
 	}
 	
 	// Switch to special block
-	if (type = "spblock" && ds_list_find_index(mc_version.special_block_list, model_name) < 0)
+	if (type = "spblock" && ds_list_find_index(special_block_list.list, model_name) < 0)
 	{
 		model_name = "chest"
 		model_state = mc_version.model_name_map[?model_name].default_state
 		temp_update_model_state_map()
 		temp_update_model()
 	}
+	
+	// Switch to bodypart
+	if (type = "bodypart")
+		temp_update_model_part()
 	
 	// Switch to block
 	if (type = "block")

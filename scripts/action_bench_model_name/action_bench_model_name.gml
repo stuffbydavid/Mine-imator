@@ -12,14 +12,7 @@ with (bench_settings)
 	temp_update_model()
 	
 	if (type = "bodypart")
-	{
 		temp_update_model_part()
-		if (model_file != null && model_part = null && model_file.part_amount > 0)
-		{
-			model_part = model_file.file_part_list[|0]
-			model_part_name = model_part.name
-		}
-	}
 	
 	with (preview)
 	{

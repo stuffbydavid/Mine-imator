@@ -1,24 +1,20 @@
 /// tl_update_list([level])
 /// @arg [level]
 
-var level;
-
 if (argument_count = 0)
 {
-	app.tree_list_amount = 0
+	ds_list_clear(tree_visible_list)
 	level = -1
 }
 else
 {
 	level = argument[0]
-	tree_pos = app.tree_list_amount
-	app.tree_list[app.tree_list_amount] = id
-	app.tree_list_level[app.tree_list_amount] = level
-	app.tree_list_amount++
+	ds_list_add(app.tree_visible_list, id)
+	
 	if (!tree_extend)
 		return 0
 }
 
-for (var t = 0; t < tree_amount; t++)
-	with (tree[t])
-		tl_update_list(level + 1)
+for (var t = 0; t < ds_list_size(tree_list); t++)
+	with (tree_list[|t])
+		tl_update_list(other.level + 1)

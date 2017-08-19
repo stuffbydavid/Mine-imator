@@ -3,8 +3,8 @@
 
 if (temp_creator != app.bench_settings)
 {
-	if (char_skin)
-		char_skin.count--
+	if (skin)
+		skin.count--
 		
 	if (item_tex)
 		item_tex.count--

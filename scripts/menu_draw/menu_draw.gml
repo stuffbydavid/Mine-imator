@@ -124,7 +124,7 @@ switch (menu_type)
 			// Check mouse
 			hasextend = false
 			extendmouseon = false
-			if (tl != app && tl.tree_amount - (tl_edit.parent = tl && !menu_include_tl_edit) > 0 && dx + 10 < menu_w)
+			if (tl != app && ds_list_size(tl.tree_list) - (tl_edit.parent = tl && !menu_include_tl_edit) > 0 && dx + 10 < menu_w)
 			{
 				hasextend = true
 				extendmouseon = app_mouse_box(menu_x, dy, dx + 10, menu_item_h)

@@ -6,6 +6,7 @@ if (history_undo)
 {
 	with (history_data)
 		history_restore_tl_select()
+	
 	app_update_tl_edit()
 }
 else
@@ -13,7 +14,7 @@ else
 	var tl = null;
 	
 	if (history_redo)
-		tl = iid_find(history_data.tl)
+		tl = save_id_find(history_data.tl_save_id)
 	else
 	{
 		if (is_string(argument0))
@@ -38,7 +39,7 @@ else
 			
 		with (history_set(action_tl_select_single))
 		{
-			id.tl = iid_get(tl)
+			tl_save_id = save_id_get(tl)
 			history_save_tl_select()
 		}
 	}

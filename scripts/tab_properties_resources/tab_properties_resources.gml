@@ -44,7 +44,7 @@ if (res_edit.type = "pack")
 	capwid = text_caption_width("resourcespackimage", "resourcespackimagecharacter", "resourcespackimagecolormap", "resourcespackimageparticles")
 	
 	tab_control(24)
-	draw_button_menu("resourcespackimage", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image, text_get("resourcespack" + res_preview.pack_image), action_res_preview_pack_image, null, 0, capwid)
+	draw_button_menu("resourcespackimage", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image, text_get("resourcespack" + res_preview.pack_image), action_res_preview_pack_image, null, null, capwid)
 	tab_next()
 	
 	switch (res_preview.pack_image)
@@ -52,7 +52,7 @@ if (res_edit.type = "pack")
 		case "modeltextures":
 		{
 			tab_control(24)
-			draw_button_menu("resourcespackimagemodeltexture", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_model_texture, res_preview.pack_model_texture, action_res_preview_pack_model_texture, null, 0, capwid)
+			draw_button_menu("resourcespackimagemodeltexture", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_model_texture, res_preview.pack_model_texture, action_res_preview_pack_model_texture, null, null, capwid)
 			tab_next()
 			break
 		}

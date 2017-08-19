@@ -65,7 +65,7 @@ if (!tab.script)
 			// Hide button
 			tab_control(16)
 			if (draw_button_normal(cat[c].name, dx - 3, dy, 16, 16, e_button.CAPTION, cat[c].show, false, true, test(cat[c].show, icons.arrowdown, icons.arrowright)))
-				cat[c].show=!cat[c].show
+				cat[c].show = !cat[c].show
 			tab_next()
 			
 			// Draw contents
@@ -91,7 +91,7 @@ else
 
 if (tab != timeline) // Scrollbar
 {
-	content_mouseon=!popup_mouseon
+	content_mouseon = !popup_mouseon
 	if (content_direction = e_scroll.VERTICAL)
 		scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + content_width - 35, content_y, content_height, maxh + 15, setting_color_buttons, setting_color_buttons_pressed, setting_color_background)
 	else

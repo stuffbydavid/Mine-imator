@@ -8,27 +8,28 @@ if (history_undo)
 {
 	// Remove keyframes
 	for (var k = 0; k < history_data.kf_add_amount; k++)
-		with (iid_find(history_data.kf_add_tl[k]))
-			tl_keyframe_remove(keyframe[history_data.kf_add_index[k]])
+		with (save_id_find(history_data.kf_add_tl_save_id[k]))
+			with (keyframe_list[|history_data.kf_add_index[k]])
+				instance_destroy()
 			
 	// Restore keyframes
 	for (var k = 0; k < history_data.kf_set_amount; k++)
-		with (iid_find(history_data.kf_set_tl[k]).keyframe[history_data.kf_set_index[k]])
+		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 			for (var v = 0; v < history_data.par_set_amount; v++)
-				value[history_data.value[v]] = tl_value_restore(history_data.value[v], history_data.kf_set_newvalue[k, v], history_data.kf_set_oldvalue[k, v])
+				value[history_data.value[v]] = tl_value_restore(history_data.value[v], history_data.kf_set_new_value[k, v], history_data.kf_set_old_value[k, v])
 }
 else if (history_redo)
 {
 	// Add keyframes
 	for (var k = 0; k < history_data.kf_add_amount; k++)
-		with (iid_find(history_data.kf_add_tl[k]))
+		with (save_id_find(history_data.kf_add_tl_save_id[k]))
 			tl_keyframe_add(history_data.kf_add_pos[k])
 	
 	// Restore keyframes
 	for (var k = 0; k < history_data.kf_set_amount; k++)
-		with (iid_find(history_data.kf_set_tl[k]).keyframe[history_data.kf_set_index[k]])
+		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 			for (var v = 0; v < history_data.par_set_amount; v++) 
-				value[history_data.value[v]] = tl_value_restore(history_data.value[v], history_data.kf_set_oldvalue[k, v], history_data.kf_set_newvalue[k, v])
+				value[history_data.value[v]] = tl_value_restore(history_data.value[v], history_data.kf_set_old_value[k, v], history_data.kf_set_new_value[k, v])
 }
 else
 {
@@ -40,32 +41,31 @@ else
 	// Modify timelines
 	with (obj_timeline)
 	{
-		var nval;
-		if (!select)
+		if (!selected)
 			continue
 			
-		if (vid = SOUNDOBJ && value[SOUNDOBJ])
+		if (vid = SOUNDOBJ && value[SOUNDOBJ] != null)
 			value[SOUNDOBJ].count--
 			
-		nval = value[vid] * add + val
+		var nval = value[vid] * add + val;
 		if (value[vid] != nval)
 			update_matrix = true
 		
 		value[vid] = tl_value_clamp(vid, nval)
-		if (vid = SOUNDOBJ && value[SOUNDOBJ])
+		if (vid = SOUNDOBJ && value[SOUNDOBJ] != null)
 			value[SOUNDOBJ].count++
 	}
 	
 	// Save and modify keyframes
 	for (var k = 0; k < history_data.kf_set_amount; k++)
 	{
-		with (iid_find(history_data.kf_set_tl[k]).keyframe[history_data.kf_set_index[k]])
+		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 		{
 			if (history_data.par_set_n = history_data.par_set_amount)
-				history_data.kf_set_oldvalue[k, history_data.par_set_n] = tl_value_save(vid, value[vid])
+				history_data.kf_set_old_value[k, history_data.par_set_n] = tl_value_save(vid, value[vid])
 			
 			value[vid] = tl_value_clamp(vid, value[vid] * add + val)
-			history_data.kf_set_newvalue[k, history_data.par_set_n] = tl_value_save(vid, value[vid])
+			history_data.kf_set_new_value[k, history_data.par_set_n] = tl_value_save(vid, value[vid])
 		}
 	}
 	

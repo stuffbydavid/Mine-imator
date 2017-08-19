@@ -1,27 +1,29 @@
 /// tl_select_single()
 /// @desc Deselects all but the given timeline.
 
-with (obj_timeline) // Deselect all other timelines
+// Deselect all other timelines
+with (obj_timeline)
 {
 	if (id = other.id)
 		continue
 		
-	select = false
+	selected = false
 	keyframe_select = null
 	keyframe_select_amount = 0
-	parent_is_select = false
+	parent_is_selected = false
 }
 
-with (obj_keyframe) // Deselect all other keyframes
+// Deselect all other keyframes
+with (obj_keyframe)
 {
-	if (id.tl = other.id)
+	if (id.timeline = other.id)
 		continue
 	
-	select = false
+	selected = false
 }
 
 tl_edit_amount = 1
 tl_edit = id
 
-select = true
-tl_update_parent_is_select()
+selected = true
+tl_update_parent_is_selected()

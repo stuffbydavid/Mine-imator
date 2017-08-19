@@ -96,10 +96,10 @@ dy = floor(listy)
 if (toolbar_location = "bottom")
 	dy = listy + listh - iconsize * 3
 
-for (var l = 0; l < ds_list_size(bench_list); l++)
+for (var l = 0; l < ds_list_size(bench_type_list); l++)
 {
 	var type, sel;
-	type = bench_list[|l]
+	type = bench_type_list[|l]
 	sel = (bench_settings.type = type)
 	
 	if (sel)

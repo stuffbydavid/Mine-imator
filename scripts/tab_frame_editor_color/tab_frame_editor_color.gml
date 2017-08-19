@@ -55,7 +55,7 @@ if (draw_button_normal("frameeditorcolorreset", dx + 25 * 0, dy, 24, 24, e_butto
 	action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, 0, 0)
 	
 if (draw_button_normal("frameeditorcoloradvanced", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, tab.color.advanced, false, true, icons.advancedcolors))
-	tab.color.advanced=!tab.color.advanced
+	tab.color.advanced = !tab.color.advanced
 	
 if (draw_button_normal("frameeditorcolorcopy", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
 {

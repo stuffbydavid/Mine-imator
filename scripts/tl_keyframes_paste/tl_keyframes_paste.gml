@@ -1,5 +1,6 @@
 /// tl_keyframes_paste(position)
 /// @arg position
+/// TODO
 
 var pos, pastemode, tllast, tlpaste;
 pos = argument0
@@ -47,7 +48,7 @@ else if (pastemode = "char")
 	pastemode = "fixed"
 	with (obj_timeline)
 	{
-		if (!select)
+		if (!selected)
 			continue
 			
 		if (part_of)

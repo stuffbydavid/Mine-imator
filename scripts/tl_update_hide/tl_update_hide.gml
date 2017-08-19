@@ -4,9 +4,9 @@
 if (!hide)
 	return 0
 	
-for (var t = 0; t < tree_amount; t++)
+for (var t = 0; t < ds_list_size(tree_list); t++)
 {
-	with (tree[t])
+	with (tree_list[|t])
 	{
 		if (inherit_visibility)
 		{

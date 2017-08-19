@@ -27,8 +27,8 @@ timeline_move_highlight_pos = null
 timeline_move_off_x = 0
 timeline_move_off_y = 0
 timeline_move_kf = null
-timeline_move_kf_mousepos = null
-timeline_sound_resize_mousepos = null
+timeline_move_kf_mouse_pos = null
+timeline_sound_resize_mouse_pos = null
 timeline_sound_end_mousex = 0
 timeline_sound_end_value = 0
 
@@ -40,8 +40,11 @@ timeline_settings_keyframes = false
 timeline_settings_keyframes_export = false
 
 copy_kf_amount = 0
-copy_kf_tl[0] = 0
 copy_kf_pos[0] = 0
 copy_kf_value[0, 0] = 0
-copy_kf_tl_bodypart_of[0] = null
-copy_kf_tl_bodypart[0] = null
+copy_kf_tl_save_id[0] = ""
+copy_kf_tl_part_of[0] = null
+copy_kf_tl_model_part_name[0] = null
+
+tree_list = ds_list_create()
+tree_visible_list = ds_list_create()

@@ -47,8 +47,8 @@ else
 render_ratio = render_width / render_height
 render_overlay = (render_camera_colors || render_watermark)
 
-render_color = draw_get_color()
-render_alpha = draw_get_alpha()
+render_prev_color = draw_get_color()
+render_prev_alpha = draw_get_alpha()
 draw_set_color(c_white)
 draw_set_alpha(1)
 

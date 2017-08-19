@@ -79,18 +79,18 @@ if (exportmovie_format != "png")
 			if (type != "audio" || (hide && !render_hidden))
 				continue
 				
-			for (var k = 0; k < keyframe_amount; k++)
+			for (var k = 0; k < ds_list_size(keyframe_list); k++)
 			{
-				with (keyframe[k])
+				with (keyframe_list[|k])
 				{
 					if (value[SOUNDOBJ] && value[SOUNDOBJ].ready && value[SOUNDVOLUME] > 0 &&
-						pos < app.exportmovie_marker_end &&
-						pos + tl_keyframe_length(id) >= app.exportmovie_marker_start)
+						position < app.exportmovie_marker_end &&
+						position + tl_keyframe_length(id) >= app.exportmovie_marker_start)
 					{
 						movie_audio_sound_add(value[SOUNDOBJ].sound_file_id, 
-											  max(0, pos - app.exportmovie_marker_start) / app.project_tempo, 
+											  max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
 											  value[SOUNDVOLUME], 
-											  value[SOUNDSTART] + max(0, app.exportmovie_marker_start - pos) / app.project_tempo, 
+											  value[SOUNDSTART] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
 											  value[SOUNDEND])
 					}
 				}
@@ -108,7 +108,7 @@ else
 	log("High Quality", yesno(exportmovie_high_quality))
 	log("Size", project_video_width, project_video_height)
 	
-	render_background=!popup_exportmovie.remove_background
+	render_background = !popup_exportmovie.remove_background
 }
 
 render_hidden = popup_exportmovie.include_hidden

@@ -40,7 +40,9 @@ if (view.controls)
 			{
 				if (hide || !value_inherit[VISIBLE])
 					continue
-				draw_set_color(test(select || parent_is_select, c_white, c_controls))
+					
+				draw_set_color(test(selected || parent_is_selected, c_white, c_controls))
+				
 				if (type = "spotlight")
 					view_shape_spotlight()
 				else if (type = "pointlight")
@@ -54,7 +56,7 @@ if (view.controls)
 			draw_set_color(c_white)
 			
 			// Controls
-			if (tl_edit && tl_edit != cam)
+			if (tl_edit != null && tl_edit != cam)
 			{
 				if (!tl_edit.hide && tl_edit.value_inherit[VISIBLE])
 				{

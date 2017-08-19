@@ -1,31 +1,31 @@
-/// action_tl_parent_tree(historyobject, newparent, newposition)
+/// action_tl_parent_tree(historyobject, newparent, newindex)
 /// @arg historyobject
 /// @arg newparent
-/// @arg newposition
+/// @arg newindex
 
-var hobj, newparent, newpos;
+var hobj, newparent, newindex;
 hobj = argument0
 newparent = argument1
-newpos = argument2
+newindex = argument2
 
-for (var t = 0; t < tree_amount; t++)
+for (var t = 0; t < ds_list_size(tree_list); t++)
 {
-	with (tree[t])
+	with (tree_list[|t])
 	{
-		if (select && !part_of && id != newparent && !tl_has_child(newparent) && !moved)
+		if (selected && part_of = null && id != newparent && !tl_has_child(newparent) && !moved)
 		{
 			with (hobj)
 			{
-				tl[tl_amount] = iid_get(other.id)
+				tl_save_id[tl_amount] = save_id_get(other.id)
 				if (other.parent = app.timeline_move_obj)
 				{
-					tl_old_parent[tl_amount] = iid_get(other.move_parent)
-					tl_old_parent_pos[tl_amount] = other.move_parent_pos
+					tl_old_parent_save_id[tl_amount] = save_id_get(other.move_parent)
+					tl_old_parent_index[tl_amount] = other.move_parent_index
 				}
 				else
 				{
-					tl_old_parent[tl_amount] = iid_get(other.parent)
-					tl_old_parent_pos[tl_amount] = other.parent_pos
+					tl_old_parent_save_id[tl_amount] = save_id_get(other.parent)
+					tl_old_parent_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
 				}
 				tl_old_x[tl_amount] = other.value[XPOS]
 				tl_old_y[tl_amount] = other.value[YPOS]
@@ -33,9 +33,9 @@ for (var t = 0; t < tree_amount; t++)
 				tl_amount++
 			}
 			
-			tl_parent_set(newparent, newpos)
+			tl_parent_set(newparent, newindex)
 			moved = true
-			if (keyframe_amount = 0)
+			if (ds_list_size(keyframe_list) = 0)
 			{
 				if (parent = app)
 				{
@@ -54,6 +54,6 @@ for (var t = 0; t < tree_amount; t++)
 		}
 		
 		if (parent != app.timeline_move_obj)
-			action_tl_parent_tree(hobj, newparent, newpos)
+			action_tl_parent_tree(hobj, newparent, newindex)
 	}
 }

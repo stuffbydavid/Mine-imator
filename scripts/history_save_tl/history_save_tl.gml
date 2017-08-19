@@ -12,22 +12,26 @@ with (tl)
 	
 with (save)
 {
-	iid = tl.iid
-	temp = iid_get(temp)
+	save_id = tl.save_id
+	temp = save_id_get(temp)
+	
+	// Save values
 	for (var v = 0; v < values; v++)
 		value_default[v] = tl_value_save(v, tl.value_default[v])
 		
-	for (var k = 0; k < keyframe_amount; k++)
+	// Save keyframes
+	kf_amount = ds_list_size(tl.keyframe_list)
+	for (var k = 0; k < kf_amount; k++)
 	{
-		with (tl.keyframe[k])
+		with (tl.keyframe_list[|k])
 		{
-			save.kf_pos[k] = pos
+			save.kf_pos[k] = position
 			for (var v = 0; v < values; v++)
 				save.kf_value[k, v] = tl_value_save(v, value[v])
 		}
 	}
-	parent = iid_get(parent)
-	part_of = iid_get(part_of)
+	parent = save_id_get(parent)
+	part_of = save_id_get(part_of)
 	
 	// Save references in templates
 	usage_temp_shape_tex_amount = 0
@@ -35,7 +39,7 @@ with (save)
 	{
 		if (shape_tex != tl)
 			continue
-		save.usage_temp_shape_tex[save.usage_temp_shape_tex_amount] = iid
+		save.usage_temp_shape_tex_save_id[save.usage_temp_shape_tex_amount] = save_id
 		save.usage_temp_shape_tex_amount++
 	}
 	
@@ -46,38 +50,41 @@ with (save)
 	{
 		if (value[TEXTUREOBJ] = tl)
 		{
-			save.usage_tl_texture[save.usage_tl_texture_amount] = iid
+			save.usage_tl_texture_save_id[save.usage_tl_texture_amount] = save_id
 			save.usage_tl_texture_amount++
 		}
+		
 		if (value[ATTRACTOR] = tl)
 		{
-			save.usage_tl_attractor[save.usage_tl_attractor_amount] = iid
+			save.usage_tl_attractor_save_id[save.usage_tl_attractor_amount] = save_id
 			save.usage_tl_attractor_amount++
 		}
 	}
 	
-	// Save references in keyframe_amount
+	// Save references in keyframes
 	usage_kf_texture_amount = 0
 	usage_kf_attractor_amount = 0
 	with (obj_keyframe)
 	{
 		if (value[TEXTUREOBJ] = tl)
 		{
-			save.usage_kf_texture_tl[save.usage_kf_texture_amount] = iid_get(id.tl)
-			save.usage_kf_texture_index[save.usage_kf_texture_amount] = index
+			save.usage_kf_texture_tl_save_id[save.usage_kf_texture_amount] = save_id_get(timeline)
+			save.usage_kf_texture_index[save.usage_kf_texture_amount] = ds_list_find_index(timeline.keyframe_list, id)
 			save.usage_kf_texture_amount++
 		}
+		
 		if (value[ATTRACTOR] = tl)
 		{
-			save.usage_kf_attractor_tl[save.usage_kf_attractor_amount] = iid_get(id.tl)
-			save.usage_kf_attractor_index[save.usage_kf_attractor_amount] = index
+			save.usage_kf_attractor_tl_save_id[save.usage_kf_attractor_amount] = save_id_get(timeline)
+			save.usage_kf_attractor_index[save.usage_kf_attractor_amount] = ds_list_find_index(timeline.keyframe_list, id)
 			save.usage_kf_attractor_amount++
 		}
 	}
+	
+	// Save recursively
+	tree_amount = ds_list_size(tl.tree_list)
+	for (var t = 0; t < tree_amount; t++)
+		tree_save_obj[t] = history_save_tl(tl.tree_list[|t])
 }
-
-// Save recursively
-for (var t = 0; t < save.tree_amount; t++)
-	save.tree[t] = history_save_tl(tl.tree[t])
 
 return save

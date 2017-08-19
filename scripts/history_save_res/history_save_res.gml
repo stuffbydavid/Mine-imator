@@ -11,7 +11,7 @@ with (res)
 	
 with (save)
 {
-	usage_char_skin_amount = 0
+	usage_skin_amount = 0
 	usage_item_tex_amount = 0
 	usage_block_tex_amount = 0
 	usage_scenery_amount = 0
@@ -32,10 +32,10 @@ with (save)
 // Save references
 with (obj_template)
 {
-	if (char_skin = res)
+	if (skin = res)
 	{
-		save.usage_char_skin[save.usage_char_skin_amount] = iid
-		save.usage_char_skin_amount++
+		save.usage_skin[save.usage_skin_amount] = iid
+		save.usage_skin_amount++
 	}
 	
 	if (item_tex = res)

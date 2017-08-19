@@ -54,7 +54,7 @@ if (temp)
 			if (temp.char_model_file = null)
 				break
 			
-			var res = temp.char_skin;
+			var res = temp.skin;
 			if (!res.ready)
 				res = res_def
 				

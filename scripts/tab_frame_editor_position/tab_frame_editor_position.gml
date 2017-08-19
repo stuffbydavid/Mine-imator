@@ -32,7 +32,7 @@ if (draw_button_normal("frameeditorpositionpaste", dx + 25 * 2, dy, 24, 24, e_bu
 	action_tl_frame_pos_xyz(tab.position.copy)
 	
 if (draw_button_normal("frameeditorpositionsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.position.snap_enabled, false, true, icons.grid))
-	tab.position.snap_enabled=!tab.position.snap_enabled
+	tab.position.snap_enabled = !tab.position.snap_enabled
 	
 if (tab.position.snap_enabled)
 {

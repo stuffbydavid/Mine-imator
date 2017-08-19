@@ -29,6 +29,7 @@ with (temp_edit)
 	block_state_map[?state] = val
 	block_state = state_vars_map_to_string(block_state_map)
 	temp_update_block()
+	temp_update_display_name()
 }
 
 lib_preview.update = true

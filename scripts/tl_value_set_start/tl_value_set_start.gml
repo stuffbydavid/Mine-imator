@@ -15,35 +15,32 @@ with (app)
 // Used only in here
 with (obj_keyframe)
 {
-	edit = select
+	edit = selected
 	created = false
 }
 
-// Add new keyframe_amount
+// Add new keyframes
 with (obj_timeline)
 {
-	if (!select)
+	if (!selected || keyframe_select != null)
 		continue
 		
-	if (!keyframe_select)
+	// If marker is on a keyframe, edit that, if not, add new keyframe
+	if (keyframe_current && keyframe_current.position = app.timeline_marker && !keyframe_current.selected)
+		keyframe_current.edit = true
+	else
 	{
-		// If marker is on a keyframe, edit that, if not, add new keyframe
-		if (keyframe_current && keyframe_current.pos = app.timeline_marker && !keyframe_current.select)
-			keyframe_current.edit = true
-		else
-		{
-			var newkf = tl_keyframe_add(app.timeline_marker);
-			newkf.created = true
-			newkf.edit = true
-			combine = false
-		}
+		var newkf = tl_keyframe_add(app.timeline_marker);
+		newkf.created = true
+		newkf.edit = true
+		combine = false
 	}
 }
 
 // Register history
 history_pop()
 if (combine && history_amount > 0 &&
-	history[0].parscript = script &&
+	history[0].par_script = script &&
 	history[0].save_axis_edit = axis_edit)
 	history_data = history[0]
 else
@@ -51,7 +48,7 @@ else
 	history_push()
 	
 	history_data = new_history(tl_value_set)
-	history_data.parscript = script
+	history_data.par_script = script
 	
 	history_data.par_set_amount = 0
 	history_data.kf_add_amount = 0
@@ -61,15 +58,16 @@ else
 	{
 		if (created)
 		{
-			history_data.kf_add_tl[history_data.kf_add_amount] = iid_get(tl)
-			history_data.kf_add_index[history_data.kf_add_amount] = index
-			history_data.kf_add_pos[history_data.kf_add_amount] = pos
+			history_data.kf_add_tl_save_id[history_data.kf_add_amount] = save_id_get(timeline)
+			history_data.kf_add_index[history_data.kf_add_amount] = ds_list_find_index(timeline.keyframe_list, id)
+			history_data.kf_add_pos[history_data.kf_add_amount] = position
 			history_data.kf_add_amount++
 		}
+		
 		if (edit)
 		{
-			history_data.kf_set_tl[history_data.kf_set_amount] = iid_get(tl)
-			history_data.kf_set_index[history_data.kf_set_amount] = index
+			history_data.kf_set_tl_save_id[history_data.kf_set_amount] = save_id_get(timeline)
+			history_data.kf_set_index[history_data.kf_set_amount] = ds_list_find_index(timeline.keyframe_list, id)
 			history_data.kf_set_amount++
 		}
 	}

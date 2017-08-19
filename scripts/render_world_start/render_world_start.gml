@@ -19,7 +19,6 @@ if (!render_camera) // Use work camera
 	cam_up[Z] = cx * (xx * xx + yy * yy)
 	
 	cam_fov = 45
-	cam_ratio = 1
 }
 else
 {
@@ -30,7 +29,6 @@ else
 	cam_up[Y] = render_camera.matrix[9]
 	cam_up[Z] = render_camera.matrix[10]
 	cam_fov = render_camera.value[CAMFOV]
-	cam_ratio = 1//render_camera.value[CAMRATIO]
 }
 
 cam_near = 1
@@ -43,7 +41,7 @@ background_sky_update()
 
 gpu_set_ztestenable(true)
 gpu_set_zwriteenable(true)
-render_set_projection(cam_from, cam_to, cam_up, cam_fov, cam_ratio * render_ratio, cam_near, cam_far)
+render_set_projection(cam_from, cam_to, cam_up, cam_fov, render_ratio, cam_near, cam_far)
 
 proj_from = cam_from
 proj_matrix = matrix_get(matrix_projection)

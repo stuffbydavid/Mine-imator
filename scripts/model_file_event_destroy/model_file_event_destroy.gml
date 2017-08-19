@@ -1,10 +1,7 @@
-/// model_unload()
+/// model_file_event_destroy()
 
-if (!loaded)
-	return 0
-	
-for (var p = 0; p < part_amount; p++)
-	with (part[p])
+for (var p = 0; p < ds_list_size(part_list); p++)
+	with (part_list[|p])
 		instance_destroy()
-
-loaded = false
+		
+ds_list_destroy(part_list)

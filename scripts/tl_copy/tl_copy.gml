@@ -13,17 +13,14 @@ to.lock = lock
 to.hide = hide
 to.depth = depth
 
-to.keyframe_amount = keyframe_amount
-
 to.lock_bend = lock_bend
 to.parent = parent
-to.parent_pos = parent_pos
-to.tree_amount = tree_amount
+to.parent_index = ds_list_find_index(parent.tree_list, id)
 to.tree_extend = tree_extend
 
-to.bodypart = bodypart
+to.model_part = model_part
+to.model_part_name = model_part_name
 to.part_of = part_of
-to.part_amount = part_amount
 
 to.inherit_position = inherit_position
 to.inherit_rotation = inherit_rotation

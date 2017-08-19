@@ -87,10 +87,10 @@ if (sound_buffer != null)
 // Clear references and update counters
 with (obj_template)
 {
-	if (char_skin = other.id)
+	if (skin = other.id)
 	{
-		char_skin = res_def
-		char_skin.count++
+		skin = res_def
+		skin.count++
 	}
 	
 	if (item_tex = other.id)
@@ -121,8 +121,8 @@ with (obj_template)
 
 with (app.bench_settings)
 {
-	if (char_skin = other.id)
-		char_skin = res_def
+	if (skin = other.id)
+		skin = res_def
 	
 	if (item_tex = other.id)
 	{

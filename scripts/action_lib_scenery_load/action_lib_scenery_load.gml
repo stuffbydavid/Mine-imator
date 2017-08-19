@@ -19,7 +19,7 @@ else
 	}
 	
 	res = new_res(fn, "schematic")
-	res.loaded=!res.replaced
+	res.loaded = !res.replaced
 	with (res)
 		res_load()
 		

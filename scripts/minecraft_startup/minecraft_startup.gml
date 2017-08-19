@@ -10,6 +10,7 @@ res_def = new(obj_resource)
 
 with (res_def)
 {
+	save_id = "default"
 	type = "pack"
 	display_name = "Minecraft"
 	font_minecraft = true

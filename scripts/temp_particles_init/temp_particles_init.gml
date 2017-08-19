@@ -25,6 +25,6 @@ pc_destroy_at_time_israndom = 0
 pc_destroy_at_time_random_min = 5
 pc_destroy_at_time_random_max = 10
 
-pc_types = 0
+pc_type_list = ds_list_create()
 
 // For type variables, see ptype_event_create()

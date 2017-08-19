@@ -18,8 +18,8 @@ log("load_folder", load_folder)
 log("save_folder", save_folder)
 
 project_write_project()
-project_write_objects()
-project_write_background()
+//project_write_objects()
+//project_write_background()
 project_write_camera()
 
 buffer_export(buffer_current, fn)

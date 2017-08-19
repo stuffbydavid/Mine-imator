@@ -1,17 +1,19 @@
-/// tl_parent_set(parent, [position])
+/// tl_parent_set(parent, [index])
 /// @desc Sets the parent
 /// @arg parent
-/// @arg [position]
+/// @arg [index]
 
 if (parent != null)
-	tl_parent_remove()
+	ds_list_delete_value(parent.tree_list, id)
 
 parent = argument[0]
-if (argument_count > 1 && argument[1] >= 0)
-	parent_pos = argument[1]
-else
-	parent_pos = parent.tree_amount
 
-tl_parent_add()
+var index;
+if (argument_count > 1 && argument[1] >= 0)
+	index = argument[1]
+else
+	index = ds_list_size(parent.tree_list)
+
+ds_list_insert(parent.tree_list, index, id)
 
 update_matrix = true

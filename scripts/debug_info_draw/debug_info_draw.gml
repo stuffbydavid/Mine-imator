@@ -11,7 +11,6 @@ str += "file_directory: " + file_directory + " \n"
 str += "fps_real: " + string(fps_real) + " \n"
 str += "current_step: " + string(current_step) + " \n"
 str += "instance_count: " + string(instance_count) + " \n"
-str += "iid_current: " + string(iid_current) + " \n"
 str += "window_busy: " + window_busy + " \n"
 str += "window_focus: " + window_focus + " \n"
 if (popup)

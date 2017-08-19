@@ -15,7 +15,10 @@ if (par = null)
 action_tl_parent(par, pos)
 
 with (timeline_move_obj)
+{
+	ds_list_destroy(tree_list)
 	instance_destroy()
+}
 timeline_move_obj = null
 
 window_busy = ""

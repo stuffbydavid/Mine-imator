@@ -3,18 +3,19 @@
 
 with (obj_timeline)
 {
-	if (select)
+	if (selected)
 	{
 		tl_update_value_types_show()
-		select = false
+		selected = false
 		keyframe_select = null
 		keyframe_select_amount = 0
 	}
-	parent_is_select = false
+	
+	parent_is_selected = false
 }
 
 with (obj_keyframe)
-	select = false
+	selected = false
 
 tl_edit_amount = 0
 tl_edit = null

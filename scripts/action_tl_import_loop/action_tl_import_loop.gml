@@ -1,5 +1,6 @@
 /// action_tl_import_loop(filename)
 /// @arg filename
+/// TODO
 
 if (history_undo)
 {
@@ -42,15 +43,15 @@ else
 	if (tladd.part_of)
 		tladd = tladd.part_of
 		
-	insertpos = tladd.keyframe_select.pos
-	goalpos = tladd.keyframe[tladd.keyframe_select.index + 1].pos
+	insertpos = tladd.keyframe_select.position
+	goalpos = tladd.keyframe[tladd.keyframe_select.index + 1].position
 	
 	tl_deselect_all()
 	
-	// Add start / end frames
-	for (var p = 0; p < tladd.part_amount; p++)
+	// Add start/end frames
+	for (var p = 0; p < ds_list_size(tladd.part_list); p++)
 	{
-		with (tladd.part[p])
+		with (tladd.part_list[|p])
 		{
 			tl_keyframe_select(tl_keyframe_add(insertpos))
 			tl_keyframe_select(tl_keyframe_add(goalpos))
@@ -63,8 +64,8 @@ else
 		
 	// Remove selected keyframes of root
 	with (obj_keyframe)
-		if (tl = tladd && select)
-			tl_keyframe_remove(id)
+		if (timeline = tladd && selected)
+			instance_destroy()
 		
 	with (tladd)
 	{

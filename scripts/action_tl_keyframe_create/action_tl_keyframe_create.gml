@@ -7,9 +7,10 @@ if (history_undo)
 	with (history_data)
 		history_restore_tl_select()
 
-	with (iid_find(history_data.tl))
+	with (save_id_find(history_data.tl_save_id))
 	{
-		tl_keyframe_remove(keyframe[history_data.kf_index])
+		with (keyframe_list[|history_data.kf_index])
+			instance_destroy()
 		tl_update_values()
 		update_matrix = true
 		tl_update_matrix()
@@ -21,8 +22,8 @@ else
 	
 	if (history_redo)
 	{
-		tl = iid_find(history_data.tl)
-		pos = history_data.pos
+		tl = save_id_find(history_data.tl_save_id)
+		pos = history_data.position
 	}
 	else
 	{
@@ -31,8 +32,8 @@ else
 		hobj = history_set(action_tl_keyframe_create)
 		with (hobj)
 		{
-			id.tl = iid_get(tl)
-			id.pos = pos
+			id.tl_save_id = save_id_get(tl)
+			id.position = pos
 			history_save_tl_select()
 		}
 	}
@@ -48,7 +49,7 @@ else
 	}
 	
 	if (!history_redo)
-		hobj.kf_index = kf.index
+		hobj.kf_index = ds_list_find_index(tl.keyframe_list, kf)
 }
 
 app_update_tl_edit()

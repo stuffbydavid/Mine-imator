@@ -19,7 +19,7 @@ if (draw_button_normal("frameeditorbendpaste", dx + 25 * 2, dy, 24, 24, e_button
 	action_tl_frame_bend_angle(tab.bend.copy, false)
 	
 if (draw_button_normal("frameeditorbendsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.bend.snap_enabled, false, true, icons.grid))
-	tab.bend.snap_enabled=!tab.bend.snap_enabled
+	tab.bend.snap_enabled = !tab.bend.snap_enabled
 	
 if (tab.bend.snap_enabled)
 {

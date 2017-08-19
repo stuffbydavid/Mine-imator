@@ -141,7 +141,7 @@ draw_box(boxx, boxy, tabmaxw, tabsh, false, setting_color_background, 1)
 
 dx = boxx
 dy = boxy
-content_mouseon=!popup_mouseon
+content_mouseon = !popup_mouseon
 
 for (var t = 0; t < panel.tab_list_amount; t++)
 {

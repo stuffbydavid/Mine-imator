@@ -8,7 +8,7 @@ with (save)
 	
 with (bench_settings)
 {
-	temp_find_iids()
+	temp_find_save_ids()
 	
 	if (type = "item")
 		temp_update_item()
@@ -33,7 +33,7 @@ with (bench_settings)
 			ntemp.iid = iid
 			with (ntemp)
 			{
-				temp_find_iids()
+				temp_find_save_ids()
 				
 				if (type = "item")
 					temp_update_item()

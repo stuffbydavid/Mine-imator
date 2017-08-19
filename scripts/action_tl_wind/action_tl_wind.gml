@@ -5,15 +5,15 @@ if (history_undo)
 {
 	with (history_data)
 		for (var t = 0; t < save_var_amount; t++)
-			with (iid_find(save_var_obj[t]))
-				wind = other.save_var_oldval[t]
+			with (save_id_find(save_var_save_id[t]))
+				wind = other.save_var_old_value[t]
 }
 else if (history_redo)
 {
 	with (history_data)
 		for (var t = 0; t < save_var_amount; t++)
-			with (iid_find(save_var_obj[t]))
-				wind = other.save_var_newval[t]
+			with (save_id_find(save_var_save_id[t]))
+				wind = other.save_var_new_value[t]
 }
 else
 {
@@ -21,7 +21,7 @@ else
 	
 	with (obj_timeline)
 	{
-		if (!select)
+		if (!selected)
 			continue
 			
 		with (hobj)
