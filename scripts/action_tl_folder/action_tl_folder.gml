@@ -17,7 +17,7 @@ else
 	tl = new_tl("folder")
 	if (tl_edit != null)
 		with (tl)
-			tl_parent_set(tl_edit.parent, ds_list_find_index(tl_edit.parent.tree_list, tl_edit))
+			tl_set_parent(tl_edit.parent, ds_list_find_index(tl_edit.parent.tree_list, tl_edit))
 	
 	if (!history_redo)
 	{

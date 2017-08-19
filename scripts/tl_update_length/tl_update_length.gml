@@ -14,7 +14,7 @@ with (obj_timeline)
 			len = max(len, keyframe_list[|k].position + tl_keyframe_length(keyframe_list[|k]))
 	}
 	else
-		len = max(len, keyframe_list[ds_list_size(keyframe_list) - 1].position)
+		len = max(len, keyframe_list[|ds_list_size(keyframe_list) - 1].position)
 }
 
 app.timeline_length = len

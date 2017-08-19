@@ -3,7 +3,7 @@
 
 var view, len, xyang, zang;
 view = argument0
-len = point3D_distance(cam_from, tl_edit.pos_rotate) * 0.2 * 0.5
+len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * 0.2 * 0.5
 
 with (tl_edit)
 {
@@ -19,7 +19,7 @@ zang = matrix_multiply(matrix_build(0, 0, 0, 90, 0, tl_edit.value[CAMROTATEXYANG
 
 view_control_rotation_axis(view, CAMROTATEXYANGLE, c_aqua, xyang, len)
 view_control_rotation_axis(view, CAMROTATEZANGLE, c_aqua, zang, len)
-view_control_position_axis(view, CAMROTATEDISTANCE, c_aqua, tl_edit.pos_rotate, tl_edit.pos)
+view_control_position_axis(view, CAMROTATEDISTANCE, c_aqua, tl_edit.world_pos_rotate, tl_edit.world_pos)
 
 // Is dragging
 if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_control_edit = CAMROTATEXYANGLE || view_control_edit = CAMROTATEZANGLE))
@@ -78,7 +78,7 @@ if (window_busy = "rendercontrol" && view_control_edit = CAMROTATEDISTANCE)
 		// Find move factor
 		vecmouse = vec2(mouse_dx, mouse_dy)
 		vecdot = vec2_dot(vec2_normalize(view_control_vec), vec2_normalize(vecmouse))
-		dis = point3D_distance(tl_edit.pos, tl_edit.pos_rotate)
+		dis = point3D_distance(tl_edit.world_pos, tl_edit.world_pos_rotate)
 		move = vec2_length(vecmouse) * (dis / veclen) * vecdot
 		view_control_value += move
 		

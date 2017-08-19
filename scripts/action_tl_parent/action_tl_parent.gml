@@ -10,7 +10,7 @@ if (history_undo)
 		{
 			with (save_id_find(tl_save_id[t]))
 			{
-				tl_parent_set(save_id_find(other.tl_old_parent[t]), other.tl_old_parent_index[t])
+				tl_set_parent(save_id_find(other.tl_old_parent[t]), other.tl_old_parent_index[t])
 				value[XPOS] = other.tl_old_x[t]
 				value[YPOS] = other.tl_old_y[t]
 				value[ZPOS] = other.tl_old_z[t]

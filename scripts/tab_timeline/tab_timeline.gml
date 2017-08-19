@@ -97,7 +97,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			sound = kf.value[SOUNDOBJ]
 			
-			dx = tlx + floor(kf.movepos * timeline_zoom - timeline.hor_scroll.value)
+			dx = tlx + floor(kf.move_pos * timeline_zoom - timeline.hor_scroll.value)
 			
 			if (dx > tlx + tlw)
 				break
@@ -687,28 +687,28 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 		
 		if (mousekf)
 		{
-			if (mousekf.select)
+			if (mousekf.selected)
 			{
 				if (keyboard_check(vk_shift)) // Deselect
 				{
-					action_tl_keyframe_deselect(mousekf.tl, mousekf)
+					action_tl_keyframe_deselect(mousekf.timeline, mousekf)
 					app_mouse_clear()
 				}
 				else // Start moving selection
 					action_tl_keyframes_move_start(mousekf)
 			}
-			else if ((timeline_marker >= mousekf.pos && timeline_marker <= mousekf.pos + tl_keyframe_length(mousekf) && mousekf.tl.select) || keyboard_check(vk_shift)) // Select
+			else if ((timeline_marker >= mousekf.position && timeline_marker <= mousekf.position + tl_keyframe_length(mousekf) && mousekf.timeline.selected) || keyboard_check(vk_shift)) // Select
 			{
-				action_tl_keyframe_select(mousekf.tl, mousekf)
+				action_tl_keyframe_select(mousekf.timeline, mousekf)
 				action_tl_keyframes_move_start(mousekf)
 			}
 			else
-				action_tl_select(mousekf.tl)
+				action_tl_select(mousekf.timeline)
 			
-			if (mousekf.tl.type = "audio" && mousekf.value[SOUNDOBJ])
+			if (mousekf.timeline.type = "audio" && mousekf.value[SOUNDOBJ])
 				timeline_marker = timeline_mouse_pos
 			else
-				timeline_marker = mousekf.pos
+				timeline_marker = mousekf.timeline
 		}
 		else
 		{

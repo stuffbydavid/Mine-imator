@@ -20,5 +20,5 @@ menu_amount++
 if (tl != app && !tl.tree_extend)
 	return 0
 
-for (var t = 0; t < tl.tree_amount; t++)
-	menu_add_timeline(tl.tree[t], level + 1)
+for (var t = 0; t < ds_list_size(tl.tree_list); t++)
+	menu_add_timeline(tl.tree_list[|t], level + 1)

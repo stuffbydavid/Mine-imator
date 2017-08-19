@@ -23,9 +23,6 @@ else
 
 with (temp_edit)
 {
-	if (block_state_map[?state] = val) 
-		return 0
-		
 	block_state_map[?state] = val
 	block_state = state_vars_map_to_string(block_state_map)
 	temp_update_block()

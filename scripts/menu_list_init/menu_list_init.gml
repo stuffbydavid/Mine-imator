@@ -21,12 +21,12 @@ if (menu_block_current != null)
 			
 switch (menu_name)
 {
-	case "benchcharskin":
+	case "benchskin":
 	case "benchspblocktex":
-	case "benchbodypartskin": // Character skin (bench)
-	case "librarycharskin":
+	case "benchbodypartskin": // Skin (bench)
+	case "libraryskin":
 	case "libraryspblocktex":
-	case "librarybodypartskin": // Character skin (library)
+	case "librarybodypartskin": // Skin (library)
 	{
 		var modelfile, texname;
 		if (string_contains(menu_name, "bench"))

@@ -3,7 +3,7 @@
 
 var view, len, axis, mat;
 view = argument0
-len = point3D_distance(cam_from, tl_edit.pos) * 0.2 * 0.6
+len = point3D_distance(cam_from, tl_edit.world_pos) * 0.2 * 0.6
 axis = tl_edit.model_part.bend_axis
 
 if (axis = X)

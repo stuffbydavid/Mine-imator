@@ -74,8 +74,8 @@ if (view.controls)
 				}
 				
 				// Update 2D position
-				tl_edit.pos_2d = view_shape_project(tl_edit.pos)
-				tl_edit.pos_2d_error = (point3D_project_error || tl_edit.pos_2d[X] < 0 || tl_edit.pos_2d[Y] < 0 || tl_edit.pos_2d[X] >= app.content_width || tl_edit.pos_2d[Y] >= app.content_height)
+				tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
+				tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= app.content_width || tl_edit.world_pos_2d[Y] >= app.content_height)
 			}
 			
 		}

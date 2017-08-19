@@ -34,7 +34,7 @@ if (tl_edit.value_type[ROTPOINT])
 	{
 		var snapval, mul, def;
 		snapval = tab.info.rot_point_snap * tab.info.rot_point_snap_size
-		mul = point_distance_3d(tl_edit.pos[X], tl_edit.pos[Y], tl_edit.pos[Z], cam_from[X], cam_from[Y], cam_from[Z]) / 500
+		mul = point3D_distance(tl_edit.world_pos, cam_from) / 500
 		if (tl_edit.temp)
 			def = tl_edit.temp.rot_point
 		else

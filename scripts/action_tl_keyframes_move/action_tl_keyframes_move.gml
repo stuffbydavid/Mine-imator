@@ -10,7 +10,7 @@ with (obj_keyframe)
 		continue
 	
 	// Calculate new position
-	new_position = max(0, movepos + movex)
+	new_position = max(0, move_pos + movex)
 	if (position = new_position)
 		continue
 	

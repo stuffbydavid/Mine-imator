@@ -42,10 +42,10 @@ keyframe_next = null
 keyframe_select = null
 keyframe_select_amount = 0
 
-pos = point3D(0, 0, 0)
-pos_rotate = point3D(0, 0, 0)
-pos_2d = point2D(0, 0)
-pos_2d_error = false
+world_pos = point3D(0, 0, 0)
+world_pos_rotate = point3D(0, 0, 0)
+world_pos_2d = point2D(0, 0)
+world_pos_2d_error = false
 
 level = 0
 parent = null

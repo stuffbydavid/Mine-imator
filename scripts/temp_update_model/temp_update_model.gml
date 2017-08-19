@@ -65,95 +65,72 @@ with (model)
 	other.model_texture_name = curtexname
 }
 
-	
-// Re-arrange timelines
-
+// Update timelines
 with (obj_timeline)
 {
 	if (temp != other.id || part_of != null)
 		continue
-		
-	// Set parent to root
-	for (var p = 0; p < ds_list_size(part_list); p++)
-		with (part[p])
-			tl_parent_set(other.id)
 			
-	// Remove unused
+	// Remove empty timelines and set others to root
 	for (var p = 0; p < ds_list_size(part_list); p++)
 	{
 		with (part_list[|p])
 		{
-			if (keyframe_amount > 0)
-				continue
-			
-			var unused = true;
-			for (var i = 0; i < ds_list_size(temp.model_file.file_part_list); i++)
+			// Check if unused
+			if (ds_list_size(keyframe_list) = 0)
 			{
-				if (temp.model_file.file_part_list[|i].name = name)
+				var unused = true;
+				
+				for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
 				{
-					unused = false
-					break
+					if (temp.model_file.file_part_list[|mp].name = model_part_name)
+					{
+						unused = false
+						break
+					}
+				}
+				
+				if (unused)
+				{
+					instance_destroy()
+					p--
+					continue
 				}
 			}
-			if (unused)
-			{
-				instance_destroy()
-				p--
-			}
-		}
-	}
-}
-/*
-with (obj_timeline) { // Rearrange hierarchy
-	if (temp != other.id || part_of)
-		continue
-		
-	for (var p = 0; p < part_amount; p++) // Set parent to root
-		with (part[p])
-			tl_parent_set(other.id)
 			
-	for (var p = 0; p < part_amount; p++) // Remove unused with 0 keyframes
-		with (part[p])
-			if (p >= temp.char_model.part_amount && keyframe_amount = 0) 
-				instance_destroy()
-			
-	for (var p = part_amount - 1; p >= 0; p--) { // Trim
-		if (part[p])
-			break
-		part_amount--
-	}
-	
-	for (var p = 0; p < temp.char_model.part_amount; p++) { // Add missing
-		if (p < part_amount && part[p])
-			continue
-		with (new(obj_timeline)) {
-			type = "bodypart"
-			temp = other.temp
-			bodypart = p
-			part_of = other.id
-			inherit_alpha = true
-			inherit_color = true
-			value_type_show[POSITION] = temp.char_model.part_show_position[p]
-			other.part[p] = id
-			other.part_amount = max(other.part_amount, p + 1)
-			tl_parent_root()
-		}
-	}
-	
-	for (var p = temp.char_model.part_amount - 1; p >= 0; p--) { // Set parents
-		var par = temp.char_model.part_parent[p];
-		with (part[p]) {
-			if (par < 0)
-				tl_parent_set(other.id)
-			else
-				tl_parent_set(other.part[par])
+			model_part = null
+			tl_set_parent(other.id)
+			tl_update_value_types()
 			tl_update_type_name()
 			tl_update_display_name()
-			tl_update_value_types()
-			tl_update_depth()
 		}
 	}
 	
+	// Add missing parts
+	for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
+	{
+		// Check if there is a previous body part with the 
+		// same name, and re-use that one if that's the case
+		var part, tlexists;
+		part = temp.model_file.file_part_list[|mp]
+		tlexists = false
+		
+		for (var p = 0; p < ds_list_size(part_list); p++)
+		{
+			if (part_list[|p].model_part_name = part.name)
+			{
+				tlexists = true
+				break
+			}	
+		}
+		
+		// Otherwise create a timeline for it
+		if (!tlexists)
+			tl_new_part(part)
+	}
+	
+	tl_update_part_list(temp.model_file, id)
 	tl_update_type_name()
+	tl_update_display_name()
 	update_matrix = true
-}*/
+}

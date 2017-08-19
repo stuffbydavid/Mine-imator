@@ -23,7 +23,7 @@ if (!render_camera) // Use work camera
 else
 {
 	var pos_lookat = point3D_mul_matrix(point3D(0, 1, 0), render_camera.matrix);
-	cam_from = point3D_copy(render_camera.pos)
+	cam_from = point3D_copy(render_camera.world_pos)
 	cam_to = point3D_copy(pos_lookat)
 	cam_up[X] = render_camera.matrix[8]
 	cam_up[Y] = render_camera.matrix[9]

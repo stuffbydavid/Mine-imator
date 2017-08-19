@@ -32,7 +32,7 @@ else
 		tl_duplicate()
 		root_copy = copy
 		with (root_copy)
-			tl_parent_root()
+			tl_set_parent_root()
 	}
 	
 	tl_deselect_all()
@@ -42,7 +42,7 @@ else
 		with (root_copy)
 		{
 			tl_select()
-			tl_parent_set(other.parent)
+			tl_set_parent(other.parent)
 		}
 	}
 }

@@ -182,7 +182,7 @@ dx -= dw + padding
 // Camera name
 if (!cam)
 	camname = text_get("viewworkcamera")
-else if (cam.select)
+else if (cam.selected)
 	camname = text_get("viewselectedcamera", string_remove_newline(cam.display_name))
 else
 	camname = text_get("viewactivecamera", string_remove_newline(cam.display_name))

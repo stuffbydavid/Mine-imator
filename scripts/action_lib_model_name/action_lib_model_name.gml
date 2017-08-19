@@ -78,7 +78,7 @@ else
 							child_parent[child_amount] = other.parent.iid
 							child_amount++
 						}
-						tl_parent_set(other.id)
+						tl_set_parent(other.id)
 						t--
 					}
 				}
@@ -112,7 +112,7 @@ if (history_undo)
 		// Restore children of affected part
 		for (var c = 0; c < child_amount; c++) 
 			with (iid_find(child[c]))
-				tl_parent_set(iid_find(history_data.child_parent[c]))
+				tl_set_parent(iid_find(history_data.child_parent[c]))
 				
 		// Restore selection
 		history_restore_tl_select()

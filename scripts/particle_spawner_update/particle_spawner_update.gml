@@ -22,7 +22,6 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 			
 			if (spawn)
 			{
-				var slot;
 				// Fill spawn array
 				if (spawn_queue_start < 0 || s >= spawn_queue_start + minute_steps)
 				{
@@ -45,7 +44,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 				}
 				
 				// Check current queue slot
-				slot = s-spawn_queue_start
+				var slot = s - spawn_queue_start;
 				for (var t = 0; t < spawn_queue_amount[slot]; t++)
 					particle_spawner_spawn(spawn_queue[slot, t])
 			}
@@ -161,7 +160,8 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 			// Bounding box
 			if (temp.pc_bounding_box_type > 0 && pt.type.bounding_box)
 			{
-				if (temp.pc_bounding_box_type = 1) // Ground
+				// Ground
+				if (temp.pc_bounding_box_type = 1) 
 				{
 					if (pt.pos[Z] < temp.pc_bounding_box_ground_z)
 					{
@@ -188,10 +188,13 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 				else
 				{
 					var boxstart, boxend;
-					if (temp.pc_bounding_box_type = 2) // Spawn region
+					
+					// Spawn region
+					if (temp.pc_bounding_box_type = 2)
 					{
 						if (!temp.pc_spawn_region_use)
 							continue
+							
 						if (temp.pc_spawn_region_type = "sphere")
 						{
 							var dis = point3D_distance(pt.pos, pos);
@@ -201,12 +204,14 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 								{
 									if (pt.type.bounce)
 									{
-										pt.spd[a] *= -pt.type.bounce_factor // Invert speed
+										// Invert speed
+										pt.spd[a] *= -pt.type.bounce_factor 
 										
 										if (abs(pt.spd[a]) < 0.1)
 											pt.spd[a] = 0
 											
-										pt.rot_spd[a] *= -0.5 // Flip and slow down rotation
+										// Flip and slow down rotation
+										pt.rot_spd[a] *= -0.5 
 									}
 								}
 								pt.pos = point3D_add(pos, vec3_mul(vec3_normalize(point3D_sub(pt.pos, pos)), temp.pc_spawn_region_sphere_radius))
@@ -230,7 +235,9 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 							}
 						}
 					}
-					else if (temp.pc_bounding_box_type = 3) // Box
+					
+					// Box
+					else if (temp.pc_bounding_box_type = 3) 
 					{
 						for (var a = X; a <= Z; a++)
 						{
@@ -243,16 +250,19 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 					{
 						if (pt.pos[a] < boxstart[a] || pt.pos[a] > boxend[a])
 						{
-							pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) // Keep within box
+							// Keep within box
+							pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
 							if (pt.type.bounce)
 							{
-								pt.spd[a] *= -pt.type.bounce_factor // Invert speed
+								// Invert speed
+								pt.spd[a] *= -pt.type.bounce_factor 
 								
 								if (abs(pt.spd[a]) < 0.25)
 									pt.spd[a] = 0
 									
+								// Flip and slow down rotation
 								for (var b = X; b <= Z; b++)
-									pt.rot_spd[b] *= -0.5 // Flip and slow down rotation
+									pt.rot_spd[b] *= -0.5 
 							}
 						}
 					}
@@ -261,4 +271,5 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 		}
 	}
 }
+
 spawn_laststep = current_step

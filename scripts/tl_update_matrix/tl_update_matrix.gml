@@ -23,7 +23,10 @@ if (object_index != app && update_matrix)
 	// Add body part transformations
 	if (type = "bodypart" && model_part != null)
 	{
-		matrix_parent = matrix_multiply(matrix_create(model_part.position, vec3(0), model_part.scale), matrix_parent)
+		if (part_of = null)
+			matrix_parent = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), model_part.scale), matrix_parent)
+		else
+			matrix_parent = matrix_multiply(matrix_create(model_part.position, vec3(0), model_part.scale), matrix_parent)
 		rot = vec3_add(rot, model_part.rotation)
 	}
 		
@@ -82,7 +85,7 @@ if (object_index != app && update_matrix)
 	}
 	
 	// Set world position
-	pos = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
+	world_pos = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
 	
 	// Scale for position controls
 	value_inherit[XSCA] = 1

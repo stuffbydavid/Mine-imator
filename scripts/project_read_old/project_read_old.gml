@@ -322,14 +322,14 @@ for (a = 0; a < load.tl_amount; a++) {
 		tl = new(obj_timeline)
 		tl.type = "camera"
 		with (tl) {
-			tl_parent_root()
+			tl_set_parent_root()
 			tl_update_value_types()
 		}
 	} else if (load.tl_type[a] = "light") {
 		tl = new(obj_timeline)
 		tl.type = "pointlight"
 		with (tl) {
-			tl_parent_root()
+			tl_set_parent_root()
 			tl_update_value_types()
 		}
 	} else
@@ -401,7 +401,7 @@ for (a = 0; a < load.tl_amount; a++) { // Lock
 		par = par.part[load.tl_lockpart[a] - 1]
 	load.tl_tl[a].lock_bend = load.tl_lockpartbend[a]
 	with (load.tl_tl[a])
-		tl_parent_set(par)
+		tl_set_parent(par)
 }
 with (obj_timeline) {
 	tl_update_type_name()

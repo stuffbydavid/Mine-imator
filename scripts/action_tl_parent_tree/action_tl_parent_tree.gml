@@ -33,7 +33,7 @@ for (var t = 0; t < ds_list_size(tree_list); t++)
 				tl_amount++
 			}
 			
-			tl_parent_set(newparent, newindex)
+			tl_set_parent(newparent, newindex)
 			moved = true
 			if (ds_list_size(keyframe_list) = 0)
 			{

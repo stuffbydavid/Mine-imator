@@ -1,12 +1,12 @@
 /// app_update_animate()
 /// @desc Handles the playing of various animations. Runs once per step.
 
-var bgobject, updatevalues;
 
 // Go through timelines
+var bgobject, updatevalues;
 updatevalues = (timeline_marker_previous != timeline_marker)
-timeline_camera = null
 bgobject = null
+timeline_camera = null
 background_lights = 1
 background_light_data[0] = 0
 
@@ -38,10 +38,10 @@ with (obj_timeline)
 		}
 		
 		// Find camera
-		if (!app.timeline_camera && value_inherit[VISIBLE] && !hide)
+		if (app.timeline_camera = null && value_inherit[VISIBLE] && !hide)
 			app.timeline_camera = id
 			
-		if (select)
+		if (selected)
 			app.timeline_camera = id
 	}
 	

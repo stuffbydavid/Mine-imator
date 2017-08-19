@@ -2,15 +2,15 @@
 
 if (window_busy = "")
 {
-	if (tl_edit) 
+	if (tl_edit != null) 
 	{
 		cam_work_focus_tl = tl_edit
 		
-		if (cam_work_focus_tl.pos_2d_error)
+		if (cam_work_focus_tl.world_pos_2d_error)
 			cam_work_focus_tl = null
 			
 		if (cam_work_focus_tl)
-			cam_work_focus = point3D_copy(cam_work_focus_tl.pos)
+			cam_work_focus = point3D_copy(cam_work_focus_tl.world_pos)
 	}
 	else
 		cam_work_focus_tl = null

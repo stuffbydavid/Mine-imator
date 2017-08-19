@@ -12,7 +12,7 @@ if (history_undo)
 		// Restore children
 		for (var c = 0; c < child_amount; c++)
 			with (iid_find(child[c]))
-				tl_parent_set(iid_find(other.child_parent[c]))
+				tl_set_parent(iid_find(other.child_parent[c]))
 	}
 }
 else
@@ -29,46 +29,48 @@ else
 	// Move children of affected timelines
 	with (obj_timeline)
 	{
-		if (temp != temp_edit || part_of)
+		if (temp != temp_edit || part_of != null)
 			continue
 		
-		for (var t = 0; t < tree_amount; t++) // Children of own tree
+		for (var t = 0; t < ds_list_size(tree_list); t++) // Children of own tree
 		{
-			with (tree[t])
+			with (tree_list[|t])
 			{
-				if (part_of)
+				if (part_of != null)
 					continue
+					
 				if (hobj)
 				{
-					hobj.child[hobj.child_amount] = iid
-					hobj.child_parent[hobj.child_amount] = parent.iid
+					hobj.child_save_id[hobj.child_amount] = save_id
+					hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
 					hobj.child_amount++
 				}
-				tl_parent_set(other.parent, other.parent_pos)
+				tl_set_parent(other.parent, other.parent_pos)
 				t--
 			}
 		}
 		
-		for (var p = 0; p < part_amount; p++) // Children of body parts
+		for (var p = 0; p < ds_list_size(part_list); p++) // Children of body parts
 		{
-			if (!part[p])
+			var part = part_list[|p];
+			if (part = null)
 				continue
 			
-			for (var t = 0; t < part[p].tree_amount; t++)
+			for (var t = 0; t < ds_list_size(part.tree_list); t++)
 			{
-				with (part[p].tree[t])
+				with (part.tree_list[|t])
 				{
-					if (part_of)
+					if (part_of = null)
 						continue
 					
 					if (hobj)
 					{
-						hobj.child[hobj.child_amount] = iid
-						hobj.child_parent[hobj.child_amount] = parent.iid
+						hobj.child_save_id[hobj.child_amount] = save_id
+						hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
 						hobj.child_amount++
 					}
 					
-					tl_parent_set(other.parent, other.parent_pos)
+					tl_set_parent(other.parent, other.parent_pos)
 					t--
 				}
 			}

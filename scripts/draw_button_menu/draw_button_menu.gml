@@ -148,7 +148,7 @@ if (mouseon && mouse_left_released)
 	else if (type = e_menu.TIMELINE)
 		menu_timeline_init()
 	else
-		menu_timeline_init()
+		menu_transition_init()
 		
 	// Flip
 	if (menu_flip)

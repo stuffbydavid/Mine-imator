@@ -6,6 +6,8 @@ ds_list_delete_value(render_list, id)
 
 // Remove from parent
 ds_list_delete_value(parent.tree_list, id)
+if (part_of)
+	ds_list_delete_value(part_of.part_list, id)
 
 // Clear tree
 while (ds_list_size(tree_list))

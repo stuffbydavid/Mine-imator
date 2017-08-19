@@ -9,12 +9,12 @@ temp = argument0
 save = argument1
 treeobj = argument2
 
-for (var t = 0; t < treeobj.tree_amount; t++)
+for (var t = 0; t < ds_list_size(treeobj.tree_list); t++)
 {
-	var tl = treeobj.tree[t]
+	var tl = treeobj.tree_list[|t]
 	if (tl.temp = temp)
 	{
-		save.usage_tl[save.usage_tl_amount] = history_save_tl(tl)
+		save.usage_tl_save_obj[save.usage_tl_amount] = history_save_tl(tl)
 		save.usage_tl_amount++
 	}
 	else

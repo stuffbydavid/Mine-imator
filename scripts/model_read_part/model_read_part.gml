@@ -95,6 +95,7 @@ with (new(obj_model_part))
 		}
 	}
 	
+	matrix = matrix_create(point3D(0, 0, 0), rotation, scale)
 		
 	// Matrix used when rendering preview/particle
 	default_matrix = matrix_create(position, rotation, scale)
