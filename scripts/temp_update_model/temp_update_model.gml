@@ -92,8 +92,22 @@ with (obj_timeline)
 				
 				if (unused)
 				{
-					instance_destroy()
+					// Move children to root (and mark them for undo/redo)
+					for (var t = 0; t < ds_list_size(tree_list); t++)
+					{
+						with (tree_list[|t])
+						{
+							if (part_of != null)
+								break
+							part_parent_save_id = save_id_get(other.id)
+							part_parent_index = t
+							tl_set_parent(other.part_of)
+							t--
+						}
+					}
+					
 					p--
+					instance_destroy()
 					continue
 				}
 			}

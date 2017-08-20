@@ -16,7 +16,8 @@ with (new(obj_timeline))
 	scale_resize = false
 	lock_bend = part.lock_bend
 	value_type_show[POSITION] = false // TODO
-			
+	part_parent_save_id = ""
+	
 	ds_list_add(other.part_list, id)
 	tl_set_parent(other.id)
 	tl_update_depth()

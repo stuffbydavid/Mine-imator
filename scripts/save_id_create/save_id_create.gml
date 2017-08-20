@@ -15,6 +15,6 @@ do
 }
 until (save_id_find(saveid) = null)
 
-save_id_seed = random_get_seed()
+save_id_seed++
 
 return saveid
