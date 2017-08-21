@@ -3,7 +3,7 @@
 var itemh, itemhalf, indent;
 var listwid, tlx, tly, tlw, tlh, tlstartpos;
 var mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
-var mousemovetl, mousemovepos, movehltl, movehlpos;
+var mousemovetl, mousemoveindex, movehltl, movehlpos;
 var barx, bary, barw, barh;
 var framestep, framehighlight, f;
 var markerx, markery;
@@ -50,7 +50,7 @@ if (mousetl >= 0 && mousetl < ds_list_size(tree_visible_list))
 else
 	mousetl = null
 mousemovetl = null
-mousemovepos = null
+mousemoveindex = null
 movehltl = null
 movehlpos = null
 timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom))
@@ -416,10 +416,11 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		}
 	
 		// Set move target
+		var index = ds_list_find_index(tl.parent.tree_list, tl);
 		if ((mouse_y >= dy || t = timeline_list_first) && mouse_y < dy + 8)
 		{
 			mousemovetl = tl.parent
-			mousemovepos = tl.parent_pos // TODO
+			mousemoveindex = index
 			movehlpos = t
 		}
 		else if (mouse_y > dy + itemh - 8)
@@ -427,24 +428,24 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if (tl.tree_extend && ds_list_size(tl.tree_list) > 0)
 			{
 				mousemovetl = tl
-				mousemovepos = 0
+				mousemoveindex = 0
 			}
-			else if (tl.parent && tl.parent_pos = ds_list_size(tl.parent.tree_list) - 1)
+			else if (tl.parent != app && index = ds_list_size(tl.parent.tree_list) - 1)
 			{
 				mousemovetl = tl.parent.parent
-				mousemovepos = tl.parent.parent_pos + 1
+				mousemoveindex = ds_list_find_index(tl.parent.parent.tree_list, tl.parent) + 1
 			}
 			else
 			{
 				mousemovetl = tl.parent
-				mousemovepos = tl.parent_pos + 1
+				mousemoveindex = index + 1
 			}
 			movehlpos = t + 1
 		}
 		else if (tl = mousetl)
 		{
 			mousemovetl = tl
-			mousemovepos = null
+			mousemoveindex = null
 			movehltl = tl
 		}
 		
@@ -766,7 +767,7 @@ if (window_busy = "timelinemove")
 	timeline_move_highlight_tl = movehltl
 	timeline_move_highlight_pos = movehlpos
 	if (!mouse_left)
-		action_tl_move_done(mousemovetl, mousemovepos)
+		action_tl_move_done(mousemovetl, mousemoveindex)
 }
 
 // Select timelines

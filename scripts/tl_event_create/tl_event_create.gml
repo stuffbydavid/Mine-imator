@@ -49,8 +49,6 @@ world_pos_2d_error = false
 
 level = 0
 parent = null
-parent_pos = null
-parent_pos_read = null
 parent_is_selected = false
 lock_bend = true
 tree_list = ds_list_create()

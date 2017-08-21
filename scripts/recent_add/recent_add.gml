@@ -9,7 +9,8 @@ for (index = 0; index < ds_list_size(recent_list); index++)
 {
 	if (recent_list[|index].filename = project_file)
 	{
-		instance_destroy()
+		with (recent_list[|index])
+			instance_destroy()
 		break
 	}
 }
