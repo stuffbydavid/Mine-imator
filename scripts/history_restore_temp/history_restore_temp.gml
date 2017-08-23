@@ -1,6 +1,6 @@
 /// history_restore_temp(save)
 /// @arg save
-/// @desc Adds a saved template.
+/// @desc Adds a previously saved template.
 
 var save, temp;
 save = argument0
@@ -11,7 +11,7 @@ with (save)
 	
 with (temp)
 {
-	iid = save.iid
+	save_id = save.save_id
 	temp_find_save_ids()
 	
 	if (skin)
@@ -32,35 +32,25 @@ with (temp)
 	if (text_font)
 		text_font.count++
 		
-	if (type = "item")
-		temp_update_item()
-		
-	if (type = "block")
-		temp_update_block()
-		
-	if (type_is_shape(type))
-		temp_update_shape()
-		
-	temp_update_rot_point()
-	temp_update_display_name()
+	temp_update()
 	
 	// Restore particle types
 	if (type = "particles")
 	{
-		for (var p = 0; p < ds_list_size(save.pc_type_list); p++)
-			history_restore_ptype(save.pc_type_list[|p], id)
+		for (var p = 0; p < save.pc_type_amount; p++)
+			history_restore_ptype(save.pc_type_save_obj[|p], id)
 			
 		temp_particles_restart()
 	}
 	
 	// Restore references in particle types
 	for (var t = 0; t < save.usage_ptype_temp_amount; t++)
-		with (iid_find(save.usage_ptype_temp[t]))
+		with (save_id_find(save.usage_ptype_temp_save_id[t]))
 			id.temp = temp
 	
 	// Restore timelines
 	for (var t = 0; t < save.usage_tl_amount; t++)
-		history_restore_tl(save.usage_tl[t])
+		history_restore_tl(save.usage_tl_save_obj[t])
 }
 
 sortlist_add(app.lib_list, temp)

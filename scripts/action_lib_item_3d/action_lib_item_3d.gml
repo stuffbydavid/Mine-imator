@@ -4,9 +4,9 @@
 var is3d;
 
 if (history_undo)
-	is3d = history_data.oldval
+	is3d = history_data.old_value
 else if (history_redo)
-	is3d = history_data.newval
+	is3d = history_data.new_value
 else
 {
 	is3d = argument0

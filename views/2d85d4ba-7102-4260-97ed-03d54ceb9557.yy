@@ -10,7 +10,7 @@
         "80d377ab-ff8a-47e8-a774-de0da69e95c8"
     ],
     "filterType": "GMScript",
-    "folderName": "Spawner",
+    "folderName": "Particle spawner",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

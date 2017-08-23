@@ -4,9 +4,9 @@
 var follow;
 
 if (history_undo)
-	follow = history_data.oldval
+	follow = history_data.old_value
 else if (history_redo)
-	follow = history_data.newval
+	follow = history_data.new_value
 else
 {
 	follow = argument0

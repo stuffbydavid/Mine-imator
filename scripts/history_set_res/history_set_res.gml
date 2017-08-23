@@ -17,10 +17,10 @@ history_push()
 log("Action Load resource", script_get_name(script), fn)
 
 hobj = new_history(script)
-hobj.fn = fn
+hobj.filename = fn
 hobj.type = ""
-hobj.oldres = iid_get(oldres)
-hobj.newres = iid_get(newres)
+hobj.old_res_save_id = save_id_get(oldres)
+hobj.new_res_save_id = save_id_get(newres)
 hobj.replaced = false
 
 if (newres && newres.object_index = obj_resource) // Not camera

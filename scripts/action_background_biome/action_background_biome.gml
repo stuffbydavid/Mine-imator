@@ -4,9 +4,9 @@
 var biome;
 
 if (history_undo)
-	biome = history_data.oldval
+	biome = history_data.old_value
 else if (history_redo)
-	biome = history_data.newval
+	biome = history_data.new_value
 else
 {
 	biome = argument0

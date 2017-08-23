@@ -5,12 +5,12 @@ var val, state;
 
 if (history_undo)
 {
-	val = history_data.oldval
+	val = history_data.old_value
 	state = history_data.state
 }
 else if (history_redo)
 {
-	val = history_data.newval
+	val = history_data.new_value
 	state = history_data.state
 }
 else

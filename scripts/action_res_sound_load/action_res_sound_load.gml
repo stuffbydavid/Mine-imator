@@ -11,7 +11,7 @@ else
 	var fn, res;
 	
 	if (history_redo)
-		fn = history_data.fn
+		fn = history_data.filename
 	else
 		fn = argument0
 		
@@ -24,7 +24,7 @@ else
 	{
 		with (history_set(action_res_sound_load))
 		{
-			id.fn = fn
+			filename = fn
 			history_save_loaded()
 		}
 	}

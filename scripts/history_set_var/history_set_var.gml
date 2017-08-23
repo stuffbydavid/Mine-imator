@@ -25,11 +25,11 @@ else
 	log("Action Set variable", script_get_name(script), oldval, newval, combine)
 	
 	hobj = new_history(script)
-	hobj.oldval = oldval
+	hobj.old_value = oldval
 	
 	history[0] = hobj
 }
 
-hobj.newval = newval
+hobj.new_value = newval
 
 return hobj

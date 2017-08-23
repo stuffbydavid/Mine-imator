@@ -4,9 +4,9 @@
 var bounche;
 
 if (history_undo)
-	bounche = history_data.oldval
+	bounche = history_data.old_value
 else if (history_redo)
-	bounche = history_data.newval
+	bounche = history_data.new_value
 else
 {
 	bounche = argument0

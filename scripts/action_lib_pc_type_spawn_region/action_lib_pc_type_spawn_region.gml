@@ -4,9 +4,9 @@
 var region;
 
 if (history_undo)
-	region = history_data.oldval
+	region = history_data.old_value
 else if (history_redo)
-	region = history_data.newval
+	region = history_data.new_value
 else
 {
 	region = argument0

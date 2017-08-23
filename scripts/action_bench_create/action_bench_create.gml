@@ -4,7 +4,7 @@ if (history_undo)
 {
 	with (history_data)
 		for (var s = 0; s < spawn_amount; s++)
-			with (iid_find(spawn[s]))
+			with (save_id_find(spawn_save_id[s]))
 				instance_destroy()
 }
 else
@@ -13,11 +13,11 @@ else
 	hobj = null
 	
 	if (history_redo)
-		history_restore_bench(history_data.save_bench)
+		history_restore_bench(history_data.bench_save_obj)
 	else
 	{
 		hobj = history_set(action_bench_create)
-		hobj.save_bench = history_save_bench()
+		hobj.bench_save_obj = history_save_bench()
 		hobj.spawn_amount = 0
 	}
 	
@@ -52,6 +52,8 @@ else
 					skin = null
 					model_file = null
 					model_part = null
+					model_state = ""
+					model_state_map = null
 				}
 				
 				if (type != "item")
@@ -64,6 +66,8 @@ else
 				{
 					block_tex.count--
 					block_tex = null
+					block_state = ""
+					block_state_map = null
 				}
 				
 				if (type != "scenery" && scenery)
@@ -72,7 +76,7 @@ else
 					scenery = null
 				}
 				
-				if (!type_is_shape(type) && shape_tex)
+				if (!type_is_shape(type) && shape_tex != null)
 				{
 					if (shape_tex.type != "camera")
 						shape_tex.count--
@@ -101,22 +105,22 @@ else
 			sortlist_add(app.lib_list, id)
 			creator = app
 			
-			if (skin)
+			if (skin != null)
 				skin.count++
 				
-			if (item_tex)
+			if (item_tex != null)
 				item_tex.count++
 				
-			if (block_tex)
+			if (block_tex != null)
 				block_tex.count++
 				
-			if (scenery)
+			if (scenery > 0)
 				scenery.count++
 				
-			if (shape_tex && shape_tex.type != "camera")
+			if (shape_tex != null && shape_tex.type != "camera")
 				shape_tex.count++
 				
-			if (text_font)
+			if (text_font != null)
 				text_font.count++
 				
 			with (hobj)

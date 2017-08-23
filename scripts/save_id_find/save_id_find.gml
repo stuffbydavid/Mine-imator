@@ -9,7 +9,7 @@ if (saveid = "")
 
 with (app)
 	if (save_id = saveid)
-		return id
+		return app
 	
 with (obj_template)
 	if (save_id = saveid)

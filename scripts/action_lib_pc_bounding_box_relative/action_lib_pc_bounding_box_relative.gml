@@ -4,9 +4,9 @@
 var relative;
 
 if (history_undo)
-	relative = history_data.oldval
+	relative = history_data.old_value
 else if (history_redo)
-	relative = history_data.newval
+	relative = history_data.new_value
 else
 {
 	relative = argument0

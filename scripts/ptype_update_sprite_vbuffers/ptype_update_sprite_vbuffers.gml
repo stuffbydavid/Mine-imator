@@ -1,7 +1,7 @@
-/// ptype_update_sprite_vbuffers()
+/// ptype_update_sprite_vbuffer_amount()
 /// @desc Updates the 3D models for sprite particles.
 
-for (var m = 0; m < sprite_vbuffers; m++)
+for (var m = 0; m < sprite_vbuffer_amount; m++)
 	vbuffer_destroy(sprite_vbuffer[m])
 
 var tex, swid, shei, fwid, fhei, framesx;
@@ -12,8 +12,8 @@ fwid = min(swid, sprite_frame_width)
 fhei = min(shei, sprite_frame_height)
 framesx = swid div fwid
 
-sprite_vbuffers = abs(sprite_frame_end - sprite_frame_start) + 1
-for (var m = 0; m < sprite_vbuffers; m++)
+sprite_vbuffer_amount = abs(sprite_frame_end - sprite_frame_start) + 1
+for (var m = 0; m < sprite_vbuffer_amount; m++)
 {
 	var frame, tx1, ty1, tx2, ty2;
 	frame = min(sprite_frame_start, sprite_frame_end) + m;

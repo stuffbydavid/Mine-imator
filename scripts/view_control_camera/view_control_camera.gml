@@ -9,9 +9,9 @@ with (tl_edit)
 {
 	// Start from the parent matrix, set the position and remove all scaling
 	xyang = matrix_parent
-	xyang[MATX] = pos_rotate[X]
-	xyang[MATY] = pos_rotate[Y]
-	xyang[MATZ] = pos_rotate[Z]
+	xyang[MATX] = world_pos_rotate[X]
+	xyang[MATY] = world_pos_rotate[Y]
+	xyang[MATZ] = world_pos_rotate[Z]
 	matrix_remove_scale(xyang)
 }
 

@@ -282,9 +282,9 @@ with (preview)
 					
 					case "particles":
 					{
-						for (var p = 0; p < ds_list_size(particles); p++)
-							with (particles[|p])
-								particle_draw()
+						for (var p = 0; p < ds_list_size(particle_list); p++)
+							with (particle_list[|p])
+								particle_render()
 						break
 					}
 					

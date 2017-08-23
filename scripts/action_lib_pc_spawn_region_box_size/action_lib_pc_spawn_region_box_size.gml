@@ -6,9 +6,9 @@ var val, add;
 add = false
 
 if (history_undo)
-	val = history_data.oldval
+	val = history_data.old_value
 else if (history_redo)
-	val = history_data.newval
+	val = history_data.new_value
 else 
 {
 	val = argument0

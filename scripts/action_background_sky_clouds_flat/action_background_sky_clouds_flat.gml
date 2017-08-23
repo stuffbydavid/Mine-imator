@@ -4,9 +4,9 @@
 var flat;
 
 if (history_undo)
-	flat = history_data.oldval
+	flat = history_data.old_value
 else if (history_redo)
-	flat = history_data.newval
+	flat = history_data.new_value
 else
 {
 	flat = argument0

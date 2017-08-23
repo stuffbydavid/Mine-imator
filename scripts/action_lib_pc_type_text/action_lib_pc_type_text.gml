@@ -4,9 +4,9 @@
 var text;
 
 if (history_undo)
-	text = history_data.oldval
+	text = history_data.old_value
 else if (history_redo)
-	text = history_data.newval
+	text = history_data.new_value
 else
 {
 	text = argument0

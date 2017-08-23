@@ -11,7 +11,7 @@ else
 	var fn, hobj, res, temp, tl;
 	
 	if (history_redo)
-		fn = history_data.fn
+		fn = history_data.filename
 	else
 	{
 		fn = argument0
@@ -41,7 +41,7 @@ else
 	{
 		with (hobj)
 		{
-			id.fn = fn
+			filename = fn
 			history_save_loaded()
 		}
 	}

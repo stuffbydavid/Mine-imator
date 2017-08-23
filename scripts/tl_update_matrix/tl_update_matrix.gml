@@ -78,7 +78,7 @@ if (object_index != app && update_matrix)
 	// Create rotation point
 	if (type = "camera" && value[CAMROTATE])
 	{
-		pos_rotate = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
+		world_pos_rotate = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
 		matrix[MATX] += lengthdir_x(value[CAMROTATEDISTANCE], value[CAMROTATEXYANGLE] + 90) * lengthdir_x(1, value[CAMROTATEZANGLE])
 		matrix[MATY] += lengthdir_y(value[CAMROTATEDISTANCE], value[CAMROTATEXYANGLE] + 90) * lengthdir_x(1, value[CAMROTATEZANGLE])
 		matrix[MATZ] += lengthdir_z(value[CAMROTATEDISTANCE], value[CAMROTATEZANGLE])

@@ -38,19 +38,23 @@ if (view.controls)
 			// Shapes
 			with (obj_timeline)
 			{
-				if (hide || !value_inherit[VISIBLE])
-					continue
-					
-				draw_set_color(test(selected || parent_is_selected, c_white, c_controls))
+				with (app)
+				{
+					var tl = other.id;
+					if (tl.hide || !tl.value_inherit[VISIBLE])
+						continue
+						
+					draw_set_color(test(tl.selected || tl.parent_is_selected, c_white, c_controls))
 				
-				if (type = "spotlight")
-					view_shape_spotlight()
-				else if (type = "pointlight")
-					view_shape_pointlight()
-				else if (type = "camera" && id != cam)
-					view_shape_camera()
-				else if (type = "particles")
-					view_shape_particles()
+					if (tl.type = "spotlight")
+						view_shape_spotlight(tl)
+					else if (tl.type = "pointlight")
+						view_shape_pointlight(tl)
+					else if (tl.type = "camera" && tl != cam)
+						view_shape_camera(tl)
+					else if (tl.type = "particles")
+						view_shape_particles(tl)
+				}
 			}
 			
 			draw_set_color(c_white)
@@ -60,13 +64,13 @@ if (view.controls)
 			{
 				if (!tl_edit.hide && tl_edit.value_inherit[VISIBLE])
 				{
-					if (tl_edit.value_type[POSITION] && app.frame_editor.position.show)
+					if (tl_edit.value_type[POSITION] && frame_editor.position.show)
 						view_control_position(view)
-					if (tl_edit.value_type[ROTATION] && app.frame_editor.rotation.show)
+					if (tl_edit.value_type[ROTATION] && frame_editor.rotation.show)
 						view_control_rotation(view)
-					if (tl_edit.value_type[BEND] && app.frame_editor.bend.show)
+					if (tl_edit.value_type[BEND] && frame_editor.bend.show)
 						view_control_bend(view)
-					if (tl_edit.value_type[CAMERA] && tl_edit.value[CAMROTATE] && app.frame_editor.camera.show)
+					if (tl_edit.value_type[CAMERA] && tl_edit.value[CAMROTATE] && frame_editor.camera.show)
 						view_control_camera(view)
 						
 					view.control_mouseon_last = view.control_mouseon
@@ -75,7 +79,7 @@ if (view.controls)
 				
 				// Update 2D position
 				tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
-				tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= app.content_width || tl_edit.world_pos_2d[Y] >= app.content_height)
+				tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= content_width || tl_edit.world_pos_2d[Y] >= content_height)
 			}
 			
 		}

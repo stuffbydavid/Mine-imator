@@ -13,7 +13,7 @@ with (tl)
 with (save)
 {
 	save_id = tl.save_id
-	temp = save_id_get(temp)
+	tl_get_save_ids()
 	
 	// Save values
 	for (var v = 0; v < values; v++)
@@ -30,8 +30,6 @@ with (save)
 				save.kf_value[k, v] = tl_value_save(v, value[v])
 		}
 	}
-	parent = save_id_get(parent)
-	part_of = save_id_get(part_of)
 	
 	// Save references in templates
 	usage_temp_shape_tex_amount = 0
@@ -81,10 +79,15 @@ with (save)
 		}
 	}
 	
-	// Save recursively
+	// Save tree recursively
 	tree_amount = ds_list_size(tl.tree_list)
 	for (var t = 0; t < tree_amount; t++)
 		tree_save_obj[t] = history_save_tl(tl.tree_list[|t])
+		
+	// Save parts
+	part_amount = ds_list_size(tl.part_list)
+	for (var p = 0; p < part_amount; p++)
+		part_save_id[p] = save_id_get(tl.part_list[|p])
 }
 
 return save

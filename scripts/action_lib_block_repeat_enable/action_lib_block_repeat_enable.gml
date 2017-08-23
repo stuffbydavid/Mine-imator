@@ -4,9 +4,9 @@
 var rep;
 
 if (history_undo)
-	rep = history_data.oldval
+	rep = history_data.old_value
 else if (history_redo)
-	rep = history_data.newval
+	rep = history_data.new_value
 else
 {
 	rep = argument0

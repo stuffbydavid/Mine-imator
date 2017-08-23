@@ -4,9 +4,9 @@
 var onend;
 
 if (history_undo)
-	onend = history_data.oldval
+	onend = history_data.old_value
 else if (history_redo)
-	onend = history_data.newval
+	onend = history_data.new_value
 else
 {
 	onend = argument0

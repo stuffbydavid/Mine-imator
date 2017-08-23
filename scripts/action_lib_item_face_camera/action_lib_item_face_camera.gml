@@ -4,9 +4,9 @@
 var face;
 
 if (history_undo)
-	face = history_data.oldval
+	face = history_data.old_value
 else if (history_redo)
-	face = history_data.newval
+	face = history_data.new_value
 else
 {
 	face = argument0

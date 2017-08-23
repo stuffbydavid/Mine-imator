@@ -4,9 +4,9 @@
 var use;
 
 if (history_undo)
-	use = history_data.oldval
+	use = history_data.old_value
 else if (history_redo)
-	use = history_data.newval
+	use = history_data.new_value
 else
 {
 	use = argument0

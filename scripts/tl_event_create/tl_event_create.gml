@@ -74,7 +74,7 @@ wind = false
 wind_amount = 1
 wind_terrain = true
 
-particles = null
+particle_list = null
 
 cam_surf_required = false
 cam_surf = null

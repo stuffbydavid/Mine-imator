@@ -4,9 +4,9 @@
 var wind;
 
 if (history_undo)
-	wind = history_data.oldval
+	wind = history_data.old_value
 else if (history_redo)
-	wind = history_data.newval
+	wind = history_data.new_value
 else
 {
 	wind = argument0

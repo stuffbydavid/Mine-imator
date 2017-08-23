@@ -7,7 +7,7 @@ ds_list_delete_value(creator.pc_type_list, id)
 if (temp_creator != app.bench_settings)
 	sprite_tex.count--
 
-for (var m = 0; m < sprite_vbuffers; m++)
+for (var m = 0; m < sprite_vbuffer_amount; m++)
 	vbuffer_destroy(sprite_vbuffer[m])
 
 // Destroy associated particles

@@ -50,7 +50,7 @@ with (obj_particle_type)
 	sprite_tex = iid_find(sprite_tex)
 	if (temp_creator != app.bench_settings)
 		sprite_tex.count++
-	ptype_update_sprite_vbuffers()
+	ptype_update_sprite_vbuffer_amount()
 }
 
 log("Get keyframe iids")

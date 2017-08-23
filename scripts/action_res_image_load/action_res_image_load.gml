@@ -13,7 +13,7 @@ else
 	
 	if (history_redo)
 	{
-		fn = history_data.fn
+		fn = history_data.filename
 		type = history_data.type
 		if (type = "itemsheet")
 			itemsheetsize = history_data.item_sheet_size
@@ -45,7 +45,7 @@ else
 	{
 		with (hobj)
 		{
-			id.fn = fn
+			filename = fn
 			id.type = type
 			id.item_sheet_size = res.item_sheet_size
 			history_save_loaded()

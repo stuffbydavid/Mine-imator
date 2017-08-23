@@ -66,12 +66,12 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 		}
 		
 		// Update particles
-		for (var i = 0; i < ds_list_size(particles); i++)
+		for (var i = 0; i < ds_list_size(particle_list); i++)
 		{
-			var pt = particles[|i];
+			var pt = particle_list[|i];
 			
 			// Delete at amount
-			if (temp.pc_destroy_at_amount && ds_list_size(particles) > temp.pc_destroy_at_amount_val)
+			if (temp.pc_destroy_at_amount && ds_list_size(particle_list) > temp.pc_destroy_at_amount_val)
 			{
 				with (pt)
 					instance_destroy()

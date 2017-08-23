@@ -15,7 +15,10 @@ to.depth = depth
 
 to.lock_bend = lock_bend
 to.parent = parent
-to.parent_index = ds_list_find_index(parent.tree_list, id)
+if (object_index = obj_timeline)
+	to.parent_index = ds_list_find_index(parent.tree_list, id)
+else
+	to.parent_index = parent_index
 to.tree_extend = tree_extend
 
 to.model_part = model_part

@@ -35,7 +35,7 @@ if (type = "particles" || type = "spotlight" || type = "pointlight" || type = "c
 		shader_texture = sprite_get_texture(spr_shape, 0)
 		shader_texture_gm = true
 		shader_use()
-		vbuffer_render(render_click_box, pos)
+		vbuffer_render(render_click_box, world_pos)
 		shader_texture_gm = false
 	}
 	
@@ -119,9 +119,9 @@ if (shader_alpha > 0)
 	} 
 	else if (render_particles) 
 	{
-		for (var p = 0; p < ds_list_size(particles); p++)
-			with (ds_list_find_value(particles, p))
-				particle_draw()
+		for (var p = 0; p < ds_list_size(particle_list); p++)
+			with (particle_list[|p])
+				particle_render()
 	}
 	
 	render_set_culling(true)

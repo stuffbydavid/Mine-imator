@@ -17,7 +17,7 @@ with (res)
 	
 	for (var s = 0; s < save.usage_char_skin_amount; s++)
 	{
-		with (iid_find(save.usage_char_skin[s]))
+		with (save_id_find(save.usage_char_skin_save_id[s]))
 		{
 			char_skin.count--
 			char_skin = res
@@ -26,7 +26,7 @@ with (res)
 			
 	for (var s = 0; s < save.usage_item_tex_amount; s++)
 	{
-		with (iid_find(save.usage_item_tex[s]))
+		with (save_id_find(save.usage_item_tex_save_id[s]))
 		{
 			item_tex.count--
 			item_tex = res
@@ -36,7 +36,7 @@ with (res)
 			
 	for (var s = 0; s < save.usage_block_tex_amount; s++)
 	{
-		with (iid_find(save.usage_block_tex[s]))
+		with (save_id_find(save.usage_block_tex_save_id[s]))
 		{
 			block_tex.count--
 			block_tex = res
@@ -44,16 +44,16 @@ with (res)
 	}
 			
 	for (var s = 0; s < save.usage_scenery_amount; s++)
-		with (iid_find(save.usage_scenery[s]))
+		with (save_id_find(save.usage_scenery_save_id[s]))
 			scenery = res
 			
 	for (var s = 0; s < save.usage_shape_tex_amount; s++)
-		with (iid_find(save.usage_shape_tex[s]))
+		with (save_id_find(save.usage_shape_tex_save_id[s]))
 			shape_tex = res
 			
 	for (var s = 0; s < save.usage_text_font_amount; s++)
 	{
-		with (iid_find(save.usage_text_font[s]))
+		with (save_id_find(save.usage_text_font_save_id[s]))
 		{
 			text_font.count--
 			text_font = res
@@ -61,20 +61,20 @@ with (res)
 	}
 			
 	for (var s = 0; s < save.usage_sprite_tex_amount; s++)
-		with (iid_find(save.usage_sprite_tex[s]))
+		with (save_id_find(save.usage_sprite_tex_save_id[s]))
 			sprite_tex = res
 			
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
-		with (iid_find(save.usage_kf_texture_tl[s]))
-			keyframe[save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = res
+		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
+			keyframe_list[|save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = res
 			
 	for (var s = 0; s < save.usage_kf_sound_amount; s++)
-		with (iid_find(save.usage_kf_sound_tl[s]))
-			keyframe[save.usage_kf_sound_index[s]].value[SOUNDOBJ] = res
+		with (save_id_find(save.usage_kf_sound_tl_save_id[s]))
+			keyframe_list[|save.usage_kf_sound_index[s]].value[SOUNDOBJ] = res
 			
 	for (var s = 0; s < save.usage_tl_texture_amount; s++)
 	{
-		with (iid_find(save.usage_tl_texture[s]))
+		with (save_id_find(save.usage_tl_texture_save_id[s]))
 		{
 			value[TEXTUREOBJ] = res
 			update_matrix = true
@@ -83,7 +83,7 @@ with (res)
 	
 	for (var s = 0; s < save.usage_tl_sound_amount; s++)
 	{
-		with (iid_find(save.usage_tl_sound[s]))
+		with (save_id_find(save.usage_tl_sound_save_id[s]))
 		{
 			value[SOUNDOBJ] = res
 			update_matrix = true

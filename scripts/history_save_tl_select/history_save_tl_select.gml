@@ -20,5 +20,6 @@ with (obj_timeline)
 		other.tl_sel_kf_index[other.tl_sel_amount, other.tl_sel_kf_amount[other.tl_sel_amount]] = k
 		other.tl_sel_kf_amount[other.tl_sel_amount]++
 	}
+	
 	other.tl_sel_amount++
 }

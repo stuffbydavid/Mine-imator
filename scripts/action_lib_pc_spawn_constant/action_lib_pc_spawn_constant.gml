@@ -4,9 +4,9 @@
 var constant;
 
 if (history_undo)
-	constant = history_data.oldval
+	constant = history_data.old_value
 else if (history_redo)
-	constant = history_data.newval
+	constant = history_data.new_value
 else
 {
 	constant = argument0

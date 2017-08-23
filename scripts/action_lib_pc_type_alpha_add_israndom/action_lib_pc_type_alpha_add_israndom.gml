@@ -4,9 +4,9 @@
 var israndom;
 
 if (history_undo)
-	israndom = history_data.oldval
+	israndom = history_data.old_value
 else if (history_redo)
-	israndom = history_data.newval
+	israndom = history_data.new_value
 else
 {
 	israndom = argument0

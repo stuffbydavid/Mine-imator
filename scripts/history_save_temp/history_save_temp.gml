@@ -1,6 +1,6 @@
 /// history_save_temp(template)
 /// @arg template
-/// @desc Saves a template in memory.
+/// @desc Saves a template into memory.
 
 var temp, save;
 temp = argument0
@@ -18,19 +18,20 @@ with (save)
 	// Save particle types
 	if (type = "particles")
 	{
-		for (var p = 0; p < pc_types; p++)
+		pc_type_amount = ds_list_size(temp.pc_type_list)
+		for (var p = 0; p < pc_type_amount; p++)
 			with (other.id)
-				save.pc_type[p] = history_save_ptype(temp.pc_type[p])
+				save.pc_type_save_obj[p] = history_save_ptype(temp.pc_type_list[|p])
 	}
 	
-	// Save references in particle types
+	// Save references in other particle types
 	usage_ptype_temp_amount = 0
 	with (obj_particle_type)
 	{
 		if (id.temp != temp)
 			continue
 		
-		save.usage_ptype_temp[save.usage_ptype_temp_amount] = iid
+		save.usage_ptype_temp_save_id[save.usage_ptype_temp_amount] = save_id
 		save.usage_ptype_temp_amount++
 	}
 }

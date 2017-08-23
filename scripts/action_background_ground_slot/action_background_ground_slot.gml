@@ -4,9 +4,9 @@
 var slot;
 
 if (history_undo)
-	slot = history_data.oldval
+	slot = history_data.old_value
 else if (history_redo)
-	slot = history_data.newval
+	slot = history_data.new_value
 else
 {
 	slot = argument0

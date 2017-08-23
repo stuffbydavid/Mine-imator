@@ -8,5 +8,5 @@ spawn_laststep = current_step
 spawn_active = true
 fire = false
 
-particles = ds_list_create()
+particle_list = ds_list_create()
 istl = (object_index = obj_timeline)

@@ -21,7 +21,7 @@ else
 	
 	if (history_redo)
 	{
-		fn = history_data.fn
+		fn = history_data.filename
 		insertpos = history_data.insertpos
 		
 		if (!file_exists_lib(fn))
@@ -44,7 +44,7 @@ else
 		hobj = history_set(action_tl_keyframes_load)
 		with (hobj)
 		{
-			id.fn = fn
+			filename = fn
 			id.insertpos = insertpos
 			history_save_tl_select()
 		}

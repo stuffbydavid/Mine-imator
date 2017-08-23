@@ -4,9 +4,9 @@
 var box;
 
 if (history_undo)
-	box = history_data.oldval
+	box = history_data.old_value
 else if (history_redo)
-	box = history_data.newval
+	box = history_data.new_value
 else
 {
 	box = argument0

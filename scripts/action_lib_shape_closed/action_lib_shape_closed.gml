@@ -4,9 +4,9 @@
 var closed;
 
 if (history_undo)
-	closed = history_data.oldval
+	closed = history_data.old_value
 else if (history_redo)
-	closed = history_data.newval
+	closed = history_data.new_value
 else
 {
 	closed = argument0

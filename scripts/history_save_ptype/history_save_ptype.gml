@@ -1,6 +1,6 @@
 /// history_save_ptype(ptype)
 /// @arg ptype
-/// @desc Saves a particle type in memory.
+/// @desc Saves a particle type into memory.
 
 var ptype, save;
 ptype = argument0
@@ -12,10 +12,8 @@ with (ptype)
 
 with (save)
 {
-	iid = ptype.iid
-	creator = iid_get(creator)
-	temp = iid_get(temp)
-	sprite_tex = iid_get(sprite_tex)
+	save_id = ptype.save_id
+	ptype_get_save_ids()
 }
 
 return save

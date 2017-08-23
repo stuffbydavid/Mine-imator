@@ -4,9 +4,9 @@
 var bounce;
 
 if (history_undo)
-	bounce = history_data.oldval
+	bounce = history_data.old_value
 else if (history_redo)
-	bounce = history_data.newval
+	bounce = history_data.new_value
 else
 {
 	bounce = argument0

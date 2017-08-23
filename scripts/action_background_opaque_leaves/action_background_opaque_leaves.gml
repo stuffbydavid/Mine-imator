@@ -4,9 +4,9 @@
 var opaque;
 
 if (history_undo)
-	opaque = history_data.oldval
+	opaque = history_data.old_value
 else if (history_redo)
-	opaque = history_data.newval
+	opaque = history_data.new_value
 else
 {
 	opaque = argument0

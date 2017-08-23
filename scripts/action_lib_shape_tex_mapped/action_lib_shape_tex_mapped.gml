@@ -4,9 +4,9 @@
 var map;
 
 if (history_undo)
-	map = history_data.oldval
+	map = history_data.old_value
 else if (history_redo)
-	map = history_data.newval
+	map = history_data.new_value
 else
 {
 	map = argument0

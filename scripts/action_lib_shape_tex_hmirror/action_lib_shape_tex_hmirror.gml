@@ -4,9 +4,9 @@
 var hmirror;
 
 if (history_undo)
-	hmirror = history_data.oldval
+	hmirror = history_data.old_value
 else if (history_redo)
-	hmirror = history_data.newval
+	hmirror = history_data.new_value
 else
 {
 	hmirror = argument0

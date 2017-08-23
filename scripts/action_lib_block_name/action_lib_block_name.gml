@@ -6,12 +6,12 @@ var name, state;
 
 if (history_undo)
 {
-	name = history_data.oldval
+	name = history_data.old_value
 	state = history_data.state
 }
 else if (history_redo)
 {
-	name = history_data.newval
+	name = history_data.new_value
 	state = history_data.state
 }
 else

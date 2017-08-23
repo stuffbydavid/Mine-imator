@@ -6,9 +6,9 @@ var val, add;
 add = false
 
 if (history_undo)
-	val = history_data.oldval
+	val = history_data.old_value
 else if (history_redo)
-	val = history_data.newval
+	val = history_data.new_value
 else
 {
 	val = argument0
@@ -19,7 +19,7 @@ else
 with (ptype_edit)
 {
 	sprite_frame_height = sprite_frame_height * add + val
-	ptype_update_sprite_vbuffers()
+	ptype_update_sprite_vbuffer_amount()
 }
 
 tab_template_editor_particles_preview_restart()

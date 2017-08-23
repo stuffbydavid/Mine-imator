@@ -4,9 +4,9 @@
 var stretch;
 
 if (history_undo)
-	stretch = history_data.oldval
+	stretch = history_data.old_value
 else if (history_redo)
-	stretch = history_data.newval
+	stretch = history_data.new_value
 else
 {
 	stretch = argument0

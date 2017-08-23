@@ -2,6 +2,6 @@
 /// @arg id
 /// @arg value
 
-var pos = ds_list_find_index(argument0, argument1)
-if (pos >= 0)
-	ds_list_delete(argument0, pos)
+var index = ds_list_find_index(argument0, argument1)
+if (index >= 0)
+	ds_list_delete(argument0, index)

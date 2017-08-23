@@ -56,9 +56,9 @@ with (obj_timeline)
 	// Add light
 	if ((type = "pointlight" || type = "spotlight") && value_inherit[VISIBLE])
 	{
-		app.background_light_data[app.background_lights * 8 + 0] = pos[X]
-		app.background_light_data[app.background_lights * 8 + 1] = pos[Y]
-		app.background_light_data[app.background_lights * 8 + 2] = pos[Z]
+		app.background_light_data[app.background_lights * 8 + 0] = world_pos[X]
+		app.background_light_data[app.background_lights * 8 + 1] = world_pos[Y]
+		app.background_light_data[app.background_lights * 8 + 2] = world_pos[Z]
 		app.background_light_data[app.background_lights * 8 + 3] = value[LIGHTRANGE]
 		app.background_light_data[app.background_lights * 8 + 4] = color_get_red(value[LIGHTCOLOR]) / 255
 		app.background_light_data[app.background_lights * 8 + 5] = color_get_green(value[LIGHTCOLOR]) / 255

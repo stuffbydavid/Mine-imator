@@ -4,9 +4,9 @@
 var extend;
 
 if (history_undo)
-	extend = history_data.oldval
+	extend = history_data.old_value
 else if (history_redo)
-	extend = history_data.newval
+	extend = history_data.new_value
 else
 {
 	extend = argument0

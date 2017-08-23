@@ -109,4 +109,4 @@ else
 	pt.color_mix_time = 0
 }
 
-ds_list_add(particles, pt)
+ds_list_add(particle_list, pt)

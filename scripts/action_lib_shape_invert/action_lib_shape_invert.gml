@@ -4,9 +4,9 @@
 var invert;
 
 if (history_undo)
-	invert = history_data.oldval
+	invert = history_data.old_value
 else if (history_redo)
-	invert = history_data.newval
+	invert = history_data.new_value
 else
 {
 	invert = argument0

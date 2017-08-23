@@ -11,7 +11,7 @@ else
 	var fn, res;
 	if (history_redo)
 	{
-		fn = history_data.fn 
+		fn = history_data.filename 
 		res = new_res(fn, "pack")
 	}
 	else
@@ -28,7 +28,7 @@ else
 	{
 		with (history_set(action_res_pack_load))
 		{
-			id.fn = fn
+			filename = fn
 			history_save_loaded()
 		}
 	}

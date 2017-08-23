@@ -12,8 +12,9 @@ with (save)
 with (tl)
 {
 	save_id = save.save_id
-	temp = save_id_find(temp)
-	if (temp && part_of = null)
+	tl_find_save_ids()
+	
+	if (temp != null && part_of = null)
 		temp.count++
 	
 	// Restore values
@@ -35,16 +36,15 @@ with (tl)
 		}
 	}
 	
-	parent = save_id_find(parent)
 	ds_list_insert(parent.tree_list, parent_index, id)
 	
-	part_of = save_id_find(part_of)
-	if (part_of != null)
-		ds_list_add(part_of.part_list, id)
-		
-	// Restore recursively
+	// Restore tree recursively
 	for (var t = 0; t < save.tree_amount; t++)
 		history_restore_tl(save.tree_save_obj[t])
+		
+	// Restore parts
+	for (var p = 0; p < save.part_amount; p++)
+		ds_list_add(part_list, save_id_find(save.part_save_id[p]))
 		
 	// Restore references
 	for (var s = 0; s < save.usage_temp_shape_tex_amount; s++)
@@ -71,11 +71,11 @@ with (tl)
 			
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
 		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
-			keyframe[save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = tl
+			keyframe_list[|save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = tl
 			
 	for (var s = 0; s < save.usage_kf_attractor_amount; s++)
 		with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))
-			keyframe[save.usage_kf_attractor_index[s]].value[ATTRACTOR] = tl
+			keyframe_list[|save.usage_kf_attractor_index[s]].value[ATTRACTOR] = tl
 
 	// Update
 	tl_update_type_name()

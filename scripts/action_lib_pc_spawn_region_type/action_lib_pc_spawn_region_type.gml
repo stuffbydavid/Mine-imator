@@ -4,9 +4,9 @@
 var type;
 
 if (history_undo)
-	type = history_data.oldval
+	type = history_data.old_value
 else if (history_redo)
-	type = history_data.newval
+	type = history_data.new_value
 else
 {
 	type = argument0

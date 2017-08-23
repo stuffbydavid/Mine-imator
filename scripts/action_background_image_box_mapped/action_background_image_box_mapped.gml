@@ -4,9 +4,9 @@
 var mapped;
 
 if (history_undo)
-	mapped = history_data.oldval
+	mapped = history_data.old_value
 else if (history_redo)
-	mapped = history_data.newval
+	mapped = history_data.new_value
 else
 {
 	mapped = argument0

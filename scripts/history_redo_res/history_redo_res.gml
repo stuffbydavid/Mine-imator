@@ -2,10 +2,10 @@
 
 var res;
 
-if (history_data.fn != "" && !history_data.replaced)
+if (history_data.filename != "" && !history_data.replaced)
 {
-	res = new_res(history_data.fn, history_data.type)
-	res.iid = history_data.newres
+	res = new_res(history_data.type, history_data.filename)
+	res.save_id = history_data.new_res_save_id
 	
 	if (history_data.type = "skin")
 		res.is_skin = temp_edit.char_model.player_skin
@@ -18,6 +18,6 @@ if (history_data.fn != "" && !history_data.replaced)
 		res_load()
 }
 else
-	res = iid_find(history_data.newres)
+	res = save_id_find(history_data.new_res_save_id)
 
 return res

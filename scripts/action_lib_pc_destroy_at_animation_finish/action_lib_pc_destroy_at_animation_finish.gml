@@ -4,9 +4,9 @@
 var destroy;
 
 if (history_undo)
-	destroy = history_data.oldval
+	destroy = history_data.old_value
 else if (history_redo)
-	destroy = history_data.newval
+	destroy = history_data.new_value
 else
 {
 	destroy = argument0

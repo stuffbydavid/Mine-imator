@@ -15,7 +15,7 @@ ptype.sprite_tex.count++
 
 // Update models
 with (ptype)
-	ptype_update_sprite_vbuffers()
+	ptype_update_sprite_vbuffer_amount()
 	
 // Update spawn %
 temp_particles_update_spawn_rate(ptype, ptype.spawn_rate)

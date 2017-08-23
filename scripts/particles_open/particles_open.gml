@@ -28,7 +28,7 @@ if (history_undo)
 }
 else if (history_redo)
 {
-	fn = history_data.fn
+	fn = history_data.filename
 	temp = iid_find(history_data.temp)
 }
 else
@@ -61,7 +61,7 @@ if (!history_redo && temp != bench_settings)
 	hobj = history_set(particles_open)
 	with (hobj)
 	{
-		id.fn = fn
+		filename = fn
 		id.temp = iid_get(temp)
 	}
 	with (temp)

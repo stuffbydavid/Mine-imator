@@ -16,7 +16,7 @@ if (history_undo)
 	return false
 }
 else if (history_redo)
-	fn = history_data.fn
+	fn = history_data.filename
 else
 	fn = argument0
 
@@ -94,7 +94,7 @@ switch (ext)
 if (!history_redo)
 {
 	hobj = history_set(asset_open)
-	hobj.fn = fn
+	hobj.filename = fn
 }
 
 log("Opening asset", fn)

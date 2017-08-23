@@ -4,9 +4,9 @@
 var temp;
 
 if (history_undo)
-	temp = iid_find(history_data.oldval)
+	temp = iid_find(history_data.old_value)
 else if (history_redo)
-	temp = iid_find(history_data.newval)
+	temp = iid_find(history_data.new_value)
 else
 {
 	temp = argument0

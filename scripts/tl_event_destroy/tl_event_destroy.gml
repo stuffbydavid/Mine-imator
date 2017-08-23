@@ -6,11 +6,11 @@ ds_list_delete_value(render_list, id)
 
 // Remove from parent
 ds_list_delete_value(parent.tree_list, id)
-if (part_of)
+if (part_of != null)
 	ds_list_delete_value(part_of.part_list, id)
 
 // Clear tree
-while (ds_list_size(tree_list))
+while (ds_list_size(tree_list) > 0)
 	with (tree_list[|0])
 		instance_destroy()
 		
@@ -62,8 +62,8 @@ with (obj_particle)
 	if (creator = other.id)
 		instance_destroy()
 
-if (particles)
-	ds_list_destroy(particles)
+if (particle_list)
+	ds_list_destroy(particle_list)
 	
 if (bend_vbuffer)
 	vbuffer_destroy(bend_vbuffer)

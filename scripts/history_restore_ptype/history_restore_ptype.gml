@@ -1,7 +1,7 @@
 /// history_restore_ptype(save, creator)
 /// @arg save
 /// @arg creator
-/// @desc Adds a saved particle type.
+/// @desc Adds a saved particle type to the given creator.
 
 var save, ptype;
 save = argument0
@@ -12,20 +12,14 @@ with (save)
 	
 with (ptype)
 {
-	creator = argument1
-	for (var t = creator.pc_types; t > creator_pos; t--) // Push up
-	{
-		creator.pc_type[t] = creator.pc_type[t - 1]
-		creator.pc_type[t].creator_pos++
-	}
-	creator.pc_type[creator_pos] = id
-	creator.pc_types++
+	save_id = save.save_id
+	ptype_find_save_ids()
 	
-	iid = save.iid
-	temp = iid_find(temp)
-	sprite_tex = iid_find(sprite_tex)
+	creator = argument1
+	ds_list_insert(creator.pc_type_list, creator_index, id)
+	
 	sprite_tex.count++
-	ptype_update_sprite_vbuffers()
+	ptype_update_sprite_vbuffer_amount()
 }
 
 return ptype

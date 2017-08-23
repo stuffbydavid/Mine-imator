@@ -26,45 +26,24 @@ with (temp)
 	if (text_font)
 		text_font.count++
 		
-	if (type = "char" || type = "spblock" || type = "bodypart")
-	{
-		temp_update_model_state_map()
-		temp_update_model()
-		if (type = "bodypart")
-			temp_update_model_part()
-	}
+	temp_update()
 	
-	if (type = "item")
-		temp_update_item()
-		
-	if (type = "block")
-	{
-		temp_update_block_state_map()
-		temp_update_block()
-	}
-		
-	if (type_is_shape(type))
-		temp_update_shape()
-		
 	if (type = "particles")
 	{
-		for (var t = 0; t < pc_types; t++)
+		for (var t = 0; t < ds_list_size(other.pc_type_list); t++)
 		{
-			with (copy.pc_type[t])
+			with (other.pc_type_list[|t])
 			{
 				var ptype = new(obj_particle_type);
 				ptype_copy(ptype)
 				ptype.creator = temp
 				ptype.sprite_tex.count++
 				with (ptype)
-					ptype_update_sprite_vbuffers()
-				temp.pc_type[t] = ptype
+					ptype_update_sprite_vbuffer_amount()
+				ds_list_add(temp.pc_type_list, ptype)
 			}
 		}
 	}
-	
-	temp_update_rot_point()
-	temp_update_display_name()
 	
 	return id
 }

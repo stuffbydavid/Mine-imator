@@ -4,9 +4,9 @@
 var custom;
 
 if (history_undo)
-	custom = history_data.oldval
+	custom = history_data.old_value
 else if (history_redo)
-	custom = history_data.newval
+	custom = history_data.new_value
 else
 {
 	custom = argument0

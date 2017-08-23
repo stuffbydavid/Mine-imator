@@ -1,7 +1,6 @@
 /// menu_draw()
 /// @desc Draws the dropdown menu.
 
-
 // Animation
 if (menu_ani_type = "hide") //Hide
 {

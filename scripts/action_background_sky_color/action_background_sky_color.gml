@@ -4,9 +4,9 @@
 var col;
 
 if (history_undo)
-	col = history_data.oldval
+	col = history_data.old_value
 else if (history_redo)
-	col = history_data.newval
+	col = history_data.new_value
 else
 {
 	col = argument0

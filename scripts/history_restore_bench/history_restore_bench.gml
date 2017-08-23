@@ -9,59 +9,33 @@ with (save)
 with (bench_settings)
 {
 	temp_find_save_ids()
-	
-	if (type = "item")
-		temp_update_item()
-		
-	if (type = "block")
-	{
-		temp_update_block_state_map()
-		temp_update_block()
-	}
-		
-	if (type_is_shape(type))
-		temp_update_shape()
+	temp_update()
 		
 	// Restore templates
 	temp_creator = app.bench_settings
 	for (var t = 0; t < save.temp_amount; t++)
 	{
-		with (save.temp[t])
+		with (save.temp_save_obj[t])
 		{
 			var ntemp = new(obj_template);
 			temp_copy(ntemp)
-			ntemp.iid = iid
 			with (ntemp)
 			{
+				save_id = other.save_id
 				temp_find_save_ids()
-				
-				if (type = "item")
-					temp_update_item()
-					
-				if (type = "block")
-				{
-					temp_update_block_state_map()
-					temp_update_block()
-				}
-					
-				if (type_is_shape(type))
-					temp_update_shape()
-					
-				temp_update_rot_point()
-				temp_update_display_name()
+				temp_update()
 			}
 		}
 	}
-	iid_current -= save.temp_amount
+	//iid_current -= save.temp_amount // TODO test without
 	temp_creator = app
 		
 	// Restore particle types
 	if (type = "particles") 
 	{
-		pc_types = 0
-		for (var p = 0; p < save.pc_types; p++)
-			history_restore_ptype(save.pc_type[p], id)
-		iid_current -= pc_types
+		for (var p = 0; p < save.pc_type_amount; p++)
+			history_restore_ptype(save.pc_type_save_obj[p], id)
+		//iid_current -= pc_types // TODO test without
 		temp_particles_restart()
 	}
 }

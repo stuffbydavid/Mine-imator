@@ -4,9 +4,9 @@
 var orbit;
 
 if (history_undo)
-	orbit = history_data.oldval
+	orbit = history_data.old_value
 else if (history_redo)
-	orbit = history_data.newval
+	orbit = history_data.new_value
 else
 {
 	orbit = argument0

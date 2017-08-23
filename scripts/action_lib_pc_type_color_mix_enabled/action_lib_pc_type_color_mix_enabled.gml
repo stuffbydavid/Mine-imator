@@ -4,9 +4,9 @@
 var enabled;
 
 if (history_undo)
-	enabled = history_data.oldval
+	enabled = history_data.old_value
 else if (history_redo)
-	enabled = history_data.newval
+	enabled = history_data.new_value
 else
 {
 	enabled = argument0

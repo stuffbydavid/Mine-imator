@@ -1,10 +1,12 @@
-/// view_shape_spotlight()
+/// view_shape_spotlight(timeline)
+/// @arg timeline
 /// @desc Renders a spotlight shape.
 
-var points;
+var tl, points;
+tl = argument0
 
 // Sphere
-view_shape_circle(pos, 2)
+view_shape_circle(tl.world_pos, 2)
 
 // Cone
 points = array(
@@ -17,4 +19,4 @@ points = array(
 	point3D(4, 6, -4),
 	point3D(4, 6, 4)
 )
-view_shape_draw(points, matrix)
+view_shape_draw(points, tl.matrix)

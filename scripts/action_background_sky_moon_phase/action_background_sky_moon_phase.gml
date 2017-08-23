@@ -4,9 +4,9 @@
 var phase;
 
 if (history_undo)
-	phase = history_data.oldval
+	phase = history_data.old_value
 else if (history_redo)
-	phase = history_data.newval
+	phase = history_data.new_value
 else
 {
 	phase = argument0

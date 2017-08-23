@@ -5,7 +5,10 @@
 var to = argument0;
 
 to.creator = creator
-to.creator_pos = creator_pos
+if (object_index = obj_particle_type)
+	to.creator_index = ds_list_find_index(creator.ptype_list, id)
+else
+	to.creator_index = creator_index
 to.name = name
 to.temp = temp
 to.text = text

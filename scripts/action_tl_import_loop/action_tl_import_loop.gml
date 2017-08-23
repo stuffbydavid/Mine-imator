@@ -28,13 +28,13 @@ else
 		hobj = history_set(action_tl_import_loop)
 		with (hobj)
 		{
-			id.fn = fn
+			filename = fn
 			history_save_tl_select()
 		}
 	}
 	else
 	{
-		fn = history_data.fn
+		fn = history_data.filename
 		if (!file_exists_lib(fn))
 			return 0
 	}

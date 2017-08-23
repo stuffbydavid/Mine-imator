@@ -19,7 +19,7 @@ for (var k = 0; k < ds_list_size(keyframe_list); k++)
 // Get progress
 p = 0
 if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-	p = (app.timeline_marker - keyframe_current.pos) / (keyframe_next.pos - keyframe_current.pos);
+	p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position);
 
 // Transition
 if (keyframe_current)
@@ -162,16 +162,19 @@ if (type = "audio" && !hide && app.timeline_marker > app.timeline_marker_previou
 		}
 		
 		// Check if passed sounds should be stopped
-		for (var k = 0; k <= keyframe_current.index; k++)
+		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 		{
-			with (keyframe[k])
+			with (keyframe_list[|k])
 			{
-				if (sound_play_index && app.timeline_marker > pos + tl_keyframe_length(id))
+				if (sound_play_index && app.timeline_marker > position + tl_keyframe_length(id))
 				{
 					audio_stop_sound(sound_play_index)
 					sound_play_index = null
 				}
 			}
+				
+			if (timeline.keyframe_current = keyframe_list[|k])
+				break
 		}
 	}
 }
