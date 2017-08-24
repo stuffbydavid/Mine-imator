@@ -26,9 +26,9 @@ setx += 68
 tip_set(text_get("particleeditorcounttip"), setx, dy, dw - (setx - dx) - 50, 24)
 draw_label(text_get("particleeditorcount", string(instance_number(obj_particle))), setx, dy + 12, fa_left, fa_middle)
 
-if (draw_button_normal("particleeditorimport", dx + dw - 50, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
+if (draw_button_normal("particleeditorimport", dx + dw - 50, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))
 	action_lib_pc_open()
-if (draw_button_normal("particleeditorexport", dx + dw - 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.export))
+if (draw_button_normal("particleeditorexport", dx + dw - 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.EXPORT))
 	particles_save()
 
 tab_next()
@@ -58,9 +58,9 @@ if (temp_edit.pc_spawn_region_use)
 	var icon;
 	switch (temp_edit.pc_spawn_region_type)
 	{
-		case "sphere":	icon = icons.sphere		break
-		case "cube":	icon = icons.cube		break
-		case "box":		icon = icons.box		break
+		case "sphere":	icon = icons.SPHERE		break
+		case "cube":	icon = icons.CUBE		break
+		case "box":		icon = icons.BOX		break
 	}
 	
 	tab_control(32)
@@ -216,13 +216,13 @@ tab_next()
 // Tools
 tab_control(24)
 
-if (draw_button_normal("particleeditortypeadd", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.create))
+if (draw_button_normal("particleeditortypeadd", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.CREATE))
 	action_lib_pc_type_add()
 	
-if (draw_button_normal("particleeditortyperemove", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.remove))
+if (draw_button_normal("particleeditortyperemove", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.REMOVE))
 	action_lib_pc_type_remove()
 	
-if (draw_button_normal("particleeditortypeduplicate", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.duplicate))
+if (draw_button_normal("particleeditortypeduplicate", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.DUPLICATE))
 	action_lib_pc_type_duplicate()
 	
 tab_next()
@@ -347,7 +347,7 @@ capwid = test(ptype_edit.spd_extend, text_caption_width("particleeditortypespeed
 									 text_caption_width("particleeditortypespeedxyz", "particleeditortypespeedxyzadd", "particleeditortypespeedxyzmul"))
 								  
 tab_control(14)
-if (draw_button_normal("particleeditortypespeedextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.spd_extend, false, true, test(ptype_edit.spd_extend, icons.arrowdown, icons.arrowright)))
+if (draw_button_normal("particleeditortypespeedextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.spd_extend, false, true, test(ptype_edit.spd_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
 	action_lib_pc_type_spd_extend(!ptype_edit.spd_extend)
 tab_next()
 
@@ -462,7 +462,7 @@ if (ptype_edit.temp)
 	capwid = test(ptype_edit.rot_extend, text_caption_width("particleeditortyperotationx", "particleeditortyperotationy", "particleeditortyperotationz"), 
 									  text_caption_width("particleeditortyperotationxyz"))
 	tab_control(14)
-	if (draw_button_normal("particleeditortyperotationextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.rot_extend, false, true, test(ptype_edit.rot_extend, icons.arrowdown, icons.arrowright)))
+	if (draw_button_normal("particleeditortyperotationextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.rot_extend, false, true, test(ptype_edit.rot_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
 		action_lib_pc_type_rot_extend(!ptype_edit.rot_extend)
 	tab_next()
 	
@@ -520,7 +520,7 @@ if (ptype_edit.temp)
 											 text_caption_width("particleeditortyperotationspeedxyz", "particleeditortyperotationspeedxyzadd", "particleeditortyperotationspeedxyzmul"))
 										
 	tab_control(14)
-	if (draw_button_normal("particleeditortyperotationspeedextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.rot_spd_extend, false, true, test(ptype_edit.rot_spd_extend, icons.arrowdown, icons.arrowright)))
+	if (draw_button_normal("particleeditortyperotationspeedextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.rot_spd_extend, false, true, test(ptype_edit.rot_spd_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
 		action_lib_pc_type_rot_spd_extend(!ptype_edit.rot_spd_extend)
 	tab_next() 
 	

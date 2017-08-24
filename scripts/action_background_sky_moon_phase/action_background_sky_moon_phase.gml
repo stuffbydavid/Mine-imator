@@ -13,7 +13,7 @@ else
 	if (action_tl_select_single("background"))
 	{
 		tl_value_set_start(action_background_sky_moon_phase, false)
-		tl_value_set(BGSKYMOONPHASE, phase, false)
+		tl_value_set(e_value.BG_SKY_MOON_PHASE, phase, false)
 		tl_value_set_done()
 		return 0
 	}

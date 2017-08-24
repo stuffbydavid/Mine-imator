@@ -1,7 +1,7 @@
 /// tab_frame_editor_texture()
 
 var texobj, name, text, tex;
-texobj = tl_edit.value[TEXTUREOBJ]
+texobj = tl_edit.value[e_value.TEXTURE_OBJ]
 text = text_get("listnone")
 tex = null
 
@@ -41,9 +41,9 @@ switch (tl_edit.type)
 
 if (texobj)
 	text = texobj.display_name
-if (tl_edit.value[TEXTUREOBJ] < 0)
+if (tl_edit.value[e_value.TEXTURE_OBJ] < 0)
 	text = text_get("frameeditortexturedefault", text)
 
 tab_control(40)
-draw_button_menu(name, e_menu.LIST, dx, dy, dw, 40, tl_edit.value[TEXTUREOBJ], text, action_tl_frame_textureobj, tex)
+draw_button_menu(name, e_menu.LIST, dx, dy, dw, 40, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, tex)
 tab_next()

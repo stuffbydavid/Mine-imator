@@ -19,7 +19,7 @@ else
 with (ptype_edit)
 {
 	sprite_frame_width = sprite_frame_width * add + val
-	ptype_update_sprite_vbuffer_amount()
+	ptype_update_sprite_vbuffers()
 }
 
 tab_template_editor_particles_preview_restart()

@@ -1,7 +1,6 @@
 /// app_update_animate()
 /// @desc Handles the playing of various animations. Runs once per step.
 
-
 // Go through timelines
 var bgobject, updatevalues;
 updatevalues = (timeline_marker_previous != timeline_marker)
@@ -24,12 +23,12 @@ with (obj_timeline)
 		// Animated zoom
 		if (app.window_busy = "") 
 		{
-			if (cam_goalzoom > 0 && cam_goalzoom != value[CAMROTATEDISTANCE])
+			if (cam_goalzoom > 0 && cam_goalzoom != value[e_value.CAM_ROTATE_DISTANCE])
 			{
 				with (app)
 				{
 					tl_value_set_start(action_tl_frame_camrotatedistance, true)
-					tl_value_set(CAMROTATEDISTANCE, (other.cam_goalzoom - other.value[CAMROTATEDISTANCE]) / max(1, 4 / delta), true)
+					tl_value_set(e_value.CAM_ROTATE_DISTANCE, (other.cam_goalzoom - other.value[e_value.CAM_ROTATE_DISTANCE]) / max(1, 4 / delta), true)
 					tl_value_set_done()
 				}
 			}
@@ -38,7 +37,7 @@ with (obj_timeline)
 		}
 		
 		// Find camera
-		if (app.timeline_camera = null && value_inherit[VISIBLE] && !hide)
+		if (app.timeline_camera = null && value_inherit[e_value.VISIBLE] && !hide)
 			app.timeline_camera = id
 			
 		if (selected)
@@ -50,19 +49,19 @@ with (obj_timeline)
 		particle_spawner_update()
 		
 	// Find background changer
-	if (type = "background" && value_inherit[VISIBLE] && !hide)
+	if (type = "background" && value_inherit[e_value.VISIBLE] && !hide)
 		bgobject = id
 		
 	// Add light
-	if ((type = "pointlight" || type = "spotlight") && value_inherit[VISIBLE])
+	if ((type = "pointlight" || type = "spotlight") && value_inherit[e_value.VISIBLE])
 	{
 		app.background_light_data[app.background_lights * 8 + 0] = world_pos[X]
 		app.background_light_data[app.background_lights * 8 + 1] = world_pos[Y]
 		app.background_light_data[app.background_lights * 8 + 2] = world_pos[Z]
-		app.background_light_data[app.background_lights * 8 + 3] = value[LIGHTRANGE]
-		app.background_light_data[app.background_lights * 8 + 4] = color_get_red(value[LIGHTCOLOR]) / 255
-		app.background_light_data[app.background_lights * 8 + 5] = color_get_green(value[LIGHTCOLOR]) / 255
-		app.background_light_data[app.background_lights * 8 + 6] = color_get_blue(value[LIGHTCOLOR]) / 255
+		app.background_light_data[app.background_lights * 8 + 3] = value[e_value.LIGHT_RANGE]
+		app.background_light_data[app.background_lights * 8 + 4] = color_get_red(value[e_value.LIGHT_COLOR]) / 255
+		app.background_light_data[app.background_lights * 8 + 5] = color_get_green(value[e_value.LIGHT_COLOR]) / 255
+		app.background_light_data[app.background_lights * 8 + 6] = color_get_blue(value[e_value.LIGHT_COLOR]) / 255
 		app.background_light_data[app.background_lights * 8 + 7] = 1
 		app.background_lights++
 	}
@@ -73,22 +72,22 @@ timeline_marker_previous = timeline_marker
 // Background
 if (bgobject)
 {
-	background_sky_moon_phase = bgobject.value[BGSKYMOONPHASE]
-	background_sky_time = bgobject.value[BGSKYTIME]
-	background_sky_rotation = bgobject.value[BGSKYROTATION]
-	background_sky_clouds_speed = bgobject.value[BGSKYCLOUDSSPEED]
-	background_sky_color = bgobject.value[BGSKYCOLOR]
-	background_sky_clouds_color = bgobject.value[BGSKYCLOUDSCOLOR]
-	background_sunlight_color = bgobject.value[BGSUNLIGHTCOLOR]
-	background_ambient_color = bgobject.value[BGAMBIENTCOLOR]
-	background_night_color = bgobject.value[BGNIGHTCOLOR]
-	background_fog_color = bgobject.value[BGFOGCOLOR]
-	background_fog_distance = bgobject.value[BGFOGDISTANCE]
-	background_fog_size = bgobject.value[BGFOGSIZE]
-	background_fog_height = bgobject.value[BGFOGHEIGHT]
-	background_wind_speed = bgobject.value[BGWINDSPEED]
-	background_wind_strength = bgobject.value[BGWINDSTRENGTH]
-	background_texture_animation_speed = bgobject.value[BGTEXTUREANISPEED]
+	background_sky_moon_phase			= bgobject.value[e_value.BG_SKY_MOON_PHASE]
+	background_sky_time					= bgobject.value[e_value.BG_SKY_TIME]
+	background_sky_rotation				= bgobject.value[e_value.BG_SKY_ROTATION]
+	background_sky_clouds_speed			= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
+	background_sky_color				= bgobject.value[e_value.BG_SKY_COLOR]
+	background_sky_clouds_color			= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
+	background_sunlight_color			= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
+	background_ambient_color			= bgobject.value[e_value.BG_AMBIENT_COLOR]
+	background_night_color				= bgobject.value[e_value.BG_NIGHT_COLOR]
+	background_fog_color				= bgobject.value[e_value.BG_FOG_COLOR]
+	background_fog_distance				= bgobject.value[e_value.BG_FOG_DISTANCE]
+	background_fog_size					= bgobject.value[e_value.BG_FOG_SIZE]
+	background_fog_height				= bgobject.value[e_value.BG_FOG_HEIGHT]
+	background_wind_speed				= bgobject.value[e_value.BG_WIND_SPEED]
+	background_wind_strength			= bgobject.value[e_value.BG_WIND_STRENGTH]
+	background_texture_animation_speed	= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
 }
 
 // Colors

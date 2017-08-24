@@ -12,9 +12,10 @@
 #macro gm_runtime					"2.0.7.110"
 #macro minecraft_version			"1.12"
 
-// Minecraft version format
-#macro minecraft_version_1			1
-#macro minecraft_version_format		minecraft_version_1
+// File formats
+#macro project_format				e_project.FORMAT_110
+#macro settings_format				e_settings.FORMAT_110
+#macro minecraft_assets_format		e_minecraft_assets.FORMAT_110
 
 // Directories
 #macro file_directory			game_save_id
@@ -27,7 +28,7 @@
 #macro minecraft_directory		data_directory + "Minecraft\\"
 
 // Files
-#macro minecraft_version_file	minecraft_directory + minecraft_version + ".mcversion"
+#macro minecraft_assets_file	minecraft_directory + minecraft_version + ".mcassets"
 #macro language_file			languages_directory + "english.milang"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.file"
@@ -90,7 +91,7 @@
 #macro item_sheet_width			32
 #macro item_sheet_height		16
 
-// Index
+// Vectors and matrices
 #macro X 0
 #macro Y 1
 #macro Z 2
@@ -114,118 +115,3 @@
 #macro c_clouds_top			make_color_rgb(255, 255, 255)
 #macro c_clouds_sideslight	make_color_rgb(215, 222, 234)
 #macro c_clouds_sidesdark	make_color_rgb(194, 201, 215)
-
-
-
-// TODO replace with enums
-
-#macro project_01			1
-#macro project_02			2
-#macro project_05			3
-#macro project_06			4
-#macro project_07demo		5
-#macro project_100demo2		6
-#macro project_100demo3		7
-#macro project_100demo4		8
-#macro project_100debug		9
-#macro project_100			10
-#macro project_105			11
-#macro project_105_2		12
-#macro project_106			13
-#macro project_106_2		14
-#macro project_format		project_106_2
-
-#macro settings_100demo4	0
-#macro settings_100demo5	1
-#macro settings_100			2
-#macro settings_103			3
-#macro settings_106			4
-#macro settings_106_2		5
-#macro settings_106_3		6
-#macro settings_110			7
-#macro settings_format		settings_110
-
-#macro POSITION 0
-#macro ROTATION 1
-#macro SCALE 2
-#macro BEND 3
-#macro COLOR 4
-#macro PARTICLES 5
-#macro LIGHT 6
-#macro SPOTLIGHT 7
-#macro CAMERA 8
-#macro BACKGROUND 9
-#macro TEXTURE 10
-#macro SOUND 11
-#macro KEYFRAME 12
-#macro ROTPOINT 13
-#macro HIERARCHY 14
-#macro GRAPHICS 15
-#macro AUDIO 16
-#macro value_types 17
-
-#macro XPOS 0
-#macro YPOS 1
-#macro ZPOS 2
-#macro XROT 3
-#macro YROT 4
-#macro ZROT 5
-#macro XSCA 6
-#macro YSCA 7
-#macro ZSCA 8
-#macro BENDANGLE 9
-#macro ALPHA 10
-#macro RGBADD 11
-#macro RGBSUB 12
-#macro RGBMUL 13
-#macro HSBADD 14
-#macro HSBSUB 15
-#macro HSBMUL 16
-#macro MIXCOLOR 17
-#macro MIXPERCENT 18
-#macro BRIGHTNESS 19
-#macro SPAWN 20
-#macro ATTRACTOR 21
-#macro FORCE 22
-#macro LIGHTCOLOR 23
-#macro LIGHTRANGE 24
-#macro LIGHTFADESIZE 25
-#macro LIGHTSPOTRADIUS 26
-#macro LIGHTSPOTSHARPNESS 27
-#macro CAMFOV 28
-#macro CAMROTATE 29
-#macro CAMROTATEDISTANCE 30
-#macro CAMROTATEXYANGLE 31
-#macro CAMROTATEZANGLE 32
-#macro CAMDOF 33
-#macro CAMDOFDEPTH 34
-#macro CAMDOFRANGE 35
-#macro CAMDOFFADESIZE 36
-#macro CAMSIZEUSEPROJECT 37
-#macro CAMSIZEKEEPASPECTRATIO 38
-#macro CAMWIDTH 39
-#macro CAMHEIGHT 40
-#macro BGSKYMOONPHASE 41
-#macro BGSKYTIME 42
-#macro BGSKYROTATION 43
-#macro BGSKYCLOUDSSPEED 44
-#macro BGSKYCOLOR 45
-#macro BGSKYCLOUDSCOLOR 46
-#macro BGSUNLIGHTCOLOR 47
-#macro BGAMBIENTCOLOR 48
-#macro BGNIGHTCOLOR 49
-#macro BGFOGCOLOR 50
-#macro BGFOGDISTANCE 51
-#macro BGFOGSIZE 52
-#macro BGFOGHEIGHT 53
-#macro BGWINDSPEED 54
-#macro BGWINDSTRENGTH 55
-#macro BGTEXTUREANISPEED 56
-#macro TEXTUREOBJ 57
-#macro SOUNDOBJ 58
-#macro SOUNDVOLUME 59
-#macro SOUNDSTART 60
-#macro SOUNDEND 61
-#macro VISIBLE 62
-#macro TRANSITION 63
-#macro values 64 // todo rename "values_"

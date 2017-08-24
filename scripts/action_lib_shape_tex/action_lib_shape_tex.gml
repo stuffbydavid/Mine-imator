@@ -26,10 +26,12 @@ else
 
 with (temp_edit)
 {
-	if (shape_tex && shape_tex.type != "camera")
+	if (shape_tex != null && shape_tex.type != "camera")
 		shape_tex.count--
+		
 	shape_tex = res
-	if (shape_tex && shape_tex.type != "camera")
+	
+	if (shape_tex != null && shape_tex.type != "camera")
 		shape_tex.count++
 }
 

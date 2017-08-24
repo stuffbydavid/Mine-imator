@@ -37,11 +37,11 @@ if (window_focus = string(view))
 	{
 		if (!cam)
 			cam_work_zoom_goal = clamp(cam_work_zoom_goal * (1 + 0.25 * mouse_wheel), cam_near, cam_far)
-		else if (cam.value[CAMROTATE])
+		else if (cam.value[e_value.CAM_ROTATE])
 		{
 			action_tl_select_single(cam)
 			if (cam.cam_goalzoom < 0) // Reset
-				cam.cam_goalzoom = cam.value[CAMROTATEDISTANCE]
+				cam.cam_goalzoom = cam.value[e_value.CAM_ROTATE_DISTANCE]
 			cam.cam_goalzoom = max(1, cam.cam_goalzoom * (1 + 0.25 * mouse_wheel))
 		}
 	}
@@ -72,7 +72,7 @@ if (window_focus = string(view))
 	{
 		mouse_cursor = cr_none
 		
-		if (!cam || cam.value[CAMROTATE])
+		if (!cam || cam.value[e_value.CAM_ROTATE])
 			cam_control_rotate(cam, view_click_x, view_click_y)
 		else
 			cam_control_move(cam, view_click_x, view_click_y)

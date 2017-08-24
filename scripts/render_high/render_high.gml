@@ -113,7 +113,7 @@ if (setting_render_shadows)
 	// Get number of lights (to divide brightness by)
 	shader_lights = 0
 	with (obj_timeline)
-		if (value_inherit[VISIBLE] && !hide && (type = "pointlight" || type = "spotlight"))
+		if (value_inherit[e_value.VISIBLE] && !hide && (type = "pointlight" || type = "spotlight"))
 			shader_lights++
 	
 	// User placed lights
@@ -121,7 +121,7 @@ if (setting_render_shadows)
 	{
 		var shadowsurftemp;
 	
-		if (!value_inherit[VISIBLE] || hide)
+		if (!value_inherit[e_value.VISIBLE] || hide)
 			continue
 		
 		if (type = "pointlight")
@@ -137,7 +137,7 @@ if (setting_render_shadows)
 				surface_set_target(app.render_surface_point_buffer[d])
 				{
 					draw_clear(c_white)
-					render_world_start_light(pos, point3D_add(pos, look), 1, value[LIGHTRANGE], 90, value[LIGHTCOLOR], value[LIGHTFADESIZE])
+					render_world_start_light(pos, point3D_add(pos, look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE])
 					render_world("highlightpointdepth")
 					render_world_done()
 				}
@@ -169,7 +169,7 @@ if (setting_render_shadows)
 			surface_set_target(app.render_surface_spot_buffer)
 			{
 				draw_clear(c_white)
-				render_world_start_light(pos, lookat, 1, value[LIGHTRANGE], value[LIGHTSPOTRADIUS], value[LIGHTCOLOR], value[LIGHTFADESIZE], value[LIGHTSPOTSHARPNESS])
+				render_world_start_light(pos, lookat, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
 				render_world("highlightspotdepth")
 				render_world_done()
 			}

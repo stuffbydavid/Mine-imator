@@ -153,7 +153,7 @@ switch (menu_type)
 					menu_clear()
 					menu_timeline_init()
 				}
-				draw_image(spr_icons, test(tl.tree_extend, icons.arrowdowntiny, icons.arrowrighttiny), menu_x + dx + 2, dy + menu_item_h / 2, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
+				draw_image(spr_icons, test(tl.tree_extend, icons.ARROW_DOWN_TINY, icons.ARROW_RIGHT_TINY), menu_x + dx + 2, dy + menu_item_h / 2, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 				dx += 10
 			}
 			

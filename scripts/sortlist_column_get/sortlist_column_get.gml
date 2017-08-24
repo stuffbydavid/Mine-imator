@@ -25,10 +25,10 @@ switch (slist.column_name[col])
 	case "charname":
 	case "spblockname":
 	case "bodypartmodelname":
-		return minecraft_get_name("model", mc_version.model_name_map[?value].name)
+		return minecraft_asset_get_name("model", mc_assets.model_name_map[?value].name)
 		
 	case "blockname":
-		return minecraft_get_name("block", mc_version.block_name_map[?value].name)
+		return minecraft_asset_get_name("block", mc_assets.block_name_map[?value].name)
 		
 	case "particleeditortypename":
 		if (dev_mode)

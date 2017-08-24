@@ -5,7 +5,7 @@ var view, len, mat;
 view = argument0
 
 // Arrow length
-if (tl_edit.type = "camera" && tl_edit.value[CAMROTATE])
+if (tl_edit.type = "camera" && tl_edit.value[e_value.CAM_ROTATE])
 	len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * 0.2
 else
 	len = point3D_distance(cam_from, tl_edit.world_pos) * 0.2
@@ -22,12 +22,12 @@ with (tl_edit)
 }
 
 // Draw each axis
-view_control_position_axis(view, XPOS, c_yellow, point3D_mul_matrix(vec3(-len, 0, 0), mat), point3D_mul_matrix(vec3(len, 0, 0), mat))
-view_control_position_axis(view, YPOS, test(setting_z_is_up, c_blue, c_red), point3D_mul_matrix(vec3(0, -len, 0), mat), point3D_mul_matrix(vec3(0, len, 0), mat))
-view_control_position_axis(view, ZPOS, test(setting_z_is_up, c_red, c_blue), point3D_mul_matrix(vec3(0, 0, -len), mat), point3D_mul_matrix(vec3(0, 0, len), mat))
+view_control_position_axis(view, e_value.POS_X, c_yellow, point3D_mul_matrix(vec3(-len, 0, 0), mat), point3D_mul_matrix(vec3(len, 0, 0), mat))
+view_control_position_axis(view, e_value.POS_Y, test(setting_z_is_up, c_blue, c_red), point3D_mul_matrix(vec3(0, -len, 0), mat), point3D_mul_matrix(vec3(0, len, 0), mat))
+view_control_position_axis(view, e_value.POS_Z, test(setting_z_is_up, c_red, c_blue), point3D_mul_matrix(vec3(0, 0, -len), mat), point3D_mul_matrix(vec3(0, 0, len), mat))
 
 // Is dragging
-if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit < XROT)
+if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit < e_value.ROT_X)
 {
 	mouse_cursor = cr_handpoint
 	
@@ -41,7 +41,7 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && view_contr
 		vecmouse = vec2(mouse_dx, mouse_dy)
 		vecdot = vec2_dot(vec2_normalize(view_control_vec), vec2_normalize(vecmouse))
 		move = (vec2_length(vecmouse) / veclen) * len * 2*vecdot
-		move /= tl_edit.value_inherit[XSCA + view_control_edit]
+		move /= tl_edit.value_inherit[e_value.SCA_X + view_control_edit]
 		view_control_value += move
 		
 		// Snap

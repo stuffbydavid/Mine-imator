@@ -11,7 +11,7 @@ with (obj_keyframe)
 	other.save_kf_tl_save_id[other.save_kf_amount] = save_id_get(timeline)
 	other.save_kf_pos[other.save_kf_amount] = position
 	
-	for (var v = 0; v < values; v++)
+	for (var v = 0; v < e_value.amount; v++)
 		other.save_kf_value[other.save_kf_amount, v] = tl_value_save(v, value[v])
 	
 	other.save_kf_amount++

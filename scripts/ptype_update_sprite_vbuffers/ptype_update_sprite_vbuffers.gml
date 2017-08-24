@@ -1,4 +1,4 @@
-/// ptype_update_sprite_vbuffer_amount()
+/// ptype_update_sprite_vbuffers()
 /// @desc Updates the 3D models for sprite particles.
 
 for (var m = 0; m < sprite_vbuffer_amount; m++)

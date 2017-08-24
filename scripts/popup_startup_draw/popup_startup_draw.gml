@@ -39,7 +39,7 @@ dw = 200
 dh = 48
 
 // New
-if (draw_button_normal("startupnewproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.newproject))
+if (draw_button_normal("startupnewproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.NEW_PROJECT))
 {
 	popup_newproject_clear()
 	popup_switch(popup_newproject)
@@ -47,14 +47,14 @@ if (draw_button_normal("startupnewproject", dx, dy, dw, dh, e_button.TEXT, false
 dy += dh + 8
 
 // Open
-if (draw_button_normal("startupopenproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.openproject))
+if (draw_button_normal("startupopenproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.OPEN_PROJECT))
 	project_open("")
 dy += dh + 8
 
 // Upgrade
 if (trial_version)
 {
-	if (draw_button_normal("startupupgrade", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.upgradesmall))
+	if (draw_button_normal("startupupgrade", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.UPGRADE_SMALL))
 		popup_switch(popup_upgrade)
 	dy += dh + 8
 }
@@ -62,12 +62,12 @@ if (trial_version)
 // Website
 dw = floor(dw / 2-5)
 dh = 32
-if (draw_button_normal("startupwebsite", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.websitesmall))
+if (draw_button_normal("startupwebsite", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.WEBSITE_SMALL))
 	action_toolbar_website()
 
 // Forums
 dx += dw + 10
-if (draw_button_normal("startupforums", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.forumssmall))
+if (draw_button_normal("startupforums", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.FORUMS_SMALL))
 	action_toolbar_forums()
    
 // Recent

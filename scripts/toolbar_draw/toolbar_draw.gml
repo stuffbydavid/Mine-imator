@@ -89,34 +89,34 @@ dx = content_x
 dy = content_y
 
 tip_set_shortcut(setting_key_new, setting_key_new_control)
-toolbar_draw_button("toolbarnewproject", (popup = popup_newproject && popup_switch_from != popup_startup && popup_switch_to != popup_startup), true, icons.newproject, action_toolbar_new)
+toolbar_draw_button("toolbarnewproject", (popup = popup_newproject && popup_switch_from != popup_startup && popup_switch_to != popup_startup), true, icons.NEW_PROJECT, action_toolbar_new)
 tip_set_shortcut(setting_key_import_asset, setting_key_import_asset_control)
-toolbar_draw_button("toolbarimportasset", false, true, icons.importasset, action_toolbar_import_asset)
+toolbar_draw_button("toolbarimportasset", false, true, icons.IMPORT_ASSET, action_toolbar_import_asset)
 tip_set_shortcut(setting_key_open, setting_key_open_control)
-toolbar_draw_button("toolbaropenproject", false, true, icons.openproject, action_toolbar_open)
+toolbar_draw_button("toolbaropenproject", false, true, icons.OPEN_PROJECT, action_toolbar_open)
 tip_set_shortcut(setting_key_save, setting_key_save_control)
-toolbar_draw_button("toolbarsaveproject", false, true, icons.saveproject, action_toolbar_save)
-toolbar_draw_button("toolbarsaveprojectas", (popup = popup_saveas), true, icons.saveprojectas, action_toolbar_save_as)
+toolbar_draw_button("toolbarsaveproject", false, true, icons.SAVE_PROJECT, action_toolbar_save)
+toolbar_draw_button("toolbarsaveprojectas", (popup = popup_saveas), true, icons.SAVE_PROJECT_AS, action_toolbar_save_as)
 
 toolbar_draw_group(2)
-toolbar_draw_button("toolbarexportmovie", (popup = popup_exportmovie), true, icons.exportmovie, action_toolbar_export_movie)
-toolbar_draw_button("toolbarexportimage", (popup = popup_exportimage), true, icons.exportimage, action_toolbar_export_image)
+toolbar_draw_button("toolbarexportmovie", (popup = popup_exportmovie), true, icons.EXPORT_MOVIE, action_toolbar_export_movie)
+toolbar_draw_button("toolbarexportimage", (popup = popup_exportimage), true, icons.EXPORT_IMAGE, action_toolbar_export_image)
 
 toolbar_draw_group(4)
-toolbar_draw_button("toolbarviewsecond", view_second.show, true, icons.viewsecond, action_toolbar_view_second)
-toolbar_draw_button("toolbarsettings", settings.show, true, icons.settings, action_toolbar_settings)
+toolbar_draw_button("toolbarviewsecond", view_second.show, true, icons.VIEW_SECOND, action_toolbar_view_second)
+toolbar_draw_button("toolbarsettings", settings.show, true, icons.SETTINGS, action_toolbar_settings)
 
 toolbar_draw_group(1)
 tip_set_shortcut(setting_key_undo, setting_key_undo_control)
-toolbar_draw_button("toolbarundo", false, (history_pos < history_amount), icons.undo, action_toolbar_undo)
+toolbar_draw_button("toolbarundo", false, (history_pos < history_amount), icons.UNDO, action_toolbar_undo)
 tip_set_shortcut(setting_key_redo, setting_key_redo_control)
-toolbar_draw_button("toolbarredo", false, (history_pos > 0), icons.redo, action_toolbar_redo)
+toolbar_draw_button("toolbarredo", false, (history_pos > 0), icons.REDO, action_toolbar_redo)
 
 toolbar_draw_group(3)
 tip = text_get("toolbarplaytip", text_control_name(setting_key_play, setting_key_play_control), text_control_name(setting_key_play_beginning, setting_key_play_beginning_control))
-toolbar_draw_button("toolbarplay", false, true, test(timeline_playing, icons.pause, icons.play), action_toolbar_play, tip)
-toolbar_draw_button("toolbarstop", false, true, icons.stop, action_toolbar_play_stop)
-toolbar_draw_button("toolbarrepeat", timeline_repeat, true, icons.loop, action_toolbar_play_repeat)
+toolbar_draw_button("toolbarplay", false, true, test(timeline_playing, icons.PAUSE, icons.PLAY), action_toolbar_play, tip)
+toolbar_draw_button("toolbarstop", false, true, icons.STOP, action_toolbar_play_stop)
+toolbar_draw_button("toolbarrepeat", timeline_repeat, true, icons.LOOP, action_toolbar_play_repeat)
 
 // Timestamp
 if (content_width >= cellsize * 3)
@@ -173,7 +173,7 @@ else
 // Upgrade
 if (trial_version)
 {
-	if (draw_button_normal("toolbarupgrade", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.upgradesmall + buttonimage))
+	if (draw_button_normal("toolbarupgrade", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.UPGRADE_SMALL + buttonimage))
 		action_toolbar_upgrade()
 		
 	if (content_direction = e_scroll.HORIZONTAL)
@@ -183,7 +183,7 @@ if (trial_version)
 }
 
 // Forums
-if (draw_button_normal("toolbarforums", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.forumssmall + buttonimage))
+if (draw_button_normal("toolbarforums", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.FORUMS_SMALL + buttonimage))
 	action_toolbar_forums()
 
 if (content_direction = e_scroll.HORIZONTAL)
@@ -192,7 +192,7 @@ else
 	dy -= buttonsize + 2
 
 // Site
-if (draw_button_normal("toolbarwebsite", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.websitesmall + buttonimage))
+if (draw_button_normal("toolbarwebsite", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.WEBSITE_SMALL + buttonimage))
 	action_toolbar_website()
 
 if (content_direction = e_scroll.HORIZONTAL)

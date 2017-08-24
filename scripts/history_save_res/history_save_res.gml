@@ -82,14 +82,14 @@ with (obj_particle_type)
 
 with (obj_keyframe)
 {
-	if (value[TEXTUREOBJ] = res)
+	if (value[e_value.TEXTURE_OBJ] = res)
 	{
 		save.usage_kf_texture_tl_save_id[save.usage_kf_texture_amount] = save_id_get(timeline)
 		save.usage_kf_texture_index[save.usage_kf_texture_amount] = ds_list_find_index(timeline.keyframe_list, id)
 		save.usage_kf_texture_amount++
 	}
 	
-	if (value[SOUNDOBJ] = res)
+	if (value[e_value.SOUND_OBJ] = res)
 	{
 		save.usage_kf_sound_tl_save_id[save.usage_kf_sound_amount] = save_id_get(timeline)
 		save.usage_kf_sound_index[save.usage_kf_sound_amount] = ds_list_find_index(timeline.keyframe_list, id)
@@ -99,13 +99,13 @@ with (obj_keyframe)
 
 with (obj_timeline)
 {
-	if (value[TEXTUREOBJ] = res)
+	if (value[e_value.TEXTURE_OBJ] = res)
 	{
 		save.usage_tl_texture_save_id[save.usage_tl_texture_amount] = save_id
 		save.usage_tl_texture_amount++
 	}
 	
-	if (value[SOUNDOBJ] = res)
+	if (value[e_value.SOUND_OBJ] = res)
 	{
 		save.usage_tl_sound_save_id[save.usage_tl_sound_amount] = save_id
 		save.usage_tl_sound_amount++

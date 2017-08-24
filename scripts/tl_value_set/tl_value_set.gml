@@ -44,16 +44,16 @@ else
 		if (!selected)
 			continue
 			
-		if (vid = SOUNDOBJ && value[SOUNDOBJ] != null)
-			value[SOUNDOBJ].count--
+		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
+			value[e_value.SOUND_OBJ].count--
 			
 		var nval = value[vid] * add + val;
 		if (value[vid] != nval)
 			update_matrix = true
 		
 		value[vid] = tl_value_clamp(vid, nval)
-		if (vid = SOUNDOBJ && value[SOUNDOBJ] != null)
-			value[SOUNDOBJ].count++
+		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
+			value[e_value.SOUND_OBJ].count++
 	}
 	
 	// Save and modify keyframes

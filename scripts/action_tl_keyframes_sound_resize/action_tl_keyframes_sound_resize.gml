@@ -24,7 +24,7 @@ with (obj_keyframe)
 	if (!selected || sound_resize_index < 0 || new_start < 0 || position = new_position)
 		continue
 		
-	value[SOUNDSTART] = new_start
+	value[e_value.SOUND_START] = new_start
 
 	with (timeline)
 	{

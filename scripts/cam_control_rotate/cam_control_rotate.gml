@@ -29,12 +29,12 @@ if (!cam)
 else
 {
 	tl_value_set_start(cam_control_rotate, true)
-	tl_value_set(CAMROTATEXYANGLE, mx, true)
-	tl_value_set(CAMROTATEZANGLE, my, true)
+	tl_value_set(e_value.CAM_ROTATE_ANGLE_XY, mx, true)
+	tl_value_set(e_value.CAM_ROTATE_ANGLE_Z, my, true)
 	if (frame_editor.camera.look_at_rotate)
 	{
-		tl_value_set(ZROT, cam.value[CAMROTATEXYANGLE], false)
-		tl_value_set(XROT, cam.value[CAMROTATEZANGLE], false)
+		tl_value_set(e_value.ROT_Z, cam.value[e_value.CAM_ROTATE_ANGLE_XY], false)
+		tl_value_set(e_value.ROT_X, cam.value[e_value.CAM_ROTATE_ANGLE_Z], false)
 	}
 	tl_value_set_done()
 }

@@ -112,8 +112,8 @@ with (template_editor)
 	char_list = new(obj_sortlist)
 	char_list.script = action_lib_model_name
 	sortlist_column_add(char_list, "charname", 0)
-	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(char_list, mc_version.char_list[|c].name)
+	for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
+		sortlist_add(char_list, mc_assets.char_list[|c].name)
 		
 	// Item
 	item_scroll = new(obj_scrollbar)
@@ -122,24 +122,24 @@ with (template_editor)
 	block_list = new(obj_sortlist)
 	block_list.script = action_lib_block_name
 	sortlist_column_add(block_list, "blockname", 0)
-	for (var b = 0; b < ds_list_size(mc_version.block_list); b++)
-		sortlist_add(block_list, mc_version.block_list[|b].name)
+	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
+		sortlist_add(block_list, mc_assets.block_list[|b].name)
 	
 	// Special block list
 	special_block_list = new(obj_sortlist)
 	special_block_list.script = action_lib_model_name
 	sortlist_column_add(special_block_list, "spblockname", 0)
-	for (var b = 0; b < ds_list_size(mc_version.special_block_list); b++)
-		sortlist_add(special_block_list, mc_version.special_block_list[|b].name)
+	for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
+		sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
 	
 	// Bodypart list
 	bodypart_model_list = new(obj_sortlist)
 	bodypart_model_list.script = action_lib_bodypart_model_name
 	sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
-	for (var m = 0; m < ds_list_size(mc_version.char_list); m++)
-		sortlist_add(bodypart_model_list, mc_version.char_list[|m].name)
-	for (var m = 0; m < ds_list_size(mc_version.special_block_list); m++)
-		sortlist_add(bodypart_model_list, mc_version.special_block_list[|m].name)
+	for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
+		sortlist_add(bodypart_model_list, mc_assets.char_list[|m].name)
+	for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
+		sortlist_add(bodypart_model_list, mc_assets.special_block_list[|m].name)
 		
 	// Particle editor
 	tbx_spawn_amount = new_textbox_integer()
@@ -372,19 +372,19 @@ with (frame_editor)
 	{
 		advanced = false
 		copy_alpha = 1
-		copy_rgbadd = c_black
-		copy_rgbsub = c_black
-		copy_rgbmul = c_white
-		copy_hsbadd = c_black
-		copy_hsbsub = c_black
-		copy_hsbmul = c_white
-		copy_mixcolor = c_black
-		copy_mixpercent = 0
+		copy_rgb_add = c_black
+		copy_rgb_sub = c_black
+		copy_rgb_mul = c_white
+		copy_hsb_add = c_black
+		copy_hsb_sub = c_black
+		copy_hsb_mul = c_white
+		copy_mix_color = c_black
+		copy_mix_percent = 0
 		copy_brightness = 0
 		tbx_alpha = new_textbox_integer()
 		tbx_alpha.suffix = "%"
-		tbx_mixpercent = new_textbox_integer()
-		tbx_mixpercent.suffix = "%"
+		tbx_mix_percent = new_textbox_integer()
+		tbx_mix_percent.suffix = "%"
 		tbx_brightness = new_textbox_integer()
 		tbx_brightness.suffix = "%"
 	}
@@ -400,9 +400,9 @@ with (frame_editor)
 	{
 		copy_color = c_white
 		copy_range = 250
-		copy_fadesize = 0.5
-		copy_spotradius = 50
-		copy_spotsharpness = 0.5
+		copy_fade_size = 0.5
+		copy_spot_radius = 50
+		copy_spot_sharpness = 0.5
 		has_spotlight = false
 		tbx_range = new_textbox_decimals()
 		tbx_fade_size = new_textbox_integer()
@@ -420,8 +420,8 @@ with (frame_editor)
 		copy_fov = 45
 		copy_rotate = false
 		copy_rotate_distance = 100
-		copy_rotate_xy_angle = 0
-		copy_rotate_z_angle = 0
+		copy_rotate_angle_xy = 0
+		copy_rotate_angle_z = 0
 		copy_dof = false
 		copy_dof_depth = 0
 		copy_dof_range = 200

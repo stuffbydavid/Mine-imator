@@ -4,7 +4,6 @@
 save_id = ""
 save_id = save_id_create()
 creator = null
-creator_pos = null
 
 name = ""
 temp = null

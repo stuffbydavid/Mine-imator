@@ -13,7 +13,7 @@ else
 	if (action_tl_select_single("background"))
 	{
 		tl_value_set_start(action_background_sky_color, true)
-		tl_value_set(BGSKYCOLOR, col, false)
+		tl_value_set(e_value.BG_SKY_COLOR, col, false)
 		tl_value_set_done()
 		return 0
 	}

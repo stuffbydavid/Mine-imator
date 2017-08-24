@@ -4,9 +4,9 @@
 if (object_index != app && update_matrix)
 {
 	var pos, rot, sca, tl, inhalpha, inhcolor, inhvis, inhtex;
-	pos = point3D(value[XPOS], value[YPOS], value[ZPOS])
-	rot = vec3(value[XROT], value[YROT], value[ZROT])
-	sca = vec3(value[XSCA], value[YSCA], value[ZSCA])
+	pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
+	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
+	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
 	
 	// Parent matrix
 	if (parent != app)
@@ -15,7 +15,7 @@ if (object_index != app && update_matrix)
 		
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
-			matrix_parent = matrix_multiply(model_bend_matrix(parent.model_part, parent.value[BENDANGLE]), matrix_parent)
+			matrix_parent = matrix_multiply(model_bend_matrix(parent.model_part, parent.value[e_value.BEND_ANGLE]), matrix_parent)
 	}
 	else
 		matrix_parent = IDENTITY
@@ -43,7 +43,7 @@ if (object_index != app && update_matrix)
 			var par = tl.parent;
 			if (!tl.inherit_scale || par = app)
 				break
-			sca = vec3_mul(sca, vec3(par.value[XSCA], par.value[YSCA], par.value[ZSCA]))
+			sca = vec3_mul(sca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
 			tl = par
 		}
 		
@@ -57,40 +57,40 @@ if (object_index != app && update_matrix)
 		if (inherit_scale)
 			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), sca), matrix)
 		else
-			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[XSCA], value[YSCA], value[ZSCA])), matrix) 
+			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
 	}
 	
 	// Remove old rotation and re-add own
 	if (!inherit_rotation)
 	{
 		matrix_remove_rotation(matrix)
-		matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[XROT], value[YROT], value[ZROT]), vec3(1)), matrix) 
+		matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix) 
 	}
 	
 	// Replace position
 	if (!inherit_position)
 	{
-		matrix[MATX] = value[XPOS]
-		matrix[MATY] = value[YPOS]
-		matrix[MATZ] = value[ZPOS]
+		matrix[MATX] = value[e_value.POS_X]
+		matrix[MATY] = value[e_value.POS_Y]
+		matrix[MATZ] = value[e_value.POS_Z]
 	}
 	
 	// Create rotation point
-	if (type = "camera" && value[CAMROTATE])
+	if (type = "camera" && value[e_value.CAM_ROTATE])
 	{
 		world_pos_rotate = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
-		matrix[MATX] += lengthdir_x(value[CAMROTATEDISTANCE], value[CAMROTATEXYANGLE] + 90) * lengthdir_x(1, value[CAMROTATEZANGLE])
-		matrix[MATY] += lengthdir_y(value[CAMROTATEDISTANCE], value[CAMROTATEXYANGLE] + 90) * lengthdir_x(1, value[CAMROTATEZANGLE])
-		matrix[MATZ] += lengthdir_z(value[CAMROTATEDISTANCE], value[CAMROTATEZANGLE])
+		matrix[MATX] += lengthdir_x(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
+		matrix[MATY] += lengthdir_y(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
+		matrix[MATZ] += lengthdir_z(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_Z])
 	}
 	
 	// Set world position
 	world_pos = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
 	
 	// Scale for position controls
-	value_inherit[XSCA] = 1
-	value_inherit[YSCA] = 1
-	value_inherit[ZSCA] = 1
+	value_inherit[e_value.SCA_X] = 1
+	value_inherit[e_value.SCA_Y] = 1
+	value_inherit[e_value.SCA_Z] = 1
 	tl = id
 	while (1)
 	{
@@ -98,9 +98,9 @@ if (object_index != app && update_matrix)
 		if (par = app)
 			break
 			
-		value_inherit[XSCA] *= par.value[XSCA]
-		value_inherit[YSCA] *= par.value[YSCA]
-		value_inherit[ZSCA] *= par.value[ZSCA]
+		value_inherit[e_value.SCA_X] *= par.value[e_value.SCA_X]
+		value_inherit[e_value.SCA_Y] *= par.value[e_value.SCA_Y]
+		value_inherit[e_value.SCA_Z] *= par.value[e_value.SCA_Z]
 		
 		if (!par.inherit_scale)
 			break
@@ -108,18 +108,18 @@ if (object_index != app && update_matrix)
 	}
 	
 	// Inherit colors
-	value_inherit[VISIBLE] = value[VISIBLE] // Multiplied
-	value_inherit[ALPHA] = value[ALPHA] // Multiplied
-	value_inherit[RGBADD] = value[RGBADD] // Added
-	value_inherit[RGBSUB] = value[RGBSUB] // Added
-	value_inherit[RGBMUL] = value[RGBMUL] // Multiplied
-	value_inherit[HSBADD] = value[HSBADD] // Added
-	value_inherit[HSBSUB] = value[HSBSUB] // Added
-	value_inherit[HSBMUL] = value[HSBMUL] // Multiplied
-	value_inherit[MIXCOLOR] = value[MIXCOLOR] // Added
-	value_inherit[MIXPERCENT] = value[MIXPERCENT] // Added
-	value_inherit[BRIGHTNESS] = value[BRIGHTNESS] // Added
-	value_inherit[TEXTUREOBJ] = value[TEXTUREOBJ] // Overwritten
+	value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
+	value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
+	value_inherit[e_value.RGB_ADD] = value[e_value.RGB_ADD] // Added
+	value_inherit[e_value.RGB_SUB] = value[e_value.RGB_SUB] // Added
+	value_inherit[e_value.RGB_MUL] = value[e_value.RGB_MUL] // Multiplied
+	value_inherit[e_value.HSB_ADD] = value[e_value.HSB_ADD] // Added
+	value_inherit[e_value.HSB_SUB] = value[e_value.HSB_SUB] // Added
+	value_inherit[e_value.HSB_MUL] = value[e_value.HSB_MUL] // Multiplied
+	value_inherit[e_value.MIX_COLOR] = value[e_value.MIX_COLOR] // Added
+	value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
+	value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
+	value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
 	
 	inhalpha = true
 	inhcolor = true
@@ -141,30 +141,30 @@ if (object_index != app && update_matrix)
 		if (!tl.inherit_visibility)
 			inhvis = false
 		
-		if (!tl.inherit_texture || tl.value[TEXTUREOBJ] >= 0)
+		if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] != null)
 			inhtex = false
 		
 		if (inhalpha)
-			value_inherit[ALPHA] *= par.value[ALPHA]
+			value_inherit[e_value.ALPHA] *= par.value[e_value.ALPHA]
 			
 		if (inhcolor)
 		{
-			value_inherit[RGBADD] = color_add(value_inherit[RGBADD], par.value[RGBADD])
-			value_inherit[RGBSUB] = color_add(value_inherit[RGBSUB], par.value[RGBSUB])
-			value_inherit[RGBMUL] = color_multiply(value_inherit[RGBMUL], par.value[RGBMUL])
-			value_inherit[HSBADD] = color_add(value_inherit[HSBADD], par.value[HSBADD])
-			value_inherit[HSBSUB] = color_add(value_inherit[HSBSUB], par.value[HSBSUB])
-			value_inherit[HSBMUL] = color_multiply(value_inherit[HSBMUL], par.value[HSBMUL])
-			value_inherit[MIXCOLOR] = color_add(value_inherit[MIXCOLOR], par.value[MIXCOLOR])
-			value_inherit[MIXPERCENT] = clamp(value_inherit[MIXPERCENT] + par.value[MIXPERCENT], 0, 1)
-			value_inherit[BRIGHTNESS] = clamp(value_inherit[BRIGHTNESS] + par.value[BRIGHTNESS], 0, 1)
+			value_inherit[e_value.RGB_ADD] = color_add(value_inherit[e_value.RGB_ADD], par.value[e_value.RGB_ADD])
+			value_inherit[e_value.RGB_SUB] = color_add(value_inherit[e_value.RGB_SUB], par.value[e_value.RGB_SUB])
+			value_inherit[e_value.RGB_MUL] = color_multiply(value_inherit[e_value.RGB_MUL], par.value[e_value.RGB_MUL])
+			value_inherit[e_value.HSB_ADD] = color_add(value_inherit[e_value.HSB_ADD], par.value[e_value.HSB_ADD])
+			value_inherit[e_value.HSB_SUB] = color_add(value_inherit[e_value.HSB_SUB], par.value[e_value.HSB_SUB])
+			value_inherit[e_value.HSB_MUL] = color_multiply(value_inherit[e_value.HSB_MUL], par.value[e_value.HSB_MUL])
+			value_inherit[e_value.MIX_COLOR] = color_add(value_inherit[e_value.MIX_COLOR], par.value[e_value.MIX_COLOR])
+			value_inherit[e_value.MIX_PERCENT] = clamp(value_inherit[e_value.MIX_PERCENT] + par.value[e_value.MIX_PERCENT], 0, 1)
+			value_inherit[e_value.BRIGHTNESS] = clamp(value_inherit[e_value.BRIGHTNESS] + par.value[e_value.BRIGHTNESS], 0, 1)
 		}
 		
 		if (inhvis)
-			value_inherit[VISIBLE] *= par.value[VISIBLE]
+			value_inherit[e_value.VISIBLE] *= par.value[e_value.VISIBLE]
 			
 		if (inhtex)
-			value_inherit[TEXTUREOBJ] = par.value[TEXTUREOBJ]
+			value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]
 			
 		tl = par
 	}

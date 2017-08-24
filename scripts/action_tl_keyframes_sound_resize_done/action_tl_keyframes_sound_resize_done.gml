@@ -16,7 +16,7 @@ if (history_undo)
 				if (position = new_position)
 					continue
 				
-				value[SOUNDSTART] = other.kf_resize_old_start[k]
+				value[e_value.SOUND_START] = other.kf_resize_old_start[k]
 			
 				// Push down other indices of same timeline
 				for (var a = 0; a < other.kf_resize_amount; a++)  
@@ -42,7 +42,7 @@ else if (history_redo)
 				if (position = new_position)
 					continue
 					
-				value[SOUNDSTART] = other.kf_resize_new_start[k]
+				value[e_value.SOUND_START] = other.kf_resize_new_start[k]
 			
 				// Push down other indices of same timeline
 				for (var a = 0; a < other.kf_resize_amount; a++)  
@@ -71,7 +71,7 @@ else
 			other.kf_resize_old_start[other.kf_resize_amount] = sound_resize_start
 			other.kf_resize_new_index[other.kf_resize_amount] = ds_list_find_index(timeline.keyframe_list, id)
 			other.kf_resize_new_pos[other.kf_resize_amount] = position
-			other.kf_resize_new_start[other.kf_resize_amount] = value[SOUNDSTART]
+			other.kf_resize_new_start[other.kf_resize_amount] = value[e_value.SOUND_START]
 			other.kf_resize_amount++
 			tl.update_values = true
 		}

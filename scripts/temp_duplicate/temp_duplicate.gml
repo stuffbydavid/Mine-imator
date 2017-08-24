@@ -30,6 +30,8 @@ with (temp)
 	
 	if (type = "particles")
 	{
+		pc_type_list = ds_list_create()
+	
 		for (var t = 0; t < ds_list_size(other.pc_type_list); t++)
 		{
 			with (other.pc_type_list[|t])
@@ -39,7 +41,7 @@ with (temp)
 				ptype.creator = temp
 				ptype.sprite_tex.count++
 				with (ptype)
-					ptype_update_sprite_vbuffer_amount()
+					ptype_update_sprite_vbuffers()
 				ds_list_add(temp.pc_type_list, ptype)
 			}
 		}

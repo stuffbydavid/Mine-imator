@@ -16,7 +16,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 		{
 			var spawn;
 			if (istl)
-				spawn = value[SPAWN]
+				spawn = value[e_value.SPAWN]
 			else
 				spawn = spawn_active
 			
@@ -127,12 +127,12 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 				// Attractor
 				if (istl)
 				{
-					if (value[ATTRACTOR] != app)
+					if (value[e_value.ATTRACTOR] != app)
 					{
 						if (pt.type.orbit)
-							pt.spd[a] += clamp(value[ATTRACTOR].pos[a] - pt.pos[a], -value[FORCE], value[FORCE]) / 60
+							pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
 						else
-							pt.spd[a] += clamp(value[ATTRACTOR].pos[a] - pos[a], -value[FORCE], value[FORCE]) / 60
+							pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
 					}
 				}
 			}

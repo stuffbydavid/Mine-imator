@@ -57,12 +57,12 @@ tip_set(tip, xx, yy, wid, hei)
 // Caption
 if (menu_model_current != null)
 {
-	cap = minecraft_get_name("modelstate", name) + ":"
+	cap = minecraft_asset_get_name("modelstate", name) + ":"
 	name = "modelstate" + name
 }
 else if (menu_block_current != null)
 {
-	cap = minecraft_get_name("blockstate", name) + ":"
+	cap = minecraft_asset_get_name("blockstate", name) + ":"
 	name = "blockstate" + name
 }
 else
@@ -106,7 +106,7 @@ textoff = test(tex || icon, imgsize - 4, 0)
 draw_label(string_limit(string_remove_newline(text), wid - textoff - hei - 8), xx + hei / 2 + textoff, yy + hei / 2 + pressed, fa_left, fa_middle, setting_color_buttons_text, 1)
 
 // Arrow
-draw_image(spr_icons, test(flip, icons.arrowup, icons.arrowdown), xx + wid - hei / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
+draw_image(spr_icons, test(flip, icons.ARROW_UP, icons.ARROW_DOWN), xx + wid - hei / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
 
 // Update menu position
 if (menu_name = name)

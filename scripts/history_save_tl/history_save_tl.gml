@@ -16,7 +16,7 @@ with (save)
 	tl_get_save_ids()
 	
 	// Save values
-	for (var v = 0; v < values; v++)
+	for (var v = 0; v < e_value.amount; v++)
 		value_default[v] = tl_value_save(v, tl.value_default[v])
 		
 	// Save keyframes
@@ -26,7 +26,7 @@ with (save)
 		with (tl.keyframe_list[|k])
 		{
 			save.kf_pos[k] = position
-			for (var v = 0; v < values; v++)
+			for (var v = 0; v < e_value.amount; v++)
 				save.kf_value[k, v] = tl_value_save(v, value[v])
 		}
 	}
@@ -46,13 +46,13 @@ with (save)
 	usage_tl_attractor_amount = 0
 	with (obj_timeline)
 	{
-		if (value[TEXTUREOBJ] = tl)
+		if (value[e_value.TEXTURE_OBJ] = tl)
 		{
 			save.usage_tl_texture_save_id[save.usage_tl_texture_amount] = save_id
 			save.usage_tl_texture_amount++
 		}
 		
-		if (value[ATTRACTOR] = tl)
+		if (value[e_value.ATTRACTOR] = tl)
 		{
 			save.usage_tl_attractor_save_id[save.usage_tl_attractor_amount] = save_id
 			save.usage_tl_attractor_amount++
@@ -64,14 +64,14 @@ with (save)
 	usage_kf_attractor_amount = 0
 	with (obj_keyframe)
 	{
-		if (value[TEXTUREOBJ] = tl)
+		if (value[e_value.TEXTURE_OBJ] = tl)
 		{
 			save.usage_kf_texture_tl_save_id[save.usage_kf_texture_amount] = save_id_get(timeline)
 			save.usage_kf_texture_index[save.usage_kf_texture_amount] = ds_list_find_index(timeline.keyframe_list, id)
 			save.usage_kf_texture_amount++
 		}
 		
-		if (value[ATTRACTOR] = tl)
+		if (value[e_value.ATTRACTOR] = tl)
 		{
 			save.usage_kf_attractor_tl_save_id[save.usage_kf_attractor_amount] = save_id_get(timeline)
 			save.usage_kf_attractor_index[save.usage_kf_attractor_amount] = ds_list_find_index(timeline.keyframe_list, id)

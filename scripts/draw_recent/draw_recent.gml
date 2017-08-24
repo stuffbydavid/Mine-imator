@@ -60,7 +60,7 @@ for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 		mouse_cursor = cr_handpoint
 		
 		// Close button
-		if (draw_button_normal("recentremove", xx + dw - 24, dy + itemh / 2-10, 20, 20, e_button.NO_TEXT, false, false, true, icons.close))
+		if (draw_button_normal("recentremove", xx + dw - 24, dy + itemh / 2-10, 20, 20, e_button.NO_TEXT, false, false, true, icons.CLOSE))
 		{
 			with (recent)
 				instance_destroy()

@@ -91,59 +91,59 @@ with (obj_timeline)
 	}
 		
 	// Set enabled
-	if (value_type[POSITION])
+	if (value_type[e_value_type.POSITION])
 		app.frame_editor.position.enabled = true
 		
-	if (value_type[ROTATION])
+	if (value_type[e_value_type.ROTATION])
 		app.frame_editor.rotation.enabled = true
 		
-	if (value_type[SCALE])
+	if (value_type[e_value_type.SCALE])
 		app.frame_editor.scale.enabled = true
 		
-	if (value_type[BEND])
+	if (value_type[e_value_type.BEND])
 		app.frame_editor.bend.enabled = true
 		
-	if (value_type[COLOR])
+	if (value_type[e_value_type.COLOR])
 		app.frame_editor.color.enabled = true
 		
-	if (value_type[PARTICLES])
+	if (value_type[e_value_type.PARTICLES])
 		app.frame_editor.particles.enabled = true
 		
-	if (value_type[LIGHT])
+	if (value_type[e_value_type.LIGHT])
 		app.frame_editor.light.enabled = true
 		
-	if (value_type[SPOTLIGHT])
+	if (value_type[e_value_type.SPOTLIGHT])
 		app.frame_editor.light.has_spotlight = true
 		
-	if (value_type[CAMERA])
+	if (value_type[e_value_type.CAMERA])
 		app.frame_editor.camera.enabled = true
 		
-	if (value_type[TEXTURE])
+	if (value_type[e_value_type.TEXTURE])
 		app.frame_editor.texture.enabled = true
 		
-	if (value_type[SOUND])
+	if (value_type[e_value_type.SOUND])
 		app.frame_editor.sound.enabled = true
 		
-	if (value_type[KEYFRAME])
+	if (value_type[e_value_type.KEYFRAME])
 		app.frame_editor.keyframe.enabled = true
 		
-	if (value_type[GRAPHICS])
+	if (value_type[e_value_type.GRAPHICS])
 		app.timeline_editor.graphics.enabled = true
 		
-	if (value_type[AUDIO])
+	if (value_type[e_value_type.AUDIO])
 		app.timeline_editor.audio.enabled = true
 		
 	// Set shown
-	if (value_type_show[POSITION])
+	if (value_type_show[e_value_type.POSITION])
 		app.frame_editor.position.show = true
 		
-	if (value_type_show[ROTATION])
+	if (value_type_show[e_value_type.ROTATION])
 		app.frame_editor.rotation.show = true
 		
-	if (value_type_show[BEND])
+	if (value_type_show[e_value_type.BEND])
 		app.frame_editor.bend.show = true
 		
-	if (value_type_show[CAMERA])
+	if (value_type_show[e_value_type.CAMERA])
 		app.frame_editor.camera.show = true
 
 }

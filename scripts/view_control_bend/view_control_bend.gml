@@ -14,10 +14,10 @@ else
 	mat = matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1), tl_edit.matrix)
 	
 matrix_remove_scale(mat)
-view_control_rotation_axis(view, BENDANGLE, c_green, mat, len)
+view_control_rotation_axis(view, e_value.BEND_ANGLE, c_green, mat, len)
 
 // Is dragging
-if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit = BENDANGLE)
+if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit = e_value.BEND_ANGLE)
 {
 	mouse_cursor = cr_handpoint
 	

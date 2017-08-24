@@ -15,10 +15,10 @@ topflow = true
 angle = 0
 
 // Still texture
-slot = ds_list_find_index(mc_version.block_texture_list, "blocks/" + block_current.name + "_still")
+slot = ds_list_find_index(mc_assets.block_texture_list, "blocks/" + block_current.name + "_still")
 if (slot < 0) // Animated
 {
-	slot = ds_list_find_index(mc_version.block_texture_ani_list, "blocks/" + block_current.name + "_still")
+	slot = ds_list_find_index(mc_assets.block_texture_ani_list, "blocks/" + block_current.name + "_still")
 	if (slot < 0)
 		return 0
 	
@@ -39,10 +39,10 @@ slotstillpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth)
 slotstillsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
 
 // Flow texture
-slot = ds_list_find_index(mc_version.block_texture_list, "blocks/" + block_current.name + "_flow")
+slot = ds_list_find_index(mc_assets.block_texture_list, "blocks/" + block_current.name + "_flow")
 if (slot < 0) // Animated
 {
-	slot = ds_list_find_index(mc_version.block_texture_ani_list, "blocks/" + block_current.name + "_flow")
+	slot = ds_list_find_index(mc_assets.block_texture_ani_list, "blocks/" + block_current.name + "_flow")
 	if (slot < 0)
 		return 0
 }

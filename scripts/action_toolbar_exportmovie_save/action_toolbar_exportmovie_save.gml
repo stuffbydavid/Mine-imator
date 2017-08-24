@@ -83,15 +83,15 @@ if (exportmovie_format != "png")
 			{
 				with (keyframe_list[|k])
 				{
-					if (value[SOUNDOBJ] && value[SOUNDOBJ].ready && value[SOUNDVOLUME] > 0 &&
+					if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 &&
 						position < app.exportmovie_marker_end &&
 						position + tl_keyframe_length(id) >= app.exportmovie_marker_start)
 					{
-						movie_audio_sound_add(value[SOUNDOBJ].sound_file_id, 
+						movie_audio_sound_add(value[e_value.SOUND_OBJ].sound_file_id, 
 											  max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
-											  value[SOUNDVOLUME], 
-											  value[SOUNDSTART] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
-											  value[SOUNDEND])
+											  value[e_value.SOUND_VOLUME], 
+											  value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
+											  value[e_value.SOUND_END])
 					}
 				}
 			}

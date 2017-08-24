@@ -52,12 +52,12 @@ with (bench_settings)
 	// Default settings
 	temp_event_create()
 	model_name = "human"
-	model_state = mc_version.model_name_map[?model_name].default_state
+	model_state = mc_assets.model_name_map[?model_name].default_state
 	model_part_name = "head"
 	temp_update_model_state_map()
 	temp_update_model()
 	temp_update_model_part()
-	block_state = mc_version.block_name_map[?block_name].default_state
+	block_state = mc_assets.block_name_map[?block_name].default_state
 	temp_update_block_state_map()
 	temp_particles_init()
 	skin = res_def
@@ -73,8 +73,8 @@ with (bench_settings)
 	char_list = new(obj_sortlist)
 	char_list.script = action_bench_model_name
 	sortlist_column_add(char_list, "charname", 0)
-	for (var c = 0; c < ds_list_size(mc_version.char_list); c++)
-		sortlist_add(char_list, mc_version.char_list[|c].name)
+	for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
+		sortlist_add(char_list, mc_assets.char_list[|c].name)
 	
 	// Item list
 	item_scroll = new(obj_scrollbar)
@@ -83,25 +83,25 @@ with (bench_settings)
 	block_list = new(obj_sortlist)
 	block_list.script = action_bench_block_name
 	sortlist_column_add(block_list, "blockname", 0)
-	for (var b = 0; b < ds_list_size(mc_version.block_list); b++)
-		sortlist_add(block_list, mc_version.block_list[|b].name)
+	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
+		sortlist_add(block_list, mc_assets.block_list[|b].name)
 	block_tbx_data = new_textbox_integer()
 
 	// Special block list
 	special_block_list = new(obj_sortlist)
 	special_block_list.script = action_bench_model_name
 	sortlist_column_add(special_block_list, "spblockname", 0)
-	for (var c = 0; c < ds_list_size(mc_version.special_block_list); c++)
-		sortlist_add(special_block_list, mc_version.special_block_list[|c].name)
+	for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
+		sortlist_add(special_block_list, mc_assets.special_block_list[|c].name)
 	
 	// Bodypart list
 	bodypart_model_list = new(obj_sortlist)
 	bodypart_model_list.script = action_bench_model_name
 	sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
-	for (var m = 0; m < ds_list_size(mc_version.char_list); m++)
-		sortlist_add(bodypart_model_list, mc_version.char_list[|m].name)
-	for (var m = 0; m < ds_list_size(mc_version.special_block_list); m++)
-		sortlist_add(bodypart_model_list, mc_version.special_block_list[|m].name)
+	for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
+		sortlist_add(bodypart_model_list, mc_assets.char_list[|m].name)
+	for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
+		sortlist_add(bodypart_model_list, mc_assets.special_block_list[|m].name)
 	
 	// Particles list
 	particles_list = new(obj_sortlist)

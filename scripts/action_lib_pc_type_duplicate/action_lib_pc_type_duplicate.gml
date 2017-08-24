@@ -3,7 +3,7 @@
 if (history_undo)
 {
 	with (temp_edit)
-		temp_particles_type_remove(iid_find(history_data.copy)) // Remove
+		temp_particles_type_remove(save_id_find(history_data.copy_save_id)) // Remove
 }
 else
 {
@@ -17,7 +17,7 @@ else
 		copy = temp_particles_type_duplicate(ptype_edit)
 		
 	with (hobj)
-		id.copy = iid_get(copy)
+		copy_save_id = save_id_get(copy)
 	
 	sortlist_add(ptype_list, copy)
 	ptype_edit = copy

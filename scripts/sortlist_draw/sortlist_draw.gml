@@ -74,7 +74,7 @@ for (var c = 0; c < slist.columns; c++)
 	// Button
 	icon = null
 	if (slist.column_sort = c)
-		icon = test(slist.sort_asc, icons.arrowupsmall, icons.arrowdownsmall)
+		icon = test(slist.sort_asc, icons.ARROW_UP_SMALL, icons.ARROW_DOWN_SMALL)
 		
 	if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1)))
 	{
@@ -162,7 +162,7 @@ else
 }
 filterx = xx + w-tbxwid
 filtery = yy + h+5
-if (draw_button_normal("listsearch", filterx - 18, filtery + 2, 16, 16, e_button.NO_TEXT, slist.filter, false, true, icons.search)) 
+if (draw_button_normal("listsearch", filterx - 18, filtery + 2, 16, 16, e_button.NO_TEXT, slist.filter, false, true, icons.SEARCH)) 
 {
 	slist.filter = !slist.filter
 	if (slist.filter)

@@ -35,7 +35,7 @@ with (obj_keyframe)
 
 if (moved)
 {
-	if (timeline_move_kf.timeline.type = "audio" && timeline_move_kf.value[SOUNDOBJ])
+	if (timeline_move_kf.timeline.type = "audio" && timeline_move_kf.value[e_value.SOUND_OBJ])
 		timeline_marker = timeline_mouse_pos
 	else
 		timeline_marker = timeline_move_kf.position

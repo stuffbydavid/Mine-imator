@@ -90,7 +90,7 @@ if (!enabled)
 	draw_set_alpha(alpha * 0.25)
 
 // Button
-if (frame && icon < icons.rendersmall)
+if (frame && icon < icons.RENDER_SMALL)
 	draw_box_rounded(xx, yy, wid, hei, test(pressed, setting_color_buttons_pressed, setting_color_buttons), 1)
 
 // Icon
@@ -102,17 +102,17 @@ if (icon != null)
 	if (type = e_button.TEXT)
 		iconx -= string_width(text) / 2
 		
-	if (icon = icons.color)
+	if (icon = icons.COLOR)
 	{
 		draw_image(spr_icons, icon, iconx, icony, 1, 1, iconblend, 1)
-		draw_image(spr_icons, icons.colorframe, iconx, icony, 1, 1, c_black, 0.5)
+		draw_image(spr_icons, icons.COLOR_FRAME, iconx, icony, 1, 1, c_black, 0.5)
 	}
-	else if (icon >= icons.rendersmall)
-		draw_image(spr_icons_render, icon - icons.rendersmall, iconx, icony, 1, 1, c_white, 1 - 0.75 * !view_render)
-	else if (icon >= icons.upgradesmall)
-		draw_image(spr_icons_big, icon - icons.websitesmall, iconx, icony, 1, 1, c_yellow, 1)
-	else if (icon >= icons.websitesmall)
-		draw_image(spr_icons_big, icon - icons.websitesmall, iconx, icony, 1, 1, test(frame, setting_color_buttons_text, setting_color_text), 1)
+	else if (icon >= icons.RENDER_SMALL)
+		draw_image(spr_icons_render, icon - icons.RENDER_SMALL, iconx, icony, 1, 1, c_white, 1 - 0.75 * !view_render)
+	else if (icon >= icons.UPGRADE_SMALL)
+		draw_image(spr_icons_big, icon - icons.WEBSITE_SMALL, iconx, icony, 1, 1, c_yellow, 1)
+	else if (icon >= icons.WEBSITE_SMALL)
+		draw_image(spr_icons_big, icon - icons.WEBSITE_SMALL, iconx, icony, 1, 1, test(frame, setting_color_buttons_text, setting_color_text), 1)
 	else
 		draw_image(spr_icons, icon, iconx, icony, 1, 1, test(frame, setting_color_buttons_text, setting_color_text), 1)
 }

@@ -18,7 +18,7 @@ if (!tl_edit.part_of)
 	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 32, par, text, action_tl_parent)
 	tab_next()
 	
-	if (!tl_edit.value_type[HIERARCHY])
+	if (!tl_edit.value_type[e_value_type.HIERARCHY])
 		return 0
 	
 	// Lock to bended half
@@ -40,14 +40,14 @@ if (par != app)
 	// Inherit position/rotation/scale
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorinheritposition", dx, dy, tl_edit.inherit_position, action_tl_inherit_position)
-	if (tl_edit.value_type[ROTATION])
+	if (tl_edit.value_type[e_value_type.ROTATION])
 		draw_checkbox("timelineeditorinheritrotation", dx + floor(dw * 0.33), dy, tl_edit.inherit_rotation, action_tl_inherit_rotation)
-	if (tl_edit.value_type[SCALE])
+	if (tl_edit.value_type[e_value_type.SCALE])
 		draw_checkbox("timelineeditorinheritscale", dx + floor(dw * 0.66), dy, tl_edit.inherit_scale, action_tl_inherit_scale)
 	tab_next()
 	
 	// Inherit alpha/color
-	if (tl_edit.value_type[COLOR])
+	if (tl_edit.value_type[e_value_type.COLOR])
 	{
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorinheritalpha", dx, dy, tl_edit.inherit_alpha, action_tl_inherit_alpha)
@@ -58,12 +58,12 @@ if (par != app)
 	// Inherit visibility/texture
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorinheritvisibility", dx, dy, tl_edit.inherit_visibility, action_tl_inherit_visibility)
-	if (tl_edit.value_type[TEXTURE])
+	if (tl_edit.value_type[e_value_type.TEXTURE])
 		draw_checkbox("timelineeditorinherittexture", dx + floor(dw * 0.33), dy, tl_edit.inherit_texture, action_tl_inherit_texture)
 	tab_next()
 	
 	// Scale mode
-	if (tl_edit.value_type[SCALE] && tl_edit.inherit_scale)
+	if (tl_edit.value_type[e_value_type.SCALE] && tl_edit.inherit_scale)
 	{
 		tab_control_checkbox()
 		draw_label(text_get("timelineeditorscalemode") + ":", dx, dy)

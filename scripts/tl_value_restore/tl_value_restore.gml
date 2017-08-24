@@ -8,16 +8,16 @@ vid = argument0
 oldval = argument1
 newval = argument2
 
-if (vid = SOUNDOBJ && oldval != null)
+if (vid = e_value.SOUND_OBJ && oldval != null)
 {
 	var obj = save_id_find(oldval);
 	obj.count--
 }
 
-if (vid = ATTRACTOR || vid = TEXTUREOBJ || vid = SOUNDOBJ)
+if (vid = e_value.ATTRACTOR || vid = e_value.TEXTURE_OBJ || vid = e_value.SOUND_OBJ)
 	newval = save_id_find(newval)
 	
-if (vid = SOUNDOBJ && newval != null)
+if (vid = e_value.SOUND_OBJ && newval != null)
 	newval.count++
 	
 return newval

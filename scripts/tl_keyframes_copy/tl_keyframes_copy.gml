@@ -18,7 +18,7 @@ with (obj_keyframe)
 		app.copy_kf_tl_part_of[app.copy_kf_amount] = iid_get(tl)
 	app.copy_kf_tl_model_part_name[app.copy_kf_amount] = tl.model_part_name // TODO update keyframes_paste
 	
-	for (var v = 0; v < values; v++)
+	for (var v = 0; v < e_value.amount; v++)
 		app.copy_kf_value[app.copy_kf_amount, v] = tl_value_save(v, value[v])
 		
 	if (minpos = null || position < minpos)

@@ -27,9 +27,9 @@ for (var t = 0; t < ds_list_size(tree_list); t++)
 					tl_old_parent_save_id[tl_amount] = save_id_get(other.parent)
 					tl_old_parent_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
 				}
-				tl_old_x[tl_amount] = other.value[XPOS]
-				tl_old_y[tl_amount] = other.value[YPOS]
-				tl_old_z[tl_amount] = other.value[ZPOS]
+				tl_old_x[tl_amount] = other.value[e_value.POS_X]
+				tl_old_y[tl_amount] = other.value[e_value.POS_Y]
+				tl_old_z[tl_amount] = other.value[e_value.POS_Z]
 				tl_amount++
 			}
 			
@@ -39,15 +39,15 @@ for (var t = 0; t < ds_list_size(tree_list); t++)
 			{
 				if (parent = app)
 				{
-					value[XPOS] = value_default[XPOS]
-					value[YPOS] = value_default[YPOS]
-					value[ZPOS] = value_default[ZPOS]
+					value[e_value.POS_X] = value_default[e_value.POS_X]
+					value[e_value.POS_Y] = value_default[e_value.POS_Y]
+					value[e_value.POS_Z] = value_default[e_value.POS_Z]
 				}
 				else
 				{
-					value[XPOS] = 0
-					value[YPOS] = 0
-					value[ZPOS] = 0
+					value[e_value.POS_X] = 0
+					value[e_value.POS_Y] = 0
+					value[e_value.POS_Z] = 0
 				}
 			}
 			t--

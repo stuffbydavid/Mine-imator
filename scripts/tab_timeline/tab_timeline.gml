@@ -95,7 +95,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if (!kf.selected)
 				continue
 			
-			sound = kf.value[SOUNDOBJ]
+			sound = kf.value[e_value.SOUND_OBJ]
 			
 			dx = tlx + floor(kf.move_pos * timeline_zoom - timeline.hor_scroll.value)
 			
@@ -124,7 +124,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		var kf, mouse, sound;
 		kf = tl.keyframe_list[|k]
 		dx = tlx + floor(kf.position * timeline_zoom - timeline.hor_scroll.value)
-		sound = kf.value[SOUNDOBJ]
+		sound = kf.value[e_value.SOUND_OBJ]
 		
 		if (tl.type = "audio" && sound && sound.ready)
 		{
@@ -133,7 +133,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if (dx > tlx + tlw)
 				break
 				
-			soundlen = max(0, sound.sound_samples / sample_rate - kf.value[SOUNDSTART] + kf.value[SOUNDEND])
+			soundlen = max(0, sound.sound_samples / sample_rate - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END])
 			
 			boxx = max(tlx, dx)
 			boxw = min(tlw, soundlen * project_tempo * timeline_zoom - max(0, tlx - dx))
@@ -141,11 +141,11 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if (boxw <= 0)
 				continue
 			
-			startsample = floor((max(0, tlstartpos - kf.position) / project_tempo + kf.value[SOUNDSTART]) * sample_rate)
+			startsample = floor((max(0, tlstartpos - kf.position) / project_tempo + kf.value[e_value.SOUND_START]) * sample_rate)
 			samplesshow = ((boxw / timeline_zoom) / project_tempo) * sample_rate
 			
 			prec = sample_rate / sample_avg_per_sec
-			wavehei = itemhalf * kf.value[SOUNDVOLUME]
+			wavehei = itemhalf * kf.value[e_value.SOUND_VOLUME]
 			alpha = draw_get_alpha()
 			
 			// Background
@@ -183,7 +183,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		else
 		{
 			// Invisible
-			if ((!kf.value[VISIBLE] || !kf.value[SPAWN]) && !tl.hide && tl.type != "audio")
+			if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != "audio")
 			{
 				var curdx, nextdx;
 				curdx = test(k = 0, tlx, max(tlx, dx))
@@ -486,19 +486,19 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	if (showkeyframes)
 	{
 		tip_set(text_get("timelinekeyframestip"), content_x + w - 16 * 3, dy, 16, itemh)
-		draw_image(spr_icons, icons.keyframe, content_x + w - 16 * 3 + 8, dy + itemh / 2, 1, 1, setting_color_text, 1)
+		draw_image(spr_icons, icons.KEYFRAME, content_x + w - 16 * 3 + 8, dy + itemh / 2, 1, 1, setting_color_text, 1)
 	}
 	
 	if (showlock)
 	{
 		tip_set(text_get("timelinelocktip"), content_x + w - 16 * 2, dy, 16, itemh)
-		draw_image(spr_icons, test(tl.lock, icons.lock, icons.unlock), content_x + w - 8 - 16 * 1, dy + itemh / 2, 1, 1, setting_color_text, 1)
+		draw_image(spr_icons, test(tl.lock, icons.LOCK, icons.UNLOCK), content_x + w - 8 - 16 * 1, dy + itemh / 2, 1, 1, setting_color_text, 1)
 	}
 	
 	if (showhide)
 	{
 		tip_set(text_get(test(tl.type = "audio", "timelinemutetip", "timelinehidetip")), content_x + w - 16 * 1, dy, 16, itemh)
-		draw_image(spr_icons, test(tl.type = "audio", test(tl.hide, icons.mute, icons.sound), test(tl.hide, icons.hide, icons.show)), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
+		draw_image(spr_icons, test(tl.type = "audio", test(tl.hide, icons.MUTE, icons.SOUND), test(tl.hide, icons.HIDE, icons.SHOW)), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
 	}
 	
 	if (showkeyframes)
@@ -517,7 +517,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			action_tl_extend(tl)
 			app_mouse_clear()
 		}
-		draw_image(spr_icons, test(tl.tree_extend, icons.arrowdowntiny, icons.arrowrighttiny), content_x + dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
+		draw_image(spr_icons, test(tl.tree_extend, icons.ARROW_DOWN_TINY, icons.ARROW_RIGHT_TINY), content_x + dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
 		dx += 10
 	}
 	
@@ -547,7 +547,7 @@ while (true)
 {
 	// Right
 	tip_set_shortcut(setting_key_folder, setting_key_folder_control)
-	if (draw_button_normal("timelinefolder", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.folderadd))
+	if (draw_button_normal("timelinefolder", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.FOLDER))
 		action_tl_folder()
 
 	dx += 25
@@ -555,7 +555,7 @@ while (true)
 		break
 		
 	tip_set_shortcut(setting_key_duplicate_timelines, setting_key_duplicate_timelines_control)
-	if (draw_button_normal("timelineduplicate", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.duplicate))
+	if (draw_button_normal("timelineduplicate", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.DUPLICATE))
 		action_tl_duplicate()
 		
 	dx += 25
@@ -563,14 +563,14 @@ while (true)
 		break
 	
 	tip_set_shortcut(setting_key_remove_timelines, setting_key_remove_timelines_control)
-	if (draw_button_normal("timelineremove", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.remove))
+	if (draw_button_normal("timelineremove", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.REMOVE))
 		action_tl_remove()
 	
 	dx += 25
 	if (dx + 25 > listwid - 5)
 		break
 		
-	if (draw_button_normal("timelinesave", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.export))
+	if (draw_button_normal("timelinesave", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.EXPORT))
 		object_save()
 		
 	// Left
@@ -578,47 +578,47 @@ while (true)
 	if (dx < 10 + 25 * 4)
 		break
 		
-	if (draw_button_normal("timelineexportkeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes_export, icons.exportkeyframes))
+	if (draw_button_normal("timelineexportkeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes_export, icons.EXPORT_KEYFRAMES))
 		keyframes_save()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_remove_keyframes, setting_key_remove_keyframes_control)
-	if (draw_button_normal("timelineremovekeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.removekeyframes))
+	if (draw_button_normal("timelineremovekeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.REMOVE_KEYFRAMES))
 		action_tl_keyframes_remove()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_paste_keyframes, setting_key_paste_keyframes_control)
-	if (draw_button_normal("timelinepastekeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, (copy_kf_amount > 0), icons.pastekeyframes))
+	if (draw_button_normal("timelinepastekeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, (copy_kf_amount > 0), icons.PASTE_KEYFRAMES))
 		action_tl_keyframes_paste(timeline_insert_pos)
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_cut_keyframes, setting_key_cut_keyframes_control)
-	if (draw_button_normal("timelinecutkeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.cutkeyframes))
+	if (draw_button_normal("timelinecutkeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.CUT_KEYFRAMES))
 		action_tl_keyframes_cut()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_copy_keyframes, setting_key_copy_keyframes_control)
-	if (draw_button_normal("timelinecopykeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.copykeyframes))
+	if (draw_button_normal("timelinecopykeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.COPY_KEYFRAMES))
 		action_tl_keyframes_copy()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
-	if (draw_button_normal("timelinerun", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_run_fn), icons.run))
+	if (draw_button_normal("timelinerun", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_run_fn), icons.RUN))
 		action_tl_import_loop(timeline_settings_run_fn)
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
-	if (draw_button_normal("timelinewalk", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_walk_fn), icons.walk))
+	if (draw_button_normal("timelinewalk", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_walk_fn), icons.WALK))
 		action_tl_import_loop(timeline_settings_walk_fn)
 	
 	break
@@ -671,7 +671,7 @@ if (mousekfend)
 	if (mouse_left_pressed)
 	{
 		timeline_sound_end_mousex = mouse_x + timeline.hor_scroll.value
-		timeline_sound_end_value = mousekfend.value[SOUNDEND]
+		timeline_sound_end_value = mousekfend.value[e_value.SOUND_END]
 		window_focus = "timeline"
 		window_busy = "timelinesetsoundend"
 	}
@@ -706,7 +706,7 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 			else
 				action_tl_select(mousekf.timeline)
 			
-			if (mousekf.timeline.type = "audio" && mousekf.value[SOUNDOBJ])
+			if (mousekf.timeline.type = "audio" && mousekf.value[e_value.SOUND_OBJ])
 				timeline_marker = timeline_mouse_pos
 			else
 				timeline_marker = mousekf.timeline
@@ -744,7 +744,7 @@ if (window_busy = "timelineresizesounds")
 if (window_busy = "timelinesetsoundend")
 {
 	var newval = timeline_sound_end_value + ((mouse_x + timeline.hor_scroll.value) - timeline_sound_end_mousex) / (timeline_zoom * project_tempo);
-	action_tl_frame_soundend(newval, false)
+	action_tl_frame_sound_end(newval, false)
 	mouse_cursor = cr_size_we
 	if (!mouse_left)
 		window_busy = ""

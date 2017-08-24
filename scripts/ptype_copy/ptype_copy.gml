@@ -7,7 +7,7 @@ var to = argument0;
 to.creator = creator
 if (object_index = obj_particle_type)
 	to.creator_index = ds_list_find_index(creator.ptype_list, id)
-else
+else // History object (copy)
 	to.creator_index = creator_index
 to.name = name
 to.temp = temp

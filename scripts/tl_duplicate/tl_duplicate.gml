@@ -22,7 +22,7 @@ with (copy)
 		newkf.timeline = id
 		newkf.selected = false
 		newkf.sound_play_index = null
-		for (var v = 0; v < values; v++)
+		for (var v = 0; v < e_value.amount; v++)
 			newkf.value[v] = oldkf.value[v]
 		ds_list_add(keyframe_list, newkf)
 	}

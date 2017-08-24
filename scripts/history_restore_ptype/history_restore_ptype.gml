@@ -19,7 +19,7 @@ with (ptype)
 	ds_list_insert(creator.pc_type_list, creator_index, id)
 	
 	sprite_tex.count++
-	ptype_update_sprite_vbuffer_amount()
+	ptype_update_sprite_vbuffers()
 }
 
 return ptype

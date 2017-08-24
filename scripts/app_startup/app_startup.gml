@@ -33,7 +33,7 @@ if (!shader_startup())
 app_startup_globals()
 app_startup_lists()
 
-if (!minecraft_startup())
+if (!minecraft_assets_startup())
 	return false
 	
 app_startup_window()

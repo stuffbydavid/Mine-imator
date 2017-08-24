@@ -51,15 +51,15 @@ else if (view.control_mouseon_last = vid)
 	// Right click
 	if (mouse_right_pressed && keyboard_check(vk_shift))
 	{
-		if (vid = BENDANGLE)
+		if (vid = e_value.BEND_ANGLE)
 			action_tl_frame_bend_angle(0, false)
-		else if (vid = CAMROTATEXYANGLE)
-			action_tl_frame_camrotatexyangle(0, false)
-		else if (vid = CAMROTATEZANGLE)
-			action_tl_frame_camrotatezangle(0, false)
+		else if (vid = e_value.CAM_ROTATE_ANGLE_XY)
+			action_tl_frame_cam_rotate_angle_xy(0, false)
+		else if (vid = e_value.CAM_ROTATE_ANGLE_Z)
+			action_tl_frame_cam_rotate_angle_z(0, false)
 		else
 		{
-			axis_edit = vid - XROT
+			axis_edit = vid - e_value.ROT_X
 			action_tl_frame_rot(0, false)
 		}
 		app_mouse_clear()

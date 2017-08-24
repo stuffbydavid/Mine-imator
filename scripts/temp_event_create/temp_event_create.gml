@@ -22,7 +22,7 @@ model_part_name = ""
 model_part = null
 
 item_tex = null
-item_slot = ds_list_find_index(mc_version.item_texture_list, "items/diamond_sword")
+item_slot = ds_list_find_index(mc_assets.item_texture_list, "items/diamond_sword")
 item_vbuffer = null
 item_3d = true
 item_face_camera = false

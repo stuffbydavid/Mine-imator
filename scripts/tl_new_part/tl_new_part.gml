@@ -15,7 +15,7 @@ with (new(obj_timeline))
 	inherit_texture = true
 	scale_resize = false
 	lock_bend = part.lock_bend
-	value_type_show[POSITION] = false // TODO
+	value_type_show[e_value_type.POSITION] = false // TODO
 	part_parent_save_id = ""
 	
 	ds_list_add(other.part_list, id)

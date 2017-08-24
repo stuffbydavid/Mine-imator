@@ -470,7 +470,7 @@ if (preview.select.type = "particles")
 // Play button
 if (playbutton)
 {
-	if (draw_button_normal(test(isplaying, "previewstop", "previewplay"), xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, test(isplaying, icons.stop, icons.play)))
+	if (draw_button_normal(test(isplaying, "previewstop", "previewplay"), xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, test(isplaying, icons.STOP, icons.PLAY)))
 	{
 		if (isplaying)
 			audio_stop_sound(preview.sound_play_index)
@@ -481,5 +481,5 @@ if (playbutton)
 		
 // Save button
 if (exportbutton)
-	if (draw_button_normal("previewexport", xx + size - 24, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, icons.export))
+	if (draw_button_normal("previewexport", xx + size - 24, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, icons.EXPORT))
 		action_res_export()

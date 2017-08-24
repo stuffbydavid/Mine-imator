@@ -21,16 +21,16 @@ tab_next()
 // Tools
 tab_control(24)
 
-if (draw_button_normal("librarynew", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.create))
+if (draw_button_normal("librarynew", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.CREATE))
 	bench_open = true
 	
-if (draw_button_normal("libraryanimate", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.animate))
+if (draw_button_normal("libraryanimate", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.ANIMATE))
 	action_lib_animate()
 	
-if (draw_button_normal("libraryremove", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.remove))
+if (draw_button_normal("libraryremove", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.REMOVE))
 	action_lib_remove()
 	
-if (draw_button_normal("libraryduplicate", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.duplicate))
+if (draw_button_normal("libraryduplicate", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.DUPLICATE))
 	action_lib_duplicate()
 	
 tab_next()
@@ -65,7 +65,7 @@ switch (temp_edit.type)
 		// Model
 		tab_control(24)
 		draw_label(text_get(text) + ":", dx, dy + 12, fa_left, fa_middle)
-		draw_label(minecraft_get_name("model", temp_edit.model_file.name), dx + capwid, dy + 12, fa_left, fa_middle)
+		draw_label(minecraft_asset_get_name("model", temp_edit.model_file.name), dx + capwid, dy + 12, fa_left, fa_middle)
 		
 		// Change
 		if (draw_button_normal("librarycharmodelchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
@@ -147,7 +147,7 @@ switch (temp_edit.type)
 		var wid = text_max_width("libraryblockchange") + 20;
 		tab_control(24)
 		draw_label(text_get("typeblock") + ":", dx, dy + 12, fa_left, fa_middle)
-		draw_label(minecraft_get_name("block", mc_version.block_name_map[?temp_edit.block_name].name), dx + capwid, dy + 12, fa_left, fa_middle)
+		draw_label(minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name), dx + capwid, dy + 12, fa_left, fa_middle)
 		if (draw_button_normal("libraryblockchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 			tab_toggle(template_editor)
 		tab_next()
@@ -167,7 +167,7 @@ switch (temp_edit.type)
 		draw_label(text_get("typebodypart") + ":", dx, dy + 12, fa_left, fa_middle)
 		
 		if (temp_edit.model_part != null)
-			draw_label(text_get("librarybodypartof", minecraft_get_name("modelpart", temp_edit.model_part_name), minecraft_get_name("model", temp_edit.model_file.name)), dx + capwid, dy + 12, fa_left, fa_middle)
+			draw_label(text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_file.name)), dx + capwid, dy + 12, fa_left, fa_middle)
 		else
 			draw_label(text_get("librarybodypartunknown"), dx + capwid, dy + 12, fa_left, fa_middle)
 		

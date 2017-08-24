@@ -41,7 +41,7 @@ switch (load_stage)
 							var bid, bdata, block;
 							bid = buffer_read_byte()
 							bdata = buffer_read_byte()
-							block = mc_version.block_legacy_id_map[?bid]
+							block = mc_assets.block_legacy_id_map[?bid]
 							array3D_set(block_obj, build_pos, block)
 							if (is_undefined(block))
 								array3D_set(block_state, build_pos, "")
@@ -128,7 +128,7 @@ switch (load_stage)
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-							array3D_set(block_obj, build_pos, mc_version.block_legacy_id_map[?buffer_read_byte()])
+							array3D_set(block_obj, build_pos, mc_assets.block_legacy_id_map[?buffer_read_byte()])
 						
 				// Data
 				buffer_seek(buffer_current, buffer_seek_start, dataarray)

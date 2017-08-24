@@ -27,26 +27,26 @@ with (obj_template)
 
 with (obj_timeline)
 {
-	if (value[TEXTUREOBJ] = other.id)
-		value[TEXTUREOBJ] = null
+	if (value[e_value.TEXTURE_OBJ] = other.id)
+		value[e_value.TEXTURE_OBJ] = null
 		
-	if (value[ATTRACTOR] = other.id)
-		value[ATTRACTOR] = app
+	if (value[e_value.ATTRACTOR] = other.id)
+		value[e_value.ATTRACTOR] = app
 		
-	if (value_inherit[ATTRACTOR] = other.id)
+	if (value_inherit[e_value.ATTRACTOR] = other.id)
 		update_matrix = true
 		
-	if (value_inherit[TEXTUREOBJ] = other.id) 
+	if (value_inherit[e_value.TEXTURE_OBJ] = other.id) 
 		update_matrix = true
 }
 
 with (obj_keyframe)
 {
-	if (value[ATTRACTOR] = other.id)
-		value[ATTRACTOR] = app
+	if (value[e_value.ATTRACTOR] = other.id)
+		value[e_value.ATTRACTOR] = app
 		
-	if (value[TEXTUREOBJ] = other.id)
-		value[TEXTUREOBJ] = null
+	if (value[e_value.TEXTURE_OBJ] = other.id)
+		value[e_value.TEXTURE_OBJ] = null
 }
 
 if (app.timeline_camera = id)

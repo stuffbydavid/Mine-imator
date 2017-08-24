@@ -82,7 +82,7 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 		curslotsx = slotsx
 		curslotsy = slotsy
 		if (res)
-			col = block_texture_get_blend(mc_version.block_texture_list[|curslot], res)
+			col = block_texture_get_blend(mc_assets.block_texture_list[|curslot], res)
 	}
 	else
 	{
@@ -91,7 +91,7 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 		curslotsx = anislotsx
 		curslotsy = anislotsy
 		if (res)
-			col = block_texture_get_blend(mc_version.block_texture_ani_list[|curslot], res)
+			col = block_texture_get_blend(mc_assets.block_texture_ani_list[|curslot], res)
 	}
 	
 	// Highlight if selected

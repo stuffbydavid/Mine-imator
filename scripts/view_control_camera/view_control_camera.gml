@@ -15,14 +15,14 @@ with (tl_edit)
 	matrix_remove_scale(xyang)
 }
 
-zang = matrix_multiply(matrix_build(0, 0, 0, 90, 0, tl_edit.value[CAMROTATEXYANGLE] + 90, 1, 1, 1), xyang)
+zang = matrix_multiply(matrix_build(0, 0, 0, 90, 0, tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY] + 90, 1, 1, 1), xyang)
 
-view_control_rotation_axis(view, CAMROTATEXYANGLE, c_aqua, xyang, len)
-view_control_rotation_axis(view, CAMROTATEZANGLE, c_aqua, zang, len)
-view_control_position_axis(view, CAMROTATEDISTANCE, c_aqua, tl_edit.world_pos_rotate, tl_edit.world_pos)
+view_control_rotation_axis(view, e_value.CAM_ROTATE_ANGLE_XY, c_aqua, xyang, len)
+view_control_rotation_axis(view, e_value.CAM_ROTATE_ANGLE_Z, c_aqua, zang, len)
+view_control_position_axis(view, e_value.CAM_ROTATE_DISTANCE, c_aqua, tl_edit.world_pos_rotate, tl_edit.world_pos)
 
 // Is dragging
-if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_control_edit = CAMROTATEXYANGLE || view_control_edit = CAMROTATEZANGLE))
+if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_control_edit = e_value.CAM_ROTATE_ANGLE_XY || view_control_edit = e_value.CAM_ROTATE_ANGLE_Z))
 {
 	mouse_cursor = cr_handpoint
 	
@@ -39,19 +39,19 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_cont
 		// Update
 		axis_edit = view_control_edit
 		
-		if (view_control_edit = CAMROTATEXYANGLE)
-			tl_value_set_start(action_tl_frame_camrotatexyangle, true)
+		if (view_control_edit = e_value.CAM_ROTATE_ANGLE_XY)
+			tl_value_set_start(action_tl_frame_cam_rotate_angle_xy, true)
 		else
-			tl_value_set_start(action_tl_frame_camrotatezangle, true)
+			tl_value_set_start(action_tl_frame_cam_rotate_angle_z, true)
 		
 		tl_value_set(view_control_edit, view_control_value - tl_edit.value[view_control_edit], true)
 		
 		if (frame_editor.camera.look_at_rotate)
 		{
-			if (view_control_edit = CAMROTATEXYANGLE)
-				tl_value_set(ZROT, tl_edit.value[CAMROTATEXYANGLE], false)
+			if (view_control_edit = e_value.CAM_ROTATE_ANGLE_XY)
+				tl_value_set(e_value.ROT_Z, tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY], false)
 			else
-				tl_value_set(XROT, tl_edit.value[CAMROTATEZANGLE], false)
+				tl_value_set(e_value.ROT_X, tl_edit.value[e_value.CAM_ROTATE_ANGLE_Z], false)
 		}
 		
 		tl_value_set_done()
@@ -65,7 +65,7 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_cont
 	}
 }
 
-if (window_busy = "rendercontrol" && view_control_edit = CAMROTATEDISTANCE)
+if (window_busy = "rendercontrol" && view_control_edit = e_value.CAM_ROTATE_DISTANCE)
 {
 	mouse_cursor = cr_handpoint
 	
@@ -84,7 +84,7 @@ if (window_busy = "rendercontrol" && view_control_edit = CAMROTATEDISTANCE)
 		
 		// Update
 		axis_edit = view_control_edit
-		tl_value_set_start(action_tl_frame_camrotatedistance, true)
+		tl_value_set_start(action_tl_frame_cam_rotate_distance, true)
 		tl_value_set(view_control_edit, view_control_value - tl_edit.value[view_control_edit], true)
 		tl_value_set_done()
 	}

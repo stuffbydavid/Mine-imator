@@ -53,7 +53,7 @@ background_ground_show = true
 background_ground_tex = res_def
 background_ground_tex.count++
 background_ground_name = "blocks/grass_top"
-background_ground_slot = ds_list_find_index(mc_version.block_texture_list, background_ground_name)
+background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
 background_ground_update_texture()
 
 background_image_show = false

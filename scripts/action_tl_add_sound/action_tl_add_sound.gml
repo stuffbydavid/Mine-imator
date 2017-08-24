@@ -37,7 +37,7 @@ else
 	with (tl_edit)
 	{
 		kf = tl_keyframe_add(pos)
-		kf.value[SOUNDOBJ] = res
+		kf.value[e_value.SOUND_OBJ] = res
 		res.count++
 		tl_update_values()
 	}

@@ -16,16 +16,16 @@ with (tl_edit)
 	matrix_remove_scale(zrot)
 }
 
-xrot = matrix_multiply(matrix_build(0, 0, 0, 0, -90, tl_edit.value[ZROT], 1, 1, 1), zrot)
-yrot = matrix_multiply(matrix_build(0, 0, 0, tl_edit.value[XROT] + 90, 0, tl_edit.value[ZROT], 1, 1, 1), zrot)
+xrot = matrix_multiply(matrix_build(0, 0, 0, 0, -90, tl_edit.value[e_value.ROT_Z], 1, 1, 1), zrot)
+yrot = matrix_multiply(matrix_build(0, 0, 0, tl_edit.value[e_value.ROT_X] + 90, 0, tl_edit.value[e_value.ROT_Z], 1, 1, 1), zrot)
 
 // Draw each axis
-view_control_rotation_axis(view, XROT, c_yellow, xrot, len)
-view_control_rotation_axis(view, YROT, test(setting_z_is_up, c_blue, c_red), yrot, len)
-view_control_rotation_axis(view, ZROT, test(setting_z_is_up, c_red, c_blue), zrot, len)
+view_control_rotation_axis(view, e_value.ROT_X, c_yellow, xrot, len)
+view_control_rotation_axis(view, e_value.ROT_Y, test(setting_z_is_up, c_blue, c_red), yrot, len)
+view_control_rotation_axis(view, e_value.ROT_Z, test(setting_z_is_up, c_red, c_blue), zrot, len)
 
 // Is dragging
-if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= XROT && view_control_edit <= ZROT)
+if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_value.ROT_X && view_control_edit <= e_value.ROT_Z)
 {
 	mouse_cursor = cr_handpoint
 	

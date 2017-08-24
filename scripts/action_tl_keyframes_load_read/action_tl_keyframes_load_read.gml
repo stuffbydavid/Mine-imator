@@ -82,7 +82,7 @@ repeat (num)
 		{
 			select = false
 			loaded = true
-			for (var v = 0; v < values; v++)
+			for (var v = 0; v < e_value.amount; v++)
 				value[v] = tladd.value_default[v]
 			project_read_values(dummytypes)
 		}

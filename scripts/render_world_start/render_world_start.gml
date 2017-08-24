@@ -28,7 +28,7 @@ else
 	cam_up[X] = render_camera.matrix[8]
 	cam_up[Y] = render_camera.matrix[9]
 	cam_up[Z] = render_camera.matrix[10]
-	cam_fov = render_camera.value[CAMFOV]
+	cam_fov = render_camera.value[e_value.CAM_FOV]
 }
 
 cam_near = 1

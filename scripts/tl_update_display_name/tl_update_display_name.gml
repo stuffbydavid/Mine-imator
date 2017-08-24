@@ -8,7 +8,7 @@ if (name = "")
 		if (model_part)
 		{
 			with (model_part)
-				other.display_name = minecraft_get_name("model", name)
+				other.display_name = minecraft_asset_get_name("model", name)
 		}
 		else
 			display_name = text_get("timelineunusedbodypart")

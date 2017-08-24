@@ -18,7 +18,7 @@ with (tl)
 		temp.count++
 	
 	// Restore values
-	for (var v = 0; v < values; v++)
+	for (var v = 0; v < e_value.amount; v++)
 		value_default[v] = save.value_default[v]
 	
 	// Restore keyframes
@@ -30,7 +30,7 @@ with (tl)
 			timeline = tl
 			selected = false
 			sound_play_index = null
-			for (var v = 0; v < values; v++)
+			for (var v = 0; v < e_value.amount; v++)
 				value[v] = tl_value_restore(v, null, save.kf_value[k, v])
 			ds_list_add(other.keyframe_list, id)
 		}
@@ -55,7 +55,7 @@ with (tl)
 	{
 		with (save_id_find(save.usage_tl_texture_save_id[s]))
 		{
-			value[TEXTUREOBJ] = tl
+			value[e_value.TEXTURE_OBJ] = tl
 			update_matrix = true
 		}
 	}
@@ -64,18 +64,18 @@ with (tl)
 	{
 		with (save_id_find(save.usage_tl_attractor_save_id[s]))
 		{
-			value[ATTRACTOR] = tl
+			value[e_value.ATTRACTOR] = tl
 			update_matrix = true
 		}
 	}
 			
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
 		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
-			keyframe_list[|save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = tl
+			keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = tl
 			
 	for (var s = 0; s < save.usage_kf_attractor_amount; s++)
 		with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))
-			keyframe_list[|save.usage_kf_attractor_index[s]].value[ATTRACTOR] = tl
+			keyframe_list[|save.usage_kf_attractor_index[s]].value[e_value.ATTRACTOR] = tl
 
 	// Update
 	tl_update_type_name()

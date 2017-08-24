@@ -158,7 +158,7 @@ if (background_ground_show)
 	tab_control(24)
 	draw_label(text_get("backgroundground") + ":", dx, dy + 12, fa_left, fa_middle)
 	if (background_ground_ani)
-		draw_texture_slot(res.block_sheet_ani_texture[block_texture_get_frame()], background_ground_slot - ds_list_size(mc_version.block_texture_list), dx + capwid, dy + 4, 16, 16, block_sheet_ani_width, block_sheet_ani_height, block_texture_get_blend(background_ground_name, res))
+		draw_texture_slot(res.block_sheet_ani_texture[block_texture_get_frame()], background_ground_slot - ds_list_size(mc_assets.block_texture_list), dx + capwid, dy + 4, 16, 16, block_sheet_ani_width, block_sheet_ani_height, block_texture_get_blend(background_ground_name, res))
 	else
 		draw_texture_slot(res.block_sheet_texture, background_ground_slot, dx + capwid, dy + 4, 16, 16, block_sheet_width, block_sheet_height, block_texture_get_blend(background_ground_name, res))
 	

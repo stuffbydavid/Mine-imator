@@ -17,10 +17,10 @@ else if (background_ground_texture != null)
 var size, bx, by, surf, tex;
 
 // In static block list
-if (background_ground_slot < ds_list_size(mc_version.block_texture_list))
+if (background_ground_slot < ds_list_size(mc_assets.block_texture_list))
 {
 	background_ground_ani = false
-	background_ground_name = mc_version.block_texture_list[|background_ground_slot]
+	background_ground_name = mc_assets.block_texture_list[|background_ground_slot]
 	size = texture_width(background_ground_tex.block_sheet_texture) / block_sheet_width
 	bx = (background_ground_slot mod block_sheet_width) * size
 	by = (background_ground_slot div block_sheet_width) * size
@@ -38,9 +38,9 @@ else
 		return 0
 	}
 
-	var slot = background_ground_slot - ds_list_size(mc_version.block_texture_list);
+	var slot = background_ground_slot - ds_list_size(mc_assets.block_texture_list);
 	background_ground_ani = true
-	background_ground_name = mc_version.block_texture_ani_list[|background_ground_slot]
+	background_ground_name = mc_assets.block_texture_ani_list[|background_ground_slot]
 	size = texture_width(background_ground_tex.block_sheet_ani_texture[0]) / block_sheet_ani_width
 	bx = (slot mod block_sheet_ani_width) * size
 	by = (slot div block_sheet_ani_width) * size

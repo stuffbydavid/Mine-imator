@@ -7,7 +7,7 @@ with (bench_settings)
 		return 0
 		
 	model_name = argument0
-	model_state = mc_version.model_name_map[?model_name].default_state
+	model_state = mc_assets.model_name_map[?model_name].default_state
 	temp_update_model_state_map()
 	temp_update_model()
 	

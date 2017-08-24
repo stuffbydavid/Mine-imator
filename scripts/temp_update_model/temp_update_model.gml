@@ -9,7 +9,7 @@ if (argument_count > 0)
 else
 	hobj = null
 
-model = mc_version.model_name_map[?model_name];
+model = mc_assets.model_name_map[?model_name];
 if (is_undefined(model))
 {
 	model_file = null

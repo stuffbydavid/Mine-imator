@@ -16,7 +16,7 @@ else
 	if (action_tl_select_single("background"))
 	{
 		tl_value_set_start(action_background_wind_strength, true)
-		tl_value_set(BGWINDSTRENGTH, val, add)
+		tl_value_set(e_value.BG_WIND_STRENGTH, val, add)
 		tl_value_set_done()
 		return 0
 	}

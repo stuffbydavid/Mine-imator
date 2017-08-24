@@ -138,30 +138,30 @@ else
 			
 		with (tl)
 		{
-			value_default[XPOS] = history_data.value_default[XPOS]
-			value_default[YPOS] = history_data.value_default[YPOS]
-			value_default[ZPOS] = history_data.value_default[ZPOS]
-			value_default[XROT] = history_data.value_default[XROT]
-			value_default[YROT] = history_data.value_default[YROT]
-			value_default[ZROT] = history_data.value_default[ZROT]
-			value[XPOS] = value_default[XPOS]
-			value[YPOS] = value_default[YPOS]
-			value[ZPOS] = value_default[ZPOS]
-			value[XROT] = value_default[XROT]
-			value[YROT] = value_default[YROT]
-			value[ZROT] = value_default[ZROT]
+			value_default[e_value.POS_X] = history_data.value_default[e_value.POS_X]
+			value_default[e_value.POS_Y] = history_data.value_default[e_value.POS_Y]
+			value_default[e_value.POS_Z] = history_data.value_default[e_value.POS_Z]
+			value_default[e_value.ROT_X] = history_data.value_default[e_value.ROT_X]
+			value_default[e_value.ROT_Y] = history_data.value_default[e_value.ROT_Y]
+			value_default[e_value.ROT_Z] = history_data.value_default[e_value.ROT_Z]
+			value[e_value.POS_X] = value_default[e_value.POS_X]
+			value[e_value.POS_Y] = value_default[e_value.POS_Y]
+			value[e_value.POS_Z] = value_default[e_value.POS_Z]
+			value[e_value.ROT_X] = value_default[e_value.ROT_X]
+			value[e_value.ROT_Y] = value_default[e_value.ROT_Y]
+			value[e_value.ROT_Z] = value_default[e_value.ROT_Z]
 		}
 	}
 	else
 	{
 		with (hobj)
 		{
-			value_default[XPOS] = tl.value_default[XPOS]
-			value_default[YPOS] = tl.value_default[YPOS]
-			value_default[ZPOS] = tl.value_default[ZPOS]
-			value_default[XROT] = tl.value_default[XROT]
-			value_default[YROT] = tl.value_default[YROT]
-			value_default[ZROT] = tl.value_default[ZROT]
+			value_default[e_value.POS_X] = tl.value_default[e_value.POS_X]
+			value_default[e_value.POS_Y] = tl.value_default[e_value.POS_Y]
+			value_default[e_value.POS_Z] = tl.value_default[e_value.POS_Z]
+			value_default[e_value.ROT_X] = tl.value_default[e_value.ROT_X]
+			value_default[e_value.ROT_Y] = tl.value_default[e_value.ROT_Y]
+			value_default[e_value.ROT_Z] = tl.value_default[e_value.ROT_Z]
 		}
 		
 		log("Created", bench_settings.type)

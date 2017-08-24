@@ -154,25 +154,25 @@ with (obj_particle_type)
 
 with (obj_keyframe)
 {
-	if (value[TEXTUREOBJ] = other.id)
-		value[TEXTUREOBJ] = null
+	if (value[e_value.TEXTURE_OBJ] = other.id)
+		value[e_value.TEXTURE_OBJ] = null
 	
-	if (value[SOUNDOBJ] = other.id)
-		value[SOUNDOBJ] = null
+	if (value[e_value.SOUND_OBJ] = other.id)
+		value[e_value.SOUND_OBJ] = null
 }
 
 with (obj_timeline)
 {
-	if (value[TEXTUREOBJ] = other.id)
-		value[TEXTUREOBJ] = null
+	if (value[e_value.TEXTURE_OBJ] = other.id)
+		value[e_value.TEXTURE_OBJ] = null
 	
-	if (value_inherit[TEXTUREOBJ] = other.id)
+	if (value_inherit[e_value.TEXTURE_OBJ] = other.id)
 		update_matrix = true
 	
-	if (value[SOUNDOBJ] = other.id)
-		value[SOUNDOBJ] = null
+	if (value[e_value.SOUND_OBJ] = other.id)
+		value[e_value.SOUND_OBJ] = null
 	
-	if (value_inherit[SOUNDOBJ] = other.id)
+	if (value_inherit[e_value.SOUND_OBJ] = other.id)
 		update_matrix = true
 }
 

@@ -17,7 +17,7 @@ to.lock_bend = lock_bend
 to.parent = parent
 if (object_index = obj_timeline)
 	to.parent_index = ds_list_find_index(parent.tree_list, id)
-else
+else // History object (copy)
 	to.parent_index = parent_index
 to.tree_extend = tree_extend
 

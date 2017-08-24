@@ -24,7 +24,7 @@ draw_label(string_remove_newline(tl_edit.type_name), dx + capwid, dy)
 tab_next()
 
 // Rotation point
-if (tl_edit.value_type[ROTPOINT])
+if (tl_edit.value_type[e_value_type.ROTPOINT])
 {
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)
@@ -67,16 +67,16 @@ if (tl_edit.value_type[ROTPOINT])
 		// Tools
 		tab_control(24)
 		
-		if (draw_button_normal("timelineeditorrotpointreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
+		if (draw_button_normal("timelineeditorrotpointreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
 			action_tl_rotpoint_all(def)
 			
-		if (draw_button_normal("timelineeditorrotpointcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
+		if (draw_button_normal("timelineeditorrotpointcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.COPY))
 			tab.info.rot_point_copy = tl_edit.rot_point
 			
-		if (draw_button_normal("timelineeditorrotpointpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.paste))
+		if (draw_button_normal("timelineeditorrotpointpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.PASTE))
 			action_tl_rotpoint_all(tab.info.rot_point_copy)
 			
-		if (draw_button_normal("timelineeditorrotpointsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.info.rot_point_snap, false, true, icons.grid))
+		if (draw_button_normal("timelineeditorrotpointsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.info.rot_point_snap, false, true, icons.GRID))
 			tab.info.rot_point_snap = !tab.info.rot_point_snap
 			
 		if (tab.info.rot_point_snap)

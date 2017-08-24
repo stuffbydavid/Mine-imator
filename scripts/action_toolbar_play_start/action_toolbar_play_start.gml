@@ -13,7 +13,7 @@ with (obj_timeline)
 			{
 				sound_play_index = null
 				
-				if (!value[SOUNDOBJ] || !value[SOUNDOBJ].ready)
+				if (value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready)
 					continue
 					
 				if (position + tl_keyframe_length(id) < app.timeline_marker)
@@ -22,9 +22,9 @@ with (obj_timeline)
 				if (position > app.timeline_marker)
 					break
 					
-				sound_play_index = audio_play_sound(value[SOUNDOBJ].sound_index, 0, true)
-				audio_sound_set_track_position(sound_play_index, (value[SOUNDSTART] + (app.timeline_marker - position) / app.project_tempo) mod (value[SOUNDOBJ].sound_samples / sample_rate))
-				audio_sound_gain(sound_play_index, value[SOUNDVOLUME], 0)
+				sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, true)
+				audio_sound_set_track_position(sound_play_index, (value[e_value.SOUND_START] + (app.timeline_marker - position) / app.project_tempo) mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
+				audio_sound_gain(sound_play_index, value[e_value.SOUND_VOLUME], 0)
 			}
 		}
 	}
@@ -32,7 +32,7 @@ with (obj_timeline)
 	{
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 		{
-			if (keyframe_list[|k].value[SPAWN] && keyframe_list[|k].position = app.timeline_marker)
+			if (keyframe_list[|k].value[e_value.SPAWN] && keyframe_list[|k].position = app.timeline_marker)
 			{
 				fire = true
 				break

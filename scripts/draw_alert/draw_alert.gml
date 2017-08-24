@@ -62,7 +62,7 @@ if (alert_icon[n] > 0)
 		iconsize = 20
 		iconimage = 0
 	}
-	draw_image(spr_icons_big, alert_icon[n] + iconimage - icons.websitesmall, content_x + test(content_width < 100, content_width / 2, 5 + iconsize / 2), content_y + content_height / 2, 1, 1, setting_color_alerts_text, 1)
+	draw_image(spr_icons_big, alert_icon[n] + iconimage - icons.WEBSITE_SMALL, content_x + test(content_width < 100, content_width / 2, 5 + iconsize / 2), content_y + content_height / 2, 1, 1, setting_color_alerts_text, 1)
 	textx += iconsize
 	textw -= iconsize
 }
@@ -101,7 +101,7 @@ if (content_width >= 100 || alert_icon[n] = 0)
 	draw_label(string_limit(string_remove_newline(alert_title[n]), textw), textx, titley, fa_left, fa_top, setting_color_alerts_text, 1, setting_font_bold)
 
 // Close
-if (content_mouseon && (content_height > 60 || alert_button[n] = "") && draw_button_normal("alertclose", content_x + content_width - 20, content_y + 4, 16, 16, e_button.NO_TEXT, false, false, true, icons.close))
+if (content_mouseon && (content_height > 60 || alert_button[n] = "") && draw_button_normal("alertclose", content_x + content_width - 20, content_y + 4, 16, 16, e_button.NO_TEXT, false, false, true, icons.CLOSE))
 	alert_close(n)
 	
 draw_set_alpha(1)

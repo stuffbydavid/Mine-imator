@@ -164,7 +164,7 @@ for (var t = 0; t < panel.tab_list_amount; t++)
 	// Close button
 	if (sel && tab.closeable)
 	{
-		if (draw_button_normal("tabclose", dx + dw - 18, dy + 8, 16, 16, e_button.NO_TEXT, false, false, true, icons.close))
+		if (draw_button_normal("tabclose", dx + dw - 18, dy + 8, 16, 16, e_button.NO_TEXT, false, false, true, icons.CLOSE))
 		{
 			tab_close(tab)
 			return 0

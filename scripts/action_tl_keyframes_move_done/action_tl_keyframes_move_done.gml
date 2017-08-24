@@ -54,7 +54,7 @@ else
 			
 			other.kf_move_tl_save_id[other.kf_move_amount] = save_id_get(timeline)
 			other.kf_move_old_index[other.kf_move_amount] = move_index
-			other.kf_move_old_pos[other.kf_move_amount] = move_position
+			other.kf_move_old_pos[other.kf_move_amount] = move_pos
 			other.kf_move_new_index[other.kf_move_amount] = ds_list_find_index(timeline.keyframe_list, id)
 			other.kf_move_new_pos[other.kf_move_amount] = position
 			other.kf_move_amount++

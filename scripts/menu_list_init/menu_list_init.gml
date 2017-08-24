@@ -5,7 +5,7 @@
 if (menu_model_current != null)
 {
 	for (var i = 0; i < menu_model_state.value_amount; i++)
-		menu_add_item(menu_model_state.value_name[i], minecraft_get_name("modelstatevalue", menu_model_state.value_name[i]))
+		menu_add_item(menu_model_state.value_name[i], minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]))
 		
 	return 0
 }
@@ -14,7 +14,7 @@ if (menu_model_current != null)
 if (menu_block_current != null)
 {
 	for (var i = 0; i < menu_block_state.value_amount; i++)
-		menu_add_item(menu_block_state.value_name[i], minecraft_get_name("blockstatevalue", menu_block_state.value_name[i]))
+		menu_add_item(menu_block_state.value_name[i], minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]))
 		
 	return 0
 }
@@ -41,11 +41,11 @@ switch (menu_name)
 		}
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Download from user
 		if (modelfile.player_skin)
-			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("librarycharskindownload"), null, icons.downloadskin)
+			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("librarycharskindownload"), null, icons.DOWNLOAD_SKIN)
 		
 		// Default
 		var tex;
@@ -76,10 +76,10 @@ switch (menu_name)
 		menu_add_item(0, text_get("listnone"))
 		
 		// Import from world
-		menu_add_item(e_option.IMPORT_WORLD, text_get("libraryschematicimport"), null, icons.importfromworld)
+		menu_add_item(e_option.IMPORT_WORLD, text_get("libraryschematicimport"), null, icons.IMPORT_FROM_WORLD)
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
@@ -96,7 +96,7 @@ switch (menu_name)
 	case "libraryblocktex": // Block texture
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.block_preview_texture)
@@ -116,7 +116,7 @@ switch (menu_name)
 	case "libraryitemtex": // Item texture
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.block_preview_texture)
@@ -141,7 +141,7 @@ switch (menu_name)
 		for (var p = 0; p < ds_list_size(bench_settings.model_file.file_part_list); p++)
 		{
 			var part = bench_settings.model_file.file_part_list[|p];
-			menu_add_item(part.name, minecraft_get_name("modelpart", part.name))
+			menu_add_item(part.name, minecraft_asset_get_name("modelpart", part.name))
 		}
 		break
 	}
@@ -151,7 +151,7 @@ switch (menu_name)
 		for (var p = 0; p < ds_list_size(temp_edit.model_file.file_part_list); p++)
 		{
 			var part = temp_edit.model_file.file_part_list[|p];
-			menu_add_item(part.name, minecraft_get_name("modelpart", part.name))
+			menu_add_item(part.name, minecraft_asset_get_name("modelpart", part.name))
 		}
 		break
 	}
@@ -160,7 +160,7 @@ switch (menu_name)
 	case "librarytextfont": // Text font
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name)
@@ -182,7 +182,7 @@ switch (menu_name)
 		menu_add_item(0, text_get("listnone"))
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
@@ -202,9 +202,9 @@ switch (menu_name)
 	
 	case "particleeditorspawnregiontype": // Particle editor spawn region type
 	{
-		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), spr_icons, icons.sphere)
-		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), spr_icons, icons.cube)
-		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), spr_icons, icons.box)
+		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), spr_icons, icons.SPHERE)
+		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), spr_icons, icons.CUBE)
+		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), spr_icons, icons.BOX)
 		break
 	}
 	
@@ -226,7 +226,7 @@ switch (menu_name)
 		var img = ptype_edit.sprite_tex_image;
 		
 		// Add from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.particles_texture[img])
@@ -246,7 +246,7 @@ switch (menu_name)
 		menu_add_item(0, text_get("listnone"))
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
@@ -269,7 +269,7 @@ switch (menu_name)
 	case "backgroundskysuntex": // Background sky sun texture
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.sun_texture)
@@ -292,7 +292,7 @@ switch (menu_name)
 	case "backgroundskymoontex": // Background sky moon texture
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.moon_texture[background_sky_moon_phase])
@@ -322,7 +322,7 @@ switch (menu_name)
 	case "backgroundskycloudstex": // Background sky clouds texture
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.clouds_texture)
@@ -345,7 +345,7 @@ switch (menu_name)
 	case "backgroundgroundtex": // Background ground texture
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.browse)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(res_def, res_def.display_name, res_def.block_preview_texture)
@@ -383,8 +383,8 @@ switch (menu_name)
 	
 	case "resourcespackimagemodeltexture": // Resource pack preview skin
 	{
-		for (var t = 0; t < ds_list_size(mc_version.model_texture_list); t++)
-			menu_add_item(mc_version.model_texture_list[|t], mc_version.model_texture_list[|t])
+		for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
+			menu_add_item(mc_assets.model_texture_list[|t], mc_assets.model_texture_list[|t])
 		break
 	}
 	

@@ -21,6 +21,6 @@ trial_version = false
 setting_render_watermark = false
 settings_save()
 
-alert_show(text_get("alertupgradedtitle"), text_get("alertupgradedtext"), icons.upgradesmall, "", "", 5000)
+alert_show(text_get("alertupgradedtitle"), text_get("alertupgradedtext"), icons.UPGRADE_SMALL, "", "", 5000)
 
 return true

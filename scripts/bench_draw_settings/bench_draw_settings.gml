@@ -83,11 +83,11 @@ else
 			
 			// States
 			var model, state;
-			model = mc_version.model_name_map[?bench_settings.model_name]
+			model = mc_assets.model_name_map[?bench_settings.model_name]
 			state = ds_map_find_first(bench_settings.model_state_map)
 			while (!is_undefined(state))
 			{
-				capwid = max(capwid, string_width(minecraft_get_name("modelstate", state) + ":") + 20)
+				capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state) + ":") + 20)
 				state = ds_map_find_next(bench_settings.model_state_map, state)
 			}
 			
@@ -96,7 +96,7 @@ else
 			{
 				menu_model_current = model
 				menu_model_state_current = model.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state_map[?state], minecraft_get_name("modelstatevalue", bench_settings.model_state_map[?state]), action_bench_model_state, null, null, capwid, text_get("benchmodelstatetip"))
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state_map[?state], minecraft_asset_get_name("modelstatevalue", bench_settings.model_state_map[?state]), action_bench_model_state, null, null, capwid, text_get("benchmodelstatetip"))
 				state = ds_map_find_next(bench_settings.model_state_map, state)
 				dy += 24 + 8
 			}
@@ -105,7 +105,7 @@ else
 			// Bodypart
 			if (bench_settings.type = "bodypart")
 			{
-				draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, null, null, capwid)
+				draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, null, null, capwid)
 				dy += 24 + 8
 			}
 			
@@ -159,7 +159,7 @@ else
 			// Item select
 			if (res.item_sheet_texture != null)
 			{
-				var slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
+				var slots = test(res.type = "pack", ds_list_size(mc_assets.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
 				listh = 200 + bench_settings.height_custom
 				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, listh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8
@@ -191,11 +191,11 @@ else
 			
 			// States
 			var block, state;
-			block = mc_version.block_name_map[?bench_settings.block_name]
+			block = mc_assets.block_name_map[?bench_settings.block_name]
 			state = ds_map_find_first(bench_settings.block_state_map)
 			while (!is_undefined(state))
 			{
-				capwid = max(capwid, string_width(minecraft_get_name("blockstate", state) + ":") + 20)
+				capwid = max(capwid, string_width(minecraft_asset_get_name("blockstate", state) + ":") + 20)
 				state = ds_map_find_next(bench_settings.block_state_map, state)
 			}
 			
@@ -204,7 +204,7 @@ else
 			{
 				menu_block_current = block
 				menu_block_state_current = block.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state_map[?state], minecraft_get_name("blockstatevalue", bench_settings.block_state_map[?state]), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state_map[?state], minecraft_asset_get_name("blockstatevalue", bench_settings.block_state_map[?state]), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
 				state = ds_map_find_next(bench_settings.block_state_map, state)
 				dy += 24 + 8
 			}

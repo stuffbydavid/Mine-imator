@@ -27,7 +27,7 @@ else
 
 with (temp_edit)
 {
-	if (text_font)
+	if (text_font != null)
 		text_font.count--
 	text_font = res
 	text_font.count++

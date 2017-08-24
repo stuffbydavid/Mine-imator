@@ -8,7 +8,7 @@ with (mc_builder)
 	build_size = test(other.block_repeat_enable, other.block_repeat, vec3(1))
 	
 	// Set blocks
-	array3D_fill(block_obj, build_size, mc_version.block_name_map[?other.block_name])
+	array3D_fill(block_obj, build_size, mc_assets.block_name_map[?other.block_name])
 	array3D_fill(block_state, build_size, other.block_state)
 				
 	// Set models

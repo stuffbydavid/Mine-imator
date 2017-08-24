@@ -37,5 +37,5 @@ render_free()
 surface_free(surf)
 
 // Return to program
-alert_show(text_get("alertexportimagetitle"), "", icons.savesmall, "alertexportimagebutton", fn, 5000)
+alert_show(text_get("alertexportimagetitle"), "", icons.SAVE_SMALL, "alertexportimagebutton", fn, 5000)
 popup_close()

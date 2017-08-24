@@ -1,7 +1,7 @@
 /// temp_update_block_state_map()
 /// @desc Updates the block state map from the block_state string.
 
-var block = mc_version.block_name_map[?block_name]
+var block = mc_assets.block_name_map[?block_name]
 
 if (is_undefined(block))
 	return 0

@@ -11,9 +11,9 @@ if (history_undo)
 			with (save_id_find(tl_save_id[t]))
 			{
 				tl_set_parent(save_id_find(other.tl_old_parent_save_id[t]), other.tl_old_parent_index[t])
-				value[XPOS] = other.tl_old_x[t]
-				value[YPOS] = other.tl_old_y[t]
-				value[ZPOS] = other.tl_old_z[t]
+				value[e_value.POS_X] = other.tl_old_x[t]
+				value[e_value.POS_Y] = other.tl_old_y[t]
+				value[e_value.POS_Z] = other.tl_old_z[t]
 			}
 		}
 	}

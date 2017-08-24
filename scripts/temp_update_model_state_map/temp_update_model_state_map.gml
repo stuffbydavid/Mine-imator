@@ -1,7 +1,7 @@
 /// temp_update_model_state_map()
 /// @desc Updates the block state map.
 
-var model = mc_version.model_name_map[?model_name]
+var model = mc_assets.model_name_map[?model_name]
 
 if (is_undefined(model))
 	return 0

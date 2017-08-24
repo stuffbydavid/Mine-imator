@@ -16,7 +16,7 @@ else
 with (ptype_edit)
 {
 	sprite_tex_image = image
-	ptype_update_sprite_vbuffer_amount()
+	ptype_update_sprite_vbuffers()
 }
 
 tab_template_editor_particles_preview_restart()

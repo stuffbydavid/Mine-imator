@@ -10,7 +10,7 @@ if (name = "")
 		case "char":
 		case "spblock":
 			with (model_file)
-				other.display_name = minecraft_get_name("model", name)
+				other.display_name = minecraft_asset_get_name("model", name)
 			break
 		
 		case "scenery":
@@ -19,12 +19,12 @@ if (name = "")
 			break
 		
 		case "block":
-			display_name = minecraft_get_name("block", mc_version.block_name_map[?block_name].name)
+			display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 			break
 		
 		case "bodypart":
 			if (model_part != null)
-				display_name = text_get("librarybodypartof", minecraft_get_name("modelpart", model_part.name), minecraft_get_name("model", model_file.name))
+				display_name = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", model_part.name), minecraft_asset_get_name("model", model_file.name))
 			else
 				display_name = text_get("librarybodypartunknown")
 			break

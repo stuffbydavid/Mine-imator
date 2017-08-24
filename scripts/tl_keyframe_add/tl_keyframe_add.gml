@@ -37,11 +37,11 @@ if (kf < 0)
 	kf.selected = false
 	
 	// Get current parameters
-	for (var v = 0; v < values; v++)
+	for (var v = 0; v < e_value.amount; v++)
 		kf.value[v] = value[v] 
 	
-	if (kf.value[SOUNDOBJ])
-		kf.value[SOUNDOBJ].count++
+	if (kf.value[e_value.SOUND_OBJ] != null)
+		kf.value[e_value.SOUND_OBJ].count++
 }
 
 kf.position = pos

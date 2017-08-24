@@ -20,6 +20,7 @@ else
 		with (history_set(action_lib_pc_type_remove))
 			save_ptype = history_save_ptype(ptype) // Save data
 	}
+	
 	with (temp_edit)
 		temp_particles_type_remove(ptype)
 }

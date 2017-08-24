@@ -25,4 +25,4 @@ if (exportmovie_format = "png")
 else
 	fn = exportmovie_filename
 
-alert_show(text_get("alertexportmovietitle"), "", icons.savesmall, "alertexportmoviebutton", fn, 5000)
+alert_show(text_get("alertexportmovietitle"), "", icons.SAVE_SMALL, "alertexportmoviebutton", fn, 5000)

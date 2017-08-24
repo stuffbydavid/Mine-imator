@@ -10,11 +10,11 @@ with (obj_timeline)
 {
 	var texobj;
 	
-	if (!value_inherit[VISIBLE] || !type_is_shape(type))
+	if (!value_inherit[e_value.VISIBLE] || !type_is_shape(type))
 		continue
 	
-	if (value_inherit[TEXTUREOBJ])
-		texobj = value_inherit[TEXTUREOBJ]
+	if (value_inherit[e_value.TEXTURE_OBJ])
+		texobj = value_inherit[e_value.TEXTURE_OBJ]
 	else
 		texobj = temp.shape_tex
 	

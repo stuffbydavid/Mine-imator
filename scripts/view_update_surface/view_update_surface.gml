@@ -41,7 +41,7 @@ if (view.controls)
 				with (app)
 				{
 					var tl = other.id;
-					if (tl.hide || !tl.value_inherit[VISIBLE])
+					if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
 						continue
 						
 					draw_set_color(test(tl.selected || tl.parent_is_selected, c_white, c_controls))
@@ -62,15 +62,15 @@ if (view.controls)
 			// Controls
 			if (tl_edit != null && tl_edit != cam)
 			{
-				if (!tl_edit.hide && tl_edit.value_inherit[VISIBLE])
+				if (!tl_edit.hide && tl_edit.value_inherit[e_value.VISIBLE])
 				{
-					if (tl_edit.value_type[POSITION] && frame_editor.position.show)
+					if (tl_edit.value_type[e_value_type.POSITION] && frame_editor.position.show)
 						view_control_position(view)
-					if (tl_edit.value_type[ROTATION] && frame_editor.rotation.show)
+					if (tl_edit.value_type[e_value_type.ROTATION] && frame_editor.rotation.show)
 						view_control_rotation(view)
-					if (tl_edit.value_type[BEND] && frame_editor.bend.show)
+					if (tl_edit.value_type[e_value_type.BEND] && frame_editor.bend.show)
 						view_control_bend(view)
-					if (tl_edit.value_type[CAMERA] && tl_edit.value[CAMROTATE] && frame_editor.camera.show)
+					if (tl_edit.value_type[e_value_type.CAMERA] && tl_edit.value[e_value.CAM_ROTATE] && frame_editor.camera.show)
 						view_control_camera(view)
 						
 					view.control_mouseon_last = view.control_mouseon

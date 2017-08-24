@@ -48,10 +48,10 @@ tab_next()
 
 tab_control(24)
 
-if (draw_button_normal("settingsfontopen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
+if (draw_button_normal("settingsfontopen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))
 	action_setting_font_open()
 	
-if (draw_button_normal("settingsfontreset", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
+if (draw_button_normal("settingsfontreset", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
 	action_setting_font_reset()
 	
 tab_next()
@@ -75,10 +75,10 @@ tab_next()
 
 tab_control(24)
 
-if (draw_button_normal("settingslanguageload", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
+if (draw_button_normal("settingslanguageload", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))
 	action_setting_language_load()
 	
-if (draw_button_normal("settingslanguagereload", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reload))
+if (draw_button_normal("settingslanguagereload", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RELOAD))
 	action_setting_language_reload()
 	
 tab_next()
@@ -124,10 +124,10 @@ tab_next()
 
 tab_control(24)
 
-if (draw_button_normal("settingscoloropen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.browse))
+if (draw_button_normal("settingscoloropen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))
 	action_setting_color_open()
 	
-if (draw_button_normal("settingscolorsave", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.export))
+if (draw_button_normal("settingscolorsave", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.EXPORT))
 	action_setting_color_save()
 	
 wid = (dw - 54) / 2-2

@@ -6,7 +6,7 @@ if (type = "char" || type = "spblock" || type = "folder" || type = "background" 
 	return 0
 	
 // Invisible?
-if (!value_inherit[VISIBLE])
+if (!value_inherit[e_value.VISIBLE])
 	return 0
 	
 // Hidden?
@@ -54,7 +54,7 @@ if (shader_alpha > 0)
 	
 	if (type != "particles")
 	{
-		var texobj = value_inherit[TEXTUREOBJ];
+		var texobj = value_inherit[e_value.TEXTURE_OBJ];
 		
 		matrix_set(matrix_world, matrix)
 		matrix_offset = point3D(-rot_point[X], -rot_point[Y], -rot_point[Z])
@@ -76,7 +76,7 @@ if (shader_alpha > 0)
 				with (res)
 					texname = other.temp.model_texture_name
 				
-				render_world_model_part(model_part, texname, res, value[BENDANGLE])
+				render_world_model_part(model_part, texname, res, value[e_value.BEND_ANGLE])
 				break
 			}
 			   

@@ -146,7 +146,7 @@ dy = captiony + 2
 // Close
 if (view = view_second)
 {
-	if (draw_button_normal("viewclose", dx, dy, dw, dh, e_button.NO_TEXT, false, false, true, icons.close))
+	if (draw_button_normal("viewclose", dx, dy, dw, dh, e_button.NO_TEXT, false, false, true, icons.CLOSE))
 	{
 		view.show = false
 		view_render = false
@@ -155,27 +155,27 @@ if (view = view_second)
 }
 
 // Aspect ratio
-if (draw_button_normal("viewaspectratio", dx, dy, dw, dh, e_button.NO_TEXT, view.aspect_ratio, false, true, icons.aspectratio))
+if (draw_button_normal("viewaspectratio", dx, dy, dw, dh, e_button.NO_TEXT, view.aspect_ratio, false, true, icons.ASPECT_RATIO))
 	view.aspect_ratio = !view.aspect_ratio
 dx -= dw + padding
 
 // Grid
-if (draw_button_normal("viewgrid", dx, dy, dw, dh, e_button.NO_TEXT, view.grid, false, true, icons.viewgrid))
+if (draw_button_normal("viewgrid", dx, dy, dw, dh, e_button.NO_TEXT, view.grid, false, true, icons.VIEW_GRID))
 	view.grid = !view.grid
 dx -= dw + padding
 
 // Particles
-if (draw_button_normal("viewparticles", dx, dy, dw, dh, e_button.NO_TEXT, view.particles, false, true, icons.particles))
+if (draw_button_normal("viewparticles", dx, dy, dw, dh, e_button.NO_TEXT, view.particles, false, true, icons.PARTICLES))
 	view.particles = !view.particles
 dx -= dw + padding
 
 // Lights
-if (draw_button_normal("viewlights", dx, dy, dw, dh, e_button.NO_TEXT, view.lights, false, true, icons.light))
+if (draw_button_normal("viewlights", dx, dy, dw, dh, e_button.NO_TEXT, view.lights, false, true, icons.LIGHT))
 	view.lights = !view.lights
 dx -= dw + padding
 
 // Controls
-if (draw_button_normal("viewcontrols", dx, dy, dw, dh, e_button.NO_TEXT, view.controls, false, true, icons.controls))
+if (draw_button_normal("viewcontrols", dx, dy, dw, dh, e_button.NO_TEXT, view.controls, false, true, icons.CONTROLS))
 	view.controls = !view.controls
 dx -= dw + padding
    
@@ -217,17 +217,17 @@ if (view = view_second || !view_second.show)
 	if (content_height > 250)
 	{
 		renderbuttonsize = 76
-		renderbuttonicon = icons.renderbig
+		renderbuttonicon = icons.RENDER_BIG
 	}
 	else if (content_height > 150)
 	{
 		renderbuttonsize = 56
-		renderbuttonicon = icons.rendermedium
+		renderbuttonicon = icons.RENDER_MEDIUM
 	}
 	else if (content_height > 40)
 	{
 		renderbuttonsize = 38
-		renderbuttonicon = icons.rendersmall
+		renderbuttonicon = icons.RENDER_SMALL
 	}
 	else
 		renderbuttonsize = 0
@@ -255,10 +255,10 @@ if (content_width > 0 && content_height > 0)
 	{
 		var wid, hei, scale;
 		
-		if (cam && !cam.value[CAMSIZEUSEPROJECT])
+		if (cam && !cam.value[e_value.CAM_SIZE_USE_PROJECT])
 		{
-			wid = cam.value[CAMWIDTH]
-			hei = cam.value[CAMHEIGHT]
+			wid = cam.value[e_value.CAM_WIDTH]
+			hei = cam.value[e_value.CAM_HEIGHT]
 		}
 		else
 		{

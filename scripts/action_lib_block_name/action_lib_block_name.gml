@@ -19,7 +19,7 @@ else
 	name = argument0
 	with (history_set_var(action_lib_block_name, temp_edit.block_name, name, false))
 		id.state = temp_edit.block_state
-	state = mc_version.block_name_map[?name].default_state
+	state = mc_assets.block_name_map[?name].default_state
 }
 
 with (temp_edit)

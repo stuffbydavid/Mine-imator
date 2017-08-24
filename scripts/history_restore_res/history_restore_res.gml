@@ -66,17 +66,17 @@ with (res)
 			
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
 		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
-			keyframe_list[|save.usage_kf_texture_index[s]].value[TEXTUREOBJ] = res
+			keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = res
 			
 	for (var s = 0; s < save.usage_kf_sound_amount; s++)
 		with (save_id_find(save.usage_kf_sound_tl_save_id[s]))
-			keyframe_list[|save.usage_kf_sound_index[s]].value[SOUNDOBJ] = res
+			keyframe_list[|save.usage_kf_sound_index[s]].value[e_value.SOUND_OBJ] = res
 			
 	for (var s = 0; s < save.usage_tl_texture_amount; s++)
 	{
 		with (save_id_find(save.usage_tl_texture_save_id[s]))
 		{
-			value[TEXTUREOBJ] = res
+			value[e_value.TEXTURE_OBJ] = res
 			update_matrix = true
 		}
 	}
@@ -85,7 +85,7 @@ with (res)
 	{
 		with (save_id_find(save.usage_tl_sound_save_id[s]))
 		{
-			value[SOUNDOBJ] = res
+			value[e_value.SOUND_OBJ] = res
 			update_matrix = true
 		}
 	}

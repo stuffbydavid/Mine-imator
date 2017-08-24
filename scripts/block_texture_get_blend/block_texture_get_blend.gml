@@ -5,7 +5,7 @@
 var texname, res, col;
 texname = argument0
 res = argument1
-col = mc_version.block_texture_color_map[?texname]
+col = mc_assets.block_texture_color_map[?texname]
 
 if (!is_undefined(col))
 {

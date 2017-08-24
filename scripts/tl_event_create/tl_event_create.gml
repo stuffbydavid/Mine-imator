@@ -21,14 +21,14 @@ model_part_name = null
 part_of = null
 part_list = ds_list_create()
 
-for (var v = 0; v < values; v++)
+for (var v = 0; v < e_value.amount; v++)
 {
 	value_default[v] = tl_value_default(v)
 	value_inherit[v] = 0
 	value[v] = value_default[v]
 }
 
-for (var t = 0; t < value_types; t++)
+for (var t = 0; t < e_value_type.amount; t++)
 {
 	value_type[t] = false
 	value_type_show[t] = true

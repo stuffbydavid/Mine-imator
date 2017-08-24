@@ -241,16 +241,16 @@ with (new(obj_block_render_model))
 					slot = -1
 					
 					if (opaque)
-						slot = ds_list_find_index(mc_version.block_texture_list, texname + " opaque")
+						slot = ds_list_find_index(mc_assets.block_texture_list, texname + " opaque")
 					if (slot < 0)
-						slot = ds_list_find_index(mc_version.block_texture_list, texname)
+						slot = ds_list_find_index(mc_assets.block_texture_list, texname)
 					
 					if (slot < 0) // Not in static sheet, is it animated?
 					{
 						if (opaque)
-							slot = ds_list_find_index(mc_version.block_texture_ani_list, texname + " opaque")
+							slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
 						if (slot < 0)
-							slot = ds_list_find_index(mc_version.block_texture_ani_list, texname)
+							slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname)
 						
 						if (slot < 0) // Missing texture, skip face
 						{
@@ -272,7 +272,7 @@ with (new(obj_block_render_model))
 						sheetheight = block_sheet_height
 						
 						// Check color
-						var col = mc_version.block_texture_color_map[?texname];
+						var col = mc_assets.block_texture_color_map[?texname];
 						if (!is_undefined(col))
 						{
 							if (is_real(col))

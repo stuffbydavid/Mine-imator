@@ -32,7 +32,7 @@ scale = min(size / fwid, size / fhei)
 draw_box(xx, yy, size, size, false, c_black, 0.1)
 draw_texture_part(tex, xx, yy, (frame mod framesx) * fwid, (frame div framesx) * fhei, fwid, fhei, scale, scale)
 
-if (draw_button_normal("", xx + size - 16, yy + size - 16, 16, 16, e_button.NO_TEXT, false, true, true, icons.arrowrightsmall))
+if (draw_button_normal("", xx + size - 16, yy + size - 16, 16, 16, e_button.NO_TEXT, false, true, true, icons.ARROW_RIGHT_SMALL))
 	tab_template_editor_particles_preview_restart()
 
 tab_next()

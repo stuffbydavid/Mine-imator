@@ -94,13 +94,13 @@ else
 		
 	if (keyboard_check(setting_key_right))
 	{
-		xd = -sin(degtorad(cam.value[ZROT] + 90)) * move
-		yd = -cos(degtorad(cam.value[ZROT] + 90)) * move
+		xd = -sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
+		yd = -cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 	}
 	else if (keyboard_check(setting_key_left))
 	{
-		xd = sin(degtorad(cam.value[ZROT] + 90)) * move
-		yd = cos(degtorad(cam.value[ZROT] + 90)) * move
+		xd = sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
+		yd = cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 	}
 	else
 	{
@@ -108,23 +108,23 @@ else
 		yd = 0
 	}
 	
-	xd += -lengthdir_x(spd, cam.value[ZROT] + 90)
-	yd += -lengthdir_y(spd, cam.value[ZROT] + 90)
+	xd += -lengthdir_x(spd, cam.value[e_value.ROT_Z] + 90)
+	yd += -lengthdir_y(spd, cam.value[e_value.ROT_Z] + 90)
 	zd = (keyboard_check(setting_key_ascend) - keyboard_check(setting_key_descend)) * move
-	zd += (-dsin(cam.value[XROT])) * (keyboard_check(setting_key_forward) - keyboard_check(setting_key_back)) * move
+	zd += (-dsin(cam.value[e_value.ROT_X])) * (keyboard_check(setting_key_forward) - keyboard_check(setting_key_back)) * move
 	
 	// Roll
-	roll = (keyboard_check(setting_key_roll_forward) - keyboard_check(setting_key_roll_back)) * 4*spdm
+	roll = (keyboard_check(setting_key_roll_forward) - keyboard_check(setting_key_roll_back)) * 4 * spdm
 	
 	// Set
 	tl_value_set_start(cam_control_move, true)
-	tl_value_set(XPOS, xd * spdm, true)
-	tl_value_set(YPOS, yd * spdm, true)
-	tl_value_set(ZPOS, zd * spdm, true)
-	tl_value_set(XROT, -my, true)
-	tl_value_set(YROT, roll, true)
-	tl_value_set(ZROT, mx, true)
+	tl_value_set(e_value.POS_X, xd * spdm, true)
+	tl_value_set(e_value.POS_Y, yd * spdm, true)
+	tl_value_set(e_value.POS_Z, zd * spdm, true)
+	tl_value_set(e_value.ROT_X, -my, true)
+	tl_value_set(e_value.ROT_Y, roll, true)
+	tl_value_set(e_value.ROT_Z, mx, true)
 	if (keyboard_check_pressed(setting_key_roll_reset))
-		tl_value_set(YROT, 0, false)
+		tl_value_set(e_value.ROT_Y, 0, false)
 	tl_value_set_done()
 }

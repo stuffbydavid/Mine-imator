@@ -30,7 +30,7 @@ with (ptype_edit)
 	sprite_tex.count--
 	sprite_tex = res
 	sprite_tex.count++
-	ptype_update_sprite_vbuffer_amount()
+	ptype_update_sprite_vbuffers()
 }
 
 tab_template_editor_particles_preview_restart()

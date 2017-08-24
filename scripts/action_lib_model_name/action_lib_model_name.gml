@@ -48,7 +48,7 @@ else
 		}
 	}
 	
-	state = mc_version.model_name_map[?name].default_state
+	state = mc_assets.model_name_map[?name].default_state
 }
 
 tl_deselect_all()

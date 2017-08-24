@@ -47,8 +47,8 @@ else if (view.control_mouseon_last = vid)
 	// Right click
 	if (mouse_right_pressed && keyboard_check(vk_shift))
 	{
-		if (vid = CAMROTATEDISTANCE)
-			action_tl_frame_camrotatedistance(tl_edit.value_default[CAMROTATEDISTANCE], false)
+		if (vid = e_value.CAM_ROTATE_DISTANCE)
+			action_tl_frame_cam_rotate_distance(tl_edit.value_default[e_value.CAM_ROTATE_DISTANCE], false)
 		else
 		{
 			axis_edit = vid

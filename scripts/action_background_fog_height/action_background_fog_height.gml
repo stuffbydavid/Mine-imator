@@ -16,7 +16,7 @@ else
 	if (action_tl_select_single("background"))
 	{
 		tl_value_set_start(action_background_fog_height, true)
-		tl_value_set(BGFOGHEIGHT, val, add)
+		tl_value_set(e_value.BG_FOG_HEIGHT, val, add)
 		tl_value_set_done()
 		return 0
 	}

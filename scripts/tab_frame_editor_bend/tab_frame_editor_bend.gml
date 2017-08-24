@@ -3,22 +3,22 @@
 var snapval = tab.bend.snap_enabled * tab.bend.snap_size;
 
 tab_control(100)
-draw_wheel("frameeditorbendwheel", dx + floor(dw * 0.5), dy + 50, c_green, tl_edit.value[BENDANGLE], -130, 130, 0, snapval, false, tab.bend.tbx_wheel, action_tl_frame_bend_angle, 50, spr_circle_100)
+draw_wheel("frameeditorbendwheel", dx + floor(dw * 0.5), dy + 50, c_green, tl_edit.value[e_value.BEND_ANGLE], -130, 130, 0, snapval, false, tab.bend.tbx_wheel, action_tl_frame_bend_angle, 50, spr_circle_100)
 tab_next()
 
 // Tools
 tab_control(24)
 
-if (draw_button_normal("frameeditorbendreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.reset))
+if (draw_button_normal("frameeditorbendreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
 	action_tl_frame_bend_angle(0, false)
 	
-if (draw_button_normal("frameeditorbendcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.copy))
-	tab.bend.copy = tl_edit.value[BENDANGLE]
+if (draw_button_normal("frameeditorbendcopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.COPY))
+	tab.bend.copy = tl_edit.value[e_value.BEND_ANGLE]
 	
-if (draw_button_normal("frameeditorbendpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.paste))
+if (draw_button_normal("frameeditorbendpaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.PASTE))
 	action_tl_frame_bend_angle(tab.bend.copy, false)
 	
-if (draw_button_normal("frameeditorbendsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.bend.snap_enabled, false, true, icons.grid))
+if (draw_button_normal("frameeditorbendsnap", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, tab.bend.snap_enabled, false, true, icons.GRID))
 	tab.bend.snap_enabled = !tab.bend.snap_enabled
 	
 if (tab.bend.snap_enabled)

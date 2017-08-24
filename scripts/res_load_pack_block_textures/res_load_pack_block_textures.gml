@@ -23,9 +23,9 @@ debug_timer_start()
 		
 // Static textures
 texlist = ds_list_create() // name -> texture
-for (var t = 0; t < ds_list_size(mc_version.block_texture_list); t++)
+for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 {
-	var fname  = textures_directory + string_replace(mc_version.block_texture_list[|t], " opaque", "") + ".png";
+	var fname  = textures_directory + string_replace(mc_assets.block_texture_list[|t], " opaque", "") + ".png";
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
@@ -39,11 +39,11 @@ for (var t = 0; t < ds_list_size(mc_version.block_texture_list); t++)
 	
 // Animated textures
 texanilist = ds_list_create() // name -> texture
-for (var t = 0; t < ds_list_size(mc_version.block_texture_ani_list); t++)
+for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 {
 	var name, fname;
-	name = mc_version.block_texture_ani_list[|t]
-	fname = textures_directory + string_replace(mc_version.block_texture_ani_list[|t], " opaque", "") + ".png"
+	name = mc_assets.block_texture_ani_list[|t]
+	fname = textures_directory + string_replace(mc_assets.block_texture_ani_list[|t], " opaque", "") + ".png"
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
@@ -74,7 +74,7 @@ surface_set_target(surf)
 	
 		if (tex != null)
 		{
-			if (string_contains(mc_version.block_texture_list[|t], " opaque"))
+			if (string_contains(mc_assets.block_texture_list[|t], " opaque"))
 				draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
 			draw_texture_part(tex, dx, dy, 0, 0, blocksize, blocksize)
 			texture_free(tex)
@@ -116,10 +116,10 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	framefade = false
 	frametime = 1
 	framelist = null
-	opaque = string_contains(mc_version.block_texture_ani_list[|t], " opaque")
+	opaque = string_contains(mc_assets.block_texture_ani_list[|t], " opaque")
 	
 	// Load JSON
-	fname = unzip_directory + "assets\\minecraft\\textures\\" + mc_version.block_texture_ani_list[|t] + ".png.mcmeta"
+	fname = unzip_directory + "assets\\minecraft\\textures\\" + mc_assets.block_texture_ani_list[|t] + ".png.mcmeta"
 	if (file_exists_lib(fname))
 	{
 		var decoded = json_decode(file_text_contents(fname));
@@ -220,7 +220,7 @@ buffer_get_surface(buffer_current, surf, 0, 0, 0)
 wid = surface_get_width(surf)
 
 block_sheet_depth_list = ds_list_create()
-for (var t = 0; t < ds_list_size(mc_version.block_texture_list); t++)
+for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 {
 	if (texlist[|t] = null)
 	{
@@ -260,7 +260,7 @@ buffer_get_surface(buffer_current, anisurf[0], 0, 0, 0)
 wid = surface_get_width(anisurf[0])
 
 block_sheet_ani_depth_list = ds_list_create()
-for (var t = 0; t < ds_list_size(mc_version.block_texture_ani_list); t++)
+for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 {
 	if (texanilist[|t] = null)
 	{

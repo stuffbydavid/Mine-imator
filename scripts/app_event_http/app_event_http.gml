@@ -45,13 +45,13 @@ if (async_load[?"id"] = alert_news_http) // Check news
 					icon = newsmap[?"icon"]
 					switch (icon)
 					{
-						case "website":		icon = icons.websitesmall;		break
-						case "forums":		icon = icons.forumssmall;		break
-						case "save":		icon = icons.savesmall;			break
-						case "download":	icon = icons.downloadsmall;		break
-						case "cake":		icon = icons.cakesmall;			break
-						case "upgrade":		icon = icons.upgradesmall;		break
-						case "render":		icon = icons.rendersmall;		break
+						case "website":		icon = icons.WEBSITE_SMALL;		break
+						case "forums":		icon = icons.FORUMS_SMALL;		break
+						case "save":		icon = icons.SAVE_SMALL;			break
+						case "download":	icon = icons.DOWNLOAD_SMALL;		break
+						case "cake":		icon = icons.CAKE_SMALL;			break
+						case "upgrade":		icon = icons.UPGRADE_SMALL;		break
+						case "render":		icon = icons.RENDER_SMALL;		break
 						default:			icon = null	;					break
 					}
 					

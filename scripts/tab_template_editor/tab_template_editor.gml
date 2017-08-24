@@ -39,11 +39,11 @@ switch (temp_edit.type)
 			
 		// States
 		var model, state, dyy;
-		model = mc_version.model_name_map[?temp_edit.model_name]
+		model = mc_assets.model_name_map[?temp_edit.model_name]
 		state = ds_map_find_first(temp_edit.model_state_map)
 		while (!is_undefined(state))
 		{
-			capwid = max(capwid, string_width(minecraft_get_name("modelstate", state) + ":") + 20)
+			capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state) + ":") + 20)
 			state = ds_map_find_next(temp_edit.model_state_map, state)
 		}
 			
@@ -54,7 +54,7 @@ switch (temp_edit.type)
 		{
 			menu_model_current = model
 			menu_model_state_current = model.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state_map[?state], minecraft_get_name("modelstatevalue", temp_edit.model_state_map[?state]), test(temp_edit.type = "bodypart", action_lib_bodypart_model_state, action_lib_model_state), null, null, capwid, text_get("templateeditormodelstatetip"))
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state_map[?state], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state_map[?state]), test(temp_edit.type = "bodypart", action_lib_bodypart_model_state, action_lib_model_state), null, null, capwid, text_get("templateeditormodelstatetip"))
 			state = ds_map_find_next(temp_edit.model_state_map, state)
 			dyy += 24 + 8
 		}
@@ -62,7 +62,7 @@ switch (temp_edit.type)
 			
 		// Bodypart
 		if (temp_edit.type = "bodypart")
-			draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, null, null, capwid)
+			draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, null, null, capwid)
 		
 		break
 	}
@@ -76,12 +76,12 @@ switch (temp_edit.type)
 		
 		// States
 		var capwid, block, state, dyy;
-		block = mc_version.block_name_map[?temp_edit.block_name]
+		block = mc_assets.block_name_map[?temp_edit.block_name]
 		state = ds_map_find_first(temp_edit.block_state_map)
 		capwid = 0
 		while (!is_undefined(state))
 		{
-			capwid = max(capwid, string_width(minecraft_get_name("blockstate", state) + ":") + 20)
+			capwid = max(capwid, string_width(minecraft_asset_get_name("blockstate", state) + ":") + 20)
 			state = ds_map_find_next(temp_edit.block_state_map, state)
 		}
 			
@@ -92,7 +92,7 @@ switch (temp_edit.type)
 		{
 			menu_block_current = block
 			menu_block_state_current = block.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state_map[?state], minecraft_get_name("blockstatevalue", temp_edit.block_state_map[?state]), action_lib_block_state, null, null, capwid, text_get("templateeditorblockstatetip"))
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state_map[?state], minecraft_asset_get_name("blockstatevalue", temp_edit.block_state_map[?state]), action_lib_block_state, null, null, capwid, text_get("templateeditorblockstatetip"))
 			state = ds_map_find_next(temp_edit.block_state_map, state)
 			dyy += 24 + 8
 		}
@@ -115,7 +115,7 @@ switch (temp_edit.type)
 			
 		draw_label(text_get("templateeditoritem") + ":", dx, dy)
 		
-		var slots = test(res.type = "pack", ds_list_size(mc_version.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
+		var slots = test(res.type = "pack", ds_list_size(mc_assets.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
 		draw_texture_picker(temp_edit.item_slot, res.item_sheet_texture, dx, dy + 22, dw, dh - 65, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item_scroll, action_lib_item_slot)
 		break
 	}
