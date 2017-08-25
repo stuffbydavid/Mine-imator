@@ -8,7 +8,7 @@ var rep = test(block_repeat_enable, block_repeat, vec3(1))
 switch (type)
 {
 	case "scenery":
-		if (!scenery)
+		if (scenery = null)
 			break
 		rot_point[X] = (rep[X] * scenery.scenery_size[X] * block_size) / 2
 		rot_point[Y] = (rep[Y] * scenery.scenery_size[Y] * block_size) / 2

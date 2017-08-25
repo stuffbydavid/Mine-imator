@@ -11,19 +11,20 @@ if (fn = "")
 	
 log("Saving project", fn)
 	
-project_write_start(true)
 save_folder = project_folder
 load_folder = project_folder
 log("load_folder", load_folder)
 log("save_folder", save_folder)
 
-project_write_project()
-//project_write_objects()
-//project_write_background()
-project_write_camera()
-
-buffer_export(buffer_current, fn)
-buffer_delete(buffer_current)
+log("timelines",instance_number(obj_timeline))
+log("keyframes",instance_number(obj_keyframe))
+debug_timer_start()
+project_save_start(fn, true)
+project_save_project()
+project_save_background()
+project_save_objects()
+project_save_done()
+debug_timer_stop("project_save")
 
 log("Project saved")
 

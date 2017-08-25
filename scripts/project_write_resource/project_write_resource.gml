@@ -12,4 +12,4 @@ if (type = "pack" || type = "blocksheet")
 		buffer_write_byte(block_ani[b])
 
 if (load_folder != save_folder)
-	res_export()
+	res_save()

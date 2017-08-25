@@ -107,7 +107,7 @@ for (var l = 0; l < ds_list_size(bench_type_list); l++)
 	draw_image(spr_icons_bench, l, dx + iconsize / 2, dy + iconsize / 2, 1, 1, test(sel, setting_color_highlight_text, setting_color_text), 1)
 	
 	if (bench_show_ani = 1)
-		tip_set(text_get("bench" + type + "tip"), dx, dy, iconsize, iconsize)
+		tip_set(text_get("benchtype" + type + "tip"), dx, dy, iconsize, iconsize)
 			   
 	if (app_mouse_box(dx, dy, iconsize, iconsize) && bench_show_ani_type = "")
 	{

@@ -57,11 +57,11 @@ enum e_button
 // Options
 enum e_option
 {
-	BROWSE =					-1,
-	IMPORT_WORLD =				-2,
-	DOWNLOAD_SKIN =				-3,
-	DOWNLOAD_SKIN_DONE =		-4,
-	IMPORT_ITEM_SHEET_DONE =	-5
+	BROWSE =					-10,
+	IMPORT_WORLD =				-11,
+	DOWNLOAD_SKIN =				-12,
+	DOWNLOAD_SKIN_DONE =		-13,
+	IMPORT_ITEM_SHEET_DONE =	-14
 }
 
 // Directions
@@ -262,7 +262,7 @@ enum e_value_type
 	TEXTURE,
 	SOUND,
 	KEYFRAME,
-	ROTPOINT,
+	ROT_POINT,
 	HIERARCHY,
 	GRAPHICS,
 	AUDIO,

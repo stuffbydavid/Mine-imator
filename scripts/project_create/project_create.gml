@@ -33,7 +33,7 @@ project_author = popup_newproject.tbx_author.text;
 project_description = popup_newproject.tbx_description.text;
 
 project_folder = dirname
-project_file = project_folder + "\\" + filename_valid(project_name) + ".mproj"
+project_file = project_folder + "\\" + filename_valid(project_name) + ".miproj"
 
 popup_close()
 

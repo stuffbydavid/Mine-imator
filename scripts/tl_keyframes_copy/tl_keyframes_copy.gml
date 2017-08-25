@@ -9,14 +9,14 @@ with (obj_keyframe)
 	if (!selected)
 		continue
 		
-	app.copy_kf_tl[app.copy_kf_amount] = iid_get(timeline)
+	app.copy_kf_tl_save_id[app.copy_kf_amount] = save_id_get(timeline)
 	app.copy_kf_pos[app.copy_kf_amount] = position
 	
-	if (tl.part_of)
-		app.copy_kf_tl_part_of[app.copy_kf_amount] = iid_get(tl.part_of)
+	if (timeline.part_of != null)
+		app.copy_kf_tl_part_of_save_id[app.copy_kf_amount] = save_id_get(timeline.part_of)
 	else
-		app.copy_kf_tl_part_of[app.copy_kf_amount] = iid_get(tl)
-	app.copy_kf_tl_model_part_name[app.copy_kf_amount] = tl.model_part_name // TODO update keyframes_paste
+		app.copy_kf_tl_part_of_save_id[app.copy_kf_amount] = save_id_get(timeline)
+	app.copy_kf_tl_model_part_name[app.copy_kf_amount] = timeline.model_part_name
 	
 	for (var v = 0; v < e_value.amount; v++)
 		app.copy_kf_value[app.copy_kf_amount, v] = tl_value_save(v, value[v])

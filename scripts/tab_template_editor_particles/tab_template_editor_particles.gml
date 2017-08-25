@@ -256,7 +256,7 @@ tab_control(32)
 text = text_get("particleeditortypesprite")
 if (ptype_edit.temp)
 	text = ptype_edit.temp.display_name
-draw_button_menu("particleeditortypetemp", e_menu.LIST, dx, dy, dw, 32, ptype_edit.temp, text, action_lib_pc_type_temp, null, 0, capwid)
+draw_button_menu("particleeditortypetemp", e_menu.LIST, dx, dy, dw, 32, ptype_edit.temp, text, action_lib_pc_type_temp, null, null, capwid)
 tab_next()
 
 // Sprite

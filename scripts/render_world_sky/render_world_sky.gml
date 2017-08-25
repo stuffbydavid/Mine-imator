@@ -9,7 +9,7 @@ if (!render_background)
 gpu_set_zwriteenable(false)
 
 // Image
-if (background_image_show && background_image && background_image_type > 0)
+if (background_image_show && background_image != null && background_image_type > 0)
 {
 	var vbuf;
 	
@@ -83,7 +83,7 @@ if (!background_image_show)
 	gpu_set_blendmode(bm_add)
 	
 	// Sun
-	if (!background_sky_sun_vbuffer)
+	if (background_sky_sun_vbuffer = null)
 		background_sky_sun_vbuffer = vbuffer_create_surface(1000, point2D(0, 0), point2D(1, 1), false)
 		
 	shader_blend_color = c_white
@@ -94,7 +94,7 @@ if (!background_image_show)
 	vbuffer_render_matrix(background_sky_sun_vbuffer, matrix_multiply(matrix_build(0, 0, dis * 0.7, 90, 0, 0, 1, 1, 1), skymat))
 	
 	// Moon
-	if (!background_sky_moon_vbuffer)
+	if (background_sky_moon_vbuffer = null)
 		background_sky_moon_vbuffer = vbuffer_create_surface(1000, point2D(0, 0), point2D(1, 1), false)
 		
 	shader_blend_color = c_white

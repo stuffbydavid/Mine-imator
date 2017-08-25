@@ -37,7 +37,7 @@ save_folder = project_folder
 
 with (obj_resource)
 	if (id != res_def)
-		res_export()
+		res_save()
 
 popup_close()
 

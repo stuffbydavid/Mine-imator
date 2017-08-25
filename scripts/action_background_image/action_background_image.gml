@@ -25,10 +25,10 @@ else
 	history_set_res(action_background_image, fn, background_image, res)
 }
 
-if (background_image)
+if (background_image != null)
 	background_image.count--
 
 background_image = res
 
-if (background_image) 
+if (background_image != null) 
 	background_image.count++

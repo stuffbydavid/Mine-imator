@@ -2,7 +2,7 @@
 /// @desc Clears all particles.
 
 with (obj_timeline)
-	if (particles_list != null)
+	if (particle_list != null)
 		particle_spawner_clear()
 
 with (obj_preview)

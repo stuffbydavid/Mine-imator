@@ -69,14 +69,14 @@ switch (menu_name)
 		break
 	}
 	
-	case "benchschematic":
-	case "libraryschematic": // Terrain
+	case "benchscenery":
+	case "libraryscenery": // Terrain
 	{
 		// None
-		menu_add_item(0, text_get("listnone"))
+		menu_add_item(null, text_get("listnone"))
 		
 		// Import from world
-		menu_add_item(e_option.IMPORT_WORLD, text_get("libraryschematicimport"), null, icons.IMPORT_FROM_WORLD)
+		menu_add_item(e_option.IMPORT_WORLD, text_get("librarysceneryimport"), null, icons.IMPORT_FROM_WORLD)
 		
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -243,7 +243,7 @@ switch (menu_name)
 	case "backgroundimage": // Background image
 	{
 		// None
-		menu_add_item(0, text_get("listnone"))
+		menu_add_item(null, text_get("listnone"))
 		
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)

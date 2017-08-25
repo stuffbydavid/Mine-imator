@@ -42,10 +42,10 @@ else
 
 with (temp_edit)
 {
-	if (scenery)
+	if (scenery != null)
 		scenery.count--
 	scenery = res
-	if (scenery)
+	if (scenery != null)
 		scenery.count++
 		
 	temp_update_display_name()

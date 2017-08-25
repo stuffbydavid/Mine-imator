@@ -14,22 +14,22 @@ with (temp)
 	save_id = save.save_id
 	temp_find_save_ids()
 	
-	if (skin)
+	if (skin != null)
 		skin.count++
 		
-	if (item_tex)
+	if (item_tex != null)
 		item_tex.count++
 		
-	if (block_tex)
+	if (block_tex != null)
 		block_tex.count++
 		
-	if (scenery)
+	if (scenery != null)
 		scenery.count++
 		
-	if (shape_tex && shape_tex.type != "camera")
+	if (shape_tex != null && shape_tex.type != "camera")
 		shape_tex.count++
 		
-	if (text_font)
+	if (text_font != null)
 		text_font.count++
 		
 	temp_update()

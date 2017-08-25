@@ -24,7 +24,7 @@ draw_label(string_remove_newline(tl_edit.type_name), dx + capwid, dy)
 tab_next()
 
 // Rotation point
-if (tl_edit.value_type[e_value_type.ROTPOINT])
+if (tl_edit.value_type[e_value_type.ROT_POINT])
 {
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)

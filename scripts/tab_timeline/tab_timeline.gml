@@ -709,7 +709,7 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 			if (mousekf.timeline.type = "audio" && mousekf.value[e_value.SOUND_OBJ])
 				timeline_marker = timeline_mouse_pos
 			else
-				timeline_marker = mousekf.timeline
+				timeline_marker = mousekf.position
 		}
 		else
 		{

@@ -126,9 +126,9 @@ else
 			
 			// Schematic
 			text = text_get("listnone")
-			if (bench_settings.scenery)
+			if (bench_settings.scenery != null)
 				text = bench_settings.scenery.display_name
-			draw_button_menu("benchschematic", e_menu.LIST, dx, dy, dw, 32, bench_settings.scenery, text, action_bench_scenery, null, null, capwid)
+			draw_button_menu("benchscenery", e_menu.LIST, dx, dy, dw, 32, bench_settings.scenery, text, action_bench_scenery, null, null, capwid)
 			dy += 32 + 8
 
 			// Texture

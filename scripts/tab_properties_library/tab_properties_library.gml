@@ -86,12 +86,12 @@ switch (temp_edit.type)
 	{
 		// Schematic
 		var text;
-		if (temp_edit.scenery)
+		if (temp_edit.scenery != null)
 			text = temp_edit.scenery.display_name
 		else
 			text = text_get("listnone")
 		tab_control(32)
-		draw_button_menu("libraryschematic", e_menu.LIST, dx, dy, dw, 32, temp_edit.scenery, text, action_lib_scenery, null, 0, capwid)
+		draw_button_menu("libraryscenery", e_menu.LIST, dx, dy, dw, 32, temp_edit.scenery, text, action_lib_scenery, null, 0, capwid)
 		tab_next()
 		
 		// Texture

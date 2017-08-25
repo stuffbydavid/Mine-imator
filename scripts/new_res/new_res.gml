@@ -49,7 +49,7 @@ load_folder = filename_dir(fn)
 save_folder = project_folder
 
 with (res)
-	res_export()
+	res_save()
 
 log("Add resource", type)
 log("filename", res.filename)

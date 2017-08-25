@@ -29,7 +29,7 @@ if (temp)
 		
 		case "scenery":
 			scenery = temp.scenery
-			if (!scenery)
+			if (scenery = null)
 				break
 			var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), point3D(block_size, block_size, block_size));
 			matrix_offset = vec3_mul(displaysize, vec3(-0.5))
@@ -63,7 +63,7 @@ if (temp)
 		}
 			
 		case "scenery":
-			if (!scenery)
+			if (scenery = null)
 				break
 			render_world_scenery(scenery, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
 			break

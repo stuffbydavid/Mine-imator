@@ -1,7 +1,7 @@
 /// app_startup_lists()
 
 globalvar language_english_map, language_map;
-globalvar biome_list, transition_list;
+globalvar biome_list, transition_list, values_list;
 
 log("Lists startup")
 
@@ -97,3 +97,72 @@ new_videoquality("exportmovievideoqualityhigh", 2500000)
 new_videoquality("exportmovievideoqualitymedium", 1200000)
 new_videoquality("exportmovievideoqualitylow", 700000)
 new_videoquality("exportmovievideoqualityverylow", 350000)
+
+// Values
+values_list = ds_list_create()
+ds_list_add(values_list,
+	"POS_X",
+	"POS_Y",
+	"POS_Z",
+	"ROT_X",
+	"ROT_Y",
+	"ROT_Z",
+	"SCA_X",
+	"SCA_Y",
+	"SCA_Z",
+	"BEND_ANGLE",
+	"ALPHA",
+	"RGB_ADD",
+	"RGB_SUB",
+	"RGB_MUL",
+	"HSB_ADD",
+	"HSB_SUB",
+	"HSB_MUL",
+	"MIX_COLOR",
+	"MIX_PERCENT",
+	"BRIGHTNESS",
+	"SPAWN",
+	"ATTRACTOR",
+	"FORCE",
+	"LIGHT_COLOR",
+	"LIGHT_RANGE",
+	"LIGHT_FADE_SIZE",
+	"LIGHT_SPOT_RADIUS",
+	"LIGHT_SPOT_SHARPNESS",
+	"CAM_FOV",
+	"CAM_ROTATE",
+	"CAM_ROTATE_DISTANCE",
+	"CAM_ROTATE_ANGLE_XY",
+	"CAM_ROTATE_ANGLE_Z",
+	"CAM_DOF",
+	"CAM_DOF_DEPTH",
+	"CAM_DOF_RANGE",
+	"CAM_DOF_FADE_SIZE",
+	"CAM_SIZE_USE_PROJECT",
+	"CAM_SIZE_KEEP_ASPECT_RATIO",
+	"CAM_WIDTH",
+	"CAM_HEIGHT",
+	"BG_SKY_MOON_PHASE",
+	"BG_SKY_TIME",
+	"BG_SKY_ROTATION",
+	"BG_SKY_CLOUDS_SPEED",
+	"BG_SKY_COLOR",
+	"BG_SKY_CLOUDS_COLOR",
+	"BG_SUNLIGHT_COLOR",
+	"BG_AMBIENT_COLOR",
+	"BG_NIGHT_COLOR",
+	"BG_FOG_COLOR",
+	"BG_FOG_DISTANCE",
+	"BG_FOG_SIZE",
+	"BG_FOG_HEIGHT",
+	"BG_WIND_SPEED",
+	"BG_WIND_STRENGTH",
+	"BG_TEXTURE_ANI_SPEED",
+	"TEXTURE_OBJ",
+	"SOUND_OBJ",
+	"SOUND_VOLUME",
+	"SOUND_START",
+	"SOUND_END",
+	"VISIBLE",
+	"TRANSITION"
+)

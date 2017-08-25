@@ -57,7 +57,7 @@ background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, backgr
 background_ground_update_texture()
 
 background_image_show = false
-background_image = 0
+background_image = null
 background_image_type = 0
 background_image_stretch = true
 background_image_box_mapped = false

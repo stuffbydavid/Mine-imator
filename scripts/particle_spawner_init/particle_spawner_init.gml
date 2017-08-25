@@ -9,4 +9,4 @@ spawn_active = true
 fire = false
 
 particle_list = ds_list_create()
-istl = (object_index = obj_timeline)
+is_timeline = (object_index = obj_timeline)

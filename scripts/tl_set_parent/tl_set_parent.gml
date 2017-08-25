@@ -13,8 +13,6 @@ if (argument_count > 1 && argument[1] >= 0)
 else
 	index = ds_list_size(parent.tree_list)
 
-if (parent.object_index != obj_dummy)
-log("tl_parent_set",type,parent.save_id,index)
 ds_list_insert(parent.tree_list, index, id)
 
 update_matrix = true

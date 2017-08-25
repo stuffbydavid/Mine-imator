@@ -7,7 +7,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 	for (var s = spawn_laststep; s < current_step; s++)
 	{
 		var temp;
-		if (istl)
+		if (is_timeline)
 			temp = id.temp
 		else
 			temp = select
@@ -15,7 +15,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 		if (temp.pc_spawn_constant)
 		{
 			var spawn;
-			if (istl)
+			if (is_timeline)
 				spawn = value[e_value.SPAWN]
 			else
 				spawn = spawn_active
@@ -100,7 +100,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 			}
 			
 			
-			if (istl)
+			if (is_timeline)
 			{
 				// Don't bother updating if hidden
 				if (hide)
@@ -125,7 +125,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 				}
 				
 				// Attractor
-				if (istl)
+				if (is_timeline)
 				{
 					if (value[e_value.ATTRACTOR] != app)
 					{

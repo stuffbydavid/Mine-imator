@@ -33,13 +33,13 @@ block_state = ""
 block_state_map = null
 block_tex = null
 block_vbuffer_reset()
-scenery = 0
+scenery = null
 
 block_repeat_enable = false
 block_repeat = vec3(1)
 
 shape_vbuffer = null
-shape_tex = 0
+shape_tex = null
 shape_tex_mapped = false
 shape_tex_hoffset = 0
 shape_tex_voffset = 0
@@ -52,6 +52,6 @@ shape_invert = false
 shape_detail = 32
 shape_face_camera = false
 
-text_font = 0
+text_font = null
 text_face_camera = false
 

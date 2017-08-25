@@ -1,0 +1,30 @@
+/// project_save_project()
+
+json_export_object_start("project")
+
+	json_export_var("name", string_escape(project_name))
+	json_export_var("author", string_escape(project_author))
+	json_export_var("description", string_escape(project_description))
+	json_export_var("video_width", project_video_width)
+	json_export_var("video_height", project_video_height)
+	json_export_var_bool("video_keep_aspect_ratio", project_video_keep_aspect_ratio)
+	json_export_var("tempo", project_tempo)
+
+	json_export_object_start("timeline")
+		json_export_var_bool("repeat", timeline_repeat)
+		json_export_var("marker", timeline_marker)
+		json_export_var("hor_scroll", timeline.hor_scroll.value)
+		json_export_var("zoom", timeline_zoom)
+		json_export_var_nullable("region_start", timeline_region_start)
+		json_export_var_nullable("region_end", timeline_region_end)
+	json_export_object_done()
+
+	json_export_object_start("work_camera")
+		json_export_var("focus", cam_work_focus)
+		json_export_var("angle_xy", cam_work_angle_xy)
+		json_export_var("angle_z", cam_work_angle_z)
+		json_export_var("roll", cam_work_roll)
+		json_export_var("zoom", cam_work_zoom)
+	json_export_object_done()
+
+json_export_object_done()

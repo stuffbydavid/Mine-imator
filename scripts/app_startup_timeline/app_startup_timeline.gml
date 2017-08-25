@@ -43,7 +43,7 @@ copy_kf_amount = 0
 copy_kf_pos[0] = 0
 copy_kf_value[0, 0] = 0
 copy_kf_tl_save_id[0] = ""
-copy_kf_tl_part_of[0] = null
+copy_kf_tl_part_of_save_id[0] = ""
 copy_kf_tl_model_part_name[0] = null
 
 tree_list = ds_list_create()

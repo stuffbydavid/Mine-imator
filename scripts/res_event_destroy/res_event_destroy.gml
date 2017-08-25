@@ -107,10 +107,10 @@ with (obj_template)
 	}
 	
 	if (scenery = other.id) 
-		scenery = 0
+		scenery = null
 	
 	if (shape_tex = other.id)
-		shape_tex = 0
+		shape_tex = null
 	
 	if (text_font = other.id)
 	{
@@ -134,13 +134,13 @@ with (app.bench_settings)
 		block_tex = res_def
 	
 	if (shape_tex = other.id)
-		shape_tex = 0
+		shape_tex = null
 	
 	if (text_font = other.id)
 		text_font = res_def
 	
 	if (scenery = other.id)
-		scenery = 0
+		scenery = null
 }
 
 with (obj_particle_type)
@@ -179,7 +179,7 @@ with (obj_timeline)
 with (app)
 {
 	if (background_image = other.id)
-		background_image = 0
+		background_image = null
 	
 	if (background_sky_sun_tex = other.id)
 	{

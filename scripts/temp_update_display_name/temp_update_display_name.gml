@@ -14,7 +14,7 @@ if (name = "")
 			break
 		
 		case "scenery":
-			if (scenery)
+			if (scenery != null)
 				display_name = scenery.display_name
 			break
 		

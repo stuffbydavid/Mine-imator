@@ -1,27 +1,23 @@
 /// string_decimals(value)
 /// @arg value
+/// @desc Converts a value into a string and removes trailing zeroes in the decimal part.
 
-var str, nstr, l;
-
-if (string_count(".", string(argument0)) = 0)
+if (floor(argument0) = argument0)
 	return string(argument0)
 
-str = string_format(argument0, 1, 4)
-nstr = str
-l = string_length(str)
+var str, p;
+str = string_format(argument0, 1, 5)
 
-for (var p = l; p > 0; p--)
+for (var p = string_length(str); p > 0; p--)
 {
-	var c;
-	c = string_char_at(str, p)
-	if (c = "0" || c = ".")
+	var c = string_char_at(str, p);
+	if (c = ".")
 	{
-		nstr = string_delete(nstr, p, 1)
-		if (c = ".")
-			break
+		p--
+		break
 	}
-	else
+	else if (c != "0")
 		break
 }
 
-return nstr
+return string_copy(str, 1, p)

@@ -1,6 +1,5 @@
 /// block_generate_liquid()
 /// @desc Creates a liquid mesh from the surrounding block data.
-// TODO replace non-flowing ids and names
 
 var level, slot, sheetwidth, sheetheight, angle;
 var slotstillpos, slotstillsize, slotflowpos, slotflowsize, topflow, dep, vbuf;

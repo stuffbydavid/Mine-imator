@@ -1,6 +1,5 @@
 /// tl_keyframes_paste(position)
 /// @arg position
-/// TODO
 
 var pos, pastemode, tllast, tlpaste;
 pos = argument0
@@ -12,12 +11,12 @@ tl_keyframes_deselect_all()
 tllast = null
 for (var k = 0; k < copy_kf_amount; k++) // All keyframes belong to same timeline?
 {
-	if (tllast && copy_kf_tl[k] != tllast)
+	if (tllast && copy_kf_tl_save_id[k] != tllast)
 	{
 		pastemode = "fixed"
 		break
 	}
-	tllast = copy_kf_tl[k]
+	tllast = copy_kf_tl_save_id[k]
 }
 
 if (pastemode = "fixed")
@@ -27,12 +26,12 @@ if (pastemode = "fixed")
 	tllast = null
 	for (var k = 0; k < copy_kf_amount; k++)
 	{
-		if (tllast && copy_kf_tl_bodypart_of[k] != tllast)
+		if (tllast && copy_kf_tl_part_of_save_id[k] != tllast)
 		{
 			pastemode = "fixed"
 			break
 		}
-		tllast = copy_kf_tl_bodypart_of[k]
+		tllast = copy_kf_tl_part_of_save_id[k]
 	}
 }
 
@@ -51,7 +50,7 @@ else if (pastemode = "char")
 		if (!selected)
 			continue
 			
-		if (part_of)
+		if (part_of != null)
 		{
 			tlpaste = part_of
 			pastemode = "char"
@@ -73,18 +72,29 @@ for (var k = 0; k < copy_kf_amount; k++)
 	var newkf, tladd;
 		
 	if (pastemode = "fixed")
-		tladd = iid_find(copy_kf_tl_bodypart_of[k])
+		tladd = save_id_find(copy_kf_tl_part_of_save_id[k])
 	else
 		tladd = tlpaste
 		
 	if (!tladd)
 		continue
 	
-	if (pastemode != "free" && copy_kf_tl_bodypart[k] != null) // Add to body part
+	if (pastemode != "free" && copy_kf_tl_model_part_name[k] != "") // Add to body part
 	{
-		if (copy_kf_tl_bodypart[k] >= tladd.part_amount)
+		var foundpart = false;
+		
+		for (var p = 0; p < ds_list_size(tladd.part_list); p++)
+		{
+			if (tladd.part_list[|p].model_part_name = copy_kf_tl_model_part_name[k])
+			{
+				tladd = part_list[|p]
+				foundpart = true
+				break
+			}
+		}
+		
+		if (!foundpart)
 			continue
-		tladd = tladd.part[copy_kf_tl_bodypart[k]]
 	}
 	
 	with (tladd)

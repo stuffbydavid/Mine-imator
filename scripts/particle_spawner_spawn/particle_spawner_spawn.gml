@@ -11,16 +11,16 @@ pt.spawntime = current_step
 pt.frame = 0
 pt.time = 0
 
-if (istl)
+if (is_timeline)
 	temp = id.temp
 else
 	temp = select
 pt.timetolive = value_random(temp.pc_destroy_at_time_seconds, temp.pc_destroy_at_time_israndom, temp.pc_destroy_at_time_random_min, temp.pc_destroy_at_time_random_max) * 60
 
 // Position
-pt.pos[X] = pos[X]
-pt.pos[Y] = pos[Y]
-pt.pos[Z] = pos[Z]
+pt.pos[X] = world_pos[X]
+pt.pos[Y] = world_pos[Y]
+pt.pos[Z] = world_pos[Z]
 if (temp.pc_spawn_region_use && type.spawn_region)
 {
 	switch (temp.pc_spawn_region_type)

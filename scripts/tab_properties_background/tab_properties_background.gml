@@ -17,7 +17,7 @@ if (background_image_show)
 	// Background image
 	text = text_get("listnone")
 	tex = null
-	if (background_image)
+	if (background_image != null)
 	{
 		text = background_image.display_name
 		tex = background_image.texture
@@ -26,7 +26,7 @@ if (background_image_show)
 	draw_button_menu("backgroundimage", e_menu.LIST, dx, dy, dw, 40, background_image, text, action_background_image, tex, null, capwid)
 	tab_next()
 	
-	if (background_image)
+	if (background_image != null)
 	{
 		// Image type
 		if (background_image_type = 0)

@@ -66,6 +66,6 @@ if (type != "item" && type != "particles" && type != "camera" && type != "pointl
 	value_type[e_value_type.TEXTURE] = true
 
 // Rotation point
-value_type[e_value_type.ROTPOINT] = true
+value_type[e_value_type.ROT_POINT] = true
 if (type = "char" || type = "bodypart" || type = "particles" || type = "camera" || type = "pointlight" || type = "spotlight" || type = "folder")
-	value_type[e_value_type.ROTPOINT] = false
+	value_type[e_value_type.ROT_POINT] = false
