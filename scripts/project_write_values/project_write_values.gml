@@ -1,6 +1,6 @@
 /// project_write_values(timeline)
 /// @arg timeline
-
+/*
 var tl = argument0;
 
 if (tl.value_type[POSITION])
@@ -111,3 +111,4 @@ if (tl.value_type[SOUND])
 
 buffer_write_byte(value[VISIBLE])
 buffer_write_int(value[TRANSITION])
+*/

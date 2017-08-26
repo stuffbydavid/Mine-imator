@@ -1,5 +1,5 @@
 /// project_write_template()
-
+/*
 buffer_write_int(iid)
 buffer_write_string_int(type)
 buffer_write_string_int(name)
@@ -63,4 +63,4 @@ if (text_font)
 buffer_write_byte(text_face_camera)
 
 if (type = "particles")
-	project_write_particles()
+	project_write_particles()*/

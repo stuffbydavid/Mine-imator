@@ -6,8 +6,8 @@ if (shape_vbuffer != null)
 if (shape_bend_vbuffer != null)
 	vbuffer_destroy(shape_bend_vbuffer)
 			
-for (var s = 0; s < shape_amount; s++)
-	with (shape[s])
+for (var s = 0; s < ds_list_size(shape_list); s++)
+	with (shape_list[|s])
 		instance_destroy()
 	
 for (var p = 0; p < ds_list_size(part_list); p++)

@@ -16,16 +16,15 @@ load_folder = project_folder
 log("load_folder", load_folder)
 log("save_folder", save_folder)
 
-log("timelines",instance_number(obj_timeline))
-log("keyframes",instance_number(obj_keyframe))
 debug_timer_start()
+
 project_save_start(fn, true)
 project_save_project()
 project_save_background()
 project_save_objects()
 project_save_done()
-debug_timer_stop("project_save")
 
+debug_timer_stop("project_save")
 log("Project saved")
 
 project_changed = false

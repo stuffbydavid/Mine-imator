@@ -2,15 +2,28 @@
 /// @arg [name]
 
 if (json_add_comma)
-	json_string += ","
+	buffer_write_byte(e_json_char.COMMA)
 
-if (json_string != "")
-	json_string += "\n"
+if (!json_empty)
+	buffer_write_byte(e_json_char.NEW_LINE)
+else
+	json_empty = false
 	
-json_string += json_indent
-if (argument_count > 0)
-	json_string += "\"" + argument[0] + "\": "
-json_string += "{"
-json_indent += "\t"
+// Indent
+json_export_indent()
 
+// Name (optional)
+if (argument_count > 0)
+{
+	buffer_write_byte(e_json_char.QUOTE)
+	buffer_write_string(argument[0])
+	buffer_write_byte(e_json_char.QUOTE)
+	buffer_write_byte(e_json_char.COLON)
+	buffer_write_byte(e_json_char.SPACE)
+}
+
+// Begin object
+buffer_write_byte(e_json_char.CURLY_BEGIN)
+
+json_indent++
 json_add_comma = false

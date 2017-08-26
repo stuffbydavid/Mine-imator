@@ -2,12 +2,12 @@
 /// @arg type
 /// @arg length
 
-var listtype, lis_timelineen, list;
+var listtype, listlen, list;
 listtype = argument0
-lis_timelineen = argument1
+listlen = argument1
 list = ds_list_create()
 		
-repeat (lis_timelineen)
+repeat (listlen)
 {
 	switch (listtype)
 	{
@@ -46,7 +46,7 @@ repeat (lis_timelineen)
 					
 		case e_nbt.TAG_LIST:
 		{
-			var nlisttype, nlis_timelineen, nlist;
+			var nlisttype, nlistlen, nlist;
 			nlisttype = buffer_read_byte()
 			if (nlisttype >= e_nbt.amount)
 			{
@@ -54,8 +54,8 @@ repeat (lis_timelineen)
 				ds_list_destroy(list)
 				return null
 			}
-			nlis_timelineen = buffer_read_int_be()
-			nlist = nbt_read_tag_list(nlisttype, nlis_timelineen)
+			nlistlen = buffer_read_int_be()
+			nlist = nbt_read_tag_list(nlisttype, nlistlen)
 			if (nlist = null)
 			{
 				ds_list_destroy(list)

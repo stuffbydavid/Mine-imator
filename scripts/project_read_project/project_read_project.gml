@@ -1,5 +1,5 @@
 /// project_read_project()
-
+/*
 project_name = buffer_read_string_int()						debug("project_name", project_name)
 project_author = buffer_read_string_int()					debug("project_author", project_author)
 project_description = buffer_read_string_int()				debug("project_description", project_description)
@@ -44,3 +44,4 @@ if (load_format >= project_100debug)
 	timeline_region_start = buffer_read_int()				debug("timeline_region_start", timeline_region_start)
 	timeline_region_end = buffer_read_int()					debug("timeline_region_end", timeline_region_end)
 }
+*/

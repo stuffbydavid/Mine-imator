@@ -11,5 +11,6 @@ if (fn != "")
 	else
 		spr = spr_map_cylinder
 		
+	// TODO save on a surface, when removing Texture.dll
 	sprite_save(spr, 0, fn)
 }

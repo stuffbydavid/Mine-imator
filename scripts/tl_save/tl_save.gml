@@ -22,7 +22,7 @@ if (temp)
 }
 
 for (var k = 0; k < ds_list_size(keyframe_list); k++)
-	tl_keyframe_save(keyframe[|k])
+	tl_keyframe_save(keyframe_list[|k])
 
 for (var t = 0; t < ds_list_size(tree_list); t++)
 	with (tree_list[|t])

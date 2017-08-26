@@ -2,7 +2,7 @@
 /// @arg filename
 /// @arg template
 /// @desc Opens .particles into the given template.
-
+/*
 var fn, temp, hobj;
 hobj = null
 
@@ -117,3 +117,4 @@ buffer_delete(buffer_current)
 tab_template_editor_update_ptype_list()
 
 log("Particles loaded")
+*/

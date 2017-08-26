@@ -10,7 +10,9 @@
         "f5d71138-27df-4a56-a3f0-27eefa19d33f",
         "a09abddb-b40e-4c04-9993-f3b3ca775da0",
         "667c987c-3839-45f7-859a-cb450765a636",
-        "e5b4ab16-6181-4de4-9b61-65fcc13044bb"
+        "e5b4ab16-6181-4de4-9b61-65fcc13044bb",
+        "6bd67d4e-5c35-4473-8683-8053a2914c4c",
+        "e1b0a7da-9db0-450d-b2c4-3c00e2c90f4b"
     ],
     "filterType": "GMScript",
     "folderName": "Write",

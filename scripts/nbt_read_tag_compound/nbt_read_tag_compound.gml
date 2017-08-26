@@ -57,10 +57,10 @@ while (!buffer_is_eof())
 		
 		case e_nbt.TAG_LIST:
 		{
-			var listtype, lis_timelineen, list;
+			var listtype, listlen, list;
 			listtype = buffer_read_byte()
-			lis_timelineen = buffer_read_int_be()
-			list = nbt_read_tag_list(listtype, lis_timelineen)
+			listlen = buffer_read_int_be()
+			list = nbt_read_tag_list(listtype, listlen)
 			if (list = null)
 			{
 				ds_map_destroy(map)

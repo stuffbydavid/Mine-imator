@@ -1,7 +1,7 @@
 /// iid_find(iid)
 /// @arg iid
 /// @desc Finds the instance with the given save ID.
-
+/*
 var i = argument0;
 
 if (i = 0) // App
@@ -24,3 +24,4 @@ with (obj_particle_type)
 		return id
 
 return null
+*/

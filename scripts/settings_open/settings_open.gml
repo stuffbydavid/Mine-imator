@@ -8,7 +8,7 @@
 ///			settings_106_2 = block brightness
 ///			settings_106_3 = remove camera buffer size
 ///			settings_110 = texture filtering level
-
+/*
 if (!file_exists_lib(settings_file))
 	return 0
 
@@ -291,3 +291,4 @@ if (load_format >= settings_106)
 }
 
 buffer_delete(buffer_current)
+*/

@@ -27,7 +27,7 @@ with (obj_timeline)
 			{
 				with (app)
 				{
-					tl_value_set_start(action_tl_frame_camrotatedistance, true)
+					tl_value_set_start(action_tl_frame_cam_rotate_distance, true)
 					tl_value_set(e_value.CAM_ROTATE_DISTANCE, (other.cam_goalzoom - other.value[e_value.CAM_ROTATE_DISTANCE]) / max(1, 4 / delta), true)
 					tl_value_set_done()
 				}

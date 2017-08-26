@@ -2,7 +2,7 @@
 /// @arg valueid
 /// @arg value
 /// @desc Converts the keyframe parameter from Mine-imator beta to 1.0.0 format.
-
+/*
 var vid, val;
 vid = argument0
 val = argument1
@@ -38,4 +38,4 @@ switch (vid)
 	case CAMROTATEXYANGLE:	return val - 90
 	case CAMFOV:			return 50 + val * 100
 }
-return val
+return val*/

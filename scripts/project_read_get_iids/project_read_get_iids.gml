@@ -1,6 +1,6 @@
 /// project_read_get_iids(import)
 /// @arg import
-
+/*
 
 // Get real ids
 log("Get template iids")
@@ -124,4 +124,4 @@ if (load_format < project_100debug)
 	for (var t = 0; t < tree_amount; t++)
 		with (tree[t])
 			tl_update_hide()
-}
+}*/

@@ -1,5 +1,5 @@
 /// project_write_particles()
-
+/*
 buffer_write_byte(pc_spawn_constant)
 buffer_write_int(pc_spawn_amount)
 
@@ -130,3 +130,4 @@ for (var t = 0; t < pc_types; t++)
 		buffer_write_byte(orbit)
 	}
 }
+*/

@@ -1,5 +1,5 @@
 /// project_write_resource()
-
+/*
 buffer_write_int(iid)
 buffer_write_string_int(type)
 buffer_write_string_int(filename)
@@ -13,3 +13,4 @@ if (type = "pack" || type = "blocksheet")
 
 if (load_folder != save_folder)
 	res_save()
+*/

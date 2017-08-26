@@ -1,6 +1,6 @@
 /// keyframes_save()
 /// @desc Export the selected keyframes
-
+/*
 var tlchar, tllast, name, fn, num, firstpos, lastpos;
 
 // Character animation?
@@ -73,3 +73,4 @@ project_write_objects()
 
 buffer_export(buffer_current, fn)
 buffer_delete(buffer_current)
+*/

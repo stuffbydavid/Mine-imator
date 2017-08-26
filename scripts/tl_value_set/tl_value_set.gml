@@ -16,7 +16,7 @@ if (history_undo)
 	for (var k = 0; k < history_data.kf_set_amount; k++)
 		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 			for (var v = 0; v < history_data.par_set_amount; v++)
-				value[history_data.value[v]] = tl_value_restore(history_data.value[v], history_data.kf_set_new_value[k, v], history_data.kf_set_old_value[k, v])
+				value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], history_data.kf_set_new_value[k, v], history_data.kf_set_old_value[k, v])
 }
 else if (history_redo)
 {
@@ -29,7 +29,7 @@ else if (history_redo)
 	for (var k = 0; k < history_data.kf_set_amount; k++)
 		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 			for (var v = 0; v < history_data.par_set_amount; v++) 
-				value[history_data.value[v]] = tl_value_restore(history_data.value[v], history_data.kf_set_old_value[k, v], history_data.kf_set_new_value[k, v])
+				value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], history_data.kf_set_old_value[k, v], history_data.kf_set_new_value[k, v])
 }
 else
 {
@@ -62,10 +62,10 @@ else
 		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 		{
 			if (history_data.par_set_n = history_data.par_set_amount)
-				history_data.kf_set_old_value[k, history_data.par_set_n] = tl_value_save(vid, value[vid])
+				history_data.kf_set_old_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			
 			value[vid] = tl_value_clamp(vid, value[vid] * add + val)
-			history_data.kf_set_new_value[k, history_data.par_set_n] = tl_value_save(vid, value[vid])
+			history_data.kf_set_new_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 		}
 	}
 	

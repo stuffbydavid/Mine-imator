@@ -1,5 +1,5 @@
 /// project_read_timeline()
-
+/*
 debug("Timeline object") debug_indent++
 
 loaded = true
@@ -127,4 +127,4 @@ if (load_format >= project_100debug)
 }
 wind_terrain = buffer_read_byte()				debug("wind_terrain", wind_terrain)
 
-debug_indent--
+debug_indent--*/

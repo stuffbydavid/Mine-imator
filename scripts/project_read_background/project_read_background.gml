@@ -1,5 +1,5 @@
 /// project_read_background()
-
+/*
 background_image_show = buffer_read_byte()					debug("background_image_show", background_image_show)
 background_image = iid_find(iid_read())						debug("background_image", background_image)
 if (background_image)
@@ -63,4 +63,4 @@ if (load_format >= project_100demo4)
 	background_sky_clouds_z = buffer_read_double()			debug("background_sky_clouds_z", background_sky_clouds_z)
 	background_sky_clouds_size = buffer_read_double()		debug("background_sky_clouds_size", background_sky_clouds_size)
 	background_sky_clouds_height = buffer_read_double()		debug("background_sky_clouds_height", background_sky_clouds_height)
-}
+}*/

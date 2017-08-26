@@ -189,7 +189,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				curdx = test(k = 0, tlx, max(tlx, dx))
 				nextdx = tlx + tlw
 				if (k < ds_list_size(tl.keyframe_list) - 1)
-					nextdx = min(nextdx, tlx + floor(tl.keyframe[k + 1].position * timeline_zoom - timeline.hor_scroll.value))
+					nextdx = min(nextdx, tlx + floor(tl.keyframe_list[|k + 1].position * timeline_zoom - timeline.hor_scroll.value))
 				if (curdx < nextdx && nextdx >= 0)
 					draw_box(curdx, dy, nextdx - curdx, itemh - 1, false, c_black, 0.25)
 			}

@@ -1,5 +1,5 @@
 /// project_read_particles()
-
+/*
 pc_spawn_constant = buffer_read_byte()						debug("pc_spawn_constant", pc_spawn_constant)
 pc_spawn_amount = buffer_read_int()							debug("pc_spawn_amount", pc_spawn_amount)
 
@@ -184,3 +184,4 @@ for (var p = 0; p < pc_types; p++)
 }
 
 debug_indent--
+*/

@@ -1,5 +1,12 @@
-/// json_export_array_done()
+/// json_export_object_done()
 
-json_indent = string_replace(json_indent, "\t", "")
-json_string += "\n" + json_indent + "}"
+buffer_write_byte(e_json_char.NEW_LINE)
+
+// Indent
+json_indent--
+json_export_indent()
+	
+// End list
+buffer_write_byte(e_json_char.CURLY_END)
+
 json_add_comma = true

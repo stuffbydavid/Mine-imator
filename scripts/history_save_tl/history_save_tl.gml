@@ -17,7 +17,7 @@ with (save)
 	
 	// Save values
 	for (var v = 0; v < e_value.amount; v++)
-		value_default[v] = tl_value_save(v, tl.value_default[v])
+		value_default[v] = tl_value_get_save_id(v, tl.value_default[v])
 		
 	// Save keyframes
 	kf_amount = ds_list_size(tl.keyframe_list)
@@ -27,7 +27,7 @@ with (save)
 		{
 			save.kf_pos[k] = position
 			for (var v = 0; v < e_value.amount; v++)
-				save.kf_value[k, v] = tl_value_save(v, value[v])
+				save.kf_value[k, v] = tl_value_get_save_id(v, value[v])
 		}
 	}
 	

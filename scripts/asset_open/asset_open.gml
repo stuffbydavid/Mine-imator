@@ -1,7 +1,7 @@
 /// asset_open(filename)
 /// @arg filename
 /// @desc Adds a file to the project.
-
+/*
 var fn, hobj;
 hobj = null
 
@@ -177,4 +177,4 @@ buffer_delete(buffer_current)
 
 log("Asset loaded")
 
-return true
+return true*/

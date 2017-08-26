@@ -2,7 +2,7 @@
 /// @arg type
 /// @arg valueid
 /// @dec Converts the value id from Mine-imator beta to 1.0.0 format.
-
+/*
 var type, vid;
 type = argument0
 vid = argument1
@@ -50,4 +50,4 @@ else
 	}
 }
 
-return -1
+return -1*/

@@ -31,7 +31,7 @@ with (tl)
 			selected = false
 			sound_play_index = null
 			for (var v = 0; v < e_value.amount; v++)
-				value[v] = tl_value_restore(v, null, save.kf_value[k, v])
+				value[v] = tl_value_find_save_id(v, null, save.kf_value[k, v])
 			ds_list_add(other.keyframe_list, id)
 		}
 	}

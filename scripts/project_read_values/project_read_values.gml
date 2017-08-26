@@ -1,6 +1,6 @@
 /// project_read_values(timeline)
 /// @arg timeline
-
+/*
 var tl = argument0;
 
 if (tl.value_type[POSITION])
@@ -135,3 +135,4 @@ if (tl.value_type[SOUND])
 
 value[VISIBLE] = buffer_read_byte()							if (dev_mode_debug_keyframes) debug("VISIBLE", value[VISIBLE])
 value[TRANSITION] = buffer_read_int()						if (dev_mode_debug_keyframes) debug("TRANSITION", value[TRANSITION])
+*/

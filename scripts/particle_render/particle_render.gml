@@ -51,7 +51,7 @@ if (temp)
 		case "char":
 		case "spblock":
 		{
-			if (temp.char_model_file = null)
+			if (temp.model_file = null)
 				break
 			
 			var res = temp.skin;

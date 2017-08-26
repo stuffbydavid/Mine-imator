@@ -44,7 +44,7 @@ else
 		tladd = tladd.part_of
 		
 	insertpos = tladd.keyframe_select.position
-	goalpos = tladd.keyframe[tladd.keyframe_select.index + 1].position
+	goalpos = tladd.keyframe_list[|ds_list_find_index(tladd.keyframe_list, tladd.keyframe_select) + 1].position
 	
 	tl_deselect_all()
 	

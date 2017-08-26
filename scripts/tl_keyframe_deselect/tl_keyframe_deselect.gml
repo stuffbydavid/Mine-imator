@@ -8,7 +8,7 @@ if (!kf.selected)
 	
 kf.selected = false
 
-with (kf.tl)
+with (kf.timeline)
 {
 	keyframe_select_amount--
 	

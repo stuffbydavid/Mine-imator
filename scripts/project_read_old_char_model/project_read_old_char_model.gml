@@ -1,6 +1,6 @@
 /// project_read_old_char_model(index)
 /// @arg index
-
+/*
 var n = argument0;
 
 switch (n)
@@ -95,3 +95,4 @@ switch (load_format)
 		break
 }
 return ""
+*/

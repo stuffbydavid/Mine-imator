@@ -1,5 +1,5 @@
 /// project_read_resource()
-
+/*
 debug("Resource object") debug_indent++
 
 sortlist_add(app.res_list, id)
@@ -43,3 +43,4 @@ if (type = "pack" || type = "blocksheet")
 
 res_load()
 debug_indent--
+*/

@@ -61,7 +61,7 @@ with (obj_timeline)
 			app.timeline_settings_import_loop_tl = null
 			if (type = "char")
 			{
-				if (keyframe_select_amount = 1 && keyframe_select && keyframe_select.index < keyframe_amount - 1)
+				if (keyframe_select_amount = 1 && keyframe_select != null && ds_list_find_index(keyframe_list, keyframe_select) < ds_list_size(keyframe_list) - 1)
 				{
 					checkwalk = true
 					app.timeline_settings_import_loop_tl = id
@@ -150,7 +150,7 @@ with (obj_timeline)
 
 if (timeline_settings_import_loop_tl)
 {
-	var name = string_replace(timeline_settings_import_loop_tl.temp.char_model.name, "character", "");
+	var name = string_replace(timeline_settings_import_loop_tl.temp.model_file.name, "character", "");
 	timeline_settings_walk_fn = loops_directory + name + "_walk.keyframes"
 	timeline_settings_run_fn = loops_directory + name + "_run.keyframes"
 }

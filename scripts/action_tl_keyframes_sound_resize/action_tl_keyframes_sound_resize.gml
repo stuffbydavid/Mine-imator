@@ -8,7 +8,7 @@ with (obj_keyframe)
 		continue
 	
 	// Calculate new position
-	new_position = max(0, soundresizepos + movex)
+	new_position = max(0, sound_resize_pos + movex)
 	new_start = sound_resize_start + movex / app.project_tempo
 	
 	if (new_start < 0 || position = new_position)

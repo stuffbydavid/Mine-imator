@@ -1,5 +1,5 @@
 /// project_read_value_types()
-
+/*
 value_type[POSITION] = buffer_read_byte()		 debug("value_type[POSITION]", value_type[POSITION])
 value_type[ROTATION] = buffer_read_byte()		 debug("value_type[ROTATION]", value_type[ROTATION])
 value_type[SCALE] = buffer_read_byte()			debug("value_type[SCALE]", value_type[SCALE])
@@ -52,4 +52,4 @@ if (load_format >= project_100debug)
 	value_type[AUDIO] = buffer_read_byte()
 else
 	value_type[AUDIO] = false
-debug("value_type[AUDIO]", value_type[AUDIO])
+debug("value_type[AUDIO]", value_type[AUDIO])*/

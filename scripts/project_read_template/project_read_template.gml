@@ -1,5 +1,5 @@
 /// project_read_template()
-
+/*
 debug("Template") debug_indent++
 
 if (temp_creator = app)
@@ -71,3 +71,4 @@ text_face_camera = buffer_read_byte()			debug("text_face_camera", text_face_came
 if (type = "particles")
 	project_read_particles()
 debug_indent--
+*/

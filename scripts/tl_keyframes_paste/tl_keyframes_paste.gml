@@ -101,7 +101,7 @@ for (var k = 0; k < copy_kf_amount; k++)
 		newkf = tl_keyframe_add(pos + app.copy_kf_pos[k])
 	
 	for (var v = 0; v < e_value.amount; v++)
-		newkf.value[v] = tl_value_restore(v, null, copy_kf_value[k, v])
+		newkf.value[v] = tl_value_find_save_id(v, null, copy_kf_value[k, v])
 	
 	tl_keyframe_select(newkf)
 }

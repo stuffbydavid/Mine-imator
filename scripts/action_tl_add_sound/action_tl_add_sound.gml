@@ -26,7 +26,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		pos = timeline_marker
-		hobj = history_set(action_new_tl_sound)
+		hobj = history_set(action_tl_add_sound)
 	}
 	
 	res = new_res(fn, "sound")
@@ -48,7 +48,7 @@ else
 		{
 			id.filename = fn
 			id.position = pos
-			id.kf_index = kf.index
+			id.kf_index = ds_list_find_index(tl_edit.keyframe_list, kf)
 			history_save_loaded()
 		}
 	}

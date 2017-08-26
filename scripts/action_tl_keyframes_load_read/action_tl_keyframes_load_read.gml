@@ -3,7 +3,7 @@
 /// @arg timeline
 /// @arg insertposition
 /// @arg maxlength
-
+/*
 /// TODO
 var fn, tl, insertpos, maxlen;
 var tlchar, tempo, temposcale, num, len;
@@ -111,3 +111,4 @@ project_read_get_iids(true)
 buffer_delete(buffer_current)
 
 return insertpos + len
+*/

@@ -1,5 +1,5 @@
 /// project_write_timeline()
-
+/*
 buffer_write_int(iid)
 buffer_write_string_int(type)
 buffer_write_string_int(name)
@@ -53,4 +53,4 @@ buffer_write_byte(ssao)
 buffer_write_byte(fog)
 buffer_write_byte(wind)
 buffer_write_double(wind_amount)
-buffer_write_byte(wind_terrain)
+buffer_write_byte(wind_terrain)*/

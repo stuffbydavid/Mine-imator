@@ -20,7 +20,7 @@ if (history_undo)
 			
 				// Push down other indices of same timeline
 				for (var a = 0; a < other.kf_resize_amount; a++)  
-					if (save_id_find(other.kf_resize_tl_save_id[a]) = tl && other.kf_resize_new_index[a] > ds_list_find_index(timeline.keyframe_list, id))
+					if (save_id_find(other.kf_resize_tl_save_id[a]) = timeline && other.kf_resize_new_index[a] > ds_list_find_index(timeline.keyframe_list, id))
 						other.kf_resize_new_index[a]--
 						
 				ds_list_delete_value(timeline.keyframe_list, id)
@@ -46,7 +46,7 @@ else if (history_redo)
 			
 				// Push down other indices of same timeline
 				for (var a = 0; a < other.kf_resize_amount; a++)  
-					if (save_id_find(other.kf_resize_tl_save_id[a]) = tl && other.kf_resize_old_index[a] > ds_list_find_index(timeline.keyframe_list, id))
+					if (save_id_find(other.kf_resize_tl_save_id[a]) = timeline && other.kf_resize_old_index[a] > ds_list_find_index(timeline.keyframe_list, id))
 						other.kf_resize_old_index[a]--
 					
 				ds_list_delete_value(timeline.keyframe_list, id)
@@ -73,7 +73,7 @@ else
 			other.kf_resize_new_pos[other.kf_resize_amount] = position
 			other.kf_resize_new_start[other.kf_resize_amount] = value[e_value.SOUND_START]
 			other.kf_resize_amount++
-			tl.update_values = true
+			timeline.update_values = true
 		}
 	}
 	window_busy = ""

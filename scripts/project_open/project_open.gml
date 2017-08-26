@@ -16,7 +16,7 @@
 ///			project_105_2 = timeline fog, timeline_marker
 ///			project_106 = new mobs
 ///			project_106_2 = camera size in keyframes
-
+/*
 var fn, name, buf;
 fn = argument0
 
@@ -100,3 +100,4 @@ if (load_format < project_100demo2)
 	project_save("")
 
 recent_add_wait = true
+*/

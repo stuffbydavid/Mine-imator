@@ -7,8 +7,21 @@ name = argument0
 value = argument1
 
 if (json_add_comma)
-	json_string += ","
+	buffer_write_byte(e_json_char.COMMA)
 	
-json_string += "\n" + json_indent + "\"" + name + "\": "
-json_string += "\"#" + color_to_hex(value) + "\""
+buffer_write_byte(e_json_char.NEW_LINE)
+
+// Indent
+json_export_indent()
+	
+// Name
+buffer_write_byte(e_json_char.QUOTE)
+buffer_write_string(argument[0])
+buffer_write_byte(e_json_char.QUOTE)
+buffer_write_byte(e_json_char.COLON)
+buffer_write_byte(e_json_char.SPACE)
+
+// Value
+json_export_value("#" + color_to_hex(value))
+
 json_add_comma = true

@@ -13,7 +13,7 @@ else
 	var ptype;
 	
 	if (history_redo)
-		ptype = iid_find(history_data.save_ptype.iid) // Fetch deleted iid from data
+		ptype = save_id_find(history_data.save_ptype.save_id) // Fetch deleted save ID from data
 	else
 	{
 		ptype = ptype_edit
