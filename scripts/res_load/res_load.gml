@@ -114,8 +114,8 @@ switch (type)
 		if (font_exists(font_preview))
 			font_exists(font_preview)
 			
-		font = font_import(fn, 48, false, false)
-		font_preview = font_import(fn, 12, false, false)
+		font = font_add_lib(fn, 48, false, false)
+		font_preview = font_add_lib(fn, 12, false, false)
 		
 		if (!font)
 		{

@@ -86,13 +86,13 @@ else
 	}
 }
 
-// Time / rotation
+// Time/rotation
 tab_control(120)
 draw_wheel_sky("backgroundskytime", dx + floor(dw * 0.25), dy + 60, background_sky_time, -45, action_background_sky_time)
 draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, 0, action_background_sky_rotation)
 tab_next()
 
-// Sunlight range / follow camera
+// Sunlight range/follow camera
 tab_control_dragger()
 draw_dragger("backgroundsunlightrange", dx, dy, dw * 0.6, background_sunlight_range, background_sunlight_range / 100, 400, world_size, 2000, 10, tab.background.tbx_sunlight_range, action_background_sunlight_range)
 draw_checkbox("backgroundsunlightfollow", dx + floor(dw * 0.6), dy, background_sunlight_follow, action_background_sunlight_follow)
@@ -174,7 +174,7 @@ if (background_ground_show)
 
 // Biome
 tab_control(24)
-draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, text_get(ds_list_find_value(biome_list, background_biome).name), action_background_biome, null, null, capwid)
+draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, text_get("biome" + background_biome.name), action_background_biome, null, null, capwid)
 tab_next()
 
 // Sky color

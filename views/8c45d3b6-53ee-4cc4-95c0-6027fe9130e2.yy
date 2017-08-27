@@ -10,7 +10,7 @@
         "d5b1de58-f5ea-47db-8d34-a136e400c6b3"
     ],
     "filterType": "GMScript",
-    "folderName": "Directions",
+    "folderName": "Direction",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

@@ -71,6 +71,6 @@ with (obj_keyframe)
 	
 project_write_objects()
 
-buffer_export(buffer_current, fn)
+buffer_save_lib(buffer_current, fn)
 buffer_delete(buffer_current)
 */

@@ -5,7 +5,10 @@ if (json_add_comma)
 	buffer_write_byte(e_json_char.COMMA)
 
 if (!json_empty)
+{
+	buffer_write_byte(e_json_char.RETURN)
 	buffer_write_byte(e_json_char.NEW_LINE)
+}
 else
 	json_empty = false
 	

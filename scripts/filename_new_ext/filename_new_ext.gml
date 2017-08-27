@@ -9,9 +9,12 @@ newext = argument1
 
 for (p = string_length(fn); p >= 0; p--)
 {
-	if (p = 0 || string_char_at(fn, p) = "\\" || string_char_at(fn, p) = "/")
+	var c = string_char_at(fn, p);
+	
+	if (p = 0 || c = "\\" || c = "/")
 		return fn + newext
-	if (string_char_at(fn, p) = ".")
+		
+	if (c = ".")
 		break
 }
 

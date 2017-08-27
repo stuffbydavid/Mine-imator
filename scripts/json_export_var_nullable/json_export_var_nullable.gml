@@ -9,6 +9,7 @@ value = argument1
 if (json_add_comma)
 	buffer_write_byte(e_json_char.COMMA)
 	
+buffer_write_byte(e_json_char.RETURN)
 buffer_write_byte(e_json_char.NEW_LINE)
 
 // Indent
@@ -23,7 +24,7 @@ buffer_write_byte(e_json_char.SPACE)
 
 // Value
 if (value = null)
-	buffer_write_string("null")
+	json_export_value("null")
 else
 	json_export_value(value)
 

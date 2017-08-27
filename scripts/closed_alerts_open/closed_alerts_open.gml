@@ -3,7 +3,7 @@
 if (!file_exists_lib(closed_file))
 	return 0
 
-buffer_current = buffer_import(closed_file)
+buffer_current = buffer_load_lib(closed_file)
 log("Loading closed alerts", closed_file)
 
 var am = buffer_read_byte()		   debug("am", am) debug_indent++

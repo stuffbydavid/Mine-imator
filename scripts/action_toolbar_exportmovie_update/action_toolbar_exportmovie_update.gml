@@ -42,7 +42,7 @@ exportmovie_surface = render_done()
 if (exportmovie_format = "png")
 {
 	// Save image
-	surface_export(exportmovie_surface, filename_new_ext(exportmovie_filename, "") + "_" + string(exportmovie_frame + 1) + ".png")
+	surface_save_lib(exportmovie_surface, filename_new_ext(exportmovie_filename, "") + "_" + string(exportmovie_frame + 1) + ".png")
 }
 else
 {

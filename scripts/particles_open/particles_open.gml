@@ -40,7 +40,7 @@ else
 if (filename_ext(fn) = ".zip") // Unzip
 {
 	var name = filename_new_ext(filename_name(fn), "");
-	zip_import(fn)
+	unzip(fn)
 	
 	fn = file_find_single(unzip_directory, ".particles")
 	if (!file_exists_lib(fn))
@@ -74,7 +74,7 @@ if (!history_redo && temp != bench_settings)
 
 log("Opening particles", fn)
 
-buffer_current = buffer_import(fn)
+buffer_current = buffer_load_lib(fn)
 save_folder = project_folder
 load_folder = filename_dir(fn)
 load_format = buffer_read_byte()

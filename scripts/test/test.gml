@@ -7,4 +7,5 @@ gml_pragma("forceinline")
 
 if (argument0)
 	return argument1
-return argument2
+else
+	return argument2

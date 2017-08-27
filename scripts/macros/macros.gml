@@ -2,7 +2,6 @@
 
 // Debug
 #macro dev_mode						true
-#macro dev_mode_debug_keyframes		false
 #macro dev_mode_debug_schematics	false
 
 // Versions
@@ -92,14 +91,14 @@
 #macro item_sheet_height		16
 
 // Vectors and matrices
-#macro X 0
-#macro Y 1
-#macro Z 2
-#macro W 3
-#macro MATX 12
-#macro MATY 13
-#macro MATZ 14
-#macro IDENTITY matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
+#macro X				0
+#macro Y				1
+#macro Z				2
+#macro W				3
+#macro MAT_X			12
+#macro MAT_Y			13
+#macro MAT_Z			14
+#macro MAT_IDENTITY		matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
 
 // Colors
 #macro c_main				make_color_rgb(200, 200, 200)

@@ -6,7 +6,7 @@ if (startup_error)
 audio_stop_all()
 if (project_changed)
 	if (question(text_get("questionconfirmexit", project_name)))
-		project_save("")
+		project_save()
 
 settings_save()
 recent_save()

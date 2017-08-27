@@ -24,7 +24,7 @@ switch (load_stage)
 		{
 			log("Loading .blocks", fname)
 			
-			buffer_current = buffer_import(fname)
+			buffer_current = buffer_load_lib(fname)
 			with (mc_builder)
 			{
 				file_map = buffer_read_string_short_be()
@@ -223,7 +223,7 @@ switch (load_stage)
 				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
 				if (filename = "export.blocks") // Rename world import file
 				{
-					var newname = filename_unique(app.project_folder + "\\" + display_name + ".blocks");
+					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks");
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
 					file_rename_lib(app.project_folder + "\\export.blocks", newname)

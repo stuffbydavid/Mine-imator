@@ -2,7 +2,7 @@
 
 if (res_edit.type = "pack")
 {
-	var fn = file_dialog_save_image(filename_valid(res_edit.display_name));
+	var fn = file_dialog_save_image(filename_get_valid(res_edit.display_name));
 	if (fn = "")
 		return 0
 	fn = filename_new_ext(fn, ".png")
@@ -12,7 +12,7 @@ else
 {
 	var ext, fn;
 	ext = filename_ext(res_edit.filename)
-	fn = file_dialog_save_resource(filename_valid(res_edit.display_name), ext)
+	fn = file_dialog_save_resource(filename_get_valid(res_edit.display_name), ext)
 	if (fn = "")
 		return 0
 	

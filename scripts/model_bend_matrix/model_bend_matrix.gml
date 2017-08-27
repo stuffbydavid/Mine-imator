@@ -8,7 +8,7 @@ part = argument0
 angle = argument1
 
 if (part.bend_part = null)
-	return IDENTITY
+	return MAT_IDENTITY
 	
 // Limit angle
 if (part.bend_direction = e_bend.FORWARD)

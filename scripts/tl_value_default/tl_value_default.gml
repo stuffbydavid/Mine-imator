@@ -46,4 +46,5 @@ switch (argument0)
 	case e_value.SOUND_VOLUME: return 1
 	case e_value.VISIBLE: return true
 }
+
 return 0

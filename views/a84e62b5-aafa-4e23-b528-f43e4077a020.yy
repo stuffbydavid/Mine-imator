@@ -8,7 +8,7 @@
         "eac4ec51-b654-4ac6-a93e-0219efb0b2b3"
     ],
     "filterType": "GMScript",
-    "folderName": "Data structures",
+    "folderName": "Data structure",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

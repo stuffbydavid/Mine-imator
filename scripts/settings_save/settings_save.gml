@@ -175,5 +175,5 @@ buffer_write_byte(popup_exportimage.remove_background)
 buffer_write_byte(popup_exportimage.include_hidden)
 buffer_write_byte(popup_exportimage.high_quality)
 
-buffer_export(buffer_current, settings_file)
+buffer_save_lib(buffer_current, settings_file)
 buffer_delete(buffer_current)

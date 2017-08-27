@@ -31,7 +31,7 @@ if (res) // Existing resource found
 	else
 	{
 		res = null
-		newfn = filename_unique(newfn)
+		newfn = filename_get_unique(newfn)
 	}
 }
 

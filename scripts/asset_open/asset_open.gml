@@ -24,7 +24,7 @@ if (filename_ext(fn) = ".zip") // Unzip
 {
 	var name, validfile;
 	name = filename_new_ext(filename_name(fn), "")
-	zip_import(fn)
+	unzip(fn)
 	
 	// Look for pack
 	validfile = file_find_single(unzip_directory, ".mcmeta")
@@ -99,7 +99,7 @@ if (!history_redo)
 
 log("Opening asset", fn)
 		
-buffer_current = buffer_import(fn)
+buffer_current = buffer_load_lib(fn)
 load_folder = filename_dir(fn)
 load_format = buffer_read_byte()
 save_folder = project_folder

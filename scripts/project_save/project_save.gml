@@ -1,20 +1,18 @@
-/// project_save(filename)
-/// @arg filename
+/// project_save([filename])
+/// @arg [filename]
 
-var fn = argument0;
-
-if (fn = "")
+var fn;
+if (argument_count > 0)
+	fn = argument[0]
+else
 	fn = project_file
-	
-if (fn = "")
-	return 0
 	
 log("Saving project", fn)
 	
 save_folder = project_folder
 load_folder = project_folder
-log("load_folder", load_folder)
 log("save_folder", save_folder)
+log("load_folder", load_folder)
 
 debug_timer_start()
 

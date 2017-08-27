@@ -3,16 +3,23 @@
 
 recent_add_wait = false
 
-// Remove old
-var index;
-for (index = 0; index < ds_list_size(recent_list); index++)
+// Find project in list
+var obj = null;
+for (var i = 0; i < ds_list_size(recent_list); i++)
 {
-	if (recent_list[|index].filename = project_file)
+	with (recent_list[|i])
 	{
-		with (recent_list[|index])
-			instance_destroy()
-		break
+		if (filename != app.project_file)
+			break
+			
+		obj = id
+		ds_list_delete_value(app.recent_list, id)
+		if (thumbnail != null)
+			texture_free(thumbnail)
 	}
+	
+	if (obj != null)
+		break
 }
 
 // Create thumbnail
@@ -22,11 +29,15 @@ surf = null
 render_start(surf, timeline_camera, recent_thumbnail_width, recent_thumbnail_height)
 render_low()
 surf = render_done()
-surface_export(surf, thumbnailfn)
+surface_save_lib(surf, thumbnailfn)
 surface_free(surf)
 
-// Store
-with (new(obj_recent))
+// Project not added, create new object
+if (obj = null)
+	obj = new(obj_recent)
+
+// Store data
+with (obj)
 {
 	filename = app.project_file
 	name = app.project_name
@@ -34,5 +45,5 @@ with (new(obj_recent))
 	description = app.project_description
 	date = date_current_datetime()
 	thumbnail = texture_create(thumbnailfn)
-	ds_list_insert(app.recent_list, index, id)
+	ds_list_insert(app.recent_list, 0, id)
 }

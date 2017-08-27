@@ -2,15 +2,11 @@
 /// @arg filename
 /// @desc Starts exporting formatted JSON to a text file.
 
-globalvar json_filename, json_indent, json_empty, json_add_comma;
-json_filename = argument0
-json_indent = 0
-json_empty = true
-json_add_comma = false
-
-enum e_json_char {
+enum e_json_char
+{
 	TAB				= ord("\t"),
 	NEW_LINE		= ord("\n"),
+	RETURN			= ord("\r"),
 	COMMA			= ord(","),
 	COLON			= ord(":"),
 	QUOTE			= ord("\""),
@@ -20,5 +16,11 @@ enum e_json_char {
 	SQUARE_BEGIN	= ord("["),
 	SQUARE_END		= ord("]")
 }
+
+globalvar json_filename, json_indent, json_empty, json_add_comma;
+json_filename = argument0
+json_indent = 0
+json_empty = true
+json_add_comma = false
 
 buffer_current = buffer_create(8, buffer_grow, 1)

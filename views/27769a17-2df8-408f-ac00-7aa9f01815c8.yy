@@ -10,7 +10,7 @@
         "12ef3a2d-a535-4320-bcd0-382d63ebe96b"
     ],
     "filterType": "GMScript",
-    "folderName": "Surfaces",
+    "folderName": "Surface",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

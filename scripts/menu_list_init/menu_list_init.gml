@@ -363,7 +363,7 @@ switch (menu_name)
 	case "backgroundbiome": // Background biome
 	{
 		for (var b = 0; b < ds_list_size(biome_list); b++)
-			menu_add_item(b, text_get(biome_list[|b].name))
+			menu_add_item(b, text_get("biome" + biome_list[|b].name))
 		break
 	}
 	
@@ -496,8 +496,11 @@ switch (menu_name)
 	{
 		if (menu_name = "frameeditorcameravideosize")
 			menu_add_item(null, text_get("frameeditorcameravideosizeuseproject"))
-		with (obj_videotemplate)
-			menu_add_item(id, name + " (" + string(width) + "x" + string(height) + ")")
+			
+		for (var i = 0; i < videotemplate_list; i++)
+			with (videotemplate_list[|i])
+				menu_add_item(id, name + " (" + string(width) + "x" + string(height) + ")")
+				
 		menu_add_item(0, text_get("projectvideosizecustom"))
 		break
 	}
@@ -513,8 +516,9 @@ switch (menu_name)
 	
 	case "exportmovievideoquality":
 	{
-		with (obj_videoquality)
-			menu_add_item(id, text_get(name))
+		for (var i = 0; i < videoquality_list; i++)
+			with (videoquality_list[|i])
+				menu_add_item(id, text_get("exportmovievideoquality" + name))
 		menu_add_item(0, text_get("exportmovievideoqualitycustom"))
 		break
 	}

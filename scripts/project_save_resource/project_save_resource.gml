@@ -2,7 +2,7 @@
 
 json_export_object_start()
 
-	json_export_var_obj("id", save_id)
+	json_export_var_save_id("id", save_id)
 	json_export_var("type", type)
 	json_export_var("filename", filename)
 	

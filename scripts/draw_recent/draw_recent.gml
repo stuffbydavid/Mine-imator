@@ -6,7 +6,7 @@
 /// @arg scrollbar
 
 var xx, yy, wid, hei, scroll;
-var dx, dy, padding, itemh, itemsy;
+var dx, dy, dw, padding, itemh, itemsy;
 xx = argument0
 yy = argument1
 wid = argument2
@@ -27,16 +27,15 @@ itemh = recent_thumbnail_height + padding * 2
 
 for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 {
-	var recent, dx, dw, name, author, desc;
-	var tip, ty, textcol, namewid;
-	recent = recent_list[|r]
 	dx = xx + padding
-	dw = wid-30 * scroll.needed
+	dw = wid - 30 * scroll.needed
 	
 	if (dy + itemh > yy + hei)
 		break
 		
 	// Name
+	var recent, name, author, desc;
+	recent = recent_list[|r]
 	name = recent.name
 	if (name = "")
 		name = filename_new_ext(filename_name(recent.filename), "")
@@ -45,7 +44,7 @@ for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 	desc = string_remove_newline(recent.description)
 	
 	// Tip
-	tip = name
+	var tip = name;
 	if (author != "")
 		tip += " " + text_get("recentauthor", author)
 	if (desc != "")
@@ -54,7 +53,7 @@ for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 	tip_set(tip, xx, dy, dw, itemh)
 		
 	// Check mouse
-	textcol = setting_color_text
+	var textcol = setting_color_text;
 	if (app_mouse_box(xx, dy, dw, itemh))
 	{
 		mouse_cursor = cr_handpoint
@@ -85,7 +84,7 @@ for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 				if (!file_exists_lib(recent.filename))
 					error("erroropenprojectexists")
 				else
-					project_open(recent.filename)
+					project_load(recent.filename)
 			}
 		}
 	}
@@ -97,11 +96,11 @@ for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 		dx += recent_thumbnail_width + padding * 2
 	}
 	
-	ty = dy + itemh / 2 - 10 - 10 * (recent.description != "")
+	var ty = dy + itemh / 2 - 10 - 10 * (recent.description != "");
 	
 	// Name
 	draw_set_font(setting_font_bold)	
-	namewid = string_width(name)
+	var namewid = string_width(name);
 	draw_label(name, dx, ty, fa_left, fa_top, textcol, 1)
 	draw_set_font(setting_font)
 	

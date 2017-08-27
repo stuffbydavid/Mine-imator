@@ -42,36 +42,23 @@ with (obj_resource)
 with (obj_keyframe)
 	instance_destroy()
 
-background_biome = 0
-with (res_def)
-{
-	res_update_colors()
-	count = 0
-}
-
-background_ground_show = true
-background_ground_tex = res_def
-background_ground_tex.count++
-background_ground_name = "blocks/grass_top"
-background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
-background_ground_update_texture()
-
 background_image_show = false
 background_image = null
 background_image_type = 0
 background_image_stretch = true
 background_image_box_mapped = false
 
-background_sky_color = c_sky
-background_sky_time = -45
-background_sky_rotation = 0
-background_sunlight_range = 2000
-background_sunlight_follow = false
 background_sky_sun_tex = res_def
 background_sky_sun_tex.count++
 background_sky_moon_tex = res_def
 background_sky_moon_tex.count++
 background_sky_moon_phase = 0
+
+background_sky_time = -45
+background_sky_rotation = 0
+background_sunlight_range = 2000
+background_sunlight_follow = false
+
 background_sky_clouds_show = true
 background_sky_clouds_tex = res_def
 background_sky_clouds_tex.count++
@@ -80,8 +67,27 @@ background_sky_clouds_speed = 1
 background_sky_clouds_z = 1000
 background_sky_clouds_size = 192
 background_sky_clouds_height = 64
-background_sky_clouds_color = c_white
 background_sky_update_clouds()
+
+background_ground_show = true
+background_ground_tex = res_def
+background_ground_tex.count++
+background_ground_name = "blocks/grass_top"
+background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
+background_ground_update_texture()
+
+background_biome = biome_list[|0]
+with (res_def)
+{
+	res_update_colors()
+	count = 0
+}
+
+background_sky_color = c_sky
+background_sky_clouds_color = c_white
+background_sunlight_color = c_white
+background_ambient_color = c_gray
+background_night_color = c_night
 
 background_fog_show = true
 background_fog_sky = true
@@ -90,10 +96,6 @@ background_fog_color = c_sky
 background_fog_distance = 10000
 background_fog_size = 2000
 background_fog_height = 1000
-
-background_sunlight_color = c_white
-background_ambient_color = c_gray
-background_night_color = c_night
 
 background_wind = true
 background_wind_speed = 0.1
@@ -125,5 +127,8 @@ copy_kf_amount = 0
 ds_list_clear(tree_list)
 ds_list_clear(tree_visible_list)
 app_update_tl_edit()
+
+for (var v = 0; v < e_value.amount; v++)
+	value_default[v] = tl_value_default(v)
 
 log("Project resetted")

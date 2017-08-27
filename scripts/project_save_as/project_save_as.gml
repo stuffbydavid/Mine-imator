@@ -32,7 +32,7 @@ project_description = popup_saveas.tbx_description.text;
 
 load_folder = project_folder
 project_folder = dirname
-project_file = project_folder + "\\" + filename_valid(project_name) + ".mproj"
+project_file = project_folder + "\\" + filename_get_valid(project_name) + ".mproj"
 save_folder = project_folder
 
 with (obj_resource)
@@ -41,6 +41,6 @@ with (obj_resource)
 
 popup_close()
 
-project_save("")
+project_save()
 
 alert_show(text_get("alertprojectsavedtitle"), text_get("alertprojectsaveastext"), 0, "alertprojectcreatedbutton", project_folder, 5000)

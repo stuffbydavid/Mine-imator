@@ -9,15 +9,15 @@ startup_error = true
 
 enums()
 randomize()
-gml_release_mode(!dev_mode) // TODO: Investigate speed boost
-// gml_pragma("forceinline") // TODO: Put in appropriate scripts
+gml_release_mode(!dev_mode) // TODO Investigate speed boost
+// gml_pragma("forceinline") // TODO Put in appropriate scripts
 
 if (!log_startup())
 	return false
 
 lib_startup()
 
-if (!file_startup())
+if (!file_lib_startup())
 	return false
 	
 if (!file_exists_lib(import_file))
@@ -48,6 +48,7 @@ app_startup_interface_tips()
 app_startup_interface_toolbar()
 app_startup_interface_views()
 
+project_legacy_startup()
 textbox_startup()
 trial_startup()
 settings_startup()

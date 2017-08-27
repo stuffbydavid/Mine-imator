@@ -14,7 +14,7 @@ if (!file_exists_lib(settings_file))
 
 log("Loading settings", settings_file)
 
-buffer_current = buffer_import(settings_file)
+buffer_current = buffer_load_lib(settings_file)
 load_format = buffer_read_byte()
 
 log("load_format", load_format)
@@ -62,8 +62,8 @@ if (!file_exists_lib(setting_font_filename))
 
 if (setting_font_filename != "") 
 {
-	setting_font = font_import(setting_font_filename, 10, 0, 0)
-	setting_font_bold = font_import(setting_font_filename, 10, 1, 0)
+	setting_font = font_add_lib(setting_font_filename, 10, 0, 0)
+	setting_font_bold = font_add_lib(setting_font_filename, 10, 1, 0)
 }
 
 setting_language_filename = buffer_read_string_int()		debug("setting_language_filename", setting_language_filename)

@@ -17,7 +17,7 @@ if (!file_exists_lib(fname))
 }
 
 var json, map;
-json = json_escape_bool(file_text_contents(fname))
+json = json_string_escape_bool(file_text_contents(fname))
 map = json_decode(json)
 if (map < 0)
 {

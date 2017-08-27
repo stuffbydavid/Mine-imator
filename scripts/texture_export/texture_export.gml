@@ -19,6 +19,6 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-surface_export(surf, fn)
+surface_save_lib(surf, fn)
 
 surface_free(surf)

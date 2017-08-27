@@ -10,7 +10,7 @@ dh = 32
 dx = content_x + content_width / 2 - dw - 4
 dy = content_y + content_height - 32
 if (draw_button_normal("openbrowse", dx, dy, dw, 32))
-	project_open("")
+	project_load()
 
 // Cancel
 dx = content_x + content_width / 2 + 4

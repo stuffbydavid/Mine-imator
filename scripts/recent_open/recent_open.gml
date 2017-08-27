@@ -1,9 +1,10 @@
 /// recent_open()
 // TODO json
+/*
 if (!file_exists_lib(recent_file))
 	return 0
 
-buffer_current = buffer_import(recent_file)
+buffer_current = buffer_load_lib(recent_file)
 log("Loading recent", recent_file)
 
 recent_amount = buffer_read_byte()						debug("recent_amount", recent_amount) debug_indent++
@@ -26,3 +27,4 @@ debug_indent--
 
 
 buffer_delete(buffer_current)
+*/

@@ -5,7 +5,7 @@ var capwid = text_caption_width("newprojectname", "newprojectauthor", "newprojec
 
 // Name
 if (draw_inputbox("newprojectname", dx, dy, dw, "", popup.tbx_name, null, capwid))
-	popup.folder = filename_valid(popup.tbx_name.text)
+	popup.folder = filename_get_valid(popup.tbx_name.text)
 dy += 30
 
 // Author

@@ -13,7 +13,7 @@ insertpos = argument2
 maxlen = argument3
 
 // Read
-buffer_current = buffer_import(fn)
+buffer_current = buffer_load_lib(fn)
 save_folder = project_folder
 load_folder = filename_dir(fn)
 load_format = buffer_read_byte()

@@ -48,7 +48,7 @@ dy += dh + 8
 
 // Open
 if (draw_button_normal("startupopenproject", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.OPEN_PROJECT))
-	project_open("")
+	project_load()
 dy += dh + 8
 
 // Upgrade

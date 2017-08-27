@@ -6,21 +6,23 @@ var fn = file_dialog_save_particles(temp_edit.display_name);
 if (fn = "")
 	return 0
 	
-fn = filename_new_ext(fn, ".particles")
+fn = filename_new_ext(fn, ".mipart")
 
 log("Saving particles", fn)
-
-project_write_start(false)
-load_folder = project_folder
 save_folder = filename_dir(fn)
-log("load_folder", load_folder)
+load_folder = project_folder
 log("save_folder", save_folder)
+log("load_folder", load_folder)
+
+debug_timer_start()
+
+project_save_start(fn, false)
 
 with (temp_edit)
-	project_write_particles()
-project_write_objects()
+	project_save_particles()
+	
+project_save_objects()
+project_save_done()
 
-buffer_export(buffer_current, fn)
-buffer_delete(buffer_current)
-
+debug_timer_stop("particles_save")
 log("Particles saved")

@@ -26,7 +26,7 @@ if (popup_exportimage.high_quality)
 else
 	render_low()
 surf = render_done()
-surface_export(surf, fn)
+surface_save_lib(surf, fn)
 
 render_watermark = false
 render_background = true

@@ -18,7 +18,11 @@ enum e_project
 	FORMAT_105_2	  = 12,
 	FORMAT_106		  = 13,
 	FORMAT_106_2	  = 14,
-	FORMAT_110		  = 15
+	FORMAT_CB_100	  = 20,
+	FORMAT_CB_102_PRE = 21,
+	FORMAT_CB_102	  = 22,
+	FORMAT_CB_103	  = 23,
+	FORMAT_110		  = 24,
 }
 
 enum e_settings
@@ -30,7 +34,10 @@ enum e_settings
 	FORMAT_106		  = 4,
 	FORMAT_106_2	  = 5,
 	FORMAT_106_3	  = 6,
-	FORMAT_110		  = 7
+	FORMAT_CB_100	  = 20,
+	FORMAT_CB_102	  = 22,
+	FORMAT_CE_110	  = 23,
+	FORMAT_110		  = 24
 }
 
 enum e_minecraft_assets

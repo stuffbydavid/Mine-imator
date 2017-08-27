@@ -15,9 +15,9 @@ with (tl_edit)
 {
 	// Start from the parent matrix (body part transforms included), restore the position and remove all scaling
 	mat = matrix_parent
-	mat[MATX] = matrix[MATX]
-	mat[MATY] = matrix[MATY]
-	mat[MATZ] = matrix[MATZ]
+	mat[MAT_X] = matrix[MAT_X]
+	mat[MAT_Y] = matrix[MAT_Y]
+	mat[MAT_Z] = matrix[MAT_Z]
 	matrix_remove_scale(mat)
 }
 

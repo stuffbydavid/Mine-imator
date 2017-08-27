@@ -11,6 +11,6 @@ if (setting_font_filename != "")
 }
 
 setting_font_filename = fn
-setting_font = font_import(fn, 12, false, false)
-setting_font_bold = font_import(fn, 12, true, false)
-setting_font_big = font_import(fn, 18, false, false)
+setting_font = font_add_lib(fn, 12, false, false)
+setting_font_bold = font_add_lib(fn, 12, true, false)
+setting_font_big = font_add_lib(fn, 18, false, false)

@@ -67,7 +67,7 @@
 		"newprojectinvalidcaption": "New project error",
 		"newprojectaccess": "The project could not be saved in this location. Try another folder by clicking \"Change\".",
 		"newprojectaccesscaption": "New project error",
-		"filecorrupted": "The file has been corrupted or was created in a deprecated version of Mine-imator. Try loading a .mbackup file if one is available (change the filter from *.mproj to *.mbackup in the file browser).",
+		"filecorrupted": "The file has been corrupted or was created in a deprecated version of Mine-imator. See the log for more details. Try loading a backup file if one is available (change the filter from *.miproj to *.backup in the file browser).",
 		"filecorruptedcaption": "Corrupted file error",
 		"openprojectzip": "No Mine-imator project could be found in this archive.",
 		"openprojectzipcaption": "Open project error",
@@ -241,7 +241,7 @@
 			"conetip": "Create a cone.",
 			"cylindertip": "Create a cylinder.",
 			"surfacetip": "Create a flat surface.",
-			"audiotip": "Create a track for sound files.",
+			"audiotip": "Create a track for sound files."
 		},
 		"model": "Model",
 		"modelstatetip": "Choose between different values for this model state.",

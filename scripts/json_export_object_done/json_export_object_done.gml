@@ -1,5 +1,6 @@
 /// json_export_object_done()
 
+buffer_write_byte(e_json_char.RETURN)
 buffer_write_byte(e_json_char.NEW_LINE)
 
 // Indent

@@ -18,7 +18,7 @@ if (object_index != app && update_matrix)
 			matrix_parent = matrix_multiply(model_bend_matrix(parent.model_part, parent.value[e_value.BEND_ANGLE]), matrix_parent)
 	}
 	else
-		matrix_parent = IDENTITY
+		matrix_parent = MAT_IDENTITY
 	
 	// Add body part transformations
 	if (type = "bodypart" && model_part != null)
@@ -70,22 +70,22 @@ if (object_index != app && update_matrix)
 	// Replace position
 	if (!inherit_position)
 	{
-		matrix[MATX] = value[e_value.POS_X]
-		matrix[MATY] = value[e_value.POS_Y]
-		matrix[MATZ] = value[e_value.POS_Z]
+		matrix[MAT_X] = value[e_value.POS_X]
+		matrix[MAT_Y] = value[e_value.POS_Y]
+		matrix[MAT_Z] = value[e_value.POS_Z]
 	}
 	
 	// Create rotation point
 	if (type = "camera" && value[e_value.CAM_ROTATE])
 	{
-		world_pos_rotate = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
-		matrix[MATX] += lengthdir_x(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
-		matrix[MATY] += lengthdir_y(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
-		matrix[MATZ] += lengthdir_z(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_Z])
+		world_pos_rotate = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
+		matrix[MAT_X] += lengthdir_x(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
+		matrix[MAT_Y] += lengthdir_y(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
+		matrix[MAT_Z] += lengthdir_z(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_Z])
 	}
 	
 	// Set world position
-	world_pos = point3D(matrix[MATX], matrix[MATY], matrix[MATZ])
+	world_pos = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
 	
 	// Scale for position controls
 	value_inherit[e_value.SCA_X] = 1

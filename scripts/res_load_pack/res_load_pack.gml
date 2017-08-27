@@ -8,7 +8,7 @@ switch (load_stage)
 	{
         if (pack_zip != "")
 		{
-	        if (zip_import(pack_zip) < 0)
+	        if (unzip(pack_zip) < 0)
 			{
 	            log("Error unzipping pack")
 	            error("errorunzippack")
