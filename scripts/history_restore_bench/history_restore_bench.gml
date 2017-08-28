@@ -27,7 +27,6 @@ with (bench_settings)
 			}
 		}
 	}
-	//iid_current -= save.temp_amount // TODO test without
 	temp_creator = app
 		
 	// Restore particle types
@@ -35,7 +34,6 @@ with (bench_settings)
 	{
 		for (var p = 0; p < save.pc_type_amount; p++)
 			history_restore_ptype(save.pc_type_save_obj[p], id)
-		//iid_current -= pc_types // TODO test without
 		temp_particles_restart()
 	}
 }

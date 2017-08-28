@@ -9,7 +9,7 @@ tab_next()
 
 // Attractor
 capwid = text_caption_width("frameeditorattractor", "frameeditorforce")
-if (tl_edit.value[e_value.ATTRACTOR])
+if (tl_edit.value[e_value.ATTRACTOR] != null)
 	text = tl_edit.value[e_value.ATTRACTOR].display_name
 else
 	text = text_get("listnone")

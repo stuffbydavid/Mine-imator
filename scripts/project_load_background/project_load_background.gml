@@ -2,16 +2,23 @@
 /// @arg map
 
 var map = argument0;
+
 if (!ds_exists(map, ds_type_map))
 	return 0
+
+background_loaded = true
 	
 background_image_show = json_read_real(map[?"image_show"], background_image_show)
+if (background_image != null)
+	background_image.count--
 background_image = json_read_save_id(map[?"image"], background_image)
 background_image_type = json_read_real(map[?"image_type"], background_image_type)
 background_image_stretch = json_read_real(map[?"image_stretch"], background_image_stretch)
 background_image_box_mapped = json_read_real(map[?"image_box_mapped"], background_image_box_mapped)
 
+background_sky_sun_tex.count--
 background_sky_sun_tex = json_read_save_id(map[?"sky_sun_tex"], background_sky_sun_tex)
+background_sky_moon_tex.count--
 background_sky_moon_tex = json_read_save_id(map[?"sky_moon_tex"], background_sky_moon_tex)
 background_sky_moon_phase = json_read_real(map[?"sky_moon_phase"], background_sky_moon_phase)
 
@@ -22,6 +29,7 @@ background_sunlight_follow = json_read_real(map[?"sunlight_follow"], background_
 
 background_sky_clouds_show = json_read_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 background_sky_clouds_flat = json_read_real(map[?"sky_clouds_flat"], background_sky_clouds_flat)
+background_sky_clouds_tex.count--
 background_sky_clouds_tex = json_read_save_id(map[?"sky_clouds_tex"], background_sky_clouds_tex)
 background_sky_clouds_speed = json_read_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 background_sky_clouds_z = json_read_real(map[?"sky_clouds_z"], background_sky_clouds_z)
@@ -30,6 +38,8 @@ background_sky_clouds_height = json_read_real(map[?"sky_clouds_height"], backgro
 
 background_ground_show = json_read_real(map[?"ground_show"], background_ground_show)
 background_ground_name = json_read_string(map[?"ground_name"], background_ground_name)
+background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
+background_ground_tex.count--
 background_ground_tex = json_read_save_id(map[?"ground_tex"], background_ground_tex)
 
 background_biome = find_biome(json_read_string(map[?"biome"], background_biome.name))

@@ -36,21 +36,18 @@ with (copy)
 	}
 	
 	// Copy body part references
-	for (var p = 0; p < ds_list_size(other.part_list); p++)
+	if (other.part_list != null)
 	{
-		part_list[|p] = other.part_list[|p].copy
-		part_list[|p].part_of = id
+		for (var p = 0; p < ds_list_size(other.part_list); p++)
+		{
+			part_list[|p] = other.part_list[|p].copy
+			part_list[|p].part_of = id
+		}
 	}
 	
-	tl_update_type_name()
-	tl_update_display_name()
-	tl_update_value_types()
-	tl_update_rot_point()
+	// Update
+	tl_update()
 	tl_update_values()
-	tl_update_depth()
-	
-	if (type = "particles")
-		particle_spawner_init()
 		
 	return id
 }

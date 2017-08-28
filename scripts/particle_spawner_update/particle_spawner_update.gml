@@ -125,15 +125,12 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 				}
 				
 				// Attractor
-				if (is_timeline)
+				if (is_timeline && value[e_value.ATTRACTOR] != null)
 				{
-					if (value[e_value.ATTRACTOR] != app)
-					{
-						if (pt.type.orbit)
-							pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
-						else
-							pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
-					}
+					if (pt.type.orbit)
+						pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+					else
+						pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
 				}
 			}
 			
@@ -141,7 +138,8 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 			pt.scale += pt.scale_add
 			if (pt.scale <= 0)
 			{
-				with (pt) instance_destroy()
+				with (pt)
+					instance_destroy()
 				continue
 			}
 			
@@ -149,7 +147,8 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 			pt.alpha += pt.alpha_add
 			if (pt.alpha <= 0)
 			{
-				with (pt) instance_destroy()
+				with (pt)
+					instance_destroy()
 				continue
 			}
 			

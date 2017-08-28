@@ -16,7 +16,7 @@ json_export_object_start()
 	if (type = "bodypart")
 		json_export_var("model_part_name", model_part_name)
 	
-	if (type = "char" || type = "spblock")
+	if (part_list != null)
 	{
 		json_export_array_start("parts")
 		
@@ -37,7 +37,7 @@ json_export_object_start()
 	json_export_object_done()
 	
 	json_export_var_save_id("parent", parent)
-	json_export_var("parent_index", ds_list_find_index(parent.tree_list, id))
+	json_export_var("parent_tree_index", ds_list_find_index(parent.tree_list, id))
 	
 	json_export_var_bool("lock_bend", lock_bend)
 	json_export_var_bool("tree_extend", tree_extend)
@@ -65,7 +65,6 @@ json_export_object_start()
 	json_export_var_bool("ssao", ssao)
 	json_export_var_bool("fog", fog)
 	json_export_var_bool("wind", wind)
-	json_export_var("wind_amount", wind_amount)
 	json_export_var_bool("wind_terrain", wind_terrain)
 
 json_export_object_done()

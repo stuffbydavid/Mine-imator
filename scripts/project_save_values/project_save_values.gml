@@ -3,7 +3,7 @@
 /// @arg array
 /// @arg defaultarray
 
-var name, arr ,defarr;
+var name, arr, defarr;
 name = argument0
 arr = argument1
 defarr = argument2

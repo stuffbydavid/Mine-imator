@@ -1,7 +1,7 @@
 /// action_tl_import_loop(filename)
 /// @arg filename
 /// TODO
-
+/*
 if (history_undo)
 {
 	tl_keyframes_remove()
@@ -74,11 +74,11 @@ else
 	}
 	
 	// Update
-	project_read_update()
+	project_load_update()
 	
 	if (!history_redo)
 		with (hobj)
 			history_save_loaded()
 }
 
-app_update_tl_edit()
+app_update_tl_edit()*/

@@ -2,6 +2,7 @@
 /// @arg map
 
 var map = argument0;
+
 if (!ds_exists(map, ds_type_map))
 	return 0
 	
@@ -34,4 +35,9 @@ if (ds_exists(cammap, ds_type_map))
 	cam_work_angle_z = json_read_real(cammap[?"angle_z"], cam_work_angle_z)
 	cam_work_roll = json_read_real(cammap[?"roll"], cam_work_roll)
 	cam_work_zoom = json_read_real(cammap[?"zoom"], cam_work_zoom)
+	cam_work_zoom_goal = cam_work_zoom
+
+	cam_work_angle_look_xy = cam_work_angle_xy
+	cam_work_angle_look_z = -cam_work_angle_z
+	cam_work_set_from()
 }

@@ -80,6 +80,8 @@ if (load_format >= e_project.FORMAT_110)
 {
 	project_load_project(rootmap[?"project"])
 	project_load_background(rootmap[?"background"])
+	project_load_objects(rootmap)
+	project_load_find_save_ids()
 }
 
 // Legacy
@@ -104,7 +106,7 @@ else
 }
 	
 // Update project
-project_read_update()
+project_load_update()
 log("Project loaded")
 
 // Close popup

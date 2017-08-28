@@ -39,6 +39,7 @@ json_export_object_start("particles")
 				json_export_var_save_id("temp", temp)
 				json_export_var("text", text)
 				json_export_var("spawn_rate", spawn_rate)
+				
 				json_export_var_save_id("sprite_tex", sprite_tex)
 				json_export_var("sprite_tex_image", sprite_tex_image)
 				json_export_var("sprite_frame_width", sprite_frame_width)

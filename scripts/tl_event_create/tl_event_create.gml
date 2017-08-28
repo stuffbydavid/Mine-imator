@@ -19,11 +19,11 @@ depth = 0
 model_part = null
 model_part_name = null
 part_of = null
-part_list = ds_list_create()
+part_list = null
 
 for (var v = 0; v < e_value.amount; v++)
 {
-	value_default[v] = tl_value_default(v)
+	value_default[v] = app.value_default[v]
 	value_inherit[v] = 0
 	value[v] = value_default[v]
 }
@@ -51,8 +51,10 @@ level = 0
 parent = null
 parent_is_selected = false
 lock_bend = true
+tree_array = 0
 tree_list = ds_list_create()
 tree_extend = false
+
 inherit_position = true
 inherit_rotation = true
 inherit_scale = true
@@ -71,7 +73,6 @@ shadows = true
 ssao = true
 fog = true
 wind = false
-wind_amount = 1
 wind_terrain = true
 
 particle_list = null

@@ -15,7 +15,9 @@ while (ds_list_size(tree_list) > 0)
 		instance_destroy()
 		
 ds_list_destroy(tree_list)
-ds_list_destroy(part_list)
+
+if (part_list != null)
+	ds_list_destroy(part_list)
 
 // Clear references
 if (part_of = null && temp != null)
@@ -31,7 +33,7 @@ with (obj_timeline)
 		value[e_value.TEXTURE_OBJ] = null
 		
 	if (value[e_value.ATTRACTOR] = other.id)
-		value[e_value.ATTRACTOR] = app
+		value[e_value.ATTRACTOR] = null
 		
 	if (value_inherit[e_value.ATTRACTOR] = other.id)
 		update_matrix = true
@@ -43,7 +45,7 @@ with (obj_timeline)
 with (obj_keyframe)
 {
 	if (value[e_value.ATTRACTOR] = other.id)
-		value[e_value.ATTRACTOR] = app
+		value[e_value.ATTRACTOR] = null
 		
 	if (value[e_value.TEXTURE_OBJ] = other.id)
 		value[e_value.TEXTURE_OBJ] = null

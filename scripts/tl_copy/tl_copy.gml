@@ -16,9 +16,9 @@ to.depth = depth
 to.lock_bend = lock_bend
 to.parent = parent
 if (object_index = obj_timeline)
-	to.parent_index = ds_list_find_index(parent.tree_list, id)
+	to.parent_tree_index = ds_list_find_index(parent.tree_list, id)
 else // History object (copy)
-	to.parent_index = parent_index
+	to.parent_tree_index = parent_tree_index
 to.tree_extend = tree_extend
 
 to.model_part = model_part
@@ -43,5 +43,4 @@ to.shadows = shadows
 to.ssao = ssao
 to.fog = fog
 to.wind = wind
-to.wind_amount = wind_amount
 to.wind_terrain = wind_terrain

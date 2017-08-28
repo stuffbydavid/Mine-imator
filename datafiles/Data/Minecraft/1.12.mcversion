@@ -1,0 +1,4878 @@
+{
+	"version": "1.12",
+	"pack": "1.12.zip",
+	"characters": [
+		{
+			"name": "human",
+			"states": {
+				"variant": [
+					{ "value": "steve", "file": "steve.mimodel" },
+					{ "value": "alex", "file": "alex.mimodel" }
+				]
+			},
+			"default_state": "variant=steve"
+		},
+		{
+			"name": "cow",
+			"file": "cow.mimodel"
+		},
+		{
+			"name": "pig",
+			"file": "pig.mimodel"
+		},
+		{
+			"name": "slime",
+			"file": "slime.mimodel"
+		}
+	],
+	"special_blocks": [
+		{
+			"name": "chest",
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "chest.mimodel" },
+					{ "value": "normal_double", "file": "chest_double.mimodel" },
+					{ "value": "ender", "file": "chest.mimodel", "texture": "entity/chest/ender" },
+					{ "value": "trapped", "file": "chest.mimodel", "texture": "entity/chest/trapped" },
+					{ "value": "trapped_double", "file": "chest_double.mimodel", "texture": "entity/chest/trapped_double" },
+					{ "value": "christmas", "file": "chest.mimodel", "texture": "entity/chest/christmas" },
+					{ "value": "christmas_double", "file": "chest_double.mimodel", "texture": "entity/chest/christmas_double" }
+				]
+			},
+			"default_state": "variant=normal"
+		},
+		{
+			"name": "bed",
+			"file": "bed.mimodel",
+			"states": {
+				"color": [
+					{ "value": "white", "texture": "entity/bed/white" },
+					{ "value": "orange", "texture": "entity/bed/orange" },
+					{ "value": "magenta", "texture": "entity/bed/magenta" },
+					{ "value": "light_blue", "texture": "entity/bed/light_blue" },
+					{ "value": "yellow", "texture": "entity/bed/yellow" },
+					{ "value": "lime", "texture": "entity/bed/lime" },
+					{ "value": "pink", "texture": "entity/bed/pink" },
+					{ "value": "gray", "texture": "entity/bed/gray" },
+					{ "value": "silver", "texture": "entity/bed/silver" },
+					{ "value": "cyan", "texture": "entity/bed/cyan" },
+					{ "value": "purple", "texture": "entity/bed/purple" },
+					{ "value": "blue", "texture": "entity/bed/blue" },
+					{ "value": "brown", "texture": "entity/bed/brown" },
+					{ "value": "green", "texture": "entity/bed/green" },
+					{ "value": "red", "texture": "entity/bed/red" },
+					{ "value": "black", "texture": "entity/bed/black" }
+				]
+			},
+			"default_state": "color=white"
+		}
+	],
+	"blocks": [
+		{
+			"name": "stone",
+			"states": {
+				"variant": [
+					{ "value": "stone", "file": "stone.json" },
+					{ "value": "granite", "file": "granite.json" },
+					{ "value": "smooth_granite", "file": "smooth_granite.json" },
+					{ "value": "diorite", "file": "diorite.json" },
+					{ "value": "smooth_diorite", "file": "smooth_diorite.json" },
+					{ "value": "andesite", "file": "andesite.json" },
+					{ "value": "smooth_andesite", "file": "smooth_andesite.json" }
+				]
+			},
+			"default_state": "variant=stone",
+			"legacy_id": 1,
+			"legacy_data": {
+				"0": "variant=stone",
+				"1": "variant=granite",
+				"2": "variant=smooth_granite",
+				"3": "variant=diorite",
+				"4": "variant=smooth_diorite",
+				"5": "variant=andesite",
+				"6": "variant=smooth_andesite"
+			}
+		},
+		{
+			"name": "grass",
+			"file": "grass.json",
+			"type": "snowy",
+			"states": {
+				"snowy": [ "true", "false" ]
+			},
+			"default_state": "snowy=false",
+			"legacy_id": 2
+		},
+		{
+			"name": "dirt",
+			"states": {
+				"snowy": [ "true", "false" ],
+				"variant": [
+					{ "value": "dirt", "file": "dirt.json" },
+					{ "value": "coarse_dirt", "file": "coarse_dirt.json" },
+					{ "value": "podzol", "file": "podzol.json", "type": "snowy" }
+				]
+			},
+			"default_state": "variant=dirt,snowy=false",
+			"legacy_id": 3,
+			"legacy_data": {
+				"0": "variant=dirt",
+				"1": "variant=coarsedirt",
+				"2": "variant=podzol"
+			}
+		},
+		{
+			"name": "cobblestone",
+			"file": "cobblestone.json",
+			"legacy_id": 4
+		},
+		{
+			"name": "planks",
+			"states": {
+				"variant": [
+					{ "value": "oak", "file": "oak_planks.json" },
+					{ "value": "spruce", "file": "spruce_planks.json" },
+					{ "value": "birch", "file": "birch_planks.json" },
+					{ "value": "jungle", "file": "jungle_planks.json" },
+					{ "value": "acacia", "file": "acacia_planks.json" },
+					{ "value": "dark_oak", "file": "dark_oak_planks.json" }
+				]	
+			},
+			"default_state": "variant=oak",
+			"legacy_id": 5,
+			"legacy_data": {
+				"0": "variant=oak",
+				"1": "variant=spruce",
+				"2": "variant=birch",
+				"3": "variant=jungle",
+				"4": "variant=acacia",
+				"5": "variant=dark_oak"
+			}
+		},
+		{
+			"name": "sapling",
+			"states": {
+				"type": [
+					{ "value": "oak", "file": "oak_sapling.json" },
+					{ "value": "spruce", "file": "spruce_sapling.json" },
+					{ "value": "birch", "file": "birch_sapling.json" },
+					{ "value": "jungle", "file": "jungle_sapling.json" },
+					{ "value": "acacia", "file": "acacia_sapling.json" },
+					{ "value": "dark_oak", "file": "dark_oak_sapling.json" }
+				],
+				"stage": [ "0", "1" ]
+			},
+			"default_state": "type=oak,stage=0",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 6,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "type=oak",
+					"1": "type=spruce",
+					"2": "type=birch",
+					"3": "type=jungle",
+					"4": "type=acacia",
+					"5": "type=dark_oak"
+				},
+				"0x8": {
+					"0": "stage=0",
+					"1": "stage=1"
+				}
+			}
+		},
+		{
+			"name": "bedrock",
+			"file": "bedrock.json",
+			"legacy_id": 7
+		},
+		{
+			"name": "water",
+			"type": "liquid",
+			"states": {
+				"level": [ "0", "1" , "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "level=0",
+			"wind": {
+				"axis": "y",
+				"yroot": 0
+			},
+			"legacy_id": 9,
+			"legacy_data": {
+				"0": "level=0",
+				"1": "level=1",
+				"2": "level=2",
+				"3": "level=3",
+				"4": "level=4",
+				"5": "level=5",
+				"6": "level=6",
+				"7": "level=7",
+				"8": "level=8",
+				"9": "level=9",
+				"10": "level=10",
+				"11": "level=11",
+				"12": "level=12",
+				"13": "level=13",
+				"14": "level=14",
+				"15": "level=15"
+			}
+		},
+		{
+			"name": "lava",
+			"type": "liquid",
+			"states": {
+				"level": [ "0", "1" , "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "level=0",
+			"brightness": 1,
+			"wind": {
+				"axis": "y",
+				"yroot": 0
+			},
+			"legacy_id": 11,
+			"legacy_data": {
+				"0": "level=0",
+				"1": "level=1",
+				"2": "level=2",
+				"3": "level=3",
+				"4": "level=4",
+				"5": "level=5",
+				"6": "level=6",
+				"7": "level=7",
+				"8": "level=8",
+				"9": "level=9",
+				"10": "level=10",
+				"11": "level=11",
+				"12": "level=12",
+				"13": "level=13",
+				"14": "level=14",
+				"15": "level=15"
+			}
+		},
+		{
+			"name": "sand",
+			"states": {
+				"variant": [
+					{ "value": "sand", "file": "sand.json" },
+					{ "value": "red_sand", "file": "red_sand.json" }
+				]
+			},
+			"default_state": "variant=sand",
+			"legacy_id": 12,
+			"legacy_data": {
+				"0": "variant=sand",
+				"1": "variant=red_sand"
+			}
+		},
+		{
+			"name": "gravel",
+			"file": "gravel.json",
+			"legacy_id": 13
+		},
+		{
+			"name": "gold_ore",
+			"file": "gold_ore.json",
+			"legacy_id": 14
+		},
+		{
+			"name": "iron_ore",
+			"file": "iron_ore.json",
+			"legacy_id": 15
+		},
+		{
+			"name": "coal_ore",
+			"file": "coal_ore.json",
+			"legacy_id": 16
+		},
+		{
+			"name": "log",
+			"states": {
+				"variant": [
+					{ "value": "oak", "file": "oak_log.json" },
+					{ "value": "spruce", "file": "spruce_log.json" },
+					{ "value": "birch", "file": "birch_log.json" },
+					{ "value": "jungle", "file": "jungle_log.json" }
+				],
+				"axis": [ "none", "x", "y", "z" ]
+			},
+			"default_state": "variant=oak,axis=y",
+			"legacy_id": 17,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "variant=oak",
+					"1": "variant=spruce",
+					"2": "variant=birch",
+					"3": "variant=jungle"
+				},
+				"0x4+0x8": {
+					"0": "axis=y",
+					"1": "axis=x",
+					"2": "axis=z",
+					"3": "axis=none"
+				}
+			}
+		},
+		{
+			"name": "leaves",
+			"type": "leaves",
+			"states": {
+				"variant": [
+					{ "value": "oak", "file": "oak_leaves.json" },
+					{ "value": "spruce", "file": "spruce_leaves.json" },
+					{ "value": "birch", "file": "birch_leaves.json" },
+					{ "value": "jungle", "file": "jungle_leaves.json" }
+				]
+			},
+			"default_state": "variant=oak",
+			"wind": {
+				"axis": "all"
+			},
+			"legacy_id": 18,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "variant=oak",
+					"1": "variant=spruce",
+					"2": "variant=birch",
+					"3": "variant=jungle"
+				}
+			}
+		},
+		{
+			"name": "sponge",
+			"file": "sponge.json",
+			"states": {
+				"wet": [ "true", "false" ]
+			},
+			"default_state": "wet=false",
+			"legacy_id": 19,
+			"legacy_data": {
+				"0": "wet=false",
+				"1": "wet=true"
+			}
+		},
+		{
+			"name": "glass",
+			"file": "glass.json",
+			"legacy_id": 20
+		},
+		{
+			"name": "lapis_ore",
+			"file": "lapis_ore.json",
+			"legacy_id": 21
+		},
+		{
+			"name": "lapis_block",
+			"file": "lapis_block.json",
+			"legacy_id": 22
+		},
+		{
+			"name": "dispenser",
+			"file": "dispenser.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 23,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "sandstone",
+			"states": {
+				"type": [
+					{ "value": "sandstone", "file": "sandstone.json" },
+					{ "value": "chiseled_sandstone", "file": "chiseled_sandstone.json" },
+					{ "value": "smooth_sandstone", "file": "smooth_sandstone.json" }
+				]
+			},
+			"default_state": "type=sandstone",
+			"legacy_id": 24,
+			"legacy_data": {
+				"0": "type=sandstone",
+				"1": "type=chiseled_sandstone",
+				"2": "type=smooth_sandstone"
+			}
+		},
+		{
+			"name": "noteblock",
+			"file": "noteblock.json",
+			"legacy_id": 25
+		},
+		{
+			"name": "golden_rail",
+			"file": "golden_rail.json",
+			"states": {
+				"powered": [ "true", "false" ],
+				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
+			},
+			"default_state": "powered=false,shape=north_south",
+			"legacy_id": 27,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "detector_rail",
+			"file": "detector_rail.json",
+			"states": {
+				"powered": [ "true", "false" ],
+				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
+			},
+			"default_state": "powered=false,shape=north_south",
+			"legacy_id": 28,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "sticky_piston",
+			"file": "sticky_piston.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"extended": [ "false", "true" ]
+			},
+			"default_state": "facing=south,extended=false",
+			"legacy_id": 29,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				},
+				"0x8": {
+					"0": "extended=false",
+					"1": "extended=true"
+				}
+			}
+		},
+		{
+			"name": "web",
+			"file": "web.json",
+			"legacy_id": 30
+		},
+		{
+			"name": "tallgrass",
+			"states": {
+				"type": [
+					{ "value": "dead_bush", "file": "dead_bush.json" },
+					{ "value": "tall_grass", "file": "tall_grass.json" },
+					{ "value": "fern", "file": "fern.json" }
+				]
+			},
+			"default_state": "type=tall_grass",
+			"random_offset": true,
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 31,
+			"legacy_data": {
+				"0": "type=dead_bush",
+				"1": "type=tall_grass",
+				"2": "type=fern"
+			}
+		},
+		{
+			"name": "deadbush",
+			"file": "dead_bush.json",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 32
+		},
+		{
+			"name": "piston",
+			"file": "piston.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"extended": [ "false", "true" ]
+			},
+			"default_state": "facing=south,extended=false",
+			"legacy_id": 33,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				},
+				"0x8": {
+					"0": "extended=false",
+					"1": "extended=true"
+				}
+			}
+		},
+		{
+			"name": "wool",
+			"states": {
+				"color": [
+					{ "value": "white", "file": "white_wool.json" },
+					{ "value": "orange", "file": "orange_wool.json" },
+					{ "value": "magenta", "file": "magenta_wool.json" },
+					{ "value": "light_blue", "file": "light_blue_wool.json" },
+					{ "value": "yellow", "file": "yellow_wool.json" },
+					{ "value": "lime", "file": "lime_wool.json" },
+					{ "value": "pink", "file": "pink_wool.json" },
+					{ "value": "gray", "file": "gray_wool.json" },
+					{ "value": "silver", "file": "silver_wool.json" },
+					{ "value": "cyan", "file": "cyan_wool.json" },
+					{ "value": "purple", "file": "purple_wool.json" },
+					{ "value": "blue", "file": "blue_wool.json" },
+					{ "value": "brown", "file": "brown_wool.json" },
+					{ "value": "green", "file": "green_wool.json" },
+					{ "value": "red", "file": "red_wool.json" },
+					{ "value": "black", "file": "black_wool.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 35,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "yellow_flower",
+			"file": "dandelion.json",
+			"random_offset": true,
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 37
+		},
+		{
+			"name": "red_flower",
+			"states": {
+				"type": [
+					{ "value": "poppy", "file": "poppy.json" },
+					{ "value": "blue_orchid", "file": "blue_orchid.json" },
+					{ "value": "allium", "file": "allium.json" },
+					{ "value": "houstonia", "file": "houstonia.json" },
+					{ "value": "red_tulip", "file": "red_tulip.json" },
+					{ "value": "orange_tulip", "file": "orange_tulip.json" },
+					{ "value": "white_tulip", "file": "white_tulip.json" },
+					{ "value": "pink_tulip", "file": "pink_tulip.json" },
+					{ "value": "oxeye_daisy", "file": "oxeye_daisy.json" }
+				]
+			},
+			"default_state": "type=poppy",
+			"random_offset": true,
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 38,
+			"legacy_data": {
+				"0": "type=poppy",
+				"1": "type=blue_orchid",
+				"2": "type=allium",
+				"3": "type=houstonia",
+				"4": "type=red_tulip",
+				"5": "type=orange_tulip",
+				"6": "type=white_tulip",
+				"7": "type=pink_tulip",
+				"8": "type=oxeye_daisy"
+			}
+		},
+		{
+			"name": "brown_mushroom",
+			"file": "brown_mushroom.json",
+			"legacy_id": 39
+		},
+		{
+			"name": "red_mushroom",
+			"file": "red_mushroom.json",
+			"legacy_id": 40
+		},
+		{
+			"name": "gold_block",
+			"file": "gold_block.json",
+			"legacy_id": 41
+		},
+		{
+			"name": "iron_block",
+			"file": "iron_block.json",
+			"legacy_id": 42
+		},
+		{
+			"name": "double_stone_slab",
+			"states": {
+				"variant": [
+					{ "value": "stone", "file": "stone_double_slab.json" },
+					{ "value": "sandstone", "file": "sandstone_double_slab.json" },
+					{ "value": "wood_old", "file": "oak_double_slab.json" },
+					{ "value": "cobblestone", "file": "cobblestone_double_slab.json" },
+					{ "value": "brick", "file": "brick_double_slab.json" },
+					{ "value": "stone_brick",  "file": "stone_brick_double_slab.json" },
+					{ "value": "nether_brick", "file": "nether_brick_double_slab.json" },
+					{ "value": "quartz", "file": "quartz_double_slab.json"}
+				]
+			},
+			"default_state": "variant=stone",
+			"legacy_id": 43,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "variant=stone",
+					"1": "variant=sandstone",
+					"2": "variant=wood_old",
+					"3": "variant=cobblestone",
+					"4": "variant=brick",
+					"5": "variant=stone_brick",
+					"6": "variant=nether_brick",
+					"7": "variant=quartz"
+				},
+				"0x8": {
+					"0": "normal",
+					"1": "all"
+				}
+			}
+		},
+		{
+			"name": "stone_slab",
+			"states": {
+				"variant": [
+					{ "value": "stone", "file": "stone_slab.json" },
+					{ "value": "sandstone", "file": "sandstone_slab.json" },
+					{ "value": "wood_old", "file": "oak_slab.json" },
+					{ "value": "cobblestone", "file": "cobblestone_slab.json" },
+					{ "value": "brick", "file": "brick_slab.json" },
+					{ "value": "stone_brick",  "file": "stone_brick_slab.json" },
+					{ "value": "nether_brick", "file": "nether_brick_slab.json" },
+					{ "value": "quartz", "file": "quartz_slab.json"}
+				],
+				"half": [ "top", "bottom" ]
+			},
+			"default_state": "variant=stone,half=bottom",
+			"legacy_id": 44,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "variant=stone",
+					"1": "variant=sandstone",
+					"2": "variant=wood_old",
+					"3": "variant=cobblestone",
+					"4": "variant=brick",
+					"5": "variant=stone_brick",
+					"6": "variant=nether_brick",
+					"7": "variant=quartz"
+				},
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "brick_block",
+			"file": "brick_block.json",
+			"legacy_id": 45
+		},
+		{
+			"name": "tnt",
+			"file": "tnt.json",
+			"legacy_id": 46
+		},
+		{
+			"name": "bookshelf",
+			"file": "bookshelf.json",
+			"legacy_id": 47
+		},
+		{
+			"name": "mossy_cobblestone",
+			"file": "mossy_cobblestone.json",
+			"legacy_id": 48
+		},
+		{
+			"name": "obsidian",
+			"file": "obsidian.json",
+			"legacy_id": 49
+		},
+		{
+			"name": "torch",
+			"file": "torch.json",
+			"states": {
+				"facing": [ "up", "north", "east", "south", "west" ]
+			},
+			"default_state": "facing=up",
+			"brightness": 1,
+			"legacy_id": 50,
+			"legacy_data": {
+				"1": "facing=east",
+				"2": "facing=west",
+				"3": "facing=south",
+				"4": "facing=north",
+				"5": "facing=up"
+			}
+		},
+		{
+			"name": "fire",
+			"file": "fire.json",
+			"type": "fire",
+			"brightness": 1,
+			"legacy_id": 51
+		},
+		{
+			"name": "mob_spawner",
+			"file": "mob_spawner.json",
+			"legacy_id": 52
+		},
+		{
+			"name": "oak_stairs",
+			"file": "oak_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 53,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "chest",
+			"type": "chest",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 54,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				}
+			}
+		},
+		{
+			"name": "redstone_wire",
+			"file": "redstone_wire.json",
+			"type": "redstone_wire",
+			"require_models": true,
+			"states": {
+				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "power=0",
+			"legacy_id": 55,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
+		},
+		{
+			"name": "diamond_ore",
+			"file": "diamond_ore.json",
+			"legacy_id": 56
+		},
+		{
+			"name": "diamond_block",
+			"file": "diamond_block.json",
+			"legacy_id": 57
+		},
+		{
+			"name": "crafting_table",
+			"file": "crafting_table.json",
+			"legacy_id": 58
+		},
+		{
+			"name": "wheat",
+			"file": "wheat.json",
+			"states": {
+				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
+			},
+			"default_state": "age=0",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 59,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6",
+				"7": "age=7"
+			}
+		},
+		{
+			"name": "farmland",
+			"file": "farmland.json",
+			"states": {
+				"moisture": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
+			},
+			"default_state": "moisture=0",
+			"legacy_id": 60,
+			"legacy_data": {
+				"0": "moisture=0",
+				"1": "moisture=1",
+				"2": "moisture=2",
+				"3": "moisture=3",
+				"4": "moisture=4",
+				"5": "moisture=5",
+				"6": "moisture=6",
+				"7": "moisture=7"
+			}
+		},
+		{
+			"name": "furnace",
+			"file": "furnace.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 61,
+			"legacy_data": {
+				"1": "facing=south",
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
+			}
+		},
+		{
+			"name": "lit_furnace",
+			"file": "lit_furnace.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 62,
+			"legacy_data": {
+				"1": "facing=south",
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
+			}
+		},
+		{
+			"name": "wooden_door",
+			"file": "wooden_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 64,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "ladder",
+			"file": "ladder.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 65,
+			"legacy_data": {
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
+			}
+		},
+		{
+			"name": "rail",
+			"file": "rail.json",
+			"states": {
+				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
+			},
+			"default_state": "shape=north_south",
+			"legacy_id": 66,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				}
+			}
+		},
+		{
+			"name": "stone_stairs",
+			"file": "stone_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 67,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "lever",
+			"file": "lever.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up_x", "down_x", "up_z", "down_z" ],
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 69,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down_x",
+					"1": "facing=east",
+					"2": "facing=west",
+					"3": "facing=south",
+					"4": "facing=north",
+					"5": "facing=up_z",
+					"6": "facing=up_x",
+					"7": "facing=down_z"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "stone_pressure_plate",
+			"file": "stone_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "powered=false",
+			"legacy_id": 70,
+			"legacy_data": {
+				"0x1": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "iron_door",
+			"file": "iron_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 71,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "wooden_pressure_plate",
+			"file": "wooden_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "powered=false",
+			"legacy_id": 72,
+			"legacy_data": {
+				"0x1": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "redstone_ore",
+			"file": "redstone_ore.json",
+			"legacy_id": 73
+		},
+		{
+			"name": "lit_redstone_ore",
+			"file": "lit_redstone_ore.json",
+			"brightness": 1,
+			"legacy_id": 74
+		},
+		{
+			"name": "unlit_redstone_torch",
+			"file": "unlit_redstone_torch.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": [ "up", "north", "east", "south", "west" ]
+			},
+			"default_state": "facing=up",
+			"legacy_id": 75,
+			"legacy_data": {
+				"1": "facing=east",
+				"2": "facing=west",
+				"3": "facing=south",
+				"4": "facing=north",
+				"5": "facing=up"
+			}
+		},
+		{
+			"name": "redstone_torch",
+			"file": "redstone_torch.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": [ "up", "north", "east", "south", "west" ]
+			},
+			"default_state": "facing=up",
+			"brightness": 1,
+			"legacy_id": 76,
+			"legacy_data": {
+				"1": "facing=east",
+				"2": "facing=west",
+				"3": "facing=south",
+				"4": "facing=north",
+				"5": "facing=up"
+			}
+		},
+		{
+			"name": "stone_button",
+			"file": "stone_button.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 77,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=east",
+					"2": "facing=west",
+					"3": "facing=south",
+					"4": "facing=north",
+					"5": "facing=up"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "snow_layer",
+			"file": "snow_layer.json",
+			"type": "snow",
+			"states": {
+				"layers": [ "1", "2", "3", "4", "5", "6", "7", "8" ]
+			},
+			"default_state": "layers=1",
+			"legacy_id": 78,
+			"legacy_data": {
+				"0": "layers=1",
+				"1": "layers=2",
+				"2": "layers=3",
+				"3": "layers=4",
+				"4": "layers=5",
+				"5": "layers=6",
+				"6": "layers=7",
+				"7": "layers=8"
+			}
+		},
+		{
+			"name": "ice",
+			"file": "ice.json",
+			"legacy_id": 79
+		},
+		{
+			"name": "snow",
+			"file": "snow.json",
+			"type": "snow",
+			"legacy_id": 80
+		},
+		{
+			"name": "cactus",
+			"file": "cactus.json",
+			"legacy_id": 81
+		},
+		{
+			"name": "clay",
+			"file": "clay.json",
+			"legacy_id": 82
+		},
+		{
+			"name": "reeds",
+			"file": "reeds.json",
+			"legacy_id": 83
+		},
+		{
+			"name": "jukebox",
+			"file": "jukebox.json",
+			"legacy_id": 84
+		},
+		{
+			"name": "fence",
+			"file": "fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 85
+		},
+		{
+			"name": "pumpkin",
+			"file": "pumpkin.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 86,
+			"legacy_data": {
+				"0": "facing=south",
+				"1": "facing=west",
+				"2": "facing=north",
+				"3": "facing=east"
+			}
+		},
+		{
+			"name": "netherrack",
+			"file": "netherrack.json",
+			"legacy_id": 87
+		},
+		{
+			"name": "soul_sand",
+			"file": "soul_sand.json",
+			"legacy_id": 88
+		},
+		{
+			"name": "glowstone",
+			"file": "glowstone.json",
+			"brightness": 1,
+			"legacy_id": 89
+		},
+		{
+			"name": "portal",
+			"file": "portal.json",
+			"states": {
+				"axis": [ "x", "z" ]
+			},
+			"default_state": "axis=x",
+			"legacy_id": 90,
+			"legacy_data": {
+				"0x1": {
+					"0": "axis=z",
+					"1": "axis=x"
+				}
+			}
+		},
+		{
+			"name": "lit_pumpkin",
+			"file": "lit_pumpkin.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"brightness": 1,
+			"legacy_id": 91,
+			"legacy_data": {
+				"0": "facing=south",
+				"1": "facing=west",
+				"2": "facing=north",
+				"3": "facing=east"
+			}
+		},
+		{
+			"name": "cake",
+			"file": "cake.json",
+			"states": {
+				"bites": [ "0", "1", "2", "3", "4", "5", "6" ]
+			},
+			"default_state": "bites=0",
+			"legacy_id": 92,
+			"legacy_data": {
+				"0": "bites=0",
+				"1": "bites=1",
+				"2": "bites=2",
+				"3": "bites=3",
+				"4": "bites=4",
+				"5": "bites=5",
+				"6": "bites=6"
+			}
+		},
+		{
+			"name": "unpowered_repeater",
+			"file": "unpowered_repeater.json",
+			"type": "redstone_repeater",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"delay": [ "1", "2", "3", "4" ]
+			},
+			"default_state": "facing=south,delay=1",
+			"legacy_id": 93,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4+0x8": {
+					"0": "delay=1",
+					"1": "delay=2",
+					"2": "delay=3",
+					"3": "delay=4"
+				}
+			}
+		},
+		{
+			"name": "powered_repeater",
+			"file": "powered_repeater.json",
+			"type": "redstone_repeater",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"delay": [ "1", "2", "3", "4" ]
+			},
+			"default_state": "facing=south,delay=1",
+			"brightness": 1,
+			"legacy_id": 94,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4+0x8": {
+					"0": "delay=1",
+					"1": "delay=2",
+					"2": "delay=3",
+					"3": "delay=4"
+				}
+			}
+		},
+		{
+			"name": "stained_glass",
+			"states": {
+				"color": [
+					{ "value": "white", "file": "white_stained_glass.json" },
+					{ "value": "orange", "file": "orange_stained_glass.json" },
+					{ "value": "magenta", "file": "magenta_stained_glass.json" },
+					{ "value": "light_blue", "file": "light_blue_stained_glass.json" },
+					{ "value": "yellow", "file": "yellow_stained_glass.json" },
+					{ "value": "lime", "file": "lime_stained_glass.json" },
+					{ "value": "pink", "file": "pink_stained_glass.json" },
+					{ "value": "gray", "file": "gray_stained_glass.json" },
+					{ "value": "silver", "file": "silver_stained_glass.json" },
+					{ "value": "cyan", "file": "cyan_stained_glass.json" },
+					{ "value": "purple", "file": "purple_stained_glass.json" },
+					{ "value": "blue", "file": "blue_stained_glass.json" },
+					{ "value": "brown", "file": "brown_stained_glass.json" },
+					{ "value": "green", "file": "green_stained_glass.json" },
+					{ "value": "red", "file": "red_stained_glass.json" },
+					{ "value": "black", "file": "black_stained_glass.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 95,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "trapdoor",
+			"file": "trapdoor.json",
+			"type": "trapdoor",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "top", "bottom" ]
+			},
+			"default_state": "facing=south,open=false,half=bottom",
+			"legacy_id": 96,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=north",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				},
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "monster_egg",
+			"states": {
+				"variant": [
+					{ "value": "stone", "file": "stone_monster_egg.json" },
+					{ "value": "cobblestone", "file": "cobblestone_monster_egg.json" },
+					{ "value": "stone_brick", "file": "stone_brick_monster_egg.json" },
+					{ "value": "mossy_brick", "file": "mossy_brick_monster_egg.json" },
+					{ "value": "cracked_brick", "file": "cracked_brick_monster_egg.json" },
+					{ "value": "chiseled_brick", "file": "chiseled_brick_monster_egg.json" }
+				]
+			},
+			"default_state": "variant=stone",
+			"legacy_id": 97,
+			"legacy_data": {
+				"0": "variant=stone",
+				"1": "variant=cobblestone",
+				"2": "variant=stone_brick",
+				"3": "variant=mossy_brick",
+				"4": "variant=cracked_brick",
+				"5": "variant=chiseled_brick"
+			}
+		},
+		{
+			"name": "stonebrick",
+			"states": {
+				"variant": [
+					{ "value": "stonebrick", "file": "stonebrick.json" },
+					{ "value": "mossy_stonebrick", "file": "mossy_stonebrick.json" },
+					{ "value": "cracked_stonebrick", "file": "cracked_stonebrick.json" },
+					{ "value": "chiseled_stonebrick", "file": "chiseled_stonebrick.json" }
+				]
+			},
+			"default_state": "variant=stonebrick",
+			"legacy_id": 98,
+			"legacy_data": {
+				"0": "variant=stonebrick",
+				"1": "variant=mossy_stonebrick",
+				"2": "variant=cracked_stonebrick",
+				"3": "variant=chiseled_stonebrick"
+			}
+		},
+		{
+			"name": "brown_mushroom_block",
+			"file": "brown_mushroom_block.json",
+			"states": {
+				"variant": [ "all_inside", "north_west", "north", "north_east", "west", "center", "east", "south_west", "south", "south_east", "stem", "all_outside", "all_stem" ]
+			},
+			"default_state": "variant=all_outside",
+			"legacy_id": 99,
+			"legacy_data": {
+				"0": "variant=all_inside",
+				"1": "variant=north_west",
+				"2": "variant=north",
+				"3": "variant=north_east",
+				"4": "variant=west",
+				"5": "variant=center",
+				"6": "variant=east",
+				"7": "variant=south_west",
+				"8": "variant=south",
+				"9": "variant=south_east",
+				"10": "variant=stem",
+				"14": "variant=all_outside",
+				"15": "variant=all_stem"
+			}
+		},
+		{
+			"name": "red_mushroom_block",
+			"file": "red_mushroom_block.json",
+			"states": {
+				"variant": [ "all_inside", "north_west", "north", "north_east", "west", "center", "east", "south_west", "south", "south_east", "stem", "all_outside", "all_stem" ]
+			},
+			"default_state": "variant=all_outside",
+			"legacy_id": 100,
+			"legacy_data": {
+				"0": "variant=all_inside",
+				"1": "variant=north_west",
+				"2": "variant=north",
+				"3": "variant=north_east",
+				"4": "variant=west",
+				"5": "variant=center",
+				"6": "variant=east",
+				"7": "variant=south_west",
+				"8": "variant=south",
+				"9": "variant=south_east",
+				"10": "variant=stem",
+				"14": "variant=all_outside",
+				"15": "variant=all_stem"
+			}
+		},
+		{
+			"name": "iron_bars",
+			"file": "iron_bars.json",
+			"type": "bars",
+			"require_models": true,
+			"legacy_id": 101
+		},
+		{
+			"name": "glass_pane",
+			"file": "glass_pane.json",
+			"type": "bars",
+			"require_models": true,
+			"legacy_id": 102
+		},
+		{
+			"name": "melon_block",
+			"file": "melon_block.json",
+			"legacy_id": 103
+		},
+		{
+			"name": "pumpkin_stem",
+			"file": "pumpkin_stem.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up" ],
+				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
+			},
+			"default_state": "age=0,facing=up",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 104,
+			"legacy_data": {
+				"0": "age=0,facing=up",
+				"1": "age=1,facing=up",
+				"2": "age=2,facing=up",
+				"3": "age=3,facing=up",
+				"4": "age=4,facing=up",
+				"5": "age=5,facing=up",
+				"6": "age=6,facing=up"
+			}
+		},
+		{
+			"name": "melon_stem",
+			"file": "melon_stem.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up" ],
+				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
+			},
+			"default_state": "age=0,facing=up",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 105,
+			"legacy_data": {
+				"0": "age=0,facing=up",
+				"1": "age=1,facing=up",
+				"2": "age=2,facing=up",
+				"3": "age=3,facing=up",
+				"4": "age=4,facing=up",
+				"5": "age=5,facing=up",
+				"6": "age=6,facing=up"
+			}
+		},
+		{
+			"name": "vine",
+			"file": "vine.json",
+			"type": "vine",
+			"states": {
+				"south": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"east": [ "true", "false" ]
+			},
+			"default_state": "south=false,west=false,north=false,east=false",
+			"legacy_id": 106,
+			"legacy_data": {
+				"0x1": {
+					"0": "south=false",
+					"1": "south=true"
+				},
+				"0x2": {
+					"0": "west=false",
+					"1": "west=true"
+				},
+				"0x4": {
+					"0": "north=false",
+					"1": "north=true"
+				},
+				"0x8": {
+					"0": "east=false",
+					"1": "east=true"
+				}
+			}
+		},
+		{
+			"name": "fence_gate",
+			"file": "fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ]
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 107,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "brick_stairs",
+			"file": "brick_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 108,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "stone_brick_stairs",
+			"file": "stone_brick_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 109,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "mycelium",
+			"file": "mycelium.json",
+			"type": "snowy",
+			"states": {
+				"snowy": [ "true", "false" ]
+			},
+			"default_state": "snowy=false",
+			"legacy_id": 110
+		},
+		{
+			"name": "waterlily",
+			"file": "waterlily.json",
+			"legacy_id": 111
+		},
+		{
+			"name": "nether_brick",
+			"file": "nether_brick.json",
+			"legacy_id": 112
+		},
+		{
+			"name": "nether_brick_fence",
+			"file": "nether_brick_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 113
+		},
+		{
+			"name": "nether_brick_stairs",
+			"file": "nether_brick_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 114,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "nether_wart",
+			"file": "nether_wart.json",
+			"states": {
+				"age": [ "0", "1", "2", "3" ]
+			},
+			"default_state": "age=0",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 115,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3"
+			}
+		},
+		{
+			"name": "enchanting_table",
+			"file": "enchanting_table.json",
+			"legacy_id": 116
+		},
+		{
+			"name": "brewing_stand",
+			"file": "brewing_stand.json",
+			"states": {
+				"has_bottle_0": [ "true", "false" ],
+				"has_bottle_1": [ "true", "false" ],
+				"has_bottle_2": [ "true", "false" ]
+			},
+			"default_state": "has_bottle_0=true,has_bottle_1=true,has_bottle_2=true",
+			"legacy_id": 117,
+			"legacy_data": {
+				"0x1": {
+					"0": "has_bottle_0=false",
+					"1": "has_bottle_0=true"
+				},
+				"0x2": {
+					"0": "has_bottle_1=false",
+					"1": "has_bottle_1=true"
+				},
+				"0x4": {
+					"0": "has_bottle_2=false",
+					"1": "has_bottle_2=true"
+				}
+			}
+		},
+		{
+			"name": "cauldron",
+			"file": "cauldron.json",
+			"states": {
+				"level": [ "0", "1", "2", "3" ]
+			},
+			"default_state": "level=0",
+			"legacy_id": 118,
+			"legacy_data": {
+				"0": "level=0",
+				"1": "level=1",
+				"2": "level=2",
+				"3": "level=3"
+			}
+		},
+		{
+			"name": "end_portal_frame",
+			"file": "end_portal_frame.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"eye": [ "true", "false" ]
+			},
+			"default_state": "facing=south,eye=false",
+			"legacy_id": 120,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "eye=false",
+					"1": "eye=true"
+				}
+			}
+		},
+		{
+			"name": "end_stone",
+			"file": "end_stone.json",
+			"legacy_id": 121
+		},
+		{
+			"name": "dragon_egg",
+			"file": "dragon_egg.json",
+			"legacy_id": 122
+		},
+		{
+			"name": "redstone_lamp",
+			"file": "redstone_lamp.json",
+			"legacy_id": 123
+		},
+		{
+			"name": "lit_redstone_lamp",
+			"file": "lit_redstone_lamp.json",
+			"legacy_id": 124
+		},
+		{
+			"name": "double_wooden_slab",
+			"states": {
+				"variant": [
+					{ "value": "oak", "file": "oak_double_slab.json" },
+					{ "value": "spruce", "file": "spruce_double_slab.json" },
+					{ "value": "birch", "file": "birch_double_slab.json" },
+					{ "value": "jungle", "file": "jungle_double_slab.json" },
+					{ "value": "acacia", "file": "acacia_double_slab.json" },
+					{ "value": "dark_oak", "file": "dark_oak_double_slab.json" }
+				]
+			},
+			"default_state": "variant=oak",
+			"legacy_id": 125,
+			"legacy_data": {
+				"0": "variant=oak",
+				"1": "variant=spruce",
+				"2": "variant=birch",
+				"3": "variant=jungle",
+				"4": "variant=acacia",
+				"5": "variant=dark_oak"
+			}
+		},
+		{
+			"name": "wooden_slab",
+			"states": {
+				"variant": [
+					{ "value": "oak", "file": "oak_slab.json" },
+					{ "value": "spruce", "file": "spruce_slab.json" },
+					{ "value": "birch", "file": "birch_slab.json" },
+					{ "value": "jungle", "file": "jungle_slab.json" },
+					{ "value": "acacia", "file": "acacia_slab.json" },
+					{ "value": "dark_oak", "file": "dark_oak_slab.json" }
+				],
+				"half": [ "top", "bottom" ]
+			},
+			"default_state": "variant=oak,half=bottom",
+			"legacy_id": 126,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "variant=oak",
+					"1": "variant=spruce",
+					"2": "variant=birch",
+					"3": "variant=jungle",
+					"4": "variant=acacia",
+					"5": "variant=dark_oak"
+				},
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "cocoa",
+			"file": "cocoa.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"age": [ "0", "1", "2" ]
+			},
+			"default_state": "facing=south,age=0",
+			"legacy_id": 127,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4+0x8": {
+					"0": "age=0",
+					"1": "age=1",
+					"2": "age=2"
+				}
+			}
+		},
+		{
+			"name": "sandstone_stairs",
+			"file": "sandstone_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 128,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "emerald_ore",
+			"file": "emerald_ore.json",
+			"legacy_id": 129
+		},
+		{
+			"name": "tripwire_hook",
+			"file": "tripwire_hook.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"attached": [ "true", "false" ],
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "facing=south,attached=false,powered=false",
+			"legacy_id": 131,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "attached=false",
+					"1": "attached=true"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "tripwire",
+			"file": "tripwire.json",
+			"type": "tripwire",
+			"states": {
+				"attached": [ "true", "false" ]
+			},
+			"default_state": "attached=false",
+			"legacy_id": 132,
+			"legacy_data": {
+				"0x4": {
+					"0": "attached=false",
+					"1": "attached=true"
+				}
+			}
+		},
+		{
+			"name": "emerald_block",
+			"file": "emerald_block.json",
+			"legacy_id": 133
+		},
+		{
+			"name": "spruce_stairs",
+			"file": "spruce_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 134,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "birch_stairs",
+			"file": "birch_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 135,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "jungle_stairs",
+			"file": "jungle_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 136,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "command_block",
+			"file": "command_block.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"conditional": [ "true", "false" ]
+			},
+			"default_state": "facing=south,conditional=false",
+			"legacy_id": 137,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east",
+					"6": "facing=down",
+					"7": "facing=up"
+				},
+				"0x8": {
+					"0": "conditional=false",
+					"1": "conditional=true"
+				}
+			}
+		},
+		{
+			"name": "beacon",
+			"file": "beacon.json",
+			"legacy_id": 138
+		},
+		{
+			"name": "cobblestone_wall",
+			"type": "wall",
+			"states": {
+				"variant": [
+					{ "value": "cobblestone", "file": "cobblestone_wall.json" },
+					{ "value": "mossy_cobblestone", "file": "mossy_cobblestone_wall.json" }
+				]
+			},
+			"default_state": "variant=cobblestone",
+			"legacy_id": 139,
+			"legacy_data": {
+				"0": "variant=cobblestone",
+				"1": "variant=mossy_cobblestone"
+			}
+		},
+		{
+			"name": "flower_pot",
+			"file": "flower_pot.json",
+			"states": {
+				"contents": [ "empty", "rose", "blue_orchid", "allium", "houstonia", "red_tulip", "orange_tulip", "white_tulip", "pink_tulip", "oxeye_daisy", "dandelion", "oak_sapling", "spruce_sapling", "birch_sapling", "jungle_sapling", "acacia_sapling", "dark_oak_sapling", "mushroom_red", "mushroom_brown", "dead_bush", "fern", "cactus" ]
+			},
+			"default_state": "contents=rose",
+			"legacy_id": 140,
+			"legacy_data": {
+				"0": "contents=empty",
+				"1": "contents=rose",
+				"2": "contents=dandelion",
+				"3": "contents=oak_sapling",
+				"4": "contents=spruce_sapling",
+				"5": "contents=birch_sapling",
+				"6": "contents=jungle_sapling",
+				"7": "contents=mushroom_red",
+				"8": "contents=mushroom_brown",
+				"9": "contents=cactus",
+				"10": "contents=dead_bush",
+				"11": "contents=fern",
+				"12": "contents=acacia_sapling",
+				"13": "contents=dark_oak_sapling"
+			}
+		},
+		{
+			"name": "carrots",
+			"file": "carrots.json",
+			"states": {
+				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
+			},
+			"default_state": "age=0",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 141,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6",
+				"7": "age=7"
+			}
+		},
+		{
+			"name": "potatoes",
+			"file": "potatoes.json",
+			"states": {
+				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
+			},
+			"default_state": "age=0",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 142,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5",
+				"6": "age=6",
+				"7": "age=7"
+			}
+		},
+		{
+			"name": "wooden_button",
+			"file": "wooden_button.json",
+			"type": "redstone_connect",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 143,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=east",
+					"2": "facing=west",
+					"3": "facing=south",
+					"4": "facing=north",
+					"5": "facing=up"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "anvil",
+			"file": "anvil.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"damage": [ "0", "1", "2" ]
+			},
+			"default_state": "facing=south,damage=0",
+			"legacy_id": 145,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4+0x8": {
+					"0": "damage=0",
+					"1": "damage=1",
+					"2": "damage=2"
+				}
+			}
+		},
+		{
+			"name": "light_weighted_pressure_plate",
+			"file": "light_weighted_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "power=0",
+			"legacy_id": 147,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
+		},
+		{
+			"name": "heavy_weighted_pressure_plate",
+			"file": "heavy_weighted_pressure_plate.json",
+			"type": "redstone_connect",
+			"states": {
+				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "power=0",
+			"legacy_id": 148,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
+		},
+		{
+			"name": "unpowered_comparator",
+			"file": "unpowered_comparator.json",
+			"type": "redstone_comparator",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"mode": [ "compare", "subtract" ],
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "facing=south,mode=compare,powered=false",
+			"legacy_id": 149,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "mode=compare",
+					"1": "mode=subtract"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "powered_comparator",
+			"file": "powered_comparator.json",
+			"type": "redstone_comparator",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"mode": [
+					{ "value": "compare", "brightness": 1 },
+					"subtract"
+				],
+				"powered": [
+					{ "value": "true", "brightness": 1 },
+					"false"
+				]
+			},
+			"default_state": "facing=south,mode=compare,powered=false",
+			"legacy_id": 150,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "mode=compare",
+					"1": "mode=subtract"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "daylight_detector",
+			"file": "daylight_detector.json",
+			"states": {
+				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "power=0",
+			"legacy_id": 151,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
+		},
+		{
+			"name": "redstone_block",
+			"file": "redstone_block.json",
+			"brightness": 1,
+			"legacy_id": 152
+		},
+		{
+			"name": "quartz_ore",
+			"file": "quartz_ore.json",
+			"legacy_id": 153
+		},
+		{
+			"name": "hopper",
+			"file": "hopper.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "down" ]
+			},
+			"default_state": "facing=down",
+			"legacy_id": 154,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=down",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "quartz_block",
+			"states": {
+				"variant": [
+					{ "value": "default", "file": "quartz_block.json" },
+					{ "value": "chiseled", "file": "chiseled_quartz_block.json" },
+					{ "value": "lines_x", "file": "quartz_column.json" },
+					{ "value": "lines_y", "file": "quartz_column.json" },
+					{ "value": "lines_z", "file": "quartz_column.json" }
+				],
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "variant=default,axis=y",
+			"legacy_id": 155,
+			"legacy_data": {
+				"0": "variant=default",
+				"1": "variant=chiseled",
+				"2": "variant=lines_y,axis=y",
+				"3": "variant=lines_x,axis=x",
+				"4": "variant=lines_z,axis=z"
+			}
+		},
+		{
+			"name": "quartz_stairs",
+			"file": "quartz_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 156,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "activator_rail",
+			"file": "activator_rail.json",
+			"states": {
+				"powered": [ "true", "false" ],
+				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
+			},
+			"default_state": "powered=false,shape=north_south",
+			"legacy_id": 157,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "shape=north_south",
+					"1": "shape=east_west",
+					"2": "shape=ascending_east",
+					"3": "shape=ascending_west",
+					"4": "shape=ascending_north",
+					"5": "shape=ascending_south"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "dropper",
+			"file": "dropper.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 158,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "stained_hardened_clay",
+			"states": {
+				"color": [
+					{ "value": "white", "file": "white_stained_hardened_clay.json" },
+					{ "value": "orange", "file": "orange_stained_hardened_clay.json" },
+					{ "value": "magenta", "file": "magenta_stained_hardened_clay.json" },
+					{ "value": "light_blue", "file": "light_blue_stained_hardened_clay.json" },
+					{ "value": "yellow", "file": "yellow_stained_hardened_clay.json" },
+					{ "value": "lime", "file": "lime_stained_hardened_clay.json" },
+					{ "value": "pink", "file": "pink_stained_hardened_clay.json" },
+					{ "value": "gray", "file": "gray_stained_hardened_clay.json" },
+					{ "value": "silver", "file": "silver_stained_hardened_clay.json" },
+					{ "value": "cyan", "file": "cyan_stained_hardened_clay.json" },
+					{ "value": "purple", "file": "purple_stained_hardened_clay.json" },
+					{ "value": "blue", "file": "blue_stained_hardened_clay.json" },
+					{ "value": "brown", "file": "brown_stained_hardened_clay.json" },
+					{ "value": "green", "file": "green_stained_hardened_clay.json" },
+					{ "value": "red", "file": "red_stained_hardened_clay.json" },
+					{ "value": "black", "file": "black_stained_hardened_clay.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 159,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "stained_glass_pane",
+			"type": "bars",
+			"require_models": true,
+			"states": {
+				"color": [
+					{ "value": "white",  "file": "white_stained_glass_pane.json" },
+					{ "value": "orange",  "file": "orange_stained_glass_pane.json" },
+					{ "value": "magenta",  "file": "magenta_stained_glass_pane.json" },
+					{ "value": "light_blue",  "file": "light_blue_stained_glass_pane.json" },
+					{ "value": "yellow",  "file": "yellow_stained_glass_pane.json" },
+					{ "value": "lime",  "file": "lime_stained_glass_pane.json" },
+					{ "value": "pink",  "file": "pink_stained_glass_pane.json" },
+					{ "value": "gray",  "file": "gray_stained_glass_pane.json" },
+					{ "value": "silver",  "file": "silver_stained_glass_pane.json" },
+					{ "value": "cyan",  "file": "cyan_stained_glass_pane.json" },
+					{ "value": "purple",  "file": "purple_stained_glass_pane.json" },
+					{ "value": "blue",  "file": "blue_stained_glass_pane.json" },
+					{ "value": "brown",  "file": "brown_stained_glass_pane.json" },
+					{ "value": "green",  "file": "green_stained_glass_pane.json" },
+					{ "value": "red", "file": "red_stained_glass_pane.json" },
+					{ "value": "black", "file": "black_stained_glass_pane.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 160,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "leaves2",
+			"type": "leaves",
+			"states": {
+				"variant": [
+					{ "value": "acacia", "file": "acacia_leaves.json" },
+					{ "value": "dark_oak", "file": "dark_oak_leaves.json" }
+				]
+			},
+			"default_state": "variant=acacia",
+			"wind": {
+				"axis": "all"
+			},
+			"legacy_id": 161,
+			"legacy_data": {
+				"0x1+0x2":{
+					"0": "variant=acacia",
+					"1": "variant=dark_oak"
+				}
+			}
+		},
+		{
+			"name": "log2",
+			"states": {
+				"variant": [
+					{ "value": "acacia", "file": "acacia_log.json" },
+					{ "value": "dark_oak", "file": "dark_oak_log.json" }
+				],
+				"axis": [ "none", "x", "y", "z" ]
+			},
+			"default_state": "variant=acacia,axis=y",
+			"legacy_id": 162,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "variant=acacia",
+					"1": "variant=dark_oak"
+				},
+				"0x4+0x8": {
+					"0": "axis=y",
+					"1": "axis=x",
+					"2": "axis=z",
+					"3": "axis=none"
+				}
+			}
+		},
+		{
+			"name": "acacia_stairs",
+			"file": "acacia_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 163,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "dark_oak_stairs",
+			"file": "dark_oak_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 164,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "slime",
+			"file": "slime.json",
+			"legacy_id": 165
+		},
+		{
+			"name": "iron_trapdoor",
+			"file": "iron_trapdoor.json",
+			"type": "trapdoor",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "top", "bottom" ]
+			},
+			"default_state": "facing=south,open=false,half=bottom",
+			"legacy_id": 167,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=north",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				},
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "prismarine",
+			"states": {
+				"variant": [
+					{ "value": "prismarine", "file": "prismarine.json" },
+					{ "value":"prismarine_bricks", "file": "prismarine_bricks.json" },
+					{ "value":"dark_prismarine", "file": "dark_prismarine.json" }
+				]
+			},
+			"default_state": "variant=prismarine",
+			"legacy_id": 168,
+			"legacy_data": {
+				"0": "variant=prismarine",
+				"1": "variant=prismarine_bricks",
+				"2": "variant=dark_prismarine"
+			}
+		},
+		{
+			"name": "sea_lantern",
+			"file": "sea_lantern.json",
+			"legacy_id": 169
+		},
+		{
+			"name": "hay_block",
+			"file": "hay_block.json",
+			"states": {
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "axis=y",
+			"legacy_id": 170,
+			"legacy_data": {
+				"0": "axis=y",
+				"1": "axis=z",
+				"2": "axis=x"
+			}
+		},
+		{
+			"name": "carpet",
+			"states": {
+				"color": [
+					{ "value": "white",  "file": "white_carpet.json" },
+					{ "value": "orange",  "file": "orange_carpet.json" },
+					{ "value": "magenta",  "file": "magenta_carpet.json" },
+					{ "value": "light_blue",  "file": "light_blue_carpet.json" },
+					{ "value": "yellow",  "file": "yellow_carpet.json" },
+					{ "value": "lime",  "file": "lime_carpet.json" },
+					{ "value": "pink",  "file": "pink_carpet.json" },
+					{ "value": "gray",  "file": "gray_carpet.json" },
+					{ "value": "silver",  "file": "silver_carpet.json" },
+					{ "value": "cyan",  "file": "cyan_carpet.json" },
+					{ "value": "purple",  "file": "purple_carpet.json" },
+					{ "value": "blue",  "file": "blue_carpet.json" },
+					{ "value": "brown",  "file": "brown_carpet.json" },
+					{ "value": "green",  "file": "green_carpet.json" },
+					{ "value": "red",  "file": "red_carpet.json" },
+					{ "value": "black",  "file": "black_carpet.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 171,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "hardened_clay",
+			"file": "hardened_clay.json",
+			"legacy_id": 172
+		},
+		{
+			"name": "coal_block",
+			"file": "coal_block.json",
+			"legacy_id": 173
+		},
+		{
+			"name": "packed_ice",
+			"file": "packed_ice.json",
+			"legacy_id": 174
+		},
+		{
+			"name": "double_plant",
+			"type": "double_plant",
+			"states": {
+				"variant": [
+					{ "value": "sunflower", "file": "sunflower.json" },
+					{ "value": "syringa", "file": "syringa.json" },
+					{ "value": "double_grass", "file": "double_grass.json" },
+					{ "value": "double_fern", "file": "double_fern.json" },
+					{ "value": "double_rose", "file": "double_rose.json" },
+					{ "value": "paeonia", "file": "paeonia.json" }
+				],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "variant=sunflower,half=lower",
+			"random_offset": true,
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 175,
+			"legacy_data": {
+				"0x8": {
+					"0": "half=lower",
+					"1": "half=upper"
+				},
+				"0": "variant=sunflower",
+				"1": "variant=syringa",
+				"2": "variant=double_grass",
+				"3": "variant=double_fern",
+				"4": "variant=double_rose",
+				"5": "variant=paeonia"
+			}
+		},
+		{
+			"name": "daylight_detector_inverted",
+			"file": "daylight_detector_inverted.json",
+			"states": {
+				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "power=0",
+			"legacy_id": 178,
+			"legacy_data": {
+				"0": "power=0",
+				"1": "power=1",
+				"2": "power=2",
+				"3": "power=3",
+				"4": "power=4",
+				"5": "power=5",
+				"6": "power=6",
+				"7": "power=7",
+				"8": "power=8",
+				"9": "power=9",
+				"10": "power=10",
+				"11": "power=11",
+				"12": "power=12",
+				"13": "power=13",
+				"14": "power=14",
+				"15": "power=15"
+			}
+		},
+		{
+			"name": "red_sandstone",
+			"states": {
+				"type": [
+					{ "value": "sandstone", "file": "red_sandstone.json" },
+					{ "value":"chiseled_sandstone", "file": "chiseled_red_sandstone.json" },
+					{ "value":"smooth_sandstone", "file": "smooth_red_sandstone.json" }
+				]
+			},
+			"default_state": "type=sandstone",
+			"legacy_id": 179,
+			"legacy_data": {
+				"0": "type=sandstone",
+				"1": "type=chiseled_sandstone",
+				"2": "type=smooth_sandstone"
+			}
+		},
+		{
+			"name": "red_sandstone_stairs",
+			"file": "red_sandstone_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 180,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "double_stone_slab2",
+			"file": "red_sandstone_double_slab.json",
+			"legacy_id": 181,
+			"legacy_data": {
+				"0x8": {
+					"0": "normal",
+					"1": "all"
+				}
+			}
+		},
+		{
+			"name": "stone_slab2",
+			"file": "red_sandstone_slab.json",
+			"states": {
+				"half": [ "top", "bottom" ]
+			},
+			"default_state": "half=bottom",
+			"legacy_id": 182,
+			"legacy_data": {
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "spruce_fence_gate",
+			"file": "spruce_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ]
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 183,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "birch_fence_gate",
+			"file": "birch_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ]
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 184,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "jungle_fence_gate",
+			"file": "jungle_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ]
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 185,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "dark_oak_fence_gate",
+			"file": "dark_oak_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ]
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 186,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "acacia_fence_gate",
+			"file": "acacia_fence_gate.json",
+			"type": "fence_gate",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ]
+			},
+			"default_state": "facing=south,open=false",
+			"legacy_id": 187,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x4": {
+					"0": "open=false",
+					"1": "open=true"
+				}
+			}
+		},
+		{
+			"name": "spruce_fence",
+			"file": "spruce_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 188
+		},
+		{
+			"name": "birch_fence",
+			"file": "birch_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 189
+		},
+		{
+			"name": "jungle_fence",
+			"file": "jungle_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 190
+		},
+		{
+			"name": "dark_oak_fence",
+			"file": "dark_oak_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 191
+		},
+		{
+			"name": "acacia_fence",
+			"file": "acacia_fence.json",
+			"type": "fence",
+			"require_models": true,
+			"legacy_id": 192
+		},
+		{
+			"name": "spruce_door",
+			"file": "spruce_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 193,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "birch_door",
+			"file": "birch_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 194,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "jungle_door",
+			"file": "jungle_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 195,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "acacia_door",
+			"file": "acacia_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 196,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "dark_oak_door",
+			"file": "dark_oak_door.json",
+			"type": "door",
+			"states": {
+				"hinge": [ "right", "left" ],
+				"facing": [ "north", "south", "east", "west" ],
+				"open": [ "true", "false" ],
+				"half": [ "upper", "lower" ]
+			},
+			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"legacy_id": 197,
+			"legacy_data": {
+				"0x1": {
+					"0": "hinge=left",
+					"1": "hinge=right"
+				},
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=south",
+					"2": "facing=west",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "open=false",	
+					"1": "open=true"
+				},
+				"0x8":{
+					"0": "half=lower",
+					"1": "half=upper"
+				}
+			}
+		},
+		{
+			"name": "end_rod",
+			"file": "end_rod.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"brightness": 1,
+			"legacy_id": 198,
+			"legacy_data": {
+				"0": "facing=up",
+				"1": "facing=down",
+				"2": "facing=east",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=north"
+			}
+		},
+		{
+			"name": "chorus_plant",
+			"file": "chorus_plant.json",
+			"type": "chorus_plant",
+			"legacy_id": 199
+		},
+		{
+			"name": "chorus_flower",
+			"file": "chorus_flower.json",
+			"type": "chorus_plant_connect",
+			"states": {
+				"age": [ "0", "1", "2", "3", "4", "5" ]
+			},
+			"default_state": "age=0",
+			"legacy_id": 200,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3",
+				"4": "age=4",
+				"5": "age=5"
+			}
+		},
+		{
+			"name": "purpur_block",
+			"file": "purpur_block.json",
+			"legacy_id": 201
+		},
+		{
+			"name": "purpur_pillar",
+			"file": "purpur_pillar.json",
+			"states": {
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "axis=y",
+			"legacy_id": 202,
+			"legacy_data": {
+				"0x4+0x8": {
+					"0": "axis=y",
+					"1": "axis=z",
+					"2": "axis=x"
+				}
+			}
+		},
+		{
+			"name": "purpur_stairs",
+			"file": "purpur_stairs.json",
+			"type": "stairs",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"half": [ "top", "bottom" ],
+				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
+			},
+			"default_state": "facing=north,half=bottom,shape=straight",
+			"legacy_id": 203,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=east",
+					"1": "facing=west",
+					"2": "facing=south",
+					"3": "facing=north"
+				},
+				"0x4": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "purpur_double_slab",
+			"file": "purpur_double_slab.json",
+			"states": {
+				"variant": [ "default" ]
+			},
+			"default_state": "variant=default",
+			"legacy_id": 204
+		},
+		{
+			"name": "purpur_slab",
+			"file": "purpur_slab.json",
+			"states": {
+				"variant": [ "default" ],
+				"half": [ "top", "bottom" ]
+			},
+			"default_state": "half=bottom,variant=default",
+			"legacy_id": 205,
+			"legacy_data": {
+				"0x8": {
+					"0": "half=bottom",
+					"1": "half=top"
+				}
+			}
+		},
+		{
+			"name": "end_bricks",
+			"file": "end_bricks.json",
+			"legacy_id": 206
+		},
+		{
+			"name": "beetroots",
+			"file": "beetroots.json",
+			"states": {
+				"age": [ "0", "1", "2", "3" ]
+			},
+			"default_state": "age=0",
+			"wind": {
+				"axis": "all",
+				"yroot": 0
+			},
+			"legacy_id": 207,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3"
+			}
+		},
+		{
+			"name": "grass_path",
+			"file": "grass_path.json",
+			"legacy_id": 208
+		},
+		{
+			"name": "repeating_command_block",
+			"file": "repeating_command_block.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"conditional": [ "true", "false" ]
+			},
+			"default_state": "facing=south,conditional=false",
+			"legacy_id": 210,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east",
+					"6": "facing=down",
+					"7": "facing=up"
+				},
+				"0x8": {
+					"0": "conditional=false",
+					"1": "conditional=true"
+				}
+			}
+		},
+		{
+			"name": "chain_command_block",
+			"file": "chain_command_block.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"conditional": [ "true", "false" ]
+			},
+			"default_state": "facing=south,conditional=false",
+			"legacy_id": 211,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east",
+					"6": "facing=down",
+					"7": "facing=up"
+				},
+				"0x8": {
+					"0": "conditional=false",
+					"1": "conditional=true"
+				}
+			}
+		},
+		{
+			"name": "frosted_ice",
+			"file": "frosted_ice.json",
+			"states": {
+				"age": [ "0", "1", "2", "3" ]
+			},
+			"default_state": "age=0",
+			"legacy_id": 212,
+			"legacy_data": {
+				"0": "age=0",
+				"1": "age=1",
+				"2": "age=2",
+				"3": "age=3"
+			}
+		},
+		{
+			"name": "magma",
+			"file": "magma.json",
+			"brightness": 1,
+			"legacy_id": 213
+		},
+		{
+			"name": "nether_wart_block",
+			"file": "nether_wart_block.json",
+			"legacy_id": 214
+		},
+		{
+			"name": "red_nether_brick",
+			"file": "red_nether_brick.json",
+			"legacy_id": 215
+		},
+		{
+			"name": "bone_block",
+			"file": "bone_block.json",
+			"states": {
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "axis=y",
+			"legacy_id": 216,
+			"legacy_data": {
+				"0x4+0x8": {
+					"0": "axis=y",
+					"1": "axis=x",
+					"2": "axis=z"
+				}
+			}
+		},
+		{
+			"name": "observer",
+			"file": "observer.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up" ],
+				"powered": [ "true", "false" ]
+			},
+			"default_state": "facing=south,powered=false",
+			"legacy_id": 218,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=up",
+					"1": "facing=down",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				},
+				"0x8": {
+					"0": "powered=false",
+					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "white_glazed_terracotta",
+			"file": "white_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 235,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "orange_glazed_terracotta",
+			"file": "orange_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 236,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "magenta_glazed_terracotta",
+			"file": "magenta_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 237,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "light_blue_glazed_terracotta",
+			"file": "light_blue_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 238,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "yellow_glazed_terracotta",
+			"file": "yellow_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 239,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "lime_glazed_terracotta",
+			"file": "lime_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 240,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "pink_glazed_terracotta",
+			"file": "pink_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 241,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "gray_glazed_terracotta",
+			"file": "gray_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 242,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "silver_glazed_terracotta",
+			"file": "silver_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 243,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "cyan_glazed_terracotta",
+			"file": "cyan_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 244,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "purple_glazed_terracotta",
+			"file": "purple_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 245,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "blue_glazed_terracotta",
+			"file": "blue_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 246,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "brown_glazed_terracotta",
+			"file": "brown_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 247,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "green_glazed_terracotta",
+			"file": "green_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 248,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "red_glazed_terracotta",
+			"file": "red_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 249,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "black_glazed_terracotta",
+			"file": "black_glazed_terracotta.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"legacy_id": 250,
+			"legacy_data": {
+				"0x1+0x2": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "concrete",
+			"states": {
+				"color": [
+					{ "value": "white", "file": "white_concrete.json" },
+					{ "value": "orange", "file": "orange_concrete.json" },
+					{ "value": "magenta", "file": "magenta_concrete.json" },
+					{ "value": "light_blue", "file": "light_blue_concrete.json" },
+					{ "value": "yellow", "file": "yellow_concrete.json" },
+					{ "value": "lime", "file": "lime_concrete.json" },
+					{ "value": "pink", "file": "pink_concrete.json" },
+					{ "value": "gray", "file": "gray_concrete.json" },
+					{ "value": "silver", "file": "silver_concrete.json" },
+					{ "value": "cyan", "file": "cyan_concrete.json" },
+					{ "value": "purple", "file": "purple_concrete.json" },
+					{ "value": "blue", "file": "blue_concrete.json" },
+					{ "value": "brown", "file": "brown_concrete.json" },
+					{ "value": "green", "file": "green_concrete.json" },
+					{ "value": "red", "file": "red_concrete.json" },
+					{ "value": "black", "file": "black_concrete.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 251,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		},
+		{
+			"name": "concrete_powder",
+			"states": {
+				"color": [
+					{ "value": "white", "file": "white_concrete_powder.json" },
+					{ "value": "orange", "file": "orange_concrete_powder.json" },
+					{ "value": "magenta", "file": "magenta_concrete_powder.json" },
+					{ "value": "light_blue", "file": "light_blue_concrete_powder.json" },
+					{ "value": "yellow", "file": "yellow_concrete_powder.json" },
+					{ "value": "lime", "file": "lime_concrete_powder.json" },
+					{ "value": "pink", "file": "pink_concrete_powder.json" },
+					{ "value": "gray", "file": "gray_concrete_powder.json" },
+					{ "value": "silver", "file": "silver_concrete_powder.json" },
+					{ "value": "cyan", "file": "cyan_concrete_powder.json" },
+					{ "value": "purple", "file": "purple_concrete_powder.json" },
+					{ "value": "blue", "file": "blue_concrete_powder.json" },
+					{ "value": "brown", "file": "brown_concrete_powder.json" },
+					{ "value": "green", "file": "green_concrete_powder.json" },
+					{ "value": "red", "file": "red_concrete_powder.json" },
+					{ "value": "black", "file": "black_concrete_powder.json" }
+				]
+			},
+			"default_state": "color=white",
+			"legacy_id": 252,
+			"legacy_data": {
+				"0": "color=white",
+				"1": "color=orange",
+				"2": "color=magenta",
+				"3": "color=light_blue",
+				"4": "color=yellow",
+				"5": "color=lime",
+				"6": "color=pink",
+				"7": "color=gray",
+				"8": "color=silver",
+				"9": "color=cyan",
+				"10": "color=purple",
+				"11": "color=blue",
+				"12": "color=brown",
+				"13": "color=green",
+				"14": "color=red",
+				"15": "color=black"
+			}
+		}
+	],
+	"model_textures": [
+		"entity/alex",
+		"entity/arrow",
+		"entity/banner_base",
+		"entity/bat",
+		"entity/blaze",
+		"entity/chicken",
+		"entity/elytra",
+		"entity/enchanting_table_book",
+		"entity/endermite",
+		"entity/guardian",
+		"entity/iron_golem",
+		"entity/lead_knot",
+		"entity/minecart",
+		"entity/sheld_base_nopattern",
+		"entity/sign",
+		"entity/silverfish",
+		"entity/snowman",
+		"entity/spider_eyes",
+		"entity/squid",
+		"entity/steve",
+		"entity/witch",
+		"entity/zombie_pigman",
+		"entity/armorstand/wood",
+		"entity/bear/polarbear",
+		"entity/bed/black",
+		"entity/bed/blue",
+		"entity/bed/brown",
+		"entity/bed/cyan",
+		"entity/bed/gray",
+		"entity/bed/green",
+		"entity/bed/light_blue",
+		"entity/bed/lime",
+		"entity/bed/magenta",
+		"entity/bed/orange",
+		"entity/bed/pink",
+		"entity/bed/purple",
+		"entity/bed/red",
+		"entity/bed/silver",
+		"entity/bed/white",
+		"entity/bed/yellow",
+		"entity/boat/boat_acacia",
+		"entity/boat/boat_birch",
+		"entity/boat/boat_darkoak",
+		"entity/boat/boat_jungle",
+		"entity/boat/boat_oak",
+		"entity/boat/boat_spruce",
+		"entity/cat/black",
+		"entity/cat/ocelot",
+		"entity/cat/red",
+		"entity/cat/siamese",
+		"entity/chest/christmas",
+		"entity/chest/christmas_double",
+		"entity/chest/ender",
+		"entity/chest/normal",
+		"entity/chest/normal_double",
+		"entity/chest/trapped",
+		"entity/chest/trapped_double",
+		"entity/cow/cow",
+		"entity/cow/mooshroom",
+		"entity/creeper/creeper",
+		"entity/endercrystal/endercrystal",
+		"entity/enderdragon/dragon",
+		"entity/enderman/enderman",
+		"entity/enderman/enderman_eyes",
+		"entity/ghast/ghast",
+		"entity/ghast/ghast_shooting",
+		"entity/horse/donkey",
+		"entity/horse/horse_black",
+		"entity/horse/horse_brown",
+		"entity/horse/horse_chestnut",
+		"entity/horse/horse_creamy",
+		"entity/horse/horse_darkbrown",
+		"entity/horse/horse_gray",
+		"entity/horse/horse_skeleton",
+		"entity/horse/horse_white",
+		"entity/horse/horse_zombie",
+		"entity/horse/mule",
+		"entity/illager/evoker",
+		"entity/illager/fangs",
+		"entity/illager/illusionist",
+		"entity/illager/vex",
+		"entity/illager/vex_charging",
+		"entity/illager/vindicator",
+		"entity/llama/llama",
+		"entity/llama/llama_brown",
+		"entity/llama/llama_creamy",
+		"entity/llama/llama_gray",
+		"entity/llama/llama_white",
+		"entity/parrot/parrot_blue",
+		"entity/parrot/parrot_green",
+		"entity/parrot/parrot_grey",
+		"entity/parrot/parrot_red_blue",
+		"entity/parrot/parrot_yellow_blue",
+		"entity/pig/pig",
+		"entity/projectiles/arrow",
+		"entity/rabbit/black",
+		"entity/rabbit/brown",
+		"entity/rabbit/caerbannog",
+		"entity/rabbit/gold",
+		"entity/rabbit/salt",
+		"entity/rabbit/toast",
+		"entity/rabbit/white",
+		"entity/rabbit/white_splotched",
+		"entity/sheep/sheep",
+		"entity/sheep/sheep_fur",
+		"entity/shulker/shulker_black",
+		"entity/shulker/shulker_blue",
+		"entity/shulker/shulker_brown",
+		"entity/shulker/shulker_cyan",
+		"entity/shulker/shulker_gray",
+		"entity/shulker/shulker_green",
+		"entity/shulker/shulker_light_blue",
+		"entity/shulker/shulker_lime",
+		"entity/shulker/shulker_magenta",
+		"entity/shulker/shulker_orange",
+		"entity/shulker/shulker_pink",
+		"entity/shulker/shulker_purple",
+		"entity/shulker/shulker_red",
+		"entity/shulker/shulker_silver",
+		"entity/shulker/shulker_white",
+		"entity/shulker/shulker_yellow",
+		"entity/shulker/shulker_spark",
+		"entity/skeleton/skeleton",
+		"entity/skeleton/stray",
+		"entity/skeleton/stray_overlay",
+		"entity/skeleton/wither_skeleton",
+		"entity/slime/magma_cube",
+		"entity/slime/slime",
+		"entity/spider/cave_spider",
+		"entity/spider/spider",
+		"entity/villager/butcher",
+		"entity/villager/farmer",
+		"entity/villager/librarian",
+		"entity/villager/priest",
+		"entity/villager/smith",
+		"entity/villager/villager",
+		"entity/wither/wither",
+		"entity/wither/wither_invulnerable",
+		"entity/wolf/wolf",
+		"entity/wolf/wolf_angry",
+		"entity/wolf/wolf_tame",
+		"entity/zombie/husk",
+		"entity/zombie/zombie",
+		"entity/zombie/zombie_villager",
+		"entity/zombie_villager/zombie_butcher",
+		"entity/zombie_villager/zombie_farmer",
+		"entity/zombie_villager/zombie_librarian",
+		"entity/zombie_villager/zombie_priest",
+		"entity/zombie_villager/zombie_smith",
+		"entity/zombie_villager/zombie_villager"
+	],
+	"block_textures": [
+		"blocks/stone",
+		"blocks/grass_top",
+		"blocks/dirt",
+		"blocks/grass_side_overlay",
+		"blocks/grass_side",
+		"blocks/grass_side_snowed",
+		"blocks/dirt_podzol_top",
+		"blocks/dirt_podzol_side",
+		"blocks/planks_oak",
+		"blocks/planks_spruce",
+		"blocks/planks_birch",
+		"blocks/planks_jungle",
+		"blocks/planks_acacia",
+		"blocks/planks_big_oak",
+		"blocks/sapling_oak",
+		"blocks/sapling_spruce",
+		"blocks/sapling_birch",
+		"blocks/sapling_jungle",
+		"blocks/sapling_acacia",
+		"blocks/sapling_roofed_oak",
+		"blocks/log_oak_top",
+		"blocks/log_oak",
+		"blocks/log_spruce_top",
+		"blocks/log_spruce",
+		"blocks/log_birch_top",
+		"blocks/log_birch",
+		"blocks/log_jungle_top",
+		"blocks/log_jungle",
+		"blocks/log_acacia_top",
+		"blocks/log_acacia",
+		"blocks/log_big_oak_top",
+		"blocks/log_big_oak",
+		"blocks/cobblestone",
+		"blocks/cobblestone_mossy",
+		"blocks/sand",
+		"blocks/red_sand",
+		"blocks/gravel",
+		"blocks/coal_ore",
+		"blocks/iron_ore",
+		"blocks/lapis_ore",
+		"blocks/emerald_ore",
+		"blocks/gold_ore",
+		"blocks/redstone_ore",
+		"blocks/diamond_ore",
+		"blocks/quartz_ore",
+		"blocks/coal_block",
+		"blocks/iron_block",
+		"blocks/lapis_block",
+		"blocks/emerald_block",
+		"blocks/gold_block",
+		"blocks/redstone_block",
+		"blocks/diamond_block",
+		"blocks/leaves_oak",
+		"blocks/leaves_spruce",
+		"blocks/leaves_birch",
+		"blocks/leaves_jungle",
+		"blocks/leaves_acacia",
+		"blocks/leaves_big_oak",
+		"blocks/leaves_oak opaque",
+		"blocks/leaves_spruce opaque",
+		"blocks/leaves_birch opaque",
+		"blocks/leaves_jungle opaque",
+		"blocks/leaves_acacia opaque",
+		"blocks/leaves_big_oak opaque",
+		"blocks/bedrock",
+		"blocks/obsidian",
+		"blocks/mob_spawner",
+		"blocks/cactus_top",
+		"blocks/cactus_bottom",
+		"blocks/cactus_side",
+		"blocks/stonebrick",
+		"blocks/stonebrick_mossy",
+		"blocks/stonebrick_cracked",
+		"blocks/stonebrick_carved",
+		"blocks/mushroom_block_skin_stem",
+		"blocks/mushroom_block_inside",
+		"blocks/mushroom_block_skin_brown",
+		"blocks/mushroom_block_skin_red",
+		"blocks/clay",
+		"blocks/hardened_clay",
+		"blocks/hardened_clay_stained_white",
+		"blocks/hardened_clay_stained_orange",
+		"blocks/hardened_clay_stained_magenta",
+		"blocks/hardened_clay_stained_light_blue",
+		"blocks/hardened_clay_stained_yellow",
+		"blocks/hardened_clay_stained_lime",
+		"blocks/hardened_clay_stained_pink",
+		"blocks/hardened_clay_stained_gray",
+		"blocks/hardened_clay_stained_silver",
+		"blocks/hardened_clay_stained_cyan",
+		"blocks/hardened_clay_stained_purple",
+		"blocks/hardened_clay_stained_blue",
+		"blocks/hardened_clay_stained_brown",
+		"blocks/hardened_clay_stained_green",
+		"blocks/hardened_clay_stained_red",
+		"blocks/hardened_clay_stained_black",
+		"blocks/snow",
+		"blocks/ice",
+		"blocks/ice_packed",
+		"blocks/sandstone_top",
+		"blocks/sandstone_bottom",
+		"blocks/sandstone_normal",
+		"blocks/sandstone_carved",
+		"blocks/sandstone_smooth",
+		"blocks/pumpkin_top",
+		"blocks/pumpkin_side",
+		"blocks/pumpkin_face_off",
+		"blocks/pumpkin_face_on",
+		"blocks/mycelium_top",
+		"blocks/mycelium_side",
+		"blocks/netherrack",
+		"blocks/soul_sand",
+		"blocks/glowstone",
+		"blocks/beacon",
+		"blocks/nether_brick",
+		"blocks/quartz_block_top",
+		"blocks/quartz_block_bottom",
+		"blocks/quartz_block_side",
+		"blocks/quartz_block_chiseled_top",
+		"blocks/quartz_block_chiseled",
+		"blocks/quartz_block_lines_top",
+		"blocks/quartz_block_lines",
+		"blocks/endframe_eye",
+		"blocks/endframe_top",
+		"blocks/end_stone",
+		"blocks/endframe_side",
+		"blocks/dragon_egg",
+		"blocks/enchanting_table_top",
+		"blocks/enchanting_table_bottom",
+		"blocks/enchanting_table_side",
+		"blocks/cauldron_top",
+		"blocks/cauldron_bottom",
+		"blocks/cauldron_inner",
+		"blocks/cauldron_side",
+		"blocks/brewing_stand",
+		"blocks/brewing_stand_base",
+		"blocks/anvil_base",
+		"blocks/anvil_top_damaged_0",
+		"blocks/anvil_top_damaged_1",
+		"blocks/anvil_top_damaged_2",
+		"blocks/brick",
+		"blocks/sponge",
+		"blocks/torch_on",
+		"blocks/ladder",
+		"blocks/glass_pane_top",
+		"blocks/glass",
+		"blocks/iron_bars",
+		"blocks/stone_slab_top",
+		"blocks/stone_slab_side",
+		"blocks/jukebox_top",
+		"blocks/jukebox_side",
+		"blocks/crafting_table_top",
+		"blocks/crafting_table_front",
+		"blocks/crafting_table_side",
+		"blocks/furnace_top",
+		"blocks/furnace_side",
+		"blocks/furnace_front_off",
+		"blocks/furnace_front_on",
+		"blocks/dispenser_front_horizontal",
+		"blocks/dispenser_front_vertical",
+		"blocks/dropper_front_horizontal",
+		"blocks/dropper_front_vertical",
+		"blocks/door_wood_upper",
+		"blocks/door_wood_lower",
+		"blocks/door_iron_upper",
+		"blocks/door_iron_lower",
+		"blocks/bookshelf",
+		"blocks/trapdoor",
+		"blocks/glass_pane_top_white",
+		"blocks/glass_pane_top_orange",
+		"blocks/glass_pane_top_magenta",
+		"blocks/glass_pane_top_light_blue",
+		"blocks/glass_pane_top_yellow",
+		"blocks/glass_pane_top_lime",
+		"blocks/glass_pane_top_pink",
+		"blocks/glass_pane_top_gray",
+		"blocks/glass_pane_top_silver",
+		"blocks/glass_pane_top_cyan",
+		"blocks/glass_pane_top_purple",
+		"blocks/glass_pane_top_blue",
+		"blocks/glass_pane_top_brown",
+		"blocks/glass_pane_top_green",
+		"blocks/glass_pane_top_red",
+		"blocks/glass_pane_top_black",
+		"blocks/glass_white",
+		"blocks/glass_orange",
+		"blocks/glass_magenta",
+		"blocks/glass_light_blue",
+		"blocks/glass_yellow",
+		"blocks/glass_lime",
+		"blocks/glass_pink",
+		"blocks/glass_gray",
+		"blocks/glass_silver",
+		"blocks/glass_cyan",
+		"blocks/glass_purple",
+		"blocks/glass_blue",
+		"blocks/glass_brown",
+		"blocks/glass_green",
+		"blocks/glass_red",
+		"blocks/glass_black",
+		"blocks/farmland_dry",
+		"blocks/farmland_wet",
+		"blocks/wheat_stage_0",
+		"blocks/wheat_stage_1",
+		"blocks/wheat_stage_2",
+		"blocks/wheat_stage_3",
+		"blocks/wheat_stage_4",
+		"blocks/wheat_stage_5",
+		"blocks/wheat_stage_6",
+		"blocks/wheat_stage_7",
+		"blocks/carrots_stage_0",
+		"blocks/carrots_stage_1",
+		"blocks/carrots_stage_2",
+		"blocks/carrots_stage_3",
+		"blocks/potatoes_stage_0",
+		"blocks/potatoes_stage_1",
+		"blocks/potatoes_stage_2",
+		"blocks/potatoes_stage_3",
+		"blocks/nether_wart_stage_0",
+		"blocks/nether_wart_stage_1",
+		"blocks/nether_wart_stage_2",
+		"blocks/cocoa_stage_0",
+		"blocks/cocoa_stage_1",
+		"blocks/cocoa_stage_2",
+		"blocks/melon_top",
+		"blocks/melon_side",
+		"blocks/pumpkin_stem_connected",
+		"blocks/pumpkin_stem_disconnected",
+		"blocks/melon_stem_connected",
+		"blocks/melon_stem_disconnected",
+		"blocks/waterlily",
+		"blocks/vine",
+		"blocks/reeds",
+		"blocks/flower_pot",
+		"blocks/web",
+		"blocks/tallgrass",
+		"blocks/fern",
+		"blocks/deadbush",
+		"blocks/mushroom_brown",
+		"blocks/mushroom_red",
+		"blocks/flower_dandelion",
+		"blocks/flower_rose",
+		"blocks/flower_blue_orchid",
+		"blocks/flower_allium",
+		"blocks/flower_houstonia",
+		"blocks/flower_tulip_red",
+		"blocks/flower_tulip_orange",
+		"blocks/flower_tulip_white",
+		"blocks/flower_tulip_pink",
+		"blocks/flower_oxeye_daisy",
+		"blocks/double_plant_sunflower_bottom",
+		"blocks/double_plant_sunflower_top",
+		"blocks/double_plant_sunflower_front",
+		"blocks/double_plant_sunflower_back",
+		"blocks/double_plant_syringa_bottom",
+		"blocks/double_plant_syringa_top",
+		"blocks/double_plant_grass_bottom",
+		"blocks/double_plant_grass_top",
+		"blocks/double_plant_fern_bottom",
+		"blocks/double_plant_fern_top",
+		"blocks/double_plant_rose_bottom",
+		"blocks/double_plant_rose_top",
+		"blocks/double_plant_paeonia_bottom",
+		"blocks/double_plant_paeonia_top",
+		"blocks/wool_colored_white",
+		"blocks/wool_colored_orange",
+		"blocks/wool_colored_magenta",
+		"blocks/wool_colored_light_blue",
+		"blocks/wool_colored_yellow",
+		"blocks/wool_colored_lime",
+		"blocks/wool_colored_pink",
+		"blocks/wool_colored_gray",
+		"blocks/wool_colored_silver",
+		"blocks/wool_colored_cyan",
+		"blocks/wool_colored_purple",
+		"blocks/wool_colored_blue",
+		"blocks/wool_colored_brown",
+		"blocks/wool_colored_green",
+		"blocks/wool_colored_red",
+		"blocks/wool_colored_black",
+		"blocks/cake_top",
+		"blocks/cake_bottom",
+		"blocks/cake_side",
+		"blocks/cake_inner",
+		"blocks/hay_block_top",
+		"blocks/hay_block_side",
+		"blocks/noteblock",
+		"blocks/rail_normal",
+		"blocks/rail_normal_turned",
+		"blocks/rail_golden",
+		"blocks/rail_golden_powered",
+		"blocks/rail_detector",
+		"blocks/rail_detector_powered",
+		"blocks/rail_activator",
+		"blocks/rail_activator_powered",
+		"blocks/redstone_dust_dot",
+		"blocks/redstone_dust_line0",
+		"blocks/redstone_dust_line1",
+		"blocks/lever",
+		"blocks/redstone_torch_off",
+		"blocks/redstone_torch_on",
+		"blocks/repeater_off",
+		"blocks/repeater_on",
+		"blocks/comparator_off",
+		"blocks/comparator_on",
+		"blocks/piston_top_sticky",
+		"blocks/piston_top_normal",
+		"blocks/piston_side",
+		"blocks/piston_bottom",
+		"blocks/piston_inner",
+		"blocks/tnt_top",
+		"blocks/tnt_bottom",
+		"blocks/tnt_side",
+		"blocks/redstone_lamp_off",
+		"blocks/redstone_lamp_on",
+		"blocks/daylight_detector_side",
+		"blocks/daylight_detector_top",
+		"blocks/hopper_top",
+		"blocks/hopper_inside",
+		"blocks/hopper_outside",
+		"blocks/trip_wire_source",
+		"blocks/trip_wire",
+		"blocks/stone_granite",
+		"blocks/stone_granite_smooth",
+		"blocks/stone_diorite",
+		"blocks/stone_diorite_smooth",
+		"blocks/stone_andesite",
+		"blocks/stone_andesite_smooth",
+		"blocks/coarse_dirt",
+		"blocks/sponge_wet",
+		"blocks/slime",
+		"blocks/iron_trapdoor",
+		"blocks/daylight_detector_inverted_top",
+		"blocks/door_spruce_upper",
+		"blocks/door_spruce_lower",
+		"blocks/door_birch_upper",
+		"blocks/door_birch_lower",
+		"blocks/door_jungle_upper",
+		"blocks/door_jungle_lower",
+		"blocks/door_acacia_upper",
+		"blocks/door_acacia_lower",
+		"blocks/door_dark_oak_upper",
+		"blocks/door_dark_oak_lower",
+		"blocks/red_sandstone_top",
+		"blocks/red_sandstone_bottom",
+		"blocks/red_sandstone_normal",
+		"blocks/red_sandstone_carved",
+		"blocks/red_sandstone_smooth",
+		"blocks/prismarine_rough",
+		"blocks/prismarine_bricks",
+		"blocks/prismarine_dark",
+		"blocks/end_rod",
+		"blocks/chorus_plant",
+		"blocks/chorus_flower",
+		"blocks/chorus_flower_dead",
+		"blocks/purpur_block",
+		"blocks/purpur_pillar_top",
+		"blocks/purpur_pillar",
+		"blocks/end_bricks",
+		"blocks/beetroots_stage_0",
+		"blocks/beetroots_stage_1",
+		"blocks/beetroots_stage_2",
+		"blocks/beetroots_stage_3",
+		"blocks/grass_path_top",
+		"blocks/grass_path_side",
+		"blocks/frosted_ice_0",
+		"blocks/frosted_ice_1",
+		"blocks/frosted_ice_2",
+		"blocks/frosted_ice_3",
+		"blocks/nether_wart_block",
+		"blocks/red_nether_brick",
+		"blocks/bone_block_top",
+		"blocks/bone_block_side",
+		"blocks/observer_top",
+		"blocks/observer_back",
+		"blocks/observer_back_lit",
+		"blocks/observer_front",
+		"blocks/observer_side",
+		"blocks/glazed_terracotta_white",
+		"blocks/glazed_terracotta_orange",
+		"blocks/glazed_terracotta_magenta",
+		"blocks/glazed_terracotta_light_blue",
+		"blocks/glazed_terracotta_yellow",
+		"blocks/glazed_terracotta_lime",
+		"blocks/glazed_terracotta_pink",
+		"blocks/glazed_terracotta_gray",
+		"blocks/glazed_terracotta_silver",
+		"blocks/glazed_terracotta_cyan",
+		"blocks/glazed_terracotta_purple",
+		"blocks/glazed_terracotta_blue",
+		"blocks/glazed_terracotta_brown",
+		"blocks/glazed_terracotta_green",
+		"blocks/glazed_terracotta_red",
+		"blocks/glazed_terracotta_black",
+		"blocks/concrete_white",
+		"blocks/concrete_orange",
+		"blocks/concrete_magenta",
+		"blocks/concrete_light_blue",
+		"blocks/concrete_yellow",
+		"blocks/concrete_lime",
+		"blocks/concrete_pink",
+		"blocks/concrete_gray",
+		"blocks/concrete_silver",
+		"blocks/concrete_cyan",
+		"blocks/concrete_purple",
+		"blocks/concrete_blue",
+		"blocks/concrete_brown",
+		"blocks/concrete_green",
+		"blocks/concrete_red",
+		"blocks/concrete_black",
+		"blocks/concrete_powder_white",
+		"blocks/concrete_powder_orange",
+		"blocks/concrete_powder_magenta",
+		"blocks/concrete_powder_light_blue",
+		"blocks/concrete_powder_yellow",
+		"blocks/concrete_powder_lime",
+		"blocks/concrete_powder_pink",
+		"blocks/concrete_powder_gray",
+		"blocks/concrete_powder_silver",
+		"blocks/concrete_powder_cyan",
+		"blocks/concrete_powder_purple",
+		"blocks/concrete_powder_blue",
+		"blocks/concrete_powder_brown",
+		"blocks/concrete_powder_green",
+		"blocks/concrete_powder_red",
+		"blocks/concrete_powder_black",
+		"blocks/structure_block",
+		"blocks/structure_block_save",
+		"blocks/structure_block_load",
+		"blocks/structure_block_corner",
+		"blocks/structure_block_data"
+	],
+	"block_textures_animated": [
+		"blocks/water_still",
+		"blocks/water_flow",
+		"blocks/lava_still",
+		"blocks/lava_flow",
+		"blocks/fire_layer_0",
+		"blocks/fire_layer_1",
+		"blocks/portal",
+		"blocks/command_block_front",
+		"blocks/command_block_back",
+		"blocks/command_block_side",
+		"blocks/command_block_conditional",
+		"blocks/repeating_command_block_front",
+		"blocks/repeating_command_block_back",
+		"blocks/repeating_command_block_side",
+		"blocks/repeating_command_block_conditional",
+		"blocks/chain_command_block_front",
+		"blocks/chain_command_block_back",
+		"blocks/chain_command_block_side",
+		"blocks/chain_command_block_conditional",
+		"blocks/prismarine_rough",
+		"blocks/sea_lantern",
+		"blocks/magma"
+	],
+	"block_textures_color": {
+		"blocks/grass_top" : "grass",
+		"blocks/grass_side_overlay" : "grass",
+		"blocks/leaves_oak": "leaves",
+		"blocks/leaves_spruce": "#62A857",
+		"blocks/leaves_birch": "#62A857",
+		"blocks/leaves_jungle": "leaves",
+		"blocks/leaves_acacia": "#87AC39",
+		"blocks/leaves_big_oak": "#87AC39",
+		"blocks/leaves_oak opaque": "leaves",
+		"blocks/leaves_spruce opaque": "#62A857",
+		"blocks/leaves_birch opaque": "#62A857",
+		"blocks/leaves_jungle opaque": "leaves",
+		"blocks/leaves_acacia opaque": "#87AC39",
+		"blocks/leaves_big_oak opaque": "#87AC39",
+		"blocks/pumpkin_stem_connected": "#8EFB2D",
+		"blocks/pumpkin_stem_disconnected": "#8EFB2D",
+		"blocks/melon_stem_connected": "#8EFB2D",
+		"blocks/melon_stem_disconnected": "#8EFB2D",
+		"blocks/waterlily": "#66B333",
+		"blocks/vine": "grass",
+		"blocks/tallgrass": "grass",
+		"blocks/fern": "grass",
+		"blocks/double_plant_grass_bottom": "grass",
+		"blocks/double_plant_grass_top": "grass",
+		"blocks/double_plant_fern_bottom": "grass",
+		"blocks/double_plant_fern_top": "grass"
+	},
+	"item_textures": [
+		"items/leather_helmet",
+		"items/chainmail_helmet",
+		"items/iron_helmet",
+		"items/diamond_helmet",
+		"items/gold_helmet",
+		"items/flint_and_steel",
+		"items/flint",
+		"items/coal",
+		"items/string",
+		"items/seeds_wheat",
+		"items/apple",
+		"items/apple_golden",
+		"items/egg",
+		"items/sugar",
+		"items/snowball",
+		"items/empty_armor_slot_helmet",
+		"items/leather_chestplate",
+		"items/chainmail_chestplate",
+		"items/iron_chestplate",
+		"items/diamond_chestplate",
+		"items/gold_chestplate",
+		"items/bow_standby",
+		"items/brick",
+		"items/iron_ingot",
+		"items/feather",
+		"items/wheat",
+		"items/painting",
+		"items/reeds",
+		"items/bone",
+		"items/cake",
+		"items/slimeball",
+		"items/empty_armor_slot_chestplate",
+		"items/leather_leggings",
+		"items/chainmail_leggings",
+		"items/iron_leggings",
+		"items/diamond_leggings",
+		"items/gold_leggings",
+		"items/arrow",
+		"items/quiver",
+		"items/gold_ingot",
+		"items/gunpowder",
+		"items/bread",
+		"items/sign",
+		"items/door_wood",
+		"items/door_iron",
+		"items/bed",
+		"items/fireball",
+		"items/empty_armor_slot_leggings",
+		"items/leather_boots",
+		"items/chainmail_boots",
+		"items/iron_boots",
+		"items/diamond_boots",
+		"items/gold_boots",
+		"items/stick",
+		"items/compass_00",
+		"items/diamond",
+		"items/redstone_dust",
+		"items/clay_ball",
+		"items/paper",
+		"items/book_normal",
+		"items/map_filled",
+		"items/seeds_pumpkin",
+		"items/seeds_melon",
+		"items/empty_armor_slot_boots",
+		"items/wood_sword",
+		"items/stone_sword",
+		"items/iron_sword",
+		"items/diamond_sword",
+		"items/gold_sword",
+		"items/fishing_rod_uncast",
+		"items/clock_00",
+		"items/bowl",
+		"items/mushroom_stew",
+		"items/glowstone_dust",
+		"items/bucket_empty",
+		"items/bucket_water",
+		"items/bucket_lava",
+		"items/bucket_milk",
+		"items/dye_powder_black",
+		"items/dye_powder_gray",
+		"items/wood_shovel",
+		"items/stone_shovel",
+		"items/iron_shovel",
+		"items/diamond_shovel",
+		"items/gold_shovel",
+		"items/fishing_rod_cast",
+		"items/repeater",
+		"items/porkchop_raw",
+		"items/porkchop_cooked",
+		"items/fish_cod_raw",
+		"items/fish_cod_cooked",
+		"items/rotten_flesh",
+		"items/cookie",
+		"items/shears",
+		"items/dye_powder_red",
+		"items/dye_powder_pink",
+		"items/wood_pickaxe",
+		"items/stone_pickaxe",
+		"items/iron_pickaxe",
+		"items/diamond_pickaxe",
+		"items/gold_pickaxe",
+		"items/bow_pulling_0",
+		"items/carrot_on_a_stick",
+		"items/leather",
+		"items/saddle",
+		"items/beef_raw",
+		"items/beef_cooked",
+		"items/ender_pearl",
+		"items/blaze_rod",
+		"items/melon",
+		"items/dye_powder_green",
+		"items/dye_powder_lime",
+		"items/wood_axe",
+		"items/stone_axe",
+		"items/iron_axe",
+		"items/diamond_axe",
+		"items/gold_axe",
+		"items/bow_pulling_1",
+		"items/potato_baked",
+		"items/potato",
+		"items/carrot",
+		"items/chicken_raw",
+		"items/chicken_cooked",
+		"items/ghast_tear",
+		"items/gold_nugget",
+		"items/nether_wart",
+		"items/dye_powder_brown",
+		"items/dye_powder_yellow",
+		"items/wood_hoe",
+		"items/stone_hoe",
+		"items/iron_hoe",
+		"items/diamond_hoe",
+		"items/gold_hoe",
+		"items/bow_pulling_2",
+		"items/potato_poisonous",
+		"items/minecart_normal",
+		"items/oak_boat",
+		"items/melon_speckled",
+		"items/spider_eye_fermented",
+		"items/spider_eye",
+		"items/potion_bottle_empty",
+		"items/potion_overlay",
+		"items/dye_powder_blue",
+		"items/dye_powder_light_blue",
+		"items/leather_helmet_overlay",
+		"items/rabbit_raw",
+		"items/rabbit_cooked",
+		"items/rabbit_foot",
+		"items/rabbit_hide",
+		"items/rabbit_stew",
+		"items/carrot_golden",
+		"items/minecart_chest",
+		"items/pumpkin_pie",
+		"items/spawn_egg",
+		"items/potion_bottle_splash",
+		"items/ender_eye",
+		"items/cauldron",
+		"items/blaze_powder",
+		"items/dye_powder_purple",
+		"items/dye_powder_magenta",
+		"items/leather_chestplate_overlay",
+		"items/mutton_raw",
+		"items/mutton_cooked",
+		"items/wooden_armorstand",
+		"items/totem",
+		"items/banner_overlay",
+		"items/minecart_tnt",
+		"items/minecart_furnace",
+		"items/minecart_hopper",
+		"items/spawn_egg_overlay",
+		"items/ruby",
+		"items/experience_bottle",
+		"items/brewing_stand",
+		"items/magma_cream",
+		"items/dye_powder_cyan",
+		"items/dye_powder_orange",
+		"items/leather_leggings_overlay",
+		"items/door_spruce",
+		"items/door_birch",
+		"items/door_jungle",
+		"items/door_acacia",
+		"items/door_dark_oak",
+		"items/barrier",
+		"items/prismarine_crystals",
+		"items/prismarine_shard",
+		"items/nether_star",
+		"items/emerald",
+		"items/book_writable",
+		"items/book_written",
+		"items/flower_pot",
+		"items/dye_powder_silver",
+		"items/dye_powder_white",
+		"items/leather_boots_overlay",
+		"items/spruce_boat",
+		"items/birch_boat",
+		"items/jungle_boat",
+		"items/acacia_boat",
+		"items/dark_oak_boat",
+		"items/beetroot",
+		"items/beetroot_seeds",
+		"items/beetroot_soup",
+		"items/fireworks",
+		"items/fireworks_charge",
+		"items/fireworks_charge_overlay",
+		"items/hopper",
+		"items/map_empty",
+		"items/item_frame",
+		"items/book_enchanted",
+		"items/fish_pufferfish_raw",
+		"items/fish_clownfish_raw",
+		"items/fish_salmon_raw",
+		"items/fish_salmon_cooked",
+		"items/knowledge_book",
+		"items/potion_bottle_drinkable",
+		"items/minecart_command_block",
+		"items/chorus_fruit",
+		"items/chorus_fruit_popped",
+		"items/dragon_breath",
+		"items/spectral_arrow",
+		"items/tipped_arrow_base",
+		"items/tipped_arrow_head",
+		"items/quartz",
+		"items/netherbrick",
+		"items/comparator",
+		"items/skull_skeleton",
+		"items/skull_wither",
+		"items/skull_zombie",
+		"items/skull_steve",
+		"items/skull_creeper",
+		"items/empty_armor_slot_shield",
+		"items/potion_bottle_lingering",
+		"items/elytra",
+		"items/broken_elytra",
+		"items/end_crystal",
+		"items/charcoal",
+		"items/diamond_horse_armor",
+		"items/gold_horse_armor",
+		"items/iron_horse_armor",
+		"items/lead",
+		"items/name_tag",
+		"items/iron_nugget",
+		"items/record_cat",
+		"items/record_blocks",
+		"items/record_chirp",
+		"items/record_far",
+		"items/record_mall",
+		"items/record_mellohi",
+		"items/record_stal",
+		"items/record_strad",
+		"items/record_ward",
+		"items/record_11",
+		"items/record_wait",
+		"items/record_13",
+		"items/structure_void",
+		"items/shulker_shell",
+		"items/map_filled_markings",
+		"items/clock_00",
+		"items/clock_01",
+		"items/clock_02",
+		"items/clock_03",
+		"items/clock_04",
+		"items/clock_05",
+		"items/clock_06",
+		"items/clock_07",
+		"items/clock_08",
+		"items/clock_09",
+		"items/clock_10",
+		"items/clock_11",
+		"items/clock_12",
+		"items/clock_13",
+		"items/clock_14",
+		"items/clock_15",
+		"items/clock_16",
+		"items/clock_17",
+		"items/clock_18",
+		"items/clock_19",
+		"items/clock_20",
+		"items/clock_21",
+		"items/clock_22",
+		"items/clock_23",
+		"items/clock_24",
+		"items/clock_25",
+		"items/clock_26",
+		"items/clock_27",
+		"items/clock_28",
+		"items/clock_29",
+		"items/clock_30",
+		"items/clock_31",
+		"items/clock_32",
+		"items/clock_33",
+		"items/clock_34",
+		"items/clock_35",
+		"items/clock_36",
+		"items/clock_37",
+		"items/clock_38",
+		"items/clock_39",
+		"items/clock_40",
+		"items/clock_41",
+		"items/clock_42",
+		"items/clock_43",
+		"items/clock_44",
+		"items/clock_45",
+		"items/clock_46",
+		"items/clock_47",
+		"items/clock_48",
+		"items/clock_49",
+		"items/clock_50",
+		"items/clock_51",
+		"items/clock_52",
+		"items/clock_53",
+		"items/clock_54",
+		"items/clock_55",
+		"items/clock_56",
+		"items/clock_57",
+		"items/clock_58",
+		"items/clock_59",
+		"items/clock_60",
+		"items/clock_61",
+		"items/clock_62",
+		"items/clock_63",
+		"items/compass_00",
+		"items/compass_01",
+		"items/compass_02",
+		"items/compass_03",
+		"items/compass_04",
+		"items/compass_05",
+		"items/compass_06",
+		"items/compass_07",
+		"items/compass_08",
+		"items/compass_09",
+		"items/compass_10",
+		"items/compass_11",
+		"items/compass_12",
+		"items/compass_13",
+		"items/compass_14",
+		"items/compass_15",
+		"items/compass_16",
+		"items/compass_17",
+		"items/compass_18",
+		"items/compass_19",
+		"items/compass_20",
+		"items/compass_21",
+		"items/compass_22",
+		"items/compass_23",
+		"items/compass_24",
+		"items/compass_25",
+		"items/compass_26",
+		"items/compass_27",
+		"items/compass_28",
+		"items/compass_29",
+		"items/compass_30",
+		"items/compass_31"
+	]
+}

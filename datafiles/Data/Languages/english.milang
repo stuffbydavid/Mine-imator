@@ -680,7 +680,7 @@
 			"Remove": "Remove",
 			"ok": "OK"
 		},
-		"size": "(%1x%2x%3 (%4 blocks)",
+		"size": "(%1x%2x%3 (%4 blocks))",
 		"cancel": "Cancel"
 	},
 	"block/": {

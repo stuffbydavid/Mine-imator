@@ -8,7 +8,7 @@ buffer_current = buffer_load_lib(fn)
 load_format = buffer_read_byte()
 
 // Check format too new
-if (load_format > e_project.FORMAT_106_2) 
+if (load_format > e_project.FORMAT_CB_103) 
 {
 	log("Invalid format", load_format)
 	error("erroropenprojectnewer")

@@ -36,13 +36,15 @@ with (tl)
 		}
 	}
 	
-	ds_list_insert(parent.tree_list, parent_index, id)
+	ds_list_insert(parent.tree_list, parent_tree_index, id)
 	
 	// Restore tree recursively
 	for (var t = 0; t < save.tree_amount; t++)
 		history_restore_tl(save.tree_save_obj[t])
 		
 	// Restore parts
+	if (save.part_amount > 0)
+		part_list = ds_list_create()
 	for (var p = 0; p < save.part_amount; p++)
 		ds_list_add(part_list, save_id_find(save.part_save_id[p]))
 		
@@ -78,14 +80,9 @@ with (tl)
 			keyframe_list[|save.usage_kf_attractor_index[s]].value[e_value.ATTRACTOR] = tl
 
 	// Update
-	tl_update_type_name()
-	tl_update_display_name()
-	tl_update_rot_point()
-	tl_update_value_types()
+	tl_update()
 	tl_update_values()
-	tl_update_depth()
-	if (type = "particles")
-		particle_spawner_init()
+	
 }
 
 return tl

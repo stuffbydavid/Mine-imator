@@ -1,7 +1,7 @@
 /// tl_update_part_list(part, parent)
 /// @arg part
 /// @arg parent
-/// @desc Sets the hierarchy of the model part list.
+/// @desc Sets the model parts and hierarchy of the timelines.
 
 var part, par;
 part = argument0

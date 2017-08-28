@@ -1,6 +1,7 @@
 /// action_tl_keyframes_load(filename)
 /// @arg filename
 /// TODO
+/*
 if (history_undo)
 {
 	tl_keyframes_remove()
@@ -57,7 +58,7 @@ else
 	action_tl_keyframes_load_read(fn, tladd, insertpos, null)
 	
 	// Update
-	project_read_update()
+	project_load_update()
 		
 	if (!history_redo)
 		with (hobj)
@@ -65,3 +66,4 @@ else
 }
 
 app_update_tl_edit()
+*/

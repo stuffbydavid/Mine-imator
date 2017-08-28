@@ -21,8 +21,7 @@ cloudsize = background_sky_clouds_size * 32
 
 if (!background_sky_clouds_flat)
 {
-	var surf, iscloud, pw, ph, blockw, blockh;
-	surf = surface_create(texwid, texhei)
+	var surf = surface_create(texwid, texhei);
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
@@ -34,6 +33,7 @@ if (!background_sky_clouds_flat)
 	buffer_get_surface(buffer_current, surf, 0, 0, 0)
 	
 	// Store pixels
+	var iscloud;
 	for (var xx = 0; xx < texwid; xx++)
 		for (var yy = 0; yy < texhei; yy++)
 			iscloud[xx, yy] = buffer_read_alpha(xx, yy, texwid) > 0
@@ -41,6 +41,7 @@ if (!background_sky_clouds_flat)
 	buffer_delete(buffer_current)
 	surface_free(surf)
 	
+	var pw, ph, blockw, blockh;
 	pw = 1 / texwid
 	ph = 1 / texhei
 	blockw = cloudsize / texwid

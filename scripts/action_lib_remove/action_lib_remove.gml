@@ -11,7 +11,7 @@ if (history_undo)
 		// Restore children
 		for (var c = 0; c < child_amount; c++)
 			with (save_id_find(child_save_id[c]))
-				tl_set_parent(save_id_find(other.child_parent_save_id[c]), other.child_parent_index[c])
+				tl_set_parent(save_id_find(other.child_parent_save_id[c]), other.child_parent_tree_index[c])
 	}
 }
 else
@@ -44,7 +44,7 @@ else
 				{
 					hobj.child_save_id[hobj.child_amount] = save_id
 					hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
-					hobj.child_parent_index[hobj.child_amount] = t
+					hobj.child_parent_tree_index[hobj.child_amount] = t
 					hobj.child_amount++
 				}
 				
@@ -68,7 +68,7 @@ else
 					{
 						hobj.child_save_id[hobj.child_amount] = save_id
 						hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
-						hobj.child_parent_index[hobj.child_amount] = t
+						hobj.child_parent_tree_index[hobj.child_amount] = t
 						hobj.child_amount++
 					}
 					

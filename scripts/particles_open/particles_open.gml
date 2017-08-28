@@ -2,7 +2,7 @@
 /// @arg filename
 /// @arg template
 /// @desc Opens .particles into the given template.
-/*
+/* TODO
 var fn, temp, hobj;
 hobj = null
 

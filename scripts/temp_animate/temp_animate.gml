@@ -15,6 +15,8 @@ with (new(obj_timeline))
 		case "char":
 		case "spblock":
 		{
+			part_list = ds_list_create()
+		
 			if (other.model_file != null)
 				for (var p = 0; p < ds_list_size(other.model_file.file_part_list); p++)
 					tl_new_part(other.model_file.file_part_list[|p])
@@ -44,15 +46,7 @@ with (new(obj_timeline))
 			break
 	}
 
-	tl_value_spawn()
-	tl_update_value_types()
-	tl_update_rot_point()
-	tl_update_type_name()
-	tl_update_display_name()
-	tl_update_depth()
-	
-	if (type = "particles")
-		particle_spawner_init()
+	tl_update()
 		
 	return id
 }

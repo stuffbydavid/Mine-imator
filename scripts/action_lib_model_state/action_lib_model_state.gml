@@ -55,7 +55,8 @@ with (temp_edit)
 {
 	model_state_map[?state] = val
 	model_state = state_vars_map_to_string(model_state_map)
-	temp_update_model(hobj)
+	temp_update_model()
+	temp_update_model_timeline_tree(hobj)
 	temp_update_display_name()
 }
 
@@ -72,7 +73,7 @@ if (history_undo)
 		// Restore child positions in tree
 		for (var m = 0; m < part_child_amount; m++) 
 			with (save_id_find(part_child_save_id[m]))
-				tl_set_parent(save_id_find(history_data.part_child_parent_save_id[m]), history_data.part_child_parent_index[m])
+				tl_set_parent(save_id_find(history_data.part_child_parent_save_id[m]), history_data.part_child_parent_tree_index[m])
 		
 		// Restore selection
 		history_restore_tl_select()

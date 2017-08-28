@@ -4,7 +4,7 @@
 
 var saveid = argument0;
 
-if (saveid = "")
+if (!is_string(saveid) || saveid = "")
 	return null
 
 with (app)

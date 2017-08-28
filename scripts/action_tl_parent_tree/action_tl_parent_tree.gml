@@ -20,12 +20,12 @@ for (var t = 0; t < ds_list_size(tree_list); t++)
 				if (other.parent = app.timeline_move_obj)
 				{
 					tl_old_parent_save_id[tl_amount] = save_id_get(other.move_parent)
-					tl_old_parent_index[tl_amount] = other.move_parent_index
+					tl_old_parent_tree_index[tl_amount] = other.move_parent_tree_index
 				}
 				else
 				{
 					tl_old_parent_save_id[tl_amount] = save_id_get(other.parent)
-					tl_old_parent_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
+					tl_old_parent_tree_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
 				}
 				tl_old_x[tl_amount] = other.value[e_value.POS_X]
 				tl_old_y[tl_amount] = other.value[e_value.POS_Y]

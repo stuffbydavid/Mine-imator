@@ -21,6 +21,7 @@ if (name = "")
 else
 	display_name = name
 
-for (var p = 0; p < ds_list_size(part_list); p++)
-	with (part_list[|p])
-		tl_update_type_name()
+if (part_list != null)
+	for (var p = 0; p < ds_list_size(part_list); p++)
+		with (part_list[|p])
+			tl_update_type_name()

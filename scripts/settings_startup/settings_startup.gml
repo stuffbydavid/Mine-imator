@@ -17,9 +17,9 @@ setting_view_grid_size_ver = 3
 setting_view_real_time_render = true
 setting_view_real_time_render_time = 100
 
-font_main = font_add_lib(data_directory + "opensans.ttf", 12, false, false)
-font_main_bold = font_add_lib(data_directory + "opensansbold.ttf", 12, false, false)
-font_main_big = font_add_lib(data_directory + "opensansbold.ttf", 18, false, false)
+font_main = font_add_lib(data_directory + "opensans.ttf", 10, false, false)
+font_main_bold = font_add_lib(data_directory + "opensansbold.ttf", 10, false, false)
+font_main_big = font_add_lib(data_directory + "opensansbold.ttf", 16, false, false)
 
 setting_font = font_main
 setting_font_bold = font_main_bold

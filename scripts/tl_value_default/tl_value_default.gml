@@ -10,7 +10,6 @@ switch (argument0)
 	case e_value.RGB_MUL:
 	case e_value.HSB_MUL: return c_white
 	case e_value.SPAWN: return true
-	case e_value.ATTRACTOR: return app
 	case e_value.FORCE: return 1
 	case e_value.LIGHT_COLOR: return c_white
 	case e_value.LIGHT_RANGE: return 250
@@ -41,7 +40,8 @@ switch (argument0)
 	case e_value.BG_WIND_SPEED: return app.background_wind_speed
 	case e_value.BG_WIND_STRENGTH: return app.background_wind_strength
 	case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed
-	case e_value.TEXTURE_OBJ: return null
+	case e_value.ATTRACTOR:
+	case e_value.TEXTURE_OBJ:
 	case e_value.SOUND_OBJ: return null
 	case e_value.SOUND_VOLUME: return 1
 	case e_value.VISIBLE: return true

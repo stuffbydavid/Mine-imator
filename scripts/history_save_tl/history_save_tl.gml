@@ -85,9 +85,14 @@ with (save)
 		tree_save_obj[t] = history_save_tl(tl.tree_list[|t])
 		
 	// Save parts
-	part_amount = ds_list_size(tl.part_list)
-	for (var p = 0; p < part_amount; p++)
-		part_save_id[p] = save_id_get(tl.part_list[|p])
+	if (tl.part_list != null)
+	{
+		part_amount = ds_list_size(tl.part_list)
+		for (var p = 0; p < part_amount; p++)
+			part_save_id[p] = save_id_get(tl.part_list[|p])
+	}
+	else
+		part_amount = 0
 }
 
 return save
