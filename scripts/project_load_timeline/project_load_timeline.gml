@@ -11,6 +11,8 @@ with (new(obj_timeline))
 	loaded = true
 	
 	save_id = json_read_string(map[?"id"], save_id)
+	save_id_map[?save_id] = save_id
+	
 	type = json_read_string(map[?"type"], type)
 	name = json_read_string(map[?"name"], name)
 	
@@ -46,10 +48,10 @@ with (new(obj_timeline))
 			with (new(obj_keyframe))
 			{
 				position = string_get_real(key)
-			    loaded = true
+				loaded = true
 				timeline = other.id
-			    selected = false
-			    sound_play_index = null
+				selected = false
+				sound_play_index = null
 				
 				for (var v = 0; v < e_value.amount; v++)
 					value[v] = other.value_default[v]

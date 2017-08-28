@@ -8,7 +8,7 @@ if (popup.tbx_username.text != "" && !popup.http)
 	if (draw_button_normal("downloadskingetskin", dx + 258, dy - 1, wid, 24))
 	{
 		popup.username = popup.tbx_username.text
-		popup.http = http_get_file(link_skins + popup.username + ".png", download_file)
+		popup.http = http_get_file(link_skins + popup.username + ".png", download_image_file)
 		popup.fail_message = ""
 		popup.start_time = current_time
 	}

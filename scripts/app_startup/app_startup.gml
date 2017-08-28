@@ -26,6 +26,12 @@ if (!file_exists_lib(import_file))
 	return false
 }
 
+if (!file_exists_lib(legacy_file))
+{
+	missing_file(legacy_file)
+	return false
+}
+
 vertex_format_startup()
 if (!shader_startup())
 	return false

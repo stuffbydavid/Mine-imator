@@ -14,6 +14,8 @@ with (new(obj_template))
 	    sortlist_add(app.lib_list, id)
 	
 	save_id = json_read_string(map[?"id"], save_id)
+	save_id_map[?save_id] = save_id
+	
 	type = json_read_string(map[?"type"], type)
 	name = json_read_string(map[?"name"], name)
 

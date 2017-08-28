@@ -1,0 +1,96 @@
+/// project_load_legacy_template()
+
+	log("project_load_legacy_template")
+with (new(obj_template))
+{
+	loaded = true
+	
+	if (temp_creator = app)
+	    sortlist_add(app.lib_list, id)
+		
+	save_id = buffer_read_int()
+	save_id_map[?save_id] = save_id
+
+	type = buffer_read_string_int()
+	name = buffer_read_string_int()
+	if (load_format = e_project.FORMAT_100_DEMO_2)
+	    buffer_read_int() // count
+
+	skin = project_load_legacy_save_id()
+	if (load_format >= e_project.FORMAT_100_DEBUG)
+	    legacy_model_name = buffer_read_string_int()
+	else 
+	    legacy_model_name = project_load_legacy_model_name(buffer_read_int())
+	legacy_bodypart = buffer_read_int()
+	
+	// Find new model name and state
+	var modelmap = legacy_model_name_map[?legacy_model_name];
+	model_name = modelmap[?"name"]
+	if (!is_undefined(modelmap[?"state"]))
+		model_state = modelmap[?"state"]
+	else
+		model_state = ""
+	log("model_name", model_name)
+	// Find new model part name
+	var modelpartlist = legacy_model_part_map[?legacy_model_name];
+	model_part_name = modelpartlist[|legacy_bodypart]
+
+	item_tex = project_load_legacy_save_id()
+	if (load_format >= e_project.FORMAT_100_DEBUG)
+	    item_sheet = buffer_read_byte()
+	item_n = buffer_read_int()
+	item_3d = buffer_read_byte()
+	item_face_camera = buffer_read_byte()
+	item_bounce = buffer_read_byte()
+
+	var bid, bdata, block;
+	bid = buffer_read_short()
+	bdata = buffer_read_byte()
+	block = mc_assets.block_legacy_id_map[?bid]
+	if (!is_undefined(block))
+	{
+		block_name = block.name
+		block_state = block.legacy_data_state[bdata]
+	}
+	block_tex = project_load_legacy_save_id()
+
+	scenery = project_load_legacy_save_id()
+
+	block_repeat_enable = buffer_read_byte()
+	var rx, ry, rz;
+	rx = buffer_read_int()
+	ry = buffer_read_int()
+	rz = buffer_read_int()
+	block_repeat = vec3(rx, ry, rz)
+	
+	shape_tex = project_load_legacy_save_id()
+	if (load_format >= e_project.FORMAT_100_DEBUG)
+	{
+	    shape_tex_mapped = buffer_read_byte()
+	    shape_tex_hoffset = buffer_read_double()
+	    shape_tex_voffset = buffer_read_double()
+	}
+	shape_tex_hrepeat = buffer_read_double()
+	shape_tex_vrepeat = buffer_read_double()
+	shape_tex_hmirror = buffer_read_byte()
+	shape_tex_vmirror = buffer_read_byte()
+	if (load_format >= e_project.FORMAT_100_DEBUG)
+	    shape_closed = buffer_read_byte()
+	shape_invert = buffer_read_byte()
+	shape_detail = buffer_read_int()
+	if (load_format >= e_project.FORMAT_100_DEBUG)
+	    shape_face_camera = buffer_read_byte()
+
+	text_font = project_load_legacy_save_id()
+	if (load_format < e_project.FORMAT_100_DEMO_4)
+	{
+	    buffer_read_string_int() // system font name
+	    buffer_read_byte() // system font bold
+	    buffer_read_byte() // system font italic
+	}
+	text_face_camera = buffer_read_byte()
+
+	//if (type="particles")
+	//    project_read_particles()
+
+}

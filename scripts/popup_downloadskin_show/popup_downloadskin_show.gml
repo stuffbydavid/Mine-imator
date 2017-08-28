@@ -14,7 +14,7 @@ with (popup_downloadskin)
 	tbx_username.text = ""
 }
 
-file_delete_lib(download_file)
+file_delete_lib(download_image_file)
 window_focus = string(popup_downloadskin.tbx_username)
 
 popup_show(popup_downloadskin)

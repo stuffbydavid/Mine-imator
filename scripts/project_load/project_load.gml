@@ -19,7 +19,7 @@
 ///			project_106_2 = camera size in keyframes
 ///			project_110 = redone in JSON
 
-var fn;
+var fn, buf;
 if (argument_count > 0)
 	fn = argument[0]
 else
@@ -62,6 +62,8 @@ else
 	log("Opening legacy project", fn)
 	if (!project_load_legacy_start(fn))
 		return 0
+		
+	buf = buffer_current
 }
 
 project_reset()
@@ -81,19 +83,17 @@ if (load_format >= e_project.FORMAT_110)
 	project_load_project(rootmap[?"project"])
 	project_load_background(rootmap[?"background"])
 	project_load_objects(rootmap)
-	project_load_find_save_ids()
 }
 
 // Legacy
 else
 {
-	if (load_format >= e_project.FORMAT_07_DEMO)
+	buffer_current = buf
+	if (load_format >= e_project.FORMAT_100_DEMO_2)
 	{
 		project_load_legacy_project()
-		/*project_read_start()
-		project_read_project()
-		project_read_objects()
-		project_read_background()
+		project_load_legacy_objects()
+		/*project_read_background()
 		project_read_camera()
 		project_read_get_iids(false)*/
 	}
@@ -106,6 +106,7 @@ else
 }
 	
 // Update project
+project_load_find_save_ids()
 project_load_update()
 log("Project loaded")
 

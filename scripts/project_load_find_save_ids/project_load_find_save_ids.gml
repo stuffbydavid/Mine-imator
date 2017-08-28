@@ -1,19 +1,32 @@
 /// project_load_find_save_ids()
 /// @desc Updates the references to objects within the project.
 
+// Look for legacy (numeric) or duplicate save IDs and create new if necessary
+var key = ds_map_find_first(save_id_map);
+while (!is_undefined(key))
+{
+	if (is_real(save_id_map[?key]) || save_id_find(save_id_map[?key]) != null)
+		save_id_map[?key] = save_id_create()
+	key = ds_map_find_next(save_id_map, key)
+}
+
+save_id_map[? null] = null
+save_id_map[?"root"] = "root"
+save_id_map[?"default"] = "default"
+
 // Set background references
 if (background_loaded)
 {
-	background_image = save_id_find(background_image)
+	background_image = save_id_find(save_id_map[?background_image])
 	if (background_image)
 		background_image.count++
-	background_sky_sun_tex = save_id_find(background_sky_sun_tex)
+	background_sky_sun_tex = save_id_find(save_id_map[?background_sky_sun_tex])
 	background_sky_sun_tex.count++
-	background_sky_moon_tex = save_id_find(background_sky_moon_tex)
+	background_sky_moon_tex = save_id_find(save_id_map[?background_sky_moon_tex])
 	background_sky_moon_tex.count++
-	background_sky_clouds_tex = save_id_find(background_sky_clouds_tex)
+	background_sky_clouds_tex = save_id_find(save_id_map[?background_sky_clouds_tex])
 	background_sky_clouds_tex.count++
-	background_ground_tex = save_id_find(background_ground_tex)
+	background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
 	background_ground_tex.count++
 }
 
@@ -23,12 +36,13 @@ with (obj_template)
     if (!loaded)
         continue
 		
-    skin = save_id_find(skin)
-    item_tex = save_id_find(item_tex)
-    block_tex = save_id_find(block_tex)
-    scenery = save_id_find(scenery)
-    shape_tex = save_id_find(shape_tex)
-    text_font = save_id_find(text_font)
+	save_id = save_id_map[?save_id]
+    skin = save_id_find(save_id_map[?skin])
+    item_tex = save_id_find(save_id_map[?item_tex])
+    block_tex = save_id_find(save_id_map[?block_tex])
+    scenery = save_id_find(save_id_map[?scenery])
+    shape_tex = save_id_find(save_id_map[?shape_tex])
+    text_font = save_id_find(save_id_map[?text_font])
 	
 	// Update counters if not loaded via the workbench particle preview
     if (temp_creator != app.bench_settings)
@@ -59,8 +73,9 @@ with (obj_particle_type)
     if (!loaded)
         continue
     
-    temp = save_id_find(temp)
-    sprite_tex = save_id_find(sprite_tex)
+	save_id = save_id_map[?save_id]
+    temp = save_id_find(save_id_map[?temp])
+    sprite_tex = save_id_find(save_id_map[?sprite_tex])
     ptype_update_sprite_vbuffers()
 	
 	// Update counters if not loaded via the workbench particle preview
@@ -74,20 +89,21 @@ with (obj_timeline)
     if (!loaded)
         continue
 		
-    temp = save_id_find(temp)
+	save_id = save_id_map[?save_id]
+    temp = save_id_find(save_id_map[?temp])
 		
 	// Set part list
 	if (part_list != null)
 	{
 		for (var i = 0; i < ds_list_size(part_list); i++)
 		{
-			part_list[|i] = save_id_find(part_list[|i])
+			part_list[|i] = save_id_find(save_id_map[?part_list[|i]])
 			part_list[|i].part_of = id
 		}
 	}
 	
 	// Set parent
-	parent = save_id_find(parent)
+	parent = save_id_find(save_id_map[?parent])
 	parent.tree_array[parent_tree_index] = id
 }
 
@@ -97,12 +113,14 @@ with (obj_keyframe)
     if (!loaded)
         continue
 	
-    value[e_value.ATTRACTOR] = save_id_find(value[e_value.ATTRACTOR])
-    value[e_value.TEXTURE_OBJ] = save_id_find(value[e_value.TEXTURE_OBJ])
-    value[e_value.SOUND_OBJ] = save_id_find(value[e_value.SOUND_OBJ])
+    value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
+    value[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_OBJ]])
+    value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
     if (value[e_value.SOUND_OBJ] != null)
         value[e_value.SOUND_OBJ].count++
 }
+
+// TODO resources
 
 // Add to root tree
 for (var i = 0; i < array_length_1d(tree_array); i++)

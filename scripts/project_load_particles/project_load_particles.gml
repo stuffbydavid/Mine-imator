@@ -43,6 +43,8 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		ds_list_add(other.pc_type_list, id)
 		
 		save_id = json_read_string(ptypemap[?"id"], save_id)
+		save_id_map[?save_id] = save_id
+	
 		name = json_read_string(ptypemap[?"name"], name)
 		temp = json_read_save_id(ptypemap[?"temp"], temp)
 		text = json_read_string(ptypemap[?"text"], text)

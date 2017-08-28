@@ -33,8 +33,8 @@ if (load_format >= e_project.FORMAT_100_DEMO_4)
 	}
 	else
 	{
-		buffer_read_double()
-		buffer_read_double()
+		buffer_read_double() // timeline.hor_scroll.value
+		buffer_read_double() // timeline_zoom
 	}
 }
 

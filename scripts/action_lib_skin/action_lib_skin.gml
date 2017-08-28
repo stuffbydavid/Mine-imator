@@ -39,7 +39,7 @@ else
 		{
 			directory_create_lib(skins_directory)
 			fn = skins_directory + popup_downloadskin.username + ".png"
-			file_copy_lib(download_file, fn)
+			file_copy_lib(download_image_file, fn)
 			
 			res = new_res(fn, "downloadskin")
 			res.is_skin = true

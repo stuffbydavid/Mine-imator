@@ -13,9 +13,9 @@ if (async_load[?"id"] = popup_downloadskin.http) // Download skin
 	
 	if (async_load[?"http_status"] = 200)
 	{
-		if (file_exists_lib(download_file))
+		if (file_exists_lib(download_image_file))
 		{
-			popup_downloadskin.texture = texture_create(download_file)
+			popup_downloadskin.texture = texture_create(download_image_file)
 			if (!popup_downloadskin.texture)
 				popup_downloadskin.fail_message = text_get("errordownloadskininternet")
 			else
