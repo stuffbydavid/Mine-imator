@@ -1,6 +1,5 @@
 /// project_load_legacy_template()
 
-	log("project_load_legacy_template")
 with (new(obj_template))
 {
 	loaded = true
@@ -10,18 +9,18 @@ with (new(obj_template))
 		
 	save_id = buffer_read_int()
 	save_id_map[?save_id] = save_id
-
+	
 	type = buffer_read_string_int()
 	name = buffer_read_string_int()
 	if (load_format = e_project.FORMAT_100_DEMO_2)
-	    buffer_read_int() // count
+	    /*count = */buffer_read_int()
 
 	skin = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 	    legacy_model_name = buffer_read_string_int()
 	else 
 	    legacy_model_name = project_load_legacy_model_name(buffer_read_int())
-	legacy_bodypart = buffer_read_int()
+	legacy_bodypart_id = buffer_read_int()
 	
 	// Find new model name and state
 	var modelmap = legacy_model_name_map[?legacy_model_name];
@@ -30,10 +29,10 @@ with (new(obj_template))
 		model_state = modelmap[?"state"]
 	else
 		model_state = ""
-	log("model_name", model_name)
+	
 	// Find new model part name
 	var modelpartlist = legacy_model_part_map[?legacy_model_name];
-	model_part_name = modelpartlist[|legacy_bodypart]
+	model_part_name = modelpartlist[|legacy_bodypart_id]
 
 	item_tex = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
@@ -54,16 +53,18 @@ with (new(obj_template))
 	}
 	block_tex = project_load_legacy_save_id()
 
-	scenery = project_load_legacy_save_id()
+	scenery = buffer_read_int()
+	if (scenery = 0)
+		scenery = null
 
 	block_repeat_enable = buffer_read_byte()
-	var rx, ry, rz;
-	rx = buffer_read_int()
-	ry = buffer_read_int()
-	rz = buffer_read_int()
-	block_repeat = vec3(rx, ry, rz)
+	block_repeat[X] = buffer_read_int()
+	block_repeat[Y] = buffer_read_int()
+	block_repeat[Z] = buffer_read_int()
 	
-	shape_tex = project_load_legacy_save_id()
+	shape_tex = buffer_read_int()
+	if (shape_tex = 0)
+		shape_tex = null
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 	{
 	    shape_tex_mapped = buffer_read_byte()
@@ -92,5 +93,4 @@ with (new(obj_template))
 
 	//if (type="particles")
 	//    project_read_particles()
-
 }

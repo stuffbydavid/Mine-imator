@@ -104,6 +104,7 @@ else
 
 	buffer_delete(buffer_current)
 }
+
 	
 // Update project
 project_load_find_save_ids()

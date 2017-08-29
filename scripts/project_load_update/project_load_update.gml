@@ -7,7 +7,13 @@ background_ground_update_texture()
 with (obj_template)
 {
     temp_update()
-	temp_update_model_timeline_parts()
+	if (type = "char" || type = "spblock" || type = "bodypart")
+	{
+		if (load_format >= e_project.FORMAT_110)
+			temp_update_model_timeline_parts()
+		else
+			temp_update_model_timeline_tree()
+	}
 }
 
 with (obj_timeline)

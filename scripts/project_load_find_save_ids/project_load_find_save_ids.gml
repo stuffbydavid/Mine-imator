@@ -14,6 +14,8 @@ save_id_map[? null] = null
 save_id_map[?"root"] = "root"
 save_id_map[?"default"] = "default"
 
+// TODO resources
+
 // Set background references
 if (background_loaded)
 {
@@ -67,29 +69,16 @@ with (obj_template)
     }
 }
 
-// Set particle type references
-with (obj_particle_type)
-{
-    if (!loaded)
-        continue
-    
-	save_id = save_id_map[?save_id]
-    temp = save_id_find(save_id_map[?temp])
-    sprite_tex = save_id_find(save_id_map[?sprite_tex])
-    ptype_update_sprite_vbuffers()
-	
-	// Update counters if not loaded via the workbench particle preview
-    if (temp_creator != app.bench_settings)
-        sprite_tex.count++
-}
-
 // Set timeline references
+with (obj_timeline)
+    if (loaded)
+		save_id = save_id_map[?save_id]
+
 with (obj_timeline)
 {
     if (!loaded)
-        continue
-		
-	save_id = save_id_map[?save_id]
+		continue
+	
     temp = save_id_find(save_id_map[?temp])
 		
 	// Set part list
@@ -120,7 +109,21 @@ with (obj_keyframe)
         value[e_value.SOUND_OBJ].count++
 }
 
-// TODO resources
+// Set particle type references
+with (obj_particle_type)
+{
+    if (!loaded)
+        continue
+    
+	save_id = save_id_map[?save_id]
+    temp = save_id_find(save_id_map[?temp])
+    sprite_tex = save_id_find(save_id_map[?sprite_tex])
+    ptype_update_sprite_vbuffers()
+	
+	// Update counters if not loaded via the workbench particle preview
+    if (temp_creator != app.bench_settings)
+        sprite_tex.count++
+}
 
 // Add to root tree
 for (var i = 0; i < array_length_1d(tree_array); i++)
