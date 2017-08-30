@@ -6,7 +6,7 @@ background_ground_update_texture()
 
 with (obj_template)
 {
-    temp_update()
+	temp_update()
 	if (type = "char" || type = "spblock" || type = "bodypart")
 	{
 		if (load_format >= e_project.FORMAT_110)
@@ -19,11 +19,11 @@ with (obj_template)
 with (obj_timeline)
 {
 	tl_update()
-    tl_update_values()
+	tl_update_values()
 }
 
 with (obj_resource)
-    res_update_colors()
+	res_update_colors()
 
 project_reset_loaded()
 tl_update_length()

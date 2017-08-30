@@ -279,7 +279,7 @@ enum e_value_type
 // Values
 enum e_value
 {
-    POS_X,
+	POS_X,
 	POS_Y,
 	POS_Z,
 	ROT_X,

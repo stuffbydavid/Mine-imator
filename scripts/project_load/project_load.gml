@@ -93,9 +93,8 @@ else
 	{
 		project_load_legacy_project()
 		project_load_legacy_objects()
-		/*project_read_background()
-		project_read_camera()
-		project_read_get_iids(false)*/
+		project_load_legacy_background()
+		project_load_legacy_work_camera()
 	}
 	else
 	{

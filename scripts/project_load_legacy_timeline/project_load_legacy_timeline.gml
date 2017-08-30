@@ -13,13 +13,13 @@ with (new(obj_timeline))
 	text = buffer_read_string_int()
 	color = buffer_read_int()
 	if (load_format < e_project.FORMAT_100_DEBUG) // Color too bright
-	    color = make_color_hsv(color_get_hue(color), 255, 128)
+		color = make_color_hsv(color_get_hue(color), 255, 128)
 
 	lock = buffer_read_byte()
 	if (load_format < e_project.FORMAT_100_DEBUG)
-	    lock = !lock
+		lock = !lock
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    depth = buffer_read_int()
+		depth = buffer_read_int()
 
 	legacy_bodypart_id = buffer_read_short()
 	if (type = "bodypart")
@@ -66,49 +66,48 @@ with (new(obj_timeline))
 	hide = buffer_read_byte()
 	
 	if (load_format >= e_project.FORMAT_100_DEMO_3)
-	    project_load_legacy_value_types()
+		project_load_legacy_value_types()
 	else
-	    tl_update_value_types()
+		tl_update_value_types()
 
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
-	    project_load_legacy_values(id)
+		project_load_legacy_values(id)
 
 	keyframe_amount = buffer_read_int()
 	if (keyframe_amount = 0)
-	    for (var v = 0; v < e_value.amount; v++)
-	        value_default[v] = value[v]
+		for (var v = 0; v < e_value.amount; v++)
+			value_default[v] = value[v]
 
 	for (var k = 0; k < keyframe_amount; k++)
 	{
-	    with (new(obj_keyframe))
+		with (new(obj_keyframe))
 		{
-	        loaded = true
-	        position = buffer_read_int()
-	        timeline = other.id
-	        selected = false
-	        sound_play_index = null
+			loaded = true
+			position = buffer_read_int()
+			timeline = other.id
+			selected = false
+			sound_play_index = null
 			
-	        for (var v = 0; v < e_value.amount; v++)
-	            value[v] = other.value[v]
-	        project_load_legacy_values(other.id)
+			for (var v = 0; v < e_value.amount; v++)
+				value[v] = other.value[v]
+			project_load_legacy_values(other.id)
 			
 			ds_list_add(other.keyframe_list, id)
-	    }
+		}
 	}
 	
 	parent = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    parent_tree_index = buffer_read_int()
+		parent_tree_index = buffer_read_int()
 	else
-	    parent_tree_index = 0
+		parent_tree_index = null
 
 	lock_bend = buffer_read_byte()
 
 	if (load_format < e_project.FORMAT_100_DEBUG)
 	{
-	    var am = buffer_read_int();
-	    for (var t = 0; t < am; t++)
-	        buffer_read_int()
+		repeat (buffer_read_int())
+			buffer_read_int()
 	}
 
 	tree_extend = buffer_read_byte()
@@ -127,35 +126,35 @@ with (new(obj_timeline))
 	rot_point[Z] = buffer_read_double()
 	if (rot_point_custom && load_format < e_project.FORMAT_100_DEBUG && type_is_shape(type))
 	{
-	    rot_point[X] -= 8
-	    rot_point[Y] -= 8
-	    if (type != "surface")
-	        rot_point[Z] -= 8
+		rot_point[X] -= 8
+		rot_point[Y] -= 8
+		if (type != "surface")
+			rot_point[Z] -= 8
 	}
 	
 	backfaces = buffer_read_byte()
 	texture_blur = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    texture_filtering = buffer_read_byte()
+		texture_filtering = buffer_read_byte()
 	else
-	    texture_filtering = (type = "scenery" || type="block")
+		texture_filtering = (type = "scenery" || type="block")
 	round_bending = buffer_read_byte()
 	shadows = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 	{
-	    ssao = buffer_read_byte()
-	    if (load_format >= e_project.FORMAT_105_2)
-	        fog = buffer_read_byte()
-	    wind = buffer_read_byte()
-	    wind_amount = buffer_read_double()
+		ssao = buffer_read_byte()
+		if (load_format >= e_project.FORMAT_105_2)
+			fog = buffer_read_byte()
+		wind = buffer_read_byte()
+		wind_amount = buffer_read_double()
 	}
 	wind_terrain = buffer_read_byte()
 
 	if (load_format >= e_project.FORMAT_CB_100) 
 	{
-	    /*inherit_bend = */buffer_read_byte()
-	    /*hide_quality_high = */buffer_read_byte()
-	    /*hide_quality_low = */buffer_read_byte()
-	    /*biome = */buffer_read_byte()
+		/*inherit_bend = */buffer_read_byte()
+		/*hide_quality_high = */buffer_read_byte()
+		/*hide_quality_low = */buffer_read_byte()
+		/*biome = */buffer_read_byte()
 	}
 }

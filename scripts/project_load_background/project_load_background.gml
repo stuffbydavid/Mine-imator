@@ -39,6 +39,8 @@ background_sky_clouds_height = json_read_real(map[?"sky_clouds_height"], backgro
 background_ground_show = json_read_real(map[?"ground_show"], background_ground_show)
 background_ground_name = json_read_string(map[?"ground_name"], background_ground_name)
 background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
+if (background_ground_slot < 0) // Animated
+	background_ground_slot = ds_list_size(mc_assets.block_texture_list) + ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_name)
 background_ground_tex.count--
 background_ground_tex = json_read_save_id(map[?"ground_tex"], background_ground_tex)
 

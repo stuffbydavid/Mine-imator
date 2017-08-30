@@ -365,7 +365,7 @@ with (preview)
 								break
 						
 							case "modeltextures":
-							    tex = select.model_texture_map[?pack_model_texture]
+								tex = select.model_texture_map[?pack_model_texture]
 								break
 						
 							case "blocksheet":

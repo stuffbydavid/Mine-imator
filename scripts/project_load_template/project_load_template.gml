@@ -11,7 +11,7 @@ with (new(obj_template))
 	loaded = true
 	
 	if (temp_creator = app)
-	    sortlist_add(app.lib_list, id)
+		sortlist_add(app.lib_list, id)
 	
 	save_id = json_read_string(map[?"id"], save_id)
 	save_id_map[?save_id] = save_id

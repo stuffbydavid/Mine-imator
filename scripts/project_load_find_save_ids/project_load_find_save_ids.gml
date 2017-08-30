@@ -14,8 +14,6 @@ save_id_map[? null] = null
 save_id_map[?"root"] = "root"
 save_id_map[?"default"] = "default"
 
-// TODO resources
-
 // Set background references
 if (background_loaded)
 {
@@ -35,51 +33,60 @@ if (background_loaded)
 // Set template references
 with (obj_template)
 {
-    if (!loaded)
-        continue
+	if (!loaded)
+		continue
 		
 	save_id = save_id_map[?save_id]
-    skin = save_id_find(save_id_map[?skin])
-    item_tex = save_id_find(save_id_map[?item_tex])
-    block_tex = save_id_find(save_id_map[?block_tex])
-    scenery = save_id_find(save_id_map[?scenery])
-    shape_tex = save_id_find(save_id_map[?shape_tex])
-    text_font = save_id_find(save_id_map[?text_font])
+	skin = save_id_find(save_id_map[?skin])
+	item_tex = save_id_find(save_id_map[?item_tex])
+	block_tex = save_id_find(save_id_map[?block_tex])
+	scenery = save_id_find(save_id_map[?scenery])
+	shape_tex = save_id_find(save_id_map[?shape_tex])
+	text_font = save_id_find(save_id_map[?text_font])
 	
 	// Update counters if not loaded via the workbench particle preview
-    if (temp_creator != app.bench_settings)
+	if (temp_creator != app.bench_settings)
 	{
-        if (skin != null)
-            skin.count++
+		if (skin != null)
+			skin.count++
 		
-        if (item_tex != null)
-            item_tex.count++
+		if (item_tex != null)
+			item_tex.count++
 		
-        if (block_tex != null)
-            block_tex.count++
+		if (block_tex != null)
+			block_tex.count++
 		
-        if (scenery != null)
-            scenery.count++
+		if (scenery != null)
+			scenery.count++
 		
-        if (shape_tex != null && shape_tex.type != "camera")
-            shape_tex.count++
+		if (shape_tex != null && shape_tex.type != "camera")
+			shape_tex.count++
 		
-        if (text_font != null)
-            text_font.count++
-    }
+		if (text_font != null)
+			text_font.count++
+	}
+	
+	// Legacy "use a sheet" option conversion
+	if (load_format < e_project.FORMAT_110 && type = "item" && item_tex != res_def)
+	{
+		if (legacy_item_sheet)
+			item_tex.item_sheet_size = vec3(16, 16)
+		else
+			item_tex.type = "texture"
+	}
 }
 
 // Set timeline references
 with (obj_timeline)
-    if (loaded)
+	if (loaded)
 		save_id = save_id_map[?save_id]
 
 with (obj_timeline)
 {
-    if (!loaded)
+	if (!loaded)
 		continue
 	
-    temp = save_id_find(save_id_map[?temp])
+	temp = save_id_find(save_id_map[?temp])
 		
 	// Set part list
 	if (part_list != null)
@@ -93,37 +100,46 @@ with (obj_timeline)
 	
 	// Set parent
 	parent = save_id_find(save_id_map[?parent])
-	parent.tree_array[parent_tree_index] = id
+	
+	if (parent_tree_index = null)
+		parent.tree_array[array_length_1d(parent.tree_array)] = id
+	else
+		parent.tree_array[parent_tree_index] = id
 }
 
 // Set keyframe references
 with (obj_keyframe)
 {
-    if (!loaded)
-        continue
+	if (!loaded)
+		continue
 	
-    value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
-    value[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_OBJ]])
-    value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
-    if (value[e_value.SOUND_OBJ] != null)
-        value[e_value.SOUND_OBJ].count++
+	value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
+	value[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_OBJ]])
+	value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
+	if (value[e_value.SOUND_OBJ] != null)
+		value[e_value.SOUND_OBJ].count++
 }
 
 // Set particle type references
 with (obj_particle_type)
 {
-    if (!loaded)
-        continue
-    
+	if (!loaded)
+		continue
+	
 	save_id = save_id_map[?save_id]
-    temp = save_id_find(save_id_map[?temp])
-    sprite_tex = save_id_find(save_id_map[?sprite_tex])
-    ptype_update_sprite_vbuffers()
+	temp = save_id_find(save_id_map[?temp])
+	sprite_tex = save_id_find(save_id_map[?sprite_tex])
+	ptype_update_sprite_vbuffers()
 	
 	// Update counters if not loaded via the workbench particle preview
-    if (temp_creator != app.bench_settings)
-        sprite_tex.count++
+	if (temp_creator != app.bench_settings)
+		sprite_tex.count++
 }
+
+// Load resources
+with (obj_resource)
+	if (loaded)
+		res_load()
 
 // Add to root tree
 for (var i = 0; i < array_length_1d(tree_array); i++)
@@ -138,6 +154,6 @@ with (obj_timeline)
 
 // Set pre-1.0.0 hide value
 if (load_format < e_project.FORMAT_100_DEBUG)
-    for (var t = 0; t < ds_list_size(tree_list); t++)
-        with (tree_list[|t])
-            tl_update_hide()
+	for (var t = 0; t < ds_list_size(tree_list); t++)
+		with (tree_list[|t])
+			tl_update_hide()

@@ -27,6 +27,7 @@ item_vbuffer = null
 item_3d = true
 item_face_camera = false
 item_bounce = false
+legacy_item_sheet = false
 
 block_name = "grass"
 block_state = ""

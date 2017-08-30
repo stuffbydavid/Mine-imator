@@ -70,7 +70,7 @@ with (new(obj_timeline))
 	}
 	
 	parent = json_read_save_id(map[?"parent"], parent)
-	parent_tree_index = json_read_real(map[?"parent_tree_index"], 0)
+	parent_tree_index = json_read_real(map[?"parent_tree_index"], null)
 	
 	lock_bend = json_read_real(map[?"lock_bend"], lock_bend)
 	tree_extend = json_read_real(map[?"tree_extend"], tree_extend)

@@ -11,7 +11,7 @@ load_format = buffer_read_byte()
 if (load_format > e_project.FORMAT_CB_103) 
 {
 	log("Invalid format", load_format)
-	error("erroropenprojectnewer")
+	error("errorfilecorrupted")
 	buffer_delete(buffer_current)
 	return false
 }

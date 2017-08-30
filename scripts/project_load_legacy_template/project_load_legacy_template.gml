@@ -5,7 +5,7 @@ with (new(obj_template))
 	loaded = true
 	
 	if (temp_creator = app)
-	    sortlist_add(app.lib_list, id)
+		sortlist_add(app.lib_list, id)
 		
 	save_id = buffer_read_int()
 	save_id_map[?save_id] = save_id
@@ -13,13 +13,13 @@ with (new(obj_template))
 	type = buffer_read_string_int()
 	name = buffer_read_string_int()
 	if (load_format = e_project.FORMAT_100_DEMO_2)
-	    /*count = */buffer_read_int()
+		/*count = */buffer_read_int()
 
 	skin = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    legacy_model_name = buffer_read_string_int()
+		legacy_model_name = buffer_read_string_int()
 	else 
-	    legacy_model_name = project_load_legacy_model_name(buffer_read_int())
+		legacy_model_name = project_load_legacy_model_name(buffer_read_int())
 	legacy_bodypart_id = buffer_read_int()
 	
 	// Find new model name and state
@@ -36,8 +36,8 @@ with (new(obj_template))
 
 	item_tex = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    item_sheet = buffer_read_byte()
-	item_n = buffer_read_int()
+		legacy_item_sheet = buffer_read_byte()
+	legacy_item_n = buffer_read_int()
 	item_3d = buffer_read_byte()
 	item_face_camera = buffer_read_byte()
 	item_bounce = buffer_read_byte()
@@ -67,30 +67,30 @@ with (new(obj_template))
 		shape_tex = null
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 	{
-	    shape_tex_mapped = buffer_read_byte()
-	    shape_tex_hoffset = buffer_read_double()
-	    shape_tex_voffset = buffer_read_double()
+		shape_tex_mapped = buffer_read_byte()
+		shape_tex_hoffset = buffer_read_double()
+		shape_tex_voffset = buffer_read_double()
 	}
 	shape_tex_hrepeat = buffer_read_double()
 	shape_tex_vrepeat = buffer_read_double()
 	shape_tex_hmirror = buffer_read_byte()
 	shape_tex_vmirror = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    shape_closed = buffer_read_byte()
+		shape_closed = buffer_read_byte()
 	shape_invert = buffer_read_byte()
 	shape_detail = buffer_read_int()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
-	    shape_face_camera = buffer_read_byte()
+		shape_face_camera = buffer_read_byte()
 
 	text_font = project_load_legacy_save_id()
 	if (load_format < e_project.FORMAT_100_DEMO_4)
 	{
-	    buffer_read_string_int() // system font name
-	    buffer_read_byte() // system font bold
-	    buffer_read_byte() // system font italic
+		buffer_read_string_int() // system font name
+		buffer_read_byte() // system font bold
+		buffer_read_byte() // system font italic
 	}
 	text_face_camera = buffer_read_byte()
 
 	//if (type="particles")
-	//    project_read_particles()
+	//	project_read_particles()
 }

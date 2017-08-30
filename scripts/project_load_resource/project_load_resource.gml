@@ -10,7 +10,7 @@ with (new(obj_resource))
 {
 	loaded = true
 	
-	sortlist_add(app.res_list,id)
+	sortlist_add(app.res_list, id)
 	
 	save_id = json_read_string(map[?"id"], save_id)
 	save_id_map[?save_id] = save_id
@@ -23,6 +23,4 @@ with (new(obj_resource))
 	
 	if (type = "itemsheet")
 		item_sheet_size = json_read_array("item_sheet_size", item_sheet_size)
-	
-	res_load()
 }

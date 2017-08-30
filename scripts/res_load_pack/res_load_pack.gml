@@ -6,17 +6,17 @@ switch (load_stage)
 	// Unzip archive
 	case "unzip":
 	{
-        if (pack_zip != "")
+		if (pack_zip != "")
 		{
-	        if (unzip(pack_zip) < 0)
+			if (unzip(pack_zip) < 0)
 			{
-	            log("Error unzipping pack")
-	            error("errorunzippack")
+				log("Error unzipping pack")
+				error("errorunzippack")
 				with (app)
 					load_next()
-	            return 0
+				return 0
 			}
-        }
+		}
 		
 		load_stage = "modeltextures"
 		with (app)
@@ -69,22 +69,23 @@ switch (load_stage)
 		// Update project and load next in the queue
 		with (app)
 		{
-	        if (background_ground_tex = other.id)
-	            background_ground_update_texture()
+			if (background_ground_tex = other.id)
+				background_ground_update_texture()
 			
-	        if (background_sky_clouds_tex = other.id)
-	            background_sky_update_clouds()
+			if (background_sky_clouds_tex = other.id)
+				background_sky_update_clouds()
 			
-	        with (bench_settings)
-	            if (item_tex = other.id)
-	                temp_update_item()
+			with (bench_settings)
+				if (item_tex = other.id)
+					temp_update_item()
 					
-	        with (obj_template)
-	            if (item_tex = other.id)
-	                temp_update_item()
+			with (obj_template)
+				if (item_tex = other.id)
+					temp_update_item()
 				
 			load_next()
 		}
 		break
 	}
 }
+

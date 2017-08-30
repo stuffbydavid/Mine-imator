@@ -2,12 +2,12 @@
 
 // Templates
 repeat (buffer_read_int())
-    project_load_legacy_template()
-        
+	project_load_legacy_template()
+
 // Timelines
 repeat (buffer_read_int())
-    project_load_legacy_timeline()
-        
+	project_load_legacy_timeline()
+
 // Resources
-//repeat (buffer_read_int())
-//    project_load_legacy_resource()
+repeat (buffer_read_int())
+	project_load_legacy_resource()
