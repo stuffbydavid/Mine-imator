@@ -6,7 +6,7 @@
 
 var version, fname, err;
 version = argument0
-fname = minecraft_directory + version + ".mcassets"
+fname = minecraft_directory + version + ".zip"
 
 if (!file_exists_lib(fname))
 {

@@ -2,6 +2,7 @@
 
 globalvar legacy_model_id_map, legacy_model_id_05_map, legacy_model_id_06_map, legacy_model_id_100_demo_map;
 globalvar legacy_model_part_map, legacy_model_name_map;
+globalvar legacy_block_05_texture_list, legacy_block_07_demo_texture_list, legacy_block_100_texture_list;
 
 legacy_model_id_map = null
 legacy_model_id_05_map = null
@@ -27,5 +28,9 @@ ds_map_merge(legacy_model_id_100_demo_map, legacy_model_id_map)
 	
 legacy_model_part_map = rootmap[?"legacy_model_part_map"]
 legacy_model_name_map = rootmap[?"legacy_model_name_map"]
+
+legacy_block_05_texture_list = rootmap[?"legacy_block_05_textures"]
+legacy_block_07_demo_texture_list = rootmap[?"legacy_block_07_demo_textures"]
+legacy_block_100_texture_list = rootmap[?"legacy_block_100_textures"]
 
 return true

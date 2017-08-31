@@ -37,7 +37,10 @@ with (new(obj_template))
 		if (ds_exists(itemmap, ds_type_map))
 		{
 			item_tex = json_read_save_id(itemmap[?"tex"], item_tex)
-			item_slot = json_read_real(itemmap[?"slot"], item_slot)
+			if (!is_undefined(itemmap[?"name"]))
+				item_slot = ds_list_find_index(mc_assets.item_texture_list, json_read_string(itemmap[?"name"]))
+			else
+				item_slot = json_read_real(itemmap[?"slot"], item_slot)
 			item_3d = json_read_real(itemmap[?"3d"], item_3d)
 			item_face_camera = json_read_real(itemmap[?"face_camera"], item_face_camera)
 			item_bounce = json_read_real(itemmap[?"bounce"], item_bounce)

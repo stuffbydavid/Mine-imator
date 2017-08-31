@@ -1,9 +1,13 @@
 /// project_load_legacy_background()
 
+background_loaded = true
+
 background_image_show = buffer_read_byte()
 if (background_image != null)
 	background_image.count--
-background_image = project_load_legacy_save_id()
+background_image = buffer_read_int()
+if (background_image = 0)
+	background_image = null
 background_image_type = buffer_read_byte()
 background_image_stretch = buffer_read_byte()
 if (load_format >= e_project.FORMAT_100_DEBUG)
@@ -15,10 +19,12 @@ background_sky_clouds_flat = buffer_read_byte()
 background_sky_clouds_speed = buffer_read_double()
 
 background_ground_show = buffer_read_byte()
-background_ground_legacy_slot = buffer_read_int() // TODO convert
+background_ground_legacy_name = legacy_block_100_texture_list[|buffer_read_int()]
+var newslot = ds_list_find_index(mc_assets.block_texture_list, background_ground_legacy_name)
+if (newslot >= 0)
+	background_ground_slot = newslot
 background_ground_tex.count--
 background_ground_tex = project_load_legacy_save_id()
-
 background_biome = biome_list[|buffer_read_byte()]
 
 background_sky_color = buffer_read_int()

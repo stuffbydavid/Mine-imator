@@ -20,7 +20,12 @@ json_export_object_start()
 	{
 		json_export_object_start("item")
 			json_export_var_save_id("tex", item_tex)
-			json_export_var("slot", item_slot)
+			
+			if (item_tex.type = "pack" && item_slot < ds_list_size(mc_assets.item_texture_list))
+				json_export_var("name", mc_assets.item_texture_list[|item_slot])
+			else
+				json_export_var("slot", item_slot)
+				
 			json_export_var_bool("3d", item_3d)
 			json_export_var_bool("face_camera", item_face_camera)
 			json_export_var_bool("bounce", item_bounce)

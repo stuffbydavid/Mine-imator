@@ -12,6 +12,16 @@ with (obj_timeline)
 {
 	if (temp != other.id || part_of != null)
 		continue
+		
+	// Missing model
+	if (temp.model_file = null)
+	{
+		for (var p = 0; p < ds_list_size(part_list); p++)
+			with (part_list[|p])
+				model_part = null
+				
+		continue
+	}
 	
 	// Save indices of children
 	if (hobj != null)

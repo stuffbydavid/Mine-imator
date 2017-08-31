@@ -12,9 +12,9 @@
 #macro minecraft_version			"1.12"
 
 // File formats
-#macro project_format				e_project.FORMAT_110
-#macro settings_format				e_settings.FORMAT_110
-#macro minecraft_assets_format		e_minecraft_assets.FORMAT_110
+#macro project_format			e_project.FORMAT_110
+#macro settings_format			e_settings.FORMAT_110
+#macro minecraft_assets_format	e_minecraft_assets.FORMAT_110
 
 // Directories
 #macro file_directory			game_save_id
@@ -27,7 +27,7 @@
 #macro minecraft_directory		data_directory + "Minecraft\\"
 
 // Files
-#macro minecraft_assets_file	minecraft_directory + minecraft_version + ".mcassets"
+#macro minecraft_assets_file	minecraft_directory + minecraft_version + ".zip"
 #macro language_file			languages_directory + "english.milang"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.midata"
@@ -53,7 +53,7 @@
 
 // Links
 #macro link_skins				"http://skins.minecraft.net/MinecraftSkins/"
-#macro link_directx				"https://www.microsoft.com/en-us/download/details.aspx?DisplayLang=en&id=35" // TODO
+#macro link_directx				"https://www.microsoft.com/en-us/download/details.aspx?DisplayLang=en&id=35" // TODO investigate
 #macro link_download			"http://www.mineimator.com"
 #macro link_upgrade				"http://www.mineimator.com/upgrade"
 #macro link_news				"http://www.mineimator.com/news.php?version=" + mineimator_version
@@ -61,6 +61,30 @@
 #macro link_forums_bugs			"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
 #macro link_mojang				"http://www.mojang.com"
 #macro link_david				"http://www.stuffbydavid.com"
+
+// Textures
+#macro block_sheet_width		32
+#macro block_sheet_height		16
+#macro block_sheet_ani_width	32
+#macro block_sheet_ani_height	1
+#macro block_sheet_ani_frames	64
+#macro item_sheet_width			32
+#macro item_sheet_height		16
+
+// Colors
+#macro c_main					make_color_rgb(200, 200, 200)
+#macro c_secondary				make_color_rgb(67, 103, 163)
+#macro c_text					make_color_rgb(10, 10, 10)
+#macro c_tips					make_color_rgb(40, 40, 40)
+#macro c_highlight				make_color_rgb(132, 159, 204)
+#macro c_alerts					make_color_rgb(240, 255, 159)
+#macro c_controls				make_color_rgb(40, 40, 40)
+#macro c_sky					make_color_rgb(145, 185, 255)
+#macro c_night					make_color_rgb(14, 14, 24)
+#macro c_clouds_bottom			make_color_rgb(174, 181, 193)
+#macro c_clouds_top				make_color_rgb(255, 255, 255)
+#macro c_clouds_sideslight		make_color_rgb(215, 222, 234)
+#macro c_clouds_sidesdark		make_color_rgb(194, 201, 215)
 
 // Audio
 #macro sample_rate				44100
@@ -82,36 +106,12 @@
 #macro item_size				16
 #macro world_size				30000
 
-// Textures
-#macro block_sheet_width		32
-#macro block_sheet_height		16
-#macro block_sheet_ani_width	32
-#macro block_sheet_ani_height	1
-#macro block_sheet_ani_frames	64
-#macro item_sheet_width			32
-#macro item_sheet_height		16
-
 // Vectors and matrices
-#macro X				0
-#macro Y				1
-#macro Z				2
-#macro W				3
-#macro MAT_X			12
-#macro MAT_Y			13
-#macro MAT_Z			14
-#macro MAT_IDENTITY		matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
-
-// Colors
-#macro c_main				make_color_rgb(200, 200, 200)
-#macro c_secondary			make_color_rgb(67, 103, 163)
-#macro c_text				make_color_rgb(10, 10, 10)
-#macro c_tips				make_color_rgb(40, 40, 40)
-#macro c_highlight			make_color_rgb(132, 159, 204)
-#macro c_alerts				make_color_rgb(240, 255, 159)
-#macro c_controls			make_color_rgb(40, 40, 40)
-#macro c_sky				make_color_rgb(145, 185, 255)
-#macro c_night				make_color_rgb(14, 14, 24)
-#macro c_clouds_bottom		make_color_rgb(174, 181, 193)
-#macro c_clouds_top			make_color_rgb(255, 255, 255)
-#macro c_clouds_sideslight	make_color_rgb(215, 222, 234)
-#macro c_clouds_sidesdark	make_color_rgb(194, 201, 215)
+#macro X						0
+#macro Y						1
+#macro Z						2
+#macro W						3
+#macro MAT_X					12
+#macro MAT_Y					13
+#macro MAT_Z					14
+#macro MAT_IDENTITY				matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)

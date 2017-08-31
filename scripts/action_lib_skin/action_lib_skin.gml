@@ -21,7 +21,7 @@ else
 				return 0
 			
 			res = new_res(fn, "skin")
-			res.is_skin = temp_edit.model_file.player_skin
+			res.player_skin = temp_edit.model_file.player_skin
 			
 			with (res)
 				res_load()
@@ -42,7 +42,7 @@ else
 			file_copy_lib(download_image_file, fn)
 			
 			res = new_res(fn, "downloadskin")
-			res.is_skin = true
+			res.player_skin = true
 			
 			with (res)
 				res_load()

@@ -3367,14 +3367,6 @@
             }
         },
         {
-            "Key": "41c30c71-5d27-4453-ae43-205d17fe0457",
-            "Value": {
-                "id": "70ae7682-de72-44ef-8f5e-cb58d36adf41",
-                "resourcePath": "views\\41c30c71-5d27-4453-ae43-205d17fe0457.yy",
-                "resourceType": "GMFolder"
-            }
-        },
-        {
             "Key": "41e39bf9-879b-493c-a674-cae7f68a7008",
             "Value": {
                 "id": "83297f38-4beb-435b-822e-168c86bcede1",
@@ -7330,7 +7322,7 @@
             "Key": "8c9d8e56-19ad-49ea-b0cb-03a1d99be613",
             "Value": {
                 "id": "f6275d95-b7bd-4470-b2ec-39b09b27c82d",
-                "resourcePath": "scripts\\res_load_skin\\res_load_skin.yy",
+                "resourcePath": "scripts\\res_load_player_skin\\res_load_player_skin.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -8114,7 +8106,7 @@
             "Key": "9b48ce10-ab9e-4f06-b9cc-6bebc14554b3",
             "Value": {
                 "id": "a3ee100d-a619-4d7f-a8f4-5daf5ab64c80",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.12.mcassets.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.12.zip.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -9983,6 +9975,14 @@
             }
         },
         {
+            "Key": "bf18a760-0a2e-4a27-b982-93265aa49b96",
+            "Value": {
+                "id": "c9a7f1b1-e873-4aaa-9a84-bcbeabcc68e5",
+                "resourcePath": "scripts\\project_load_legacy_particles\\project_load_legacy_particles.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "bf69db01-6332-4929-94a8-5e3018aa70bd",
             "Value": {
                 "id": "1e3ab4c9-37bd-4357-bcee-c9d61191e005",
@@ -10003,6 +10003,14 @@
             "Value": {
                 "id": "a3699a54-f23b-4cf1-b272-291f47404854",
                 "resourcePath": "scripts\\buffer_load_lib\\buffer_load_lib.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "bfd9cc59-bfa7-4069-b1e0-8b4de1e9ae7d",
+            "Value": {
+                "id": "bc03552c-cb29-48b1-a2d3-81ca19285bd6",
+                "resourcePath": "scripts\\res_load_legacy_block_sheet\\res_load_legacy_block_sheet.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14389,6 +14397,7 @@
         "0cddfc93-4a4c-47ec-99c8-371cf4597f03",
         "579e1e36-39c2-4743-bb96-fb942c56e9ea",
         "059b9ad0-d27c-4691-9674-21586b45cf9c",
+        "bf18a760-0a2e-4a27-b982-93265aa49b96",
         "7653e6bb-f61f-4902-977b-b3ff256d2a5b",
         "c3f4448f-3afc-466b-a11f-c87ab1744f6c",
         "46e25ff8-84bb-4702-9ec5-9f5a976f7532",
@@ -14426,14 +14435,15 @@
         "9f9f537f-28b4-408f-8342-ea2f92a7a995",
         "2d0f314e-48e3-4567-99df-e58ce5bdfcd2",
         "d4630b39-a84a-4835-ac48-7109f20828ca",
+        "bfd9cc59-bfa7-4069-b1e0-8b4de1e9ae7d",
         "356022c1-a5d4-45b2-87a4-dfbe428cf6ea",
-        "8c9d8e56-19ad-49ea-b0cb-03a1d99be613",
         "89a0b20b-8a16-43bf-a8e6-d00ab6f8af40",
         "3070d448-c1d7-4203-b1e7-edbb935b555b",
         "94b2a149-3aa3-4750-9f13-e439c809476b",
         "325aadc3-33a4-4f31-a433-9ed6295223ca",
         "f716150a-cd25-4013-8b5d-6a08f30cba6a",
         "cd00baf8-7792-440f-afa6-1603c0b4df29",
+        "8c9d8e56-19ad-49ea-b0cb-03a1d99be613",
         "8a60c663-7962-42ef-9ea1-e354ef255d48",
         "966dfa9d-379b-4488-84a9-fe8eeefe92fd",
         "2773c7a3-a55c-4b65-a482-99c59543939d",

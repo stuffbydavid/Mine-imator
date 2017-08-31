@@ -36,8 +36,8 @@ switch (type)
 		if (model_texture)
 			texture_free(model_texture)
 		
-		if (is_skin)
-			model_texture = res_load_skin(fn)
+		if (player_skin)
+			model_texture = res_load_player_skin(fn)
 		else
 			model_texture = texture_create_square(fn)
 			
@@ -54,12 +54,22 @@ switch (type)
 		break
 	}
 	
+	case "legacyblocksheet":
 	case "blocksheet":
 	{
 		if (block_sheet_texture != null)
 			texture_free(block_sheet_texture)
 			
-		block_sheet_texture = texture_create(fn)
+		if (type = "legacyblocksheet")
+		{
+			block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
+			if (load_folder = save_folder)
+				file_rename_lib(fn, filename_new_ext(fn, ".old") + filename_ext(fn))
+			res_save()
+			type ="blocksheet"
+		}
+		else
+			block_sheet_texture = texture_create(fn)
 		
 		colormap_grass_texture = texture_duplicate(res_def.colormap_grass_texture)
 		colormap_foliage_texture = texture_duplicate(res_def.colormap_foliage_texture)

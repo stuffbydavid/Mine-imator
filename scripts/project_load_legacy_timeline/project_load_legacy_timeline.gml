@@ -39,19 +39,27 @@ with (new(obj_timeline))
 		
 		// Find name from ID
 		var modelpartlist = legacy_model_part_map[?findtemp.legacy_model_name];
-		model_part_name = modelpartlist[|legacy_bodypart_id]
-		
-		// Find part model by looking through model file for the name
-		var filepartlist = findtemp.model_file.file_part_list;
-		for (var i = 0; i < ds_list_size(filepartlist); i++)
+		if (!is_undefined(modelpartlist))
 		{
-			var part = filepartlist[|i];
-			if (part.name = model_part_name)
+			model_part_name = modelpartlist[|legacy_bodypart_id]
+		
+			// Find part model by looking through model file for the name
+			if (findtemp.model_file != null)
 			{
-				model_part = part
-				break
+				var filepartlist = findtemp.model_file.file_part_list;
+				for (var i = 0; i < ds_list_size(filepartlist); i++)
+				{
+					var part = filepartlist[|i];
+					if (part.name = model_part_name)
+					{
+						model_part = part
+						break
+					}
+				}
 			}
 		}
+		else
+			log("Could not find model part list for", findtemp.legacy_model_name)
 	}
 	
 	project_load_legacy_save_id() // part_of

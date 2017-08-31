@@ -19,7 +19,7 @@ with (new(obj_resource))
 	filename = json_read_string(map[?"filename"], filename)
 	
 	if (type = "skin" || type = "downloadskin")
-		is_skin = json_read_real("is_skin", is_skin)
+		player_skin = json_read_real("player_skin", player_skin)
 	
 	if (type = "itemsheet")
 		item_sheet_size = json_read_array("item_sheet_size", item_sheet_size)

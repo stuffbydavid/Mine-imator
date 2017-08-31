@@ -17,7 +17,7 @@ count = 0
 model = null
 model_texture = null
 model_texture_map = null
-is_skin = false
+player_skin = false
 
 block_sheet_texture = null
 block_sheet_ani_texture = null

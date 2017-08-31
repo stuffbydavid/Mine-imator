@@ -3,21 +3,21 @@
 /// @desc Opens a .miproj, .mproj, .mani project or zipped archive.
 ///		  A file browser appears if no filename is given.
 ///		  Formats:
-///			project_01
-///			project_02
-///			project_05
-///			project_06
-///			project_07demo
-///			project_100demo2
-///			project_100demo3 = added hasX in timeline, removed count in library, added spawn_rate, spawn_region toggle in particle types
-///			project_100demo4 = added ground_z in particles, has_background, removed text_system_font_*, camera rotation and ratio, block_ani, pars in timelines, timeline zoom, pos
-///			project_100debug = shape hvoffset, map, closed, wind setting, char_model name, particle type iid, click->!lock, timeline depth, parent_pos, fog height, item_sheet, block_frames, new value types, shape face camera, timeline texture filtering & ssao, fog sky, render region
-///			project_100 = timeline_repeat
-///			project_105 = background_sunlight_follow
-///			project_105_2 = timeline fog, timeline_marker
-///			project_106 = new mobs
-///			project_106_2 = camera size in keyframes
-///			project_110 = redone in JSON
+///			0.1
+///			0.2
+///			0.5
+///			0.6
+///			0.7 DEMO
+///			1.0.0 DEMO 2
+///			1.0.0 DEMO 3 = added hasX in timeline, removed count in library, added spawn_rate, spawn_region toggle in particle types
+///			1.0.0 DEMO 4 = added ground_z in particles, has_background, removed text_system_font_*, camera rotation and ratio, block_ani, pars in timelines, timeline zoom, pos
+///			1.0.0 debug = shape hvoffset, map, closed, wind setting, char_model name, particle type iid, click->!lock, timeline depth, parent_pos, fog height, item_sheet, block_frames, new value types, shape face camera, timeline texture filtering & ssao, fog sky, render region
+///			1.0.0 = timeline_repeat
+///			1.0.5 = background_sunlight_follow
+///			1.0.5 2 = timeline fog, timeline_marker
+///			1.0.6 = new mobs
+///			1.0.6 2 = camera size in keyframes
+///			1.1.0 = redone in JSON
 
 var fn, buf;
 if (argument_count > 0)
@@ -98,7 +98,7 @@ else
 	}
 	else
 	{
-		/*project_read_old(false)*/
+		/*project_load_legacy_beta()*/
 	}
 
 	buffer_delete(buffer_current)
@@ -114,7 +114,11 @@ log("Project loaded")
 if (ds_priority_size(load_queue) = 0)
 	popup_close()
 
+// Save into newest format
 if (load_format < e_project.FORMAT_110)
+{
+	file_rename_lib(fn, fn + ".old")
 	project_save()
+}
 
 recent_add_wait = true

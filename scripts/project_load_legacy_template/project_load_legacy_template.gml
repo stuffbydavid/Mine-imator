@@ -24,20 +24,28 @@ with (new(obj_template))
 	
 	// Find new model name and state
 	var modelmap = legacy_model_name_map[?legacy_model_name];
-	model_name = modelmap[?"name"]
-	if (!is_undefined(modelmap[?"state"]))
-		model_state = modelmap[?"state"]
+	if (!is_undefined(modelmap))
+	{
+		model_name = modelmap[?"name"]
+		if (!is_undefined(modelmap[?"state"]))
+			model_state = modelmap[?"state"]
+		else
+			model_state = ""
+	}
 	else
-		model_state = ""
+		log("Could not convert model ", legacy_model_name)
 	
 	// Find new model part name
 	var modelpartlist = legacy_model_part_map[?legacy_model_name];
-	model_part_name = modelpartlist[|legacy_bodypart_id]
-
+	if (!is_undefined(modelpartlist))
+		model_part_name = modelpartlist[|legacy_bodypart_id]
+	else
+		log("Could not convert model part of ", legacy_model_name, legacy_bodypart_id)
+		
 	item_tex = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 		legacy_item_sheet = buffer_read_byte()
-	legacy_item_n = buffer_read_int()
+	item_slot = buffer_read_int()
 	item_3d = buffer_read_byte()
 	item_face_camera = buffer_read_byte()
 	item_bounce = buffer_read_byte()
@@ -91,6 +99,6 @@ with (new(obj_template))
 	}
 	text_face_camera = buffer_read_byte()
 
-	//if (type="particles")
-	//	project_read_particles()
+	if (type = "particles")
+		project_load_legacy_particles()
 }

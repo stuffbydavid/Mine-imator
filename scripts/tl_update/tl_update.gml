@@ -1,6 +1,5 @@
 /// tl_update()
 
-tl_value_spawn()
 tl_update_value_types()
 tl_update_rot_point()
 tl_update_type_name()

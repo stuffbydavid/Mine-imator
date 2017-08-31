@@ -47,6 +47,7 @@ with (new(obj_timeline))
 	}
 
 	tl_update()
+	tl_value_spawn()
 		
 	return id
 }

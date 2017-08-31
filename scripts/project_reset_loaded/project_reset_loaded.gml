@@ -21,3 +21,5 @@ with (obj_resource)
 
 with (obj_keyframe)
 	loaded = false
+	
+loaded = false

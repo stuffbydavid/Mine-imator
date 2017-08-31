@@ -5,7 +5,8 @@
 var key = ds_map_find_first(save_id_map);
 while (!is_undefined(key))
 {
-	if (is_real(save_id_map[?key]) || save_id_find(save_id_map[?key]) != null)
+	var obj = save_id_find(save_id_map[?key]);
+	if (is_real(save_id_map[?key]) || (obj != null && !obj.loaded))
 		save_id_map[?key] = save_id_create()
 	key = ds_map_find_next(save_id_map, key)
 }
@@ -14,20 +15,35 @@ save_id_map[? null] = null
 save_id_map[?"root"] = "root"
 save_id_map[?"default"] = "default"
 
+// Load resources
+with (obj_resource)
+{
+	if (!loaded)
+		continue
+		
+	save_id = save_id_map[?save_id]
+	res_load()
+}
+
 // Set background references
 if (background_loaded)
 {
 	background_image = save_id_find(save_id_map[?background_image])
 	if (background_image)
 		background_image.count++
-	background_sky_sun_tex = save_id_find(save_id_map[?background_sky_sun_tex])
-	background_sky_sun_tex.count++
-	background_sky_moon_tex = save_id_find(save_id_map[?background_sky_moon_tex])
-	background_sky_moon_tex.count++
-	background_sky_clouds_tex = save_id_find(save_id_map[?background_sky_clouds_tex])
-	background_sky_clouds_tex.count++
+		
 	background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
 	background_ground_tex.count++
+	
+	if (load_format >= e_project.FORMAT_100_DEMO_4)
+	{
+		background_sky_sun_tex = save_id_find(save_id_map[?background_sky_sun_tex])
+		background_sky_sun_tex.count++
+		background_sky_moon_tex = save_id_find(save_id_map[?background_sky_moon_tex])
+		background_sky_moon_tex.count++
+		background_sky_clouds_tex = save_id_find(save_id_map[?background_sky_clouds_tex])
+		background_sky_clouds_tex.count++
+	}
 }
 
 // Set template references
@@ -135,11 +151,6 @@ with (obj_particle_type)
 	if (temp_creator != app.bench_settings)
 		sprite_tex.count++
 }
-
-// Load resources
-with (obj_resource)
-	if (loaded)
-		res_load()
 
 // Add to root tree
 for (var i = 0; i < array_length_1d(tree_array); i++)

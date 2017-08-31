@@ -28,7 +28,7 @@ with (save)
 	usage_background_sky_sun_tex = false
 	usage_background_sky_moon_tex = false
 	usage_background_sky_clouds_tex = false
-	usage_background_ground = false
+	usage_background_ground_tex = false
 }
 
 // Save references
