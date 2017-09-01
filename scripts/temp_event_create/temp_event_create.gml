@@ -14,7 +14,7 @@ rot_point[Z] = 0
 
 skin = null
 model_name = "human"
-model_texture_name = ""
+model_texture_name_map = null
 model_file = null
 model_state = ""
 model_state_map = null

@@ -66,6 +66,7 @@ if (bend_part != null)
 		switch (bend_part)
 		{
 			case e_part.UPPER:
+			{
 				z2 = size[Z] - bend_offset + from[Z]
 				znadd = false
 				
@@ -79,10 +80,12 @@ if (bend_part != null)
 				yntex[2] = point2D_add(yntex[2], texoff)
 				yntex[3] = point2D_add(yntex[3], texoff)
 				
-				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), vec3(1))
+				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), scale)
 				break
-				
+			}
+			
 			case e_part.LOWER:
+			{
 				z2 = 0
 				z1 = -(bend_offset - from[Z])
 				zpadd = false
@@ -97,8 +100,9 @@ if (bend_part != null)
 				yntex[0] = point2D_add(yntex[0], texoff)
 				yntex[1] = point2D_add(yntex[1], texoff)
 				
-				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), vec3(1))
+				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), scale)
 				break
+			}
 		}
 	}
 	else
@@ -106,7 +110,8 @@ if (bend_part != null)
 		switch (bend_part)
 		{
 			case e_part.UPPER:
-				z2 = bend_offset - from[Z]
+			{
+				z2 = (bend_offset - from[Z]) / scale[Z]
 				zpadd = false
 				
 				var texoff = point2D(0, (bend_offset - from[Z]))
@@ -119,9 +124,11 @@ if (bend_part != null)
 				yntex[0] = point2D_add(yntex[0], texoff)
 				yntex[1] = point2D_add(yntex[1], texoff)
 				break
+			}
 				
 			case e_part.LOWER:
-				z1 = bend_offset - from[Z]
+			{
+				z1 = (bend_offset - from[Z]) / scale[Z]
 				znadd = false
 				
 				var texoff = point2D(0, -(bend_offset - from[Z]))
@@ -134,6 +141,7 @@ if (bend_part != null)
 				yntex[2] = point2D_add(yntex[2], texoff)
 				yntex[3] = point2D_add(yntex[3], texoff)
 				break
+			}
 		}
 	}
 }

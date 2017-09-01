@@ -13,22 +13,29 @@ switch (tl_edit.type)
 	case "char":
 	case "spblock":
 	case "bodypart":
+	{
 		name = "frameeditor" + tl_edit.type + "tex"
+		
 		//if (!texobj || texobj.type = "camera" || (!texobj.mob_texture && !texobj.model_texture_map)) // TODO
 		//	texobj = tl_edit.temp.char_skin
+		
 		with (texobj)
-			tex = res_get_model_texture(tl_edit.temp.model_texture_name)
+			tex = res_get_model_texture(model_get_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part_name))
 		break
-
+	}
+	
 	case "block":
 	case "scenery":
+	{
 		name = "frameeditorblocktex"
 		if (!texobj || texobj.type = "camera" || texobj.block_sheet_texture = null)
 			texobj = tl_edit.temp.block_tex
 		tex = texobj.block_preview_texture
 		break
+	}
 	
 	default: // Shapes
+	{
 		name = "frameeditorshapetex"
 		with (tl_edit.temp)
 		{
@@ -37,6 +44,7 @@ switch (tl_edit.type)
 				tex = texobj.texture
 		}
 		break
+	}
 }
 
 if (texobj)

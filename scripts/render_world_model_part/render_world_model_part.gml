@@ -1,12 +1,12 @@
-/// render_world_model_part(part, texturename, resource, bending)
+/// render_world_model_part(part, texturenamemap, resource, bending)
 /// @arg part
-/// @arg texturename
+/// @arg texturenamemap
 /// @arg resource
 /// @arg bending
 
-var part, texname, res, bend;
+var part, texnamemap, res, bend;
 part = argument0
-texname = argument1
+texnamemap = argument1
 res = argument2
 bend = argument3
 
@@ -14,7 +14,7 @@ if (part.shape_vbuffer != null)
 {
 	// Get texture
 	with (res)
-		shader_texture = res_get_model_texture(texname)
+		shader_texture = res_get_model_texture(model_get_texture_name(texnamemap, part.name))
 	shader_use()
 		
 	// Main part

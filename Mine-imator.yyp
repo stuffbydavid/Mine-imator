@@ -7623,6 +7623,14 @@
             }
         },
         {
+            "Key": "9290c927-3613-46d1-8ad9-b4b9ba67d9e6",
+            "Value": {
+                "id": "c62345ec-0de0-4b90-b079-9cc368b6334a",
+                "resourcePath": "scripts\\model_get_texture_name\\model_get_texture_name.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "92cb0e0b-b475-4547-aa66-a54e196b6d25",
             "Value": {
                 "id": "0a50c427-cf9d-45ad-9a72-c298a47cf3d0",
@@ -14335,9 +14343,9 @@
         "42fc6d90-75a7-4404-9176-57c4e88533c6",
         "399604f3-357c-4002-a34d-f4d91712237d",
         "f9563782-e5e5-4163-8b53-891fb17c0185",
-        "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
         "b0954969-d77b-400a-888b-a47410e349ef",
         "8955cde0-61b3-4993-a04e-927841db0475",
+        "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
         "4a400fa0-0f88-4ab8-a908-82bcf007bd7e",
         "9922aaaf-38ac-461a-b655-539804962ffe",
         "6808a9e4-4563-4155-8025-92daf3c0c9f1",
@@ -14383,6 +14391,7 @@
         "bee2f4ad-a2a1-4be9-a540-5e1c17cff2d7",
         "793e56bb-97f6-4468-8e3c-c4675d8ca6fc",
         "d6a1feee-8ce6-4486-8e86-e64f1392c520",
+        "9290c927-3613-46d1-8ad9-b4b9ba67d9e6",
         "0c915454-70c5-45eb-a762-4b6f0c52c3bd",
         "ee4e6369-8fc5-4c8c-8a14-eea1cfb0f379",
         "cc84bf27-b266-4f6b-87df-5503fee82581",

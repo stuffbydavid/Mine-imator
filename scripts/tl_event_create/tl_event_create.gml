@@ -17,7 +17,7 @@ hide = false
 depth = 0
 
 model_part = null
-model_part_name = null
+model_part_name = ""
 part_of = null
 part_list = null
 

@@ -73,10 +73,8 @@ if (shader_alpha > 0)
 					res = texobj
 				if (!res.ready)
 					res = res_def
-				with (res)
-					texname = other.temp.model_texture_name
 				
-				render_world_model_part(model_part, texname, res, value[e_value.BEND_ANGLE])
+				render_world_model_part(model_part, temp.model_texture_name_map, res, value[e_value.BEND_ANGLE])
 				break
 			}
 			   

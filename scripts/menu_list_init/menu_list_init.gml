@@ -28,16 +28,16 @@ switch (menu_name)
 	case "libraryspblocktex":
 	case "librarybodypartskin": // Skin (library)
 	{
-		var modelfile, texname;
+		var modelfile, texnamemap;
 		if (string_contains(menu_name, "bench"))
 		{
 			modelfile = bench_settings.model_file
-			texname = bench_settings.model_texture_name
+			texnamemap = bench_settings.model_texture_name_map
 		}
 		else
 		{
 			modelfile = temp_edit.model_file
-			texname = temp_edit.model_texture_name
+			texnamemap = temp_edit.model_texture_name_map
 		}
 		
 		// Import from file
@@ -50,7 +50,7 @@ switch (menu_name)
 		// Default
 		var tex;
 		with (res_def)
-			tex = res_get_model_texture(texname)
+			tex = res_get_model_texture(model_get_texture_name(texnamemap, ""))
 		menu_add_item(res_def, res_def.display_name, tex)
 		
 		// Add existing resources
@@ -61,7 +61,7 @@ switch (menu_name)
 				continue
 				
 			with (res)
-				tex = res_get_model_texture(texname)
+				tex = res_get_model_texture(model_get_texture_name(texnamemap, ""))
 			
 			menu_add_item(res, res.display_name, tex)
 		}

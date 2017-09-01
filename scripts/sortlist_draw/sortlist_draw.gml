@@ -170,5 +170,5 @@ if (draw_button_normal("listsearch", filterx - 18, filtery + 2, 16, 16, e_button
 }
 
 if (tbxwid > 0)
-	if (draw_inputbox("listsearch", filterx, filtery, tbxwid, text_get("listsearch"), slist.filter_tbx, null, 0, 18, 1))
+	if (draw_inputbox("listsearch", filterx, filtery, tbxwid, text_get("listsearch"), slist.filter_tbx, null, 0, 20, 1))
 		sortlist_sort(slist)

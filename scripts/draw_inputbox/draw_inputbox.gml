@@ -36,7 +36,7 @@ if (xx + wid<content_x || xx > content_x + content_width || yy + h<content_y || 
 if (argument_count > 9)
 	padding = argument[9]
 else
-	padding = 3
+	padding = 1
 
 if (argument_count > 10)
 	font = argument[10]
