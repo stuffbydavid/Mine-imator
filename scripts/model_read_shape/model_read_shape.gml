@@ -59,6 +59,18 @@ with (new(obj_model_shape))
 		texture_name = other.texture_name
 		texture_size = other.texture_size
 	}
+		
+	// Mirror (optional)
+	if (is_real(map[?"texture_mirror"]))
+		texture_mirror = map[?"texture_mirror"]
+	else
+		texture_mirror = false
+	
+	// Invert (optional)
+	if (is_real(map[?"invert"]))
+		invert = map[?"invert"]
+	else
+		invert = false
 	
 	// From/To
 	var fromlist = map[?"from"]
@@ -74,7 +86,7 @@ with (new(obj_model_shape))
 	else
 		rotation = vec3(0, 0, 0)
 		
-	// Scale (optional) TODO: Will mess up bending? Try it..
+	// Scale (optional)
 	var scalist = map[?"scale"]
 	if (is_real(scalist) && ds_exists(scalist, ds_type_list))
 		scale = vec3(scalist[|X], scalist[|Z], scalist[|Y])
@@ -101,14 +113,40 @@ with (new(obj_model_shape))
 	// Generate
 	if (type = "block")
 	{
-		vbuffer_current = other.shape_vbuffer
+		vbuffer = vbuffer_start()
 		model_read_shape_block()
+		vbuffer_done()
 		
 		if (bend_part != null)
 		{
-			vbuffer_current = other.shape_bend_vbuffer
+			bend_vbuffer = vbuffer_start()
 			model_read_shape_block(true)
+			vbuffer_done()
 		}
+		else
+			bend_vbuffer = null
+	}
+	else if (type = "plane")
+	{
+		to[Y] = from[Y]
+		
+		vbuffer = vbuffer_start()
+		model_read_shape_plane()
+		vbuffer_done()
+		
+		if (bend_part != null)
+		{
+			bend_vbuffer = vbuffer_start()
+			model_read_shape_plane(true)
+			vbuffer_done()
+		}
+		else
+			bend_vbuffer = null
+	}
+	else
+	{
+		log("Invalid shape type", type)
+		return null
 	}
 	
 	// Update bounds

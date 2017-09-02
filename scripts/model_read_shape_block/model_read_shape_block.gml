@@ -11,96 +11,173 @@ mat = vertex_matrix
 size = point3D_sub(to, from)
 
 var x1, x2, y1, y2, z1, z2;
-var p1, p2, p3, p4;
-var xptex, xntex, yptex, yntex, zptex, zntex;
-var xpadd, xnadd, ypadd, ynadd, zpadd, znadd;
-
-x1 = 0;	   y1 = 0;	   z1 = 0
+x1 = 0;		  y1 = 0;		z1 = 0
 x2 = size[X]; y2 = size[Y]; z2 = size[Z]
 
-// Define texture coordinates to use (clockwise, starting at top-left)
-
-xptex[0] = point2D_add(uv, point2D(size[X], 0))
-xptex[1] = point2D_add(xptex[0], point2D(size[Y], 0))
-xptex[2] = point2D_add(xptex[0], point2D(size[Y], size[Z]))
-xptex[3] = point2D_add(xptex[0], point2D(0, size[Z]))
-
-xntex[0] = point2D_sub(uv, point2D(size[Y], 0))
-xntex[1] = point2D_add(xntex[0], point2D(size[Y], 0))
-xntex[2] = point2D_add(xntex[0], point2D(size[Y], size[Z]))
-xntex[3] = point2D_add(xntex[0], point2D(0, size[Z]))
-
-yptex[0] = uv
-yptex[1] = point2D_add(yptex[0], point2D(size[X], 0))
-yptex[2] = point2D_add(yptex[0], point2D(size[X], size[Z]))
-yptex[3] = point2D_add(yptex[0], point2D(0, size[Z]))
-
-yntex[0] = point2D_add(xptex[0], point2D(size[Y], 0))
-yntex[1] = point2D_add(yntex[0], point2D(size[X], 0))
-yntex[2] = point2D_add(yntex[0], point2D(size[X], size[Z]))
-yntex[3] = point2D_add(yntex[0], point2D(0, size[Z]))
-
-zptex[0] = point2D_sub(uv, point2D(0, size[Y]))
-zptex[1] = point2D_add(zptex[0], point2D(size[X], 0))
-zptex[2] = point2D_add(zptex[0], point2D(size[X], size[Y]))
-zptex[3] = point2D_add(zptex[0], point2D(0, size[Y]))
-
-zntex[0] = point2D_add(zptex[0], point2D(size[X], 0))
-zntex[1] = point2D_add(zntex[0], point2D(0, size[Y]))
-zntex[2] = point2D_add(zntex[0], point2D(size[X], size[Y]))
-zntex[3] = point2D_add(zntex[0], point2D(size[X], 0))
-
 // Set to add
-xpadd = true
-xnadd = true
-ypadd = true
-ynadd = true
-zpadd = true
-znadd = true
+var add;
+for (var d = 0; d < e_dir.amount; d++)
+	add[d] = true
+	
+// Define texture coordinates to use (clockwise, starting at top-left)
+var tex;
+tex[e_dir.EAST, 0] = point2D_add(uv, point2D(size[X], 0))
+tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 0], point2D(size[Y], 0))
+tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 0], point2D(size[Y], size[Z]))
+tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 0], point2D(0, size[Z]))
 
-// Adjust by bending
+tex[e_dir.WEST, 0] = point2D_sub(uv, point2D(size[Y], 0))
+tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 0], point2D(size[Y], 0))
+tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 0], point2D(size[Y], size[Z]))
+tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 0], point2D(0, size[Z]))
+
+tex[e_dir.SOUTH, 0] = uv
+tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 0], point2D(size[X], 0))
+tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 0], point2D(size[X], size[Z]))
+tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 0], point2D(0, size[Z]))
+
+tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.EAST, 0], point2D(size[Y], 0))
+tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 0], point2D(size[X], 0))
+tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 0], point2D(size[X], size[Z]))
+tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 0], point2D(0, size[Z]))
+
+tex[e_dir.UP, 0] = point2D_sub(uv, point2D(0, size[Y]))
+tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 0], point2D(size[X], 0))
+tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 0], point2D(size[X], size[Y]))
+tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 0], point2D(0, size[Y]))
+
+tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.UP, 0], point2D(size[X], 0))
+tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 0], point2D(0, size[Y]))
+tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 0], point2D(size[X], size[Y]))
+tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 0], point2D(size[X], 0))
+
+// Flip east/west sides if mirrored
+if (texture_mirror)
+{
+	for (var t = 0; t < 4; t++)
+	{
+		var tmp = tex[e_dir.EAST, t]
+		tex[e_dir.EAST, t] = tex[e_dir.WEST, t]
+		tex[e_dir.WEST, t] = tmp
+	}
+}
+
+// Adjust by bending TODO other directions
 if (bend_part != null)
 {
+	var texoff;
 	if (bend) // Bent half
 	{
 		switch (bend_part)
 		{
-			case e_part.UPPER:
+			case e_part.RIGHT: // X+
 			{
-				z2 = size[Z] - bend_offset + from[Z]
-				znadd = false
+				add[e_dir.WEST] = false
+				x2 = size[X] - bend_offset + from[X]
+				mat = matrix_create(point3D(0, from[Y], from[Z]), vec3(0), scale)
 				
-				var texoff = point2D(0, -(bend_offset - from[Z]))
-				xptex[2] = point2D_add(xptex[2], texoff)
-				xptex[3] = point2D_add(xptex[3], texoff)
-				xntex[2] = point2D_add(xntex[2], texoff)
-				xntex[3] = point2D_add(xntex[3], texoff)
-				yptex[2] = point2D_add(yptex[2], texoff)
-				yptex[3] = point2D_add(yptex[3], texoff)
-				yntex[2] = point2D_add(yntex[2], texoff)
-				yntex[3] = point2D_add(yntex[3], texoff)
-				
-				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), scale)
+				texoff = point2D((bend_offset - from[X]), 0)
+				tex[e_dir.SOUTH, 0] = point2D_add(tex[e_dir.SOUTH, 0], texoff)
+				tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 3], texoff)
+				tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.NORTH, 0], texoff)
+				tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 3], texoff)
+				tex[e_dir.UP, 0] = point2D_add(tex[e_dir.UP, 0], texoff)
+				tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 3], texoff)
+				tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.DOWN, 0], texoff)
+				tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 1], texoff)
 				break
 			}
 			
-			case e_part.LOWER:
+			case e_part.LEFT: // X-
 			{
+				add[e_dir.EAST] = false
+				x2 = 0
+				x1 = -(bend_offset - from[X])
+				mat = matrix_create(point3D(0, from[Y], from[Z]), vec3(0), scale)
+				
+				texoff = point2D(-(size[X] - bend_offset + from[X]), 0)
+				tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 1], texoff)
+				tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 2], texoff)
+				tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 1], texoff)
+				tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 2], texoff)
+				tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 1], texoff)
+				tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 2], texoff)
+				tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 2], texoff)
+				tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 3], texoff)
+				break
+			}
+			
+			case e_part.FRONT: // Y+
+			{
+				add[e_dir.NORTH] = false
+				y2 = size[Y] - bend_offset + from[Y]
+				mat = matrix_create(point3D(from[X], 0, from[Z]), vec3(0), scale)
+				
+				texoff = point2D((bend_offset - from[Y]), 0)
+				tex[e_dir.EAST, 1] = point2D_sub(tex[e_dir.EAST, 1], texoff)
+				tex[e_dir.EAST, 2] = point2D_sub(tex[e_dir.EAST, 2], texoff)
+				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
+				tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 3], texoff)
+				tex[e_dir.UP, 0] = point2D_add(tex[e_dir.UP, 0], texoff)
+				tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 3], texoff)
+				tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.DOWN, 0], texoff)
+				tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 1], texoff)
+				break
+			}
+			
+			case e_part.BACK: // Y-
+			{
+				add[e_dir.SOUTH] = false
+				y2 = 0
+				y1 = -(bend_offset - from[Y])
+				mat = matrix_create(point3D(from[X], 0, from[Z]), vec3(0), scale)
+				
+				texoff = point2D(-(size[Y] - bend_offset + from[Y]), 0)
+				tex[e_dir.EAST, 0] = point2D_sub(tex[e_dir.EAST, 0], texoff)
+				tex[e_dir.EAST, 3] = point2D_sub(tex[e_dir.EAST, 3], texoff)
+				tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 1], texoff)
+				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
+				tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 1], texoff)
+				tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 2], texoff)
+				tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 2], texoff)
+				tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 3], texoff)
+				break
+			}
+			
+			case e_part.UPPER: // Z+
+			{
+				add[e_dir.DOWN] = false
+				z2 = size[Z] - bend_offset + from[Z]
+				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), scale)
+				
+				texoff = point2D(0, -(bend_offset - from[Z]))
+				tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 2], texoff)
+				tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 3], texoff)
+				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
+				tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 3], texoff)
+				tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 2], texoff)
+				tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 3], texoff)
+				tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 2], texoff)
+				tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 3], texoff)
+				break
+			}
+			
+			case e_part.LOWER: // Z-
+			{
+				add[e_dir.UP] = false
 				z2 = 0
 				z1 = -(bend_offset - from[Z])
-				zpadd = false
-				
-				var texoff = point2D(0, (bend_offset - from[Z]))
-				xptex[0] = point2D_add(xptex[0], texoff)
-				xptex[1] = point2D_add(xptex[1], texoff)
-				xntex[0] = point2D_add(xntex[0], texoff)
-				xntex[1] = point2D_add(xntex[1], texoff)
-				yptex[0] = point2D_add(yptex[0], texoff)
-				yptex[1] = point2D_add(yptex[1], texoff)
-				yntex[0] = point2D_add(yntex[0], texoff)
-				yntex[1] = point2D_add(yntex[1], texoff)
-				
 				mat = matrix_create(point3D(from[X], from[Y], 0), vec3(0), scale)
+				
+				texoff = point2D(0, (size[Z] - bend_offset + from[Z]))
+				tex[e_dir.EAST, 0] = point2D_add(tex[e_dir.EAST, 0], texoff)
+				tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 1], texoff)
+				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
+				tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 1], texoff)
+				tex[e_dir.SOUTH, 0] = point2D_add(tex[e_dir.SOUTH, 0], texoff)
+				tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 1], texoff)
+				tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.NORTH, 0], texoff)
+				tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 1], texoff)
 				break
 			}
 		}
@@ -109,118 +186,210 @@ if (bend_part != null)
 	{
 		switch (bend_part)
 		{
-			case e_part.UPPER:
+			case e_part.RIGHT: // X+
 			{
-				z2 = (bend_offset - from[Z]) / scale[Z]
-				zpadd = false
+				add[e_dir.EAST] = false
+				x2 = (bend_offset - from[X]) / scale[X]
 				
-				var texoff = point2D(0, (bend_offset - from[Z]))
-				xptex[0] = point2D_add(xptex[0], texoff)
-				xptex[1] = point2D_add(xptex[1], texoff)
-				xntex[0] = point2D_add(xntex[0], texoff)
-				xntex[1] = point2D_add(xntex[1], texoff)
-				yptex[0] = point2D_add(yptex[0], texoff)
-				yptex[1] = point2D_add(yptex[1], texoff)
-				yntex[0] = point2D_add(yntex[0], texoff)
-				yntex[1] = point2D_add(yntex[1], texoff)
+				texoff = point2D(-(size[X] - bend_offset + from[X]), 0)
+				tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 1], texoff)
+				tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 2], texoff)
+				tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 1], texoff)
+				tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 2], texoff)
+				tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 1], texoff)
+				tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 2], texoff)
+				tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 2], texoff)
+				tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 3], texoff)
 				break
 			}
 				
-			case e_part.LOWER:
+			case e_part.LEFT: // X-
 			{
-				z1 = (bend_offset - from[Z]) / scale[Z]
-				znadd = false
+				add[e_dir.WEST] = false
+				x1 = (bend_offset - from[X]) / scale[X]
 				
-				var texoff = point2D(0, -(bend_offset - from[Z]))
-				xptex[2] = point2D_add(xptex[2], texoff)
-				xptex[3] = point2D_add(xptex[3], texoff)
-				xntex[2] = point2D_add(xntex[2], texoff)
-				xntex[3] = point2D_add(xntex[3], texoff)
-				yptex[2] = point2D_add(yptex[2], texoff)
-				yptex[3] = point2D_add(yptex[3], texoff)
-				yntex[2] = point2D_add(yntex[2], texoff)
-				yntex[3] = point2D_add(yntex[3], texoff)
+				texoff = point2D((bend_offset - from[X]), 0)
+				tex[e_dir.SOUTH, 0] = point2D_add(tex[e_dir.SOUTH, 0], texoff)
+				tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 3], texoff)
+				tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.NORTH, 0], texoff)
+				tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 3], texoff)
+				tex[e_dir.UP, 0] = point2D_add(tex[e_dir.UP, 0], texoff)
+				tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 3], texoff)
+				tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.DOWN, 0], texoff)
+				tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 1], texoff)
+				break
+			}
+			
+			case e_part.FRONT: // Y+
+			{
+				add[e_dir.SOUTH] = false
+				y2 = (bend_offset - from[Y]) / scale[Y]
+				
+				texoff = point2D(-(size[Y] - bend_offset + from[Y]), 0)
+				tex[e_dir.EAST, 0] = point2D_sub(tex[e_dir.EAST, 0], texoff)
+				tex[e_dir.EAST, 3] = point2D_sub(tex[e_dir.EAST, 3], texoff)
+				tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 1], texoff)
+				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
+				tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 1], texoff)
+				tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 2], texoff)
+				tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 2], texoff)
+				tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 3], texoff)
+				break
+			}
+				
+			case e_part.BACK: // Y-
+			{
+				add[e_dir.NORTH] = false
+				y1 = (bend_offset - from[Y]) / scale[Y]
+				
+				texoff = point2D((bend_offset - from[Y]), 0)
+				tex[e_dir.EAST, 1] = point2D_sub(tex[e_dir.EAST, 1], texoff)
+				tex[e_dir.EAST, 2] = point2D_sub(tex[e_dir.EAST, 2], texoff)
+				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
+				tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 3], texoff)
+				tex[e_dir.UP, 0] = point2D_add(tex[e_dir.UP, 0], texoff)
+				tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 3], texoff)
+				tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.DOWN, 0], texoff)
+				tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 1], texoff)
+				break
+			}
+			
+			case e_part.UPPER: // Z+
+			{
+				add[e_dir.UP] = false
+				z2 = (bend_offset - from[Z]) / scale[Z]
+				
+				texoff = point2D(0, (size[Z] - bend_offset + from[Z]))
+				tex[e_dir.EAST, 0] = point2D_add(tex[e_dir.EAST, 0], texoff)
+				tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 1], texoff)
+				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
+				tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 1], texoff)
+				tex[e_dir.SOUTH, 0] = point2D_add(tex[e_dir.SOUTH, 0], texoff)
+				tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 1], texoff)
+				tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.NORTH, 0], texoff)
+				tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 1], texoff)
+				break
+			}
+				
+			case e_part.LOWER: // Z-
+			{
+				add[e_dir.DOWN] = false
+				z1 = (bend_offset - from[Z]) / scale[Z]
+				
+				texoff = point2D(0, -(bend_offset - from[Z]))
+				tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 2], texoff)
+				tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 3], texoff)
+				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
+				tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 3], texoff)
+				tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 2], texoff)
+				tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 3], texoff)
+				tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 2], texoff)
+				tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 3], texoff)
 				break
 			}
 		}
 	}
 }
 
-// Transform to values between 0-1
-for (var t = 0; t < 4; t++)
+// Create faces
+for (var d = 0; d < e_dir.amount; d++)
 {
-	xptex[t] = vec2_div(xptex[t], texture_size)
-	xntex[t] = vec2_div(xntex[t], texture_size)
-	yptex[t] = vec2_div(yptex[t], texture_size)
-	yntex[t] = vec2_div(yntex[t], texture_size)
-	zptex[t] = vec2_div(zptex[t], texture_size)
-	zntex[t] = vec2_div(zntex[t], texture_size)
-}
-
-// X+
-if (xpadd)
-{
-	p1 = point3D(x2, y2, z2)
-	p2 = point3D(x2, y1, z2)
-	p3 = point3D(x2, y1, z1)
-	p4 = point3D(x2, y2, z1)
-	vbuffer_add_triangle(p1, p2, p3, xptex[0], xptex[1], xptex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, xptex[2], xptex[3], xptex[0], mat)
-}
-
-// X-
-if (xnadd)
-{ 
-	p1 = point3D(x1, y1, z2)
-	p2 = point3D(x1, y2, z2)
-	p3 = point3D(x1, y2, z1)
-	p4 = point3D(x1, y1, z1)
-	vbuffer_add_triangle(p1, p2, p3, xntex[0], xntex[1], xntex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, xntex[2], xntex[3], xntex[0], mat)
-}
-
-// Y+
-if (ypadd)
-{
-	p1 = point3D(x1, y2, z2)
-	p2 = point3D(x2, y2, z2)
-	p3 = point3D(x2, y2, z1)
-	p4 = point3D(x1, y2, z1)
-	vbuffer_add_triangle(p1, p2, p3, yptex[0], yptex[1], yptex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, yptex[2], yptex[3], yptex[0], mat)
-}
-
-// Y-
-if (ynadd)
-{
-	p1 = point3D(x2, y1, z2)
-	p2 = point3D(x1, y1, z2)
-	p3 = point3D(x1, y1, z1)
-	p4 = point3D(x2, y1, z1)
-	vbuffer_add_triangle(p1, p2, p3, yntex[0], yntex[1], yntex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, yntex[2], yntex[3], yntex[0], mat)
-}
-
-// Z+
-if (zpadd)
-{
-	p1 = point3D(x1, y1, z2)
-	p2 = point3D(x2, y1, z2)
-	p3 = point3D(x2, y2, z2)
-	p4 = point3D(x1, y2, z2)
-	vbuffer_add_triangle(p1, p2, p3, zptex[0], zptex[1], zptex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, zptex[2], zptex[3], zptex[0], mat)
-}
-
-// Z-
-if (znadd)
-{
-	p1 = point3D(x1, y1, z1)
-	p2 = point3D(x1, y2, z1)
-	p3 = point3D(x2, y2, z1)
-	p4 = point3D(x2, y1, z1)
-	vbuffer_add_triangle(p1, p2, p3, zntex[0], zntex[1], zntex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, zntex[2], zntex[3], zntex[0], mat)
+	if (!add[d])
+		continue
+	
+	var p1, p2, p3, p4;
+	var t1, t2, t3, t4;
+		
+	// Mirror texture U
+	if (texture_mirror)
+	{
+		t1 = tex[d, 1]
+		t2 = tex[d, 0]
+		t3 = tex[d, 3]
+		t4 = tex[d, 2]
+	}
+	else
+	{
+		t1 = tex[d, 0]
+		t2 = tex[d, 1]
+		t3 = tex[d, 2]
+		t4 = tex[d, 3]
+	}
+	
+	// Transform texture values between 0-1
+	t1 = vec2_div(t1, texture_size)
+	t2 = vec2_div(t2, texture_size)
+	t3 = vec2_div(t3, texture_size)
+	t4 = vec2_div(t4, texture_size)
+	
+	// Set vertices
+	switch (d)
+	{
+		case e_dir.EAST:
+		{
+			p1 = point3D(x2, y2, z2)
+			p2 = point3D(x2, y1, z2) 
+			p3 = point3D(x2, y1, z1)
+			p4 = point3D(x2, y2, z1)
+			break
+		}
+		
+		case e_dir.WEST:
+		{
+			p1 = point3D(x1, y1, z2)
+			p2 = point3D(x1, y2, z2)
+			p3 = point3D(x1, y2, z1)
+			p4 = point3D(x1, y1, z1)
+			break
+		}
+		
+		case e_dir.SOUTH:
+		{
+			p1 = point3D(x1, y2, z2)
+			p2 = point3D(x2, y2, z2)
+			p3 = point3D(x2, y2, z1)
+			p4 = point3D(x1, y2, z1)
+			break
+		}
+		
+		case e_dir.NORTH:
+		{
+			p1 = point3D(x2, y1, z2)
+			p2 = point3D(x1, y1, z2)
+			p3 = point3D(x1, y1, z1)
+			p4 = point3D(x2, y1, z1)
+			break
+		}
+		
+		case e_dir.UP:
+		{
+			p1 = point3D(x1, y1, z2)
+			p2 = point3D(x2, y1, z2)
+			p3 = point3D(x2, y2, z2)
+			p4 = point3D(x1, y2, z2)
+			break
+		}
+		
+		case e_dir.DOWN:
+		{
+			p1 = point3D(x1, y1, z1)
+			p2 = point3D(x1, y2, z1)
+			p3 = point3D(x2, y2, z1)
+			p4 = point3D(x2, y1, z1)
+			break
+		}
+	}
+	
+	if (invert)
+	{
+		vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, mat)
+		vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, mat)
+	}
+	else
+	{
+		vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, mat)
+		vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, mat)
+	}
 }
 
 // Update bounds

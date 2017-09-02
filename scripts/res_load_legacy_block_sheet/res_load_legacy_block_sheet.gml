@@ -15,7 +15,7 @@ else
 
 // Find dimensions
 var oldtex, sheetwid, blocksize;
-oldtex  = texture_create(fn)
+oldtex = texture_create(fn)
 sheetwid = 16
 if (format >= e_project.FORMAT_100_DEMO_2)
 	sheetwid = 32

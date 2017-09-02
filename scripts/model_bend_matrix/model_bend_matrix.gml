@@ -35,9 +35,9 @@ switch (part.bend_part)
 // Get rotation
 switch (part.bend_axis)
 {
-	case X:	rot = vec3(angle, 0, 0);	break
-	case Y:	rot = vec3(0, angle, 0);	break
-	case Z:	rot = vec3(0, 0, angle);	break
+	case X:	rot = vec3(angle, 0, 0); break
+	case Y:	rot = vec3(0, angle, 0); break
+	case Z:	rot = vec3(0, 0, angle); break
 }
 	
 // Get scale

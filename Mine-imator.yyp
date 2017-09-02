@@ -12575,6 +12575,14 @@
             }
         },
         {
+            "Key": "efcffa2c-ef5e-4d2a-813b-dc4a3306fd86",
+            "Value": {
+                "id": "0ecd0128-0cbd-49dd-9151-00fae0790b7d",
+                "resourcePath": "scripts\\model_read_shape_plane\\model_read_shape_plane.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "efdf6f2d-eab2-45b1-a4d6-464f32266c61",
             "Value": {
                 "id": "4a4f010e-0938-4ce6-b3a1-a58c44926ab3",
@@ -14388,6 +14396,7 @@
         "f548f153-9e92-4b67-b594-d504d7ed5e49",
         "6842d081-bab3-4c12-9cf3-cbadcd2278e3",
         "3e4e5e0a-2dba-4487-a686-075b5b642dc7",
+        "efcffa2c-ef5e-4d2a-813b-dc4a3306fd86",
         "bee2f4ad-a2a1-4be9-a540-5e1c17cff2d7",
         "793e56bb-97f6-4468-8e3c-c4675d8ca6fc",
         "d6a1feee-8ce6-4486-8e86-e64f1392c520",

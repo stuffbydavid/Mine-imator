@@ -31,7 +31,7 @@ if (object_index != app && update_matrix)
 	}
 		
 	// Create main matrix
-	matrix = matrix_multiply(matrix_create(pos, rot ,sca), matrix_parent)
+	matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
 	
 	// No scale or "resize" mode
 	if (scale_resize || !inherit_scale)

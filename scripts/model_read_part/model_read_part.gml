@@ -87,8 +87,18 @@ with (new(obj_model_part))
 		{
 			switch (other.bend_part)
 			{
+				case e_part.LEFT:
+				case e_part.RIGHT:
+						position[X] -= other.bend_offset
+					break
+					
+				case e_part.BACK:
+				case e_part.FRONT:
+						position[Y] -= other.bend_offset
+					break
+					
+				case e_part.LOWER:
 				case e_part.UPPER:
-					if (position[Z] > other.bend_offset)
 						position[Z] -= other.bend_offset
 					break
 			}
@@ -185,10 +195,6 @@ with (new(obj_model_part))
 	var shapelist = map[?"shapes"]
 	if (is_real(shapelist) && ds_exists(shapelist, ds_type_list))
 	{
-		shape_vbuffer = vbuffer_start()
-		if (bend_part != null)
-			shape_bend_vbuffer = vbuffer_start()
-			
 		shape_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(shapelist); p++)
 		{
@@ -196,23 +202,13 @@ with (new(obj_model_part))
 			if (shape = null) // Something went wrong
 			{
 				log("Could not read shape list", name)
-				vbuffer_done(shape_vbuffer)
-				if (bend_part != null)
-					vbuffer_done(shape_bend_vbuffer)
-				shape_vbuffer = null
 				return null
 			}
 			ds_list_add(shape_list, shape)
 		}
-		vbuffer_done(shape_vbuffer)
-		if (bend_part != null)
-			vbuffer_done(shape_bend_vbuffer)
 	}
 	else
-	{
 		shape_list = null
-		shape_vbuffer = null
-	}
 	
 	// Default bounds (including parts)
 	bounds_parts_start = bounds_start

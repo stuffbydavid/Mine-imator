@@ -51,50 +51,6 @@ with (mc_assets)
 {
 	name = contentsmap[?"version"];
 	
-	// Characters
-	var characterslist = contentsmap[?"characters"];
-	if (is_undefined(characterslist))
-	{
-		log("No character list found")
-		break
-	}
-	
-	for (var i = 0; i < ds_list_size(characterslist); i++)
-	{
-		var model = model_load(characterslist[|i], character_directory);
-		if (!model) // Something went wrong!
-		{
-			log("Could not load model")
-			continue
-		}
-		
-		model_name_map[?model.name] = model
-		
-		ds_list_add(char_list, model)
-	}
-	
-	// Special blocks
-	var specialblockslist = contentsmap[?"special_blocks"];
-	if (is_undefined(specialblockslist))
-	{
-		log("No special block list found")
-		break
-	}
-	
-	for (var i = 0; i < ds_list_size(specialblockslist); i++)
-	{
-		var model = model_load(specialblockslist[|i], special_block_directory);
-		if (!model) // Something went wrong!
-		{
-			log("Could not load model")
-			continue
-		}
-		
-		model_name_map[?model.name] = model
-		
-		ds_list_add(special_block_list, model)
-	}
-	
 	// Model textures
 	var modeltextureslist = contentsmap[?"model_textures"];
 	if (is_undefined(modeltextureslist))
@@ -161,6 +117,50 @@ with (mc_assets)
 		res_load_pack_block_textures()
 		res_load_pack_item_textures()
 		res_load_pack_misc()
+	}
+	
+	// Characters
+	var characterslist = contentsmap[?"characters"];
+	if (is_undefined(characterslist))
+	{
+		log("No character list found")
+		break
+	}
+	
+	for (var i = 0; i < ds_list_size(characterslist); i++)
+	{
+		var model = model_load(characterslist[|i], character_directory);
+		if (!model) // Something went wrong!
+		{
+			log("Could not load model")
+			continue
+		}
+		
+		model_name_map[?model.name] = model
+		
+		ds_list_add(char_list, model)
+	}
+	
+	// Special blocks
+	var specialblockslist = contentsmap[?"special_blocks"];
+	if (is_undefined(specialblockslist))
+	{
+		log("No special block list found")
+		break
+	}
+	
+	for (var i = 0; i < ds_list_size(specialblockslist); i++)
+	{
+		var model = model_load(specialblockslist[|i], special_block_directory);
+		if (!model) // Something went wrong!
+		{
+			log("Could not load model")
+			continue
+		}
+		
+		model_name_map[?model.name] = model
+		
+		ds_list_add(special_block_list, model)
 	}
 	
 	// Blocks

@@ -20,6 +20,7 @@ for (var mp = 0; mp < ds_list_size(part.part_list); mp++)
 			with (tl)
 			{
 				model_part = mpart
+				lock_bend = mpart.lock_bend
 				tl_set_parent(par)
 				tl_update_value_types()
 				tl_update_type_name()
