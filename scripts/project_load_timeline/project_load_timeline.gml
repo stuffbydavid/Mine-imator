@@ -95,10 +95,15 @@ with (new(obj_timeline))
 	backfaces = json_read_real(map[?"backfaces"], backfaces)
 	texture_blur = json_read_real(map[?"texture_blur"], texture_blur)
 	texture_filtering = json_read_real(map[?"texture_filtering"], texture_filtering)
-	round_bending = json_read_real(map[?"round_bending"], round_bending)
+	if (type = "bodypart")
+		round_bending = json_read_real(map[?"round_bending"], round_bending)
 	shadows = json_read_real(map[?"shadows"], shadows)
 	ssao= json_read_real(map[?"ssao"], ssao)
 	fog = json_read_real(map[?"fog"], fog)
-	wind = json_read_real(map[?"wind"], wind)
-	wind_terrain = json_read_real(map[?"wind_terrain"], wind_terrain)
+	
+	if (type = "scenery" || type = "block" || type = "particles" || type = "text" || type_is_shape(type))
+	{
+		wind = json_read_real(map[?"wind"], wind)
+		wind_terrain = json_read_real(map[?"wind_terrain"], wind_terrain)
+	}
 }

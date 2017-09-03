@@ -60,11 +60,16 @@ json_export_object_start()
 	json_export_var_bool("backfaces", backfaces)
 	json_export_var_bool("texture_blur", texture_blur)
 	json_export_var_bool("texture_filtering", texture_filtering)
-	json_export_var_bool("round_bending", round_bending)
+	if (type = "bodypart")
+		json_export_var_bool("round_bending", round_bending)
 	json_export_var_bool("shadows", shadows)
 	json_export_var_bool("ssao", ssao)
 	json_export_var_bool("fog", fog)
-	json_export_var_bool("wind", wind)
-	json_export_var_bool("wind_terrain", wind_terrain)
+	
+	if (type = "scenery" || type = "block" || type = "particles" || type = "text" || type_is_shape(type))
+	{
+		json_export_var_bool("wind", wind)
+		json_export_var_bool("wind_terrain", wind_terrain)
+	}
 
 json_export_object_done()
