@@ -272,7 +272,7 @@ with (preview)
 						
 						matrix_add_offset()
 						matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-						render_world_model_part(select.model_part, select.model_texture_name_map, res, 0)
+						render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null)
 						break
 					}
 					

@@ -166,8 +166,8 @@ for (var m = 0; m < array_length_1d(models); m++)
 				
 					// Add two triangles for each face
 					vbuffer_current = mc_builder.vbuffer[face_depth[f], face_vbuffer[f]]
-					vbuffer_add_triangle(p1, p2, p3, face_uv[f, 0], face_uv[f, 1], face_uv[f, 2], mat, color)
-					vbuffer_add_triangle(p3, p4, p1, face_uv[f, 2], face_uv[f, 3], face_uv[f, 0], mat, color)
+					vbuffer_add_triangle(p1, p2, p3, face_uv[f, 0], face_uv[f, 1], face_uv[f, 2], null, color, mat)
+					vbuffer_add_triangle(p3, p4, p1, face_uv[f, 2], face_uv[f, 3], face_uv[f, 0], null, color, mat)
 				}
 			}
 		}

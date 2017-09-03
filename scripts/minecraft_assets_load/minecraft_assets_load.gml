@@ -16,7 +16,8 @@ if (!file_exists_lib(fname))
 	
 log("Loading version", version)
 
-unzip(fname)
+if (!dev_mode || dev_mode_unzip_assets)
+	unzip(fname)
 
 var contentsfname = unzip_directory + "contents.midata"
 if (!file_exists_lib(contentsfname))

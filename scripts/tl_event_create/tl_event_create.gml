@@ -83,10 +83,9 @@ cam_surf_tmp = null
 cam_goalzoom = null
 
 update_matrix = true
-bend_vbuffer = null
-bend_lastbend = 0
-bend_lastchar = 0
-bend_lastbodypart = 0
+bend_vbuffer_list = null
+bend_angle_last = 0
+bend_model_part_last = null
 
 text_vbuffer = null
 text_texture = null

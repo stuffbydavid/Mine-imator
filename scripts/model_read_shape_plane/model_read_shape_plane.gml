@@ -147,11 +147,11 @@ p2 = point3D(x2, 0, z2)
 p3 = point3D(x2, 0, z1)
 p4 = point3D(x1, 0, z1)
 
-vbuffer_add_triangle(p1, p2, p3, tex[0], tex[1], tex[2], mat)
-vbuffer_add_triangle(p3, p4, p1, tex[2], tex[3], tex[0], mat)
+vbuffer_add_triangle(p1, p2, p3, tex[0], tex[1], tex[2], null, null, mat)
+vbuffer_add_triangle(p3, p4, p1, tex[2], tex[3], tex[0], null, null, mat)
 
-vbuffer_add_triangle(p2, p1, p3, tex[1], tex[0], tex[2], mat)
-vbuffer_add_triangle(p4, p3, p1, tex[3], tex[2], tex[0], mat)
+vbuffer_add_triangle(p2, p1, p3, tex[1], tex[0], tex[2], null, null, mat)
+vbuffer_add_triangle(p4, p3, p1, tex[3], tex[2], tex[0], null, null, mat)
 
 // Update bounds
 if (!bend)

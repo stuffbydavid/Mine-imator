@@ -1,14 +1,16 @@
-/// render_world_model_part(part, texturenamemap, resource, bendangle)
+/// render_world_model_part(part, texturenamemap, resource, bendangle, bendvbufferlist)
 /// @arg part
 /// @arg texturenamemap
 /// @arg resource
 /// @arg bendangle
+/// @arg bendvbufferlist
 
-var part, texnamemap, res, bend;
+var part, texnamemap, res, bendangle, bendvbufferlist;
 part = argument0
 texnamemap = argument1
 res = argument2
-bend = argument3
+bendangle = argument3
+bendvbufferlist = argument4
 
 if (part.shape_list != null)
 {
@@ -26,14 +28,19 @@ if (part.shape_list != null)
 			shader_texture = res_get_model_texture(texname)
 		shader_use()
 		
-		// Main part
+		// Main part mesh
 		vbuffer_render(shape.vbuffer)
 		
 		// Bended half
 		if (part.bend_part != null)
 		{
+			// Connect mesh
+			if (s = 0 && bendangle != 0 && bendvbufferlist != null && bendvbufferlist[|s] != null)
+				vbuffer_render(bendvbufferlist[|s])
+		
+			// Second half mesh
 			var mat = matrix_get(matrix_world);
-			matrix_set(matrix_world, matrix_multiply(model_bend_matrix(part, bend), mat))
+			matrix_set(matrix_world, matrix_multiply(model_part_bend_matrix(part, bendangle), mat))
 			vbuffer_render(shape.bend_vbuffer)
 			matrix_set(matrix_world, mat)
 		}

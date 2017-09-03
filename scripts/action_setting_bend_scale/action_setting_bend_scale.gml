@@ -6,7 +6,7 @@ setting_bend_scale = setting_bend_scale * argument1 + argument0
 
 with (obj_timeline)
 {
-	//tl_update_bend(true)
+	tl_update_bend(true)
 	update_matrix = true
 }
 

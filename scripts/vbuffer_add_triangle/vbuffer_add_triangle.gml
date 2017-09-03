@@ -1,13 +1,14 @@
 /// vbuffer_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3)
-/// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [matrix, [color]])
+/// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [normal, [color, [matrix]]])
 /// @arg pos1
 /// @arg pos2
 /// @arg pos3
 /// @arg texcoord1
 /// @arg texcoord2
 /// @arg texcoord3
-/// @arg [matrix
-/// @arg [color]]
+/// @arg [normal
+/// @arg [color
+/// @arg [matrix]]]
 
 if (argument_count < 15)
 {
@@ -18,20 +19,25 @@ if (argument_count < 15)
 	tex1 = argument[3]
 	tex2 = argument[4]
 	tex3 = argument[5]
-	normal = vec3_cross(point3D_sub(pos1, pos2), point3D_sub(pos2, pos3))
-	color = -1
 	
-	if (argument_count > 6)
+	if (argument_count > 6 && is_array(argument[6]))
+		normal = argument[6]
+	else
+		normal = vec3_cross(point3D_sub(pos1, pos2), point3D_sub(pos2, pos3))
+	
+	if (argument_count > 7 && argument[7] != null)
+		color = argument[7]
+	else
+		color = -1
+	
+	if (argument_count > 8)
 	{
-		var mat = argument[6];
+		var mat = argument[8];
 		pos1 = point3D_mul_matrix(pos1, mat)
 		pos2 = point3D_mul_matrix(pos2, mat)
 		pos3 = point3D_mul_matrix(pos3, mat)
 		normal = vec3_normalize(vec3_mul_matrix(normal, mat))
 	}
-	
-	if (argument_count > 7)
-		color = argument[7]
 	
 	vertex_add(pos1, normal, tex1, color)
 	vertex_add(pos2, normal, tex2, color)

@@ -317,10 +317,10 @@ for (var d = 0; d < e_dir.amount; d++)
 		
 	if (d = e_dir.UP)
 	{
-		vbuffer_add_triangle(mid, corner[0], corner[1], topmidtex, toptex[0], toptex[1], mat)
-		vbuffer_add_triangle(mid, corner[1], corner[2], topmidtex, toptex[1], toptex[2], mat)
-		vbuffer_add_triangle(mid, corner[2], corner[3], topmidtex, toptex[2], toptex[3], mat)
-		vbuffer_add_triangle(mid, corner[3], corner[0], topmidtex, toptex[3], toptex[0], mat)
+		vbuffer_add_triangle(mid, corner[0], corner[1], topmidtex, toptex[0], toptex[1], null, null, mat)
+		vbuffer_add_triangle(mid, corner[1], corner[2], topmidtex, toptex[1], toptex[2], null, null, mat)
+		vbuffer_add_triangle(mid, corner[2], corner[3], topmidtex, toptex[2], toptex[3], null, null, mat)
+		vbuffer_add_triangle(mid, corner[3], corner[0], topmidtex, toptex[3], toptex[0], null, null, mat)
 		continue
 	}
 	else if (d = e_dir.DOWN)
@@ -329,8 +329,8 @@ for (var d = 0; d < e_dir.amount; d++)
 		p2 = point3D(x2, y2, z1)
 		p3 = point3D(x2, y1, z1)
 		p4 = point3D(x1, y1, z1)
-		vbuffer_add_triangle(p1, p2, p3, toptex[3], toptex[2], toptex[1], mat)
-		vbuffer_add_triangle(p3, p4, p1, toptex[1], toptex[0], toptex[3], mat)
+		vbuffer_add_triangle(p1, p2, p3, toptex[3], toptex[2], toptex[1], null, null, mat)
+		vbuffer_add_triangle(p3, p4, p1, toptex[1], toptex[0], toptex[3], null, null, mat)
 		continue
 	}
 	
@@ -376,10 +376,10 @@ for (var d = 0; d < e_dir.amount; d++)
 			break
 	}
 	
-	vbuffer_add_triangle(p1, p2, p3, sidetex[0], sidetex[1], sidetex[2], mat)
-	vbuffer_add_triangle(p3, p4, p1, sidetex[2], sidetex[3], sidetex[0], mat)
+	vbuffer_add_triangle(p1, p2, p3, sidetex[0], sidetex[1], sidetex[2], null, null, mat)
+	vbuffer_add_triangle(p3, p4, p1, sidetex[2], sidetex[3], sidetex[0], null, null, mat)
 	if (cornerz[c1] > cornerz[c2])
-		vbuffer_add_triangle(p2, p1, corner[c1], sidetex[1], sidetex[0], cornerrighttex[c1], mat)
+		vbuffer_add_triangle(p2, p1, corner[c1], sidetex[1], sidetex[0], cornerrighttex[c1], null, null, mat)
 	else if (cornerz[c1] < cornerz[c2])
-		vbuffer_add_triangle(p2, p1, corner[c2], sidetex[1], sidetex[0], cornerlefttex[c2], mat)
+		vbuffer_add_triangle(p2, p1, corner[c2], sidetex[1], sidetex[0], cornerlefttex[c2], null, null, mat)
 }

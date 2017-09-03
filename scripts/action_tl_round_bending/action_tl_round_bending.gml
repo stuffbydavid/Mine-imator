@@ -10,7 +10,7 @@ if (history_undo)
 			with (save_id_find(save_var_save_id[t]))
 			{
 				round_bending = other.save_var_old_value[t]
-				//tl_update_bend(true) // TODO
+				tl_update_bend(true)
 			}
 		}
 	}
@@ -24,7 +24,7 @@ else if (history_redo)
 			with (save_id_find(save_var_save_id[t]))
 			{
 				round_bending = other.save_var_new_value[t]
-				//tl_update_bend(true) // TODO
+				tl_update_bend(true)
 			}
 		}
 	}
@@ -42,6 +42,6 @@ else
 			history_save_var(other.id, other.round_bending, argument0)
 			
 		round_bending = argument0
-		//tl_update_bend(1)  // TODO
+		tl_update_bend(true)
 	}
 }
