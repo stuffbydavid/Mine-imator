@@ -17,6 +17,7 @@ if (part.shape_list != null)
 	var texname = model_get_texture_name(texnamemap, part.name);
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
+		if (s>0) break
 		var shape = part.shape_list[|s];
 		
 		// Get texture (shape texture overrides part texture)
@@ -35,7 +36,7 @@ if (part.shape_list != null)
 		if (part.bend_part != null)
 		{
 			// Connect mesh
-			if (s = 0 && bendangle != 0 && bendvbufferlist != null && bendvbufferlist[|s] != null)
+			if (bendangle != 0 && bendvbufferlist != null && bendvbufferlist[|s] != null)
 				vbuffer_render(bendvbufferlist[|s])
 		
 			// Second half mesh
