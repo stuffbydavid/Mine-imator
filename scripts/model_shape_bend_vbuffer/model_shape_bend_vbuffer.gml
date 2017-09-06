@@ -47,7 +47,7 @@ switch (shape.bend_axis)
 		if (shape.bend_part = e_part.UPPER || shape.bend_part = e_part.LOWER)
 		{
 			// Middle position
-			sizefill = test(anglesign < 0, shape.to[Y], -shape.from[Y])
+			sizefill = test(anglesign > 0, shape.to[Y], -shape.from[Y])
 			pmidp = point3D(shape.to[X], 0, shape.bend_offset)
 			nmidp = point3D(shape.from[X], pmidp[Y], pmidp[Z])
 		
@@ -82,7 +82,7 @@ switch (shape.bend_axis)
 		else if (shape.bend_part = e_part.FRONT || shape.bend_part = e_part.BACK)
 		{
 			// Middle position
-			sizefill = test(anglesign < 0, shape.to[Z], -shape.from[Z])
+			sizefill = test(anglesign > 0, shape.to[Z], -shape.from[Z])
 			pmidp = point3D(shape.to[X], shape.bend_offset, 0)
 			nmidp = point3D(shape.from[X], pmidp[Y], pmidp[Z])
 			
@@ -122,13 +122,6 @@ switch (shape.bend_axis)
 	
 	case Y:
 	{
-		pmidtex = shape.uv
-		nmidtex = shape.uv
-		pedgetex = shape.uv
-		pbacktex = shape.uv
-		nedgetex = shape.uv
-		nbacktex = shape.uv
-		
 		// Z+ or Z- half being bent
 		if (shape.bend_part = e_part.UPPER || shape.bend_part = e_part.LOWER)
 		{
@@ -136,7 +129,32 @@ switch (shape.bend_axis)
 			sizefill = test(anglesign > 0, shape.to[X], -shape.from[X])
 			pmidp = point3D(0, shape.to[Y], shape.bend_offset)
 			nmidp = point3D(pmidp[X], shape.from[Y], pmidp[Z])
-		
+			
+			// Normal
+			if (roundbend)
+			{
+				backnormal[0] = vec3(dcos(0) * anglesign * partsign, 0, dsin(0) * partsign)
+				backnormal[1] = vec3(dcos(angle * 0.75) * anglesign * partsign, 0, dsin(angle * 0.75) * partsign)
+			}
+			
+			// Texture
+			var midtexy = shape.to[Z] - shape.bend_offset;
+			pmidtex = point2D_add(shape.uv, point2D(-shape.from[X], midtexy)) // South middle
+			nmidtex = point2D_add(shape.uv, point2D(size[X] + size[Y] - shape.from[X], midtexy)) // North middle
+			if (anglesign * partsign > 0)
+			{
+				pedgetex = point2D_add(shape.uv, point2D(size[X], midtexy)) // South right middle
+				pbacktex = pedgetex // East left middle
+				nedgetex = point2D_add(shape.uv, point2D(size[X] + size[Y], midtexy)) // East right middle
+				nbacktex = nedgetex // North left middle
+			}
+			else
+			{
+				pedgetex = point2D_add(shape.uv, point2D(0, midtexy)) // South left middle
+				pbacktex = pedgetex // West right middle
+				nedgetex = point2D_add(shape.uv, point2D(size[X] + size[Y] + size[X], midtexy)) // North right middle
+				nbacktex = point2D_add(shape.uv, point2D(-size[Y], midtexy)) // West left middle
+			}
 		}
 		
 		// X+ or X- half being bent
@@ -146,6 +164,32 @@ switch (shape.bend_axis)
 			sizefill = test(anglesign > 0, shape.to[Z], -shape.from[Z])
 			pmidp = point3D(shape.bend_offset, shape.to[Y], 0)
 			nmidp = point3D(pmidp[X], shape.from[Y], pmidp[Z])
+			
+			// Normal
+			if (roundbend)
+			{
+				backnormal[0] = vec3(dsin(0) * partsign, 0, -dcos(0) * anglesign * partsign)
+				backnormal[1] = vec3(dsin(angle * 0.75) * partsign, 0, -dcos(angle * 0.75) * anglesign * partsign)
+			}
+			
+			// Texture
+			var midtexx = size[X] - (shape.to[X] - shape.bend_offset);
+			pmidtex = point2D_add(shape.uv, point2D(midtexx, shape.to[Z])) // South middle
+			nmidtex = point2D_add(shape.uv, point2D(size[X] + size[Y] + size[X] - midtexx, shape.to[Z])) // North middle
+			if (anglesign * partsign > 0)
+			{
+				pedgetex = point2D_add(shape.uv, point2D(midtexx, size[Z])) // South middle bottom
+				pbacktex = point2D_add(shape.uv, point2D(size[X] + midtexx, 0)) // Bottom middle bottom
+				nedgetex = point2D_add(shape.uv, point2D(size[X] + size[Y] + size[X] - midtexx, size[Z])) // North middle bottom
+				nbacktex = point2D_add(shape.uv, point2D(size[X] + midtexx, -size[Y])) // Bottom middle top
+			}
+			else
+			{
+				pedgetex = point2D_add(shape.uv, point2D(midtexx, 0)) // South middle top
+				pbacktex = pedgetex // Top middle bottom
+				nedgetex = point2D_add(shape.uv, point2D(size[X] + size[Y] + size[X] - midtexx, 0)) // North middle top
+				nbacktex = point2D_add(shape.uv, point2D(midtexx, -size[Y])) // Top middle top
+			}
 		}
 		
 		// Invalid
@@ -157,15 +201,53 @@ switch (shape.bend_axis)
 	
 	case Z:
 	{
+		pmidtex = shape.uv
+		nmidtex = shape.uv
+		pedgetex = shape.uv
+		pbacktex = shape.uv
+		nedgetex = shape.uv
+		nbacktex = shape.uv
+		
 		// Y+ or Y- half being bent
 		if (shape.bend_part = e_part.FRONT || shape.bend_part = e_part.BACK)
 		{
+			// Middle position
+			sizefill = test(anglesign < 0, shape.to[X], -shape.from[X])
+			pmidp = point3D(0, shape.bend_offset, shape.to[Z])
+			nmidp = point3D(pmidp[X], pmidp[Y], shape.from[Z])
+			
+			// Normal
+			if (roundbend)
+			{
+				backnormal[0] = vec3(-dcos(0) * anglesign * partsign, dsin(0) * partsign, 0)
+				backnormal[1] = vec3(-dcos(angle * 0.75) * anglesign * partsign, dsin(angle * 0.75) * partsign, 0)
+			}
+			
+			// Texture
+			var midtexy = shape.to[Y] - shape.bend_offset;
+			pmidtex = point2D_add(shape.uv, point2D(-shape.from[Z], -size[Y] + midtexy)) // Top middle
+			nmidtex = point2D_add(shape.uv, point2D(size[X] - shape.from[Z], -size[Y] + midtexy)) // Bottom middle
 		}
 		
 		// X+ or X- half being bent
 		else if (shape.bend_part = e_part.RIGHT || shape.bend_part = e_part.LEFT)
 		{
+			// Middle position
+			sizefill = test(anglesign < 0, shape.to[Y], -shape.from[Y])
+			pmidp = point3D(shape.bend_offset, 0, shape.to[Z])
+			nmidp = point3D(pmidp[X], pmidp[Y], shape.from[Z])
 		
+			// Normal
+			if (roundbend)
+			{
+				backnormal[0] = vec3(dsin(0) * partsign, dcos(0) * anglesign * partsign, 0)
+				backnormal[1] = vec3(dsin(angle * 0.75) * partsign, dcos(angle * 0.75) * anglesign * partsign, 0)
+			}
+			
+			// Texture
+			var midtexx = size[X] - (shape.to[X] - shape.bend_offset);
+			pmidtex = point2D_add(shape.uv, point2D(midtexx, -size[Y] - shape.from[Y])) // Top middle
+			nmidtex = point2D_add(shape.uv, point2D(size[X]+ midtexx, -size[Y] - shape.from[Y])) // Bottom middle
 		}
 		
 		// Invalid
@@ -178,10 +260,10 @@ switch (shape.bend_axis)
 
 // No flicker
 var pedgetex2, nedgetex2, pbacktex2, nbacktex2;
-pedgetex2 = point2D_add(pedgetex, point2D(0, 1 / 16))
-pbacktex2 = point2D_add(pbacktex, point2D(0, 1 / 16))
-nedgetex2 = point2D_add(nedgetex, point2D(0, 1 / 16))
-nbacktex2 = point2D_add(nbacktex, point2D(0, 1 / 16))
+pedgetex2 = point2D_add(pedgetex, point2D(0, 1 / 256))
+pbacktex2 = point2D_add(pbacktex, point2D(0, 1 / 256))
+nedgetex2 = point2D_add(nedgetex, point2D(0, 1 / 256))
+nbacktex2 = point2D_add(nbacktex, point2D(0, 1 / 256))
 
 // Transform texture to 0-1
 pmidtex = vec2_div(pmidtex, shape.texture_size)
@@ -204,23 +286,18 @@ while (a <= 1)
 	if (!roundbend && a < 1)
 		len = sqrtlen
 	
-	var pnextp, nnextp;
+	var dista, distb, pnextp, nnextp;
+	dista = min(1, dcos(angle * a) * len) * sizefill * anglesign * partsign
+	distb = shape.bend_offset + dsin(angle * a) * len * sizefill * partsign
+	
 	switch (shape.bend_axis)
 	{
 		case X:
 		{
 			if (shape.bend_part = e_part.UPPER || shape.bend_part = e_part.LOWER)
-			{
-				pnextp = point3D(shape.to[X],
-								 min(1, dcos(angle * a) * len) * sizefill * anglesign * (-partsign),
-								 shape.bend_offset + dsin(angle * a) * len * sizefill * partsign)
-			}
+				pnextp = point3D(shape.to[X], -dista, distb)
 			else // FRONT or BACK
-			{
-				pnextp = point3D(shape.to[X],
-								 shape.bend_offset + dsin(angle * a) * len * sizefill * partsign,
-								 min(1, dcos(angle * a) * len) * sizefill * anglesign * partsign)
-			}
+				pnextp = point3D(shape.to[X], distb, dista)
 		
 			nnextp = point3D(shape.from[X], pnextp[Y], pnextp[Z])
 			break
@@ -229,17 +306,9 @@ while (a <= 1)
 		case Y:
 		{
 			if (shape.bend_part = e_part.UPPER || shape.bend_part = e_part.LOWER)
-			{
-				pnextp = point3D(min(1, dcos(angle * a) * len) * sizefill * anglesign * partsign,
-								 shape.to[Y],
-								 shape.bend_offset + dsin(angle * a) * len * sizefill * partsign)
-			}
+				pnextp = point3D(dista, shape.to[Y], distb)
 			else // RIGHT or LEFT
-			{
-				pnextp = point3D(shape.bend_offset + dsin(angle * a) * len * sizefill * partsign,
-								 shape.to[Y],
-								 min(1, dcos(angle * a) * len) * sizefill * anglesign * (-partsign))
-			}
+				pnextp = point3D(distb, shape.to[Y], -dista)
 			
 			nnextp = point3D(pnextp[X], shape.from[Y], pnextp[Z])
 			break
@@ -248,13 +317,9 @@ while (a <= 1)
 		case Z:
 		{
 			if (shape.bend_part = e_part.FRONT || shape.bend_part = e_part.BACK)
-			{
-				
-			}
+				pnextp = point3D(-dista, distb, shape.to[Z])
 			else // RIGHT or LEFT
-			{
-				
-			}
+				pnextp = point3D(distb, dista, shape.to[Z])
 			
 			nnextp = point3D(pnextp[X], pnextp[Y], shape.from[Z])
 			break
