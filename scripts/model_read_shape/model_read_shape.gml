@@ -78,8 +78,15 @@ with (new(obj_model_shape))
 	
 	var tolist = map[?"to"];
 	to = vec3(tolist[|X], tolist[|Z], tolist[|Y])
+	
+	// Position (optional)
+	var poslist = map[?"position"]
+	if (is_real(poslist) && ds_exists(poslist, ds_type_list))
+		position = vec3(poslist[|X], poslist[|Z], poslist[|Y])
+	else
+		position = vec3(0, 0, 0)
 		
-	// Rotation (optional) TODO: Will mess up bending? Try it..
+	// Rotation (optional)
 	var rotlist = map[?"rotation"]
 	if (is_real(rotlist) && ds_exists(rotlist, ds_type_list))
 		rotation = vec3(rotlist[|X], rotlist[|Z], rotlist[|Y])
@@ -93,23 +100,22 @@ with (new(obj_model_shape))
 	else
 		scale = vec3(1, 1, 1)
 		
+	matrix = matrix_create(position, rotation, vec3(1))
+	matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), scale), matrix) // Add scale
+	matrix_bend = matrix_create(position, rotation, vec3(1))
+	matrix_bend_half = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
+	
 	// Bending
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
 	bend_offset = other.bend_offset
+	bend_vbuffer = null
 	
 	// UV
 	var uvlist = map[?"uv"];
 	uv = vec2(uvlist[|X], uvlist[|Y])
 		
-	// Matrix applied to vertices
-	vertex_matrix = matrix_create(from, rotation, scale)
-	
-	// Default bounds
-	bounds_start = point3D(no_limit, no_limit, no_limit)
-	bounds_end = point3D(-no_limit, -no_limit, -no_limit)
-	
 	// Generate
 	if (type = "block")
 	{
@@ -123,8 +129,6 @@ with (new(obj_model_shape))
 			model_read_shape_block(true)
 			vbuffer_done()
 		}
-		else
-			bend_vbuffer = null
 	}
 	else if (type = "plane")
 	{
@@ -140,8 +144,6 @@ with (new(obj_model_shape))
 			model_read_shape_plane(true)
 			vbuffer_done()
 		}
-		else
-			bend_vbuffer = null
 	}
 	else
 	{
@@ -150,6 +152,14 @@ with (new(obj_model_shape))
 	}
 	
 	// Update bounds
+	var startpos = point3D_mul_matrix(from, matrix);
+	var endpos   = point3D_mul_matrix(to, matrix);
+	bounds_start[X] = min(startpos[X], endpos[X])
+	bounds_start[Y] = min(startpos[Y], endpos[Y])
+	bounds_start[Z] = min(startpos[Z], endpos[Z])
+	bounds_end[X]	= max(startpos[X], endpos[X])
+	bounds_end[Y]	= max(startpos[Y], endpos[Y])
+	bounds_end[Z]	= max(startpos[Z], endpos[Z])
 	other.bounds_start[X] = min(other.bounds_start[X], bounds_start[X])
 	other.bounds_start[Y] = min(other.bounds_start[Y], bounds_start[Y])
 	other.bounds_start[Z] = min(other.bounds_start[Z], bounds_start[Z])

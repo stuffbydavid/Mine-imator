@@ -4,7 +4,7 @@
 /// @arg [rotation
 /// @arg [scale]]]
 
-var vbuf, pos, rot, sca;
+var vbuf, pos, rot, sca, mat;
 vbuf = argument[0]
 
 if (argument_count > 1)
@@ -23,9 +23,12 @@ else
 	sca = vec3(1, 1, 1)
 	
 if (argument_count > 1)
+{
+	var mat = matrix_get(matrix_world);
 	matrix_set(matrix_world, matrix_create(pos, rot, sca))
+}
 
 vertex_submit(vbuf, pr_trianglelist, -1)
 
 if (argument_count > 1)
-	matrix_world_reset()
+	matrix_set(matrix_world, mat)

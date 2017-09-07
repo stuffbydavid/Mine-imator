@@ -67,8 +67,13 @@ with (obj_particle)
 if (particle_list)
 	ds_list_destroy(particle_list)
 	
-if (bend_vbuffer)
-	vbuffer_destroy(bend_vbuffer)
+if (bend_vbuffer_list != null)
+{
+	for (var s = 0; s < ds_list_size(model_part.shape_list); s++)
+		if (bend_vbuffer_list[|s] != null)
+			vbuffer_destroy(bend_vbuffer_list[|s])
+	ds_list_destroy(bend_vbuffer_list)
+}
 
 if (surface_exists(cam_surf))
 	surface_free(cam_surf)
