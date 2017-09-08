@@ -125,6 +125,7 @@ with (preview)
 		{
 			draw_clear_alpha(c_black, 0)
 			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+			
 		
 			if (is3d) // 3D view
 			{
@@ -215,7 +216,7 @@ with (preview)
 				)
 			
 				render_update_text()
-			
+				
 				gpu_set_ztestenable(true)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_render)
@@ -317,15 +318,18 @@ with (preview)
 						else
 							draw_set_font(select.font_preview)
 						
-						var dx, dy;
+						var dx, dy, color;
 						dx = size / 2 - xoff * zoom
 						dy = size / 2 - yoff * zoom
+						color = draw_get_color()
+						draw_set_color(c_white)
 						draw_set_halign(fa_center)
 						draw_set_valign(fa_middle)
 						draw_text_transformed(dx, dy, "AaBbCc", zoom, zoom, 0)
 						draw_set_valign(fa_top)
 						draw_set_halign(fa_left)
-						draw_set_font(setting_font)
+						draw_set_color(color)
+						draw_set_font(app.setting_font)
 						break
 					}
 				

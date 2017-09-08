@@ -298,8 +298,7 @@ nbacktex2 = vec2_div(nbacktex2, shape.texture_size)
 
 vbuffer_start()
 
-var a = 0;
-while (a <= 1)
+for (var a = 0; a <= 1; a += 1 / detail)
 {
 	var len = 1;
 	if (!roundbend && a < 1)
@@ -366,8 +365,6 @@ while (a <= 1)
 			
 	pcurp = pnextp
 	ncurp = nnextp
-	
-	a += 1 / detail
 }
 
 return vbuffer_done()

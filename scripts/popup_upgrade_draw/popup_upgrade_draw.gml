@@ -16,7 +16,7 @@ if (draw_button_normal("upgradebutton", dx + dw / 2 - 50, dy, 100, 40))
 	
 // Enter key
 dy += 70
-draw_inputbox("upgradekey", dx + 70, dy, 290, "", popup_upgrade.tbx_key, null, 50, 40, 7, setting_font_big)
+draw_inputbox("upgradekey", dx + 70, dy, 290, "", popup_upgrade.tbx_key, null, 50, 40, 4, setting_font_big)
 if (draw_button_normal("upgradekeypaste", dx + 370, dy + 8, 60, 28))
 	popup_upgrade.tbx_key.text = string(clipboard_get_text())
 	

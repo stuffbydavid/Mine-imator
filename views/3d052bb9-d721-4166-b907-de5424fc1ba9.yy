@@ -13,7 +13,7 @@
         "0b08b77c-926b-4654-a610-0bbedd3808f7"
     ],
     "filterType": "GMScript",
-    "folderName": "movie",
+    "folderName": "Movie",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

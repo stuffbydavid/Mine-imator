@@ -98,21 +98,20 @@ with (obj_timeline)
 		}
 	}
 	
-	// Construct new list of parts (re-use old timelines if possible)
-	var newpartlist = ds_list_create();
+	// Construct new list of parts (re-add old timelines that had keyframes)
+	ds_list_clear(part_list)
 	for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
 	{
-		// Check if there is a previous body part with the 
-		// same name, and re-use that one if that's the case
+		// Check if there is a previously existing timeline with the part name
 		var part, tlexists;
 		part = temp.model_file.file_part_list[|mp]
 		tlexists = false
 		
-		for (var p = 0; p < ds_list_size(part_list); p++)
+		with (obj_timeline)
 		{
-			if (part_list[|p].model_part_name = part.name)
+			if (part_of = other.id && model_part_name = part.name)
 			{
-				ds_list_add(newpartlist, part_list[|p])
+				ds_list_add(other.part_list, id)
 				tlexists = true
 				break
 			}	
@@ -120,11 +119,9 @@ with (obj_timeline)
 		
 		// Otherwise create a timeline for it
 		if (!tlexists)
-			ds_list_add(newpartlist, tl_new_part(part))
+			ds_list_add(part_list, tl_new_part(part))
 	}
 	
-	ds_list_destroy(part_list)
-	part_list = newpartlist
 	tl_update_part_list(temp.model_file, id)
 	tl_update_type_name()
 	tl_update_display_name()

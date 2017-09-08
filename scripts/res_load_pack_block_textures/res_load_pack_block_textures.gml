@@ -77,7 +77,6 @@ surface_set_target(surf)
 			if (string_contains(mc_assets.block_texture_list[|t], " opaque"))
 				draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
 			draw_texture_part(tex, dx, dy, 0, 0, blocksize, blocksize)
-			texture_free(tex)
 		}
 		else
 			draw_missing(dx, dy, blocksize, blocksize)
@@ -200,8 +199,6 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 		}
 		surface_reset_target()
 	}
-	
-	texture_free(tex)
 }
 gpu_set_blendmode(bm_normal)
 
@@ -300,6 +297,14 @@ for (var f = 0; f < block_sheet_ani_frames; f++)
 	block_sheet_ani_texture[f] = texture_surface(anisurf[f])
 	surface_free(anisurf[f])
 }
+
+for (var t = 0; t < ds_list_size(texlist); t++)
+	if (texlist[|t] != null)
+		texture_free(texlist[|t])
+		
+for (var t = 0; t < ds_list_size(texanilist); t++)
+	if (texanilist[|t] != null)
+		texture_free(texanilist[|t])
 
 surface_free(surf)
 ds_list_destroy(texlist)

@@ -31,6 +31,7 @@ switch (load_stage)
 				build_size[Y] = buffer_read_short_be() // Derp
 				build_size[X] = buffer_read_short_be()
 				build_size[Z] = buffer_read_short_be()
+				log("Size", mc_builder.build_size)
 			
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 				{
@@ -92,6 +93,7 @@ switch (load_stage)
 				log("Schematic error", "Size not fully defined")
 				break
 			}
+			log("Size", mc_builder.build_size)
 			
 			if (mc_builder.build_size[X] = 0 || 
 				mc_builder.build_size[Y] = 0 || 
@@ -129,7 +131,7 @@ switch (load_stage)
 					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
 							array3D_set(block_obj, build_pos, mc_assets.block_legacy_id_map[?buffer_read_byte()])
-						
+					
 				// Data
 				buffer_seek(buffer_current, buffer_seek_start, dataarray)
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
@@ -149,8 +151,6 @@ switch (load_stage)
 				}
 			}
 		}
-		
-		log("Scenery size", mc_builder.build_size)
 		
 		openerr = false
 		
@@ -216,7 +216,7 @@ switch (load_stage)
 			block_vbuffer_done()
 			scenery_size = mc_builder.build_size
 			ready = true
-				
+
 			// Put map name in resource name
 			if (mc_builder.file_map != "")
 			{

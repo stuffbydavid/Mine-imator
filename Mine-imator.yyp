@@ -319,14 +319,6 @@
             }
         },
         {
-            "Key": "06333152-b1d3-4372-8b3f-d32fe3688327",
-            "Value": {
-                "id": "9145df40-5ce7-4d8b-b95c-31764ffbb866",
-                "resourcePath": "scripts\\draw_texture_box\\draw_texture_box.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "065496b1-8990-4646-8dd4-68a837f07f40",
             "Value": {
                 "id": "a42f199d-d389-4368-bf7a-4c232f0d9bb6",
@@ -1239,14 +1231,6 @@
             }
         },
         {
-            "Key": "162ce245-62aa-4900-b0ea-494dd8d10178",
-            "Value": {
-                "id": "7cd290f2-19fd-47d2-aab9-b2cbdbcc170f",
-                "resourcePath": "scripts\\texture_reset_stage\\texture_reset_stage.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "1641a2ff-ba2c-4e97-981e-061b3de3fe5b",
             "Value": {
                 "id": "04a292b5-386b-4b72-8222-a1370b90395e",
@@ -1404,6 +1388,14 @@
                 "id": "45f0ef32-c541-4db2-856a-ef7d4847809f",
                 "resourcePath": "views\\1920b208-1b28-4e71-b570-34952a8217f3.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "1957f5e3-70b7-4e89-bebb-817a66c3b526",
+            "Value": {
+                "id": "ecbfd748-5431-473a-97d3-41a88e1167ba",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.12.midata.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -2599,14 +2591,6 @@
             }
         },
         {
-            "Key": "31af4425-f2fe-42c9-bf99-abe8ae77206c",
-            "Value": {
-                "id": "a2a2a8c1-515d-4f06-a69c-478d4b4357d3",
-                "resourcePath": "scripts\\texture_set_stage_lib\\texture_set_stage_lib.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "31d6018c-c074-4fb4-8340-91b41387847b",
             "Value": {
                 "id": "e5c5f639-e9d7-4124-8b1f-73f034101889",
@@ -3579,14 +3563,6 @@
             "Value": {
                 "id": "f192a392-6544-4589-bdea-e4277e8e23ea",
                 "resourcePath": "scripts\\scrollbar_event_create\\scrollbar_event_create.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "467fb704-8818-4fc1-8f7e-1563f2ca99ed",
-            "Value": {
-                "id": "66d6feec-4daf-4484-bae8-2b11614e03d1",
-                "resourcePath": "scripts\\texture_set_mipmap_level\\texture_set_mipmap_level.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -4644,14 +4620,6 @@
                 "id": "a167c977-f397-441a-a7b4-65a94d27c71e",
                 "resourcePath": "views\\5ad93983-5ef0-4db9-a78e-2eb524ab9239.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "5adf7c24-4f1f-41e2-90c1-0e70f7a596b3",
-            "Value": {
-                "id": "326468bd-d48b-4fd8-bb63-7143994a44e4",
-                "resourcePath": "datafiles_yy\\Data\\texture.dll.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -6655,14 +6623,6 @@
             }
         },
         {
-            "Key": "818f7956-9234-44ef-a85e-b3641d0058ef",
-            "Value": {
-                "id": "3226d4a2-25e6-4f54-ba72-d61424f9853b",
-                "resourcePath": "scripts\\shader_draw_texture_set\\shader_draw_texture_set.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "818fdf2f-ec5b-4212-b80f-203239b6dfa4",
             "Value": {
                 "id": "753704d9-6281-459b-a63c-a810ed3a4734",
@@ -6947,6 +6907,14 @@
             "Value": {
                 "id": "a0edfc2e-a8e3-445f-9b32-2552246dabc1",
                 "resourcePath": "scripts\\object_save\\object_save.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "872f8cb5-60cb-4555-b917-39c41d56cd8d",
+            "Value": {
+                "id": "6124ab4c-c027-4920-bebe-440fdd974df8",
+                "resourcePath": "scripts\\texture_get\\texture_get.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -8543,14 +8511,6 @@
             }
         },
         {
-            "Key": "a16e999d-9724-45c9-b0bf-1eea3f111524",
-            "Value": {
-                "id": "3240262c-052d-4e34-9692-3f8d341b5227",
-                "resourcePath": "scripts\\texture_sprite\\texture_sprite.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "a17595c1-5cd7-4af8-958a-85b31f0fa51e",
             "Value": {
                 "id": "01a361e7-8c99-4385-83c3-b72feb6ad0ab",
@@ -9895,6 +9855,14 @@
             }
         },
         {
+            "Key": "bd513f03-fe25-416e-8c54-5e886a9b9bba",
+            "Value": {
+                "id": "2ad708e5-b324-4051-96b3-bdb36210bf99",
+                "resourcePath": "scripts\\sprite_add_lib\\sprite_add_lib.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "bd77bf76-6478-4cbf-a515-361c5de1affe",
             "Value": {
                 "id": "53bdc2ee-4d32-4fad-ad9f-109c50220244",
@@ -10919,14 +10887,6 @@
             }
         },
         {
-            "Key": "cf5facb7-1722-4f98-bc3b-d5be62b5a183",
-            "Value": {
-                "id": "a6849f05-0abd-42f3-824a-860f94668296",
-                "resourcePath": "shaders\\shader_draw_texture\\shader_draw_texture.yy",
-                "resourceType": "GMShader"
-            }
-        },
-        {
             "Key": "cf9ea34f-6984-45e3-826a-c539a2d17852",
             "Value": {
                 "id": "6a17b5f5-cc6c-447f-8b11-295ed90598a6",
@@ -11579,14 +11539,6 @@
             "Value": {
                 "id": "79b6b85c-f785-47e5-ad11-8045d010ae87",
                 "resourcePath": "scripts\\action_setting_render_ssao_color\\action_setting_render_ssao_color.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "dbb89edb-eca2-47b5-8583-39bf7279bb61",
-            "Value": {
-                "id": "fb4d9243-3d53-41e4-9a82-f7227260bee5",
-                "resourcePath": "scripts\\texture_set_filtering\\texture_set_filtering.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14155,10 +14107,7 @@
         "925b148f-38e1-46f8-ad90-74c45df9a5e1",
         "8f1047e9-f4ba-400f-85be-764e407e725d",
         "ec44072a-2d58-4343-855a-4d064376db03",
-        "16a1d35f-0096-4aa4-af47-066807b63257",
-        "a0c468ba-c1e3-48c6-a4a5-aeff0ae4474a",
         "45eb872d-a81f-467c-acc9-74c2f2aa1ff6",
-        "06333152-b1d3-4372-8b3f-d32fe3688327",
         "6c730969-40db-41da-984f-b3dcc46e2428",
         "31000fe2-a92c-4c0e-a0be-4599d699bebd",
         "86cffcf9-dd8e-410a-b707-d4d3d0a66db1",
@@ -14233,6 +14182,7 @@
         "099ce55c-6573-4ac8-a36f-0de2eedc3df9",
         "6693c91f-f0a6-4165-9645-3b9acfe9edfc",
         "e9f35fde-a712-47ca-b2bd-dac072a7c338",
+        "bd513f03-fe25-416e-8c54-5e886a9b9bba",
         "55f326c3-db6d-47cf-8188-67e4e8ac5a06",
         "e750dc52-7619-4f86-baf5-46499343a1fd",
         "841b2cc0-9501-4104-bcca-39455bc94248",
@@ -14244,23 +14194,6 @@
         "84d50a51-4b89-41e3-9f8a-11c1e97d4932",
         "c760c57e-4947-460e-ad0c-fd599a04f3a3",
         "0b08b77c-926b-4654-a610-0bbedd3808f7",
-        "5382774e-53fb-4af2-8e10-337b4a6c2da4",
-        "cd911641-d6f0-4aa9-8351-c991692a2b75",
-        "0f6b1c9a-2a73-4b7e-9806-458dbcce19eb",
-        "c17ccd5b-0dee-47f9-ab0b-54ee593611a6",
-        "70fd0c2f-de8a-4512-a93d-3d3897b0d1d7",
-        "da63a129-196a-4feb-a6e3-91b618a6aea7",
-        "b78937d7-2295-4909-b955-331942cfb5fd",
-        "ed2f85cc-1dc3-4836-a8ed-ac439004151e",
-        "86635e27-6f36-48e7-b4b8-86a5d4aa4d7a",
-        "162ce245-62aa-4900-b0ea-494dd8d10178",
-        "dbb89edb-eca2-47b5-8583-39bf7279bb61",
-        "467fb704-8818-4fc1-8f7e-1563f2ca99ed",
-        "31af4425-f2fe-42c9-bf99-abe8ae77206c",
-        "881c5225-7a11-48f2-a66d-2dea558fb305",
-        "a16e999d-9724-45c9-b0bf-1eea3f111524",
-        "2fd7b320-b25b-40f7-b9dd-2744e582961d",
-        "bced5998-bc17-456b-bdf8-bab5ed52643e",
         "255b9e1b-979b-440a-af51-db008047330c",
         "50ed4a8d-989c-41fc-8b7c-0808afbd58c2",
         "74666be9-e566-4d06-8ffd-95923d1814ce",
@@ -14292,13 +14225,12 @@
         "992925d2-52fe-4179-ba4a-199d76a331ea",
         "4768652a-a850-4af1-a949-139bd12b332c",
         "9ff39a74-b1fc-4174-bd91-6f279795051a",
-        "818f7956-9234-44ef-a85e-b3641d0058ef",
         "702cc5cd-8688-4662-b7c7-2bf4e4887665",
-        "9f9c70eb-670c-4c8b-948a-bcb0c6618d35",
         "e9bfac8e-ac2e-4344-add4-c49c1ced1bf4",
         "b0c4b169-cc3a-402d-a3a1-2a447ba81bdc",
         "90032ed4-338d-4a70-8b48-f9c686b9af01",
         "1ec50cde-da19-4ea0-ab6c-e0ffd923f074",
+        "9f9c70eb-670c-4c8b-948a-bcb0c6618d35",
         "5c23aae3-1361-4cf6-bc2a-a58db25b3889",
         "07d23e0e-e091-466d-af56-8acfb01c2b9a",
         "de249af6-f215-4bd8-954f-c69ba04398b2",
@@ -14754,6 +14686,21 @@
         "d11f3e54-a282-4f0a-a478-2f14151bcee5",
         "fa7a2c52-c7f8-404e-a2ba-49492e593555",
         "12ef3a2d-a535-4320-bcd0-382d63ebe96b",
+        "16a1d35f-0096-4aa4-af47-066807b63257",
+        "a0c468ba-c1e3-48c6-a4a5-aeff0ae4474a",
+        "5382774e-53fb-4af2-8e10-337b4a6c2da4",
+        "cd911641-d6f0-4aa9-8351-c991692a2b75",
+        "0f6b1c9a-2a73-4b7e-9806-458dbcce19eb",
+        "c17ccd5b-0dee-47f9-ab0b-54ee593611a6",
+        "70fd0c2f-de8a-4512-a93d-3d3897b0d1d7",
+        "da63a129-196a-4feb-a6e3-91b618a6aea7",
+        "b78937d7-2295-4909-b955-331942cfb5fd",
+        "872f8cb5-60cb-4555-b917-39c41d56cd8d",
+        "ed2f85cc-1dc3-4836-a8ed-ac439004151e",
+        "86635e27-6f36-48e7-b4b8-86a5d4aa4d7a",
+        "881c5225-7a11-48f2-a66d-2dea558fb305",
+        "2fd7b320-b25b-40f7-b9dd-2744e582961d",
+        "bced5998-bc17-456b-bdf8-bab5ed52643e",
         "ee2c854b-8b0d-4fe6-89b8-ec73edcda5bb",
         "3207bd95-0acf-481f-ba2d-50ef148864ce",
         "4c32ef09-fd90-4474-a35b-0e0144301117",

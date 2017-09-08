@@ -3,7 +3,7 @@
 // Debug
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_unzip_assets		true
+#macro dev_mode_unzip_assets		false
 
 // Versions
 #macro mineimator_version			"1.1.0"
@@ -28,7 +28,7 @@
 #macro minecraft_directory		data_directory + "Minecraft\\"
 
 // Files
-#macro minecraft_assets_file	minecraft_directory + minecraft_version + ".zip"
+#macro minecraft_assets_file	minecraft_directory + minecraft_version + ".midata"
 #macro language_file			languages_directory + "english.milang"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.midata"

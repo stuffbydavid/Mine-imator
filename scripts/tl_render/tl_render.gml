@@ -32,11 +32,9 @@ if (type = "particles" || type = "spotlight" || type = "pointlight" || type = "c
 {
 	if (render_mode = "click")
 	{
-		shader_texture = sprite_get_texture(spr_shape, 0)
-		shader_texture_gm = true
+		shader_texture = spr_shape
 		shader_use()
 		vbuffer_render(render_click_box, world_pos)
-		shader_texture_gm = false
 	}
 	
 	if (type != "particles") // Only proceed with rendering for particles

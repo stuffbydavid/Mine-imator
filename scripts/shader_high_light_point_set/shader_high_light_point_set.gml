@@ -20,10 +20,7 @@ var uTexture = shader_get_sampler_index(shader_high_light_point, "uTexture"),
 	
 shader_set(shader_high_light_point)
 
-if (shader_texture_gm)
-	texture_set_stage(uTexture, shader_texture)
-else
-	texture_set_stage_lib(uTexture, shader_texture)
+texture_set_stage(uTexture, texture_get(shader_texture))
 	
 shader_set_uniform_f(uAlpha, shader_alpha)
 shader_set_uniform_f(uBrightness, shader_brightness / shader_lights)

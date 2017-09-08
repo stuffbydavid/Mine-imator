@@ -7,12 +7,11 @@ if (texobj)
 {
 	if (texobj.type = "camera")
 	{
-		shader_texture_gm = true
-		return surface_get_texture(texobj.cam_surf)
+		shader_texture_surface = true
+		return texobj.cam_surf
 	}
 	else
 		return texobj.texture
 }
 
-shader_texture_gm = true
-return sprite_get_texture(spr_shape, 0)
+return spr_shape

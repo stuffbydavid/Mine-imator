@@ -8,7 +8,7 @@
         "50ed4a8d-989c-41fc-8b7c-0808afbd58c2"
     ],
     "filterType": "GMScript",
-    "folderName": "window",
+    "folderName": "Window",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

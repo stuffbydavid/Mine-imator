@@ -129,4 +129,4 @@ setting_render_watermark = trial_version
 
 settings_open()
 
-texture_set_mipmap_level(setting_texture_filtering_level)
+gpu_set_tex_mip_bias(-setting_texture_filtering_level)

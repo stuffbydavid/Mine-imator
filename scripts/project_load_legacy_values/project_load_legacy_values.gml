@@ -47,6 +47,8 @@ if (tl.value_type[e_value_type.PARTICLES])
 {
 	value[e_value.SPAWN] = buffer_read_byte()
 	value[e_value.ATTRACTOR] = project_load_legacy_save_id()
+	if (value[e_value.ATTRACTOR] = "root")
+		value[e_value.ATTRACTOR] = null
 	value[e_value.FORCE] = buffer_read_double()
 }
 

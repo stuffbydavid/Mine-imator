@@ -1,8 +1,8 @@
 /// shader_clear()
 
 shader_tl = null
-shader_texture = 0
-shader_texture_gm = false
+shader_texture = -1
+shader_texture_surface = false
 shader_blend_color = c_white
 shader_alpha = 1
 
@@ -26,8 +26,6 @@ shader_fog = true
 shader_is_ground = false
 
 if (shader_current() > -1)
-{
-	var uTexture = shader_get_sampler_index(shader_current(), "uTexture");
-	texture_reset_stage(uTexture)
 	shader_reset()
-}
+	
+gpu_set_tex_mip_enable(false)

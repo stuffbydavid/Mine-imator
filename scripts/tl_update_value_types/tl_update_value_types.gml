@@ -23,7 +23,7 @@ if (type = "background")
 value_type[e_value_type.HIERARCHY] = true
 value_type[e_value_type.GRAPHICS] = true
 
-if (type = "camera")
+if (type = "camera" || type = "pointlight" || type = "spotlight")
 	value_type[e_value_type.GRAPHICS] = false
 
 // Position

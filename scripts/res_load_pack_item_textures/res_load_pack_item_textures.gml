@@ -45,10 +45,7 @@ surface_set_target(surf)
 		dy = (t div item_sheet_width) * itemsize
 	
 		if (tex != null)
-		{
 			draw_texture_part(tex, dx, dy, 0, 0, itemsize, itemsize)
-			texture_free(tex)
-		}
 	}
 	
 	gpu_set_blendmode(bm_normal)
@@ -57,6 +54,11 @@ surface_reset_target()
 
 item_sheet_texture = texture_surface(surf)
 
+// Clean up
+for (var t = 0; t < ds_list_size(texlist); t++)
+	if (texlist[|t] != null)
+		texture_free(texlist[|t])
+	
 surface_free(surf)
 ds_list_destroy(texlist)
 

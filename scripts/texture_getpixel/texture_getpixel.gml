@@ -15,6 +15,7 @@ surface_set_target(surf)
 	draw_texture(tex, 0, 0)
 }
 surface_reset_target()
+
 col = surface_getpixel(surf, xx, yy)
 surface_free(surf)
 

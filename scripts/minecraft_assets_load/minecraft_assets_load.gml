@@ -4,27 +4,24 @@
 
 // TODO: error check
 
-var version, fname, err;
+var version, contentsfname, zipfname;
 version = argument0
-fname = minecraft_directory + version + ".zip"
+contentsfname = minecraft_directory + version + ".midata"
+zipfname = minecraft_directory + version + ".zip"
 
-if (!file_exists_lib(fname))
-{
-	log("Could not find Minecraft assets file", fname)
-	return false
-}
-	
-log("Loading version", version)
-
-if (!dev_mode || dev_mode_unzip_assets)
-	unzip(fname)
-
-var contentsfname = unzip_directory + "contents.midata"
 if (!file_exists_lib(contentsfname))
 {
-	log("Could not find contents.midata")
+	log("Could not find Minecraft assets file", contentsfname)
 	return false
 }
+
+if (!file_exists_lib(zipfname))
+{
+	log("Could not find Minecraft assets archive", zipfname)
+	return false
+}
+
+log("Loading version", version)
 
 var contentsmap = json_decode(file_text_contents(contentsfname));
 if (contentsmap < 0)
@@ -32,7 +29,6 @@ if (contentsmap < 0)
 	log("Could not parse JSON", contentsfname)
 	return false
 }
-
 
 var format = contentsmap[?"format"];
 if (!is_real(format))
@@ -44,9 +40,14 @@ if (format > minecraft_assets_format)
 	return false
 }
 
+// Unzip archive
+if (!dev_mode || dev_mode_unzip_assets)
+	unzip(zipfname)
+
 mc_block_state_file_map = ds_map_create() // filename -> states
 mc_block_model_file_map = ds_map_create() // filename -> model
-err = true
+
+var err = true;
 
 with (mc_assets)
 {

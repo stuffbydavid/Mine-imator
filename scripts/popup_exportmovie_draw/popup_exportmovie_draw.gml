@@ -38,7 +38,7 @@ if (popup.format != "png")
 	if (popup.video_quality = 0)
 		text = text_get("exportmovievideoqualitycustom")
 	else
-		text = text_get(popup.video_quality.name)
+		text = text_get("exportmovievideoquality" + popup.video_quality.name)
 	draw_button_menu("exportmovievideoquality", e_menu.LIST, dx, dy, capwid + 140, 24, popup.video_quality, text, action_toolbar_exportmovie_video_quality, null, null, capwid)
 	
 	// Custom quality

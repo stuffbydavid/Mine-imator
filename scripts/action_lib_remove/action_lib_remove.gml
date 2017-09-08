@@ -53,27 +53,30 @@ else
 			}
 		}
 		
-		for (var p = 0; p < ds_list_size(part_list); p++) // Children of body parts
+		if (part_list != null)
 		{
-			var part = part_list[|p];
-			
-			for (var t = 0; t < ds_list_size(part.tree_list); t++)
+			for (var p = 0; p < ds_list_size(part_list); p++) // Children of body parts
 			{
-				with (part.tree_list[|t])
+				var part = part_list[|p];
+			
+				for (var t = 0; t < ds_list_size(part.tree_list); t++)
 				{
-					if (part_of != null)
-						continue
-					
-					if (hobj)
+					with (part.tree_list[|t])
 					{
-						hobj.child_save_id[hobj.child_amount] = save_id
-						hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
-						hobj.child_parent_tree_index[hobj.child_amount] = t
-						hobj.child_amount++
-					}
+						if (part_of != null)
+							continue
 					
-					tl_set_parent(other.parent, index)
-					t--
+						if (hobj)
+						{
+							hobj.child_save_id[hobj.child_amount] = save_id
+							hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
+							hobj.child_parent_tree_index[hobj.child_amount] = t
+							hobj.child_amount++
+						}
+					
+						tl_set_parent(other.parent, index)
+						t--
+					}
 				}
 			}
 		}

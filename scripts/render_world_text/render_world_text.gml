@@ -1,4 +1,4 @@
-/// draw_world_text(vbuffer, texture, facecamera, resource)
+/// render_world_text(vbuffer, texture, facecamera, resource)
 /// @arg vbuffer
 /// @arg texture
 /// @arg facecamera
@@ -11,8 +11,8 @@ tex = argument1
 facecamera = argument2
 res = argument3
 
-rot = vec3(0, 0, 0)
-sca = vec3(1, 1, 1)
+rot = vec3(0)
+sca = vec3(1)
 
 if (facecamera)
 {
@@ -22,14 +22,14 @@ if (facecamera)
 }
 
 if (!res.font_minecraft)
-	sca = 8 / 48
+	sca = vec3(8 / 48)
 	
 matrix_add_offset()
 matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, sca))
 
 mipmap = shader_texture_filter_mipmap
 shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
-shader_texture = tex
+shader_texture = tex // TODO broken
 
 shader_use()
 vbuffer_render(vbuffer)

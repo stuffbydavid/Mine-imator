@@ -23,7 +23,7 @@ switch (type)
 		
 		with (app)
 		{
-			ds_priority_add(load_queue, other.id, 0)
+			ds_priority_add(load_queue, other.id, 2)
 			load_start(other.id, res_load_start)
 		}
 		
@@ -63,7 +63,7 @@ switch (type)
 		if (type = "legacyblocksheet")
 		{
 			block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
-			if (load_folder = save_folder)
+			if (load_folder = save_folder && !dev_mode)
 				file_rename_lib(fn, filename_new_ext(fn, ".old") + filename_ext(fn))
 			res_save()
 			type ="blocksheet"
@@ -86,7 +86,7 @@ switch (type)
 		
 		with (app)
 		{
-			ds_priority_add(load_queue, other.id, 2)
+			ds_priority_add(load_queue, other.id, 1)
 			load_start(other.id, res_load_start)
 		}
 		
@@ -97,6 +97,7 @@ switch (type)
 	{
 		if (particles_texture[0])
 			texture_free(particles_texture[0])
+			
 		if (particles_texture[1])
 			texture_free(particles_texture[1])
 			
@@ -119,10 +120,10 @@ switch (type)
 	case "font":
 	{
 		if (font_exists(font))
-			font_exists(font)
+			font_delete(font)
 			
 		if (font_exists(font_preview))
-			font_exists(font_preview)
+			font_delete(font_preview)
 			
 		font = font_add_lib(fn, 48, false, false)
 		font_preview = font_add_lib(fn, 12, false, false)

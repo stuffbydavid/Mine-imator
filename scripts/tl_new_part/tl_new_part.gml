@@ -18,7 +18,6 @@ with (new(obj_timeline))
 	value_type_show[e_value_type.POSITION] = false // TODO
 	part_parent_save_id = ""
 	
-	ds_list_add(other.part_list, id)
 	tl_set_parent(other.id)
 	tl_update_depth()
 	

@@ -111,13 +111,13 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 					continue
 			}
 			
-			// Speed TODO rewrite with vec2
+			// Speed
 			for (var a = X; a <= Z; a++)
 			{
 				pt.pos[a] += pt.spd[a]
 				pt.spd[a] += pt.spd_add[a]
 				pt.spd[a] *= pt.spd_mul[a]
-				if (pt.type.temp)
+				if (pt.type.temp != null)
 				{
 					pt.rot[a] += pt.rot_spd[a]
 					pt.rot_spd[a] += pt.rot_spd_add[a]
@@ -128,9 +128,9 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 				if (is_timeline && value[e_value.ATTRACTOR] != null)
 				{
 					if (pt.type.orbit)
-						pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+						pt.spd[a] += clamp(value[e_value.ATTRACTOR].world_pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
 					else
-						pt.spd[a] += clamp(value[e_value.ATTRACTOR].pos[a] - pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+						pt.spd[a] += clamp(value[e_value.ATTRACTOR].world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
 				}
 			}
 			

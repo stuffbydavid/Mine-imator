@@ -11,53 +11,9 @@
 /// @arg [color
 /// @arg alpha]]
 
-var tex, xx, yy, left, top, w, h, xsca, ysca, color, alpha;
-var tw, th;
-tex = argument[0]
-xx = argument[1]
-yy = argument[2]
-left = argument[3]
-top = argument[4]
-w = argument[5]
-h = argument[6]
-
-if (argument_count > 7)
-{
-	xsca = argument[7]
-	ysca = argument[8]
-}
+if (argument_count < 8)
+	draw_sprite_part_ext(argument[0], 0, argument[3], argument[4], argument[5], argument[6], argument[1], argument[2], 1, 1, c_white, draw_get_alpha())
+else if (argument_count < 10)
+	draw_sprite_part_ext(argument[0], 0, argument[3], argument[4], argument[5], argument[6], argument[1], argument[2], argument[7], argument[8], c_white, draw_get_alpha())
 else
-{
-	xsca = 1
-	ysca = 1
-}
-
-if (argument_count > 9)
-{
-	color = argument[9]
-	alpha = draw_get_alpha() * argument[10]
-}
-else
-{
-	color = c_white
-	alpha = draw_get_alpha()
-}
-
-tw = texture_width(tex)
-th = texture_height(tex)
-
-shader_texture = tex
-shader_draw_texture_set()
-	
-draw_primitive_begin(pr_trianglestrip)
-
-draw_vertex_texture_color(xx, yy, left / tw, top / th, color, alpha)
-draw_vertex_texture_color(xx + w * xsca, yy, (left + w) / tw, top / th, color, alpha)
-draw_vertex_texture_color(xx, yy + h * ysca, left / tw, (top + h) / th, color, alpha)
-draw_vertex_texture_color(xx + w * xsca, yy + h * ysca, (left + w) / tw, (top + h) / th, color, alpha)
-
-draw_primitive_end()
-
-texture_set_stage(0, 0)
-shader_reset()
-shader_texture = 0
+	draw_sprite_part_ext(argument[0], 0, argument[3], argument[4], argument[5], argument[6], argument[1], argument[2], argument[7], argument[8], argument[9], argument[10] * draw_get_alpha())

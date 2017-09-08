@@ -16,8 +16,8 @@ switch (tl_edit.type)
 	{
 		name = "frameeditor" + tl_edit.type + "tex"
 		
-		//if (!texobj || texobj.type = "camera" || (!texobj.mob_texture && !texobj.model_texture_map)) // TODO
-		//	texobj = tl_edit.temp.char_skin
+		if (texobj = null || texobj.type = "camera" || (texobj.model_texture = null && texobj.model_texture_map = null))
+			texobj = tl_edit.temp.skin
 		
 		with (texobj)
 			tex = res_get_model_texture(model_get_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part_name))
@@ -28,7 +28,7 @@ switch (tl_edit.type)
 	case "scenery":
 	{
 		name = "frameeditorblocktex"
-		if (!texobj || texobj.type = "camera" || texobj.block_sheet_texture = null)
+		if (texobj = null || texobj.type = "camera" || texobj.block_sheet_texture = null)
 			texobj = tl_edit.temp.block_tex
 		tex = texobj.block_preview_texture
 		break

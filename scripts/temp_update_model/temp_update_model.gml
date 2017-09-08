@@ -62,5 +62,5 @@ with (model)
 model_file = curfile
 	
 // Get default texture from file if not defined
-if (is_undefined(model_texture_name_map[?""]))
+if (model_file != null && is_undefined(model_texture_name_map[?""]))
 	model_texture_name_map[?""] = curfile.texture_name

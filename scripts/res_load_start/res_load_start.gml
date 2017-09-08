@@ -15,7 +15,7 @@ switch (type)
 		break
 	}
 	
-	case "audio":
+	case "sound":
 	{
 		load_stage = "open"
 		with (app)

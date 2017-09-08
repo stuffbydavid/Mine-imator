@@ -98,7 +98,7 @@ if (temp)
 			break
 			
 		case "text":
-			render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font)
+			//render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font)
 			break
 		
 		default: // Shapes

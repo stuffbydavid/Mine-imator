@@ -18,12 +18,6 @@ with (res_def)
 	font_preview = font
 }
 
-if (!file_exists_lib(minecraft_assets_file))
-{
-	missing_file(minecraft_assets_file)
-	return false
-}
-
 if (!minecraft_assets_load(minecraft_version))
 	return false
 	

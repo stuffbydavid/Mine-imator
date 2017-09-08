@@ -1,4 +1,4 @@
 /// texture_height(texture)
 /// @arg texture
 
-return external_call(lib_texture_height, argument0)
+return sprite_get_height(argument0)

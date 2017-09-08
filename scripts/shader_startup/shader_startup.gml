@@ -1,6 +1,6 @@
 /// shader_startup()
 
-globalvar shader_tl, shader_texture, shader_texture_gm, shader_blend_color, shader_alpha, shader_replace_color, shader_is_ground;
+globalvar shader_tl, shader_texture, shader_texture_surface, shader_blend_color, shader_alpha, shader_replace_color, shader_is_ground;
 globalvar shader_colors_ext, shader_mixcolor, shader_mixpercent, shader_brightness;
 globalvar shader_rgbadd, shader_rgbsub, shader_rgbmul;
 globalvar shader_hsbadd, shader_hsbsub, shader_hsbmul;
@@ -19,7 +19,6 @@ new_shader("shader_blend_fog", shader_blend_fog)
 new_shader("shader_color_fog", shader_color_fog)
 new_shader("shader_color_fog_lights", shader_color_fog_lights)
 new_shader("shader_depth", shader_depth)
-new_shader("shader_draw_texture", shader_draw_texture)
 new_shader("shader_replace", shader_replace)
 new_shader("shader_high_aa", shader_high_aa)
 new_shader("shader_high_dof", shader_high_dof)
@@ -34,7 +33,6 @@ new_shader("shader_high_ssao_depth_normal", shader_high_ssao_depth_normal)
 new_shader("shader_high_ssao", shader_high_ssao)
 new_shader("shader_high_ssao_blur", shader_high_ssao_blur)
 
-shader_clear()
 log("Shader init")
 
 // Supported?
@@ -65,7 +63,9 @@ if (err)
 		open_url(link_directx)
 		
 	game_end()
-	return 0
+	return false
 }
 
-return 1
+shader_clear()
+
+return true

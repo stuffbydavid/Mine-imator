@@ -65,7 +65,8 @@ switch (temp_edit.type)
 		// Model
 		tab_control(24)
 		draw_label(text_get(text) + ":", dx, dy + 12, fa_left, fa_middle)
-		draw_label(minecraft_asset_get_name("model", temp_edit.model_file.name), dx + capwid, dy + 12, fa_left, fa_middle)
+		if (temp_edit.model_file != null)
+			draw_label(minecraft_asset_get_name("model", temp_edit.model_file.name), dx + capwid, dy + 12, fa_left, fa_middle)
 		
 		// Change
 		if (draw_button_normal("librarycharmodelchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))

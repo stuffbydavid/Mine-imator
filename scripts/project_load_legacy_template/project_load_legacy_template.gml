@@ -91,6 +91,8 @@ with (new(obj_template))
 		shape_face_camera = buffer_read_byte()
 
 	text_font = project_load_legacy_save_id()
+	if (text_font = "root")
+		text_font = null
 	if (load_format < e_project.FORMAT_100_DEMO_4)
 	{
 		buffer_read_string_int() // system font name

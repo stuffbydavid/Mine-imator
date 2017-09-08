@@ -110,14 +110,17 @@ project_load_find_save_ids()
 project_load_update()
 log("Project loaded")
 
-// Close popup
-if (ds_priority_size(load_queue) = 0)
+// Start loading resources
+if (ds_priority_size(load_queue) > 0)
+	load_start(ds_priority_find_max(load_queue), res_load_start)
+else
 	popup_close()
 
 // Save into newest format
 if (load_format < e_project.FORMAT_110)
 {
-	file_rename_lib(fn, fn + ".old")
+	if (!dev_mode)
+		file_rename_lib(fn, fn + ".old")
 	project_save()
 }
 

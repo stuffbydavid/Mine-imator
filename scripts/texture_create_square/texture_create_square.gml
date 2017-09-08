@@ -1,15 +1,15 @@
 /// texture_create_square(filename)
 /// @arg filename
 
-var tex, ww, hh, size;
+var tex, ww, hh;
 tex = texture_create(argument0)
-
 ww = texture_width(tex)
 hh = texture_height(tex)
 
 if (ww = hh)
 	return tex
 
+var size, surf, newtex;
 size = max(ww, hh)
 
 surf = surface_create(size, size)

@@ -6,7 +6,6 @@
 
 var tmpfile = file_directory + "tmp.ttf"
 
-file_delete_lib(tmpfile)
 file_copy_lib(argument0, tmpfile)
 
 if (file_exists_lib(tmpfile))
