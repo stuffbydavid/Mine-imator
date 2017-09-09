@@ -28,10 +28,7 @@ if (timeline_marker > exportmovie_marker_end)
 app_update_animate()
 
 // Render
-if (exportmovie_format = "png")
-	render_start(exportmovie_surface, timeline_camera)
-else
-	render_start(exportmovie_surface, timeline_camera, project_video_width, project_video_height)
+render_start(exportmovie_surface, timeline_camera)
 
 if (exportmovie_high_quality)
 	render_high()

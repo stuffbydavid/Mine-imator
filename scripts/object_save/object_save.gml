@@ -14,8 +14,6 @@ load_folder = project_folder
 log("save_folder", save_folder)
 log("load_folder", load_folder)
 
-debug_timer_start()
-
 project_save_start(fn, false)
 
 with (obj_timeline)
@@ -25,5 +23,4 @@ with (obj_timeline)
 project_save_objects()
 project_save_done()
 
-debug_timer_stop("object_save")
 log("Object saved")

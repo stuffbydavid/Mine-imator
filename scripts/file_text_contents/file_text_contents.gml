@@ -8,7 +8,9 @@ str = ""
 
 if (file_exists_lib(fname))
 {
-	var f = file_text_open_read(fname);
+	file_delete_lib(temp_file)
+	file_copy_lib(fname, temp_file)
+	var f = file_text_open_read(temp_file);
 	if (f > -1)
 	{
 		while (!file_text_eof(f))

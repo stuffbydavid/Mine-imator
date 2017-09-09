@@ -98,23 +98,17 @@ else
 	}
 	else
 	{
-		/*project_load_legacy_beta()*/
+		project_load_legacy_beta()
 	}
 
 	buffer_delete(buffer_current)
 }
-
 	
 // Update project
 project_load_find_save_ids()
 project_load_update()
+project_reset_loaded()
 log("Project loaded")
-
-// Start loading resources
-if (ds_priority_size(load_queue) > 0)
-	load_start(ds_priority_find_max(load_queue), res_load_start)
-else
-	popup_close()
 
 // Save into newest format
 if (load_format < e_project.FORMAT_110)

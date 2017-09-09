@@ -12,7 +12,7 @@ if (history_data.filename != "" && !history_data.replaced)
 	else if (history_data.type = "downloadskin")
 		res.player_skin = true
 	else if (history_data.type = "itemsheet")
-		res.item_sheet_size = history_data.item_sheet_size
+		res.item_sheet_size = array_copy_1d(history_data.item_sheet_size)
 		
 	with (res)
 		res_load()

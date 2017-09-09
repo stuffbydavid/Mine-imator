@@ -363,7 +363,7 @@ switch (menu_name)
 	case "backgroundbiome": // Background biome
 	{
 		for (var b = 0; b < ds_list_size(biome_list); b++)
-			menu_add_item(b, text_get("biome" + biome_list[|b].name))
+			menu_add_item(biome_list[|b], text_get("biome" + biome_list[|b].name))
 		break
 	}
 	

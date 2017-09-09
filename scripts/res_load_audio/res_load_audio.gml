@@ -1,7 +1,7 @@
 /// res_load_audio()
 /// @desc Build peaks from raw audio data.
 
-var fname, prec, soundsamples, sample;
+var fname, prec;
 fname = load_folder + "\\" + filename
 prec = sample_rate / sample_avg_per_sec
 
@@ -45,10 +45,7 @@ switch (load_stage)
 		load_audio_sample = 0
 		
 		with (app)
-		{
-			popup_loading.text = text_get("loadaudioread")
 			popup_loading.progress = 1 / 5
-		}
 		break
 	}
 	
@@ -77,7 +74,7 @@ switch (load_stage)
 		}
 
 		with (app)
-			popup_loading.progress = (1 / 5) + (4 / 5) * (load_audio_sample / sound_samples)
+			popup_loading.progress = (1 / 5) + (4 / 5) * (other.load_audio_sample / other.sound_samples)
 			
 		break
 	}

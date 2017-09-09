@@ -28,6 +28,7 @@ view_second = new(obj_view)
 view_second.show = false
 view_second.location = "rightbottom"
 view_second.controls = false
+view_second.aspect_ratio = true
 
 view_render = false
 view_render_real_time = true

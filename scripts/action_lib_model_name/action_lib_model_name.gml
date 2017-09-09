@@ -32,7 +32,7 @@ else
 		// TODO save timeline info?
 		with (obj_timeline)
 		{
-			if (temp != temp_edit || part_of != null)
+			if (temp != temp_edit || part_list = null)
 				continue
 				
 			with (hobj)

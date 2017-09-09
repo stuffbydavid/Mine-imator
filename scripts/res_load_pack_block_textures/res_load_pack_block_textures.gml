@@ -96,9 +96,8 @@ for (var f = 0; f < block_sheet_ani_frames; f++)
 gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 for (var t = 0; t < ds_list_size(texanilist); t++)
 {
-	var tex, texwid, dx, dy;
+	var tex, dx, dy;
 	tex = texanilist[|t]
-	texwid = texture_width(tex)
 	dx = (t mod block_sheet_width) * blocksize
 	dy = (t div block_sheet_width) * blocksize
 	
@@ -111,7 +110,7 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	
 	// Read animation data if available
 	var framefade, frametime, framelist, opaque;
-	var fname, images, aniframes, anilength, aniloops;
+	var fname, texwid, images, aniframes, anilength, aniloops;
 	framefade = false
 	frametime = 1
 	framelist = null
@@ -143,6 +142,7 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	}
 	
 	// Images in the texture
+	texwid = texture_width(tex)
 	images = texture_height(tex) / texwid
 	
 	// Total animation time (in frames)

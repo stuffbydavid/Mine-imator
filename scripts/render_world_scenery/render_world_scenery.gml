@@ -22,12 +22,13 @@ if (argument2) // Repeat
 		{
 			for (reppos[Z] = 0; reppos[Z] < rep[Z]; reppos[Z]++)
 			{
-				matrix_set(matrix_world, matrix_multiply(matrix_create(vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size)), vec3(0), vec3(1)), mat))
-				render_world_block(scenery.block_vbuffer, res)
+				var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size))
+				matrix_set(matrix_world, matrix_multiply(matrix_create(pos, vec3(0), vec3(1)), mat))
+				render_world_block(scenery.block_vbuffer, scenery.scenery_size, res)
 			}
 		}
 	}
 }
 else
-	render_world_block(scenery.block_vbuffer, res)
+	render_world_block(scenery.block_vbuffer, scenery.scenery_size, res)
 

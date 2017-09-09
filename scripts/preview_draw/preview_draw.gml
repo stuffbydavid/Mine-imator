@@ -181,7 +181,7 @@ with (preview)
 						if (scenery = null)
 							break
 						
-						var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), point3D(block_size, block_size, block_size));
+						var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
 						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
 						matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 						break
@@ -241,25 +241,20 @@ with (preview)
 					}
 					
 					case "scenery":
-					case "schematic":
-					{
-						if (scenery = null)
-							break
-					
-						if (select.type = "scenery")
+						if (scenery != null)
 							render_world_scenery(scenery, select.block_tex, select.block_repeat_enable, select.block_repeat)
-						else
-							render_world_block(scenery.block_vbuffer, res_def)
-					
 						break
-					}
+						
+					case "schematic":
+						render_world_block(select.block_vbuffer, select.scenery_size, res_def)
+						break
 					
 					case "item":
 						render_world_item(select.item_vbuffer, select.item_bounce, select.item_face_camera, select.item_tex)
 						break
 					
 					case "block":
-						render_world_block(select.block_vbuffer, select.block_tex)
+						render_world_block(select.block_vbuffer, rep, select.block_tex)
 						break
 					
 					case "bodypart":
@@ -350,8 +345,8 @@ with (preview)
 							ind = floor((dx / wid) * select.sound_samples) div prec
 							maxv = select.sound_max_sample[ind]
 							minv = select.sound_min_sample[ind]
-							draw_vertex_color(10 + dx, size / 2-maxv * wavehei, setting_color_buttons, alpha)
-							draw_vertex_color(10 + dx, size / 2-minv * wavehei + 1, setting_color_buttons, alpha)
+							draw_vertex_color(10 + dx, size / 2-maxv * wavehei, app.setting_color_buttons, alpha)
+							draw_vertex_color(10 + dx, size / 2-minv * wavehei + 1, app.setting_color_buttons, alpha)
 						}
 						draw_primitive_end()
 						break

@@ -1,7 +1,8 @@
 /// tab_timeline()
 
 var itemh, itemhalf, indent;
-var listwid, tlx, tly, tlw, tlh, tlstartpos;
+var tlx, tly, tlw, tlh, tlstartpos;
+var listx, listy, listw, listh;
 var mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
 var mousemovetl, mousemoveindex, movehltl, movehlpos;
 var barx, bary, barw, barh;
@@ -11,17 +12,35 @@ var regionx1, regionx2;
 
 content_mouseon = true
 
+// Background
+draw_box(content_x, content_y, content_width, content_height, false, setting_color_background, 1)
+
 // Init
 itemh = test(setting_timeline_compact, 18, 24)
 itemhalf = itemh / 2
 indent = 16
 
+// List
+listx = content_x
+listw = min(timeline.list_width, content_width)
+listy = content_y
+listh = floor((content_height - 30) / itemh) * itemh
+
 // Timeline
-listwid = min(timeline.list_width, content_width)
-tlx = content_x + listwid
+tlx = content_x + listw
 tly = content_y
-tlw = content_width - 5*(tab.panel = panel_left_top || tab.panel = panel_left_bottom) - 30 * timeline.ver_scroll.needed - listwid
-tlh = floor((content_height - 30) / itemh) * itemh
+tlw = content_width - 30 * timeline.ver_scroll.needed - listw
+tlh = listh
+
+// Adjust by panel location
+if (tab.panel = panel_left_top || tab.panel = panel_left_bottom)
+	tlw -= 5
+else if (tab.panel = panel_right_top || tab.panel = panel_right_bottom)
+{
+	listx += 5
+	listw -= 5
+}
+
 tlstartpos = timeline.hor_scroll.value / timeline_zoom
 timeline_list_first = round(timeline.ver_scroll.value / itemh)
 timeline_list_visible = floor(tlh / itemh)
@@ -30,7 +49,7 @@ if (timeline_marker < tlstartpos || timeline_marker > tlstartpos + tlw / timelin
 	timeline_insert_pos = tlstartpos
 else
 	timeline_insert_pos = timeline_marker
-
+	
 // Bar
 barw = content_width - tab.list_width
 barh = 28
@@ -39,7 +58,7 @@ bary = tly - barh
 
 // Mouse
 mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !popup_mouseon)
-mouseinnames = (app_mouse_box(content_x, content_y, listwid - 5, tlh) && !popup_mouseon)
+mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon)
 mousetl = floor((mouse_y - content_y + timeline.ver_scroll.value) / itemh)
 mousetlname = null
 mousekf = null
@@ -55,8 +74,6 @@ movehltl = null
 movehlpos = null
 timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom))
 
-// Background
-draw_box(content_x, content_y, content_width, content_height, false, setting_color_background, 1)
 
 // Empty
 if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100)
@@ -224,8 +241,10 @@ if (window_busy = "timelineselectkeyframes")
 	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), tly, tly + tlh)
 	x2 = clamp(mouse_x, tlx, tlx + tlw)
 	y2 = clamp(mouse_y, tly, tly + tlh)
+	render_set_culling(false)
 	draw_box(x1, y1, x2 - x1, y2 - y1, false, c_blue, 0.25)
 	draw_box(x1, y1, x2 - x1, y2 - y1, true, c_blue, 1)
+	render_set_culling(true)
 	
 	if (!mouse_left)
 	{
@@ -377,26 +396,26 @@ if (markerx >= 0 && markerx < tlw)
 }
 
 // Timeline list
-draw_box(content_x, tly, listwid, content_height, false, setting_color_interface, 1)
-dy = tly
+draw_box(content_x, tly, listw, content_height, false, setting_color_interface, 1)
+dy = listy
 for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
 	var tl, level, mouse, w, textcol, name;
 	var showkeyframes, showlock, showhide;
 	
-	if (dy + itemh > tly + tlh)
+	if (dy + itemh > listy + listh)
 		break
 	
 	tl = tree_visible_list[|t]
 	level = tl.level
-	dx = 5 + level * indent
-	w = listwid - 5
+	dx = listx + 5 + level * indent
+	w = listw - 5
 	textcol = setting_color_text
 	
 	// Select highlight
 	if (tl.selected)
 	{
-		draw_box(content_x, dy, listwid, itemh - 1, false, setting_color_timeline_select, 1)
+		draw_box(content_x, dy, listw, itemh - 1, false, setting_color_timeline_select, 1)
 		draw_set_font(setting_font_bold)
 	}
 	else if (window_busy = "timelinemove")
@@ -404,15 +423,15 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		// Move highlight
 		if (timeline_move_highlight_tl = tl)
 		{
-			draw_box(content_x, dy, listwid, itemh - 1, false, setting_color_highlight, 1)
+			draw_box(content_x, dy, listw, itemh - 1, false, setting_color_highlight, 1)
 			textcol = setting_color_highlight_text
 		}
 		else if (timeline_move_highlight_tl = null)
 		{
 			if (timeline_move_highlight_pos = t)
-				draw_box(content_x, max(tly, dy - 2), listwid, 4, false, setting_color_highlight, 1)
+				draw_box(content_x, max(tly, dy - 2), listw, 4, false, setting_color_highlight, 1)
 			else if (timeline_move_highlight_pos = t + 1)
-				draw_box(content_x, dy + itemh - 2, listwid, 4, false, setting_color_highlight, 1)
+				draw_box(content_x, dy + itemh - 2, listw, 4, false, setting_color_highlight, 1)
 		}
 	
 		// Set move target
@@ -473,7 +492,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				
 			app_mouse_clear()
 		}
-		timeline_move_off_x = content_x + dx - mouse_x
+		timeline_move_off_x = dx - mouse_x
 		timeline_move_off_y = dy - mouse_y
 	}
 	else
@@ -509,116 +528,116 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		w -= 16 * 1
 	
 	// Expander / Collapser
-	if (ds_list_size(tl.tree_list) > 0 && dx + 10 < w)
+	if (ds_list_size(tl.tree_list) > 0 && dx - listx + 10 < w)
 	{
-		if (app_mouse_box(content_x, dy, dx + 10, itemh) && mouse_left_pressed)
+		if (app_mouse_box(listx, dy, dx - listx + 10, itemh) && mouse_left_pressed)
 		{
 			window_focus = string(timeline.ver_scroll)
 			action_tl_extend(tl)
 			app_mouse_clear()
 		}
-		draw_image(spr_icons, test(tl.tree_extend, icons.ARROW_DOWN_TINY, icons.ARROW_RIGHT_TINY), content_x + dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
+		draw_image(spr_icons, test(tl.tree_extend, icons.ARROW_DOWN_TINY, icons.ARROW_RIGHT_TINY), dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
 		dx += 10
 	}
 	
 	// Name
-	name = string_limit(string_remove_newline(tl.display_name), w - dx)
+	name = string_limit(string_remove_newline(tl.display_name), w - (dx - listx))
 	if (dev_mode)
 		name += " [" + string(tl.save_id) + "]"
 		
 	if (window_busy = "timelineclick")
 	{
 		window_busy = ""
-		if (app_mouse_box(content_x + dx, dy, string_width(name), itemh))
+		if (app_mouse_box(dx, dy, string_width(name), itemh))
 			mousetlname = tl
 		window_busy = "timelineclick"
 	}
-	draw_label(name, content_x + dx, dy + itemh / 2, fa_left, fa_middle, textcol, 1)
+	draw_label(name, dx, dy + itemh / 2, fa_left, fa_middle, textcol, 1)
 	
 	draw_set_font(setting_font)
 	dy += itemh
 }
 
 // Tools
-dx = 5
-dy = content_height - 28
+dx = listx + 5
+dy = listy + content_height - 28
 
 while (true)
 {
 	// Right
 	tip_set_shortcut(setting_key_folder, setting_key_folder_control)
-	if (draw_button_normal("timelinefolder", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.FOLDER))
+	if (draw_button_normal("timelinefolder", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.FOLDER))
 		action_tl_folder()
 
 	dx += 25
-	if (dx + 25 > listwid - 5)
+	if (dx + 25 > listx + listw - 5)
 		break
 		
 	tip_set_shortcut(setting_key_duplicate_timelines, setting_key_duplicate_timelines_control)
-	if (draw_button_normal("timelineduplicate", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.DUPLICATE))
+	if (draw_button_normal("timelineduplicate", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.DUPLICATE))
 		action_tl_duplicate()
 		
 	dx += 25
-	if (dx + 25 > listwid - 5)
+	if (dx + 25 > listx + listw - 5)
 		break
 	
 	tip_set_shortcut(setting_key_remove_timelines, setting_key_remove_timelines_control)
-	if (draw_button_normal("timelineremove", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.REMOVE))
+	if (draw_button_normal("timelineremove", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.REMOVE))
 		action_tl_remove()
 	
 	dx += 25
-	if (dx + 25 > listwid - 5)
+	if (dx + 25 > listx + listw - 5)
 		break
 		
-	if (draw_button_normal("timelinesave", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.EXPORT))
+	if (draw_button_normal("timelinesave", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.EXPORT))
 		object_save()
 		
 	// Left
-	dx = listwid - 5-25
+	dx = listx + listw - 5-25
 	if (dx < 10 + 25 * 4)
 		break
 		
-	if (draw_button_normal("timelineexportkeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes_export, icons.EXPORT_KEYFRAMES))
+	if (draw_button_normal("timelineexportkeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes_export, icons.EXPORT_KEYFRAMES))
 		keyframes_save()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_remove_keyframes, setting_key_remove_keyframes_control)
-	if (draw_button_normal("timelineremovekeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.REMOVE_KEYFRAMES))
+	if (draw_button_normal("timelineremovekeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.REMOVE_KEYFRAMES))
 		action_tl_keyframes_remove()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_paste_keyframes, setting_key_paste_keyframes_control)
-	if (draw_button_normal("timelinepastekeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, (copy_kf_amount > 0), icons.PASTE_KEYFRAMES))
+	if (draw_button_normal("timelinepastekeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, (copy_kf_amount > 0), icons.PASTE_KEYFRAMES))
 		action_tl_keyframes_paste(timeline_insert_pos)
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_cut_keyframes, setting_key_cut_keyframes_control)
-	if (draw_button_normal("timelinecutkeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.CUT_KEYFRAMES))
+	if (draw_button_normal("timelinecutkeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.CUT_KEYFRAMES))
 		action_tl_keyframes_cut()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	tip_set_shortcut(setting_key_copy_keyframes, setting_key_copy_keyframes_control)
-	if (draw_button_normal("timelinecopykeyframes", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.COPY_KEYFRAMES))
+	if (draw_button_normal("timelinecopykeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.COPY_KEYFRAMES))
 		action_tl_keyframes_copy()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
-	if (draw_button_normal("timelinerun", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_run_fn), icons.RUN))
+	if (draw_button_normal("timelinerun", dx, dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_run_fn), icons.RUN))
 		action_tl_import_loop(timeline_settings_run_fn)
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
-	if (draw_button_normal("timelinewalk", content_x + dx, content_y + dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_walk_fn), icons.WALK))
+	if (draw_button_normal("timelinewalk", dx, dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_walk_fn), icons.WALK))
 		action_tl_import_loop(timeline_settings_walk_fn)
 	
 	break
@@ -631,7 +650,7 @@ if (app_mouse_box(tlx - 5, content_y - 20, 5, content_height + 20))
 	if (mouse_left_pressed)
 	{
 		window_busy = "timelinelistresize"
-		timeline_list_resize_start = listwid
+		timeline_list_resize_start = listw
 	}
 }
 
@@ -781,8 +800,10 @@ if (window_busy = "timelineselect")
 	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), content_y, content_y + tlh)
 	x2 = clamp(mouse_x, content_x, tlx)
 	y2 = clamp(mouse_y, content_y, content_y + tlh)
+	render_set_culling(false)
 	draw_box(x1, y1, x2 - x1, y2 - y1, false, c_blue, 0.25)
 	draw_box(x1, y1, x2 - x1, y2 - y1, true, c_blue, 1)
+	render_set_culling(true)
 	
 	if (!mouse_left)
 	{
@@ -819,7 +840,7 @@ if (window_busy = "timelineclick")
 	mouse_cursor = cr_handpoint
 	if (mouse_move > 5) // Select
 	{
-		if (mousetlname && mousetlname.selected && !mousetlname.part_of && !keyboard_check(vk_shift))
+		if (mousetlname && mousetlname.selected && mousetlname.part_of = null && !keyboard_check(vk_shift))
 			action_tl_move_start()
 		else
 		{

@@ -1,70 +1,82 @@
-/// asset_open(filename)
-/// @arg filename
+/// asset_open([filename])
+/// @arg [filename]
 /// @desc Adds a file to the project.
-/* TODO
-var fn, hobj;
-hobj = null
+///		  A file browser appears if no filename is given.
+
+var fn;
 
 if (history_undo)
 {
 	with (history_data)
 		history_destroy_loaded()
+		
 	tl_update_length()
 	tl_update_list()
 	lib_preview.update = true
 	res_preview.update = true
+	
 	return false
 }
 else if (history_redo)
 	fn = history_data.filename
 else
-	fn = argument0
+{
+	if (argument_count > 0)
+		fn = argument[0]
+	else
+		fn = file_dialog_open_asset()
+}
 
-if (filename_ext(fn) = ".zip") // Unzip
+if (fn = "")
+	return false
+
+var ext = filename_ext(fn);
+if (ext = ".zip") // Unzip
 {
 	var name, validfile;
 	name = filename_new_ext(filename_name(fn), "")
 	unzip(fn)
 	
 	// Look for pack
-	validfile = file_find_single(unzip_directory, ".mcmeta")
-	if (file_exists_lib(validfile))
+	if (directory_exists_lib(unzip_directory + "assets"))
 	{
 		action_res_pack_load(fn)
 		return false
 	}
 	
 	// Look for project
-	validfile = file_find_single(unzip_directory, ".mproj;.mani")
+	validfile = file_find_single(unzip_directory, "miproj;.mproj;.mani")
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", ".mproj;.mani")
+		validfile = file_find_single(unzip_directory + name + "\\", "miproj;.mproj;.mani")
 	
 	// Look for object
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory, ".object;.particles;")
+		validfile = file_find_single(unzip_directory, "miobj;mipart;.object;.particles;")
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", ".object;.particles;")
+		validfile = file_find_single(unzip_directory + name + "\\", "miobj;mipart;.object;.particles;")
 	
 	// Pack?
 	if (!file_exists_lib(validfile))
 	{
-		if (question(text_get("questionzip")))
-			action_res_pack_load(fn)
+		error("erroropenassetzip")
 		return false
 	} 
 	else
+	{
 		fn = validfile
+		ext = filename_ext(fn)
+	}
 }
 
 if (!file_exists_lib(fn))
 	return false
 
-var ext = filename_ext(fn);
 switch (ext)
 {
+	case ".miframes":
 	case ".keyframes":
 		log("Opening keyframes", fn)
-		action_tl_keyframes_load(fn)
+		//action_tl_keyframes_load(fn)
 		return true
 	
 	case ".schematic":
@@ -89,92 +101,115 @@ switch (ext)
 		popup_importimage.filename = fn
 		popup_show(popup_importimage)
 		return true
-}
-
-if (!history_redo)
-{
-	hobj = history_set(asset_open)
-	hobj.filename = fn
+		
+	// TODO .mimodel
+	// TODO .json model
 }
 
 log("Opening asset", fn)
-		
-buffer_current = buffer_load_lib(fn)
-load_folder = filename_dir(fn)
-load_format = buffer_read_byte()
-save_folder = project_folder
-log("load_folder", load_folder)
-log("load_format", load_format)
-log("save_folder", load_format)
 
-if (load_format > project_format)
+// Post 1.1.0 (JSON)
+if (string_contains(filename_ext(fn), ".miproj"))
 {
-	log("Too new")
-	error("erroropenassetnewer")
-	buffer_delete(buffer_current)
-	return 0
+	log("Opening project", fn)
+	var rootmap = project_load_start(fn);
+	if (rootmap = null)
+		return false
 }
-else if (load_format < project_05) // Too old
+
+// Pre 1.1.0 (buffer)
+else
 {
-	log("Too old")
-	error("errorfilecorrupted")
-	buffer_delete(buffer_current)
-	return 0
+	log("Opening legacy project", fn)
+	if (!project_load_legacy_start(fn))
+		return false
 }
+
+var hobj = null;
+if (!history_redo)
+	hobj = history_set(asset_open)
+
+project_reset_loaded()
+
+save_folder = project_folder
+load_folder = filename_dir(fn)
+log("save_folder", save_folder)
+log("load_folder", load_folder)
 
 switch (ext)
 {
+	// Object
+	case ".miobj":
+	{
+	
+	}
 	case ".object":
-		log("Opening object")
-		project_read_start()
-		project_read_objects()
-		project_read_get_iids(true)
-		break
+	{
+		log("Opening legacy object")
 		
+		project_load_legacy_objects()
+		project_load_find_save_ids()
+		project_load_update()
+		break
+	}
+		
+	// Particle spawner
 	case ".particles":
-		var temp, tl;
+	{
 		log("Opening particles")
-		project_read_start()
-		temp = new(obj_template)
-		temp.loaded = true
+		
+		var temp = new(obj_template);
 		with (temp)
 		{
-			load_iid_offset++
+			loaded = true
+			sortlist_add(other.lib_list, id)
 			type = "particles"
-			project_read_particles()
+			project_load_legacy_particles()
 		}
-		project_read_objects()
-		project_read_get_iids(true)
-		with (temp)
-			tl = temp_animate()
-		tl.loaded = true
-		sortlist_add(lib_list, temp)
-		break
+		project_load_legacy_objects()
+		project_load_find_save_ids()
 		
+		with (temp)
+			with (temp_animate())
+				loaded = true
+				
+		project_load_update()
+		break
+	}
+	
+	// Project
 	case ".mproj":
+	{
 		log("Opening mproj")
-		project_read_start()
+		
 		with (new(obj_dummy))
 		{
-			project_read_project()
+			project_load_legacy_project()
 			instance_destroy()
 		}
-		project_read_objects()
-		project_read_get_iids(true)
+		project_load_legacy_objects()
+		project_load_find_save_ids()
+		project_load_update()
 		break
-		
+	}
+	
 	case ".mani":
+	{
 		log("Opening mani")
-		project_read_old(true)
+		project_load_legacy_beta()
 		break
+	}
 }
 
+// Mark for undo
 with (hobj)
+{
+	filename = fn
 	history_save_loaded()
+}
 
-project_read_update()
-buffer_delete(buffer_current)
+project_reset_loaded()
 
 log("Asset loaded")
 
-return true*/
+return true

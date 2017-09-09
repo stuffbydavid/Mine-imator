@@ -31,7 +31,7 @@ if (temp)
 			scenery = temp.scenery
 			if (scenery = null)
 				break
-			var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), point3D(block_size, block_size, block_size));
+			var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
 			matrix_offset = vec3_mul(displaysize, vec3(-0.5))
 			break
 			
@@ -73,7 +73,7 @@ if (temp)
 			break
 		
 		case "block":
-			render_world_block(temp.block_vbuffer, temp.block_tex) 
+			render_world_block(temp.block_vbuffer, rep, temp.block_tex) 
 			break
 		
 		case "bodypart":

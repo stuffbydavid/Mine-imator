@@ -6,28 +6,18 @@
 
 render_target = argument[0]
 render_camera = argument[1]
+render_width = project_video_width
+render_height = project_video_height
 
-if (render_camera)
+// Use camera settings
+if (render_camera != null)
 {
-	if (render_camera.value[e_value.CAM_SIZE_USE_PROJECT])
-	{
-		render_width = project_video_width
-		render_height = project_video_height
-	}
-	else
+	if (!render_camera.value[e_value.CAM_SIZE_USE_PROJECT])
 	{
 		render_width = render_camera.value[e_value.CAM_WIDTH]
 		render_height = render_camera.value[e_value.CAM_HEIGHT]
 	}
-}
-else if (argument_count > 2)
-{
-	render_width = argument[2]
-	render_height = argument[3]
-}
-
-if (render_camera)
-{
+	
 	render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
 							render_camera.value[e_value.BRIGHTNESS] > 0 || 
 							render_camera.value[e_value.RGB_ADD] - render_camera.value[e_value.RGB_SUB] != c_black || 
@@ -38,10 +28,17 @@ if (render_camera)
 	
 	render_camera_dof = (setting_render_dof && render_camera.value[e_value.CAM_DOF])
 }
-else
+else 
 {
 	render_camera_colors = false
 	render_camera_dof = false
+}
+
+// Argument overwrites size
+if (argument_count > 2)
+{
+	render_width = argument[2]
+	render_height = argument[3]
 }
 
 render_ratio = render_width / render_height

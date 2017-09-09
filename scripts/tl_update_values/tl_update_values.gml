@@ -171,7 +171,7 @@ if (type = "audio" && !hide && app.timeline_marker > app.timeline_marker_previou
 				}
 			}
 				
-			if (timeline.keyframe_current = keyframe_list[|k])
+			if (keyframe_current = keyframe_list[|k])
 				break
 		}
 	}

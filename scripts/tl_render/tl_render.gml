@@ -81,17 +81,15 @@ if (shader_alpha > 0)
 			{
 				// Get resource for texture
 				var res = temp.block_tex;
-				if (texobj)
-					if (texobj.type != "camera")
-						if (res.block_sheet_texture != null)
-							res = texobj
+				if (texobj != null && texobj.type != "camera" && res.block_sheet_texture != null)
+					res = texobj
 					
 				if (!res.ready)
 					res = res_def
 				
 				// Draw
 				if (type = "block")
-					render_world_block(temp.block_vbuffer, res)
+					render_world_block(temp.block_vbuffer, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)), res)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, res, temp.block_repeat_enable, temp.block_repeat)
 				break

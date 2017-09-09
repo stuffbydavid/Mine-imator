@@ -6,7 +6,7 @@ var fn, format, list;
 fn = argument0
 format = argument1
 
-if (format >= e_project.FORMAT_100_DEBUG)
+if (format >= e_project.FORMAT_100_DEMO_2)
 	list = legacy_block_100_texture_list
 else if (format = e_project.FORMAT_07_DEMO)
 	list = legacy_block_07_demo_texture_list

@@ -11,7 +11,7 @@ else
 	var fn, res;
 	if (history_redo)
 	{
-		fn = history_data.filename 
+		fn = history_data.filename
 		res = new_res(fn, "pack")
 	}
 	else

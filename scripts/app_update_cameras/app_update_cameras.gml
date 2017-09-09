@@ -8,17 +8,16 @@ if (!view_second.show && view_render && !view_render_real_time && !exportmovie)
 
 with (obj_timeline)
 {
-	var texobj;
-	
 	if (!value_inherit[e_value.VISIBLE] || !type_is_shape(type))
 		continue
 	
-	if (value_inherit[e_value.TEXTURE_OBJ])
+	var texobj;
+	if (value_inherit[e_value.TEXTURE_OBJ] != null)
 		texobj = value_inherit[e_value.TEXTURE_OBJ]
 	else
 		texobj = temp.shape_tex
 	
-	if (texobj && texobj.type = "camera")
+	if (texobj != null && texobj.type = "camera")
 		texobj.cam_surf_required = true
 }
 
@@ -47,7 +46,7 @@ with (obj_timeline)
 		other.cam_surf_tmp = render_done()
 	}
 	
-	// Re - use the same two surfaces
+	// Re-use the same two surfaces
 	cam_surf = surface_require(cam_surf, app.render_width, app.render_height)
 	
 	var tmp = cam_surf;

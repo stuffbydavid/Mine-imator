@@ -94,7 +94,7 @@ switch (temp_edit.type)
 		else
 			text = text_get("listnone")
 		tab_control(32)
-		draw_button_menu("libraryscenery", e_menu.LIST, dx, dy, dw, 32, temp_edit.scenery, text, action_lib_scenery, null, 0, capwid)
+		draw_button_menu("libraryscenery", e_menu.LIST, dx, dy, dw, 32, temp_edit.scenery, text, action_lib_scenery, null, null, capwid)
 		tab_next()
 		
 		// Texture
@@ -210,7 +210,7 @@ switch (temp_edit.type)
 	{
 		// Font
 		tab_control(32)
-		draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 32, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font, null, 0, capwid)
+		draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 32, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font, null, null, capwid)
 		tab_next()
 		
 		// Face camera
@@ -236,7 +236,7 @@ switch (temp_edit.type)
 			text = text_get("listnone")
 		
 		tab_control(40)
-		draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 40, temp_edit.shape_tex, text, action_lib_shape_tex, sprite, 0, capwid)
+		draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 40, temp_edit.shape_tex, text, action_lib_shape_tex, sprite, null, capwid)
 		tab_next()
 		
 		// Mapped

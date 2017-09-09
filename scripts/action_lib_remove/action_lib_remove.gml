@@ -28,7 +28,7 @@ else
 	// Move children of affected timelines
 	with (obj_timeline)
 	{
-		if (temp != temp_edit || part_of != null)
+		if (temp != temp_edit || part_list = null)
 			continue
 		
 		var index = ds_list_find_index(parent.tree_list, id);
@@ -53,30 +53,27 @@ else
 			}
 		}
 		
-		if (part_list != null)
+		for (var p = 0; p < ds_list_size(part_list); p++) // Children of body parts
 		{
-			for (var p = 0; p < ds_list_size(part_list); p++) // Children of body parts
-			{
-				var part = part_list[|p];
+			var part = part_list[|p];
 			
-				for (var t = 0; t < ds_list_size(part.tree_list); t++)
+			for (var t = 0; t < ds_list_size(part.tree_list); t++)
+			{
+				with (part.tree_list[|t])
 				{
-					with (part.tree_list[|t])
+					if (part_of != null)
+						continue
+					
+					if (hobj)
 					{
-						if (part_of != null)
-							continue
-					
-						if (hobj)
-						{
-							hobj.child_save_id[hobj.child_amount] = save_id
-							hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
-							hobj.child_parent_tree_index[hobj.child_amount] = t
-							hobj.child_amount++
-						}
-					
-						tl_set_parent(other.parent, index)
-						t--
+						hobj.child_save_id[hobj.child_amount] = save_id
+						hobj.child_parent_save_id[hobj.child_amount] = parent.save_id
+						hobj.child_parent_tree_index[hobj.child_amount] = t
+						hobj.child_amount++
 					}
+					
+					tl_set_parent(other.parent, index)
+					t--
 				}
 			}
 		}

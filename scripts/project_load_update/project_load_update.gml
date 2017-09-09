@@ -1,9 +1,21 @@
 /// project_load_update()
 /// @desc Update program after reading a file.
 
+// Load resources
+with (obj_resource)
+	if (loaded)
+		res_load()
+		
+if (ds_priority_size(load_queue) > 0)
+	load_start(ds_priority_find_max(load_queue), res_load_start)
+else
+	popup_close()
+	
+// Update sky
 background_sky_update_clouds()
 background_ground_update_texture()
 
+// Update templates and timelines
 with (obj_template)
 {
 	temp_update()
@@ -22,10 +34,9 @@ with (obj_timeline)
 	tl_update_values()
 }
 
-with (obj_resource)
-	res_update_colors()
-
-project_reset_loaded()
+with (obj_particle_type)
+	ptype_update_sprite_vbuffers()
+	
 tl_update_length()
 tl_update_list()
 tl_update_matrix()

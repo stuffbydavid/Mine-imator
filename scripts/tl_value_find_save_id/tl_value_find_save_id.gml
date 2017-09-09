@@ -11,7 +11,8 @@ newval = argument2
 if (vid = e_value.SOUND_OBJ && oldval != null)
 {
 	var obj = save_id_find(oldval);
-	obj.count--
+	if (obj != null)
+		obj.count--
 }
 
 if (vid = e_value.ATTRACTOR || vid = e_value.TEXTURE_OBJ || vid = e_value.SOUND_OBJ)

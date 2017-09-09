@@ -25,4 +25,6 @@ else if (load_format < e_project.FORMAT_05)
 	return false
 }
 
+log("load_format", load_format)
+
 return true

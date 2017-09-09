@@ -8,7 +8,7 @@ if (history_undo)
 }
 else
 {
-	var fn, hobj, res, temp, tl;
+	var fn, hobj = null;
 	
 	if (history_redo)
 		fn = history_data.filename
@@ -18,7 +18,7 @@ else
 		hobj = history_set(action_lib_scenery_load)
 	}
 	
-	res = new_res(fn, "schematic")
+	var res = new_res(fn, "schematic");
 	res.loaded = !res.replaced
 	with (res)
 		res_load()
@@ -33,17 +33,14 @@ else
 		block_tex = res_def
 		res_def.count++
 		temp_update_display_name()
-		tl = temp_animate()
-		tl.loaded = true
+		with (temp_animate())
+			loaded = true
 	}
 	
-	if (!history_redo)
+	with (hobj)
 	{
-		with (hobj)
-		{
-			filename = fn
-			history_save_loaded()
-		}
+		filename = fn
+		history_save_loaded()
 	}
 }
 

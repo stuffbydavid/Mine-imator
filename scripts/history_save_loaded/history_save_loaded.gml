@@ -4,28 +4,13 @@
 loaded_amount = 0
 
 with (obj_template)
-{
-	if (!loaded)
-		continue
-		
-	other.loaded_save_id[other.loaded_amount] = save_id
-	other.loaded_amount++
-}
+	if (loaded)
+		other.loaded_save_id[other.loaded_amount++] = save_id
 
 with (obj_timeline)
-{
-	if (!loaded)
-		continue
-		
-	other.loaded_save_id[other.loaded_amount] = save_id
-	other.loaded_amount++
-}
+	if (loaded)
+		other.loaded_save_id[other.loaded_amount++] = save_id
 
 with (obj_resource)
-{
-	if (!loaded)
-		continue
-		
-	other.loaded_save_id[other.loaded_amount] = save_id
-	other.loaded_amount++
-}
+	if (loaded)
+		other.loaded_save_id[other.loaded_amount++] = save_id

@@ -5,20 +5,15 @@ var fn = load_folder + "\\" + filename;
 
 debug("Loading " + type, fn)
 
+if (load_folder != save_folder && type != "legacyblocksheet")
+	res_save()
+
 // Load from file
 switch (type)
 {
 	case "pack":
 	case "packunzipped":
 	{
-		if (type = "packunzipped") // Pre-unzipped pack (when loading assets)
-		{
-			pack_zip = ""
-			type = "pack"
-		}
-		else
-			pack_zip = fn
-			
 		ready = false
 		
 		with (app)
@@ -65,7 +60,7 @@ switch (type)
 			block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
 			if (load_folder = save_folder && !dev_mode)
 				file_rename_lib(fn, filename_new_ext(fn, ".old") + filename_ext(fn))
-			res_save()
+			texture_export(block_sheet_texture, save_folder + "\\" + filename)
 			type ="blocksheet"
 		}
 		else
@@ -81,6 +76,7 @@ switch (type)
 	}
 		
 	case "schematic":
+	case "fromworld":
 	{
 		ready = false
 		

@@ -26,9 +26,16 @@ with (new(obj_timeline))
 		}
 		
 		case "block":
-		case "scenery":
 			texture_filtering = true
 			break
+			
+		case "scenery":
+		{
+			texture_filtering = true
+			
+			// TODO add timelines
+			break
+		}
 		
 		case "bodypart":
 		{

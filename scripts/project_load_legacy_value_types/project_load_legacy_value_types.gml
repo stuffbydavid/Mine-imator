@@ -34,14 +34,17 @@ else
 
 value_type[e_value_type.ROT_POINT] = buffer_read_byte()
 
-if (load_format >= e_project.FORMAT_100_DEMO_4) {
+if (load_format >= e_project.FORMAT_100_DEMO_4)
+{
 	value_type[e_value_type.HIERARCHY] = buffer_read_byte()
 	value_type[e_value_type.GRAPHICS] = buffer_read_byte()
 }
 
 if (load_format < e_project.FORMAT_100_DEBUG) // Bug in demos
+{
 	value_type[e_value_type.HIERARCHY] = true
 	value_type[e_value_type.GRAPHICS] = true
+}
 
 if (load_format >= e_project.FORMAT_100_DEBUG)
 	value_type[e_value_type.AUDIO] = buffer_read_byte()

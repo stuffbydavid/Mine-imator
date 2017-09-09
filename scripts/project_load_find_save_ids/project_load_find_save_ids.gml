@@ -5,9 +5,12 @@
 var key = ds_map_find_first(save_id_map);
 while (!is_undefined(key))
 {
-	var obj = save_id_find(save_id_map[?key]);
-	if (is_real(save_id_map[?key]) || (obj != null && !obj.loaded))
-		save_id_map[?key] = save_id_create()
+	if (save_id_map[?key] != "root" && save_id_map[?key] != "default") // Skip removed objects
+	{
+		var obj = save_id_find(save_id_map[?key]);
+		if (is_real(save_id_map[?key]) || (obj != null && !obj.loaded))
+			save_id_map[?key] = save_id_create()
+	}
 	key = ds_map_find_next(save_id_map, key)
 }
 
@@ -15,15 +18,10 @@ save_id_map[? null] = null
 save_id_map[?"root"] = "root"
 save_id_map[?"default"] = "default"
 
-// Load resources
+// Set resource IDs
 with (obj_resource)
-{
-	if (!loaded)
-		continue
-		
-	save_id = save_id_map[?save_id]
-	res_load()
-}
+	if (loaded && !is_undefined(save_id_map[?save_id]))
+		save_id = save_id_map[?save_id]
 
 // Set background references
 if (background_loaded)
@@ -52,7 +50,9 @@ with (obj_template)
 	if (!loaded)
 		continue
 		
-	save_id = save_id_map[?save_id]
+	if (!is_undefined(save_id_map[?save_id]))
+		save_id = save_id_map[?save_id]
+		
 	skin = save_id_find(save_id_map[?skin])
 	item_tex = save_id_find(save_id_map[?item_tex])
 	block_tex = save_id_find(save_id_map[?block_tex])
@@ -86,7 +86,7 @@ with (obj_template)
 	if (load_format < e_project.FORMAT_110 && type = "item" && item_tex != res_def)
 	{
 		if (legacy_item_sheet)
-			item_tex.item_sheet_size = vec3(16, 16)
+			item_tex.item_sheet_size = vec2(16, 16)
 		else
 			item_tex.type = "texture"
 	}
@@ -94,7 +94,7 @@ with (obj_template)
 
 // Set timeline references
 with (obj_timeline)
-	if (loaded)
+	if (loaded && !is_undefined(save_id_map[?save_id]))
 		save_id = save_id_map[?save_id]
 
 with (obj_timeline)
@@ -103,6 +103,8 @@ with (obj_timeline)
 		continue
 	
 	temp = save_id_find(save_id_map[?temp])
+	if (temp != null)
+		temp.count++
 		
 	// Set part list
 	if (part_list != null)
@@ -111,6 +113,7 @@ with (obj_timeline)
 		{
 			part_list[|i] = save_id_find(save_id_map[?part_list[|i]])
 			part_list[|i].part_of = id
+			temp.count--
 		}
 	}
 	
@@ -142,11 +145,12 @@ with (obj_particle_type)
 	if (!loaded)
 		continue
 	
-	save_id = save_id_map[?save_id]
+	if (!is_undefined(save_id_map[?save_id]))
+		save_id = save_id_map[?save_id]
+	
 	temp = save_id_find(save_id_map[?temp])
 	sprite_tex = save_id_find(save_id_map[?sprite_tex])
-	ptype_update_sprite_vbuffers()
-	
+
 	// Update counters if not loaded via the workbench particle preview
 	if (temp_creator != app.bench_settings)
 		sprite_tex.count++

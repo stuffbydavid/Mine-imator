@@ -168,6 +168,10 @@
 				]
 			},
 			"default_state": "color=purple"
+		},
+		{
+			"name": "shulker_spark",
+			"file": "shulker_spark.mimodel"
 		}
 	],
 	"blocks": [
@@ -852,6 +856,7 @@
 			"brightness": 1,
 			"legacy_id": 50,
 			"legacy_data": {
+				"0": "facing=up",
 				"1": "facing=east",
 				"2": "facing=west",
 				"3": "facing=south",
@@ -1007,6 +1012,7 @@
 			"default_state": "facing=south",
 			"legacy_id": 61,
 			"legacy_data": {
+				"0": "facing=south",
 				"1": "facing=south",
 				"2": "facing=north",
 				"3": "facing=south",
@@ -1023,6 +1029,7 @@
 			"default_state": "facing=south",
 			"legacy_id": 62,
 			"legacy_data": {
+				"0": "facing=south",
 				"1": "facing=south",
 				"2": "facing=north",
 				"3": "facing=south",
@@ -1234,6 +1241,7 @@
 			"default_state": "facing=up",
 			"legacy_id": 75,
 			"legacy_data": {
+				"0": "facing=up",
 				"1": "facing=east",
 				"2": "facing=west",
 				"3": "facing=south",
@@ -1252,6 +1260,7 @@
 			"brightness": 1,
 			"legacy_id": 76,
 			"legacy_data": {
+				"0": "facing=up",
 				"1": "facing=east",
 				"2": "facing=west",
 				"3": "facing=south",
@@ -4127,6 +4136,7 @@
 		"entity/shulker/shulker_white",
 		"entity/shulker/shulker_yellow",
 		"entity/shulker/shulker_spark",
+		"entity/shulker/spark",
 		"entity/skeleton/skeleton",
 		"entity/skeleton/stray",
 		"entity/skeleton/stray_overlay",

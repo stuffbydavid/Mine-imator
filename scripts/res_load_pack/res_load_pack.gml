@@ -1,14 +1,16 @@
 /// res_load_pack()
 /// @desc Unzips an archive and stores the textures in the resource.
 
+var fname = load_folder + "\\" + filename;
+
 switch (load_stage)
 {
 	// Unzip archive
 	case "unzip":
 	{
-		if (pack_zip != "")
+		if (type != "packunzipped")
 		{
-			if (unzip(pack_zip) < 0)
+			if (unzip(fname) < 0)
 			{
 				log("Error unzipping pack")
 				error("errorunzippack")
@@ -18,6 +20,7 @@ switch (load_stage)
 			}
 		}
 		
+		type = "pack"
 		load_stage = "modeltextures"
 		with (app)
 		{
@@ -82,6 +85,10 @@ switch (load_stage)
 			with (obj_template)
 				if (item_tex = other.id)
 					temp_update_item()
+					
+			with (obj_particle_type)
+				if (sprite_tex = other.id)
+					ptype_update_sprite_vbuffers()
 				
 			load_next()
 		}

@@ -44,4 +44,6 @@ else if (load_format < e_project.FORMAT_110)
 	return null
 }
 
+log("load_format", load_format)
+
 return map

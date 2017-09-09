@@ -1,6 +1,9 @@
 /// ptype_update_sprite_vbuffers()
 /// @desc Updates the 3D models for sprite particles.
 
+if (!sprite_tex.ready)
+	return 0
+
 for (var m = 0; m < sprite_vbuffer_amount; m++)
 	vbuffer_destroy(sprite_vbuffer[m])
 
@@ -21,6 +24,7 @@ for (var m = 0; m < sprite_vbuffer_amount; m++)
 	ty1 = ((frame div framesx) * fhei) / shei
 	tx2 = tx1 + fwid / swid
 	ty2 = ty1 + fhei / shei
+	
 	sprite_vbuffer[m] = vbuffer_start()
 	vertex_add(-fwid / 2, 0, fhei / 2, 0, 0, 1, tx1, ty1)
 	vertex_add(fwid / 2, 0, fhei / 2, 0, 0, 1, tx2, ty1)

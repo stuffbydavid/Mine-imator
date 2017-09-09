@@ -12,9 +12,9 @@ if (history_undo)
 				if (position = new_position)
 					continue
 				
+				var index = ds_list_find_index(timeline.keyframe_list, id);
 				ds_list_delete_value(timeline.keyframe_list, id)
 				
-				var index = ds_list_find_index(timeline.keyframe_list, id);
 				for (var a = 0; a < other.kf_move_amount; a++)  // Push down other indices of same timeline
 					if (save_id_find(other.kf_move_tl_save_id[a]) = timeline && other.kf_move_new_index[a] > index)
 						other.kf_move_new_index[a]--
@@ -34,9 +34,9 @@ else if (history_redo)
 				if (position = new_position)
 					continue
 				
+				var index = ds_list_find_index(timeline.keyframe_list, id);
 				ds_list_delete_value(timeline.keyframe_list, id)
 				
-				var index = ds_list_find_index(timeline.keyframe_list, id);
 				for (var a = 0; a < other.kf_move_amount; a++) // Push down other indices of same timeline
 					if (save_id_find(other.kf_move_tl_save_id[a]) = timeline && other.kf_move_old_index[a] > index)
 						other.kf_move_old_index[a]--

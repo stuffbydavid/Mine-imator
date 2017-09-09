@@ -48,9 +48,6 @@ res.replaced = replaced
 load_folder = filename_dir(fn)
 save_folder = project_folder
 
-with (res)
-	res_save()
-
 log("Add resource", type)
 log("filename", res.filename)
 

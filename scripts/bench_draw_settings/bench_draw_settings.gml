@@ -106,7 +106,7 @@ else
 			menu_model_current = null
 			
 			// Bodypart
-			if (bench_settings.type = "bodypart")
+			if (bench_settings.type = "bodypart" && bench_settings.model_file != null)
 			{
 				draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, null, null, capwid)
 				dy += 24 + 8

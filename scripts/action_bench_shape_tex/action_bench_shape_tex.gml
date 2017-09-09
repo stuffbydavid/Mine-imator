@@ -19,7 +19,6 @@ else
 			return 0
 		
 		res = new_res(fn, "texture")
-		
 		with (res)
 			res_load()
 	}

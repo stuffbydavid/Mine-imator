@@ -2,8 +2,7 @@
 /// @arg resource
 /// @desc Sets the scenery of the given library item.
 
-var res, fn;
-fn = ""
+var res;
 
 if (history_undo)
 	res = history_undo_res()
@@ -11,17 +10,18 @@ else if (history_redo)
 	res = history_redo_res()
 else
 {
+	var fn = "";
 	res = argument0
 	if (res = e_option.IMPORT_WORLD)
 	{
-		fn = data_directory + "export.blocks"
+		fn = file_directory + "export.schematic"
 		file_delete_lib(fn)
 		execute(import_file, fn, true)
 		
 		if (!file_exists_lib(fn))
 			return 0
 			
-		res = new_res(fn, "schematic")
+		res = new_res(fn, "fromworld")
 		with (res)
 			res_load()
 	}

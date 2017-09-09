@@ -4,12 +4,12 @@
 switch (type)
 {
 	case "schematic":
+	case "fromworld":
 	{
 		load_stage = "open"
 		with (app)
 		{
 			popup_loading.text = text_get("loadsceneryopen")
-			popup_loading.caption = ""
 			popup_loading.load_script = res_load_scenery
 		}
 		break
@@ -20,7 +20,7 @@ switch (type)
 		load_stage = "open"
 		with (app)
 		{
-			popup_loading.text = text_get("loadaudioopen")
+			popup_loading.text = text_get("loadaudioread")
 			popup_loading.caption = text_get("loadaudiocaption", other.filename)
 			popup_loading.load_script = res_load_audio
 		}
@@ -28,6 +28,7 @@ switch (type)
 	}
 	
 	case "pack":
+	case "packunzipped":
 	{
 		load_stage = "unzip"
 		with (app)

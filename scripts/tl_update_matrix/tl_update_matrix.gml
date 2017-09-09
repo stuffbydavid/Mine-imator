@@ -8,10 +8,10 @@ if (object_index != app && update_matrix)
 	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
 	
-	// Parent matrix
+	// Get parent matrix
 	if (parent != app)
 	{
-		matrix_parent = parent.matrix
+		matrix_parent = array_copy_1d(parent.matrix)
 		
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
@@ -19,7 +19,7 @@ if (object_index != app && update_matrix)
 	}
 	else
 		matrix_parent = MAT_IDENTITY
-	
+		
 	// Add body part transformations
 	if (type = "bodypart" && model_part != null)
 	{
@@ -32,13 +32,13 @@ if (object_index != app && update_matrix)
 		
 	// Create main matrix
 	matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
-	
+		
 	// No scale or "resize" mode
 	if (scale_resize || !inherit_scale)
 	{
 		// Get actual scale
 		tl = id
-		while (1)
+		while (true)
 		{
 			var par = tl.parent;
 			if (!tl.inherit_scale || par = app)

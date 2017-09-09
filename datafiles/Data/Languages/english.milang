@@ -79,14 +79,16 @@
 		"openparticleszipcaption": "Import particles error",
 		"openparticlesnewer": "These particles were made using a newer version of Mine-imator. Update the program to import them.",
 		"openparticlesnewercaption": "Import particles error",
+		"openassetzip": "The archive could not be loaded because it didn't contain any valid files.",
+		"openassetzipcaption": "Import asset error",
 		"openassetnewer": "This file was made using a newer version of Mine-imator. Update the program to import it.",
-		"openassetnewercaption": "Import object error",
+		"openassetnewercaption": "Import asset error",
 		"openkeyframes": "No timeline selected to put the keyframes in!",
 		"openkeyframescaption": "Import asset error",
 		"loadschematic": "Could not read the schematic file. See the log for details.",
 		"loadschematiccaption": "Import schematic error",
-		"unzippack": "Could not unzip the archive.",
-		"unzippackcaption": "Import texture pack error",
+		"unzippack": "Could not unzip the pack.",
+		"unzippackcaption": "Import pack error",
 		"loadaudio": "An error occurred when importing the audio file.",
 		"loadaudiocaption": "Import audio error",
 		"exportmovie": "An error occured when exporting the movie. Check your render settings and make sure the target file isn't opened in another program. See the log for details.",
@@ -102,7 +104,6 @@
 		"confirmopen": "Save the changes made in %1 before opening another project?",
 		"replace": "A resource with this filename has already been added into the project. Do you want to replace it with the selected file?",
 		"buffersizewarning": "WARNING: This setting may or may not crash the program when rendering. Only proceed if you think your graphics card and RAM can handle it.\nContinue?",
-		"zip": "No valid project file could be found in this archive. Is this a texture pack?",
 		"stoprender": "Really stop rendering?"
 	},
 	"filedialog/": {
@@ -1651,7 +1652,7 @@
 			"image": "Pack image to view",
 			"imagetip": "Choose the image to view in the preview window.",
 			"image/": {
-				"modeltexture": "Model texture to view",
+				"modeltexture": "Texture to view",
 				"modeltexturetip": "Choose the model texture to view in the preview window.",
 				"blocksheet": "Sheet to view",
 				"blocksheetstatic": "Static",
@@ -1697,8 +1698,7 @@
 	},
 	"loadaudio/": {
 		"caption": "Importing %1",
-		"open": "Opening file...",
-		"buildingwaveforms": "Building waveforms..."
+		"read": "Reading file...",
 	},
 	"loadpack/": {
 		"caption": "Importing %1",

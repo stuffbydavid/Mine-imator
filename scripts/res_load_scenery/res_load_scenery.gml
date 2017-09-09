@@ -52,7 +52,6 @@ switch (load_stage)
 					}
 				}
 			}
-			app.popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
 		}
 		
 		// Schematic file
@@ -162,6 +161,10 @@ switch (load_stage)
 		with (app)
 		{
 			popup_loading.text = text_get("loadsceneryblocks")
+			if (mc_builder.file_map != "")
+				popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
+			else
+				popup_loading.caption = text_get("loadscenerycaption", other.filename)
 			popup_loading.progress = 2 / 10
 		}
 		break
@@ -214,19 +217,20 @@ switch (load_stage)
 		if (mc_builder.build_pos[Z] = mc_builder.build_size[Z])
 		{
 			block_vbuffer_done()
-			scenery_size = mc_builder.build_size
+			scenery_size = vec3(mc_builder.build_size[Y], mc_builder.build_size[X], mc_builder.build_size[Z]) // Rotate 90 degrees
 			ready = true
 
 			// Put map name in resource name
 			if (mc_builder.file_map != "")
 			{
 				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
-				if (filename = "export.blocks") // Rename world import file
+				if (type = "fromworld") // Rename world import file
 				{
-					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks");
+					type = "schematic"
+					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".schematic");
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
-					file_rename_lib(app.project_folder + "\\export.blocks", newname)
+					file_rename_lib(app.project_folder + "\\export.schematic", newname)
 				}
 			}
 				

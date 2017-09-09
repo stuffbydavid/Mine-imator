@@ -10,7 +10,7 @@ else
 	
 with (obj_timeline)
 {
-	if (temp != other.id || part_of != null)
+	if (temp != other.id || part_list = null)
 		continue
 		
 	// Missing model
