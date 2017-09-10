@@ -14,7 +14,7 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-newtex = texture_surface(surf)
+var newtex = texture_surface(surf);
 
 surface_free(surf)
 

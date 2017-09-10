@@ -4,12 +4,13 @@
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_unzip_assets		false
+#macro texture_lib					true
 
 // Versions
 #macro mineimator_version			"1.1.0"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017"
-#macro gm_runtime					"2.0.7.110"
+#macro gm_runtime					"2.1.0.136"
 #macro minecraft_version			"1.12"
 
 // File formats
@@ -39,6 +40,7 @@
 #macro log_previous_file		file_directory + "log_previous.txt"
 #macro log_file					file_directory + "log.txt"
 #macro temp_file				file_directory + "tmp.file"
+#macro temp_image				file_directory + "tmp.png"
 #macro download_image_file		file_directory + "download.png"
 #macro unzip_directory			file_directory + "unzip\\"
 

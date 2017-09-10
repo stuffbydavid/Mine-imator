@@ -52,7 +52,7 @@ if (background_fog_show && background_fog_sky)
 	shader_texture_filter_linear = true
 	shader_blend_color = background_fog_color_final
 	shader_alpha = 1
-	shader_texture = spr_fog
+	shader_texture = background_fog_texture
 	shader_blend_set()
 	vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(1, 1, background_fog_height / 1000))
 	shader_texture_filter_linear = false
@@ -72,7 +72,7 @@ if (!background_image_show)
 			
 		shader_blend_color = c_white
 		shader_alpha = 0.4 * background_night_alpha
-		shader_texture = spr_stars
+		shader_texture = background_sky_stars_texture
 		shader_blend_set()
 		vbuffer_render_matrix(background_sky_stars_vbuffer, skymat)
 	}

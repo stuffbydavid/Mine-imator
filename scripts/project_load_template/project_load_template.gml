@@ -64,6 +64,7 @@ with (new(obj_template))
 		var blockmap = map[?"block"];
 		if (ds_exists(blockmap, ds_type_map))
 		{
+			block_tex = json_read_save_id(blockmap[?"tex"], block_tex)
 			block_repeat_enable = json_read_real(blockmap[?"repeat_enable"], block_repeat_enable)
 			block_repeat = json_read_array(blockmap[?"repeat"], block_repeat)
 		}

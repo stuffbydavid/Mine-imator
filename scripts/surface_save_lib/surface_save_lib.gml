@@ -2,7 +2,6 @@
 /// @arg surface
 /// @arg filename
 
-var tmpfile = file_directory + "tmp.png";
-file_delete_lib(tmpfile)
-surface_save(argument0, tmpfile)
-file_copy_lib(tmpfile, argument1)
+file_delete_lib(temp_image)
+surface_save(argument0, temp_image)
+file_copy_lib(temp_image, argument1)

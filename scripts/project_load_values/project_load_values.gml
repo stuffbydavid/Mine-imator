@@ -11,7 +11,16 @@ while (!is_undefined(key))
 {
 	var index = ds_list_find_index(value_name_list, key);
 	if (index >= 0)
-		arr[@ index] = map[?key]
+	{
+		if (tl_value_is_bool(index))
+			arr[@ index] = json_read_real(map[?key], arr[@ index])
+		else if (tl_value_is_color(index))
+			arr[@ index] = json_read_color(map[?key], arr[@ index])
+		else if (map[?key] != "null")
+			arr[@ index]= map[?key]
+		else
+			arr[@ index] = null
+	}
 		
 	key = ds_map_find_next(map, key)
 }

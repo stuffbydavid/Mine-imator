@@ -17,7 +17,7 @@ var uTexture = shader_get_sampler_index(shader_high_light_sun, "uTexture"),
 	
 shader_set(shader_high_light_sun)
 
-texture_set_stage(uTexture, texture_get(shader_texture))
+shader_set_texture(uTexture, shader_texture)
 	
 shader_set_uniform_f(uAlpha, shader_alpha)
 shader_set_uniform_f(uBrightness, shader_brightness)

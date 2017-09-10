@@ -3,7 +3,7 @@
 
 var texobj = argument0;
 
-if (texobj)
+if (texobj != null)
 {
 	if (texobj.type = "camera")
 	{
@@ -14,4 +14,4 @@ if (texobj)
 		return texobj.texture
 }
 
-return spr_shape
+return shape_texture

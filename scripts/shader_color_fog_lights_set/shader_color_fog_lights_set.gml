@@ -19,10 +19,7 @@ var uTexture = shader_get_sampler_index(shader_color_fog_lights, "uTexture"),
 shader_set(shader_color_fog_lights)
 
 // Texture
-gpu_set_tex_filter_ext(uTexture, shader_texture_filter_linear)
-gpu_set_tex_mip_enable(shader_texture_filter_mipmap)
-gpu_set_tex_mip_filter_ext(uTexture, test(shader_texture_filter_mipmap, tf_linear, tf_point))
-texture_set_stage(uTexture, texture_get(shader_texture))
+shader_set_texture(uTexture, shader_texture)
 
 // Colors
 shader_set_uniform_color(uBlendColor, shader_blend_color, shader_alpha)

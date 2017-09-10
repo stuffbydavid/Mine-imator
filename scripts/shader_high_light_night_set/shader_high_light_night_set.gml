@@ -7,7 +7,7 @@ var uTexture = shader_get_sampler_index(shader_high_light_night, "uTexture"),
 
 shader_set(shader_high_light_night)
 
-texture_set_stage(uTexture, texture_get(shader_texture))
+shader_set_texture(uTexture, shader_texture)
 	
 shader_set_uniform_f(uBrightness, shader_brightness)
 shader_set_uniform_f(uBlockBrightness, app.setting_block_brightness)

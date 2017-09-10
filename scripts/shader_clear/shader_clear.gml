@@ -26,6 +26,13 @@ shader_fog = true
 shader_is_ground = false
 
 if (shader_current() > -1)
+{
+	if (texture_lib)
+	{
+		var uTexture = shader_get_sampler_index(shader_current(), "uTexture");
+		external_call(lib_texture_reset_stage, uTexture)
+	}
 	shader_reset()
-	
+}
+
 gpu_set_tex_mip_enable(false)

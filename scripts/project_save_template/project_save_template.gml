@@ -45,6 +45,7 @@ json_export_object_start()
 	{
 		json_export_var_save_id("scenery", scenery)
 		json_export_object_start("block")
+			json_export_var_save_id("tex", block_tex)
 			json_export_var_bool("repeat_enable", block_repeat_enable)
 			json_export_var("repeat", block_repeat)
 		json_export_object_done()

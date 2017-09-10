@@ -32,7 +32,7 @@ if (type = "particles" || type = "spotlight" || type = "pointlight" || type = "c
 {
 	if (render_mode = "click")
 	{
-		shader_texture = spr_shape
+		shader_texture = shape_texture
 		shader_use()
 		vbuffer_render(render_click_box, world_pos)
 	}
@@ -65,10 +65,11 @@ if (shader_alpha > 0)
 					break
 					
 				// Get texture
-				var res, texname;
-				res = temp.skin
+				var res = temp.skin;
+				
 				if (texobj && texobj.type != "camera")
 					res = texobj
+				
 				if (!res.ready)
 					res = res_def
 				

@@ -3,4 +3,4 @@
 /// @arg add
 
 setting_texture_filtering_level = setting_texture_filtering_level * argument1 + argument0
-gpu_set_tex_mip_bias(-setting_texture_filtering_level)
+texture_set_mipmap_level(setting_texture_filtering_level)

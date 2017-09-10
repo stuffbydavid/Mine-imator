@@ -179,7 +179,7 @@ switch (menu_name)
 	case "libraryshapetex": // Shape texture
 	{
 		// None
-		menu_add_item(0, text_get("listnone"))
+		menu_add_item(null, text_get("listnone"))
 		
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -392,7 +392,7 @@ switch (menu_name)
 	case "frameeditorspblocktex":
 	case "frameeditorbodyparttex": // Timeline frame skin
 	{
-		// Default
+		// Default TODO
 		//menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.char_skin.display_name), tl_edit.temp.char_skin.mob_texture[tl_edit.temp.char_model.index])
 		
 		// Add existing resources

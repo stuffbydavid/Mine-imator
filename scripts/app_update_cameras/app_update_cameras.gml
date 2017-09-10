@@ -23,10 +23,10 @@ with (obj_timeline)
 
 with (obj_particle)
 {
-	if (!type.temp || !type_is_shape(type.temp.type))
+	if (type.temp = null || !type_is_shape(type.temp.type))
 		continue
 		
-	if (type.temp.shape_tex && type.temp.shape_tex.type = "camera")
+	if (type.temp.shape_tex != null && type.temp.shape_tex.type = "camera")
 		type.temp.shape_tex.cam_surf_required = true
 }
 
