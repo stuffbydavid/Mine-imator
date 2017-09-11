@@ -1,7 +1,7 @@
 /// shader_clear()
 
 shader_tl = null
-shader_texture = -1
+shader_texture = 0
 shader_texture_surface = false
 shader_blend_color = c_white
 shader_alpha = 1
@@ -35,4 +35,5 @@ if (shader_current() > -1)
 	shader_reset()
 }
 
-gpu_set_tex_mip_enable(false)
+if (!texture_lib)
+	gpu_set_tex_mip_enable(mip_off)

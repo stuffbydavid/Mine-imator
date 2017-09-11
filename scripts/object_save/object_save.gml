@@ -7,8 +7,8 @@ if (fn = "")
 	return 0
 
 fn = filename_new_ext(fn, ".miobj")
-
 log("Saving object", fn)
+
 save_folder = filename_dir(fn)
 load_folder = project_folder
 log("save_folder", save_folder)

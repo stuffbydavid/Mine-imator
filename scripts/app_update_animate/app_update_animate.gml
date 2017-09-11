@@ -13,10 +13,7 @@ with (obj_timeline)
 {
 	// Update values
 	if (updatevalues)
-	{
 		tl_update_values()
-		tl_update_matrix()
-	}
 	
 	if (type = "camera")
 	{
@@ -66,6 +63,9 @@ with (obj_timeline)
 		app.background_lights++
 	}
 }
+
+if (updatevalues)
+	tl_update_matrix()
 
 timeline_marker_previous = timeline_marker
 

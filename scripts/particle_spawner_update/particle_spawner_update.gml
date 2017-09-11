@@ -196,7 +196,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 							
 						if (temp.pc_spawn_region_type = "sphere")
 						{
-							var dis = point3D_distance(pt.pos, pos);
+							var dis = point3D_distance(pt.pos, world_pos);
 							if (dis > temp.pc_spawn_region_sphere_radius)
 							{
 								for (var a = X; a <= Z; a++)
@@ -213,7 +213,7 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 										pt.rot_spd[a] *= -0.5 
 									}
 								}
-								pt.pos = point3D_add(pos, vec3_mul(vec3_normalize(point3D_sub(pt.pos, pos)), temp.pc_spawn_region_sphere_radius))
+								pt.pos = point3D_add(world_pos, vec3_mul(vec3_normalize(point3D_sub(pt.pos, world_pos)), temp.pc_spawn_region_sphere_radius))
 							}
 							continue
 						}
@@ -221,16 +221,16 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 						{
 							for (var a = X; a <= Z; a++)
 							{
-								boxstart[a] = pos[a] - temp.pc_spawn_region_cube_size / 2
-								boxend[a] = pos[a] + temp.pc_spawn_region_cube_size / 2
+								boxstart[a] = world_pos[a] - temp.pc_spawn_region_cube_size / 2
+								boxend[a] = world_pos[a] + temp.pc_spawn_region_cube_size / 2
 							}
 						}
 						else if (temp.pc_spawn_region_type = "box")
 						{
 							for (var a = X; a <= Z; a++)
 							{
-								boxstart[a] = pos[a] - temp.pc_spawn_region_box_size[a] / 2
-								boxend[a] = pos[a] + temp.pc_spawn_region_box_size[a] / 2
+								boxstart[a] = world_pos[a] - temp.pc_spawn_region_box_size[a] / 2
+								boxend[a] = world_pos[a] + temp.pc_spawn_region_box_size[a] / 2
 							}
 						}
 					}
@@ -240,8 +240,8 @@ if (app.exportmovie || !app.popup || !app.popup.block)
 					{
 						for (var a = X; a <= Z; a++)
 						{
-							boxstart[a] = pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_start[a]
-							boxend[a] = pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_end[a]
+							boxstart[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_start[a]
+							boxend[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_end[a]
 						}
 					}
 					

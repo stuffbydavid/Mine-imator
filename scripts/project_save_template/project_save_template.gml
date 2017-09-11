@@ -4,7 +4,7 @@ json_export_object_start()
 
 	json_export_var("id", save_id)
 	json_export_var("type", type)
-	json_export_var("name", json_string_escape(name))
+	json_export_var("name", json_string_encode(name))
 	
 	if (type = "char" || type = "spblock" || type = "bodypart")
 	{

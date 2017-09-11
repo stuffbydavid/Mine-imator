@@ -10,8 +10,8 @@ with (new(obj_timeline))
 {
 	loaded = true
 	
-	save_id = json_read_string(map[?"id"], save_id)
-	save_id_map[?save_id] = save_id
+	load_id = json_read_string(map[?"id"], save_id)
+	save_id_map[?load_id] = load_id
 	
 	type = json_read_string(map[?"type"], type)
 	name = json_read_string(map[?"name"], name)
@@ -24,7 +24,10 @@ with (new(obj_timeline))
 	depth = json_read_real(map[?"depth"], depth)
 	
 	if (type = "bodypart")
+	{
 		model_part_name = json_read_string(map[?"model_part_name"], model_part_name)
+		part_of = json_read_save_id(map[?"part_of"], part_of)
+	}
 		
 	if (type = "char" || type = "spblock")
 	{

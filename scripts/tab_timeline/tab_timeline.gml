@@ -626,19 +626,19 @@ while (true)
 		
 	tip_set_shortcut(setting_key_copy_keyframes, setting_key_copy_keyframes_control)
 	if (draw_button_normal("timelinecopykeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.COPY_KEYFRAMES))
-		action_tl_keyframes_copy()
+		tl_keyframes_copy()
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	if (draw_button_normal("timelinerun", dx, dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_run_fn), icons.RUN))
-		action_tl_import_loop(timeline_settings_run_fn)
+		action_tl_load_loop(timeline_settings_run_fn)
 	dx -= 25
 	if (dx < 10 + 25 * 4)
 		break
 		
 	if (draw_button_normal("timelinewalk", dx, dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_walk_fn), icons.WALK))
-		action_tl_import_loop(timeline_settings_walk_fn)
+		action_tl_load_loop(timeline_settings_walk_fn)
 	
 	break
 }

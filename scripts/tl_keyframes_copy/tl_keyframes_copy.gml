@@ -1,6 +1,7 @@
 /// tl_keyframes_copy()
 
 var minpos = null;
+
 copy_kf_amount = 0
 	
 // Create new copies

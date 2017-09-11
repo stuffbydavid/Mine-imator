@@ -70,7 +70,7 @@ if (window_busy = "" && !textbox_isediting)
 		action_tl_remove()
 	
 	if (keyboard_check_pressed(setting_key_copy_keyframes) && app_check_control(setting_key_copy_keyframes_control))
-		action_tl_keyframes_copy()
+		tl_keyframes_copy()
 	
 	if (keyboard_check_pressed(setting_key_cut_keyframes) && app_check_control(setting_key_cut_keyframes_control))
 		action_tl_keyframes_cut()

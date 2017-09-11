@@ -4,17 +4,20 @@ json_export_object_start()
 
 	json_export_var("id", save_id)
 	json_export_var("type", type)
-	json_export_var("name", json_string_escape(name))
+	json_export_var("name", json_string_encode(name))
 	
 	json_export_var_save_id("temp", temp)
-	json_export_var("text", json_string_escape(text))
+	json_export_var("text", json_string_encode(text))
 	json_export_var_color("color", color)
 	json_export_var_bool("hide", hide)
 	json_export_var_bool("lock", lock)
 	json_export_var("depth", depth)
 	
 	if (type = "bodypart")
+	{
 		json_export_var("model_part_name", model_part_name)
+		json_export_var_save_id("part_of", part_of)
+	}
 	
 	if (part_list != null)
 	{

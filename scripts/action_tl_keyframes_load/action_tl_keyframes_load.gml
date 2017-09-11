@@ -1,7 +1,6 @@
 /// action_tl_keyframes_load(filename)
 /// @arg filename
-/// TODO
-/*
+
 if (history_undo)
 {
 	tl_keyframes_remove()
@@ -19,11 +18,12 @@ if (history_undo)
 else
 {
 	var fn, insertpos, hobj, tladd;
+	hobj = null
 	
 	if (history_redo)
 	{
 		fn = history_data.filename
-		insertpos = history_data.insertpos
+		insertpos = history_data.insert_pos
 		
 		if (!file_exists_lib(fn))
 			return 0
@@ -46,7 +46,7 @@ else
 		with (hobj)
 		{
 			filename = fn
-			id.insertpos = insertpos
+			id.insert_pos = insertpos
 			history_save_tl_select()
 		}
 	}
@@ -55,15 +55,13 @@ else
 	tl_deselect_all()
 		
 	// Read file
-	action_tl_keyframes_load_read(fn, tladd, insertpos, null)
-	
-	// Update
+	action_tl_keyframes_load_file(fn, tladd, insertpos, null)
 	project_load_update()
+	
+	with (hobj)
+		history_save_loaded()
 		
-	if (!history_redo)
-		with (hobj)
-			history_save_loaded()
+	project_reset_loaded()
 }
 
 app_update_tl_edit()
-*/

@@ -2,9 +2,9 @@
 
 json_export_object_start("project")
 
-	json_export_var("name", json_string_escape(project_name))
-	json_export_var("author", json_string_escape(project_author))
-	json_export_var("description", json_string_escape(project_description))
+	json_export_var("name", json_string_encode(project_name))
+	json_export_var("author", json_string_encode(project_author))
+	json_export_var("description", json_string_encode(project_description))
 	json_export_var("video_width", project_video_width)
 	json_export_var("video_height", project_video_height)
 	json_export_var_bool("video_keep_aspect_ratio", project_video_keep_aspect_ratio)

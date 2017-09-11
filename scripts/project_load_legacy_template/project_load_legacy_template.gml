@@ -7,8 +7,8 @@ with (new(obj_template))
 	if (temp_creator = app)
 		sortlist_add(app.lib_list, id)
 		
-	save_id = buffer_read_int()
-	save_id_map[?save_id] = save_id
+	load_id = buffer_read_int()
+	save_id_map[?load_id] = load_id
 	
 	type = buffer_read_string_int()
 	name = buffer_read_string_int()
@@ -36,11 +36,11 @@ with (new(obj_template))
 		log("Could not convert model ", legacy_model_name)
 	
 	// Find new model part name
-	var modelpartlist = legacy_model_part_map[?legacy_model_name];
+	var modelpartlist = legacy_model_part_map[?model_name];
 	if (!is_undefined(modelpartlist))
 		model_part_name = modelpartlist[|legacy_bodypart_id]
 	else
-		log("Could not convert model part of ", legacy_model_name, legacy_bodypart_id)
+		log("Could not convert model part of ", model_name, legacy_bodypart_id)
 		
 	item_tex = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)

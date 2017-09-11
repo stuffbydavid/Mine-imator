@@ -37,8 +37,10 @@ with (temp)
 	// Restore particle types
 	if (type = "particles")
 	{
+		pc_type_list = ds_list_create()
+		
 		for (var p = 0; p < save.pc_type_amount; p++)
-			history_restore_ptype(save.pc_type_save_obj[|p], id)
+			history_restore_ptype(save.pc_type_save_obj[p], id)
 			
 		temp_particles_restart()
 	}

@@ -48,11 +48,11 @@ for (var p = 0; p < pc_type_amount; p++)
 		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 		{
-			save_id = project_load_legacy_save_id()
-			save_id_map[?save_id] = save_id
+			load_id = project_load_legacy_save_id()
+			save_id_map[?load_id] = load_id
 		} 
 		else
-			save_id = save_id_create()
+			load_id = save_id_create()
 		
 		name = buffer_read_string_int()
 		temp = project_load_legacy_save_id()

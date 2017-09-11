@@ -436,7 +436,7 @@ if (window_focus = string(tbx))
 			if (tbx.replace_char != "")
 				inserttext = string_repeat(tbx.replace_char, string_length(inserttext))
 			
-			// Apparently, string_insert doesn't support ??, ??, ??, ??, ??, ?? etc.
+			// Apparently, string_insert doesn't support special ASCII
 			tbx.line[textbox_select_startline] = string_copy(tbx.line[textbox_select_startline], 1, textbox_select_mousepos) + inserttext + string_delete(tbx.line[textbox_select_startline], 1, textbox_select_mousepos)
 			textbox_select_mousepos += string_length(inserttext)
 		}

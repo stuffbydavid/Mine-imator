@@ -24,7 +24,8 @@ if (temp)
 	{
 		case "char":
 		case "spblock":
-			matrix_offset = point3D(0, 0, -(temp.model_file.bounds_end[Z] - temp.model_file.bounds_start[Z]) / 2)
+			if (temp.model_file != null)
+				matrix_offset = point3D(0, 0, -(temp.model_file.bounds_parts_end[Z] - temp.model_file.bounds_parts_start[Z]) / 2)
 			break
 		
 		case "scenery":

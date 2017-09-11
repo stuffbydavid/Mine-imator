@@ -23,6 +23,12 @@ background_ground_legacy_name = legacy_block_100_texture_list[|buffer_read_int()
 var newslot = ds_list_find_index(mc_assets.block_texture_list, background_ground_legacy_name)
 if (newslot >= 0)
 	background_ground_slot = newslot
+else // Animated?
+{
+	newslot = ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_legacy_name)
+	if (newslot >= 0)
+		background_ground_slot = ds_list_size(mc_assets.block_texture_list) + newslot
+}
 background_ground_tex.count--
 background_ground_tex = project_load_legacy_save_id()
 background_biome = biome_list[|buffer_read_byte()]

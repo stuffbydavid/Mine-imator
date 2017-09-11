@@ -1,3 +1,3 @@
 /// action_toolbar_import_asset()
 
-asset_open()
+asset_load()

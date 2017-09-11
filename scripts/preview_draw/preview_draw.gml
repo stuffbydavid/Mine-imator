@@ -246,7 +246,8 @@ with (preview)
 						break
 						
 					case "schematic":
-						render_world_block(select.block_vbuffer, select.scenery_size, res_def)
+						if (scenery != null)
+							render_world_block(scenery.block_vbuffer, scenery.scenery_size, res_def)
 						break
 					
 					case "item":

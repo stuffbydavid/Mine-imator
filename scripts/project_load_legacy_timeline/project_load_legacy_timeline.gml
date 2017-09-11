@@ -4,8 +4,8 @@ with (new(obj_timeline))
 {
 	loaded = true
 
-	save_id = buffer_read_int()
-	save_id_map[?save_id] = save_id
+	load_id = buffer_read_int()
+	save_id_map[?load_id] = load_id
 	
 	type = buffer_read_string_int()
 	name = buffer_read_string_int()
@@ -28,7 +28,7 @@ with (new(obj_timeline))
 		var findtemp;
 		with (obj_template)
 		{
-			if (loaded && save_id = other.temp)
+			if (loaded && load_id = other.temp)
 			{
 				temp_update_model_state_map()
 				temp_update_model()
@@ -38,7 +38,7 @@ with (new(obj_timeline))
 		}
 		
 		// Find name from ID
-		var modelpartlist = legacy_model_part_map[?findtemp.legacy_model_name];
+		var modelpartlist = legacy_model_part_map[?findtemp.model_name];
 		if (!is_undefined(modelpartlist))
 		{
 			model_part_name = modelpartlist[|legacy_bodypart_id]
@@ -62,7 +62,7 @@ with (new(obj_timeline))
 			log("Could not find model part list for", findtemp.legacy_model_name)
 	}
 	
-	project_load_legacy_save_id() // part_of
+	part_of = project_load_legacy_save_id()
 	
 	if (type = "char" || type = "spblock")
 		part_list = ds_list_create()

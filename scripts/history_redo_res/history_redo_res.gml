@@ -4,7 +4,7 @@ var res;
 
 if (history_data.filename != "" && !history_data.replaced)
 {
-	res = new_res(history_data.type, history_data.filename)
+	res = new_res(history_data.filename, history_data.type)
 	res.save_id = history_data.new_res_save_id
 	
 	if (history_data.type = "skin")

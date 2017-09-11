@@ -68,11 +68,6 @@ if (!cam)
 		cam_work_focus[Z] += zd * spdm
 	}
 	
-	// Roll
-	cam_work_roll += (keyboard_check(setting_key_roll_forward) - keyboard_check(setting_key_roll_back)) * 4*spdm
-	if (keyboard_check_pressed(setting_key_roll_reset))
-		cam_work_roll = 0
-	
 	// Reset
 	if (keyboard_check_pressed(setting_key_reset))
 		cam_work_reset()

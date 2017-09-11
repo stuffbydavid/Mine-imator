@@ -1,35 +1,37 @@
 /// particles_open(filename, template)
 /// @arg filename
 /// @arg template
-/// @desc Opens .particles into the given template.
-/* TODO
+/// @desc Loads a particle spawner file into the given template.
+
 var fn, temp, hobj;
 hobj = null
 
 if (history_undo)
 {
-	temp = iid_find(history_data.temp)
+	temp = save_id_find(history_data.temp_save_id)
 	with (temp)
 		temp_particles_type_clear()
+		
 	with (history_data)
 	{
 		history_destroy_loaded()
 		temp_particles_copy(temp)
 	}
+	
 	with (temp)
 	{
-		pc_types = 0
-		for (var t = 0; t < history_data.pc_types; t++)
-			history_restore_ptype(history_data.pc_type[t], id)
+		for (var t = 0; t < history_data.pc_type_amount; t++)
+			history_restore_ptype(history_data.pc_type_save_obj[t], id)
 		temp_particles_restart()
 	}
+	
 	tab_template_editor_update_ptype_list()
 	return 0
 }
 else if (history_redo)
 {
 	fn = history_data.filename
-	temp = iid_find(history_data.temp)
+	temp = save_id_find(history_data.temp_save_id)
 }
 else
 {
@@ -42,9 +44,9 @@ if (filename_ext(fn) = ".zip") // Unzip
 	var name = filename_new_ext(filename_name(fn), "");
 	unzip(fn)
 	
-	fn = file_find_single(unzip_directory, ".particles")
-	if (!file_exists_lib(fn))
-		fn = file_find_single(unzip_directory + name + "\\", ".particles")
+	fn = file_find_single(unzip_directory, ".miparts;*.particles")
+	if (!file_exists_lib(fn)) // Look in a subfolder with the same name as archive
+		fn = file_find_single(unzip_directory + name + "\\", ".miparts;*.particles")
 	
 	if (!file_exists_lib(fn))
 	{
@@ -59,62 +61,82 @@ if (!file_exists_lib(fn))
 if (!history_redo && temp != bench_settings)
 {
 	hobj = history_set(particles_open)
+	
 	with (hobj)
 	{
 		filename = fn
-		id.temp = iid_get(temp)
+		id.temp_save_id = save_id_get(temp)
 	}
+	
 	with (temp)
 	{
 		temp_particles_copy(hobj)
-		for (var t = 0; t < pc_types; t++)
-			hobj.pc_type[t] = history_save_ptype(pc_type[t])
+		hobj.pc_type_amount = ds_list_size(pc_type_list)
+		for (var t = 0; t < hobj.pc_type_amount; t++)
+			hobj.pc_type_save_obj[t] = history_save_ptype(pc_type_list[|t])
 	}
 }
 
-log("Opening particles", fn)
+// Post 1.1.0 (JSON)
+var rootmap, legacy;
+if (string_contains(filename_ext(fn), ".miparts"))
+{
+	log("Opening particles", fn)
+	rootmap = project_load_start(fn)
+	if (rootmap = null)
+		return 0
+		
+	legacy = false
+}
 
-buffer_current = buffer_load_lib(fn)
+// Pre 1.1.0 (buffer)
+else
+{
+	log("Opening legacy particles", fn)
+	if (!project_load_legacy_start(fn))
+		return 0
+		
+	legacy = true
+}
+
+project_reset_loaded()
+
 save_folder = project_folder
 load_folder = filename_dir(fn)
-load_format = buffer_read_byte()
-
 log("save_folder", save_folder)
 log("load_folder", load_folder)
-log("load_format", load_format)
 
-if (load_format > project_format)
+if (!legacy)
 {
-	log("Too new")
-	error("erroropenparticlesnewer")
-	buffer_delete(buffer_current)
-	return 0
+	with (temp)
+	{
+		temp_particles_type_clear()
+		project_load_particles(rootmap[?"particles"])
+		temp_particles_restart()
+	}
+	project_load_objects(rootmap)
 }
-else if (load_format < project_05) // Too old
-{ 
-	log("Too old")
-	error("errorfilecorrupted")
-	buffer_delete(buffer_current)
-	return 0
-}
-
-project_read_start()
-with (temp)
+else
 {
-	temp_particles_type_clear()
-	project_read_particles()
-	temp_particles_restart()
+	with (temp)
+	{
+		temp_particles_type_clear()
+		project_load_legacy_particles()
+		temp_particles_restart()
+	}
+	project_load_legacy_objects()
 }
-project_read_objects()
-project_read_get_iids(true)
 
+// Update program
+project_load_find_save_ids()
+project_load_update()
+
+// Mark for undo
 with (hobj)
 	history_save_loaded()
 
-project_read_update()
+project_reset_loaded()
 
-buffer_delete(buffer_current)
 tab_template_editor_update_ptype_list()
 
 log("Particles loaded")
-*/

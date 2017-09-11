@@ -13,14 +13,16 @@ load_folder = app.project_folder
 
 with (res)
 {
+	save_id = save.save_id
+	
 	res_load()
 	
 	for (var s = 0; s < save.usage_skin_amount; s++)
 	{
 		with (save_id_find(save.usage_skin_save_id[s]))
 		{
-			char_skin.count--
-			char_skin = res
+			skin.count--
+			skin = res
 		}
 	}
 			
@@ -133,7 +135,7 @@ with (res)
 	count += save.usage_background_sky_sun_tex
 	count += save.usage_background_sky_moon_tex
 	count += save.usage_background_sky_clouds_tex
-	count += save.usage_background_ground
+	count += save.usage_background_ground_tex
 }
 
 sortlist_add(app.res_list, res)

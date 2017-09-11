@@ -12,15 +12,15 @@ with (new(obj_resource))
 	
 	sortlist_add(app.res_list, id)
 	
-	save_id = json_read_string(map[?"id"], save_id)
-	save_id_map[?save_id] = save_id
+	load_id = json_read_string(map[?"id"], save_id)
+	save_id_map[?load_id] = load_id
 	
 	type = json_read_string(map[?"type"], type)
 	filename = json_read_string(map[?"filename"], filename)
 	
 	if (type = "skin" || type = "downloadskin")
-		player_skin = json_read_real("player_skin", player_skin)
+		player_skin = json_read_real(map[?"player_skin"], player_skin)
 	
 	if (type = "itemsheet")
-		item_sheet_size = json_read_array("item_sheet_size", item_sheet_size)
+		item_sheet_size = json_read_array(map[?"item_sheet_size"], item_sheet_size)
 }

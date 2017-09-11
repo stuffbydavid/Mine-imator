@@ -4,7 +4,7 @@ json_export_object_start()
 
 	json_export_var("id", save_id)
 	json_export_var("type", type)
-	json_export_var("filename", filename)
+	json_export_var("filename", json_string_encode(filename))
 	
 	if (type = "skin" || type = "downloadskin")
 		json_export_var_bool("player_skin", player_skin)

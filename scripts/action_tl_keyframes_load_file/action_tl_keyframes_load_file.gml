@@ -1,0 +1,169 @@
+/// action_tl_keyframes_load_file(filename, timeline, insertposition, maxlength)
+/// @arg filename
+/// @arg timeline
+/// @arg insertposition
+/// @arg maxlength
+
+var fn, tl, insertpos, maxlen;
+fn = argument0
+tl = argument1
+insertpos = argument2
+maxlen = argument3
+
+// Post 1.1.0 (JSON)
+var rootmap, legacy;
+if (string_contains(filename_ext(fn), ".miframes"))
+{
+	log("Opening keyframes", fn)
+	rootmap = project_load_start(fn)
+	if (rootmap = null)
+		return false
+	
+	legacy = false
+}
+
+// Pre 1.1.0 (buffer)
+else
+{
+	log("Opening legacy keyframes", fn)
+	if (!project_load_legacy_start(fn))
+		return false
+		
+	legacy = true
+}
+	
+project_reset_loaded()
+
+save_folder = project_folder
+load_folder = filename_dir(fn)
+
+// Get info
+var ismodel, tempo, temposcale, num, len, kflist, dummy;
+
+if (!legacy)
+{
+	ismodel = json_read_real(rootmap[?"is_model"], false)
+	tempo = json_read_real(rootmap[?"tempo"], project_tempo)
+	temposcale = (project_tempo / tempo)
+	kflist = rootmap[?"keyframes"]
+	if (ds_exists(kflist, ds_type_list))
+		num = ds_list_size(kflist)
+	else
+		num = 0
+	
+	len = json_read_real(rootmap[?"length"], 0)
+}
+else
+{
+	ismodel = buffer_read_byte()
+	tempo = buffer_read_byte()
+	temposcale = (project_tempo / tempo)
+	num = buffer_read_int()
+	len = buffer_read_int()
+	dummy = new(obj_dummy) // Create dummy for storing keyframe value types
+}
+
+len = max(1, round(temposcale * len))
+
+if (ismodel && tl.part_of != null)
+	tl = tl.part_of
+	
+// Read keyframes
+for (var k = 0; k < num; k++)
+{
+	var pos, partname, kfcurmap, tladd;
+	partname = ""
+	tladd = tl
+	
+	if (!legacy)
+	{
+		kfcurmap = kflist[|k]
+		pos = round(temposcale * json_read_real(kfcurmap[?"position"], 0))
+		
+		// Add to a body part?
+		if (!is_undefined(kfcurmap[?"part_name"]))
+			partname = kfcurmap[?"part_name"]
+	}
+	else
+	{
+		pos = round(temposcale * buffer_read_int())
+		var bp = buffer_read_int();
+		with (dummy)
+			project_load_legacy_value_types()
+			
+		// Add to a body part?
+		if (bp != null)
+		{
+			// Convert legacy bodypart ID to name and find part's timeline
+			var modelpartlist = legacy_model_part_map[?tl.temp.model_name];
+			if (!is_undefined(modelpartlist) && bp < ds_list_size(modelpartlist))
+				partname = modelpartlist[|bp]
+			else
+				tladd = null // Throw away if not found
+		}
+	}
+	
+	// Find part's timeline
+	if (ismodel && partname != "")
+	{
+		tladd = null
+		for (var p = 0; p < ds_list_size(tl.part_list); p++)
+		{
+			if (tl.part_list[|p].model_part_name = partname)
+			{
+				tladd = tl.part_list[|p]
+				break
+			}
+		}
+	}
+	
+	// Off limits
+	if (maxlen != null && pos > maxlen - tempo * 0.2)
+		tladd = null
+	
+	// Create
+	if (tladd != null)
+	{
+		var newkf = new(obj_keyframe);
+		with (newkf)
+		{
+			loaded = true
+			selected = false
+			for (var v = 0; v < e_value.amount; v++)
+				value[v] = tladd.value_default[v]
+				
+			if (!legacy)
+				project_load_values(kfcurmap[?"values"], value)
+			else
+				project_load_legacy_values(dummy)
+		}
+		
+		with (tladd)
+			tl_keyframe_add(insertpos + pos, newkf)
+			
+		tl_keyframe_select(newkf)
+	}
+	
+	// Throw away
+	else if (legacy)
+		with (dummy)
+			project_load_legacy_values(id)
+}
+
+// Load asociated objects (texture or particle attractor references)
+if (!legacy)
+	project_load_objects(rootmap)
+else
+{
+	project_load_legacy_objects()
+	with (dummy)
+		instance_destroy()
+	buffer_delete(buffer_current)
+}
+	
+// Update
+project_load_find_save_ids()
+
+log("Loaded " + string(num) + " keyframes")
+
+return insertpos + len

@@ -4,9 +4,10 @@ if (history_undo)
 {
 	with (history_data)
 	{
+		var newindex = array_copy_1d(kf_move_new_index); // Create copy that can be altered
 		for (var k = 0; k < kf_move_amount; k++) // Move back keyframes
 		{
-			with (save_id_find(kf_move_tl_save_id[k]).keyframe_list[|kf_move_new_index[k]])
+			with (save_id_find(kf_move_tl_save_id[k]).keyframe_list[|newindex[k]])
 			{
 				new_position = other.kf_move_old_pos[k]
 				if (position = new_position)
@@ -16,8 +17,8 @@ if (history_undo)
 				ds_list_delete_value(timeline.keyframe_list, id)
 				
 				for (var a = 0; a < other.kf_move_amount; a++)  // Push down other indices of same timeline
-					if (save_id_find(other.kf_move_tl_save_id[a]) = timeline && other.kf_move_new_index[a] > index)
-						other.kf_move_new_index[a]--
+					if (save_id_find(other.kf_move_tl_save_id[a]) = timeline && newindex[a] > index)
+						newindex[a]--
 			}
 		}
 	}
@@ -26,9 +27,10 @@ else if (history_redo)
 {
 	with (history_data)
 	{
+		var oldindex = array_copy_1d(kf_move_old_index); // Create copy that can be altered
 		for (var k = 0; k < kf_move_amount; k++) // Move forward keyframes
 		{
-			with (save_id_find(kf_move_tl_save_id[k]).keyframe_list[|kf_move_old_index[k]])
+			with (save_id_find(kf_move_tl_save_id[k]).keyframe_list[|oldindex[k]])
 			{
 				new_position = other.kf_move_new_pos[k]
 				if (position = new_position)
@@ -38,8 +40,8 @@ else if (history_redo)
 				ds_list_delete_value(timeline.keyframe_list, id)
 				
 				for (var a = 0; a < other.kf_move_amount; a++) // Push down other indices of same timeline
-					if (save_id_find(other.kf_move_tl_save_id[a]) = timeline && other.kf_move_old_index[a] > index)
-						other.kf_move_old_index[a]--
+					if (save_id_find(other.kf_move_tl_save_id[a]) = timeline && oldindex[a] > index)
+						oldindex[a]--
 			}
 		}
 	}

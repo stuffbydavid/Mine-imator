@@ -4,7 +4,6 @@
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_unzip_assets		false
-#macro texture_lib					true
 
 // Versions
 #macro mineimator_version			"1.1.0"
@@ -73,6 +72,7 @@
 #macro block_sheet_ani_frames	64
 #macro item_sheet_width			32
 #macro item_sheet_height		16
+#macro texture_lib				true
 
 // Colors
 #macro c_main					make_color_rgb(200, 200, 200)

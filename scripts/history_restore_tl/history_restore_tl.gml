@@ -19,7 +19,7 @@ with (tl)
 	
 	// Restore values
 	for (var v = 0; v < e_value.amount; v++)
-		value_default[v] = save.value_default[v]
+		value_default[v] = tl_value_find_save_id(v, null, save.value_default[v])
 	
 	// Restore keyframes
 	for (var k = 0; k < save.kf_amount; k++)

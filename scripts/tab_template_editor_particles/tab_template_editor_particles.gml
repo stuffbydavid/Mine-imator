@@ -466,24 +466,24 @@ if (ptype_edit.temp)
 		action_lib_pc_type_rot_extend(!ptype_edit.rot_extend)
 	tab_next()
 	
-	tab.tbx_type_xrot_spd.suffix = "??" + test(ptype_edit.rot_spd_israndom[X], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_xrot_spd_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_yrot_spd.suffix = "??" + test(ptype_edit.rot_spd_israndom[sn], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_yrot_spd_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_zrot_spd.suffix = "??" + test(ptype_edit.rot_spd_israndom[ud], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_zrot_spd_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_xrot_spd_add.suffix = "??" + test(ptype_edit.rot_spd_add_israndom[X], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_xrot_spd_add_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_yrot_spd_add.suffix = "??" + test(ptype_edit.rot_spd_add_israndom[sn], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_yrot_spd_add_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_zrot_spd_add.suffix = "??" + test(ptype_edit.rot_spd_add_israndom[ud], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_zrot_spd_add_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_xrot_spd_mul.suffix = "??" + test(ptype_edit.rot_spd_mul_israndom[X], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_xrot_spd_mul_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_yrot_spd_mul.suffix = "??" + test(ptype_edit.rot_spd_mul_israndom[sn], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_yrot_spd_mul_random.suffix = "??" + text_get("particleeditorpersecond")
-	tab.tbx_type_zrot_spd_mul.suffix = "??" + test(ptype_edit.rot_spd_mul_israndom[ud], "", text_get("particleeditorpersecond"))
-	tab.tbx_type_zrot_spd_mul_random.suffix = "??" + text_get("particleeditorpersecond")
+	tab.tbx_type_xrot_spd.suffix = "°" + test(ptype_edit.rot_spd_israndom[X], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_xrot_spd_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_yrot_spd.suffix = "°" + test(ptype_edit.rot_spd_israndom[sn], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_yrot_spd_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_zrot_spd.suffix = "°" + test(ptype_edit.rot_spd_israndom[ud], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_zrot_spd_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_xrot_spd_add.suffix = "°" + test(ptype_edit.rot_spd_add_israndom[X], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_xrot_spd_add_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_yrot_spd_add.suffix = "°" + test(ptype_edit.rot_spd_add_israndom[sn], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_yrot_spd_add_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_zrot_spd_add.suffix = "°" + test(ptype_edit.rot_spd_add_israndom[ud], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_zrot_spd_add_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_xrot_spd_mul.suffix = "°" + test(ptype_edit.rot_spd_mul_israndom[X], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_xrot_spd_mul_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_yrot_spd_mul.suffix = "°" + test(ptype_edit.rot_spd_mul_israndom[sn], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_yrot_spd_mul_random.suffix = "°" + text_get("particleeditorpersecond")
+	tab.tbx_type_zrot_spd_mul.suffix = "°" + test(ptype_edit.rot_spd_mul_israndom[ud], "", text_get("particleeditorpersecond"))
+	tab.tbx_type_zrot_spd_mul_random.suffix = "°" + text_get("particleeditorpersecond")
 	
 	axis_edit = X
 	tab_template_editor_particles_value("particleeditortyperotation" + test(ptype_edit.rot_extend, "x", "xyz"), 
@@ -553,7 +553,7 @@ if (ptype_edit.temp)
 
 	// Rotation speed add
 	axis_edit = X
-	tab_template_editor_particles_value("particleeditortype" + test(ptype_edit.rot_spd_extend, "x", "xyz") + "rotationspeedadd", 
+	tab_template_editor_particles_value("particleeditortyperotationspeed" + test(ptype_edit.rot_spd_extend, "x", "xyz") + "add", 
 		ptype_edit.rot_spd_add[X], ptype_edit.rot_spd_add_israndom[X], ptype_edit.rot_spd_add_random_min[X], ptype_edit.rot_spd_add_random_max[X], 
 		1 / 10, -no_limit, no_limit, array(0, -10, 10), 0, 
 		array(tab.tbx_type_xrot_spd_add, tab.tbx_type_xrot_spd_add_random), 

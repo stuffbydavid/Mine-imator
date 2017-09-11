@@ -82,6 +82,7 @@ cam_surf = null
 cam_surf_tmp = null
 cam_goalzoom = null
 
+matrix = 0
 update_matrix = true
 bend_vbuffer_list = null
 bend_angle_last = 0

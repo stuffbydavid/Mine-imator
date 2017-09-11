@@ -6,8 +6,8 @@ with (new(obj_resource))
 	
 	sortlist_add(app.res_list, id)
 	
-	save_id = buffer_read_int()
-	save_id_map[?save_id] = save_id
+	load_id = buffer_read_int()
+	save_id_map[?load_id] = load_id
 	
 	type = buffer_read_string_int()
 	
@@ -34,6 +34,10 @@ with (new(obj_resource))
 	if (load_format >= e_project.FORMAT_100_DEMO_4 && (type = "pack" || type = "legacyblocksheet"))
 	    repeat (32 * 16)
 			buffer_read_byte() // block_ani
+			
+	// Define sheet size
+	if (type = "itemsheet")
+		item_sheet_size = vec2(16, 16)
 			
 	// No support for old packs
 	if (type = "pack")

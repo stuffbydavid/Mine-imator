@@ -48,12 +48,15 @@ if (!file_exists_lib(fn))
 	return 0
 
 // Post 1.1.0 (JSON)
+var rootmap, legacy;
 if (string_contains(filename_ext(fn), ".miproj"))
 {
 	log("Opening project", fn)
-	var rootmap = project_load_start(fn);
+	rootmap = project_load_start(fn)
 	if (rootmap = null)
 		return 0
+		
+	legacy = false
 }
 
 // Pre 1.1.0 (buffer)
@@ -64,6 +67,7 @@ else
 		return 0
 		
 	buf = buffer_current
+	legacy = true
 }
 
 project_reset()
@@ -78,14 +82,12 @@ load_folder = filename_dir(fn)
 log("save_folder", save_folder)
 log("load_folder", load_folder)
 
-if (load_format >= e_project.FORMAT_110)
+if (!legacy)
 {
 	project_load_project(rootmap[?"project"])
 	project_load_background(rootmap[?"background"])
 	project_load_objects(rootmap)
 }
-
-// Legacy
 else
 {
 	buffer_current = buf

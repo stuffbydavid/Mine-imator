@@ -16,6 +16,10 @@
 			"file": "zombie.mimodel"
 		},
 		{
+			"name": "skeleton",
+			"file": "skeleton.mimodel"
+		},
+		{
 			"name": "creeper",
 			"file": "creeper.mimodel"
 		},

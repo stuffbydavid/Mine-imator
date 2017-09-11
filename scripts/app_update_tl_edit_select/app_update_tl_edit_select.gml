@@ -52,7 +52,7 @@ with (obj_timeline)
 	if (part_of = null)
 		app.timeline_settings = true
 		
-	if (keyframe_select)
+	if (keyframe_select != null)
 	{
 		// Show walk setting?
 		if (checkwalk)
@@ -76,7 +76,7 @@ with (obj_timeline)
 		if (checkexport)
 		{
 			var obj = test(part_of != null, part_of, id);
-			if (!checkexportobj)
+			if (checkexportobj = null)
 			{
 				checkexportobj = obj
 				app.timeline_settings_keyframes_export = true

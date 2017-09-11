@@ -2,6 +2,9 @@
 
 var saveid = buffer_read_int();
 
+if (saveid < 0) // None
+	return null
+
 if (saveid = 0) // Tree root
 	return "root"
 	

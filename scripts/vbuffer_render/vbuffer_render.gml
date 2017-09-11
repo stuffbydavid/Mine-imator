@@ -24,7 +24,7 @@ else
 	
 if (argument_count > 1)
 {
-	var mat = matrix_get(matrix_world);
+	mat = matrix_get(matrix_world)
 	matrix_set(matrix_world, matrix_create(pos, rot, sca))
 }
 

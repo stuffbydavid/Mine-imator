@@ -11,7 +11,7 @@ tl_keyframes_deselect_all()
 tllast = null
 for (var k = 0; k < copy_kf_amount; k++) // All keyframes belong to same timeline?
 {
-	if (tllast && copy_kf_tl_save_id[k] != tllast)
+	if (tllast != null && copy_kf_tl_save_id[k] != tllast)
 	{
 		pastemode = "fixed"
 		break
@@ -21,12 +21,12 @@ for (var k = 0; k < copy_kf_amount; k++) // All keyframes belong to same timelin
 
 if (pastemode = "fixed")
 {
-	// All keyframes belong to same character?
-	pastemode = "char"
+	// All keyframes belong to same model?
+	pastemode = "model"
 	tllast = null
 	for (var k = 0; k < copy_kf_amount; k++)
 	{
-		if (tllast && copy_kf_tl_part_of_save_id[k] != tllast)
+		if (tllast != null && copy_kf_tl_part_of_save_id[k] != tllast)
 		{
 			pastemode = "fixed"
 			break
@@ -42,7 +42,7 @@ if (pastemode = "free")
 }
 
 // Find character to paste into (first selected found)
-else if (pastemode = "char")
+else if (pastemode = "model")
 {
 	pastemode = "fixed"
 	with (obj_timeline)
@@ -53,14 +53,14 @@ else if (pastemode = "char")
 		if (part_of != null)
 		{
 			tlpaste = part_of
-			pastemode = "char"
+			pastemode = "model"
 			break
 		}
 		
-		if (part_amount > 0)
+		if (part_list != null)
 		{
 			tlpaste = id
-			pastemode = "char"
+			pastemode = "model"
 			break
 		}
 	}
@@ -69,14 +69,14 @@ else if (pastemode = "char")
 // Insert
 for (var k = 0; k < copy_kf_amount; k++)
 {
-	var newkf, tladd;
+	var tladd;
 		
 	if (pastemode = "fixed")
 		tladd = save_id_find(copy_kf_tl_part_of_save_id[k])
 	else
 		tladd = tlpaste
 		
-	if (!tladd)
+	if (tladd = null)
 		continue
 	
 	if (pastemode != "free" && copy_kf_tl_model_part_name[k] != "") // Add to body part
@@ -87,7 +87,7 @@ for (var k = 0; k < copy_kf_amount; k++)
 		{
 			if (tladd.part_list[|p].model_part_name = copy_kf_tl_model_part_name[k])
 			{
-				tladd = part_list[|p]
+				tladd = tladd.part_list[|p]
 				foundpart = true
 				break
 			}
@@ -96,6 +96,8 @@ for (var k = 0; k < copy_kf_amount; k++)
 		if (!foundpart)
 			continue
 	}
+	
+	var newkf;
 	
 	with (tladd)
 		newkf = tl_keyframe_add(pos + app.copy_kf_pos[k])

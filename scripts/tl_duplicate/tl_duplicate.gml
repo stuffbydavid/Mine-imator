@@ -38,6 +38,7 @@ with (copy)
 	// Copy body part references
 	if (other.part_list != null)
 	{
+		part_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(other.part_list); p++)
 		{
 			part_list[|p] = other.part_list[|p].copy

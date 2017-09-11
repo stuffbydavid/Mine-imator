@@ -5,8 +5,6 @@ if (history_undo)
 		res_edit = history_restore_res(save_res)
 else
 {
-	var index;
-	
 	if (!history_redo)
 		with (history_set(action_res_remove))
 			save_res = history_save_res(res_edit)

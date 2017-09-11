@@ -21,12 +21,13 @@ if (menu_block_current != null)
 			
 switch (menu_name)
 {
+	// Skin
 	case "benchskin":
 	case "benchspblocktex":
-	case "benchbodypartskin": // Skin (bench)
+	case "benchbodypartskin":
 	case "libraryskin":
 	case "libraryspblocktex":
-	case "librarybodypartskin": // Skin (library)
+	case "librarybodypartskin":
 	{
 		var modelfile, texnamemap;
 		if (string_contains(menu_name, "bench"))
@@ -44,8 +45,8 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Download from user
-		if (modelfile.player_skin)
-			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("librarycharskindownload"), null, icons.DOWNLOAD_SKIN)
+		if (modelfile != null && modelfile.player_skin)
+			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
 		
 		// Default
 		var tex;
@@ -69,8 +70,9 @@ switch (menu_name)
 		break
 	}
 	
+	// Terrain
 	case "benchscenery":
-	case "libraryscenery": // Terrain
+	case "libraryscenery":
 	{
 		// None
 		menu_add_item(null, text_get("listnone"))
@@ -92,8 +94,9 @@ switch (menu_name)
 		break
 	}
 	
+	// Block texture
 	case "benchblocktex":
-	case "libraryblocktex": // Block texture
+	case "libraryblocktex":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -112,8 +115,9 @@ switch (menu_name)
 		break
 	}
 	
+	// Item texture
 	case "benchitemtex":
-	case "libraryitemtex": // Item texture
+	case "libraryitemtex":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -133,31 +137,37 @@ switch (menu_name)
 			else if (res.item_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
+		
 		break
 	}
 	
-	case "benchbodypart": // Body part
+	// Body part
+	case "benchbodypart":
 	{
 		for (var p = 0; p < ds_list_size(bench_settings.model_file.file_part_list); p++)
 		{
 			var part = bench_settings.model_file.file_part_list[|p];
 			menu_add_item(part.name, minecraft_asset_get_name("modelpart", part.name))
 		}
+		
 		break
 	}
 		
-	case "templateeditorbodypart": // Body part
+	// Body part
+	case "templateeditorbodypart":
 	{
 		for (var p = 0; p < ds_list_size(temp_edit.model_file.file_part_list); p++)
 		{
 			var part = temp_edit.model_file.file_part_list[|p];
 			menu_add_item(part.name, minecraft_asset_get_name("modelpart", part.name))
 		}
+		
 		break
 	}
 		
+	// Text font
 	case "benchtextfont":
-	case "librarytextfont": // Text font
+	case "librarytextfont":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -172,11 +182,13 @@ switch (menu_name)
 			if (res != res_def && font_exists(res.font))
 				menu_add_item(res, res.display_name)
 		}
+		
 		break
 	}
 	
+	// Shape texture
 	case "benchshapetex":
-	case "libraryshapetex": // Shape texture
+	case "libraryshapetex":
 	{
 		// None
 		menu_add_item(null, text_get("listnone"))
@@ -200,15 +212,18 @@ switch (menu_name)
 		break
 	}
 	
-	case "particleeditorspawnregiontype": // Particle editor spawn region type
+	// Particle editor spawn region type
+	case "particleeditorspawnregiontype":
 	{
 		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), spr_icons, icons.SPHERE)
 		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), spr_icons, icons.CUBE)
 		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), spr_icons, icons.BOX)
+		
 		break
 	}
 	
-	case "particleeditortypetemp": // Particle editor type library source
+	// Particle editor type library source
+	case "particleeditortypetemp":
 	{
 		menu_add_item(null, text_get("particleeditortypesprite"))
 		
@@ -218,10 +233,12 @@ switch (menu_name)
 			if (temp.type != "particles")
 				menu_add_item(temp, temp.display_name)
 		}
+		
 		break
 	}
 	
-	case "particleeditortypespritetex": // Block texture
+	// Block texture
+	case "particleeditortypespritetex":
 	{
 		var img = ptype_edit.sprite_tex_image;
 		
@@ -238,9 +255,12 @@ switch (menu_name)
 			if (res != res_def && res.particles_texture[0])
 				menu_add_item(res, res.display_name, res.particles_texture[img])
 		}
+		
 		break
 	}
-	case "backgroundimage": // Background image
+	
+	// Background image
+	case "backgroundimage":
 	{
 		// None
 		menu_add_item(null, text_get("listnone"))
@@ -255,18 +275,22 @@ switch (menu_name)
 			if (res.texture)
 				menu_add_item(res, res.display_name, res.texture)
 		}
+		
 		break
 	}
 	
-	case "backgroundimagetype": // Background image type
+	// Background image type
+	case "backgroundimagetype":
 	{
 		menu_add_item(0, text_get("backgroundimagetypeimage"))
 		menu_add_item(1, text_get("backgroundimagetypesphere"))
 		menu_add_item(2, text_get("backgroundimagetypebox"))
+		
 		break
 	}
 	
-	case "backgroundskysuntex": // Background sky sun texture
+	// Background sky sun texture
+	case "backgroundskysuntex":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -289,7 +313,8 @@ switch (menu_name)
 		break
 	}
 	
-	case "backgroundskymoontex": // Background sky moon texture
+	// Background sky moon texture
+	case "backgroundskymoontex":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
@@ -312,14 +337,17 @@ switch (menu_name)
 		break
 	}
 	
-	case "backgroundskymoonphase": // Background sky moon phase
+	// Background sky moon phase
+	case "backgroundskymoonphase":
 	{
 		for (var p = 0; p < 8; p++)
 			menu_add_item(p, text_get("backgroundskymoonphase" + string(p + 1)), background_sky_moon_tex.moon_texture[p])
+		
 		break
 	}
 	
-	case "backgroundskycloudstex": // Background sky clouds texture
+	// Background sky clouds texture
+	case "backgroundskycloudstex":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
@@ -342,7 +370,8 @@ switch (menu_name)
 		break
 	}
 	
-	case "backgroundgroundtex": // Background ground texture
+	// Background ground texture
+	case "backgroundgroundtex":
 	{
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
@@ -357,17 +386,21 @@ switch (menu_name)
 			if (res != res_def && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
+		
 		break
 	}
 	
-	case "backgroundbiome": // Background biome
+	// Background biome
+	case "backgroundbiome":
 	{
 		for (var b = 0; b < ds_list_size(biome_list); b++)
 			menu_add_item(biome_list[|b], text_get("biome" + biome_list[|b].name))
+		
 		break
 	}
 	
-	case "resourcespackimage": // Resource pack preview image
+	// Resource pack preview image
+	case "resourcespackimage":
 	{
 		menu_add_item("preview", text_get("resourcespackpreview"))
 		menu_add_item("modeltextures", text_get("resourcespackmodeltextures"))
@@ -378,35 +411,49 @@ switch (menu_name)
 		menu_add_item("suntexture", text_get("resourcespacksuntexture"))
 		menu_add_item("moontexture", text_get("resourcespackmoontexture"))
 		menu_add_item("cloudtexture", text_get("resourcespackcloudtexture"))
+		
 		break
 	}
 	
-	case "resourcespackimagemodeltexture": // Resource pack preview skin
+	// Resource pack preview skin
+	case "resourcespackimagemodeltexture":
 	{
 		for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 			menu_add_item(mc_assets.model_texture_list[|t], mc_assets.model_texture_list[|t])
+		
 		break
 	}
 	
+	// Timeline frame skin
 	case "frameeditorchartex":
 	case "frameeditorspblocktex":
-	case "frameeditorbodyparttex": // Timeline frame skin
+	case "frameeditorbodyparttex":
 	{
-		// Default TODO
-		//menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.char_skin.display_name), tl_edit.temp.char_skin.mob_texture[tl_edit.temp.char_model.index])
+		// Default
+		var tex;
+		with (tl_edit.temp.skin)
+			tex = res_get_model_texture(model_get_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part_name))
+		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.skin.display_name), tex)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-		   // if (res != tl_edit.temp.char_skin && res.mob_texture[0])
-		   //	menu_add_item(res, res.display_name, res.mob_texture[tl_edit.temp.char_model.index])
+			if (res != tl_edit.temp.skin)
+			{
+				with (res)
+					tex = res_get_model_texture(model_get_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part_name))
+					
+				if (tex != null)
+					menu_add_item(res, res.display_name, tex)
+			}
 		}
 		
 		break
 	}
 	
-	case "frameeditorblocktex": // Timeline frame block texture
+	// Timeline frame block texture
+	case "frameeditorblocktex":
 	{
 		// Default
 		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.block_tex.display_name), tl_edit.temp.block_tex.block_preview_texture)
@@ -422,15 +469,16 @@ switch (menu_name)
 		break
 	}
 	
-	case "frameeditorshapetex": // Timeline frame shape texture
+	// Timeline frame shape texture
+	case "frameeditorshapetex":
 	{
-		if (tl_edit.temp.shape_tex)
+		if (tl_edit.temp.shape_tex != null)
 		{
 			if (tl_edit.temp.shape_tex.object_index = obj_timeline)
 				menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.shape_tex.display_name))
 			else
 				menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.shape_tex.display_name), tl_edit.temp.shape_tex.texture)
-			menu_add_item(0, text_get("listnone"))
+			menu_add_item(null, text_get("listnone"))
 		}
 		else
 			menu_add_item(null, text_get("frameeditortexturedefault", text_get("listnone")))
@@ -449,7 +497,8 @@ switch (menu_name)
 		break
 	}
 	 
-	case "frameeditorsound": // Sound
+	// Sound
+	case "frameeditorsound":
 	{
 		// Default
 		menu_add_item(null, text_get("listnone"))
@@ -465,20 +514,10 @@ switch (menu_name)
 		break
 	}
 	
-	case "settingscamerabuffersize": // Camera surface detail
-	{
-		menu_add_item(64, text_get("settingscamerabuffersize64") + " (64x64)", null, 0)
-		menu_add_item(128, text_get("settingscamerabuffersize128") + " (128x128)", null, 0)
-		menu_add_item(256, text_get("settingscamerabuffersize256") + " (256x256)", null, 0)
-		menu_add_item(512, text_get("settingscamerabuffersize512") + " (512x512)", null, 0)
-		menu_add_item(1024, text_get("settingscamerabuffersize1024") + " (1024x1024)", null, 0)
-		menu_add_item(2048, text_get("settingscamerabuffersize2048") + " (2048x2048)", null, 0)
-		break
-	}
-	
+	// Shadow map detail
 	case "settingsrendershadowssunbuffersize":
 	case "settingsrendershadowsspotbuffersize":
-	case "settingsrendershadowspointbuffersize": // Shadow map detail
+	case "settingsrendershadowspointbuffersize":
 	{
 		menu_add_item(256, text_get("settingsrendershadowsbuffersize256") + " (256x256)", null, 0)
 		menu_add_item(512, text_get("settingsrendershadowsbuffersize512") + " (512x512)", null, 0)
@@ -486,9 +525,11 @@ switch (menu_name)
 		menu_add_item(2048, text_get("settingsrendershadowsbuffersize2048") + " (2048x2048)", null, 0)
 		menu_add_item(4096, text_get("settingsrendershadowsbuffersize4096") + " (4096x4096)", null, 0)
 		menu_add_item(8192, text_get("settingsrendershadowsbuffersize8192") + " (8192x8192)", null, 0)
+		
 		break
 	}
 	
+	// Video size
 	case "projectvideosize":
 	case "exportmovievideosize":
 	case "exportimageimagesize":
@@ -502,32 +543,40 @@ switch (menu_name)
 				menu_add_item(id, name + " (" + string(width) + "x" + string(height) + ")")
 				
 		menu_add_item(0, text_get("projectvideosizecustom"))
+		
 		break
 	}
 	
+	// Export format
 	case "exportmovieformat":
 	{
 		menu_add_item("mp4", text_get("exportmovieformatmp4"))
 		menu_add_item("mov", text_get("exportmovieformatmov"))
 		menu_add_item("wmv", text_get("exportmovieformatwmv"))
 		menu_add_item("png", text_get("exportmovieformatpng"))
+		
 		break
 	}
 	
+	// Video quality
 	case "exportmovievideoquality":
 	{
 		for (var i = 0; i < videoquality_list; i++)
 			with (videoquality_list[|i])
 				menu_add_item(id, text_get("exportmovievideoquality" + name))
+			
 		menu_add_item(0, text_get("exportmovievideoqualitycustom"))
+		
 		break
 	}
 	
+	// Video framerate
 	case "exportmovieframerate":
 	{
 		menu_add_item(24, "24")
 		menu_add_item(30, "30")
 		menu_add_item(60, "60")
+		
 		break
 	}
 }

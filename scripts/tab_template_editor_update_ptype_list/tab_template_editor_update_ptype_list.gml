@@ -1,9 +1,6 @@
 /// tab_template_editor_update_ptype_list()
 
-if (!temp_edit)
-	return 0
-	
-if (temp_edit.type != "particles")
+if (temp_edit = null || temp_edit.type != "particles")
 	return 0
 	
 sortlist_clear(ptype_list)

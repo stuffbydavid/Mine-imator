@@ -380,7 +380,7 @@ if (setting_render_aa)
 	surface_reset_target()
 }
 
-// 2D overlay (camera colors / watermark)
+// 2D overlay (camera colors/watermark)
 if (render_overlay)
 {
 	render_target = surface_require(render_target, render_width, render_height)

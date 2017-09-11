@@ -13,8 +13,8 @@ with (new(obj_template))
 	if (temp_creator = app)
 		sortlist_add(app.lib_list, id)
 	
-	save_id = json_read_string(map[?"id"], save_id)
-	save_id_map[?save_id] = save_id
+	load_id = json_read_string(map[?"id"], save_id)
+	save_id_map[?load_id] = load_id
 	
 	type = json_read_string(map[?"type"], type)
 	name = json_read_string(map[?"name"], name)
@@ -28,7 +28,7 @@ with (new(obj_template))
 			model_name = json_read_string(modelmap[?"name"], model_name)
 			model_state = json_read_string(modelmap[?"state"], model_state)
 			if (type = "bodypart")
-				model_part_name = json_read_string("part_name", model_part_name)
+				model_part_name = json_read_string(modelmap[?"part_name"], model_part_name)
 		}
 	}
 	else if (type = "item")

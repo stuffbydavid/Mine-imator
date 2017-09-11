@@ -38,7 +38,7 @@ tab_next()
 if (!temp_edit)
 	return 0
 	
-var capwid = text_caption_width("libraryname", "librarycharmodel", "librarycharskin", 
+var capwid = text_caption_width("libraryname", "librarycharmodel", "libraryskin", 
 								"typescenery", "libraryblocktex", 
 								"typeitem", "libraryitemtex", 
 								"libraryspblockmodel", "libraryspblocktex", 

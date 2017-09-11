@@ -12,15 +12,15 @@ pc_spawn_constant = json_read_real(map[?"spawn_constant"], pc_spawn_constant)
 pc_spawn_amount = json_read_real(map[?"spawn_amount"], pc_spawn_amount)
 
 pc_spawn_region_use = json_read_real(map[?"spawn_region_use"], pc_spawn_region_use)
-pc_spawn_region_type = json_read_real(map[?"spawn_region_type"], pc_spawn_region_type)
+pc_spawn_region_type = json_read_string(map[?"spawn_region_type"], pc_spawn_region_type)
 pc_spawn_region_sphere_radius = json_read_real(map[?"spawn_region_sphere_radius"], pc_spawn_region_sphere_radius)
 pc_spawn_region_cube_size = json_read_real(map[?"spawn_region_cube_size"], pc_spawn_region_cube_size)
-pc_spawn_region_box_size = json_read_real(map[?"spawn_region_box_size"], pc_spawn_region_box_size)
+pc_spawn_region_box_size = json_read_array(map[?"spawn_region_box_size"], pc_spawn_region_box_size)
 
 pc_bounding_box_type = json_read_real(map[?"bounding_box_type"], pc_bounding_box_type)
 pc_bounding_box_ground_z = json_read_real(map[?"bounding_box_ground_z"], pc_bounding_box_ground_z)
-pc_bounding_box_custom_start = json_read_real(map[?"bounding_box_custom_start"], pc_bounding_box_custom_start)
-pc_bounding_box_custom_end = json_read_real(map[?"bounding_box_custom_end"], pc_bounding_box_custom_end)
+pc_bounding_box_custom_start = json_read_array(map[?"bounding_box_custom_start"], pc_bounding_box_custom_start)
+pc_bounding_box_custom_end = json_read_array(map[?"bounding_box_custom_end"], pc_bounding_box_custom_end)
 pc_bounding_box_relative = json_read_real(map[?"bounding_box_relative"], pc_bounding_box_relative)
 
 pc_destroy_at_animation_finish = json_read_real(map[?"destroy_at_animation_finish"], pc_destroy_at_animation_finish)
@@ -42,8 +42,8 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		creator = other.id
 		ds_list_add(other.pc_type_list, id)
 		
-		save_id = json_read_string(ptypemap[?"id"], save_id)
-		save_id_map[?save_id] = save_id
+		load_id = json_read_string(ptypemap[?"id"], save_id)
+		save_id_map[?load_id] = load_id
 	
 		name = json_read_string(ptypemap[?"name"], name)
 		temp = json_read_save_id(ptypemap[?"temp"], temp)

@@ -94,6 +94,8 @@ else
 		instance_destroy()
 }
 
+tab_template_editor_update_ptype_list()
+
 tl_update_length()
 tl_update_list()
 tl_update_matrix()

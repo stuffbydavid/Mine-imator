@@ -8,7 +8,7 @@ while (!is_undefined(key))
 	if (save_id_map[?key] != "root" && save_id_map[?key] != "default") // Skip removed objects
 	{
 		var obj = save_id_find(save_id_map[?key]);
-		if (is_real(save_id_map[?key]) || (obj != null && !obj.loaded))
+		if (is_real(save_id_map[?key]) || obj != null)
 			save_id_map[?key] = save_id_create()
 	}
 	key = ds_map_find_next(save_id_map, key)
@@ -20,8 +20,8 @@ save_id_map[?"default"] = "default"
 
 // Set resource IDs
 with (obj_resource)
-	if (loaded && !is_undefined(save_id_map[?save_id]))
-		save_id = save_id_map[?save_id]
+	if (loaded && !is_undefined(save_id_map[?load_id]))
+		save_id = save_id_map[?load_id]
 
 // Set background references
 if (background_loaded)
@@ -50,8 +50,8 @@ with (obj_template)
 	if (!loaded)
 		continue
 		
-	if (!is_undefined(save_id_map[?save_id]))
-		save_id = save_id_map[?save_id]
+	if (!is_undefined(save_id_map[?load_id]))
+		save_id = save_id_map[?load_id]
 		
 	skin = save_id_find(save_id_map[?skin])
 	item_tex = save_id_find(save_id_map[?item_tex])
@@ -94,8 +94,8 @@ with (obj_template)
 
 // Set timeline references
 with (obj_timeline)
-	if (loaded && !is_undefined(save_id_map[?save_id]))
-		save_id = save_id_map[?save_id]
+	if (loaded && !is_undefined(save_id_map[?load_id]))
+		save_id = save_id_map[?load_id]
 
 with (obj_timeline)
 {
@@ -103,19 +103,16 @@ with (obj_timeline)
 		continue
 	
 	temp = save_id_find(save_id_map[?temp])
-	if (temp != null)
+		
+	// Bodypart
+	part_of = save_id_find(save_id_map[?part_of])
+	if (part_of = null && temp != null)
 		temp.count++
 		
 	// Set part list
 	if (part_list != null)
-	{
 		for (var i = 0; i < ds_list_size(part_list); i++)
-		{
 			part_list[|i] = save_id_find(save_id_map[?part_list[|i]])
-			part_list[|i].part_of = id
-			temp.count--
-		}
-	}
 	
 	// Set parent
 	parent = save_id_find(save_id_map[?parent])
@@ -145,8 +142,8 @@ with (obj_particle_type)
 	if (!loaded)
 		continue
 	
-	if (!is_undefined(save_id_map[?save_id]))
-		save_id = save_id_map[?save_id]
+	if (!is_undefined(save_id_map[?load_id]))
+		save_id = save_id_map[?load_id]
 	
 	temp = save_id_find(save_id_map[?temp])
 	sprite_tex = save_id_find(save_id_map[?sprite_tex])

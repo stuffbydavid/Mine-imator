@@ -35,9 +35,9 @@ json_export_object_start("particles")
 			with (pc_type_list[|t])
 			{
 				json_export_var("id", save_id)
-				json_export_var("name", name)
+				json_export_var("name", json_string_encode(name))
 				json_export_var_save_id("temp", temp)
-				json_export_var("text", text)
+				json_export_var("text", json_string_encode(text))
 				json_export_var("spawn_rate", spawn_rate)
 				
 				json_export_var_save_id("sprite_tex", sprite_tex)
