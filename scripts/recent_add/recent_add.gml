@@ -47,3 +47,5 @@ with (obj)
 	thumbnail = texture_create(thumbnailfn)
 	ds_list_insert(app.recent_list, 0, id)
 }
+
+settings_save()

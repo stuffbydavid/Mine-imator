@@ -2,6 +2,11 @@
 
 setting_project_folder = projects_directory
 
+recent_list = ds_list_create()
+recent_thumbnail_width = 110
+recent_thumbnail_height = 58
+recent_add_wait = false
+
 backup_next = 0
 setting_backup = true
 setting_backup_time = 10
@@ -127,6 +132,6 @@ setting_render_aa_power = 1
 
 setting_render_watermark = trial_version
 
-settings_open()
+settings_load()
 
 texture_set_mipmap_level(setting_texture_filtering_level)

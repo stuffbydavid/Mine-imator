@@ -5,9 +5,10 @@ var fn = file_dialog_save_color("");
 if (fn = "")
 	return 0
 
-fn = filename_new_ext(fn, ".mcolor")
+fn = filename_new_ext(fn, ".micolor")
 
-buffer_current = buffer_create(8, buffer_grow, 1)
-settings_write_colors()
-buffer_save_lib(buffer_current, fn)
-buffer_delete(buffer_current)
+json_export_start(fn)
+json_export_object_start()
+settings_save_colors()
+json_export_object_done()
+json_export_done()

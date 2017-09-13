@@ -125,7 +125,7 @@ tab_next()
 tab_control(24)
 
 if (draw_button_normal("settingscoloropen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))
-	action_setting_color_open()
+	action_setting_color_load()
 	
 if (draw_button_normal("settingscolorsave", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.EXPORT))
 	action_setting_color_save()

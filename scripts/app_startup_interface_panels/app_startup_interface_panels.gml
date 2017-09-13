@@ -7,6 +7,14 @@ panel_top = new(obj_panel)
 panel_left_top = new(obj_panel)
 panel_right_top = new(obj_panel)
 
+panel_list = ds_list_create()
+ds_list_add(panel_list, panel_left_bottom)
+ds_list_add(panel_list, panel_right_bottom)
+ds_list_add(panel_list, panel_bottom)
+ds_list_add(panel_list, panel_top)
+ds_list_add(panel_list, panel_left_top)
+ds_list_add(panel_list, panel_right_top)
+
 panel_bottom.size = 205
 panel_top.size = 205
 

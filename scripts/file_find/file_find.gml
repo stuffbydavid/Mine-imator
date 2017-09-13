@@ -13,7 +13,7 @@ ret_count = 0
 f = file_find_first(dir + "*", 0)
 while (f != "")
 {
-	if (string_count(filename_ext(f), exts) > 0)
+	if (string_contains(exts, filename_ext(f)))
 	{
 		ret[ret_count] = dir + f
 		ret_count++

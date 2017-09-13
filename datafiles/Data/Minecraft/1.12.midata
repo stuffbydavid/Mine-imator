@@ -12,6 +12,10 @@
 			"default_state": "variant=steve"
 		},
 		{
+			"name": "steve_edit",
+			"file": "steve_edit.mimodel"
+		},
+		{
 			"name": "zombie",
 			"file": "zombie.mimodel"
 		},

@@ -113,6 +113,7 @@ if (window_busy = "viewmove" && view = view_second)
 	boxy += mouse_y - mouse_click_y
 	draw_set_alpha(0.5)
 }
+draw_box(boxx, boxy, boxw, boxh, false, setting_color_background, 1)
 
 // Set camera to use
 if (view = view_second)
@@ -126,22 +127,24 @@ captionx = boxx + padding * 2
 captiony = boxy + padding
 captionw = boxw
 captionh = 24
-if (view = view_main && view_second.show && window_busy != "viewmove")
-{
-	if (view_second.location = "lefttop")
-		captionx += view_second.width
-	
-	if (view_second.location = "lefttop" || view_second.location = "righttop")
-		captionw -= view_second.width
-}
-	
-draw_box(boxx, boxy, boxw, boxh, false, setting_color_background, 1)
 
 // Buttons
 dw = 16
 dh = 16
 dx = boxx + boxw - padding - dw - 2
 dy = captiony + 2
+
+if (view = view_main && view_second.show && window_busy != "viewmove")
+{
+	if (view_second.location = "lefttop")
+		captionx += view_second.width
+		
+	if (view_second.location = "righttop")
+		dx -= view_second.width
+	
+	if (view_second.location = "lefttop" || view_second.location = "righttop")
+		captionw -= view_second.width
+}
 
 // Close
 if (view = view_second)
