@@ -584,6 +584,65 @@ with (obj_timeline)
 // Background and camera
 if (argument0)
 {
+    // Image
+    if (load.bg_select > -1)
+        background_image = load.bg_res[load.bg_select].load_id
+    
+    background_image_show = load.bg_show
+    background_image_stretch = load.bg_stretch
+    background_image_box = load.bg_box
+	
+	// Ground
+    background_ground_show = load.bg_ground_show
+    if (load.bg_ground_tex > -1)
+	{
+		background_ground_tex.count--
+        background_ground_tex = load.ter_res[load.bg_ground_tex].load_id
+    }
+	else
+		background_ground_tex = "default"
+	
+	var oldslot, legacyname, newslot;
+	oldslot = load.bg_ground_y * 16 + load.bg_ground_x
+	if (load_format = e_project.FORMAT_07_DEMO)
+		legacyname = legacy_block_07_demo_texture_list[|oldslot]
+	else
+		legacyname = legacy_block_05_texture_list[|oldslot]
+		
+	newslot = ds_list_find_index(mc_assets.block_texture_list, legacyname)
+	if (newslot >= 0)
+		background_ground_slot = newslot
+	else // Animated?
+	{
+		newslot = ds_list_find_index(mc_assets.block_texture_ani_list, legacyname)
+		if (newslot >= 0)
+			background_ground_slot = ds_list_size(mc_assets.block_texture_list) + newslot
+	}
+	
+	// Sky
+    background_sky_color = load.sky_color
+    background_sky_time = load.sky_time
+	
+	// Lights
+    view_main.lights = load.sky_light
+    
+    // Work camera
+    cam_work_focus[X] = load.camto[X]
+    cam_work_focus[Y] = load.camto[Y]
+    cam_work_focus[Z] = load.camto[Z]
+    cam_work_angle_xy = load.camanglexy
+    cam_work_angle_z = load.camanglez
+    cam_work_zoom = load.camzoom
+    cam_work_zoom_goal = cam_work_zoom
+    cam_work_angle_look_xy = cam_work_angle_xy
+    cam_work_angle_look_z = -cam_work_angle_z
+    cam_work_set_from()
+    
+	// Playback
+    project_tempo = load.tempo
+    timeline_repeat = load.loop
+	
+	background_loaded = true
 }
 
 // Clean up

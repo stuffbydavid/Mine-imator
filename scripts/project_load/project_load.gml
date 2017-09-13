@@ -99,9 +99,7 @@ else
 		project_load_legacy_work_camera()
 	}
 	else
-	{
 		project_load_legacy_beta(true)
-	}
 
 	buffer_delete(buffer_current)
 }

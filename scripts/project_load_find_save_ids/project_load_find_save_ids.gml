@@ -83,13 +83,8 @@ with (obj_template)
 	}
 	
 	// Legacy "use a sheet" option conversion
-	if (load_format < e_project.FORMAT_110 && type = "item" && item_tex != res_def)
-	{
-		if (legacy_item_sheet)
-			item_tex.item_sheet_size = vec2(16, 16)
-		else
-			item_tex.type = "texture"
-	}
+	if (load_format < e_project.FORMAT_110 && type = "item" && item_tex != res_def && !legacy_item_sheet)
+		item_tex.type = "texture"
 }
 
 // Set timeline references

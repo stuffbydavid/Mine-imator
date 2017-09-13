@@ -39,8 +39,9 @@ with (new(obj_resource))
 	// No support for old unzipped packs
 	if (type = "pack")
 	{
-		save_id_map[?save_id] = "default"
+		save_id_map[?load_id] = "default"
 		instance_destroy()
+		break
 	}
 	
 	sortlist_add(app.res_list, id)
