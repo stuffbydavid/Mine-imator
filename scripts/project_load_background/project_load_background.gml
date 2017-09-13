@@ -3,7 +3,7 @@
 
 var map = argument0;
 
-if (!ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 
 background_loaded = true

@@ -13,7 +13,7 @@ if (!is_string(map[?"name"]))
 	return null
 }
 
-if (!is_real(map[?"position"]) || !ds_exists(map[?"position"], ds_type_list))
+if (!ds_list_valid(map[?"position"]))
 {
 	log("Missing array \"position\"")
 	return null
@@ -42,7 +42,7 @@ with (new(obj_model_part))
 		texture_name = map[?"texture"]
 		
 		// Texture size
-		if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
+		if (!ds_list_valid(map[?"texture_size"]))
 		{
 			log("Missing array \"texture_size\"")
 			return null
@@ -64,14 +64,14 @@ with (new(obj_model_part))
 	
 	// Rotation (optional)
 	var rotlist = map[?"rotation"]
-	if (is_real(rotlist) && ds_exists(rotlist, ds_type_list))
+	if (ds_list_valid(rotlist))
 		rotation = vec3(rotlist[|X], rotlist[|Z], rotlist[|Y])
 	else
 		rotation = vec3(0, 0, 0)
 		
 	// Scale (optional)
 	var scalelist = map[?"scale"]
-	if (is_real(scalelist) && ds_exists(scalelist, ds_type_list))
+	if (ds_list_valid(scalelist))
 		scale = vec3(scalelist[|X], scalelist[|Z], scalelist[|Y])
 	else
 		scale = vec3(1, 1, 1)
@@ -193,7 +193,7 @@ with (new(obj_model_part))
 	
 	// Add shapes (optional)
 	var shapelist = map[?"shapes"]
-	if (is_real(shapelist) && ds_exists(shapelist, ds_type_list))
+	if (ds_list_valid(shapelist))
 	{
 		shape_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(shapelist); p++)
@@ -216,7 +216,7 @@ with (new(obj_model_part))
 	
 	// Recursively add parts (optional)
 	var partlist = map[?"parts"]
-	if (is_real(partlist) && ds_exists(partlist, ds_type_list))
+	if (ds_list_valid(partlist))
 	{
 		part_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(partlist); p++)

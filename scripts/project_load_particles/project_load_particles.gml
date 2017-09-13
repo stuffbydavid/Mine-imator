@@ -3,7 +3,7 @@
 
 var map = argument0;
 
-if (!ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 	
 temp_particles_init()
@@ -39,11 +39,9 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 	with (new(obj_particle_type))
 	{
 		loaded = true
-		creator = other.id
-		ds_list_add(other.pc_type_list, id)
-		
 		load_id = json_read_string(ptypemap[?"id"], save_id)
 		save_id_map[?load_id] = load_id
+		creator = other.id
 	
 		name = json_read_string(ptypemap[?"name"], name)
 		temp = json_read_save_id(ptypemap[?"temp"], temp)
@@ -133,5 +131,7 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		bounce = json_read_real(ptypemap[?"bounce"], bounce)
 		bounce_factor = json_read_real(ptypemap[?"bounce_factor"], bounce_factor)
 		orbit = json_read_real(ptypemap[?"orbit"], orbit)
+		
+		ds_list_add(other.pc_type_list, id)
 	}
 }

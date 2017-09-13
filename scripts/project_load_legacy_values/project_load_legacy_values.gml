@@ -70,7 +70,7 @@ if (tl.value_type[e_value_type.CAMERA])
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
 	{
 		value[e_value.CAM_FOV] = buffer_read_double()
-		if (load_format < e_project.FORMAT_106_2)
+		if (load_format != e_project.FORMAT_106_2)
 			/*value[e_value.CAM_RATIO] = */buffer_read_double()
 		value[e_value.CAM_ROTATE] = buffer_read_byte()
 		value[e_value.CAM_ROTATE_DISTANCE] = buffer_read_double()

@@ -3,7 +3,6 @@
 with (new(obj_timeline))
 {
 	loaded = true
-
 	load_id = buffer_read_int()
 	save_id_map[?load_id] = load_id
 	

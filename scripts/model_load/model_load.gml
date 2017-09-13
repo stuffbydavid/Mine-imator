@@ -29,7 +29,7 @@ with (new(obj_model))
 		texture_name_map = ds_map_create()
 		texture_name_map[?""] = map[?"texture"]
 	}
-	else if (!is_undefined(map[?"texture"]) && ds_exists(map[?"texture"], ds_type_map))
+	else if (ds_map_valid(map[?"texture"]))
 	{
 		texture_name_map = ds_map_create()
 		ds_map_copy(texture_name_map, map[?"texture"])
@@ -39,7 +39,7 @@ with (new(obj_model))
 		
 	// Read states and their possible values
 	states_map = null
-	if (is_real(map[?"states"]) && ds_exists(map[?"states"], ds_type_map))
+	if (ds_map_valid(map[?"states"]))
 	{
 		states_map = ds_map_create()
 		var curstate = ds_map_find_first(map[?"states"]);
@@ -69,7 +69,7 @@ with (new(obj_model))
 						texnamemap[?""] = curvalue[?"texture"]
 						value_texture_name_map[v] = texnamemap
 					}
-					else if (!is_undefined(curvalue[?"texture"]) && ds_exists(curvalue[?"texture"], ds_type_map))
+					else if (ds_map_valid(curvalue[?"texture"]))
 					{
 						var texnamemap = ds_map_create();
 						ds_map_merge(texnamemap, curvalue[?"texture"], true)

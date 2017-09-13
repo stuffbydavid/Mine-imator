@@ -3,7 +3,7 @@
 
 var map = argument0;
 
-if (!ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 	
 project_name = json_read_string(map[?"name"], project_name)
@@ -15,7 +15,7 @@ project_video_keep_aspect_ratio = json_read_real(map[?"video_keep_aspect_ratio"]
 project_tempo = json_read_real(map[?"tempo"], project_tempo)
 	
 var tlmap = map[?"timeline"];
-if (ds_exists(tlmap, ds_type_map))
+if (ds_map_valid(tlmap))
 {
 	timeline_repeat = json_read_real(tlmap[?"repeat"], timeline_repeat)
 	timeline_marker = json_read_real(tlmap[?"marker"], timeline_marker)
@@ -28,7 +28,7 @@ if (ds_exists(tlmap, ds_type_map))
 }
 
 var cammap = map[?"work_camera"];
-if (ds_exists(cammap, ds_type_map))
+if (ds_map_valid(cammap))
 {
 	cam_work_focus = json_read_array(cammap[?"focus"], cam_work_focus)
 	cam_work_angle_xy = json_read_real(cammap[?"angle_xy"], cam_work_angle_xy)

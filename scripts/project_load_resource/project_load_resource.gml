@@ -3,15 +3,12 @@
 
 var map = argument0;
 
-if (!ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 
 with (new(obj_resource))
 {
 	loaded = true
-	
-	sortlist_add(app.res_list, id)
-	
 	load_id = json_read_string(map[?"id"], save_id)
 	save_id_map[?load_id] = load_id
 	
@@ -23,4 +20,6 @@ with (new(obj_resource))
 	
 	if (type = "itemsheet")
 		item_sheet_size = json_read_array(map[?"item_sheet_size"], item_sheet_size)
+	
+	sortlist_add(app.res_list, id)
 }

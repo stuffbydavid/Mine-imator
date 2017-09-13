@@ -95,7 +95,7 @@ with (new(obj_block_load_state_file))
 				{
 					// OR, one of multiple sets of conditions must match
 					var orlist = whenmap[?"OR"];
-					if (is_real(orlist) && ds_exists(orlist, ds_type_list))
+					if (ds_list_valid(orlist))
 					{
 						for (var oc = 0; oc < ds_list_size(orlist); oc++)
 						{

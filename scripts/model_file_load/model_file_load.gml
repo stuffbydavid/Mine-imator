@@ -31,13 +31,13 @@ if (!is_string(map[?"texture"]))
 	return null
 }
 
-if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
+if (!ds_list_valid(map[?"texture_size"]))
 {
 	log("Missing array \"texture_size\"")
 	return null
 }
 
-if (!is_real(map[?"parts"]) || !ds_exists(map[?"parts"], ds_type_list))
+if (!ds_list_valid(map[?"parts"]))
 {
 	log("Missing array \"parts\"")
 	return null

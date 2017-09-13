@@ -100,7 +100,7 @@ else
 	}
 	else
 	{
-		project_load_legacy_beta()
+		project_load_legacy_beta(true)
 	}
 
 	buffer_delete(buffer_current)

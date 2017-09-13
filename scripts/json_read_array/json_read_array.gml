@@ -9,7 +9,7 @@ if (argument_count > 1)
 else
 	def = null
 	
-if (ds_exists(val, ds_type_list))
+if (ds_list_valid(val))
 {
 	var arr;
 	for (var i = 0; i < ds_list_size(val); i++)

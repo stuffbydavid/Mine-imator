@@ -3,7 +3,7 @@
 
 var map = argument0;
 
-if (is_undefined(map) || !ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 	
 setting_color_interface = json_read_color(map[?"interface"], setting_color_interface)

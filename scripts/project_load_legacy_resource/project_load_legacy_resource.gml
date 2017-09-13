@@ -3,9 +3,6 @@
 with (new(obj_resource))
 {
 	loaded = true
-	
-	sortlist_add(app.res_list, id)
-	
 	load_id = buffer_read_int()
 	save_id_map[?load_id] = load_id
 	
@@ -39,10 +36,12 @@ with (new(obj_resource))
 	if (type = "itemsheet")
 		item_sheet_size = vec2(16, 16)
 			
-	// No support for old packs
+	// No support for old unzipped packs
 	if (type = "pack")
 	{
 		save_id_map[?save_id] = "default"
 		instance_destroy()
 	}
+	
+	sortlist_add(app.res_list, id)
 }

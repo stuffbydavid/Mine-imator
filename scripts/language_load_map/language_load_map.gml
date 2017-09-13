@@ -9,7 +9,7 @@ pre = argument0
 smap = argument1
 dmap = argument2
 
-if (!ds_exists(smap, ds_type_map))
+if (!ds_map_valid(smap))
 	return 0
 
 key = ds_map_find_first(smap)

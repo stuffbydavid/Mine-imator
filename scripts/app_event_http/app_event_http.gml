@@ -38,7 +38,7 @@ if (async_load[?"id"] = alert_news_http) // Check news
 				var newsmap, title, text, icon, button, buttonurl, iid;
 				newsmap = newslist[|n]
 				
-				if (!is_undefined(newsmap) && ds_exists(newsmap, ds_type_map))
+				if (ds_map_valid(newsmap))
 				{
 					title = newsmap[?"title"]
 					text = newsmap[?"text"]

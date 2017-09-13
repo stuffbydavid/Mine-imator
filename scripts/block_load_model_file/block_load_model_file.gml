@@ -30,7 +30,7 @@ with (new(obj_block_load_model_file))
 		
 	// Textures
 	texture_map = null
-	if (is_real(map[?"textures"]) && ds_exists(map[?"textures"], ds_type_map))
+	if (ds_map_valid(map[?"textures"]))
 	{
 		texture_map = ds_map_create()
 		ds_map_copy(texture_map, map[?"textures"])
@@ -56,7 +56,7 @@ with (new(obj_block_load_model_file))
 				
 				// Rotation
 				var rotationmap = elementmap[?"rotation"];
-				if (is_real(rotationmap) && ds_exists(rotationmap, ds_type_map))
+				if (ds_map_valid(rotationmap))
 				{
 					var origin, angle, rot, scale;
 					origin = vec3(8, 8, 8)
@@ -65,7 +65,7 @@ with (new(obj_block_load_model_file))
 					scale = vec3(1)
 					
 					var originlist = rotationmap[?"origin"];
-					if (is_real(originlist) && ds_exists(originlist, ds_type_list))
+					if (ds_list_valid(originlist))
 						origin = point3D(originlist[|X], originlist[|Z], originlist[|Y])
 						
 					if (is_real(rotationmap[?"angle"]))
@@ -106,7 +106,7 @@ with (new(obj_block_load_model_file))
 						
 						// UV
 						face_has_uv[f] = false
-						if (is_real(curmap[?"uv"]) && ds_exists(curmap[?"uv"], ds_type_list))
+						if (ds_list_valid(curmap[?"uv"]))
 						{
 							var uvlist = curmap[?"uv"];
 							face_uv_from[f] = point2D(uvlist[|0], uvlist[|1])

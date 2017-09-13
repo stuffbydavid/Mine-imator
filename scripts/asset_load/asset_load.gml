@@ -213,7 +213,7 @@ switch (ext)
 	
 	case ".mani":
 	{
-		project_load_legacy_beta()
+		project_load_legacy_beta(false)
 		buffer_delete(buffer_current)
 		break
 	}

@@ -3,13 +3,12 @@
 
 var map = argument0;
 
-if (!ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 
 with (new(obj_timeline))
 {
 	loaded = true
-	
 	load_id = json_read_string(map[?"id"], save_id)
 	save_id_map[?load_id] = load_id
 	
@@ -42,7 +41,7 @@ with (new(obj_timeline))
 	
 	// Keyframes
 	var kfmap = map[?"keyframes"];
-	if (ds_exists(kfmap, ds_type_map))
+	if (ds_map_valid(kfmap))
 	{
 		var key = ds_map_find_first(kfmap);
 		keyframe_array = 0
@@ -79,7 +78,7 @@ with (new(obj_timeline))
 	tree_extend = json_read_real(map[?"tree_extend"], tree_extend)
 	
 	var inheritmap = map[?"inherit"];
-	if (ds_exists(inheritmap, ds_type_map))
+	if (ds_map_valid(inheritmap))
 	{
 		inherit_position = json_read_real(inheritmap[?"position"], inherit_position)
 		inherit_rotation = json_read_real(inheritmap[?"rotation"], inherit_rotation)

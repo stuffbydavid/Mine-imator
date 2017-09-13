@@ -78,28 +78,18 @@ if (temp)
 			break
 		
 		case "bodypart":
-			/*var char, bodypart, res;
-			char = temp.char_model
-			bodypart = temp.char_bodypart
-			if (char.part_vbuffer[bodypart] = null)
+			if (temp.model_part = null)
 				break
 				
-			res = temp.char_skin
+			var res = temp.skin;
 			if (!res.ready)
 				res = res_def
-			
-			shader_texture = res.mob_texture[char.index]
-			shader_use()
-			vbuffer_render(char.part_vbuffer[bodypart])
-			if (char.part_hasbend[bodypart])
-			{ // Draw bend half
-				matrix_world_multiply_pre(tl_bend_matrix(0, char, bodypart))
-				vbuffer_render(char.part_bendvbuffer[bodypart])
-			}*/
+							
+			render_world_model_part(temp.model_part, temp.model_texture_name_map, res, 0, null)
 			break
 			
 		case "text":
-			//render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font)
+			render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font)
 			break
 		
 		default: // Shapes

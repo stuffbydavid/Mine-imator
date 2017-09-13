@@ -34,7 +34,7 @@ with (new(obj_block))
 	
 	// Read states and their possible values
 	states_map = null
-	if (is_real(map[?"states"]) && ds_exists(map[?"states"], ds_type_map))
+	if (ds_map_valid(map[?"states"]))
 	{
 		states_map = ds_map_create()
 		var curstate = ds_map_find_first(map[?"states"]);
@@ -54,7 +54,7 @@ with (new(obj_block))
 					value_type[v] = ""
 					value_brightness[v] = null
 					
-					if (!is_string(curvalue) && ds_exists(curvalue, ds_type_map))
+					if (ds_map_valid(curvalue))
 					{
 						// Name
 						value_name[v] = curvalue[?"value"]
@@ -95,7 +95,7 @@ with (new(obj_block))
 	var windmap = map[?"wind"];
 	wind_axis = e_vertex_wave.NONE
 	wind_zroot = null
-	if (is_real(windmap) && ds_exists(windmap, ds_type_map))
+	if (ds_map_valid(windmap))
 	{
 		if (is_string(windmap[?"axis"]))
 		{
@@ -123,7 +123,7 @@ with (new(obj_block))
 	}
 		
 	// Read data list into maps
-	if (is_real(map[?"legacy_data"]) && ds_exists(map[?"legacy_data"], ds_type_map))
+	if (ds_map_valid(map[?"legacy_data"]))
 		block_load_legacy_data_map(map[?"legacy_data"], 0, 1)
 	
 	// Convert maps to strings

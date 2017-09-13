@@ -46,7 +46,7 @@ if (!legacy)
 	tempo = json_read_real(rootmap[?"tempo"], project_tempo)
 	temposcale = (project_tempo / tempo)
 	kflist = rootmap[?"keyframes"]
-	if (ds_exists(kflist, ds_type_list))
+	if (ds_list_valid(kflist))
 		num = ds_list_size(kflist)
 	else
 		num = 0
@@ -105,17 +105,8 @@ for (var k = 0; k < num; k++)
 	
 	// Find part's timeline
 	if (ismodel && partname != "")
-	{
-		tladd = null
-		for (var p = 0; p < ds_list_size(tl.part_list); p++)
-		{
-			if (tl.part_list[|p].model_part_name = partname)
-			{
-				tladd = tl.part_list[|p]
-				break
-			}
-		}
-	}
+		with (tl)
+			tladd = tl_part_find(partname)
 	
 	// Off limits
 	if (maxlen != null && pos > maxlen - tempo * 0.2)

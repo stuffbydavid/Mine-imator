@@ -17,5 +17,5 @@ if (json = "")
 jsonmap = json_decode(json)
 language_load_map("", jsonmap, map)
 
-if (ds_exists(jsonmap, ds_type_map))
+if (ds_map_valid(jsonmap))
 	ds_map_destroy(jsonmap)

@@ -81,19 +81,13 @@ for (var k = 0; k < copy_kf_amount; k++)
 	
 	if (pastemode != "free" && copy_kf_tl_model_part_name[k] != "") // Add to body part
 	{
-		var foundpart = false;
+		var part;
+		with (tladd)
+			part = tl_part_find(app.copy_kf_tl_model_part_name[k])
 		
-		for (var p = 0; p < ds_list_size(tladd.part_list); p++)
-		{
-			if (tladd.part_list[|p].model_part_name = copy_kf_tl_model_part_name[k])
-			{
-				tladd = tladd.part_list[|p]
-				foundpart = true
-				break
-			}
-		}
-		
-		if (!foundpart)
+		if (part != null)
+			tladd = part
+		else
 			continue
 	}
 	

@@ -3,10 +3,6 @@
 with (new(obj_template))
 {
 	loaded = true
-	
-	if (temp_creator = app)
-		sortlist_add(app.lib_list, id)
-		
 	load_id = buffer_read_int()
 	save_id_map[?load_id] = load_id
 	
@@ -103,4 +99,7 @@ with (new(obj_template))
 
 	if (type = "particles")
 		project_load_legacy_particles()
+		
+	if (temp_creator = app)
+		sortlist_add(app.lib_list, id)
 }

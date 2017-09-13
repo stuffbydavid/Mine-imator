@@ -58,10 +58,10 @@ switch (type)
 		if (type = "legacyblocksheet")
 		{
 			block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
-			if (load_folder = save_folder && !dev_mode)
-				file_rename_lib(fn, filename_new_ext(fn, ".old") + filename_ext(fn))
+			if (load_folder = save_folder)
+				filename = filename_new_ext(filename_name(fn), "_converted" + filename_ext(fn))
 			texture_export(block_sheet_texture, save_folder + "\\" + filename)
-			type ="blocksheet"
+			type = "blocksheet"
 		}
 		else
 			block_sheet_texture = texture_create(fn)

@@ -3,15 +3,12 @@
 
 var map = argument0;
 
-if (!ds_exists(map, ds_type_map))
+if (!ds_map_valid(map))
 	return 0
 
 with (new(obj_template))
 {
 	loaded = true
-	
-	if (temp_creator = app)
-		sortlist_add(app.lib_list, id)
 	
 	load_id = json_read_string(map[?"id"], save_id)
 	save_id_map[?load_id] = load_id
@@ -23,7 +20,7 @@ with (new(obj_template))
 	{
 		skin = json_read_save_id(map[?"skin"], skin)
 		var modelmap = map[?"model"];
-		if (ds_exists(modelmap, ds_type_map))
+		if (ds_map_valid(modelmap))
 		{
 			model_name = json_read_string(modelmap[?"name"], model_name)
 			model_state = json_read_string(modelmap[?"state"], model_state)
@@ -34,7 +31,7 @@ with (new(obj_template))
 	else if (type = "item")
 	{
 		var itemmap = map[?"item"];
-		if (ds_exists(itemmap, ds_type_map))
+		if (ds_map_valid(itemmap))
 		{
 			item_tex = json_read_save_id(itemmap[?"tex"], item_tex)
 			if (!is_undefined(itemmap[?"name"]))
@@ -49,7 +46,7 @@ with (new(obj_template))
 	else if (type = "block")
 	{
 		var blockmap = map[?"block"];
-		if (ds_exists(blockmap, ds_type_map))
+		if (ds_map_valid(blockmap))
 		{
 			block_name = json_read_string(blockmap[?"name"], block_name)
 			block_state = json_read_string(blockmap[?"state"], block_state)
@@ -62,7 +59,7 @@ with (new(obj_template))
 	{
 		scenery = json_read_save_id(map[?"scenery"], scenery)
 		var blockmap = map[?"block"];
-		if (ds_exists(blockmap, ds_type_map))
+		if (ds_map_valid(blockmap))
 		{
 			block_tex = json_read_save_id(blockmap[?"tex"], block_tex)
 			block_repeat_enable = json_read_real(blockmap[?"repeat_enable"], block_repeat_enable)
@@ -73,7 +70,7 @@ with (new(obj_template))
 	if (type_is_shape(type))
 	{
 		var shapemap = map[?"shape"];
-		if (ds_exists(shapemap, ds_type_map))
+		if (ds_map_valid(shapemap))
 		{
 			shape_tex = json_read_save_id(shapemap[?"tex"], shape_tex)
 			shape_tex_mapped = json_read_real(shapemap[?"tex_mapped"], shape_tex_mapped)
@@ -92,7 +89,7 @@ with (new(obj_template))
 	else if (type = "text")
 	{
 		var textmap = map[?"text"];
-		if (ds_exists(textmap, ds_type_map))
+		if (ds_map_valid(textmap))
 		{
 			text_font = json_read_save_id(textmap[?"font"], text_font)
 			text_face_camera = json_read_real(textmap[?"face_camera"], text_face_camera)
@@ -100,4 +97,7 @@ with (new(obj_template))
 	}
 	else if (type = "particles")
 		project_load_particles(map[?"particles"])
+	
+	if (temp_creator = app)
+		sortlist_add(app.lib_list, id)
 }

@@ -12,25 +12,18 @@ for (var mp = 0; mp < ds_list_size(part.part_list); mp++)
 	var mpart = part.part_list[|mp];
 	
 	// Find timeline with name
-	for (var p = 0; p < ds_list_size(part_list); p++)
+	var tl = tl_part_find(mpart.name);
+	with (tl)
 	{
-		var tl = part_list[|p];
-		if (tl.model_part_name = mpart.name)
-		{
-			with (tl)
-			{
-				model_part = mpart
-				lock_bend = mpart.lock_bend
-				tl_set_parent(par)
-				tl_update_value_types()
-				tl_update_type_name()
-				tl_update_display_name()
-			}
-			
-			// Recurse for this part
-			if (mpart.part_list != null)
-				tl_update_part_list(mpart, tl)
-			break	
-		}
+		model_part = mpart
+		lock_bend = mpart.lock_bend
+		tl_set_parent(par)
+		tl_update_value_types()
+		tl_update_type_name()
+		tl_update_display_name()
 	}
+			
+	// Recurse for this part
+	if (tl != null && mpart.part_list != null)
+		tl_update_part_list(mpart, tl)
 }

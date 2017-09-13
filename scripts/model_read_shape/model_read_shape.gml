@@ -10,19 +10,19 @@ if (!is_string(map[?"type"]))
 	return null
 }
 
-if (!is_real(map[?"from"]) || !ds_exists(map[?"from"], ds_type_list))
+if (!ds_list_valid(map[?"from"]))
 {
 	log("Missing array \"from\"")
 	return null
 }
 
-if (!is_real(map[?"to"]) || !ds_exists(map[?"to"], ds_type_list))
+if (!ds_list_valid(map[?"to"]))
 {
 	log("Missing array \"to\"")
 	return null
 }
 
-if (!is_real(map[?"uv"]) || !ds_exists(map[?"uv"], ds_type_list))
+if (!ds_list_valid(map[?"uv"]))
 {
 	log("Missing array \"uv\"")
 	return null
@@ -45,7 +45,7 @@ with (new(obj_model_shape))
 		texture_name = map[?"texture"]
 		
 		// Texture size
-		if (!is_real(map[?"texture_size"]) || !ds_exists(map[?"texture_size"], ds_type_list))
+		if (!ds_list_valid(map[?"texture_size"]))
 		{
 			log("Missing array \"texture_size\"")
 			return null
@@ -81,21 +81,21 @@ with (new(obj_model_shape))
 	
 	// Position (optional)
 	var poslist = map[?"position"]
-	if (is_real(poslist) && ds_exists(poslist, ds_type_list))
+	if (ds_list_valid(poslist))
 		position = vec3(poslist[|X], poslist[|Z], poslist[|Y])
 	else
 		position = vec3(0, 0, 0)
 		
 	// Rotation (optional)
 	var rotlist = map[?"rotation"]
-	if (is_real(rotlist) && ds_exists(rotlist, ds_type_list))
+	if (ds_list_valid(rotlist))
 		rotation = vec3(rotlist[|X], rotlist[|Z], rotlist[|Y])
 	else
 		rotation = vec3(0, 0, 0)
 		
 	// Scale (optional)
 	var scalist = map[?"scale"]
-	if (is_real(scalist) && ds_exists(scalist, ds_type_list))
+	if (ds_list_valid(scalist))
 		scale = vec3(scalist[|X], scalist[|Z], scalist[|Y])
 	else
 		scale = vec3(1, 1, 1)

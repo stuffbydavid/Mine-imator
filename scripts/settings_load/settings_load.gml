@@ -38,7 +38,7 @@ if (filename_ext(fn) = ".midata")
 	
 	// Recent files
 	var fileslist = map[?"recent_files"];
-	if (!is_undefined(fileslist) && ds_exists(fileslist, ds_type_list))
+	if (ds_list_valid(fileslist))
 	{
 		for (var i = 0; i < ds_list_size(fileslist); i++)
 		{
@@ -64,7 +64,7 @@ if (filename_ext(fn) = ".midata")
 	
 	// Program
 	var programmap = map[?"program"];
-	if (!is_undefined(programmap) && ds_exists(programmap, ds_type_map))
+	if (ds_map_valid(programmap))
 	{
 		room_speed = json_read_real(programmap[?"fps"], room_speed)
 		if (!dev_mode)
@@ -78,7 +78,7 @@ if (filename_ext(fn) = ".midata")
 	
 	// Interface
 	var interfacemap = map[?"interface"];
-	if (!is_undefined(interfacemap) && ds_exists(interfacemap, ds_type_map))
+	if (ds_map_valid(interfacemap))
 	{
 		setting_tip_show = json_read_real(interfacemap[?"tip_show"], setting_tip_show)
 		setting_tip_delay = json_read_real(interfacemap[?"tip_delay"], setting_tip_delay)
@@ -153,7 +153,7 @@ if (filename_ext(fn) = ".midata")
 	
 	// Controls
 	var controlsmap = map[?"controls"];
-	if (!is_undefined(controlsmap) && ds_exists(controlsmap, ds_type_map))
+	if (ds_map_valid(controlsmap))
 	{
 	    setting_key_new = json_read_real(controlsmap[?"key_new"], setting_key_new)
 		setting_key_new_control = json_read_real(controlsmap[?"key_new_control"], setting_key_new_control)
@@ -218,7 +218,7 @@ if (filename_ext(fn) = ".midata")
 	
 	// Graphics
 	var graphicsmap = map[?"graphics"];
-	if (!is_undefined(graphicsmap) && ds_exists(graphicsmap, ds_type_map))
+	if (ds_map_valid(graphicsmap))
 	{
 		setting_bend_round_default = json_read_real(graphicsmap[?"bend_round_default"], setting_bend_round_default)
 		setting_bend_detail = json_read_real(graphicsmap[?"bend_detail"], setting_bend_detail)
@@ -233,7 +233,7 @@ if (filename_ext(fn) = ".midata")
 	
 	// Render
 	var rendermap = map[?"render"];
-	if (!is_undefined(rendermap) && ds_exists(rendermap, ds_type_map))
+	if (ds_map_valid(rendermap))
 	{
 		setting_render_ssao = json_read_real(rendermap[?"render_ssao"], setting_render_ssao)
 		setting_render_ssao_radius = json_read_real(rendermap[?"render_ssao_radius"], setting_render_ssao_radius)
