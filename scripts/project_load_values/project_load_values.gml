@@ -16,10 +16,12 @@ while (!is_undefined(key))
 			arr[@ index] = json_read_real(map[?key], arr[@ index])
 		else if (tl_value_is_color(index))
 			arr[@ index] = json_read_color(map[?key], arr[@ index])
-		else if (map[?key] != "null")
-			arr[@ index]= map[?key]
-		else
+		else if (tl_value_is_string(index))
+			arr[@ index] = json_read_string(map[?key], arr[@ index])
+		else if (map[?key] = "null")
 			arr[@ index] = null
+		else
+			arr[@ index]= map[?key]
 	}
 		
 	key = ds_map_find_next(map, key)

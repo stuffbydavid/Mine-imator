@@ -72,6 +72,7 @@ json_export_object_start()
 	{
 		json_export_object_start("text")
 			json_export_var_save_id("font", text_font)
+			json_export_var_bool("3d", text_3d)
 			json_export_var_bool("face_camera", text_face_camera)
 		json_export_object_done()
 	}

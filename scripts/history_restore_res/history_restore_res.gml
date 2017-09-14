@@ -17,6 +17,7 @@ with (res)
 	
 	res_load()
 	
+	// Restore template usage
 	for (var s = 0; s < save.usage_skin_amount; s++)
 	{
 		with (save_id_find(save.usage_skin_save_id[s]))
@@ -62,10 +63,12 @@ with (res)
 		}
 	}
 			
+	// Restore particle type usage
 	for (var s = 0; s < save.usage_sprite_tex_amount; s++)
 		with (save_id_find(save.usage_sprite_tex_save_id[s]))
 			sprite_tex = res
 			
+	// Restore keyframe usage
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
 		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 			keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = res
@@ -74,6 +77,11 @@ with (res)
 		with (save_id_find(save.usage_kf_sound_tl_save_id[s]))
 			keyframe_list[|save.usage_kf_sound_index[s]].value[e_value.SOUND_OBJ] = res
 			
+	for (var s = 0; s < save.usage_kf_text_font_amount; s++)
+		with (save_id_find(save.usage_kf_text_font_tl_save_id[s]))
+			keyframe_list[|save.usage_kf_text_font_index[s]].value[e_value.TEXT_FONT] = res
+	
+	// Restore timeline usage
 	for (var s = 0; s < save.usage_tl_texture_amount; s++)
 	{
 		with (save_id_find(save.usage_tl_texture_save_id[s]))
@@ -92,6 +100,16 @@ with (res)
 		}
 	}
 	
+	for (var s = 0; s < save.usage_tl_text_font_amount; s++)
+	{
+		with (save_id_find(save.usage_tl_text_font_save_id[s]))
+		{
+			value[e_value.TEXT_FONT] = res
+			update_matrix = true
+		}
+	}
+	
+	// Restore background usage
 	if (save.usage_background_image)
 		app.background_image = res
 		

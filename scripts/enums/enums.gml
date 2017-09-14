@@ -60,6 +60,7 @@ enum e_value_type
 	BACKGROUND,
 	TEXTURE,
 	SOUND,
+	TEXT,
 	KEYFRAME,
 	ROT_POINT,
 	HIERARCHY,
@@ -133,10 +134,12 @@ enum e_value
 	SOUND_VOLUME,
 	SOUND_START,
 	SOUND_END,
+	TEXT,
+	TEXT_FONT,
 	VISIBLE,
 	TRANSITION,
 	amount
-}
+} // Update app_startup_lists() when adding values
 
 // Icons
 enum icons

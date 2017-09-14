@@ -19,12 +19,14 @@ switch (vid)
 	{
 		switch (val)
 		{
-	        case 0: return 0 // Linear
-	        case 1: return 2 // Ease in
-	        case 2: return 3 // Ease out
-	        case 3: return 4 // Ease out
-	        case 4: return 1 // Instant
+	        case 0: return "linear"
+	        case 1: return "easeinquad"
+	        case 2: return "easeoutquad"
+	        case 3: return "easeinoutquad"
+	        case 4: return "instant"
        }
+	   
+	   return "linear"
 	}
     case e_value.CAM_ROTATE_ANGLE_XY: return val - 90
     case e_value.CAM_FOV: return 50 + val * 100

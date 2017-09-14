@@ -42,9 +42,12 @@ switch (argument0)
 	case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed
 	case e_value.ATTRACTOR:
 	case e_value.TEXTURE_OBJ:
-	case e_value.SOUND_OBJ: return null
+	case e_value.SOUND_OBJ:
+	case e_value.TEXT_FONT: return null
 	case e_value.SOUND_VOLUME: return 1
 	case e_value.VISIBLE: return true
+	case e_value.TEXT: return ""
+	case e_value.TRANSITION: return "linear"
 }
 
 return 0

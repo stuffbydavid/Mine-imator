@@ -24,6 +24,8 @@ with (save)
 	usage_tl_texture_amount = 0
 	usage_kf_sound_amount = 0
 	usage_tl_sound_amount = 0
+	usage_kf_text_font_amount = 0
+	usage_tl_text_font_amount = 0
 	usage_background_image = false
 	usage_background_sky_sun_tex = false
 	usage_background_sky_moon_tex = false
@@ -95,6 +97,13 @@ with (obj_keyframe)
 		save.usage_kf_sound_index[save.usage_kf_sound_amount] = ds_list_find_index(timeline.keyframe_list, id)
 		save.usage_kf_sound_amount++
 	}
+	
+	if (value[e_value.TEXT_FONT] = res)
+	{
+		save.usage_kf_text_font_tl_save_id[save.usage_kf_text_font_amount] = save_id_get(timeline)
+		save.usage_kf_text_font_index[save.usage_kf_text_font_amount] = ds_list_find_index(timeline.keyframe_list, id)
+		save.usage_kf_text_font_amount++
+	}
 }
 
 with (obj_timeline)
@@ -109,6 +118,12 @@ with (obj_timeline)
 	{
 		save.usage_tl_sound_save_id[save.usage_tl_sound_amount] = save_id
 		save.usage_tl_sound_amount++
+	}
+	
+	if (value[e_value.TEXT_FONT] = res)
+	{
+		save.usage_tl_text_font_save_id[save.usage_tl_text_font_amount] = save_id
+		save.usage_tl_text_font_amount++
 	}
 }
 

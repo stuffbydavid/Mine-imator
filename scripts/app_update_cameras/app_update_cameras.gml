@@ -12,7 +12,7 @@ with (obj_timeline)
 		continue
 	
 	var texobj;
-	if (value_inherit[e_value.TEXTURE_OBJ] != null)
+	if (value_inherit[e_value.TEXTURE_OBJ] > 0)
 		texobj = value_inherit[e_value.TEXTURE_OBJ]
 	else
 		texobj = temp.shape_tex

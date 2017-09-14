@@ -186,9 +186,8 @@ switch (menu_type)
 			// Check mouse
 			if (app_mouse_box(dx, dy, menu_item_h, menu_item_h))
 			{
-				var name = ds_list_find_value(transition_list, item.value)
 				window_busy = ""
-				tip_set(text_get("transition" + name), dx, dy, menu_item_w, menu_item_h)
+				tip_set(text_get("transition" + item.value), dx, dy, menu_item_w, menu_item_h)
 				mouseitem = item
 				mouseval = item.value
 				mouse_cursor = cr_handpoint
@@ -200,7 +199,7 @@ switch (menu_type)
 				draw_box(dx, dy, menu_item_w, menu_item_h, false, setting_color_highlight, 1)
 	
 			// Texture
-			draw_texture(transition_texture[item.value], dx, dy, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
+			draw_texture(transition_texture_map[?item.value], dx, dy, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 			
 			// Iterate
 			dx += menu_item_w

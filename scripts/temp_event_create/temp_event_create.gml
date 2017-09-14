@@ -54,5 +54,6 @@ shape_detail = 32
 shape_face_camera = false
 
 text_font = null
+text_3d = false
 text_face_camera = false
 

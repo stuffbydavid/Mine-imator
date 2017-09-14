@@ -20,6 +20,7 @@ with (frame_editor)
 	camera.video_template = null
 	texture.enabled = false
 	sound.enabled = false
+	text.enabled = false
 	keyframe.enabled = false
 }
 
@@ -123,6 +124,9 @@ with (obj_timeline)
 		
 	if (value_type[e_value_type.SOUND])
 		app.frame_editor.sound.enabled = true
+		
+	if (value_type[e_value_type.TEXT])
+		app.frame_editor.text.enabled = true
 		
 	if (value_type[e_value_type.KEYFRAME])
 		app.frame_editor.keyframe.enabled = true

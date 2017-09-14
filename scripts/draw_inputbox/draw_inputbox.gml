@@ -66,7 +66,7 @@ if (font)
 var update = textbox_draw(tbx, xx + padding, yy + padding, wid - padding * 2, h - padding * 2);
 
 if (tbx.text = "" && placeholder != "")
-	draw_label(string_limit(placeholder, wid - padding * 2), xx + padding, yy + h / 2, fa_left, fa_middle, setting_color_boxes_text, 0.25)
+	draw_label(string_limit(placeholder, wid - padding * 2), xx + padding, yy + padding, fa_left, fa_top, setting_color_boxes_text, 0.25)
 if (font)
 	draw_set_font(setting_font)
 

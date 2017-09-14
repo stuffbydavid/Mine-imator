@@ -20,10 +20,8 @@ if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position);
 
 // Transition
-if (keyframe_current)
-	value[e_value.TRANSITION] = keyframe_current.value[e_value.TRANSITION]
-
-var trans = transition_list[|value[e_value.TRANSITION]];
+tl_update_values_ease(e_value.TRANSITION, "instant", 0)
+var trans = value[e_value.TRANSITION];
 
 // Position
 if (value_type[e_value_type.POSITION])
@@ -141,6 +139,13 @@ if (value_type[e_value_type.SOUND])
 	tl_update_values_ease(e_value.SOUND_VOLUME, trans, p)
 	tl_update_values_ease(e_value.SOUND_START, trans, p)
 	tl_update_values_ease(e_value.SOUND_END, trans, p)
+}
+
+// Text
+if (value_type[e_value_type.TEXT])
+{
+	tl_update_values_ease(e_value.TEXT, trans, p)
+	tl_update_values_ease(e_value.TEXT_FONT, trans, p)
 }
 
 // Visible

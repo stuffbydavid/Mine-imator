@@ -141,7 +141,7 @@ if (object_index != app && update_matrix)
 		if (!tl.inherit_visibility)
 			inhvis = false
 		
-		if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] != null)
+		if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] > 0)
 			inhtex = false
 		
 		if (inhalpha)

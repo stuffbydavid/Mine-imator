@@ -92,6 +92,7 @@ with (new(obj_template))
 		if (ds_map_valid(textmap))
 		{
 			text_font = json_read_save_id(textmap[?"font"], text_font)
+			text_3d = json_read_real(textmap[?"3d"], text_3d)
 			text_face_camera = json_read_real(textmap[?"face_camera"], text_face_camera)
 		}
 	}

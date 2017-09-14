@@ -64,6 +64,10 @@ if (type = "camera")
 // Texture
 if (type != "item" && type != "particles" && type != "camera" && type != "pointlight" && type != "spotlight" && type != "text" && type != "folder")
 	value_type[e_value_type.TEXTURE] = true
+	
+// Text
+if (type = "text")
+	value_type[e_value_type.TEXT] = true
 
 // Rotation point
 value_type[e_value_type.ROT_POINT] = true

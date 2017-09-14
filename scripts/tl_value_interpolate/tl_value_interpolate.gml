@@ -41,6 +41,8 @@ switch (vid)
 	case e_value.SOUND_VOLUME:
 	case e_value.SOUND_START:
 	case e_value.SOUND_END:
+	case e_value.TEXT:
+	case e_value.TEXT_FONT:
 	case e_value.TRANSITION: return val1 // No interpolation
 }
 

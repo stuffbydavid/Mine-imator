@@ -14,10 +14,7 @@ with (load)
 		
 		lib_char_skin[a] = buffer_read_short() - 1
 		var modelid = buffer_read_byte();
-		if (load_format = e_project.FORMAT_05)
-			lib_char_model_legacy_name[a] = legacy_model_id_05_map[?string(modelid)]
-		else
-			lib_char_model_legacy_name[a] = legacy_model_id_06_map[?string(modelid)]
+		lib_char_model_legacy_name[a] = project_load_legacy_model_name(modelid)
 			
 		if (is_string(lib_char_model_legacy_name[a]))
 		{
@@ -556,7 +553,7 @@ for (var a = 0; a < load.tl_amount; a++)
 	
 	// Find bodypart from ID
 	var partid = load.tl_lock_part[a] - 1;
-	if (par.part_list != null && load.tl_lock_part[a] > -1)
+	if (par.part_list != null && partid > -1)
 	{
 		var modelpartlist, newpar;
 		modelpartlist = legacy_model_part_map[?par.temp.model_name];
@@ -579,7 +576,6 @@ for (var a = 0; a < load.tl_amount; a++)
 with (obj_timeline)
 	if (loaded && temp != null)
 		temp = temp.load_id
-
 
 // Background and camera
 if (argument0)

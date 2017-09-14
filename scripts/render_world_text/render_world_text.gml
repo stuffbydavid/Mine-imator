@@ -22,7 +22,7 @@ if (facecamera)
 }
 
 if (!res.font_minecraft)
-	sca = vec3(8 / 48)
+	sca = vec3(8 / 48, 1, 8 / 48)
 	
 matrix_add_offset()
 matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, sca))

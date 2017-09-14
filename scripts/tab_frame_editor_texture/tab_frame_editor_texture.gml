@@ -1,8 +1,7 @@
 /// tab_frame_editor_texture()
 
-var texobj, name, text, tex;
+var texobj, name, tex;
 texobj = tl_edit.value[e_value.TEXTURE_OBJ]
-text = text_get("listnone")
 tex = null
 
 if (!tl_edit.temp)
@@ -40,16 +39,20 @@ switch (tl_edit.type)
 		with (tl_edit.temp)
 		{
 			texobj = temp_get_shape_texobj(texobj)
-			if (texobj && texobj.type != "camera")
+			if (texobj != null && texobj.type != "camera")
 				tex = texobj.texture
 		}
 		break
 	}
 }
 
-if (texobj)
+var text;
+if (texobj != null)
 	text = texobj.display_name
-if (tl_edit.value[e_value.TEXTURE_OBJ] < 0)
+else
+	text = text_get("listnone")
+
+if (tl_edit.value[e_value.TEXTURE_OBJ] = null)
 	text = text_get("frameeditortexturedefault", text)
 
 tab_control(40)

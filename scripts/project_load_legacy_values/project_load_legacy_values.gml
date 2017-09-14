@@ -144,8 +144,8 @@ if (tl.value_type[e_value_type.BACKGROUND])
 if (tl.value_type[e_value_type.TEXTURE])
 {
 	value[e_value.TEXTURE_OBJ] = project_load_legacy_save_id()
-	if (value[e_value.TEXTURE_OBJ] = "root")
-		value[e_value.TEXTURE_OBJ] = null
+	if (value[e_value.TEXTURE_OBJ] = "root") // TODO test
+		value[e_value.TEXTURE_OBJ] = 0
 }
 
 if (tl.value_type[e_value_type.SOUND])
@@ -157,5 +157,5 @@ if (tl.value_type[e_value_type.SOUND])
 }
 
 value[e_value.VISIBLE] = buffer_read_byte()
-value[e_value.TRANSITION] = buffer_read_int()
+value[e_value.TRANSITION] = transition_list[|buffer_read_int()]
 

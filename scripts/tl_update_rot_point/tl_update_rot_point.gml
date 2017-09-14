@@ -4,4 +4,4 @@
 if (temp = null || rot_point_custom)
 	return 0
 
-rot_point = temp.rot_point
+rot_point = array_copy_1d(temp.rot_point)

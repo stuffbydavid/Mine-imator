@@ -159,6 +159,9 @@ with (obj_keyframe)
 	
 	if (value[e_value.SOUND_OBJ] = other.id)
 		value[e_value.SOUND_OBJ] = null
+		
+	if (value[e_value.TEXT_FONT] = other.id)
+		value[e_value.TEXT_FONT] = null
 }
 
 with (obj_timeline)
@@ -173,6 +176,12 @@ with (obj_timeline)
 		value[e_value.SOUND_OBJ] = null
 	
 	if (value_inherit[e_value.SOUND_OBJ] = other.id)
+		update_matrix = true
+		
+	if (value[e_value.TEXT_FONT] = other.id)
+		value[e_value.TEXT_FONT] = null
+		
+	if (value_inherit[e_value.TEXT_FONT] = other.id)
 		update_matrix = true
 }
 

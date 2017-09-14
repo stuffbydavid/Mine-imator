@@ -41,6 +41,7 @@ to.shape_detail = shape_detail
 to.shape_face_camera = shape_face_camera
 
 to.text_font = text_font
+to.text_3d = text_3d
 to.text_face_camera = text_face_camera
 
 if (type = "particles")

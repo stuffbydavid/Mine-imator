@@ -457,6 +457,11 @@ with (frame_editor)
 		tbx_end = new_textbox_ndecimals()
 	}
 	
+	// Text
+	text = tab_add_category("frameeditortext", tab_frame_editor_text, false)
+	with (text)
+		tbx_text = new_textbox(false, 0, "")
+	
 	// Keyframe
 	keyframe = tab_add_category("frameeditorkeyframe", tab_frame_editor_keyframe, false)
 }

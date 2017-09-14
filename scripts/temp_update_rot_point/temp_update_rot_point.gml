@@ -25,6 +25,7 @@ switch (type)
 		break
 		
 	case "text":
+		rot_point[Y] = 0.5 * bool_to_float(text_3d)
 		break
 	
 	default:

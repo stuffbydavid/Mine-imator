@@ -213,9 +213,10 @@ switch (temp_edit.type)
 		draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 32, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font, null, null, capwid)
 		tab_next()
 		
-		// Face camera
+		// 3D / Face camera
 		tab_control_checkbox()
-		draw_checkbox("librarytextfacecamera", dx, dy, temp_edit.text_face_camera, action_lib_text_face_camera)
+		draw_checkbox("librarytext3d", dx, dy, temp_edit.text_3d, action_lib_text_3d)
+		draw_checkbox("librarytextfacecamera", dx + floor(dw / 4), dy, temp_edit.text_face_camera, action_lib_text_face_camera)
 		tab_next()
 		
 		break
@@ -226,7 +227,7 @@ switch (temp_edit.type)
 		// Texture
 		var text, sprite;
 		sprite = null
-		if (temp_edit.shape_tex)
+		if (temp_edit.shape_tex != null)
 		{
 			text = temp_edit.shape_tex.display_name
 			if (temp_edit.shape_tex.type != "camera")

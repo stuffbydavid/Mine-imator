@@ -101,15 +101,22 @@ if (shader_alpha > 0)
 				break
 			
 			case "text":
-				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, temp.text_font)
+			{
+				var font = value[e_value.TEXT_FONT];
+				if (font = null)
+					font = temp.text_font
+				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, font)
 				break
-				
+			}
+			
 			default: // Shapes
+			{
 				var tex;
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(texobj))
 				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, tex)
 				break
+			}
 		}
 	} 
 	else if (render_particles) 

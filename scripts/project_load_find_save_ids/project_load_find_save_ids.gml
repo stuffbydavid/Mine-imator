@@ -129,6 +129,7 @@ with (obj_keyframe)
 	value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
 	if (value[e_value.SOUND_OBJ] != null)
 		value[e_value.SOUND_OBJ].count++
+	value[e_value.TEXT_FONT] = save_id_find(save_id_map[?value[e_value.TEXT_FONT]])
 }
 
 // Set particle type references

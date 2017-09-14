@@ -45,6 +45,7 @@ with (tl)
 	// Restore parts
 	if (save.part_amount > 0)
 		part_list = ds_list_create()
+	
 	for (var p = 0; p < save.part_amount; p++)
 		ds_list_add(part_list, save_id_find(save.part_save_id[p]))
 		

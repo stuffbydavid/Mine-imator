@@ -23,3 +23,4 @@ text_vbuffer = null
 text_texture = null
 text_string = ""
 text_res = null
+text_3d = false

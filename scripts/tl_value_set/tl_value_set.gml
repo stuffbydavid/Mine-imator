@@ -47,7 +47,12 @@ else
 		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
 			value[e_value.SOUND_OBJ].count--
 			
-		var nval = value[vid] * add + val;
+		var nval;
+		if (tl_value_is_string(vid))
+			nval = val
+		else
+			nval = value[vid] * add + val;
+		
 		if (value[vid] != nval)
 			update_matrix = true
 		
@@ -64,7 +69,13 @@ else
 			if (history_data.par_set_n = history_data.par_set_amount)
 				history_data.kf_set_old_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			
-			value[vid] = tl_value_clamp(vid, value[vid] * add + val)
+			var nval;
+			if (tl_value_is_string(vid))
+				nval = val
+			else
+				nval = value[vid] * add + val;
+			
+			value[vid] = tl_value_clamp(vid, nval)
 			history_data.kf_set_new_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 		}
 	}

@@ -236,8 +236,9 @@ else
 			draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, 32, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font)
 			dy += 32 + 8
 			
-			// Face camera
-			draw_checkbox("benchtextfacecamera", dx, dy, bench_settings.text_face_camera, action_bench_text_face_camera)
+			// 3D / Face camera
+			draw_checkbox("benchtext3d", dx, dy, bench_settings.text_3d, action_bench_text_3d)
+			draw_checkbox("benchtextfacecamera", dx + floor(dw / 4), dy, bench_settings.text_face_camera, action_bench_text_face_camera)
 			dy += 16
 			break
 		}

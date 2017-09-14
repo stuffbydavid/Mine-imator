@@ -18,6 +18,8 @@ json_export_object_start(name)
 				json_export_var_bool(value_name_list[|v], arr[@ v])
 			else if (tl_value_is_color(v))
 				json_export_var_color(value_name_list[|v], arr[@ v])
+			else if (tl_value_is_string(v))
+				json_export_var(value_name_list[|v], json_string_encode(arr[@ v]))
 			else
 				json_export_var(value_name_list[|v], tl_value_get_save_id(v, arr[@ v]))
 		}

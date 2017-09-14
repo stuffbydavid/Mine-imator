@@ -47,7 +47,6 @@ with (new(obj_timeline))
 			break
 		}
 		
-		case "text":
 		case "surface":
 			backfaces = true
 			break

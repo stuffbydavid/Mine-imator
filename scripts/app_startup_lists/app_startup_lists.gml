@@ -69,6 +69,8 @@ ds_list_add(value_name_list,
 	"SOUND_VOLUME",
 	"SOUND_START",
 	"SOUND_END",
+	"TEXT",
+	"TEXT_FONT",
 	"VISIBLE",
 	"TRANSITION"
 )
@@ -111,8 +113,8 @@ ds_list_add(transition_list,
 )
 
 log("Make transitions")
-transition_texture = app_startup_make_transition_texture(60, 60, 12)
-transition_texture_small = app_startup_make_transition_texture(36, 36, 2)
+transition_texture_map = app_startup_make_transition_texture_map(60, 60, 12)
+transition_texture_small_map = app_startup_make_transition_texture_map(36, 36, 2)
 log("Transitions OK")
 
 // Biomes

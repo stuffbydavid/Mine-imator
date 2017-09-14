@@ -478,7 +478,7 @@ switch (menu_name)
 				menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.shape_tex.display_name))
 			else
 				menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.shape_tex.display_name), tl_edit.temp.shape_tex.texture)
-			menu_add_item(null, text_get("listnone"))
+			menu_add_item(0, text_get("listnone"))
 		}
 		else
 			menu_add_item(null, text_get("frameeditortexturedefault", text_get("listnone")))
@@ -511,6 +511,22 @@ switch (menu_name)
 				menu_add_item(res, res.display_name)
 		}
 		
+		break
+	}
+	
+	// Font
+	case "frameeditortextfont":
+	{
+		// Default
+		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.text_font.display_name))
+		
+		// Add existing resources
+		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		{
+			var res = res_list.list[|i];
+			if (res != tl_edit.temp.text_font && font_exists(res.font))
+				menu_add_item(res, res.display_name)
+		}
 		break
 	}
 	
