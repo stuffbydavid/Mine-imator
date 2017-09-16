@@ -3,13 +3,13 @@
 // Debug
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_unzip_assets		false
+#macro dev_mode_unzip_assets		true
 
 // Versions
 #macro mineimator_version			"1.1.0"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017"
-#macro gm_runtime					"2.1.0.136"
+#macro gm_runtime					"2.1.0.144"
 #macro minecraft_version			"1.12"
 
 // File formats

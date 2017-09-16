@@ -148,6 +148,30 @@ switch (load_stage)
 						}
 					}
 				}
+				
+				// Tile entities
+				var tileentitylist = schematicmap[?"TileEntities"];
+				if (ds_list_valid(tileentitylist))
+				{
+					for (var i = 0; i < ds_list_size(tileentitylist); i++)
+					{
+						var entity, eid, ex, ey, ez;
+						entity = tileentitylist[|i]
+						eid = entity[?"id"]
+						ex = entity[?"x"]
+						ey = entity[?"z"]
+						ez = entity[?"y"]
+						if (is_string(eid) && is_real(ex) && is_real(ey) && is_real(ez))
+						{
+							var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));
+							if (script > -1)
+							{
+								build_pos = point3D(ex, ey, ez)
+								script_execute(script, entity)
+							}
+						}
+					}
+				}
 			}
 		}
 		

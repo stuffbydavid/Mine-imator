@@ -915,6 +915,16 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=south",
+			"animated": {
+				"special_block": "chest",
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, 270, 0 ]
+				}
+			},
 			"legacy_id": 54,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -2224,7 +2234,7 @@
 					"0": "conditional=false",
 					"1": "conditional=true"
 				}
-			}
+			} 
 		},
 		{
 			"name": "beacon",

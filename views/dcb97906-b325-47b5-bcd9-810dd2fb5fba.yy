@@ -4,6 +4,7 @@
     "mvc": "1.1",
     "name": "dcb97906-b325-47b5-bcd9-810dd2fb5fba",
     "children": [
+        "976ad256-6231-4ab5-aaa1-893f574c8f8d",
         "ee2c854b-8b0d-4fe6-89b8-ec73edcda5bb",
         "3207bd95-0acf-481f-ba2d-50ef148864ce",
         "4c32ef09-fd90-4474-a35b-0e0144301117",
@@ -15,8 +16,7 @@
         "2b94a81a-da09-4a3b-b3cc-103d94db13f0",
         "b6484046-3386-4818-b970-f920b1888bda",
         "cad4bee4-fe0f-45d0-9466-53f234c872a1",
-        "fa0f67e1-72ed-4e1f-91a5-c18ff5aea309",
-        "976ad256-6231-4ab5-aaa1-893f574c8f8d"
+        "fa0f67e1-72ed-4e1f-91a5-c18ff5aea309"
     ],
     "filterType": "GMScript",
     "folderName": "Vertex buffer",

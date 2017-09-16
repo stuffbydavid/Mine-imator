@@ -54,19 +54,9 @@ text_vbuffer = vbuffer_start()
 // 3D pixels
 if (is3d)
 {
-	buffer_current = buffer_create(wid * hei * 4, buffer_fixed, 4)
-	buffer_get_surface(buffer_current, surf, 0, 0, 0)
-	
-	var hascolor;
-	for (var px = 0; px < wid; px++)
-		for (var py = 0; py < hei; py++)
-			hascolor[px, py] = (buffer_read_alpha(px, py, wid) = 1)
-	
-	buffer_delete(buffer_current)
-	
 	var texsize = vec2(wid, hei);
 	var texpixelsize = vec2_div(vec2(1, 1), texsize);
-	vbuffer_add_pixels(hascolor, point3D(xx, 0, zz), hei, vec2(0, 0), texsize, texpixelsize, vec3(1))
+	vbuffer_add_pixels(surf, point3D(xx, 0, zz), hei, vec2(0, 0), texsize, texpixelsize, vec3(1))
 }
 
 var ysize, p1, p2, p3, p4, t1, t2, t3, t4;

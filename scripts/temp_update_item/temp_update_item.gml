@@ -41,38 +41,6 @@ else if (slotsize[Y] > slotsize[X])
 	
 scale = vec3_div(size, vec3(slotsize[X], size[Y], slotsize[Y]))
 
-// 3D pixels
-if (item_3d)
-{
-	var surf, tex;
-	surf = surface_create(slotsize[X], slotsize[Y])
-	if (item_tex.item_sheet_texture != null)
-		tex = item_tex.item_sheet_texture
-	else
-		tex = item_tex.texture
-	
-	surface_set_target(surf)
-	{
-		draw_clear_alpha(c_black, 0)
-		draw_texture_part(tex, 0, 0, texpos[X] * slotsize[X], texpos[Y] * slotsize[Y], slotsize[X], slotsize[Y])
-	}
-	surface_reset_target()
-	
-	buffer_current = buffer_create(slotsize[X] * slotsize[Y] * 4, buffer_fixed, 4)
-	buffer_get_surface(buffer_current, surf, 0, 0, 0)
-	
-	var hascolor;
-	for (var xx = 0; xx < slotsize[X]; xx++)
-		for (var yy = 0; yy < slotsize[Y]; yy++)
-			hascolor[xx, yy] = (buffer_read_alpha(xx, yy, slotsize[X]) = 1)
-			
-	buffer_delete(buffer_current)
-	surface_free(surf)
-	
-	var slotpixel = vec2_div(slottexsize, slotsize);
-	vbuffer_add_pixels(hascolor, point3D(0, 0, 0), size[Z], slottex, slotsize, slotpixel, scale)
-}
-
 var p1, p2, p3, p4;
 var t1, t2, t3, t4;
 
@@ -99,5 +67,28 @@ t3 = point2D(slottex[X], slottex[Y] + slottexsize[Y])
 t4 = point2D_add(slottex, slottexsize)
 vbuffer_add_triangle(p1, p2, p3, t1, t2, t3)
 vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
+
+// 3D pixels
+if (item_3d)
+{
+	var surf, tex;
+	surf = surface_create(slotsize[X], slotsize[Y])
+	if (item_tex.item_sheet_texture != null)
+		tex = item_tex.item_sheet_texture
+	else
+		tex = item_tex.texture
+	
+	surface_set_target(surf)
+	{
+		draw_clear_alpha(c_black, 0)
+		draw_texture_part(tex, 0, 0, texpos[X] * slotsize[X], texpos[Y] * slotsize[Y], slotsize[X], slotsize[Y])
+	}
+	surface_reset_target()
+	
+	var slotpixel = vec2_div(slottexsize, slotsize);
+	vbuffer_add_pixels(surf, point3D(0, 0, 0), size[Z], slottex, slotsize, slotpixel, scale)
+	
+	surface_free(surf)
+}
 
 vbuffer_done()

@@ -33,10 +33,10 @@ if (!background_sky_clouds_flat)
 	buffer_get_surface(buffer_current, surf, 0, 0, 0)
 	
 	// Store pixels
-	var iscloud;
-	for (var xx = 0; xx < texwid; xx++)
-		for (var yy = 0; yy < texhei; yy++)
-			iscloud[xx, yy] = buffer_read_alpha(xx, yy, texwid) > 0
+	var hascolor;
+	for (var py = 0; py < texwid; py++)
+		for (var px = 0; px < texhei; px++)
+			hascolor[px, py] = (buffer_read_int_uns() >> 24 = 255)
 			
 	buffer_delete(buffer_current)
 	surface_free(surf)
@@ -54,7 +54,7 @@ if (!background_sky_clouds_flat)
 		{
 			var vx, vy, tx, ty;
 			
-			if (!iscloud[xx, yy])
+			if (!hascolor[xx, yy])
 				continue
 			
 			vx = xx * blockw
@@ -62,7 +62,7 @@ if (!background_sky_clouds_flat)
 			tx = xx * pw
 			ty = yy * ph
 			
-			if (!iscloud[(xx + 1) mod texwid, yy])
+			if (!hascolor[(xx + 1) mod texwid, yy])
 			{
 				vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty, c_clouds_sidesdark)
 				vertex_add(vx + blockw, vy + blockh, hei, 1, 0, 0, tx, ty + ph, c_clouds_sidesdark)
@@ -72,7 +72,7 @@ if (!background_sky_clouds_flat)
 				vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty, c_clouds_sidesdark)
 			}
 			
-			if (!iscloud[mod_fix(xx - 1, texwid), yy])
+			if (!hascolor[mod_fix(xx - 1, texwid), yy])
 			{
 				vertex_add(vx, vy, 0, -1, 0, 0, tx, ty, c_clouds_sidesdark)
 				vertex_add(vx, vy, hei, -1, 0, 0, tx, ty + ph, c_clouds_sidesdark)
@@ -82,7 +82,7 @@ if (!background_sky_clouds_flat)
 				vertex_add(vx, vy, 0, -1, 0, 0, tx, ty, c_clouds_sidesdark)
 			}
 			
-			if (!iscloud[xx, (yy + 1) mod texhei])
+			if (!hascolor[xx, (yy + 1) mod texhei])
 			{
 				vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty, c_clouds_sideslight)
 				vertex_add(vx, vy + blockh, hei, 0, 1, 0, tx, ty + ph, c_clouds_sideslight)
@@ -92,7 +92,7 @@ if (!background_sky_clouds_flat)
 				vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty, c_clouds_sideslight)
 			}
 			
-			if (!iscloud[xx, mod_fix(yy - 1, texhei)])
+			if (!hascolor[xx, mod_fix(yy - 1, texhei)])
 			{
 				vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty, c_clouds_sideslight)
 				vertex_add(vx + blockw, vy, hei, 0, -1, 0, tx, ty + ph, c_clouds_sideslight)

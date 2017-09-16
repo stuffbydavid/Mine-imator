@@ -5,7 +5,7 @@ with (new(obj_template))
 	loaded = true
 	load_id = buffer_read_int()
 	save_id_map[?load_id] = load_id
-	
+
 	type = buffer_read_string_int()
 	name = buffer_read_string_int()
 	if (load_format = e_project.FORMAT_100_DEMO_2)
@@ -19,25 +19,31 @@ with (new(obj_template))
 	legacy_bodypart_id = buffer_read_int()
 	
 	// Find new model name and state
-	var modelmap = legacy_model_name_map[?legacy_model_name];
-	if (!is_undefined(modelmap))
+	if (type = "char" || type = "spblock")
 	{
-		model_name = modelmap[?"name"]
-		if (!is_undefined(modelmap[?"state"]))
-			model_state = modelmap[?"state"]
+		var modelmap = legacy_model_name_map[?legacy_model_name];
+		if (!is_undefined(modelmap))
+		{
+			model_name = modelmap[?"name"]
+			if (!is_undefined(modelmap[?"state"]))
+				model_state = modelmap[?"state"]
+			else
+				model_state = ""
+		}
 		else
-			model_state = ""
+			log("Could not convert model ", legacy_model_name)
 	}
-	else
-		log("Could not convert model ", legacy_model_name)
 	
 	// Find new model part name
-	var modelpartlist = legacy_model_part_map[?model_name];
-	if (!is_undefined(modelpartlist))
-		model_part_name = modelpartlist[|legacy_bodypart_id]
-	else
-		log("Could not convert model part of ", model_name, legacy_bodypart_id)
-		
+	if (type = "bodypart")
+	{
+		var modelpartlist = legacy_model_part_map[?model_name];
+		if (!is_undefined(modelpartlist))
+			model_part_name = modelpartlist[|legacy_bodypart_id]
+		else
+			log("Could not convert model part of ", model_name, legacy_bodypart_id)
+	}
+	
 	item_tex = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 		legacy_item_sheet = buffer_read_byte()
@@ -60,7 +66,7 @@ with (new(obj_template))
 	scenery = buffer_read_int()
 	if (scenery = 0)
 		scenery = null
-
+	
 	block_repeat_enable = buffer_read_byte()
 	block_repeat[X] = buffer_read_int()
 	block_repeat[Y] = buffer_read_int()
