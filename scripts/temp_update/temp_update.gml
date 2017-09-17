@@ -16,6 +16,6 @@ else if (type = "block")
 }
 else if (type_is_shape(type))
 	temp_update_shape()
-		
+
 temp_update_rot_point()
 temp_update_display_name()

@@ -41,6 +41,7 @@ particles_texture[0] = null
 particles_texture[1] = null
 
 block_vbuffer_reset()
+scenery_tl_list = null
 scenery_size = vec3(0)
 
 texture = null

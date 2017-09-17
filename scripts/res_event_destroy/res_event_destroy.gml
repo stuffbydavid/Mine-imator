@@ -83,6 +83,15 @@ if (sound_index != null)
 
 if (sound_buffer != null)
 	buffer_delete(sound_buffer)
+	
+// Free blocks
+if (scenery_tl_list != null)
+{
+	for (var i = 0; i < ds_list_size(scenery_tl_list); i++)
+		with (scenery_tl_list[|i])
+			instance_destroy()
+	ds_list_destroy(scenery_tl_list)
+}
 
 // Clear references and update counters
 with (obj_template)

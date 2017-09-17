@@ -54,8 +54,7 @@ if (shader_alpha > 0)
 	{
 		var texobj = value_inherit[e_value.TEXTURE_OBJ];
 		
-		matrix_set(matrix_world, matrix)
-		matrix_offset = point3D(-rot_point[X], -rot_point[Y], -rot_point[Z])
+		matrix_set(matrix_world, matrix_render)
 		
 		switch (type)
 		{

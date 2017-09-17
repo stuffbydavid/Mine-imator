@@ -115,6 +115,12 @@ with (new(obj_block))
 	else
 		require_models = false
 	
+	// Has timeline
+	var timelinemap = map[?"timeline"];
+	timeline = false
+	if (ds_map_valid(timelinemap))
+		block_load_timeline(timelinemap)
+	
 	// Legacy data
 	for (var d = 0; d < 16; d++)
 	{

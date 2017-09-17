@@ -10,7 +10,7 @@ vbuf = argument1
 facecamera = argument2
 tex = argument3
 
-rot = vec3(0, 0, 0)
+rot = vec3(0)
 
 if (type = "surface" && facecamera)
 {
@@ -19,7 +19,6 @@ if (type = "surface" && facecamera)
 	rot[Z] = 90 + point_direction(pos[X], pos[Y], proj_from[X], proj_from[Y])
 }
 
-matrix_add_offset()
 matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, vec3(1)))
 
 shader_texture = tex

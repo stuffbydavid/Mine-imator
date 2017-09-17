@@ -14,8 +14,8 @@ if (!file_exists_lib(fpath))
 	return null
 }
 
-var map = json_decode(file_text_contents(fpath));
-if (map < 0)
+var map = json_load(fpath);
+if (!ds_map_valid(map))
 {
 	log("Could not parse model file", fname)
 	return null

@@ -27,12 +27,14 @@ switch (type)
 	case "text":
 		rot_point[Y] = 0.5 * bool_to_float(text_3d)
 		break
-	
-	default:
-		rot_point[Z] = -8
-		break
 }
+
+if (type_is_shape(type))
+	rot_point[Z] = -8
 
 with (obj_timeline)
 	if (temp = other.id)
 		tl_update_rot_point()
+
+with (app)
+	tl_update_matrix()

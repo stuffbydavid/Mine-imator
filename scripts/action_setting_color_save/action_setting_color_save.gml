@@ -7,8 +7,8 @@ if (fn = "")
 
 fn = filename_new_ext(fn, ".micolor")
 
-json_export_start(fn)
-json_export_object_start()
+json_save_start(fn)
+json_save_object_start()
 settings_save_colors()
-json_export_object_done()
-json_export_done()
+json_save_object_done()
+json_save_done()

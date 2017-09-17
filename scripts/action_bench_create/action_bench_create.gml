@@ -90,9 +90,9 @@ else
 				}
 				
 				tl = temp_animate()
+				sortlist_add(app.lib_list, id)
 			}
 			
-			sortlist_add(app.lib_list, temp)
 			temp_edit = temp
 		}
 		

@@ -7,9 +7,7 @@ if (!file_exists_lib(fn))
 
 if (filename_ext(fn) = ".micolor")
 {
-	var json, map;
-	json = file_text_contents(fn)
-	map = json_decode(json)
+	var map = json_load(fn);
 	settings_load_colors(map[?"colors"])
 }
 

@@ -48,7 +48,7 @@ for (var f = 0; f < e_dir.amount; f++)
 var models = array3D_get(block_render_models, build_pos);
 if (models = 0) // Requires other models
 	models = block_get_render_models(block_current, block_state_current, true)
-
+	
 if (models != null)
 {
 	if (is_array(models)) // Generate from render models

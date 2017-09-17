@@ -42,8 +42,8 @@ var ismodel, tempo, temposcale, num, len, kflist, dummy;
 
 if (!legacy)
 {
-	ismodel = json_read_real(rootmap[?"is_model"], false)
-	tempo = json_read_real(rootmap[?"tempo"], project_tempo)
+	ismodel = value_get_real(rootmap[?"is_model"], false)
+	tempo = value_get_real(rootmap[?"tempo"], project_tempo)
 	temposcale = (project_tempo / tempo)
 	kflist = rootmap[?"keyframes"]
 	if (ds_list_valid(kflist))
@@ -51,7 +51,7 @@ if (!legacy)
 	else
 		num = 0
 	
-	len = json_read_real(rootmap[?"length"], 0)
+	len = value_get_real(rootmap[?"length"], 0)
 }
 else
 {
@@ -78,7 +78,7 @@ for (var k = 0; k < num; k++)
 	if (!legacy)
 	{
 		kfcurmap = kflist[|k]
-		pos = round(temposcale * json_read_real(kfcurmap[?"position"], 0))
+		pos = round(temposcale * value_get_real(kfcurmap[?"position"], 0))
 		
 		// Add to a body part?
 		if (!is_undefined(kfcurmap[?"part_name"]))

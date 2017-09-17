@@ -9,6 +9,7 @@ globalvar trial_version, current_step, minute_steps, delta,
 current_step = 0
 minute_steps = 60 * 60
 delta = 1
+json_startup()
 
 // Assets
 globalvar load_queue, temp_edit, ptype_edit, tl_edit_amount, tl_edit, res_edit, axis_edit,

@@ -1,6 +1,6 @@
 /// particle_render()
 /// @desc Renders the particle.
-
+// TODOO
 var temp, prevalpha, prevcolor;
 temp = type.temp
 
@@ -18,7 +18,7 @@ if (temp)
 	else
 		rep = vec3(1)
 		
-	matrix_reset_offset()
+	//matrix_reset_offset()
 	
 	switch (temp.type) // Rotation point
 	{

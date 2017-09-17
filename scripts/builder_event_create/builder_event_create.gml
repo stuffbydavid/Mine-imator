@@ -14,6 +14,7 @@ block_state[0] = 0
 block_state_current = ""
 block_render_models[0] = 0
 block_render_models_dir[e_dir.amount] = 0
+block_tl_list = null
 
 vars = ds_map_create()
 

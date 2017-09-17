@@ -2,9 +2,9 @@
 /// @arg filename
 /// @arg saveall
 
-json_export_start(argument0)
-json_export_object_start()
-json_export_var("format", project_format)
+json_save_start(argument0)
+json_save_object_start()
+json_save_var("format", project_format)
 
 with (obj_template)
 	save = argument1

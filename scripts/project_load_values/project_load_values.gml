@@ -13,11 +13,11 @@ while (!is_undefined(key))
 	if (index >= 0)
 	{
 		if (tl_value_is_bool(index))
-			arr[@ index] = json_read_real(map[?key], arr[@ index])
+			arr[@ index] = value_get_real(map[?key], arr[@ index])
 		else if (tl_value_is_color(index))
-			arr[@ index] = json_read_color(map[?key], arr[@ index])
+			arr[@ index] = value_get_color(map[?key], arr[@ index])
 		else if (tl_value_is_string(index))
-			arr[@ index] = json_read_string(map[?key], arr[@ index])
+			arr[@ index] = value_get_string(map[?key], arr[@ index])
 		else if (map[?key] = "null")
 			arr[@ index] = null
 		else

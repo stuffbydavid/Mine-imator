@@ -120,10 +120,10 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	fname = unzip_directory + "assets\\minecraft\\textures\\" + mc_assets.block_texture_ani_list[|t] + ".png.mcmeta"
 	if (file_exists_lib(fname))
 	{
-		var decoded = json_decode(file_text_contents(fname));
-		if (decoded >= 0)
+		var map = json_load(fname);
+		if (ds_map_valid(map))
 		{
-			var animation = decoded[?"animation"];
+			var animation = map[?"animation"];
 			if (!is_undefined(animation))
 			{
 				// Interpolate

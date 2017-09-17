@@ -5,10 +5,8 @@
 var fn = argument0;
 	
 // Decode JSON
-var json, map;
-json = file_text_contents(fn)
-map = json_decode(json)
-if (map < 0)
+var map = json_load(fn);
+if (!ds_map_valid(map))
 {
 	log("Could not parse JSON file", fn)
 	error("errorfilecorrupted")

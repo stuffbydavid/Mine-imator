@@ -16,12 +16,13 @@ if (!file_exists_lib(fname))
 	return null
 }
 
-var json, map;
-json = json_string_escape_bool(file_text_contents(fname))
-map = json_decode(json)
-if (map < 0)
+var jsontypemap, map;
+jsontypemap = ds_map_create()
+map = json_load(fname, jsontypemap);
+if (!ds_map_valid(map))
 {
 	log("Could not parse state file", fname)
+	ds_map_destroy(jsontypemap)
 	return null
 }
 
@@ -63,7 +64,7 @@ with (new(obj_block_load_state_file))
 				list = ds_list_create()
 			
 				// Check if a list of models
-				if (string_contains(json, "\"" + name + "\": ["))
+				if (ds_map_find_value(jsontypemap[?variantsmap], name) = e_json_type.ARRAY)
 					ds_list_copy(list, variantlist)
 				else
 					ds_list_add(list, variantlist)
@@ -91,7 +92,7 @@ with (new(obj_block_load_state_file))
 				var whenmap = mcase[?"when"];
 				condition_amount = 0
 				
-				if (!is_undefined(whenmap) && ds_map_size(whenmap) > 0)
+				if (ds_map_valid(whenmap) && ds_map_size(whenmap) > 0)
 				{
 					// OR, one of multiple sets of conditions must match
 					var orlist = whenmap[?"OR"];
@@ -105,7 +106,10 @@ with (new(obj_block_load_state_file))
 							cond = ds_map_find_first(curcondmap)
 							while (!is_undefined(cond))
 							{
-								condmap[?cond] = string_split(curcondmap[?cond], "|")
+								var val = curcondmap[?cond];
+								if (ds_map_find_value(jsontypemap[?curcondmap], cond) = e_json_type.BOOL) // Booleans must be string
+									val = test(val, "true", "false")
+								condmap[?cond] = string_split(val, "|")
 								cond = ds_map_find_next(curcondmap, cond)
 							}
 							condition[condition_amount++] = condmap
@@ -120,7 +124,10 @@ with (new(obj_block_load_state_file))
 						cond = ds_map_find_first(whenmap)
 						while (!is_undefined(cond))
 						{
-							condmap[?cond] = string_split(whenmap[?cond], "|")
+							var val = whenmap[?cond];
+							if (ds_map_find_value(jsontypemap[?whenmap], cond) = e_json_type.BOOL) // Booleans must be string
+								val = test(val, "true", "false")
+							condmap[?cond] = string_split(val, "|")
 							cond = ds_map_find_next(whenmap, cond)
 						}
 						condition[condition_amount++] = condmap
@@ -128,17 +135,15 @@ with (new(obj_block_load_state_file))
 				}
 				
 				// Apply
-				var applylist, list, match, spos;
+				var applylist, list;
 				applylist = mcase[?"apply"]
 				list = ds_list_create()
 				
 				// Check if a list of models
-				var match = "\"apply\":";
-				if (string_copy(json, string_pos(match, json), string_length(match + " [")) = match + " [")
+				if (ds_map_find_value(jsontypemap[?mcase], "apply") = e_json_type.ARRAY)
 					ds_list_copy(list, applylist)
 				else
 					ds_list_add(list, applylist)
-				json = string_replace(json, match, "")
 				
 				if (!block_load_state_models(list, type))
 					return null
@@ -151,5 +156,6 @@ with (new(obj_block_load_state_file))
 	}
 	
 	//ds_map_destroy(map) // Error
+	ds_map_destroy(jsontypemap)
 	return id
 }

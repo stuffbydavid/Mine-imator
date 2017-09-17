@@ -24,8 +24,8 @@ if (facecamera)
 if (!res.font_minecraft)
 	sca = vec3(8 / 48, 1, 8 / 48)
 	
-matrix_add_offset()
-matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, sca))
+matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, vec3(1)))
+matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), vec3(0), sca))
 
 mipmap = shader_texture_filter_mipmap
 shader_texture_filter_mipmap = app.setting_transparent_texture_filtering

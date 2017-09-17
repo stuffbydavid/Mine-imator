@@ -20,6 +20,9 @@ else if (parent = app && !part_of && type != "folder")
 	value[e_value.POS_X] = app.cam_work_focus[X]
 	value[e_value.POS_Y] = app.cam_work_focus[Y]
 	value[e_value.POS_Z] = max(0, app.cam_work_focus[Z] - 16)
+	
+	if (type = "text")
+		value[e_value.POS_Z] += 16
 }
 
 value_default[e_value.POS_X] = value[e_value.POS_X]

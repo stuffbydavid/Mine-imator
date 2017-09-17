@@ -181,7 +181,21 @@ switch (load_stage)
 		buffer_delete(buffer_current)
 			
 		load_stage = "blocks"
+		
+		// Clear old timelines
+		if (scenery_tl_list = null)
+			scenery_tl_list = ds_list_create()
+		else
+		{
+			for (var i = 0; i < ds_list_size(scenery_tl_list); i++)
+				with (scenery_tl_list[|i])
+					instance_destroy()
+			ds_list_clear(scenery_tl_list)
+		}
+		
 		mc_builder.build_pos = point3D(0, 0, 0)
+		mc_builder.block_tl_list = scenery_tl_list
+			
 		with (app)
 		{
 			popup_loading.text = text_get("loadsceneryblocks")
@@ -241,6 +255,8 @@ switch (load_stage)
 		if (mc_builder.build_pos[Z] = mc_builder.build_size[Z])
 		{
 			block_vbuffer_done()
+			mc_builder.block_tl_list = null
+			
 			scenery_size = vec3(mc_builder.build_size[Y], mc_builder.build_size[X], mc_builder.build_size[Z]) // Rotate 90 degrees
 			ready = true
 
@@ -258,14 +274,23 @@ switch (load_stage)
 				}
 			}
 				
-			// Update rotation points
+			// Update templates
 			with (obj_template)
+			{
 				if (scenery = other.id)
+				{
 					temp_update_rot_point()
+					if (scenery_animate)
+						temp_animate_scenery(scenery_animate_root)
+				}
+			}
 			
 			// Next
 			with (app)
+			{
+				tl_update_matrix()
 				load_next()
+			}
 		}
 		else
 			with (app)

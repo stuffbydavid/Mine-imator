@@ -35,7 +35,6 @@ if (facecamera)
 }
 
 matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, vec3(1)))
-matrix_add_offset()
 matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
 
 mipmap = shader_texture_filter_mipmap

@@ -51,29 +51,29 @@ with (obj_keyframe)
 	lastpos = max(position, lastpos)
 }
 
-json_export_var_bool("is_model", ismodel)
-json_export_var("tempo", project_tempo)
-json_export_var("length", lastpos - firstpos)
+json_save_var_bool("is_model", ismodel)
+json_save_var("tempo", project_tempo)
+json_save_var("length", lastpos - firstpos)
 
-json_export_array_start("keyframes")
+json_save_array_start("keyframes")
 
 with (obj_keyframe)
 {
 	if (!selected)
 		continue
 	
-	json_export_object_start()
+	json_save_object_start()
 	
-		json_export_var("position", position - firstpos)
+		json_save_var("position", position - firstpos)
 		if (ismodel && timeline.part_of != null)
-			json_export_var("part_name", timeline.model_part_name)
+			json_save_var("part_name", timeline.model_part_name)
 			
 		project_save_values("values", value, timeline.value_default)
 	
-	json_export_object_done()
+	json_save_object_done()
 }
 
-json_export_array_done()
+json_save_array_done()
 	
 project_save_objects()
 project_save_done()

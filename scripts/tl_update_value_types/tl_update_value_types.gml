@@ -71,5 +71,5 @@ if (type = "text")
 
 // Rotation point
 value_type[e_value_type.ROT_POINT] = true
-if (type = "char" || type = "bodypart" || type = "particles" || type = "camera" || type = "pointlight" || type = "spotlight" || type = "folder")
+if (type = "particles" || type = "camera" || type = "pointlight" || type = "spotlight")
 	value_type[e_value_type.ROT_POINT] = false

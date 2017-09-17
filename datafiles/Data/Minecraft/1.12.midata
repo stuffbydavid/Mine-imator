@@ -915,12 +915,19 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=south",
-			"animated": {
-				"special_block": "chest",
+			"timeline": {
+				"model": "chest",
+				"model_state": {
+					"double=false": "variant=normal",
+					"double=true": "variant=normal_double"
+				},
+				"rotation_point": {
+					"double=true": [ -8, 0, 0 ]
+				},
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],
-					"facing=south": [ 0, 0, 0],
+					"facing=south": [ 0, 0, 0 ],
 					"facing=east": [ 0, 90, 0 ],
 					"facing=west": [ 0, 270, 0 ]
 				}
@@ -928,10 +935,10 @@
 			"legacy_id": 54,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": "facing=east",
-					"1": "facing=west",
-					"2": "facing=south",
-					"3": "facing=north"
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
 				}
 			}
 		},
@@ -1065,7 +1072,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=north,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 64,
 			"legacy_data": {
 				"0x1": {

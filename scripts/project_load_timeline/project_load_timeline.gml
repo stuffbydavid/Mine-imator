@@ -9,23 +9,23 @@ if (!ds_map_valid(map))
 with (new(obj_timeline))
 {
 	loaded = true
-	load_id = json_read_string(map[?"id"], save_id)
+	load_id = value_get_string(map[?"id"], save_id)
 	save_id_map[?load_id] = load_id
 	
-	type = json_read_string(map[?"type"], type)
-	name = json_read_string(map[?"name"], name)
+	type = value_get_string(map[?"type"], type)
+	name = value_get_string(map[?"name"], name)
 	
-	temp = json_read_save_id(map[?"temp"], temp)
-	text = json_read_string(map[?"text"], text)
-	color = json_read_color(map[?"color"], color)
-	hide= json_read_real(map[?"hide"], hide)
-	lock = json_read_real(map[?"lock"], lock)
-	depth = json_read_real(map[?"depth"], depth)
+	temp = value_get_save_id(map[?"temp"], temp)
+	text = value_get_string(map[?"text"], text)
+	color = value_get_color(map[?"color"], color)
+	hide= value_get_real(map[?"hide"], hide)
+	lock = value_get_real(map[?"lock"], lock)
+	depth = value_get_real(map[?"depth"], depth)
 	
 	if (type = "bodypart")
 	{
-		model_part_name = json_read_string(map[?"model_part_name"], model_part_name)
-		part_of = json_read_save_id(map[?"part_of"], part_of)
+		model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
+		part_of = value_get_save_id(map[?"part_of"], part_of)
 	}
 		
 	if (type = "char" || type = "spblock")
@@ -71,41 +71,41 @@ with (new(obj_timeline))
 				ds_list_add(keyframe_list, keyframe_array[i])
 	}
 	
-	parent = json_read_save_id(map[?"parent"], parent)
-	parent_tree_index = json_read_real(map[?"parent_tree_index"], null)
+	parent = value_get_save_id(map[?"parent"], parent)
+	parent_tree_index = value_get_real(map[?"parent_tree_index"], null)
 	
-	lock_bend = json_read_real(map[?"lock_bend"], lock_bend)
-	tree_extend = json_read_real(map[?"tree_extend"], tree_extend)
+	lock_bend = value_get_real(map[?"lock_bend"], lock_bend)
+	tree_extend = value_get_real(map[?"tree_extend"], tree_extend)
 	
 	var inheritmap = map[?"inherit"];
 	if (ds_map_valid(inheritmap))
 	{
-		inherit_position = json_read_real(inheritmap[?"position"], inherit_position)
-		inherit_rotation = json_read_real(inheritmap[?"rotation"], inherit_rotation)
-		inherit_scale = json_read_real(inheritmap[?"scale"], inherit_scale)
-		inherit_alpha = json_read_real(inheritmap[?"alpha"], inherit_alpha)
-		inherit_color = json_read_real(inheritmap[?"color"], inherit_color)
-		inherit_texture = json_read_real(inheritmap[?"texture"], inherit_texture)
-		inherit_visibility = json_read_real(inheritmap[?"visibility"], inherit_visibility)
+		inherit_position = value_get_real(inheritmap[?"position"], inherit_position)
+		inherit_rotation = value_get_real(inheritmap[?"rotation"], inherit_rotation)
+		inherit_scale = value_get_real(inheritmap[?"scale"], inherit_scale)
+		inherit_alpha = value_get_real(inheritmap[?"alpha"], inherit_alpha)
+		inherit_color = value_get_real(inheritmap[?"color"], inherit_color)
+		inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
+		inherit_visibility = value_get_real(inheritmap[?"visibility"], inherit_visibility)
 	}
 	
-	scale_resize = json_read_real(map[?"scale_resize"], scale_resize)
+	scale_resize = value_get_real(map[?"scale_resize"], scale_resize)
 	
-	rot_point_custom = json_read_real(map[?"rot_point_custom"], rot_point_custom)
-	rot_point = json_read_array(map[?"rot_point"], rot_point)
+	rot_point_custom = value_get_real(map[?"rot_point_custom"], rot_point_custom)
+	rot_point = value_get_array(map[?"rot_point"], rot_point)
 	
-	backfaces = json_read_real(map[?"backfaces"], backfaces)
-	texture_blur = json_read_real(map[?"texture_blur"], texture_blur)
-	texture_filtering = json_read_real(map[?"texture_filtering"], texture_filtering)
+	backfaces = value_get_real(map[?"backfaces"], backfaces)
+	texture_blur = value_get_real(map[?"texture_blur"], texture_blur)
+	texture_filtering = value_get_real(map[?"texture_filtering"], texture_filtering)
 	if (type = "bodypart")
-		round_bending = json_read_real(map[?"round_bending"], round_bending)
-	shadows = json_read_real(map[?"shadows"], shadows)
-	ssao= json_read_real(map[?"ssao"], ssao)
-	fog = json_read_real(map[?"fog"], fog)
+		round_bending = value_get_real(map[?"round_bending"], round_bending)
+	shadows = value_get_real(map[?"shadows"], shadows)
+	ssao= value_get_real(map[?"ssao"], ssao)
+	fog = value_get_real(map[?"fog"], fog)
 	
 	if (type = "scenery" || type = "block" || type = "particles" || type = "text" || type_is_shape(type))
 	{
-		wind = json_read_real(map[?"wind"], wind)
-		wind_terrain = json_read_real(map[?"wind_terrain"], wind_terrain)
+		wind = value_get_real(map[?"wind"], wind)
+		wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)
 	}
 }
