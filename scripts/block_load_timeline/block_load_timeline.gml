@@ -17,8 +17,13 @@ if (is_string(map[?"model"]))
 	// Model state
 	tl_model_state = ""
 	tl_model_state_amount = 0
+	tl_has_model_state = false
+	
 	if (typemap[?"model_state"] = e_json_type.STRING)
+	{
 		tl_model_state = map[?"model_state"]
+		tl_has_model_state = true
+	}
 	else if (typemap[?"model_state"] = e_json_type.OBJECT) // Determined by block state
 	{
 		var key = ds_map_find_first(map[?"model_state"]);
@@ -33,10 +38,22 @@ if (is_string(map[?"model"]))
 			}
 			key = ds_map_find_next(map[?"model_state"], key)
 		}
+		tl_has_model_state = true
 	}
 }
 else // Uses own block model with default state
+{
 	tl_model_name = ""
+	tl_has_model_state = false
+}
+
+// Text
+tl_has_text = false
+if (is_real(map[?"has_text"]))
+	tl_has_text = map[?"has_text"]
+	
+if (tl_has_text)
+	tl_text_position = value_get_point3D(map[?"text_position"], point3D(0, 0, 0))
 		
 // Rotation point
 tl_rot_point = point3D(0, 0, 0)

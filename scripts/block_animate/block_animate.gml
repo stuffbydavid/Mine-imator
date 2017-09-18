@@ -27,7 +27,7 @@ with (obj_template)
 	}
 }
 	
-// Create new
+// Create new template
 if (temp = null)
 {
 	with (new(obj_template))
@@ -57,10 +57,11 @@ if (temp = null)
 	}
 }
 	
+// Create timeline
 var tl;
 with (temp)
 	tl = temp_animate()
-		
+
 with (tl)
 {
 	rot_point_custom = true
@@ -76,5 +77,60 @@ with (tl)
 	value_default[e_value.ROT_Z] = other.rotation[Z] + 90
 		
 	tl_update_values()
-	return id
 }
+
+// Add text
+if (has_text)
+{
+	var texttemp = null;
+	
+	// Find existing template to re-use
+	with (obj_template)
+	{
+		if (id.creator != creator || id.type != "text")
+			continue
+		
+		texttemp = id
+		break
+	}
+	
+	// Create new template
+	if (texttemp = null)
+	{
+		with (new(obj_template))
+		{
+			id.type = "text"
+			id.creator = creator
+		
+			text_font = res_def
+			text_font.count++
+		
+			temp_update()
+			sortlist_add(app.lib_list, id)
+			texttemp = id
+		}
+	}
+	
+	// Create timeline
+	var texttl;
+	with (texttemp)
+		texttl = temp_animate()
+	
+	with (texttl)
+	{
+		text = other.text
+		
+		value_default[e_value.POS_X] = other.text_position[X]
+		value_default[e_value.POS_Y] = other.text_position[Y]
+		value_default[e_value.POS_Z] = other.text_position[Z]
+		value_default[e_value.SCA_X] = 0.175
+		value_default[e_value.SCA_Y] = 0.175
+		value_default[e_value.SCA_Z] = 0.175
+		value_default[e_value.RGB_MUL] = c_black
+		
+		tl_update_values()
+		tl_set_parent(tl)
+	}
+}
+
+return tl

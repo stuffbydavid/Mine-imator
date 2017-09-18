@@ -29,12 +29,10 @@ with (new(obj_block_tl))
 	
 	if (model_name != "")
 	{
-		if (block.tl_model_state_amount = 0)
-		{
+		if (!block.tl_has_model_state)
+			model_state = state // Copy block state if not specified
+		else if (block.tl_model_state_amount = 0)
 			model_state = block.tl_model_state
-			if (model_state = "") // Copy block state if not specified
-				model_state = state
-		}
 		
 		// Find model state from block state
 		for (var i = 0; i < block.tl_model_state_amount; i++)
@@ -46,6 +44,18 @@ with (new(obj_block_tl))
 				break
 			}
 		}
+	}
+	
+	// Get text from state
+	has_text = block.tl_has_text
+	if (has_text)
+	{
+		text = mc_builder.vars[?"text"]
+		text_position = block.tl_text_position
+		
+		// Un-escape = and ,
+		text = string_replace_all(text, "\\=", "=")
+		text = string_replace_all(text, "\\,", ",")
 	}
 	
 	rot_point = block.tl_rot_point

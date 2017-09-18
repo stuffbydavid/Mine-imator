@@ -1154,7 +1154,9 @@
 			"default_state": "orientation=0",
 			"timeline": {
 				"model": "standing_sign",
+				"model_state": "",
 				"has_text": true,
+				"text_position": [ 0, 13.25, 0.8 ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"orientation=0": [ 0, 0, 0 ],
@@ -1308,7 +1310,9 @@
 			},
 			"timeline": {
 				"model": "wall_sign",
+				"model_state": "",
 				"has_text": true,
+				"text_position": [ 0, 8, 1.5 ],
 				"position": {
 					"facing=east": [ 0, 0, 8 ],
 					"facing=west": [ 16, 0, 8 ],
@@ -1344,6 +1348,7 @@
 			"default_state": "facing=up_z,powered=false",
 			"timeline": {
 				"model": "lever",
+				"model_state": "",
 				"position": {
 					"facing=north": [ 8, 8, 16 ],
 					"facing=south": [ 8, 8, 0 ],

@@ -1,9 +1,9 @@
 /// block_tile_entity_sign(map)
 /// @arg map
 
-var map, state;
+var map, str;
 map = argument0
-state = block_state_current
+str = ""
 
 for (var i = 0; i < 4; i++)
 {
@@ -13,13 +13,19 @@ for (var i = 0; i < 4; i++)
 		
 	var textmap = json_decode(text);
 	if (ds_map_valid(textmap))
-		text= textmap[?"text"]
+		text = textmap[?"text"]
 	
-	// Escape = and , in the text
-	text = string_replace_all(text, "=", "\\=")
-	text = string_replace_all(text, ",", "\\,")
+	if (i > 0)
+		str += "\n"
 	
-	state += ",text" + string(i + 1) + "=" + text
+	if (text = "")
+		text = " "
+	
+	str += text
 }
 
-array3D_set(block_state, build_pos, state)
+// Escape = and , in text
+str = string_replace_all(str, "=", "\\=")
+str = string_replace_all(str, ",", "\\,")
+
+array3D_set(block_state, build_pos, block_state_current + ",text=" + str)

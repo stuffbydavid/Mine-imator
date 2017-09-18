@@ -21,7 +21,7 @@ draw_set_font(res.font)
 // Calculate dimensions
 var wid, hei, xx, zz;
 wid = string_width(str) + 1
-hei = string_height(str) + 1
+hei = string_height_ext(str, string_height(" ") + 2, -1) + 1
 xx = -wid / 2
 zz = -hei / 2
 
@@ -34,7 +34,7 @@ surface_set_target(surf)
 	draw_set_color(c_white)
 	draw_set_halign(fa_center)
 	draw_set_valign(fa_middle)
-	draw_text(ceil(wid / 2), ceil(hei / 2), str)
+	draw_text_ext(ceil(wid / 2), ceil(hei / 2), str, string_height(" ") + 2, -1)
 	draw_set_halign(fa_left)
 	draw_set_valign(fa_top)
 	draw_set_color(color)
