@@ -3,7 +3,7 @@
 // Debug
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_unzip_assets		true
+#macro dev_mode_unzip_assets		false
 
 // Versions
 #macro mineimator_version			"1.1.0"

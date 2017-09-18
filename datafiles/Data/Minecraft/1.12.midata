@@ -143,6 +143,14 @@
 			"file": "shield.mimodel"
 		},
 		{
+			"name": "standing_sign",
+			"file": "standing_sign.mimodel"
+		},
+		{
+			"name": "wall_sign",
+			"file": "wall_sign.mimodel"
+		},
+		{
 			"name": "bed",
 			"file": "bed.mimodel",
 			"states": {
@@ -165,7 +173,7 @@
 					{ "value": "black", "texture": "entity/bed/black" }
 				]
 			},
-			"default_state": "color=white"
+			"default_state": "color=red"
 		},
 		{
 			"name": "shulker_box",
@@ -537,6 +545,40 @@
 			"name": "noteblock",
 			"file": "noteblock.json",
 			"legacy_id": 25
+		},
+		{
+			"name": "bed",
+			"type": "bed",
+			"states": {
+				"facing": [ "east", "west", "south", "north" ],
+				"half": [ "foot", "head" ],
+				"color": [ "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver", "cyan", "purple", "blue", "brown", "green", "red", "black" ]
+			},
+			"default_state": "facing=north,half=foot,color=red",
+			"timeline": {
+				"model": "bed",
+				"rotation_point": [ 0, 0, 8 ],
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"facing=east": [ 0, -90, 0 ],
+					"facing=south": [ 0, 180, 0 ],
+					"facing=west": [ 0, 90, 0 ],
+					"facing=north": [ 0, 0, 0 ]
+				}
+			},
+			"legacy_id": 26,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=south",
+					"1": "facing=west",
+					"2": "facing=north",
+					"3": "facing=east"
+				},
+				"0x8": {
+					"0": "half=foot",
+					"1": "half=head"
+				}
+			}
 		},
 		{
 			"name": "golden_rail",
@@ -1105,6 +1147,55 @@
 			}
 		},
 		{
+			"name": "standing_sign",
+			"states": {
+				"orientation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "orientation=0",
+			"timeline": {
+				"model": "standing_sign",
+				"has_text": true,
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"orientation=0": [ 0, 0, 0 ],
+					"orientation=1": [ 0, -22.5, 0 ],
+					"orientation=2": [ 0, -45, 0 ],
+					"orientation=3": [ 0, -67.5, 0 ],
+					"orientation=4": [ 0, -90, 0 ],
+					"orientation=5": [ 0, -112.5, 0 ],
+					"orientation=6": [ 0, -135, 0 ],
+					"orientation=7": [ 0, -157.5, 0 ],
+					"orientation=8": [ 0, 180, 0 ],
+					"orientation=9": [ 0, 157.5, 0 ],
+					"orientation=10": [ 0, 135, 0 ],
+					"orientation=11": [ 0, 112.5, 0 ],
+					"orientation=12": [ 0, 90, 0 ],
+					"orientation=13": [ 0, 67.5, 0 ],
+					"orientation=14": [ 0, 45, 0 ],
+					"orientation=15": [ 0, 22.5, 0 ]
+				}
+			},
+			"legacy_id": 63,
+			"legacy_data": {
+				"0": "orientation=0",
+				"1": "orientation=1",
+				"2": "orientation=2",
+				"3": "orientation=3",
+				"4": "orientation=4",
+				"5": "orientation=5",
+				"6": "orientation=6",
+				"7": "orientation=7",
+				"8": "orientation=8",
+				"9": "orientation=9",
+				"10": "orientation=10",
+				"11": "orientation=11",
+				"12": "orientation=12",
+				"13": "orientation=13",
+				"14": "orientation=14",
+				"15": "orientation=15"
+			}
+		},
+		{
 			"name": "wooden_door",
 			"file": "wooden_door.json",
 			"type": "door",
@@ -1211,6 +1302,38 @@
 			}
 		},
 		{
+			"name": "wall_sign",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"timeline": {
+				"model": "wall_sign",
+				"has_text": true,
+				"position": {
+					"facing=east": [ 0, 0, 8 ],
+					"facing=west": [ 16, 0, 8 ],
+					"facing=south": [ 8, 0, 0 ],
+					"facing=north": [ 8, 0, 16 ],
+				},
+				"rotation": {
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=north": [ 0, 180, 0 ],
+				}
+			},
+			"default_state": "facing=south",
+			"legacy_id": 68,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
 			"name": "lever",
 			"file": "lever.json",
 			"type": "redstone_connect",
@@ -1232,14 +1355,14 @@
 					"facing=down_z": [ 8, 16, 8 ]
 				},
 				"rotation": {
-					"facing=north": [ 90, 180, 180 ],
-					"facing=south": [ 90, 180, 0 ],
-					"facing=east": [ 90, 180, -90 ],
-					"facing=west": [ 90, 180, 90 ],
-					"facing=up_x": [ 0, 90, 0 ],
-					"facing=up_z": [ 0, 0, 0 ],
-					"facing=down_x": [ 180, -90, 0 ],
-					"facing=down_z": [ 180, 180, 0 ]
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up_x": [ 0, -90, 0 ],
+					"facing=up_z": [ 0, 180, 0 ],
+					"facing=down_x": [ 180, 90, 0 ],
+					"facing=down_z": [ 180, 0, 0 ]
 				}
 			},
 			"legacy_id": 69,
@@ -1655,6 +1778,34 @@
 				"half": [ "top", "bottom" ]
 			},
 			"default_state": "facing=south,open=false,half=bottom",
+			"timeline": {
+				"rotation_point": {
+					"facing=east": [ 1.5, 1.5, 8 ],
+					"facing=west": [ 14.5, 1.5, 8 ],
+					"facing=south": [ 8, 1.5, 1.5 ],
+					"facing=north": [ 8, 1.5, 14.5 ]
+				},
+				"position": {
+					"facing=east,half=bottom": [ 1.5, 1.5, 8 ],
+					"facing=west,half=bottom": [ 14.5, 1.5, 8 ],
+					"facing=south,half=bottom": [ 8, 1.5, 1.5 ],
+					"facing=north,half=bottom": [ 8, 1.5, 14.5 ],
+					"facing=east,half=top": [ 1.5, 14.5, 8 ],
+					"facing=west,half=top": [ 14.5, 14.5, 8 ],
+					"facing=south,half=top": [ 8, 14.5, 1.5 ],
+					"facing=north,half=top": [ 8, 14.5, 14.5 ]
+				},
+				"rotation": {
+					"facing=east,half=bottom,open=true": [ 0, 0, 90 ],
+					"facing=west,half=bottom,open=true": [ 0, 0, -90 ],
+					"facing=south,half=bottom,open=true": [ -90, 0, 0 ],
+					"facing=north,half=bottom,open=true": [ 90, 0, 0 ],
+					"facing=east,half=top,open=true": [ 0, 0, -90 ],
+					"facing=west,half=top,open=true": [ 0, 0, 90 ],
+					"facing=south,half=top,open=true": [ 90, 0, 0 ],
+					"facing=north,half=top,open=true": [ -90, 0, 0 ]
+				}
+			},
 			"legacy_id": 96,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2191,6 +2342,35 @@
 			"name": "emerald_ore",
 			"file": "emerald_ore.json",
 			"legacy_id": 129
+		},
+		{
+			"name": "ender_chest",
+			"type": "chest",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=south",
+			"timeline": {
+				"model": "chest",
+				"model_state": "variant=ender",
+				"rotation_point": [ -8, 0, 0 ],
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
+			"legacy_id": 130,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
 		},
 		{
 			"name": "tripwire_hook",
@@ -2938,6 +3118,34 @@
 				"half": [ "top", "bottom" ]
 			},
 			"default_state": "facing=south,open=false,half=bottom",
+			"timeline": {
+				"rotation_point": {
+					"facing=east": [ 1.5, 1.5, 8 ],
+					"facing=west": [ 14.5, 1.5, 8 ],
+					"facing=south": [ 8, 1.5, 1.5 ],
+					"facing=north": [ 8, 1.5, 14.5 ]
+				},
+				"position": {
+					"facing=east,half=bottom": [ 1.5, 1.5, 8 ],
+					"facing=west,half=bottom": [ 14.5, 1.5, 8 ],
+					"facing=south,half=bottom": [ 8, 1.5, 1.5 ],
+					"facing=north,half=bottom": [ 8, 1.5, 14.5 ],
+					"facing=east,half=top": [ 1.5, 14.5, 8 ],
+					"facing=west,half=top": [ 14.5, 14.5, 8 ],
+					"facing=south,half=top": [ 8, 14.5, 1.5 ],
+					"facing=north,half=top": [ 8, 14.5, 14.5 ]
+				},
+				"rotation": {
+					"facing=east,half=bottom,open=true": [ 0, 0, 90 ],
+					"facing=west,half=bottom,open=true": [ 0, 0, -90 ],
+					"facing=south,half=bottom,open=true": [ -90, 0, 0 ],
+					"facing=north,half=bottom,open=true": [ 90, 0, 0 ],
+					"facing=east,half=top,open=true": [ 0, 0, -90 ],
+					"facing=west,half=top,open=true": [ 0, 0, 90 ],
+					"facing=south,half=top,open=true": [ 90, 0, 0 ],
+					"facing=north,half=top,open=true": [ -90, 0, 0 ]
+				}
+			},
 			"legacy_id": 167,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3812,15 +4020,15 @@
 			"name": "observer",
 			"file": "observer.json",
 			"states": {
-				"facing": [ "north", "south", "east", "west", "up" ],
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
 				"powered": [ "true", "false" ]
 			},
 			"default_state": "facing=south,powered=false",
 			"legacy_id": 218,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
-					"0": "facing=up",
-					"1": "facing=down",
+					"0": "facing=down",
+					"1": "facing=up",
 					"2": "facing=north",
 					"3": "facing=south",
 					"4": "facing=west",
@@ -3829,6 +4037,614 @@
 				"0x8": {
 					"0": "powered=false",
 					"1": "powered=true"
+				}
+			}
+		},
+		{
+			"name": "white_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=white",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 219,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "orange_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=orange",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 220,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "magenta_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=magenta",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 221,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "light_blue_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=light_blue",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 222,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "yellow_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=yellow",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 223,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "lime_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=lime",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 224,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "pink_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=pink",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 225,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "gray_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=gray",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 226,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "silver_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=silver",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 227,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "cyan_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=cyan",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 228,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "purple_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=purple",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 229,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "blue_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=blue",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 230,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "brown_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=brown",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 231,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "green_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=green",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 232,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "red_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=red",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 233,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
+			"name": "black_shulker_box",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ]
+			},
+			"default_state": "facing=up",
+			"timeline": {
+				"model": "shulker_box",
+				"model_state": "color=black",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up": [ 8, 0, 8 ],
+					"facing=down": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 0 ],
+					"facing=south": [ 90, 180, 180 ],
+					"facing=east": [ 90, 180, 90 ],
+					"facing=west": [ 90, 180, -90 ],
+					"facing=up": [ 0, 0, 0 ],
+					"facing=down": [ 180, 0, 0 ]
+				}
+			},
+			"legacy_id": 234,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"0": "facing=down",
+					"1": "facing=up",
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
 				}
 			}
 		},

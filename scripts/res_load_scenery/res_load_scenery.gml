@@ -161,12 +161,15 @@ switch (load_stage)
 						ex = entity[?"x"]
 						ey = entity[?"z"]
 						ez = entity[?"y"]
+						
 						if (is_string(eid) && is_real(ex) && is_real(ey) && is_real(ez))
 						{
 							var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));
 							if (script > -1)
 							{
 								build_pos = point3D(ex, ey, ez)
+								block_current = array3D_get(block_obj, build_pos)
+								block_state_current = array3D_get(block_state, build_pos)
 								script_execute(script, entity)
 							}
 						}
@@ -267,10 +270,10 @@ switch (load_stage)
 				if (type = "fromworld") // Rename world import file
 				{
 					type = "schematic"
-					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".schematic");
+					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
-					file_rename_lib(app.project_folder + "\\export.schematic", newname)
+					file_rename_lib(app.project_folder + "\\export.blocks", newname)
 				}
 			}
 				

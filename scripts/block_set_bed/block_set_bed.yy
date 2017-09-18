@@ -1,8 +1,8 @@
 {
-    "id": "9f46d80a-6bbe-4481-8416-3d6a3a8b44ac",
+    "id": "e825cfab-dfb5-4e7b-9043-26653c3666d6",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "value_get_real",
+    "name": "block_set_bed",
     "IsCompatibility": false,
     "IsDnD": false
 }

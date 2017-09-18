@@ -61,6 +61,10 @@ with (new(obj_model_part))
 	
 	// Position
 	position = value_get_point3D(map[?"position"])
+	
+	show_position = false
+	if (is_real(map[?"show_position"]))
+		show_position = map[?"show_position"]
 		
 	// Rotation (optional)
 	rotation = value_get_point3D(map[?"rotation"], vec3(0, 0, 0))
