@@ -21,7 +21,7 @@ json_save_object_start("project")
 	json_save_object_done()
 
 	json_save_object_start("work_camera")
-		json_save_var("focus", cam_work_focus)
+		json_save_var_point3D("focus", cam_work_focus)
 		json_save_var("angle_xy", cam_work_angle_xy)
 		json_save_var("angle_z", cam_work_angle_z)
 		json_save_var("roll", cam_work_roll)

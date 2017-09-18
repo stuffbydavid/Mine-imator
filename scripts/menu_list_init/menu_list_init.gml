@@ -51,7 +51,7 @@ switch (menu_name)
 		// Default
 		var tex;
 		with (res_def)
-			tex = res_get_model_texture(model_get_texture_name(texnamemap, ""))
+			tex = res_get_model_texture(model_part_texture_name(texnamemap, modelfile))
 		menu_add_item(res_def, res_def.display_name, tex)
 		
 		// Add existing resources
@@ -62,7 +62,7 @@ switch (menu_name)
 				continue
 				
 			with (res)
-				tex = res_get_model_texture(model_get_texture_name(texnamemap, ""))
+				tex = res_get_model_texture(model_part_texture_name(texnamemap, modelfile))
 			
 			menu_add_item(res, res.display_name, tex)
 		}
@@ -432,7 +432,7 @@ switch (menu_name)
 		// Default
 		var tex;
 		with (tl_edit.temp.skin)
-			tex = res_get_model_texture(model_get_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part_name))
+			tex = res_get_model_texture(model_part_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part))
 		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.skin.display_name), tex)
 		
 		// Add existing resources
@@ -442,7 +442,7 @@ switch (menu_name)
 			if (res != tl_edit.temp.skin)
 			{
 				with (res)
-					tex = res_get_model_texture(model_get_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part_name))
+					tex = res_get_model_texture(model_part_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part))
 					
 				if (tex != null)
 					menu_add_item(res, res.display_name, tex)

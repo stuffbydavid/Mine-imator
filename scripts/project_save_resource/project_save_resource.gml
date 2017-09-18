@@ -10,7 +10,7 @@ json_save_object_start()
 		json_save_var_bool("player_skin", player_skin)
 	
 	if (type = "itemsheet")
-		json_save_var("item_sheet_size", item_sheet_size)
+		json_save_var_point2D("item_sheet_size", item_sheet_size)
 		
 	if (load_folder != save_folder)
 		res_save()

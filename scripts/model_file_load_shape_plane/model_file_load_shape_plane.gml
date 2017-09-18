@@ -1,4 +1,4 @@
-/// model_read_shape_plane([bend])
+/// model_file_load_shape_plane([bend])
 /// @arg [bend]
 /// @desc Generates a plane shape, bend is supplied if this is the bended half.
 

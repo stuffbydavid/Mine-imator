@@ -52,7 +52,7 @@ with (new(obj_template))
 			block_state = value_get_string(blockmap[?"state"], block_state)
 			block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
 			block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
-			block_repeat = value_get_array(blockmap[?"repeat"], block_repeat)
+			block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 		}
 	}
 	if (type = "scenery")
@@ -63,7 +63,7 @@ with (new(obj_template))
 		{
 			block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
 			block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
-			block_repeat = value_get_array(blockmap[?"repeat"], block_repeat)
+			block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 		}
 	}
 	

@@ -1,7 +1,10 @@
-/// block_load(map)
+/// block_load(map, typemap)
 /// @arg map
+/// @arg typemap
 
-var map = argument0;
+var map, typemap;
+map = argument0
+typemap = argument1
 
 with (new(obj_block))
 {
@@ -119,7 +122,7 @@ with (new(obj_block))
 	var timelinemap = map[?"timeline"];
 	timeline = false
 	if (ds_map_valid(timelinemap))
-		block_load_timeline(timelinemap)
+		block_load_timeline(timelinemap, typemap[?timelinemap])
 	
 	// Legacy data
 	for (var d = 0; d < 16; d++)

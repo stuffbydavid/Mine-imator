@@ -1,4 +1,4 @@
-/// value_get_string(value, [default])
+/// json_read_string(value, [default])
 /// @arg value
 /// @arg [default]
 

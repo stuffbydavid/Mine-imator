@@ -60,10 +60,10 @@ with (new(obj_model_file))
 		
 	// Texture
 	texture_name = map[?"texture"]
+	texture_inherit = id
 	
 	// Texture size
-	var texturesizelist = map[?"texture_size"];
-	texture_size = vec2(texturesizelist[|X], texturesizelist[|Y])
+	texture_size = value_get_point2D(map[?"texture_size"])
 
 	// Player skin
 	if (is_real(map[?"player_skin"]))
@@ -81,7 +81,7 @@ with (new(obj_model_file))
 	part_list = ds_list_create()
 	for (var p = 0; p < ds_list_size(partlist); p++)
 	{
-		var part = model_read_part(partlist[|p], id)
+		var part = model_file_load_part(partlist[|p], id)
 		if (part = null)
 		{
 			log("Could not read part", name)

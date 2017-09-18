@@ -19,7 +19,7 @@ with (new(obj_resource))
 		player_skin = value_get_real(map[?"player_skin"], player_skin)
 	
 	if (type = "itemsheet")
-		item_sheet_size = value_get_array(map[?"item_sheet_size"], item_sheet_size)
+		item_sheet_size = value_get_point2D(map[?"item_sheet_size"], item_sheet_size)
 	
 	sortlist_add(app.res_list, id)
 }

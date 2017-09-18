@@ -63,7 +63,7 @@ json_save_object_start()
 	if (value_type[e_value_type.ROT_POINT])
 	{
 		json_save_var_bool("rot_point_custom", rot_point_custom)
-		json_save_var("rot_point", rot_point)
+		json_save_var_point3D("rot_point", rot_point)
 	}
 	
 	if (value_type[e_value_type.GRAPHICS])

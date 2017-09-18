@@ -15,14 +15,14 @@ mat = matrix_get(matrix_world)
 
 if (part.shape_list != null)
 {
-	var parttexname = model_get_texture_name(texnamemap, part.name);
+	var parttexname = model_part_texture_name(texnamemap, part);
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
 		var shape = part.shape_list[|s];
 		
 		// Get texture (shape texture overrides part texture)
 		var shapetexname = parttexname;
-		if (shape.texture_name != part.texture_name)
+		if (shape.texture_name != "")
 			shapetexname = shape.texture_name
 			
 		// Set shader

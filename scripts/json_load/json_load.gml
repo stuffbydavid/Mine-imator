@@ -1,6 +1,9 @@
 /// json_load(filename, [typemap])
 /// @arg filename
 /// @arg [typemap]
+/// @desc Loads a JSON file and stores the structure in a new map.
+///       An existing map can be supplied in the second parameter
+///		  that will be filled with the types of object fields.
 
 buffer_current = buffer_load_lib(argument[0])
 

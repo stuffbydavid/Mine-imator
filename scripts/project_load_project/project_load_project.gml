@@ -30,7 +30,7 @@ if (ds_map_valid(tlmap))
 var cammap = map[?"work_camera"];
 if (ds_map_valid(cammap))
 {
-	cam_work_focus = value_get_array(cammap[?"focus"], cam_work_focus)
+	cam_work_focus = value_get_point3D(cammap[?"focus"], cam_work_focus)
 	cam_work_angle_xy = value_get_real(cammap[?"angle_xy"], cam_work_angle_xy)
 	cam_work_angle_z = value_get_real(cammap[?"angle_z"], cam_work_angle_z)
 	cam_work_roll = value_get_real(cammap[?"roll"], cam_work_roll)

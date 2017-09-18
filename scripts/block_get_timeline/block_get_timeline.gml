@@ -32,8 +32,8 @@ with (new(obj_block_tl))
 		if (block.tl_model_state_amount = 0)
 		{
 			model_state = block.tl_model_state
-			if (model_state = "" && !is_undefined(mc_assets.model_name_map[?model_name])) // Get default if not specified
-				model_state = mc_assets.model_name_map[?model_name].default_state
+			if (model_state = "") // Copy block state if not specified
+				model_state = state
 		}
 		
 		// Find model state from block state

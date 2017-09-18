@@ -1,8 +1,8 @@
 {
-    "id": "9290c927-3613-46d1-8ad9-b4b9ba67d9e6",
+    "id": "6842d081-bab3-4c12-9cf3-cbadcd2278e3",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "model_get_texture_name",
+    "name": "model_file_load_shape",
     "IsCompatibility": false,
     "IsDnD": false
 }

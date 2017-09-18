@@ -4,14 +4,14 @@
 
 // TODO: error check
 
-var version, contentsfname, zipfname;
+var version, fname, zipfname;
 version = argument0
-contentsfname = minecraft_directory + version + ".midata"
+fname = minecraft_directory + version + ".midata"
 zipfname = minecraft_directory + version + ".zip"
 
-if (!file_exists_lib(contentsfname))
+if (!file_exists_lib(fname))
 {
-	log("Could not find Minecraft assets file", contentsfname)
+	log("Could not find Minecraft assets file", fname)
 	return false
 }
 
@@ -23,14 +23,17 @@ if (!file_exists_lib(zipfname))
 
 log("Loading version", version)
 
-var contentsmap = json_decode(file_text_contents(contentsfname));
-if (contentsmap < 0)
+var typemap, map;
+typemap = ds_map_create()
+map = json_load(fname, typemap)
+if (!ds_map_valid(map))
 {
-	log("Could not parse JSON", contentsfname)
+	log("Could not parse JSON", fname)
+	ds_map_destroy(typemap)
 	return false
 }
 
-var format = contentsmap[?"format"];
+var format = map[?"format"];
 if (!is_real(format))
 	format = e_minecraft_assets.FORMAT_110
 
@@ -51,10 +54,10 @@ var err = true;
 
 with (mc_assets)
 {
-	name = contentsmap[?"version"];
+	name = map[?"version"];
 	
 	// Model textures
-	var modeltextureslist = contentsmap[?"model_textures"];
+	var modeltextureslist = map[?"model_textures"];
 	if (is_undefined(modeltextureslist))
 	{
 		log("No model textures found")
@@ -64,7 +67,7 @@ with (mc_assets)
 	ds_list_copy(model_texture_list, modeltextureslist)
 	
 	// Block textures
-	var blocktextureslist = contentsmap[?"block_textures"];
+	var blocktextureslist = map[?"block_textures"];
 	if (is_undefined(blocktextureslist))
 	{
 		log("No block textures found")
@@ -74,7 +77,7 @@ with (mc_assets)
 	ds_list_copy(block_texture_list, blocktextureslist)
 	
 	// Animated block textures
-	var blocktexturesanimatedlist = contentsmap[?"block_textures_animated"];
+	var blocktexturesanimatedlist = map[?"block_textures_animated"];
 	if (is_undefined(blocktexturesanimatedlist))
 	{
 		log("No animated block textures found")
@@ -84,7 +87,7 @@ with (mc_assets)
 	ds_list_copy(block_texture_ani_list, blocktexturesanimatedlist)
 	
 	// Block texture colors
-	var blocktexturescolorlist = contentsmap[?"block_textures_color"];
+	var blocktexturescolorlist = map[?"block_textures_color"];
 	if (is_undefined(blocktexturescolorlist))
 	{
 		log("No block texture colors found")
@@ -103,7 +106,7 @@ with (mc_assets)
 	}
 	
 	// Item textures
-	var itemtextureslist = contentsmap[?"item_textures"];
+	var itemtextureslist = map[?"item_textures"];
 	if (is_undefined(itemtextureslist))
 	{
 		log("No item textures found")
@@ -122,7 +125,7 @@ with (mc_assets)
 	}
 	
 	// Characters
-	var characterslist = contentsmap[?"characters"];
+	var characterslist = map[?"characters"];
 	if (is_undefined(characterslist))
 	{
 		log("No character list found")
@@ -144,7 +147,7 @@ with (mc_assets)
 	}
 	
 	// Special blocks
-	var specialblockslist = contentsmap[?"special_blocks"];
+	var specialblockslist = map[?"special_blocks"];
 	if (is_undefined(specialblockslist))
 	{
 		log("No special block list found")
@@ -166,7 +169,7 @@ with (mc_assets)
 	}
 	
 	// Blocks
-	var blockslist = contentsmap[?"blocks"];
+	var blockslist = map[?"blocks"];
 	if (is_undefined(blockslist))
 	{
 		log("No block list found")
@@ -178,7 +181,7 @@ with (mc_assets)
 	{
 		var blockmap, block;
 		blockmap = blockslist[|i]
-		block = block_load(blockmap)
+		block = block_load(blockmap, typemap)
 		if (!block)
 		{
 			log("Could not load block")
@@ -217,7 +220,8 @@ with (mc_assets)
 
 ds_map_destroy(mc_block_state_file_map)
 ds_map_destroy(mc_block_model_file_map)
-ds_map_destroy(contentsmap)
+ds_map_destroy(map)
+ds_map_destroy(typemap)
 
 if (!err)
 	log("Loaded successfully")

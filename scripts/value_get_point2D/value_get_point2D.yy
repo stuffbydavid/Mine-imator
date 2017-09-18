@@ -1,8 +1,8 @@
 {
-    "id": "92cb0e0b-b475-4547-aa66-a54e196b6d25",
+    "id": "eccbff3c-054f-4d65-bd75-7c2b99cc37e4",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "json_read_string",
+    "name": "value_get_point2D",
     "IsCompatibility": false,
     "IsDnD": false
 }

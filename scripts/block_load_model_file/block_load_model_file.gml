@@ -48,26 +48,19 @@ with (new(obj_block_load_model_file))
 				var elementmap = elementslist[|i];
 				
 				// From/To
-				var fromlist = elementmap[?"from"]
-				from = point3D(fromlist[|X], fromlist[|Z], fromlist[|Y])
-				
-				var tolist = elementmap[?"to"]
-				to = point3D(tolist[|X], tolist[|Z], tolist[|Y])
+				from = value_get_point3D(elementmap[?"from"])
+				to = value_get_point3D(elementmap[?"to"])
 				
 				// Rotation
 				var rotationmap = elementmap[?"rotation"];
 				if (ds_map_valid(rotationmap))
 				{
 					var origin, angle, rot, scale;
-					origin = vec3(8, 8, 8)
+					origin = value_get_point3D(elementmap[?"origin"], vec3(8, 8, 8))
 					angle = 0
 					rot = vec3(0)
 					scale = vec3(1)
 					
-					var originlist = rotationmap[?"origin"];
-					if (ds_list_valid(originlist))
-						origin = point3D(originlist[|X], originlist[|Z], originlist[|Y])
-						
 					if (is_real(rotationmap[?"angle"]))
 						angle = snap(clamp(rotationmap[?"angle"], -45, 45), 22.5)
 						

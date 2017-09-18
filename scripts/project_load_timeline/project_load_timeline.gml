@@ -92,7 +92,7 @@ with (new(obj_timeline))
 	scale_resize = value_get_real(map[?"scale_resize"], scale_resize)
 	
 	rot_point_custom = value_get_real(map[?"rot_point_custom"], rot_point_custom)
-	rot_point = value_get_array(map[?"rot_point"], rot_point)
+	rot_point = value_get_point3D(map[?"rot_point"], rot_point)
 	
 	backfaces = value_get_real(map[?"backfaces"], backfaces)
 	texture_blur = value_get_real(map[?"texture_blur"], texture_blur)

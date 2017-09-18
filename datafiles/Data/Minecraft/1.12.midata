@@ -120,6 +120,21 @@
 			"default_state": "variant=normal"
 		},
 		{
+			"name": "lever",
+			"file": "lever.mimodel"
+		},
+		{
+			"name": "piston",
+			"file": "piston.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "normal", "texture": { "extension": "blocks/piston_top_normal" } },
+					{ "value": "sticky", "texture": { "extension": "blocks/piston_top_sticky" } }
+				]
+			},
+			"default_state": "variant=normal"
+		},
+		{
 			"name": "arrow",
 			"file": "arrow.mimodel"
 		},
@@ -579,6 +594,20 @@
 				"extended": [ "false", "true" ]
 			},
 			"default_state": "facing=south,extended=false",
+			"timeline": {
+				"model": "piston",
+				"model_state": "variant=sticky",
+				"rotation_point": [ 0, 8, 0 ],
+				"position": [ 8, 8, 8 ],
+				"rotation": {
+					"facing=down": [ 90, 0, 0 ],
+					"facing=up": [ -90, 0, 0 ],
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
 			"legacy_id": 29,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -633,12 +662,25 @@
 		},
 		{
 			"name": "piston",
-			"file": "piston.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
 				"extended": [ "false", "true" ]
 			},
 			"default_state": "facing=south,extended=false",
+			"timeline": {
+				"model": "piston",
+				"model_state": "variant=normal",
+				"rotation_point": [ 0, 8, 0 ],
+				"position": [ 8, 8, 8 ],
+				"rotation": {
+					"facing=down": [ 90, 0, 0 ],
+					"facing=up": [ -90, 0, 0 ],
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
 			"legacy_id": 33,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -929,7 +971,7 @@
 					"facing=north": [ 0, 180, 0 ],
 					"facing=south": [ 0, 0, 0 ],
 					"facing=east": [ 0, 90, 0 ],
-					"facing=west": [ 0, 270, 0 ]
+					"facing=west": [ 0, -90, 0 ]
 				}
 			},
 			"legacy_id": 54,
@@ -1072,7 +1114,7 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=north,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -1083,7 +1125,7 @@
 				},
 				"rotation": {
 					"direction=east": [ 0, 0, 0 ],
-					"direction=south": [ 0, 270, 0],
+					"direction=south": [ 0, -90, 0],
 					"direction=west": [ 0, 180, 0 ],
 					"direction=north": [ 0, 90, 0 ]
 				}
@@ -1176,7 +1218,30 @@
 				"facing": [ "north", "south", "east", "west", "up_x", "down_x", "up_z", "down_z" ],
 				"powered": [ "true", "false" ]
 			},
-			"default_state": "facing=south,powered=false",
+			"default_state": "facing=up_z,powered=false",
+			"timeline": {
+				"model": "lever",
+				"position": {
+					"facing=north": [ 8, 8, 16 ],
+					"facing=south": [ 8, 8, 0 ],
+					"facing=east": [ 0, 8, 8 ],
+					"facing=west": [ 16, 8, 8 ],
+					"facing=up_x": [ 8, 0, 8 ],
+					"facing=up_z": [ 8, 0, 8 ],
+					"facing=down_x": [ 8, 16, 8 ],
+					"facing=down_z": [ 8, 16, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 90, 180, 180 ],
+					"facing=south": [ 90, 180, 0 ],
+					"facing=east": [ 90, 180, -90 ],
+					"facing=west": [ 90, 180, 90 ],
+					"facing=up_x": [ 0, 90, 0 ],
+					"facing=up_z": [ 0, 0, 0 ],
+					"facing=down_x": [ 180, -90, 0 ],
+					"facing=down_z": [ 180, 180, 0 ]
+				}
+			},
 			"legacy_id": 69,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -1221,7 +1286,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 71,
 			"legacy_data": {
 				"0x1": {
@@ -3258,7 +3338,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 193,
 			"legacy_data": {
 				"0x1": {
@@ -3291,7 +3386,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 194,
 			"legacy_data": {
 				"0x1": {
@@ -3324,7 +3434,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 195,
 			"legacy_data": {
 				"0x1": {
@@ -3357,7 +3482,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 196,
 			"legacy_data": {
 				"0x1": {
@@ -3390,7 +3530,22 @@
 				"open": [ "true", "false" ],
 				"half": [ "upper", "lower" ]
 			},
-			"default_state": "hinge=right,facing=south,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"timeline": {
+				"rotation_point": [ 1.5, 0, 1.5 ],
+				"position": {
+					"location=north_west": [ 1.5, 0, 1.5 ],
+					"location=north_east": [ 14.5, 0, 1.5 ],
+					"location=south_west": [ 1.5, 0, 14.5 ],
+					"location=south_east": [ 14.5, 0, 14.5 ]
+				},
+				"rotation": {
+					"direction=east": [ 0, 0, 0 ],
+					"direction=south": [ 0, 270, 0],
+					"direction=west": [ 0, 180, 0 ],
+					"direction=north": [ 0, 90, 0 ]
+				}
+			},
 			"legacy_id": 197,
 			"legacy_data": {
 				"0x1": {
@@ -4204,7 +4359,14 @@
 		"entity/zombie_villager/zombie_librarian",
 		"entity/zombie_villager/zombie_priest",
 		"entity/zombie_villager/zombie_smith",
-		"entity/zombie_villager/zombie_villager"
+		"entity/zombie_villager/zombie_villager",
+		"blocks/cobblestone",
+		"blocks/lever",
+		"blocks/piston_top_sticky",
+		"blocks/piston_top_normal",
+		"blocks/piston_side",
+		"blocks/piston_bottom",
+		"blocks/piston_inner"
 	],
 	"block_textures": [
 		"blocks/stone",

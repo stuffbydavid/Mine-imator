@@ -38,7 +38,7 @@ json_save_object_start()
 			json_save_var("state", block_state)
 			json_save_var_save_id("tex", block_tex)
 			json_save_var_bool("repeat_enable", block_repeat_enable)
-			json_save_var("repeat", block_repeat)
+			json_save_var_point3D("repeat", block_repeat)
 		json_save_object_done()
 	}
 	if (type = "scenery")
@@ -47,7 +47,7 @@ json_save_object_start()
 		json_save_object_start("block")
 			json_save_var_save_id("tex", block_tex)
 			json_save_var_bool("repeat_enable", block_repeat_enable)
-			json_save_var("repeat", block_repeat)
+			json_save_var_point3D("repeat", block_repeat)
 		json_save_object_done()
 	}
 	

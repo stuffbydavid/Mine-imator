@@ -42,5 +42,5 @@ vars[?"double"] = "false"
 if (!build_edge[connectdir]) // Connect
 	if (array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(connectdir))) = block_current)
 		vars[?"double"] = "true"
-		
+
 return 0

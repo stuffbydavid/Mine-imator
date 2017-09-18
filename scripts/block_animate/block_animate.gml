@@ -19,8 +19,8 @@ with (obj_template)
 	if (id.creator != creator || id.type != type)
 		continue
 		
-	if ((model_name = other.model_name && model_state = other.model_state) ||
-	    (block_name = other.block.name && block_state = other.block.default_state))
+	if ((type = "spblock" && model_name = other.model_name && model_state = other.model_state) ||
+	    (type = "block" && block_name = other.block.name && block_state = other.block.default_state))
 	{
 		temp = id
 		break

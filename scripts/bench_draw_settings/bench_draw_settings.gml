@@ -51,14 +51,14 @@ else
 		case "spblock":
 		case "bodypart":
 		{
-			var labeltext, list, texcap, capwid, partname;
+			var labeltext, list, texcap, capwid, part;
 			if (bench_settings.type = "char")
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.char_list
 				texcap = "benchskin"
 				capwid  = text_caption_width(texcap)
-				partname = ""
+				part = bench_settings.model_file
 			}
 			else if (bench_settings.type = "spblock")
 			{
@@ -66,7 +66,7 @@ else
 				list = bench_settings.special_block_list
 				texcap = "benchspblocktex"
 				capwid  = text_caption_width(texcap)
-				partname = ""
+				part = bench_settings.model_file
 			}
 			else if (bench_settings.type = "bodypart")
 			{
@@ -74,7 +74,7 @@ else
 				list = bench_settings.bodypart_model_list
 				texcap = "benchbodypartskin"
 				capwid  = text_caption_width("benchbodypart", texcap)
-				partname = bench_settings.model_part_name
+				part = bench_settings.model_part
 			}
 			
 			// Model
@@ -116,7 +116,7 @@ else
 			var text, tex;
 			text = bench_settings.skin.display_name
 			with (bench_settings.skin)
-				tex = res_get_model_texture(model_get_texture_name(other.bench_settings.model_texture_name_map, partname))
+				tex = res_get_model_texture(model_part_texture_name(other.bench_settings.model_texture_name_map, part))
 			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.skin, text, action_bench_skin, tex, null, capwid)
 			dy += 40
 			break
