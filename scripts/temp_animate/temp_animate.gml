@@ -16,7 +16,6 @@ with (new(obj_timeline))
 		case "spblock":
 		{
 			part_list = ds_list_create()
-		
 			if (other.model_file != null)
 				for (var p = 0; p < ds_list_size(other.model_file.file_part_list); p++)
 					ds_list_add(part_list, tl_new_part(other.model_file.file_part_list[|p]))

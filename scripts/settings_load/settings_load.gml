@@ -154,7 +154,7 @@ if (filename_ext(fn) = ".midata")
 	var controlsmap = map[?"controls"];
 	if (ds_map_valid(controlsmap))
 	{
-	    setting_key_new = value_get_real(controlsmap[?"key_new"], setting_key_new)
+		setting_key_new = value_get_real(controlsmap[?"key_new"], setting_key_new)
 		setting_key_new_control = value_get_real(controlsmap[?"key_new_control"], setting_key_new_control)
 		setting_key_import_asset = value_get_real(controlsmap[?"key_import_asset"], setting_key_import_asset)
 		setting_key_import_asset_control = value_get_real(controlsmap[?"key_import_asset_control"], setting_key_import_asset_control)

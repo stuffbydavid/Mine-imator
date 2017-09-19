@@ -17,11 +17,11 @@ h = "0123456789ABCDEF"
 hex = ""
 while (dec)
 {
-    byte = dec & 255
-    hi = string_char_at(h, byte div 16 + 1)
-    lo = string_char_at(h, byte mod 16 + 1)
-    hex = hi + lo + hex
-    dec = dec >> 8
+	byte = dec & 255
+	hi = string_char_at(h, byte div 16 + 1)
+	lo = string_char_at(h, byte mod 16 + 1)
+	hex = hi + lo + hex
+	dec = dec >> 8
 }
 
 repeat (max(0, len - string_length(hex)))

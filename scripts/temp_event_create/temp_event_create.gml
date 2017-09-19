@@ -34,12 +34,12 @@ block_state = ""
 block_state_map = null
 block_tex = null
 block_vbuffer_reset()
+block_repeat_enable = false
+block_repeat = vec3(1)
+
 scenery = null
 scenery_animate = false
 scenery_animate_root = null
-
-block_repeat_enable = false
-block_repeat = vec3(1)
 
 shape_vbuffer = null
 shape_tex = null

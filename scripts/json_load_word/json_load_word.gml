@@ -6,8 +6,8 @@ if (json_char = e_json_char.T)
 		if (!json_load_char())
 			return false
 	
-    json_value = true
-    json_value_type = e_json_type.BOOL
+	json_value = true
+	json_value_type = e_json_type.BOOL
 }
 else if (json_char = e_json_char.F)
 {
@@ -15,8 +15,8 @@ else if (json_char = e_json_char.F)
 		if (!json_load_char())
 			return false
 	
-    json_value = false
-    json_value_type = e_json_type.BOOL
+	json_value = false
+	json_value_type = e_json_type.BOOL
 }
 else if (json_char = e_json_char.N)
 {
@@ -24,8 +24,8 @@ else if (json_char = e_json_char.N)
 		if (!json_load_char())
 			return false
 	
-    json_value = null
-    json_value_type = e_json_type.NULL
+	json_value = null
+	json_value_type = e_json_type.NULL
 }
 else
 {
@@ -34,3 +34,4 @@ else
 }
 
 return true
+

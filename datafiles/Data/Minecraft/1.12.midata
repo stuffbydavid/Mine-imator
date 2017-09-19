@@ -203,6 +203,10 @@
 		{
 			"name": "shulker_spark",
 			"file": "shulker_spark.mimodel"
+		},
+		{
+			"name": "camera",
+			"file": "camera.mimodel"
 		}
 	],
 	"blocks": [
@@ -5118,6 +5122,7 @@
 		"entity/llama/decor/decor_silver",
 		"entity/llama/decor/decor_white",
 		"entity/llama/decor/decor_yellow",
+		"entity/mineimator/camera",
 		"entity/parrot/parrot_blue",
 		"entity/parrot/parrot_green",
 		"entity/parrot/parrot_grey",

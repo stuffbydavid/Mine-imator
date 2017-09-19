@@ -9,16 +9,16 @@ with (new(obj_resource))
 	type = buffer_read_string_int()
 	
 	if (type = "scenery")
-	    type = "schematic"
+		type = "schematic"
 		
 	if (type = "item")
-	    type = "itemsheet"
+		type = "itemsheet"
 		
 	if (type = "block" || type = "blocksheet")
-	    type = "legacyblocksheet"
+		type = "legacyblocksheet"
 		
 	if (type = "particles")
-	    type = "particlesheet"
+		type = "particlesheet"
 		
 	filename = buffer_read_string_int()
 	
@@ -29,7 +29,7 @@ with (new(obj_resource))
 		/*block_frames = */buffer_read_byte()
 		
 	if (load_format >= e_project.FORMAT_100_DEMO_4 && (type = "pack" || type = "legacyblocksheet"))
-	    repeat (32 * 16)
+		repeat (32 * 16)
 			buffer_read_byte() // block_ani
 			
 	// Define sheet size

@@ -580,21 +580,21 @@ with (obj_timeline)
 // Background and camera
 if (argument0)
 {
-    // Image
-    if (load.bg_select > -1)
-        background_image = load.bg_res[load.bg_select].load_id
-    
-    background_image_show = load.bg_show
-    background_image_stretch = load.bg_stretch
-    background_image_box = load.bg_box
+	// Image
+	if (load.bg_select > -1)
+		background_image = load.bg_res[load.bg_select].load_id
+	
+	background_image_show = load.bg_show
+	background_image_stretch = load.bg_stretch
+	background_image_box = load.bg_box
 	
 	// Ground
-    background_ground_show = load.bg_ground_show
-    if (load.bg_ground_tex > -1)
+	background_ground_show = load.bg_ground_show
+	if (load.bg_ground_tex > -1)
 	{
 		background_ground_tex.count--
-        background_ground_tex = load.ter_res[load.bg_ground_tex].load_id
-    }
+		background_ground_tex = load.ter_res[load.bg_ground_tex].load_id
+	}
 	else
 		background_ground_tex = "default"
 	
@@ -616,27 +616,27 @@ if (argument0)
 	}
 	
 	// Sky
-    background_sky_color = load.sky_color
-    background_sky_time = load.sky_time
+	background_sky_color = load.sky_color
+	background_sky_time = load.sky_time
 	
 	// Lights
-    view_main.lights = load.sky_light
-    
-    // Work camera
-    cam_work_focus[X] = load.camto[X]
-    cam_work_focus[Y] = load.camto[Y]
-    cam_work_focus[Z] = load.camto[Z]
-    cam_work_angle_xy = load.camanglexy
-    cam_work_angle_z = load.camanglez
-    cam_work_zoom = load.camzoom
-    cam_work_zoom_goal = cam_work_zoom
-    cam_work_angle_look_xy = cam_work_angle_xy
-    cam_work_angle_look_z = -cam_work_angle_z
-    cam_work_set_from()
-    
+	view_main.lights = load.sky_light
+	
+	// Work camera
+	cam_work_focus[X] = load.camto[X]
+	cam_work_focus[Y] = load.camto[Y]
+	cam_work_focus[Z] = load.camto[Z]
+	cam_work_angle_xy = load.camanglexy
+	cam_work_angle_z = load.camanglez
+	cam_work_zoom = load.camzoom
+	cam_work_zoom_goal = cam_work_zoom
+	cam_work_angle_look_xy = cam_work_angle_xy
+	cam_work_angle_look_z = -cam_work_angle_z
+	cam_work_set_from()
+	
 	// Playback
-    project_tempo = load.tempo
-    timeline_repeat = load.loop
+	project_tempo = load.tempo
+	timeline_repeat = load.loop
 	
 	background_loaded = true
 }
@@ -644,3 +644,4 @@ if (argument0)
 // Clean up
 with (load)
 	instance_destroy()
+

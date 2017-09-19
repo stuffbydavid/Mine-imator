@@ -35,15 +35,15 @@ while (json_load_char())
 	switch (json_value_type)
 	{
 		case e_json_type.OBJECT:
-            ds_map_add_map(map, name, json_value)
-            break
-           
-        case e_json_type.ARRAY:
-            ds_map_add_list(map, name, json_value)
-            break
-           
-        default:
-            map[?name] = json_value
+			ds_map_add_map(map, name, json_value)
+			break
+		   
+		case e_json_type.ARRAY:
+			ds_map_add_list(map, name, json_value)
+			break
+		   
+		default:
+			map[?name] = json_value
 	}
 	
 	// Add type
@@ -68,11 +68,12 @@ if (!argument0)
 // Clean up on error
 if (json_error)
 {
-    ds_map_destroy(map)
-    return false
+	ds_map_destroy(map)
+	return false
 }
 
 json_value = map
 json_value_type = e_json_type.OBJECT
 
 return true
+
