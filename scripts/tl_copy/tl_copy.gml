@@ -32,6 +32,7 @@ to.inherit_alpha = inherit_alpha
 to.inherit_color = inherit_color
 to.inherit_texture = inherit_texture
 to.inherit_visibility = inherit_visibility
+to.inherit_rot_point = inherit_rot_point
 to.scale_resize = scale_resize
 to.rot_point_custom = rot_point_custom
 to.rot_point = point3D_copy(rot_point)

@@ -1,27 +1,43 @@
 /// tl_update_display_name()
-/// @desc Sets the default name of a timeline (shown in timeline).
+/// @desc Sets the display name of a timeline (shown in timeline).
 
 if (name = "")
 {
-	if (type = "bodypart" && part_of)
+	display_name = text_get("type" + type)
+	
+	if (part_of != null)
 	{
-		if (model_part)
+		if (type = "bodypart")
 		{
-			with (model_part)
-				other.display_name = minecraft_asset_get_name("model", name)
+			if (model_part != null)
+				display_name = minecraft_asset_get_name("model", model_part.name)
+			else
+				display_name = text_get("timelineunusedbodypart")
 		}
-		else
-			display_name = text_get("timelineunusedbodypart")
+		else if (type = "spblock")
+		{
+			if (model_file != null)
+				display_name = minecraft_asset_get_name("model", model_file.name)
+		}
+		else if (type = "block")
+		{
+			display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+		}
 	}
-	else if (temp)
+	else if (temp != null)
 		display_name = temp.display_name
-	else
-		display_name = text_get("type" + type)
 }
 else
 	display_name = name
 
 if (part_list != null)
+{
 	for (var p = 0; p < ds_list_size(part_list); p++)
+	{
 		with (part_list[|p])
+		{
 			tl_update_type_name()
+			tl_update_display_name()
+		}
+	}
+}

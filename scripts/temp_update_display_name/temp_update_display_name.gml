@@ -9,8 +9,8 @@ if (name = "")
 	{
 		case "char":
 		case "spblock":
-			with (model_file)
-				other.display_name = minecraft_asset_get_name("model", name)
+			if (model_file != null)
+				display_name = minecraft_asset_get_name("model", model_file.name)
 			break
 		
 		case "scenery":
@@ -35,7 +35,7 @@ else
 
 with (obj_timeline)
 {
-	if (temp = other.id && !part_of)
+	if (temp = other.id && part_of = null)
 	{
 		tl_update_type_name()
 		tl_update_display_name()

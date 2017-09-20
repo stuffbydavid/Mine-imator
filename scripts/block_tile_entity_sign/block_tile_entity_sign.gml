@@ -13,7 +13,12 @@ for (var i = 0; i < 4; i++)
 		
 	var textmap = json_decode(text);
 	if (ds_map_valid(textmap))
-		text = textmap[?"text"]
+	{
+		if (is_string(textmap[?"text"]))
+			text = textmap[?"text"]
+			
+		ds_map_destroy(textmap)
+	}
 	
 	if (i > 0)
 		str += "\n"

@@ -11,8 +11,11 @@ if (object_index != app && update_matrix)
 	// Get parent matrix
 	if (parent != app)
 	{
-		matrix_parent = array_copy_1d(parent.matrix_render)
-		
+		if (inherit_rot_point)
+			matrix_parent = array_copy_1d(parent.matrix_render)
+		else
+			matrix_parent = array_copy_1d(parent.matrix)
+			
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
 			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value[e_value.BEND_ANGLE]), matrix_parent)

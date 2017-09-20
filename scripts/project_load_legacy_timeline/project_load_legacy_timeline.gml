@@ -125,6 +125,7 @@ with (new(obj_timeline))
 	inherit_color = buffer_read_byte()
 	inherit_texture = buffer_read_byte()
 	inherit_visibility = buffer_read_byte()
+	inherit_rot_point = false
 	scale_resize = buffer_read_byte()
 	rot_point_custom = buffer_read_byte()
 

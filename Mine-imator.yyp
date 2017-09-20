@@ -7375,6 +7375,14 @@
             }
         },
         {
+            "Key": "8b574a68-fbc7-46dc-8afe-438f39e134a3",
+            "Value": {
+                "id": "8b798f7f-b0d7-4050-9388-25243b01d806",
+                "resourcePath": "scripts\\action_tl_inherit_rot_point\\action_tl_inherit_rot_point.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "8b7c4a81-17a6-4acd-87a0-f93c62142b20",
             "Value": {
                 "id": "e0287e71-1ff4-4731-b491-d684681e270c",
@@ -14216,6 +14224,7 @@
         "c72637e0-b4f9-4b1d-80cc-752cedabe857",
         "cc0468c8-62b9-4a29-9d27-2954bbe1ce27",
         "071c6f90-946c-4115-a3d1-38a1c7188b6d",
+        "8b574a68-fbc7-46dc-8afe-438f39e134a3",
         "79de02bd-48aa-4dec-b3ef-6be4ffc7d750",
         "93e8b8c4-cd77-410f-81d8-1609923eb199",
         "039b348f-4d0f-4b1d-8f49-577792aa1d83",

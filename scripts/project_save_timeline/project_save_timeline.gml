@@ -14,8 +14,25 @@ json_save_object_start()
 	json_save_var("depth", depth)
 	
 	if (type = "bodypart")
-	{
 		json_save_var("model_part_name", model_part_name)
+		
+	if (part_of != null)
+	{
+		if (type = "spblock")
+		{
+			json_save_object_start("model")
+				json_save_var("name", model_name)
+				json_save_var("state", model_state)
+			json_save_object_done()
+		}
+		else if (type = "block")
+		{
+			json_save_object_start("block")
+				json_save_var("name", block_name)
+				json_save_var("state", block_state)
+			json_save_object_done()
+		}
+		
 		json_save_var_save_id("part_of", part_of)
 	}
 	
@@ -23,8 +40,8 @@ json_save_object_start()
 	{
 		json_save_array_start("parts")
 		
-		for (var p = 0; p < ds_list_size(part_list); p++)
-			json_save_array_value(save_id_get(part_list[|p]))
+			for (var p = 0; p < ds_list_size(part_list); p++)
+				json_save_array_value(save_id_get(part_list[|p]))
 		
 		json_save_array_done()
 	}
@@ -55,6 +72,7 @@ json_save_object_start()
 			json_save_var_bool("color", inherit_color)
 			json_save_var_bool("texture", inherit_texture)
 			json_save_var_bool("visibility", inherit_visibility)
+			json_save_var_bool("rot_point", inherit_rot_point)
 		json_save_object_done()
 	
 		json_save_var_bool("scale_resize", scale_resize)
@@ -83,5 +101,5 @@ json_save_object_start()
 			json_save_var_bool("wind_terrain", wind_terrain)
 		}
 	}
-
+	
 json_save_object_done()

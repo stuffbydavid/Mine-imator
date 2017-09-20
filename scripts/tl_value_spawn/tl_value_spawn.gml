@@ -12,7 +12,7 @@ if (type = "camera")
 	value[e_value.ROT_Y] = app.cam_work_roll
 	value[e_value.ROT_Z] = app.cam_work_angle_look_xy - 90
 }
-else if (parent = app && !part_of && type != "folder")
+else if (parent = app && part_of = null && type != "folder")
 {
 	if (!app.setting_spawn_objects)
 		return 0

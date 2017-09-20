@@ -35,7 +35,7 @@ if (tl_edit.value_type[e_value_type.ROT_POINT])
 		var snapval, mul, def;
 		snapval = tab.info.rot_point_snap * tab.info.rot_point_snap_size
 		mul = point3D_distance(tl_edit.world_pos, cam_from) / 500
-		if (tl_edit.temp)
+		if (tl_edit.part_of = null && tl_edit.temp != null)
 			def = tl_edit.temp.rot_point
 		else
 			def = point3D(0, 0, 0)

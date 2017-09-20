@@ -15,6 +15,7 @@ with (new(obj_timeline))
 	inherit_alpha = true
 	inherit_color = true
 	inherit_texture = true
+	inherit_rot_point = true
 	scale_resize = false
 	lock_bend = part.lock_bend
 	

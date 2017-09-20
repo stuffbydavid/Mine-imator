@@ -10,7 +10,7 @@ type = ""
 name = ""
 display_name = ""
 count = 0
-rot_point[Z] = 0
+rot_point = point3D(0, 0, 0)
 
 skin = null
 model_name = "human"

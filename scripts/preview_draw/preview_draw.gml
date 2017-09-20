@@ -129,10 +129,9 @@ with (preview)
 		
 			if (is3d) // 3D view
 			{
-				var prevcam_zoom, rep, scenery;
+				var prevcam_zoom, rep, scenery, off;
 				prevcam_zoom = 32
-			
-				matrix_reset_offset()
+				off = point3D(0, 0, 0)
 			
 				// Repeat
 				if (select.object_index = obj_template && select.block_repeat_enable)
@@ -151,19 +150,19 @@ with (preview)
 						
 						var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
 						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
-						matrix_offset = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
+						off = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
 						break
 					}
 					
 					case "item":
-						matrix_offset = point3D(-8, -0.5 * bool_to_float(select.item_3d), -8)
+						off = point3D(-8, -0.5 * bool_to_float(select.item_3d), -8)
 						break
 					
 					case "block":
 					{
 						var displaysize = vec3_mul(rep, vec3(block_size));
 						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-						matrix_offset = vec3_mul(displaysize, vec3(-0.5))
+						off = vec3_mul(displaysize, vec3(-0.5))
 						break
 					}
 					
@@ -183,7 +182,7 @@ with (preview)
 						
 						var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
 						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-						matrix_offset = vec3_mul(displaysize, vec3(-0.5))
+						off = vec3_mul(displaysize, vec3(-0.5))
 						break
 					}
 					
@@ -194,7 +193,7 @@ with (preview)
 							
 						var displaysize = point3D_sub(select.model_part.bounds_end, select.model_part.bounds_start);
 						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
-						matrix_offset = point3D_mul(point3D_add(select.model_part.bounds_start, vec3_mul(displaysize, 0.5)), -1)
+						off = point3D_mul(point3D_add(select.model_part.bounds_start, vec3_mul(displaysize, 0.5)), -1)
 						break
 					}
 					
@@ -222,6 +221,8 @@ with (preview)
 				camera_apply(cam_render)
 				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), 60, 1, 1, 32000)
 				render_mode = "preview"
+				
+				matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
 			
 				switch (select.type)
 				{
@@ -235,7 +236,6 @@ with (preview)
 						if (!res.ready)
 							res = res_def
 						
-						matrix_add_offset()
 						render_world_model_file_parts(select.model_file, select.model_texture_name_map, res)
 						break
 					}
@@ -267,7 +267,6 @@ with (preview)
 						if (!res.ready)
 							res = res_def
 						
-						matrix_add_offset()
 						matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
 						render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null)
 						break

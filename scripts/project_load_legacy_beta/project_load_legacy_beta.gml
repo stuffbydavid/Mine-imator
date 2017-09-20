@@ -439,6 +439,7 @@ for (var a = 0; a < load.tl_amount; a++)
 		hide = !load.tl_visible[a]
 		color = load.tl_color[a]
 		inherit_visibility = false
+		inherit_rot_point = false
 		parent = "root"
 		parent_tree_index = null
 		

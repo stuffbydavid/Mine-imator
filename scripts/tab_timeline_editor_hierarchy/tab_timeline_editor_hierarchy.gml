@@ -5,7 +5,7 @@ var par = tl_edit.parent;
 if (par = timeline_move_obj)
 	par = tl_edit.move_parent
 
-if (!tl_edit.part_of)
+if (tl_edit.part_of = null)
 {
 	var text;
 	
@@ -37,23 +37,25 @@ if (par != app)
 	draw_label(text_get("timelineeditorinherit"), dx, dy)
 	tab_next()
 	
-	// Inherit position/rotation/scale
+	// Inherit position/rotation/rotation point
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorinheritposition", dx, dy, tl_edit.inherit_position, action_tl_inherit_position)
 	if (tl_edit.value_type[e_value_type.ROTATION])
 		draw_checkbox("timelineeditorinheritrotation", dx + floor(dw * 0.33), dy, tl_edit.inherit_rotation, action_tl_inherit_rotation)
-	if (tl_edit.value_type[e_value_type.SCALE])
-		draw_checkbox("timelineeditorinheritscale", dx + floor(dw * 0.66), dy, tl_edit.inherit_scale, action_tl_inherit_scale)
+	draw_checkbox("timelineeditorinheritrotpoint", dx + floor(dw * 0.66), dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
 	tab_next()
 	
-	// Inherit alpha/color
+	// Inherit scale/alpha/color
+	tab_control_checkbox()
+	if (tl_edit.value_type[e_value_type.SCALE])
+		draw_checkbox("timelineeditorinheritscale", dx, dy, tl_edit.inherit_scale, action_tl_inherit_scale)
 	if (tl_edit.value_type[e_value_type.COLOR])
 	{
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorinheritalpha", dx, dy, tl_edit.inherit_alpha, action_tl_inherit_alpha)
-		draw_checkbox("timelineeditorinheritcolor", dx + floor(dw * 0.33), dy, tl_edit.inherit_color, action_tl_inherit_color)
-		tab_next()
+		draw_checkbox("timelineeditorinheritalpha", dx + floor(dw * 0.33) * (tl_edit.value_type[e_value_type.SCALE]), dy, tl_edit.inherit_alpha, action_tl_inherit_alpha)
+		draw_checkbox("timelineeditorinheritcolor", dx + floor(dw * 0.33) * (1 + (tl_edit.value_type[e_value_type.SCALE])), dy, tl_edit.inherit_color, action_tl_inherit_color)
+		
 	}
+	tab_next()
 	
 	// Inherit visibility/texture
 	tab_control_checkbox()

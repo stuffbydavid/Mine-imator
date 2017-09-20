@@ -23,15 +23,35 @@ with (new(obj_timeline))
 	depth = value_get_real(map[?"depth"], depth)
 	
 	if (type = "bodypart")
-	{
 		model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
-		part_of = value_get_save_id(map[?"part_of"], part_of)
+	
+	part_of = value_get_save_id(map[?"part_of"], part_of)
+	if (part_of != null)
+	{
+		if (type = "spblock")
+		{
+			var modelmap = map[?"model"];
+			if (ds_map_valid(modelmap))
+			{
+				model_name = value_get_string(modelmap[?"name"], "")
+				model_state = value_get_string(modelmap[?"state"], "")
+			}
+		}
+		else if (type = "block")
+		{
+			var blockmap = map[?"block"];
+			if (ds_map_valid(blockmap))
+			{
+				block_name = value_get_string(blockmap[?"name"], "")
+				block_state = value_get_string(blockmap[?"state"], "")
+			}
+		}
 	}
 		
-	if (type = "char" || type = "spblock")
+	var partslist = map[?"parts"];
+	if (ds_list_valid(partslist))
 	{
 		part_list = ds_list_create()
-		var partslist = map[?"parts"];
 		for (var p = 0; p < ds_list_size(partslist); p++)
 			ds_list_add(part_list, partslist[|p])
 	}
@@ -87,6 +107,7 @@ with (new(obj_timeline))
 		inherit_color = value_get_real(inheritmap[?"color"], inherit_color)
 		inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
 		inherit_visibility = value_get_real(inheritmap[?"visibility"], inherit_visibility)
+		inherit_rot_point = value_get_real(inheritmap[?"rot_point"], inherit_rot_point)
 	}
 	
 	scale_resize = value_get_real(map[?"scale_resize"], scale_resize)

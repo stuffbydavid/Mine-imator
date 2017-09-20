@@ -2362,7 +2362,6 @@
 			"timeline": {
 				"model": "chest",
 				"model_state": "variant=ender",
-				"rotation_point": [ -8, 0, 0 ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],

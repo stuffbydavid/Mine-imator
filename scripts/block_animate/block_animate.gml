@@ -68,6 +68,7 @@ with (new(obj_timeline))
 	value_default[e_value.ROT_Z] = other.rotation[Z] + 90
 	
 	// Set to be a part of the schematic
+	inherit_rot_point = true
 	part_of = root
 	ds_list_add(root.part_list, id)
 	tl_set_parent(root)
@@ -101,9 +102,10 @@ with (new(obj_timeline))
 			value_default[e_value.SCA_Z] = 0.175
 			value_default[e_value.RGB_MUL] = c_black
 			
-			// Set parent to other timeline, and to be part of the schematic
-			part_of = root
-			ds_list_add(root.part_list, id)
+			// Set parent to other timeline
+			inherit_rot_point = true
+			part_of = other.id
+			ds_list_add(other.part_list, id)
 			tl_set_parent(other.id)
 			
 			tl_update()
