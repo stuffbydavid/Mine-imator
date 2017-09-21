@@ -144,7 +144,7 @@ if (tl.value_type[e_value_type.BACKGROUND])
 if (tl.value_type[e_value_type.TEXTURE])
 {
 	value[e_value.TEXTURE_OBJ] = project_load_legacy_save_id()
-	if (value[e_value.TEXTURE_OBJ] = "root") // TODO test
+	if (value[e_value.TEXTURE_OBJ] = "root")
 		value[e_value.TEXTURE_OBJ] = 0
 }
 

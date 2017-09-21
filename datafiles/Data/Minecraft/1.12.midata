@@ -28,6 +28,20 @@
 			"file": "creeper.mimodel"
 		},
 		{
+			"name": "spider",
+			"states": {
+				"variant": [
+					{ "value": "spider", "file": "spider.mimodel" },
+					{ "value": "cave_spider", "file": "cave_spider.mimodel" }
+				]
+			},
+			"default_state": "variant=spider"
+		},
+		{
+			"name": "enderman",
+			"file": "enderman.mimodel"
+		},
+		{
 			"name": "cow",
 			"states": {
 				"variant": [
@@ -2162,7 +2176,11 @@
 		},
 		{
 			"name": "enchanting_table",
-			"file": "enchanting_table.json",
+			"timeline": {
+				"model": "enchantment_table",
+				"model_state": "",
+				"position": [ 8, 0, 8 ]
+			},
 			"legacy_id": 116
 		},
 		{
@@ -5033,7 +5051,6 @@
 		"entity/sign",
 		"entity/silverfish",
 		"entity/snowman",
-		"entity/spider_eyes",
 		"entity/squid",
 		"entity/steve",
 		"entity/witch",

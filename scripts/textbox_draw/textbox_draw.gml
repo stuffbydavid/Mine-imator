@@ -29,7 +29,7 @@ if (tbx.last_text != tbx.text)
 		str = string_replace_all(str, "\n", " ")
 	tbx.text = str
 	
-	str += chr(10)
+	str += "\n"
 	tbx.lines = 0
 	while (str != "")
 	{
@@ -355,11 +355,8 @@ if (window_focus = string(tbx))
 		for (l = 0; l < tbx.lines; l++)
 		{
 			tbx.text += tbx.line[l]
-			if (l < textbox_select_endline)
-			{
-				if (!tbx.line_wrap[l + 1] && !tbx.line_single[l])
-					tbx.text += "\n"
-			}
+			if (l < tbx.lines - 1 && !tbx.line_wrap[l + 1])
+				tbx.text += "\n"
 		}
 		
 		textbox_select_clickline = textbox_select_startline
@@ -391,17 +388,17 @@ if (window_focus = string(tbx))
 			
 		if (string_pos("\n", inserttext) > 0) // Add text with multiple lines (Paste or linebreak)
 		{
-			inserttext += chr(10)
+			inserttext += "\n"
 			a = tbx.line[textbox_select_mouseline]
 			b = -1
 			
 			while (inserttext != "") // Parse
 			{
 				b++
-				str[b] = string_copy(inserttext, 1, string_pos(chr(10), inserttext) - 1)
+				str[b] = string_copy(inserttext, 1, string_pos("\n", inserttext) - 1)
 				if (tbx.replace_char != "")
 					str[b] = string_repeat(tbx.replace_char, string_length(str[b]))
-				inserttext = string_delete(inserttext, 1, string_pos(chr(10), inserttext))
+				inserttext = string_delete(inserttext, 1, string_pos("\n", inserttext))
 			}
 			tbx.lines += b
 			
@@ -830,7 +827,7 @@ else // Wordwrapping
 draw_set_halign(fa_left)
 draw_set_valign(fa_top)
 
-for (l = tbx.start*!tbx.single_line; l < tbx.lines; l++)
+for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 {
 	var ly = (l - tbx.start*!tbx.single_line) * lineheight; // Current line y value
 	

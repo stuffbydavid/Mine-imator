@@ -270,7 +270,7 @@ switch (load_stage)
 				if (type = "fromworld") // Rename world import file
 				{
 					type = "schematic"
-					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic
+					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic to support TileEntities & string block ids
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
 					file_rename_lib(app.project_folder + "\\export.blocks", newname)
@@ -279,14 +279,13 @@ switch (load_stage)
 				
 			// Update templates
 			with (obj_template)
-			{
 				if (scenery = other.id)
-				{
 					temp_update_rot_point()
-					if (scenery_animate)
-						temp_animate_scenery(scenery_animate_root)
-				}
-			}
+			
+			// Update timelines
+			with (obj_timeline)
+				if (type = "scenery" && temp.scenery = other.id && scenery_animate)
+					tl_animate_scenery()
 			
 			// Next
 			with (app)

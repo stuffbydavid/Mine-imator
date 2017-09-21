@@ -2,7 +2,8 @@
 /// @arg resource
 /// @desc Sets the scenery of the given library item.
 
-var res;
+var res, hobj;
+hobj = null
 
 if (history_undo)
 	res = history_undo_res()
@@ -37,19 +38,46 @@ else
 			res_load()
 	}
 
-	history_set_res(action_lib_scenery, fn, temp_edit.scenery, res)
+	hobj = history_set_res(action_lib_scenery, fn, temp_edit.scenery, res)
+	with (hobj)
+	{
+		part_amount = 0
+		part_child_amount = 0
+		history_save_tl_select()
+	}
 }
 
+tl_deselect_all()
+
 with (temp_edit)
+	temp_set_scenery(res, !app.history_undo, hobj)
+
+// Restore old timelines
+if (history_undo)
 {
-	if (scenery != null)
-		scenery.count--
-	scenery = res
-	if (scenery != null)
-		scenery.count++
+	with (history_data)
+	{
+		// Restore parts
+		for (var t = 0; t < part_amount; t++)
+		{
+			var tl = history_restore_tl(part_save_obj[t]);
+			ds_list_add(tl.part_of.part_list, tl)
+		}
+			
+		// Restore child positions in tree
+		for (var m = 0; m < part_child_amount; m++) 
+			with (save_id_find(part_child_save_id[m]))
+				tl_set_parent(save_id_find(history_data.part_child_parent_save_id[m]), history_data.part_child_parent_tree_index[m])
 		
-	temp_update_display_name()
-	temp_update_rot_point()
+		// Restore selection
+		history_restore_tl_select()
+	}
 }
+
+tl_update_length()
+tl_update_list()
+tl_update_matrix()
+
+app_update_tl_edit()
 
 lib_preview.update = true

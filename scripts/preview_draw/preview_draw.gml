@@ -222,7 +222,7 @@ with (preview)
 				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), 60, 1, 1, 32000)
 				render_mode = "preview"
 				
-				matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
+				matrix_set(matrix_world, matrix_create(off, vec3(0), vec3(1)))
 			
 				switch (select.type)
 				{
@@ -251,7 +251,7 @@ with (preview)
 						break
 					
 					case "item":
-						render_world_item(select.item_vbuffer, select.item_bounce, select.item_face_camera, select.item_tex)
+						render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_tex)
 						break
 					
 					case "block":

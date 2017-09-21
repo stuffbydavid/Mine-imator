@@ -96,7 +96,7 @@ if (shader_alpha > 0)
 			}
 			   
 			case "item":
-				render_world_item(temp.item_vbuffer, temp.item_bounce, temp.item_face_camera, temp.item_tex)
+				render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_tex)
 				break
 			
 			case "text":

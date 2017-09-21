@@ -1,5 +1,5 @@
 /// closed_alerts_open()
-
+// TODO json
 if (!file_exists_lib(closed_file))
 	return 0
 

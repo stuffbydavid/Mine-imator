@@ -9,9 +9,13 @@ str = argument0
 res = argument1
 is3d = argument2
 
+
 if (text_texture != null && text_string = str && text_res = res && text_3d = is3d)
 	return 0
 
+if (string_char_at(str, string_length(str)) = "\n")
+	str += " "
+	
 text_string = str
 text_res = res
 text_3d = is3d

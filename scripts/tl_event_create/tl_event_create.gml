@@ -20,6 +20,7 @@ model_part = null
 model_part_name = ""
 part_of = null
 part_list = null
+scenery_animate = false
 
 for (var v = 0; v < e_value.amount; v++)
 {

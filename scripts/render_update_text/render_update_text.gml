@@ -18,8 +18,8 @@ with (obj_timeline)
 }
 		
 with (obj_particle_type)
-	if (temp && temp.type = "text")
-		render_generate_text(text, temp.text_font, temp.text_3d)
+	if (temp != null && temp.type = "text")
+		render_generate_text(id.text, temp.text_font, temp.text_3d)
 		
 with (obj_preview)
 	if (instance_exists(select) && select.type = "text")

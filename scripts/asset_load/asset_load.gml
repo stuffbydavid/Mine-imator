@@ -51,9 +51,9 @@ if (ext = ".zip") // Unzip
 	
 	// Look for object
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory, "miobj;mipart;.object;.particles;")
+		validfile = file_find_single(unzip_directory, "miobj;miparts;.object;.particles;")
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", "miobj;mipart;.object;.particles;")
+		validfile = file_find_single(unzip_directory + name + "\\", "miobj;miparts;.object;.particles;")
 	
 	// Pack?
 	if (!file_exists_lib(validfile))
@@ -172,6 +172,24 @@ switch (ext)
 	// Particle spawner
 	case ".miparts":
 	{
+		var temp = new(obj_template);
+		with (temp)
+		{
+			loaded = true
+			load_id = save_id
+			save_id_map[?load_id] = load_id
+			type = "particles"
+			project_load_particles(rootmap[?"particles"])
+			sortlist_add(other.lib_list, id)
+		}
+		project_load_objects(rootmap)
+		project_load_find_save_ids()
+		
+		with (temp)
+			with (temp_animate())
+				loaded = true
+				
+		project_load_update()
 		break
 	}
 	case ".particles":
@@ -180,18 +198,20 @@ switch (ext)
 		with (temp)
 		{
 			loaded = true
-			sortlist_add(other.lib_list, id)
+			load_id = save_id
+			save_id_map[?load_id] = load_id
 			type = "particles"
 			project_load_legacy_particles()
+			sortlist_add(other.lib_list, id)
 		}
 		project_load_legacy_objects()
 		project_load_find_save_ids()
-		project_load_update()
 		
 		with (temp)
 			with (temp_animate())
 				loaded = true
 				
+		project_load_update()
 		buffer_delete(buffer_current)
 		break
 	}

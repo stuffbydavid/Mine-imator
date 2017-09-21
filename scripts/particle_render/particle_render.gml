@@ -1,6 +1,6 @@
 /// particle_render()
 /// @desc Renders the particle.
-// TODOO
+
 var temp, prevalpha, prevcolor;
 temp = type.temp
 
@@ -11,21 +11,20 @@ shader_alpha *= alpha
 
 if (temp)
 {
-	var scenery, rep;
+	var scenery, rep, off;
+	off = point3D(0, 0, 0)
 	
 	if (temp.block_repeat_enable)
 		rep = temp.block_repeat
 	else
 		rep = vec3(1)
 		
-	//matrix_reset_offset()
-	
 	switch (temp.type) // Rotation point
 	{
 		case "char":
 		case "spblock":
 			if (temp.model_file != null)
-				matrix_offset = point3D(0, 0, -(temp.model_file.bounds_parts_end[Z] - temp.model_file.bounds_parts_start[Z]) / 2)
+				off = point3D(0, 0, -(temp.model_file.bounds_parts_end[Z] - temp.model_file.bounds_parts_start[Z]) / 2)
 			break
 		
 		case "scenery":
@@ -33,19 +32,19 @@ if (temp)
 			if (scenery = null)
 				break
 			var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
-			matrix_offset = vec3_mul(displaysize, vec3(-0.5))
+			off = vec3_mul(displaysize, vec3(-0.5))
 			break
 			
 		case "block":
-			matrix_offset = point3D_mul(rep, -block_size / 2)
+			off = point3D_mul(rep, -block_size / 2)
 			break
 		
 		case "item":
-			matrix_offset = point3D(-8, -0.5, 0)
+			off = point3D(-8, -0.5, 0)
 			break
 	}
 	
-	matrix_set(matrix_world, matrix_create(pos, rot, vec3(scale)))
+	matrix_set(matrix_world, matrix_create(point3D_add(pos, off), rot, vec3(scale)))
 	
 	switch (temp.type)
 	{
@@ -70,7 +69,7 @@ if (temp)
 			break
 			
 		case "item":
-			render_world_item(temp.item_vbuffer, temp.item_bounce, temp.item_face_camera, temp.item_tex)
+			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_tex)
 			break
 		
 		case "block":

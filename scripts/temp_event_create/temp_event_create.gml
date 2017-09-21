@@ -38,8 +38,6 @@ block_repeat_enable = false
 block_repeat = vec3(1)
 
 scenery = null
-scenery_animate = false
-scenery_animate_root = null
 
 shape_vbuffer = null
 shape_tex = null

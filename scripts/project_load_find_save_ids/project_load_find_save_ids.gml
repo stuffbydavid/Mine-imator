@@ -44,6 +44,11 @@ if (background_loaded)
 	}
 }
 
+// Set timeline references
+with (obj_timeline)
+	if (loaded && !is_undefined(save_id_map[?load_id]))
+		save_id = save_id_map[?load_id]
+
 // Set template references
 with (obj_template)
 {
@@ -86,11 +91,6 @@ with (obj_template)
 	if (load_format < e_project.FORMAT_110 && type = "item" && item_tex != res_def && !legacy_item_sheet)
 		item_tex.type = "texture"
 }
-
-// Set timeline references
-with (obj_timeline)
-	if (loaded && !is_undefined(save_id_map[?load_id]))
-		save_id = save_id_map[?load_id]
 
 with (obj_timeline)
 {

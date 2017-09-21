@@ -1,19 +1,21 @@
-/// render_world_item(vbuffer, bounce, facecamera, resource)
+/// render_world_item(vbuffer, is3d, facecamera, bounce, resource)
 /// @arg vbuffer
-/// @arg bounce
+/// @arg is3d
 /// @arg facecamera
+/// @arg bounce
 /// @arg resource
 
-var vbuffer, bounce, facecamera, res;
-var rot, off, mipmap;
+var vbuffer, is3d, facecamera, bounce, res;
 vbuffer = argument0
-bounce = argument1
+is3d = argument1
 facecamera = argument2
-res = argument3
+bounce = argument3
+res = argument4
 
 if (!res.ready)
 	res = res_def
 
+var rot, off, mipmap;
 rot = vec3(0)
 off = point3D(0, 0, 0)
 
@@ -34,7 +36,9 @@ if (facecamera)
 	rot[Z] = 90 + point_direction(pos[X], pos[Y], proj_from[X], proj_from[Y])
 }
 
-matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, vec3(1)))
+var rotmat = matrix_create(point3D(-8, -0.5 * is3d, 0), vec3(0), vec3(1));
+rotmat = matrix_multiply(rotmat, matrix_create(point3D(8, 0.5 * is3d, 0), rot, vec3(1)))
+matrix_world_multiply_pre(rotmat)
 matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
 
 mipmap = shader_texture_filter_mipmap

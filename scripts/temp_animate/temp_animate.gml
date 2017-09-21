@@ -32,19 +32,12 @@ with (new(obj_timeline))
 		{
 			texture_filtering = true
 			
-			// Create timelines
-			with (temp)
+			if (temp.scenery != null)
 			{
-				if (scenery != null)
-				{
-					if (scenery.ready)
-						temp_animate_scenery(other.id)
-					else
-					{
-						scenery_animate = true
-						scenery_animate_root = other.id
-					}
-				}
+				if (temp.scenery.ready)
+					tl_animate_scenery()
+				else
+					scenery_animate = true
 			}
 			
 			break

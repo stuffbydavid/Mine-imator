@@ -45,3 +45,17 @@ to.ssao = ssao
 to.fog = fog
 to.wind = wind
 to.wind_terrain = wind_terrain
+
+if (part_of != null)
+{
+	if (type = "spblock")
+	{
+		to.model_name = model_name
+		to.model_state = model_state
+	}
+	else if (type = "block")
+	{
+		to.block_name = block_name
+		to.block_state = block_state
+	}
+}
