@@ -1,4 +1,4 @@
-/// json_read_real(value, [default])
+/// value_get_real(value, [default])
 /// @arg value
 /// @arg [default]
 

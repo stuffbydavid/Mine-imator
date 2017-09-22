@@ -45,7 +45,7 @@ if (part.shape_list != null)
 			}
 			
 			// Second half mesh
-			matrix_set(matrix_world, matrix_multiply(matrix_multiply(model_part_bend_matrix(part, bendangle), shape.matrix_bend_half), mat))
+			matrix_set(matrix_world, matrix_multiply(matrix_multiply(model_part_bend_matrix(part, bendangle, shape.position), shape.matrix_bend_half), mat))
 			matrix_set(matrix_world, matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), shape.scale), matrix_get(matrix_world))) // Add scale
 			vbuffer_render(shape.bend_vbuffer)
 		}

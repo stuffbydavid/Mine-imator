@@ -1,6 +1,9 @@
 /// app_update_keyboard()
 /// @desc Handle keyboard shortcuts.
 
+if (keyboard_check_pressed(vk_f7) && dev_mode)
+	minecraft_assets_reload()
+	
 if (keyboard_check_pressed(vk_f8) && dev_mode)
 	popup_show(popup_startup)
 

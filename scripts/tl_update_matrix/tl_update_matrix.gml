@@ -18,7 +18,7 @@ if (object_index != app && update_matrix)
 			
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
-			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value[e_value.BEND_ANGLE]), matrix_parent)
+			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
 	}
 	else
 		matrix_parent = MAT_IDENTITY

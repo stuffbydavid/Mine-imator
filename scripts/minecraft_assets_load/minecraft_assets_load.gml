@@ -1,11 +1,16 @@
-/// minecraft_assets_load(version)
+/// minecraft_assets_load(version, unzip)
 /// @arg version
+/// @arg unzip
 /// @desc Loads assets from an archive.
 
 // TODO: error check
 
-var version, fname, zipfname;
-version = argument0
+var version, unz, fname, zipfname;
+version = argument[0]
+unz = true
+if (argument_count > 1)
+	unz = argument[1]
+
 fname = minecraft_directory + version + ".midata"
 zipfname = minecraft_directory + version + ".zip"
 
@@ -44,7 +49,7 @@ if (format > minecraft_assets_format)
 }
 
 // Unzip archive
-if (!dev_mode || dev_mode_unzip_assets)
+if ((!dev_mode || dev_mode_unzip_assets) && unz)
 	unzip(zipfname)
 
 mc_block_state_file_map = ds_map_create() // filename -> states

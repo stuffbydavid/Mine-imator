@@ -12,16 +12,26 @@
 			"default_state": "variant=steve"
 		},
 		{
-			"name": "steve_edit",
-			"file": "steve_edit.mimodel"
-		},
-		{
 			"name": "zombie",
-			"file": "zombie.mimodel"
+			"file": "zombie.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "zombie", "texture": "entity/zombie/zombie" },
+					{ "value": "husk", "texture": "entity/zombie/husk" }
+				]
+			},
+			"default_state": "variant=zombie"
 		},
 		{
 			"name": "skeleton",
-			"file": "skeleton.mimodel"
+			"states": {
+				"variant": [
+					{ "value": "skeleton", "file": "skeleton.mimodel" },
+					{ "value": "wither_skeleton", "file": "wither_skeleton.mimodel" },
+					{ "value": "stray_skeleton", "file": "stray_skeleton.mimodel" }
+				]
+			},
+			"default_state": "variant=skeleton"
 		},
 		{
 			"name": "creeper",
@@ -42,6 +52,22 @@
 			"file": "enderman.mimodel"
 		},
 		{
+			"name": "slime",
+			"file": "slime.mimodel"
+		},
+		{
+			"name": "ghast",
+			"file": "ghast.mimodel"
+		},
+		{
+			"name": "zombie_pigman",
+			"file": "zombie_pigman.mimodel",
+		},
+		{
+			"name": "chicken",
+			"file": "chicken.mimodel"
+		},
+		{
 			"name": "cow",
 			"states": {
 				"variant": [
@@ -53,11 +79,99 @@
 		},
 		{
 			"name": "pig",
-			"file": "pig.mimodel"
+			"states": {
+				"saddle": [
+					{ "value": "false", "file": "pig.mimodel" },
+					{ "value": "true", "file": "pig_saddle.mimodel" }
+				]
+			},
+			"default_state": "saddle=false"
 		},
 		{
-			"name": "slime",
-			"file": "slime.mimodel"
+			"name": "sheep",
+			"states": {
+				"sheared": [
+					{ "value": "false", "file": "sheep.mimodel" },
+					{ "value": "true", "file": "sheep_sheared.mimodel" }
+				]
+			},
+			"default_state": "sheared=false"
+		},
+		{
+			"name": "rabbit",
+			"file": "rabbit.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "black", "texture": "entity/rabbit/black" },
+					{ "value": "brown", "texture": "entity/rabbit/brown" },
+					{ "value": "caerbannog", "texture": "entity/rabbit/caerbannog" },
+					{ "value": "gold", "texture": "entity/rabbit/gold" },
+					{ "value": "salt", "texture": "entity/rabbit/salt" },
+					{ "value": "toast", "texture": "entity/rabbit/toast" },
+					{ "value": "white", "texture": "entity/rabbit/white" },
+					{ "value": "white_splotched", "texture": "entity/rabbit/white_splotched" }
+				]
+			},
+			"default_state": "variant=brown"
+		},
+		{
+			"name": "squid",
+			"file": "squid.mimodel"
+		},
+		{
+			"name": "cat",
+			"file": "cat.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "black", "texture": "entity/cat/black" },
+					{ "value": "ocelot", "texture": "entity/cat/ocelot" },
+					{ "value": "red", "texture": "entity/cat/red" },
+					{ "value": "siamese", "texture": "entity/cat/siamese" }
+				]
+			},
+			"default_state": "variant=ocelot"
+		},
+		{
+			"name": "wolf",
+			"file": "wolf.mimodel"
+		},
+		{
+			"name": "parrot",
+			"file": "parrot.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "blue", "texture": "entity/parrot/parrot_blue" },
+					{ "value": "green", "texture": "entity/parrot/parrot_green" },
+					{ "value": "grey", "texture": "entity/parrot/parrot_grey" },
+					{ "value": "red_blue", "texture": "entity/parrot/parrot_red_blue" },
+					{ "value": "yellow_blue", "texture": "entity/parrot/parrot_yellow_blue" }
+				]
+			},
+			"default_state": "variant=green"
+		},
+		{
+			"name": "polarbear",
+			"file": "polarbear.mimodel"
+		},
+		{
+			"name": "horse",
+			"file": "horse.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "black", "texture": "entity/horse/horse_black" },
+					{ "value": "brown", "texture": "entity/horse/horse_brown" },
+					{ "value": "chestnut", "texture": "entity/horse/horse_chestnut" },
+					{ "value": "creamy", "texture": "entity/horse/horse_creamy" },
+					{ "value": "darkbrown", "texture": "entity/horse/horse_darkbrown" },
+					{ "value": "gray", "texture": "entity/horse/horse_gray" },
+					{ "value": "white", "texture": "entity/horse/horse_white" },
+					{ "value": "donkey", "texture": "entity/horse/donkey" },
+					{ "value": "mule", "texture": "entity/horse/mule" },
+					{ "value": "skeleton", "texture": "entity/horse/horse_skeleton" },
+					{ "value": "zombie", "texture": "entity/horse/horse_zombie" }
+				]
+			},
+			"default_state": "variant=brown"
 		},
 		{
 			"name": "llama",
@@ -92,6 +206,74 @@
 			"default_state": "variant=normal,decor=white"
 		},
 		{
+			"name": "villager",
+			"file": "villager.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "butcher", "texture": "entity/villager/butcher" },
+					{ "value": "farmer", "texture": "entity/villager/farmer" },
+					{ "value": "librarian", "texture": "entity/villager/librarian" },
+					{ "value": "priest", "texture": "entity/villager/priest" },
+					{ "value": "smith", "texture": "entity/villager/smith" },
+					{ "value": "villager", "texture": "entity/villager/villager" }
+				]
+			},
+			"default_state": "variant=villager"
+		},
+		{
+			"name": "zombie_villager",
+			"file": "zombie_villager.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "butcher", "texture": "entity/zombie_villager/zombie_butcher" },
+					{ "value": "farmer", "texture": "entity/zombie_villager/zombie_farmer" },
+					{ "value": "librarian", "texture": "entity/zombie_villager/zombie_librarian" },
+					{ "value": "priest", "texture": "entity/zombie_villager/zombie_priest" },
+					{ "value": "smith", "texture": "entity/zombie_villager/zombie_smith" },
+					{ "value": "villager", "texture": "entity/zombie_villager/zombie_villager" }
+				]
+			},
+			"default_state": "variant=villager"
+		},
+		{
+			"name": "witch",
+			"file": "witch.mimodel"
+		},
+		{
+			"name": "iron_golem",
+			"file": "iron_golem.mimodel"
+		},
+		{
+			"name": "silverfish",
+			"file": "silverfish.mimodel"
+		},
+		{
+			"name": "bat",
+			"file": "bat.mimodel"
+		},
+		{
+			"name": "blaze",
+			"file": "blaze.mimodel"
+		},
+		{
+			"name": "magma_cube",
+			"file": "magma_cube.mimodel"
+		},
+		{
+			"name": "endermite",
+			"file": "endermite.mimodel"
+		},
+		{
+			"name": "guardian",
+			"states": {
+				"variant": [
+					{ "value": "guardian", "file": "guardian.mimodel" },
+					{ "value": "elder_guardian", "file": "elder_guardian.mimodel" }
+				]
+			},
+			"default_state": "variant=guardian"
+		},
+		{
 			"name": "shulker",
 			"file": "shulker.mimodel",
 			"states": {
@@ -115,6 +297,18 @@
 				]
 			},
 			"default_state": "color=purple"
+		},
+		{
+			"name": "wither",
+			"file": "wither.mimodel"
+		},
+		{
+			"name": "ender_dragon",
+			"file": "ender_dragon.mimodel"
+		},
+		{
+			"name": "snowman",
+			"file": "snowman.mimodel"
 		}
 	],
 	"special_blocks": [
@@ -149,6 +343,15 @@
 			"default_state": "variant=normal"
 		},
 		{
+			"name": "sign",
+			"states": {
+				"variant": [
+					{ "value": "standing", "file": "standing_sign.mimodel" },
+					{ "value": "wall", "file": "wall_sign.mimodel" }
+				]
+			}
+		},
+		{
 			"name": "arrow",
 			"file": "arrow.mimodel"
 		},
@@ -157,12 +360,47 @@
 			"file": "shield.mimodel"
 		},
 		{
-			"name": "standing_sign",
-			"file": "standing_sign.mimodel"
+			"name": "elytra",
+			"file": "elytra.mimodel"
 		},
 		{
-			"name": "wall_sign",
-			"file": "wall_sign.mimodel"
+			"name": "boat",
+			"file": "boat.mimodel",
+			"states": {
+				"wood": [
+					{ "value": "oak", "texture": "entity/boat/boat_oak" },
+					{ "value": "spruce", "texture": "entity/boat/boat_spruce" },
+					{ "value": "birch", "texture": "entity/boat/boat_birch" },
+					{ "value": "jungle", "texture": "entity/boat/boat_jungle" },
+					{ "value": "acacia", "texture": "entity/boat/boat_acacia" },
+					{ "value": "darkoak", "texture": "entity/boat/boat_darkoak" }
+				]
+			},
+			"default_state": "wood=oak"
+		},
+		{
+			"name": "minecart",
+			"file": "minecart.mimodel"
+		},
+		{
+			"name": "tripwire_hook",
+			"file": "tripwire_hook.mimodel"
+		},
+		{
+			"name": "enchantment_table",
+			"file": "enchantment_table.mimodel"
+		},
+		{
+			"name": "ender_crystal",
+			"file": "ender_crystal.mimodel"
+		},
+		{
+			"name": "banner",
+			"file": "banner.mimodel"
+		},
+		{
+			"name": "armor_stand",
+			"file": "armor_stand.mimodel"
 		},
 		{
 			"name": "bed",
@@ -5145,6 +5383,7 @@
 		"entity/parrot/parrot_red_blue",
 		"entity/parrot/parrot_yellow_blue",
 		"entity/pig/pig",
+		"entity/pig/pig_saddle",
 		"entity/projectiles/arrow",
 		"entity/rabbit/black",
 		"entity/rabbit/brown",

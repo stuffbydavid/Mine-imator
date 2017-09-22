@@ -112,6 +112,8 @@ with (obj_timeline)
 			if (part_of = other.id && model_part_name = part.name)
 			{
 				ds_list_add(other.part_list, id)
+				lock_bend = part.lock_bend
+				value_type_show[e_value_type.POSITION] = part.show_position
 				tlexists = true
 				break
 			}	

@@ -1,4 +1,4 @@
-/// json_read_color(value, [default])
+/// value_get_color(value, [default])
 /// @arg value
 /// @arg [default]
 

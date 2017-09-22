@@ -1,11 +1,13 @@
-/// model_part_bend_matrix(part, angle)
+/// model_part_bend_matrix(part, angle, position)
 /// @arg part
 /// @arg angle
+/// @arg position
 /// @desc Returns the transformation matrix for bending.
 
 var part, angle, pos, rot, scale;
 part = argument0
 angle = argument1
+pos = argument2
 
 if (part.bend_part = null)
 	return MAT_IDENTITY
@@ -20,15 +22,15 @@ else if (part.bend_direction = e_bend.BACKWARD)
 switch (part.bend_part)
 {
 	case e_part.RIGHT: case e_part.LEFT:
-		pos = point3D(part.bend_offset, 0, 0)
+		pos[X] = part.bend_offset
 		break
 		
 	case e_part.FRONT: case e_part.BACK:
-		pos = point3D(0, part.bend_offset, 0)
+		pos[Y] = part.bend_offset
 		break
 		
 	case e_part.UPPER: case e_part.LOWER:
-		pos = point3D(0, 0, part.bend_offset)
+		pos[Z] = part.bend_offset
 		break
 }
 

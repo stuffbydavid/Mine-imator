@@ -1,4 +1,4 @@
-/// json_read_save_id(value, [default])
+/// value_get_save_id(value, [default])
 /// @arg value
 /// @arg [default]
 
