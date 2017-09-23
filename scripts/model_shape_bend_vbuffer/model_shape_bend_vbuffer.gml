@@ -9,7 +9,7 @@ shape = argument0
 angle = argument1
 roundbend = argument2
 
-if (shape.type != "block")
+if (shape.type != "block" || shape.bend_mode != e_shape_bend.BEND)
 	return null
 
 var anglesign, partsign, detail;
@@ -279,10 +279,10 @@ switch (shape.bend_axis)
 
 // No flicker
 var pedgetex2, nedgetex2, pbacktex2, nbacktex2;
-pedgetex2 = point2D_add(pedgetex, point2D(0, 1 / 256))
-pbacktex2 = point2D_add(pbacktex, point2D(0, 1 / 256))
-nedgetex2 = point2D_add(nedgetex, point2D(0, 1 / 256))
-nbacktex2 = point2D_add(nbacktex, point2D(0, 1 / 256))
+pedgetex2 = point2D_add(pedgetex, point2D(1 / 256, 1 / 256))
+pbacktex2 = point2D_add(pbacktex, point2D(1 / 256, 1 / 256))
+nedgetex2 = point2D_add(nedgetex, point2D(1 / 256, 1 / 256))
+nbacktex2 = point2D_add(nbacktex, point2D(1 / 256, 1 / 256))
 
 // Transform texture to 0-1
 pmidtex = vec2_div(pmidtex, shape.texture_size)

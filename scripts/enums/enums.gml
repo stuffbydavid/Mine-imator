@@ -297,6 +297,13 @@ enum e_bend
 	BOTH
 }
 
+enum e_shape_bend
+{
+	BEND,
+	LOCK_STATIONARY,
+	LOCK_MOVING
+}
+
 // Scrollbar
 enum e_scroll
 {

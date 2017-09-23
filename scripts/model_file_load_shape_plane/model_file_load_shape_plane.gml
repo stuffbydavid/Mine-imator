@@ -2,15 +2,13 @@
 /// @arg [bend]
 /// @desc Generates a plane shape, bend is supplied if this is the bended half.
 
-var bend;
+var bend = false;
 if (argument_count > 0)
 	bend = argument[0]
-else
-	bend = false
 
-var x1, x2, z1, z2;
-x1 = from[X]; z1 = from[Z]
-x2 = to[X];   z2 = to[Z]
+var x1, x2, y1, z1, z2;
+x1 = from[X]; y1 = from[Y]; z1 = from[Z]
+x2 = to[X];					z2 = to[Z]
 
 // Define texture coordinates to use (clockwise, starting at top-left)
 var tex, size;
@@ -22,7 +20,7 @@ tex[2] = point2D_add(tex[0], point2D(size[X], size[Z]))
 tex[3] = point2D_add(tex[0], point2D(0, size[Z]))
 
 // Adjust by bending
-if (bend_part != null)
+if (bend_part != null && bend_mode = e_shape_bend.BEND)
 {
 	var bendoff, texoff;
 	
@@ -153,10 +151,10 @@ tex[3] = vec2_div(tex[3], texture_size)
 
 // Create faces
 var p1, p2, p3, p4;
-p1 = point3D(x1, 0, z2)
-p2 = point3D(x2, 0, z2)
-p3 = point3D(x2, 0, z1)
-p4 = point3D(x1, 0, z1)
+p1 = point3D(x1, y1, z2)
+p2 = point3D(x2, y1, z2)
+p3 = point3D(x2, y1, z1)
+p4 = point3D(x1, y1, z1)
 
 vbuffer_add_triangle(p1, p2, p3, tex[0], tex[1], tex[2])
 vbuffer_add_triangle(p3, p4, p1, tex[2], tex[3], tex[0])

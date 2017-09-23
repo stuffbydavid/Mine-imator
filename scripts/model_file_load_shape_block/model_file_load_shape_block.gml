@@ -63,7 +63,7 @@ if (texture_mirror)
 }
 
 // Adjust by bending
-if (bend_part != null)
+if (bend_part != null && bend_mode = e_shape_bend.BEND)
 {
 	var bendoff, texoff;
 	
@@ -258,7 +258,7 @@ if (bend_part != null)
 				add[e_dir.NORTH] = false
 				bendoff = (bend_offset - position[Y]) - from[Y]
 				y1 = (from[Y] + bendoff) / scale[Y]
-				y2 = to[Z]
+				y2 = to[Y]
 				
 				texoff = point2D(bendoff, 0)
 				tex[e_dir.EAST, 1] = point2D_sub(tex[e_dir.EAST, 1], texoff)

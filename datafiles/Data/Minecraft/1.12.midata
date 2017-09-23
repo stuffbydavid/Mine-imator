@@ -133,7 +133,15 @@
 		},
 		{
 			"name": "wolf",
-			"file": "wolf.mimodel"
+			"file": "wolf.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "normal", "texture": "entity/wolf/wolf" },
+					{ "value": "tame", "file": "wolf_tame.mimodel" },
+					{ "value": "angry", "texture": "entity/wolf/wolf_angry" }
+				]
+			},
+			"default_state": "variant=normal"
 		},
 		{
 			"name": "parrot",
@@ -171,7 +179,7 @@
 					{ "value": "zombie", "texture": "entity/horse/horse_zombie" }
 				]
 			},
-			"default_state": "variant=brown"
+			"default_state": "variant=black"
 		},
 		{
 			"name": "llama",
@@ -185,22 +193,22 @@
 					{ "value": "white", "texture": "entity/llama/llama_white" }
 				],
 				"decor": [
-					{ "value": "white", "texture": { "decoration": "entity/llama/decor/decor_white", "decoration_1": "entity/llama/decor/decor_white" } },
-					{ "value": "orange", "texture": { "decoration": "entity/llama/decor/decor_orange", "decoration_1": "entity/llama/decor/decor_orange" } },
-					{ "value": "magenta", "texture": { "decoration": "entity/llama/decor/decor_magenta", "decoration_1": "entity/llama/decor/decor_magenta" } },
-					{ "value": "light_blue", "texture": { "decoration": "entity/llama/decor/decor_light_blue", "decoration_1": "entity/llama/decor/decor_light_blue" } },
-					{ "value": "yellow", "texture": { "decoration": "entity/llama/decor/decor_yellow", "decoration_1": "entity/llama/decor/decor_yellow" } },
-					{ "value": "lime", "texture": { "decoration": "entity/llama/decor/decor_lime", "decoration_1": "entity/llama/decor/decor_lime" } },
-					{ "value": "pink", "texture": { "decoration": "entity/llama/decor/decor_pink", "decoration_1": "entity/llama/decor/decor_pink" } },
-					{ "value": "gray", "texture": { "decoration": "entity/llama/decor/decor_gray", "decoration_1": "entity/llama/decor/decor_gray" } },
-					{ "value": "silver", "texture": { "decoration": "entity/llama/decor/decor_silver", "decoration_1": "entity/llama/decor/decor_silver" } },
-					{ "value": "cyan", "texture": { "decoration": "entity/llama/decor/decor_cyan", "decoration_1": "entity/llama/decor/decor_cyan" } },
-					{ "value": "purple", "texture": { "decoration": "entity/llama/decor/decor_purple", "decoration_1": "entity/llama/decor/decor_purple" } },
-					{ "value": "blue", "texture": { "decoration": "entity/llama/decor/decor_blue", "decoration_1": "entity/llama/decor/decor_blue" } },
-					{ "value": "brown", "texture": { "decoration": "entity/llama/decor/decor_brown", "decoration_1": "entity/llama/decor/decor_brown" } },
-					{ "value": "green", "texture": { "decoration": "entity/llama/decor/decor_green", "decoration_1": "entity/llama/decor/decor_green" } },
-					{ "value": "red", "texture": { "decoration": "entity/llama/decor/decor_red", "decoration_1": "entity/llama/decor/decor_red" } },
-					{ "value": "black", "texture": { "decoration": "entity/llama/decor/decor_black", "decoration_1": "entity/llama/decor/decor_black" } }
+					{ "value": "white", "texture": { "body_decoration": "entity/llama/decor/decor_white", "neck_decoration": "entity/llama/decor/decor_white" } },
+					{ "value": "orange", "texture": { "body_decoration": "entity/llama/decor/decor_orange", "neck_decoration": "entity/llama/decor/decor_orange" } },
+					{ "value": "magenta", "texture": { "body_decoration": "entity/llama/decor/decor_magenta", "neck_decoration": "entity/llama/decor/decor_magenta" } },
+					{ "value": "light_blue", "texture": { "body_decoration": "entity/llama/decor/decor_light_blue", "neck_decoration": "entity/llama/decor/decor_light_blue" } },
+					{ "value": "yellow", "texture": { "body_decoration": "entity/llama/decor/decor_yellow", "neck_decoration": "entity/llama/decor/decor_yellow" } },
+					{ "value": "lime", "texture": { "body_decoration": "entity/llama/decor/decor_lime", "neck_decoration": "entity/llama/decor/decor_lime" } },
+					{ "value": "pink", "texture": { "body_decoration": "entity/llama/decor/decor_pink", "neck_decoration": "entity/llama/decor/decor_pink" } },
+					{ "value": "gray", "texture": { "body_decoration": "entity/llama/decor/decor_gray", "neck_decoration": "entity/llama/decor/decor_gray" } },
+					{ "value": "silver", "texture": { "body_decoration": "entity/llama/decor/decor_silver", "neck_decoration": "entity/llama/decor/decor_silver" } },
+					{ "value": "cyan", "texture": { "body_decoration": "entity/llama/decor/decor_cyan", "neck_decoration": "entity/llama/decor/decor_cyan" } },
+					{ "value": "purple", "texture": { "body_decoration": "entity/llama/decor/decor_purple", "neck_decoration": "entity/llama/decor/decor_purple" } },
+					{ "value": "blue", "texture": { "body_decoration": "entity/llama/decor/decor_blue", "neck_decoration": "entity/llama/decor/decor_blue" } },
+					{ "value": "brown", "texture": { "body_decoration": "entity/llama/decor/decor_brown", "neck_decoration": "entity/llama/decor/decor_brown" } },
+					{ "value": "green", "texture": { "body_decoration": "entity/llama/decor/decor_green", "neck_decoration": "entity/llama/decor/decor_green" } },
+					{ "value": "red", "texture": { "body_decoration": "entity/llama/decor/decor_red", "neck_decoration": "entity/llama/decor/decor_red" } },
+					{ "value": "black", "texture": { "body_decoration": "entity/llama/decor/decor_black", "neck_decoration": "entity/llama/decor/decor_black" } }
 				]
 			},
 			"default_state": "variant=normal,decor=white"
@@ -242,6 +250,16 @@
 		{
 			"name": "iron_golem",
 			"file": "iron_golem.mimodel"
+		},
+		{
+			"name": "snow_golem",
+			"states": {
+				"variant": [
+					{ "value": "snow_golem", "file": "snow_golem.mimodel" },
+					{ "value": "snowman", "file": "snowman.mimodel" }
+				]
+			},
+			"default_state": "variant=snow_golem"
 		},
 		{
 			"name": "silverfish",
@@ -300,15 +318,18 @@
 		},
 		{
 			"name": "wither",
-			"file": "wither.mimodel"
+			"file": "wither.mimodel",
+			"states": {
+				"invulnerable": [
+					{ "value": "false", "texture": "entity/wither/wither" },
+					{ "value": "true", "texture": "entity/wither/wither_invulnerable" }
+				]
+			},
+			"default_state": "invulnerable=false"
 		},
 		{
 			"name": "ender_dragon",
 			"file": "ender_dragon.mimodel"
-		},
-		{
-			"name": "snowman",
-			"file": "snowman.mimodel"
 		}
 	],
 	"special_blocks": [
@@ -5417,7 +5438,7 @@
 		"entity/skeleton/stray",
 		"entity/skeleton/stray_overlay",
 		"entity/skeleton/wither_skeleton",
-		"entity/slime/magma_cube",
+		"entity/slime/magmacube",
 		"entity/slime/slime",
 		"entity/spider/cave_spider",
 		"entity/spider/spider",
@@ -5431,6 +5452,7 @@
 		"entity/wither/wither_invulnerable",
 		"entity/wolf/wolf",
 		"entity/wolf/wolf_angry",
+		"entity/wolf/wolf_collar",
 		"entity/wolf/wolf_tame",
 		"entity/zombie/husk",
 		"entity/zombie/zombie",
@@ -5441,6 +5463,9 @@
 		"entity/zombie_villager/zombie_priest",
 		"entity/zombie_villager/zombie_smith",
 		"entity/zombie_villager/zombie_villager",
+		"blocks/pumpkin_top",
+		"blocks/pumpkin_face_off",
+		"blocks/pumpkin_side",
 		"blocks/cobblestone",
 		"blocks/lever",
 		"blocks/piston_top_sticky",

@@ -31,11 +31,14 @@ if (part.shape_list != null)
 		shader_use()
 		
 		// Main part mesh
-		matrix_set(matrix_world, matrix_multiply(shape.matrix, mat))
+		if (shape.bend_mode = e_shape_bend.LOCK_MOVING) // Lock to moving half
+			matrix_set(matrix_world, matrix_multiply(matrix_multiply(shape.matrix, model_part_bend_matrix(part, bendangle, shape.position)), mat))
+		else
+			matrix_set(matrix_world, matrix_multiply(shape.matrix, mat))
 		vbuffer_render(shape.vbuffer)
 		
 		// Bended half
-		if (part.bend_part != null)
+		if (part.bend_part != null && shape.bend_mode = e_shape_bend.BEND)
 		{
 			// Connect mesh
 			if (bendangle != 0 && bendvbufferlist != null && bendvbufferlist[|s] != null)
