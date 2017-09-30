@@ -61,6 +61,11 @@ if (filename_ext(fn) = ".midata")
 		}
 	}
 	
+	// Closed alerts
+	var alertslist = map[?"closed_alerts"];
+	if (ds_list_valid(alertslist))
+		ds_list_copy(closed_alert_list, alertslist)
+	
 	// Program
 	var programmap = map[?"program"];
 	if (ds_map_valid(programmap))

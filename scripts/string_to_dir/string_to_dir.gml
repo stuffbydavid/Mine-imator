@@ -1,7 +1,7 @@
 /// string_to_dir(string)
 /// @arg string
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 switch (argument0)
 {

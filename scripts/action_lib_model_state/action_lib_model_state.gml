@@ -20,7 +20,7 @@ else {
 	{
 		val = argument0
 		state = menu_model_state.name
-		hobj = history_set_var(action_lib_model_state, temp_edit.model_state_map[?state], val, false)
+		hobj = history_set_var(action_lib_model_state, state_vars_get_value(temp_edit.model_state, state), val, false)
 		with (hobj)
 		{
 			id.state = state
@@ -53,8 +53,7 @@ tl_deselect_all()
 
 with (temp_edit)
 {
-	model_state_map[?state] = val
-	model_state = state_vars_map_to_string(model_state_map)
+	state_vars_set_value(model_state, state, val)
 	temp_update_model()
 	temp_update_model_timeline_tree(hobj)
 	temp_update_display_name()

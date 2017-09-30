@@ -26,9 +26,9 @@ with (new(obj_template))
 		{
 			model_name = modelmap[?"name"]
 			if (!is_undefined(modelmap[?"state"]))
-				model_state = modelmap[?"state"]
+				model_state = string_get_state_vars(modelmap[?"state"])
 			else
-				model_state = ""
+				model_state = array()
 		}
 		else
 			log("Could not convert model ", legacy_model_name)
@@ -59,7 +59,7 @@ with (new(obj_template))
 	if (!is_undefined(block))
 	{
 		block_name = block.name
-		block_state = block.legacy_data_state[bdata]
+		block_state = array_copy_1d(block.legacy_data_state[bdata])
 	}
 	block_tex = project_load_legacy_save_id()
 

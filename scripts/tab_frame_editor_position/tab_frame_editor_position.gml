@@ -7,17 +7,17 @@ capwid = text_caption_width("frameeditorpositionx", "frameeditorpositiony", "fra
 
 axis_edit = X
 tab_control_dragger()
-draw_dragger("frameeditorpositionx", dx, dy, dw, tl_edit.value[e_value.POS_X], mul / tl_edit.value_inherit[e_value.SCA_X], -no_limit, no_limit, 0, snapval, tab.position.tbx_x, action_tl_frame_pos, capwid)
+draw_dragger("frameeditorpositionx", dx, dy, dw, tl_edit.value[e_value.POS_X], mul / tl_edit.value_inherit[e_value.SCA_X], -no_limit, no_limit, tl_edit.value_default[e_value.POS_X], snapval, tab.position.tbx_x, action_tl_frame_pos, capwid)
 tab_next()
 
 axis_edit = test(setting_z_is_up, Y, Z)
 tab_control_dragger() 
-draw_dragger("frameeditorpositiony", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, 0, snapval, tab.position.tbx_y, action_tl_frame_pos, capwid)
+draw_dragger("frameeditorpositiony", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.POS_X + axis_edit], snapval, tab.position.tbx_y, action_tl_frame_pos, capwid)
 tab_next()
 
 axis_edit = test(setting_z_is_up, Z, Y)
 tab_control_dragger()
-draw_dragger("frameeditorpositionz", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, 0, snapval, tab.position.tbx_z, action_tl_frame_pos, capwid)
+draw_dragger("frameeditorpositionz", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.POS_X + axis_edit], snapval, tab.position.tbx_z, action_tl_frame_pos, capwid)
 tab_next()
 
 // Tools

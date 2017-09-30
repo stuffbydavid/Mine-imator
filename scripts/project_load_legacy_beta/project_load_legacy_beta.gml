@@ -23,14 +23,14 @@ with (load)
 			{
 				lib_char_model_name[a] = modelmap[?"name"]
 				if (!is_undefined(modelmap[?"state"]))
-					lib_char_model_state[a] = modelmap[?"state"]
+					lib_char_model_state[a] = string_get_state_vars(modelmap[?"state"])
 				else
-					lib_char_model_state[a] = ""
+					lib_char_model_state[a] = array()
 			}
 			else
 			{
 				lib_char_model_name[a] = ""
-				lib_char_model_state[a] = ""
+				lib_char_model_state[a] = array()
 				log("Could not convert model name", lib_char_model_legacy_name[a])
 			}
 		}
@@ -326,8 +326,7 @@ for (var a = 0; a < load.lib_amount; a++)
 			case "spblock":
 			{
 				model_name = load.lib_char_model_name[a]
-				model_state = load.lib_char_model_state[a]
-				temp_update_model_state_map()
+				model_state = array_copy_1d(load.lib_char_model_state[a])
 				temp_update_model()
 				
 				if (load.lib_char_skin[a] > -1)
@@ -360,7 +359,7 @@ for (var a = 0; a < load.lib_amount; a++)
 				if (!is_undefined(block))
 				{
 					block_name = block.name
-					block_state = block.legacy_data_state[load.lib_block_data[a]]
+					block_state = array_copy_1d(block.legacy_data_state[load.lib_block_data[a]])
 				}
 				
 				if (load.lib_block_tex[a] > -1)

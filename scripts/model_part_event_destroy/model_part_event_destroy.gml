@@ -1,10 +1,4 @@
 /// model_part_event_destroy()
-
-if (shape_vbuffer != null)
-	vbuffer_destroy(shape_vbuffer)
-
-if (shape_bend_vbuffer != null)
-	vbuffer_destroy(shape_bend_vbuffer)
 			
 for (var s = 0; s < ds_list_size(shape_list); s++)
 	with (shape_list[|s])

@@ -7,7 +7,7 @@ var str, sep, arr, arrlen, pos, escapestr;
 str = argument0
 sep = argument1
 
-arr[0] = 0
+arr = array()
 arrlen = 0
 str += sep
 escapestr = ""

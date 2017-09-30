@@ -2,23 +2,26 @@
 /// @desc Set locked state.
 
 var facing, facingopp;
-facing = string_to_dir(vars[?"facing"]);
+facing = string_to_dir(state_vars_get_value(vars, "facing"));
 facingopp = dir_get_opposite(facing)
-
-vars[?"locked"] = "false"
 
 for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 {
 	if (d = facing || d = facingopp || build_edge[d])
 		continue
 		
-	var block = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(d)));
+	var block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d)));
 	if (is_undefined(block)) // Skip air
 		continue
 	
-	var facing = state_vars_get_value(array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(d))), "facing")
+	var facing = state_vars_get_value(array3D_get(block_state, build_size, point3D_add(build_pos, dir_get_vec3(d))), "facing")
 	if (block.name = "powered_repeater" && facing = dir_get_string(d))
-		vars[?"locked"] = "true"
+	{
+		state_vars_set_value(vars, "locked", "true")
+		return 0
+	}
 }
+
+state_vars_set_value(vars, "locked", "false")
 
 return 0

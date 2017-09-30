@@ -16,8 +16,7 @@ skin = null
 model_name = "human"
 model_texture_name_map = null
 model_file = null
-model_state = ""
-model_state_map = null
+model_state = array()
 model_part_name = ""
 model_part = null
 
@@ -30,8 +29,7 @@ item_bounce = false
 legacy_item_sheet = true
 
 block_name = "grass"
-block_state = ""
-block_state_map = null
+block_state = array()
 block_tex = null
 block_vbuffer_reset()
 block_repeat_enable = false

@@ -77,7 +77,7 @@ if (temp)
 			break
 		
 		case "bodypart":
-			if (temp.model_part = null)
+			if (temp.model_part = null || temp.model_file = null)
 				break
 				
 			var res = temp.skin;

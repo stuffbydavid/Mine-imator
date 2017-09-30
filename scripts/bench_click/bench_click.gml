@@ -9,8 +9,7 @@ with (bench_settings)
 	if (type = "char" && ds_list_find_index(char_list.list, model_name) < 0)
 	{
 		model_name = "human"
-		model_state = mc_assets.model_name_map[?model_name].default_state
-		temp_update_model_state_map()
+		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		temp_update_model()
 	}
 	
@@ -18,8 +17,7 @@ with (bench_settings)
 	if (type = "spblock" && ds_list_find_index(special_block_list.list, model_name) < 0)
 	{
 		model_name = "chest"
-		model_state = mc_assets.model_name_map[?model_name].default_state
-		temp_update_model_state_map()
+		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		temp_update_model()
 	}
 	

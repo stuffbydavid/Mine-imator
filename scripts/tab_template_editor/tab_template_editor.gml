@@ -33,29 +33,30 @@ switch (temp_edit.type)
 		}
 			
 		// Model
-		var statesh = 32 * ds_map_size(temp_edit.model_state_map) + test(temp_edit.type = "bodypart", 32, 0);
+		var statelen, statesh;
+		statelen = array_length_1d(temp_edit.model_state)
+		statesh = 32 * (statelen / 2) + test(temp_edit.type = "bodypart", 32, 0);
 		draw_label(labeltext + ":", dx, dy)
 		sortlist_draw(list, dx, dy + 22, dw, dh - 92 - statesh, temp_edit.model_name)
 			
 		// States
-		var model, state, dyy;
-		model = mc_assets.model_name_map[?temp_edit.model_name]
-		state = ds_map_find_first(temp_edit.model_state_map)
-		while (!is_undefined(state))
+		var model = mc_assets.model_name_map[?temp_edit.model_name];
+		statelen = array_length_1d(temp_edit.model_state)
+		statesh = 32 * (statelen / 2) + test(temp_edit.type = "bodypart", 32, 0)
+		
+		for (var i = 0; i < statelen; i += 2)
 		{
+			var state = temp_edit.model_state[i];
 			capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state) + ":") + 20)
-			state = ds_map_find_next(temp_edit.model_state_map, state)
 		}
 			
-		state = ds_map_find_first(temp_edit.model_state_map)
-		statesh = 32 * ds_map_size(temp_edit.model_state_map) + test(temp_edit.type = "bodypart", 32, 0)
-		dyy = dy + dh - 42 - statesh
-		while (!is_undefined(state))
+		var dyy = dy + dh - 42 - statesh;
+		for (var i = 0; i < statelen; i += 2)
 		{
+			var state = temp_edit.model_state[i];
 			menu_model_current = model
 			menu_model_state_current = model.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state_map[?state], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state_map[?state]), test(temp_edit.type = "bodypart", action_lib_bodypart_model_state, action_lib_model_state), null, null, capwid, text_get("templateeditormodelstatetip"))
-			state = ds_map_find_next(temp_edit.model_state_map, state)
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), test(temp_edit.type = "bodypart", action_lib_bodypart_model_state, action_lib_model_state), null, null, capwid, text_get("templateeditormodelstatetip"))
 			dyy += 24 + 8
 		}
 		menu_model_current = null
@@ -70,30 +71,31 @@ switch (temp_edit.type)
 	case "block":
 	{
 		// Block
-		var statesh = 32 * ds_map_size(temp_edit.block_state_map);
+		var statelen, statesh;
+		statelen = array_length_1d(temp_edit.block_state)
+		statesh = 32 * (statelen / 2)
 		draw_label(text_get("templateeditorblock") + ":", dx, dy)
 		sortlist_draw(tab.block_list, dx, dy + 22, dw, dh - 92 - statesh, temp_edit.block_name)
 		
 		// States
-		var capwid, block, state, dyy;
+		var block, capwid;
 		block = mc_assets.block_name_map[?temp_edit.block_name]
-		state = ds_map_find_first(temp_edit.block_state_map)
+		statelen = array_length_1d(temp_edit.block_state)
+		statesh = 32 * (statelen / 2)
 		capwid = 0
-		while (!is_undefined(state))
+		for (var i = 0; i < statelen; i += 2)
 		{
+			var state = temp_edit.block_state[i];
 			capwid = max(capwid, string_width(minecraft_asset_get_name("blockstate", state) + ":") + 20)
-			state = ds_map_find_next(temp_edit.block_state_map, state)
 		}
 			
-		state = ds_map_find_first(temp_edit.block_state_map)
-		statesh = 32 * ds_map_size(temp_edit.block_state_map)
-		dyy = dy + dh - 42 - statesh
-		while (!is_undefined(state))
+		var dyy = dy + dh - 42 - statesh;
+		for (var i = 0; i < statelen; i += 2)
 		{
+			var state = temp_edit.block_state[i];
 			menu_block_current = block
 			menu_block_state_current = block.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state_map[?state], minecraft_asset_get_name("blockstatevalue", temp_edit.block_state_map[?state]), action_lib_block_state, null, null, capwid, text_get("templateeditorblockstatetip"))
-			state = ds_map_find_next(temp_edit.block_state_map, state)
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state[i + 1], minecraft_asset_get_name("blockstatevalue", temp_edit.block_state[i + 1]), action_lib_block_state, null, null, capwid, text_get("templateeditorblockstatetip"))
 			dyy += 24 + 8
 		}
 		menu_block_current = null

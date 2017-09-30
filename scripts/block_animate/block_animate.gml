@@ -20,7 +20,7 @@ with (new(obj_timeline))
 		type = "spblock"
 		
 		model_name = other.model_name
-		model_state = other.model_state
+		model_state = array_copy_1d(other.model_state)
 		tl_update_scenery_part()
 		
 		// Add model parts
@@ -40,7 +40,7 @@ with (new(obj_timeline))
 		type = "block"
 		
 		block_name = other.block.name
-		block_state = other.block.default_state
+		block_state = array_copy_1d(other.block.default_state)
 		tl_update_scenery_part()
 		
 		texture_filtering = true
@@ -52,12 +52,13 @@ with (new(obj_timeline))
 		
 	// Rotate by 90 degrees for legacy support
 	var pos = point3D_mul_matrix(other.position, matrix_create(point3D(0, root.temp.scenery.scenery_size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
-	value_default[e_value.POS_X] = snap(pos[X], 0.5)
-	value_default[e_value.POS_Y] = snap(pos[Y], 0.5)
-	value_default[e_value.POS_Z] = snap(pos[Z], 0.5)
+	value_default[e_value.POS_X] = snap(pos[X], 0.01)
+	value_default[e_value.POS_Y] = snap(pos[Y], 0.01)
+	value_default[e_value.POS_Z] = snap(pos[Z], 0.01)
 	value_default[e_value.ROT_X] = other.rotation[X]
 	value_default[e_value.ROT_Y] = other.rotation[Y]
 	value_default[e_value.ROT_Z] = other.rotation[Z] + 90
+	value_type_show[e_value_type.POSITION] = false
 	
 	tl_update()
 	tl_update_values()
@@ -91,6 +92,8 @@ with (new(obj_timeline))
 			value_default[e_value.SCA_Y] = 0.175
 			value_default[e_value.SCA_Z] = 0.175
 			value_default[e_value.RGB_MUL] = c_black
+			value_type_show[e_value_type.POSITION] = false
+			value_type_show[e_value_type.ROTATION] = false
 			
 			tl_update()
 			tl_update_values()

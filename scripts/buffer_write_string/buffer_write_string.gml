@@ -2,7 +2,7 @@
 /// @arg string
 /// @desc Writes a string to the buffer.
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var str = argument0;
 

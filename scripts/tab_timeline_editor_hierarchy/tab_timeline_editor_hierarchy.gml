@@ -57,11 +57,12 @@ if (par != app)
 	}
 	tab_next()
 	
-	// Inherit visibility/texture
+	// Inherit visibility/bend/texture
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorinheritvisibility", dx, dy, tl_edit.inherit_visibility, action_tl_inherit_visibility)
+	draw_checkbox("timelineeditorinheritbend", dx + floor(dw * 0.33), dy, tl_edit.inherit_bend, action_tl_inherit_bend)
 	if (tl_edit.value_type[e_value_type.TEXTURE])
-		draw_checkbox("timelineeditorinherittexture", dx + floor(dw * 0.33), dy, tl_edit.inherit_texture, action_tl_inherit_texture)
+		draw_checkbox("timelineeditorinherittexture", dx + floor(dw * 0.66), dy, tl_edit.inherit_texture, action_tl_inherit_texture)
 	tab_next()
 	
 	// Scale mode

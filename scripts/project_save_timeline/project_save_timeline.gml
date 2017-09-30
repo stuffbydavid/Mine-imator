@@ -22,14 +22,14 @@ json_save_object_start()
 		{
 			json_save_object_start("model")
 				json_save_var("name", model_name)
-				json_save_var("state", model_state)
+				json_save_var_state_vars("state", model_state)
 			json_save_object_done()
 		}
 		else if (type = "block")
 		{
 			json_save_object_start("block")
 				json_save_var("name", block_name)
-				json_save_var("state", block_state)
+				json_save_var_state_vars("state", block_state)
 			json_save_object_done()
 		}
 		

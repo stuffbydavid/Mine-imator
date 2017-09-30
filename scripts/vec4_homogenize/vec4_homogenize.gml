@@ -1,7 +1,7 @@
 /// vec4_homogenize(vector)
 /// @arg vector
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var vec = argument0;
 

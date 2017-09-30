@@ -17,7 +17,7 @@ if (is_undefined(model))
 	
 // Set file and texture
 var tempstatevars, temptexnamemap, curfile;
-tempstatevars = model_state_map
+tempstatevars = model_state
 temptexnamemap = model_texture_name_map
 
 with (model)
@@ -32,14 +32,15 @@ with (model)
 		var curstate = ds_map_find_first(states_map);
 		while (!is_undefined(curstate))
 		{
-			if (!is_undefined(tempstatevars[?curstate]))
+			var val = state_vars_get_value(tempstatevars, curstate);
+			if (val != "")
 			{
 				// This state has a set value, check if it matches any of the possibilities
 				with (states_map[?curstate])
 				{
 					for (var v = 0; v < value_amount; v++)
 					{
-						if (tempstatevars[?curstate] != value_name[v])
+						if (val != value_name[v])
 							continue
 							
 						// Match found, get the properties and stop checking further values in this state

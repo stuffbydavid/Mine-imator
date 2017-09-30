@@ -6,8 +6,7 @@ var block, state;
 block = argument0
 state = argument1
 
-ds_map_clear(mc_builder.vars)
-state_vars_string_to_map(state, mc_builder.vars)
+mc_builder.vars = array_copy_1d(state)
 
 // Run block specific script, returns null to skip this block
 if (block.type != null)
@@ -25,22 +24,22 @@ with (new(obj_block_tl))
 {
 	id.block = block
 	model_name = block.tl_model_name
-	model_state = ""
+	model_state = array()
 	
 	if (model_name != "")
 	{
 		if (!block.tl_has_model_state)
-			model_state = state // Copy block state if not specified
+			model_state = array_copy_1d(state) // Copy block state if not specified
 		else if (block.tl_model_state_amount = 0)
-			model_state = block.tl_model_state
+			model_state = array_copy_1d(block.tl_model_state)
 		
 		// Find model state from block state
 		for (var i = 0; i < block.tl_model_state_amount; i++)
 		{
 			var curstate = block.tl_model_state[i];
-			if (state_vars_match(curstate.state_map, mc_builder.vars)) // Found matching state
+			if (state_vars_match(curstate.vars, mc_builder.vars)) // Found matching state
 			{
-				model_state = curstate.value
+				model_state = array_copy_1d(curstate.value)
 				break
 			}
 		}
@@ -50,12 +49,8 @@ with (new(obj_block_tl))
 	has_text = block.tl_has_text
 	if (has_text)
 	{
-		text = mc_builder.vars[?"text"]
+		text = state_vars_get_value(mc_builder.vars, "text")
 		text_position = block.tl_text_position
-		
-		// Un-escape = and ,
-		text = string_replace_all(text, "\\=", "=")
-		text = string_replace_all(text, "\\,", ",")
 	}
 	
 	rot_point = block.tl_rot_point
@@ -66,7 +61,7 @@ with (new(obj_block_tl))
 	for (var i = 0; i < block.tl_rot_point_state_amount; i++)
 	{
 		var curstate = block.tl_rot_point_state[i];
-		if (state_vars_match(curstate.state_map, mc_builder.vars)) // Found matching state
+		if (state_vars_match(curstate.vars, mc_builder.vars)) // Found matching state
 		{
 			rot_point = curstate.value
 			break
@@ -77,7 +72,7 @@ with (new(obj_block_tl))
 	for (var i = 0; i < block.tl_position_state_amount; i++)
 	{
 		var curstate = block.tl_position_state[i];
-		if (state_vars_match(curstate.state_map, mc_builder.vars)) // Found matching state
+		if (state_vars_match(curstate.vars, mc_builder.vars)) // Found matching state
 		{
 			position = curstate.value
 			break
@@ -88,7 +83,7 @@ with (new(obj_block_tl))
 	for (var i = 0; i < block.tl_rotation_state_amount; i++)
 	{
 		var curstate = block.tl_rotation_state[i];
-		if (state_vars_match(curstate.state_map, mc_builder.vars)) // Found matching state
+		if (state_vars_match(curstate.vars, mc_builder.vars)) // Found matching state
 		{
 			rotation = curstate.value
 			break

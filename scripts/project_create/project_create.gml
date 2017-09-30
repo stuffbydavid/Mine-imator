@@ -39,4 +39,4 @@ popup_close()
 
 project_save()
 
-alert_show(text_get("alertprojectcreatedtitle"), text_get("alertprojectcreatedtext"), 0, "alertprojectcreatedbutton", project_folder, 5000)
+alert_show(text_get("alertprojectcreatedtitle"), text_get("alertprojectcreatedtext"), null, "alertprojectcreatedbutton", project_folder, 5000)

@@ -14,6 +14,10 @@ if (shape.type != "block" || shape.bend_mode != e_shape_bend.BEND)
 
 var anglesign, partsign, detail;
 
+// Invert angle
+if (shape.bend_invert)
+	angle = -angle
+
 // Limit angle
 if (shape.bend_direction = e_bend.FORWARD)
 	angle = min(0, -angle)
@@ -275,6 +279,22 @@ switch (shape.bend_axis)
 		
 		break
 	}
+}
+
+// Mirror (switch positive and negative) (NOT FULLY TESTED)
+if (shape.texture_mirror)
+{
+	var tmp = nbacktex;
+	nbacktex = pbacktex
+	pbacktex = tmp
+	
+	tmp = nedgetex
+	nedgetex = pedgetex
+	pedgetex = tmp
+	
+	tmp = nmidtex
+	nmidtex = pmidtex
+	pmidtex = tmp
 }
 
 // No flicker

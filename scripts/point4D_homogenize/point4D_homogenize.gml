@@ -1,7 +1,7 @@
 /// point4D_homogenize(point)
 /// @arg point
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var pnt = argument0;
 

@@ -69,8 +69,8 @@ with (new(obj_block_render_model))
 				{
 					var mi = min(relem.rot_from[a], relem.rot_to[a]);
 					var ma = max(relem.rot_from[a], relem.rot_to[a]);
-					relem.rot_from[a] = mi
-					relem.rot_to[a] = ma
+					relem.rot_from[a] = snap(mi, 0.01)
+					relem.rot_to[a] = snap(ma, 0.01)
 				}
 				
 				// Set face rotations and rotated directions

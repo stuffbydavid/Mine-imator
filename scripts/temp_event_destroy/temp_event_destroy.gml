@@ -21,15 +21,9 @@ if (temp_creator != app.bench_settings)
 	if (text_font != null)
 		text_font.count--
 }
-
-if (model_state_map != null)
-	ds_map_destroy(model_state_map)
 	
 if (item_vbuffer != null)
 	vbuffer_destroy(item_vbuffer)
-	
-if (block_state_map != null)
-	ds_map_destroy(block_state_map)
 
 block_vbuffer_destroy()
 	

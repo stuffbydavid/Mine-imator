@@ -12,6 +12,10 @@ pos = argument2
 if (part.bend_part = null)
 	return MAT_IDENTITY
 	
+// Invert angle
+if (part.bend_invert)
+	angle = -angle
+	
 // Limit angle
 if (part.bend_direction = e_bend.FORWARD)
 	angle = min(0, -angle)

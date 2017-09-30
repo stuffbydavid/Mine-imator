@@ -4,7 +4,7 @@
 /// @arg if1
 /// @arg if2...
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 for (var a = 0; a < 15; a++)
 	if (argument[0] = a)

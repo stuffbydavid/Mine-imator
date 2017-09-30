@@ -23,6 +23,7 @@ switch (load_stage)
 		if (filename_ext(fname) = ".blocks")
 		{
 			log("Loading .blocks", fname)
+			debug_timer_start()
 			
 			buffer_current = buffer_load_lib(fname)
 			with (mc_builder)
@@ -32,6 +33,10 @@ switch (load_stage)
 				build_size[X] = buffer_read_short_be()
 				build_size[Z] = buffer_read_short_be()
 				log("Size", mc_builder.build_size)
+				
+				array3D_set_size(block_obj, build_size)
+				array3D_set_size(block_state, build_size)
+				array3D_set_size(block_render_models, build_size)
 			
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 				{
@@ -43,21 +48,23 @@ switch (load_stage)
 							bid = buffer_read_byte()
 							bdata = buffer_read_byte()
 							block = mc_assets.block_legacy_id_map[?bid]
-							array3D_set(block_obj, build_pos, block)
+							array3D_set(block_obj, build_size, build_pos, block)
 							if (is_undefined(block))
-								array3D_set(block_state, build_pos, "")
+								array3D_set(block_state, build_size, build_pos, "")
 							else
-								array3D_set(block_state, build_pos, block.legacy_data_state[bdata])
+								array3D_set(block_state, build_size, build_pos, block.legacy_data_state[bdata])
 						}
 					}
 				}
 			}
+			debug_timer_stop("res_load_scenery: Loaded .blocks")
 		}
 		
 		// Schematic file
 		else
 		{
 			log("Loading .schematic", fname)
+			debug_timer_start()
 		
 			// Unzip
 			file_delete_lib(temp_file)
@@ -69,6 +76,8 @@ switch (load_stage)
 			rootmap = nbt_read_tag_compound();
 			if (rootmap = null)
 				break
+				
+			debug_timer_stop("res_load_scenery, Parse NBT")
 			
 			if (dev_mode_debug_schematics)
 				nbt_debug_tag_compound("root", rootmap)
@@ -92,7 +101,6 @@ switch (load_stage)
 				log("Schematic error", "Size not fully defined")
 				break
 			}
-			log("Size", mc_builder.build_size)
 			
 			if (mc_builder.build_size[X] = 0 || 
 				mc_builder.build_size[Y] = 0 || 
@@ -102,6 +110,8 @@ switch (load_stage)
 				break
 			}
 			
+			log("Size", mc_builder.build_size)
+		
 			// Get block/data array
 			var blocksarray = schematicmap[?"Blocks"];
 			if (is_undefined(blocksarray))
@@ -124,13 +134,18 @@ switch (load_stage)
 			// Parse blocks
 			with (mc_builder)
 			{
+				debug_timer_start()
+				array3D_set_size(block_obj, build_size)
+				array3D_set_size(block_state, build_size)
+				array3D_set_size(block_render_models, build_size)
+			
 				// ID
 				buffer_seek(buffer_current, buffer_seek_start, blocksarray)
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
 					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-							array3D_set(block_obj, build_pos, mc_assets.block_legacy_id_map[?buffer_read_byte()])
-					
+							array3D_set(block_obj, build_size, build_pos, mc_assets.block_legacy_id_map[?buffer_read_byte()])
+				
 				// Data
 				buffer_seek(buffer_current, buffer_seek_start, dataarray)
 				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
@@ -140,19 +155,21 @@ switch (load_stage)
 						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
 						{
 							var block, bdata = buffer_read_byte();
-							block = array3D_get(block_obj, build_pos)
+							block = array3D_get(block_obj, build_size, build_pos)
 							if (is_undefined(block))
-								array3D_set(block_state, build_pos, "")
+								array3D_set(block_state, build_size, build_pos, array())
 							else
-								array3D_set(block_state, build_pos, block.legacy_data_state[bdata])
+								array3D_set(block_state, build_size, build_pos, block.legacy_data_state[bdata])
 						}
 					}
 				}
+				debug_timer_stop("res_load_scenery, Parse blocks")
 				
 				// Tile entities
 				var tileentitylist = schematicmap[?"TileEntities"];
 				if (ds_list_valid(tileentitylist))
 				{
+					debug_timer_start()
 					for (var i = 0; i < ds_list_size(tileentitylist); i++)
 					{
 						var entity, eid, ex, ey, ez;
@@ -168,16 +185,19 @@ switch (load_stage)
 							if (script > -1)
 							{
 								build_pos = point3D(ex, ey, ez)
-								block_current = array3D_get(block_obj, build_pos)
-								block_state_current = array3D_get(block_state, build_pos)
+								block_current = array3D_get(block_obj, build_size, build_pos)
+								block_state_current = array3D_get(block_state, build_size, build_pos)
 								script_execute(script, entity)
 							}
 						}
 					}
+					debug_timer_stop("res_load_scenery, Parse Tile Entities")
 				}
 			}
 		}
 		
+		debug_timer_start()
+
 		openerr = false
 		
 		// Free file buffer
@@ -226,6 +246,9 @@ switch (load_stage)
 		
 		if (mc_builder.build_pos[Z] = mc_builder.build_size[Z])
 		{
+			debug_timer_stop("res_load_scenery, Set models")
+			debug_timer_start()
+			
 			// Prepare vbuffers
 			block_vbuffer_start()
 		
@@ -257,6 +280,7 @@ switch (load_stage)
 		// All done
 		if (mc_builder.build_pos[Z] = mc_builder.build_size[Z])
 		{
+			debug_timer_stop("res_load_scenery, Generate models")
 			block_vbuffer_done()
 			mc_builder.block_tl_list = null
 			
@@ -270,7 +294,7 @@ switch (load_stage)
 				if (type = "fromworld") // Rename world import file
 				{
 					type = "schematic"
-					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic to support TileEntities & string block ids
+					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic to support TileEntities & block states
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
 					file_rename_lib(app.project_folder + "\\export.blocks", newname)

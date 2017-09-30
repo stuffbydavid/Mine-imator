@@ -2,7 +2,7 @@
 /// @arg value
 /// @arg x
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 if (argument1 = 0)
 	return argument0

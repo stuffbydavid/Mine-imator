@@ -3,7 +3,7 @@
 
 if (object_index != app && update_matrix)
 {
-	var pos, rot, sca, tl, inhalpha, inhcolor, inhvis, inhtex;
+	var pos, rot, sca, tl;
 	pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
 	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
@@ -18,10 +18,14 @@ if (object_index != app && update_matrix)
 			
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
-			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
+			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value_inherit[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
 	}
 	else
 		matrix_parent = MAT_IDENTITY
+		
+	// Add model scale
+	if (part_of = null && temp != null && temp.model_file != null)
+		matrix_parent = matrix_multiply(temp.model_file.scale_matrix, matrix_parent)
 		
 	// Add body part transformations
 	if (type = "bodypart" && model_part != null)
@@ -41,6 +45,7 @@ if (object_index != app && update_matrix)
 	{
 		// Get actual scale
 		tl = id
+		
 		while (true)
 		{
 			var par = tl.parent;
@@ -113,8 +118,7 @@ if (object_index != app && update_matrix)
 		tl = par
 	}
 	
-	// Inherit colors
-	value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
+	// Inherit
 	value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
 	value_inherit[e_value.RGB_ADD] = value[e_value.RGB_ADD] // Added
 	value_inherit[e_value.RGB_SUB] = value[e_value.RGB_SUB] // Added
@@ -125,11 +129,15 @@ if (object_index != app && update_matrix)
 	value_inherit[e_value.MIX_COLOR] = value[e_value.MIX_COLOR] // Added
 	value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
 	value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
+	value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
+	value_inherit[e_value.BEND_ANGLE] = value[e_value.BEND_ANGLE] // Added
 	value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
 	
+	var inhalpha, inhcolor, inhvis, inhbend, inhtex;
 	inhalpha = true
 	inhcolor = true
 	inhvis = true
+	inhbend = true
 	inhtex = true
 	tl = id
 	while (true)
@@ -146,6 +154,9 @@ if (object_index != app && update_matrix)
 		
 		if (!tl.inherit_visibility)
 			inhvis = false
+		
+		if (!tl.inherit_bend)
+			inhbend = false
 		
 		if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] > 0)
 			inhtex = false
@@ -168,6 +179,9 @@ if (object_index != app && update_matrix)
 		
 		if (inhvis)
 			value_inherit[e_value.VISIBLE] *= par.value[e_value.VISIBLE]
+			
+		if (inhbend)
+			value_inherit[e_value.BEND_ANGLE] += par.value[e_value.BEND_ANGLE]
 			
 		if (inhtex)
 			value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]

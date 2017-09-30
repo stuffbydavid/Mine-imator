@@ -1,7 +1,7 @@
 /// dir_get_string(direction)
 /// @arg direction
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 switch (argument0)
 {

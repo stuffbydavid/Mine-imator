@@ -2,9 +2,11 @@
 /// @arg models
 /// @desc Generate triangles from the render models.
 
-var models = argument0;
+var models, modelslen;
+models = argument0
+modelslen = array_length_1d(models)
 
-for (var m = 0; m < array_length_1d(models); m++)
+for (var m = 0; m < modelslen; m++)
 {
 	with (models[m])
 	{

@@ -123,7 +123,8 @@ with (template_editor)
 	block_list.script = action_lib_block_name
 	sortlist_column_add(block_list, "blockname", 0)
 	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-		sortlist_add(block_list, mc_assets.block_list[|b].name)
+		if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "")
+			sortlist_add(block_list, mc_assets.block_list[|b].name)
 	
 	// Special block list
 	special_block_list = new(obj_sortlist)

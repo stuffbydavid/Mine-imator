@@ -27,12 +27,13 @@ to.part_of = part_of
 
 to.inherit_position = inherit_position
 to.inherit_rotation = inherit_rotation
+to.inherit_rot_point = inherit_rot_point
 to.inherit_scale = inherit_scale
 to.inherit_alpha = inherit_alpha
 to.inherit_color = inherit_color
-to.inherit_texture = inherit_texture
 to.inherit_visibility = inherit_visibility
-to.inherit_rot_point = inherit_rot_point
+to.inherit_bend = inherit_bend
+to.inherit_texture = inherit_texture
 to.scale_resize = scale_resize
 to.rot_point_custom = rot_point_custom
 to.rot_point = point3D_copy(rot_point)
@@ -46,16 +47,16 @@ to.fog = fog
 to.wind = wind
 to.wind_terrain = wind_terrain
 
-if (part_of != null)
+if (part_of != null && part_of != "")
 {
 	if (type = "spblock")
 	{
 		to.model_name = model_name
-		to.model_state = model_state
+		to.model_state = array_copy_1d(model_state)
 	}
 	else if (type = "block")
 	{
 		to.block_name = block_name
-		to.block_state = block_state
+		to.block_state = array_copy_1d(block_state)
 	}
 }

@@ -29,6 +29,13 @@ json_save_array_start("recent_files")
 	
 json_save_array_done()
 
+json_save_array_start("closed_alerts")
+
+	for (var i = 0; i < ds_list_size(closed_alert_list); i++)
+		json_save_array_value(closed_alert_list[|i])
+		
+json_save_array_done()
+
 json_save_object_start("program")
 
 	json_save_var("fps", room_speed)

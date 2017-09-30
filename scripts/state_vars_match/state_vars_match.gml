@@ -1,30 +1,31 @@
 /// state_vars_match(vars, varscomp)
 /// @arg vars
 /// @arg varscomp
-/// @desc Returns whether two collections of variables are matching.
+/// @desc Returns whether all the values in vars are equal to varscomp.
 
-var vars, varscomp, curvar;
+var vars, varscomp, varslen, curvar;
 vars = argument0
 varscomp = argument1
+varslen = array_length_1d(vars)
 
-curvar = ds_map_find_first(vars)
-while (!is_undefined(curvar))
+for (var i = 0; i < varslen; i += 2)
 {
-	// Not set
-	if (is_undefined(varscomp[?curvar]))
-		return false
+	var name, val, valcomp;
+	name = vars[@ i]
+	val = vars[@ i + 1]
+	valcomp = state_vars_get_value(varscomp, name)
 	
+	if (valcomp = null) // Not set
+		return false
+		
 	// Check match
-	if (is_array(vars[?curvar])) // OR
+	if (is_array(val)) // OR
 	{
-		if (!array_contains(vars[?curvar], varscomp[?curvar]))
+		if (!array_contains(val, valcomp))
 			return false
 	}
-	else if (vars[?curvar] != varscomp[?curvar])
+	else if (val != valcomp)
 		return false
-						
-	// Next variable
-	curvar = ds_map_find_next(vars, curvar)
 }
 
 return true

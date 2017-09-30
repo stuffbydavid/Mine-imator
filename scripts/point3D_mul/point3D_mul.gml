@@ -2,7 +2,7 @@
 /// @arg point
 /// @arg multiplier
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var pnt, mul;
 pnt = argument0

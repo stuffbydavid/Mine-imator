@@ -2,7 +2,7 @@
 
 var busy;
 
-if (alert_amount = 0)
+if (ds_list_size(alert_list) = 0)
 	return 0
 	
 busy = window_busy

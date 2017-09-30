@@ -1,14 +1,14 @@
 /// block_set_stairs()
 /// @desc Defines logic for connecting adjacent stairs.
 
-if (!is_undefined(vars[?"shape"]))
+if (state_vars_get_value(vars, "shape") != null)
 	return 0
 
-vars[?"shape"] = "straight"
-
-var facing, facingopp;
-facing = string_to_dir(vars[?"facing"])
-facingopp = dir_get_opposite(string_to_dir(vars[?"facing"]))
+var half, facing, facingopp, shape;
+half = state_vars_get_value(vars, "half")
+facing = string_to_dir(state_vars_get_value(vars, "facing"))
+facingopp = dir_get_opposite(facing)
+shape = "straight"
 
 for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 {
@@ -21,13 +21,13 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		continue
 		
 	// Check for stairs
-	var block = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(d)));
+	var block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d)));
 	if (is_undefined(block) || block.type != "stairs")
 		continue
 		
 	// Check same half
-	var state = array3D_get(block_state, point3D_add(build_pos, dir_get_vec3(d)));
-	if (vars[?"half"] != state_vars_get_value(state, "half"))
+	var state = array3D_get(block_state, build_size, point3D_add(build_pos, dir_get_vec3(d)));
+	if (half != state_vars_get_value(state, "half"))
 		continue
 		
 	var otherfacing = string_to_dir(state_vars_get_value(state, "facing"));
@@ -38,16 +38,16 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		if (facing = e_dir.EAST)
 		{
 			if (otherfacing = e_dir.SOUTH)
-				vars[?"shape"] = "outer_right"
+				shape = "outer_right"
 			else if (otherfacing = e_dir.NORTH)
-				vars[?"shape"] = "outer_left"
+				shape = "outer_left"
 		}
 		else // West
 		{
 			if (otherfacing = e_dir.SOUTH)
-				vars[?"shape"] = "inner_left"
+				shape = "inner_left"
 			else if (otherfacing = e_dir.NORTH)
-				vars[?"shape"] = "inner_right"
+				shape = "inner_right"
 		}
 	}
 	
@@ -57,16 +57,16 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		if (facing = e_dir.EAST)
 		{
 			if (otherfacing = e_dir.SOUTH)
-				vars[?"shape"] = "inner_right"
+				shape = "inner_right"
 			else if (otherfacing = e_dir.NORTH)
-				vars[?"shape"] = "inner_left"
+				shape = "inner_left"
 		}
 		else // West
 		{
 			if (otherfacing = e_dir.SOUTH)
-				vars[?"shape"] = "outer_left"
+				shape = "outer_left"
 			else if (otherfacing = e_dir.NORTH)
-				vars[?"shape"] = "outer_right"
+				shape = "outer_right"
 		}
 	}
 	
@@ -76,16 +76,16 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		if (facing = e_dir.SOUTH)
 		{
 			if (otherfacing = e_dir.EAST)
-				vars[?"shape"] = "outer_left"
+				shape = "outer_left"
 			else if (otherfacing = e_dir.WEST)
-				vars[?"shape"] = "outer_right"
+				shape = "outer_right"
 		}
 		else // North
 		{
 			if (otherfacing = e_dir.EAST)
-				vars[?"shape"] = "inner_right"
+				shape = "inner_right"
 			else if (otherfacing = e_dir.WEST)
-				vars[?"shape"] = "inner_left"
+				shape = "inner_left"
 		}
 	}
 	
@@ -95,16 +95,18 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		if (facing = e_dir.SOUTH)
 		{
 			if (otherfacing = e_dir.EAST)
-				vars[?"shape"] = "inner_left"
+				shape = "inner_left"
 			else if (otherfacing = e_dir.WEST)
-				vars[?"shape"] = "inner_right"
+				shape = "inner_right"
 		}
 		else // North
 		{
 			if (otherfacing = e_dir.EAST)
-				vars[?"shape"] = "outer_right"
+				shape = "outer_right"
 			else if (otherfacing = e_dir.WEST)
-				vars[?"shape"] = "outer_left"
+				shape = "outer_left"
 		}
 	}
 }
+
+state_vars_set_value(vars, "shape", shape)

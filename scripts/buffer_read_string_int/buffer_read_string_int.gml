@@ -1,7 +1,7 @@
 /// buffer_read_string_int()
 /// @desc Reads a string consisting of an int, then that many utf-8 characters.
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var str = "";
 repeat (buffer_read_int())

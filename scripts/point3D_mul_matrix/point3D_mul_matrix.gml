@@ -2,7 +2,7 @@
 /// @arg point
 /// @arg matrix
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var pnt, mat, pntmat;
 pnt = argument0

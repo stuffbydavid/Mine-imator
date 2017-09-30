@@ -2,7 +2,7 @@
 /// @arg x
 /// @arg y
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var vec;
 

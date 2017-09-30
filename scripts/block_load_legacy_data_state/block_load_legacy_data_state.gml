@@ -5,10 +5,10 @@
 
 var value, state, bitmask, bitbase;
 value = string_get_real(argument0)
-state = argument1
+state = string_split(argument1, "=");
 bitmask = argument2
 bitbase = argument3
-	
+
 // Insert into array
 if (bitmask > 0)
 {
@@ -18,16 +18,26 @@ if (bitmask > 0)
 		if ((d & bitmask) / bitbase != value)
 			continue
 		
-		if (legacy_data_state_map[d] = null)
-			legacy_data_state_map[d] = ds_map_create()
-			
-		state_vars_string_to_map(state, legacy_data_state_map[d])
+		var arr, arrlen;
+		arr = legacy_data_state[d]
+		arrlen = array_length_1d(arr)
+		
+		arr[@ arrlen] = state[0]
+		if (array_length_1d(state) > 1)
+			arr[@ arrlen + 1] = state[1]
+		else
+			arr[@ arrlen + 1] = ""
 	}
 }
 else
 {
-	if (legacy_data_state_map[value] = null)
-		legacy_data_state_map[value] = ds_map_create()
+	var arr, arrlen;
+	arr = legacy_data_state[value]
+	arrlen = array_length_1d(arr)
 		
-	state_vars_string_to_map(state, legacy_data_state_map[value])
+	arr[@ arrlen] = state[0]
+	if (array_length_1d(state) > 1)
+		arr[@ arrlen + 1] = state[1]
+	else
+		arr[@ arrlen + 1] = ""
 }

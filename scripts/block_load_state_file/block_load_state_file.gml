@@ -56,8 +56,12 @@ with (new(obj_block_load_state_file))
 			{
 				// Name
 				name = variant
-				vars = ds_map_create()
-				state_vars_string_to_map(name, vars)
+				
+				// Single "normal" state is always selected
+				if (name = "normal" && ds_map_size(variantsmap) = 1)
+					vars = array()
+				else
+					vars = string_get_state_vars(name)
 			
 				var variantlist, list;
 				variantlist = variantsmap[?name]
@@ -100,37 +104,37 @@ with (new(obj_block_load_state_file))
 					{
 						for (var oc = 0; oc < ds_list_size(orlist); oc++)
 						{
-							var curcondmap, condmap, cond;
+							var curcondmap, condvars, cond;
 							curcondmap = orlist[|oc]
-							condmap = ds_map_create()
+							condvars = array()
 							cond = ds_map_find_first(curcondmap)
 							while (!is_undefined(cond))
 							{
 								var val = curcondmap[?cond];
 								if (ds_map_find_value(jsontypemap[?curcondmap], cond) = e_json_type.BOOL) // Booleans must be string
 									val = test(val, "true", "false")
-								condmap[?cond] = string_split(val, "|")
+								state_vars_set_value(condvars, cond, string_split(val, "|"))
 								cond = ds_map_find_next(curcondmap, cond)
 							}
-							condition[condition_amount++] = condmap
+							condition[condition_amount++] = condvars
 						}
 					}
 					
 					// Single condition
 					else
 					{
-						var condmap, cond;
-						condmap = ds_map_create()
+						var condvars, cond;
+						condvars = array()
 						cond = ds_map_find_first(whenmap)
 						while (!is_undefined(cond))
 						{
 							var val = whenmap[?cond];
 							if (ds_map_find_value(jsontypemap[?whenmap], cond) = e_json_type.BOOL) // Booleans must be string
 								val = test(val, "true", "false")
-							condmap[?cond] = string_split(val, "|")
+							state_vars_set_value(condvars, cond, string_split(val, "|"))
 							cond = ds_map_find_next(whenmap, cond)
 						}
-						condition[condition_amount++] = condmap
+						condition[condition_amount++] = condvars
 					}
 				}
 				

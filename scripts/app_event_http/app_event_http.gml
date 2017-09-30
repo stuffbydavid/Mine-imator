@@ -47,12 +47,12 @@ if (async_load[?"id"] = alert_news_http) // Check news
 					{
 						case "website":		icon = icons.WEBSITE_SMALL;		break
 						case "forums":		icon = icons.FORUMS_SMALL;		break
-						case "save":		icon = icons.SAVE_SMALL;			break
-						case "download":	icon = icons.DOWNLOAD_SMALL;		break
-						case "cake":		icon = icons.CAKE_SMALL;			break
+						case "save":		icon = icons.SAVE_SMALL;		break
+						case "download":	icon = icons.DOWNLOAD_SMALL;	break
+						case "cake":		icon = icons.CAKE_SMALL;		break
 						case "upgrade":		icon = icons.UPGRADE_SMALL;		break
 						case "render":		icon = icons.RENDER_SMALL;		break
-						default:			icon = null	;					break
+						default:			icon = null;					break
 					}
 					
 					button = newsmap[?"button"]
@@ -62,7 +62,7 @@ if (async_load[?"id"] = alert_news_http) // Check news
 					else
 						iid = null
 					
-					if (!iid || ds_list_find_index(closed_alerts, iid) < 0)
+					if (!iid || ds_list_find_index(closed_alert_list, iid) < 0)
 						alert_show(title, text, icon, button, buttonurl, null, iid)
 				}
 			}

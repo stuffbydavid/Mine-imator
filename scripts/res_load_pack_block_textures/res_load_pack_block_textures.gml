@@ -225,12 +225,20 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 		continue
 	}
 	
+	// Opaque leaves are treated as transparent to fix wind issues
+	var opaque = string_contains(mc_assets.block_texture_list[|t], " opaque");
+	if (opaque)
+	{
+		ds_list_add(block_sheet_depth_list, e_block_depth.DEPTH1)
+		continue
+	}
+	
 	var bx, by, dep;
 	bx = (t mod block_sheet_width) * blocksize
 	by = (t div block_sheet_width) * blocksize
 	dep = e_block_depth.DEPTH0
 	
-	// Sample
+	// Sample pixels
 	for (var s = 0; s < sampleposamount; s++)
 	{
 		var spos, alpha;

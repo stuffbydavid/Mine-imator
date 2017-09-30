@@ -71,7 +71,7 @@ with (new(obj_model_part))
 		
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
-		
+	
 	// Locked to parent bend half?
 	lock_bend = true
 	if (other.object_index = obj_model_part && other.bend_part != null)
@@ -100,9 +100,9 @@ with (new(obj_model_part))
 			}
 		}
 	}
-	
-	matrix = matrix_create(point3D(0, 0, 0), rotation, scale)
 		
+	matrix = matrix_create(point3D(0, 0, 0), rotation, scale)
+	
 	// Matrix used when rendering preview/particle
 	default_matrix = matrix_create(position, rotation, scale)
 	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
@@ -174,6 +174,9 @@ with (new(obj_model_part))
 			return null
 		}
 		bend_offset = bendmap[?"offset"]
+		
+		// Invert
+		bend_invert = value_get_real(bendmap[?"invert"], false)
 	}
 	else
 	{
@@ -181,6 +184,7 @@ with (new(obj_model_part))
 		bend_axis = null
 		bend_direction = null
 		bend_offset = 0
+		bend_invert = false
 	}
 	
 	// Default bounds

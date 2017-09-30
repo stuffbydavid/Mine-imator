@@ -7,8 +7,7 @@ with (bench_settings)
 		return 0
 		
 	model_name = argument0
-	model_state = mc_assets.model_name_map[?model_name].default_state
-	temp_update_model_state_map()
+	model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 	temp_update_model()
 	
 	if (type = "bodypart")

@@ -1,15 +1,7 @@
 /// app_startup()
 
-globalvar debug_indent;
-debug_indent = 0
-debug_info = false
-
 startup_last_crash = false
 startup_error = true
-
-enums()
-randomize()
-gml_release_mode(!dev_mode)
 
 if (!log_startup())
 	return false
@@ -56,12 +48,12 @@ app_startup_interface_views()
 project_legacy_startup()
 textbox_startup()
 trial_startup()
-settings_startup()
 alert_startup()
+settings_startup()
 render_startup()
 background_ground_startup()
 background_sky_startup()
-
+alert_show("A title","some text",icons.WEBSITE_SMALL)
 log("Startup OK")
 startup_error = false
 

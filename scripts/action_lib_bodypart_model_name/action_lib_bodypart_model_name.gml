@@ -18,15 +18,14 @@ else
 {
 	name = argument0
 	with (history_set_var(action_lib_bodypart_model_name, temp_edit.model_name, name, false))
-		id.state = temp_edit.model_state
+		id.state = array_copy_1d(temp_edit.model_state)
 	state = mc_assets.model_name_map[?name].default_state
 }
 	
 with (temp_edit)
 {
 	model_name = name
-	model_state = state
-	temp_update_model_state_map()
+	model_state = array_copy_1d(state)
 	temp_update_model()
 	temp_update_model_part()
 	temp_update_display_name()

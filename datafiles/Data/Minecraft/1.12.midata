@@ -158,8 +158,8 @@
 			"default_state": "variant=green"
 		},
 		{
-			"name": "polarbear",
-			"file": "polarbear.mimodel"
+			"name": "polar_bear",
+			"file": "polar_bear.mimodel"
 		},
 		{
 			"name": "horse",
@@ -227,6 +227,21 @@
 				]
 			},
 			"default_state": "variant=villager"
+		},
+		{
+			"name": "illager",
+			"file": "zombie_villager.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "evoker", "texture": "entity/illager/evoker" },
+					{ "value": "vindicator", "texture": "entity/illager/vindicator" }
+				]
+			},
+			"default_state": "variant=evoker"
+		},
+		{
+			"name": "vex",
+			"file": "vex.mimodel"
 		},
 		{
 			"name": "zombie_villager",
@@ -370,7 +385,8 @@
 					{ "value": "standing", "file": "standing_sign.mimodel" },
 					{ "value": "wall", "file": "wall_sign.mimodel" }
 				]
-			}
+			},
+			"default_state": "variant=standing"
 		},
 		{
 			"name": "arrow",
@@ -981,6 +997,7 @@
 		},
 		{
 			"name": "piston",
+			"file": "piston.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
 				"extended": [ "false", "true" ]
@@ -1137,7 +1154,7 @@
 					{ "value": "quartz", "file": "quartz_double_slab.json"}
 				]
 			},
-			"default_state": "variant=stone",
+			"default_state": "normal,variant=stone",
 			"legacy_id": 43,
 			"legacy_data": {
 				"0x1+0x2+0x4": {
@@ -1430,8 +1447,8 @@
 			},
 			"default_state": "orientation=0",
 			"timeline": {
-				"model": "standing_sign",
-				"model_state": "",
+				"model": "sign",
+				"model_state": "variant=standing",
 				"has_text": true,
 				"text_position": [ 0, 13.25, 0.8 ],
 				"position": [ 8, 0, 8 ],
@@ -1586,8 +1603,8 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"timeline": {
-				"model": "wall_sign",
-				"model_state": "",
+				"model": "sign",
+				"model_state": "variant=wall",
 				"has_text": true,
 				"text_position": [ 0, 8, 1.5 ],
 				"position": {
@@ -2435,6 +2452,7 @@
 		},
 		{
 			"name": "enchanting_table",
+			"file": "enchanting_table.json",
 			"timeline": {
 				"model": "enchantment_table",
 				"model_state": "",
@@ -3648,6 +3666,7 @@
 		{
 			"name": "double_stone_slab2",
 			"file": "red_sandstone_double_slab.json",
+			"default_state": "normal",
 			"legacy_id": 181,
 			"legacy_data": {
 				"0x8": {
@@ -5301,8 +5320,12 @@
 		"entity/chicken",
 		"entity/elytra",
 		"entity/enchanting_table_book",
+		"blocks/enchanting_table_top",
+		"blocks/enchanting_table_bottom",
+		"blocks/enchanting_table_side",
 		"entity/endermite",
 		"entity/guardian",
+		"entity/guardian_elder",
 		"entity/iron_golem",
 		"entity/lead_knot",
 		"entity/minecart",

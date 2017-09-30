@@ -82,13 +82,8 @@ ds_map_destroy(map)
 ds_map_destroy(typemap)
 
 with (obj_template)
-{
 	if (type = "char" || type = "spblock")
-	{
-		temp_update_model_state_map()
 		temp_update_model()
-	}
-}
 
 with (obj_timeline)
 	tl_update_scenery_part()

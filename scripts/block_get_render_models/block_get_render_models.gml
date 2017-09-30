@@ -12,9 +12,7 @@ if (argument_count > 2)
 else
 	ongenerate = false
 
-ds_map_clear(mc_builder.vars)
-mc_builder.vars[?"normal"] = ""
-state_vars_string_to_map(state, mc_builder.vars)
+vars = array_copy_1d(state)
 
 with (block)
 {
@@ -34,14 +32,15 @@ with (block)
 		var curstate = ds_map_find_first(states_map);
 		while (!is_undefined(curstate))
 		{
-			if (!is_undefined(mc_builder.vars[?curstate]))
+			var val = state_vars_get_value(mc_builder.vars, curstate)
+			if (val != "")
 			{
 				// This state has a set value, check if it matches any of the possibilities
 				with (states_map[?curstate])
 				{
 					for (var v = 0; v < value_amount; v++)
 					{
-						if (mc_builder.vars[?curstate] != value_name[v])
+						if (val != value_name[v])
 							continue
 							
 						// Match found, get the properties and stop checking further values in this state
@@ -91,9 +90,8 @@ with (block)
 						break
 				
 					// Check if match
-					if (is_undefined(vars[?"normal"]) || ds_map_size(vars) > 1)
-						if (!state_vars_match(vars, mc_builder.vars))
-							continue
+					if (!state_vars_match(vars, mc_builder.vars))
+						continue
 				
 					// Pick a random model from the list
 					var m, rand = irandom(total_weight - 1);

@@ -20,7 +20,8 @@
         "c20d5d6a-1f34-470b-bcd3-946280144e85",
         "726e691b-7dd0-414b-9fbf-3c9786332743",
         "e5f3dfd5-467e-44f2-b12d-1ecc3a8526f9",
-        "d20523cc-62db-487d-9a0d-9227fcfa40fe"
+        "d20523cc-62db-487d-9a0d-9227fcfa40fe",
+        "056394a5-d76a-4700-9fe4-e3404231788a"
     ],
     "filterType": "GMScript",
     "folderName": "Save",

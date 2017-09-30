@@ -203,7 +203,7 @@ else
 // Alerts
 alert_x = content_x
 alert_y = content_y
-alpha_alpha = draw_get_alpha()
+alert_alpha = draw_get_alpha()
 if (content_direction = e_scroll.HORIZONTAL)
 {
 	alert_width = dx - content_x

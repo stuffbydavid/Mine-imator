@@ -4,22 +4,29 @@
 for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 {
 	var dstr = dir_get_string(d);
-	vars[?dstr] = "false"
 
 	if (build_edge[d])
+	{
+		state_vars_set_value(vars, dstr, "false")
 		continue
+	}
 	
 	// Check for other bars
-	var block = array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(d)));
+	var block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d)));
 	if (!is_undefined(block) && block.type = "bars")
 	{
-		vars[?dstr] = "true"
+		state_vars_set_value(vars, dstr, "true")
 		continue
 	}
 	
 	// Check for solid faces
 	if (block_render_models_dir[d] != null && block_render_models_get_solid_dir(block_render_models_dir[d], d))
-		vars[?dstr] = "true"
+	{
+		state_vars_set_value(vars, dstr, "true")
+		continue
+	}
+	
+	state_vars_set_value(vars, dstr, "false")
 }
 
 return 0

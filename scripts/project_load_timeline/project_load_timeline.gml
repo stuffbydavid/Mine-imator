@@ -34,7 +34,7 @@ with (new(obj_timeline))
 			if (ds_map_valid(modelmap))
 			{
 				model_name = value_get_string(modelmap[?"name"], "")
-				model_state = value_get_string(modelmap[?"state"], "")
+				model_state = value_get_state_vars(modelmap[?"state"])
 			}
 		}
 		else if (type = "block")
@@ -43,7 +43,7 @@ with (new(obj_timeline))
 			if (ds_map_valid(blockmap))
 			{
 				block_name = value_get_string(blockmap[?"name"], "")
-				block_state = value_get_string(blockmap[?"state"], "")
+				block_state = value_get_state_vars(blockmap[?"state"])
 			}
 		}
 	}
@@ -102,12 +102,13 @@ with (new(obj_timeline))
 	{
 		inherit_position = value_get_real(inheritmap[?"position"], inherit_position)
 		inherit_rotation = value_get_real(inheritmap[?"rotation"], inherit_rotation)
+		inherit_rot_point = value_get_real(inheritmap[?"rot_point"], inherit_rot_point)
 		inherit_scale = value_get_real(inheritmap[?"scale"], inherit_scale)
 		inherit_alpha = value_get_real(inheritmap[?"alpha"], inherit_alpha)
 		inherit_color = value_get_real(inheritmap[?"color"], inherit_color)
-		inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
 		inherit_visibility = value_get_real(inheritmap[?"visibility"], inherit_visibility)
-		inherit_rot_point = value_get_real(inheritmap[?"rot_point"], inherit_rot_point)
+		inherit_bend = value_get_real(inheritmap[?"bend"], inherit_bend)
+		inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
 	}
 	
 	scale_resize = value_get_real(map[?"scale_resize"], scale_resize)

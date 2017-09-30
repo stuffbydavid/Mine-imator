@@ -9,7 +9,6 @@ if (project_changed)
 		project_save()
 
 settings_save()
-closed_alerts_save()
 
 log("Closing...")
 

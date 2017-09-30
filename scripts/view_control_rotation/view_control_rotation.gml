@@ -9,7 +9,7 @@ len = point3D_distance(cam_from, tl_edit.world_pos) * 0.2 * 0.8
 with (tl_edit)
 {
 	// Start from the parent matrix (body part transforms included), restore the position and remove all scaling
-	zrot = matrix_parent
+	zrot = array_copy_1d(matrix_parent)
 	zrot[MAT_X] = matrix[MAT_X]
 	zrot[MAT_Y] = matrix[MAT_Y]
 	zrot[MAT_Z] = matrix[MAT_Z]

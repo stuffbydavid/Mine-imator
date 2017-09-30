@@ -52,8 +52,7 @@ else
 					skin = null
 					model_file = null
 					model_part = null
-					model_state = ""
-					model_state_map = null
+					model_state = array()
 				}
 				
 				if (type != "item")
@@ -66,8 +65,7 @@ else
 				{
 					block_tex.count--
 					block_tex = null
-					block_state = ""
-					block_state_map = null
+					block_state = array()
 				}
 				
 				if (type != "scenery" && scenery)

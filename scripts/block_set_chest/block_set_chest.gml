@@ -1,8 +1,12 @@
 /// block_set_chest()
 /// @desc Finds double chests.
 
+var facing = state_vars_get_value(vars, "facing");
+if (facing = null)
+	return 0
+
 var connectdir, discarddir;
-switch (string_to_dir(vars[?"facing"]))
+switch (string_to_dir(facing))
 {
 	case e_dir.EAST:
 	{
@@ -33,14 +37,12 @@ switch (string_to_dir(vars[?"facing"]))
 	}
 }
 
-if (!build_edge[discarddir]) // Discard
-	if (array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(discarddir))) = block_current)
-		return null
+if (!build_edge[discarddir] && array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(discarddir))) = block_current) // Discard
+	return null
 		
-vars[?"double"] = "false"
-
-if (!build_edge[connectdir]) // Connect
-	if (array3D_get(block_obj, point3D_add(build_pos, dir_get_vec3(connectdir))) = block_current)
-		vars[?"double"] = "true"
+if (!build_edge[connectdir] && array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(connectdir))) = block_current) // Connect
+	state_vars_set_value(vars, "double", "true")
+else
+	state_vars_set_value(vars, "double", "false")
 
 return 0

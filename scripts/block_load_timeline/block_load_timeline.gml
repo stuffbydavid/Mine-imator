@@ -15,13 +15,13 @@ if (is_string(map[?"model"]))
 	tl_model_name = map[?"model"]
 	
 	// Model state
-	tl_model_state = ""
+	tl_model_state = array()
 	tl_model_state_amount = 0
 	tl_has_model_state = false
 	
 	if (typemap[?"model_state"] = e_json_type.STRING)
 	{
-		tl_model_state = map[?"model_state"]
+		tl_model_state = string_get_state_vars(map[?"model_state"])
 		tl_has_model_state = true
 	}
 	else if (typemap[?"model_state"] = e_json_type.OBJECT) // Determined by block state
@@ -31,9 +31,8 @@ if (is_string(map[?"model"]))
 		{
 			with (new(obj_block_tl_state))
 			{
-				state_map = ds_map_create()
-				state_vars_string_to_map(key, state_map)
-				value = ds_map_find_value(map[?"model_state"], key)
+				vars = string_get_state_vars(key)
+				value = string_get_state_vars(ds_map_find_value(map[?"model_state"], key))
 				other.tl_model_state[other.tl_model_state_amount++] = id
 			}
 			key = ds_map_find_next(map[?"model_state"], key)
@@ -67,8 +66,7 @@ else if (typemap[?"rotation_point"] = e_json_type.OBJECT) // Determined by state
 	{
 		with (new(obj_block_tl_state))
 		{
-			state_map = ds_map_create()
-			state_vars_string_to_map(key, state_map)
+			vars = string_get_state_vars(key)
 			value = value_get_point3D(ds_map_find_value(map[?"rotation_point"], key), point3D(0, 0, 0))
 			other.tl_rot_point_state[other.tl_rot_point_state_amount++] = id
 		}
@@ -88,8 +86,7 @@ else if (typemap[?"position"] = e_json_type.OBJECT) // Determined by state
 	{
 		with (new(obj_block_tl_state))
 		{
-			state_map = ds_map_create()
-			state_vars_string_to_map(key, state_map)
+			vars = string_get_state_vars(key)
 			value = value_get_point3D(ds_map_find_value(map[?"position"], key), point3D(0, 0, 0))
 			other.tl_position_state[other.tl_position_state_amount++] = id
 		}
@@ -109,13 +106,10 @@ else if (typemap[?"rotation"] = e_json_type.OBJECT) // Determined by state
 	{
 		with (new(obj_block_tl_state))
 		{
-			state_map = ds_map_create()
-			state_vars_string_to_map(key, state_map)
+			vars = string_get_state_vars(key)
 			value = value_get_point3D(ds_map_find_value(map[?"rotation"], key), point3D(0, 0, 0))
 			other.tl_rotation_state[other.tl_rotation_state_amount++] = id
 		}
 		key = ds_map_find_next(map[?"rotation"], key)
 	}
 }
-
-// TODO create preview vbuffer

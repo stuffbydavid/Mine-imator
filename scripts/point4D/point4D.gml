@@ -4,7 +4,7 @@
 /// @arg z
 /// @arg w
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var pnt;
 

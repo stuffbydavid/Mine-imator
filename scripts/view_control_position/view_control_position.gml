@@ -14,7 +14,7 @@ else
 with (tl_edit)
 {
 	// Start from the parent matrix (body part transforms included), restore the position and remove all scaling
-	mat = matrix_parent
+	mat = array_copy_1d(matrix_parent)
 	mat[MAT_X] = matrix[MAT_X]
 	mat[MAT_Y] = matrix[MAT_Y]
 	mat[MAT_Z] = matrix[MAT_Z]

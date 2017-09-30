@@ -21,7 +21,7 @@ else
 		with (hobj)
 		{
 			old_name = temp_edit.model_name
-			old_state = temp_edit.model_state
+			old_state = array_copy_1d(temp_edit.model_state)
 			new_name = name
 			tl_amount = 0
 			part_child_amount = 0
@@ -56,8 +56,7 @@ tl_deselect_all()
 with (temp_edit)
 {
 	model_name = name
-	model_state = state
-	temp_update_model_state_map()
+	model_state = array_copy_1d(state)
 	temp_update_model()
 	temp_update_model_timeline_tree(hobj)
 	temp_update_display_name()

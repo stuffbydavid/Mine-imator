@@ -85,9 +85,9 @@ with (new(obj_model))
 	
 	// Default state
 	if (is_string(map[?"default_state"]))
-		default_state = map[?"default_state"]
+		default_state = string_get_state_vars(map[?"default_state"])
 	else
-		default_state = ""
+		default_state = array()
 		
 	return id
 }

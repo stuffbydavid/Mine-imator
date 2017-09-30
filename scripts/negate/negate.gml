@@ -1,7 +1,7 @@
 /// negate(bool)
 /// @arg bool
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 if (argument0)
 	return -1

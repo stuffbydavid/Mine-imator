@@ -35,26 +35,16 @@ if (argument_count > 6)
 else
 	iid = null
 
-for (var a = alert_amount; a > 0; a--)
+with (new(obj_alert))
 {
-	alert_title[a] = alert_title[a - 1]
-	alert_text[a] = alert_text[a - 1]
-	alert_icon[a] = alert_icon[a - 1]
-	alert_button[a] = alert_button[a - 1]
-	alert_button_url[a] = alert_button_url[a - 1]
-	alert_fadetime[a] = alert_fadetime[a - 1]
-	alert_fadestart[a] = alert_fadestart[a - 1]
-	alert_created[a] = alert_created[a - 1]
-	alert_iid[a] = alert_iid[a - 1]
+	id.title = title
+	id.text = text
+	id.icon = icon
+	id.button = button
+	id.button_url = buttonurl
+	id.fade_time = fadetime
+	id.fade_start = current_time
+	id.created = current_time
+	id.iid = iid
+	ds_list_insert(other.alert_list, 0, id)
 }
-alert_amount++
-
-alert_title[0] = title
-alert_text[0] = text
-alert_icon[0] = icon
-alert_button[0] = button
-alert_button_url[0] = buttonurl
-alert_fadetime[0] = fadetime
-alert_fadestart[0] = current_time
-alert_created[0] = current_time
-alert_iid[0] = iid

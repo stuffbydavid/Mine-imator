@@ -3,5 +3,8 @@
 
 gml_pragma("forceinline")
 
+if (array_length_1d(argument[0]) = 0)
+	return array()
+
 argument0[0] = argument0[0]
 return argument0

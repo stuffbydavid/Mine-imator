@@ -1,0 +1,1 @@
+model_shape_event_destroy()

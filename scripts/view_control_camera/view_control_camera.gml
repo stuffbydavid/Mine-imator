@@ -8,7 +8,7 @@ len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * 0.2 * 0.5
 with (tl_edit)
 {
 	// Start from the parent matrix, set the position and remove all scaling
-	xyang = matrix_parent
+	xyang = array_copy_1d(matrix_parent)
 	xyang[MAT_X] = world_pos_rotate[X]
 	xyang[MAT_Y] = world_pos_rotate[Y]
 	xyang[MAT_Z] = world_pos_rotate[Z]

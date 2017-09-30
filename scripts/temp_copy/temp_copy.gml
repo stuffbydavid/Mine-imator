@@ -9,7 +9,7 @@ to.name = name
 
 to.skin = skin
 to.model_name = model_name
-to.model_state = model_state
+to.model_state = array_copy_1d(model_state)
 to.model_part_name = model_part_name
 
 to.item_tex = item_tex
@@ -19,7 +19,7 @@ to.item_face_camera = item_face_camera
 to.item_bounce = item_bounce
 
 to.block_name = block_name
-to.block_state = block_state
+to.block_state = array_copy_1d(block_state)
 to.block_tex = block_tex
 
 to.scenery = scenery

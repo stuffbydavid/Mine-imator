@@ -56,7 +56,7 @@ with (new(obj_block_load_model_file))
 				if (ds_map_valid(rotationmap))
 				{
 					var origin, angle, rot, scale;
-					origin = value_get_point3D(elementmap[?"origin"], vec3(8, 8, 8))
+					origin = value_get_point3D(rotationmap[?"origin"], point3D(8, 8, 8))
 					angle = 0
 					rot = vec3(0)
 					scale = vec3(1)

@@ -14,7 +14,7 @@
 /// @arg [radius
 /// @arg sprite]
 
-var name, xx, yy, color, value, minval, maxval, def, snapval, limit, tbx, script, rad, sprite;
+var name, xx, yy, color, value, modval, minval, maxval, def, snapval, limit, tbx, script, rad, sprite;
 var capwid, text, labelx, labely, labelw;
 name = argument[0]
 xx = argument[1]
@@ -43,11 +43,15 @@ else
 if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < content_y || yy - rad > content_y + content_height)
 	return 0
 
+modval = mod_fix(value, 360)
 capwid = string_width(text_get(name) + ":") + 5
-text = string(test(limit, mod_fix(value, 360), value)) + tbx.suffix
+if (limit)
+	text = string(modval) + tbx.suffix
+else
+	text = string(value) + tbx.suffix
 labelx = xx - floor(string_width(text) / 4)
 labelw = rad
-labely = yy + test(mod_fix(value, 360) > 180 || mod_fix(value, 360) = 0, -24, 8)
+labely = yy + test(modval > 180 || modval = 0, -24, 8)
 tip_set(text_get(name + "tip") + "\n" + text_get("wheeltip"), xx - rad, yy - rad, rad * 2, rad * 2)
 
 // Background

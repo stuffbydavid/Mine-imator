@@ -58,12 +58,13 @@ tree_extend = false
 
 inherit_position = true
 inherit_rotation = true
+inherit_rot_point = false
 inherit_scale = true
 inherit_alpha = false
 inherit_color = false
-inherit_texture = false
 inherit_visibility = true
-inherit_rot_point = false
+inherit_bend = false
+inherit_texture = false
 scale_resize = true
 rot_point_custom = false
 rot_point = point3D(0, 0, 0)

@@ -5,13 +5,13 @@ snapval = tab.rotation.snap_enabled * tab.rotation.snap_size
 
 tab_control(100)
 axis_edit = X
-draw_wheel("frameeditorrotationx", dx + floor(dw * 0.25) - 25, dy + 50, c_yellow, tl_edit.value[e_value.ROT_X], -no_limit, no_limit, 0, snapval, tab.rotation.loops, tab.rotation.tbx_x, action_tl_frame_rot)
+draw_wheel("frameeditorrotationx", dx + floor(dw * 0.25) - 25, dy + 50, c_yellow, tl_edit.value[e_value.ROT_X], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X], snapval, tab.rotation.loops, tab.rotation.tbx_x, action_tl_frame_rot)
 
 axis_edit = test(setting_z_is_up, Y, Z)
-draw_wheel("frameeditorrotationy", dx + floor(dw * 0.5), dy + 50, c_blue, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, 0, snapval, tab.rotation.loops, tab.rotation.tbx_y, action_tl_frame_rot)
+draw_wheel("frameeditorrotationy", dx + floor(dw * 0.5), dy + 50, c_blue, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.rotation.loops, tab.rotation.tbx_y, action_tl_frame_rot)
 
 axis_edit = test(setting_z_is_up, Z, Y)
-draw_wheel("frameeditorrotationz", dx + floor(dw * 0.75) + 25, dy + 50, c_red, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, 0, snapval, tab.rotation.loops, tab.rotation.tbx_z, action_tl_frame_rot)
+draw_wheel("frameeditorrotationz", dx + floor(dw * 0.75) + 25, dy + 50, c_red, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.rotation.loops, tab.rotation.tbx_z, action_tl_frame_rot)
 tab_next()
 
 // Loops

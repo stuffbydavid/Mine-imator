@@ -2,7 +2,7 @@
 /// @arg x
 /// @arg y
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 while (argument0 < 0)
 	argument0 += argument1

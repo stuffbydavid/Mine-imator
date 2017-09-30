@@ -84,9 +84,9 @@ with (new(obj_block))
 	
 	// Default state
 	if (is_string(map[?"default_state"]))
-		default_state = map[?"default_state"]
+		default_state = string_get_state_vars(map[?"default_state"])
 	else
-		default_state = ""
+		default_state = array()
 	
 	// Random offset
 	if (is_real(map[?"random_offset"]))
@@ -126,24 +126,11 @@ with (new(obj_block))
 	
 	// Legacy data
 	for (var d = 0; d < 16; d++)
-	{
-		legacy_data_state_map[d] = null
-		legacy_data_state[d] = ""
-	}
+		legacy_data_state[d] = array()
 		
 	// Read data list into maps
 	if (ds_map_valid(map[?"legacy_data"]))
 		block_load_legacy_data_map(map[?"legacy_data"], 0, 1)
-	
-	// Convert maps to strings
-	for (var d = 0; d < 16; d++)
-	{
-		if (legacy_data_state_map[d] != null)
-		{
-			legacy_data_state[d] = state_vars_map_to_string(legacy_data_state_map[d])
-			ds_map_destroy(legacy_data_state_map[d])
-		}
-	}
 	
 	return id
 }

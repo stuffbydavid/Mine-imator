@@ -1,23 +1,15 @@
-/// array3D_set(array, point, value)
+/// array3D_set(array, size, point, value)
 /// @arg array
+/// @arg size
 /// @arg point
 /// @arg value
 
 gml_pragma("forceinline")
 
-var arr_x = argument0,
-	pnt = argument1,
-	value = argument2;
+var arr, size, pnt, val;
+arr = argument0
+size = argument1
+pnt = argument2
+val = argument3
 
-// X
-if (pnt[@ X] >= array_length_1d(arr_x) || !is_array(arr_x[@ pnt[@ X]]))
-	arr_x[@ pnt[@ X]] = array()
-var arr_y = arr_x[@ pnt[@ X]];
-
-// Y
-if (pnt[@ Y] >= array_length_1d(arr_y) || !is_array(arr_y[@ pnt[@ Y]]))
-	arr_y[@ pnt[@ Y]] = array()
-var arr_z = arr_y[@ pnt[@ Y]];
-
-// Z
-arr_z[@ pnt[@ Z]] = value
+ds_grid_set(arr, pnt[X], pnt[Y] * size[Z] + pnt[Z], val)

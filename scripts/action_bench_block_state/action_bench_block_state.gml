@@ -7,11 +7,10 @@ state = menu_block_state.name
 
 with (bench_settings)
 {
-	if (block_state_map[?state] = val) 
+	if (state_vars_get_value(block_state, state) = val) 
 		return 0
 		
-	block_state_map[?state] = val
-	block_state = state_vars_map_to_string(block_state_map)
+	state_vars_set_value(block_state, state, val)
 	temp_update_block()
 	
 	preview.update = true

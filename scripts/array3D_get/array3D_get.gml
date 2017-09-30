@@ -1,13 +1,13 @@
-/// array3D_get(array, point)
+/// array3D_get(array, size, point)
 /// @arg array
+/// @arg size
 /// @arg point
 
 gml_pragma("forceinline")
 
-var arr_x = argument0,
-	pnt = argument1;
-	
-var arr_y = arr_x[@ pnt[@ X]];
-var arr_z = arr_y[@ pnt[@ Y]];
+var arr, size, pnt;
+arr = argument0
+size = argument1
+pnt = argument2
 
-return arr_z[@ pnt[@ Z]]
+return ds_grid_get(arr, pnt[@ X], pnt[@ Y] * size[@ Z] + pnt[@ Z])

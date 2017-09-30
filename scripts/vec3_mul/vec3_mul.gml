@@ -2,7 +2,7 @@
 /// @arg vector
 /// @arg multiplier
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var vec, mul;
 vec = argument0

@@ -69,7 +69,7 @@ if (particle_list)
 	
 if (bend_vbuffer_list != null)
 {
-	for (var s = 0; s < ds_list_size(model_part.shape_list); s++)
+	for (var s = 0; s < ds_list_size(bend_vbuffer_list); s++)
 		if (bend_vbuffer_list[|s] != null)
 			vbuffer_destroy(bend_vbuffer_list[|s])
 	ds_list_destroy(bend_vbuffer_list)

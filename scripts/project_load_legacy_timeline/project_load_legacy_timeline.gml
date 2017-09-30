@@ -29,7 +29,6 @@ with (new(obj_timeline))
 		{
 			if (loaded && load_id = other.temp)
 			{
-				temp_update_model_state_map()
 				temp_update_model()
 				findtemp = id
 				break
@@ -140,6 +139,9 @@ with (new(obj_timeline))
 			rot_point[Z] -= 8
 	}
 	
+	if (part_of != null)
+		rot_point = point3D(0, 0, 0)
+	
 	backfaces = buffer_read_byte()
 	texture_blur = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
@@ -160,7 +162,7 @@ with (new(obj_timeline))
 
 	if (load_format >= e_project.FORMAT_CB_100) 
 	{
-		/*inherit_bend = */buffer_read_byte()
+		inherit_bend = buffer_read_byte()
 		/*hide_quality_high = */buffer_read_byte()
 		/*hide_quality_low = */buffer_read_byte()
 		/*biome = */buffer_read_byte()

@@ -1,11 +1,11 @@
 /// builder_generate()
 /// @desc Generate triangles from the block render models.
 
-block_current = array3D_get(block_obj, build_pos)
+block_current = array3D_get(block_obj, build_size, build_pos)
 if (is_undefined(block_current))
 	return 0
 	
-block_state_current = array3D_get(block_state, build_pos)
+block_state_current = array3D_get(block_state, build_size, build_pos)
 block_pos = point3D_mul(build_pos, block_size)
 block_color = null
 
@@ -41,19 +41,22 @@ for (var f = 0; f < e_dir.amount; f++)
 			block_render_models_dir[f] = null
 	}
 	else
-		block_render_models_dir[f] = array3D_get(block_render_models, point3D_add(build_pos, dir_get_vec3(f)))
+		block_render_models_dir[f] = array3D_get(block_render_models, build_size, point3D_add(build_pos, dir_get_vec3(f)))
 }
 			
 // Get render models
-var models = array3D_get(block_render_models, build_pos);
+var models = array3D_get(block_render_models, build_size, build_pos);
 if (models = 0) // Requires other models
 	models = block_get_render_models(block_current, block_state_current, true)
 	
 if (models != null)
 {
+	
 	if (is_array(models)) // Generate from render models
+	{
+		if (models[0] = 0) {log(block_current.name, models)}
 		block_render_models_generate(models)
-	else // Use script for triangles
+	}else // Use script for triangles
 		script_execute(models)
 }
 

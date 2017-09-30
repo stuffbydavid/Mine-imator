@@ -92,6 +92,7 @@ with (new(obj_model_shape))
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
 	bend_offset = other.bend_offset
+	bend_invert = other.bend_invert
 	bend_vbuffer = null
 	bend_mode = e_shape_bend.BEND
 	
@@ -194,6 +195,8 @@ with (new(obj_model_shape))
 			model_file_load_shape_block(true)
 			vbuffer_done()
 		}
+		else
+			bend_vbuffer = null
 	}
 	else if (type = "plane")
 	{
@@ -209,6 +212,8 @@ with (new(obj_model_shape))
 			model_file_load_shape_plane(true)
 			vbuffer_done()
 		}
+		else
+			bend_vbuffer = null
 	}
 	else
 	{

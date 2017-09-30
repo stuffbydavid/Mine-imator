@@ -85,22 +85,22 @@ else
 			dy += listh + 30
 			
 			// States
-			var model, state;
-			model = mc_assets.model_name_map[?bench_settings.model_name]
-			state = ds_map_find_first(bench_settings.model_state_map)
-			while (!is_undefined(state))
+			var model, statelen;
+			model = mc_assets.model_name_map[?bench_settings.model_name];
+			statelen = array_length_1d(bench_settings.model_state)
+			
+			for (var i = 0; i < statelen; i += 2)
 			{
+				var state = bench_settings.model_state[i];
 				capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state) + ":") + 20)
-				state = ds_map_find_next(bench_settings.model_state_map, state)
 			}
 			
-			state = ds_map_find_first(bench_settings.model_state_map);
-			while (!is_undefined(state))
+			for (var i = 0; i < statelen; i += 2)
 			{
+				var state = bench_settings.model_state[i];
 				menu_model_current = model
 				menu_model_state_current = model.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state_map[?state], minecraft_asset_get_name("modelstatevalue", bench_settings.model_state_map[?state]), action_bench_model_state, null, null, capwid, text_get("benchmodelstatetip"))
-				state = ds_map_find_next(bench_settings.model_state_map, state)
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", bench_settings.model_state[i + 1]), action_bench_model_state, null, null, capwid, text_get("benchmodelstatetip"))
 				dy += 24 + 8
 			}
 			menu_model_current = null
@@ -193,22 +193,22 @@ else
 			dy += listh + 30
 			
 			// States
-			var block, state;
+			var block, statelen;
 			block = mc_assets.block_name_map[?bench_settings.block_name]
-			state = ds_map_find_first(bench_settings.block_state_map)
-			while (!is_undefined(state))
+			statelen = array_length_1d(bench_settings.block_state)
+			
+			for (var i = 0; i < statelen; i += 2)
 			{
+				var state = bench_settings.block_state[i];
 				capwid = max(capwid, string_width(minecraft_asset_get_name("blockstate", state) + ":") + 20)
-				state = ds_map_find_next(bench_settings.block_state_map, state)
 			}
 			
-			state = ds_map_find_first(bench_settings.block_state_map);
-			while (!is_undefined(state))
+			for (var i = 0; i < statelen; i += 2)
 			{
+				var state = bench_settings.block_state[i];
 				menu_block_current = block
 				menu_block_state_current = block.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state_map[?state], minecraft_asset_get_name("blockstatevalue", bench_settings.block_state_map[?state]), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
-				state = ds_map_find_next(bench_settings.block_state_map, state)
+				draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.block_state[i + 1], minecraft_asset_get_name("blockstatevalue", bench_settings.block_state[i + 1]), action_bench_block_state, null, null, capwid, text_get("benchblockstatetip"))
 				dy += 24 + 8
 			}
 			menu_block_current = null

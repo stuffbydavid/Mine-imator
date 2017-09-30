@@ -52,13 +52,11 @@ with (bench_settings)
 	// Default settings
 	temp_event_create()
 	model_name = "human"
-	model_state = mc_assets.model_name_map[?model_name].default_state
+	model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 	model_part_name = "head"
-	temp_update_model_state_map()
 	temp_update_model()
 	temp_update_model_part()
-	block_state = mc_assets.block_name_map[?block_name].default_state
-	temp_update_block_state_map()
+	block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 	temp_particles_init()
 	skin = res_def
 	item_tex = res_def
@@ -84,7 +82,8 @@ with (bench_settings)
 	block_list.script = action_bench_block_name
 	sortlist_column_add(block_list, "blockname", 0)
 	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-		sortlist_add(block_list, mc_assets.block_list[|b].name)
+		if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "")
+			sortlist_add(block_list, mc_assets.block_list[|b].name)
 	block_tbx_data = new_textbox_integer()
 
 	// Special block list

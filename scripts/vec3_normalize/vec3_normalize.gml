@@ -1,7 +1,7 @@
 /// vec3_normalize(vector)
 /// @arg vector
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var vec, len;
 vec = argument0

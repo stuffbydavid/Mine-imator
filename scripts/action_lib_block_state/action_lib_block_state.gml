@@ -17,14 +17,13 @@ else
 {
 	val = argument0
 	state = menu_block_state.name
-	with (history_set_var(action_lib_block_state, temp_edit.block_state_map[?state], val, false))
+	with (history_set_var(action_lib_block_state, state_vars_get_value(temp_edit.block_state, state), val, false))
 		id.state = state
 }
 
 with (temp_edit)
 {
-	block_state_map[?state] = val
-	block_state = state_vars_map_to_string(block_state_map)
+	state_vars_set_value(block_state, state, val)
 	temp_update_block()
 	temp_update_display_name()
 }
