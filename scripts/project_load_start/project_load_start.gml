@@ -34,7 +34,7 @@ if (load_format > project_format)
 }
 
 // Check format too old
-else if (load_format < e_project.FORMAT_110)
+else if (load_format < e_project.FORMAT_110_PRE_1)
 {
 	log("Invalid format", load_format)
 	error("errorfilecorrupted")

@@ -7,17 +7,18 @@ if (argument_count > 0)
 	bend = argument[0]
 
 var x1, x2, y1, z1, z2;
-x1 = from[X]; y1 = from[Y]; z1 = from[Z]
-x2 = to[X];					z2 = to[Z]
+x1 = from[X];  y1 = from[Y]; z1 = from[Z]
+x2 = to[X];					 z2 = to[Z]
 
 // Define texture coordinates to use (clockwise, starting at top-left)
-var tex, size;
+var tex, size, texsize;
 size = point3D_sub(to, from)
+texsize = point3D_sub(to_noscale, from_noscale)
 
 tex[0] = uv
-tex[1] = point2D_add(tex[0], point2D(size[X], 0))
-tex[2] = point2D_add(tex[0], point2D(size[X], size[Z]))
-tex[3] = point2D_add(tex[0], point2D(0, size[Z]))
+tex[1] = point2D_add(tex[0], point2D(texsize[X], 0))
+tex[2] = point2D_add(tex[0], point2D(texsize[X], texsize[Z]))
+tex[3] = point2D_add(tex[0], point2D(0, texsize[Z]))
 
 // Adjust by bending
 if (bend_part != null && bend_mode = e_shape_bend.BEND)
@@ -34,7 +35,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = 0
 				x2 = size[X] - bendoff
 				
-				texoff = point2D(bendoff, 0)
+				texoff = point2D(bendoff / scale[X], 0)
 				tex[0] = point2D_add(tex[0], texoff)
 				tex[3] = point2D_add(tex[3], texoff)
 				break
@@ -46,7 +47,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = -bendoff
 				x2 = 0
 				
-				texoff = point2D(-(size[X] - bendoff), 0)
+				texoff = point2D(-(texsize[X] - bendoff / scale[X]), 0)
 				tex[1] = point2D_add(tex[1], texoff)
 				tex[2] = point2D_add(tex[2], texoff)
 				break
@@ -58,7 +59,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = 0
 				z2 = size[Z] - bendoff
 				
-				texoff = point2D(0, -bendoff)
+				texoff = point2D(0, -bendoff / scale[Z])
 				tex[2] = point2D_add(tex[2], texoff)
 				tex[3] = point2D_add(tex[3], texoff)
 				break
@@ -70,7 +71,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = -bendoff
 				z2 = 0
 				
-				texoff = point2D(0, (size[Z] - bendoff))
+				texoff = point2D(0, (texsize[Z] - bendoff / scale[Z]))
 				tex[0] = point2D_add(tex[0], texoff)
 				tex[1] = point2D_add(tex[1], texoff)
 				break
@@ -87,7 +88,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = from[X]
 				x2 = from[X] + bendoff
 				
-				texoff = point2D(-(size[X] - bendoff), 0)
+				texoff = point2D(-(texsize[X] - bendoff / scale[X]), 0)
 				tex[1] = point2D_add(tex[1], texoff)
 				tex[2] = point2D_add(tex[2], texoff)
 				break
@@ -99,7 +100,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = from[X] + bendoff
 				x2 = to[X]
 				
-				texoff = point2D(bendoff, 0)
+				texoff = point2D(bendoff / scale[X], 0)
 				tex[0] = point2D_add(tex[0], texoff)
 				tex[3] = point2D_add(tex[3], texoff)
 				break
@@ -111,7 +112,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = from[Z]
 				z2 = from[Z] + bendoff
 				
-				texoff = point2D(0, (size[Z] - bendoff))
+				texoff = point2D(0, (texsize[Z] - bendoff / scale[Z]))
 				tex[0] = point2D_add(tex[0], texoff)
 				tex[1] = point2D_add(tex[1], texoff)
 				break
@@ -123,7 +124,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = from[Z] + bendoff
 				z2 = to[Z]
 				
-				texoff = point2D(0, -bendoff)
+				texoff = point2D(0, -bendoff / scale[Z])
 				tex[2] = point2D_add(tex[2], texoff)
 				tex[3] = point2D_add(tex[3], texoff)
 				break

@@ -53,7 +53,7 @@ settings_startup()
 render_startup()
 background_ground_startup()
 background_sky_startup()
-alert_show("A title","some text",icons.WEBSITE_SMALL)
+
 log("Startup OK")
 startup_error = false
 

@@ -17,6 +17,9 @@ with (new(obj_model))
 		return null
 	}
 	
+	if (dev_mode_check_names && !text_exists("model" + name))
+		log("model/" + name + dev_mode_name_translation_message)
+		
 	// File
 	if (is_string(map[?"file"]))
 		file = model_file_load(dir + map[?"file"])
@@ -45,6 +48,9 @@ with (new(obj_model))
 		var curstate = ds_map_find_first(map[?"states"]);
 		while (!is_undefined(curstate))
 		{
+			if (dev_mode_check_names && !text_exists("modelstate" + curstate))
+				log("model/state/" + curstate + dev_mode_name_translation_message)
+				
 			with (new(obj_model_state))
 			{
 				name = curstate
@@ -57,6 +63,9 @@ with (new(obj_model))
 					value_name[v] = curvalue[?"value"]
 					value_file[v] = null
 					value_texture_name_map[v] = null
+					
+					if (dev_mode_check_names && !text_exists("modelstatevalue" + value_name[v]))
+						log("model/state/value/" + value_name[v] + dev_mode_name_translation_message)
 					
 					// File
 					if (!is_undefined(curvalue[?"file"]))

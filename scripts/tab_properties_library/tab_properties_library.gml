@@ -170,7 +170,7 @@ switch (temp_edit.type)
 		draw_label(text_get("typebodypart") + ":", dx, dy + 12, fa_left, fa_middle)
 		
 		if (temp_edit.model_part != null)
-			draw_label(text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_file.name)), dx + capwid, dy + 12, fa_left, fa_middle)
+			draw_label(text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name)), dx + capwid, dy + 12, fa_left, fa_middle)
 		else
 			draw_label(text_get("librarybodypartunknown"), dx + capwid, dy + 12, fa_left, fa_middle)
 		

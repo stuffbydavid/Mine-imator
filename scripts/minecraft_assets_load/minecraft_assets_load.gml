@@ -2,7 +2,7 @@
 /// @arg version
 /// @desc Loads assets from an archive.
 
-// TODO: error check
+#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
 
 var version, fname, zipfname;
 version = argument[0]
@@ -36,11 +36,11 @@ if (!ds_map_valid(map))
 
 var format = map[?"format"];
 if (!is_real(format))
-	format = e_minecraft_assets.FORMAT_110
+	format = e_minecraft_assets.FORMAT_110_PRE_1
 
 if (format > minecraft_assets_format)
 {
-	error("Too new") // TODO
+	log("Too new archive, format", format)
 	return false
 }
 

@@ -19,8 +19,8 @@ if (block_current.random_offset && build_size[X] * build_size[Y] * build_size[Z]
 	
 // Set wind
 vertex_wave = block_current.wind_axis
-if (block_current.wind_zroot != null)
-	vertex_wave_minz = block_pos[Z] + block_current.wind_zroot
+if (block_current.wind_zmin != null)
+	vertex_wave_zmin = block_pos[Z] + block_current.wind_zmin
 			
 // Check edges
 build_edge[e_dir.EAST]	= (build_pos[X] = build_size[X] - 1)
@@ -62,5 +62,5 @@ if (models != null)
 
 // Reset wind and brightness
 vertex_wave = e_vertex_wave.NONE
-vertex_wave_minz = null
+vertex_wave_zmin = null
 vertex_brightness = 0

@@ -154,7 +154,8 @@ with (obj_timeline)
 
 if (timeline_settings_import_loop_tl)
 {
-	var name = string_replace(timeline_settings_import_loop_tl.temp.model_file.name, "character", "");
-	timeline_settings_walk_fn = loops_directory + name + "_walk.keyframes"
-	timeline_settings_run_fn = loops_directory + name + "_run.keyframes"
+	// TODO!
+	//var name = string_replace(timeline_settings_import_loop_tl.temp.model_file.name, "character", "");
+	//timeline_settings_walk_fn = loops_directory + name + "_walk.keyframes"
+	//timeline_settings_run_fn = loops_directory + name + "_run.keyframes"
 }

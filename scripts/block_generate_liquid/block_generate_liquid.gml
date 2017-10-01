@@ -77,8 +77,8 @@ if (falling)
 			array3D_get(block_obj, build_size, lookside) != block_current)
 		{
 			vertex_wave = e_vertex_wave.Z_ONLY
-			vertex_wave_minz = null
-			vertex_wave_maxz = block_pos[Z] + 1
+			vertex_wave_zmin = null
+			vertex_wave_zmax = block_pos[Z] + 1
 			break
 		}
 		
@@ -88,7 +88,7 @@ if (falling)
 			(build_edge[e_dir.UP] || array3D_get(block_obj, build_size, looksideup) != block_current))
 		{
 			vertex_wave = e_vertex_wave.Z_ONLY
-			vertex_wave_minz = block_pos[Z] + 1
+			vertex_wave_zmin = block_pos[Z] + 1
 			break
 		}
 	}

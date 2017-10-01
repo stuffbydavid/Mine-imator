@@ -43,13 +43,12 @@ if (part.shape_list != null)
 			// Connect mesh
 			if (bendangle != 0 && bendvbufferlist != null && bendvbufferlist[|s] != null)
 			{
-				matrix_set(matrix_world, matrix_multiply(shape.matrix_bend, mat))
+				matrix_set(matrix_world, matrix_multiply(shape.matrix, mat))
 				vbuffer_render(bendvbufferlist[|s])
 			}
 			
 			// Second half mesh
 			matrix_set(matrix_world, matrix_multiply(matrix_multiply(model_part_bend_matrix(part, bendangle, shape.position), shape.matrix_bend_half), mat))
-			matrix_set(matrix_world, matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), shape.scale), matrix_get(matrix_world))) // Add scale
 			vbuffer_render(shape.bend_vbuffer)
 		}
 	}

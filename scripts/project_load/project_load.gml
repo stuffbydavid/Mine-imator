@@ -17,7 +17,7 @@
 ///			1.0.5 2 = timeline fog, timeline_marker
 ///			1.0.6 = new mobs
 ///			1.0.6 2 = camera size in keyframes
-///			1.1.0 = redone in JSON
+///			1.1.0 PRE 1 = redone in JSON
 
 var fn, buf;
 if (argument_count > 0)
@@ -111,7 +111,7 @@ project_reset_loaded()
 log("Project loaded")
 
 // Save into newest format
-if (load_format < e_project.FORMAT_110)
+if (load_format < e_project.FORMAT_110_PRE_1)
 {
 	if (!dev_mode)
 		file_rename_lib(fn, fn + ".old")

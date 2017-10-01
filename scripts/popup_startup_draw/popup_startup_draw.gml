@@ -23,13 +23,13 @@ if (draw_link("startupcredits1", creditname, dx, dy) && mouse_left_pressed)
 	open_url(link_david)
 dx += string_width(creditname)
 
-// Mojang
+// Minecraft
 credittext = text_get("startupcredits2")
-creditname = "Mojang"
+creditname = "Minecraft"
 draw_label(credittext, dx, dy)
 dx += string_width(credittext)
 if (draw_link("startupcredits2", creditname, dx, dy) && mouse_left_pressed)
-	open_url(link_mojang)
+	open_url(link_minecraft)
 dx += string_width(creditname)
 
 // Buttons

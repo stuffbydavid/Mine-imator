@@ -22,13 +22,16 @@ if (!ds_list_valid(map[?"position"]))
 with (new(obj_model_part))
 {
 	// Name
-	if (is_string(map[?"name"]))
+	if (is_string(map[?"name"]) && map[?"name"] != "")
 		name = map[?"name"]
 	else
 	{
-		log("Missing parameter \"name\"")
+		log("Missing or invalid parameter \"name\"")
 		return null
 	}
+	
+	if (dev_mode_check_names && !text_exists("modelpart" + name))
+		log("model/part/" + name + dev_mode_name_translation_message)
 	
 	// Description (optional)
 	if (is_string(map[?"description"]))
@@ -60,7 +63,8 @@ with (new(obj_model_part))
 	}
 	
 	// Position
-	position = value_get_point3D(map[?"position"])
+	position_noscale = value_get_point3D(map[?"position"])
+	position = point3D_mul(position_noscale, other.scale)
 	
 	show_position = false
 	if (is_real(map[?"show_position"]))
@@ -71,6 +75,7 @@ with (new(obj_model_part))
 		
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
+	scale = vec3_mul(scale, other.scale)
 	
 	// Locked to parent bend half?
 	lock_bend = true
@@ -101,10 +106,10 @@ with (new(obj_model_part))
 		}
 	}
 		
-	matrix = matrix_create(point3D(0, 0, 0), rotation, scale)
+	matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
 	
 	// Matrix used when rendering preview/particle
-	default_matrix = matrix_create(position, rotation, scale)
+	default_matrix = matrix_create(position, rotation, vec3(1))
 	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
 		default_matrix = matrix_multiply(default_matrix, model_part_bend_matrix(other.id, 0, point3D(0, 0, 0)))
 	
@@ -112,6 +117,14 @@ with (new(obj_model_part))
 	if (!is_undefined(map[?"bend"]))
 	{
 		var bendmap = map[?"bend"]
+		
+		// Offset
+		if (!is_real(bendmap[?"offset"]))
+		{
+			log("Missing parameter \"offset\"")
+			return null
+		}
+		bend_offset_noscale = bendmap[?"offset"]
 		
 		// Part
 		if (!is_string(bendmap[?"part"])) 
@@ -122,12 +135,12 @@ with (new(obj_model_part))
 		
 		switch (bendmap[?"part"])
 		{
-			case "right":	bend_part = e_part.RIGHT;	break
-			case "left":	bend_part = e_part.LEFT;	break
-			case "front":	bend_part = e_part.FRONT;	break
-			case "back":	bend_part = e_part.BACK;	break
-			case "upper":	bend_part = e_part.UPPER;	break
-			case "lower":	bend_part = e_part.LOWER;	break
+			case "right":	bend_part = e_part.RIGHT;	bend_offset = bend_offset_noscale * scale[X];	break
+			case "left":	bend_part = e_part.LEFT;	bend_offset = bend_offset_noscale * scale[X];	break
+			case "front":	bend_part = e_part.FRONT;	bend_offset = bend_offset_noscale * scale[Y];	break
+			case "back":	bend_part = e_part.BACK;	bend_offset = bend_offset_noscale * scale[Y];	break
+			case "upper":	bend_part = e_part.UPPER;	bend_offset = bend_offset_noscale * scale[Z];	break
+			case "lower":	bend_part = e_part.LOWER;	bend_offset = bend_offset_noscale * scale[Z];	break
 			default:
 				log("Invalid parameter \"part\"")
 				return null
@@ -167,14 +180,6 @@ with (new(obj_model_part))
 				return null
 		}
 		
-		// Offset
-		if (!is_real(bendmap[?"offset"]))
-		{
-			log("Missing parameter \"offset\"")
-			return null
-		}
-		bend_offset = bendmap[?"offset"]
-		
 		// Invert
 		bend_invert = value_get_real(bendmap[?"invert"], false)
 	}
@@ -184,6 +189,7 @@ with (new(obj_model_part))
 		bend_axis = null
 		bend_direction = null
 		bend_offset = 0
+		bend_offset_noscale = 0
 		bend_invert = false
 	}
 	

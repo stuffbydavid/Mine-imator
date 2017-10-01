@@ -52,6 +52,9 @@ with (new(obj_model_file))
 		return null
 	}
 	
+	if (dev_mode_check_names && !text_exists("model" + name))
+		log("model/" + name + dev_mode_name_translation_message)
+		
 	// Description (optional)
 	if (is_string(map[?"description"]))
 		description = map[?"description"]
@@ -73,7 +76,6 @@ with (new(obj_model_file))
 		
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
-	scale_matrix = matrix_create(point3D(0, 0, 0), vec3(0), scale)
 	
 	// Bounds in default position
 	bounds_parts_start = point3D(no_limit, no_limit, no_limit)

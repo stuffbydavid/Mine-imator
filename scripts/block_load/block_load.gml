@@ -17,6 +17,9 @@ with (new(obj_block))
 		return null
 	}
 	
+	if (dev_mode_check_names && !text_exists("block" + name))
+		log("block/" + name + dev_mode_name_translation_message)
+	
 	// Type (overridden by states)
 	if (is_string(map[?"type"]))
 		type = map[?"type"]
@@ -41,11 +44,16 @@ with (new(obj_block))
 	{
 		states_map = ds_map_create()
 		var curstate = ds_map_find_first(map[?"states"]);
+		
 		while (!is_undefined(curstate))
 		{
+			if (dev_mode_check_names && !text_exists("blockstate" + curstate))
+				log("block/state/" + curstate + dev_mode_name_translation_message)
+				
 			with (new(obj_block_state))
 			{
 				name = curstate
+				
 				var valuelist = ds_map_find_value(map[?"states"], curstate);
 				value_amount = ds_list_size(valuelist)
 				
@@ -74,6 +82,9 @@ with (new(obj_block))
 						if (is_real(curvalue[?"brightness"]))
 							value_brightness[v] = curvalue[?"brightness"]
 					}
+					
+					if (dev_mode_check_names && string_length(value_name[v]) > 3 && !text_exists("blockstatevalue" + value_name[v]))
+						log("block/state/value/" + value_name[v] + dev_mode_name_translation_message)
 				}
 				
 				other.states_map[?curstate] = id
@@ -97,7 +108,7 @@ with (new(obj_block))
 	// Wind
 	var windmap = map[?"wind"];
 	wind_axis = e_vertex_wave.NONE
-	wind_zroot = null
+	wind_zmin = null
 	if (ds_map_valid(windmap))
 	{
 		if (is_string(windmap[?"axis"]))
@@ -108,8 +119,8 @@ with (new(obj_block))
 				wind_axis = e_vertex_wave.ALL
 		}
 		
-		if (is_real(windmap[?"yroot"]))
-			wind_zroot = windmap[?"yroot"]
+		if (is_real(windmap[?"ymin"]))
+			wind_zmin = windmap[?"ymin"]
 	}
 	
 	// Requires render models

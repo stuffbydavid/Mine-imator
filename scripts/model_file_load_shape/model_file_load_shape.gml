@@ -75,23 +75,28 @@ with (new(obj_model_shape))
 		invert = false
 	
 	// From/To
-	from = value_get_point3D(map[?"from"])
-	to = value_get_point3D(map[?"to"])
+	from_noscale = value_get_point3D(map[?"from"])
+	to_noscale = value_get_point3D(map[?"to"])
 	
 	// Position (optional)
-	position = value_get_point3D(map[?"position"], point3D(0, 0, 0))
+	position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
+	position = point3D_mul(position_noscale, other.scale)
 		
 	// Rotation (optional)
 	rotation = value_get_point3D(map[?"rotation"], vec3(0, 0, 0))
 		
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
+	scale = vec3_mul(scale, other.scale)
+	from = point3D_mul(from_noscale, scale)
+	to = point3D_mul(to_noscale, scale)
 	
 	// Bending
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
 	bend_offset = other.bend_offset
+	bend_offset_noscale = other.bend_offset_noscale
 	bend_invert = other.bend_invert
 	bend_vbuffer = null
 	bend_mode = e_shape_bend.BEND
@@ -175,12 +180,33 @@ with (new(obj_model_shape))
 	
 	// Create matrices
 	matrix = matrix_create(position, rotation, vec3(1))
-	matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), scale), matrix) // Add scale
-	matrix_bend = matrix_create(position, rotation, vec3(1))
 	matrix_bend_half = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
 	
 	// UV
 	uv = value_get_point2D(map[?"uv"])
+	
+	// Wind
+	var windmap = map[?"wind"];
+	if (ds_map_valid(windmap))
+	{
+		if (is_string(windmap[?"axis"]))
+		{
+			if (windmap[?"axis"] = "y")
+				vertex_wave = e_vertex_wave.Z_ONLY
+			else
+				vertex_wave = e_vertex_wave.ALL
+		}
+		
+		if (is_real(windmap[?"ymin"]))
+			vertex_wave_zmin = windmap[?"ymin"]
+			
+		if (is_real(windmap[?"ymax"]))
+			vertex_wave_zmax = windmap[?"ymax"]
+	}
+	
+	// Brightness
+	if (is_real(map[?"brightness"]))
+		vertex_brightness = map[?"brightness"]
 		
 	// Generate
 	if (type = "block")
@@ -236,6 +262,12 @@ with (new(obj_model_shape))
 	other.bounds_end[X] = max(other.bounds_end[X], bounds_end[X])
 	other.bounds_end[Y] = max(other.bounds_end[Y], bounds_end[Y])
 	other.bounds_end[Z] = max(other.bounds_end[Z], bounds_end[Z])
+	
+	// Reset wind and brightness
+	vertex_wave = e_vertex_wave.NONE
+	vertex_wave_zmin = null
+	vertex_wave_zmax = null
+	vertex_brightness = 0
 	
 	return id
 }

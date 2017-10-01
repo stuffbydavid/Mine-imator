@@ -13,7 +13,7 @@ if (alert.fade_time = null)
 else
 	alpha = 1 - max(0, (current_time - (alert.fade_start + alert.fade_time)) / 3000)
 
-if (alpha < 1 && num < ds_list_size(alert_list))
+if (alpha < 1 && num < ds_list_size(alert_list) - 1)
 	draw_alert(num + 1)
 	
 if (alpha < 0)

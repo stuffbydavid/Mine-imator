@@ -64,7 +64,8 @@ switch (menu_name)
 			with (res)
 				tex = res_get_model_texture(model_part_texture_name(texnamemap, modelfile))
 			
-			menu_add_item(res, res.display_name, tex)
+			if (tex != null)
+				menu_add_item(res, res.display_name, tex)
 		}
 			
 		break

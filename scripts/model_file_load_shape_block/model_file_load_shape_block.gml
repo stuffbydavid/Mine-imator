@@ -18,38 +18,39 @@ for (var d = 0; d < e_dir.amount; d++)
 	add[d] = true
 	
 // Define texture coordinates to use (clockwise, starting at top-left)
-var tex, size;
+var tex, size, texsize;
 size = point3D_sub(to, from)
+texsize = point3D_sub(to_noscale, from_noscale)
 
-tex[e_dir.EAST, 0] = point2D_add(uv, point2D(size[X], 0))
-tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 0], point2D(size[Y], 0))
-tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 0], point2D(size[Y], size[Z]))
-tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 0], point2D(0, size[Z]))
+tex[e_dir.EAST, 0] = point2D_add(uv, point2D(texsize[X], 0))
+tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 0], point2D(texsize[Y], 0))
+tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 0], point2D(texsize[Y], texsize[Z]))
+tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 0], point2D(0, texsize[Z]))
 
-tex[e_dir.WEST, 0] = point2D_sub(uv, point2D(size[Y], 0))
-tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 0], point2D(size[Y], 0))
-tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 0], point2D(size[Y], size[Z]))
-tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 0], point2D(0, size[Z]))
+tex[e_dir.WEST, 0] = point2D_sub(uv, point2D(texsize[Y], 0))
+tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 0], point2D(texsize[Y], 0))
+tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 0], point2D(texsize[Y], texsize[Z]))
+tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 0], point2D(0, texsize[Z]))
 
 tex[e_dir.SOUTH, 0] = uv
-tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 0], point2D(size[X], 0))
-tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 0], point2D(size[X], size[Z]))
-tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 0], point2D(0, size[Z]))
+tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsize[X], 0))
+tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsize[X], texsize[Z]))
+tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 0], point2D(0, texsize[Z]))
 
-tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.EAST, 0], point2D(size[Y], 0))
-tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 0], point2D(size[X], 0))
-tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 0], point2D(size[X], size[Z]))
-tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 0], point2D(0, size[Z]))
+tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.EAST, 0], point2D(texsize[Y], 0))
+tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 0], point2D(texsize[X], 0))
+tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 0], point2D(texsize[X], texsize[Z]))
+tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 0], point2D(0, texsize[Z]))
 
-tex[e_dir.UP, 0] = point2D_sub(uv, point2D(0, size[Y]))
-tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 0], point2D(size[X], 0))
-tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 0], point2D(size[X], size[Y]))
-tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 0], point2D(0, size[Y]))
+tex[e_dir.UP, 0] = point2D_sub(uv, point2D(0, texsize[Y]))
+tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 0], point2D(texsize[X], 0))
+tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 0], point2D(texsize[X], texsize[Y]))
+tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 0], point2D(0, texsize[Y]))
 
-tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.UP, 0], point2D(size[X], 0))
-tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 0], point2D(0, size[Y]))
-tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 0], point2D(size[X], size[Y]))
-tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 0], point2D(size[X], 0))
+tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.UP, 0], point2D(texsize[X], 0))
+tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 0], point2D(0, texsize[Y]))
+tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 0], point2D(texsize[X], texsize[Y]))
+tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 0], point2D(texsize[X], 0))
 
 // Flip east/west sides if mirrored
 if (texture_mirror)
@@ -78,7 +79,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = 0
 				x2 = size[X] - bendoff
 				
-				texoff = point2D(bendoff, 0)
+				texoff = point2D(bendoff / scale[X], 0)
 				tex[e_dir.SOUTH, 0] = point2D_add(tex[e_dir.SOUTH, 0], texoff)
 				tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 3], texoff)
 				tex[e_dir.NORTH, 1] = point2D_sub(tex[e_dir.NORTH, 1], texoff)
@@ -97,7 +98,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = -bendoff
 				x2 = 0
 				
-				texoff = point2D(-(size[X] - bendoff), 0)
+				texoff = point2D(-(texsize[X] - bendoff / scale[X]), 0)
 				tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 1], texoff)
 				tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 2], texoff)
 				tex[e_dir.NORTH, 0] = point2D_sub(tex[e_dir.NORTH, 0], texoff)
@@ -116,13 +117,13 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				y1 = 0
 				y2 = size[Y] - bendoff
 				
-				texoff = point2D(bendoff, 0)
+				texoff = point2D(bendoff / scale[Y], 0)
 				tex[e_dir.EAST, 1] = point2D_sub(tex[e_dir.EAST, 1], texoff)
 				tex[e_dir.EAST, 2] = point2D_sub(tex[e_dir.EAST, 2], texoff)
 				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
 				tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 3], texoff)
 				
-				texoff = point2D(0, bendoff)
+				texoff = point2D(0, bendoff / scale[Y])
 				tex[e_dir.UP, 0] = point2D_add(tex[e_dir.UP, 0], texoff)
 				tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 1], texoff)
 				tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.DOWN, 0], texoff)
@@ -137,13 +138,13 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				y1 = -bendoff
 				y2 = 0
 				
-				texoff = point2D(-(size[Y] - bendoff), 0)
+				texoff = point2D(-(texsize[Y] - bendoff / scale[Y]), 0)
 				tex[e_dir.EAST, 0] = point2D_sub(tex[e_dir.EAST, 0], texoff)
 				tex[e_dir.EAST, 3] = point2D_sub(tex[e_dir.EAST, 3], texoff)
 				tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 1], texoff)
 				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
 				
-				texoff = point2D(0, -(size[Y] - bendoff))
+				texoff = point2D(0, -(texsize[Y] - bendoff / scale[Y]))
 				tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 2], texoff)
 				tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 3], texoff)
 				tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 1], texoff)
@@ -158,7 +159,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = 0
 				z2 = size[Z] - bendoff
 				
-				texoff = point2D(0, -bendoff)
+				texoff = point2D(0, -bendoff / scale[Z])
 				tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 2], texoff)
 				tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 3], texoff)
 				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
@@ -177,7 +178,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = -bendoff
 				z2 = 0
 				
-				texoff = point2D(0, (size[Z] - bendoff))
+				texoff = point2D(0, (texsize[Z] - bendoff / scale[Z]))
 				tex[e_dir.EAST, 0] = point2D_add(tex[e_dir.EAST, 0], texoff)
 				tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 1], texoff)
 				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
@@ -201,7 +202,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x1 = from[X]
 				x2 = from[X] + bendoff
 				
-				texoff = point2D(-(size[X] - bendoff), 0)
+				texoff = point2D(-(size[X] - bendoff / scale[X]), 0)
 				tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 1], texoff)
 				tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 2], texoff)
 				tex[e_dir.NORTH, 0] = point2D_sub(tex[e_dir.NORTH, 0], texoff)
@@ -217,10 +218,10 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 			{
 				add[e_dir.WEST] = false
 				bendoff = (bend_offset - position[X]) - from[X]
-				x1 = (from[X] + bendoff) / scale[X]
+				x1 = from[X] + bendoff
 				x2 = to[X]
 				
-				texoff = point2D(bendoff, 0)
+				texoff = point2D(bendoff / scale[X], 0)
 				tex[e_dir.SOUTH, 0] = point2D_add(tex[e_dir.SOUTH, 0], texoff)
 				tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 3], texoff)
 				tex[e_dir.NORTH, 1] = point2D_sub(tex[e_dir.NORTH, 1], texoff)
@@ -239,13 +240,13 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				y1 = from[Y]
 				y2 = from[Y] + bendoff
 				
-				texoff = point2D(-(size[Y] - bendoff), 0)
+				texoff = point2D(-(texsize[Y] - bendoff / scale[Y]), 0)
 				tex[e_dir.EAST, 0] = point2D_sub(tex[e_dir.EAST, 0], texoff)
 				tex[e_dir.EAST, 3] = point2D_sub(tex[e_dir.EAST, 3], texoff)
 				tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 1], texoff)
 				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)
 				
-				texoff = point2D(0, -(size[Y] - bendoff))
+				texoff = point2D(0, -(texsize[Y] - bendoff / scale[Y]))
 				tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 2], texoff)
 				tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 3], texoff)
 				tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 1], texoff)
@@ -257,16 +258,16 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 			{
 				add[e_dir.NORTH] = false
 				bendoff = (bend_offset - position[Y]) - from[Y]
-				y1 = (from[Y] + bendoff) / scale[Y]
+				y1 = from[Y] + bendoff
 				y2 = to[Y]
 				
-				texoff = point2D(bendoff, 0)
+				texoff = point2D(bendoff / scale[Y], 0)
 				tex[e_dir.EAST, 1] = point2D_sub(tex[e_dir.EAST, 1], texoff)
 				tex[e_dir.EAST, 2] = point2D_sub(tex[e_dir.EAST, 2], texoff)
 				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
 				tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 3], texoff)
 				
-				texoff = point2D(0, bendoff)
+				texoff = point2D(0, bendoff / scale[Y])
 				tex[e_dir.UP, 0] = point2D_add(tex[e_dir.UP, 0], texoff)
 				tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 1], texoff)
 				tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.DOWN, 0], texoff)
@@ -281,7 +282,7 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z1 = from[Z]
 				z2 = from[Z] + bendoff
 				
-				texoff = point2D(0, (size[Z] - bendoff))
+				texoff = point2D(0, (texsize[Z] - bendoff / scale[Z]))
 				tex[e_dir.EAST, 0] = point2D_add(tex[e_dir.EAST, 0], texoff)
 				tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 1], texoff)
 				tex[e_dir.WEST, 0] = point2D_add(tex[e_dir.WEST, 0], texoff)
@@ -297,10 +298,10 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 			{
 				add[e_dir.DOWN] = false
 				bendoff = (bend_offset - position[Z]) - from[Z]
-				z1 = (from[Z] + bendoff) / scale[Z]
+				z1 = from[Z] + bendoff
 				z2 = to[Z]
 				
-				texoff = point2D(0, -bendoff)
+				texoff = point2D(0, -bendoff / scale[Z])
 				tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 2], texoff)
 				tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 3], texoff)
 				tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 2], texoff)

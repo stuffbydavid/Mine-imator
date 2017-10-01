@@ -57,8 +57,8 @@ with (new(obj_block_load_state_file))
 				// Name
 				name = variant
 				
-				// Single "normal" state is always selected
-				if (name = "normal" && ds_map_size(variantsmap) = 1)
+				// "normal" state is always selected
+				if (name = "normal")
 					vars = array()
 				else
 					vars = string_get_state_vars(name)

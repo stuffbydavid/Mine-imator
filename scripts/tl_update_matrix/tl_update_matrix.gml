@@ -23,17 +23,11 @@ if (object_index != app && update_matrix)
 	else
 		matrix_parent = MAT_IDENTITY
 		
-	// Add model scale
-	if (part_of = null && temp != null && temp.model_file != null)
-		matrix_parent = matrix_multiply(temp.model_file.scale_matrix, matrix_parent)
-		
-	// Add body part transformations
+	// Add body part position and rotation
 	if (type = "bodypart" && model_part != null)
 	{
-		if (part_of = null)
-			matrix_parent = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), model_part.scale), matrix_parent)
-		else
-			matrix_parent = matrix_multiply(matrix_create(model_part.position, vec3(0), model_part.scale), matrix_parent)
+		if (part_of != null)
+			matrix_parent = matrix_multiply(matrix_create(model_part.position, vec3(0), vec3(1)), matrix_parent)
 		rot = vec3_add(rot, model_part.rotation)
 	}
 		

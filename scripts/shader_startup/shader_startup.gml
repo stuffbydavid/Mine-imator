@@ -59,9 +59,9 @@ if (!err)
 if (err)
 {
 	log("Shader compilation failed")
-	log("Download DirectX runtime", link_directx)
-	if (show_question("Some shaders failed to compile.\nYour graphics drivers are outdated or DirectX runtime is missing. Download DirectX runtime now?"))
-		open_url(link_directx)
+	log("Try updating your graphics drivers", link_article_drivers)
+	if (show_question("Some shaders failed to compile.\nCheck that your graphics drivers are up-to-date and restart Mine-imator.\n\nOpen support article about updating graphics drivers?"))
+		open_url(link_article_drivers)
 		
 	game_end()
 	return false

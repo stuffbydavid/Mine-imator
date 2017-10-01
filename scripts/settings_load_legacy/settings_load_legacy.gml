@@ -9,7 +9,7 @@ buffer_current = buffer_load_lib(fn)
 load_format = buffer_read_byte()
 log("load_format", load_format)
 
-if (load_format >= e_settings.FORMAT_110)
+if (load_format >= e_settings.FORMAT_110_PRE_1)
 {
 	buffer_delete(buffer_current)
 	return 0
