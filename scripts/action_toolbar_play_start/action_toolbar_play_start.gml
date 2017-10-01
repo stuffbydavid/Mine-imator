@@ -5,7 +5,7 @@ audio_stop_all()
 
 with (obj_timeline)
 {
-	if (type = "audio" && !hide && !app.exportmovie)
+	if (type = "audio" && !hide && app.window_busy != "export_movie")
 	{
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 		{

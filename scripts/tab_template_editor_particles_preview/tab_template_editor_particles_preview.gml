@@ -18,7 +18,7 @@ tip_set(text_get("particleeditortypespriteanimationpreviewtip"), xx, yy, size, s
 
 res = ptype_edit.sprite_tex
 if (!res.ready)
-	res = res_def
+	res = mc_res
 tex = res.particles_texture[ptype_edit.sprite_tex_image]
 swid = texture_width(tex)
 fwid = min(swid, ptype_edit.sprite_frame_width)

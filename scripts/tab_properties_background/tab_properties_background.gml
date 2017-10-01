@@ -152,7 +152,7 @@ if (background_ground_show)
 	wid = text_caption_width("backgroundgroundchange")
 	res = background_ground_tex
 	if (!res.ready)
-		res = res_def
+		res = mc_res
 	
 	// Change ground
 	tab_control(24)

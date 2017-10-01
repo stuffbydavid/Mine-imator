@@ -14,8 +14,8 @@ perc = exportmovie_frame / totalframes
 
 content_width = floor(window_width * 0.8)
 content_height = min(500, floor(window_height * 0.5))
-content_x = floor(window_width / 2-content_width / 2)
-content_y = floor(window_height / 2-content_height / 2)
+content_x = floor(window_width / 2 - content_width / 2)
+content_y = floor(window_height / 2 - content_height / 2)
 
 // Background
 draw_clear(setting_color_interface)
@@ -48,7 +48,9 @@ timeleftstr += text_get(test(timeleftsecs = 1, "exportmovietimeleftsecond", "exp
 draw_label(text_get("exportmovietimeleft", timeleftstr), content_x + content_width / 2, content_y + content_height - 80, fa_center, fa_middle, null, 1, setting_font_big)
 
 // Bar
-draw_loading_bar(content_x, content_y + content_height - 32, content_width, 32, perc, text_get("exportmovieloading", string(floor(perc * 100))))
+var loadtext = text_get("exportmovieloading", string(floor(perc * 100)));
+draw_loading_bar(content_x, content_y + content_height - 32, content_width, 32, perc, loadtext)
+window_set_caption(loadtext + " - Mine-imator")
 
 // Stop
 content_height += 32

@@ -1,10 +1,10 @@
 /// view_area_draw()
 
 // Calculate area
-view_area_x = panel_area_x + panel_left_top.size_real + panel_left_bottom.size_real
-view_area_y = panel_area_y + panel_top.size_real
-view_area_width = panel_area_width - panel_left_top.size_real - panel_left_bottom.size_real - panel_right_top.size_real - panel_right_bottom.size_real
-view_area_height = panel_area_height - panel_top.size_real - panel_bottom.size_real
+view_area_x = panel_area_x + panel_map[?"left_top"].size_real + panel_map[?"left_bottom"].size_real
+view_area_y = panel_area_y + panel_map[?"top"].size_real
+view_area_width = panel_area_width - panel_map[?"left_top"].size_real - panel_map[?"left_bottom"].size_real - panel_map[?"right_top"].size_real - panel_map[?"right_bottom"].size_real
+view_area_height = panel_area_height - panel_map[?"top"].size_real - panel_map[?"bottom"].size_real
 
 // Draw views
 view_draw(view_main)
@@ -39,7 +39,7 @@ if (window_busy = "viewresizever" || window_busy = "viewresizeboth") // Vertical
 
 if (window_busy = "viewresizeboth") // Both
 {
-	if (view_second.location = "righttop" || view_second.location = "leftbottom")
+	if (view_second.location = "right_top" || view_second.location = "left_bottom")
 		mouse_cursor = cr_size_nesw
 	else
 		mouse_cursor = cr_size_nwse
@@ -52,7 +52,7 @@ if (window_busy = "viewresizesplithor")
 	view_split = clamp((mouse_x - view_area_x) / view_area_width, 0.1, 0.9)
 	
 	if (view_second.location = "right")
-		view_split = 1-view_split
+		view_split = 1 - view_split
 		
 	if (!mouse_left)
 		window_busy = ""
@@ -64,7 +64,7 @@ if (window_busy = "viewresizesplitver")
 	view_split = clamp((mouse_y - view_area_y) / view_area_height, 0.1, 0.9)
 	
 	if (view_second.location = "bottom")
-		view_split = 1-view_split
+		view_split = 1 - view_split
 		
 	if (!mouse_left)
 		window_busy = ""

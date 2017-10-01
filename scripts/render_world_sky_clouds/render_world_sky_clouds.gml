@@ -14,7 +14,7 @@ num = (ceil(background_fog_distance / size) + 1) * size
 res = background_sky_clouds_tex
 
 if (!res.ready)
-	res = res_def
+	res = mc_res
 
 shader_blend_color = merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha)
 shader_alpha = 0.8 - min(background_night_alpha, 0.75)

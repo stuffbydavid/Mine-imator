@@ -53,7 +53,7 @@ switch (location)
 		mouseonresizesplit = app_mouse_box(boxx + boxw - 5, boxy, 5, boxh)
 		break
 		
-	case "righttop":
+	case "right_top":
 		boxw = min(view_area_width, view.width)
 		boxh = min(view_area_height, view.height)
 		boxx += view_area_width - boxw
@@ -61,7 +61,7 @@ switch (location)
 		mouseonresizever = app_mouse_box(boxx, boxy + boxh - 5, boxw, 5)
 		break
 		
-	case "rightbottom":
+	case "right_bottom":
 		boxw = min(view_area_width, view.width)
 		boxh = min(view_area_height, view.height)
 		boxx += view_area_width - boxw
@@ -70,7 +70,7 @@ switch (location)
 		mouseonresizever = app_mouse_box(boxx, boxy, boxw, 5)
 		break
 		
-	case "leftbottom":
+	case "left_bottom":
 		boxw = min(view_area_width, view.width)
 		boxh = min(view_area_height, view.height)
 		boxy += view_area_height - boxh
@@ -78,7 +78,7 @@ switch (location)
 		mouseonresizever = app_mouse_box(boxx, boxy, boxw, 5)
 		break
 		
-	case "lefttop":
+	case "left_top":
 		boxw = min(view_area_width, view.width)
 		boxh = min(view_area_height, view.height)
 		mouseonresizehor = app_mouse_box(boxx + boxw - 5, boxy, 5, boxh)
@@ -136,13 +136,13 @@ dy = captiony + 2
 
 if (view = view_main && view_second.show && window_busy != "viewmove")
 {
-	if (view_second.location = "lefttop")
+	if (view_second.location = "left_top")
 		captionx += view_second.width
 		
-	if (view_second.location = "righttop")
+	if (view_second.location = "right_top")
 		dx -= view_second.width
 	
-	if (view_second.location = "lefttop" || view_second.location = "righttop")
+	if (view_second.location = "left_top" || view_second.location = "right_top")
 		captionw -= view_second.width
 }
 
@@ -210,7 +210,7 @@ if (location != "full" && location != "top" && location != "bottom")
 	if (!string_contains(location, "right"))
 		content_width -= 3
 	
-	if (location = "righttop" || location = "lefttop")
+	if (location = "right_top" || location = "left_top")
 		content_height -= 3
 }
 
@@ -327,7 +327,7 @@ if (view = view_second)
 	{
 		if (mouseonresizehor && mouseonresizever) // Both
 		{
-			if (view.location = "righttop" || view.location = "leftbottom")
+			if (view.location = "right_top" || view.location = "left_bottom")
 				mouse_cursor = cr_size_nesw
 			else
 				mouse_cursor = cr_size_nwse
@@ -384,14 +384,20 @@ if (view = view_second)
 			mouselocation = "right"
 			
 		if (mouse_y < view_area_y + view_area_height * 0.3)
-			mouselocation += "top"
+			mouselocation += "_top"
 			
 		else if (mouse_y >= view_area_y + view_area_height * 0.7)
-			mouselocation += "bottom"
+			mouselocation += "_bottom"
 			
+		if (mouselocation = "_top")
+			mouselocation = "top"
+		
+		if (mouselocation = "_bottom")
+			mouselocation = "bottom"
+		
 		switch (mouselocation)
 		{
-			case "lefttop":
+			case "left_top":
 				view_glow_left_top = min(1, view_glow_left_top + 0.1 * delta)
 				break
 				
@@ -399,7 +405,7 @@ if (view = view_second)
 				view_glow_top = min(1, view_glow_top + 0.1 * delta)
 				break
 				
-			case "righttop":
+			case "right_top":
 				view_glow_right_top = min(1, view_glow_right_top + 0.1 * delta)
 				break
 				
@@ -407,7 +413,7 @@ if (view = view_second)
 				view_glow_right = min(1, view_glow_right + 0.1 * delta)
 				break
 				
-			case "rightbottom":
+			case "right_bottom":
 				view_glow_right_bottom = min(1, view_glow_right_bottom + 0.1 * delta)
 				break
 				
@@ -415,7 +421,7 @@ if (view = view_second)
 				view_glow_bottom = min(1, view_glow_bottom + 0.1 * delta)
 				break
 				
-			case "leftbottom":
+			case "left_bottom":
 				view_glow_left_bottom = min(1, view_glow_left_bottom + 0.1 * delta)
 				break
 				

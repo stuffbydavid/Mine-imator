@@ -1,6 +1,5 @@
 /// app_startup_exportmovie()
 
-exportmovie = false
 exportmovie_filename = ""
 exportmovie_format = ""
 exportmovie_marker_previous = 0

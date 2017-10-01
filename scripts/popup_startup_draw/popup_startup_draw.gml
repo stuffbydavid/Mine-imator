@@ -15,6 +15,7 @@ draw_label(text_get("startupversion", text_get(test(trial_version, "startuptrial
 dy += string_height(" ")
 
 // David
+var creditsx = dx;
 credittext = text_get("startupcredits1")
 creditname = "David Norgren"
 draw_label(credittext, dx, dy)
@@ -31,6 +32,10 @@ dx += string_width(credittext)
 if (draw_link("startupcredits2", creditname, dx, dy) && mouse_left_pressed)
 	open_url(link_minecraft)
 dx += string_width(creditname)
+
+dx = creditsx
+dy += string_height(" ")
+draw_label(text_get("startupcredits3", "David and Nimi", "Voxy"), dx, dy)
 
 // Buttons
 dx = content_x

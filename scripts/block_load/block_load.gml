@@ -17,7 +17,7 @@ with (new(obj_block))
 		return null
 	}
 	
-	if (dev_mode_check_names && !text_exists("block" + name))
+	if (dev_mode_debug_names && !text_exists("block" + name))
 		log("block/" + name + dev_mode_name_translation_message)
 	
 	// Type (overridden by states)
@@ -47,7 +47,7 @@ with (new(obj_block))
 		
 		while (!is_undefined(curstate))
 		{
-			if (dev_mode_check_names && !text_exists("blockstate" + curstate))
+			if (dev_mode_debug_names && !text_exists("blockstate" + curstate))
 				log("block/state/" + curstate + dev_mode_name_translation_message)
 				
 			with (new(obj_block_state))
@@ -83,7 +83,7 @@ with (new(obj_block))
 							value_brightness[v] = curvalue[?"brightness"]
 					}
 					
-					if (dev_mode_check_names && string_length(value_name[v]) > 3 && !text_exists("blockstatevalue" + value_name[v]))
+					if (dev_mode_debug_names && string_length(value_name[v]) > 3 && !text_exists("blockstatevalue" + value_name[v]))
 						log("block/state/value/" + value_name[v] + dev_mode_name_translation_message)
 				}
 				

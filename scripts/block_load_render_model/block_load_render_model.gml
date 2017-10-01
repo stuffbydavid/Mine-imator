@@ -259,14 +259,14 @@ with (new(obj_block_render_model))
 							continue
 						}
 						
-						relem.face_depth[f] = res_def.block_sheet_ani_depth_list[|slot]
+						relem.face_depth[f] = mc_res.block_sheet_ani_depth_list[|slot]
 						relem.face_vbuffer[f] = e_block_vbuffer.ANIMATED
 						sheetwidth = block_sheet_ani_width
 						sheetheight = block_sheet_ani_height
 					}
 					else
 					{
-						relem.face_depth[f] = res_def.block_sheet_depth_list[|slot]
+						relem.face_depth[f] = mc_res.block_sheet_depth_list[|slot]
 						relem.face_vbuffer[f] = e_block_vbuffer.NORMAL
 						sheetwidth = block_sheet_width
 						sheetheight = block_sheet_height

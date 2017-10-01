@@ -29,32 +29,18 @@ if (!shader_startup())
 
 app_startup_globals()
 app_startup_lists()
+app_startup_window()
+
+settings_startup()
+project_legacy_startup()
+render_startup()
 
 if (!minecraft_assets_startup())
+{
+	error("loadassets")
 	return false
-	
-app_startup_window()
-app_startup_history()
-app_startup_timeline()
-app_startup_exportmovie()
-app_startup_interface_menus()
-app_startup_interface_popups()
-app_startup_interface_panels()
-app_startup_interface_tabs()
-app_startup_interface_tips()
-app_startup_interface_toolbar()
-app_startup_interface_views()
+}
 
-project_legacy_startup()
-textbox_startup()
-trial_startup()
-alert_startup()
-settings_startup()
-render_startup()
-background_ground_startup()
-background_sky_startup()
-
-log("Startup OK")
 startup_error = false
 
 return true

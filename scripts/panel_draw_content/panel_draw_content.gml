@@ -24,7 +24,7 @@ else
 	// Minimum height
 	if (dh < minh)
 	{
-		if (tab.panel != panel_bottom)
+		if (tab.panel != panel_map[?"bottom"])
 			dy -= minh - dh
 		dh = minh
 	}

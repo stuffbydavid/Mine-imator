@@ -30,7 +30,7 @@ with (new(obj_model_part))
 		return null
 	}
 	
-	if (dev_mode_check_names && !text_exists("modelpart" + name))
+	if (dev_mode_debug_names && !text_exists("modelpart" + name))
 		log("model/part/" + name + dev_mode_name_translation_message)
 	
 	// Description (optional)

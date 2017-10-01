@@ -50,6 +50,8 @@ with (new(obj_block_tl))
 	if (has_text)
 	{
 		text = state_vars_get_value(mc_builder.vars, "text")
+		if (text = null)
+			text = ""
 		text_position = block.tl_text_position
 	}
 	

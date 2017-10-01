@@ -58,10 +58,10 @@ with (bench_settings)
 	temp_update_model_part()
 	block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 	temp_particles_init()
-	skin = res_def
-	item_tex = res_def
-	block_tex = res_def
-	text_font = res_def
+	skin = mc_res
+	item_tex = mc_res
+	block_tex = mc_res
+	text_font = mc_res
 	particle_preset = ""
 	
 	// Preview window

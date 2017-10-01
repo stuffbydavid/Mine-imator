@@ -9,13 +9,13 @@ size = argument1
 res = argument2
 
 if (!res.ready)
-	res = res_def
+	res = mc_res
 
 tex = res.block_sheet_texture
 if (is_array(res.block_sheet_ani_texture))
 	texani = res.block_sheet_ani_texture[block_texture_get_frame()]
 else
-	texani = res_def.block_sheet_ani_texture[block_texture_get_frame()]
+	texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
 
 blend = shader_blend_color
 shader_texture = tex

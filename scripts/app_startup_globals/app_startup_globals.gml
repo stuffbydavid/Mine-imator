@@ -3,7 +3,7 @@
 log("Globals startup")
 
 // Program
-globalvar trial_version, current_step, minute_steps, delta,
+globalvar current_step, minute_steps, delta,
 		  buffer_current, vbuffer_current, load_format, load_folder, save_folder, 
 		  debug_indent, debug_timer, history_data;
 current_step = 0
@@ -11,7 +11,7 @@ minute_steps = 60 * 60
 delta = 1
 json_startup()
 
-// Assets
+// Project
 globalvar load_queue, temp_edit, ptype_edit, tl_edit_amount, tl_edit, res_edit, axis_edit,
 		  temp_creator, res_creator, save_id_seed, save_id_map, shape_texture;
 load_queue = ds_priority_create()

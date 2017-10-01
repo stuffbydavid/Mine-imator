@@ -1,6 +1,12 @@
 /// window_draw()
 
-if (exportmovie)
+if (window_busy = "load_assets")
+{
+	window_draw_load_assets()
+	return 0
+}
+
+if (window_busy = "export_movie")
 {
 	window_draw_exportmovie()
 	return 0

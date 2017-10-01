@@ -66,8 +66,8 @@ switch (type)
 		else
 			block_sheet_texture = texture_create(fn)
 		
-		colormap_grass_texture = texture_duplicate(res_def.colormap_grass_texture)
-		colormap_foliage_texture = texture_duplicate(res_def.colormap_foliage_texture)
+		colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
+		colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
 			
 		res_update_colors()
 		res_update_block_preview()

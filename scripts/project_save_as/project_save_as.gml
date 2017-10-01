@@ -36,7 +36,7 @@ project_file = project_folder + "\\" + filename_get_valid(project_name) + ".mipr
 save_folder = project_folder
 
 with (obj_resource)
-	if (id != res_def)
+	if (id != mc_res)
 		res_save()
 
 popup_close()

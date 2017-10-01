@@ -30,8 +30,8 @@ else
 		type = "scenery"
 		scenery = res
 		scenery.count++
-		block_tex = res_def
-		res_def.count++
+		block_tex = mc_res
+		mc_res.count++
 		temp_update_display_name()
 		with (temp_animate())
 			loaded = true

@@ -15,6 +15,7 @@
 		"credits1tip": "Click to visit David's site.",
 		"credits2": ", based on the game ",
 		"credits2tip": "Click to visit the Minecraft site.",
+		"credits3": "Code by %1, design by %2",
 		"newproject": "New project",
 		"newprojecttip": "Create a new project.",
 		"openproject": "Open project",
@@ -61,6 +62,8 @@
 		"closetip": "Close this message."
 	},
 	"error/": {
+		"loadassets": "The Minecraft assets could not be loaded. Re-install the program to fix it. See the log for details.",
+		"loadassetscaption": "Load assets error",
 		"newprojectexists": "The chosen folder already exists. Change it to something else.",
 		"newprojectexistscaption": "New project error",
 		"newprojectinvalid": "Please enter an unique valid folder name.",
@@ -151,6 +154,12 @@
 			"resourcecaption": "Save resource",
 			"projectcaption": "Save project folder"
 		}
+	},
+	"loadassets/": {
+		"unzip": "Extracting resources...",
+		"textures": "Loading textures...",
+		"models": "Loading characters...",
+		"blocks": "Loading blocks..."
 	},
 	"newproject/": {
 		"caption": "New project",
@@ -1901,7 +1910,7 @@
 	},
 	"loadpack/": {
 		"caption": "Importing %1",
-		"unzip": "Unzipping...",
+		"unzip": "Extracting resources...",
 		"modeltextures": "Loading model textures...",
 		"blocktextures": "Loading block textures...",
 		"itemtextures": "Loading item textures..."

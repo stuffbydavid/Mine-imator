@@ -13,7 +13,7 @@ if (panel.size_real < 1 && panel.glow = 0)
 	return 0
 
 // Calculate box
-if (panel = panel_left_top)
+if (panel = panel_map[?"left_top"])
 {
 	boxx = panel_area_x
 	boxy = panel_area_y
@@ -23,7 +23,7 @@ if (panel = panel_left_top)
 	if (panel.glow > 0)
 		draw_gradient(boxx, boxy, 100, boxh, c_yellow, panel.glow, 0, 0, panel.glow)
 }
-else if (panel = panel_right_top)
+else if (panel = panel_map[?"right_top"])
 {
 	boxx = panel_area_x + panel_area_width - panel.size_real
 	boxy = panel_area_y
@@ -33,42 +33,42 @@ else if (panel = panel_right_top)
 	if (panel.glow > 0)
 		draw_gradient(boxx + boxw - 100, boxy, 100, boxh, c_yellow, 0, panel.glow, panel.glow, 0)
 }
-else if (panel = panel_bottom)
+else if (panel = panel_map[?"bottom"])
 {
-	boxx = panel_area_x + panel_left_top.size_real
+	boxx = panel_area_x + panel_map[?"left_top"].size_real
 	boxy = panel_area_y + panel_area_height - panel.size_real
-	boxw = panel_area_width - panel_left_top.size_real - panel_right_top.size_real
+	boxw = panel_area_width - panel_map[?"left_top"].size_real - panel_map[?"right_top"].size_real
 	boxh = panel.size_real
 	content_direction = e_scroll.HORIZONTAL
 	if (panel.glow > 0)
 		draw_gradient(boxx, boxy + boxh - 100, boxw, 100, c_yellow, 0, 0, panel.glow, panel.glow)
 }
-else if (panel = panel_top)
+else if (panel = panel_map[?"top"])
 {
-	boxx = panel_area_x + panel_left_top.size_real
+	boxx = panel_area_x + panel_map[?"left_top"].size_real
 	boxy = panel_area_y
-	boxw = panel_area_width - panel_left_top.size_real - panel_right_top.size_real
+	boxw = panel_area_width - panel_map[?"left_top"].size_real - panel_map[?"right_top"].size_real
 	boxh = panel.size_real
 	content_direction = e_scroll.HORIZONTAL
 	if (panel.glow > 0)
 		draw_gradient(boxx, boxy, boxw, 100, c_yellow, panel.glow, panel.glow, 0, 0)
 }
-else if (panel = panel_left_bottom)
+else if (panel = panel_map[?"left_bottom"])
 {
-	boxx = panel_area_x + panel_left_top.size_real
-	boxy = panel_area_y + panel_top.size_real
+	boxx = panel_area_x + panel_map[?"left_top"].size_real
+	boxy = panel_area_y + panel_map[?"top"].size_real
 	boxw = panel.size_real
-	boxh = panel_area_height - panel_top.size_real - panel_bottom.size_real
+	boxh = panel_area_height - panel_map[?"top"].size_real - panel_map[?"bottom"].size_real
 	content_direction = e_scroll.VERTICAL
 	if (panel.glow > 0)
 		draw_gradient(boxx, boxy, 100, boxh, c_yellow, panel.glow, 0, 0, panel.glow)
 }
-else if (panel = panel_right_bottom)
+else if (panel = panel_map[?"right_bottom"])
 {
-	boxx = panel_area_x + panel_area_width - panel_right_top.size_real - panel.size_real
-	boxy = panel_area_y + panel_top.size_real
+	boxx = panel_area_x + panel_area_width - panel_map[?"right_top"].size_real - panel.size_real
+	boxy = panel_area_y + panel_map[?"top"].size_real
 	boxw = panel.size_real
-	boxh = panel_area_height - panel_top.size_real - panel_bottom.size_real
+	boxh = panel_area_height - panel_map[?"top"].size_real - panel_map[?"bottom"].size_real
 	content_direction = e_scroll.VERTICAL
 	if (panel.glow > 0)
 		draw_gradient(boxx + boxw - 100, boxy, 100, boxh, c_yellow, 0, panel.glow, panel.glow, 0)
@@ -237,7 +237,7 @@ if (content_tab.glow > 0)
 
 // Border
 resizemouseon = false
-if (panel = panel_left_top || panel = panel_left_bottom)
+if (panel = panel_map[?"left_top"] || panel = panel_map[?"left_bottom"])
 {
 	draw_gradient(boxx + boxw, boxy, shadow_size, boxh, c_black, shadow_alpha, 0, 0, shadow_alpha)
 	if (app_mouse_box(boxx + boxw - 5, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon)
@@ -246,7 +246,7 @@ if (panel = panel_left_top || panel = panel_left_bottom)
 		resizemouseon = true
 	}
 }
-else if (panel = panel_right_top || panel = panel_right_bottom)
+else if (panel = panel_map[?"right_top"] || panel = panel_map[?"right_bottom"])
 {
 	draw_gradient(boxx - shadow_size, boxy, shadow_size, boxh, c_black, 0, shadow_alpha, shadow_alpha, 0)
 	if (app_mouse_box(boxx, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon)
@@ -255,7 +255,7 @@ else if (panel = panel_right_top || panel = panel_right_bottom)
 		resizemouseon = true
 	}
 }
-else if (panel = panel_bottom)
+else if (panel = panel_map[?"bottom"])
 {
 	draw_gradient(boxx, boxy - shadow_size, boxw, shadow_size, c_black, 0, 0, shadow_alpha, shadow_alpha)
 	if (app_mouse_box(boxx, boxy, boxw, 5) && tablistmouseon = null && !popup_mouseon)
@@ -264,7 +264,7 @@ else if (panel = panel_bottom)
 		resizemouseon = true
 	}
 }
-else if (panel = panel_top)
+else if (panel = panel_map[?"top"])
 {
 	draw_gradient(boxx, boxy + boxh, boxw, shadow_size, c_black, shadow_alpha, shadow_alpha, 0, 0)
 	if (app_mouse_box(boxx, boxy + boxh - 5, boxw, 5) && tablistmouseon = null && !popup_mouseon)

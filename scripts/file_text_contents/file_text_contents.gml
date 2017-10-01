@@ -2,9 +2,10 @@
 /// @arg filename
 /// @desc Returns the contents of a text file.
 
-var fname, str;
+var fname, str, line;
 fname = argument0
 str = ""
+line = 0
 
 if (file_exists_lib(fname))
 {
@@ -15,7 +16,9 @@ if (file_exists_lib(fname))
 	{
 		while (!file_text_eof(f))
 		{
-			str += file_text_read_string(f) + "\n"
+			if (line++ > 0)
+				str += "\n"
+			str += file_text_read_string(f)
 			file_text_readln(f)
 		}
 		file_text_close(f)

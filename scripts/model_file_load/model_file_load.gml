@@ -52,7 +52,7 @@ with (new(obj_model_file))
 		return null
 	}
 	
-	if (dev_mode_check_names && !text_exists("model" + name))
+	if (dev_mode_debug_names && !text_exists("model" + name))
 		log("model/" + name + dev_mode_name_translation_message)
 		
 	// Description (optional)

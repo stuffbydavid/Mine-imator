@@ -98,20 +98,20 @@ with (obj_template)
 {
 	if (skin = other.id)
 	{
-		skin = res_def
+		skin = mc_res
 		skin.count++
 	}
 	
 	if (item_tex = other.id)
 	{
-		item_tex = res_def
+		item_tex = mc_res
 		item_tex.count++
 		temp_update_item()
 	}
 	
 	if (block_tex = other.id)
 	{
-		block_tex = res_def
+		block_tex = mc_res
 		block_tex.count++
 	}
 	
@@ -123,7 +123,7 @@ with (obj_template)
 	
 	if (text_font = other.id)
 	{
-		text_font = res_def
+		text_font = mc_res
 		text_font.count++
 	}
 }
@@ -131,22 +131,22 @@ with (obj_template)
 with (app.bench_settings)
 {
 	if (skin = other.id)
-		skin = res_def
+		skin = mc_res
 	
 	if (item_tex = other.id)
 	{
-		item_tex = res_def
+		item_tex = mc_res
 		temp_update_item()
 	}
 	
 	if (block_tex = other.id)
-		block_tex = res_def
+		block_tex = mc_res
 	
 	if (shape_tex = other.id)
 		shape_tex = null
 	
 	if (text_font = other.id)
-		text_font = res_def
+		text_font = mc_res
 	
 	if (scenery = other.id)
 		scenery = null
@@ -156,7 +156,7 @@ with (obj_particle_type)
 {
 	if (sprite_tex = other.id)
 	{
-		sprite_tex = res_def
+		sprite_tex = mc_res
 		sprite_tex.count++
 	}
 }
@@ -201,25 +201,25 @@ with (app)
 	
 	if (background_sky_sun_tex = other.id)
 	{
-		background_sky_sun_tex = res_def
+		background_sky_sun_tex = mc_res
 		background_sky_sun_tex.count++
 	}
 	
 	if (background_sky_moon_tex = other.id)
 	{
-		background_sky_moon_tex = res_def
+		background_sky_moon_tex = mc_res
 		background_sky_moon_tex.count++
 	}
 	
 	if (background_sky_clouds_tex = other.id)
 	{
-		background_sky_clouds_tex = res_def
+		background_sky_clouds_tex = mc_res
 		background_sky_clouds_tex.count++
 	}
 	
 	if (background_ground_tex = other.id)
 	{
-		background_ground_tex = res_def
+		background_ground_tex = mc_res
 		background_ground_tex.count++
 		background_ground_update_texture()
 	}

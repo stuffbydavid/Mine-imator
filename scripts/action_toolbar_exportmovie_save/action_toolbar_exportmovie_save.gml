@@ -114,7 +114,7 @@ else
 render_hidden = popup_exportmovie.include_hidden
 render_watermark = setting_render_watermark
 
-exportmovie = true
+window_busy = "export_movie"
 exportmovie_frame = 0
 exportmovie_start = current_time
 

@@ -107,7 +107,7 @@ switch (temp_edit.type)
 	{
 		var res = temp_edit.item_tex;
 		if (!res.ready)
-			res = res_def
+			res = mc_res
 		
 		if (res.item_sheet_texture = null)
 		{

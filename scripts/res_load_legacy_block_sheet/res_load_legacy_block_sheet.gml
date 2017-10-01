@@ -30,7 +30,7 @@ draw_clear_alpha(c_black, 0)
 
 // Draw default sheet
 gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
-draw_texture(res_def.block_sheet_texture, 0, 0, blocksize / 16, blocksize / 16)
+draw_texture(mc_res.block_sheet_texture, 0, 0, blocksize / 16, blocksize / 16)
 
 for (var i = 0; i < ds_list_size(list); i++)
 {

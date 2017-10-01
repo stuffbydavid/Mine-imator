@@ -120,14 +120,14 @@ with (popup_importitemsheet)
 popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 500, 380, true)
 with (popup_exportmovie)
 {
-	format = "mp4"
-	frame_rate = 30
-	bit_rate = 2500000
+	format = app.setting_export_movie_format
+	frame_rate = app.setting_export_movie_frame_rate
+	bit_rate = app.setting_export_movie_bit_rate
 	video_quality = find_videoquality(bit_rate)
-	include_audio = true
-	remove_background = false
-	include_hidden = false
-	high_quality = true
+	include_audio = app.setting_export_movie_include_audio
+	remove_background = app.setting_export_movie_remove_background
+	include_hidden = app.setting_export_movie_include_hidden
+	high_quality = app.setting_export_movie_high_quality
 	tbx_video_size_custom_width = new_textbox_integer()
 	tbx_video_size_custom_height = new_textbox_integer()
 	tbx_bit_rate = new_textbox_integer()
@@ -137,9 +137,9 @@ with (popup_exportmovie)
 popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 500, 290, true)
 with (popup_exportimage)
 {
-	remove_background = false
-	include_hidden = false
-	high_quality = true
+	remove_background = app.setting_export_image_remove_background
+	include_hidden = app.setting_export_image_include_hidden
+	high_quality = app.setting_export_image_high_quality
 	tbx_video_size_custom_width = new_textbox_integer()
 	tbx_video_size_custom_height = new_textbox_integer()
 }

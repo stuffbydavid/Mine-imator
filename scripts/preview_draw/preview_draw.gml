@@ -234,7 +234,7 @@ with (preview)
 						
 						var res = select.skin;
 						if (!res.ready)
-							res = res_def
+							res = mc_res
 						
 						render_world_model_file_parts(select.model_file, select.model_texture_name_map, res)
 						break
@@ -247,7 +247,7 @@ with (preview)
 						
 					case "schematic":
 						if (scenery != null)
-							render_world_block(scenery.block_vbuffer, scenery.scenery_size, res_def)
+							render_world_block(scenery.block_vbuffer, scenery.scenery_size, mc_res)
 						break
 					
 					case "item":
@@ -265,7 +265,7 @@ with (preview)
 						
 						var res = select.skin;
 						if (!res.ready)
-							res = res_def
+							res = mc_res
 						
 						matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
 						render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null)

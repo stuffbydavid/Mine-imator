@@ -210,57 +210,45 @@ if (load_format >= e_settings.FORMAT_100)
 	if (trial_version)
 		setting_render_watermark = true
 	
-	toolbar_location = buffer_read_string_int()
-	toolbar_size = buffer_read_double()
+	setting_toolbar_location = buffer_read_string_int()
+	setting_toolbar_size = buffer_read_double()
 	
-	panel_left_bottom.size = buffer_read_double()
-	panel_right_bottom.size = buffer_read_double()
-	panel_bottom.size = buffer_read_double()
-	panel_top.size = buffer_read_double()
-	panel_left_top.size = buffer_read_double()
-	panel_right_top.size = buffer_read_double()
+	setting_panel_left_bottom_size = buffer_read_double()
+	setting_panel_right_bottom_size = buffer_read_double()
+	setting_panel_bottom_bottom_size = buffer_read_double()
+	setting_panel_top_size = buffer_read_double()
+	setting_panel_left_top_size = buffer_read_double()
+	setting_panel_right_top_size = buffer_read_double()
 	
-	var propertiespanel = buffer_read_byte();
-	var groundeditorpanel = buffer_read_byte();
-	var templateeditorpanel = buffer_read_byte();
-	var timelinepanel = buffer_read_byte();
-	var timelineeditorpanel = buffer_read_byte();
-	var frameeditorpanel = buffer_read_byte();
-	var settingspanel = buffer_read_byte();
+	var locarr = array("left_bottom", "right_bottom", "bottom", "top", "left_top", "right_top");
+	setting_properties_location = locarr[buffer_read_byte()]
+	setting_ground_editor_location = locarr[buffer_read_byte()]
+	setting_template_editor_location = locarr[buffer_read_byte()]
+	setting_timeline_location = locarr[buffer_read_byte()]
+	setting_timeline_editor_location = locarr[buffer_read_byte()]
+	setting_frame_editor_location = locarr[buffer_read_byte()]
+	setting_settings_location = locarr[buffer_read_byte()]
 	
-	panel_tab_list_remove(panel_right_top, properties)
-	panel_tab_list_add(panel_list[|propertiespanel], 0, properties)
+	setting_view_split = buffer_read_double()
 	
-	ground_editor.panel = panel_list[|groundeditorpanel]
-	template_editor.panel = panel_list[|templateeditorpanel]
+	setting_view_main_controls = buffer_read_byte()
+	setting_view_main_lights = buffer_read_byte()
+	setting_view_main_particles = buffer_read_byte()
+	setting_view_main_grid = buffer_read_byte()
+	setting_view_main_aspect_ratio = buffer_read_byte()
+	setting_view_main_location = buffer_read_string_int()
 	
-	panel_tab_list_remove(panel_bottom, timeline)
-	panel_tab_list_add(panel_list[|timelinepanel], 0, timeline)
+	setting_view_second_show = buffer_read_byte()
+	setting_view_second_controls = buffer_read_byte()
+	setting_view_second_lights = buffer_read_byte()
+	setting_view_second_particles = buffer_read_byte()
+	setting_view_second_grid = buffer_read_byte()
+	setting_view_second_aspect_ratio = buffer_read_byte()
+	setting_view_second_location = buffer_read_string_int()
+	setting_view_second_width = buffer_read_double()
+	setting_view_second_height = buffer_read_double()
 	
-	timeline_editor.panel = panel_list[|timelineeditorpanel]
-	frame_editor.panel = panel_list[|frameeditorpanel]
-	settings.panel = panel_list[|settingspanel]
-	
-	view_split = buffer_read_double()
-	
-	view_main.controls = buffer_read_byte()
-	view_main.lights = buffer_read_byte()
-	view_main.particles = buffer_read_byte()
-	view_main.grid = buffer_read_byte()
-	view_main.aspect_ratio = buffer_read_byte()
-	view_main.location = buffer_read_string_int()
-	
-	view_second.show = buffer_read_byte()
-	view_second.controls = buffer_read_byte()
-	view_second.lights = buffer_read_byte()
-	view_second.particles = buffer_read_byte()
-	view_second.grid = buffer_read_byte()
-	view_second.aspect_ratio = buffer_read_byte()
-	view_second.location = buffer_read_string_int()
-	view_second.width = buffer_read_double()
-	view_second.height = buffer_read_double()
-	
-	frame_editor.color.advanced = buffer_read_byte()
+	setting_frame_editor_color_advanced = buffer_read_byte()
 }
 else
 {
@@ -272,17 +260,16 @@ else
 
 if (load_format >= e_settings.FORMAT_106)
 {
-	popup_exportmovie.format = buffer_read_string_int()
-	popup_exportmovie.frame_rate = buffer_read_byte()
-	popup_exportmovie.bit_rate = buffer_read_int()
-	popup_exportmovie.video_quality = find_videoquality(popup_exportmovie.bit_rate)
-	popup_exportmovie.include_audio = buffer_read_byte()
-	popup_exportmovie.remove_background = buffer_read_byte()
-	popup_exportmovie.include_hidden = buffer_read_byte()
-	popup_exportmovie.high_quality = buffer_read_byte()
-	popup_exportimage.remove_background = buffer_read_byte()
-	popup_exportimage.include_hidden = buffer_read_byte()
-	popup_exportimage.high_quality = buffer_read_byte()
+	setting_export_movie_format = buffer_read_string_int()
+	setting_export_movie_frame_rate = buffer_read_byte()
+	setting_export_movie_bit_rate = buffer_read_int()
+	setting_export_movie_include_audio = buffer_read_byte()
+	setting_export_movie_remove_background = buffer_read_byte()
+	setting_export_movie_include_hidden = buffer_read_byte()
+	setting_export_movie_high_quality = buffer_read_byte()
+	setting_export_image_remove_background = buffer_read_byte()
+	setting_export_image_include_hidden = buffer_read_byte()
+	setting_export_image_high_quality = buffer_read_byte()
 }
 if (load_format >= e_settings.FORMAT_CB_102)
 {

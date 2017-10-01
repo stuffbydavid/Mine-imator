@@ -10,7 +10,7 @@ col = mc_assets.block_texture_color_map[?texname]
 if (!is_undefined(col))
 {
 	if (!res.ready)
-		res = res_def
+		res = mc_res
 	
 	if (is_real(col))
 		return col

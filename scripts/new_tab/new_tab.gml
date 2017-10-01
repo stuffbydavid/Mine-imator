@@ -1,11 +1,11 @@
-/// new_tab(panel, show)
-/// @arg panel
+/// new_tab(location, show)
+/// @arg location
 /// @arg show
 /// @desc Creates a new tab and sets its parameters.
 
 var tab = new(obj_tab);
 
-tab.panel = argument0
+tab.panel = panel_map[?argument0]
 tab.show = argument1
 tab.closeable = !tab.show
 tab.scroll = new(obj_scrollbar)

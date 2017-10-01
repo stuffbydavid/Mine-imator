@@ -111,7 +111,7 @@ switch (temp_edit.type)
 		wid = text_max_width("libraryitemchange") + 20
 		res = temp_edit.item_tex
 		if (!res.ready)
-			res = res_def
+			res = mc_res
 		
 		// Item image
 		tab_control(24)

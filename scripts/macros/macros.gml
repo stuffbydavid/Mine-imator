@@ -2,13 +2,13 @@
 
 // Debug
 #macro dev_mode						true
+#macro dev_mode_unzip_assets		false
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_unzip_assets		true
-#macro dev_mode_check_names			false
+#macro dev_mode_debug_names			false
 
 // Versions
 #macro mineimator_version			"1.1.0 PRE-RELEASE"
-#macro mineimator_version_extra		""
+#macro mineimator_version_extra		"private build"
 #macro mineimator_version_date		"2017.10.03"
 #macro gm_runtime					"2.1.0.144"
 #macro minecraft_version			"1.12"
@@ -60,7 +60,7 @@
 #macro link_news				"http://www.mineimator.com/news.php?version=" + mineimator_version
 #macro link_forums				"http://www.mineimatorforums.com"
 #macro link_forums_bugs			"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
-#macro link_minecraft			"http://www.minecraft.com"
+#macro link_minecraft			"http://www.minecraft.net"
 #macro link_david				"http://www.stuffbydavid.com"
 
 // Textures

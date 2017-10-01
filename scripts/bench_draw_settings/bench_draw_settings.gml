@@ -146,7 +146,7 @@ else
 			capwid = text_caption_width("typeitem", "benchitemtex")
 			res = bench_settings.item_tex
 			if (!res.ready)
-				res = res_def
+				res = mc_res
 			
 			// Preview
 			draw_label(text_get("typeitem") + ":", dx, dy + 8, fa_left, fa_middle)

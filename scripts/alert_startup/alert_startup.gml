@@ -8,5 +8,3 @@ alert_alpha = 1
 
 alert_list = ds_list_create()
 alert_news_http = http_get(link_news)
-
-closed_alert_list = ds_list_create()

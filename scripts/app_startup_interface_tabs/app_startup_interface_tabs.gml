@@ -13,7 +13,7 @@ tab_move_mouseon_panel = null
 tab_move_mouseon_position = 0
 
 // Project properties
-properties = new_tab(panel_right_top, true)
+properties = new_tab(setting_properties_location, true)
 with (properties)
 {
 	// Project
@@ -84,7 +84,7 @@ with (properties)
 		sortlist_column_add(list, "resname", 0)
 		sortlist_column_add(list, "restype", 0.45)
 		sortlist_column_add(list, "rescount", 0.75)
-		sortlist_add(list, res_def)
+		sortlist_add(list, mc_res)
 		
 		tbx_item_sheet_width = new_textbox_integer()
 		tbx_item_sheet_height = new_textbox_integer()
@@ -97,13 +97,13 @@ res_preview = properties.resources.preview
 res_list = properties.resources.list
 
 // Ground editor
-ground_editor = new_tab(panel_right_bottom, false)
+ground_editor = new_tab(setting_ground_editor_location, false)
 ground_editor.script = tab_ground_editor
 with (ground_editor)
 	ground_scroll = new(obj_scrollbar)
 
 // Template editor
-template_editor = new_tab(panel_right_bottom, false)
+template_editor = new_tab(setting_template_editor_location, false)
 template_editor.script = tab_template_editor
 
 with (template_editor)
@@ -258,7 +258,7 @@ with (template_editor)
 ptype_list = template_editor.type_list
 
 // Timeline
-timeline = new_tab(panel_bottom, true)
+timeline = new_tab(setting_timeline_location, true)
 timeline.script = tab_timeline
 with (timeline)
 {
@@ -268,7 +268,7 @@ with (timeline)
 }
 
 // Timeline editor
-timeline_editor = new_tab(panel_right_top, false)
+timeline_editor = new_tab(setting_timeline_editor_location, false)
 with (timeline_editor)
 {
 	// Information
@@ -301,7 +301,7 @@ with (timeline_editor)
 }
 
 // Frame editor
-frame_editor = new_tab(panel_right_bottom, false)
+frame_editor = new_tab(setting_frame_editor_location, false)
 with (frame_editor)
 {
 	// Position
@@ -371,7 +371,7 @@ with (frame_editor)
 	color = tab_add_category("frameeditorcolor", tab_frame_editor_color, false)
 	with (color)
 	{
-		advanced = false
+		advanced = app.setting_frame_editor_color_advanced
 		copy_alpha = 1
 		copy_rgb_add = c_black
 		copy_rgb_sub = c_black
@@ -468,7 +468,7 @@ with (frame_editor)
 }
 
 // Settings
-settings = new_tab(panel_right_bottom, false)
+settings = new_tab(setting_settings_location, false)
 with (settings)
 {
 	// Program

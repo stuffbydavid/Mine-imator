@@ -56,7 +56,7 @@ if (temp)
 			
 			var res = temp.skin;
 			if (!res.ready)
-				res = res_def
+				res = mc_res
 				
 			render_world_model_file_parts(temp.model_file, temp.model_texture_name_map, res)
 			break
@@ -82,7 +82,7 @@ if (temp)
 				
 			var res = temp.skin;
 			if (!res.ready)
-				res = res_def
+				res = mc_res
 							
 			render_world_model_part(temp.model_part, temp.model_texture_name_map, res, 0, null)
 			break
@@ -103,7 +103,7 @@ else // Sprite
 {
 	var res = type.sprite_tex;
 	if (!res.ready)
-		res = res_def
+		res = mc_res
 	
 	shader_texture = res.particles_texture[type.sprite_tex_image]
 	shader_use()

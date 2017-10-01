@@ -3,7 +3,7 @@
 /// @desc Updates surface of all required cameras.
 
 // Only main view is visible and not real time rendering, no need to update
-if (!view_second.show && view_render && !view_render_real_time && !exportmovie)
+if (!view_second.show && view_render && !view_render_real_time && window_busy != "export_movie")
 	return 0
 
 with (obj_timeline)

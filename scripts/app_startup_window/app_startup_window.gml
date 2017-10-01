@@ -4,10 +4,10 @@ log("Windows startup")
 
 window_width = 1
 window_height = 1
-window_maximize()
 window_set_focus()
 window_set_min_width(100)
 window_set_min_height(100)
+window_set_caption("Mine-imator")
 
 window_busy = ""
 window_focus = ""

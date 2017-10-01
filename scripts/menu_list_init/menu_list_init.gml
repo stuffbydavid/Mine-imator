@@ -50,15 +50,15 @@ switch (menu_name)
 		
 		// Default
 		var tex;
-		with (res_def)
+		with (mc_res)
 			tex = res_get_model_texture(model_part_texture_name(texnamemap, modelfile))
-		menu_add_item(res_def, res_def.display_name, tex)
+		menu_add_item(mc_res, mc_res.display_name, tex)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res = res_def)
+			if (res = mc_res)
 				continue
 				
 			with (res)
@@ -103,13 +103,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.block_preview_texture)
+		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && res.block_sheet_texture != null)
+			if (res != mc_res && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		
@@ -124,13 +124,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.block_preview_texture)
+		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res = res_def)
+			if (res = mc_res)
 				continue
 				
 			if (res.type = "texture")
@@ -174,13 +174,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name)
+		menu_add_item(mc_res, mc_res.display_name)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && font_exists(res.font))
+			if (res != mc_res && font_exists(res.font))
 				menu_add_item(res, res.display_name)
 		}
 		
@@ -247,13 +247,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.particles_texture[img])
+		menu_add_item(mc_res, mc_res.display_name, mc_res.particles_texture[img])
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && res.particles_texture[0])
+			if (res != mc_res && res.particles_texture[0])
 				menu_add_item(res, res.display_name, res.particles_texture[img])
 		}
 		
@@ -297,13 +297,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.sun_texture)
+		menu_add_item(mc_res, mc_res.display_name, mc_res.sun_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res = res_def)
+			if (res = mc_res)
 				continue
 			if (res.sun_texture)
 				menu_add_item(res, res.display_name, res.sun_texture)
@@ -321,13 +321,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.moon_texture[background_sky_moon_phase])
+		menu_add_item(mc_res, mc_res.display_name, mc_res.moon_texture[background_sky_moon_phase])
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res = res_def)
+			if (res = mc_res)
 				continue
 			if (res.moon_texture[0])
 				menu_add_item(res, res.display_name, res.moon_texture[background_sky_moon_phase])
@@ -354,13 +354,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.clouds_texture)
+		menu_add_item(mc_res, mc_res.display_name, mc_res.clouds_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res = res_def)
+			if (res = mc_res)
 				continue
 			if (res.clouds_texture)
 				menu_add_item(res, res.display_name, res.clouds_texture)
@@ -378,13 +378,13 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
-		menu_add_item(res_def, res_def.display_name, res_def.block_preview_texture)
+		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != res_def && res.block_sheet_texture != null)
+			if (res != mc_res && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		
@@ -555,7 +555,7 @@ switch (menu_name)
 		if (menu_name = "frameeditorcameravideosize")
 			menu_add_item(null, text_get("frameeditorcameravideosizeuseproject"))
 			
-		for (var i = 0; i < videotemplate_list; i++)
+		for (var i = 0; i < ds_list_size(videotemplate_list); i++)
 			with (videotemplate_list[|i])
 				menu_add_item(id, name + " (" + string(width) + "x" + string(height) + ")")
 				
@@ -578,7 +578,7 @@ switch (menu_name)
 	// Video quality
 	case "exportmovievideoquality":
 	{
-		for (var i = 0; i < videoquality_list; i++)
+		for (var i = 0; i < ds_list_size(videoquality_list); i++)
 			with (videoquality_list[|i])
 				menu_add_item(id, text_get("exportmovievideoquality" + name))
 			

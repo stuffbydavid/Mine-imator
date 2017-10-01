@@ -21,14 +21,14 @@ if (slot < 0) // Animated
 	if (slot < 0)
 		return 0
 	
-	dep = res_def.block_sheet_ani_depth_list[|slot]
+	dep = mc_res.block_sheet_ani_depth_list[|slot]
 	vbuf = e_block_vbuffer.ANIMATED
 	sheetwidth = block_sheet_ani_width
 	sheetheight = block_sheet_ani_height
 }
 else
 { 
-	dep = res_def.block_sheet_depth_list[|slot]
+	dep = mc_res.block_sheet_depth_list[|slot]
 	vbuf = e_block_vbuffer.NORMAL
 	sheetwidth = block_sheet_width
 	sheetheight = block_sheet_height

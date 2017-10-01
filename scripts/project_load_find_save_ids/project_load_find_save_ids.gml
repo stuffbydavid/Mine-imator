@@ -88,7 +88,7 @@ with (obj_template)
 	}
 	
 	// Legacy "use a sheet" option conversion
-	if (load_format < e_project.FORMAT_110_PRE_1 && type = "item" && item_tex != res_def && !legacy_item_sheet)
+	if (load_format < e_project.FORMAT_110_PRE_1 && type = "item" && item_tex != mc_res && !legacy_item_sheet)
 		item_tex.type = "texture"
 }
 

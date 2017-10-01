@@ -25,13 +25,13 @@ tab_control(24)
 if (draw_button_normal("resourcesnew", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.IMPORT))
 	action_toolbar_import_asset()
 	
-if (draw_button_normal("resourcesremove", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (res_edit && res_edit != res_def), icons.REMOVE))
+if (draw_button_normal("resourcesremove", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (res_edit && res_edit != mc_res), icons.REMOVE))
 	action_res_remove()
 	
-if (draw_button_normal("resourcesreload", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (res_edit && res_edit != res_def), icons.RELOAD))
+if (draw_button_normal("resourcesreload", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (res_edit && res_edit != mc_res), icons.RELOAD))
 	action_res_reload()
 	
-if (draw_button_normal("resourcesreplace", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, false, false, (res_edit && res_edit != res_def), icons.BROWSE))
+if (draw_button_normal("resourcesreplace", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, false, false, (res_edit && res_edit != mc_res), icons.BROWSE))
 	action_res_replace()
 	
 tab_next()

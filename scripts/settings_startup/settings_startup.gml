@@ -1,11 +1,15 @@
 /// settings_startup()
 
+trial_startup()
+
 setting_project_folder = projects_directory
 
 recent_list = ds_list_create()
 recent_thumbnail_width = 110
 recent_thumbnail_height = 58
 recent_add_wait = false
+
+closed_alert_list = ds_list_create()
 
 backup_next = 0
 setting_backup = true
@@ -30,7 +34,6 @@ setting_font = font_main
 setting_font_bold = font_main_bold
 setting_font_big = font_main_big
 setting_font_filename = ""
-
 setting_language_filename = language_file
 
 action_setting_color_reset()
@@ -39,6 +42,44 @@ setting_timeline_autoscroll = true
 setting_timeline_compact = false
 setting_timeline_select_jump = true
 setting_z_is_up = false
+
+setting_toolbar_location = "top"
+setting_toolbar_size = 82
+
+setting_panel_left_bottom_size = 380
+setting_panel_right_bottom_size = 380
+setting_panel_bottom_size = 205
+setting_panel_top_size = 205
+setting_panel_left_top_size = 380
+setting_panel_right_top_size = 380
+
+setting_properties_location = "right_top"
+setting_ground_editor_location = "right_bottom"
+setting_template_editor_location = "right_bottom"
+setting_timeline_location = "bottom"
+setting_timeline_editor_location = "right_top"
+setting_frame_editor_location = "right_bottom"
+setting_frame_editor_color_advanced = false
+setting_settings_location = "right_bottom"
+
+setting_view_split = 0.5
+
+setting_view_main_controls = true
+setting_view_main_lights = true
+setting_view_main_particles = true
+setting_view_main_grid = false
+setting_view_main_aspect_ratio = false
+setting_view_main_location = "full"
+
+setting_view_second_show = false
+setting_view_second_controls = false
+setting_view_second_lights = true
+setting_view_second_particles = true
+setting_view_second_grid = false
+setting_view_second_aspect_ratio = true
+setting_view_second_location = "right_bottom"
+setting_view_second_width = 440
+setting_view_second_height = 280
 
 setting_key_new = ord("N")
 setting_key_new_control = true
@@ -82,7 +123,6 @@ setting_key_spawn_particles = ord("S")
 setting_key_spawn_particles_control = false
 setting_key_clear_particles = ord("C")
 setting_key_clear_particles_control = false
-
 setting_key_forward = ord("W")
 setting_key_back = ord("S")
 setting_key_left = ord("A")
@@ -116,21 +156,29 @@ setting_render_ssao_power = 1
 setting_render_ssao_samples = 16
 setting_render_ssao_blur_passes = 2
 setting_render_ssao_color = c_black
-
 setting_render_shadows = true
 setting_render_shadows_sun_buffer_size = 2048
 setting_render_shadows_spot_buffer_size = 512
 setting_render_shadows_point_buffer_size = 256
 setting_render_shadows_blur_quality = 20
 setting_render_shadows_blur_size = 1
-
 setting_render_dof = true
 setting_render_dof_blur_size = 0.02
-
 setting_render_aa = true
 setting_render_aa_power = 1
-
 setting_render_watermark = trial_version
+
+setting_export_movie_format = "mp4"
+setting_export_movie_frame_rate = 30
+setting_export_movie_bit_rate = 2500000
+setting_export_movie_include_audio = true
+setting_export_movie_remove_background = false
+setting_export_movie_include_hidden = false
+setting_export_movie_high_quality = true
+
+setting_export_image_remove_background = false
+setting_export_image_include_hidden = false
+setting_export_image_high_quality = true
 
 settings_load()
 

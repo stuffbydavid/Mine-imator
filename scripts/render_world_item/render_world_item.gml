@@ -13,7 +13,7 @@ bounce = argument3
 res = argument4
 
 if (!res.ready)
-	res = res_def
+	res = mc_res
 
 var rot, off, mipmap;
 rot = vec3(0)

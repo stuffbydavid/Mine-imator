@@ -70,7 +70,7 @@ if (shader_alpha > 0)
 					res = texobj
 				
 				if (!res.ready)
-					res = res_def
+					res = mc_res
 				
 				render_world_model_part(model_part, temp.model_texture_name_map, res, value_inherit[e_value.BEND_ANGLE], bend_vbuffer_list)
 				break
@@ -85,7 +85,7 @@ if (shader_alpha > 0)
 					res = texobj
 					
 				if (!res.ready)
-					res = res_def
+					res = mc_res
 				
 				// Draw
 				if (type = "block")

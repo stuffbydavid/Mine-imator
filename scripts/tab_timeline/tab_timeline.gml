@@ -33,9 +33,9 @@ tlw = content_width - 30 * timeline.ver_scroll.needed - listw
 tlh = listh
 
 // Adjust by panel location
-if (tab.panel = panel_left_top || tab.panel = panel_left_bottom)
+if (tab.panel = panel_map[?"left_top"] || tab.panel = panel_map[?"left_bottom"])
 	tlw -= 5
-else if (tab.panel = panel_right_top || tab.panel = panel_right_bottom)
+else if (tab.panel = panel_map[?"right_top"] || tab.panel = panel_map[?"right_bottom"])
 {
 	listx += 5
 	listw -= 5
@@ -901,7 +901,7 @@ if (window_busy = "timelineclickkeyframes")
 }
 
 // Bar
-if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_bottom), barw, barh - 5 * (tab.panel = panel_bottom)) && !popup_mouseon)
+if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, barh - 5 * (tab.panel = panel_map[?"bottom"])) && !popup_mouseon)
 {
 	mouse_cursor = cr_handpoint
 	
@@ -1089,7 +1089,7 @@ if (window_busy = "timelineselectkeyframes" ||
 		timeline.ver_scroll.value += 8
 }
 
-content_mouseon = (app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_left_top || tab.panel = panel_left_bottom), content_height - 5 * (tab.panel = panel_top)) && !popup_mouseon)
+content_mouseon = (app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left_top"] || tab.panel = panel_map[?"left_bottom"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
 
 // Vertical scrollbar
 if (tlw > 16)

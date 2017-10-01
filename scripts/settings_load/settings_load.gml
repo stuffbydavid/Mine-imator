@@ -102,57 +102,43 @@ if (filename_ext(fn) = ".midata")
 		setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
 		setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
 	
-		toolbar_location = value_get_string(interfacemap[?"toolbar_location"], toolbar_location)
-		toolbar_size = value_get_real(interfacemap[?"toolbar_size"], toolbar_size)
+		setting_toolbar_location = value_get_string(interfacemap[?"toolbar_location"], setting_toolbar_location)
+		setting_toolbar_size = value_get_real(interfacemap[?"toolbar_size"], setting_toolbar_size)
 
-		panel_left_bottom.size = value_get_real(interfacemap[?"panel_left_bottom_size"], panel_left_bottom.size)
-		panel_right_bottom.size = value_get_real(interfacemap[?"panel_right_bottom_size"], panel_right_bottom.size)
-		panel_bottom.size = value_get_real(interfacemap[?"panel_bottom_size"], panel_bottom.size)
-		panel_top.size = value_get_real(interfacemap[?"panel_top_size"], panel_top.size)
-		panel_left_top.size = value_get_real(interfacemap[?"panel_left_top_size"], panel_left_top.size)
-		panel_right_top.size = value_get_real(interfacemap[?"panel_right_top_size"], panel_right_top.size)
+		setting_panel_left_bottom_size = value_get_real(interfacemap[?"panel_left_bottom_size"], setting_panel_left_bottom_size)
+		setting_panel_right_bottom_size = value_get_real(interfacemap[?"panel_right_bottom_size"], setting_panel_right_bottom_size)
+		setting_panel_bottom_size = value_get_real(interfacemap[?"panel_bottom_size"], setting_panel_bottom_size)
+		setting_panel_top_size = value_get_real(interfacemap[?"panel_top_size"], setting_panel_top_size)
+		setting_panel_left_top_size = value_get_real(interfacemap[?"panel_left_top_size"], setting_panel_left_top_size)
+		setting_panel_right_top_size = value_get_real(interfacemap[?"panel_right_top_size"], setting_panel_right_top_size)
 
-		var propertiespanel = value_get_real(interfacemap[?"properties_location"], properties.panel.num);
-		var groundeditorpanel = value_get_real(interfacemap[?"ground_editor_location"], ground_editor.panel.num);
-		var templateeditorpanel = value_get_real(interfacemap[?"template_editor_location"], template_editor.panel.num);
-		var timelinepanel = value_get_real(interfacemap[?"timeline_location"], timeline.panel.num);
-		var timelineeditorpanel = value_get_real(interfacemap[?"timeline_editor_location"], timeline_editor.panel.num);
-		var frameeditorpanel = value_get_real(interfacemap[?"frame_editor_location"], frame_editor.panel.num);
-		var settingspanel = value_get_real(interfacemap[?"settings_location"], settings.panel.num);
-
-		panel_tab_list_remove(panel_right_top, properties)
-		panel_tab_list_add(panel_list[|propertiespanel], 0, properties)
-	
-		ground_editor.panel = panel_list[|groundeditorpanel]
-		template_editor.panel = panel_list[|templateeditorpanel]
-	
-		panel_tab_list_remove(panel_bottom, timeline)
-		panel_tab_list_add(panel_list[|timelinepanel], 0, timeline)
-	
-		timeline_editor.panel = panel_list[|timelineeditorpanel]
-		frame_editor.panel = panel_list[|frameeditorpanel]
-		settings.panel = panel_list[|settingspanel]
-	
-		view_split = value_get_real(interfacemap[?"view_split"], view_split)
-
-		view_main.controls = value_get_real(interfacemap[?"view_main_controls"], view_main.controls)
-		view_main.lights = value_get_real(interfacemap[?"view_main_lights"], view_main.lights)
-		view_main.particles = value_get_real(interfacemap[?"view_main_particles"], view_main.particles)
-		view_main.grid = value_get_real(interfacemap[?"view_main_grid"], view_main.grid)
-		view_main.aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], view_main.aspect_ratio)
-		view_main.location = value_get_string(interfacemap[?"view_main_location"], view_main.location)
-
-		view_second.show = value_get_real(interfacemap[?"view_second_show"], view_second.show)
-		view_second.controls = value_get_real(interfacemap[?"view_second_controls"], view_second.controls)
-		view_second.lights = value_get_real(interfacemap[?"view_second_lights"], view_second.lights)
-		view_second.particles = value_get_real(interfacemap[?"view_second_particles"], view_second.particles)
-		view_second.grid = value_get_real(interfacemap[?"view_second_grid"], view_second.grid)
-		view_second.aspect_ratio = value_get_real(interfacemap[?"view_second_aspect_ratio"], view_second.aspect_ratio)
-		view_second.location = value_get_string(interfacemap[?"view_second_location"], view_second.location)
-		view_second.width = value_get_real(interfacemap[?"view_second_width"], view_second.width)
-		view_second.height = value_get_real(interfacemap[?"view_second_height"], view_second.height)
-
-		frame_editor.color.advanced = value_get_real(interfacemap[?"frame_editor_color_advanced"], frame_editor.color.advanced)
+		setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
+		setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
+		setting_template_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_template_editor_location)
+		setting_timeline_location = value_get_string(interfacemap[?"timeline_location"], setting_timeline_location)
+		setting_timeline_editor_location = value_get_string(interfacemap[?"timeline_editor_location"], setting_timeline_editor_location)
+		setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
+		setting_frame_editor_color_advanced = value_get_real(interfacemap[?"frame_editor_color_advanced"], setting_frame_editor_color_advanced)
+		setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)
+		
+		setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)
+		
+		setting_view_main_controls = value_get_real(interfacemap[?"view_main_controls"], setting_view_main_controls)
+		setting_view_main_lights = value_get_real(interfacemap[?"view_main_lights"], setting_view_main_lights)
+		setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
+		setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
+		setting_view_main_aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], setting_view_main_aspect_ratio)
+		setting_view_main_location = value_get_string(interfacemap[?"view_main_location"], setting_view_main_location)
+		
+		setting_view_second_show = value_get_real(interfacemap[?"view_second_show"], setting_view_second_show)
+		setting_view_second_controls = value_get_real(interfacemap[?"view_second_controls"], setting_view_second_controls)
+		setting_view_second_lights = value_get_real(interfacemap[?"view_second_lights"], setting_view_second_lights)
+		setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
+		setting_view_second_grid = value_get_real(interfacemap[?"view_second_grid"], setting_view_second_grid)
+		setting_view_second_aspect_ratio = value_get_real(interfacemap[?"view_second_aspect_ratio"], setting_view_second_aspect_ratio)
+		setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
+		setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
+		setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
 	}
 	
 	// Controls
@@ -244,33 +230,28 @@ if (filename_ext(fn) = ".midata")
 		setting_render_ssao_power = value_get_real(rendermap[?"render_ssao_power"], setting_render_ssao_power)
 		setting_render_ssao_blur_passes = value_get_real(rendermap[?"render_ssao_blur_passes"], setting_render_ssao_blur_passes)
 		setting_render_ssao_color = value_get_color(rendermap[?"render_ssao_color"], setting_render_ssao_color)
-
 		setting_render_shadows = value_get_real(rendermap[?"render_shadows"], setting_render_shadows)
 		setting_render_shadows_sun_buffer_size = value_get_real(rendermap[?"render_shadows_sun_buffer_size"], setting_render_shadows_sun_buffer_size)
 		setting_render_shadows_spot_buffer_size = value_get_real(rendermap[?"render_shadows_spot_buffer_size"], setting_render_shadows_spot_buffer_size)
 		setting_render_setting_render_shadows_point_buffer_sizessao = value_get_real(rendermap[?"render_shadows_point_buffer_size"], setting_render_shadows_point_buffer_size)
 		setting_render_shadows_blur_quality = value_get_real(rendermap[?"render_shadows_blur_quality"], setting_render_shadows_blur_quality)
 		setting_render_shadows_blur_size = value_get_real(rendermap[?"render_shadows_blur_size"], setting_render_shadows_blur_size)
-
 		setting_render_dof = value_get_real(rendermap[?"render_dof"], setting_render_dof)
 		setting_render_dof_blur_size = value_get_real(rendermap[?"render_dof_blur_size"], setting_render_dof_blur_size)
-
 		setting_render_aa = value_get_real(rendermap[?"render_aa"], setting_render_aa)
 		setting_render_aa_power = value_get_real(rendermap[?"render_aa_power"], setting_render_aa_power)
-
 		setting_render_watermark = value_get_real(rendermap[?"render_watermark"], setting_render_watermark)
 
-		popup_exportmovie.format = value_get_string(rendermap[?"exportmovie_format"], popup_exportmovie.format)
-		popup_exportmovie.frame_rate = value_get_real(rendermap[?"exportmovie_frame_rate"], popup_exportmovie.frame_rate)
-		popup_exportmovie.bit_rate = value_get_real(rendermap[?"exportmovie_bit_rate"], popup_exportmovie.bit_rate)
-		popup_exportmovie.include_audio = value_get_real(rendermap[?"exportmovie_include_audio"], popup_exportmovie.include_audio)
-		popup_exportmovie.remove_background = value_get_real(rendermap[?"exportmovie_remove_background"], popup_exportmovie.remove_background)
-		popup_exportmovie.include_hidden = value_get_real(rendermap[?"exportmovie_include_hidden"], popup_exportmovie.include_hidden)
-		popup_exportmovie.high_quality = value_get_real(rendermap[?"exportmovie_high_quality"], popup_exportmovie.high_quality)
-
-		popup_exportimage.remove_background = value_get_real(rendermap[?"exportimage_remove_background"], popup_exportimage.remove_background)
-		popup_exportimage.include_hidden = value_get_real(rendermap[?"exportimage_include_hidden"], popup_exportimage.include_hidden)
-		popup_exportimage.high_quality = value_get_real(rendermap[?"exportimage_high_quality"], popup_exportimage.high_quality)
+		setting_export_movie_format = value_get_string(rendermap[?"export_movie_format"], setting_export_movie_format)
+		setting_export_movie_frame_rate = value_get_string(rendermap[?"export_movie_frame_rate"], setting_export_movie_frame_rate)
+		setting_export_movie_bit_rate = value_get_string(rendermap[?"export_movie_bit_rate"], setting_export_movie_bit_rate)
+		setting_export_movie_include_audio = value_get_string(rendermap[?"export_movie_include_audio"], setting_export_movie_include_audio)
+		setting_export_movie_remove_background = value_get_string(rendermap[?"export_movie_remove_background"], setting_export_movie_remove_background)
+		setting_export_movie_include_hidden = value_get_string(rendermap[?"export_movie_remove_background"], setting_export_movie_include_hidden)
+		setting_export_movie_high_quality = value_get_string(rendermap[?"export_movie_high_quality"], setting_export_movie_high_quality)
+		setting_export_image_remove_background = value_get_string(rendermap[?"export_image_remove_background"], setting_export_image_remove_background)
+		setting_export_image_include_hidden = value_get_string(rendermap[?"export_image_include_hidden"], setting_export_image_include_hidden)
+		setting_export_image_high_quality = value_get_string(rendermap[?"export_image_high_quality"], setting_export_image_high_quality)
 	}
 }
 

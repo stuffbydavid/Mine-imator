@@ -5,7 +5,7 @@ if (part_of = null)
 
 if (type = "spblock")
 {
-	skin = res_def
+	skin = mc_res
 	model_file = null
 	model_texture_name_map = null
 	temp_update_model()
@@ -13,7 +13,7 @@ if (type = "spblock")
 }
 else if (type = "block")
 {
-	block_tex = res_def
+	block_tex = mc_res
 	block_repeat_enable = false
 	block_repeat = vec3(1)
 	block_vbuffer_reset()
@@ -21,7 +21,7 @@ else if (type = "block")
 }
 else if (type = "text")
 {
-	text_font = res_def
+	text_font = mc_res
 	text_3d = false
 	text_face_camera = false
 }

@@ -36,7 +36,7 @@ with (obj_timeline)
 	instance_destroy()
 	
 with (obj_resource)
-	if (id != res_def)
+	if (id != mc_res)
 		instance_destroy()
 		
 with (obj_keyframe)
@@ -48,9 +48,9 @@ background_image_type = 0
 background_image_stretch = true
 background_image_box_mapped = false
 
-background_sky_sun_tex = res_def
+background_sky_sun_tex = mc_res
 background_sky_sun_tex.count++
-background_sky_moon_tex = res_def
+background_sky_moon_tex = mc_res
 background_sky_moon_tex.count++
 background_sky_moon_phase = 0
 
@@ -60,7 +60,7 @@ background_sunlight_range = 2000
 background_sunlight_follow = false
 
 background_sky_clouds_show = true
-background_sky_clouds_tex = res_def
+background_sky_clouds_tex = mc_res
 background_sky_clouds_tex.count++
 background_sky_clouds_flat = 0
 background_sky_clouds_speed = 1
@@ -70,14 +70,14 @@ background_sky_clouds_height = 64
 background_sky_update_clouds()
 
 background_ground_show = true
-background_ground_tex = res_def
+background_ground_tex = mc_res
 background_ground_tex.count++
 background_ground_name = "blocks/grass_top"
 background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
 background_ground_update_texture()
 
 background_biome = biome_list[|0]
-with (res_def)
+with (mc_res)
 {
 	res_update_colors()
 	count = 0
