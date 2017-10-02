@@ -1,23 +1,29 @@
  /// tab_frame_editor_position()
 
-var mul, snapval, capwid;
+var mul, snapval, capwid, def;
 mul = point3D_distance(tl_edit.world_pos, cam_work_from) / 100
 snapval = tab.position.snap_enabled * tab.position.snap_size
 capwid = text_caption_width("frameeditorpositionx", "frameeditorpositiony", "frameeditorpositionz")
 
+// Parts default to their spawn position, other objects to (0, 0, 0)
+if (tl_edit.part_of = null)
+	def = point3D(0, 0, 0)
+else
+	def = point3D(tl_edit.value_default[e_value.POS_X], tl_edit.value_default[e_value.POS_Y], tl_edit.value_default[e_value.POS_Z])
+	
 axis_edit = X
 tab_control_dragger()
-draw_dragger("frameeditorpositionx", dx, dy, dw, tl_edit.value[e_value.POS_X], mul / tl_edit.value_inherit[e_value.SCA_X], -no_limit, no_limit, tl_edit.value_default[e_value.POS_X], snapval, tab.position.tbx_x, action_tl_frame_pos, capwid)
+draw_dragger("frameeditorpositionx", dx, dy, dw, tl_edit.value[e_value.POS_X], mul / tl_edit.value_inherit[e_value.SCA_X], -no_limit, no_limit, def[X], snapval, tab.position.tbx_x, action_tl_frame_pos, capwid)
 tab_next()
 
 axis_edit = test(setting_z_is_up, Y, Z)
 tab_control_dragger() 
-draw_dragger("frameeditorpositiony", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.POS_X + axis_edit], snapval, tab.position.tbx_y, action_tl_frame_pos, capwid)
+draw_dragger("frameeditorpositiony", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, def[X + axis_edit], snapval, tab.position.tbx_y, action_tl_frame_pos, capwid)
 tab_next()
 
 axis_edit = test(setting_z_is_up, Z, Y)
 tab_control_dragger()
-draw_dragger("frameeditorpositionz", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.POS_X + axis_edit], snapval, tab.position.tbx_z, action_tl_frame_pos, capwid)
+draw_dragger("frameeditorpositionz", dx, dy, dw, tl_edit.value[e_value.POS_X + axis_edit], mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit], -no_limit, no_limit, def[X + axis_edit], snapval, tab.position.tbx_z, action_tl_frame_pos, capwid)
 tab_next()
 
 // Tools

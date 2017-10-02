@@ -64,8 +64,9 @@ with (obj_timeline)
 			{
 				if (keyframe_select_amount = 1 && keyframe_select != null && ds_list_find_index(keyframe_list, keyframe_select) < ds_list_size(keyframe_list) - 1)
 				{
-					checkwalk = true
-					app.timeline_settings_import_loop_tl = id
+					// TODO
+					//checkwalk = true
+					//app.timeline_settings_import_loop_tl = id
 				}
 			}
 		}

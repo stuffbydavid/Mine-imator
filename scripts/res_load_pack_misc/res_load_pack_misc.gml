@@ -31,16 +31,16 @@ if (clouds_texture != null)
 	texture_free(clouds_texture)
 	
 // Create new
-block_preview_texture = texture_create(unzip_directory + "pack.png")
+block_preview_texture = texture_create(load_assets_dir + "pack.png")
 
-colormap_grass_texture = texture_create(textures_directory + "colormap\\grass.png")
-colormap_foliage_texture = texture_create(textures_directory + "colormap\\foliage.png")
+colormap_grass_texture = texture_create(load_assets_dir + mc_textures_directory + "colormap\\grass.png")
+colormap_foliage_texture = texture_create(load_assets_dir + mc_textures_directory + "colormap\\foliage.png")
 
-particles_texture[0] = texture_create(textures_directory + "particle\\particles.png")
-particles_texture[1] = texture_create(textures_directory + "entity\\explosion.png")
+particles_texture[0] = texture_create(load_assets_dir + mc_textures_directory + "particle\\particles.png")
+particles_texture[1] = texture_create(load_assets_dir + mc_textures_directory + "entity\\explosion.png")
 
-sun_texture = texture_create(textures_directory + "environment\\sun.png")
-moonphases_texture = texture_create(textures_directory + "environment\\moon_phases.png")
+sun_texture = texture_create(load_assets_dir + mc_textures_directory + "environment\\sun.png")
+moonphases_texture = texture_create(load_assets_dir + mc_textures_directory + "environment\\moon_phases.png")
 moon_texture = texture_split(moonphases_texture, 4, 2)
 
-clouds_texture = texture_create_fixed(textures_directory + "environment\\clouds.png", 32, 32)
+clouds_texture = texture_create_fixed(load_assets_dir + mc_textures_directory + "environment\\clouds.png", 32, 32)

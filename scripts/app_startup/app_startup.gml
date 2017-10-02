@@ -37,7 +37,7 @@ render_startup()
 
 if (!minecraft_assets_startup())
 {
-	error("loadassets")
+	error("errorloadassets")
 	return false
 }
 

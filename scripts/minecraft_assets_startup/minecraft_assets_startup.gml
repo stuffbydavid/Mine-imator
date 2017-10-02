@@ -4,7 +4,7 @@
 
 globalvar mc_assets, mc_builder, mc_res;
 globalvar mc_block_state_file_map, mc_block_model_file_map;
-globalvar load_assets_stage, load_assets_progress, load_assets_map, load_assets_type_map, load_assets_zip_file, load_assets_block_index;
+globalvar load_assets_stage, load_assets_progress, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_map, load_assets_type_map, load_assets_block_index;
 
 mc_assets = new(obj_minecraft_assets)
 mc_builder = new(obj_builder)
@@ -28,18 +28,25 @@ with (mc_res)
 	font_preview = font
 }
 
-log("Loading Minecraft assets version", minecraft_version)
+log("Loading Minecraft assets version", app.setting_minecraft_version)
 
-// Open assets specification
-var fname = minecraft_directory + minecraft_version + ".midata"
-if (!file_exists_lib(fname))
+load_assets_file = minecraft_directory + app.setting_minecraft_version + ".midata"
+load_assets_zip_file = minecraft_directory + app.setting_minecraft_version + ".zip"
+
+if (!file_exists_lib(load_assets_file) || !file_exists_lib(load_assets_zip_file))
 {
-	log("Could not find Minecraft assets file", fname)
+	log("Could not find Minecraft assets file/archive " + string(app.setting_minecraft_version) + ". Resetting to default", minecraft_version)
+	app.setting_minecraft_version = minecraft_version
+	load_assets_file = minecraft_directory + app.setting_minecraft_version + ".midata"
+	load_assets_zip_file = minecraft_directory + app.setting_minecraft_version + ".zip"
+}
+
+if (!file_exists_lib(load_assets_file))
+{
+	log("Could not find Minecraft assets file", load_assets_file)
 	return false
 }
 
-// Locate zip file
-load_assets_zip_file = minecraft_directory + minecraft_version + ".zip"
 if (!file_exists_lib(load_assets_zip_file))
 {
 	log("Could not find Minecraft assets archive", load_assets_zip_file)
@@ -48,10 +55,10 @@ if (!file_exists_lib(load_assets_zip_file))
 
 // Load specification
 load_assets_type_map = ds_map_create()
-load_assets_map = json_load(fname, load_assets_type_map)
+load_assets_map = json_load(load_assets_file, load_assets_type_map)
 if (!ds_map_valid(load_assets_map))
 {
-	log("Could not parse JSON", fname)
+	log("Could not parse JSON", load_assets_file)
 	ds_map_destroy(load_assets_type_map)
 	return false
 }
@@ -67,6 +74,7 @@ if (format > minecraft_assets_format)
 	return false
 }
 
+load_assets_dir = file_directory + app.setting_minecraft_version + "\\"
 mc_block_state_file_map = ds_map_create() // filename -> states
 mc_block_model_file_map = ds_map_create() // filename -> model
 

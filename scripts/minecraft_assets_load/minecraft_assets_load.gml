@@ -14,10 +14,12 @@ with (mc_assets)
 			if (current_step < 5)
 				break
 			
-			debug_timer_start()
-			if (!dev_mode || dev_mode_unzip_assets)
-				unzip(load_assets_zip_file)
-			debug_timer_stop("Unzip archive")
+			if (!directory_exists(load_assets_dir))
+			{
+				debug_timer_start()
+				unzip(load_assets_zip_file, load_assets_dir)
+				debug_timer_stop("Unzip archive")
+			}
 			
 			load_assets_stage = "textures"
 			load_assets_progress = 0.3
@@ -114,7 +116,7 @@ with (mc_assets)
 			debug_timer_start()
 			for (var i = 0; i < ds_list_size(characterslist); i++)
 			{
-				var model = model_load(characterslist[|i], character_directory);
+				var model = model_load(characterslist[|i], load_assets_dir + mc_character_directory);
 				if (!model) // Something went wrong!
 				{
 					log("Could not load model")
@@ -138,7 +140,7 @@ with (mc_assets)
 			debug_timer_start()
 			for (var i = 0; i < ds_list_size(specialblockslist); i++)
 			{
-				var model = model_load(specialblockslist[|i], special_block_directory);
+				var model = model_load(specialblockslist[|i], load_assets_dir + mc_special_block_directory);
 				if (!model) // Something went wrong!
 				{
 					log("Could not load model")

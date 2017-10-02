@@ -2,6 +2,7 @@
 
 trial_startup()
 
+setting_minecraft_version = minecraft_version
 setting_project_folder = projects_directory
 
 recent_list = ds_list_create()

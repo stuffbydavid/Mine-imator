@@ -2,7 +2,6 @@
 
 // Debug
 #macro dev_mode						true
-#macro dev_mode_unzip_assets		false
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 
@@ -43,14 +42,14 @@
 #macro unzip_directory			file_directory + "unzip\\"
 
 // Minecraft structure
-#macro assets_directory			unzip_directory + "assets\\minecraft\\"
-#macro models_directory			assets_directory + "models\\"
-#macro blockstates_directory	assets_directory + "blockstates\\"
-#macro textures_directory		assets_directory + "textures\\"
-#macro character_directory		models_directory + "character\\"
-#macro special_block_directory	models_directory + "special_block\\"
-#macro block_directory			models_directory + "block\\"
-#macro loops_directory			character_directory + "loops\\"
+#macro mc_assets_directory			"assets\\minecraft\\"
+#macro mc_models_directory			mc_assets_directory + "models\\"
+#macro mc_blockstates_directory		mc_assets_directory + "blockstates\\"
+#macro mc_textures_directory		mc_assets_directory + "textures\\"
+#macro mc_character_directory		mc_models_directory + "character\\"
+#macro mc_special_block_directory	mc_models_directory + "special_block\\"
+#macro mc_block_directory			mc_models_directory + "block\\"
+#macro mc_loops_directory			mc_character_directory + "loops\\"
 
 // Links
 #macro link_skins				"http://skins.minecraft.net/MinecraftSkins/"
@@ -74,20 +73,23 @@
 #macro texture_lib				true
 
 // Colors
-#macro c_main					make_color_rgb(200, 200, 200)
-#macro c_secondary				make_color_rgb(67, 103, 163)
-#macro c_text					make_color_rgb(10, 10, 10)
-#macro c_tips					make_color_rgb(40, 40, 40)
-#macro c_highlight				make_color_rgb(132, 159, 204)
-#macro c_alerts					make_color_rgb(240, 255, 159)
-#macro c_controls				make_color_rgb(40, 40, 40)
-#macro c_sky					make_color_rgb(145, 185, 255)
-#macro c_night					make_color_rgb(14, 14, 24)
-#macro c_clouds_bottom			make_color_rgb(174, 181, 193)
-#macro c_clouds_top				make_color_rgb(255, 255, 255)
-#macro c_clouds_sideslight		make_color_rgb(215, 222, 234)
-#macro c_clouds_sidesdark		make_color_rgb(194, 201, 215)
-
+#macro c_main						make_color_rgb(200, 200, 200)
+#macro c_secondary					make_color_rgb(67, 103, 163)
+#macro c_text						make_color_rgb(10, 10, 10)
+#macro c_tips						make_color_rgb(40, 40, 40)
+#macro c_highlight					make_color_rgb(132, 159, 204)
+#macro c_alerts						make_color_rgb(240, 255, 159)
+#macro c_controls					make_color_rgb(40, 40, 40)
+#macro c_sky						make_color_rgb(145, 185, 255)
+#macro c_night						make_color_rgb(14, 14, 24)
+#macro c_clouds_bottom				make_color_rgb(174, 181, 193)
+#macro c_clouds_top					make_color_rgb(255, 255, 255)
+#macro c_clouds_sideslight			make_color_rgb(215, 222, 234)
+#macro c_clouds_sidesdark			make_color_rgb(194, 201, 215)
+#macro c_mesa_biome_grass			make_color_rgb(158, 129, 77)
+#macro c_mesa_biome_foliage			make_color_rgb(158, 129, 77)
+#macro c_swampland_biome_grass		make_color_rgb(74, 116, 59)
+#macro c_swampland_biome_foliage	make_color_rgb(74, 116, 59)
 // Audio
 #macro sample_rate				44100
 #macro sample_size				4

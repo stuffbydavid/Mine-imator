@@ -15,7 +15,7 @@ debug_timer_start()
 texlist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 {
-	var fname = textures_directory + mc_assets.item_texture_list[|t] + ".png";
+	var fname = load_assets_dir + mc_textures_directory + mc_assets.item_texture_list[|t] + ".png";
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);

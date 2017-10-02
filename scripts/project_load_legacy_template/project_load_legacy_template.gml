@@ -19,10 +19,10 @@ with (new(obj_template))
 	legacy_bodypart_id = buffer_read_int()
 	
 	// Find new model name and state
-	if (type = "char" || type = "spblock")
+	if (type = "char" || type = "spblock" || type = "bodypart")
 	{
 		var modelmap = legacy_model_name_map[?legacy_model_name];
-		if (!is_undefined(modelmap))
+		if (ds_map_valid(modelmap))
 		{
 			model_name = modelmap[?"name"]
 			if (!is_undefined(modelmap[?"state"]))
@@ -38,7 +38,7 @@ with (new(obj_template))
 	if (type = "bodypart")
 	{
 		var modelpartlist = legacy_model_part_map[?model_name];
-		if (!is_undefined(modelpartlist))
+		if (ds_list_valid(modelpartlist) && legacy_bodypart_id < ds_list_size(modelpartlist))
 			model_part_name = modelpartlist[|legacy_bodypart_id]
 		else
 			log("Could not convert model part of ", model_name, legacy_bodypart_id)

@@ -156,7 +156,7 @@
 		}
 	},
 	"loadassets/": {
-		"unzip": "Extracting resources...",
+		"unzip": "Extracting %1 resources...",
 		"textures": "Loading textures...",
 		"models": "Loading characters...",
 		"blocks": "Loading blocks..."
@@ -1847,7 +1847,10 @@
 		"iceplains": "Ice Plains",
 		"icemountains": "Ice Mountains",
 		"frozenocean": "Frozen Ocean",
-		"frozenriver": "Frozen River"
+		"frozenriver": "Frozen River",
+		"mesa": "Mesa",
+		"nether": "Nether",
+		"theend": "The End"
 	},
 	"resources": "Resources",
 	"resourcestip": "Manage your imported files.",

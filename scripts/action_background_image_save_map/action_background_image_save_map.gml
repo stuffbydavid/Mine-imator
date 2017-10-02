@@ -2,4 +2,4 @@
 
 var fn = file_dialog_save_image("cube");
 if (fn != "")
-	file_copy_lib(textures_directory + "cube.png", fn);
+	sprite_save_lib(spr_map_cube, 0, fn)

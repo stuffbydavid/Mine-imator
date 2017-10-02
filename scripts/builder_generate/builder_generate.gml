@@ -53,14 +53,13 @@ if (models != null)
 {
 	
 	if (is_array(models)) // Generate from render models
-	{
-		if (models[0] = 0) {log(block_current.name, models)}
 		block_render_models_generate(models)
-	}else // Use script for triangles
+	else // Use script for triangles
 		script_execute(models)
 }
 
 // Reset wind and brightness
 vertex_wave = e_vertex_wave.NONE
 vertex_wave_zmin = null
+vertex_wave_zmax = null
 vertex_brightness = 0

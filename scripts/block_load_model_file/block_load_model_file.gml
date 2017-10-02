@@ -3,7 +3,7 @@
 
 var fname, fpath;
 fname = argument0
-fpath = unzip_directory + "\\assets\\minecraft\\models\\" + fname
+fpath = load_assets_dir + mc_models_directory + fname
 
 if (!is_undefined(mc_block_model_file_map[?fname])) // Previously loaded
 	return mc_block_model_file_map[?fname]

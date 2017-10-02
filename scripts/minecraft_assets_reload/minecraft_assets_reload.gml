@@ -33,7 +33,7 @@ with (mc_assets)
 	
 	for (var i = 0; i < ds_list_size(characterslist); i++)
 	{
-		var model = model_load(characterslist[|i], character_directory);
+		var model = model_load(characterslist[|i], load_assets_dir + mc_character_directory);
 		if (!model) // Something went wrong!
 		{
 			log("Could not load model")
@@ -55,7 +55,7 @@ with (mc_assets)
 	
 	for (var i = 0; i < ds_list_size(specialblockslist); i++)
 	{
-		var model = model_load(specialblockslist[|i], special_block_directory);
+		var model = model_load(specialblockslist[|i], load_assets_dir + mc_special_block_directory);
 		if (!model) // Something went wrong!
 		{
 			log("Could not load model")

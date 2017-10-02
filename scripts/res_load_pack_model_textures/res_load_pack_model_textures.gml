@@ -20,7 +20,7 @@ for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 {
 	var name, fname;
 	name = mc_assets.model_texture_list[|t]
-	fname = textures_directory + name + ".png"
+	fname = load_assets_dir + mc_textures_directory + name + ".png"
 	model_texture_map[?name] = texture_create(fname)
 }
 

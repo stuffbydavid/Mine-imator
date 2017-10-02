@@ -37,7 +37,7 @@ with (new(obj_timeline))
 		
 		// Find name from ID
 		var modelpartlist = legacy_model_part_map[?findtemp.model_name];
-		if (!is_undefined(modelpartlist))
+		if (!is_undefined(modelpartlist) && legacy_bodypart_id < ds_list_size(modelpartlist))
 		{
 			model_part_name = modelpartlist[|legacy_bodypart_id]
 		
@@ -57,7 +57,7 @@ with (new(obj_timeline))
 			}
 		}
 		else
-			log("Could not find model part list for", findtemp.legacy_model_name)
+			log("Could not find model part for", findtemp.model_name, findtemp.legacy_model_name, legacy_bodypart_id)
 	}
 	
 	part_of = project_load_legacy_save_id()

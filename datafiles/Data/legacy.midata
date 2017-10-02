@@ -139,7 +139,7 @@
 	"legacy_model_part_map": {
 		"human": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head", "hat" ],
 		"zombie": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head", "hat" ],
-		"skeleton": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head" ],
+		"skeleton": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head", "hat" ],
 		"creeper": [ "body", "right_front_foot", "left_front_foot", "right_back_foot", "left_back_foot", "head" ],
 		"spider": [ "body", "leg_1", "leg_2", "leg_3", "leg_4", "leg_5", "leg_6", "leg_7", "leg_8", "head" ],
 		"enderman": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "mouth", "head" ],
@@ -173,7 +173,7 @@
 		"lever": [ "stone", "handle" ],
 		"piston": [ "stone", "extension" ],
 		"arrow": [ "arrow" ],
-		"boat": [ "boat" ],
+		"boat": [ "boat", "right_paddle", "left_paddle" ],
 		"minecart": [ "minecart" ],
 		"enchantment_table": [ "table", "book", "book_right_half", "book_left_half", "book_right_pages", "book_left_pages", "book_right_leaf", "book_left_leaf" ],
 		"sign": [ "sign" ],
