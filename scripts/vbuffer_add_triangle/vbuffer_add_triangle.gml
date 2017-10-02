@@ -30,7 +30,7 @@ if (argument_count < 15)
 	else
 		color = -1
 	
-	if (argument_count > 8)
+	if (argument_count > 8 && argument[8] != null)
 	{
 		var mat = argument[8];
 		pos1 = point3D_mul_matrix(pos1, mat)
@@ -47,7 +47,7 @@ else
 {
 	var x1, y1, z1, x2, y2, z2, x3, y3, z3;
 	var nx, ny, nz;
-
+	
 	x1 = argument[0]
 	y1 = argument[1]
 	z1 = argument[2]

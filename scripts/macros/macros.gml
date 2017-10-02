@@ -1,7 +1,7 @@
 /// macros()
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 
@@ -29,7 +29,7 @@
 
 // Files
 #macro minecraft_assets_file	minecraft_directory + minecraft_version + ".midata"
-#macro language_file			languages_directory + "english.milang"
+#macro language_file			languages_directory + "english.milanguage"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.midata"
 #macro legacy_file				data_directory + "legacy.midata"

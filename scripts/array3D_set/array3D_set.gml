@@ -12,4 +12,4 @@ size = argument1
 pnt = argument2
 val = argument3
 
-ds_grid_set(arr, pnt[X], pnt[Y] * size[Z] + pnt[Z], val)
+ds_grid_set(arr, pnt[@ X], pnt[@ Y] * size[@ Z] + pnt[@ Z], val)

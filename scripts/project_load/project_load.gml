@@ -1,6 +1,6 @@
 /// project_load([filename])
 /// @arg [filename]
-/// @desc Opens a .miproj, .mproj, .mani project or zipped archive.
+/// @desc Opens a .miproject, .mproj, .mani project or zipped archive.
 ///		  A file browser appears if no filename is given.
 ///		  Formats:
 ///			0.1
@@ -34,9 +34,9 @@ var name = filename_new_ext(filename_name(fn), "");
 if (filename_ext(fn) = ".zip")
 {
 	unzip(fn)
-	fn = file_find_single(unzip_directory, ".miproj;.mproj;.mani")
+	fn = file_find_single(unzip_directory, ".miproject;.mproj;.mani")
 	if (!file_exists_lib(fn))
-		fn = file_find_single(unzip_directory + name + "\\", ".miproj;.mproj;.mani")
+		fn = file_find_single(unzip_directory + name + "\\", ".miproject;.mproj;.mani")
 	if (!file_exists_lib(fn))
 	{
 		error("erroropenprojectzip")
@@ -49,7 +49,7 @@ if (!file_exists_lib(fn))
 
 // Post 1.1.0 (JSON)
 var rootmap, legacy;
-if (string_contains(filename_ext(fn), ".miproj"))
+if (string_contains(filename_ext(fn), ".miproject"))
 {
 	log("Opening project", fn)
 	rootmap = project_load_start(fn)
@@ -73,7 +73,7 @@ else
 project_reset()
 project_reset_loaded()
 
-project_file = filename_new_ext(fn, ".miproj")
+project_file = filename_new_ext(fn, ".miproject")
 project_folder = filename_dir(fn)
 project_name = name
 

@@ -45,15 +45,15 @@ if (ext = ".zip") // Unzip
 	}
 	
 	// Look for project
-	validfile = file_find_single(unzip_directory, "miproj;.mproj;.mani")
+	validfile = file_find_single(unzip_directory, "miproject;.mproj;.mani")
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", "miproj;.mproj;.mani")
+		validfile = file_find_single(unzip_directory + name + "\\", "miproject;.mproj;.mani")
 	
 	// Look for object
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory, "miobj;miparts;.object;.particles;")
+		validfile = file_find_single(unzip_directory, "miobject;miparticles;.object;.particles;")
 	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", "miobj;miparts;.object;.particles;")
+		validfile = file_find_single(unzip_directory + name + "\\", "miobject;miparticles;.object;.particles;")
 	
 	// Pack?
 	if (!file_exists_lib(validfile))
@@ -107,9 +107,9 @@ switch (ext)
 	// TODO .mimodel
 	// TODO .json model
 	
-	case ".miobj":
-	case ".miparts":
-	case ".miproj":
+	case ".miobject":
+	case ".miparticles":
+	case ".miproject":
 		legacy = false
 		break
 		
@@ -153,7 +153,7 @@ log("load_folder", load_folder)
 switch (ext)
 {
 	// Object
-	case ".miobj":
+	case ".miobject":
 	{
 		project_load_objects(rootmap)
 		project_load_find_save_ids()
@@ -170,7 +170,7 @@ switch (ext)
 	}
 		
 	// Particle spawner
-	case ".miparts":
+	case ".miparticles":
 	{
 		var temp = new(obj_template);
 		with (temp)

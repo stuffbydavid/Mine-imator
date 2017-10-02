@@ -25,7 +25,7 @@ if (view.render)
 else
 	render_low()
 
-if (view.controls)
+if (view.controls && tl_edit_amount > 0)
 {
 	// Selection
 	view.surface_select = render_select(view.surface_select)

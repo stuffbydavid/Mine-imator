@@ -10,12 +10,13 @@ path_window = "Data\\window.dll"
 path_texture = "Data\\texture.dll"
 
 globalvar lib_open_url, lib_execute, lib_gzunzip, lib_file_rename, lib_file_copy, lib_file_delete, lib_file_exists;
-globalvar lib_directory_create, lib_directory_exists, lib_directory_delete;
+globalvar file_copy_temp, lib_directory_create, lib_directory_exists, lib_directory_delete;
 globalvar lib_movie_init, lib_movie_set, lib_movie_start, lib_movie_audio_file_decode, lib_movie_audio_file_add, lib_movie_audio_sound_add, lib_movie_frame, lib_movie_done;
 globalvar lib_window_maximize, lib_window_set_focus;
 globalvar lib_texture_init, lib_texture_create, lib_texture_free, lib_texture_width, lib_texture_height, lib_texture_set_stage, lib_texture_reset_stage, lib_texture_set_filtering, lib_texture_set_mipmap_level;
 
 log(path_file)
+file_copy_temp = true
 lib_open_url = external_define(path_file, "open_url", dll_cdecl, ty_real, 1, ty_string)
 lib_execute = external_define(path_file, "execute", dll_cdecl, ty_real, 3, ty_string, ty_string, ty_real)
 lib_gzunzip = external_define(path_file, "gzunzip", dll_cdecl, ty_real, 2, ty_string, ty_string)

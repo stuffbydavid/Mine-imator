@@ -2,11 +2,13 @@
 /// @arg object
 /// @desc Returns whether the timeline has the given object as parent.
 
-if (parent = argument0)
+var tl = argument0;
+
+if (parent = tl)
 	return true
 
 if (parent = app)
 	return false
 	
 with (parent)
-	return tl_has_parent(argument0)
+	return tl_has_parent(tl)

@@ -23,6 +23,7 @@ with (mc_assets)
 			
 			load_assets_stage = "textures"
 			load_assets_progress = 0.3
+			file_copy_temp = false
 			break
 		}
 	
@@ -219,10 +220,15 @@ with (mc_assets)
 					key = ds_map_find_next(mc_block_model_file_map, key)
 				}
 		
+				debug("Block state files", ds_map_size(mc_block_state_file_map))
+				debug("Block model files", ds_map_size(mc_block_model_file_map))
+				
 				ds_map_destroy(mc_block_state_file_map)
 				ds_map_destroy(mc_block_model_file_map)
 				ds_map_destroy(load_assets_map)
 				ds_map_destroy(load_assets_type_map)
+				
+				file_copy_temp = true
 			
 				log("Loaded assets successfully")
 			}

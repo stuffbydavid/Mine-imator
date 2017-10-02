@@ -23,12 +23,27 @@ for (var m = 0; m < modelslen; m++)
 				var x1, x2, y1, y2, z1, z2;
 				var p1, p2, p3, p4;
 				var mat;
-	
-				x1 = from[X]; y1 = from[Y]; z1 = from[Z]
-				x2 = to[X];	  y2 = to[Y];   z2 = to[Z]
+				
+				x1 = from[X];	y1 = from[Y]; z1 = from[Z]
+				x2 = to[X];		y2 = to[Y];   z2 = to[Z]
+				
+				// Apply offset to transformation matrix
+				if (matrix != null)
+				{
+					mat = matrix;
+					mat[MAT_X] += off[X]
+					mat[MAT_Y] += off[Y]
+					mat[MAT_Z] += off[Z]
+				}
+				
+				// Simply add to shape
+				else
+				{
+					mat = null
+					x1 += off[X]; y1 += off[Y]; z1 += off[Z]
+					x2 += off[X]; y2 += off[Y]; z2 += off[Z]
+				}
 		
-				mat = matrix_multiply(matrix, matrix_create(off, vec3(0), vec3(1)))
-
 				// Create faces
 				for (var f = 0; f < e_dir.amount; f++)
 				{

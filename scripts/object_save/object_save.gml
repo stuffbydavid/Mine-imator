@@ -6,7 +6,7 @@ var fn = file_dialog_save_object(filename_get_valid(tl_edit.display_name));
 if (fn = "")
 	return 0
 
-fn = filename_new_ext(fn, ".miobj")
+fn = filename_new_ext(fn, ".miobject")
 log("Saving object", fn)
 
 save_folder = filename_dir(fn)

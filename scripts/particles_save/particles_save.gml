@@ -6,7 +6,7 @@ var fn = file_dialog_save_particles(temp_edit.display_name);
 if (fn = "")
 	return 0
 	
-fn = filename_new_ext(fn, ".miparts")
+fn = filename_new_ext(fn, ".miparticles")
 
 log("Saving particles", fn)
 

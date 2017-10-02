@@ -14,8 +14,13 @@ opaque = argument3
 wei = argument4
 
 // Create matrix for rotation
-rotmat = matrix_create(point3D(-block_size / 2, -block_size / 2, -block_size / 2), vec3(0), vec3(1))
-rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_size / 2, block_size / 2, block_size / 2), vec3(-rot[X], 0, -rot[Z]), vec3(1)))
+if (rot[X] != 0 || rot[Z] != 0)
+{
+	rotmat = matrix_create(point3D(-block_size / 2, -block_size / 2, -block_size / 2), vec3(0), vec3(1))
+	rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_size / 2, block_size / 2, block_size / 2), vec3(-rot[X], 0, -rot[Z]), vec3(1)))
+}
+else
+	rotmat = null
 
 with (new(obj_block_render_model))
 {
@@ -60,9 +65,30 @@ with (new(obj_block_render_model))
 				var facerot, facenewdir;
 				relem.from = from
 				relem.to = to
-				relem.matrix = matrix_multiply(matrix, rotmat)
-				relem.rot_from = point3D_mul_matrix(from, rotmat)
-				relem.rot_to = point3D_mul_matrix(to, rotmat)
+				
+				// Create transform matrix
+				if (matrix != null)
+				{
+					if (rotmat != null)
+						relem.matrix = matrix_multiply(matrix, rotmat)
+					else
+						relem.matrix = matrix
+				}
+				else
+					relem.matrix = rotmat
+					
+				// Find (rotated) points
+				if (rotmat != null)
+				{
+					relem.rot_from = point3D_mul_matrix(from, rotmat)
+					relem.rot_to = point3D_mul_matrix(to, rotmat)
+				}
+				else
+				{
+					relem.rot_from = point3D_copy(from)
+					relem.rot_to = point3D_copy(to)
+				}
+				
 				relem.rotated = rotated
 				
 				for (var a = X; a <= Z; a++)

@@ -44,9 +44,9 @@ if (filename_ext(fn) = ".zip") // Unzip
 	var name = filename_new_ext(filename_name(fn), "");
 	unzip(fn)
 	
-	fn = file_find_single(unzip_directory, ".miparts;*.particles")
+	fn = file_find_single(unzip_directory, ".miparticles;*.particles")
 	if (!file_exists_lib(fn)) // Look in a subfolder with the same name as archive
-		fn = file_find_single(unzip_directory + name + "\\", ".miparts;*.particles")
+		fn = file_find_single(unzip_directory + name + "\\", ".miparticles;*.particles")
 	
 	if (!file_exists_lib(fn))
 	{
@@ -79,7 +79,7 @@ if (!history_redo && temp != bench_settings)
 
 // Post 1.1.0 (JSON)
 var rootmap, legacy;
-if (string_contains(filename_ext(fn), ".miparts"))
+if (string_contains(filename_ext(fn), ".miparticles"))
 {
 	log("Opening particles", fn)
 	rootmap = project_load_start(fn)

@@ -7194,7 +7194,7 @@
             "Key": "88e82aa6-468c-4fbe-9dca-852cf9243bd4",
             "Value": {
                 "id": "19aa5643-f687-4eb8-8580-2be0ff73ad8c",
-                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milang.yy",
+                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milanguage.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
