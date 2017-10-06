@@ -552,7 +552,7 @@
 			"legacy_id": 3,
 			"legacy_data": {
 				"0": "variant=dirt",
-				"1": "variant=coarsedirt",
+				"1": "variant=coarse_dirt",
 				"2": "variant=podzol"
 			}
 		},
@@ -1239,7 +1239,7 @@
 				"facing": [ "up", "north", "east", "south", "west" ]
 			},
 			"default_state": "facing=up",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 50,
 			"legacy_data": {
 				"0": "facing=up",
@@ -1770,7 +1770,7 @@
 		{
 			"name": "lit_redstone_ore",
 			"file": "lit_redstone_ore.json",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 74
 		},
 		{
@@ -1799,7 +1799,7 @@
 				"facing": [ "up", "north", "east", "south", "west" ]
 			},
 			"default_state": "facing=up",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 76,
 			"legacy_data": {
 				"0": "facing=up",
@@ -1931,6 +1931,7 @@
 				"axis": [ "x", "z" ]
 			},
 			"default_state": "axis=x",
+			"brightness": 0.5,
 			"legacy_id": 90,
 			"legacy_data": {
 				"0x1": {
@@ -1946,7 +1947,7 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 91,
 			"legacy_data": {
 				"0": "facing=south",
@@ -2007,7 +2008,7 @@
 				"delay": [ "1", "2", "3", "4" ]
 			},
 			"default_state": "facing=west,delay=1",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 94,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2540,6 +2541,7 @@
 		{
 			"name": "lit_redstone_lamp",
 			"file": "lit_redstone_lamp.json",
+			"brightness": 1,
 			"legacy_id": 124
 		},
 		{
@@ -2976,6 +2978,40 @@
 			}
 		},
 		{
+			"name": "trapped_chest",
+			"type": "chest",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=west",
+			"timeline": {
+				"model": "chest",
+				"model_state": {
+					"double=false": "variant=trapped",
+					"double=true": "variant=trapped_double"
+				},
+				"rotation_point": {
+					"double=true": [ -8, 0, 0 ]
+				},
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
+			"legacy_id": 146,
+			"legacy_data": {
+				"0x1+0x2+0x4": {
+					"2": "facing=north",
+					"3": "facing=south",
+					"4": "facing=west",
+					"5": "facing=east"
+				}
+			}
+		},
+		{
 			"name": "light_weighted_pressure_plate",
 			"file": "light_weighted_pressure_plate.json",
 			"type": "redstone_connect",
@@ -3038,7 +3074,10 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"mode": [ "compare", "subtract" ],
-				"powered": [ "true", "false" ]
+				"powered": [ 
+					{ "value": "true", "brightness": 0.75 },
+					"false"
+				]
 			},
 			"default_state": "facing=west,mode=compare,powered=false",
 			"legacy_id": 149,
@@ -3065,16 +3104,11 @@
 			"type": "redstone_comparator",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"mode": [
-					{ "value": "compare", "brightness": 1 },
-					"subtract"
-				],
-				"powered": [
-					{ "value": "true", "brightness": 1 },
-					"false"
-				]
+				"mode": [ "compare", "subtract" ],
+				"powered": [ "true", "false" ]
 			},
 			"default_state": "facing=west,mode=compare,powered=false",
+			"brightness": 0.75,
 			"legacy_id": 150,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3123,7 +3157,6 @@
 		{
 			"name": "redstone_block",
 			"file": "redstone_block.json",
-			"brightness": 1,
 			"legacy_id": 152
 		},
 		{
@@ -3156,9 +3189,7 @@
 				"variant": [
 					{ "value": "default", "file": "quartz_block.json" },
 					{ "value": "chiseled", "file": "chiseled_quartz_block.json" },
-					{ "value": "lines_x", "file": "quartz_column.json" },
-					{ "value": "lines_y", "file": "quartz_column.json" },
-					{ "value": "lines_z", "file": "quartz_column.json" }
+					{ "value": "lines", "file": "quartz_column.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -3167,9 +3198,9 @@
 			"legacy_data": {
 				"0": "variant=default",
 				"1": "variant=chiseled",
-				"2": "variant=lines_y,axis=y",
-				"3": "variant=lines_x,axis=x",
-				"4": "variant=lines_z,axis=z"
+				"2": "variant=lines,axis=y",
+				"3": "variant=lines,axis=x",
+				"4": "variant=lines,axis=z"
 			}
 		},
 		{
@@ -3501,6 +3532,7 @@
 		{
 			"name": "sea_lantern",
 			"file": "sea_lantern.json",
+			"brightness": 1,
 			"legacy_id": 169
 		},
 		{
@@ -4094,15 +4126,15 @@
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
 			"default_state": "facing=up",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 198,
 			"legacy_data": {
-				"0": "facing=up",
-				"1": "facing=down",
-				"2": "facing=east",
+				"0": "facing=down",
+				"1": "facing=up",
+				"2": "facing=north",
 				"3": "facing=south",
 				"4": "facing=west",
-				"5": "facing=north"
+				"5": "facing=east"
 			}
 		},
 		{
@@ -4298,7 +4330,7 @@
 		{
 			"name": "magma",
 			"file": "magma.json",
-			"brightness": 1,
+			"brightness": 0.75,
 			"legacy_id": 213
 		},
 		{

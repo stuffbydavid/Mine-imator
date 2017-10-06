@@ -1,13 +1,13 @@
 /// macros()
 
 // Debug
-#macro dev_mode						false
+#macro dev_mode						true
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 
 // Versions
 #macro mineimator_version			"1.1.0 PRE-RELEASE"
-#macro mineimator_version_extra		"private build"
+#macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017.10.03"
 #macro gm_runtime					"2.1.0.144"
 #macro minecraft_version			"1.12"
@@ -28,7 +28,6 @@
 #macro minecraft_directory		data_directory + "Minecraft\\"
 
 // Files
-#macro minecraft_assets_file	minecraft_directory + minecraft_version + ".midata"
 #macro language_file			languages_directory + "english.milanguage"
 #macro import_file				data_directory + "import.exe"
 #macro settings_file			data_directory + "settings.midata"
@@ -90,6 +89,7 @@
 #macro c_mesa_biome_foliage			make_color_rgb(158, 129, 77)
 #macro c_swampland_biome_grass		make_color_rgb(74, 116, 59)
 #macro c_swampland_biome_foliage	make_color_rgb(74, 116, 59)
+
 // Audio
 #macro sample_rate				44100
 #macro sample_size				4

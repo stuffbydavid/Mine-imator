@@ -14,13 +14,13 @@ opaque = argument3
 wei = argument4
 
 // Create matrix for rotation
-if (rot[X] != 0 || rot[Z] != 0)
-{
+//if (rot[X] != 0 || rot[Z] != 0)
+//{
 	rotmat = matrix_create(point3D(-block_size / 2, -block_size / 2, -block_size / 2), vec3(0), vec3(1))
 	rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_size / 2, block_size / 2, block_size / 2), vec3(-rot[X], 0, -rot[Z]), vec3(1)))
-}
-else
-	rotmat = null
+//}
+//else
+//	rotmat = null
 
 with (new(obj_block_render_model))
 {
@@ -67,12 +67,12 @@ with (new(obj_block_render_model))
 				relem.to = to
 				
 				// Create transform matrix
-				if (matrix != null)
+				/*if (matrix != null)
 				{
 					if (rotmat != null)
 						relem.matrix = matrix_multiply(matrix, rotmat)
 					else
-						relem.matrix = matrix
+						relem.matrix = array_copy_1d(matrix)
 				}
 				else
 					relem.matrix = rotmat
@@ -87,7 +87,11 @@ with (new(obj_block_render_model))
 				{
 					relem.rot_from = point3D_copy(from)
 					relem.rot_to = point3D_copy(to)
-				}
+				}*/
+				relem.matrix = matrix_multiply(matrix, rotmat)
+				relem.rot_from = point3D_mul_matrix(from, rotmat)
+				relem.rot_to = point3D_mul_matrix(to, rotmat)
+				
 				
 				relem.rotated = rotated
 				

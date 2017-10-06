@@ -7,8 +7,9 @@ var tl = argument0;
 if (tl = app)
 	return false
 
-with (tl)
-	if (tl_has_parent(other.id))
-		return true
+for (var i = 0; i < ds_list_size(tree_list); i++)
+	with (tree_list[|i])
+		if (id = tl || tl_has_child(tl))
+			return true
 
 return false

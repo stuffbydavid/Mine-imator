@@ -16,7 +16,6 @@ with (new(obj_timeline))
 	name = value_get_string(map[?"name"], name)
 	
 	temp = value_get_save_id(map[?"temp"], temp)
-	text = value_get_string(map[?"text"], text)
 	color = value_get_color(map[?"color"], color)
 	hide= value_get_real(map[?"hide"], hide)
 	lock = value_get_real(map[?"lock"], lock)
@@ -24,6 +23,9 @@ with (new(obj_timeline))
 	
 	if (type = "bodypart")
 		model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
+		
+	if (type = "text")
+		text = value_get_string(map[?"text"], text)
 	
 	part_of = value_get_save_id(map[?"part_of"], part_of)
 	if (part_of != null)
@@ -44,6 +46,15 @@ with (new(obj_timeline))
 			{
 				block_name = value_get_string(blockmap[?"name"], "")
 				block_state = value_get_state_vars(blockmap[?"state"])
+				
+				/*block_legacy_id = value_get_real(blockmap[?"legacy_id"], 2)
+				block_legacy_data = value_get_real(blockmap[?"legacy_data"], 0)
+				var block = mc_assets.block_legacy_id_map[?block_legacy_id];
+				if (!is_undefined(block))
+				{
+					block_name = block.name
+					block_state = array_copy_1d(block.legacy_data_state[block_legacy_data])
+				}*/
 			}
 		}
 	}

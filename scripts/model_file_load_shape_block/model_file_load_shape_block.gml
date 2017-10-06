@@ -1,6 +1,6 @@
 /// model_file_load_shape_block([bend])
 /// @arg [bend]
-/// @desc Generates a block shape, bend is supplied if this is the bended half.
+/// @desc Generates a block shape, bend is supplied if this is the bent half.
 
 var bend;
 if (argument_count > 0)

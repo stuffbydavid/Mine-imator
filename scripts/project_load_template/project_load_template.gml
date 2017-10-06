@@ -50,6 +50,16 @@ with (new(obj_template))
 		{
 			block_name = value_get_string(blockmap[?"name"], block_name)
 			block_state = value_get_state_vars(blockmap[?"state"])
+			
+			/*block_legacy_id = value_get_real(blockmap[?"legacy_id"], 2)
+			block_legacy_data = value_get_real(blockmap[?"legacy_data"], 0)
+			var block = mc_assets.block_legacy_id_map[?block_legacy_id];
+			if (!is_undefined(block))
+			{
+				block_name = block.name
+				block_state = array_copy_1d(block.legacy_data_state[block_legacy_data])
+			}*/
+			
 			block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
 			block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 			block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)

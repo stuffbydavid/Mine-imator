@@ -1,7 +1,7 @@
-/// temp_set_scenery(res, animate, [historyobj])
+/// temp_set_scenery(res, animate, [historyobject])
 /// @arg res
 /// @arg animate
-/// @arg [historyobj]
+/// @arg [historyobject]
 
 var res, animate, hobj;
 res = argument0

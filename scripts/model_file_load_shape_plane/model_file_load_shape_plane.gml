@@ -1,6 +1,6 @@
 /// model_file_load_shape_plane([bend])
 /// @arg [bend]
-/// @desc Generates a plane shape, bend is supplied if this is the bended half.
+/// @desc Generates a plane shape, bend is supplied if this is the bent half.
 
 var bend = false;
 if (argument_count > 0)

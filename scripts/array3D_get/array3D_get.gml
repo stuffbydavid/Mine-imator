@@ -3,7 +3,7 @@
 /// @arg size
 /// @arg point
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var arr, size, pnt;
 arr = argument0

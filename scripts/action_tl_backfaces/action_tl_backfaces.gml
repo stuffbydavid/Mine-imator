@@ -20,22 +20,6 @@ else
 	var hobj = history_save_var_start(action_tl_backfaces, false);
 	
 	with (obj_timeline)
-	{
-		if (!selected)
-			continue
-			
-		with (hobj)
-			history_save_var(other.id, other.backfaces, argument0)
-			
-		backfaces = argument0
-		with (obj_timeline)
-		{
-			if (tl_has_parent(other.id))
-			{
-				with (hobj)
-					history_save_var(other.id, other.backfaces, argument0)
-				backfaces = argument0
-			}
-		}
-	}
+		if (selected)
+			action_tl_backfaces_tree(id, argument0, hobj)
 }

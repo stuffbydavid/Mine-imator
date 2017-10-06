@@ -18,26 +18,7 @@ else if (history_redo)
 else
 {
 	var hobj = history_save_var_start(action_tl_texture_blur, false);
-	
 	with (obj_timeline)
-	{
-		if (!selected)
-			continue
-			
-		with (hobj)
-			history_save_var(other.id, other.texture_blur, argument0)
-			
-		texture_blur = argument0
-		
-		with (obj_timeline)
-		{
-			if (tl_has_parent(other.id))
-			{
-				with (hobj)
-					history_save_var(other.id, other.texture_blur, argument0)
-					
-				texture_blur = argument0
-			}
-		}
-	}
+		if (selected)
+			action_tl_texture_blur_tree(id, argument0, hobj)
 }

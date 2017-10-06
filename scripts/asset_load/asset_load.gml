@@ -153,6 +153,7 @@ log("load_folder", load_folder)
 switch (ext)
 {
 	// Object
+	case ".miproject":
 	case ".miobject":
 	{
 		project_load_objects(rootmap)
@@ -216,7 +217,7 @@ switch (ext)
 		break
 	}
 	
-	// Project
+	// Legacy project
 	case ".mproj":
 	{
 		with (new(obj_dummy))

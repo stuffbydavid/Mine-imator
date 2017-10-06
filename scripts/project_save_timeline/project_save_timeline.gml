@@ -7,7 +7,6 @@ json_save_object_start()
 	json_save_var("name", json_string_encode(name))
 	
 	json_save_var_save_id("temp", temp)
-	json_save_var("text", json_string_encode(text))
 	json_save_var_color("color", color)
 	json_save_var_bool("hide", hide)
 	json_save_var_bool("lock", lock)
@@ -15,6 +14,9 @@ json_save_object_start()
 	
 	if (type = "bodypart")
 		json_save_var("model_part_name", model_part_name)
+		
+	if (type = "text")
+		json_save_var("text", json_string_encode(text))
 		
 	if (part_of != null)
 	{
@@ -30,6 +32,21 @@ json_save_object_start()
 			json_save_object_start("block")
 				json_save_var("name", block_name)
 				json_save_var_state_vars("state", block_state)
+				
+				// Store legacy ID & state for future reference
+				var block = mc_assets.block_name_map[?block_name];
+				if (!is_undefined(block))
+				{
+					json_save_var("legacy_id", block.legacy_id)
+					for (var d = 0; d < 16; d++)
+					{
+						if (state_vars_match(block.legacy_data_state[d], block_state))
+						{
+							json_save_var("legacy_data", d)
+							break
+						}
+					}
+				}
 			json_save_object_done()
 		}
 		
@@ -72,6 +89,7 @@ json_save_object_start()
 			json_save_var_bool("color", inherit_color)
 			json_save_var_bool("texture", inherit_texture)
 			json_save_var_bool("visibility", inherit_visibility)
+			json_save_var_bool("bend", inherit_bend)
 			json_save_var_bool("rot_point", inherit_rot_point)
 		json_save_object_done()
 	

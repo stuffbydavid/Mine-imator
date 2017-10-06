@@ -12,17 +12,23 @@ else
 	popup_close()
 	
 // Update sky
-background_sky_update_clouds()
-background_ground_update_texture()
+if (background_loaded)
+{
+	background_sky_update_clouds()
+	background_ground_update_texture()
+}
 
 // Update scenery parts
 with (obj_timeline)
-	if (part_of != null)
+	if (loaded && part_of != null)
 		tl_update_scenery_part()
 
 // Update templates and timelines
 with (obj_template)
 {
+	if (!loaded)
+		continue
+	
 	temp_update()
 	
 	if (type = "char" || type = "spblock" || type = "bodypart")
@@ -37,6 +43,9 @@ with (obj_template)
 
 with (obj_timeline)
 {
+	if (!loaded)
+		continue
+		
 	tl_update()
 	tl_update_values()
 	
@@ -51,7 +60,8 @@ with (obj_timeline)
 }
 
 with (obj_particle_type)
-	ptype_update_sprite_vbuffers()
+	if (loaded)
+		ptype_update_sprite_vbuffers()
 	
 tl_update_length()
 tl_update_list()

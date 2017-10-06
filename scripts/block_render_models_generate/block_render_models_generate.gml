@@ -28,13 +28,13 @@ for (var m = 0; m < modelslen; m++)
 				x2 = to[X];		y2 = to[Y];   z2 = to[Z]
 				
 				// Apply offset to transformation matrix
-				if (matrix != null)
-				{
-					mat = matrix;
+				//if (matrix != null)
+				//{
+					mat = array_copy_1d(matrix);
 					mat[MAT_X] += off[X]
 					mat[MAT_Y] += off[Y]
 					mat[MAT_Z] += off[Z]
-				}
+				/*}
 				
 				// Simply add to shape
 				else
@@ -42,7 +42,7 @@ for (var m = 0; m < modelslen; m++)
 					mat = null
 					x1 += off[X]; y1 += off[Y]; z1 += off[Z]
 					x2 += off[X]; y2 += off[Y]; z2 += off[Z]
-				}
+				}*/
 		
 				// Create faces
 				for (var f = 0; f < e_dir.amount; f++)

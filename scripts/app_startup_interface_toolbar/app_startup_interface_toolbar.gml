@@ -1,7 +1,7 @@
 /// app_startup_interface_toolbar()
 
-toolbar_location = "top"
-toolbar_size = 82
+toolbar_location = setting_toolbar_location
+toolbar_size = setting_toolbar_size
 
 toolbar_rows = 0
 toolbar_resize_size = 0

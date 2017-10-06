@@ -3,11 +3,6 @@
 
 if (object_index != app && update_matrix)
 {
-	var pos, rot, sca, tl;
-	pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
-	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
-	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
-	
 	// Get parent matrix
 	if (parent != app)
 	{
@@ -27,11 +22,16 @@ if (object_index != app && update_matrix)
 	if (type = "bodypart" && model_part != null)
 	{
 		if (part_of != null)
-			matrix_parent = matrix_multiply(matrix_create(model_part.position, vec3(0), vec3(1)), matrix_parent)
-		rot = vec3_add(rot, model_part.rotation)
+			matrix_parent = matrix_multiply(matrix_create(model_part.position, model_part.rotation, vec3(1)), matrix_parent)
+		else
+			matrix_parent = matrix_multiply(matrix_create(point3D(0, 0, 0), model_part.rotation, vec3(1)), matrix_parent)
 	}
 		
 	// Create main matrix
+	var pos, rot, sca, tl;
+	pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
+	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
+	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
 	matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
 		
 	// No scale or "resize" mode

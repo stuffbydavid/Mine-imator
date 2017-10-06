@@ -134,6 +134,9 @@ with (new(obj_block))
 	timeline = false
 	if (ds_map_valid(timelinemap))
 		block_load_timeline(timelinemap, typemap[?timelinemap])
+		
+	// Legacy ID
+	legacy_id = value_get_real(map[?"legacy_id"], 0)
 	
 	// Legacy data
 	for (var d = 0; d < 16; d++)

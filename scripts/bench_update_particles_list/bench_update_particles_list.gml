@@ -1,6 +1,6 @@
 /// bench_update_particles_list()
 
-var files = file_find(particles_directory, ".miparticles;.particles");
+var files = file_find(particles_directory, ".miparticles");
 
 sortlist_clear(bench_settings.particles_list)
 if (array_length_1d(files) > 0)

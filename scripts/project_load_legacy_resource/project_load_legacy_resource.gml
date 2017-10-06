@@ -36,7 +36,7 @@ with (new(obj_resource))
 	if (type = "itemsheet")
 		item_sheet_size = vec2(16, 16)
 			
-	// No support for old unzipped packs
+	// No support for old unzipped packs, sorry!
 	if (type = "pack")
 	{
 		save_id_map[?load_id] = "default"

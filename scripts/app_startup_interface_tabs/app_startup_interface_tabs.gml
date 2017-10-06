@@ -522,7 +522,7 @@ with (settings)
 		tbx_shadows_blur_quality = new_textbox_integer()
 		tbx_shadows_blur_size = new_textbox_integer()
 		tbx_shadows_blur_size.suffix = "%"
-		tbx_dof_blur_size = new_textbox_integer()
+		tbx_dof_blur_size = new_textbox_decimals()
 		tbx_dof_blur_size.suffix = "%"
 		tbx_aa_power = new_textbox_integer()
 		tbx_aa_power.suffix = "%"

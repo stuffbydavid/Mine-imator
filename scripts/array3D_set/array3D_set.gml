@@ -4,7 +4,7 @@
 /// @arg point
 /// @arg value
 
-gml_pragma("forceinline")
+//gml_pragma("forceinline")
 
 var arr, size, pnt, val;
 arr = argument0

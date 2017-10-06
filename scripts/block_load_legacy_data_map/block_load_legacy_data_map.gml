@@ -20,7 +20,7 @@ while (!is_undefined(val))
 		case "0x1+0x2":		block_load_legacy_data_map(map[?val], 3, 1);						break
 		case "0x1+0x2+0x4":	block_load_legacy_data_map(map[?val], 7, 1);						break
 		case "0x4+0x8":		block_load_legacy_data_map(map[?val], 12, 4);						break
-		default:			block_load_legacy_data_state(val, map[?val], bitmask, bitbase);	break
+		default:			block_load_legacy_data_state(val, map[?val], bitmask, bitbase);		break
 	}
 	
 	val = ds_map_find_next(map, val)

@@ -111,10 +111,8 @@ with (new(obj_timeline))
 	lock_bend = buffer_read_byte()
 
 	if (load_format < e_project.FORMAT_100_DEBUG)
-	{
 		repeat (buffer_read_int())
 			buffer_read_int()
-	}
 
 	tree_extend = buffer_read_byte()
 	inherit_position = buffer_read_byte()
@@ -163,6 +161,16 @@ with (new(obj_timeline))
 	if (load_format >= e_project.FORMAT_CB_100) 
 	{
 		inherit_bend = buffer_read_byte()
+		
+		// Reset bend to 0
+		if (inherit_bend)
+		{
+			value[e_value.BEND_ANGLE] = 0
+			for (var i = 0; i < ds_list_size(keyframe_list); i++)
+				with (keyframe_list[|i])
+					value[e_value.BEND_ANGLE]= 0
+		}
+		
 		/*hide_quality_high = */buffer_read_byte()
 		/*hide_quality_low = */buffer_read_byte()
 		/*biome = */buffer_read_byte()

@@ -1,5 +1,5 @@
-/// temp_update_model_timelines([historyobj])
-/// @arg [historyobj]
+/// temp_update_model_timelines([historyobject])
+/// @arg [historyobject]
 /// @desc Update timelines of the changed model.
 
 var hobj;

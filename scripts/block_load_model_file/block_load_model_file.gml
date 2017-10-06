@@ -84,7 +84,7 @@ with (new(obj_block_load_model_file))
 				}
 				else
 				{
-					matrix = null
+					matrix = MAT_IDENTITY
 					rotated = false
 				}
 				

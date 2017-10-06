@@ -44,12 +44,12 @@ if (background_loaded)
 	}
 }
 
-// Set timeline references
+// Set timeline IDs
 with (obj_timeline)
 	if (loaded && !is_undefined(save_id_map[?load_id]))
 		save_id = save_id_map[?load_id]
 
-// Set template references
+// Set template IDs and references
 with (obj_template)
 {
 	if (!loaded)
@@ -92,6 +92,7 @@ with (obj_template)
 		item_tex.type = "texture"
 }
 
+// Set timeline references
 with (obj_timeline)
 {
 	if (!loaded)
@@ -132,7 +133,7 @@ with (obj_keyframe)
 	value[e_value.TEXT_FONT] = save_id_find(save_id_map[?value[e_value.TEXT_FONT]])
 }
 
-// Set particle type references
+// Set particle type IDs and references
 with (obj_particle_type)
 {
 	if (!loaded)

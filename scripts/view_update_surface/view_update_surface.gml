@@ -25,10 +25,11 @@ if (view.render)
 else
 	render_low()
 
-if (view.controls && tl_edit_amount > 0)
+if (view.controls)
 {
 	// Selection
-	view.surface_select = render_select(view.surface_select)
+	if (tl_edit_amount > 0)
+		view.surface_select = render_select(view.surface_select)
 	
 	// Shapes and controls
 	if (surface_exists(render_target))

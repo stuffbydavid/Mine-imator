@@ -18,23 +18,5 @@ else if (history_redo)
 else
 {
 	var hobj = history_save_var_start(action_tl_lock, false);
-	
-	with (argument0)
-	{
-		with (hobj)
-			history_save_var(other.id, other.lock, !other.lock)
-			
-		lock = !lock
-		
-		with (obj_timeline)
-		{
-			if (tl_has_parent(other.id))
-			{
-				with (hobj)
-					history_save_var(other.id, other.lock, argument0.lock)
-					
-				lock = argument0.lock
-			}
-		}
-	}
+	action_tl_lock_tree(argument0, !argument0.lock, hobj)
 }
