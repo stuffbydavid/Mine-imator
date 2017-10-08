@@ -1,6 +1,6 @@
 /// block_set_leaves()
 /// @desc Returns the opaque or transparent model.
-
+/*
 var variantval = state_vars_get_value(vars, "variant");
 
 if (block_current.states_map != null)
@@ -34,4 +34,4 @@ if (block_current.states_map != null)
 	}
 }
 
-return null
+return null*/

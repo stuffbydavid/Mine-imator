@@ -1,11 +1,11 @@
-/// block_get_timeline(block, state)
+/// block_get_timeline(block, stateid)
 /// @arg block
-/// @arg state
+/// @arg stateid
 
-var block, state;
+var block, stateid;
 block = argument0
-state = argument1
-
+stateid = argument1
+/*
 mc_builder.vars = array_copy_1d(state)
 
 // Run block specific script, returns null to skip this block
@@ -94,4 +94,4 @@ with (new(obj_block_tl))
 
 	position = point3D_add(other.block_pos, position)
 	return id
-}
+}*/

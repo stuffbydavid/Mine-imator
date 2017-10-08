@@ -32,27 +32,25 @@ switch (load_stage)
 				build_size[Y] = buffer_read_short_be() // Derp
 				build_size[X] = buffer_read_short_be()
 				build_size[Z] = buffer_read_short_be()
-				log("Size", mc_builder.build_size)
 				
-				array3D_set_size(block_obj, build_size)
-				array3D_set_size(block_state, build_size)
-				array3D_set_size(block_render_models, build_size)
+				builder_set_size()
+				log("Size", build_size)
 			
-				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
-					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
+					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 					{
-						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
+						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
 							var bid, bdata, block;
 							bid = buffer_read_byte()
 							bdata = buffer_read_byte()
 							block = mc_assets.block_legacy_id_map[?bid]
-							array3D_set(block_obj, build_size, build_pos, block)
-							if (is_undefined(block))
-								array3D_set(block_state, build_size, build_pos, "")
-							else
-								array3D_set(block_state, build_size, build_pos, block.legacy_data_state[bdata])
+							if (!is_undefined(block))
+							{
+								array3D_set(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z, block)
+								array3D_set(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
+							}
 						}
 					}
 				}
@@ -94,6 +92,8 @@ switch (load_stage)
 			mc_builder.build_size[X] = schematicmap[?"Width"]
 			mc_builder.build_size[Y] = schematicmap[?"Length"]
 			mc_builder.build_size[Z] = schematicmap[?"Height"]
+			log("Size", mc_builder.build_size)
+				
 			if (is_undefined(mc_builder.build_size[X]) || 
 				is_undefined(mc_builder.build_size[Y]) || 
 				is_undefined(mc_builder.build_size[Z]))
@@ -109,8 +109,6 @@ switch (load_stage)
 				log("Schematic error", "Size cannot be 0")
 				break
 			}
-			
-			log("Size", mc_builder.build_size)
 		
 			// Get block/data array
 			var blocksarray = schematicmap[?"Blocks"];
@@ -135,34 +133,41 @@ switch (load_stage)
 			with (mc_builder)
 			{
 				debug_timer_start()
-				array3D_set_size(block_obj, build_size)
-				array3D_set_size(block_state, build_size)
-				array3D_set_size(block_render_models, build_size)
-			
-				// ID
-				buffer_seek(buffer_current, buffer_seek_start, blocksarray)
-				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
-					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
-						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-							array3D_set(block_obj, build_size, build_pos, mc_assets.block_legacy_id_map[?buffer_read_byte()])
 				
-				// Data
-				buffer_seek(buffer_current, buffer_seek_start, dataarray)
-				for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+				builder_set_size()
+					
+				// Block
+				buffer_seek(buffer_current, buffer_seek_start, blocksarray)
+				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
-					for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
+					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 					{
-						for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
+						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
-							var block, bdata = buffer_read_byte();
-							block = array3D_get(block_obj, build_size, build_pos)
-							if (is_undefined(block))
-								array3D_set(block_state, build_size, build_pos, array())
-							else
-								array3D_set(block_state, build_size, build_pos, block.legacy_data_state[bdata])
+							var block = mc_assets.block_legacy_id_map[?buffer_read_byte()];
+							if (!is_undefined(block))
+								array3D_set(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z, block)
 						}
 					}
 				}
+					
+				// State
+				buffer_seek(buffer_current, buffer_seek_start, dataarray)
+				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
+				{
+					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
+					{
+						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
+						{
+							var block, bdata;
+							block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z, build_pos)
+							bdata = buffer_read_byte()
+							if (block != null)
+								array3D_set(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
+						}
+					}
+				}
+				
 				debug_timer_stop("res_load_scenery, Parse blocks")
 				
 				// Tile entities
@@ -216,7 +221,9 @@ switch (load_stage)
 			ds_list_clear(scenery_tl_list)
 		}
 		
-		mc_builder.build_pos = point3D(0, 0, 0)
+		mc_builder.build_pos_x = 0
+		mc_builder.build_pos_y = 0
+		mc_builder.build_pos_z = 0
 		mc_builder.block_tl_list = scenery_tl_list
 			
 		with (app)
@@ -237,14 +244,14 @@ switch (load_stage)
 		// Set models
 		with (mc_builder)
 		{
-			for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-				for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
+			for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
+				for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 					builder_set_models()
-			
-			build_pos[Z]++
+						
+			build_pos_z++
 		}
 		
-		if (mc_builder.build_pos[Z] = mc_builder.build_size[Z])
+		if (mc_builder.build_pos_z = mc_builder.build_size_z)
 		{
 			debug_timer_stop("res_load_scenery, Set models")
 			debug_timer_start()
@@ -253,14 +260,14 @@ switch (load_stage)
 			block_vbuffer_start()
 		
 			load_stage = "model"
-			mc_builder.build_pos[Z] = 0
+			mc_builder.build_pos_z = 0
 			
 			with (app)
 				popup_loading.text = text_get("loadscenerymodel")
 		}
 		else
 			with (app)
-				popup_loading.progress = 2 / 10 + (2 / 10) * (mc_builder.build_pos[Z] / mc_builder.build_size[Z])
+				popup_loading.progress = 2 / 10 + (2 / 10) * (mc_builder.build_pos_z / mc_builder.build_size_z)
 		
 		break
 	}
@@ -270,21 +277,24 @@ switch (load_stage)
 	{
 		with (mc_builder)
 		{
-			for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-				for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
+			for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
+				for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 					builder_generate()
 					
-			build_pos[Z]++
+			build_pos_z++
 		}
 		
 		// All done
-		if (mc_builder.build_pos[Z] = mc_builder.build_size[Z])
+		if (mc_builder.build_pos_z = mc_builder.build_size_z)
 		{
 			debug_timer_stop("res_load_scenery, Generate models")
 			block_vbuffer_done()
 			mc_builder.block_tl_list = null
 			
-			scenery_size = vec3(mc_builder.build_size[Y], mc_builder.build_size[X], mc_builder.build_size[Z]) // Rotate 90 degrees
+			if (dev_mode_rotate_blocks) // Rotate 90 degrees
+				scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
+			else
+				scenery_size = vec3(mc_builder.build_size_x, mc_builder.build_size_y, mc_builder.build_size_z)
 			ready = true
 
 			// Put map name in resource name
@@ -320,7 +330,7 @@ switch (load_stage)
 		}
 		else
 			with (app)
-				popup_loading.progress = 4 / 10 + (6 / 10) * (mc_builder.build_pos[Z] / mc_builder.build_size[Z])
+				popup_loading.progress = 4 / 10 + (6 / 10) * (mc_builder.build_pos_z / mc_builder.build_size_z)
 		
 		break
 	}

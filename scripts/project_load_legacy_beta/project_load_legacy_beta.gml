@@ -2,7 +2,7 @@
 /// @arg loadbackground
 /// @desc Load a project made in Mine-imator BETA 0.5, 0.6 or 0.7 DEMO
 
-var load = new(obj_dummy);
+var load = new(obj_data);
 
 with (load)
 {
@@ -145,7 +145,7 @@ with (load)
 		tl_keyframes[a] = buffer_read_short()
 		for (var b = 0; b < tl_keyframes[a]; b++)
 		{
-			with (new(obj_dummy))
+			with (new(obj_keyframe))
 			{
 				pos = buffer_read_int()
 				

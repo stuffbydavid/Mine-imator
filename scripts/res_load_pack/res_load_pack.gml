@@ -22,6 +22,7 @@ switch (load_stage)
 		
 		type = "pack"
 		load_stage = "modeltextures"
+		load_assets_dir = unzip_directory
 		with (app)
 		{
 			popup_loading.text = text_get("loadpackmodeltextures")

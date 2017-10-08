@@ -220,7 +220,7 @@ switch (ext)
 	// Legacy project
 	case ".mproj":
 	{
-		with (new(obj_dummy))
+		with (new(obj_data))
 		{
 			project_load_legacy_project()
 			instance_destroy()

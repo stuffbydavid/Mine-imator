@@ -3,7 +3,7 @@
 
 window_busy = "timelinemove"
 
-timeline_move_obj = new(obj_dummy)
+timeline_move_obj = new(obj_data)
 timeline_move_obj.tree_list = ds_list_create()
 
 action_tl_move_start_tree()

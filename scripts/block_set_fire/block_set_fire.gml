@@ -1,6 +1,6 @@
 /// block_set_fire()
 /// @desc Locates non-air blocks.
-
+/*
 for (var d = 0; d < e_dir.amount; d++)
 {
 	var dstr = dir_get_string(d);
@@ -20,4 +20,4 @@ for (var d = 0; d < e_dir.amount; d++)
 	}
 	
 	state_vars_set_value(vars, dstr, "false")
-}	
+}	*/

@@ -1,6 +1,6 @@
 /// block_set_vine()
 /// @desc Connects to non-air blocks above.
-
+/*
 if (build_edge[e_dir.UP])
 {
 	state_vars_set_value(vars, "up", "false")
@@ -16,4 +16,4 @@ if (!is_undefined(block) && block != block_current)
 
 state_vars_set_value(vars, "up", "false")
 
-return 0
+return 0*/

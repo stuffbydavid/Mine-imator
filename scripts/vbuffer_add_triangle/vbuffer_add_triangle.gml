@@ -1,5 +1,5 @@
-/// vbuffer_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3)
 /// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [normal, [color, [matrix]]])
+/// OR vbuffer_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3, [color, [matrix]])
 /// @arg pos1
 /// @arg pos2
 /// @arg pos3
@@ -47,22 +47,44 @@ else
 {
 	var x1, y1, z1, x2, y2, z2, x3, y3, z3;
 	var nx, ny, nz;
+	var color;
 	
-	x1 = argument[0]
-	y1 = argument[1]
-	z1 = argument[2]
-	x2 = argument[3]
-	y2 = argument[4]
-	z2 = argument[5]
-	x3 = argument[6]
-	y3 = argument[7]
-	z3 = argument[8]
+	if (argument_count > 15 && argument[15] != null)
+		color = argument[15]
+	else
+		color = -1
+		
+	if (argument_count > 16 && argument[16] != null)
+	{
+		var mat = argument[16];
+		x1 = mat[@ 0] * argument[0] + mat[@ 4] * argument[1] + mat[@ 8] * argument[2] + mat[@ 12]
+		y1 = mat[@ 1] * argument[0] + mat[@ 5] * argument[1] + mat[@ 9] * argument[2] + mat[@ 13]
+		z1 = mat[@ 2] * argument[0] + mat[@ 6] * argument[1] + mat[@ 10] * argument[2] + mat[@ 14]
+		x2 = mat[@ 0] * argument[3] + mat[@ 4] * argument[4] + mat[@ 8] * argument[5] + mat[@ 12]
+		y2 = mat[@ 1] * argument[3] + mat[@ 5] * argument[4] + mat[@ 9] * argument[5] + mat[@ 13]
+		z2 = mat[@ 2] * argument[3] + mat[@ 6] * argument[4] + mat[@ 10] * argument[5] + mat[@ 14]
+		x3 = mat[@ 0] * argument[6] + mat[@ 4] * argument[7] + mat[@ 8] * argument[8] + mat[@ 12]
+		y3 = mat[@ 1] * argument[6] + mat[@ 5] * argument[7] + mat[@ 9] * argument[8] + mat[@ 13]
+		z3 = mat[@ 2] * argument[6] + mat[@ 6] * argument[7] + mat[@ 10] * argument[8] + mat[@ 14]
+	}
+	else
+	{
+		x1 = argument[0]
+		y1 = argument[1]
+		z1 = argument[2]
+		x2 = argument[3]
+		y2 = argument[4]
+		z2 = argument[5]
+		x3 = argument[6]
+		y3 = argument[7]
+		z3 = argument[8]
+	}
 
 	nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2)
 	ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2)
 	nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2)
 
-	vertex_add(x1, y1, z1, nx, ny, nz, argument[9], argument[10])
-	vertex_add(x2, y2, z2, nx, ny, nz, argument[11], argument[12])
-	vertex_add(x3, y3, z3, nx, ny, nz, argument[13], argument[14])
+	vertex_add(x1, y1, z1, nx, ny, nz, argument[9], argument[10], color)
+	vertex_add(x2, y2, z2, nx, ny, nz, argument[11], argument[12], color)
+	vertex_add(x3, y3, z3, nx, ny, nz, argument[13], argument[14], color)
 }

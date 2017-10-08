@@ -5,26 +5,29 @@ block_vbuffer_start()
 
 with (mc_builder)
 {
-	build_size = test(other.block_repeat_enable, vec3(other.block_repeat[Y], other.block_repeat[X], other.block_repeat[Z]), vec3(1))
-	
-	array3D_set_size(block_obj, build_size)
-	array3D_set_size(block_state, build_size)
-	array3D_set_size(block_render_models, build_size)
+	if (dev_mode_rotate_blocks)
+		build_size = test(other.block_repeat_enable, vec3(other.block_repeat[Y], other.block_repeat[X], other.block_repeat[Z]), vec3(1))
+	else
+		build_size = test(other.block_repeat_enable, vec3(other.block_repeat[X], other.block_repeat[Y], other.block_repeat[Z]), vec3(1))
+	builder_set_size()
 
 	// Set blocks
-	array3D_fill(block_obj, build_size, mc_assets.block_name_map[?other.block_name])
-	array3D_fill(block_state, build_size, other.block_state)
+	var block, stateid;
+	block = mc_assets.block_name_map[?other.block_name]
+	stateid = block_get_state_id(block, other.block_state)
+	array3D_fill(block_obj, block)
+	array3D_fill(block_state_id, stateid)
 				
 	// Set models
-	for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-		for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
-			for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
+		for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
+			for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				builder_set_models()
 				
 	// Generate
-	for (build_pos[X] = 0; build_pos[X] < build_size[X]; build_pos[X]++)
-		for (build_pos[Y] = 0; build_pos[Y] < build_size[Y]; build_pos[Y]++)
-			for (build_pos[Z] = 0; build_pos[Z] < build_size[Z]; build_pos[Z]++)
+	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
+		for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
+			for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				builder_generate()
 }
 

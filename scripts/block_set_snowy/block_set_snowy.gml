@@ -1,6 +1,6 @@
 /// block_set_snowy()
 /// @desc Check for a snow block above the current block.
-
+/*
 if (state_vars_get_value(vars, "snowy") != null)
 	return 0
 
@@ -17,4 +17,4 @@ if (!build_edge[e_dir.UP])
 
 state_vars_set_value(vars, "snowy", "false")
 
-return 0
+return 0*/

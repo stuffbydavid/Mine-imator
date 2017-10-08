@@ -212,19 +212,15 @@ with (mc_assets)
 				debug_timer_stop("Load blocks")
 	
 				// Clear up loaded models
-				key = ds_map_find_first(mc_block_model_file_map)
+				key = ds_map_find_first(load_assets_model_file_map)
 				while (!is_undefined(key))
 				{
-					with (mc_block_model_file_map[?key])
+					with (load_assets_model_file_map[?key])
 						instance_destroy()
-					key = ds_map_find_next(mc_block_model_file_map, key)
+					key = ds_map_find_next(load_assets_model_file_map, key)
 				}
 		
-				debug("Block state files", ds_map_size(mc_block_state_file_map))
-				debug("Block model files", ds_map_size(mc_block_model_file_map))
-				
-				ds_map_destroy(mc_block_state_file_map)
-				ds_map_destroy(mc_block_model_file_map)
+				ds_map_destroy(load_assets_model_file_map)
 				ds_map_destroy(load_assets_map)
 				ds_map_destroy(load_assets_type_map)
 				

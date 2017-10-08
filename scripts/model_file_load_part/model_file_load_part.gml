@@ -124,7 +124,7 @@ with (new(obj_model_part))
 			log("Missing parameter \"offset\"")
 			return null
 		}
-		bend_offset_noscale = bendmap[?"offset"]
+		bend_offset = bendmap[?"offset"]
 		
 		// Part
 		if (!is_string(bendmap[?"part"])) 
@@ -135,12 +135,12 @@ with (new(obj_model_part))
 		
 		switch (bendmap[?"part"])
 		{
-			case "right":	bend_part = e_part.RIGHT;	bend_offset = bend_offset_noscale * scale[X];	break
-			case "left":	bend_part = e_part.LEFT;	bend_offset = bend_offset_noscale * scale[X];	break
-			case "front":	bend_part = e_part.FRONT;	bend_offset = bend_offset_noscale * scale[Y];	break
-			case "back":	bend_part = e_part.BACK;	bend_offset = bend_offset_noscale * scale[Y];	break
-			case "upper":	bend_part = e_part.UPPER;	bend_offset = bend_offset_noscale * scale[Z];	break
-			case "lower":	bend_part = e_part.LOWER;	bend_offset = bend_offset_noscale * scale[Z];	break
+			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	break
+			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	break
+			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	break
+			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	break
+			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	break
+			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	break
 			default:
 				log("Invalid parameter \"part\"")
 				return null
@@ -189,7 +189,6 @@ with (new(obj_model_part))
 		bend_axis = null
 		bend_direction = null
 		bend_offset = 0
-		bend_offset_noscale = 0
 		bend_invert = false
 	}
 	

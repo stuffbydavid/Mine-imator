@@ -1,6 +1,6 @@
 /// block_set_chorus_plant()
 /// @desc Connects to other chorus plants, chorus flowers and end stone below.
-
+/*
 for (var d = 0; d <= e_dir.amount; d++)
 {
 	var dstr = dir_get_string(d);
@@ -39,4 +39,4 @@ for (var d = 0; d <= e_dir.amount; d++)
 	state_vars_set_value(vars, dstr, "false")
 }
 
-return 0
+return 0*/

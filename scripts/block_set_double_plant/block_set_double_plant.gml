@@ -1,6 +1,6 @@
 /// block_set_double_plant()
 /// @desc Returns an array with the upper and lower plant models.
-
+/*
 var half = state_vars_get_value(vars, "half");
 if (half = null || half = "upper")
 	return 0
@@ -37,4 +37,4 @@ with (block_current.states_map[?"variant"])
 	}
 }
 
-return models
+return models*/

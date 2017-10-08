@@ -16,7 +16,7 @@ if (block_sheet_ani_depth_list != null)
 	ds_list_destroy(block_sheet_ani_depth_list)
 		
 // Create new
-var blocksize, texlist, texanilist, surf, anisurf, samplepos, sampleposamount, wid;
+var blocksize, texlist, texanilist, surf, anisurf, wid;
 blocksize = null
 
 debug_timer_start()
@@ -203,6 +203,7 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 gpu_set_blendmode(bm_normal)
 
 // Setup texture sample positions
+var samplepos, sampleposamount;
 samplepos[0] = point2D(blocksize / 2, blocksize / 2)
 samplepos[1] = point2D(0, blocksize / 2)
 samplepos[2] = point2D(blocksize / 2, 0)
@@ -225,8 +226,8 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 		continue
 	}
 	
-	// Opaque leaves are treated as transparent to fix wind issues
-	var opaque = string_contains(mc_assets.block_texture_list[|t], " opaque");
+	// Leaves are always treated as transparent (opaque or not) to fix wind issues
+	var opaque = string_contains(mc_assets.block_texture_list[|t], "leaves");
 	if (opaque)
 	{
 		ds_list_add(block_sheet_depth_list, e_block_depth.DEPTH1)

@@ -1,14 +1,14 @@
 /// view_control_bend(view)
 /// @arg view
 
-var view, len, axis, mat;
+var view, len, part, mat;
 view = argument0
 len = point3D_distance(cam_from, tl_edit.world_pos) * 0.2 * 0.6
-axis = tl_edit.model_part.bend_axis
+part = tl_edit.model_part
 
-if (axis = X)
+if (part.bend_axis = X)
 	mat = matrix_multiply(matrix_build(0, 0, 0, 0, 90, 0, 1, 1, 1), tl_edit.matrix)
-else if (axis = Y)
+else if (part.bend_axis = Y)
 	mat = matrix_multiply(matrix_build(0, 0, 0, 0, 90, 90, 1, 1, 1), tl_edit.matrix)
 else
 	mat = matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1), tl_edit.matrix)
@@ -28,7 +28,7 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && view_contr
 		// Find rotate amount
 		ang = point_direction(mouse_x - content_x, mouse_y - content_y, view_control_pos[X], view_control_pos[Y])
 		prevang = point_direction(mouse_previous_x - content_x, mouse_previous_y - content_y, view_control_pos[X], view_control_pos[Y])
-		rot = angle_difference_fix(ang, prevang) * test(view_control_flip, -1, 1) * test(tl_edit.model_part.bend_direction != e_bend.FORWARD, -1, 1)
+		rot = angle_difference_fix(ang, prevang) * negate(view_control_flip) * negate(part.bend_invert) * negate(part.bend_direction != e_bend.FORWARD)
 		view_control_value += rot
 		
 		// Snap

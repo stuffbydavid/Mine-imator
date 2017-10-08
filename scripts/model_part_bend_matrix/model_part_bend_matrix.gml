@@ -6,7 +6,7 @@
 
 var part, angle, pos, rot, scale;
 part = argument0
-angle = argument1
+angle = tl_value_clamp(e_value.BEND_ANGLE, argument1)
 pos = argument2
 
 if (part.bend_part = null)

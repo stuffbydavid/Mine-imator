@@ -6,7 +6,7 @@
 
 var shape, angle, roundbend;
 shape = argument0
-angle = argument1
+angle = tl_value_clamp(e_value.BEND_ANGLE, argument1)
 roundbend = argument2
 
 with (shape)
@@ -35,10 +35,11 @@ with (shape)
 	else
 		partsign = 1
 
-	var texsize, sizefill, pmidp, nmidp, pcurp, ncurp;
+	var invertsign, texsize, sizefill, pmidp, nmidp, pcurp, ncurp;
 	var sqrtlen, backnormal;
 	var pmidtex, nmidtex, pedgetex, nedgetex, nbacktex, pbacktex;
-
+	
+	invertsign = negate(invert)
 	texsize = point3D_sub(to_noscale, from_noscale)
 	backnormal = array(null, null)
 	sqrtlen = sqrt(2 - abs(90 - angle) / 90)
@@ -63,7 +64,7 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexy = to_noscale[Z] - (bend_offset_noscale - position_noscale[Z]);
+				var midtexy = (to[Z] - (bend_offset - position[Z])) / scale[Z] ;
 				pmidtex = point2D_add(uv, point2D(texsize[X] + to_noscale[Y], midtexy)) // East middle
 				nmidtex = point2D_add(uv, point2D(-to_noscale[Y], midtexy)) // West middle
 				if (anglesign * partsign > 0)
@@ -98,7 +99,7 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexx = to_noscale[Y] - (bend_offset_noscale - position_noscale[Y]);
+				var midtexx = (to[Y] - (bend_offset - position[Y])) / scale[Y];
 				pmidtex = point2D_add(uv, point2D(texsize[X] + midtexx, to_noscale[Z])) // East middle
 				nmidtex = point2D_add(uv, point2D(-midtexx, to_noscale[Z])) // West middle
 				if (anglesign * partsign > 0)
@@ -142,7 +143,7 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexy = to_noscale[Z] - (bend_offset_noscale - position_noscale[Z]);
+				var midtexy = (to[Z] - (bend_offset - position[Z])) / scale[Z];
 				pmidtex = point2D_add(uv, point2D(-from_noscale[X], midtexy)) // South middle
 				nmidtex = point2D_add(uv, point2D(texsize[X] + texsize[Y] - from_noscale[X], midtexy)) // North middle
 				if (anglesign * partsign > 0)
@@ -177,7 +178,7 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexx = texsize[X] - (to_noscale[X] - (bend_offset_noscale - position_noscale[X]));
+				var midtexx = texsize[X] - (to[X] - (bend_offset - position[X])) / scale[X];
 				pmidtex = point2D_add(uv, point2D(midtexx, to_noscale[Z])) // South middle
 				nmidtex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsize[X] - midtexx, to_noscale[Z])) // North middle
 				if (anglesign * partsign > 0)
@@ -221,7 +222,7 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexy = to_noscale[Y] - (bend_offset_noscale - position_noscale[Y]);
+				var midtexy = (to[Y] - (bend_offset - position[Y])) / scale[Y];
 				pmidtex = point2D_add(uv, point2D(-from_noscale[Z], -texsize[Y] + midtexy)) // Top middle
 				nmidtex = point2D_add(uv, point2D(texsize[X] - from_noscale[Z], -texsize[Y] + midtexy)) // Bottom middle
 				if (anglesign * partsign > 0)
@@ -256,7 +257,7 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexx = texsize[X] - (to_noscale[X] - (bend_offset_noscale - position_noscale[X]));
+				var midtexx = texsize[X] - (to[X] - (bend_offset - position[X])) / scale[X];
 				pmidtex = point2D_add(uv, point2D(midtexx, -texsize[Y] - from_noscale[Y])) // Top middle
 				nmidtex = point2D_add(uv, point2D(texsize[X] + midtexx, -texsize[Y] - from_noscale[Y])) // Bottom middle
 				if (anglesign * partsign > 0)
@@ -283,7 +284,7 @@ with (shape)
 		}
 	}
 
-	// Mirror (switch positive and negative) (NOT FULLY TESTED)
+	// Mirror (switch positive and negative) (todo: this is UNFINISHED, only works well for arms/legs atm)
 	if (texture_mirror)
 	{
 		var tmp = nbacktex;
@@ -301,10 +302,10 @@ with (shape)
 
 	// No flicker
 	var pedgetex2, nedgetex2, pbacktex2, nbacktex2;
-	pedgetex2 = point2D_add(pedgetex, point2D(1 / 256, 1 / 256))
-	pbacktex2 = point2D_add(pbacktex, point2D(1 / 256, 1 / 256))
-	nedgetex2 = point2D_add(nedgetex, point2D(1 / 256, 1 / 256))
-	nbacktex2 = point2D_add(nbacktex, point2D(1 / 256, 1 / 256))
+	pedgetex2 = point2D_add(pedgetex, point2D(1 / 512, 1 / 512))
+	pbacktex2 = point2D_add(pbacktex, point2D(1 / 512, 1 / 512))
+	nedgetex2 = point2D_add(nedgetex, point2D(1 / 512, 1 / 512))
+	nbacktex2 = point2D_add(nbacktex, point2D(1 / 512, 1 / 512))
 
 	// Transform texture to 0-1
 	pmidtex = vec2_div(pmidtex, texture_size)
@@ -369,7 +370,7 @@ with (shape)
 	
 		if (a > 0)
 		{
-			if (anglesign > 0)
+			if (anglesign * invertsign > 0)
 			{
 				vbuffer_add_triangle(pcurp, pmidp, pnextp, pedgetex, pmidtex, pedgetex2) // +
 				vbuffer_add_triangle(nmidp, ncurp, nnextp, nmidtex, nedgetex, nedgetex2) // -

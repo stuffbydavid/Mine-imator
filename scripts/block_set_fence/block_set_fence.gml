@@ -1,6 +1,6 @@
 /// block_set_fence()
 /// @desc Connects to other fences with the same ID, fence gates and solid adjacent faces.
-
+/*
 for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 {
 	var dstr = dir_get_string(d);
@@ -43,4 +43,4 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 		state_vars_set_value(vars, dstr, "false")
 }
 
-return 0
+return 0*/

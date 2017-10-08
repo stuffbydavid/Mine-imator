@@ -1,6 +1,6 @@
 /// block_set_door()
 /// @desc Returns an array with the lower and upper door models, from their combined data.
-
+/*
 if (state_vars_get_value(vars, "half") = "upper")
 	return null
 
@@ -96,4 +96,4 @@ switch (string_to_dir(state_vars_get_value(vars, "facing")))
 if (open)
 	state_vars_set_value(vars, "direction", state_vars_get_value(vars, "facing"))
 
-return models
+return models*/

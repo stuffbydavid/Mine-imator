@@ -7,8 +7,8 @@ var rad, thflip, tvflip, tex1, tex2;
 rad = 8
 
 // Set texture
-thflip = test(shape_tex_hmirror, -1, 1)
-tvflip = test(shape_tex_vmirror, -1, 1)
+thflip = negate(shape_tex_hmirror)
+tvflip = negate(shape_tex_vmirror)
 if (shape_invert)
 	thflip *= -1
 

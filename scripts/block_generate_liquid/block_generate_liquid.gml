@@ -1,6 +1,6 @@
 /// block_generate_liquid()
 /// @desc Creates a liquid mesh from the surrounding block data.
-
+/*
 var level, slot, sheetwidth, sheetheight, angle;
 var slotstillpos, slotstillsize, slotflowpos, slotflowsize, topflow, dep, vbuf;
 var cornerz, minz, averagez;
@@ -382,4 +382,4 @@ for (var d = 0; d < e_dir.amount; d++)
 		vbuffer_add_triangle(p2, p1, corner[c1], sidetex[1], sidetex[0], cornerrighttex[c1], null, null, mat)
 	else if (cornerz[c1] < cornerz[c2])
 		vbuffer_add_triangle(p2, p1, corner[c2], sidetex[1], sidetex[0], cornerlefttex[c2], null, null, mat)
-}
+}*/

@@ -6,7 +6,9 @@
     "children": [
         "4a400fa0-0f88-4ab8-a908-82bcf007bd7e",
         "9922aaaf-38ac-461a-b655-539804962ffe",
-        "6808a9e4-4563-4155-8025-92daf3c0c9f1"
+        "6808a9e4-4563-4155-8025-92daf3c0c9f1",
+        "b7181a04-f83d-4acf-ae08-aa7c72a1936d",
+        "7bf011dd-33ad-42ef-8216-3d2005a4bf90"
     ],
     "filterType": "GMScript",
     "folderName": "Builder",

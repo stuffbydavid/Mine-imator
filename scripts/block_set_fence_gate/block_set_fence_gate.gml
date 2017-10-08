@@ -1,6 +1,6 @@
 /// block_set_fence_gate()
 /// @desc Connects to fences and cobblestone walls in the same direction.
-
+/*
 var facing = state_vars_get_value(vars, "facing");
 if (facing = null)
 	return 0
@@ -58,4 +58,4 @@ else if (facing = "south" || facing = "north")
 
 state_vars_set_value(vars, "in_wall", "false")
 
-return 0
+return 0*/

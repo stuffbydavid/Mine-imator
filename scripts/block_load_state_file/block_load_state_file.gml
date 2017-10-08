@@ -1,15 +1,14 @@
-/// block_load_state_file(filename, type)
+/// block_load_state_file(filename, block, state)
 /// @arg filename
-/// @arg type
+/// @arg block
+/// @arg state
 /// @desc Loads the different block variants from the state file.
 
-var fname, type;
+var fname, block, state;
 fname = argument0
-type = argument1
+block = argument1
+state = argument2
 
-if (!is_undefined(mc_block_state_file_map[?fname])) // Previously loaded
-	return mc_block_state_file_map[?fname]
-	
 if (!file_exists_lib(fname))
 {
 	log("Could not find state file", fname)
@@ -39,12 +38,7 @@ if (is_undefined(variantsmap) && is_undefined(multipartlist))
 
 with (new(obj_block_load_state_file))
 {
-	// Filename
-	name = fname
-	mc_block_state_file_map[?fname] = id
-	
-	variant_amount = 0
-	multipart_case_amount = 0
+	state_id_map = ds_map_create()
 	
 	// Load variants
 	if (!is_undefined(variantsmap))
@@ -54,38 +48,47 @@ with (new(obj_block_load_state_file))
 		{
 			with (new(obj_block_load_variant))
 			{
-				// Name
-				name = variant
+				var stateid = 0;
 				
-				// "normal" state is always selected
-				if (name = "normal")
-					vars = array()
-				else
-					vars = string_get_state_vars(name)
-			
-				var variantlist, list;
-				variantlist = variantsmap[?name]
-				list = ds_list_create()
-			
+				// Find state ID of variant if not "normal"
+				if (variant != "normal")
+				{
+					var vars  = string_get_state_vars(variant);
+					if (vars = null) // Ignore "all"
+					{
+						instance_destroy()
+						break
+					}
+					state_vars_add(vars, state)
+					stateid = block_get_state_id(block, vars)
+				}
+				
+				model_amount = 0
+				total_weight = 0
+				
 				// Check if a list of models
-				if (ds_map_find_value(jsontypemap[?variantsmap], name) = e_json_type.ARRAY)
-					ds_list_copy(list, variantlist)
+				if (ds_map_find_value(jsontypemap[?variantsmap], variant) = e_json_type.ARRAY)
+				{
+					var modellist = variantsmap[?variant];
+					for (var i = 0; i < ds_list_size(modellist); i++)
+						if (!block_load_variant_model(modellist[|i], block.type))
+							return false
+				}
+				
+				// Single model
 				else
-					ds_list_add(list, variantlist)
-
-				// Load models
-				if (!block_load_state_models(list, type))
-					return null
-				ds_list_destroy(list)
+					if (!block_load_variant_model(variantsmap[?variant], block.type))
+						return null
 			
-				other.variant[other.variant_amount++] = id
+				other.state_id_map[?stateid] = id
 			}
+			
 			variant = ds_map_find_next(variantsmap, variant)
 		}
 	}
 	
 	// Load multipart
-	else if (!is_undefined(multipartlist))
+	/*else if (!is_undefined(multipartlist))
 	{
 		for (var c = 0; c < ds_list_size(multipartlist); c++)
 		{
@@ -149,7 +152,7 @@ with (new(obj_block_load_state_file))
 				else
 					ds_list_add(list, applylist)
 				
-				if (!block_load_state_models(list, type))
+				if (!block_load_variant_models(list, type))
 					return null
 				
 				ds_list_destroy(list)
@@ -157,7 +160,7 @@ with (new(obj_block_load_state_file))
 				other.multipart_case[other.multipart_case_amount++] = id
 			}
 		}
-	}
+	}*/
 	
 	//ds_map_destroy(map) // Error
 	ds_map_destroy(jsontypemap)

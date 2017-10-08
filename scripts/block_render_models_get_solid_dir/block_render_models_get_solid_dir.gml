@@ -3,7 +3,7 @@
 /// @arg direction
 /// @desc Returns whether any of the render models are solid when looking in a direction.
 
-var models, dir, diropp, minz, maxz;
+/*var models, dir, diropp, minz, maxz;
 models = argument0
 dir = argument1
 diropp = dir_get_opposite(dir)
@@ -41,4 +41,4 @@ for (var m = 0; m < array_length_1d(models); m++)
 	}
 }
 
-return false
+return false*/

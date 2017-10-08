@@ -1,6 +1,6 @@
 /// block_set_chest()
 /// @desc Finds double chests.
-
+/*
 var facing = state_vars_get_value(vars, "facing");
 if (facing = null)
 	return 0
@@ -45,4 +45,4 @@ if (!build_edge[connectdir] && array3D_get(block_obj, build_size, point3D_add(bu
 else
 	state_vars_set_value(vars, "double", "false")
 
-return 0
+return 0*/

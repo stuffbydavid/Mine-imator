@@ -1,6 +1,6 @@
 /// block_set_redstone_repeater()
 /// @desc Set locked state.
-
+/*
 var facing, facingopp;
 facing = string_to_dir(state_vars_get_value(vars, "facing"));
 facingopp = dir_get_opposite(facing)
@@ -24,4 +24,4 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 
 state_vars_set_value(vars, "locked", "false")
 
-return 0
+return 0*/

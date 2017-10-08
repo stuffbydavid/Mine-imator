@@ -96,7 +96,6 @@ with (new(obj_model_shape))
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
 	bend_offset = other.bend_offset
-	bend_offset_noscale = other.bend_offset_noscale
 	bend_invert = other.bend_invert
 	bend_vbuffer = null
 	bend_mode = e_shape_bend.BEND

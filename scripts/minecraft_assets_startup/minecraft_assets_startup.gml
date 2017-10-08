@@ -3,8 +3,8 @@
 ///		  stored in mc_assets, while the textures are put in mc_res.
 
 globalvar mc_assets, mc_builder, mc_res;
-globalvar mc_block_state_file_map, mc_block_model_file_map;
-globalvar load_assets_stage, load_assets_progress, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_map, load_assets_type_map, load_assets_block_index;
+globalvar load_assets_stage, load_assets_progress, load_assets_block_index;
+globalvar load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 
 mc_assets = new(obj_minecraft_assets)
 mc_builder = new(obj_builder)
@@ -75,7 +75,6 @@ if (format > minecraft_assets_format)
 }
 
 load_assets_dir = file_directory + app.setting_minecraft_version + "\\"
-mc_block_state_file_map = ds_map_create() // filename -> states
-mc_block_model_file_map = ds_map_create() // filename -> model
+load_assets_model_file_map = ds_map_create() // filename -> model
 
 return true

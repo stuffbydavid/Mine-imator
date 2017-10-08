@@ -5,8 +5,8 @@ var fname, fpath;
 fname = argument0
 fpath = load_assets_dir + mc_models_directory + fname
 
-if (!is_undefined(mc_block_model_file_map[?fname])) // Previously loaded
-	return mc_block_model_file_map[?fname]
+if (!is_undefined(load_assets_model_file_map[?fname])) // Previously loaded
+	return load_assets_model_file_map[?fname]
 
 if (!file_exists_lib(fpath))
 {
@@ -83,10 +83,7 @@ with (new(obj_block_load_model_file))
 					rotated = true
 				}
 				else
-				{
-					matrix = MAT_IDENTITY
 					rotated = false
-				}
 				
 				// Faces
 				var facesmap = elementmap[?"faces"]
@@ -109,11 +106,6 @@ with (new(obj_block_load_model_file))
 						
 						// Texture
 						face_texture[f] = curmap[?"texture"]
-						
-						// Cull face
-						face_cullface[f] = null
-						if (is_string(curmap[?"cullface"]))
-							face_cullface[f] = string_to_dir(curmap[?"cullface"])
 							
 						// Rotation
 						face_rotation[f] = 0
@@ -129,7 +121,7 @@ with (new(obj_block_load_model_file))
 		}
 	}
 	
-	mc_block_model_file_map[?fname] = id
+	load_assets_model_file_map[?fname] = id
 	ds_map_destroy(map)
 	
 	return id

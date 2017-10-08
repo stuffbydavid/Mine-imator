@@ -1,6 +1,6 @@
 /// block_set_redstone_wire()
 /// @desc Connect to other redstone wires, or powered blocks facing the opposite direction
-
+/*
 var pow, red;
 pow = string_get_real(state_vars_get_value(vars, "power")) / 15
 if (pow = 0)
@@ -73,4 +73,4 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 	state_vars_set_value(vars, dstr, "none")
 }
 
-return 0
+return 0*/

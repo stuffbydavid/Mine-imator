@@ -1,6 +1,6 @@
 /// block_set_stairs()
 /// @desc Defines logic for connecting adjacent stairs.
-
+/*
 if (state_vars_get_value(vars, "shape") != null)
 	return 0
 
@@ -109,4 +109,4 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 	}
 }
 
-state_vars_set_value(vars, "shape", shape)
+state_vars_set_value(vars, "shape", shape)*/

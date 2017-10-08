@@ -21,7 +21,8 @@ blend = shader_blend_color
 shader_texture = tex
 
 // Rotate by 90 degrees for legacy support
-matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
+if (dev_mode_rotate_blocks)
+	matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 
 // DEPTH 0
 

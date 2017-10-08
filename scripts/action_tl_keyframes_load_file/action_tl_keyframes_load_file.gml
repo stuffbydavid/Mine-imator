@@ -60,7 +60,7 @@ else
 	temposcale = (project_tempo / tempo)
 	num = buffer_read_int()
 	len = buffer_read_int()
-	dummy = new(obj_dummy) // Create dummy for storing keyframe value types
+	dummy = new(obj_data) // Create dummy for storing keyframe value types
 }
 
 len = max(1, round(temposcale * len))

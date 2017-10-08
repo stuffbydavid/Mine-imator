@@ -1558,7 +1558,7 @@
 			"name": "rail",
 			"file": "rail.json",
 			"states": {
-				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
+				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west", "south_east", "south_west", "north_west", "north_east"  ]
 			},
 			"default_state": "shape=north_south",
 			"legacy_id": 66,
@@ -1569,7 +1569,11 @@
 					"2": "shape=ascending_east",
 					"3": "shape=ascending_west",
 					"4": "shape=ascending_north",
-					"5": "shape=ascending_south"
+					"5": "shape=ascending_south",
+					"6": "shape=south_east",
+					"7": "shape=south_west",
+					"8": "shape=north_west",
+					"9": "shape=north_east"
 				}
 			}
 		},
@@ -1980,9 +1984,10 @@
 			"type": "redstone_repeater",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"delay": [ "1", "2", "3", "4" ]
+				"delay": [ "1", "2", "3", "4" ],
+				"locked": [ "true", "false" ]
 			},
-			"default_state": "facing=west,delay=1",
+			"default_state": "facing=west,delay=1,locked=false",
 			"legacy_id": 93,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2005,9 +2010,10 @@
 			"type": "redstone_repeater",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"delay": [ "1", "2", "3", "4" ]
+				"delay": [ "1", "2", "3", "4" ],
+				"locked": [ "true", "false" ]
 			},
-			"default_state": "facing=west,delay=1",
+			"default_state": "facing=west,delay=1,locked=false",
 			"brightness": 0.75,
 			"legacy_id": 94,
 			"legacy_data": {
@@ -2287,9 +2293,10 @@
 				"south": [ "true", "false" ],
 				"west": [ "true", "false" ],
 				"north": [ "true", "false" ],
-				"east": [ "true", "false" ]
+				"east": [ "true", "false" ],
+				"up": [ "true", "false" ]
 			},
-			"default_state": "south=false,west=false,north=false,east=false",
+			"default_state": "south=false,west=false,north=false,east=false,up=false",
 			"legacy_id": 106,
 			"legacy_data": {
 				"0x1": {
@@ -2316,9 +2323,10 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ]
+				"open": [ "true", "false" ],
+				"in_wall": [ "true", "false" ]
 			},
-			"default_state": "facing=west,open=false",
+			"default_state": "facing=west,open=false,in_wall=false",
 			"legacy_id": 107,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2723,6 +2731,10 @@
 			"file": "tripwire.json",
 			"type": "tripwire",
 			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ],
 				"attached": [ "true", "false" ]
 			},
 			"default_state": "attached=false",
@@ -3735,9 +3747,10 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ]
+				"open": [ "true", "false" ],
+				"in_wall": [ "true", "false" ]
 			},
-			"default_state": "facing=west,open=false",
+			"default_state": "facing=west,open=false,in_wall=false",
 			"legacy_id": 183,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3758,9 +3771,10 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ]
+				"open": [ "true", "false" ],
+				"in_wall": [ "true", "false" ]
 			},
-			"default_state": "facing=west,open=false",
+			"default_state": "facing=west,open=false,in_wall=false",
 			"legacy_id": 184,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3781,9 +3795,10 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ]
+				"open": [ "true", "false" ],
+				"in_wall": [ "true", "false" ]
 			},
-			"default_state": "facing=west,open=false",
+			"default_state": "facing=west,open=false,in_wall=false",
 			"legacy_id": 185,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3804,9 +3819,10 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ]
+				"open": [ "true", "false" ],
+				"in_wall": [ "true", "false" ]
 			},
-			"default_state": "facing=west,open=false",
+			"default_state": "facing=west,open=false,in_wall=false",
 			"legacy_id": 186,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3827,9 +3843,10 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ]
+				"open": [ "true", "false" ],
+				"in_wall": [ "true", "false" ]
 			},
-			"default_state": "facing=west,open=false",
+			"default_state": "facing=west,open=false,in_wall=false",
 			"legacy_id": 187,
 			"legacy_data": {
 				"0x1+0x2": {

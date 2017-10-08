@@ -15,7 +15,7 @@ if (!ds_map_valid(map))
 	return false
 }
 
-mc_block_model_file_map = ds_map_create() // filename -> model
+load_assets_model_file_map = ds_map_create() // filename -> model
 
 with (mc_assets)
 {
@@ -68,16 +68,16 @@ with (mc_assets)
 	}
 	
 	// Clear up loaded models
-	var key = ds_map_find_first(mc_block_model_file_map);
+	var key = ds_map_find_first(load_assets_model_file_map);
 	while (!is_undefined(key))
 	{
-		with (mc_block_model_file_map[?key])
+		with (load_assets_model_file_map[?key])
 			instance_destroy()
-		key = ds_map_find_next(mc_block_model_file_map, key)
+		key = ds_map_find_next(load_assets_model_file_map, key)
 	}
 }
 
-ds_map_destroy(mc_block_model_file_map)
+ds_map_destroy(load_assets_model_file_map)
 ds_map_destroy(map)
 ds_map_destroy(typemap)
 
