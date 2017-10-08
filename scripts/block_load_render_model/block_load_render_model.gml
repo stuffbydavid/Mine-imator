@@ -138,7 +138,7 @@ with (new(obj_block_render_model))
 						{
 							faceuvrot[facenewdir[e_dir.EAST]] = 90
 							faceuvrot[facenewdir[e_dir.WEST]] = -90
-							faceuvrot[facenewdir[e_dir.NORTH]] = 180
+							faceuvrot[facenewdir[e_dir.UP]] = 180
 							faceuvrot[e_dir.UP] = rot[Z]
 							faceuvrot[e_dir.DOWN] = 180 - rot[Z]
 							break
@@ -159,7 +159,7 @@ with (new(obj_block_render_model))
 						{
 							faceuvrot[facenewdir[e_dir.EAST]] = -90
 							faceuvrot[facenewdir[e_dir.WEST]] = 90
-							faceuvrot[facenewdir[e_dir.NORTH]] = 180
+							faceuvrot[facenewdir[e_dir.DOWN]] = 180
 							faceuvrot[e_dir.UP] = 180 + rot[Z]
 							faceuvrot[e_dir.DOWN] = -rot[Z]
 							break
@@ -209,7 +209,6 @@ with (new(obj_block_render_model))
 					// Auto generate UVs
 					else
 					{
-						// elem.from, to...?
 						switch (f)
 						{
 							case e_dir.EAST:
@@ -256,13 +255,12 @@ with (new(obj_block_render_model))
 						}
 					}
 					
-					// Rotate UVs
-					if (!uvlock && faceuvrot[nd] != 0)
-						for (var t = 0; t < 4; t++)
-							face_uv[nd, t] = uv_rotate(face_uv[nd, t], faceuvrot[nd], point2D(block_size / 2, block_size / 2))
-					
-					// Shift UVs
-					repeat (elem.face_rotation[f] / 90)
+					// Shift UVs anti-clockwise by face rotation
+					var facerot = elem.face_rotation[f];
+					if (!uvlock)
+						facerot += mod_fix(faceuvrot[nd], 360)
+						
+					repeat (facerot / 90)
 					{
 						var tmp = face_uv[nd, 0];
 						face_uv[nd, 0] = face_uv[nd, 3]
