@@ -1,40 +1,15 @@
 /// block_set_double_plant()
 /// @desc Returns an array with the upper and lower plant models.
-/*
-var half = state_vars_get_value(vars, "half");
-if (half = null || half = "upper")
-	return 0
-	
-var models = array(null, null)
-var variantval = state_vars_get_value(vars, "variant");
 
-with (block_current.states_map[?"variant"])
-{
-	for (var val = 0; val < value_amount; val++)
-	{
-		if (value_name[val] != variantval)
-			continue
+if (block_get_state_id_value(block_current, block_state_id_current, "half") = "upper")
+	return null
 	
-		with (value_file[val])
-		{
-			for (var v = 0; v < variant_amount; v++)
-			{
-				with (variant[v])
-				{
-					if (model_amount = 0)
-						break
-				
-					if (state_vars_get_value(vars, "half") = "lower")
-						models[0] = model[0]
-					else
-					{
-						model[0].offset[Z] = block_size
-						models[1] = model[0]
-					}
-				}
-			}
-		}
-	}
-}
+// Pick models
+var models = array(
+	block_current.state_id_variant[block_state_id_current].model[0],
+	block_current.state_id_variant[block_set_state_id_value(block_current, block_state_id_current, "half", "upper")].model[0]
+)
 
-return models*/
+models[1].offset_z = block_size
+
+return models

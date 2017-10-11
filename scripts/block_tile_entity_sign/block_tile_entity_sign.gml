@@ -4,7 +4,7 @@
 var map, text;
 map = argument0
 text = ""
-
+/*
 for (var i = 0; i < 4; i++)
 {
 	var line = map[?"Text" + string(i + 1)];
@@ -28,4 +28,4 @@ for (var i = 0; i < 4; i++)
 	text += line
 }
 
-state_vars_set_value(block_state_current, "text", text)
+state_vars_set_value(block_state_current, "text", text)*/

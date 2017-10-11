@@ -1,6 +1,6 @@
 /// block_set_bed()
-/*
-if (state_vars_get_value(vars, "half") = "head")
+
+if (block_get_state_id_value(block_current, block_state_id_current, "half") = "head")
 	return null
 	
-return 0*/
+return 0

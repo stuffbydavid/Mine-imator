@@ -1,7 +1,7 @@
 /// block_render_models_get_solid(models)
 /// @arg models
 /// @desc Returns whether any of the render models is a solid block.
-
+/*
 var models = argument0;
 
 for (var m = 0; m < array_length_1d(models); m++)
@@ -31,4 +31,4 @@ for (var m = 0; m < array_length_1d(models); m++)
 	}
 }
 
-return false
+return false*/

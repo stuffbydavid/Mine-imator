@@ -22,9 +22,17 @@ with (new(obj_block))
 	
 	// Type (overridden by states)
 	if (is_string(map[?"type"]))
+	{
 		type = map[?"type"]
+		set_script = asset_get_index("block_set_" + type)
+		generate_script = asset_get_index("block_generate_" + type)
+	}
 	else
+	{
 		type = ""
+		set_script = null
+		generate_script = null
+	}
 	
 	// File
 	if (is_string(map[?"file"]))
@@ -73,7 +81,6 @@ with (new(obj_block))
 					value_name[v] = curvalue
 					value_filename[v] = ""
 					value_file[v] = null
-					value_type[v] = ""
 					value_brightness[v] = null
 					
 					if (ds_map_valid(curvalue))
@@ -84,10 +91,6 @@ with (new(obj_block))
 						// File
 						if (is_string(curvalue[?"file"]))
 							value_filename[v] = curvalue[?"file"]
-								
-						// Type
-						if (is_string(curvalue[?"type"]))
-							value_type[v] = curvalue[?"type"]
 							
 						// Brightness
 						if (is_real(curvalue[?"brightness"]))
@@ -173,14 +176,12 @@ with (new(obj_block))
 		
 	// Pre-calculate the block variant to pick for each (numerical) state ID
 	state_id_variant = null
-	//log(name, state_id_amount)
 	for (var sid = 0; sid < state_id_amount; sid++)
 	{
 		// Get active file and properties
-		var curfile, curtype, curbrightness;
+		var curfile, curbrightness;
 		curfile = file
-		curtype = type
-		curbrightness = brightness
+		curbrightness = brightness // todo
 		
 		// Check states
 		if (states_map != null)
@@ -200,9 +201,6 @@ with (new(obj_block))
 							value_file[valid] = block_load_state_file(load_assets_dir + mc_blockstates_directory + value_filename[valid], other.id, array(name, value_name[valid]))
 						curfile = value_file[valid]
 					}
-					
-					if (value_type[valid] != "")
-						curtype = value_type[valid]
 					
 					if (value_brightness[valid] != null)
 						curbrightness = value_brightness[valid]

@@ -190,8 +190,8 @@ switch (load_stage)
 							if (script > -1)
 							{
 								build_pos = point3D(ex, ey, ez)
-								block_current = array3D_get(block_obj, build_size, build_pos)
-								block_state_current = array3D_get(block_state, build_size, build_pos)
+								block_current = array3D_get(block_obj, build_size_z, ex, ey, ez)
+								block_state_id_current = array3D_get(block_state_id, build_size_z, ex, ey, ez)
 								script_execute(script, entity)
 							}
 						}
@@ -246,7 +246,7 @@ switch (load_stage)
 		{
 			for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 				for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
-					builder_set_models()
+					builder_set_model()
 						
 			build_pos_z++
 		}

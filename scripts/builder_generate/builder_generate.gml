@@ -5,17 +5,22 @@ block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, b
 if (block_current = null)
 	return 0
 
-block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z)
+block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+
+// Block position
 block_pos_x = build_pos_x * block_size
 block_pos_y = build_pos_y * block_size
 block_pos_z = build_pos_z * block_size
 block_color = null
 
-// Set wind
-vertex_wave = block_current.wind_axis
-if (block_current.wind_zmin != null)
-	vertex_wave_zmin = block_pos_z + block_current.wind_zmin
-	
+// Random X & Y offset
+if (block_current.random_offset && build_size_x * build_size_y * build_size_z > 1)
+{
+	random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
+	block_pos_x += irandom_range(-4, 4)
+	block_pos_y += irandom_range(-4, 4)
+}
+
 // Check edges for culling
 
 // X+
@@ -32,6 +37,8 @@ if (build_edge_xp)
 else
 {
 	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	if (is_array(othermodel))
+		othermodel = othermodel[0]
 	if (othermodel != null)
 	{
 		block_face_full_xp = othermodel.face_full_xn
@@ -57,6 +64,8 @@ if (build_edge_xn)
 else
 {
 	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	if (is_array(othermodel))
+		othermodel = othermodel[0]
 	if (othermodel != null)
 	{
 		block_face_full_xn = othermodel.face_full_xp
@@ -82,6 +91,8 @@ if (build_edge_yp)
 else
 {
 	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	if (is_array(othermodel))
+		othermodel = othermodel[0]
 	if (othermodel != null)
 	{
 		block_face_full_yp = othermodel.face_full_yn
@@ -107,6 +118,8 @@ if (build_edge_yn)
 else
 {
 	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	if (is_array(othermodel))
+		othermodel = othermodel[0]
 	if (othermodel != null)
 	{
 		block_face_full_yn = othermodel.face_full_yp
@@ -132,6 +145,8 @@ if (build_edge_zp)
 else
 {
 	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
+	if (is_array(othermodel))
+		othermodel = othermodel[0]
 	if (othermodel != null)
 	{
 		block_face_full_zp = othermodel.face_full_zn
@@ -157,6 +172,8 @@ if (build_edge_zn)
 else
 {
 	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z - 1);
+	if (is_array(othermodel))
+		othermodel = othermodel[0]
 	if (othermodel != null)
 	{
 		block_face_full_zn = othermodel.face_full_zp
@@ -168,11 +185,36 @@ else
 	}
 }
 
-// Get render model
-var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z);
-if (model != null)
+// Run a block-specific script for generating a mesh if available
+if (block_current.generate_script > -1)
 {
-	// Multipart
+	build_pos = point3D(build_pos_x, build_pos_y, build_pos_z)
+	build_edge[e_dir.EAST]	= (build_pos_x = build_size_x - 1)
+	build_edge[e_dir.WEST]	= (build_pos_x = 0)
+	build_edge[e_dir.SOUTH] = (build_pos_y = build_size_y - 1)
+	build_edge[e_dir.NORTH] = (build_pos_y = 0)
+	build_edge[e_dir.UP]	= (build_pos_z = build_size_z - 1)
+	build_edge[e_dir.DOWN]	= (build_pos_z = 0)
+					
+	script_execute(block_current.generate_script)
+}
+else
+{
+	// Requires other render models for states
+	if (block_current.require_models)
+		builder_set_model()
+
+	// Get model	
+	var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+	if (model = null)
+		return 0
+
+	// Set wind
+	vertex_wave = block_current.wind_axis
+	if (block_current.wind_zmin != null)
+		vertex_wave_zmin = block_pos_z + block_current.wind_zmin
+	
+	// Generate render model
 	if (is_array(model))
 	{
 		var modellen = array_length_1d(model);
@@ -188,66 +230,3 @@ vertex_wave = e_vertex_wave.NONE
 vertex_wave_zmin = null
 vertex_wave_zmax = null
 vertex_brightness = 0
-
-/*block_current = array3D_get(block_obj, build_size, build_pos)
-if (is_undefined(block_current))
-	return 0
-	
-block_state_current = array3D_get(block_state, build_size, build_pos)
-block_pos = point3D_mul(build_pos, block_size)
-block_color = null
-
-// Random X & Y offset
-if (block_current.random_offset && build_size[X] * build_size[Y] * build_size[Z] > 1)
-{
-	random_set_seed(build_pos[X] * build_size[Y] * build_size[Z] + build_pos[Y] * build_size[Z] + build_pos[Z])
-	block_pos[X] += irandom_range(-4, 4)
-	block_pos[Y] += irandom_range(-4, 4)
-}
-	
-// Set wind
-vertex_wave = block_current.wind_axis
-if (block_current.wind_zmin != null)
-	vertex_wave_zmin = block_pos[Z] + block_current.wind_zmin
-			
-// Check edges
-build_edge[e_dir.EAST]	= (build_pos[X] = build_size[X] - 1)
-build_edge[e_dir.WEST]	= (build_pos[X] = 0)
-build_edge[e_dir.SOUTH] = (build_pos[Y] = build_size[Y] - 1)
-build_edge[e_dir.NORTH] = (build_pos[Y] = 0)
-build_edge[e_dir.UP]	= (build_pos[Z] = build_size[Z] - 1)
-build_edge[e_dir.DOWN]	= (build_pos[Z] = 0)
-
-// Check adjacent
-for (var f = 0; f < e_dir.amount; f++)
-{
-	if (build_edge[f])
-	{
-		if (app.setting_schematic_remove_edges && (build_size[X] > 200 && build_size[Y] > 200))
-			block_render_models_dir[f] = array(solid_model)
-		else
-			block_render_models_dir[f] = null
-	}
-	else
-		block_render_models_dir[f] = array3D_get(block_render_models, build_size, point3D_add(build_pos, dir_get_vec3(f)))
-}
-			
-// Get render models
-var models = array3D_get(block_render_models, build_size, build_pos);
-if (models = 0) // Requires other models
-	models = block_get_render_models(block_current, block_state_current, true)
-	
-if (models != null)
-{
-	
-	if (is_array(models)) // Generate from render models
-		block_render_models_generate(models)
-	else // Use script for triangles
-		script_execute(models)
-}
-
-// Reset wind and brightness
-vertex_wave = e_vertex_wave.NONE
-vertex_wave_zmin = null
-vertex_wave_zmax = null
-vertex_brightness = 0*/

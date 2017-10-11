@@ -19,7 +19,7 @@ oldtex = texture_create(fn)
 sheetwid = 16
 if (format >= e_project.FORMAT_100_DEMO_2)
 	sheetwid = 32
-blocksize = texture_width(oldtex) / sheetwid
+blocksize = ceil(texture_width(oldtex) / sheetwid)
 
 // Create new surface
 var newsurf, newtex;

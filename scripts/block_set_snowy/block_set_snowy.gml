@@ -1,20 +1,16 @@
 /// block_set_snowy()
 /// @desc Check for a snow block above the current block.
-/*
-if (state_vars_get_value(vars, "snowy") != null)
-	return 0
+
+var snowy = "false";
 
 if (!build_edge[e_dir.UP])
 {
-	var block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(e_dir.UP)));
+	var otherblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
 	
-	if (!is_undefined(block) && block.type = "snow")
-	{
-		state_vars_set_value(vars, "snowy", "true")
-		return 0
-	}
+	if (otherblock != null && otherblock.type = "snow")
+		snowy = "true"
 }
 
-state_vars_set_value(vars, "snowy", "false")
+block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "snowy", snowy)
 
-return 0*/
+return 0

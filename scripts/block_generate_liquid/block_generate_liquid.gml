@@ -1,385 +1,481 @@
 /// block_generate_liquid()
 /// @desc Creates a liquid mesh from the surrounding block data.
-/*
-var level, slot, sheetwidth, sheetheight, angle;
-var slotstillpos, slotstillsize, slotflowpos, slotflowsize, topflow, dep, vbuf;
-var cornerz, minz, averagez;
 
-level = block_generate_liquid_get_level(build_pos)
+var matchxp, matchxn, matchyp, matchyn, matchzp, matchzn;
+var solidxp, solidxn, solidyp, solidyn, solidzp, solidzn;
+matchxp = (!build_edge[e_dir.EAST]	&& array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z) = block_current)
+matchxn = (!build_edge[e_dir.WEST]  && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z) = block_current)
+matchyp = (!build_edge[e_dir.SOUTH] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z) = block_current)
+matchyn = (!build_edge[e_dir.NORTH] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z) = block_current)
+matchzp = (!build_edge[e_dir.UP]	&& array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1) = block_current)
+matchzn = (!build_edge[e_dir.DOWN]	&& array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z - 1) = block_current)
+solidxp = (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)
+solidxn = (block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)
+solidyp = (block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)
+solidyn = (block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)
+solidzp = (block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)
+solidzn = (block_face_min_depth_zn = e_block_depth.DEPTH0 && block_face_full_zn)
 
-if (!app.setting_liquid_animation)
-	vertex_wave = e_vertex_wave.NONE
+// To fix wave "gaps"
+if (app.setting_liquid_animation)
+{
+	var model;
+		
+	if (matchzp)
+	{
+		if (solidxp && !build_edge[e_dir.EAST] && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1) != block_current)
+		{
+			solidxp = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1)
+			if (model != null && !is_array(model))
+				solidxp = (model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
+		}
+	
+		if (solidxn && !build_edge[e_dir.WEST] && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1) != block_current)
+		{
+			solidxn = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1)
+			if (model != null && !is_array(model))
+				solidxn = (model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
+		}
+	
+		if (solidyp && !build_edge[e_dir.SOUTH] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1) != block_current)
+		{
+			solidyp = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1)
+			if (model != null && !is_array(model))
+				solidyp = (model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
+		}
+	
+		if (solidyn && !build_edge[e_dir.NORTH] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1) != block_current)
+		{
+			solidyn = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1)
+			if (model != null && !is_array(model))
+				solidyn = (model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
+		}
+	}
+	
+	if (matchzn)
+	{
+		if (solidxp && !build_edge[e_dir.EAST] && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z - 1) != block_current)
+		{
+			solidxp = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z - 1)
+			if (model != null && !is_array(model))
+				solidxp = (model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
+		}
+	
+		if (solidxn && !build_edge[e_dir.WEST] && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z - 1) != block_current)
+		{
+			solidxn = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z - 1)
+			if (model != null && !is_array(model))
+				solidxn = (model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
+		}
+	
+		if (solidyp && !build_edge[e_dir.SOUTH] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z - 1) != block_current)
+		{
+			solidyp = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z - 1)
+			if (model != null && !is_array(model))
+				solidyp = (model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
+		}
+	
+		if (solidyn && !build_edge[e_dir.NORTH] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z - 1) != block_current)
+		{
+			solidyn = false
+			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z - 1)
+			if (model != null && !is_array(model))
+				solidyn = (model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
+		}
+	}
+}
 
-topflow = true
-angle = 0
+// Completely surrounded, no need to render
+if ((matchxp || solidxp) && (matchxn || solidxn) && 
+	(matchyp || solidyp) && (matchyn || solidyn) && 
+	(matchzp || solidzp) && (matchzn || solidzn))
+	return 0
+	
+// Find texture and buffers to use
+var slot, dep, vbuf, sheetwidth, sheetheight;
+var slotstillposx, slotstillposy, slotstillsizex, slotstillsizey;
+var slotflowposx, slotflowposy, slotflowsizex, slotflowsizey;
 
 // Still texture
-slot = ds_list_find_index(mc_assets.block_texture_list, "blocks/" + block_current.name + "_still")
-if (slot < 0) // Animated
-{
-	slot = ds_list_find_index(mc_assets.block_texture_ani_list, "blocks/" + block_current.name + "_still")
-	if (slot < 0)
-		return 0
-	
-	dep = mc_res.block_sheet_ani_depth_list[|slot]
-	vbuf = e_block_vbuffer.ANIMATED
-	sheetwidth = block_sheet_ani_width
-	sheetheight = block_sheet_ani_height
-}
-else
-{ 
-	dep = mc_res.block_sheet_depth_list[|slot]
-	vbuf = e_block_vbuffer.NORMAL
-	sheetwidth = block_sheet_width
-	sheetheight = block_sheet_height
-}
-
-slotstillpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) * block_size)
-slotstillsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
+slot = mc_assets.block_liquid_slot_map[?block_current.name]
+dep = mc_res.block_sheet_ani_depth_list[|slot]
+vbuf = e_block_vbuffer.ANIMATED
+sheetwidth = block_sheet_ani_width
+sheetheight = block_sheet_ani_height
+slotstillposx = (slot mod sheetwidth) * block_size
+slotstillposy = (slot div sheetwidth) * block_size
+slotstillsizex = 1 / (sheetwidth * block_size)
+slotstillsizey = 1 / (sheetheight * block_size)
 
 // Flow texture
-slot = ds_list_find_index(mc_assets.block_texture_list, "blocks/" + block_current.name + "_flow")
-if (slot < 0) // Animated
-{
-	slot = ds_list_find_index(mc_assets.block_texture_ani_list, "blocks/" + block_current.name + "_flow")
-	if (slot < 0)
-		return 0
-}
+slot = mc_assets.block_liquid_slot_map[?"flowing_" + block_current.name]
+slotflowposx = (slot mod sheetwidth) * block_size
+slotflowposy = (slot div sheetwidth) * block_size
+slotflowsizex = 1 / (sheetwidth * block_size)
+slotflowsizey = 1 / (sheetheight * block_size)
 
-slotflowpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) * block_size)
-slotflowsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
+// Top face
+var topflow, topangle;
+topflow = true
+topangle = 0
+
+// Corners
+var corner0z, corner1z, corner2z, corner3z, minz, averagez;
+
+// Wave
+if (app.setting_liquid_animation)
+{
+	vertex_wave = e_vertex_wave.Z_ONLY
+	
+	// Enable wave on bottom vertices if there is a liquid block
+	if (matchzn)
+		vertex_wave_zmin = null
+	else
+		vertex_wave_zmin = block_pos_z
+}
 
 // Falling
-var falling = (level div 8);
-if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(e_dir.UP))) = block_current)
+if (block_state_id_current div 8 || matchzp)
 {
-	falling = true
-	vertex_wave = e_vertex_wave.NONE
-}
-
-if (falling)
-{
-	for (var d = 0; d < 4; d++)
-		cornerz[d] = block_size
+	corner0z = block_size
+	corner1z = block_size
+	corner2z = block_size
+	corner3z = block_size
 	minz = block_size
 	averagez = block_size
 	topflow = false
+}
+else
+{
+	// Level at sides
+	var sidelevelxp, sidelevelxn, sidelevelyp, sidelevelyn;
+	sidelevelxp = 7
+	sidelevelxn = 7
+	sidelevelyp = 7
+	sidelevelyn = 7
 	
-	for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
+	if (!build_edge[e_dir.EAST])
 	{
-		if (build_edge[d])
-			continue
-			
-		// Check below and enable wave at bottom vertices
-		var looksidedown = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.DOWN), dir_get_vec3(d)));
-		var lookside = point3D_add(build_pos, dir_get_vec3(d));
-		if (!build_edge[e_dir.DOWN] && array3D_get(block_obj, build_size, looksidedown) = block_current && block_generate_liquid_get_level(looksidedown) < 8 &&
-			array3D_get(block_obj, build_size, lookside) != block_current)
-		{
-			vertex_wave = e_vertex_wave.Z_ONLY
-			vertex_wave_zmin = null
-			vertex_wave_zmax = block_pos[Z] + 1
-			break
-		}
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1) = block_current)
+			sidelevelxp = 8
+		else if (matchxp)
+			sidelevelxp = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+	}
+	
+	if (!build_edge[e_dir.WEST])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1) = block_current)
+			sidelevelxn = 8
+		else if (matchxn)
+			sidelevelxn = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+	}
+	
+	if (!build_edge[e_dir.SOUTH])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1) = block_current)
+			sidelevelyp = 8
+		else if (matchyp)
+			sidelevelyp = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+	}
 		
-		// Check to side and enable wave at top vertices
-		var looksideup = point3D_add(build_pos, vec3_add(dir_get_vec3(e_dir.UP), dir_get_vec3(d)));
-		if (array3D_get(block_obj, build_size, lookside) = block_current && block_generate_liquid_get_level(lookside) < 8 &&
-			(build_edge[e_dir.UP] || array3D_get(block_obj, build_size, looksideup) != block_current))
-		{
-			vertex_wave = e_vertex_wave.Z_ONLY
-			vertex_wave_zmin = block_pos[Z] + 1
-			break
-		}
+	if (!build_edge[e_dir.NORTH])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1) = block_current)
+			sidelevelyn = 8
+		else if (matchyn)
+			sidelevelyn = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+	}
+		
+	// Level at corners
+	var corner0level, corner1level, corner2level, corner3level;
+	corner0level = 7
+	corner1level = 7
+	corner2level = 7
+	corner3level = 7
+	
+	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.NORTH])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y - 1, build_pos_z + 1) = block_current)
+			corner0level = 8
+		else if (array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y - 1, build_pos_z) = block_current)
+			corner0level = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y - 1, build_pos_z)
+	}
+	
+	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.NORTH])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y - 1, build_pos_z + 1) = block_current)
+			corner1level = 8
+		else if (array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y - 1, build_pos_z) = block_current)
+			corner1level = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y - 1, build_pos_z)
+	}
+	
+	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.SOUTH])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y + 1, build_pos_z + 1) = block_current)
+			corner2level = 8
+		else if (array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y + 1, build_pos_z) = block_current)
+			corner2level = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y + 1, build_pos_z)
+	}
+	
+	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.SOUTH])
+	{
+		if (!build_edge[e_dir.UP] && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y + 1, build_pos_z + 1) = block_current)
+			corner3level = 8
+		else if (array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y + 1, build_pos_z) = block_current)
+			corner3level = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y + 1, build_pos_z)
+	}
+	
+	// Set top face flow
+	var flowxp, flowxn, flowyp, flowyn;
+	flowxp = 0
+	flowxn = 0
+	flowyp = 0
+	flowyn = 0
+	
+	if (sidelevelxp mod 8 < block_state_id_current)
+		flowxn++ 
+	else if (sidelevelxp mod 8 > block_state_id_current)
+		flowxp++
+		
+	if (sidelevelxn mod 8 < block_state_id_current)
+		flowxp++ 
+	else if (sidelevelxn mod 8 > block_state_id_current)
+		flowxn++
+	
+	if (sidelevelyp mod 8 < block_state_id_current)
+		flowyn++ 
+	else if (sidelevelyp mod 8 > block_state_id_current)
+		flowyp++
+		
+	if (sidelevelyn mod 8 < block_state_id_current)
+		flowyp++ 
+	else if (sidelevelyn mod 8 > block_state_id_current)
+		flowyn++
+		
+	// Set Zs
+	var myz, sidezxp, sidezxn, sidezyp, sidezyn;
+	myz = 14 - (block_state_id_current / 7) * 13.5
+	sidezxp = test(sidelevelxp div 8, block_size, 14 - (sidelevelxp / 7) * 13.5)
+	sidezxn = test(sidelevelxn div 8, block_size, 14 - (sidelevelxn / 7) * 13.5)
+	sidezyp = test(sidelevelyp div 8, block_size, 14 - (sidelevelyp / 7) * 13.5)
+	sidezyn = test(sidelevelyn div 8, block_size, 14 - (sidelevelyn / 7) * 13.5)
+	corner0z = test(corner0level div 8, block_size, 14 - (corner0level / 7) * 13.5)
+	corner1z = test(corner1level div 8, block_size, 14 - (corner1level / 7) * 13.5)
+	corner2z = test(corner2level div 8, block_size, 14 - (corner2level / 7) * 13.5)
+	corner3z = test(corner3level div 8, block_size, 14 - (corner3level / 7) * 13.5)
+	
+	// Max corner levels
+	corner0z = max(corner0z, sidezxn, sidezyn, myz)
+	corner1z = max(corner1z, sidezxp, sidezyn, myz)
+	corner2z = max(corner2z, sidezxp, sidezyp, myz)
+	corner3z = max(corner3z, sidezxn, sidezyp, myz)
+	
+	// Set mininum and average
+	averagez = (corner0z + corner1z + corner2z + corner3z) / 4
+	minz = min(corner0z, corner1z, corner2z, corner3z)
+	
+	// Set texture orientation
+	if ((!flowxn && !flowxp && !flowyn && !flowyp) || 
+		(flowxn && flowxp && flowyn && flowyp) || 
+		(flowxn && flowxp && !flowyn && !flowyp) || 
+		(!flowxn && !flowxp && flowyn && flowyp))
+		topflow = false
+	else if (flowxn && flowxp && flowyp)
+		topangle = 0
+	else if (flowxn && flowxp && flowyn)
+		topangle = 180
+	else if (flowxp && flowyn && flowyp)
+		topangle = 90
+	else if (flowxn && flowyn && flowyp)
+		topangle = 270
+	else if (flowxn && flowyn)
+		topangle = 180 + 45 + 10 * (flowxn - 1) - 10 * (flowyn - 1)
+	else if (flowxp && flowyn)
+		topangle = 180 - 45 + 10 * (flowyn - 1) - 10 * (flowxp - 1)
+	else if (flowxn && flowyp)
+		topangle = 270 + 45 + 10 * (flowyp - 1) - 10 * (flowxn - 1)
+	else if (flowxp && flowyp)
+		topangle = 45 + 10 * (flowxp - 1) - 10 * (flowyp - 1)
+	else if (flowyp)
+		topangle = 0
+	else if (flowxp)
+		topangle = 90
+	else if (flowyn)
+		topangle = 180
+	else if (flowxn)
+		topangle = 270
+}
+
+// Texture coordinates (clockwise starting at top-left)
+var sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y, sidetex3x, sidetex3y;
+var cornerlefttex0x, cornerlefttex0y, cornerlefttex1x, cornerlefttex1y, cornerlefttex2x, cornerlefttex2y, cornerlefttex3x, cornerlefttex3y;
+var cornerrighttex0x, cornerrighttex0y, cornerrighttex1x, cornerrighttex1y, cornerrighttex2x, cornerrighttex2y, cornerrighttex3x, cornerrighttex3y
+var toptex0x, toptex0y, toptex1x, toptex1y, toptex2x, toptex2y, toptex3x, toptex3y;
+var topmidtexx, topmidtexy;
+
+// Side
+sidetex0x = 0; sidetex0y = block_size - minz
+sidetex1x = block_size; sidetex1y = block_size - minz
+sidetex2x = block_size; sidetex2y = block_size
+sidetex3x = 0; sidetex3y = block_size
+
+// Corner (left side)
+cornerlefttex0x = 0; cornerlefttex0y = block_size - corner0z
+cornerlefttex1x = 0; cornerlefttex1y = block_size - corner1z
+cornerlefttex2x = 0; cornerlefttex2y = block_size - corner2z
+cornerlefttex3x = 0; cornerlefttex3y = block_size - corner3z
+
+// Corner (right side)
+cornerrighttex0x = block_size; cornerrighttex0y = block_size - corner0z
+cornerrighttex1x = block_size; cornerrighttex1y = block_size - corner1z
+cornerrighttex2x = block_size; cornerrighttex2y = block_size - corner2z
+cornerrighttex3x = block_size; cornerrighttex3y = block_size - corner3z
+
+// Top
+if (topangle <> 0)
+{
+	var p = (mod_fix(topangle, 90) / 90) * block_size;
+	
+	toptex0x = p; toptex0y = 0
+	toptex1x = block_size; toptex1y = p
+	toptex2x = block_size - p; toptex2y = block_size
+	toptex3x = 0; toptex3y = block_size - p
+			
+	repeat (topangle div 90)
+	{
+		var tmpx, tmpy;
+		tmpx = toptex0x; tmpy = toptex0y
+		toptex0x = toptex1x; toptex0y = toptex1y
+		toptex1x = toptex2x; toptex1y = toptex2y
+		toptex2x = toptex3x; toptex2y = toptex3y
+		toptex3x = tmpx; toptex3y = tmpy
 	}
 }
 else
 {
-	var flow, sidelevel, cornerlevel, myz, sidez, cornerz;
-	flow[e_dir.NORTH] = 0
-	
-	// Data at sides
-	for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
-	{
-		sidelevel[d] = 7
-		cornerlevel[d] = 7
-		if (!build_edge[d] && array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d))) = block_current)
-		{
-			sidelevel[d] = block_generate_liquid_get_level(point3D_add(build_pos, dir_get_vec3(d)))
-			
-			if (sidelevel[d] mod 8 < level)
-				flow[dir_get_opposite(d)]++ 
-			else if (sidelevel[d] mod 8 > level)
-				flow[d]++
-		}
-	}
+	toptex0x = 0; toptex0y = 0
+	toptex1x = block_size; toptex1y = 0
+	toptex2x = block_size; toptex2y = block_size
+	toptex3x = 0; toptex3y = block_size
+}
 
-	// Data in corners
-	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.NORTH] && array3D_get(block_obj, build_size, point3D_add(build_pos, vec3(-1, -1, 0))) = block_current)
-		cornerlevel[0] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(-1, -1, 0)))
-		
-	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.NORTH] && array3D_get(block_obj, build_size, point3D_add(build_pos, vec3(1, -1, 0))) = block_current)
-		cornerlevel[1] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(1, -1, 0)))
-		
-	if (!build_edge[e_dir.EAST] && !build_edge[e_dir.SOUTH] && array3D_get(block_obj, build_size, point3D_add(build_pos, vec3(1, 1, 0))) = block_current)
-		cornerlevel[2] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(1, 1, 0)))
-		
-	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.SOUTH] && array3D_get(block_obj, build_size, point3D_add(build_pos, vec3(-1, 1, 0))) = block_current)
-		cornerlevel[3] = block_generate_liquid_get_level(point3D_add(build_pos, vec3(-1, 1, 0)))
-		
-	// Set Zs
-	myz = 14 - (level / 7) * 13.5
-	for (var i = 0; i < 4; i++)
-	{
-		// Corner
-		if (cornerlevel[i] div 8)
-			cornerz[i] = block_size
-		else
-			cornerz[i] = 14 - (cornerlevel[i] / 7) * 13.5
-		
-		// Side
-		if (sidelevel[i] div 8)
-			sidez[i] = block_size
-		else
-			sidez[i] = 14 - (sidelevel[i] / 7) * 13.5
-	}
-	
-	// Max corner levels
-	cornerz[0] = max(cornerz[0], sidez[e_dir.WEST], sidez[e_dir.NORTH], myz)
-	cornerz[1] = max(cornerz[1], sidez[e_dir.EAST], sidez[e_dir.NORTH], myz)
-	cornerz[2] = max(cornerz[2], sidez[e_dir.EAST], sidez[e_dir.SOUTH], myz)
-	cornerz[3] = max(cornerz[3], sidez[e_dir.WEST], sidez[e_dir.SOUTH], myz)
-	
-	// Set mininum and average
-	averagez = 0
-	minz = block_size
-	for (var i = 0; i < 4; i++)
-	{
-		averagez += cornerz[i] / 4
-		minz = min(minz, cornerz[i])
-	}
-	
-	// Set texture orientation
-	if ((!flow[e_dir.WEST] && !flow[e_dir.EAST] && !flow[e_dir.NORTH] && !flow[e_dir.SOUTH]) || 
-		(flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH]) || 
-		(flow[e_dir.WEST] && flow[e_dir.EAST] && !flow[e_dir.NORTH] && !flow[e_dir.SOUTH]) || 
-		(!flow[e_dir.WEST] && !flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH]))
-		topflow = false
-	else if (flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.SOUTH])
-		angle = 0
-	else if (flow[e_dir.WEST] && flow[e_dir.EAST] && flow[e_dir.NORTH])
-		angle = 180
-	else if (flow[e_dir.EAST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH])
-		angle = 90
-	else if (flow[e_dir.WEST] && flow[e_dir.NORTH] && flow[e_dir.SOUTH])
-		angle = 270
-	else if (flow[e_dir.WEST] && flow[e_dir.NORTH])
-		angle = 180 + 45 + 10 * (flow[e_dir.WEST] - 1) - 10 * (flow[e_dir.NORTH] - 1)
-	else if (flow[e_dir.EAST] && flow[e_dir.NORTH])
-		angle = 180 - 45 + 10 * (flow[e_dir.NORTH] - 1) - 10 * (flow[e_dir.EAST] - 1)
-	else if (flow[e_dir.WEST] && flow[e_dir.SOUTH])
-		angle = 270 + 45 + 10 * (flow[e_dir.SOUTH] - 1) - 10 * (flow[e_dir.WEST] - 1)
-	else if (flow[e_dir.EAST] && flow[e_dir.SOUTH])
-		angle = 45 + 10 * (flow[e_dir.EAST] - 1) - 10 * (flow[e_dir.SOUTH] - 1)
-	else if (flow[e_dir.SOUTH])
-		angle = 0
-	else if (flow[e_dir.EAST])
-		angle = 90
-	else if (flow[e_dir.NORTH])
-		angle = 180
-	else if (flow[e_dir.WEST])
-		angle = 270
+topmidtexx = block_size / 2; topmidtexy = block_size / 2
+
+// Transform to sheet
+sidetex0x = (sidetex0x + slotflowposx) * slotflowsizex; sidetex0y = (sidetex0y + slotflowposy) * slotflowsizey
+sidetex1x = (sidetex1x + slotflowposx) * slotflowsizex; sidetex1y = (sidetex1y + slotflowposy) * slotflowsizey
+sidetex2x = (sidetex2x + slotflowposx) * slotflowsizex; sidetex2y = (sidetex2y + slotflowposy) * slotflowsizey
+sidetex3x = (sidetex3x + slotflowposx) * slotflowsizex; sidetex3y = (sidetex3y + slotflowposy) * slotflowsizey
+
+cornerlefttex0x = (cornerlefttex0x + slotflowposx) * slotflowsizex; cornerlefttex0y = (cornerlefttex0y + slotflowposy) * slotflowsizey
+cornerlefttex1x = (cornerlefttex1x + slotflowposx) * slotflowsizex; cornerlefttex1y = (cornerlefttex1y + slotflowposy) * slotflowsizey
+cornerlefttex2x = (cornerlefttex2x + slotflowposx) * slotflowsizex; cornerlefttex2y = (cornerlefttex2y + slotflowposy) * slotflowsizey
+cornerlefttex3x = (cornerlefttex3x + slotflowposx) * slotflowsizex; cornerlefttex3y = (cornerlefttex3y + slotflowposy) * slotflowsizey
+
+cornerrighttex0x = (cornerrighttex0x + slotflowposx) * slotflowsizex; cornerrighttex0y = (cornerrighttex0y + slotflowposy) * slotflowsizey
+cornerrighttex1x = (cornerrighttex1x + slotflowposx) * slotflowsizex; cornerrighttex1y = (cornerrighttex1y + slotflowposy) * slotflowsizey
+cornerrighttex2x = (cornerrighttex2x + slotflowposx) * slotflowsizex; cornerrighttex2y = (cornerrighttex2y + slotflowposy) * slotflowsizey
+cornerrighttex3x = (cornerrighttex3x + slotflowposx) * slotflowsizex; cornerrighttex3y = (cornerrighttex3y + slotflowposy) * slotflowsizey
+
+if (topflow)
+{
+	toptex0x = (toptex0x + slotflowposx) * slotflowsizex; toptex0y = (toptex0y + slotflowposy) * slotflowsizey
+	toptex1x = (toptex1x + slotflowposx) * slotflowsizex; toptex1y = (toptex1y + slotflowposy) * slotflowsizey
+	toptex2x = (toptex2x + slotflowposx) * slotflowsizex; toptex2y = (toptex2y + slotflowposy) * slotflowsizey
+	toptex3x = (toptex3x + slotflowposx) * slotflowsizex; toptex3y = (toptex3y + slotflowposy) * slotflowsizey
+	topmidtexx = (topmidtexx + slotflowposx) * slotflowsizex; topmidtexy = (topmidtexy + slotflowposy) * slotflowsizey
+}
+else
+{
+	toptex0x = (toptex0x + slotstillposx) * slotstillsizex; toptex0y = (toptex0y + slotstillposy) * slotstillsizey
+	toptex1x = (toptex1x + slotstillposx) * slotstillsizex; toptex1y = (toptex1y + slotstillposy) * slotstillsizey
+	toptex2x = (toptex2x + slotstillposx) * slotstillsizex; toptex2y = (toptex2y + slotstillposy) * slotstillsizey
+	toptex3x = (toptex3x + slotstillposx) * slotstillsizex; toptex3y = (toptex3y + slotstillposy) * slotstillsizey
+	topmidtexx = (topmidtexx + slotstillposx) * slotstillsizex; topmidtexy = (topmidtexy + slotstillposy) * slotstillsizey
 }
 
 // Add triangles
 var x1, x2, y1, y2, z1, z2;
-var corner, mid;
-var mat, toptex, topmidtex, sidetex, cornerlefttex, cornerrighttex;
+var midx, midy, midz;
 
-x1 = 0; y1 = 0; z1 = 0;
-x2 = block_size; y2 = block_size; z2 = minz;
+x1 = block_pos_x;	  y1 = block_pos_y;		z1 = block_pos_z;
+x2 = x1 + block_size; y2 = y1 + block_size; z2 = z1 + minz;
 
-// Shape points
-corner[0] = point3D(x1, y1, cornerz[0])
-corner[1] = point3D(x2, y1, cornerz[1])
-corner[2] = point3D(x2, y2, cornerz[2])
-corner[3] = point3D(x1, y2, cornerz[3])
-mid = point3D(x1 + block_size / 2, y1 + block_size / 2, averagez)
+midx = x1 + block_size / 2
+midy = y1 + block_size / 2
+midz = z1 + averagez
 
-// Texture coordinates (clockwise starting at top-left)
-
-// Top texture
-if (angle <> 0)
-{
-	var p = (mod_fix(angle, 90) / 90) * block_size;
-	switch (angle div 90)
-	{
-		case 0:
-			toptex = array(
-				point2D(p, 0),
-				point2D(block_size, p),
-				point2D(block_size - p, block_size),
-				point2D(0, block_size - p)
-			)
-			break
-			
-		case 1:
-			toptex = array(
-				point2D(block_size, p),
-				point2D(block_size - p, block_size),
-				point2D(0, block_size - p),
-				point2D(p, 0)
-			)
-			break
-			
-		case 2:
-			toptex = array(
-				point2D(block_size - p, block_size),
-				point2D(0, block_size - p),
-				point2D(p, 0),
-				point2D(block_size, p)
-			)
-			break
-			
-		case 3:
-			toptex = array(
-				point2D(0, block_size - p),
-				point2D(p, 0),
-				point2D(block_size, p),
-				point2D(block_size - p, block_size)
-			)
-			break
-	}
-}
-else
-{
-	toptex = array(
-		point2D(0, 0),
-		point2D(block_size, 0),
-		point2D(block_size, block_size),
-		point2D(0, block_size)
-	)
-}
-
-topmidtex = point2D(block_size / 2, block_size / 2)
-
-// Side textures
-sidetex = array(
-	point2D(0, block_size - z2),
-	point2D(block_size, block_size - z2),
-	point2D(block_size, block_size),
-	point2D(0, block_size)
-)
-
-// Corner textures (left side)
-cornerlefttex = array(
-	point2D(0, block_size - cornerz[0]),
-	point2D(0, block_size - cornerz[1]),
-	point2D(0, block_size - cornerz[2]),
-	point2D(0, block_size - cornerz[3])
-)
-
-// Corner textures (right side)
-cornerrighttex = array(
-	point2D(block_size, block_size - cornerz[0]),
-	point2D(block_size, block_size - cornerz[1]),
-	point2D(block_size, block_size - cornerz[2]),
-	point2D(block_size, block_size - cornerz[3])
-)
-
-// Transform to sheet
-for (var i = 0; i < 4; i++)
-{
-	if (topflow)
-		toptex[i] = vec2_mul(point2D_add(toptex[i], slotflowpos), slotflowsize)
-	else
-		toptex[i] = vec2_mul(point2D_add(toptex[i], slotstillpos), slotstillsize)
-	sidetex[i] = vec2_mul(point2D_add(sidetex[i], slotflowpos), slotflowsize)
-	cornerlefttex[i] = vec2_mul(point2D_add(cornerlefttex[i], slotflowpos), slotflowsize)
-	cornerrighttex[i] = vec2_mul(point2D_add(cornerrighttex[i], slotflowpos), slotflowsize)
-}
-if (topflow)
-	topmidtex = vec2_mul(point2D_add(topmidtex, slotflowpos), slotflowsize)
-else
-	topmidtex = vec2_mul(point2D_add(topmidtex, slotstillpos), slotstillsize)
-
-mat = matrix_create(block_pos, vec3(0), vec3(1))
+corner0z += z1
+corner1z += z1
+corner2z += z1
+corner3z += z1
 
 vbuffer_current = vbuffer[dep, vbuf]
 vertex_brightness = block_current.brightness
 
-for (var d = 0; d < e_dir.amount; d++)
+// X+
+if (!matchxp && !solidxp)
 {
-	// Cull
-	if (!build_edge[d] && (array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d))) = block_current || 
-						   (d != e_dir.UP && block_render_models_get_solid(block_render_models_dir[d]))))
-		continue
-		
-	if (d = e_dir.UP)
-	{
-		vbuffer_add_triangle(mid, corner[0], corner[1], topmidtex, toptex[0], toptex[1], null, null, mat)
-		vbuffer_add_triangle(mid, corner[1], corner[2], topmidtex, toptex[1], toptex[2], null, null, mat)
-		vbuffer_add_triangle(mid, corner[2], corner[3], topmidtex, toptex[2], toptex[3], null, null, mat)
-		vbuffer_add_triangle(mid, corner[3], corner[0], topmidtex, toptex[3], toptex[0], null, null, mat)
-		continue
-	}
-	else if (d = e_dir.DOWN)
-	{
-		p1 = point3D(x1, y2, z1)
-		p2 = point3D(x2, y2, z1)
-		p3 = point3D(x2, y1, z1)
-		p4 = point3D(x1, y1, z1)
-		vbuffer_add_triangle(p1, p2, p3, toptex[3], toptex[2], toptex[1], null, null, mat)
-		vbuffer_add_triangle(p3, p4, p1, toptex[1], toptex[0], toptex[3], null, null, mat)
-		continue
-	}
-	
-	var p1, p2, p3, p4;
-	var c1, c2;
-		
-	switch (d)
-	{
-		case e_dir.EAST:
-			p1 = point3D(x2, y2, z2)
-			p2 = point3D(x2, y1, z2)
-			p3 = point3D(x2, y1, z1)
-			p4 = point3D(x2, y2, z1)
-			c1 = 1
-			c2 = 2
-			break
-			
-		case e_dir.WEST:
-			p1 = point3D(x1, y1, z2)
-			p2 = point3D(x1, y2, z2)
-			p3 = point3D(x1, y2, z1)
-			p4 = point3D(x1, y1, z1)
-			c1 = 3
-			c2 = 0
-			break
-			
-		case e_dir.SOUTH:
-			p1 = point3D(x1, y2, z2)
-			p2 = point3D(x2, y2, z2)
-			p3 = point3D(x2, y2, z1)
-			p4 = point3D(x1, y2, z1)
-			c1 = 2
-			c2 = 3
-			break
-			
-		case e_dir.NORTH:
-			p1 = point3D(x2, y1, z2)
-			p2 = point3D(x1, y1, z2)
-			p3 = point3D(x1, y1, z1)
-			p4 = point3D(x2, y1, z1)
-			c1 = 0
-			c2 = 1
-			break
-	}
-	
-	vbuffer_add_triangle(p1, p2, p3, sidetex[0], sidetex[1], sidetex[2], null, null, mat)
-	vbuffer_add_triangle(p3, p4, p1, sidetex[2], sidetex[3], sidetex[0], null, null, mat)
-	if (cornerz[c1] > cornerz[c2])
-		vbuffer_add_triangle(p2, p1, corner[c1], sidetex[1], sidetex[0], cornerrighttex[c1], null, null, mat)
-	else if (cornerz[c1] < cornerz[c2])
-		vbuffer_add_triangle(p2, p1, corner[c2], sidetex[1], sidetex[0], cornerlefttex[c2], null, null, mat)
-}*/
+	vbuffer_add_triangle(x2, y2, z2, x2, y1, z2, x2, y1, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
+	vbuffer_add_triangle(x2, y1, z1, x2, y2, z1, x2, y2, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	if (corner1z > corner2z)
+		vbuffer_add_triangle(x2, y1, z2, x2, y2, z2, x2, y1, corner1z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex1x, cornerrighttex1y)
+	else
+		vbuffer_add_triangle(x2, y1, z2, x2, y2, z2, x2, y2, corner2z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex2x, cornerlefttex2y)
+}
+
+// X-
+if (!matchxn && !solidxn)
+{
+	vbuffer_add_triangle(x1, y1, z2, x1, y2, z2, x1, y2, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
+	vbuffer_add_triangle(x1, y2, z1, x1, y1, z1, x1, y1, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	if (corner3z > corner0z)
+		vbuffer_add_triangle(x1, y2, z2, x1, y1, z2, x1, y2, corner3z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex3x, cornerrighttex3y)
+	else
+		vbuffer_add_triangle(x1, y2, z2, x1, y1, z2, x1, y1, corner0z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex0x, cornerlefttex0y)
+}
+
+// Y+
+if (!matchyp && !solidyp)
+{
+	vbuffer_add_triangle(x1, y2, z2, x2, y2, z2, x2, y2, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
+	vbuffer_add_triangle(x2, y2, z1, x1, y2, z1, x1, y2, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	if (corner2z > corner3z)
+		vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x2, y2, corner2z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex2x, cornerrighttex2y)
+	else
+		vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x1, y2, corner3z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex3x, cornerlefttex3y)
+}
+
+// Y-
+if (!matchyn && !solidyn)
+{
+	vbuffer_add_triangle(x2, y1, z2, x1, y1, z2, x1, y1, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
+	vbuffer_add_triangle(x1, y1, z1, x2, y1, z1, x2, y1, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	if (corner0z > corner1z)
+		vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x1, y1, corner0z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex0x, cornerrighttex0y)
+	else
+		vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x2, y1, corner1z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex1x, cornerlefttex1y)
+}
+
+// Z+
+if (!matchzp && !solidzp)
+{
+	vbuffer_add_triangle(midx, midy, midz, x1, y1, corner0z, x2, y1, corner1z, topmidtexx, topmidtexy, toptex0x, toptex0y, toptex1x, toptex1y)
+	vbuffer_add_triangle(midx, midy, midz, x2, y1, corner1z, x2, y2, corner2z, topmidtexx, topmidtexy, toptex1x, toptex1y, toptex2x, toptex2y)
+	vbuffer_add_triangle(midx, midy, midz, x2, y2, corner2z, x1, y2, corner3z, topmidtexx, topmidtexy, toptex2x, toptex2y, toptex3x, toptex3y)
+	vbuffer_add_triangle(midx, midy, midz, x1, y2, corner3z, x1, y1, corner0z, topmidtexx, topmidtexy, toptex3x, toptex3y, toptex0x, toptex0y)
+}
+
+// Z-
+if (!matchzn && !solidzn)
+{
+	vbuffer_add_triangle(x1, y2, z1, x2, y2, z1, x2, y1, z1, toptex3x, toptex3y, toptex2x, toptex2y, toptex1x, toptex1y)
+	vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, toptex1x, toptex1y, toptex0x, toptex0y, toptex3x, toptex3y)
+}

@@ -10,6 +10,7 @@ special_block_list = ds_list_create()
 block_list = ds_list_create()
 block_name_map = ds_map_create()
 block_legacy_id_map = ds_map_create()
+block_liquid_slot_map = ds_map_create()
 
 model_texture_list = ds_list_create()
 block_texture_list = ds_list_create()

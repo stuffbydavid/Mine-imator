@@ -8,7 +8,7 @@ switch (culldir)
 {
 	case e_dir.EAST:
 	{
-		if (!face_edge_xp || mc_builder.block_face_min_depth_xp = null || mc_builder.block_face_min_depth_xp > face_depth_xp)
+		if (!face_edge_xp || mc_builder.block_face_min_depth_xp = null || mc_builder.block_face_min_depth_xp > other.face_min_depth_xp)
 			return false
 			
 		if (mc_builder.block_face_full_xp ||
@@ -21,7 +21,7 @@ switch (culldir)
 	
 	case e_dir.WEST:
 	{
-		if (!face_edge_xn || mc_builder.block_face_min_depth_xn = null || mc_builder.block_face_min_depth_xn > face_depth_xn)
+		if (!face_edge_xn || mc_builder.block_face_min_depth_xn = null || mc_builder.block_face_min_depth_xn > other.face_min_depth_xn)
 			return false
 			
 		if (mc_builder.block_face_full_xn ||
@@ -34,7 +34,7 @@ switch (culldir)
 	
 	case e_dir.SOUTH:
 	{
-		if (!face_edge_yp || mc_builder.block_face_min_depth_yp = null || mc_builder.block_face_min_depth_yp > face_depth_yp)
+		if (!face_edge_yp || mc_builder.block_face_min_depth_yp = null || mc_builder.block_face_min_depth_yp > other.face_min_depth_yp)
 			return false
 		
 		if (mc_builder.block_face_full_yp ||
@@ -47,7 +47,7 @@ switch (culldir)
 	
 	case e_dir.NORTH:
 	{
-		if (!face_edge_yn || mc_builder.block_face_min_depth_yn = null || mc_builder.block_face_min_depth_yn > face_depth_yn)
+		if (!face_edge_yn || mc_builder.block_face_min_depth_yn = null || mc_builder.block_face_min_depth_yn > other.face_min_depth_yn)
 			return false
 		
 		if (mc_builder.block_face_full_yn ||
@@ -60,7 +60,7 @@ switch (culldir)
 	
 	case e_dir.UP:
 	{
-		if (!face_edge_zp || mc_builder.block_face_min_depth_zp = null || mc_builder.block_face_min_depth_zp > face_depth_zp)
+		if (!face_edge_zp || mc_builder.block_face_min_depth_zp = null || mc_builder.block_face_min_depth_zp > other.face_min_depth_zp)
 			return false
 		
 		if (mc_builder.block_face_full_zp ||
@@ -73,7 +73,7 @@ switch (culldir)
 	
 	case e_dir.DOWN:
 	{
-		if (!face_edge_zn || mc_builder.block_face_min_depth_zn = null || mc_builder.block_face_min_depth_zn > face_depth_zn)
+		if (!face_edge_zn || mc_builder.block_face_min_depth_zn = null || mc_builder.block_face_min_depth_zn > other.face_min_depth_zn)
 			return false
 		
 		if (mc_builder.block_face_full_zn ||

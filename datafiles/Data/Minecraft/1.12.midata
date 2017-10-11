@@ -540,12 +540,13 @@
 		},
 		{
 			"name": "dirt",
+			"type": "snowy",
 			"states": {
 				"snowy": [ "true", "false" ],
 				"variant": [
 					{ "value": "dirt", "file": "dirt.json" },
 					{ "value": "coarse_dirt", "file": "coarse_dirt.json" },
-					{ "value": "podzol", "file": "podzol.json", "type": "snowy" }
+					{ "value": "podzol", "file": "podzol.json" }
 				]
 			},
 			"default_state": "variant=dirt,snowy=false",
@@ -930,7 +931,7 @@
 			"file": "sticky_piston.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"extended": [ "false", "true" ]
+				"extended": [ "true", "false" ]
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
@@ -1004,7 +1005,7 @@
 			"file": "piston.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"extended": [ "false", "true" ]
+				"extended": [ "true", "false" ]
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
@@ -1290,7 +1291,8 @@
 			"name": "chest",
 			"type": "chest",
 			"states": {
-				"facing": [ "north", "south", "east", "west" ]
+				"facing": [ "north", "south", "east", "west" ],
+				"double": [ "true", "false" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
@@ -1499,9 +1501,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -1710,9 +1714,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -2324,9 +2330,9 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"in_wall": [ "true", "false" ]
+				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "facing=west,open=false,in_wall=false",
+			"default_state": "facing=west,open=false",
 			"legacy_id": 107,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -2661,7 +2667,8 @@
 			"name": "ender_chest",
 			"type": "chest",
 			"states": {
-				"facing": [ "north", "south", "east", "west" ]
+				"facing": [ "north", "south", "east", "west" ],
+				"double": [ "true", "false" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
@@ -2993,7 +3000,8 @@
 			"name": "trapped_chest",
 			"type": "chest",
 			"states": {
-				"facing": [ "north", "south", "east", "west" ]
+				"facing": [ "north", "south", "east", "west" ],
+				"double": [ "true", "false" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
@@ -3631,9 +3639,9 @@
 					{ "value": "double_rose", "file": "double_rose.json" },
 					{ "value": "paeonia", "file": "paeonia.json" }
 				],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ]
 			},
-			"default_state": "variant=sunflower,half=lower",
+			"default_state": "variant=sunflower",
 			"random_offset": true,
 			"wind": {
 				"axis": "all",
@@ -3748,9 +3756,9 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"in_wall": [ "true", "false" ]
+				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "facing=west,open=false,in_wall=false",
+			"default_state": "facing=west,open=false",
 			"legacy_id": 183,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3772,9 +3780,9 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"in_wall": [ "true", "false" ]
+				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "facing=west,open=false,in_wall=false",
+			"default_state": "facing=west,open=false",
 			"legacy_id": 184,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3796,9 +3804,9 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"in_wall": [ "true", "false" ]
+				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "facing=west,open=false,in_wall=false",
+			"default_state": "facing=west,open=false",
 			"legacy_id": 185,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3820,9 +3828,9 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"in_wall": [ "true", "false" ]
+				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "facing=west,open=false,in_wall=false",
+			"default_state": "facing=west,open=false",
 			"legacy_id": 186,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3844,9 +3852,9 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"in_wall": [ "true", "false" ]
+				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "facing=west,open=false,in_wall=false",
+			"default_state": "facing=west,open=false",
 			"legacy_id": 187,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3904,9 +3912,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -3952,9 +3962,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -4000,9 +4012,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -4048,9 +4062,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -4096,9 +4112,11 @@
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "true", "false" ],
-				"half": [ "upper", "lower" ]
+				"half": [ "lower", "upper" ],
+				"location": [ "north_west", "north_east", "south_west", "south_east" ],
+				"direction": [ "east", "south", "west", "north" ]
 			},
-			"default_state": "hinge=right,facing=west,open=false,half=lower",
+			"default_state": "hinge=right,facing=west,open=false",
 			"timeline": {
 				"rotation_point": [ 1.5, 0, 1.5 ],
 				"position": {
@@ -4229,7 +4247,6 @@
 			"states": {
 				"variant": [ "default" ]
 			},
-			"default_state": "variant=default",
 			"legacy_id": 204
 		},
 		{
@@ -4239,7 +4256,7 @@
 				"variant": [ "default" ],
 				"half": [ "top", "bottom" ]
 			},
-			"default_state": "half=bottom,variant=default",
+			"default_state": "half=bottom",
 			"legacy_id": 205,
 			"legacy_data": {
 				"0x8": {

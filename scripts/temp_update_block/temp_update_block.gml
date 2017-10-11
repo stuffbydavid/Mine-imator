@@ -22,7 +22,7 @@ with (mc_builder)
 	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 		for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 			for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
-				builder_set_models()
+				builder_set_model()
 				
 	// Generate
 	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)

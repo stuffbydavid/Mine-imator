@@ -208,7 +208,11 @@ with (mc_assets)
 				block_name_map[?"flowing_lava"] = block_name_map[?"lava"]
 				block_legacy_id_map[?8] = block_legacy_id_map[?9]
 				block_legacy_id_map[?10] = block_legacy_id_map[?11]
-	
+				block_liquid_slot_map[?"water"] = ds_list_find_index(block_texture_ani_list, "blocks/water_still")
+				block_liquid_slot_map[?"lava"] = ds_list_find_index(block_texture_ani_list, "blocks/lava_still")
+				block_liquid_slot_map[?"flowing_water"] = ds_list_find_index(block_texture_ani_list, "blocks/water_flow")
+				block_liquid_slot_map[?"flowing_lava"] = ds_list_find_index(block_texture_ani_list, "blocks/lava_flow")
+				
 				debug_timer_stop("Load blocks")
 	
 				// Clear up loaded models
