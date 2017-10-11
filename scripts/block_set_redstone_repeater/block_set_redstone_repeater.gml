@@ -1,9 +1,10 @@
 /// block_set_redstone_repeater()
 /// @desc Set locked state.
 
-var facingdir, facingdiropp;
+var facingdir, facingdiropp, locked;
 facingdir = string_to_dir(block_get_state_id_value(block_current, block_state_id_current, "facing"));
 facingdiropp = dir_get_opposite(facingdir)
+locked = "false"
 
 for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 {
@@ -19,9 +20,11 @@ for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
 	otherfacingdir = string_to_dir(block_get_state_id_value(block_current, otherstateid, "facing"))
 	if (otherblock.name = "powered_repeater" && otherfacingdir = d)
 	{
-		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "locked", "true")
+		locked = "true"
 		break
 	}
 }
+
+block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "locked", locked)
 
 return 0

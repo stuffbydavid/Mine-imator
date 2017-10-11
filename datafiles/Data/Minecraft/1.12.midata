@@ -1255,6 +1255,13 @@
 			"name": "fire",
 			"file": "fire.json",
 			"type": "fire",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ],
+				"up": [ "true", "false" ]
+			},
 			"brightness": 1,
 			"legacy_id": 51
 		},
@@ -1328,7 +1335,11 @@
 			"type": "redstone_wire",
 			"require_models": true,
 			"states": {
-				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],
+				"east": [ "none", "side", "up" ],
+				"west": [ "none", "side", "up" ],
+				"north": [ "none", "side", "up" ],
+				"south": [ "none", "side", "up" ]
 			},
 			"default_state": "power=0",
 			"legacy_id": 55,
@@ -1900,6 +1911,12 @@
 			"name": "fence",
 			"file": "fence.json",
 			"type": "fence",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 85
 		},
@@ -2230,6 +2247,12 @@
 			"name": "iron_bars",
 			"file": "iron_bars.json",
 			"type": "bars",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 101
 		},
@@ -2237,6 +2260,12 @@
 			"name": "glass_pane",
 			"file": "glass_pane.json",
 			"type": "bars",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 102
 		},
@@ -2418,7 +2447,13 @@
 		{
 			"name": "nether_brick_fence",
 			"file": "nether_brick_fence.json",
-			"type": "fence",
+			"type": "fence_nether",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 113
 		},
@@ -2868,7 +2903,12 @@
 				"variant": [
 					{ "value": "cobblestone", "file": "cobblestone_wall.json" },
 					{ "value": "mossy_cobblestone", "file": "mossy_cobblestone_wall.json" }
-				]
+				],
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ],
+				"up": [ "true", "false" ]
 			},
 			"default_state": "variant=cobblestone",
 			"legacy_id": 139,
@@ -3093,7 +3133,10 @@
 			"type": "redstone_comparator",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"mode": [ "compare", "subtract" ],
+				"mode": [ 
+					{ "value": "subtract", "brightness": 0.75 },
+					"compare"
+				],
 				"powered": [ 
 					{ "value": "true", "brightness": 0.75 },
 					"false"
@@ -3124,11 +3167,16 @@
 			"type": "redstone_comparator",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"mode": [ "compare", "subtract" ],
-				"powered": [ "true", "false" ]
+				"mode": [ 
+					{ "value": "subtract", "brightness": 0.75 },
+					"compare"
+				],
+				"powered": [ 
+					{ "value": "true", "brightness": 0.75 },
+					"false"
+				]
 			},
 			"default_state": "facing=west,mode=compare,powered=false",
-			"brightness": 0.75,
 			"legacy_id": 150,
 			"legacy_data": {
 				"0x1+0x2": {
@@ -3355,7 +3403,11 @@
 					{ "value": "green",  "file": "green_stained_glass_pane.json" },
 					{ "value": "red", "file": "red_stained_glass_pane.json" },
 					{ "value": "black", "file": "black_stained_glass_pane.json" }
-				]
+				],
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
 			},
 			"default_state": "color=white",
 			"legacy_id": 160,
@@ -3873,6 +3925,12 @@
 			"name": "spruce_fence",
 			"file": "spruce_fence.json",
 			"type": "fence",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 188
 		},
@@ -3880,6 +3938,12 @@
 			"name": "birch_fence",
 			"file": "birch_fence.json",
 			"type": "fence",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 189
 		},
@@ -3887,6 +3951,12 @@
 			"name": "jungle_fence",
 			"file": "jungle_fence.json",
 			"type": "fence",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 190
 		},
@@ -3894,6 +3964,12 @@
 			"name": "dark_oak_fence",
 			"file": "dark_oak_fence.json",
 			"type": "fence",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 191
 		},
@@ -3901,6 +3977,12 @@
 			"name": "acacia_fence",
 			"file": "acacia_fence.json",
 			"type": "fence",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ]
+			},
 			"require_models": true,
 			"legacy_id": 192
 		},
@@ -4176,6 +4258,14 @@
 			"name": "chorus_plant",
 			"file": "chorus_plant.json",
 			"type": "chorus_plant",
+			"states": {
+				"east": [ "true", "false" ],
+				"west": [ "true", "false" ],
+				"north": [ "true", "false" ],
+				"south": [ "true", "false" ],
+				"up": [ "true", "false" ],
+				"down": [ "true", "false" ]
+			},
 			"legacy_id": 199
 		},
 		{

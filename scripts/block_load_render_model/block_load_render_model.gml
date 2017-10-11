@@ -56,13 +56,9 @@ with (new(obj_block_render_model))
 	// For culling
 	for (var f = 0; f < e_dir.amount; f++)
 	{
-		face_full[f, Z] = false
-		face_min[f, X] = null
-		face_max[f, X] = null
-		face_min[f, Y] = null
-		face_max[f, Y] = null
-		face_min[f, Z] = null
-		face_max[f, Z] = null
+		face_full[f] = false
+		face_min[f] = null
+		face_max[f] = null
 		face_min_depth[f] = null
 	}
 	
@@ -209,7 +205,7 @@ with (new(obj_block_render_model))
 					// Auto generate UVs
 					else
 					{
-						switch (f)
+						switch (nd)
 						{
 							case e_dir.EAST:
 								face_uv[nd, 0] = point2D(block_size - to[Y], block_size - to[Z])
@@ -340,43 +336,85 @@ with (new(obj_block_render_model))
 					face_edge[nd] = false
 					if (!rotated)
 					{
-						// Check with edge
 						switch (nd)
 						{
-							case e_dir.EAST:	face_edge[nd] = (to[X] = block_size);	break
-							case e_dir.WEST:	face_edge[nd] = (from[X] = 0);			break
-							case e_dir.SOUTH:	face_edge[nd] = (to[Y] = block_size);	break
-							case e_dir.NORTH:	face_edge[nd] = (from[Y] = 0);			break
-							case e_dir.UP:		face_edge[nd] = (to[Z] = block_size);	break
-							case e_dir.DOWN:	face_edge[nd] = (from[Z] = 0);			break
-						}
-						
-						if (face_edge[nd])
-						{
-							// Check with each direction
-							var dirvec = dir_get_vec3(nd);
-							for (var a = X; a <= Z; a++)
+							case e_dir.EAST:
+							case e_dir.WEST:
 							{
-								if (dirvec[a] != 0)
-									continue
+								if (nd = e_dir.EAST)
+									face_edge[nd] = (to[X] = block_size)
+								else
+									face_edge[nd] = (from[X] = 0)
 								
-								// Set min and max for this axis
-								if (!other.face_full[nd, a])
+								if (face_edge[nd] && !other.face_full[nd] && from[Y] = 0 && to[Y] = block_size)
 								{
-									if ((other.face_min[nd, a] = null || from[a] <= other.face_min[nd, a]) && 
-										(other.face_max[nd, a] = null || to[a] >= other.face_max[nd, a]))
-									{
-										other.face_min[nd, a] = from[a]
-										other.face_max[nd, a] = to[a]
-								
-										if (other.face_min[nd, a] = 0 && other.face_max[nd, a] = block_size)
-											other.face_full[nd, a] = true
-									}
+									if (other.face_min[nd] = null || from[Z] <= other.face_min[nd])
+										other.face_min[nd] = from[Z]
+										
+									if (other.face_max[nd] = null || to[Z] >= other.face_max[nd])
+										other.face_max[nd] = to[Z]
+									
+									if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
+										other.face_full[nd] = true
+										
+									if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
+										other.face_min_depth[nd] = face_depth[nd]
 								}
+								
+								break
 							}
 							
-							if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
-								other.face_min_depth[nd] = face_depth[nd]
+							case e_dir.SOUTH:
+							case e_dir.NORTH:
+							{
+								if (nd = e_dir.SOUTH)
+									face_edge[nd] = (to[Y] = block_size)
+								else
+									face_edge[nd] = (from[Y] = 0)
+								
+								if (face_edge[nd] && !other.face_full[nd] && from[X] = 0 && to[X] = block_size)
+								{
+									if (other.face_min[nd] = null || from[Z] <= other.face_min[nd])
+										other.face_min[nd] = from[Z]
+										
+									if (other.face_max[nd] = null || to[Z] >= other.face_max[nd])
+										other.face_max[nd] = to[Z]
+									
+									if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
+										other.face_full[nd] = true
+										
+									if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
+										other.face_min_depth[nd] = face_depth[nd]
+								}
+								
+								break
+							}
+							
+							case e_dir.UP:
+							case e_dir.DOWN:
+							{
+								if (nd = e_dir.SOUTH)
+									face_edge[nd] = (to[Z] = block_size)
+								else
+									face_edge[nd] = (from[Z] = 0)
+								
+								if (face_edge[nd] && !other.face_full[nd] && from[X] = 0 && to[X] = block_size)
+								{
+									if (other.face_min[nd] = null || from[Y] <= other.face_min[nd])
+										other.face_min[nd] = from[Y]
+										
+									if (other.face_max[nd] = null || to[Y] >= other.face_max[nd])
+										other.face_max[nd] = to[Y]
+									
+									if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
+										other.face_full[nd] = true
+										
+									if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
+										other.face_min_depth[nd] = face_depth[nd]
+								}
+								
+								break
+							}
 						}
 					}
 				}
@@ -477,46 +515,34 @@ with (new(obj_block_render_model))
 	
 	// Convert from arrays
 	
-	face_full_xp = (face_full[e_dir.EAST, Y] && face_full[e_dir.EAST, Z])
-	face_min_y_xp = face_min[e_dir.EAST, Y]
-	face_max_y_xp = face_max[e_dir.EAST, Y]
-	face_min_z_xp = face_min[e_dir.EAST, Z]
-	face_max_z_xp = face_max[e_dir.EAST, Z]
+	face_full_xp = face_full[e_dir.EAST]
+	face_min_xp = face_min[e_dir.EAST]
+	face_max_xp = face_max[e_dir.EAST]
 	face_min_depth_xp = face_min_depth[e_dir.EAST]
 	
-	face_full_xn = (face_full[e_dir.WEST, Y] && face_full[e_dir.WEST, Z])
-	face_min_y_xn = face_min[e_dir.WEST, Y]
-	face_max_y_xn = face_max[e_dir.WEST, Y]
-	face_min_z_xn = face_min[e_dir.WEST, Z]
-	face_max_z_xn = face_max[e_dir.WEST, Z]
+	face_full_xn = face_full[e_dir.WEST]
+	face_min_xn = face_min[e_dir.WEST]
+	face_max_xn = face_max[e_dir.WEST]
 	face_min_depth_xn = face_min_depth[e_dir.WEST]
 	
-	face_full_yp = (face_full[e_dir.SOUTH, X] && face_full[e_dir.SOUTH, Z])
-	face_min_x_yp = face_min[e_dir.SOUTH, X]
-	face_max_x_yp = face_max[e_dir.SOUTH, X]
-	face_min_z_yp = face_min[e_dir.SOUTH, Z]
-	face_max_z_yp = face_max[e_dir.SOUTH, Z]
+	face_full_yp = face_full[e_dir.SOUTH]
+	face_min_yp = face_min[e_dir.SOUTH]
+	face_max_yp = face_max[e_dir.SOUTH]
 	face_min_depth_yp = face_min_depth[e_dir.SOUTH]
 	
-	face_full_yn = (face_full[e_dir.NORTH, X] && face_full[e_dir.NORTH, Z])
-	face_min_x_yn = face_min[e_dir.NORTH, X]
-	face_max_x_yn = face_max[e_dir.NORTH, X]
-	face_min_z_yn = face_min[e_dir.NORTH, Z]
-	face_max_z_yn = face_max[e_dir.NORTH, Z]
+	face_full_yn = face_full[e_dir.NORTH]
+	face_min_yn = face_min[e_dir.NORTH]
+	face_max_yn = face_max[e_dir.NORTH]
 	face_min_depth_yn = face_min_depth[e_dir.NORTH]
 	
-	face_full_zp = (face_full[e_dir.UP, X] && face_full[e_dir.UP, Y])
-	face_min_x_zp = face_min[e_dir.UP, X]
-	face_max_x_zp = face_max[e_dir.UP, X]
-	face_min_y_zp = face_min[e_dir.UP, Y]
-	face_max_y_zp = face_max[e_dir.UP, Y]
+	face_full_zp = face_full[e_dir.UP]
+	face_min_zp = face_min[e_dir.UP]
+	face_max_zp = face_max[e_dir.UP]
 	face_min_depth_zp = face_min_depth[e_dir.UP]
 	
-	face_full_zn = (face_full[e_dir.DOWN, X] && face_full[e_dir.DOWN, Y])
-	face_min_x_zn = face_min[e_dir.DOWN, X]
-	face_max_x_zn = face_max[e_dir.DOWN, X]
-	face_min_y_zn = face_min[e_dir.DOWN, Y]
-	face_max_y_zn = face_max[e_dir.DOWN, Y]
+	face_full_zn = face_full[e_dir.DOWN]
+	face_min_zn = face_min[e_dir.DOWN]
+	face_max_zn = face_max[e_dir.DOWN]
 	face_min_depth_zn = face_min_depth[e_dir.DOWN]
 	
 	ds_map_destroy(texturemap)

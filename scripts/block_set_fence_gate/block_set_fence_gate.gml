@@ -1,34 +1,26 @@
 /// block_set_fence_gate()
 /// @desc Connects to fences and cobblestone walls in the same direction.
-/*
-var facing = state_vars_get_value(vars, "facing");
-if (facing = null)
-	return 0
-	
-var block;
-	
+
+var block, facing, inwall;
+facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
+inwall = "false"
+
 if (facing = "east" || facing = "west")
 {
 	// Check south for wall
 	if (!build_edge[e_dir.SOUTH])
 	{
-		block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(e_dir.SOUTH)))
-		if (!is_undefined(block) && block.type = "wall")
-		{
-			state_vars_set_value(vars, "in_wall", "true")
-			return 0
-		}
+		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+		if (block != null && block.type = "wall")
+			inwall = "true"
 	}
 	
 	// Check north for wall
-	if (!build_edge[e_dir.NORTH])
+	if (inwall = "false" && !build_edge[e_dir.NORTH])
 	{
-		block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(e_dir.NORTH)))
-		if (!is_undefined(block) && block.type = "wall")
-		{
-			state_vars_set_value(vars, "in_wall", "true")
-			return 0
-		}
+		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+		if (block != null && block.type = "wall")
+			inwall = "true"
 	}
 }
 else if (facing = "south" || facing = "north")
@@ -36,26 +28,20 @@ else if (facing = "south" || facing = "north")
 	// Check east for wall
 	if (!build_edge[e_dir.EAST])
 	{
-		block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(e_dir.EAST)))
-		if (!is_undefined(block) && block.type = "wall")
-		{
-			state_vars_set_value(vars, "in_wall", "true")
-			return 0
-		}
+		block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+		if (block != null && block.type = "wall")
+			inwall = "true"
 	}
 	
 	// Check west for wall
-	if (!build_edge[e_dir.WEST])
+	if (inwall = "false" && !build_edge[e_dir.WEST])
 	{
-		block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(e_dir.WEST)))
-		if (!is_undefined(block) && block.type = "wall")
-		{
-			state_vars_set_value(vars, "in_wall", "true")
-			return 0
-		}
+		block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+		if (block != null && block.type = "wall")
+			inwall = "true"
 	}
 }
 
-state_vars_set_value(vars, "in_wall", "false")
+block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "in_wall", inwall)
 
-return 0*/
+return 0

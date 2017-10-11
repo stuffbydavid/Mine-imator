@@ -175,13 +175,14 @@ with (new(obj_block))
 		legacy_data_state_id[d] = block_get_state_id(id, legacy_data_state[d])
 		
 	// Pre-calculate the block variant to pick for each (numerical) state ID
-	state_id_variant = null
+	state_id_model_obj = null
+	state_id_brightness = null
 	for (var sid = 0; sid < state_id_amount; sid++)
 	{
 		// Get active file and properties
 		var curfile, curbrightness;
 		curfile = file
-		curbrightness = brightness // todo
+		curbrightness = brightness
 		
 		// Check states
 		if (states_map != null)
@@ -210,16 +211,17 @@ with (new(obj_block))
 			}
 		}
 		
-		state_id_variant[sid] = null
+		state_id_model_obj[sid] = null
 		
-		// Open selected file and look for variant
+		// Open selected file and look for variant or array of multipart cases
 		with (curfile)
 		{
 			var variant = state_id_map[?sid];
 			if (is_undefined(variant))
 				variant = state_id_map[?0] // Only "normal" is available
 				
-			other.state_id_variant[sid] = variant
+			other.state_id_model_obj[sid] = variant
+			other.state_id_brightness[sid] = curbrightness
 		}
 	}
 	

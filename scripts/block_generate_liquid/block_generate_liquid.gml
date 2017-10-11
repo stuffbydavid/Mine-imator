@@ -127,6 +127,7 @@ topflow = true
 topangle = 0
 
 // Corners
+var level = block_state_id_current;
 var corner0z, corner1z, corner2z, corner3z, minz, averagez;
 
 // Wave
@@ -142,7 +143,7 @@ if (app.setting_liquid_animation)
 }
 
 // Falling
-if (block_state_id_current div 8 || matchzp)
+if (level div 8 || matchzp)
 {
 	corner0z = block_size
 	corner1z = block_size
@@ -156,10 +157,10 @@ else
 {
 	// Level at sides
 	var sidelevelxp, sidelevelxn, sidelevelyp, sidelevelyn;
-	sidelevelxp = 7
-	sidelevelxn = 7
-	sidelevelyp = 7
-	sidelevelyn = 7
+	sidelevelxp = level
+	sidelevelxn = level
+	sidelevelyp = level
+	sidelevelyn = level
 	
 	if (!build_edge[e_dir.EAST])
 	{
@@ -195,10 +196,10 @@ else
 		
 	// Level at corners
 	var corner0level, corner1level, corner2level, corner3level;
-	corner0level = 7
-	corner1level = 7
-	corner2level = 7
-	corner3level = 7
+	corner0level = level
+	corner1level = level
+	corner2level = level
+	corner3level = level
 	
 	if (!build_edge[e_dir.WEST] && !build_edge[e_dir.NORTH])
 	{
@@ -239,29 +240,29 @@ else
 	flowyp = 0
 	flowyn = 0
 	
-	if (sidelevelxp mod 8 < block_state_id_current)
+	if (sidelevelxp mod 8 < level)
 		flowxn++ 
-	else if (sidelevelxp mod 8 > block_state_id_current)
+	else if (sidelevelxp mod 8 > level)
 		flowxp++
 		
-	if (sidelevelxn mod 8 < block_state_id_current)
+	if (sidelevelxn mod 8 < level)
 		flowxp++ 
-	else if (sidelevelxn mod 8 > block_state_id_current)
+	else if (sidelevelxn mod 8 > level)
 		flowxn++
 	
-	if (sidelevelyp mod 8 < block_state_id_current)
+	if (sidelevelyp mod 8 < level)
 		flowyn++ 
-	else if (sidelevelyp mod 8 > block_state_id_current)
+	else if (sidelevelyp mod 8 > level)
 		flowyp++
 		
-	if (sidelevelyn mod 8 < block_state_id_current)
+	if (sidelevelyn mod 8 < level)
 		flowyp++ 
-	else if (sidelevelyn mod 8 > block_state_id_current)
+	else if (sidelevelyn mod 8 > level)
 		flowyn++
 		
 	// Set Zs
 	var myz, sidezxp, sidezxn, sidezyp, sidezyn;
-	myz = 14 - (block_state_id_current / 7) * 13.5
+	myz = 14 - (level / 7) * 13.5
 	sidezxp = test(sidelevelxp div 8, block_size, 14 - (sidelevelxp / 7) * 13.5)
 	sidezxn = test(sidelevelxn div 8, block_size, 14 - (sidelevelxn / 7) * 13.5)
 	sidezyp = test(sidelevelyp div 8, block_size, 14 - (sidelevelyp / 7) * 13.5)

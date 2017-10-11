@@ -1,4 +1,5 @@
-/// builder_set_model()
+/// builder_set_model([ongeneration])
+/// @arg [ongeneration]
 /// @desc Sets the render model of the current block.
 
 block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z);
@@ -11,7 +12,7 @@ var model = null;
 
 // Run a block-specific script that sets the state and returns 0,
 // or returns a render model/array of render models to use.
-if (block_current.set_script > -1)
+if (block_current.set_script > -1 && (!block_current.require_models || (argument_count > 0 && argument[0])))
 {
 	build_pos = point3D(build_pos_x, build_pos_y, build_pos_z)
 	build_edge[e_dir.EAST]	= (build_pos_x = build_size_x - 1)
@@ -35,27 +36,23 @@ if (block_current.timeline && block_tl_list != null)
 else
 {
 	// Look for the render model of the current state
-	if (model = null && block_current.state_id_variant != null)
+	if (model = null && block_current.state_id_model_obj != null)
 	{
-		var variant = block_current.state_id_variant[block_state_id_current];
-		if (!is_undefined(variant) && variant != null && variant.model_amount > 0)
+		var modelobj = block_current.state_id_model_obj[block_state_id_current];
+		if (modelobj != null)
 		{
-			if (variant.model_amount > 1)
+			var brightness = block_current.state_id_brightness[block_state_id_current];
+			
+			// Multipart
+			if (is_array(modelobj))
 			{
-				// Pick a random model from the list
-				var rand = irandom(variant.total_weight - 1);
-				for (var m = 0; m < variant.model_amount; m++)
-				{
-					rand -= variant.model[m].weight
-					if (rand <= 0)
-					{
-						model = variant.model[m]
-						break
-					}
-				}
+				model = array()
+				for (var i = 0; i < array_length_1d(modelobj); i++)
+					array_add(model, block_get_render_model(modelobj[i], brightness))
 			}
-			else
-				model = variant.model[0]
+			// Single model
+			else 
+				model = block_get_render_model(modelobj, brightness)
 		}
 	}
 		

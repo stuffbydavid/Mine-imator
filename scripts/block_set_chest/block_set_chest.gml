@@ -4,30 +4,30 @@
 var facing, connectdir, discarddir;
 facing = block_get_state_id_value(block_current, block_state_id_current, "facing");
 
-switch (string_to_dir(facing))
+switch (facing)
 {
-	case e_dir.EAST:
+	case "east":
 	{
 		connectdir = e_dir.NORTH
 		discarddir = e_dir.SOUTH
 		break
 	}
 	
-	case e_dir.WEST:
+	case "west":
 	{
 		connectdir = e_dir.SOUTH
 		discarddir = e_dir.NORTH
 		break
 	}
 	
-	case e_dir.SOUTH:
+	case "south":
 	{
 		connectdir = e_dir.EAST
 		discarddir = e_dir.WEST
 		break
 	}
 	
-	case e_dir.NORTH:
+	case "north":
 	{
 		connectdir = e_dir.WEST
 		discarddir = e_dir.EAST

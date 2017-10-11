@@ -42,10 +42,8 @@ else
 	if (othermodel != null)
 	{
 		block_face_full_xp = othermodel.face_full_xn
-		block_face_min_y_xp = othermodel.face_min_y_xn
-		block_face_max_y_xp = othermodel.face_max_y_xn
-		block_face_min_z_xp = othermodel.face_min_z_xn
-		block_face_max_z_xp = othermodel.face_max_z_xn
+		block_face_min_xp = othermodel.face_min_xn
+		block_face_max_xp = othermodel.face_max_xn
 		block_face_min_depth_xp = othermodel.face_min_depth_xn
 	}
 }
@@ -69,10 +67,8 @@ else
 	if (othermodel != null)
 	{
 		block_face_full_xn = othermodel.face_full_xp
-		block_face_min_y_xn = othermodel.face_min_y_xp
-		block_face_max_y_xn = othermodel.face_max_y_xp
-		block_face_min_z_xn = othermodel.face_min_z_xp
-		block_face_max_z_xn = othermodel.face_max_z_xp
+		block_face_min_xn = othermodel.face_min_xp
+		block_face_max_xn = othermodel.face_max_xp
 		block_face_min_depth_xn = othermodel.face_min_depth_xp
 	}
 }
@@ -96,10 +92,8 @@ else
 	if (othermodel != null)
 	{
 		block_face_full_yp = othermodel.face_full_yn
-		block_face_min_x_yp = othermodel.face_min_x_yn
-		block_face_max_x_yp = othermodel.face_max_x_yn
-		block_face_min_z_yp = othermodel.face_min_z_yn
-		block_face_max_z_yp = othermodel.face_max_z_yn
+		block_face_min_yp = othermodel.face_min_yn
+		block_face_max_yp = othermodel.face_max_yn
 		block_face_min_depth_yp = othermodel.face_min_depth_yn
 	}
 }
@@ -123,10 +117,8 @@ else
 	if (othermodel != null)
 	{
 		block_face_full_yn = othermodel.face_full_yp
-		block_face_min_x_yn = othermodel.face_min_x_yp
-		block_face_max_x_yn = othermodel.face_max_x_yp
-		block_face_min_z_yn = othermodel.face_min_z_yp
-		block_face_max_z_yn = othermodel.face_max_z_yp
+		block_face_min_yn = othermodel.face_min_yp
+		block_face_max_yn = othermodel.face_max_yp
 		block_face_min_depth_yn = othermodel.face_min_depth_yp
 	}
 }
@@ -150,10 +142,8 @@ else
 	if (othermodel != null)
 	{
 		block_face_full_zp = othermodel.face_full_zn
-		block_face_min_x_zp = othermodel.face_min_x_zn
-		block_face_max_x_zp = othermodel.face_max_x_zn
-		block_face_min_y_zp = othermodel.face_min_y_zn
-		block_face_max_y_zp = othermodel.face_max_y_zn
+		block_face_min_zp = othermodel.face_min_zn
+		block_face_max_zp = othermodel.face_max_zn
 		block_face_min_depth_zp = othermodel.face_min_depth_zn
 	}
 }
@@ -177,10 +167,8 @@ else
 	if (othermodel != null)
 	{
 		block_face_full_zn = othermodel.face_full_zp
-		block_face_min_x_zn = othermodel.face_min_x_zp
-		block_face_max_x_zn = othermodel.face_max_x_zp
-		block_face_min_y_zn = othermodel.face_min_y_zp
-		block_face_max_y_zn = othermodel.face_max_y_zp
+		block_face_min_zn = othermodel.face_min_zp
+		block_face_max_zn = othermodel.face_max_zp
 		block_face_min_depth_zn = othermodel.face_min_depth_zp
 	}
 }
@@ -201,28 +189,29 @@ if (block_current.generate_script > -1)
 else
 {
 	// Requires other render models for states
+	vertex_brightness = null
 	if (block_current.require_models)
-		builder_set_model()
+		builder_set_model(true)
 
 	// Get model	
 	var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z);
-	if (model = null)
-		return 0
-
-	// Set wind
-	vertex_wave = block_current.wind_axis
-	if (block_current.wind_zmin != null)
-		vertex_wave_zmin = block_pos_z + block_current.wind_zmin
-	
-	// Generate render model
-	if (is_array(model))
+	if (model != null)
 	{
-		var modellen = array_length_1d(model);
-		for (var i = 0; i < modellen; i++)
-			block_render_model_generate(model[i]);
+		// Set wind and brightness
+		vertex_wave = block_current.wind_axis
+		if (block_current.wind_zmin != null)
+			vertex_wave_zmin = block_pos_z + block_current.wind_zmin
+	
+		// Generate render model
+		if (is_array(model))
+		{
+			var modellen = array_length_1d(model);
+			for (var i = 0; i < modellen; i++)
+				block_render_model_generate(model[i]);
+		}
+		else
+			block_render_model_generate(model)
 	}
-	else
-		block_render_model_generate(model)
 }
 
 // Reset wind and brightness

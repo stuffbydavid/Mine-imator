@@ -12,7 +12,8 @@ with (model)
 	offz = offset_z + mc_builder.block_pos_z
 	
 	// Set brightness
-	vertex_brightness = brightness
+	if (vertex_brightness = null)
+		vertex_brightness = brightness
 	
 	// Generate elements
 	for (var e = 0; e < element_amount; e++)

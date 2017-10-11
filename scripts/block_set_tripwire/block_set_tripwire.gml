@@ -1,30 +1,43 @@
 /// block_set_tripwire()
-/*
-for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
-{
-	var dstr = dir_get_string(d);
 
-	if (build_edge[d])
-	{
-		state_vars_set_value(vars, dstr, "false")
-		continue
-	}
-	
-	var block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d)));
-	if (is_undefined(block)) // Skip air
-	{
-		state_vars_set_value(vars, dstr, "false")
-		continue
-	}
-		
-	// Check for other tripwire or hooks
-	if (block.name = "tripwire" || block.name = "tripwire_hook")
-	{
-		state_vars_set_value(vars, dstr, "true")
-		continue
-	}
-	
-	state_vars_set_value(vars, dstr, "false")
+var east, west, south, north;
+east = "false"
+west = "false"
+south = "false"
+north = "false"
+
+// X+
+if (!build_edge[e_dir.EAST])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
+		east = "true"
 }
 
-return 0*/
+// X-
+if (!build_edge[e_dir.WEST])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
+		west = "true"
+}
+
+// Y+
+if (!build_edge[e_dir.SOUTH])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
+		south = "true"
+}
+
+// Y-
+if (!build_edge[e_dir.NORTH])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
+		north = "true"
+}
+
+block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north))
+
+return 0

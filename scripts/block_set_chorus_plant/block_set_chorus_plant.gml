@@ -1,42 +1,48 @@
 /// block_set_chorus_plant()
 /// @desc Connects to other chorus plants, chorus flowers and end stone below.
-/*
-for (var d = 0; d <= e_dir.amount; d++)
-{
-	var dstr = dir_get_string(d);
 
-	if (build_edge[d])
-	{
-		state_vars_set_value(vars, dstr, "false")
-		continue
-	}
-		
-	// Check for chorus plant/flower
-	var block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d)));
-	if (is_undefined(block)) // Skip air
-	{
-		state_vars_set_value(vars, dstr, "false")
-		continue
-	}
-		
-	if (block = block_current || block.type = "chorus_plant_connect")
-	{
-		state_vars_set_value(vars, dstr, "true")
-		continue
-	}
-	
-	// Check for end stone
-	if (d = e_dir.DOWN)
-	{
-		block = array3D_get(block_obj, build_size, point3D_add(build_pos, dir_get_vec3(d)));
-		if (!is_undefined(block) && block.name = "end_stone")
-		{
-			state_vars_set_value(vars, dstr, "true")
-			continue
-		}
-	}
-	
-	state_vars_set_value(vars, dstr, "false")
+var east, west, south, north, down;
+east = "false"
+west = "false"
+south = "false"
+north = "false"
+down = "false"
+
+if (!build_edge[e_dir.EAST])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	if (block != null && (block = block_current || block.type = "chorus_plant_connect"))
+		east = "true"
 }
 
-return 0*/
+if (!build_edge[e_dir.WEST])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	if (block != null && (block = block_current || block.type = "chorus_plant_connect"))
+		west = "true"
+}
+
+if (!build_edge[e_dir.SOUTH])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	if (block != null && (block = block_current || block.type = "chorus_plant_connect"))
+		south = "true"
+}
+
+if (!build_edge[e_dir.NORTH])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	if (block != null && (block = block_current || block.type = "chorus_plant_connect"))
+		north = "true"
+}
+
+if (!build_edge[e_dir.DOWN])
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z - 1);
+	if (block != null && (block = block_current || block.type = "chorus_plant_connect" || block.name = "end_stone"))
+		down = "true"
+}
+
+block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "down", down))
+
+return 0
