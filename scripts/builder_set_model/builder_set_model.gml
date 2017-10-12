@@ -8,35 +8,26 @@ if (block_current = null)
 	
 block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z);
 	
-var model = null;
+var model, ret;
+model = null
+ret = 0
 
 // Run a block-specific script that sets the state and returns 0,
 // or returns a render model/array of render models to use.
 if (block_current.set_script > -1 && (!block_current.require_models || (argument_count > 0 && argument[0])))
 {
-	build_pos = point3D(build_pos_x, build_pos_y, build_pos_z)
-	build_edge[e_dir.EAST]	= (build_pos_x = build_size_x - 1)
-	build_edge[e_dir.WEST]	= (build_pos_x = 0)
-	build_edge[e_dir.SOUTH] = (build_pos_y = build_size_y - 1)
-	build_edge[e_dir.NORTH] = (build_pos_y = 0)
-	build_edge[e_dir.UP]	= (build_pos_z = build_size_z - 1)
-	build_edge[e_dir.DOWN]	= (build_pos_z = 0)
-					
-	var ret = script_execute(block_current.set_script);
+	ret = script_execute(block_current.set_script);
 	if (ret != 0)
 		model = ret
 }
 		
 // Has timeline
-if (block_current.timeline && block_tl_list != null)
-{
-	//block_pos = point3D_mul(build_pos, block_size)
-	//ds_list_add(block_tl_list, block_get_timeline(block_current, block_state_id_current))
-}
+if (block_current.timeline && block_tl_list != null && ret != null)
+	ds_list_add(block_tl_list, block_get_timeline(block_current, block_state_id_current))
 else
 {
 	// Look for the render model of the current state
-	if (model = null && block_current.state_id_model_obj != null)
+	if (ret = 0 && block_current.state_id_model_obj != null)
 	{
 		var modelobj = block_current.state_id_model_obj[block_state_id_current];
 		if (modelobj != null)

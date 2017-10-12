@@ -6,12 +6,10 @@ build_size_x = 0
 build_size_y = 0
 build_size_z = 0
 
-build_pos = point3D(0, 0, 0)
 build_pos_x = 0
 build_pos_y = 0
 build_pos_z = 0
 
-build_edge[e_dir.amount] = false
 build_edge_xp = false
 build_edge_xn = false
 build_edge_yp = false

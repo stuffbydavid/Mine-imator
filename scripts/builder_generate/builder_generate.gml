@@ -5,26 +5,11 @@ block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, b
 if (block_current = null)
 	return 0
 
-block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z);
-
-// Block position
-block_pos_x = build_pos_x * block_size
-block_pos_y = build_pos_y * block_size
-block_pos_z = build_pos_z * block_size
-block_color = null
-
-// Random X & Y offset
-if (block_current.random_offset && build_size_x * build_size_y * build_size_z > 1)
-{
-	random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
-	block_pos_x += irandom_range(-4, 4)
-	block_pos_y += irandom_range(-4, 4)
-}
-
 // Check edges for culling
 
 // X+
 build_edge_xp = (build_pos_x = build_size_x - 1)
+block_face_full_xp = false
 block_face_min_depth_xp = null
 if (build_edge_xp)
 {
@@ -50,6 +35,7 @@ else
 
 // X-
 build_edge_xn = (build_pos_x = 0)
+block_face_full_xn = false
 block_face_min_depth_xn = null
 if (build_edge_xn)
 {
@@ -75,6 +61,7 @@ else
 
 // Y+
 build_edge_yp = (build_pos_y = build_size_y - 1)
+block_face_full_yp = false
 block_face_min_depth_yp = null
 if (build_edge_yp)
 {
@@ -100,6 +87,7 @@ else
 
 // Y-
 build_edge_yn = (build_pos_y = 0)
+block_face_full_yn = false
 block_face_min_depth_yn = null
 if (build_edge_yn)
 {
@@ -125,6 +113,7 @@ else
 
 // Z+
 build_edge_zp = (build_pos_z = build_size_z - 1)
+block_face_full_zp = false
 block_face_min_depth_zp = null
 if (build_edge_zp)
 {
@@ -150,6 +139,7 @@ else
 
 // Z-
 build_edge_zn = (build_pos_z = 0)
+block_face_full_zn = false
 block_face_min_depth_zn = null
 if (build_edge_zn)
 {
@@ -173,19 +163,35 @@ else
 	}
 }
 
+// Completely surrounded by solids, skip
+if (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp &&
+	block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn &&
+	block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp &&
+	block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn &&
+	block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp &&
+	block_face_min_depth_zn = e_block_depth.DEPTH0 && block_face_full_zn)
+	return 0
+
+// Current state ID
+block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+
+// Block position
+block_pos_x = build_pos_x * block_size
+block_pos_y = build_pos_y * block_size
+block_pos_z = build_pos_z * block_size
+block_color = null
+
+// Random X & Y offset
+if (block_current.random_offset && build_size_x * build_size_y * build_size_z > 1)
+{
+	random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
+	block_pos_x += irandom_range(-4, 4)
+	block_pos_y += irandom_range(-4, 4)
+}
+
 // Run a block-specific script for generating a mesh if available
 if (block_current.generate_script > -1)
-{
-	build_pos = point3D(build_pos_x, build_pos_y, build_pos_z)
-	build_edge[e_dir.EAST]	= (build_pos_x = build_size_x - 1)
-	build_edge[e_dir.WEST]	= (build_pos_x = 0)
-	build_edge[e_dir.SOUTH] = (build_pos_y = build_size_y - 1)
-	build_edge[e_dir.NORTH] = (build_pos_y = 0)
-	build_edge[e_dir.UP]	= (build_pos_z = build_size_z - 1)
-	build_edge[e_dir.DOWN]	= (build_pos_z = 0)
-					
 	script_execute(block_current.generate_script)
-}
 else
 {
 	// Requires other render models for states

@@ -1,12 +1,10 @@
 /// string_get_state_vars(string)
 /// @arg string
-/// @desc Parses a string of comma-separated variables
-///		  and their values, eg. "foo=true,bar=10".
+/// @desc Parses a string of comma-separated variables and their values, eg. "foo=true,bar=10".
 ///		  Returns null if invalid.
 
-var str = argument0;
-
-var vars, varslen, arr;
+var str, vars, varslen, arr;
+str = argument0
 vars = string_split(str, ",")
 varslen = array_length_1d(vars)
 arr = array_create(varslen * 2)

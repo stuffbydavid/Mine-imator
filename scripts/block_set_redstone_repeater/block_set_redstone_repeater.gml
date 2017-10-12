@@ -1,27 +1,51 @@
 /// block_set_redstone_repeater()
 /// @desc Set locked state.
 
-var facingdir, facingdiropp, locked;
-facingdir = string_to_dir(block_get_state_id_value(block_current, block_state_id_current, "facing"));
-facingdiropp = dir_get_opposite(facingdir)
+var facing, locked;
+facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 locked = "false"
 
-for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
+if (!build_edge_xp && (facing = "south" || facing = "north"))
 {
-	if (d = facingdir || d = facingdiropp || build_edge[d])
-		continue
-		
-	var otherblock = array3D_get(block_obj, build_size_z, point3D_add(build_pos, dir_get_vec3(d)));
-	if (otherblock = null) // Skip air
-		continue
-	
-	var otherstateid, otherfacingdir;
-	otherstateid = array3D_get(block_state_id, build_size_z, point3D_add(build_pos, dir_get_vec3(d)))
-	otherfacingdir = string_to_dir(block_get_state_id_value(block_current, otherstateid, "facing"))
-	if (otherblock.name = "powered_repeater" && otherfacingdir = d)
+	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	if (block != null && block.name = "powered_repeater")
 	{
-		locked = "true"
-		break
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "facing") = "east")
+			locked = "true"
+	}
+}
+
+if (locked = "false" && !build_edge_xn && (facing = "south" || facing = "north"))
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	if (block != null && block.name = "powered_repeater")
+	{
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "facing") = "west")
+			locked = "true"
+	}
+}
+
+if (locked = "false" && !build_edge_yp && (facing = "east" || facing = "west"))
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	if (block != null && block.name = "powered_repeater")
+	{
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "facing") = "south")
+			locked = "true"
+	}
+}
+
+if (locked = "false" && !build_edge_yn && (facing = "east" || facing = "west"))
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	if (block != null && block.name = "powered_repeater")
+	{
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "facing") = "north")
+			locked = "true"
 	}
 }
 

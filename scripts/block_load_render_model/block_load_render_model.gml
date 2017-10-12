@@ -346,16 +346,19 @@ with (new(obj_block_render_model))
 								else
 									face_edge[nd] = (from[X] = 0)
 								
-								if (face_edge[nd] && !other.face_full[nd] && from[Y] = 0 && to[Y] = block_size)
+								if (face_edge[nd] && !other.face_full[nd])
 								{
-									if (other.face_min[nd] = null || from[Z] <= other.face_min[nd])
-										other.face_min[nd] = from[Z]
+									if (from[Y] = 0 && to[Y] = block_size)
+									{
+										if (other.face_min[nd] = null || from[Z] <= other.face_min[nd])
+											other.face_min[nd] = from[Z]
 										
-									if (other.face_max[nd] = null || to[Z] >= other.face_max[nd])
-										other.face_max[nd] = to[Z]
+										if (other.face_max[nd] = null || to[Z] >= other.face_max[nd])
+											other.face_max[nd] = to[Z]
 									
-									if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
-										other.face_full[nd] = true
+										if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
+											other.face_full[nd] = true
+									}
 										
 									if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
 										other.face_min_depth[nd] = face_depth[nd]
@@ -372,17 +375,20 @@ with (new(obj_block_render_model))
 								else
 									face_edge[nd] = (from[Y] = 0)
 								
-								if (face_edge[nd] && !other.face_full[nd] && from[X] = 0 && to[X] = block_size)
+								if (face_edge[nd] && !other.face_full[nd])
 								{
-									if (other.face_min[nd] = null || from[Z] <= other.face_min[nd])
-										other.face_min[nd] = from[Z]
+									if (from[X] = 0 && to[X] = block_size)
+									{
+										if (other.face_min[nd] = null || from[Z] <= other.face_min[nd])
+											other.face_min[nd] = from[Z]
 										
-									if (other.face_max[nd] = null || to[Z] >= other.face_max[nd])
-										other.face_max[nd] = to[Z]
+										if (other.face_max[nd] = null || to[Z] >= other.face_max[nd])
+											other.face_max[nd] = to[Z]
 									
-									if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
-										other.face_full[nd] = true
-										
+										if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
+											other.face_full[nd] = true
+									}
+									
 									if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
 										other.face_min_depth[nd] = face_depth[nd]
 								}
@@ -393,22 +399,25 @@ with (new(obj_block_render_model))
 							case e_dir.UP:
 							case e_dir.DOWN:
 							{
-								if (nd = e_dir.SOUTH)
+								if (nd = e_dir.UP)
 									face_edge[nd] = (to[Z] = block_size)
 								else
 									face_edge[nd] = (from[Z] = 0)
 								
-								if (face_edge[nd] && !other.face_full[nd] && from[X] = 0 && to[X] = block_size)
+								if (face_edge[nd] && !other.face_full[nd])
 								{
-									if (other.face_min[nd] = null || from[Y] <= other.face_min[nd])
-										other.face_min[nd] = from[Y]
+									if (from[X] = 0 && to[X] = block_size)
+									{
+										if (other.face_min[nd] = null || from[Y] <= other.face_min[nd])
+											other.face_min[nd] = from[Y]
 										
-									if (other.face_max[nd] = null || to[Y] >= other.face_max[nd])
-										other.face_max[nd] = to[Y]
+										if (other.face_max[nd] = null || to[Y] >= other.face_max[nd])
+											other.face_max[nd] = to[Y]
 									
-									if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
-										other.face_full[nd] = true
-										
+										if (other.face_min[nd] = 0 && other.face_max[nd] = block_size)
+											other.face_full[nd] = true
+									}
+									
 									if (other.face_min_depth[nd] = null || face_depth[nd] < other.face_min_depth[nd])
 										other.face_min_depth[nd] = face_depth[nd]
 								}

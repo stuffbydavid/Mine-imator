@@ -33,10 +33,19 @@ if (is_string(map[?"model"]))
 			{
 				vars = string_get_state_vars(key)
 				value = string_get_state_vars(ds_map_find_value(map[?"model_state"], key))
+				
+				// Apply to matching state IDs
+				state_id = array()
+				for (var i = 0; i < other.state_id_amount; i++)
+					if (state_vars_match_state_id(vars, other.id, i))
+						state_id = array_add(state_id, i)
+				
 				other.tl_model_state[other.tl_model_state_amount++] = id
 			}
+			
 			key = ds_map_find_next(map[?"model_state"], key)
 		}
+		
 		tl_has_model_state = true
 	}
 }
@@ -68,8 +77,16 @@ else if (typemap[?"rotation_point"] = e_json_type.OBJECT) // Determined by state
 		{
 			vars = string_get_state_vars(key)
 			value = value_get_point3D(ds_map_find_value(map[?"rotation_point"], key), point3D(0, 0, 0))
+			
+			// Apply to matching state IDs
+			state_id = array()
+			for (var i = 0; i < other.state_id_amount; i++)
+				if (state_vars_match_state_id(vars, other.id, i))
+					state_id = array_add(state_id, i)
+						
 			other.tl_rot_point_state[other.tl_rot_point_state_amount++] = id
 		}
+		
 		key = ds_map_find_next(map[?"rotation_point"], key)
 	}
 }
@@ -88,8 +105,16 @@ else if (typemap[?"position"] = e_json_type.OBJECT) // Determined by state
 		{
 			vars = string_get_state_vars(key)
 			value = value_get_point3D(ds_map_find_value(map[?"position"], key), point3D(0, 0, 0))
+			
+			// Apply to matching state IDs
+			state_id = array()
+			for (var i = 0; i < other.state_id_amount; i++)
+				if (state_vars_match_state_id(vars, other.id, i))
+					state_id = array_add(state_id, id)
+			
 			other.tl_position_state[other.tl_position_state_amount++] = id
 		}
+		
 		key = ds_map_find_next(map[?"position"], key)
 	}
 }
@@ -108,8 +133,16 @@ else if (typemap[?"rotation"] = e_json_type.OBJECT) // Determined by state
 		{
 			vars = string_get_state_vars(key)
 			value = value_get_point3D(ds_map_find_value(map[?"rotation"], key), point3D(0, 0, 0))
+			
+			// Apply to matching state IDs
+			state_id = array()
+			for (var i = 0; i < other.state_id_amount; i++)
+				if (state_vars_match_state_id(vars, other.id, i))
+					state_id = array_add(state_id, id)
+				
 			other.tl_rotation_state[other.tl_rotation_state_amount++] = id
 		}
+		
 		key = ds_map_find_next(map[?"rotation"], key)
 	}
 }

@@ -65,7 +65,7 @@ switch (culldir)
 	{
 		if (!face_edge_zn || mc_builder.block_face_min_depth_zn = null || mc_builder.block_face_min_depth_zn > other.face_min_depth_zn)
 			return false
-		
+				
 		if (mc_builder.block_face_full_zn || (mc_builder.block_face_min_zn <= from_y && mc_builder.block_face_max_zn >= to_y))
 			return true
 			

@@ -160,7 +160,7 @@ switch (load_stage)
 						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
 							var block, bdata;
-							block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z, build_pos)
+							block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z)
 							bdata = buffer_read_byte()
 							if (block != null)
 								array3D_set(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
@@ -189,7 +189,6 @@ switch (load_stage)
 							var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));
 							if (script > -1)
 							{
-								build_pos = point3D(ex, ey, ez)
 								block_current = array3D_get(block_obj, build_size_z, ex, ey, ez)
 								block_state_id_current = array3D_get(block_state_id, build_size_z, ex, ey, ez)
 								script_execute(script, entity)

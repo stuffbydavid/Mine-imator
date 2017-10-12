@@ -7,7 +7,7 @@ south = "false"
 north = "false"
 
 // X+
-if (!build_edge[e_dir.EAST])
+if (!build_edge_xp)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
 	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
@@ -15,7 +15,7 @@ if (!build_edge[e_dir.EAST])
 }
 
 // X-
-if (!build_edge[e_dir.WEST])
+if (!build_edge_xn)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
 	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
@@ -23,7 +23,7 @@ if (!build_edge[e_dir.WEST])
 }
 
 // Y+
-if (!build_edge[e_dir.SOUTH])
+if (!build_edge_yp)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
 	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))
@@ -31,7 +31,7 @@ if (!build_edge[e_dir.SOUTH])
 }
 
 // Y-
-if (!build_edge[e_dir.NORTH])
+if (!build_edge_xn)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
 	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))

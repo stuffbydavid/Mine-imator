@@ -6,7 +6,7 @@ if (block_get_state_id_value(block_current, block_state_id_current, "half") = "u
 	
 // Fetch hinge value from upper half
 var hinge = block_get_state_id_value(block_current, block_state_id_current, "hinge");
-if (!build_edge[e_dir.UP])
+if (!build_edge_zp)
 {
 	var aboveblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
 	if (aboveblock = block_current)

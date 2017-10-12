@@ -1,46 +1,57 @@
 /// block_set_chest()
 /// @desc Finds double chests.
 
-var facing, connectdir, discarddir;
+var facing, connectblock, discardblock, double;
 facing = block_get_state_id_value(block_current, block_state_id_current, "facing");
+connectblock = null
+discardblock = null
 
 switch (facing)
 {
 	case "east":
 	{
-		connectdir = e_dir.NORTH
-		discarddir = e_dir.SOUTH
+		if (!build_edge_yn)
+			connectblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+		if (!build_edge_yp)
+			discardblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
 		break
 	}
 	
 	case "west":
 	{
-		connectdir = e_dir.SOUTH
-		discarddir = e_dir.NORTH
+		if (!build_edge_yp)
+			connectblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+		if (!build_edge_yn)
+			discardblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
 		break
 	}
 	
 	case "south":
 	{
-		connectdir = e_dir.EAST
-		discarddir = e_dir.WEST
+		if (!build_edge_xp)
+			connectblock = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+		if (!build_edge_xn)
+			discardblock = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
 		break
 	}
 	
 	case "north":
 	{
-		connectdir = e_dir.WEST
-		discarddir = e_dir.EAST
+		if (!build_edge_xn)
+			connectblock = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+		if (!build_edge_xp)
+			discardblock = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
 		break
 	}
 }
 
-if (!build_edge[discarddir] && array3D_get(block_obj, build_size_z, point3D_add(build_pos, dir_get_vec3(discarddir))) = block_current) // Discard
+if (discardblock = block_current) // Discard
 	return null
 		
-var double = "false"
-if (!build_edge[connectdir] && array3D_get(block_obj, build_size_z, point3D_add(build_pos, dir_get_vec3(connectdir))) = block_current) // Connect
+if (connectblock = block_current) // Connect
 	double = "true"
+else
+	double = "false"
 
 block_state_id_current = block_get_state_id(block_current, array("facing", facing, "double", double))
 

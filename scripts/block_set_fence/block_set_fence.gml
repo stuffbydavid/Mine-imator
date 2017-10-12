@@ -8,12 +8,12 @@ south = "false"
 north = "false"
 
 // X+
-if (!build_edge[e_dir.EAST])
+if (!build_edge_xp)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
 	if (block != null)
 	{
-		if (block.type = block_current.type) // Same fences/walls
+		if (block.type = block_current.type || (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)) // Same fences/walls or solid
 			east = "true"
 		else if (block.type = "fence_gate") // Fence gates
 		{
@@ -21,22 +21,16 @@ if (!build_edge[e_dir.EAST])
 			if (facing != "east" && facing != "west")
 				east = "true"
 		}
-		else // Check solid
-		{
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
-				east = "true"
-		}
 	}
 }
 
 // X-
-if (!build_edge[e_dir.WEST])
+if (!build_edge_xn)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
 	if (block != null)
 	{
-		if (block.type = block_current.type) // Same fences/walls
+		if (block.type = block_current.type || (block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)) // Same fences/walls
 			west = "true"
 		else if (block.type = "fence_gate") // Fence gates
 		{
@@ -44,22 +38,16 @@ if (!build_edge[e_dir.WEST])
 			if (facing != "east" && facing != "west")
 				west = "true"
 		}
-		else // Check solid
-		{
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
-				west = "true"
-		}
 	}
 }
 
 // Y+
-if (!build_edge[e_dir.SOUTH])
+if (!build_edge_yp)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
 	if (block != null)
 	{
-		if (block.type = block_current.type) // Same fences/walls
+		if (block.type = block_current.type || (block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)) // Same fences/walls
 			south = "true"
 		else if (block.type = "fence_gate") // Fence gates
 		{
@@ -67,33 +55,21 @@ if (!build_edge[e_dir.SOUTH])
 			if (facing != "south" && facing != "north")
 				south = "true"
 		}
-		else // Check solid
-		{
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
-				south = "true"
-		}
 	}
 }
 
 // Y-
-if (!build_edge[e_dir.NORTH])
+if (!build_edge_yn)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
 	if (block != null)
 	{
-		if (block.type = block_current.type) // Same fences/walls
+		if (block.type = block_current.type || (block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)) // Same fences/walls
 			north = "true"
 		else if (block.type = "fence_gate") // Fence gates
 		{
 			var facing = block_get_state_id_value(block, array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z), "facing")
 			if (facing != "south" && facing != "north")
-				north = "true"
-		}
-		else // Check solid
-		{
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
 				north = "true"
 		}
 	}

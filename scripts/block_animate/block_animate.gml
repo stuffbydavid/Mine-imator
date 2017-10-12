@@ -2,7 +2,7 @@
 /// @arg root
 
 var root = argument0;
-/*
+
 // Create timeline
 with (new(obj_timeline))
 {
@@ -50,7 +50,7 @@ with (new(obj_timeline))
 	rot_point_custom = true
 	rot_point = array_copy_1d(other.rot_point)
 		
-	// Rotate by 90 degrees for legacy support
+	// Position & rotation
 	if (dev_mode_rotate_blocks)
 	{
 		var pos = point3D_mul_matrix(other.position, matrix_create(point3D(0, root.temp.scenery.scenery_size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
@@ -60,6 +60,15 @@ with (new(obj_timeline))
 		value_default[e_value.ROT_X] = other.rotation[X]
 		value_default[e_value.ROT_Y] = other.rotation[Y]
 		value_default[e_value.ROT_Z] = other.rotation[Z] + 90
+	}
+	else
+	{
+		value_default[e_value.POS_X] = other.position[X]
+		value_default[e_value.POS_Y] = other.position[Y]
+		value_default[e_value.POS_Z] = other.position[Z]
+		value_default[e_value.ROT_X] = other.rotation[X]
+		value_default[e_value.ROT_Y] = other.rotation[Y]
+		value_default[e_value.ROT_Z] = other.rotation[Z]
 	}
 	value_type_show[e_value_type.POSITION] = false
 	
@@ -102,4 +111,4 @@ with (new(obj_timeline))
 			tl_update_values()
 		}
 	}
-}*/
+}

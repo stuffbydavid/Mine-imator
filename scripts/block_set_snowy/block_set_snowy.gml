@@ -3,10 +3,9 @@
 
 var snowy = "false";
 
-if (!build_edge[e_dir.UP])
+if (!build_edge_zp)
 {
 	var otherblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
-	
 	if (otherblock != null && otherblock.type = "snow")
 		snowy = "true"
 }

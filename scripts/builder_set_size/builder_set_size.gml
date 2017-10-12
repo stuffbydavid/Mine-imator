@@ -10,4 +10,4 @@ array3D_fill(block_render_model, null)
 build_size_x = build_size[X]
 build_size_y = build_size[Y]
 build_size_z = build_size[Z]
-build_edges = !(app.setting_schematic_remove_edges && (build_size[X] > 200 || build_size[Y] > 200))
+build_edges = !(app.setting_schematic_remove_edges && (build_size[X] > 150 || build_size[Y] > 150))

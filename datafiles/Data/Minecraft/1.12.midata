@@ -2332,6 +2332,9 @@
 				"up": [ "true", "false" ]
 			},
 			"default_state": "south=false,west=false,north=false,east=false,up=false",
+			"wind": {
+				"axis": "all"
+			},
 			"legacy_id": 106,
 			"legacy_data": {
 				"0x1": {

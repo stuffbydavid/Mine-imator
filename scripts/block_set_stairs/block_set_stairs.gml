@@ -1,117 +1,119 @@
 /// block_set_stairs()
 /// @desc Defines logic for connecting adjacent stairs.
 
-var shape, half, facing, facingdir, facingoppdir;
+var shape, half, facing;
 shape = "straight"
 half = block_get_state_id_value(block_current, block_state_id_current, "half")
 facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
-facingdir = string_to_dir(facing)
-facingoppdir = dir_get_opposite(facingdir)
 
-for (var d = e_dir.EAST; d <= e_dir.NORTH; d++)
+// X+
+if (!build_edge_xp && (facing = "east" || facing = "west"))
 {
-	// Check in facingdir axis
-	if (d != facingdir && d != facingoppdir)
-		continue
-		
-	// Ignore edge
-	if (build_edge[d])
-		continue
-		
-	// Check for stairs
-	var otherblock = array3D_get(block_obj, build_size_z, point3D_add(build_pos, dir_get_vec3(d)));
-	if (otherblock = null || otherblock.type != "stairs")
-		continue
-		
-	// Check same half
-	var otherstateid, otherhalf;
-	otherstateid = array3D_get(block_state_id, build_size_z, point3D_add(build_pos, dir_get_vec3(d)));
-	otherhalf = block_get_state_id_value(otherblock, otherstateid, "half")
-	if (half != otherhalf)
-		continue
-		
-	var otherfacingdir = string_to_dir(block_get_state_id_value(otherblock, otherstateid, "facing"));
-	
-	// Looking east
-	switch (d)
+	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	if (block != null && block.type = "stairs")
 	{
-		case e_dir.EAST:
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
-			if (facingdir = e_dir.EAST)
+			var otherfacing = block_get_state_id_value(block, stateid, "facing");
+			if (facing = "east")
 			{
-				if (otherfacingdir = e_dir.SOUTH)
+				if (otherfacing = "south")
 					shape = "outer_right"
-				else if (otherfacingdir = e_dir.NORTH)
+				else if (otherfacing = "north")
 					shape = "outer_left"
 			}
 			else // West
 			{
-				if (otherfacingdir = e_dir.SOUTH)
+				if (otherfacing = "south")
 					shape = "inner_left"
-				else if (otherfacingdir = e_dir.NORTH)
+				else if (otherfacing = "north")
 					shape = "inner_right"
 			}
-			break
 		}
-	
-		// Looking west
-		case e_dir.WEST:
+	}
+}
+
+// X-
+if (!build_edge_xn && (facing = "east" || facing = "west"))
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	if (block != null && block.type = "stairs")
+	{
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
-			if (facingdir = e_dir.EAST)
+			var otherfacing = block_get_state_id_value(block, stateid, "facing");
+			if (facing = "east")
 			{
-				if (otherfacingdir = e_dir.SOUTH)
+				if (otherfacing = "south")
 					shape = "inner_right"
-				else if (otherfacingdir = e_dir.NORTH)
+				else if (otherfacing = "north")
 					shape = "inner_left"
 			}
 			else // West
 			{
-				if (otherfacingdir = e_dir.SOUTH)
+				if (otherfacing = "south")
 					shape = "outer_left"
-				else if (otherfacingdir = e_dir.NORTH)
+				else if (otherfacing = "north")
 					shape = "outer_right"
 			}
-			break
 		}
-	
-		// Looking south
-		case e_dir.SOUTH:
+	}
+}
+
+// Y+
+if (!build_edge_yp && (facing = "south" || facing = "north"))
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	if (block != null && block.type = "stairs")
+	{
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
-			if (facingdir = e_dir.SOUTH)
+			var otherfacing = block_get_state_id_value(block, stateid, "facing");
+			if (facing = "south")
 			{
-				if (otherfacingdir = e_dir.EAST)
+				if (otherfacing = "east")
 					shape = "outer_left"
-				else if (otherfacingdir = e_dir.WEST)
+				else if (otherfacing = "west")
 					shape = "outer_right"
 			}
 			else // North
 			{
-				if (otherfacingdir = e_dir.EAST)
+				if (otherfacing = "east")
 					shape = "inner_right"
-				else if (otherfacingdir = e_dir.WEST)
+				else if (otherfacing = "west")
 					shape = "inner_left"
 			}
-			break
 		}
-	
-		// Looking north
-		case e_dir.NORTH:
+	}
+}
+
+// Y-
+if (!build_edge_yn && (facing = "south" || facing = "north"))
+{
+	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	if (block != null && block.type = "stairs")
+	{
+		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
-			if (facingdir = e_dir.SOUTH)
+			var otherfacing = block_get_state_id_value(block, stateid, "facing");
+			if (facing = "south")
 			{
-				if (otherfacingdir = e_dir.EAST)
+				if (otherfacing = "east")
 					shape = "inner_left"
-				else if (otherfacingdir = e_dir.WEST)
+				else if (otherfacing = "west")
 					shape = "inner_right"
 			}
 			else // North
 			{
-				if (otherfacingdir = e_dir.EAST)
+				if (otherfacing = "east")
 					shape = "outer_right"
-				else if (otherfacingdir = e_dir.WEST)
+				else if (otherfacing = "west")
 					shape = "outer_left"
 			}
-			break
 		}
 	}
 }

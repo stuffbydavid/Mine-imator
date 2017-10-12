@@ -8,79 +8,35 @@ south = "false"
 north = "false"
 
 // X+
-if (!build_edge[e_dir.EAST])
+if (!build_edge_xp)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
-	if (block != null)
-	{
-		// Check for other bars
-		if (block.type = "bars")
-			east = "true"
-		else
-		{
-			// Check solid
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_xn != e_block_depth.DEPTH1 && model.face_full_xn)
-				east = "true"
-		}
-	}
+	if ((block != null && block.type = "bars") || (block_face_min_depth_xp != e_block_depth.DEPTH1 && block_face_full_xp))
+		east = "true"
 }
 
 // X-
-if (!build_edge[e_dir.WEST])
+if (!build_edge_xn)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
-	if (block != null)
-	{
-		// Check for other bars
-		if (block.type = "bars")
-			west = "true"
-		else
-		{
-			// Check solid
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_xp != e_block_depth.DEPTH1 && model.face_full_xp)
-				west = "true"
-		}
-	}
+	if ((block != null && block.type = "bars") || (block_face_min_depth_xn != e_block_depth.DEPTH1 && block_face_full_xn))
+		west = "true"
 }
 
 // Y+
-if (!build_edge[e_dir.SOUTH])
+if (!build_edge_yp)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
-	if (block != null)
-	{
-		// Check for other bars
-		if (block.type = "bars")
-			south = "true"
-		else
-		{
-			// Check solid
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_yn != e_block_depth.DEPTH1 && model.face_full_yn)
-				south = "true"
-		}
-	}
+	if ((block != null && block.type = "bars") || (block_face_min_depth_yp != e_block_depth.DEPTH1 && block_face_full_yp))
+		south = "true"
 }
 
 // Y-
-if (!build_edge[e_dir.NORTH])
+if (!build_edge_yn)
 {
 	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
-	if (block != null)
-	{
-		// Check for other bars
-		if (block.type = "bars")
-			north = "true"
-		else
-		{
-			// Check solid
-			var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
-			if (model != null && !is_array(model) && model.face_min_depth_yp != e_block_depth.DEPTH1 && model.face_full_yp)
-				north = "true"
-		}
-	}
+	if ((block != null && block.type = "bars") || (block_face_min_depth_yn != e_block_depth.DEPTH1 && block_face_full_yn))
+		north = "true"
 }
 
 block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north))
