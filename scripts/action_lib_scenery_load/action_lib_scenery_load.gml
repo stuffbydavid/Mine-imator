@@ -18,7 +18,7 @@ else
 		hobj = history_set(action_lib_scenery_load)
 	}
 	
-	var res = new_res(fn, "schematic");
+	var res = new_res(fn, e_res_type.SCHEMATIC);
 	res.loaded = !res.replaced
 	with (res)
 		res_load()
@@ -27,7 +27,7 @@ else
 	{
 		sortlist_add(app.lib_list, id)
 		loaded = true
-		type = "scenery"
+		type = e_temp_type.SCENERY
 		scenery = res
 		scenery.count++
 		block_tex = mc_res

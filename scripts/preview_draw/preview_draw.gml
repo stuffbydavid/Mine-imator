@@ -30,10 +30,10 @@ if (!instance_exists(preview.select))
 // Show 3D view?
 if (preview.select.object_index = obj_resource)
 {
-	playbutton = (preview.select.type = "sound")
+	playbutton = (preview.select.type = e_res_type.SOUND)
 	isplaying = audio_is_playing(preview.sound_play_index)
 	exportbutton = true
-	is3d = (preview.select.type = "schematic")
+	is3d = (preview.select.type = e_res_type.SCHEMATIC)
 }
 else
 {
@@ -42,7 +42,7 @@ else
 	is3d = true
 }
 
-if ((preview.select.type = "particles" && app_mouse_box(xx + size - butw, yy + size - 24, butw, 24)) ||
+if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + size - butw, yy + size - 24, butw, 24)) ||
 	(playbutton && app_mouse_box(xx + size - 48, yy + size - 24, 24, 24)) ||
 	(exportbutton && app_mouse_box(xx + size - 24, yy + size - 24, 24, 24)))
 	mouseon = false
@@ -114,7 +114,7 @@ if (window_focus = string(preview))
 with (preview)
 {
 	if (!surface_exists(surface) || surface_get_width(surface) < 0 ||
-		select.type = "particles" || (select.type = "item" && select.item_bounce))
+		select.type = e_temp_type.PARTICLE_SPAWNER || (select.type = e_temp_type.ITEM && select.item_bounce))
 		update = true
 
 	surface = surface_require(surface, size, size)
@@ -125,11 +125,10 @@ with (preview)
 		{
 			draw_clear_alpha(c_black, 0)
 			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
-			
 		
 			if (is3d) // 3D view
 			{
-				var prevcam_zoom, rep, scenery, off;
+				var prevcam_zoom, rep, off;
 				prevcam_zoom = 32
 				off = point3D(0, 0, 0)
 			
@@ -140,72 +139,79 @@ with (preview)
 					rep = vec3(1)
 			
 				// Set z and zoom for camera
-				switch (select.type)
+				if (select.object_index = obj_resource) // Resource
 				{
-					case "char":
-					case "spblock":
+					switch (select.type)
 					{
-						if (select.model_file = null)
+						case e_res_type.SCHEMATIC:
+						{
+							var displaysize = vec3_mul(vec3_mul(select.scenery_size, rep), vec3(block_size));
+							prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
+							off = vec3_mul(displaysize, vec3(-0.5))
 							break
-						
-						var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
-						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
-						off = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
-						break
+						}
 					}
-					
-					case "item":
-						off = point3D(-8, -0.5 * bool_to_float(select.item_3d), -8)
-						break
-					
-					case "block":
-					{
-						var displaysize = vec3_mul(rep, vec3(block_size));
-						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-						off = vec3_mul(displaysize, vec3(-0.5))
-						break
-					}
-					
-					case "scenery":
-					case "schematic":
-					{
-						if (select.type = "schematic")
-							scenery = select
-						else
-							scenery = select.scenery
-						
-						if (scenery != null && !scenery.ready)
-							scenery = null
-						
-						if (scenery = null)
-							break
-						
-						var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
-						prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
-						off = vec3_mul(displaysize, vec3(-0.5))
-						break
-					}
-					
-					case "bodypart":
-					{
-						if (select.model_part = null)
-							break
-							
-						var displaysize = point3D_sub(select.model_part.bounds_end, select.model_part.bounds_start);
-						prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
-						off = point3D_mul(point3D_add(select.model_part.bounds_start, vec3_mul(displaysize, 0.5)), -1)
-						break
-					}
-					
-					case "particles":
-						prevcam_zoom = 80
-						break
-					
-					case "text":
-						prevcam_zoom = 60
-						break
 				}
-			
+				else // Template
+				{
+					switch (select.type)
+					{
+						case e_temp_type.CHARACTER:
+						case e_temp_type.SPECIAL_BLOCK:
+						{
+							if (select.model_file = null)
+								break
+						
+							var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
+							prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
+							off = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
+							break
+						}
+					
+						case e_temp_type.ITEM:
+							off = point3D(-8, -0.5 * bool_to_float(select.item_3d), -8)
+							break
+					
+						case e_temp_type.BLOCK:
+						{
+							var displaysize = vec3_mul(rep, vec3(block_size));
+							prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
+							off = vec3_mul(displaysize, vec3(-0.5))
+							break
+						}
+					
+						case e_temp_type.SCENERY:
+						{
+							if (select.scenery = null || !select.scenery.ready)
+								break
+						
+							var displaysize = vec3_mul(vec3_mul(select.scenery.scenery_size, rep), vec3(block_size));
+							prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
+							off = vec3_mul(displaysize, vec3(-0.5))
+							break
+						}
+					
+						case e_temp_type.BODYPART:
+						{
+							if (select.model_part = null)
+								break
+							
+							var displaysize = point3D_sub(select.model_part.bounds_end, select.model_part.bounds_start);
+							prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
+							off = point3D_mul(point3D_add(select.model_part.bounds_start, vec3_mul(displaysize, 0.5)), -1)
+							break
+						}
+					
+						case e_temp_type.PARTICLE_SPAWNER:
+							prevcam_zoom = 80
+							break
+					
+						case e_temp_type.TEXT:
+							prevcam_zoom = 60
+							break
+					}
+				}
+				
 				prevcam_zoom /= zoom
 			
 				proj_from = point3D(
@@ -220,82 +226,99 @@ with (preview)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_render)
 				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), 60, 1, 1, 32000)
-				render_mode = "preview"
 				
+				render_mode = e_render_mode.PREVIEW
+				render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
+				with (render_shader_obj)
+					shader_use()
+	
 				matrix_set(matrix_world, matrix_create(off, vec3(0), vec3(1)))
 			
-				switch (select.type)
+				if (select.object_index = obj_resource) // Resource
 				{
-					case "char":
-					case "spblock":
+					switch (select.type)
 					{
-						if (select.model_file = null)
+						case e_res_type.SCHEMATIC:
+							render_world_block(select.block_vbuffer, select.scenery_size, mc_res)
 							break
-						
-						var res = select.skin;
-						if (!res.ready)
-							res = mc_res
-						
-						render_world_model_file_parts(select.model_file, select.model_texture_name_map, res)
-						break
 					}
-					
-					case "scenery":
-						if (scenery != null)
-							render_world_scenery(scenery, select.block_tex, select.block_repeat_enable, select.block_repeat)
-						break
-						
-					case "schematic":
-						if (scenery != null)
-							render_world_block(scenery.block_vbuffer, scenery.scenery_size, mc_res)
-						break
-					
-					case "item":
-						render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_tex)
-						break
-					
-					case "block":
-						render_world_block(select.block_vbuffer, rep, select.block_tex)
-						break
-					
-					case "bodypart":
+				}
+				else // Template
+				{
+					switch (select.type)
 					{
-						if (select.model_part = null)
+						case e_temp_type.CHARACTER:
+						case e_temp_type.SPECIAL_BLOCK:
+						{
+							if (select.model_file = null)
+								break
+						
+							var res = select.skin;
+							if (!res.ready)
+								res = mc_res
+						
+							render_world_model_file_parts(select.model_file, select.model_texture_name_map, select.model_hide_list, res)
 							break
+						}
+					
+						case e_temp_type.SCENERY:
+							if (select.scenery != null)
+								render_world_scenery(select.scenery, select.block_tex, select.block_repeat_enable, select.block_repeat)
+							break
+					
+						case e_temp_type.ITEM:
+							render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_tex)
+							break
+					
+						case e_temp_type.BLOCK:
+							render_world_block(select.block_vbuffer, rep, select.block_tex)
+							break
+					
+						case e_temp_type.BODYPART:
+						{
+							if (select.model_part = null)
+								break
 						
-						var res = select.skin;
-						if (!res.ready)
-							res = mc_res
+							var res = select.skin;
+							if (!res.ready)
+								res = mc_res
 						
-						matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-						render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null)
-						break
-					}
+							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
+							render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null)
+							break
+						}
 					
-					case "text":
-						render_world_text(text_vbuffer, text_texture, select.text_face_camera, select.text_font)
-						break
+						case e_temp_type.TEXT:
+							render_world_text(text_vbuffer, text_texture, select.text_face_camera, select.text_font)
+							break
 					
-					case "particles":
-					{
-						for (var p = 0; p < ds_list_size(particle_list); p++)
-							with (particle_list[|p])
-								particle_render()
-						break
-					}
+						case e_temp_type.PARTICLE_SPAWNER:
+						{
+							for (var p = 0; p < ds_list_size(particle_list); p++)
+								with (particle_list[|p])
+									render_world_particle()
+							break
+						}
 					
-					default: // Shapes
-					{
-						var tex;
-						with (select)
-							tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-						render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, tex)
-						break
+						case e_temp_type.CUBE: 
+						case e_temp_type.CONE: 
+						case e_temp_type.CYLINDER: 
+						case e_temp_type.SPHERE: 
+						case e_temp_type.SURFACE: // Shapes
+						{
+							var tex;
+							with (select)
+								tex = temp_get_shape_tex(temp_get_shape_texobj(null))
+							render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, tex)
+							break
+						}
 					}
 				}
 			
+				with (render_shader_obj)
+					shader_clear()
+				
 				matrix_world_reset()
-				shader_clear()
 				gpu_set_ztestenable(false)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_window)
@@ -306,9 +329,9 @@ with (preview)
 			
 				switch (select.type)
 				{
-					case "font":
+					case e_res_type.FONT:
 					{
-						if (select.type = "text")
+						if (select.type = e_temp_type.TEXT)
 							draw_set_font(select.text_font.font_preview)
 						else
 							draw_set_font(select.font_preview)
@@ -328,7 +351,7 @@ with (preview)
 						break
 					}
 				
-					case "sound":
+					case e_res_type.SOUND:
 					{
 						if (!select.ready)
 							break
@@ -352,7 +375,7 @@ with (preview)
 						break
 					}
 				
-					case "pack":
+					case e_res_type.PACK:
 					{
 						if (!select.ready)
 							break
@@ -398,24 +421,24 @@ with (preview)
 						break
 					}
 				
-					case "skin":
-					case "downloadskin":
+					case e_res_type.SKIN:
+					case e_res_type.DOWNLOADED_SKIN:
 						tex = select.model_texture
 						break
 					
-					case "itemsheet":
+					case e_res_type.ITEM_SHEET:
 						tex = select.item_sheet_texture
 						break
 					
-					case "blocksheet":
+					case e_res_type.BLOCK_SHEET:
 						tex = select.block_sheet_texture
 						break
 					
-					case "texture":
+					case e_res_type.TEXTURE:
 						tex = select.texture
 						break
 					
-					case "particlesheet":
+					case e_res_type.PARTICLE_SHEET:
 						tex = select.particles_texture[0]
 						break
 				}
@@ -452,7 +475,7 @@ with (preview)
 }
 
 // Particle button
-if (preview.select.type = "particles")
+if (preview.select.type = e_temp_type.PARTICLE_SPAWNER)
 {
 	if (preview.select.pc_spawn_constant)
 	{

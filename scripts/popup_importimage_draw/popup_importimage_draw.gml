@@ -5,15 +5,15 @@ draw_label(text_get("importimageinfo") + ":", dx, dy)
 dy += 32
 
 // Type
-draw_radiobutton("importimageskin", dx, dy, "skin", popup.type = "skin", action_toolbar_importimage_type)
+draw_radiobutton("importimageskin", dx, dy, e_res_type.SKIN, popup.type = e_res_type.SKIN, action_toolbar_importimage_type)
 dy += 24
-draw_radiobutton("importimageitemsheet", dx, dy, "itemsheet", popup.type = "itemsheet", action_toolbar_importimage_type)
+draw_radiobutton("importimageitemsheet", dx, dy, e_res_type.ITEM_SHEET, popup.type = e_res_type.ITEM_SHEET, action_toolbar_importimage_type)
 dy += 24
-draw_radiobutton("importimageblocksheet", dx, dy, "blocksheet", popup.type = "blocksheet", action_toolbar_importimage_type)
+draw_radiobutton("importimageblocksheet", dx, dy, e_res_type.BLOCK_SHEET, popup.type = e_res_type.BLOCK_SHEET, action_toolbar_importimage_type)
 dy += 24
-draw_radiobutton("importimageparticlesheet", dx, dy, "particlesheet", popup.type = "particlesheet", action_toolbar_importimage_type)
+draw_radiobutton("importimageparticlesheet", dx, dy, e_res_type.PARTICLE_SHEET, popup.type = e_res_type.PARTICLE_SHEET, action_toolbar_importimage_type)
 dy += 24
-draw_radiobutton("importimagetexture", dx, dy, "texture", popup.type = "texture", action_toolbar_importimage_type)
+draw_radiobutton("importimagetexture", dx, dy, e_res_type.TEXTURE, popup.type = e_res_type.TEXTURE, action_toolbar_importimage_type)
 dy += 24
 
 // OK
@@ -23,7 +23,7 @@ dx = content_x + content_width / 2 - dw - 4
 dy = content_y + content_height - 32
 if (draw_button_normal("importimageok", dx, dy, dw, 32))
 {
-	if (popup.type = "itemsheet")
+	if (popup.type = e_res_type.ITEM_SHEET)
 		popup_importitemsheet_show(popup.filename, null)
 	else
 	{

@@ -14,6 +14,7 @@ h = texture_height(tex)
 sw = max(1, w div slotsx)
 sh = max(1, h div slotsy)
 
+draw_texture_start()
 surf = surface_create(sw, sh)
 surface_set_target(surf)
 {
@@ -29,5 +30,6 @@ surface_set_target(surf)
 }
 surface_reset_target()
 surface_free(surf)
+draw_texture_done()
 
 return newtex

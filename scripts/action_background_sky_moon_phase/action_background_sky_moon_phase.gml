@@ -10,7 +10,7 @@ else if (history_redo)
 else
 {
 	phase = argument0
-	if (action_tl_select_single("background"))
+	if (action_tl_select_single(null, e_tl_type.BACKGROUND))
 	{
 		tl_value_set_start(action_background_sky_moon_phase, false)
 		tl_value_set(e_value.BG_SKY_MOON_PHASE, phase, false)

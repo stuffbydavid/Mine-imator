@@ -1,16 +1,14 @@
 uniform sampler2D uTexture;
-uniform vec4 uBlendColor;
 
-uniform float uColorsExt;
+uniform int uColorsExt;
 uniform vec4 uRGBAdd;
 uniform vec4 uRGBSub;
-uniform vec4 uRGBMul;
 uniform vec4 uHSBAdd;
 uniform vec4 uHSBSub;
 uniform vec4 uHSBMul;
 uniform vec4 uMixColor;
 
-uniform float uFogShow;
+uniform int uFogShow;
 uniform vec4 uFogColor;
 uniform float uFogDistance;
 uniform float uFogSize;
@@ -43,7 +41,7 @@ vec4 hsbtorgb(vec4 c)
 float getFog()
 {
 	float fog;
-	if (uFogShow > 0.0)
+	if (uFogShow > 0)
 	{
 		fog = clamp(1.0 - (uFogDistance - vDepth) / uFogSize, 0.0, 1.0);
 		fog *= clamp(1.0 - (vPosition.z - uFogHeight) / uFogSize, 0.0, 1.0);
@@ -56,16 +54,16 @@ float getFog()
 
 void main()
 {
-	vec4 baseColor = vColor * uBlendColor * texture2D(uTexture, vTexCoord); // Get base
+	vec4 baseColor = vColor * texture2D(uTexture, vTexCoord); // Get base
 	
-	if (uColorsExt > 0.0)
+	if (uColorsExt > 0)
 	{
-		gl_FragColor = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0) * uRGBMul; // Transform RGB
+		gl_FragColor = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
 		gl_FragColor = hsbtorgb(clamp(rgbtohsb(gl_FragColor) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
 		gl_FragColor = mix(gl_FragColor, uMixColor, uMixColor.a); // Mix
 		gl_FragColor *= vec4(vDiffuse, 1.0); // Multiply diffuse
 		gl_FragColor = mix(gl_FragColor, uFogColor, getFog()); // Mix fog
-		gl_FragColor.a = uRGBMul.a * baseColor.a; // Correct alpha
+		gl_FragColor.a = baseColor.a; // Correct alpha
 	}
 	else
 	{

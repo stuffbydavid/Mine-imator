@@ -28,23 +28,23 @@ if (tvflip < 0)
 
 switch (type)
 {
-	case "surface":
+	case e_temp_type.SURFACE:
 		shape_vbuffer = vbuffer_create_surface(rad, tex1, tex2, shape_invert)
 		break
 		
-	case "cube":
+	case e_temp_type.CUBE:
 		shape_vbuffer = vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, shape_invert, shape_tex_mapped)
 		break
 	
-	case "cone":
+	case e_temp_type.CONE:
 		shape_vbuffer = vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_closed, shape_invert, shape_tex_mapped)
 		break
 		
-	case "cylinder":
+	case e_temp_type.CYLINDER:
 		shape_vbuffer = vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_closed, shape_invert, shape_tex_mapped)
 		break
 		
-	case "sphere":
+	case e_temp_type.SPHERE:
 		shape_vbuffer = vbuffer_create_sphere(rad, tex1, tex2, shape_detail, shape_invert)
 		break
 }

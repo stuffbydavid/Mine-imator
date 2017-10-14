@@ -17,7 +17,7 @@ with (new(obj_timeline))
 	// Special block
 	if (other.model_name != "")
 	{
-		type = "spblock"
+		type = e_temp_type.SPECIAL_BLOCK
 		
 		model_name = other.model_name
 		model_state = array_copy_1d(other.model_state)
@@ -37,7 +37,7 @@ with (new(obj_timeline))
 	// Block
 	else
 	{
-		type = "block"
+		type = e_temp_type.BLOCK
 		
 		block_name = other.block.name
 		block_state = array_copy_1d(other.block.default_state)
@@ -85,7 +85,7 @@ with (new(obj_timeline))
 		
 		with (new(obj_timeline))
 		{
-			type = "text"
+			type = e_temp_type.TEXT
 			temp = id
 			
 			// Set parent to other timeline

@@ -12,14 +12,14 @@ if (object_index != app && update_matrix)
 			matrix_parent = array_copy_1d(parent.matrix)
 			
 		// Parent is a body part and we're locked to bended half
-		if (parent.type = "bodypart" && lock_bend && parent.model_part != null)
+		if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null)
 			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value_inherit[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
 	}
 	else
 		matrix_parent = MAT_IDENTITY
 		
 	// Add body part position and rotation
-	if (type = "bodypart" && model_part != null)
+	if (type = e_tl_type.BODYPART && model_part != null)
 	{
 		if (part_of != null)
 			matrix_parent = matrix_multiply(matrix_create(model_part.position, model_part.rotation, vec3(1)), matrix_parent)
@@ -72,13 +72,14 @@ if (object_index != app && update_matrix)
 	// Replace position
 	if (!inherit_position)
 	{
+		matrix_remove_rotation(matrix_parent)
 		matrix[MAT_X] = value[e_value.POS_X]
 		matrix[MAT_Y] = value[e_value.POS_Y]
 		matrix[MAT_Z] = value[e_value.POS_Z]
 	}
 	
 	// Create rotation point
-	if (type = "camera" && value[e_value.CAM_ROTATE])
+	if (type = e_tl_type.CAMERA && value[e_value.CAM_ROTATE])
 	{
 		world_pos_rotate = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
 		matrix[MAT_X] += lengthdir_x(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
@@ -182,6 +183,12 @@ if (object_index != app && update_matrix)
 			
 		tl = par
 	}
+	
+	colors_ext = (value_inherit[e_value.ALPHA] < 1 ||
+				  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
+				  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
+				  value_inherit[e_value.HSB_MUL] < c_white ||
+				  value_inherit[e_value.MIX_PERCENT] > 0)
 	
 	// Update bend vbuffer
 	tl_update_bend()

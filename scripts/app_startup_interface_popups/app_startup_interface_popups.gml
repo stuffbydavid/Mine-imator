@@ -99,7 +99,7 @@ popup_importimage = new_popup("importimage", popup_importimage_draw, 300, 280, t
 with (popup_importimage)
 {
 	filename = ""
-	type = "skin"
+	type = e_res_type.SKIN
 }
 
 // Import item sheet

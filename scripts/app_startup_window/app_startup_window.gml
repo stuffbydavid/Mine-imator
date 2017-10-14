@@ -1,5 +1,10 @@
 /// app_startup_window()
 
+globalvar current_step, minute_steps, delta;
+current_step = 0
+minute_steps = 60 * 60
+delta = 1
+
 log("Windows startup")
 
 window_width = 1

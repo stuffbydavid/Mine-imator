@@ -12,25 +12,28 @@ with (new(obj_timeline))
 	
 	switch (type)
 	{
-		case "char":
-		case "spblock":
+		case e_temp_type.CHARACTER:
+		case e_temp_type.SPECIAL_BLOCK:
 		{
 			part_list = ds_list_create()
-			if (other.model_file != null)
+			if (temp.model_file != null)
 			{
-				for (var p = 0; p < ds_list_size(other.model_file.file_part_list); p++)
-					ds_list_add(part_list, tl_new_part(other.model_file.file_part_list[|p]))
-			
+				for (var p = 0; p < ds_list_size(temp.model_file.file_part_list); p++)
+				{
+					var part = temp.model_file.file_part_list[|p];
+					if (temp.model_hide_list = null || ds_list_find_index(temp.model_hide_list, part.name) = -1)
+						ds_list_add(part_list, tl_new_part(part))
+				}
 				tl_update_part_list(temp.model_file, id)
 			}
 			break
 		}
 		
-		case "block":
+		case e_temp_type.BLOCK:
 			texture_filtering = true
 			break
 			
-		case "scenery":
+		case e_temp_type.SCENERY:
 		{
 			texture_filtering = true
 			
@@ -45,7 +48,7 @@ with (new(obj_timeline))
 			break
 		}
 		
-		case "bodypart":
+		case e_temp_type.BODYPART:
 		{
 			model_part = temp.model_part 
 			if (model_part != null)
@@ -55,7 +58,7 @@ with (new(obj_timeline))
 			break
 		}
 		
-		case "surface":
+		case e_temp_type.SURFACE:
 			backfaces = true
 			break
 	}

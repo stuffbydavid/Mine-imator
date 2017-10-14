@@ -6,7 +6,9 @@ with (new(obj_template))
 	load_id = buffer_read_int()
 	save_id_map[?load_id] = load_id
 
-	type = buffer_read_string_int()
+	var typename = buffer_read_string_int();
+	type = ds_list_find_index(temp_type_name_list, typename)
+	
 	name = buffer_read_string_int()
 	if (load_format = e_project.FORMAT_100_DEMO_2)
 		/*count = */buffer_read_int()
@@ -19,7 +21,7 @@ with (new(obj_template))
 	legacy_bodypart_id = buffer_read_int()
 	
 	// Find new model name and state
-	if (type = "char" || type = "spblock" || type = "bodypart")
+	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 	{
 		var modelmap = legacy_model_name_map[?legacy_model_name];
 		if (ds_map_valid(modelmap))
@@ -35,7 +37,7 @@ with (new(obj_template))
 	}
 	
 	// Find new model part name
-	if (type = "bodypart")
+	if (type = e_temp_type.BODYPART)
 	{
 		var modelpartlist = legacy_model_part_map[?model_name];
 		if (ds_list_valid(modelpartlist) && legacy_bodypart_id < ds_list_size(modelpartlist))
@@ -103,7 +105,7 @@ with (new(obj_template))
 	}
 	text_face_camera = buffer_read_byte()
 
-	if (type = "particles")
+	if (type = e_temp_type.PARTICLE_SPAWNER)
 		project_load_legacy_particles()
 		
 	if (temp_creator = app)

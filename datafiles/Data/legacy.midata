@@ -104,7 +104,7 @@
 		"characterwither": { "name": "wither", "state": "invulnerable=false" },
 		"characterblaze": { "name": "blaze" },
 		"charactermagmacube": { "name": "magma_cube" },
-		"characterhorse": { "name": "horse", "state": "variant=black" },
+		"characterhorse": { "name": "horse", "state": "variant=black,saddle=true,chests=true" },
 		"characterdonkey": { "name": "horse", "state": "variant=donkey" },
 		"characterenderdragon": { "name": "ender_dragon" },
 		"characterendermite": { "name": "endermite" },

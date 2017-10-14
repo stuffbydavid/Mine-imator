@@ -3,8 +3,8 @@
 
 switch (type)
 {
-	case "schematic":
-	case "fromworld":
+	case e_res_type.SCHEMATIC:
+	case e_res_type.FROM_WORLD:
 	{
 		load_stage = "open"
 		with (app)
@@ -15,7 +15,7 @@ switch (type)
 		break
 	}
 	
-	case "sound":
+	case e_res_type.SOUND:
 	{
 		load_stage = "open"
 		with (app)
@@ -27,8 +27,8 @@ switch (type)
 		break
 	}
 	
-	case "pack":
-	case "packunzipped":
+	case e_res_type.PACK:
+	case e_res_type.PACK_UNZIPPED:
 	{
 		load_stage = "unzip"
 		with (app)

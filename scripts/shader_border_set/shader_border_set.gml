@@ -1,9 +1,3 @@
-/// shader_border_set(width, height)
-/// @arg width
-/// @arg height
+/// shader_border_set()
 
-var uTexSize = shader_get_uniform(shader_border, "uTexSize");
-
-shader_set(shader_border)
-
-shader_set_uniform_f(uTexSize, argument0, argument1)
+render_set_uniform_vec2("uTexSize", render_width, render_height)

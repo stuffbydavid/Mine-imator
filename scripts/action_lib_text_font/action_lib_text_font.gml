@@ -17,7 +17,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res(fn, "font")
+		res = new_res(fn, e_res_type.FONT)
 		with (res)
 			res_load()
 	}

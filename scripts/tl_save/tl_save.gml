@@ -11,7 +11,7 @@ if (temp)
 {
 	temp.save = true
 	
-	if (temp.type = "particles")
+	if (temp.type = e_temp_type.PARTICLE_SPAWNER)
 	{
 		with (obj_particle_type)
 		{

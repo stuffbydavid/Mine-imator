@@ -11,14 +11,14 @@ str += "file_directory: " + file_directory + " \n"
 str += "fps_real: " + string(fps_real) + " \n"
 str += "current_step: " + string(current_step) + " \n"
 str += "instance_count: " + string(instance_count) + " \n"
-str += "window_busy: " + window_busy + " \n"
+/*str += "window_busy: " + window_busy + " \n"
 str += "window_focus: " + window_focus + " \n"
 if (popup)
 	str += "popup.name: " + popup.name + " \n"
 else
 	str += "popup.name: \n"
 str += "popup_ani_type: " + popup_ani_type + " \n"
-str += "popup_mouseon: " + string(popup_mouseon) + " \n"
+str += "popup_mouseon: " + string(popup_mouseon) + " \n"*/
 str += "delta: " + string(delta) + " \n"
 str += "DPI: " + string(display_get_dpi_x()) + "," + string(display_get_dpi_y()) + " \n"
 

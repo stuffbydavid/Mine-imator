@@ -1,4 +1,4 @@
-/// state_vars_match(vars, block, stateid)
+/// state_vars_match_state_id(vars, block, stateid)
 /// @arg vars
 /// @arg block
 /// @arg stateid

@@ -14,7 +14,7 @@ render_background = !popup_exportimage.remove_background
 render_watermark = setting_render_watermark
 
 log("Hidden", yesno(render_hidden))
-log("Background", yesno(render_background))
+log(e_tl_type.BACKGROUND, yesno(render_background))
 log("Watermark", yesno(render_watermark))
 log("High Quality", yesno(popup_exportimage.high_quality))
 log("Size", project_video_width, project_video_height)

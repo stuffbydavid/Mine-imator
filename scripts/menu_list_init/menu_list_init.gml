@@ -88,7 +88,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res.type = "schematic")
+			if (res.type = e_res_type.SCHEMATIC)
 				menu_add_item(res, res.display_name)
 		}
 		
@@ -133,7 +133,7 @@ switch (menu_name)
 			if (res = mc_res)
 				continue
 				
-			if (res.type = "texture")
+			if (res.type = e_res_type.TEXTURE)
 				menu_add_item(res, res.display_name, res.texture)
 			else if (res.item_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
@@ -207,7 +207,7 @@ switch (menu_name)
 		
 		// Add existing cameras
 		with (obj_timeline)
-			if (type = "camera")
+			if (type = e_tl_type.CAMERA)
 				menu_add_item(id, display_name)
 			
 		break
@@ -231,7 +231,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(lib_list.list); i++)
 		{
 			var temp = lib_list.list[|i];
-			if (temp.type != "particles")
+			if (temp.type != e_temp_type.PARTICLE_SPAWNER)
 				menu_add_item(temp, temp.display_name)
 		}
 		
@@ -283,9 +283,9 @@ switch (menu_name)
 	// Background image type
 	case "backgroundimagetype":
 	{
-		menu_add_item(0, text_get("backgroundimagetypeimage"))
-		menu_add_item(1, text_get("backgroundimagetypesphere"))
-		menu_add_item(2, text_get("backgroundimagetypebox"))
+		menu_add_item("image", text_get("backgroundimagetypeimage"))
+		menu_add_item("sphere", text_get("backgroundimagetypesphere"))
+		menu_add_item("box", text_get("backgroundimagetypebox"))
 		
 		break
 	}
@@ -405,7 +405,7 @@ switch (menu_name)
 	{
 		menu_add_item("preview", text_get("resourcespackpreview"))
 		menu_add_item("modeltextures", text_get("resourcespackmodeltextures"))
-		menu_add_item("blocksheet", text_get("resourcespackblocksheet"))
+		menu_add_item("block", text_get("resourcespackblocksheet"))
 		menu_add_item("colormap", text_get("resourcespackcolormap"))
 		menu_add_item("itemsheet", text_get("resourcespackitemsheet"))
 		menu_add_item("particlesheet", text_get("resourcespackparticlesheet"))
@@ -492,7 +492,7 @@ switch (menu_name)
 		}
 		
 		with (obj_timeline)
-			if (id != tl_edit.temp.shape_tex && type = "camera")
+			if (id != tl_edit.temp.shape_tex && type = e_tl_type.CAMERA)
 				menu_add_item(id, display_name)
 			
 		break
@@ -508,7 +508,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res.type = "sound")
+			if (res.type = e_res_type.SOUND)
 				menu_add_item(res, res.display_name)
 		}
 		

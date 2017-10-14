@@ -35,10 +35,7 @@ with (new(obj_block_tl))
 	has_text = block.tl_has_text
 	if (has_text)
 	{
-		/*text = state_vars_get_value(mc_builder.vars, "text")
-		if (text = null)
-			text = ""*/
-		text = "todo"
+		text = array3D_get(mc_builder.block_text, mc_builder.build_size_z, mc_builder.build_pos_x, mc_builder.build_pos_y, mc_builder.build_pos_z)
 		text_position = block.tl_text_position
 	}
 	
@@ -80,9 +77,9 @@ with (new(obj_block_tl))
 	}
 
 	// Add current position in terrain
-	position[X] += other.build_pos_x * block_size
-	position[Y] += other.build_pos_y * block_size
-	position[Z] += other.build_pos_z * block_size
+	position[X] += mc_builder.build_pos_x * block_size
+	position[Y] += mc_builder.build_pos_y * block_size
+	position[Z] += mc_builder.build_pos_z * block_size
 	
 	return id
 }

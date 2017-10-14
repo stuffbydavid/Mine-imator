@@ -59,7 +59,7 @@ if (texture_lib)
 	lib_texture_set_mipmap_level = external_define(path_texture, "texture_set_mipmap_level", dll_cdecl, ty_real, 1, ty_real)
 
 	log("Texture init")
-	external_call(lib_texture_init, window_device())
+	external_call(lib_texture_init, ds_map_find_value(os_get_info(), "video_d3d11_device"))
 }
 
 if (startup_last_crash)

@@ -60,8 +60,8 @@ else
 	items = slots + anislots
 
 // Sizes
-slotwid = clamp(floor(texture_width(tex) / slotsx), 1, 64)
-slothei = clamp(floor(texture_height(tex) / slotsy), 1, 64)
+slotwid = clamp(floor(texture_width(tex) / slotsx), 16, 64)
+slothei = clamp(floor(texture_height(tex) / slotsy), 16, 64)
 itemwid = slotwid + off * 2
 itemhei = slothei + off * 2
 itemsx = floor((wid - 30 * scroll.needed) / itemwid)

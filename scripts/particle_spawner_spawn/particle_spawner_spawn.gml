@@ -15,7 +15,7 @@ if (is_timeline)
 	temp = id.temp
 else
 	temp = select
-pt.timetolive = value_random(temp.pc_destroy_at_time_seconds, temp.pc_destroy_at_time_israndom, temp.pc_destroy_at_time_random_min, temp.pc_destroy_at_time_random_max) * 60
+pt.time_to_live = value_random(temp.pc_destroy_at_time_seconds, temp.pc_destroy_at_time_israndom, temp.pc_destroy_at_time_random_min, temp.pc_destroy_at_time_random_max) * 60
 
 // Position
 pt.pos[X] = world_pos[X]
@@ -25,7 +25,7 @@ if (temp.pc_spawn_region_use && type.spawn_region)
 {
 	switch (temp.pc_spawn_region_type)
 	{
-		case "sphere":
+		case e_temp_type.SPHERE:
 		{
 			var xyang, zang, dis;
 			xyang = random(360)
@@ -37,7 +37,7 @@ if (temp.pc_spawn_region_use && type.spawn_region)
 			break
 		}
 		
-		case "cube":
+		case e_temp_type.CUBE:
 		{
 			pt.pos[X] += random_range(-temp.pc_spawn_region_cube_size / 2, temp.pc_spawn_region_cube_size / 2)
 			pt.pos[Y] += random_range(-temp.pc_spawn_region_cube_size / 2, temp.pc_spawn_region_cube_size / 2)

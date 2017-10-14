@@ -2,7 +2,7 @@
 /// Renders the timeline instance.
 
 // No 3D representation?
-if (type = "char" || type = "spblock" || type = "folder" || type = "background" || type = "audio")
+if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_tl_type.FOLDER || type = e_tl_type.BACKGROUND || type = e_tl_type.AUDIO)
 	return 0
 	
 // Invisible?
@@ -28,7 +28,7 @@ if (render_mode = "select" && !parent_is_select && !select)
 tl_set_shader()
 
 // Box for clicking
-if (type = "particles" || type = "spotlight" || type = "pointlight" || type = "camera") {
+if (type = e_temp_type.PARTICLE_SPAWNER || type = e_tl_type.SPOT_LIGHT || type = e_tl_type.POINT_LIGHT || type = e_tl_type.CAMERA) {
 	if (render_mode = "click") {
 		shader_texture = sprite_get_texture(spr_shape, 0)
 		shader_texture_gm = true
@@ -36,7 +36,7 @@ if (type = "particles" || type = "spotlight" || type = "pointlight" || type = "c
 		model_draw(render_click_box, pos[X], pos[Y], pos[Z])
 		shader_texture_gm = false
 	}
-	if (type != "particles") { // Only proceed with rendering for particles
+	if (type != e_temp_type.PARTICLE_SPAWNER) { // Only proceed with rendering for particles
 		shader_clear()
 		return 0
 	}
@@ -47,14 +47,14 @@ if (shader_alpha > 0) {
 	shader_texture_filter_linear = texture_blur
 	shader_texture_filter_mipmap = (app.setting_texture_filtering && texture_filtering)
 	
-	if (type != "particles") {
+	if (type != e_temp_type.PARTICLE_SPAWNER) {
 		var texobj = value_inherit[TEXTUREOBJ];
 		
 		matrix_set(matrix_world, matrix)
 		matrix_offset = point3D(-rot_point[XPOS], -rot_point[YPOS], -rot_point[ZPOS])
 		
 		switch (type) {
-			case "bodypart":
+			case e_temp_type.BODYPART:
 				var char, res;
 				char = temp.char_model
 				if (bodypart >= char.part_amount || !char.part_model[bodypart])
@@ -63,7 +63,7 @@ if (shader_alpha > 0) {
 				// Get texture
 				res = temp.char_skin
 				if (texobj)
-					if (texobj.type != "camera")
+					if (texobj.type != e_tl_type.CAMERA)
 						res = texobj
 					
 				if (!res.ready)
@@ -82,12 +82,12 @@ if (shader_alpha > 0) {
 				}
 				break
 				
-			case "scenery":
-			case "block":
+			case e_temp_type.SCENERY:
+			case e_temp_type.BLOCK:
 				// Get resource for texture
 				var res = temp.block_tex;
 				if (texobj)
-					if (texobj.type != "camera")
+					if (texobj.type != e_tl_type.CAMERA)
 						if (res.block_texture[0])
 							res = texobj
 					
@@ -95,17 +95,17 @@ if (shader_alpha > 0) {
 					res = res_def
 				
 				// Draw
-				if (type = "block")
+				if (type = e_temp_type.BLOCK)
 					render_world_block(temp.block_model, res)
 				else if (temp.scenery)
 					render_world_schematic(temp.scenery, temp.repeat_toggle, temp.repeat_x, temp.repeat_y, temp.repeat_z, res)
 				break
 				
-			case "item":
+			case e_temp_type.ITEM:
 				render_world_item(temp.item_model, temp.item_bounce, temp.item_face_camera, temp.item_tex)
 				break
 			
-			case "text":
+			case e_temp_type.TEXT:
 				render_world_text(text_model, text_texture, temp.text_face_camera, temp.text_font)
 				break
 				

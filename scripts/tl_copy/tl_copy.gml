@@ -49,12 +49,12 @@ to.wind_terrain = wind_terrain
 
 if (part_of != null && part_of != "")
 {
-	if (type = "spblock")
+	if (type = e_temp_type.SPECIAL_BLOCK)
 	{
 		to.model_name = model_name
 		to.model_state = array_copy_1d(model_state)
 	}
-	else if (type = "block")
+	else if (type = e_temp_type.BLOCK)
 	{
 		to.block_name = block_name
 		to.block_state = array_copy_1d(block_state)

@@ -1,7 +1,7 @@
 /// tab_timeline_editor_graphics()
 	
 // Round bending
-if (tl_edit.type = "bodypart" && tl_edit.model_part != null && tl_edit.model_part.bend_part != null)
+if (tl_edit.type = e_temp_type.BODYPART && tl_edit.model_part != null && tl_edit.model_part.bend_part != null)
 {
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorroundbending", dx, dy, tl_edit.round_bending, action_tl_round_bending)
@@ -26,11 +26,11 @@ draw_checkbox("timelineeditorfog", dx, dy, tl_edit.fog, action_tl_fog)
 tab_next()
 
 // Wind
-if (tl_edit.type = "scenery" || tl_edit.type = "block" || tl_edit.type = "particles" || tl_edit.type = "text" || type_is_shape(tl_edit.type))
+if (tl_edit.type = e_temp_type.SCENERY || tl_edit.type = e_temp_type.BLOCK || tl_edit.type = e_temp_type.PARTICLE_SPAWNER || tl_edit.type = e_temp_type.TEXT || type_is_shape(tl_edit.type))
 {
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorwind", dx, dy, tl_edit.wind, action_tl_wind)
-	if (tl_edit.type != "text" && !type_is_shape(tl_edit.type))
+	if (tl_edit.type != e_temp_type.TEXT && !type_is_shape(tl_edit.type))
 		draw_checkbox("timelineeditorwindterrain", dx + floor(dw * 0.5), dy, tl_edit.wind_terrain, action_tl_wind_terrain)
 	tab_next()
 }

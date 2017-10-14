@@ -13,7 +13,7 @@ else
 {
 	val = argument0
 	add = argument1
-	if (action_tl_select_single("background"))
+	if (action_tl_select_single(null, e_tl_type.BACKGROUND))
 	{
 		tl_value_set_start(action_background_fog_height, true)
 		tl_value_set(e_value.BG_FOG_HEIGHT, val, add)

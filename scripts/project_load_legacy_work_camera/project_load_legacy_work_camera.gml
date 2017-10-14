@@ -11,4 +11,4 @@ cam_work_zoom_goal = cam_work_zoom
 
 cam_work_angle_look_xy = cam_work_angle_xy
 cam_work_angle_look_z = -cam_work_angle_z
-cam_work_set_from()
+camera_work_set_from()

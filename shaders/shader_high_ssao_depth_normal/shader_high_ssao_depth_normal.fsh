@@ -1,5 +1,6 @@
-uniform float uAlpha;
+uniform float4 uBlendColor;
 uniform float uBrightness;
+uniform int uSSAOEnable;
 
 struct FSInput
 {
@@ -45,7 +46,7 @@ FSOutput main(FSInput IN) : SV_TARGET
 	OUT.Color1 = packNormal(IN.Normal);
 	
 	// Brightness
-	float br = max(0.0, uAlpha - uBrightness - IN.Custom.z);
+	float br = max(0.0, uBlendColor.a - uBrightness + (1.0 - float(uSSAOEnable)) - IN.Custom.z);
 	OUT.Color2 = float4(br, br, br, 1.0);
 	
 	return OUT;

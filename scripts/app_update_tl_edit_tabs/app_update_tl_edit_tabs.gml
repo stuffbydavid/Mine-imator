@@ -7,7 +7,7 @@ showkf = false
 if (tl_edit_amount > 0)
 {
 	showtl = true
-	if (tl_edit.type = "audio")
+	if (tl_edit.type = e_tl_type.AUDIO)
 		showkf = (tl_edit.keyframe_select != null)
 	else
 		showkf = true

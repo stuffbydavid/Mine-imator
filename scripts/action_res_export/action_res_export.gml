@@ -1,6 +1,6 @@
 /// action_res_export()
 
-if (res_edit.type = "pack")
+if (res_edit.type = e_res_type.PACK)
 {
 	var fn = file_dialog_save_image(filename_get_valid(res_edit.display_name));
 	if (fn = "")

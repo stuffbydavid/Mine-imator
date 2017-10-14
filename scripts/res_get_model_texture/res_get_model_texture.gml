@@ -4,7 +4,7 @@
 
 var name = argument0;
 
-if (type = "pack")
+if (type = e_res_type.PACK)
 {
 	if (ds_map_exists(model_texture_map, name))
 		return model_texture_map[?name]

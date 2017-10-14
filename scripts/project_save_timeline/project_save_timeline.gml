@@ -3,7 +3,7 @@
 json_save_object_start()
 
 	json_save_var("id", save_id)
-	json_save_var("type", type)
+	json_save_var("type", tl_type_name_list[|type])
 	json_save_var("name", json_string_encode(name))
 	
 	json_save_var_save_id("temp", temp)
@@ -12,22 +12,22 @@ json_save_object_start()
 	json_save_var_bool("lock", lock)
 	json_save_var("depth", depth)
 	
-	if (type = "bodypart")
+	if (type = e_temp_type.BODYPART)
 		json_save_var("model_part_name", model_part_name)
 		
-	if (type = "text")
+	if (type = e_temp_type.TEXT)
 		json_save_var("text", json_string_encode(text))
 		
 	if (part_of != null)
 	{
-		if (type = "spblock")
+		if (type = e_temp_type.SPECIAL_BLOCK)
 		{
 			json_save_object_start("model")
 				json_save_var("name", model_name)
 				json_save_var_state_vars("state", model_state)
 			json_save_object_done()
 		}
-		else if (type = "block")
+		else if (type = e_temp_type.BLOCK)
 		{
 			json_save_object_start("block")
 				json_save_var("name", block_name)
@@ -107,13 +107,13 @@ json_save_object_start()
 		json_save_var_bool("backfaces", backfaces)
 		json_save_var_bool("texture_blur", texture_blur)
 		json_save_var_bool("texture_filtering", texture_filtering)
-		if (type = "bodypart")
+		if (type = e_temp_type.BODYPART)
 			json_save_var_bool("round_bending", round_bending)
 		json_save_var_bool("shadows", shadows)
 		json_save_var_bool("ssao", ssao)
 		json_save_var_bool("fog", fog)
 	
-		if (type = "scenery" || type = "block" || type = "particles" || type = "text" || type_is_shape(type))
+		if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
 		{
 			json_save_var_bool("wind", wind)
 			json_save_var_bool("wind_terrain", wind_terrain)

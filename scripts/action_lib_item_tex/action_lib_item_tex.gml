@@ -23,7 +23,7 @@ else
 		
 			if (filename_ext(fn) = ".zip")
 			{
-				res = new_res(fn, "pack")
+				res = new_res(fn, e_res_type.PACK)
 				with (res)
 					res_load()
 			}
@@ -38,11 +38,11 @@ else
 			fn = popup_importitemsheet.filename
 			if (popup_importitemsheet.is_sheet)
 			{
-				res = new_res(fn, "itemsheet")
+				res = new_res(fn, e_res_type.ITEM_SHEET)
 				res.item_sheet_size = popup_importitemsheet.sheet_size
 			}
 			else
-				res = new_res(fn, "texture")
+				res = new_res(fn, e_res_type.TEXTURE)
 				
 			with (res)
 				res_load()

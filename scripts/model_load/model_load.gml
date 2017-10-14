@@ -63,6 +63,7 @@ with (new(obj_model))
 					value_name[v] = curvalue[?"value"]
 					value_file[v] = null
 					value_texture_name_map[v] = null
+					value_hide_list[v] = null
 					
 					if (dev_mode_debug_names && !text_exists("modelstatevalue" + value_name[v]))
 						log("model/state/value/" + value_name[v] + dev_mode_name_translation_message)
@@ -80,9 +81,15 @@ with (new(obj_model))
 					}
 					else if (ds_map_valid(curvalue[?"texture"]))
 					{
-						var texnamemap = ds_map_create();
-						ds_map_merge(texnamemap, curvalue[?"texture"], true)
-						value_texture_name_map[v] = texnamemap
+						value_texture_name_map[v] = ds_map_create();
+						ds_map_merge(value_texture_name_map[v], curvalue[?"texture"], true)
+					}
+					
+					// Hide parts
+					if (ds_list_valid(curvalue[?"hide"]))
+					{
+						value_hide_list[v] = ds_list_create()
+						ds_list_copy(value_hide_list[v], curvalue[?"hide"])
 					}
 				}
 				

@@ -19,6 +19,7 @@ if (block_sheet_ani_depth_list != null)
 var blocksize, texlist, texanilist, surf, anisurf, wid;
 blocksize = null
 
+draw_texture_start()
 debug_timer_start()
 		
 // Static textures
@@ -320,3 +321,4 @@ ds_list_destroy(texlist)
 ds_list_destroy(texanilist)
 
 debug_timer_stop("res_load_pack_block_textures")
+draw_texture_done()

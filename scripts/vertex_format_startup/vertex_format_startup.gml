@@ -1,6 +1,6 @@
 /// vertex_format_startup()
 
-globalvar vertex_format, vertex_wave, vertex_wave_zmin, vertex_wave_zmax, vertex_brightness;
+globalvar vbuffer_current, vertex_format, vertex_wave, vertex_wave_zmin, vertex_wave_zmax, vertex_brightness;
 
 log("Create vertex format")
 vertex_format_begin()

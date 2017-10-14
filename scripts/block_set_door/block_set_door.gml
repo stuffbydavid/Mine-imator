@@ -22,39 +22,29 @@ var facing, open, location, dir;
 facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 open = block_get_state_id_value(block_current, block_state_id_current, "open")
 
-switch (string_to_dir(facing))
+if (facing = "east")
 {
-	case e_dir.EAST:
-	{
-		location = test(hinge = "right", "south_west", "north_west")
-		if (open = "false")
-			dir = test(hinge = "right", "north", "south")
-		break
-	}
-	
-	case e_dir.WEST:
-	{
-		location = test(hinge = "right", "north_east", "south_east")
-		if (open = "false")
-			dir = test(hinge = "right", "south", "north")
-		break
-	}
-	
-	case e_dir.SOUTH:
-	{
-		location = test(hinge = "right", "north_west", "north_east")
-		if (open = "false")
-			dir = test(hinge = "right", "east", "west")
-		break
-	}
-	
-	case e_dir.NORTH:
-	{
-		location = test(hinge = "right", "south_east", "south_west")
-		if (open = "false")
-			dir = test(hinge = "right", "west", "east")
-		break
-	}
+	location = test(hinge = "right", "south_west", "north_west")
+	if (open = "false")
+		dir = test(hinge = "right", "north", "south")
+}
+else if (facing = "west")
+{
+	location = test(hinge = "right", "north_east", "south_east")
+	if (open = "false")
+		dir = test(hinge = "right", "south", "north")
+}
+else if (facing = "south")
+{
+	location = test(hinge = "right", "north_west", "north_east")
+	if (open = "false")
+		dir = test(hinge = "right", "east", "west")
+}
+else if (facing = "north")
+{
+	location = test(hinge = "right", "south_east", "south_west")
+	if (open = "false")
+		dir = test(hinge = "right", "west", "east")
 }
 
 if (open = "true")

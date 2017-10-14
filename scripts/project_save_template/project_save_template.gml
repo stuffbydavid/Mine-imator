@@ -3,25 +3,25 @@
 json_save_object_start()
 
 	json_save_var("id", save_id)
-	json_save_var("type", type)
+	json_save_var("type", temp_type_name_list[|type])
 	json_save_var("name", json_string_encode(name))
 	
-	if (type = "char" || type = "spblock" || type = "bodypart")
+	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 	{
 		json_save_var_save_id("skin", skin)
 		json_save_object_start("model")
 			json_save_var("name", model_name)
 			json_save_var_state_vars("state", model_state)
-			if (type = "bodypart")
+			if (type = e_temp_type.BODYPART)
 				json_save_var("part_name", model_part_name)
 		json_save_object_done()
 	}
-	else if (type = "item")
+	else if (type = e_temp_type.ITEM)
 	{
 		json_save_object_start("item")
 			json_save_var_save_id("tex", item_tex)
 			
-			if (item_tex.type = "pack" && item_slot < ds_list_size(mc_assets.item_texture_list))
+			if (item_tex.type = e_res_type.PACK && item_slot < ds_list_size(mc_assets.item_texture_list))
 				json_save_var("name", mc_assets.item_texture_list[|item_slot])
 			else
 				json_save_var("slot", item_slot)
@@ -31,7 +31,7 @@ json_save_object_start()
 			json_save_var_bool("bounce", item_bounce)
 		json_save_object_done()
 	}
-	else if (type = "block")
+	else if (type = e_temp_type.BLOCK)
 	{
 		json_save_object_start("block")
 			json_save_var("name", block_name)
@@ -57,7 +57,7 @@ json_save_object_start()
 			json_save_var_point3D("repeat", block_repeat)
 		json_save_object_done()
 	}
-	if (type = "scenery")
+	if (type = e_temp_type.SCENERY)
 	{
 		json_save_var_save_id("scenery", scenery)
 		json_save_object_start("block")
@@ -84,7 +84,7 @@ json_save_object_start()
 			json_save_var_bool("face_camera", shape_face_camera)
 		json_save_object_done()
 	}
-	else if (type = "text")
+	else if (type = e_temp_type.TEXT)
 	{
 		json_save_object_start("text")
 			json_save_var_save_id("font", text_font)
@@ -92,7 +92,7 @@ json_save_object_start()
 			json_save_var_bool("face_camera", text_face_camera)
 		json_save_object_done()
 	}
-	else if (type = "particles")
+	else if (type = e_temp_type.PARTICLE_SPAWNER)
 		project_save_particles()
 	
 json_save_object_done()

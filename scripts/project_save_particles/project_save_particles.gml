@@ -11,7 +11,7 @@ json_save_object_start("particles")
 	json_save_var("spawn_region_cube_size", pc_spawn_region_cube_size)
 	json_save_var_point3D("spawn_region_box_size", pc_spawn_region_box_size)
 
-	json_save_var_bool("bounding_box_type", pc_bounding_box_type)
+	json_save_var("bounding_box_type", pc_bounding_box_type)
 	json_save_var("bounding_box_ground_z", pc_bounding_box_ground_z)
 	json_save_var_point3D("bounding_box_custom_start", pc_bounding_box_custom_start)
 	json_save_var_point3D("bounding_box_custom_end", pc_bounding_box_custom_end)

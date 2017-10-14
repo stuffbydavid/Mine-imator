@@ -12,7 +12,7 @@ background_image_show = value_get_real(map[?"image_show"], background_image_show
 if (background_image != null)
 	background_image.count--
 background_image = value_get_save_id(map[?"image"], background_image)
-background_image_type = value_get_real(map[?"image_type"], background_image_type)
+background_image_type = value_get_string(map[?"image_type"], background_image_type)
 background_image_stretch = value_get_real(map[?"image_stretch"], background_image_stretch)
 background_image_box_mapped = value_get_real(map[?"image_box_mapped"], background_image_box_mapped)
 

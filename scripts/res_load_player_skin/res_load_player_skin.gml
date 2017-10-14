@@ -48,6 +48,7 @@ buffer_delete(buffer_current)
 
 if (needconvert)
 {
+	draw_texture_start()
 	render_set_culling(false)
 	surface_set_target(surf)
 	{
@@ -68,6 +69,7 @@ if (needconvert)
 		draw_texture_part(tex, 44 * scale, 48 * scale, 48 * scale, 16 * scale, 4 * scale, 4 * scale, -1, 1) // Bottom
 	}
 	surface_reset_target()
+	draw_texture_done()
 	render_set_culling(true)
 }
 

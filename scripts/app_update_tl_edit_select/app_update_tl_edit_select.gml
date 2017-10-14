@@ -60,7 +60,7 @@ with (obj_timeline)
 		{
 			checkwalk = false
 			app.timeline_settings_import_loop_tl = null
-			if (type = "char")
+			if (type = e_temp_type.CHARACTER)
 			{
 				if (keyframe_select_amount = 1 && keyframe_select != null && ds_list_find_index(keyframe_list, keyframe_select) < ds_list_size(keyframe_list) - 1)
 				{
@@ -150,7 +150,6 @@ with (obj_timeline)
 		
 	if (value_type_show[e_value_type.CAMERA])
 		app.frame_editor.camera.show = true
-
 }
 
 if (timeline_settings_import_loop_tl)

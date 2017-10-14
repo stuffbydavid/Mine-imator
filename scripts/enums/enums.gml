@@ -22,7 +22,7 @@ enum e_project
 	FORMAT_CB_102_PRE = 21,
 	FORMAT_CB_102	  = 22,
 	FORMAT_CB_103	  = 23,
-	FORMAT_110_PRE_1  = 24,
+	FORMAT_110_PRE_1  = 24
 }
 
 enum e_settings
@@ -141,6 +141,69 @@ enum e_value
 	amount
 } // Update app_startup_lists() when adding values
 
+// Template types
+enum e_temp_type
+{
+	CHARACTER,
+	SPECIAL_BLOCK,
+	SCENERY,
+	ITEM,
+	BLOCK,
+	BODYPART,
+	PARTICLE_SPAWNER,
+	TEXT,
+	CUBE,
+	CONE,
+	CYLINDER,
+	SPHERE,
+	SURFACE,
+	MODEL
+} // Update app_startup_lists() when adding types
+
+// Timeline types
+enum e_tl_type
+{
+	CHARACTER,
+	SPECIAL_BLOCK,
+	SCENERY,
+	ITEM,
+	BLOCK,
+	BODYPART,
+	PARTICLE_SPAWNER,
+	TEXT,
+	CUBE,
+	CONE,
+	CYLINDER,
+	SPHERE,
+	SURFACE,
+	MODEL,
+	CAMERA,
+	SPOT_LIGHT,
+	POINT_LIGHT,
+	FOLDER,
+	BACKGROUND,
+	AUDIO
+} // Update app_startup_lists() when adding types
+
+// Resource types
+enum e_res_type
+{
+	PACK,
+	PACK_UNZIPPED,
+	SKIN,
+	DOWNLOADED_SKIN,
+	ITEM_SHEET,
+	LEGACY_BLOCK_SHEET,
+	BLOCK_SHEET,
+	SCHEMATIC,
+	FROM_WORLD,
+	PARTICLE_SHEET,
+	TEXTURE,
+	FONT,
+	SOUND,
+	MODEL
+} // Update app_startup_lists() when adding types
+
 // Icons
 enum icons
 {
@@ -237,6 +300,28 @@ enum icons
 	RENDER_SMALL, 
 	RENDER_MEDIUM, 
 	RENDER_BIG
+}
+
+// Render modes
+enum e_render_mode
+{
+	CLICK,
+	SELECT,
+	PREVIEW,
+	COLOR_FOG,
+	COLOR_FOG_LIGHTS,
+	ALPHA_FIX,
+	ALPHA_TEST,
+	HIGH_SSAO_DEPTH_NORMAL,
+	HIGH_DOF_DEPTH,
+	HIGH_LIGHT_SUN_DEPTH,
+	HIGH_LIGHT_SPOT_DEPTH,
+	HIGH_LIGHT_POINT_DEPTH,
+	HIGH_LIGHT_SUN,
+	HIGH_LIGHT_SPOT,
+	HIGH_LIGHT_POINT,
+	HIGH_LIGHT_NIGHT,
+	HIGH_FOG
 }
 
 // Menus

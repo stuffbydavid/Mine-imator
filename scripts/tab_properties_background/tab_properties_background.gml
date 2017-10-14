@@ -29,24 +29,17 @@ if (background_image_show)
 	if (background_image != null)
 	{
 		// Image type
-		if (background_image_type = 0)
-			text = text_get("backgroundimagetypeimage")
-		else if (background_image_type = 1)
-			text = text_get("backgroundimagetypesphere")
-		else
-			text = text_get("backgroundimagetypebox")
-			
 		tab_control(24)
-		draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 24, background_image_type, text, action_background_image_type, null, null, capwid)
+		draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 24, background_image_type, text_get("backgroundimagetype" + background_image_type), action_background_image_type, null, null, capwid)
 		tab_next()
 		
-		if (background_image_type = 0) // Background stretch
+		if (background_image_type = "image") // Background stretch
 		{
 			tab_control(24)
 			draw_checkbox("backgroundimagestretch", dx, dy + 3, background_image_stretch, action_background_image_stretch)
 			tab_next()
 		}
-		else if (background_image_type = 2) // Background box mapped
+		else if (background_image_type = "box") // Background box mapped
 		{
 			tab_control(24)
 			draw_checkbox("backgroundimageboxmapped", dx, dy + 3, background_image_box_mapped, action_background_image_box_mapped)
@@ -66,19 +59,19 @@ else
 	capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
 	
 	// Sun
-	tex = test(background_sky_sun_tex.type = "pack", background_sky_sun_tex.sun_texture, background_sky_sun_tex.texture)
+	tex = test(background_sky_sun_tex.type = e_res_type.PACK, background_sky_sun_tex.sun_texture, background_sky_sun_tex.texture)
 	tab_control(40)
 	draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, 40, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, tex, null, capwid)
 	tab_next()
 	
 	// Moon
-	tex = test(background_sky_moon_tex.type = "pack", background_sky_moon_tex.moon_texture[background_sky_moon_phase], background_sky_moon_tex.texture)
+	tex = test(background_sky_moon_tex.type = e_res_type.PACK, background_sky_moon_tex.moon_texture[background_sky_moon_phase], background_sky_moon_tex.texture)
 	tab_control(40)
 	draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, 40, background_sky_moon_tex, background_sky_moon_tex.display_name, action_background_sky_moon_tex, tex, null, capwid)
 	tab_next()
 	
 	// Moon phase
-	if (background_sky_moon_tex.type = "pack")
+	if (background_sky_moon_tex.type = e_res_type.PACK)
 	{
 		tab_control(40)
 		draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, 40, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, background_sky_moon_tex.moon_texture[background_sky_moon_phase], null, capwid)
@@ -113,7 +106,7 @@ if (background_sky_clouds_show)
 	capwid = text_caption_width("backgroundskycloudstex", "backgroundskycloudsspeed", "backgroundskycloudsz", "backgroundskycloudssize", "backgroundskycloudsheight")
 	
 	// Cloud texture
-	var tex = test(background_sky_clouds_tex.type = "pack", background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture);
+	var tex = test(background_sky_clouds_tex.type = e_res_type.PACK, background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture);
 	tab_control(40)
 	draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, 40, background_sky_clouds_tex, background_sky_clouds_tex.display_name, action_background_sky_clouds_tex, tex, null, capwid)
 	tab_next()

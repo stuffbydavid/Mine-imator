@@ -4,4 +4,4 @@ var fn = file_dialog_open_particles();
 if (fn = "")
 	return 0
 
-particles_open(fn, temp_edit)
+particles_load(fn, temp_edit)

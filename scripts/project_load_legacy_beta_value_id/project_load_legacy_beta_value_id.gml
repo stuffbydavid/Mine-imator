@@ -6,7 +6,7 @@ var type, vid;
 type = argument0
 vid = argument1
 
-if (type = "camera")
+if (type = e_tl_type.CAMERA)
 {
 	switch (vid)
 	{
@@ -32,7 +32,7 @@ else
 		case 0: return e_value.ALPHA
 		case 1: return e_value.MIX_PERCENT
 		case 2:
-			if (type = "pointlight")
+			if (type = e_tl_type.POINT_LIGHT)
 				return e_value.LIGHT_RANGE
 			return e_value.MIX_COLOR
 		

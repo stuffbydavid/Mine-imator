@@ -3,7 +3,7 @@
 
 with (obj_timeline)
 {
-	if (type != "particles")
+	if (type != e_temp_type.PARTICLE_SPAWNER)
 		continue
 	
 	if (temp = temp_edit || selected)

@@ -16,7 +16,7 @@ with (save)
 	temp_get_save_ids()
 	
 	// Save particle types
-	if (type = "particles")
+	if (type = e_temp_type.PARTICLE_SPAWNER)
 	{
 		pc_type_amount = ds_list_size(temp.pc_type_list)
 		for (var p = 0; p < pc_type_amount; p++)

@@ -121,7 +121,7 @@ if (scenery != null)
 {
 	scenery.count++
 	
-	if (animate)
+	if (app.setting_schematic_add_timelines && animate)
 	{
 		// Create new timelines
 		with (obj_timeline)

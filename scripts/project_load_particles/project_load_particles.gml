@@ -17,7 +17,7 @@ pc_spawn_region_sphere_radius = value_get_real(map[?"spawn_region_sphere_radius"
 pc_spawn_region_cube_size = value_get_real(map[?"spawn_region_cube_size"], pc_spawn_region_cube_size)
 pc_spawn_region_box_size = value_get_point3D(map[?"spawn_region_box_size"], pc_spawn_region_box_size)
 
-pc_bounding_box_type = value_get_real(map[?"bounding_box_type"], pc_bounding_box_type)
+pc_bounding_box_type = value_get_string(map[?"bounding_box_type"], pc_bounding_box_type)
 pc_bounding_box_ground_z = value_get_real(map[?"bounding_box_ground_z"], pc_bounding_box_ground_z)
 pc_bounding_box_custom_start = value_get_point3D(map[?"bounding_box_custom_start"], pc_bounding_box_custom_start)
 pc_bounding_box_custom_end = value_get_point3D(map[?"bounding_box_custom_end"], pc_bounding_box_custom_end)

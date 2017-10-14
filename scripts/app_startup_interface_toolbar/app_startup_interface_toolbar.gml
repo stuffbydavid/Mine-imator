@@ -17,24 +17,24 @@ bench_height = 250
 
 bench_type_list = ds_list_create()
 ds_list_add(bench_type_list,
-	"char",
-	"scenery",
-	"item",
-	"block",
-	"spblock",
-	"camera",
-	"bodypart",
-	"particles",
-	"pointlight",
-	"spotlight",
-	"text",
-	"background",
-	"cube",
-	"sphere",
-	"cone",
-	"cylinder",
-	"surface",
-	"audio"
+	e_temp_type.CHARACTER,
+	e_temp_type.SCENERY,
+	e_temp_type.ITEM,
+	e_temp_type.BLOCK,
+	e_temp_type.SPECIAL_BLOCK,
+	e_tl_type.CAMERA,
+	e_temp_type.BODYPART,
+	e_temp_type.PARTICLE_SPAWNER,
+	e_tl_type.POINT_LIGHT,
+	e_tl_type.SPOT_LIGHT,
+	e_temp_type.TEXT,
+	e_tl_type.BACKGROUND,
+	e_temp_type.CUBE,
+	e_temp_type.SPHERE,
+	e_temp_type.CONE,
+	e_temp_type.CYLINDER,
+	e_temp_type.SURFACE,
+	e_tl_type.AUDIO
 )
 
 // Workbench settings

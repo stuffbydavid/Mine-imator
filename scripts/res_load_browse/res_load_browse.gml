@@ -5,19 +5,19 @@ var fn;
 
 switch (type)
 {
-	case "pack":
+	case e_res_type.PACK:
 		fn = file_dialog_open_pack()
 		break
 	
-	case "schematic":
+	case e_res_type.SCHEMATIC:
 		fn = file_dialog_open_scenery()
 		break
 	
-	case "font":
+	case e_res_type.FONT:
 		fn = file_dialog_open_font()
 		break
 		
-	case "sound":
+	case e_res_type.SOUND:
 		fn = file_dialog_open_sound()
 		break
 		
@@ -31,8 +31,8 @@ if (file_exists_lib(fn))
 	filename = filename_name(fn)
 	load_folder = filename_dir(fn)
 	save_folder = app.project_folder
-	if (type = "downloadskin")
-		type = "skin"
+	if (type = e_res_type.DOWNLOADED_SKIN)
+		type = e_res_type.SKIN
 	
 	res_load()
 }

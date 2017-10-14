@@ -12,7 +12,7 @@ if (kf.value[e_value.TEXTURE_OBJ] > 0)
 	kf.value[e_value.TEXTURE_OBJ].save = true
 	
 	// Camera used as texture
-	if (kf.value[e_value.TEXTURE_OBJ].type = "camera")
+	if (kf.value[e_value.TEXTURE_OBJ].type = e_tl_type.CAMERA)
 		with (kf.value[e_value.TEXTURE_OBJ])
 			tl_save()
 }

@@ -83,7 +83,7 @@ else if (typemap[?"rotation_point"] = e_json_type.OBJECT) // Determined by state
 			for (var i = 0; i < other.state_id_amount; i++)
 				if (state_vars_match_state_id(vars, other.id, i))
 					state_id = array_add(state_id, i)
-						
+			
 			other.tl_rot_point_state[other.tl_rot_point_state_amount++] = id
 		}
 		
@@ -110,7 +110,7 @@ else if (typemap[?"position"] = e_json_type.OBJECT) // Determined by state
 			state_id = array()
 			for (var i = 0; i < other.state_id_amount; i++)
 				if (state_vars_match_state_id(vars, other.id, i))
-					state_id = array_add(state_id, id)
+					state_id = array_add(state_id, i)
 			
 			other.tl_position_state[other.tl_position_state_amount++] = id
 		}
@@ -138,7 +138,7 @@ else if (typemap[?"rotation"] = e_json_type.OBJECT) // Determined by state
 			state_id = array()
 			for (var i = 0; i < other.state_id_amount; i++)
 				if (state_vars_match_state_id(vars, other.id, i))
-					state_id = array_add(state_id, id)
+					state_id = array_add(state_id, i)
 				
 			other.tl_rotation_state[other.tl_rotation_state_amount++] = id
 		}

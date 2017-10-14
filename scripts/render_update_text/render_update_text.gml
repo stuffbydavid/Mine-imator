@@ -3,7 +3,7 @@
 
 with (obj_timeline)
 {
-	if (type != "text")
+	if (type != e_temp_type.TEXT)
 		continue
 		
 	var text, font;
@@ -18,9 +18,9 @@ with (obj_timeline)
 }
 		
 with (obj_particle_type)
-	if (temp != null && temp.type = "text")
+	if (temp != null && temp.type = e_temp_type.TEXT)
 		render_generate_text(id.text, temp.text_font, temp.text_3d)
 		
 with (obj_preview)
-	if (instance_exists(select) && select.type = "text")
+	if (instance_exists(select) && select.type = e_temp_type.TEXT)
 		render_generate_text("AaBbCc", select.text_font, select.text_3d)

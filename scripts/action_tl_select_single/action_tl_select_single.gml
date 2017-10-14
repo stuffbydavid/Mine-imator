@@ -1,5 +1,6 @@
-/// action_tl_select_single(tl)
+/// action_tl_select_single(tl, [type])
 /// @arg timeline
+/// @arg [type]
 /// @desc Deselects all but the given timeline. A type can also be supplied.
 
 if (history_undo)
@@ -17,11 +18,11 @@ else
 		tl = save_id_find(history_data.tl_save_id)
 	else
 	{
-		if (is_string(argument0))
+		if (argument_count > 1 && argument[1] != null)
 		{
 			with (obj_timeline)
 			{
-				if (type = argument0)
+				if (type = argument[1])
 				{
 					tl = id
 					break
@@ -29,7 +30,7 @@ else
 			}
 		}
 		else
-			tl = argument0
+			tl = argument[0]
 		
 		if (!tl)
 			return 0

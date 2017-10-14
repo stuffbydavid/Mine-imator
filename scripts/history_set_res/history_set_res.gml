@@ -18,15 +18,17 @@ log("Action Load resource", script_get_name(script), fn)
 
 hobj = new_history(script)
 hobj.filename = fn
-hobj.type = ""
+hobj.type = null
 hobj.old_res_save_id = save_id_get(oldres)
 hobj.new_res_save_id = save_id_get(newres)
 hobj.replaced = false
+hobj.copied = false
 
 if (newres && newres.object_index = obj_resource) // Not camera
 {
 	hobj.type = newres.type
 	hobj.replaced = newres.replaced
+	hobj.copied = newres.copied
 }
 	
 history[0] = hobj

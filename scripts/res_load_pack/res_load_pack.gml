@@ -8,7 +8,7 @@ switch (load_stage)
 	// Unzip archive
 	case "unzip":
 	{
-		if (type != "packunzipped")
+		if (type != e_res_type.PACK_UNZIPPED)
 		{
 			if (unzip(fname) < 0)
 			{
@@ -20,7 +20,7 @@ switch (load_stage)
 			}
 		}
 		
-		type = "pack"
+		type = e_res_type.PACK
 		load_stage = "modeltextures"
 		load_assets_dir = unzip_directory
 		with (app)

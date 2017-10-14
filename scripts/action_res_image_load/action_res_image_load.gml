@@ -15,7 +15,7 @@ else
 	{
 		fn = history_data.filename
 		type = history_data.type
-		if (type = "itemsheet")
+		if (type = e_res_type.ITEM_SHEET)
 			itemsheetsize = history_data.item_sheet_size
 	}
 	else
@@ -24,18 +24,18 @@ else
 		type = argument1
 		hobj = history_set(action_res_image_load)
 		
-		if (type = "itemsheet")
+		if (type = e_res_type.ITEM_SHEET)
 		{
 			if (popup_importitemsheet.is_sheet)
 				itemsheetsize = popup_importitemsheet.sheet_size
 			else
-				type = "texture"
+				type = e_res_type.TEXTURE
 		}
 	}
 	
 	res = new_res(fn, type)
 	res.loaded = true
-	if (type = "itemsheet")
+	if (type = e_res_type.ITEM_SHEET)
 		res.item_sheet_size = itemsheetsize
 	
 	with (res)

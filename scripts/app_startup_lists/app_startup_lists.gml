@@ -1,6 +1,7 @@
 /// app_startup_lists()
 
 globalvar value_name_list, transition_list;
+globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
 globalvar biome_list, videotemplate_list, videoquality_list;
 globalvar language_english_map, language_map;
 
@@ -75,6 +76,69 @@ ds_list_add(value_name_list,
 	"TRANSITION"
 )
 
+// Template types
+temp_type_name_list = ds_list_create()
+ds_list_add(temp_type_name_list,
+	"char",
+	"spblock",
+	"scenery",
+	"item",
+	"block",
+	"bodypart",
+	"particles",
+	"text",
+	"cube",
+	"cone",
+	"cylinder",
+	"sphere",
+	"surface",
+	"model"
+)
+
+// Timeline types
+tl_type_name_list = ds_list_create()
+ds_list_add(tl_type_name_list,
+	"char",
+	"spblock",
+	"scenery",
+	"item",
+	"block",
+	"bodypart",
+	"particles",
+	"text",
+	"cube",
+	"cone",
+	"cylinder",
+	"sphere",
+	"surface",
+	"model",
+	"camera",
+	"spotlight",
+	"pointlight",
+	"folder",
+	"background",
+	"audio"
+)
+
+// Resource types
+res_type_name_list = ds_list_create()
+ds_list_add(res_type_name_list,
+	"pack",
+	"packunzipped",
+	"skin",
+	"downloadskin",
+	"itemsheet",
+	"legacyblocksheet",
+	"blocksheet",
+	"schematic",
+	"fromworld",
+	"particlesheet",
+	"texture",
+	"font",
+	"sound",
+	"model"
+)
+
 // Transitions
 transition_list = ds_list_create()
 ds_list_add(transition_list,
@@ -113,8 +177,8 @@ ds_list_add(transition_list,
 )
 
 log("Make transitions")
-transition_texture_map = app_startup_make_transition_texture_map(60, 60, 12)
-transition_texture_small_map = app_startup_make_transition_texture_map(36, 36, 2)
+transition_texture_map = new_transition_texture_map(60, 60, 12)
+transition_texture_small_map = new_transition_texture_map(36, 36, 2)
 log("Transitions OK")
 
 // Biomes

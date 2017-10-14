@@ -80,7 +80,7 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 			
 			// Delete after an amount of time
 			pt.time++
-			if (temp.pc_destroy_at_time && pt.time >= pt.timetolive)
+			if (temp.pc_destroy_at_time && pt.time >= pt.time_to_live)
 			{
 				with (pt)
 					instance_destroy()
@@ -157,10 +157,10 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 				pt.color = merge_color(pt.color_mix_start, pt.color_mix, clamp((s - pt.spawntime) / pt.color_mix_time, 0, 1))
 			
 			// Bounding box
-			if (temp.pc_bounding_box_type > 0 && pt.type.bounding_box)
+			if (temp.pc_bounding_box_type != "none" && pt.type.bounding_box)
 			{
 				// Ground
-				if (temp.pc_bounding_box_type = 1) 
+				if (temp.pc_bounding_box_type = "ground") 
 				{
 					if (pt.pos[Z] < temp.pc_bounding_box_ground_z)
 					{
@@ -189,7 +189,7 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 					var boxstart, boxend;
 					
 					// Spawn region
-					if (temp.pc_bounding_box_type = 2)
+					if (temp.pc_bounding_box_type = "spawn")
 					{
 						if (!temp.pc_spawn_region_use)
 							continue
@@ -236,7 +236,7 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 					}
 					
 					// Box
-					else if (temp.pc_bounding_box_type = 3) 
+					else if (temp.pc_bounding_box_type = "custom") 
 					{
 						for (var a = X; a <= Z; a++)
 						{

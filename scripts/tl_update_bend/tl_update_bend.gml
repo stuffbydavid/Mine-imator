@@ -6,7 +6,7 @@ if (argument_count > 0)
 	force = argument[0]
 	
 // Not a body part or no in-between mesh needed
-if (type != "bodypart" || value_inherit[e_value.BEND_ANGLE] = 0)
+if (type != e_tl_type.BODYPART || value_inherit[e_value.BEND_ANGLE] = 0)
 	return 0
 	
 // Invalid part, no bending or no shapes

@@ -9,7 +9,7 @@ partrot = argument4
 
 bp = false
 
-if (type = "bodypart" && part_of)
+if (type = e_temp_type.BODYPART && part_of)
 	if (bodypart < temp.char_model.part_amount)
 		bp = true
 

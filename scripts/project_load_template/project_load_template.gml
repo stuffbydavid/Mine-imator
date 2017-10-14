@@ -13,10 +13,10 @@ with (new(obj_template))
 	load_id = value_get_string(map[?"id"], save_id)
 	save_id_map[?load_id] = load_id
 	
-	type = value_get_string(map[?"type"], type)
+	type = ds_list_find_index(temp_type_name_list, value_get_string(map[?"type"]))
 	name = value_get_string(map[?"name"], name)
 
-	if (type = "char" || type = "spblock" || type = "bodypart")
+	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 	{
 		skin = value_get_save_id(map[?"skin"], skin)
 		var modelmap = map[?"model"];
@@ -24,11 +24,11 @@ with (new(obj_template))
 		{
 			model_name = value_get_string(modelmap[?"name"], model_name)
 			model_state = value_get_state_vars(modelmap[?"state"])
-			if (type = "bodypart")
+			if (type = e_temp_type.BODYPART)
 				model_part_name = value_get_string(modelmap[?"part_name"], model_part_name)
 		}
 	}
-	else if (type = "item")
+	else if (type = e_temp_type.ITEM)
 	{
 		var itemmap = map[?"item"];
 		if (ds_map_valid(itemmap))
@@ -43,7 +43,7 @@ with (new(obj_template))
 			item_bounce = value_get_real(itemmap[?"bounce"], item_bounce)
 		}
 	}
-	else if (type = "block")
+	else if (type = e_temp_type.BLOCK)
 	{
 		var blockmap = map[?"block"];
 		if (ds_map_valid(blockmap))
@@ -65,7 +65,7 @@ with (new(obj_template))
 			block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 		}
 	}
-	if (type = "scenery")
+	if (type = e_temp_type.SCENERY)
 	{
 		scenery = value_get_save_id(map[?"scenery"], scenery)
 		var blockmap = map[?"block"];
@@ -96,7 +96,7 @@ with (new(obj_template))
 			shape_face_camera = value_get_real(shapemap[?"face_camera"], shape_face_camera)
 		}
 	}
-	else if (type = "text")
+	else if (type = e_temp_type.TEXT)
 	{
 		var textmap = map[?"text"];
 		if (ds_map_valid(textmap))
@@ -106,7 +106,7 @@ with (new(obj_template))
 			text_face_camera = value_get_real(textmap[?"face_camera"], text_face_camera)
 		}
 	}
-	else if (type = "particles")
+	else if (type = e_temp_type.PARTICLE_SPAWNER)
 		project_load_particles(map[?"particles"])
 	
 	if (temp_creator = app)

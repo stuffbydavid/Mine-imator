@@ -1,6 +1,6 @@
 /// history_undo_res()
 
-if (history_data.filename != "" && !history_data.replaced)
+if (history_data.filename != "" && (!history_data.replaced || history_data.copied))
 {
 	with (save_id_find(history_data.new_res_save_id))
 	{

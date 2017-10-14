@@ -39,7 +39,7 @@ tab_next()
 if (!res_edit)
 	return 0
 
-if (res_edit.type = "pack")
+if (res_edit.type = e_res_type.PACK)
 {
 	capwid = text_caption_width("resourcespackimage", "resourcespackimagecharacter", "resourcespackimagecolormap", "resourcespackimageparticles")
 	
@@ -85,7 +85,7 @@ if (res_edit.type = "pack")
 		}
 	}
 }
-else if (res_edit.type = "itemsheet")
+else if (res_edit.type = e_res_type.ITEM_SHEET)
 {
 	// Sheet size
 	capwid = text_caption_width("resourcesitemsheetsizewidth", "resourcesitemsheetsizeheight")
@@ -113,7 +113,7 @@ if (res_edit.filename != "") // Filename
 	draw_label(text_get("resourcesfilename") + ":", dx, dy + 12, fa_left, fa_middle)
 	draw_label(string_limit(string_remove_newline(res_edit.filename), dw - capwid - wid), dx + capwid, dy + 12, fa_left, fa_middle)
 	
-	if (res_edit.type != "schematic")
+	if (res_edit.type != e_res_type.SCHEMATIC)
 		if (draw_button_normal("resourcesfilenameopen", dx + dw - wid, dy, wid, 24))
 			open_url(project_folder + "\\" + res_edit.filename)
 			

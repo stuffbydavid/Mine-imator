@@ -1,7 +1,6 @@
-/// shader_set_uniform_color(uniform, color, alpha)
-/// @arg uniform
+/// shader_set_uniform_color(name, color)
+/// @arg name
 /// @arg color
-/// @arg alpha
 
 shader_set_uniform_f(argument0, 
 					 color_get_red(argument1) / 255, 

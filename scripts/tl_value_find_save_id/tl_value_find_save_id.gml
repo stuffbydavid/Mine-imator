@@ -15,7 +15,9 @@ if (vid = e_value.SOUND_OBJ && oldval != null)
 		obj.count--
 }
 
-if (vid = e_value.ATTRACTOR || vid = e_value.TEXTURE_OBJ || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
+if (vid = e_value.TEXTURE_OBJ && newval = "none")
+	newval = 0
+else if (vid = e_value.ATTRACTOR || vid = e_value.TEXTURE_OBJ || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
 	newval = save_id_find(newval)
 	
 if (vid = e_value.SOUND_OBJ && newval != null)

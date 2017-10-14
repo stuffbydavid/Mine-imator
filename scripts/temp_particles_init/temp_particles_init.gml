@@ -10,7 +10,7 @@ pc_spawn_region_sphere_radius = 100
 pc_spawn_region_cube_size = 200
 pc_spawn_region_box_size = vec3(200, 200, 200)
 
-pc_bounding_box_type = 0
+pc_bounding_box_type = "none"
 pc_bounding_box_ground_z = 0
 pc_bounding_box_custom_start = vec3(-100, -100, -100)
 pc_bounding_box_custom_end = vec3(100, 100, 100)

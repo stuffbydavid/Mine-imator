@@ -9,10 +9,11 @@ creator = res_creator
 replaced = false
 ready = true
 
-type = ""
+type = null
 filename = ""
 display_name = ""
 count = 0
+copied = false
 
 model = null
 model_texture = null

@@ -6,5 +6,5 @@ tl_update_type_name()
 tl_update_display_name()
 tl_update_depth()
 	
-if (type = "particles")
+if (type = e_tl_type.PARTICLE_SPAWNER)
 	particle_spawner_init()

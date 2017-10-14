@@ -1,6 +1,12 @@
 /// temp_event_destroy()
 /// @desc Destroy event of templates
 
+if (model_texture_name_map != null)	
+	ds_map_destroy(model_texture_name_map)
+	
+if (model_hide_list != null)
+	ds_list_destroy(model_hide_list)
+	
 if (temp_creator != app.bench_settings)
 {
 	if (skin != null)
@@ -15,7 +21,7 @@ if (temp_creator != app.bench_settings)
 	if (scenery > 0)
 		scenery.count--
 		
-	if (shape_tex != null && shape_tex.type != "camera")
+	if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 		shape_tex.count--
 		
 	if (text_font != null)
@@ -27,7 +33,7 @@ if (item_vbuffer != null)
 
 block_vbuffer_destroy()
 	
-if (type = "particles")
+if (type = e_temp_type.PARTICLE_SPAWNER)
 	temp_particles_type_clear()
 	
 with (obj_timeline)

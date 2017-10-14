@@ -3,23 +3,23 @@
 
 if (name = "")
 {
-	display_name = text_get("type" + type)
+	display_name = text_get("type" + tl_type_name_list[|type])
 	
 	if (part_of != null)
 	{
-		if (type = "bodypart")
+		if (type = e_tl_type.BODYPART)
 		{
 			if (model_part != null)
 				display_name = minecraft_asset_get_name("model", model_part.name)
 			else
 				display_name = text_get("timelineunusedbodypart")
 		}
-		else if (type = "spblock")
+		else if (type = e_tl_type.SPECIAL_BLOCK)
 		{
 			if (model_file != null)
 				display_name = minecraft_asset_get_name("model", model_file.name)
 		}
-		else if (type = "block")
+		else if (type = e_tl_type.BLOCK)
 		{
 			display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 		}

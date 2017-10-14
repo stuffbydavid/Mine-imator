@@ -6,7 +6,9 @@ with (new(obj_timeline))
 	load_id = buffer_read_int()
 	save_id_map[?load_id] = load_id
 	
-	type = buffer_read_string_int()
+	var typename = buffer_read_string_int();
+	type = ds_list_find_index(tl_type_name_list, typename)
+	
 	name = buffer_read_string_int()
 	temp = project_load_legacy_save_id()
 	text = buffer_read_string_int()
@@ -21,7 +23,7 @@ with (new(obj_timeline))
 		depth = buffer_read_int()
 
 	legacy_bodypart_id = buffer_read_short()
-	if (type = "bodypart")
+	if (type = e_temp_type.BODYPART)
 	{
 		// Find part model
 		var findtemp;
@@ -62,7 +64,7 @@ with (new(obj_timeline))
 	
 	part_of = project_load_legacy_save_id()
 	
-	if (type = "char" || type = "spblock")
+	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
 		part_list = ds_list_create()
 		
 	part_amount = buffer_read_short()
@@ -133,7 +135,7 @@ with (new(obj_timeline))
 	{
 		rot_point[X] -= 8
 		rot_point[Y] -= 8
-		if (type != "surface")
+		if (type != e_temp_type.SURFACE)
 			rot_point[Z] -= 8
 	}
 	
@@ -145,7 +147,7 @@ with (new(obj_timeline))
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 		texture_filtering = buffer_read_byte()
 	else
-		texture_filtering = (type = "scenery" || type="block")
+		texture_filtering = (type = e_temp_type.SCENERY || type=e_temp_type.BLOCK)
 	round_bending = buffer_read_byte()
 	shadows = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)

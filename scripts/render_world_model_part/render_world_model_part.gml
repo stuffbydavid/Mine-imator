@@ -27,8 +27,7 @@ if (part.shape_list != null)
 			
 		// Set shader
 		with (res)
-			shader_texture = res_get_model_texture(shapetexname)
-		shader_use()
+			render_set_texture(res_get_model_texture(shapetexname))
 		
 		// Main part mesh
 		if (shape.bend_mode = e_shape_bend.LOCK_MOVING) // Lock to moving half

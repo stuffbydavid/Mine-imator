@@ -28,7 +28,7 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && view_contr
 		// Find rotate amount
 		ang = point_direction(mouse_x - content_x, mouse_y - content_y, view_control_pos[X], view_control_pos[Y])
 		prevang = point_direction(mouse_previous_x - content_x, mouse_previous_y - content_y, view_control_pos[X], view_control_pos[Y])
-		rot = angle_difference_fix(ang, prevang) * negate(view_control_flip) * negate(part.bend_invert) * negate(part.bend_direction != e_bend.FORWARD)
+		rot = angle_difference_fix(ang, prevang) * negate(view_control_flip) * negate(part.bend_invert) * negate(part.bend_direction != e_bend.FORWARD) * negate(part.bend_part = e_part.LEFT || part.bend_part = e_part.RIGHT)
 		view_control_value += rot
 		
 		// Snap

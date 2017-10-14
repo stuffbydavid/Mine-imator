@@ -15,7 +15,7 @@ varying float vDepth;
 
 // Wind
 uniform float uTime;
-uniform float uWindEnabled;
+uniform float uWindEnable;
 uniform float uWindTerrain;
 uniform float uWindSpeed;
 uniform float uWindStrength;
@@ -23,9 +23,9 @@ uniform float uWindStrength;
 vec3 getWind()
 {
 	return vec3(
-		sin((uTime + in_Position.x * 10.0 + in_Position.y + in_Position.z) * (uWindSpeed / 5.0)) * max(in_Wave.x * uWindTerrain, uWindEnabled) * uWindStrength,
-		sin((uTime + in_Position.x + in_Position.y * 10.0 + in_Position.z) * (uWindSpeed / 7.5)) * max(in_Wave.x * uWindTerrain, uWindEnabled) * uWindStrength,
-		sin((uTime + in_Position.x + in_Position.y + in_Position.z * 10.0) * (uWindSpeed / 10.0)) * max(in_Wave.y * uWindTerrain, uWindEnabled) * uWindStrength
+		sin((uTime + in_Position.x * 10.0 + in_Position.y + in_Position.z) * (uWindSpeed / 5.0)) * max(in_Wave.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((uTime + in_Position.x + in_Position.y * 10.0 + in_Position.z) * (uWindSpeed / 7.5)) * max(in_Wave.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((uTime + in_Position.x + in_Position.y + in_Position.z * 10.0) * (uWindSpeed / 10.0)) * max(in_Wave.y * uWindTerrain, uWindEnable) * uWindStrength
 	);
 }
 

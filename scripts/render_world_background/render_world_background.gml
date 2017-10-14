@@ -7,7 +7,7 @@ if (!render_background)
 draw_clear(background_sky_color)
 if (background_image_show) // Draw image
 {
-	if (background_image != null && background_image_type = 0)
+	if (background_image != null && background_image_type = "image")
 	{
 		if (background_image_stretch)
 			draw_texture(background_image.texture, 0, 0, render_width / texture_width(background_image.texture), render_height / texture_height(background_image.texture))

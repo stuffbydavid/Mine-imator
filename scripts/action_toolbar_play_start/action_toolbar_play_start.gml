@@ -5,7 +5,7 @@ audio_stop_all()
 
 with (obj_timeline)
 {
-	if (type = "audio" && !hide && app.window_busy != "export_movie")
+	if (type = e_tl_type.AUDIO && !hide && app.window_busy != "export_movie")
 	{
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 		{
@@ -28,7 +28,7 @@ with (obj_timeline)
 			}
 		}
 	}
-	else if (type = "particles")
+	else if (type = e_temp_type.PARTICLE_SPAWNER)
 	{
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 		{

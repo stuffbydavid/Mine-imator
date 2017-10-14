@@ -78,12 +78,14 @@ if (item_3d)
 	else
 		tex = item_tex.texture
 	
+	draw_texture_start()
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
 		draw_texture_part(tex, 0, 0, texpos[X] * slotsize[X], texpos[Y] * slotsize[Y], slotsize[X], slotsize[Y])
 	}
 	surface_reset_target()
+	draw_texture_done()
 	
 	var slotpixel = vec2_div(slottexsize, slotsize);
 	vbuffer_add_pixels(surf, point3D(0, 0, 0), size[Z], slottex, slotsize, slotpixel, scale)

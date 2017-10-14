@@ -6,7 +6,7 @@ var bgobject, updatevalues;
 updatevalues = (timeline_marker_previous != timeline_marker)
 bgobject = null
 timeline_camera = null
-background_lights = 1
+background_light_amount = 1
 background_light_data[0] = 0
 
 with (obj_timeline)
@@ -15,7 +15,7 @@ with (obj_timeline)
 	if (updatevalues)
 		tl_update_values()
 	
-	if (type = "camera")
+	if (type = e_tl_type.CAMERA)
 	{
 		// Animated zoom
 		if (app.window_busy = "") 
@@ -42,25 +42,25 @@ with (obj_timeline)
 	}
 	
 	// Update spawner
-	if (type = "particles")
+	if (type = e_temp_type.PARTICLE_SPAWNER)
 		particle_spawner_update()
 		
 	// Find background changer
-	if (type = "background" && value_inherit[e_value.VISIBLE] && !hide)
+	if (type = e_tl_type.BACKGROUND && value_inherit[e_value.VISIBLE] && !hide)
 		bgobject = id
 		
 	// Add light
-	if ((type = "pointlight" || type = "spotlight") && value_inherit[e_value.VISIBLE])
+	if ((type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT) && value_inherit[e_value.VISIBLE])
 	{
-		app.background_light_data[app.background_lights * 8 + 0] = world_pos[X]
-		app.background_light_data[app.background_lights * 8 + 1] = world_pos[Y]
-		app.background_light_data[app.background_lights * 8 + 2] = world_pos[Z]
-		app.background_light_data[app.background_lights * 8 + 3] = value[e_value.LIGHT_RANGE]
-		app.background_light_data[app.background_lights * 8 + 4] = color_get_red(value[e_value.LIGHT_COLOR]) / 255
-		app.background_light_data[app.background_lights * 8 + 5] = color_get_green(value[e_value.LIGHT_COLOR]) / 255
-		app.background_light_data[app.background_lights * 8 + 6] = color_get_blue(value[e_value.LIGHT_COLOR]) / 255
-		app.background_light_data[app.background_lights * 8 + 7] = 1
-		app.background_lights++
+		app.background_light_data[app.background_light_amount * 8 + 0] = world_pos[X]
+		app.background_light_data[app.background_light_amount * 8 + 1] = world_pos[Y]
+		app.background_light_data[app.background_light_amount * 8 + 2] = world_pos[Z]
+		app.background_light_data[app.background_light_amount * 8 + 3] = value[e_value.LIGHT_RANGE]
+		app.background_light_data[app.background_light_amount * 8 + 4] = color_get_red(value[e_value.LIGHT_COLOR]) / 255
+		app.background_light_data[app.background_light_amount * 8 + 5] = color_get_green(value[e_value.LIGHT_COLOR]) / 255
+		app.background_light_data[app.background_light_amount * 8 + 6] = color_get_blue(value[e_value.LIGHT_COLOR]) / 255
+		app.background_light_data[app.background_light_amount * 8 + 7] = 1
+		app.background_light_amount++
 	}
 }
 

@@ -40,7 +40,7 @@ if (exportmovie_format != "png")
 	log("Format", exportmovie_format)
 	log("Bitrate", popup_exportmovie.bit_rate)
 	log("Framerate", exportmovie_frame_rate)
-	log("Audio", yesno(popup_exportmovie.include_audio))
+	log(e_tl_type.AUDIO, yesno(popup_exportmovie.include_audio))
 	log("High Quality", yesno(exportmovie_high_quality))
 	log("Size", project_video_width, project_video_height)
 
@@ -60,7 +60,7 @@ if (exportmovie_format != "png")
 	{
 		with (obj_resource)
 		{
-			if (type = "sound" && ready)
+			if (type = e_res_type.SOUND && ready)
 			{
 				buffer_save(sound_buffer, temp_file)
 				sound_file_id = movie_audio_file_add(temp_file)
@@ -76,7 +76,7 @@ if (exportmovie_format != "png")
 		
 		with (obj_timeline)
 		{
-			if (type != "audio" || (hide && !render_hidden))
+			if (type != e_tl_type.AUDIO || (hide && !render_hidden))
 				continue
 				
 			for (var k = 0; k < ds_list_size(keyframe_list); k++)

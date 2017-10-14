@@ -16,13 +16,19 @@ ret = 0
 // or returns a render model/array of render models to use.
 if (block_current.set_script > -1 && (!block_current.require_models || (argument_count > 0 && argument[0])))
 {
+	build_edge_xp = (build_pos_x = build_size_x - 1)
+	build_edge_xn = (build_pos_x = 0)
+	build_edge_yp = (build_pos_y = build_size_y - 1)
+	build_edge_yn = (build_pos_y = 0)
+	build_edge_zp = (build_pos_z = build_size_z - 1)
+	build_edge_zn = (build_pos_z = 0)
 	ret = script_execute(block_current.set_script);
 	if (ret != 0)
 		model = ret
 }
 		
 // Has timeline
-if (block_current.timeline && block_tl_list != null && ret != null)
+if (app.setting_schematic_add_timelines && block_current.timeline && block_tl_list != null && ret != null)
 	ds_list_add(block_tl_list, block_get_timeline(block_current, block_state_id_current))
 else
 {

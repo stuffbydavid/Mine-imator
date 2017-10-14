@@ -8,7 +8,7 @@ tab.info.tbx_name.text = tl_edit.name
 draw_inputbox("timelineeditorname", dx, dy, dw, string_remove_newline(tl_edit.display_name), tab.info.tbx_name, action_tl_name, capwid)
 tab_next()
 
-if (tl_edit.type = "text")
+if (tl_edit.type = e_temp_type.TEXT)
 {
 	// Text
 	tab_control(110)

@@ -14,20 +14,20 @@ else if (tab = template_editor)
 		return ""
 	switch (temp_edit.type)
 	{
-		case "char":
+		case e_temp_type.CHARACTER:
 			return text_get("tabcharmodel", string_remove_newline(temp_edit.display_name))
 		
-		case "spblock":
-		case "block":
+		case e_temp_type.SPECIAL_BLOCK:
+		case e_temp_type.BLOCK:
 			return text_get("tabblock", string_remove_newline(temp_edit.display_name))
 		
-		case "item":
+		case e_temp_type.ITEM:
 			return text_get("tabitem", string_remove_newline(temp_edit.display_name))
 		
-		case "bodypart":
+		case e_temp_type.BODYPART:
 			return text_get("tabbodypart", string_remove_newline(temp_edit.display_name))
 		
-		case "particles":
+		case e_temp_type.PARTICLE_SPAWNER:
 			return text_get("tabparticles", string_remove_newline(temp_edit.display_name))
 	}
 }

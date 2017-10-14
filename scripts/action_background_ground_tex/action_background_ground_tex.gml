@@ -17,7 +17,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res(fn, "blocksheet")
+		res = new_res(fn, e_res_type.BLOCK_SHEET)
 		with (res)
 			res_load()
 	}

@@ -1,48 +1,39 @@
 /// render_world_ground()
 /// @desc Renders a seemingly infinite plane with a repeated texture.
 
-if (!background_ground_show)
+if (render_mode = e_render_mode.CLICK ||
+	render_mode = e_render_mode.SELECT ||
+	render_mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
+	render_mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
+	render_mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH ||
+	render_mode = e_render_mode.ALPHA_TEST)
 	return 0
 
+if (!background_ground_show)
+	return 0
+	
+// Blend
+var blend = block_texture_get_blend(background_ground_name, background_ground_tex);
+if (render_mode = e_render_mode.COLOR_FOG_LIGHTS) // Simulate normal
+	blend = color_multiply(color_add(background_ambient_color_final, background_sunlight_color_final), blend)
+
+// Shading
+render_set_uniform_int("uIsGround", true)
+render_set_uniform_color("uBlendColor", blend, 1)
+
+// Texture
+shader_texture_filter_mipmap = app.setting_texture_filtering
+if (background_ground_ani)
+	render_set_texture(background_ground_ani_texture[block_texture_get_frame()])
+else
+	render_set_texture(background_ground_texture)
+
+// Submit ground mesh at an offset from the camera
 var xo, yo;
 xo = (cam_from[X] div 16) * 16
 yo = (cam_from[Y] div 16) * 16
-
-shader_is_ground = true
-shader_blend_color = block_texture_get_blend(background_ground_name, background_ground_tex)
-if (background_ground_ani)
-	shader_texture = background_ground_ani_texture[block_texture_get_frame()]
-else
-	shader_texture = background_ground_texture
-	
-shader_texture_filter_mipmap = app.setting_texture_filtering
-
-switch (render_mode)
-{
-	case "colorfog": shader_color_fog_set() break
-	case "colorfoglights":
-		shader_blend_color = color_multiply(color_add(background_ambient_color_final, background_sunlight_color_final), shader_blend_color) // Simulate normal
-		if (background_fog_show)
-			shader_blend_fog_set()
-		else
-			shader_blend_set()
-		break
-		
-	case "alphafix":
-		shader_blend_color = c_black
-		shader_blend_set()
-		break
-		
-	case "highssaodepthnormal": shader_high_ssao_depth_normal_set() break
-	case "highlightsun":		shader_high_light_sun_set() break
-	case "highlightspot":		shader_high_light_spot_set() break
-	case "highlightpoint":		shader_high_light_point_set() break
-	case "highlightnight":		shader_high_light_night_set() break
-	case "highfog":				shader_high_fog_set() break
-	case "highdofdepth":		shader_depth_set() break
-}
-
 vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0))
 
-shader_is_ground = false
-shader_clear()
+// Reset
+render_set_uniform_int("uIsGround", false)
+shader_texture_filter_mipmap = false

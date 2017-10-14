@@ -183,14 +183,16 @@ switch (load_stage)
 						ex = entity[?"x"]
 						ey = entity[?"z"]
 						ez = entity[?"y"]
-						
 						if (is_string(eid) && is_real(ex) && is_real(ey) && is_real(ez))
 						{
 							var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));
 							if (script > -1)
 							{
-								block_current = array3D_get(block_obj, build_size_z, ex, ey, ez)
-								block_state_id_current = array3D_get(block_state_id, build_size_z, ex, ey, ez)
+								build_pos_x = ex
+								build_pos_y = ey
+								build_pos_z = ez
+								block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z)
+								block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z)
 								script_execute(script, entity)
 							}
 						}
@@ -300,9 +302,9 @@ switch (load_stage)
 			if (mc_builder.file_map != "")
 			{
 				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
-				if (type = "fromworld") // Rename world import file
+				if (type = e_res_type.FROM_WORLD) // Rename world import file
 				{
-					type = "schematic"
+					type = e_res_type.SCHEMATIC
 					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic to support TileEntities & block states
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
@@ -317,7 +319,7 @@ switch (load_stage)
 			
 			// Update timelines
 			with (obj_timeline)
-				if (type = "scenery" && temp.scenery = other.id && scenery_animate)
+				if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
 					tl_animate_scenery()
 			
 			// Next

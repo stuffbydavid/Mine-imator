@@ -21,7 +21,7 @@ load_assets_block_index = 0
 with (mc_res)
 {
 	save_id = "default"
-	type = "pack"
+	type = e_res_type.PACK
 	display_name = "Minecraft"
 	font_minecraft = true
 	font = new_minecraft_font()

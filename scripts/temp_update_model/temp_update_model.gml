@@ -8,6 +8,11 @@ if (model_texture_name_map = null)
 	model_texture_name_map = ds_map_create()
 ds_map_clear(model_texture_name_map)
 
+// Parts to hide
+if (model_hide_list = null)
+	model_hide_list = ds_list_create()
+ds_list_clear(model_hide_list)
+
 // Invalid model
 if (is_undefined(model))
 {
@@ -16,9 +21,10 @@ if (is_undefined(model))
 }
 	
 // Set file and texture
-var tempstatevars, temptexnamemap, curfile;
+var tempstatevars, temptexnamemap, temphidelist, curfile;
 tempstatevars = model_state
 temptexnamemap = model_texture_name_map
+temphidelist = model_hide_list
 
 with (model)
 {
@@ -51,6 +57,9 @@ with (model)
 						if (value_texture_name_map[v] != null)
 							ds_map_merge(temptexnamemap, value_texture_name_map[v], true)
 								
+						if (value_hide_list[v] != null)
+							ds_list_merge(temphidelist, value_hide_list[v])
+						
 						break
 					}
 				}

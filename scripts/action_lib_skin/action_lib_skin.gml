@@ -20,7 +20,7 @@ else
 			if (!file_exists_lib(fn))
 				return 0
 			
-			res = new_res(fn, "skin")
+			res = new_res(fn, e_res_type.SKIN)
 			res.player_skin = temp_edit.model_file.player_skin
 			
 			with (res)
@@ -41,7 +41,7 @@ else
 			fn = skins_directory + popup_downloadskin.username + ".png"
 			file_copy_lib(download_image_file, fn)
 			
-			res = new_res(fn, "downloadskin")
+			res = new_res(fn, e_res_type.DOWNLOADED_SKIN)
 			res.player_skin = true
 			
 			with (res)

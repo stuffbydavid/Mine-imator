@@ -22,7 +22,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 			
-		res = new_res(fn, "fromworld")
+		res = new_res(fn, e_res_type.FROM_WORLD)
 		with (res)
 			res_load()
 	}
@@ -33,7 +33,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 			
-		res = new_res(fn, "schematic")
+		res = new_res(fn, e_res_type.SCHEMATIC)
 		with (res)
 			res_load()
 	}

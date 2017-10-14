@@ -1,48 +1,28 @@
 /// shader_high_light_spot_set()
 
-var uTexture = shader_get_sampler_index(shader_high_light_spot, "uTexture"), 
-	uAlpha = shader_get_uniform(shader_high_light_spot, "uAlpha"), 
-	uBrightness = shader_get_uniform(shader_high_light_spot, "uBrightness"), 
-	uBlockBrightness = shader_get_uniform(shader_high_light_spot, "uBlockBrightness"), 
-	uLightMatrix = shader_get_uniform(shader_high_light_spot, "uLightMatrix"), 
-	uLightPosition = shader_get_uniform(shader_high_light_spot, "uLightPosition"), 
-	uLightColor = shader_get_uniform(shader_high_light_spot, "uLightColor"), 
-	uLightNear = shader_get_uniform(shader_high_light_spot, "uLightNear"), 
-	uLightFar = shader_get_uniform(shader_high_light_spot, "uLightFar"), 
-	uLightFadeSize = shader_get_uniform(shader_high_light_spot, "uLightFadeSize"), 
-	uLightSpotSharpness = shader_get_uniform(shader_high_light_spot, "uLightSpotSharpness"), 
-	uDepthBuffer = shader_get_sampler_index(shader_high_light_spot, "uDepthBuffer"), 
-	uBlurQuality = shader_get_uniform(shader_high_light_spot, "uBlurQuality"), 
-	uBlurSize = shader_get_uniform(shader_high_light_spot, "uBlurSize");
-	
-shader_set(shader_high_light_spot)
+render_set_uniform("uBrightness", 0)
+render_set_uniform("uBlockBrightness", app.setting_block_brightness)
 
-shader_set_texture(uTexture, shader_texture)
-	
-shader_set_uniform_f(uAlpha, shader_alpha)
-shader_set_uniform_f(uBrightness, shader_brightness / shader_lights)
-shader_set_uniform_f(uBlockBrightness, app.setting_block_brightness / shader_lights)
+render_set_uniform_int("uIsSky", 0)
 
-shader_set_uniform_f_array(uLightMatrix, shader_light_matrix)
+render_set_uniform_int("uLightAmount", render_light_amount)
+render_set_uniform("uLightMatrix", render_light_matrix)
+render_set_uniform_vec3("uLightPosition", render_light_from[X], render_light_from[Y], render_light_from[Z])
+render_set_uniform_color("uLightColor", render_light_color, 1)
+render_set_uniform("uLightNear", render_light_near)
+render_set_uniform("uLightFar", render_light_far)
+render_set_uniform("uLightFadeSize", render_light_fade_size)
+render_set_uniform("uLightSpotSharpness", render_light_spot_sharpness)
 
-shader_set_uniform_f(uLightPosition, shader_light_from[X], shader_light_from[Y], shader_light_from[Z])
-shader_set_uniform_color(uLightColor, shader_light_color, 1)
-shader_set_uniform_f(uLightNear, shader_light_near)
-shader_set_uniform_f(uLightFar, shader_light_far)
-shader_set_uniform_f(uLightFadeSize, shader_light_fadesize)
-shader_set_uniform_f(uLightSpotSharpness, shader_light_spotsharpness)
-
-texture_set_stage(uDepthBuffer, surface_get_texture(app.render_surface_spot_buffer))
-gpu_set_texfilter_ext(uDepthBuffer, true)
+texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_spot_buffer))
+gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], true)
 
 if (app.setting_render_shadows_blur_size > 0)
-	shader_set_uniform_i(uBlurQuality, app.setting_render_shadows_blur_quality)
+	render_set_uniform_int("uBlurQuality", app.setting_render_shadows_blur_quality)
 else
-	shader_set_uniform_i(uBlurQuality, 1)
+	render_set_uniform_int("uBlurQuality", 1)
 
 if (app.setting_render_shadows_blur_quality > 1)
-	shader_set_uniform_f(uBlurSize, app.setting_render_shadows_blur_size)
+	render_set_uniform("uBlurSize", app.setting_render_shadows_blur_size)
 else
-	shader_set_uniform_f(uBlurSize, 0)
-
-shader_set_wind(shader_high_light_spot)
+	render_set_uniform("uBlurSize", 0)

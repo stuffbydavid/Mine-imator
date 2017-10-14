@@ -5,7 +5,7 @@ var part = argument0;
 
 with (new(obj_timeline))
 {
-	type = "bodypart"
+	type = e_tl_type.BODYPART
 	temp = other.temp
 	
 	model_part = part

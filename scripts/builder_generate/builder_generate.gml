@@ -4,11 +4,17 @@
 block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z)
 if (block_current = null)
 	return 0
+	
+build_edge_xp = (build_pos_x = build_size_x - 1)
+build_edge_xn = (build_pos_x = 0)
+build_edge_yp = (build_pos_y = build_size_y - 1)
+build_edge_yn = (build_pos_y = 0)
+build_edge_zp = (build_pos_z = build_size_z - 1)
+build_edge_zn = (build_pos_z = 0)
 
 // Check edges for culling
 
 // X+
-build_edge_xp = (build_pos_x = build_size_x - 1)
 block_face_full_xp = false
 block_face_min_depth_xp = null
 if (build_edge_xp)
@@ -34,7 +40,6 @@ else
 }
 
 // X-
-build_edge_xn = (build_pos_x = 0)
 block_face_full_xn = false
 block_face_min_depth_xn = null
 if (build_edge_xn)
@@ -60,7 +65,6 @@ else
 }
 
 // Y+
-build_edge_yp = (build_pos_y = build_size_y - 1)
 block_face_full_yp = false
 block_face_min_depth_yp = null
 if (build_edge_yp)
@@ -86,7 +90,6 @@ else
 }
 
 // Y-
-build_edge_yn = (build_pos_y = 0)
 block_face_full_yn = false
 block_face_min_depth_yn = null
 if (build_edge_yn)
@@ -112,7 +115,6 @@ else
 }
 
 // Z+
-build_edge_zp = (build_pos_z = build_size_z - 1)
 block_face_full_zp = false
 block_face_min_depth_zp = null
 if (build_edge_zp)
@@ -138,7 +140,6 @@ else
 }
 
 // Z-
-build_edge_zn = (build_pos_z = 0)
 block_face_full_zn = false
 block_face_min_depth_zn = null
 if (build_edge_zn)

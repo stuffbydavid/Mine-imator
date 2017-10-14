@@ -25,7 +25,7 @@ project_video_template = find_videotemplate(project_video_width, project_video_h
 project_video_keep_aspect_ratio = true
 project_tempo = 24
 
-cam_work_reset()
+camera_work_reset()
 
 log("Destroying instances")
 
@@ -44,7 +44,7 @@ with (obj_keyframe)
 
 background_image_show = false
 background_image = null
-background_image_type = 0
+background_image_type = "image"
 background_image_stretch = true
 background_image_box_mapped = false
 

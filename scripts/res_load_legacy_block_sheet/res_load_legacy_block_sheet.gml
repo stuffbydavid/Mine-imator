@@ -25,6 +25,7 @@ blocksize = ceil(texture_width(oldtex) / sheetwid)
 var newsurf, newtex;
 newsurf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
 
+draw_texture_start()
 surface_set_target(newsurf)
 draw_clear_alpha(c_black, 0)
 
@@ -59,6 +60,7 @@ for (var i = 0; i < ds_list_size(list); i++)
 
 gpu_set_blendmode(bm_normal)
 surface_reset_target()
+draw_texture_done()
 
 newtex = texture_surface(newsurf)
 surface_free(newsurf)

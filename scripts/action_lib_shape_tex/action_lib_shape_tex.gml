@@ -17,7 +17,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res(fn, "texture")
+		res = new_res(fn, e_res_type.TEXTURE)
 		with (res)
 			res_load()
 	}
@@ -26,12 +26,12 @@ else
 
 with (temp_edit)
 {
-	if (shape_tex != null && shape_tex.type != "camera")
+	if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 		shape_tex.count--
 		
 	shape_tex = res
 	
-	if (shape_tex != null && shape_tex.type != "camera")
+	if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 		shape_tex.count++
 }
 

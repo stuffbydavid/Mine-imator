@@ -179,7 +179,7 @@ switch (ext)
 			loaded = true
 			load_id = save_id
 			save_id_map[?load_id] = load_id
-			type = "particles"
+			type = e_temp_type.PARTICLE_SPAWNER
 			project_load_particles(rootmap[?"particles"])
 			sortlist_add(other.lib_list, id)
 		}
@@ -201,7 +201,7 @@ switch (ext)
 			loaded = true
 			load_id = save_id
 			save_id_map[?load_id] = load_id
-			type = "particles"
+			type = e_temp_type.PARTICLE_SPAWNER
 			project_load_legacy_particles()
 			sortlist_add(other.lib_list, id)
 		}

@@ -14,7 +14,7 @@ else
 	if (!history_redo)
 		hobj = history_set(action_tl_folder)
 	
-	tl = new_tl("folder")
+	tl = new_tl(e_tl_type.FOLDER)
 	if (tl_edit != null)
 		with (tl)
 			tl_set_parent(tl_edit.parent, ds_list_find_index(tl_edit.parent.tree_list, tl_edit))

@@ -17,7 +17,7 @@ switch (slist.column_name[col])
 		return string_remove_newline(value.display_name)
 		
 	case "libtype":
-		return text_get("type" + value.type)
+		return text_get("type" + temp_type_name_list[|value.type])
 		
 	case "libcount":
 		return value.count
@@ -53,7 +53,7 @@ switch (slist.column_name[col])
 		return string_remove_newline(value.filename)
 		
 	case "restype":
-		return text_get("type" + value.type)
+		return text_get("type" + res_type_name_list[|value.type])
 		
 	case "rescount":
 		return value.count

@@ -67,6 +67,20 @@ with (obj_particle)
 if (particle_list)
 	ds_list_destroy(particle_list)
 	
+if (temp = id)
+{
+	if (type = e_tl_type.SPECIAL_BLOCK)
+	{
+		if (model_texture_name_map != null)	
+			ds_map_destroy(model_texture_name_map)
+	
+		if (model_hide_list != null)
+			ds_list_destroy(model_hide_list)
+	}
+	else if (type = e_tl_type.BLOCK)
+		block_vbuffer_destroy()
+}
+	
 if (bend_vbuffer_list != null)
 {
 	for (var s = 0; s < ds_list_size(bend_vbuffer_list); s++)

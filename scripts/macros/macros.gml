@@ -3,8 +3,8 @@
 // Debug
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_debug_names			true
-#macro dev_mode_rotate_blocks		false
+#macro dev_mode_debug_names			false
+#macro dev_mode_rotate_blocks		true
 
 // Versions
 #macro mineimator_version			"1.1.0 PRE-RELEASE"

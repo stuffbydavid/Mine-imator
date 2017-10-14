@@ -1,12 +1,13 @@
 /// app_event_create()
 /// @desc Entry point of the application.
 
-globalvar debug_indent;
+globalvar debug_indent, debug_timer;
 debug_indent = 0
 debug_info = false
 
 enums()
 randomize()
+gml_release_mode(true)
 
 if (!app_startup())
 {

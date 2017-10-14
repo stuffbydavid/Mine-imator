@@ -11,7 +11,7 @@ if (temp = temp_edit && template_editor.show)
 {
 	if (temp.pc_spawn_region_use)
 	{
-		if (temp.pc_bounding_box_type = 2)
+		if (temp.pc_bounding_box_type = "spawn")
 			draw_set_color(c_red)
 		
 		switch (temp.pc_spawn_region_type)
@@ -36,7 +36,7 @@ if (temp = temp_edit && template_editor.show)
 		}
 	}
 	
-	if (temp.pc_bounding_box_type = 3)
+	if (temp.pc_bounding_box_type = "custom")
 	{
 		draw_set_color(c_red)
 		view_shape_box(point3D(tl.world_pos[X] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_start[X], 

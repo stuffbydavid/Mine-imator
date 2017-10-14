@@ -14,7 +14,7 @@ surface_set_target(surf)
 {
 	draw_clear(c_black)
 	render_world_start()
-	render_world("click")
+	render_world(e_render_mode.CLICK)
 	render_world_done()
 }
 surface_reset_target()

@@ -47,13 +47,13 @@ if (view.controls)
 						
 					draw_set_color(test(tl.selected || tl.parent_is_selected, c_white, c_controls))
 				
-					if (tl.type = "spotlight")
+					if (tl.type = e_tl_type.SPOT_LIGHT)
 						view_shape_spotlight(tl)
-					else if (tl.type = "pointlight")
+					else if (tl.type = e_tl_type.POINT_LIGHT)
 						view_shape_pointlight(tl)
-					else if (tl.type = "camera" && tl != cam)
+					else if (tl.type = e_tl_type.CAMERA && tl != cam)
 						view_shape_camera(tl)
-					else if (tl.type = "particles")
+					else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
 						view_shape_particles(tl)
 				}
 			}

@@ -18,7 +18,7 @@ pos2D = view_shape_project(pos)
 if (point3D_project_error)
 	return 0
 	
-rad2D = ((rad / point3D_distance(pos, cam_from)) * app.render_height) / (cam_fov / 60)
+rad2D = ((rad / point3D_distance(pos, cam_from)) * render_height) / (cam_fov / 60)
 detail = 32
 
 for (var i = 0; i < 1; i += 1 / detail)

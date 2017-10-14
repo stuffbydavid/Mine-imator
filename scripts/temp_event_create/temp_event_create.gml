@@ -6,7 +6,7 @@ save_id = save_id_create()
 loaded = false
 creator = temp_creator
 
-type = ""
+type = null
 name = ""
 display_name = ""
 count = 0
@@ -15,6 +15,7 @@ rot_point = point3D(0, 0, 0)
 skin = null
 model_name = "human"
 model_texture_name_map = null
+model_hide_list = null
 model_file = null
 model_state = array()
 model_part_name = ""

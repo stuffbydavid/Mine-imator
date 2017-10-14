@@ -44,5 +44,5 @@ to.text_font = text_font
 to.text_3d = text_3d
 to.text_face_camera = text_face_camera
 
-if (type = "particles")
+if (type = e_temp_type.PARTICLE_SPAWNER)
 	temp_particles_copy(to)

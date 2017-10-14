@@ -6,7 +6,7 @@ with (bench_settings)
 	type = argument0
 
 	// Switch to character
-	if (type = "char" && ds_list_find_index(char_list.list, model_name) < 0)
+	if (type = e_temp_type.CHARACTER && ds_list_find_index(char_list.list, model_name) < 0)
 	{
 		model_name = "human"
 		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
@@ -14,7 +14,7 @@ with (bench_settings)
 	}
 	
 	// Switch to special block
-	if (type = "spblock" && ds_list_find_index(special_block_list.list, model_name) < 0)
+	if (type = e_temp_type.SPECIAL_BLOCK && ds_list_find_index(special_block_list.list, model_name) < 0)
 	{
 		model_name = "chest"
 		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
@@ -22,15 +22,15 @@ with (bench_settings)
 	}
 	
 	// Switch to bodypart
-	if (type = "bodypart")
+	if (type = e_temp_type.BODYPART)
 		temp_update_model_part()
 	
 	// Switch to block
-	if (type = "block")
+	if (type = e_temp_type.BLOCK)
 		temp_update_block()
 		
 	// Switch to item
-	if (type = "item")
+	if (type = e_temp_type.ITEM)
 		temp_update_item()
 	
 	// Switch to shape
@@ -39,7 +39,7 @@ with (bench_settings)
 }
 
 // Switch to particles
-if (bench_settings.type = "particles")
+if (bench_settings.type = e_temp_type.PARTICLE_SPAWNER)
 	bench_update_particles_list()
 
 with (bench_settings.preview)

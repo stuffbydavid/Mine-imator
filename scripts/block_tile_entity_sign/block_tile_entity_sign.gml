@@ -4,10 +4,10 @@
 var map, text;
 map = argument0
 text = ""
-/*
+
 for (var i = 0; i < 4; i++)
 {
-	var line = map[?"Text" + string(i + 1)];
+	var line = map[?"text" + string(i + 1)];
 	if (!is_string(line))
 		return 0
 		
@@ -28,4 +28,4 @@ for (var i = 0; i < 4; i++)
 	text += line
 }
 
-state_vars_set_value(block_state_current, "text", text)*/
+array3D_set(block_text, build_size_z, build_pos_x, build_pos_y, build_pos_z, text)

@@ -21,7 +21,7 @@ struct VSOutput
 
 // Wind
 uniform float uTime;
-uniform float uWindEnabled;
+uniform float uWindEnable;
 uniform float uWindTerrain;
 uniform float uWindSpeed;
 uniform float uWindStrength;
@@ -29,9 +29,9 @@ uniform float uWindStrength;
 float4 getWind(float4 pos, float3 custom)
 {
 	return float4(
-		sin((uTime + pos.x * 10.0 + pos.y + pos.z) * (uWindSpeed / 5.0)) * max(custom.x * uWindTerrain, uWindEnabled) * uWindStrength,
-		sin((uTime + pos.x + pos.y * 10.0 + pos.z) * (uWindSpeed / 7.5)) * max(custom.x * uWindTerrain, uWindEnabled) * uWindStrength,
-		sin((uTime + pos.x + pos.y + pos.z * 10.0) * (uWindSpeed / 10.0)) * max(custom.y * uWindTerrain, uWindEnabled) * uWindStrength,
+		sin((uTime + pos.x * 10.0 + pos.y + pos.z) * (uWindSpeed / 5.0)) * max(custom.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((uTime + pos.x + pos.y * 10.0 + pos.z) * (uWindSpeed / 7.5)) * max(custom.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((uTime + pos.x + pos.y + pos.z * 10.0) * (uWindSpeed / 10.0)) * max(custom.y * uWindTerrain, uWindEnable) * uWindStrength,
 		0
 	);
 }

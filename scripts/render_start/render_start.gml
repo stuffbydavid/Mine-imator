@@ -18,13 +18,9 @@ if (render_camera != null)
 		render_height = render_camera.value[e_value.CAM_HEIGHT]
 	}
 	
-	render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
-							render_camera.value[e_value.BRIGHTNESS] > 0 || 
-							render_camera.value[e_value.RGB_ADD] - render_camera.value[e_value.RGB_SUB] != c_black || 
-							render_camera.value[e_value.RGB_MUL] < c_white || 
-							render_camera.value[e_value.HSB_ADD] - render_camera.value[e_value.HSB_SUB] != c_black || 
-							render_camera.value[e_value.HSB_MUL] < c_white || 
-							render_camera.value[e_value.MIX_PERCENT] > 0)
+	render_camera_colors = (render_camera.colors_ext ||
+							render_camera.value[e_value.ALPHA] < 1 || 
+							render_camera.value[e_value.BRIGHTNESS] > 0)
 	
 	render_camera_dof = (setting_render_dof && render_camera.value[e_value.CAM_DOF])
 }

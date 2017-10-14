@@ -82,7 +82,7 @@ ds_map_destroy(map)
 ds_map_destroy(typemap)
 
 with (obj_template)
-	if (type = "char" || type = "spblock")
+	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
 		temp_update_model()
 
 with (obj_timeline)

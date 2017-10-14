@@ -17,7 +17,6 @@ if (exportmovie_escape_time > 0 && current_time - exportmovie_escape_time > 1000
 
 // Update marker
 timeline_marker = exportmovie_marker_start + (exportmovie_frame / popup_exportmovie.frame_rate) * project_tempo
-
 if (timeline_marker > exportmovie_marker_end)
 {
 	action_toolbar_exportmovie_done()
@@ -28,12 +27,16 @@ if (timeline_marker > exportmovie_marker_end)
 app_update_animate()
 
 // Render
-render_start(exportmovie_surface, timeline_camera)
+if (exportmovie_format = "png")
+	render_start(exportmovie_surface, timeline_camera)
+else
+	render_start(exportmovie_surface, timeline_camera, project_video_width, project_video_height)
 
 if (exportmovie_high_quality)
 	render_high()
 else
 	render_low()
+
 exportmovie_surface = render_done()
 
 if (exportmovie_format = "png")

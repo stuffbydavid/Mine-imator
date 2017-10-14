@@ -3,26 +3,26 @@
 
 if (name = "")
 {
-	display_name = text_get("type" + type)
+	display_name = text_get("type" + temp_type_name_list[|type])
 	
 	switch (type)
 	{
-		case "char":
-		case "spblock":
+		case e_temp_type.CHARACTER:
+		case e_temp_type.SPECIAL_BLOCK:
 			if (model_file != null)
 				display_name = minecraft_asset_get_name("model", model_file.name)
 			break
 		
-		case "scenery":
+		case e_temp_type.SCENERY:
 			if (scenery != null)
 				display_name = scenery.display_name
 			break
 		
-		case "block":
+		case e_temp_type.BLOCK:
 			display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 			break
 		
-		case "bodypart":
+		case e_temp_type.BODYPART:
 			if (model_part != null)
 				display_name = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", model_part.name), minecraft_asset_get_name("model", model_file.name))
 			else

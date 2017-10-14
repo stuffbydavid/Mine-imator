@@ -5,7 +5,7 @@ var texobj = argument0;
 
 if (texobj != null)
 {
-	if (texobj.type = "camera")
+	if (texobj.type = e_tl_type.CAMERA)
 	{
 		shader_texture_surface = true
 		return texobj.cam_surf

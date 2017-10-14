@@ -23,7 +23,7 @@ if (versionmap < 0)
 	return false
 }
 
-var pack = versionmap[?"pack"];
+var pack = versionmap[?e_res_type.PACK];
 if (!file_exists_lib(minecraft_directory + pack))
 {
 	log("Could not find pack", minecraft_directory + pack)

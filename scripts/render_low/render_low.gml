@@ -24,7 +24,7 @@ surface_set_target(surf)
 	// World
 	render_world_start()
 	render_world_sky()
-	render_world(test(render_lights, "colorfoglights", "colorfog"))
+	render_world(test(render_lights, e_render_mode.COLOR_FOG_LIGHTS, e_render_mode.COLOR_FOG))
 	render_world_done()
 	
 	// Alpha fix
@@ -35,7 +35,7 @@ surface_set_target(surf)
 	else
 	{
 		render_world_start()
-		render_world("alphafix")
+		render_world(e_render_mode.ALPHA_FIX)
 		render_world_done()
 	}
 	gpu_set_blendmode(bm_normal)
@@ -52,9 +52,12 @@ if (render_overlay)
 		
 		if (render_camera_colors)
 		{
-			shader_color_camera_set(render_camera)
+			render_shader_obj = shader_map[?shader_color_camera]
+			with (render_shader_obj)
+				shader_use()
 			draw_surface_exists(render_surface[0], 0, 0)
-			shader_reset()
+			with (render_shader_obj)
+				shader_clear()
 		}
 		else
 			draw_surface_exists(render_surface[0], 0, 0)

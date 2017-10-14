@@ -17,10 +17,11 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 		
-		res = new_res(fn, "texture")
+		res = new_res(fn, e_res_type.TEXTURE)
 		with (res)
 			res_load()
 	}
+	
 	history_set_res(action_background_sky_clouds_tex, fn, background_sky_clouds_tex, res)
 }
 

@@ -21,6 +21,7 @@ build_edges = true
 block_obj = array3D()
 block_state_id = array3D()
 block_state_id_current = 0
+block_text = array3D()
 block_render_model = array3D()
 block_current = 0
 

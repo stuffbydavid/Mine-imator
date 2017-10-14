@@ -6,7 +6,7 @@ var tex, texwid, texhei, texsize, hei, cloudsize, col;
 if (!background_sky_clouds_tex.ready)
 	return 0
 
-tex = test(background_sky_clouds_tex.type = "pack", background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture)
+tex = test(background_sky_clouds_tex.type = e_res_type.PACK, background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture)
 texwid = texture_width(tex)
 texhei = texture_height(tex)
 texsize = max(texwid, texhei)

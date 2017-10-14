@@ -1,5 +1,7 @@
 /// file_startup()
 
+globalvar buffer_current;
+
 // Define directories
 log("working_directory", working_directory)
 if (!directory_exists_lib(working_directory))

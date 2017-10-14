@@ -11,7 +11,8 @@ pc_spawn_region_box_size[X] = buffer_read_double()
 pc_spawn_region_box_size[Y] = buffer_read_double()
 pc_spawn_region_box_size[Z] = buffer_read_double()
 
-pc_bounding_box_type = buffer_read_byte()
+var boxtype = array("none", "ground", "spawn", "custom");
+pc_bounding_box_type = boxtype[buffer_read_byte()]
 if (load_format >= e_project.FORMAT_100_DEMO_4)
 	pc_bounding_box_ground_z = buffer_read_double()
 else

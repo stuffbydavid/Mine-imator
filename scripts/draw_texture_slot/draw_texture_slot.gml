@@ -30,4 +30,6 @@ sx = (slot mod slotsx) * slotwid
 sy = (slot div slotsx) * slothei
 scale = min(width / slotwid, height / slothei)
 
+draw_texture_start()
 draw_texture_part(tex, xx, yy, sx, sy, slotwid, slothei, scale, scale, color, 1)
+draw_texture_done()

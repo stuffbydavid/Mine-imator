@@ -20,12 +20,15 @@ dy += 10
 
 // Scenery
 tab_control_checkbox()
+draw_checkbox("settingsschematicaddtimelines", dx, dy, setting_schematic_add_timelines, action_setting_schematic_add_timelines)
+tab_next()
+tab_control_checkbox()
 draw_checkbox("settingsschematicremoveedges", dx, dy, setting_schematic_remove_edges, action_setting_schematic_remove_edges)
 tab_next()
-
 tab_control_checkbox()
 draw_checkbox("settingsliquidanimation", dx, dy, setting_liquid_animation, action_setting_liquid_animation)
 tab_next()
+dy += 10
 
 // Texture filtering
 tab_control_checkbox()

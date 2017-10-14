@@ -17,7 +17,7 @@ with (obj_timeline)
 	else
 		texobj = temp.shape_tex
 	
-	if (texobj != null && texobj.type = "camera")
+	if (texobj != null && texobj.type = e_tl_type.CAMERA)
 		texobj.cam_surf_required = true
 }
 
@@ -26,13 +26,13 @@ with (obj_particle)
 	if (type.temp = null || !type_is_shape(type.temp.type))
 		continue
 		
-	if (type.temp.shape_tex != null && type.temp.shape_tex.type = "camera")
+	if (type.temp.shape_tex != null && type.temp.shape_tex.type = e_tl_type.CAMERA)
 		type.temp.shape_tex.cam_surf_required = true
 }
 
 with (obj_timeline)
 {
-	if (type != "camera" || !cam_surf_required)
+	if (type != e_tl_type.CAMERA || !cam_surf_required)
 		continue
 	
 	// Render
@@ -47,7 +47,7 @@ with (obj_timeline)
 	}
 	
 	// Re-use the same two surfaces
-	cam_surf = surface_require(cam_surf, app.render_width, app.render_height)
+	cam_surf = surface_require(cam_surf, render_width, render_height)
 	
 	var tmp = cam_surf;
 	cam_surf = cam_surf_tmp

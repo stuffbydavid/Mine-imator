@@ -73,9 +73,9 @@ if (window_focus = string(view))
 		mouse_cursor = cr_none
 		
 		if (!cam || cam.value[e_value.CAM_ROTATE])
-			cam_control_rotate(cam, view_click_x, view_click_y)
+			camera_control_rotate(cam, view_click_x, view_click_y)
 		else
-			cam_control_move(cam, view_click_x, view_click_y)
+			camera_control_move(cam, view_click_x, view_click_y)
 		
 		if (!mouse_left)
 			window_busy = ""
@@ -86,11 +86,11 @@ if (window_focus = string(view))
 	{
 		mouse_cursor = cr_none
 		
-		cam_control_move(cam, view_click_x, view_click_y)
+		camera_control_move(cam, view_click_x, view_click_y)
 		
 		if (!mouse_right)
 		{
-			cam_work_set_focus()
+			camera_work_set_focus()
 			window_busy = ""
 		}
 	}

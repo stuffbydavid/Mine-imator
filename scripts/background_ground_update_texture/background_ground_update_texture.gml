@@ -46,6 +46,7 @@ else
 	by = (slot div block_sheet_ani_width) * size
 }
 
+draw_texture_start()
 surf = surface_create(size, size)
 surface_set_target(surf)
 {
@@ -70,3 +71,4 @@ surface_set_target(surf)
 }
 surface_reset_target()
 surface_free(surf)
+draw_texture_done()

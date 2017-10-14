@@ -67,7 +67,7 @@ if (draw_button_normal("importimageok", dx, dy, dw, 32))
 	if (popup.value_script != null)
 		script_execute(popup.value_script, e_option.IMPORT_ITEM_SHEET_DONE)
 	else
-		action_res_image_load(popup.filename, "itemsheet")
+		action_res_image_load(popup.filename, e_res_type.ITEM_SHEET)
 	popup_close()
 }
 

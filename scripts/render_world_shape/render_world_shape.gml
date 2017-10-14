@@ -12,7 +12,7 @@ tex = argument3
 
 rot = vec3(0)
 
-if (type = "surface" && facecamera)
+if (type = e_temp_type.SURFACE && facecamera)
 {
 	var pos = point3D_mul_matrix(point3D(0, 0, 0), matrix_get(matrix_world));
 	rot[X] -= point_zdirection(pos[X], pos[Y], pos[Z], proj_from[X], proj_from[Y], proj_from[Z])
@@ -21,6 +21,5 @@ if (type = "surface" && facecamera)
 
 matrix_world_multiply_pre(matrix_create(point3D(0, 0, 0), rot, vec3(1)))
 
-shader_texture = tex
-shader_use()
+render_set_texture(tex)
 vbuffer_render(vbuf)

@@ -131,14 +131,14 @@ if (!build_edge_yn)
 		}
 	}
 	
-	if (south = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
+	if (north = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
 	{
 		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1)
 		if (block = block_current)
 			north = "up"
 	}
 	
-	if (south = "none" && !build_edge_zn && !(block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)) // Check down
+	if (north = "none" && !build_edge_zn && !(block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)) // Check down
 	{
 		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z - 1)
 		if (block = block_current)

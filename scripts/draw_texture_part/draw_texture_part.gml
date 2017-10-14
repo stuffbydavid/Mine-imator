@@ -46,18 +46,11 @@ var tw, th;
 tw = texture_width(tex)
 th = texture_height(tex)
 
-shader_texture = tex
-shader_draw_texture_set()
+render_set_texture(tex)
 	
 draw_primitive_begin(pr_trianglestrip)
-
 draw_vertex_texture_color(xx, yy, left / tw, top / th, color, alpha)
 draw_vertex_texture_color(xx + w * xsca, yy, (left + w) / tw, top / th, color, alpha)
 draw_vertex_texture_color(xx, yy + h * ysca, left / tw, (top + h) / th, color, alpha)
 draw_vertex_texture_color(xx + w * xsca, yy + h * ysca, (left + w) / tw, (top + h) / th, color, alpha)
-
 draw_primitive_end()
-
-texture_set_stage(0, 0)
-shader_reset()
-shader_texture = 0

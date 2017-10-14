@@ -5,7 +5,7 @@ save_id = ""
 save_id = save_id_create()
 loaded = false
 
-type = ""
+type = null
 type_name = ""
 name = ""
 display_name = ""
@@ -47,6 +47,7 @@ world_pos = point3D(0, 0, 0)
 world_pos_rotate = point3D(0, 0, 0)
 world_pos_2d = point2D(0, 0)
 world_pos_2d_error = false
+colors_ext = false
 
 level = 0
 parent = null

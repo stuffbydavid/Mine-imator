@@ -3,15 +3,16 @@
 if (part_of = null)
 	return 0
 
-if (type = "spblock")
+if (type = e_tl_type.SPECIAL_BLOCK)
 {
 	skin = mc_res
 	model_file = null
 	model_texture_name_map = null
+	model_hide_list = null
 	temp_update_model()
 	temp_update_model_timeline_parts()
 }
-else if (type = "block")
+else if (type = e_tl_type.BLOCK)
 {
 	block_tex = mc_res
 	block_repeat_enable = false
@@ -19,7 +20,7 @@ else if (type = "block")
 	block_vbuffer_reset()
 	temp_update_block()
 }
-else if (type = "text")
+else if (type = e_tl_type.TEXT)
 {
 	text_font = mc_res
 	text_3d = false

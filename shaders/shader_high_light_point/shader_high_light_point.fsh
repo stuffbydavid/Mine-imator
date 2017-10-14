@@ -4,8 +4,8 @@
 #define MAXSAMPLES 64
 
 uniform sampler2D uTexture;
-uniform float uAlpha;
-uniform float uBrightness;
+uniform vec4 uBlendColor;
+uniform int uIsSky;
 
 uniform vec3 uLightPosition;
 uniform vec4 uLightColor;
@@ -66,104 +66,111 @@ vec2 getShadowMapCoord(vec3 look)
 
 void main()
 {
-	float shadow = 0.0;
+	vec3 light;
 	
-	// Diffuse factor
-	float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition))); 
-	
-	// Attenuation factor
-	dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0); 
-	 
-	if (dif > 0.0 && uBrightness < 1.0)
+	if (uIsSky > 0)
+		light = vec3(1.0);
+	else
 	{
-		int buffer;
-		vec2 fragCoord;
-		vec3 toLight = vPosition - uLightPosition;
-		vec4 lookDir = vec4( // Get the direction from the pixel to the light
-			toLight.x / distance(vPosition.xy, uLightPosition.xy),
-			toLight.y / distance(vPosition.xy, uLightPosition.xy),
-			toLight.z / distance(vPosition.xz, uLightPosition.xz),
-			toLight.z / distance(vPosition.yz, uLightPosition.yz)
-		);
-		
-		// Get shadow map and texture coordinate
-		
-		// Z+
-		if (lookDir.z > SQRT05 && lookDir.w > SQRT05)
-		{ 
-			buffer = 4;
-			fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, 1.0));
-		}
-		
-		// Z-
-		else if (lookDir.z < -SQRT05 && lookDir.w < -SQRT05)
-		{
-			buffer = 5;
-			fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, -1.0));
-		}
-		
-		// X+
-		else if (lookDir.x > SQRT05)
-		{ 
-			buffer = 0;
-			fragCoord = getShadowMapCoord(vec3(1.0, 0.0, 0.0));
-		}
-		
-		// X-
-		else if (lookDir.x < -SQRT05)
-		{
-			buffer = 1;
-			fragCoord = getShadowMapCoord(vec3(-1.0, 0.0, 0.0));
-		}
-		
-		// Y+
-		else if (lookDir.y > SQRT05)
-		{ 
-			buffer = 2;
-			fragCoord = getShadowMapCoord(vec3(0.0, 1.0, 0.0));
-		}
-		
-		// Y-
-		else
-		{ 
-			buffer = 3;
-			fragCoord = getShadowMapCoord(vec3(0.0, -1.0, 0.0));
-		}
-		
-		// Calculate shadow
-		float fragDepth = distance(vPosition, uLightPosition);
-		float sampleSize = uBlurSize / fragDepth;
-		float bias =  1.0 + 2.0 * uBlurSize;
-		
-		for (int i = 0; i < MAXSAMPLES; i++)
-		{
-			if (i < uBlurQuality)
-			{
-				// Sample from circle
-				float angle = (float(i) / float(uBlurQuality)) * TAU;
-				vec2 off = vec2(cos(angle), sin(angle));
-				
-				// Get sample coordinate and depth
-				vec2 sampleCoord = fragCoord + off * sampleSize;
-				float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, sampleCoord));
-				
-				// Add to shadow
-				shadow += (fragDepth - bias > sampleDepth) ? 1.0 : 0.0;
-			}
-			else
-				break;
-		}
-		
-		shadow /= float(uBlurQuality);
-	}
+		float shadow = 0.0;
 	
-	// Calculate light
-	vec3 light = uLightColor.rgb * dif * (1.0 - shadow);
-	light = mix(light, vec3(1.0), vBrightness + uBrightness);
+		// Diffuse factor
+		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition))); 
+	
+		// Attenuation factor
+		dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0); 
+	 
+		if (dif > 0.0 && vBrightness < 1.0)
+		{
+			int buffer;
+			vec2 fragCoord;
+			vec3 toLight = vPosition - uLightPosition;
+			vec4 lookDir = vec4( // Get the direction from the pixel to the light
+				toLight.x / distance(vPosition.xy, uLightPosition.xy),
+				toLight.y / distance(vPosition.xy, uLightPosition.xy),
+				toLight.z / distance(vPosition.xz, uLightPosition.xz),
+				toLight.z / distance(vPosition.yz, uLightPosition.yz)
+			);
+		
+			// Get shadow map and texture coordinate
+		
+			// Z+
+			if (lookDir.z > SQRT05 && lookDir.w > SQRT05)
+			{ 
+				buffer = 4;
+				fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, 1.0));
+			}
+		
+			// Z-
+			else if (lookDir.z < -SQRT05 && lookDir.w < -SQRT05)
+			{
+				buffer = 5;
+				fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, -1.0));
+			}
+		
+			// X+
+			else if (lookDir.x > SQRT05)
+			{ 
+				buffer = 0;
+				fragCoord = getShadowMapCoord(vec3(1.0, 0.0, 0.0));
+			}
+		
+			// X-
+			else if (lookDir.x < -SQRT05)
+			{
+				buffer = 1;
+				fragCoord = getShadowMapCoord(vec3(-1.0, 0.0, 0.0));
+			}
+		
+			// Y+
+			else if (lookDir.y > SQRT05)
+			{ 
+				buffer = 2;
+				fragCoord = getShadowMapCoord(vec3(0.0, 1.0, 0.0));
+			}
+		
+			// Y-
+			else
+			{ 
+				buffer = 3;
+				fragCoord = getShadowMapCoord(vec3(0.0, -1.0, 0.0));
+			}
+		
+			// Calculate shadow
+			float fragDepth = distance(vPosition, uLightPosition);
+			float sampleSize = uBlurSize / fragDepth;
+			float bias =  1.0 + 2.0 * uBlurSize;
+		
+			for (int i = 0; i < MAXSAMPLES; i++)
+			{
+				if (i < uBlurQuality)
+				{
+					// Sample from circle
+					float angle = (float(i) / float(uBlurQuality)) * TAU;
+					vec2 off = vec2(cos(angle), sin(angle));
+				
+					// Get sample coordinate and depth
+					vec2 sampleCoord = fragCoord + off * sampleSize;
+					float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, sampleCoord));
+				
+					// Add to shadow
+					shadow += (fragDepth - bias > sampleDepth) ? 1.0 : 0.0;
+				}
+				else
+					break;
+			}
+		
+			shadow /= float(uBlurQuality);
+		}
+	
+		// Calculate light
+		light = uLightColor.rgb * dif * (1.0 - shadow);
+		light = mix(light, vec3(1.0), vBrightness);
+	}
 	
 	// Set final color
 	vec4 baseColor = texture2D(uTexture, vTexCoord);
-	gl_FragColor = vec4(light, uAlpha * baseColor.a);
+	gl_FragColor = vec4(light, uBlendColor.a * baseColor.a);
 	
 	if (gl_FragColor.a == 0.0)
 		discard;

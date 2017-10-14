@@ -30,7 +30,7 @@ else
 			spawn_amount++
 		}
 		
-		if (bench_settings.type = "camera")
+		if (bench_settings.type = e_tl_type.CAMERA)
 			view_second.show = true
 	}
 	else
@@ -46,7 +46,7 @@ else
 			
 			with (temp)
 			{
-				if (type != "char" && type != "spblock" && type != "bodypart")
+				if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART)
 				{
 					skin.count--
 					skin = null
@@ -55,20 +55,20 @@ else
 					model_state = array()
 				}
 				
-				if (type != "item")
+				if (type != e_temp_type.ITEM)
 				{
 					item_tex.count--
 					item_tex = null
 				}
 				
-				if (type != "block" && type != "scenery")
+				if (type != e_temp_type.BLOCK && type != e_temp_type.SCENERY)
 				{
 					block_tex.count--
 					block_tex = null
 					block_state = array()
 				}
 				
-				if (type != "scenery" && scenery)
+				if (type != e_temp_type.SCENERY && scenery)
 				{
 					scenery.count--
 					scenery = null
@@ -76,12 +76,12 @@ else
 				
 				if (!type_is_shape(type) && shape_tex != null)
 				{
-					if (shape_tex.type != "camera")
+					if (shape_tex.type != e_tl_type.CAMERA)
 						shape_tex.count--
 					shape_tex = null
 				}
 				
-				if (type != "text")
+				if (type != e_temp_type.TEXT)
 				{
 					text_font.count--
 					text_font = null
@@ -115,7 +115,7 @@ else
 			if (scenery > 0)
 				scenery.count++
 				
-			if (shape_tex != null && shape_tex.type != "camera")
+			if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 				shape_tex.count++
 				
 			if (text_font != null)

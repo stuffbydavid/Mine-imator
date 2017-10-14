@@ -3,16 +3,16 @@
 
 var fn = load_folder + "\\" + filename;
 
-debug("Loading " + type, fn)
+debug("Loading " + res_type_name_list[|type], fn)
 
-if (load_folder != save_folder && type != "legacyblocksheet")
+if (load_folder != save_folder && type != e_res_type.LEGACY_BLOCK_SHEET)
 	res_save()
 
 // Load from file
 switch (type)
 {
-	case "pack":
-	case "packunzipped":
+	case e_res_type.PACK:
+	case e_res_type.PACK_UNZIPPED:
 	{
 		ready = false
 		
@@ -25,8 +25,8 @@ switch (type)
 		break
 	}
 		
-	case "skin":
-	case "downloadskin":
+	case e_res_type.SKIN:
+	case e_res_type.DOWNLOADED_SKIN:
 	{
 		if (model_texture)
 			texture_free(model_texture)
@@ -39,7 +39,7 @@ switch (type)
 		break
 	}
 		
-	case "itemsheet":
+	case e_res_type.ITEM_SHEET:
 	{
 		if (item_sheet_texture)
 			texture_free(item_sheet_texture)
@@ -49,19 +49,19 @@ switch (type)
 		break
 	}
 	
-	case "legacyblocksheet":
-	case "blocksheet":
+	case e_res_type.LEGACY_BLOCK_SHEET:
+	case e_res_type.BLOCK_SHEET:
 	{
 		if (block_sheet_texture != null)
 			texture_free(block_sheet_texture)
 			
-		if (type = "legacyblocksheet")
+		if (type = e_res_type.LEGACY_BLOCK_SHEET)
 		{
 			block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
 			if (load_folder = save_folder)
 				filename = filename_new_ext(filename_name(fn), "_converted" + filename_ext(fn))
 			texture_export(block_sheet_texture, save_folder + "\\" + filename)
-			type = "blocksheet"
+			type = e_res_type.BLOCK_SHEET
 		}
 		else
 			block_sheet_texture = texture_create(fn)
@@ -75,8 +75,8 @@ switch (type)
 		break
 	}
 		
-	case "schematic":
-	case "fromworld":
+	case e_res_type.SCHEMATIC:
+	case e_res_type.FROM_WORLD:
 	{
 		ready = false
 		
@@ -89,7 +89,7 @@ switch (type)
 		break
 	}
 	
-	case "particlesheet":
+	case e_res_type.PARTICLE_SHEET:
 	{
 		if (particles_texture[0])
 			texture_free(particles_texture[0])
@@ -103,7 +103,7 @@ switch (type)
 		break
 	}
 		
-	case "texture":
+	case e_res_type.TEXTURE:
 	{
 		if (texture)
 			texture_free(texture)
@@ -113,7 +113,7 @@ switch (type)
 		break
 	}
 		
-	case "font":
+	case e_res_type.FONT:
 	{
 		if (font_exists(font))
 			font_delete(font)
@@ -134,7 +134,7 @@ switch (type)
 		break
 	}
 		
-	case "sound":
+	case e_res_type.SOUND:
 	{
 		audio_stop_all()
 		ready = false
@@ -152,10 +152,10 @@ switch (type)
 // Set display name
 if (filename_ext(fn) = ".zip")
 	display_name = string_replace(filename, ".zip", "")
-else if (type != "pack")
+else if (type != e_res_type.PACK)
 	display_name = filename_new_ext(filename, "")
 else
 	display_name = filename
 	
-if (type = "downloadskin")
+if (type = e_res_type.DOWNLOADED_SKIN)
 	display_name = text_get("downloadskinname", display_name)

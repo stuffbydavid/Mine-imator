@@ -119,7 +119,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if (dx > tlx + tlw)
 				break
 			
-			if (tl.type = "audio" && sound && sound.ready)
+			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
 			{
 				var boxw = tl_keyframe_length(kf) * timeline_zoom;
 				if (dx + boxw < tlx)
@@ -143,7 +143,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		dx = tlx + floor(kf.position * timeline_zoom - timeline.hor_scroll.value)
 		sound = kf.value[e_value.SOUND_OBJ]
 		
-		if (tl.type = "audio" && sound && sound.ready)
+		if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
 		{
 			var soundlen, boxx, boxw, startsample, samplesshow, prec, wavehei, alpha;
 			
@@ -200,7 +200,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		else
 		{
 			// Invisible
-			if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != "audio")
+			if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO)
 			{
 				var curdx, nextdx;
 				curdx = test(k = 0, tlx, max(tlx, dx))
@@ -516,8 +516,8 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	
 	if (showhide)
 	{
-		tip_set(text_get(test(tl.type = "audio", "timelinemutetip", "timelinehidetip")), content_x + w - 16 * 1, dy, 16, itemh)
-		draw_image(spr_icons, test(tl.type = "audio", test(tl.hide, icons.MUTE, icons.SOUND), test(tl.hide, icons.HIDE, icons.SHOW)), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
+		tip_set(text_get(test(tl.type = e_tl_type.AUDIO, "timelinemutetip", "timelinehidetip")), content_x + w - 16 * 1, dy, 16, itemh)
+		draw_image(spr_icons, test(tl.type = e_tl_type.AUDIO, test(tl.hide, icons.MUTE, icons.SOUND), test(tl.hide, icons.HIDE, icons.SHOW)), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
 	}
 	
 	if (showkeyframes)
@@ -725,7 +725,7 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 			else
 				action_tl_select(mousekf.timeline)
 			
-			if (mousekf.timeline.type = "audio" && mousekf.value[e_value.SOUND_OBJ])
+			if (mousekf.timeline.type = e_tl_type.AUDIO && mousekf.value[e_value.SOUND_OBJ])
 				timeline_marker = timeline_mouse_pos
 			else
 				timeline_marker = mousekf.position

@@ -26,7 +26,7 @@ with (temp)
 	if (scenery != null)
 		scenery.count++
 		
-	if (shape_tex != null && shape_tex.type != "camera")
+	if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 		shape_tex.count++
 		
 	if (text_font != null)
@@ -35,7 +35,7 @@ with (temp)
 	temp_update()
 	
 	// Restore particle types
-	if (type = "particles")
+	if (type = e_temp_type.PARTICLE_SPAWNER)
 	{
 		pc_type_list = ds_list_create()
 		

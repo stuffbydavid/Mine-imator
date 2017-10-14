@@ -45,11 +45,10 @@ mipmap = shader_texture_filter_mipmap
 shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
 
 if (res.item_sheet_texture != null)
-	shader_texture = res.item_sheet_texture
+	render_set_texture(res.item_sheet_texture)
 else
-	shader_texture = res.texture
+	render_set_texture(res.texture)
 
-shader_use()
 vbuffer_render(vbuffer)
 
 shader_texture_filter_mipmap = mipmap

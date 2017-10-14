@@ -110,7 +110,7 @@ with (load)
 		tl_color[a] = buffer_read_int()
 		
 		tl_parts[a] = 1
-		if (tl_type[a] = "char" || tl_type[a] = "spblock")
+		if (tl_type[a] = e_temp_type.CHARACTER || tl_type[a] = e_temp_type.SPECIAL_BLOCK)
 		{
 			var modelname = lib_char_model_name[tl_lib[a]]
 			if (modelname = "spider" || modelname = "cave_spider")
@@ -233,7 +233,7 @@ for (var a = 0; a < load.skin_amount; a++)
 		load_id = loadid++
 		save_id_map[?load_id] = load_id
 		
-		type = "skin"
+		type = e_res_type.SKIN
 		filename = load.skin_name[a]
 		
 		// Used as skin?
@@ -261,7 +261,7 @@ for (var a = 0; a < load.item_amount; a++)
 		load_id = loadid++
 		save_id_map[?load_id] = load_id
 		
-		type = "itemsheet"
+		type = e_res_type.ITEM_SHEET
 		filename = load.item_name[a]
 		item_sheet_size = vec2(16, 16)
 		
@@ -279,7 +279,7 @@ for (var a = 0; a < load.ter_amount; a++)
 		load_id = loadid++
 		save_id_map[?load_id] = load_id
 		
-		type = "legacyblocksheet"
+		type = e_res_type.LEGACY_BLOCK_SHEET
 		filename = load.ter_name[a]
 		
 		load.ter_res[a] = id
@@ -296,7 +296,7 @@ for (var a = 0; a < load.bg_amount; a++)
 		load_id = loadid++
 		save_id_map[?load_id] = load_id
 		
-		type = "texture"
+		type = e_res_type.TEXTURE
 		filename = load.bg_name[a]
 		
 		load.bg_res[a] = id
@@ -322,8 +322,8 @@ for (var a = 0; a < load.lib_amount; a++)
 		// Characters
 		switch (type)
 		{
-			case "char":
-			case "spblock":
+			case e_temp_type.CHARACTER:
+			case e_temp_type.SPECIAL_BLOCK:
 			{
 				model_name = load.lib_char_model_name[a]
 				model_state = array_copy_1d(load.lib_char_model_state[a])
@@ -337,7 +337,7 @@ for (var a = 0; a < load.lib_amount; a++)
 				break
 			}
 			
-			case "item":
+			case e_temp_type.ITEM:
 			{
 				item_3d = load.lib_item_type[a]
 				item_face_camera = load.lib_item_face[a]
@@ -353,7 +353,7 @@ for (var a = 0; a < load.lib_amount; a++)
 				break
 			}
 			
-			case "block":
+			case e_temp_type.BLOCK:
 			{
 				var block = mc_assets.block_legacy_id_map[?load.lib_block_id[a]];
 				if (!is_undefined(block))
@@ -371,7 +371,7 @@ for (var a = 0; a < load.lib_amount; a++)
 				break
 			}
 			
-			case "scenery":
+			case e_temp_type.SCENERY:
 			{
 				if (load.lib_scenery_source[a] != "")
 				{
@@ -381,7 +381,7 @@ for (var a = 0; a < load.lib_amount; a++)
 						load_id = loadid++
 						save_id_map[?load_id] = load_id
 		
-						type = "schematic"
+						type = e_res_type.SCHEMATIC
 						filename = filename_name(load.lib_scenery_source[a])
 		
 						other.scenery = load_id
@@ -414,12 +414,12 @@ for (var a = 0; a < load.tl_amount; a++)
 			continue
 		
 		tl = new(obj_timeline)
-		tl.type = "camera"
+		tl.type = e_tl_type.CAMERA
 	}
 	else if (load.tl_type[a] = "light")
 	{
 		tl = new(obj_timeline)
-		tl.type = "pointlight"
+		tl.type = e_tl_type.POINT_LIGHT
 	}
 	else
 	{
@@ -443,7 +443,7 @@ for (var a = 0; a < load.tl_amount; a++)
 		parent_tree_index = null
 		
 		// Create parts
-		if (type = "char" || type = "spblock")
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
 		{
 			part_list = ds_list_create()
 			if (temp.model_file != null)
@@ -454,7 +454,7 @@ for (var a = 0; a < load.tl_amount; a++)
 		}
 		
 		// Set rotation point
-		else if (type = "item" || type = "block" || type = "scenery") 
+		else if (type = e_temp_type.ITEM || type = e_temp_type.BLOCK || type = e_temp_type.SCENERY) 
 		{
 			rot_point_custom = true
 			rot_point = point3D_copy(load.lib_rotpoint[lib])
@@ -501,7 +501,7 @@ for (var a = 0; a < load.tl_amount; a++)
 					
 					value[e_value.TRANSITION] = project_load_legacy_beta_value(e_value.TRANSITION, readkf.set[0])
 					
-					if (other.type = "camera")
+					if (other.type = e_tl_type.CAMERA)
 					{
 						value[e_value.CAM_ROTATE] = true
 						value[e_value.ROT_X] = value[e_value.CAM_ROTATE_ANGLE_Z]
@@ -632,7 +632,7 @@ if (argument0)
 	cam_work_zoom_goal = cam_work_zoom
 	cam_work_angle_look_xy = cam_work_angle_xy
 	cam_work_angle_look_z = -cam_work_angle_z
-	cam_work_set_from()
+	camera_work_set_from()
 	
 	// Playback
 	project_tempo = load.tempo

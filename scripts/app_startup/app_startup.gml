@@ -27,13 +27,15 @@ vertex_format_startup()
 if (!shader_startup())
 	return false
 
-app_startup_globals()
 app_startup_lists()
 app_startup_window()
 
+json_startup()
 settings_startup()
+project_startup()
 project_legacy_startup()
 render_startup()
+camera_startup()
 
 if (!minecraft_assets_startup())
 {

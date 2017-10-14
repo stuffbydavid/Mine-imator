@@ -25,24 +25,31 @@ if (setting_render_ssao)
 	{
 		draw_clear_alpha(c_white, 0)
 		render_world_start(5000)
-		render_world("highssaodepthnormal")
+		render_world(e_render_mode.HIGH_SSAO_DEPTH_NORMAL)
 		render_world_done()
 	}
 	surface_reset_target()
 	
 	// Calculate SSAO
+	render_shader_obj = shader_map[?shader_high_ssao]
+	with (render_shader_obj)
+		shader_set(shader)
+			
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	ssaosurf = render_surface[0]
 	surface_set_target(ssaosurf)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear(c_white)
-		shader_high_ssao_set(depthsurf, normalsurf, brightnesssurf)
+		with (render_shader_obj)
+			shader_high_ssao_set(depthsurf, normalsurf, brightnesssurf)
 		draw_blank(0, 0, render_width, render_height) // Blank quad
-		shader_reset()
 		gpu_set_texrepeat(true)
 	}
 	surface_reset_target()
+	
+	with (render_shader_obj)
+		shader_clear()
 	
 	// Blur
 	repeat (setting_render_ssao_blur_passes)
@@ -51,23 +58,30 @@ if (setting_render_ssao)
 		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 		ssaosurftemp = render_surface[3]
 		
+		render_shader_obj = shader_map[?shader_high_ssao_blur]
+		with (render_shader_obj)
+			shader_set(shader)
+		
 		// Horizontal
 		surface_set_target(ssaosurftemp)
 		{
-			shader_high_ssao_blur_set(depthsurf, normalsurf, 1, 0)
+			with (render_shader_obj)
+				shader_high_ssao_blur_set(depthsurf, normalsurf, 1, 0)
 			draw_surface_exists(ssaosurf, 0, 0)
-			shader_reset()
 		}
 		surface_reset_target()
 		
 		// Vertical
 		surface_set_target(ssaosurf)
 		{
-			shader_high_ssao_blur_set(depthsurf, normalsurf, 0, 1)
+			with (render_shader_obj)
+				shader_high_ssao_blur_set(depthsurf, normalsurf, 0, 1)
 			draw_surface_exists(ssaosurftemp, 0, 0)
-			shader_reset()
 		}
 		surface_reset_target()
+		
+		with (render_shader_obj)
+			shader_clear()
 	}
 	gpu_set_texrepeat(true)
 }
@@ -91,7 +105,7 @@ if (setting_render_shadows)
 				background_light_data[3], background_light_data[7], 
 				cam_fov, background_sunlight_color_final
 			)
-			render_world("highlightsundepth")
+			render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 			render_world_done()
 		}
 		surface_reset_target()
@@ -105,16 +119,16 @@ if (setting_render_shadows)
 	{
 		draw_clear(c_white)
 		render_world_start()
-		render_world(test(sunout, "highlightsun", "highlightnight"))
+		render_world(test(sunout, e_render_mode.HIGH_LIGHT_SUN, e_render_mode.HIGH_LIGHT_NIGHT))
 		render_world_done()
 	}
 	surface_reset_target()
 		
 	// Get number of lights (to divide brightness by)
-	shader_lights = 0
+	render_light_amount = 0
 	with (obj_timeline)
-		if (value_inherit[e_value.VISIBLE] && !hide && (type = "pointlight" || type = "spotlight"))
-			shader_lights++
+		if (value_inherit[e_value.VISIBLE] && !hide && (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT))
+			render_light_amount++
 	
 	// User placed lights
 	with (obj_timeline)
@@ -124,7 +138,7 @@ if (setting_render_shadows)
 		if (!value_inherit[e_value.VISIBLE] || hide)
 			continue
 		
-		if (type = "pointlight")
+		if (type = e_tl_type.POINT_LIGHT)
 		{
 			// Depth
 			for (var d = e_dir.EAST; d < e_dir.amount; d++)
@@ -133,12 +147,12 @@ if (setting_render_shadows)
 				if (d = e_dir.DOWN || d = e_dir.UP)
 					look[Y] -= 0.0001
 				
-				app.render_surface_point_buffer[d] = surface_require(app.render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size)
-				surface_set_target(app.render_surface_point_buffer[d])
+				render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size)
+				surface_set_target(render_surface_point_buffer[d])
 				{
 					draw_clear(c_white)
 					render_world_start_light(world_pos, point3D_add(world_pos, look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE])
-					render_world("highlightpointdepth")
+					render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 					render_world_done()
 				}
 				surface_reset_target()
@@ -153,24 +167,24 @@ if (setting_render_shadows)
 				{
 					draw_clear(c_white)
 					render_world_start()
-					render_world("highlightpoint")
+					render_world(e_render_mode.HIGH_LIGHT_POINT)
 					render_world_done()
 				}
 				surface_reset_target()
 			}
 			
 		}
-		else if (type = "spotlight")
+		else if (type = e_tl_type.SPOT_LIGHT)
 		{
 			var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 			
 			// Depth
-			app.render_surface_spot_buffer = surface_require(app.render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size)
-			surface_set_target(app.render_surface_spot_buffer)
+			render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size)
+			surface_set_target(render_surface_spot_buffer)
 			{
 				draw_clear(c_white)
 				render_world_start_light(world_pos, lookat, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
-				render_world("highlightspotdepth")
+				render_world(e_render_mode.HIGH_LIGHT_SPOT_DEPTH)
 				render_world_done()
 			}
 			surface_reset_target()
@@ -184,7 +198,7 @@ if (setting_render_shadows)
 				{
 					draw_clear(c_white)
 					render_world_start()
-					render_world("highlightspot")
+					render_world(e_render_mode.HIGH_LIGHT_SPOT)
 					render_world_done()
 				}
 				surface_reset_target()
@@ -219,7 +233,7 @@ if (background_fog_show)
 	{
 		draw_clear(c_black)
 		render_world_start()
-		render_world("highfog")
+		render_world(e_render_mode.HIGH_FOG)
 		render_world_done()
 	}
 	surface_reset_target()
@@ -248,7 +262,7 @@ surface_set_target(finalsurf)
 	// World
 	render_world_start()
 	render_world_sky()
-	render_world("colorfog")
+	render_world(e_render_mode.COLOR_FOG)
 	render_world_done()
 	
 	// 2D mode
@@ -262,18 +276,27 @@ surface_set_target(finalsurf)
 	// Multiply by shadows
 	if (setting_render_shadows)
 	{
-		shader_high_light_apply_set()
+		render_shader_obj = shader_map[?shader_high_light_apply]
+		with (render_shader_obj)
+			shader_use()
 		draw_surface_exists(shadowsurf, 0, 0)
-		shader_reset()
+		with (render_shader_obj)
+			shader_clear()
 	}
 	gpu_set_blendmode(bm_normal)
 	
 	// Draw fog
 	if (background_fog_show)
 	{
-		shader_high_fog_apply_set(fogsurf)
+		render_shader_obj = shader_map[?shader_high_fog_apply]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_high_fog_apply_set(fogsurf)
+		}
 		draw_blank(0, 0, render_width, render_height)
-		shader_reset()
+		with (render_shader_obj)
+			shader_clear()
 	}
 	
 	// Alpha fix
@@ -283,7 +306,7 @@ surface_set_target(finalsurf)
 	else
 	{
 		render_world_start()
-		render_world("alphafix")
+		render_world(e_render_mode.ALPHA_FIX)
 		render_world_done()
 	}
 	gpu_set_blendmode(bm_normal)
@@ -306,7 +329,7 @@ if (render_camera_dof)
 	{
 		draw_clear(c_white)
 		render_world_start()
-		render_world("highdofdepth")
+		render_world(e_render_mode.HIGH_DOF_DEPTH)
 		render_world_done()
 	}
 	surface_reset_target()
@@ -371,7 +394,7 @@ if (setting_render_aa)
 		else
 		{
 			render_world_start()
-			render_world("alphatest")
+			render_world(e_render_mode.ALPHA_TEST)
 			render_world_done()
 		}
 		gpu_set_blendmode(bm_normal)
@@ -390,9 +413,12 @@ if (render_overlay)
 	
 		if (render_camera_colors)
 		{
-			shader_color_camera_set(render_camera)
+			render_shader_obj = shader_map[?shader_color_camera]
+			with (render_shader_obj)
+				shader_use()
 			draw_surface_exists(finalsurf, 0, 0)
-			shader_reset()
+			with (render_shader_obj)
+				shader_clear()
 		}
 		else
 			draw_surface_exists(finalsurf, 0, 0)

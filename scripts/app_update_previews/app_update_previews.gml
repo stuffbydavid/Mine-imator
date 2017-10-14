@@ -14,7 +14,7 @@ with (obj_preview)
 	}
 	last_select = select
 	
-	if (select && select.type = "particles")
+	if (select && select.type = e_temp_type.PARTICLE_SPAWNER)
 		particle_spawner_update()
 	
 	spawn_laststep = current_step

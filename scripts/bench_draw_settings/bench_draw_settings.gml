@@ -17,7 +17,7 @@ content_height = dh
 
 // Header
 draw_set_font(setting_font_bold)
-draw_text(dx + padding, dy + padding, text_get("type" + bench_settings.type))
+draw_text(dx + padding, dy + padding, text_get("type" + tl_type_name_list[|bench_settings.type]))
 draw_set_font(setting_font)
 draw_separator_horizontal(dx + padding, dy + padding + 20, dw - padding * 2)
 
@@ -47,12 +47,12 @@ else
 	// Settings
 	switch (bench_settings.type)
 	{
-		case "char":
-		case "spblock":
-		case "bodypart":
+		case e_temp_type.CHARACTER:
+		case e_temp_type.SPECIAL_BLOCK:
+		case e_temp_type.BODYPART:
 		{
 			var labeltext, list, texcap, capwid, part;
-			if (bench_settings.type = "char")
+			if (bench_settings.type = e_temp_type.CHARACTER)
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.char_list
@@ -60,7 +60,7 @@ else
 				capwid  = text_caption_width(texcap)
 				part = bench_settings.model_file
 			}
-			else if (bench_settings.type = "spblock")
+			else if (bench_settings.type = e_temp_type.SPECIAL_BLOCK)
 			{
 				labeltext = text_get("benchblock")
 				list = bench_settings.special_block_list
@@ -68,7 +68,7 @@ else
 				capwid  = text_caption_width(texcap)
 				part = bench_settings.model_file
 			}
-			else if (bench_settings.type = "bodypart")
+			else if (bench_settings.type = e_temp_type.BODYPART)
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.bodypart_model_list
@@ -106,7 +106,7 @@ else
 			menu_model_current = null
 			
 			// Bodypart
-			if (bench_settings.type = "bodypart" && bench_settings.model_file != null)
+			if (bench_settings.type = e_temp_type.BODYPART && bench_settings.model_file != null)
 			{
 				draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, null, null, capwid)
 				dy += 24 + 8
@@ -122,7 +122,7 @@ else
 			break
 		}
 		
-		case "scenery":
+		case e_temp_type.SCENERY:
 		{
 			var capwid, text, tex;
 			capwid = text_caption_width("benchschematic", "benchblocktex")
@@ -140,7 +140,7 @@ else
 			break
 		}
 		
-		case "item":
+		case e_temp_type.ITEM:
 		{
 			var capwid, res, text, sprite;
 			capwid = text_caption_width("typeitem", "benchitemtex")
@@ -162,7 +162,7 @@ else
 			// Item select
 			if (res.item_sheet_texture != null)
 			{
-				var slots = test(res.type = "pack", ds_list_size(mc_assets.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
+				var slots = test(res.type = e_res_type.PACK, ds_list_size(mc_assets.item_texture_list), res.item_sheet_size[X] * res.item_sheet_size[Y]);
 				listh = 200 + bench_settings.height_custom
 				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, listh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8
@@ -180,7 +180,7 @@ else
 			break
 		}
 		
-		case "block":
+		case e_temp_type.BLOCK:
 		{
 			var capwid, text, sprite;
 			capwid = text_caption_width("benchblocktex")
@@ -219,7 +219,7 @@ else
 			break
 		}
 		
-		case "particles":
+		case e_temp_type.PARTICLE_SPAWNER:
 		{
 			// Particles
 			draw_label(text_get("benchparticlespreset") + ":", dx, dy + 8, fa_left, fa_middle)
@@ -230,7 +230,7 @@ else
 			break
 		}
 		
-		case "text":
+		case e_temp_type.TEXT:
 		{
 			// Font
 			draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, 32, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font)
@@ -252,21 +252,21 @@ else
 			if (bench_settings.shape_tex)
 			{
 				text = bench_settings.shape_tex.display_name
-				if (bench_settings.shape_tex.type != "camera")
+				if (bench_settings.shape_tex.type != e_tl_type.CAMERA)
 					tex = bench_settings.shape_tex.texture
 			}
 			draw_button_menu("benchshapetex", e_menu.LIST, dx, dy, dw, 40, bench_settings.shape_tex, text, action_bench_shape_tex, tex)
 			dy += 40 + 8
 			
 			// Is mapped
-			if (bench_settings.type = "cube" || 
-				bench_settings.type = "cylinder" || 
-				bench_settings.type = "cone")
+			if (bench_settings.type = e_temp_type.CUBE || 
+				bench_settings.type = e_temp_type.CYLINDER || 
+				bench_settings.type = e_temp_type.CONE)
 			{
 				draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map)
 				dy += 16
 			}
-			else if (bench_settings.type = "surface")
+			else if (bench_settings.type = e_temp_type.SURFACE)
 			{
 				draw_checkbox("benchshapefacecamera", dx, dy, bench_settings.shape_face_camera, action_bench_shape_face_camera)
 				dy += 16

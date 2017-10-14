@@ -79,10 +79,11 @@
 		},
 		{
 			"name": "pig",
+			"file": "pig.mimodel",
 			"states": {
 				"saddle": [
-					{ "value": "false", "file": "pig.mimodel" },
-					{ "value": "true", "file": "pig_saddle.mimodel" }
+					{ "value": "false", "hide": [ "saddle" ] },
+					{ "value": "true" }
 				]
 			},
 			"default_state": "saddle=false"
@@ -177,9 +178,17 @@
 					{ "value": "mule", "texture": "entity/horse/mule" },
 					{ "value": "skeleton", "texture": "entity/horse/horse_skeleton" },
 					{ "value": "zombie", "texture": "entity/horse/horse_zombie" }
+				],
+				"saddle": [
+					{ "value": "false", "hide": [ "saddle", "right_stirrup", "left_stirrup", "halter", "right_rein", "left_rein" ] },
+					{ "value": "true" }
+				],
+				"chests": [
+					{ "value": "false", "hide": [ "chests", "right_chest", "left_chest" ] },
+					{ "value": "true" }
 				]
 			},
-			"default_state": "variant=black"
+			"default_state": "variant=black,saddle=false,chests=false"
 		},
 		{
 			"name": "llama",
@@ -193,6 +202,7 @@
 					{ "value": "white", "texture": "entity/llama/llama_white" }
 				],
 				"decor": [
+					{ "value": "none", "hide": [ "body_decoration", "neck_decoration" ] },
 					{ "value": "white", "texture": { "body_decoration": "entity/llama/decor/decor_white", "neck_decoration": "entity/llama/decor/decor_white" } },
 					{ "value": "orange", "texture": { "body_decoration": "entity/llama/decor/decor_orange", "neck_decoration": "entity/llama/decor/decor_orange" } },
 					{ "value": "magenta", "texture": { "body_decoration": "entity/llama/decor/decor_magenta", "neck_decoration": "entity/llama/decor/decor_magenta" } },
@@ -209,9 +219,13 @@
 					{ "value": "green", "texture": { "body_decoration": "entity/llama/decor/decor_green", "neck_decoration": "entity/llama/decor/decor_green" } },
 					{ "value": "red", "texture": { "body_decoration": "entity/llama/decor/decor_red", "neck_decoration": "entity/llama/decor/decor_red" } },
 					{ "value": "black", "texture": { "body_decoration": "entity/llama/decor/decor_black", "neck_decoration": "entity/llama/decor/decor_black" } }
+				],
+				"chests": [
+					{ "value": "false", "hide": [ "chests", "right_chest", "left_chest" ] },
+					{ "value": "true" }
 				]
 			},
-			"default_state": "variant=normal,decor=white"
+			"default_state": "variant=normal,decor=none,chests=false"
 		},
 		{
 			"name": "villager",

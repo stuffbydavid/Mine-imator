@@ -8,7 +8,7 @@ with (obj_timeline)
 	if (ds_list_size(keyframe_list) = 0)
 		continue
 		
-	if (type = "audio")
+	if (type = e_tl_type.AUDIO)
 	{
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 			len = max(len, keyframe_list[|k].position + tl_keyframe_length(keyframe_list[|k]))

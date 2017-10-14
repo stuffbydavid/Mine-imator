@@ -9,7 +9,7 @@ if (fn = "")
 
 temp_creator = bench_settings
 bench_clear()
-particles_open(fn, bench_settings)
+particles_load(fn, bench_settings)
 temp_creator = app
 
 bench_settings.preview.fire = true

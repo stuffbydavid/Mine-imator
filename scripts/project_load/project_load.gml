@@ -48,8 +48,9 @@ if (!file_exists_lib(fn))
 	return 0
 
 // Post 1.1.0 (JSON)
-var rootmap, legacy, buf;
-if (string_contains(filename_ext(fn), ".miproject"))
+var ext, rootmap, legacy, buf;
+ext = filename_ext(fn)
+if (ext = ".miproject" || string_contains(ext, ".backup"))
 {
 	log("Opening project", fn)
 	rootmap = project_load_start(fn)

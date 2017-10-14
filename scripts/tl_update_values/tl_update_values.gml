@@ -152,7 +152,7 @@ if (value_type[e_value_type.TEXT])
 tl_update_values_ease(e_value.VISIBLE, trans, p)
 
 // Play sounds
-if (type = "audio" && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
+if (type = e_tl_type.AUDIO && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
 {
 	// Play new sound
 	if (keyframe_current)
@@ -183,5 +183,5 @@ if (type = "audio" && !hide && app.timeline_marker > app.timeline_marker_previou
 }
 
 // Fire particles
-if (type = "particles" && !temp.pc_spawn_constant && value[e_value.SPAWN] && app.timeline_marker > app.timeline_marker_previous && oldkf != keyframe_current)
+if (type = e_temp_type.PARTICLE_SPAWNER && !temp.pc_spawn_constant && value[e_value.SPAWN] && app.timeline_marker > app.timeline_marker_previous && oldkf != keyframe_current)
 	fire = true

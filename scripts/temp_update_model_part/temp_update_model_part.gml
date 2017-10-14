@@ -28,7 +28,7 @@ if (model_part = null && ds_list_size(model_file.file_part_list) > 0)
 // Update timelines
 with (obj_timeline)
 {
-	if (type != "bodypart" || temp != other.id)
+	if (type != e_temp_type.BODYPART || temp != other.id)
 		continue
 	
 	model_part = other.model_part

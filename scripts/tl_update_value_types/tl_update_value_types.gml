@@ -4,7 +4,7 @@
 for (var v = 0; v < e_value_type.amount; v++)
 	value_type[v] = false
 
-if (type = "audio")
+if (type = e_tl_type.AUDIO)
 {
 	value_type[e_value_type.SOUND] = true
 	value_type[e_value_type.AUDIO] = true
@@ -13,7 +13,7 @@ if (type = "audio")
 
 value_type[e_value_type.KEYFRAME] = true
 
-if (type = "background")
+if (type = e_tl_type.BACKGROUND)
 {
 	value_type[e_value_type.BACKGROUND] = true
 	return 0
@@ -23,53 +23,65 @@ if (type = "background")
 value_type[e_value_type.HIERARCHY] = true
 value_type[e_value_type.GRAPHICS] = true
 
-if (type = "camera" || type = "pointlight" || type = "spotlight")
+if (type = e_tl_type.CAMERA || type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.GRAPHICS] = false
 
 // Position
 value_type[e_value_type.POSITION] = true
 
 // Rotation
-if (type != "particles" && type != "pointlight")
+if (type != e_tl_type.PARTICLE_SPAWNER && type != e_tl_type.POINT_LIGHT)
 	value_type[e_value_type.ROTATION] = true
 
 // Scale
-if (type != "particles" && type != "camera" && type != "pointlight" && type != "spotlight")
+if (type != e_tl_type.PARTICLE_SPAWNER &&
+	type != e_tl_type.CAMERA &&
+	type != e_tl_type.POINT_LIGHT &&
+	type != e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.SCALE] = true
 
 // Bend
-if (type = "bodypart" && model_part != null && model_part.bend_part != null)
+if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != null)
 	value_type[e_value_type.BEND] = true
 
 // Color
-if (type != "pointlight" && type != "spotlight")
+if (type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.COLOR] = true
 
 // Particles
-if (type = "particles")
+if (type = e_tl_type.PARTICLE_SPAWNER)
 	value_type[e_value_type.PARTICLES] = true
 
 // Light
-if (type = "pointlight" || type = "spotlight")
+if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.LIGHT] = true
 
 // Spotlight
-if (type = "spotlight")
+if (type = e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.SPOTLIGHT] = true
 
 // Camera
-if (type = "camera")
+if (type = e_tl_type.CAMERA)
 	value_type[e_value_type.CAMERA] = true
 
 // Texture
-if (type != "item" && type != "particles" && type != "camera" && type != "pointlight" && type != "spotlight" && type != "text" && type != "folder")
+if (type != e_tl_type.ITEM &&
+	type != e_tl_type.PARTICLE_SPAWNER &&
+	type != e_tl_type.CAMERA &&
+	type != e_tl_type.POINT_LIGHT &&
+	type != e_tl_type.SPOT_LIGHT &&
+	type != e_tl_type.TEXT &&
+	type != e_tl_type.FOLDER)
 	value_type[e_value_type.TEXTURE] = true
 	
 // Text
-if (type = "text")
+if (type = e_tl_type.TEXT)
 	value_type[e_value_type.TEXT] = true
 
 // Rotation point
 value_type[e_value_type.ROT_POINT] = true
-if (type = "particles" || type = "camera" || type = "pointlight" || type = "spotlight")
+if (type = e_tl_type.PARTICLE_SPAWNER ||
+	type = e_tl_type.CAMERA ||
+	type = e_tl_type.POINT_LIGHT ||
+	type = e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.ROT_POINT] = false

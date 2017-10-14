@@ -12,7 +12,7 @@ with (new(obj_timeline))
 	load_id = value_get_string(map[?"id"], save_id)
 	save_id_map[?load_id] = load_id
 	
-	type = value_get_string(map[?"type"], type)
+	type = ds_list_find_index(tl_type_name_list, value_get_string(map[?"type"]))
 	name = value_get_string(map[?"name"], name)
 	
 	temp = value_get_save_id(map[?"temp"], temp)
@@ -21,16 +21,16 @@ with (new(obj_timeline))
 	lock = value_get_real(map[?"lock"], lock)
 	depth = value_get_real(map[?"depth"], depth)
 	
-	if (type = "bodypart")
+	if (type = e_temp_type.BODYPART)
 		model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
 		
-	if (type = "text")
+	if (type = e_temp_type.TEXT)
 		text = value_get_string(map[?"text"], text)
 	
 	part_of = value_get_save_id(map[?"part_of"], part_of)
 	if (part_of != null)
 	{
-		if (type = "spblock")
+		if (type = e_temp_type.SPECIAL_BLOCK)
 		{
 			var modelmap = map[?"model"];
 			if (ds_map_valid(modelmap))
@@ -39,7 +39,7 @@ with (new(obj_timeline))
 				model_state = value_get_state_vars(modelmap[?"state"])
 			}
 		}
-		else if (type = "block")
+		else if (type = e_temp_type.BLOCK)
 		{
 			var blockmap = map[?"block"];
 			if (ds_map_valid(blockmap))
@@ -130,13 +130,13 @@ with (new(obj_timeline))
 	backfaces = value_get_real(map[?"backfaces"], backfaces)
 	texture_blur = value_get_real(map[?"texture_blur"], texture_blur)
 	texture_filtering = value_get_real(map[?"texture_filtering"], texture_filtering)
-	if (type = "bodypart")
+	if (type = e_temp_type.BODYPART)
 		round_bending = value_get_real(map[?"round_bending"], round_bending)
 	shadows = value_get_real(map[?"shadows"], shadows)
 	ssao= value_get_real(map[?"ssao"], ssao)
 	fog = value_get_real(map[?"fog"], fog)
 	
-	if (type = "scenery" || type = "block" || type = "particles" || type = "text" || type_is_shape(type))
+	if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
 	{
 		wind = value_get_real(map[?"wind"], wind)
 		wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)

@@ -9,16 +9,16 @@ if (!tl_edit.temp)
 	
 switch (tl_edit.type)
 {
-	case "char":
-	case "spblock":
-	case "bodypart":
+	case e_temp_type.CHARACTER:
+	case e_temp_type.SPECIAL_BLOCK:
+	case e_temp_type.BODYPART:
 	{
-		name = "frameeditor" + tl_edit.type + "tex"
+		name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 		
-		if (texobj = null || texobj.type = "camera" || (texobj.model_texture = null && texobj.model_texture_map = null))
+		if (texobj = null || texobj.type = e_tl_type.CAMERA || (texobj.model_texture = null && texobj.model_texture_map = null))
 			texobj = tl_edit.temp.skin
 		
-		if (tl_edit.type = "bodypart")
+		if (tl_edit.type = e_temp_type.BODYPART)
 		{
 			with (texobj)
 				tex = res_get_model_texture(model_part_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part))
@@ -31,11 +31,11 @@ switch (tl_edit.type)
 		break
 	}
 	
-	case "block":
-	case "scenery":
+	case e_temp_type.BLOCK:
+	case e_temp_type.SCENERY:
 	{
 		name = "frameeditorblocktex"
-		if (texobj = null || texobj.type = "camera" || texobj.block_sheet_texture = null)
+		if (texobj = null || texobj.type = e_tl_type.CAMERA || texobj.block_sheet_texture = null)
 			texobj = tl_edit.temp.block_tex
 		tex = texobj.block_preview_texture
 		break
@@ -47,7 +47,7 @@ switch (tl_edit.type)
 		with (tl_edit.temp)
 		{
 			texobj = temp_get_shape_texobj(texobj)
-			if (texobj != null && texobj.type != "camera")
+			if (texobj != null && texobj.type != e_tl_type.CAMERA)
 				tex = texobj.texture
 		}
 		break

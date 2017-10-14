@@ -1,11 +1,7 @@
-/// shader_high_fog_apply_set(fogsurface)
-/// @arg fogsurface
+/// shader_high_fog_apply_set(fogbuffer)
+/// @arg fogbuffer
 
-var fogBuffer = shader_get_sampler_index(shader_high_fog_apply, "fogBuffer"), 
-	fogColor = shader_get_uniform(shader_high_fog_apply, "fogColor");
+var fogbuffer = argument0;
 
-shader_set(shader_high_fog_apply)
-
-texture_set_stage(fogBuffer, surface_get_texture(argument0))
-
-shader_set_uniform_color(fogColor, background_fog_color_final, 1)
+texture_set_stage(sampler_map[?"uFogBuffer"], surface_get_texture(fogbuffer))
+shader_set_uniform_color("uFogColor", app.background_fog_color_final, 1)

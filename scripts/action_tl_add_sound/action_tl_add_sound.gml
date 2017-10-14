@@ -29,7 +29,7 @@ else
 		hobj = history_set(action_tl_add_sound)
 	}
 	
-	res = new_res(fn, "sound")
+	res = new_res(fn, e_res_type.SOUND)
 	res.loaded = !res.replaced
 	with (res)
 		res_load()
@@ -46,9 +46,9 @@ else
 	{
 		with (hobj)
 		{
-			id.filename = fn
-			id.position = pos
-			id.kf_index = ds_list_find_index(tl_edit.keyframe_list, kf)
+			filename = fn
+			position = pos
+			kf_index = ds_list_find_index(tl_edit.keyframe_list, kf)
 			history_save_loaded()
 		}
 	}

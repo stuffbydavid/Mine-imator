@@ -94,6 +94,8 @@ if (filename_ext(fn) = ".midata")
 
 		setting_font_filename = value_get_string(interfacemap[?"font_filename"], setting_font_filename)
 		setting_language_filename = value_get_string(interfacemap[?"language_filename"], setting_language_filename)
+		if (setting_language_filename != language_file)
+			language_load(setting_language_filename, language_map)
 		
 		settings_load_colors(interfacemap[?"colors"])
 
@@ -213,6 +215,7 @@ if (filename_ext(fn) = ".midata")
 		setting_bend_round_default = value_get_real(graphicsmap[?"bend_round_default"], setting_bend_round_default)
 		setting_bend_detail = value_get_real(graphicsmap[?"bend_detail"], setting_bend_detail)
 		setting_bend_scale = value_get_real(graphicsmap[?"bend_scale"], setting_bend_scale)
+		setting_schematic_add_timelines = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_schematic_add_timelines)
 		setting_schematic_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_schematic_remove_edges)
 		setting_liquid_animation = value_get_real(graphicsmap[?"liquid_animation"], setting_liquid_animation)
 		setting_texture_filtering = value_get_real(graphicsmap[?"texture_filtering"], setting_texture_filtering)

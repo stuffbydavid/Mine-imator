@@ -31,6 +31,7 @@ if (itemsize = null)
 	itemsize = item_size
 
 // Create surface of static blocks
+draw_texture_start()
 surf = surface_create(item_sheet_width * itemsize, item_sheet_height * itemsize)
 surface_set_target(surf)
 {
@@ -51,6 +52,7 @@ surface_set_target(surf)
 	gpu_set_blendmode(bm_normal)
 }
 surface_reset_target()
+draw_texture_done()
 
 item_sheet_texture = texture_surface(surf)
 

@@ -55,11 +55,11 @@ tab_next()
 
 switch (temp_edit.type)
 {
-	case "char":
-	case "spblock":
+	case e_temp_type.CHARACTER:
+	case e_temp_type.SPECIAL_BLOCK:
 	{
 		var text, wid;
-		text = test(temp_edit.type = "char", "librarycharmodel", "libraryspblockmodel")
+		text = test(temp_edit.type = e_temp_type.CHARACTER, "librarycharmodel", "libraryspblockmodel")
 		wid = text_max_width("librarycharmodelchange") + 20
 		
 		// Model
@@ -79,13 +79,13 @@ switch (temp_edit.type)
 			tex = res_get_model_texture(model_part_texture_name(temp_edit.model_texture_name_map, temp_edit.model_file))
 		
 		tab_control(40)
-		draw_button_menu(test(temp_edit.type = "spblock", "libraryspblocktex", "libraryskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.skin, temp_edit.skin.display_name, action_lib_skin, tex, null, capwid)
+		draw_button_menu(test(temp_edit.type = e_temp_type.SPECIAL_BLOCK, "libraryspblocktex", "libraryskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.skin, temp_edit.skin.display_name, action_lib_skin, tex, null, capwid)
 		tab_next()
 		
 		break
 	}
 	
-	case "scenery":
+	case e_temp_type.SCENERY:
 	{
 		// Schematic
 		var text;
@@ -105,7 +105,7 @@ switch (temp_edit.type)
 		break
 	}
 	
-	case "item":
+	case e_temp_type.ITEM:
 	{
 		var wid, res;
 		wid = text_max_width("libraryitemchange") + 20
@@ -144,7 +144,7 @@ switch (temp_edit.type)
 		break
 	}
 	
-	case "block":
+	case e_temp_type.BLOCK:
 	{
 		// Block
 		var wid = text_max_width("libraryblockchange") + 20;
@@ -163,7 +163,7 @@ switch (temp_edit.type)
 		break
 	}
 	
-	case "bodypart":
+	case e_temp_type.BODYPART:
 	{
 		// Model
 		tab_control(24)
@@ -192,7 +192,7 @@ switch (temp_edit.type)
 		break
 	}
 	
-	case "particles":
+	case e_temp_type.PARTICLE_SPAWNER:
 	{
 		// Open editor
 		var wid = text_max_width("libraryparticleeditoropen") + 20;
@@ -206,7 +206,7 @@ switch (temp_edit.type)
 		break
 	}
 	
-	case "text":
+	case e_temp_type.TEXT:
 	{
 		// Font
 		tab_control(32)
@@ -222,7 +222,11 @@ switch (temp_edit.type)
 		break
 	}
 	
-	default: // Shapes
+	case e_temp_type.CUBE: 
+	case e_temp_type.CONE: 
+	case e_temp_type.CYLINDER: 
+	case e_temp_type.SPHERE: 
+	case e_temp_type.SURFACE: // Shapes
 	{
 		// Texture
 		var text, sprite;
@@ -230,7 +234,7 @@ switch (temp_edit.type)
 		if (temp_edit.shape_tex != null)
 		{
 			text = temp_edit.shape_tex.display_name
-			if (temp_edit.shape_tex.type != "camera")
+			if (temp_edit.shape_tex.type != e_tl_type.CAMERA)
 				sprite = temp_edit.shape_tex.texture
 		}
 		else
@@ -241,7 +245,7 @@ switch (temp_edit.type)
 		tab_next()
 		
 		// Mapped
-		if (temp_edit.type = "cube" || temp_edit.type = "cone" || temp_edit.type = "cylinder")
+		if (temp_edit.type = e_temp_type.CUBE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
 			tab_control(24)
 			draw_checkbox("libraryshapetexmapped", dx, dy + 3, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
@@ -288,7 +292,7 @@ switch (temp_edit.type)
 		}
 		
 		// Closed
-		if (temp_edit.type = "cone" || temp_edit.type = "cylinder")
+		if (temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
 			tab_control_checkbox()
 			draw_checkbox("libraryshapeclosed", dx, dy, temp_edit.shape_closed, action_lib_shape_closed)
@@ -300,14 +304,14 @@ switch (temp_edit.type)
 		draw_checkbox("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert)
 		tab_next()
 		
-		if (temp_edit.type = "sphere" || temp_edit.type = "cone" || temp_edit.type = "cylinder")
+		if (temp_edit.type = e_temp_type.SPHERE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
 			// Detail
 			tab_control_dragger()
 			draw_dragger("libraryshapedetail", dx, dy, dw, temp_edit.shape_detail, 1 / 4, 4, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
 			tab_next()
 		}
-		else if (temp_edit.type = "surface")
+		else if (temp_edit.type = e_temp_type.SURFACE)
 		{
 			// Face camera
 			tab_control_checkbox()
@@ -319,7 +323,7 @@ switch (temp_edit.type)
 }
 
 // Repeat
-if (temp_edit.type = "scenery" || temp_edit.type = "block")
+if (temp_edit.type = e_temp_type.SCENERY || temp_edit.type = e_temp_type.BLOCK)
 {
 	tab_control_checkbox()
 	draw_checkbox("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)

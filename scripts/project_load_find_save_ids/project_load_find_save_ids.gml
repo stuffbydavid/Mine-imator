@@ -80,7 +80,7 @@ with (obj_template)
 		if (scenery != null)
 			scenery.count++
 		
-		if (shape_tex != null && shape_tex.type != "camera")
+		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 			shape_tex.count++
 		
 		if (text_font != null)
@@ -88,8 +88,8 @@ with (obj_template)
 	}
 	
 	// Legacy "use a sheet" option conversion
-	if (load_format < e_project.FORMAT_110_PRE_1 && type = "item" && item_tex != mc_res && !legacy_item_sheet)
-		item_tex.type = "texture"
+	if (load_format < e_project.FORMAT_110_PRE_1 && type = e_temp_type.ITEM && item_tex != mc_res && !legacy_item_sheet)
+		item_tex.type = e_res_type.TEXTURE
 }
 
 // Set timeline references
@@ -126,7 +126,10 @@ with (obj_keyframe)
 		continue
 	
 	value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
-	value[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_OBJ]])
+	if (value[e_value.TEXTURE_OBJ] = "none")
+		value[e_value.TEXTURE_OBJ] = 0
+	else
+		value[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_OBJ]])
 	value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
 	if (value[e_value.SOUND_OBJ] != null)
 		value[e_value.SOUND_OBJ].count++
