@@ -26,7 +26,7 @@ if (render_mode = e_render_mode.CLICK)
 	if (selected || lock) // Already selected when clicking?
 		return 0
 	
-	render_set_uniform_color("uBlendColor", id, 1)
+	render_set_uniform_color("uReplaceColor", id, 1)
 }
 
 // Outlined?
@@ -54,28 +54,23 @@ if (value_inherit[e_value.ALPHA] = 0)
 
 // Set render options
 render_set_culling(!backfaces)
-shader_blend_color = c_white
-shader_blend_alpha = 1
 shader_texture_filter_linear = texture_blur
 shader_texture_filter_mipmap = (app.setting_texture_filtering && texture_filtering)
 
-if (render_mode != e_render_mode.CLICK && render_mode != e_render_mode.ALPHA_TEST)
+shader_blend_color = value_inherit[e_value.RGB_MUL]
+shader_blend_alpha = value_inherit[e_value.ALPHA]
+render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+if (colors_ext)
 {
-	shader_blend_color = value_inherit[e_value.RGB_MUL]
-	shader_blend_alpha = value_inherit[e_value.ALPHA]
-	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
-	if (colors_ext)
-	{
-		render_set_uniform_int("uColorsExt", colors_ext)
-		render_set_uniform_color("uRGBAdd", value_inherit[e_value.RGB_ADD], 1)
-		render_set_uniform_color("uRGBSub", value_inherit[e_value.RGB_SUB], 1)
-		render_set_uniform_color("uHSBAdd", value_inherit[e_value.HSB_ADD], 1)
-		render_set_uniform_color("uHSBSub", value_inherit[e_value.HSB_SUB], 1)
-		render_set_uniform_color("uHSBMul", value_inherit[e_value.HSB_MUL], 1)
-		render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
-	}
-	render_set_uniform("uBrightness", value_inherit[e_value.BRIGHTNESS])
+	render_set_uniform_int("uColorsExt", colors_ext)
+	render_set_uniform_color("uRGBAdd", value_inherit[e_value.RGB_ADD], 1)
+	render_set_uniform_color("uRGBSub", value_inherit[e_value.RGB_SUB], 1)
+	render_set_uniform_color("uHSBAdd", value_inherit[e_value.HSB_ADD], 1)
+	render_set_uniform_color("uHSBSub", value_inherit[e_value.HSB_SUB], 1)
+	render_set_uniform_color("uHSBMul", value_inherit[e_value.HSB_MUL], 1)
+	render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
 }
+render_set_uniform("uBrightness", value_inherit[e_value.BRIGHTNESS])
 
 if (wind)
 	render_set_uniform("uWindEnable", wind)
@@ -163,11 +158,11 @@ else if (render_particles)
 }
 
 // Reset
+matrix_world_reset()
 render_set_culling(true)
 shader_texture_surface = false
 shader_texture_filter_linear = false
 shader_texture_filter_mipmap = false
-matrix_world_reset()
 
 render_set_uniform("uBrightness", 0)
 

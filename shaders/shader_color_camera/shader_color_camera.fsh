@@ -1,5 +1,5 @@
 uniform float uBrightness;
-uniform float uAlpha;
+uniform vec4 uBlendColor;
 
 uniform vec4 uRGBAdd;
 uniform vec4 uRGBSub;
@@ -31,11 +31,11 @@ vec4 hsbtorgb(vec4 c)
 
 void main()
 {
-	vec4 baseColor = vColor * texture2D(gm_BaseTexture, vTexCoord); // Get base
+	vec4 baseColor = vec4(uBlendColor.rgb, 1.0) * vColor * texture2D(gm_BaseTexture, vTexCoord); // Get base
 	
 	gl_FragColor = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
 	gl_FragColor = hsbtorgb(clamp(rgbtohsb(gl_FragColor) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
 	gl_FragColor = mix(gl_FragColor, vec4(uMixColor.rgb, 1.0), uMixColor.a); // Mix
 	gl_FragColor = mix(gl_FragColor, vec4(1.0), uBrightness); // Brightness
-	gl_FragColor = mix(gl_FragColor, vec4(0.0, 0.0, 0.0, 1.0), 1.0 - uAlpha); // Alpha
+	gl_FragColor = mix(gl_FragColor, vec4(0.0, 0.0, 0.0, 1.0), 1.0 - uBlendColor.a); // Alpha
 }

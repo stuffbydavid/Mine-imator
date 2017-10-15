@@ -50,7 +50,7 @@ with (obj_timeline)
 	tl_update_values()
 	
 	// Animate scenery
-	if (type = e_temp_type.SCENERY && temp.scenery != null && load_format < e_project.FORMAT_110_PRE_1)
+	if (type = e_tl_type.SCENERY && temp.scenery != null && load_format < e_project.FORMAT_110_PRE_1)
 	{
 		if (temp.scenery.ready)
 			tl_animate_scenery()

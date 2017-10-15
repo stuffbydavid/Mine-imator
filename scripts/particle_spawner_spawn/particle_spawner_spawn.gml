@@ -25,7 +25,7 @@ if (temp.pc_spawn_region_use && type.spawn_region)
 {
 	switch (temp.pc_spawn_region_type)
 	{
-		case e_temp_type.SPHERE:
+		case "sphere":
 		{
 			var xyang, zang, dis;
 			xyang = random(360)
@@ -37,7 +37,7 @@ if (temp.pc_spawn_region_use && type.spawn_region)
 			break
 		}
 		
-		case e_temp_type.CUBE:
+		case "cube":
 		{
 			pt.pos[X] += random_range(-temp.pc_spawn_region_cube_size / 2, temp.pc_spawn_region_cube_size / 2)
 			pt.pos[Y] += random_range(-temp.pc_spawn_region_cube_size / 2, temp.pc_spawn_region_cube_size / 2)

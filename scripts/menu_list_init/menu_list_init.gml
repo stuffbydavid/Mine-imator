@@ -405,7 +405,7 @@ switch (menu_name)
 	{
 		menu_add_item("preview", text_get("resourcespackpreview"))
 		menu_add_item("modeltextures", text_get("resourcespackmodeltextures"))
-		menu_add_item("block", text_get("resourcespackblocksheet"))
+		menu_add_item("blocksheet", text_get("resourcespackblocksheet"))
 		menu_add_item("colormap", text_get("resourcespackcolormap"))
 		menu_add_item("itemsheet", text_get("resourcespackitemsheet"))
 		menu_add_item("particlesheet", text_get("resourcespackparticlesheet"))

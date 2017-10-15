@@ -3,9 +3,6 @@
 /// @arg normalsurface
 /// @arg brightnesssurf
 
-if (!surface_exists(render_ssao_noise))
-	render_ssao_noise = render_generate_noise(4, 4)
-
 texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(argument0))
 texture_set_stage(sampler_map[?"uNormalBuffer"], surface_get_texture(argument1))
 texture_set_stage(sampler_map[?"uBrightnessBuffer"], surface_get_texture(argument2))

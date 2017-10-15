@@ -1,15 +1,6 @@
 /// render_world_sky_clouds()
 /// @desc Renders the cloud models.
 
-if (render_mode = e_render_mode.CLICK ||
-	render_mode = e_render_mode.SELECT ||
-	render_mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
-	render_mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
-	render_mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH ||
-	render_mode = e_render_mode.ALPHA_TEST ||
-	render_mode = e_render_mode.HIGH_FOG)
-	return 0
-
 if (!background_sky_clouds_show || !render_background)
 	return 0
 
@@ -18,7 +9,8 @@ if (!res.ready)
 	res = mc_res
 
 // Shading
-render_set_uniform_int("uIsSky", true)
+render_set_uniform_int("uIsSky", 1)
+render_set_uniform_int("uSSAOEnable", 0)
 render_set_uniform_color("uBlendColor", merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha), 0.8 - min(background_night_alpha, 0.75))
 
 // Texture
@@ -49,6 +41,7 @@ while (xx < num)
 }
 
 // Reset
-render_set_uniform_int("uIsSky", false)
+render_set_uniform_int("uIsSky", 0)
+render_set_uniform_int("uSSAOEnable", 1)
 if (!background_fog_sky)
 	render_set_uniform("uFogShow", (render_lights && app.background_fog_show))

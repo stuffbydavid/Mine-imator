@@ -39,9 +39,9 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 {
-	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_grass), 1)
+	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_grass), shader_blend_alpha)
 	vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
-	render_set_uniform_color("uBlendColor", blend, 1)
+	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 }
 
 // DEPTH 1
@@ -62,16 +62,16 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS]))
 {
-	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_grass), 1)
+	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_grass), shader_blend_alpha)
 	vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS])
-	render_set_uniform_color("uBlendColor", blend, 1)
+	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 }
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES]))
 {
-	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_foliage), 1)
+	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_foliage), shader_blend_alpha)
 	vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES])
-	render_set_uniform_color("uBlendColor", blend, 1)
+	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 }
 
 // Depth 2

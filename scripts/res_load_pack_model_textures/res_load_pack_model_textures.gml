@@ -21,7 +21,11 @@ for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	var name, fname;
 	name = mc_assets.model_texture_list[|t]
 	fname = load_assets_dir + mc_textures_directory + name + ".png"
-	model_texture_map[?name] = texture_create_square(fname)
+	
+	if (name = "entity/steve")
+		model_texture_map[?name]= res_load_player_skin(fname)
+	else
+		model_texture_map[?name] = texture_create_square(fname)
 }
 
 debug_timer_stop("res_load_pack_model_textures")

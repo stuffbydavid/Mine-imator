@@ -1,45 +1,45 @@
 /// macros()
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 #macro dev_mode_rotate_blocks		true
 
 // Versions
-#macro mineimator_version			"1.1.0 PRE-RELEASE"
+#macro mineimator_version			"1.1.0 PRE-RELEASE 2"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2017.10.03"
-#macro gm_runtime					"2.1.1.158"
+#macro mineimator_version_date		"2017.10.15"
+#macro gm_runtime					"2.1.0.144"
 #macro minecraft_version			"1.12"
 
 // File formats
-#macro project_format			e_project.FORMAT_110_PRE_1
-#macro settings_format			e_settings.FORMAT_110_PRE_1
-#macro minecraft_assets_format	e_minecraft_assets.FORMAT_110_PRE_1
+#macro project_format				e_project.FORMAT_110_PRE_1
+#macro settings_format				e_settings.FORMAT_110_PRE_1
+#macro minecraft_assets_format		e_minecraft_assets.FORMAT_110_PRE_2
 
 // Directories
-#macro file_directory			game_save_id
-#macro data_directory			working_directory + "Data\\"
-#macro projects_directory		working_directory + "Projects\\"
-#macro schematics_directory		working_directory + "Schematics\\"
-#macro skins_directory			working_directory + "Skins\\"
-#macro particles_directory		working_directory + "Particles\\"
-#macro languages_directory		data_directory + "Languages\\"
-#macro minecraft_directory		data_directory + "Minecraft\\"
+#macro file_directory				game_save_id
+#macro data_directory				working_directory + "Data\\"
+#macro projects_directory			working_directory + "Projects\\"
+#macro schematics_directory			working_directory + "Schematics\\"
+#macro skins_directory				working_directory + "Skins\\"
+#macro particles_directory			working_directory + "Particles\\"
+#macro languages_directory			data_directory + "Languages\\"
+#macro minecraft_directory			data_directory + "Minecraft\\"
 
 // Files
-#macro language_file			languages_directory + "english.milanguage"
-#macro import_file				data_directory + "import.exe"
-#macro settings_file			data_directory + "settings.midata"
-#macro legacy_file				data_directory + "legacy.midata"
-#macro key_file					data_directory + "key.midata"
-#macro log_previous_file		file_directory + "log_previous.txt"
-#macro log_file					file_directory + "log.txt"
-#macro temp_file				file_directory + "tmp.file"
-#macro temp_image				file_directory + "tmp.png"
-#macro download_image_file		file_directory + "download.png"
-#macro unzip_directory			file_directory + "unzip\\"
+#macro language_file				languages_directory + "english.milanguage"
+#macro import_file					data_directory + "import.exe"
+#macro settings_file				data_directory + "settings.midata"
+#macro legacy_file					data_directory + "legacy.midata"
+#macro key_file						data_directory + "key.midata"
+#macro log_previous_file			file_directory + "log_previous.txt"
+#macro log_file						file_directory + "log.txt"
+#macro temp_file					file_directory + "tmp.file"
+#macro temp_image					file_directory + "tmp.png"
+#macro download_image_file			file_directory + "download.png"
+#macro unzip_directory				file_directory + "unzip\\"
 
 // Minecraft structure
 #macro mc_assets_directory			"assets\\minecraft\\"
@@ -52,25 +52,24 @@
 #macro mc_loops_directory			mc_character_directory + "loops\\"
 
 // Links
-#macro link_skins				"http://skins.minecraft.net/MinecraftSkins/"
-#macro link_article_drivers		"http://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
-#macro link_download			"http://www.mineimator.com"
-#macro link_upgrade				"http://www.mineimator.com/upgrade"
-#macro link_news				"http://www.mineimator.com/news.php?version=" + mineimator_version
-#macro link_forums				"http://www.mineimatorforums.com"
-#macro link_forums_bugs			"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
-#macro link_minecraft			"http://www.minecraft.net"
-#macro link_david				"http://www.stuffbydavid.com"
+#macro link_skins					"http://skins.minecraft.net/MinecraftSkins/"
+#macro link_article_drivers			"http://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
+#macro link_download				"http://www.mineimator.com"
+#macro link_upgrade					"http://www.mineimator.com/upgrade"
+#macro link_news					"http://www.mineimator.com/news.php?version=" + mineimator_version
+#macro link_forums					"http://www.mineimatorforums.com"
+#macro link_forums_bugs				"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
+#macro link_minecraft				"http://www.minecraft.net"
+#macro link_david					"http://www.stuffbydavid.com"
 
 // Textures
-#macro block_sheet_width		32
-#macro block_sheet_height		16
-#macro block_sheet_ani_width	32
-#macro block_sheet_ani_height	1
-#macro block_sheet_ani_frames	64
-#macro item_sheet_width			32
-#macro item_sheet_height		16
-#macro texture_lib				true
+#macro block_sheet_width			32
+#macro block_sheet_height			16
+#macro block_sheet_ani_width		32
+#macro block_sheet_ani_height		1
+#macro block_sheet_ani_frames		64
+#macro item_sheet_width				32
+#macro item_sheet_height			16
 
 // Colors
 #macro c_main						make_color_rgb(200, 200, 200)
@@ -92,31 +91,31 @@
 #macro c_swampland_biome_foliage	make_color_rgb(74, 116, 59)
 
 // Audio
-#macro sample_rate				44100
-#macro sample_size				4
-#macro sample_max				32767
-#macro sample_avg_per_sec		100
+#macro sample_rate					44100
+#macro sample_size					4
+#macro sample_max					32767
+#macro sample_avg_per_sec			100
 
 // Interface
-#macro glow_alpha				0.75
-#macro shadow_size				5
-#macro shadow_alpha				0.1
+#macro glow_alpha					0.75
+#macro shadow_size					5
+#macro shadow_alpha					0.1
 
 // Values
-#macro null						noone
-#macro no_limit					100000000
+#macro null							noone
+#macro no_limit						100000000
 
 // World
-#macro block_size				16
-#macro item_size				16
-#macro world_size				30000
+#macro block_size					16
+#macro item_size					16
+#macro world_size					30000
 
 // Vectors and matrices
-#macro X						0
-#macro Y						1
-#macro Z						2
-#macro W						3
-#macro MAT_X					12
-#macro MAT_Y					13
-#macro MAT_Z					14
-#macro MAT_IDENTITY				matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
+#macro X							0
+#macro Y							1
+#macro Z							2
+#macro W							3
+#macro MAT_X						12
+#macro MAT_Y						13
+#macro MAT_Z						14
+#macro MAT_IDENTITY					matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)

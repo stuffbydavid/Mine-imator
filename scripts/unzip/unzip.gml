@@ -8,9 +8,9 @@ dir = unzip_directory
 if (argument_count > 1)
 	dir = argument[1]
 
-file_delete_lib(temp_file)
-file_copy_lib(fn, temp_file)
 directory_delete_lib(dir)
+directory_create_lib(dir)
 
 log("Unzipping", fn, dir)
-return zip_unzip(temp_file, dir)
+var num = external_call(lib_unzip, fn, dir)
+log(string(num) + " files were extracted")

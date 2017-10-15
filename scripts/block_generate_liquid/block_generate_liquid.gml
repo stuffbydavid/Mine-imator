@@ -95,7 +95,7 @@ if (app.setting_liquid_animation)
 // Completely surrounded, no need to render
 if ((matchxp || solidxp) && (matchxn || solidxn) && 
 	(matchyp || solidyp) && (matchyn || solidyn) && 
-	(matchzp || solidzp) && (matchzn || solidzn))
+	matchzp && (matchzn || solidzn))
 	return 0
 	
 // Find texture and buffers to use

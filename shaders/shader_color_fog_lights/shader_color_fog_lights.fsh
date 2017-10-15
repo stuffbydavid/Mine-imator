@@ -1,4 +1,5 @@
 uniform sampler2D uTexture;
+uniform vec2 uTexScale;
 
 uniform int uColorsExt;
 uniform vec4 uRGBAdd;
@@ -54,7 +55,10 @@ float getFog()
 
 void main()
 {
-	vec4 baseColor = vColor * texture2D(uTexture, vTexCoord); // Get base
+	vec2 tex = vTexCoord;
+	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
+		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
+	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	
 	if (uColorsExt > 0)
 	{

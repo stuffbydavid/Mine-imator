@@ -54,3 +54,5 @@ draw_vertex_texture_color(xx + w * xsca, yy, (left + w) / tw, top / th, color, a
 draw_vertex_texture_color(xx, yy + h * ysca, left / tw, (top + h) / th, color, alpha)
 draw_vertex_texture_color(xx + w * xsca, yy + h * ysca, (left + w) / tw, (top + h) / th, color, alpha)
 draw_primitive_end()
+
+render_set_texture(0)

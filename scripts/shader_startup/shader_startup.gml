@@ -75,7 +75,6 @@ with (shader_map[?shader_border])
 with (shader_map[?shader_color_camera])
 {
 	new_shader_uniform("uBrightness")
-	new_shader_uniform("uAlpha")
 	new_shader_uniform("uRGBAdd")
 	new_shader_uniform("uRGBSub")
 	new_shader_uniform("uHSBAdd")

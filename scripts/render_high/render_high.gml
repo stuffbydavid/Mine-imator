@@ -30,26 +30,29 @@ if (setting_render_ssao)
 	}
 	surface_reset_target()
 	
+	// Noise texture
+	if (!surface_exists(render_ssao_noise))
+		render_ssao_noise = render_generate_noise(4, 4)
+	
 	// Calculate SSAO
-	render_shader_obj = shader_map[?shader_high_ssao]
-	with (render_shader_obj)
-		shader_set(shader)
-			
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	ssaosurf = render_surface[0]
 	surface_set_target(ssaosurf)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear(c_white)
+		render_shader_obj = shader_map[?shader_high_ssao]
 		with (render_shader_obj)
+		{
+			shader_set(shader)
 			shader_high_ssao_set(depthsurf, normalsurf, brightnesssurf)
+		}
 		draw_blank(0, 0, render_width, render_height) // Blank quad
+		with (render_shader_obj)
+			shader_clear()
 		gpu_set_texrepeat(true)
 	}
 	surface_reset_target()
-	
-	with (render_shader_obj)
-		shader_clear()
 	
 	// Blur
 	repeat (setting_render_ssao_blur_passes)
@@ -353,9 +356,17 @@ if (render_camera_dof)
 		draw_clear_alpha(c_black, 0)
 		gpu_set_texfilter(true)
 		gpu_set_texrepeat(false)
-		shader_high_dof_set(depthsurf)
+		
+		render_shader_obj = shader_map[?shader_high_aa]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_high_dof_set(depthsurf)
+		}
 		draw_surface_exists(prevsurf, 0, 0)
-		shader_reset()
+		with (render_shader_obj)
+			shader_clear()
+			
 		gpu_set_texfilter(false)
 		gpu_set_texrepeat(true)
 	}
@@ -383,9 +394,13 @@ if (setting_render_aa)
 	surface_set_target(finalsurf)
 	{
 		draw_clear_alpha(c_black, 0)
-		shader_high_aa_set()
+		
+		render_shader_obj = shader_map[?shader_high_aa]
+		with (render_shader_obj)
+			shader_use()
 		draw_surface_exists(prevsurf, 0, 0)
-		shader_reset()
+		with (render_shader_obj)
+			shader_clear()
 		
 		// Alpha fix
 		gpu_set_blendmode_ext(bm_src_color, bm_one) 

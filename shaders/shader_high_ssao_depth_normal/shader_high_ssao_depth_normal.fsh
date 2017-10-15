@@ -1,3 +1,4 @@
+uniform float2 uTexScale;
 uniform float4 uBlendColor;
 uniform float uBrightness;
 uniform int uSSAOEnable;
@@ -36,7 +37,8 @@ FSOutput main(FSInput IN) : SV_TARGET
 	FSOutput OUT;
 	
 	// Alpha test
-	float4 baseColor = uTextureT.Sample(uTexture, IN.TexCoord);
+	float2 tex = fmod(IN.TexCoord * uTexScale, uTexScale);
+	float4 baseColor = uTextureT.Sample(uTexture, tex);
 	clip((baseColor.a < 1.0) ? -1 : 1);
 	
 	// Depth
@@ -45,8 +47,12 @@ FSOutput main(FSInput IN) : SV_TARGET
 	// Normal
 	OUT.Color1 = packNormal(IN.Normal);
 	
-	// Brightness
-	float br = max(0.0, uBlendColor.a - uBrightness + (1.0 - float(uSSAOEnable)) - IN.Custom.z);
+	// Brightness of SSAO
+	float br;
+	if (uSSAOEnable > 0)
+		br = max(0.0, uBlendColor.a - uBrightness - IN.Custom.z);
+	else
+		br = 0.0;
 	OUT.Color2 = float4(br, br, br, 1.0);
 	
 	return OUT;

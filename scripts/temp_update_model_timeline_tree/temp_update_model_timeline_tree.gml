@@ -60,12 +60,16 @@ with (obj_timeline)
 			{
 				var unused = true;
 				
-				for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
+				// Check if not hidden and exists in the new model
+				if (ds_list_find_index(temp.model_hide_list, model_part_name) = -1)
 				{
-					if (temp.model_file.file_part_list[|mp].name = model_part_name)
+					for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
 					{
-						unused = false
-						break
+						if (temp.model_file.file_part_list[|mp].name = model_part_name)
+						{
+							unused = false
+							break
+						}
 					}
 				}
 				
@@ -106,6 +110,10 @@ with (obj_timeline)
 		var part, tlexists;
 		part = temp.model_file.file_part_list[|mp]
 		tlexists = false
+		
+		// Hidden?
+		if (ds_list_find_index(temp.model_hide_list, part.name) > -1)
+			continue
 		
 		with (obj_timeline)
 		{

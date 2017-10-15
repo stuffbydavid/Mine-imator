@@ -42,7 +42,8 @@ enum e_settings
 
 enum e_minecraft_assets
 {
-	FORMAT_110_PRE_1  = 1
+	FORMAT_110_PRE_1  = 1,
+	FORMAT_110_PRE_2  = 2
 }
 
 // Value types

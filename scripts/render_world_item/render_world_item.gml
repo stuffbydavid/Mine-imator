@@ -15,33 +15,29 @@ res = argument4
 if (!res.ready)
 	res = mc_res
 
-var rot, off, mipmap;
-rot = vec3(0)
-off = point3D(0, 0, 0)
+if (facecamera)
+{
+	var mat, rotz, rotmat;
+	mat = matrix_get(matrix_world)
+	rotz = 90 + point_direction(mat[MAT_X], mat[MAT_Y], proj_from[X], proj_from[Y])
+	rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
+	rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, rotz, 1, 1, 1))
+	matrix_world_multiply_pre(rotmat)
+}
 
 if (bounce)
 {
-	var d, t;
+	var d, t, offz;
 	d = 60 * 2
 	t = current_step mod d * 2
 	if (t < d)
-		off[Z] = ease("easeinoutquad", t / d) * 2 - 1
+		offz = ease("easeinoutquad", t / d) * 2 - 1
 	else
-		off[Z] = 1 - ease("easeinoutquad", (t - d) / d) * 2
+		offz = 1 - ease("easeinoutquad", (t - d) / d) * 2
+	matrix_world_multiply_post(matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
 }
 
-if (facecamera)
-{
-	var pos = point3D_mul_matrix(point3D(0, 0, 0), matrix_get(matrix_world));
-	rot[Z] = 90 + point_direction(pos[X], pos[Y], proj_from[X], proj_from[Y])
-}
-
-var rotmat = matrix_create(point3D(-8, -0.5 * is3d, 0), vec3(0), vec3(1));
-rotmat = matrix_multiply(rotmat, matrix_create(point3D(8, 0.5 * is3d, 0), rot, vec3(1)))
-matrix_world_multiply_pre(rotmat)
-matrix_world_multiply_post(matrix_create(off, vec3(0), vec3(1)))
-
-mipmap = shader_texture_filter_mipmap
+var mipmap = shader_texture_filter_mipmap;
 shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
 
 if (res.item_sheet_texture != null)

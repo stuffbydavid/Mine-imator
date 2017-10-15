@@ -1,5 +1,6 @@
 {
 	"version": "1.12",
+	"format": 2,
 	"characters": [
 		{
 			"name": "human",
@@ -244,7 +245,7 @@
 		},
 		{
 			"name": "illager",
-			"file": "zombie_villager.mimodel",
+			"file": "illager.mimodel",
 			"states": {
 				"variant": [
 					{ "value": "evoker", "texture": "entity/illager/evoker" },

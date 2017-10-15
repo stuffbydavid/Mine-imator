@@ -9,7 +9,6 @@ str = argument0
 res = argument1
 is3d = argument2
 
-
 if (text_texture != null && text_string = str && text_res = res && text_3d = is3d)
 	return 0
 
@@ -50,7 +49,7 @@ draw_set_font(app.setting_font)
 // Create texture
 if (text_texture != null)
 	texture_free(text_texture)
-text_texture = texture_surface(surf)
+text_texture =  texture_surface(surf)
 
 // Create vbuffer
 text_vbuffer = vbuffer_start()

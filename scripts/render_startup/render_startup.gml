@@ -7,7 +7,6 @@ globalvar render_width, render_height, render_ratio, render_camera, render_camer
 		  render_light_color, render_light_fade_size, render_light_spot_sharpness, render_light_matrix,
 		  proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far;
 
-
 log("Render init")
 
 render_width = 1

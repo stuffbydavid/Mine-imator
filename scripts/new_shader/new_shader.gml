@@ -13,6 +13,7 @@ with (new(obj_shader))
 	// Set common uniforms
 	
 	new_shader_sampler("uTexture")
+	new_shader_uniform("uTexScale")
 	new_shader_uniform("uBlendColor")
 	
 	// Wind

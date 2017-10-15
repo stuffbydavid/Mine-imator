@@ -2,23 +2,20 @@
 /// @arg texture
 /// @desc Sets the texture of the currently selected texture.
 
-var tex, sampler;
+var tex, sampler, scalex, scaley;
 tex = argument0
 sampler = render_shader_obj.sampler_map[?"uTexture"]
+scalex = 1
+scaley = 1
 
-if (sampler < 0)
+if (is_undefined(sampler) || sampler < 0)
 	return 0
 
-if (!texture_lib)
-{
-	gpu_set_tex_filter_ext(sampler, shader_texture_filter_linear)
-	gpu_set_tex_mip_enable(test(shader_texture_filter_mipmap, mip_on, mip_off))
-	gpu_set_tex_mip_filter_ext(sampler, test(shader_texture_filter_mipmap, tf_linear, tf_point))
-}
-else
-	texture_set_stage(sampler, 0) // Clear GM texture
+gpu_set_tex_filter_ext(sampler, shader_texture_filter_linear)
+gpu_set_tex_mip_enable(test(shader_texture_filter_mipmap, mip_on, mip_off))
+gpu_set_tex_mip_filter_ext(sampler, test(shader_texture_filter_mipmap, tf_linear, tf_point))
 
-// GM surface
+// Surface
 if (shader_texture_surface)
 {
 	if (surface_exists(tex))
@@ -27,18 +24,25 @@ if (shader_texture_surface)
 		texture_set_stage(sampler, 0)
 }
 
-// Library texture
-else if (texture_lib)
-{
-	external_call(lib_texture_set_filtering, sampler, shader_texture_filter_linear, shader_texture_filter_mipmap)
-	external_call(lib_texture_set_stage, sampler, tex)
-}
-
-// GM sprite
+// sprite
 else
 {
 	if (sprite_exists(tex))
+	{
 		texture_set_stage(sampler, sprite_get_texture(tex, 0))
+		
+		// GM sprite bug workaround
+		// http://bugs.yoyogames.com/view.php?id=26268
+		// When looking up added sprite textures using Texture2D in shaders,
+		// their dimensions are limited to powers of 2, leading to graphical bugs.
+		var wid, hei;
+		wid = texture_width(tex)
+		hei = texture_height(tex)
+		scalex = wid / power(2, ceil(log2(wid))) 
+		scaley = hei / power(2, ceil(log2(hei)))
+	}
 	else
 		texture_set_stage(sampler, 0)
 }
+
+render_set_uniform_vec2("uTexScale", scalex, scaley)
