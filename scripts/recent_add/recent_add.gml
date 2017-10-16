@@ -43,7 +43,6 @@ with (obj)
 	name = app.project_name
 	author = app.project_author
 	description = app.project_description
-	date = date_current_datetime()
 	thumbnail = texture_create(thumbnailfn)
 	ds_list_insert(app.recent_list, 0, id)
 }

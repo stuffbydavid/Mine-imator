@@ -17,12 +17,6 @@ json_save_array_start("recent_files")
 			json_save_var("name", json_string_encode(name))
 			json_save_var("author", json_string_encode(author))
 			json_save_var("description", json_string_encode(description))
-			json_save_var("last_opened", array(date_get_year(date),
-												 date_get_month(date),
-												 date_get_day(date),
-												 date_get_hour(date),
-												 date_get_minute(date),
-												 date_get_second(date)))
 			json_save_object_done()
 		}
 	}

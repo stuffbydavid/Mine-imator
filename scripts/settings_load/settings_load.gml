@@ -48,7 +48,6 @@ if (filename_ext(fn) = ".midata")
 				name = value_get_string(curfile[?"name"])
 				author = value_get_string(curfile[?"author"])
 				description = value_get_string(curfile[?"description"])
-				date = value_get_real(curfile[?"date"])
 		
 				var thumbnailfn = filename_path(filename) + "thumbnail.png";
 				if (file_exists_lib(thumbnailfn))
@@ -73,6 +72,9 @@ if (filename_ext(fn) = ".midata")
 		room_speed = value_get_real(programmap[?"fps"], room_speed)
 		if (!dev_mode)
 			setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
+		if (!directory_exists_lib(setting_project_folder))
+			setting_project_folder = projects_directory
+		
 		setting_backup = value_get_real(programmap[?"backup"], setting_backup)
 		setting_backup_time = value_get_real(programmap[?"backup_time"], setting_backup_time)
 		setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)
@@ -93,7 +95,15 @@ if (filename_ext(fn) = ".midata")
 		setting_view_real_time_render_time = value_get_real(interfacemap[?"view_real_time_render_time"], setting_view_real_time_render_time)
 
 		setting_font_filename = value_get_string(interfacemap[?"font_filename"], setting_font_filename)
+		if (!file_exists_lib(setting_font_filename))
+			setting_font_filename = ""
+		else if (setting_font_filename != "")
+			action_setting_font_open(setting_font_filename)
+		
 		setting_language_filename = value_get_string(interfacemap[?"language_filename"], setting_language_filename)
+		if (!file_exists_lib(setting_language_filename))
+			setting_language_filename = language_file
+		
 		if (setting_language_filename != language_file)
 			language_load(setting_language_filename, language_map)
 		

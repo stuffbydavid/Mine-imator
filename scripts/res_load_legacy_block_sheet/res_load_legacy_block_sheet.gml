@@ -25,7 +25,6 @@ blocksize = ceil(texture_width(oldtex) / sheetwid)
 var newsurf, newtex;
 newsurf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
 
-draw_texture_start()
 surface_set_target(newsurf)
 draw_clear_alpha(c_black, 0)
 
@@ -33,6 +32,7 @@ draw_clear_alpha(c_black, 0)
 gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 draw_texture(mc_res.block_sheet_texture, 0, 0, blocksize / 16, blocksize / 16)
 
+draw_texture_start()
 for (var i = 0; i < ds_list_size(list); i++)
 {
 	var name = list[|i];
@@ -57,10 +57,10 @@ for (var i = 0; i < ds_list_size(list); i++)
 	gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 	draw_texture_part(oldtex, newx, newy, oldx, oldy, blocksize, blocksize)
 }
+draw_texture_done()
 
 gpu_set_blendmode(bm_normal)
 surface_reset_target()
-draw_texture_done()
 
 newtex = texture_surface(newsurf)
 surface_free(newsurf)

@@ -9,7 +9,7 @@
 // Versions
 #macro mineimator_version			"1.1.0 PRE-RELEASE 2"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2017.10.15"
+#macro mineimator_version_date		"2017.10.17"
 #macro gm_runtime					"2.1.0.144"
 #macro minecraft_version			"1.12"
 
@@ -42,6 +42,7 @@
 #macro unzip_directory				file_directory + "unzip\\"
 
 // Minecraft structure
+#macro mc_unzip_directory			file_directory + "Minecraft\\"
 #macro mc_assets_directory			"assets\\minecraft\\"
 #macro mc_models_directory			mc_assets_directory + "models\\"
 #macro mc_blockstates_directory		mc_assets_directory + "blockstates\\"

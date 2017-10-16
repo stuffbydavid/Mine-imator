@@ -133,7 +133,6 @@ switch (load_stage)
 			with (mc_builder)
 			{
 				debug_timer_start()
-				
 				builder_set_size()
 					
 				// Block

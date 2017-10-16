@@ -7,7 +7,7 @@ text = ""
 
 for (var i = 0; i < 4; i++)
 {
-	var line = map[?"text" + string(i + 1)];
+	var line = map[?"Text" + string(i + 1)];
 	if (!is_string(line))
 		return 0
 		

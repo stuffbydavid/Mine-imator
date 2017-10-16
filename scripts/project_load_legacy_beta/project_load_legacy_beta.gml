@@ -110,7 +110,7 @@ with (load)
 		tl_color[a] = buffer_read_int()
 		
 		tl_parts[a] = 1
-		if (tl_type[a] = e_temp_type.CHARACTER || tl_type[a] = e_temp_type.SPECIAL_BLOCK)
+		if (tl_type[a] = "char" || tl_type[a] = "spblock")
 		{
 			var modelname = lib_char_model_name[tl_lib[a]]
 			if (modelname = "spider" || modelname = "cave_spider")
@@ -145,7 +145,7 @@ with (load)
 		tl_keyframes[a] = buffer_read_short()
 		for (var b = 0; b < tl_keyframes[a]; b++)
 		{
-			with (new(obj_keyframe))
+			with (new(obj_data))
 			{
 				pos = buffer_read_int()
 				
@@ -316,7 +316,7 @@ for (var a = 0; a < load.lib_amount; a++)
 		load_id = loadid++
 		save_id_map[?load_id] = load_id
 		
-		type = load.lib_type[a]
+		type = ds_list_find_index(temp_type_name_list, load.lib_type[a])
 		name = load.lib_name[a]
 		
 		// Characters
@@ -389,7 +389,7 @@ for (var a = 0; a < load.lib_amount; a++)
 					}
 				}
 				
-				if (load.lib_scenery_tex[a]>-1)
+				if (load.lib_scenery_tex[a] > -1)
 					block_tex = load.ter_res[load.lib_scenery_tex[a]].load_id
 				else
 					block_tex = save_id_get(mc_res)
@@ -426,7 +426,7 @@ for (var a = 0; a < load.tl_amount; a++)
 		tl = new(obj_timeline)
 		lib = load.tl_lib[a]
 		tl.temp = load.lib_temp[lib]
-		tl.type = load.lib_temp[lib].type
+		tl.type = ds_list_find_index(tl_type_name_list, load.tl_type[a])
 	}
 	
 	with (tl)
@@ -443,18 +443,19 @@ for (var a = 0; a < load.tl_amount; a++)
 		parent_tree_index = null
 		
 		// Create parts
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_tl_type.CHARACTER || type = e_tl_type.SPECIAL_BLOCK)
 		{
 			part_list = ds_list_create()
 			if (temp.model_file != null)
 				for (var p = 0; p < ds_list_size(temp.model_file.file_part_list); p++)
-					ds_list_add(part_list, tl_new_part(temp.model_file.file_part_list[|p]))
+					if (ds_list_find_index(temp.model_hide_list, temp.model_file.file_part_list[|p].name) = -1)
+						ds_list_add(part_list, tl_new_part(temp.model_file.file_part_list[|p]))
 		
 			ds_list_clear(tree_list)
 		}
 		
 		// Set rotation point
-		else if (type = e_temp_type.ITEM || type = e_temp_type.BLOCK || type = e_temp_type.SCENERY) 
+		else if (type = e_tl_type.ITEM || type = e_tl_type.BLOCK || type = e_tl_type.SCENERY) 
 		{
 			rot_point_custom = true
 			rot_point = point3D_copy(load.lib_rotpoint[lib])

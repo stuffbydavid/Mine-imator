@@ -62,7 +62,7 @@
 		},
 		{
 			"name": "zombie_pigman",
-			"file": "zombie_pigman.mimodel",
+			"file": "zombie_pigman.mimodel"
 		},
 		{
 			"name": "chicken",
@@ -1645,13 +1645,13 @@
 					"facing=east": [ 0, 0, 8 ],
 					"facing=west": [ 16, 0, 8 ],
 					"facing=south": [ 8, 0, 0 ],
-					"facing=north": [ 8, 0, 16 ],
+					"facing=north": [ 8, 0, 16 ]
 				},
 				"rotation": {
 					"facing=east": [ 0, 90, 0 ],
 					"facing=west": [ 0, -90, 0 ],
 					"facing=south": [ 0, 0, 0 ],
-					"facing=north": [ 0, 180, 0 ],
+					"facing=north": [ 0, 180, 0 ]
 				}
 			},
 			"default_state": "facing=west",

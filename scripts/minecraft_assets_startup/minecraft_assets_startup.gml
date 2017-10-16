@@ -74,7 +74,7 @@ if (format > minecraft_assets_format)
 	return false
 }
 
-load_assets_dir = file_directory + app.setting_minecraft_version + "\\"
+load_assets_dir = mc_unzip_directory + app.setting_minecraft_version + "\\"
 load_assets_model_file_map = ds_map_create() // filename -> model
 
 return true

@@ -18,7 +18,7 @@ repeat (recent_amount)
 		name = buffer_read_string_int()
 		author = buffer_read_string_int()
 		description = buffer_read_string_int()
-		date = buffer_read_double()
+		/*date = */buffer_read_double()
 		
 		var thumbnailfn = filename_path(filename) + "thumbnail.png";
 		if (file_exists_lib(thumbnailfn))

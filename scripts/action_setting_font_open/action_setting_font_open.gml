@@ -1,6 +1,13 @@
-/// action_setting_font_open()
+/// action_setting_font_open([filename])
+/// @arg [filename]
 
-var fn = file_dialog_open_font();
+var fn;
+
+if (argument_count > 0)
+	fn = argument[0]
+else
+	fn = file_dialog_open_font();
+
 if (!file_exists_lib(fn))
 	return 0
 
