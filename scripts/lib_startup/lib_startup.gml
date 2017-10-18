@@ -7,7 +7,7 @@ path_file = "Data\\file.dll"
 path_movie = "Data\\movie.dll"
 path_window = "Data\\window.dll"
 
-globalvar lib_open_url, lib_execute, lib_unzip, lib_gzunzip, lib_file_rename, lib_file_copy, lib_file_delete, lib_file_exists;
+globalvar lib_open_url, lib_execute, lib_unzip, lib_gzunzip, lib_file_rename, lib_file_copy, lib_file_delete, lib_file_exists, lib_file_json_convert_unicode;
 globalvar file_copy_temp, lib_directory_create, lib_directory_exists, lib_directory_delete;
 globalvar lib_movie_init, lib_movie_set, lib_movie_start, lib_movie_audio_file_decode, lib_movie_audio_file_add, lib_movie_audio_sound_add, lib_movie_frame, lib_movie_done;
 globalvar lib_window_maximize, lib_window_set_focus;
@@ -25,6 +25,7 @@ lib_file_exists = external_define(path_file, "file_exists", dll_cdecl, ty_real, 
 lib_directory_create = external_define(path_file, "directory_create", dll_cdecl, ty_real, 1, ty_string)
 lib_directory_delete = external_define(path_file, "directory_delete", dll_cdecl, ty_real, 1, ty_string)
 lib_directory_exists = external_define(path_file, "directory_exists", dll_cdecl, ty_real, 1, ty_string)
+lib_file_json_convert_unicode = external_define(path_file, "file_json_convert_unicode", dll_cdecl, ty_real, 2, ty_string, ty_string)
 
 log(path_movie)
 lib_movie_init = external_define(path_movie, "movie_init", dll_cdecl, ty_real, 0)

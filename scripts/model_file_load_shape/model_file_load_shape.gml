@@ -53,7 +53,8 @@ with (new(obj_model_shape))
 		}
 		
 		texture_size = value_get_point2D(map[?"texture_size"])
-		texture_size = vec2(max(texture_size[X], texture_size[Y]), max(texture_size[X], texture_size[Y])) // Make square
+		var size = max(texture_size[X], texture_size[Y]);
+		texture_size = vec2(size, size) // Make square
 	}
 	else
 	{

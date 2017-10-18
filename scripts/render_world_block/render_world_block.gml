@@ -49,6 +49,7 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 // Transparent stuff, no mipmapping
 var mipmap = shader_texture_filter_mipmap;
 shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
+render_set_texture(tex)
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL]))
 	vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL])

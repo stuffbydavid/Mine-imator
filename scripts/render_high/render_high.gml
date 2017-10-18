@@ -357,7 +357,7 @@ if (render_camera_dof)
 		gpu_set_texfilter(true)
 		gpu_set_texrepeat(false)
 		
-		render_shader_obj = shader_map[?shader_high_aa]
+		render_shader_obj = shader_map[?shader_high_dof]
 		with (render_shader_obj)
 		{
 			shader_set(shader)

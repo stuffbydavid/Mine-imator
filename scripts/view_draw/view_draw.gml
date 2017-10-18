@@ -558,7 +558,7 @@ if (view.render)
 		infoy = boxy + boxh - infoh - infopadding
 		
 		draw_box(infox, infoy, infow, infoh, false, c_black, 0.25)
-		draw_label(infotext, infox + infopadding, infoy + infopadding, fa_left, fa_top, c_white, 1)
+		draw_label(infotext, infox + infopadding, infoy + floor(infoh / 2), fa_left, fa_middle, c_white, 1)
 	}
 	
 	draw_set_font(setting_font)

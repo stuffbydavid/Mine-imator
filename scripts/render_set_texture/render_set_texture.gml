@@ -1,6 +1,6 @@
 /// render_set_texture(texture)
 /// @arg texture
-/// @desc Sets the texture of the currently selected texture.
+/// @desc Sets the texture of the currently selected shader.
 
 var tex, sampler, scalex, scaley;
 tex = argument0
