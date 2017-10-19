@@ -35,7 +35,8 @@ with (new(obj_block_tl))
 	has_text = block.tl_has_text
 	if (has_text)
 	{
-		text = array3D_get(mc_builder.block_text, mc_builder.build_size_z, mc_builder.build_pos_x, mc_builder.build_pos_y, mc_builder.build_pos_z)
+		with (mc_builder)
+			other.text = builder_get(block_text, build_pos_x, build_pos_y, build_pos_z)
 		text_position = block.tl_text_position
 	}
 	

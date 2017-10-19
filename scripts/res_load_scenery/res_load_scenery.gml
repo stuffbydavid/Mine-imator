@@ -32,9 +32,9 @@ switch (load_stage)
 				build_size[Y] = buffer_read_short_be() // Derp
 				build_size[X] = buffer_read_short_be()
 				build_size[Z] = buffer_read_short_be()
+				log("Size", build_size)
 				
 				builder_set_size()
-				log("Size", build_size)
 			
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
@@ -48,8 +48,8 @@ switch (load_stage)
 							block = mc_assets.block_legacy_id_map[?bid]
 							if (!is_undefined(block))
 							{
-								array3D_set(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z, block)
-								array3D_set(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
+								builder_set(block_obj, build_pos_x, build_pos_y, build_pos_z, block)
+								builder_set(block_state_id, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
 							}
 						}
 					}
@@ -145,7 +145,7 @@ switch (load_stage)
 						{
 							var block = mc_assets.block_legacy_id_map[?buffer_read_byte()];
 							if (!is_undefined(block))
-								array3D_set(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z, block)
+								builder_set(block_obj, build_pos_x, build_pos_y, build_pos_z, block)
 						}
 					}
 				}
@@ -159,10 +159,10 @@ switch (load_stage)
 						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
 							var block, bdata;
-							block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z)
+							block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z)
 							bdata = buffer_read_byte()
 							if (block != null)
-								array3D_set(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
+								builder_set(block_state_id, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
 						}
 					}
 				}
@@ -190,8 +190,8 @@ switch (load_stage)
 								build_pos_x = ex
 								build_pos_y = ey
 								build_pos_z = ez
-								block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z)
-								block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z)
+								block_current = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z)
+								block_state_id_current = builder_get(block_state_id, build_pos_x, build_pos_y, build_pos_z)
 								script_execute(script, entity)
 							}
 						}

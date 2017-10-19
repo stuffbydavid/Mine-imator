@@ -10,35 +10,35 @@ up = "false"
 
 if (!build_edge_xp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z);
 	if (block != null && block != block_current)
 		east = "true"
 }
 
 if (!build_edge_xn)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z);
 	if (block != null && block != block_current)
 		west = "true"
 }
 
 if (!build_edge_yp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z);
 	if (block != null && block != block_current)
 		south = "true"
 }
 
 if (!build_edge_yn)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z);
 	if (block != null && block != block_current)
 		north = "true"
 }
 
 if (!build_edge_zp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1);
 	if (block != null && block != block_current)
 		up = "true"
 }

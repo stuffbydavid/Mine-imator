@@ -10,7 +10,7 @@ north = "false"
 // X+
 if (!build_edge_xp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z);
 	if ((block != null && block.type = "bars") || (block_face_min_depth_xp != e_block_depth.DEPTH1 && block_face_full_xp))
 		east = "true"
 }
@@ -18,7 +18,7 @@ if (!build_edge_xp)
 // X-
 if (!build_edge_xn)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z);
 	if ((block != null && block.type = "bars") || (block_face_min_depth_xn != e_block_depth.DEPTH1 && block_face_full_xn))
 		west = "true"
 }
@@ -26,7 +26,7 @@ if (!build_edge_xn)
 // Y+
 if (!build_edge_yp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z);
 	if ((block != null && block.type = "bars") || (block_face_min_depth_yp != e_block_depth.DEPTH1 && block_face_full_yp))
 		south = "true"
 }
@@ -34,7 +34,7 @@ if (!build_edge_yp)
 // Y-
 if (!build_edge_yn)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z);
 	if ((block != null && block.type = "bars") || (block_face_min_depth_yn != e_block_depth.DEPTH1 && block_face_full_yn))
 		north = "true"
 }

@@ -8,10 +8,10 @@ if (block_get_state_id_value(block_current, block_state_id_current, "half") = "u
 var hinge = block_get_state_id_value(block_current, block_state_id_current, "hinge");
 if (!build_edge_zp)
 {
-	var aboveblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
+	var aboveblock = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1);
 	if (aboveblock = block_current)
 	{
-		var abovestateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
+		var abovestateid = builder_get(block_state_id, build_pos_x, build_pos_y, build_pos_z + 1);
 		hinge = block_get_state_id_value(block_current, abovestateid, "hinge")
 		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "hinge", hinge)
 	}

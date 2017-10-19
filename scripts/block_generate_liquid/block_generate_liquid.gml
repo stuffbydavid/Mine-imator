@@ -3,12 +3,12 @@
 
 var matchxp, matchxn, matchyp, matchyn, matchzp, matchzn;
 var solidxp, solidxn, solidyp, solidyn, solidzp, solidzn;
-matchxp = (!build_edge_xp && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z) = block_current)
-matchxn = (!build_edge_xn && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z) = block_current)
-matchyp = (!build_edge_yp && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z) = block_current)
-matchyn = (!build_edge_yn && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z) = block_current)
-matchzp = (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1) = block_current)
-matchzn = (!build_edge_zn && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z - 1) = block_current)
+matchxp = (!build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z) = block_current)
+matchxn = (!build_edge_xn && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z) = block_current)
+matchyp = (!build_edge_yp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z) = block_current)
+matchyn = (!build_edge_yn && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z) = block_current)
+matchzp = (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1) = block_current)
+matchzn = (!build_edge_zn && builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z - 1) = block_current)
 solidxp = (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)
 solidxn = (block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)
 solidyp = (block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)
@@ -23,34 +23,34 @@ if (app.setting_liquid_animation)
 		
 	if (matchzp)
 	{
-		if (solidxp && !build_edge_xp && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1) != block_current)
+		if (solidxp && !build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) != block_current)
 		{
 			solidxp = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1)
+			model = builder_get(block_render_model, build_pos_x + 1, build_pos_y, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidxp = (model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
 		}
 	
-		if (solidxn && !build_edge_xn && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1) != block_current)
+		if (solidxn && !build_edge_xn && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1) != block_current)
 		{
 			solidxn = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1)
+			model = builder_get(block_render_model, build_pos_x - 1, build_pos_y, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidxn = (model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
 		}
 	
-		if (solidyp && !build_edge_yp && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1) != block_current)
+		if (solidyp && !build_edge_yp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1) != block_current)
 		{
 			solidyp = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1)
+			model = builder_get(block_render_model, build_pos_x, build_pos_y + 1, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidyp = (model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
 		}
 	
-		if (solidyn && !build_edge_yn && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1) != block_current)
+		if (solidyn && !build_edge_yn && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1) != block_current)
 		{
 			solidyn = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1)
+			model = builder_get(block_render_model, build_pos_x, build_pos_y - 1, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidyn = (model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
 		}
@@ -58,34 +58,34 @@ if (app.setting_liquid_animation)
 	
 	if (matchzn)
 	{
-		if (solidxp && !build_edge_xp && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z - 1) != block_current)
+		if (solidxp && !build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z - 1) != block_current)
 		{
 			solidxp = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z - 1)
+			model = builder_get(block_render_model, build_pos_x + 1, build_pos_y, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidxp = (model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
 		}
 	
-		if (solidxn && !build_edge_xn && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z - 1) != block_current)
+		if (solidxn && !build_edge_xn && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z - 1) != block_current)
 		{
 			solidxn = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z - 1)
+			model = builder_get(block_render_model, build_pos_x - 1, build_pos_y, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidxn = (model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
 		}
 	
-		if (solidyp && !build_edge_yp && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z - 1) != block_current)
+		if (solidyp && !build_edge_yp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z - 1) != block_current)
 		{
 			solidyp = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z - 1)
+			model = builder_get(block_render_model, build_pos_x, build_pos_y + 1, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidyp = (model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
 		}
 	
-		if (solidyn && !build_edge_yn && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z - 1) != block_current)
+		if (solidyn && !build_edge_yn && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z - 1) != block_current)
 		{
 			solidyn = false
-			model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z - 1)
+			model = builder_get(block_render_model, build_pos_x, build_pos_y - 1, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidyn = (model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
 		}
@@ -164,34 +164,34 @@ else
 	
 	if (!build_edge_xp)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) = block_current)
 			sidelevelxp = 8
 		else if (matchxp)
-			sidelevelxp = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+			sidelevelxp = builder_get(block_state_id, build_pos_x + 1, build_pos_y, build_pos_z)
 	}
 	
 	if (!build_edge_xn)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1) = block_current)
 			sidelevelxn = 8
 		else if (matchxn)
-			sidelevelxn = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+			sidelevelxn = builder_get(block_state_id, build_pos_x - 1, build_pos_y, build_pos_z)
 	}
 	
 	if (!build_edge_yp)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1) = block_current)
 			sidelevelyp = 8
 		else if (matchyp)
-			sidelevelyp = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+			sidelevelyp = builder_get(block_state_id, build_pos_x, build_pos_y + 1, build_pos_z)
 	}
 		
 	if (!build_edge_yn)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1) = block_current)
 			sidelevelyn = 8
 		else if (matchyn)
-			sidelevelyn = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+			sidelevelyn = builder_get(block_state_id, build_pos_x, build_pos_y - 1, build_pos_z)
 	}
 		
 	// Level at corners
@@ -203,34 +203,34 @@ else
 	
 	if (!build_edge_xn && !build_edge_yn)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y - 1, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z + 1) = block_current)
 			corner0level = 8
-		else if (array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y - 1, build_pos_z) = block_current)
-			corner0level = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y - 1, build_pos_z)
+		else if (builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z) = block_current)
+			corner0level = builder_get(block_state_id, build_pos_x - 1, build_pos_y - 1, build_pos_z)
 	}
 	
 	if (!build_edge_xp && !build_edge_yn)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y - 1, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z + 1) = block_current)
 			corner1level = 8
-		else if (array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y - 1, build_pos_z) = block_current)
-			corner1level = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y - 1, build_pos_z)
+		else if (builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z) = block_current)
+			corner1level = builder_get(block_state_id, build_pos_x + 1, build_pos_y - 1, build_pos_z)
 	}
 	
 	if (!build_edge_xp && !build_edge_yp)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y + 1, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z + 1) = block_current)
 			corner2level = 8
-		else if (array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y + 1, build_pos_z) = block_current)
-			corner2level = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y + 1, build_pos_z)
+		else if (builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z) = block_current)
+			corner2level = builder_get(block_state_id, build_pos_x + 1, build_pos_y + 1, build_pos_z)
 	}
 	
 	if (!build_edge_xn && !build_edge_yp)
 	{
-		if (!build_edge_zp && array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y + 1, build_pos_z + 1) = block_current)
+		if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z + 1) = block_current)
 			corner3level = 8
-		else if (array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y + 1, build_pos_z) = block_current)
-			corner3level = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y + 1, build_pos_z)
+		else if (builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z) = block_current)
+			corner3level = builder_get(block_state_id, build_pos_x - 1, build_pos_y + 1, build_pos_z)
 	}
 	
 	// Set top face flow

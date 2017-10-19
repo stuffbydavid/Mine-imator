@@ -2,11 +2,11 @@
 /// @arg [ongeneration]
 /// @desc Sets the render model of the current block.
 
-block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+block_current = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z);
 if (block_current = null)
 	return 0
 	
-block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+block_state_id_current = builder_get(block_state_id, build_pos_x, build_pos_y, build_pos_z);
 	
 var model, ret;
 model = null
@@ -55,5 +55,5 @@ else
 		
 	// Set model
 	if (model != null)
-		array3D_set(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z, model)
+		builder_set(block_render_model, build_pos_x, build_pos_y, build_pos_z, model)
 }

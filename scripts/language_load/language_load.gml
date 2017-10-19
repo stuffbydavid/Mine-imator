@@ -1,10 +1,15 @@
-/// language_load(filename, map)
+/// language_load(filename, map, reload)
 /// @arg filename
 /// @arg map
+/// @arg [reload]
 
-var fn, map;
-fn = argument0
-map = argument1
+var fn, map, reload;
+fn = argument[0]
+map = argument[1]
+if (argument_count > 2)
+	reload = argument[2]
+else
+	reload = false
 
 log("Loading language file", fn)
 
@@ -13,11 +18,11 @@ ds_map_clear(map)
 if (filename_ext(fn) = ".milanguage")
 {
 	// Convert unicode (external)
-	//var convfn = file_directory + "conv.tmp";
-	//show_message(string(file_json_convert_unicode(fn, convfn)))
+	var convfn = file_directory + "conv.tmp";
+	file_json_convert_unicode(fn, convfn)
 	
 	// Load JSON
-	var jsonmap = json_load(fn);
+	var jsonmap = json_load(convfn);
 	language_load_map("", jsonmap, map)
 
 	if (ds_map_valid(jsonmap))
@@ -27,23 +32,28 @@ else
 	language_load_legacy(fn, map)
 
 // Check keys
-var missingkeyslist, key;
-missingkeyslist = ds_list_create()
-key = ds_map_find_first(language_english_map);
-while (!is_undefined(key))
+if (!reload && map != language_english_map)
 {
-	if (is_undefined(map[?key]))
-		ds_list_add(missingkeyslist, key)
-	key = ds_map_find_next(language_english_map, key)	
-}
+	var missingkeyslist, key;
+	missingkeyslist = ds_list_create()
+	key = ds_map_find_first(language_english_map);
+	while (!is_undefined(key))
+	{
+		if (is_undefined(map[?key]))
+			ds_list_add(missingkeyslist, key)
+		key = ds_map_find_next(language_english_map, key)	
+	}
 
-if (ds_list_size(missingkeyslist) > 0)
-{
-	ds_list_sort(missingkeyslist, true)
+	if (ds_list_size(missingkeyslist) > 0)
+	{
+		ds_list_sort(missingkeyslist, true)
+		var str = "The following texts are missing in the translation and will display as English:\n"
+		for (var i = 0; i < ds_list_size(missingkeyslist); i++)
+			str += missingkeyslist[|i] + ": " + string_replace_all(language_english_map[?missingkeyslist[|i]], "\n", "\\n") + "\n"
+		log(str)
 	
-	var str = "The following keys are missing from the translation and will display an erroneous text:\n"
-	for (var i = 0; i < ds_list_size(missingkeyslist); i++)
-		str += missingkeyslist[|i] + ": " + string_replace_all(language_english_map[?missingkeyslist[|i]], "\n", "\\n") + "\n"
-		
-	log(str)
+		window_set_caption("Error")
+		show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file)
+		window_set_caption("")
+	}
 }

@@ -11,36 +11,36 @@ switch (facing)
 	case "east":
 	{
 		if (!build_edge_yn)
-			connectblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+			connectblock = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z)
 		if (!build_edge_yp)
-			discardblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+			discardblock = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z)
 		break
 	}
 	
 	case "west":
 	{
 		if (!build_edge_yp)
-			connectblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+			connectblock = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z)
 		if (!build_edge_yn)
-			discardblock = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+			discardblock = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z)
 		break
 	}
 	
 	case "south":
 	{
 		if (!build_edge_xp)
-			connectblock = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+			connectblock = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z)
 		if (!build_edge_xn)
-			discardblock = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+			discardblock = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z)
 		break
 	}
 	
 	case "north":
 	{
 		if (!build_edge_xn)
-			connectblock = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+			connectblock = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z)
 		if (!build_edge_xp)
-			discardblock = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+			discardblock = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z)
 		break
 	}
 }

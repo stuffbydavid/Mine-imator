@@ -5,7 +5,7 @@ var up = "false";
 
 if (!build_edge_zp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1);
 	if (block != null && block != block_current)
 		up = "true"
 }

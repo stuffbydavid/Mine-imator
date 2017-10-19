@@ -21,7 +21,7 @@ north = "none"
 // X+
 if (!build_edge_xp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z); // Check side
+	var block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z); // Check side
 	if (block != null)
 	{
 		// Connect to other redstone wire
@@ -29,7 +29,7 @@ if (!build_edge_xp)
 			east = "side"
 		else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
 		{
-			var facing = block_get_state_id_value(block, array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z), "facing");
+			var facing = block_get_state_id_value(block, builder_get(block_state_id, build_pos_x + 1, build_pos_y, build_pos_z), "facing");
 			if (facing = "east" || facing = "west")
 				east = "side"
 		}
@@ -37,14 +37,14 @@ if (!build_edge_xp)
 	
 	if (east = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z + 1)
+		block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1)
 		if (block = block_current)
 			east = "up"
 	}
 	
 	if (east = "none" && !build_edge_zn && !(block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)) // Check down
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z - 1)
+		block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z - 1)
 		if (block = block_current)
 			east = "side"
 	}
@@ -53,7 +53,7 @@ if (!build_edge_xp)
 // X-
 if (!build_edge_xn)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z); // Check side
+	var block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z); // Check side
 	if (block != null)
 	{
 		// Connect to other redstone wire
@@ -61,7 +61,7 @@ if (!build_edge_xn)
 			west = "side"
 		else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
 		{
-			var facing = block_get_state_id_value(block, array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z), "facing");
+			var facing = block_get_state_id_value(block, builder_get(block_state_id, build_pos_x - 1, build_pos_y, build_pos_z), "facing");
 			if (facing = "east" || facing = "west")
 				west = "side"
 		}
@@ -69,14 +69,14 @@ if (!build_edge_xn)
 	
 	if (west = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z + 1)
+		block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1)
 		if (block = block_current)
 			west = "up"
 	}
 	
 	if (west = "none" && !build_edge_zn && !(block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)) // Check down
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z - 1)
+		block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z - 1)
 		if (block = block_current)
 			west = "side"
 	}
@@ -85,7 +85,7 @@ if (!build_edge_xn)
 // Y+
 if (!build_edge_yp)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z); // Check side
+	var block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z); // Check side
 	if (block != null)
 	{
 		// Connect to other redstone wire
@@ -93,7 +93,7 @@ if (!build_edge_yp)
 			south = "side"
 		else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
 		{
-			var facing = block_get_state_id_value(block, array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z), "facing");
+			var facing = block_get_state_id_value(block, builder_get(block_state_id, build_pos_x, build_pos_y + 1, build_pos_z), "facing");
 			if (facing = "south" || facing = "north")
 				south = "side"
 		}
@@ -101,14 +101,14 @@ if (!build_edge_yp)
 	
 	if (south = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z + 1)
+		block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1)
 		if (block = block_current)
 			south = "up"
 	}
 	
 	if (south = "none" && !build_edge_zn && !(block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)) // Check down
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z - 1)
+		block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z - 1)
 		if (block = block_current)
 			south = "side"
 	}
@@ -117,7 +117,7 @@ if (!build_edge_yp)
 // Y-
 if (!build_edge_yn)
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z); // Check side
+	var block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z); // Check side
 	if (block != null)
 	{
 		// Connect to other redstone wire
@@ -125,7 +125,7 @@ if (!build_edge_yn)
 			north = "side"
 		else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
 		{
-			var facing = block_get_state_id_value(block, array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z), "facing");
+			var facing = block_get_state_id_value(block, builder_get(block_state_id, build_pos_x, build_pos_y - 1, build_pos_z), "facing");
 			if (facing = "south" || facing = "north")
 				north = "side"
 		}
@@ -133,14 +133,14 @@ if (!build_edge_yn)
 	
 	if (north = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z + 1)
+		block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1)
 		if (block = block_current)
 			north = "up"
 	}
 	
 	if (north = "none" && !build_edge_zn && !(block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)) // Check down
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z - 1)
+		block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z - 1)
 		if (block = block_current)
 			north = "side"
 	}

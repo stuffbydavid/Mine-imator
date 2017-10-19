@@ -9,10 +9,10 @@ facing = block_get_state_id_value(block_current, block_state_id_current, "facing
 // X+
 if (!build_edge_xp && (facing = "east" || facing = "west"))
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z);
 	if (block != null && block.type = "stairs")
 	{
-		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+		var stateid = builder_get(block_state_id, build_pos_x + 1, build_pos_y, build_pos_z);
 		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
 			var otherfacing = block_get_state_id_value(block, stateid, "facing");
@@ -37,10 +37,10 @@ if (!build_edge_xp && (facing = "east" || facing = "west"))
 // X-
 if (!build_edge_xn && (facing = "east" || facing = "west"))
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z);
 	if (block != null && block.type = "stairs")
 	{
-		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+		var stateid = builder_get(block_state_id, build_pos_x - 1, build_pos_y, build_pos_z);
 		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
 			var otherfacing = block_get_state_id_value(block, stateid, "facing");
@@ -65,10 +65,10 @@ if (!build_edge_xn && (facing = "east" || facing = "west"))
 // Y+
 if (!build_edge_yp && (facing = "south" || facing = "north"))
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z);
 	if (block != null && block.type = "stairs")
 	{
-		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+		var stateid = builder_get(block_state_id, build_pos_x, build_pos_y + 1, build_pos_z);
 		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
 			var otherfacing = block_get_state_id_value(block, stateid, "facing");
@@ -93,10 +93,10 @@ if (!build_edge_yp && (facing = "south" || facing = "north"))
 // Y-
 if (!build_edge_yn && (facing = "south" || facing = "north"))
 {
-	var block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	var block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z);
 	if (block != null && block.type = "stairs")
 	{
-		var stateid = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+		var stateid = builder_get(block_state_id, build_pos_x, build_pos_y - 1, build_pos_z);
 		if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 		{
 			var otherfacing = block_get_state_id_value(block, stateid, "facing");

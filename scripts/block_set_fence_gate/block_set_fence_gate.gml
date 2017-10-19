@@ -10,7 +10,7 @@ if (facing = "east" || facing = "west")
 	// Check south for wall
 	if (!build_edge_yp)
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z)
+		block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z)
 		if (block != null && block.type = "wall")
 			inwall = "true"
 	}
@@ -18,7 +18,7 @@ if (facing = "east" || facing = "west")
 	// Check north for wall
 	if (inwall = "false" && !build_edge_yn)
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z)
+		block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z)
 		if (block != null && block.type = "wall")
 			inwall = "true"
 	}
@@ -28,7 +28,7 @@ else if (facing = "south" || facing = "north")
 	// Check east for wall
 	if (!build_edge_xp)
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z)
+		block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z)
 		if (block != null && block.type = "wall")
 			inwall = "true"
 	}
@@ -36,7 +36,7 @@ else if (facing = "south" || facing = "north")
 	// Check west for wall
 	if (inwall = "false" && !build_edge_xn)
 	{
-		block = array3D_get(block_obj, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z)
+		block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z)
 		if (block != null && block.type = "wall")
 			inwall = "true"
 	}

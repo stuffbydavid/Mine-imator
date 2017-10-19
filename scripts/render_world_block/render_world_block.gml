@@ -75,7 +75,7 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES]))
 	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 }
 
-// Depth 2
+// DEPTH 2
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL]))
 	vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL])

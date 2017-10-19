@@ -15,8 +15,8 @@ with (mc_builder)
 	var block, stateid;
 	block = mc_assets.block_name_map[?other.block_name]
 	stateid = block_get_state_id(block, other.block_state)
-	array3D_fill(block_obj, block)
-	array3D_fill(block_state_id, stateid)
+	ds_grid_clear(block_obj, block)
+	ds_grid_clear(block_state_id, stateid)
 				
 	// Set models
 	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)

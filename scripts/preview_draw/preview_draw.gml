@@ -114,7 +114,8 @@ if (window_focus = string(preview))
 with (preview)
 {
 	if (!surface_exists(surface) || surface_get_width(surface) < 0 ||
-		select.type = e_temp_type.PARTICLE_SPAWNER || (select.type = e_temp_type.ITEM && select.item_bounce))
+		select.type = e_temp_type.PARTICLE_SPAWNER ||
+		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && select.item_bounce))
 		update = true
 
 	surface = surface_require(surface, size, size)
@@ -475,7 +476,7 @@ with (preview)
 }
 
 // Particle button
-if (preview.select.type = e_temp_type.PARTICLE_SPAWNER)
+if (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
 {
 	if (preview.select.pc_spawn_constant)
 	{

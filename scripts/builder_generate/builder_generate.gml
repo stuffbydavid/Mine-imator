@@ -1,7 +1,7 @@
 /// builder_generate()
 /// @desc Generate triangles from the block render models.
 
-block_current = array3D_get(block_obj, build_size_z, build_pos_x, build_pos_y, build_pos_z)
+block_current = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z)
 if (block_current = null)
 	return 0
 	
@@ -27,7 +27,7 @@ if (build_edge_xp)
 }
 else
 {
-	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x + 1, build_pos_y, build_pos_z);
+	var othermodel = builder_get(block_render_model, build_pos_x + 1, build_pos_y, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -52,7 +52,7 @@ if (build_edge_xn)
 }
 else
 {
-	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x - 1, build_pos_y, build_pos_z);
+	var othermodel = builder_get(block_render_model, build_pos_x - 1, build_pos_y, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -77,7 +77,7 @@ if (build_edge_yp)
 }
 else
 {
-	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y + 1, build_pos_z);
+	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y + 1, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -102,7 +102,7 @@ if (build_edge_yn)
 }
 else
 {
-	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y - 1, build_pos_z);
+	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y - 1, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -117,17 +117,9 @@ else
 // Z+
 block_face_full_zp = false
 block_face_min_depth_zp = null
-if (build_edge_zp)
+if (!build_edge_zp)
 {
-	if (!build_edges)
-	{
-		block_face_full_zp = true
-		block_face_min_depth_zp = e_block_depth.DEPTH0
-	}
-}
-else
-{
-	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z + 1);
+	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y, build_pos_z + 1);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -152,7 +144,7 @@ if (build_edge_zn)
 }
 else
 {
-	var othermodel = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z - 1);
+	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y, build_pos_z - 1);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -174,7 +166,7 @@ if (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp &&
 	return 0
 
 // Current state ID
-block_state_id_current = array3D_get(block_state_id, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+block_state_id_current = builder_get(block_state_id, build_pos_x, build_pos_y, build_pos_z);
 
 // Block position
 block_pos_x = build_pos_x * block_size
@@ -201,7 +193,7 @@ else
 		builder_set_model(true)
 
 	// Get model	
-	var model = array3D_get(block_render_model, build_size_z, build_pos_x, build_pos_y, build_pos_z);
+	var model = builder_get(block_render_model, build_pos_x, build_pos_y, build_pos_z);
 	if (model != null)
 	{
 		// Set wind and brightness

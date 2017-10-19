@@ -28,4 +28,4 @@ for (var i = 0; i < 4; i++)
 	text += line
 }
 
-array3D_set(block_text, build_size_z, build_pos_x, build_pos_y, build_pos_z, text)
+builder_set(block_text, build_pos_x, build_pos_y, build_pos_z, text)

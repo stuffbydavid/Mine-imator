@@ -3,13 +3,19 @@
 /// @arg val1
 /// @arg val2...
 
-var key, text;
+var key, map;
 key = argument[0]
+map = language_map
 
-if (!text_exists(key))
-	return "<No text found for \"" + key + "\">"
+if (is_undefined(map[?key]))
+{
+	if (!text_exists(key))
+		return "<No text found for \"" + key + "\">"
 	
-text = language_map[?key]
+	map = language_english_map
+}
+
+var text = map[?key];
 
 for (var a = 1; a < argument_count; a++)
 	text = string_replace(text, "%" + string(a), argument[a])
