@@ -26,7 +26,7 @@ if (app.setting_liquid_animation)
 		if (solidxp && !build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) != block_current)
 		{
 			solidxp = false
-			model = builder_get(block_render_model, build_pos_x + 1, build_pos_y, build_pos_z + 1)
+			model = builder_get_render_model(build_pos_x + 1, build_pos_y, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidxp = (model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
 		}
@@ -34,7 +34,7 @@ if (app.setting_liquid_animation)
 		if (solidxn && !build_edge_xn && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1) != block_current)
 		{
 			solidxn = false
-			model = builder_get(block_render_model, build_pos_x - 1, build_pos_y, build_pos_z + 1)
+			model = builder_get_render_model(build_pos_x - 1, build_pos_y, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidxn = (model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
 		}
@@ -42,7 +42,7 @@ if (app.setting_liquid_animation)
 		if (solidyp && !build_edge_yp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1) != block_current)
 		{
 			solidyp = false
-			model = builder_get(block_render_model, build_pos_x, build_pos_y + 1, build_pos_z + 1)
+			model = builder_get_render_model(build_pos_x, build_pos_y + 1, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidyp = (model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
 		}
@@ -50,7 +50,7 @@ if (app.setting_liquid_animation)
 		if (solidyn && !build_edge_yn && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1) != block_current)
 		{
 			solidyn = false
-			model = builder_get(block_render_model, build_pos_x, build_pos_y - 1, build_pos_z + 1)
+			model = builder_get_render_model(build_pos_x, build_pos_y - 1, build_pos_z + 1)
 			if (model != null && !is_array(model))
 				solidyn = (model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
 		}
@@ -61,7 +61,7 @@ if (app.setting_liquid_animation)
 		if (solidxp && !build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z - 1) != block_current)
 		{
 			solidxp = false
-			model = builder_get(block_render_model, build_pos_x + 1, build_pos_y, build_pos_z - 1)
+			model = builder_get_render_model(build_pos_x + 1, build_pos_y, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidxp = (model.face_min_depth_xn = e_block_depth.DEPTH0 && model.face_full_xn)
 		}
@@ -69,7 +69,7 @@ if (app.setting_liquid_animation)
 		if (solidxn && !build_edge_xn && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z - 1) != block_current)
 		{
 			solidxn = false
-			model = builder_get(block_render_model, build_pos_x - 1, build_pos_y, build_pos_z - 1)
+			model = builder_get_render_model(build_pos_x - 1, build_pos_y, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidxn = (model.face_min_depth_xp = e_block_depth.DEPTH0 && model.face_full_xp)
 		}
@@ -77,7 +77,7 @@ if (app.setting_liquid_animation)
 		if (solidyp && !build_edge_yp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z - 1) != block_current)
 		{
 			solidyp = false
-			model = builder_get(block_render_model, build_pos_x, build_pos_y + 1, build_pos_z - 1)
+			model = builder_get_render_model(build_pos_x, build_pos_y + 1, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidyp = (model.face_min_depth_yn = e_block_depth.DEPTH0 && model.face_full_yn)
 		}
@@ -85,7 +85,7 @@ if (app.setting_liquid_animation)
 		if (solidyn && !build_edge_yn && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z - 1) != block_current)
 		{
 			solidyn = false
-			model = builder_get(block_render_model, build_pos_x, build_pos_y - 1, build_pos_z - 1)
+			model = builder_get_render_model(build_pos_x, build_pos_y - 1, build_pos_z - 1)
 			if (model != null && !is_array(model))
 				solidyn = (model.face_min_depth_yp = e_block_depth.DEPTH0 && model.face_full_yp)
 		}

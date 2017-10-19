@@ -34,7 +34,10 @@ switch (load_stage)
 				build_size[Z] = buffer_read_short_be()
 				log("Size", build_size)
 				
-				builder_set_size()
+				builder_start()
+				
+				buffer_seek(block_obj, buffer_seek_start, 0)
+				buffer_seek(block_state_id, buffer_seek_start, 0)
 			
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
@@ -48,8 +51,13 @@ switch (load_stage)
 							block = mc_assets.block_legacy_id_map[?bid]
 							if (!is_undefined(block))
 							{
-								builder_set(block_obj, build_pos_x, build_pos_y, build_pos_z, block)
-								builder_set(block_state_id, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
+								buffer_write(block_obj, buffer_s32, block)
+								buffer_write(block_state_id, buffer_s32, block.legacy_data_state_id[bdata])
+							}
+							else
+							{
+								buffer_write(block_obj, buffer_s32, null)
+								buffer_write(block_state_id, buffer_s32, 0)
 							}
 						}
 					}
@@ -133,10 +141,11 @@ switch (load_stage)
 			with (mc_builder)
 			{
 				debug_timer_start()
-				builder_set_size()
+				builder_start()
 					
 				// Block
 				buffer_seek(buffer_current, buffer_seek_start, blocksarray)
+				buffer_seek(block_obj, buffer_seek_start, 0)
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
 					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
@@ -145,13 +154,16 @@ switch (load_stage)
 						{
 							var block = mc_assets.block_legacy_id_map[?buffer_read_byte()];
 							if (!is_undefined(block))
-								builder_set(block_obj, build_pos_x, build_pos_y, build_pos_z, block)
+								buffer_write(block_obj, buffer_s32, block)
+							else
+								buffer_write(block_obj, buffer_s32, null)
 						}
 					}
 				}
 					
 				// State
 				buffer_seek(buffer_current, buffer_seek_start, dataarray)
+				buffer_seek(block_state_id, buffer_seek_start, 0)
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
 					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
@@ -162,7 +174,9 @@ switch (load_stage)
 							block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z)
 							bdata = buffer_read_byte()
 							if (block != null)
-								builder_set(block_state_id, build_pos_x, build_pos_y, build_pos_z, block.legacy_data_state_id[bdata])
+								buffer_write(block_state_id, buffer_s32, block.legacy_data_state_id[bdata])
+							else
+								buffer_write(block_state_id, buffer_s32, 0)
 						}
 					}
 				}
@@ -289,7 +303,12 @@ switch (load_stage)
 		{
 			debug_timer_stop("res_load_scenery, Generate models")
 			block_vbuffer_done()
-			mc_builder.block_tl_list = null
+			
+			with (mc_builder)
+			{
+				builder_done()
+				block_tl_list = null
+			}
 			
 			if (dev_mode_rotate_blocks) // Rotate 90 degrees
 				scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)

@@ -174,7 +174,6 @@ json_save_object_start("graphics")
 	json_save_var_bool("schematic_remove_edges", setting_schematic_remove_edges)
 	json_save_var_bool("liquid_animation", setting_liquid_animation)
 	json_save_var_bool("texture_filtering", setting_texture_filtering)
-	json_save_var_bool("transparent_texture_filtering", setting_transparent_texture_filtering)
 	json_save_var("texture_filtering_level", setting_texture_filtering_level)
 	json_save_var("block_brightness", setting_block_brightness)
 

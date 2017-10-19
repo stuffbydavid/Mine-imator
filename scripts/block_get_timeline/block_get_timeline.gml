@@ -36,7 +36,10 @@ with (new(obj_block_tl))
 	if (has_text)
 	{
 		with (mc_builder)
-			other.text = builder_get(block_text, build_pos_x, build_pos_y, build_pos_z)
+		{
+			var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
+			other.text = block_text_map[?ind]
+		}
 		text_position = block.tl_text_position
 	}
 	

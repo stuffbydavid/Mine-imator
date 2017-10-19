@@ -1,6 +1,9 @@
 /// block_set_snowy()
 /// @desc Check for a snow block above the current block.
 
+if (block_get_state_id_value(block_current, block_state_id_current, "snowy") = "true")
+	return 0
+
 var snowy = "false";
 
 if (!build_edge_zp)

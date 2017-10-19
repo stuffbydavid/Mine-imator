@@ -37,14 +37,9 @@ if (bounce)
 	matrix_world_multiply_post(matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
 }
 
-var mipmap = shader_texture_filter_mipmap;
-shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
-
 if (res.item_sheet_texture != null)
 	render_set_texture(res.item_sheet_texture)
 else
 	render_set_texture(res.texture)
 
 vbuffer_render(vbuffer)
-
-shader_texture_filter_mipmap = mipmap

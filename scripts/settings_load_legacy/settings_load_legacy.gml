@@ -176,7 +176,7 @@ if (load_format >= e_settings.FORMAT_106)
 if (load_format >= e_settings.FORMAT_100)
 {
 	setting_texture_filtering = buffer_read_byte()
-	setting_transparent_texture_filtering = buffer_read_byte()
+	/*setting_transparent_texture_filtering = */buffer_read_byte()
 	if (load_format >= e_settings.FORMAT_106_2)
 		setting_block_brightness = buffer_read_double()
 	if (load_format < e_settings.FORMAT_106_3)

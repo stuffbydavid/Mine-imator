@@ -548,7 +548,7 @@
 			"file": "grass.json",
 			"type": "snowy",
 			"states": {
-				"snowy": [ "true", "false" ]
+				"snowy": [ "false", "true" ]
 			},
 			"default_state": "snowy=false",
 			"legacy_id": 2
@@ -557,7 +557,7 @@
 			"name": "dirt",
 			"type": "snowy",
 			"states": {
-				"snowy": [ "true", "false" ],
+				"snowy": [ "false", "true" ],
 				"variant": [
 					{ "value": "dirt", "file": "dirt.json" },
 					{ "value": "coarse_dirt", "file": "coarse_dirt.json" },
@@ -794,7 +794,7 @@
 			"name": "sponge",
 			"file": "sponge.json",
 			"states": {
-				"wet": [ "true", "false" ]
+				"wet": [ "false", "true" ]
 			},
 			"default_state": "wet=false",
 			"legacy_id": 19,
@@ -897,7 +897,7 @@
 			"name": "golden_rail",
 			"file": "golden_rail.json",
 			"states": {
-				"powered": [ "true", "false" ],
+				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
 			"default_state": "powered=false,shape=north_south",
@@ -921,7 +921,7 @@
 			"name": "detector_rail",
 			"file": "detector_rail.json",
 			"states": {
-				"powered": [ "true", "false" ],
+				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
 			"default_state": "powered=false,shape=north_south",
@@ -946,7 +946,7 @@
 			"file": "sticky_piston.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"extended": [ "true", "false" ]
+				"extended": [ "false", "true" ]
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
@@ -1020,7 +1020,7 @@
 			"file": "piston.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"extended": [ "true", "false" ]
+				"extended": [ "false", "true" ]
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
@@ -1271,11 +1271,11 @@
 			"file": "fire.json",
 			"type": "fire",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"up": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"up": [ "false", "true" ]
 			},
 			"brightness": 1,
 			"legacy_id": 51
@@ -1314,7 +1314,7 @@
 			"type": "chest",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"double": [ "true", "false" ]
+				"double": [ "false", "true" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
@@ -1526,7 +1526,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -1671,7 +1671,7 @@
 			"type": "redstone_connect",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up_x", "down_x", "up_z", "down_z" ],
-				"powered": [ "true", "false" ]
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "facing=up_z,powered=false",
 			"timeline": {
@@ -1721,7 +1721,7 @@
 			"file": "stone_pressure_plate.json",
 			"type": "redstone_connect",
 			"states": {
-				"powered": [ "true", "false" ]
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "powered=false",
 			"legacy_id": 70,
@@ -1739,7 +1739,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -1787,7 +1787,7 @@
 			"file": "wooden_pressure_plate.json",
 			"type": "redstone_connect",
 			"states": {
-				"powered": [ "true", "false" ]
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "powered=false",
 			"legacy_id": 72,
@@ -1852,7 +1852,7 @@
 			"type": "redstone_connect",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"powered": [ "true", "false" ]
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "facing=west,powered=false",
 			"legacy_id": 77,
@@ -1927,10 +1927,10 @@
 			"file": "fence.json",
 			"type": "fence",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 85
@@ -2023,7 +2023,7 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"delay": [ "1", "2", "3", "4" ],
-				"locked": [ "true", "false" ]
+				"locked": [ "false", "true" ]
 			},
 			"default_state": "facing=west,delay=1,locked=false",
 			"legacy_id": 93,
@@ -2049,7 +2049,7 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"delay": [ "1", "2", "3", "4" ],
-				"locked": [ "true", "false" ]
+				"locked": [ "false", "true" ]
 			},
 			"default_state": "facing=west,delay=1,locked=false",
 			"brightness": 0.75,
@@ -2118,7 +2118,7 @@
 			"type": "trapdoor",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "top", "bottom" ]
 			},
 			"default_state": "facing=west,open=false,half=bottom",
@@ -2263,10 +2263,10 @@
 			"file": "iron_bars.json",
 			"type": "bars",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 101
@@ -2276,10 +2276,10 @@
 			"file": "glass_pane.json",
 			"type": "bars",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 102
@@ -2340,11 +2340,11 @@
 			"file": "vine.json",
 			"type": "vine",
 			"states": {
-				"south": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"east": [ "true", "false" ],
-				"up": [ "true", "false" ]
+				"south": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"up": [ "false", "true" ]
 			},
 			"default_state": "south=false,west=false,north=false,east=false,up=false",
 			"wind": {
@@ -2376,7 +2376,7 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
@@ -2447,7 +2447,7 @@
 			"file": "mycelium.json",
 			"type": "snowy",
 			"states": {
-				"snowy": [ "true", "false" ]
+				"snowy": [ "false", "true" ]
 			},
 			"default_state": "snowy=false",
 			"legacy_id": 110
@@ -2467,10 +2467,10 @@
 			"file": "nether_brick_fence.json",
 			"type": "fence_nether",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 113
@@ -2532,9 +2532,9 @@
 			"name": "brewing_stand",
 			"file": "brewing_stand.json",
 			"states": {
-				"has_bottle_0": [ "true", "false" ],
-				"has_bottle_1": [ "true", "false" ],
-				"has_bottle_2": [ "true", "false" ]
+				"has_bottle_0": [ "false", "true" ],
+				"has_bottle_1": [ "false", "true" ],
+				"has_bottle_2": [ "false", "true" ]
 			},
 			"default_state": "has_bottle_0=true,has_bottle_1=true,has_bottle_2=true",
 			"legacy_id": 117,
@@ -2573,7 +2573,7 @@
 			"file": "end_portal_frame.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"eye": [ "true", "false" ]
+				"eye": [ "false", "true" ]
 			},
 			"default_state": "facing=west,eye=false",
 			"legacy_id": 120,
@@ -2721,7 +2721,7 @@
 			"type": "chest",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"double": [ "true", "false" ]
+				"double": [ "false", "true" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
@@ -2749,8 +2749,8 @@
 			"name": "tripwire_hook",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"attached": [ "true", "false" ],
-				"powered": [ "true", "false" ]
+				"attached": [ "false", "true" ],
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "facing=west,attached=false,powered=false",
 			"timeline": {
@@ -2791,11 +2791,11 @@
 			"file": "tripwire.json",
 			"type": "tripwire",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"attached": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"attached": [ "false", "true" ]
 			},
 			"default_state": "attached=false",
 			"legacy_id": 132,
@@ -2888,7 +2888,7 @@
 			"file": "command_block.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"conditional": [ "true", "false" ]
+				"conditional": [ "false", "true" ]
 			},
 			"default_state": "facing=west,conditional=false",
 			"legacy_id": 137,
@@ -2922,11 +2922,11 @@
 					{ "value": "cobblestone", "file": "cobblestone_wall.json" },
 					{ "value": "mossy_cobblestone", "file": "mossy_cobblestone_wall.json" }
 				],
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"up": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"up": [ "false", "true" ]
 			},
 			"default_state": "variant=cobblestone",
 			"legacy_id": 139,
@@ -3012,7 +3012,7 @@
 			"type": "redstone_connect",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"powered": [ "true", "false" ]
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "facing=west,powered=false",
 			"legacy_id": 143,
@@ -3059,7 +3059,7 @@
 			"type": "chest",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"double": [ "true", "false" ]
+				"double": [ "false", "true" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
@@ -3317,7 +3317,7 @@
 			"name": "activator_rail",
 			"file": "activator_rail.json",
 			"states": {
-				"powered": [ "true", "false" ],
+				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
 			"default_state": "powered=false,shape=north_south",
@@ -3422,10 +3422,10 @@
 					{ "value": "red", "file": "red_stained_glass_pane.json" },
 					{ "value": "black", "file": "black_stained_glass_pane.json" }
 				],
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"default_state": "color=white",
 			"legacy_id": 160,
@@ -3552,7 +3552,7 @@
 			"type": "trapdoor",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "top", "bottom" ]
 			},
 			"default_state": "facing=west,open=false,half=bottom",
@@ -3825,7 +3825,7 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
@@ -3849,7 +3849,7 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
@@ -3873,7 +3873,7 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
@@ -3897,7 +3897,7 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
@@ -3921,7 +3921,7 @@
 			"type": "fence_gate",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
@@ -3944,10 +3944,10 @@
 			"file": "spruce_fence.json",
 			"type": "fence",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 188
@@ -3957,10 +3957,10 @@
 			"file": "birch_fence.json",
 			"type": "fence",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 189
@@ -3970,10 +3970,10 @@
 			"file": "jungle_fence.json",
 			"type": "fence",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 190
@@ -3983,10 +3983,10 @@
 			"file": "dark_oak_fence.json",
 			"type": "fence",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 191
@@ -3996,10 +3996,10 @@
 			"file": "acacia_fence.json",
 			"type": "fence",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ]
 			},
 			"require_models": true,
 			"legacy_id": 192
@@ -4011,7 +4011,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -4061,7 +4061,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -4111,7 +4111,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -4161,7 +4161,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -4211,7 +4211,7 @@
 			"states": {
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"open": [ "true", "false" ],
+				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
 				"direction": [ "east", "south", "west", "north" ]
@@ -4277,12 +4277,12 @@
 			"file": "chorus_plant.json",
 			"type": "chorus_plant",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"up": [ "true", "false" ],
-				"down": [ "true", "false" ]
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"up": [ "false", "true" ],
+				"down": [ "false", "true" ]
 			},
 			"legacy_id": 199
 		},
@@ -4407,7 +4407,7 @@
 			"file": "repeating_command_block.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"conditional": [ "true", "false" ]
+				"conditional": [ "false", "true" ]
 			},
 			"default_state": "facing=west,conditional=false",
 			"legacy_id": 210,
@@ -4433,7 +4433,7 @@
 			"file": "chain_command_block.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"conditional": [ "true", "false" ]
+				"conditional": [ "false", "true" ]
 			},
 			"default_state": "facing=west,conditional=false",
 			"legacy_id": 211,
@@ -4506,7 +4506,7 @@
 			"file": "observer.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"powered": [ "true", "false" ]
+				"powered": [ "false", "true" ]
 			},
 			"default_state": "facing=west,powered=false",
 			"legacy_id": 218,

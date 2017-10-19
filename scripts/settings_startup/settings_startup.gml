@@ -148,7 +148,6 @@ setting_schematic_add_timelines = true
 setting_schematic_remove_edges = true
 setting_liquid_animation = true
 setting_texture_filtering = true
-setting_transparent_texture_filtering = false
 setting_texture_filtering_level = 1
 setting_block_brightness = 0.75
 

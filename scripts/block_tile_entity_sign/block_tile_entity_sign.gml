@@ -28,4 +28,5 @@ for (var i = 0; i < 4; i++)
 	text += line
 }
 
-builder_set(block_text, build_pos_x, build_pos_y, build_pos_z, text)
+var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
+block_text_map[?ind] = text

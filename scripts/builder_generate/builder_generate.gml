@@ -27,7 +27,7 @@ if (build_edge_xp)
 }
 else
 {
-	var othermodel = builder_get(block_render_model, build_pos_x + 1, build_pos_y, build_pos_z);
+	var othermodel = builder_get_render_model(build_pos_x + 1, build_pos_y, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -52,7 +52,7 @@ if (build_edge_xn)
 }
 else
 {
-	var othermodel = builder_get(block_render_model, build_pos_x - 1, build_pos_y, build_pos_z);
+	var othermodel = builder_get_render_model(build_pos_x - 1, build_pos_y, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -77,7 +77,7 @@ if (build_edge_yp)
 }
 else
 {
-	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y + 1, build_pos_z);
+	var othermodel = builder_get_render_model(build_pos_x, build_pos_y + 1, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -102,7 +102,7 @@ if (build_edge_yn)
 }
 else
 {
-	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y - 1, build_pos_z);
+	var othermodel = builder_get_render_model(build_pos_x, build_pos_y - 1, build_pos_z);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -119,7 +119,7 @@ block_face_full_zp = false
 block_face_min_depth_zp = null
 if (!build_edge_zp)
 {
-	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y, build_pos_z + 1);
+	var othermodel = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z + 1);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -144,7 +144,7 @@ if (build_edge_zn)
 }
 else
 {
-	var othermodel = builder_get(block_render_model, build_pos_x, build_pos_y, build_pos_z - 1);
+	var othermodel = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z - 1);
 	if (is_array(othermodel))
 		othermodel = othermodel[0]
 	if (othermodel != null)
@@ -193,7 +193,7 @@ else
 		builder_set_model(true)
 
 	// Get model	
-	var model = builder_get(block_render_model, build_pos_x, build_pos_y, build_pos_z);
+	var model = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z);
 	if (model != null)
 	{
 		// Set wind and brightness

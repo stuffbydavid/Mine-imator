@@ -9,14 +9,15 @@ with (mc_builder)
 		build_size = test(other.block_repeat_enable, vec3(other.block_repeat[Y], other.block_repeat[X], other.block_repeat[Z]), vec3(1))
 	else
 		build_size = test(other.block_repeat_enable, vec3(other.block_repeat[X], other.block_repeat[Y], other.block_repeat[Z]), vec3(1))
-	builder_set_size()
+	
+	builder_start()
 
 	// Set blocks
 	var block, stateid;
 	block = mc_assets.block_name_map[?other.block_name]
 	stateid = block_get_state_id(block, other.block_state)
-	ds_grid_clear(block_obj, block)
-	ds_grid_clear(block_state_id, stateid)
+	buffer_fill(block_obj, 0, buffer_s32, block, build_size_total * 4)
+	buffer_fill(block_state_id, 0, buffer_s32, stateid, build_size_total * 4)
 				
 	// Set models
 	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
@@ -29,6 +30,8 @@ with (mc_builder)
 		for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 			for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				builder_generate()
+				
+	builder_done()
 }
 
 block_vbuffer_done()

@@ -1,16 +1,18 @@
-/// builder_set(grid, x, y, z, value)
-/// @arg grid
+/// builder_set(buffer, x, y, z, value)
+/// @arg buffer
 /// @arg x
 /// @arg y
 /// @arg z
 /// @arg val
 
-var grid, xx, yy, zz, val, t;
-grid = argument0
+var buf, xx, yy, zz, val, t;
+buf = argument0
 xx = argument1
 yy = argument2
 zz = argument3
 val = argument4
-t = zz * build_size_x * build_size_y + yy * build_size_x + xx
 
-ds_grid_set(grid, t div build_size_sqrt, t mod build_size_sqrt, val)
+t = builder_get_index(xx, yy, zz)
+
+buffer_seek(buf, buffer_seek_start, t * 4)
+buffer_write(buf, buffer_s32, val)

@@ -46,11 +46,6 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 
 // DEPTH 1
 
-// Transparent stuff, no mipmapping
-var mipmap = shader_texture_filter_mipmap;
-shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
-render_set_texture(tex)
-
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL]))
 	vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL])
 
@@ -85,5 +80,3 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
 	render_set_texture(texani)
 	vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
 }
-
-shader_texture_filter_mipmap = mipmap

@@ -5,8 +5,8 @@ build_size = vec3(0, 0, 0)
 build_size_x = 0
 build_size_y = 0
 build_size_z = 0
-build_dsize = 0
-build_xysize = 0
+build_size_total = 0
+build_size_sqrt = 0
 
 build_pos_x = 0
 build_pos_y = 0
@@ -20,12 +20,12 @@ build_edge_zp = false
 build_edge_zn = false
 build_edges = true
 
-block_obj = ds_grid_create(1, 1)
-block_state_id = ds_grid_create(1, 1)
-block_state_id_current = 0
-block_text = ds_grid_create(1, 1)
-block_render_model = ds_grid_create(1, 1)
+block_obj = null
 block_current = 0
+block_state_id = null
+block_state_id_current = 0
+block_render_model = null
+block_text_map = ds_map_create()
 
 block_tl_list = null
 block_color = null

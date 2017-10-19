@@ -55,5 +55,5 @@ else
 		
 	// Set model
 	if (model != null)
-		builder_set(block_render_model, build_pos_x, build_pos_y, build_pos_z, model)
+		builder_set_render_model(build_pos_x, build_pos_y, build_pos_z, model)
 }

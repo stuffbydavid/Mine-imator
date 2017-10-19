@@ -25,10 +25,6 @@ if (!res.font_minecraft)
 	matrix_world_multiply_pre(matrix_build(0, 0, 0, 0, 0, 0, sca, 1, sca))
 }
 	
-var mipmap = shader_texture_filter_mipmap;
-shader_texture_filter_mipmap = app.setting_transparent_texture_filtering
 render_set_texture(tex)
 
 vbuffer_render(vbuffer)
-
-shader_texture_filter_mipmap = mipmap
