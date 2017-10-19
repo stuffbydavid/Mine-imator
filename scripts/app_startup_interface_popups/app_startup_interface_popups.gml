@@ -7,7 +7,15 @@ popup_switch_to = null
 popup_switch_from = null
 popup_mouseon = false
 
-// Startpu
+// Download content
+popup_download = new_popup("download", popup_download_draw, 480, 600, true)
+with(popup_download)
+{
+	header = spr_content_header
+	changelog_scroll = new(obj_scrollbar)
+}
+
+// Startup
 popup_startup = new_popup("startup", popup_startup_draw, 760, 515, true)
 with (popup_startup)
 	recent_scroll = new(obj_scrollbar)

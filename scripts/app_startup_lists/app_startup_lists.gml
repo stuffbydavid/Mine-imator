@@ -4,6 +4,11 @@ globalvar value_name_list, transition_list;
 globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
 globalvar biome_list, videotemplate_list, videoquality_list;
 globalvar language_english_map, language_map;
+globalvar content_list;
+
+
+// Content changelog
+content_list = ds_list_create()
 
 // Values
 value_name_list = ds_list_create()

@@ -28,5 +28,9 @@ if (dev_mode)
 else
 {
 	project_reset()
-	popup_show(popup_startup)
+	
+	if(ds_list_empty(content_list))
+		popup_show(popup_startup)
+	else
+		popup_show(popup_download)
 }
