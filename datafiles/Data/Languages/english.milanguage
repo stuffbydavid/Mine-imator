@@ -6,6 +6,14 @@
         "forversion": "1.1.0",
         "lastchange": "2017.08.11"
     },
+    "download/": {
+		"caption": "Download content",
+		"download": "Download",
+		"cancel": "Cancel",
+		"changelog": "Changelog",
+        "uptodate": "Content is up to date!",
+        "back": "Back"
+	},
     "startup/": {
         "caption": "Startup screen",
         "trial": "TRIAL",
@@ -199,6 +207,7 @@
         "timestamptip": "Shows the marker's current position and the total animation length.",
         "websitetip": "Visit the Mine-imator website.",
         "forumstip": "Visit the Mine-imator forums.",
+        "contenttip": "Search for new content.",
         "upgradetip": "You're running the Trial version of Mine-imator. Click to upgrade to Full."
     },
     "type/": {
