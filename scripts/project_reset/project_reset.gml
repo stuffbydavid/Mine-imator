@@ -42,6 +42,9 @@ with (obj_resource)
 with (obj_keyframe)
 	instance_destroy()
 
+with (mc_res)
+	count = 0
+
 background_image_show = false
 background_image = null
 background_image_type = "image"
@@ -78,10 +81,7 @@ background_ground_update_texture()
 
 background_biome = biome_list[|0]
 with (mc_res)
-{
 	res_update_colors()
-	count = 0
-}
 
 background_sky_color = c_sky
 background_sky_clouds_color = c_white

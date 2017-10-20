@@ -19,8 +19,7 @@ for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
-		if (itemsize = null)
-			itemsize = texture_width(tex)
+		itemsize = max(itemsize, texture_width(tex))
 		ds_list_add(texlist, tex)
 	}
 	else
@@ -46,7 +45,17 @@ surface_set_target(surf)
 		dy = (t div item_sheet_width) * itemsize
 	
 		if (tex != null)
-			draw_texture_part(tex, dx, dy, 0, 0, itemsize, itemsize)
+		{
+			var wid, hei, scale;
+			wid = texture_width(tex)
+			hei = texture_height(tex)
+			scale = itemsize / wid
+			draw_texture_part(tex, dx, dy, 0, 0, wid, hei, scale, scale)
+		}
+		else if (id != mc_res)
+			draw_texture_part(mc_res.item_sheet_texture, dx, dy,
+							  (t mod item_sheet_width) * item_size, (t div item_sheet_width) * item_size,
+							  item_size, item_size, itemsize / item_size, itemsize / item_size)
 	}
 	
 	gpu_set_blendmode(bm_normal)

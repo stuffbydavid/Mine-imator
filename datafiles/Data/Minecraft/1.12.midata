@@ -865,7 +865,7 @@
 			"states": {
 				"facing": [ "east", "west", "south", "north" ],
 				"half": [ "foot", "head" ],
-				"color": [ "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver", "cyan", "purple", "blue", "brown", "green", "red", "black" ]
+				"color": [ "red", "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver", "cyan", "purple", "blue", "brown", "green", "black" ]
 			},
 			"default_state": "facing=north,half=foot,color=red",
 			"timeline": {

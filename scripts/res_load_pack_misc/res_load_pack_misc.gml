@@ -30,17 +30,52 @@ if (moonphases_texture != null)
 if (clouds_texture != null)
 	texture_free(clouds_texture)
 	
-// Create new
-block_preview_texture = texture_create(load_assets_dir + "pack.png")
+// Pack image
+if (!file_exists_lib(load_assets_dir + mc_pack_image_file) && id != mc_res)
+	block_preview_texture = texture_sprite(spr_unknown_pack)
+else
+	block_preview_texture = texture_create(load_assets_dir + mc_pack_image_file)
 
-colormap_grass_texture = texture_create(load_assets_dir + mc_textures_directory + "colormap\\grass.png")
-colormap_foliage_texture = texture_create(load_assets_dir + mc_textures_directory + "colormap\\foliage.png")
+// Grass
+if (!file_exists_lib(load_assets_dir + mc_grass_image_file) && id != mc_res)
+	colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
+else
+	colormap_grass_texture = texture_create(load_assets_dir + mc_grass_image_file)
+	
+// Foliage
+if (!file_exists_lib(load_assets_dir + mc_foliage_image_file) && id != mc_res)
+	colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
+else
+	colormap_foliage_texture = texture_create(load_assets_dir + mc_foliage_image_file)
 
-particles_texture[0] = texture_create(load_assets_dir + mc_textures_directory + "particle\\particles.png")
-particles_texture[1] = texture_create(load_assets_dir + mc_textures_directory + "entity\\explosion.png")
+// Particles
+if (!file_exists_lib(load_assets_dir + mc_particles_image_file) && id != mc_res)
+	particles_texture[0] = texture_duplicate(mc_res.particles_texture[0])
+else
+	particles_texture[0] = texture_create(load_assets_dir + mc_particles_image_file)
+	
+// Explosion
+if (!file_exists_lib(load_assets_dir + mc_explosion_image_file) && id != mc_res)
+	particles_texture[1] = texture_duplicate(mc_res.particles_texture[1])
+else
+	particles_texture[1] = texture_create(load_assets_dir + mc_explosion_image_file)
 
-sun_texture = texture_create(load_assets_dir + mc_textures_directory + "environment\\sun.png")
-moonphases_texture = texture_create(load_assets_dir + mc_textures_directory + "environment\\moon_phases.png")
+// Sun
+if (!file_exists_lib(load_assets_dir + mc_sun_image_file) && id != mc_res)
+	sun_texture = texture_duplicate(mc_res.sun_texture)
+else
+	sun_texture = texture_create(load_assets_dir + mc_sun_image_file)
+
+// Moon phases
+if (!file_exists_lib(load_assets_dir + mc_moon_phases_image_file) && id != mc_res)
+	moonphases_texture = texture_duplicate(mc_res.moonphases_texture)
+else
+	moonphases_texture = texture_create(load_assets_dir + mc_moon_phases_image_file)
+
 moon_texture = texture_split(moonphases_texture, 4, 2)
 
-clouds_texture = texture_create_fixed(load_assets_dir + mc_textures_directory + "environment\\clouds.png", 32, 32)
+// Clouds
+if (!file_exists_lib(load_assets_dir + mc_clouds_image_file) && id != mc_res)
+	clouds_texture = texture_duplicate(mc_res.clouds_texture)
+else
+	clouds_texture = texture_create_fixed(load_assets_dir + mc_clouds_image_file, 32, 32)

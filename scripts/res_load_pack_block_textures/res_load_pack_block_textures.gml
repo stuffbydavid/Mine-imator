@@ -16,7 +16,7 @@ if (block_sheet_ani_depth_list != null)
 	ds_list_destroy(block_sheet_ani_depth_list)
 		
 // Create new
-var blocksize, texlist, texanilist, surf, anisurf, wid;
+var blocksize, texlist, texanilist, surf, anisurf;
 blocksize = null
 
 draw_texture_start()
@@ -30,8 +30,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
-		if (blocksize = null)
-			blocksize = texture_width(tex)
+		blocksize = max(blocksize, texture_width(tex))
 		ds_list_add(texlist, tex)
 	}
 	else
@@ -48,8 +47,6 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
-		if (blocksize = null)
-			blocksize = texture_width(tex)
 		ds_list_add(texanilist, tex)
 	}
 	else
@@ -58,6 +55,8 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 
 if (blocksize = null)
 	blocksize = block_size
+	
+log("blocksize", blocksize)
 
 // Create surface of static blocks
 surf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
@@ -75,10 +74,18 @@ surface_set_target(surf)
 	
 		if (tex != null)
 		{
+			var texwid, texhei, scale;
+			texwid = texture_width(tex)
+			texhei = texture_height(tex)
+			scale = blocksize / texwid
 			if (string_contains(mc_assets.block_texture_list[|t], " opaque"))
 				draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
-			draw_texture_part(tex, dx, dy, 0, 0, blocksize, blocksize)
+			draw_texture_part(tex, dx, dy, 0, 0, texwid, texhei, scale, scale)
 		}
+		else if (id != mc_res)
+			draw_texture_part(mc_res.block_sheet_texture, dx, dy,
+							  (t mod block_sheet_width) * block_size, (t div block_sheet_width) * block_size,
+							  block_size, block_size, blocksize / block_size, blocksize / block_size)
 		else
 			draw_missing(dx, dy, blocksize, blocksize)
 	}
@@ -87,7 +94,7 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-//surface_save(surf,"pack_load_block_textures_staticsurf.png")
+surface_save(surf,"pack_load_block_textures_staticsurf.png")
 block_sheet_texture = texture_surface(surf)
 
 // Create surfaces for animated blocks
@@ -101,13 +108,6 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	tex = texanilist[|t]
 	dx = (t mod block_sheet_width) * blocksize
 	dy = (t div block_sheet_width) * blocksize
-	
-	// Missing
-	if (tex = null)
-	{
-		draw_missing(dx, dy, blocksize, blocksize)
-		continue
-	}
 	
 	// Read animation data if available
 	var framefade, frametime, framelist, opaque;
@@ -172,30 +172,45 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 			if (t = 0)
 				draw_clear_alpha(c_black, 0)
 				
-			// Set current and next image
-			var image, nextimage;
-			image = aniprogress * aniframes;
-			nextimage = floor(image) + 1
-			if (framelist != null)
+			if (tex != null)
 			{
-				image = framelist[|floor(image) mod ds_list_size(framelist)] + frac(image)
-				nextimage = framelist[|(floor(image) + 1) mod ds_list_size(framelist)]
-			}
-			image = image mod images
-			nextimage = nextimage mod images
+				// Set current and next image
+				var image, nextimage;
+				image = aniprogress * aniframes;
+				nextimage = floor(image) + 1
+				if (framelist != null)
+				{
+					image = framelist[|floor(image) mod ds_list_size(framelist)] + frac(image)
+					nextimage = framelist[|(floor(image) + 1) mod ds_list_size(framelist)]
+				}
+				image = image mod images
+				nextimage = nextimage mod images
 		
-			// Draw part
-			if (opaque)
-				draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
+				// Draw part
+				if (opaque)
+					draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
 			
-			draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, blocksize, blocksize)
+				var scale = blocksize / texwid;
+				draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, texwid, texwid, scale, scale)
 			
-			// Interpolate with next
-			if (framefade)
-			{	
-				gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha) // Windows only
-				draw_texture_part(tex, dx, dy, 0, nextimage * texwid, blocksize, blocksize, 1, 1, c_white, frac(image))
-				gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+				// Interpolate with next
+				if (framefade)
+				{
+					gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha) // Windows only
+					draw_texture_part(tex, dx, dy, 0, nextimage * texwid, blocksize, blocksize, scale, scale, c_white, frac(image))
+					gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+				}
+			}
+			
+			// Missing
+			else
+			{
+				if (id != mc_res)
+					draw_texture_part(mc_res.block_sheet_ani_texture[f], dx, dy,
+									  (t mod block_sheet_width) * block_size, (t div block_sheet_width) * block_size,
+									  block_size, block_size, blocksize / block_size, blocksize / block_size)
+				else
+					draw_missing(dx, dy, blocksize, blocksize)
 			}
 		}
 		surface_reset_target()
@@ -216,7 +231,7 @@ sampleposamount = 6
 // Find block depths (static)
 buffer_current = buffer_create(surface_get_width(surf) * surface_get_height(surf) * 4, buffer_fixed, 4)
 buffer_get_surface(buffer_current, surf, 0, 0, 0)
-wid = surface_get_width(surf)
+var wid = surface_get_width(surf);
 
 block_sheet_depth_list = ds_list_create()
 for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)

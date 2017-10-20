@@ -11,10 +11,15 @@ scaley = 1
 if (is_undefined(sampler) || sampler < 0)
 	return 0
 
-// Set filter
-gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)
-gpu_set_tex_mip_enable(test(shader_texture_filter_mipmap, mip_on, mip_off))
-gpu_set_tex_mip_filter_ext(sampler, tf_linear)
+if (!texture_lib)
+{
+	// Set filter
+	gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)
+	gpu_set_tex_mip_enable(test(shader_texture_filter_mipmap, mip_on, mip_off))
+	gpu_set_tex_mip_filter_ext(sampler, tf_linear)
+}
+else
+	texture_set_stage(sampler, 0)
 
 // Surface
 if (shader_texture_surface)
@@ -25,7 +30,14 @@ if (shader_texture_surface)
 		texture_set_stage(sampler, 0)
 }
 
-// sprite
+// External texture
+else if (texture_lib)
+{
+	external_call(lib_texture_set_filtering, sampler, shader_texture_filter_linear, shader_texture_filter_mipmap)
+	external_call(lib_texture_set_stage, sampler, tex)
+}
+
+// Internal texture
 else
 {
 	if (sprite_exists(tex))

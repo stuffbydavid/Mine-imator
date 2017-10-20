@@ -4,10 +4,10 @@ background_image_sphere_vbuffer = null
 background_image_cube_vbuffer = null
 background_image_cube_mapped_vbuffer = null
 
-background_fog_texture = sprite_duplicate(spr_fog)
+background_fog_texture = texture_sprite(spr_fog)
 background_fog_vbuffer = null
 
-background_sky_stars_texture = sprite_duplicate(spr_stars)
+background_sky_stars_texture = texture_sprite(spr_stars)
 background_sky_stars_vbuffer = null
 background_sky_sun_vbuffer = null
 background_sky_moon_vbuffer = null
