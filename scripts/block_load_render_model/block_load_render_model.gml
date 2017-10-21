@@ -62,6 +62,10 @@ with (new(obj_block_render_model))
 		face_min_depth[f] = null
 	}
 	
+	// For the world importer
+	preview_color_zp = null
+	preview_color_yp = null
+	
 	// Add elements
 	element_amount = 0
 	if (elementmodel != null)
@@ -327,6 +331,31 @@ with (new(obj_block_render_model))
 					
 					slotpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
 					texsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
+						
+					// Get preview color for world importer
+					if ((nd = e_dir.UP && other.preview_color_zp = null) ||
+						(nd = e_dir.SOUTH && other.preview_color_yp = null))
+					{
+						buffer_current = test((face_vbuffer[nd] = e_block_vbuffer.ANIMATED), load_assets_block_preview_ani_buffer, load_assets_block_preview_buffer)
+						
+						var px, py, alpha;
+						px = slot mod sheetwidth
+						py = slot div sheetwidth
+						alpha = buffer_read_alpha(px, py, sheetwidth)
+						
+						// Not transparent
+						if (alpha > 0)
+						{
+							var pcol = buffer_read_color(px, py, sheetwidth);
+							if (face_texture_color[nd] > -1)
+								pcol = color_multiply(pcol, face_texture_color[nd])
+						
+							if (nd = e_dir.UP)
+								other.preview_color_zp = pcol
+							else
+								other.preview_color_yp = pcol
+						}
+					}
 					
 					// Apply to UV
 					for (var t = 0; t < 4; t++)

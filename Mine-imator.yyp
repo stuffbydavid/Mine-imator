@@ -1799,6 +1799,14 @@
             }
         },
         {
+            "Key": "203e7ce0-c83f-45d5-b170-da6c010fa00c",
+            "Value": {
+                "id": "d6b08b4e-eb81-4052-8065-86c0a482c3b2",
+                "resourcePath": "scripts\\buffer_read_color\\buffer_read_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "204092b2-451a-48ef-83ab-05f9563f7f04",
             "Value": {
                 "id": "b6ff96c8-c876-4d7f-95e4-7ad4de2e8301",
@@ -3019,6 +3027,14 @@
             "Value": {
                 "id": "6e6c4e3c-8801-493b-9ee9-aa759af8722e",
                 "resourcePath": "scripts\\project_load_legacy_start\\project_load_legacy_start.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "39642edf-aba8-4e96-834a-dc7a1dd232b9",
+            "Value": {
+                "id": "f0909acf-2030-478e-9013-330726150f7d",
+                "resourcePath": "scripts\\minecraft_assets_create_block_previews\\minecraft_assets_create_block_previews.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14903,6 +14919,7 @@
         "a25a806d-511b-43f1-8fca-90e23d7b5981",
         "d53c7203-6d82-410c-ba4d-7d78adb7378b",
         "f9563782-e5e5-4163-8b53-891fb17c0185",
+        "39642edf-aba8-4e96-834a-dc7a1dd232b9",
         "b0954969-d77b-400a-888b-a47410e349ef",
         "8955cde0-61b3-4993-a04e-927841db0475",
         "b4fe5db7-2939-4804-b650-c8ee2bb1e9f4",
@@ -15246,6 +15263,7 @@
         "597da3da-b8f0-4919-9b38-8c574061097f",
         "92004e39-bd86-48e1-8bfc-67e822274319",
         "db7dfdc2-b28d-45f6-88af-882a00be2723",
+        "203e7ce0-c83f-45d5-b170-da6c010fa00c",
         "57f91a10-b82a-4706-a694-97749ac1c901",
         "46de2448-9b09-463c-b15d-556cfd1bcb85",
         "16b3c535-0652-4d7f-a2a0-eeae9944c102",

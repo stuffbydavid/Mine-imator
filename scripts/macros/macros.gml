@@ -33,6 +33,7 @@
 #macro import_file					data_directory + "import.exe"
 #macro settings_file				data_directory + "settings.midata"
 #macro legacy_file					data_directory + "legacy.midata"
+#macro block_preview_file			data_directory + "blockpreview.midata"
 #macro key_file						data_directory + "key.midata"
 #macro log_previous_file			file_directory + "log_previous.txt"
 #macro log_file						file_directory + "log.txt"

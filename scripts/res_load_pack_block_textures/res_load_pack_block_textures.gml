@@ -19,7 +19,6 @@ if (block_sheet_ani_depth_list != null)
 var blocksize, texlist, texanilist, surf, anisurf;
 blocksize = null
 
-draw_texture_start()
 debug_timer_start()
 		
 // Static textures
@@ -59,6 +58,7 @@ if (blocksize = null)
 log("blocksize", blocksize)
 
 // Create surface of static blocks
+draw_texture_start()
 surf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
 surface_set_target(surf)
 {
@@ -93,21 +93,41 @@ surface_set_target(surf)
 	gpu_set_blendmode(bm_normal)
 }
 surface_reset_target()
+draw_texture_done()
 
-surface_save(surf,"pack_load_block_textures_staticsurf.png")
+if (id = mc_res)
+{
+	var previewsurf = surface_create(block_sheet_width, block_sheet_height);
+	surface_set_target(previewsurf)
+	{
+		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+		draw_clear_alpha(c_black, 0)
+		draw_surface_ext(surf, 0, 0, 1 / block_size, 1 / block_size, 0, c_white, 1)
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
+	
+	load_assets_block_preview_buffer = buffer_create(block_sheet_width * block_sheet_height * 4, buffer_fixed, 4)
+	buffer_get_surface(load_assets_block_preview_buffer, previewsurf, 0, 0, 0)
+	//surface_save(previewsurf, "previewsurf.png")
+	//surface_free(previewsurf)
+}
+
+//surface_save(surf,"pack_load_block_textures_staticsurf.png")
 block_sheet_texture = texture_surface(surf)
 
 // Create surfaces for animated blocks
 for (var f = 0; f < block_sheet_ani_frames; f++)
 	anisurf[f] = surface_create(block_sheet_ani_width * blocksize, block_sheet_ani_height * blocksize)
 
+draw_texture_start()
 gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 for (var t = 0; t < ds_list_size(texanilist); t++)
 {
 	var tex, dx, dy;
 	tex = texanilist[|t]
-	dx = (t mod block_sheet_width) * blocksize
-	dy = (t div block_sheet_width) * blocksize
+	dx = (t mod block_sheet_ani_width) * blocksize
+	dy = (t div block_sheet_ani_width) * blocksize
 	
 	// Read animation data if available
 	var framefade, frametime, framelist, opaque;
@@ -207,7 +227,7 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 			{
 				if (id != mc_res)
 					draw_texture_part(mc_res.block_sheet_ani_texture[f], dx, dy,
-									  (t mod block_sheet_width) * block_size, (t div block_sheet_width) * block_size,
+									  (t mod block_sheet_ani_width) * block_size, (t div block_sheet_ani_width) * block_size,
 									  block_size, block_size, blocksize / block_size, blocksize / block_size)
 				else
 					draw_missing(dx, dy, blocksize, blocksize)
@@ -217,6 +237,24 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	}
 }
 gpu_set_blendmode(bm_normal)
+draw_texture_done()
+
+// Create preview surface and get buffer
+if (id = mc_res)
+{
+	var previewanisurf = surface_create(block_sheet_ani_width, block_sheet_ani_height);
+	surface_set_target(previewanisurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		draw_surface_ext(anisurf[0], 0, 0, 1 / block_size, 1 / block_size, 0, c_white, 1)
+	}
+	surface_reset_target()
+	
+	load_assets_block_preview_ani_buffer = buffer_create(block_sheet_ani_width * block_sheet_ani_height * 4, buffer_fixed, 4)
+	buffer_get_surface(load_assets_block_preview_ani_buffer, previewanisurf, 0, 0, 0)
+	//surface_save(previewanisurf, "previewanisurf.png")
+	//surface_free(previewanisurf)
+}
 
 // Setup texture sample positions
 var samplepos, sampleposamount;
@@ -336,4 +374,3 @@ ds_list_destroy(texlist)
 ds_list_destroy(texanilist)
 
 debug_timer_stop("res_load_pack_block_textures")
-draw_texture_done()

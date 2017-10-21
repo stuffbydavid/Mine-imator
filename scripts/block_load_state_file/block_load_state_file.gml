@@ -38,6 +38,8 @@ if (!ds_map_valid(variantsmap) && !ds_list_valid(multipartlist))
 
 with (new(obj_block_load_state_file))
 {
+	name = filename_name(fname)
+	
 	state_id_map = ds_map_create()
 	
 	// Load variants
