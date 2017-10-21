@@ -1,7 +1,5 @@
 /// app_update_tl_edit_select()
 
-var checkwalk, checkexport, checkexportobj;
-
 with (frame_editor)
 {
 	position.show = false
@@ -40,6 +38,7 @@ timeline_settings_run_fn = ""
 timeline_settings_keyframes = false
 timeline_settings_keyframes_export = false
 
+var checkwalk, checkexport, checkexportobj;
 checkwalk = true
 checkexport = true
 checkexportobj = null
@@ -60,13 +59,12 @@ with (obj_timeline)
 		{
 			checkwalk = false
 			app.timeline_settings_import_loop_tl = null
-			if (type = e_temp_type.CHARACTER)
+			if (type = e_tl_type.CHARACTER)
 			{
 				if (keyframe_select_amount = 1 && keyframe_select != null && ds_list_find_index(keyframe_list, keyframe_select) < ds_list_size(keyframe_list) - 1)
 				{
-					// TODO
-					//checkwalk = true
-					//app.timeline_settings_import_loop_tl = id
+					checkwalk = true
+					app.timeline_settings_import_loop_tl = id
 				}
 			}
 		}
@@ -89,7 +87,6 @@ with (obj_timeline)
 				app.timeline_settings_keyframes_export = false
 			}
 		}
-		
 	}
 		
 	// Set enabled
@@ -152,10 +149,9 @@ with (obj_timeline)
 		app.frame_editor.camera.show = true
 }
 
-if (timeline_settings_import_loop_tl)
+if (timeline_settings_import_loop_tl != null)
 {
-	// TODO!
-	//var name = string_replace(timeline_settings_import_loop_tl.temp.model_file.name, "character", "");
-	//timeline_settings_walk_fn = loops_directory + name + "_walk.keyframes"
-	//timeline_settings_run_fn = loops_directory + name + "_run.keyframes"
+	var name = timeline_settings_import_loop_tl.temp.model_name;
+	timeline_settings_walk_fn = load_assets_dir + mc_loops_directory + name + "_walk.miframes"
+	timeline_settings_run_fn = load_assets_dir + mc_loops_directory + name + "_run.miframes"
 }

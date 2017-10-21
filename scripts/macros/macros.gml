@@ -1,7 +1,7 @@
 /// macros()
 
 // Debug
-#macro dev_mode						false
+#macro dev_mode						true
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 #macro dev_mode_rotate_blocks		true
@@ -51,6 +51,7 @@
 #macro mc_special_block_directory	mc_models_directory + "special_block\\"
 #macro mc_block_directory			mc_models_directory + "block\\"
 #macro mc_loops_directory			mc_character_directory + "loops\\"
+
 #macro mc_pack_image_file			"pack.png"
 #macro mc_grass_image_file			mc_textures_directory + "colormap\\grass.png"
 #macro mc_foliage_image_file		mc_textures_directory + "colormap\\foliage.png"

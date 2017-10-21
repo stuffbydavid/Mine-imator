@@ -11,6 +11,7 @@ project_author = value_get_string(map[?"author"], project_author)
 project_description = value_get_string(map[?"description"], project_description)
 project_video_width = value_get_real(map[?"video_width"], project_video_width)
 project_video_height = value_get_real(map[?"video_height"], project_video_height)
+project_video_template = find_videotemplate(project_video_width, project_video_height)
 project_video_keep_aspect_ratio = value_get_real(map[?"video_keep_aspect_ratio"], project_video_keep_aspect_ratio)
 project_tempo = value_get_real(map[?"tempo"], project_tempo)
 	

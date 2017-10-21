@@ -12,7 +12,7 @@ if (index < 0)
 	return null
 
 ds_list_delete(sl.list, index)
-ds_list_delete(sl.filter_list, ds_list_find_index(sl.filter_list, value))
+ds_list_delete(sl.display_list, ds_list_find_index(sl.display_list, value))
 
 index = min(ds_list_size(sl.list) - 1, index)
 if (index < 0)

@@ -162,7 +162,7 @@
 		"witch": [ "body", "arms", "right_leg", "left_leg", "head", "nose", "hat" ],
 		"wither": [ "body_upper", "left_head", "middle_head", "right_head", "body_lower", "tail" ],
 		"blaze": [ "head", "rods_upper", "rod_1", "rod_2", "rod_3", "rod_4", "rods_middle", "rod_5", "rod_6", "rod_7", "rod_8", "rods_lower", "rod_9", "rod_10", "rod_11", "rod_12" ],
-		"magma_cube": [ "slice_1", "slice_2", "slice_3", "slice_4", "slice_5", "slice_6", "slice_7", "slice_8" ],
+		"magma_cube": [ "slice_4", "slice_3", "slice_2", "slice_1", "magma", "slice_6", "slice_7", "slice_8" ],
 		"horse": [ "body", "neck", "right_ear", "left_ear", "mouth_upper", "mouth_lower", "right_front_leg", "left_front_leg", "right_back_leg", "left_back_leg", "tail", "saddle", "stirrup", "halter", "chests", "right_rein", "left_rein" ],
 		"ender_dragon": [ "body", "right_arm", "right_hand", "left_arm", "left_hand", "right_leg", "right_foot", "left_leg", "left_foot", "right_wing", "left_wing", "tail_1", "tail_2", "tail_3", "tail_4", "tail_5", "tail_6", "tail_7", "tail_8", "tail_9", "tail_10", "tail_11", "tail_12", "neck_1", "neck_2", "neck_3", "neck_4", "neck_5", "neck_6", "neck_7", "neck_8", "neck_9", "neck_10", "neck_11", "neck_12", "head", "mouth_upper", "mouth_lower" ],
 		"endermite": [ "tail_2", "tail_1", "body", "head" ],

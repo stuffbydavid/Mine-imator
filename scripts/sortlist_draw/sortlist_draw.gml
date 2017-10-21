@@ -8,7 +8,7 @@
 /// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 
 var slist, xx, yy, w, h, select;
-var itemh, colsh, dy, list;
+var itemh, colsh, dy;
 var tbxwid, filterx, filtery;
 slist = argument0
 xx = argument1
@@ -90,7 +90,8 @@ for (var c = 0; c < slist.columns; c++)
 		}
 		else
 			slist.column_sort = c
-		sortlist_sort(slist)
+		
+		sortlist_update(slist)
 	}
 }
 
@@ -101,18 +102,14 @@ dy = yy + colsh
 draw_box(xx, yy + colsh, w, h - colsh, false, setting_color_background, 1)
 
 // List
-list = slist.list
-if (slist.filter)
-	list = slist.filter_list
-
-for (var i = round(slist.scroll.value / itemh); i < ds_list_size(list); i++)
+for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
 {
 	var value, dw;
 	
 	if (dy + itemh > yy + h)
 		break
 		
-	value = ds_list_find_value(list, i)
+	value = slist.display_list[|i]
 	dw = w - 30 * slist.scroll.needed
 	if (select = value)
 		draw_box(xx, dy, dw, itemh, false, setting_color_highlight, 1)
@@ -147,7 +144,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(list); i++)
 
 // Scrollbar
 slist.scroll.snap_value = itemh
-scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w-30, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(list) * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w-30, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
 
 // Filter box
 if (slist.filter)
@@ -165,10 +162,11 @@ filtery = yy + h+5
 if (draw_button_normal("listsearch", filterx - 18, filtery + 2, 16, 16, e_button.NO_TEXT, slist.filter, false, true, icons.SEARCH)) 
 {
 	slist.filter = !slist.filter
+	sortlist_update(slist)
 	if (slist.filter)
 		window_focus = string(slist.filter_tbx)
 }
 
 if (tbxwid > 0)
 	if (draw_inputbox("listsearch", filterx, filtery, tbxwid, text_get("listsearch"), slist.filter_tbx, null, 0, 20, 1))
-		sortlist_sort(slist)
+		sortlist_update(slist)

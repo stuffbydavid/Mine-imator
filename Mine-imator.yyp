@@ -8458,7 +8458,7 @@
             "Key": "9d500899-f782-407e-8d4c-cebdc4beafe6",
             "Value": {
                 "id": "7d050537-7cd1-4737-b766-cc623dbcd32e",
-                "resourcePath": "scripts\\sortlist_sort\\sortlist_sort.yy",
+                "resourcePath": "scripts\\sortlist_update\\sortlist_update.yy",
                 "resourceType": "GMScript"
             }
         },

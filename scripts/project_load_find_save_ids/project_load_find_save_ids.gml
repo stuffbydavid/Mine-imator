@@ -65,6 +65,13 @@ with (obj_template)
 	shape_tex = save_id_find(save_id_map[?shape_tex])
 	text_font = save_id_find(save_id_map[?text_font])
 	
+	// Fix broken references
+	if (type = e_temp_type.ITEM && (!instance_exists(item_tex) || item_tex.object_index != obj_resource))
+		item_tex = mc_res
+		
+	if (type = e_temp_type.SCENERY && instance_exists(scenery) && scenery.object_index != obj_resource)
+		scenery = null
+	
 	// Update counters if not loaded via the workbench particle preview
 	if (temp_creator != app.bench_settings)
 	{
