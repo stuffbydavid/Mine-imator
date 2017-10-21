@@ -393,7 +393,10 @@ with (frame_editor)
 	// Particles
 	particles = tab_add_category("frameeditorparticles", tab_frame_editor_particles, false)
 	with (particles)
+	{
+		tbx_seed = new_textbox_ninteger()
 		tbx_force = new_textbox_ndecimals()
+	}
 	
 	// Light
 	light = tab_add_category("frameeditorlight", tab_frame_editor_light, false)
@@ -528,3 +531,4 @@ with (settings)
 		tbx_aa_power.suffix = "%"
 	}
 }
+

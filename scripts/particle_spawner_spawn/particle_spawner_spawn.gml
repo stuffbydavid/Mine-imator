@@ -15,6 +15,17 @@ if (is_timeline)
 	temp = id.temp
 else
 	temp = select
+	
+// Get seed for generating particle values
+var base_seed = 0;
+
+if (pt.creator.value[e_value.CUSTOM_SEED])
+	base_seed = ds_list_size(particle_list) + pt.creator.value[e_value.SEED];
+else
+	base_seed = random(current_step);
+random_set_seed(base_seed)
+
+	
 pt.time_to_live = value_random(temp.pc_destroy_at_time_seconds, temp.pc_destroy_at_time_israndom, temp.pc_destroy_at_time_random_min, temp.pc_destroy_at_time_random_max) * 60
 
 // Position
