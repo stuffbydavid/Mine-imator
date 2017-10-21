@@ -18,6 +18,7 @@ depth = 0
 
 model_part = null
 model_part_name = ""
+model_plane_vbuffer_map = null
 part_of = null
 part_list = null
 scenery_animate = false
@@ -25,7 +26,7 @@ scenery_animate = false
 for (var v = 0; v < e_value.amount; v++)
 {
 	value_default[v] = app.value_default[v]
-	value_inherit[v] = 0
+	value_inherit[v] = value_default[v]
 	value[v] = value_default[v]
 }
 

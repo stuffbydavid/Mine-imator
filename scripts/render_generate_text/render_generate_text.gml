@@ -56,11 +56,7 @@ text_vbuffer = vbuffer_start()
 
 // 3D pixels
 if (is3d)
-{
-	var texsize = vec2(wid, hei);
-	var texpixelsize = vec2_div(vec2(1, 1), texsize);
-	vbuffer_add_pixels(surf, point3D(xx, 0, zz), hei, vec2(0, 0), texsize, texpixelsize, vec3(1))
-}
+	vbuffer_add_pixels(surf, point3D(xx, 0, zz))
 
 var ysize, p1, p2, p3, p4, t1, t2, t3, t4;
 t1 = vec2(0, 0)

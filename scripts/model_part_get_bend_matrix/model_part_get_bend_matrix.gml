@@ -1,4 +1,4 @@
-/// model_part_bend_matrix(part, angle, position)
+/// model_part_get_bend_matrix(part, angle, position)
 /// @arg part
 /// @arg angle
 /// @arg position

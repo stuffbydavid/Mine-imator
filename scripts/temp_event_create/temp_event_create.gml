@@ -15,6 +15,7 @@ rot_point = point3D(0, 0, 0)
 skin = null
 model_name = "human"
 model_texture_name_map = null
+model_plane_vbuffer_map = null
 model_hide_list = null
 model_file = null
 model_state = array()

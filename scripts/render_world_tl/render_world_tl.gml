@@ -98,13 +98,13 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 			// Get texture
 			var res = temp.skin;
 				
-			if (texobj && texobj.type != e_tl_type.CAMERA)
+			if (texobj > 0 && texobj.type != e_tl_type.CAMERA)
 				res = texobj
 				
 			if (!res.ready)
 				res = mc_res
 				
-			render_world_model_part(model_part, temp.model_texture_name_map, res, value_inherit[e_value.BEND_ANGLE], bend_vbuffer_list)
+			render_world_model_part(model_part, res, temp.model_texture_name_map, value_inherit[e_value.BEND_ANGLE], bend_vbuffer_list, model_plane_vbuffer_map)
 			break
 		}
 			   

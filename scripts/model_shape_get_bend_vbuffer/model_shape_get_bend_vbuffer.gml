@@ -1,4 +1,4 @@
-/// model_shape_bend_vbuffer(shape, angle, round)
+/// model_shape_get_bend_vbuffer(shape, angle, round)
 /// @arg shape
 /// @arg angle
 /// @arg round

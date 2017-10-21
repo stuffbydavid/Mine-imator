@@ -74,3 +74,6 @@ model_file = curfile
 // Get default texture from file if not defined
 if (model_file != null && is_undefined(model_texture_name_map[?""]))
 	model_texture_name_map[?""] = curfile.texture_name
+	
+// Update 3D planes
+temp_update_model_plane_vbuffer_map()

@@ -6975,6 +6975,14 @@
             }
         },
         {
+            "Key": "83338a37-e0ee-419e-8bbb-0149fa04da83",
+            "Value": {
+                "id": "e9c7e0db-3dbd-4308-80c5-529e32cbba19",
+                "resourcePath": "scripts\\tl_update_part_plane_vbuffer_map\\tl_update_part_plane_vbuffer_map.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "83372010-f905-4472-8223-6a8834c31c09",
             "Value": {
                 "id": "46de4781-d8da-4eea-a96a-f88256f96131",
@@ -7858,7 +7866,7 @@
             "Key": "9290c927-3613-46d1-8ad9-b4b9ba67d9e6",
             "Value": {
                 "id": "c62345ec-0de0-4b90-b079-9cc368b6334a",
-                "resourcePath": "scripts\\model_part_texture_name\\model_part_texture_name.yy",
+                "resourcePath": "scripts\\model_part_get_texture_name\\model_part_get_texture_name.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10330,7 +10338,7 @@
             "Key": "bee2f4ad-a2a1-4be9-a540-5e1c17cff2d7",
             "Value": {
                 "id": "459e9453-d78c-493b-aa75-aaf85ede5f62",
-                "resourcePath": "scripts\\model_part_bend_matrix\\model_part_bend_matrix.yy",
+                "resourcePath": "scripts\\model_part_get_bend_matrix\\model_part_get_bend_matrix.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11218,7 +11226,7 @@
             "Key": "cd6b6e7a-6de0-40c1-afb0-47facb5cda40",
             "Value": {
                 "id": "cb0cc014-080e-4819-b7eb-9724252a2697",
-                "resourcePath": "scripts\\model_shape_bend_vbuffer\\model_shape_bend_vbuffer.yy",
+                "resourcePath": "scripts\\model_shape_get_bend_vbuffer\\model_shape_get_bend_vbuffer.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -13247,6 +13255,14 @@
             }
         },
         {
+            "Key": "f2135b7a-03fb-4af3-8469-540169b5e941",
+            "Value": {
+                "id": "e2c1cb1c-b2c1-4f30-b405-11fd43489734",
+                "resourcePath": "scripts\\temp_update_model_plane_vbuffer_map\\temp_update_model_plane_vbuffer_map.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f21ac450-9596-4c10-84f7-19e8d3208c86",
             "Value": {
                 "id": "26467f7b-5175-4fdd-9698-7f7e076ebba5",
@@ -13371,6 +13387,14 @@
             "Value": {
                 "id": "8c112eb1-b530-401c-88db-99a4ba23a39c",
                 "resourcePath": "scripts\\action_setting_slow_modifier\\action_setting_slow_modifier.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "f4b87d12-3477-4b9d-9df8-4fa35ccd0ee9",
+            "Value": {
+                "id": "efc8e4be-6fa5-4211-bb56-6b86d8988880",
+                "resourcePath": "scripts\\model_part_get_plane_vbuffer_map\\model_part_get_plane_vbuffer_map.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14987,8 +15011,9 @@
         "0c915454-70c5-45eb-a762-4b6f0c52c3bd",
         "793e56bb-97f6-4468-8e3c-c4675d8ca6fc",
         "bee2f4ad-a2a1-4be9-a540-5e1c17cff2d7",
-        "ee4e6369-8fc5-4c8c-8a14-eea1cfb0f379",
         "9290c927-3613-46d1-8ad9-b4b9ba67d9e6",
+        "f4b87d12-3477-4b9d-9df8-4fa35ccd0ee9",
+        "ee4e6369-8fc5-4c8c-8a14-eea1cfb0f379",
         "cd6b6e7a-6de0-40c1-afb0-47facb5cda40",
         "0b7b06cf-eba8-4e04-b7ce-fc158b0fa40f",
         "cc84bf27-b266-4f6b-87df-5503fee82581",
@@ -15159,6 +15184,7 @@
         "ba37b4e1-4673-410f-ac57-35372d8d87e9",
         "aa235bf5-a688-4b12-a307-8b652733b3b0",
         "aa1948c7-0104-43b4-ab9a-d4461c00c04e",
+        "f2135b7a-03fb-4af3-8469-540169b5e941",
         "2efad053-abc5-4e2d-a385-9d92b4879126",
         "111a660a-a29c-468b-9f5e-63fdb4ecd827",
         "ab42e8a5-d964-4b54-81f3-433aff78d6d9",
@@ -15211,6 +15237,7 @@
         "12ce2441-4230-4413-b676-c2395c506a1b",
         "ce925f6b-c39d-40f2-ac96-b622676e60ff",
         "ccb9392d-ebd2-4b7f-afc1-c108603bcfce",
+        "83338a37-e0ee-419e-8bbb-0149fa04da83",
         "999a08bd-a3c6-455b-802c-041b6de52f77",
         "9f9e847f-1ebf-4f3a-9bb8-929ec9e43be1",
         "90bf9e37-c169-4dd9-a0fa-e511e59b432c",

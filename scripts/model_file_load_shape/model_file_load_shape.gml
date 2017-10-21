@@ -75,6 +75,13 @@ with (new(obj_model_shape))
 		invert = map[?"invert"]
 	else
 		invert = false
+		
+	// 3D (optional)
+	if (is_real(map[?"3d"]))
+		is3d = map[?"3d"]
+	else
+		is3d = false
+	is3d = true
 	
 	// From/To
 	from_noscale = value_get_point3D(map[?"from"])

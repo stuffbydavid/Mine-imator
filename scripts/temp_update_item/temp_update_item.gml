@@ -10,25 +10,27 @@ if (item_vbuffer)
 item_vbuffer = vbuffer_start()
 
 // Calculate texture position and size
-var texpos, texsize, slotsize, slottexsize, slottex;
+var texsize, texpos, slotpos, slotsize, slottexsize, slottex;
 
 if (item_tex.item_sheet_texture != null)
 {
-	texpos = point2D(item_slot mod item_tex.item_sheet_size[X], item_slot div item_tex.item_sheet_size[X])
 	texsize = vec2(texture_width(item_tex.item_sheet_texture), texture_height(item_tex.item_sheet_texture))
+	slotpos = point2D(item_slot mod item_tex.item_sheet_size[X], item_slot div item_tex.item_sheet_size[X])
 	slotsize = vec2_div(texsize, item_tex.item_sheet_size)
 	slotsize[X] = max(1, floor(slotsize[X]))
 	slotsize[Y] = max(1, floor(slotsize[Y]))
 	slottexsize = vec2_div(vec2(1), item_tex.item_sheet_size)
-	slottex = point2D_mul(texpos, slottexsize)
+	slottex = point2D_mul(slotpos, slottexsize)
+	texpos = point2D_mul(slotpos, slotsize)
 }
 else
 {
-	texpos = point2D(0, 0)
 	texsize = vec2(texture_width(item_tex.texture), texture_height(item_tex.texture))
+	slotpos = point2D(0, 0)
 	slotsize = texsize
 	slottexsize = point2D(1, 1)
 	slottex = point2D(0, 0)
+	texpos = point2D(0, 0)
 }
 
 // Calculate 3D size
@@ -82,13 +84,13 @@ if (item_3d)
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
-		draw_texture_part(tex, 0, 0, texpos[X] * slotsize[X], texpos[Y] * slotsize[Y], slotsize[X], slotsize[Y])
+		draw_texture_part(tex, 0, 0, texpos[X], texpos[Y], slotsize[X], slotsize[Y])
 	}
 	surface_reset_target()
 	draw_texture_done()
 	
 	var slotpixel = vec2_div(slottexsize, slotsize);
-	vbuffer_add_pixels(surf, point3D(0, 0, 0), size[Z], slottex, slotsize, slotpixel, scale)
+	vbuffer_add_pixels(surf, point3D(0, 0, 0), size[Z], texpos, slotsize, slotpixel, scale)
 	
 	surface_free(surf)
 }

@@ -13,7 +13,7 @@ if (object_index != app && update_matrix)
 			
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null)
-			matrix_parent = matrix_multiply(model_part_bend_matrix(parent.model_part, parent.value_inherit[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
+			matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, parent.value_inherit[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
 	}
 	else
 		matrix_parent = MAT_IDENTITY
@@ -114,6 +114,7 @@ if (object_index != app && update_matrix)
 	}
 	
 	// Inherit
+	var lasttex = value[e_value.TEXTURE_OBJ];
 	value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
 	value_inherit[e_value.RGB_ADD] = value[e_value.RGB_ADD] // Added
 	value_inherit[e_value.RGB_SUB] = value[e_value.RGB_SUB] // Added
@@ -192,6 +193,10 @@ if (object_index != app && update_matrix)
 	
 	// Update bend vbuffer
 	tl_update_bend()
+	
+	// Texture change, update planes
+	if (lasttex != value[e_value.TEXTURE_OBJ])
+		tl_update_part_plane_vbuffer_map()
 }
 
 // Update children

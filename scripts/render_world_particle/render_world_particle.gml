@@ -59,7 +59,7 @@ if (temp != null)
 			if (!res.ready)
 				res = mc_res
 				
-			render_world_model_file_parts(temp.model_file, temp.model_texture_name_map, temp.model_hide_list, res)
+			render_world_model_file_parts(temp.model_file, res, temp.model_texture_name_map, temp.model_hide_list, temp.model_plane_vbuffer_map)
 			break
 		}
 			
@@ -85,7 +85,7 @@ if (temp != null)
 			if (!res.ready)
 				res = mc_res
 							
-			render_world_model_part(temp.model_part, temp.model_texture_name_map, res, 0, null)
+			render_world_model_part(temp.model_part, res, temp.model_texture_name_map, 0, null, temp.model_plane_vbuffer_map)
 			break
 			
 		case e_temp_type.TEXT:

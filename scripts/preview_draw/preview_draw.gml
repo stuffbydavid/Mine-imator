@@ -258,7 +258,7 @@ with (preview)
 							if (!res.ready)
 								res = mc_res
 						
-							render_world_model_file_parts(select.model_file, select.model_texture_name_map, select.model_hide_list, res)
+							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_plane_vbuffer_map)
 							break
 						}
 					
@@ -285,7 +285,7 @@ with (preview)
 								res = mc_res
 						
 							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-							render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null)
+							render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null, select.model_plane_vbuffer_map)
 							break
 						}
 					

@@ -116,7 +116,7 @@ else
 			var text, tex;
 			text = bench_settings.skin.display_name
 			with (bench_settings.skin)
-				tex = res_get_model_texture(model_part_texture_name(other.bench_settings.model_texture_name_map, part))
+				tex = res_get_model_texture(model_part_get_texture_name(part, other.bench_settings.model_texture_name_map))
 			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.skin, text, action_bench_skin, tex, null, capwid)
 			dy += 40
 			break

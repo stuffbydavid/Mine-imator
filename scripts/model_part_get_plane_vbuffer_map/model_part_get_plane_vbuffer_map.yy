@@ -1,8 +1,8 @@
 {
-    "id": "bee2f4ad-a2a1-4be9-a540-5e1c17cff2d7",
+    "id": "f4b87d12-3477-4b9d-9df8-4fa35ccd0ee9",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "model_part_bend_matrix",
+    "name": "model_part_get_plane_vbuffer_map",
     "IsCompatibility": false,
     "IsDnD": false
 }

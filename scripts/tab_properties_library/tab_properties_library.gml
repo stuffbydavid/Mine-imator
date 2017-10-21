@@ -76,7 +76,7 @@ switch (temp_edit.type)
 		// Skin
 		var tex = null;
 		with (temp_edit.skin)
-			tex = res_get_model_texture(model_part_texture_name(temp_edit.model_texture_name_map, temp_edit.model_file))
+			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 		
 		tab_control(40)
 		draw_button_menu(test(temp_edit.type = e_temp_type.SPECIAL_BLOCK, "libraryspblocktex", "libraryskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.skin, temp_edit.skin.display_name, action_lib_skin, tex, null, capwid)
@@ -183,7 +183,7 @@ switch (temp_edit.type)
 		// Skin
 		var tex = null;
 		with (temp_edit.skin)
-			tex = res_get_model_texture(model_part_texture_name(temp_edit.model_texture_name_map, temp_edit.model_file))
+			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 				
 		tab_control(40)
 		draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 40, temp_edit.skin, temp_edit.skin.display_name, action_lib_skin, tex, null, capwid)

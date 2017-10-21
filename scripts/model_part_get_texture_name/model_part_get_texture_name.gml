@@ -1,10 +1,10 @@
-/// model_part_texture_name(map, part)
-/// @arg map
+/// model_part_get_texture_name(part, map)
 /// @arg part
+/// @arg map
 
-var map, part, key;
-map = argument0
-part = argument1
+var part, map, key;
+part = argument0
+map = argument1
 
 if (part = null)
 	return map[?""]
@@ -23,4 +23,4 @@ if (part.texture_name != "")
 	return part.texture_name
 
 // Get texture of inherited part
-return model_part_texture_name(map, part.texture_inherit)
+return model_part_get_texture_name(part.texture_inherit, map)

@@ -21,12 +21,12 @@ switch (tl_edit.type)
 		if (tl_edit.type = e_temp_type.BODYPART)
 		{
 			with (texobj)
-				tex = res_get_model_texture(model_part_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.model_part))
+				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.model_part, tl_edit.temp.model_texture_name_map))
 		}
 		else
 		{
 			with (texobj)
-				tex = res_get_model_texture(model_part_texture_name(tl_edit.temp.model_texture_name_map, tl_edit.temp.model_file))
+				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.temp.model_file, tl_edit.temp.model_texture_name_map))
 		}
 		break
 	}

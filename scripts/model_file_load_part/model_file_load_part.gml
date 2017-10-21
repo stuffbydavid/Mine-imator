@@ -113,7 +113,7 @@ with (new(obj_model_part))
 	// Matrix used when rendering preview/particle
 	default_matrix = matrix_create(position, rotation, vec3(1))
 	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
-		default_matrix = matrix_multiply(default_matrix, model_part_bend_matrix(other.id, 0, point3D(0, 0, 0)))
+		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, 0, point3D(0, 0, 0)))
 	
 	// Bend (optional)
 	if (!is_undefined(map[?"bend"]))
