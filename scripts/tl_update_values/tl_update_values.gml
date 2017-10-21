@@ -70,6 +70,9 @@ if (value_type[e_value_type.COLOR])
 if (value_type[e_value_type.PARTICLES])
 {
 	tl_update_values_ease(e_value.SPAWN, trans, p)
+	tl_update_values_ease(e_value.CLEAR, trans, p)
+	tl_update_values_ease(e_value.CUSTOM_SEED, trans, p)
+	tl_update_values_ease(e_value.SEED, trans, p)
 	tl_update_values_ease(e_value.ATTRACTOR, trans, p)
 	tl_update_values_ease(e_value.FORCE, trans, p)
 }
@@ -182,6 +185,14 @@ if (type = e_tl_type.AUDIO && !hide && app.timeline_marker > app.timeline_marker
 	}
 }
 
-// Fire particles
-if (type = e_temp_type.PARTICLE_SPAWNER && !temp.pc_spawn_constant && value[e_value.SPAWN] && app.timeline_marker > app.timeline_marker_previous && oldkf != keyframe_current)
-	fire = true
+// Update particle spawners
+if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && oldkf != keyframe_current)
+{
+	// Fire particles
+	if (!temp.pc_spawn_constant && value[e_value.SPAWN])
+		fire = true
+	
+	// Clear particles
+	if (value[e_value.CLEAR])
+		particle_spawner_clear()
+}

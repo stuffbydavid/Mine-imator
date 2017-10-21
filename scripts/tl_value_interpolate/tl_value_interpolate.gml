@@ -29,6 +29,9 @@ switch (vid)
 	case e_value.CAM_WIDTH:
 	case e_value.CAM_HEIGHT: return round(val1 + p * (val2 - val1)) // No decimals
 	case e_value.SPAWN:
+	case e_value.CLEAR:
+	case e_value.CUSTOM_SEED:
+	case e_value.SEED:
 	case e_value.ATTRACTOR:
 	case e_value.CAM_ROTATE:
 	case e_value.CAM_DOF:
