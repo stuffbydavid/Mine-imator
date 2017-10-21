@@ -39,6 +39,8 @@ with (new(obj_block_tl))
 		{
 			var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
 			other.text = block_text_map[?ind]
+			if (is_undefined(other.text))
+				other.text = ""
 		}
 		text_position = block.tl_text_position
 	}

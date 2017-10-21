@@ -79,7 +79,7 @@ for (var k = 0; k < copy_kf_amount; k++)
 	if (tladd = null)
 		continue
 	
-	if (pastemode != "free" && copy_kf_tl_model_part_name[k] != "") // Add to body part
+	if (pastemode != "free" && tladd.part_list != null && copy_kf_tl_model_part_name[k] != "") // Add to body part
 	{
 		var part;
 		with (tladd)

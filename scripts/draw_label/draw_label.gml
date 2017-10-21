@@ -50,7 +50,7 @@ if (argument_count > 7)
 	draw_set_font(font)
 }
 
-draw_text(xx, yy, str)
+draw_text(xx, yy - 1, str)
 
 if (argument_count > 3)
 {

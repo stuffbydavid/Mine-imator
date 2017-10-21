@@ -20,4 +20,4 @@ save_id = "root"
 save_id_seed = random_get_seed()
 save_id_map = ds_map_create()
 
-shape_texture = sprite_duplicate(spr_shape)
+shape_texture = texture_sprite(spr_shape)

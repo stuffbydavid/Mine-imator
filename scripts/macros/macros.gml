@@ -1,15 +1,15 @@
 /// macros()
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 #macro dev_mode_rotate_blocks		true
 
 // Versions
-#macro mineimator_version			"1.1.0 PRE-RELEASE 2"
+#macro mineimator_version			"1.1.0"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2017.10.17"
+#macro mineimator_version_date		"2017.11.01"
 #macro gm_runtime					"2.1.0.144"
 #macro minecraft_version			"1.12"
 
@@ -51,17 +51,25 @@
 #macro mc_special_block_directory	mc_models_directory + "special_block\\"
 #macro mc_block_directory			mc_models_directory + "block\\"
 #macro mc_loops_directory			mc_character_directory + "loops\\"
+#macro mc_pack_image_file			"pack.png"
+#macro mc_grass_image_file			mc_textures_directory + "colormap\\grass.png"
+#macro mc_foliage_image_file		mc_textures_directory + "colormap\\foliage.png"
+#macro mc_particles_image_file		mc_textures_directory + "particle\\particles.png"
+#macro mc_explosion_image_file		mc_textures_directory + "entity\\explosion.png"
+#macro mc_sun_image_file			mc_textures_directory + "environment\\sun.png"
+#macro mc_moon_phases_image_file	mc_textures_directory + "environment\\moon_phases.png"
+#macro mc_clouds_image_file			mc_textures_directory + "environment\\clouds.png"
 
 // Links
-#macro link_skins					"http://skins.minecraft.net/MinecraftSkins/"
-#macro link_article_drivers			"http://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
-#macro link_download				"http://www.mineimator.com"
-#macro link_upgrade					"http://www.mineimator.com/upgrade"
-#macro link_news					"http://www.mineimator.com/news.php?version=" + mineimator_version
-#macro link_forums					"http://www.mineimatorforums.com"
-#macro link_forums_bugs				"http://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
-#macro link_minecraft				"http://www.minecraft.net"
-#macro link_david					"http://www.stuffbydavid.com"
+#macro link_skins					"https://skins.minecraft.net/MinecraftSkins/"
+#macro link_article_drivers			"https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
+#macro link_download				"https://www.mineimator.com"
+#macro link_upgrade					"https://www.mineimator.com/upgrade"
+#macro link_news					"https://www.mineimator.com/news.php?version=" + mineimator_version
+#macro link_forums					"https://www.mineimatorforums.com"
+#macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
+#macro link_minecraft				"https://www.minecraft.net"
+#macro link_david					"https://www.stuffbydavid.com"
 
 // Textures
 #macro block_sheet_width			32
