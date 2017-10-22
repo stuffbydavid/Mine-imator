@@ -1,6 +1,9 @@
 /// temp_update_model_plane_vbuffer_map()
 /// @desc Updates the 3D plane vbuffers when the model or texture changes.
 
+if (model_file = null)
+	return 0
+
 if (model_plane_vbuffer_map = null)
 	model_plane_vbuffer_map = ds_map_create()
 	

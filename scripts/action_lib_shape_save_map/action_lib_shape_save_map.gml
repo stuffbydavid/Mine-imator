@@ -1,6 +1,6 @@
 /// action_lib_shape_save_map()
 
-var fn = file_dialog_save_image(temp_edit.type);
+var fn = file_dialog_save_image(temp_type_name_list[|temp_edit.type]);
 if (fn != "")
 {
 	if (temp_edit.type = e_temp_type.CONE)

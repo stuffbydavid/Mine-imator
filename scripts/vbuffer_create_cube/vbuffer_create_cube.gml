@@ -188,7 +188,7 @@ else
 // Z-
 if (mapped)
 {
-	tex1 = vec2_mul(texsize, 2)
+	tex1 = point2D(texsize[X] * 2, texsize[Y])
 	tex2 = point2D_add(tex1, texsize)
 	
 	if (thflip < 0)
