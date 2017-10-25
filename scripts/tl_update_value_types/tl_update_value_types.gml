@@ -23,7 +23,7 @@ if (type = e_tl_type.BACKGROUND)
 value_type[e_value_type.HIERARCHY] = true
 value_type[e_value_type.GRAPHICS] = true
 
-if (type = e_tl_type.CAMERA || type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+if (type = e_tl_type.CAMERA)
 	value_type[e_value_type.GRAPHICS] = false
 
 // Position

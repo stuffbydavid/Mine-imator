@@ -155,7 +155,11 @@ if (setting_render_shadows)
 				{
 					draw_clear(c_white)
 					render_world_start_light(world_pos, point3D_add(world_pos, look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE])
-					render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+					
+					// Only render depth for shadows if the light source isn't shadowless
+					if (shadows)
+						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+						
 					render_world_done()
 				}
 				surface_reset_target()
@@ -186,8 +190,13 @@ if (setting_render_shadows)
 			surface_set_target(render_surface_spot_buffer)
 			{
 				draw_clear(c_white)
+				
 				render_world_start_light(world_pos, lookat, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
-				render_world(e_render_mode.HIGH_LIGHT_SPOT_DEPTH)
+				
+				// Only render depth for shadows if the light source isn't shadowless
+				if (shadows)
+					render_world(e_render_mode.HIGH_LIGHT_SPOT_DEPTH)
+					
 				render_world_done()
 			}
 			surface_reset_target()

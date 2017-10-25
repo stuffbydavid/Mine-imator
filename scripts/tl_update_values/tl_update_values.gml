@@ -70,6 +70,7 @@ if (value_type[e_value_type.COLOR])
 if (value_type[e_value_type.PARTICLES])
 {
 	tl_update_values_ease(e_value.SPAWN, trans, p)
+	tl_update_values_ease(e_value.FREEZE, trans, p)
 	tl_update_values_ease(e_value.CLEAR, trans, p)
 	tl_update_values_ease(e_value.CUSTOM_SEED, trans, p)
 	tl_update_values_ease(e_value.SEED, trans, p)

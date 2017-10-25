@@ -1463,6 +1463,14 @@
             }
         },
         {
+            "Key": "18ecaeaf-a32b-422b-b4c0-fb7c42f5c129",
+            "Value": {
+                "id": "3cc3b5c1-f4c8-4b6b-8ea6-d6e83c0f6891",
+                "resourcePath": "scripts\\action_tl_frame_freeze\\action_tl_frame_freeze.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1920b208-1b28-4e71-b570-34952a8217f3",
             "Value": {
                 "id": "45f0ef32-c541-4db2-856a-ef7d4847809f",
@@ -14457,6 +14465,7 @@
         "5e316480-5d8c-43db-b9d7-d005e502f54e",
         "d8431c47-a119-4fb3-8960-46d871a77711",
         "e1481368-655a-4173-b231-e17a0d05690b",
+        "18ecaeaf-a32b-422b-b4c0-fb7c42f5c129",
         "37d93c98-ca91-464a-bb4c-2efa46f54b30",
         "38623192-008d-4725-8803-5e08d7118bab",
         "fabe0138-9999-4044-b95e-c8e57ae54752",

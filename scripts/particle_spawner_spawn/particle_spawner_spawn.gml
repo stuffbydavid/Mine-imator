@@ -10,6 +10,7 @@ pt.type = type
 pt.spawntime = current_step
 pt.frame = 0
 pt.time = 0
+pt.freezetime = 0
 
 if (is_timeline)
 	temp = id.temp

@@ -21,7 +21,12 @@ if (argument_count < 8)
 		
 	vertex_position_3d(vbuffer_current, pos[@ X], pos[@ Y], pos[@ Z])
 	vertex_normal(vbuffer_current, normal[@ X], normal[@ Y], normal[@ Z])
-	vertex_color(vbuffer_current, color, 1)
+	
+	if (is_array(color))
+		vertex_color(vbuffer_current, color[0], color[1])
+	else
+		vertex_color(vbuffer_current, color, 1)
+	
 	vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
 	
 	zz = pos[@ Z]

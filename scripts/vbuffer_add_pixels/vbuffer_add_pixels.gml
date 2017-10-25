@@ -1,4 +1,4 @@
-/// vbuffer_add_pixels(surface, position, [height, texpos, texsize, texpixelsize, scale, [mirror]])
+/// vbuffer_add_pixels(surface, position, [height, texpos, texsize, texpixelsize, scale, [mirror, [color]]])
 /// @arg surface
 /// @arg position
 /// @arg [height
@@ -6,9 +6,10 @@
 /// @arg texsize
 /// @arg texpixelsize
 /// @arg scale
-/// @arg [mirror]]
+/// @arg [mirror
+/// @arg [blendcolor]]]
 
-var surf, pos, height, texpos, texsize, texpixelsize, scale, mirror, mirrorsign, mat;
+var surf, pos, height, texpos, texsize, texpixelsize, scale, mirror, color, mirrorsign, mat;
 surf = argument[0]
 pos = argument[1]
 
@@ -38,8 +39,16 @@ if (argument_count > 7)
 else
 	mirror = false
 
+if (argument_count > 8)
+	color = argument[8]
+else
+	color = c_white
+
 mirrorsign = negate(mirror)
 mat = matrix_create(pos, vec3(0), scale)
+
+
+log(is_array(mat))
 
 if (mirror)
 	texpos[X] += texsize[X]
@@ -65,16 +74,16 @@ if (QUICK)
 		p2 = point3D_add(p1, point3D(0, 1, 0))
 		p3 = point3D_add(p1, point3D(0, 1, -height))
 		p4 = point3D_add(p1, point3D(0, 0, -height))
-		vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, mat)
-		vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, mat)
+		vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, mat)
+		vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, mat)
 		
 		// X+ face
 		p1 = point3D_add(p1, point3D(1, 0, 0))
 		p2 = point3D_add(p2, point3D(1, 0, 0))
 		p3 = point3D_add(p3, point3D(1, 0, 0))
 		p4 = point3D_add(p4, point3D(1, 0, 0))
-		vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, null, mat)
-		vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, null, mat)
+		vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color, mat)
+		vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, color, mat)
 	}
 	
 	// Y
@@ -90,16 +99,16 @@ if (QUICK)
 		p2 = point3D_add(p1, point3D(texsize[X], 0, 0))
 		p3 = point3D_add(p1, point3D(texsize[X], 1, 0))
 		p4 = point3D_add(p1, point3D(0, 1, 0))
-		vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, mat)
-		vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, mat)
+		vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, mat)
+		vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, mat)
 		
 		// Y- face
 		p1 = point3D_add(p1, point3D(0, 0, -1))
 		p2 = point3D_add(p2, point3D(0, 0, -1))
 		p3 = point3D_add(p3, point3D(0, 0, -1))
 		p4 = point3D_add(p4, point3D(0, 0, -1))
-		vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, null, mat)
-		vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, null, mat)
+		vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color, mat)
+		vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, color, mat)
 	}
 }
 else
@@ -138,8 +147,8 @@ else
 				p2 = point3D(xx + 1, 0, (height - 1) - (yy - 1))
 				p3 = point3D(xx + 1, 0, (height - 1) - yy)
 				p4 = point3D(xx + 1, 1, (height - 1) - yy)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, mat)
 			}
 			
 			// West
@@ -149,8 +158,8 @@ else
 				p2 = point3D(xx, 1, (height - 1) - (yy - 1))
 				p3 = point3D(xx, 1, (height - 1) - yy)
 				p4 = point3D(xx, 0, (height - 1) - yy)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, mat)
 			}
 			
 			// Up
@@ -160,8 +169,8 @@ else
 				p2 = point3D(xx + 1, 0, (height - 1) - (yy - 1))
 				p3 = point3D(xx + 1, 1, (height - 1) - (yy - 1))
 				p4 = point3D(xx, 1, (height - 1) - (yy - 1))
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, mat)
 			}
 			
 			// Down
@@ -171,8 +180,8 @@ else
 				p2 = point3D(xx + 1, 1, (height - 1) - yy)
 				p3 = point3D(xx + 1, 0, (height - 1) - yy)
 				p4 = point3D(xx, 0, (height - 1) - yy)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, mat)
 			}
 		}
 	}

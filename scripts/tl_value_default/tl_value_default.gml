@@ -10,6 +10,7 @@ switch (argument0)
 	case e_value.RGB_MUL:
 	case e_value.HSB_MUL: return c_white
 	case e_value.SPAWN: return true
+	case e_value.FREEZE: return false
 	case e_value.CLEAR: return false
 	case e_value.CUSTOM_SEED: return false
 	case e_value.SEED: return ceil(random(32000))

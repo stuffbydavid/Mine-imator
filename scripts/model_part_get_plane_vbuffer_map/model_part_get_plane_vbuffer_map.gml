@@ -54,8 +54,12 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	render_set_culling(true)
 	
 	// Generate 3D pixels
+	vertex_brightness = shape.color_brightness
+	
 	map[?shape] = vbuffer_start();
-	vbuffer_add_pixels(surf, shape.from, texsize[Y], array_copy_1d(shape.uv), texsize, vec2_div(vec2(1), shape.texture_size), shape.scale, shape.texture_mirror)
+	vbuffer_add_pixels(surf, shape.from, texsize[Y], array_copy_1d(shape.uv), texsize, vec2_div(vec2(1), shape.texture_size), shape.scale, shape.texture_mirror, shape.color)
 	vbuffer_done()
+	
+	vertex_brightness = 0
 }
 draw_texture_done()

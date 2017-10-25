@@ -4,6 +4,7 @@
 var vid = argument0;
 
 return (vid = e_value.SPAWN ||
+		vid = e_value.FREEZE ||
 		vid = e_value.CLEAR ||
 		vid = e_value.CUSTOM_SEED ||
 		vid = e_value.CAM_ROTATE ||

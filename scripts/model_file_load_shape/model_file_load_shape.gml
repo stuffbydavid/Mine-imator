@@ -63,7 +63,22 @@ with (new(obj_model_shape))
 		texture_inherit = other.texture_inherit
 		texture_size = texture_inherit.texture_size
 	}
-		
+	
+	// Color (optional)
+	color_inherit = value_get_real(map[?"color_inherit"], true)
+	color_blend = value_get_color(map[?"color_blend"], c_white)
+	color_alpha = value_get_color(map[?"color_alpha"], 1)
+	color_brightness = value_get_real(map[?"color_brightness"], 0)
+	
+	if (color_inherit)
+	{
+		color_blend = color_multiply(color_blend, other.color_blend)
+		color_alpha *= other.color_alpha
+		color_brightness += other.color_brightness
+	}
+	
+	color = point2D(color_blend, color_alpha)
+	
 	// Mirror (optional)
 	if (is_real(map[?"texture_mirror"]))
 		texture_mirror = map[?"texture_mirror"]
@@ -212,10 +227,8 @@ with (new(obj_model_shape))
 			vertex_wave_zmax = windmap[?"ymax"]
 	}
 	
-	// Brightness
-	if (is_real(map[?"brightness"]))
-		vertex_brightness = map[?"brightness"]
-		
+	vertex_brightness = color_brightness
+	
 	// Generate
 	if (type = "block")
 	{

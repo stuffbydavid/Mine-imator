@@ -7,6 +7,11 @@ tab_control_checkbox()
 draw_checkbox("frameeditorspawn", dx, dy, tl_edit.value[e_value.SPAWN], action_tl_frame_spawn)
 tab_next()
 
+// Freeze
+tab_control_checkbox()
+draw_checkbox("frameeditorfreeze", dx, dy, tl_edit.value[e_value.FREEZE], action_tl_frame_freeze)
+tab_next()
+
 // Clear
 tab_control_checkbox()
 draw_checkbox("frameeditorclear", dx, dy, tl_edit.value[e_value.CLEAR], action_tl_frame_clear)

@@ -64,6 +64,21 @@ with (new(obj_model_part))
 		texture_size = texture_inherit.texture_size
 	}
 	
+	// Color (optional)
+	color_inherit = value_get_real(map[?"color_inherit"], true)
+	color_blend = value_get_color(map[?"color_blend"], c_white)
+	color_alpha = value_get_color(map[?"color_alpha"], 1)
+	color_brightness = value_get_real(map[?"color_brightness"], 0)
+	
+	if (color_inherit)
+	{
+		color_blend = color_multiply(color_blend, other.color_blend)
+		color_alpha *= other.color_alpha
+		color_brightness += other.color_brightness
+	}
+	
+	color = point2D(color_blend, color_alpha)
+	
 	// Position
 	position_noscale = value_get_point3D(map[?"position"])
 	position = point3D_mul(position_noscale, other.scale)

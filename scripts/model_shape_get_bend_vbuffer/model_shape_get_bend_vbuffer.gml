@@ -13,9 +13,11 @@ with (shape)
 {
 	if (type != "block" || bend_mode != e_shape_bend.BEND)
 		return null
-
+	
 	var anglesign, partsign, detail;
-
+	
+	vertex_brightness = shape.color_brightness
+	
 	// Invert angle
 	if (bend_invert)
 		angle = -angle
@@ -372,17 +374,17 @@ with (shape)
 		{
 			if (anglesign * invertsign > 0)
 			{
-				vbuffer_add_triangle(pcurp, pmidp, pnextp, pedgetex, pmidtex, pedgetex2) // +
-				vbuffer_add_triangle(nmidp, ncurp, nnextp, nmidtex, nedgetex, nedgetex2) // -
-				vbuffer_add_triangle(ncurp, pcurp, nnextp, nbacktex, pbacktex, nbacktex2, backnormal[a > 0.5]) // Back 1
-				vbuffer_add_triangle(nnextp, pcurp, pnextp, nbacktex2, pbacktex, pbacktex2, backnormal[a > 0.5]) // Back 2
+				vbuffer_add_triangle(pcurp, pmidp, pnextp, pedgetex, pmidtex, pedgetex2, null, color) // +
+				vbuffer_add_triangle(nmidp, ncurp, nnextp, nmidtex, nedgetex, nedgetex2, null, color) // -
+				vbuffer_add_triangle(ncurp, pcurp, nnextp, nbacktex, pbacktex, nbacktex2, backnormal[a > 0.5], null, color) // Back 1
+				vbuffer_add_triangle(nnextp, pcurp, pnextp, nbacktex2, pbacktex, pbacktex2, backnormal[a > 0.5], null, color) // Back 2
 			}
 			else // Invert
 			{
-				vbuffer_add_triangle(pmidp, pcurp, pnextp, pmidtex, pedgetex, pedgetex2) // +
-				vbuffer_add_triangle(ncurp, nmidp, nnextp, nedgetex, nmidtex, nedgetex2) // -
-				vbuffer_add_triangle(pcurp, ncurp, nnextp, pbacktex, nbacktex, nbacktex2, backnormal[a > 0.5]) // Back 1
-				vbuffer_add_triangle(pcurp, nnextp, pnextp, pbacktex, nbacktex2, pbacktex2, backnormal[a > 0.5]) // Back 2
+				vbuffer_add_triangle(pmidp, pcurp, pnextp, pmidtex, pedgetex, pedgetex2, null, color) // +
+				vbuffer_add_triangle(ncurp, nmidp, nnextp, nedgetex, nmidtex, nedgetex2, null, color) // -
+				vbuffer_add_triangle(pcurp, ncurp, nnextp, pbacktex, nbacktex, nbacktex2, backnormal[a > 0.5], null, color) // Back 1
+				vbuffer_add_triangle(pcurp, nnextp, pnextp, pbacktex, nbacktex2, pbacktex2, backnormal[a > 0.5], null, color) // Back 2
 			}
 		}
 			
@@ -391,4 +393,6 @@ with (shape)
 	}
 
 	return vbuffer_done()
+	
+	vertex_brightness = 0
 }

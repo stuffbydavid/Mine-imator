@@ -70,6 +70,12 @@ with (new(obj_model_file))
 	var size = max(texture_size[X], texture_size[Y]);
 	texture_size = vec2(size, size) // Make square
 	
+	// Color
+	color_inherit = false
+	color_blend = c_white
+	color_alpha = 1
+	color_brightness = 0
+	
 	// Player skin
 	if (is_real(map[?"player_skin"]))
 		player_skin = map[?"player_skin"]
