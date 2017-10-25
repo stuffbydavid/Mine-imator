@@ -96,6 +96,7 @@ with (mc_assets)
 				res_load_pack_block_textures()
 				res_load_pack_item_textures()
 				res_load_pack_misc()
+				res_update_colors(biome_list[|0])
 			}
 		
 			load_assets_stage = "models"

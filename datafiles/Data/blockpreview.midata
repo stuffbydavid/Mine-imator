@@ -74,7 +74,7 @@
 		"Y": "#79553A"
 	},
 	"grass.json": {
-		"Y": "#B3B3B3",
+		"Y": "#65843E",
 		"Z": "#79553A"
 	},
 	"melon_stem.json": {
@@ -460,8 +460,8 @@
 		"Z": "#9F5845"
 	},
 	"jungle_leaves.json": {
-		"Y": "#878787",
-		"Z": "#878787"
+		"Y": "#3F5A18",
+		"Z": "#3F5A18"
 	},
 	"netherrack.json": {
 		"Y": "#B66B6B",
@@ -937,7 +937,7 @@
 		"Z": "#C8C8C8"
 	},
 	"fern.json": {
-		"Z": "#616161"
+		"Z": "#374721"
 	},
 	"pink_concrete.json": {
 		"Y": "#D6658F",
@@ -1144,7 +1144,7 @@
 		"Z": "#08080C"
 	},
 	"tall_grass.json": {
-		"Z": "#8B8B8B"
+		"Z": "#4F6730"
 	},
 	"cyan_glazed_terracotta.json": {
 		"Y": "#16A3A3",

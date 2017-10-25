@@ -349,6 +349,10 @@ with (new(obj_block_render_model))
 							var pcol = buffer_read_color(px, py, sheetwidth);
 							if (face_texture_color[nd] > -1)
 								pcol = color_multiply(pcol, face_texture_color[nd])
+							else if (face_vbuffer[nd] = e_block_vbuffer.GRASS)
+								pcol = color_multiply(pcol, mc_res.color_grass)
+							else if (face_vbuffer[nd] = e_block_vbuffer.LEAVES)
+								pcol = color_multiply(pcol, mc_res.color_foliage)
 						
 							if (nd = e_dir.UP)
 								other.preview_color_zp = pcol
