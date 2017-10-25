@@ -225,14 +225,14 @@ with (mc_assets)
 					key = ds_map_find_next(load_assets_model_file_map, key)
 				}
 		
+				file_copy_temp = true
+				minecraft_assets_create_block_previews()
+				
 				ds_map_destroy(load_assets_model_file_map)
 				ds_map_destroy(load_assets_map)
 				ds_map_destroy(load_assets_type_map)
 				buffer_delete(load_assets_block_preview_buffer)
 				buffer_delete(load_assets_block_preview_ani_buffer)
-				
-				file_copy_temp = true
-				minecraft_assets_create_block_previews()
 			
 				log("Loaded assets successfully")
 			}
