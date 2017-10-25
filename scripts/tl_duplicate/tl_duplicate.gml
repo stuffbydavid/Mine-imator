@@ -12,6 +12,10 @@ with (copy)
 	if (temp && part_of = null)
 		temp.count++
 		
+	// Copy default values
+	for (var v = 0; v < e_value.amount; v++)
+		value_default[v] = tl_value_find_save_id(v, null, other.value_default[v])
+		
 	// Copy keyframes
 	for (var k = 0; k < ds_list_size(other.keyframe_list); k++)
 	{
@@ -47,6 +51,7 @@ with (copy)
 	}
 	
 	// Update
+	tl_update_scenery_part()
 	tl_update()
 	tl_update_values()
 		

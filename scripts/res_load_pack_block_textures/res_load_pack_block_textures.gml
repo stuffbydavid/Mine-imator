@@ -101,8 +101,10 @@ if (id = mc_res)
 	surface_set_target(previewsurf)
 	{
 		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+		gpu_set_tex_filter(true)
 		draw_clear_alpha(c_black, 0)
 		draw_surface_ext(surf, 0, 0, 1 / block_size, 1 / block_size, 0, c_white, 1)
+		gpu_set_tex_filter(false)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()

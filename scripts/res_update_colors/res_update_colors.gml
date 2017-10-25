@@ -1,10 +1,15 @@
-/// res_update_colors()
+/// res_update_colors([biome])
+/// @arg [biome]
 /// @desc Update grass & foliage colors for a resource.
 
-if (!colormap_grass_texture)
+if (colormap_grass_texture = null)
 	return 0
 	
-var biome = app.background_biome;
+var biome;
+if (argument_count > 0)
+	biome = argument[0]
+else
+	biome = app.background_biome;
 
 if (biome.name = "mesa")
 {

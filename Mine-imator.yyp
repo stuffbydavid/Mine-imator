@@ -4271,14 +4271,6 @@
             }
         },
         {
-            "Key": "4f19b4cc-417d-4aeb-ba37-3ab4361c983a",
-            "Value": {
-                "id": "7feec198-c60b-4700-8c82-1816f6a1ea0f",
-                "resourcePath": "scripts\\block_load_legacy_data_state\\block_load_legacy_data_state.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "4f55eb19-8ab5-48ba-9c5c-7a051070615c",
             "Value": {
                 "id": "ce9e168b-c866-4692-905c-d8d1e13fd028",
@@ -14996,7 +14988,6 @@
         "476035cd-bd4d-4d9b-a448-e5a5a474b911",
         "18cb105d-3207-47df-a389-0d7082a1a082",
         "a522f2b9-240d-4a9f-870c-858a013c1dd7",
-        "4f19b4cc-417d-4aeb-ba37-3ab4361c983a",
         "a2caa902-4218-4e39-8eb9-ccbd81182687",
         "f421a321-b0fc-4cdb-885a-94de9f27a3e4",
         "61b8b454-9779-4a7f-afc2-dff1f9ea5bb3",

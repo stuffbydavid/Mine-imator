@@ -17,7 +17,7 @@ with (tl)
 	if (temp != null && part_of = null)
 		temp.count++
 	
-	// Restore values
+	// Restore default values
 	for (var v = 0; v < e_value.amount; v++)
 		value_default[v] = tl_value_find_save_id(v, null, save.value_default[v])
 	
@@ -80,6 +80,7 @@ with (tl)
 		with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))
 			keyframe_list[|save.usage_kf_attractor_index[s]].value[e_value.ATTRACTOR] = tl
 			
+	// Update
 	tl_update_scenery_part()
 	tl_update()
 	tl_update_values()

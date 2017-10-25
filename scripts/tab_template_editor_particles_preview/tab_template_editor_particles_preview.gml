@@ -1,7 +1,6 @@
 /// tab_template_editor_particles_preview()
 
-var size, xx, yy, bx, by;
-var res, tex, swid, fwid, fhei, ani, frame, framesx, scale;
+var size, xx, yy;
 size = 64
 tab_control(size)
 
@@ -16,6 +15,7 @@ if (xx + size < content_x || xx > content_x + content_width || yy + size < conte
 
 tip_set(text_get("particleeditortypespriteanimationpreviewtip"), xx, yy, size, size)
 
+var res, tex, swid, fwid, fhei, ani, frame, framesx, scale;
 res = ptype_edit.sprite_tex
 if (!res.ready)
 	res = mc_res
@@ -30,7 +30,9 @@ framesx = swid div fwid
 scale = min(size / fwid, size / fhei)
 
 draw_box(xx, yy, size, size, false, c_black, 0.1)
+draw_texture_start()
 draw_texture_part(tex, xx, yy, (frame mod framesx) * fwid, (frame div framesx) * fhei, fwid, fhei, scale, scale)
+draw_texture_done()
 
 if (draw_button_normal("", xx + size - 16, yy + size - 16, 16, 16, e_button.NO_TEXT, false, true, true, icons.ARROW_RIGHT_SMALL))
 	tab_template_editor_particles_preview_restart()

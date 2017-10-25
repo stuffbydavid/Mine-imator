@@ -64,7 +64,9 @@ with (new(obj_block_render_model))
 	
 	// For the world importer
 	preview_color_zp = null
+	preview_alpha_zp = 0
 	preview_color_yp = null
+	preview_alpha_yp = 0
 	
 	// Add elements
 	element_amount = 0
@@ -346,14 +348,27 @@ with (new(obj_block_render_model))
 						// Not transparent
 						if (alpha > 0)
 						{
-							var pcol = buffer_read_color(px, py, sheetwidth);
+							var pcol, palpha;
+							pcol = buffer_read_color(px, py, sheetwidth);
+							palpha = buffer_read_alpha(px, py, sheetwidth);
+							
 							if (face_texture_color[nd] > -1)
 								pcol = color_multiply(pcol, face_texture_color[nd])
+							else if (face_vbuffer[nd] = e_block_vbuffer.GRASS)
+								pcol = color_multiply(pcol, mc_res.color_grass)
+							else if (face_vbuffer[nd] = e_block_vbuffer.LEAVES)
+								pcol = color_multiply(pcol, mc_res.color_foliage)
 						
 							if (nd = e_dir.UP)
+							{
 								other.preview_color_zp = pcol
+								other.preview_alpha_zp = palpha
+							}
 							else
+							{
 								other.preview_color_yp = pcol
+								other.preview_alpha_yp = palpha
+							}
 						}
 					}
 					
