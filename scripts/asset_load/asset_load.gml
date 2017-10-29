@@ -75,6 +75,19 @@ if (!file_exists_lib(fn))
 var legacy;
 switch (ext)
 {
+	case ".miobject":
+	case ".miparticles":
+	case ".miproject":
+		legacy = false
+		break
+		
+	case ".object":
+	case ".particles":
+	case ".mproj":
+	case ".mani":
+		legacy = true
+		break
+		
 	case ".miframes":
 	case ".keyframes":
 		log("Opening keyframes", fn)
@@ -85,6 +98,12 @@ switch (ext)
 	case ".blocks":
 		log("Opening schematic", fn)
 		action_lib_scenery_load(fn)
+		return true
+		
+	case ".mimodel":
+	case ".json":
+		log("Opening model", fn)
+		action_res_model_load(fn)
 		return true
 		
 	case ".mp3":
@@ -103,22 +122,6 @@ switch (ext)
 		popup_importimage.filename = fn
 		popup_show(popup_importimage)
 		return true
-		
-	// TODO .mimodel
-	// TODO .json model
-	
-	case ".miobject":
-	case ".miparticles":
-	case ".miproject":
-		legacy = false
-		break
-		
-	case ".object":
-	case ".particles":
-	case ".mproj":
-	case ".mani":
-		legacy = true
-		break
 }
 
 var hobj = null;

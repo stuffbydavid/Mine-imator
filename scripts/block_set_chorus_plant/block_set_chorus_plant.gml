@@ -1,11 +1,12 @@
 /// block_set_chorus_plant()
 /// @desc Connects to other chorus plants, chorus flowers and end stone below.
 
-var east, west, south, north, down;
+var east, west, south, north, up, down;
 east = "false"
 west = "false"
 south = "false"
 north = "false"
+up = "false"
 down = "false"
 
 if (!build_edge_xp)
@@ -36,6 +37,13 @@ if (!build_edge_yn)
 		north = "true"
 }
 
+if (!build_edge_zp)
+{
+	var block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1);
+	if (block != null && (block = block_current || block.type = "chorus_plant_connect"))
+		up = "true"
+}
+
 if (!build_edge_zn)
 {
 	var block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z - 1);
@@ -43,6 +51,6 @@ if (!build_edge_zn)
 		down = "true"
 }
 
-block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "down", down))
+block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "up", up, "down", down))
 
 return 0

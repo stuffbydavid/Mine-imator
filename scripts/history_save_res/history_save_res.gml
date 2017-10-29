@@ -13,7 +13,7 @@ with (res)
 with (save)
 {
 	save_id = res.save_id
-	usage_skin_amount = 0
+	usage_model_tex_amount = 0
 	usage_item_tex_amount = 0
 	usage_block_tex_amount = 0
 	usage_scenery_amount = 0
@@ -36,10 +36,10 @@ with (save)
 // Save references
 with (obj_template)
 {
-	if (skin = res)
+	if (model_tex = res)
 	{
-		save.usage_skin_save_id[save.usage_skin_amount] = save_id
-		save.usage_skin_amount++
+		save.usage_model_tex_save_id[save.usage_model_tex_amount] = save_id
+		save.usage_model_tex_amount++
 	}
 	
 	if (item_tex = res)

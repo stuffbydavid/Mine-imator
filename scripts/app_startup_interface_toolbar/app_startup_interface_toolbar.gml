@@ -12,29 +12,30 @@ bench_hover_ani = 0
 bench_click_ani = 0
 bench_show_ani_type = ""
 bench_show_ani = 0
-bench_width = 490
-bench_height = 250
+bench_width = 410
+bench_height = 325
 
 bench_type_list = ds_list_create()
 ds_list_add(bench_type_list,
-	e_temp_type.CHARACTER,
-	e_temp_type.SCENERY,
-	e_temp_type.ITEM,
-	e_temp_type.BLOCK,
-	e_temp_type.SPECIAL_BLOCK,
-	e_tl_type.CAMERA,
-	e_temp_type.BODYPART,
-	e_temp_type.PARTICLE_SPAWNER,
+	e_tl_type.CHARACTER,
+	e_tl_type.SCENERY,
+	e_tl_type.ITEM,
+	e_tl_type.BLOCK,
+	e_tl_type.SPECIAL_BLOCK,
+	e_tl_type.BODYPART,
+	e_tl_type.PARTICLE_SPAWNER,
 	e_tl_type.POINT_LIGHT,
 	e_tl_type.SPOT_LIGHT,
-	e_temp_type.TEXT,
+	e_tl_type.TEXT,
+	e_tl_type.CUBE,
+	e_tl_type.SPHERE,
+	e_tl_type.CONE,
+	e_tl_type.CYLINDER,
+	e_tl_type.SURFACE,
+	e_tl_type.CAMERA,
 	e_tl_type.BACKGROUND,
-	e_temp_type.CUBE,
-	e_temp_type.SPHERE,
-	e_temp_type.CONE,
-	e_temp_type.CYLINDER,
-	e_temp_type.SURFACE,
-	e_tl_type.AUDIO
+	e_tl_type.AUDIO,
+	e_tl_type.MODEL
 )
 
 // Workbench settings
@@ -58,7 +59,7 @@ with (bench_settings)
 	temp_update_model_part()
 	block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 	temp_particles_init()
-	skin = mc_res
+	model_tex = mc_res
 	item_tex = mc_res
 	block_tex = mc_res
 	text_font = mc_res

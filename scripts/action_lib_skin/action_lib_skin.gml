@@ -50,14 +50,14 @@ else
 			break
 		}
 	}
-	history_set_res(action_lib_skin, fn, temp_edit.skin, res)
+	history_set_res(action_lib_skin, fn, temp_edit.model_tex, res)
 }
 
 with (temp_edit)
 {
-	skin.count--
-	skin = res
-	skin.count++
+	model_tex.count--
+	model_tex = res
+	model_tex.count++
 }
 
 lib_preview.update = true

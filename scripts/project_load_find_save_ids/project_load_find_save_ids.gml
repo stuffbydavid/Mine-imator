@@ -58,7 +58,7 @@ with (obj_template)
 	if (!is_undefined(save_id_map[?load_id]))
 		save_id = save_id_map[?load_id]
 		
-	skin = save_id_find(save_id_map[?skin])
+	model_tex = save_id_find(save_id_map[?model_tex])
 	item_tex = save_id_find(save_id_map[?item_tex])
 	block_tex = save_id_find(save_id_map[?block_tex])
 	scenery = save_id_find(save_id_map[?scenery])
@@ -75,8 +75,8 @@ with (obj_template)
 	// Update counters if not loaded via the workbench particle preview
 	if (temp_creator != app.bench_settings)
 	{
-		if (skin != null)
-			skin.count++
+		if (model_tex != null)
+			model_tex.count++
 		
 		if (item_tex != null)
 			item_tex.count++

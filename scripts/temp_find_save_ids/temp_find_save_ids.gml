@@ -1,6 +1,6 @@
 /// temp_find_save_ids()
 
-skin = save_id_find(skin)
+model_tex = save_id_find(model_tex)
 item_tex = save_id_find(item_tex)
 block_tex = save_id_find(block_tex)
 scenery = save_id_find(scenery)

@@ -147,6 +147,25 @@ switch (type)
 		
 		break
 	}
+	
+	case e_res_type.MODEL:
+	{
+		with (model_file)
+			instance_destroy()
+			
+		model_file = model_file_load(fn)
+		
+		if (model_texture_name_map = null)
+			model_texture_name_map = ds_map_create()
+		else
+			ds_map_clear(model_texture_name_map)
+			
+		if (model_file != null)
+			model_texture_name_map[?""] = model_file.texture_name
+			
+		res_update_model_plane_vbuffer_map()
+		break
+	}
 }
 
 // Set display name

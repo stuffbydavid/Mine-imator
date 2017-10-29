@@ -330,9 +330,9 @@ for (var a = 0; a < load.lib_amount; a++)
 				temp_update_model()
 				
 				if (load.lib_char_skin[a] > -1)
-					skin = load.skin_res[load.lib_char_skin[a]].load_id
+					model_tex = load.skin_res[load.lib_char_skin[a]].load_id
 				else
-					skin = save_id_get(mc_res)
+					model_tex = save_id_get(mc_res)
 					
 				break
 			}

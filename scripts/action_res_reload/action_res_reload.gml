@@ -4,6 +4,9 @@ var hobj = null;
 
 if (!history_undo && !history_redo)
 {
+	with (res_edit)
+		res_load()
+		
 	hobj = history_set(action_res_reload)
 	with (hobj)
 	{
@@ -15,10 +18,9 @@ if (!history_undo && !history_redo)
 	load_folder = project_folder
 	save_folder = project_folder
 
-	with (res_edit)
-		res_load()
+	tl_deselect_all()
 }
-	
+
 with (obj_template)
 {
 	if (scenery = res_edit)

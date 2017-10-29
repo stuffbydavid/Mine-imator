@@ -323,10 +323,10 @@ switch (load_stage)
 				if (type = e_res_type.FROM_WORLD) // Rename world import file
 				{
 					type = e_res_type.SCHEMATIC
-					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".blocks"); // TODO exporter should use .schematic to support TileEntities & block states
+					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".schematic");
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
-					file_rename_lib(app.project_folder + "\\export.blocks", newname)
+					file_rename_lib(app.project_folder + "\\export.schematic", newname)
 				}
 			}
 				

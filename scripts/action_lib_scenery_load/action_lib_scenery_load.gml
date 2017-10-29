@@ -25,16 +25,16 @@ else
 		
 	with (new(obj_template))
 	{
-		sortlist_add(app.lib_list, id)
-		loaded = true
 		type = e_temp_type.SCENERY
 		scenery = res
 		scenery.count++
 		block_tex = mc_res
 		mc_res.count++
 		temp_update_display_name()
+		loaded = true
 		with (temp_animate())
 			loaded = true
+		sortlist_add(app.lib_list, id)
 	}
 	
 	with (hobj)

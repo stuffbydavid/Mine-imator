@@ -17,7 +17,8 @@
         "ece96df4-fab8-4e55-a0a3-5dab395186fc",
         "d54bf27e-48d9-43f9-a088-a6b4ad1cf4be",
         "fd62ac27-1ff9-4494-a7f1-9bdc98b306aa",
-        "49befe24-7429-4ebe-9572-5e389eb767b9"
+        "49befe24-7429-4ebe-9572-5e389eb767b9",
+        "02763a86-c77b-4f3f-bdf5-afc3a8d19848"
     ],
     "filterType": "GMScript",
     "folderName": "Resources",

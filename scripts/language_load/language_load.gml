@@ -23,10 +23,18 @@ if (filename_ext(fn) = ".milanguage")
 	
 	// Load JSON
 	var jsonmap = json_load(convfn);
-	language_load_map("", jsonmap, map)
-
 	if (ds_map_valid(jsonmap))
+	{
+		language_load_map("", jsonmap, map)
 		ds_map_destroy(jsonmap)
+	}
+	else
+	{
+		window_set_caption("Error")
+		show_message("An error occured while reading the file:\n" + json_error + " on line " + string(json_line) + ", column " + string(json_column))
+		window_set_caption("")
+		return 0
+	}
 }
 else
 	language_load_legacy(fn, map)

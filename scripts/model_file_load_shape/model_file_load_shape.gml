@@ -34,10 +34,7 @@ with (new(obj_model_shape))
 	type = map[?"type"]
 
 	// Description (optional)
-	if (is_string(map[?"description"]))
-		description = map[?"description"]
-	else
-		description = ""
+	description = value_get_string(map[?"description"], "")
 		
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
@@ -77,26 +74,14 @@ with (new(obj_model_shape))
 		color_brightness += other.color_brightness
 	}
 	
-	color = point2D(color_blend, color_alpha)
-	
 	// Mirror (optional)
-	if (is_real(map[?"texture_mirror"]))
-		texture_mirror = map[?"texture_mirror"]
-	else
-		texture_mirror = false
+	texture_mirror = value_get_real(map[?"texture_mirror"], false)
 	
 	// Invert (optional)
-	if (is_real(map[?"invert"]))
-		invert = map[?"invert"]
-	else
-		invert = false
+	invert = value_get_real(map[?"invert"], false)
 		
 	// 3D (optional)
-	if (is_real(map[?"3d"]))
-		is3d = map[?"3d"]
-	else
-		is3d = false
-	is3d = true
+	is3d = value_get_real(map[?"is3d"], false)
 	
 	// From/To
 	from_noscale = value_get_point3D(map[?"from"])

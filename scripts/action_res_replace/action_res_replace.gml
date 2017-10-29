@@ -4,6 +4,10 @@ var hobj = null;
 
 if (!history_undo && !history_redo)
 {
+	with (res_edit)
+		if (!res_load_browse())
+			return 0
+		
 	hobj = history_set(action_res_replace)
 	with (hobj)
 	{
@@ -12,10 +16,9 @@ if (!history_undo && !history_redo)
 		history_save_tl_select()
 	}
 	
-	with (res_edit)
-		res_load_browse()
+	tl_deselect_all()
 }
-	
+
 with (obj_template)
 {
 	if (scenery = res_edit)

@@ -114,10 +114,10 @@ else
 			
 			// Skin
 			var text, tex;
-			text = bench_settings.skin.display_name
-			with (bench_settings.skin)
+			text = bench_settings.model_tex.display_name
+			with (bench_settings.model_tex)
 				tex = res_get_model_texture(model_part_get_texture_name(part, other.bench_settings.model_texture_name_map))
-			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.skin, text, action_bench_skin, tex, null, capwid)
+			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.model_tex, text, action_bench_skin, tex, null, capwid)
 			dy += 40
 			break
 		}
@@ -275,9 +275,10 @@ else
 			break
 		}
 	}
+	
 	dy += 10
 	buttony = dy
-	dy += 32 + padding * 2
+	dy += 32 + padding * 2 - 1
 }
 
 if (draw_button_normal("benchcreate", dx + floor(dw / 2) - 50, floor(buttony), 100, 32))

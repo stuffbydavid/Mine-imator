@@ -12,8 +12,9 @@ display_name = ""
 count = 0
 rot_point = point3D(0, 0, 0)
 
-skin = null
+model = null
 model_name = "human"
+model_tex = null
 model_texture_name_map = null
 model_plane_vbuffer_map = null
 model_hide_list = null

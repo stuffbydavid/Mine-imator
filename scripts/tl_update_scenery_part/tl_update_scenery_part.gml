@@ -5,7 +5,7 @@ if (part_of = null)
 
 if (type = e_tl_type.SPECIAL_BLOCK)
 {
-	skin = mc_res
+	model_tex = mc_res
 	model_file = null
 	model_texture_name_map = null
 	model_hide_list = null

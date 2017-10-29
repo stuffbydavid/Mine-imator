@@ -19,7 +19,7 @@ ds_map_clear(model_plane_vbuffer_map)
 // Get texture
 var texobj, res;
 texobj = value_inherit[e_value.TEXTURE_OBJ]
-res = temp.skin
+res = temp.model_tex
 
 if (texobj != null && texobj.type != e_tl_type.CAMERA)
 	res = texobj

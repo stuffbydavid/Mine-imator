@@ -55,7 +55,7 @@ if (temp != null)
 			if (temp.model_file = null)
 				break
 			
-			var res = temp.skin;
+			var res = temp.model_tex;
 			if (!res.ready)
 				res = mc_res
 				
@@ -81,7 +81,7 @@ if (temp != null)
 			if (temp.model_part = null || temp.model_file = null)
 				break
 				
-			var res = temp.skin;
+			var res = temp.model_tex;
 			if (!res.ready)
 				res = mc_res
 							

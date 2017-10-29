@@ -13,7 +13,7 @@ with (new(obj_template))
 	if (load_format = e_project.FORMAT_100_DEMO_2)
 		/*count = */buffer_read_int()
 
-	skin = project_load_legacy_save_id()
+	model_tex = project_load_legacy_save_id()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 		legacy_model_name = buffer_read_string_int()
 	else 

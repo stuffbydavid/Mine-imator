@@ -57,7 +57,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	vertex_brightness = shape.color_brightness
 	
 	map[?shape] = vbuffer_start();
-	vbuffer_add_pixels(surf, shape.from, texsize[Y], array_copy_1d(shape.uv), texsize, vec2_div(vec2(1), shape.texture_size), shape.scale, shape.texture_mirror, shape.color)
+	vbuffer_add_pixels(surf, shape.from, texsize[Y], array_copy_1d(shape.uv), texsize, vec2_div(vec2(1), shape.texture_size), shape.scale, shape.texture_mirror, shape.color_blend, shape.color_alpha)
 	vbuffer_done()
 	
 	vertex_brightness = 0

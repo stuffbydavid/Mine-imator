@@ -9,8 +9,8 @@ if (model_hide_list != null)
 	
 if (temp_creator != app.bench_settings)
 {
-	if (skin != null)
-		skin.count--
+	if (model_tex != null)
+		model_tex.count--
 		
 	if (item_tex != null)
 		item_tex.count--

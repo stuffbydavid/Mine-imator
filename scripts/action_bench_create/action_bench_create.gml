@@ -48,8 +48,8 @@ else
 			{
 				if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART)
 				{
-					skin.count--
-					skin = null
+					model_tex.count--
+					model_tex = null
 					model_file = null
 					model_part = null
 					model_state = array()
@@ -103,8 +103,8 @@ else
 			sortlist_add(app.lib_list, id)
 			creator = app
 			
-			if (skin != null)
-				skin.count++
+			if (model_tex != null)
+				model_tex.count++
 				
 			if (item_tex != null)
 				item_tex.count++

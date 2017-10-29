@@ -16,7 +16,7 @@ switch (tl_edit.type)
 		name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 		
 		if (texobj = null || texobj.type = e_tl_type.CAMERA || (texobj.model_texture = null && texobj.model_texture_map = null))
-			texobj = tl_edit.temp.skin
+			texobj = tl_edit.temp.model_tex
 		
 		if (tl_edit.type = e_temp_type.BODYPART)
 		{

@@ -34,12 +34,14 @@ else
 	}
 	
 	res = new_res(fn, type)
-	res.loaded = true
-	if (type = e_res_type.ITEM_SHEET)
-		res.item_sheet_size = itemsheetsize
-	
 	with (res)
+	{
+		loaded = true
+		if (type = e_res_type.ITEM_SHEET)
+			item_sheet_size = itemsheetsize
+	
 		res_load()
+	}
 	
 	if (!history_redo && !res.replaced)
 	{

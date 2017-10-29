@@ -8,8 +8,8 @@ copy = id
 
 with (temp)
 {
-	if (skin)
-		skin.count++
+	if (model_tex)
+		model_tex.count++
 		
 	if (item_tex)
 		item_tex.count++

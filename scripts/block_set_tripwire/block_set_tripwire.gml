@@ -31,7 +31,7 @@ if (!build_edge_yp)
 }
 
 // Y-
-if (!build_edge_xn)
+if (!build_edge_yn)
 {
 	var block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z);
 	if (block != null && (block.name = "tripwire" || block.name = "tripwire_hook"))

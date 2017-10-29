@@ -7,7 +7,7 @@ var to = argument0;
 to.type = type
 to.name = name
 
-to.skin = skin
+to.model_tex = model_tex
 to.model_name = model_name
 to.model_state = array_copy_1d(model_state)
 to.model_part_name = model_part_name

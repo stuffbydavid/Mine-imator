@@ -1,6 +1,9 @@
 /// block_set_redstone_repeater()
 /// @desc Set locked state.
 
+if (block_get_state_id_value(block_current, block_state_id_current, "locked") = "true")
+	return 0
+	
 var facing, locked;
 facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 locked = "false"

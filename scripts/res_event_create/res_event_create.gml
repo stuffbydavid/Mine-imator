@@ -15,7 +15,6 @@ display_name = ""
 count = 0
 copied = false
 
-model = null
 model_texture = null
 model_texture_map = null
 player_skin = false
@@ -56,3 +55,7 @@ sound_index = null
 
 load_stage = ""
 load_audio_sample = 0
+
+model_file = null
+model_texture_name_map = null
+model_plane_vbuffer_map = null

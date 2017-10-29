@@ -14,7 +14,7 @@ else
 	res = argument0
 	if (res = e_option.IMPORT_WORLD)
 	{
-		fn = file_directory + "export.blocks"
+		fn = file_directory + "export.schematic"
 		file_delete_lib(fn)
 		execute(import_file, fn, true)
 		

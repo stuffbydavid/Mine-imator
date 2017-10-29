@@ -18,7 +18,11 @@ with (new(obj_template))
 
 	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 	{
-		skin = value_get_save_id(map[?"skin"], skin)
+		if (load_format = e_project.FORMAT_110_PRE_1)
+			model_tex = value_get_save_id(map[?"skin"], model_tex)
+		else
+			model_tex = value_get_save_id(map[?"model_tex"], model_tex)
+			
 		var modelmap = map[?"model"];
 		if (ds_map_valid(modelmap))
 		{

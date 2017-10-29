@@ -26,13 +26,14 @@ switch (type)
 		break
 }
 
-if (file_exists_lib(fn))
-{
-	filename = filename_name(fn)
-	load_folder = filename_dir(fn)
-	save_folder = app.project_folder
-	if (type = e_res_type.DOWNLOADED_SKIN)
-		type = e_res_type.SKIN
+if (!file_exists_lib(fn))
+	return 0
+
+filename = filename_name(fn)
+load_folder = filename_dir(fn)
+save_folder = app.project_folder
+if (type = e_res_type.DOWNLOADED_SKIN)
+	type = e_res_type.SKIN
 	
-	res_load()
-}
+res_load()
+return 1

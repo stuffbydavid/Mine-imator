@@ -432,15 +432,15 @@ switch (menu_name)
 	{
 		// Default
 		var tex;
-		with (tl_edit.temp.skin)
+		with (tl_edit.temp.model_tex)
 			tex = res_get_model_texture(model_part_get_texture_name(tl_edit.model_part, tl_edit.temp.model_texture_name_map))
-		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.skin.display_name), tex)
+		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.model_tex.display_name), tex)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i];
-			if (res != tl_edit.temp.skin)
+			if (res != tl_edit.temp.model_tex)
 			{
 				with (res)
 					tex = res_get_model_texture(model_part_get_texture_name(tl_edit.model_part, tl_edit.temp.model_texture_name_map))

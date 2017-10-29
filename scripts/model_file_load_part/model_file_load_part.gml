@@ -22,23 +22,14 @@ if (!ds_list_valid(map[?"position"]))
 with (new(obj_model_part))
 {
 	// Name
-	if (is_string(map[?"name"]) && map[?"name"] != "")
-		name = map[?"name"]
-	else
-	{
-		log("Missing or invalid parameter \"name\"")
-		return null
-	}
+	name = map[?"name"]
 	
 	if (dev_mode_debug_names && !text_exists("modelpart" + name))
 		log("model/part/" + name + dev_mode_name_translation_message)
 	
 	// Description (optional)
-	if (is_string(map[?"description"]))
-		description = map[?"description"]
-	else
-		description = ""
-		
+	description = value_get_string(map[?"description"], "")
+	
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
 	{
@@ -76,8 +67,6 @@ with (new(obj_model_part))
 		color_alpha *= other.color_alpha
 		color_brightness += other.color_brightness
 	}
-	
-	color = point2D(color_blend, color_alpha)
 	
 	// Position
 	position_noscale = value_get_point3D(map[?"position"])

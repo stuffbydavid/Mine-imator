@@ -96,7 +96,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 				break
 					
 			// Get texture
-			var res = temp.skin;
+			var res = temp.model_tex;
 				
 			if (texobj > 0 && texobj.type != e_tl_type.CAMERA)
 				res = texobj

@@ -44,22 +44,13 @@ if (!ds_list_valid(map[?"parts"]))
 with (new(obj_model_file))
 {
 	// Name
-	if (is_string(map[?"name"]))
-		name = map[?"name"]
-	else
-	{
-		log("Missing parameter \"name\"")
-		return null
-	}
+	name = map[?"name"]
 	
 	if (dev_mode_debug_names && !text_exists("model" + name))
 		log("model/" + name + dev_mode_name_translation_message)
 		
 	// Description (optional)
-	if (is_string(map[?"description"]))
-		description = map[?"description"]
-	else
-		description = ""
+	description = value_get_string(map[?"description"], "")
 		
 	// Texture
 	texture_name = map[?"texture"]
@@ -77,10 +68,7 @@ with (new(obj_model_file))
 	color_brightness = 0
 	
 	// Player skin
-	if (is_real(map[?"player_skin"]))
-		player_skin = map[?"player_skin"]
-	else
-		player_skin = false
+	player_skin = value_get_real(map[?"player_skin"], false)
 		
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))

@@ -18,12 +18,12 @@ with (res)
 	res_load()
 	
 	// Restore template usage
-	for (var s = 0; s < save.usage_skin_amount; s++)
+	for (var s = 0; s < save.usage_model_tex_amount; s++)
 	{
-		with (save_id_find(save.usage_skin_save_id[s]))
+		with (save_id_find(save.usage_model_tex_save_id[s]))
 		{
-			skin.count--
-			skin = res
+			model_tex.count--
+			model_tex = res
 		}
 	}
 			
@@ -141,7 +141,7 @@ with (res)
 		}
 	}
 		
-	count += save.usage_skin_amount
+	count += save.usage_model_tex_amount
 	count += save.usage_item_tex_amount
 	count += save.usage_block_tex_amount
 	count += save.usage_scenery_amount

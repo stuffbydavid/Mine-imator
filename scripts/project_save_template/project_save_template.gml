@@ -8,7 +8,7 @@ json_save_object_start()
 	
 	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 	{
-		json_save_var_save_id("skin", skin)
+		json_save_var_save_id("model_tex", model_tex)
 		json_save_object_start("model")
 			json_save_var("name", model_name)
 			json_save_var_state_vars("state", model_state)

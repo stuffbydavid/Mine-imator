@@ -33,7 +33,7 @@ if (preview.select.object_index = obj_resource)
 	playbutton = (preview.select.type = e_res_type.SOUND)
 	isplaying = audio_is_playing(preview.sound_play_index)
 	exportbutton = true
-	is3d = (preview.select.type = e_res_type.SCHEMATIC)
+	is3d = (preview.select.type = e_res_type.SCHEMATIC || preview.select.type = e_res_type.MODEL)
 }
 else
 {
@@ -151,6 +151,17 @@ with (preview)
 							off = vec3_mul(displaysize, vec3(-0.5))
 							break
 						}
+						
+						case e_res_type.MODEL:
+						{
+							if (select.model_file = null)
+								break
+						
+							var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
+							prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
+							off = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
+							break
+						}
 					}
 				}
 				else // Template
@@ -240,8 +251,18 @@ with (preview)
 					switch (select.type)
 					{
 						case e_res_type.SCHEMATIC:
-							render_world_block(select.block_vbuffer, select.scenery_size, mc_res)
+							if (select.ready)
+								render_world_block(select.block_vbuffer, select.scenery_size, mc_res)
 							break
+							
+						case e_res_type.MODEL:
+						{
+							if (select.model_file = null)
+								break
+						
+							render_world_model_file_parts(select.model_file, mc_res, select.model_texture_name_map, null, select.model_plane_vbuffer_map)
+							break
+						}
 					}
 				}
 				else // Template
@@ -254,7 +275,7 @@ with (preview)
 							if (select.model_file = null)
 								break
 						
-							var res = select.skin;
+							var res = select.model_tex;
 							if (!res.ready)
 								res = mc_res
 						
@@ -280,12 +301,12 @@ with (preview)
 							if (select.model_part = null)
 								break
 						
-							var res = select.skin;
+							var res = select.model_tex;
 							if (!res.ready)
 								res = mc_res
 						
 							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-							render_world_model_part(select.model_part, select.model_texture_name_map, res, 0, null, select.model_plane_vbuffer_map)
+							render_world_model_part(select.model_part, res, select.model_texture_name_map, 0, null, select.model_plane_vbuffer_map)
 							break
 						}
 					

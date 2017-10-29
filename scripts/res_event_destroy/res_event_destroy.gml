@@ -96,10 +96,10 @@ if (scenery_tl_list != null)
 // Clear references and update counters
 with (obj_template)
 {
-	if (skin = other.id)
+	if (model_tex = other.id)
 	{
-		skin = mc_res
-		skin.count++
+		model_tex = mc_res
+		model_tex.count++
 	}
 	
 	if (item_tex = other.id)
@@ -130,8 +130,8 @@ with (obj_template)
 
 with (app.bench_settings)
 {
-	if (skin = other.id)
-		skin = mc_res
+	if (model_tex = other.id)
+		model_tex = mc_res
 	
 	if (item_tex = other.id)
 	{

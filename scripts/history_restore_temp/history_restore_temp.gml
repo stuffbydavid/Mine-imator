@@ -14,8 +14,8 @@ with (temp)
 	save_id = save.save_id
 	temp_find_save_ids()
 	
-	if (skin != null)
-		skin.count++
+	if (model_tex != null)
+		model_tex.count++
 		
 	if (item_tex != null)
 		item_tex.count++
