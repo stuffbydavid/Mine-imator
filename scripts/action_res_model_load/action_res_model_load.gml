@@ -8,7 +8,7 @@ if (history_undo)
 }
 else
 {
-	var fn, hobj, res;
+	var fn, hobj, res, temp;
 	
 	if (history_redo)
 		fn = history_data.filename
@@ -23,6 +23,18 @@ else
 	{
 		loaded = true
 		res_load()
+	}
+	
+	temp = new(obj_template)
+	with (temp)
+	{
+		loaded = true
+		type = e_temp_type.MODEL
+		model_tex = null
+		model = res
+		model.count++
+		temp_update()
+		sortlist_add(other.lib_list, id)
 	}
 	
 	if (!history_redo && !res.replaced)

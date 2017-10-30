@@ -21,12 +21,18 @@ if (!history_undo && !history_redo)
 	tl_deselect_all()
 }
 
+// Update affected templates
 with (obj_template)
 {
 	if (scenery = res_edit)
 		temp_set_scenery(scenery, !app.history_undo, hobj)
 	else if (item_tex = res_edit)
 		temp_update_item()
+	else if (model = res_edit)
+	{
+		temp_update_model()
+		temp_update_display_name()
+	}
 }
 
 // Restore old timelines

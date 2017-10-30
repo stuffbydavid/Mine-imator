@@ -57,7 +57,7 @@ json_save_object_start()
 			json_save_var_point3D("repeat", block_repeat)
 		json_save_object_done()
 	}
-	if (type = e_temp_type.SCENERY)
+	else if (type = e_temp_type.SCENERY)
 	{
 		json_save_var_save_id("scenery", scenery)
 		json_save_object_start("block")
@@ -65,6 +65,11 @@ json_save_object_start()
 			json_save_var_bool("repeat_enable", block_repeat_enable)
 			json_save_var_point3D("repeat", block_repeat)
 		json_save_object_done()
+	}
+	else if (type = e_temp_type.MODEL)
+	{
+		json_save_var_save_id("model", model)
+		json_save_var_save_id("model_tex", model_tex)
 	}
 	
 	if (type_is_shape(type))

@@ -8,7 +8,7 @@ tab_next()
 // List
 var listh = 256;
 if (content_direction = e_scroll.HORIZONTAL)
-	listh = max(130, dh - (dy - dy_start) - 30)
+	listh = max(135, dh - (dy - dy_start) - 35)
 
 if (tab_control(listh))
 {
@@ -45,7 +45,8 @@ var capwid = text_caption_width("libraryname", "librarycharmodel", "libraryskin"
 								"typeblock", 
 								"typebodypart", "librarybodypartskin", 
 								"librarytextfont", 
-								"libraryshapetex");
+								"libraryshapetex",
+								"model", "modeltex");
 	
 // Name
 tab_control_inputbox()
@@ -79,7 +80,7 @@ switch (temp_edit.type)
 			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 		
 		tab_control(40)
-		draw_button_menu(test(temp_edit.type = e_temp_type.SPECIAL_BLOCK, "libraryspblocktex", "libraryskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_skin, tex, null, capwid)
+		draw_button_menu(test(temp_edit.type = e_temp_type.SPECIAL_BLOCK, "libraryspblocktex", "libraryskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, tex, null, capwid)
 		tab_next()
 		
 		break
@@ -319,6 +320,44 @@ switch (temp_edit.type)
 			tab_next()
 		}
 		break
+	}
+	
+	case e_temp_type.MODEL:
+	{
+		var text;
+		if (temp_edit.model != null)
+			text = temp_edit.model.display_name
+		else
+			text = text_get("listnone")
+			
+		// Model
+		tab_control(32)
+		draw_button_menu("librarymodel", e_menu.LIST, dx, dy, dw, 32, temp_edit.model, text, action_lib_model, null, null, capwid)
+		tab_next()
+		
+		// Texture
+		var texobj, text, tex;
+		if (temp_edit.model_tex = null)
+		{
+			texobj = temp_edit.model
+			text = text_get("librarymodeltexdefault", text)
+			if (texobj != null && texobj.model_texture = null && texobj.model_texture_map = null)
+				texobj = mc_res
+		}
+		else
+		{
+			texobj = temp_edit.model_tex
+			text = temp_edit.model_tex.display_name
+		}
+		
+		tex = null
+		with (texobj)
+			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			
+		tab_control(40)
+		draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, text, action_lib_model_tex, tex, null, capwid)
+		tab_next()
+		break	
 	}
 }
 

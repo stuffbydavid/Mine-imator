@@ -13,6 +13,7 @@ with (res)
 with (save)
 {
 	save_id = res.save_id
+	usage_model_amount = 0
 	usage_model_tex_amount = 0
 	usage_item_tex_amount = 0
 	usage_block_tex_amount = 0
@@ -36,6 +37,12 @@ with (save)
 // Save references
 with (obj_template)
 {
+	if (model = res)
+	{
+		save.usage_model_save_id[save.usage_model_amount] = save_id
+		save.usage_model_amount++
+	}
+	
 	if (model_tex = res)
 	{
 		save.usage_model_tex_save_id[save.usage_model_tex_amount] = save_id

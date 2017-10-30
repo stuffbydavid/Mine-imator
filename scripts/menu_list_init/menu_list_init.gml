@@ -29,29 +29,23 @@ switch (menu_name)
 	case "libraryspblocktex":
 	case "librarybodypartskin":
 	{
-		var modelfile, texnamemap;
+		var temp;
 		if (string_contains(menu_name, "bench"))
-		{
-			modelfile = bench_settings.model_file
-			texnamemap = bench_settings.model_texture_name_map
-		}
+			temp = bench_settings
 		else
-		{
-			modelfile = temp_edit.model_file
-			texnamemap = temp_edit.model_texture_name_map
-		}
+			temp = temp_edit
 		
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Download from user
-		if (modelfile != null && modelfile.player_skin)
+		if (temp.model_file != null && temp.model_file.player_skin)
 			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
 		
 		// Default
 		var tex;
 		with (mc_res)
-			tex = res_get_model_texture(model_part_get_texture_name(modelfile, texnamemap))
+			tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 		menu_add_item(mc_res, mc_res.display_name, tex)
 		
 		// Add existing resources
@@ -62,12 +56,60 @@ switch (menu_name)
 				continue
 				
 			with (res)
-				tex = res_get_model_texture(model_part_get_texture_name(modelfile, texnamemap))
+				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 			
 			if (tex != null)
 				menu_add_item(res, res.display_name, tex)
 		}
 			
+		break
+	}
+	
+	// Model texture
+	case "benchmodeltex":
+	case "librarymodeltex":
+	{
+		var temp;
+		if (string_contains(menu_name, "bench"))
+			temp = bench_settings
+		else
+			temp = temp_edit
+		
+		// Default
+		if (temp.model != null)
+		{
+			var texobj = temp.model;
+			if (texobj.model_texture = null || texobj.model_texture_map = null) // Use Minecraft texture if none is found in model
+				texobj = mc_res
+			with (texobj)
+				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+				
+			menu_add_item(null, text_get("librarymodeltexdefault", temp.model.display_name), tex)
+		}
+		else
+			menu_add_item(null, text_get("librarymodeltexdefault", text_get("listnone")))
+			
+		// Import from file
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		
+		// Download from user
+		if (temp.model_file != null && temp.model_file.player_skin)
+			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
+			
+		// Add existing resources
+		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		{
+			var res = res_list.list[|i];
+			if (res = temp.model)
+				continue
+			
+			with (res)
+				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+			
+			if (tex != null)
+				menu_add_item(res, res.display_name, tex)
+		}
+		
 		break
 	}
 	
@@ -210,6 +252,23 @@ switch (menu_name)
 			if (type = e_tl_type.CAMERA)
 				menu_add_item(id, display_name)
 			
+		break
+	}
+	
+	// Model
+	case "librarymodel":
+	{
+		// None
+		menu_add_item(null, text_get("listnone"))
+		
+		// Add resources
+		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		{
+			var res = res_list.list[|i];
+			if (res.type = e_res_type.MODEL)
+				menu_add_item(res, res.display_name)
+		}
+		
 		break
 	}
 	

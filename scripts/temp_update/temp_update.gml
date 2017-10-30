@@ -1,6 +1,6 @@
 /// temp_update()
 
-if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
+if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART || type = e_temp_type.MODEL)
 {
 	temp_update_model()
 	if (type = e_temp_type.BODYPART)

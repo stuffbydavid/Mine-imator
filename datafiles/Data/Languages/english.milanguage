@@ -1415,7 +1415,12 @@
             "detailtip": "Choose the smoothness of the shape.",
             "facecamera": "Face camera",
             "facecameratip": "Whether the shape will always face the camera."
-        }
+        },
+        "model": "Model",
+        "modeltip": "Pick the model to use.",
+        "modeltex": "Texture",
+        "modeltextip": "Change the texture of the given model.",
+        "modeltexdefault": "Default (%1)"
     },
     "templateeditor/": {
         "model": "Model",

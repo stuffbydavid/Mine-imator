@@ -69,7 +69,7 @@ with (new(obj_template))
 			block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 		}
 	}
-	if (type = e_temp_type.SCENERY)
+	else if (type = e_temp_type.SCENERY)
 	{
 		scenery = value_get_save_id(map[?"scenery"], scenery)
 		var blockmap = map[?"block"];
@@ -79,6 +79,11 @@ with (new(obj_template))
 			block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 			block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 		}
+	}
+	else if (type = e_temp_type.MODEL)
+	{
+		model = value_get_save_id(map[?"model"], model)
+		model_tex = value_get_save_id(map[?"model_tex"], model_tex)	
 	}
 	
 	if (type_is_shape(type))

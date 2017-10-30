@@ -28,6 +28,13 @@ if (name = "")
 			else
 				display_name = text_get("librarybodypartunknown")
 			break
+			
+		case e_temp_type.MODEL:
+			if (model_file != null)
+				display_name = model_file.name
+			else if (model != null)
+				display_name = model.display_name
+			break
 	}
 }
 else

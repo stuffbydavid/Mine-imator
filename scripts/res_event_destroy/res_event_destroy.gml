@@ -1,8 +1,12 @@
 /// res_event_destroy()
-/// @desc Destroy event of a resource.
+/// @desc Called by the destroy event of a resource.
 
-// Free model textures
-if (model_texture_map)
+// Free single model texture
+if (model_texture != null)
+	texture_free(model_texture)
+	
+// Free multiple model textures
+if (model_texture_map != null)
 {
 	var key = ds_map_find_first(model_texture_map);
 	while (!is_undefined(key))
@@ -12,12 +16,8 @@ if (model_texture_map)
 	}
 	ds_map_destroy(model_texture_map)
 }
-
-// Free skin
-if (model_texture != null)
-	texture_free(model_texture)
 		
-// Free blocks
+// Free block textures
 if (block_sheet_texture != null)
 	texture_free(block_sheet_texture)
 	
@@ -96,6 +96,9 @@ if (scenery_tl_list != null)
 // Clear references and update counters
 with (obj_template)
 {
+	if (model = other.id)
+		model = null
+	
 	if (model_tex = other.id)
 	{
 		model_tex = mc_res
@@ -130,6 +133,9 @@ with (obj_template)
 
 with (app.bench_settings)
 {
+	if (model = other.id)
+		model = null
+		
 	if (model_tex = other.id)
 		model_tex = mc_res
 	
@@ -225,4 +231,5 @@ with (app)
 	}
 }
 
+// Remove from resource browser
 res_edit = sortlist_remove(app.res_list, id)

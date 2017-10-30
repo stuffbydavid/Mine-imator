@@ -168,13 +168,4 @@ switch (type)
 	}
 }
 
-// Set display name
-if (filename_ext(fn) = ".zip")
-	display_name = string_replace(filename, ".zip", "")
-else if (type != e_res_type.PACK)
-	display_name = filename_new_ext(filename, "")
-else
-	display_name = filename
-	
-if (type = e_res_type.DOWNLOADED_SKIN)
-	display_name = text_get("downloadskinname", display_name)
+res_update_display_name()

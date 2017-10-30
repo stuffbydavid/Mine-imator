@@ -8,6 +8,9 @@ copy = id
 
 with (temp)
 {
+	if (model)
+		model.count++
+	
 	if (model_tex)
 		model_tex.count++
 		

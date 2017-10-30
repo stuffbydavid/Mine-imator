@@ -1,5 +1,6 @@
 /// temp_find_save_ids()
 
+model = save_id_find(model)
 model_tex = save_id_find(model_tex)
 item_tex = save_id_find(item_tex)
 block_tex = save_id_find(block_tex)

@@ -170,6 +170,7 @@ with (preview)
 					{
 						case e_temp_type.CHARACTER:
 						case e_temp_type.SPECIAL_BLOCK:
+						case e_temp_type.MODEL:
 						{
 							if (select.model_file = null)
 								break
@@ -271,12 +272,16 @@ with (preview)
 					{
 						case e_temp_type.CHARACTER:
 						case e_temp_type.SPECIAL_BLOCK:
+						case e_temp_type.MODEL:
 						{
 							if (select.model_file = null)
 								break
 						
 							var res = select.model_tex;
-							if (!res.ready)
+							if (res = null)
+								res = select.model
+							
+							if (!res.ready || (res.model_texture = null && res.model_texture_map = null))
 								res = mc_res
 						
 							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_plane_vbuffer_map)

@@ -1,6 +1,6 @@
-/// action_lib_skin(resource)
+/// action_lib_model_tex(resource)
 /// @arg resource
-/// @desc Sets the character skin of the given library item.
+/// @desc Sets the model texture of the given library item.
 
 var res, fn;
 fn = ""
@@ -28,10 +28,10 @@ else
 				
 			break
 		}
+		
 		case e_option.DOWNLOAD_SKIN: // Download, start
 		{
-			popup_downloadskin_show(action_lib_skin)
-			
+			popup_downloadskin_show(action_lib_model_tex)
 			return 0
 		}
 		
@@ -50,14 +50,16 @@ else
 			break
 		}
 	}
-	history_set_res(action_lib_skin, fn, temp_edit.model_tex, res)
+	history_set_res(action_lib_model_tex, fn, temp_edit.model_tex, res)
 }
 
 with (temp_edit)
 {
-	model_tex.count--
+	if (model_tex != null)
+		model_tex.count--
 	model_tex = res
-	model_tex.count++
+	if (model_tex != null)
+		model_tex.count++
 }
 
 lib_preview.update = true
