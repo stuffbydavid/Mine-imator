@@ -1,12 +1,15 @@
-/// model_file_load_part(map, root)
+/// model_file_load_part(map, root, resource)
 /// @arg map
 /// @arg root
-/// @desc Adds a part from the given map (JSON object), returns its instance
+/// @arg resource
+/// @desc Adds a part from the given map (JSON object) and returns its instance.
 
-var map, root;
+var map, root, res;
 map = argument0
 root = argument1
+res = argument2
 
+// Check required fields
 if (!is_string(map[?"name"]))
 {
 	log("Missing parameter \"name\"")
@@ -43,6 +46,9 @@ with (new(obj_model_part))
 			return null
 		}
 		
+		if (res != null)
+			model_file_load_texture(texture_name, res)
+		
 		texture_size = value_get_point2D(map[?"texture_size"])
 		var size = max(texture_size[X], texture_size[Y]);
 		texture_size = vec2(size, size) // Make square
@@ -58,7 +64,7 @@ with (new(obj_model_part))
 	// Color (optional)
 	color_inherit = value_get_real(map[?"color_inherit"], true)
 	color_blend = value_get_color(map[?"color_blend"], c_white)
-	color_alpha = value_get_color(map[?"color_alpha"], 1)
+	color_alpha = value_get_real(map[?"color_alpha"], 1)
 	color_brightness = value_get_real(map[?"color_brightness"], 0)
 	
 	if (color_inherit)
@@ -209,7 +215,7 @@ with (new(obj_model_part))
 		shape_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(shapelist); p++)
 		{
-			var shape = model_file_load_shape(shapelist[|p]);
+			var shape = model_file_load_shape(shapelist[|p], res);
 			if (shape = null) // Something went wrong
 			{
 				log("Could not read shape list", name)
@@ -232,7 +238,7 @@ with (new(obj_model_part))
 		part_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(partlist); p++)
 		{
-			var part = model_file_load_part(partlist[|p], root)
+			var part = model_file_load_part(partlist[|p], root, res)
 			if (part = null) // Something went wrong
 			{
 				log("Could not read part list", name)

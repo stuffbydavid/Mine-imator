@@ -55,7 +55,7 @@ with (temp_edit)
 // Restore old timelines
 if (history_undo)
 	with (history_data)
-		history_restore_scenery()
+		history_restore_parts()
 
 tl_update_length()
 tl_update_list()

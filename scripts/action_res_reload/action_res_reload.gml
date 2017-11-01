@@ -31,6 +31,7 @@ with (obj_template)
 	else if (model = res_edit)
 	{
 		temp_update_model()
+		temp_update_model_timeline_tree(hobj)
 		temp_update_display_name()
 	}
 }
@@ -38,7 +39,7 @@ with (obj_template)
 // Restore old timelines
 if (history_undo)
 	with (history_data)
-		history_restore_scenery()
+		history_restore_parts()
 		
 tl_update_length()
 tl_update_list()

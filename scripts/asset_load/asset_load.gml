@@ -118,6 +118,7 @@ switch (ext)
 		
 	case ".png":
 	case ".jpg":
+	case ".jpeg":
 		log("Opening image", fn)
 		popup_importimage.filename = fn
 		popup_show(popup_importimage)

@@ -6,7 +6,8 @@ if (type = e_tl_type.CHARACTER ||
 	type = e_tl_type.SPECIAL_BLOCK ||
 	type = e_tl_type.FOLDER ||
 	type = e_tl_type.BACKGROUND ||
-	type = e_tl_type.AUDIO)
+	type = e_tl_type.AUDIO ||
+	type = e_tl_type.MODEL)
 	return 0
 	
 // Invisible?
@@ -84,8 +85,6 @@ if (!ssao)
 // Render
 if (type != e_tl_type.PARTICLE_SPAWNER)
 {
-	var texobj = value_inherit[e_value.TEXTURE_OBJ];
-		
 	matrix_set(matrix_world, matrix_render)
 		
 	switch (type)
@@ -94,16 +93,10 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		{
 			if (model_part = null)
 				break
-					
-			// Get texture
-			var res = temp.model_tex;
-				
-			if (texobj > 0 && texobj.type != e_tl_type.CAMERA)
-				res = texobj
-				
-			if (!res.ready)
-				res = mc_res
-				
+			
+			var res;
+			with (temp)
+				res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 			render_world_model_part(model_part, res, temp.model_texture_name_map, value_inherit[e_value.BEND_ANGLE], bend_vbuffer_list, model_plane_vbuffer_map)
 			break
 		}
@@ -111,15 +104,10 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		case e_tl_type.SCENERY:
 		case e_tl_type.BLOCK:
 		{
-			// Get resource for texture
-			var res = temp.block_tex;
-			if (texobj != null && texobj.type != e_tl_type.CAMERA && res.block_sheet_texture != null)
-				res = texobj
-					
-			if (!res.ready)
-				res = mc_res
+			var res;
+			with (temp)
+				res = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 				
-			// Draw
 			if (type = e_tl_type.BLOCK)
 				render_world_block(temp.block_vbuffer, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)), res)
 			else if (temp.scenery)
@@ -128,9 +116,11 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		}
 			   
 		case e_tl_type.ITEM:
+		{
 			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_tex)
 			break
-			
+		}
+		
 		case e_tl_type.TEXT:
 		{
 			var font = value[e_value.TEXT_FONT];
@@ -144,7 +134,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		{
 			var tex;
 			with (temp)
-				tex = temp_get_shape_tex(temp_get_shape_texobj(texobj))
+				tex = temp_get_shape_tex(temp_get_shape_texobj(other.value_inherit[e_value.TEXTURE_OBJ]))
 			render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, tex)
 			break
 		}

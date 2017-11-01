@@ -16,7 +16,7 @@ render_camera = null
 render_camera_dof = false
 render_overlay = false
 
-render_click_box = vbuffer_create_cube(4, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
+render_click_box = vbuffer_create_cube(6, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 render_list = ds_list_create()
 render_lights = true
 render_particles = true

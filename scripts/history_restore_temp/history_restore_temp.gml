@@ -14,6 +14,9 @@ with (temp)
 	save_id = save.save_id
 	temp_find_save_ids()
 	
+	if (model != null)
+		model.count++
+		
 	if (model_tex != null)
 		model_tex.count++
 		

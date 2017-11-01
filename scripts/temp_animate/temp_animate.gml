@@ -14,6 +14,7 @@ with (new(obj_timeline))
 	{
 		case e_temp_type.CHARACTER:
 		case e_temp_type.SPECIAL_BLOCK:
+		case e_temp_type.MODEL:
 		{
 			part_list = ds_list_create()
 			if (temp.model_file != null)

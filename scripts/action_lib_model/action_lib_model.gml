@@ -5,41 +5,51 @@ var res, hobj;
 hobj = null
 
 if (history_undo)
-	res = history_data.old_model
+	res = history_undo_res()
+else if (history_redo)
+	res = history_redo_res()
 else
 {
-	if (history_redo)
-		res = history_data.new_model
-	else
+	var fn = "";
+	res = argument0
+	if (res = e_option.BROWSE)
 	{
-		res = argument0
-		hobj = history_set(action_lib_model)
+		fn = file_dialog_open_model()
+		
+		if (!file_exists_lib(fn))
+			return 0
+			
+		res = new_res(fn, e_res_type.MODEL)
+		with (res)
+			res_load()
+	}
+	
+	hobj = history_set_res(action_lib_model, fn, temp_edit.model, res)
+	with (hobj)
+	{
+		old_model_save_id = save_id_get(temp_edit.model)
+		new_model_save_id = save_id_get(res)
+		tl_amount = 0
+		part_child_amount = 0
+		history_save_tl_select()
+	}
+		
+	// Find affected timelines
+	// TODO save timeline info?
+	with (obj_timeline)
+	{
+		if (temp != temp_edit || part_list = null)
+			continue
+				
 		with (hobj)
 		{
-			old_model = temp_edit.model
-			new_model = res
-			tl_amount = 0
-			part_child_amount = 0
-			history_save_tl_select()
-		}
-		
-		// Find affected timelines
-		// TODO save timeline info?
-		with (obj_timeline)
-		{
-			if (temp != temp_edit || part_list = null)
-				continue
+			tl_save_id[tl_amount] = save_id_get(other.id)
 				
-			with (hobj)
-			{
-				tl_save_id[tl_amount] = save_id_get(other.id)
-				
-				// Save IDs of parts
-				for (var p = 0; p < ds_list_size(other.part_list); p++)
-					tl_part_old_save_id[tl_amount, p] = save_id_get(other.part_list[|p])
+			// Save IDs of parts
+			for (var p = 0; p < ds_list_size(other.part_list); p++)
+				tl_part_old_save_id[tl_amount, p] = save_id_get(other.part_list[|p])
 			
-				tl_amount++
-			}
+			tl_amount++
 		}
 	}
 }
@@ -53,6 +63,7 @@ with (temp_edit)
 	model = res
 	if (model != null)
 		model.count++
+	
 	temp_update_model()
 	temp_update_model_timeline_tree(hobj)
 	temp_update_display_name()

@@ -1,7 +1,6 @@
 /// tab_frame_editor_texture()
 
 var texobj, name, tex;
-texobj = tl_edit.value[e_value.TEXTURE_OBJ]
 tex = null
 
 if (!tl_edit.temp)
@@ -11,12 +10,13 @@ switch (tl_edit.type)
 {
 	case e_temp_type.CHARACTER:
 	case e_temp_type.SPECIAL_BLOCK:
+	case e_temp_type.MODEL:
 	case e_temp_type.BODYPART:
 	{
 		name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 		
-		if (texobj = null || texobj.type = e_tl_type.CAMERA || (texobj.model_texture = null && texobj.model_texture_map = null))
-			texobj = tl_edit.temp.model_tex
+		with (tl_edit.temp)
+			texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
 		
 		if (tl_edit.type = e_temp_type.BODYPART)
 		{
@@ -35,8 +35,8 @@ switch (tl_edit.type)
 	case e_temp_type.SCENERY:
 	{
 		name = "frameeditorblocktex"
-		if (texobj = null || texobj.type = e_tl_type.CAMERA || texobj.block_sheet_texture = null)
-			texobj = tl_edit.temp.block_tex
+		with (tl_edit.temp)
+			texobj = temp_get_block_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
 		tex = texobj.block_preview_texture
 		break
 	}
@@ -45,15 +45,15 @@ switch (tl_edit.type)
 	{
 		name = "frameeditorshapetex"
 		with (tl_edit.temp)
-		{
-			texobj = temp_get_shape_texobj(texobj)
-			if (texobj != null && texobj.type != e_tl_type.CAMERA)
-				tex = texobj.texture
-		}
+			texobj = temp_get_shape_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
+		
+		if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
+			tex = texobj.texture
 		break
 	}
 }
 
+// Text to display
 var text;
 if (texobj != null)
 	text = texobj.display_name

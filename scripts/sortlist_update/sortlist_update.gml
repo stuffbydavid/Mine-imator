@@ -14,7 +14,7 @@ if (slist.column_sort != null)
 	
 	// Store values in column and sort
 	for (var p = 0; p < ds_list_size(valuelist); p++)
-		ds_list_add(sortedlist, sortlist_column_get(slist, valuelist[|p], slist.column_sort))
+		ds_list_add(sortedlist, string_lower(sortlist_column_get(slist, valuelist[|p], slist.column_sort)))
 	ds_list_sort(sortedlist, !slist.sort_asc)
 	
 	// Find which values belong to what items
@@ -24,7 +24,7 @@ if (slist.column_sort != null)
 		{
 			var val, colval;
 			val = valuelist[|p]
-			colval = sortlist_column_get(slist, val, slist.column_sort)
+			colval = string_lower(sortlist_column_get(slist, val, slist.column_sort))
 			if (sortedlist[|0] = colval)
 			{
 				ds_list_add(slist.display_list, val)

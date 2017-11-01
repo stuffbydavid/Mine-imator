@@ -33,8 +33,11 @@ else
 			return 0
 		
 		res = new_res(fn, e_res_type.SCHEMATIC)
-		with (res)
-			res_load()
+		if (res.replaced)
+			action_res_replace(fn)
+		else
+			with (res)
+				res_load()
 	}
 	history_set_res(action_bench_scenery, fn, bench_settings.scenery, res)
 }

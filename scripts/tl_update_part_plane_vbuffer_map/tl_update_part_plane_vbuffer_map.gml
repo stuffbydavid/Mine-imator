@@ -21,10 +21,13 @@ var texobj, res;
 texobj = value_inherit[e_value.TEXTURE_OBJ]
 res = temp.model_tex
 
+if (res = null)
+	res = temp.model
+	
 if (texobj != null && texobj.type != e_tl_type.CAMERA)
 	res = texobj
 				
-if (!res.ready)
+if (!res.ready || res.model_texture = null || res.model_texture_map = null)
 	res = mc_res
 
 model_part_get_plane_vbuffer_map(model_part, model_plane_vbuffer_map, res, temp.model_texture_name_map)

@@ -1,8 +1,8 @@
 {
-    "id": "201609e4-b185-494b-954d-7c2b36e44d39",
+    "id": "f929b2c9-3032-43c4-9eda-b2e8f2aebf9c",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "history_restore_scenery",
+    "name": "temp_set_model",
     "IsCompatibility": false,
     "IsDnD": false
 }

@@ -111,6 +111,7 @@
 #macro glow_alpha					0.75
 #macro shadow_size					5
 #macro shadow_alpha					0.1
+#macro control_width				20
 
 // Values
 #macro null							noone

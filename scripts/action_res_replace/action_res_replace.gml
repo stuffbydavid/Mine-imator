@@ -1,12 +1,29 @@
-/// action_res_replace()
+/// action_res_replace([filename])
+/// @arg [filename]
 
 var hobj = null;
 
 if (!history_undo && !history_redo)
 {
 	with (res_edit)
-		if (!res_load_browse())
+	{
+		var fn;
+		if (argument_count > 0)
+			fn = argument[0]
+		else
+			fn = res_load_browse()
+		
+		if (fn = "")
 			return 0
+			
+		filename = filename_name(fn)
+		load_folder = filename_dir(fn)
+		save_folder = app.project_folder
+		if (type = e_res_type.DOWNLOADED_SKIN)
+			type = e_res_type.SKIN
+	
+		res_load()
+	}
 		
 	hobj = history_set(action_res_replace)
 	with (hobj)
@@ -28,6 +45,7 @@ with (obj_template)
 	else if (model = res_edit)
 	{
 		temp_update_model()
+		temp_update_model_timeline_tree(hobj)
 		temp_update_display_name()
 	}
 }
@@ -35,7 +53,7 @@ with (obj_template)
 // Restore old timelines
 if (history_undo)
 	with (history_data)
-		history_restore_scenery()
+		history_restore_parts()
 
 tl_update_length()
 tl_update_list()

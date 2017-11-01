@@ -25,7 +25,7 @@ with (obj_resource)
 }
 
 var copied = false;
-if (res) // Existing resource found
+if (res != null) // Existing resource found
 {
 	if (question(text_get("questionreplace")))
 		replaced = true

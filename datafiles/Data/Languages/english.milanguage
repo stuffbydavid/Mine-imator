@@ -141,7 +141,9 @@
             "language": "Language files",
             "languagecaption": "Load language",
             "color": "Color files",
-            "colorcaption": "Import colors"
+            "colorcaption": "Import colors",
+            "model": "Model files",
+            "modelcaption": "Open model"
         },
         "save/": {
             "moviemp4": "MP4 files",
@@ -2283,6 +2285,8 @@
         "blocktextip": "Select the block texture from a previously loaded image or resource pack.",
         "shapetex": "Texture",
         "shapetextip": "Select the shape texture from a previously loaded image or camera.",
+        "modeltex": "Texture",
+        "modeltextip": "Select the model texture from a previously loaded image",
         "sound": "Sound",
         "soundtip": "Change the current sound playing.",
         "sound/": {

@@ -1,8 +1,15 @@
-/// model_file_load(filename)
+/// model_file_load(filename, resource)
 /// @arg filename
+/// @arg [resource]
 /// @desc Loads the parts and shapes from the selected filename.
 
-var fname  = argument0;
+var fname, res;
+fname = argument[0];
+
+if (argument_count > 1)
+	res = argument[1]
+else
+	res = null
 	
 if (!file_exists_lib(fname))
 {
@@ -17,6 +24,7 @@ if (!ds_map_valid(map))
 	return null
 }
 
+// Check required fields
 if (!is_string(map[?"name"]))
 {
 	log("Missing parameter \"name\"")
@@ -46,7 +54,7 @@ with (new(obj_model_file))
 	// Name
 	name = map[?"name"]
 	
-	if (dev_mode_debug_names && !text_exists("model" + name))
+	if (res = null && dev_mode_debug_names && !text_exists("model" + name))
 		log("model/" + name + dev_mode_name_translation_message)
 		
 	// Description (optional)
@@ -55,6 +63,8 @@ with (new(obj_model_file))
 	// Texture
 	texture_name = map[?"texture"]
 	texture_inherit = id
+	if (res != null)
+		model_file_load_texture(texture_name, res)
 	
 	// Texture size
 	texture_size = value_get_point2D(map[?"texture_size"])
@@ -83,7 +93,7 @@ with (new(obj_model_file))
 	part_list = ds_list_create()
 	for (var p = 0; p < ds_list_size(partlist); p++)
 	{
-		var part = model_file_load_part(partlist[|p], id)
+		var part = model_file_load_part(partlist[|p], id, res)
 		if (part = null)
 		{
 			log("Could not read part", name)

@@ -70,7 +70,7 @@ ang = point_direction(start2D[X], start2D[Y], end2D[X], end2D[Y])
 draw_image(spr_arrow, 0, end2D[X], end2D[Y], 1, 1, draw_get_color(), 1, ang)
 
 // Check mouse
-if (content_mouseon && point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < 8)
+if (content_mouseon && point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < control_width / 2)
 	view.control_mouseon = vid
 	
 draw_set_color(c_white)

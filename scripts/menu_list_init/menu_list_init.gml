@@ -49,9 +49,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, tex)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res = mc_res)
 				continue
 				
@@ -75,32 +75,32 @@ switch (menu_name)
 		else
 			temp = temp_edit
 		
-		// Default
-		if (temp.model != null)
-		{
-			var texobj = temp.model;
-			if (texobj.model_texture = null || texobj.model_texture_map = null) // Use Minecraft texture if none is found in model
-				texobj = mc_res
-			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
-				
-			menu_add_item(null, text_get("librarymodeltexdefault", temp.model.display_name), tex)
-		}
-		else
-			menu_add_item(null, text_get("librarymodeltexdefault", text_get("listnone")))
-			
 		// Import from file
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Download from user
 		if (temp.model_file != null && temp.model_file.player_skin)
 			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
+		
+		// Default
+		var texobj = temp.model;
+		if (texobj != null)
+		{
+			var tex;
+			if (texobj.model_texture = null && texobj.model_texture_map = null)
+				texobj = mc_res
+			with (texobj)
+				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+			menu_add_item(null, text_get("librarymodeltexdefault", texobj.display_name), tex)
+		}
+		else
+			menu_add_item(null, text_get("librarymodeltexdefault", text_get("listnone")))
 			
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
-			if (res = temp.model)
+			var res = res_list.display_list[|i];
+			if (res = temp.model || res = texobj)
 				continue
 			
 			with (res)
@@ -127,9 +127,9 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res.type = e_res_type.SCHEMATIC)
 				menu_add_item(res, res.display_name)
 		}
@@ -148,9 +148,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != mc_res && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
@@ -169,9 +169,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res = mc_res)
 				continue
 				
@@ -219,9 +219,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != mc_res && font_exists(res.font))
 				menu_add_item(res, res.display_name)
 		}
@@ -240,9 +240,9 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res.texture)
 				menu_add_item(res, res.display_name, res.texture)
 		}
@@ -261,10 +261,13 @@ switch (menu_name)
 		// None
 		menu_add_item(null, text_get("listnone"))
 		
+		// Browse
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		
 		// Add resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res.type = e_res_type.MODEL)
 				menu_add_item(res, res.display_name)
 		}
@@ -287,9 +290,9 @@ switch (menu_name)
 	{
 		menu_add_item(null, text_get("particleeditortypesprite"))
 		
-		for (var i = 0; i < ds_list_size(lib_list.list); i++)
+		for (var i = 0; i < ds_list_size(lib_list.display_list); i++)
 		{
-			var temp = lib_list.list[|i];
+			var temp = lib_list.display_list[|i];
 			if (temp.type != e_temp_type.PARTICLE_SPAWNER)
 				menu_add_item(temp, temp.display_name)
 		}
@@ -309,9 +312,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.particles_texture[img])
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != mc_res && res.particles_texture[0])
 				menu_add_item(res, res.display_name, res.particles_texture[img])
 		}
@@ -329,9 +332,9 @@ switch (menu_name)
 		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res.texture)
 				menu_add_item(res, res.display_name, res.texture)
 		}
@@ -359,9 +362,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.sun_texture)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res = mc_res)
 				continue
 			if (res.sun_texture)
@@ -383,9 +386,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.moon_texture[background_sky_moon_phase])
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res = mc_res)
 				continue
 			if (res.moon_texture[0])
@@ -416,9 +419,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.clouds_texture)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res = mc_res)
 				continue
 			if (res.clouds_texture)
@@ -440,9 +443,9 @@ switch (menu_name)
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != mc_res && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
@@ -488,25 +491,36 @@ switch (menu_name)
 	case "frameeditorchartex":
 	case "frameeditorspblocktex":
 	case "frameeditorbodyparttex":
+	case "frameeditormodeltex":
 	{
+		var texobj;
+		with (tl_edit.temp)
+			texobj = temp_get_model_texobj(null)
+		
 		// Default
-		var tex;
-		with (tl_edit.temp.model_tex)
-			tex = res_get_model_texture(model_part_get_texture_name(tl_edit.model_part, tl_edit.temp.model_texture_name_map))
-		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.model_tex.display_name), tex)
+		var tex = null;
+		if (texobj != null)
+		{
+			with (texobj)
+				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.temp.model_file, tl_edit.temp.model_texture_name_map))
+			menu_add_item(null, text_get("frameeditortexturedefault", texobj.display_name), tex)
+		}
+		else
+			menu_add_item(null, text_get("frameeditortexturedefault", text_get("listnone")), null)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
-			if (res != tl_edit.temp.model_tex)
-			{
-				with (res)
-					tex = res_get_model_texture(model_part_get_texture_name(tl_edit.model_part, tl_edit.temp.model_texture_name_map))
-					
-				if (tex != null)
-					menu_add_item(res, res.display_name, tex)
-			}
+			var res = res_list.display_list[|i];
+			if (res = tl_edit.temp.model || res = tl_edit.temp.model_tex || res = texobj)
+				continue
+			
+			var tex;
+			with (res)
+				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.temp.model_file, tl_edit.temp.model_texture_name_map))
+			
+			if (tex != null)
+				menu_add_item(res, res.display_name, tex)
 		}
 		
 		break
@@ -519,9 +533,9 @@ switch (menu_name)
 		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.block_tex.display_name), tl_edit.temp.block_tex.block_preview_texture)
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != tl_edit.temp.block_tex && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
@@ -543,9 +557,9 @@ switch (menu_name)
 		else
 			menu_add_item(null, text_get("frameeditortexturedefault", text_get("listnone")))
 		
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != tl_edit.temp.shape_tex && res.texture)
 				menu_add_item(res, res.display_name, res.texture)
 		}
@@ -564,9 +578,9 @@ switch (menu_name)
 		menu_add_item(null, text_get("listnone"))
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res.type = e_res_type.SOUND)
 				menu_add_item(res, res.display_name)
 		}
@@ -581,9 +595,9 @@ switch (menu_name)
 		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.text_font.display_name))
 		
 		// Add existing resources
-		for (var i = 0; i < ds_list_size(res_list.list); i++)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
-			var res = res_list.list[|i];
+			var res = res_list.display_list[|i];
 			if (res != tl_edit.temp.text_font && font_exists(res.font))
 				menu_add_item(res, res.display_name)
 		}

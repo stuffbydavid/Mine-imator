@@ -1,5 +1,5 @@
 /// res_load_browse()
-/// @desc Browses for an external file and loads it.
+/// @desc Browses for an external file to load.
 
 var fn;
 
@@ -21,19 +21,16 @@ switch (type)
 		fn = file_dialog_open_sound()
 		break
 		
+	case e_res_type.MODEL:
+		fn = file_dialog_open_model()
+		break
+		
 	default:
 		fn = file_dialog_open_image()
 		break
 }
 
 if (!file_exists_lib(fn))
-	return 0
+	return ""
 
-filename = filename_name(fn)
-load_folder = filename_dir(fn)
-save_folder = app.project_folder
-if (type = e_res_type.DOWNLOADED_SKIN)
-	type = e_res_type.SKIN
-	
-res_load()
-return 1
+return fn

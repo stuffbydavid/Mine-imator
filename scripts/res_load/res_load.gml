@@ -153,13 +153,28 @@ switch (type)
 		with (model_file)
 			instance_destroy()
 			
-		model_file = model_file_load(fn)
-		
-		if (model_texture_name_map = null)
-			model_texture_name_map = ds_map_create()
-		else
-			ds_map_clear(model_texture_name_map)
+		// Create texture map (file.png/jpg->texture)
+		if (model_texture_map != null)
+		{
+			var key = ds_map_find_first(model_texture_map);
+			while (!is_undefined(key))
+			{
+				texture_free(model_texture_map[?key])
+				key = ds_map_find_next(model_texture_map, key)
+			}
+			ds_map_destroy(model_texture_map)
+			model_texture_map = null
+		}
 			
+		// Load model (model_file will be null if unsuccessful)
+		model_file = model_file_load(fn, id)
+		
+		// Create texture name map
+		if (model_texture_name_map != null)
+			ds_map_clear(model_texture_name_map)
+		else
+			model_texture_name_map = ds_map_create()
+		
 		if (model_file != null)
 			model_texture_name_map[?""] = model_file.texture_name
 			

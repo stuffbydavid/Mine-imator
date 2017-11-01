@@ -1,5 +1,5 @@
-/// history_restore_scenery()
-/// @desc Restores old generated timelines in the scenery.
+/// history_restore_parts()
+/// @desc Restores old model parts.
 
 // Restore parts
 for (var t = 0; t < part_amount; t++)

@@ -169,6 +169,9 @@ else
 			}
 			
 			// Image
+			var tex = res.block_preview_texture;
+			if (tex = null)
+				tex = res.texture
 			draw_button_menu("benchitemtex", e_menu.LIST, dx, dy, dw, 40, bench_settings.item_tex, bench_settings.item_tex.display_name, action_bench_item_tex, bench_settings.item_tex.block_preview_texture, null, capwid)
 			dy += 40 + 8
 			

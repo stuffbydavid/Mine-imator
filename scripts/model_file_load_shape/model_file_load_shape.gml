@@ -1,9 +1,13 @@
-/// model_file_load_shape(map)
+/// model_file_load_shape(map, resource)
 /// @arg map
+/// @arg resource
 /// @desc Adds a shape from the given map (JSON object)
 
-var map = argument0;
+var map, res;
+map = argument0
+res = argument1
 
+// Check required fields
 if (!is_string(map[?"type"]))
 {
 	log("Missing parameter \"type\"")
@@ -49,6 +53,9 @@ with (new(obj_model_shape))
 			return null
 		}
 		
+		if (res != null)
+			model_file_load_texture(texture_name, res)
+			
 		texture_size = value_get_point2D(map[?"texture_size"])
 		var size = max(texture_size[X], texture_size[Y]);
 		texture_size = vec2(size, size) // Make square
@@ -64,7 +71,7 @@ with (new(obj_model_shape))
 	// Color (optional)
 	color_inherit = value_get_real(map[?"color_inherit"], true)
 	color_blend = value_get_color(map[?"color_blend"], c_white)
-	color_alpha = value_get_color(map[?"color_alpha"], 1)
+	color_alpha = value_get_real(map[?"color_alpha"], 1)
 	color_brightness = value_get_real(map[?"color_brightness"], 0)
 	
 	if (color_inherit)

@@ -17,7 +17,7 @@ else // Root
 // State-specific texture
 if (!is_undefined(map[?key]))
 	return map[?key]
-	
+
 // Part-specific texture
 if (part.texture_name != "")
 	return part.texture_name

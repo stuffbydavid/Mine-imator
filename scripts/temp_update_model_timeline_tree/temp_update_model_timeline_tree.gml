@@ -12,16 +12,6 @@ with (obj_timeline)
 {
 	if (temp != other.id || part_list = null)
 		continue
-		
-	// Missing model
-	if (temp.model_file = null)
-	{
-		for (var p = 0; p < ds_list_size(part_list); p++)
-			with (part_list[|p])
-				model_part = null
-				
-		continue
-	}
 	
 	// Save indices of children
 	if (hobj != null)
@@ -61,7 +51,7 @@ with (obj_timeline)
 				var unused = true;
 				
 				// Check if not hidden and exists in the new model
-				if (ds_list_find_index(temp.model_hide_list, model_part_name) = -1)
+				if (temp.model_file != null && ds_list_find_index(temp.model_hide_list, model_part_name) = -1)
 				{
 					for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
 					{
@@ -103,36 +93,40 @@ with (obj_timeline)
 	}
 	
 	// Construct new list of parts (re-add old timelines that had keyframes)
-	ds_list_clear(part_list)
-	for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
+	if (temp.model_file != null)
 	{
-		// Check if there is a previously existing timeline with the part name
-		var part, tlexists;
-		part = temp.model_file.file_part_list[|mp]
-		tlexists = false
-		
-		// Hidden?
-		if (ds_list_find_index(temp.model_hide_list, part.name) > -1)
-			continue
-		
-		with (obj_timeline)
+		ds_list_clear(part_list)
+		for (var mp = 0; mp < ds_list_size(temp.model_file.file_part_list); mp++)
 		{
-			if (part_of = other.id && model_part_name = part.name)
+			// Check if there is a previously existing timeline with the part name
+			var part, tlexists;
+			part = temp.model_file.file_part_list[|mp]
+			tlexists = false
+		
+			// Hidden?
+			if (ds_list_find_index(temp.model_hide_list, part.name) > -1)
+				continue
+		
+			with (obj_timeline)
 			{
-				ds_list_add(other.part_list, id)
-				lock_bend = part.lock_bend
-				value_type_show[e_value_type.POSITION] = part.show_position
-				tlexists = true
-				break
-			}	
+				if (part_of = other.id && model_part_name = part.name)
+				{
+					ds_list_add(other.part_list, id)
+					lock_bend = part.lock_bend
+					value_type_show[e_value_type.POSITION] = part.show_position
+					tlexists = true
+					break
+				}	
+			}
+		
+			// Otherwise create a timeline for it
+			if (!tlexists)
+				ds_list_add(part_list, tl_new_part(part))
 		}
 		
-		// Otherwise create a timeline for it
-		if (!tlexists)
-			ds_list_add(part_list, tl_new_part(part))
+		tl_update_part_list(temp.model_file, id)
 	}
 	
-	tl_update_part_list(temp.model_file, id)
 	tl_update_type_name()
 	tl_update_display_name()
 	update_matrix = true

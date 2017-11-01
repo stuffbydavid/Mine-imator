@@ -88,18 +88,38 @@ if (load_format >= e_settings.FORMAT_103)
 if (load_format >= e_settings.FORMAT_100)
 	setting_z_is_up = buffer_read_byte()
 
-setting_key_new = buffer_read_byte()
-setting_key_new_control = buffer_read_byte()
+// Workaround a bug where the keys are saved as "0", causing them to continuously pressed
+var keynew = buffer_read_byte();
+var keynewcontrol = buffer_read_byte();
+var keyimportasset = setting_key_import_asset;
+var keyimportassetcontrol = setting_key_import_asset_control;
+
 if (load_format >= e_settings.FORMAT_100)
 {
-	setting_key_import_asset = buffer_read_byte()
-	setting_key_import_asset_control = buffer_read_byte()
+	keyimportasset = buffer_read_byte();
+	keyimportassetcontrol = buffer_read_byte()
 }
 
-setting_key_open = buffer_read_byte()
-setting_key_open_control = buffer_read_byte()
-setting_key_save = buffer_read_byte()
-setting_key_save_control = buffer_read_byte()
+var keyopen = buffer_read_byte();
+var keyopencontrol = buffer_read_byte();
+var keysave = buffer_read_byte();
+var keysavecontrol = buffer_read_byte();
+
+if (keynew = 0 || keyimportasset = 0 || keyopen = 0 || keysave = 0)
+{
+	buffer_delete(buffer_current)
+	return 0
+}
+
+setting_key_open = keyopen
+setting_key_open_control = keyopencontrol
+setting_key_save =  keysave
+setting_key_save_control = keysavecontrol
+
+setting_key_new = keynew
+setting_key_new_control = keynewcontrol
+setting_key_import_asset = keyimportasset
+setting_key_import_asset_control = keyimportassetcontrol
 
 if (load_format >= e_settings.FORMAT_100)
 {

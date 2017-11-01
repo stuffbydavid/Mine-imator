@@ -131,8 +131,10 @@ switch (temp_edit.type)
 		tab_next()
 		
 		// Image
-		tab_control(40)
-		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 40, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, temp_edit.item_tex.block_preview_texture, null, capwid)
+		var tex = res.block_preview_texture;
+		if (tex = null)
+			tex = res.texture
+		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 40, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, tex, null, capwid)
 		tab_next()
 		
 		// Graphics
@@ -337,18 +339,17 @@ switch (temp_edit.type)
 		
 		// Texture
 		var texobj, text, tex;
-		if (temp_edit.model_tex = null)
-		{
-			texobj = temp_edit.model
-			text = text_get("librarymodeltexdefault", text)
-			if (texobj != null && texobj.model_texture = null && texobj.model_texture_map = null)
-				texobj = mc_res
-		}
+		with (temp_edit)
+			texobj = temp_get_model_texobj(null)
+		
+		if (texobj != null)
+			text = texobj.display_name
 		else
-		{
-			texobj = temp_edit.model_tex
-			text = temp_edit.model_tex.display_name
-		}
+			text = text_get("listnone")
+			
+		// Default
+		if (temp_edit.model_tex = null)
+			text = text_get("librarymodeltexdefault", text)
 		
 		tex = null
 		with (texobj)

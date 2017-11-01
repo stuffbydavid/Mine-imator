@@ -74,7 +74,7 @@ vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
 if (item_3d)
 {
 	var surf, tex;
-	surf = surface_create(slotsize[X], slotsize[Y])
+	surf = surface_create(ceil(slotsize[X]), ceil(slotsize[Y]))
 	if (item_tex.item_sheet_texture != null)
 		tex = item_tex.item_sheet_texture
 	else
@@ -84,7 +84,7 @@ if (item_3d)
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
-		draw_texture_part(tex, 0, 0, texpos[X], texpos[Y], slotsize[X], slotsize[Y])
+		draw_texture_part(tex, 0, 0, texpos[X], texpos[Y], ceil(slotsize[X]), ceil(slotsize[Y]))
 	}
 	surface_reset_target()
 	draw_texture_done()

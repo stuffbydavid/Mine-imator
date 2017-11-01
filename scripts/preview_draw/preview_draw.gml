@@ -261,7 +261,10 @@ with (preview)
 							if (select.model_file = null)
 								break
 						
-							render_world_model_file_parts(select.model_file, mc_res, select.model_texture_name_map, null, select.model_plane_vbuffer_map)
+							var res = select;
+							if (select.model_texture_map = null)
+								res = mc_res
+							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_plane_vbuffer_map)
 							break
 						}
 					}
@@ -277,13 +280,9 @@ with (preview)
 							if (select.model_file = null)
 								break
 						
-							var res = select.model_tex;
-							if (res = null)
-								res = select.model
-							
-							if (!res.ready || (res.model_texture = null && res.model_texture_map = null))
-								res = mc_res
-						
+							var res;
+							with (select)
+								res = temp_get_model_texobj(null)
 							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_plane_vbuffer_map)
 							break
 						}

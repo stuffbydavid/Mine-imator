@@ -91,7 +91,7 @@ for (var i = 0; i <= 1; i += 1/detail)
 	view_shape_line_draw(start2D, end2D)
 	
 	// Check mouse
-	if (content_mouseon && point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < 8)
+	if (content_mouseon && point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < control_width / 2)
 		view.control_mouseon = vid
 }
 

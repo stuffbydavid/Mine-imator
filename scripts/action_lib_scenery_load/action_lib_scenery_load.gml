@@ -20,8 +20,11 @@ else
 	
 	var res = new_res(fn, e_res_type.SCHEMATIC);
 	res.loaded = !res.replaced
-	with (res)
-		res_load()
+	if (res.replaced)
+		action_res_replace(fn)
+	else
+		with (res)
+			res_load()
 		
 	with (new(obj_template))
 	{
