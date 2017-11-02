@@ -189,7 +189,7 @@ switch (temp_edit.type)
 			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 				
 		tab_control(40)
-		draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_skin, tex, null, capwid)
+		draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, tex, null, capwid)
 		tab_next()
 		
 		break
@@ -349,7 +349,7 @@ switch (temp_edit.type)
 			
 		// Default
 		if (temp_edit.model_tex = null)
-			text = text_get("librarymodeltexdefault", text)
+			text = text_get("listdefault", text)
 		
 		tex = null
 		with (texobj)

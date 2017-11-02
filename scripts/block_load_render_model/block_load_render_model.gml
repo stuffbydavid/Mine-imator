@@ -177,6 +177,10 @@ with (new(obj_block_render_model))
 					if (!face_render[nd])
 						continue
 						
+					var facerot = elem.face_rotation[f];
+					if (!uvlock)
+						facerot += mod_fix(faceuvrot[nd], 360)
+						
 					// UV
 					if (elem.face_has_uv[f])
 					{
@@ -206,6 +210,16 @@ with (new(obj_block_render_model))
 						face_uv[nd, 1] = point2D(uvto[X], uvfrom[Y])
 						face_uv[nd, 2] = uvto
 						face_uv[nd, 3] = point2D(uvfrom[X], uvto[Y])
+						
+						// Shift UVs anti-clockwise by face rotation
+						repeat (facerot / 90)
+						{
+							var tmp = face_uv[nd, 0];
+							face_uv[nd, 0] = face_uv[nd, 3]
+							face_uv[nd, 3] = face_uv[nd, 2]
+							face_uv[nd, 2] = face_uv[nd, 1]
+							face_uv[nd, 1] = tmp
+						}
 					}
 					
 					// Auto generate UVs
@@ -255,20 +269,15 @@ with (new(obj_block_render_model))
 								face_uv[nd, 3] = point2D(from[X], block_size - from[Y])
 								break
 						}
-					}
-					
-					// Shift UVs anti-clockwise by face rotation
-					var facerot = elem.face_rotation[f];
-					if (!uvlock)
-						facerot += mod_fix(faceuvrot[nd], 360)
 						
-					repeat (facerot / 90)
-					{
-						var tmp = face_uv[nd, 0];
-						face_uv[nd, 0] = face_uv[nd, 3]
-						face_uv[nd, 3] = face_uv[nd, 2]
-						face_uv[nd, 2] = face_uv[nd, 1]
-						face_uv[nd, 1] = tmp
+						// Shift UVs anti-clockwise by face rotation
+						if (facerot > 0)
+						{
+							face_uv[nd, 0] = uv_rotate(face_uv[nd, 0], facerot, point2D(block_size / 2, block_size / 2))
+							face_uv[nd, 1] = uv_rotate(face_uv[nd, 1], facerot, point2D(block_size / 2, block_size / 2))
+							face_uv[nd, 2] = uv_rotate(face_uv[nd, 2], facerot, point2D(block_size / 2, block_size / 2))
+							face_uv[nd, 3] = uv_rotate(face_uv[nd, 3], facerot, point2D(block_size / 2, block_size / 2))
+						}
 					}
 					
 					// Texture

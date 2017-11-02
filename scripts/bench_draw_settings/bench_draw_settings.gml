@@ -116,8 +116,8 @@ else
 			var text, tex;
 			text = bench_settings.model_tex.display_name
 			with (bench_settings.model_tex)
-				tex = res_get_model_texture(model_part_get_texture_name(part, other.bench_settings.model_texture_name_map))
-			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.model_tex, text, action_bench_skin, tex, null, capwid)
+				tex = res_get_model_texture(model_part_get_texture_name(part, app.bench_settings.model_texture_name_map))
+			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.model_tex, text, action_bench_model_tex, tex, null, capwid)
 			dy += 40
 			break
 		}
@@ -246,7 +246,11 @@ else
 			break
 		}
 		
-		default: // Shapes
+		case e_temp_type.CUBE: 
+		case e_temp_type.CONE: 
+		case e_temp_type.CYLINDER: 
+		case e_temp_type.SPHERE: 
+		case e_temp_type.SURFACE: // Shapes
 		{
 			// Texture
 			var text, tex;
@@ -275,6 +279,41 @@ else
 				dy += 16
 			}
 			
+			break
+		}
+		
+		case e_temp_type.MODEL:
+		{
+			var capwid = text_caption_width("benchmodel", "benchmodeltex");
+			
+			// Model
+			var text;
+			if (bench_settings.model != null)
+				text = bench_settings.model.display_name
+			else
+				text = text_get("listnone")
+			draw_button_menu("benchmodel", e_menu.LIST, dx, dy, dw, 32, bench_settings.model, text, action_bench_model, null, null, capwid)
+			dy += 32 + 8
+
+			// Texture
+			var texobj, tex;
+			with (bench_settings)
+				texobj = temp_get_model_texobj(null)
+		
+			if (texobj != null)
+				text = texobj.display_name
+			else
+				text = text_get("listnone")
+			
+			// Default
+			if (bench_settings.model_tex = null)
+				text = text_get("listdefault", text)
+		
+			tex = null
+			with (texobj)
+				tex = res_get_model_texture(model_part_get_texture_name(app.bench_settings.model_file, app.bench_settings.model_texture_name_map))
+			draw_button_menu("benchmodeltex", e_menu.LIST, dx, dy, dw, 40, bench_settings.model_tex, text, action_bench_model_tex, tex, null, capwid)
+			dy += 40
 			break
 		}
 	}

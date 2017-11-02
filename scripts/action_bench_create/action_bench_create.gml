@@ -46,7 +46,13 @@ else
 			
 			with (temp)
 			{
-				if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART)
+				if (type != e_temp_type.MODEL && model != null)
+				{
+					model.count--
+					model = null
+				}
+				
+				if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
 				{
 					model_tex.count--
 					model_tex = null
@@ -68,7 +74,7 @@ else
 					block_state = array()
 				}
 				
-				if (type != e_temp_type.SCENERY && scenery)
+				if (type != e_temp_type.SCENERY && scenery != null)
 				{
 					scenery.count--
 					scenery = null

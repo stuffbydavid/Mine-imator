@@ -273,7 +273,7 @@
         "scenery": "Scenery",
         "scenerytip": "Load Minecraft terrain from a world or file.",
         "blocktex": "Texture",
-        "blocktextip": "Load texture from a resource pack or image.",
+        "blocktextip": "Load a texture from a resource pack or image.",
         "itemtex": "Image",
         "itemtextip": "Choose a new grid of items from an image to use.",
         "item3d": "3D item",
@@ -303,6 +303,9 @@
         "shapetexmaptip": "Whether the faces of the shape are given different parts of the texture image.",
         "shapefacecamera": "Face camera",
         "shapefacecameratip": "Whether the shape will always face the camera.",
+        "modeltip": "Load a model from an external file.",
+        "modeltex": "Texture",
+        "modeltextip": "Change the texture to a previously loaded skin or external image.",
         "create": "Create",
         "createtip": "Create a new object using the selected settings."
     },
@@ -533,7 +536,8 @@
         "search": "Search...",
         "searchtip": "Filter the list by entering a specific keyword.",
         "browse": "Browse...",
-        "none": "None"
+        "none": "None",
+        "default": "Default (%1)"
     },
     "model/": {
         "human": "Human",
@@ -1421,8 +1425,7 @@
         "model": "Model",
         "modeltip": "Pick the model to use.",
         "modeltex": "Texture",
-        "modeltextip": "Change the texture of the given model.",
-        "modeltexdefault": "Default (%1)"
+        "modeltextip": "Change the texture of the given model."
     },
     "templateeditor/": {
         "model": "Model",
@@ -2274,7 +2277,6 @@
         },
         "texture": "Texture",
         "texturetip": "Modify the object's texture.",
-        "texturedefault": "Default (%1)",
         "chartex": "Skin",
         "chartextip": "Select the character skin from a previously loaded skin.",
         "spblocktex": "Texture",
@@ -2358,7 +2360,7 @@
         "fps60": "60",
         "fps60tip": "Set the program to update 60 times per second.",
         "backup": "Backup projects automatically",
-        "backuptip": "Enable regular backups of your projects, this is strongly recommended. Your project will be saved in the project folder as files with a \"mbackup\" extension.",
+        "backuptip": "Enable regular backups of your projects, this is strongly recommended. Your project will be saved in the project folder as files with a \"backup\" extension.",
         "backuptime": "Backup time",
         "backuptimetip": "The time between each backup.",
         "backuptimeminutes": "minutes",
@@ -2394,7 +2396,7 @@
         "languagetranslator": "Translator",
         "languageforversion": "For version",
         "languagelastchange": "Last change",
-        "languageloadtip": "Load another language from a .txt file.",
+        "languageloadtip": "Load another language from a .milanguage or .txt file.",
         "languagereloadtip": "Re-load the opened language file.",
         "color/": {
             "interface": "Interface color",
@@ -2410,7 +2412,7 @@
             "buttonstext": "Buttons text color",
             "buttonstexttip": "The color of text in buttons.",
             "boxes": "Boxes color",
-            "boxestip": "The color of text- and checkboxes.",
+            "boxestip": "The color of textboxes and checkboxes.",
             "boxestext": "Boxes text color",
             "boxestexttip": "The color of text in textboxes and checks in checkboxes.",
             "highlight": "Highlight color",

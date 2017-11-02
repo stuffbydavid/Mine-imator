@@ -34,8 +34,11 @@ else
 			return 0
 			
 		res = new_res(fn, e_res_type.SCHEMATIC)
-		with (res)
-			res_load()
+		if (res.replaced)
+			action_res_replace(fn)
+		else
+			with (res)
+				res_load()
 	}
 
 	hobj = history_set_res(action_lib_scenery, fn, temp_edit.scenery, res)

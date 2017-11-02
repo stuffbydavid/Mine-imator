@@ -21,7 +21,8 @@ else
 				return 0
 			
 			res = new_res(fn, e_res_type.SKIN)
-			res.player_skin = temp_edit.model_file.player_skin
+			if (temp_edit.model_file != null)
+				res.player_skin = temp_edit.model_file.player_skin
 			
 			with (res)
 				res_load()

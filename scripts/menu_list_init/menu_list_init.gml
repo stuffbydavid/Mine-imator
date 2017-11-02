@@ -91,10 +91,10 @@ switch (menu_name)
 				texobj = mc_res
 			with (texobj)
 				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
-			menu_add_item(null, text_get("librarymodeltexdefault", texobj.display_name), tex)
+			menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
 		}
 		else
-			menu_add_item(null, text_get("librarymodeltexdefault", text_get("listnone")))
+			menu_add_item(null, text_get("listdefault", text_get("listnone")))
 			
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -256,6 +256,7 @@ switch (menu_name)
 	}
 	
 	// Model
+	case "benchmodel":
 	case "librarymodel":
 	{
 		// None
@@ -493,20 +494,25 @@ switch (menu_name)
 	case "frameeditorbodyparttex":
 	case "frameeditormodeltex":
 	{
+		// Default
 		var texobj;
 		with (tl_edit.temp)
 			texobj = temp_get_model_texobj(null)
 		
-		// Default
-		var tex = null;
 		if (texobj != null)
 		{
+			var modelfile = tl_edit.temp.model_file;
+			if (menu_name = "frameeditorbodyparttex")
+				modelfile = tl_edit.model_part
+				
+			var tex;
 			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.temp.model_file, tl_edit.temp.model_texture_name_map))
-			menu_add_item(null, text_get("frameeditortexturedefault", texobj.display_name), tex)
+				tex = res_get_model_texture(model_part_get_texture_name(modelfile, tl_edit.temp.model_texture_name_map))
+			
+			menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
 		}
 		else
-			menu_add_item(null, text_get("frameeditortexturedefault", text_get("listnone")), null)
+			menu_add_item(null, text_get("listdefault", text_get("listnone")), null)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -530,7 +536,7 @@ switch (menu_name)
 	case "frameeditorblocktex":
 	{
 		// Default
-		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.block_tex.display_name), tl_edit.temp.block_tex.block_preview_texture)
+		menu_add_item(null, text_get("listdefault", tl_edit.temp.block_tex.display_name), tl_edit.temp.block_tex.block_preview_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -549,13 +555,13 @@ switch (menu_name)
 		if (tl_edit.temp.shape_tex != null)
 		{
 			if (tl_edit.temp.shape_tex.object_index = obj_timeline)
-				menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.shape_tex.display_name))
+				menu_add_item(null, text_get("listdefault", tl_edit.temp.shape_tex.display_name))
 			else
-				menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.shape_tex.display_name), tl_edit.temp.shape_tex.texture)
+				menu_add_item(null, text_get("listdefault", tl_edit.temp.shape_tex.display_name), tl_edit.temp.shape_tex.texture)
 			menu_add_item(0, text_get("listnone"))
 		}
 		else
-			menu_add_item(null, text_get("frameeditortexturedefault", text_get("listnone")))
+			menu_add_item(null, text_get("listdefault", text_get("listnone")))
 		
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
@@ -592,7 +598,7 @@ switch (menu_name)
 	case "frameeditortextfont":
 	{
 		// Default
-		menu_add_item(null, text_get("frameeditortexturedefault", tl_edit.temp.text_font.display_name))
+		menu_add_item(null, text_get("listdefault", tl_edit.temp.text_font.display_name))
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
