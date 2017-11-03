@@ -21,9 +21,10 @@ else
 var base_seed = 0;
 
 if (pt.creator.value[e_value.CUSTOM_SEED])
-	base_seed = ds_list_size(particle_list) + pt.creator.value[e_value.SEED];
+	base_seed = test(temp.pc_spawn_constant, ds_list_size(particle_list), pt.creator.single_fire_count) + pt.creator.value[e_value.SEED];
 else
 	base_seed = random(current_step);
+	
 random_set_seed(base_seed)
 
 	
