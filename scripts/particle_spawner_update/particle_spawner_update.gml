@@ -57,9 +57,17 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 				{
 					if (creator != temp)
 						continue
+					
+					// Repeat through amount of particles to fire
 					repeat (floor(spawn_rate * temp.pc_spawn_amount))
+					{
+						other.single_fire_count++
 						with (other)
 							particle_spawner_spawn(other.id)
+							
+					}
+					other.single_fire_count = 0
+					
 				}
 				fire = false
 			}

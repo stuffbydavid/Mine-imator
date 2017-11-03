@@ -7,6 +7,7 @@ spawn_queue_start = null
 spawn_laststep = current_step
 spawn_active = true
 fire = false
+single_fire_count = 0
 
 particle_list = ds_list_create()
 is_timeline = (object_index = obj_timeline)
