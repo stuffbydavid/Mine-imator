@@ -6,8 +6,10 @@ if (type = e_tl_type.CHARACTER ||
 	type = e_tl_type.SPECIAL_BLOCK ||
 	type = e_tl_type.FOLDER ||
 	type = e_tl_type.BACKGROUND ||
-	type = e_tl_type.AUDIO ||
-	type = e_tl_type.MODEL)
+	type = e_tl_type.AUDIO)
+	return 0
+	
+if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))
 	return 0
 	
 // Invisible?
@@ -109,12 +111,12 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 				res = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 				
 			if (type = e_tl_type.BLOCK)
-				render_world_block(temp.block_vbuffer, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)), res)
+				render_world_block(temp.block_vbuffer, res, true, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)))
 			else if (temp.scenery)
 				render_world_scenery(temp.scenery, res, temp.block_repeat_enable, temp.block_repeat)
 			break
 		}
-			   
+		
 		case e_tl_type.ITEM:
 		{
 			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_tex)
@@ -127,6 +129,24 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 			if (font = null)
 				font = temp.text_font
 			render_world_text(text_vbuffer, text_texture, temp.text_face_camera, font)
+			break
+		}
+		
+		case e_tl_type.MODEL:
+		{
+			if (temp.model != null)
+			{
+				var res;
+				if (temp.model_tex != null && temp.model_tex.block_sheet_texture != null)
+					res = temp.model_tex
+				else
+					res = mc_res
+				render_world_block(temp.model.block_vbuffer, mc_res)
+				
+				with (temp)
+					res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
+				render_world_block_map(temp.model.model_block_map, res)
+			}
 			break
 		}
 			

@@ -233,7 +233,7 @@ with (mc_assets)
 				ds_map_destroy(load_assets_type_map)
 				buffer_delete(load_assets_block_preview_buffer)
 				buffer_delete(load_assets_block_preview_ani_buffer)
-			
+				
 				log("Loaded assets successfully")
 			}
 			

@@ -1,23 +1,31 @@
-/// block_load_model_file(filename)
+/// block_load_model_file(filename, resource)
 /// @arg filename
+/// @arg [resource]
 
-var fname, fpath;
-fname = argument0
-fpath = load_assets_dir + mc_models_directory + fname
+var fname, res;
+fname = argument[0]
 
-if (!is_undefined(load_assets_model_file_map[?fname])) // Previously loaded
-	return load_assets_model_file_map[?fname]
+if (argument_count > 1)
+	res = argument[1]
+else
+	res = null
 
-if (!file_exists_lib(fpath))
+if (res = null && !is_undefined(load_assets_model_file_map[?filename_name(fname)])) // Previously loaded
+	return load_assets_model_file_map[?filename_name(fname)]
+
+if (!file_exists_lib(fname))
 {
 	log("Could not find model file", fname)
 	return null
 }
 
-var map = json_load(fpath);
+var typemap, map;
+typemap = ds_map_create()
+map = json_load(fname, typemap)
 if (!ds_map_valid(map))
 {
 	log("Could not parse model file", fname)
+	ds_map_destroy(typemap)
 	return null
 }
 
@@ -25,15 +33,41 @@ with (new(obj_block_load_model_file))
 {
 	// Parent
 	parent = null
-	if (is_string(map[?"parent"]))
-		parent = block_load_model_file(map[?"parent"] + ".json")
+	if (res = null && is_string(map[?"parent"]))
+		parent = block_load_model_file(load_assets_dir + mc_models_directory + map[?"parent"] + ".json")
 		
 	// Textures
 	texture_map = null
-	if (ds_map_valid(map[?"textures"]))
+	if (is_real(map[?"textures"]))
 	{
-		texture_map = ds_map_create()
-		ds_map_copy(texture_map, map[?"textures"])
+		// Array of models, fill map with the string IDs
+		if (ds_map_find_value(typemap[?map], "textures") = e_json_type.ARRAY && ds_list_valid(map[?"textures"]))
+		{
+			texture_map = ds_map_create()
+			for (var i = 0; i < ds_list_size(map[?"textures"]); i++)
+			{
+				var texname = ds_list_find_value(map[?"textures"], i);
+				texture_map[?string(i)] = texname
+				block_load_model_file_texture(texname, res)
+			}
+		}
+		
+		// Regular map, copy keys and values
+		else if (ds_map_valid(map[?"textures"]))
+		{
+			texture_map = ds_map_create()
+			ds_map_copy(texture_map, map[?"textures"])
+		
+			if (res != null)
+			{
+				var key = ds_map_find_first(texture_map);
+				while (!is_undefined(key))
+				{
+					block_load_model_file_texture(texture_map[?key], res)
+					key = ds_map_find_next(texture_map, key)
+				}
+			}
+		}
 	}
 	
 	// Element list
@@ -121,7 +155,9 @@ with (new(obj_block_load_model_file))
 		}
 	}
 	
-	load_assets_model_file_map[?fname] = id
+	if (res = null)
+		load_assets_model_file_map[?filename_name(fname)] = id
+	
 	ds_map_destroy(map)
 	
 	return id

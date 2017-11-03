@@ -15,15 +15,16 @@ switch (tl_edit.type)
 	{
 		name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 		
-		with (tl_edit.temp)
-			texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
-		
 		var modelfile = tl_edit.temp.model_file;
 		if (tl_edit.type = e_temp_type.BODYPART)
 			modelfile = tl_edit.model_part
 		
-		with (texobj)
-			tex = res_get_model_texture(model_part_get_texture_name(modelfile, tl_edit.temp.model_texture_name_map))
+		with (tl_edit.temp)
+		{
+			texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
+			tex = temp_get_model_tex_preview(texobj, modelfile)
+		}
+		
 		break
 	}
 	

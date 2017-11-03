@@ -63,6 +63,8 @@ while (true)
 			}
 			str += chr(hex_to_dec(hex))
 		}
+		else
+			str += chr(json_char)
 	}
 	else
 		str += chr(json_char)

@@ -12,8 +12,19 @@ if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA ||  // Check i
 if (texobj = null) // Use the model's texture
 {
 	texobj = model
-	if (texobj != null && texobj.model_texture = null && texobj.model_texture_map = null) // Model has no texture, use Minecraft
-		texobj = mc_res
+	if (texobj != null)
+	{
+		if (texobj.model_format = e_model_format.BLOCK)
+		{
+			if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
+				texobj = mc_res
+		}
+		else
+		{
+			if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
+				texobj = mc_res
+		}
+	}
 }
 
 return texobj

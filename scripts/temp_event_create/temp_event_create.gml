@@ -34,7 +34,7 @@ legacy_item_sheet = true
 block_name = "grass"
 block_state = array()
 block_tex = null
-block_vbuffer_reset()
+block_vbuffer = null
 block_repeat_enable = false
 block_repeat = vec3(1)
 

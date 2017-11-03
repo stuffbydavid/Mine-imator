@@ -144,22 +144,28 @@ with (preview)
 				{
 					switch (select.type)
 					{
+						case e_res_type.MODEL:
+						{
+							if (select.model_format = e_model_format.BLOCK)
+							{
+								var displaysize = vec3(block_size);
+								prevcam_zoom = 32
+								off = vec3_mul(displaysize, vec3(-0.5))
+							}
+							else if (select.model_file != null)
+							{
+								var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
+								prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
+								off = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
+							}
+							break
+						}
+						
 						case e_res_type.SCHEMATIC:
 						{
 							var displaysize = vec3_mul(vec3_mul(select.scenery_size, rep), vec3(block_size));
 							prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
 							off = vec3_mul(displaysize, vec3(-0.5))
-							break
-						}
-						
-						case e_res_type.MODEL:
-						{
-							if (select.model_file = null)
-								break
-						
-							var displaysize = point3D_sub(select.model_file.bounds_parts_end, select.model_file.bounds_parts_start);
-							prevcam_zoom = max(displaysize[X], displaysize[Y], displaysize[Z]) + 16
-							off = point3D_mul(point3D_add(select.model_file.bounds_parts_start, vec3_mul(displaysize, 0.5)), -1)
 							break
 						}
 					}
@@ -168,9 +174,22 @@ with (preview)
 				{
 					switch (select.type)
 					{
+						case e_temp_type.MODEL:
+						{
+							if (select.model = null)
+								break
+								
+							if (select.model.model_format = e_model_format.BLOCK)
+							{
+								var displaysize = vec3(block_size);
+								prevcam_zoom = 32
+								off = vec3_mul(displaysize, vec3(-0.5))
+								break
+							}
+						}
+						
 						case e_temp_type.CHARACTER:
 						case e_temp_type.SPECIAL_BLOCK:
-						case e_temp_type.MODEL:
 						{
 							if (select.model_file = null)
 								break
@@ -253,18 +272,23 @@ with (preview)
 					{
 						case e_res_type.SCHEMATIC:
 							if (select.ready)
-								render_world_block(select.block_vbuffer, select.scenery_size, mc_res)
+								render_world_block(select.block_vbuffer, mc_res, true, select.scenery_size)
 							break
 							
 						case e_res_type.MODEL:
 						{
-							if (select.model_file = null)
-								break
-						
-							var res = select;
-							if (select.model_texture_map = null)
-								res = mc_res
-							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_plane_vbuffer_map)
+							if (select.model_format = e_model_format.BLOCK)
+							{
+								render_world_block(select.block_vbuffer, mc_res)
+								render_world_block_map(select.model_block_map, select)
+							}
+							else if (select.model_file != null)
+							{
+								var res = select;
+								if (select.model_texture_map = null)
+									res = mc_res
+								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_plane_vbuffer_map)
+							}
 							break
 						}
 					}
@@ -273,9 +297,29 @@ with (preview)
 				{
 					switch (select.type)
 					{
+						case e_temp_type.MODEL:
+						{
+							if (select.model = null)
+								break
+							
+							if (select.model.model_format = e_model_format.BLOCK)
+							{
+								var res;
+								if (select.model_tex != null && select.model_tex.block_sheet_texture != null)
+									res = select.model_tex
+								else
+									res = mc_res
+								render_world_block(select.model.block_vbuffer, res)
+								
+								with (select)
+									res = temp_get_model_texobj(null)
+								render_world_block_map(select.model.model_block_map, res)
+								break
+							}
+						}
+						
 						case e_temp_type.CHARACTER:
 						case e_temp_type.SPECIAL_BLOCK:
-						case e_temp_type.MODEL:
 						{
 							if (select.model_file = null)
 								break
@@ -297,7 +341,7 @@ with (preview)
 							break
 					
 						case e_temp_type.BLOCK:
-							render_world_block(select.block_vbuffer, rep, select.block_tex)
+							render_world_block(select.block_vbuffer, select.block_tex, true, rep)
 							break
 					
 						case e_temp_type.BODYPART:

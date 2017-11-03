@@ -338,9 +338,12 @@ switch (temp_edit.type)
 		tab_next()
 		
 		// Texture
-		var texobj, text, tex;
+		var texobj, tex, text;
 		with (temp_edit)
+		{
 			texobj = temp_get_model_texobj(null)
+			tex = temp_get_model_tex_preview(texobj, model_file)
+		}
 		
 		if (texobj != null)
 			text = texobj.display_name
@@ -351,10 +354,6 @@ switch (temp_edit.type)
 		if (temp_edit.model_tex = null)
 			text = text_get("listdefault", text)
 		
-		tex = null
-		with (texobj)
-			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
-			
 		tab_control(40)
 		draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, text, action_lib_model_tex, tex, null, capwid)
 		tab_next()

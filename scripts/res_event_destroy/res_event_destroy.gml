@@ -93,6 +93,17 @@ if (scenery_tl_list != null)
 	ds_list_destroy(scenery_tl_list)
 }
 
+if (model_block_map != null)
+{
+	var key = ds_map_find_first(model_block_map);
+	while (!is_undefined(key))
+	{
+		vbuffer_destroy(model_block_map[?key])
+		key = ds_map_find_next(model_block_map, key)
+	}
+	ds_map_destroy(model_block_map)
+}
+
 // Clear references and update counters
 with (obj_template)
 {

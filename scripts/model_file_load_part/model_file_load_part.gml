@@ -27,7 +27,7 @@ with (new(obj_model_part))
 	// Name
 	name = map[?"name"]
 	
-	if (dev_mode_debug_names && !text_exists("modelpart" + name))
+	if (res = null && dev_mode_debug_names && !text_exists("modelpart" + name))
 		log("model/part/" + name + dev_mode_name_translation_message)
 	
 	// Description (optional)

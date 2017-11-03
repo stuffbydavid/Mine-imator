@@ -210,6 +210,13 @@ enum e_res_type
 	MODEL
 } // Update app_startup_lists() when adding types
 
+// Model format
+enum e_model_format
+{
+	MIMODEL,
+	BLOCK
+}
+
 // Icons
 enum icons
 {

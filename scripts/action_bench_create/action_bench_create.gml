@@ -54,7 +54,8 @@ else
 				
 				if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
 				{
-					model_tex.count--
+					if (model_tex != null)
+						model_tex.count--
 					model_tex = null
 					model_file = null
 					model_part = null

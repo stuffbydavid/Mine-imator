@@ -1,19 +1,30 @@
-/// render_world_block(vbuffer, size, resource)
+/// render_world_block(vbuffer, resource, [rotate, size])
 /// @arg vbuffer
-/// @arg size
 /// @arg resource
+/// @arg [rotate
+/// @arg size]
 
-var vbuffer, size, res;
-vbuffer = argument0
-size = argument1
-res = argument2
+var vbuffer, res, rotate, size;
+vbuffer = argument[0]
+res = argument[1]
 
+if (argument_count > 2)
+{
+	rotate = argument[2]
+	size = argument[3]
+}
+else
+	rotate = false
+
+if (vbuffer = null)
+	return 0
+	
 if (!res.ready)
 	res = mc_res
 
 var tex, texani;
 tex = res.block_sheet_texture
-if (is_array(res.block_sheet_ani_texture))
+if (res.block_sheet_ani_texture != null)
 	texani = res.block_sheet_ani_texture[block_texture_get_frame()]
 else
 	texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
@@ -22,7 +33,7 @@ var blend = shader_blend_color;
 render_set_texture(tex)
 
 // Rotate by 90 degrees for legacy support
-if (dev_mode_rotate_blocks)
+if (rotate && dev_mode_rotate_blocks)
 	matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 
 // DEPTH 0

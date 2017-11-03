@@ -5,9 +5,6 @@ var fn = load_folder + "\\" + filename;
 
 debug("Loading " + res_type_name_list[|type], fn)
 
-if (load_folder != save_folder && type != e_res_type.LEGACY_BLOCK_SHEET)
-	res_save()
-
 // Load from file
 switch (type)
 {
@@ -153,6 +150,19 @@ switch (type)
 		with (model_file)
 			instance_destroy()
 			
+		// Clear old block model map
+		if (model_block_map != null)
+		{
+			var key = ds_map_find_first(model_block_map);
+			while (!is_undefined(key))
+			{
+				vbuffer_destroy(model_block_map[?key])
+				key = ds_map_find_next(model_block_map, key)
+			}
+			ds_map_destroy(model_block_map)
+			model_block_map = null
+		}
+			
 		// Create texture map (file.png/jpg->texture)
 		if (model_texture_map != null)
 		{
@@ -166,21 +176,62 @@ switch (type)
 			model_texture_map = null
 		}
 			
-		// Load model (model_file will be null if unsuccessful)
-		model_file = model_file_load(fn, id)
+		// Load model from .mimodel or block .json
+		if (filename_ext(fn) = ".mimodel")
+		{
+			model_format = e_model_format.MIMODEL
+			model_file = model_file_load(fn, id) // model_file will be null if unsuccessful
 		
-		// Create texture name map
-		if (model_texture_name_map != null)
-			ds_map_clear(model_texture_name_map)
-		else
-			model_texture_name_map = ds_map_create()
+			// Create texture name map
+			if (model_texture_name_map != null)
+				ds_map_clear(model_texture_name_map)
+			else
+				model_texture_name_map = ds_map_create()
 		
-		if (model_file != null)
-			model_texture_name_map[?""] = model_file.texture_name
+			if (model_file != null)
+				model_texture_name_map[?""] = model_file.texture_name
 			
-		res_update_model_plane_vbuffer_map()
+			res_update_model_plane_vbuffer_map()
+		}
+		else
+		{
+			model_format = e_model_format.BLOCK
+			model_file = null
+			block_vbuffer = null
+			
+			// Load model file
+			var blockmodel = block_load_model_file(fn, id);
+			if (blockmodel = null)
+				break
+				
+			model_block_map = ds_map_create()
+			
+			// Create render model
+			var rendermodel = block_load_render_model(blockmodel, vec3(0), false, false, 0, id);
+			
+			// Generate triangles from render model
+			block_vbuffer_start()
+			with (mc_builder)
+				builder_generate_single(rendermodel)
+			block_vbuffer_done()
+			
+			// Freeze block vbuffer map
+			var key = ds_map_find_first(model_block_map);
+			while (!is_undefined(key))
+			{
+				vertex_end(model_block_map[?key])
+				vertex_freeze(model_block_map[?key])
+				key = ds_map_find_next(model_block_map, key)
+			}
+			
+			with (blockmodel)
+				instance_destroy()
+		}
 		break
 	}
 }
+
+if (load_folder != save_folder && type != e_res_type.LEGACY_BLOCK_SHEET)
+	res_save()
 
 res_update_display_name()

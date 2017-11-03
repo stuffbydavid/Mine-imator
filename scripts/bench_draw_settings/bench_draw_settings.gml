@@ -298,7 +298,10 @@ else
 			// Texture
 			var texobj, tex;
 			with (bench_settings)
+			{
 				texobj = temp_get_model_texobj(null)
+				tex = temp_get_model_tex_preview(texobj, model_file)
+			}
 		
 			if (texobj != null)
 				text = texobj.display_name
@@ -309,9 +312,6 @@ else
 			if (bench_settings.model_tex = null)
 				text = text_get("listdefault", text)
 		
-			tex = null
-			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(app.bench_settings.model_file, app.bench_settings.model_texture_name_map))
 			draw_button_menu("benchmodeltex", e_menu.LIST, dx, dy, dw, 40, bench_settings.model_tex, text, action_bench_model_tex, tex, null, capwid)
 			dy += 40
 			break

@@ -12,7 +12,7 @@ if (is_undefined(map[?"model"]))
 }
 			
 // Model
-var blockmodel = block_load_model_file("block/" + map[?"model"] + ".json")
+var blockmodel = block_load_model_file(load_assets_dir + mc_models_directory + "block/" + map[?"model"] + ".json")
 if (!blockmodel)
 	return false
 				

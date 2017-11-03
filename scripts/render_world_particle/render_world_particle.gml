@@ -22,62 +22,109 @@ if (temp != null)
 		
 	switch (temp.type) // Rotation point
 	{
+		case e_temp_type.MODEL:
+		{
+			if (temp.model = null)
+				break
+				
+			if (temp.model.model_format = e_model_format.BLOCK)
+			{
+				off = point3D_mul(rep, -block_size / 2)
+				break
+			}
+		}
+		
 		case e_temp_type.CHARACTER:
 		case e_temp_type.SPECIAL_BLOCK:
+		{
 			if (temp.model_file != null)
 				off = point3D(0, 0, -(temp.model_file.bounds_parts_end[Z] - temp.model_file.bounds_parts_start[Z]) / 2)
 			break
+		}
 		
 		case e_temp_type.SCENERY:
+		{
 			scenery = temp.scenery
 			if (scenery = null)
 				break
+				
 			var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
 			off = vec3_mul(displaysize, vec3(-0.5))
 			break
+		}
 			
 		case e_temp_type.BLOCK:
+		{
 			off = point3D_mul(rep, -block_size / 2)
 			break
+		}
 		
 		case e_temp_type.ITEM:
+		{
 			off = point3D(-8, -0.5, 0)
 			break
+		}
 	}
 	
 	matrix_set(matrix_world, matrix_create(point3D_add(pos, off), rot, vec3(scale)))
 	
 	switch (temp.type)
 	{
+		case e_temp_type.MODEL:
+		{
+			if (temp.model = null)
+				break
+							
+			if (temp.model.model_format = e_model_format.BLOCK)
+			{
+				var res;
+				if (select.model_tex != null && select.model_tex.block_sheet_texture != null)
+					res = select.model_tex
+				else
+					res = mc_res
+				render_world_block(temp.model.block_vbuffer, res)
+				
+				with (temp)
+					res = temp_get_model_texobj(null)
+				render_world_block_map(temp.model.model_block_map, res)
+				break
+			}
+		}
+		
 		case e_temp_type.CHARACTER:
 		case e_temp_type.SPECIAL_BLOCK:
 		{
 			if (temp.model_file = null)
 				break
 			
-			var res = temp.model_tex;
-			if (!res.ready)
-				res = mc_res
-				
+			var res;
+			with (temp)
+				res = temp_get_model_texobj(null)
 			render_world_model_file_parts(temp.model_file, res, temp.model_texture_name_map, temp.model_hide_list, temp.model_plane_vbuffer_map)
 			break
 		}
 			
 		case e_temp_type.SCENERY:
-			if (scenery = null)
-				break
-			render_world_scenery(scenery, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
+		{
+			if (scenery != null)
+				render_world_scenery(scenery, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
 			break
-			
+		}
+		
 		case e_temp_type.ITEM:
+		{
 			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_tex)
 			break
+		}
 		
 		case e_temp_type.BLOCK:
-			render_world_block(temp.block_vbuffer, rep, temp.block_tex) 
+		{
+			render_world_block(temp.block_vbuffer, temp.block_tex, true, rep) 
 			break
+		}
 		
 		case e_temp_type.BODYPART:
+		{
 			if (temp.model_part = null || temp.model_file = null)
 				break
 				
@@ -87,17 +134,22 @@ if (temp != null)
 							
 			render_world_model_part(temp.model_part, res, temp.model_texture_name_map, 0, null, temp.model_plane_vbuffer_map)
 			break
-			
+		}
+		
 		case e_temp_type.TEXT:
+		{
 			render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font)
 			break
+		}
 		
 		default: // Shapes
+		{
 			var tex;
 			with (temp)
 				tex = temp_get_shape_tex(temp_get_shape_texobj(null))
 			render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, tex)
 			break
+		}
 	}
 }
 else // Sprite

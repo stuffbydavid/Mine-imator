@@ -16,5 +16,3 @@ else if (!is_undefined(res.model_texture_map[?fn]))
 	return 0
 	
 res.model_texture_map[?fn] = texture_create_square(load_folder + "\\" + fn)
-
-file_copy_lib(load_folder + "\\" + fn, save_folder + "\\" + fn)

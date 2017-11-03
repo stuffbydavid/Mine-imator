@@ -83,14 +83,26 @@ switch (menu_name)
 			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
 		
 		// Default
-		var texobj = temp.model;
+		var texobj = temp.model
+		if (texobj != null)
+		{
+			if (texobj.model_format = e_model_format.BLOCK)
+			{
+				if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
+					texobj = mc_res
+			}
+			else
+			{
+				if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
+					texobj = mc_res
+			}
+		}
+		
 		if (texobj != null)
 		{
 			var tex;
-			if (texobj.model_texture = null && texobj.model_texture_map = null)
-				texobj = mc_res
-			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+			with (temp)
+				tex = temp_get_model_tex_preview(texobj, model_file)
 			menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
 		}
 		else
@@ -103,8 +115,9 @@ switch (menu_name)
 			if (res = temp.model || res = texobj)
 				continue
 			
-			with (res)
-				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+			var tex;
+			with (temp)
+				tex = temp_get_model_tex_preview(res, model_file)
 			
 			if (tex != null)
 				menu_add_item(res, res.display_name, tex)
@@ -494,21 +507,37 @@ switch (menu_name)
 	case "frameeditorbodyparttex":
 	case "frameeditormodeltex":
 	{
+		var temp = tl_edit.temp;
+		
 		// Default
-		var texobj;
-		with (tl_edit.temp)
-			texobj = temp_get_model_texobj(null)
+		var texobj = temp.model_tex;
+		if (texobj = null)
+		{
+			texobj = temp.model
+			if (texobj != null)
+			{
+				if (texobj.model_format = e_model_format.BLOCK)
+				{
+					if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
+						texobj = mc_res
+				}
+				else
+				{
+					if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
+						texobj = mc_res
+				}
+			}
+		}
 		
 		if (texobj != null)
 		{
-			var modelfile = tl_edit.temp.model_file;
-			if (menu_name = "frameeditorbodyparttex")
+			var modelfile = temp.model_file;
+			if (tl_edit.type = e_temp_type.BODYPART)
 				modelfile = tl_edit.model_part
 				
 			var tex;
-			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(modelfile, tl_edit.temp.model_texture_name_map))
-			
+			with (temp)
+				tex = temp_get_model_tex_preview(texobj, modelfile)
 			menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
 		}
 		else
@@ -518,13 +547,12 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
 			var res = res_list.display_list[|i];
-			if (res = tl_edit.temp.model || res = tl_edit.temp.model_tex || res = texobj)
+			if (res = temp.model || res = texobj)
 				continue
 			
 			var tex;
-			with (res)
-				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.temp.model_file, tl_edit.temp.model_texture_name_map))
-			
+			with (temp)
+				tex = temp_get_model_tex_preview(res, model_file)
 			if (tex != null)
 				menu_add_item(res, res.display_name, tex)
 		}

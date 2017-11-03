@@ -18,7 +18,7 @@ else if (type = e_tl_type.BLOCK)
 	block_tex = mc_res
 	block_repeat_enable = false
 	block_repeat = vec3(1)
-	block_vbuffer_reset()
+	block_vbuffer = null
 	temp_update_block()
 }
 else if (type = e_tl_type.TEXT)

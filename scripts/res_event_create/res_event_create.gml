@@ -15,8 +15,10 @@ display_name = ""
 count = 0
 copied = false
 
+model_format = null
 model_texture = null
 model_texture_map = null
+model_block_map = null
 player_skin = false
 
 block_sheet_texture = null
@@ -40,7 +42,7 @@ item_sheet_size = vec2(item_sheet_width, item_sheet_height)
 particles_texture[0] = null
 particles_texture[1] = null
 
-block_vbuffer_reset()
+block_vbuffer = null
 scenery_tl_list = null
 scenery_size = vec3(0)
 

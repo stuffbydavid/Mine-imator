@@ -20,6 +20,8 @@ enum e_json_char
 	MINUS			= ord("-"),
 	PLUS			= ord("+"),
 	BACKSLASH		= ord("\\"),
+	E				= ord("e"),
+	CAPITAL_E		= ord("E"),
 	F				= ord("f"),
 	N				= ord("n"),
 	T				= ord("t"),

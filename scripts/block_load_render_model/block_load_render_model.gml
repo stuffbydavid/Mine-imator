@@ -1,17 +1,23 @@
-/// block_load_render_model(model, rotation, uvlock, opaque, weight)
+/// block_load_render_model(model, rotation, uvlock, opaque, weight, [resource])
 /// @arg model
 /// @arg rotation
 /// @arg uvlock
 /// @arg opaque
 /// @arg weight
+/// @arg [resource]
 /// @desc Creates a render-ready model from the loaded files.
 
-var model, rot, uvlock, wei, opaque, rotmat;
-model = argument0
-rot = argument1
-uvlock = argument2
-opaque = argument3
-wei = argument4
+var model, rot, uvlock, wei, res, opaque, rotmat;
+model = argument[0]
+rot = argument[1]
+uvlock = argument[2]
+opaque = argument[3]
+wei = argument[4]
+
+if (argument_count > 5)
+	res = argument[5]
+else
+	res = null
 
 // Create matrix for rotation
 if (rot[X] > 0 || rot[Z] > 0)
@@ -281,109 +287,148 @@ with (new(obj_block_render_model))
 					}
 					
 					// Texture
-					var texname;
+					var texname, texpos, texsize;
 					if (uvlock && elem.face_render[nd]) // Keep texture on UV lock
 						texname = elem.face_texture[nd]
 					else
 						texname = elem.face_texture[f]
 					
 					while (string_char_at(texname, 1) = "#") // Fetch from map
-						texname = texturemap[?string_delete(texname, 1, 1)]
+					{
+						texname = string_delete(texname, 1, 1)
+						if (is_undefined(texturemap[?texname]))
+						{
+							log("Could not find block texture", texname)
+							texname = ""
+							break
+						}
+						texname = texturemap[?texname]
+					}
+					
+					// Texture variable is not defined, skip face
+					if (texname = "")
+					{
+						face_render[nd] = false
+						continue
+					}
 						
 					// Texture color
 					face_texture_color[nd] = -1
 					
-					// Apply UVs to block sheet
-					var slot, slotpos, texsize, sheetwidth, sheetheight;
-					slot = -1
-					
-					if (opaque)
-						slot = ds_list_find_index(mc_assets.block_texture_list, texname + " opaque")
-					if (slot < 0)
-						slot = ds_list_find_index(mc_assets.block_texture_list, texname)
-					
-					if (slot < 0) // Not in static sheet, is it animated?
+					// Check texture with resource
+					if (res != null && res.model_texture_map != null && !is_undefined(res.model_texture_map[?texname]))
 					{
-						if (opaque)
-							slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
-						if (slot < 0)
-							slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname)
-						
-						if (slot < 0) // Missing texture, skip face
+						face_depth[nd] = e_block_depth.DEPTH2
+						face_block_vbuffer[nd] = null
+						face_vbuffer[nd] = res.model_block_map[?texname]
+						if (is_undefined(face_vbuffer[nd]))
 						{
-							face_render[nd] = false
-							continue
+							face_vbuffer[nd] = vbuffer_start()
+							res.model_block_map[?texname] = face_vbuffer[nd]
 						}
 						
-						face_depth[nd] = mc_res.block_sheet_ani_depth_list[|slot]
-						face_vbuffer[nd] = e_block_vbuffer.ANIMATED
-						sheetwidth = block_sheet_ani_width
-						sheetheight = block_sheet_ani_height
+						texpos = vec2(0, 0)
+						texsize = vec2(1 / block_size, 1 / block_size)
 					}
 					else
 					{
-						face_depth[nd] = mc_res.block_sheet_depth_list[|slot]
-						face_vbuffer[nd] = e_block_vbuffer.NORMAL
-						sheetwidth = block_sheet_width
-						sheetheight = block_sheet_height
+						// Apply UVs to block sheet/texture
+						var slot, sheetwidth, sheetheight;
+						slot = -1
 						
-						// Check color
-						var col = mc_assets.block_texture_color_map[?texname];
-						if (!is_undefined(col))
-						{
-							if (is_real(col))
-								face_texture_color[nd] = col
-							else if (col = "grass")
-								face_vbuffer[nd] = e_block_vbuffer.GRASS
-							else if (col = "leaves")
-								face_vbuffer[nd] = e_block_vbuffer.LEAVES
-						}
-					}
+						face_vbuffer[nd] = null
 					
-					slotpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
-					texsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
-						
-					// Get preview color for world importer
-					if ((nd = e_dir.UP && other.preview_color_zp = null) ||
-						(nd = e_dir.SOUTH && other.preview_color_yp = null))
-					{
-						buffer_current = test((face_vbuffer[nd] = e_block_vbuffer.ANIMATED), load_assets_block_preview_ani_buffer, load_assets_block_preview_buffer)
-						
-						var px, py, alpha;
-						px = slot mod sheetwidth
-						py = slot div sheetwidth
-						alpha = buffer_read_alpha(px, py, sheetwidth)
-						
-						// Not transparent
-						if (alpha > 0)
+						if (opaque)
+							slot = ds_list_find_index(mc_assets.block_texture_list, texname + " opaque")
+						if (slot < 0)
+							slot = ds_list_find_index(mc_assets.block_texture_list, texname)
+					
+						if (slot < 0) // Not in static sheet, is it animated?
 						{
-							var pcol, palpha;
-							pcol = buffer_read_color(px, py, sheetwidth);
-							palpha = buffer_read_alpha(px, py, sheetwidth);
-							
-							if (face_texture_color[nd] > -1)
-								pcol = color_multiply(pcol, face_texture_color[nd])
-							else if (face_vbuffer[nd] = e_block_vbuffer.GRASS)
-								pcol = color_multiply(pcol, mc_res.color_grass)
-							else if (face_vbuffer[nd] = e_block_vbuffer.LEAVES)
-								pcol = color_multiply(pcol, mc_res.color_foliage)
+							if (opaque)
+								slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
+							if (slot < 0)
+								slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname)
 						
-							if (nd = e_dir.UP)
+							if (slot < 0) // Missing texture, skip face
 							{
-								other.preview_color_zp = pcol
-								other.preview_alpha_zp = palpha
+								face_render[nd] = false
+								continue
 							}
-							else
+						
+							face_depth[nd] = mc_res.block_sheet_ani_depth_list[|slot]
+							face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED
+							sheetwidth = block_sheet_ani_width
+							sheetheight = block_sheet_ani_height
+						}
+						else
+						{
+							face_depth[nd] = mc_res.block_sheet_depth_list[|slot]
+							face_block_vbuffer[nd] = e_block_vbuffer.NORMAL
+							sheetwidth = block_sheet_width
+							sheetheight = block_sheet_height
+						
+							// Check color
+							var col = mc_assets.block_texture_color_map[?texname];
+							if (!is_undefined(col))
 							{
-								other.preview_color_yp = pcol
-								other.preview_alpha_yp = palpha
+								if (is_real(col))
+									face_texture_color[nd] = col
+								else if (col = "grass")
+									face_block_vbuffer[nd] = e_block_vbuffer.GRASS
+								else if (col = "leaves")
+									face_block_vbuffer[nd] = e_block_vbuffer.LEAVES
+							}
+						}
+					
+						texpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
+						texsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
+						
+						// Get preview color for world importer
+						if (res = null)
+						{
+							if ((nd = e_dir.UP && other.preview_color_zp = null) ||
+								(nd = e_dir.SOUTH && other.preview_color_yp = null))
+							{
+								buffer_current = test((face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED), load_assets_block_preview_ani_buffer, load_assets_block_preview_buffer)
+						
+								var px, py, alpha;
+								px = slot mod sheetwidth
+								py = slot div sheetwidth
+								alpha = buffer_read_alpha(px, py, sheetwidth)
+						
+								// Not transparent
+								if (alpha > 0)
+								{
+									var pcol, palpha;
+									pcol = buffer_read_color(px, py, sheetwidth);
+									palpha = buffer_read_alpha(px, py, sheetwidth);
+							
+									if (face_texture_color[nd] > -1)
+										pcol = color_multiply(pcol, face_texture_color[nd])
+									else if (face_block_vbuffer[nd] = e_block_vbuffer.GRASS)
+										pcol = color_multiply(pcol, mc_res.color_grass)
+									else if (face_block_vbuffer[nd] = e_block_vbuffer.LEAVES)
+										pcol = color_multiply(pcol, mc_res.color_foliage)
+						
+									if (nd = e_dir.UP)
+									{
+										other.preview_color_zp = pcol
+										other.preview_alpha_zp = palpha
+									}
+									else
+									{
+										other.preview_color_yp = pcol
+										other.preview_alpha_yp = palpha
+									}
+								}
 							}
 						}
 					}
 					
 					// Apply to UV
 					for (var t = 0; t < 4; t++)
-						face_uv[nd, t] = vec2_mul(point2D_add(face_uv[nd, t], slotpos), texsize)
+						face_uv[nd, t] = vec2_mul(point2D_add(face_uv[nd, t], texpos), texsize)
 						
 					// For culling
 					face_edge[nd] = false
@@ -502,6 +547,7 @@ with (new(obj_block_render_model))
 				{
 					face_texture_color_xp = face_texture_color[e_dir.EAST]
 					face_depth_xp = face_depth[e_dir.EAST]
+					face_block_vbuffer_xp = face_block_vbuffer[e_dir.EAST]
 					face_vbuffer_xp = face_vbuffer[e_dir.EAST]
 					face_edge_xp = face_edge[e_dir.EAST]
 					face_uv_xp_0 = face_uv[e_dir.EAST, 0];	face_uv_xp_0_x = face_uv_xp_0[X];	 face_uv_xp_0_y = face_uv_xp_0[Y];
@@ -514,6 +560,7 @@ with (new(obj_block_render_model))
 				{
 					face_texture_color_xn = face_texture_color[e_dir.WEST]
 					face_depth_xn = face_depth[e_dir.WEST]
+					face_block_vbuffer_xn = face_block_vbuffer[e_dir.WEST]
 					face_vbuffer_xn = face_vbuffer[e_dir.WEST]
 					face_edge_xn = face_edge[e_dir.WEST]
 					face_uv_xn_0 = face_uv[e_dir.WEST, 0];	face_uv_xn_0_x = face_uv_xn_0[X];	 face_uv_xn_0_y = face_uv_xn_0[Y];
@@ -526,6 +573,7 @@ with (new(obj_block_render_model))
 				{
 					face_texture_color_yp = face_texture_color[e_dir.SOUTH]
 					face_depth_yp = face_depth[e_dir.SOUTH]
+					face_block_vbuffer_yp = face_block_vbuffer[e_dir.SOUTH]
 					face_vbuffer_yp = face_vbuffer[e_dir.SOUTH]
 					face_edge_yp = face_edge[e_dir.SOUTH]
 					face_uv_yp_0 = face_uv[e_dir.SOUTH, 0];	face_uv_yp_0_x = face_uv_yp_0[X];	 face_uv_yp_0_y = face_uv_yp_0[Y];
@@ -538,6 +586,7 @@ with (new(obj_block_render_model))
 				{
 					face_texture_color_yn = face_texture_color[e_dir.NORTH]
 					face_depth_yn = face_depth[e_dir.NORTH]
+					face_block_vbuffer_yn = face_block_vbuffer[e_dir.NORTH]
 					face_vbuffer_yn = face_vbuffer[e_dir.NORTH]
 					face_edge_yn = face_edge[e_dir.NORTH]
 					face_uv_yn_0 = face_uv[e_dir.NORTH, 0];	face_uv_yn_0_x = face_uv_yn_0[X];	 face_uv_yn_0_y = face_uv_yn_0[Y];
@@ -550,6 +599,7 @@ with (new(obj_block_render_model))
 				{
 					face_texture_color_zp = face_texture_color[e_dir.UP]
 					face_depth_zp = face_depth[e_dir.UP]
+					face_block_vbuffer_zp = face_block_vbuffer[e_dir.UP]
 					face_vbuffer_zp = face_vbuffer[e_dir.UP]
 					face_edge_zp = face_edge[e_dir.UP]
 					face_uv_zp_0 = face_uv[e_dir.UP, 0];	face_uv_zp_0_x = face_uv_zp_0[X];	 face_uv_zp_0_y = face_uv_zp_0[Y];
@@ -562,6 +612,7 @@ with (new(obj_block_render_model))
 				{
 					face_texture_color_zn = face_texture_color[e_dir.DOWN]
 					face_depth_zn = face_depth[e_dir.DOWN]
+					face_block_vbuffer_zn = face_block_vbuffer[e_dir.DOWN]
 					face_vbuffer_zn = face_vbuffer[e_dir.DOWN]
 					face_edge_zn = face_edge[e_dir.DOWN]
 					face_uv_zn_0 = face_uv[e_dir.DOWN, 0];	face_uv_zn_0_x = face_uv_zn_0[X];	 face_uv_zn_0_y = face_uv_zn_0[Y];
