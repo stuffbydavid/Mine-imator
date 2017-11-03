@@ -8,7 +8,7 @@ if (history_data.filename != "" && !history_data.replaced)
 	res.save_id = history_data.new_res_save_id
 	
 	if (history_data.type = e_res_type.SKIN)
-		res.player_skin = temp_edit.model_file.player_skin
+		res.player_skin = history_data.player_skin
 	else if (history_data.type = e_res_type.DOWNLOADED_SKIN)
 		res.player_skin = true
 	else if (history_data.type = e_res_type.ITEM_SHEET)

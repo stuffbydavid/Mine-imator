@@ -4898,7 +4898,7 @@
             "Key": "5c1ee956-fc7d-4002-abaa-4c127c9bb894",
             "Value": {
                 "id": "f38c11ef-1c95-44c1-96a9-76dd5b3d73e5",
-                "resourcePath": "scripts\\action_bench_skin\\action_bench_skin.yy",
+                "resourcePath": "scripts\\action_bench_model_tex\\action_bench_model_tex.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10719,6 +10719,14 @@
             }
         },
         {
+            "Key": "c477b1bf-c2de-42e6-a7d8-3567135f9e2d",
+            "Value": {
+                "id": "c8f21d98-34a8-4fb2-a55a-eecbf41b07bc",
+                "resourcePath": "scripts\\action_bench_model\\action_bench_model.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "c477f6f0-abc8-43a2-b602-63724954fb60",
             "Value": {
                 "id": "c9efadd7-0387-4d99-a61d-85d3cca41c02",
@@ -14608,6 +14616,7 @@
         "0e7c054d-6eb7-451f-9d4e-0d640ddae5c0",
         "48e2d67c-ea08-4147-bc0f-04cea2cab0a5",
         "0c9505d5-8b1b-48ed-b2eb-c2a00f48f6d6",
+        "c477b1bf-c2de-42e6-a7d8-3567135f9e2d",
         "30759b33-35b4-4603-b37a-fbbacfd922dc",
         "a01f6d09-47d7-4d4b-a78d-2f2827cea195",
         "3d1ab786-ded7-4fec-bd51-9cb609da4b45",

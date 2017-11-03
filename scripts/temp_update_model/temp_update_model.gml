@@ -13,7 +13,8 @@ if (model_hide_list = null)
 	model_hide_list = ds_list_create()
 ds_list_clear(model_hide_list)
 
-if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
+// Get model from Minecraft assets list
+if (type != e_temp_type.MODEL)
 {
 	// Invalid model
 	if (is_undefined(mc_assets.model_name_map[?model_name]))
@@ -70,7 +71,7 @@ if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
 	
 	model_file = curfile
 }
-else if (type = e_temp_type.MODEL && model != null)
+else if (model != null)
 	model_file = model.model_file
 	
 // Get default texture from file if not defined

@@ -18,16 +18,12 @@ switch (tl_edit.type)
 		with (tl_edit.temp)
 			texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
 		
+		var modelfile = tl_edit.temp.model_file;
 		if (tl_edit.type = e_temp_type.BODYPART)
-		{
-			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.model_part, tl_edit.temp.model_texture_name_map))
-		}
-		else
-		{
-			with (texobj)
-				tex = res_get_model_texture(model_part_get_texture_name(tl_edit.temp.model_file, tl_edit.temp.model_texture_name_map))
-		}
+			modelfile = tl_edit.model_part
+		
+		with (texobj)
+			tex = res_get_model_texture(model_part_get_texture_name(modelfile, tl_edit.temp.model_texture_name_map))
 		break
 	}
 	
@@ -61,7 +57,7 @@ else
 	text = text_get("listnone")
 
 if (tl_edit.value[e_value.TEXTURE_OBJ] = null)
-	text = text_get("frameeditortexturedefault", text)
+	text = text_get("listdefault", text)
 
 tab_control(40)
 draw_button_menu(name, e_menu.LIST, dx, dy, dw, 40, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, tex)

@@ -1,4 +1,4 @@
-/// action_bench_skin(resource)
+/// action_bench_model_tex(resource)
 /// @arg resource
 /// @desc Sets the character skin of the workbench settings.
 
@@ -21,7 +21,8 @@ else
 				return 0
 				
 			res = new_res(fn, e_res_type.SKIN)
-			res.player_skin = bench_settings.model_file.player_skin
+			if (bench_settings.model_file != null)
+				res.player_skin = bench_settings.model_file.player_skin
 			
 			with (res)
 				res_load()
@@ -31,7 +32,7 @@ else
 			
 		case e_option.DOWNLOAD_SKIN: // Download, start
 		{
-			popup_downloadskin_show(action_bench_skin)
+			popup_downloadskin_show(action_bench_model_tex)
 			
 			return 0
 		}
@@ -52,7 +53,7 @@ else
 		}
 	}
 	
-	history_set_res(action_bench_skin, fn, bench_settings.model_tex, res)
+	history_set_res(action_bench_model_tex, fn, bench_settings.model_tex, res)
 }
 
 bench_settings.model_tex = res

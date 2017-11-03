@@ -14,7 +14,7 @@ tab_next()
 // Font
 var text;
 if (tl_edit.value[e_value.TEXT_FONT] = null)
-	text = text_get("frameeditortexturedefault", tl_edit.temp.text_font.display_name)
+	text = text_get("listdefault", tl_edit.temp.text_font.display_name)
 else
 	text = tl_edit.value[e_value.TEXT_FONT].display_name
 tab_control(32)

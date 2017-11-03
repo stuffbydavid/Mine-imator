@@ -23,7 +23,7 @@ enum e_project
 	FORMAT_CB_102	  = 22,
 	FORMAT_CB_103	  = 23,
 	FORMAT_110_PRE_1  = 24,
-	FORMAT_110		  = 25
+	FORMAT_110_PRE_3  = 25
 }
 
 enum e_settings

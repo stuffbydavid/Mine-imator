@@ -1,20 +1,21 @@
 /// macros()
+/// @desc Defines constants used in the project.
 
 // Debug
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_debug_names			false
+#macro dev_mode_debug_names			true
 #macro dev_mode_rotate_blocks		true
 
 // Versions
-#macro mineimator_version			"1.1.0"
+#macro mineimator_version			"1.1.0 PRE-RELEASE 3"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017.11.03"
-#macro gm_runtime					"2.1.0.144"
+#macro gm_runtime					"2.1.2.172"
 #macro minecraft_version			"1.12"
 
 // File formats
-#macro project_format				e_project.FORMAT_110
+#macro project_format				e_project.FORMAT_110_PRE_3
 #macro settings_format				e_settings.FORMAT_110_PRE_1
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_110_PRE_2
 
@@ -111,7 +112,8 @@
 #macro glow_alpha					0.75
 #macro shadow_size					5
 #macro shadow_alpha					0.1
-#macro control_width				20
+#macro view_3d_control_width		20
+#macro view_3d_box_size				12
 
 // Values
 #macro null							noone

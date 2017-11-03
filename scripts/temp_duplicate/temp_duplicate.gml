@@ -8,25 +8,25 @@ copy = id
 
 with (temp)
 {
-	if (model)
+	if (model != null)
 		model.count++
 	
-	if (model_tex)
+	if (model_tex != null)
 		model_tex.count++
 		
-	if (item_tex)
+	if (item_tex != null)
 		item_tex.count++
 		
-	if (block_tex)
+	if (block_tex != null)
 		block_tex.count++
 		
-	if (scenery)
+	if (scenery != null)
 		scenery.count++
 		
-	if (shape_tex && shape_tex.type != e_tl_type.CAMERA)
+	if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 		shape_tex.count++
 		
-	if (text_font)
+	if (text_font != null)
 		text_font.count++
 		
 	temp_update()

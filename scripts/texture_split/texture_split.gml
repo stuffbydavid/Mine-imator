@@ -22,7 +22,7 @@ surface_set_target(surf)
 	{
 		var dx, dy;
 		dx = (i mod slotsx) * sw
-		dy = (i div slotsy) * sh
+		dy = (i div slotsx) * sh
 		draw_clear_alpha(c_black, 0)
 		draw_texture_part(tex, 0, 0, dx, dy, sw, sh)
 		newtex[i] = texture_surface(surf)
