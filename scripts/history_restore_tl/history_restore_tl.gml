@@ -38,6 +38,11 @@ with (tl)
 	
 	ds_list_insert(parent.tree_list, parent_tree_index, id)
 	
+	// Update
+	tl_update_scenery_part()
+	tl_update()
+	tl_update_values()
+	
 	// Restore tree recursively
 	for (var t = 0; t < save.tree_amount; t++)
 		history_restore_tl(save.tree_save_obj[t])
@@ -79,11 +84,6 @@ with (tl)
 	for (var s = 0; s < save.usage_kf_attractor_amount; s++)
 		with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))
 			keyframe_list[|save.usage_kf_attractor_index[s]].value[e_value.ATTRACTOR] = tl
-			
-	// Update
-	tl_update_scenery_part()
-	tl_update()
-	tl_update_values()
 }
 
 return tl

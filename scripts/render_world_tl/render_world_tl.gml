@@ -136,12 +136,12 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		{
 			if (temp.model != null)
 			{
-				var res;
-				if (temp.model_tex != null && temp.model_tex.block_sheet_texture != null)
+				var res = value_inherit[e_value.TEXTURE_OBJ];
+				if (res = null)
 					res = temp.model_tex
-				else
+				if (res = null || res.block_sheet_texture = null)
 					res = mc_res
-				render_world_block(temp.model.block_vbuffer, mc_res)
+				render_world_block(temp.model.block_vbuffer, res)
 				
 				with (temp)
 					res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])

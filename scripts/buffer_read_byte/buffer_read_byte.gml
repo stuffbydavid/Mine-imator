@@ -3,4 +3,4 @@
 
 //gml_pragma("forceinline")
 
-return buffer_read(buffer_current, buffer_u8)
+return real(buffer_read(buffer_current, buffer_u8))

@@ -28,7 +28,7 @@ if (block_current.set_script > -1 && (!block_current.require_models || (argument
 }
 		
 // Has timeline
-if (app.setting_schematic_add_timelines && block_current.timeline && block_tl_list != null && ret != null)
+if ((block_tl_add = null || block_tl_add) && block_current.timeline && block_tl_list != null && ret != null)
 	ds_list_add(block_tl_list, block_get_timeline(block_current, block_state_id_current))
 else
 {

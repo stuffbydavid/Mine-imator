@@ -547,7 +547,7 @@ switch (menu_name)
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
 			var res = res_list.display_list[|i];
-			if (res = temp.model || res = texobj)
+			if ((temp.object_index != obj_timeline && res = temp.model) || res = texobj)
 				continue
 			
 			var tex;

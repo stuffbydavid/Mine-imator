@@ -16,6 +16,7 @@ if (!history_undo && !history_redo)
 		if (fn = "")
 			return 0
 			
+		scenery_tl_add = null
 		filename = filename_name(fn)
 		load_folder = filename_dir(fn)
 		save_folder = app.project_folder

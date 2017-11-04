@@ -27,6 +27,7 @@ block_state_id_current = 0
 block_render_model = null
 block_text_map = ds_map_create()
 
+block_tl_add = false
 block_tl_list = null
 block_color = null
 file_map = ""

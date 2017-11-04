@@ -43,6 +43,7 @@ particles_texture[0] = null
 particles_texture[1] = null
 
 block_vbuffer = null
+scenery_tl_add = null
 scenery_tl_list = null
 scenery_size = vec3(0)
 

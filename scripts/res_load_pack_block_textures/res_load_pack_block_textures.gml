@@ -74,13 +74,12 @@ surface_set_target(surf)
 	
 		if (tex != null)
 		{
-			var texwid, texhei, scale;
+			var texwid, scale;
 			texwid = texture_width(tex)
-			texhei = texture_height(tex)
 			scale = blocksize / texwid
 			if (string_contains(mc_assets.block_texture_list[|t], " opaque"))
 				draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
-			draw_texture_part(tex, dx, dy, 0, 0, texwid, texhei, scale, scale)
+			draw_texture_part(tex, dx, dy, 0, 0, texwid, texwid, scale, scale)
 		}
 		else if (id != mc_res)
 			draw_texture_part(mc_res.block_sheet_texture, dx, dy,

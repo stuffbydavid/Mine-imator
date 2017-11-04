@@ -4,6 +4,6 @@
 //gml_pragma("forceinline")
 
 var str = "";
-repeat (buffer_read_int())
+repeat (real(buffer_read_int()))
 	str += chr(buffer_read_byte())
 return str

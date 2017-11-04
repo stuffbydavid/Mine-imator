@@ -20,7 +20,12 @@ else
 			if (!file_exists_lib(fn))
 				return 0
 				
-			res = new_res(fn, e_res_type.SKIN)
+			var type = e_res_type.SKIN;
+			if (bench_settings.type = e_tl_type.MODEL && bench_settings.model != null &&
+				bench_settings.model.model_format = e_model_format.BLOCK) // Load as block sheet if the selected model is in .json format
+				type = e_res_type.BLOCK_SHEET
+			
+			res = new_res(fn, type)
 			if (bench_settings.model_file != null)
 				res.player_skin = bench_settings.model_file.player_skin
 			

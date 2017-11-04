@@ -9,4 +9,4 @@ xx = argument0
 yy = argument1
 wid = argument2
 
-return buffer_peek(buffer_current, (xx + yy * wid) * 4 + 3, buffer_u8) / 255
+return real(buffer_peek(buffer_current, (xx + yy * wid) * 4 + 3, buffer_u8) / 255)

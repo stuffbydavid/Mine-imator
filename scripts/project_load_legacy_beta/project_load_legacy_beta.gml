@@ -383,7 +383,8 @@ for (var a = 0; a < load.lib_amount; a++)
 		
 						type = e_res_type.SCHEMATIC
 						filename = filename_name(load.lib_scenery_source[a])
-		
+						scenery_tl_add = false
+						
 						other.scenery = load_id
 						sortlist_add(app.res_list, id)
 					}

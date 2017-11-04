@@ -861,11 +861,15 @@
     },
     "importfromworld/": {
         "title": "Import scenery from world",
-        "info": "Select a world from the dropdown list, then left click to create a box around the wished area. Right/Middle click: Move view, Mouse wheel: Zoom.",
+        "info": "Browse for a Minecraft world or select one from the dropdown list, then left click to create a box around the wished area. Right/Middle click: Move view, Mouse wheel: Zoom.",
         "topdownview": "Top down view",
         "crosssectionview": "Cross section view",
         "noworld": "No world loaded",
         "world": "World",
+        "browse": "Browse...",
+        "browsecaption": "Open Minecraft world",
+        "browseworlds": "Minecraft worlds",
+        "worldunsupported": "This world was created in an unsupported Minecraft version and could not be loaded.",
         "worldopened": "This world is used by another process, possibly Minecraft or MCEdit. Close them and try again.",
         "fileopened": "Could not write to file. Check that it's not used by another process.",
         "loadingregion": "Loading region...",
@@ -1937,7 +1941,8 @@
         "open": "Opening file...",
         "blocks": "Reading blocks...",
         "model": "Creating 3D model...",
-        "pieceof": "Piece of %1"
+        "pieceof": "Piece of %1",
+        "addtimelines": "%1 blocks were found in the terrain that can be animated.\n\nDo you want to add these as individual timelines? (This could decrease performance)"
     },
     "loadaudio/": {
         "caption": "Importing %1",

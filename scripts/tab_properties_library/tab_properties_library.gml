@@ -134,6 +134,7 @@ switch (temp_edit.type)
 		var tex = res.block_preview_texture;
 		if (tex = null)
 			tex = res.texture
+		tab_control(40)
 		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 40, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, tex, null, capwid)
 		tab_next()
 		

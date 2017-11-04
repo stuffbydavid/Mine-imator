@@ -47,7 +47,7 @@ else
 deletetext = 0
 inserttext = ""
 lineheight = string_height(" ")
-mouseover = (mouse_x >= xx && mouse_x < xx + w && mouse_y >= yy && mouse_y < yy + h)
+mouseover = (content_mouseon && app_mouse_box(xx, yy, w, h))
 	
 if (window_focus = string(tbx))
 {

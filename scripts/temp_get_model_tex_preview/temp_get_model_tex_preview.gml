@@ -6,10 +6,10 @@ var texobj, part;
 texobj = argument0
 part = argument1
 
-if (texobj = null || model = null)
+if (texobj = null)
 	return null
 
-if (model.model_format = e_model_format.BLOCK)
+if (object_index != obj_timeline && model != null && model.model_format = e_model_format.BLOCK) // Not scenery timeline and model is a .json
 	return texobj.block_preview_texture
 
 with (texobj)

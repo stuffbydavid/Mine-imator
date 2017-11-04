@@ -144,7 +144,6 @@ setting_slow_modifier = 0.25
 setting_bend_round_default = false
 setting_bend_detail = 3
 setting_bend_scale = 1.001
-setting_schematic_add_timelines = true
 setting_schematic_remove_edges = false
 setting_liquid_animation = true
 setting_texture_filtering = true

@@ -11,7 +11,8 @@ north = "false"
 if (!build_edge_xp)
 {
 	var block = builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z);
-	if ((block != null && block.type = "bars") || (block_face_min_depth_xp != e_block_depth.DEPTH1 && block_face_full_xp))
+	if ((block != null && (block.type = "bars" || block.type = "colored_bars")) ||
+		(block_face_min_depth_xp != e_block_depth.DEPTH1 && block_face_full_xp))
 		east = "true"
 }
 
@@ -19,7 +20,8 @@ if (!build_edge_xp)
 if (!build_edge_xn)
 {
 	var block = builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z);
-	if ((block != null && block.type = "bars") || (block_face_min_depth_xn != e_block_depth.DEPTH1 && block_face_full_xn))
+	if ((block != null && (block.type = "bars" || block.type = "colored_bars")) ||
+		(block_face_min_depth_xn != e_block_depth.DEPTH1 && block_face_full_xn))
 		west = "true"
 }
 
@@ -27,7 +29,8 @@ if (!build_edge_xn)
 if (!build_edge_yp)
 {
 	var block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z);
-	if ((block != null && block.type = "bars") || (block_face_min_depth_yp != e_block_depth.DEPTH1 && block_face_full_yp))
+	if ((block != null && (block.type = "bars" || block.type = "colored_bars")) ||
+		(block_face_min_depth_yp != e_block_depth.DEPTH1 && block_face_full_yp))
 		south = "true"
 }
 
@@ -35,7 +38,8 @@ if (!build_edge_yp)
 if (!build_edge_yn)
 {
 	var block = builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z);
-	if ((block != null && block.type = "bars") || (block_face_min_depth_yn != e_block_depth.DEPTH1 && block_face_full_yn))
+	if ((block != null && (block.type = "bars" || block.type = "colored_bars")) ||
+		(block_face_min_depth_yn != e_block_depth.DEPTH1 && block_face_full_yn))
 		north = "true"
 }
 

@@ -46,5 +46,7 @@ with (new(obj_resource))
 		break
 	}
 	
+	scenery_tl_add = false
+	
 	sortlist_add(app.res_list, id)
 }

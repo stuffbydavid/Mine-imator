@@ -10,8 +10,8 @@ yy = argument1
 wid = argument2
 
 off = (xx + yy * wid) * 4
-r = buffer_peek(buffer_current, off, buffer_u8)
-g = buffer_peek(buffer_current, off + 1, buffer_u8)
-b = buffer_peek(buffer_current, off + 2, buffer_u8)
+r = real(buffer_peek(buffer_current, off, buffer_u8))
+g = real(buffer_peek(buffer_current, off + 1, buffer_u8))
+b = real(buffer_peek(buffer_current, off + 2, buffer_u8))
 
 return make_color_rgb(r, g, b)

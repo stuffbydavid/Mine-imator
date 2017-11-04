@@ -10,7 +10,7 @@ for (var b = 0; b < 8; b++)
 	buffer_write(tmpbuf, buffer_u8, byte[7 - b])
 
 buffer_seek(tmpbuf, 0, 0)
-value = buffer_read(tmpbuf, buffer_f64)
+value = real(buffer_read(tmpbuf, buffer_f64))
 buffer_delete(tmpbuf)
 
 return value

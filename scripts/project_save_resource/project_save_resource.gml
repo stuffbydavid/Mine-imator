@@ -12,6 +12,9 @@ json_save_object_start()
 	if (type = e_res_type.ITEM_SHEET)
 		json_save_var_point2D("item_sheet_size", item_sheet_size)
 		
+	if (type = e_res_type.SCHEMATIC)
+		json_save_var_bool("scenery_tl_add", scenery_tl_add)
+	
 	if (load_folder != save_folder)
 		res_save()
 

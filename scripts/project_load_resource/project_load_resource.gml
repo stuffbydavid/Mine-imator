@@ -20,6 +20,9 @@ with (new(obj_resource))
 	
 	if (type = e_res_type.ITEM_SHEET)
 		item_sheet_size = value_get_point2D(map[?"item_sheet_size"], item_sheet_size)
+		
+	if (type = e_res_type.SCHEMATIC)
+		scenery_tl_add = value_get_real(map[?"scenery_tl_add"], true)
 	
 	sortlist_add(app.res_list, id)
 }

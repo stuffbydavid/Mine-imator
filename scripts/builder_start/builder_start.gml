@@ -7,6 +7,7 @@ build_size_total = build_size_x * build_size_y * build_size_z
 build_size_sqrt = ceil(sqrt(build_size_total))
 build_edges = !(app.setting_schematic_remove_edges && (build_size[X] > 150 || build_size[Y] > 150))
 
+block_tl_add = false
 block_obj = buffer_create(build_size_total * 4, buffer_fixed, 4)
 block_state_id = buffer_create(build_size_total * 4, buffer_fixed, 4)
 block_render_model = ds_grid_create(build_size_sqrt, build_size_sqrt)

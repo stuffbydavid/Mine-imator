@@ -12,6 +12,8 @@ switch (load_stage)
 	// Open file
 	case "open":
 	{
+		var timelineamount = 0;
+				
 		if (!file_exists_lib(fname))
 		{
 			with (app)
@@ -53,6 +55,8 @@ switch (load_stage)
 							{
 								buffer_write(block_obj, buffer_s32, block)
 								buffer_write(block_state_id, buffer_s32, block.legacy_data_state_id[bdata])
+								if (block.timeline)
+									timelineamount++
 							}
 							else
 							{
@@ -154,7 +158,11 @@ switch (load_stage)
 						{
 							var block = mc_assets.block_legacy_id_map[?buffer_read_byte()];
 							if (!is_undefined(block))
+							{
 								buffer_write(block_obj, buffer_s32, block)
+								if (block.timeline)
+									timelineamount++
+							}
 							else
 								buffer_write(block_obj, buffer_s32, null)
 						}
@@ -235,11 +243,6 @@ switch (load_stage)
 			ds_list_clear(scenery_tl_list)
 		}
 		
-		mc_builder.build_pos_x = 0
-		mc_builder.build_pos_y = 0
-		mc_builder.build_pos_z = 0
-		mc_builder.block_tl_list = scenery_tl_list
-			
 		with (app)
 		{
 			popup_loading.text = text_get("loadsceneryblocks")
@@ -249,6 +252,15 @@ switch (load_stage)
 				popup_loading.caption = text_get("loadscenerycaption", other.filename)
 			popup_loading.progress = 2 / 10
 		}
+		
+		if (scenery_tl_add = null && timelineamount > 20)
+			scenery_tl_add = question(text_get("loadsceneryaddtimelines", timelineamount))
+		
+		mc_builder.build_pos_x = 0
+		mc_builder.build_pos_y = 0
+		mc_builder.build_pos_z = 0
+		mc_builder.block_tl_add = scenery_tl_add
+		mc_builder.block_tl_list = scenery_tl_list
 		break
 	}
 		
