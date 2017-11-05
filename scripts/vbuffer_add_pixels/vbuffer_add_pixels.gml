@@ -57,56 +57,76 @@ mat = matrix_create(pos, vec3(0), scale)
 if (mirror)
 	texpos[X] += texsize[X]
 	
-texsize[X] = ceil(texsize[X])
-texsize[Y] = ceil(texsize[Y])
+var texsizeceil;
+texsizeceil[X] = ceil(texsize[X])
+texsizeceil[Y] = ceil(texsize[Y])
 
 // Create array with full alpha pixels
-buffer_current = buffer_create(texsize[X] * texsize[Y] * 4, buffer_fixed, 4)
+buffer_current = buffer_create(texsizeceil[X] * texsizeceil[Y] * 4, buffer_fixed, 4)
 buffer_get_surface(buffer_current, surf, 0, 0, 0)
 	
 var hascolor;
-for (var py = 0; py < texsize[Y]; py++)
-	for (var px = 0; px < texsize[X]; px++)
+for (var py = 0; py < texsizeceil[Y]; py++)
+	for (var px = 0; px < texsizeceil[X]; px++)
 		hascolor[px, py] = (buffer_read_int_uns() >> 24 = 255)
 	
 buffer_delete(buffer_current)
 
 var px = 0;
-for (var xx = 0; xx < texsize[X]; xx++)
+for (var xx = 0; xx < texsizeceil[X]; xx++)
 {
-	// X size of pixel TODO
+	// X size of pixel
 	var pxs = 1;
-	//if (xx = 0)
-	//	pxs = 1 - frac(texpos[X])
-	//else if (xx = texsize[X] - 1)
-	//	pxs = frac(texpos[X] + texsize[X])
+	if (xx = 0)
+		pxs = 1 - frac(texpos[X])
+	else if (xx = texsizeceil[X] - 1 && frac(texpos[X] + texsize[X]) > 0)
+		pxs = frac(texpos[X] + texsize[X])
 		
 	var py = 0;
-	for (var yy = 0; yy < texsize[Y]; yy++)
+	for (var yy = 0; yy < texsizeceil[Y]; yy++)
 	{
-		if (!hascolor[@ xx, yy]) 
-			continue
-				
 		// Z size of pixel
 		var pys = 1;
+		if (yy = 0)
+			pys = 1 - frac(texpos[Y])
+		else if (yy = texsizeceil[Y] - 1 && frac(texpos[Y] + texsize[Y]) > 0)
+			pys = frac(texpos[Y] + texsize[Y])
+		
+		// Transparent pixel found, continue
+		if (!hascolor[@ xx, yy])
+		{
+			py += pys
+			continue
+		}
 		
 		// Texture
-		var ptex, t1, t2, t3, t4;
-		ptex = point2D((texpos[X] + xx * mirrorsign) * texpixelsize[X], (texpos[Y] + yy) * texpixelsize[Y])
+		var ptex, pfix, psize, t1, t2, t3, t4;
+		ptex = point2D(floor(texpos[X]) + xx * mirrorsign, floor(texpos[Y]) + yy)
+		
+		// Artifact fix with CPU rendering
+		pfix = 1 / 64 
+		psize = 1 - pfix
+		
 		t1 = ptex
-		t2 = point2D(ptex[X] + texpixelsize[X] * mirrorsign, ptex[Y])
-		t3 = point2D(ptex[X] + texpixelsize[X] * mirrorsign, ptex[Y] + texpixelsize[Y])
-		t4 = point2D(ptex[X], ptex[Y] + texpixelsize[Y])
+		t2 = point2D(ptex[X] + mirrorsign * psize, ptex[Y])
+		t3 = point2D(ptex[X] + mirrorsign * psize, ptex[Y] + psize)
+		t4 = point2D(ptex[X], ptex[Y] + psize)
+		
+		// Conver coordinates to 0-1
+		t1 = point2D_mul(t1, texpixelsize)
+		t2 = point2D_mul(t2, texpixelsize)
+		t3 = point2D_mul(t3, texpixelsize)
+		t4 = point2D_mul(t4, texpixelsize)
 			
 		var p1, p2, p3, p4;
 		
 		// East
-		if (xx = texsize[X] - 1 || !hascolor[@ xx + 1, yy])
+		if (xx = texsizeceil[X] - 1 || !hascolor[@ xx + 1, yy])
 		{
-			p1 = point3D(xx + 1, 1, (height / scale[Z] - 1) - (yy - 1))
-			p2 = point3D(xx + 1, 0, (height / scale[Z] - 1) - (yy - 1))
-			p3 = point3D(xx + 1, 0, (height / scale[Z] - 1) - yy)
-			p4 = point3D(xx + 1, 1, (height / scale[Z] - 1) - yy)
+			p1 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
+			p2 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - (py - pys))
+			p3 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - py)
+			p4 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - py)
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}
@@ -114,10 +134,10 @@ for (var xx = 0; xx < texsize[X]; xx++)
 		// West
 		if (xx = 0 || !hascolor[@ xx - 1, yy])
 		{
-			p1 = point3D(xx, 0, (height / scale[Z] - 1) - (yy - 1))
-			p2 = point3D(xx, 1, (height / scale[Z] - 1) - (yy - 1))
-			p3 = point3D(xx, 1, (height / scale[Z] - 1) - yy)
-			p4 = point3D(xx, 0, (height / scale[Z] - 1) - yy)
+			p1 = point3D(px, -pfix, (height / scale[Z] - pys) - (py - pys))
+			p2 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
+			p3 = point3D(px, 1 + pfix, (height / scale[Z] - pys)- py)
+			p4 = point3D(px, -pfix, (height / scale[Z] - pys) - py)
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}
@@ -125,21 +145,21 @@ for (var xx = 0; xx < texsize[X]; xx++)
 		// Up
 		if (yy = 0 || !hascolor[@ xx, yy - 1])
 		{
-			p1 = point3D(xx, 0, (height / scale[Z] - 1) - (yy - 1))
-			p2 = point3D(xx + 1, 0, (height / scale[Z] - 1) - (yy - 1))
-			p3 = point3D(xx + 1, 1, (height / scale[Z] - 1) - (yy - 1))
-			p4 = point3D(xx, 1, (height / scale[Z] - 1) - (yy - 1))
+			p1 = point3D(px, -pfix, (height / scale[Z] - pys) - (py - pys))
+			p2 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - (py - pys))
+			p3 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
+			p4 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}
 			
 		// Down
-		if (yy = texsize[Y] - 1 || !hascolor[@ xx, yy + 1])
+		if (yy = texsizeceil[Y] - 1 || !hascolor[@ xx, yy + 1])
 		{
-			p1 = point3D(xx, 1, (height / scale[Z] - 1) - yy)
-			p2 = point3D(xx + 1, 1, (height / scale[Z] - 1) - yy)
-			p3 = point3D(xx + 1, 0, (height / scale[Z] - 1) - yy)
-			p4 = point3D(xx, 0, (height / scale[Z] - 1) - yy)
+			p1 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - py)
+			p2 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - py)
+			p3 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - py)
+			p4 = point3D(px, -pfix, (height / scale[Z] - pys) - py)
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}

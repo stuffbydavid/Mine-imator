@@ -16,7 +16,7 @@ content_height = boxh
 
 draw_box(boxx + tab_move_x, boxy, tab_move_width, tabsh - 1, false, setting_color_interface, 1)
 draw_box(boxx, boxy + tabsh, boxw, boxh - tabsh, false, setting_color_interface, 1)
-draw_label(tab_move_name, boxx + tab_move_x + tab_move_width / 2-5 * tab_move.closeable, boxy + tabsh / 2, fa_center, fa_middle, null, 1, setting_font_bold)
+draw_label(tab_move_name, boxx + tab_move_x + tab_move_width / 2 - 5 * tab_move.closeable, boxy + tabsh / 2, fa_center, fa_middle, null, 1, setting_font_bold)
 
 content_y += tabsh
 content_width = boxw

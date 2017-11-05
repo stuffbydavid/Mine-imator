@@ -102,7 +102,7 @@ iconsize = 80
 dx = floor(listx)
 dy = floor(listy)
 if (toolbar_location = "bottom")
-	dy = listy + listh - iconsize * 3
+	dy = listy + listh - iconsize * 4
 
 for (var l = 0; l < ds_list_size(bench_type_list); l++)
 {

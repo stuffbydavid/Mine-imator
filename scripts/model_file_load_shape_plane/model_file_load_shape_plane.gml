@@ -14,14 +14,17 @@ if (is3d)
 	y2 += scale[Y]
 
 // Define texture coordinates to use (clockwise, starting at top-left)
-var tex, size, texsize;
+var tex, size, texsize, texsizefix;
 size = point3D_sub(to, from)
 texsize = point3D_sub(to_noscale, from_noscale)
 
+// Artifact fix with CPU rendering
+texsizefix = point3D_sub(texsize, vec3(1 / 64))
+
 tex[0] = uv
-tex[1] = point2D_add(tex[0], point2D(texsize[X], 0))
-tex[2] = point2D_add(tex[0], point2D(texsize[X], texsize[Z]))
-tex[3] = point2D_add(tex[0], point2D(0, texsize[Z]))
+tex[1] = point2D_add(tex[0], point2D(texsizefix[X], 0))
+tex[2] = point2D_add(tex[0], point2D(texsizefix[X], texsizefix[Z]))
+tex[3] = point2D_add(tex[0], point2D(0, texsizefix[Z]))
 
 // Adjust by bending
 if (bend_part != null && bend_mode = e_shape_bend.BEND)

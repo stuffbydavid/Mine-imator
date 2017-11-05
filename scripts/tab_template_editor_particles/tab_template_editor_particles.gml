@@ -199,18 +199,17 @@ if (temp_edit.pc_destroy_at_time)
 }
 
 // Type list
-tab_control(14)
-draw_label(text_get("particleeditortypes") + ":", dx, dy)
-tab_next()
-listh = 172
+listh = 192
 if (content_direction = e_scroll.HORIZONTAL)
-	listh = max(130, dh - (dy - dy_start) - 30)
+	listh = max(135, dh - (dy - dy_start) - 35)
+
 if (tab_control(listh))
 {
 	listh = dh - (dy - dy_start - 18) - 30
 	tab_control_h = listh
 }
-sortlist_draw(tab.type_list, dx, dy, dw, listh, ptype_edit)
+draw_label(text_get("particleeditortypes") + ":", dx, dy)
+sortlist_draw(tab.type_list, dx, dy + 20, dw, listh - 20, ptype_edit)
 tab_next()
 
 // Tools
@@ -227,7 +226,7 @@ if (draw_button_normal("particleeditortypeduplicate", dx + 25 * 2, dy, 24, 24, e
 	
 tab_next()
 
-if (!ptype_edit)
+if (ptype_edit = null)
 	return 0
 	
 capwid = text_caption_width("particleeditortypename", 

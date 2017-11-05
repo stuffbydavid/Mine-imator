@@ -2,9 +2,9 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_debug_names			true
+#macro dev_mode_debug_names			false
 #macro dev_mode_rotate_blocks		true
 
 // Versions
@@ -12,7 +12,7 @@
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017.11.05"
 #macro gm_runtime					"2.1.2.172"
-#macro minecraft_version			"1.12"
+#macro minecraft_version			"1.12.2"
 
 // File formats
 #macro project_format				e_project.FORMAT_110_PRE_3

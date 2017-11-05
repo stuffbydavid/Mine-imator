@@ -18,39 +18,42 @@ for (var d = 0; d < e_dir.amount; d++)
 	add[d] = true
 	
 // Define texture coordinates to use (clockwise, starting at top-left)
-var tex, size, texsize;
+var tex, size, texsize, texsizefix;
 size = point3D_sub(to, from)
 texsize = point3D_sub(to_noscale, from_noscale)
 
+// Artifact fix with CPU rendering
+texsizefix = point3D_sub(texsize, vec3(1 / 64))
+
 tex[e_dir.EAST, 0] = point2D_add(uv, point2D(texsize[X], 0))
-tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 0], point2D(texsize[Y], 0))
-tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 0], point2D(texsize[Y], texsize[Z]))
-tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 0], point2D(0, texsize[Z]))
+tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 0], point2D(texsizefix[Y], 0))
+tex[e_dir.EAST, 2] = point2D_add(tex[e_dir.EAST, 0], point2D(texsizefix[Y], texsizefix[Z]))
+tex[e_dir.EAST, 3] = point2D_add(tex[e_dir.EAST, 0], point2D(0, texsizefix[Z]))
 
 tex[e_dir.WEST, 0] = point2D_sub(uv, point2D(texsize[Y], 0))
-tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 0], point2D(texsize[Y], 0))
-tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 0], point2D(texsize[Y], texsize[Z]))
-tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 0], point2D(0, texsize[Z]))
+tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 0], point2D(texsizefix[Y], 0))
+tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 0], point2D(texsizefix[Y], texsizefix[Z]))
+tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 0], point2D(0, texsizefix[Z]))
 
 tex[e_dir.SOUTH, 0] = uv
-tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsize[X], 0))
-tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsize[X], texsize[Z]))
-tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 0], point2D(0, texsize[Z]))
+tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsizefix[X], 0))
+tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsizefix[X], texsizefix[Z]))
+tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 0], point2D(0, texsizefix[Z]))
 
 tex[e_dir.NORTH, 0] = point2D_add(tex[e_dir.EAST, 0], point2D(texsize[Y], 0))
-tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 0], point2D(texsize[X], 0))
-tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 0], point2D(texsize[X], texsize[Z]))
-tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 0], point2D(0, texsize[Z]))
+tex[e_dir.NORTH, 1] = point2D_add(tex[e_dir.NORTH, 0], point2D(texsizefix[X], 0))
+tex[e_dir.NORTH, 2] = point2D_add(tex[e_dir.NORTH, 0], point2D(texsizefix[X], texsizefix[Z]))
+tex[e_dir.NORTH, 3] = point2D_add(tex[e_dir.NORTH, 0], point2D(0, texsizefix[Z]))
 
 tex[e_dir.UP, 0] = point2D_sub(uv, point2D(0, texsize[Y]))
-tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 0], point2D(texsize[X], 0))
-tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 0], point2D(texsize[X], texsize[Y]))
-tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 0], point2D(0, texsize[Y]))
+tex[e_dir.UP, 1] = point2D_add(tex[e_dir.UP, 0], point2D(texsizefix[X], 0))
+tex[e_dir.UP, 2] = point2D_add(tex[e_dir.UP, 0], point2D(texsizefix[X], texsizefix[Y]))
+tex[e_dir.UP, 3] = point2D_add(tex[e_dir.UP, 0], point2D(0, texsizefix[Y]))
 
 tex[e_dir.DOWN, 0] = point2D_add(tex[e_dir.UP, 0], point2D(texsize[X], 0))
-tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 0], point2D(0, texsize[Y]))
-tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 0], point2D(texsize[X], texsize[Y]))
-tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 0], point2D(texsize[X], 0))
+tex[e_dir.DOWN, 1] = point2D_add(tex[e_dir.DOWN, 0], point2D(0, texsizefix[Y]))
+tex[e_dir.DOWN, 2] = point2D_add(tex[e_dir.DOWN, 0], point2D(texsizefix[X], texsizefix[Y]))
+tex[e_dir.DOWN, 3] = point2D_add(tex[e_dir.DOWN, 0], point2D(texsizefix[X], 0))
 
 // Flip east/west sides if mirrored
 if (texture_mirror)

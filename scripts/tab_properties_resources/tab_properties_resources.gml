@@ -1,6 +1,6 @@
 /// tab_properties_resources()
 
-var listh, capwid;
+var capwid;
 
 // Preview selected resource
 tab_control(160)
@@ -8,9 +8,10 @@ preview_draw(res_preview, dx + floor(dw / 2) - 80, dy, 160)
 tab_next()
 
 // List
-listh = 256
+var listh = 256;
 if (content_direction = e_scroll.HORIZONTAL)
-	listh = max(130, dh - (dy - dy_start) - 30)
+	listh = max(135, dh - (dy - dy_start) - 35)
+
 if (tab_control(listh))
 {
 	listh = dh - (dy - dy_start - 18) - 30
@@ -36,7 +37,7 @@ if (draw_button_normal("resourcesreplace", dx + 25 * 3, dy, 24, 24, e_button.NO_
 	
 tab_next()
 
-if (!res_edit)
+if (res_edit = null)
 	return 0
 
 if (res_edit.type = e_res_type.PACK)

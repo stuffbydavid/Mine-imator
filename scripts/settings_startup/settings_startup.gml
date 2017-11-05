@@ -45,7 +45,7 @@ setting_timeline_select_jump = true
 setting_z_is_up = false
 
 setting_toolbar_location = "top"
-setting_toolbar_size = 82
+setting_toolbar_size = 90
 
 setting_panel_left_bottom_size = 380
 setting_panel_right_bottom_size = 380

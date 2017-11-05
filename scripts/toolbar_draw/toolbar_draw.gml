@@ -152,7 +152,7 @@ padding = 10
 
 if (content_direction = e_scroll.HORIZONTAL)
 {
-	content_width = 400 + (buttonsize + 2) * (2 + trial_version)
+	content_width = 300 + (buttonsize + 2) * (2 + trial_version)
 	content_height = boxh - padding * 2
 	content_x = boxx + boxw - content_width - padding
 	content_y = boxy + padding
@@ -183,13 +183,13 @@ if (trial_version)
 }
 
 // Download content
-if(draw_button_normal("toolbarcontent", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.CONTENT_SMALL + buttonimage))
+/*if(draw_button_normal("toolbarcontent", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.CONTENT_SMALL + buttonimage))
 	app_check_content()
 
 if (content_direction = e_scroll.HORIZONTAL)
 	dx -= buttonsize + 2
 else
-	dy -= buttonsize + 2
+	dy -= buttonsize + 2*/
 
 // Forums
 if (draw_button_normal("toolbarforums", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.FORUMS_SMALL + buttonimage))

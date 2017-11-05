@@ -47,7 +47,7 @@ if (part.shape_list != null)
 			// Connect mesh
 			if (bendangle != 0 && bendvbufferlist != null && bendvbufferlist[|s] != null)
 			{
-				matrix_set(matrix_world, matrix_multiply(shape.matrix, mat))
+				matrix_set(matrix_world, matrix_multiply(matrix_multiply(model_part_get_bend_matrix(part, 0, shape.position), shape.matrix_bend_half), mat))
 				vbuffer_render(bendvbufferlist[|s])
 			}
 			

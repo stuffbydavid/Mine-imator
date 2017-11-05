@@ -10,7 +10,7 @@ if (name = "")
 		if (type = e_tl_type.BODYPART)
 		{
 			if (model_part != null)
-				display_name = minecraft_asset_get_name("model", model_part.name)
+				display_name = minecraft_asset_get_name("modelpart", model_part.name)
 			else
 				display_name = text_get("timelineunusedbodypart")
 		}

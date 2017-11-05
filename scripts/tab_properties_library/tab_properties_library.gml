@@ -35,7 +35,7 @@ if (draw_button_normal("libraryduplicate", dx + 25 * 3, dy, 24, 24, e_button.NO_
 	
 tab_next()
 
-if (!temp_edit)
+if (temp_edit = null)
 	return 0
 	
 var capwid = text_caption_width("libraryname", "librarycharmodel", "libraryskin", 

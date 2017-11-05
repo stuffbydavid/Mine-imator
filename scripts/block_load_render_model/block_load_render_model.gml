@@ -286,6 +286,15 @@ with (new(obj_block_render_model))
 						}
 					}
 					
+					// Artifact fix with CPU rendering
+					for (var i = 0; i < 4; i++)
+					{
+						var fuv = face_uv[nd, i];
+						fuv[X] = min(block_size - 1 / 64, fuv[X])
+						fuv[Y] = min(block_size - 1 / 64, fuv[Y])
+						face_uv[nd, i] = fuv
+					}
+					
 					// Texture
 					var texname, texpos, texsize;
 					if (uvlock && elem.face_render[nd]) // Keep texture on UV lock
@@ -328,7 +337,7 @@ with (new(obj_block_render_model))
 						}
 						
 						texpos = vec2(0, 0)
-						texsize = vec2(1 / block_size, 1 / block_size)
+						texsize = vec2(block_size, block_size)
 					}
 					else
 					{
@@ -382,7 +391,7 @@ with (new(obj_block_render_model))
 						}
 					
 						texpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
-						texsize = vec2(1 / (sheetwidth * block_size), 1 / (sheetheight * block_size))
+						texsize = vec2(sheetwidth * block_size, sheetheight * block_size)
 						
 						// Get preview color for world importer
 						if (res = null)
@@ -428,7 +437,7 @@ with (new(obj_block_render_model))
 					
 					// Apply to UV
 					for (var t = 0; t < 4; t++)
-						face_uv[nd, t] = vec2_mul(point2D_add(face_uv[nd, t], texpos), texsize)
+						face_uv[nd, t] = vec2_div(point2D_add(face_uv[nd, t], texpos), texsize)
 						
 					// For culling
 					face_edge[nd] = false
