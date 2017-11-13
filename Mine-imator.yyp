@@ -271,10 +271,26 @@
             }
         },
         {
+            "Key": "045bdadf-61a7-4419-a0a0-f47af87aaa93",
+            "Value": {
+                "id": "f380536d-eafc-4e97-be71-4227a6a68360",
+                "resourcePath": "scripts\\unzip_model\\unzip_model.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "04730e04-96c5-4018-93d9-2ee70faa578d",
             "Value": {
                 "id": "b333e46f-a1d6-4fb7-8cba-96681439635a",
                 "resourcePath": "scripts\\action_bench_create\\action_bench_create.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "04cbb1cd-61dc-4277-ac53-20e321042932",
+            "Value": {
+                "id": "defef8a8-6d18-4b0f-b26e-bbce6ed44d62",
+                "resourcePath": "scripts\\surface_get_alpha_array\\surface_get_alpha_array.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -2375,6 +2391,14 @@
             }
         },
         {
+            "Key": "2b16cb31-9690-49cb-921b-a018dbad8a5c",
+            "Value": {
+                "id": "1b00dc26-56ef-4557-876a-898efd47d5b5",
+                "resourcePath": "scripts\\unzip_asset\\unzip_asset.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "2b238e7e-054f-4d4a-abce-d6e273211309",
             "Value": {
                 "id": "a013f69b-6878-41e3-9b76-b997dc25cd0d",
@@ -3599,6 +3623,14 @@
             }
         },
         {
+            "Key": "425481e4-d1e2-49a2-9516-541b0fe05b44",
+            "Value": {
+                "id": "16b3f85a-da0d-4239-a7a8-5fd2fbf8971f",
+                "resourcePath": "datafiles_yy\\Particles\\Hi-fi fire.miparticles.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "42971072-366c-4cb8-8998-05b8ef5cdb08",
             "Value": {
                 "id": "6bebd2c3-8abc-4b4c-b1df-2293c1b0ee43",
@@ -3812,6 +3844,14 @@
                 "id": "77f60a10-079e-4ec1-a366-7e421cb76a52",
                 "resourcePath": "scripts\\app_update_mouse\\app_update_mouse.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "47449358-974b-4d67-b299-bd154b5d6a4a",
+            "Value": {
+                "id": "11662ec6-0cfa-47dc-b08c-a249e8844ab4",
+                "resourcePath": "datafiles_yy\\Particles\\Default spawner.miparticles.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -5607,6 +5647,14 @@
             }
         },
         {
+            "Key": "678fa52c-76f3-4371-acb9-09b628477533",
+            "Value": {
+                "id": "b1dd373b-ba26-4e2b-973c-34d398aa26c4",
+                "resourcePath": "datafiles_yy\\Particles\\Lo-fi fire.miparticles.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "67a3fd9d-174d-4c75-8020-81b98e0248ac",
             "Value": {
                 "id": "098dad4c-65ea-4ceb-a1d6-a9cee747a76f",
@@ -5780,6 +5828,14 @@
                 "id": "813fbb01-dd20-4de6-b112-e83c5a30adc6",
                 "resourcePath": "scripts\\res_update_model_plane_vbuffer_map\\res_update_model_plane_vbuffer_map.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "6aa38299-a35b-44f4-974d-d4c6862ff182",
+            "Value": {
+                "id": "66c7332d-ce6e-4bce-bd9b-14fcd7ba5f6a",
+                "resourcePath": "datafiles_yy\\Particles\\Smoke.miparticles.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -6172,6 +6228,14 @@
                 "id": "56706ea6-cfa5-4539-92b2-00cfaa5f925e",
                 "resourcePath": "scripts\\action_lib_pc_type_sprite_animation_speed_random_min\\action_lib_pc_type_sprite_animation_speed_random_min.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "7219e993-75df-4ba2-af1e-3e975b1abb8e",
+            "Value": {
+                "id": "0fd07f37-270b-477a-b7b1-f0cd83612f30",
+                "resourcePath": "datafiles_yy\\Particles\\Explosion.miparticles.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -6999,6 +7063,14 @@
             }
         },
         {
+            "Key": "82a9e204-d477-4089-b9a3-357c8997efb7",
+            "Value": {
+                "id": "76e6d238-3c7e-4267-9ddc-3a6d9ed0a132",
+                "resourcePath": "datafiles_yy\\Particles\\Grass explosion.miparticles.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "82bdef47-1b11-4c85-b7be-1ca60c35bd67",
             "Value": {
                 "id": "d7b687c2-66ce-487f-8b15-cd7c9a36ff1c",
@@ -7180,6 +7252,14 @@
                 "id": "e9d3315b-39cb-4b1d-b261-58eb11da3fed",
                 "resourcePath": "scripts\\project_backup\\project_backup.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "860f0792-a0af-47ab-b726-2699a63c4757",
+            "Value": {
+                "id": "5be985a3-670e-455a-aee2-925c0a7e9197",
+                "resourcePath": "datafiles_yy\\Particles\\Fountain of cakes.miparticles.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -9015,6 +9095,14 @@
             }
         },
         {
+            "Key": "a34d5b83-f89f-4eb3-abe8-b9cd41f5091f",
+            "Value": {
+                "id": "5030fb5e-512f-4c7d-abf6-db768cbdd51c",
+                "resourcePath": "datafiles_yy\\Particles\\Snow.miparticles.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "a35bd18d-a39f-4bd7-b08c-73c056c1a60c",
             "Value": {
                 "id": "39bf34e2-36fc-49fe-a3ef-bb24cfa10353",
@@ -9308,6 +9396,14 @@
                 "id": "75cd4b80-c0aa-454f-8b5a-acce0ed14d15",
                 "resourcePath": "scripts\\tl_keyframes_copy\\tl_keyframes_copy.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "a9ace7b7-ddc3-47e9-b581-6b1a2a3d395e",
+            "Value": {
+                "id": "a99ce05c-c6d4-4de9-a14b-4576dcafe644",
+                "resourcePath": "views\\a9ace7b7-ddc3-47e9-b581-6b1a2a3d395e.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -10692,6 +10788,14 @@
                 "id": "b4941284-888b-4c42-9125-14061de02e6e",
                 "resourcePath": "scripts\\history_restore_ptype\\history_restore_ptype.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "c352cb32-de82-4b97-a655-912e290190fb",
+            "Value": {
+                "id": "544c63cc-aa07-46ac-812b-6daae9b996b1",
+                "resourcePath": "datafiles_yy\\Particles\\Rain.miparticles.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -15250,6 +15354,8 @@
         "6d6f62a7-8628-47db-b9df-0ef5035e5c51",
         "152a73d8-a814-4e29-8e74-18c076db470b",
         "9b54e38a-5026-486b-9dd3-99279f40cff1",
+        "2b16cb31-9690-49cb-921b-a018dbad8a5c",
+        "045bdadf-61a7-4419-a0a0-f47af87aaa93",
         "2c96fe77-2dce-4b39-a6a1-547f45a1cb74",
         "56e36451-e02e-44f5-a0fe-50ab04682822",
         "1f37f481-6d57-4f10-97db-450a0d382153",
@@ -15569,6 +15675,7 @@
         "d2a21391-fb3d-4ea8-ba88-d58290399d3a",
         "d11f3e54-a282-4f0a-a478-2f14151bcee5",
         "fa7a2c52-c7f8-404e-a2ba-49492e593555",
+        "04cbb1cd-61dc-4277-ac53-20e321042932",
         "12ef3a2d-a535-4320-bcd0-382d63ebe96b",
         "eccbff3c-054f-4d65-bd75-7c2b99cc37e4",
         "8f3e25de-b1d0-4e12-a2d6-55de7239bf20",

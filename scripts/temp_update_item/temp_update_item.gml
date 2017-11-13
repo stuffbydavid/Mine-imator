@@ -80,7 +80,7 @@ vbuffer_add_triangle(p3, p4, p1, t3, t4, t1)
 // 3D pixels
 if (item_3d)
 {
-	var surf, tex, slotsizeceil;
+	var slotsizeceil, surf, tex;
 	slotsizeceil = point2D(ceil(slotsize[X]), ceil(slotsize[Y]))
 	
 	surf = surface_create(slotsizeceil[X], slotsizeceil[Y])
@@ -99,7 +99,7 @@ if (item_3d)
 	draw_texture_done()
 	
 	var slotpixel = vec2_div(slottexsizefix, slotsizefix);
-	vbuffer_add_pixels(surf, point3D(0, 0, 0), size[Z], texpos, slotsizefix, slotpixel, scale)
+	vbuffer_add_pixels(surface_get_alpha_array(surf), point3D(0, 0, 0), size[Z], texpos, slotsizefix, slotpixel, scale)
 	
 	surface_free(surf)
 }

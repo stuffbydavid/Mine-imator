@@ -86,9 +86,6 @@ with (new(obj_model_shape))
 	
 	// Invert (optional)
 	invert = value_get_real(map[?"invert"], false)
-		
-	// 3D (optional)
-	is3d = value_get_real(map[?"is3d"], false)
 	
 	// From/To
 	from_noscale = value_get_point3D(map[?"from"])
@@ -224,6 +221,8 @@ with (new(obj_model_shape))
 	// Generate
 	if (type = "block")
 	{
+		is3d = false
+		
 		vbuffer = vbuffer_start()
 		model_file_load_shape_block()
 		vbuffer_done()
@@ -239,7 +238,9 @@ with (new(obj_model_shape))
 	}
 	else if (type = "plane")
 	{
-		to[Y] = from[Y]
+		// 3D (optional)
+		is3d = value_get_real(map[?"3d"], false)
+		to[Y] = from[Y] + is3d * scale[Y]
 		
 		vbuffer = vbuffer_start()
 		model_file_load_shape_plane()

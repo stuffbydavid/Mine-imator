@@ -17,8 +17,11 @@ item.level = max(0, level)
 menu_item[menu_amount] = item
 menu_amount++
 
-if (tl != app && !tl.tree_extend)
+if (tl != null && !tl.tree_extend)
 	return 0
 
+if (tl = null)
+	tl = app
+	
 for (var t = 0; t < ds_list_size(tl.tree_list); t++)
 	menu_add_timeline(tl.tree_list[|t], level + 1)

@@ -62,3 +62,4 @@ load_audio_sample = 0
 model_file = null
 model_texture_name_map = null
 model_plane_vbuffer_map = null
+model_plane_alpha_map = null

@@ -20,7 +20,8 @@ if (part.shape_list != null)
 	var parttexname = model_part_get_texture_name(part, texnamemap);
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
-		var shape = part.shape_list[|s];
+		var shape, planevbuf;
+		shape = part.shape_list[|s];
 		
 		// Get texture (shape texture overrides part texture)
 		var shapetexname = parttexname;
@@ -39,7 +40,10 @@ if (part.shape_list != null)
 		vbuffer_render(shape.vbuffer)
 		
 		if (shape.type = "plane" && shape.is3d)
-			vbuffer_render(planevbuffermap[?shape])
+		{
+			planevbuf = planevbuffermap[?shape];
+			vbuffer_render(planevbuf[0])
+		}
 		
 		// Bended half
 		if (part.bend_part != null && shape.bend_mode = e_shape_bend.BEND)
@@ -54,6 +58,9 @@ if (part.shape_list != null)
 			// Second half mesh
 			matrix_set(matrix_world, matrix_multiply(matrix_multiply(model_part_get_bend_matrix(part, bendangle, shape.position), shape.matrix_bend_half), mat))
 			vbuffer_render(shape.bend_vbuffer)
+			
+			if (shape.type = "plane" && shape.is3d)
+				vbuffer_render(planevbuf[1])
 		}
 	}
 }

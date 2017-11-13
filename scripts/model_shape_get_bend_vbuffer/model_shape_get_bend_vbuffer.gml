@@ -1,17 +1,24 @@
-/// model_shape_get_bend_vbuffer(shape, angle, round)
+/// model_shape_get_bend_vbuffer(shape, angle, round, alphaarraymap)
 /// @arg shape
 /// @arg angle
 /// @arg round
+/// @arg alphaarraymap
 /// @desc Returns an "in-between" mesh that connects the two halves of the given shape.
 
-var shape, angle, roundbend;
+var shape, angle, roundbend, alphaarrmap, alphaarr;
 shape = argument0
 angle = tl_value_clamp(e_value.BEND_ANGLE, argument1)
 roundbend = argument2
+alphaarrmap = argument3
+
+if (alphaarrmap != null && !is_undefined(alphaarrmap[?shape]))
+	alphaarr = alphaarrmap[?shape]
+else
+	alphaarr = null
 
 with (shape)
 {
-	if (type != "block" || bend_mode != e_shape_bend.BEND)
+	if (bend_mode != e_shape_bend.BEND)
 		return null
 	
 	vertex_brightness = shape.color_brightness
@@ -36,18 +43,16 @@ with (shape)
 	else
 		partsign = 1
 
-	var invertsign, texsize, texsizefix, sizefill, pmidp, nmidp;
+	var invertsign, texsize, texsizefix, sizefill, pmid, nmid;
 	var sqrtlen, backnormal;
 	var pmidtex, nmidtex, pedgetex, nedgetex, nbacktex, pbacktex;
-	
 	invertsign = negate(invert)
 	texsize = point3D_sub(to_noscale, from_noscale)
+	backnormal = array(null, null)
+	sqrtlen = sqrt(2 - abs(90 - angle) / 90)
 	
 	// Artifact fix with CPU rendering
 	texsizefix = point3D_sub(texsize, vec3(1 / 64))
-	
-	backnormal = array(null, null)
-	sqrtlen = sqrt(2 - abs(90 - angle) / 90)
 
 	switch (bend_axis)
 	{
@@ -58,8 +63,8 @@ with (shape)
 			{
 				// Middle position
 				sizefill = test(anglesign * partsign < 0, to[Y], -from[Y])
-				pmidp = point3D(to[X], 0, 0)
-				nmidp = point3D(from[X], pmidp[Y], pmidp[Z])
+				pmid = point3D(to[X], 0, 0)
+				nmid = point3D(from[X], pmid[Y], pmid[Z])
 		
 				// Normal
 				if (roundbend)
@@ -69,22 +74,34 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexy = (to[Z] - (bend_offset - position[Z])) / scale[Z] ;
-				pmidtex = point2D_add(uv, point2D(texsize[X] + to_noscale[Y], midtexy)) // East middle
-				nmidtex = point2D_add(uv, point2D(-to_noscale[Y], midtexy)) // West middle
-				if (anglesign * partsign > 0)
+				var midtexy = (to[Z] - (bend_offset - position[Z])) / scale[Z];
+				if (type = "block")
 				{
-					pedgetex = point2D_add(uv, point2D(texsize[X] + texsizefix[Y], midtexy)) // East right middle
-					pbacktex = pedgetex // Back left middle
-					nedgetex = point2D_add(uv, point2D(-texsizefix[Y], midtexy)) // West left middle
-					nbacktex = point2D_add(pbacktex, point2D(texsizefix[X], 0)) // Back right middle
+					pmidtex = point2D_add(uv, point2D(texsize[X] + to_noscale[Y], midtexy)) // East middle
+					nmidtex = point2D_add(uv, point2D(-to_noscale[Y], midtexy)) // West middle
+					if (anglesign * partsign > 0)
+					{
+						pedgetex = point2D_add(uv, point2D(texsize[X] + texsizefix[Y], midtexy)) // East right middle
+						pbacktex = pedgetex // Back left middle
+						nedgetex = point2D_add(uv, point2D(-texsizefix[Y], midtexy)) // West left middle
+						nbacktex = point2D_add(pbacktex, point2D(texsizefix[X], 0)) // Back right middle
+					}
+					else
+					{
+						pedgetex = point2D_add(uv, point2D(texsize[X], midtexy)) // East left middle
+						pbacktex = pedgetex // Front right middle
+						nedgetex = point2D_add(uv, point2D(0, midtexy)) // West right middle
+						nbacktex = nedgetex // Front left middle
+					}
 				}
 				else
 				{
-					pedgetex = point2D_add(uv, point2D(texsize[X], midtexy)) // East left middle
-					pbacktex = pedgetex // Front right middle
-					nedgetex = point2D_add(uv, point2D(0, midtexy)) // West right middle
-					nbacktex = nedgetex // Front left middle
+					pmidtex = point2D_add(uv, point2D(texsize[X], midtexy))
+					nmidtex = point2D_add(uv, point2D(0, midtexy))
+					pedgetex = pmidtex
+					pbacktex = pmidtex
+					nedgetex = nmidtex
+					nbacktex = nmidtex
 				}
 			}
 		
@@ -93,8 +110,8 @@ with (shape)
 			{
 				// Middle position
 				sizefill = test(anglesign * partsign > 0, to[Z], -from[Z])
-				pmidp = point3D(to[X], 0, 0)
-				nmidp = point3D(from[X], pmidp[Y], pmidp[Z])
+				pmid = point3D(to[X], 0, 0)
+				nmid = point3D(from[X], pmid[Y], pmid[Z])
 			
 				// Normal
 				if (roundbend)
@@ -137,8 +154,8 @@ with (shape)
 			{
 				// Middle position
 				sizefill = test(anglesign * partsign > 0, to[X], -from[X])
-				pmidp = point3D(0, to[Y], 0)
-				nmidp = point3D(pmidp[X], from[Y], pmidp[Z])
+				pmid = point3D(0, to[Y], 0)
+				nmid = point3D(pmid[X], from[Y], pmid[Z])
 			
 				// Normal
 				if (roundbend)
@@ -172,8 +189,8 @@ with (shape)
 			{
 				// Middle position
 				sizefill = test(anglesign * partsign < 0, to[Z], -from[Z])
-				pmidp = point3D(0, to[Y], 0)
-				nmidp = point3D(pmidp[X], from[Y], pmidp[Z])
+				pmid = point3D(0, to[Y], 0)
+				nmid = point3D(pmid[X], from[Y], pmid[Z])
 			
 				// Normal
 				if (roundbend)
@@ -216,8 +233,8 @@ with (shape)
 			{
 				// Middle position
 				sizefill = test(anglesign * partsign < 0, to[X], -from[X])
-				pmidp = point3D(0, 0, to[Z])
-				nmidp = point3D(pmidp[X], pmidp[Y], from[Z])
+				pmid = point3D(0, 0, to[Z])
+				nmid = point3D(pmid[X], pmid[Y], from[Z])
 			
 				// Normal
 				if (roundbend)
@@ -251,8 +268,8 @@ with (shape)
 			{
 				// Middle position
 				sizefill = test(anglesign * partsign > 0, to[Y], -from[Y])
-				pmidp = point3D(0, 0, to[Z])
-				nmidp = point3D(pmidp[X], pmidp[Y], from[Z])
+				pmid = point3D(0, 0, to[Z])
+				nmid = point3D(pmid[X], pmid[Y], from[Z])
 		
 				// Normal
 				if (roundbend)
@@ -307,10 +324,10 @@ with (shape)
 
 	// No flicker
 	var pedgetex2, nedgetex2, pbacktex2, nbacktex2;
-	pedgetex2 = point2D_add(pedgetex, point2D(1 / 512, 1 / 512))
-	pbacktex2 = point2D_add(pbacktex, point2D(1 / 512, 1 / 512))
-	nedgetex2 = point2D_add(nedgetex, point2D(1 / 512, 1 / 512))
-	nbacktex2 = point2D_add(nbacktex, point2D(1 / 512, 1 / 512))
+	pedgetex2 = point2D_add(pedgetex, point2D(1 / 512, 0))
+	pbacktex2 = point2D_add(pbacktex, point2D(1 / 512, 0))
+	nedgetex2 = point2D_add(nedgetex, point2D(1 / 512, 0))
+	nbacktex2 = point2D_add(nbacktex, point2D(1 / 512, 0))
 
 	// Transform texture to 0-1
 	pmidtex = vec2_div(pmidtex, texture_size)
@@ -325,20 +342,21 @@ with (shape)
 	nbacktex2 = vec2_div(nbacktex2, texture_size)
 	
 	// Apply scale for anti-Z-fighting
-	var pmidpsca, nmidpsca;
-	pmidpsca = point3D_mul(pmidp, app.setting_bend_scale)
-	nmidpsca = point3D_mul(nmidp, app.setting_bend_scale)
+	var pmidsca, nmidsca;
+	pmidsca = point3D_mul(pmid, app.setting_bend_scale)
+	nmidsca = point3D_mul(nmid, app.setting_bend_scale)
 
+	var temptex = vec2(1 - 1 / 64, 0);
 	vbuffer_start()
 
-	var pcurp, ncurp, pcurpsca, ncurpsca;
+	var scacur, pcur, ncur, pcursca, ncursca;
 	for (var a = 0; a <= 1; a += 1 / detail)
 	{
 		var len = 1;
 		if (!roundbend && a < 1)
 			len = sqrtlen
 	
-		var dista, distb, pnextp, nnextp;
+		var dista, distb, pnext, nnext;
 		dista = min(1, dcos(angle * a) * len) * sizefill * anglesign * partsign
 		distb = dsin(angle * a) * len * sizefill * partsign
 	
@@ -348,65 +366,137 @@ with (shape)
 			case X:
 			{
 				if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
-					pnextp = point3D(pmidp[X], -dista, distb + pmidp[Z])
+					pnext = point3D(pmid[X], -dista, distb + pmid[Z])
 				else // FRONT or BACK
-					pnextp = point3D(pmidp[X], distb + pmidp[Y], dista)
+					pnext = point3D(pmid[X], distb + pmid[Y], dista)
 		
-				nnextp = point3D(nmidp[X], pnextp[Y], pnextp[Z])
+				nnext = point3D(nmid[X], pnext[Y], pnext[Z])
 				break
 			}
 		
 			case Y:
 			{
 				if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
-					pnextp = point3D(dista, pmidp[Y], distb + pmidp[Z])
+					pnext = point3D(dista, pmid[Y], distb + pmid[Z])
 				else // RIGHT or LEFT
-					pnextp = point3D(distb + pmidp[X], pmidp[Y], -dista)
+					pnext = point3D(distb + pmid[X], pmid[Y], -dista)
 			
-				nnextp = point3D(pnextp[X], nmidp[Y], pnextp[Z])
+				nnext = point3D(pnext[X], nmid[Y], pnext[Z])
 				break
 			}
 		
 			case Z:
 			{
 				if (bend_part = e_part.FRONT || bend_part = e_part.BACK)
-					pnextp = point3D(-dista, distb + pmidp[Y], pmidp[Z])
+					pnext = point3D(-dista, distb + pmid[Y], pmid[Z])
 				else // RIGHT or LEFT
-					pnextp = point3D(distb + pmidp[X], dista, pmidp[Z])
+					pnext = point3D(distb + pmid[X], dista, pmid[Z])
 			
-				nnextp = point3D(pnextp[X], pnextp[Y], nmidp[Z])
+				nnext = point3D(pnext[X], pnext[Y], nmid[Z])
 				break
 			}
 		}
 	
 		// Apply scale for anti-Z-fighting
-		var sca, pnextpsca, nnextpsca;
-		sca = 1 + (app.setting_bend_scale - 1) * a
-		pnextpsca = point3D_mul(pnextp, sca)
-		nnextpsca = point3D_mul(nnextp, sca)
+		var scanext, pnextsca, nnextsca;
+		scanext = 1 + (app.setting_bend_scale - 1) * a
+		pnextsca = point3D_mul(pnext, scanext)
+		nnextsca = point3D_mul(nnext, scanext)
 		
 		if (a > 0)
 		{
 			if (anglesign * invertsign > 0)
 			{
-				vbuffer_add_triangle(pcurpsca, pmidpsca, pnextpsca, pedgetex, pmidtex, pedgetex2, null, color_blend, color_alpha) // +
-				vbuffer_add_triangle(nmidpsca, ncurpsca, nnextpsca, nmidtex, nedgetex, nedgetex2, null, color_blend, color_alpha) // -
-				vbuffer_add_triangle(ncurpsca, pcurpsca, nnextpsca, nbacktex, pbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 1
-				vbuffer_add_triangle(nnextpsca, pcurpsca, pnextpsca, nbacktex2, pbacktex, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 2
+				if (!is3d)
+				{
+					vbuffer_add_triangle(pcursca, pmidsca, pnextsca, pedgetex, pmidtex, pedgetex2, null, color_blend, color_alpha) // +
+					vbuffer_add_triangle(nmidsca, ncursca, nnextsca, nmidtex, nedgetex, nedgetex2, null, color_blend, color_alpha) // -
+				}
+				vbuffer_add_triangle(ncursca, pcursca, nnextsca, nbacktex, pbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 1
+				vbuffer_add_triangle(nnextsca, pcursca, pnextsca, nbacktex2, pbacktex, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 2
 			}
 			else // Invert
 			{
-				vbuffer_add_triangle(pmidpsca, pcurpsca, pnextpsca, pmidtex, pedgetex, pedgetex2, null, color_blend, color_alpha) // +
-				vbuffer_add_triangle(ncurpsca, nmidpsca, nnextpsca, nedgetex, nmidtex, nedgetex2, null, color_blend, color_alpha) // -
-				vbuffer_add_triangle(pcurpsca, ncurpsca, nnextpsca, pbacktex, nbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 1
-				vbuffer_add_triangle(pcurpsca, nnextpsca, pnextpsca, pbacktex, nbacktex2, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 2
+				if (!is3d)
+				{
+					vbuffer_add_triangle(pmidsca, pcursca, pnextsca, pmidtex, pedgetex, pedgetex2, null, color_blend, color_alpha) // +
+					vbuffer_add_triangle(ncursca, nmidsca, nnextsca, nedgetex, nmidtex, nedgetex2, null, color_blend, color_alpha) // -
+				}
+				vbuffer_add_triangle(pcursca, ncursca, nnextsca, pbacktex, nbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 1
+				vbuffer_add_triangle(pcursca, nnextsca, pnextsca, pbacktex, nbacktex2, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 2
 			}
-		}
 			
-		pcurp = pnextp
-		ncurp = nnextp
-		pcurpsca = pnextpsca
-		ncurpsca = nnextpsca
+			// 3D planes
+			/*if (is3d && alphaarr != null)
+			{
+				if (true)
+				{
+					var ay, px;
+					ay = floor(pmidtex[Y])
+					px = from[X]
+					if (ay >= 0 && ay < texsize[Z])
+					{
+						for (var ax = 0; ax < texsize[X]; ax++)
+						{
+							var pxs = scale[X];
+						
+							if (alphaarr[@ ax, ay] < 1)
+							{
+								px += pxs
+								continue
+							}
+						
+							var ptex, psize, t1, t2, t3;
+							ptex = point2D(uv[X] + ax, ay)
+							psize = 1 - 1 / 256
+							t1 = ptex
+							t2 = point2D(ptex[X] + psize, ptex[Y])
+							t3 = point2D(ptex[X], ptex[Y] + psize)
+						
+							// Conver coordinates to 0-1
+							t1 = vec2_div(t1, texture_size)
+							t2 = vec2_div(t2, texture_size)
+							t3 = vec2_div(t3, texture_size)
+		
+							var p1, p2, p3, p4;
+						
+							// East
+							if (ax = texsize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+							{
+								p1 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
+								p2 = point3D((px + pxs) * scanext, pnextsca[Y], pnextsca[Z])
+								p3 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
+								vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+							}
+						
+							// West
+							if (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+							{
+								p1 = point3D(px * scanext, nnextsca[Y], nnextsca[Z])
+								p2 = point3D(px * scacur, ncursca[Y], ncursca[Z])
+								p3 = point3D(px, nmidsca[Y], nmidsca[Z])
+								vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+							}
+						
+							px += pxs
+						}
+					}
+				}
+				
+				if (a = 1 && is3d)
+				{
+					// Top face
+					vbuffer_add_triangle(nnextsca, nmidsca, pmidsca, nbacktex, nmidtex, pmidtex, null, color_blend, color_alpha)
+					vbuffer_add_triangle(pnextsca, nnextsca, pmidsca, pbacktex, nbacktex, pmidtex, null, color_blend, color_alpha)
+				}
+			}*/
+		}
+		
+		pcur = pnext
+		ncur = nnext
+		scacur = scanext
+		pcursca = pnextsca
+		ncursca = nnextsca
 	}
 
 	return vbuffer_done()

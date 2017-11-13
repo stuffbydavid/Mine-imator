@@ -14,3 +14,4 @@ directory_create_lib(dir)
 log("Unzipping", fn, dir)
 var num = external_call(lib_unzip, fn, dir)
 log(string(num) + " files were extracted")
+return num

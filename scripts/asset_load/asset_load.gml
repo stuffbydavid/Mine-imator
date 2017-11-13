@@ -27,49 +27,30 @@ else
 		fn = file_dialog_open_asset()
 }
 
-if (fn = "")
+if (fn = "" || !file_exists_lib(fn))
 	return false
 
 var ext = filename_ext(fn);
-if (ext = ".zip") // Unzip
+if (ext = ".zip")
 {
-	var name, validfile;
-	name = filename_new_ext(filename_name(fn), "")
-	unzip(fn)
+	// Unzip and look for valid files
+	var validfile = unzip_asset(fn);
 	
-	// Look for pack
-	if (directory_exists_lib(unzip_directory + "assets"))
-	{
-		action_res_pack_load(fn)
-		return false
-	}
-	
-	// Look for project
-	validfile = file_find_single(unzip_directory, "miproject;.mproj;.mani")
-	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", "miproject;.mproj;.mani")
-	
-	// Look for object
-	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory, "miobject;miparticles;.object;.particles;")
-	if (!file_exists_lib(validfile))
-		validfile = file_find_single(unzip_directory + name + "\\", "miobject;miparticles;.object;.particles;")
-	
-	// Pack?
-	if (!file_exists_lib(validfile))
-	{
-		error("erroropenassetzip")
-		return false
-	} 
-	else
+	if (file_exists_lib(validfile))
 	{
 		fn = validfile
 		ext = filename_ext(fn)
+	} 
+	else
+	{
+		// Look for pack
+		if (directory_exists_lib(unzip_directory + "assets"))
+			action_res_pack_load(fn)
+		else
+			error("erroropenassetzip")
+		return false
 	}
 }
-
-if (!file_exists_lib(fn))
-	return false
 
 // Check formats
 var legacy;

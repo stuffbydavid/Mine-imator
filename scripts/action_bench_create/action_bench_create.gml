@@ -169,7 +169,7 @@ else
 			value_default[e_value.ROT_Z] = tl.value_default[e_value.ROT_Z]
 		}
 		
-		log("Created", bench_settings.type)
+		log("Created", tl_type_name_list[|bench_settings.type])
 	}
 }
 

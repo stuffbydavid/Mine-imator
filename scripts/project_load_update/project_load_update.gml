@@ -8,7 +8,7 @@ with (obj_resource)
 		
 if (ds_priority_size(load_queue) > 0)
 	load_start(ds_priority_find_max(load_queue), res_load_start)
-else
+else if (popup != null)
 	popup_close()
 	
 // Update sky

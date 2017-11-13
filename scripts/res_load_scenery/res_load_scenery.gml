@@ -344,8 +344,13 @@ switch (load_stage)
 				
 			// Update templates
 			with (obj_template)
+			{
 				if (scenery = other.id)
+				{
+					temp_update_display_name()
 					temp_update_rot_point()
+				}
+			}
 			
 			// Update timelines
 			with (obj_timeline)

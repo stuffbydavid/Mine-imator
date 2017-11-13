@@ -8,10 +8,7 @@ if (argument_count > 0)
 
 var x1, x2, y1, y2, z1, z2;
 x1 = from[X];	y1 = from[Y];	z1 = from[Z]
-x2 = to[X];		y2 = from[Y];	z2 = to[Z]
-
-if (is3d)
-	y2 += scale[Y]
+x2 = to[X];		y2 = to[Y];		z2 = to[Z]
 
 // Define texture coordinates to use (clockwise, starting at top-left)
 var tex, size, texsize, texsizefix;

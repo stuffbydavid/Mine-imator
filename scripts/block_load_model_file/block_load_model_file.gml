@@ -40,32 +40,27 @@ with (new(obj_block_load_model_file))
 	texture_map = null
 	if (is_real(map[?"textures"]))
 	{
+		texture_map = ds_map_create()
+		
 		// Array of models, fill map with the string IDs
 		if (ds_map_find_value(typemap[?map], "textures") = e_json_type.ARRAY && ds_list_valid(map[?"textures"]))
 		{
-			texture_map = ds_map_create()
 			for (var i = 0; i < ds_list_size(map[?"textures"]); i++)
 			{
 				var texname = ds_list_find_value(map[?"textures"], i);
-				texture_map[?string(i)] = texname
-				block_load_model_file_texture(texname, res)
+				texture_map[?string(i)] = block_load_model_file_texture(texname, res)
 			}
 		}
 		
 		// Regular map, copy keys and values
 		else if (ds_map_valid(map[?"textures"]))
 		{
-			texture_map = ds_map_create()
-			ds_map_copy(texture_map, map[?"textures"])
-		
-			if (res != null)
+			var key = ds_map_find_first(map[?"textures"]);
+			while (!is_undefined(key))
 			{
-				var key = ds_map_find_first(texture_map);
-				while (!is_undefined(key))
-				{
-					block_load_model_file_texture(texture_map[?key], res)
-					key = ds_map_find_next(texture_map, key)
-				}
+				var texname = ds_map_find_value(map[?"textures"], key);
+				texture_map[?key] = block_load_model_file_texture(texname, res)
+				key = ds_map_find_next(map[?"textures"], key)
 			}
 		}
 	}
@@ -136,6 +131,13 @@ with (new(obj_block_load_model_file))
 							face_uv_from[f] = point2D(uvlist[|0], uvlist[|1])
 							face_uv_to[f] = point2D(uvlist[|2], uvlist[|3])
 							face_has_uv[f] = true
+							
+							// Limit to between 0 and 16
+							var uvfrom, uvto;
+							uvfrom = face_uv_from[f]
+							uvto = face_uv_to[f]
+							face_uv_from[f] = vec2(mod_fix(uvfrom[X], block_size + 0.1), mod_fix(uvfrom[Y], block_size + 0.1))
+							face_uv_to[f] = vec2(mod_fix(uvto[X], block_size + 0.1), mod_fix(uvto[Y], block_size + 0.1))
 						}
 						
 						// Texture

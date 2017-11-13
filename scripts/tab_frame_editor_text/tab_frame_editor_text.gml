@@ -2,7 +2,7 @@
 
 var capwid = text_caption_width("frameeditortexttext", "frameeditortextfont");
 
-if (!tl_edit.temp)
+if (tl_edit.temp = null || tl_edit.type != e_tl_type.TEXT)
 	return 0
 	
 // Text

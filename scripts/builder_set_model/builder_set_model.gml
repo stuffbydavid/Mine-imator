@@ -14,17 +14,22 @@ ret = 0
 
 // Run a block-specific script that sets the state and returns 0,
 // or returns a render model/array of render models to use.
-if (block_current.set_script > -1 && (!block_current.require_models || (argument_count > 0 && argument[0])))
+if (block_current.set_script > -1)
 {
-	build_edge_xp = (build_pos_x = build_size_x - 1)
-	build_edge_xn = (build_pos_x = 0)
-	build_edge_yp = (build_pos_y = build_size_y - 1)
-	build_edge_yn = (build_pos_y = 0)
-	build_edge_zp = (build_pos_z = build_size_z - 1)
-	build_edge_zn = (build_pos_z = 0)
-	ret = script_execute(block_current.set_script);
-	if (ret != 0)
-		model = ret
+	if (!block_current.require_models || (argument_count > 0  && argument[0]))
+	{
+		build_edge_xp = (build_pos_x = build_size_x - 1)
+		build_edge_xn = (build_pos_x = 0)
+		build_edge_yp = (build_pos_y = build_size_y - 1)
+		build_edge_yn = (build_pos_y = 0)
+		build_edge_zp = (build_pos_z = build_size_z - 1)
+		build_edge_zn = (build_pos_z = 0)
+		ret = script_execute(block_current.set_script);
+		if (ret != 0)
+			model = ret
+	}
+	else
+		ret = null
 }
 		
 // Has timeline

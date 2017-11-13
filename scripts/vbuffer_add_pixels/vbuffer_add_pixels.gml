@@ -1,17 +1,19 @@
-/// vbuffer_add_pixels(surface, position, [height, texpos, texsize, texpixelsize, scale, [mirror, [color, alpha]]])
-/// @arg surface
+/// vbuffer_add_pixels(alphaarray, position, [height, texpos, texsize, texpixelsize, scale, [texposoff, texsizeoff, mirror, [color, alpha]]])
+/// @arg alphaarray
 /// @arg position
 /// @arg [height
 /// @arg texpos
 /// @arg texsize
 /// @arg texpixelsize
 /// @arg scale
-/// @arg [mirror
+/// @arg [texposoff
+/// @arg texsizeoff
+/// @arg mirror
 /// @arg [color
 /// @arg alpha]]]
 
-var surf, pos, height, texpos, texsize, texpixelsize, scale, mirror, color, alpha, mirrorsign, mat;
-surf = argument[0]
+var alphaarr, pos, height, texpos, texsize, texpixelsize, scale, texposoff, texsizeoff, mirror, color, alpha, mirrorsign, mat;
+alphaarr = argument[0]
 pos = argument[1]
 
 if (argument_count > 2)
@@ -25,8 +27,8 @@ if (argument_count > 2)
 else
 {
 	var wid, hei;
-	wid = surface_get_width(surf)
-	hei = surface_get_height(surf)
+	wid = array_height_2d(alphaarr)
+	hei = array_length_2d(alphaarr, 0)
 	
 	height = hei
 	texpos = vec2(0, 0)
@@ -36,14 +38,22 @@ else
 }
 
 if (argument_count > 7)
-	mirror = argument[7]
-else
-	mirror = false
-
-if (argument_count > 8)
 {
-	color = argument[8]
-	alpha = argument[9]
+	texposoff = argument[7]
+	texsizeoff = argument[8]
+	mirror = argument[9]
+}
+else
+{
+	texposoff = vec2(0, 0)
+	texsizeoff = vec2(0, 0)
+	mirror = false
+}
+
+if (argument_count > 10)
+{
+	color = argument[10]
+	alpha = argument[11]
 }
 else
 {
@@ -56,44 +66,40 @@ mat = matrix_create(pos, vec3(0), scale)
 
 if (mirror)
 	texpos[X] += texsize[X]
-	
-var texsizeceil;
-texsizeceil[X] = ceil(texsize[X])
-texsizeceil[Y] = ceil(texsize[Y])
 
-// Create array with full alpha pixels
-buffer_current = buffer_create(texsizeceil[X] * texsizeceil[Y] * 4, buffer_fixed, 4)
-buffer_get_surface(buffer_current, surf, 0, 0, 0)
-	
-var hascolor;
-for (var py = 0; py < texsizeceil[Y]; py++)
-	for (var px = 0; px < texsizeceil[X]; px++)
-		hascolor[px, py] = (buffer_read_int_uns() >> 24 = 255)
-	
-buffer_delete(buffer_current)
+// Sample area of pixels
+var samplesize = vec2(ceil(texsize[X] + texsizeoff[X]), ceil(texsize[Y] + texsizeoff[Y]));
+if (samplesize[X] <= 0 || samplesize[Y] <= 0)
+	return 0
 
+// Create triangles
 var px = 0;
-for (var xx = 0; xx < texsizeceil[X]; xx++)
+for (var xx = 0; xx < samplesize[X]; xx++)
 {
 	// X size of pixel
 	var pxs = 1;
 	if (xx = 0)
 		pxs = 1 - frac(texpos[X])
-	else if (xx = texsizeceil[X] - 1 && frac(texpos[X] + texsize[X]) > 0)
-		pxs = frac(texpos[X] + texsize[X])
-		
+	else if (xx = samplesize[X] - 1 && frac(texpos[X] + texposoff[X] + texsize[X] + texsizeoff[X]) > 0)
+		pxs = frac(texpos[X] + texposoff[X] + texsize[X] + texsizeoff[X])
+	
 	var py = 0;
-	for (var yy = 0; yy < texsizeceil[Y]; yy++)
+	for (var yy = 0; yy < samplesize[Y]; yy++)
 	{
 		// Z size of pixel
 		var pys = 1;
 		if (yy = 0)
 			pys = 1 - frac(texpos[Y])
-		else if (yy = texsizeceil[Y] - 1 && frac(texpos[Y] + texsize[Y]) > 0)
-			pys = frac(texpos[Y] + texsize[Y])
+		else if (yy = samplesize[Y] - 1 && frac(texpos[Y] + texposoff[Y] + texsize[Y] + texsizeoff[Y]) > 0)
+			pys = frac(texpos[Y] + texposoff[Y] + texsize[Y] + texsizeoff[Y])
+		
+		// Array sample position
+		var ax, ay;
+		ax = floor(texposoff[X]) + xx
+		ay = floor(texposoff[Y]) + yy
 		
 		// Transparent pixel found, continue
-		if (!hascolor[@ xx, yy])
+		if (alphaarr[@ ax, ay] < 1)
 		{
 			py += pys
 			continue
@@ -104,7 +110,7 @@ for (var xx = 0; xx < texsizeceil[X]; xx++)
 		ptex = point2D(floor(texpos[X]) + xx * mirrorsign, floor(texpos[Y]) + yy)
 		
 		// Artifact fix with CPU rendering
-		pfix = 1 / 64 
+		pfix = 1 / 256 
 		psize = 1 - pfix
 		
 		t1 = ptex
@@ -117,11 +123,11 @@ for (var xx = 0; xx < texsizeceil[X]; xx++)
 		t2 = point2D_mul(t2, texpixelsize)
 		t3 = point2D_mul(t3, texpixelsize)
 		t4 = point2D_mul(t4, texpixelsize)
-			
+		
 		var p1, p2, p3, p4;
 		
 		// East
-		if (xx = texsizeceil[X] - 1 || !hascolor[@ xx + 1, yy])
+		if (xx = samplesize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
 		{
 			p1 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
 			p2 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - (py - pys))
@@ -132,7 +138,7 @@ for (var xx = 0; xx < texsizeceil[X]; xx++)
 		}
 			
 		// West
-		if (xx = 0 || !hascolor[@ xx - 1, yy])
+		if (xx = 0 || alphaarr[@ ax - 1, ay] < 1)
 		{
 			p1 = point3D(px, -pfix, (height / scale[Z] - pys) - (py - pys))
 			p2 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
@@ -143,7 +149,7 @@ for (var xx = 0; xx < texsizeceil[X]; xx++)
 		}
 			
 		// Up
-		if (yy = 0 || !hascolor[@ xx, yy - 1])
+		if (yy = 0 || alphaarr[@ ax, ay - 1] < 1)
 		{
 			p1 = point3D(px, -pfix, (height / scale[Z] - pys) - (py - pys))
 			p2 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - (py - pys))
@@ -154,7 +160,7 @@ for (var xx = 0; xx < texsizeceil[X]; xx++)
 		}
 			
 		// Down
-		if (yy = texsizeceil[Y] - 1 || !hascolor[@ xx, yy + 1])
+		if (yy = samplesize[Y] - 1 || alphaarr[@ ax, ay + 1] < 1)
 		{
 			p1 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - py)
 			p2 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - py)

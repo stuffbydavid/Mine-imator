@@ -87,10 +87,10 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 			}
 			
 			// Freeze particles
-			if (pt.creator.value[e_value.FREEZE])
+			if (is_timeline && pt.creator.value[e_value.FREEZE])
 				pt.freezetime++
 				
-			if (!pt.creator.value[e_value.FREEZE])
+			if (!is_timeline || !pt.creator.value[e_value.FREEZE])
 			{
 				// Delete after an amount of time
 				pt.time++

@@ -1,7 +1,8 @@
 /// action_lib_model(resource)
 /// @arg resource
 
-var res, hobj;
+var res, fn, hobj;
+fn = ""
 hobj = null
 
 if (history_undo)
@@ -10,7 +11,6 @@ else if (history_redo)
 	res = history_redo_res()
 else
 {
-	var fn = "";
 	res = argument0
 	if (res = e_option.BROWSE)
 	{
@@ -18,10 +18,21 @@ else
 		
 		if (!file_exists_lib(fn))
 			return 0
+		
+		if (filename_ext(fn) = ".zip")
+		{
+			// Unzip and look for valid files
+			fn = unzip_model(fn)
+			if (!file_exists_lib(fn))
+				return 0
+		}
 			
 		res = new_res(fn, e_res_type.MODEL)
 		if (res.replaced)
+		{
+			res_edit = res
 			action_res_replace(fn)
+		}
 		else
 			with (res)
 				res_load()

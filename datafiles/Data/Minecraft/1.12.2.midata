@@ -2944,6 +2944,7 @@
 		{
 			"name": "cobblestone_wall",
 			"type": "wall",
+			"require_models": true,
 			"states": {
 				"variant": [
 					{ "value": "cobblestone", "file": "cobblestone_wall.json" },

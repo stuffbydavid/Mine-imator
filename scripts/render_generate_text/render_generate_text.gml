@@ -56,7 +56,7 @@ text_vbuffer = vbuffer_start()
 
 // 3D pixels
 if (is3d)
-	vbuffer_add_pixels(surf, point3D(xx, 0, zz))
+	vbuffer_add_pixels(surface_get_alpha_array(surf), point3D(xx, 0, zz))
 
 var ysize, p1, p2, p3, p4, t1, t2, t3, t4;
 t1 = vec2(0, 0)

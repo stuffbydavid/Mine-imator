@@ -33,4 +33,4 @@ else
 
 // Create meshes of each shape in this part
 for (var s = 0; s < ds_list_size(model_part.shape_list); s++)
-	ds_list_add(bend_vbuffer_list, model_shape_get_bend_vbuffer(model_part.shape_list[|s], value_inherit[e_value.BEND_ANGLE], round_bending))
+	ds_list_add(bend_vbuffer_list, model_shape_get_bend_vbuffer(model_part.shape_list[|s], value_inherit[e_value.BEND_ANGLE], round_bending, model_plane_alpha_map))

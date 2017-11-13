@@ -3,15 +3,15 @@
 var texobj, name, tex;
 tex = null
 
-if (!tl_edit.temp)
+if (tl_edit.temp = null)
 	return 0
 	
 switch (tl_edit.type)
 {
-	case e_temp_type.CHARACTER:
-	case e_temp_type.SPECIAL_BLOCK:
-	case e_temp_type.MODEL:
-	case e_temp_type.BODYPART:
+	case e_tl_type.CHARACTER:
+	case e_tl_type.SPECIAL_BLOCK:
+	case e_tl_type.MODEL:
+	case e_tl_type.BODYPART:
 	{
 		name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 		
@@ -28,8 +28,8 @@ switch (tl_edit.type)
 		break
 	}
 	
-	case e_temp_type.BLOCK:
-	case e_temp_type.SCENERY:
+	case e_tl_type.BLOCK:
+	case e_tl_type.SCENERY:
 	{
 		name = "frameeditorblocktex"
 		with (tl_edit.temp)

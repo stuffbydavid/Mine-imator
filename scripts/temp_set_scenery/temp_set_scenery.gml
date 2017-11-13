@@ -119,7 +119,7 @@ if (scenery != null)
 {
 	scenery.count++
 	
-	if (scenery.scenery_tl_add && animate)
+	if (animate)
 	{
 		// Create new timelines
 		with (obj_timeline)
@@ -134,6 +134,9 @@ if (scenery != null)
 		}
 	}
 }
-		
-temp_update_display_name()
-temp_update_rot_point()
+
+if (scenery.ready)
+{
+	temp_update_display_name()
+	temp_update_rot_point()
+}
