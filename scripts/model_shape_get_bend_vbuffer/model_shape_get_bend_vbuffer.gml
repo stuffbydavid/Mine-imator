@@ -43,16 +43,16 @@ with (shape)
 	else
 		partsign = 1
 
-	var invertsign, texsize, texsizefix, sizefill, pmid, nmid;
+	var invertsign, size, sizefix, sizefill, pmid, nmid;
 	var sqrtlen, backnormal;
 	var pmidtex, nmidtex, pedgetex, nedgetex, nbacktex, pbacktex;
 	invertsign = negate(invert)
-	texsize = point3D_sub(to_noscale, from_noscale)
+	size = point3D_sub(to_noscale, from_noscale)
 	backnormal = array(null, null)
 	sqrtlen = sqrt(2 - abs(90 - angle) / 90)
 	
 	// Artifact fix with CPU rendering
-	texsizefix = point3D_sub(texsize, vec3(1 / 64))
+	sizefix = point3D_sub(size, vec3(1 / 64))
 
 	switch (bend_axis)
 	{
@@ -77,26 +77,26 @@ with (shape)
 				var midtexy = (to[Z] - (bend_offset - position[Z])) / scale[Z];
 				if (type = "block")
 				{
-					pmidtex = point2D_add(uv, point2D(texsize[X] + to_noscale[Y], midtexy)) // East middle
+					pmidtex = point2D_add(uv, point2D(size[X] + to_noscale[Y], midtexy)) // East middle
 					nmidtex = point2D_add(uv, point2D(-to_noscale[Y], midtexy)) // West middle
 					if (anglesign * partsign > 0)
 					{
-						pedgetex = point2D_add(uv, point2D(texsize[X] + texsizefix[Y], midtexy)) // East right middle
+						pedgetex = point2D_add(uv, point2D(size[X] + sizefix[Y], midtexy)) // East right middle
 						pbacktex = pedgetex // Back left middle
-						nedgetex = point2D_add(uv, point2D(-texsizefix[Y], midtexy)) // West left middle
-						nbacktex = point2D_add(pbacktex, point2D(texsizefix[X], 0)) // Back right middle
+						nedgetex = point2D_add(uv, point2D(-sizefix[Y], midtexy)) // West left middle
+						nbacktex = point2D_add(pbacktex, point2D(sizefix[X], 0)) // Back right middle
 					}
 					else
 					{
-						pedgetex = point2D_add(uv, point2D(texsize[X], midtexy)) // East left middle
+						pedgetex = point2D_add(uv, point2D(size[X], midtexy)) // East left middle
 						pbacktex = pedgetex // Front right middle
 						nedgetex = point2D_add(uv, point2D(0, midtexy)) // West right middle
 						nbacktex = nedgetex // Front left middle
 					}
 				}
-				else
+				else // 3D plane
 				{
-					pmidtex = point2D_add(uv, point2D(texsize[X], midtexy))
+					pmidtex = point2D_add(uv, point2D(size[X], midtexy))
 					nmidtex = point2D_add(uv, point2D(0, midtexy))
 					pedgetex = pmidtex
 					pbacktex = pmidtex
@@ -105,7 +105,7 @@ with (shape)
 				}
 			}
 		
-			// Y+ or Y- half being bent
+			// Y+ or Y- half being bent (block only)
 			else if (bend_part = e_part.FRONT || bend_part = e_part.BACK)
 			{
 				// Middle position
@@ -122,21 +122,21 @@ with (shape)
 			
 				// Texture
 				var midtexx = (to[Y] - (bend_offset - position[Y])) / scale[Y];
-				pmidtex = point2D_add(uv, point2D(texsize[X] + midtexx, to_noscale[Z])) // East middle
+				pmidtex = point2D_add(uv, point2D(size[X] + midtexx, to_noscale[Z])) // East middle
 				nmidtex = point2D_add(uv, point2D(-midtexx, to_noscale[Z])) // West middle
 				if (anglesign * partsign > 0)
 				{
-					pedgetex = point2D_add(uv, point2D(texsize[X] + midtexx, 0)) // East middle top
-					pbacktex = point2D_add(uv, point2D(texsizefix[X], -midtexx)) // Top right middle
+					pedgetex = point2D_add(uv, point2D(size[X] + midtexx, 0)) // East middle top
+					pbacktex = point2D_add(uv, point2D(sizefix[X], -midtexx)) // Top right middle
 					nedgetex = point2D_add(uv, point2D(-midtexx, 0)) // West middle top
 					nbacktex = point2D_add(uv, point2D(0, -midtexx)) // Top left middle
 				}
 				else
 				{
-					pedgetex = point2D_add(uv, point2D(texsize[X] + midtexx, texsizefix[Z])) // East middle bottom
-					pbacktex = point2D_add(uv, point2D(texsize[X] + texsizefix[X], -midtexx)) // Bottom right middle
-					nedgetex = point2D_add(uv, point2D(-midtexx, texsizefix[Z])) // West middle bottom
-					nbacktex = point2D_add(uv, point2D(texsizefix[X], -midtexx)) // Bottom left middle
+					pedgetex = point2D_add(uv, point2D(size[X] + midtexx, sizefix[Z])) // East middle bottom
+					pbacktex = point2D_add(uv, point2D(size[X] + sizefix[X], -midtexx)) // Bottom right middle
+					nedgetex = point2D_add(uv, point2D(-midtexx, sizefix[Z])) // West middle bottom
+					nbacktex = point2D_add(uv, point2D(sizefix[X], -midtexx)) // Bottom left middle
 				}
 			}
 		
@@ -166,21 +166,36 @@ with (shape)
 			
 				// Texture
 				var midtexy = (to[Z] - (bend_offset - position[Z])) / scale[Z];
-				pmidtex = point2D_add(uv, point2D(-from_noscale[X], midtexy)) // South middle
-				nmidtex = point2D_add(uv, point2D(texsize[X] + texsize[Y] - from_noscale[X], midtexy)) // North middle
-				if (anglesign * partsign > 0)
+				if (type = "block")
 				{
-					pedgetex = point2D_add(uv, point2D(texsizefix[X], midtexy)) // South right middle
-					pbacktex = pedgetex // East left middle
-					nedgetex = point2D_add(uv, point2D(texsize[X] + texsizefix[Y], midtexy)) // East right middle
-					nbacktex = nedgetex // North left middle
+					pmidtex = point2D_add(uv, point2D(-from_noscale[X], midtexy)) // South middle
+					nmidtex = point2D_add(uv, point2D(size[X] + size[Y] - from_noscale[X], midtexy)) // North middle
+					if (anglesign * partsign > 0)
+					{
+						pedgetex = point2D_add(uv, point2D(sizefix[X], midtexy)) // South right middle
+						pbacktex = pedgetex // East left middle
+						nedgetex = point2D_add(uv, point2D(size[X] + sizefix[Y], midtexy)) // East right middle
+						nbacktex = nedgetex // North left middle
+					}
+					else
+					{
+						pedgetex = point2D_add(uv, point2D(0, midtexy)) // South left middle
+						pbacktex = pedgetex // West right middle
+						nedgetex = point2D_add(uv, point2D(size[X] + size[Y] + sizefix[X], midtexy)) // North right middle
+						nbacktex = point2D_add(uv, point2D(-sizefix[Y], midtexy)) // West left middle
+					}
 				}
-				else
+				else // 3D plane
 				{
-					pedgetex = point2D_add(uv, point2D(0, midtexy)) // South left middle
-					pbacktex = pedgetex // West right middle
-					nedgetex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsizefix[X], midtexy)) // North right middle
-					nbacktex = point2D_add(uv, point2D(-texsizefix[Y], midtexy)) // West left middle
+					pmidtex = point2D_add(uv, point2D(-from_noscale[X], midtexy))
+					if (anglesign * partsign > 0)
+						pedgetex = point2D_add(uv, point2D(size[X] - 1, midtexy))
+					else
+						pedgetex = point2D_add(uv, point2D(0, midtexy))
+					nmidtex = pmidtex
+					pbacktex = pedgetex
+					nedgetex = pedgetex
+					nbacktex = pedgetex
 				}
 			}
 		
@@ -200,22 +215,37 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexx = texsize[X] - (to[X] - (bend_offset - position[X])) / scale[X];
-				pmidtex = point2D_add(uv, point2D(midtexx, to_noscale[Z])) // South middle
-				nmidtex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsize[X] - midtexx, to_noscale[Z])) // North middle
-				if (anglesign * partsign > 0)
+				var midtexx = size[X] - (to[X] - (bend_offset - position[X])) / scale[X];
+				if (type = "block")
 				{
-					pedgetex = point2D_add(uv, point2D(midtexx, texsizefix[Z])) // South middle bottom
-					pbacktex = point2D_add(uv, point2D(texsize[X] + midtexx, 0)) // Bottom middle bottom
-					nedgetex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsize[X] - midtexx, texsizefix[Z])) // North middle bottom
-					nbacktex = point2D_add(uv, point2D(texsize[X] + midtexx, -texsizefix[Y])) // Bottom middle top
+					pmidtex = point2D_add(uv, point2D(midtexx, to_noscale[Z])) // South middle
+					nmidtex = point2D_add(uv, point2D(size[X] + size[Y] + size[X] - midtexx, to_noscale[Z])) // North middle
+					if (anglesign * partsign > 0)
+					{
+						pedgetex = point2D_add(uv, point2D(midtexx, sizefix[Z])) // South middle bottom
+						pbacktex = point2D_add(uv, point2D(size[X] + midtexx, 0)) // Bottom middle bottom
+						nedgetex = point2D_add(uv, point2D(size[X] + size[Y] + size[X] - midtexx, sizefix[Z])) // North middle bottom
+						nbacktex = point2D_add(uv, point2D(size[X] + midtexx, -sizefix[Y])) // Bottom middle top
+					}
+					else
+					{
+						pedgetex = point2D_add(uv, point2D(midtexx, 0)) // South middle top
+						pbacktex = pedgetex // Top middle bottom
+						nedgetex = point2D_add(uv, point2D(size[X] + size[Y] + size[X] - midtexx, 0)) // North middle top
+						nbacktex = point2D_add(uv, point2D(midtexx, -sizefix[Y])) // Top middle top
+					}
 				}
-				else
+				else // 3D plane
 				{
-					pedgetex = point2D_add(uv, point2D(midtexx, 0)) // South middle top
-					pbacktex = pedgetex // Top middle bottom
-					nedgetex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsize[X] - midtexx, 0)) // North middle top
-					nbacktex = point2D_add(uv, point2D(midtexx, -texsizefix[Y])) // Top middle top
+					pmidtex = point2D_add(uv, point2D(midtexx, to_noscale[Z]))
+					if (anglesign * partsign > 0)
+						pedgetex = point2D_add(uv, point2D(midtexx, size[Z] - 1))
+					else
+						pedgetex = point2D_add(uv, point2D(midtexx, 0))
+					nmidtex = pmidtex
+					pbacktex = pedgetex
+					nedgetex = pedgetex
+					nbacktex = pedgetex
 				}
 			}
 		
@@ -228,7 +258,7 @@ with (shape)
 	
 		case Z:
 		{
-			// Y+ or Y- half being bent
+			// Y+ or Y- half being bent (block only)
 			if (bend_part = e_part.FRONT || bend_part = e_part.BACK)
 			{
 				// Middle position
@@ -245,21 +275,21 @@ with (shape)
 			
 				// Texture
 				var midtexy = (to[Y] - (bend_offset - position[Y])) / scale[Y];
-				pmidtex = point2D_add(uv, point2D(-from_noscale[Z], -texsize[Y] + midtexy)) // Top middle
-				nmidtex = point2D_add(uv, point2D(texsize[X] - from_noscale[Z], -texsize[Y] + midtexy)) // Bottom middle
+				pmidtex = point2D_add(uv, point2D(-from_noscale[Z], -size[Y] + midtexy)) // Top middle
+				nmidtex = point2D_add(uv, point2D(size[X] - from_noscale[Z], -size[Y] + midtexy)) // Bottom middle
 				if (anglesign * partsign > 0)
 				{
-					pedgetex = point2D_add(uv, point2D(texsize[X], -texsize[Y] + midtexy)) // Top right middle
-					pbacktex = point2D_add(uv, point2D(texsize[X] + texsize[Y] - midtexy, 0)) // East middle top
-					nedgetex = point2D_add(uv, point2D(texsize[X] + texsize[X], -texsize[Y] + midtexy)) // Bottom right middle
-					nbacktex = point2D_add(uv, point2D(texsize[X] + texsize[Y] - midtexy, texsizefix[Z])) // East middle bottom
+					pedgetex = point2D_add(uv, point2D(size[X], -size[Y] + midtexy)) // Top right middle
+					pbacktex = point2D_add(uv, point2D(size[X] + size[Y] - midtexy, 0)) // East middle top
+					nedgetex = point2D_add(uv, point2D(size[X] + size[X], -size[Y] + midtexy)) // Bottom right middle
+					nbacktex = point2D_add(uv, point2D(size[X] + size[Y] - midtexy, sizefix[Z])) // East middle bottom
 				}
 				else
 				{
-					pedgetex = point2D_add(uv, point2D(0, -texsize[Y] + midtexy)) // Top left middle
-					pbacktex = point2D_add(uv, point2D(-texsize[Y] + midtexy, 0)) // West middle top
-					nedgetex = point2D_add(uv, point2D(texsize[X], -texsize[Y] + midtexy)) // Bottom left middle
-					nbacktex = point2D_add(uv, point2D(-texsize[Y] + midtexy, texsizefix[Z])) // West middle bottom
+					pedgetex = point2D_add(uv, point2D(0, -size[Y] + midtexy)) // Top left middle
+					pbacktex = point2D_add(uv, point2D(-size[Y] + midtexy, 0)) // West middle top
+					nedgetex = point2D_add(uv, point2D(size[X], -size[Y] + midtexy)) // Bottom left middle
+					nbacktex = point2D_add(uv, point2D(-size[Y] + midtexy, sizefix[Z])) // West middle bottom
 				}
 			}
 		
@@ -279,22 +309,34 @@ with (shape)
 				}
 			
 				// Texture
-				var midtexx = texsize[X] - (to[X] - (bend_offset - position[X])) / scale[X];
-				pmidtex = point2D_add(uv, point2D(midtexx, -texsize[Y] - from_noscale[Y])) // Top middle
-				nmidtex = point2D_add(uv, point2D(texsize[X] + midtexx, -texsize[Y] - from_noscale[Y])) // Bottom middle
-				if (anglesign * partsign > 0)
+				var midtexx = size[X] - (to[X] - (bend_offset - position[X])) / scale[X];
+				if (type = "block")
 				{
-					pedgetex = point2D_add(uv, point2D(midtexx, 0)) // Top middle bottom
-					pbacktex = pedgetex // South middle top
-					nedgetex = point2D_add(uv, point2D(texsize[X] + midtexx, 0)) // Bottom middle bottom
-					nbacktex = point2D_add(uv, point2D(midtexx, texsize[Z])) // South middle bottom
+					pmidtex = point2D_add(uv, point2D(midtexx, -size[Y] - from_noscale[Y])) // Top middle
+					nmidtex = point2D_add(uv, point2D(size[X] + midtexx, -size[Y] - from_noscale[Y])) // Bottom middle
+					if (anglesign * partsign > 0)
+					{
+						pedgetex = point2D_add(uv, point2D(midtexx, 0)) // Top middle bottom
+						pbacktex = pedgetex // South middle top
+						nedgetex = point2D_add(uv, point2D(size[X] + midtexx, 0)) // Bottom middle bottom
+						nbacktex = point2D_add(uv, point2D(midtexx, size[Z])) // South middle bottom
+					}
+					else
+					{
+						pedgetex = point2D_add(uv, point2D(midtexx, -sizefix[Y])) // Top middle top
+						pbacktex = point2D_add(uv, point2D(size[X] + size[Y] + size[X] - midtexx, 0)) // North middle top
+						nedgetex = point2D_add(uv, point2D(size[X] + midtexx, -sizefix[Y])) // Bottom middle top
+						nbacktex = point2D_add(uv, point2D(size[X] + size[Y] + size[X] - midtexx, sizefix[Z])) // North middle bottom
+					}
 				}
-				else
+				else // 3D plane
 				{
-					pedgetex = point2D_add(uv, point2D(midtexx, -texsizefix[Y])) // Top middle top
-					pbacktex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsize[X] - midtexx, 0)) // North middle top
-					nedgetex = point2D_add(uv, point2D(texsize[X] + midtexx, -texsizefix[Y])) // Bottom middle top
-					nbacktex = point2D_add(uv, point2D(texsize[X] + texsize[Y] + texsize[X] - midtexx, texsizefix[Z])) // North middle bottom
+					pmidtex = point2D_add(uv, point2D(midtexx, 0))
+					nmidtex = point2D_add(uv, point2D(midtexx, size[Z]))
+					pedgetex = pmidtex
+					pbacktex = pmidtex
+					nedgetex = nmidtex
+					nbacktex = nmidtex
 				}
 			}
 		
@@ -346,7 +388,6 @@ with (shape)
 	pmidsca = point3D_mul(pmid, app.setting_bend_scale)
 	nmidsca = point3D_mul(nmid, app.setting_bend_scale)
 
-	var temptex = vec2(1 - 1 / 64, 0);
 	vbuffer_start()
 
 	var scacur, pcur, ncur, pcursca, ncursca;
@@ -427,69 +468,244 @@ with (shape)
 			}
 			
 			// 3D planes
-			/*if (is3d && alphaarr != null)
+			if (is3d && alphaarr != null)
 			{
-				if (true)
+				switch (bend_axis)
 				{
-					var ay, px;
-					ay = floor(pmidtex[Y])
-					px = from[X]
-					if (ay >= 0 && ay < texsize[Z])
+					case X:
 					{
-						for (var ax = 0; ax < texsize[X]; ax++)
+						if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
 						{
-							var pxs = scale[X];
-						
-							if (alphaarr[@ ax, ay] < 1)
+							var ay = floor((to[Z] - (bend_offset - position[Z])) / scale[Z]);
+							if (ay < 0 && ay >= size[Z])
+								break
+							
+							var px = from[X];
+							for (var ax = 0; ax < size[X]; ax++)
 							{
-								px += pxs
-								continue
-							}
+								var pxs = scale[X];
 						
-							var ptex, psize, t1, t2, t3;
-							ptex = point2D(uv[X] + ax, ay)
-							psize = 1 - 1 / 256
-							t1 = ptex
-							t2 = point2D(ptex[X] + psize, ptex[Y])
-							t3 = point2D(ptex[X], ptex[Y] + psize)
+								if (alphaarr[@ ax, ay] < 1)
+								{
+									px += pxs
+									continue
+								}
+								
+								var eface, wface;
+								eface = (ax = size[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+								wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+								
+								if (!eface && !wface)
+								{
+									px += pxs
+									continue
+								}
+								
+								var ptex, psize, t1, t2, t3;
+								ptex = point2D(uv[X] + ax, uv[Y] + ay)
+								psize = 1// - 1 / 256
+								t1 = ptex
+								t2 = point2D(ptex[X] + psize, ptex[Y])
+								t3 = point2D(ptex[X], ptex[Y] + psize)
 						
-							// Conver coordinates to 0-1
-							t1 = vec2_div(t1, texture_size)
-							t2 = vec2_div(t2, texture_size)
-							t3 = vec2_div(t3, texture_size)
+								// Conver coordinates to 0-1
+								t1 = vec2_div(t1, texture_size)
+								t2 = vec2_div(t2, texture_size)
+								t3 = vec2_div(t3, texture_size)
 		
-							var p1, p2, p3, p4;
+								var p1, p2, p3, p4;
 						
-							// East
-							if (ax = texsize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
-							{
-								p1 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
-								p2 = point3D((px + pxs) * scanext, pnextsca[Y], pnextsca[Z])
-								p3 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
-								vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+								// East
+								if (eface)
+								{
+									p1 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
+									p2 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
+									p3 = point3D((px + pxs) * scanext, pnextsca[Y], pnextsca[Z])
+									if (anglesign * invertsign > 0)
+										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+									else
+										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+								}
+						
+								// West
+								if (wface)
+								{
+									p1 = point3D(px, nmidsca[Y], nmidsca[Z])
+									p2 = point3D(px * scacur, ncursca[Y], ncursca[Z])
+									p3 = point3D(px * scanext, nnextsca[Y], nnextsca[Z])
+									if (anglesign * invertsign > 0)
+										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+									else
+										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+								}
+						
+								px += pxs
 							}
-						
-							// West
-							if (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
-							{
-								p1 = point3D(px * scanext, nnextsca[Y], nnextsca[Z])
-								p2 = point3D(px * scacur, ncursca[Y], ncursca[Z])
-								p3 = point3D(px, nmidsca[Y], nmidsca[Z])
-								vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-							}
-						
-							px += pxs
 						}
+						
+						break
+					}
+					
+					case Y:
+					{
+						if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
+						{
+							var ay = floor((to[Z] - (bend_offset - position[Z])) / scale[Z]);
+							if (ay < 0 && ay >= size[Z])
+								break
+								
+							var px = 0;
+							for (var ax = floor(-from_noscale[X]); ax < size[X]; ax++)
+							{
+								var pxs = scale[X];
+						
+								if (alphaarr[@ ax, ay] < 1)
+								{
+									px += pxs
+									continue
+								}
+								
+								var eface, wface;
+								eface = (ax = size[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+								wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+								
+								if (!eface && !wface)
+								{
+									px += pxs
+									continue
+								}
+								
+								var ptex, psize, t1, t2, t3;
+								ptex = point2D(uv[X] + ax, uv[Y] + ay)
+								psize = 1// - 1 / 256
+								t1 = ptex
+								t2 = point2D(ptex[X] + psize, ptex[Y])
+								t3 = point2D(ptex[X], ptex[Y] + psize)
+						
+								// Convert coordinates to 0-1
+								t1 = vec2_div(t1, texture_size)
+								t2 = vec2_div(t2, texture_size)
+								t3 = vec2_div(t3, texture_size)
+		
+								var p1, p2, p3, p4;
+						
+								// East
+								if (eface)
+								{
+									p1 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
+									p2 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
+									p3 = point3D((px + pxs) * scanext, pnextsca[Y], pnextsca[Z])
+									if (anglesign * invertsign > 0)
+										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+									else
+										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+								}
+						
+								// West
+								if (wface)
+								{
+									p1 = point3D(px, nmidsca[Y], nmidsca[Z])
+									p2 = point3D(px * scacur, ncursca[Y], ncursca[Z])
+									p3 = point3D(px * scanext, nnextsca[Y], nnextsca[Z])
+									if (anglesign * invertsign > 0)
+										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+									else
+										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+								}
+						
+								px += pxs
+							}
+						}
+						else if (bend_part = e_part.RIGHT || bend_part = e_part.LEFT)
+						{
+							
+						}
+						
+						break
+					}
+					
+					case Z:
+					{
+						if (bend_part = e_part.RIGHT || bend_part = e_part.LEFT)
+						{
+							var ax = floor(size[X] - (to[X] - (bend_offset - position[X])) / scale[X]);
+							if (ax < 0 && ax >= size[X])
+								break
+								
+							var pz = to[Z];
+							for (var ay = 0; ay < size[Z]; ay++)
+							{
+								var pzs = scale[Z];
+						
+								if (alphaarr[@ ax, ay] < 1)
+								{
+									pz -= pzs
+									continue
+								}
+								
+								var bface, aface;
+								bface = (ay = size[Z] - 1 || alphaarr[@ ax, ay + 1] < 1)
+								aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
+								
+								if (!bface && !aface)
+								{
+									pz -= pzs
+									continue
+								}
+						
+								var ptex, psize, t1, t2, t3;
+								ptex = point2D(uv[X] + ax, uv[Y] + ay)
+								psize = 1// - 1 / 256
+								t1 = ptex
+								t2 = point2D(ptex[X] + psize, ptex[Y])
+								t3 = point2D(ptex[X] + psize, ptex[Y] + psize)
+						
+								// Convert coordinates to 0-1
+								t1 = vec2_div(t1, texture_size)
+								t2 = vec2_div(t2, texture_size)
+								t3 = vec2_div(t3, texture_size)
+		
+								var p1, p2, p3, p4;
+						
+								// Below
+								if (bface)
+								{
+									p1 = point3D(pmidsca[X], pmidsca[Y], pz - pzs)
+									p2 = point3D(pcursca[X], pcursca[Y], (pz - pzs) * scacur)
+									p3 = point3D(pnextsca[X], pnextsca[Y], (pz - pzs) * scanext)
+									if (anglesign * invertsign > 0)
+										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+									else
+										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+								}
+						
+								// Above
+								if (aface)
+								{
+									p1 = point3D(ncursca[X], ncursca[Y], pz * scacur)
+									p2 = point3D(nmidsca[X], nmidsca[Y], pz)
+									p3 = point3D(nnextsca[X], nnextsca[Y], pz * scanext)
+									if (anglesign * invertsign > 0)
+										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
+									else
+										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+								}
+						
+								pz -= pzs
+							}
+						}
+						
+						break
 					}
 				}
-				
+					
 				if (a = 1 && is3d)
 				{
 					// Top face
-					vbuffer_add_triangle(nnextsca, nmidsca, pmidsca, nbacktex, nmidtex, pmidtex, null, color_blend, color_alpha)
-					vbuffer_add_triangle(pnextsca, nnextsca, pmidsca, pbacktex, nbacktex, pmidtex, null, color_blend, color_alpha)
+					//vbuffer_add_triangle(nnextsca, nmidsca, pmidsca, nbacktex, nmidtex, pmidtex, null, color_blend, color_alpha)
+					//vbuffer_add_triangle(pnextsca, nnextsca, pmidsca, pbacktex, nbacktex, pmidtex, null, color_blend, color_alpha)
 				}
-			}*/
+			}
 		}
 		
 		pcur = pnext
@@ -498,8 +714,8 @@ with (shape)
 		pcursca = pnextsca
 		ncursca = nnextsca
 	}
-
-	return vbuffer_done()
 	
 	vertex_brightness = 0
+
+	return vbuffer_done()
 }

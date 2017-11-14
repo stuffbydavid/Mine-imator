@@ -60,7 +60,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		alphaarrmap[?id] = surface_get_alpha_array(surf)
 		
 		var vbufarr = array(null, null);
-		if (bend_part = null || bend_mode != e_shape_bend.BEND)
+		if (bend_mode != e_shape_bend.BEND || bend_part = null || bend_part = e_part.FRONT || bend_part = e_part.BACK) // Bend deactivated or invalid half
 		{
 			// Generate 3D pixels
 			vbufarr[0] = vbuffer_start()
@@ -70,22 +70,73 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		else
 		{
 			var pos, bendoff, texoff;
-			pos = array_copy_1d(from)
 		
-			//if (bend_part = e_part.UPPER)
-			//{
+			if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
+			{
 				bendoff = (bend_offset - position[Z]) - from[Z]
 				texoff = bendoff / scale[Z]
 			
-				vbufarr[0] = vbuffer_start()
-				vbuffer_add_pixels(alphaarrmap[?id], from, bendoff, vec2(uv[X], uv[Y] + (texsize[Y] - texoff)), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, texsize[Y] - texoff), vec2(0, texoff), texture_mirror, color_blend, color_alpha)
+				// Lower
+				if (bend_part = e_part.UPPER)
+				{
+					pos = from
+					vbufarr[0] = vbuffer_start()
+				}
+				else
+				{
+					pos = point3D(from[X], from[Y], -bendoff)
+					vbufarr[1] = vbuffer_start()
+				}
+				vbuffer_add_pixels(alphaarrmap[?id], pos, bendoff, vec2(uv[X], uv[Y] + (texsize[Y] - texoff)), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, texsize[Y] - texoff), vec2(0, texoff), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 		
-				pos[Z] = 0
-				vbufarr[1] = vbuffer_start()
+				// Upper
+				if (bend_part = e_part.UPPER)
+				{
+					pos = point3D(from[X], from[Y], 0)
+					vbufarr[1] = vbuffer_start()
+				}
+				else
+				{
+					pos = point3D(from[X], from[Y], from[Z] + bendoff)
+					vbufarr[0] = vbuffer_start()
+				}
 				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y] * scale[Z] - bendoff, array_copy_1d(uv), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(0, -texoff), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
-			//}
+			}
+			else // Right or Left
+			{
+				bendoff = (bend_offset - position[X]) - from[X]
+				texoff = bendoff / scale[X]
+			
+				// Left
+				if (bend_part = e_part.RIGHT)
+				{
+					pos = from
+					vbufarr[0] = vbuffer_start()
+				}
+				else
+				{
+					pos = point3D( -bendoff, from[Y], from[Z])
+					vbufarr[1] = vbuffer_start()
+				}
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], array_copy_1d(uv), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(-(texsize[X] - texoff), 0), texture_mirror, color_blend, color_alpha)
+				vbuffer_done()
+		
+				// Right
+				if (bend_part = e_part.RIGHT)
+				{
+					pos = point3D(0, from[Y], from[Z])
+					vbufarr[1] = vbuffer_start()
+				}
+				else
+				{
+					pos = point3D(from[X] + bendoff, from[Y], from[Z])
+					vbufarr[0] = vbuffer_start()
+				}
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], vec2(uv[X] + texoff, uv[Y]), texsize, vec2_div(vec2(1), texture_size), scale, vec2(texoff, 0), vec2(-texoff, 0), texture_mirror, color_blend, color_alpha)
+				vbuffer_done()
+			}
 		}
 	
 		vbufmap[?id] = vbufarr

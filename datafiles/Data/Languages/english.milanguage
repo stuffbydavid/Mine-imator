@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David",
         "forversion": "1.1.0",
-        "lastchange": "2017.11.05"
+        "lastchange": "2017.11.14"
     },
     "download/": {
 		"caption": "Download content",
@@ -96,6 +96,8 @@
         "openassetnewercaption": "Import asset error",
         "openkeyframes": "No timeline selected to put the keyframes in! Select a timeline and try again.",
         "openkeyframescaption": "Import asset error",
+        "loadmodel": "Could not load the model. See the log for details.",
+        "loadmodelcaption": "Load model error",
         "loadschematic": "Could not read the schematic file. See the log for details.",
         "loadschematiccaption": "Import schematic error",
         "unzippack": "Could not unzip the pack.",

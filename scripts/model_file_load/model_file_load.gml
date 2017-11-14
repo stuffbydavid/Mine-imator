@@ -95,10 +95,7 @@ with (new(obj_model_file))
 	{
 		var part = model_file_load_part(partlist[|p], id, res)
 		if (part = null)
-		{
-			log("Could not read part", name)
 			return null
-		}
 		ds_list_add(part_list, part)
 	}
 	

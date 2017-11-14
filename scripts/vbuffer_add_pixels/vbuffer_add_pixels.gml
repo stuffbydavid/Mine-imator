@@ -80,8 +80,8 @@ for (var xx = 0; xx < samplesize[X]; xx++)
 	var pxs = 1;
 	if (xx = 0)
 		pxs = 1 - frac(texpos[X])
-	else if (xx = samplesize[X] - 1 && frac(texpos[X] + texposoff[X] + texsize[X] + texsizeoff[X]) > 0)
-		pxs = frac(texpos[X] + texposoff[X] + texsize[X] + texsizeoff[X])
+	else if (xx = samplesize[X] - 1 && frac(texpos[X] + texsize[X] + texsizeoff[X]) > 0)
+		pxs = frac(texpos[X] + texsize[X] + texsizeoff[X])
 	
 	var py = 0;
 	for (var yy = 0; yy < samplesize[Y]; yy++)
@@ -90,8 +90,8 @@ for (var xx = 0; xx < samplesize[X]; xx++)
 		var pys = 1;
 		if (yy = 0)
 			pys = 1 - frac(texpos[Y])
-		else if (yy = samplesize[Y] - 1 && frac(texpos[Y] + texposoff[Y] + texsize[Y] + texsizeoff[Y]) > 0)
-			pys = frac(texpos[Y] + texposoff[Y] + texsize[Y] + texsizeoff[Y])
+		else if (yy = samplesize[Y] - 1 && frac(texpos[Y] + texsize[Y] + texsizeoff[Y]) > 0)
+			pys = frac(texpos[Y] + texsize[Y] + texsizeoff[Y])
 		
 		// Array sample position
 		var ax, ay;
@@ -105,13 +105,25 @@ for (var xx = 0; xx < samplesize[X]; xx++)
 			continue
 		}
 		
+		var eface, wface, aface, bface;
+		eface = (xx = samplesize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+		wface = (xx = 0 || alphaarr[@ ax - 1, ay] < 1)
+		aface = (yy = 0 || alphaarr[@ ax, ay - 1] < 1)
+		bface = (yy = samplesize[Y] - 1 || alphaarr[@ ax, ay + 1] < 1)
+		
+		if (!eface && !wface && !aface && !bface)
+		{
+			py += pys
+			continue
+		}
+		
 		// Texture
 		var ptex, pfix, psize, t1, t2, t3, t4;
 		ptex = point2D(floor(texpos[X]) + xx * mirrorsign, floor(texpos[Y]) + yy)
 		
 		// Artifact fix with CPU rendering
 		pfix = 1 / 256 
-		psize = 1 - pfix
+		psize = 1// - pfix
 		
 		t1 = ptex
 		t2 = point2D(ptex[X] + mirrorsign * psize, ptex[Y])
@@ -127,45 +139,45 @@ for (var xx = 0; xx < samplesize[X]; xx++)
 		var p1, p2, p3, p4;
 		
 		// East
-		if (xx = samplesize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+		if (eface)
 		{
-			p1 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
-			p2 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - (py - pys))
-			p3 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - py)
-			p4 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - py)
+			p1 = point3D(px + pxs, 1, (height / scale[Z] - pys) - (py - pys))
+			p2 = point3D(px + pxs, 0, (height / scale[Z] - pys) - (py - pys))
+			p3 = point3D(px + pxs, 0, (height / scale[Z] - pys) - py)
+			p4 = point3D(px + pxs, 1, (height / scale[Z] - pys) - py)
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}
 			
 		// West
-		if (xx = 0 || alphaarr[@ ax - 1, ay] < 1)
+		if (wface)
 		{
-			p1 = point3D(px, -pfix, (height / scale[Z] - pys) - (py - pys))
-			p2 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
-			p3 = point3D(px, 1 + pfix, (height / scale[Z] - pys)- py)
-			p4 = point3D(px, -pfix, (height / scale[Z] - pys) - py)
+			p1 = point3D(px, 0, (height / scale[Z] - pys) - (py - pys))
+			p2 = point3D(px, 1, (height / scale[Z] - pys) - (py - pys))
+			p3 = point3D(px, 1, (height / scale[Z] - pys)- py)
+			p4 = point3D(px, 0, (height / scale[Z] - pys) - py)
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}
 			
-		// Up
-		if (yy = 0 || alphaarr[@ ax, ay - 1] < 1)
+		// Above
+		if (aface)
 		{
-			p1 = point3D(px, -pfix, (height / scale[Z] - pys) - (py - pys))
-			p2 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - (py - pys))
-			p3 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
-			p4 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - (py - pys))
+			p1 = point3D(px, 0, (height / scale[Z] - pys) - (py - pys))
+			p2 = point3D(px + pxs, 0, (height / scale[Z] - pys) - (py - pys))
+			p3 = point3D(px + pxs, 1, (height / scale[Z] - pys) - (py - pys))
+			p4 = point3D(px, 1, (height / scale[Z] - pys) - (py - pys))
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}
 			
-		// Down
-		if (yy = samplesize[Y] - 1 || alphaarr[@ ax, ay + 1] < 1)
+		// Below
+		if (bface)
 		{
-			p1 = point3D(px, 1 + pfix, (height / scale[Z] - pys) - py)
-			p2 = point3D(px + pxs, 1 + pfix, (height / scale[Z] - pys) - py)
-			p3 = point3D(px + pxs, -pfix, (height / scale[Z] - pys) - py)
-			p4 = point3D(px, -pfix, (height / scale[Z] - pys) - py)
+			p1 = point3D(px, 1, (height / scale[Z] - pys) - py)
+			p2 = point3D(px + pxs, 1, (height / scale[Z] - pys) - py)
+			p3 = point3D(px + pxs, 0, (height / scale[Z] - pys) - py)
+			p4 = point3D(px, 0, (height / scale[Z] - pys) - py)
 			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, mat)
 			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, mat)
 		}

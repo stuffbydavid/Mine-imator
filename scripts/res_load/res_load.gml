@@ -181,6 +181,9 @@ switch (type)
 		{
 			model_format = e_model_format.MIMODEL
 			model_file = model_file_load(fn, id) // model_file will be null if unsuccessful
+			
+			if (model_file = null)
+				error("errorloadmodel")
 		
 			// Create texture name map
 			if (model_texture_name_map != null)
@@ -202,7 +205,10 @@ switch (type)
 			// Load model file
 			var blockmodel = block_load_model_file(fn, id);
 			if (blockmodel = null)
+			{
+				error("errorloadmodel")
 				break
+			}
 				
 			model_block_map = ds_map_create()
 			

@@ -1,10 +1,13 @@
 /// model_part_event_destroy()
 			
-for (var s = 0; s < ds_list_size(shape_list); s++)
-	with (shape_list[|s])
-		instance_destroy()
+if (shape_list != null)
+{
+	for (var s = 0; s < ds_list_size(shape_list); s++)
+		with (shape_list[|s])
+			instance_destroy()
 	
-ds_list_destroy(shape_list)
+	ds_list_destroy(shape_list)
+}
 
 if (part_list != null)
 {

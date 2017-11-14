@@ -22,6 +22,16 @@ if (!ds_list_valid(map[?"position"]))
 	return null
 }
 
+// Check if unique part name
+for (var i = 0; i < ds_list_size(root.file_part_list); i++)
+{
+	if (root.file_part_list[|i].name = map[?"name"])
+	{
+		log("Duplicate part name found", map[?"name"])
+		return null
+	}
+}
+	
 with (new(obj_model_part))
 {
 	// Name
@@ -217,10 +227,7 @@ with (new(obj_model_part))
 		{
 			var shape = model_file_load_shape(shapelist[|p], res);
 			if (shape = null) // Something went wrong
-			{
-				log("Could not read shape list", name)
 				return null
-			}
 			ds_list_add(shape_list, shape)
 		}
 	}
@@ -240,10 +247,7 @@ with (new(obj_model_part))
 		{
 			var part = model_file_load_part(partlist[|p], root, res)
 			if (part = null) // Something went wrong
-			{
-				log("Could not read part list", name)
 				return null
-			}
 			ds_list_add(part_list, part)
 		}
 	}
