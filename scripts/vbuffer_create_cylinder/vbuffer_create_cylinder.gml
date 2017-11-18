@@ -67,31 +67,19 @@ while (i < 1)
 		if (mapped)
 			texmid[X] = 5 / 6
 				
-		if (invert)
-			vbuffer_add_triangle(x1, y1, -rad, 0, 0, -rad, x2, y2, -rad, 
-								 texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(ip * pi * 2) * (texsize[Y] / 2), 
-								 texmid[X], texmid[Y], 
-								 texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(i * pi * 2) * (texsize[Y] / 2))
-		else
-			vbuffer_add_triangle(0, 0, -rad, x1, y1, -rad, x2, y2, -rad, 
-								 texmid[X], texmid[Y], 
-								 texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(ip * pi * 2) * (texsize[Y] / 2), 
-								 texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(i * pi * 2) * (texsize[Y] / 2))
+		vbuffer_add_triangle(0, 0, -rad, x1, y1, -rad, x2, y2, -rad, 
+								texmid[X], texmid[Y], 
+								texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(ip * pi * 2) * (texsize[Y] / 2), 
+								texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(i * pi * 2) * (texsize[Y] / 2), c_white, 1, invert)
 			
 		// Top
 		if (mapped)
 			texmid[X] = 1 / 2
 		
-		if (invert)
-			vbuffer_add_triangle(x2, y2, rad, 0, 0, rad, x1, y1, rad, 
-								 texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] - sin(i * pi * 2) * (texsize[Y] / 2), 
-								 texmid[X], texmid[Y], 
-								 texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] - sin(ip * pi * 2) * (texsize[Y] / 2))
-		else
-			vbuffer_add_triangle(0, 0, rad, x2, y2, rad, x1, y1, rad, 
-								 texmid[X], texmid[Y], 
-								 texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] - sin(i * pi * 2) * (texsize[Y] / 2), 
-								 texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] - sin(ip * pi * 2) * (texsize[Y] / 2))
+		vbuffer_add_triangle(0, 0, rad, x2, y2, rad, x1, y1, rad, 
+								texmid[X], texmid[Y], 
+								texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] - sin(i * pi * 2) * (texsize[Y] / 2), 
+								texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] - sin(ip * pi * 2) * (texsize[Y] / 2), c_white, 1, invert)
 	}
 	
 	// Sides

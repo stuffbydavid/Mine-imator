@@ -12,15 +12,7 @@ invert = argument3
 
 vbuffer_start()
 
-if (invert)
-{
-	vbuffer_add_triangle(rad, 0, rad, -rad, 0, rad, rad, 0, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
-	vbuffer_add_triangle(-rad, 0, rad, -rad, 0, -rad, rad, 0, -rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
-}
-else
-{
-	vbuffer_add_triangle(-rad, 0, rad, rad, 0, rad, rad, 0, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
-	vbuffer_add_triangle(-rad, 0, -rad, -rad, 0, rad, rad, 0, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
-}
+vbuffer_add_triangle(-rad, 0, rad, rad, 0, rad, rad, 0, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
+vbuffer_add_triangle(-rad, 0, -rad, -rad, 0, rad, rad, 0, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
 
 return vbuffer_done()

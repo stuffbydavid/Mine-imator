@@ -66,6 +66,8 @@ with (temp_edit)
 	model_tex = res
 	if (model_tex != null)
 		model_tex.count++
+		
+	temp_update_model_plane_vbuffer_map()
 }
 
 lib_preview.update = true

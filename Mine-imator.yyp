@@ -3751,6 +3751,14 @@
             }
         },
         {
+            "Key": "4596cdbb-e792-42ed-8531-5ebba2e4d569",
+            "Value": {
+                "id": "9aedeb71-5bcd-4af1-a7a5-cc09263a53fd",
+                "resourcePath": "scripts\\float_to_int\\float_to_int.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "45e4f0a2-0b05-4f14-808b-4b2b6d8d7131",
             "Value": {
                 "id": "8e482a19-f4cc-47aa-96c3-6e4f0bef59e0",
@@ -15701,6 +15709,7 @@
         "65dd7e86-b116-40a1-b70c-0cbe8a76aa0b",
         "085079a6-2de4-4bf9-8ce4-d12b90b1d789",
         "41f101e7-5f11-49ac-bf91-9a5c8cbd2ab5",
+        "4596cdbb-e792-42ed-8531-5ebba2e4d569",
         "5d78d0b3-deb1-4fb4-b836-02f71f238b44",
         "2e5434de-be6d-494c-afc4-1dc23c97663d",
         "e442be62-c380-4166-8037-fe22a8a858fa",

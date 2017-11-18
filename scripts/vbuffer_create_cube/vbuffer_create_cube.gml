@@ -45,16 +45,8 @@ if (mapped)
 	}
 }
 
-if (invert)
-{
-	vbuffer_add_triangle(rad, rad, rad, rad, rad, -rad, rad, -rad, rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex1[Y])
-	vbuffer_add_triangle(rad, -rad, rad, rad, rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
-}
-else
-{
-	vbuffer_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex1[Y])
-	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tex1[X], tex2[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
-}
+vbuffer_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex1[Y], c_white, 1, invert)
+vbuffer_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tex1[X], tex2[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
 
 // X-
 if (mapped)
@@ -81,16 +73,8 @@ if (mapped)
 	}
 }
 
-if (invert)
-{
-	vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, -rad, -rad, rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex1[Y])
-	vbuffer_add_triangle(-rad, rad, -rad, -rad, -rad, rad, -rad, -rad, -rad, tex2[X], tex2[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
-}
-else
-{
-	vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
-	vbuffer_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
-}
+vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y], c_white, 1, invert)
+vbuffer_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], c_white, 1, invert)
 
 // Y+
 if (mapped)
@@ -112,16 +96,8 @@ if (mapped)
 	}
 }
 
-if (invert)
-{
-	vbuffer_add_triangle(rad, rad, rad, -rad, rad, rad, rad, rad, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
-	vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, rad, rad, -rad, tex1[X], tex1[Y], tex1[X], tex2[Y], tex2[X], tex2[Y])
-}
-else
-{
-	vbuffer_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y])
-	vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y])
-}
+vbuffer_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
+vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
 
 // Y-
 if (mapped)
@@ -143,16 +119,8 @@ if (mapped)
 	}
 }
 
-if (invert)
-{
-	vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, rad, -rad, -rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
-	vbuffer_add_triangle(-rad, -rad, -rad, -rad, -rad, rad, rad, -rad, -rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
-}
-else
-{
-	vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
-	vbuffer_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
-}
+vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y], c_white, 1, invert)
+vbuffer_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], c_white, 1, invert)
 
 // Z+
 if (mapped)
@@ -174,16 +142,8 @@ if (mapped)
 	}
 }
 
-if (invert)
-{
-	vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex1[X], tex1[Y], tex1[X], tex2[Y])
-	vbuffer_add_triangle(rad, rad, rad, rad, -rad, rad, -rad, rad, rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
-}
-else
-{
-	vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y])
-	vbuffer_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y])
-}
+vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y], c_white, 1, invert)
+vbuffer_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], c_white, 1, invert)
 
 // Z-
 if (mapped)
@@ -205,15 +165,7 @@ if (mapped)
 	}
 }
 
-if (invert)
-{
-	vbuffer_add_triangle(-rad, -rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex1[X], tex2[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
-	vbuffer_add_triangle(rad, -rad, -rad, rad, rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex2[X], tex1[Y], tex1[X], tex1[Y])
-}
-else
-{
-	vbuffer_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex1[X], tex2[Y], tex1[X], tex1[Y])
-	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y])
-}
+vbuffer_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex1[X], tex2[Y], tex1[X], tex1[Y], c_white, 1, invert)
+vbuffer_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y], c_white, 1, invert)
 
 return vbuffer_done()

@@ -189,9 +189,9 @@ with (shape)
 				{
 					pmidtex = point2D_add(uv, point2D(-from_noscale[X], midtexy))
 					if (anglesign * partsign > 0)
-						pedgetex = point2D_add(uv, point2D(size[X] - 1, midtexy))
+						pedgetex = point2D_add(uv, point2D(size[X] - 1 / 256, midtexy))
 					else
-						pedgetex = point2D_add(uv, point2D(0, midtexy))
+						pedgetex = point2D_add(uv, point2D(1 / 256, midtexy))
 					nmidtex = pmidtex
 					pbacktex = pedgetex
 					nedgetex = pedgetex
@@ -239,7 +239,7 @@ with (shape)
 				{
 					pmidtex = point2D_add(uv, point2D(midtexx, to_noscale[Z]))
 					if (anglesign * partsign > 0)
-						pedgetex = point2D_add(uv, point2D(midtexx, size[Z] - 1))
+						pedgetex = point2D_add(uv, point2D(midtexx, size[Z] - 1 / 256))
 					else
 						pedgetex = point2D_add(uv, point2D(midtexx, 0))
 					nmidtex = pmidtex
@@ -348,28 +348,40 @@ with (shape)
 		}
 	}
 
-	// Mirror (switch positive and negative) (TODO: this is UNFINISHED, only works well for arms/legs atm)
+	// Mirror
 	if (texture_mirror)
 	{
-		var tmp = nbacktex;
-		nbacktex = pbacktex
-		pbacktex = tmp
+		if (type = "block") // Blocks switch positive and negative sides (TODO: this is UNFINISHED, only works well for arms/legs atm)
+		{
+			var tmp = nbacktex;
+			nbacktex = pbacktex
+			pbacktex = tmp
 	
-		tmp = nedgetex
-		nedgetex = pedgetex
-		pedgetex = tmp
+			tmp = nedgetex
+			nedgetex = pedgetex
+			pedgetex = tmp
 	
-		tmp = nmidtex
-		nmidtex = pmidtex
-		pmidtex = tmp
+			tmp = nmidtex
+			nmidtex = pmidtex
+			pmidtex = tmp
+		}
+		else // Planes
+		{
+			nbacktex[X] = (size[X] - (nbacktex[X] - uv[X])) + uv[X]
+			pbacktex[X] = (size[X] - (pbacktex[X] - uv[X])) + uv[X]
+			nedgetex[X] = (size[X] - (nedgetex[X] - uv[X])) + uv[X]
+			pedgetex[X] = (size[X] - (pedgetex[X] - uv[X])) + uv[X]
+			nmidtex[X] = (size[X] - (nmidtex[X] - uv[X])) + uv[X]
+			pmidtex[X] = (size[X] - (pmidtex[X] - uv[X])) + uv[X]
+		}
 	}
 
 	// No flicker
 	var pedgetex2, nedgetex2, pbacktex2, nbacktex2;
-	pedgetex2 = point2D_add(pedgetex, point2D(1 / 512, 0))
-	pbacktex2 = point2D_add(pbacktex, point2D(1 / 512, 0))
-	nedgetex2 = point2D_add(nedgetex, point2D(1 / 512, 0))
-	nbacktex2 = point2D_add(nbacktex, point2D(1 / 512, 0))
+	pedgetex2 = point2D_add(pedgetex, point2D(1 / 512, 1 / 512))
+	pbacktex2 = point2D_add(pbacktex, point2D(1 / 512, 1 / 512))
+	nedgetex2 = point2D_add(nedgetex, point2D(1 / 512, 1 / 512))
+	nbacktex2 = point2D_add(nbacktex, point2D(1 / 512, 1 / 512))
 
 	// Transform texture to 0-1
 	pmidtex = vec2_div(pmidtex, texture_size)
@@ -446,26 +458,13 @@ with (shape)
 		
 		if (a > 0)
 		{
-			if (anglesign * invertsign > 0)
+			if (!is3d || bend_axis = Y)
 			{
-				if (!is3d)
-				{
-					vbuffer_add_triangle(pcursca, pmidsca, pnextsca, pedgetex, pmidtex, pedgetex2, null, color_blend, color_alpha) // +
-					vbuffer_add_triangle(nmidsca, ncursca, nnextsca, nmidtex, nedgetex, nedgetex2, null, color_blend, color_alpha) // -
-				}
-				vbuffer_add_triangle(ncursca, pcursca, nnextsca, nbacktex, pbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 1
-				vbuffer_add_triangle(nnextsca, pcursca, pnextsca, nbacktex2, pbacktex, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 2
+				vbuffer_add_triangle(pmidsca, pcursca, pnextsca, pmidtex, pedgetex, pedgetex2, null, color_blend, color_alpha, (anglesign * invertsign > 0)) // +
+				vbuffer_add_triangle(ncursca, nmidsca, nnextsca, nedgetex, nmidtex, nedgetex2, null, color_blend, color_alpha, (anglesign * invertsign > 0)) // -
 			}
-			else // Invert
-			{
-				if (!is3d)
-				{
-					vbuffer_add_triangle(pmidsca, pcursca, pnextsca, pmidtex, pedgetex, pedgetex2, null, color_blend, color_alpha) // +
-					vbuffer_add_triangle(ncursca, nmidsca, nnextsca, nedgetex, nmidtex, nedgetex2, null, color_blend, color_alpha) // -
-				}
-				vbuffer_add_triangle(pcursca, ncursca, nnextsca, pbacktex, nbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 1
-				vbuffer_add_triangle(pcursca, nnextsca, pnextsca, pbacktex, nbacktex2, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha) // Back 2
-			}
+			vbuffer_add_triangle(pcursca, ncursca, nnextsca, pbacktex, nbacktex, nbacktex2, backnormal[a > 0.5], color_blend, color_alpha, (anglesign * invertsign > 0)) // Back 1
+			vbuffer_add_triangle(pcursca, nnextsca, pnextsca, pbacktex, nbacktex2, pbacktex2, backnormal[a > 0.5], color_blend, color_alpha, (anglesign * invertsign > 0)) // Back 2
 			
 			// 3D planes
 			if (is3d && alphaarr != null)
@@ -476,15 +475,27 @@ with (shape)
 					{
 						if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
 						{
+							// Array Y location
 							var ay = floor((to[Z] - (bend_offset - position[Z])) / scale[Z]);
 							if (ay < 0 && ay >= size[Z])
 								break
 							
 							var px = from[X];
-							for (var ax = 0; ax < size[X]; ax++)
+							for (var xx = 0; xx < size[X]; xx++)
 							{
-								var pxs = scale[X];
-						
+								// Array X location
+								var ax = xx;
+								if (texture_mirror)
+									ax = ceil(size[X]) - 1 - xx
+								
+								// Pixel X size
+								var pxs;
+								if (ax = ceil(size[X]) - 1 && frac(size[X]) > 0)
+									pxs = frac(size[X])
+								else
+									pxs = 1
+								pxs *= scale[X]
+								
 								if (alphaarr[@ ax, ay] < 1)
 								{
 									px += pxs
@@ -492,8 +503,15 @@ with (shape)
 								}
 								
 								var eface, wface;
-								eface = (ax = size[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+								eface = (ax = ceil(size[X]) - 1 || alphaarr[@ ax + 1, ay] < 1)
 								wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+								
+								if (texture_mirror)
+								{
+									var tmp = eface;
+									eface = wface
+									wface = tmp
+								}
 								
 								if (!eface && !wface)
 								{
@@ -518,25 +536,19 @@ with (shape)
 								// East
 								if (eface)
 								{
-									p1 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
-									p2 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
+									p1 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
+									p2 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
 									p3 = point3D((px + pxs) * scanext, pnextsca[Y], pnextsca[Z])
-									if (anglesign * invertsign > 0)
-										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-									else
-										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (anglesign * invertsign > 0))
 								}
 						
 								// West
 								if (wface)
 								{
-									p1 = point3D(px, nmidsca[Y], nmidsca[Z])
-									p2 = point3D(px * scacur, ncursca[Y], ncursca[Z])
+									p1 = point3D(px * scacur, ncursca[Y], ncursca[Z])
+									p2 = point3D(px, nmidsca[Y], nmidsca[Z])
 									p3 = point3D(px * scanext, nnextsca[Y], nnextsca[Z])
-									if (anglesign * invertsign > 0)
-										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-									else
-										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (anglesign * invertsign > 0))
 								}
 						
 								px += pxs
@@ -550,14 +562,52 @@ with (shape)
 					{
 						if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
 						{
+							// Texture Y location
 							var ay = floor((to[Z] - (bend_offset - position[Z])) / scale[Z]);
 							if (ay < 0 && ay >= size[Z])
 								break
-								
-							var px = 0;
-							for (var ax = floor(-from_noscale[X]); ax < size[X]; ax++)
+							
+							// Find out texture start and end
+							var px, xxstart, xxend;
+							if (anglesign * partsign > 0) // Middle to end
 							{
-								var pxs = scale[X];
+								px = 0
+								xxstart = floor(-from_noscale[X])
+								xxend = size[X]
+							}
+							else // Start to middle
+							{
+								px = from[X]
+								xxstart = 0
+								xxend = floor(-from_noscale[X])
+							}
+								
+							for (var xx = xxstart; xx < xxend; xx++)
+							{
+								// Texture X location
+								var ax = xx;
+								if (texture_mirror)
+									ax = ceil(size[X]) - 1 - xx
+								
+								// Pixel X size
+								var pxs = 1;
+								if (!texture_mirror)
+								{
+									if (xx = floor(-from_noscale[X])) // Middle
+										pxs = 1 - frac(-from_noscale[X])
+									else if (xx = floor(-from_noscale[X]) - 1 && frac(-from_noscale[X]) > 0) // Next is middle
+										pxs = frac(-from_noscale[X])
+								}
+								else
+								{
+									if (xx = floor(-from_noscale[X]) && frac(to_noscale[X]) > 0) // Middle
+										pxs = frac(to_noscale[X])
+									else if (xx = floor(-from_noscale[X]) - 1) // Next is middle
+										pxs = 1 - frac(-from_noscale[X])
+								}
+								if (ax = ceil(size[X]) - 1 && frac(size[X]) > 0) // End
+									pxs = frac(size[X])
+								pxs *= scale[X]
 						
 								if (alphaarr[@ ax, ay] < 1)
 								{
@@ -566,8 +616,15 @@ with (shape)
 								}
 								
 								var eface, wface;
-								eface = (ax = size[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+								eface = (ax = ceil(size[X]) - 1 || alphaarr[@ ax + 1, ay] < 1)
 								wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+								
+								if (texture_mirror)
+								{
+									var tmp = eface;
+									eface = wface
+									wface = tmp
+								}
 								
 								if (!eface && !wface)
 								{
@@ -575,42 +632,54 @@ with (shape)
 									continue
 								}
 								
-								var ptex, psize, t1, t2, t3;
+								var ptex, psize, t1, t2, t3, t4;
 								ptex = point2D(uv[X] + ax, uv[Y] + ay)
 								psize = 1// - 1 / 256
 								t1 = ptex
 								t2 = point2D(ptex[X] + psize, ptex[Y])
-								t3 = point2D(ptex[X], ptex[Y] + psize)
+								t3 = point2D(ptex[X] + psize, ptex[Y] + psize)
+								t4 = point2D(ptex[X], ptex[Y] + psize)
 						
 								// Convert coordinates to 0-1
 								t1 = vec2_div(t1, texture_size)
 								t2 = vec2_div(t2, texture_size)
 								t3 = vec2_div(t3, texture_size)
+								t4 = vec2_div(t4, texture_size)
 		
-								var p1, p2, p3, p4;
-						
+								var perccur, percnext, p1, p2, p3, p4;
+								
+								// Percentage of shape complete
+								if (anglesign * partsign > 0)
+								{
+									perccur = (px / to[X])
+									percnext = ((px + pxs) / to[X])
+								}
+								else
+								{
+									perccur = -(px / -from[X])
+									percnext = -((px + pxs) / -from[X])
+								}
+								
 								// East
 								if (eface)
 								{
-									p1 = point3D((px + pxs) * scacur, pcursca[Y], pcursca[Z])
-									p2 = point3D(px + pxs, pmidsca[Y], pmidsca[Z])
-									p3 = point3D((px + pxs) * scanext, pnextsca[Y], pnextsca[Z])
-									if (anglesign * invertsign > 0)
-										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-									else
-										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+									p1 = point3D(pmidsca[X] + percnext * pcursca[X], pmidsca[Y], pmidsca[Z] + percnext * pcursca[Z])
+									p2 = point3D(pmidsca[X] + percnext * pcursca[X], nmidsca[Y], pmidsca[Z] + percnext * pcursca[Z])
+									p3 = point3D(pmidsca[X] + percnext * pnextsca[X], nmidsca[Y], pmidsca[Z] + percnext * pnextsca[Z])
+									p4 = point3D(pmidsca[X] + percnext * pnextsca[X], pmidsca[Y], pmidsca[Z] + percnext * pnextsca[Z])
+									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (partsign * invertsign > 0))
+									vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, (partsign * invertsign > 0))
 								}
 						
 								// West
 								if (wface)
 								{
-									p1 = point3D(px, nmidsca[Y], nmidsca[Z])
-									p2 = point3D(px * scacur, ncursca[Y], ncursca[Z])
-									p3 = point3D(px * scanext, nnextsca[Y], nnextsca[Z])
-									if (anglesign * invertsign > 0)
-										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-									else
-										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+									p1 = point3D(pmidsca[X] + perccur * pnextsca[X], pmidsca[Y], pmidsca[Z] + perccur * pnextsca[Z])
+									p2 = point3D(pmidsca[X] + perccur * pnextsca[X], nmidsca[Y], pmidsca[Z] + perccur * pnextsca[Z])
+									p3 = point3D(pmidsca[X] + perccur * pcursca[X], nmidsca[Y], pmidsca[Z] + perccur * pcursca[Z])
+									p4 = point3D(pmidsca[X] + perccur * pcursca[X], pmidsca[Y], pmidsca[Z] + perccur * pcursca[Z])
+									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (partsign * invertsign > 0))
+									vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, (partsign * invertsign > 0))
 								}
 						
 								px += pxs
@@ -618,7 +687,118 @@ with (shape)
 						}
 						else if (bend_part = e_part.RIGHT || bend_part = e_part.LEFT)
 						{
+							// Get texture middle X
+							var ax = floor(size[X] - (to[X] - (bend_offset - position[X])) / scale[X]);
+							if (texture_mirror)
+								ax = floor((to[X] - (bend_offset - position[X])) / scale[X])
+								
+							if (ax < 0 && ax >= size[X])
+								break
 							
+							// Find out texture start and end
+							var pz, aystart, ayend;
+							if (anglesign * partsign > 0) // Bottom to middle
+							{
+								pz = from[Z]
+								aystart = ceil(size[Z]) - 1
+								ayend = floor(to_noscale[Z])
+							}
+							else // Middle to top
+							{
+								pz = 0
+								aystart = floor(to_noscale[Z]) - 1
+								ayend = 0
+							}
+							
+							for (var ay = aystart; ay >= ayend; ay--)
+							{
+								// Get size of pixel
+								var pzs = 1;
+								if (anglesign * partsign > 0) // Bottom to middle
+								{
+									if (ay = aystart && frac(size[Z]) > 0)
+										pzs = frac(size[Z])
+									if (ay - 1 < ayend)
+										pzs = 1 - frac(to_noscale[Z])
+								}
+								else // Middle to top
+								{
+									if (ay = aystart && frac(to_noscale[Z]) > 0)
+										pzs = frac(to_noscale[Z])
+								}
+								pzs *= scale[Z]
+								
+								// Pixel is transparent, continue
+								if (alphaarr[@ ax, ay] < 1)
+								{
+									pz += pzs
+									continue
+								}
+								
+								// Calculate which faces to add, continue if none are visible
+								var aface, bface;
+								aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
+								bface = (ay = ceil(size[Z]) - 1 || alphaarr[@ ax, ay + 1] < 1)
+								
+								if (!aface && !bface)
+								{
+									pz += pzs
+									continue
+								}
+								
+								// Set texture
+								var ptex, psize, t1, t2, t3, t4;
+								ptex = point2D(uv[X] + ax, uv[Y] + ay)
+								psize = 1// - 1 / 256
+								t1 = ptex
+								t2 = point2D(ptex[X] + psize, ptex[Y])
+								t3 = point2D(ptex[X] + psize, ptex[Y] + psize)
+								t4 = point2D(ptex[X], ptex[Y] + psize)
+						
+								// Convert coordinates to 0-1
+								t1 = vec2_div(t1, texture_size)
+								t2 = vec2_div(t2, texture_size)
+								t3 = vec2_div(t3, texture_size)
+								t4 = vec2_div(t4, texture_size)
+		
+								var perccur, percnext, p1, p2, p3, p4;
+								
+								// Percentage of shape complete
+								if (anglesign * partsign > 0) // Bottom to middle
+								{
+									perccur = -(pz / -from[Z])
+									percnext = -((pz + pzs) / -from[Z])
+								}
+								else // Middle to top
+								{
+									perccur = (pz / to[Z])
+									percnext = ((pz + pzs) / to[Z])
+								}
+								
+								// Above triangle
+								if (aface)
+								{
+									p1 = point3D(pmidsca[X] + percnext * pcursca[X], pmidsca[Y], pmidsca[Z] + percnext * pcursca[Z])
+									p2 = point3D(pmidsca[X] + percnext * pcursca[X], nmidsca[Y], pmidsca[Z] + percnext * pcursca[Z])
+									p3 = point3D(pmidsca[X] + percnext * pnextsca[X], nmidsca[Y], pmidsca[Z] + percnext * pnextsca[Z])
+									p4 = point3D(pmidsca[X] + percnext * pnextsca[X], pmidsca[Y], pmidsca[Z] + percnext * pnextsca[Z])
+									vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha, (partsign * invertsign > 0))
+									vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, color_blend, color_alpha, (partsign * invertsign > 0))
+								}
+						
+								// Below triangle
+								if (bface)
+								{
+									p1 = point3D(pmidsca[X] + perccur * pnextsca[X], pmidsca[Y], pmidsca[Z] + perccur * pnextsca[Z])
+									p2 = point3D(pmidsca[X] + perccur * pnextsca[X], nmidsca[Y], pmidsca[Z] + perccur * pnextsca[Z])
+									p3 = point3D(pmidsca[X] + perccur * pcursca[X], nmidsca[Y], pmidsca[Z] + perccur * pcursca[Z])
+									p4 = point3D(pmidsca[X] + perccur * pcursca[X], pmidsca[Y], pmidsca[Z] + perccur * pcursca[Z])
+									vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha, (partsign * invertsign > 0))
+									vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, color_blend, color_alpha, (partsign * invertsign > 0))
+								}
+						
+								pz += pzs
+							}
 						}
 						
 						break
@@ -628,7 +808,11 @@ with (shape)
 					{
 						if (bend_part = e_part.RIGHT || bend_part = e_part.LEFT)
 						{
+							// Array X location
 							var ax = floor(size[X] - (to[X] - (bend_offset - position[X])) / scale[X]);
+							if (texture_mirror)
+								ax = floor((to[X] - (bend_offset - position[X])) / scale[X])
+							
 							if (ax < 0 && ax >= size[X])
 								break
 								
@@ -636,6 +820,8 @@ with (shape)
 							for (var ay = 0; ay < size[Z]; ay++)
 							{
 								var pzs = scale[Z];
+								if (ay = ceil(size[Z]) - 1 && frac(size[Z]) > 0)
+									pzs = frac(size[Z]) * scale[Z]
 						
 								if (alphaarr[@ ax, ay] < 1)
 								{
@@ -644,7 +830,7 @@ with (shape)
 								}
 								
 								var bface, aface;
-								bface = (ay = size[Z] - 1 || alphaarr[@ ax, ay + 1] < 1)
+								bface = (ay = ceil(size[Z]) - 1 || alphaarr[@ ax, ay + 1] < 1)
 								aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
 								
 								if (!bface && !aface)
@@ -670,25 +856,19 @@ with (shape)
 								// Below
 								if (bface)
 								{
-									p1 = point3D(pmidsca[X], pmidsca[Y], pz - pzs)
-									p2 = point3D(pcursca[X], pcursca[Y], (pz - pzs) * scacur)
+									p1 = point3D(pcursca[X], pcursca[Y], (pz - pzs) * scacur)
+									p2 = point3D(pmidsca[X], pmidsca[Y], pz - pzs)
 									p3 = point3D(pnextsca[X], pnextsca[Y], (pz - pzs) * scanext)
-									if (anglesign * invertsign > 0)
-										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-									else
-										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (anglesign * invertsign > 0))
 								}
 						
 								// Above
 								if (aface)
 								{
-									p1 = point3D(ncursca[X], ncursca[Y], pz * scacur)
-									p2 = point3D(nmidsca[X], nmidsca[Y], pz)
+									p1 = point3D(nmidsca[X], nmidsca[Y], pz)
+									p2 = point3D(ncursca[X], ncursca[Y], pz * scacur)
 									p3 = point3D(nnextsca[X], nnextsca[Y], pz * scanext)
-									if (anglesign * invertsign > 0)
-										vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-									else
-										vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
+									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (anglesign * invertsign > 0))
 								}
 						
 								pz -= pzs
@@ -697,13 +877,6 @@ with (shape)
 						
 						break
 					}
-				}
-					
-				if (a = 1 && is3d)
-				{
-					// Top face
-					//vbuffer_add_triangle(nnextsca, nmidsca, pmidsca, nbacktex, nmidtex, pmidtex, null, color_blend, color_alpha)
-					//vbuffer_add_triangle(pnextsca, nnextsca, pmidsca, pbacktex, nbacktex, pmidtex, null, color_blend, color_alpha)
 				}
 			}
 		}

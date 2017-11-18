@@ -114,7 +114,7 @@ if (object_index != app && update_matrix)
 	}
 	
 	// Inherit
-	var lasttex = value[e_value.TEXTURE_OBJ];
+	var lasttex = value_inherit[e_value.TEXTURE_OBJ];
 	value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
 	value_inherit[e_value.RGB_ADD] = value[e_value.RGB_ADD] // Added
 	value_inherit[e_value.RGB_SUB] = value[e_value.RGB_SUB] // Added

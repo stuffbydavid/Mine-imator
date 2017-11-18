@@ -327,21 +327,21 @@ for (var d = 0; d < e_dir.amount; d++)
 	
 	var p1, p2, p3, p4;
 	var t1, t2, t3, t4;
-		
-	// Mirror texture U
-	if (texture_mirror)
-	{
-		t1 = tex[d, 1]
-		t2 = tex[d, 0]
-		t3 = tex[d, 3]
-		t4 = tex[d, 2]
-	}
-	else
+			
+	// Mirror texture X
+	if (!texture_mirror)
 	{
 		t1 = tex[d, 0]
 		t2 = tex[d, 1]
 		t3 = tex[d, 2]
 		t4 = tex[d, 3]
+	}
+	else
+	{
+		t1 = tex[d, 1]
+		t2 = tex[d, 0]
+		t3 = tex[d, 3]
+		t4 = tex[d, 2]
 	}
 	
 	// Transform texture values between 0-1
@@ -408,14 +408,6 @@ for (var d = 0; d < e_dir.amount; d++)
 		}
 	}
 	
-	if (invert)
-	{
-		vbuffer_add_triangle(p2, p1, p3, t2, t1, t3, null, color_blend, color_alpha)
-		vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, null, color_blend, color_alpha)
-	}
-	else
-	{
-		vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha)
-		vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha)
-	}
+	vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
+	vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
 }

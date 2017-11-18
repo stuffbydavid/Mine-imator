@@ -30,3 +30,8 @@ var res = temp_get_model_texobj(null);
 for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
 	if (ds_list_find_index(model_hide_list, model_file.file_part_list[|p].name) < 0)
 		model_part_get_plane_vbuffer_map(model_file.file_part_list[|p], model_plane_vbuffer_map, model_plane_alpha_map, res, model_texture_name_map)
+		
+// Update timelines
+with (obj_timeline)
+	if (temp = other.id)
+		tl_update_part_plane_vbuffer_map()

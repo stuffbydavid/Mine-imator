@@ -10,5 +10,8 @@ with (bench_settings)
 		
 	model_part_name = name
 	temp_update_model_part()
-	preview.update = true
+	temp_update_model_plane_vbuffer_map()
+	
+	with (preview)
+		update = true
 }

@@ -11,17 +11,18 @@ x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];		y2 = to[Y];		z2 = to[Z]
 
 // Define texture coordinates to use (clockwise, starting at top-left)
-var tex, size, texsize, texsizefix;
+var size, texsize, texsizefix;
+var t1, t2, t3, t4;
 size = point3D_sub(to, from)
 texsize = point3D_sub(to_noscale, from_noscale)
 
 // Artifact fix with CPU rendering
-texsizefix = point3D_sub(texsize, vec3(1 / 64))
+texsizefix = texsize//point3D_sub(texsize, vec3(1 / 64))
 
-tex[0] = uv
-tex[1] = point2D_add(tex[0], point2D(texsizefix[X], 0))
-tex[2] = point2D_add(tex[0], point2D(texsizefix[X], texsizefix[Z]))
-tex[3] = point2D_add(tex[0], point2D(0, texsizefix[Z]))
+t1 = uv
+t2 = point2D_add(t1, point2D(texsizefix[X], 0))
+t3 = point2D_add(t1, point2D(texsizefix[X], texsizefix[Z]))
+t4 = point2D_add(t1, point2D(0, texsizefix[Z]))
 
 // Adjust by bending
 if (bend_part != null && bend_mode = e_shape_bend.BEND)
@@ -39,8 +40,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x2 = size[X] - bendoff
 				
 				texoff = point2D(bendoff / scale[X], 0)
-				tex[0] = point2D_add(tex[0], texoff)
-				tex[3] = point2D_add(tex[3], texoff)
+				t1 = point2D_add(t1, texoff)
+				t4 = point2D_add(t4, texoff)
 				break
 			}
 			
@@ -51,8 +52,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x2 = 0
 				
 				texoff = point2D(-(texsize[X] - bendoff / scale[X]), 0)
-				tex[1] = point2D_add(tex[1], texoff)
-				tex[2] = point2D_add(tex[2], texoff)
+				t2 = point2D_add(t2, texoff)
+				t3 = point2D_add(t3, texoff)
 				break
 			}
 			
@@ -63,8 +64,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z2 = size[Z] - bendoff
 				
 				texoff = point2D(0, -bendoff / scale[Z])
-				tex[2] = point2D_add(tex[2], texoff)
-				tex[3] = point2D_add(tex[3], texoff)
+				t3 = point2D_add(t3, texoff)
+				t4 = point2D_add(t4, texoff)
 				break
 			}
 			
@@ -75,8 +76,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z2 = 0
 				
 				texoff = point2D(0, (texsize[Z] - bendoff / scale[Z]))
-				tex[0] = point2D_add(tex[0], texoff)
-				tex[1] = point2D_add(tex[1], texoff)
+				t1 = point2D_add(t1, texoff)
+				t2 = point2D_add(t2, texoff)
 				break
 			}
 		}	
@@ -92,8 +93,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x2 = from[X] + bendoff
 				
 				texoff = point2D(-(texsize[X] - bendoff / scale[X]), 0)
-				tex[1] = point2D_add(tex[1], texoff)
-				tex[2] = point2D_add(tex[2], texoff)
+				t2 = point2D_add(t2, texoff)
+				t3 = point2D_add(t3, texoff)
 				break
 			}
 			
@@ -104,8 +105,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				x2 = to[X]
 				
 				texoff = point2D(bendoff / scale[X], 0)
-				tex[0] = point2D_add(tex[0], texoff)
-				tex[3] = point2D_add(tex[3], texoff)
+				t1 = point2D_add(t1, texoff)
+				t4 = point2D_add(t4, texoff)
 				break
 			}
 			
@@ -116,8 +117,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z2 = from[Z] + bendoff
 				
 				texoff = point2D(0, (texsize[Z] - bendoff / scale[Z]))
-				tex[0] = point2D_add(tex[0], texoff)
-				tex[1] = point2D_add(tex[1], texoff)
+				t1 = point2D_add(t1, texoff)
+				t2 = point2D_add(t2, texoff)
 				break
 			}
 			
@@ -128,8 +129,8 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 				z2 = to[Z]
 				
 				texoff = point2D(0, -bendoff / scale[Z])
-				tex[2] = point2D_add(tex[2], texoff)
-				tex[3] = point2D_add(tex[3], texoff)
+				t3 = point2D_add(t3, texoff)
+				t4 = point2D_add(t4, texoff)
 				break
 			}
 		}
@@ -139,19 +140,17 @@ if (bend_part != null && bend_mode = e_shape_bend.BEND)
 // Mirror texture U
 if (texture_mirror)
 {
-	var tmp = tex[0];
-	tex[0] = tex[1]
-	tex[1] = tmp
-	tmp = tex[2]
-	tex[2] = tex[3]
-	tex[3] = tmp
+	t1[X] = (texsize[X] - (t1[X] - uv[X])) + uv[X]
+	t2[X] = (texsize[X] - (t2[X] - uv[X])) + uv[X]
+	t3[X] = (texsize[X] - (t3[X] - uv[X])) + uv[X]
+	t4[X] = (texsize[X] - (t4[X] - uv[X])) + uv[X]
 }
 
 // Transform texture values between 0-1
-tex[0] = vec2_div(tex[0], texture_size)
-tex[1] = vec2_div(tex[1], texture_size)
-tex[2] = vec2_div(tex[2], texture_size)
-tex[3] = vec2_div(tex[3], texture_size)
+t1 = vec2_div(t1, texture_size)
+t2 = vec2_div(t2, texture_size)
+t3 = vec2_div(t3, texture_size)
+t4 = vec2_div(t4, texture_size)
 
 // Create faces
 var p1, p2, p3, p4;
@@ -159,12 +158,12 @@ p1 = point3D(x1, y1, z2)
 p2 = point3D(x2, y1, z2)
 p3 = point3D(x2, y1, z1)
 p4 = point3D(x1, y1, z1)
-vbuffer_add_triangle(p2, p1, p3, tex[1], tex[0], tex[2], null, color_blend, color_alpha)
-vbuffer_add_triangle(p4, p3, p1, tex[3], tex[2], tex[0], null, color_blend, color_alpha)
+vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, true)
+vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, true)
 
 p1 = point3D(x1, y2, z2)
 p2 = point3D(x2, y2, z2)
 p3 = point3D(x2, y2, z1)
 p4 = point3D(x1, y2, z1)
-vbuffer_add_triangle(p1, p2, p3, tex[0], tex[1], tex[2], null, color_blend, color_alpha)
-vbuffer_add_triangle(p3, p4, p1, tex[2], tex[3], tex[0], null, color_blend, color_alpha)
+vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, false)
+vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, false)

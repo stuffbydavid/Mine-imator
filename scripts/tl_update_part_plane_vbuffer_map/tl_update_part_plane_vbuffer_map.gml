@@ -29,3 +29,4 @@ with (temp)
 	res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 
 model_part_get_plane_vbuffer_map(model_part, model_plane_vbuffer_map, model_plane_alpha_map, res, temp.model_texture_name_map)
+tl_update_bend(true)

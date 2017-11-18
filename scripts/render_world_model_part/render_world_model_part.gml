@@ -39,6 +39,7 @@ if (part.shape_list != null)
 			matrix_set(matrix_world, matrix_multiply(shape.matrix, mat))
 		vbuffer_render(shape.vbuffer)
 		
+		// 3D plane pixel mesh
 		if (shape.type = "plane" && shape.is3d)
 		{
 			planevbuf = planevbuffermap[?shape];

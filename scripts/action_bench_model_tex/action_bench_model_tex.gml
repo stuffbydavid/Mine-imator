@@ -61,5 +61,11 @@ else
 	history_set_res(action_bench_model_tex, fn, bench_settings.model_tex, res)
 }
 
-bench_settings.model_tex = res
-bench_settings.preview.update = true
+with (bench_settings)
+{
+	model_tex = res
+	temp_update_model_plane_vbuffer_map()
+	
+	with (preview)
+		update = true
+}

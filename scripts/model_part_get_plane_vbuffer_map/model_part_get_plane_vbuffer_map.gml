@@ -45,17 +45,13 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		// Create surface from texture
 		var surf, texsize;
 		texsize = vec2(to_noscale[X] - from_noscale[X], to_noscale[Z] - from_noscale[Z])
-		surf = surface_create(texsize[X], texsize[Y])
-		render_set_culling(false)
+		surf = surface_create(ceil(texsize[X]), ceil(texsize[Y]))
 		surface_set_target(surf)
 		{
-			if (texture_mirror)
-				draw_texture_part(tex, texsize[X], 0, uv[X], uv[Y], texsize[X], texsize[Y], -1, 1)
-			else
-				draw_texture_part(tex, 0, 0, uv[X], uv[Y], texsize[X], texsize[Y])
+			draw_clear_alpha(c_black, 0)
+			draw_texture_part(tex, 0, 0, uv[X], uv[Y], ceil(texsize[X]), ceil(texsize[Y]))
 		}
 		surface_reset_target()
-		render_set_culling(true)
 		
 		alphaarrmap[?id] = surface_get_alpha_array(surf)
 		
@@ -64,7 +60,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		{
 			// Generate 3D pixels
 			vbufarr[0] = vbuffer_start()
-			vbuffer_add_pixels(alphaarrmap[?id], from, texsize[Y] * scale[Z], array_copy_1d(uv), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(0, 0), texture_mirror, color_blend, color_alpha)
+			vbuffer_add_pixels(alphaarrmap[?id], from, texsize[Y] * scale[Z], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(0, 0), texture_mirror, color_blend, color_alpha)
 			vbuffer_done()
 		}
 		else
@@ -74,7 +70,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 			if (bend_part = e_part.UPPER || bend_part = e_part.LOWER)
 			{
 				bendoff = (bend_offset - position[Z]) - from[Z]
-				texoff = bendoff / scale[Z]
+				texoff = texsize[Y] - bendoff / scale[Z]
 			
 				// Lower
 				if (bend_part = e_part.UPPER)
@@ -87,7 +83,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 					pos = point3D(from[X], from[Y], -bendoff)
 					vbufarr[1] = vbuffer_start()
 				}
-				vbuffer_add_pixels(alphaarrmap[?id], pos, bendoff, vec2(uv[X], uv[Y] + (texsize[Y] - texoff)), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, texsize[Y] - texoff), vec2(0, texoff), texture_mirror, color_blend, color_alpha)
+				vbuffer_add_pixels(alphaarrmap[?id], pos, bendoff, uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, texoff), vec2(0, -texoff), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 		
 				// Upper
@@ -101,7 +97,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 					pos = point3D(from[X], from[Y], from[Z] + bendoff)
 					vbufarr[0] = vbuffer_start()
 				}
-				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y] * scale[Z] - bendoff, array_copy_1d(uv), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(0, -texoff), texture_mirror, color_blend, color_alpha)
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y] * scale[Z] - bendoff, uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(0, -(texsize[Y] - texoff)), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 			}
 			else // Right or Left
@@ -117,10 +113,10 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 				}
 				else
 				{
-					pos = point3D( -bendoff, from[Y], from[Z])
+					pos = point3D(-bendoff, from[Y], from[Z])
 					vbufarr[1] = vbuffer_start()
 				}
-				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], array_copy_1d(uv), texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(-(texsize[X] - texoff), 0), texture_mirror, color_blend, color_alpha)
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(-(texsize[X] - texoff), 0), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 		
 				// Right
@@ -134,7 +130,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 					pos = point3D(from[X] + bendoff, from[Y], from[Z])
 					vbufarr[0] = vbuffer_start()
 				}
-				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], vec2(uv[X] + texoff, uv[Y]), texsize, vec2_div(vec2(1), texture_size), scale, vec2(texoff, 0), vec2(-texoff, 0), texture_mirror, color_blend, color_alpha)
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(texoff, 0), vec2(-texoff, 0), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 			}
 		}

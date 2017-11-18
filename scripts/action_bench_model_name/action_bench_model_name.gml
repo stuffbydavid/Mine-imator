@@ -13,6 +13,8 @@ with (bench_settings)
 	if (type = e_temp_type.BODYPART)
 		temp_update_model_part()
 	
+	temp_update_model_plane_vbuffer_map()
+	
 	with (preview)
 	{
 		preview_reset_view()

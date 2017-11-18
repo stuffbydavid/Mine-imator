@@ -8,6 +8,7 @@ if (type = e_temp_type.CHARACTER ||
 	temp_update_model()
 	if (type = e_temp_type.BODYPART)
 		temp_update_model_part()
+	temp_update_model_plane_vbuffer_map()
 }
 else if (type = e_temp_type.ITEM)
 	temp_update_item()

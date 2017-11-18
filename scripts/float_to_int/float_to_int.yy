@@ -1,8 +1,8 @@
 {
-    "id": "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
+    "id": "4596cdbb-e792-42ed-8531-5ebba2e4d569",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "minecraft_startup",
+    "name": "float_to_int",
     "IsCompatibility": false,
     "IsDnD": false
 }

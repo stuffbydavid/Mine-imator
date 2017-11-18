@@ -1,5 +1,5 @@
-/// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [normal, [color, alpha, [matrix]]])
-/// OR vbuffer_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3, [color, alpha, [matrix]])
+/// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [normal, [color, alpha, [invert, [matrix]]]])
+/// OR vbuffer_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3, [color, alpha, [invert, [matrix]]])
 /// @arg pos1
 /// @arg pos2
 /// @arg pos3
@@ -9,7 +9,8 @@
 /// @arg [normal
 /// @arg [color
 /// @arg alpha
-/// @arg [matrix]]]
+/// @arg [invert
+/// @arg [matrix]]]]
 
 if (argument_count < 15)
 {
@@ -20,6 +21,17 @@ if (argument_count < 15)
 	tex1 = argument[3]
 	tex2 = argument[4]
 	tex3 = argument[5]
+	
+	// Invert
+	if (argument_count > 9 && argument[9])
+	{
+		var tmp = pos1;
+		pos1 = pos2
+		pos2 = tmp
+		tmp = tex1
+		tex1 = tex2
+		tex2 = tmp
+	}
 	
 	if (argument_count > 6 && is_array(argument[6]))
 		normal = argument[6]
@@ -37,9 +49,9 @@ if (argument_count < 15)
 		alpha = 1
 	}
 	
-	if (argument_count > 9 && argument[9] != null)
+	if (argument_count > 10 && argument[10] != null)
 	{
-		var mat = argument[9];
+		var mat = argument[10];
 		pos1 = point3D_mul_matrix(pos1, mat)
 		pos2 = point3D_mul_matrix(pos2, mat)
 		pos3 = point3D_mul_matrix(pos3, mat)
@@ -53,6 +65,7 @@ if (argument_count < 15)
 else
 {
 	var x1, y1, z1, x2, y2, z2, x3, y3, z3;
+	var tx1, ty1, tx2, ty2, tx3, ty3;
 	var nx, ny, nz;
 	var color, alpha;
 	
@@ -67,9 +80,9 @@ else
 		alpha = 1
 	}
 		
-	if (argument_count > 17 && argument[17] != null)
+	if (argument_count > 18 && argument[18] != null)
 	{
-		var mat = argument[17];
+		var mat = argument[18];
 		x1 = mat[@ 0] * argument[0] + mat[@ 4] * argument[1] + mat[@ 8] * argument[2] + mat[@ 12]
 		y1 = mat[@ 1] * argument[0] + mat[@ 5] * argument[1] + mat[@ 9] * argument[2] + mat[@ 13]
 		z1 = mat[@ 2] * argument[0] + mat[@ 6] * argument[1] + mat[@ 10] * argument[2] + mat[@ 14]
@@ -92,12 +105,30 @@ else
 		y3 = argument[7]
 		z3 = argument[8]
 	}
+	
+	// Invert
+	if (argument_count > 17 && argument[17])
+	{
+		var tx1, ty1, tz1;
+		tx1 = x1; ty1 = y1; tz1 = z1;
+		x1 = x2; y1 = y2; z1 = z2;
+		x2 = tx1; y2 = ty1; z2 = tz1;
+		tx1 = argument[11]; ty1 = argument[12];
+		tx2 = argument[9]; ty2 = argument[10];
+		tx3 = argument[13]; ty3 = argument[14];
+	}
+	else
+	{
+		tx1 = argument[9]; ty1 = argument[10];
+		tx2 = argument[11]; ty2 = argument[12];
+		tx3 = argument[13]; ty3 = argument[14];
+	}
 
 	nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2)
 	ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2)
 	nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2)
 
-	vertex_add(x1, y1, z1, nx, ny, nz, argument[9], argument[10], color, alpha)
-	vertex_add(x2, y2, z2, nx, ny, nz, argument[11], argument[12], color, alpha)
-	vertex_add(x3, y3, z3, nx, ny, nz, argument[13], argument[14], color, alpha)
+	vertex_add(x1, y1, z1, nx, ny, nz, tx1, ty1, color, alpha)
+	vertex_add(x2, y2, z2, nx, ny, nz, tx2, ty2, color, alpha)
+	vertex_add(x3, y3, z3, nx, ny, nz, tx3, ty3, color, alpha)
 }

@@ -409,26 +409,24 @@ with (new(obj_block_render_model))
 								// Not transparent
 								if (alpha > 0)
 								{
-									var pcol, palpha;
-									pcol = buffer_read_color(px, py, sheetwidth);
-									palpha = buffer_read_alpha(px, py, sheetwidth);
+									var col = buffer_read_color(px, py, sheetwidth);
 							
 									if (face_texture_color[nd] > -1)
-										pcol = color_multiply(pcol, face_texture_color[nd])
+										col = color_multiply(col, face_texture_color[nd])
 									else if (face_block_vbuffer[nd] = e_block_vbuffer.GRASS)
-										pcol = color_multiply(pcol, mc_res.color_grass)
+										col = color_multiply(col, mc_res.color_grass)
 									else if (face_block_vbuffer[nd] = e_block_vbuffer.LEAVES)
-										pcol = color_multiply(pcol, mc_res.color_foliage)
+										col = color_multiply(col, mc_res.color_foliage)
 						
 									if (nd = e_dir.UP)
 									{
-										other.preview_color_zp = pcol
-										other.preview_alpha_zp = palpha
+										other.preview_color_zp = col
+										other.preview_alpha_zp = alpha
 									}
 									else
 									{
-										other.preview_color_yp = pcol
-										other.preview_alpha_yp = palpha
+										other.preview_color_yp = col
+										other.preview_alpha_yp = alpha
 									}
 								}
 							}
