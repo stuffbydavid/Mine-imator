@@ -1,7 +1,7 @@
  /// tab_frame_editor_position()
 
 var mul, snapval, capwid, def;
-mul = point3D_distance(tl_edit.world_pos, cam_work_from) / 100
+mul = max(1, point3D_distance(tl_edit.world_pos, cam_work_from)) / 100
 snapval = tab.position.snap_enabled * tab.position.snap_size
 capwid = text_caption_width("frameeditorpositionx", "frameeditorpositiony", "frameeditorpositionz")
 

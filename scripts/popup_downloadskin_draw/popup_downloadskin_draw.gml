@@ -2,13 +2,13 @@
 
 // Username input
 draw_inputbox("downloadskinusername", dx + 30, dy, 220, "", popup.tbx_username, null)
-if (popup.tbx_username.text != "" && !popup.http)
+if (popup.tbx_username.text != "" && http_downloadskin = null)
 {
 	var wid = text_max_width("downloadskingetskin") + 20;
 	if (draw_button_normal("downloadskingetskin", dx + 258, dy - 1, wid, 24))
 	{
 		popup.username = popup.tbx_username.text
-		popup.http = http_get_file(link_skins + popup.username + ".png", download_image_file)
+		http_downloadskin = http_get_file(link_skins + popup.username + ".png", download_image_file)
 		popup.fail_message = ""
 		popup.start_time = current_time
 	}
@@ -30,7 +30,7 @@ if (popup.http != null)
 	if (current_time - popup.start_time > 3000) // Timeout
 	{
 		popup.fail_message = text_get("errordownloadskininternet")
-		popup.http = null
+		http_downloadskin = null
 	}
 }
 else if (popup.fail_message != "")

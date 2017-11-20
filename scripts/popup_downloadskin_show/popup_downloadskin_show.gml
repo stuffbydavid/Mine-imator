@@ -8,7 +8,6 @@ with (popup_downloadskin)
 	
 	value_script = argument0
 	texture = null
-	http = null
 	username = ""
 	fail_message = ""
 	tbx_username.text = ""

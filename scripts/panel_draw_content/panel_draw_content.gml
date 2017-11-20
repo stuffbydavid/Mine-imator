@@ -95,5 +95,5 @@ if (tab != timeline) // Scrollbar
 	if (content_direction = e_scroll.VERTICAL)
 		scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + content_width - 35, content_y, content_height, maxh + 15, setting_color_buttons, setting_color_buttons_pressed, setting_color_background)
 	else
-		scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15, setting_color_buttons, setting_color_buttons_pressed, setting_color_background)
+		scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
 }

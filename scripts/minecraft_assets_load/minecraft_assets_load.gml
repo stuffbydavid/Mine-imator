@@ -13,11 +13,15 @@ with (mc_assets)
 		{
 			if (current_step < 5)
 				break
-			
+
 			if (!directory_exists(load_assets_dir + mc_assets_directory))
 			{
 				debug_timer_start()
-				unzip(load_assets_zip_file, load_assets_dir)
+				if (unzip(load_assets_zip_file, load_assets_dir) = 0)
+				{
+					log("Could not unzip archive")
+					return false
+				}
 				debug_timer_stop("Unzip archive")
 			}
 			

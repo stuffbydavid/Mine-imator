@@ -31,6 +31,8 @@ if (!ds_map_valid(map))
 
 with (new(obj_block_load_model_file))
 {
+	name = filename_new_ext(filename_name(fname), "")
+	
 	// Parent
 	parent = null
 	if (res = null && is_string(map[?"parent"]))

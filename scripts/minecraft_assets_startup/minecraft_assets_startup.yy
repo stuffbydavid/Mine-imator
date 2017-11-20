@@ -1,5 +1,5 @@
 {
-    "id": "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
+    "id": "af081791-28a6-4b4a-8220-91956909387c",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "minecraft_assets_startup",

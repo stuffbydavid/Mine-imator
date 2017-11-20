@@ -12,7 +12,7 @@ if (exportmovie_format != "png")
 
 surface_free(exportmovie_surface)
 exportmovie_surface = null
-window_busy = ""
+window_state = ""
 
 render_watermark = false
 render_background = true

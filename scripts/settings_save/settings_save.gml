@@ -6,6 +6,25 @@ json_save_start(settings_file)
 json_save_object_start()
 json_save_var("format", settings_format)
 
+json_save_object_start("assets")
+
+	json_save_var("version", setting_minecraft_assets_version)
+	
+	if (setting_minecraft_assets_new_version != "")
+	{
+		json_save_object_start("new")
+
+			json_save_var("version", setting_minecraft_assets_new_version)
+			json_save_var("format", setting_minecraft_assets_new_format)
+			json_save_var("changes", json_string_encode(setting_minecraft_assets_new_changes))
+			json_save_var("image", json_string_encode(setting_minecraft_assets_new_image))
+
+		json_save_object_done()
+	}
+	
+json_save_object_done()
+
+
 json_save_array_start("recent_files")
 	
 	for (var i = 0; i < ds_list_size(recent_list); i++)

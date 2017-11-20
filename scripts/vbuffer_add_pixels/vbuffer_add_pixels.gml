@@ -57,7 +57,7 @@ if (argument_count > 10)
 }
 else
 {
-	color = -1
+	color = c_white
 	alpha = 1
 }
 
@@ -133,6 +133,7 @@ for (var xx = 0; xx < samplesizex; xx++)
 			continue
 		}
 		
+		// Calculate which faces to add, continue if none are visible
 		var wface, eface, aface, bface;
 		wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
 		eface = (ax = ceil(texsize[X]) - 1 || alphaarr[@ ax + 1, ay] < 1)

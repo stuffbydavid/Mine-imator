@@ -1,27 +1,37 @@
-/// scrollbar_draw(scrollbar, direction, x, y, size, maxsize, color, pressedcolor, backcolor)
+/// scrollbar_draw(scrollbar, direction, x, y, size, maxsize, [color, pressedcolor, backcolor])
 /// @arg scrollbar
 /// @arg direction
 /// @arg x
 /// @arg y
 /// @arg size
 /// @arg maxsize
-/// @arg color
+/// @arg [color
 /// @arg pressedcolor
-/// @arg backcolor
-/// @desc Draws the scrollbar.
+/// @arg backcolor]
+/// @desc Draws a scrollbar.
 
 var sb, dir, xx, yy, size, maxsize, color, pressedcolor, backcolor;
 var margin, areasize, barsizeadj;
 var barsize, barpos, mouseinarea, mouseinbar, pressed;
-sb = argument0
-dir = argument1
-xx = argument2
-yy = argument3
-size = argument4
-maxsize = argument5
-color = argument6
-pressedcolor = argument7
-backcolor = argument8
+sb = argument[0]
+dir = argument[1]
+xx = argument[2]
+yy = argument[3]
+size = argument[4]
+maxsize = argument[5]
+
+if (argument_count > 6)
+{
+	color = argument[6]
+	pressedcolor = argument[7]
+	backcolor = argument[8]
+}
+else
+{
+	color = setting_color_buttons
+	pressedcolor = setting_color_buttons_pressed
+	backcolor = setting_color_background_scrollbar
+}
 
 margin = 10
 barsizeadj = 10

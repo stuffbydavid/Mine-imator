@@ -338,7 +338,7 @@ switch (load_stage)
 					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".schematic");
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")
-					file_rename_lib(app.project_folder + "\\export.schematic", newname)
+					file_rename_lib(app.project_folder + "\\world.schematic", newname)
 				}
 			}
 				

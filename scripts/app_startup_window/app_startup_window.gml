@@ -7,6 +7,12 @@ delta = 1
 
 log("Windows startup")
 
+http_assets = null
+http_download_assets_file = null
+http_download_assets_zip = null
+http_alert_news = null
+http_downloadskin = null
+
 window_width = 1
 window_height = 1
 window_set_focus()
@@ -14,6 +20,7 @@ window_set_min_width(100)
 window_set_min_height(100)
 window_set_caption("Mine-imator")
 
+window_state = ""
 window_busy = ""
 window_focus = ""
 
@@ -60,3 +67,30 @@ dw_start = 0
 dh_start = 0
 tab = null
 tab_control_h = 0
+
+// Tips
+tip_show = false
+tip_alpha = 0
+tip_text = ""
+tip_text_wrap = ""
+tip_x = 0
+tip_y = 0
+tip_w = 0
+tip_h = 0
+tip_box_x = 0
+tip_box_y = 0
+tip_maxwid = 270
+tip_padding = 10
+tip_location_x = 0
+tip_location_y = 0
+tip_wrap = true
+tip_shortcut_key = -1
+tip_shortcut_control = false
+
+// Popups
+popup = null
+popup_ani = 0
+popup_ani_type = ""
+popup_switch_to = null
+popup_switch_from = null
+popup_mouseon = false

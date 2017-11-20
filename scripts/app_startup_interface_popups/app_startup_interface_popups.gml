@@ -1,20 +1,5 @@
 /// app_startup_interface_popups()
 
-popup = null
-popup_ani = 0
-popup_ani_type = ""
-popup_switch_to = null
-popup_switch_from = null
-popup_mouseon = false
-
-// Download content
-popup_download = new_popup("download", popup_download_draw, 480, 600, true)
-with(popup_download)
-{
-	header = spr_content_header
-	changelog_scroll = new(obj_scrollbar)
-}
-
 // Startup
 popup_startup = new_popup("startup", popup_startup_draw, 760, 515, true)
 with (popup_startup)
@@ -96,7 +81,6 @@ with (popup_downloadskin)
 	value_script = null
 	username = ""
 	texture = null
-	http = null
 	fail_message = ""
 	start_time = 0
 	tbx_username = new_textbox(true, 0, "")

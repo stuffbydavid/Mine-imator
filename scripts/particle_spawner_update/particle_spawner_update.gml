@@ -1,7 +1,7 @@
 /// particle_spawner_update()
 /// @desc Runs once per step and updates the particle spawning and their positions, scale, alpha, color etc.
 
-if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
+if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 {
 	// Iterate through missed steps
 	for (var s = spawn_laststep; s < current_step; s++)
@@ -121,7 +121,7 @@ if (app.window_busy = "export_movie" || !app.popup || !app.popup.block)
 						continue
 					
 					// Don't bother updating if particles are disabled (and not exporting)
-					if (!app.view_main.particles && (!app.view_second.particles || !app.view_second.show) && app.window_busy != "export_movie")
+					if (!app.view_main.particles && (!app.view_second.particles || !app.view_second.show) && app.window_state != "export_movie")
 						continue
 				}
 			

@@ -1,8 +1,8 @@
 {
-    "id": "58c78181-456f-4a34-9c00-0e07c61e2327",
+    "id": "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "changelog_load",
+    "name": "minecraft_assets_load_startup",
     "IsCompatibility": false,
     "IsDnD": false
 }

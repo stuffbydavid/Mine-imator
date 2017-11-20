@@ -496,12 +496,14 @@ with (shape)
 									pxs = 1
 								pxs *= scale[X]
 								
+								// Pixel is transparent, continue
 								if (alphaarr[@ ax, ay] < 1)
 								{
 									px += pxs
 									continue
 								}
 								
+								// Calculate which faces to add, continue if none are visible
 								var eface, wface;
 								eface = (ax = ceil(size[X]) - 1 || alphaarr[@ ax + 1, ay] < 1)
 								wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
@@ -519,6 +521,7 @@ with (shape)
 									continue
 								}
 								
+								// Set texture
 								var ptex, psize, t1, t2, t3;
 								ptex = point2D(uv[X] + ax, uv[Y] + ay)
 								psize = 1// - 1 / 256
@@ -609,12 +612,14 @@ with (shape)
 									pxs = frac(size[X])
 								pxs *= scale[X]
 						
+								// Pixel is transparent, continue
 								if (alphaarr[@ ax, ay] < 1)
 								{
 									px += pxs
 									continue
 								}
 								
+								// Calculate which faces to add, continue if none are visible
 								var eface, wface;
 								eface = (ax = ceil(size[X]) - 1 || alphaarr[@ ax + 1, ay] < 1)
 								wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
@@ -632,6 +637,7 @@ with (shape)
 									continue
 								}
 								
+								// Set texture
 								var ptex, psize, t1, t2, t3, t4;
 								ptex = point2D(uv[X] + ax, uv[Y] + ay)
 								psize = 1// - 1 / 256
@@ -660,7 +666,7 @@ with (shape)
 									percnext = -((px + pxs) / -from[X])
 								}
 								
-								// East
+								// East face
 								if (eface)
 								{
 									p1 = point3D(pmidsca[X] + percnext * pcursca[X], pmidsca[Y], pmidsca[Z] + percnext * pcursca[Z])
@@ -671,7 +677,7 @@ with (shape)
 									vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, (partsign * invertsign > 0))
 								}
 						
-								// West
+								// West face
 								if (wface)
 								{
 									p1 = point3D(pmidsca[X] + perccur * pnextsca[X], pmidsca[Y], pmidsca[Z] + perccur * pnextsca[Z])
@@ -819,16 +825,19 @@ with (shape)
 							var pz = to[Z];
 							for (var ay = 0; ay < size[Z]; ay++)
 							{
+								// Pixel Z size
 								var pzs = scale[Z];
 								if (ay = ceil(size[Z]) - 1 && frac(size[Z]) > 0)
 									pzs = frac(size[Z]) * scale[Z]
 						
+								// Pixel is transparent, continue
 								if (alphaarr[@ ax, ay] < 1)
 								{
 									pz -= pzs
 									continue
 								}
 								
+								// Calculate which faces to add, continue if none are visible
 								var bface, aface;
 								bface = (ay = ceil(size[Z]) - 1 || alphaarr[@ ax, ay + 1] < 1)
 								aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
@@ -839,6 +848,7 @@ with (shape)
 									continue
 								}
 						
+								// Set texture
 								var ptex, psize, t1, t2, t3;
 								ptex = point2D(uv[X] + ax, uv[Y] + ay)
 								psize = 1// - 1 / 256
@@ -853,7 +863,7 @@ with (shape)
 		
 								var p1, p2, p3, p4;
 						
-								// Below
+								// Below triangle
 								if (bface)
 								{
 									p1 = point3D(pcursca[X], pcursca[Y], (pz - pzs) * scacur)
@@ -862,7 +872,7 @@ with (shape)
 									vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, (anglesign * invertsign > 0))
 								}
 						
-								// Above
+								// Above triangle
 								if (aface)
 								{
 									p1 = point3D(nmidsca[X], nmidsca[Y], pz)

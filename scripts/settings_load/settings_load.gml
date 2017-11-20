@@ -35,6 +35,22 @@ if (filename_ext(fn) = ".midata")
 	
 	log("load_format", load_format)
 	
+	// Assets
+	var assetsmap = map[?"assets"];
+	if (ds_map_valid(assetsmap))
+	{
+		setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
+		
+		var newmap = assetsmap[?"new"];
+		if (ds_map_valid(newmap))
+		{
+			setting_minecraft_assets_new_version = value_get_string(newmap[?"version"])
+			setting_minecraft_assets_new_format = value_get_real(newmap[?"format"])
+			setting_minecraft_assets_new_changes = value_get_string(newmap[?"changes"])
+			setting_minecraft_assets_new_image = value_get_string(newmap[?"image"])
+		}
+	}
+	
 	// Recent files
 	var fileslist = map[?"recent_files"];
 	if (ds_list_valid(fileslist))

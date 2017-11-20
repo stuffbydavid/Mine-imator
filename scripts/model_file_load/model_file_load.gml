@@ -87,6 +87,9 @@ with (new(obj_model_file))
 	bounds_parts_start = point3D(no_limit, no_limit, no_limit)
 	bounds_parts_end = point3D(-no_limit, -no_limit, -no_limit)
 	
+	// Whether this file contains 3D planes that need to be regenerated on texture switches
+	has_3d_plane = false
+	
 	// Read all the parts of the root
 	var partlist = map[?"parts"]
 	file_part_list = ds_list_create()

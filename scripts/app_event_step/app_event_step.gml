@@ -5,15 +5,15 @@ keyboard_string = ""
 
 app_update_window()
 
-if (window_busy = "load_assets")
+if (window_state = "load_assets")
 	return 0
 
 app_update_mouse()
-app_update_keyboard()
 
-if (window_busy = "export_movie")
+if (window_state = "new_assets" || window_state = "export_movie")
 	return 0
 	
+app_update_keyboard()
 app_update_play()
 app_update_animate()
 app_update_previews()

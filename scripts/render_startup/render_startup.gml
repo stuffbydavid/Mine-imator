@@ -8,6 +8,18 @@ globalvar render_width, render_height, render_ratio, render_camera, render_camer
 		  proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far;
 
 log("Render init")
+	
+gpu_set_blendenable(true)
+gpu_set_blendmode(bm_normal)
+gpu_set_alphatestenable(true)
+gpu_set_alphatestref(0)
+gpu_set_texfilter(false)
+gpu_set_tex_mip_enable(mip_off)
+gpu_set_tex_mip_filter(tf_linear)
+gpu_set_texrepeat(true)
+gpu_set_ztestenable(false)
+gpu_set_zwriteenable(false)
+render_set_culling(true)
 
 render_width = 1
 render_height = 1
@@ -65,15 +77,3 @@ render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT] = shader_high_light_spot
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT] = shader_high_light_point
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_NIGHT] = shader_high_light_night
 render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
-	
-gpu_set_blendenable(true)
-gpu_set_blendmode(bm_normal)
-gpu_set_alphatestenable(true)
-gpu_set_alphatestref(0)
-gpu_set_texfilter(false)
-gpu_set_tex_mip_enable(mip_off)
-gpu_set_tex_mip_filter(tf_linear)
-gpu_set_texrepeat(true)
-gpu_set_ztestenable(false)
-gpu_set_zwriteenable(false)
-render_set_culling(true)

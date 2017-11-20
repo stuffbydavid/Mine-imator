@@ -182,15 +182,6 @@ if (trial_version)
 		dy -= buttonsize + 2
 }
 
-// Download content
-/*if(draw_button_normal("toolbarcontent", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.CONTENT_SMALL + buttonimage))
-	app_check_content()
-
-if (content_direction = e_scroll.HORIZONTAL)
-	dx -= buttonsize + 2
-else
-	dy -= buttonsize + 2*/
-
 // Forums
 if (draw_button_normal("toolbarforums", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.FORUMS_SMALL + buttonimage))
 	action_toolbar_forums()

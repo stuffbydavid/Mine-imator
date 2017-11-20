@@ -54,7 +54,7 @@ if (setting_tip_show && app_mouse_box(xx, yy, w, h) && content_mouseon &&
 		}
 		else // Below
 		{
-			tip_y = yy + h+12
+			tip_y = yy + h + 12
 			tip_location_y = false
 		}
 		

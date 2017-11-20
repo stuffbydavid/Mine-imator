@@ -48,8 +48,7 @@ else
 		history_save_tl_select()
 	}
 		
-	// Find affected timelines
-	// TODO save timeline info?
+	// Find affected timelines (TODO: timeline info of unused parts is not saved and will be LOST)
 	with (obj_timeline)
 	{
 		if (temp != temp_edit || part_list = null)

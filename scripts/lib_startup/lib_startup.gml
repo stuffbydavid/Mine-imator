@@ -8,6 +8,18 @@ pathmovie = "Data\\movie.dll"
 pathtexture = "Data\\texture.dll"
 pathwindow = "Data\\window.dll"
 
+if (!file_exists(pathfile))
+	return missing_file(pathfile)
+	
+if (!file_exists(pathmovie))
+	return missing_file(pathmovie)
+	
+if (!file_exists(pathtexture))
+	return missing_file(pathtexture)
+	
+if (!file_exists(pathwindow))
+	return missing_file(pathwindow)
+
 globalvar lib_open_url, lib_execute, lib_unzip, lib_gzunzip, lib_file_rename, lib_file_copy, lib_file_delete, lib_file_exists, lib_file_json_convert_unicode;
 globalvar file_copy_temp, lib_directory_create, lib_directory_exists, lib_directory_delete;
 globalvar lib_movie_init, lib_movie_set, lib_movie_start, lib_movie_audio_file_decode, lib_movie_audio_file_add, lib_movie_audio_sound_add, lib_movie_frame, lib_movie_done;
@@ -71,3 +83,5 @@ if (startup_last_crash)
 		open_url(log_previous_file)
 	}
 }
+
+return true

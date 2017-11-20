@@ -27,8 +27,7 @@
         "399604f3-357c-4002-a34d-f4d91712237d",
         "60afcc62-c070-489b-8be9-1b178166ef3f",
         "2225ee6a-6dbc-4c1d-9a4d-c42f68c36378",
-        "a25a806d-511b-43f1-8fca-90e23d7b5981",
-        "d53c7203-6d82-410c-ba4d-7d78adb7378b"
+        "a25a806d-511b-43f1-8fca-90e23d7b5981"
     ],
     "filterType": "GMScript",
     "folderName": "App",

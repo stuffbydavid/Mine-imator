@@ -638,6 +638,18 @@ switch (menu_name)
 		break
 	}
 	
+	// Minecraft version
+	case "settingsminecraftversion":
+	{
+		var files = file_find(minecraft_directory, ".midata");
+		for (var i = 0; i < array_length_1d(files); i++)
+		{
+			var name = filename_new_ext(filename_name(files[i]), "");
+			menu_add_item(name, name)
+		}
+		break
+	}
+	
 	// Shadow map detail
 	case "settingsrendershadowssunbuffersize":
 	case "settingsrendershadowsspotbuffersize":

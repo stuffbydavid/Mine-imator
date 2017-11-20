@@ -1065,6 +1065,8 @@ if (window_busy = "timelinemove" || window_busy = "timelineselect")
 		
 	if (mouse_y > tly + tlh)
 		timeline.ver_scroll.value += 8
+		
+	timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
 }
 
 // Move view when selecting/moving keyframes
@@ -1087,6 +1089,9 @@ if (window_busy = "timelineselectkeyframes" ||
 		
 	if (mouse_y > tly + tlh)
 		timeline.ver_scroll.value += 8
+		
+	timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
+	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
 }
 
 content_mouseon = (app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left_top"] || tab.panel = panel_map[?"left_bottom"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
@@ -1095,9 +1100,9 @@ content_mouseon = (app_mouse_box(content_x, content_y, content_width - 5 * (tab.
 if (tlw > 16)
 {
 	timeline.ver_scroll.snap_value = itemh
-	scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 30, tly, tlh, ds_list_size(tree_visible_list) * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+	scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 30, tly, tlh, ds_list_size(tree_visible_list) * itemh)
 }
 
 // Horizontal scrollbar
 if (content_height > 0 && (!timeline_playing || !setting_timeline_autoscroll))
-	scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 30, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw), setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+	scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 30, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw))

@@ -4839,14 +4839,6 @@
             }
         },
         {
-            "Key": "58c78181-456f-4a34-9c00-0e07c61e2327",
-            "Value": {
-                "id": "8251ddf2-dad2-44f6-a61c-a644a3958863",
-                "resourcePath": "scripts\\changelog_load\\changelog_load.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "58d0e59e-b4e2-4037-ab47-4c5d46f3efa5",
             "Value": {
                 "id": "5cc05d58-fac3-4a98-8b79-eac725e16637",
@@ -5026,7 +5018,7 @@
             "Key": "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
             "Value": {
                 "id": "e845acaa-903a-43c1-b7bb-05a86bb2ec01",
-                "resourcePath": "scripts\\minecraft_assets_startup\\minecraft_assets_startup.yy",
+                "resourcePath": "scripts\\minecraft_assets_load_startup\\minecraft_assets_load_startup.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -6359,14 +6351,6 @@
             }
         },
         {
-            "Key": "745b99ed-f1f2-4599-8deb-4601523360c3",
-            "Value": {
-                "id": "61c3c2fe-7fa4-4394-8e4c-486a37aecb2f",
-                "resourcePath": "sprites\\spr_content_header\\spr_content_header.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "74666be9-e566-4d06-8ffd-95923d1814ce",
             "Value": {
                 "id": "88acac18-7051-45ce-8ecf-72c5225dcbf1",
@@ -6412,6 +6396,14 @@
                 "id": "1dc47741-dd45-4260-a1db-b645cfd13ba7",
                 "resourcePath": "views\\755176d7-4412-4b46-aadc-ecfe6601b7fe.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "75883ec0-50f7-40a8-a2fa-1c9ea3550c45",
+            "Value": {
+                "id": "7c477f04-3849-43f1-8eca-506dfca2feab",
+                "resourcePath": "scripts\\action_setting_minecraft_assets_version\\action_setting_minecraft_assets_version.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -7436,14 +7428,6 @@
                 "id": "d850a628-530b-45a9-a8ce-43a2a0d9c33d",
                 "resourcePath": "sprites\\spr_watermark\\spr_watermark.yy",
                 "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "88e82aa6-468c-4fbe-9dca-852cf9243bd4",
-            "Value": {
-                "id": "19aa5643-f687-4eb8-8580-2be0ff73ad8c",
-                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milanguage.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -9623,6 +9607,14 @@
             }
         },
         {
+            "Key": "ad9f3f07-dc2e-4960-8529-c99e6e841971",
+            "Value": {
+                "id": "7884612e-0dc1-40e5-8dce-6414d7ee54cf",
+                "resourcePath": "scripts\\window_draw_new_assets\\window_draw_new_assets.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ae295d03-8c6f-422f-b222-25e23e939c93",
             "Value": {
                 "id": "545612d9-4537-46ac-b969-1be9ac306815",
@@ -9651,6 +9643,14 @@
             "Value": {
                 "id": "dc7e1d7c-f3c6-4a7e-9a34-8a554244935b",
                 "resourcePath": "scripts\\vbuffer_destroy\\vbuffer_destroy.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "af081791-28a6-4b4a-8220-91956909387c",
+            "Value": {
+                "id": "04f5dbab-b277-4d29-bc83-2e0d213abcee",
+                "resourcePath": "scripts\\minecraft_assets_startup\\minecraft_assets_startup.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10235,14 +10235,6 @@
             "Value": {
                 "id": "4c4adab2-02ae-4e37-8cda-cb8cf0f4e224",
                 "resourcePath": "scripts\\ds_map_valid\\ds_map_valid.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "b8a19853-e6be-43a1-876d-04e7f38524e4",
-            "Value": {
-                "id": "f35f9576-67ba-42e6-b8bd-8a070865b626",
-                "resourcePath": "scripts\\app_startup_interface_tips\\app_startup_interface_tips.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11859,14 +11851,6 @@
             "Value": {
                 "id": "f4ff984e-9c3e-4bca-843d-a4d39cb7789c",
                 "resourcePath": "scripts\\action_lib_pc_spawn_region_use\\action_lib_pc_spawn_region_use.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "d53c7203-6d82-410c-ba4d-7d78adb7378b",
-            "Value": {
-                "id": "f0079f3d-33cf-43db-a1e4-691c3e2f37f6",
-                "resourcePath": "scripts\\app_check_content\\app_check_content.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -13927,6 +13911,14 @@
             }
         },
         {
+            "Key": "fa09ecfb-33fe-4cb2-85c5-1ce0f6bcc5e5",
+            "Value": {
+                "id": "76b600f4-9c5c-41ec-8364-1d6971bba1b4",
+                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milanguage.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "fa0f67e1-72ed-4e1f-91a5-c18ff5aea309",
             "Value": {
                 "id": "1c42f3aa-994c-4407-b3a3-3b826144299d",
@@ -14602,13 +14594,14 @@
         "9ffd6a25-94d4-49f3-a773-56874a480211",
         "68e20340-0620-41f0-99c8-8c07bf4412a0",
         "8ee10bf8-fa55-4039-a32d-7bc9ec7ff9e6",
-        "737e38e9-5d06-4bea-894c-2e319d1af07f",
-        "673550a2-a94a-4f1e-b5bc-83312a605421",
         "0f06a4fd-b854-4929-815c-b0b0a43a8c0e",
-        "a35bd18d-a39f-4bd7-b08c-73c056c1a60c",
         "f0e7f606-843f-491c-917c-57d73079a4b8",
         "c8ea1dcf-b3bc-413d-b54d-6b90fc4a70cb",
+        "a35bd18d-a39f-4bd7-b08c-73c056c1a60c",
+        "75883ec0-50f7-40a8-a2fa-1c9ea3550c45",
         "9dac8e22-afa1-4ef2-a67f-3729175d9e62",
+        "673550a2-a94a-4f1e-b5bc-83312a605421",
+        "737e38e9-5d06-4bea-894c-2e319d1af07f",
         "43de08fe-e075-446e-9678-c490096e71f4",
         "eb03721d-bac6-4edf-b10a-8cb3eaa5e488",
         "269d7077-44ef-4393-90b3-c01b908ba6eb",
@@ -15038,7 +15031,6 @@
         "e4528c77-8c5d-40ce-9f5e-a9120a142a48",
         "416d3dc1-9ed6-43f5-b2e4-fe8359470a5d",
         "2eadb11b-9a02-41e0-9823-4a0e0948df6f",
-        "b8a19853-e6be-43a1-876d-04e7f38524e4",
         "49dc7810-d090-4839-9498-69b785898971",
         "cbc91817-2b9c-4fb3-92c3-edd866b1a803",
         "c827ae4d-03ec-4926-8930-c4abfa178968",
@@ -15085,12 +15077,12 @@
         "1320f297-eb21-46e7-90f8-54d3f3243eab",
         "3417238a-7b9a-4a8e-a608-71a675859bd1",
         "5fe80aad-39f0-4eca-90d1-95ba2b4406ce",
-        "58c78181-456f-4a34-9c00-0e07c61e2327",
         "8a11d893-f0f0-440a-8d8d-8ed62855d72c",
         "9f9914d5-1314-4567-b9a9-8105836a0af7",
         "529c4a27-0f39-41e1-91d3-0dfcf3b0086d",
         "18478adc-14df-4a55-acde-39980d34612f",
         "54735c89-2701-4db3-8855-b94d4dd4656e",
+        "ad9f3f07-dc2e-4960-8529-c99e6e841971",
         "6292d01d-aafa-42eb-845e-56c35fdd1363",
         "84d9376a-3cd4-4b38-99ca-1a54b8b25b92",
         "bf734d59-483b-422a-bd0d-7a4ede5bb36d",
@@ -15180,13 +15172,13 @@
         "60afcc62-c070-489b-8be9-1b178166ef3f",
         "2225ee6a-6dbc-4c1d-9a4d-c42f68c36378",
         "a25a806d-511b-43f1-8fca-90e23d7b5981",
-        "d53c7203-6d82-410c-ba4d-7d78adb7378b",
         "f9563782-e5e5-4163-8b53-891fb17c0185",
         "39642edf-aba8-4e96-834a-dc7a1dd232b9",
         "b0954969-d77b-400a-888b-a47410e349ef",
         "8955cde0-61b3-4993-a04e-927841db0475",
-        "b4fe5db7-2939-4804-b650-c8ee2bb1e9f4",
         "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
+        "b4fe5db7-2939-4804-b650-c8ee2bb1e9f4",
+        "af081791-28a6-4b4a-8220-91956909387c",
         "4a400fa0-0f88-4ab8-a908-82bcf007bd7e",
         "9baf016f-e9ba-4c5f-99b6-bc13523e8003",
         "9922aaaf-38ac-461a-b655-539804962ffe",
@@ -15422,6 +15414,11 @@
         "63a18eff-4abf-49d0-aba2-7b403c43ce0b",
         "617a7134-b14a-4639-b1a5-481c421d8ab3",
         "3e9fe735-c5f2-4bcb-9d23-9c1d6965e1bb",
+        "29236046-5f6c-4e54-953b-750652b30aac",
+        "f2fe3107-7667-48c0-a8fa-d605fbc78830",
+        "1641a651-0492-4a12-bfd1-7dce9e448981",
+        "0d832974-c4cd-498e-b5cb-8578e83d3028",
+        "5c2f2907-2726-439d-a0b7-1d661f749235",
         "b4360aa3-b6db-40b6-bfe8-7648eeee302f",
         "b40a7d18-7c69-4b57-b5c0-19b521c5a8f6",
         "3bfcbcbd-80f0-484e-8d3d-f5496da407cd",
@@ -15433,11 +15430,6 @@
         "111a660a-a29c-468b-9f5e-63fdb4ecd827",
         "ab42e8a5-d964-4b54-81f3-433aff78d6d9",
         "9f24b340-c1d7-4382-80a4-d12614829e7b",
-        "29236046-5f6c-4e54-953b-750652b30aac",
-        "f2fe3107-7667-48c0-a8fa-d605fbc78830",
-        "1641a651-0492-4a12-bfd1-7dce9e448981",
-        "0d832974-c4cd-498e-b5cb-8578e83d3028",
-        "5c2f2907-2726-439d-a0b7-1d661f749235",
         "28d9bfe6-3203-457b-9cbf-e3d56df22dee",
         "1607d7d9-5654-44a7-83bf-4a804c3114a6",
         "f3bbd03e-a06d-4a2f-b28c-0663f94af93a",

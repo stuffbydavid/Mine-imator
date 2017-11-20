@@ -12,7 +12,9 @@ if (string_pos("assets/minecraft_", name) = 1)
 if (res = null)
 	return name
 
-fn = load_folder + "\\" + name + ".png" // Look in the same folder
+fn = load_folder + "\\" + id.name + "\\" + name + ".png" // Look in exported folder
+if (!file_exists_lib(fn)) // Look in the same folder
+	fn = load_folder + "\\" + name + ".png"
 if (!file_exists_lib(fn))
 	fn = load_folder + "\\" + string_replace(name, "blocks/", "") + ".png" // Remove blocks/ and look in folder
 if (!file_exists_lib(fn))

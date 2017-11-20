@@ -1,38 +1,99 @@
 /// app_event_http()
 
-if (async_load[?"id"] = popup_downloadskin.http) // Download skin
+// Check assets
+if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 {
-	popup_downloadskin.http = null
-	popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
-	
-	if (popup_downloadskin.texture)
+	http_assets = null
+	if (async_load[?"http_status"] = http_ok)
 	{
-		texture_free(popup_downloadskin.texture)
-		popup_downloadskin.texture = null
-	}
-	
-	if (async_load[?"http_status"] = 200)
-	{
-		if (file_exists_lib(download_image_file))
+		var decodedmap = json_decode(async_load[?"result"]);
+		if (ds_map_valid(decodedmap))
 		{
-			popup_downloadskin.texture = texture_create(download_image_file)
-			if (!popup_downloadskin.texture)
-				popup_downloadskin.fail_message = text_get("errordownloadskininternet")
+			var versionslist, newversionmap;
+			versionslist = decodedmap[?"versions"]
+			newversionmap = versionslist[|ds_list_size(versionslist) - 1]
+			
+			// New assets available
+			if (ds_map_valid(newversionmap) && !file_exists_lib(minecraft_directory + newversionmap[?"version"] + ".zip"))
+			{
+				// Get info about assets
+				setting_minecraft_assets_new_version = newversionmap[?"version"]
+				setting_minecraft_assets_new_format = newversionmap[?"format"]
+				setting_minecraft_assets_new_changes = newversionmap[?"changes"]
+				if (is_string(newversionmap[?"image"]))
+				{
+					// Download image
+					setting_minecraft_assets_new_image = mc_file_directory + newversionmap[?"image"]
+					assets_http_image = http_get_file(link_assets + newversionmap[?"image"], setting_minecraft_assets_new_image)
+				}
+				else
+					setting_minecraft_assets_new_image = ""
+				
+				// Alert
+				alert_show(text_get("alertnewassetstitle", setting_minecraft_assets_new_version), text_get("alertnewassetstext"), icons.CHEST_SMALL)
+				
+				log("New assets found", setting_minecraft_assets_new_version)
+			}
 			else
-				popup_downloadskin.fail_message = ""
+				log("Using the latest assets")
+			
+			ds_map_destroy(decodedmap)
 		}
 	}
 }
 
-if (async_load[?"id"] = alert_news_http) // Check news
+// Download assets specification
+if (async_load[?"id"] = http_download_assets_file)
 {
-	alert_news_http = null
-	if (async_load[?"http_status"] = 200)
+	if (async_load[?"status"] = 1)
+		new_assets_download_progress = (async_load[?"sizeDownloaded"] / async_load[?"contentLength"]) * 0.25
+	else
 	{
-		var decoded = json_decode(async_load[?"result"]);
-		if (decoded >= 0)
+		http_download_assets_file = null
+		http_download_assets_zip = http_get_file(link_assets + new_assets_version + ".zip", mc_file_directory + new_assets_version + ".zip")
+	}
+}
+
+// Download assets archive
+if (async_load[?"id"] = http_download_assets_zip)
+{
+	if (async_load[?"status"] = 1)
+		new_assets_download_progress = 0.25 + (async_load[?"sizeDownloaded"] / async_load[?"contentLength"]) * 0.75
+	else
+	{
+		http_download_assets_zip = null
+		
+		// Set as current assets
+		setting_minecraft_assets_version = new_assets_version
+		setting_minecraft_assets_new_version = ""
+		
+		// Move files and cleanup
+		file_copy_lib(mc_file_directory + new_assets_version + ".midata", minecraft_directory + new_assets_version + ".midata")
+		file_copy_lib(mc_file_directory + new_assets_version + ".zip", minecraft_directory + new_assets_version + ".zip")
+		file_delete_lib(mc_file_directory + new_assets_image)
+		file_delete_lib(mc_file_directory + new_assets_version + ".midata")
+		file_delete_lib(mc_file_directory + new_assets_version + ".zip")
+		
+		// Load new assets
+		if (!minecraft_assets_load_startup())
 		{
-			newslist = decoded[?"default"]
+			error("errorloadassets")
+			game_end()
+			return false
+		}
+	}
+}
+
+// Check news
+else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
+{
+	http_alert_news = null
+	if (async_load[?"http_status"] = http_ok)
+	{
+		var decodedmap = json_decode(async_load[?"result"]);
+		if (ds_map_valid(decodedmap))
+		{
+			var newslist = decodedmap[?"default"];
 			for (var n = 0; n < ds_list_size(newslist); n++)
 			{
 				var newsmap, title, text, icon, button, buttonurl, iid;
@@ -66,9 +127,34 @@ if (async_load[?"id"] = alert_news_http) // Check news
 						alert_show(title, text, icon, button, buttonurl, null, iid)
 				}
 			}
-			ds_map_destroy(decoded)
+			ds_map_destroy(decodedmap)
 		}
 		else
 			log("Failed to decode")
+	}
+}
+
+// Download skin
+else if (async_load[?"id"] = http_downloadskin && async_load[?"status"] < 1)
+{
+	http_downloadskin = null
+	popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
+	
+	if (popup_downloadskin.texture)
+	{
+		texture_free(popup_downloadskin.texture)
+		popup_downloadskin.texture = null
+	}
+	
+	if (async_load[?"http_status"] = http_ok)
+	{
+		if (file_exists_lib(download_image_file))
+		{
+			popup_downloadskin.texture = texture_create(download_image_file)
+			if (!popup_downloadskin.texture)
+				popup_downloadskin.fail_message = text_get("errordownloadskininternet")
+			else
+				popup_downloadskin.fail_message = ""
+		}
 	}
 }

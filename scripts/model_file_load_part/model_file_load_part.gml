@@ -218,6 +218,9 @@ with (new(obj_model_part))
 	bounds_start = point3D(no_limit, no_limit, no_limit)
 	bounds_end = point3D(-no_limit, -no_limit, -no_limit)
 	
+	// Whether this part contains 3D planes that need to be regenerated on texture switches
+	has_3d_plane = false
+	
 	// Add shapes (optional)
 	var shapelist = map[?"shapes"]
 	if (ds_list_valid(shapelist))
@@ -267,6 +270,10 @@ with (new(obj_model_part))
 	
 	// Add to file list
 	ds_list_add(root.file_part_list, id)
+	
+	// Set file to contain 3D planes
+	if (has_3d_plane)
+		root.has_3d_plane = true
 		
 	return id
 }

@@ -7,4 +7,4 @@ alert_height = 0
 alert_alpha = 1
 
 alert_list = ds_list_create()
-alert_news_http = http_get(link_news)
+http_alert_news = http_get(link_news)

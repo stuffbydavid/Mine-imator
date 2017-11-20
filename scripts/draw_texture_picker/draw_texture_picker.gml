@@ -125,4 +125,4 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 
 // Scrollbar
 scroll.snap_value = itemhei
-scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 30, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 30, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei)

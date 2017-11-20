@@ -117,4 +117,4 @@ for (var r = round(scroll.value / itemh); r < ds_list_size(recent_list); r++)
 
 // Scrollbar
 scroll.snap_value = itemh
-scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid-30, yy, floor(hei / itemh) * itemh, ds_list_size(recent_list) * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid-30, yy, floor(hei / itemh) * itemh, ds_list_size(recent_list) * itemh)

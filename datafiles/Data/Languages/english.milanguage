@@ -4,16 +4,8 @@
         "language": "English",
         "translator": "David",
         "forversion": "1.1.0",
-        "lastchange": "2017.11.14"
+        "lastchange": "2017.11.20" 
     },
-    "download/": {
-		"caption": "Download content",
-		"download": "Download",
-		"cancel": "Cancel",
-		"changelog": "Changelog",
-        "uptodate": "Content is up to date!",
-        "back": "Back"
-	},
     "startup/": {
         "caption": "Startup screen",
         "trial": "TRIAL",
@@ -43,6 +35,8 @@
         "ago": "%1 ago"
     },
     "alert/": {
+        "newassetstitle": "Minecraft %1 assets",
+        "newassetstext": "New assets are available! Restart Mine-imator to download them.",
         "projectcreatedtitle": "Project created!",
         "projectcreatedtext": "Imported files will be copied into the project folder.",
         "projectcreatedbutton": "View folder",
@@ -63,6 +57,8 @@
         "upgradedtext": "You are now using the Full version!",
         "reloadprojecttitle": "Setting changed",
         "reloadprojecttext": "Re-load the project or affected objects to see the changes.",
+        "restartprogramtitle": "Setting changed",
+        "restartprogramtext": "Restart Mine-imator to apply the changes.",
         "downloadbutton": "Download",
         "downloadbuttontip": "Download the update.",
         "viewbutton": "View",
@@ -117,7 +113,8 @@
         "confirmopen": "Save the changes made in %1 before opening another project?",
         "replace": "A resource with this filename has already been added into the project. Do you want to replace it with the selected file?",
         "buffersizewarning": "WARNING: This setting may or may not crash the program when rendering. Only proceed if you think your graphics card and RAM can handle it.\nContinue?",
-        "stoprender": "Really stop rendering?"
+        "stoprender": "Really stop rendering?",
+        "assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?"
     },
     "filedialog/": {
         "open/": {
@@ -166,6 +163,13 @@
             "resourcecaption": "Save resource",
             "projectcaption": "Save project folder"
         }
+    },
+    "newassets/": {
+        "title": "Minecraft %1 assets are available!",
+        "text": "Click \"Download\" below to start using them in your projects.",
+        "later": "Later",
+        "download": "Download",
+        "downloading": "Downloading..."
     },
     "loadassets/": {
         "unzip": "Extracting %1 resources...",
@@ -2362,6 +2366,8 @@
     "settings/": {
         "program": "Program",
         "programtip": "Change settings related to using the program and saving files.",
+        "minecraftversion": "Minecraft version",
+        "minecraftversiontip": "Choose the Minecraft version to use in projects.",
         "fps": "FPS",
         "fps30": "30",
         "fps30tip": "Set the program to update 30 times per second.",

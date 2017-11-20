@@ -1,6 +1,6 @@
 /// tl_animate_scenery()
 
-if (temp.scenery.scenery_tl_add)
+if (temp.scenery.scenery_tl_add = null || temp.scenery.scenery_tl_add)
 {
 	part_list = ds_list_create()
 

@@ -144,7 +144,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 
 // Scrollbar
 slist.scroll.snap_value = itemh
-scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 30, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh, setting_color_buttons, setting_color_buttons_pressed, setting_color_background_scrollbar)
+scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 30, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
 
 // Filter box
 if (slist.filter)

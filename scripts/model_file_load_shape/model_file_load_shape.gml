@@ -238,9 +238,16 @@ with (new(obj_model_shape))
 	}
 	else if (type = "plane")
 	{
+		to[Y] = from[Y]
+		
 		// 3D (optional)
 		is3d = value_get_real(map[?"3d"], false)
-		to[Y] = from[Y] + is3d * scale[Y]
+		
+		if (is3d)
+		{
+			to[Y] = from[Y] + scale[Z]
+			other.has_3d_plane = true
+		}
 		
 		vbuffer = vbuffer_start()
 		model_file_load_shape_plane()

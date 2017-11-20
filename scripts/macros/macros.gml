@@ -2,15 +2,15 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			false
 #macro dev_mode_rotate_blocks		true
 
 // Versions
-#macro mineimator_version			"1.1.0 PRE-RELEASE 3"
+#macro mineimator_version			"1.1.0"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2017.11.05"
+#macro mineimator_version_date		"2017.11.20"
 #macro gm_runtime					"2.1.2.172"
 #macro minecraft_version			"1.12.2"
 
@@ -44,7 +44,7 @@
 #macro unzip_directory				file_directory + "unzip\\"
 
 // Minecraft structure
-#macro mc_unzip_directory			file_directory + "Minecraft\\"
+#macro mc_file_directory			file_directory + "Minecraft\\"
 #macro mc_assets_directory			"assets\\minecraft\\"
 #macro mc_models_directory			mc_assets_directory + "models\\"
 #macro mc_blockstates_directory		mc_assets_directory + "blockstates\\"
@@ -66,13 +66,17 @@
 // Links
 #macro link_skins					"https://skins.minecraft.net/MinecraftSkins/"
 #macro link_article_drivers			"https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
-#macro link_download				"https://www.mineimator.com"
+#macro link_website					"https://www.mineimator.com"
+#macro link_download				"https://www.mineimator.com/download"
 #macro link_upgrade					"https://www.mineimator.com/upgrade"
+#macro link_assets					"https://www.mineimator.com/assets/"
+#macro link_assets_versions			link_assets + "versions.midata"
 #macro link_news					"https://www.mineimator.com/news.php?version=" + mineimator_version
 #macro link_forums					"https://www.mineimatorforums.com"
 #macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
 #macro link_minecraft				"https://www.minecraft.net"
 #macro link_david					"https://www.stuffbydavid.com"
+#macro http_ok						200
 
 // Textures
 #macro block_sheet_width			32

@@ -2,7 +2,12 @@
 
 trial_startup()
 
-setting_minecraft_version = minecraft_version
+setting_minecraft_assets_version = minecraft_version
+setting_minecraft_assets_new_version = ""
+setting_minecraft_assets_new_format = 0
+setting_minecraft_assets_new_changes = ""
+setting_minecraft_assets_new_image = ""
+
 setting_project_folder = projects_directory
 
 recent_list = ds_list_create()

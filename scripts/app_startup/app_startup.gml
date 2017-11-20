@@ -6,22 +6,20 @@ startup_error = true
 if (!log_startup())
 	return false
 
-lib_startup()
+if (!lib_startup())
+	return false
 
 if (!file_lib_startup())
 	return false
 	
 if (!file_exists_lib(import_file))
-{
-	missing_file(import_file)
-	return false
-}
+	return missing_file(import_file)
 
 if (!file_exists_lib(legacy_file))
-{
-	missing_file(legacy_file)
-	return false
-}
+	return missing_file(legacy_file)
+
+if (!file_exists_lib(language_file))
+	return missing_file(language_file)
 
 vertex_format_startup()
 if (!shader_startup())
@@ -30,6 +28,7 @@ if (!shader_startup())
 app_startup_lists()
 app_startup_window()
 
+alert_startup()
 json_startup()
 settings_startup()
 project_startup()
@@ -38,10 +37,7 @@ render_startup()
 camera_startup()
 
 if (!minecraft_assets_startup())
-{
-	error("errorloadassets")
 	return false
-}
 
 startup_error = false
 

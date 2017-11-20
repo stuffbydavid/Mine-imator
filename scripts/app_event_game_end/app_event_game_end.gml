@@ -6,7 +6,7 @@ if (startup_error)
 audio_stop_all()
 
 // Interface ready
-if (window_busy != "load_assets")
+if (window_state != "new_assets" && window_state != "load_assets")
 {
 	if (project_changed)
 		if (question(text_get("questionconfirmexit", project_name)))

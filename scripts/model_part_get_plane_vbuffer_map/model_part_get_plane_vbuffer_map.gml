@@ -116,7 +116,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 					pos = point3D(-bendoff, from[Y], from[Z])
 					vbufarr[1] = vbuffer_start()
 				}
-				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(-(texsize[X] - texoff), 0), texture_mirror, color_blend, color_alpha)
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y] * scale[Z], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(0, 0), vec2(-(texsize[X] - texoff), 0), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 		
 				// Right
@@ -130,7 +130,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 					pos = point3D(from[X] + bendoff, from[Y], from[Z])
 					vbufarr[0] = vbuffer_start()
 				}
-				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(texoff, 0), vec2(-texoff, 0), texture_mirror, color_blend, color_alpha)
+				vbuffer_add_pixels(alphaarrmap[?id], pos, texsize[Y] * scale[Z], uv, texsize, vec2_div(vec2(1), texture_size), scale, vec2(texoff, 0), vec2(-texoff, 0), texture_mirror, color_blend, color_alpha)
 				vbuffer_done()
 			}
 		}

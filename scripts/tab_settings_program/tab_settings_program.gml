@@ -1,5 +1,11 @@
 /// tab_settings_program()
 
+// Minecraft assets version
+tab_control(24)
+draw_button_menu("settingsminecraftversion", e_menu.LIST, dx, dy, dw, 24, setting_minecraft_assets_version, setting_minecraft_assets_version, action_setting_minecraft_assets_version)
+tab_next()
+dy += 10
+
 // FPS
 tab_control_checkbox()
 draw_label(text_get("settingsfps") + ":", dx, dy)
