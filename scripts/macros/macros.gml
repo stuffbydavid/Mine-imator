@@ -10,13 +10,13 @@
 // Versions
 #macro mineimator_version			"1.1.0"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2017.11.20"
+#macro mineimator_version_date		"2017.11.22"
 #macro gm_runtime					"2.1.2.172"
 #macro minecraft_version			"1.12.2"
 
 // File formats
-#macro project_format				e_project.FORMAT_110_PRE_3
-#macro settings_format				e_settings.FORMAT_110_PRE_1
+#macro project_format				e_project.FORMAT_110
+#macro settings_format				e_settings.FORMAT_110
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_110_PRE_2
 
 // Directories

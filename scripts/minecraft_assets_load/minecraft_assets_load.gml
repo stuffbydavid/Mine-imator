@@ -20,6 +20,7 @@ with (mc_assets)
 				if (unzip(load_assets_zip_file, load_assets_dir) = 0)
 				{
 					log("Could not unzip archive")
+					access_error()
 					return false
 				}
 				debug_timer_stop("Unzip archive")

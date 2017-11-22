@@ -1,14 +1,15 @@
 /// ptype_update_sprite_vbuffers()
 /// @desc Updates the 3D models for sprite particles.
 
-if (!sprite_tex.ready)
-	return 0
+var res = sprite_tex;
+if (!res.ready)
+	res = mc_res
 
 for (var m = 0; m < sprite_vbuffer_amount; m++)
 	vbuffer_destroy(sprite_vbuffer[m])
 
 var tex, swid, shei, fwid, fhei, framesx;
-tex = sprite_tex.particles_texture[sprite_tex_image]
+tex = res.particles_texture[sprite_tex_image]
 swid = texture_width(tex)
 shei = texture_height(tex)
 fwid = min(swid, sprite_frame_width)

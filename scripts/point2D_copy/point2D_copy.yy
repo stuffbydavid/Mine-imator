@@ -1,8 +1,8 @@
 {
-    "id": "4ba34d1d-1207-4344-9f56-c69c115fce2b",
+    "id": "1ba7e9ef-c134-4434-b934-be6245d5939b",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "popup_download_draw",
+    "name": "point2D_copy",
     "IsCompatibility": false,
     "IsDnD": false
 }

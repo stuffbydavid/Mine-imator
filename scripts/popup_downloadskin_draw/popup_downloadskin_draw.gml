@@ -8,9 +8,9 @@ if (popup.tbx_username.text != "" && http_downloadskin = null)
 	if (draw_button_normal("downloadskingetskin", dx + 258, dy - 1, wid, 24))
 	{
 		popup.username = popup.tbx_username.text
-		http_downloadskin = http_get_file(link_skins + popup.username + ".png", download_image_file)
 		popup.fail_message = ""
 		popup.start_time = current_time
+		http_downloadskin = http_get_file(link_skins + popup.username + ".png", download_image_file)
 	}
 }
 
@@ -24,7 +24,7 @@ if (popup.texture)
 // Status
 dx = content_x + content_width / 2
 dy += 68
-if (popup.http != null)
+if (http_downloadskin != null)
 {
 	draw_label(text_get("downloadskindownloading"), dx, dy, fa_center, fa_top)
 	if (current_time - popup.start_time > 3000) // Timeout

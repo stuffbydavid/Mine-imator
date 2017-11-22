@@ -676,7 +676,7 @@ switch (menu_name)
 			
 		for (var i = 0; i < ds_list_size(videotemplate_list); i++)
 			with (videotemplate_list[|i])
-				menu_add_item(id, name + " (" + string(width) + "x" + string(height) + ")")
+				menu_add_item(id, id.name + " (" + string(width) + "x" + string(height) + ")")
 				
 		menu_add_item(0, text_get("projectvideosizecustom"))
 		
@@ -699,7 +699,7 @@ switch (menu_name)
 	{
 		for (var i = 0; i < ds_list_size(videoquality_list); i++)
 			with (videoquality_list[|i])
-				menu_add_item(id, text_get("exportmovievideoquality" + name))
+				menu_add_item(id, text_get("exportmovievideoquality" + id.name))
 			
 		menu_add_item(0, text_get("exportmovievideoqualitycustom"))
 		

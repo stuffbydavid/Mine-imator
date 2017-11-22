@@ -43,7 +43,7 @@ if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 }
 
 // Download assets specification
-if (async_load[?"id"] = http_download_assets_file)
+else if (async_load[?"id"] = http_download_assets_file)
 {
 	if (async_load[?"status"] = 1)
 		new_assets_download_progress = (async_load[?"sizeDownloaded"] / async_load[?"contentLength"]) * 0.25
@@ -55,7 +55,7 @@ if (async_load[?"id"] = http_download_assets_file)
 }
 
 // Download assets archive
-if (async_load[?"id"] = http_download_assets_zip)
+else if (async_load[?"id"] = http_download_assets_zip)
 {
 	if (async_load[?"status"] = 1)
 		new_assets_download_progress = 0.25 + (async_load[?"sizeDownloaded"] / async_load[?"contentLength"]) * 0.75
@@ -70,9 +70,10 @@ if (async_load[?"id"] = http_download_assets_zip)
 		// Move files and cleanup
 		file_copy_lib(mc_file_directory + new_assets_version + ".midata", minecraft_directory + new_assets_version + ".midata")
 		file_copy_lib(mc_file_directory + new_assets_version + ".zip", minecraft_directory + new_assets_version + ".zip")
-		file_delete_lib(mc_file_directory + new_assets_image)
 		file_delete_lib(mc_file_directory + new_assets_version + ".midata")
 		file_delete_lib(mc_file_directory + new_assets_version + ".zip")
+		if (new_assets_image != "")
+			file_delete_lib(mc_file_directory + new_assets_image)
 		
 		// Load new assets
 		if (!minecraft_assets_load_startup())

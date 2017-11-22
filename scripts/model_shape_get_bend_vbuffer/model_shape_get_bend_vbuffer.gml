@@ -98,10 +98,10 @@ with (shape)
 				{
 					pmidtex = point2D_add(uv, point2D(size[X], midtexy))
 					nmidtex = point2D_add(uv, point2D(0, midtexy))
-					pedgetex = pmidtex
-					pbacktex = pmidtex
-					nedgetex = nmidtex
-					nbacktex = nmidtex
+					pedgetex = point2D_copy(pmidtex)
+					pbacktex = point2D_copy(pmidtex)
+					nedgetex = point2D_copy(nmidtex)
+					nbacktex = point2D_copy(nmidtex)
 				}
 			}
 		
@@ -192,10 +192,10 @@ with (shape)
 						pedgetex = point2D_add(uv, point2D(size[X] - 1 / 256, midtexy))
 					else
 						pedgetex = point2D_add(uv, point2D(1 / 256, midtexy))
-					nmidtex = pmidtex
-					pbacktex = pedgetex
-					nedgetex = pedgetex
-					nbacktex = pedgetex
+					nmidtex = point2D_copy(pmidtex)
+					pbacktex = point2D_copy(pedgetex)
+					nedgetex = point2D_copy(pedgetex)
+					nbacktex = point2D_copy(pedgetex)
 				}
 			}
 		
@@ -242,10 +242,10 @@ with (shape)
 						pedgetex = point2D_add(uv, point2D(midtexx, size[Z] - 1 / 256))
 					else
 						pedgetex = point2D_add(uv, point2D(midtexx, 0))
-					nmidtex = pmidtex
-					pbacktex = pedgetex
-					nedgetex = pedgetex
-					nbacktex = pedgetex
+					nmidtex = point2D_copy(pmidtex)
+					pbacktex = point2D_copy(pedgetex)
+					nedgetex = point2D_copy(pedgetex)
+					nbacktex = point2D_copy(pedgetex)
 				}
 			}
 		
@@ -333,10 +333,10 @@ with (shape)
 				{
 					pmidtex = point2D_add(uv, point2D(midtexx, 0))
 					nmidtex = point2D_add(uv, point2D(midtexx, size[Z]))
-					pedgetex = pmidtex
-					pbacktex = pmidtex
-					nedgetex = nmidtex
-					nbacktex = nmidtex
+					pedgetex = point2D_copy(pmidtex)
+					pbacktex = point2D_copy(pmidtex)
+					nedgetex = point2D_copy(nmidtex)
+					nbacktex = point2D_copy(nmidtex)
 				}
 			}
 		

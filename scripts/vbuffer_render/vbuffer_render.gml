@@ -5,6 +5,9 @@
 /// @arg [scale]]]
 
 var vbuf = argument[0];
+
+if (vbuf = null)
+	return false
 	
 if (argument_count > 1)
 {

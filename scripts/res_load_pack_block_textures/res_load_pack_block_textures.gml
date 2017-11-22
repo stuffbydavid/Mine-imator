@@ -211,14 +211,13 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 				if (opaque)
 					draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
 			
-				var scale = blocksize / texwid;
-				draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, texwid, texwid, scale, scale)
+				draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, texwid, texwid)
 			
 				// Interpolate with next
 				if (framefade)
 				{
 					gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha) // Windows only
-					draw_texture_part(tex, dx, dy, 0, nextimage * texwid, blocksize, blocksize, scale, scale, c_white, frac(image))
+					draw_texture_part(tex, dx, dy, 0, nextimage * texwid, blocksize, blocksize, 1, 1, c_white, frac(image))
 					gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 				}
 			}

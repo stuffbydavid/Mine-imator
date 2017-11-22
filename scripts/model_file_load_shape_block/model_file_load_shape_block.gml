@@ -35,7 +35,7 @@ tex[e_dir.WEST, 1] = point2D_add(tex[e_dir.WEST, 0], point2D(texsizefix[Y], 0))
 tex[e_dir.WEST, 2] = point2D_add(tex[e_dir.WEST, 0], point2D(texsizefix[Y], texsizefix[Z]))
 tex[e_dir.WEST, 3] = point2D_add(tex[e_dir.WEST, 0], point2D(0, texsizefix[Z]))
 
-tex[e_dir.SOUTH, 0] = uv
+tex[e_dir.SOUTH, 0] = point2D_copy(uv)
 tex[e_dir.SOUTH, 1] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsizefix[X], 0))
 tex[e_dir.SOUTH, 2] = point2D_add(tex[e_dir.SOUTH, 0], point2D(texsizefix[X], texsizefix[Z]))
 tex[e_dir.SOUTH, 3] = point2D_add(tex[e_dir.SOUTH, 0], point2D(0, texsizefix[Z]))

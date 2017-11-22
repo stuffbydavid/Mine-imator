@@ -290,8 +290,8 @@ with (new(obj_block_render_model))
 					for (var i = 0; i < 4; i++)
 					{
 						var fuv = face_uv[nd, i];
-						fuv[X] = min(block_size - 1 / 64, fuv[X])
-						fuv[Y] = min(block_size - 1 / 64, fuv[Y])
+						fuv[X] = min(block_size - 1 / 256, fuv[X])
+						fuv[Y] = min(block_size - 1 / 256, fuv[Y])
 						face_uv[nd, i] = fuv
 					}
 					

@@ -159,7 +159,7 @@ for (var xx = 0; xx < samplesizex; xx++)
 		
 		// Artifact fix with CPU rendering
 		pfix = 1 / 256 
-		psize = 1// - pfix
+		psize = 1 - pfix
 		
 		t1 = ptex
 		t2 = point2D(ptex[X] + psize, ptex[Y])

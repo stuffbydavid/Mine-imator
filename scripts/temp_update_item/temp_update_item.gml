@@ -1,8 +1,9 @@
 /// temp_update_item()
 /// @desc Generates the item vbuffer of the template from the selected resource.
 
+var res = item_tex
 if (!item_tex.ready)
-	return 0
+	res = mc_res
 
 // Create vbuffer
 if (item_vbuffer)
@@ -12,20 +13,20 @@ item_vbuffer = vbuffer_start()
 // Calculate texture position and size
 var texsize, texpos, slotpos, slotsize, slottexsize, slottex;
 
-if (item_tex.item_sheet_texture != null)
+if (res.item_sheet_texture != null)
 {
-	texsize = vec2(texture_width(item_tex.item_sheet_texture), texture_height(item_tex.item_sheet_texture))
-	slotpos = point2D(item_slot mod item_tex.item_sheet_size[X], item_slot div item_tex.item_sheet_size[X])
-	slotsize = vec2_div(texsize, item_tex.item_sheet_size)
+	texsize = vec2(texture_width(res.item_sheet_texture), texture_height(res.item_sheet_texture))
+	slotpos = point2D(item_slot mod res.item_sheet_size[X], item_slot div res.item_sheet_size[X])
+	slotsize = vec2_div(texsize, res.item_sheet_size)
 	slotsize[X] = max(1, slotsize[X])
 	slotsize[Y] = max(1, slotsize[Y])
-	slottexsize = vec2_div(vec2(1), item_tex.item_sheet_size)
+	slottexsize = vec2_div(vec2(1), res.item_sheet_size)
 	slottex = point2D_mul(slotpos, slottexsize)
 	texpos = point2D_mul(slotpos, slotsize)
 }
 else
 {
-	texsize = vec2(texture_width(item_tex.texture), texture_height(item_tex.texture))
+	texsize = vec2(texture_width(res.texture), texture_height(res.texture))
 	slotpos = point2D(0, 0)
 	slotsize = texsize
 	slottexsize = point2D(1, 1)
@@ -84,10 +85,10 @@ if (item_3d)
 	slotsizeceil = point2D(ceil(slotsize[X]), ceil(slotsize[Y]))
 	
 	surf = surface_create(slotsizeceil[X], slotsizeceil[Y])
-	if (item_tex.item_sheet_texture != null)
-		tex = item_tex.item_sheet_texture
+	if (res.item_sheet_texture != null)
+		tex = res.item_sheet_texture
 	else
-		tex = item_tex.texture
+		tex = res.texture
 	
 	draw_texture_start()
 	surface_set_target(surf)

@@ -8,6 +8,8 @@ switch (load_stage)
 	// Unzip archive
 	case "unzip":
 	{
+		debug("res_load_pack", "unzip")
+		
 		if (type != e_res_type.PACK_UNZIPPED)
 		{
 			if (unzip(fname) < 0)
@@ -34,6 +36,7 @@ switch (load_stage)
 	// Load model textures
 	case "modeltextures":
 	{
+		debug("res_load_pack", "modeltextures")
 		res_load_pack_model_textures()
 		
 		load_stage = "blocktextures"
@@ -48,6 +51,7 @@ switch (load_stage)
 	// Load block textures
 	case "blocktextures":
 	{
+		debug("res_load_pack", "blocktextures")
 		res_load_pack_block_textures()
 		
 		load_stage = "itemtextures"
@@ -62,6 +66,7 @@ switch (load_stage)
 	// Load item textures and finish
 	case "itemtextures":
 	{
+		debug("res_load_pack", "itemtextures")
 		res_load_pack_item_textures()
 		res_load_pack_misc()
 		res_update_colors()

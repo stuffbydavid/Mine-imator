@@ -13,6 +13,8 @@ switch (load_stage)
 	case "open":
 	{
 		var timelineamount = 0;
+		
+		debug("res_load_scenery", "open")
 				
 		if (!file_exists_lib(fname))
 		{

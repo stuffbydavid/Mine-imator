@@ -66,7 +66,7 @@
         "closetip": "Close this message."
     },
     "error/": {
-        "loadassets": "The Minecraft assets could not be loaded. Re-install the program to fix it. See the log for details.",
+        "loadassets": "The Minecraft assets could not be loaded. Try re-installing Mine-imator. See the log for details.",
         "loadassetscaption": "Load assets error",
         "newprojectexists": "The chosen folder already exists. Change it to something else.",
         "newprojectexistscaption": "New project error",
