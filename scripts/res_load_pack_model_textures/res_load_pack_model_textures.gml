@@ -15,6 +15,7 @@ if (model_texture_map != null)
 // Create new
 debug_timer_start()
 
+log("Model textures", "load")
 model_texture_map = ds_map_create()
 for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 {
@@ -37,4 +38,5 @@ for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	model_texture_map[?name] = tex
 }
 
-debug_timer_stop("res_load_pack_model_textures")
+log("Model textures", "done")
+debug_timer_stop("Model textures")

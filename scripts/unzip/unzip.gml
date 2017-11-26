@@ -8,7 +8,7 @@ dir = unzip_directory
 if (argument_count > 1)
 	dir = argument[1]
 
-directory_delete_lib(dir)
+var ret = directory_delete_lib(dir);
 directory_create_lib(dir)
 
 log("Unzipping", fn, dir)

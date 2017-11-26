@@ -2369,7 +2369,7 @@
             "inoutback": "Lissage de vitesse (anticipation)",
             "inbounce": "Lissage à l'approche (rebond)",
             "outbounce": "Lissage à l'éloignement (rebond)",
-            "inoutbounce": "Lissage de vitesse (rebond)",
+            "inoutbounce": "Lissage de vitesse (rebond)"
         }
     },
     "settings/": {

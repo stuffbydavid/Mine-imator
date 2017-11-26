@@ -13,8 +13,15 @@ with (mc_assets)
 		{
 			if (current_step < 5)
 				break
+				
+			// Check already unzipped
+			var exists = directory_exists_lib(load_assets_dir + mc_assets_directory);
+			if (array_length_1d(file_find(load_assets_dir + mc_character_directory, ".mimodel")) = 0 ||
+				array_length_1d(file_find(load_assets_dir + mc_block_directory, ".json")) = 0 ||
+				array_length_1d(file_find(load_assets_dir + mc_textures_directory + "blocks\\", ".png")) = 0)
+				exists = false
 
-			if (!directory_exists(load_assets_dir + mc_assets_directory))
+			if (!exists)
 			{
 				debug_timer_start()
 				if (unzip(load_assets_zip_file, load_assets_dir) = 0)
@@ -25,6 +32,8 @@ with (mc_assets)
 				}
 				debug_timer_stop("Unzip archive")
 			}
+			else
+				log("Archive already unzipped, re-using", load_assets_dir + mc_assets_directory)
 			
 			load_assets_stage = "textures"
 			load_assets_progress = 0.3

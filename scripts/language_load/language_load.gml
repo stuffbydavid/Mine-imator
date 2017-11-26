@@ -19,7 +19,7 @@ if (filename_ext(fn) = ".milanguage")
 {
 	// Convert unicode (external)
 	var convfn = file_directory + "conv.tmp";
-	file_json_convert_unicode(fn, convfn)
+	json_file_convert_unicode(fn, convfn)
 	
 	// Load JSON
 	var jsonmap = json_load(convfn);

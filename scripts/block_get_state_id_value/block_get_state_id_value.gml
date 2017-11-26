@@ -1,4 +1,4 @@
-/// block_get_state_id(block, stateid, name)
+/// block_get_state_id_value(block, stateid, name)
 /// @arg block
 /// @arg stateid
 /// @arg name

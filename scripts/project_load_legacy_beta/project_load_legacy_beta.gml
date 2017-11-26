@@ -359,7 +359,7 @@ for (var a = 0; a < load.lib_amount; a++)
 				if (!is_undefined(block))
 				{
 					block_name = block.name
-					block_state = array_copy_1d(block.legacy_data_state[load.lib_block_data[a]])
+					block_state = block_get_state_id_state_vars(block, block.legacy_data_state_id[load.lib_block_data[a]])
 				}
 				
 				if (load.lib_block_tex[a] > -1)

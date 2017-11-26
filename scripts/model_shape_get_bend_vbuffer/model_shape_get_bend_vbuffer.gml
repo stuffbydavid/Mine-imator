@@ -52,7 +52,7 @@ with (shape)
 	sqrtlen = sqrt(2 - abs(90 - angle) / 90)
 	
 	// Artifact fix with CPU rendering
-	sizefix = point3D_sub(size, vec3(1 / 64))
+	sizefix = point3D_sub(size, vec3(1 / 256))
 
 	switch (bend_axis)
 	{

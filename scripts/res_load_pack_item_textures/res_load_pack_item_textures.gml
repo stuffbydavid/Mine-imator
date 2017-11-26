@@ -12,6 +12,7 @@ itemsize = null
 debug_timer_start()
 
 // Load textures
+log("Item textures", "load")
 texlist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 {
@@ -29,7 +30,8 @@ for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 if (itemsize = null)
 	itemsize = item_size
 
-// Create surface of static blocks
+// Create surface of items
+log("Item textures", "surface")
 draw_texture_start()
 surf = surface_create(item_sheet_width * itemsize, item_sheet_height * itemsize)
 surface_set_target(surf)
@@ -73,4 +75,5 @@ for (var t = 0; t < ds_list_size(texlist); t++)
 surface_free(surf)
 ds_list_destroy(texlist)
 
-debug_timer_stop("res_load_pack_item_textures")
+log("Item textures", "done")
+debug_timer_stop("Item textures")

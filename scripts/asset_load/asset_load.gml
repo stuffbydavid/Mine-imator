@@ -97,6 +97,11 @@ switch (ext)
 		action_res_sound_load(fn)
 		return true
 		
+	case ".ttf":
+		log("Adding font", fn)
+		action_res_font_load(fn)
+		return true
+		
 	case ".png":
 	case ".jpg":
 	case ".jpeg":

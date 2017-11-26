@@ -40,7 +40,7 @@ json_save_object_start()
 					json_save_var("legacy_id", block.legacy_id)
 					for (var d = 0; d < 16; d++)
 					{
-						if (state_vars_match(block.legacy_data_state[d], block_state))
+						if (state_vars_match_state_id(block_state, block, block.legacy_data_state_id[d]))
 						{
 							json_save_var("legacy_data", d)
 							break

@@ -111,23 +111,30 @@ switch (menu_type)
 		
 		for (var m = round(menu_scroll.value / menu_item_h); m < menu_amount; m++)
 		{
-			var item, tl, dx, highlight, text, hasextend, extendmouseon;
+			var item, tl, select, dx, highlight, text, hasextend, extendmouseon;
 			
 			if (dy + menu_item_h > yy + h)
 				break
 			
 			item = menu_item[m]
 			tl = item.value
+			select = (menu_value = tl)
 			dx = 12 + item.level * indent
 			
 			// Check mouse
 			hasextend = false
 			extendmouseon = false
-			if (tl != null && ds_list_size(tl.tree_list) - (tl_edit.parent = tl && !menu_include_tl_edit) > 0 && dx + 10 < menu_w)
+			if (tl != null)
 			{
-				hasextend = true
-				extendmouseon = app_mouse_box(menu_x, dy, dx + 10, menu_item_h)
+				if (ds_list_size(tl.tree_list) - (tl_edit.parent = tl && !menu_include_tl_edit) > 0 && dx + 10 < menu_w)
+				{
+					hasextend = true
+					extendmouseon = app_mouse_box(menu_x, dy, dx + 10, menu_item_h)
+				}
 			}
+			else if (tl = null && menu_value = app)
+				select = true
+			
 			if (app_mouse_box(menu_x, dy, menu_w - 30 * menu_scroll.needed, menu_item_h))
 			{
 				mouse_cursor = cr_handpoint
@@ -139,7 +146,7 @@ switch (menu_type)
 			}
 			
 			// Highlight box
-			highlight = (menu_value = tl || (mouseitem = item && (mouse_left || mouse_left_released)))
+			highlight = (select || (mouseitem = item && (mouse_left || mouse_left_released)))
 			if (highlight)
 				draw_box(menu_x, dy, menu_w - 30 * menu_scroll.needed, menu_item_h, false, setting_color_highlight, 1)
 			

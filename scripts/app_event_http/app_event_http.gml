@@ -4,38 +4,40 @@
 if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 {
 	http_assets = null
-	if (async_load[?"http_status"] = http_ok)
+	if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)
 	{
 		var decodedmap = json_decode(async_load[?"result"]);
 		if (ds_map_valid(decodedmap))
 		{
-			var versionslist, newversionmap;
-			versionslist = decodedmap[?"versions"]
-			newversionmap = versionslist[|ds_list_size(versionslist) - 1]
-			
-			// New assets available
-			if (ds_map_valid(newversionmap) && !file_exists_lib(minecraft_directory + newversionmap[?"version"] + ".zip"))
+			var versionslist = decodedmap[?"versions"];
+			if (ds_list_valid(versionslist))
 			{
-				// Get info about assets
-				setting_minecraft_assets_new_version = newversionmap[?"version"]
-				setting_minecraft_assets_new_format = newversionmap[?"format"]
-				setting_minecraft_assets_new_changes = newversionmap[?"changes"]
-				if (is_string(newversionmap[?"image"]))
+				var newversionmap = versionslist[|ds_list_size(versionslist) - 1];
+			
+				// New assets available
+				if (ds_map_valid(newversionmap) && !file_exists_lib(minecraft_directory + newversionmap[?"version"] + ".zip"))
 				{
-					// Download image
-					setting_minecraft_assets_new_image = mc_file_directory + newversionmap[?"image"]
-					assets_http_image = http_get_file(link_assets + newversionmap[?"image"], setting_minecraft_assets_new_image)
+					// Get info about assets
+					setting_minecraft_assets_new_version = newversionmap[?"version"]
+					setting_minecraft_assets_new_format = newversionmap[?"format"]
+					setting_minecraft_assets_new_changes = newversionmap[?"changes"]
+					if (is_string(newversionmap[?"image"]))
+					{
+						// Download image
+						setting_minecraft_assets_new_image = mc_file_directory + newversionmap[?"image"]
+						assets_http_image = http_get_file(link_assets + newversionmap[?"image"], setting_minecraft_assets_new_image)
+					}
+					else
+						setting_minecraft_assets_new_image = ""
+				
+					// Alert
+					alert_show(text_get("alertnewassetstitle", setting_minecraft_assets_new_version), text_get("alertnewassetstext"), icons.CHEST_SMALL)
+				
+					log("New assets found", setting_minecraft_assets_new_version)
 				}
 				else
-					setting_minecraft_assets_new_image = ""
-				
-				// Alert
-				alert_show(text_get("alertnewassetstitle", setting_minecraft_assets_new_version), text_get("alertnewassetstext"), icons.CHEST_SMALL)
-				
-				log("New assets found", setting_minecraft_assets_new_version)
+					log("Using the latest assets")
 			}
-			else
-				log("Using the latest assets")
 			
 			ds_map_destroy(decodedmap)
 		}
@@ -89,7 +91,7 @@ else if (async_load[?"id"] = http_download_assets_zip)
 else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 {
 	http_alert_news = null
-	if (async_load[?"http_status"] = http_ok)
+	if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)
 	{
 		var decodedmap = json_decode(async_load[?"result"]);
 		if (ds_map_valid(decodedmap))
@@ -147,7 +149,7 @@ else if (async_load[?"id"] = http_downloadskin && async_load[?"status"] < 1)
 		popup_downloadskin.texture = null
 	}
 	
-	if (async_load[?"http_status"] = http_ok)
+	if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)
 	{
 		if (file_exists_lib(download_image_file))
 		{

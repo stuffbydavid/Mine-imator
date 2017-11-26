@@ -23,7 +23,7 @@ size = point3D_sub(to, from)
 texsize = point3D_sub(to_noscale, from_noscale)
 
 // Artifact fix with CPU rendering
-texsizefix = point3D_sub(texsize, vec3(1 / 64))
+texsizefix = point3D_sub(texsize, vec3(1 / 256))
 
 tex[e_dir.EAST, 0] = point2D_add(uv, point2D(texsize[X], 0))
 tex[e_dir.EAST, 1] = point2D_add(tex[e_dir.EAST, 0], point2D(texsizefix[Y], 0))

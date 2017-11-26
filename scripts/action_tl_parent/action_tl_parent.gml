@@ -31,6 +31,8 @@ else
 	else
 	{
 		par = argument0
+		if (par = null)
+			par = app
 		index = argument1
 		hobj = history_set(action_tl_parent)
 		with (hobj)

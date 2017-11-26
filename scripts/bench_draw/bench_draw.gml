@@ -48,6 +48,7 @@ else
 	bench_settings.width = bench_settings.width_goal
 	bench_settings.height = bench_settings.height_goal
 }
+
 settingsw = round(bench_settings.width)
 settingsh = round(bench_settings.height)
 boxw = bench_width + settingsw

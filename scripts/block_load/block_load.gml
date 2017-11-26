@@ -162,17 +162,13 @@ with (new(obj_block))
 	// Legacy ID
 	legacy_id = value_get_real(map[?"legacy_id"], 0)
 	
-	// Legacy data
+	// Legacy data state IDs
 	for (var d = 0; d < 16; d++)
-		legacy_data_state[d] = array()
+		legacy_data_state_id[d] = 0
 		
 	// Read data list into maps
 	if (ds_map_valid(map[?"legacy_data"]))
 		block_load_legacy_data_map(map[?"legacy_data"], 0, 1)
-		
-	// Legacy data state ids
-	for (var d = 0; d < 16; d++)
-		legacy_data_state_id[d] = block_get_state_id(id, legacy_data_state[d])
 		
 	// Pre-calculate the block variant to pick for each (numerical) state ID
 	state_id_model_obj = null

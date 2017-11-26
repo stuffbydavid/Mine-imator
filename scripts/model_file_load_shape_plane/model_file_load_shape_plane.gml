@@ -11,18 +11,15 @@ x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];		y2 = to[Y];		z2 = to[Z]
 
 // Define texture coordinates to use (clockwise, starting at top-left)
-var size, texsize, texsizefix;
+var size, texsize;
 var t1, t2, t3, t4;
 size = point3D_sub(to, from)
 texsize = point3D_sub(to_noscale, from_noscale)
 
-// Artifact fix with CPU rendering
-texsizefix = texsize //point3D_sub(texsize, vec3(1 / 64))
-
 t1 = point2D_copy(uv)
-t2 = point2D_add(t1, point2D(texsizefix[X], 0))
-t3 = point2D_add(t1, point2D(texsizefix[X], texsizefix[Z]))
-t4 = point2D_add(t1, point2D(0, texsizefix[Z]))
+t2 = point2D_add(t1, point2D(texsize[X], 0))
+t3 = point2D_add(t1, point2D(texsize[X], texsize[Z]))
+t4 = point2D_add(t1, point2D(0, texsize[Z]))
 
 // Adjust by bending
 if (bend_part != null && bend_mode = e_shape_bend.BEND)

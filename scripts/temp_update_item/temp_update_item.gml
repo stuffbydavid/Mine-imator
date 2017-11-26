@@ -34,9 +34,9 @@ else
 	texpos = point2D(0, 0)
 }
 
-// Artifact fix with CPU rendering, offset end texture coordinates by 1/64s of a pixel
+// Artifact fix with CPU rendering, offset end texture coordinates by 1/256 of a pixel
 var pfix, slottexsizefix, slotsizefix;
-pfix = vec2_mul(vec2_div(vec2(1), slotsize), vec2(1 / 64))
+pfix = vec2_mul(vec2_div(vec2(1), slotsize), vec2(1 / 256))
 slottexsizefix = point2D_sub(slottexsize, point2D_mul(pfix, slottexsize))
 slotsizefix = point2D_sub(slotsize, point2D_mul(pfix, slotsize))
 

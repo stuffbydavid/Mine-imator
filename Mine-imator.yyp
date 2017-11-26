@@ -5631,6 +5631,14 @@
             }
         },
         {
+            "Key": "67652f6e-cca1-414d-aeb2-ad13ba830537",
+            "Value": {
+                "id": "a254bb9f-1c18-4521-9a05-34e576eeb2c3",
+                "resourcePath": "datafiles_yy\\Data\\Languages\\french.milanguage.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "677aa25e-36a7-43ef-af82-accc68a30988",
             "Value": {
                 "id": "ab6da5a3-b548-4acf-a82f-d8c0489335b2",
@@ -6131,6 +6139,14 @@
             "Value": {
                 "id": "1f5f9763-ddb0-4f46-8068-da9e27b26111",
                 "resourcePath": "scripts\\enums\\enums.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "6fc045ef-5387-486b-a2c3-2cc0024e4d1e",
+            "Value": {
+                "id": "b3ba1b53-f823-4184-8472-cbace461e011",
+                "resourcePath": "scripts\\action_res_font_load\\action_res_font_load.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12042,7 +12058,7 @@
             "Key": "d878b3e1-560f-4810-bf7a-ec0e1a570090",
             "Value": {
                 "id": "4f0aeb23-ab9c-4332-aba6-5badacd5809c",
-                "resourcePath": "scripts\\file_json_convert_unicode\\file_json_convert_unicode.yy",
+                "resourcePath": "scripts\\json_file_convert_unicode\\json_file_convert_unicode.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14488,6 +14504,7 @@
         "d54bf27e-48d9-43f9-a088-a6b4ad1cf4be",
         "fd62ac27-1ff9-4494-a7f1-9bdc98b306aa",
         "49befe24-7429-4ebe-9572-5e389eb767b9",
+        "6fc045ef-5387-486b-a2c3-2cc0024e4d1e",
         "d6c6f86a-56f2-43a8-9989-14cb6a753ffb",
         "e5c370d8-9603-436a-a3d6-64f151d10f61",
         "fced5c04-3f70-4498-b62c-236b4afab3d1",

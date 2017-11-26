@@ -22,6 +22,7 @@ blocksize = null
 debug_timer_start()
 		
 // Static textures
+log("Block textures", "load static")
 texlist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 {
@@ -37,6 +38,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 }
 	
 // Animated textures
+log("Block textures", "load animated")
 texanilist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 {
@@ -55,11 +57,13 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 if (blocksize = null)
 	blocksize = block_size
 	
-log("blocksize", blocksize)
+log("Block textures, blocksize", blocksize)
 
 // Create surface of static blocks
 draw_texture_start()
 surf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
+
+log("Block textures", "static block surface")
 surface_set_target(surf)
 {
 	gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
@@ -97,6 +101,7 @@ draw_texture_done()
 if (id = mc_res)
 {
 	var previewsurf = surface_create(block_sheet_width, block_sheet_height);
+	log("Block textures", "static block preview")
 	surface_set_target(previewsurf)
 	{
 		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
@@ -118,11 +123,13 @@ if (id = mc_res)
 block_sheet_texture = texture_surface(surf)
 
 // Create surfaces for animated blocks
+log("Block textures", "animated block surfaces")
 for (var f = 0; f < block_sheet_ani_frames; f++)
 	anisurf[f] = surface_create(block_sheet_ani_width * blocksize, block_sheet_ani_height * blocksize)
 
 draw_texture_start()
 gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+log("Block textures", "animated frames")
 for (var t = 0; t < ds_list_size(texanilist); t++)
 {
 	var tex, dx, dy;
@@ -164,8 +171,16 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 	}
 	
 	// Images in the texture
-	texwid = texture_width(tex)
-	images = texture_height(tex) / texwid
+	if (tex != null)
+	{
+		texwid = texture_width(tex)
+		images = texture_height(tex) / texwid
+	}
+	else
+	{
+		texwid = blocksize
+		images = 1
+	}
 	
 	// Total animation time (in frames)
 	if (framelist != null)
@@ -242,6 +257,7 @@ draw_texture_done()
 // Create preview surface and get buffer
 if (id = mc_res)
 {
+	log("Block textures", "animated block preview")
 	var previewanisurf = surface_create(block_sheet_ani_width, block_sheet_ani_height);
 	surface_set_target(previewanisurf)
 	{
@@ -267,6 +283,7 @@ samplepos[5] = point2D(blocksize / 4, blocksize / 4)
 sampleposamount = 6
 
 // Find block depths (static)
+log("Block textures", "find static block depths")
 buffer_current = buffer_create(surface_get_width(surf) * surface_get_height(surf) * 4, buffer_fixed, 4)
 buffer_get_surface(buffer_current, surf, 0, 0, 0)
 var wid = surface_get_width(surf);
@@ -315,6 +332,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 buffer_delete(buffer_current)
 
 // Find block depths (animated)
+log("Block textures", "find animated block depths")
 buffer_current = buffer_create(surface_get_width(anisurf[0]) * surface_get_height(anisurf[0]) * 4, buffer_fixed, 4)
 buffer_get_surface(buffer_current, anisurf[0], 0, 0, 0)
 wid = surface_get_width(anisurf[0])
@@ -373,4 +391,5 @@ surface_free(surf)
 ds_list_destroy(texlist)
 ds_list_destroy(texanilist)
 
-debug_timer_stop("res_load_pack_block_textures")
+log("Block textures", "done")
+debug_timer_stop("Block textures")

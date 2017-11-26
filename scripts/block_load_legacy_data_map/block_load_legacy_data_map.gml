@@ -25,19 +25,19 @@ while (!is_undefined(val))
 		// Number (apply previous bitmask)
 		default:
 		{
-			var realval, state;
+			var realval, stateid;
 			realval = string_get_real(val)
-			state = string_get_state_vars(map[?val])
+			stateid = block_get_state_id(id, string_get_state_vars(map[?val]))
 			
 			// Insert into array
 			if (bitmask > 0)
 			{
 				for (var d = 0; d < 16; d++)
 					if ((d & bitmask) / bitbase = realval) // Check data value with bitmask
-						state_vars_add(legacy_data_state[d], state)
+						legacy_data_state_id[d] += stateid
 			}
 			else
-				state_vars_add(legacy_data_state[realval], state)
+				legacy_data_state_id[realval] += stateid
 			
 			break	
 		}

@@ -61,7 +61,7 @@ with (new(obj_template))
 	if (!is_undefined(block))
 	{
 		block_name = block.name
-		block_state = array_copy_1d(block.legacy_data_state[bdata])
+		block_state = block_get_state_id_state_vars(block, block.legacy_data_state_id[bdata])
 	}
 	block_tex = project_load_legacy_save_id()
 
