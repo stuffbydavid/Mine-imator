@@ -226,7 +226,7 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 				if (opaque)
 					draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
 			
-				draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, texwid, texwid)
+				draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, blocksize, blocksize)
 			
 				// Interpolate with next
 				if (framefade)
@@ -254,6 +254,9 @@ for (var t = 0; t < ds_list_size(texanilist); t++)
 gpu_set_blendmode(bm_normal)
 draw_texture_done()
 
+//for (var f = 0; f < block_sheet_ani_frames; f++)
+//	surface_save(anisurf[f], "aniframe" + string(f) + ".png")
+	
 // Create preview surface and get buffer
 if (id = mc_res)
 {

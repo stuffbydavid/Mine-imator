@@ -43,7 +43,8 @@ if (part.shape_list != null)
 		if (shape.type = "plane" && shape.is3d)
 		{
 			planevbuf = planevbuffermap[?shape];
-			vbuffer_render(planevbuf[0])
+			if (is_array(planevbuf))
+				vbuffer_render(planevbuf[0])
 		}
 		
 		// Bended half
@@ -60,7 +61,7 @@ if (part.shape_list != null)
 			matrix_set(matrix_world, matrix_multiply(matrix_multiply(model_part_get_bend_matrix(part, bendangle, shape.position), shape.matrix_bend_half), mat))
 			vbuffer_render(shape.bend_vbuffer)
 			
-			if (shape.type = "plane" && shape.is3d)
+			if (shape.type = "plane" && shape.is3d && is_array(planevbuf))
 				vbuffer_render(planevbuf[1])
 		}
 	}

@@ -59,3 +59,4 @@ else
 }
 
 render_set_uniform_vec2("uTexScale", scalex, scaley)
+gpu_set_texrepeat_ext(sampler, true)

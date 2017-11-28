@@ -67,7 +67,7 @@ if (exportmovie_format != "png")
 				if (sound_file_id < 0)
 				{
 					movie_done()
-					log("Error adding sound, error code", sound_file_id)
+					log("Error adding audio file, error code", sound_file_id)
 					error("errorexportmovie")
 					return 0
 				}
@@ -83,15 +83,23 @@ if (exportmovie_format != "png")
 			{
 				with (keyframe_list[|k])
 				{
-					if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 &&
+					
+					if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 && tl_keyframe_length(id) > 0 &&
 						position < app.exportmovie_marker_end &&
 						position + tl_keyframe_length(id) >= app.exportmovie_marker_start)
 					{
-						movie_audio_sound_add(value[e_value.SOUND_OBJ].sound_file_id, 
-											  max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
-											  value[e_value.SOUND_VOLUME], 
-											  value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
-											  value[e_value.SOUND_END])
+						var ret = movie_audio_sound_add(value[e_value.SOUND_OBJ].sound_file_id, 
+														max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
+														value[e_value.SOUND_VOLUME], 
+														value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
+														value[e_value.SOUND_END])
+						if (ret < 0)
+						{
+							movie_done()
+							log("Error adding sound, error code", ret)
+							error("errorexportmovie")
+							return 0
+						}
 					}
 				}
 			}

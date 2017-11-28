@@ -17,10 +17,19 @@ switch (load_stage)
 		sound_index = null
 		sound_buffer = null
 		sound_samples = 0
-	
-		if (movie_audio_file_decode(fname, temp_file) < 0)
+		
+		if (!file_exists_lib(fname))
 		{
-			log("Error loading audio")
+			with (app)
+				load_next()
+			return 0
+		}
+	
+		file_delete_lib(temp_file)
+		var ret = movie_audio_file_decode(fname, temp_file);
+		if (ret < 0)
+		{
+			log("Error loading audio", ret)
 			error("errorloadaudio")
 			with (app)
 				load_next()

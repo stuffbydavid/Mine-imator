@@ -78,9 +78,16 @@ switch (load_stage)
 			log("Loading .schematic", fname)
 			debug_timer_start()
 		
-			// Unzip
+			// GZunzip
 			file_delete_lib(temp_file)
 			gzunzip(fname, temp_file)
+			
+			if (!file_exists_lib(temp_file))
+			{
+				log("Schematic error", "gzunzip")
+				break
+			}
+			
 			buffer_current = buffer_load(temp_file)
 			openerr = true
 		
