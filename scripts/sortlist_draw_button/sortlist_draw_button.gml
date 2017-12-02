@@ -35,13 +35,13 @@ if (mouseon)
 }
 
 // Box
-draw_box_rounded(xx, yy, w, h, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1, isfirst, islast, false, false)
+draw_box_rounded(xx, yy, w, h, test(pressed, setting_color_buttons_pressed, setting_color_buttons), 1, isfirst, islast, false, false)
 
 // Separator
 if (!pressed && !isfirst)
 {
 	render_set_culling(false)
-	draw_line_width_color(xx - 2, yy + 6, xx - 2, yy + h-6, 2, setting_color_buttons_pressed, setting_color_buttons_pressed)
+	draw_line_width_color(xx - 2, yy + 6, xx - 2, yy + h - 6, 2, setting_color_buttons_pressed, setting_color_buttons_pressed)
 	render_set_culling(true)
 }
 

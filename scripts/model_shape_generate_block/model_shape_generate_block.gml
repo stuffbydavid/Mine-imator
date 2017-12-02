@@ -163,7 +163,7 @@ else if (bendstart < 0) // Start inside bend, apply partial angle
 // Apply bending transform
 if (angle != 0)
 {
-	var mat = model_part_get_bend_matrix(id, invangle ? (angle - cangle) : cangle, vec3(0));
+	var mat = model_part_get_bend_matrix(id, test(invangle, (angle - cangle), cangle), vec3(0));
 	p1 = point3D_mul_matrix(p1, mat)
 	p2 = point3D_mul_matrix(p2, mat)
 	p3 = point3D_mul_matrix(p3, mat)
@@ -272,7 +272,7 @@ while (true)
 	// Apply bending transform
 	if (angle != 0)
 	{
-		var nmat = model_part_get_bend_matrix(id, invangle ? (angle - cangle) : cangle, vec3(0));
+		var nmat = model_part_get_bend_matrix(id, test(invangle, (angle - cangle), cangle), vec3(0));
 		np1 = point3D_mul_matrix(np1, nmat)
 		np2 = point3D_mul_matrix(np2, nmat)
 		np3 = point3D_mul_matrix(np3, nmat)

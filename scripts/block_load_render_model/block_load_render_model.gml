@@ -399,7 +399,7 @@ with (new(obj_block_render_model))
 							if ((nd = e_dir.UP && other.preview_color_zp = null) ||
 								(nd = e_dir.SOUTH && other.preview_color_yp = null))
 							{
-								buffer_current = (face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED) ? load_assets_block_preview_ani_buffer : load_assets_block_preview_buffer
+								buffer_current = test((face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED), load_assets_block_preview_ani_buffer, load_assets_block_preview_buffer)
 						
 								var px, py, alpha;
 								px = slot mod sheetwidth

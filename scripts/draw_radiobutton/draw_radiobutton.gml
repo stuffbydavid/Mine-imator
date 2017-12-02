@@ -35,7 +35,7 @@ if (mouseon)
 }
 
 // Circle
-draw_image(spr_circle_16, 0, xx + rad, yy + rad, 1, 1, pressed ? setting_color_boxes_pressed : setting_color_boxes, 1)
+draw_image(spr_circle_16, 0, xx + rad, yy + rad, 1, 1, test(pressed, setting_color_boxes_pressed, setting_color_boxes), 1)
 
 if (checked)
 	draw_image(spr_circle_8, 0, xx + rad, yy + rad, 1, 1, setting_color_buttons, 1)

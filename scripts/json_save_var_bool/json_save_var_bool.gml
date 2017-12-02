@@ -23,6 +23,6 @@ buffer_write_byte(e_json_char.COLON)
 buffer_write_byte(e_json_char.SPACE)
 
 // Value
-buffer_write_string(value ? "true" : "false")
+buffer_write_string(test(value, "true", "false"))
 
 json_add_comma = true

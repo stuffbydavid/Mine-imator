@@ -15,7 +15,7 @@ if (!texture_lib)
 {
 	// Set filter
 	gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)
-	gpu_set_tex_mip_enable(shader_texture_filter_mipmap ? mip_on : mip_off)
+	gpu_set_tex_mip_enable(test(shader_texture_filter_mipmap, mip_on, mip_off))
 	gpu_set_tex_mip_filter_ext(sampler, tf_linear)
 }
 else

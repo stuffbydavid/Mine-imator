@@ -59,13 +59,13 @@ else
 	capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
 	
 	// Sun
-	tex = (background_sky_sun_tex.type = e_res_type.PACK) ? background_sky_sun_tex.sun_texture : background_sky_sun_tex.texture
+	tex = test((background_sky_sun_tex.type = e_res_type.PACK), background_sky_sun_tex.sun_texture, background_sky_sun_tex.texture)
 	tab_control(40)
 	draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, 40, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, tex, null, capwid)
 	tab_next()
 	
 	// Moon
-	tex = (background_sky_moon_tex.type = e_res_type.PACK) ? background_sky_moon_tex.moon_texture[background_sky_moon_phase] : background_sky_moon_tex.texture
+	tex = test((background_sky_moon_tex.type = e_res_type.PACK), background_sky_moon_tex.moon_texture[background_sky_moon_phase], background_sky_moon_tex.texture)
 	tab_control(40)
 	draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, 40, background_sky_moon_tex, background_sky_moon_tex.display_name, action_background_sky_moon_tex, tex, null, capwid)
 	tab_next()
@@ -106,7 +106,7 @@ if (background_sky_clouds_show)
 	capwid = text_caption_width("backgroundskycloudstex", "backgroundskycloudsspeed", "backgroundskycloudsz", "backgroundskycloudssize", "backgroundskycloudsheight")
 	
 	// Cloud texture
-	var tex = (background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture;
+	var tex = test((background_sky_clouds_tex.type = e_res_type.PACK), background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture);
 	tab_control(40)
 	draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, 40, background_sky_clouds_tex, background_sky_clouds_tex.display_name, action_background_sky_clouds_tex, tex, null, capwid)
 	tab_next()
@@ -118,7 +118,7 @@ if (background_sky_clouds_show)
 	
 	// Cloud Z / Y
 	tab_control_dragger()
-	draw_dragger("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, dw, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
+	draw_dragger("backgroundskyclouds" + test(setting_z_is_up, "z", "y"), dx, dy, dw, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
 	tab_next()
 	
 	// Cloud size

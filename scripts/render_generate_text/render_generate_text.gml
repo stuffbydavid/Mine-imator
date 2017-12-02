@@ -70,7 +70,7 @@ t1 = vec2_div(t1, tsize)
 t2 = vec2_div(t2, tsize)
 t3 = vec2_div(t3, tsize)
 t4 = vec2_div(t4, tsize)
-ysize = is3d ? 1 : 0
+ysize = test(is3d, 1, 0)
 
 // Front
 p1 = point3D(xx, ysize, zz + hei)

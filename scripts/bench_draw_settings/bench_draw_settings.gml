@@ -162,7 +162,7 @@ else
 			// Item select
 			if (res.item_sheet_texture != null)
 			{
-				var slots = (res.type = e_res_type.PACK) ? ds_list_size(mc_assets.item_texture_list) : (res.item_sheet_size[X] * res.item_sheet_size[Y]);
+				var slots = test((res.type = e_res_type.PACK), ds_list_size(mc_assets.item_texture_list), (res.item_sheet_size[X] * res.item_sheet_size[Y]));
 				listh = 200 + bench_settings.height_custom
 				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, listh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8

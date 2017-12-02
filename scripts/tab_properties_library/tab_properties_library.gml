@@ -60,7 +60,7 @@ switch (temp_edit.type)
 	case e_temp_type.SPECIAL_BLOCK:
 	{
 		var text, wid;
-		text = (temp_edit.type = e_temp_type.CHARACTER) ? "librarycharmodel" : "libraryspblockmodel"
+		text = test((temp_edit.type = e_temp_type.CHARACTER), "librarycharmodel", "libraryspblockmodel")
 		wid = text_max_width("librarycharmodelchange") + 20
 		
 		// Model
@@ -80,7 +80,7 @@ switch (temp_edit.type)
 			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 		
 		tab_control(40)
-		draw_button_menu((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin", e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, tex, null, capwid)
+		draw_button_menu(test((temp_edit.type = e_temp_type.SPECIAL_BLOCK), "libraryspblocktex", "libraryskin"), e_menu.LIST, dx, dy, dw, 40, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, tex, null, capwid)
 		tab_next()
 		
 		break
@@ -378,12 +378,12 @@ if (temp_edit.type = e_temp_type.SCENERY || temp_edit.type = e_temp_type.BLOCK)
 		draw_dragger("libraryrepeatx", dx, dy, dw, temp_edit.block_repeat[X], 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_x, action_lib_block_repeat, capwid)
 		tab_next()
 		
-		axis_edit = setting_z_is_up ? Y : Z
+		axis_edit = test(setting_z_is_up, Y, Z)
 		tab_control_dragger()
 		draw_dragger("libraryrepeaty", dx, dy, dw, temp_edit.block_repeat[axis_edit], 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_y, action_lib_block_repeat, capwid)
 		tab_next()
 		
-		axis_edit = setting_z_is_up ? Z : Y
+		axis_edit = test(setting_z_is_up, Z, Y)
 		tab_control_dragger()
 		draw_dragger("libraryrepeatz", dx, dy, dw, temp_edit.block_repeat[axis_edit], 1 / 10, 1, 1000, 1, 1, tab.library.tbx_repeat_z, action_lib_block_repeat, capwid)
 		tab_next()

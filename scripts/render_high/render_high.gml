@@ -122,7 +122,7 @@ if (setting_render_shadows)
 	{
 		draw_clear(c_white)
 		render_world_start()
-		render_world(sunout ? e_render_mode.HIGH_LIGHT_SUN : e_render_mode.HIGH_LIGHT_NIGHT)
+		render_world(test(sunout, e_render_mode.HIGH_LIGHT_SUN, e_render_mode.HIGH_LIGHT_NIGHT))
 		render_world_done()
 	}
 	surface_reset_target()

@@ -53,7 +53,7 @@ if (mouseon && content_mouseon)
 	mouse_cursor = cr_size_all
 	if (mouse_left_pressed)
 	{
-		window_busy = is3d ? "previewrotate" : "previewmove"
+		window_busy = test(is3d, "previewrotate", "previewmove")
 		window_focus = string(preview)
 		preview.clickxyangle = preview.xyangle
 		preview.clickzangle = preview.zangle
@@ -461,11 +461,11 @@ with (preview)
 								break
 						
 							case "blocksheet":
-								tex = pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame()] : select.block_sheet_texture
+								tex = test(pack_block_sheet_ani, select.block_sheet_ani_texture[block_texture_get_frame()], select.block_sheet_texture)
 								break
 						
 							case "colormap":
-								tex = pack_colormap ? select.colormap_foliage_texture : select.colormap_grass_texture
+								tex = test(pack_colormap, select.colormap_foliage_texture, select.colormap_grass_texture)
 								break
 						
 							case "itemsheet":
@@ -562,7 +562,7 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 // Play button
 if (playbutton)
 {
-	if (draw_button_normal(isplaying ? "previewstop" : "previewplay", xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, isplaying ? icons.STOP : icons.PLAY))
+	if (draw_button_normal(test(isplaying, "previewstop", "previewplay"), xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, test(isplaying, icons.STOP, icons.PLAY)))
 	{
 		if (isplaying)
 			audio_stop_sound(preview.sound_play_index)

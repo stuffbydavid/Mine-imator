@@ -38,8 +38,8 @@ else
 }
 
 var yy, h;
-h = ease((menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo", menu_ani) * min(itemsy, menu_show) * menu_item_h
-yy = menu_flip ? (menu_y - h) : (menu_y + menu_button_h)
+h = ease(test((menu_ani_type = "show"), "easeoutexpo", "easeinexpo"), menu_ani) * min(itemsy, menu_show) * menu_item_h
+yy = test(menu_flip, (menu_y - h), (menu_y + menu_button_h))
 
 draw_drop_shadow(menu_x, yy, menu_w, h)
 draw_box_rounded(menu_x, yy, menu_w, h, setting_color_buttons, 1, menu_flip, menu_flip, !menu_flip, !menu_flip)
@@ -90,14 +90,14 @@ switch (menu_type)
 			
 			// Sprite
 			if (item.icon)  //Icons
-				draw_image(spr_icons, item.icon, menu_x + imgsize / 2+4, dy + menu_item_h / 2, 1, 1, highlight ? setting_color_highlight_text : setting_color_buttons_text, 1)
+				draw_image(spr_icons, item.icon, menu_x + imgsize / 2+4, dy + menu_item_h / 2, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 			else if (item.tex)
 				draw_texture(item.tex, menu_x + 4, dy + 2, imgsize / texture_width(item.tex), imgsize / texture_height(item.tex))
 			
 			// Caption
-			dx += (item.icon || item.tex) ? (imgsize - 4) : 0
+			dx += test((item.icon || item.tex), (imgsize - 4), 0)
 			text = string_limit(item.text, menu_w - 30 * menu_scroll.needed - 8-dx)
-			draw_label(text, menu_x + dx, dy + menu_item_h / 2, fa_left, fa_middle, highlight ? setting_color_highlight_text : setting_color_buttons_text, 1)
+			draw_label(text, menu_x + dx, dy + menu_item_h / 2, fa_left, fa_middle, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 			dy += menu_item_h
 		}
 		break
@@ -160,7 +160,7 @@ switch (menu_type)
 					menu_clear()
 					menu_timeline_init()
 				}
-				draw_image(spr_icons, tl.tree_extend ? icons.ARROW_DOWN_TINY : icons.ARROW_RIGHT_TINY, menu_x + dx + 2, dy + menu_item_h / 2, 1, 1, highlight ? setting_color_highlight_text : setting_color_buttons_text, 1)
+				draw_image(spr_icons, test(tl.tree_extend, icons.ARROW_DOWN_TINY, icons.ARROW_RIGHT_TINY), menu_x + dx + 2, dy + menu_item_h / 2, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 				dx += 10
 			}
 			
@@ -169,7 +169,7 @@ switch (menu_type)
 				text = text_get("timelinenone")
 			else
 				text = string_remove_newline(tl.display_name)
-			draw_label(string_limit(text, menu_w - 30 * menu_scroll.needed - dx), menu_x + dx, dy + menu_item_h / 2, fa_left, fa_middle, highlight ? setting_color_highlight_text : setting_color_buttons_text, 1)
+			draw_label(string_limit(text, menu_w - 30 * menu_scroll.needed - dx), menu_x + dx, dy + menu_item_h / 2, fa_left, fa_middle, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 			dy += menu_item_h
 		}
 		break
@@ -206,7 +206,7 @@ switch (menu_type)
 				draw_box(dx, dy, menu_item_w, menu_item_h, false, setting_color_highlight, 1)
 	
 			// Texture
-			draw_texture(transition_texture_map[?item.value], dx, dy, 1, 1, highlight ? setting_color_highlight_text : setting_color_buttons_text, 1)
+			draw_texture(transition_texture_map[?item.value], dx, dy, 1, 1, test(highlight, setting_color_highlight_text, setting_color_buttons_text), 1)
 			
 			// Iterate
 			dx += menu_item_w

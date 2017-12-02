@@ -24,27 +24,27 @@ open = block_get_state_id_value(block_current, block_state_id_current, "open")
 
 if (facing = "east")
 {
-	location = (hinge = "right") ? "south_west" : "north_west"
+	location = test(hinge = "right", "south_west", "north_west")
 	if (open = "false")
-		dir = (hinge = "right") ? "north" : "south"
+		dir = test(hinge = "right", "north", "south")
 }
 else if (facing = "west")
 {
-	location = (hinge = "right") ? "north_east" : "south_east"
+	location = test(hinge = "right", "north_east", "south_east")
 	if (open = "false")
-		dir = (hinge = "right") ? "south" : "north"
+		dir = test(hinge = "right", "south", "north")
 }
 else if (facing = "south")
 {
-	location = (hinge = "right") ? "north_west" : "north_east"
+	location = test(hinge = "right", "north_west", "north_east")
 	if (open = "false")
-		dir = (hinge = "right") ? "east" : "west"
+		dir = test(hinge = "right", "east", "west")
 }
 else if (facing = "north")
 {
-	location = (hinge = "right") ? "south_east" : "south_west"
+	location = test(hinge = "right", "south_east", "south_west")
 	if (open = "false")
-		dir = (hinge = "right") ? "west" : "east"
+		dir = test(hinge = "right", "west", "east")
 }
 
 if (open = "true")

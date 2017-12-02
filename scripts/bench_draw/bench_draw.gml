@@ -14,14 +14,14 @@ if (bench_show_ani_type = "show")
 	bench_show_ani = min(1, bench_show_ani + 0.1 * delta)
 	if (bench_show_ani = 1)
 		bench_show_ani_type = ""
-	func = (toolbar_location = "top" || toolbar_location = "left") ? "easeincirc" : "easeoutcirc"
+	func = test(toolbar_location = "top" || toolbar_location = "left", "easeincirc", "easeoutcirc")
 }
 else if (bench_show_ani_type = "hide")
 {
 	bench_show_ani = max(0, bench_show_ani - 0.1 * delta)
 	if (bench_show_ani = 0)
 		bench_show_ani_type = ""
-	func = (toolbar_location = "bottom" || toolbar_location = "right") ? "easeoutcirc" : "easeincirc"
+	func = test(toolbar_location = "bottom" || toolbar_location = "right", "easeoutcirc", "easeincirc")
 }
 
 if (bench_show_ani = 0)
@@ -113,7 +113,7 @@ for (var l = 0; l < ds_list_size(bench_type_list); l++)
 	
 	if (sel)
 		draw_box(dx, dy, iconsize, iconsize, false, setting_color_highlight, 1)
-	draw_image(spr_icons_bench, l, dx + iconsize / 2, dy + iconsize / 2, 1, 1, sel ? setting_color_highlight_text : setting_color_text, 1)
+	draw_image(spr_icons_bench, l, dx + iconsize / 2, dy + iconsize / 2, 1, 1, test(sel, setting_color_highlight_text, setting_color_text), 1)
 	
 	if (bench_show_ani = 1)
 		tip_set(text_get("benchtype" + tl_type_name_list[|type] + "tip"), dx, dy, iconsize, iconsize)

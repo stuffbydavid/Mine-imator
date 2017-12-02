@@ -7,10 +7,10 @@ tab_control(100)
 axis_edit = X
 draw_wheel("frameeditorrotationx", dx + floor(dw * 0.25) - 25, dy + 50, c_yellow, tl_edit.value[e_value.ROT_X], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X], snapval, tab.rotation.loops, tab.rotation.tbx_x, action_tl_frame_rot)
 
-axis_edit = setting_z_is_up ? Y : Z
+axis_edit = test(setting_z_is_up, Y, Z)
 draw_wheel("frameeditorrotationy", dx + floor(dw * 0.5), dy + 50, c_blue, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.rotation.loops, tab.rotation.tbx_y, action_tl_frame_rot)
 
-axis_edit = setting_z_is_up ? Z : Y
+axis_edit = test(setting_z_is_up, Z, Y)
 draw_wheel("frameeditorrotationz", dx + floor(dw * 0.75) + 25, dy + 50, c_red, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.rotation.loops, tab.rotation.tbx_z, action_tl_frame_rot)
 tab_next()
 
@@ -22,10 +22,10 @@ if (tab.rotation.loops)
 	axis_edit = X
 	draw_dragger("frameeditorrotationloopsx", dx + floor(dw * 0.25) - 25 - 45, dy, 80, floor(tl_edit.value[e_value.ROT_X] / 360), 1 / 10, -no_limit, no_limit, 0, 1, tab.rotation.tbx_loops_x, action_tl_frame_rot_loops, 45)
 	
-	axis_edit = setting_z_is_up ? Y : Z
+	axis_edit = test(setting_z_is_up, Y, Z)
 	draw_dragger("frameeditorrotationloopsy", dx + floor(dw * 0.5) - 25, dy, 80, floor(tl_edit.value[e_value.ROT_X + axis_edit] / 360), 1 / 10, -no_limit, no_limit, 0, 1, tab.rotation.tbx_loops_y, action_tl_frame_rot_loops)
 	
-	axis_edit = setting_z_is_up ? Z : Y
+	axis_edit = test(setting_z_is_up, Z, Y)
 	draw_dragger("frameeditorrotationloopsz", dx + floor(dw * 0.75), dy, 80, floor(tl_edit.value[e_value.ROT_X + axis_edit] / 360), 1 / 10, -no_limit, no_limit, 0, 1, tab.rotation.tbx_loops_z, action_tl_frame_rot_loops)
 	tab_next()
 	dy += 10

@@ -51,7 +51,7 @@ else
 	text = string(value) + tbx.suffix
 labelx = xx - floor(string_width(text) / 4)
 labelw = rad
-labely = yy + ((modval > 180 || modval = 0) ? -24 : 8)
+labely = yy + test((modval > 180 || modval = 0), -24, 8)
 tip_set(text_get(name + "tip") + "\n" + text_get("wheeltip"), xx - rad, yy - rad, rad * 2, rad * 2)
 
 // Background

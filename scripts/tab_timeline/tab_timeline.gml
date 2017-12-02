@@ -16,7 +16,7 @@ content_mouseon = true
 draw_box(content_x, content_y, content_width, content_height, false, setting_color_background, 1)
 
 // Init
-itemh = setting_timeline_compact ? 18 : 24
+itemh = test(setting_timeline_compact, 18, 24)
 itemhalf = itemh / 2
 indent = 16
 
@@ -182,8 +182,8 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 					draw_primitive_end()
 					draw_primitive_begin(pr_linelist)
 				}
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_white : tl.color, alpha)
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_white : tl.color, alpha)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, test(kf.selected, c_white, tl.color), alpha)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, test(kf.selected, c_white, tl.color), alpha)
 			}
 			draw_primitive_end()
 			
@@ -203,7 +203,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO)
 			{
 				var curdx, nextdx;
-				curdx = (k = 0) ? tlx : max(tlx, dx)
+				curdx = test((k = 0), tlx, max(tlx, dx))
 				nextdx = tlx + tlw
 				if (k < ds_list_size(tl.keyframe_list) - 1)
 					nextdx = min(nextdx, tlx + floor(tl.keyframe_list[|k + 1].position * timeline_zoom - timeline.hor_scroll.value))
@@ -221,7 +221,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			// Sprite
 			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
-			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_white : tl.color, 1)
+			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, test(kf.selected, c_white, tl.color), 1)
 		}
 		
 		if (mouse && mouseintl && !tl.lock)
@@ -358,7 +358,7 @@ for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < 
 	{
 		var oldcol = draw_get_color();
 		draw_set_color(color)
-		draw_set_halign((f = 0) ? fa_left : fa_center)
+		draw_set_halign(test((f = 0), fa_left, fa_center))
 		draw_text(linex, bary + 5, string(f))
 		draw_set_halign(fa_left)
 		draw_set_color(oldcol)
@@ -511,13 +511,13 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	if (showlock)
 	{
 		tip_set(text_get("timelinelocktip"), content_x + w - 16 * 2, dy, 16, itemh)
-		draw_image(spr_icons, tl.lock ? icons.LOCK : icons.UNLOCK, content_x + w - 8 - 16 * 1, dy + itemh / 2, 1, 1, setting_color_text, 1)
+		draw_image(spr_icons, test(tl.lock, icons.LOCK, icons.UNLOCK), content_x + w - 8 - 16 * 1, dy + itemh / 2, 1, 1, setting_color_text, 1)
 	}
 	
 	if (showhide)
 	{
-		tip_set(text_get((tl.type = e_tl_type.AUDIO) ? "timelinemutetip" : "timelinehidetip"), content_x + w - 16 * 1, dy, 16, itemh)
-		draw_image(spr_icons, (tl.type = e_tl_type.AUDIO) ? (tl.hide ? icons.MUTE : icons.SOUND) : (tl.hide ? icons.HIDE : icons.SHOW), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
+		tip_set(text_get(test((tl.type = e_tl_type.AUDIO), "timelinemutetip", "timelinehidetip")), content_x + w - 16 * 1, dy, 16, itemh)
+		draw_image(spr_icons, test((tl.type = e_tl_type.AUDIO), test(tl.hide, icons.MUTE, icons.SOUND), test(tl.hide, icons.HIDE, icons.SHOW)), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
 	}
 	
 	if (showkeyframes)
@@ -536,7 +536,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			action_tl_extend(tl)
 			app_mouse_clear()
 		}
-		draw_image(spr_icons, tl.tree_extend ? icons.ARROW_DOWN_TINY : icons.ARROW_RIGHT_TINY, dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
+		draw_image(spr_icons, test(tl.tree_extend, icons.ARROW_DOWN_TINY, icons.ARROW_RIGHT_TINY), dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
 		dx += 10
 	}
 	

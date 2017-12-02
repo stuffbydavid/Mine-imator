@@ -19,7 +19,7 @@ if (part.shape_list = null)
 	
 var parttexname = model_part_get_texture_name(part, texnamemap);
 
-// Create vertex buffer for each 3D plane
+/*// Create vertex buffer for each 3D plane
 draw_texture_start()
 for (var s = 0; s < ds_list_size(part.shape_list); s++)
 {
@@ -139,4 +139,4 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		vertex_brightness = 0
 	}
 }
-draw_texture_done()
+draw_texture_done()*/
