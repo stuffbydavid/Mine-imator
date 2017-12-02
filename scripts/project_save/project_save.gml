@@ -25,5 +25,8 @@ project_save_done()
 debug_timer_stop("project_save")
 log("Project saved")
 
-project_changed = false
-recent_add_wait = true
+if (!string_contains(filename_ext(fn), "backup"))
+{
+	project_changed = false
+	recent_add_wait = true
+}

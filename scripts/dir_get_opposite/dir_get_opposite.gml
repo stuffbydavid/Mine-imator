@@ -1,8 +1,6 @@
 /// dir_get_opposite(direction)
 /// @arg direction
 
-//gml_pragma("forceinline")
-
 switch (argument0)
 {
 	case e_dir.EAST:	return e_dir.WEST

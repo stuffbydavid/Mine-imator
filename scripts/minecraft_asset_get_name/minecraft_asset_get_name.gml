@@ -9,6 +9,6 @@ type = argument0
 name = argument1
 
 if (string_digits(name) = name || !text_exists(type + name))
-	return string_format_snakecase(name) + test(dev_mode_debug_names, " [" + name + "]", "")
+	return string_format_snakecase(name) + (dev_mode_debug_names ? (" [" + name + "]") : "")
 else
-	return text_get(type + name) + test(dev_mode_debug_names, " [" + name + "]", "")
+	return text_get(type + name) + (dev_mode_debug_names ? (" [" + name + "]") : "")

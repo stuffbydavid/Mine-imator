@@ -91,7 +91,7 @@ if (!enabled)
 
 // Button
 if (frame && icon < icons.RENDER_SMALL)
-	draw_box_rounded(xx, yy, wid, hei, test(pressed, setting_color_buttons_pressed, setting_color_buttons), 1)
+	draw_box_rounded(xx, yy, wid, hei, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1)
 
 // Icon
 if (icon != null)
@@ -112,9 +112,9 @@ if (icon != null)
 	else if (icon >= icons.UPGRADE_SMALL)
 		draw_image(spr_icons_big, icon - icons.WEBSITE_SMALL, iconx, icony, 1, 1, c_yellow, 1)
 	else if (icon >= icons.WEBSITE_SMALL)
-		draw_image(spr_icons_big, icon - icons.WEBSITE_SMALL, iconx, icony, 1, 1, test(frame, setting_color_buttons_text, setting_color_text), 1)
+		draw_image(spr_icons_big, icon - icons.WEBSITE_SMALL, iconx, icony, 1, 1, frame ? setting_color_buttons_text : setting_color_text, 1)
 	else
-		draw_image(spr_icons, icon, iconx, icony, 1, 1, test(frame, setting_color_buttons_text, setting_color_text), 1)
+		draw_image(spr_icons, icon, iconx, icony, 1, 1, frame ? setting_color_buttons_text : setting_color_text, 1)
 }
 
 // Text

@@ -53,7 +53,7 @@ if (mouseon && content_mouseon)
 	mouse_cursor = cr_size_all
 	if (mouse_left_pressed)
 	{
-		window_busy = test(is3d, "previewrotate", "previewmove")
+		window_busy = is3d ? "previewrotate" : "previewmove"
 		window_focus = string(preview)
 		preview.clickxyangle = preview.xyangle
 		preview.clickzangle = preview.zangle
@@ -287,7 +287,7 @@ with (preview)
 								var res = select;
 								if (select.model_texture_map = null)
 									res = mc_res
-								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_plane_vbuffer_map)
+								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_shape_vbuffer_map)
 							}
 							break
 						}
@@ -327,7 +327,7 @@ with (preview)
 							var res;
 							with (select)
 								res = temp_get_model_texobj(null)
-							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_plane_vbuffer_map)
+							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map)
 							break
 						}
 					
@@ -354,7 +354,7 @@ with (preview)
 								res = mc_res
 						
 							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-							render_world_model_part(select.model_part, res, select.model_texture_name_map, 0, null, select.model_plane_vbuffer_map)
+							render_world_model_part(select.model_part, res, select.model_texture_name_map, select.model_shape_vbuffer_map)
 							break
 						}
 					
@@ -461,11 +461,11 @@ with (preview)
 								break
 						
 							case "blocksheet":
-								tex = test(pack_block_sheet_ani, select.block_sheet_ani_texture[block_texture_get_frame()], select.block_sheet_texture)
+								tex = pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame()] : select.block_sheet_texture
 								break
 						
 							case "colormap":
-								tex = test(pack_colormap, select.colormap_foliage_texture, select.colormap_grass_texture)
+								tex = pack_colormap ? select.colormap_foliage_texture : select.colormap_grass_texture
 								break
 						
 							case "itemsheet":
@@ -562,7 +562,7 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 // Play button
 if (playbutton)
 {
-	if (draw_button_normal(test(isplaying, "previewstop", "previewplay"), xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, test(isplaying, icons.STOP, icons.PLAY)))
+	if (draw_button_normal(isplaying ? "previewstop" : "previewplay", xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, isplaying ? icons.STOP : icons.PLAY))
 	{
 		if (isplaying)
 			audio_stop_sound(preview.sound_play_index)

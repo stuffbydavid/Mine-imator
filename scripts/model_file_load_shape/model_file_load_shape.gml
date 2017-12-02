@@ -104,91 +104,18 @@ with (new(obj_model_shape))
 	from = point3D_mul(from_noscale, scale)
 	to = point3D_mul(to_noscale, scale)
 	
+	// 3D plane (optional)
+	is3d = false
+	if (type = "plane")
+		is3d = value_get_real(map[?"3d"], false)
+	
 	// Bending
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
 	bend_offset = other.bend_offset
+	bend_size = other.bend_size
 	bend_invert = other.bend_invert
-	bend_vbuffer = null
-	bend_mode = e_shape_bend.BEND
-	
-	// Disable bending if the shape is beneath/above the offset,
-	// and instead lock it to either the stationary or moving half
-	switch (bend_part)
-	{
-		case e_part.RIGHT:
-		{
-			if (position[X] + from[X] > bend_offset)
-			{
-				bend_mode = e_shape_bend.LOCK_MOVING
-				position[X] -= bend_offset
-			}
-			else if (position[X] + to[X] <= bend_offset)
-				bend_mode = e_shape_bend.LOCK_STATIONARY
-			break
-		}
-		
-		case e_part.LEFT:
-		{
-			if (position[X] + to[X] < bend_offset)
-			{
-				bend_mode = e_shape_bend.LOCK_MOVING
-				position[X] -= bend_offset
-			}
-			else if (position[X] + from[X] >= bend_offset)
-				bend_mode = e_shape_bend.LOCK_STATIONARY
-			break
-		}
-		
-		case e_part.FRONT:
-		{
-			if (position[Y] + from[Y] > bend_offset)
-			{
-				bend_mode = e_shape_bend.LOCK_MOVING
-				position[Y] -= bend_offset
-			}
-			else if (position[Y] + to[Y] <= bend_offset)
-				bend_mode = e_shape_bend.LOCK_STATIONARY
-			break
-		}
-		
-		case e_part.BACK:
-		{
-			if (position[Y] + to[Y] < bend_offset)
-			{
-				bend_mode = e_shape_bend.LOCK_MOVING
-				position[Y] -= bend_offset
-			}
-			else if (position[Y] + from[Y] >= bend_offset)
-				bend_mode = e_shape_bend.LOCK_STATIONARY
-			break
-		}
-		
-		case e_part.UPPER:
-		{
-			if (position[Z] + from[Z] > bend_offset)
-			{
-				bend_mode = e_shape_bend.LOCK_MOVING
-				position[Z] -= bend_offset
-			}
-			else if (position[Z] + to[Z] <= bend_offset)
-				bend_mode = e_shape_bend.LOCK_STATIONARY
-			break
-		}
-		
-		case e_part.LOWER:
-		{
-			if (position[Z] + to[Z] < bend_offset)
-			{
-				bend_mode = e_shape_bend.LOCK_MOVING
-				position[Z] -= bend_offset
-			}
-			else if (position[Z] + from[Z] >= bend_offset)
-				bend_mode = e_shape_bend.LOCK_STATIONARY
-			break
-		}
-	}
 	
 	// Create matrices
 	matrix = matrix_create(position, rotation, vec3(1))
@@ -220,28 +147,10 @@ with (new(obj_model_shape))
 	
 	// Generate
 	if (type = "block")
-	{
-		is3d = false
-		
-		vbuffer = vbuffer_start()
-		model_file_load_shape_block()
-		vbuffer_done()
-		
-		if (bend_part != null && bend_mode = e_shape_bend.BEND)
-		{
-			bend_vbuffer = vbuffer_start()
-			model_file_load_shape_block(true)
-			vbuffer_done()
-		}
-		else
-			bend_vbuffer = null
-	}
+		vbuffer = model_shape_generate_block(0)
 	else if (type = "plane")
 	{
 		to[Y] = from[Y]
-		
-		// 3D (optional)
-		is3d = value_get_real(map[?"3d"], false)
 		
 		if (is3d)
 		{
@@ -249,18 +158,7 @@ with (new(obj_model_shape))
 			other.has_3d_plane = true
 		}
 		
-		vbuffer = vbuffer_start()
-		model_file_load_shape_plane()
-		vbuffer_done()
-		
-		if (bend_part != null && bend_mode = e_shape_bend.BEND)
-		{
-			bend_vbuffer = vbuffer_start()
-			model_file_load_shape_plane(true)
-			vbuffer_done()
-		}
-		else
-			bend_vbuffer = null
+		vbuffer = model_shape_generate_plane(null, 0)
 	}
 	else
 	{

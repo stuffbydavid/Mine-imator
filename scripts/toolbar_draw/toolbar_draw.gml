@@ -114,7 +114,7 @@ toolbar_draw_button("toolbarredo", false, (history_pos > 0), icons.REDO, action_
 
 toolbar_draw_group(3)
 tip = text_get("toolbarplaytip", text_control_name(setting_key_play, setting_key_play_control), text_control_name(setting_key_play_beginning, setting_key_play_beginning_control))
-toolbar_draw_button("toolbarplay", false, true, test(timeline_playing, icons.PAUSE, icons.PLAY), action_toolbar_play, tip)
+toolbar_draw_button("toolbarplay", false, true, timeline_playing ? icons.PAUSE : icons.PLAY, action_toolbar_play, tip)
 toolbar_draw_button("toolbarstop", false, true, icons.STOP, action_toolbar_play_stop)
 toolbar_draw_button("toolbarrepeat", timeline_repeat, true, icons.LOOP, action_toolbar_play_repeat)
 

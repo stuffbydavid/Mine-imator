@@ -93,7 +93,7 @@ if (menu_name = name)
 // Button
 roundtop = (menu_name != name || !menu_flip)
 roundbottom = (menu_name != name || menu_flip)
-draw_box_rounded(xx, yy, wid, hei, test(pressed, setting_color_buttons_pressed, setting_color_buttons), 1, roundtop, roundtop, roundbottom, roundbottom)
+draw_box_rounded(xx, yy, wid, hei, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1, roundtop, roundtop, roundbottom, roundbottom)
 
 // Sprite
 if (icon != null)
@@ -102,11 +102,11 @@ else if (tex != null)
 	draw_texture(tex, xx + 4, yy + 2 + pressed, imgsize / texture_width(tex), imgsize / texture_height(tex))
 
 // Text
-textoff = test(tex || icon, imgsize - 4, 0)
+textoff = (tex || icon) ? (imgsize - 4) : 0
 draw_label(string_limit(string_remove_newline(text), wid - textoff - hei - 8), xx + hei / 2 + textoff, yy + hei / 2 + pressed, fa_left, fa_middle, setting_color_buttons_text, 1)
 
 // Arrow
-draw_image(spr_icons, test(flip, icons.ARROW_UP, icons.ARROW_DOWN), xx + wid - hei / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
+draw_image(spr_icons, flip ? icons.ARROW_UP : icons.ARROW_DOWN, xx + wid - hei / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
 
 // Update menu position
 if (menu_name = name)

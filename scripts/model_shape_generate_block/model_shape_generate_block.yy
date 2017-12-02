@@ -1,8 +1,8 @@
 {
-    "id": "cd6b6e7a-6de0-40c1-afb0-47facb5cda40",
+    "id": "3e4e5e0a-2dba-4487-a686-075b5b642dc7",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "model_shape_get_bend_vbuffer",
+    "name": "model_shape_generate_block",
     "IsCompatibility": false,
     "IsDnD": false
 }

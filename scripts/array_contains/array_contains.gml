@@ -2,8 +2,6 @@
 /// @arg array
 /// @arg value
 
-//gml_pragma("forceinline")
-
 var arr, value, len;
 arr = argument0
 value = argument1

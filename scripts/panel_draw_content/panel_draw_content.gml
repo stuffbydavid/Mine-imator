@@ -64,7 +64,7 @@ if (!tab.script)
 		{
 			// Hide button
 			tab_control(16)
-			if (draw_button_normal(cat[c].name, dx - 3, dy, 16, 16, e_button.CAPTION, cat[c].show, false, true, test(cat[c].show, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+			if (draw_button_normal(cat[c].name, dx - 3, dy, 16, 16, e_button.CAPTION, cat[c].show, false, true, cat[c].show ? icons.ARROW_DOWN : icons.ARROW_RIGHT))
 				cat[c].show = !cat[c].show
 			tab_next()
 			

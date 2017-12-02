@@ -14,7 +14,7 @@ while (!is_undefined(key))
 	key = ds_map_find_next(save_id_map, key)
 }
 
-save_id_map[? null] = null
+save_id_map[?null] = null
 save_id_map[?"root"] = "root"
 save_id_map[?"default"] = "default"
 

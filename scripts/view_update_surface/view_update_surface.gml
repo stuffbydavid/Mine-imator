@@ -45,7 +45,7 @@ if (view.controls)
 					if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
 						continue
 						
-					draw_set_color(test(tl.selected || tl.parent_is_selected, c_white, c_controls))
+					draw_set_color((tl.selected || tl.parent_is_selected) ? c_white : c_controls)
 				
 					if (tl.type = e_tl_type.SPOT_LIGHT)
 						view_shape_spotlight(tl)

@@ -4,8 +4,6 @@
 /// @arg z
 /// @arg w
 
-//gml_pragma("forceinline")
-
 var vec;
 
 if (argument_count = 1)

@@ -21,6 +21,16 @@ if (filename_ext(fn) = ".milanguage")
 	var convfn = file_directory + "conv.tmp";
 	json_file_convert_unicode(fn, convfn)
 	
+	if (!file_exists_lib(convfn))
+	{
+		var msg = "An error occurred while reading the language file:\nCould not convert.";
+		log(msg)
+		window_set_caption("Error")
+		show_message(msg)
+		window_set_caption("")
+		return 0
+	}
+	
 	// Load JSON
 	var jsonmap = json_load(convfn);
 	if (ds_map_valid(jsonmap))
@@ -30,8 +40,10 @@ if (filename_ext(fn) = ".milanguage")
 	}
 	else
 	{
+		var msg = "An error occured while reading the language file:\n" + json_error + " on line " + string(json_line) + ", column " + string(json_column);
+		log(msg)
 		window_set_caption("Error")
-		show_message("An error occured while reading the file:\n" + json_error + " on line " + string(json_line) + ", column " + string(json_column))
+		show_message(msg)
 		window_set_caption("")
 		return 0
 	}
@@ -55,10 +67,10 @@ if (!reload && map != language_english_map)
 	if (ds_list_size(missingkeyslist) > 0)
 	{
 		ds_list_sort(missingkeyslist, true)
-		var str = "The following texts are missing in the translation and will display as English:\n"
+		var msg = "The following texts are missing in the translation and will display as English:\n"
 		for (var i = 0; i < ds_list_size(missingkeyslist); i++)
-			str += missingkeyslist[|i] + ": " + string_replace_all(language_english_map[?missingkeyslist[|i]], "\n", "\\n") + "\n"
-		log(str)
+			msg += missingkeyslist[|i] + ": " + string_replace_all(language_english_map[?missingkeyslist[|i]], "\n", "\\n") + "\n"
+		log(msg)
 	
 		window_set_caption("Error")
 		show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file)

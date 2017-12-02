@@ -3,8 +3,6 @@
 /// @arg start
 /// @arg end
 
-//gml_pragma("forceinline")
-
 if (argument1 = argument2) 
 	return (argument0 < argument1)
 	

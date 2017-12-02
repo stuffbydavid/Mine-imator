@@ -3,8 +3,6 @@
 /// @arg rotation
 /// @arg scale
 
-//gml_pragma("forceinline")
-
 var pos, rot, sca;
 pos = argument0
 rot = argument1

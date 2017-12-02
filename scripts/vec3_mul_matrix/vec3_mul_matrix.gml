@@ -2,8 +2,6 @@
 /// @arg vector
 /// @arg matrix
 
-//gml_pragma("forceinline")
-
 var vec, mat, vecmat;
 vec = argument0
 mat = argument1

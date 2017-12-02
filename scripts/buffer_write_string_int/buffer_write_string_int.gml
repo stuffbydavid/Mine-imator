@@ -2,8 +2,6 @@
 /// @arg string
 /// @desc Writes a string to the buffer, beginning with an integer telling the length in bytes.
 
-//gml_pragma("forceinline")
-
 var str, len;
 str = argument0
 len = string_length(str)

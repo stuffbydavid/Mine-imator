@@ -99,7 +99,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 			var res;
 			with (temp)
 				res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-			render_world_model_part(model_part, res, temp.model_texture_name_map, value_inherit[e_value.BEND_ANGLE], bend_vbuffer_list, model_plane_vbuffer_map)
+			render_world_model_part(model_part, res, temp.model_texture_name_map, model_shape_vbuffer_map)
 			break
 		}
 			   
@@ -111,7 +111,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 				res = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 				
 			if (type = e_tl_type.BLOCK)
-				render_world_block(temp.block_vbuffer, res, true, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)))
+				render_world_block(temp.block_vbuffer, res, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1))
 			else if (temp.scenery)
 				render_world_scenery(temp.scenery, res, temp.block_repeat_enable, temp.block_repeat)
 			break

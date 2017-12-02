@@ -42,7 +42,11 @@ exportmovie_surface = render_done()
 if (exportmovie_format = "png")
 {
 	// Save image
-	surface_save_lib(exportmovie_surface, filename_new_ext(exportmovie_filename, "") + "_" + string(exportmovie_frame + 1) + ".png")
+	var totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.frame_rate);
+	var totallen = string_length(string(totalframes));
+	var numstr = string(exportmovie_frame + 1);
+	numstr = string_repeat("0", (totallen - string_length(numstr))) + numstr
+	surface_save_lib(exportmovie_surface, filename_new_ext(exportmovie_filename, "") + "_" + numstr + ".png")
 }
 else
 {

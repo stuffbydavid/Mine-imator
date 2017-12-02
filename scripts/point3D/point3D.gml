@@ -3,8 +3,6 @@
 /// @arg y
 /// @arg z
 
-//gml_pragma("forceinline")
-
 var pnt;
 
 pnt[X] = argument0

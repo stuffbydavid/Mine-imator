@@ -18,8 +18,8 @@ depth = 0
 
 model_part = null
 model_part_name = ""
+model_shape_vbuffer_map = null
 model_plane_vbuffer_map = null
-model_plane_alpha_map = null
 part_of = null
 part_list = null
 scenery_animate = false
@@ -90,7 +90,6 @@ cam_goalzoom = null
 
 matrix = 0
 update_matrix = true
-bend_vbuffer_list = null
 bend_angle_last = 0
 bend_model_part_last = null
 

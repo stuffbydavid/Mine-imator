@@ -16,6 +16,7 @@ model = null
 model_name = "human"
 model_tex = null
 model_texture_name_map = null
+model_shape_vbuffer_map = null
 model_plane_vbuffer_map = null
 model_plane_alpha_map = null
 model_hide_list = null

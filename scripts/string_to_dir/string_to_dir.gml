@@ -1,8 +1,6 @@
 /// string_to_dir(string)
 /// @arg string
 
-//gml_pragma("forceinline")
-
 switch (argument0)
 {
 	case "east":	return e_dir.EAST

@@ -2,8 +2,6 @@
 /// @arg x
 /// @arg y
 
-//gml_pragma("forceinline")
-
 var xx, yy;
 xx = argument0
 yy = argument1

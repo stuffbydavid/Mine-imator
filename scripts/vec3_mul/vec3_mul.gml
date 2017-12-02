@@ -2,8 +2,6 @@
 /// @arg vector
 /// @arg multiplier
 
-//gml_pragma("forceinline")
-
 var vec, mul;
 vec = argument0
 mul = argument1

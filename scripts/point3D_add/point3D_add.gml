@@ -2,8 +2,6 @@
 /// @arg point
 /// @arg vector
 
-//gml_pragma("forceinline")
-
 var pnt, vec;
 pnt = argument0
 vec = argument1

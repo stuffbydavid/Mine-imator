@@ -2,8 +2,6 @@
 /// @arg vector1
 /// @arg vector2
 
-//gml_pragma("forceinline")
-
 var v1, v2;
 v1 = argument0
 v2 = argument1

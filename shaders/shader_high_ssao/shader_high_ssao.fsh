@@ -90,8 +90,8 @@ void main()
 		
 		// Add occlusion if checks succeed
 		float bias = originDepth * 50.0;
-		float depthCheck = (sampleDepth < samplePos.z - bias) ? 1.0 : 0.0;
-		float rangeCheck = (abs(origin.z - sampleDepth ) < sampleRadius) ? 1.0 : 0.0;
+		float depthCheck = (sampleDepth < (samplePos.z - bias)) ? 1.0 : 0.0;
+		float rangeCheck = (abs(origin.z - sampleDepth) < sampleRadius) ? 1.0 : 0.0;
 		occlusion += depthCheck * rangeCheck * uPower * sampleBrightness;
 	}
 	

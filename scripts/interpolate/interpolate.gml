@@ -4,6 +4,4 @@
 /// @arg x1
 /// @arg x2
 
-//gml_pragma("forceinline")
-
 return argument2 + ease(argument0, argument1) * (argument3 - argument2)

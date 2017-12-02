@@ -4,8 +4,6 @@
 /// @arg z
 /// @arg w
 
-//gml_pragma("forceinline")
-
 var pnt;
 
 pnt[X] = argument0

@@ -32,7 +32,7 @@ while (i < 1) {
 		tys = ty2 - ty1
 		txm = tx1 + txs / 2
 		tym = ty1 + tys / 2
-		n = test(invert, -1, 1)
+		n = (invert) ? -1 : 1
 		
 		n1x = sin(ip * pi * 2) * sin(jp * pi)
 		n1y = -cos(ip * pi * 2) * sin(jp * pi)

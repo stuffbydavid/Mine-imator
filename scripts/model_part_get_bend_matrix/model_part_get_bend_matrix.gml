@@ -4,7 +4,7 @@
 /// @arg position
 /// @desc Returns the transformation matrix for bending.
 
-var part, angle, pos, rot, scale;
+var part, angle, pos, rot;
 part = argument0
 angle = tl_value_clamp(e_value.BEND_ANGLE, argument1)
 pos = argument2
@@ -27,14 +27,20 @@ switch (part.bend_part)
 {
 	case e_part.RIGHT: case e_part.LEFT:
 		pos[X] = part.bend_offset
+		if (object_index = obj_model_shape)
+			pos[X] -= position[X]
 		break
 		
 	case e_part.FRONT: case e_part.BACK:
 		pos[Y] = part.bend_offset
+		if (object_index = obj_model_shape)
+			pos[Y] -= position[Y]
 		break
 		
 	case e_part.UPPER: case e_part.LOWER:
 		pos[Z] = part.bend_offset
+		if (object_index = obj_model_shape)
+			pos[Z] -= position[Z]
 		break
 }
 
@@ -45,11 +51,11 @@ switch (part.bend_axis)
 	case Y:	rot = vec3(0, angle, 0); break
 	case Z:	rot = vec3(0, 0, angle); break
 }
-	
-// Get scale
-if (angle != 0)
-	scale = vec3(app.setting_bend_scale)
-else
-	scale = vec3(1)
-	
-return matrix_create(pos, rot, scale)
+
+// Create matrix
+var mat = matrix_create(pos, rot, vec3(1))
+if (object_index = obj_model_shape)
+	mat = matrix_multiply(matrix_create(point3D_mul(pos, -1), vec3(0), vec3(1)), mat)
+
+
+return mat

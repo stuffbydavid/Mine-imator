@@ -2,8 +2,6 @@
 /// @arg string
 /// @desc Writes a string to the buffer.
 
-//gml_pragma("forceinline")
-
 var str = argument0;
 
 for (var p = 0; p < string_length(str); p++)

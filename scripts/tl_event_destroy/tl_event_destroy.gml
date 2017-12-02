@@ -81,12 +81,15 @@ if (temp = id)
 		block_vbuffer_destroy()
 }
 	
-if (bend_vbuffer_list != null)
+if (model_shape_vbuffer_map != null)
 {
-	for (var s = 0; s < ds_list_size(bend_vbuffer_list); s++)
-		if (bend_vbuffer_list[|s] != null)
-			vbuffer_destroy(bend_vbuffer_list[|s])
-	ds_list_destroy(bend_vbuffer_list)
+	var key = ds_map_find_first(model_shape_vbuffer_map);
+	while (!is_undefined(key))
+	{
+		vbuffer_destroy(model_shape_vbuffer_map[?key])
+		key = ds_map_find_next(model_shape_vbuffer_map, key)
+	}
+	ds_list_destroy(model_shape_vbuffer_map)
 }
 
 if (surface_exists(cam_surf))

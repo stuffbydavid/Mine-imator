@@ -39,7 +39,7 @@ else // Below
 	cy = tip_y
 	
 render_set_culling(false)
-draw_image(spr_tip_arrow, 0, cx, cy, test(tip_location_x, 1, -1), test(tip_location_y, 1, -1), setting_color_tips, 1)
+draw_image(spr_tip_arrow, 0, cx, cy, tip_location_x ? 1 : -1, tip_location_y ? 1 : -1, setting_color_tips, 1)
 render_set_culling(true)
 
 // Text

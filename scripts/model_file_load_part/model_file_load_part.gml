@@ -202,6 +202,9 @@ with (new(obj_model_part))
 				return null
 		}
 		
+		// Size
+		bend_size = value_get_real(bendmap[?"size"], 4)
+		
 		// Invert
 		bend_invert = value_get_real(bendmap[?"invert"], false)
 	}
@@ -211,6 +214,7 @@ with (new(obj_model_part))
 		bend_axis = null
 		bend_direction = null
 		bend_offset = 0
+		bend_size = 4
 		bend_invert = false
 	}
 	

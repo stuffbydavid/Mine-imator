@@ -155,7 +155,7 @@ void main()
 					float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, sampleCoord));
 				
 					// Add to shadow
-					shadow += (fragDepth - bias > sampleDepth) ? 1.0 : 0.0;
+					shadow += ((fragDepth - bias) > sampleDepth) ? 1.0 : 0.0;
 				}
 				else
 					break;

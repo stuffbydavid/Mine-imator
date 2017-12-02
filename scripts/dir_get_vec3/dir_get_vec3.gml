@@ -1,8 +1,6 @@
 /// dir_get_vec3(direction)
 /// @arg direction
 
-//gml_pragma("forceinline")
-
 switch (argument0)
 {
 	case e_dir.EAST:	return vec3(1, 0, 0)
