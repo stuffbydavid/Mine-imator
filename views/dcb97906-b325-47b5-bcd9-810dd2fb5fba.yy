@@ -13,10 +13,10 @@
         "5f9485e6-c185-4b39-86a4-b7edf98b3a03",
         "af075190-6c5c-4562-9f5a-dbf4a318d778",
         "671774b2-2e96-4d5f-9230-44af0853061a",
+        "fa0f67e1-72ed-4e1f-91a5-c18ff5aea309",
         "2b94a81a-da09-4a3b-b3cc-103d94db13f0",
         "b6484046-3386-4818-b970-f920b1888bda",
-        "cad4bee4-fe0f-45d0-9466-53f234c872a1",
-        "fa0f67e1-72ed-4e1f-91a5-c18ff5aea309"
+        "cad4bee4-fe0f-45d0-9466-53f234c872a1"
     ],
     "filterType": "GMScript",
     "folderName": "Vertex buffer",

@@ -57,6 +57,7 @@ text_vbuffer = vbuffer_start()
 // 3D pixels
 if (is3d)
 	vbuffer_add_pixels(surface_get_alpha_array(surf), point3D(xx, 0, zz), hei, point2D(0, 0), vec2(wid + 2, hei + 2), vec2(1 / (wid + 2), 1 / (hei + 2)), vec3(1), point2D(1, 1), point2D(-2, -2), false)
+surface_free(surf)
 
 var ysize, p1, p2, p3, p4, tsize, t1, t2, t3, t4,;
 t1 = vec2(1, 1)
@@ -65,12 +66,12 @@ t3 = vec2(wid + 1, hei + 1)
 t4 = vec2(1, hei + 1)
 
 // Convert coordinates to 0-1
+ysize = test(is3d, 1, 0)
 tsize = vec2(wid + 2, hei + 2)
 t1 = vec2_div(t1, tsize)
 t2 = vec2_div(t2, tsize)
 t3 = vec2_div(t3, tsize)
 t4 = vec2_div(t4, tsize)
-ysize = test(is3d, 1, 0)
 
 // Front
 p1 = point3D(xx, ysize, zz + hei)
@@ -88,5 +89,4 @@ p4 = point3D(xx, 0, zz)
 vbuffer_add_triangle(p2, p1, p3, t2, t1, t3)
 vbuffer_add_triangle(p4, p3, p1, t4, t3, t1)
 
-surface_free(surf)
 vbuffer_done()

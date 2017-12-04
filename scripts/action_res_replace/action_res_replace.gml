@@ -47,11 +47,11 @@ with (obj_template)
 	{
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
-		temp_update_model_plane_vbuffer_map()
+		temp_update_model_shape_vbuffer_map()
 		temp_update_display_name()
 	}
 	else if (model_tex = res_edit)
-		temp_update_model_plane_vbuffer_map()
+		temp_update_model_shape_vbuffer_map()
 }
 
 // Restore old timelines

@@ -1,8 +1,8 @@
 {
-    "id": "efcffa2c-ef5e-4d2a-813b-dc4a3306fd86",
+    "id": "f65b3f15-ac19-4236-bb30-ade55ad76bff",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "model_file_load_shape_plane",
+    "name": "model_shape_generate_plane_3d",
     "IsCompatibility": false,
     "IsDnD": false
 }

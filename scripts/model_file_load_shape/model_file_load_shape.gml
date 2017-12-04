@@ -107,7 +107,11 @@ with (new(obj_model_shape))
 	// 3D plane (optional)
 	is3d = false
 	if (type = "plane")
+	{
 		is3d = value_get_real(map[?"3d"], false)
+		if (is3d)
+			other.has_3d_plane = true
+	}
 	
 	// Bending
 	bend_part = other.bend_part
@@ -125,41 +129,33 @@ with (new(obj_model_shape))
 	uv = value_get_point2D(map[?"uv"])
 	
 	// Wind
+	wind_wave = e_vertex_wave.NONE
+	wind_wave_zmin = null
+	wind_wave_zmax = null
+	
 	var windmap = map[?"wind"];
 	if (ds_map_valid(windmap))
 	{
 		if (is_string(windmap[?"axis"]))
 		{
 			if (windmap[?"axis"] = "y")
-				vertex_wave = e_vertex_wave.Z_ONLY
+				wind_wave = e_vertex_wave.Z_ONLY
 			else
-				vertex_wave = e_vertex_wave.ALL
+				wind_wave = e_vertex_wave.ALL
 		}
 		
 		if (is_real(windmap[?"ymin"]))
-			vertex_wave_zmin = windmap[?"ymin"]
+			wind_wave_zmin = windmap[?"ymin"]
 			
 		if (is_real(windmap[?"ymax"]))
-			vertex_wave_zmax = windmap[?"ymax"]
+			wind_wave_zmax = windmap[?"ymax"]
 	}
-	
-	vertex_brightness = color_brightness
 	
 	// Generate
 	if (type = "block")
 		vbuffer = model_shape_generate_block(0)
 	else if (type = "plane")
-	{
-		to[Y] = from[Y]
-		
-		if (is3d)
-		{
-			to[Y] = from[Y] + scale[Z]
-			other.has_3d_plane = true
-		}
-		
-		vbuffer = model_shape_generate_plane(null, 0)
-	}
+		vbuffer = model_shape_generate_plane(0)
 	else
 	{
 		log("Invalid shape type", type)
@@ -181,12 +177,6 @@ with (new(obj_model_shape))
 	other.bounds_end[X] = max(other.bounds_end[X], bounds_end[X])
 	other.bounds_end[Y] = max(other.bounds_end[Y], bounds_end[Y])
 	other.bounds_end[Z] = max(other.bounds_end[Z], bounds_end[Z])
-	
-	// Reset wind and brightness
-	vertex_wave = e_vertex_wave.NONE
-	vertex_wave_zmin = null
-	vertex_wave_zmax = null
-	vertex_brightness = 0
 	
 	return id
 }

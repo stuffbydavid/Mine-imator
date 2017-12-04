@@ -191,12 +191,9 @@ if (object_index != app && update_matrix)
 				  value_inherit[e_value.HSB_MUL] < c_white ||
 				  value_inherit[e_value.MIX_PERCENT] > 0)
 	
-	if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && model_part != null && model_part.has_3d_plane)
-		// Texture change, update planes
-		tl_update_part_plane_vbuffer_map()
-	else
-		// Update bend vbuffer if angle changed
-		tl_update_bend()
+	// Texture change, update planes
+	if (!tl_update_bend() && lasttex != value_inherit[e_value.TEXTURE_OBJ] && model_part != null && model_part.has_3d_plane)
+		tl_update_model_shape_vbuffer_map()
 }
 
 // Update children

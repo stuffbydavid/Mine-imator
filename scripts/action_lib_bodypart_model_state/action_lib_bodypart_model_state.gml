@@ -29,7 +29,7 @@ with (temp_edit)
 	state_vars_set_value(model_state, state, val)
 	temp_update_model()
 	temp_update_model_part()
-	temp_update_model_plane_vbuffer_map()
+	temp_update_model_shape_vbuffer_map()
 	temp_update_display_name()
 }
 

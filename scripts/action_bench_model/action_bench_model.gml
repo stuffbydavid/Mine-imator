@@ -45,7 +45,7 @@ with (bench_settings)
 {
 	model = res
 	temp_update_model()
-	temp_update_model_plane_vbuffer_map()
+	temp_update_model_shape_vbuffer_map()
 	
 	with (preview)
 	{

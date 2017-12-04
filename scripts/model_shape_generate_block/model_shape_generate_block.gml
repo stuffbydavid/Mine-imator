@@ -96,12 +96,12 @@ if (texture_mirror)
 	tmp1 = texdown3; texdown3 = texdown4; texdown4 = tmp1
 }
 
+// Start position and bounds
 var detail = 2;
 var bendstart, bendend, bendsegsize, invangle;
 bendsegsize = bend_size / detail;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 
-// Start position and bounds
 var p1, p2, p3, p4;
 var texp1, texp2, texp3;
 switch (segaxis)
@@ -154,23 +154,31 @@ switch (segaxis)
 }
 
 // Angle
-var cangle = 0;
-if (bendend < 0) // Above bend, apply full angle
-	cangle = angle
+var segangle;
+if (bendstart > 0) // Below bend, no angle
+	segangle = 0
+else if (bendend < 0) // Above bend, apply full angle
+	segangle = angle
 else if (bendstart < 0) // Start inside bend, apply partial angle
-	cangle = (1 - bendend / bend_size) * angle
+	segangle = (1 - bendend / bend_size) * angle
 
 // Apply bending transform
 if (angle != 0)
 {
-	var mat = model_part_get_bend_matrix(id, test(invangle, (angle - cangle), cangle), vec3(0));
+	var mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0));
 	p1 = point3D_mul_matrix(p1, mat)
 	p2 = point3D_mul_matrix(p2, mat)
 	p3 = point3D_mul_matrix(p3, mat)
 	p4 = point3D_mul_matrix(p4, mat)
 }
 
+// Create triangles
 vbuffer_start()
+
+vertex_brightness = color_brightness
+vertex_wave = wind_wave
+vertex_wave_zmin = wind_wave_zmin
+vertex_wave_zmax = wind_wave_zmax
 
 var segpos = 0;
 while (true)
@@ -221,9 +229,9 @@ while (true)
 			segsize -= (from[segaxis] - bendstart) % bendsegsize
 		
 		segsize = min(size[segaxis] - segpos, segsize)
-		cangle += angle / detail
+		segangle += angle / detail
 	}
-			
+	
 	// Advance
 	segpos += segsize
 	switch (segaxis)
@@ -236,9 +244,9 @@ while (true)
 			np3 = point3D(x1 + segpos, y2, z1)
 			np4 = point3D(x1 + segpos, y1, z1)
 			var toff = (segpos / size[X]) * texsizefix[X] * negate(texture_mirror);
-			texp1 = texsouth1[X] + toff // South/Above X
-			texp2 = texnorth2[X] - toff // North X
-			texp3 = texdown4[X] + toff // Below X
+			ntexp1 = texsouth1[X] + toff // South/Above X
+			ntexp2 = texnorth2[X] - toff // North X
+			ntexp3 = texdown4[X] + toff // Below X
 			break
 		}
 		
@@ -272,7 +280,7 @@ while (true)
 	// Apply bending transform
 	if (angle != 0)
 	{
-		var nmat = model_part_get_bend_matrix(id, test(invangle, (angle - cangle), cangle), vec3(0));
+		var nmat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0));
 		np1 = point3D_mul_matrix(np1, nmat)
 		np2 = point3D_mul_matrix(np2, nmat)
 		np3 = point3D_mul_matrix(np3, nmat)
@@ -400,5 +408,10 @@ while (true)
 	
 	p1 = np1; p2 = np2; p3 = np3; p4 = np4;
 }
+
+vertex_brightness = 0
+vertex_wave = e_vertex_wave.NONE
+vertex_wave_zmin = null
+vertex_wave_zmax = null
 
 return vbuffer_done()
