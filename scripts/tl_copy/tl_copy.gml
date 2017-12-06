@@ -40,7 +40,6 @@ to.rot_point = point3D_copy(rot_point)
 to.backfaces = backfaces
 to.texture_blur = texture_blur
 to.texture_filtering = texture_filtering
-to.round_bending = round_bending
 to.shadows = shadows
 to.ssao = ssao
 to.fog = fog

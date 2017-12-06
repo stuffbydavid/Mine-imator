@@ -155,14 +155,17 @@ with (new(obj_model_part))
 			return null
 		}
 		
+		// Size
+		bend_size = value_get_real(bendmap[?"size"], 4)
+		
 		switch (bendmap[?"part"])
 		{
-			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	break
-			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	break
-			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	break
-			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	break
-			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	break
-			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	break
+			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	bend_size *= scale[X];	break
+			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	bend_size *= scale[X];	break
+			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	bend_size *= scale[Y];	break
+			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	bend_size *= scale[Y];	break
+			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	bend_size *= scale[Z];	break
+			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	bend_size *= scale[Z];	break
 			default:
 				log("Invalid parameter \"part\"")
 				return null
@@ -201,9 +204,6 @@ with (new(obj_model_part))
 				log("Invalid parameter \"direction\"")
 				return null
 		}
-		
-		// Size
-		bend_size = value_get_real(bendmap[?"size"], 4)
 		
 		// Invert
 		bend_invert = value_get_real(bendmap[?"invert"], false)

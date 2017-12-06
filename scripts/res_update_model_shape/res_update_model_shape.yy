@@ -1,8 +1,8 @@
 {
-    "id": "83338a37-e0ee-419e-8bbb-0149fa04da83",
+    "id": "53fa9823-edfe-48f6-996b-7d2c7ea2960c",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "tl_update_model_shape_vbuffer_map",
+    "name": "res_update_model_shape",
     "IsCompatibility": false,
     "IsDnD": false
 }

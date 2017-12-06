@@ -64,7 +64,7 @@ else
 with (bench_settings)
 {
 	model_tex = res
-	temp_update_model_shape_vbuffer_map()
+	temp_update_model_shape()
 	
 	with (preview)
 		update = true

@@ -194,7 +194,7 @@ switch (type)
 			if (model_file != null)
 				model_texture_name_map[?""] = model_file.texture_name
 			
-			res_update_model_shape_vbuffer_map()
+			res_update_model_shape()
 		}
 		else
 		{

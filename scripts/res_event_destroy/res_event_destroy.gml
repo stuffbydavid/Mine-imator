@@ -16,6 +16,21 @@ if (model_texture_map != null)
 	}
 	ds_map_destroy(model_texture_map)
 }
+
+// Free shape vbuffers
+if (model_shape_vbuffer_map != null)
+{
+	var key = ds_map_find_first(model_shape_vbuffer_map);
+	while (!is_undefined(key))
+	{
+		vbuffer_destroy(model_shape_vbuffer_map[?key])
+		key = ds_map_find_next(model_shape_vbuffer_map, key)
+	}
+	ds_map_destroy(model_shape_vbuffer_map)
+}
+
+if (model_shape_alpha_map != null)
+	ds_map_destroy(model_shape_alpha_map)
 		
 // Free block textures
 if (block_sheet_texture != null)

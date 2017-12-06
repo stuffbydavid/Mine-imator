@@ -153,24 +153,27 @@ switch (segaxis)
 	}
 }
 
-// Angle
-var segangle;
-if (bendstart > 0) // Below bend, no angle
-	segangle = 0
-else if (bendend < 0) // Above bend, apply full angle
-	segangle = angle
-else if (bendstart < 0) // Start inside bend, apply partial angle
-	segangle = (1 - bendend / bend_size) * angle
-
 // Apply bending transform
+var mat;
 if (angle != 0)
 {
-	var mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0));
-	p1 = point3D_mul_matrix(p1, mat)
-	p2 = point3D_mul_matrix(p2, mat)
-	p3 = point3D_mul_matrix(p3, mat)
-	p4 = point3D_mul_matrix(p4, mat)
+	var startangle;
+	if (bendstart > 0) // Below bend, no angle
+		startangle = 0
+	else if (bendend < 0) // Above bend, apply full angle
+		startangle = angle
+	else // Start inside bend, apply partial angle
+		startangle = (1 - bendend / bend_size) * angle
+	
+	mat = model_part_get_bend_matrix(id, test(invangle, (angle - startangle), startangle), vec3(0))
 }
+else // Apply rotation
+	mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
+
+p1 = point3D_mul_matrix(p1, mat)
+p2 = point3D_mul_matrix(p2, mat)
+p3 = point3D_mul_matrix(p3, mat)
+p4 = point3D_mul_matrix(p4, mat)
 
 // Create triangles
 vbuffer_start()
@@ -229,7 +232,6 @@ while (true)
 			segsize -= (from[segaxis] - bendstart) % bendsegsize
 		
 		segsize = min(size[segaxis] - segpos, segsize)
-		segangle += angle / detail
 	}
 	
 	// Advance
@@ -280,12 +282,23 @@ while (true)
 	// Apply bending transform
 	if (angle != 0)
 	{
-		var nmat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0));
-		np1 = point3D_mul_matrix(np1, nmat)
-		np2 = point3D_mul_matrix(np2, nmat)
-		np3 = point3D_mul_matrix(np3, nmat)
-		np4 = point3D_mul_matrix(np4, nmat)
+		var segangle;
+		if (segpos < bendstart) // Below bend, no angle
+			segangle = 0
+		else if (segpos >= bendend) // Above bend, apply full angle
+			segangle = angle
+		else // Inside bend, apply partial angle
+			segangle = (1 - (bendend - segpos) / bend_size) * angle
+		
+		mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0))
 	}
+	else // Apply rotation
+		mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
+		
+	np1 = point3D_mul_matrix(np1, mat)
+	np2 = point3D_mul_matrix(np2, mat)
+	np3 = point3D_mul_matrix(np3, mat)
+	np4 = point3D_mul_matrix(np4, mat)
 	
 	// Add surrounding faces
 	var t1, t2, t3, t4;

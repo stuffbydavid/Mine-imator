@@ -506,8 +506,6 @@ with (settings)
 	graphics = tab_add_category("settingsgraphics", tab_settings_graphics, false)
 	with (graphics)
 	{
-		tbx_bend_detail = new_textbox_integer()
-		tbx_bend_scale = new_textbox_decimals()
 		tbx_texture_filtering_level = new_textbox_integer()
 		tbx_block_brightness = new_textbox_decimals()
 		tbx_block_brightness.suffix = "%"

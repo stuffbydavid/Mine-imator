@@ -21,7 +21,7 @@ for (var mp = 0; mp < ds_list_size(part.part_list); mp++)
 		tl_update_value_types()
 		tl_update_type_name()
 		tl_update_display_name()
-		tl_update_model_shape_vbuffer_map()
+		tl_update_model_shape()
 	}
 			
 	// Recurse for this part

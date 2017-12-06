@@ -28,7 +28,7 @@ with (temp_edit)
 	model_state = array_copy_1d(state)
 	temp_update_model()
 	temp_update_model_part()
-	temp_update_model_shape_vbuffer_map()
+	temp_update_model_shape()
 	temp_update_display_name()
 }
 

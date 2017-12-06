@@ -185,9 +185,9 @@ setting_look_sensitivity = buffer_read_double()
 setting_fast_modifier = buffer_read_double()
 setting_slow_modifier = buffer_read_double()
 
-setting_bend_round_default = buffer_read_byte()
-setting_bend_detail = buffer_read_int()
-setting_bend_scale = buffer_read_double()
+/*setting_bend_round_default = */buffer_read_byte()
+/*setting_bend_detail = */buffer_read_int()
+/*setting_bend_scale = */buffer_read_double()
 setting_schematic_remove_edges = buffer_read_byte()
 
 if (load_format >= e_settings.FORMAT_106)

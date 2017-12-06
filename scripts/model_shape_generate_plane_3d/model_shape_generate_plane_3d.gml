@@ -1,11 +1,14 @@
-/// model_shape_generate_plane_3d(texture, angle)
-/// @arg texture
+/// model_shape_generate_plane_3d(angle, alphaarray)
 /// @arg angle
-/// @desc Generates a 3D plane shape with the given texture and bent by an angle.
+/// @arg alphaarray
+/// @desc Generates a 3D plane shape bent by an angle from an array of alpha values.
 
-var tex, angle;
-tex = argument0
-angle = argument1
+var angle, alpha;
+angle = argument0
+alpha = argument1
+
+if (!is_array(alpha))
+	return null
 
 var x1, x2, y1, y2, z1, z2, size;
 x1 = from[X];	y1 = from[Y];			 z1 = from[Z]
@@ -19,44 +22,29 @@ if (angle != 0)
 {
 	if (bend_part = e_part.LEFT || bend_part = e_part.RIGHT)
 	{
-		segouteraxis = X; seginneraxis = Z;
-		arrouteraxis = X; arrinneraxis = Y;
+		segouteraxis = Z; seginneraxis = X;
+		arrouteraxis = Y; arrinneraxis = X;
 	}
 	else if (bend_part = e_part.LOWER || bend_part = e_part.UPPER)
 	{
-		segouteraxis = Z; seginneraxis = X;
-		arrouteraxis = Y; arrinneraxis = X;
+		segouteraxis = X; seginneraxis = Z;
+		arrouteraxis = X; arrinneraxis = Y;
 	}
 }
 else
 {
-	segouteraxis = Z; seginneraxis = X;
-	arrouteraxis = Y; arrinneraxis = X;
+	segouteraxis = X; seginneraxis = Z;
+	arrouteraxis = X; arrinneraxis = Y;
 }
 
 // Define texture coordinates to use
-var texsize, texuv;
+var texsize, texuv, samplesize;
 texsize = point3D_sub(to_noscale, from_noscale)
-
-// Generate array with the alpha values of the texture
-var surf, alpha, samplesize;
-samplesize = vec2(ceil(texsize[X]), ceil(texsize[Y]))
-surf = surface_create(samplesize[X], samplesize[Y])
-surface_set_target(surf)
-{
-	draw_clear_alpha(c_black, 0)
-	draw_texture_part(tex, 0, 0, uv[X], uv[Y], samplesize[X], samplesize[Y])
-}
-surface_reset_target()
-alpha = surface_get_alpha_array(surf)
-surface_free(surf)
-
-// Convert to 0-1
-texsize = vec3(texsize[X] / texture_size[X], texsize[Y] / texture_size[Y], texsize[Z] / texture_size[Y])
 texuv = vec2_div(uv, texture_size)
+samplesize = vec2(ceil(texsize[X]), ceil(texsize[Z]))
 
 // Start position and bounds
-var bendstart, bendend, invangle, segangle, mat, nmat;
+var bendstart, bendend, invangle;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
 
 if (segouteraxis = X)
@@ -70,16 +58,77 @@ else if (segouteraxis = Z)
 	bendend = (bend_offset - (position[Z] + z1)) + bend_size / 2
 }
 
-// Angle
-var segangle, mat, nmat;
-if (angle = 0 || bendstart > 0) // No/below bend, no angle
-	segangle = 0
-else if (bendend < 0) // Above bend, apply full angle
-	segangle = angle
-else // Start inside bend, apply partial angle
-	segangle = (1 - bendend / bend_size) * angle
-
-mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0))
+// Precalculate points
+var y1pnt, y2pnt;
+var segouterpos = 0;
+for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
+{
+	var seginnerpos = 0;
+	for (var inner = 0; inner <= samplesize[arrinneraxis]; inner++)
+	{
+		var p1, p2;
+		if (seginneraxis = X)
+		{
+			p1 = point3D(x1 + seginnerpos, y1, z1 + segouterpos)
+			p2 = point3D(x1 + seginnerpos, y2, z1 + segouterpos)
+		}
+		else if (seginneraxis = Z)
+		{
+			p1 = point3D(x1 + segouterpos, y1, z1 + seginnerpos)
+			p2 = point3D(x1 + segouterpos, y2, z1 + seginnerpos)
+		}
+		
+		var mat;
+		if (angle != 0) // Apply bending transform
+		{
+			var segangle;
+			if (seginnerpos < bendstart) // No/below bend, no angle
+				segangle = 0
+			else if (seginnerpos >= bendend) // Above bend, apply full angle
+				segangle = angle
+			else // Inside bend, apply partial angle
+				segangle = (1 - (bendend - seginnerpos) / bend_size) * angle
+			
+			mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0))
+		}
+		else // Apply rotation
+			mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
+		
+		p1 = point3D_mul_matrix(p1, mat)
+		p2 = point3D_mul_matrix(p2, mat)
+			
+		y1pnt[outer, inner] = p1
+		y2pnt[outer, inner] = p2
+		
+		// Pixel size
+		var seginnersize = 1;
+		if (arrinneraxis = X)
+		{
+			if (inner = test(texture_mirror, 0, samplesize[X] - 1) && frac(texsize[X]) > 0)
+				seginnersize = frac(texsize[X])
+		}
+		else if (arrinneraxis = Y)
+		{
+			if (inner = samplesize[Y] - 1 && frac(texsize[Z]) > 0)
+				seginnersize = frac(texsize[Z])
+		}
+		seginnerpos += seginnersize * scale[seginneraxis]
+	}
+	
+	// Pixel size
+	var segoutersize = 1;
+	if (arrouteraxis = X)
+	{
+		if (outer = test(texture_mirror, 0, samplesize[X] - 1) && frac(texsize[X]) > 0)
+			segoutersize = frac(texsize[X])
+	}
+	else if (arrouteraxis = Y)
+	{
+		if (outer = samplesize[Y] - 1 && frac(texsize[Z]) > 0)
+			segoutersize = frac(texsize[Z])
+	}
+	segouterpos += segoutersize * scale[segouteraxis]
+}
 
 // Create triangles
 vbuffer_start()
@@ -88,47 +137,28 @@ vertex_brightness = color_brightness
 vertex_wave = wind_wave
 vertex_wave_zmin = wind_wave_zmin
 vertex_wave_zmax = wind_wave_zmax
-	
-var segouterpos, arrouterpos;
-segouterpos = 0
-arrouterpos = 0
-while (arrouterpos < samplesize[arrouteraxis])
-{
-	var psize = scale[segouteraxis];
-	arrouterpos++
-	segouterpos += psize
 
-	// Angle
-	if (angle = 0 || segouterpos < bendstart) // No/below bend, no angle
-		segangle = 0
-	else if (segouterpos >= bendend) // Above bend, apply full angle
-		segangle = angle
-	else // Inside bend, apply partial angle
-		segangle = (1 - (bendend - segouterpos) / bend_size) * angle
-	
-	nmat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0))
-	
-	var seginnerpos, arrinnerpos;
-	seginnerpos = 0
-	arrinnerpos = 0
-	while (arrinnerpos < samplesize[arrinneraxis])
+// Create triangles
+for (var outer = 0; outer < samplesize[arrouteraxis]; outer++)
+{
+	// Inner loop
+	for (var inner = 0; inner < samplesize[arrinneraxis]; inner++)
 	{
-		var psize = scale[seginneraxis];
-		
-		arrinnerpos++
-		seginnerpos += psize
-		
+		// Array location
 		var ax, ay;
 		if (seginneraxis = X)
 		{
-			ax = arrinnerpos
-			ay = samplesize[Y] - arrouterpos
+			ax = inner
+			ay = samplesize[Y] - 1 - outer
 		}
 		else if (seginneraxis = Z)
 		{
-			ax = arrouterpos
-			ay = samplesize[Y] - arrinnerpos
+			ax = outer
+			ay = samplesize[Y] - 1 - inner
 		}
+		
+		if (texture_mirror)
+			ax = samplesize[X] - 1 - ax
 		
 		// Transparent pixel found, continue
 		if (alpha[@ ax, ay] < 1)
@@ -140,9 +170,14 @@ while (arrouterpos < samplesize[arrouteraxis])
 		eface = (ax = samplesize[X] - 1 || alpha[@ ax + 1, ay] < 1)
 		aface = (ay = 0 || alpha[@ ax, ay - 1] < 1)
 		bface = (ay = samplesize[Y] - 1 || alpha[@ ax, ay + 1] < 1)
-			
-		if (!eface && !wface && !aface && !bface)
-			continue
+		
+		// Switch east/west face when mirrored
+		if (texture_mirror)
+		{
+			var tmp = wface;
+			wface = eface
+			eface = tmp
+		}
 			
 		// Texture
 		var ptex, ptexsize, t1, t2, t3, t4;
@@ -150,68 +185,107 @@ while (arrouterpos < samplesize[arrouteraxis])
 		ptexsize = vec2_div(vec2(1 - 1 / 256), texture_size)
 		
 		t1 = ptex
-		t2 = point2D(ptex[X] + psize, ptex[Y])
-		t3 = point2D(ptex[X] + psize, ptex[Y] + psize)
-		t4 = point2D(ptex[X], ptex[Y] + psize)
+		t2 = point2D(ptex[X] + ptexsize[X], ptex[Y])
+		t3 = point2D(ptex[X] + ptexsize[X], ptex[Y] + ptexsize[Y])
+		t4 = point2D(ptex[X], ptex[Y] + ptexsize[Y])
 		
-		var p1, p2, p3, p4;
-		var np1, np2, np3, np4;
-		
+		// Create faces
+		var p1, p2, p3, p4, np1, np2, np3, np4;
 		if (seginneraxis = X)
 		{
+			p1 = y1pnt[outer + 1, inner]
+			p2 = y2pnt[outer + 1, inner]
+			p3 = y2pnt[outer, inner]
+			p4 = y1pnt[outer, inner]
+			np1 = y1pnt[outer + 1, inner + 1]
+			np2 = y2pnt[outer + 1, inner + 1]
+			np3 = y2pnt[outer, inner + 1]
+			np4 = y1pnt[outer, inner + 1]
 			
-		}
-		else if (seginneraxis = Z)
-		{
+			// East face
+			if (eface)
+			{
+				vbuffer_add_triangle(np2, np1, np4, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np4, np3, np2, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
 			
-		}
-		
-		/*// East face
-		if (eface)
-		{
-			p1 = point3D(px + pxs, 1, pz)
-			p2 = point3D(px + pxs, 1, pz + pzs)
-			p3 = point3D(px + pxs, 0, pz + pzs)
-			p4 = point3D(px + pxs, 0, pz)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
-		}
+			// West face
+			if (wface)
+			{
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
 			
-		// West face
-		if (wface)
-		{
-			p1 = point3D(px, 0, pz)
-			p2 = point3D(px, 0, pz + pzs)
-			p3 = point3D(px, 1, pz + pzs)
-			p4 = point3D(px, 1, pz)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
-		}
+			// South face
+			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np3, p3, p2, t1, t2, t3, null, color_blend, color_alpha, invert)
 			
-		// Above face
-		if (aface)
-		{
-			p1 = point3D(px, 1, pz + pzs)
-			p2 = point3D(px, 0, pz + pzs)
-			p3 = point3D(px + pxs, 0, pz + pzs)
-			p4 = point3D(px + pxs, 1, pz + pzs)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
-		}
+			// North face
+			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p4, np4, np1, t1, t2, t3, null, color_blend, color_alpha, invert)
 			
-		// Below face
-		if (bface)
+			// Above face
+			if (aface)
+			{
+				vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
+			
+			// Below face
+			if (bface)
+			{
+				vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
+		}
+		else
 		{
-			p1 = point3D(px, 0, pz)
-			p2 = point3D(px, 1, pz)
-			p3 = point3D(px + pxs, 1, pz)
-			p4 = point3D(px + pxs, 0, pz)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
-		}*/
+			p1 = y1pnt[outer, inner]
+			p2 = y1pnt[outer + 1, inner]
+			p3 = y2pnt[outer + 1, inner]
+			p4 = y2pnt[outer, inner]
+			np1 = y1pnt[outer, inner + 1]
+			np2 = y1pnt[outer + 1, inner + 1]
+			np3 = y2pnt[outer + 1, inner + 1]
+			np4 = y2pnt[outer, inner + 1]
+			
+			// East face
+			if (eface)
+			{
+				vbuffer_add_triangle(np3, np2, p2, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p2, p3, np3, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
+			
+			// West face
+			if (wface)
+			{
+				vbuffer_add_triangle(np1, np4, p4, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p4, p1, np1, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
+			
+			// South face
+			vbuffer_add_triangle(np4, np3, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p3, p4, np4, t1, t2, t3, null, color_blend, color_alpha, invert)
+			
+			// North face
+			vbuffer_add_triangle(np2, np1, p1, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p1, p2, np2, t1, t2, t3, null, color_blend, color_alpha, invert)
+			
+			// Above face
+			if (aface)
+			{
+				vbuffer_add_triangle(np1, np2, np3, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np3, np4, np1, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
+			
+			// Below face
+			if (bface)
+			{
+				vbuffer_add_triangle(p4, p3, p2, t1, t2, t3, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p2, p1, p4, t3, t4, t1, null, color_blend, color_alpha, invert)
+			}
+		}
 	}
-	
-	mat = nmat
 }
 
 vertex_brightness = 0

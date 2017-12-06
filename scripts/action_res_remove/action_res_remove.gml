@@ -36,7 +36,7 @@ with (obj_template)
 			model = null
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
-		temp_update_model_shape_vbuffer_map()
+		temp_update_model_shape()
 		temp_update_display_name()
 	}
 	else

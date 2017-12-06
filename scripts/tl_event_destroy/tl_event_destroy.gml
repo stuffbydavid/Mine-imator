@@ -80,7 +80,7 @@ if (temp = id)
 	else if (type = e_tl_type.BLOCK)
 		block_vbuffer_destroy()
 }
-	
+
 if (model_shape_vbuffer_map != null)
 {
 	var key = ds_map_find_first(model_shape_vbuffer_map);
@@ -89,8 +89,11 @@ if (model_shape_vbuffer_map != null)
 		vbuffer_destroy(model_shape_vbuffer_map[?key])
 		key = ds_map_find_next(model_shape_vbuffer_map, key)
 	}
-	ds_list_destroy(model_shape_vbuffer_map)
+	ds_map_destroy(model_shape_vbuffer_map)
 }
+
+if (model_shape_alpha_map != null)
+	ds_map_destroy(model_shape_alpha_map)
 
 if (surface_exists(cam_surf))
 	surface_free(cam_surf)

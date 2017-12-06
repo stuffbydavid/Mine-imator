@@ -13,7 +13,7 @@ with (bench_settings)
 	state_vars_set_value(model_state, state, val)
 	temp_update_model()
 	temp_update_model_part()
-	temp_update_model_shape_vbuffer_map()
+	temp_update_model_shape()
 	
 	with (preview)
 		update = true

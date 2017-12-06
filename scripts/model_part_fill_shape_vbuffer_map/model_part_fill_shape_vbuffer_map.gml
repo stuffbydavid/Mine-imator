@@ -1,23 +1,19 @@
-/// model_part_fill_shape_vbuffer_map(part, vbuffermap, angle, resource, texturenamemap)
+/// model_part_fill_shape_vbuffer_map(part, vbuffermap, alphamap, angle)
 /// @arg part
 /// @arg vbuffermap
+/// @arg alphamap
 /// @arg angle
-/// @arg resource
-/// @arg texturenamemap
-/// @desc Clears and fills the given maps with vbuffers for the 3D shapes,
-///		  with the given resource selected as a texture and bent by an angle.
+/// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by an angle.
 
-var part, vbufmap, angle, res, texnamemap;
+var part, vbufmap, alphamap, angle;
 part = argument0
 vbufmap = argument1
-angle = argument2
-res = argument3
-texnamemap = argument4
+alphamap = argument2
+angle = argument3
 
 if (part.shape_list = null)
 	return 0
 	
-var parttexname = model_part_get_texture_name(part, texnamemap);
 for (var s = 0; s < ds_list_size(part.shape_list); s++)
 {
 	with (part.shape_list[|s])
@@ -27,19 +23,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		else if (type = "plane")
 		{
 			if (is3d)
-			{
-				// Get texture (shape texture overrides part texture)
-				var shapetexname = parttexname;
-				if (texture_name != "")
-					shapetexname = texture_name
-			
-				var tex;
-				with (res)
-					tex = res_get_model_texture(shapetexname)
-				
-				if (tex != null)
-					vbufmap[?id] = model_shape_generate_plane_3d(tex, angle)
-			}
+				vbufmap[?id] = model_shape_generate_plane_3d(angle, alphamap[?id])
 			else if (angle != 0)
 				vbufmap[?id] = model_shape_generate_plane(angle)
 		}

@@ -67,7 +67,7 @@ with (temp_edit)
 	if (model_tex != null)
 		model_tex.count++
 		
-	temp_update_model_shape_vbuffer_map()
+	temp_update_model_shape()
 }
 
 lib_preview.update = true

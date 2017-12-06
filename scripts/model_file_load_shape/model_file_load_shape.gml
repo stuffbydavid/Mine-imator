@@ -90,6 +90,8 @@ with (new(obj_model_shape))
 	// From/To
 	from_noscale = value_get_point3D(map[?"from"])
 	to_noscale = value_get_point3D(map[?"to"])
+	if (type = "plane")
+		to_noscale[Y] = from_noscale[Y]
 	
 	// Position (optional)
 	position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
@@ -121,9 +123,8 @@ with (new(obj_model_shape))
 	bend_size = other.bend_size
 	bend_invert = other.bend_invert
 	
-	// Create matrices
-	matrix = matrix_create(position, rotation, vec3(1))
-	matrix_bend_half = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
+	// Create matrix
+	matrix = matrix_create(position, vec3(0), vec3(1))
 	
 	// UV
 	uv = value_get_point2D(map[?"uv"])
@@ -163,8 +164,9 @@ with (new(obj_model_shape))
 	}
 	
 	// Update bounds
-	var startpos = point3D_mul_matrix(from, matrix);
-	var endpos   = point3D_mul_matrix(to, matrix);
+	var boundsmat = matrix_create(position, rotation, vec3(1))
+	var startpos = point3D_mul_matrix(from, boundsmat);
+	var endpos   = point3D_mul_matrix(to, boundsmat);
 	bounds_start[X] = min(startpos[X], endpos[X])
 	bounds_start[Y] = min(startpos[Y], endpos[Y])
 	bounds_start[Z] = min(startpos[Z], endpos[Z])

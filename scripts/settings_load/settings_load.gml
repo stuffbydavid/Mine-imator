@@ -238,9 +238,6 @@ if (filename_ext(fn) = ".midata")
 	var graphicsmap = map[?"graphics"];
 	if (ds_map_valid(graphicsmap))
 	{
-		setting_bend_round_default = value_get_real(graphicsmap[?"bend_round_default"], setting_bend_round_default)
-		setting_bend_detail = value_get_real(graphicsmap[?"bend_detail"], setting_bend_detail)
-		setting_bend_scale = value_get_real(graphicsmap[?"bend_scale"], setting_bend_scale)
 		setting_schematic_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_schematic_remove_edges)
 		setting_liquid_animation = value_get_real(graphicsmap[?"liquid_animation"], setting_liquid_animation)
 		setting_texture_filtering = value_get_real(graphicsmap[?"texture_filtering"], setting_texture_filtering)

@@ -53,9 +53,9 @@ switch (part.bend_axis)
 }
 
 // Create matrix
-var mat = matrix_create(pos, rot, vec3(1))
+var mat = matrix_build(pos[X], pos[Y], pos[Z], rot[X], rot[Y], rot[Z], 1, 1, 1);
 if (object_index = obj_model_shape)
-	mat = matrix_multiply(matrix_create(point3D_mul(pos, -1), vec3(0), vec3(1)), mat)
+	mat = matrix_multiply(matrix_build(-pos[X], -pos[Y], -pos[Z], rotation[X], rotation[Y], rotation[Z], 1, 1, 1), mat)
 
 
 return mat

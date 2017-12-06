@@ -148,7 +148,7 @@ with (new(obj_timeline))
 		texture_filtering = buffer_read_byte()
 	else
 		texture_filtering = (type = e_temp_type.SCENERY || type=e_temp_type.BLOCK)
-	round_bending = buffer_read_byte()
+	/*round_bending = */buffer_read_byte()
 	shadows = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 	{

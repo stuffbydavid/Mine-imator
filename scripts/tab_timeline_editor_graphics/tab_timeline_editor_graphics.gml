@@ -2,14 +2,6 @@
 	
 if (!(tl_edit.type = e_tl_type.POINT_LIGHT) || (tl_edit.type = e_tl_type.SPOT_LIGHT))
 {
-	// Round bending
-	if (tl_edit.type = e_temp_type.BODYPART && tl_edit.model_part != null && tl_edit.model_part.bend_part != null)
-	{
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorroundbending", dx, dy, tl_edit.round_bending, action_tl_round_bending)
-		tab_next()
-	}
-
 	// Texture
 	tab_control_checkbox()
 	draw_checkbox("timelineeditortextureblur", dx, dy, tl_edit.texture_blur, action_tl_texture_blur)
