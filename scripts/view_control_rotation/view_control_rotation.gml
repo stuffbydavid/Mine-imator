@@ -3,7 +3,7 @@
 
 var view, len, xrot, yrot, zrot;
 view = argument0
-len = point3D_distance(cam_from, tl_edit.world_pos) * 0.2 * 0.8
+len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * 0.8
 
 // Create matrices
 with (tl_edit)

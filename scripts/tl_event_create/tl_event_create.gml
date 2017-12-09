@@ -89,7 +89,7 @@ cam_goalzoom = null
 
 matrix = 0
 update_matrix = true
-bend_angle_last = 0
+bend_rot_last = vec3(0)
 bend_model_part_last = null
 
 text_vbuffer = null

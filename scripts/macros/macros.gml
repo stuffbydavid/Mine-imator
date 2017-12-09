@@ -15,9 +15,9 @@
 #macro minecraft_version			"1.12.2"
 
 // File formats
-#macro project_format				e_project.FORMAT_110
-#macro settings_format				e_settings.FORMAT_110
-#macro minecraft_assets_format		e_minecraft_assets.FORMAT_110_PRE_2
+#macro project_format				e_project.FORMAT_113
+#macro settings_format				e_settings.FORMAT_113
+#macro minecraft_assets_format		e_minecraft_assets.FORMAT_113
 
 // Directories
 #macro file_directory				game_save_id
@@ -116,6 +116,7 @@
 #macro glow_alpha					0.75
 #macro shadow_size					5
 #macro shadow_alpha					0.1
+#macro view_3d_control_size			0.225
 #macro view_3d_control_width		20
 #macro view_3d_box_size				12
 

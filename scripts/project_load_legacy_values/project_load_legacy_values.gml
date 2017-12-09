@@ -26,7 +26,7 @@ if (tl.value_type[e_value_type.SCALE])
 
 if (tl.value_type[e_value_type.BEND])
 {
-	value[e_value.BEND_ANGLE] = buffer_read_double()
+	value[e_value.BEND_ANGLE_LEGACY] = buffer_read_double()
 }
 
 if (tl.value_type[e_value_type.COLOR])

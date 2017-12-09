@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David",
-        "forversion": "1.1.0",
-        "lastchange": "2017.11.20" 
+        "forversion": "1.1.3",
+        "lastchange": "2017.12.20" 
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2166,8 +2166,12 @@
         "bend": "Bend",
         "bendtip": "Modify the bending of the body part.",
         "bend/": {
-            "wheel": "Bend",
-            "wheeltip": "Change how much the body part should bend.",
+            "x": "X",
+            "xtip": "Change how much the body part should bend along the X axis.",
+            "y": "Y",
+            "ytip": "Change how much the body part should bend along the Y axis.",
+            "z": "Z",
+            "ztip": "Change how much the body part should bend along the Z axis.",
             "resettip": "Reset the bending to the default value.",
             "copytip": "Copy the selected bending value.",
             "pastetip": "Paste the copied bending.",

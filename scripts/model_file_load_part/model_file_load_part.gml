@@ -133,7 +133,7 @@ with (new(obj_model_part))
 	// Matrix used when rendering preview/particle
 	default_matrix = matrix_create(position, rotation, vec3(1))
 	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
-		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, 0, point3D(0, 0, 0)))
+		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, vec3(0), point3D(0, 0, 0)))
 	
 	// Bend (optional)
 	if (!is_undefined(map[?"bend"]))
@@ -148,15 +148,15 @@ with (new(obj_model_part))
 		}
 		bend_offset = bendmap[?"offset"]
 		
+		// Size
+		bend_size = value_get_real(bendmap[?"size"], 4)
+		
 		// Part
 		if (!is_string(bendmap[?"part"])) 
 		{
 			log("Missing parameter \"part\"")
 			return null
 		}
-		
-		// Size
-		bend_size = value_get_real(bendmap[?"size"], 4)
 		
 		switch (bendmap[?"part"])
 		{
@@ -172,41 +172,88 @@ with (new(obj_model_part))
 		}
 			
 		// Axis
-		if (!is_string(bendmap[?"axis"]))
+		bend_axis = array(false, false, false);
+		var axis = array();
+		if (is_string(bendmap[?"axis"])) // Single
+		{
+			switch (bendmap[?"axis"])
+			{
+				case "x":	bend_axis[X] = true; array_add(axis, X);	break
+				case "z":	bend_axis[Y] = true; array_add(axis, Y);	break
+				case "y":	bend_axis[Z] = true; array_add(axis, Z);	break
+				default:
+					log("Invalid parameter \"axis\"")
+					return null
+			}
+		}
+		else if (ds_list_valid(bendmap[?"axis"])) // Multi
+		{
+			for (var i = 0; i < ds_list_size(bendmap[?"axis"]); i++)
+			{
+				switch (ds_list_find_value(bendmap[?"axis"], i))
+				{
+					case "x":	bend_axis[X] = true; array_add(axis, X);	break
+					case "z":	bend_axis[Y] = true; array_add(axis, Y);	break
+					case "y":	bend_axis[Z] = true; array_add(axis, Z);	break
+					default:
+						log("Invalid parameter \"axis\"")
+						return null
+				}
+			}
+		}
+		else
 		{
 			log("Missing parameter \"axis\"")
 			return null
 		}
 		
-		switch (bendmap[?"axis"])
-		{
-			case "x":	bend_axis = X;	break
-			case "y":	bend_axis = Z;	break
-			case "z":	bend_axis = Y;	break
-			default:
-				log("Invalid parameter \"axis\"")
-				return null
-		}
-		
 		// Direction
-		if (!is_string(bendmap[?"direction"]))
+		bend_direction = array(0, 0, 0)
+		if (is_string(bendmap[?"direction"])) // Single
+		{
+			switch (bendmap[?"direction"])
+			{
+				case "forward":		bend_direction[axis[0]] = e_bend.FORWARD;	break
+				case "backward":	bend_direction[axis[0]] = e_bend.BACKWARD;	break
+				case "both":		bend_direction[axis[0]] = e_bend.BOTH;		break
+				default:
+					log("Invalid parameter \"direction\"")
+					return null
+			}
+		}
+		else if (ds_list_valid(bendmap[?"direction"])) // Multi
+		{
+			for (var i = 0; i < ds_list_size(bendmap[?"direction"]); i++)
+			{
+				switch (ds_list_find_value(bendmap[?"direction"], i))
+				{
+					case "forward":		bend_direction[axis[i]] = e_bend.FORWARD;	break
+					case "backward":	bend_direction[axis[i]] = e_bend.BACKWARD;	break
+					case "both":		bend_direction[axis[i]] = e_bend.BOTH;		break
+					default:
+						log("Invalid parameter \"direction\"")
+						return null
+				}
+			}
+		}
+		else
 		{
 			log("Missing parameter \"direction\"")
 			return null
 		}
 		
-		switch (bendmap[?"direction"])
-		{
-			case "forward":		bend_direction = e_bend.FORWARD;	break
-			case "backward":	bend_direction = e_bend.BACKWARD;	break
-			case "both":		bend_direction = e_bend.BOTH;		break
-			default:
-				log("Invalid parameter \"direction\"")
-				return null
-		}
-		
 		// Invert
-		bend_invert = value_get_real(bendmap[?"invert"], false)
+		if (is_real(bendmap[?"invert"]) && bendmap[?"invert"] < 2) // Single
+		{
+			bend_invert = vec3(bendmap[?"invert"])
+		}
+		else if (ds_list_valid(bendmap[?"invert"])) // Multi
+		{
+			for (var i = 0; i < ds_list_size(bendmap[?"invert"]); i++)
+				bend_invert[axis[i]] = ds_list_find_value(bendmap[?"invert"], i)
+		}
+		else
+			bend_invert = vec3(false)
 	}
 	else
 	{

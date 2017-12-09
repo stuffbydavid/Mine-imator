@@ -51,17 +51,21 @@ else if (view.control_mouseon_last = vid)
 	// Right click
 	if (mouse_right_pressed && keyboard_check(vk_shift))
 	{
-		if (vid = e_value.BEND_ANGLE)
-			action_tl_frame_bend_angle(0, false)
-		else if (vid = e_value.CAM_ROTATE_ANGLE_XY)
-			action_tl_frame_cam_rotate_angle_xy(0, false)
-		else if (vid = e_value.CAM_ROTATE_ANGLE_Z)
-			action_tl_frame_cam_rotate_angle_z(0, false)
-		else
+		if (vid = e_value.ROT_X || vid = e_value.ROT_Y || vid = e_value.ROT_Z)
 		{
 			axis_edit = vid - e_value.ROT_X
 			action_tl_frame_rot(0, false)
 		}
+		else if (vid = e_value.BEND_ANGLE_X || vid = e_value.BEND_ANGLE_Y || vid = e_value.BEND_ANGLE_Z)
+		{
+			axis_edit = vid - e_value.BEND_ANGLE_X
+			action_tl_frame_bend_angle(0, false)
+		}
+		else if (vid = e_value.CAM_ROTATE_ANGLE_XY)
+			action_tl_frame_cam_rotate_angle_xy(0, false)
+		else if (vid = e_value.CAM_ROTATE_ANGLE_Z)
+			action_tl_frame_cam_rotate_angle_z(0, false)
+		
 		app_mouse_clear()
 	}
 	
@@ -77,12 +81,12 @@ for (var i = 0; i <= 1; i += 1/detail)
 	var start3D, start2D, end3D, end2D;
 	
 	// Convert to screen
-	start3D = point3D_mul_matrix(point3D(cos(pi * 2*(i - 1/detail)) * len, sin(pi * 2*(i - 1/detail)) * len, 0), mat)
+	start3D = point3D_mul_matrix(point3D(cos(pi * 2 * (i - 1 / detail)) * len, sin(pi * 2 * (i - 1 / detail)) * len, 0), mat)
 	start2D = view_shape_project(start3D)
 	if (point3D_project_error)
 		return 0
 	
-	end3D = point3D_mul_matrix(point3D(cos(pi * 2*i) * len, sin(pi * 2*i) * len, 0), mat)
+	end3D = point3D_mul_matrix(point3D(cos(pi * 2 * i) * len, sin(pi * 2 * i) * len, 0), mat)
 	end2D = view_shape_project(end3D)
 	if (point3D_project_error)
 		return 0

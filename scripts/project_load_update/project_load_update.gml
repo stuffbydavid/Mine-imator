@@ -38,14 +38,32 @@ with (obj_template)
 		else
 			temp_update_model_timeline_tree()
 	}
-		
 }
 
 with (obj_timeline)
 {
 	if (!loaded)
 		continue
-		
+
+	// Convert legacy bending
+	if (load_format < e_project.FORMAT_113 && model_part != null && model_part.bend_part != null)
+	{
+		var legacyaxis;
+		for (legacyaxis = X; legacyaxis <= Z; legacyaxis++)
+			if (model_part.bend_axis[legacyaxis])
+				break
+				
+		for (var i = 0; i < ds_list_size(keyframe_list); i++)
+		{
+			with (keyframe_list[|i])
+			{
+				value[e_value.BEND_ANGLE_X + legacyaxis] = value[e_value.BEND_ANGLE_LEGACY]
+				value[e_value.BEND_ANGLE_LEGACY] = 0
+			}
+		}
+	}
+	
+	// Update
 	tl_update()
 	tl_update_values()
 	

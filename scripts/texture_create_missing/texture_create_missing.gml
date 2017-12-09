@@ -2,7 +2,7 @@
 /// @arg [size]
 /// @desc Creates a checkerboard texture.
 
-var size, surf;
+var size, surf, newtex;
 size = 16
 if (argument_count > 0)
 	size = argument[0]
@@ -14,8 +14,7 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-var newtex = texture_surface(surf);
-
+newtex = texture_surface(surf)
 surface_free(surf)
 
 return newtex

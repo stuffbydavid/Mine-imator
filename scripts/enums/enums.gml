@@ -24,7 +24,8 @@ enum e_project
 	FORMAT_CB_103	  = 23,
 	FORMAT_110_PRE_1  = 24,
 	FORMAT_110_PRE_3  = 25,
-	FORMAT_110		  = 26
+	FORMAT_110		  = 26,
+	FORMAT_113		  = 27
 }
 
 enum e_settings
@@ -40,13 +41,15 @@ enum e_settings
 	FORMAT_CB_102	  = 22,
 	FORMAT_CE_110	  = 23,
 	FORMAT_110_PRE_1  = 24,
-	FORMAT_110		  = 25
+	FORMAT_110		  = 25,
+	FORMAT_113		  = 26
 }
 
 enum e_minecraft_assets
 {
 	FORMAT_110_PRE_1  = 1,
-	FORMAT_110_PRE_2  = 2
+	FORMAT_110_PRE_2  = 2,
+	FORMAT_113		  = 3
 }
 
 // Value types
@@ -85,7 +88,10 @@ enum e_value
 	SCA_X,
 	SCA_Y,
 	SCA_Z,
-	BEND_ANGLE,
+	BEND_ANGLE_LEGACY,
+	BEND_ANGLE_X,
+	BEND_ANGLE_Y,
+	BEND_ANGLE_Z,
 	ALPHA,
 	RGB_ADD,
 	RGB_SUB,

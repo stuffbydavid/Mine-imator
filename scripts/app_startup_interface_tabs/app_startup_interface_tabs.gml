@@ -360,9 +360,13 @@ with (frame_editor)
 	{
 		snap_enabled = false
 		snap_size = 15
-		copy = 0
-		tbx_wheel = new_textbox_ndecimals()
-		tbx_wheel.suffix = "°"
+		copy = vec3(0)
+		tbx_wheel[0] = new_textbox_ndecimals()
+		tbx_wheel[0].suffix = "°"
+		tbx_wheel[1] = new_textbox_ndecimals()
+		tbx_wheel[1].suffix = "°"
+		tbx_wheel[2] = new_textbox_ndecimals()
+		tbx_wheel[2].suffix = "°"
 		tbx_snap = new_textbox_decimals()
 		tbx_snap.text = string(snap_size)
 	}

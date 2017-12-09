@@ -1,24 +1,25 @@
-/// model_shape_generate_plane_3d(angle, alphaarray)
-/// @arg angle
+/// model_shape_generate_plane_3d(bend, alphaarray)
+/// @arg bend
 /// @arg alphaarray
-/// @desc Generates a 3D plane shape bent by an angle from an array of alpha values.
+/// @desc Generates a 3D plane shape from an array of alpha values, transformed by a bend vector.
 
-var angle, alpha;
-angle = argument0
+var bend, alpha;
+bend = argument0
 alpha = argument1
 
 if (!is_array(alpha))
 	return null
 
+// Plane dimensions
 var x1, x2, y1, y2, z1, z2, size;
 x1 = from[X];	y1 = from[Y];			 z1 = from[Z]
 x2 = to[X];		y2 = from[Y] + scale[Y]; z2 = to[Z]
 size = point3D_sub(to, from)
 
 // Axis to split up the plane
-var segouteraxis, seginneraxis;
-var arrouteraxis, arrinneraxis;
-if (angle != 0)
+var isbent, segouteraxis, seginneraxis, arrouteraxis, arrinneraxis;
+isbent = !vec3_equals(bend, vec3(0))
+if (isbent)
 {
 	if (bend_part = e_part.LEFT || bend_part = e_part.RIGHT)
 	{
@@ -59,7 +60,7 @@ else if (segouteraxis = Z)
 }
 
 // Precalculate points
-var y1pnt, y2pnt;
+var y1p, y2p;
 var segouterpos = 0;
 for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 {
@@ -78,27 +79,31 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 			p2 = point3D(x1 + segouterpos, y2, z1 + seginnerpos)
 		}
 		
+		// Apply transform
 		var mat;
-		if (angle != 0) // Apply bending transform
+		if (isbent) // Apply segment bending
 		{
-			var segangle;
+			var segp;
 			if (seginnerpos < bendstart) // No/below bend, no angle
-				segangle = 0
+				segp = 0
 			else if (seginnerpos >= bendend) // Above bend, apply full angle
-				segangle = angle
+				segp = 1
 			else // Inside bend, apply partial angle
-				segangle = (1 - (bendend - seginnerpos) / bend_size) * angle
+				segp = (1 - (bendend - seginnerpos) / bend_size)
 			
-			mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0))
+			if (invangle)
+				segp = 1 - segp
+			
+			mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0))
 		}
-		else // Apply rotation
+		else // Apply rotation only
 			mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
 		
 		p1 = point3D_mul_matrix(p1, mat)
 		p2 = point3D_mul_matrix(p2, mat)
 			
-		y1pnt[outer, inner] = p1
-		y2pnt[outer, inner] = p2
+		y1p[outer, inner] = p1
+		y2p[outer, inner] = p2
 		
 		// Pixel size
 		var seginnersize = 1;
@@ -193,96 +198,96 @@ for (var outer = 0; outer < samplesize[arrouteraxis]; outer++)
 		var p1, p2, p3, p4, np1, np2, np3, np4;
 		if (seginneraxis = X)
 		{
-			p1 = y1pnt[outer + 1, inner]
-			p2 = y2pnt[outer + 1, inner]
-			p3 = y2pnt[outer, inner]
-			p4 = y1pnt[outer, inner]
-			np1 = y1pnt[outer + 1, inner + 1]
-			np2 = y2pnt[outer + 1, inner + 1]
-			np3 = y2pnt[outer, inner + 1]
-			np4 = y1pnt[outer, inner + 1]
+			p1 = y1p[outer + 1, inner]
+			p2 = y2p[outer + 1, inner]
+			p3 = y2p[outer, inner]
+			p4 = y1p[outer, inner]
+			np1 = y1p[outer + 1, inner + 1]
+			np2 = y2p[outer + 1, inner + 1]
+			np3 = y2p[outer, inner + 1]
+			np4 = y1p[outer, inner + 1]
 			
 			// East face
 			if (eface)
 			{
-				vbuffer_add_triangle(np2, np1, np4, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np4, np3, np2, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np2, np1, np4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np4, np3, np2, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 			
 			// West face
 			if (wface)
 			{
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 			
 			// South face
-			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np3, p3, p2, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np3, p3, p2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
 			
 			// North face
-			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p4, np4, np1, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p4, np4, np1, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
 			
 			// Above face
 			if (aface)
 			{
-				vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 			
 			// Below face
 			if (bface)
 			{
-				vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 		}
 		else
 		{
-			p1 = y1pnt[outer, inner]
-			p2 = y1pnt[outer + 1, inner]
-			p3 = y2pnt[outer + 1, inner]
-			p4 = y2pnt[outer, inner]
-			np1 = y1pnt[outer, inner + 1]
-			np2 = y1pnt[outer + 1, inner + 1]
-			np3 = y2pnt[outer + 1, inner + 1]
-			np4 = y2pnt[outer, inner + 1]
+			p1 = y1p[outer, inner]
+			p2 = y1p[outer + 1, inner]
+			p3 = y2p[outer + 1, inner]
+			p4 = y2p[outer, inner]
+			np1 = y1p[outer, inner + 1]
+			np2 = y1p[outer + 1, inner + 1]
+			np3 = y2p[outer + 1, inner + 1]
+			np4 = y2p[outer, inner + 1]
 			
 			// East face
 			if (eface)
 			{
-				vbuffer_add_triangle(np3, np2, p2, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p2, p3, np3, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np3, np2, p2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p2, p3, np3, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 			
 			// West face
 			if (wface)
 			{
-				vbuffer_add_triangle(np1, np4, p4, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p4, p1, np1, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np1, np4, p4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p4, p1, np1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 			
 			// South face
-			vbuffer_add_triangle(np4, np3, p3, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p4, np4, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np4, np3, p3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p3, p4, np4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
 			
 			// North face
-			vbuffer_add_triangle(np2, np1, p1, t1, t2, t3, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p1, p2, np2, t1, t2, t3, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np2, np1, p1, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p1, p2, np2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
 			
 			// Above face
 			if (aface)
 			{
-				vbuffer_add_triangle(np1, np2, np3, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np3, np4, np1, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np1, np2, np3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np3, np4, np1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 			
 			// Below face
 			if (bface)
 			{
-				vbuffer_add_triangle(p4, p3, p2, t1, t2, t3, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p2, p1, p4, t3, t4, t1, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p4, p3, p2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p2, p1, p4, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
 			}
 		}
 	}

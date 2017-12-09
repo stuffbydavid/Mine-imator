@@ -31,7 +31,9 @@ switch (vid)
 	case e_value.BG_AMBIENT_COLOR:
 	case e_value.BG_NIGHT_COLOR:
 	case e_value.BG_FOG_COLOR: return clamp(val, c_black, c_white)
-	case e_value.BEND_ANGLE: return clamp(val, -130, 130)
+	case e_value.BEND_ANGLE_X:
+	case e_value.BEND_ANGLE_Y:
+	case e_value.BEND_ANGLE_Z: return clamp(val, -130, 130)
 	case e_value.CAM_FOV: return clamp(val, 1, 170)
 	case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 	case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)

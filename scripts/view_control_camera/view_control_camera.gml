@@ -3,7 +3,7 @@
 
 var view, len, xyang, zang;
 view = argument0
-len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * 0.2 * 0.5
+len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * view_3d_control_size * 0.5
 
 with (tl_edit)
 {

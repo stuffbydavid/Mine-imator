@@ -49,8 +49,12 @@ if (value_type[e_value_type.SCALE])
 
 // Bend
 if (value_type[e_value_type.BEND])
-	tl_update_values_ease(e_value.BEND_ANGLE, trans, p)
-	
+{
+	tl_update_values_ease(e_value.BEND_ANGLE_X, trans, p)
+	tl_update_values_ease(e_value.BEND_ANGLE_Y, trans, p)
+	tl_update_values_ease(e_value.BEND_ANGLE_Z, trans, p)
+}
+
 // Color
 if (value_type[e_value_type.COLOR])
 {

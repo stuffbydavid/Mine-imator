@@ -1,17 +1,19 @@
-/// model_shape_generate_plane(angle)
-/// @arg angle
-/// @desc Generates a plane shape bent by an angle.
+/// model_shape_generate_plane(bend)
+/// @arg bend
+/// @desc Generates a plane shape transformed by a bend vector.
 
-var angle = argument0;
+var bend = argument0;
 
+// Plane dimensions
 var x1, x2, y1, z1, z2, size;
 x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];						z2 = to[Z]
 size = point3D_sub(to, from)
 
 // Axis to split up the plane
-var segaxis = Z;
-if (angle != 0)
+var isbent, segaxis = Z;
+isbent = !vec3_equals(bend, vec3(0))
+if (isbent)
 {
 	if (bend_part = e_part.LEFT || bend_part = e_part.RIGHT)
 		segaxis = X
@@ -49,7 +51,7 @@ var bendstart, bendend, bendsegsize, invangle;
 bendsegsize = bend_size / detail;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
 
-var p1, p2, p3, p4;
+var p1, p2, p3, p4, n1, n2;
 var texp1;
 
 if (segaxis = X)
@@ -68,26 +70,32 @@ else if (segaxis = Z)
 	p2 = point3D(x2, y1, z1)
 	texp1 = tex3[Y]
 }
-	
+
+// Apply transform
 var mat;
-if (angle != 0) // Apply bending transform
+if (isbent) // Apply start bend
 {
 	// Angle
-	var startangle;
+	var startp;
 	if (bendstart > 0) // Below bend, no angle
-		startangle = 0
+		startp = 0
 	else if (bendend < 0) // Above bend, apply full angle
-		startangle = angle
+		startp = 1
 	else // Start inside bend, apply partial angle
-		startangle = (1 - bendend / bend_size) * angle
+		startp = (1 - bendend / bend_size)
 	
-	mat = model_part_get_bend_matrix(id, test(invangle, (angle - startangle), startangle), vec3(0))
+	if (invangle)
+		startp = 1 - startp
+	
+	mat = model_part_get_bend_matrix(id, vec3_mul(bend, startp), vec3(0))
 }
-else // Apply rotation
+else // Apply rotation only
 	mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
 
 p1 = point3D_mul_matrix(p1, mat)
 p2 = point3D_mul_matrix(p2, mat)
+n1 = vec3_normalize(vec3_mul_matrix(vec3(0, 1, 0), mat))
+n2 = vec3_normalize(vec3_mul_matrix(vec3(0, -1, 0), mat))
 
 // Create triangles
 vbuffer_start()
@@ -100,10 +108,13 @@ vertex_wave_zmax = wind_wave_zmax
 var segpos = 0;
 while (segpos < size[segaxis])
 {
-	var segsize, np1, np2, ntexp1, ntexp2, ntexp3;
+	var segsize;
+	var np1, np2;
+	var nn1, nn2;
+	var ntexp1, ntexp2, ntexp3;
 	
 	// Find segment size
-	if (angle = 0 || segpos >= bendend) // No/Above bend
+	if (!isbent || segpos >= bendend) // No/Above bend
 		segsize = size[segaxis] - segpos
 	else if (segpos < bendstart) // Below bend
 		segsize = min(size[segaxis] - segpos, bendstart)
@@ -136,23 +147,29 @@ while (segpos < size[segaxis])
 		ntexp1 = tex3[Y] - toff
 	}
 	
-	if (angle != 0) // Apply bending transform
+	// Apply transform
+	if (isbent)  // Apply segment bend
 	{
-		var segangle;
+		var segp;
 		if (segpos < bendstart) // Below bend, no angle
-			segangle = 0
+			segp = 0
 		else if (segpos >= bendend) // Above bend, apply full angle
-			segangle = angle
+			segp = 1
 		else // Inside bend, apply partial angle
-			segangle = (1 - (bendend - segpos) / bend_size) * angle
+			segp = (1 - (bendend - segpos) / bend_size)
 			
-		mat = model_part_get_bend_matrix(id, test(invangle, (angle - segangle), segangle), vec3(0))
+		if (invangle)
+			segp = 1 - segp
+			
+		mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0))
 	}
-	else // Apply rotation
+	else // Apply rotation only
 		mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
 	
 	np1 = point3D_mul_matrix(np1, mat)
 	np2 = point3D_mul_matrix(np2, mat)
+	nn1 = vec3_normalize(vec3_mul_matrix(vec3(0, 1, 0), mat))
+	nn2 = vec3_normalize(vec3_mul_matrix(vec3(0, -1, 0), mat))
 	
 	// Add faces
 	var t1, t2, t3, t4;
@@ -162,10 +179,14 @@ while (segpos < size[segaxis])
 		t2 = vec2(ntexp1, tex1[Y])
 		t3 = vec2(ntexp1, tex3[Y])
 		t4 = vec2(texp1, tex3[Y])
-		vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, color_blend, color_alpha, true)
-		vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, color_blend, color_alpha, true)
-		vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, color_blend, color_alpha, false)
-		vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, color_blend, color_alpha, false)
+		
+		// South
+		vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, n1, nn1, nn1, color_blend, color_alpha, invert)
+		vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, nn1, n1, n1, color_blend, color_alpha, invert)
+		
+		// North
+		vbuffer_add_triangle(np1, p1, np2, t2, t1, t3, nn2, n2, nn2, color_blend, color_alpha, invert)
+		vbuffer_add_triangle(p2, np2, p1, t4, t3, t1, n2, nn2, n2, color_blend, color_alpha, invert)
 	}
 	else if (segaxis = Z)
 	{
@@ -173,13 +194,18 @@ while (segpos < size[segaxis])
 		t2 = vec2(tex2[X], ntexp1)
 		t3 = vec2(tex2[X], texp1)
 		t4 = vec2(tex1[X], texp1)
-		vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, null, color_blend, color_alpha, true)
-		vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, null, color_blend, color_alpha, true)
-		vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, null, color_blend, color_alpha, false)
-		vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, null, color_blend, color_alpha, false)
+		
+		// South
+		vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, nn1, nn1, n1, color_blend, color_alpha, invert)
+		vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, n1, n1, nn1, color_blend, color_alpha, invert)
+		
+		// North
+		vbuffer_add_triangle(np2, np1, p2, t2, t1, t3, nn2, nn2, n2, color_blend, color_alpha, invert)
+		vbuffer_add_triangle(p1, p2, np1, t4, t3, t1, n2, n2, nn2, color_blend, color_alpha, invert)
 	}
 	
 	p1 = np1; p2 = np2;
+	n1 = nn1; n2 = nn2;
 	texp1 = ntexp1
 }
 

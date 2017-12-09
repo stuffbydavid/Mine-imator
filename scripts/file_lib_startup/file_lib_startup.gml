@@ -45,15 +45,6 @@ var tex1, tex2;
 tex1 = texture_create(tmpfile1) // Can I load textures from file bundle?
 tex2 = texture_create(tmpfile2) // Can I load textures from installation folder?
 
-if (tex1 < 0 || texture_width(tex1) != 32 || texture_height(tex1) != 32 ||
-	tex2 < 0 || texture_width(tex2) != 32 || texture_height(tex2) != 32)
-{
-	texture_lib = false
-	log("Couldn't load texture from file_directory, switching to sprites")
-	tex1 = texture_create(tmpfile1)
-	tex2 = texture_create(tmpfile2)
-}
-
 if (tex1 < 0 || texture_width(tex1) != 32 || texture_height(tex1) != 32)
 {
 	log("Couldn't load texture from file_directory")

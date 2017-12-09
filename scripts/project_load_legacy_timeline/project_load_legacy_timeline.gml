@@ -167,10 +167,10 @@ with (new(obj_timeline))
 		// Reset bend to 0
 		if (inherit_bend)
 		{
-			value[e_value.BEND_ANGLE] = 0
+			value[e_value.BEND_ANGLE_LEGACY] = 0
 			for (var i = 0; i < ds_list_size(keyframe_list); i++)
 				with (keyframe_list[|i])
-					value[e_value.BEND_ANGLE]= 0
+					value[e_value.BEND_ANGLE_LEGACY]= 0
 		}
 		
 		/*hide_quality_high = */buffer_read_byte()

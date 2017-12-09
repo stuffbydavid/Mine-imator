@@ -12,8 +12,11 @@ if (object_index != app && update_matrix)
 			matrix_parent = array_copy_1d(parent.matrix)
 			
 		// Parent is a body part and we're locked to bended half
-		if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null)
-			matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, parent.value_inherit[e_value.BEND_ANGLE], point3D(0, 0, 0)), matrix_parent)
+		if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
+		{
+			var bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z]);
+			matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0, 0, 0)), matrix_parent)
+		}
 	}
 	else
 		matrix_parent = MAT_IDENTITY
@@ -126,7 +129,9 @@ if (object_index != app && update_matrix)
 	value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
 	value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
 	value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
-	value_inherit[e_value.BEND_ANGLE] = value[e_value.BEND_ANGLE] // Added
+	value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] // Added
+	value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] // Added
+	value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] // Added
 	value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
 	
 	var inhalpha, inhcolor, inhvis, inhbend, inhtex;
@@ -177,7 +182,11 @@ if (object_index != app && update_matrix)
 			value_inherit[e_value.VISIBLE] *= par.value[e_value.VISIBLE]
 			
 		if (inhbend)
-			value_inherit[e_value.BEND_ANGLE] += par.value[e_value.BEND_ANGLE]
+		{
+			value_inherit[e_value.BEND_ANGLE_X] += par.value[e_value.BEND_ANGLE_X]
+			value_inherit[e_value.BEND_ANGLE_Y] += par.value[e_value.BEND_ANGLE_Y]
+			value_inherit[e_value.BEND_ANGLE_Z] += par.value[e_value.BEND_ANGLE_Z]
+		}
 			
 		if (inhtex)
 			value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]

@@ -36,7 +36,7 @@ for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
 	if (ds_list_find_index(model_hide_list, model_file.file_part_list[|p].name) < 0)
 	{
 		model_part_fill_shape_alpha_map(model_file.file_part_list[|p], model_shape_alpha_map, res, model_texture_name_map)
-		model_part_fill_shape_vbuffer_map(model_file.file_part_list[|p], model_shape_vbuffer_map, model_shape_alpha_map, 0)
+		model_part_fill_shape_vbuffer_map(model_file.file_part_list[|p], model_shape_vbuffer_map, model_shape_alpha_map, vec3(0))
 	}
 }
 

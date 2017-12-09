@@ -6,9 +6,9 @@ view = argument0
 
 // Arrow length
 if (tl_edit.type = e_tl_type.CAMERA && tl_edit.value[e_value.CAM_ROTATE])
-	len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * 0.2
+	len = point3D_distance(cam_from, tl_edit.world_pos_rotate) * view_3d_control_size
 else
-	len = point3D_distance(cam_from, tl_edit.world_pos) * 0.2
+	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size
 
 // Create matrix
 with (tl_edit)

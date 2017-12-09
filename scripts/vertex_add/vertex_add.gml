@@ -29,7 +29,6 @@ if (argument_count < 8)
 	vertex_position_3d(vbuffer_current, pos[@ X], pos[@ Y], pos[@ Z])
 	vertex_normal(vbuffer_current, normal[@ X], normal[@ Y], normal[@ Z])
 	vertex_color(vbuffer_current, color, alpha)
-	
 	vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
 	
 	zz = pos[@ Z]

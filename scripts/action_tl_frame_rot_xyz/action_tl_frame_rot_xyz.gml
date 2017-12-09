@@ -1,5 +1,5 @@
-/// action_tl_frame_rot_xyz(point)
-/// @arg point
+/// action_tl_frame_rot_xyz(rotation)
+/// @arg rotation
 
 tl_value_set_start(action_tl_frame_rot_xyz, false)
 tl_value_set(e_value.ROT_X, argument0[@ X], false)

@@ -154,9 +154,9 @@ with (new(obj_model_shape))
 	
 	// Generate
 	if (type = "block")
-		vbuffer = model_shape_generate_block(0)
+		vbuffer = model_shape_generate_block(vec3(0))
 	else if (type = "plane")
-		vbuffer = model_shape_generate_plane(0)
+		vbuffer = model_shape_generate_plane(vec3(0))
 	else
 	{
 		log("Invalid shape type", type)

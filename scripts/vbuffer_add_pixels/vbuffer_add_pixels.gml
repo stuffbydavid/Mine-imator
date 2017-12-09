@@ -1,20 +1,19 @@
-/// vbuffer_add_pixels(alphaarray, position, [height, texpos, texsize, texpixelsize, scale, [arrayoff, arraysizeoff, mirror, [color, alpha]]])
+/// vbuffer_add_pixels(alphaarray, position, [height, texpos, texsize, texpixelsize, scale])
 /// @arg alphaarray
 /// @arg position
 /// @arg [height
 /// @arg texpos
 /// @arg texsize
 /// @arg texpixelsize
-/// @arg scale
-/// @arg [arrposoff
-/// @arg arrsizeoff
-/// @arg mirror
-/// @arg [color
-/// @arg alpha]]]
+/// @arg scale]
 
-var alphaarr, pos, height, texpos, texsize, texpixelsize, scale, arrposoff, arrsizeoff, mirror, color, alpha, mat;
-alphaarr = argument[0]
+var alpha, pos, height, texpos, texsize, texpixelsize, scale, mat;
+var samplesizex, samplesizey;
+alpha = argument[0]
 pos = argument[1]
+
+samplesizex = array_height_2d(alpha)
+samplesizey = array_length_2d(alpha, 0)
 
 if (argument_count > 2)
 {
@@ -26,108 +25,45 @@ if (argument_count > 2)
 }
 else
 {
-	var wid, hei;
-	wid = array_height_2d(alphaarr)
-	hei = array_length_2d(alphaarr, 0)
-	
-	height = hei
+	height = samplesizey
 	texpos = vec2(0, 0)
-	texsize = vec2(wid, hei)
+	texsize = vec2(samplesizex, samplesizey)
 	texpixelsize = vec2_div(vec2(1, 1), texsize)
 	scale = vec3(1)
 }
 
-if (argument_count > 7)
-{
-	arrposoff = argument[7]
-	arrsizeoff = argument[8]
-	mirror = argument[9]
-}
-else
-{
-	arrposoff = vec2(0, 0)
-	arrsizeoff = vec2(0, 0)
-	mirror = false
-}
-
-if (argument_count > 10)
-{
-	color = argument[10]
-	alpha = argument[11]
-}
-else
-{
-	color = c_white
-	alpha = 1
-}
-
 mat = matrix_create(pos, vec3(0), scale)
-
-// Sample area of pixels
-var samplestartx, samplestarty, sampleendx, sampleendy, samplesizex, samplesizey;
-if (!mirror)
-{
-	samplestartx = texpos[X] + arrposoff[X]
-	sampleendx = texpos[X] + arrposoff[X] + texsize[X] + arrsizeoff[X]
-}
-else
-{
-	samplestartx = texpos[X] + texsize[X] - (arrposoff[X] + texsize[X] + arrsizeoff[X])
-	sampleendx = texpos[X] + texsize[X] - arrposoff[X]
-}
-samplestarty = texpos[Y] + arrposoff[Y]
-sampleendy = texpos[Y] + arrposoff[Y] + texsize[Y] + arrsizeoff[Y]
-samplesizex = ceil(sampleendx) - floor(samplestartx)
-samplesizey = ceil(sampleendy) - floor(samplestarty)
 
 // Pixel sizes
 var sizestartx, sizestarty, sizeendx, sizeendy;
-if (!mirror)
-{
-	sizestartx = 1 - frac(samplestartx)
-	sizeendx = frac(sampleendx)
-}
-else
-{
-	sizestartx = frac(sampleendx)
-	sizeendx = 1 - frac(samplestartx)
-}
-sizestarty = 1 - frac(samplestarty)
-sizeendy = frac(sampleendy)
+sizestartx = 1 - frac(texpos[X])
+sizestarty = 1 - frac(texpos[Y])
+sizeendx = frac(texpos[X] + texsize[X])
+sizeendy = frac(texpos[Y] + texsize[Y])
 
 // Create triangles
 var px = 0;
 for (var xx = 0; xx < samplesizex; xx++)
 {
-	// Array X location
-	var ax;
-	if (!mirror)
-		ax = floor(arrposoff[X]) + xx
-	else
-		ax = ceil(texsize[X] - arrposoff[X]) - 1 - xx
-	
 	// X size of pixel
 	var pxs = 1;
 	if (xx = 0 && sizestartx > 0) // First pixel
 		pxs = sizestartx
 	else if (xx = samplesizex - 1 && sizeendx > 0) // Last pixel
 		pxs = sizeendx
-	
+		
 	var pz = height / scale[Z];
 	for (var yy = 0; yy < samplesizey; yy++)
 	{
-		// Array Z location
-		var ay = floor(arrposoff[Y]) + yy;
-		
 		// Z size of pixel
 		var pzs = 1;
 		if (yy = 0 && sizestarty > 0) // First pixel
 			pzs = sizestarty
 		else if (yy = samplesizey - 1 && sizeendy > 0) // Last pixel
 			pzs = sizeendy
-		
+			
 		// Transparent pixel found, continue
-		if (alphaarr[@ ax, ay] < 1)
+		if (alpha[@ xx, yy] < 1)
 		{
 			pz -= pzs
 			continue
@@ -135,17 +71,10 @@ for (var xx = 0; xx < samplesizex; xx++)
 		
 		// Calculate which faces to add, continue if none are visible
 		var wface, eface, aface, bface;
-		wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
-		eface = (ax = ceil(texsize[X]) - 1 || alphaarr[@ ax + 1, ay] < 1)
-		aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
-		bface = (ay = ceil(texsize[Y]) - 1 || alphaarr[@ ax, ay + 1] < 1)
-		
-		if (mirror)
-		{
-			var tmp = wface;
-			wface = eface
-			eface = tmp
-		}
+		wface = (xx = 0 || alpha[@ xx - 1, yy] < 1)
+		eface = (xx = ceil(texsize[X]) - 1 || alpha[@ xx + 1, yy] < 1)
+		aface = (yy = 0 || alpha[@ xx, yy - 1] < 1)
+		bface = (yy = ceil(texsize[Y]) - 1 || alpha[@ xx, yy + 1] < 1)
 		
 		if (!eface && !wface && !aface && !bface)
 		{
@@ -155,7 +84,7 @@ for (var xx = 0; xx < samplesizex; xx++)
 		
 		// Texture
 		var ptex, pfix, psize, t1, t2, t3, t4;
-		ptex = point2D(floor(texpos[X]) + ax, floor(texpos[Y]) + ay)
+		ptex = point2D(floor(texpos[X]) + xx, floor(texpos[Y]) + yy)
 		
 		// Artifact fix with CPU rendering
 		pfix = 1 / 256 
@@ -181,8 +110,8 @@ for (var xx = 0; xx < samplesizex; xx++)
 			p2 = point3D(px + pxs, 1, pz)
 			p3 = point3D(px + pxs, 0, pz)
 			p4 = point3D(px + pxs, 0, pz - pzs)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, false, mat)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, false, mat)
+			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
+			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
 		}
 			
 		// West face
@@ -192,8 +121,8 @@ for (var xx = 0; xx < samplesizex; xx++)
 			p2 = point3D(px, 0, pz)
 			p3 = point3D(px, 1, pz)
 			p4 = point3D(px, 1, pz - pzs)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, false, mat)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, false, mat)
+			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
+			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
 		}
 			
 		// Above face
@@ -203,8 +132,8 @@ for (var xx = 0; xx < samplesizex; xx++)
 			p2 = point3D(px, 0, pz)
 			p3 = point3D(px + pxs, 0, pz)
 			p4 = point3D(px + pxs, 1, pz)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, false, mat)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, false, mat)
+			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
+			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
 		}
 			
 		// Below face
@@ -214,8 +143,8 @@ for (var xx = 0; xx < samplesizex; xx++)
 			p2 = point3D(px, 1, pz - pzs)
 			p3 = point3D(px + pxs, 1, pz - pzs)
 			p4 = point3D(px + pxs, 0, pz - pzs)
-			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, color, alpha, false, mat)
-			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, color, alpha, false, mat)
+			vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
+			vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
 		}
 		
 		pz -= pzs

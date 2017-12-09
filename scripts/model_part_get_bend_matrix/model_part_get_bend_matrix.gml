@@ -1,27 +1,41 @@
-/// model_part_get_bend_matrix(part, angle, position)
+/// model_part_get_bend_matrix(part, bend, position)
 /// @arg part
-/// @arg angle
+/// @arg bend
 /// @arg position
 /// @desc Returns the transformation matrix for bending.
 
-var part, angle, pos, rot;
+var part, bend, pos, rot;
 part = argument0
-angle = tl_value_clamp(e_value.BEND_ANGLE, argument1)
+bend = argument1
 pos = argument2
 
 if (part.bend_part = null)
 	return MAT_IDENTITY
 	
-// Invert angle
-if (part.bend_invert)
-	angle = -angle
-	
 // Limit angle
-if (part.bend_direction = e_bend.FORWARD)
-	angle = min(0, -angle)
-else if (part.bend_direction = e_bend.BACKWARD)
-	angle = max(0, angle)
+for (var i = X; i <= Z; i++)
+{
+	if (bend[i] = 0)
+		continue
 	
+	// Clamp to a valid angle
+	bend[i] = tl_value_clamp(e_value.BEND_ANGLE_X + i, bend[i])
+	
+	// Invert
+	if (part.bend_invert[i])
+		bend[i] *= -1
+	
+	// Reset if not defined
+	if (!part.bend_axis[i])
+		bend[i] = 0
+		
+	// Limit by direction
+	else if (part.bend_direction[i] = e_bend.FORWARD)
+		bend[i] = min(0, -bend[i])
+	else if (part.bend_direction[i] = e_bend.BACKWARD)
+		bend[i] = max(0, bend[i])
+}
+
 // Get position
 switch (part.bend_part)
 {
@@ -44,18 +58,9 @@ switch (part.bend_part)
 		break
 }
 
-// Get rotation
-switch (part.bend_axis)
-{
-	case X:	rot = vec3(angle, 0, 0); break
-	case Y:	rot = vec3(0, angle, 0); break
-	case Z:	rot = vec3(0, 0, angle); break
-}
-
 // Create matrix
-var mat = matrix_build(pos[X], pos[Y], pos[Z], rot[X], rot[Y], rot[Z], 1, 1, 1);
+var mat = matrix_build(pos[X], pos[Y], pos[Z], bend[X], bend[Y], bend[Z], 1, 1, 1);
 if (object_index = obj_model_shape)
 	mat = matrix_multiply(matrix_build(-pos[X], -pos[Y], -pos[Z], rotation[X], rotation[Y], rotation[Z], 1, 1, 1), mat)
-
 
 return mat

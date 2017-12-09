@@ -1,4 +1,4 @@
-/// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [normal, [color, alpha, [invert, [matrix]]]])
+/// vbuffer_add_triangle(pos1, pos2, pos3, texcoord1, texcoord2, texcoord3, [normal1, normal2, normal3, [color, alpha, [invert, [matrix]]]])
 /// OR vbuffer_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3, [color, alpha, [invert, [matrix]]])
 /// @arg pos1
 /// @arg pos2
@@ -6,7 +6,9 @@
 /// @arg texcoord1
 /// @arg texcoord2
 /// @arg texcoord3
-/// @arg [normal
+/// @arg [normal1
+/// @arg normal2
+/// @arg normal3
 /// @arg [color
 /// @arg alpha
 /// @arg [invert
@@ -14,7 +16,7 @@
 
 if (argument_count < 15)
 {
-	var pos1, pos2, pos3, tex1, tex2, tex3, normal, color, alpha;
+	var pos1, pos2, pos3, tex1, tex2, tex3, normal1, normal2, normal3, color, alpha;
 	pos1 = argument[0]
 	pos2 = argument[1]
 	pos3 = argument[2]
@@ -23,7 +25,7 @@ if (argument_count < 15)
 	tex3 = argument[5]
 	
 	// Invert
-	if (argument_count > 9 && argument[9])
+	if (argument_count > 11 && argument[11])
 	{
 		var tmp = pos1;
 		pos1 = pos2
@@ -34,14 +36,22 @@ if (argument_count < 15)
 	}
 	
 	if (argument_count > 6 && is_array(argument[6]))
-		normal = argument[6]
-	else
-		normal = vec3_cross(point3D_sub(pos1, pos2), point3D_sub(pos2, pos3))
-	
-	if (argument_count > 7 && argument[7] != null)
 	{
-		color = argument[7]
-		alpha = argument[8]
+		normal1 = argument[6]
+		normal2 = argument[7]
+		normal3 = argument[8]
+	}
+	else
+	{
+		normal1 = vec3_cross(point3D_sub(pos1, pos2), point3D_sub(pos2, pos3))
+		normal2 = normal1
+		normal3 = normal1
+	}
+	
+	if (argument_count > 9 && argument[9] != null)
+	{
+		color = argument[9]
+		alpha = argument[10]
 	}
 	else
 	{
@@ -49,18 +59,28 @@ if (argument_count < 15)
 		alpha = 1
 	}
 	
-	if (argument_count > 10 && argument[10] != null)
+	if (argument_count > 12 && argument[12] != null)
 	{
-		var mat = argument[10];
+		var mat = argument[12];
 		pos1 = point3D_mul_matrix(pos1, mat)
 		pos2 = point3D_mul_matrix(pos2, mat)
 		pos3 = point3D_mul_matrix(pos3, mat)
-		normal = vec3_normalize(vec3_mul_matrix(normal, mat))
+		normal1 = vec3_normalize(vec3_mul_matrix(normal1, mat))
+		
+		if (argument[7] != null)
+			normal2 = vec3_normalize(vec3_mul_matrix(normal2, mat))
+		else
+			normal2 = normal1
+		
+		if (argument[8] != null)
+			normal3 = vec3_normalize(vec3_mul_matrix(normal3, mat))
+		else
+			normal3 = normal1
 	}
 	
-	vertex_add(pos1, normal, tex1, color, alpha)
-	vertex_add(pos2, normal, tex2, color, alpha)
-	vertex_add(pos3, normal, tex3, color, alpha)
+	vertex_add(pos1, normal1, tex1, color, alpha)
+	vertex_add(pos2, normal2, tex2, color, alpha)
+	vertex_add(pos3, normal3, tex3, color, alpha)
 }
 else
 {
@@ -123,7 +143,8 @@ else
 		tx2 = argument[11]; ty2 = argument[12];
 		tx3 = argument[13]; ty3 = argument[14];
 	}
-
+	
+	// Calculate normal
 	nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2)
 	ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2)
 	nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2)

@@ -45,7 +45,7 @@ else
 		case 9: return e_value.ROT_X
 		case 10: return e_value.ROT_Y
 		case 11: return e_value.ROT_Z
-		case 12: return e_value.BEND_ANGLE
+		case 12: return e_value.BEND_ANGLE_LEGACY
 	}
 }
 
