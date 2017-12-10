@@ -26,7 +26,13 @@ log("Block textures", "load static")
 texlist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 {
-	var fname  = load_assets_dir + mc_textures_directory + string_replace(mc_assets.block_texture_list[|t], " opaque", "") + ".png";
+	var name, fname;
+	name = string_replace(mc_assets.block_texture_list[|t], " opaque", "")
+	fname = load_assets_dir + mc_textures_directory + name + ".png"
+	
+	if (!file_exists_lib(fname) && !is_undefined(legacy_block_texture_name_map[?name]))
+		fname = load_assets_dir + mc_textures_directory + legacy_block_texture_name_map[?name] + ".png"
+	
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
@@ -34,7 +40,11 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 		ds_list_add(texlist, tex)
 	}
 	else
+	{
+		if (id = mc_res)
+			log("Block texture not found", mc_assets.block_texture_list[|t])
 		ds_list_add(texlist, null)
+	}
 }
 	
 // Animated textures
@@ -43,15 +53,23 @@ texanilist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 {
 	var name, fname;
-	name = mc_assets.block_texture_ani_list[|t]
-	fname = load_assets_dir + mc_textures_directory + string_replace(mc_assets.block_texture_ani_list[|t], " opaque", "") + ".png"
+	name = string_replace(mc_assets.block_texture_ani_list[|t], " opaque", "")
+	fname = load_assets_dir + mc_textures_directory + name + ".png"
+	
+	if (!file_exists_lib(fname))
+		fname = load_assets_dir + mc_textures_directory + legacy_block_texture_name_map[?name] + ".png"
+	
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
 		ds_list_add(texanilist, tex)
 	}
 	else
+	{
+		if (id = mc_res)
+			log("Block texture not found", mc_assets.block_texture_ani_list[|t])
 		ds_list_add(texanilist, null)
+	}
 }
 
 if (blocksize = null)

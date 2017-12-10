@@ -13,7 +13,7 @@ count = 0
 rot_point = point3D(0, 0, 0)
 
 model = null
-model_name = "human"
+model_name = default_model
 model_tex = null
 model_texture_name_map = null
 model_shape_vbuffer_map = null
@@ -25,14 +25,14 @@ model_part_name = ""
 model_part = null
 
 item_tex = null
-item_slot = ds_list_find_index(mc_assets.item_texture_list, "items/diamond_sword")
+item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
 item_vbuffer = null
 item_3d = true
 item_face_camera = false
 item_bounce = false
 legacy_item_sheet = true
 
-block_name = "grass"
+block_name = default_block
 block_state = array()
 block_tex = null
 block_vbuffer = null

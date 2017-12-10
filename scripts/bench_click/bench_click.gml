@@ -10,7 +10,7 @@ with (bench_settings)
 	{
 		if (ds_list_find_index(char_list.list, model_name) < 0)
 		{
-			model_name = "human"
+			model_name = default_model
 			model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		}
 		model_tex = mc_res
@@ -22,7 +22,7 @@ with (bench_settings)
 	{
 		if (ds_list_find_index(special_block_list.list, model_name) < 0)
 		{
-			model_name = "chest"
+			model_name = default_special_block
 			model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		}
 		model_tex = mc_res

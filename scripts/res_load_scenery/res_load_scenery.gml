@@ -43,28 +43,31 @@ switch (load_stage)
 				buffer_seek(block_obj, buffer_seek_start, 0)
 				buffer_seek(block_state_id, buffer_seek_start, 0)
 			
+				var i = 0;
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
 					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 					{
 						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
-							var bid, bdata, block;
-							bid = buffer_read_byte()
-							bdata = buffer_read_byte()
-							block = mc_assets.block_legacy_id_map[?bid]
-							if (!is_undefined(block))
+							var block, stateid;
+							block = null
+							stateid = null
+							
+							// Read legacy block ID & data
+							var bid = buffer_peek(buffer_current, blocksarray + i, buffer_u8);
+							if (bid > 0)
 							{
-								buffer_write(block_obj, buffer_s32, block)
-								buffer_write(block_state_id, buffer_s32, block.legacy_data_state_id[bdata])
-								if (block.timeline)
+								var bdata = buffer_peek(buffer_current, dataarray + i, buffer_u8);
+								block = legacy_block_obj[bid, bdata]
+								stateid = legacy_block_state_id[bid, bdata]
+								if (block != null && block.timeline)
 									timelineamount++
 							}
-							else
-							{
-								buffer_write(block_obj, buffer_s32, null)
-								buffer_write(block_state_id, buffer_s32, 0)
-							}
+							
+							buffer_write(block_obj, buffer_s32, block)
+							buffer_write(block_state_id, buffer_s32, stateid)
+							i++
 						}
 					}
 				}
@@ -156,44 +159,37 @@ switch (load_stage)
 				debug_timer_start()
 				builder_start()
 					
-				// Block
-				buffer_seek(buffer_current, buffer_seek_start, blocksarray)
 				buffer_seek(block_obj, buffer_seek_start, 0)
-				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
-				{
-					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
-					{
-						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
-						{
-							var block = mc_assets.block_legacy_id_map[?buffer_read_byte()];
-							if (!is_undefined(block))
-							{
-								buffer_write(block_obj, buffer_s32, block)
-								if (block.timeline)
-									timelineamount++
-							}
-							else
-								buffer_write(block_obj, buffer_s32, null)
-						}
-					}
-				}
-					
-				// State
-				buffer_seek(buffer_current, buffer_seek_start, dataarray)
 				buffer_seek(block_state_id, buffer_seek_start, 0)
+				
+				var i = 0;
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
 					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 					{
 						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
-							var block, bdata;
-							block = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z)
-							bdata = buffer_read_byte()
-							if (block != null)
-								buffer_write(block_state_id, buffer_s32, block.legacy_data_state_id[bdata])
-							else
-								buffer_write(block_state_id, buffer_s32, 0)
+							var block, stateid;
+							block = null
+							stateid = null
+							
+							if (true)
+							{
+								// Read legacy block ID & data
+								var bid = buffer_peek(buffer_current, blocksarray + i, buffer_u8)
+								if (bid > 0)
+								{
+									var bdata = buffer_peek(buffer_current, dataarray + i, buffer_u8);
+									block = legacy_block_obj[bid, bdata]
+									stateid = legacy_block_state_id[bid, bdata]
+									if (block != null && block.timeline)
+										timelineamount++
+								}
+							}
+							
+							buffer_write(block_obj, buffer_s32, block)
+							buffer_write(block_state_id, buffer_s32, stateid)
+							i++
 						}
 					}
 				}

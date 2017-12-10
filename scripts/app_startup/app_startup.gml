@@ -32,7 +32,7 @@ alert_startup()
 json_startup()
 settings_startup()
 project_startup()
-project_legacy_startup()
+legacy_startup()
 render_startup()
 camera_startup()
 

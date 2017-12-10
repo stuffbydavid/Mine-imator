@@ -32,21 +32,6 @@ json_save_object_start()
 			json_save_object_start("block")
 				json_save_var("name", block_name)
 				json_save_var_state_vars("state", block_state)
-				
-				// Store legacy ID & state for future reference
-				var block = mc_assets.block_name_map[?block_name];
-				if (!is_undefined(block))
-				{
-					json_save_var("legacy_id", block.legacy_id)
-					for (var d = 0; d < 16; d++)
-					{
-						if (state_vars_match_state_id(block_state, block, block.legacy_data_state_id[d]))
-						{
-							json_save_var("legacy_data", d)
-							break
-						}
-					}
-				}
 			json_save_object_done()
 		}
 		

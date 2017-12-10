@@ -8,7 +8,14 @@ var type, name;
 type = argument0
 name = argument1
 
-if (string_digits(name) = name || !text_exists(type + name))
-	return string_format_snakecase(name) + test(dev_mode_debug_names, " [" + name + "]", "")
+// Digits only
+if (string_digits(name) = name)
+	return name
+
+// Non-existing
+if (!text_exists(type + name))
+	return test(dev_mode_debug_names, "?????? [" + name + "]", string_format_snakecase(name))
+	
+// Existing
 else
 	return text_get(type + name) + test(dev_mode_debug_names, " [" + name + "]", "")

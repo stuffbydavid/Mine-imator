@@ -206,10 +206,6 @@ with (mc_assets)
 				// Save name in load_assets_map
 				block_name_map[?block.name] = block
 			
-				// Save legacy ID in load_assets_map if available
-				if (is_real(blockmap[?"legacy_id"]))
-					block_legacy_id_map[?blockmap[?"legacy_id"]] = block
-			
 				ds_list_add(block_list, block)
 				load_assets_block_index++
 			}
@@ -221,16 +217,46 @@ with (mc_assets)
 				// Flowing Water/Lava
 				block_name_map[?"flowing_water"] = block_name_map[?"water"]
 				block_name_map[?"flowing_lava"] = block_name_map[?"lava"]
-				block_legacy_id_map[?8] = block_legacy_id_map[?9]
-				block_legacy_id_map[?10] = block_legacy_id_map[?11]
 				block_liquid_slot_map[?"water"] = ds_list_find_index(block_texture_ani_list, "blocks/water_still")
 				block_liquid_slot_map[?"lava"] = ds_list_find_index(block_texture_ani_list, "blocks/lava_still")
 				block_liquid_slot_map[?"flowing_water"] = ds_list_find_index(block_texture_ani_list, "blocks/water_flow")
 				block_liquid_slot_map[?"flowing_lava"] = ds_list_find_index(block_texture_ani_list, "blocks/lava_flow")
 				
+				// Legacy block ID mapping
+				var key = ds_map_find_first(legacy_block_id);
+				while (!is_undefined(key))
+				{
+					var curid, curmap;
+					curid = string_get_real(key)
+					curmap = ds_map_find_value(legacy_block_id, key)
+	
+					// Look for block object from ID
+					var block = null;
+					if (is_string(curmap[?"id"]) && !is_undefined(block_id_map[?curmap[?"id"]]))
+						block = block_id_map[?curmap[?"id"]]
+	
+					for (var d = 0; d < 16; d++)
+					{
+						legacy_block_obj[curid, d] = block
+						legacy_block_state_vars[curid, d] = null
+						legacy_block_state_id[curid, d] = null
+					}
+	
+					// Look for block states
+					if (!is_undefined(curmap[?"data"]))
+						minecraft_assets_load_legacy_block_data(curid, curmap[?"data"], 0, 1)
+		
+					// Get block-specific state IDs
+					for (var d = 0; d < 16; d++)
+						if (legacy_block_obj[curid, d] != null && legacy_block_state_vars[curid, d] != null)
+							legacy_block_state_id[curid, d] = block_get_state_id(legacy_block_obj[curid, d], legacy_block_state_vars[curid, d])
+	
+					key = ds_map_find_next(legacy_block_id, key)
+				}
+				
 				debug_timer_stop("Load blocks")
 	
-				// Clear up loaded models
+				// Clean up loaded model file objects
 				key = ds_map_find_first(load_assets_model_file_map)
 				while (!is_undefined(key))
 				{

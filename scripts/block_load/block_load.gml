@@ -17,6 +17,8 @@ with (new(obj_block))
 		return null
 	}
 	
+	log("Loading", name)
+	
 	if (dev_mode_debug_names && !text_exists("block" + name))
 		log("block/" + name + dev_mode_name_translation_message)
 	
@@ -159,16 +161,22 @@ with (new(obj_block))
 	if (ds_map_valid(timelinemap))
 		block_load_timeline(timelinemap, typemap[?timelinemap])
 		
-	// Legacy ID
-	legacy_id = value_get_real(map[?"legacy_id"], 0)
-	
-	// Legacy data state IDs
-	for (var d = 0; d < 16; d++)
-		legacy_data_state_id[d] = 0
-		
-	// Read data list into maps
-	if (ds_map_valid(map[?"legacy_data"]))
-		block_load_legacy_data_map(map[?"legacy_data"], 0, 1)
+	// ID(s)
+	var idmap = map[?"id"];
+	id_state_vars_map = null
+	if (is_string(idmap)) // Single
+		mc_assets.block_id_map[?idmap] = id
+	else if (ds_list_valid(idmap)) // List
+	{
+		id_state_vars_map = ds_map_create()
+		var key = ds_map_find_first(idmap);
+		while (!is_undefined(key))
+		{
+			id_state_vars_map[?key] = string_get_state_vars(idmap[?key])
+			mc_assets.block_id_map[?key] = id
+			key = ds_map_find_next(idmap, key)
+		}
+	}
 		
 	// Pre-calculate the block variant to pick for each (numerical) state ID
 	state_id_model_obj = null

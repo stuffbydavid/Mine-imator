@@ -1503,14 +1503,6 @@
             }
         },
         {
-            "Key": "1957f5e3-70b7-4e89-bebb-817a66c3b526",
-            "Value": {
-                "id": "ecbfd748-5431-473a-97d3-41a88e1167ba",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.12.2.midata.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "197c98bf-b9f4-4249-8f31-55cf9c565127",
             "Value": {
                 "id": "7fd5b4e5-c2cc-4584-9d27-d1926b6be04e",
@@ -1906,7 +1898,7 @@
             "Key": "21030606-d516-45a7-9c1d-3caa0fbea67c",
             "Value": {
                 "id": "1b69c4bf-eac3-483e-8d70-cc7cc8576f3e",
-                "resourcePath": "scripts\\project_legacy_startup\\project_legacy_startup.yy",
+                "resourcePath": "scripts\\legacy_startup\\legacy_startup.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5031,6 +5023,14 @@
             }
         },
         {
+            "Key": "5d3aa8cb-278a-41e5-9b13-b937bc80652b",
+            "Value": {
+                "id": "7ab9f63f-39ba-4ba5-9d99-0172d1dac39f",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\17w47.midata.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "5d727d5b-40a0-4eaf-ac32-3048ae67ced3",
             "Value": {
                 "id": "79a606ad-7b1d-4505-84e0-9b36033109b0",
@@ -6580,6 +6580,14 @@
                 "id": "00220adb-e25e-429f-8870-5c9c95b47ca8",
                 "resourcePath": "scripts\\action_tl_lock_bend\\action_tl_lock_bend.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "7a0e4ec8-6562-44ad-b40f-a20791282e78",
+            "Value": {
+                "id": "57147cfa-ede1-4d9f-b2f5-5864b0f1d3c7",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\17w47.zip.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -8511,14 +8519,6 @@
             }
         },
         {
-            "Key": "9b48ce10-ab9e-4f06-b9cc-6bebc14554b3",
-            "Value": {
-                "id": "a3ee100d-a619-4d7f-a8f4-5daf5ab64c80",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.12.2.zip.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "9b533251-df2a-4235-a382-f1f728074320",
             "Value": {
                 "id": "12cb5ccf-c4b4-4b71-80ab-ab235747c7a4",
@@ -9202,7 +9202,7 @@
             "Key": "a522f2b9-240d-4a9f-870c-858a013c1dd7",
             "Value": {
                 "id": "9e039c39-00ae-4c81-bc7b-9def401d829f",
-                "resourcePath": "scripts\\block_load_legacy_data_map\\block_load_legacy_data_map.yy",
+                "resourcePath": "scripts\\minecraft_assets_load_legacy_block_data\\minecraft_assets_load_legacy_block_data.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -15139,6 +15139,7 @@
         "39642edf-aba8-4e96-834a-dc7a1dd232b9",
         "b0954969-d77b-400a-888b-a47410e349ef",
         "8955cde0-61b3-4993-a04e-927841db0475",
+        "a522f2b9-240d-4a9f-870c-858a013c1dd7",
         "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
         "b4fe5db7-2939-4804-b650-c8ee2bb1e9f4",
         "af081791-28a6-4b4a-8220-91956909387c",
@@ -15154,7 +15155,6 @@
         "8776d755-63c1-4c15-8865-6b861051879f",
         "476035cd-bd4d-4d9b-a448-e5a5a474b911",
         "18cb105d-3207-47df-a389-0d7082a1a082",
-        "a522f2b9-240d-4a9f-870c-858a013c1dd7",
         "a2caa902-4218-4e39-8eb9-ccbd81182687",
         "f421a321-b0fc-4cdb-885a-94de9f27a3e4",
         "496fc0c7-4245-465c-9553-f2fb615c2608",
@@ -15303,7 +15303,6 @@
         "b0efa25f-c7cf-4c68-baa5-f7c7bb845322",
         "5d93d801-e270-4b4e-ba33-56ac72e46607",
         "2097309f-f1af-436d-8d90-4a8ede8d4e56",
-        "21030606-d516-45a7-9c1d-3caa0fbea67c",
         "ec12610b-6dc3-4261-814a-63cf0692d927",
         "6bce0501-5adb-4fce-b0f6-df51f1642fef",
         "d31a91a1-a70e-4197-8be6-333d9e372f76",
@@ -15466,6 +15465,7 @@
         "e3798cfa-5057-4075-9005-9f24feae39c4",
         "31d6018c-c074-4fb4-8340-91b41387847b",
         "3223bf25-94be-4497-9ee3-6f31efb5777c",
+        "21030606-d516-45a7-9c1d-3caa0fbea67c",
         "17c30426-34d1-4f28-a8f0-d534d04dfa20",
         "3ea65f32-b92b-4b46-9a13-3ab592e37876",
         "3c6a1d56-7715-40dd-b410-5366b241eeec",

@@ -19,8 +19,7 @@
         "ceccda4a-3b97-4866-acac-74fab6168b72",
         "b0efa25f-c7cf-4c68-baa5-f7c7bb845322",
         "5d93d801-e270-4b4e-ba33-56ac72e46607",
-        "2097309f-f1af-436d-8d90-4a8ede8d4e56",
-        "21030606-d516-45a7-9c1d-3caa0fbea67c"
+        "2097309f-f1af-436d-8d90-4a8ede8d4e56"
     ],
     "filterType": "GMScript",
     "folderName": "Legacy",

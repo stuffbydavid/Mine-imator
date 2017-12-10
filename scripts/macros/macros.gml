@@ -4,7 +4,7 @@
 // Debug
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
-#macro dev_mode_debug_names			false
+#macro dev_mode_debug_names			true
 #macro dev_mode_rotate_blocks		true
 
 // Versions
@@ -12,7 +12,7 @@
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2017.12.xx"
 #macro gm_runtime					"2.1.2.172"
-#macro minecraft_version			"1.12.2"
+#macro minecraft_version			"17w47"
 
 // File formats
 #macro project_format				e_project.FORMAT_113
@@ -123,6 +123,12 @@
 // Values
 #macro null							noone
 #macro no_limit						100000000
+#macro default_model				"human"
+#macro default_model_part			"head"
+#macro default_special_block		"chest"
+#macro default_block				"grass_block"
+#macro default_item					"items/diamond_sword"
+#macro default_ground				"blocks/grass_block_top"
 
 // World
 #macro block_size					16
