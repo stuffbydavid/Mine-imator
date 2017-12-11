@@ -33,8 +33,11 @@ for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	else if (id != mc_res)
 		tex = texture_duplicate(mc_res.model_texture_map[?name])
 	else
+	{
+		log("Model texture not found", mc_assets.block_texture_list[|t])
 		tex = texture_create_missing()
-		
+	}
+	
 	model_texture_map[?name] = tex
 }
 

@@ -41,8 +41,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 	}
 	else
 	{
-		if (id = mc_res)
-			log("Block texture not found", mc_assets.block_texture_list[|t])
+		log("Block texture not found", mc_assets.block_texture_list[|t])
 		ds_list_add(texlist, null)
 	}
 }
@@ -56,7 +55,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 	name = string_replace(mc_assets.block_texture_ani_list[|t], " opaque", "")
 	fname = load_assets_dir + mc_textures_directory + name + ".png"
 	
-	if (!file_exists_lib(fname))
+	if (!file_exists_lib(fname) && !is_undefined(legacy_block_texture_name_map[?name]))
 		fname = load_assets_dir + mc_textures_directory + legacy_block_texture_name_map[?name] + ".png"
 	
 	if (file_exists_lib(fname))
@@ -66,8 +65,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 	}
 	else
 	{
-		if (id = mc_res)
-			log("Block texture not found", mc_assets.block_texture_ani_list[|t])
+		log("Animated block texture not found", mc_assets.block_texture_ani_list[|t])
 		ds_list_add(texanilist, null)
 	}
 }

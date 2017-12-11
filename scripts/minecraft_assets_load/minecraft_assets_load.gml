@@ -229,17 +229,28 @@ with (mc_assets)
 					var curid, curmap;
 					curid = string_get_real(key)
 					curmap = ds_map_find_value(legacy_block_id, key)
+					legacy_block_set[curid] = true
 	
 					// Look for block object from ID
-					var block = null;
-					if (is_string(curmap[?"id"]) && !is_undefined(block_id_map[?curmap[?"id"]]))
-						block = block_id_map[?curmap[?"id"]]
+					var newid, block, statevars;
+					newid = curmap[?"id"]
+					block = null
+					statevars = null
+					if (is_string(newid) && !is_undefined(block_id_map[?newid]))
+					{
+						block = block_id_map[?newid]
+						if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+							statevars = block.id_state_vars_map[?newid]
+					}
 	
 					for (var d = 0; d < 16; d++)
 					{
 						legacy_block_obj[curid, d] = block
-						legacy_block_state_vars[curid, d] = null
-						legacy_block_state_id[curid, d] = null
+						if (statevars != null)
+							legacy_block_state_vars[curid, d] = array_copy_1d(statevars)
+						else
+							legacy_block_state_vars[curid, d] = null
+						legacy_block_state_id[curid, d] = 0
 					}
 	
 					// Look for block states

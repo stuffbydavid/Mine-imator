@@ -177,7 +177,7 @@ switch (load_stage)
 							{
 								// Read legacy block ID & data
 								var bid = buffer_peek(buffer_current, blocksarray + i, buffer_u8)
-								if (bid > 0)
+								if (bid > 0 && legacy_block_set[bid])
 								{
 									var bdata = buffer_peek(buffer_current, dataarray + i, buffer_u8);
 									block = legacy_block_obj[bid, bdata]

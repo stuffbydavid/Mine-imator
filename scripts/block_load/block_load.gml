@@ -17,8 +17,6 @@ with (new(obj_block))
 		return null
 	}
 	
-	log("Loading", name)
-	
 	if (dev_mode_debug_names && !text_exists("block" + name))
 		log("block/" + name + dev_mode_name_translation_message)
 	
@@ -166,7 +164,7 @@ with (new(obj_block))
 	id_state_vars_map = null
 	if (is_string(idmap)) // Single
 		mc_assets.block_id_map[?idmap] = id
-	else if (ds_list_valid(idmap)) // List
+	else if (ds_map_valid(idmap)) // Map
 	{
 		id_state_vars_map = ds_map_create()
 		var key = ds_map_find_first(idmap);

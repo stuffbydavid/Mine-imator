@@ -1,11 +1,12 @@
 /// block_set_fence()
 /// @desc Connects to other fences with the same material, fence gates and solid adjacent faces.
 
-var east, west, south, north;
+var east, west, south, north, variant;
 east = "false"
 west = "false"
 south = "false"
 north = "false"
+variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
 
 // X+
 if (!build_edge_xp)
@@ -77,8 +78,8 @@ if (!build_edge_yn)
 
 if (block_current.type = "wall")
 {
-	var variant, up;
-	variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
+	// Determine if the middle piece should be rendered
+	var up;
 	if ((east && west && !south && !north) || (!east && !west && south && north))
 		up = "false"
 	else
@@ -87,6 +88,6 @@ if (block_current.type = "wall")
 	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", east, "west", west, "south", south, "north", north, "up", up))
 }
 else
-	block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north))
+	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", east, "west", west, "south", south, "north", north))
 
 return 0

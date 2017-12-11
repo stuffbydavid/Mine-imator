@@ -16,7 +16,19 @@ log("Item textures", "load")
 texlist = ds_list_create() // name -> texture
 for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 {
-	var fname = load_assets_dir + mc_textures_directory + mc_assets.item_texture_list[|t] + ".png";
+	if (mc_assets.item_texture_list[|t] = "")
+	{
+		ds_list_add(texlist, null)
+		continue
+	}
+	
+	var name, fname;
+	name = mc_assets.item_texture_list[|t]
+	fname = load_assets_dir + mc_textures_directory + name + ".png";
+	
+	if (!file_exists_lib(fname) && !is_undefined(legacy_item_texture_name_map[?name]))
+		fname = load_assets_dir + mc_textures_directory + legacy_item_texture_name_map[?name] + ".png"
+		
 	if (file_exists_lib(fname))
 	{
 		var tex = texture_create(fname);
@@ -24,7 +36,10 @@ for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 		ds_list_add(texlist, tex)
 	}
 	else
+	{
+		log("Item texture not found", mc_assets.item_texture_list[|t])
 		ds_list_add(texlist, null)
+	}
 }
 
 if (itemsize = null)

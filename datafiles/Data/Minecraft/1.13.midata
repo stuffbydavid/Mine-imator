@@ -1,5 +1,5 @@
 {
-	"version": "17w47",
+	"version": "1.13",
 	"format": 3,
 	"characters": [
 		{
@@ -534,7 +534,7 @@
 			"default_state": "variant=stone",
 			"id": {
 				"minecraft:stone": "variant=stone",
-				"minecraft:granite": "variant=stone",
+				"minecraft:granite": "variant=granite",
 				"minecraft:polished_granite": "variant=polished_granite",
 				"minecraft:diorite": "variant=diorite",
 				"minecraft:polished_diorite": "variant=polished_diorite",
@@ -600,7 +600,7 @@
 		{
 			"name": "sapling",
 			"states": {
-				"type": [
+				"variant": [
 					{ "value": "oak", "file": "oak_sapling.json" },
 					{ "value": "spruce", "file": "spruce_sapling.json" },
 					{ "value": "birch", "file": "birch_sapling.json" },
@@ -610,7 +610,7 @@
 				],
 				"stage": [ "0", "1" ]
 			},
-			"default_state": "type=oak,stage=0",
+			"default_state": "variant=oak,stage=0",
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -640,7 +640,10 @@
 				"axis": "y",
 				"ymin": 0
 			},
-			"id": "minecraft:water"
+			"id": {
+				"minecraft:flowing_water": "",
+				"minecraft:water": ""
+			}
 		},
 		{
 			"name": "lava",
@@ -654,7 +657,10 @@
 				"axis": "y",
 				"ymin": 0
 			},
-			"id": "minecraft:lava"
+			"id": {
+				"minecraft:flowing_lava": "",
+				"minecraft:lava": ""
+			}
 		},
 		{
 			"name": "sand",
@@ -701,7 +707,7 @@
 					{ "value": "acacia", "file": "acacia_log.json" },
 					{ "value": "dark_oak", "file": "dark_oak_log.json" }
 				],
-				"axis": [ "none", "x", "y", "z" ]
+				"axis": [ "x", "y", "z" ]
 			},
 			"default_state": "variant=oak,axis=y",
 			"id": {
@@ -765,8 +771,8 @@
 			"name": "sponge",
 			"states": {
 				"wet": [ 
-					{ "name": "false", "file": "sponge.json" },
-					{ "name": "true", "file": "wet_sponge.json" }
+					{ "value": "false", "file": "sponge.json" },
+					{ "value": "true", "file": "wet_sponge.json" }
 				]
 			},
 			"default_state": "wet=false",
@@ -1209,6 +1215,7 @@
 				"minecraft:birch_stairs": "variant=birch",
 				"minecraft:jungle_stairs": "variant=jungle",
 				"minecraft:acacia_stairs": "variant=acacia",
+				"minecraft:dark_oak_stairs": "variant=dark_oak",
 				"minecraft:cobblestone_stairs": "variant=cobblestone",
 				"minecraft:brick_stairs": "variant=brick",
 				"minecraft:stone_brick_stairs": "variant=stone_brick",
@@ -1223,6 +1230,7 @@
 			"name": "chest",
 			"type": "chest",
 			"states": {
+				"type": [ "legacy", "single", "left", "right" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"double": [ "false", "true" ]
 			},
@@ -1436,32 +1444,35 @@
 			"file": "lever.json",
 			"type": "redstone_connect",
 			"states": {
-				"facing": [ "north", "south", "east", "west", "up_x", "down_x", "up_z", "down_z" ],
+				"face": [ "ceiling", "wall", "floor" ],
+				"facing": [ "north", "south", "east", "west" ],
 				"powered": [ "false", "true" ]
 			},
-			"default_state": "facing=up_z,powered=false",
+			"default_state": "face=wall,facing=east,powered=false",
 			"timeline": {
 				"model": "lever",
 				"model_state": "",
 				"position": {
-					"facing=north": [ 8, 8, 16 ],
-					"facing=south": [ 8, 8, 0 ],
-					"facing=east": [ 0, 8, 8 ],
-					"facing=west": [ 16, 8, 8 ],
-					"facing=up_x": [ 8, 0, 8 ],
-					"facing=up_z": [ 8, 0, 8 ],
-					"facing=down_x": [ 8, 16, 8 ],
-					"facing=down_z": [ 8, 16, 8 ]
+					"face=wall,facing=north": [ 8, 8, 16 ],
+					"face=wall,facing=south": [ 8, 8, 0 ],
+					"face=wall,facing=east": [ 0, 8, 8 ],
+					"face=wall,facing=west": [ 16, 8, 8 ],
+					"face=floor": [ 8, 0, 8 ],
+					"face=ceiling": [ 8, 16, 8 ]
 				},
 				"rotation": {
-					"facing=north": [ 90, 180, 0 ],
-					"facing=south": [ 90, 180, 180 ],
-					"facing=east": [ 90, 180, 90 ],
-					"facing=west": [ 90, 180, -90 ],
-					"facing=up_x": [ 0, -90, 0 ],
-					"facing=up_z": [ 0, 180, 0 ],
-					"facing=down_x": [ 180, 90, 0 ],
-					"facing=down_z": [ 180, 0, 0 ]
+					"face=wall,facing=north": [ 90, 180, 0 ],
+					"face=wall,facing=south": [ 90, 180, 180 ],
+					"face=wall,facing=east": [ 90, 180, 90 ],
+					"face=wall,facing=west": [ 90, 180, -90 ],
+					"face=floor,facing=north": [ 0, 0, 0 ],
+					"face=floor,facing=south": [ 0, 180, 0 ],
+					"face=floor,facing=east": [ 0, -90, 0 ],
+					"face=floor,facing=west": [ 0, 90, 0 ],
+					"face=ceiling,facing=north": [ 180, 180, 0 ],
+					"face=ceiling,facing=south": [ 180, 0, 0 ],
+					"face=ceiling,facing=east": [ 180, 90, 0 ],
+					"face=ceiling,facing=west": [ 180, -90, 0 ]
 				}
 			},
 			"id": "minecraft:lever"
@@ -1500,7 +1511,10 @@
 			"name": "redstone_ore",
 			"file": "redstone_ore.json",
 			"states": {
-				"lit": [ "true", "false" ]
+				"lit": [ 
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.75 }
+				]
 			},
 			"default_state": "lit=false",
 			"id": "minecraft:redstone_ore"
@@ -1509,21 +1523,25 @@
 			"name": "redstone_torch",
 			"file": "redstone_torch.json",
 			"states": {
-				"lit": [ "true", "false"]
+				"lit": [ 
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.75 }
+				]
 			},
 			"default_state": "lit=false",
-			"brightness": 0.75,
 			"id": "minecraft:redstone_torch"
 		},
 		{
 			"name": "redstone_wall_torch",
 			"file": "redstone_wall_torch.json",
 			"states": {
-				"lit": [ "true", "false"],
+				"lit": [ 
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.75 }
+				],
 				"facing": [ "north", "east", "south", "west" ]
 			},
 			"default_state": "lit=false,facing=east",
-			"brightness": 0.75,
 			"id": "minecraft:redstone_wall_torch"
 		},
 		{
@@ -1539,27 +1557,34 @@
 					{ "value": "acacia", "file": "acacia_button.json" },
 					{ "value": "dark_oak", "file": "dark_oak_button.json" }
 				],
-				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"face": [ "ceiling", "wall", "floor" ],
+				"facing": [ "north", "south", "east", "west" ],
 				"powered": [ "false", "true" ]
 			},
-			"default_state": "variant=stone,facing=up,powered=false",
+			"default_state": "variant=stone,face=floor,facing=east,powered=false",
 			"timeline": {
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
-					"facing=north": [ 8, 8, 16 ],
-					"facing=south": [ 8, 8, 0 ],
-					"facing=east": [ 0, 8, 8 ],
-					"facing=west": [ 16, 8, 8 ],
-					"facing=up": [ 8, 0, 8 ],
-					"facing=down": [ 8, 16, 8 ]
+					"face=wall,facing=east": [ 0, 8, 8 ],
+					"face=wall,facing=west": [ 16, 8, 8 ],
+					"face=wall,facing=north": [ 8, 8, 16 ],
+					"face=wall,facing=south": [ 8, 8, 0 ],
+					"face=floor": [ 8, 0, 8 ],
+					"face=ceiling": [ 8, 16, 8 ]
 				},
 				"rotation": {
-					"facing=north": [ 0, -90, 90 ],
-					"facing=south": [ 0, 90, 90 ],
-					"facing=east": [ 0, 0, -90 ],
-					"facing=west": [ 0, 0, 90 ],
-					"facing=up": [ 0, 90, 0 ],
-					"facing=down": [ 180, 90, 0 ]
+					"face=wall,facing=north": [ 0, -90, 90 ],
+					"face=wall,facing=south": [ 0, 90, 90 ],
+					"face=wall,facing=east": [ 0, 0, -90 ],
+					"face=wall,facing=west": [ 0, 0, 90 ],
+					"face=floor,facing=north": [ 0, 90, 0 ],
+					"face=floor,facing=south": [ 0, -90, 0 ],
+					"face=floor,facing=east": [ 0, 0, 0 ],
+					"face=floor,facing=west": [ 0, 180, 0 ],
+					"face=ceiling,facing=north": [ 180, 90, 0 ],
+					"face=ceiling,facing=south": [ 180, -90, 0 ],
+					"face=ceiling,facing=east": [ 180, 0, 0 ],
+					"face=ceiling,facing=west": [ 180, 180, 0 ]
 				}
 			},
 			"id": {
@@ -1646,10 +1671,6 @@
 		{
 			"name": "pumpkin",
 			"file": "pumpkin.json",
-			"states": {
-				"facing": [ "north", "south", "east", "west" ]
-			},
-			"default_state": "facing=west",
 			"id": "minecraft:pumpkin"
 		},
 		{
@@ -1680,13 +1701,18 @@
 		},
 		{
 			"name": "jack_o_lantern",
-			"file": "jack_o_lantern.json",
 			"states": {
+				"lit": [ 
+					{ "value": "false", "file": "carved_pumpkin.json" },
+					{ "value": "true", "brightness": 0.75, "file": "jack_o_lantern.json" }
+				],
 				"facing": [ "north", "south", "east", "west" ]
 			},
-			"default_state": "facing=west",
-			"brightness": 0.75,
-			"id": "minecraft:jack_o_lantern"
+			"default_state": "lit=false,facing=west",
+			"id": {
+				"minecraft:carved_pumpkin": "lit=false",
+				"minecraft:jack_o_lantern": "lit=true"
+			}
 		},
 		{
 			"name": "cake",
@@ -1702,13 +1728,15 @@
 			"file": "repeater.json",
 			"type": "redstone_repeater",
 			"states": {
-				"powered": [ "true", "false" ],
+				"powered": [ 
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.75 }
+				],
 				"facing": [ "north", "south", "east", "west" ],
 				"delay": [ "1", "2", "3", "4" ],
 				"locked": [ "false", "true" ]
 			},
 			"default_state": "powered=false,facing=west,delay=1,locked=false",
-			"brightness": 0.75,
 			"id": "minecraft:repeater"
 		},
 		{
@@ -1810,7 +1838,7 @@
 			}
 		},
 		{
-			"name": "monster_egg",
+			"name": "infested_stone",
 			"states": {
 				"variant": [
 					{ "value": "stone", "file": "infested_stone.json" },
@@ -2093,7 +2121,10 @@
 			"name": "redstone_lamp",
 			"file": "redstone_lamp.json",
 			"states": {
-				"lit": [ "true", "false" ]
+				"lit": [ 
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.75 }
+				]
 			},
 			"default_state": "lit=false",
 			"id": "minecraft:redstone_lamp"
@@ -2117,6 +2148,7 @@
 			"name": "ender_chest",
 			"type": "chest",
 			"states": {
+				"type": [ "legacy", "single", "left", "right" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"double": [ "false", "true" ]
 			},
@@ -2315,6 +2347,7 @@
 			"name": "trapped_chest",
 			"type": "chest",
 			"states": {
+				"type": [ "legacy", "single", "left", "right" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"double": [ "false", "true" ]
 			},
@@ -2411,7 +2444,7 @@
 				"variant": [
 					{ "value": "default", "file": "quartz_block.json" },
 					{ "value": "chiseled", "file": "chiseled_quartz_block.json" },
-					{ "value": "lines", "file": "quartz_pillar.json" }
+					{ "value": "pillar", "file": "quartz_pillar.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -2419,7 +2452,7 @@
 			"id": {
 				"minecraft:quartz_block": "variant=default",
 				"minecraft:chiseled_quartz_block": "variant=chiseled",
-				"minecraft:quartz_pillar": "variant=lines"
+				"minecraft:quartz_pillar": "variant=pillar"
 			}
 		},
 		{
@@ -3660,14 +3693,14 @@
 		"items/chainmail_helmet",
 		"items/iron_helmet",
 		"items/diamond_helmet",
-		"items/gold_helmet",
+		"items/golden_helmet",
 		"items/flint_and_steel",
 		"items/flint",
 		"items/coal",
 		"items/string",
-		"items/seeds_wheat",
+		"items/wheat_seeds",
 		"items/apple",
-		"items/apple_golden",
+		"items/golden_apple",
 		"items/egg",
 		"items/sugar",
 		"items/snowball",
@@ -3676,178 +3709,178 @@
 		"items/chainmail_chestplate",
 		"items/iron_chestplate",
 		"items/diamond_chestplate",
-		"items/gold_chestplate",
-		"items/bow_standby",
+		"items/golden_chestplate",
+		"items/bow",
 		"items/brick",
 		"items/iron_ingot",
 		"items/feather",
 		"items/wheat",
 		"items/painting",
-		"items/reeds",
+		"items/sugar_cane",
 		"items/bone",
 		"items/cake",
-		"items/slimeball",
+		"items/slime_ball",
 		"items/empty_armor_slot_chestplate",
 		"items/leather_leggings",
 		"items/chainmail_leggings",
 		"items/iron_leggings",
 		"items/diamond_leggings",
-		"items/gold_leggings",
+		"items/golden_leggings",
 		"items/arrow",
-		"items/quiver",
+		"",
 		"items/gold_ingot",
 		"items/gunpowder",
 		"items/bread",
 		"items/sign",
 		"items/oak_door",
 		"items/iron_door",
-		"items/bed",
-		"items/fireball",
+		"",
+		"items/fire_charge",
 		"items/empty_armor_slot_leggings",
 		"items/leather_boots",
 		"items/chainmail_boots",
 		"items/iron_boots",
 		"items/diamond_boots",
-		"items/gold_boots",
+		"items/golden_boots",
 		"items/stick",
 		"items/compass_00",
 		"items/diamond",
-		"items/redstone_dust",
+		"items/redstone",
 		"items/clay_ball",
 		"items/paper",
-		"items/book_normal",
+		"items/book",
 		"items/map_filled",
-		"items/seeds_pumpkin",
-		"items/seeds_melon",
+		"items/pumpkin_seeds",
+		"items/melon_seeds",
 		"items/empty_armor_slot_boots",
-		"items/wood_sword",
+		"items/wooden_sword",
 		"items/stone_sword",
 		"items/iron_sword",
 		"items/diamond_sword",
-		"items/gold_sword",
-		"items/fishing_rod_uncast",
+		"items/golden_sword",
+		"items/fishing_rod",
 		"items/clock_00",
 		"items/bowl",
 		"items/mushroom_stew",
 		"items/glowstone_dust",
-		"items/bucket_empty",
-		"items/bucket_water",
-		"items/bucket_lava",
-		"items/bucket_milk",
-		"items/dye_powder_black",
-		"items/dye_powder_gray",
-		"items/wood_shovel",
+		"items/bucket",
+		"items/water_bucket",
+		"items/lava_bucket",
+		"items/milk_bucket",
+		"items/ink_sac",
+		"items/gray_dye",
+		"items/wooden_shovel",
 		"items/stone_shovel",
 		"items/iron_shovel",
 		"items/diamond_shovel",
-		"items/gold_shovel",
+		"items/golden_shovel",
 		"items/fishing_rod_cast",
 		"items/repeater",
-		"items/porkchop_raw",
-		"items/porkchop_cooked",
-		"items/fish_cod_raw",
-		"items/fish_cod_cooked",
+		"items/porkchop",
+		"items/cooked_porkchop",
+		"items/cod",
+		"items/cooked_cod",
 		"items/rotten_flesh",
 		"items/cookie",
 		"items/shears",
-		"items/dye_powder_red",
-		"items/dye_powder_pink",
-		"items/wood_pickaxe",
+		"items/rose_red",
+		"items/pink_dye",
+		"items/wooden_pickaxe",
 		"items/stone_pickaxe",
 		"items/iron_pickaxe",
 		"items/diamond_pickaxe",
-		"items/gold_pickaxe",
+		"items/golden_pickaxe",
 		"items/bow_pulling_0",
 		"items/carrot_on_a_stick",
 		"items/leather",
 		"items/saddle",
-		"items/beef_raw",
-		"items/beef_cooked",
+		"items/beef",
+		"items/cooked_beef",
 		"items/ender_pearl",
 		"items/blaze_rod",
 		"items/melon",
-		"items/dye_powder_green",
-		"items/dye_powder_lime",
-		"items/wood_axe",
+		"items/cactus_green",
+		"items/lime_dye",
+		"items/wooden_axe",
 		"items/stone_axe",
 		"items/iron_axe",
 		"items/diamond_axe",
-		"items/gold_axe",
+		"items/golden_axe",
 		"items/bow_pulling_1",
-		"items/potato_baked",
+		"items/baked_potato",
 		"items/potato",
 		"items/carrot",
-		"items/chicken_raw",
-		"items/chicken_cooked",
+		"items/chicken",
+		"items/cooked_chicken",
 		"items/ghast_tear",
 		"items/gold_nugget",
 		"items/nether_wart",
-		"items/dye_powder_brown",
-		"items/dye_powder_yellow",
-		"items/wood_hoe",
+		"items/cocoa_beans",
+		"items/dandelion_yellow",
+		"items/wooden_hoe",
 		"items/stone_hoe",
 		"items/iron_hoe",
 		"items/diamond_hoe",
-		"items/gold_hoe",
+		"items/golden_hoe",
 		"items/bow_pulling_2",
-		"items/potato_poisonous",
-		"items/minecart_normal",
+		"items/poisonous_potato",
+		"items/minecart",
 		"items/oak_boat",
-		"items/melon_speckled",
-		"items/spider_eye_fermented",
+		"items/speckled_melon",
+		"items/fermented_spider_eye",
 		"items/spider_eye",
-		"items/potion_bottle_empty",
+		"items/potion",
 		"items/potion_overlay",
-		"items/dye_powder_blue",
-		"items/dye_powder_light_blue",
+		"items/lapis_lazuli",
+		"items/light_blue_dye",
 		"items/leather_helmet_overlay",
-		"items/rabbit_raw",
-		"items/rabbit_cooked",
+		"items/rabbit",
+		"items/cooked_rabbit",
 		"items/rabbit_foot",
 		"items/rabbit_hide",
 		"items/rabbit_stew",
-		"items/carrot_golden",
-		"items/minecart_chest",
+		"items/golden_carrot",
+		"items/chest_minecart",
 		"items/pumpkin_pie",
 		"items/spawn_egg",
-		"items/potion_bottle_splash",
+		"items/splash_potion",
 		"items/ender_eye",
 		"items/cauldron",
 		"items/blaze_powder",
-		"items/dye_powder_purple",
-		"items/dye_powder_magenta",
+		"items/purple_dye",
+		"items/magenta_dye",
 		"items/leather_chestplate_overlay",
-		"items/mutton_raw",
-		"items/mutton_cooked",
-		"items/wooden_armorstand",
-		"items/totem",
-		"items/banner_overlay",
-		"items/minecart_tnt",
-		"items/minecart_furnace",
-		"items/minecart_hopper",
+		"items/mutton",
+		"items/cooked_mutton",
+		"items/armor_stand",
+		"items/totem_of_undying",
+		"",
+		"items/tnt_minecart",
+		"items/furnace_minecart",
+		"items/hopper_minecart",
 		"items/spawn_egg_overlay",
 		"items/ruby",
 		"items/experience_bottle",
 		"items/brewing_stand",
 		"items/magma_cream",
-		"items/dye_powder_cyan",
-		"items/dye_powder_orange",
+		"items/cyan_dye",
+		"items/orange_dye",
 		"items/leather_leggings_overlay",
-		"items/door_spruce",
-		"items/door_birch",
-		"items/door_jungle",
-		"items/door_acacia",
-		"items/door_dark_oak",
+		"items/spruce_door",
+		"items/birch_door",
+		"items/jungle_door",
+		"items/acacia_door",
+		"items/dark_oak_door",
 		"items/barrier",
 		"items/prismarine_crystals",
 		"items/prismarine_shard",
 		"items/nether_star",
 		"items/emerald",
-		"items/book_writable",
-		"items/book_written",
+		"items/writable_book",
+		"items/written_book",
 		"items/flower_pot",
-		"items/dye_powder_light_gray",
-		"items/dye_powder_white",
+		"items/light_gray_dye",
+		"items/bone_meal",
 		"items/leather_boots_overlay",
 		"items/spruce_boat",
 		"items/birch_boat",
@@ -3857,20 +3890,20 @@
 		"items/beetroot",
 		"items/beetroot_seeds",
 		"items/beetroot_soup",
-		"items/fireworks",
-		"items/fireworks_charge",
-		"items/fireworks_charge_overlay",
+		"items/firework_rocket",
+		"items/firework_star",
+		"items/firework_star_overlay",
 		"items/hopper",
-		"items/map_empty",
+		"items/map",
 		"items/item_frame",
-		"items/book_enchanted",
-		"items/fish_pufferfish_raw",
-		"items/fish_clownfish_raw",
-		"items/fish_salmon_raw",
-		"items/fish_salmon_cooked",
+		"items/enchanted_book",
+		"items/pufferfish",
+		"items/clownfish",
+		"items/salmon",
+		"items/cooked_salmon",
 		"items/knowledge_book",
-		"items/potion_bottle_drinkable",
-		"items/minecart_command_block",
+		"items/glass_bottle",
+		"items/command_block_minecart",
 		"items/chorus_fruit",
 		"items/chorus_fruit_popped",
 		"items/dragon_breath",
@@ -3878,37 +3911,37 @@
 		"items/tipped_arrow_base",
 		"items/tipped_arrow_head",
 		"items/quartz",
-		"items/netherbrick",
+		"items/nether_brick",
 		"items/comparator",
-		"items/skull_skeleton",
-		"items/skull_wither",
-		"items/skull_zombie",
-		"items/skull_steve",
-		"items/skull_creeper",
+		"",
+		"",
+		"",
+		"",
+		"",
 		"items/empty_armor_slot_shield",
-		"items/potion_bottle_lingering",
+		"items/lingering_potion",
 		"items/elytra",
 		"items/broken_elytra",
 		"items/end_crystal",
 		"items/charcoal",
 		"items/diamond_horse_armor",
-		"items/gold_horse_armor",
+		"items/golden_horse_armor",
 		"items/iron_horse_armor",
 		"items/lead",
 		"items/name_tag",
 		"items/iron_nugget",
-		"items/record_cat",
-		"items/record_blocks",
-		"items/record_chirp",
-		"items/record_far",
-		"items/record_mall",
-		"items/record_mellohi",
-		"items/record_stal",
-		"items/record_strad",
-		"items/record_ward",
-		"items/record_11",
-		"items/record_wait",
-		"items/record_13",
+		"items/music_disc_cat",
+		"items/music_disc_blocks",
+		"items/music_disc_chirp",
+		"items/music_disc_far",
+		"items/music_disc_mall",
+		"items/music_disc_mellohi",
+		"items/music_disc_stal",
+		"items/music_disc_strad",
+		"items/music_disc_ward",
+		"items/music_disc_11",
+		"items/music_disc_wait",
+		"items/music_disc_13",
 		"items/structure_void",
 		"items/shulker_shell",
 		"items/map_filled_markings",

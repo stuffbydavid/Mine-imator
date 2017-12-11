@@ -30,7 +30,7 @@ while (!is_undefined(key))
 			var val, statevars, newid, block;
 			val = string_get_real(key)
 			statevars = string_get_state_vars(map[?key])
-			newid = state_vars_get_value(statevars, "id");
+			newid = state_vars_get_value(statevars, "id")
 			block = null
 			if (is_string(newid) && !is_undefined(block_id_map[?newid]))
 				block = block_id_map[?newid]
@@ -42,26 +42,38 @@ while (!is_undefined(key))
 				{
 					if ((d & bitmask) / bitbase = val) // Check data value with bitmask
 					{
-						// ID
-						if (block != null)
-							legacy_block_obj[curid, d] = block
-						
 						// State
 						if (legacy_block_state_vars[curid, d] = null)
 							legacy_block_state_vars[curid, d] = array()
+						
+						// ID
+						if (block != null)
+						{
+							legacy_block_obj[curid, d] = block
+							if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+								state_vars_add(legacy_block_state_vars[curid, d], block.id_state_vars_map[?newid]) // Add ID-specific vars
+						}
+						
+						// Overwrite by data specific vars
 						state_vars_add(legacy_block_state_vars[curid, d], statevars)
 					}
 				}
 			}
 			else
 			{
-				// ID
-				if (block != null)
-					legacy_block_obj[curid, val] = block
-				
 				// State
 				if (legacy_block_state_vars[curid, val] = null)
 					legacy_block_state_vars[curid, val] = array()
+				
+				// ID
+				if (block != null)
+				{
+					legacy_block_obj[curid, val] = block
+					if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+						state_vars_add(legacy_block_state_vars[curid, val], block.id_state_vars_map[?newid]) // Add ID-specific vars
+				}
+				
+				// Overwrite by data specific vars
 				state_vars_add(legacy_block_state_vars[curid, val], statevars)
 			}
 			

@@ -5026,7 +5026,7 @@
             "Key": "5d3aa8cb-278a-41e5-9b13-b937bc80652b",
             "Value": {
                 "id": "7ab9f63f-39ba-4ba5-9d99-0172d1dac39f",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\17w47.midata.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.13.midata.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -6586,7 +6586,7 @@
             "Key": "7a0e4ec8-6562-44ad-b40f-a20791282e78",
             "Value": {
                 "id": "57147cfa-ede1-4d9f-b2f5-5864b0f1d3c7",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\17w47.zip.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.13.zip.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -10323,6 +10323,14 @@
             "Value": {
                 "id": "32977a2f-8b0d-49e2-8d1d-0d18a5a7ee5a",
                 "resourcePath": "scripts\\temp_update_model_shape\\temp_update_model_shape.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "bae9eaf2-f316-4de4-8531-a902ed545e5d",
+            "Value": {
+                "id": "d1b702fd-a158-42b3-9137-cccedf0fb4e7",
+                "resourcePath": "scripts\\ds_map_find_key\\ds_map_find_key.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -15493,6 +15501,7 @@
         "fd6886e2-a34e-438a-a590-2de58e22c1e5",
         "eac4ec51-b654-4ac6-a93e-0219efb0b2b3",
         "b87d0fb3-da8a-4a05-9be3-317cd1b37c30",
+        "bae9eaf2-f316-4de4-8531-a902ed545e5d",
         "a277cd83-a3bd-4d9b-bedf-d5705d324953",
         "4306f8a0-f1e6-4f4b-85e5-8e71df826950",
         "8b1c707a-43ef-4831-bac4-fd6c4195f269",

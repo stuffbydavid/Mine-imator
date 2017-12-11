@@ -38,6 +38,14 @@ background_sky_clouds_height = value_get_real(map[?"sky_clouds_height"], backgro
 
 background_ground_show = value_get_real(map[?"ground_show"], background_ground_show)
 background_ground_name = value_get_string(map[?"ground_name"], background_ground_name)
+
+if (load_format < e_project.FORMAT_113)
+{
+	var newname = ds_map_find_key(legacy_block_texture_name_map, background_ground_name);
+	if (!is_undefined(newname))
+		background_ground_name = newname
+}
+
 background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
 if (background_ground_slot < 0) // Animated
 	background_ground_slot = ds_list_size(mc_assets.block_texture_list) + ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_name)

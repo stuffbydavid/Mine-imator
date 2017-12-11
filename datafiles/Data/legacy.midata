@@ -1,5 +1,5 @@
 {
-	"legacy_model_id_map": {
+	"legacy_model_id": {
 		"0": "characterhuman",
 		"1": "characterzombie",
 		"2": "characterskeleton",
@@ -21,11 +21,11 @@
 		"18": "characterirongolem",
 		"19": "charactersnowman"
 	},
-	"legacy_model_id_05_map": {
+	"legacy_model_id_05": {
 		"20": "characterhuman",
 		"21": "characterpig"
 	},
-	"legacy_model_id_06_map": {
+	"legacy_model_id_06": {
 		"20": "charactersilverfish",
 		"21": "characterbat",
 		"22": "characterzombievillager",
@@ -44,7 +44,7 @@
 		"35": "specialblockboat",
 		"36": "specialblockminecart"
 	},
-	"legacy_model_id_100_demo_map": {
+	"legacy_model_id_100_demo": {
 		"20": "charactersilverfish",
 		"21": "characterbat",
 		"22": "characterzombievillager",
@@ -74,7 +74,7 @@
 		"46": "specialblockendercrystal",
 		"47": "specialblockcamera"
 	},
-	"legacy_model_name_map": {
+	"legacy_model_name": {
 		"characterhuman": { "name": "human", "state": "variant=steve" },
 		"characterzombie": { "name": "zombie", "state": "variant=zombie" },
 		"characterskeleton": { "name": "skeleton", "state": "variant=skeleton" },
@@ -136,7 +136,7 @@
 		"specialblockshield": { "name": "shield" },
 		"specialblockelytra": { "name": "elytra" }
 	},
-	"legacy_model_part_map": {
+	"legacy_model_part": {
 		"human": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head", "hat" ],
 		"zombie": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head", "hat" ],
 		"skeleton": [ "body", "right_arm", "left_arm", "right_leg", "left_leg", "head", "hat" ],
@@ -325,10 +325,9 @@
 			}
 		},
 		"12": {
-			"id": "minecraft:sand",
 			"data": {
-				"0": "minecraft:sand",
-				"1": "minecraft:red_sand"
+				"0": "id=minecraft:sand",
+				"1": "id=minecraft:red_sand"
 			}
 		},
 		"13": {
@@ -384,6 +383,7 @@
 			"id": "minecraft:lapis_block"
 		},
 		"23": {
+			"id": "minecraft:dispenser",
 			"data": {
 				"0x1+0x2+0x4": {
 					"0": "facing=down",
@@ -406,6 +406,7 @@
 			"id": "minecraft:note_block"
 		},
 		"26": {
+			"id": "minecraft:bed",
 			"data": {
 				"0x1+0x2+0x4": {
 					"0": "facing=south",
@@ -454,6 +455,7 @@
 			}
 		},
 		"29": {
+			"id": "minecraft:sticky_piston",
 			"data": {
 				"0x1+0x2+0x4": {
 					"0": "facing=down",
@@ -483,6 +485,7 @@
 			"id": "minecraft:dead_bush"
 		},
 		"33": {
+			"id": "minecraft:piston",
 			"data": {
 				"0x1+0x2+0x4": {
 					"0": "facing=down",
@@ -519,7 +522,7 @@
 			}
 		},
 		"37": {
-			"id": "minecraft:yellow_flower"
+			"id": "minecraft:dandelion"
 		},
 		"38": {
 			"data": {
@@ -551,7 +554,7 @@
 				"0x1+0x2+0x4": {
 					"0": "id=minecraft:stone_slab,type=double",
 					"1": "id=minecraft:sandstone_slab,type=double",
-					"2": "id=minecraft:petrified_wood_slab,type=double",
+					"2": "id=minecraft:petrified_oak_slab,type=double",
 					"3": "id=minecraft:cobblestone_slab,type=double",
 					"4": "id=minecraft:brick_slab,type=double",
 					"5": "id=minecraft:stone_brick_slab,type=double",
@@ -565,7 +568,7 @@
 				"0x1+0x2+0x4": {
 					"0": "id=minecraft:stone_slab",
 					"1": "id=minecraft:sandstone_slab",
-					"2": "id=minecraft:petrified_wood_slab",
+					"2": "id=minecraft:petrified_oak_slab",
 					"3": "id=minecraft:cobblestone_slab",
 					"4": "id=minecraft:brick_slab",
 					"5": "id=minecraft:stone_brick_slab",
@@ -594,14 +597,12 @@
 			"id": "minecraft:obsidian"
 		},
 		"50": {
-			"id": "minecraft:wall_torch",
+			"id": "minecraft:torch",
 			"data": {
-				"0": "id=minecraft:torch",
-				"1": "facing=east",
-				"2": "facing=west",
-				"3": "facing=south",
-				"4": "facing=north",
-				"5": "id=minecraft:torch"
+				"1": "id=minecraft:wall_torch,facing=east",
+				"2": "id=minecraft:wall_torch,facing=west",
+				"3": "id=minecraft:wall_torch,facing=south",
+				"4": "id=minecraft:wall_torch,facing=north"
 			}
 		},
 		"51": {
@@ -814,14 +815,14 @@
 			"id": "minecraft:lever",
 			"data": {
 				"0x1+0x2+0x4": {
-					"0": "facing=down_x",
-					"1": "facing=east",
-					"2": "facing=west",
-					"3": "facing=south",
-					"4": "facing=north",
-					"5": "facing=up_z",
-					"6": "facing=up_x",
-					"7": "facing=down_z"
+					"0": "face=ceiling,facing=west",
+					"1": "face=wall,facing=east",
+					"2": "face=wall,facing=west",
+					"3": "face=wall,facing=south",
+					"4": "face=wall,facing=north",
+					"5": "face=floor,facing=north",
+					"6": "face=floor,facing=west",
+					"7": "face=ceiling,facing=north"
 				},
 				"0x8": {
 					"0": "powered=false",
@@ -883,37 +884,37 @@
 			}
 		},
 		"75": {
-			"id": "minecraft:redstone_wall_torch",
+			"id": "minecraft:redstone_torch",
 			"data": {
-				"0": "id=minecraft:redstone_torch,lit=false",
-				"1": "lit=false,facing=east,",
-				"2": "lit=false,facing=west",
-				"3": "lit=false,facing=south",
-				"4": "lit=false,facing=north",
-				"5": "id=minecraft:redstone_torch,lit=false"
+				"0": "lit=false",
+				"1": "id=minecraft:redstone_wall_torch,lit=false,facing=east",
+				"2": "id=minecraft:redstone_wall_torch,lit=false,facing=west",
+				"3": "id=minecraft:redstone_wall_torch,lit=false,facing=south",
+				"4": "id=minecraft:redstone_wall_torch,lit=false,facing=north",
+				"5": "lit=false"
 			}
 		},
 		"76": {
-			"id": "minecraft:redstone_wall_torch",
+			"id": "minecraft:redstone_torch",
 			"data": {
-				"0": "id=minecraft:redstone_torch,lit=true",
-				"1": "lit=true,facing=east",
-				"2": "lit=true,facing=west",
-				"3": "lit=true,facing=south",
-				"4": "lit=true,facing=north",
-				"5": "id=minecraft:redstone_torch,lit=true"
+				"0": "lit=true",
+				"1": "id=minecraft:redstone_wall_torch,lit=true,facing=east",
+				"2": "id=minecraft:redstone_wall_torch,lit=true,facing=west",
+				"3": "id=minecraft:redstone_wall_torch,lit=true,facing=south",
+				"4": "id=minecraft:redstone_wall_torch,lit=true,facing=north",
+				"5": "lit=true"
 			}
 		},
 		"77": {
 			"id": "minecraft:stone_button",
 			"data": {
 				"0x1+0x2+0x4": {
-					"0": "facing=down",
-					"1": "facing=east",
-					"2": "facing=west",
-					"3": "facing=south",
-					"4": "facing=north",
-					"5": "facing=up"
+					"0": "face=ceiling,facing=south",
+					"1": "face=wall,facing=east",
+					"2": "face=wall,facing=west",
+					"3": "face=wall,facing=south",
+					"4": "face=wall,facing=north",
+					"5": "face=floor,facing=south"
 				},
 				"0x8": {
 					"0": "powered=false",
@@ -956,7 +957,7 @@
 			"id": "minecraft:oak_fence"
 		},
 		"86": {
-			"id": "minecraft:pumpkin",
+			"id": "minecraft:carved_pumpkin",
 			"data": {
 				"0": "facing=south",
 				"1": "facing=west",
@@ -1088,10 +1089,10 @@
 		},
 		"98": {
 			"data": {
-				"0": "id:minecraft:stone_bricks",
-				"1": "id:minecraft:mossy_stone_bricks",
-				"2": "id:minecraft:cracked_stone_bricks",
-				"3": "id:minecraft:chiseled_stone_bricks"
+				"0": "id=minecraft:stone_bricks",
+				"1": "id=minecraft:mossy_stone_bricks",
+				"2": "id=minecraft:cracked_stone_bricks",
+				"3": "id=minecraft:chiseled_stone_bricks"
 			}
 		},
 		"99": {
@@ -1547,12 +1548,12 @@
 			"id": "minecraft:oak_button",
 			"data": {
 				"0x1+0x2+0x4": {
-					"0": "facing=down",
-					"1": "facing=east",
-					"2": "facing=west",
-					"3": "facing=south",
-					"4": "facing=north",
-					"5": "facing=up"
+					"0": "face=ceiling,facing=south",
+					"1": "face=wall,facing=east",
+					"2": "face=wall,facing=west",
+					"3": "face=wall,facing=south",
+					"4": "face=wall,facing=north",
+					"5": "face=floor,facing=south"
 				},
 				"0x8": {
 					"0": "powered=false",
@@ -1818,8 +1819,7 @@
 				"0x4+0x8": {
 					"0": "axis=y",
 					"1": "axis=x",
-					"2": "axis=z",
-					"3": "axis=none"
+					"2": "axis=z"
 				}
 			}
 		},
@@ -2858,8 +2858,8 @@
 		"blocks/pumpkin_face": "blocks/pumpkin_face_off",
 		"blocks/chiseled_quartz_block_top": "blocks/quartz_block_chiseled_top",
 		"blocks/chiseled_quartz_block": "blocks/quartz_block_chiseled",
-		"blocks/quartz_pillar_top": "blocks/quartz_pillar_top",
-		"blocks/quartz_pillar": "blocks/quartz_pillar",
+		"blocks/quartz_pillar_top": "blocks/quartz_block_lines_top",
+		"blocks/quartz_pillar": "blocks/quartz_block_lines",
 		"blocks/end_portal_frame_eye": "blocks/endframe_eye",
 		"blocks/end_portal_frame_top": "blocks/endframe_top",
 		"blocks/end_portal_frame_side": "blocks/endframe_side",
@@ -3019,6 +3019,10 @@
 		"blocks/prismarine": "blocks/prismarine_rough",
 		"blocks/dark_prismarine": "blocks/prismarine_dark",
 		"blocks/end_stone_bricks": "blocks/end_bricks",
+		"blocks/beetroots_stage0": "blocks/beetroots_stage_0",
+		"blocks/beetroots_stage1": "blocks/beetroots_stage_1",
+		"blocks/beetroots_stage2": "blocks/beetroots_stage_2",
+		"blocks/beetroots_stage3": "blocks/beetroots_stage_3",
 		"blocks/observer_back_on": "blocks/observer_back_lit",
 		"blocks/white_glazed_terracotta": "blocks/glazed_terracotta_white",
 		"blocks/orange_glazed_terracotta": "blocks/glazed_terracotta_orange",
@@ -3979,5 +3983,113 @@
 		"blocks/repeating_command_block_back",
 		"blocks/chain_command_block_back",
 		"blocks/frosted_ice_0"
-	]
+	],
+	"legacy_item_texture_name": {
+		"items/golden_helmet": "items/gold_helmet",
+		"items/wheat_seeds": "items/seeds_wheat",
+		"items/golden_apple": "items/apple_golden",
+		"items/golden_chestplate": "items/gold_chestplate",
+		"items/bow": "items/bow_standby",
+		"items/sugar_cane": "items/reeds",
+		"items/slime_ball": "items/slimeball",
+		"items/golden_leggings": "items/gold_leggings",
+		"items/oak_door": "items/door_wood",
+		"items/iron_door": "items/door_iron",
+		"items/fire_charge": "items/fireball",
+		"items/golden_boots": "items/gold_boots",
+		"items/redstone": "items/redstone_dust",
+		"items/book": "items/book_normal",
+		"items/pumpkin_seeds": "items/seeds_pumpkin",
+		"items/melon_seeds": "items/seeds_melon",
+		"items/wooden_sword": "items/wood_sword",
+		"items/golden_sword": "items/gold_sword",
+		"items/fishing_rod": "items/fishing_rod_uncast",
+		"items/bucket": "items/bucket_empty",
+		"items/water_bucket": "items/bucket_water",
+		"items/lava_bucket": "items/bucket_lava",
+		"items/milk_bucket": "items/bucket_milk",
+		"items/ink_sac": "items/dye_powder_black",
+		"items/gray_dye": "items/dye_powder_gray",
+		"items/wooden_shovel": "items/wood_shovel",
+		"items/golden_shovel": "items/gold_shovel",
+		"items/porkchop": "items/porkchop_raw",
+		"items/cooked_porkchop": "items/porkchop_cooked",
+		"items/cod": "items/fish_cod_raw",
+		"items/cooked_cod": "items/fish_cod_cooked",
+		"items/rose_red": "items/dye_powder_red",
+		"items/pink_dye": "items/dye_powder_pink",
+		"items/wooden_pickaxe": "items/wood_pickaxe",
+		"items/golden_pickaxe": "items/gold_pickaxe",
+		"items/beef": "items/beef_raw",
+		"items/cooked_beef": "items/beef_cooked",
+		"items/cactus_green": "items/dye_powder_green",
+		"items/lime_dye": "items/dye_powder_lime",
+		"items/wooden_axe": "items/wood_axe",
+		"items/golden_axe": "items/gold_axe",
+		"items/baked_potato": "items/potato_baked",
+		"items/chicken": "items/chicken_raw",
+		"items/cooked_chicken": "items/chicken_cooked",
+		"items/cocoa_beans": "items/dye_powder_brown",
+		"items/dandelion_yellow": "items/dye_powder_yellow",
+		"items/wooden_hoe": "items/wood_hoe",
+		"items/golden_hoe": "items/gold_hoe",
+		"items/poisonous_potato": "items/potato_poisonous",
+		"items/minecart": "items/minecart_normal",
+		"items/speckled_melon": "items/melon_speckled",
+		"items/fermented_spider_eye": "items/spider_eye_fermented",
+		"items/potion": "items/potion_bottle_empty",
+		"items/lapis_lazuli": "items/dye_powder_blue",
+		"items/light_blue_dye": "items/dye_powder_light_blue",
+		"items/rabbit": "items/rabbit_raw",
+		"items/cooked_rabbit": "items/rabbit_cooked",
+		"items/golden_carrot": "items/carrot_golden",
+		"items/chest_minecart": "items/minecart_chest",
+		"items/splash_potion": "items/potion_bottle_splash",
+		"items/purple_dye": "items/dye_powder_purple",
+		"items/magenta_dye": "items/dye_powder_magenta",
+		"items/mutton": "items/mutton_raw",
+		"items/cooked_mutton": "items/mutton_cooked",
+		"items/armor_stand": "items/wooden_armorstand",
+		"items/totem_of_undying": "items/totem",
+		"items/tnt_minecart": "items/minecart_tnt",
+		"items/furnace_minecart": "items/minecart_furnace",
+		"items/hopper_minecart": "items/minecart_hopper",
+		"items/cyan_dye": "items/dye_powder_cyan",
+		"items/orange_dye": "items/dye_powder_orange",
+		"items/spruce_door": "items/door_spruce",
+		"items/birch_door": "items/door_birch",
+		"items/jungle_door": "items/door_jungle",
+		"items/acacia_door": "items/door_acacia",
+		"items/dark_oak_door": "items/door_dark_oak",
+		"items/writable_book": "items/book_writable",
+		"items/written": "items/book_written",
+		"items/light_gray_dye": "items/dye_powder_light_gray",
+		"items/bone_meal": "items/dye_powder_white",
+		"items/firework_rocket": "items/fireworks",
+		"items/firework_star": "items/fireworks_charge",
+		"items/firework_star_overlay": "items/fireworks_charge_overlay",
+		"items/map": "items/map_empty",
+		"items/enchanted_book": "items/book_enchanted",
+		"items/pufferfish": "items/fish_pufferfish_raw",
+		"items/clownfish": "items/fish_clownfish_raw",
+		"items/salmon": "items/fish_salmon_raw",
+		"items/cooked_salmon": "items/fish_salmon_cooked",
+		"items/glass_bottle": "items/potion_bottle_drinkable",
+		"items/command_block_minecart": "items/minecart_command_block",
+		"items/nether_brick": "items/netherbrick",
+		"items/lingering_potion": "items/potion_bottle_lingering",
+		"items/golden_horse_armor": "items/gold_horse_armor",
+		"items/music_disc_cat": "items/record_cat",
+		"items/music_disc_blocks": "items/record_blocks",
+		"items/music_disc_chirp": "items/record_chirp",
+		"items/music_disc_far": "items/record_far",
+		"items/music_disc_mall": "items/record_mall",
+		"items/music_disc_mellohi": "items/record_mellohi",
+		"items/music_disc_stal": "items/record_stal",
+		"items/music_disc_strad": "items/record_strad",
+		"items/music_disc_ward": "items/record_ward",
+		"items/music_disc_11": "items/record_11",
+		"items/music_disc_wait": "items/record_wait",
+		"items/music_disc_13": "items/record_13"
+	}
 }
