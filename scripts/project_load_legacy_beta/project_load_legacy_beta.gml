@@ -355,11 +355,16 @@ for (var a = 0; a < load.lib_amount; a++)
 			
 			case e_temp_type.BLOCK:
 			{
-				var block = mc_assets.block_legacy_id_map[?load.lib_block_id[a]];
-				if (!is_undefined(block))
+				var bid = load.lib_block_id[a];
+				var bdata = load.lib_block_data[a];
+				if (legacy_block_set[bid])
 				{
-					block_name = block.name
-					block_state = block_get_state_id_state_vars(block, block.legacy_data_state_id[load.lib_block_data[a]])
+					var block = legacy_block_obj[bid, bdata];
+					if (block != null)
+					{
+						block_name = block.name
+						block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
+					}
 				}
 				
 				if (load.lib_block_tex[a] > -1)

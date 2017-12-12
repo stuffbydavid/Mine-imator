@@ -54,15 +54,20 @@ with (new(obj_template))
 	item_face_camera = buffer_read_byte()
 	item_bounce = buffer_read_byte()
 
-	var bid, bdata, block;
+	// Read legacy block
+	var bid, bdata;
 	bid = buffer_read_short()
 	bdata = buffer_read_byte()
-	block = mc_assets.block_legacy_id_map[?bid]
-	if (!is_undefined(block))
+	if (legacy_block_set[bid])
 	{
-		block_name = block.name
-		block_state = block_get_state_id_state_vars(block, block.legacy_data_state_id[bdata])
+		var block = legacy_block_obj[bid, bdata];
+		if (block != null)
+		{
+			block_name = block.name
+			block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
+		}
 	}
+	
 	block_tex = project_load_legacy_save_id()
 
 	scenery = buffer_read_int()

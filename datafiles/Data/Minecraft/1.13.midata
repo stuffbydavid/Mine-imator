@@ -1465,14 +1465,14 @@
 					"face=wall,facing=south": [ 90, 180, 180 ],
 					"face=wall,facing=east": [ 90, 180, 90 ],
 					"face=wall,facing=west": [ 90, 180, -90 ],
-					"face=floor,facing=north": [ 0, 0, 0 ],
-					"face=floor,facing=south": [ 0, 180, 0 ],
-					"face=floor,facing=east": [ 0, -90, 0 ],
-					"face=floor,facing=west": [ 0, 90, 0 ],
-					"face=ceiling,facing=north": [ 180, 180, 0 ],
-					"face=ceiling,facing=south": [ 180, 0, 0 ],
-					"face=ceiling,facing=east": [ 180, 90, 0 ],
-					"face=ceiling,facing=west": [ 180, -90, 0 ]
+					"face=floor,facing=north": [ 0, 180, 0 ],
+					"face=floor,facing=south": [ 0, 0, 0 ],
+					"face=floor,facing=east": [ 0, 90, 0 ],
+					"face=floor,facing=west": [ 0, -90, 0 ],
+					"face=ceiling,facing=north": [ 180, 0, 0 ],
+					"face=ceiling,facing=south": [ 180, 180, 0 ],
+					"face=ceiling,facing=east": [ 180, -90, 0 ],
+					"face=ceiling,facing=west": [ 180, 90, 0 ]
 				}
 			},
 			"id": "minecraft:lever"
@@ -1561,14 +1561,14 @@
 				"facing": [ "north", "south", "east", "west" ],
 				"powered": [ "false", "true" ]
 			},
-			"default_state": "variant=stone,face=floor,facing=east,powered=false",
+			"default_state": "variant=stone,face=floor,facing=south,powered=false",
 			"timeline": {
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
-					"face=wall,facing=east": [ 0, 8, 8 ],
-					"face=wall,facing=west": [ 16, 8, 8 ],
 					"face=wall,facing=north": [ 8, 8, 16 ],
 					"face=wall,facing=south": [ 8, 8, 0 ],
+					"face=wall,facing=east": [ 0, 8, 8 ],
+					"face=wall,facing=west": [ 16, 8, 8 ],
 					"face=floor": [ 8, 0, 8 ],
 					"face=ceiling": [ 8, 16, 8 ]
 				},
@@ -1577,10 +1577,10 @@
 					"face=wall,facing=south": [ 0, 90, 90 ],
 					"face=wall,facing=east": [ 0, 0, -90 ],
 					"face=wall,facing=west": [ 0, 0, 90 ],
-					"face=floor,facing=north": [ 0, 90, 0 ],
-					"face=floor,facing=south": [ 0, -90, 0 ],
-					"face=floor,facing=east": [ 0, 0, 0 ],
-					"face=floor,facing=west": [ 0, 180, 0 ],
+					"face=floor,facing=north": [ 0, -90, 0 ],
+					"face=floor,facing=south": [ 0, 90, 0 ],
+					"face=floor,facing=east": [ 0, 180, 0 ],
+					"face=floor,facing=west": [ 0, 0, 0 ],
 					"face=ceiling,facing=north": [ 180, 90, 0 ],
 					"face=ceiling,facing=south": [ 180, -90, 0 ],
 					"face=ceiling,facing=east": [ 180, 0, 0 ],

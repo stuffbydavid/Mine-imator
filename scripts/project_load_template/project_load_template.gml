@@ -38,8 +38,18 @@ with (new(obj_template))
 		if (ds_map_valid(itemmap))
 		{
 			item_tex = value_get_save_id(itemmap[?"tex"], item_tex)
-			if (!is_undefined(itemmap[?"name"]))
-				item_slot = ds_list_find_index(mc_assets.item_texture_list, value_get_string(itemmap[?"name"]))
+			
+			var itemname = itemmap[?"name"];
+			if (is_string(itemname))
+			{
+				if (load_format < e_project.FORMAT_113)
+				{
+					var newname = ds_map_find_key(legacy_item_texture_name_map, itemname);
+					if (!is_undefined(newname))
+						itemname = newname
+				}
+				item_slot = ds_list_find_index(mc_assets.item_texture_list, itemname)
+			}
 			else
 				item_slot = value_get_real(itemmap[?"slot"], item_slot)
 			item_3d = value_get_real(itemmap[?"3d"], item_3d)
@@ -52,17 +62,26 @@ with (new(obj_template))
 		var blockmap = map[?"block"];
 		if (ds_map_valid(blockmap))
 		{
-			block_name = value_get_string(blockmap[?"name"], block_name)
-			block_state = value_get_state_vars(blockmap[?"state"])
-			
-			/*block_legacy_id = value_get_real(blockmap[?"legacy_id"], 2)
-			block_legacy_data = value_get_real(blockmap[?"legacy_data"], 0)
-			var block = mc_assets.block_legacy_id_map[?block_legacy_id];
-			if (!is_undefined(block))
+			if (load_format < e_project.FORMAT_113)
 			{
-				block_name = block.name
-				block_state = array_copy_1d(block.legacy_data_state[block_legacy_data])
-			}*/
+				// Read legacy block
+				var bid = value_get_real(blockmap[?"legacy_id"], 2);
+				var bdata = value_get_real(blockmap[?"legacy_data"], 0);
+				if (legacy_block_set[bid])
+				{
+					var block = legacy_block_obj[bid, bdata];
+					if (block != null)
+					{
+						block_name = block.name
+						block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
+					}
+				}
+			}
+			else
+			{
+				block_name = value_get_string(blockmap[?"name"], block_name)
+				block_state = value_get_state_vars(blockmap[?"state"])
+			}
 			
 			block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
 			block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
