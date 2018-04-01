@@ -24,6 +24,7 @@ do
 until (json_char != e_json_char.TAB &&
 	   json_char != e_json_char.SPACE && 
 	   json_char != e_json_char.NEW_LINE && 
-	   json_char != e_json_char.RETURN)
+	   json_char != e_json_char.RETURN &&
+	   json_char < 127)
 
 return true

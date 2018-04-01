@@ -6,6 +6,9 @@ with (obj_resource)
 	if (loaded)
 		res_load()
 		
+with (mc_res)
+	res_update_colors()
+		
 if (ds_priority_size(load_queue) > 0)
 	load_start(ds_priority_find_max(load_queue), res_load_start)
 else if (popup != null)

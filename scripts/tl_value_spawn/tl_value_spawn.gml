@@ -1,5 +1,6 @@
 /// tl_value_spawn()
 
+// Cameras copy the work camera
 if (type = e_tl_type.CAMERA)
 {
 	if (!app.setting_spawn_cameras)
@@ -12,11 +13,20 @@ if (type = e_tl_type.CAMERA)
 	value[e_value.ROT_Y] = app.cam_work_roll
 	value[e_value.ROT_Z] = app.cam_work_angle_look_xy - 90
 }
-else if (parent = app && part_of = null && type != e_tl_type.FOLDER)
+
+// Background objects inherit current settings
+else if (type = e_tl_type.BACKGROUND)
+{
+	for (var v = e_value.BG_SKY_MOON_PHASE; v <= e_value.BG_TEXTURE_ANI_SPEED; v++)
+		value[v] = tl_value_default(v)
+}
+
+// Spawn at work camera position
+else if (parent = app && part_of = null && type != e_tl_type.FOLDER && value_type[e_value_type.POSITION])
 {
 	if (!app.setting_spawn_objects)
 		return 0
-		
+	
 	value[e_value.POS_X] = app.cam_work_focus[X]
 	value[e_value.POS_Y] = app.cam_work_focus[Y]
 	value[e_value.POS_Z] = max(0, app.cam_work_focus[Z] - 16)
@@ -25,9 +35,6 @@ else if (parent = app && part_of = null && type != e_tl_type.FOLDER)
 		value[e_value.POS_Z] += 16
 }
 
-value_default[e_value.POS_X] = value[e_value.POS_X]
-value_default[e_value.POS_Y] = value[e_value.POS_Y]
-value_default[e_value.POS_Z] = value[e_value.POS_Z]
-value_default[e_value.ROT_X] = value[e_value.ROT_X]
-value_default[e_value.ROT_Y] = value[e_value.ROT_Y]
-value_default[e_value.ROT_Z] = value[e_value.ROT_Z]
+// Set defaults
+for (var v = 0; v < e_value.amount; v++)
+	value_default[v] = value[v]

@@ -76,6 +76,18 @@ switch (load_stage)
 		log("Pack loaded")
 		
 		// Update project and load next in the queue
+		with (obj_template)
+			if (item_tex = other.id)
+				temp_update_item()
+					
+		with (obj_particle_type)
+			if (sprite_tex = other.id)
+				ptype_update_sprite_vbuffers()
+				
+		with (app.bench_settings)
+			if (item_tex = other.id)
+				temp_update_item()
+				
 		with (app)
 		{
 			if (background_ground_tex = other.id)
@@ -84,20 +96,9 @@ switch (load_stage)
 			if (background_sky_clouds_tex = other.id)
 				background_sky_update_clouds()
 			
-			with (bench_settings)
-				if (item_tex = other.id)
-					temp_update_item()
-					
-			with (obj_template)
-				if (item_tex = other.id)
-					temp_update_item()
-					
-			with (obj_particle_type)
-				if (sprite_tex = other.id)
-					ptype_update_sprite_vbuffers()
-				
 			load_next()
 		}
+				
 		break
 	}
 }

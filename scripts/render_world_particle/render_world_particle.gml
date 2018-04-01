@@ -66,7 +66,7 @@ if (temp != null)
 		}
 	}
 	
-	matrix_set(matrix_world, matrix_create(point3D_add(pos, off), rot, vec3(scale)))
+	matrix_set(matrix_world, matrix_multiply(matrix_create(off, vec3(0), vec3(1)), matrix_create(pos, rot, vec3(scale))))
 	
 	switch (temp.type)
 	{
