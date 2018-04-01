@@ -126,7 +126,7 @@ with (obj_timeline)
 	if (parent = null)
 		parent = app
 	
-	if (parent_tree_index = null)
+	if (parent_tree_index < 0)
 		parent.tree_array[array_length_1d(parent.tree_array)] = id
 	else
 		parent.tree_array[parent_tree_index] = id

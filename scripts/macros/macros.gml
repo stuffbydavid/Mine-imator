@@ -64,7 +64,6 @@
 #macro mc_clouds_image_file			mc_textures_directory + "environment\\clouds.png"
 
 // Links
-#macro link_skins					"https://skins.minecraft.net/MinecraftSkins/"
 #macro link_article_drivers			"https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
 #macro link_website					"https://www.mineimator.com"
 #macro link_download				"https://www.mineimator.com/download"
@@ -72,11 +71,13 @@
 #macro link_assets					"https://www.mineimator.com/assets/"
 #macro link_assets_versions			link_assets + "versions.midata"
 #macro link_news					"https://www.mineimator.com/news.php?version=" + mineimator_version
+#macro link_skins					"https://www.mineimator.com/skin?username="
 #macro link_forums					"https://www.mineimatorforums.com"
 #macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
 #macro link_minecraft				"https://www.minecraft.net"
 #macro link_david					"https://www.stuffbydavid.com"
 #macro http_ok						200
+#macro http_bad_request				400
 
 // Textures
 #macro block_sheet_width			32

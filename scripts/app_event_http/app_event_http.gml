@@ -141,7 +141,7 @@ else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 else if (async_load[?"id"] = http_downloadskin && async_load[?"status"] < 1)
 {
 	http_downloadskin = null
-	popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
+	popup_downloadskin.fail_message = text_get("errordownloadskininternet")
 	
 	if (popup_downloadskin.texture)
 	{
@@ -149,15 +149,14 @@ else if (async_load[?"id"] = http_downloadskin && async_load[?"status"] < 1)
 		popup_downloadskin.texture = null
 	}
 	
-	if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)
+	if (async_load[?"status"] = 0)
 	{
-		if (file_exists_lib(download_image_file))
+		popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
+		
+		if (async_load[?"http_status"] = http_ok && file_exists_lib(download_image_file))
 		{
 			popup_downloadskin.texture = texture_create(download_image_file)
-			if (!popup_downloadskin.texture)
-				popup_downloadskin.fail_message = text_get("errordownloadskininternet")
-			else
-				popup_downloadskin.fail_message = ""
+			popup_downloadskin.fail_message = ""
 		}
 	}
 }

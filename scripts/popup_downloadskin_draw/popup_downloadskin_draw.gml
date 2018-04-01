@@ -10,7 +10,7 @@ if (popup.tbx_username.text != "" && http_downloadskin = null)
 		popup.username = popup.tbx_username.text
 		popup.fail_message = ""
 		popup.start_time = current_time
-		http_downloadskin = http_get_file(link_skins + popup.username + ".png", download_image_file)
+		http_downloadskin = http_get_file(link_skins + popup.username, download_image_file)
 	}
 }
 
