@@ -13,7 +13,7 @@ if (history_data.filename != "" && !history_data.replaced)
 		res.player_skin = true
 	else if (history_data.type = e_res_type.ITEM_SHEET)
 		res.item_sheet_size = array_copy_1d(history_data.item_sheet_size)
-		
+	
 	with (res)
 		res_load()
 }

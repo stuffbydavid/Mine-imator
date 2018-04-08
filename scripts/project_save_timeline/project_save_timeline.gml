@@ -58,7 +58,11 @@ json_save_object_start()
 
 	json_save_object_done()
 	
-	json_save_var_save_id("parent", parent)
+	// Only include parent in the file if it's also saved
+	if (parent != app && parent.save)
+		json_save_var_save_id("parent", parent)
+	else
+		json_save_var_save_id("parent", app)
 	json_save_var("parent_tree_index", ds_list_find_index(parent.tree_list, id))
 	
 	if (value_type[e_value_type.HIERARCHY])

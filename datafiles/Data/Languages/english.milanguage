@@ -3,7 +3,7 @@
     "file/": {
         "language": "English",
         "translator": "David",
-        "forversion": "1.1.3",
+        "forversion": "1.1.4",
         "lastchange": "2018.04.01" 
     },
     "startup/": {
@@ -887,14 +887,14 @@
         "filters": "Filters",
         "filters/": {
             "title": "Block filter",
-            "alert": "Some blocks will be filtered!",
+            "alert": "Some blocks are being filtered!",
             "activate": "Activate filters",
-            "remove": "Remove filtered",
-            "keep": "Keep filtered",
-            "blocksremove": "Choose blocks to remove from the selection",
-            "blockskeep": "Choose blocks to keep from the selection",
+            "blockstoremove": "Choose blocks to remove from the selection",
+            "blockstokeep": "Choose blocks to keep in the selection",
             "add": "Add",
-            "Remove": "Remove",
+            "remove": "Remove",
+            "removefiltered": "Remove filtered",
+            "keepfiltered": "Keep filtered",
             "ok": "OK"
         },
         "size": "(%1x%2x%3 (%4 blocks))",

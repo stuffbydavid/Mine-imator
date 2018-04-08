@@ -12,3 +12,5 @@ with (obj_template)
 
 with (obj_timeline)
 	tl_update_type_name()
+
+settings_save()

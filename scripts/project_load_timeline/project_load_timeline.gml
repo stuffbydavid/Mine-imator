@@ -23,7 +23,7 @@ with (new(obj_timeline))
 	
 	if (type = e_temp_type.BODYPART)
 		model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
-		
+	
 	if (type = e_temp_type.TEXT)
 		text = value_get_string(map[?"text"], text)
 	

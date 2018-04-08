@@ -152,6 +152,6 @@ with (obj_timeline)
 if (timeline_settings_import_loop_tl != null)
 {
 	var name = timeline_settings_import_loop_tl.temp.model_name;
-	timeline_settings_walk_fn = load_assets_dir + mc_loops_directory + name + "_walk.miframes"
-	timeline_settings_run_fn = load_assets_dir + mc_loops_directory + name + "_run.miframes"
+	timeline_settings_walk_fn = load_assets_startup_dir + mc_loops_directory + name + "_walk.miframes"
+	timeline_settings_run_fn = load_assets_startup_dir + mc_loops_directory + name + "_run.miframes"
 }

@@ -34,8 +34,8 @@ if (!background_sky_clouds_flat)
 	
 	// Store pixels
 	var hascolor;
-	for (var py = 0; py < texwid; py++)
-		for (var px = 0; px < texhei; px++)
+	for (var py = 0; py < texhei; py++)
+		for (var px = 0; px < texwid; px++)
 			hascolor[px, py] = (buffer_read_int_uns() >> 24 = 255)
 			
 	buffer_delete(buffer_current)

@@ -82,7 +82,7 @@
 	"flower_pot.json": {
 		"Y": "#78553A"
 	},
-	"grass.json": {
+	"grass_block.json": {
 		"Y": "#577235",
 		"Z": "#78553A"
 	},

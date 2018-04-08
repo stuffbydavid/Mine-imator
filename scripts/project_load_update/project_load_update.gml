@@ -78,6 +78,10 @@ with (obj_timeline)
 		else
 			scenery_animate = true
 	}
+	
+	// Show position window
+	if (model_part != null)
+		value_type_show[e_value_type.POSITION] = model_part.show_position
 }
 
 with (obj_particle_type)

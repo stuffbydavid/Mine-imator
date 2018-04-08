@@ -25,17 +25,20 @@ else
 	spr = spr_circle_100
 }
 
-tab_control(100)
-var wheelx = dx + floor(dw / 2) - (axislen * rad * 2 + (axislen - 1) * 25) / 2;
-for (var i = 0; i < 3; i++)
+if (axislen > 0)
 {
-	axis_edit = axis[i]
-	if (!tl_edit.model_part.bend_axis[axis_edit])
-		continue
-	draw_wheel("frameeditorbend" + axisname[i], wheelx + rad, dy + 50, c_aqua, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], -130, 130, 0, snapval, false, tab.bend.tbx_wheel[i], action_tl_frame_bend_angle, rad, spr)
-	wheelx += rad * 2 + 25
+	tab_control(100)
+	var wheelx = dx + floor(dw / 2) - (axislen * rad * 2 + (axislen - 1) * 25) / 2;
+	for (var i = 0; i < 3; i++)
+	{
+		axis_edit = axis[i]
+		if (!tl_edit.model_part.bend_axis[axis_edit])
+			continue
+		draw_wheel("frameeditorbend" + axisname[i], wheelx + rad, dy + 50, c_aqua, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], -130, 130, 0, snapval, false, tab.bend.tbx_wheel[i], action_tl_frame_bend_angle, rad, spr)
+		wheelx += rad * 2 + 25
+	}
+	tab_next()
 }
-tab_next()
 
 // Tools
 tab_control(24)

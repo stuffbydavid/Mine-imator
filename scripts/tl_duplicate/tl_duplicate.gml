@@ -9,9 +9,17 @@ with (copy)
 	root_copy = null
 	copy = null
 	
-	if (temp && part_of = null)
-		temp.count++
-		
+	// Set correct template
+	if (temp != null)
+	{
+		if (part_of = null) // Template is in the library, add count
+			temp.count++
+		else if (temp = other.id) // Template is itself, update
+			temp = id
+		else if (temp.part_of != null) // Template is also a part, update to its copy
+			temp = temp.copy
+	}
+	
 	// Copy default values
 	for (var v = 0; v < e_value.amount; v++)
 		value_default[v] = tl_value_find_save_id(v, null, other.value_default[v])
@@ -45,8 +53,9 @@ with (copy)
 		part_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(other.part_list); p++)
 		{
-			part_list[|p] = other.part_list[|p].copy
-			part_list[|p].part_of = id
+			var pcopy = other.part_list[|p].copy;
+			ds_list_add(part_list, pcopy)
+			pcopy.part_of = id
 		}
 	}
 	

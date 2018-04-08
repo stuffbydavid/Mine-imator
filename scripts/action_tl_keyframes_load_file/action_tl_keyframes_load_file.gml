@@ -127,6 +127,18 @@ for (var k = 0; k < num; k++)
 				project_load_values(kfcurmap[?"values"], value)
 			else
 				project_load_legacy_values(dummy)
+				
+			// Convert legacy bending
+			if (load_format < e_project.FORMAT_113 && tladd.model_part != null && tladd.model_part.bend_part != null)
+			{
+				var legacyaxis;
+				for (legacyaxis = X; legacyaxis <= Z; legacyaxis++)
+					if (tladd.model_part.bend_axis[legacyaxis])
+						break
+				
+				value[e_value.BEND_ANGLE_X + legacyaxis] = value[e_value.BEND_ANGLE_LEGACY]
+				value[e_value.BEND_ANGLE_LEGACY] = 0
+			}
 		}
 		
 		with (tladd)
@@ -141,7 +153,7 @@ for (var k = 0; k < num; k++)
 			project_load_legacy_values(id)
 }
 
-// Load asociated objects (texture or particle attractor references)
+// Load associated objects (texture or particle attractor references)
 if (!legacy)
 	project_load_objects(rootmap)
 else

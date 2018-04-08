@@ -1,6 +1,6 @@
 /// tl_update_matrix()
 /// @desc Updates matrixes and positions.
-
+	
 if (object_index != app && update_matrix)
 {
 	// Get parent matrix

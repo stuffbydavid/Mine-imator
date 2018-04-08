@@ -225,6 +225,8 @@ switch (ext)
 	case ".mani":
 	{
 		project_load_legacy_beta(false)
+		project_load_find_save_ids()
+		project_load_update()
 		buffer_delete(buffer_current)
 		break
 	}

@@ -43,22 +43,21 @@ switch (load_stage)
 				buffer_seek(block_obj, buffer_seek_start, 0)
 				buffer_seek(block_state_id, buffer_seek_start, 0)
 			
-				var i = 0;
 				for (build_pos_z = 0; build_pos_z < build_size_z; build_pos_z++)
 				{
 					for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
 					{
 						for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)
 						{
-							var block, stateid;
+							var block, stateid, bid, bdata;
 							block = null
 							stateid = null
 							
 							// Read legacy block ID & data
-							var bid = buffer_peek(buffer_current, blocksarray + i, buffer_u8);
+							bid = buffer_read_byte()
+							bdata = buffer_read_byte()
 							if (bid > 0)
 							{
-								var bdata = buffer_peek(buffer_current, dataarray + i, buffer_u8);
 								block = legacy_block_obj[bid, bdata]
 								stateid = legacy_block_state_id[bid, bdata]
 								if (block != null && block.timeline)
@@ -67,7 +66,6 @@ switch (load_stage)
 							
 							buffer_write(block_obj, buffer_s32, block)
 							buffer_write(block_state_id, buffer_s32, stateid)
-							i++
 						}
 					}
 				}
@@ -346,7 +344,7 @@ switch (load_stage)
 					file_rename_lib(app.project_folder + "\\world.schematic", newname)
 				}
 			}
-				
+			
 			// Update templates
 			with (obj_template)
 			{

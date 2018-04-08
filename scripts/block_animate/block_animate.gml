@@ -81,7 +81,9 @@ with (new(obj_timeline))
 		var text, textpos;
 		text = other.text
 		textpos = other.text_position
-		part_list = ds_list_create()
+		
+		if (part_list = null)
+			part_list = ds_list_create()
 		
 		with (new(obj_timeline))
 		{

@@ -1,6 +1,6 @@
-/// json_save_var_save_id(name, obj)
+/// json_save_var_save_id(name, object)
 /// @arg name
-/// @arg obj
+/// @arg object
 
 var name, obj;
 name = argument0

@@ -125,7 +125,7 @@ with (obj_timeline)
 	parent = save_id_find(save_id_map[?parent])
 	if (parent = null)
 		parent = app
-	
+		
 	if (parent_tree_index < 0)
 		parent.tree_array[array_length_1d(parent.tree_array)] = id
 	else

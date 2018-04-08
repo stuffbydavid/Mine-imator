@@ -258,8 +258,8 @@ with (new(obj_model_part))
 	else
 	{
 		bend_part = null
-		bend_axis = null
-		bend_direction = null
+		bend_axis[Z] = false
+		bend_direction[Z] = 0
 		bend_offset = 0
 		bend_size = 4
 		bend_invert = false
