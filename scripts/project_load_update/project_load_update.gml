@@ -8,7 +8,7 @@ with (obj_resource)
 		
 with (mc_res)
 	res_update_colors()
-		
+
 if (ds_priority_size(load_queue) > 0)
 	load_start(ds_priority_find_max(load_queue), res_load_start)
 else if (popup != null)
@@ -47,7 +47,7 @@ with (obj_timeline)
 {
 	if (!loaded)
 		continue
-
+	
 	// Convert legacy bending
 	if (load_format < e_project.FORMAT_113 && model_part != null && model_part.bend_part != null)
 	{

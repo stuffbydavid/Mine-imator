@@ -44,7 +44,7 @@ with (new(obj_timeline))
 			var blockmap = map[?"block"];
 			if (ds_map_valid(blockmap))
 			{
-				if (load_format < e_project.FORMAT_113)
+				if (load_format < e_project.FORMAT_114)
 				{
 					// Read legacy block
 					var bid = value_get_real(blockmap[?"legacy_id"], 2);

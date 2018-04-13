@@ -15,7 +15,7 @@
 #macro minecraft_version			"1.13"
 
 // File formats
-#macro project_format				e_project.FORMAT_113
+#macro project_format				e_project.FORMAT_114
 #macro settings_format				e_settings.FORMAT_113
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_113
 

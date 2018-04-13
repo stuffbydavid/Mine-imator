@@ -14,7 +14,7 @@ while (!is_undefined(key))
 	key = ds_map_find_next(save_id_map, key)
 }
 
-save_id_map[?null] = null
+save_id_map[? null] = null
 save_id_map[?"root"] = "root"
 save_id_map[?"default"] = "default"
 
@@ -125,7 +125,7 @@ with (obj_timeline)
 	parent = save_id_find(save_id_map[?parent])
 	if (parent = null)
 		parent = app
-		
+	
 	if (parent_tree_index < 0)
 		parent.tree_array[array_length_1d(parent.tree_array)] = id
 	else

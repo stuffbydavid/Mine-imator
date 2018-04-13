@@ -9,6 +9,10 @@ map = argument0
 root = argument1
 res = argument2
 
+// Check invisible
+if (!is_undefined(map[?"visible"]) && !map[?"visible"])
+	return 0
+
 // Check required fields
 if (!is_string(map[?"name"]))
 {
@@ -243,7 +247,7 @@ with (new(obj_model_part))
 		}
 		
 		// Invert
-		if (is_real(bendmap[?"invert"]) && bendmap[?"invert"] < 2) // Single
+		if (is_real(bendmap[?"invert"]) && array_length_1d(axis) = 1) // Single
 		{
 			bend_invert = vec3(bendmap[?"invert"])
 		}
@@ -254,12 +258,26 @@ with (new(obj_model_part))
 		}
 		else
 			bend_invert = vec3(false)
+		
+		// Fixed angle
+		if (is_real(bendmap[?"angle"]) && array_length_1d(axis) = 1) // Single
+		{
+			bend_fixed_angle = vec3(bendmap[?"angle"])
+		}
+		else if (ds_list_valid(bendmap[?"angle"])) // Multi
+		{
+			for (var i = 0; i < ds_list_size(bendmap[?"angle"]); i++)
+				bend_fixed_angle[axis[i]] = ds_list_find_value(bendmap[?"angle"], i)
+		}
+		else
+			bend_fixed_angle[Z] = 0
 	}
 	else
 	{
 		bend_part = null
 		bend_axis[Z] = false
 		bend_direction[Z] = 0
+		bend_fixed_angle[Z] = 0
 		bend_offset = 0
 		bend_size = 4
 		bend_invert = false
@@ -282,7 +300,8 @@ with (new(obj_model_part))
 			var shape = model_file_load_shape(shapelist[|p], res);
 			if (shape = null) // Something went wrong
 				return null
-			ds_list_add(shape_list, shape)
+			if (shape > 0)
+				ds_list_add(shape_list, shape)
 		}
 	}
 	else
@@ -302,7 +321,8 @@ with (new(obj_model_part))
 			var part = model_file_load_part(partlist[|p], root, res)
 			if (part = null) // Something went wrong
 				return null
-			ds_list_add(part_list, part)
+			if (part > 0)
+				ds_list_add(part_list, part)
 		}
 	}
 	else

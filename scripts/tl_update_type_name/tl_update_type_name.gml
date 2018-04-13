@@ -8,7 +8,7 @@ if (part_of != null)
 	if (type = e_tl_type.BODYPART)
 	{
 		if (model_part != null)
-			type_name = minecraft_asset_get_name("model", model_part.name)
+			type_name = minecraft_asset_get_name("modelpart", model_part.name)
 		else
 			type_name = text_get("timelineunusedbodypart")
 	}

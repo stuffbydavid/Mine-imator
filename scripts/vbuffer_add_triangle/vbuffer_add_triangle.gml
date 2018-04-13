@@ -24,17 +24,6 @@ if (argument_count < 15)
 	tex2 = argument[4]
 	tex3 = argument[5]
 	
-	// Invert
-	if (argument_count > 11 && argument[11])
-	{
-		var tmp = pos1;
-		pos1 = pos2
-		pos2 = tmp
-		tmp = tex1
-		tex1 = tex2
-		tex2 = tmp
-	}
-	
 	if (argument_count > 6 && is_array(argument[6]))
 	{
 		normal1 = argument[6]
@@ -76,6 +65,20 @@ if (argument_count < 15)
 			normal3 = vec3_normalize(vec3_mul_matrix(normal3, mat))
 		else
 			normal3 = normal1
+	}
+	
+	// Invert
+	if (argument_count > 11 && argument[11])
+	{
+		var tmp = pos1;
+		pos1 = pos2
+		pos2 = tmp
+		tmp = tex1
+		tex1 = tex2
+		tex2 = tmp
+		normal1 = vec3_mul(normal1, -1)
+		normal2 = vec3_mul(normal2, -1)
+		normal3 = vec3_mul(normal3, -1)
 	}
 	
 	vertex_add(pos1, normal1, tex1, color, alpha)
@@ -126,6 +129,11 @@ else
 		z3 = argument[8]
 	}
 	
+	// Calculate normal
+	nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2)
+	ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2)
+	nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2)
+	
 	// Invert
 	if (argument_count > 17 && argument[17])
 	{
@@ -136,6 +144,9 @@ else
 		tx1 = argument[11]; ty1 = argument[12];
 		tx2 = argument[9]; ty2 = argument[10];
 		tx3 = argument[13]; ty3 = argument[14];
+		nx *= -1
+		ny *= -1
+		nz *= -1
 	}
 	else
 	{
@@ -143,11 +154,6 @@ else
 		tx2 = argument[11]; ty2 = argument[12];
 		tx3 = argument[13]; ty3 = argument[14];
 	}
-	
-	// Calculate normal
-	nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2)
-	ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2)
-	nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2)
 
 	vertex_add(x1, y1, z1, nx, ny, nz, tx1, ty1, color, alpha)
 	vertex_add(x2, y2, z2, nx, ny, nz, tx2, ty2, color, alpha)

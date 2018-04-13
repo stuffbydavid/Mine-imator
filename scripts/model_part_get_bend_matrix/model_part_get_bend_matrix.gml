@@ -15,6 +15,13 @@ if (part.bend_part = null)
 // Limit angle
 for (var i = X; i <= Z; i++)
 {
+	// Fixed angle (not used in the gen scripts)
+	if (part != id && part.bend_fixed_angle[i] != 0)
+	{
+		bend[i] = part.bend_fixed_angle[i]
+		continue
+	}
+	
 	if (bend[i] = 0)
 		continue
 	

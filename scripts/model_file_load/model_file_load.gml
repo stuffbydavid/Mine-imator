@@ -99,7 +99,8 @@ with (new(obj_model_file))
 		var part = model_file_load_part(partlist[|p], id, res)
 		if (part = null)
 			return null
-		ds_list_add(part_list, part)
+		if (part > 0)
+			ds_list_add(part_list, part)
 	}
 	
 	ds_map_destroy(map)

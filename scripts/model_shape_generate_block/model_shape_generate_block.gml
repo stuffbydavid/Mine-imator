@@ -10,9 +10,16 @@ x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];		y2 = to[Y];		z2 = to[Z]
 size = point3D_sub(to, from)
 
+// Apply fixed bending
+for (var a = X; a <= Z; a++)
+	if (bend_fixed_angle[a] != 0)
+		bend[a] = bend_fixed_angle[a]
+
+// Find whether the shape is bent
+var isbent = !vec3_equals(bend, vec3(0));
+
 // Axis to split up the block
-var isbent, segaxis = Z;
-isbent = !vec3_equals(bend, vec3(0))
+var segaxis = Z;
 if (isbent)
 {
 	if (bend_part = e_part.LEFT || bend_part = e_part.RIGHT)

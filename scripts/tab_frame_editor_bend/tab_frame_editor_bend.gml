@@ -6,7 +6,7 @@ var snapval = tab.bend.snap_enabled * tab.bend.snap_size;
 var axis, axislen, axisname, rad, spr;
 axislen = 0
 for (var i = X; i <= Z; i++)
-	axislen += tl_edit.model_part.bend_axis[i]
+	axislen += (tl_edit.model_part.bend_axis[i] && tl_edit.model_part.bend_fixed_angle[i] = 0)
 
 if (!setting_z_is_up)
 	axis = array(X, Z, Y)
@@ -32,7 +32,7 @@ if (axislen > 0)
 	for (var i = 0; i < 3; i++)
 	{
 		axis_edit = axis[i]
-		if (!tl_edit.model_part.bend_axis[axis_edit])
+		if (!tl_edit.model_part.bend_axis[axis_edit] || tl_edit.model_part.bend_fixed_angle[axis_edit] != 0)
 			continue
 		draw_wheel("frameeditorbend" + axisname[i], wheelx + rad, dy + 50, c_aqua, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], -130, 130, 0, snapval, false, tab.bend.tbx_wheel[i], action_tl_frame_bend_angle, rad, spr)
 		wheelx += rad * 2 + 25

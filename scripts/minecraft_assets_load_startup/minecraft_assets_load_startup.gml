@@ -4,7 +4,7 @@
 
 globalvar mc_assets, mc_builder, mc_res;
 globalvar load_assets_stage, load_assets_progress, load_assets_block_index;
-globalvar load_assets_startup_dir,load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_model_file_map, load_assets_map, load_assets_type_map;
+globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
 
 mc_assets = new(obj_minecraft_assets)

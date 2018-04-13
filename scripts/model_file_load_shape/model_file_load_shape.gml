@@ -7,6 +7,10 @@ var map, res;
 map = argument0
 res = argument1
 
+// Check invisible
+if (!is_undefined(map[?"visible"]) && !map[?"visible"])
+	return 0
+
 // Check required fields
 if (!is_string(map[?"type"]))
 {
@@ -119,6 +123,7 @@ with (new(obj_model_shape))
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
+	bend_fixed_angle = other.bend_fixed_angle
 	bend_offset = other.bend_offset
 	bend_size = other.bend_size
 	bend_invert = other.bend_invert
