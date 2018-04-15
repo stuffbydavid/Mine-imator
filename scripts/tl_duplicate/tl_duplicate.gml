@@ -12,8 +12,11 @@ with (copy)
 	// Set correct template
 	if (temp != null)
 	{
-		if (part_of = null) // Template is in the library, add count
-			temp.count++
+		if (temp.object_index = obj_template) // Template is in the library, 
+		{
+			if (part_of = null) // Add count for non-parts
+				temp.count++
+		}
 		else if (temp = other.id) // Template is itself, update
 			temp = id
 		else if (temp.part_of != null) // Template is also a part, update to its copy

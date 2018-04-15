@@ -57,6 +57,7 @@ with (bench_settings)
 	model_part_name = default_model_part
 	temp_update_model()
 	temp_update_model_part()
+	temp_update_model_shape()
 	block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 	temp_particles_init()
 	model_tex = mc_res

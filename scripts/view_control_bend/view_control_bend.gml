@@ -8,7 +8,7 @@ part = tl_edit.model_part
 
 for (var i = X; i <= Z; i++)
 {
-	if (!part.bend_axis[i] || part.bend_fixed_angle[i] != 0)
+	if (!part.bend_axis[i])
 		continue
 	
 	var mat;

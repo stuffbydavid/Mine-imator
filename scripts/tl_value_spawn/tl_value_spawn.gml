@@ -14,6 +14,14 @@ if (type = e_tl_type.CAMERA)
 	value[e_value.ROT_Z] = app.cam_work_angle_look_xy - 90
 }
 
+// Default bending
+else if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != null)
+{
+	value[e_value.BEND_ANGLE_X] = model_part.bend_default_angle[X]
+	value[e_value.BEND_ANGLE_Y] = model_part.bend_default_angle[Y]
+	value[e_value.BEND_ANGLE_Z] = model_part.bend_default_angle[Z]
+}
+
 // Background objects inherit current settings
 else if (type = e_tl_type.BACKGROUND)
 {

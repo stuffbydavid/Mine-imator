@@ -19,14 +19,15 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 {
 	with (part.shape_list[|s])
 	{
+		vbufmap[? id] = vbuffer_default
 		if (type = "block" && isbent)
-			vbufmap[?id] = model_shape_generate_block(bend)
+			vbufmap[? id] = model_shape_generate_block(bend)
 		else if (type = "plane")
 		{
 			if (is3d)
-				vbufmap[?id] = model_shape_generate_plane_3d(bend, alphamap[?id])
+				vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[?id])
 			else if (isbent)
-				vbufmap[?id] = model_shape_generate_plane(bend)
+				vbufmap[? id] = model_shape_generate_plane(bend)
 		}
 	}
 }

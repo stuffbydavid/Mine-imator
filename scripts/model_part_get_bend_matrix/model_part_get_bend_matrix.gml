@@ -1,13 +1,19 @@
-/// model_part_get_bend_matrix(part, bend, position)
+/// model_part_get_bend_matrix(part, bend, position, [scale])
 /// @arg part
 /// @arg bend
 /// @arg position
-/// @desc Returns the transformation matrix for bending.
+/// @arg scale
+/// @desc Returns the transformation matrix for bending. The scale factor is used to combat Z-fighting.
 
-var part, bend, pos, rot;
-part = argument0
-bend = argument1
-pos = argument2
+var part, bend, pos, rot, sca;
+part = argument[0]
+bend = argument[1]
+pos = argument[2]
+
+if (argument_count > 3)
+	sca = argument[3]
+else
+	sca = vec3(1)
 
 if (part.bend_part = null)
 	return MAT_IDENTITY
@@ -15,13 +21,6 @@ if (part.bend_part = null)
 // Limit angle
 for (var i = X; i <= Z; i++)
 {
-	// Fixed angle (not used in the gen scripts)
-	if (part != id && part.bend_fixed_angle[i] != 0)
-	{
-		bend[i] = part.bend_fixed_angle[i]
-		continue
-	}
-	
 	if (bend[i] = 0)
 		continue
 	
@@ -66,7 +65,7 @@ switch (part.bend_part)
 }
 
 // Create matrix
-var mat = matrix_build(pos[X], pos[Y], pos[Z], bend[X], bend[Y], bend[Z], 1, 1, 1);
+var mat = matrix_build(pos[X], pos[Y], pos[Z], bend[X], bend[Y], bend[Z], sca[X], sca[Y], sca[Z]);
 if (object_index = obj_model_shape)
 	mat = matrix_multiply(matrix_build(-pos[X], -pos[Y], -pos[Z], rotation[X], rotation[Y], rotation[Z], 1, 1, 1), mat)
 

@@ -1,5 +1,5 @@
 /// tl_update_model_shape()
-/// @desc Updates the 3D planes in the model part using the keyframed texture.
+/// @desc Updates the meshes of the shapes in the timeline model.
 	
 // Clear old alpha arrays
 if (model_shape_alpha_map != null)
@@ -11,19 +11,24 @@ if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	var key = ds_map_find_first(model_shape_vbuffer_map);
 	while (!is_undefined(key))
 	{
-		vbuffer_destroy(model_shape_vbuffer_map[?key])
+		if (key.vbuffer_default != model_shape_vbuffer_map[?key]) // Don't clear default buffers
+			vbuffer_destroy(model_shape_vbuffer_map[?key])
 		key = ds_map_find_next(model_shape_vbuffer_map, key)
 	}
 	ds_map_clear(model_shape_vbuffer_map)
 }
 
-// Cancel if no 3D planes are available
-if (model_part = null || !model_part.has_3d_plane)
+if (model_part = null)
 	return 0
 	
-// Create maps if unavailable
-if (model_shape_alpha_map = null)
-	model_shape_alpha_map = ds_map_create()
+if (model_part.has_3d_plane)
+{
+	// Create maps for 3D planes
+	if (model_shape_alpha_map = null)
+		model_shape_alpha_map = ds_map_create()
+}
+	
+// Create map for shape ID->mesh
 if (model_shape_vbuffer_map = null)
 	model_shape_vbuffer_map = ds_map_create()
 

@@ -15,6 +15,7 @@ with (bench_settings)
 		}
 		model_tex = mc_res
 		temp_update_model()
+		temp_update_model_shape()
 	}
 	
 	// Switch to special block
@@ -27,6 +28,7 @@ with (bench_settings)
 		}
 		model_tex = mc_res
 		temp_update_model()
+		temp_update_model_shape()
 	}
 	
 	// Switch to bodypart
@@ -35,6 +37,7 @@ with (bench_settings)
 		model_tex = mc_res
 		temp_update_model()
 		temp_update_model_part()
+		temp_update_model_shape()
 	}
 	
 	// Switch to block
@@ -54,6 +57,7 @@ with (bench_settings)
 	{
 		model_tex = null
 		temp_update_model()
+		temp_update_model_shape()
 	}
 }
 

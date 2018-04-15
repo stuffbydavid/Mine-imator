@@ -37,8 +37,6 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	// Pick vertex buffer from map if available
 	if (shapevbuffermap != null && !is_undefined(shapevbuffermap[?shape]))
 		vbuffer_render(shapevbuffermap[?shape])
-	else
-		vbuffer_render(shape.vbuffer)
 }
 
 matrix_set(matrix_world, mat)

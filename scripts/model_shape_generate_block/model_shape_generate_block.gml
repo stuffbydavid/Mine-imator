@@ -5,15 +5,11 @@
 var bend = argument0;
 
 // Block dimensions
-var x1, x2, y1, y2, z1, z2, size;
+var x1, x2, y1, y2, z1, z2, size, scalef;
 x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];		y2 = to[Y];		z2 = to[Z]
 size = point3D_sub(to, from)
-
-// Apply fixed bending
-for (var a = X; a <= Z; a++)
-	if (bend_fixed_angle[a] != 0)
-		bend[a] = bend_fixed_angle[a]
+scalef = 0.01 // Used to combat Z-fighting
 
 // Find whether the shape is bent
 var isbent = !vec3_equals(bend, vec3(0));
@@ -106,8 +102,9 @@ if (texture_mirror)
 
 // Start position and bounds
 var detail = 2;
-var bendstart, bendend, bendsegsize, invangle;
-bendsegsize = bend_size / detail;
+var bendsize, bendstart, bendend, bendsegsize, invangle;
+bendsize = test(bend_size = null, test(app.setting_bend_pinch, 4, 1), bend_size)
+bendsegsize = bendsize / detail;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 	
 // Find start points/normals
@@ -118,8 +115,8 @@ switch (segaxis)
 {
 	case X:
 	{
-		bendstart = (bend_offset - (position[X] + x1)) - bend_size / 2
-		bendend = (bend_offset - (position[X] + x1)) + bend_size / 2
+		bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
+		bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
 		p1 = point3D(x1, y1, z2)
 		p2 = point3D(x1, y2, z2)
 		p3 = point3D(x1, y2, z1)
@@ -138,8 +135,8 @@ switch (segaxis)
 	
 	case Y:
 	{
-		bendstart = (bend_offset - (position[Y] + y1)) - bend_size / 2
-		bendend = (bend_offset - (position[Y] + y1)) + bend_size / 2
+		bendstart = (bend_offset - (position[Y] + y1)) - bendsize / 2
+		bendend = (bend_offset - (position[Y] + y1)) + bendsize / 2
 		p1 = point3D(x2, y1, z2)
 		p2 = point3D(x1, y1, z2)
 		p3 = point3D(x1, y1, z1)
@@ -158,8 +155,8 @@ switch (segaxis)
 	
 	case Z:
 	{
-		bendstart = (bend_offset - (position[Z] + z1)) - bend_size / 2
-		bendend = (bend_offset - (position[Z] + z1)) + bend_size / 2
+		bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
+		bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
 		p1 = point3D(x1, y2, z1)
 		p2 = point3D(x2, y2, z1)
 		p3 = point3D(x2, y1, z1)
@@ -185,7 +182,7 @@ if (isbent) // Apply start bend
 	else if (bendend < 0) // Above bend, apply full angle
 		startp = 1
 	else // Start inside bend, apply partial angle
-		startp = (1 - bendend / bend_size)
+		startp = (1 - bendend / bendsize)
 	
 	if (invangle)
 		startp = 1 - startp
@@ -334,12 +331,12 @@ while (true)
 		else if (segpos >= bendend) // Above bend, apply full angle
 			segp = 1
 		else // Inside bend, apply partial angle
-			segp = (1 - (bendend - segpos) / bend_size)
+			segp = (1 - (bendend - segpos) / bendsize)
 			
 		if (invangle)
 			segp = 1 - segp
 		
-		mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0))
+		mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0), vec3(1 + segp * scalef))
 	}
 	else // Apply rotation only
 		mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)

@@ -1,5 +1,10 @@
 /// tab_settings_graphics()
 
+// Texture filtering
+tab_control_checkbox()
+draw_checkbox("settingsbendpinch", dx, dy, setting_bend_pinch, action_setting_bend_pinch)
+tab_next()
+
 // Scenery
 tab_control_checkbox()
 draw_checkbox("settingsschematicremoveedges", dx, dy, setting_schematic_remove_edges, action_setting_schematic_remove_edges)

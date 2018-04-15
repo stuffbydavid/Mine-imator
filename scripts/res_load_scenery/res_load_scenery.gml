@@ -256,8 +256,14 @@ switch (load_stage)
 			popup_loading.progress = 2 / 10
 		}
 		
-		if (scenery_tl_add = null && timelineamount > 20)
-			scenery_tl_add = question(text_get("loadsceneryaddtimelines", timelineamount))
+		// A null value will peform a check if block timelines should be added
+		if (scenery_tl_add = null)
+		{
+			if (timelineamount > 20) // More than 20 possible timelines, ask the user
+				scenery_tl_add = question(text_get("loadsceneryaddtimelines", timelineamount))
+			else // Less, always add
+				scenery_tl_add = true
+		}
 		
 		mc_builder.build_pos_x = 0
 		mc_builder.build_pos_y = 0

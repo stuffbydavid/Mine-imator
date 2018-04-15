@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David",
-        "forversion": "1.1.4",
-        "lastchange": "2018.04.01" 
+        "forversion": "1.1.5",
+        "lastchange": "2018.04.15" 
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2021,8 +2021,6 @@
         "scalemodestretchtip": "The object will be stretched when the parent is scaled.",
         "graphics": "Graphics",
         "graphicstip": "Change settings that alter the appearence of the object.",
-        "roundbending": "Round bending",
-        "roundbendingtip": "The bending will have a round shape.",
         "textureblur": "Blur texture",
         "textureblurtip": "Interpolate colors between pixels in the texture. Useful for high resolution textures.",
         "texturefiltering": "Texture filtering",
@@ -2487,15 +2485,8 @@
         "slowmodifiertip": "The camera speed modifier when going slower.",
         "graphics": "Graphics",
         "graphicstip": "Modify the appearence of objects and textures in animations.",
-        "benddefault": "Default bending",
-        "benddefaultsharp": "Sharp",
-        "benddefaultsharptip": "New body parts will have sharp bending by default. To change the bending, select an object and visit the Graphics tab in the properties.",
-        "benddefaultround": "Round",
-        "benddefaultroundtip": "New body parts will have round bending by default. To change the bending, select an object and visit the Graphics tab in the properties.",
-        "benddetail": "Bending detail",
-        "benddetailtip": "The detail level in rounded bends.",
-        "bendscale": "Bending scale",
-        "bendscaletip": "The scale of the bended half of body parts. Increase to combat depth issues.",
+        "bendpinch": "Pinch effect for bent arms and legs",
+        "bendpinchtip": "Whether bent arms and legs will have a pinch effect.",
         "schematicaddtimelines": "Add block timelines to schematics",
         "schematicaddtimelinestip": "Whether to add timelines of certain blocks in imported schematics.",
         "schematicremoveedges": "Remove edges of big schematics",

@@ -24,6 +24,7 @@ with (new(obj_timeline))
 	
 	tl_set_parent(other.id)
 	tl_update_depth()
+	tl_value_spawn()
 	
 	return id
 }

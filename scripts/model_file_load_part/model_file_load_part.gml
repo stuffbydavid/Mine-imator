@@ -131,13 +131,6 @@ with (new(obj_model_part))
 			}
 		}
 	}
-		
-	matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
-	
-	// Matrix used when rendering preview/particle
-	default_matrix = matrix_create(position, rotation, vec3(1))
-	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
-		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, vec3(0), point3D(0, 0, 0)))
 	
 	// Bend (optional)
 	if (!is_undefined(map[?"bend"]))
@@ -153,7 +146,7 @@ with (new(obj_model_part))
 		bend_offset = bendmap[?"offset"]
 		
 		// Size
-		bend_size = value_get_real(bendmap[?"size"], 4)
+		bend_size = value_get_real(bendmap[?"size"], null)
 		
 		// Part
 		if (!is_string(bendmap[?"part"])) 
@@ -164,12 +157,12 @@ with (new(obj_model_part))
 		
 		switch (bendmap[?"part"])
 		{
-			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	bend_size *= scale[X];	break
-			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	bend_size *= scale[X];	break
-			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	bend_size *= scale[Y];	break
-			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	bend_size *= scale[Y];	break
-			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	bend_size *= scale[Z];	break
-			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	bend_size *= scale[Z];	break
+			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	if (bend_size != null) bend_size *= scale[X];	break
+			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	if (bend_size != null) bend_size *= scale[X];	break
+			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	if (bend_size != null) bend_size *= scale[Y];	break
+			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	if (bend_size != null) bend_size *= scale[Y];	break
+			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	if (bend_size != null) bend_size *= scale[Z];	break
+			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	if (bend_size != null) bend_size *= scale[Z];	break
 			default:
 				log("Invalid parameter \"part\"")
 				return null
@@ -262,26 +255,33 @@ with (new(obj_model_part))
 		// Fixed angle
 		if (is_real(bendmap[?"angle"]) && array_length_1d(axis) = 1) // Single
 		{
-			bend_fixed_angle = vec3(bendmap[?"angle"])
+			bend_default_angle = vec3(bendmap[?"angle"])
 		}
 		else if (ds_list_valid(bendmap[?"angle"])) // Multi
 		{
 			for (var i = 0; i < ds_list_size(bendmap[?"angle"]); i++)
-				bend_fixed_angle[axis[i]] = ds_list_find_value(bendmap[?"angle"], i)
+				bend_default_angle[axis[i]] = ds_list_find_value(bendmap[?"angle"], i)
 		}
 		else
-			bend_fixed_angle[Z] = 0
+			bend_default_angle[Z] = 0
 	}
 	else
 	{
 		bend_part = null
 		bend_axis[Z] = false
 		bend_direction[Z] = 0
-		bend_fixed_angle[Z] = 0
+		bend_default_angle[Z] = 0
 		bend_offset = 0
-		bend_size = 4
+		bend_size = null
 		bend_invert = false
 	}
+		
+	matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
+	
+	// Matrix used when rendering preview/particle
+	default_matrix = matrix_create(position, rotation, vec3(1))
+	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
+		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_default_angle, point3D(0, 0, 0)))
 	
 	// Default bounds
 	bounds_start = point3D(no_limit, no_limit, no_limit)

@@ -11,15 +11,11 @@ if (!is_array(alpha))
 	return null
 
 // Plane dimensions
-var x1, x2, y1, y2, z1, z2, size;
+var x1, x2, y1, y2, z1, z2, size, scalef;
 x1 = from[X];	y1 = from[Y];			 z1 = from[Z]
 x2 = to[X];		y2 = from[Y] + scale[Y]; z2 = to[Z]
 size = point3D_sub(to, from)
-
-// Apply fixed bending
-for (var a = X; a <= Z; a++)
-	if (bend_fixed_angle[a] != 0)
-		bend[a] = bend_fixed_angle[a]
+scalef = 0.01 // Used to combat Z-fighting
 
 // Find whether the shape is bent
 var isbent = !vec3_equals(bend, vec3(0));
@@ -52,18 +48,19 @@ texuv = vec2_div(uv, texture_size)
 samplesize = vec2(ceil(texsize[X]), ceil(texsize[Z]))
 
 // Start position and bounds
-var bendstart, bendend, invangle;
+var bendsize, bendstart, bendend, invangle;
+bendsize = test(bend_size = null, test(app.setting_bend_pinch, 4, 1), bend_size)
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
 
 if (segouteraxis = X)
 {
-	bendstart = (bend_offset - (position[X] + x1)) - bend_size / 2
-	bendend = (bend_offset - (position[X] + x1)) + bend_size / 2
+	bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
+	bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
 }
 else if (segouteraxis = Z)
 {
-	bendstart = (bend_offset - (position[Z] + z1)) - bend_size / 2
-	bendend = (bend_offset - (position[Z] + z1)) + bend_size / 2
+	bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
+	bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
 }
 
 // Precalculate points
@@ -96,12 +93,12 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 			else if (seginnerpos >= bendend) // Above bend, apply full angle
 				segp = 1
 			else // Inside bend, apply partial angle
-				segp = (1 - (bendend - seginnerpos) / bend_size)
+				segp = (1 - (bendend - seginnerpos) / bendsize)
 			
 			if (invangle)
 				segp = 1 - segp
 			
-			mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0))
+			mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0), vec3(1 + segp * scalef))
 		}
 		else // Apply rotation only
 			mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)

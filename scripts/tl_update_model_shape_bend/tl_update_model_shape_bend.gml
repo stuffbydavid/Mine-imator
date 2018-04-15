@@ -19,15 +19,12 @@ if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	var key = ds_map_find_first(model_shape_vbuffer_map);
 	while (!is_undefined(key))
 	{
-		vbuffer_destroy(model_shape_vbuffer_map[?key])
+		if (key.vbuffer_default != model_shape_vbuffer_map[?key]) // Don't clear default buffers
+			vbuffer_destroy(model_shape_vbuffer_map[?key])
 		key = ds_map_find_next(model_shape_vbuffer_map, key)
 	}
 	ds_map_clear(model_shape_vbuffer_map)
 }
-	
-// Not a body part or no in-between mesh needed
-if (type != e_tl_type.BODYPART || (vec3_equals(bend, vec3(0)) && !model_part.has_3d_plane))
-	return 0
 
 // Create map if unavailable
 if (model_shape_vbuffer_map = null)

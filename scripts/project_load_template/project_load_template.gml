@@ -42,7 +42,7 @@ with (new(obj_template))
 			var itemname = itemmap[?"name"];
 			if (is_string(itemname))
 			{
-				if (load_format < e_project.FORMAT_114)
+				if (load_format < e_project.FORMAT_115)
 				{
 					var newname = ds_map_find_key(legacy_item_texture_name_map, itemname);
 					if (!is_undefined(newname))
@@ -62,7 +62,7 @@ with (new(obj_template))
 		var blockmap = map[?"block"];
 		if (ds_map_valid(blockmap))
 		{
-			if (load_format < e_project.FORMAT_114)
+			if (load_format < e_project.FORMAT_115)
 			{
 				// Read legacy block
 				var bid = value_get_real(blockmap[?"legacy_id"], 2);

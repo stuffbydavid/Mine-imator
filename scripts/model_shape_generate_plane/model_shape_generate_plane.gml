@@ -10,11 +10,6 @@ x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];						z2 = to[Z]
 size = point3D_sub(to, from)
 
-// Apply fixed bending
-for (var a = X; a <= Z; a++)
-	if (bend_fixed_angle[a] != 0)
-		bend[a] = bend_fixed_angle[a]
-
 // Find whether the shape is bent
 var isbent = !vec3_equals(bend, vec3(0));
 
@@ -54,8 +49,9 @@ if (texture_mirror)
 
 // Start position and bounds
 var detail = 2;
-var bendstart, bendend, bendsegsize, invangle;
-bendsegsize = bend_size / detail;
+var bendsize, bendstart, bendend, bendsegsize, invangle;
+bendsize = test(bend_size = null, test(app.setting_bend_pinch, 4, 1), bend_size)
+bendsegsize = bendsize / detail;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
 
 var p1, p2, p3, p4, n1, n2;
@@ -63,16 +59,16 @@ var texp1;
 
 if (segaxis = X)
 {
-	bendstart = (bend_offset - (position[X] + x1)) - bend_size / 2
-	bendend = (bend_offset - (position[X] + x1)) + bend_size / 2
+	bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
+	bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
 	p1 = point3D(x1, y1, z2)
 	p2 = point3D(x1, y1, z1)
 	texp1 = tex1[X]
 }
 else if (segaxis = Z)
 {
-	bendstart = (bend_offset - (position[Z] + z1)) - bend_size / 2
-	bendend = (bend_offset - (position[Z] + z1)) + bend_size / 2
+	bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
+	bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
 	p1 = point3D(x1, y1, z1)
 	p2 = point3D(x2, y1, z1)
 	texp1 = tex3[Y]
@@ -89,7 +85,7 @@ if (isbent) // Apply start bend
 	else if (bendend < 0) // Above bend, apply full angle
 		startp = 1
 	else // Start inside bend, apply partial angle
-		startp = (1 - bendend / bend_size)
+		startp = (1 - bendend / bendsize)
 	
 	if (invangle)
 		startp = 1 - startp
@@ -163,7 +159,7 @@ while (segpos < size[segaxis])
 		else if (segpos >= bendend) // Above bend, apply full angle
 			segp = 1
 		else // Inside bend, apply partial angle
-			segp = (1 - (bendend - segpos) / bend_size)
+			segp = (1 - (bendend - segpos) / bendsize)
 			
 		if (invangle)
 			segp = 1 - segp

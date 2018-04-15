@@ -123,7 +123,7 @@ with (new(obj_model_shape))
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction
-	bend_fixed_angle = other.bend_fixed_angle
+	bend_default_angle = other.bend_default_angle
 	bend_offset = other.bend_offset
 	bend_size = other.bend_size
 	bend_invert = other.bend_invert
@@ -157,13 +157,14 @@ with (new(obj_model_shape))
 			wind_wave_zmax = windmap[?"ymax"]
 	}
 	
-	// Generate
+	// Generate default mesh
 	if (type = "block")
-		vbuffer = model_shape_generate_block(vec3(0))
+		vbuffer_default = model_shape_generate_block(vec3(0))
 	else if (type = "plane")
-		vbuffer = model_shape_generate_plane(vec3(0))
+		vbuffer_default = model_shape_generate_plane(vec3(0))
 	else
 	{
+		vbuffer_default = null
 		log("Invalid shape type", type)
 		return null
 	}

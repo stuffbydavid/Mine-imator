@@ -146,6 +146,7 @@ setting_look_sensitivity = 1
 setting_fast_modifier = 3
 setting_slow_modifier = 0.25
 
+setting_bend_pinch = true
 setting_schematic_remove_edges = false
 setting_liquid_animation = true
 setting_texture_filtering = true

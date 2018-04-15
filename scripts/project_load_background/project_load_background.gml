@@ -39,7 +39,7 @@ background_sky_clouds_height = value_get_real(map[?"sky_clouds_height"], backgro
 background_ground_show = value_get_real(map[?"ground_show"], background_ground_show)
 background_ground_name = value_get_string(map[?"ground_name"], background_ground_name)
 
-if (load_format < e_project.FORMAT_114)
+if (load_format < e_project.FORMAT_115)
 {
 	var newname = ds_map_find_key(legacy_block_texture_name_map, background_ground_name);
 	if (!is_undefined(newname))
