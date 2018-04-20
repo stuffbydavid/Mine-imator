@@ -19,7 +19,7 @@ if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	var key = ds_map_find_first(model_shape_vbuffer_map);
 	while (!is_undefined(key))
 	{
-		if (key.vbuffer_default != model_shape_vbuffer_map[?key]) // Don't clear default buffers
+		if (instance_exists(key) && key.vbuffer_default != model_shape_vbuffer_map[?key]) // Don't clear default buffers
 			vbuffer_destroy(model_shape_vbuffer_map[?key])
 		key = ds_map_find_next(model_shape_vbuffer_map, key)
 	}
