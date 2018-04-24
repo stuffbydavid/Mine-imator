@@ -72,22 +72,23 @@ timeline_marker_previous = timeline_marker
 // Background
 if (bgobject)
 {
-	background_sky_moon_phase			= bgobject.value[e_value.BG_SKY_MOON_PHASE]
-	background_sky_time					= bgobject.value[e_value.BG_SKY_TIME]
-	background_sky_rotation				= bgobject.value[e_value.BG_SKY_ROTATION]
-	background_sky_clouds_speed			= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
-	background_sky_color				= bgobject.value[e_value.BG_SKY_COLOR]
-	background_sky_clouds_color			= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
-	background_sunlight_color			= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
-	background_ambient_color			= bgobject.value[e_value.BG_AMBIENT_COLOR]
-	background_night_color				= bgobject.value[e_value.BG_NIGHT_COLOR]
-	background_fog_color				= bgobject.value[e_value.BG_FOG_COLOR]
-	background_fog_distance				= bgobject.value[e_value.BG_FOG_DISTANCE]
-	background_fog_size					= bgobject.value[e_value.BG_FOG_SIZE]
-	background_fog_height				= bgobject.value[e_value.BG_FOG_HEIGHT]
-	background_wind_speed				= bgobject.value[e_value.BG_WIND_SPEED]
-	background_wind_strength			= bgobject.value[e_value.BG_WIND_STRENGTH]
-	background_texture_animation_speed	= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
+		
+	background_sky_moon_phase				= bgobject.value[e_value.BG_SKY_MOON_PHASE]
+	background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
+	background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
+	background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
+	background_sky_color					= bgobject.value[e_value.BG_SKY_COLOR]
+	background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
+	background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
+	background_ambient_color				= bgobject.value[e_value.BG_AMBIENT_COLOR]
+	background_night_color					= bgobject.value[e_value.BG_NIGHT_COLOR]
+	background_fog_color					= bgobject.value[e_value.BG_FOG_COLOR]
+	background_fog_distance					= bgobject.value[e_value.BG_FOG_DISTANCE]
+	background_fog_size						= bgobject.value[e_value.BG_FOG_SIZE]
+	background_fog_height					= bgobject.value[e_value.BG_FOG_HEIGHT]
+	background_wind_speed					= bgobject.value[e_value.BG_WIND_SPEED]
+	background_wind_strength				= bgobject.value[e_value.BG_WIND_STRENGTH]
+	background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
 }
 
 // Colors

@@ -367,6 +367,17 @@ with (new(obj_block_render_model))
 						
 							face_depth[nd] = mc_res.block_sheet_ani_depth_list[|slot]
 							face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED
+							
+							// Check color
+							var col = mc_assets.block_texture_color_map[?texname];
+							if (!is_undefined(col))
+							{
+								if (col = "water")
+								{
+									face_block_vbuffer[nd] = e_block_vbuffer.WATER
+								}
+							}
+							
 							sheetwidth = block_sheet_ani_width
 							sheetheight = block_sheet_ani_height
 						}
@@ -387,6 +398,8 @@ with (new(obj_block_render_model))
 									face_block_vbuffer[nd] = e_block_vbuffer.GRASS
 								else if (col = "leaves")
 									face_block_vbuffer[nd] = e_block_vbuffer.LEAVES
+								else if (col = "water")
+									face_block_vbuffer[nd] = e_block_vbuffer.WATER
 							}
 						}
 					
@@ -417,7 +430,9 @@ with (new(obj_block_render_model))
 										col = color_multiply(col, mc_res.color_grass)
 									else if (face_block_vbuffer[nd] = e_block_vbuffer.LEAVES)
 										col = color_multiply(col, mc_res.color_foliage)
-						
+									else if (face_block_vbuffer[nd] = e_block_vbuffer.WATER)
+										col = color_multiply(col, mc_res.color_water)
+										
 									if (nd = e_dir.UP)
 									{
 										other.preview_color_zp = col

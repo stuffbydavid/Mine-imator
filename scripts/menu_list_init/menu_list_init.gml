@@ -471,7 +471,16 @@ switch (menu_name)
 	case "backgroundbiome":
 	{
 		for (var b = 0; b < ds_list_size(biome_list); b++)
-			menu_add_item(biome_list[|b], text_get("biome" + biome_list[|b].name))
+			menu_add_item(biome_list[|b], minecraft_asset_get_name("biome", biome_list[|b].name))
+
+		break
+	}
+	
+	// Background biome
+	case "backgroundbiomevariant":
+	{
+		for (var v = 0; v < ds_list_size(background_biome.biome_variants); v++)
+			menu_add_item(v, minecraft_asset_get_name("biome", background_biome.biome_variants[|v].name))
 		
 		break
 	}
@@ -676,7 +685,7 @@ switch (menu_name)
 			
 		for (var i = 0; i < ds_list_size(videotemplate_list); i++)
 			with (videotemplate_list[|i])
-				menu_add_item(id, id.name + " (" + string(width) + "x" + string(height) + ")")
+				menu_add_item(id, text_get("projectvideosizetemplate" + id.name) + " (" + string(width) + "x" + string(height) + ")")
 				
 		menu_add_item(0, text_get("projectvideosizecustom"))
 		

@@ -12,6 +12,7 @@
     "option_mac_copyright": "(c)2016 Stuff by David",
     "option_mac_display_cursor": true,
     "option_mac_display_name": "mineimator",
+    "option_mac_enable_retina": false,
     "option_mac_enable_steam": false,
     "option_mac_icon_png": "${options_dir}\\mac\\icons\\icon512.png",
     "option_mac_interpolate_pixels": false,

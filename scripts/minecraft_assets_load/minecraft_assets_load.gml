@@ -35,12 +35,28 @@ with (mc_assets)
 			else
 				log("Archive already unzipped, re-using", load_assets_dir + mc_assets_directory)
 			
-			load_assets_stage = "textures"
+			load_assets_stage = "biomes"
 			load_assets_progress = 0.3
 			file_copy_temp = false
 			break
 		}
-	
+
+		// Load biomes
+		case "biomes":
+		{
+			with(mc_res)
+				minecraft_assets_load_biomes(biome_list, load_assets_dir + mi_assets_directory + "biomes.json");
+			
+			app.background_biome = biome_list[|2]
+			app.background_biome_color_foliage = c_plains_biome_foliage
+			app.background_biome_color_grass = c_plains_biome_grass
+			app.background_biome_color_water = c_plains_biome_water
+			
+			load_assets_stage = "textures"
+			load_assets_progress = 0.4
+			break;
+		}
+
 		// Load textures
 		case "textures":
 		{
@@ -110,14 +126,14 @@ with (mc_assets)
 				res_load_pack_block_textures()
 				res_load_pack_item_textures()
 				res_load_pack_misc()
-				res_update_colors(biome_list[|0])
+				res_update_colors(biome_list[|2])
 			}
 		
 			load_assets_stage = "models"
-			load_assets_progress = 0.4
+			load_assets_progress = 0.5
 			break
 		}
-	
+		
 		// Load models
 		case "models":
 		{
@@ -171,7 +187,7 @@ with (mc_assets)
 			
 			debug_timer_start()
 			load_assets_stage = "blocks"
-			load_assets_progress = 0.5
+			load_assets_progress = 0.6
 			break
 		}
 	
@@ -210,7 +226,7 @@ with (mc_assets)
 				load_assets_block_index++
 			}
 			
-			load_assets_progress = 0.5 + 0.5 * (load_assets_block_index / ds_list_size(blockslist))
+			load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blockslist))
 	
 			if (load_assets_stage = "done")
 			{

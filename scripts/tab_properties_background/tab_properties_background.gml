@@ -136,7 +136,7 @@ if (background_sky_clouds_show)
 }
 
 // Ground
-capwid = text_caption_width("backgroundground", "backgroundgroundtex", "backgroundbiome")
+capwid = text_caption_width("backgroundground", "backgroundgroundtex", "backgroundbiome", "backgroundbiomevariant")
 
 tab_control_checkbox()
 draw_checkbox("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show)
@@ -170,8 +170,36 @@ if (background_ground_show)
 
 // Biome
 tab_control(24)
-draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, text_get("biome" + background_biome.name), action_background_biome, null, null, capwid)
+draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome.name), action_background_biome, null, null, capwid)
 tab_next()
+
+if (background_biome.name != "custom")
+{
+	// Biome variant
+	if (ds_list_valid(background_biome.biome_variants))
+	{
+		tab_control(24)
+		draw_button_menu("backgroundbiomevariant", e_menu.LIST, dx, dy, dw, 24, background_biome.selected_variant, minecraft_asset_get_name("biome", background_biome.biome_variants[|background_biome.selected_variant].name), action_background_biome_variant, null, null, capwid)
+		tab_next()
+	}
+}
+else
+{
+	// Foliage color
+	tab_control_color()
+	draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_biome_color_foliage, c_plains_biome_foliage, false, action_background_biome_color_foliage)
+	tab_next()
+
+	// Grass color
+	tab_control_color()
+	draw_button_color("backgroundgrasscolor", dx, dy, dw, background_biome_color_grass, c_plains_biome_grass, false, action_background_biome_color_grass)
+	tab_next()
+
+	// Water color
+	tab_control_color()
+	draw_button_color("backgroundwatercolor", dx, dy, dw, background_biome_color_water, c_plains_biome_water, false, action_background_biome_color_water)
+	tab_next()
+}
 
 // Sky color
 tab_control_color()

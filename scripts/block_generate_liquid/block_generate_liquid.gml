@@ -106,7 +106,12 @@ var slotflowposx, slotflowposy, slotflowsizex, slotflowsizey;
 // Still texture
 slot = mc_assets.block_liquid_slot_map[?block_current.name]
 dep = mc_res.block_sheet_ani_depth_list[|slot]
-vbuf = e_block_vbuffer.ANIMATED
+
+if (block_current.name = "water")
+	vbuf = e_block_vbuffer.WATER
+else
+	vbuf = e_block_vbuffer.ANIMATED
+	
 sheetwidth = block_sheet_ani_width
 sheetheight = block_sheet_ani_height
 slotstillposx = (slot mod sheetwidth) * block_size

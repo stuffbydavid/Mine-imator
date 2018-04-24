@@ -18,6 +18,8 @@ if (!is_undefined(col))
 		return res.color_grass
 	else if (col = "leaves")
 		return res.color_foliage
+	else if (col = "water")
+		return res.color_water
 }
 	
 return c_white

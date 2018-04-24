@@ -431,6 +431,7 @@ enum e_block_vbuffer
 	ANIMATED,
 	GRASS,
 	LEAVES,
+	WATER,
 	amount
 }
 

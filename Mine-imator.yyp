@@ -1007,6 +1007,14 @@
             }
         },
         {
+            "Key": "114e73ae-2679-41a8-8953-e80f6087f49d",
+            "Value": {
+                "id": "fe214b40-ccb4-4c34-bedb-bcfe5e5701e8",
+                "resourcePath": "views\\114e73ae-2679-41a8-8953-e80f6087f49d.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "115bb9af-f648-491e-a6d4-697cd682d769",
             "Value": {
                 "id": "a7e7b9bc-dab7-4c5e-bda2-cfa3ebe84a8b",
@@ -4551,6 +4559,14 @@
             }
         },
         {
+            "Key": "54ee181b-88eb-46f8-93c8-283ba8c13deb",
+            "Value": {
+                "id": "807903d4-fcc4-4e29-8abe-df38f2a2b3d0",
+                "resourcePath": "scripts\\action_background_biome_color_foliage\\action_background_biome_color_foliage.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "55da72c5-bdb5-428c-8433-129da09230d0",
             "Value": {
                 "id": "48d8daf4-be5d-4484-81b5-0b0284c55e4f",
@@ -5487,6 +5503,14 @@
             }
         },
         {
+            "Key": "64dfe6c3-2133-4f00-9095-adaa31c56390",
+            "Value": {
+                "id": "1c025ac0-f4b6-45fb-9c22-14b3e431a249",
+                "resourcePath": "scripts\\action_background_biome_color_water\\action_background_biome_color_water.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "6532bcd3-5f96-4530-adf6-527dc40bb90d",
             "Value": {
                 "id": "144f5c61-f97c-44e1-ab16-29964f9b613b",
@@ -5771,6 +5795,14 @@
             "Value": {
                 "id": "292355b5-c072-4af8-b77d-7a651cf2fdc1",
                 "resourcePath": "scripts\\action_setting_timeline_autoscroll\\action_setting_timeline_autoscroll.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "697a1de9-85fe-4d0c-b435-1ec147416628",
+            "Value": {
+                "id": "01ce352f-067b-44da-984d-cc5ecc728a68",
+                "resourcePath": "scripts\\action_background_biome_color_grass\\action_background_biome_color_grass.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9451,6 +9483,14 @@
             "Value": {
                 "id": "0647e789-a041-4a5d-91aa-bbcf51fb14f6",
                 "resourcePath": "scripts\\action_project_video_template\\action_project_video_template.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "aa47ad0f-6cf7-4085-b03b-3408acb4dac8",
+            "Value": {
+                "id": "71073402-1fb3-4fa1-a00b-3d40ad8ac70e",
+                "resourcePath": "scripts\\minecraft_assets_load_biomes\\minecraft_assets_load_biomes.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -13975,6 +14015,14 @@
             }
         },
         {
+            "Key": "faa08f8e-54ab-495e-b30f-b65ddd32d649",
+            "Value": {
+                "id": "58848eff-0fb2-4652-b5a0-7006c9a349ba",
+                "resourcePath": "scripts\\action_background_biome_variant\\action_background_biome_variant.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "faa0d15f-e807-4378-beef-6a0b5e7dacbd",
             "Value": {
                 "id": "19a7c671-3460-4d9c-955e-d426e57c3328",
@@ -14296,6 +14344,11 @@
         }
     ],
     "script_order": [
+        "0273369f-8dd5-477d-b200-9a8cd5961bc9",
+        "faa08f8e-54ab-495e-b30f-b65ddd32d649",
+        "54ee181b-88eb-46f8-93c8-283ba8c13deb",
+        "697a1de9-85fe-4d0c-b435-1ec147416628",
+        "64dfe6c3-2133-4f00-9095-adaa31c56390",
         "f8045dae-aa94-44c3-a54f-a0059dfd3189",
         "c468715e-119d-4320-a2d7-e97c57b5ba58",
         "69d7311e-d878-41ae-956e-04a3bb90c7ff",
@@ -14332,7 +14385,6 @@
         "ba4ec927-4978-444e-ab62-88c37b2f2930",
         "6277ceb9-6930-441c-9d05-6399acc1dd39",
         "4be46ccc-cea1-418f-a5ea-306f4d5a2165",
-        "0273369f-8dd5-477d-b200-9a8cd5961bc9",
         "5110df47-c5cf-4d8e-a313-8f01f2bd00f5",
         "46bc281e-2d22-402e-8042-7dfabce4121d",
         "eb7b8a81-9fa5-4aa8-a101-be45fdfab75c",
@@ -15165,6 +15217,7 @@
         "39642edf-aba8-4e96-834a-dc7a1dd232b9",
         "b0954969-d77b-400a-888b-a47410e349ef",
         "8955cde0-61b3-4993-a04e-927841db0475",
+        "aa47ad0f-6cf7-4085-b03b-3408acb4dac8",
         "a522f2b9-240d-4a9f-870c-858a013c1dd7",
         "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
         "b4fe5db7-2939-4804-b650-c8ee2bb1e9f4",

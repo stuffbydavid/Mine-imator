@@ -46,6 +46,7 @@
 // Minecraft structure
 #macro mc_file_directory			file_directory + "Minecraft_unzip\\"
 #macro mc_assets_directory			"assets\\minecraft\\"
+#macro mi_assets_directory			"assets\\mineimator\\"
 #macro mc_models_directory			mc_assets_directory + "models\\"
 #macro mc_blockstates_directory		mc_assets_directory + "blockstates\\"
 #macro mc_textures_directory		mc_assets_directory + "textures\\"
@@ -102,10 +103,10 @@
 #macro c_clouds_top					make_color_rgb(255, 255, 255)
 #macro c_clouds_sideslight			make_color_rgb(215, 222, 234)
 #macro c_clouds_sidesdark			make_color_rgb(194, 201, 215)
-#macro c_mesa_biome_grass			make_color_rgb(158, 129, 77)
-#macro c_mesa_biome_foliage			make_color_rgb(158, 129, 77)
-#macro c_swampland_biome_grass		make_color_rgb(74, 116, 59)
-#macro c_swampland_biome_foliage	make_color_rgb(74, 116, 59)
+#macro c_plains_biome_foliage       make_color_rgb(119, 171, 47)
+#macro c_plains_biome_grass         make_color_rgb(145, 189, 89)
+#macro c_plains_biome_water         make_color_rgb(62, 117, 225)
+
 
 // Audio
 #macro sample_rate					44100

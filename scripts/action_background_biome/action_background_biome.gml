@@ -14,6 +14,8 @@ else
 }
 
 background_biome = biome
+
 with (obj_resource)
 	res_update_colors()
+
 properties.library.preview.update = true

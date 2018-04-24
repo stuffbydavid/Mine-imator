@@ -188,46 +188,18 @@ transition_texture_map = new_transition_texture_map(60, 60, 12)
 transition_texture_small_map = new_transition_texture_map(36, 36, 2)
 log("Transitions OK")
 
-// Biomes
-biome_list = ds_list_create()
-ds_list_add(biome_list,
-	new_biome("plains", 50, 173),
-	new_biome("beach", 60, 191),
-	new_biome("forest", 76, 112),
-	new_biome("foresthills", 76, 122),
-	new_biome("river", 128, 187),
-	new_biome("swampland", 117, 124),
-	new_biome("desert", 0, 255),
-	new_biome("deserthills", 0, 255),
-	new_biome("jungle", 0, 25),
-	new_biome("junglehills", 0, 35),
-	new_biome("mushroomisland", 25, 25),
-	new_biome("mushroomislandshore", 25, 35),
-	new_biome("extremehills", 203, 239),
-	new_biome("extremehillsedge", 203, 249),
-	new_biome("taiga", 242, 244),
-	new_biome("taigahills", 242, 254),
-	new_biome("iceplains", 249, 251),
-	new_biome("icemountains", 249, 251),
-	new_biome("frozenocean", 249, 255),
-	new_biome("frozenriver", 249, 251),
-	new_biome("mesa", 255, 255),
-	new_biome("nether", 0, 255),
-	new_biome("theend", 127, 189)
-)
-
 // Video templates
 videotemplate_list = ds_list_create()
 ds_list_add(videotemplate_list,
-	new_videotemplate("Avatar", 150, 150),
-	new_videotemplate("Multimedia", 320, 240),
-	new_videotemplate("Internet", 640, 480),
-	new_videotemplate("NTSC DV", 720, 480),
-	new_videotemplate("PAL", 720, 576),
-	new_videotemplate("HDV 720", 1280, 720),
-	new_videotemplate("HD 1080", 1920, 1080),
-	new_videotemplate("2K", 2048, 1152),
-	new_videotemplate("4K", 4096, 2304)
+	new_videotemplate("avatar", 512, 512),
+	new_videotemplate("hd_720p", 1280, 720),
+	new_videotemplate("fhd_1080p", 1920, 1080),
+	new_videotemplate("qhd_1440p", 2560, 1440),
+	new_videotemplate("uhd_4k", 3840, 2160),
+	new_videotemplate("hd_720p_cinematic", 1680, 720),
+	new_videotemplate("fhd_1080p_cinematic", 2560, 1080),
+	new_videotemplate("qhd_1440p_cinematic", 3440, 1440),
+	new_videotemplate("uhd_4k_cinematic", 5120, 2160)
 )
 
 // Video qualities
@@ -246,3 +218,7 @@ language_map = ds_map_create()
 
 language_load(language_file, language_english_map)
 ds_map_copy(language_map, language_english_map)
+
+// Biomes
+biome_list = ds_list_create()
+ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))

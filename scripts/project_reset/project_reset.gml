@@ -79,7 +79,17 @@ background_ground_name = default_ground
 background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
 background_ground_update_texture()
 
-background_biome = biome_list[|0]
+background_biome = biome_list[|2]
+background_biome_color_foliage = c_plains_biome_foliage
+background_biome_color_grass = c_plains_biome_grass
+background_biome_color_water = c_plains_biome_water
+
+with (obj_biome)
+{
+	if (biome_base = null)
+		selected_variant = 0
+}
+
 with (mc_res)
 	res_update_colors()
 

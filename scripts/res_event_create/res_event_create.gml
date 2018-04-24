@@ -35,6 +35,7 @@ colormap_grass_texture = null
 colormap_foliage_texture = null
 color_grass = null
 color_foliage = null
+color_water = null
 sun_texture = null
 moonphases_texture = null
 moon_texture[0] = null

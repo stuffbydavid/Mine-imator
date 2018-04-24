@@ -82,6 +82,12 @@ if (load_format >= e_project.FORMAT_100_DEMO_4)
 
 if (load_format >= e_project.FORMAT_CB_100)
 {
-	/*background_custom_biome = */buffer_read_byte()
-	/*background_biome_color = */buffer_read_int()
+	var custombiome;
+	custombiome = buffer_read_byte()
+	
+	if (custombiome)
+		background_biome = biome_list[| 0]
+		
+	background_biome_color_foliage = buffer_read_int()
+	background_biome_color_grass = background_biome_color_foliage
 }

@@ -53,7 +53,10 @@ background_ground_tex.count--
 background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
 
 background_biome = find_biome(value_get_string(map[?"biome"], background_biome.name))
-
+background_biome_color_foliage = value_get_color(map[?"foliage_color"], background_biome_color_foliage)
+background_biome_color_grass = value_get_color(map[?"grass_color"], background_biome_color_grass)
+background_biome_color_water = value_get_color(map[?"water_color"], background_biome_color_water)
+	
 background_sky_color = value_get_color(map[?"sky_color"], background_sky_color)
 background_sky_clouds_color = value_get_color(map[?"sky_clouds_color"], background_sky_clouds_color)
 background_sunlight_color = value_get_color(map[?"sunlight_color"], background_sunlight_color)
