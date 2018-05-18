@@ -2,7 +2,7 @@
 
 if (!minecraft_assets_load())
 {
-	error("loadassets")
+	error("errorloadassets")
 	game_end()
 	return 0
 }

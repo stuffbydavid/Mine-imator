@@ -2,25 +2,13 @@
 /// @arg name
 
 var findname;
+findname = argument0;
 
 // Convert old biome names to new
-switch (argument0)
+if (load_format < e_project.FORMAT_115)
 {
-	case "foresthills": findname = "forest_hills"; break;
-	case "deserthills": findname = "desert_hills"; break;
-	case "junglehills": findname = "jungle_hills"; break;
-	case "mushroomisland": findname = "mushroom_island"; break;
-	case "mushroomislandshore": findname = "mushroom_island_shore"; break;
-	case "extremehills": findname = "extreme_hills"; break;
-	case "extremehillsedge": findname = "extreme_hills_edge"; break;
-	case "taigahills": findname = "taiga_hills"; break;
-	case "iceplains": findname = "ice_plains"; break;
-	case "icemountains": findname = "ice_moutains"; break;
-	case "frozenocean": findname = "frozen_ocean"; break;
-	case "frozenriver": findname = "frozen_river"; break;
-	case "thenend": findname = "the_end"; break;
-	
-	default: findname = argument0;
+	if (ds_map_exists(biome_legacy_map, findname))
+		findname = biome_legacy_map[? findname]
 }
 
 with (obj_biome)

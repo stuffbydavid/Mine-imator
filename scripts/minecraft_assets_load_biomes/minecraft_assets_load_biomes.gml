@@ -1,4 +1,6 @@
 /// minecraft_assets_load_biomes(list, fn)
+/// @arg list
+/// @arg fn
 /// @desc Loads biomes from Minecraft version
 
 var list, fn;
