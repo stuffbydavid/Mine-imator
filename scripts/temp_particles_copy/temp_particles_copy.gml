@@ -26,3 +26,4 @@ to.pc_destroy_at_time_seconds = pc_destroy_at_time_seconds
 to.pc_destroy_at_time_israndom = pc_destroy_at_time_israndom
 to.pc_destroy_at_time_random_min = pc_destroy_at_time_random_min
 to.pc_destroy_at_time_random_max = pc_destroy_at_time_random_max
+to.pc_destroy_at_bounding_box = pc_destroy_at_bounding_box

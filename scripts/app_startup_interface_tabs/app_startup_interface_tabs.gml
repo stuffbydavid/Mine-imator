@@ -235,6 +235,15 @@ with (template_editor)
 	tbx_type_zrot_spd_mul = new_textbox_ndecimals()
 	tbx_type_zrot_spd_mul_random = new_textbox_ndecimals()
 	
+	tbx_type_sprite_angle = new_textbox_ndecimals()
+	tbx_type_sprite_angle.suffix = "°"
+	tbx_type_sprite_angle_random = new_textbox_ndecimals()
+	tbx_type_sprite_angle_random.suffix = "°"
+	tbx_type_sprite_angle_add = new_textbox_ndecimals()
+	tbx_type_sprite_angle_add.suffix = "°"
+	tbx_type_sprite_angle_add_random = new_textbox_ndecimals()
+	tbx_type_sprite_angle_add_random.suffix = "°"
+	
 	tbx_type_scale = new_textbox_ndecimals()
 	tbx_type_scale_random = new_textbox_ndecimals()
 	tbx_type_scale_add = new_textbox_ndecimals()
@@ -531,6 +540,10 @@ with (settings)
 		tbx_dof_blur_size.suffix = "%"
 		tbx_aa_power = new_textbox_integer()
 		tbx_aa_power.suffix = "%"
+		tbx_watermark_scale = new_textbox_integer()
+		tbx_watermark_scale.suffix = "%"
+		tbx_watermark_alpha = new_textbox_integer()
+		tbx_watermark_alpha.suffix = "%"
 	}
 }
 

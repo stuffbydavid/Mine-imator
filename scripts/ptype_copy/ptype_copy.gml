@@ -60,6 +60,15 @@ to.rot_spd_mul_israndom = array_copy_1d(rot_spd_mul_israndom)
 to.rot_spd_mul_random_min = array_copy_1d(rot_spd_mul_random_min)
 to.rot_spd_mul_random_max = array_copy_1d(rot_spd_mul_random_max)
 
+to.sprite_angle = sprite_angle
+to.sprite_angle_israndom = sprite_angle_israndom
+to.sprite_angle_random_min = sprite_angle_random_min
+to.sprite_angle_random_max = sprite_angle_random_max
+to.sprite_angle_add = sprite_angle_add
+to.sprite_angle_add_israndom = sprite_angle_add_israndom
+to.sprite_angle_add_random_min = sprite_angle_add_random_min
+to.sprite_angle_add_random_max = sprite_angle_add_random_max
+
 to.scale = scale
 to.scale_israndom = scale_israndom
 to.scale_random_min = scale_random_min

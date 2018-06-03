@@ -198,6 +198,11 @@ if (temp_edit.pc_destroy_at_time)
 		array(action_lib_pc_destroy_at_time_seconds, action_lib_pc_destroy_at_time_israndom, action_lib_pc_destroy_at_time_random_min, action_lib_pc_destroy_at_time_random_max))
 }
 
+// Destroy at bounding box
+tab_control_checkbox()
+draw_checkbox("particleeditordestroyatboundingboxtoggle", dx, dy, temp_edit.pc_destroy_at_bounding_box, action_lib_pc_destroy_at_bounding_box)
+tab_next()
+
 // Type list
 listh = 192
 if (content_direction = e_scroll.HORIZONTAL)
@@ -605,6 +610,31 @@ if (ptype_edit.temp)
 			array(action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max), 
 			capwid)
 	}
+	dy += 10
+}
+
+// Sprite angle
+if (ptype_edit.temp = null)
+{
+	capwid = text_caption_width("particleeditortypespriteangle", "particleeditortypespriteangleadd")
+
+	tab.tbx_type_sprite_angle_add.suffix = "°" + test(ptype_edit.sprite_angle_add_israndom, "", text_get("particleeditorpersecond"))
+	tab.tbx_type_sprite_angle_add_random.suffix = "°" + text_get("particleeditorpersecond")
+	
+	tab_template_editor_particles_value("particleeditortypespriteangle", 
+		ptype_edit.sprite_angle, ptype_edit.sprite_angle_israndom, ptype_edit.sprite_angle_random_min, ptype_edit.sprite_angle_random_max, 
+		1 / 100, 0, no_limit, array(0, 0, 360), 0, 
+		array(tab.tbx_type_sprite_angle, tab.tbx_type_sprite_angle_random), 
+		array(action_lib_pc_type_sprite_angle, action_lib_pc_type_sprite_angle_israndom, action_lib_pc_type_sprite_angle_random_min, action_lib_pc_type_sprite_angle_random_max), 
+		capwid)
+	
+	// Angle change
+	tab_template_editor_particles_value("particleeditortypespriteangleadd", 
+		ptype_edit.sprite_angle_add, ptype_edit.sprite_angle_add_israndom, ptype_edit.sprite_angle_add_random_min, ptype_edit.sprite_angle_add_random_max, 
+		1 / 100, -no_limit, no_limit, array(0, -90, 90), 0, 
+		array(tab.tbx_type_sprite_angle_add, tab.tbx_type_sprite_angle_add_random), 
+		array(action_lib_pc_type_sprite_angle_add, action_lib_pc_type_sprite_angle_add_israndom, action_lib_pc_type_sprite_angle_add_random_min, action_lib_pc_type_sprite_angle_add_random_max), 
+		capwid)
 	dy += 10
 }
 

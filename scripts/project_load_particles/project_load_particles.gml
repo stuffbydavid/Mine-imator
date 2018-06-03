@@ -31,6 +31,7 @@ pc_destroy_at_time_seconds = value_get_real(map[?"destroy_at_time_seconds"], pc_
 pc_destroy_at_time_israndom = value_get_real(map[?"destroy_at_time_israndom"], pc_destroy_at_time_israndom)
 pc_destroy_at_time_random_min = value_get_real(map[?"destroy_at_time_random_min"], pc_destroy_at_time_random_min)
 pc_destroy_at_time_random_max = value_get_real(map[?"destroy_at_time_random_max"], pc_destroy_at_time_random_max)
+pc_destroy_at_bounding_box = value_get_real(map[?"destroy_at_bounding_box"], pc_destroy_at_bounding_box)
 
 var ptypeslist = map[?"types"];
 for (var i = 0; i < ds_list_size(ptypeslist); i++)
@@ -93,6 +94,15 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		rot_spd_mul_israndom = value_get_point3D(ptypemap[?"rot_spd_mul_israndom"], rot_spd_mul_israndom)
 		rot_spd_mul_random_min = value_get_point3D(ptypemap[?"rot_spd_mul_random_min"], rot_spd_mul_random_min)
 		rot_spd_mul_random_max = value_get_point3D(ptypemap[?"rot_spd_mul_random_max"], rot_spd_mul_random_max)
+		
+		sprite_angle = value_get_real(ptypemap[?"sprite_angle"], sprite_angle)
+		sprite_angle_israndom = value_get_real(ptypemap[?"sprite_angle_israndom"], sprite_angle_israndom)
+		sprite_angle_random_min = value_get_real(ptypemap[?"sprite_angle_random_min"], sprite_angle_random_min)
+		sprite_angle_random_max = value_get_real(ptypemap[?"sprite_angle_random_max"], sprite_angle_random_max)
+		sprite_angle_add = value_get_real(ptypemap[?"sprite_angle_add"], sprite_angle_add)
+		sprite_angle_add_israndom = value_get_real(ptypemap[?"sprite_angle_add_israndom"], sprite_angle_add_israndom)
+		sprite_angle_add_random_min = value_get_real(ptypemap[?"sprite_angle_add_random_min"], sprite_angle_add_random_min)
+		sprite_angle_add_random_max = value_get_real(ptypemap[?"sprite_angle_add_random_max"], sprite_angle_add_random_max)
 		
 		scale = value_get_real(ptypemap[?"scale"], scale)
 		scale_israndom = value_get_real(ptypemap[?"scale_israndom"], scale_israndom)

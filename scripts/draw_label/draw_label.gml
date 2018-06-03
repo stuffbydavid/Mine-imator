@@ -2,11 +2,11 @@
 /// @arg string
 /// @arg x
 /// @arg y
-/// @arg halign
+/// @arg [halign
 /// @arg valign
 /// @arg [color
 /// @arg alpha
-/// @arg [font]]
+/// @arg [font]]]
 
 var str, xx, yy, halign, valign, color, alpha, font;
 var oldcolor, oldalpha;

@@ -57,6 +57,15 @@ rot_spd_mul_israndom = vec3(false)
 rot_spd_mul_random_min = vec3(0.75)
 rot_spd_mul_random_max = vec3(0.9)
 
+sprite_angle = 0
+sprite_angle_israndom = false
+sprite_angle_random_min = 0
+sprite_angle_random_max = 360
+sprite_angle_add = 0
+sprite_angle_add_israndom = false
+sprite_angle_add_random_min = -90
+sprite_angle_add_random_max = 90
+
 scale = 1
 scale_israndom = false
 scale_random_min = 0.5

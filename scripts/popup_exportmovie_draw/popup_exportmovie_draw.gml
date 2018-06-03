@@ -8,7 +8,7 @@ capwid = text_caption_width("exportmovievideosize", "exportmovievideosizecustomw
 if (project_video_template = 0)
 	text = text_get("projectvideosizecustom")
 else
-	text = project_video_template.name + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
+	text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 
 tab_control(24)
 draw_button_menu("exportmovievideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template, null, null, capwid)

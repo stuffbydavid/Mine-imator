@@ -80,7 +80,7 @@ else
 		tab.camera.video_template = find_videotemplate(tl_edit.value[e_value.CAM_WIDTH], tl_edit.value[e_value.CAM_HEIGHT])
 		
 	if (tab.camera.video_template > 0) // Use template
-		text = tab.camera.video_template.name + " (" + string(tab.camera.video_template.width) + "x" + string(tab.camera.video_template.height) + ")"
+		text = text_get("projectvideosizetemplate" + tab.camera.video_template.name) + " (" + string(tab.camera.video_template.width) + "x" + string(tab.camera.video_template.height) + ")"
 	else // Use custom
 		text = text_get("projectvideosizecustom")
 }

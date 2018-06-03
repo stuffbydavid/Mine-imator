@@ -94,4 +94,22 @@ if (window_focus = string(view))
 			window_busy = ""
 		}
 	}
+	
+	// Smoothen angles
+	if (cam_work_angle_off_xy != 0 || cam_work_angle_off_z != 0)
+	{
+		cam_work_angle_off_xy -= cam_work_angle_off_xy / (5 / delta)
+		cam_work_angle_off_z -= cam_work_angle_off_z / (5 / delta)
+		
+		cam_work_angle_xy += cam_work_angle_off_xy
+		cam_work_angle_z += cam_work_angle_off_z
+		cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
+		
+		cam_work_angle_look_xy += cam_work_angle_off_xy
+		cam_work_angle_look_z -= cam_work_angle_off_z
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		
+		camera_work_set_from()
+	}
+
 }

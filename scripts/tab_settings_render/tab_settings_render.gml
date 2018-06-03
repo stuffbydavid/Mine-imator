@@ -90,3 +90,61 @@ if (setting_render_aa)
 tab_control_checkbox()
 draw_checkbox("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark)
 tab_next()
+
+if (setting_render_watermark)
+{
+	if (!trial_version)
+	{
+		var capwid = text_caption_width("settingsrenderwatermarkpositionx", 
+									"settingsrenderwatermarkpositiony", 
+									"settingsrenderwatermarkscale", 
+									"settingsrenderwatermarkalpha", 
+									"settingswatermarkimage")
+		
+		// Watermark Image
+		tab_control(18)
+		var fn = test((setting_render_watermark_filename = ""), text_get("settingsrenderwatermarkdefault"), setting_render_watermark_filename);
+		draw_label(text_get("settingsrenderwatermarkimage") + ":", dx, dy)
+		draw_label(string_limit(fn, dw - capwid), dx + capwid, dy)
+		tip_wrap = false
+		tip_set(fn, dx, dy, capwid + string_width(fn), 16)
+		tab_next()
+
+		tab_control(24)
+
+		if (draw_button_normal("settingswatermarkopen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))
+			action_setting_render_watermark_open()
+	
+		if (draw_button_normal("settingswatermarkreset", dx + 25, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
+			action_setting_render_watermark_reset()
+	
+		tab_next()
+		
+		// X Position
+		tab_control(24)
+		draw_button_menu("settingsrenderwatermarkpositionx", e_menu.LIST, dx, dy, dw, 24, setting_render_watermark_anchor_x, text_get("settingsrenderwatermark" + setting_render_watermark_anchor_x), action_setting_render_watermark_position_x, null, null, capwid)
+		tab_next()
+		
+		// Y Position
+		tab_control(24)
+		draw_button_menu("settingsrenderwatermarkpositiony", e_menu.LIST, dx, dy, dw, 24, setting_render_watermark_anchor_y, text_get("settingsrenderwatermark" + setting_render_watermark_anchor_y), action_setting_render_watermark_position_y, null, null, capwid)
+		tab_next()
+		
+		// Scale
+		tab_control_meter()
+		draw_meter("settingsrenderwatermarkscale", dx, dy, dw, round(setting_render_watermark_scale * 100), 48, 0, 1000, 100, 1, tab.render.tbx_watermark_scale, action_setting_render_watermark_scale, capwid)
+		tab_next()
+		
+		// Alpha
+		tab_control_meter()
+		draw_meter("settingsrenderwatermarkalpha", dx, dy, dw, round(setting_render_watermark_alpha * 100), 48, 0, 100, 100, 1, tab.render.tbx_watermark_alpha, action_setting_render_watermark_alpha, capwid)
+		tab_next()
+		
+		// Preview
+		draw_watermark_preview(dx, dy, dw)
+	}
+	else
+	{
+		draw_label(string_limit(text_get("settingsrenderwatermarkupgraderequired"), dw), dx, dy)
+	}
+}

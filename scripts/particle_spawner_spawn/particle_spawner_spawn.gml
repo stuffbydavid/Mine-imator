@@ -91,6 +91,10 @@ for (var a = X; a <= Z; a++)
 			pt.rot_spd_mul[a] = sqrt(pt.rot_spd_mul[a])
 }
 
+// Angle (Sprites)
+pt.sprite_angle = value_random(type.sprite_angle, type.sprite_angle_israndom, type.sprite_angle_random_min, type.sprite_angle_random_max)
+pt.sprite_angle_add = value_random(type.sprite_angle_add, type.sprite_angle_add_israndom, type.sprite_angle_add_random_min, type.sprite_angle_add_random_max) / 60
+
 // Scale
 pt.scale = value_random(type.scale, type.scale_israndom, type.scale_random_min, type.scale_random_max)
 pt.scale_add = value_random(type.scale_add, type.scale_add_israndom, type.scale_add_random_min, type.scale_add_random_max) / 60

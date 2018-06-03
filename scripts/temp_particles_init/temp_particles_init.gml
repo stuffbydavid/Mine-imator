@@ -24,6 +24,7 @@ pc_destroy_at_time_seconds = 5
 pc_destroy_at_time_israndom = 0
 pc_destroy_at_time_random_min = 5
 pc_destroy_at_time_random_max = 10
+pc_destroy_at_bounding_box = false
 
 pc_type_list = ds_list_create()
 

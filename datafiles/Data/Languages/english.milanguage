@@ -1476,7 +1476,9 @@
             "timetip": "The amount of time after which particles are destroyed.",
             "timeisrandom": "Random",
             "timeisrandomtip": "Use a random value.",
-            "timerandom": "to"
+            "timerandom": "to",
+            "boundingboxtoggle": "When particles hit bounding box",
+            "boundingboxtoggletip": "Particles will be destroyed when the touch the bounding box (if one is selected)."
         },
         "types": "Types",
         "type/": {
@@ -1627,6 +1629,12 @@
                     "zmulrandom": "to"
                 }
             },
+            "spriteangle": "Sprite angle",
+            "spriteangletip": "The rotation angle of sprite particles.",
+            "spriteanglerandom": "to",
+            "spriteangleadd": "Angle change",
+            "spriteangleaddtip": "The change in angle per second.",
+            "spriteangleaddrandom": "to",
             "scale": "Scale",
             "scaletip": "The scale factor of each particle.",
             "scalerandom": "to",
@@ -2617,7 +2625,24 @@
             "aapower": "AA power",
             "aapowertip": "The power (intensity) of the Anti Aliasing effect.",
             "watermark": "Watermark",
-            "watermarktip": "Show a watermark in the bottom right corner of exported movies and images."
+            "watermarktip": "Show a watermark in the bottom right corner of exported movies and images.",
+            "watermarkupgraderequired": "Upgrade Mine-imator to use a custom watermark.",
+            "watermarkimage": "Image",
+            "watermarkimagetip": "The watermark image.",
+            "watermarkdefault": "Default",
+            "watermarkpositionx": "X position",
+            "watermarkpositionxtip": "The horizontal position of the watermark.",
+            "watermarkpositiony": "Y position",
+            "watermarkpositionytip": "The vertical position of the watermark.",
+            "watermarkleft": "Left",
+            "watermarkcenter": "Center",
+            "watermarkright": "Right",
+            "watermarktop": "Top",
+            "watermarkbottom": "Bottom",
+            "watermarkscale": "Scale",
+            "watermarkscaletip": "The scale of the watermark.",
+            "watermarkalpha": "Alpha",
+            "watermarkalphatip": "The transparency of the watermark."
         }
     }
 }

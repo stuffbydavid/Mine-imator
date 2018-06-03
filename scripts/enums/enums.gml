@@ -44,7 +44,10 @@ enum e_settings
 	FORMAT_110_PRE_1  = 24,
 	FORMAT_110		  = 25,
 	FORMAT_113		  = 26,
-	FORMAT_114		  = 27
+	FORMAT_114		  = 27,
+	FORMAT_115		  = 28,
+	FORMAT_120        = 29
+	
 }
 
 enum e_minecraft_assets

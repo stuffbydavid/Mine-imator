@@ -164,7 +164,7 @@ else // Sprite
 	xyang = 90 + point_direction(pos[X], pos[Y], proj_from[X], proj_from[Y])
 	zang = -point_zdirection(pos[X], pos[Y], pos[Z], proj_from[X], proj_from[Y], proj_from[Z])
 	m = max(0, frame - min(type.sprite_frame_start, type.sprite_frame_end)) mod type.sprite_vbuffer_amount
-	matrix_set(matrix_world, matrix_create(pos, vec3(zang, 0, xyang), vec3(scale)))
+	matrix_set(matrix_world, matrix_create(pos, vec3(zang, sprite_angle, xyang), vec3(scale)))
 	
 	vbuffer_render(type.sprite_vbuffer[m])
 }

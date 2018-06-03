@@ -25,6 +25,7 @@ json_save_object_start("particles")
 	json_save_var_bool("destroy_at_time_israndom", pc_destroy_at_time_israndom)
 	json_save_var("destroy_at_time_random_min", pc_destroy_at_time_random_min)
 	json_save_var("destroy_at_time_random_max", pc_destroy_at_time_random_max)
+	json_save_var("destroy_at_bounding_box", pc_destroy_at_bounding_box)
 	
 	json_save_array_start("types")
 	
@@ -85,7 +86,16 @@ json_save_object_start("particles")
 				json_save_var_point3D("rot_spd_mul_israndom", rot_spd_mul_israndom)
 				json_save_var_point3D("rot_spd_mul_random_min", rot_spd_mul_random_min)
 				json_save_var_point3D("rot_spd_mul_random_max", rot_spd_mul_random_max)
-		
+				
+				json_save_var("sprite_angle", sprite_angle)
+				json_save_var_bool("sprite_angle_israndom", sprite_angle_israndom)
+				json_save_var("sprite_angle_random_min", sprite_angle_random_min)
+				json_save_var("sprite_angle_random_max", sprite_angle_random_max)
+				json_save_var("sprite_angle_add", sprite_angle_add)
+				json_save_var_bool("sprite_angle_add_israndom", sprite_angle_add_israndom)
+				json_save_var("sprite_angle_add_random_min", sprite_angle_add_random_min)
+				json_save_var("sprite_angle_add_random_max", sprite_angle_add_random_max)
+				
 				json_save_var("scale", scale)
 				json_save_var_bool("scale_israndom", scale_israndom)
 				json_save_var("scale_random_min", scale_random_min)

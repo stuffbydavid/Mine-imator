@@ -674,6 +674,25 @@ switch (menu_name)
 		break
 	}
 	
+	// Watermark position
+	case "settingsrenderwatermarkpositionx":
+	{
+		menu_add_item("left", text_get("settingsrenderwatermarkleft"), null, 0)
+		menu_add_item("center", text_get("settingsrenderwatermarkcenter"), null, 0)
+		menu_add_item("right", text_get("settingsrenderwatermarkright"), null, 0)
+		
+		break
+	}
+	
+	case "settingsrenderwatermarkpositiony":
+	{
+		menu_add_item("top", text_get("settingsrenderwatermarktop"), null, 0)
+		menu_add_item("center", text_get("settingsrenderwatermarkcenter"), null, 0)
+		menu_add_item("bottom", text_get("settingsrenderwatermarkbottom"), null, 0)
+		
+		break
+	}
+	
 	// Video size
 	case "projectvideosize":
 	case "exportmovievideosize":

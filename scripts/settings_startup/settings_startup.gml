@@ -170,6 +170,12 @@ setting_render_dof_blur_size = 0.02
 setting_render_aa = true
 setting_render_aa_power = 1
 setting_render_watermark = trial_version
+setting_render_watermark_image = spr_watermark
+setting_render_watermark_filename = ""
+setting_render_watermark_anchor_x = "right"
+setting_render_watermark_anchor_y = "bottom"
+setting_render_watermark_scale = 1
+setting_render_watermark_alpha = 1
 
 setting_export_movie_format = "mp4"
 setting_export_movie_frame_rate = 30

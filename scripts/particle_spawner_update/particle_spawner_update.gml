@@ -147,7 +147,10 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 							pt.spd[a] += clamp(value[e_value.ATTRACTOR].world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
 					}
 				}
-			
+				
+				// Angle (Sprites)
+				pt.sprite_angle += pt.sprite_angle_add
+				
 				// Scale
 				pt.scale += pt.scale_add
 				if (pt.scale <= 0)
@@ -171,6 +174,8 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 					pt.color = merge_color(pt.color_mix_start, pt.color_mix, clamp((s - pt.spawntime) / pt.color_mix_time, 0, 1))
 			
 				// Bounding box
+				var hit_bounding_box = false;
+				
 				if (temp.pc_bounding_box_type != "none" && pt.type.bounding_box)
 				{
 					// Ground
@@ -178,6 +183,8 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 					{
 						if (pt.pos[Z] < temp.pc_bounding_box_ground_z)
 						{
+							hit_bounding_box = true
+							
 							if (pt.type.bounce)
 							{
 								// Flip Z speed
@@ -213,6 +220,8 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 								var dis = point3D_distance(pt.pos, world_pos);
 								if (dis > temp.pc_spawn_region_sphere_radius)
 								{
+									hit_bounding_box = true
+									
 									for (var a = X; a <= Z; a++)
 									{
 										if (pt.type.bounce)
@@ -264,6 +273,7 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 							if (pt.pos[a] < boxstart[a] || pt.pos[a] > boxend[a])
 							{
 								// Keep within box
+								hit_bounding_box = true
 								pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
 								if (pt.type.bounce)
 								{
@@ -281,6 +291,14 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 						}
 					}
 				}
+				
+				if (hit_bounding_box && temp.pc_destroy_at_bounding_box)
+				{
+					with (pt)
+						instance_destroy()
+					continue
+				}
+				
 			}
 		}
 	}
