@@ -14,19 +14,25 @@ display_mouse_set(lockx, locky)
 
 if (!cam)
 {
-	cam_work_angle_off_xy += mx / (5/delta)
-	cam_work_angle_off_z += my / (5/delta)
+	if (fps > 20)
+	{
+		cam_work_angle_off_xy += mx / (5/delta)
+		cam_work_angle_off_z += my / (5/delta)
+	}
+	else
+	{
+		cam_work_angle_off_xy = 0
+		cam_work_angle_off_z = 0
+		
+		cam_work_angle_xy += mx
+		cam_work_angle_z += my
+		cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
 	
-	/*
-	cam_work_angle_xy += mx
-	cam_work_angle_z += my
-	cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
-	
-	cam_work_angle_look_xy += mx
-	cam_work_angle_look_z -= my
-	cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
-	camera_work_set_from()
-	*/
+		cam_work_angle_look_xy += mx
+		cam_work_angle_look_z -= my
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		camera_work_set_from()
+	}
 	
 	if (keyboard_check_pressed(setting_key_reset))
 		camera_work_reset()

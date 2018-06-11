@@ -44,23 +44,10 @@ with (mc_assets)
 		// Load biomes
 		case "biomes":
 		{
-			if (!file_exists(load_assets_dir + mi_assets_directory + "biomes.json"))
-			{
-				log("Biomes file doesn't exist.")
-				return false
-			}
-			
-			if (!file_exists(load_assets_dir + mi_assets_directory + "biomes_legacy.json"))
-			{
-				log("Legacy biomes file doesn't exist.")
-				return false
-			}
-			
 			with(mc_res)
-				minecraft_assets_load_biomes(biome_list, load_assets_dir + mi_assets_directory + "biomes.json");
+				minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 			
-			if (file_exists(load_assets_dir + mi_assets_directory + "biomes_legacy.json"))
-				biome_legacy_map = json_load(load_assets_dir + mi_assets_directory + "biomes_legacy.json")
+			biome_legacy_map = load_assets_map[?"biomes_legacy"]
 			
 			app.background_biome = biome_list[|2]
 			app.background_biome_color_foliage = c_plains_biome_foliage

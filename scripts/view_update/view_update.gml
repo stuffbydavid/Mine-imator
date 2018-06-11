@@ -96,7 +96,7 @@ if (window_focus = string(view))
 	}
 	
 	// Smoothen angles
-	if (cam_work_angle_off_xy != 0 || cam_work_angle_off_z != 0)
+	if ((cam_work_angle_off_xy != 0 || cam_work_angle_off_z != 0) && fps > 20) // Doesn't like low FPS
 	{
 		cam_work_angle_off_xy -= cam_work_angle_off_xy / (5 / delta)
 		cam_work_angle_off_z -= cam_work_angle_off_z / (5 / delta)

@@ -2,9 +2,9 @@
     "description": "Mine-imator language file. Copy and rename this to begin creating your own translation.",
     "file/": {
         "language": "English",
-        "translator": "David",
+        "translator": "David/Nimi",
         "forversion": "1.1.5",
-        "lastchange": "2018.04.15" 
+        "lastchange": "2018.06.11" 
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1853,7 +1853,7 @@
         "ice_spikes": "Ice Spikes",
         "desert": "Desert",
         "desert_hills": "Desert Hills",
-        "desert_lakes": "desert Lakes",
+        "desert_lakes": "Desert Lakes",
         "mountains": "Mountains",
         "mountain_edge": "Mountain Edge",
         "wooded_mountains": "Wooded Mountains",

@@ -4044,5 +4044,373 @@
 		"items/compass_29",
 		"items/compass_30",
 		"items/compass_31"
-	]
+	],
+	"biomes": [
+        {
+            "name": "ocean",
+            "foliage": [ 129, 192 ],
+            "water": "#3E75E1",
+            "variant": [
+                { 
+                    "name": "normal"
+                },
+                {
+                    "name": "deep_ocean"
+                },
+                {
+                    "name": "frozen_ocean",
+                    "water": "#3837C7"
+                },
+                {
+                    "name": "warm_ocean"
+                },
+                {
+                    "name": "lukewarm_ocean"
+                },
+                {
+                    "name": "cold_ocean",
+                    "water": "#3C56D3"
+                },
+                {
+                    "name": "warm_deep_ocean"
+                },
+                {
+                    "name": "deep_lukewarm_ocean"
+                },
+                {
+                    "name": "deep_cold_ocean",
+                    "water": "#3C56D3"
+                },
+                {
+                    "name": "deep_frozen_ocean",
+                    "water": "#3837C7"
+                }
+            ]
+        },
+        {
+            "name": "plains",
+            "foliage": [ 50, 173 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "sunflower_plains"
+                },
+                {
+                    "name": "snowy_tundra",
+                    "foliage": [ 242, 244 ]
+                },
+                {
+                    "name": "ice_spikes",
+                    "foliage": [ 242, 244 ]
+                }
+            ]
+        },
+        {
+            "name": "desert",
+            "foliage": [ 0, 255 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "desert_hills"
+                },
+                {
+                    "name": "desert_lakes"
+                }
+            ]
+        },
+        {
+            "name": "mountains",
+            "foliage": [ 203, 239 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "mountain_edge"
+                },
+                {
+                    "name": "wooded_mountains"
+                },
+                {
+                    "name": "gravelly_mountains"
+                },
+                {
+                    "name": "gravelly_mountains+"
+                },
+                {
+                    "name": "snowy_mountains"
+                }
+            ]
+        },
+        {
+            "name": "forest",
+            "foliage": [ 75, 110],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "wooded_hills"
+                },
+                {
+                    "name": "flower_forest"
+                }
+            ]
+        },
+        {
+            "name": "taiga",
+            "foliage": [ 242, 244 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "taiga_hills"
+                },
+                {
+                    "name": "snowy_taiga",
+                    "water": "#3C56D3"
+                },
+                {
+                    "name": "snowy_taiga_hills",
+                    "water": "#3C56D3"
+                },
+                {
+                    "name": "giant_tree_taiga"
+                },
+                {
+                    "name": "giant_tree_taiga_hills"
+                },
+                {
+                    "name": "taiga_mountains"
+                },
+                {
+                    "name": "snowy_taiga_mountains",
+                    "water": "#3C56D3"
+                },
+                {
+                    "name": "giant_spruce_hills"
+                },
+                {
+                    "name": "giant_spruce_taiga_hills"
+                }
+            ]
+        },
+        {
+            "name": "swamp",
+            "foliage": "#6A7039",
+            "water": "#607A63",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+					"name": "swamp_hills",
+					"water": "#DDFCAC"
+                }
+            ]
+        },
+        {
+            "name": "river",
+            "foliage": [ 128, 187 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "frozen_river",
+                    "water": "#3837C7"
+                }
+            ]
+        },
+        {
+            "name": "nether",
+            "foliage": [ 0, 255 ],
+            "water": "#3E75E1"
+        },
+        {
+            "name": "the_end",
+            "foliage": [ 127, 189 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "small_end_islands"
+                },
+                {
+                    "name": "end_midlands"
+                },
+                {
+                    "name": "end_highlands"
+                },
+                {
+                    "name": "end_barrens"
+                }
+            ]
+        },
+        {
+            "name": "mushroom_fields",
+            "foliage": [ 25, 25 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "mushroom_field_shore"
+                }
+            ]
+        },
+        {
+            "name": "beach",
+            "foliage": [ 60, 191 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "stone_shore"
+                },
+                {
+                    "name": "snowy_beach",
+                    "water": "#3C56D3"
+                }
+            ]
+        },
+        {
+            "name": "jungle",
+            "foliage": [ 0, 25 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "jungle_hills"
+                },
+                {
+                    "name": "jungle_edge"
+                },
+                {
+                    "name": "modified_jungle"
+                },
+                {
+                    "name": "modified_jungle_edge"
+                }
+            ]
+        },
+        {
+            "name": "birch_forest",
+            "foliage": [ 99, 162 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "birch_forest_hills"
+                },
+                {
+                    "name": "tall_birch_forest"
+                },
+                {
+                    "name": "tall_birch_hills"
+                }
+            ]
+        },
+        {
+            "name": "dark_forest",
+            "foliage": "#507831",
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "dark_forest_hills"
+                }
+            ]
+        },
+        {
+            "name": "savanna",
+            "foliage": [ 0, 255 ],
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "savanna_plateau"
+                },
+                {
+                    "name": "shattered_savanna"
+                },
+                {
+                    "name": "shattered_savanna_plateau"
+                }
+            ]
+        },
+        {
+            "name": "badlands",
+            "grass": "#90814D",
+            "foliage": "#9E814D",
+            "water": "#3E75E1",
+            "variant": [
+                {
+                    "name": "normal"
+                },
+                {
+                    "name": "wooded_badlands_plateau"
+                },
+                {
+                    "name": "badlands_plateau"
+                },
+                {
+                    "name": "eroded_badlands"
+                },
+                {
+                    "name": "modified_wooded_badlands_plateau"
+                },
+                {
+                    "name": "modified_badlands_plateau"
+                }
+            ]
+        },
+        {
+            "name": "the_void",
+            "foliage": [ 127, 189 ],
+            "water": "#3E75E1"
+        }
+    ],
+	"biomes_legacy": 
+	{
+		"foresthills": "wooded_hills",
+		"swampland": "swamp",
+		"deserthills": "desert_hills",
+		"junglehills": "jungle_hills",
+		"mushroomisland": "mushroom_fields",
+		"mushroomislandshore": "mushroom_field_shore",
+		"extremehills": "mountains",
+		"extremehillsedge": "mountain_edge",
+		"taigahills": "taiga_hills",
+		"iceplains": "snowy_tundra",
+		"icemountains": "snow_mountains",
+		"frozenocean": "frozen_ocean",
+		"frozenriver": "frozen_river",
+		"mesa": "badlands",
+		"theend": "the_end"
+	}
 }

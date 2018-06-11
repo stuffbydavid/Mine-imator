@@ -1,26 +1,16 @@
-/// minecraft_assets_load_biomes(list, fn)
+/// minecraft_assets_load_biomes(list, map)
 /// @arg list
-/// @arg fn
+/// @arg map
 /// @desc Loads biomes from Minecraft version
 
-var list, fn;
+var list, map;
 list = argument0;
-fn = argument1;
-
-if (!file_exists_lib(fn))
-{
-	log("Biomes file doesn't exist.")
-	log(fn)
-	return null
-}
-
-var map = json_load(fn);
+map = argument1;
 
 // Read all the 'base' biomes
-var basebiomes = map[?"biomes"];
-for (var b = 0; b < ds_list_size(basebiomes); b++)
+for (var b = 0; b < ds_list_size(map); b++)
 {
-	var biome = basebiomes[|b]
+	var biome = map[|b]
 	var biomeid;
 	with (new(obj_biome))
 	{
@@ -113,5 +103,3 @@ for (var b = 0; b < ds_list_size(basebiomes); b++)
 	
 	ds_list_add(biome_list, biomeid)
 }
-
-ds_map_destroy(map)
