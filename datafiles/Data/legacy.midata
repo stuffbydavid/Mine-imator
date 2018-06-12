@@ -4091,5 +4091,23 @@
 		"items/music_disc_11": "items/record_11",
 		"items/music_disc_wait": "items/record_wait",
 		"items/music_disc_13": "items/record_13"
+	},
+	"legacy_biomes": 
+	{
+		"foresthills": "wooded_hills",
+		"swampland": "swamp",
+		"deserthills": "desert_hills",
+		"junglehills": "jungle_hills",
+		"mushroomisland": "mushroom_fields",
+		"mushroomislandshore": "mushroom_field_shore",
+		"extremehills": "mountains",
+		"extremehillsedge": "mountain_edge",
+		"taigahills": "taiga_hills",
+		"iceplains": "snowy_tundra",
+		"icemountains": "snow_mountains",
+		"frozenocean": "frozen_ocean",
+		"frozenriver": "frozen_river",
+		"mesa": "badlands",
+		"theend": "the_end"
 	}
 }

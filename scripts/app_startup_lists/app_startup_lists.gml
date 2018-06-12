@@ -2,7 +2,7 @@
 
 globalvar value_name_list, transition_list;
 globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
-globalvar biome_legacy_map, biome_list, videotemplate_list, videoquality_list;
+globalvar biome_list, videotemplate_list, videoquality_list;
 globalvar language_english_map, language_map;
 
 // Values
@@ -220,6 +220,5 @@ language_load(language_file, language_english_map)
 ds_map_copy(language_map, language_english_map)
 
 // Biomes
-biome_legacy_map = ds_map_create()
 biome_list = ds_list_create()
 ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))

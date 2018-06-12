@@ -47,8 +47,6 @@ with (mc_assets)
 			with(mc_res)
 				minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 			
-			biome_legacy_map = load_assets_map[?"biomes_legacy"]
-			
 			app.background_biome = biome_list[|2]
 			app.background_biome_color_foliage = c_plains_biome_foliage
 			app.background_biome_color_grass = c_plains_biome_grass

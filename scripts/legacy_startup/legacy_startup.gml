@@ -8,6 +8,7 @@ globalvar legacy_model_part_map, legacy_model_name_map;
 globalvar legacy_block_set, legacy_block_id, legacy_block_obj, legacy_block_state_vars, legacy_block_state_id;
 globalvar legacy_block_texture_name_map, legacy_block_05_texture_list, legacy_block_07_demo_texture_list, legacy_block_100_texture_list;
 globalvar legacy_item_texture_name_map;
+globalvar legacy_biomes_map;
 
 var map = json_load(legacy_file);
 if (!ds_map_valid(map))
@@ -35,3 +36,6 @@ legacy_block_100_texture_list = map[?"legacy_block_100_textures"]
 
 // Items
 legacy_item_texture_name_map = map[?"legacy_item_texture_name"]
+
+// Biomes
+legacy_biomes_map = map[?"legacy_biomes"]
