@@ -18,6 +18,11 @@ if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	ds_map_clear(model_shape_vbuffer_map)
 }
 
+bend_rot_last = vec3(value_inherit[e_value.BEND_ANGLE_X],
+					 value_inherit[e_value.BEND_ANGLE_Y],
+					 value_inherit[e_value.BEND_ANGLE_Z])
+bend_model_part_last = model_part
+
 if (model_part = null)
 	return 0
 	
@@ -33,14 +38,10 @@ if (model_shape_vbuffer_map = null)
 	model_shape_vbuffer_map = ds_map_create()
 
 // Get resource
-var res;
-with (temp)
-	res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-
-bend_rot_last = vec3(value_inherit[e_value.BEND_ANGLE_X],
-					 value_inherit[e_value.BEND_ANGLE_Y],
-					 value_inherit[e_value.BEND_ANGLE_Z])
-bend_model_part_last = model_part
+var res = null;
+if (temp.object_index = obj_template)
+	with (temp)
+		res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 
 model_part_fill_shape_alpha_map(model_part, model_shape_alpha_map, res, temp.model_texture_name_map)
 model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)

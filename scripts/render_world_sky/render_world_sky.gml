@@ -95,7 +95,7 @@ if (!background_image_show)
 		background_sky_moon_vbuffer = vbuffer_create_surface(1000, point2D(0, 0), point2D(1, 1), false)
 		
 	render_set_uniform_color("uBlendColor", c_white, background_night_alpha)
-	if (background_sky_moon_tex.type = e_res_type.PACK)
+	if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
 		render_set_texture(background_sky_moon_tex.moon_texture[background_sky_moon_phase])
 	else
 		render_set_texture(background_sky_moon_tex.texture)

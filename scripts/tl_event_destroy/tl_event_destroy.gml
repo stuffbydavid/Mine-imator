@@ -25,7 +25,7 @@ if (part_of = null && temp != null)
 	
 with (obj_template)
 	if (shape_tex = other.id)
-		shape_tex = 0
+		shape_tex = null
 
 with (obj_timeline)
 {

@@ -16,8 +16,8 @@ if (!cam)
 {
 	if (fps > 20)
 	{
-		cam_work_angle_off_xy += mx / (5/delta)
-		cam_work_angle_off_z += my / (5/delta)
+		cam_work_angle_off_xy += mx / (2 / delta)
+		cam_work_angle_off_z += my / (2 / delta)
 	}
 	else
 	{
