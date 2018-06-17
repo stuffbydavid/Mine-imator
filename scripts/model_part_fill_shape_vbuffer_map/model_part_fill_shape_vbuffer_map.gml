@@ -25,7 +25,10 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		else if (type = "plane")
 		{
 			if (is3d)
-				vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[?id])
+			{
+				if (ds_map_valid(alphamap))
+					vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[?id])
+			}
 			else if (isbent)
 				vbufmap[? id] = model_shape_generate_plane(bend)
 		}
