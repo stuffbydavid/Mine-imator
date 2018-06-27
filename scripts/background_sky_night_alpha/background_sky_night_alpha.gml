@@ -6,7 +6,7 @@ x2 = 110
 x3 = 180 + 60
 x4 = 180 + 110
 
-t = mod_fix(background_sky_time, 360)
+t = mod_fix(app.background_sky_time, 360)
 
 a = 0
 if (t >= x1 && t < x2)

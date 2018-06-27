@@ -173,8 +173,8 @@ with (new(obj_timeline))
 					value[e_value.BEND_ANGLE_LEGACY]= 0
 		}
 		
-		/*hide_quality_high = */buffer_read_byte()
-		/*hide_quality_low = */buffer_read_byte()
-		/*biome = */buffer_read_byte()
+		hq_hiding = buffer_read_byte() // hide_quality_high
+		lq_hiding = buffer_read_byte() // hide_quality_low
+		foliage_tint = buffer_read_byte() // biome
 	}
 }

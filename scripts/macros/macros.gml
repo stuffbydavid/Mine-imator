@@ -8,15 +8,15 @@
 #macro dev_mode_rotate_blocks		true
 
 // Versions
-#macro mineimator_version			"1.1.5"
+#macro mineimator_version			"1.2.0"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2018 Q2"
+#macro mineimator_version_date		"2018 Q3"
 #macro gm_runtime					"2.1.4.203"
 #macro minecraft_version			"1.13"
 
 // File formats
-#macro project_format				e_project.FORMAT_115
-#macro settings_format				e_settings.FORMAT_115
+#macro project_format				e_project.FORMAT_120
+#macro settings_format				e_settings.FORMAT_120
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_113
 
 // Directories
@@ -106,7 +106,6 @@
 #macro c_plains_biome_foliage       make_color_rgb(119, 171, 47)
 #macro c_plains_biome_grass         make_color_rgb(145, 189, 89)
 #macro c_plains_biome_water         make_color_rgb(62, 117, 225)
-
 
 // Audio
 #macro sample_rate					44100

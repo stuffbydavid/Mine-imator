@@ -20,4 +20,8 @@ if (!background_fog_color_custom) // Fog color
 		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 270)) / 160, 1) * 0.75
 		background_fog_color_final = merge_color(background_fog_color_final, c_orange, background_sunrise_alpha * p)
 	}
+	
+	if (!background_fog_object_color_custom)
+		background_fog_object_color_final = background_fog_color_final
+	
 }

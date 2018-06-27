@@ -1,4 +1,4 @@
-/// action_tl_frame_set_colors(alpha, rgbadd, rgbsub, rgbmul, hsbadd, hsbsub, hsbmul, mixcolor, mixpercent, brightness)
+/// action_tl_frame_set_colors(alpha, rgbadd, rgbsub, rgbmul, hsbadd, hsbsub, hsbmul, mixcolor, glowcolor, mixpercent, brightness)
 /// @arg alpha
 /// @arg rgbadd
 /// @arg rgbsub
@@ -7,6 +7,7 @@
 /// @arg hsbsub
 /// @arg hsbmul
 /// @arg mixcolor
+/// @arg glowcolor
 /// @arg mixpercent
 /// @arg brightness
 
@@ -19,6 +20,7 @@ tl_value_set(e_value.HSB_ADD, argument4, false)
 tl_value_set(e_value.HSB_SUB, argument5, false)
 tl_value_set(e_value.HSB_MUL, argument6, false)
 tl_value_set(e_value.MIX_COLOR, argument7, false)
-tl_value_set(e_value.MIX_PERCENT, argument8, false)
-tl_value_set(e_value.BRIGHTNESS, argument9, false)
+tl_value_set(e_value.GLOW_COLOR, argument8, false)
+tl_value_set(e_value.MIX_PERCENT, argument9, false)
+tl_value_set(e_value.BRIGHTNESS, argument10, false)
 tl_value_set_done()

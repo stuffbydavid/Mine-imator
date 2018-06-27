@@ -1,26 +1,32 @@
-/// action_tl_frame_set_camera(fov, rotate, rotatedistance, rotatexyangle, rotatezangle, dof, dofdepth, dofrange, doffadesize, width, height)
-/// @arg fov
-/// @arg rotate
-/// @arg rotatedistance
-/// @arg rotatexyangle
-/// @arg rotatezangle
-/// @arg dof
-/// @arg dofdepth
-/// @arg dofrange
-/// @arg doffadesize
-/// @arg width
-/// @arg height
+/// action_tl_frame_set_camera(valueslist, [reset])
+/// @arg valueslist
+/// @arg [reset]
+
+var valueslist, reset;
+valueslist = argument[0]
+reset = false
+
+if (argument_count > 1)
+	reset = argument[1]
 
 tl_value_set_start(action_tl_frame_set_camera, false)
-tl_value_set(e_value.CAM_FOV, argument0, false)
-tl_value_set(e_value.CAM_ROTATE, argument1, false)
-tl_value_set(e_value.CAM_ROTATE_DISTANCE, argument2, false)
-tl_value_set(e_value.CAM_ROTATE_ANGLE_XY, argument3, false)
-tl_value_set(e_value.CAM_ROTATE_ANGLE_Z, argument4, false)
-tl_value_set(e_value.CAM_DOF, argument5, false)
-tl_value_set(e_value.CAM_DOF_DEPTH, argument6, false)
-tl_value_set(e_value.CAM_DOF_RANGE, argument7, false)
-tl_value_set(e_value.CAM_DOF_FADE_SIZE, argument8, false)
-tl_value_set(e_value.CAM_WIDTH, argument9, false)
-tl_value_set(e_value.CAM_HEIGHT, argument10, false)
+
+for (var i = 0; i < ds_list_size(camera_values_list); i++)
+{
+	var vid = camera_values_list[|i];
+	
+	if (reset)
+	{
+		if (valueslist[|i] = null)
+			tl_value_set(vid, null, false)
+			
+		if (valueslist[|i] = true)
+			tl_value_set(vid, tl_value_default(vid), false)
+	}
+	else
+	{
+		tl_value_set(vid, valueslist[|i], false)
+	}
+}
+
 tl_value_set_done()

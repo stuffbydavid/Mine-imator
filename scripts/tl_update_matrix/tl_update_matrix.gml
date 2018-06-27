@@ -126,6 +126,7 @@ if (object_index != app && update_matrix)
 	value_inherit[e_value.HSB_SUB] = value[e_value.HSB_SUB] // Added
 	value_inherit[e_value.HSB_MUL] = value[e_value.HSB_MUL] // Multiplied
 	value_inherit[e_value.MIX_COLOR] = value[e_value.MIX_COLOR] // Added
+	value_inherit[e_value.GLOW_COLOR] = value[e_value.GLOW_COLOR] // Multiplied
 	value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
 	value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
 	value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
@@ -134,9 +135,10 @@ if (object_index != app && update_matrix)
 	value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] // Added
 	value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
 	
-	var inhalpha, inhcolor, inhvis, inhbend, inhtex;
+	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex;
 	inhalpha = true
 	inhcolor = true
+	inhglowcolor = true
 	inhvis = true
 	inhbend = true
 	inhtex = true
@@ -152,6 +154,9 @@ if (object_index != app && update_matrix)
 		
 		if (!tl.inherit_color)
 			inhcolor = false
+			
+		if (!tl.inherit_glow_color)
+			inhglowcolor = false
 		
 		if (!tl.inherit_visibility)
 			inhvis = false
@@ -177,6 +182,9 @@ if (object_index != app && update_matrix)
 			value_inherit[e_value.MIX_PERCENT] = clamp(value_inherit[e_value.MIX_PERCENT] + par.value[e_value.MIX_PERCENT], 0, 1)
 			value_inherit[e_value.BRIGHTNESS] = clamp(value_inherit[e_value.BRIGHTNESS] + par.value[e_value.BRIGHTNESS], 0, 1)
 		}
+		
+		if (inhglowcolor)
+			value_inherit[e_value.GLOW_COLOR] = color_multiply(value_inherit[e_value.GLOW_COLOR], par.value[e_value.GLOW_COLOR])
 		
 		if (inhvis)
 			value_inherit[e_value.VISIBLE] *= par.value[e_value.VISIBLE]

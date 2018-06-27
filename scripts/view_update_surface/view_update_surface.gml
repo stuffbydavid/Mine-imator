@@ -63,7 +63,7 @@ if (view.controls)
 			// Controls
 			if (tl_edit != null && tl_edit != cam)
 			{
-				if (!tl_edit.hide && tl_edit.value_inherit[e_value.VISIBLE])
+				if (!tl_edit.hide && tl_edit.value_inherit[e_value.VISIBLE] && (!(view_render && tl_edit.hq_hiding) && !(!view_render && tl_edit.lq_hiding)))
 				{
 					if (tl_edit.value_type[e_value_type.POSITION] && frame_editor.position.show)
 						view_control_position(view)

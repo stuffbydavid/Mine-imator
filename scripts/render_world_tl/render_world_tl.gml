@@ -13,9 +13,13 @@ if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_
 	return 0
 	
 // Invisible?
-if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden))
+if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden) || (app.view_render && hq_hiding) || (!app.view_render && lq_hiding))
 	return 0
-	
+
+// Only render glow effect?
+if ((glow && only_render_glow) && render_mode != e_render_mode.COLOR_GLOW)
+	return 0
+
 // Not registered on shadow depth testing?
 if (!shadows &&
 	(render_mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
@@ -61,6 +65,10 @@ shader_texture_filter_linear = texture_blur
 shader_texture_filter_mipmap = (app.setting_texture_filtering && texture_filtering)
 
 shader_blend_color = value_inherit[e_value.RGB_MUL]
+
+if (foliage_tint)
+	shader_blend_color = color_multiply(shader_blend_color, app.background_biome_color_foliage)
+
 shader_blend_alpha = value_inherit[e_value.ALPHA]
 render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 if (colors_ext)
@@ -84,6 +92,17 @@ if (!fog)
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", ssao)
 	
+if (glow)
+{
+	render_set_uniform_color("uGlowColor", value_inherit[e_value.GLOW_COLOR], 1)
+	render_set_uniform_int("uGlowTexture", glow_texture)
+}
+else
+{
+	render_set_uniform_color("uGlowColor", c_black, 1)
+	render_set_uniform_int("uGlowTexture", 0)
+}
+
 // Render
 if (type != e_tl_type.PARTICLE_SPAWNER)
 {

@@ -7,6 +7,7 @@ switch (argument0)
 	case e_value.SCA_Y:
 	case e_value.SCA_Z: return 1
 	case e_value.ALPHA: return 1
+	case e_value.GLOW_COLOR:
 	case e_value.RGB_MUL:
 	case e_value.HSB_MUL: return c_white
 	case e_value.SPAWN: return true
@@ -24,6 +25,11 @@ switch (argument0)
 	case e_value.CAM_ROTATE_DISTANCE: return 100
 	case e_value.CAM_DOF_RANGE: return 200
 	case e_value.CAM_DOF_FADE_SIZE: return 100
+	case e_value.CAM_DOF_BLUR_SIZE: return .01
+	case e_value.CAM_BLOOM_THRESHOLD: return .85
+	case e_value.CAM_BLOOM_INTENSITY: return .4
+	case e_value.CAM_BLOOM_RADIUS: return 1
+	case e_value.CAM_BLOOM_BLEND: return c_white
 	case e_value.CAM_WIDTH: return 1280
 	case e_value.CAM_HEIGHT: return 720
 	case e_value.CAM_SIZE_USE_PROJECT: return true
@@ -38,6 +44,7 @@ switch (argument0)
 	case e_value.BG_AMBIENT_COLOR: return app.background_ambient_color
 	case e_value.BG_NIGHT_COLOR: return app.background_night_color
 	case e_value.BG_FOG_COLOR: return app.background_fog_color
+	case e_value.BG_FOG_OBJECT_COLOR: return app.background_fog_object_color
 	case e_value.BG_FOG_DISTANCE: return app.background_fog_distance
 	case e_value.BG_FOG_SIZE: return app.background_fog_size
 	case e_value.BG_FOG_HEIGHT: return app.background_fog_height

@@ -220,8 +220,8 @@ if (load_format >= e_settings.FORMAT_100)
 	setting_render_shadows_blur_quality = buffer_read_byte()
 	setting_render_shadows_blur_size = buffer_read_double()
 	
-	setting_render_dof = buffer_read_byte()
-	setting_render_dof_blur_size = buffer_read_double()
+	/*setting_render_dof =*/ buffer_read_byte()
+	/*setting_render_dof_blur_size =*/ buffer_read_double()
 	
 	setting_render_aa = buffer_read_byte()
 	setting_render_aa_power = buffer_read_double()
@@ -275,7 +275,7 @@ else
 	/*setting_camera_buffer_size=*/ buffer_read_int()
 	setting_render_shadows_blur_quality = buffer_read_byte()
 	setting_render_shadows_blur_size = min(buffer_read_double(), 4)
-	setting_render_dof_blur_size = buffer_read_double()
+	/*setting_render_dof_blur_size =*/ buffer_read_double()
 }
 
 if (load_format >= e_settings.FORMAT_106)

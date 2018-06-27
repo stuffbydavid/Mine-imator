@@ -4,6 +4,7 @@ globalvar value_name_list, transition_list;
 globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
 globalvar biome_list, videotemplate_list, videoquality_list;
 globalvar language_english_map, language_map;
+globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 
 // Values
 value_name_list = ds_list_create()
@@ -29,6 +30,7 @@ ds_list_add(value_name_list,
 	"HSB_SUB",
 	"HSB_MUL",
 	"MIX_COLOR",
+	"GLOW_COLOR",
 	"MIX_PERCENT",
 	"BRIGHTNESS",
 	"SPAWN",
@@ -52,6 +54,12 @@ ds_list_add(value_name_list,
 	"CAM_DOF_DEPTH",
 	"CAM_DOF_RANGE",
 	"CAM_DOF_FADE_SIZE",
+	"CAM_DOF_BLUR_SIZE",
+	"CAM_BLOOM",
+	"CAM_BLOOM_THRESHOLD",
+	"CAM_BLOOM_INTENSITY",
+	"CAM_BLOOM_RADIUS",
+	"CAM_BLOOM_BLEND",
 	"CAM_SIZE_USE_PROJECT",
 	"CAM_SIZE_KEEP_ASPECT_RATIO",
 	"CAM_WIDTH",
@@ -66,6 +74,7 @@ ds_list_add(value_name_list,
 	"BG_AMBIENT_COLOR",
 	"BG_NIGHT_COLOR",
 	"BG_FOG_COLOR",
+	"BG_FOG_OBJECT_COLOR",
 	"BG_FOG_DISTANCE",
 	"BG_FOG_SIZE",
 	"BG_FOG_HEIGHT",
@@ -81,6 +90,57 @@ ds_list_add(value_name_list,
 	"TEXT_FONT",
 	"VISIBLE",
 	"TRANSITION"
+)
+
+// Camera values
+camera_values_list = ds_list_create()
+ds_list_add(camera_values_list,
+	e_value.CAM_FOV,
+	e_value.CAM_ROTATE,
+	e_value.CAM_ROTATE_DISTANCE,
+	e_value.CAM_ROTATE_ANGLE_XY,
+	e_value.CAM_ROTATE_ANGLE_Z,
+	e_value.CAM_DOF,
+	e_value.CAM_DOF_DEPTH,
+	e_value.CAM_DOF_RANGE,
+	e_value.CAM_DOF_FADE_SIZE,
+	e_value.CAM_DOF_BLUR_SIZE,
+	e_value.CAM_BLOOM,
+	e_value.CAM_BLOOM_THRESHOLD,
+	e_value.CAM_BLOOM_INTENSITY,
+	e_value.CAM_BLOOM_RADIUS,
+	e_value.CAM_BLOOM_BLEND,
+	e_value.CAM_WIDTH,
+	e_value.CAM_HEIGHT,
+	e_value.CAM_SIZE_USE_PROJECT,
+	e_value.CAM_SIZE_KEEP_ASPECT_RATIO
+)
+
+camera_values_copy = ds_list_create()
+for (var i = 0; i < ds_list_size(camera_values_list); i++)
+	camera_values_copy[|i] = tl_value_default(camera_values_list[|i])
+
+camera_use_default_list = ds_list_create()
+ds_list_add(camera_use_default_list,
+	true,	// CAM_FOV
+	false,	// CAM_ROTATE
+	true,	// CAM_ROTATE_DISTANCE
+	true,	// CAM_ROTATE_ANGLE_XY
+	true,	// CAM_ROTATE_ANGLE_Z
+	false,	// CAM_DOF
+	true,	// CAM_DOF_DEPTH
+	true,	// CAM_DOF_RANGE
+	true,	// CAM_DOF_FADE_SIZE
+	true,	// CAM_DOF_BLUR_SIZE
+	false,	// CAM_BLOOM
+	true,	// CAM_BLOOM_THRESHOLD
+	true,	// CAM_BLOOM_INTENSITY
+	true,	// CAM_BLOOM_RADIUS
+	true,	// CAM_BLOOM_BLEND
+	null,	// CAM_WIDTH
+	null,	// CAM_HEIGHT
+	true,	// CAM_SIZE_USE_PROJECT
+	true	// CAM_SIZE_KEEP_ASPECT_RATIO
 )
 
 // Template types

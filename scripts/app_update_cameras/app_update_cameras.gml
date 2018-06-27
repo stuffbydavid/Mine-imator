@@ -8,7 +8,7 @@ if (!view_second.show && view_render && !view_render_real_time && window_state !
 
 with (obj_timeline)
 {
-	if (!value_inherit[e_value.VISIBLE] || !type_is_shape(type))
+	if (!value_inherit[e_value.VISIBLE] || !type_is_shape(type) || (app.view_render && hq_hiding) || (!app.view_render && lq_hiding))
 		continue
 	
 	var texobj;

@@ -12,6 +12,8 @@ if (!res.ready)
 render_set_uniform_int("uIsSky", 1)
 render_set_uniform_int("uSSAOEnable", 0)
 render_set_uniform_color("uBlendColor", merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha), 0.8 - min(background_night_alpha, 0.75))
+render_set_uniform_color("uGlowColor", c_black, 1)
+render_set_uniform_int("uGlowTexture", 0)
 
 // Texture
 if (res.type = e_res_type.PACK)

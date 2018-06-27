@@ -18,16 +18,24 @@ if (render_camera != null)
 		render_height = render_camera.value[e_value.CAM_HEIGHT]
 	}
 	
-	render_camera_colors = (render_camera.colors_ext ||
-							render_camera.value[e_value.ALPHA] < 1 || 
-							render_camera.value[e_value.BRIGHTNESS] > 0)
+	render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
+							render_camera.value[e_value.BRIGHTNESS] > 0 || 
+							render_camera.value[e_value.MIX_COLOR] > 0 ||
+							render_camera.value[e_value.RGB_ADD] != c_black ||
+							render_camera.value[e_value.RGB_SUB] != c_black ||
+							render_camera.value[e_value.RGB_MUL] != c_white ||
+							render_camera.value[e_value.HSB_ADD] != c_black ||
+							render_camera.value[e_value.HSB_SUB] != c_black ||
+							render_camera.value[e_value.HSB_MUL] != c_red)
 	
-	render_camera_dof = (setting_render_dof && render_camera.value[e_value.CAM_DOF])
+	render_camera_dof = (setting_render_camera_effects && render_camera.value[e_value.CAM_DOF])
+	render_camera_bloom = (setting_render_camera_effects && render_camera.value[e_value.CAM_BLOOM])
 }
 else 
 {
 	render_camera_colors = false
 	render_camera_dof = false
+	render_camera_bloom = false
 }
 
 // Argument overwrites size

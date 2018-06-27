@@ -2,9 +2,10 @@
     "option_author": "David Norgren",
     "option_gameguid": "{40DCB35F-9582-4EC8-B13B-6036C1B4BDB6}",
     "option_steam_app_id": "0",
-    "option_lastchanged": "11 September 2017 12:32:52",
+    "option_lastchanged": "12 June 2018 21:04:06",
     "option_sci_usesci": false,
-    "option_mips_for_3d_textures": false
+    "option_mips_for_3d_textures": false,
+    "option_game_speed": 60
 }←be5f1418-b31b-48af-a023-f04cdf6e5121|{
     "textureGroups": {
         "Additions": [

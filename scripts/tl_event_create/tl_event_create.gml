@@ -68,6 +68,7 @@ inherit_color = false
 inherit_visibility = true
 inherit_bend = false
 inherit_texture = false
+inherit_glow_color = true
 scale_resize = true
 rot_point_custom = false
 rot_point = point3D(0, 0, 0)
@@ -76,9 +77,15 @@ texture_blur = false
 texture_filtering = false
 shadows = true
 ssao = true
+glow = false
+glow_texture = true
+only_render_glow = false
 fog = true
 wind = false
 wind_terrain = true
+hq_hiding = false
+lq_hiding = false
+foliage_tint = false
 
 particle_list = null
 

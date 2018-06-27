@@ -1,12 +1,20 @@
 /// tab_settings_render()
 
-// SSAO
+// Camera effects
 tab_control_checkbox()
-draw_checkbox("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao)
+draw_checkbox("settingsrendercameraeffects", dx, dy, setting_render_camera_effects, action_setting_render_camera_effects)
 tab_next()
 
-if (setting_render_ssao)
+// SSAO
+tab_control_checkbox()
+draw_checkbox_expand("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao, checkbox_expand_settings_ssao, action_checkbox_expand_settings_ssao)
+tab_next()
+
+if (setting_render_ssao && checkbox_expand_settings_ssao)
 {
+	dx += 4
+	dw -= 4
+	
 	var capwid = text_caption_width("settingsrenderssaoradius", "settingsrenderssaopower", "settingsrenderssaoblurpasses")
 	
 	tab_control_dragger()
@@ -26,15 +34,21 @@ if (setting_render_ssao)
 	tab_next()
 	
 	dy += 10
+	
+	dx -= 4
+	dw += 4
 }
 
 // Shadows
 tab_control_checkbox()
-draw_checkbox("settingsrendershadows", dx, dy, setting_render_shadows, action_setting_render_shadows)
+draw_checkbox_expand("settingsrendershadows", dx, dy, setting_render_shadows, action_setting_render_shadows, checkbox_expand_settings_shadows, action_checkbox_expand_settings_shadows)
 tab_next()
 
-if (setting_render_shadows)
+if (setting_render_shadows && checkbox_expand_settings_shadows)
 {
+	dx += 4
+	dw -= 4
+	
 	var capwid = text_caption_width("settingsrendershadowssunbuffersize", 
 									"settingsrendershadowsspotbuffersize", 
 									"settingsrendershadowspointbuffersize", 
@@ -60,41 +74,90 @@ if (setting_render_shadows)
 	tab_control_meter()
 	draw_meter("settingsrendershadowsblursize", dx, dy, dw, round(setting_render_shadows_blur_size * 100), 48, 0, 400, 100, 1, tab.render.tbx_shadows_blur_size, action_setting_render_shadows_blur_size, capwid)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
-// DOF
+// Glow
 tab_control_checkbox()
-draw_checkbox("settingsrenderdof", dx, dy, setting_render_dof, action_setting_render_dof)
+draw_checkbox_expand("settingsrenderglow", dx, dy, setting_render_glow, action_setting_render_glow, checkbox_expand_settings_glow, action_checkbox_expand_settings_glow)
 tab_next()
 
-if (setting_render_dof)
+if (setting_render_glow && checkbox_expand_settings_glow)
 {
+	dx += 4
+	dw -= 4
+	
+	var capwid = text_caption_width("settingsrenderglowradius", 
+									"settingsrenderglowintensity")
+	
 	tab_control_meter()
-	draw_meter("settingsrenderdofblursize", dx, dy, dw, setting_render_dof_blur_size * 100, 48, 0, 10, 2, 0, tab.render.tbx_dof_blur_size, action_setting_render_dof_blur_size)
+	draw_meter("settingsrenderglowradius", dx, dy, dw, round(setting_render_glow_radius * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_radius, action_setting_render_glow_radius, capwid)
 	tab_next()
+	
+	tab_control_meter()
+	draw_meter("settingsrenderglowintensity", dx, dy, dw, round(setting_render_glow_intensity * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_intensity, action_setting_render_glow_intensity, capwid)
+	tab_next()
+	
+	tab_control_checkbox()
+	draw_checkbox("settingsrenderglowfalloff", dx, dy, setting_render_glow_falloff, action_setting_render_glow_falloff)
+	tab_next()
+	
+	if (setting_render_glow_falloff)
+	{
+		capwid = text_caption_width("settingsrenderglowfalloffradius", 
+									"settingsrenderglowfalloffintensity")
+		
+		tab_control_meter()
+		draw_meter("settingsrenderglowfalloffradius", dx, dy, dw, round(setting_render_glow_falloff_radius * 100), 50, 0, 300, 200, 1, tab.render.tbx_glow_falloff_radius, action_setting_render_glow_falloff_radius, capwid)
+		tab_next()
+	
+		tab_control_meter()
+		draw_meter("settingsrenderglowfalloffintensity", dx, dy, dw, round(setting_render_glow_falloff_intensity * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_falloff_intensity, action_setting_render_glow_falloff_intensity, capwid)
+		tab_next()
+	}
+	
+	dx -= 4
+	dw += 4
 }
 
 // AA
 tab_control_checkbox()
-draw_checkbox("settingsrenderaa", dx, dy, setting_render_aa, action_setting_render_aa)
+draw_checkbox_expand("settingsrenderaa", dx, dy, setting_render_aa, action_setting_render_aa, checkbox_expand_settings_aa, action_checkbox_expand_settings_aa)
 tab_next()
 
-if (setting_render_aa)
+if (setting_render_aa && checkbox_expand_settings_aa)
 {
+	dx += 4
+	dw -= 4
+	
 	tab_control_meter()
 	draw_meter("settingsrenderaapower", dx, dy, dw, round(setting_render_aa_power * 100), 48, 0, 300, 100, 1, tab.render.tbx_aa_power, action_setting_render_aa_power)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
 // Watermark
 tab_control_checkbox()
-draw_checkbox("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark)
+
+if (trial_version)
+	draw_checkbox("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark)
+else
+	draw_checkbox_expand("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark, checkbox_expand_settings_watermark, action_checkbox_expand_settings_watermark)
+
 tab_next()
 
 if (setting_render_watermark)
 {
-	if (!trial_version)
+	
+	if (!trial_version && checkbox_expand_settings_watermark)
 	{
+		dx += 4
+		dw -= 4
+		
 		var capwid = text_caption_width("settingsrenderwatermarkpositionx", 
 									"settingsrenderwatermarkpositiony", 
 									"settingsrenderwatermarkscale", 
@@ -142,9 +205,14 @@ if (setting_render_watermark)
 		
 		// Preview
 		draw_watermark_preview(dx, dy, dw)
+		dy += (30 * tab.scroll.needed)
+		
+		dx += 4
+		dw -= 4
 	}
 	else
 	{
-		draw_label(string_limit(text_get("settingsrenderwatermarkupgraderequired"), dw), dx, dy)
+		if (trial_version)
+			draw_label(string_limit(text_get("settingsrenderwatermarkupgraderequired"), dw), dx, dy)
 	}
 }

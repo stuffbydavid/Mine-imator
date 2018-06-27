@@ -129,6 +129,7 @@ with (new(obj_timeline))
 		inherit_visibility = value_get_real(inheritmap[?"visibility"], inherit_visibility)
 		inherit_bend = value_get_real(inheritmap[?"bend"], inherit_bend)
 		inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
+		inherit_glow_color = value_get_real(inheritmap[?"glow_color"], inherit_glow_color)
 	}
 	
 	scale_resize = value_get_real(map[?"scale_resize"], scale_resize)
@@ -140,7 +141,10 @@ with (new(obj_timeline))
 	texture_blur = value_get_real(map[?"texture_blur"], texture_blur)
 	texture_filtering = value_get_real(map[?"texture_filtering"], texture_filtering)
 	shadows = value_get_real(map[?"shadows"], shadows)
-	ssao= value_get_real(map[?"ssao"], ssao)
+	ssao = value_get_real(map[?"ssao"], ssao)
+	glow = value_get_real(map[?"glow"], glow)
+	glow_texture = value_get_real(map[?"glow_texture"], glow_texture)
+	only_render_glow = value_get_real(map[?"only_render_glow"], only_render_glow)
 	fog = value_get_real(map[?"fog"], fog)
 	
 	if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
@@ -148,4 +152,8 @@ with (new(obj_timeline))
 		wind = value_get_real(map[?"wind"], wind)
 		wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)
 	}
+	
+	hq_hiding = value_get_real(map[?"hq_hiding"], hq_hiding)
+	lq_hiding = value_get_real(map[?"lq_hiding"], lq_hiding)
+	foliage_tint = value_get_real(map[?"foliage_tint"], foliage_tint)
 }

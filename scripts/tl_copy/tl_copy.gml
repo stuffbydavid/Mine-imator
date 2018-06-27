@@ -34,6 +34,7 @@ to.inherit_color = inherit_color
 to.inherit_visibility = inherit_visibility
 to.inherit_bend = inherit_bend
 to.inherit_texture = inherit_texture
+to.inherit_glow_color = inherit_glow_color
 to.scale_resize = scale_resize
 to.rot_point_custom = rot_point_custom
 to.rot_point = point3D_copy(rot_point)
@@ -42,9 +43,15 @@ to.texture_blur = texture_blur
 to.texture_filtering = texture_filtering
 to.shadows = shadows
 to.ssao = ssao
+to.glow = glow
+to.glow_texture = glow_texture
+to.only_render_glow = only_render_glow
 to.fog = fog
 to.wind = wind
 to.wind_terrain = wind_terrain
+to.hq_hiding = hq_hiding
+to.lq_hiding = lq_hiding
+to.foliage_tint = foliage_tint
 
 if (part_of != null && part_of != "")
 {

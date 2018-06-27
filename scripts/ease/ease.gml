@@ -17,6 +17,7 @@ if (xx >= 1)
 switch (function)
 {
 	case "linear":
+		
 		return xx
 		
 	case "instant":

@@ -6,9 +6,11 @@ gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], false)
 
 render_set_uniform_vec2("uScreenSize", render_width, render_height)
 
-render_set_uniform("uBlurSize", app.setting_render_dof_blur_size)
+render_set_uniform("uBlurSize", render_camera.value[e_value.CAM_DOF_BLUR_SIZE])
 render_set_uniform("uDepth", render_camera.value[e_value.CAM_DOF_DEPTH])
 render_set_uniform("uRange", render_camera.value[e_value.CAM_DOF_RANGE])
 render_set_uniform("uFadeSize", render_camera.value[e_value.CAM_DOF_FADE_SIZE])
 render_set_uniform("uNear", cam_near)
 render_set_uniform("uFar", cam_far)
+render_set_uniform_int("uSamples", 24)
+render_set_uniform_int("uRingDetail", 6)

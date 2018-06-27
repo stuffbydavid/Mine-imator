@@ -80,6 +80,7 @@ json_save_object_start()
 			json_save_var_bool("visibility", inherit_visibility)
 			json_save_var_bool("bend", inherit_bend)
 			json_save_var_bool("rot_point", inherit_rot_point)
+			json_save_var_bool("glow_color", inherit_glow_color)
 		json_save_object_done()
 	
 		json_save_var_bool("scale_resize", scale_resize)
@@ -98,6 +99,9 @@ json_save_object_start()
 		json_save_var_bool("texture_filtering", texture_filtering)
 		json_save_var_bool("shadows", shadows)
 		json_save_var_bool("ssao", ssao)
+		json_save_var_bool("glow", glow)
+		json_save_var_bool("glow_texture", glow_texture)
+		json_save_var_bool("only_render_glow", only_render_glow)
 		json_save_var_bool("fog", fog)
 	
 		if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
@@ -105,6 +109,10 @@ json_save_object_start()
 			json_save_var_bool("wind", wind)
 			json_save_var_bool("wind_terrain", wind_terrain)
 		}
+		
+		json_save_var_bool("hq_hiding", hq_hiding)
+		json_save_var_bool("lq_hiding", lq_hiding)
+		json_save_var_bool("foliage_tint", foliage_tint)
 	}
 	
 json_save_object_done()

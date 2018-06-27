@@ -13,12 +13,7 @@ if (!(tl_edit.type = e_tl_type.POINT_LIGHT) || (tl_edit.type = e_tl_type.SPOT_LI
 	draw_checkbox("timelineeditorshadows", dx, dy, tl_edit.shadows, action_tl_shadows)
 	draw_checkbox("timelineeditorssao", dx + floor(dw * 0.5), dy, tl_edit.ssao, action_tl_ssao)
 	tab_next()
-
-	// Fog
-	tab_control_checkbox()
-	draw_checkbox("timelineeditorfog", dx, dy, tl_edit.fog, action_tl_fog)
-	tab_next()
-
+	
 	// Wind
 	if (tl_edit.type = e_temp_type.SCENERY || tl_edit.type = e_temp_type.BLOCK || tl_edit.type = e_temp_type.PARTICLE_SPAWNER || tl_edit.type = e_temp_type.TEXT || type_is_shape(tl_edit.type))
 	{
@@ -28,6 +23,22 @@ if (!(tl_edit.type = e_tl_type.POINT_LIGHT) || (tl_edit.type = e_tl_type.SPOT_LI
 			draw_checkbox("timelineeditorwindterrain", dx + floor(dw * 0.5), dy, tl_edit.wind_terrain, action_tl_wind_terrain)
 		tab_next()
 	}
+	
+	// Glow
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorglow", dx, dy, tl_edit.glow, action_tl_glow)
+	if (tl_edit.glow)
+	{
+		draw_checkbox("timelineeditorglowtexture", dx + floor(dw * 0.5), dy, tl_edit.glow_texture, action_tl_glow_texture)
+		tab_next()
+		draw_checkbox("timelineeditoronlyrenderglow", dx, dy, tl_edit.only_render_glow, action_tl_only_render_glow)
+	}
+	tab_next()
+
+	// Fog
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorfog", dx, dy, tl_edit.fog, action_tl_fog)
+	tab_next()
 
 	// Depth
 	tab_control_dragger()
@@ -37,6 +48,19 @@ if (!(tl_edit.type = e_tl_type.POINT_LIGHT) || (tl_edit.type = e_tl_type.SPOT_LI
 	// Backfaces
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorbackfaces", dx, dy, tl_edit.backfaces, action_tl_backfaces)
+	tab_next()
+	
+	// High quality hiding
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorhqhiding", dx, dy, tl_edit.hq_hiding, action_tl_hq_hiding)
+	
+	// Low quality hiding
+	draw_checkbox("timelineeditorlqhiding", dx + floor(dw * 0.5), dy, tl_edit.lq_hiding, action_tl_lq_hiding)
+	tab_next()
+	
+	// Foliage hiding
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorfoliagetint", dx, dy, tl_edit.foliage_tint, action_tl_foliage_tint)
 	tab_next()
 }
 else

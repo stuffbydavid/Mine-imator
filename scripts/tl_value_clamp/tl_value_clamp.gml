@@ -24,13 +24,15 @@ switch (vid)
 	case e_value.HSB_SUB:
 	case e_value.HSB_MUL:
 	case e_value.MIX_COLOR:
+	case e_value.GLOW_COLOR:
 	case e_value.LIGHT_COLOR:
 	case e_value.BG_SKY_COLOR: 
 	case e_value.BG_SKY_CLOUDS_COLOR:
 	case e_value.BG_SUNLIGHT_COLOR:
 	case e_value.BG_AMBIENT_COLOR:
 	case e_value.BG_NIGHT_COLOR:
-	case e_value.BG_FOG_COLOR: return clamp(val, c_black, c_white)
+	case e_value.BG_FOG_COLOR:
+	case e_value.BG_FOG_OBJECT_COLOR: return clamp(val, c_black, c_white)
 	case e_value.BEND_ANGLE_X:
 	case e_value.BEND_ANGLE_Y:
 	case e_value.BEND_ANGLE_Z: return clamp(val, -130, 130)

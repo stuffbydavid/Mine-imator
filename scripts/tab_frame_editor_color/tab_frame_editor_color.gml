@@ -34,11 +34,19 @@ else
 	tab_next()
 }
 
-// Mix
+// Mix and (Glow?)
+var halfwid = floor(dw / 2) - 4;
+var glowenabled = tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA];
 capwid = text_caption_width("frameeditormixpercent", "frameeditorbrightness")
+
 tab_control_color()
-draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
+draw_button_color("frameeditormixcolor", dx, dy, test(glowenabled, halfwid, dw), tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
+
+if (glowenabled)
+	draw_button_color("frameeditorglowcolor", dx + halfwid + 8, dy, halfwid, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
+	
 tab_next()
+
 tab_control_meter()
 draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 60, 0, 100, 0, 1, tab.color.tbx_mix_percent, action_tl_frame_mix_percent, capwid)
 tab_next()
@@ -52,7 +60,7 @@ tab_next()
 tab_control(24)
 
 if (draw_button_normal("frameeditorcolorreset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
-	action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, 0, 0)
+	action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, c_black, 0, 0)
 	
 if (draw_button_normal("frameeditorcoloradvanced", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, tab.color.advanced, false, true, icons.ADVANCED_COLORS))
 	tab.color.advanced = !tab.color.advanced
@@ -66,6 +74,7 @@ if (draw_button_normal("frameeditorcolorcopy", dx + 25 * 2, dy, 24, 24, e_button
 	tab.color.copy_hsb_add = tl_edit.value[e_value.HSB_ADD]
 	tab.color.copy_hsb_sub = tl_edit.value[e_value.HSB_SUB]
 	tab.color.copy_hsb_mul = tl_edit.value[e_value.HSB_MUL]
+	tab.color.copy_glow_color = tl_edit.value[e_value.GLOW_COLOR]
 	tab.color.copy_mix_color = tl_edit.value[e_value.MIX_COLOR]
 	tab.color.copy_mix_percent = tl_edit.value[e_value.MIX_PERCENT]
 	tab.color.copy_brightness = tl_edit.value[e_value.BRIGHTNESS]
@@ -80,7 +89,8 @@ if (draw_button_normal("frameeditorcolorpaste", dx + 25 * 3, dy, 24, 24, e_butto
 							   tab.color.copy_hsb_add, 
 							   tab.color.copy_hsb_sub, 
 							   tab.color.copy_hsb_mul, 
-							   tab.color.copy_mix_color, 
+							   tab.color.copy_mix_color,
+							   tab.color.copy_glow_color,
 							   tab.color.copy_mix_percent, 
 							   tab.color.copy_brightness)
 }

@@ -47,12 +47,12 @@ switch (setting_render_watermark_anchor_y)
 		break;
 }
 
+gpu_set_texfilter(true)
+
 draw_image(setting_render_watermark_image, 0, round(watermark_x), round(watermark_y), scale, scale, c_white, setting_render_watermark_alpha)
 
-//gpu_set_blendmode(bm_normal)
-
-gpu_set_blendmode_ext(bm_src_color, bm_one)
-draw_box(0, 0, draw_width, draw_height, false, c_black, 1)
+gpu_set_blendmode_ext_sepalpha(bm_src_color, bm_one, bm_one, bm_one)
+draw_image(setting_render_watermark_image, 0, round(watermark_x), round(watermark_y), scale, scale, c_black, 1)
 gpu_set_blendmode(bm_normal)
 
 gpu_set_texfilter(false)

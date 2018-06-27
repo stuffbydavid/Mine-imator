@@ -5,7 +5,7 @@ globalvar render_width, render_height, render_ratio, render_camera, render_camer
 		  render_click_box, render_list, render_lights, render_particles, render_hidden, render_background, render_watermark, 
 		  render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 		  render_light_color, render_light_fade_size, render_light_spot_sharpness, render_light_matrix,
-		  proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far;
+		  proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far, render_camera_bloom;
 
 log("Render init")
 	
@@ -27,6 +27,7 @@ render_ratio = 1
 render_camera = null
 render_camera_dof = false
 render_overlay = false
+render_camera_bloom = false
 
 render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 render_list = ds_list_create()
@@ -44,6 +45,7 @@ render_surface[0] = null
 render_surface[1] = null
 render_surface[2] = null
 render_surface[3] = null
+render_surface[4] = null
 
 // Shadows
 globalvar render_surface_sun_buffer, render_surface_spot_buffer, render_surface_point_buffer;
@@ -77,3 +79,4 @@ render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT] = shader_high_light_spot
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT] = shader_high_light_point
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_NIGHT] = shader_high_light_night
 render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
+render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow

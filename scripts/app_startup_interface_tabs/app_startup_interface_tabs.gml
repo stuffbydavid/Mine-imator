@@ -393,6 +393,7 @@ with (frame_editor)
 		copy_hsb_sub = c_black
 		copy_hsb_mul = c_white
 		copy_mix_color = c_black
+		copy_glow_color = c_white
 		copy_mix_percent = 0
 		copy_brightness = 0
 		tbx_alpha = new_textbox_integer()
@@ -434,17 +435,6 @@ with (frame_editor)
 	with (camera)
 	{
 		video_template = null
-		copy_fov = 45
-		copy_rotate = false
-		copy_rotate_distance = 100
-		copy_rotate_angle_xy = 0
-		copy_rotate_angle_z = 0
-		copy_dof = false
-		copy_dof_depth = 0
-		copy_dof_range = 200
-		copy_dof_fade_size = 100
-		copy_width = 0
-		copy_height = 0
 		look_at_rotate = true
 		tbx_fov = new_textbox_integer()
 		tbx_fov.suffix = "°"
@@ -457,8 +447,16 @@ with (frame_editor)
 		tbx_dof_depth = new_textbox_decimals()
 		tbx_dof_range = new_textbox_decimals()
 		tbx_dof_fade_size = new_textbox_decimals()
+		tbx_dof_blur_size = new_textbox_decimals()
+		tbx_dof_blur_size.suffix = "%"
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
+		tbx_bloom_threshold = new_textbox_integer()
+		tbx_bloom_threshold.suffix = "%"
+		tbx_bloom_intensity = new_textbox_integer()
+		tbx_bloom_intensity.suffix = "%"
+		tbx_bloom_radius = new_textbox_integer()
+		tbx_bloom_radius.suffix = "%"
 	}
 	
 	// Texture
@@ -536,8 +534,14 @@ with (settings)
 		tbx_shadows_blur_quality = new_textbox_integer()
 		tbx_shadows_blur_size = new_textbox_integer()
 		tbx_shadows_blur_size.suffix = "%"
-		tbx_dof_blur_size = new_textbox_decimals()
-		tbx_dof_blur_size.suffix = "%"
+		tbx_glow_radius = new_textbox_integer()
+		tbx_glow_radius.suffix = "%"
+		tbx_glow_intensity = new_textbox_integer()
+		tbx_glow_intensity.suffix = "%"
+		tbx_glow_falloff_radius = new_textbox_integer()
+		tbx_glow_falloff_radius.suffix = "%"
+		tbx_glow_falloff_intensity = new_textbox_integer()
+		tbx_glow_falloff_intensity.suffix = "%"
 		tbx_aa_power = new_textbox_integer()
 		tbx_aa_power.suffix = "%"
 		tbx_watermark_scale = new_textbox_integer()

@@ -70,6 +70,15 @@ if (par != app)
 		draw_checkbox("timelineeditorinherittexture", dx + floor(dw * 0.33 * pos++), dy, tl_edit.inherit_texture, action_tl_inherit_texture)
 	tab_next()
 	
+	// Glow
+	if (!tl_edit.value_type[e_value_type.CAMERA])
+	{
+		pos = 0
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritglowcolor", dx + floor(dw * 0.33 * pos++), dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)
+		tab_next()
+	}
+	
 	// Scale mode
 	if (tl_edit.value_type[e_value_type.SCALE] && tl_edit.inherit_scale)
 	{

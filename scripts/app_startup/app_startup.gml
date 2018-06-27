@@ -35,6 +35,7 @@ project_startup()
 legacy_startup()
 render_startup()
 camera_startup()
+checkbox_expand_startup()
 
 if (!minecraft_assets_startup())
 	return false

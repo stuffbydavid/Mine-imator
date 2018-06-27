@@ -39,6 +39,10 @@ if (!err)
 	new_shader("shader_high_ssao")
 	new_shader("shader_high_ssao_blur")
 	new_shader("shader_high_ssao_depth_normal")
+	new_shader("shader_high_bloom_threshold")
+	new_shader("shader_add")
+	new_shader("shader_blur")
+	new_shader("shader_color_glow")
 
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -144,6 +148,8 @@ with (shader_map[?shader_high_dof])
 	new_shader_uniform("uFadeSize")
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
+	new_shader_uniform("uSamples")
+	new_shader_uniform("uRingDetail")
 }
 
 with (shader_map[?shader_high_fog_apply])
@@ -249,6 +255,31 @@ with (shader_map[?shader_high_ssao_depth_normal])
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
+}
+
+with (shader_map[?shader_high_bloom_threshold])
+{
+	new_shader_uniform("uThreshold")
+}
+
+with (shader_map[?shader_add])
+{
+	new_shader_sampler("uAddTexture")
+	new_shader_uniform("uAmount")
+	new_shader_uniform("uBlendColor")
+}
+
+with (shader_map[?shader_blur])
+{
+	new_shader_uniform("uResolution")
+	new_shader_uniform("uRadius")
+	new_shader_uniform("uDirection")
+}
+
+with (shader_map[?shader_color_glow])
+{
+	new_shader_uniform("uGlowTexture")
+	new_shader_uniform("uGlowColor")
 }
 
 return true

@@ -10,11 +10,14 @@ tab_next()
 
 // Rotate point 
 tab_control_checkbox()
-draw_checkbox("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate)
+draw_checkbox_expand("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate, checkbox_expand_frameeditor_rotatepoint, action_checkbox_expand_frameeditor_rotatepoint)
 tab_next()
 
-if (tl_edit.value[e_value.CAM_ROTATE])
+if (tl_edit.value[e_value.CAM_ROTATE] && checkbox_expand_frameeditor_rotatepoint)
 {
+	dx += 4
+	dw -= 4
+	
 	// Distance
 	tab_control_dragger()
 	draw_dragger("frameeditorcamerarotatedistance", dx, dy, dw, tl_edit.value[e_value.CAM_ROTATE_DISTANCE], 1, 1, no_limit, 100, 0, tab.camera.tbx_rotate_distance, action_tl_frame_cam_rotate_distance)
@@ -34,15 +37,21 @@ if (tl_edit.value[e_value.CAM_ROTATE])
 	tab_control_checkbox()
 	draw_checkbox("frameeditorcameralookatrotate", dx, dy, tab.camera.look_at_rotate, action_tl_frame_look_at_rotate)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
 // DOF
 tab_control_checkbox()
-draw_checkbox("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof)
+draw_checkbox_expand("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof, checkbox_expand_frameeditor_dof, action_checkbox_expand_frameeditor_dof)
 tab_next()
-if (tl_edit.value[e_value.CAM_DOF])
+if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 {
-	capwid = text_caption_width("frameeditorcameradofdepth", "frameeditorcameradofrange", "frameeditorcameradoffadesize")
+	dx += 4
+	dw -= 4
+	
+	capwid = text_caption_width("frameeditorcameradofdepth", "frameeditorcameradofrange", "frameeditorcameradoffadesize", "frameeditorcameradofblursize")
 	
 	tab_control_dragger()
 	draw_dragger("frameeditorcameradofdepth", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_DOF_DEPTH] / 50), 0, world_size, 0, 0, tab.camera.tbx_dof_depth, action_tl_frame_cam_dof_depth)
@@ -56,6 +65,10 @@ if (tl_edit.value[e_value.CAM_DOF])
 	draw_dragger("frameeditorcameradoffadesize", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera.tbx_dof_fade_size, action_tl_frame_cam_dof_fade_size)
 	tab_next()
 	
+	tab_control_meter()
+	draw_meter("frameeditorcameradofblursize", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_BLUR_SIZE] * 100, 48, 0, 10, 1, 0, tab.camera.tbx_dof_blur_size, action_tl_frame_cam_dof_blur_size)
+	tab_next()
+	
 	tab_control(24)
 	capwid = text_caption_width("frameeditorcameradofforeground")
 	
@@ -66,6 +79,40 @@ if (tl_edit.value[e_value.CAM_DOF])
 		action_tl_frame_cam_dof_background()
 		
 	tab_next()
+	
+	dx -= 4
+	dw += 4
+}
+
+// Bloom
+tab_control_checkbox()
+draw_checkbox_expand("frameeditorcamerabloom", dx, dy, tl_edit.value[e_value.CAM_BLOOM], action_tl_frame_cam_bloom, checkbox_expand_frameeditor_bloom, action_checkbox_expand_frameeditor_bloom)
+tab_next()
+if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
+{
+	dx += 4
+	dw -= 4
+	
+	capwid = text_caption_width("frameeditorcamerabloomthreshold", "frameeditorcamerabloomintensity", "frameeditorcamerabloomradius")
+	
+	tab_control_meter()
+	draw_meter("frameeditorcamerabloomthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_THRESHOLD] * 100), 50, 0, 100, 85, 1, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcamerabloomradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_RADIUS] * 100), 50, 0, 300, 100, 1, tab.camera.tbx_bloom_radius, action_tl_frame_cam_bloom_radius, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcamerabloomintensity", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_INTENSITY] * 100), 50, 0, 300, 40, 1, tab.camera.tbx_bloom_intensity, action_tl_frame_cam_bloom_intensity, capwid)
+	tab_next()
+	
+	tab_control_color()
+	draw_button_color("frameeditorcamerabloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
 // Camera size
@@ -106,36 +153,18 @@ if (tab.camera.video_template = 0)
 tab_control(24)
 
 if (draw_button_normal("frameeditorcamerareset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
-	action_tl_frame_set_camera(45, tl_edit.value[e_value.CAM_ROTATE], 100, 0, 0, tl_edit.value[e_value.CAM_DOF], 0, 200, 100, null, null)
+	action_tl_frame_set_camera(camera_use_default_list, true)
 	
 if (draw_button_normal("frameeditorcameracopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.COPY))
 {
-	tab.camera.copy_fov = tl_edit.value[e_value.CAM_FOV]
-	tab.camera.copy_rotate = tl_edit.value[e_value.CAM_ROTATE]
-	tab.camera.copy_rotate_distance = tl_edit.value[e_value.CAM_ROTATE_DISTANCE]
-	tab.camera.copy_rotate_angle_xy = tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY]
-	tab.camera.copy_rotate_angle_z = tl_edit.value[e_value.CAM_ROTATE_ANGLE_Z]
-	tab.camera.copy_dof = tl_edit.value[e_value.CAM_DOF]
-	tab.camera.copy_dof_depth = tl_edit.value[e_value.CAM_DOF_DEPTH]
-	tab.camera.copy_dof_range = tl_edit.value[e_value.CAM_DOF_RANGE]
-	tab.camera.copy_dof_fade_size = tl_edit.value[e_value.CAM_DOF_FADE_SIZE]
-	tab.camera.copy_width = tl_edit.value[e_value.CAM_WIDTH]
-	tab.camera.copy_height = tl_edit.value[e_value.CAM_HEIGHT]
+	for (var i = 0; i < ds_list_size(camera_values_list); i++)
+	{
+		var vid = camera_values_list[|i];
+		camera_values_copy[|i] = tl_edit.value[vid]
+	}
 }
 
 if (draw_button_normal("frameeditorcamerapaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.PASTE))
-{
-	action_tl_frame_set_camera(tab.camera.copy_fov, 
-							   tab.camera.copy_rotate, 
-							   tab.camera.copy_rotate_distance, 
-							   tab.camera.copy_rotate_angle_xy, 
-							   tab.camera.copy_rotate_angle_z, 
-							   tab.camera.copy_dof, 
-							   tab.camera.copy_dof_depth, 
-							   tab.camera.copy_dof_range, 
-							   tab.camera.copy_dof_fade_size, 
-							   tab.camera.copy_width, 
-							   tab.camera.copy_height)
-}
+	action_tl_frame_set_camera(camera_values_copy)
 
 tab_next()

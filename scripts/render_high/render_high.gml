@@ -2,12 +2,13 @@
 /// @desc Renders scene in high quality.
 
 var starttime;
-var ssaosurf, shadowsurf, fogsurf, finalsurf;
+var ssaosurf, shadowsurf, fogsurf, finalsurf, nextfinalpos;
+nextfinalpos = 0
 
 starttime = current_time
 render_surface_time = 0
 
-// SSAO
+#region SSAO
 if (setting_render_ssao)
 {
 	var depthsurf, normalsurf, brightnesssurf;
@@ -88,8 +89,9 @@ if (setting_render_ssao)
 	}
 	gpu_set_texrepeat(true)
 }
+#endregion
 
-// Shadows
+#region Shadows
 if (setting_render_shadows)
 {
 	var sunout = (background_sunlight_color_final != c_black);
@@ -138,7 +140,7 @@ if (setting_render_shadows)
 	{
 		var shadowsurftemp;
 	
-		if (!value_inherit[e_value.VISIBLE] || hide)
+		if (!value_inherit[e_value.VISIBLE] || hide || (app.view_render && hq_hiding) || (!app.view_render && lq_hiding))
 			continue
 		
 		if (type = e_tl_type.POINT_LIGHT)
@@ -235,8 +237,9 @@ if (setting_render_shadows)
 	}
 	gpu_set_texfilter(false)
 }
+#endregion
 
-// Fog
+#region Fog
 if (background_fog_show)
 {
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
@@ -250,11 +253,14 @@ if (background_fog_show)
 	}
 	surface_reset_target()
 }
+#endregion
 
 // At this point: 0 = SSAO, 1 = Shadows, 2 = Fog, 3 = free
 
+#region Apply Environment effects
+
 // Render directly to target?
-if (!render_camera_dof && !setting_render_aa && !render_overlay)
+if (!render_camera_bloom && !render_camera_dof && !setting_render_aa && !render_overlay)
 {
 	render_target = surface_require(render_target, render_width, render_height)
 	finalsurf = render_target
@@ -325,18 +331,146 @@ surface_set_target(finalsurf)
 
 }
 surface_reset_target()
+#endregion
 
-// DOF
+// Post processing starts here, finalsurf will ping-pong between [0] and [1] if effects are enabled
+
+#region Put finalsurf in [0] if there's any post processing
+if (render_camera_bloom || render_camera_dof || setting_render_glow || setting_render_aa || render_overlay)
+{
+	var prevsurf = finalsurf;
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	finalsurf = render_surface[0]
+	nextfinalpos = !nextfinalpos
+	
+	surface_set_target(finalsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		draw_surface_exists(prevsurf, 0, 0)
+	}
+	surface_reset_target()
+}
+#endregion
+
+#region Bloom
+if (render_camera_bloom)
+{
+	var prevsurf, bloomsurf;
+	prevsurf = finalsurf
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	bloomsurf = render_surface[2]
+	
+	// Bloom threshold
+	surface_set_target(bloomsurf)
+	{
+		draw_clear_alpha(c_black, 1)
+		gpu_set_texfilter(true)
+		gpu_set_texrepeat(false)
+		
+		render_shader_obj = shader_map[?shader_high_bloom_threshold]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_high_bloom_threshold_set()
+		}
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+			
+		gpu_set_texfilter(false)
+		gpu_set_texrepeat(true)
+	}
+	surface_reset_target()
+	
+	// Blur
+	if (render_camera.value[e_value.CAM_BLOOM_RADIUS] > 0)
+	{
+		var bloomsurftemp;
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		bloomsurftemp = render_surface[3]
+		
+		render_shader_obj = shader_map[?shader_blur]
+		with (render_shader_obj)
+			shader_set(shader)
+		
+		// Radius changes based on the render height to make it consistant with the size of the render
+		var baseradius = ((render_camera.value[e_value.CAM_BLOOM_RADIUS] * 10) * render_height / 500);
+		gpu_set_tex_repeat(false)
+		gpu_set_texfilter(true)
+
+		for (var i = 0; i < 3; i++)
+		{
+			var radius = baseradius / (1 + 1.333 * i);
+
+			// Horizontal
+			surface_set_target(bloomsurftemp)
+			{
+				with (render_shader_obj)
+					shader_blur_set(render_width, radius, 1, 0)
+				draw_surface_exists(bloomsurf, 0, 0)
+			}
+			surface_reset_target()
+		
+			// Vertical
+			surface_set_target(bloomsurf)
+			{
+				with (render_shader_obj)
+					shader_blur_set(render_height, radius, 0, 1)
+				draw_surface_exists(bloomsurftemp, 0, 0)
+			}
+			surface_reset_target()
+		}
+		
+		with (render_shader_obj)
+			shader_clear()
+				
+		gpu_set_tex_repeat(true)
+		gpu_set_texfilter(false)
+		
+	}
+	
+	// Apply Bloom
+	
+	// Render directly to target?
+	if (!setting_render_glow && !render_camera_dof && !setting_render_aa && !render_overlay)
+	{
+		render_target = surface_require(render_target, render_width, render_height)
+		finalsurf = render_target
+	}
+	else
+	{
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
+	}
+	
+	surface_set_target(finalsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		
+		render_shader_obj = shader_map[?shader_add]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_add_set(bloomsurf, render_camera.value[e_value.CAM_BLOOM_INTENSITY], render_camera.value[e_value.CAM_BLOOM_BLEND])
+		}
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+}
+#endregion
+
+#region DOF
 if (render_camera_dof)
 {
 	var prevsurf, depthsurf;
 	prevsurf = finalsurf
-	
-	// At this point: 0, 1, 2 = free, 3 = Final
 
 	// Get depth
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	depthsurf = render_surface[0]
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	depthsurf = render_surface[2]
 	surface_set_target(depthsurf)
 	{
 		draw_clear(c_white)
@@ -349,16 +483,19 @@ if (render_camera_dof)
 	// Apply DOF
 	
 	// Render directly to target?
-	if (!setting_render_aa && !render_overlay)
+	if (!setting_render_glow && !setting_render_aa && !render_overlay)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
 	}
 	else
 	{
-		render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-		finalsurf = render_surface[1]
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
 	}
+	
+	// Apply DOF
 	
 	surface_set_target(finalsurf)
 	{
@@ -382,8 +519,209 @@ if (render_camera_dof)
 	surface_reset_target()
 	
 }
+#endregion
 
-// AA
+#region Glow
+if (setting_render_glow)
+{
+	var prevsurf, glowcolorsurf, glowsurf, glowfalloffsurf;
+	prevsurf = finalsurf
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	glowcolorsurf = render_surface[2]
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+	glowsurf = render_surface[4]
+	
+	surface_set_target(glowcolorsurf)
+	{
+		draw_clear_alpha(c_black, 1)
+		
+		render_world_start()
+		render_world(e_render_mode.COLOR_GLOW)
+		render_world_done()
+		
+		render_set_projection_ortho(0, 0, render_width, render_height, 0)
+		
+		gpu_set_blendmode_ext(bm_src_color, bm_one) 
+		draw_box(0, 0, render_width, render_height, false, c_black, 1)
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
+	
+	var glowsurftemp;
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	glowsurftemp = render_surface[3]
+		
+	render_shader_obj = shader_map[?shader_blur]
+	with (render_shader_obj)
+		shader_set(shader)
+		
+	// Radius changes based on the render height to make it consistant with the size of the render
+	var baseradius = ((setting_render_glow_radius * 10) * render_height / 500);
+	gpu_set_tex_repeat(false)
+	gpu_set_texfilter(true)
+
+	for (var i = 0; i < 3; i++)
+	{
+		var radius = baseradius / (1 + 1.333 * i);
+
+		// Horizontal
+		surface_set_target(glowsurftemp)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_width, radius, 1, 0)
+			draw_surface_exists(test(i = 0, glowcolorsurf, glowsurf), 0, 0)
+		}
+		surface_reset_target()
+		
+		// Vertical
+		surface_set_target(glowsurf)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_height, radius, 0, 1)
+			draw_surface_exists(glowsurftemp, 0, 0)
+		}
+		surface_reset_target()
+	}
+		
+	with (render_shader_obj)
+		shader_clear()
+				
+	gpu_set_tex_repeat(true)
+	gpu_set_texfilter(false)
+	
+	// Apply Glow
+	
+	// Render directly to target?
+	if (!setting_render_aa && !render_overlay)
+	{
+		render_target = surface_require(render_target, render_width, render_height)
+		finalsurf = render_target
+	}
+	else
+	{
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
+	}
+	
+	surface_set_target(finalsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		
+		render_shader_obj = shader_map[?shader_add]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_add_set(glowsurf, app.setting_render_glow_intensity, c_white)
+		}
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+}
+#endregion
+
+#region Glow (Falloff)
+if (setting_render_glow && setting_render_glow_falloff)
+{
+	var prevsurf, glowfalloffsurf;
+	prevsurf = finalsurf
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	glowfalloffsurf = render_surface[2]
+	
+	surface_set_target(glowcolorsurf)
+	{
+		draw_clear_alpha(c_black, 1)
+		
+		render_world_start()
+		render_world(e_render_mode.COLOR_GLOW)
+		render_world_done()
+		
+		render_set_projection_ortho(0, 0, render_width, render_height, 0)
+		
+		gpu_set_blendmode_ext(bm_src_color, bm_one) 
+		draw_box(0, 0, render_width, render_height, false, c_black, 1)
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
+	
+	var glowsurftemp;
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	glowsurftemp = render_surface[3]
+		
+	render_shader_obj = shader_map[?shader_blur]
+	with (render_shader_obj)
+		shader_set(shader)
+		
+	// Radius changes based on the render height to make it consistant with the size of the render
+	var baseradius = (((setting_render_glow_radius * setting_render_glow_falloff_radius) * 10) * render_height / 500);
+	gpu_set_tex_repeat(false)
+	gpu_set_texfilter(true)
+
+	for (var i = 0; i < 3; i++)
+	{
+		var radius = baseradius / (1 + 1.333 * i);
+
+		// Horizontal
+		surface_set_target(glowsurftemp)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_width, radius, 1, 0)
+			draw_surface_exists(glowfalloffsurf, 0, 0)
+		}
+		surface_reset_target()
+		
+		// Vertical
+		surface_set_target(glowfalloffsurf)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_height, radius, 0, 1)
+			draw_surface_exists(glowsurftemp, 0, 0)
+		}
+		surface_reset_target()
+	}
+		
+	with (render_shader_obj)
+		shader_clear()
+				
+	gpu_set_tex_repeat(true)
+	gpu_set_texfilter(false)
+	
+	// Apply Glow
+	
+	// Render directly to target?
+	if (!setting_render_aa && !render_overlay)
+	{
+		render_target = surface_require(render_target, render_width, render_height)
+		finalsurf = render_target
+	}
+	else
+	{
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
+	}
+	
+	surface_set_target(finalsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		
+		render_shader_obj = shader_map[?shader_add]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_add_set(glowfalloffsurf, app.setting_render_glow_falloff_intensity, c_white)
+		}
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+}
+#endregion
+
+#region AA
 if (setting_render_aa)
 {
 	var prevsurf = finalsurf;
@@ -396,8 +734,9 @@ if (setting_render_aa)
 	}
 	else
 	{
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		finalsurf = render_surface[2]
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
 	}
 	
 	surface_set_target(finalsurf)
@@ -426,8 +765,9 @@ if (setting_render_aa)
 	}
 	surface_reset_target()
 }
+#endregion
 
-// 2D overlay (camera colors/watermark)
+#region 2D overlay (camera colors/watermark)
 if (render_overlay)
 {
 	render_target = surface_require(render_target, render_width, render_height)
@@ -452,5 +792,6 @@ if (render_overlay)
 	}
 	surface_reset_target()
 }
-	
+#endregion
+
 render_time = current_time - starttime - render_surface_time

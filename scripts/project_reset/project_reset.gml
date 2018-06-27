@@ -65,7 +65,7 @@ background_sunlight_follow = false
 background_sky_clouds_show = true
 background_sky_clouds_tex = mc_res
 background_sky_clouds_tex.count++
-background_sky_clouds_flat = 0
+background_sky_clouds_flat = false
 background_sky_clouds_speed = 1
 background_sky_clouds_z = 1000
 background_sky_clouds_size = 192
@@ -103,6 +103,8 @@ background_fog_show = true
 background_fog_sky = true
 background_fog_color_custom = 0
 background_fog_color = c_sky
+background_fog_object_color_custom = 0
+background_fog_object_color = c_sky
 background_fog_distance = 10000
 background_fog_size = 2000
 background_fog_height = 1000

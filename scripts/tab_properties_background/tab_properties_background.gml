@@ -96,11 +96,14 @@ tab_next()
 
 // Clouds
 tab_control_checkbox()
-draw_checkbox("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show)
+draw_checkbox_expand("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, checkbox_expand_background_clouds, action_checkbox_expand_background_clouds)
 tab_next()
 
-if (background_sky_clouds_show)
+if (background_sky_clouds_show && checkbox_expand_background_clouds)
 {
+	dx += 4
+	dw -= 4
+	
 	// Flat clouds
 	tab_control_checkbox()
 	draw_checkbox("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
@@ -133,17 +136,23 @@ if (background_sky_clouds_show)
 	tab_control_dragger()
 	draw_dragger("backgroundskycloudsheight", dx, dy, dw, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height, capwid)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
 // Ground
 capwid = text_caption_width("backgroundground", "backgroundgroundtex", "backgroundbiome", "backgroundbiomevariant")
 
 tab_control_checkbox()
-draw_checkbox("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show)
+draw_checkbox_expand("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show, checkbox_expand_background_ground, action_checkbox_expand_background_ground)
 tab_next()
 
-if (background_ground_show)
+if (background_ground_show && checkbox_expand_background_ground)
 {
+	dx += 4
+	dw -= 4
+	
 	var wid, res;
 	wid = text_caption_width("backgroundgroundchange")
 	res = background_ground_tex
@@ -166,6 +175,9 @@ if (background_ground_show)
 	tab_control(40)
 	draw_button_menu("backgroundgroundtex", e_menu.LIST, dx, dy, dw, 40, background_ground_tex, background_ground_tex.display_name, action_background_ground_tex, background_ground_tex.block_preview_texture, null, capwid)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
 // Biome
@@ -228,16 +240,19 @@ tab_next()
 
 // Show fog
 tab_control_checkbox()
-draw_checkbox("backgroundfog", dx, dy, background_fog_show, action_background_fog_show)
+draw_checkbox_expand("backgroundfog", dx, dy, background_fog_show, action_background_fog_show, checkbox_expand_background_fog, action_checkbox_expand_background_fog)
+tab_next()
 
-if (background_fog_show)
+if (background_fog_show && checkbox_expand_background_fog)
 {
+	dx += 4
+	dw -= 4
+	
 	// Sky fog
+	tab_control_checkbox()
 	draw_checkbox("backgroundfogsky", dx + floor(dw * 0.5), dy, background_fog_sky, action_background_fog_sky)
-	tab_next()
 	
 	// Custom color
-	tab_control_checkbox()
 	draw_checkbox("backgroundfogcolorcustom", dx, dy, background_fog_color_custom, action_background_fog_color_custom)
 	tab_next()
 	
@@ -248,6 +263,20 @@ if (background_fog_show)
 		draw_button_color("backgroundfogcolor", dx, dy, dw, background_fog_color, c_sky, false, action_background_fog_color)
 		tab_next()
 	}
+	
+	// Custom object fog color
+	tab_control_checkbox()
+	draw_checkbox("backgroundfogobjectcolorcustom", dx, dy, background_fog_object_color_custom, action_background_fog_object_color_custom)
+	tab_next()
+	
+	// Fog color
+	if (background_fog_object_color_custom)
+	{
+		tab_control_color()
+		draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky, false, action_background_fog_object_color)
+		tab_next()
+	}
+	
 	
 	capwid = text_caption_width("backgroundfogdistance", "backgroundfogsize")
 	
@@ -265,17 +294,21 @@ if (background_fog_show)
 	tab_control_dragger()
 	draw_dragger("backgroundfogheight", dx, dy, dw, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height, capwid)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
-else
-	tab_next()
 
 // Wind
 tab_control_checkbox()
-draw_checkbox("backgroundwind", dx, dy, background_wind, action_background_wind)
+draw_checkbox_expand("backgroundwind", dx, dy, background_wind, action_background_wind, checkbox_expand_background_wind, action_checkbox_expand_background_wind)
 tab_next()
 
-if (background_wind)
+if (background_wind && checkbox_expand_background_wind)
 {
+	dx += 4
+	dw -= 4
+	
 	capwid = text_caption_width("backgroundwindstrength", "backgroundwindamount")
 	
 	// Wind strength
@@ -287,6 +320,9 @@ if (background_wind)
 	tab_control_meter()
 	draw_meter("backgroundwindstrength", dx, dy, dw, background_wind_strength, 64, 0, 8, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength)
 	tab_next()
+	
+	dx -= 4
+	dw += 4
 }
 
 // Fast graphics

@@ -12,6 +12,8 @@ if (render_mode = e_render_mode.COLOR_FOG_LIGHTS) // Simulate normal
 // Shading
 render_set_uniform_int("uIsGround", 1)
 render_set_uniform_color("uBlendColor", blend, 1)
+render_set_uniform_color("uGlowColor", c_black, 1)
+render_set_uniform_int("uGlowTexture", 0)
 
 // Texture
 shader_texture_filter_mipmap = app.setting_texture_filtering

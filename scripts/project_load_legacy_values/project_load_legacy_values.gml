@@ -100,20 +100,20 @@ if (tl.value_type[e_value_type.CAMERA])
 	//Bloom
 	if (load_format = e_project.FORMAT_CB_102)
 	{
-		/*value[CAMBLOOM] = */buffer_read_byte()
-		/*value[CAMBLOOMTHRE] = */buffer_read_double()
-		/*value[CAMBLOOMOFFS] = */buffer_read_double()
+		value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM
+		value[e_value.CAM_BLOOM_THRESHOLD] = buffer_read_double() // CAMBLOOMTHRE
+		value[e_value.CAM_BLOOM_INTENSITY] = buffer_read_double() // CAMBLOOMOFFS
 		
-		// value[CAMBLOOMTHRE] = ((value[CAMBLOOMTHRE]-1)*-1)*100
-		// value[CAMBLOOMOFFS] = ((value[CAMBLOOMOFFS]-1)*-1)*100
+		value[e_value.CAM_BLOOM_THRESHOLD] = ((value[e_value.CAM_BLOOM_THRESHOLD]-1)*-1)*100
+		value[e_value.CAM_BLOOM_INTENSITY] = ((value[e_value.CAM_BLOOM_INTENSITY]-1)*-1)*100
 	}
 	
 	//Bloom
 	if (load_format >= e_project.FORMAT_CB_103)
 	{
-		/*value[CAMBLOOM] = */buffer_read_byte()
-		/*value[CAMBLOOMTHRE] = */buffer_read_int()
-		/*value[CAMBLOOMOFFS] = */buffer_read_int()
+		value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM
+		value[e_value.CAM_BLOOM_THRESHOLD] = buffer_read_int() // CAMBLOOMTHRE
+		value[e_value.CAM_BLOOM_INTENSITY] = buffer_read_int() // CAMBLOOMOFFS
 	}
 }
 
@@ -138,7 +138,9 @@ if (tl.value_type[e_value_type.BACKGROUND])
 	value[e_value.BG_TEXTURE_ANI_SPEED] = buffer_read_double()
 	
 	if (load_format >= e_project.FORMAT_CB_100)
+	{
 		/*value[BGBIOMECOLOR] = */buffer_read_int()
+	}
 }
 
 if (tl.value_type[e_value_type.TEXTURE])
