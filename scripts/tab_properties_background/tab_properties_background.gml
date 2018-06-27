@@ -65,7 +65,7 @@ else
 	tab_next()
 	
 	// Moon
-	if (background_sky_moon_tex.type = e_res_type.PACK)
+	if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
 		tex = background_sky_moon_tex.moon_texture[background_sky_moon_phase]
 	else
 		tex = background_sky_moon_tex.texture
@@ -74,7 +74,7 @@ else
 	tab_next()
 	
 	// Moon phase
-	if (background_sky_moon_tex.type = e_res_type.PACK)
+	if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
 	{
 		tab_control(40)
 		draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, 40, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, background_sky_moon_tex.moon_texture[background_sky_moon_phase], null, capwid)

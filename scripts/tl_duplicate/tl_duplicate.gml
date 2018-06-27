@@ -9,6 +9,8 @@ with (copy)
 	root_copy = null
 	copy = null
 	
+	tl_update_scenery_part()
+	
 	// Set correct template
 	if (temp != null)
 	{
@@ -63,7 +65,6 @@ with (copy)
 	}
 	
 	// Update
-	tl_update_scenery_part()
 	tl_update()
 	tl_update_values()
 		

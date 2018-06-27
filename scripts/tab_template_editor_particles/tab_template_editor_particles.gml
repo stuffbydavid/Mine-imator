@@ -623,7 +623,7 @@ if (ptype_edit.temp = null)
 	
 	tab_template_editor_particles_value("particleeditortypespriteangle", 
 		ptype_edit.sprite_angle, ptype_edit.sprite_angle_israndom, ptype_edit.sprite_angle_random_min, ptype_edit.sprite_angle_random_max, 
-		1 / 100, 0, no_limit, array(0, 0, 360), 0, 
+		1 / 5, 0, no_limit, array(0, 0, 360), 0, 
 		array(tab.tbx_type_sprite_angle, tab.tbx_type_sprite_angle_random), 
 		array(action_lib_pc_type_sprite_angle, action_lib_pc_type_sprite_angle_israndom, action_lib_pc_type_sprite_angle_random_min, action_lib_pc_type_sprite_angle_random_max), 
 		capwid)
@@ -631,7 +631,7 @@ if (ptype_edit.temp = null)
 	// Angle change
 	tab_template_editor_particles_value("particleeditortypespriteangleadd", 
 		ptype_edit.sprite_angle_add, ptype_edit.sprite_angle_add_israndom, ptype_edit.sprite_angle_add_random_min, ptype_edit.sprite_angle_add_random_max, 
-		1 / 100, -no_limit, no_limit, array(0, -90, 90), 0, 
+		1 / 10, -no_limit, no_limit, array(0, -90, 90), 0, 
 		array(tab.tbx_type_sprite_angle_add, tab.tbx_type_sprite_angle_add_random), 
 		array(action_lib_pc_type_sprite_angle_add, action_lib_pc_type_sprite_angle_add_israndom, action_lib_pc_type_sprite_angle_add_random_min, action_lib_pc_type_sprite_angle_add_random_max), 
 		capwid)
