@@ -592,7 +592,7 @@ if (setting_render_glow)
 	// Apply Glow
 	
 	// Render directly to target?
-	if (!setting_render_aa && !render_overlay)
+	if (!setting_render_glow_falloff && !setting_render_aa && !render_overlay)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target

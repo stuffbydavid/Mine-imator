@@ -29,6 +29,8 @@ json_save_object_start()
 			json_save_var_bool("3d", item_3d)
 			json_save_var_bool("face_camera", item_face_camera)
 			json_save_var_bool("bounce", item_bounce)
+			json_save_var_bool("spin", item_spin)
+			json_save_var("spin_offset", item_spin_offset)
 		json_save_object_done()
 	}
 	else if (type = e_temp_type.BLOCK)

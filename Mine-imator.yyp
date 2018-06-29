@@ -6575,6 +6575,14 @@
             }
         },
         {
+            "Key": "72ae87c3-6499-40ed-9459-fa270e99a997",
+            "Value": {
+                "id": "60fb3b58-20ed-48ec-8ba8-99a062382ee0",
+                "resourcePath": "scripts\\action_lib_item_spin\\action_lib_item_spin.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "72b31362-c34c-42df-89ff-7a788868fd1b",
             "Value": {
                 "id": "09ae0e05-7913-4c87-b8cb-6c21ef3891d5",
@@ -7932,6 +7940,14 @@
                 "id": "6ed251a3-0b07-4af6-8468-f5cfc28b3083",
                 "resourcePath": "views\\8acd15e4-51a8-4add-81e5-7b152441cc11.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "8ae0c754-e527-4cd3-a128-fe2ef387c0ca",
+            "Value": {
+                "id": "15634d1d-75f4-42a1-9ec4-847c9aeede2e",
+                "resourcePath": "scripts\\action_lib_item_spin_offset\\action_lib_item_spin_offset.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -9499,6 +9515,14 @@
             "Value": {
                 "id": "d0735c50-4b59-405e-8347-306f506882b8",
                 "resourcePath": "scripts\\tl_find_save_ids\\tl_find_save_ids.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "a3800f67-1d87-436b-80b7-89018bf7ac1b",
+            "Value": {
+                "id": "e707b4f4-271b-46a0-b62b-4f0a9f882156",
+                "resourcePath": "scripts\\action_bench_item_spin\\action_bench_item_spin.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14988,6 +15012,8 @@
         "aa0147e4-13f1-419c-b624-28e93a36fa93",
         "a3e95c28-5c80-4059-81f4-06dfeae11436",
         "0093358b-0d29-4c3d-ac9f-0e855d77a343",
+        "72ae87c3-6499-40ed-9459-fa270e99a997",
+        "8ae0c754-e527-4cd3-a128-fe2ef387c0ca",
         "d1123802-2406-486a-afdc-16e705166c17",
         "c69feb66-79c9-4e5e-a2a9-aadfa486a419",
         "04443266-8d0e-41eb-ae8a-b3a3f7260fcc",
@@ -15440,6 +15466,7 @@
         "cbe58a7b-e4e2-4767-943d-80783ddd45ac",
         "4efa0d1a-939f-415a-9db3-4c17ba71b015",
         "f55bfa91-ad0c-428e-9bc3-10784cd2b64e",
+        "a3800f67-1d87-436b-80b7-89018bf7ac1b",
         "027cd08d-e7fe-49c3-83ff-7ea04f7715c3",
         "8b20b3ad-4409-4770-b2b0-60138a632b42",
         "c477b1bf-c2de-42e6-a7d8-3567135f9e2d",

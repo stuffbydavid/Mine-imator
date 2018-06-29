@@ -30,6 +30,8 @@ item_vbuffer = null
 item_3d = true
 item_face_camera = false
 item_bounce = false
+item_spin = false
+item_spin_offset = 0
 legacy_item_sheet = true
 
 block_name = default_block

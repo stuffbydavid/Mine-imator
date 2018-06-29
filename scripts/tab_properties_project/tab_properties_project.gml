@@ -53,7 +53,7 @@ tab_next()
 
 // Video size
 if (project_video_template = 0)
-	text = text_get("projectvideosizetemplatecustom")
+	text = text_get("projectvideosizecustom")
 else
 	text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 tab_control(24)

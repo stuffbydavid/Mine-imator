@@ -14,11 +14,11 @@ if (!background_fog_color_custom) // Fog color
 		
 		// Sunset
 		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 160, 1) * 0.75
-		background_fog_color_final = merge_color(background_fog_color_final, c_orange, background_sunset_alpha * p)
+		background_fog_color_final = merge_color(background_fog_color_final, hex_to_color("CF5B36"), background_sunset_alpha * p)
 		
 		// Sunrise
 		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 270)) / 160, 1) * 0.75
-		background_fog_color_final = merge_color(background_fog_color_final, c_orange, background_sunrise_alpha * p)
+		background_fog_color_final = merge_color(background_fog_color_final, hex_to_color("CF5B36"), background_sunrise_alpha * p)
 	}
 	
 	if (!background_fog_object_color_custom)

@@ -2,9 +2,9 @@
 /// @arg rise
 
 var t, a, x1, x2, x3;
-x1 = 70 + 180 * argument0
+x1 = 60 + 180 * argument0
 x2 = 90 + 180 * argument0  // Most intense
-x3 = 110 + 180 * argument0
+x3 = 120 + 180 * argument0
 
 t = mod_fix(background_sky_time, 360)
 

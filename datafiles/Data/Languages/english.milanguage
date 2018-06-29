@@ -2,9 +2,9 @@
     "description": "Mine-imator language file. Copy and rename this to begin creating your own translation.",
     "file/": {
         "language": "English",
-        "translator": "David/Nimi",
+        "translator": "David & Bailey",
         "forversion": "1.2.0",
-        "lastchange": "2018.06.27" 
+        "lastchange": "2018.06.29" 
     },
     "startup/": {
         "caption": "Startup screen",
@@ -289,6 +289,8 @@
         "itemfacecameratip": "Whether this item always faces the camera.",
         "itembounce": "Bounce",
         "itembouncetip": "Whether this item bounces up and down.",
+        "itemspin": "Spin",
+        "itemspintip": "Whether this item should spin.",
         "block": "Block",
         "blockstatetip": "Choose between different values for this block state.",
         "spblockmodel": "Block",
@@ -1325,6 +1327,10 @@
         "itemfacecameratip": "Whether this item always faces the camera.",
         "itembounce": "Bounce",
         "itembouncetip": "Whether this item bounces up and down.",
+        "itemspin": "Spin",
+        "itemspintip": "Whether this item should spin.",
+        "itemspinoffset": "Spin offset",
+        "itemspinoffsettip": "The rotation offset of the item spin.",
         "blocktex": "Texture",
         "blocktextip": "Load texture from a resource pack or image.",
         "blockchange": "Change",

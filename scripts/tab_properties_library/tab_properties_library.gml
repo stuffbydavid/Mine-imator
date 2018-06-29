@@ -145,6 +145,16 @@ switch (temp_edit.type)
 		draw_checkbox("libraryitembounce", dx + floor(dw * 0.7), dy, temp_edit.item_bounce, action_lib_item_bounce)
 		tab_next()
 		
+		tab_control_checkbox()
+		draw_checkbox("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
+		tab_next()
+		
+		if (temp_edit.item_spin)
+		{
+			tab_control_meter()
+			draw_meter("libraryitemspinoffset", dx, dy, dw, temp_edit.item_spin_offset, 64, 0, 360, 0, 1, tab.library.tbx_item_spin_offset, action_lib_item_spin_offset)
+			tab_next()
+		}
 		break
 	}
 	

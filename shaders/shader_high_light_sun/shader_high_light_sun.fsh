@@ -39,10 +39,13 @@ void main()
 	{
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));
+		float angdif = dif;
 		float shadow = 0.0;
 	
 		if (dif > 0.0 && vBrightness < 1.0)
 		{
+			angdif *= (angdif + (2.0 * dif));
+			
 			float fragDepth = min(vScreenCoord.z, uLightFar);
 			vec2 fragCoord = (vec2(vScreenCoord.x, -vScreenCoord.y) / vScreenCoord.z + 1.0) / 2.0;
 		
@@ -80,7 +83,7 @@ void main()
 		}
 	
 		// Calculate light
-		light = uLightColor.rgb * dif * (1.0 - shadow);
+		light = ((1.0 - shadow) * uLightColor.rgb) * angdif;
 		light = mix(light, vec3(1.0), vBrightness);
 	}
 	

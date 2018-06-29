@@ -1,10 +1,10 @@
 /// background_sky_night_alpha()
 
 var t, a, x1, x2, x3, x4;
-x1 = 80
+x1 = 70
 x2 = 110
 x3 = 180 + 60
-x4 = 180 + 110
+x4 = 180 + 120
 
 t = mod_fix(app.background_sky_time, 360)
 
@@ -16,4 +16,4 @@ if (t >= x2 && t < x3)
 if (t >= x3 && t < x4)
 	a = 1-percent(t, x3, x4)
 
-return a
+return min(1, a * (a * 2))

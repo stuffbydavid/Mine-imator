@@ -1,16 +1,20 @@
-/// render_world_item(vbuffer, is3d, facecamera, bounce, resource)
+/// render_world_item(vbuffer, is3d, facecamera, bounce, rotate, rotateoffset, resource)
 /// @arg vbuffer
 /// @arg is3d
 /// @arg facecamera
 /// @arg bounce
+/// @arg rotate
+/// @arg rotateoffset
 /// @arg resource
 
-var vbuffer, is3d, facecamera, bounce, res;
+var vbuffer, is3d, facecamera, bounce, rotate, rotateoffset, res;
 vbuffer = argument0
 is3d = argument1
 facecamera = argument2
 bounce = argument3
-res = argument4
+rotate = argument4
+rotateoffset = argument5
+res = argument6
 
 if (!res.ready)
 	res = mc_res
@@ -25,10 +29,19 @@ if (facecamera)
 	matrix_world_multiply_pre(rotmat)
 }
 
+if (rotate)
+{
+	var d, t, offz;
+	d = 60 * 6
+	t = current_step mod d * 360
+	offz = t/360
+	matrix_world_multiply_post(matrix_build(0, 0, 0, 0, 0, offz + rotateoffset, 1, 1, 1))
+}
+
 if (bounce)
 {
 	var d, t, offz;
-	d = 60 * 2
+	d = 60 * 3
 	t = current_step mod d * 2
 	if (t < d)
 		offz = ease("easeinoutquad", t / d) * 2 - 1

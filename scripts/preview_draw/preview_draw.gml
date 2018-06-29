@@ -115,7 +115,7 @@ with (preview)
 {
 	if (!surface_exists(surface) || surface_get_width(surface) < 0 ||
 		select.type = e_temp_type.PARTICLE_SPAWNER ||
-		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && select.item_bounce))
+		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin)))
 		update = true
 
 	surface = surface_require(surface, size, size)
@@ -337,7 +337,7 @@ with (preview)
 							break
 					
 						case e_temp_type.ITEM:
-							render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_tex)
+							render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, select.item_spin_offset, select.item_tex)
 							break
 					
 						case e_temp_type.BLOCK:
