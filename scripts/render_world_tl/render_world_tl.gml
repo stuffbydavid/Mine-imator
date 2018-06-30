@@ -91,16 +91,20 @@ if (!fog)
 	render_set_uniform_int("uFogShow", fog)
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", ssao)
-	
+
+render_set_uniform_int("uBlockGlow", app.setting_block_glow)
+
 if (glow)
 {
-	render_set_uniform_color("uGlowColor", value_inherit[e_value.GLOW_COLOR], 1)
+	render_set_uniform_int("uGlow", 1)
 	render_set_uniform_int("uGlowTexture", glow_texture)
+	render_set_uniform_color("uGlowColor", value_inherit[e_value.GLOW_COLOR], 1)
 }
 else
 {
-	render_set_uniform_color("uGlowColor", c_black, 1)
+	render_set_uniform_int("uGlow", 0)
 	render_set_uniform_int("uGlowTexture", 0)
+	render_set_uniform_color("uGlowColor", c_black, 1)
 }
 
 // Render

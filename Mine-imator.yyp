@@ -9823,6 +9823,14 @@
             }
         },
         {
+            "Key": "a9321863-a4fb-4e9c-b747-3b68409af268",
+            "Value": {
+                "id": "8b51b545-043a-4317-98f5-917e2c220268",
+                "resourcePath": "scripts\\action_setting_block_glow\\action_setting_block_glow.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "a94ae1a2-6c36-444e-8c37-e5baa7b89c86",
             "Value": {
                 "id": "f4bca21c-1af2-43ce-95f5-35e91309f3ac",
@@ -15238,6 +15246,7 @@
         "115bb9af-f648-491e-a6d4-697cd682d769",
         "7b8f0085-ed35-4f1f-b11b-199d5178da06",
         "61bfc6f1-3c05-4d45-bf92-0345c92c70df",
+        "a9321863-a4fb-4e9c-b747-3b68409af268",
         "bd4878d5-a3b5-4e33-b8dc-aa9bb87d0f7a",
         "2831e949-d1da-46e8-bdc2-3b4a81a7e1d1",
         "c4b5552d-6e25-4285-aa0d-2f8ae31044f4",

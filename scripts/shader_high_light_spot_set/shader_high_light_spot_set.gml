@@ -1,7 +1,6 @@
 /// shader_high_light_spot_set()
 
 render_set_uniform("uBrightness", 0)
-render_set_uniform("uBlockBrightness", app.setting_block_brightness)
 
 render_set_uniform_int("uIsSky", 0)
 

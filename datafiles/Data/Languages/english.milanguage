@@ -2619,7 +2619,9 @@
         "transparenttexturefiltering": "Transparent texture filtering",
         "transparenttexturefilteringtip": "Enable texture filtering (mip-mapping) for transparent textures.",
         "blockbrightness": "Glowing block brightness",
-        "blockbrightnesstip": "Sets the brightness of certain blocks in schematics (Lava, Fire, Torches, Glowstone, Redstone Lamps etc.)",
+        "blockbrightnesstip": "Sets the brightness of certain blocks in schematics (Lava, Fire, Torches, Glowstone, Redstone Lamps etc.) and bright model shapes.",
+        "blockglow": "Glow bright blocks and models",
+        "blockglowtip": "Enables the glow effect on blocks and model shapes depending on their brightness.",
         "render": "Render",
         "rendertip": "Change settings about high quality rendering.",
         "render/": {

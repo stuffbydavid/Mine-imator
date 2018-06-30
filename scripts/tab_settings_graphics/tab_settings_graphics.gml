@@ -31,3 +31,8 @@ if (setting_texture_filtering)
 tab_control_meter()
 draw_meter("settingsblockbrightness", dx, dy, dw, round(setting_block_brightness * 100), 48, 0, 100, 75, 0, tab.graphics.tbx_block_brightness, action_setting_block_brightness)
 tab_next()
+
+// Apply glow to bright blocks
+tab_control_checkbox()
+draw_checkbox("settingsblockglow", dx, dy, setting_block_glow, action_setting_block_glow)
+tab_next()

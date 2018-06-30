@@ -278,8 +278,11 @@ with (shader_map[?shader_blur])
 
 with (shader_map[?shader_color_glow])
 {
+	new_shader_uniform("uGlow")
 	new_shader_uniform("uGlowTexture")
 	new_shader_uniform("uGlowColor")
+	new_shader_uniform("uBlockGlow")
+	new_shader_uniform("uBlockBrightness")
 }
 
 return true

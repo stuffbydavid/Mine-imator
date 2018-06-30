@@ -1,8 +1,10 @@
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 
+uniform int uGlow;
 uniform int uGlowTexture;
 uniform vec4 uGlowColor;
+uniform int uBlockGlow;
 
 uniform int uFogShow;
 uniform float uFogDistance;
@@ -13,6 +15,7 @@ varying vec3 vPosition;
 varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
+varying float vBrightness;
 
 float getFog()
 {
@@ -35,11 +38,16 @@ void main()
 		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	
-	if (uGlowTexture > 0)
-		baseColor.rgb *= uGlowColor.rgb;
+	// Glow isn't enabled on object, but bright blocks should still glow
+	if (uGlow < 1 && uBlockGlow > 0)
+		baseColor.rgb *= vec3(vBrightness);
 	else
-		baseColor.rgb = uGlowColor.rgb;
-	
+	{
+		if (uGlowTexture > 0)
+			baseColor.rgb *= uGlowColor.rgb;
+		else
+			baseColor.rgb = uGlowColor.rgb;
+	}
 	baseColor.rgb *= vec3(1.0 - getFog());
 	
 	gl_FragColor = baseColor;

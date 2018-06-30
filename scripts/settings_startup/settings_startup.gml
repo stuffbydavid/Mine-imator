@@ -152,6 +152,7 @@ setting_liquid_animation = true
 setting_texture_filtering = true
 setting_texture_filtering_level = 1
 setting_block_brightness = 0.75
+setting_block_glow = true
 
 setting_render_camera_effects = true
 setting_render_ssao = true
