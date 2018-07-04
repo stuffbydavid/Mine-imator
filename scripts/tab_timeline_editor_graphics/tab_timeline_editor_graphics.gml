@@ -1,6 +1,6 @@
 /// tab_timeline_editor_graphics()
 	
-if (!(tl_edit.type = e_tl_type.POINT_LIGHT) || (tl_edit.type = e_tl_type.SPOT_LIGHT))
+if (tl_edit.type != e_tl_type.POINT_LIGHT && tl_edit.type != e_tl_type.SPOT_LIGHT)
 {
 	// Texture
 	tab_control_checkbox()

@@ -31,11 +31,14 @@ if (facecamera)
 
 if (rotate)
 {
-	var d, t, offz;
+	var d, t, offz, mat, rotz, rotmat;
 	d = 60 * 6
 	t = current_step mod d * 360
-	offz = t/360
-	matrix_world_multiply_post(matrix_build(0, 0, 0, 0, 0, offz + rotateoffset, 1, 1, 1))
+	offz = (t/360) + rotateoffset
+	mat = matrix_get(matrix_world)
+	rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
+	rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, offz, 1, 1, 1))
+	matrix_world_multiply_pre(rotmat)
 }
 
 if (bounce)

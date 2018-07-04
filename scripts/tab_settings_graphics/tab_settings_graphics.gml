@@ -1,9 +1,14 @@
 /// tab_settings_graphics()
 
-// Texture filtering
+// Bending
 tab_control_checkbox()
-draw_checkbox("settingsbendpinch", dx, dy, setting_bend_pinch, action_setting_bend_pinch)
+draw_label(text_get("settingsbendstyle") + ":", dx, dy)
 tab_next()
+tab_control_checkbox()
+draw_radiobutton("settingsbendstylerealistic", dx, dy, "realistic", (setting_bend_style = "realistic"), action_setting_bend_style)
+draw_radiobutton("settingsbendstyleblocky", dx + floor(dw * 0.35), dy, "blocky", (setting_bend_style = "blocky"), action_setting_bend_style)
+tab_next()
+dy += 10
 
 // Scenery
 tab_control_checkbox()

@@ -26,6 +26,8 @@ background_sky_time = value_get_real(map[?"sky_time"], background_sky_time)
 background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
 background_sunlight_range = value_get_real(map[?"sunlight_range"], background_sunlight_range)
 background_sunlight_follow = value_get_real(map[?"sunlight_follow"], background_sunlight_follow)
+background_diffuse_boost = value_get_real(map[?"diffuse_boost"], background_diffuse_boost)
+background_diffuse_strength = value_get_real(map[?"diffuse_strength"], background_diffuse_strength)
 
 background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 background_sky_clouds_flat = value_get_real(map[?"sky_clouds_flat"], background_sky_clouds_flat)

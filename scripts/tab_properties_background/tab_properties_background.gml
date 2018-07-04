@@ -94,6 +94,19 @@ draw_dragger("backgroundsunlightrange", dx, dy, dw * 0.6, background_sunlight_ra
 draw_checkbox("backgroundsunlightfollow", dx + floor(dw * 0.6), dy, background_sunlight_follow, action_background_sunlight_follow)
 tab_next()
 
+// Sun diffuse boost
+tab_control_checkbox()
+draw_checkbox("backgrounddiffuseboost", dx, dy, background_diffuse_boost, action_background_diffuse_boost)
+tab_next()
+
+if (background_diffuse_boost)
+{
+	tab_control_meter()
+	draw_meter("backgrounddiffusestrength", dx, dy, dw, round(background_diffuse_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_diffuse_strength, action_background_diffuse_strength)
+	tab_next()
+}
+dy += 10
+
 // Clouds
 tab_control_checkbox()
 draw_checkbox_expand("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, checkbox_expand_background_clouds, action_checkbox_expand_background_clouds)

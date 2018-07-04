@@ -38,3 +38,7 @@ for (; i < ds_list_size(render_list); i++)
 		
 with (render_shader_obj)
 	shader_clear()
+
+// Turn off texture blur if it's still on from rendering scene
+if (gpu_get_tex_filter())
+	gpu_set_tex_filter(false)

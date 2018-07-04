@@ -48,8 +48,9 @@ texuv = vec2_div(uv, texture_size)
 samplesize = vec2(ceil(texsize[X]), ceil(texsize[Z]))
 
 // Start position and bounds
-var bendsize, bendstart, bendend, invangle;
-bendsize = test(bend_size = null, test(app.setting_bend_pinch, 4, 1), bend_size)
+var sharpbend, bendsize, bendstart, bendend, invangle;
+sharpbend = app.setting_bend_style = "blocky" && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]
+bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
 
 if (segouteraxis = X)

@@ -186,7 +186,7 @@ json_save_object_done()
 
 json_save_object_start("graphics")
 
-	json_save_var_bool("bend_pinch", setting_bend_pinch)
+	json_save_var("bend_style", setting_bend_style)
 	json_save_var_bool("schematic_remove_edges", setting_schematic_remove_edges)
 	json_save_var_bool("liquid_animation", setting_liquid_animation)
 	json_save_var_bool("texture_filtering", setting_texture_filtering)

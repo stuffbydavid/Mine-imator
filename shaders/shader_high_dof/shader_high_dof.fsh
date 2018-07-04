@@ -6,14 +6,14 @@ uniform float uRange;
 uniform float uFadeSize;
 uniform float uNear;
 uniform float uFar;
-uniform int uSamples;
-uniform int uRingDetail;
 
 varying vec2 vTexCoord;
 
 const float pi = 3.14159265;
 const float tau = pi * 2.0;
-int totalSamples = uSamples * uRingDetail; // samples * ringDetail
+const int samples = 24;
+const int ringDetail = 6;
+const int totalSamples = 144; // samples * ringDetail
 
 float screenSampleSize = uScreenSize.y * uBlurSize;
 vec2 texelSize = 1.0 / uScreenSize;
@@ -58,8 +58,8 @@ void main()
 	
 	for (int i = 0; i < totalSamples; i++)
 	{
-		float angle = (float(i / uRingDetail) / float(uSamples)) * tau;
-		float dis = 1.0 - mod(float(i),float(uRingDetail)) / float(uRingDetail);
+		float angle = (float(i / ringDetail) / float(samples)) * tau;
+		float dis = 1.0 - mod(float(i),float(ringDetail)) / float(ringDetail);
 		dis *= (myFrontBlur + myBackBlur);
 		vec2 offset = vec2(cos(angle), sin(angle)) * dis * screenSampleSize;
 		vec2 tex = vTexCoord + texelSize * offset;

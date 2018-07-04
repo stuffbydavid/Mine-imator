@@ -94,11 +94,16 @@ if (!ssao)
 
 render_set_uniform_int("uBlockGlow", app.setting_block_glow)
 
+var prevblend = gpu_get_blendmode();
+
 if (glow)
 {
 	render_set_uniform_int("uGlow", 1)
 	render_set_uniform_int("uGlowTexture", glow_texture)
 	render_set_uniform_color("uGlowColor", value_inherit[e_value.GLOW_COLOR], 1)
+	
+	if (only_render_glow)
+		gpu_set_blendmode(bm_add)
 }
 else
 {
@@ -209,3 +214,6 @@ if (!fog)
 	render_set_uniform_int("uFogShow", (render_lights && app.background_fog_show))
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", 1)
+	
+if (glow && only_render_glow)
+	gpu_set_blendmode(prevblend)

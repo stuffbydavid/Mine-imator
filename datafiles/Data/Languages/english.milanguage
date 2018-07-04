@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Bailey",
         "forversion": "1.2.0",
-        "lastchange": "2018.06.29" 
+        "lastchange": "2018.07.04"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1284,7 +1284,7 @@
             "fhd_1080p": "FHD 1080p",
             "qhd_1440p": "QHD 1440p",
             "uhd_4k": "UHD 4K",
-            "hd_720p_cinematic": "UHD 720p Cinematic",
+            "hd_720p_cinematic": "HD 720p Cinematic",
             "fhd_1080p_cinematic": "FHD 1080p Cinematic",
             "qhd_1440p_cinematic": "QHD 1440p Cinematic",
             "uhd_4k_cinematic": "UHD 4K Cinematic"
@@ -1485,7 +1485,7 @@
             "timeisrandomtip": "Use a random value.",
             "timerandom": "to",
             "boundingboxtoggle": "When particles hit bounding box",
-            "boundingboxtoggletip": "Particles will be destroyed when the touch the bounding box (if one is selected)."
+            "boundingboxtoggletip": "Particles will be destroyed when they touch the bounding box (if one is selected)."
         },
         "types": "Types",
         "type/": {
@@ -1780,6 +1780,10 @@
         "sunlightrangetip": "The distance from the sun's light source to the world origin. Increasing will render shadows within a larger area, but shadow quality will decrease.",
         "sunlightfollow": "Follow camera",
         "sunlightfollowtip": "The sun's shadows will be rendered from the camera's position. Not recommended if your project contains moving cameras.",
+        "diffuseboost": "Diffuse boost",
+        "diffuseboosttip": "Enable editing the strength of diffuse lighting from the sun.",
+        "diffusestrength": "Strength",
+        "diffusestrengthtip": "The additional strength of the diffuse lighting from the sun.",
         "groundshow": "Show ground",
         "groundshowtip": "Whether to show a ground.",
         "ground": "Ground",
@@ -2604,8 +2608,11 @@
         "slowmodifiertip": "The camera speed modifier when going slower.",
         "graphics": "Graphics",
         "graphicstip": "Modify the appearence of objects and textures in animations.",
-        "bendpinch": "Pinch effect for bent arms and legs",
-        "bendpinchtip": "Whether bent arms and legs will have a pinch effect.",
+        "bendstyle": "Arm/Legs bending style",
+        "bendstylerealistic": "Realistic",
+        "bendstylerealistictip": "Enables a realistic style with a pinch effect for bent arms and legs.",
+        "bendstyleblocky": "Blocky",
+        "bendstyleblockytip": "Enables a blocky style for bent arms and legs.",
         "schematicaddtimelines": "Add block timelines to schematics",
         "schematicaddtimelinestip": "Whether to add timelines of certain blocks in imported schematics.",
         "schematicremoveedges": "Remove edges of big schematics",
@@ -2678,7 +2685,7 @@
             "aapower": "AA power",
             "aapowertip": "The power (intensity) of the Anti Aliasing effect.",
             "watermark": "Watermark",
-            "watermarktip": "Show a watermark in the bottom right corner of exported movies and images.",
+            "watermarktip": "Show a watermark in exported movies and images.",
             "watermarkupgraderequired": "Upgrade Mine-imator to use a custom watermark.",
             "watermarkimage": "Image",
             "watermarkimagetip": "The watermark image.",

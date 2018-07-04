@@ -148,8 +148,6 @@ with (shader_map[?shader_high_dof])
 	new_shader_uniform("uFadeSize")
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
-	new_shader_uniform("uSamples")
-	new_shader_uniform("uRingDetail")
 }
 
 with (shader_map[?shader_high_fog_apply])
@@ -222,6 +220,7 @@ with (shader_map[?shader_high_light_sun])
 	new_shader_sampler("uDepthBuffer")
 	new_shader_uniform("uBlurQuality")
 	new_shader_uniform("uBlurSize")
+	new_shader_uniform("uDiffuseBoost")
 }
 
 with (shader_map[?shader_high_ssao])

@@ -1,7 +1,7 @@
-/// action_setting_bend_pinch(value)
+/// action_setting_bend_style(value)
 /// @arg value
 
-setting_bend_pinch = argument0
+setting_bend_style = argument0
 
 // Force update timeline meshes
 with (obj_timeline)
