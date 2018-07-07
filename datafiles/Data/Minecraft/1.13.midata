@@ -95,9 +95,27 @@
 				"sheared": [
 					{ "value": "false", "file": "sheep.mimodel" },
 					{ "value": "true", "file": "sheep_sheared.mimodel" }
+				],
+				"wool_color": [
+					{ "value": "white", "color": { "wool": "white" } },
+					{ "value": "orange", "color": { "wool": "orange"} },
+					{ "value": "magenta", "color": { "wool": "magenta"} },
+					{ "value": "light_blue", "color": { "wool": "light_blue"} },
+					{ "value": "yellow", "color": { "wool": "yellow"} },
+					{ "value": "lime", "color": { "wool": "lime"} },
+					{ "value": "pink", "color": { "wool": "pink"} },
+					{ "value": "gray", "color": { "wool": "gray"} },
+					{ "value": "light_gray", "color": { "wool": "light_gray"} },
+					{ "value": "cyan", "color": { "wool": "cyan"} },
+					{ "value": "purple", "color": { "wool": "purple"} },
+					{ "value": "blue", "color": { "wool": "blue"} },
+					{ "value": "brown", "color": { "wool": "brown"} },
+					{ "value": "green", "color": { "wool": "green"} },
+					{ "value": "red", "color": { "wool": "red"} },
+					{ "value": "black", "color": { "wool": "black"} }
 				]
 			},
-			"default_state": "sheared=false"
+			"default_state": "sheared=false,wool_color=white"
 		},
 		{
 			"name": "rabbit",

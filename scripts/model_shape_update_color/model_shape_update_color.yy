@@ -1,8 +1,8 @@
 {
-    "id": "6e3e5d5a-a052-4608-adb5-7bb90b5e74d6",
+    "id": "6cf8ef5a-306f-4fd8-bef7-5888a5079364",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "action_background_diffuse_boost",
+    "name": "model_shape_update_color",
     "IsCompatibility": false,
     "IsDnD": false
 }

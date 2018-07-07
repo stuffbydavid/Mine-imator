@@ -79,7 +79,7 @@ timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / 
 if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100)
 	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor(content_height / 2), fa_center, fa_middle, null, 0.3, setting_font_big)
 
-// Keyframes
+// Keyframe backgrounds
 dy = tly
 for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
@@ -100,7 +100,146 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	// Hidden
 	if (tl.hide)
 		draw_box(dx, dy, tlw, itemh - 1, false, c_black, 0.25)
+	
+	dy += itemh
+}
+
+// Timeline bar
+draw_box(barx, bary, barw, barh - 1, false, setting_color_timeline, 1)
+
+// Timeline region
+if (timeline_region_start != null)
+{
+	regionx1 = floor(timeline_region_start * timeline_zoom - timeline.hor_scroll.value)
+	regionx2 = floor(timeline_region_end * timeline_zoom - timeline.hor_scroll.value)
+	
+	var x1, x2;
+	x1 = regionx1
+	x2 = regionx2
+	if (x1 < barw && x2 > 0)
+	{
+		x1 = clamp(x1, 0, barw)
+		x2 = clamp(x2, 0, barw)
 		
+		draw_box(barx + x1, bary, x2 - x1, barh - 1, false, setting_color_highlight, 1)
+		
+		if (x1 >= 0)
+			draw_image(spr_marker, 1, barx + x1, bary, 1, content_height + barh, setting_color_highlight, 1)
+			
+		if (x2 < barw)
+			draw_image(spr_marker, 1, barx + x2, bary, 1, content_height + barh, setting_color_highlight, 1)
+	}
+}
+
+// Frames
+framestep = 1
+framehighlight = 5
+
+if (timeline_zoom < 5)
+{
+	framestep = 5
+	framehighlight = 10
+}
+
+if (timeline_zoom < 3)
+{
+	framestep = 10
+	framehighlight = 50
+}
+
+if (timeline_zoom < 1)
+{
+	framestep = 20
+	framehighlight = 100
+}
+
+if (timeline_zoom < 0.5)
+{
+	framestep = 50
+	framehighlight = 200
+}
+
+f = floor(timeline.hor_scroll.value / (timeline_zoom * framestep)) * framestep
+
+for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < barw; dx += timeline_zoom * framestep)
+{
+	var highlight, linex, color, linecolor, alpha, fullsec, halfsec, inregion;
+	highlight = ((f mod framehighlight) = 0)
+	linex = floor(barx + dx)
+	alpha = 1
+	fullsec = false
+	halfsec = false
+	inregion = false
+	
+	if (timeline_region_start != null && f >= timeline_region_start && f <= timeline_region_end)
+	{
+		inregion = true
+		color = setting_color_highlight_text
+	}
+	else
+		color = setting_color_timeline_text
+	
+	linecolor = color
+	
+	if (project_file != "" && instance_exists(obj_timeline) && timeline_show_seconds)
+	{
+		if (f mod (project_tempo/2) = 0 && f > 0)
+		{
+			fullsec = false
+			halfsec = true
+			alpha = 0.35
+			linecolor = setting_color_timeline_marks
+		}
+	
+		if (f mod project_tempo = 0 && f > 0)
+		{
+			fullsec = true
+			halfsec = false
+			alpha = .8
+			linecolor = setting_color_timeline_marks
+		}
+		
+		if (fullsec || halfsec)
+			color = setting_color_timeline_marks
+	}
+	
+	// Horizontal line at base of notches of timeline bar
+	if ((fullsec || halfsec) && !inregion)
+		draw_line_ext(linex - 2, bary + barh - 1, linex + 1, bary + barh - 1, color, 1)
+	
+	// Line through timeline
+	if (fullsec || halfsec)
+		draw_line_ext(linex, bary + barh - 1, linex, content_y + content_height, linecolor, alpha)
+	
+	if (inregion)
+		linecolor = setting_color_highlight_text
+	
+	// Vertical notch in timeline bar
+	draw_line_ext(linex, (bary + barh - 3 - 2 * highlight) - 2 * (fullsec || halfsec), linex, bary + barh - 1, linecolor, 1)
+	
+	if (highlight)
+	{
+		var oldcol = draw_get_color();
+		draw_set_color(color)
+		draw_set_halign(test((f = 0), fa_left, fa_center))
+		draw_text(linex, bary + 5, string(f))
+		draw_set_halign(fa_left)
+		draw_set_color(oldcol)
+	}
+		
+	f += framestep
+}
+
+// Keyframes
+dy = tly
+for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
+{
+	if (dy + itemh > tly + tlh)
+		break
+		
+	dx = tlx
+	var tl = tree_visible_list[|t];
+	
 	// Draw ghosts
 	if (window_busy = "timelinemovekeyframes")
 	{
@@ -242,8 +381,8 @@ if (window_busy = "timelineselectkeyframes")
 	x2 = clamp(mouse_x, tlx, tlx + tlw)
 	y2 = clamp(mouse_y, tly, tly + tlh)
 	render_set_culling(false)
-	draw_box(x1, y1, x2 - x1, y2 - y1, false, c_blue, 0.25)
-	draw_box(x1, y1, x2 - x1, y2 - y1, true, c_blue, 1)
+	draw_box(x1, y1, x2 - x1, y2 - y1, false, setting_color_timeline_select_box, 0.25)
+	draw_box(x1, y1, x2 - x1, y2 - y1, true, setting_color_timeline_select_box, 1)
 	render_set_culling(true)
 	
 	if (!mouse_left)
@@ -283,88 +422,6 @@ if (window_busy = "timelineselectkeyframes")
 		window_busy = ""
 		app_mouse_clear()
 	}
-}
-
-// Bar
-draw_box(barx, bary, barw, barh - 1, false, setting_color_timeline, 1)
-
-// Region
-if (timeline_region_start != null)
-{
-	regionx1 = floor(timeline_region_start * timeline_zoom - timeline.hor_scroll.value)
-	regionx2 = floor(timeline_region_end * timeline_zoom - timeline.hor_scroll.value)
-	
-	var x1, x2;
-	x1 = regionx1
-	x2 = regionx2
-	if (x1 < barw && x2 > 0)
-	{
-		x1 = clamp(x1, 0, barw)
-		x2 = clamp(x2, 0, barw)
-		
-		draw_box(barx + x1, bary, x2 - x1, barh - 1, false, setting_color_highlight, 1)
-		
-		if (x1 >= 0)
-			draw_image(spr_marker, 1, barx + x1, bary, 1, content_height + barh, setting_color_highlight, 1)
-			
-		if (x2 < barw)
-			draw_image(spr_marker, 1, barx + x2, bary, 1, content_height + barh, setting_color_highlight, 1)
-	}
-}
-
-// Frames
-framestep = 1
-framehighlight = 5
-
-if (timeline_zoom < 5)
-{
-	framestep = 5
-	framehighlight = 10
-}
-
-if (timeline_zoom < 3)
-{
-	framestep = 10
-	framehighlight = 50
-}
-
-if (timeline_zoom < 1)
-{
-	framestep = 20
-	framehighlight = 100
-}
-
-if (timeline_zoom < 0.5)
-{
-	framestep = 50
-	framehighlight = 200
-}
-
-f = floor(timeline.hor_scroll.value / (timeline_zoom * framestep)) * framestep
-
-for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < barw; dx += timeline_zoom * framestep)
-{
-	var highlight, linex, color;
-	highlight = ((f mod framehighlight) = 0)
-	linex = floor(barx + dx)
-	
-	if (timeline_region_start != null && f >= timeline_region_start && f <= timeline_region_end)
-		color = setting_color_highlight_text
-	else
-		color = setting_color_timeline_text
-	
-	draw_line_ext(linex, bary + barh - 3 - 2 * highlight, linex, bary + barh - 1, color, 1)
-	if (highlight)
-	{
-		var oldcol = draw_get_color();
-		draw_set_color(color)
-		draw_set_halign(test((f = 0), fa_left, fa_center))
-		draw_text(linex, bary + 5, string(f))
-		draw_set_halign(fa_left)
-		draw_set_color(oldcol)
-	}
-		
-	f += framestep
 }
 
 // Marker

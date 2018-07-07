@@ -14,6 +14,7 @@ with (bench_settings)
 	temp_update_model()
 	temp_update_model_part()
 	temp_update_model_shape()
+	model_shape_update_color()
 	
 	with (preview)
 		update = true

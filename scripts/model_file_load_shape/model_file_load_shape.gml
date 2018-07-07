@@ -85,6 +85,9 @@ with (new(obj_model_shape))
 		color_brightness += other.color_brightness
 	}
 	
+	// Minecraft color (Only used in states)
+	minecraft_color = c_white
+	
 	// Mirror (optional)
 	texture_mirror = value_get_real(map[?"texture_mirror"], false)
 	

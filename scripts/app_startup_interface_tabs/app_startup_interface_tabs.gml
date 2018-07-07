@@ -59,8 +59,8 @@ with (properties)
 	background = tab_add_category("background", tab_properties_background, false)
 	with (background)
 	{
-		tbx_diffuse_strength = new_textbox_decimals()
-		tbx_diffuse_strength.suffix = "%"
+		tbx_sunlight_strength = new_textbox_decimals()
+		tbx_sunlight_strength.suffix = "%"
 		tbx_sky_clouds_fade_distance = new_textbox_integer()
 		tbx_sky_clouds_z = new_textbox_ndecimals()
 		tbx_sky_clouds_size = new_textbox_decimals()

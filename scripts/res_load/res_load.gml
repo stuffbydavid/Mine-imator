@@ -194,7 +194,14 @@ switch (type)
 			if (model_file != null)
 				model_texture_name_map[?""] = model_file.texture_name
 			
+			// Create color name map
+			if (model_color_name_map != null)
+				ds_map_clear(model_color_name_map)
+			else
+				model_color_name_map = ds_map_create()
+			
 			res_update_model_shape()
+			model_shape_update_color()
 		}
 		else
 		{

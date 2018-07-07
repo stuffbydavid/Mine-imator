@@ -107,7 +107,7 @@ sharpbend = app.setting_bend_style = "blocky" && bend_axis[X] && !bend_axis[Y] &
 bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
 bendsegsize = bendsize / detail;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
-	
+
 // Find start points/normals
 var p1, p2, p3, p4;
 var n1, n2, n3, n4;
@@ -173,6 +173,10 @@ switch (segaxis)
 	}
 }
 
+// Find out if the shape should bend if blocky bending is enabled
+if (app.setting_bend_style = "blocky")
+	isbent = isbent && (bendstart > 0) && (bendend < size[segaxis])
+
 // Apply transform
 var mat;
 if (isbent) // Apply start bend
@@ -188,7 +192,7 @@ if (isbent) // Apply start bend
 	if (invangle)
 		startp = 1 - startp
 	
-	// X-axis sharp bending
+	// Blocky bending
 	if (sharpbend)
 	{
 		var bendsca;
@@ -259,16 +263,16 @@ while (true)
 			case X: case Y:
 			{
 				// Flip left/right positions
-				vbuffer_add_triangle(p2, p1, p4, texend1, texend2, texend3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p4, p3, p2, texend3, texend4, texend1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p2, p1, p4, texend1, texend2, texend3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(p4, p3, p2, texend3, texend4, texend1, null, null, null, c_white, 1, invert)
 				break
 			}
 			
 			case Z:
 			{
 				// Flip top/bottom positions
-				vbuffer_add_triangle(p4, p3, p2, texend1, texend2, texend3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p2, p1, p4, texend3, texend4, texend1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p4, p3, p2, texend1, texend2, texend3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(p2, p1, p4, texend3, texend4, texend1, null, null, null, c_white, 1, invert)
 				break
 			}
 		}
@@ -278,8 +282,8 @@ while (true)
 	// Start face
 	if (segpos = 0)
 	{
-		vbuffer_add_triangle(p1, p2, p3, texstart1, texstart2, texstart3, null, null, null, color_blend, color_alpha, invert)
-		vbuffer_add_triangle(p3, p4, p1, texstart3, texstart4, texstart1, null, null, null, color_blend, color_alpha, invert)
+		vbuffer_add_triangle(p1, p2, p3, texstart1, texstart2, texstart3, null, null, null, c_white, 1, invert)
+		vbuffer_add_triangle(p3, p4, p1, texstart3, texstart4, texstart1, null, null, null, c_white, 1, invert)
 	}
 	
 	var segsize;
@@ -438,32 +442,32 @@ while (true)
 			t2 = vec2(ntexp1, texsouth1[Y])
 			t3 = vec2(ntexp1, texsouth3[Y])
 			t4 = vec2(texp1, texsouth3[Y])
-			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, n1, nn1, nn1, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np3, p3, p2, t3, t4, t1, nn1, n1, n1, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, n1, nn1, nn1, c_white, 1, invert)
+			vbuffer_add_triangle(np3, p3, p2, t3, t4, t1, nn1, n1, n1, c_white, 1, invert)
 			
 			// North
 			t1 = vec2(ntexp2, texnorth1[Y])
 			t2 = vec2(texp2, texnorth1[Y])
 			t3 = vec2(texp2, texnorth3[Y])
 			t4 = vec2(ntexp2, texnorth3[Y])
-			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, nn2, n2, n2, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p4, np4, np1, t3, t4, t1, n2, nn2, nn2, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, nn2, n2, n2, c_white, 1, invert)
+			vbuffer_add_triangle(p4, np4, np1, t3, t4, t1, n2, nn2, nn2, c_white, 1, invert)
 			
 			// Up
 			t1 = vec2(texp1, texup1[Y])
 			t2 = vec2(ntexp1, texup1[Y])
 			t3 = vec2(ntexp1, texup3[Y])
 			t4 = vec2(texp1, texup3[Y])
-			vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, n3, nn3, nn3, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, nn3, n3, n3, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, n3, nn3, nn3, c_white, 1, invert)
+			vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, nn3, n3, n3, c_white, 1, invert)
 			
 			// Down
 			t1 = vec2(texp3, texdown1[Y])
 			t2 = vec2(ntexp3, texdown1[Y])
 			t3 = vec2(ntexp3, texdown3[Y])
 			t4 = vec2(texp3, texdown3[Y])
-			vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, n4, nn4, nn4, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, nn4, n4, n4, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, n4, nn4, nn4, c_white, 1, invert)
+			vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, nn4, n4, n4, c_white, 1, invert)
 			
 			texp1 = ntexp1; texp2 = ntexp2; texp3 = ntexp3;
 			break
@@ -476,32 +480,32 @@ while (true)
 			t2 = vec2(texp1, texeast1[Y])
 			t3 = vec2(texp1, texeast3[Y])
 			t4 = vec2(ntexp1, texeast3[Y])
-			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, nn1, n1, n1, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p4, np4, np1, t3, t4, t1, n1, nn1, nn1, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, nn1, n1, n1, c_white, 1, invert)
+			vbuffer_add_triangle(p4, np4, np1, t3, t4, t1, n1, nn1, nn1, c_white, 1, invert)
 			
 			// West
 			t1 = vec2(texp2, texwest1[Y])
 			t2 = vec2(ntexp2, texwest1[Y])
 			t3 = vec2(ntexp2, texwest3[Y])
 			t4 = vec2(texp2, texwest3[Y])
-			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, n2, nn2, nn2, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np3, p3, p2, t3, t4, t1, nn2, n2, n2, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, n2, nn2, nn2, c_white, 1, invert)
+			vbuffer_add_triangle(np3, p3, p2, t3, t4, t1, nn2, n2, n2, c_white, 1, invert)
 			
 			// Up
 			t1 = vec2(texup1[X], texp3)
 			t2 = vec2(texup2[X], texp3)
 			t3 = vec2(texup2[X], ntexp3)
 			t4 = vec2(texup1[X], ntexp3)
-			vbuffer_add_triangle(p2, p1, np1, t1, t2, t3, n3, n3, nn3, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np1, np2, p2, t3, t4, t1, nn3, nn3, n3, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p2, p1, np1, t1, t2, t3, n3, n3, nn3, c_white, 1, invert)
+			vbuffer_add_triangle(np1, np2, p2, t3, t4, t1, nn3, nn3, n3, c_white, 1, invert)
 			
 			// Down
 			t1 = vec2(texdown1[X], ntexp3)
 			t2 = vec2(texdown2[X], ntexp3)
 			t3 = vec2(texdown2[X], texp3)
 			t4 = vec2(texdown1[X], texp3)
-			vbuffer_add_triangle(np3, np4, p4, t1, t2, t3, nn4, nn4, n4, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p4, p3, np3, t3, t4, t1, n4, n4, nn4, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np3, np4, p4, t1, t2, t3, nn4, nn4, n4, c_white, 1, invert)
+			vbuffer_add_triangle(p4, p3, np3, t3, t4, t1, n4, n4, nn4, c_white, 1, invert)
 			
 			texp1 = ntexp1; texp2 = ntexp2; texp3 = ntexp3;
 			break
@@ -514,32 +518,32 @@ while (true)
 			t2 = vec2(texeast2[X], ntexp1)
 			t3 = vec2(texeast2[X], texp1)
 			t4 = vec2(texeast1[X], texp1)
-			vbuffer_add_triangle(np2, np3, p3, t1, t2, t3, nn1, nn1, n1, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p2, np2, t3, t4, t1, n1, n1, nn1, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np2, np3, p3, t1, t2, t3, nn1, nn1, n1, c_white, 1, invert)
+			vbuffer_add_triangle(p3, p2, np2, t3, t4, t1, n1, n1, nn1, c_white, 1, invert)
 	
 			// West
 			t1 = vec2(texwest1[X], ntexp1)
 			t2 = vec2(texwest2[X], ntexp1)
 			t3 = vec2(texwest2[X], texp1)
 			t4 = vec2(texwest1[X], texp1)
-			vbuffer_add_triangle(np4, np1, p1, t1, t2, t3, nn2, nn2, n2, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p1, p4, np4, t3, t4, t1, n2, n2, nn2, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np4, np1, p1, t1, t2, t3, nn2, nn2, n2, c_white, 1, invert)
+			vbuffer_add_triangle(p1, p4, np4, t3, t4, t1, n2, n2, nn2, c_white, 1, invert)
 	
 			// South
 			t1 = vec2(texsouth1[X], ntexp1)
 			t2 = vec2(texsouth2[X], ntexp1)
 			t3 = vec2(texsouth2[X], texp1)
 			t4 = vec2(texsouth1[X], texp1)
-			vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, nn3, nn3, n3, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, n3, n3, nn3, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, nn3, nn3, n3, c_white, 1, invert)
+			vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, n3, n3, nn3, c_white, 1, invert)
 	
 			// North
 			t1 = vec2(texnorth1[X], ntexp1)
 			t2 = vec2(texnorth2[X], ntexp1)
 			t3 = vec2(texnorth2[X], texp1)
 			t4 = vec2(texnorth1[X], texp1)
-			vbuffer_add_triangle(np3, np4, p4, t1, t2, t3, nn4, nn4, n4, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p4, p3, np3, t3, t4, t1, n4, n4, nn4, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np3, np4, p4, t1, t2, t3, nn4, nn4, n4, c_white, 1, invert)
+			vbuffer_add_triangle(p4, p3, np3, t3, t4, t1, n4, n4, nn4, c_white, 1, invert)
 			
 			texp1 = ntexp1
 			break

@@ -61,8 +61,7 @@ background_sky_time = -45
 background_sky_rotation = 0
 background_sunlight_range = 2000
 background_sunlight_follow = false
-background_diffuse_boost = false
-background_diffuse_strength = 0
+background_sunlight_strength = 0
 
 background_sky_clouds_show = true
 background_sky_clouds_tex = mc_res

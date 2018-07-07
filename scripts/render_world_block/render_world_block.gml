@@ -96,8 +96,13 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))
 {
-	render_set_texture(texani)
-	render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_water), shader_blend_alpha)
-	vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
-	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+	if (render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH &&
+	 render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH &&
+	 render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+	{
+		render_set_texture(texani)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_water), shader_blend_alpha)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
+		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+	}
 }

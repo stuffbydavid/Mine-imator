@@ -39,7 +39,7 @@ with (new(obj_model))
 	}
 	else
 		texture_name_map = null
-		
+	
 	// Read states and their possible values
 	states_map = null
 	if (ds_map_valid(map[?"states"]))
@@ -64,6 +64,7 @@ with (new(obj_model))
 					value_file[v] = null
 					value_texture_name_map[v] = null
 					value_hide_list[v] = null
+					value_color_name_map[v] = null
 					
 					if (dev_mode_debug_names && !text_exists("modelstatevalue" + value_name[v]))
 						log("model/state/value/" + value_name[v] + dev_mode_name_translation_message)
@@ -91,6 +92,14 @@ with (new(obj_model))
 						value_hide_list[v] = ds_list_create()
 						ds_list_copy(value_hide_list[v], curvalue[?"hide"])
 					}
+					
+					// Minecraft color palette
+					if (ds_map_valid(curvalue[?"color"]))
+					{
+						value_color_name_map[v] = ds_map_create();
+						ds_map_merge(value_color_name_map[v], curvalue[?"color"], true)
+					}
+					
 				}
 				
 				other.states_map[?curstate] = id

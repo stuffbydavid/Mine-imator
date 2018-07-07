@@ -36,6 +36,7 @@ pc_destroy_at_time_seconds = buffer_read_double()
 pc_destroy_at_time_israndom = buffer_read_byte()
 pc_destroy_at_time_random_min = buffer_read_double()
 pc_destroy_at_time_random_max = buffer_read_double()
+pc_destroy_at_bounding_box = false
 
 pc_type_list = ds_list_create()
 pc_type_amount = buffer_read_int()

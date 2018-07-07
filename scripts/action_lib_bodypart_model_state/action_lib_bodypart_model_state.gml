@@ -31,6 +31,7 @@ with (temp_edit)
 	temp_update_model_part()
 	temp_update_model_shape()
 	temp_update_display_name()
+	model_shape_update_color()
 }
 
 lib_preview.update = true

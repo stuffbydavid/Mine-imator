@@ -215,37 +215,37 @@ for (var outer = 0; outer < samplesize[arrouteraxis]; outer++)
 			// East face
 			if (eface)
 			{
-				vbuffer_add_triangle(np2, np1, np4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np4, np3, np2, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np2, np1, np4, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(np4, np3, np2, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 			
 			// West face
 			if (wface)
 			{
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 			
 			// South face
-			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(np3, p3, p2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, null, null, null, c_white, 1, invert)
+			vbuffer_add_triangle(np3, p3, p2, t1, t2, t3, null, null, null, c_white, 1, invert)
 			
 			// North face
-			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p4, np4, np1, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, null, null, null, c_white, 1, invert)
+			vbuffer_add_triangle(p4, np4, np1, t1, t2, t3, null, null, null, c_white, 1, invert)
 			
 			// Above face
 			if (aface)
 			{
-				vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 			
 			// Below face
 			if (bface)
 			{
-				vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 		}
 		else
@@ -262,37 +262,37 @@ for (var outer = 0; outer < samplesize[arrouteraxis]; outer++)
 			// East face
 			if (eface)
 			{
-				vbuffer_add_triangle(np3, np2, p2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p2, p3, np3, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np3, np2, p2, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(p2, p3, np3, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 			
 			// West face
 			if (wface)
 			{
-				vbuffer_add_triangle(np1, np4, p4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p4, p1, np1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np1, np4, p4, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(p4, p1, np1, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 			
 			// South face
-			vbuffer_add_triangle(np4, np3, p3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p3, p4, np4, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np4, np3, p3, t1, t2, t3, null, null, null, c_white, 1, invert)
+			vbuffer_add_triangle(p3, p4, np4, t1, t2, t3, null, null, null, c_white, 1, invert)
 			
 			// North face
-			vbuffer_add_triangle(np2, np1, p1, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-			vbuffer_add_triangle(p1, p2, np2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
+			vbuffer_add_triangle(np2, np1, p1, t1, t2, t3, null, null, null, c_white, 1, invert)
+			vbuffer_add_triangle(p1, p2, np2, t1, t2, t3, null, null, null, c_white, 1, invert)
 			
 			// Above face
 			if (aface)
 			{
-				vbuffer_add_triangle(np1, np2, np3, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(np3, np4, np1, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(np1, np2, np3, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(np3, np4, np1, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 			
 			// Below face
 			if (bface)
 			{
-				vbuffer_add_triangle(p4, p3, p2, t1, t2, t3, null, null, null, color_blend, color_alpha, invert)
-				vbuffer_add_triangle(p2, p1, p4, t3, t4, t1, null, null, null, color_blend, color_alpha, invert)
+				vbuffer_add_triangle(p4, p3, p2, t1, t2, t3, null, null, null, c_white, 1, invert)
+				vbuffer_add_triangle(p2, p1, p4, t3, t4, t1, null, null, null, c_white, 1, invert)
 			}
 		}
 	}

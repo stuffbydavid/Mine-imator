@@ -13,6 +13,11 @@ if (model_hide_list = null)
 	model_hide_list = ds_list_create()
 ds_list_clear(model_hide_list)
 
+// Each key(shape description) in the map refers to a minecraft color
+if (model_color_name_map = null)
+	model_color_name_map = ds_map_create()
+ds_map_clear(model_color_name_map)
+
 // Get model from Minecraft assets list
 if (type != e_temp_type.MODEL)
 {
@@ -21,9 +26,10 @@ if (type != e_temp_type.MODEL)
 		return 0
 	
 	// Set file and texture
-	var tempstatevars, temptexnamemap, temphidelist, curfile;
+	var tempstatevars, temptexnamemap, tempcolornamemap, temphidelist, curfile;
 	tempstatevars = model_state
 	temptexnamemap = model_texture_name_map
+	tempcolornamemap = model_color_name_map
 	temphidelist = model_hide_list
 
 	with (mc_assets.model_name_map[?model_name])
@@ -59,7 +65,10 @@ if (type != e_temp_type.MODEL)
 								
 							if (value_hide_list[v] != null)
 								ds_list_merge(temphidelist, value_hide_list[v])
-						
+							
+							if (value_color_name_map[v] != null)
+								ds_map_merge(tempcolornamemap, value_color_name_map[v], true)
+								
 							break
 						}
 					}
@@ -73,7 +82,7 @@ if (type != e_temp_type.MODEL)
 }
 else if (model != null)
 	model_file = model.model_file
-	
+
 // Get default texture from file if not defined
 if (model_file != null && is_undefined(model_texture_name_map[?""]))
 	model_texture_name_map[?""] = model_file.texture_name

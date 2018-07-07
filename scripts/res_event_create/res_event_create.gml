@@ -21,6 +21,7 @@ model_texture = null
 model_texture_map = null
 model_block_map = null
 model_texture_name_map = null
+model_color_name_map = null
 model_shape_vbuffer_map = null
 model_shape_alpha_map = null
 player_skin = false

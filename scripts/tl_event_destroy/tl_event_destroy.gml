@@ -76,6 +76,9 @@ if (temp = id)
 	
 		if (model_hide_list != null)
 			ds_list_destroy(model_hide_list)
+			
+		if (model_color_name_map != null)	
+			ds_map_destroy(model_color_name_map)
 	}
 	else if (type = e_tl_type.BLOCK)
 		block_vbuffer_destroy()

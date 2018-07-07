@@ -7,6 +7,7 @@ timeline_playing_last_marker = 0
 timeline_playing_start_hor_scroll = 0
 
 timeline_repeat = false
+timeline_show_seconds = true
 timeline_list_first = 0
 timeline_list_visible = 0
 timeline_mouse_pos = null

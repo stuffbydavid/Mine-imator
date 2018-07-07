@@ -29,4 +29,4 @@ if (app.setting_render_shadows_blur_quality > 1)
 else
 	render_set_uniform("uBlurSize", 0)
 
-render_set_uniform("uDiffuseBoost", 1 + (app.background_diffuse_boost * app.background_diffuse_strength))
+render_set_uniform("uDiffuseBoost", 1 + (app.background_sunlight_strength))

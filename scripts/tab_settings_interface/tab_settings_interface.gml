@@ -117,13 +117,18 @@ draw_button_color("settingscolorhighlighttext", dx + wid + 8, dy, wid, setting_c
 tab_next()
 
 tab_control_color()
+draw_button_color("settingscoloralerts", dx, dy, wid, setting_color_alerts, c_alerts, false, action_setting_color_alerts)
+draw_button_color("settingscoloralertstext", dx + wid + 8, dy, wid, setting_color_alerts_text, c_text, false, action_setting_color_alerts_text)
+tab_next()
+
+tab_control_color()
 draw_button_color("settingscolortimeline", dx, dy, wid, setting_color_timeline, c_white, false, action_setting_color_timeline)
 draw_button_color("settingscolortimelinetext", dx + wid + 8, dy, wid, setting_color_timeline_text, c_text, false, action_setting_color_timeline_text)
 tab_next()
 
 tab_control_color()
-draw_button_color("settingscoloralerts", dx, dy, wid, setting_color_alerts, c_alerts, false, action_setting_color_alerts)
-draw_button_color("settingscoloralertstext", dx + wid + 8, dy, wid, setting_color_alerts_text, c_text, false, action_setting_color_alerts_text)
+draw_button_color("settingscolortimelinemarks", dx, dy, wid, setting_color_timeline_marks, c_secondary, false, action_setting_color_timeline_marks)
+draw_button_color("settingscolortimelineboxselect", dx + wid + 8, dy, wid, setting_color_timeline_select_box, c_blue, false, action_setting_color_timeline_select_box)
 tab_next()
 
 tab_control(24)

@@ -6,7 +6,10 @@ if (model_texture_name_map != null)
 	
 if (model_hide_list != null)
 	ds_list_destroy(model_hide_list)
-	
+
+if (model_texture_name_map != null)	
+	ds_map_destroy(model_texture_name_map)
+
 if (model_shape_vbuffer_map != null)
 {
 	var key = ds_map_find_first(model_shape_vbuffer_map);

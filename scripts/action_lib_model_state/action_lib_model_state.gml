@@ -58,6 +58,7 @@ with (temp_edit)
 	temp_update_model_timeline_tree(hobj)
 	temp_update_model_shape()
 	temp_update_display_name()
+	model_shape_update_color()
 }
 
 if (history_undo)

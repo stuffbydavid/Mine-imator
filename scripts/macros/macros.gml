@@ -107,6 +107,24 @@
 #macro c_plains_biome_grass         make_color_rgb(145, 189, 89)
 #macro c_plains_biome_water         make_color_rgb(62, 117, 225)
 
+// Minecraft color palette
+#macro c_minecraft_white			hex_to_color("E9ECEC")	
+#macro c_minecraft_orange			hex_to_color("F07613")	
+#macro c_minecraft_magenta			hex_to_color("BD44B3")	
+#macro c_minecraft_light_blue		hex_to_color("3AAFD9")	
+#macro c_minecraft_yellow			hex_to_color("F8C627")	
+#macro c_minecraft_lime				hex_to_color("70B919")	
+#macro c_minecraft_pink				hex_to_color("ED8DAC")	
+#macro c_minecraft_gray				hex_to_color("3E4447")	
+#macro c_minecraft_light_gray		hex_to_color("8E8E86")	
+#macro c_minecraft_cyan				hex_to_color("158991")	
+#macro c_minecraft_purple			hex_to_color("792AAC")	
+#macro c_minecraft_blue				hex_to_color("35399D")	
+#macro c_minecraft_brown			hex_to_color("724728")	
+#macro c_minecraft_green			hex_to_color("546D1B")	
+#macro c_minecraft_red				hex_to_color("A12722")	
+#macro c_minecraft_black			hex_to_color("141519")	
+
 // Audio
 #macro sample_rate					44100
 #macro sample_size					4

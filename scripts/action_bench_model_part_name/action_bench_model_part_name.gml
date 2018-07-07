@@ -11,6 +11,7 @@ with (bench_settings)
 	model_part_name = name
 	temp_update_model_part()
 	temp_update_model_shape()
+	model_shape_update_color()
 	
 	with (preview)
 		update = true
