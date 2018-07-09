@@ -52,6 +52,10 @@ with (obj_timeline)
 	// Add light
 	if ((type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT) && value_inherit[e_value.VISIBLE])
 	{
+		// Invisible via timeline?
+		if ((hide && !render_hidden) || (!app.view_render && lq_hiding))
+			continue
+		
 		app.background_light_data[app.background_light_amount * 8 + 0] = world_pos[X]
 		app.background_light_data[app.background_light_amount * 8 + 1] = world_pos[Y]
 		app.background_light_data[app.background_light_amount * 8 + 2] = world_pos[Z]

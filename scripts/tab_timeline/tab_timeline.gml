@@ -360,7 +360,14 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			// Sprite
 			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
+			
+			if (kf.selected)
+				image = 2
+				
 			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, test(kf.selected, c_white, tl.color), 1)
+			
+			if (kf.selected)
+				draw_image(spr_keyframe, 3, dx + 1, dy + itemhalf, 1, 1, setting_color_highlight, 1)
 		}
 		
 		if (mouse && mouseintl && !tl.lock)

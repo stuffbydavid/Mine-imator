@@ -39,6 +39,8 @@ switch (vid)
 	case e_value.ATTRACTOR:
 	case e_value.CAM_ROTATE:
 	case e_value.CAM_DOF:
+	case e_value.CAM_BLOOM:
+	case e_value.CAM_COLOR_CORRECTION:
 	case e_value.CAM_SIZE_USE_PROJECT:
 	case e_value.CAM_SIZE_KEEP_ASPECT_RATIO:
 	case e_value.BG_SKY_MOON_PHASE:

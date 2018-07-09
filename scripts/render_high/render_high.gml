@@ -145,6 +145,13 @@ if (setting_render_shadows)
 		
 		if (type = e_tl_type.POINT_LIGHT)
 		{
+			// If shadowless, add to shadowless point light list and continue
+			if (!shadows)
+			{
+				ds_list_add(render_shadowless_point_list, id)
+				continue
+			}
+			
 			// Depth
 			for (var d = e_dir.EAST; d < e_dir.amount; d++)
 			{
@@ -158,9 +165,7 @@ if (setting_render_shadows)
 					draw_clear(c_white)
 					render_world_start_light(world_pos, point3D_add(world_pos, look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE])
 					
-					// Only render depth for shadows if the light source isn't shadowless
-					if (shadows)
-						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+					render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 						
 					render_world_done()
 				}
@@ -235,6 +240,64 @@ if (setting_render_shadows)
 		}
 		
 	}
+	
+	// Shadowless point lights
+	if (ds_list_size(render_shadowless_point_list) > 0)
+	{
+		var shadowsurftemp, remaininglights, groupsdone;
+		remaininglights = ds_list_size(render_shadowless_point_list)
+		groupsdone = 0
+		while (remaininglights > 0)
+		{
+			for (var l = 0; l < 63; l++)
+			{
+				if (remaininglights = 0)
+					continue
+				
+				var light = render_shadowless_point_list[| l + (groupsdone * 63)];
+				
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 0] = light.world_pos[X]
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 1] = light.world_pos[Y]
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 2] = light.world_pos[Z]
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 3] = light.value[e_value.LIGHT_RANGE]
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 4] = color_get_red(light.value[e_value.LIGHT_COLOR]) / 255
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 5] = color_get_green(light.value[e_value.LIGHT_COLOR]) / 255
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 6] = color_get_blue(light.value[e_value.LIGHT_COLOR]) / 255
+				render_shadowless_point_data[render_shadowless_point_amount * 8 + 7] = light.value[e_value.LIGHT_FADE_SIZE]
+				render_shadowless_point_amount++
+				remaininglights--
+			}
+			
+			// Render lights
+			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+			shadowsurftemp = render_surface[2]
+			surface_set_target(shadowsurftemp)
+			{
+				draw_clear(c_white)
+				render_world_start()
+				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS)
+				render_world_done()
+			}
+			surface_reset_target()
+			
+			// Add to final shadow surface
+			if (surface_exists(shadowsurf))
+			{
+				surface_set_target(shadowsurf)
+				{
+					gpu_set_blendmode(bm_add)
+					draw_surface_exists(shadowsurftemp, 0, 0)
+					gpu_set_blendmode(bm_normal)
+				}
+				surface_reset_target()
+			}
+			groupsdone++
+			render_shadowless_point_amount = 0
+		}
+		
+		ds_list_clear(render_shadowless_point_list)
+	}
+	
 	gpu_set_texfilter(false)
 }
 #endregion
@@ -260,7 +323,7 @@ if (background_fog_show)
 #region Apply Environment effects
 
 // Render directly to target?
-if (!render_camera_bloom && !render_camera_dof && !setting_render_aa && !render_overlay)
+if (!render_camera_bloom && !render_camera_dof && !setting_render_aa && !render_overlay && !render_camera_color_correction)
 {
 	render_target = surface_require(render_target, render_width, render_height)
 	finalsurf = render_target
@@ -336,7 +399,7 @@ surface_reset_target()
 // Post processing starts here, finalsurf will ping-pong between [0] and [1] if effects are enabled
 
 #region Put finalsurf in [0] if there's any post processing
-if (render_camera_bloom || render_camera_dof || setting_render_glow || setting_render_aa || render_overlay)
+if (render_camera_bloom || render_camera_dof || setting_render_glow || setting_render_aa || render_overlay || render_camera_color_correction)
 {
 	var prevsurf = finalsurf;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
@@ -432,7 +495,7 @@ if (render_camera_bloom)
 	// Apply Bloom
 	
 	// Render directly to target?
-	if (!setting_render_glow && !render_camera_dof && !setting_render_aa && !render_overlay)
+	if (!setting_render_glow && !render_camera_dof && !setting_render_aa && !render_overlay && !render_camera_color_correction)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -483,7 +546,7 @@ if (render_camera_dof)
 	// Apply DOF
 	
 	// Render directly to target?
-	if (!setting_render_glow && !setting_render_aa && !render_overlay)
+	if (!setting_render_glow && !setting_render_aa && !render_overlay && !render_camera_color_correction)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -592,7 +655,7 @@ if (setting_render_glow)
 	// Apply Glow
 	
 	// Render directly to target?
-	if (!setting_render_glow_falloff && !setting_render_aa && !render_overlay)
+	if (!setting_render_glow_falloff && !setting_render_aa && !render_overlay && !render_camera_color_correction)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -691,7 +754,7 @@ if (setting_render_glow && setting_render_glow_falloff)
 	// Apply Glow
 	
 	// Render directly to target?
-	if (!setting_render_aa && !render_overlay)
+	if (!setting_render_aa && !render_overlay && !render_camera_color_correction)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -727,7 +790,7 @@ if (setting_render_aa)
 	var prevsurf = finalsurf;
 
 	// Render directly to target?
-	if (!render_overlay)
+	if (!render_overlay && !render_camera_color_correction)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -765,6 +828,42 @@ if (setting_render_aa)
 	}
 	surface_reset_target()
 }
+#endregion
+
+#region Color correction
+if (render_camera_color_correction)
+{
+	var prevsurf = finalsurf;
+	
+	// Render directly to target?
+	if (!render_overlay)
+	{
+		render_target = surface_require(render_target, render_width, render_height)
+		finalsurf = render_target
+	}
+	else
+	{
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
+	}
+	
+	surface_set_target(finalsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		
+		render_shader_obj = shader_map[?shader_color_correction]
+		with (render_shader_obj)
+			shader_use()
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+	
+}
+
+
 #endregion
 
 #region 2D overlay (camera colors/watermark)

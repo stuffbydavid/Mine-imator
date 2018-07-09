@@ -34,15 +34,17 @@ if (!err)
 	new_shader("shader_high_light_apply")
 	new_shader("shader_high_light_night")
 	new_shader("shader_high_light_point")
+	new_shader("shader_high_light_point_shadowless")
 	new_shader("shader_high_light_spot")
-	new_shader("shader_high_light_sun",)
+	new_shader("shader_high_light_sun")
 	new_shader("shader_high_ssao")
 	new_shader("shader_high_ssao_blur")
 	new_shader("shader_high_ssao_depth_normal")
+	new_shader("shader_color_glow")
 	new_shader("shader_high_bloom_threshold")
 	new_shader("shader_add")
 	new_shader("shader_blur")
-	new_shader("shader_color_glow")
+	new_shader("shader_color_correction")
 
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -187,6 +189,15 @@ with (shader_map[?shader_high_light_point])
 	new_shader_uniform("uBlurSize")
 }
 
+with (shader_map[?shader_high_light_point_shadowless])
+{
+	new_shader_uniform("uIsSky")
+	new_shader_uniform("uLightAmount")
+	new_shader_uniform("uLightData")
+	new_shader_uniform("uBrightness")
+	new_shader_uniform("uBlockBrightness")
+}
+
 with (shader_map[?shader_high_light_spot])
 {
 	new_shader_uniform("uBrightness")
@@ -256,6 +267,15 @@ with (shader_map[?shader_high_ssao_depth_normal])
 	new_shader_uniform("uFar")
 }
 
+with (shader_map[?shader_color_glow])
+{
+	new_shader_uniform("uGlow")
+	new_shader_uniform("uGlowTexture")
+	new_shader_uniform("uGlowColor")
+	new_shader_uniform("uBlockGlow")
+	new_shader_uniform("uBlockBrightness")
+}
+
 with (shader_map[?shader_high_bloom_threshold])
 {
 	new_shader_uniform("uThreshold")
@@ -275,13 +295,11 @@ with (shader_map[?shader_blur])
 	new_shader_uniform("uDirection")
 }
 
-with (shader_map[?shader_color_glow])
+with (shader_map[?shader_color_correction])
 {
-	new_shader_uniform("uGlow")
-	new_shader_uniform("uGlowTexture")
-	new_shader_uniform("uGlowColor")
-	new_shader_uniform("uBlockGlow")
-	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uContrast")
+	new_shader_uniform("uBrightness")
+	new_shader_uniform("uSaturation")
 }
 
 return true

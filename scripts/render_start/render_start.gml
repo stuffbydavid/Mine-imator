@@ -30,12 +30,14 @@ if (render_camera != null)
 	
 	render_camera_dof = (setting_render_camera_effects && render_camera.value[e_value.CAM_DOF])
 	render_camera_bloom = (setting_render_camera_effects && render_camera.value[e_value.CAM_BLOOM])
+	render_camera_color_correction = (setting_render_camera_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION])
 }
 else 
 {
 	render_camera_colors = false
 	render_camera_dof = false
 	render_camera_bloom = false
+	render_camera_color_correction = false
 }
 
 // Argument overwrites size

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Bailey",
         "forversion": "1.2.0",
-        "lastchange": "2018.07.07"
+        "lastchange": "2018.07.09"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2343,6 +2343,14 @@
             "bloomradiustip": "The radius of the bloom effect.",
             "bloomblend": "Blend color",
             "bloomblendtip": "The blend color of the bloom effect (RGB multiply).",
+            "colorcorrection": "Color correction",
+            "colorcorrectiontip": "Enable color correction effects.",
+            "colorcorrectioncontrast": "Contrast",
+            "colorcorrectioncontrasttip": "The amount of additional contrast in the final render.",
+            "colorcorrectionbrightness": "Brightness",
+            "colorcorrectionbrightnesstip": "The amount of additional brightness in the render.",
+            "colorcorrectionsaturation": "Saturation",
+            "colorcorrectionsaturationtip": "Determines how saturated the final render will be.",
             "videosize": "Camera size",
             "videosizetip": "The size of the camera view. Can be set to either the project settings or a custom value for this keyframe. This will not affect the size when exporting as a movie file, only when saving as a PNG image/sequence and when using this camera as a texture.",
             "videosizeuseproject": "Use project settings",

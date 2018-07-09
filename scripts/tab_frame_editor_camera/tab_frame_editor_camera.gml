@@ -115,6 +115,33 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	dw += 4
 }
 
+// Color correction
+tab_control_checkbox()
+draw_checkbox_expand("frameeditorcameracolorcorrection", dx, dy, tl_edit.value[e_value.CAM_COLOR_CORRECTION], action_tl_frame_cam_clrcor, checkbox_expand_frameeditor_clrcor, action_checkbox_expand_frameeditor_clrcor)
+tab_next()
+if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_clrcor)
+{
+	dx += 4
+	dw -= 4
+	
+	capwid = text_caption_width("frameeditorcameracolorcorrectioncontrast", "frameeditorcameracolorcorrectionbrightness", "frameeditorcameracolorcorrectionsaturation")
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracolorcorrectioncontrast", dx, dy, dw, round(tl_edit.value[e_value.CAM_CONTRAST] * 100), 50, 0, 100, 20, 1, tab.camera.tbx_contrast, action_tl_frame_cam_clrcor_contrast, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracolorcorrectionbrightness", dx, dy, dw, round(tl_edit.value[e_value.CAM_BRIGHTNESS] * 100), 50, 0, 100, 0, 1, tab.camera.tbx_brightness, action_tl_frame_cam_clrcor_brightness, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracolorcorrectionsaturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_SATURATION] * 100), 50, 0, 200, 100, 1, tab.camera.tbx_saturation, action_tl_frame_cam_clrcor_saturation, capwid)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+}
+
 // Camera size
 if (tl_edit.value[e_value.CAM_SIZE_USE_PROJECT]) // Use project settings
 {

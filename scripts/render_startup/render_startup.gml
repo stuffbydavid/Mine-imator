@@ -1,7 +1,7 @@
 /// render_startup()
 
-globalvar render_width, render_height, render_ratio, render_camera, render_camera_dof, render_overlay,
-		  render_time, render_surface_time, render_target, render_surface, render_prev_color, render_prev_alpha,
+globalvar render_width, render_height, render_ratio, render_camera, render_camera_dof, render_camera_color_correction,
+		  render_overlay, render_time, render_surface_time, render_target, render_surface, render_prev_color, render_prev_alpha,
 		  render_click_box, render_list, render_lights, render_particles, render_hidden, render_background, render_watermark, 
 		  render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 		  render_light_color, render_light_fade_size, render_light_spot_sharpness, render_light_matrix,
@@ -48,7 +48,11 @@ render_surface[3] = null
 render_surface[4] = null
 
 // Shadows
-globalvar render_surface_sun_buffer, render_surface_spot_buffer, render_surface_point_buffer;
+globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer,
+render_surface_spot_buffer, render_surface_point_buffer;
+
+render_shadowless_point_amount = 0
+render_shadowless_point_list = ds_list_create()
 render_surface_sun_buffer = null
 render_surface_spot_buffer = null
 for (var d = 0; d < 6; d++)
@@ -77,6 +81,7 @@ render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_DEPTH] = shader_depth_poi
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN] = shader_high_light_sun
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT] = shader_high_light_spot
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT] = shader_high_light_point
+render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS] = shader_high_light_point_shadowless
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_NIGHT] = shader_high_light_night
 render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
 render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
