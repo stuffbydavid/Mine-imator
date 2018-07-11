@@ -35,7 +35,7 @@ dx += string_width(creditname)
 
 dx = creditsx
 dy += string_height(" ")
-draw_label(text_get("startupcredits3", "David", "Bailey", "Voxy"), dx, dy)
+draw_label(text_get("startupcredits3", "David", "Nimi", "Voxy"), dx, dy)
 
 // Buttons
 dx = content_x

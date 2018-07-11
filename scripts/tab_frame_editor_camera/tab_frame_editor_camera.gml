@@ -127,7 +127,7 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	capwid = text_caption_width("frameeditorcameracolorcorrectioncontrast", "frameeditorcameracolorcorrectionbrightness", "frameeditorcameracolorcorrectionsaturation")
 	
 	tab_control_meter()
-	draw_meter("frameeditorcameracolorcorrectioncontrast", dx, dy, dw, round(tl_edit.value[e_value.CAM_CONTRAST] * 100), 50, 0, 100, 20, 1, tab.camera.tbx_contrast, action_tl_frame_cam_clrcor_contrast, capwid)
+	draw_meter("frameeditorcameracolorcorrectioncontrast", dx, dy, dw, round(tl_edit.value[e_value.CAM_CONTRAST] * 100), 50, 0, 100, 0, 1, tab.camera.tbx_contrast, action_tl_frame_cam_clrcor_contrast, capwid)
 	tab_next()
 	
 	tab_control_meter()

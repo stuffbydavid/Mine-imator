@@ -2,9 +2,9 @@
     "description": "Mine-imator language file. Copy and rename this to begin creating your own translation.",
     "file/": {
         "language": "English",
-        "translator": "David & Bailey",
+        "translator": "David & Nimi",
         "forversion": "1.2.0",
-        "lastchange": "2018.07.09"
+        "lastchange": "2018.07.10"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1761,6 +1761,8 @@
             "cloudsshowtip": "Whether clouds should be visible.",
             "cloudsflat": "Flat clouds",
             "cloudsflattip": "Whether clouds are flat, like the \"Fast graphics\" setting in Minecraft.",
+            "cloudsstorymode": "Story mode clouds",
+            "cloudsstorymodetip": "Whether clouds should resemble the clouds from \"Minecraft: Story Mode\" and fade away the closer the camera is to them.",
             "cloudstex": "Cloud texture",
             "cloudstextip": "The image to use for clouds.",
             "cloudsspeed": "Clouds speed",
@@ -2641,11 +2643,13 @@
         "blockbrightnesstip": "Sets the brightness of certain blocks in schematics (Lava, Fire, Torches, Glowstone, Redstone Lamps etc.) and bright model shapes.",
         "blockglow": "Glow bright blocks and models",
         "blockglowtip": "Enables the glow effect on blocks and model shapes depending on their brightness.",
+        "lightbleeding": "Foliage light bleeding",
+        "lightbleedingtip": "Enables light bleeding on foliage and other various plants.",
         "render": "Render",
         "rendertip": "Change settings about high quality rendering.",
         "render/": {
             "cameraeffects": "Camera effects",
-            "cameraeffectstip": "Enable camera effects in rendered images. (DOF and Bloom)",
+            "cameraeffectstip": "Enable camera effects in rendered images. (DOF, Bloom and Color correction)",
             "ssao": "SSAO",
             "ssaotip": "Enable SSAO (Screen Space Ambient Occlusion) in rendered images.",
             "ssao/": {

@@ -1,7 +1,7 @@
 /// background_sky_update_clouds()
 /// @desc Updates the vbuffer to be used for fancy/poor clouds.
 
-var tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col;
+var tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col, colsidesdark, colsideslight, coltop, colbottom;
 
 if (!background_sky_clouds_tex.ready)
 	return 0
@@ -11,7 +11,23 @@ texwid = texture_width(tex)
 texhei = texture_height(tex)
 texsize = max(texwid, texhei)
 hei = 0
-topalpha = 1
+
+if (background_sky_clouds_story_mode)
+{
+	colsidesdark = make_color_rgb(216, 230, 255)
+	colsideslight = make_color_rgb(216, 230, 255)
+	coltop = make_color_rgb(216, 230, 255)
+	colbottom = make_color_rgb(216, 230, 255)
+	topalpha = 0
+}
+else
+{
+	colsidesdark = c_clouds_sidesdark
+	colsideslight = c_clouds_sideslight
+	coltop = c_clouds_top
+	colbottom = c_clouds_bottom
+	topalpha = 1
+}
 
 // Clean up
 if (background_sky_clouds_vbuffer)
@@ -65,48 +81,48 @@ if (!background_sky_clouds_flat)
 			
 			if (!hascolor[(xx + 1) mod texwid, yy])
 			{
-				vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty, c_clouds_sidesdark, 1)
-				vertex_add(vx + blockw, vy + blockh, hei, 1, 0, 0, tx, ty + ph, c_clouds_sidesdark, topalpha)
-				vertex_add(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph, c_clouds_sidesdark, topalpha)
-				vertex_add(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph, c_clouds_sidesdark, topalpha)
-				vertex_add(vx + blockw, vy, 0, 1, 0, 0, tx + pw, ty, c_clouds_sidesdark, 1)
-				vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty, c_clouds_sidesdark, 1)
+				vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty, colsidesdark, 1)
+				vertex_add(vx + blockw, vy + blockh, hei, 1, 0, 0, tx, ty + ph, colsidesdark, topalpha)
+				vertex_add(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph, colsidesdark, topalpha)
+				vertex_add(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph, colsidesdark, topalpha)
+				vertex_add(vx + blockw, vy, 0, 1, 0, 0, tx + pw, ty, colsidesdark, 1)
+				vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty, colsidesdark, 1)
 			}
 			
 			if (!hascolor[mod_fix(xx - 1, texwid), yy])
 			{
-				vertex_add(vx, vy, 0, -1, 0, 0, tx, ty, c_clouds_sidesdark, 1)
-				vertex_add(vx, vy, hei, -1, 0, 0, tx, ty + ph, c_clouds_sidesdark, topalpha)
-				vertex_add(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph, c_clouds_sidesdark, topalpha)
-				vertex_add(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph, c_clouds_sidesdark, topalpha)
-				vertex_add(vx, vy + blockh, 0, -1, 0, 0, tx + pw, ty, c_clouds_sidesdark, 1)
-				vertex_add(vx, vy, 0, -1, 0, 0, tx, ty, c_clouds_sidesdark, 1)
+				vertex_add(vx, vy, 0, -1, 0, 0, tx, ty, colsidesdark, 1)
+				vertex_add(vx, vy, hei, -1, 0, 0, tx, ty + ph, colsidesdark, topalpha)
+				vertex_add(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph, colsidesdark, topalpha)
+				vertex_add(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph, colsidesdark, topalpha)
+				vertex_add(vx, vy + blockh, 0, -1, 0, 0, tx + pw, ty, colsidesdark, 1)
+				vertex_add(vx, vy, 0, -1, 0, 0, tx, ty, colsidesdark, 1)
 			}
 			
 			if (!hascolor[xx, (yy + 1) mod texhei])
 			{
-				vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty, c_clouds_sideslight, 1)
-				vertex_add(vx, vy + blockh, hei, 0, 1, 0, tx, ty + ph, c_clouds_sideslight, topalpha)
-				vertex_add(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph, c_clouds_sideslight, topalpha)
-				vertex_add(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph, c_clouds_sideslight, topalpha)
-				vertex_add(vx + blockw, vy + blockh, 0, 0, 1, 0, tx + pw, ty, c_clouds_sideslight, 1)
-				vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty, c_clouds_sideslight, 1)
+				vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty, colsideslight, 1)
+				vertex_add(vx, vy + blockh, hei, 0, 1, 0, tx, ty + ph, colsideslight, topalpha)
+				vertex_add(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph, colsideslight, topalpha)
+				vertex_add(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph, colsideslight, topalpha)
+				vertex_add(vx + blockw, vy + blockh, 0, 0, 1, 0, tx + pw, ty, colsideslight, 1)
+				vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty, colsideslight, 1)
 			}
 			
 			if (!hascolor[xx, mod_fix(yy - 1, texhei)])
 			{
-				vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty, c_clouds_sideslight, 1)
-				vertex_add(vx + blockw, vy, hei, 0, -1, 0, tx, ty + ph, c_clouds_sideslight, topalpha)
-				vertex_add(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph, c_clouds_sideslight, topalpha)
-				vertex_add(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph, c_clouds_sideslight, topalpha)
-				vertex_add(vx, vy, 0, 0, -1, 0, tx + pw, ty, c_clouds_sideslight, 1)
-				vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty, c_clouds_sideslight, 1)
+				vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty, colsideslight, 1)
+				vertex_add(vx + blockw, vy, hei, 0, -1, 0, tx, ty + ph, colsideslight, topalpha)
+				vertex_add(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph, colsideslight, topalpha)
+				vertex_add(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph, colsideslight, topalpha)
+				vertex_add(vx, vy, 0, 0, -1, 0, tx + pw, ty, colsideslight, 1)
+				vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty, colsideslight, 1)
 			}
 		}
 	}
 }
 
-col = test(background_sky_clouds_flat, c_clouds_top, c_clouds_bottom)
+col = test(background_sky_clouds_flat, coltop, colbottom)
 
 vertex_add(0, 0, 0, 0, 0, -1, 0, 0, col, 1)
 vertex_add(0, cloudsize, 0, 0, 0, -1, 0, 1, col, 1)
@@ -115,11 +131,11 @@ vertex_add(cloudsize, cloudsize, 0, 0, 0, -1, 1, 1, col, 1)
 vertex_add(cloudsize, 0, 0, 0, 0, -1, 1, 0, col, 1)
 vertex_add(0, 0, 0, 0, 0, -1, 0, 0, col, 1)
 
-vertex_add(0, 0, hei, 0, 0, 1, 0, 0, c_clouds_top, topalpha)
-vertex_add(cloudsize, 0, hei, 0, 0, 1, 1, 0, c_clouds_top, topalpha)
-vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1, c_clouds_top, topalpha)
-vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1, c_clouds_top, topalpha)
-vertex_add(0, cloudsize, hei, 0, 0, 1, 0, 1, c_clouds_top, topalpha)
-vertex_add(0, 0, hei, 0, 0, 1, 0, 0, c_clouds_top, topalpha)
+vertex_add(0, 0, hei, 0, 0, 1, 0, 0, coltop, topalpha)
+vertex_add(cloudsize, 0, hei, 0, 0, 1, 1, 0, coltop, topalpha)
+vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1, coltop, topalpha)
+vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1, coltop, topalpha)
+vertex_add(0, cloudsize, hei, 0, 0, 1, 0, 1, coltop, topalpha)
+vertex_add(0, 0, hei, 0, 0, 1, 0, 0, coltop, topalpha)
 
 vbuffer_done()

@@ -123,6 +123,12 @@ with (new(obj_block))
 	
 	default_state_id = block_get_state_id(id, default_state)
 	
+	// Light bleeding
+	if (is_real(map[?"light_bleeding"]))
+		light_bleeding = map[?"light_bleeding"]
+	else
+		light_bleeding = 0
+	
 	// Random offset
 	if (is_real(map[?"random_offset"]))
 		random_offset = map[?"random_offset"]
@@ -179,6 +185,7 @@ with (new(obj_block))
 	// Pre-calculate the block variant to pick for each (numerical) state ID
 	state_id_model_obj = null
 	state_id_brightness = null
+	state_id_light_bleeding = null
 	for (var sid = 0; sid < state_id_amount; sid++)
 	{
 		// Get active file and properties

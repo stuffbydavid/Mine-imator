@@ -5,16 +5,18 @@ attribute vec3 in_Position;
 attribute vec3 in_Normal;
 attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec3 in_Wave;
+attribute vec4 in_Wave;
 
 uniform int uLightAmount;
 uniform float uBlockBrightness;
 uniform float uBrightness;
+uniform float uLightBleed;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying float vBrightness;
+varying float vLightBleed;
 
 // Wind
 uniform float uTime;
@@ -39,6 +41,7 @@ void main()
 	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
 	vTexCoord = in_TextureCoord;
 	vBrightness = in_Wave.z * uBlockBrightness + uBrightness / float(uLightAmount);
+	vLightBleed = in_Wave.w * uLightBleed;
 	
 	gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position + off, 1.0);
 }

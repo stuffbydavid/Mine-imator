@@ -68,4 +68,4 @@ if (vertex_wave != e_vertex_wave.NONE)
 }
 
 // Custom
-vertex_float3(vbuffer_current, wavexy, wavez, vertex_brightness)
+vertex_float4(vbuffer_current, wavexy, wavez, vertex_brightness, vertex_light_bleeding)

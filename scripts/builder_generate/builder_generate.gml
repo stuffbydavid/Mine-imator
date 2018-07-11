@@ -200,7 +200,8 @@ else
 		vertex_wave = block_current.wind_axis
 		if (block_current.wind_zmin != null)
 			vertex_wave_zmin = block_pos_z + block_current.wind_zmin
-	
+		vertex_light_bleeding = block_current.light_bleeding
+		
 		// Generate render model
 		if (is_array(model))
 		{
@@ -213,8 +214,9 @@ else
 	}
 }
 
-// Reset wind and brightness
+// Reset wind, brightness, and light bleeding
 vertex_wave = e_vertex_wave.NONE
 vertex_wave_zmin = null
 vertex_wave_zmax = null
 vertex_brightness = 0
+vertex_light_bleeding = 0

@@ -5,7 +5,7 @@ attribute vec3 in_Position;
 attribute vec3 in_Normal;
 attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec3 in_Wave;
+attribute vec4 in_Wave;
 
 varying vec3 vPosition;
 varying vec4 vColor;

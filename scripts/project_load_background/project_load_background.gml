@@ -30,6 +30,7 @@ background_sunlight_strength = value_get_real(map[?"sunlight_strength"], backgro
 
 background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 background_sky_clouds_flat = value_get_real(map[?"sky_clouds_flat"], background_sky_clouds_flat)
+background_sky_clouds_story_mode = value_get_real(map[?"sky_clouds_story_mode"], background_sky_clouds_story_mode)
 background_sky_clouds_tex.count--
 background_sky_clouds_tex = value_get_save_id(map[?"sky_clouds_tex"], background_sky_clouds_tex)
 background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)

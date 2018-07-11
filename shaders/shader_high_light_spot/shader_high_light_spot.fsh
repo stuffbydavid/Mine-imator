@@ -24,6 +24,7 @@ varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying float vBrightness;
+varying float vLightBleed;
 
 float unpackDepth(vec4 c)
 {
@@ -46,7 +47,8 @@ void main()
 		{
 			// Diffuse factor
 			dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));
-		
+			dif = clamp(dif + vLightBleed, 0.0, 1.0);
+			
 			// Attenuation factor
 			dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
 		
@@ -58,6 +60,9 @@ void main()
 				// Texture position must be valid
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 				{
+					// Blur size(Increase if there's light bleeding)
+					float blurSize = uBlurSize + (.2 * vLightBleed);
+					
 					// Create circle
 					dif *= 1.0 - clamp((distance(fragCoord, vec2(0.5, 0.5)) - 0.5 * uLightSpotSharpness) / (0.5 * max(0.01, 1.0 - uLightSpotSharpness)), 0.0, 1.0);
 				

@@ -133,10 +133,10 @@ if (scenery != null)
 				scenery_animate = true
 		}
 	}
-}
-
-if (scenery.ready)
-{
-	temp_update_display_name()
-	temp_update_rot_point()
+	
+	if (scenery.ready)
+	{
+		temp_update_display_name()
+		temp_update_rot_point()
+	}
 }

@@ -116,6 +116,7 @@ with (shader_map[?shader_color_fog_lights])
 	new_shader_uniform("uAmbientColor")
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uLightBleed")
 }
 
 with (shader_map[?shader_depth])
@@ -172,6 +173,7 @@ with (shader_map[?shader_high_light_point])
 {
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uLightBleed")
 	new_shader_uniform("uIsSky")
 	new_shader_uniform("uLightAmount")
 	new_shader_uniform("uLightPosition")
@@ -196,12 +198,14 @@ with (shader_map[?shader_high_light_point_shadowless])
 	new_shader_uniform("uLightData")
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uLightBleed")
 }
 
 with (shader_map[?shader_high_light_spot])
 {
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uLightBleed")
 	new_shader_uniform("uIsSky")
 	new_shader_uniform("uLightAmount")
 	new_shader_uniform("uLightMatrix")
@@ -220,6 +224,7 @@ with (shader_map[?shader_high_light_sun])
 {
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uLightBleed")
 	new_shader_uniform("uIsGround")
 	new_shader_uniform("uSunAt")
 	new_shader_uniform("uIsSky")

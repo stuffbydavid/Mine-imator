@@ -629,6 +629,7 @@
 				"stage": [ "0", "1" ]
 			},
 			"default_state": "variant=oak,stage=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -773,6 +774,7 @@
 				]
 			},
 			"default_state": "variant=oak",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all"
 			},
@@ -960,6 +962,7 @@
 			},
 			"default_state": "type=grass",
 			"random_offset": true,
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -1053,6 +1056,7 @@
 				]
 			},
 			"default_state": "type=poppy",
+			"light_bleeding": 1,
 			"random_offset": true,
 			"wind": {
 				"axis": "all",
@@ -1074,11 +1078,13 @@
 		{
 			"name": "brown_mushroom",
 			"file": "brown_mushroom.json",
+			"light_bleeding": 1,
 			"id": "minecraft:brown_mushroom"
 		},
 		{
 			"name": "red_mushroom",
 			"file": "red_mushroom.json",
+			"light_bleeding": 1,
 			"id": "minecraft:red_mushroom"
 		},
 		{
@@ -1309,6 +1315,7 @@
 				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -1972,6 +1979,7 @@
 				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -1985,6 +1993,7 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=east",
+			"light_bleeding": 1,
 			"id": "minecraft:attached_pumpkin_stem"
 		},
 		{
@@ -1994,6 +2003,7 @@
 				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -2003,6 +2013,7 @@
 		{
 			"name": "attached_melon_stem",
 			"file": "attached_melon_stem.json",
+			"light_bleeding": 1,
 			"states": {
 				"facing": [ "north", "south", "east", "west" ]
 			},
@@ -2021,6 +2032,7 @@
 				"up": [ "false", "true" ]
 			},
 			"default_state": "south=false,west=false,north=false,east=false,up=false",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all"
 			},
@@ -2065,6 +2077,7 @@
 		{
 			"name": "lily_pad",
 			"file": "lily_pad.json",
+			"light_bleeding": 1,
 			"id": "minecraft:lily_pad"
 		},
 		{
@@ -2079,6 +2092,7 @@
 				"age": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -2325,6 +2339,7 @@
 				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -2338,6 +2353,7 @@
 				"age": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -2691,6 +2707,7 @@
 			},
 			"default_state": "variant=sunflower",
 			"random_offset": true,
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -2780,6 +2797,7 @@
 				"age": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "age=0",
+			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
 				"ymin": 0

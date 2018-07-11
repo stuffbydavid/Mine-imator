@@ -8,10 +8,17 @@ var res = background_sky_clouds_tex;
 if (!res.ready)
 	res = mc_res
 
+// If using story mode clouds, slowly make them disspear the closer the camera is to them
+var alphay;
+if (background_sky_clouds_story_mode)
+	alphay = percent(cam_from[Z], background_sky_clouds_z, background_sky_clouds_z - 250)
+else
+	alphay = 1
+	
 // Shading
 render_set_uniform_int("uIsSky", 1)
 render_set_uniform_int("uSSAOEnable", 0)
-render_set_uniform_color("uBlendColor", merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha), 0.8 - min(background_night_alpha, 0.75))
+render_set_uniform_color("uBlendColor", merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha), test(background_sky_clouds_story_mode, 1 - min(background_night_alpha, 0.95), .8 - min(background_night_alpha, 0.75)) * alphay)
 render_set_uniform_color("uGlowColor", c_black, 1)
 render_set_uniform_int("uGlowTexture", 0)
 

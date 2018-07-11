@@ -20,6 +20,7 @@ json_save_object_start("background")
 
 	json_save_var_bool("sky_clouds_show", background_sky_clouds_show)
 	json_save_var_bool("sky_clouds_flat", background_sky_clouds_flat)
+	json_save_var_bool("sky_clouds_story_mode", background_sky_clouds_story_mode)
 	json_save_var_save_id("sky_clouds_tex", background_sky_clouds_tex)
 	json_save_var("sky_clouds_speed", background_sky_clouds_speed)
 	json_save_var("sky_clouds_z", background_sky_clouds_z)

@@ -25,6 +25,7 @@ varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying float vBrightness;
+varying float vLightBleed;
 
 float unpackDepth(vec4 c)
 {
@@ -40,7 +41,9 @@ void main()
 	else
 	{
 		// Diffuse factor
-		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));
+		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));	
+		dif = clamp(dif + vLightBleed, 0.0, 1.0);
+		
 		float shadow = 0.0;
 	
 		if (dif > 0.0 && vBrightness < 1.0)
@@ -53,11 +56,14 @@ void main()
 			// Texture position must be valid
 			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 			{
+				// Blur size(Increase if there's light bleeding)
+				float blurSize = uBlurSize + (.2 * vLightBleed);
+				
 				// Calculate bias
-				float bias = 1.0 + (uLightFar / fragDepth) * uBlurSize;
+				float bias = 1.0 + (uLightFar / fragDepth) * blurSize;
 			
 				// Calculate sample size
-				float sampleSize = uBlurSize / fragDepth;
+				float sampleSize = blurSize / fragDepth;
 			
 				// Find shadow
 				for (int i = 0; i < MAXSAMPLES; i++)

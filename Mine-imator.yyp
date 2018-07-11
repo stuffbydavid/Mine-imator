@@ -13079,6 +13079,14 @@
             }
         },
         {
+            "Key": "dfa880f4-5b9b-47f1-8983-55cc89465785",
+            "Value": {
+                "id": "1750885c-1096-4dd5-87de-db005ef46bab",
+                "resourcePath": "scripts\\action_background_sky_clouds_story_mode\\action_background_sky_clouds_story_mode.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "dfce2150-85e6-4210-ad99-e37d903fd021",
             "Value": {
                 "id": "7368d48a-07f2-4a94-88d3-99874558b4bb",
@@ -14559,6 +14567,14 @@
             }
         },
         {
+            "Key": "f8e3381e-0a7e-4b02-abad-d522cc16451b",
+            "Value": {
+                "id": "33974754-d397-453c-b8e2-f5d327570775",
+                "resourcePath": "scripts\\action_setting_light_bleeding\\action_setting_light_bleeding.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f909c802-8ea4-4a4b-9f26-8f2ada8a1ca4",
             "Value": {
                 "id": "e1cf4b66-99e4-4749-af13-fabde9c9459c",
@@ -15112,6 +15128,7 @@
         "9f61daef-bdef-4313-ae99-4ed9d6be1572",
         "7e51bbe3-5ee9-4ff2-b2d2-5c8ca2bba395",
         "e6b5b711-c0d0-4ebf-b88e-6806c3c44731",
+        "dfa880f4-5b9b-47f1-8983-55cc89465785",
         "f5415133-df15-4b48-a907-7bf2240ea456",
         "8bd55145-8757-44de-8a60-386184fb5b0b",
         "d9c47984-662f-4bfc-a289-aed97dcde68d",
@@ -15369,6 +15386,7 @@
         "61bfc6f1-3c05-4d45-bf92-0345c92c70df",
         "a9321863-a4fb-4e9c-b747-3b68409af268",
         "bd4878d5-a3b5-4e33-b8dc-aa9bb87d0f7a",
+        "f8e3381e-0a7e-4b02-abad-d522cc16451b",
         "2831e949-d1da-46e8-bdc2-3b4a81a7e1d1",
         "c4b5552d-6e25-4285-aa0d-2f8ae31044f4",
         "8b26a449-7094-464a-82fb-0d69c9b4994e",

@@ -193,6 +193,7 @@ json_save_object_start("graphics")
 	json_save_var("texture_filtering_level", setting_texture_filtering_level)
 	json_save_var("block_brightness", setting_block_brightness)
 	json_save_var("block_glow", setting_block_glow)
+	json_save_var("light_bleeding", setting_light_bleeding)
 
 json_save_object_done()
 

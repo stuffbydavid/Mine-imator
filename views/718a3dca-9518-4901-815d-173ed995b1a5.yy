@@ -7,7 +7,7 @@
         "a94111d0-f5e5-4a86-a6ae-4a1522d3f4c4"
     ],
     "filterType": "GMShader",
-    "folderName": "Color effects",
+    "folderName": "Color correction",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

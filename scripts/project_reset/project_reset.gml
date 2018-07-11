@@ -67,6 +67,7 @@ background_sky_clouds_show = true
 background_sky_clouds_tex = mc_res
 background_sky_clouds_tex.count++
 background_sky_clouds_flat = false
+background_sky_clouds_story_mode = false
 background_sky_clouds_speed = 1
 background_sky_clouds_z = 1000
 background_sky_clouds_size = 192

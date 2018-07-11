@@ -5,10 +5,11 @@ attribute vec3 in_Position;
 attribute vec3 in_Normal;
 attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec3 in_Wave;
+attribute vec4 in_Wave;
 
 uniform float uBrightness;
 uniform float uBlockBrightness;
+uniform float uLightBleed;
 uniform int uIsGround;
 uniform vec3 uSunAt;
 
@@ -19,6 +20,7 @@ varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying float vBrightness;
+varying float vLightBleed;
 
 // Wind
 uniform float uTime;
@@ -44,6 +46,7 @@ void main()
 	vTexCoord = in_TextureCoord;
 	vScreenCoord = uLightMatrix * vec4(vPosition, 1.0);
 	vBrightness = in_Wave.z * uBlockBrightness + uBrightness;
+	vLightBleed = in_Wave.w * uLightBleed;
 	
 	// Single normal for ground
 	if (uIsGround > 0)

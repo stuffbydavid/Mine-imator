@@ -41,3 +41,8 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingsblockglow", dx, dy, setting_block_glow, action_setting_block_glow)
 tab_next()
+
+// Foliage light bleeding
+tab_control_checkbox()
+draw_checkbox("settingslightbleeding", dx, dy, setting_light_bleeding, action_setting_light_bleeding)
+tab_next()

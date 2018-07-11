@@ -28,6 +28,7 @@ varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying float vBrightness;
+varying float vLightBleed;
 
 float unpackDepth(vec4 c)
 {
@@ -77,7 +78,8 @@ void main()
 	
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition))); 
-	
+		dif = clamp(dif + vLightBleed, 0.0, 1.0);
+		
 		// Attenuation factor
 		dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0); 
 	 
@@ -136,11 +138,14 @@ void main()
 				buffer = 3;
 				fragCoord = getShadowMapCoord(vec3(0.0, -1.0, 0.0));
 			}
-		
+			
+			// Blur size(Increase if there's light bleeding)
+			float blurSize = uBlurSize + (.2 * vLightBleed);
+			
 			// Calculate shadow
 			float fragDepth = distance(vPosition, uLightPosition);
-			float sampleSize = uBlurSize / fragDepth;
-			float bias =  1.0 + 2.0 * uBlurSize;
+			float sampleSize = blurSize / fragDepth;
+			float bias =  1.0 + 2.0 * blurSize;
 		
 			for (int i = 0; i < MAXSAMPLES; i++)
 			{

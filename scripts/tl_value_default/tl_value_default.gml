@@ -31,7 +31,7 @@ switch (argument0)
 	case e_value.CAM_BLOOM_RADIUS: return 1
 	case e_value.CAM_BLOOM_BLEND: return c_white
 	case e_value.CAM_COLOR_CORRECTION: return false
-	case e_value.CAM_CONTRAST: return .2
+	case e_value.CAM_CONTRAST: return 0
 	case e_value.CAM_BRIGHTNESS: return 0
 	case e_value.CAM_SATURATION: return 1
 	case e_value.CAM_WIDTH: return 1280

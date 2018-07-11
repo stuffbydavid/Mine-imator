@@ -109,9 +109,10 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	dx += 4
 	dw -= 4
 	
-	// Flat clouds
+	// Flat clouds & 'Story Mode' clouds
 	tab_control_checkbox()
-	draw_checkbox("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
+	draw_checkbox("backgroundskycloudsstorymode", dx, dy, background_sky_clouds_story_mode, action_background_sky_clouds_story_mode)
+	draw_checkbox("backgroundskycloudsflat", dx + floor(dw * 0.6), dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
 	tab_next()
 	
 	capwid = text_caption_width("backgroundskycloudstex", "backgroundskycloudsspeed", "backgroundskycloudsz", "backgroundskycloudssize", "backgroundskycloudsheight")

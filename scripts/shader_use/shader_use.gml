@@ -36,6 +36,10 @@ if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)
 // Block brightness
 if (!is_undefined(uniform_map[?"uBlockBrightness"]) && uniform_map[?"uBlockBrightness"] > -1)
 	render_set_uniform("uBlockBrightness", app.setting_block_brightness)
+	
+// Light bleeding
+if (!is_undefined(uniform_map[?"uLightBleed"]) && uniform_map[?"uLightBleed"] > -1)
+	render_set_uniform("uLightBleed", bool_to_float(app.setting_light_bleeding))
 
 // Init script
 if (script > -1)
