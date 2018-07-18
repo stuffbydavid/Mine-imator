@@ -147,6 +147,19 @@ if (app.setting_liquid_animation)
 		vertex_wave_zmin = block_pos_z
 }
 
+// Color
+var color, alpha;
+color = c_white
+alpha = 1
+
+if (app.setting_noisy_grass_water && block_current.name = "water")
+{
+	var samplex, sampley;
+	samplex = abs(mc_builder.build_pos_x mod 512)
+	sampley = abs(mc_builder.build_pos_y mod 512)
+	color = surface_getpixel(noise_surf, samplex, sampley)
+}
+
 // Falling
 if (level div 8 || matchzp)
 {
@@ -432,56 +445,56 @@ if (!matchxp && !solidxp)
 	vbuffer_add_triangle(x2, y2, z2, x2, y1, z2, x2, y1, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
 	vbuffer_add_triangle(x2, y1, z1, x2, y2, z1, x2, y2, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
 	if (corner1z > corner2z)
-		vbuffer_add_triangle(x2, y1, z2, x2, y2, z2, x2, y1, corner1z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex1x, cornerrighttex1y)
+		vbuffer_add_triangle(x2, y1, z2, x2, y2, z2, x2, y1, corner1z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex1x, cornerrighttex1y, color, alpha)
 	else
-		vbuffer_add_triangle(x2, y1, z2, x2, y2, z2, x2, y2, corner2z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex2x, cornerlefttex2y)
+		vbuffer_add_triangle(x2, y1, z2, x2, y2, z2, x2, y2, corner2z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex2x, cornerlefttex2y, color, alpha)
 }
 
 // X-
 if (!matchxn && !solidxn)
 {
-	vbuffer_add_triangle(x1, y1, z2, x1, y2, z2, x1, y2, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
-	vbuffer_add_triangle(x1, y2, z1, x1, y1, z1, x1, y1, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	vbuffer_add_triangle(x1, y1, z2, x1, y2, z2, x1, y2, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y, color, alpha)
+	vbuffer_add_triangle(x1, y2, z1, x1, y1, z1, x1, y1, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y, color, alpha)
 	if (corner3z > corner0z)
-		vbuffer_add_triangle(x1, y2, z2, x1, y1, z2, x1, y2, corner3z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex3x, cornerrighttex3y)
+		vbuffer_add_triangle(x1, y2, z2, x1, y1, z2, x1, y2, corner3z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex3x, cornerrighttex3y, color, alpha)
 	else
-		vbuffer_add_triangle(x1, y2, z2, x1, y1, z2, x1, y1, corner0z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex0x, cornerlefttex0y)
+		vbuffer_add_triangle(x1, y2, z2, x1, y1, z2, x1, y1, corner0z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex0x, cornerlefttex0y, color, alpha)
 }
 
 // Y+
 if (!matchyp && !solidyp)
 {
-	vbuffer_add_triangle(x1, y2, z2, x2, y2, z2, x2, y2, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
-	vbuffer_add_triangle(x2, y2, z1, x1, y2, z1, x1, y2, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	vbuffer_add_triangle(x1, y2, z2, x2, y2, z2, x2, y2, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y, color, alpha)
+	vbuffer_add_triangle(x2, y2, z1, x1, y2, z1, x1, y2, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y, color, alpha)
 	if (corner2z > corner3z)
-		vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x2, y2, corner2z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex2x, cornerrighttex2y)
+		vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x2, y2, corner2z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex2x, cornerrighttex2y, color, alpha)
 	else
-		vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x1, y2, corner3z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex3x, cornerlefttex3y)
+		vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x1, y2, corner3z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex3x, cornerlefttex3y, color, alpha)
 }
 
 // Y-
 if (!matchyn && !solidyn)
 {
-	vbuffer_add_triangle(x2, y1, z2, x1, y1, z2, x1, y1, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y)
-	vbuffer_add_triangle(x1, y1, z1, x2, y1, z1, x2, y1, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y)
+	vbuffer_add_triangle(x2, y1, z2, x1, y1, z2, x1, y1, z1, sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y, color, alpha)
+	vbuffer_add_triangle(x1, y1, z1, x2, y1, z1, x2, y1, z2, sidetex2x, sidetex2y, sidetex3x, sidetex3y, sidetex0x, sidetex0y, color, alpha)
 	if (corner0z > corner1z)
-		vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x1, y1, corner0z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex0x, cornerrighttex0y)
+		vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x1, y1, corner0z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerrighttex0x, cornerrighttex0y, color, alpha)
 	else
-		vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x2, y1, corner1z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex1x, cornerlefttex1y)
+		vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x2, y1, corner1z, sidetex1x, sidetex1y, sidetex0x, sidetex0y, cornerlefttex1x, cornerlefttex1y, color, alpha)
 }
 
 // Z+
 if (!matchzp)
 {
-	vbuffer_add_triangle(midx, midy, midz, x1, y1, corner0z, x2, y1, corner1z, topmidtexx, topmidtexy, toptex0x, toptex0y, toptex1x, toptex1y)
-	vbuffer_add_triangle(midx, midy, midz, x2, y1, corner1z, x2, y2, corner2z, topmidtexx, topmidtexy, toptex1x, toptex1y, toptex2x, toptex2y)
-	vbuffer_add_triangle(midx, midy, midz, x2, y2, corner2z, x1, y2, corner3z, topmidtexx, topmidtexy, toptex2x, toptex2y, toptex3x, toptex3y)
-	vbuffer_add_triangle(midx, midy, midz, x1, y2, corner3z, x1, y1, corner0z, topmidtexx, topmidtexy, toptex3x, toptex3y, toptex0x, toptex0y)
+	vbuffer_add_triangle(midx, midy, midz, x1, y1, corner0z, x2, y1, corner1z, topmidtexx, topmidtexy, toptex0x, toptex0y, toptex1x, toptex1y, color, alpha)
+	vbuffer_add_triangle(midx, midy, midz, x2, y1, corner1z, x2, y2, corner2z, topmidtexx, topmidtexy, toptex1x, toptex1y, toptex2x, toptex2y, color, alpha)
+	vbuffer_add_triangle(midx, midy, midz, x2, y2, corner2z, x1, y2, corner3z, topmidtexx, topmidtexy, toptex2x, toptex2y, toptex3x, toptex3y, color, alpha)
+	vbuffer_add_triangle(midx, midy, midz, x1, y2, corner3z, x1, y1, corner0z, topmidtexx, topmidtexy, toptex3x, toptex3y, toptex0x, toptex0y, color, alpha)
 }
 
 // Z-
 if (!matchzn && !solidzn)
 {
-	vbuffer_add_triangle(x1, y2, z1, x2, y2, z1, x2, y1, z1, toptex3x, toptex3y, toptex2x, toptex2y, toptex1x, toptex1y)
-	vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, toptex1x, toptex1y, toptex0x, toptex0y, toptex3x, toptex3y)
+	vbuffer_add_triangle(x1, y2, z1, x2, y2, z1, x2, y1, z1, toptex3x, toptex3y, toptex2x, toptex2y, toptex1x, toptex1y, color, alpha)
+	vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, toptex1x, toptex1y, toptex0x, toptex0y, toptex3x, toptex3y, color, alpha)
 }

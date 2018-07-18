@@ -1,7 +1,7 @@
 /// tab_frame_editor_camera()
 
 var capwid, text;
-capwid = text_caption_width("frameeditorcamerafov", "frameeditorcameravideosize", "projectvideosizecustomwidth");
+capwid = text_caption_width("frameeditorcamerafov");
 
 // FOV
 tab_control_meter()
@@ -9,7 +9,7 @@ draw_meter("frameeditorcamerafov", dx, dy, dw, tl_edit.value[e_value.CAM_FOV], 5
 tab_next()
 
 // Rotate point 
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate, checkbox_expand_frameeditor_rotatepoint, action_checkbox_expand_frameeditor_rotatepoint)
 tab_next()
 
@@ -40,10 +40,11 @@ if (tl_edit.value[e_value.CAM_ROTATE] && checkbox_expand_frameeditor_rotatepoint
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // DOF
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof, checkbox_expand_frameeditor_dof, action_checkbox_expand_frameeditor_dof)
 tab_next()
 if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
@@ -82,10 +83,11 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // Bloom
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcamerabloom", dx, dy, tl_edit.value[e_value.CAM_BLOOM], action_tl_frame_cam_bloom, checkbox_expand_frameeditor_bloom, action_checkbox_expand_frameeditor_bloom)
 tab_next()
 if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
@@ -113,10 +115,11 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // Color correction
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcameracolorcorrection", dx, dy, tl_edit.value[e_value.CAM_COLOR_CORRECTION], action_tl_frame_cam_clrcor, checkbox_expand_frameeditor_clrcor, action_checkbox_expand_frameeditor_clrcor)
 tab_next()
 if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_clrcor)
@@ -131,7 +134,7 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("frameeditorcameracolorcorrectionbrightness", dx, dy, dw, round(tl_edit.value[e_value.CAM_BRIGHTNESS] * 100), 50, 0, 100, 0, 1, tab.camera.tbx_brightness, action_tl_frame_cam_clrcor_brightness, capwid)
+	draw_meter("frameeditorcameracolorcorrectionbrightness", dx, dy, dw, round(tl_edit.value[e_value.CAM_BRIGHTNESS] * 100), 50, -100, 100, 0, 1, tab.camera.tbx_brightness, action_tl_frame_cam_clrcor_brightness, capwid)
 	tab_next()
 	
 	tab_control_meter()
@@ -140,7 +143,38 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
+
+// Vignette
+tab_control_checkbox_expand()
+draw_checkbox_expand("frameeditorcameravignette", dx, dy, tl_edit.value[e_value.CAM_VIGNETTE], action_tl_frame_cam_vignette, checkbox_expand_frameeditor_vignette, action_checkbox_expand_frameeditor_vignette)
+tab_next()
+if (tl_edit.value[e_value.CAM_VIGNETTE] && checkbox_expand_frameeditor_vignette)
+{
+	dx += 4
+	dw -= 4
+	
+	capwid = text_caption_width("frameeditorcameravignetteradius", "frameeditorcameravignettesoftness", "frameeditorcameravignettestrength")
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameravignetteradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_VIGNETTE_RADIUS] * 100), 50, 0, 100, 100, 1, tab.camera.tbx_vignette_radius, action_tl_frame_cam_vignette_radius, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameravignettesoftness", dx, dy, dw, round(tl_edit.value[e_value.CAM_VIGNETTE_SOFTNESS] * 100), 50, 0, 100, 50, 1, tab.camera.tbx_vignette_softness, action_tl_frame_cam_vignette_softness, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameravignettestrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_VIGNETTE_STRENGTH] * 100), 50, 0, 100, 100, 1, tab.camera.tbx_vignette_strength, action_tl_frame_cam_vignette_strength, capwid)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
+capwid = text_caption_width("frameeditorcameravideosize", "projectvideosizecustomwidth")
 
 // Camera size
 if (tl_edit.value[e_value.CAM_SIZE_USE_PROJECT]) // Use project settings

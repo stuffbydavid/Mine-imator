@@ -6,6 +6,7 @@ globalvar mc_assets, mc_builder, mc_res;
 globalvar load_assets_stage, load_assets_progress, load_assets_block_index;
 globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
+globalvar noise_surf;
 
 mc_assets = new(obj_minecraft_assets)
 mc_builder = new(obj_builder)
@@ -80,5 +81,13 @@ if (format > minecraft_assets_format)
 load_assets_startup_dir = mc_file_directory + app.setting_minecraft_assets_version + "\\"
 load_assets_dir = load_assets_startup_dir
 load_assets_model_file_map = ds_map_create() // filename -> model
+
+// Noise map surface for noisy grass/water from Minecraft: Bedrock Edition
+noise_surf = surface_create(sprite_get_width(spr_noise), sprite_get_height(spr_noise))
+surface_set_target(noise_surf)
+{
+	draw_sprite(spr_noise, 0, 0, 0)
+}
+surface_reset_target()
 
 return true

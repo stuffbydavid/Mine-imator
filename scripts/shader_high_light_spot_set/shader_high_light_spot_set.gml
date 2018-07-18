@@ -3,6 +3,7 @@
 render_set_uniform("uBrightness", 0)
 
 render_set_uniform_int("uIsSky", 0)
+render_set_uniform_int("uIsWater", 0)
 
 render_set_uniform_int("uLightAmount", render_light_amount)
 render_set_uniform("uLightMatrix", render_light_matrix)

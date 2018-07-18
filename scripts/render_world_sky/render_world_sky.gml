@@ -70,7 +70,7 @@ if (!background_image_show)
 	if (background_night_alpha > 0)
 	{
 		if (background_sky_stars_vbuffer = null)
-			background_sky_stars_vbuffer = vbuffer_create_sphere(dis * 0.8, point2D(0, 0), point2D(6, 6), 8, true)
+			background_sky_stars_vbuffer = vbuffer_create_cube(dis * 0.8, point2D(0, 0), point2D(2, 2), false, false, true, false)// vbuffer_create_sphere(dis * 0.8, point2D(0, 0), point2D(6, 6), 8, true)
 			
 		render_set_uniform_color("uBlendColor", c_white, 0.4 * background_night_alpha)
 		render_set_texture(background_sky_stars_texture)

@@ -11,7 +11,7 @@ var name, xx, yy, checked, script, expanded, expandscript;
 var size, expandwidth, caption, w, checkboxmouseon, checkboxpressed, expandmouseon, expandpressed;
 name = argument0
 xx = argument1
-yy = argument2
+yy = argument2 + 2
 checked = argument3
 script = argument4
 expanded = argument5

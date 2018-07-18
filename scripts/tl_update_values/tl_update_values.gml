@@ -120,6 +120,10 @@ if (value_type[e_value_type.CAMERA])
 	tl_update_values_ease(e_value.CAM_CONTRAST, trans, p)
 	tl_update_values_ease(e_value.CAM_BRIGHTNESS, trans, p)
 	tl_update_values_ease(e_value.CAM_SATURATION, trans, p)
+	tl_update_values_ease(e_value.CAM_VIGNETTE, trans, p)
+	tl_update_values_ease(e_value.CAM_VIGNETTE_RADIUS, trans, p)
+	tl_update_values_ease(e_value.CAM_VIGNETTE_SOFTNESS, trans, p)
+	tl_update_values_ease(e_value.CAM_VIGNETTE_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.CAM_WIDTH, trans, p)
 	tl_update_values_ease(e_value.CAM_HEIGHT, trans, p)
 	tl_update_values_ease(e_value.CAM_SIZE_USE_PROJECT, trans, p)
@@ -206,7 +210,7 @@ if (type = e_tl_type.AUDIO && !hide && app.timeline_marker > app.timeline_marker
 if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && oldkf != keyframe_current)
 {
 	// Fire particles
-	if (!temp.pc_spawn_constant && value[e_value.SPAWN])
+	if (!temp.pc_spawn_constant && value[e_value.SPAWN] && !value[e_value.FREEZE])
 		fire = true
 	
 	// Clear particles

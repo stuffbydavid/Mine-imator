@@ -100,7 +100,7 @@ draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_s
 tab_next()
 
 // Clouds
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, checkbox_expand_background_clouds, action_checkbox_expand_background_clouds)
 tab_next()
 
@@ -109,10 +109,14 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	dx += 4
 	dw -= 4
 	
-	// Flat clouds & 'Story Mode' clouds
+	// Flat clouds
+	tab_control_checkbox()
+	draw_checkbox("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
+	tab_next()
+	
+	// 'Story mode' clouds
 	tab_control_checkbox()
 	draw_checkbox("backgroundskycloudsstorymode", dx, dy, background_sky_clouds_story_mode, action_background_sky_clouds_story_mode)
-	draw_checkbox("backgroundskycloudsflat", dx + floor(dw * 0.6), dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
 	tab_next()
 	
 	capwid = text_caption_width("backgroundskycloudstex", "backgroundskycloudsspeed", "backgroundskycloudsz", "backgroundskycloudssize", "backgroundskycloudsheight")
@@ -145,12 +149,13 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // Ground
-capwid = text_caption_width("backgroundground", "backgroundgroundtex", "backgroundbiome", "backgroundbiomevariant")
+capwid = text_caption_width("backgroundground", "backgroundgroundtex")
 
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show, checkbox_expand_background_ground, action_checkbox_expand_background_ground)
 tab_next()
 
@@ -184,68 +189,84 @@ if (background_ground_show && checkbox_expand_background_ground)
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // Biome
+if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_variants))
+	capwid = text_caption_width("backgroundbiome", "backgroundbiomevariant")
+else
+	capwid = text_caption_width("backgroundbiome")
+
 tab_control(24)
 draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome.name), action_background_biome, null, null, capwid)
 tab_next()
 
-if (background_biome.name != "custom")
+if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_variants))
 {
 	// Biome variant
-	if (ds_list_valid(background_biome.biome_variants))
-	{
-		tab_control(24)
-		draw_button_menu("backgroundbiomevariant", e_menu.LIST, dx, dy, dw, 24, background_biome.selected_variant, minecraft_asset_get_name("biome", background_biome.biome_variants[|background_biome.selected_variant].name), action_background_biome_variant, null, null, capwid)
-		tab_next()
-	}
+	tab_control(24)
+	draw_button_menu("backgroundbiomevariant", e_menu.LIST, dx, dy, dw, 24, background_biome.selected_variant, minecraft_asset_get_name("biome", background_biome.biome_variants[|background_biome.selected_variant].name), action_background_biome_variant, null, null, capwid)
+	tab_next()
 }
-else
+
+// Background colors
+var custombiome = (background_biome.name = "custom")
+var wid = test(custombiome, floor(dw / 2) - 4, dw);
+var pxpad = 8 * custombiome;
+
+tab_control(20)
+draw_label(text_get("backgroundcolor") + ":", dx, dy, fa_left, fa_top)
+tab_next()
+
+// Sky & Clouds color
+tab_control_color()
+draw_button_color("backgroundskycolor", dx, dy, wid, background_sky_color, c_sky, false, action_background_sky_color)
+
+if (!custombiome)
 {
-	// Foliage color
-	tab_control_color()
-	draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_biome_color_foliage, c_plains_biome_foliage, false, action_background_biome_color_foliage)
 	tab_next()
-
-	// Grass color
 	tab_control_color()
-	draw_button_color("backgroundgrasscolor", dx, dy, dw, background_biome_color_grass, c_plains_biome_grass, false, action_background_biome_color_grass)
-	tab_next()
-
-	// Water color
-	tab_control_color()
-	draw_button_color("backgroundwatercolor", dx, dy, dw, background_biome_color_water, c_plains_biome_water, false, action_background_biome_color_water)
-	tab_next()
 }
 
-// Sky color
-tab_control_color()
-draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, c_sky, false, action_background_sky_color)
+draw_button_color("backgroundskycloudscolor", dx + (wid + pxpad) * custombiome, dy, wid, background_sky_clouds_color, c_white, false, action_background_sky_clouds_color)
 tab_next()
 
-// Clouds color
+// Sun light & Ambient color
 tab_control_color()
-draw_button_color("backgroundskycloudscolor", dx, dy, dw, background_sky_clouds_color, c_white, false, action_background_sky_clouds_color)
-tab_next()
+draw_button_color("backgroundsunlightcolor", dx, dy, wid, background_sunlight_color, c_white, false, action_background_sunlight_color)
 
-// Sun light color
-tab_control_color()
-draw_button_color("backgroundsunlightcolor", dx, dy, dw, background_sunlight_color, c_white, false, action_background_sunlight_color)
-tab_next()
+if (!custombiome)
+{
+	tab_next()
+	tab_control_color()
+}
 
-// Ambient color
-tab_control_color()
-draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_gray, false, action_background_ambient_color)
+draw_button_color("backgroundambientcolor", dx + (wid + pxpad) * custombiome, dy, wid, background_ambient_color, c_gray, false, action_background_ambient_color)
 tab_next()
 
 // Night color
 tab_control_color()
-draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
-tab_next()
+draw_button_color("backgroundnightcolor", dx, dy, wid, background_night_color, c_night, false, action_background_night_color)
+
+// Biome colors
+if (custombiome)
+{
+	// Grass color
+	draw_button_color("backgroundgrasscolor", dx + wid + 8, dy, wid, background_biome_color_grass, c_plains_biome_grass, false, action_background_biome_color_grass)
+	tab_next()
+
+	// Foliage & Water color
+	tab_control_color()
+	draw_button_color("backgroundfoliagecolor", dx, dy, wid, background_biome_color_foliage, c_plains_biome_foliage, false, action_background_biome_color_foliage)
+	draw_button_color("backgroundwatercolor", dx + wid + 8, dy, wid, background_biome_color_water, c_plains_biome_water, false, action_background_biome_color_water)
+	tab_next()
+}
+else
+	tab_next()
 
 // Show fog
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("backgroundfog", dx, dy, background_fog_show, action_background_fog_show, checkbox_expand_background_fog, action_checkbox_expand_background_fog)
 tab_next()
 
@@ -256,10 +277,13 @@ if (background_fog_show && checkbox_expand_background_fog)
 	
 	// Sky fog
 	tab_control_checkbox()
-	draw_checkbox("backgroundfogsky", dx + floor(dw * 0.5), dy, background_fog_sky, action_background_fog_sky)
+	draw_checkbox("backgroundfogsky", dx, dy, background_fog_sky, action_background_fog_sky)
+	tab_next()
 	
-	// Custom color
+	// Custom color && Custom object fog color
+	tab_control_checkbox()
 	draw_checkbox("backgroundfogcolorcustom", dx, dy, background_fog_color_custom, action_background_fog_color_custom)
+	draw_checkbox("backgroundfogobjectcolorcustom", dx + floor(dw * 0.5), dy, background_fog_object_color_custom, action_background_fog_object_color_custom)
 	tab_next()
 	
 	// Fog color
@@ -270,19 +294,13 @@ if (background_fog_show && checkbox_expand_background_fog)
 		tab_next()
 	}
 	
-	// Custom object fog color
-	tab_control_checkbox()
-	draw_checkbox("backgroundfogobjectcolorcustom", dx, dy, background_fog_object_color_custom, action_background_fog_object_color_custom)
-	tab_next()
-	
-	// Fog color
+	// Object Fog color
 	if (background_fog_object_color_custom)
 	{
 		tab_control_color()
 		draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky, false, action_background_fog_object_color)
 		tab_next()
 	}
-	
 	
 	capwid = text_caption_width("backgroundfogdistance", "backgroundfogsize")
 	
@@ -303,10 +321,11 @@ if (background_fog_show && checkbox_expand_background_fog)
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // Wind
-tab_control_checkbox()
+tab_control_checkbox_expand()
 draw_checkbox_expand("backgroundwind", dx, dy, background_wind, action_background_wind, checkbox_expand_background_wind, action_checkbox_expand_background_wind)
 tab_next()
 
@@ -319,16 +338,17 @@ if (background_wind && checkbox_expand_background_wind)
 	
 	// Wind strength
 	tab_control_meter()
-	draw_meter("backgroundwindspeed", dx, dy, dw, round(background_wind_speed * 100), 64, 0, 100, 10, 1, tab.background.tbx_wind_speed, action_background_wind_speed)
+	draw_meter("backgroundwindspeed", dx, dy, dw, round(background_wind_speed * 100), 64, 0, 100, 10, 1, tab.background.tbx_wind_speed, action_background_wind_speed, capwid)
 	tab_next()
 	
 	// Wind amount
 	tab_control_meter()
-	draw_meter("backgroundwindstrength", dx, dy, dw, background_wind_strength, 64, 0, 8, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength)
+	draw_meter("backgroundwindstrength", dx, dy, dw, background_wind_strength, 64, 0, 8, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength, capwid)
 	tab_next()
 	
 	dx -= 4
 	dw += 4
+	checkbox_expand_end()
 }
 
 // Fast graphics

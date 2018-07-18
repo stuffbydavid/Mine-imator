@@ -14,4 +14,3 @@ else
 }
 
 temp_edit.item_bounce = bounce
-lib_preview.update = true

@@ -45,6 +45,7 @@ if (!err)
 	new_shader("shader_add")
 	new_shader("shader_blur")
 	new_shader("shader_color_correction")
+	new_shader("shader_vignette")
 
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -175,6 +176,7 @@ with (shader_map[?shader_high_light_point])
 	new_shader_uniform("uBlockBrightness")
 	new_shader_uniform("uLightBleed")
 	new_shader_uniform("uIsSky")
+	new_shader_uniform("uIsWater")
 	new_shader_uniform("uLightAmount")
 	new_shader_uniform("uLightPosition")
 	new_shader_uniform("uLightColor")
@@ -207,6 +209,7 @@ with (shader_map[?shader_high_light_spot])
 	new_shader_uniform("uBlockBrightness")
 	new_shader_uniform("uLightBleed")
 	new_shader_uniform("uIsSky")
+	new_shader_uniform("uIsWater")
 	new_shader_uniform("uLightAmount")
 	new_shader_uniform("uLightMatrix")
 	new_shader_uniform("uLightPosition")
@@ -228,6 +231,7 @@ with (shader_map[?shader_high_light_sun])
 	new_shader_uniform("uIsGround")
 	new_shader_uniform("uSunAt")
 	new_shader_uniform("uIsSky")
+	new_shader_uniform("uIsWater")
 	new_shader_uniform("uLightMatrix")
 	new_shader_uniform("uLightPosition")
 	new_shader_uniform("uLightNear")
@@ -305,6 +309,14 @@ with (shader_map[?shader_color_correction])
 	new_shader_uniform("uContrast")
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uSaturation")
+}
+
+with (shader_map[?shader_vignette])
+{
+	new_shader_uniform("uScreenSize")
+	new_shader_uniform("uRadius")
+	new_shader_uniform("uSoftness")
+	new_shader_uniform("uStrength")
 }
 
 return true

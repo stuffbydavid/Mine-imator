@@ -6,6 +6,8 @@ var view, cam;
 view = argument0
 cam = argument1
 
+render_view_current = view
+
 // Render
 render_lights = view.lights
 render_particles = view.particles
@@ -63,7 +65,7 @@ if (view.controls)
 			// Controls
 			if (tl_edit != null && tl_edit != cam)
 			{
-				if (!tl_edit.hide && tl_edit.value_inherit[e_value.VISIBLE] && (!(view_render && tl_edit.hq_hiding) && !(!view_render && tl_edit.lq_hiding)))
+				if (!tl_edit.hide && tl_edit.value_inherit[e_value.VISIBLE] && (!(view.render && tl_edit.hq_hiding) && !(!view.render && tl_edit.lq_hiding)))
 				{
 					if (tl_edit.value_type[e_value_type.POSITION] && frame_editor.position.show)
 						view_control_position(view)

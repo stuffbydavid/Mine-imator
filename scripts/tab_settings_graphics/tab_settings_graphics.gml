@@ -17,6 +17,9 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingsliquidanimation", dx, dy, setting_liquid_animation, action_setting_liquid_animation)
 tab_next()
+tab_control_checkbox()
+draw_checkbox("settingsnoisygrasswater", dx, dy, setting_noisy_grass_water, action_setting_noisy_grass_water)
+tab_next()
 dy += 10
 
 // Texture filtering

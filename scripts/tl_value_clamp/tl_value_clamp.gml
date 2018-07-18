@@ -16,7 +16,12 @@ switch (vid)
 	case e_value.SCA_Z: return max(val, 0.0001)
 	case e_value.ALPHA:
 	case e_value.MIX_PERCENT:
-	case e_value.BRIGHTNESS: return clamp(val, 0, 1)
+	case e_value.BRIGHTNESS:
+	case e_value.CAM_BLOOM_THRESHOLD:
+	case e_value.CAM_CONTRAST:
+	case e_value.CAM_VIGNETTE_RADIUS:
+	case e_value.CAM_VIGNETTE_SOFTNESS:
+	case e_value.CAM_VIGNETTE_STRENGTH: return clamp(val, 0, 1)
 	case e_value.RGB_ADD:
 	case e_value.RGB_SUB:
 	case e_value.RGB_MUL:

@@ -14,4 +14,3 @@ else
 }
 	
 temp_edit.item_spin = spin
-lib_preview.update = true

@@ -93,11 +93,11 @@ with (new(obj_model))
 						ds_list_copy(value_hide_list[v], curvalue[?"hide"])
 					}
 					
-					// Minecraft color palette
-					if (ds_map_valid(curvalue[?"color"]))
+					// Minecraft color palette(shapes)
+					if (ds_map_valid(curvalue[?"shape_color"]))
 					{
 						value_color_name_map[v] = ds_map_create();
-						ds_map_merge(value_color_name_map[v], curvalue[?"color"], true)
+						ds_map_merge(value_color_name_map[v], curvalue[?"shape_color"], true)
 					}
 					
 				}

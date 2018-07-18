@@ -6,6 +6,7 @@ uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 uniform vec4 uBlendColor;
 uniform int uIsSky;
+uniform int uIsWater;
 
 uniform vec3 uLightPosition;
 uniform vec4 uLightColor;
@@ -101,7 +102,10 @@ void main()
 		}
 	
 		// Calculate light
-		light = uLightColor.rgb * dif * (1.0 - shadow);
+		if (uIsWater == 1)
+			light = uLightColor.rgb * dif;
+		else
+			light = uLightColor.rgb * dif * (1.0 - shadow);
 		light = mix(light, vec3(1.0), vBrightness);
 	}
 		

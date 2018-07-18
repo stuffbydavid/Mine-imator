@@ -15,6 +15,19 @@ with (model)
 	if (vertex_brightness = null)
 		vertex_brightness = brightness
 	
+	// Sample noisemap if noisy grass and water are enabled
+	var noiseoff = c_white;
+	if (mc_builder.block_current != null)
+	{
+		if (surface_exists(noise_surf) && app.setting_noisy_grass_water && (mc_builder.block_current.name = "grass_block" || mc_builder.block_current.name = "grass"))
+		{
+			var samplex, sampley;
+			samplex = abs(mc_builder.build_pos_x mod 512)
+			sampley = abs(mc_builder.build_pos_y mod 512)
+			noiseoff = surface_getpixel(noise_surf, samplex, sampley)
+		}
+	}
+	
 	// Generate elements
 	for (var e = 0; e < element_amount; e++)
 	{
@@ -48,6 +61,10 @@ with (model)
 					vbuffer_current = face_vbuffer_xp
 				else
 					vbuffer_current = mc_builder.vbuffer[face_depth_xp, face_block_vbuffer_xp]
+					
+				if (face_block_vbuffer_xp = e_block_vbuffer.GRASS)
+					color = noiseoff
+					
 				vbuffer_add_triangle(x2, y2, z2, x2, y1, z2, x2, y1, z1, face_uv_xp_0_x, face_uv_xp_0_y, face_uv_xp_1_x, face_uv_xp_1_y, face_uv_xp_2_x, face_uv_xp_2_y, color, 1, false, mat)
 				vbuffer_add_triangle(x2, y1, z1, x2, y2, z1, x2, y2, z2, face_uv_xp_2_x, face_uv_xp_2_y, face_uv_xp_3_x, face_uv_xp_3_y, face_uv_xp_0_x, face_uv_xp_0_y, color, 1, false, mat)
 			}
@@ -64,6 +81,10 @@ with (model)
 					vbuffer_current = face_vbuffer_xn
 				else
 					vbuffer_current = mc_builder.vbuffer[face_depth_xn, face_block_vbuffer_xn]
+					
+				if (face_block_vbuffer_xn = e_block_vbuffer.GRASS)
+					color = noiseoff
+					
 				vbuffer_add_triangle(x1, y1, z2, x1, y2, z2, x1, y2, z1, face_uv_xn_0_x, face_uv_xn_0_y, face_uv_xn_1_x, face_uv_xn_1_y, face_uv_xn_2_x, face_uv_xn_2_y, color, 1, false, mat)
 				vbuffer_add_triangle(x1, y2, z1, x1, y1, z1, x1, y1, z2, face_uv_xn_2_x, face_uv_xn_2_y, face_uv_xn_3_x, face_uv_xn_3_y, face_uv_xn_0_x, face_uv_xn_0_y, color, 1, false, mat)
 			}
@@ -80,6 +101,10 @@ with (model)
 					vbuffer_current = face_vbuffer_yp
 				else
 					vbuffer_current = mc_builder.vbuffer[face_depth_yp, face_block_vbuffer_yp]
+					
+				if (face_block_vbuffer_yp = e_block_vbuffer.GRASS)
+					color = noiseoff
+					
 				vbuffer_add_triangle(x1, y2, z2, x2, y2, z2, x2, y2, z1, face_uv_yp_0_x, face_uv_yp_0_y, face_uv_yp_1_x, face_uv_yp_1_y, face_uv_yp_2_x, face_uv_yp_2_y, color, 1, false, mat)
 				vbuffer_add_triangle(x2, y2, z1, x1, y2, z1, x1, y2, z2, face_uv_yp_2_x, face_uv_yp_2_y, face_uv_yp_3_x, face_uv_yp_3_y, face_uv_yp_0_x, face_uv_yp_0_y, color, 1, false, mat)
 			}
@@ -96,6 +121,10 @@ with (model)
 					vbuffer_current = face_vbuffer_yn
 				else
 					vbuffer_current = mc_builder.vbuffer[face_depth_yn, face_block_vbuffer_yn]
+					
+				if (face_block_vbuffer_yn = e_block_vbuffer.GRASS)
+					color = noiseoff
+					
 				vbuffer_add_triangle(x2, y1, z2, x1, y1, z2, x1, y1, z1, face_uv_yn_0_x, face_uv_yn_0_y, face_uv_yn_1_x, face_uv_yn_1_y, face_uv_yn_2_x, face_uv_yn_2_y, color, 1, false, mat)
 				vbuffer_add_triangle(x1, y1, z1, x2, y1, z1, x2, y1, z2, face_uv_yn_2_x, face_uv_yn_2_y, face_uv_yn_3_x, face_uv_yn_3_y, face_uv_yn_0_x, face_uv_yn_0_y, color, 1, false, mat)
 			}
@@ -112,6 +141,10 @@ with (model)
 					vbuffer_current = face_vbuffer_zp
 				else
 					vbuffer_current = mc_builder.vbuffer[face_depth_zp, face_block_vbuffer_zp]
+					
+				if (face_block_vbuffer_zp = e_block_vbuffer.GRASS)
+					color = noiseoff
+					
 				vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x2, y2, z2, face_uv_zp_0_x, face_uv_zp_0_y, face_uv_zp_1_x, face_uv_zp_1_y, face_uv_zp_2_x, face_uv_zp_2_y, color, 1, false, mat)
 				vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x1, y1, z2, face_uv_zp_2_x, face_uv_zp_2_y, face_uv_zp_3_x, face_uv_zp_3_y, face_uv_zp_0_x, face_uv_zp_0_y, color, 1, false, mat)
 			}
@@ -128,6 +161,10 @@ with (model)
 					vbuffer_current = face_vbuffer_zn
 				else
 					vbuffer_current = mc_builder.vbuffer[face_depth_zn, face_block_vbuffer_zn]
+					
+				if (face_block_vbuffer_zn = e_block_vbuffer.GRASS)
+					color = noiseoff
+					
 				vbuffer_add_triangle(x1, y2, z1, x2, y2, z1, x2, y1, z1, face_uv_zn_0_x, face_uv_zn_0_y, face_uv_zn_1_x, face_uv_zn_1_y, face_uv_zn_2_x, face_uv_zn_2_y, color, 1, false, mat)
 				vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, face_uv_zn_2_x, face_uv_zn_2_y, face_uv_zn_3_x, face_uv_zn_3_y, face_uv_zn_0_x, face_uv_zn_0_y, color, 1, false, mat)
 			}

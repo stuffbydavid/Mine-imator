@@ -83,16 +83,16 @@ void main()
 		sampleCoord.y = 1.0 - sampleCoord.y;
 		
 		// Get sample depth
-		float sampleDepth = posFromBuffer(sampleCoord, unpackDepth(texture2D(uDepthBuffer,sampleCoord))).z;
+		float sampleDepth = posFromBuffer(sampleCoord, unpackDepth(texture2D(uDepthBuffer, sampleCoord))).z;
 		
 		// Get sample brightness
 		float sampleBrightness = texture2D(uBrightnessBuffer, sampleCoord).r;
 		
 		// Add occlusion if checks succeed
 		float bias = originDepth * 50.0;
-		float depthCheck = (sampleDepth < (samplePos.z - bias)) ? 1.0 : 0.0;
-		float rangeCheck = (abs(origin.z - sampleDepth) < sampleRadius) ? 1.0 : 0.0;
-		occlusion += depthCheck * rangeCheck * uPower * sampleBrightness;
+		float depthCheck = (sampleDepth <= (samplePos.z - bias)) ? 1.0 : 0.0;
+		float rangeCheck = smoothstep(0.0, 1.0, sampleRadius / abs(origin.z - sampleDepth));
+		occlusion += depthCheck * rangeCheck * sampleBrightness;//depthCheck * rangeCheck * uPower * ampleBrightness;
 	}
 	
 	// Raise to power
@@ -100,6 +100,7 @@ void main()
 	
 	// Apply brightness
 	occlusion *= texture2D(uBrightnessBuffer, vTexCoord).r;
+	occlusion = clamp(occlusion, 0.0, 1.0);
 	
 	// Mix
 	gl_FragColor = mix(vec4(1.0), uColor, occlusion);

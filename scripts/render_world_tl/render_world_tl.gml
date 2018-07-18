@@ -13,7 +13,7 @@ if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_
 	return 0
 	
 // Invisible?
-if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden) || (app.view_render && hq_hiding) || (!app.view_render && lq_hiding))
+if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden) || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
 	return 0
 
 // Only render glow effect?
@@ -214,6 +214,6 @@ if (!fog)
 	render_set_uniform_int("uFogShow", (render_lights && app.background_fog_show))
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", 1)
-	
+
 if (glow && only_render_glow)
 	gpu_set_blendmode(prevblend)

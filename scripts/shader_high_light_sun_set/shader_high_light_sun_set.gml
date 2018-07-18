@@ -4,6 +4,7 @@ render_set_uniform("uBrightness", 0)
 
 render_set_uniform_int("uIsGround", 0)
 render_set_uniform_int("uIsSky", 0)
+render_set_uniform_int("uIsWater", 0)
 
 render_set_uniform("uLightMatrix", render_light_matrix)
 if (app.background_sunlight_follow)

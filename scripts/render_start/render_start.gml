@@ -31,6 +31,7 @@ if (render_camera != null)
 	render_camera_dof = (setting_render_camera_effects && render_camera.value[e_value.CAM_DOF])
 	render_camera_bloom = (setting_render_camera_effects && render_camera.value[e_value.CAM_BLOOM])
 	render_camera_color_correction = (setting_render_camera_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION])
+	render_camera_vignette = (setting_render_camera_effects && render_camera.value[e_value.CAM_VIGNETTE])
 }
 else 
 {
@@ -38,6 +39,7 @@ else
 	render_camera_dof = false
 	render_camera_bloom = false
 	render_camera_color_correction = false
+	render_camera_vignette = false
 }
 
 // Argument overwrites size

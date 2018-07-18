@@ -6,7 +6,8 @@
     "children": [
         "073e2afc-b6e3-4e5c-a66d-a1d6c371b618",
         "e1e2110f-d3d1-4e70-afd1-c4170253bfda",
-        "718a3dca-9518-4901-815d-173ed995b1a5"
+        "718a3dca-9518-4901-815d-173ed995b1a5",
+        "032f02d4-8c78-4b7c-8624-88b25cc7a627"
     ],
     "filterType": "GMShader",
     "folderName": "Effects",

@@ -149,6 +149,7 @@ setting_slow_modifier = 0.25
 setting_bend_style = "realistic"
 setting_schematic_remove_edges = false
 setting_liquid_animation = true
+setting_noisy_grass_water = true
 setting_texture_filtering = true
 setting_texture_filtering_level = 1
 setting_block_brightness = 0.75

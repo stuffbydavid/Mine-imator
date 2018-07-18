@@ -102,7 +102,9 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))
 	{
 		render_set_texture(texani)
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_water), shader_blend_alpha)
+		render_set_uniform_int("uIsWater", 1)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+		render_set_uniform_int("uIsWater", 0)
 	}
 }

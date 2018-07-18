@@ -26,8 +26,7 @@ enum e_project
 	FORMAT_110_PRE_3  = 25,
 	FORMAT_110		  = 26,
 	FORMAT_113		  = 27,
-	FORMAT_115		  = 28,
-	FORMAT_120		  = 29
+	FORMAT_120		  = 28
 }
 
 enum e_settings
@@ -46,15 +45,15 @@ enum e_settings
 	FORMAT_110		  = 25,
 	FORMAT_113		  = 26,
 	FORMAT_114		  = 27,
-	FORMAT_115		  = 28,
-	FORMAT_120		  = 29
+	FORMAT_120		  = 28
 }
 
 enum e_minecraft_assets
 {
 	FORMAT_110_PRE_1  = 1,
 	FORMAT_110_PRE_2  = 2,
-	FORMAT_113		  = 3
+	FORMAT_113		  = 3,
+	FORMAT_120		  = 4
 }
 
 // Value types
@@ -139,6 +138,10 @@ enum e_value
 	CAM_CONTRAST,
 	CAM_BRIGHTNESS,
 	CAM_SATURATION,
+	CAM_VIGNETTE,
+	CAM_VIGNETTE_RADIUS,
+	CAM_VIGNETTE_SOFTNESS,
+	CAM_VIGNETTE_STRENGTH,
 	CAM_SIZE_USE_PROJECT,
 	CAM_SIZE_KEEP_ASPECT_RATIO,
 	CAM_WIDTH,

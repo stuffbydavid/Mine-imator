@@ -466,6 +466,12 @@ with (frame_editor)
 		tbx_brightness.suffix = "%"
 		tbx_saturation = new_textbox_integer()
 		tbx_saturation.suffix = "%"
+		tbx_vignette_radius = new_textbox_integer()
+		tbx_vignette_radius.suffix = "%"
+		tbx_vignette_softness = new_textbox_integer()
+		tbx_vignette_softness.suffix = "%"
+		tbx_vignette_strength = new_textbox_integer()
+		tbx_vignette_strength.suffix = "%"
 	}
 	
 	// Texture

@@ -97,22 +97,22 @@
 					{ "value": "true", "file": "sheep_sheared.mimodel" }
 				],
 				"wool_color": [
-					{ "value": "white", "color": { "wool": "white" } },
-					{ "value": "orange", "color": { "wool": "orange"} },
-					{ "value": "magenta", "color": { "wool": "magenta"} },
-					{ "value": "light_blue", "color": { "wool": "light_blue"} },
-					{ "value": "yellow", "color": { "wool": "yellow"} },
-					{ "value": "lime", "color": { "wool": "lime"} },
-					{ "value": "pink", "color": { "wool": "pink"} },
-					{ "value": "gray", "color": { "wool": "gray"} },
-					{ "value": "light_gray", "color": { "wool": "light_gray"} },
-					{ "value": "cyan", "color": { "wool": "cyan"} },
-					{ "value": "purple", "color": { "wool": "purple"} },
-					{ "value": "blue", "color": { "wool": "blue"} },
-					{ "value": "brown", "color": { "wool": "brown"} },
-					{ "value": "green", "color": { "wool": "green"} },
-					{ "value": "red", "color": { "wool": "red"} },
-					{ "value": "black", "color": { "wool": "black"} }
+					{ "value": "white", "shape_color": { "wool": "white" } },
+					{ "value": "orange", "shape_color": { "wool": "orange"} },
+					{ "value": "magenta", "shape_color": { "wool": "magenta"} },
+					{ "value": "light_blue", "shape_color": { "wool": "light_blue"} },
+					{ "value": "yellow", "shape_color": { "wool": "yellow"} },
+					{ "value": "lime", "shape_color": { "wool": "lime"} },
+					{ "value": "pink", "shape_color": { "wool": "pink"} },
+					{ "value": "gray", "shape_color": { "wool": "gray"} },
+					{ "value": "light_gray", "shape_color": { "wool": "light_gray"} },
+					{ "value": "cyan", "shape_color": { "wool": "cyan"} },
+					{ "value": "purple", "shape_color": { "wool": "purple"} },
+					{ "value": "blue", "shape_color": { "wool": "blue"} },
+					{ "value": "brown", "shape_color": { "wool": "brown"} },
+					{ "value": "green", "shape_color": { "wool": "green"} },
+					{ "value": "red", "shape_color": { "wool": "red"} },
+					{ "value": "black", "shape_color": { "wool": "black"} }
 				]
 			},
 			"default_state": "sheared=false,wool_color=white"
@@ -4098,20 +4098,24 @@
                     "water": "#3837C7"
                 },
                 {
-                    "name": "warm_ocean"
+					"name": "warm_ocean",
+					"water": "#42D2EB"
                 },
                 {
-                    "name": "lukewarm_ocean"
+					"name": "lukewarm_ocean",
+					"water": "#44ABEF"
                 },
                 {
                     "name": "cold_ocean",
                     "water": "#3C56D3"
                 },
                 {
-                    "name": "warm_deep_ocean"
+					"name": "deep_warm_ocean",
+					"water": "#42D2EB"
                 },
                 {
-                    "name": "deep_lukewarm_ocean"
+					"name": "deep_lukewarm_ocean",
+					"water": "#44ABEF"
                 },
                 {
                     "name": "deep_cold_ocean",

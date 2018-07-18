@@ -58,7 +58,7 @@ if (tl_edit.type != e_tl_type.POINT_LIGHT && tl_edit.type != e_tl_type.SPOT_LIGH
 	draw_checkbox("timelineeditorlqhiding", dx + floor(dw * 0.5), dy, tl_edit.lq_hiding, action_tl_lq_hiding)
 	tab_next()
 	
-	// Foliage hiding
+	// Foliage tint
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorfoliagetint", dx, dy, tl_edit.foliage_tint, action_tl_foliage_tint)
 	tab_next()
