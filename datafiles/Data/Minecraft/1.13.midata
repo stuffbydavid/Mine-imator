@@ -14,11 +14,11 @@
 		},
 		{
 			"name": "zombie",
-			"file": "zombie.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "zombie", "texture": "entity/zombie/zombie" },
-					{ "value": "husk", "texture": "entity/zombie/husk" }
+					{ "value": "zombie", "file": "zombie.mimodel" },
+					{ "value": "husk", "file": "husk.mimodel" },
+					{ "value": "drowned", "file": "drowned.mimodel" }
 				]
 			},
 			"default_state": "variant=zombie"
@@ -193,13 +193,13 @@
 					{ "value": "darkbrown", "texture": "entity/horse/horse_darkbrown" },
 					{ "value": "gray", "texture": "entity/horse/horse_gray" },
 					{ "value": "white", "texture": "entity/horse/horse_white" },
-					{ "value": "donkey", "texture": "entity/horse/donkey" },
-					{ "value": "mule", "texture": "entity/horse/mule" },
+					{ "value": "donkey", "file": "donkey.mimodel" },
+					{ "value": "mule", "file": "mule.mimodel" },
 					{ "value": "skeleton", "texture": "entity/horse/horse_skeleton" },
 					{ "value": "zombie", "texture": "entity/horse/horse_zombie" }
 				],
 				"saddle": [
-					{ "value": "false", "hide": [ "saddle", "right_stirrup", "left_stirrup", "halter", "right_rein", "left_rein" ] },
+					{ "value": "false", "hide": [ "saddle", "right_stirrup", "left_stirrup", "halter" ] },
 					{ "value": "true" }
 				],
 				"chests": [
@@ -382,6 +382,99 @@
 		{
 			"name": "ender_dragon",
 			"file": "ender_dragon.mimodel"
+		},
+		{
+			"name": "phantom",
+			"file": "phantom.mimodel"
+		},
+		{
+			"name": "turtle",
+			"states": {
+				"has_egg": [
+					{ "value": "false", "file": "turtle.mimodel"},
+					{ "value": "true", "file": "turtle_has_egg.mimodel"}
+				]
+			},
+			"default_state": "has_egg=false"
+		},
+		{
+			"name": "dolphin",
+			"file": "dolphin.mimodel"
+		},
+		{
+			"name": "cod",
+			"file": "cod.mimodel"
+		},
+		{
+			"name": "salmon",
+			"file": "salmon.mimodel"
+		},
+		{
+			"name": "pufferfish",
+			"states": {
+				"size": [
+					{ "value": "small", "file": "pufferfish_small.mimodel"},
+					{ "value": "medium", "file": "pufferfish_medium.mimodel"},
+					{ "value": "large", "file": "pufferfish_large.mimodel"}
+				]
+			},
+			"default_state": "size=small"
+		},
+		{
+			"name": "tropical_fish",
+			"states": {
+				"variant": [
+					{ "value": "model_a_pattern_1", "file": "tropical_fish_a_pattern_1.mimodel" },
+					{ "value": "model_a_pattern_2", "file": "tropical_fish_a_pattern_2.mimodel" },
+					{ "value": "model_a_pattern_3", "file": "tropical_fish_a_pattern_3.mimodel" },
+					{ "value": "model_a_pattern_4", "file": "tropical_fish_a_pattern_4.mimodel" },
+					{ "value": "model_a_pattern_5", "file": "tropical_fish_a_pattern_5.mimodel" },
+					{ "value": "model_a_pattern_6", "file": "tropical_fish_a_pattern_6.mimodel" },
+					{ "value": "model_b_pattern_1", "file": "tropical_fish_b_pattern_1.mimodel" },
+					{ "value": "model_b_pattern_2", "file": "tropical_fish_b_pattern_2.mimodel" },
+					{ "value": "model_b_pattern_3", "file": "tropical_fish_b_pattern_3.mimodel" },
+					{ "value": "model_b_pattern_4", "file": "tropical_fish_b_pattern_4.mimodel" },
+					{ "value": "model_b_pattern_5", "file": "tropical_fish_b_pattern_5.mimodel" },
+					{ "value": "model_b_pattern_6", "file": "tropical_fish_b_pattern_6.mimodel" }
+				],
+				"base_color": [
+					{ "value": "white", "shape_color": { "base": "white" } },
+					{ "value": "orange", "shape_color": { "base": "orange"} },
+					{ "value": "magenta", "shape_color": { "base": "magenta"} },
+					{ "value": "light_blue", "shape_color": { "base": "light_blue"} },
+					{ "value": "yellow", "shape_color": { "base": "yellow"} },
+					{ "value": "lime", "shape_color": { "base": "lime"} },
+					{ "value": "pink", "shape_color": { "base": "pink"} },
+					{ "value": "gray", "shape_color": { "base": "gray"} },
+					{ "value": "light_gray", "shape_color": { "base": "light_gray"} },
+					{ "value": "cyan", "shape_color": { "base": "cyan"} },
+					{ "value": "purple", "shape_color": { "base": "purple"} },
+					{ "value": "blue", "shape_color": { "base": "blue"} },
+					{ "value": "brown", "shape_color": { "base": "brown"} },
+					{ "value": "green", "shape_color": { "base": "green"} },
+					{ "value": "red", "shape_color": { "base": "red"} },
+					{ "value": "black", "shape_color": { "base": "black"} }
+				],
+				"pattern_color": [
+					{ "value": "white", "shape_color": { "pattern": "white" } },
+					{ "value": "orange", "shape_color": { "pattern": "orange"} },
+					{ "value": "magenta", "shape_color": { "pattern": "magenta"} },
+					{ "value": "light_blue", "shape_color": { "pattern": "light_blue"} },
+					{ "value": "yellow", "shape_color": { "pattern": "yellow"} },
+					{ "value": "lime", "shape_color": { "pattern": "lime"} },
+					{ "value": "pink", "shape_color": { "pattern": "pink"} },
+					{ "value": "gray", "shape_color": { "pattern": "gray"} },
+					{ "value": "light_gray", "shape_color": { "pattern": "light_gray"} },
+					{ "value": "cyan", "shape_color": { "pattern": "cyan"} },
+					{ "value": "purple", "shape_color": { "pattern": "purple"} },
+					{ "value": "blue", "shape_color": { "pattern": "blue"} },
+					{ "value": "brown", "shape_color": { "pattern": "brown"} },
+					{ "value": "green", "shape_color": { "pattern": "green"} },
+					{ "value": "red", "shape_color": { "pattern": "red"} },
+					{ "value": "black", "shape_color": { "pattern": "black"} }
+				]
+			},
+			"default_state": "variant=model_a_pattern_1,base_color=orange,pattern_color=white"
 		}
 	],
 	"special_blocks": [
@@ -529,6 +622,20 @@
 		{
 			"name": "shulker_spark",
 			"file": "shulker_spark.mimodel"
+		},
+		{
+			"name": "trident",
+			"file": "trident.mimodel"
+		},
+		{
+			"name": "conduit",
+			"states": {
+				"open": [
+					{ "value": "true", "file": "conduit_open.mimodel" },
+					{ "value": "false", "file": "conduit.mimodel" }
+				]
+			},
+			"default_state": "open=true"
 		},
 		{
 			"name": "camera",
@@ -3221,6 +3328,33 @@
 		"entity/zombie_villager/zombie_priest",
 		"entity/zombie_villager/zombie_smith",
 		"entity/zombie_villager/zombie_villager",
+		"entity/zombie/drowned",
+		"entity/zombie/drowned_outer_layer",
+		"entity/phantom",
+		"entity/phantom_eyes",
+		"entity/turtle/big_sea_turtle",
+		"entity/dolphin",
+		"entity/fish/cod",
+		"entity/fish/salmon",
+		"entity/fish/pufferfish",
+		"entity/fish/tropical_a",
+		"entity/fish/tropical_a_pattern_1",
+		"entity/fish/tropical_a_pattern_2",
+		"entity/fish/tropical_a_pattern_3",
+		"entity/fish/tropical_a_pattern_4",
+		"entity/fish/tropical_a_pattern_5",
+		"entity/fish/tropical_a_pattern_6",
+		"entity/fish/tropical_b",
+		"entity/fish/tropical_b_pattern_1",
+		"entity/fish/tropical_b_pattern_2",
+		"entity/fish/tropical_b_pattern_3",
+		"entity/fish/tropical_b_pattern_4",
+		"entity/fish/tropical_b_pattern_5",
+		"entity/fish/tropical_b_pattern_6",
+		"entity/trident",
+		"entity/conduit/base",
+		"entity/conduit/cage",
+		"entity/conduit/closed_eye",
 		"blocks/pumpkin_top",
 		"blocks/pumpkin_face",
 		"blocks/pumpkin_side",
@@ -3984,6 +4118,21 @@
 		"items/structure_void",
 		"items/shulker_shell",
 		"items/map_filled_markings",
+		"items/cod_bucket",
+		"items/salmon_bucket",
+		"items/clownfish_bucket",
+		"items/pufferfish_bucket",
+		"items/kelp",
+		"items/dried_kelp",
+		"items/sea_grass",
+		"items/sea_pickle",
+		"items/scute",
+		"items/turtle_egg",
+		"items/turtle_helmet",
+		"items/trident",
+		"items/nautilus_shell",
+		"items/heart_of_the_sea",
+		"items/phantom_membrane",
 		"items/clock_00",
 		"items/clock_01",
 		"items/clock_02",

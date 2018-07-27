@@ -13,7 +13,7 @@ if (model_hide_list = null)
 	model_hide_list = ds_list_create()
 ds_list_clear(model_hide_list)
 
-// Each key(shape description) in the map refers to a minecraft color
+// Minecraft pallete color
 if (model_color_name_map = null)
 	model_color_name_map = ds_map_create()
 ds_map_clear(model_color_name_map)
@@ -86,3 +86,5 @@ else if (model != null)
 // Get default texture from file if not defined
 if (model_file != null && is_undefined(model_texture_name_map[?""]))
 	model_texture_name_map[?""] = model_file.texture_name
+
+model_shape_update_color()

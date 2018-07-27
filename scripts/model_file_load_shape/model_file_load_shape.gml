@@ -94,6 +94,15 @@ with (new(obj_model_shape))
 	// Invert (optional)
 	invert = value_get_real(map[?"invert"], false)
 	
+	// Hide backface (optional, 2D surfaces only)
+	hide_backface = value_get_real(map[?"hide_backface"], false)
+	
+	// Face camera (optional, overrides rotation when rendering)
+	face_camera = value_get_real(map[?"face_camera"], false)
+	
+	// Item bounce (optional)
+	item_bounce = value_get_real(map[?"item_bounce"], false)
+	
 	// From/To
 	from_noscale = value_get_point3D(map[?"from"])
 	to_noscale = value_get_point3D(map[?"to"])

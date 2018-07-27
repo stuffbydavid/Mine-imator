@@ -287,7 +287,7 @@ with (preview)
 								var res = select;
 								if (select.model_texture_map = null)
 									res = mc_res
-								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_shape_vbuffer_map)
+								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_shape_vbuffer_map, select.model_color_map)
 							}
 							break
 						}
@@ -327,7 +327,7 @@ with (preview)
 							var res;
 							with (select)
 								res = temp_get_model_texobj(null)
-							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map)
+							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map, select.model_color_map)
 							break
 						}
 					
@@ -354,7 +354,7 @@ with (preview)
 								res = mc_res
 						
 							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-							render_world_model_part(select.model_part, res, select.model_texture_name_map, select.model_shape_vbuffer_map)
+							render_world_model_part(select.model_part, res, select.model_texture_name_map, select.model_shape_vbuffer_map, select.model_color_map)
 							break
 						}
 					

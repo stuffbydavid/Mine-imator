@@ -10,6 +10,7 @@ if (type = e_tl_type.SPECIAL_BLOCK)
 	model_texture_name_map = null
 	model_hide_list = null
 	model_color_name_map = null
+	model_color_map = null
 	model_shape_vbuffer_map = null
 	temp_update_model()
 	temp_update_model_timeline_parts()

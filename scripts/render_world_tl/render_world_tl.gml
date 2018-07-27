@@ -127,7 +127,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 			var res;
 			with (temp)
 				res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-			render_world_model_part(model_part, res, temp.model_texture_name_map, model_shape_vbuffer_map)
+			render_world_model_part(model_part, res, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map)
 			break
 		}
 			   

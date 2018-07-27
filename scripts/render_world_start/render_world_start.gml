@@ -44,6 +44,7 @@ gpu_set_zwriteenable(true)
 render_set_projection(cam_from, cam_to, cam_up, cam_fov, render_ratio, cam_near, cam_far)
 
 proj_from = cam_from
+render_proj_from = proj_from
 proj_matrix = matrix_get(matrix_projection)
 view_proj_matrix = matrix_multiply(matrix_get(matrix_view), matrix_get(matrix_projection))
 

@@ -24,7 +24,7 @@ gpu_set_ztestenable(true)
 gpu_set_zwriteenable(true)
 render_set_projection(render_light_from, render_light_to, vec3(0, 0, 1), render_light_fov, 1, 1, render_light_far)
 
-proj_from = render_light_from
+render_proj_from = render_light_from
 proj_matrix = matrix_get(matrix_projection)
 view_proj_matrix = matrix_multiply(matrix_get(matrix_view), matrix_get(matrix_projection))
 

@@ -17,6 +17,7 @@ model_name = default_model
 model_tex = null
 model_texture_name_map = null
 model_color_name_map = null
+model_color_map = null
 model_shape_vbuffer_map = null
 model_shape_alpha_map = null
 model_hide_list = null

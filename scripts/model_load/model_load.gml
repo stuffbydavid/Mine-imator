@@ -96,7 +96,7 @@ with (new(obj_model))
 					// Minecraft color palette(shapes)
 					if (ds_map_valid(curvalue[?"shape_color"]))
 					{
-						value_color_name_map[v] = ds_map_create();
+						value_color_name_map[v] = ds_map_create()
 						ds_map_merge(value_color_name_map[v], curvalue[?"shape_color"], true)
 					}
 					
