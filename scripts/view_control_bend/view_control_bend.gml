@@ -3,7 +3,7 @@
 
 var view, len, part;
 view = argument0
-len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * 0.5
+len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * 0.35
 part = tl_edit.model_part
 
 for (var i = X; i <= Z; i++)
@@ -13,11 +13,11 @@ for (var i = X; i <= Z; i++)
 	
 	var mat;
 	if (i = X)
-		mat = matrix_multiply(matrix_build(0, 0, 0, 0, 90, tl_edit.value[e_value.BEND_ANGLE_Z] * part.bend_axis[Z], 1, 1, 1), tl_edit.matrix)
+		mat = matrix_multiply(matrix_build(part.bend_pos_offset[X], part.bend_pos_offset[Y], part.bend_pos_offset[Z], 0, 90, tl_edit.value[e_value.BEND_ANGLE_Z] * part.bend_axis[Z], 1, 1, 1), tl_edit.matrix)
 	else if (i = Y)
-		mat = matrix_multiply(matrix_build(0, 0, 0, tl_edit.value[e_value.BEND_ANGLE_X] * part.bend_axis[X] + 90, 0, tl_edit.value[e_value.BEND_ANGLE_Z] * part.bend_axis[Z], 1, 1, 1), tl_edit.matrix)
+		mat = matrix_multiply(matrix_build(part.bend_pos_offset[X], part.bend_pos_offset[Y], part.bend_pos_offset[Z], tl_edit.value[e_value.BEND_ANGLE_X] * part.bend_axis[X] + 90, 0, tl_edit.value[e_value.BEND_ANGLE_Z] * part.bend_axis[Z], 1, 1, 1), tl_edit.matrix)
 	else
-		mat = matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1), tl_edit.matrix)
+		mat = matrix_multiply(matrix_build(part.bend_pos_offset[X], part.bend_pos_offset[Y], part.bend_pos_offset[Z], 0, 0, 0, 1, 1, 1), tl_edit.matrix)
 	
 	matrix_remove_scale(mat)
 	view_control_rotation_axis(view, e_value.BEND_ANGLE_X + i, c_aqua, mat, len)

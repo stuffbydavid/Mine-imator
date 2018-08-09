@@ -36,7 +36,7 @@ if (object_index != app && update_matrix)
 	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
 	matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
-		
+	
 	// No scale or "resize" mode
 	if (scale_resize || !inherit_scale)
 	{
@@ -206,7 +206,8 @@ if (object_index != app && update_matrix)
 				  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
 				  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
 				  value_inherit[e_value.HSB_MUL] < c_white ||
-				  value_inherit[e_value.MIX_PERCENT] > 0)
+				  value_inherit[e_value.MIX_PERCENT] > 0 ||
+				  part_mixing_shapes)
 	
 	
 	// Update 3D planes if texture changed

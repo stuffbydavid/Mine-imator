@@ -14,6 +14,7 @@ to.hide = hide
 to.depth = depth
 
 to.lock_bend = lock_bend
+to.part_mixing_shapes = part_mixing_shapes
 to.parent = parent
 if (object_index = obj_timeline)
 	to.parent_tree_index = ds_list_find_index(parent.tree_list, id)

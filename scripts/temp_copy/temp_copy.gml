@@ -19,7 +19,6 @@ to.item_3d = item_3d
 to.item_face_camera = item_face_camera
 to.item_bounce = item_bounce
 to.item_spin = item_spin
-to.item_spin_offset = item_spin_offset
 
 to.block_name = block_name
 to.block_state = array_copy_1d(block_state)

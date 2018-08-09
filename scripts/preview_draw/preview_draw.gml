@@ -245,7 +245,9 @@ with (preview)
 				}
 				
 				prevcam_zoom /= zoom
-			
+				
+				var projfromprev = proj_from;
+				
 				proj_from = point3D(
 					lengthdir_x(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
 					lengthdir_y(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
@@ -263,7 +265,19 @@ with (preview)
 				render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 				with (render_shader_obj)
 					shader_use()
-	
+				
+				// No fog in preview
+				render_set_uniform_int("uFogShow", 0)
+				
+				// Set defaults
+				render_set_uniform_int("uColorsExt", 1)
+				render_set_uniform_color("uRGBAdd", tl_value_default(e_value.RGB_ADD), 1)
+				render_set_uniform_color("uRGBSub", tl_value_default(e_value.RGB_SUB), 1)
+				render_set_uniform_color("uHSBAdd", tl_value_default(e_value.HSB_ADD), 1)
+				render_set_uniform_color("uHSBSub", tl_value_default(e_value.HSB_SUB), 1)
+				render_set_uniform_color("uHSBMul", tl_value_default(e_value.HSB_MUL), 1)
+				render_set_uniform_color("uMixColor", tl_value_default(e_value.MIX_COLOR), tl_value_default(e_value.MIX_PERCENT))
+				
 				matrix_set(matrix_world, matrix_create(off, vec3(0), vec3(1)))
 			
 				if (select.object_index = obj_resource) // Resource
@@ -287,7 +301,7 @@ with (preview)
 								var res = select;
 								if (select.model_texture_map = null)
 									res = mc_res
-								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_shape_vbuffer_map, select.model_color_map)
+								render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, null, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map)
 							}
 							break
 						}
@@ -327,7 +341,7 @@ with (preview)
 							var res;
 							with (select)
 								res = temp_get_model_texobj(null)
-							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map, select.model_color_map)
+							render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map)
 							break
 						}
 					
@@ -337,7 +351,7 @@ with (preview)
 							break
 					
 						case e_temp_type.ITEM:
-							render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, select.item_spin_offset, select.item_tex)
+							render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, select.item_tex)
 							break
 					
 						case e_temp_type.BLOCK:
@@ -354,7 +368,7 @@ with (preview)
 								res = mc_res
 						
 							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
-							render_world_model_part(select.model_part, res, select.model_texture_name_map, select.model_shape_vbuffer_map, select.model_color_map)
+							render_world_model_part(select.model_part, res, select.model_texture_name_map, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map, null)
 							break
 						}
 					
@@ -392,6 +406,8 @@ with (preview)
 				gpu_set_ztestenable(false)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_window)
+				
+				proj_from = projfromprev
 			}
 			else
 			{

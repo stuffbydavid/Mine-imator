@@ -80,13 +80,21 @@ with (new(obj_model_part))
 	color_blend = value_get_color(map[?"color_blend"], c_white)
 	color_alpha = value_get_real(map[?"color_alpha"], 1)
 	color_brightness = value_get_real(map[?"color_brightness"], 0)
+	color_mix = value_get_color(map[?"color_mix"], c_black)
+	color_mix_percent = value_get_real(map[?"color_mix_percent"], 0)
+	part_mixing_shapes = false
 	
 	if (color_inherit)
 	{
 		color_blend = color_multiply(color_blend, other.color_blend)
 		color_alpha *= other.color_alpha
-		color_brightness += other.color_brightness
+		color_brightness = clamp(color_brightness + other.color_brightness, 0, 1)
+		color_mix = color_add(color_mix, other.color_mix)
+		color_mix_percent = clamp(color_mix_percent + other.color_mix_percent, 0, 1)
 	}
+	
+	if (color_mix_percent > 0)
+		part_mixing_shapes = true
 	
 	// Position
 	position_noscale = value_get_point3D(map[?"position"])
@@ -157,12 +165,12 @@ with (new(obj_model_part))
 		
 		switch (bendmap[?"part"])
 		{
-			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	if (bend_size != null) bend_size *= scale[X];	break
-			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	if (bend_size != null) bend_size *= scale[X];	break
-			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	if (bend_size != null) bend_size *= scale[Y];	break
-			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	if (bend_size != null) bend_size *= scale[Y];	break
-			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	if (bend_size != null) bend_size *= scale[Z];	break
-			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	if (bend_size != null) bend_size *= scale[Z];	break
+			case "right":	bend_part = e_part.RIGHT;	bend_offset *= scale[X];	if (bend_size != null) bend_size *= scale[X];	bend_pos_offset = point3D(bend_offset, 0, 0); break
+			case "left":	bend_part = e_part.LEFT;	bend_offset *= scale[X];	if (bend_size != null) bend_size *= scale[X];	bend_pos_offset = point3D(bend_offset, 0, 0); break
+			case "front":	bend_part = e_part.FRONT;	bend_offset *= scale[Y];	if (bend_size != null) bend_size *= scale[Y];	bend_pos_offset = point3D(0, bend_offset, 0); break
+			case "back":	bend_part = e_part.BACK;	bend_offset *= scale[Y];	if (bend_size != null) bend_size *= scale[Y];	bend_pos_offset = point3D(0, bend_offset, 0); break
+			case "upper":	bend_part = e_part.UPPER;	bend_offset *= scale[Z];	if (bend_size != null) bend_size *= scale[Z];	bend_pos_offset = point3D(0, 0, bend_offset); break
+			case "lower":	bend_part = e_part.LOWER;	bend_offset *= scale[Z];	if (bend_size != null) bend_size *= scale[Z];	bend_pos_offset = point3D(0, 0, bend_offset); break
 			default:
 				log("Invalid parameter \"part\"")
 				return null
@@ -274,6 +282,7 @@ with (new(obj_model_part))
 		bend_offset = 0
 		bend_size = null
 		bend_invert = false
+		bend_pos_offset = vec3(0)
 	}
 		
 	matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))

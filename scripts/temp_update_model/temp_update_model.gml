@@ -7,11 +7,21 @@ model_file = null
 if (model_texture_name_map = null)
 	model_texture_name_map = ds_map_create()
 ds_map_clear(model_texture_name_map)
+
+// Each key in the map points to a shape texture
+if (model_shape_texture_name_map = null)
+	model_shape_texture_name_map = ds_map_create()
+ds_map_clear(model_shape_texture_name_map)
 	
 // Parts to hide
 if (model_hide_list = null)
 	model_hide_list = ds_list_create()
 ds_list_clear(model_hide_list)
+
+// Shapes to hide
+if (model_shape_hide_list = null)
+	model_shape_hide_list = ds_list_create()
+ds_list_clear(model_shape_hide_list)
 
 // Minecraft pallete color
 if (model_color_name_map = null)
@@ -26,11 +36,13 @@ if (type != e_temp_type.MODEL)
 		return 0
 	
 	// Set file and texture
-	var tempstatevars, temptexnamemap, tempcolornamemap, temphidelist, curfile;
+	var tempstatevars, temptexnamemap, tempshapetexnamemap, tempcolornamemap, temphidelist, tempshapehidelist, curfile;
 	tempstatevars = model_state
 	temptexnamemap = model_texture_name_map
+	tempshapetexnamemap = model_shape_texture_name_map
 	tempcolornamemap = model_color_name_map
 	temphidelist = model_hide_list
+	tempshapehidelist = model_shape_hide_list
 
 	with (mc_assets.model_name_map[?model_name])
 	{
@@ -63,8 +75,14 @@ if (type != e_temp_type.MODEL)
 							if (value_texture_name_map[v] != null)
 								ds_map_merge(temptexnamemap, value_texture_name_map[v], true)
 								
+							if (value_shape_texture_name_map[v] != null)
+								ds_map_merge(tempshapetexnamemap, value_shape_texture_name_map[v], true)
+								
 							if (value_hide_list[v] != null)
 								ds_list_merge(temphidelist, value_hide_list[v])
+								
+							if (value_shape_hide_list[v] != null)
+								ds_list_merge(tempshapehidelist, value_shape_hide_list[v])
 							
 							if (value_color_name_map[v] != null)
 								ds_map_merge(tempcolornamemap, value_color_name_map[v], true)

@@ -20,4 +20,4 @@ else
 	history_set_var(action_background_sunlight_color, background_sunlight_color, col, true)
 }
 
-background_sunlight_color = argument0
+background_sunlight_color = col

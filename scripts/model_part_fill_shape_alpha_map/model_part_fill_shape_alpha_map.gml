@@ -1,16 +1,18 @@
-/// model_part_fill_shape_alpha_map(part, alphamap, resource, texturenamemap)
+/// model_part_fill_shape_alpha_map(part, alphamap, resource, texturenamemap, shapetexnamemap)
 /// @arg part
 /// @arg alphamap
 /// @arg resource
 /// @arg texturenamemap
+/// @arg shapetexnamemap
 /// @desc Fills the given maps with alpha values for the 3D planes,
 ///		  with the given resource selected as a texture.
 
-var part, alphamap, res, texnamemap;
+var part, alphamap, res, texnamemap, shapetexnamemap;
 part = argument0
 alphamap = argument1
 res = argument2
 texnamemap = argument3
+shapetexnamemap = argument4
 
 if (part.shape_list = null)
 	return 0
@@ -26,6 +28,14 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 			var shapetexname = parttexname;
 			if (texture_name != "")
 				shapetexname = texture_name
+			
+			// Change texture if name is in shape texture map
+			if (shapetexnamemap != null)
+			{
+				var maptexname = shapetexnamemap[? description];
+				if (!is_undefined(maptexname))
+					shapetexname = maptexname
+			}
 			
 			var tex;
 			with (res)

@@ -543,8 +543,6 @@ if (render_camera_dof)
 	}
 	surface_reset_target()
 	
-	// Apply DOF
-	
 	// Render directly to target?
 	if (!setting_render_glow && !setting_render_aa && !render_overlay && !render_camera_color_correction && !render_camera_vignette)
 	{

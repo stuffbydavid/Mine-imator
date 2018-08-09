@@ -77,13 +77,20 @@ with (new(obj_model_shape))
 	color_blend = value_get_color(map[?"color_blend"], c_white)
 	color_alpha = value_get_real(map[?"color_alpha"], 1)
 	color_brightness = value_get_real(map[?"color_brightness"], 0)
+	color_mix = value_get_color(map[?"color_mix"], c_black)
+	color_mix_percent = value_get_real(map[?"color_mix_percent"], 0)
 	
 	if (color_inherit)
 	{
 		color_blend = color_multiply(color_blend, other.color_blend)
 		color_alpha *= other.color_alpha
-		color_brightness += other.color_brightness
+		color_brightness = clamp(color_brightness + other.color_brightness, 0, 1)
+		color_mix = color_add(color_mix, other.color_mix)
+		color_mix_percent = clamp(color_mix_percent + other.color_mix_percent, 0, 1)
 	}
+	
+	if (color_mix_percent > 0)
+		other.part_mixing_shapes = true
 	
 	// Minecraft color (Only used in states)
 	minecraft_color = c_white
@@ -103,6 +110,13 @@ with (new(obj_model_shape))
 	// Item bounce (optional)
 	item_bounce = value_get_real(map[?"item_bounce"], false)
 	
+	// Move required (optional, amount of position moved from part's timeline to be visible)
+	move_required_array = value_get_point3D(map[?"move_required"], vec3(-1, -1, -1))
+	if (!array_equals(move_required_array, vec3(-1)))
+		move_required = true
+	else
+		move_required = false
+		
 	// From/To
 	from_noscale = value_get_point3D(map[?"from"])
 	to_noscale = value_get_point3D(map[?"to"])

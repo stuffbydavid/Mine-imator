@@ -17,6 +17,7 @@ for (var mp = 0; mp < ds_list_size(part.part_list); mp++)
 	{
 		model_part = mpart
 		lock_bend = mpart.lock_bend
+		part_mixing_shapes = mpart.part_mixing_shapes
 		bend_model_part_last = null
 		tl_set_parent(par)
 		tl_update_value_types()

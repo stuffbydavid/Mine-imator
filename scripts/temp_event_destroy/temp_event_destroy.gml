@@ -4,11 +4,14 @@
 if (model_texture_name_map != null)	
 	ds_map_destroy(model_texture_name_map)
 	
+if (model_shape_texture_name_map != null)	
+	ds_map_destroy(model_shape_texture_name_map)
+	
 if (model_hide_list != null)
 	ds_list_destroy(model_hide_list)
-
-if (model_texture_name_map != null)	
-	ds_map_destroy(model_texture_name_map)
+	
+if (model_shape_hide_list != null)
+	ds_list_destroy(model_shape_hide_list)
 
 if (model_shape_vbuffer_map != null)
 {

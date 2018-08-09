@@ -40,10 +40,10 @@ if (exportmovie_format != "png")
 	log("Format", exportmovie_format)
 	log("Bitrate", popup_exportmovie.bit_rate)
 	log("Framerate", exportmovie_frame_rate)
-	log(e_tl_type.AUDIO, yesno(popup_exportmovie.include_audio))
+	log("Audio", yesno(popup_exportmovie.include_audio))
 	log("High Quality", yesno(exportmovie_high_quality))
 	log("Size", project_video_width, project_video_height)
-
+	
 	movie_set(project_video_width, project_video_height, popup_exportmovie.bit_rate, exportmovie_frame_rate, popup_exportmovie.include_audio)
 	var err = movie_start(fn, fmt);
 	if (err < 0)

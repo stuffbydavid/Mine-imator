@@ -3,7 +3,7 @@
 cam_work_focus[X] = buffer_read_double()
 cam_work_focus[Y] = buffer_read_double()
 cam_work_focus[Z] = buffer_read_double()
-cam_work_angle_xy  =buffer_read_double()
+cam_work_angle_xy = buffer_read_double()
 cam_work_angle_z = buffer_read_double()
 cam_work_roll = buffer_read_double()
 cam_work_zoom = buffer_read_double()

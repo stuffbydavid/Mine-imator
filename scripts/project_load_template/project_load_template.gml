@@ -56,7 +56,6 @@ with (new(obj_template))
 			item_face_camera = value_get_real(itemmap[?"face_camera"], item_face_camera)
 			item_bounce = value_get_real(itemmap[?"bounce"], item_bounce)
 			item_spin = value_get_real(itemmap[?"item_spin"], item_spin)
-			item_spin_offset = value_get_real(itemmap[?"spin_offset"], item_spin_offset)
 		}
 	}
 	else if (type = e_temp_type.BLOCK)

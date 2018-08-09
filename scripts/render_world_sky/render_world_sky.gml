@@ -81,7 +81,7 @@ if (!background_image_show)
 	
 	// Sun
 	if (background_sky_sun_vbuffer = null)
-		background_sky_sun_vbuffer = vbuffer_create_surface(1000, point2D(0, 0), point2D(1, 1), false)
+		background_sky_sun_vbuffer = vbuffer_create_surface(1750, point2D(0, 0), point2D(1, 1), false)
 		
 	render_set_uniform_color("uBlendColor", c_white, 1 - background_night_alpha)
 	if (background_sky_sun_tex.type = e_res_type.PACK)

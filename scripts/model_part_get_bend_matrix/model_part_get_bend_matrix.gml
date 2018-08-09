@@ -66,6 +66,7 @@ switch (part.bend_part)
 
 // Create matrix
 var mat = matrix_build(pos[X], pos[Y], pos[Z], bend[X], bend[Y], bend[Z], sca[X], sca[Y], sca[Z]);
+
 if (object_index = obj_model_shape)
 	mat = matrix_multiply(matrix_build(-pos[X], -pos[Y], -pos[Z], rotation[X], rotation[Y], rotation[Z], 1, 1, 1), mat)
 

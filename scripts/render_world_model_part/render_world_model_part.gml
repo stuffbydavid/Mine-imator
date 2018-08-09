@@ -1,16 +1,22 @@
-/// render_world_model_part(part, resource, texturenamemap, shapevbuffermap, colormap)
+/// render_world_model_part(part, resource, texturenamemap, shapevbuffermap, colormap, shapehidelist, shapetexnamemap, shapetexnamemap, tlobject)
 /// @arg part
 /// @arg resource
 /// @arg texturenamemap
 /// @arg shapevbuffermap
 /// @arg colornamemap
+/// @arg shapehidelist
+/// @arg shapetexnamemap
+/// @arg tlobject
 
-var part, res, texnamemap, shapevbuffermap, colornamemap;
+var part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, tlobject;
 part = argument0
 res = argument1
 texnamemap = argument2
 shapevbuffermap = argument3
-colormap = argument4
+colornamemap = argument4
+shapehidelist = argument5
+shapetexnamemap = argument6
+tlobject = argument7
 
 if (part.shape_list = null)
 	return 0
@@ -24,32 +30,66 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	var shape, planevbuf;
 	shape = part.shape_list[|s];
 	
+	// Hidden?
+	if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
+		continue
+	
 	// Check alpha if valid to render
 	if (shape.color_alpha = 0)
 		continue
+	
+	// Does the part need to move a certain amount for this shape to render?
+	if (shape.move_required)
+	{
+		if (tlobject = null)
+			continue
+		
+		if (!(abs(tlobject.value[e_value.POS_X]) > shape.move_required_array[X] &&
+		abs(tlobject.value[e_value.POS_Y]) > shape.move_required_array[Y] &&
+		abs(tlobject.value[e_value.POS_Z]) > shape.move_required_array[Z]))
+			continue
+	}
 	
 	// Get texture (shape texture overrides part texture)
 	var shapetexname = parttexname;
 	if (shape.texture_name != "")
 		shapetexname = shape.texture_name
-			
+	
+	// Change texture if name is in shape texture map
+	if (shapetexnamemap != null)
+	{
+		var maptexname = shapetexnamemap[? shape.description];
+		if (!is_undefined(maptexname))
+			shapetexname = maptexname
+	}
+	
 	// Set shader
 	with (res)
 		render_set_texture(res_get_model_texture(shapetexname))
 	
-	// Set color
+	// Blend color
 	var minecraft_color = c_white;
-	if (colormap != null)
+	if (colornamemap != null)
 	{
-		var color = colormap[? shape.description];
+		var color = colornamemap[? shape.description];
 		if (!is_undefined(color))
 			minecraft_color = color
 	}
 	
+	// Minecraft color(Overrides shapes' blend color)
 	if (minecraft_color = c_white)
 		render_set_uniform_color("uBlendColor", color_multiply(shader_blend_color, shape.color_blend), shader_blend_alpha * shape.color_alpha)
 	else
 		render_set_uniform_color("uBlendColor", color_multiply(shader_blend_color, minecraft_color), shader_blend_alpha * shape.color_alpha)
+	
+	// Mix color
+	if (shape.color_mix_percent > 0)
+	{
+		if (tlobject != null)
+			render_set_uniform_color("uMixColor", merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
+		else
+			render_set_uniform_color("uMixColor", shape.color_mix, shape.color_mix_percent)
+	}
 	
 	// Shape matrix
 	var rendermatrix = matrix_multiply(shape.matrix, mat);

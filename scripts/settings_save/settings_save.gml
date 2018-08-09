@@ -201,31 +201,37 @@ json_save_object_done()
 json_save_object_start("render")
 
 	json_save_var_bool("render_camera_effects", setting_render_camera_effects)
+	
 	json_save_var_bool("render_ssao", setting_render_ssao)
 	json_save_var("render_ssao_radius", setting_render_ssao_radius)
 	json_save_var("render_ssao_power", setting_render_ssao_power)
 	json_save_var("render_ssao_blur_passes", setting_render_ssao_blur_passes)
 	json_save_var_color("render_ssao_color", setting_render_ssao_color)
+	
 	json_save_var_bool("render_shadows", setting_render_shadows)
 	json_save_var("render_shadows_sun_buffer_size", setting_render_shadows_sun_buffer_size)
 	json_save_var("render_shadows_spot_buffer_size", setting_render_shadows_spot_buffer_size)
 	json_save_var("render_shadows_point_buffer_size", setting_render_shadows_point_buffer_size)
 	json_save_var("render_shadows_blur_quality", setting_render_shadows_blur_quality)
 	json_save_var("render_shadows_blur_size", setting_render_shadows_blur_size)
+	
 	json_save_var_bool("render_glow", setting_render_glow)
 	json_save_var("render_glow_radius", setting_render_glow_radius)
 	json_save_var("render_glow_intensity", setting_render_glow_intensity)
 	json_save_var_bool("render_glow_falloff", setting_render_glow_falloff)
 	json_save_var("render_glow_falloff_radius", setting_render_glow_falloff_radius)
 	json_save_var("render_glow_falloff_intensity", setting_render_glow_falloff_intensity)
+	
 	json_save_var_bool("render_aa", setting_render_aa)
 	json_save_var("render_aa_power", setting_render_aa_power)
+	
 	json_save_var_bool("render_watermark", setting_render_watermark)
 	json_save_var("render_watermark_filename", setting_render_watermark_filename)
 	json_save_var("render_watermark_anchor_x", setting_render_watermark_anchor_x)
 	json_save_var("render_watermark_anchor_y", setting_render_watermark_anchor_y)
 	json_save_var("render_watermark_scale", setting_render_watermark_scale)
 	json_save_var("render_watermark_alpha", setting_render_watermark_alpha)
+	
 	json_save_var("exportmovie_format", popup_exportmovie.format)
 	json_save_var("exportmovie_frame_rate", popup_exportmovie.frame_rate)
 	json_save_var("exportmovie_bit_rate", popup_exportmovie.bit_rate)

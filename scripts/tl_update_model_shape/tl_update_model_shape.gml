@@ -43,5 +43,5 @@ if (temp.object_index = obj_template)
 	with (temp)
 		res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 
-model_part_fill_shape_alpha_map(model_part, model_shape_alpha_map, res, temp.model_texture_name_map)
+model_part_fill_shape_alpha_map(model_part, model_shape_alpha_map, res, temp.model_texture_name_map, temp.model_shape_texture_name_map)
 model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)

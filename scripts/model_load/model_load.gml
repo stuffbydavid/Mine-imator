@@ -63,7 +63,9 @@ with (new(obj_model))
 					value_name[v] = curvalue[?"value"]
 					value_file[v] = null
 					value_texture_name_map[v] = null
+					value_shape_texture_name_map[v] = null
 					value_hide_list[v] = null
+					value_shape_hide_list[v] = null
 					value_color_name_map[v] = null
 					
 					if (dev_mode_debug_names && !text_exists("modelstatevalue" + value_name[v]))
@@ -86,11 +88,31 @@ with (new(obj_model))
 						ds_map_merge(value_texture_name_map[v], curvalue[?"texture"], true)
 					}
 					
+					// Shape texture
+					if (is_string(curvalue[?"shape_texture"]))
+					{
+						var shapetexnamemap = ds_map_create();
+						shapetexnamemap[?""] = curvalue[?"shape_texture"]
+						value_shape_texture_name_map[v] = shapetexnamemap
+					}
+					else if (ds_map_valid(curvalue[?"shape_texture"]))
+					{
+						value_shape_texture_name_map[v] = ds_map_create();
+						ds_map_merge(value_shape_texture_name_map[v], curvalue[?"shape_texture"], true)
+					}
+					
 					// Hide parts
 					if (ds_list_valid(curvalue[?"hide"]))
 					{
 						value_hide_list[v] = ds_list_create()
 						ds_list_copy(value_hide_list[v], curvalue[?"hide"])
+					}
+					
+					// Hide shapes
+					if (ds_list_valid(curvalue[?"shape_hide"]))
+					{
+						value_shape_hide_list[v] = ds_list_create()
+						ds_list_copy(value_shape_hide_list[v], curvalue[?"shape_hide"])
 					}
 					
 					// Minecraft color palette(shapes)

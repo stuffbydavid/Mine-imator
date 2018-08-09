@@ -4069,6 +4069,8 @@
 		"items/firework_star": "items/fireworks_charge",
 		"items/firework_star_overlay": "items/fireworks_charge_overlay",
 		"items/map": "items/map_empty",
+		"items/map_filled": "items/filled_map",
+		"items/map_filled_markings": "items/filled_map_markings",
 		"items/enchanted_book": "items/book_enchanted",
 		"items/pufferfish": "items/fish_pufferfish_raw",
 		"items/clownfish": "items/clownfish",

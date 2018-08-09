@@ -127,7 +127,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 			var res;
 			with (temp)
 				res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-			render_world_model_part(model_part, res, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map)
+			render_world_model_part(model_part, res, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, self)
 			break
 		}
 			   
@@ -147,7 +147,7 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		
 		case e_tl_type.ITEM:
 		{
-			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_spin_offset, temp.item_tex)
+			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_tex)
 			break
 		}
 		

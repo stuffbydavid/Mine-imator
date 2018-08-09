@@ -185,7 +185,7 @@ switch (type)
 			if (model_file = null)
 				error("errorloadmodel")
 		
-			// Create texture name map
+			// Create texture name maps
 			if (model_texture_name_map != null)
 				ds_map_clear(model_texture_name_map)
 			else

@@ -100,7 +100,7 @@ if (temp != null)
 			var res;
 			with (temp)
 				res = temp_get_model_texobj(null)
-			render_world_model_file_parts(temp.model_file, res, temp.model_texture_name_map, temp.model_hide_list, temp.model_shape_vbuffer_map, temp.model_color_map)
+			render_world_model_file_parts(temp.model_file, res, temp.model_texture_name_map, temp.model_hide_list, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map)
 			break
 		}
 			
@@ -113,7 +113,7 @@ if (temp != null)
 		
 		case e_temp_type.ITEM:
 		{
-			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_spin_offset, temp.item_tex)
+			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_tex)
 			break
 		}
 		
@@ -132,7 +132,7 @@ if (temp != null)
 			if (!res.ready)
 				res = mc_res
 							
-			render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map)
+			render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, null)
 			break
 		}
 		

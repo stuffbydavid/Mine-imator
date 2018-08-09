@@ -258,27 +258,33 @@ if (filename_ext(fn) = ".midata")
 	if (ds_map_valid(rendermap))
 	{
 		setting_render_camera_effects = value_get_real(rendermap[?"render_camera_effects"], setting_render_camera_effects)
+		
 		setting_render_ssao = value_get_real(rendermap[?"render_ssao"], setting_render_ssao)
 		setting_render_ssao_radius = value_get_real(rendermap[?"render_ssao_radius"], setting_render_ssao_radius)
 		setting_render_ssao_power = value_get_real(rendermap[?"render_ssao_power"], setting_render_ssao_power)
 		setting_render_ssao_blur_passes = value_get_real(rendermap[?"render_ssao_blur_passes"], setting_render_ssao_blur_passes)
 		setting_render_ssao_color = value_get_color(rendermap[?"render_ssao_color"], setting_render_ssao_color)
+		
 		setting_render_shadows = value_get_real(rendermap[?"render_shadows"], setting_render_shadows)
 		setting_render_shadows_sun_buffer_size = value_get_real(rendermap[?"render_shadows_sun_buffer_size"], setting_render_shadows_sun_buffer_size)
 		setting_render_shadows_spot_buffer_size = value_get_real(rendermap[?"render_shadows_spot_buffer_size"], setting_render_shadows_spot_buffer_size)
 		setting_render_shadows_point_buffer_size = value_get_real(rendermap[?"render_shadows_point_buffer_size"], setting_render_shadows_point_buffer_size)
 		setting_render_shadows_blur_quality = value_get_real(rendermap[?"render_shadows_blur_quality"], setting_render_shadows_blur_quality)
 		setting_render_shadows_blur_size = value_get_real(rendermap[?"render_shadows_blur_size"], setting_render_shadows_blur_size)
+		
 		setting_render_glow = value_get_real(rendermap[?"render_glow"], setting_render_glow)
 		setting_render_glow_radius = value_get_real(rendermap[?"render_glow_radius"], setting_render_glow_radius)
 		setting_render_glow_intensity = value_get_real(rendermap[?"render_glow_intensity"], setting_render_glow_intensity)
 		setting_render_glow_falloff = value_get_real(rendermap[?"render_glow_falloff"], setting_render_glow_falloff)
 		setting_render_glow_falloff_radius = value_get_real(rendermap[?"render_glow_falloff_radius"], setting_render_glow_falloff_radius)
 		setting_render_glow_falloff_intensity = value_get_real(rendermap[?"render_glow_falloff_intensity"], setting_render_glow_falloff_intensity)
+		
 		setting_render_aa = value_get_real(rendermap[?"render_aa"], setting_render_aa)
 		setting_render_aa_power = value_get_real(rendermap[?"render_aa_power"], setting_render_aa_power)
+		
 		setting_render_watermark = value_get_real(rendermap[?"render_watermark"], setting_render_watermark)
 		setting_render_watermark_filename = value_get_real(rendermap[?"render_watermark_filename"], setting_render_watermark_filename)
+		
 		if (!file_exists_lib(setting_render_watermark_filename))
 			setting_render_watermark_filename = ""
 		else if (setting_render_watermark_filename != "")

@@ -195,11 +195,18 @@
 					{ "value": "white", "texture": "entity/horse/horse_white" },
 					{ "value": "donkey", "file": "donkey.mimodel" },
 					{ "value": "mule", "file": "mule.mimodel" },
-					{ "value": "skeleton", "texture": "entity/horse/horse_skeleton" },
-					{ "value": "zombie", "texture": "entity/horse/horse_zombie" }
+					{ "value": "skeleton", "file": "horse_skeleton.mimodel" },
+					{ "value": "zombie", "file": "horse_zombie.mimodel" }
+				],
+				"markings": [
+					{ "value": "none", "shape_hide": [ "markings" ] },
+					{ "value": "blackdots", "shape_texture": { "markings": "entity/horse/horse_markings_blackdots" } },
+					{ "value": "white", "shape_texture": { "markings": "entity/horse/horse_markings_white" } },
+					{ "value": "whitedots", "shape_texture": { "markings": "entity/horse/horse_markings_whitedots" } },
+					{ "value": "whitefield", "shape_texture": { "markings": "entity/horse/horse_markings_whitefield" } }
 				],
 				"saddle": [
-					{ "value": "false", "hide": [ "saddle", "right_stirrup", "left_stirrup", "halter" ] },
+					{ "value": "false", "hide": [ "saddle", "right_stirrup", "left_stirrup", "halter", "right_rein", "left_rein" ] },
 					{ "value": "true" }
 				],
 				"chests": [
@@ -207,7 +214,7 @@
 					{ "value": "true" }
 				]
 			},
-			"default_state": "variant=black,saddle=false,chests=false"
+			"default_state": "variant=black,markings=none,saddle=false,chests=false"
 		},
 		{
 			"name": "llama",
@@ -278,7 +285,14 @@
 		},
 		{
 			"name": "vex",
-			"file": "vex.mimodel"
+			"file": "vex.mimodel",
+			"states": {
+				"charging": [
+					{ "value": "true", "texture": "entity/vex/vex" },
+					{ "value": "false", "texture": "entity/vex/vex_charging" }
+				]
+			},
+			"default_state": "charging=false"
 		},
 		{
 			"name": "zombie_villager",
@@ -3235,6 +3249,10 @@
 		"entity/horse/horse_white",
 		"entity/horse/horse_zombie",
 		"entity/horse/mule",
+		"entity/horse/horse_markings_blackdots",
+		"entity/horse/horse_markings_white",
+		"entity/horse/horse_markings_whitedots",
+		"entity/horse/horse_markings_whitefield",
 		"entity/illager/evoker",
 		"entity/illager/fangs",
 		"entity/illager/illusionist",
@@ -3922,7 +3940,7 @@
 		"items/clay_ball",
 		"items/paper",
 		"items/book",
-		"items/map_filled",
+		"items/filled_map",
 		"items/pumpkin_seeds",
 		"items/melon_seeds",
 		"items/empty_armor_slot_boots",
@@ -4117,7 +4135,7 @@
 		"items/music_disc_13",
 		"items/structure_void",
 		"items/shulker_shell",
-		"items/map_filled_markings",
+		"items/filled_map_markings",
 		"items/cod_bucket",
 		"items/salmon_bucket",
 		"items/clownfish_bucket",

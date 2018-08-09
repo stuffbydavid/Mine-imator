@@ -52,6 +52,6 @@ void main()
 	
 	gl_FragColor = baseColor;
 	
-	if (gl_FragColor.a == 0.0)
+	if (gl_FragColor.a <= 0.98)
 		discard;
 }

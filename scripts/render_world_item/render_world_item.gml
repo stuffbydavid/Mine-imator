@@ -1,20 +1,18 @@
-/// render_world_item(vbuffer, is3d, facecamera, bounce, rotate, rotateoffset, resource)
+/// render_world_item(vbuffer, is3d, facecamera, bounce, rotate, resource)
 /// @arg vbuffer
 /// @arg is3d
 /// @arg facecamera
 /// @arg bounce
 /// @arg rotate
-/// @arg rotateoffset
 /// @arg resource
 
-var vbuffer, is3d, facecamera, bounce, rotate, rotateoffset, res;
+var vbuffer, is3d, facecamera, bounce, rotate, res;
 vbuffer = argument0
 is3d = argument1
 facecamera = argument2
 bounce = argument3
 rotate = argument4
-rotateoffset = argument5
-res = argument6
+res = argument5
 
 if (!res.ready)
 	res = mc_res
@@ -34,7 +32,7 @@ if (rotate)
 	var d, t, offz, mat, rotz, rotmat;
 	d = 60 * 6
 	t = current_step mod d * 360
-	offz = (t/360) + rotateoffset
+	offz = t/360
 	mat = matrix_get(matrix_world)
 	rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
 	rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, offz, 1, 1, 1))
