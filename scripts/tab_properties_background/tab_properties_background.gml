@@ -275,9 +275,10 @@ if (background_fog_show && checkbox_expand_background_fog)
 	dx += 4
 	dw -= 4
 	
-	// Sky fog
+	// Circular fog & Sky fog
 	tab_control_checkbox()
-	draw_checkbox("backgroundfogsky", dx, dy, background_fog_sky, action_background_fog_sky)
+	draw_checkbox("backgroundfogcircular", dx, dy, background_fog_circular, action_background_fog_circular)
+	draw_checkbox("backgroundfogsky", dx + floor(dw * 0.5), dy, background_fog_sky, action_background_fog_sky)
 	tab_next()
 	
 	// Custom color && Custom object fog color

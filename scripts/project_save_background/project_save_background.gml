@@ -47,6 +47,7 @@ json_save_object_start("background")
 	json_save_var_color("night_color", background_night_color)
 	
 	json_save_var_bool("fog_show", background_fog_show)
+	json_save_var_bool("fog_circular", background_fog_circular)
 	json_save_var_bool("fog_sky", background_fog_sky)
 	json_save_var_bool("fog_color_custom", background_fog_color_custom)
 	json_save_var_color("fog_color", background_fog_color)

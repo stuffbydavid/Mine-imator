@@ -10,10 +10,13 @@ uniform vec4 uHSBMul;
 uniform vec4 uMixColor;
 
 uniform int uFogShow;
+uniform int uFogCircular;
 uniform vec4 uFogColor;
 uniform float uFogDistance;
 uniform float uFogSize;
 uniform float uFogHeight;
+
+uniform vec3 uCameraPosition;
 
 varying vec3 vPosition;
 varying float vDepth;
@@ -43,7 +46,11 @@ float getFog()
 	float fog;
 	if (uFogShow > 0)
 	{
-		fog = clamp(1.0 - (uFogDistance - vDepth) / uFogSize, 0.0, 1.0);
+		float fogDepth = vDepth;
+		if (uFogCircular > 0)
+			fogDepth = distance(vPosition, uCameraPosition);
+		
+		fog = clamp(1.0 - (uFogDistance - fogDepth) / uFogSize, 0.0, 1.0);
 		fog *= clamp(1.0 - (vPosition.z - uFogHeight) / uFogSize, 0.0, 1.0);
 	}
 	else

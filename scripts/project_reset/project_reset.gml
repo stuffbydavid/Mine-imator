@@ -102,6 +102,7 @@ background_ambient_color = c_gray
 background_night_color = c_night
 
 background_fog_show = true
+background_fog_circular = true
 background_fog_sky = true
 background_fog_color_custom = 0
 background_fog_color = c_sky

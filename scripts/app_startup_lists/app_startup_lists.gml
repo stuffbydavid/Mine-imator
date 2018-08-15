@@ -153,6 +153,14 @@ ds_list_add(camera_use_default_list,
 	true,	// CAM_BLOOM_INTENSITY
 	true,	// CAM_BLOOM_RADIUS
 	true,	// CAM_BLOOM_BLEND
+	false,	// CAM_COLOR_CORRECTION
+	true,	// CAM_CONTRAST
+	true,	// CAM_BRIGHTNESS
+	true,	// CAM_SATURATION
+	false,	// CAM_VIGNETTE
+	true,	// CAM_VIGNETTE_RADIUS
+	true,	// CAM_VIGNETTE_SOFTNESS
+	true,	// CAM_VIGNETTE_STRENGTH
 	null,	// CAM_WIDTH
 	null,	// CAM_HEIGHT
 	true,	// CAM_SIZE_USE_PROJECT

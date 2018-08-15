@@ -1777,6 +1777,7 @@
 		{
 			"name": "sugar_cane",
 			"file": "sugar_cane.json",
+			"light_bleeding": 1,
 			"id": "minecraft:sugar_cane"
 		},
 		{

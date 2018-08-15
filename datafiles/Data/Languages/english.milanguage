@@ -1878,6 +1878,8 @@
         "fog": "Show fog",
         "fogtip": "Whether to show a fog effect.",
         "fog/": {
+            "circular": "Circular fog",
+            "circulartip": "Whether the fog effect should wrap around the camera view in a sphere.",
             "sky": "Sky fog",
             "skytip": "Whether the sky should be affected by fog.",
             "colorcustom": "Custom fog color",

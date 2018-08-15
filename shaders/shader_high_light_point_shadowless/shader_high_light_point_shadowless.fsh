@@ -3,12 +3,6 @@ uniform vec2 uTexScale;
 
 uniform int uIsSky;
 
-uniform int uFogShow;
-uniform vec4 uFogColor;
-uniform float uFogDistance;
-uniform float uFogSize;
-uniform float uFogHeight;
-
 uniform int uLightAmount;
 uniform vec4 uLightData[128];
 uniform float uBrightness;

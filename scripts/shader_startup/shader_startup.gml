@@ -154,6 +154,12 @@ with (shader_map[?shader_high_dof])
 	new_shader_uniform("uFar")
 }
 
+with (shader_map[?shader_high_fog])
+{
+	
+	new_shader_uniform("uCameraPos")
+}
+
 with (shader_map[?shader_high_fog_apply])
 {
 	new_shader_sampler("uFogBuffer")

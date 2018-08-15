@@ -25,10 +25,13 @@ with (new(obj_shader))
 	
 	// Fog
 	new_shader_uniform("uFogShow")
+	new_shader_uniform("uFogCircular")
 	new_shader_uniform("uFogColor")
 	new_shader_uniform("uFogDistance")
 	new_shader_uniform("uFogSize")
 	new_shader_uniform("uFogHeight")
+	
+	new_shader_uniform("uCameraPosition")
 	
 	shader_map[?shader] = id
 	return id

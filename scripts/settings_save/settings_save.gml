@@ -245,6 +245,25 @@ json_save_object_start("render")
 
 json_save_object_done()
 
+json_save_object_start("checkbox_expand")
+
+	json_save_var_bool("settings_ssso", checkbox_expand_settings_ssao)
+	json_save_var_bool("settings_shadows", checkbox_expand_settings_shadows)
+	json_save_var_bool("settings_glow", checkbox_expand_settings_glow)
+	json_save_var_bool("settings_aa", checkbox_expand_settings_aa)
+	json_save_var_bool("settings_watermark", checkbox_expand_settings_watermark)
+	json_save_var_bool("background_clouds", checkbox_expand_background_clouds)
+	json_save_var_bool("backgound_ground", checkbox_expand_background_ground)
+	json_save_var_bool("background_fog", checkbox_expand_background_fog)
+	json_save_var_bool("background_wind", checkbox_expand_background_wind)
+	json_save_var_bool("frameeditor_rotatepoint", checkbox_expand_frameeditor_rotatepoint)
+	json_save_var_bool("frameeditor_dof", checkbox_expand_frameeditor_dof)
+	json_save_var_bool("frameeditor_bloom", checkbox_expand_frameeditor_bloom)
+	json_save_var_bool("frameeditor_clrcor", checkbox_expand_frameeditor_clrcor)
+	json_save_var_bool("frameeditor_vignette", checkbox_expand_frameeditor_vignette)
+
+json_save_object_done()
+
 json_save_object_done()
 json_save_done()
 

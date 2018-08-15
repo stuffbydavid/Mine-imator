@@ -306,6 +306,26 @@ if (filename_ext(fn) = ".midata")
 		setting_export_image_include_hidden = value_get_string(rendermap[?"export_image_include_hidden"], setting_export_image_include_hidden)
 		setting_export_image_high_quality = value_get_string(rendermap[?"export_image_high_quality"], setting_export_image_high_quality)
 	}
+	
+	// Expandable checkboxes
+	var checkboxmap = map[?"checkbox_expand"];
+	if (ds_map_valid(checkboxmap))
+	{
+		checkbox_expand_settings_ssao = value_get_string(checkboxmap[?"settings_ssso"], checkbox_expand_settings_ssao)
+		checkbox_expand_settings_shadows = value_get_string(checkboxmap[?"settings_shadows"], checkbox_expand_settings_shadows)
+		checkbox_expand_settings_glow = value_get_string(checkboxmap[?"settings_glow"], checkbox_expand_settings_glow)
+		checkbox_expand_settings_aa = value_get_string(checkboxmap[?"settings_aa"], checkbox_expand_settings_aa)
+		checkbox_expand_settings_watermark = value_get_string(checkboxmap[?"settings_watermark"], checkbox_expand_settings_watermark)
+		checkbox_expand_background_clouds = value_get_string(checkboxmap[?"background_clouds"], checkbox_expand_background_clouds)
+		checkbox_expand_background_ground = value_get_string(checkboxmap[?"backgound_ground"], checkbox_expand_background_ground)
+		checkbox_expand_background_fog = value_get_string(checkboxmap[?"background_fog"], checkbox_expand_background_fog)
+		checkbox_expand_background_wind = value_get_string(checkboxmap[?"background_wind"], checkbox_expand_background_wind)
+		checkbox_expand_frameeditor_rotatepoint = value_get_string(checkboxmap[?"frameeditor_rotatepoint"], checkbox_expand_frameeditor_rotatepoint)
+		checkbox_expand_frameeditor_dof = value_get_string(checkboxmap[?"frameeditor_dof"], checkbox_expand_frameeditor_dof)
+		checkbox_expand_frameeditor_bloom = value_get_string(checkboxmap[?"frameeditor_bloom"], checkbox_expand_frameeditor_bloom)
+		checkbox_expand_frameeditor_clrcor = value_get_string(checkboxmap[?"frameeditor_clrcor"], checkbox_expand_frameeditor_clrcor)
+		checkbox_expand_frameeditor_vignette = value_get_string(checkboxmap[?"frameeditor_vignette"], checkbox_expand_frameeditor_vignette)
+	}
 }
 
 // Legacy
