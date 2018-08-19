@@ -25,7 +25,6 @@ with (new(obj_shader))
 	
 	// Fog
 	new_shader_uniform("uFogShow")
-	new_shader_uniform("uFogCircular")
 	new_shader_uniform("uFogColor")
 	new_shader_uniform("uFogDistance")
 	new_shader_uniform("uFogSize")

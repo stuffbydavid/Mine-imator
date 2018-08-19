@@ -26,7 +26,6 @@ if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)
 
 	if (fog)
 	{
-		render_set_uniform_int("uFogCircular", bool_to_float(app.background_fog_circular))
 		render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
 		render_set_uniform("uFogDistance", app.background_fog_distance)
 		render_set_uniform("uFogSize", app.background_fog_size)

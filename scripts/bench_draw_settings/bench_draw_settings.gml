@@ -178,10 +178,10 @@ else
 			// Settings
 			draw_checkbox("benchitem3d", dx, dy, bench_settings.item_3d, action_bench_item_3d)
 			draw_checkbox("benchitemfacecamera", dx + floor(dw * 0.3), dy, bench_settings.item_face_camera, action_bench_item_face_camera)
-			draw_checkbox("benchitembounce", dx + floor(dw * 0.7), dy, bench_settings.item_bounce, action_bench_item_bounce)
 			dy += 16 + 8
 			
-			draw_checkbox("benchitemspin", dx, dy, bench_settings.item_spin, action_bench_item_spin)
+			draw_checkbox("benchitembounce", dx, dy, bench_settings.item_bounce, action_bench_item_bounce)
+			draw_checkbox("benchitemspin", dx + floor(dw * 0.3), dy, bench_settings.item_spin, action_bench_item_spin)
 			dy += 16
 			break
 		}

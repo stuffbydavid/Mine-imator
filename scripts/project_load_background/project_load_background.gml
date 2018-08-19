@@ -66,7 +66,6 @@ background_ambient_color = value_get_color(map[?"ambient_color"], background_amb
 background_night_color = value_get_color(map[?"night_color"], background_night_color)
 
 background_fog_show = value_get_real(map[?"fog_show"], background_fog_show)
-background_fog_circular = value_get_real(map[?"fog_circular"], background_fog_circular)
 background_fog_sky = value_get_real(map[?"fog_sky"], background_fog_sky)
 background_fog_color_custom = value_get_real(map[?"fog_color_custom"], background_fog_color_custom)
 background_fog_color = value_get_color(map[?"fog_color"], background_fog_color)

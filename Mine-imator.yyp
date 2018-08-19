@@ -1175,14 +1175,6 @@
             }
         },
         {
-            "Key": "12a54e4e-c8a9-4db3-9471-1843c9ec081f",
-            "Value": {
-                "id": "21231986-89a0-45d9-bdd1-60a5bccd2605",
-                "resourcePath": "scripts\\action_background_fog_circular\\action_background_fog_circular.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "12a604c8-1cda-4ca3-91d7-cd842d057acf",
             "Value": {
                 "id": "5e5e18f9-3b7c-4665-8bd0-0eec5c2723d6",
@@ -15205,7 +15197,6 @@
         "9e32a06b-1227-4008-91d6-68cc6b86f52b",
         "44eb047a-d54a-452b-9226-d5db3c5e392d",
         "799843af-5ff7-44e6-b1a5-2601987c79f5",
-        "12a54e4e-c8a9-4db3-9471-1843c9ec081f",
         "d429f732-0608-4f1c-9b58-d537cda03cdd",
         "72897204-1ded-447b-88a7-90c79be3b660",
         "78adcc28-a685-41cf-9df7-6a44d1101fb7",

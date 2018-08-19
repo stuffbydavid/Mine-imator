@@ -142,11 +142,11 @@ switch (temp_edit.type)
 		tab_control_checkbox()
 		draw_checkbox("libraryitem3d", dx, dy, temp_edit.item_3d, action_lib_item_3d)
 		draw_checkbox("libraryitemfacecamera", dx + floor(dw * 0.3), dy, temp_edit.item_face_camera, action_lib_item_face_camera)
-		draw_checkbox("libraryitembounce", dx + floor(dw * 0.7), dy, temp_edit.item_bounce, action_lib_item_bounce)
 		tab_next()
 		
 		tab_control_checkbox()
-		draw_checkbox("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
+		draw_checkbox("libraryitembounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce)
+		draw_checkbox("libraryitemspin", dx + floor(dw * 0.3), dy, temp_edit.item_spin, action_lib_item_spin)
 		tab_next()
 
 		break
