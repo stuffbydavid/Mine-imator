@@ -18,7 +18,7 @@ with (mc_assets)
 			var exists = directory_exists_lib(load_assets_dir + mc_assets_directory);
 			if (array_length_1d(file_find(load_assets_dir + mc_character_directory, ".mimodel")) = 0 ||
 				array_length_1d(file_find(load_assets_dir + mc_block_directory, ".json")) = 0 ||
-				array_length_1d(file_find(load_assets_dir + mc_textures_directory + "blocks\\", ".png")) = 0)
+				array_length_1d(file_find(load_assets_dir + mc_textures_directory + "block\\", ".png")) = 0)
 				exists = false
 
 			if (!exists)
@@ -233,10 +233,10 @@ with (mc_assets)
 				// Flowing Water/Lava
 				block_name_map[?"flowing_water"] = block_name_map[?"water"]
 				block_name_map[?"flowing_lava"] = block_name_map[?"lava"]
-				block_liquid_slot_map[?"water"] = ds_list_find_index(block_texture_ani_list, "blocks/water_still")
-				block_liquid_slot_map[?"lava"] = ds_list_find_index(block_texture_ani_list, "blocks/lava_still")
-				block_liquid_slot_map[?"flowing_water"] = ds_list_find_index(block_texture_ani_list, "blocks/water_flow")
-				block_liquid_slot_map[?"flowing_lava"] = ds_list_find_index(block_texture_ani_list, "blocks/lava_flow")
+				block_liquid_slot_map[?"water"] = ds_list_find_index(block_texture_ani_list, "block/water_still")
+				block_liquid_slot_map[?"lava"] = ds_list_find_index(block_texture_ani_list, "block/lava_still")
+				block_liquid_slot_map[?"flowing_water"] = ds_list_find_index(block_texture_ani_list, "block/water_flow")
+				block_liquid_slot_map[?"flowing_lava"] = ds_list_find_index(block_texture_ani_list, "block/lava_flow")
 				
 				// Legacy block ID mapping
 				var key = ds_map_find_first(legacy_block_id);
@@ -291,10 +291,51 @@ with (mc_assets)
 						instance_destroy()
 					key = ds_map_find_next(load_assets_model_file_map, key)
 				}
+				
+				// Dev mode: Look for newly added block states and model files
+				if (dev_mode && dev_mode_debug_unused)
+				{
+					// Blockstates
+					var filesarr = file_find(load_assets_dir + mc_blockstates_directory, ".json");
+					var unusedlist = ds_list_create()
+					
+					for (var f = 0; f < array_length_1d(filesarr); f++)
+						if (is_undefined(load_assets_state_file_map[?filename_name(filesarr[f])]))
+							ds_list_add(unusedlist, filesarr[f])
+							
+					if (ds_list_size(unusedlist) > 0)
+					{
+						ds_list_sort(unusedlist, true)
+						var str = "The following blockstates were unused:\n";
+						for (var i = 0; i < ds_list_size(unusedlist); i++)
+							str += "  " + filename_name(unusedlist[|i]) + "\n"
+						log(str)
+					}
+					
+					// Block models
+					filesarr = file_find(load_assets_dir + mc_models_directory + "block\\", ".json");
+					ds_list_clear(unusedlist)
+					
+					for (var f = 0; f < array_length_1d(filesarr); f++)
+						if (is_undefined(load_assets_model_file_map[?filename_name(filesarr[f])]))
+							ds_list_add(unusedlist, filesarr[f])
+							
+					if (ds_list_size(unusedlist) > 0)
+					{
+						ds_list_sort(unusedlist, true)
+						var str = "The following block models were unused:\n";
+						for (var i = 0; i < ds_list_size(unusedlist); i++)
+							str += "  " + filename_name(unusedlist[|i]) + "\n"
+						log(str)
+					}
+					
+					ds_list_destroy(unusedlist)
+				}
 		
 				file_copy_temp = true
 				minecraft_assets_create_block_previews()
 				
+				ds_map_destroy(load_assets_state_file_map)
 				ds_map_destroy(load_assets_model_file_map)
 				ds_map_destroy(load_assets_map)
 				ds_map_destroy(load_assets_type_map)

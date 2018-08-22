@@ -331,7 +331,7 @@ switch (load_stage)
 				block_tl_list = null
 			}
 			
-			if (dev_mode_rotate_blocks) // Rotate 90 degrees
+			if (!dev_mode || dev_mode_rotate_blocks) // Rotate 90 degrees
 				scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
 			else
 				scenery_size = vec3(mc_builder.build_size_x, mc_builder.build_size_y, mc_builder.build_size_z)

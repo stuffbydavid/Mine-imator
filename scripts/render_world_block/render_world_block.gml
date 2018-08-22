@@ -33,7 +33,7 @@ var blend = shader_blend_color;
 render_set_texture(tex)
 
 // Rotate by 90 degrees for legacy support
-if (rotate && dev_mode_rotate_blocks)
+if (rotate && (!dev_mode || dev_mode_rotate_blocks))
 	matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 
 // DEPTH 0

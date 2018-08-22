@@ -12,7 +12,10 @@ globalvar legacy_biomes_map;
 
 var map = json_load(legacy_file);
 if (!ds_map_valid(map))
-	return 0
+{
+	log("Error loading legacy.midata")
+	return false
+}
 
 // Models
 legacy_model_id_05_map = map[?"legacy_model_id_05"]
@@ -39,3 +42,5 @@ legacy_item_texture_name_map = map[?"legacy_item_texture_name"]
 
 // Biomes
 legacy_biomes_map = map[?"legacy_biomes"]
+
+return true

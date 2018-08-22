@@ -8895,6 +8895,14 @@
             }
         },
         {
+            "Key": "9753dae6-8742-4905-868d-55267d9b4a72",
+            "Value": {
+                "id": "bba0faad-4f3e-4158-93bb-396b288b1ed5",
+                "resourcePath": "scripts\\block_set_kelp\\block_set_kelp.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "976ad256-6231-4ab5-aaa1-893f574c8f8d",
             "Value": {
                 "id": "6b708952-aeaf-40c1-bb99-62123d65cff4",
@@ -16177,6 +16185,7 @@
         "c326b7e3-91ed-4b2c-8025-9e663dbe0a9b",
         "2fbd370f-4dc8-4e1b-bfbb-a801f4ec5732",
         "8118d4c4-0b40-4cf3-8a63-e37ab66f9433",
+        "9753dae6-8742-4905-868d-55267d9b4a72",
         "3f54cd21-a61e-4b83-9fbf-c329438c7fd7",
         "def3f537-ceff-4a5f-946a-49f38dd523c3",
         "96c30d38-a9a4-45c5-ba4d-b6ef9698f8d3",

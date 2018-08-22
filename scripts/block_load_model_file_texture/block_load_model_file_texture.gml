@@ -7,7 +7,7 @@ name = string_lower(argument0)
 res = argument1
 
 if (string_pos("assets/minecraft_", name) = 1)
-	name = string_replace(name, "assets/minecraft_", "blocks/")
+	name = string_replace(name, "assets/minecraft_", "block/")
 
 if (res = null)
 	return name
@@ -17,6 +17,8 @@ if (!file_exists_lib(fn)) // Look in the same folder
 	fn = load_folder + "\\" + name + ".png"
 if (!file_exists_lib(fn))
 	fn = load_folder + "\\" + string_replace(name, "blocks/", "") + ".png" // Remove blocks/ and look in folder
+if (!file_exists_lib(fn))
+	fn = load_folder + "\\" + string_replace(name, "block/", "") + ".png" // Remove block/ and look in folder
 if (!file_exists_lib(fn))
 	fn = load_folder + "\\" + filename_name(name) + ".png" // Remove directory and look in folder
 if (!file_exists_lib(fn))

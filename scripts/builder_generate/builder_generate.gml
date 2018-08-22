@@ -187,8 +187,14 @@ if (block_current.generate_script > -1)
 	script_execute(block_current.generate_script)
 else
 {
-	// Requires other render models for states
+	// Set wind and brightness
 	vertex_brightness = null
+	vertex_wave = block_current.wind_axis
+	if (block_current.wind_zmin != null)
+		vertex_wave_zmin = block_pos_z + block_current.wind_zmin
+	vertex_light_bleeding = block_current.light_bleeding
+		
+	// Requires other render models for states
 	if (block_current.require_models)
 		builder_set_model(true)
 
@@ -196,12 +202,6 @@ else
 	var model = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z);
 	if (model != null)
 	{
-		// Set wind and brightness
-		vertex_wave = block_current.wind_axis
-		if (block_current.wind_zmin != null)
-			vertex_wave_zmin = block_pos_z + block_current.wind_zmin
-		vertex_light_bleeding = block_current.light_bleeding
-		
 		// Generate render model
 		if (is_array(model))
 		{

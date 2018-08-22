@@ -16,10 +16,22 @@ if (block_sheet_ani_depth_list != null)
 	ds_list_destroy(block_sheet_ani_depth_list)
 		
 // Create new
-var blocksize, texlist, texanilist, surf, anisurf;
+var blocksize, texlist, texanilist, surf, anisurf, fileslist;
 blocksize = null
+fileslist = null
 
 debug_timer_start()
+
+// Used to figure out what new files have been added
+if (dev_mode && dev_mode_debug_unused)
+{
+	var filesarr = file_find(load_assets_dir + mc_textures_directory + "block\\", ".png");
+	fileslist = ds_list_create()
+	
+	// Convert array to modifyable list
+	for (var i = 0; i < array_length_1d(filesarr); i++)
+		ds_list_add(fileslist, filesarr[i])
+}
 		
 // Static textures
 log("Block textures", "load static")
@@ -30,6 +42,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 	name = string_replace(mc_assets.block_texture_list[|t], " opaque", "")
 	fname = load_assets_dir + mc_textures_directory + name + ".png"
 	
+	// Look if legacy name exists
 	if (!file_exists_lib(fname) && !is_undefined(legacy_block_texture_name_map[?name]))
 		fname = load_assets_dir + mc_textures_directory + legacy_block_texture_name_map[?name] + ".png"
 	
@@ -38,6 +51,9 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_list); t++)
 		var tex = texture_create(fname);
 		blocksize = max(blocksize, texture_width(tex))
 		ds_list_add(texlist, tex)
+		
+		if (dev_mode_debug_unused)
+			ds_list_delete_value(fileslist, string_replace_all(fname, "/", "\\"))
 	}
 	else
 	{
@@ -55,6 +71,7 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 	name = string_replace(mc_assets.block_texture_ani_list[|t], " opaque", "")
 	fname = load_assets_dir + mc_textures_directory + name + ".png"
 	
+	// Look if legacy name exists
 	if (!file_exists_lib(fname) && !is_undefined(legacy_block_texture_name_map[?name]))
 		fname = load_assets_dir + mc_textures_directory + legacy_block_texture_name_map[?name] + ".png"
 	
@@ -62,12 +79,28 @@ for (var t = 0; t < ds_list_size(mc_assets.block_texture_ani_list); t++)
 	{
 		var tex = texture_create(fname);
 		ds_list_add(texanilist, tex)
+		
+		if (fileslist != null)
+			ds_list_delete_value(fileslist, string_replace_all(fname,"/","\\"))
 	}
 	else
 	{
 		log("Animated block texture not found", mc_assets.block_texture_ani_list[|t])
 		ds_list_add(texanilist, null)
 	}
+}
+
+if (fileslist != null)
+{
+	ds_list_sort(fileslist, true)
+	if (ds_list_size(fileslist) > 0)
+	{
+		var str = "The following block textures were unused:\n";
+		for (var i = 0; i < ds_list_size(fileslist); i++)
+			str += "  " + filename_name(fileslist[|i]) + "\n"
+		log(str)
+	}
+	ds_list_destroy(fileslist)
 }
 
 if (blocksize = null)

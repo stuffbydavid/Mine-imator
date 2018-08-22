@@ -10,8 +10,8 @@ key = ds_map_find_first(map)
 while (!is_undefined(key))
 {
 	if (map[?key] = val)
-		break
+		return key
 	key = ds_map_find_next(map, key)
 }
 
-return key
+return undefined

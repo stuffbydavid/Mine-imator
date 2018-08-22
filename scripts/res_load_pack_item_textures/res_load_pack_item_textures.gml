@@ -6,10 +6,22 @@ if (item_sheet_texture != null)
 	texture_free(item_sheet_texture)
 
 // Create new
-var itemsize, texlist, surf;
+var itemsize, texlist, surf, fileslist;
 itemsize = null
+fileslist = null
 
 debug_timer_start()
+
+// Used to figure out what new files have been added
+if (dev_mode && dev_mode_debug_unused)
+{
+	var filesarr = file_find(load_assets_dir + mc_textures_directory + "item\\", ".png");
+	fileslist = ds_list_create()
+	
+	// Convert array to modifyable list
+	for (var i = 0; i < array_length_1d(filesarr); i++)
+		ds_list_add(fileslist, filesarr[i])
+}
 
 // Load textures
 log("Item textures", "load")
@@ -26,6 +38,7 @@ for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 	name = mc_assets.item_texture_list[|t]
 	fname = load_assets_dir + mc_textures_directory + name + ".png";
 	
+	// Look if legacy name exists
 	if (!file_exists_lib(fname) && !is_undefined(legacy_item_texture_name_map[?name]))
 		fname = load_assets_dir + mc_textures_directory + legacy_item_texture_name_map[?name] + ".png"
 		
@@ -34,12 +47,28 @@ for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 		var tex = texture_create(fname);
 		itemsize = max(itemsize, texture_width(tex))
 		ds_list_add(texlist, tex)
+		
+		if (fileslist != null)
+			ds_list_delete_value(fileslist, string_replace_all(fname, "/", "\\"))
 	}
 	else
 	{
 		log("Item texture not found", mc_assets.item_texture_list[|t])
 		ds_list_add(texlist, null)
 	}
+}
+
+if (fileslist != null)
+{
+	ds_list_sort(fileslist, true)
+	if (ds_list_size(fileslist) > 0)
+	{
+		var str = "The following item textures were unused:\n";
+		for (var i = 0; i < ds_list_size(fileslist); i++)
+			str += "  " + filename_name(fileslist[|i]) + "\n"
+		log(str)
+	}
+	ds_list_destroy(fileslist)
 }
 
 if (itemsize = null)

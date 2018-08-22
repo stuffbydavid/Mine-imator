@@ -11,7 +11,7 @@ state = argument2
 
 if (!file_exists_lib(fname))
 {
-	log("Could not find state file", fname)
+	log("Could not find state file", filename_name(fname))
 	return null
 }
 
@@ -20,7 +20,7 @@ jsontypemap = ds_map_create()
 map = json_load(fname, jsontypemap);
 if (!ds_map_valid(map))
 {
-	log("Could not parse state file", fname)
+	log("Could not parse state file", filename_name(fname))
 	ds_map_destroy(jsontypemap)
 	return null
 }
@@ -50,8 +50,8 @@ with (new(obj_block_load_state_file))
 		{
 			with (new(obj_block_load_variant))
 			{
-				// Find state ID of variant if not "normal"
-				if (variant != "normal")
+				// Find state ID of variant if not "" or "normal" (pre-1.13)
+				if (variant != "" && variant != "normal")
 				{
 					var vars  = string_get_state_vars(variant);
 					if (vars = null) // Ignore "all"
@@ -187,6 +187,8 @@ with (new(obj_block_load_state_file))
 			}
 		}
 	}
+	
+	load_assets_state_file_map[?filename_name(fname)] = id
 	
 	//ds_map_destroy(map) // Error
 	ds_map_destroy(jsontypemap)

@@ -51,7 +51,7 @@ with (new(obj_timeline))
 	rot_point = array_copy_1d(other.rot_point)
 		
 	// Position & rotation
-	if (dev_mode_rotate_blocks)
+	if (!dev_mode || dev_mode_rotate_blocks)
 	{
 		var pos = point3D_mul_matrix(other.position, matrix_create(point3D(0, root.temp.scenery.scenery_size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 		value_default[e_value.POS_X] = snap(pos[X], 0.01)

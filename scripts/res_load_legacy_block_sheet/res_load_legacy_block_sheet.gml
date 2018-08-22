@@ -41,8 +41,23 @@ for (var i = 0; i < ds_list_size(list); i++)
 		
 	var newindex = ds_list_find_index(mc_assets.block_texture_list, name);
 	if (newindex < 0)
-		continue
-		
+	{
+		// Look for legacy name
+		var key = ds_map_find_key(legacy_block_texture_name_map, name);
+		if (is_undefined(key))
+		{
+			debug("Could not convert block texture", name)
+			continue
+		}
+			
+		newindex = ds_list_find_index(mc_assets.block_texture_list, key)
+		if (newindex < 0)
+		{
+			debug("Could not convert block texture", key)
+			continue
+		}
+	}
+	
 	var oldx, oldy, newx, newy;
 	oldx = (i mod sheetwid) * blocksize
 	oldy = (i div sheetwid) * blocksize

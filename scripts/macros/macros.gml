@@ -5,6 +5,7 @@
 #macro dev_mode						true
 #macro dev_mode_debug_schematics	false
 #macro dev_mode_debug_names			true
+#macro dev_mode_debug_unused		true
 #macro dev_mode_rotate_blocks		true
 
 // Versions
@@ -146,8 +147,8 @@
 #macro default_model_part			"head"
 #macro default_special_block		"chest"
 #macro default_block				"grass_block"
-#macro default_item					"items/diamond_sword"
-#macro default_ground				"blocks/grass_block_top"
+#macro default_item					"item/diamond_sword"
+#macro default_ground				"block/grass_block_top"
 
 // World
 #macro block_size					16

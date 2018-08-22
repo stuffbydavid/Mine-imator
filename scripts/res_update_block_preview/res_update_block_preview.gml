@@ -10,10 +10,10 @@ surf = surface_create(32, 32)
 surface_set_target(surf)
 {
 	draw_clear_alpha(c_black, 0)
-	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "blocks/stone"), 0, 0, size, size, block_sheet_width, block_sheet_height)
-	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "blocks/grass_side"), 16, 0, size, size, block_sheet_width, block_sheet_height)
-	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "blocks/tnt_side"), 0, 16, size, size, block_sheet_width, block_sheet_height)
-	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "blocks/sapling_oak"), 16, 16, size, size, block_sheet_width, block_sheet_height)
+	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "block/stone"), 0, 0, size, size, block_sheet_width, block_sheet_height)
+	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "block/grass_side"), 16, 0, size, size, block_sheet_width, block_sheet_height)
+	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "block/tnt_side"), 0, 16, size, size, block_sheet_width, block_sheet_height)
+	draw_texture_slot(block_sheet_texture, ds_list_find_index(mc_assets.block_texture_list, "block/sapling_oak"), 16, 16, size, size, block_sheet_width, block_sheet_height)
 }
 surface_reset_target()
 

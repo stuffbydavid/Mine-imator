@@ -5,7 +5,7 @@ block_vbuffer_start()
 
 with (mc_builder)
 {
-	if (dev_mode_rotate_blocks)
+	if (!dev_mode || dev_mode_rotate_blocks)
 		build_size = test(other.block_repeat_enable, vec3(other.block_repeat[Y], other.block_repeat[X], other.block_repeat[Z]), vec3(1))
 	else
 		build_size = test(other.block_repeat_enable, vec3(other.block_repeat[X], other.block_repeat[Y], other.block_repeat[Z]), vec3(1))
