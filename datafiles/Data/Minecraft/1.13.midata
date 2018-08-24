@@ -1021,7 +1021,7 @@
 			"type": "bed",
 			"states": {
 				"facing": [ "east", "west", "south", "north" ],
-				"half": [ "foot", "head" ],
+				"part": [ "foot", "head" ],
 				"color": [
 					{ "value": "red" },
 					{ "value": "white" },
@@ -1041,7 +1041,7 @@
 					{ "value": "black" }
 				]
 			},
-			"default_state": "facing=north,half=foot,color=red",
+			"default_state": "facing=north,part=foot,color=red",
 			"timeline": {
 				"model": "bed",
 				"rotation_point": [ 0, 0, 8 ],
@@ -1526,9 +1526,9 @@
 		{
 			"name": "sign",
 			"states": {
-				"orientation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+				"rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
 			},
-			"default_state": "orientation=0",
+			"default_state": "rotation=0",
 			"timeline": {
 				"model": "sign",
 				"model_state": "variant=standing",
@@ -1536,22 +1536,22 @@
 				"text_position": [ 0, 13.25, 0.8 ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
-					"orientation=0": [ 0, 0, 0 ],
-					"orientation=1": [ 0, -22.5, 0 ],
-					"orientation=2": [ 0, -45, 0 ],
-					"orientation=3": [ 0, -67.5, 0 ],
-					"orientation=4": [ 0, -90, 0 ],
-					"orientation=5": [ 0, -112.5, 0 ],
-					"orientation=6": [ 0, -135, 0 ],
-					"orientation=7": [ 0, -157.5, 0 ],
-					"orientation=8": [ 0, 180, 0 ],
-					"orientation=9": [ 0, 157.5, 0 ],
-					"orientation=10": [ 0, 135, 0 ],
-					"orientation=11": [ 0, 112.5, 0 ],
-					"orientation=12": [ 0, 90, 0 ],
-					"orientation=13": [ 0, 67.5, 0 ],
-					"orientation=14": [ 0, 45, 0 ],
-					"orientation=15": [ 0, 22.5, 0 ]
+					"rotation=0": [ 0, 0, 0 ],
+					"rotation=1": [ 0, -22.5, 0 ],
+					"rotation=2": [ 0, -45, 0 ],
+					"rotation=3": [ 0, -67.5, 0 ],
+					"rotation=4": [ 0, -90, 0 ],
+					"rotation=5": [ 0, -112.5, 0 ],
+					"rotation=6": [ 0, -135, 0 ],
+					"rotation=7": [ 0, -157.5, 0 ],
+					"rotation=8": [ 0, 180, 0 ],
+					"rotation=9": [ 0, 157.5, 0 ],
+					"rotation=10": [ 0, 135, 0 ],
+					"rotation=11": [ 0, 112.5, 0 ],
+					"rotation=12": [ 0, 90, 0 ],
+					"rotation=13": [ 0, 67.5, 0 ],
+					"rotation=14": [ 0, 45, 0 ],
+					"rotation=15": [ 0, 22.5, 0 ]
 				}
 			},
 			"id": "minecraft:sign"
@@ -3230,6 +3230,15 @@
 			}
 		},
 		{
+			"name": "structure_block",
+			"file": "structure_block.json",
+			"states": {
+				"mode": [ "save", "load", "corner", "data" ]
+			},
+			"default_state": "mode=save",
+			"id": "minecraft:structure_block"
+		},
+		{
 			"name": "blue_ice",
 			"file": "blue_ice.json",
 			"id": "minecraft:blue_ice"
@@ -3237,8 +3246,10 @@
 		{
 			"name": "sea_pickle",
 			"file": "sea_pickle.json",
+			"waterlogged": true,
 			"states": {
-				"pickles": [ "1", "2", "3", "4" ]
+				"pickles": [ "1", "2", "3", "4" ],
+				"waterlogged": [ "false", "true" ]
 			},
 			"default_state": "pickles=1",
 			"brightness": 0.75,
@@ -3247,6 +3258,7 @@
 		{
 			"name": "turtle_egg",
 			"file": "turtle_egg.json",
+			"waterlogged": true,
 			"states": {
 				"eggs": [ "1", "2", "3", "4" ],
 				"hatch": [ "0", "1", "2" ]
@@ -3257,6 +3269,7 @@
 		{
 			"name": "seagrass",
 			"file": "seagrass.json",
+			"waterlogged": true,
 			"light_bleeding": 1,
 			"wind": {
 				"axis": "all",
@@ -3267,6 +3280,7 @@
 		{
 			"name": "tall_seagrass",
 			"type": "double_plant",
+			"waterlogged": true,
 			"file": "tall_seagrass.json",
 			"states": {
 				"half": [ "lower", "upper" ]
@@ -3281,6 +3295,7 @@
 		{
 			"name": "kelp",
 			"type": "kelp",
+			"waterlogged": true,
 			"require_models": true,
 			"file": "kelp.json",
 			"light_bleeding": 1,
@@ -3292,6 +3307,7 @@
 		{
 			"name": "kelp_plant",
 			"type": "kelp",
+			"waterlogged": true,
 			"require_models": true,
 			"file": "kelp_plant.json",
 			"light_bleeding": 1,
@@ -3303,10 +3319,12 @@
 		{
 			"name": "dried_kelp_block",
 			"file": "dried_kelp_block.json",
+			"waterlogged": true,
 			"id": "minecraft:dried_kelp_block"
 		},
 		{
 			"name": "coral",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "tube_coral.json" },
@@ -3332,6 +3350,7 @@
 		},
 		{
 			"name": "coral_fan",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "tube_coral_fan.json" },
@@ -3357,6 +3376,7 @@
 		},
 		{
 			"name": "coral_wall_fan",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "tube_coral_wall_fan.json" },
@@ -3379,6 +3399,7 @@
 		},
 		{
 			"name": "coral_block",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "tube_coral_block.json" },
@@ -3399,6 +3420,7 @@
 		},
 		{
 			"name": "dead_coral",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "dead_tube_coral.json" },
@@ -3424,6 +3446,7 @@
 		},
 		{
 			"name": "dead_coral_fan",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "dead_tube_coral_fan.json" },
@@ -3449,6 +3472,7 @@
 		},
 		{
 			"name": "dead_coral_wall_fan",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "dead_tube_coral_wall_fan.json" },
@@ -3471,6 +3495,7 @@
 		},
 		{
 			"name": "dead_coral_block",
+			"waterlogged": true,
 			"states": {
 				"variant": [
 					{ "value": "tube", "file": "dead_tube_coral_block.json" },

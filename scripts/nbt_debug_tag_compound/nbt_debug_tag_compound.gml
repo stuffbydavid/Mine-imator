@@ -66,6 +66,13 @@ while (!is_undefined(key))
 					debug("Length", map[?key + "_NBT_length"])
 				debug_indent--
 				break
+				
+			case e_nbt.TAG_LONG_ARRAY:
+				debug("[TAG_Long_Array] " + key)
+				debug_indent++
+					debug("Length", map[?key + "_NBT_length"])
+				debug_indent--
+				break
 		}
 	}
 	key = ds_map_find_next(map, key)

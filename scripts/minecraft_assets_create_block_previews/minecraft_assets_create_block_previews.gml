@@ -32,6 +32,7 @@ slot = mc_assets.block_liquid_slot_map[?"water"]
 px = slot mod block_sheet_ani_width
 py = slot div block_sheet_ani_width
 waterpcolor = buffer_read_color(px, py, block_sheet_ani_width)
+waterpcolor = color_multiply(waterpcolor, mc_res.color_water)
 waterpalpha = power(buffer_read_alpha(px, py, block_sheet_ani_width), 2)
 
 slot = mc_assets.block_liquid_slot_map[?"lava"]

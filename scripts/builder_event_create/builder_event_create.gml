@@ -21,6 +21,7 @@ build_edge_zn = false
 build_edges = true
 
 block_obj = null
+block_waterlogged = null
 block_current = 0
 block_state_id = null
 block_state_id_current = 0

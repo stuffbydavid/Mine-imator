@@ -13,6 +13,19 @@
 		"Y": "#581716",
 		"Z": "#7A0A09"
 	},
+	"dead_horn_coral_block.json": {
+		"Y": "#726B69",
+		"Z": "#726B69"
+	},
+	"cut_red_sandstone.json": {
+		"Y": "#A6541E",
+		"Z": "#AD5820"
+	},
+	"potted_blue_orchid.json": {
+		"Y": "#78553A",
+		"Z": "#55A54B",
+		"Z_alpha": 0.74902
+	},
 	"allium.json": {
 		"Z": "#A3AB89",
 		"Z_alpha": 0.74902
@@ -21,16 +34,25 @@
 		"Y": "#EBB4C8",
 		"Z": "#EBB4C8"
 	},
+	"potted_fern.json": {
+		"Y": "#78553A",
+		"Z": "#4B612E"
+	},
+	"magma_block.json": {
+		"Y": "#E66410",
+		"Z": "#E66410"
+	},
+	"green_terracotta.json": {
+		"Y": "#4C532B",
+		"Z": "#4C532B"
+	},
 	"green_concrete.json": {
 		"Y": "#495B24",
 		"Z": "#495B24"
 	},
-	"dark_oak_fence_gate.json": {
-		"Y": "#3B2612",
-		"Z": "#3B2612"
-	},
-	"wooden_door.json": {
-		"Z": "#8C6A35"
+	"dead_fire_coral_block.json": {
+		"Y": "#8F8782",
+		"Z": "#8F8782"
 	},
 	"yellow_concrete_powder.json": {
 		"Y": "#ECCE3D",
@@ -48,9 +70,8 @@
 		"Y": "#FFF144",
 		"Z": "#FFF144"
 	},
-	"nether_brick.json": {
-		"Y": "#251317",
-		"Z": "#251317"
+	"dark_oak_sapling.json": {
+		"Z": "#337F27"
 	},
 	"orange_stained_glass_pane.json": {
 		"Y": "#CE7930",
@@ -60,38 +81,29 @@
 		"Y": "#CD9800",
 		"Z": "#BD7012"
 	},
-	"unlit_redstone_torch.json": {
-		"Y": "#4E2819",
-		"Z": "#4E2819"
+	"horn_coral_fan.json": {
+		"Y": "#DACD42"
 	},
 	"smooth_red_sandstone.json": {
 		"Y": "#A6541E",
-		"Z": "#AD5820"
-	},
-	"oak_slab.json": {
-		"Y": "#977B4D",
-		"Z": "#977B4D"
+		"Z": "#A6541E"
 	},
 	"oxeye_daisy.json": {
 		"Z": "#C7D7BF"
 	},
-	"silver_stained_glass_pane.json": {
-		"Y": "#919191",
-		"Y_alpha": 0.90196
+	"smooth_quartz.json": {
+		"Y": "#EAE7E0",
+		"Z": "#EAE7E0"
 	},
 	"flower_pot.json": {
 		"Y": "#78553A"
 	},
-	"grass_block.json": {
-		"Y": "#577235",
-		"Z": "#78553A"
+	"grass.json": {
+		"Z": "#374822",
+		"Z_alpha": 0.74902
 	},
 	"melon_stem.json": {
 		"Z": "#579B1B"
-	},
-	"red_sandstone_stairs.json": {
-		"Y": "#A6541E",
-		"Z": "#A95620"
 	},
 	"red_concrete_powder.json": {
 		"Y": "#AE3834",
@@ -100,6 +112,14 @@
 	"oak_log.json": {
 		"Y": "#614D30",
 		"Z": "#614D30"
+	},
+	"light_blue_terracotta.json": {
+		"Y": "#726D8A",
+		"Z": "#726D8A"
+	},
+	"light_gray_wool.json": {
+		"Y": "#8A8A82",
+		"Z": "#8A8A82"
 	},
 	"brown_concrete.json": {
 		"Y": "#603B1F",
@@ -113,14 +133,6 @@
 		"Y": "#718471",
 		"Z": "#718471"
 	},
-	"silver_glazed_terracotta.json": {
-		"Y": "#B0B8BA",
-		"Z": "#B0B8BA"
-	},
-	"lit_redstone_lamp.json": {
-		"Y": "#E1AF72",
-		"Z": "#E1AF72"
-	},
 	"sticky_piston.json": {
 		"Y": "#848484",
 		"Z": "#7E7E7E"
@@ -128,10 +140,6 @@
 	"chiseled_red_sandstone.json": {
 		"Y": "#A6541E",
 		"Z": "#984D17"
-	},
-	"daylight_detector_inverted.json": {
-		"Y": "#A8B5C9",
-		"Z": "#493C27"
 	},
 	"purple_stained_glass_pane.json": {
 		"Y": "#793CA9",
@@ -141,9 +149,13 @@
 		"Y": "#79C218",
 		"Y_alpha": 0.90196
 	},
-	"nether_brick_double_slab.json": {
-		"Y": "#251317",
-		"Z": "#251317"
+	"mossy_stone_bricks.json": {
+		"Y": "#6B735C",
+		"Z": "#6B735C"
+	},
+	"oak_fence.json": {
+		"Y": "#977B4D",
+		"Z": "#977B4D"
 	},
 	"cyan_wool.json": {
 		"Y": "#15868F",
@@ -157,79 +169,62 @@
 		"Y": "#77666A",
 		"Z": "#453121"
 	},
-	"trapdoor.json": {
-		"Y": "#8B6834",
-		"Z": "#8B6834"
-	},
 	"grass_path.json": {
 		"Y": "#8C723E",
 		"Z": "#78553A"
 	},
+	"potted_cactus.json": {
+		"Y": "#78553A",
+		"Z": "#073A0E"
+	},
 	"smooth_sandstone.json": {
 		"Y": "#DAD19F",
-		"Z": "#E3DAAC"
+		"Z": "#DAD19F"
 	},
 	"lime_concrete.json": {
 		"Y": "#5EA818",
 		"Z": "#5EA818"
 	},
-	"purple_stained_hardened_clay.json": {
-		"Y": "#784757",
-		"Z": "#784757"
-	},
-	"wooden_button.json": {
-		"Y": "#977B4D",
-		"Z": "#977B4D"
+	"potted_dark_oak_sapling.json": {
+		"Y": "#78553A",
+		"Z": "#337F27"
 	},
 	"blue_orchid.json": {
 		"Z": "#55A54B",
 		"Z_alpha": 0.74902
 	},
+	"yellow_terracotta.json": {
+		"Y": "#BB8624",
+		"Z": "#BB8624"
+	},
 	"water": {
-		"Y": "#2232AE",
-		"Y_alpha": 0.2599,
-		"Z": "#2232AE",
-		"Z_alpha": 0.2599
+		"Y": "#1D386C",
+		"Y_alpha": 0.24804,
+		"Z": "#1D386C",
+		"Z_alpha": 0.24804
 	},
 	"gray_concrete_powder.json": {
 		"Y": "#505559",
 		"Z": "#505559"
 	},
-	"acacia_fence_gate.json": {
-		"Y": "#A45A32",
-		"Z": "#A45A32"
-	},
 	"red_sand.json": {
 		"Y": "#AF5D24",
 		"Z": "#AF5D24"
-	},
-	"stone_brick_monster_egg.json": {
-		"Y": "#6F6F6F",
-		"Z": "#6F6F6F"
 	},
 	"white_wool.json": {
 		"Y": "#E4E7E8",
 		"Z": "#E4E7E8"
 	},
+	"potted_jungle_sapling.json": {
+		"Y": "#78553A",
+		"Z": "#2D420D"
+	},
 	"spruce_fence.json": {
 		"Y": "#644B2D",
 		"Z": "#644B2D"
 	},
-	"magenta_stained_hardened_clay.json": {
-		"Y": "#97596D",
-		"Z": "#97596D"
-	},
-	"red_sandstone_double_slab.json": {
-		"Y": "#A6541E",
-		"Z": "#A95620"
-	},
-	"red_glazed_terracotta.json": {
-		"Y": "#B22E26",
-		"Z": "#B22E26"
-	},
-	"orange_glazed_terracotta.json": {
-		"Y": "#FAD8B5",
-		"Z": "#FAD8B5"
+	"birch_sapling.json": {
+		"Z": "#5A8032"
 	},
 	"green_stained_glass_pane.json": {
 		"Y": "#607930",
@@ -245,20 +240,28 @@
 		"Z": "#667F33",
 		"Z_alpha": 0.41569
 	},
-	"web.json": {
-		"Z": "#EDEDED"
+	"dead_tube_coral.json": {
+		"Z": "#7D7775"
+	},
+	"horn_coral_block.json": {
+		"Y": "#C8AF3A",
+		"Z": "#C8AF3A"
 	},
 	"prismarine.json": {
 		"Y": "#8ECBC2",
 		"Z": "#8ECBC2"
 	},
-	"lit_furnace.json": {
-		"Y": "#7E7E7E",
-		"Z": "#7D7D7D"
+	"potted_oxeye_daisy.json": {
+		"Y": "#78553A",
+		"Z": "#C7D7BF"
 	},
-	"purpur_slab.json": {
-		"Y": "#9C749C",
-		"Z": "#9C749C"
+	"potted_birch_sapling.json": {
+		"Y": "#78553A",
+		"Z": "#5A8032"
+	},
+	"tube_coral_fan.json": {
+		"Y": "#17295B",
+		"Y_alpha": 0.49804
 	},
 	"dead_bush.json": {
 		"Z": "#774C17"
@@ -275,13 +278,20 @@
 		"Y": "#6CB519",
 		"Z": "#6CB519"
 	},
+	"potted_dead_bush.json": {
+		"Y": "#78553A",
+		"Z": "#774C17"
+	},
 	"farmland.json": {
 		"Y": "#815533",
 		"Z": "#78553A"
 	},
-	"brick_stairs.json": {
-		"Y": "#A8796C",
-		"Z": "#A8796C"
+	"wall_torch.json": {
+		"Y": "#B1A77E",
+		"Z": "#B1A77E"
+	},
+	"jungle_sapling.json": {
+		"Z": "#2D420D"
 	},
 	"gold_block.json": {
 		"Y": "#FFF144",
@@ -291,25 +301,33 @@
 		"Y": "#DAD19F",
 		"Z": "#D9D09A"
 	},
+	"fire_coral_block.json": {
+		"Y": "#B52633",
+		"Z": "#B52633"
+	},
 	"white_concrete.json": {
 		"Y": "#CFD5D6",
 		"Z": "#CFD5D6"
+	},
+	"gray_terracotta.json": {
+		"Y": "#3A2B24",
+		"Z": "#3A2B24"
 	},
 	"piston.json": {
 		"Y": "#848484",
 		"Z": "#7E7E7E"
 	},
-	"yellow_stained_hardened_clay.json": {
-		"Y": "#BB8624",
-		"Z": "#BB8624"
-	},
 	"sponge.json": {
 		"Y": "#BFC04E",
 		"Z": "#BFC04E"
 	},
-	"noteblock.json": {
-		"Y": "#754934",
-		"Z": "#754934"
+	"horn_coral.json": {
+		"Z": "#342D10",
+		"Z_alpha": 0.25098
+	},
+	"red_terracotta.json": {
+		"Y": "#903E2F",
+		"Z": "#903E2F"
 	},
 	"end_stone.json": {
 		"Y": "#C8C38C",
@@ -319,69 +337,67 @@
 		"Y": "#9C9C9C",
 		"Z": "#9C9C9C"
 	},
+	"dead_tube_coral_fan.json": {
+		"Y": "#94918F",
+		"Y_alpha": 0.49804
+	},
 	"stone_button.json": {
 		"Y": "#797979",
 		"Z": "#797979"
 	},
-	"green_stained_hardened_clay.json": {
-		"Y": "#4C532B",
-		"Z": "#4C532B"
-	},
-	"fence_gate.json": {
-		"Y": "#977B4D",
-		"Z": "#977B4D"
-	},
-	"silver_concrete.json": {
-		"Y": "#7D7D73",
-		"Z": "#7D7D73"
+	"infested_cobblestone.json": {
+		"Y": "#9C9C9C",
+		"Z": "#9C9C9C"
 	},
 	"chorus_flower.json": {
 		"Y": "#F3EEF3",
 		"Z": "#6A486A"
 	},
-	"spruce_stairs.json": {
-		"Y": "#644B2D",
-		"Z": "#644B2D"
+	"lime_terracotta.json": {
+		"Y": "#697635",
+		"Z": "#697635"
 	},
-	"acacia_double_slab.json": {
-		"Y": "#A45A32",
-		"Z": "#A45A32"
+	"potted_orange_tulip.json": {
+		"Y": "#78553A",
+		"Z": "#8EAA6A",
+		"Z_alpha": 0.49804
 	},
-	"red_stained_hardened_clay.json": {
-		"Y": "#903E2F",
-		"Z": "#903E2F"
+	"spruce_sapling.json": {
+		"Z": "#3F2912"
 	},
-	"dark_oak_stairs.json": {
-		"Y": "#3B2612",
-		"Z": "#3B2612"
-	},
-	"jungle_stairs.json": {
-		"Y": "#956B4C",
-		"Z": "#956B4C"
+	"dead_brain_coral_block.json": {
+		"Y": "#716865",
+		"Z": "#716865"
 	},
 	"glowstone.json": {
 		"Y": "#69613B",
 		"Z": "#69613B"
 	},
-	"sandstone_double_slab.json": {
-		"Y": "#DAD19F",
-		"Z": "#DDD5A8"
+	"dried_kelp_block.json": {
+		"Y": "#73745D",
+		"Z": "#4B5243"
 	},
 	"blue_stained_glass_pane.json": {
 		"Y": "#3049A9",
 		"Y_alpha": 0.90196
 	},
-	"acacia_fence.json": {
-		"Y": "#A45A32",
-		"Z": "#A45A32"
+	"potted_white_tulip.json": {
+		"Y": "#78553A",
+		"Z": "#8CA867",
+		"Z_alpha": 0.49804
 	},
 	"cyan_stained_glass_pane.json": {
 		"Y": "#497991",
 		"Y_alpha": 0.90196
 	},
-	"unpowered_repeater.json": {
-		"Y": "#460100",
-		"Z": "#A5A5A5"
+	"potted_pink_tulip.json": {
+		"Y": "#78553A",
+		"Z": "#90AF6B",
+		"Z_alpha": 0.49804
+	},
+	"acacia_fence.json": {
+		"Y": "#A45A32",
+		"Z": "#A45A32"
 	},
 	"red_concrete.json": {
 		"Y": "#8F2121",
@@ -395,6 +411,9 @@
 		"Y": "#6091CE",
 		"Y_alpha": 0.90196
 	},
+	"dead_bubble_coral.json": {
+		"Z": "#6D6664"
+	},
 	"iron_bars.json": {
 		"Y": "#5E5C5A"
 	},
@@ -406,9 +425,8 @@
 		"Y": "#259AA1",
 		"Z": "#259AA1"
 	},
-	"brown_glazed_terracotta.json": {
-		"Y": "#9A6E48",
-		"Z": "#9A6E48"
+	"acacia_sapling.json": {
+		"Z": "#717B17"
 	},
 	"blue_carpet.json": {
 		"Y": "#33369A",
@@ -418,82 +436,93 @@
 		"Y": "#BBA014",
 		"Z": "#BBA014"
 	},
+	"melon.json": {
+		"Y": "#838B21",
+		"Z": "#5A671A"
+	},
 	"white_carpet.json": {
 		"Y": "#E4E7E8",
 		"Z": "#E4E7E8"
 	},
-	"sandstone_stairs.json": {
-		"Y": "#DAD19F",
-		"Z": "#DDD5A8"
+	"potted_red_tulip.json": {
+		"Y": "#78553A",
+		"Z": "#94B36F",
+		"Z_alpha": 0.49804
 	},
-	"red_nether_brick.json": {
-		"Y": "#390305",
-		"Z": "#390305"
+	"tube_coral_wall_fan.json": {
+		"Y": "#17295B",
+		"Y_alpha": 0.49804
 	},
 	"red_tulip.json": {
 		"Z": "#94B36F",
 		"Z_alpha": 0.49804
 	},
-	"spruce_fence_gate.json": {
-		"Y": "#644B2D",
-		"Z": "#644B2D"
+	"bubble_coral_fan.json": {
+		"Y": "#721174",
+		"Y_alpha": 0.74902
 	},
-	"gray_stained_hardened_clay.json": {
-		"Y": "#3A2B24",
-		"Z": "#3A2B24"
+	"nether_bricks.json": {
+		"Y": "#251317",
+		"Z": "#251317"
 	},
 	"lapis_ore.json": {
 		"Y": "#5F6B8A",
 		"Z": "#5F6B8A"
 	},
-	"jungle_double_slab.json": {
-		"Y": "#956B4C",
-		"Z": "#956B4C"
+	"cobweb.json": {
+		"Z": "#EDEDED"
 	},
 	"andesite.json": {
 		"Y": "#8E8F84",
 		"Z": "#8E8F84"
 	},
-	"golden_rail.json": {
-		"Y": "#390000"
+	"polished_diorite.json": {
+		"Y": "#D1D1D3",
+		"Z": "#D1D1D3"
 	},
-	"yellow_glazed_terracotta.json": {
-		"Y": "#E4B249",
-		"Z": "#E4B249"
+	"infested_stone.json": {
+		"Y": "#797979",
+		"Z": "#797979"
 	},
-	"dark_oak_door.json": {
-		"Z": "#432B15"
+	"repeater.json": {
+		"Y": "#460100",
+		"Z": "#A5A5A5"
 	},
 	"birch_fence.json": {
 		"Y": "#BEAF7A",
 		"Z": "#BEAF7A"
 	},
-	"pink_glazed_terracotta.json": {
-		"Y": "#F4A6BF",
-		"Z": "#F4A6BF"
+	"potted_spruce_sapling.json": {
+		"Y": "#78553A",
+		"Z": "#3F2912"
 	},
-	"dark_oak_leaves.json": {
-		"Y": "#263010",
-		"Y_alpha": 0.49804,
-		"Z": "#263010",
-		"Z_alpha": 0.49804
+	"redstone_wall_torch.json": {
+		"Y": "#4E2819",
+		"Z": "#4E2819"
+	},
+	"terracotta.json": {
+		"Y": "#985E44",
+		"Z": "#985E44"
+	},
+	"potted_acacia_sapling.json": {
+		"Y": "#78553A",
+		"Z": "#717B17"
 	},
 	"blue_wool.json": {
 		"Y": "#33369A",
 		"Z": "#33369A"
+	},
+	"dark_oak_leaves.json": {
+		"Y": "#21300D",
+		"Y_alpha": 0.49804,
+		"Z": "#21300D",
+		"Z_alpha": 0.49804
 	},
 	"brown_stained_glass.json": {
 		"Y": "#664C33",
 		"Y_alpha": 0.41569,
 		"Z": "#664C33",
 		"Z_alpha": 0.41569
-	},
-	"iron_door.json": {
-		"Z": "#9F9F9F"
-	},
-	"brick_block.json": {
-		"Y": "#A8796C",
-		"Z": "#A8796C"
 	},
 	"jungle_leaves.json": {
 		"Y": "#46651B",
@@ -515,10 +544,6 @@
 		"Y": "#956B4C",
 		"Z": "#956B4C"
 	},
-	"white_stained_hardened_clay.json": {
-		"Y": "#D2B3A2",
-		"Z": "#D2B3A2"
-	},
 	"diamond_block.json": {
 		"Y": "#69DFDA",
 		"Z": "#69DFDA"
@@ -527,21 +552,17 @@
 		"Y": "#3B2612",
 		"Z": "#3B2612"
 	},
-	"stone_brick_double_slab.json": {
-		"Y": "#6F6F6F",
-		"Z": "#6F6F6F"
-	},
 	"spruce_leaves.json": {
 		"Y": "#2C4B27",
 		"Z": "#2C4B27"
 	},
-	"smooth_diorite.json": {
-		"Y": "#D1D1D3",
-		"Z": "#D1D1D3"
+	"dead_tube_coral_block.json": {
+		"Y": "#7A716E",
+		"Z": "#7A716E"
 	},
-	"purple_glazed_terracotta.json": {
-		"Y": "#9743CD",
-		"Z": "#9743CD"
+	"dead_bubble_coral_fan.json": {
+		"Y": "#867E79",
+		"Y_alpha": 0.74902
 	},
 	"end_portal_frame.json": {
 		"Y": "#041511",
@@ -551,21 +572,17 @@
 		"Y": "#2D2D2D",
 		"Z": "#414141"
 	},
+	"light_gray_carpet.json": {
+		"Y": "#8A8A82",
+		"Z": "#8A8A82"
+	},
+	"infested_mossy_stone_bricks.json": {
+		"Y": "#6B735C",
+		"Z": "#6B735C"
+	},
 	"white_tulip.json": {
 		"Z": "#8CA867",
 		"Z_alpha": 0.49804
-	},
-	"hardened_clay.json": {
-		"Y": "#985E44",
-		"Z": "#985E44"
-	},
-	"birch_stairs.json": {
-		"Y": "#BEAF7A",
-		"Z": "#BEAF7A"
-	},
-	"silver_wool.json": {
-		"Y": "#8A8A82",
-		"Z": "#8A8A82"
 	},
 	"yellow_stained_glass.json": {
 		"Y": "#E5E533",
@@ -573,27 +590,15 @@
 		"Z": "#E5E533",
 		"Z_alpha": 0.41569
 	},
-	"portal.json": {
-		"Z": "#5D11AB",
-		"Z_alpha": 0.67059
-	},
 	"nether_wart_block.json": {
 		"Y": "#790708",
 		"Z": "#790708"
-	},
-	"spruce_double_slab.json": {
-		"Y": "#644B2D",
-		"Z": "#644B2D"
 	},
 	"orange_concrete_powder.json": {
 		"Y": "#E38018",
 		"Z": "#E38018"
 	},
-	"blue_stained_hardened_clay.json": {
-		"Y": "#4B3C5B",
-		"Z": "#4B3C5B"
-	},
-	"cracked_stonebrick.json": {
+	"infested_cracked_stone_bricks.json": {
 		"Y": "#5E5E5E",
 		"Z": "#5E5E5E"
 	},
@@ -601,25 +606,30 @@
 		"Y": "#698129",
 		"Z": "#698129"
 	},
+	"bubble_coral_block.json": {
+		"Y": "#B61BAF",
+		"Z": "#B61BAF"
+	},
+	"tube_coral_block.json": {
+		"Y": "#314FD0",
+		"Z": "#314FD0"
+	},
 	"purpur_block.json": {
 		"Y": "#9C749C",
 		"Z": "#9C749C"
 	},
-	"black_stained_hardened_clay.json": {
-		"Y": "#261710",
-		"Z": "#261710"
+	"chiseled_stone_bricks.json": {
+		"Y": "#5D5D5D",
+		"Z": "#5D5D5D"
 	},
-	"lime_glazed_terracotta.json": {
-		"Y": "#7FCC19",
-		"Z": "#7FCC19"
+	"potted_dandelion.json": {
+		"Y": "#78553A",
+		"Z": "#3C3E00",
+		"Z_alpha": 0.25098
 	},
-	"fence.json": {
-		"Y": "#977B4D",
-		"Z": "#977B4D"
-	},
-	"brown_mushroom_block.json": {
-		"Y": "#C8A977",
-		"Z": "#C8A977"
+	"magenta_terracotta.json": {
+		"Y": "#97596D",
+		"Z": "#97596D"
 	},
 	"yellow_wool.json": {
 		"Y": "#F7C123",
@@ -637,9 +647,31 @@
 		"Y": "#6E4526",
 		"Z": "#6E4526"
 	},
+	"dead_fire_coral.json": {
+		"Z": "#867D78"
+	},
+	"light_gray_concrete_powder.json": {
+		"Y": "#9E9E97",
+		"Z": "#9E9E97"
+	},
+	"white_terracotta.json": {
+		"Y": "#D2B3A2",
+		"Z": "#D2B3A2"
+	},
+	"dead_bubble_coral_block.json": {
+		"Y": "#8F8782",
+		"Z": "#8F8782"
+	},
+	"potted_red_mushroom.json": {
+		"Y": "#78553A"
+	},
 	"nether_brick_fence.json": {
 		"Y": "#251317",
 		"Z": "#251317"
+	},
+	"brain_coral_block.json": {
+		"Y": "#D05099",
+		"Z": "#D05099"
 	},
 	"light_blue_concrete.json": {
 		"Y": "#2389C7",
@@ -649,9 +681,13 @@
 		"Y": "#A949CE",
 		"Y_alpha": 0.90196
 	},
-	"quartz_stairs.json": {
-		"Y": "#EAE7E0",
-		"Z": "#EAE7E0"
+	"pink_terracotta.json": {
+		"Y": "#A24F4F",
+		"Z": "#A24F4F"
+	},
+	"cyan_terracotta.json": {
+		"Y": "#575B5B",
+		"Z": "#575B5B"
 	},
 	"command_block.json": {
 		"Y": "#CE7A77",
@@ -662,6 +698,9 @@
 		"Y_alpha": 0.49804,
 		"Z": "#1B2F18",
 		"Z_alpha": 0.49804
+	},
+	"dead_horn_coral_fan.json": {
+		"Y": "#97908B"
 	},
 	"orange_carpet.json": {
 		"Y": "#EE700F",
@@ -677,13 +716,21 @@
 		"Y": "#161321",
 		"Z": "#161321"
 	},
-	"magenta_glazed_terracotta.json": {
-		"Y": "#C851BF",
-		"Z": "#C851BF"
+	"stone_bricks.json": {
+		"Y": "#6F6F6F",
+		"Z": "#6F6F6F"
 	},
 	"birch_planks.json": {
 		"Y": "#BEAF7A",
 		"Z": "#BEAF7A"
+	},
+	"infested_chiseled_stone_bricks.json": {
+		"Y": "#5D5D5D",
+		"Z": "#5D5D5D"
+	},
+	"carved_pumpkin.json": {
+		"Y": "#CD9800",
+		"Z": "#BD7012"
 	},
 	"jukebox.json": {
 		"Y": "#181514",
@@ -693,19 +740,7 @@
 		"Y": "#EC85A6",
 		"Z": "#EC85A6"
 	},
-	"purpur_stairs.json": {
-		"Y": "#9C749C",
-		"Z": "#9C749C"
-	},
 	"redstone_ore.json": {
-		"Y": "#995A5A",
-		"Z": "#995A5A"
-	},
-	"snow_layer.json": {
-		"Y": "#F0F9F9",
-		"Z": "#F0F9F9"
-	},
-	"lit_redstone_ore.json": {
 		"Y": "#995A5A",
 		"Z": "#995A5A"
 	},
@@ -727,17 +762,9 @@
 		"Y": "#F0F9F9",
 		"Z": "#F0F9F9"
 	},
-	"quartz_ore.json": {
-		"Y": "#958078",
-		"Z": "#958078"
-	},
 	"brown_carpet.json": {
 		"Y": "#6E4526",
 		"Z": "#6E4526"
-	},
-	"unpowered_comparator.json": {
-		"Y": "#E4A99F",
-		"Z": "#A5A5A5"
 	},
 	"white_stained_glass.json": {
 		"Y": "#FFFFFF",
@@ -757,6 +784,10 @@
 		"Y": "#E6799E",
 		"Y_alpha": 0.90196
 	},
+	"nether_quartz_ore.json": {
+		"Y": "#958078",
+		"Z": "#958078"
+	},
 	"stone_slab.json": {
 		"Y": "#A5A5A5",
 		"Z": "#A4A4A4"
@@ -765,36 +796,52 @@
 		"Y": "#DFDFE1",
 		"Z": "#DFDFE1"
 	},
+	"bubble_coral.json": {
+		"Z": "#7C0C83"
+	},
+	"black_terracotta.json": {
+		"Y": "#261710",
+		"Z": "#261710"
+	},
+	"cracked_stone_bricks.json": {
+		"Y": "#5E5E5E",
+		"Z": "#5E5E5E"
+	},
 	"light_blue_stained_glass.json": {
 		"Y": "#6699D8",
 		"Y_alpha": 0.41569,
 		"Z": "#6699D8",
 		"Z_alpha": 0.41569
 	},
+	"blue_terracotta.json": {
+		"Y": "#4B3C5B",
+		"Z": "#4B3C5B"
+	},
 	"pumpkin_stem.json": {
 		"Z": "#579B1B"
+	},
+	"powered_rail.json": {
+		"Y": "#390000"
 	},
 	"black_concrete.json": {
 		"Y": "#090B10",
 		"Z": "#090B10"
 	},
-	"cyan_stained_hardened_clay.json": {
-		"Y": "#575B5B",
-		"Z": "#575B5B"
+	"potted_brown_mushroom.json": {
+		"Y": "#78553A"
 	},
-	"lime_stained_hardened_clay.json": {
-		"Y": "#697635",
-		"Z": "#697635"
-	},
-	"cobblestone_double_slab.json": {
-		"Y": "#9C9C9C",
-		"Z": "#9C9C9C"
+	"oak_door.json": {
+		"Z": "#8C6A35"
 	},
 	"cyan_stained_glass.json": {
 		"Y": "#4C7F99",
 		"Y_alpha": 0.41569,
 		"Z": "#4C7F99",
 		"Z_alpha": 0.41569
+	},
+	"note_block.json": {
+		"Y": "#754934",
+		"Z": "#754934"
 	},
 	"dispenser.json": {
 		"Y": "#7E7E7E",
@@ -810,15 +857,8 @@
 		"Y": "#977B4D",
 		"Z": "#977B4D"
 	},
-	"spruce_door.json": {
-		"Z": "#775934"
-	},
 	"glass_pane.json": {
 		"Y": "#C9E8EC"
-	},
-	"brick_double_slab.json": {
-		"Y": "#A8796C",
-		"Z": "#A8796C"
 	},
 	"pink_tulip.json": {
 		"Z": "#90AF6B",
@@ -836,6 +876,11 @@
 		"Y": "#E2EAE2",
 		"Z": "#E2EAE2"
 	},
+	"potted_allium.json": {
+		"Y": "#78553A",
+		"Z": "#A3AB89",
+		"Z_alpha": 0.74902
+	},
 	"oak_leaves.json": {
 		"Y": "#21300D",
 		"Y_alpha": 0.49804,
@@ -846,9 +891,11 @@
 		"Y": "#E06101",
 		"Z": "#E06101"
 	},
-	"gray_glazed_terracotta.json": {
-		"Y": "#7F8081",
-		"Z": "#7F8081"
+	"light_gray_stained_glass.json": {
+		"Y": "#999999",
+		"Y_alpha": 0.41569,
+		"Z": "#999999",
+		"Z_alpha": 0.41569
 	},
 	"bone_block.json": {
 		"Y": "#E9E6D5",
@@ -866,25 +913,33 @@
 		"Y": "#F1AF15",
 		"Z": "#F1AF15"
 	},
-	"orange_stained_hardened_clay.json": {
-		"Y": "#A25526",
-		"Z": "#A25526"
+	"potted_azure_bluet.json": {
+		"Y": "#78553A",
+		"Z": "#BCC68B",
+		"Z_alpha": 0.74902
 	},
 	"cauldron.json": {
 		"Y": "#2D2D2D",
 		"Z": "#424242"
 	},
-	"pink_stained_hardened_clay.json": {
-		"Y": "#A24F4F",
-		"Z": "#A24F4F"
+	"kelp.json": {
+		"Z": "#59AB30"
 	},
 	"lime_concrete_powder.json": {
 		"Y": "#88C62B",
 		"Z": "#88C62B"
 	},
-	"brown_stained_hardened_clay.json": {
-		"Y": "#4E3324",
-		"Z": "#4E3324"
+	"potted_oak_sapling.json": {
+		"Y": "#78553A",
+		"Z": "#59742F"
+	},
+	"red_nether_bricks.json": {
+		"Y": "#390305",
+		"Z": "#390305"
+	},
+	"nether_portal.json": {
+		"Z": "#5D11AB",
+		"Z_alpha": 0.67059
 	},
 	"blue_concrete_powder.json": {
 		"Y": "#4448A6",
@@ -896,13 +951,17 @@
 		"Z": "#B24CD8",
 		"Z_alpha": 0.41569
 	},
+	"cut_sandstone.json": {
+		"Y": "#DAD19F",
+		"Z": "#E3DAAC"
+	},
+	"fire_coral_fan.json": {
+		"Y": "#410E14",
+		"Y_alpha": 0.49804
+	},
 	"black_carpet.json": {
 		"Y": "#111217",
 		"Z": "#111217"
-	},
-	"powered_repeater.json": {
-		"Y": "#DF0101",
-		"Z": "#A5A5A5"
 	},
 	"clay.json": {
 		"Y": "#A6ABB9",
@@ -912,20 +971,43 @@
 		"Y": "#BE4EB6",
 		"Z": "#BE4EB6"
 	},
+	"snow_block.json": {
+		"Y": "#F0F9F9",
+		"Z": "#F0F9F9"
+	},
+	"grass_block.json": {
+		"Y": "#577235",
+		"Z": "#78553A"
+	},
+	"tall_seagrass.json": {
+		"Z": "#509529"
+	},
 	"gravel.json": {
 		"Y": "#8D8B8A",
 		"Z": "#8D8B8A"
 	},
+	"comparator.json": {
+		"Y": "#E4A99F",
+		"Z": "#A5A5A5"
+	},
 	"detector_rail.json": {
 		"Y": "#A8A8A8"
 	},
-	"nether_brick_stairs.json": {
-		"Y": "#251317",
-		"Z": "#251317"
+	"bricks.json": {
+		"Y": "#A8796C",
+		"Z": "#A8796C"
 	},
-	"iron_trapdoor.json": {
-		"Y": "#CBCBCB",
-		"Z": "#CBCBCB"
+	"polished_andesite.json": {
+		"Y": "#838383",
+		"Z": "#838383"
+	},
+	"oak_trapdoor.json": {
+		"Y": "#8B6834",
+		"Z": "#8B6834"
+	},
+	"potted_poppy.json": {
+		"Y": "#78553A",
+		"Z": "#730205"
 	},
 	"white_concrete_powder.json": {
 		"Y": "#DEE0E1",
@@ -935,29 +1017,13 @@
 		"Y": "#913030",
 		"Y_alpha": 0.90196
 	},
-	"mossy_stonebrick.json": {
-		"Y": "#6B735C",
-		"Z": "#6B735C"
-	},
-	"jungle_fence_gate.json": {
-		"Y": "#956B4C",
-		"Z": "#956B4C"
-	},
-	"mossy_brick_monster_egg.json": {
-		"Y": "#6B735C",
-		"Z": "#6B735C"
+	"light_gray_terracotta.json": {
+		"Y": "#886B62",
+		"Z": "#886B62"
 	},
 	"emerald_ore.json": {
 		"Y": "#4C7E5F",
 		"Z": "#4C7E5F"
-	},
-	"birch_fence_gate.json": {
-		"Y": "#BEAF7A",
-		"Z": "#BEAF7A"
-	},
-	"dark_oak_double_slab.json": {
-		"Y": "#3B2612",
-		"Z": "#3B2612"
 	},
 	"ice.json": {
 		"Y": "#77A9FF",
@@ -965,93 +1031,77 @@
 		"Z": "#77A9FF",
 		"Z_alpha": 0.62353
 	},
+	"kelp_plant.json": {
+		"Z": "#475719"
+	},
 	"sand.json": {
 		"Y": "#E3DAA8",
 		"Z": "#E3DAA8"
-	},
-	"blue_glazed_terracotta.json": {
-		"Y": "#405DBE",
-		"Z": "#405DBE"
 	},
 	"black_stained_glass_pane.json": {
 		"Y": "#181818",
 		"Y_alpha": 0.90196
 	},
-	"heavy_weighted_pressure_plate.json": {
-		"Y": "#E7E7E7",
-		"Z": "#E7E7E7"
+	"wet_sponge.json": {
+		"Y": "#908E36",
+		"Z": "#908E36"
+	},
+	"sea_pickle.json": {
+		"Y": "#575C20",
+		"Z": "#575C20"
 	},
 	"tnt.json": {
 		"Y": "#000000",
 		"Z": "#676767"
 	},
-	"acacia_log.json": {
-		"Y": "#666056",
-		"Z": "#666056"
-	},
-	"melon_block.json": {
-		"Y": "#838B21",
-		"Z": "#5A671A"
-	},
 	"cactus.json": {
 		"Y": "#107D1E",
 		"Z": "#073A0E"
-	},
-	"silver_carpet.json": {
-		"Y": "#8A8A82",
-		"Z": "#8A8A82"
-	},
-	"houstonia.json": {
-		"Z": "#BCC68B",
-		"Z_alpha": 0.74902
 	},
 	"stone.json": {
 		"Y": "#797979",
 		"Z": "#797979"
 	},
-	"black_glazed_terracotta.json": {
-		"Y": "#782325",
-		"Z": "#782325"
+	"stripped_oak_wood.json": {
+		"Y": "#BE9C60",
+		"Z": "#BE9C60"
 	},
 	"gray_stained_glass_pane.json": {
 		"Y": "#494949",
 		"Y_alpha": 0.90196
 	},
-	"stone_double_slab.json": {
-		"Y": "#A5A5A5",
-		"Z": "#A4A4A4"
-	},
 	"fern.json": {
 		"Z": "#4B612E"
+	},
+	"dead_tube_coral_wall_fan.json": {
+		"Y": "#94918F",
+		"Y_alpha": 0.49804
 	},
 	"pink_concrete.json": {
 		"Y": "#D6658F",
 		"Z": "#D6658F"
 	},
-	"waterlily.json": {
-		"Y": "#325919"
-	},
-	"silver_stained_glass.json": {
-		"Y": "#999999",
-		"Y_alpha": 0.41569,
-		"Z": "#999999",
-		"Z_alpha": 0.41569
-	},
 	"obsidian.json": {
 		"Y": "#161321",
 		"Z": "#161321"
+	},
+	"tube_coral.json": {
+		"Z": "#2E5BBD"
 	},
 	"observer.json": {
 		"Y": "#808080",
 		"Z": "#3F0101"
 	},
-	"stone_brick_stairs.json": {
-		"Y": "#6F6F6F",
-		"Z": "#6F6F6F"
+	"attached_pumpkin_stem.json": {
+		"Z": "#579B1B"
 	},
 	"magenta_wool.json": {
 		"Y": "#B940AE",
 		"Z": "#B940AE"
+	},
+	"dead_horn_coral.json": {
+		"Z": "#22201F",
+		"Z_alpha": 0.25098
 	},
 	"orange_wool.json": {
 		"Y": "#EE700F",
@@ -1060,6 +1110,26 @@
 	"prismarine_bricks.json": {
 		"Y": "#75B5A8",
 		"Z": "#75B5A8"
+	},
+	"orange_terracotta.json": {
+		"Y": "#A25526",
+		"Z": "#A25526"
+	},
+	"stripped_oak_log.json": {
+		"Y": "#BE9C60",
+		"Z": "#BE9C60"
+	},
+	"azure_bluet.json": {
+		"Z": "#BCC68B",
+		"Z_alpha": 0.74902
+	},
+	"light_gray_stained_glass_pane.json": {
+		"Y": "#919191",
+		"Y_alpha": 0.90196
+	},
+	"turtle_egg.json": {
+		"Y": "#F5EBC5",
+		"Z": "#F5EBC5"
 	},
 	"green_wool.json": {
 		"Y": "#52691D",
@@ -1073,6 +1143,10 @@
 		"Y": "#F7C123",
 		"Z": "#F7C123"
 	},
+	"infested_stone_bricks.json": {
+		"Y": "#6F6F6F",
+		"Z": "#6F6F6F"
+	},
 	"oak_sapling.json": {
 		"Z": "#59742F"
 	},
@@ -1080,27 +1154,27 @@
 		"Y": "#C5B855",
 		"Z": "#C5B855"
 	},
+	"oak_wood.json": {
+		"Y": "#614D30",
+		"Z": "#614D30"
+	},
+	"oak_fence_gate.json": {
+		"Y": "#977B4D",
+		"Z": "#977B4D"
+	},
 	"bookshelf.json": {
 		"Y": "#977B4D",
 		"Z": "#8E7446"
 	},
-	"green_glazed_terracotta.json": {
-		"Y": "#485A23",
-		"Z": "#485A23"
-	},
-	"jungle_fence.json": {
-		"Y": "#956B4C",
-		"Z": "#956B4C"
-	},
-	"slime.json": {
+	"slime_block.json": {
 		"Y": "#67B752",
 		"Y_alpha": 0.73725,
 		"Z": "#67B752",
 		"Z_alpha": 0.73725
 	},
-	"stone_monster_egg.json": {
-		"Y": "#797979",
-		"Z": "#797979"
+	"jungle_fence.json": {
+		"Y": "#956B4C",
+		"Z": "#956B4C"
 	},
 	"stone_pressure_plate.json": {
 		"Y": "#797979",
@@ -1110,20 +1184,20 @@
 		"Y": "#604930",
 		"Y_alpha": 0.90196
 	},
+	"light_gray_concrete.json": {
+		"Y": "#7D7D73",
+		"Z": "#7D7D73"
+	},
 	"dark_oak_fence.json": {
 		"Y": "#3B2612",
 		"Z": "#3B2612"
 	},
-	"stonebrick.json": {
-		"Y": "#6F6F6F",
-		"Z": "#6F6F6F"
-	},
 	"redstone_torch.json": {
-		"Y": "#EA7F65",
-		"Z": "#EA7F65"
+		"Y": "#4E2819",
+		"Z": "#4E2819"
 	},
-	"birch_door.json": {
-		"Z": "#D1C68C"
+	"brain_coral.json": {
+		"Z": "#DE7CB5"
 	},
 	"red_carpet.json": {
 		"Y": "#9C2522",
@@ -1134,12 +1208,16 @@
 		"Z": "#6CB519"
 	},
 	"daylight_detector.json": {
-		"Y": "#DDD0C0",
+		"Y": "#A8B5C9",
 		"Z": "#493C27"
 	},
 	"light_blue_concrete_powder.json": {
 		"Y": "#50BCDA",
 		"Z": "#50BCDA"
+	},
+	"brown_terracotta.json": {
+		"Y": "#4E3324",
+		"Z": "#4E3324"
 	},
 	"quartz_block.json": {
 		"Y": "#EAE7E0",
@@ -1148,6 +1226,10 @@
 	"lapis_block.json": {
 		"Y": "#25438E",
 		"Z": "#25438E"
+	},
+	"dead_brain_coral_fan.json": {
+		"Y": "#746A66",
+		"Y_alpha": 0.25098
 	},
 	"cyan_carpet.json": {
 		"Y": "#15868F",
@@ -1161,10 +1243,6 @@
 		"Y": "#9C2522",
 		"Z": "#9C2522"
 	},
-	"powered_comparator.json": {
-		"Y": "#E4A99F",
-		"Z": "#A5A5A5"
-	},
 	"gray_wool.json": {
 		"Y": "#3D4245",
 		"Z": "#3D4245"
@@ -1172,6 +1250,10 @@
 	"furnace.json": {
 		"Y": "#7E7E7E",
 		"Z": "#7D7D7D"
+	},
+	"dead_fire_coral_fan.json": {
+		"Y": "#635E5C",
+		"Y_alpha": 0.49804
 	},
 	"orange_stained_glass.json": {
 		"Y": "#D87F33",
@@ -1187,18 +1269,6 @@
 		"Y": "#7426A7",
 		"Z": "#7426A7"
 	},
-	"red_sandstone_slab.json": {
-		"Y": "#A6541E",
-		"Z": "#A95620"
-	},
-	"cracked_brick_monster_egg.json": {
-		"Y": "#5E5E5E",
-		"Z": "#5E5E5E"
-	},
-	"birch_double_slab.json": {
-		"Y": "#BEAF7A",
-		"Z": "#BEAF7A"
-	},
 	"chiseled_quartz_block.json": {
 		"Y": "#EAE7E0",
 		"Z": "#E5E1D8"
@@ -1206,14 +1276,6 @@
 	"dropper.json": {
 		"Y": "#7E7E7E",
 		"Z": "#7D7D7D"
-	},
-	"chiseled_brick_monster_egg.json": {
-		"Y": "#5D5D5D",
-		"Z": "#5D5D5D"
-	},
-	"light_blue_glazed_terracotta.json": {
-		"Y": "#AFDBEC",
-		"Z": "#AFDBEC"
 	},
 	"coal_block.json": {
 		"Y": "#131313",
@@ -1223,25 +1285,9 @@
 		"Y": "#3AAAD6",
 		"Z": "#3AAAD6"
 	},
-	"end_bricks.json": {
-		"Y": "#C7C38D",
-		"Z": "#C7C38D"
-	},
-	"red_mushroom_block.json": {
-		"Y": "#C8A977",
-		"Z": "#C8A977"
-	},
 	"dragon_egg.json": {
 		"Y": "#0C0C0E",
 		"Z": "#0C0C0E"
-	},
-	"tall_grass.json": {
-		"Z": "#374822",
-		"Z_alpha": 0.74902
-	},
-	"cyan_glazed_terracotta.json": {
-		"Y": "#286E70",
-		"Z": "#286E70"
 	},
 	"green_carpet.json": {
 		"Y": "#52691D",
@@ -1252,23 +1298,11 @@
 		"Z": "#707070",
 		"Z_alpha": 0.49804
 	},
-	"smooth_andesite.json": {
-		"Y": "#838383",
-		"Z": "#838383"
-	},
 	"acacia_leaves.json": {
-		"Y": "#263010",
+		"Y": "#21300D",
 		"Y_alpha": 0.49804,
-		"Z": "#263010",
+		"Z": "#21300D",
 		"Z_alpha": 0.49804
-	},
-	"light_blue_stained_hardened_clay.json": {
-		"Y": "#726D8A",
-		"Z": "#726D8A"
-	},
-	"silver_concrete_powder.json": {
-		"Y": "#9E9E97",
-		"Z": "#9E9E97"
 	},
 	"purpur_pillar.json": {
 		"Y": "#A97EA9",
@@ -1276,10 +1310,6 @@
 	},
 	"activator_rail.json": {
 		"Y": "#390000"
-	},
-	"oak_double_slab.json": {
-		"Y": "#977B4D",
-		"Z": "#977B4D"
 	},
 	"acacia_planks.json": {
 		"Y": "#A45A32",
@@ -1289,6 +1319,9 @@
 		"Y": "#8136B1",
 		"Z": "#8136B1"
 	},
+	"dead_brain_coral.json": {
+		"Z": "#9A9490"
+	},
 	"redstone_wire.json": {
 		"Y": "#B5B5B5",
 		"Y_alpha": 0.74902
@@ -1297,16 +1330,8 @@
 		"Y": "#DAD19F",
 		"Z": "#DDD5A8"
 	},
-	"magma.json": {
-		"Y": "#E66410",
-		"Z": "#E66410"
-	},
 	"sunflower.json": {
 		"Z": "#4B7B33"
-	},
-	"silver_stained_hardened_clay.json": {
-		"Y": "#886B62",
-		"Z": "#886B62"
 	},
 	"poppy.json": {
 		"Z": "#730205"
@@ -1317,13 +1342,13 @@
 		"Z": "#4C4C4C",
 		"Z_alpha": 0.41569
 	},
-	"purpur_double_slab.json": {
-		"Y": "#9C749C",
-		"Z": "#9C749C"
-	},
 	"white_stained_glass_pane.json": {
 		"Y": "#F3F3F3",
 		"Y_alpha": 0.90196
+	},
+	"brain_coral_fan.json": {
+		"Y": "#301124",
+		"Y_alpha": 0.25098
 	},
 	"emerald_block.json": {
 		"Y": "#63EA89",
@@ -1332,10 +1357,6 @@
 	"chain_command_block.json": {
 		"Y": "#864341",
 		"Z": "#864341"
-	},
-	"lit_pumpkin.json": {
-		"Y": "#CD9800",
-		"Z": "#BD7012"
 	},
 	"soul_sand.json": {
 		"Y": "#453227",
@@ -1349,13 +1370,16 @@
 		"Y": "#454545",
 		"Z": "#454545"
 	},
-	"quartz_double_slab.json": {
-		"Y": "#EAE7E0",
-		"Z": "#EAE7E0"
+	"structure_block.json": {
+		"Y": "#D7C2D7",
+		"Z": "#D7C2D7"
 	},
 	"lava": {
 		"Y": "#CE4609",
 		"Z": "#CE4609"
+	},
+	"fire_coral.json": {
+		"Z": "#A2222F"
 	},
 	"lime_stained_glass.json": {
 		"Y": "#7FCC19",
@@ -1364,7 +1388,7 @@
 		"Z_alpha": 0.41569
 	},
 	"vine.json": {
-		"Z": "#0B0F07",
+		"Z": "#090E03",
 		"Z_alpha": 0.25098
 	},
 	"blue_stained_glass.json": {
@@ -1373,9 +1397,13 @@
 		"Z": "#334CB2",
 		"Z_alpha": 0.41569
 	},
-	"wooden_pressure_plate.json": {
-		"Y": "#977B4D",
-		"Z": "#977B4D"
+	"smooth_stone.json": {
+		"Y": "#A5A5A5",
+		"Z": "#A5A5A5"
+	},
+	"end_stone_bricks.json": {
+		"Y": "#C7C38D",
+		"Z": "#C7C38D"
 	},
 	"coal_ore.json": {
 		"Y": "#6B6B6B",
@@ -1384,10 +1412,6 @@
 	"repeating_command_block.json": {
 		"Y": "#AC6967",
 		"Z": "#A85451"
-	},
-	"smooth_granite.json": {
-		"Y": "#956B5B",
-		"Z": "#956B5B"
 	},
 	"blue_concrete.json": {
 		"Y": "#2C2E8F",
@@ -1403,6 +1427,9 @@
 		"Z": "#7F3FB2",
 		"Z_alpha": 0.41569
 	},
+	"attached_melon_stem.json": {
+		"Z": "#579B1B"
+	},
 	"redstone_block.json": {
 		"Y": "#740F06",
 		"Z": "#740F06"
@@ -1415,17 +1442,8 @@
 		"Y": "#446055",
 		"Z": "#446055"
 	},
-	"chiseled_stonebrick.json": {
-		"Y": "#5D5D5D",
-		"Z": "#5D5D5D"
-	},
-	"cobblestone_monster_egg.json": {
-		"Y": "#9C9C9C",
-		"Z": "#9C9C9C"
-	},
-	"stone_stairs.json": {
-		"Y": "#9C9C9C",
-		"Z": "#9C9C9C"
+	"lily_pad.json": {
+		"Y": "#325919"
 	},
 	"orange_tulip.json": {
 		"Z": "#8EAA6A",
@@ -1435,13 +1453,21 @@
 		"Y": "#928A84",
 		"Z": "#928A84"
 	},
+	"polished_granite.json": {
+		"Y": "#956B5B",
+		"Z": "#956B5B"
+	},
 	"cobblestone.json": {
 		"Y": "#9C9C9C",
 		"Z": "#9C9C9C"
 	},
-	"acacia_stairs.json": {
-		"Y": "#A45A32",
-		"Z": "#A45A32"
+	"blue_ice.json": {
+		"Y": "#70A7FD",
+		"Z": "#70A7FD"
+	},
+	"purple_terracotta.json": {
+		"Y": "#784757",
+		"Z": "#784757"
 	},
 	"redstone_lamp.json": {
 		"Y": "#9C6746",

@@ -153,6 +153,12 @@ with (new(obj_block))
 			wind_zmin = windmap[?"ymin"]
 	}
 	
+	// Is always waterlogged
+	if (is_real(map[?"waterlogged"]))
+		waterlogged = map[?"waterlogged"]
+	else
+		waterlogged = false
+		
 	// Requires render models
 	if (is_real(map[?"require_models"]))
 		require_models = map[?"require_models"]
@@ -186,6 +192,7 @@ with (new(obj_block))
 	state_id_model_obj = null
 	state_id_brightness = null
 	state_id_light_bleeding = null
+	
 	for (var sid = 0; sid < state_id_amount; sid++)
 	{
 		// Get active file and properties

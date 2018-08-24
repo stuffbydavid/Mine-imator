@@ -370,13 +370,8 @@ with (new(obj_block_render_model))
 							
 							// Check color
 							var col = mc_assets.block_texture_color_map[?texname];
-							if (!is_undefined(col))
-							{
-								if (col = "water")
-								{
-									face_block_vbuffer[nd] = e_block_vbuffer.WATER
-								}
-							}
+							if (!is_undefined(col) && col = "water")
+								face_block_vbuffer[nd] = e_block_vbuffer.WATER
 							
 							sheetwidth = block_sheet_ani_width
 							sheetheight = block_sheet_ani_height
@@ -398,8 +393,6 @@ with (new(obj_block_render_model))
 									face_block_vbuffer[nd] = e_block_vbuffer.GRASS
 								else if (col = "leaves")
 									face_block_vbuffer[nd] = e_block_vbuffer.LEAVES
-								else if (col = "water")
-									face_block_vbuffer[nd] = e_block_vbuffer.WATER
 							}
 						}
 					
@@ -412,7 +405,10 @@ with (new(obj_block_render_model))
 							if ((nd = e_dir.UP && other.preview_color_zp = null) ||
 								(nd = e_dir.SOUTH && other.preview_color_yp = null))
 							{
-								buffer_current = test((face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED), load_assets_block_preview_ani_buffer, load_assets_block_preview_buffer)
+								if (face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED || face_block_vbuffer[nd] = e_block_vbuffer.WATER)
+									buffer_current = load_assets_block_preview_ani_buffer
+								else
+									buffer_current = load_assets_block_preview_buffer
 						
 								var px, py, alpha;
 								px = slot mod sheetwidth

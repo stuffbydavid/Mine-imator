@@ -220,3 +220,16 @@ vertex_wave_zmin = null
 vertex_wave_zmax = null
 vertex_brightness = 0
 vertex_light_bleeding = 0
+
+// Waterlogged
+if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z))
+{
+	block_current = mc_assets.block_name_map[?"water"]
+	block_generate_liquid()
+	
+	vertex_wave = e_vertex_wave.NONE
+	vertex_wave_zmin = null
+	vertex_wave_zmax = null
+	vertex_brightness = 0
+	vertex_light_bleeding = 0
+}

@@ -25,14 +25,14 @@ for (var i = 0; i < varslen; i += 2)
 	state = block.states_map[?statename]
 	if (is_undefined(state))
 	{
-		log("Undefined state for block " + block.name + ":" + statename)
+		debug("Undefined state for block " + block.name + ":" + statename)
 		continue
 	}
 	
 	valid = state.value_map[?valname]
 	if (is_undefined(valid))
 	{
-		log("Undefined value for block " + block.name + " state " + statename + ": " + valname)
+		debug("Undefined value for block " + block.name + " state " + statename + ": " + valname)
 		continue
 	}
 	

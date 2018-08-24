@@ -91,6 +91,15 @@ while (!buffer_is_eof())
 			buffer_skip(len * 4)
 			break
 		}
+		
+		case e_nbt.TAG_LONG_ARRAY:
+		{
+			var len = buffer_read_int_be();
+			map[?name] = buffer_tell(buffer_current)
+			map[?name + "_NBT_length"] = len
+			buffer_skip(len * 8)
+			break
+		}
 	}
 }
 

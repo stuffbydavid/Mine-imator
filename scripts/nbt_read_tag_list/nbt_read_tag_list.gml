@@ -83,6 +83,11 @@ repeat (listlen)
 			var len = buffer_read_int_be();
 			buffer_skip(len * 4)
 			break
+			
+		case e_nbt.TAG_LONG_ARRAY:
+			var len = buffer_read_int_be();
+			buffer_skip(len * 8)
+			break
 	}
 }
 

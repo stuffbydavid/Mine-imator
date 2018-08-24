@@ -18,6 +18,7 @@ with (mc_builder)
 	stateid = block_get_state_id(block, other.block_state)
 	buffer_fill(block_obj, 0, buffer_s32, block, build_size_total * 4)
 	buffer_fill(block_state_id, 0, buffer_s32, stateid, build_size_total * 4)
+	buffer_fill(block_waterlogged, 0, buffer_u8, false, build_size_total)
 				
 	// Set models
 	for (build_pos_x = 0; build_pos_x < build_size_x; build_pos_x++)

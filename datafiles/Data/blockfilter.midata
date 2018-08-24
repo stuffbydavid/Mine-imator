@@ -1,7 +1,7 @@
 {
 	"active": false,
-	"invert": true,
+	"invert": false,
 	"blocks": [
-		"grass_block"
+		"water"
 	]
 }

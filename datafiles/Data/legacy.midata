@@ -415,8 +415,8 @@
 					"3": "facing=east"
 				},
 				"0x8": {
-					"0": "half=foot",
-					"1": "half=head"
+					"0": "part=foot",
+					"1": "part=head"
 				}
 			}
 		},
@@ -718,22 +718,22 @@
 		"63": {
 			"id": "minecraft:sign",
 			"data": {
-				"0": "orientation=0",
-				"1": "orientation=1",
-				"2": "orientation=2",
-				"3": "orientation=3",
-				"4": "orientation=4",
-				"5": "orientation=5",
-				"6": "orientation=6",
-				"7": "orientation=7",
-				"8": "orientation=8",
-				"9": "orientation=9",
-				"10": "orientation=10",
-				"11": "orientation=11",
-				"12": "orientation=12",
-				"13": "orientation=13",
-				"14": "orientation=14",
-				"15": "orientation=15"
+				"0": "rotation=0",
+				"1": "rotation=1",
+				"2": "rotation=2",
+				"3": "rotation=3",
+				"4": "rotation=4",
+				"5": "rotation=5",
+				"6": "rotation=6",
+				"7": "rotation=7",
+				"8": "rotation=8",
+				"9": "rotation=9",
+				"10": "rotation=10",
+				"11": "rotation=11",
+				"12": "rotation=12",
+				"13": "rotation=13",
+				"14": "rotation=14",
+				"15": "rotation=15"
 			}
 		},
 		"64": {
@@ -2788,6 +2788,9 @@
 				"14": "id=minecraft:red_concrete_powder",
 				"15": "id=minecraft:black_concrete_powder"
 			}
+		},
+		"255": {
+			"id": "minecraft:structure_block"
 		}
 	},
 	"legacy_block_texture_name": {
@@ -4109,7 +4112,7 @@
 		"item/glistering_melon_slice": "item/speckled_melon",
 		"item/tropical_fish": "item/fish_clownfish_raw",
 		"item/tropical_fish_bucket": "item/clownfish_bucket",
-		"item/popped_chorus_fruit": "item/chorus_fruit_popped",
+		"item/popped_chorus_fruit": "item/chorus_fruit_popped"
 	},
 	"legacy_biomes": 
 	{

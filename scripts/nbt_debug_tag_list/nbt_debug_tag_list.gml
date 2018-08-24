@@ -21,6 +21,7 @@ switch (listtype)
 	case e_nbt.TAG_LIST:		listtypestr = "TAG_List"		break
 	case e_nbt.TAG_COMPOUND:	listtypestr = "TAG_Compound"	break
 	case e_nbt.TAG_INT_ARRAY:	listtypestr = "TAG_Int_Array"	break
+	case e_nbt.TAG_LONG_ARRAY:	listtypestr = "TAG_Long_Array"	break
 }
 
 debug("[TAG_List of " + listtypestr + "] " + name)
@@ -52,6 +53,9 @@ for (var i = 0; i < ds_list_size(list); i++)
 			break
 				
 		case e_nbt.TAG_INT_ARRAY:
+			break
+				
+		case e_nbt.TAG_LONG_ARRAY:
 			break
 	}
 }
