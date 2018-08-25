@@ -87,5 +87,8 @@ with (new(obj_block_tl))
 	position[Y] += mc_builder.build_pos_y * block_size
 	position[Z] += mc_builder.build_pos_z * block_size
 	
+	// Get variant
+	variant = block_get_state_id_value(block, stateid, "variant")
+	
 	return id
 }

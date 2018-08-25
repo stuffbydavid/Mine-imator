@@ -43,6 +43,7 @@ background_ground_name = value_get_string(map[?"ground_name"], background_ground
 
 if (load_format < e_project.FORMAT_120)
 {
+	background_ground_name = string_replace(background_ground_name, "blocks/", "block/")
 	var newname = ds_map_find_key(legacy_block_texture_name_map, background_ground_name);
 	if (!is_undefined(newname))
 		background_ground_name = newname

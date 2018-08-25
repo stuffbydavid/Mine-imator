@@ -943,7 +943,7 @@
         "browsecaption": "Open Minecraft world",
         "browseworlds": "Minecraft worlds",
         "worldunsupported": "This world was created in an unsupported Minecraft version and could not be loaded.",
-        "worldopened": "This world is used by another process, possibly Minecraft or MCEdit. Close them and try again.",
+        "worldopened": "This world is used by another process, possibly Minecraft. Close it and try again.",
         "fileopened": "Could not write to file. Check that it's not used by another process.",
         "loadingregion": "Loading region...",
         "overworld": "Overworld",

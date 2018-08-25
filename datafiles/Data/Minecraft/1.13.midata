@@ -1436,11 +1436,11 @@
 			"name": "chest",
 			"type": "chest",
 			"states": {
-				"type": [ "legacy", "single", "left", "right" ],
+				"type": [ "legacy" , "single", "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"double": [ "false", "true" ]
 			},
-			"default_state": "facing=west",
+			"default_state": "facing=west,type=legacy",
 			"timeline": {
 				"model": "chest",
 				"model_state": {
@@ -1533,7 +1533,7 @@
 				"model": "sign",
 				"model_state": "variant=standing",
 				"has_text": true,
-				"text_position": [ 0, 13.25, 0.8 ],
+				"text_position": [ 0, 13.6, 0.8 ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"rotation=0": [ 0, 0, 0 ],
@@ -1629,7 +1629,7 @@
 				"model": "sign",
 				"model_state": "variant=wall",
 				"has_text": true,
-				"text_position": [ 0, 8, 1.5 ],
+				"text_position": [ 0, 8.2, 1.5 ],
 				"position": {
 					"facing=east": [ 0, 0, 8 ],
 					"facing=west": [ 16, 0, 8 ],
@@ -1699,7 +1699,7 @@
 				],
 				"powered": [ "false", "true" ]
 			},
-			"default_state": "powered=false",
+			"default_state": "variant=stone,powered=false",
 			"timeline": {
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
@@ -2363,11 +2363,11 @@
 			"name": "ender_chest",
 			"type": "chest",
 			"states": {
-				"type": [ "legacy", "single", "left", "right" ],
+				"type": [ "legacy" , "single", "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"double": [ "false", "true" ]
 			},
-			"default_state": "facing=west",
+			"default_state": "facing=west,type=legacy",
 			"timeline": {
 				"model": "chest",
 				"model_state": "variant=ender",
@@ -2564,11 +2564,11 @@
 			"name": "trapped_chest",
 			"type": "chest",
 			"states": {
-				"type": [ "legacy", "single", "left", "right" ],
+				"type": [ "legacy" , "single", "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
 				"double": [ "false", "true" ]
 			},
-			"default_state": "facing=west",
+			"default_state": "facing=west,type=legacy",
 			"timeline": {
 				"model": "chest",
 				"model_state": {

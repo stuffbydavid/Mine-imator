@@ -41,6 +41,8 @@ with (new(obj_timeline))
 		
 		block_name = other.block.name
 		block_state = array_copy_1d(other.block.default_state)
+		if (is_string(other.variant))
+			state_vars_add(block_state, array("variant", other.variant))
 		tl_update_scenery_part()
 		
 		texture_filtering = true
@@ -102,9 +104,9 @@ with (new(obj_timeline))
 			value_default[e_value.POS_X] = textpos[X]
 			value_default[e_value.POS_Y] = textpos[Y]
 			value_default[e_value.POS_Z] = textpos[Z]
-			value_default[e_value.SCA_X] = 0.175
-			value_default[e_value.SCA_Y] = 0.175
-			value_default[e_value.SCA_Z] = 0.175
+			value_default[e_value.SCA_X] = 0.165
+			value_default[e_value.SCA_Y] = 0.165
+			value_default[e_value.SCA_Z] = 0.165
 			value_default[e_value.RGB_MUL] = c_black
 			value_type_show[e_value_type.POSITION] = false
 			value_type_show[e_value_type.ROTATION] = false

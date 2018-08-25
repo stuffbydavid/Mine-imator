@@ -76,7 +76,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 			minecraft_color = color
 	}
 	
-	// Minecraft color(Overrides shapes' blend color)
+	// Minecraft color (Overrides shapes' blend color)
 	if (minecraft_color = c_white)
 		render_set_uniform_color("uBlendColor", color_multiply(shader_blend_color, shape.color_blend), shader_blend_alpha * shape.color_alpha)
 	else

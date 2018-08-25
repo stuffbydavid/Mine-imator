@@ -14,6 +14,9 @@ for (var i = 0; i < 4; i++)
 	var textmap = json_decode(line);
 	if (ds_map_valid(textmap))
 	{
+		if (ds_list_valid(textmap[?"extra"]) && ds_list_size(textmap[?"extra"]) > 0)
+			textmap = ds_list_find_value(textmap[?"extra"], 0)
+		
 		if (is_string(textmap[?"text"]))
 			line = textmap[?"text"]
 			

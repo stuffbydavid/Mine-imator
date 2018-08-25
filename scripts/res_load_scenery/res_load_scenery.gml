@@ -160,9 +160,16 @@ switch (load_stage)
 						// ID only
 						else if (!is_undefined(mc_assets.block_id_map[?key]))
 						{
-							paletteblocks[index] = mc_assets.block_id_map[?key]
-							palettestateids[index] = 0
-							palettewaterlogged[index] = paletteblocks[index].waterlogged
+							var block = mc_assets.block_id_map[?key]
+							paletteblocks[index] = block
+							
+							// ID specific vars
+							if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?key]))
+								palettestateids[index] = block_get_state_id(block, block.id_state_vars_map[?key])
+							else
+								palettestateids[index] = 0
+							
+							palettewaterlogged[index] = block.waterlogged
 						}
 					}
 					
@@ -284,10 +291,10 @@ switch (load_stage)
 					{
 						var entity, eid, ex, ey, ez;
 						entity = tileentitylist[|i]
-						eid = entity[?"id"]
 						
 						if (!legacy)
 						{
+							eid = entity[?"Id"]
 							var poslist = entity[?"Pos"];
 							buffer_seek(buffer_current, buffer_seek_start, poslist)
 							ex = buffer_read_int_be()
@@ -296,6 +303,7 @@ switch (load_stage)
 						}
 						else
 						{
+							eid = entity[?"id"]
 							ex = entity[?"x"]
 							ey = entity[?"z"]
 							ez = entity[?"y"]

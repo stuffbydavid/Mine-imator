@@ -119,6 +119,6 @@ if (!build_edge_yn && (facing = "south" || facing = "north"))
 }
 
 if (shape != "straight")
-	block_state_id_current = block_get_state_id(block_current, array("shape", shape, "half", half, "facing", facing))
+	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "shape", shape)
 	
 return 0

@@ -44,6 +44,7 @@ with (new(obj_template))
 			{
 				if (load_format < e_project.FORMAT_120)
 				{
+					itemname = string_replace(itemname, "items/", "item/")
 					var newname = ds_map_find_key(legacy_item_texture_name_map, itemname);
 					if (!is_undefined(newname))
 						itemname = newname
