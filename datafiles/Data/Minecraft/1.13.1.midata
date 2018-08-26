@@ -1,5 +1,5 @@
 {
-	"version": "1.13",
+	"version": "1.13.1",
 	"format": 3,
 	"characters": [
 		{
@@ -582,7 +582,14 @@
 		},
 		{
 			"name": "armor_stand",
-			"file": "armor_stand.mimodel"
+			"file": "armor_stand.mimodel",
+			"states": {
+				"arms": [
+					{ "value": "true" },
+					{ "value": "false", "hide": [ "right_arm", "left_arm" ] }
+				]
+			},
+			"default_state": "arms=false"
 		},
 		{
 			"name": "bed",
@@ -3244,6 +3251,18 @@
 			"id": "minecraft:blue_ice"
 		},
 		{
+			"name": "conduit",
+			"states": {
+				"open": [ "false", "true" ]
+			},
+			"default_state": "open=false",
+			"timeline": {
+				"model": "conduit",
+				"position": [ 8, 0, 8 ]
+			},
+			"id": "minecraft:conduit"
+		},
+		{
 			"name": "sea_pickle",
 			"file": "sea_pickle.json",
 			"waterlogged": true,
@@ -4554,6 +4573,7 @@
 		"item/nautilus_shell",
 		"item/heart_of_the_sea",
 		"item/phantom_membrane",
+		"",
 		"item/clock_00",
 		"item/clock_01",
 		"item/clock_02",

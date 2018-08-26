@@ -136,7 +136,6 @@ if (mouseon && mouse_left_released)
 	menu_button_h = hei
 	menu_item_w = wid
 	menu_item_h = menu_button_h
-	menu_flip = flip
 	menu_include_tl_edit = (menu_name != "timelineeditorparent")
 	menu_model_state = menu_model_state_current
 	menu_block_state = menu_block_state_current
@@ -149,22 +148,14 @@ if (mouseon && mouse_left_released)
 		menu_timeline_init()
 	else
 		menu_transition_init()
+	
+	menu_focus_selected()
 		
 	// Flip
 	if (menu_flip)
-		menu_show = floor((menu_y * 0.9) / menu_item_h)
+		menu_show_amount = floor((menu_y * 0.9) / menu_item_h)
 	else
-		menu_show = floor(((window_height - (menu_y + menu_button_h)) * 0.9) / menu_item_h)
-	
-	// Set scroll
-	for (var m = 0; m < menu_amount; m++)
-	{
-		if (menu_value = menu_item[m].value)
-		{
-			menu_scroll.value = floor(clamp(m - floor(menu_show / 2), 0, max(0, menu_amount - menu_show)) / floor(menu_w / menu_item_w)) * menu_item_h
-			break
-		}
-	}
+		menu_show_amount = floor(((window_height - (menu_y + menu_button_h)) * 0.9) / menu_item_h)
 	
 	return true
 }

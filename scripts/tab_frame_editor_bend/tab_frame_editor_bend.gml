@@ -1,7 +1,8 @@
 /// tab_frame_editor_bend()
 
-var snapval = tab.bend.snap_enabled * tab.bend.snap_size;
-
+if (tl_edit.model_part = null || tl_edit.model_part.bend_part = null)
+	return 0
+	
 // Wheels
 var axis, axislen, axisname;
 axislen = 0
@@ -34,6 +35,7 @@ else if (axislen = 2)
 else
 	wheelx[0] = dw * 0.5
 
+var snapval = tab.bend.snap_enabled * tab.bend.snap_size;
 if (axislen > 0)
 {
 	tab_control(100)

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.0",
-        "lastchange": "2018.07.18"
+        "lastchange": "2018.08.25"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -828,6 +828,7 @@
             "pattern_color": "Pattern color",
             "open": "Open",
             "charging": "Charging",
+            "arms": "Arms",
             "value/": {
                 "steve": "Steve",
                 "alex": "Alex",
@@ -945,6 +946,7 @@
         "worldunsupported": "This world was created in an unsupported Minecraft version and could not be loaded.",
         "worldopened": "This world is used by another process, possibly Minecraft. Close it and try again.",
         "fileopened": "Could not write to file. Check that it's not used by another process.",
+        "noblocks": "No blocks have been selected. Check the selected region and your filter settings (by clicking the Filters button).",
         "loadingregion": "Loading region...",
         "overworld": "Overworld",
         "nether": "Nether",
@@ -1142,6 +1144,7 @@
         "concrete_powder": "Concrete Powder",
         "structure_block": "Structure Block",
         "blue_ice": "Blue Ice",
+        "conduit": "Conduit",
         "sea_pickle": "Sea Pickle",
         "turtle_egg": "Turtle Egg",
         "seagrass": "Seagrass",
@@ -2682,6 +2685,8 @@
             "duplicatetimelinestip": "The key that duplicates the selected timelines.",
             "removetimelines": "Remove timelines",
             "removetimelinestip": "The key that removes the selected timelines.",
+            "createkeyframes": "Create keyframes",
+            "createkeyframestip": "The key that creates keyframes for the selected objects.",
             "copykeyframes": "Copy keyframes",
             "copykeyframestip": "The key that copies the selected keyframes.",
             "cutkeyframes": "Cut keyframes",

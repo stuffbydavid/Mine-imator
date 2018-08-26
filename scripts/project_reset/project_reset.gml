@@ -96,9 +96,9 @@ with (mc_res)
 	res_update_colors()
 
 background_sky_color = c_sky
-background_sky_clouds_color = c_white
-background_sunlight_color = c_white
-background_ambient_color = c_gray
+background_sky_clouds_color = c_clouds
+background_sunlight_color = c_sunlight
+background_ambient_color = c_ambient
 background_night_color = c_night
 
 background_fog_show = true

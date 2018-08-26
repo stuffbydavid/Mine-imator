@@ -44,5 +44,6 @@ else
 with (obj_timeline)
 	tl_update_values()
 tl_update_matrix()
+tl_update_length()
 
 app_update_tl_edit()

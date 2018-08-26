@@ -72,6 +72,9 @@ if (window_busy = "" && !textbox_isediting)
 	if (keyboard_check_pressed(setting_key_remove_timelines) && app_check_control(setting_key_remove_timelines_control))
 		action_tl_remove()
 	
+	if (keyboard_check_pressed(setting_key_create_keyframes) && app_check_control(setting_key_create_keyframes_control))
+		action_tl_keyframes_create()
+		
 	if (keyboard_check_pressed(setting_key_copy_keyframes) && app_check_control(setting_key_copy_keyframes_control))
 		tl_keyframes_copy()
 	

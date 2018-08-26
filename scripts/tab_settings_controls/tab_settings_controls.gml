@@ -92,6 +92,11 @@ draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_remove_ti
 tab_next()
 
 tab_control_keycontrol()
+draw_keycontrol("settingskeycreatekeyframes", dx, dy, dw - capwid2, setting_key_create_keyframes, setting_key_create_keyframes_control, ord("Q"), action_setting_key_create_keyframes, capwid)
+draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_create_keyframes_control, action_setting_key_create_keyframes_control)
+tab_next()
+
+tab_control_keycontrol()
 draw_keycontrol("settingskeycopykeyframes", dx, dy, dw - capwid2, setting_key_copy_keyframes, setting_key_copy_keyframes_control, ord("C"), action_setting_key_copy_keyframes, capwid)
 draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_copy_keyframes_control, action_setting_key_copy_keyframes_control)
 tab_next()

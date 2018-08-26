@@ -53,3 +53,4 @@ else
 }
 
 app_update_tl_edit()
+tl_update_length()

@@ -12,8 +12,8 @@
 #macro mineimator_version			"1.2.0"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2018 Q3"
-#macro gm_runtime					"2.1.4.203"
-#macro minecraft_version			"1.13"
+#macro gm_runtime					"2.1.5.246"
+#macro minecraft_version			"1.13.1"
 
 // File formats
 #macro project_format				e_project.FORMAT_120
@@ -99,6 +99,9 @@
 #macro c_alerts						make_color_rgb(240, 255, 159)
 #macro c_controls					make_color_rgb(40, 40, 40)
 #macro c_sky						make_color_rgb(145, 185, 255)
+#macro c_clouds						make_color_rgb(255, 255, 255)
+#macro c_sunlight					make_color_rgb(252, 255, 199)
+#macro c_ambient					make_color_rgb(105, 110, 161)
 #macro c_night						make_color_rgb(14, 14, 24)
 #macro c_clouds_bottom				make_color_rgb(174, 181, 193)
 #macro c_clouds_top					make_color_rgb(255, 255, 255)

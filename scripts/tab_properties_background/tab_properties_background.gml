@@ -229,12 +229,12 @@ if (!custombiome)
 	tab_control_color()
 }
 
-draw_button_color("backgroundskycloudscolor", dx + (wid + pxpad) * custombiome, dy, wid, background_sky_clouds_color, c_white, false, action_background_sky_clouds_color)
+draw_button_color("backgroundskycloudscolor", dx + (wid + pxpad) * custombiome, dy, wid, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color)
 tab_next()
 
 // Sun light & Ambient color
 tab_control_color()
-draw_button_color("backgroundsunlightcolor", dx, dy, wid, background_sunlight_color, c_white, false, action_background_sunlight_color)
+draw_button_color("backgroundsunlightcolor", dx, dy, wid, background_sunlight_color, c_sunlight, false, action_background_sunlight_color)
 
 if (!custombiome)
 {
@@ -242,7 +242,7 @@ if (!custombiome)
 	tab_control_color()
 }
 
-draw_button_color("backgroundambientcolor", dx + (wid + pxpad) * custombiome, dy, wid, background_ambient_color, c_gray, false, action_background_ambient_color)
+draw_button_color("backgroundambientcolor", dx + (wid + pxpad) * custombiome, dy, wid, background_ambient_color, c_ambient, false, action_background_ambient_color)
 tab_next()
 
 // Night color

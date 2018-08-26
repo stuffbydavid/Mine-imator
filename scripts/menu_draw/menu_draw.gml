@@ -26,6 +26,7 @@ else if (menu_ani_type = "show") //Show
 if (menu_name = "")
 	return 0
 
+var itemsx, itemsy;
 if (menu_type = e_menu.TRANSITION_LIST)
 {
 	itemsx = floor((menu_w - 30 * menu_scroll.needed) / menu_item_w)
@@ -38,7 +39,7 @@ else
 }
 
 var yy, h;
-h = ease(test((menu_ani_type = "show"), "easeoutexpo", "easeinexpo"), menu_ani) * min(itemsy, menu_show) * menu_item_h
+h = ease(test((menu_ani_type = "show"), "easeoutexpo", "easeinexpo"), menu_ani) * min(itemsy, menu_show_amount) * menu_item_h
 yy = test(menu_flip, (menu_y - h), (menu_y + menu_button_h))
 
 draw_drop_shadow(menu_x, yy, menu_w, h)

@@ -74,7 +74,6 @@ movehltl = null
 movehlpos = null
 timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom))
 
-
 // Empty
 if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100)
 	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor(content_height / 2), fa_center, fa_middle, null, 0.3, setting_font_big)
@@ -738,6 +737,10 @@ if (window_busy = "" && mouseinnames)
 		window_focus = string(timeline.ver_scroll)
 	}
 }
+
+// Transition menu
+if (window_busy = "" && mouseintl && mouse_right_pressed && tl_edit)
+	action_tl_transition_menu(tl_edit.value[e_value.TRANSITION])
 
 // Sound resize
 if (mousekfstart)

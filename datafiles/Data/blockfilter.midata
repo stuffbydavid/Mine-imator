@@ -1,5 +1,5 @@
 {
-	"active": false,
+	"active": true,
 	"invert": false,
 	"blocks": [
 		"water"
