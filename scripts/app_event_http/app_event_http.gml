@@ -4,7 +4,7 @@
 if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 {
 	http_assets = null
-	if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)
+	if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok && 0) // TODO enable
 	{
 		var decodedmap = json_decode(async_load[?"result"]);
 		if (ds_map_valid(decodedmap))

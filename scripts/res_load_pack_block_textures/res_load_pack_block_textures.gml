@@ -23,7 +23,7 @@ fileslist = null
 debug_timer_start()
 
 // Used to figure out what new files have been added
-if (dev_mode && dev_mode_debug_unused)
+if (dev_mode_debug_unused)
 {
 	var filesarr = file_find(load_assets_dir + mc_textures_directory + "block\\", ".png");
 	fileslist = ds_list_create()
