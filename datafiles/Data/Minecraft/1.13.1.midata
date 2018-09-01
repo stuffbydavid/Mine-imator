@@ -288,8 +288,8 @@
 			"file": "vex.mimodel",
 			"states": {
 				"charging": [
-					{ "value": "true", "texture": "entity/vex/vex" },
-					{ "value": "false", "texture": "entity/vex/vex_charging" }
+					{ "value": "true", "texture": "entity/illager/vex" },
+					{ "value": "false", "texture": "entity/illager/vex_charging" }
 				]
 			},
 			"default_state": "charging=false"
