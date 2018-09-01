@@ -32,63 +32,13 @@ with (mc_res)
 	font_preview = font
 }
 
-log("Loading Minecraft assets version", app.setting_minecraft_assets_version)
-
-load_assets_file = minecraft_directory + app.setting_minecraft_assets_version + ".midata"
-load_assets_zip_file = minecraft_directory + app.setting_minecraft_assets_version + ".zip"
-
-if (!file_exists_lib(load_assets_file) || !file_exists_lib(load_assets_zip_file))
+// Load assets from version in settings, if it fails, reset to default
+if (!minecraft_assets_load_startup_version())
 {
-	log("Could not find Minecraft assets file/archive " + string(app.setting_minecraft_assets_version) + ". Resetting to default", minecraft_version)
+	log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_version)
 	app.setting_minecraft_assets_version = minecraft_version
-	load_assets_file = minecraft_directory + app.setting_minecraft_assets_version + ".midata"
-	load_assets_zip_file = minecraft_directory + app.setting_minecraft_assets_version + ".zip"
+	if (!minecraft_assets_load_startup_version())
+		return false
 }
-
-if (!file_exists_lib(load_assets_file))
-{
-	log("Could not find Minecraft assets file", load_assets_file)
-	return false
-}
-
-if (!file_exists_lib(load_assets_zip_file))
-{
-	log("Could not find Minecraft assets archive", load_assets_zip_file)
-	return false
-}
-
-// Load specification
-load_assets_type_map = ds_map_create()
-load_assets_map = json_load(load_assets_file, load_assets_type_map)
-if (!ds_map_valid(load_assets_map))
-{
-	log("Could not parse JSON", load_assets_file)
-	ds_map_destroy(load_assets_type_map)
-	return false
-}
-
-// Check format
-var format = load_assets_map[?"format"];
-if (!is_real(format))
-	format = e_minecraft_assets.FORMAT_110_PRE_1
-
-if (format > minecraft_assets_format)
-{
-	log("Too new archive, format", format)
-	return false
-}
-
-load_assets_startup_dir = mc_file_directory + app.setting_minecraft_assets_version + "\\"
-load_assets_dir = load_assets_startup_dir
-load_assets_state_file_map = ds_map_create() // filename -> model
-load_assets_model_file_map = ds_map_create() // filename -> model
-
-// Noise map surface for noisy grass/water from Minecraft: Bedrock Edition
-noise_surf = surface_create(sprite_get_width(spr_noise), sprite_get_height(spr_noise))
-surface_set_target(noise_surf)
-{
-	draw_sprite(spr_noise, 0, 0, 0)
-}
-surface_reset_target()
 
 return true

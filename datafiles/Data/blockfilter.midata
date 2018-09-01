@@ -2,6 +2,6 @@
 	"active": true,
 	"invert": false,
 	"blocks": [
-		"water"
+		"stone"
 	]
 }

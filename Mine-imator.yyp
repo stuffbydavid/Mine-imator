@@ -3815,6 +3815,14 @@
             }
         },
         {
+            "Key": "4241fe94-0079-423e-88b3-05bb9f94c46b",
+            "Value": {
+                "id": "d9da5463-a27e-4a8b-a57f-96023c7b932e",
+                "resourcePath": "scripts\\minecraft_assets_load_startup_version\\minecraft_assets_load_startup_version.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "4246bc54-d997-41d3-a342-b0c26fd553aa",
             "Value": {
                 "id": "3b650bf6-4836-45f4-93f2-82c938bd0fe2",
@@ -16191,6 +16199,7 @@
         "aa47ad0f-6cf7-4085-b03b-3408acb4dac8",
         "a522f2b9-240d-4a9f-870c-858a013c1dd7",
         "5ce98fc8-d86e-4a59-9a92-b13115b255f5",
+        "4241fe94-0079-423e-88b3-05bb9f94c46b",
         "b4fe5db7-2939-4804-b650-c8ee2bb1e9f4",
         "af081791-28a6-4b4a-8220-91956909387c",
         "4a400fa0-0f88-4ab8-a908-82bcf007bd7e",
