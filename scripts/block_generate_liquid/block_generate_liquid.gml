@@ -1,14 +1,19 @@
-/// block_generate_liquid()
+/// block_generate_liquid(waterlogged)
+/// @arg waterlogged
 /// @desc Creates a liquid mesh from the surrounding block data.
+
+var waterlogged = false;
+if (argument_count > 0)
+	waterlogged = argument[0]
 
 var matchxp, matchxn, matchyp, matchyn, matchzp, matchzn;
 var solidxp, solidxn, solidyp, solidyn, solidzp, solidzn;
-matchxp = (!build_edge_xp && (builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z) = block_current || builder_get_waterlogged(build_pos_x + 1, build_pos_y, build_pos_z)))
-matchxn = (!build_edge_xn && (builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z) = block_current || builder_get_waterlogged(build_pos_x - 1, build_pos_y, build_pos_z)))
-matchyp = (!build_edge_yp && (builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z) = block_current || builder_get_waterlogged(build_pos_x, build_pos_y + 1, build_pos_z)))
-matchyn = (!build_edge_yn && (builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z) = block_current || builder_get_waterlogged(build_pos_x, build_pos_y - 1, build_pos_z)))
-matchzp = (!build_edge_zp && (builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1) = block_current || builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z + 1)))
-matchzn = (!build_edge_zn && (builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z - 1) = block_current || builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z - 1)))
+matchxp = (!build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z) = block_current)
+matchxn = (!build_edge_xn && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z) = block_current)
+matchyp = (!build_edge_yp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z) = block_current)
+matchyn = (!build_edge_yn && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z) = block_current)
+matchzp = (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z + 1) = block_current)
+matchzn = (!build_edge_zn && builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z - 1) = block_current)
 solidxp = (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)
 solidxn = (block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)
 solidyp = (block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)
@@ -16,11 +21,22 @@ solidyn = (block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)
 solidzp = (block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)
 solidzn = (block_face_min_depth_zn = e_block_depth.DEPTH0 && block_face_full_zn)
 
+// Waterlogged: No water around, no need to render
+if (waterlogged && !matchxp && !matchxn && !matchyp && !matchyn && !matchzp && !matchzn)
+	return 0
+
+// Match with waterlogged
+matchxp = (matchxp || (!build_edge_xp && builder_get_waterlogged(build_pos_x + 1, build_pos_y, build_pos_z)))
+matchxn = (matchxn || (!build_edge_xn && builder_get_waterlogged(build_pos_x - 1, build_pos_y, build_pos_z)))
+matchyp = (matchyp || (!build_edge_yp && builder_get_waterlogged(build_pos_x, build_pos_y + 1, build_pos_z)))
+matchyn = (matchyn || (!build_edge_yn && builder_get_waterlogged(build_pos_x, build_pos_y - 1, build_pos_z)))
+matchzp = (matchzp || (!build_edge_zp && builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z + 1)))
+matchzn = (matchzn || (!build_edge_zn && builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z - 1)))
+	
 // To fix wave "gaps"
 if (app.setting_liquid_animation)
 {
 	var model;
-		
 	if (matchzp)
 	{
 		if (solidxp && !build_edge_xp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) != block_current)
