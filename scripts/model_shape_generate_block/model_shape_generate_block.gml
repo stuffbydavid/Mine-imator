@@ -12,7 +12,7 @@ size = point3D_sub(to, from)
 scalef = 0.005 // Used to combat Z-fighting
 
 // Find whether the shape is bent
-var isbent = !vec3_equals(bend, vec3(0));
+var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
 
 // Axis to split up the block
 var segaxis = Z;
@@ -172,10 +172,6 @@ switch (segaxis)
 		break
 	}
 }
-
-// Find out if the shape should bend if blocky bending is enabled
-if (app.setting_bend_style = "blocky")
-	isbent = isbent && (bendstart > 0) && (bendend < size[segaxis])
 
 // Apply transform
 var mat;

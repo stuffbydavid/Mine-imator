@@ -5,7 +5,7 @@ globalvar render_view_current, render_width, render_height, render_ratio, render
 		  render_particles, render_hidden, render_background, render_watermark, render_light_amount, render_light_from,
 		  render_light_to, render_light_near, render_light_far, render_light_fov, render_light_color, render_light_fade_size,
 		  render_light_spot_sharpness, render_light_matrix, proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far,
-		  render_proj_from;
+		  render_proj_from, render_active;
 
 globalvar render_camera_bloom, render_camera_dof, render_camera_color_correction, render_camera_vignette, render_overlay;
 
@@ -44,6 +44,7 @@ render_watermark = false
 
 render_time = 0
 render_surface_time = 0
+render_active = null
 
 render_target = null
 render_surface[0] = null

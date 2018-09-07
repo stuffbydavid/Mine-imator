@@ -13,9 +13,35 @@ if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_
 	return 0
 	
 // Invisible?
-if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden) || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
+if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden))
 	return 0
 
+// Hidden during certain render modes?
+if (render_active = "image")
+{
+	if (app.popup_exportimage.high_quality && hq_hiding)
+		return 0
+	
+	if (!app.popup_exportimage.high_quality && lq_hiding)
+		return 0
+}
+else if (render_active = "movie")
+{
+	if (app.exportmovie_high_quality && hq_hiding)
+		return 0
+	
+	if (!app.exportmovie_high_quality && lq_hiding)
+		return 0
+}
+else
+{
+	if (render_view_current.render && hq_hiding)
+		return 0
+		
+	if (!render_view_current.render && lq_hiding)
+		return 0
+}
+	
 // Only render glow effect?
 if ((glow && only_render_glow) && render_mode != e_render_mode.COLOR_GLOW)
 	return 0

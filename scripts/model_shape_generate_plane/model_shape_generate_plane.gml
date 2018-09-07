@@ -11,7 +11,7 @@ x2 = to[X];						z2 = to[Z]
 size = point3D_sub(to, from)
 
 // Find whether the shape is bent
-var isbent = !vec3_equals(bend, vec3(0));
+var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
 
 // Axis to split up the plane
 var segaxis = Z;

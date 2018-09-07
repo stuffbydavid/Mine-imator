@@ -18,7 +18,7 @@ size = point3D_sub(to, from)
 scalef = 0.01 // Used to combat Z-fighting
 
 // Find whether the shape is bent
-var isbent = !vec3_equals(bend, vec3(0));
+var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
 
 // Axis to split up the plane
 var segouteraxis, seginneraxis, arrouteraxis, arrinneraxis;

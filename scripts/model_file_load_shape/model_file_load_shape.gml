@@ -146,6 +146,7 @@ with (new(obj_model_shape))
 	}
 	
 	// Bending
+	bend_shape = value_get_real(map[?"bend"], true)
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
 	bend_direction = other.bend_direction

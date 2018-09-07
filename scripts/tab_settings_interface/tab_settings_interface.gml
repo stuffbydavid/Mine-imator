@@ -163,3 +163,8 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingszisup", dx, dy, setting_z_is_up, action_setting_z_is_up)
 tab_next()
+
+// Camera
+tab_control_checkbox()
+draw_checkbox("settingssmoothcamera", dx, dy, setting_smooth_camera, action_setting_smooth_camera)
+tab_next()

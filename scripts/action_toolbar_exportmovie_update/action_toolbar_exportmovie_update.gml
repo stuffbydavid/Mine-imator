@@ -27,6 +27,8 @@ if (timeline_marker > exportmovie_marker_end)
 app_update_animate()
 
 // Render
+render_active = "movie"
+
 if (exportmovie_format = "png")
 	render_start(exportmovie_surface, timeline_camera)
 else
@@ -38,6 +40,8 @@ else
 	render_low()
 
 exportmovie_surface = render_done()
+
+render_active = null
 
 if (exportmovie_format = "png")
 {

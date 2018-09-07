@@ -112,8 +112,8 @@ if (tl.value_type[e_value_type.CAMERA])
 	if (load_format >= e_project.FORMAT_CB_103)
 	{
 		value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM
-		value[e_value.CAM_BLOOM_THRESHOLD] = buffer_read_int() // CAMBLOOMTHRE
-		value[e_value.CAM_BLOOM_INTENSITY] = buffer_read_int() // CAMBLOOMOFFS
+		value[e_value.CAM_BLOOM_THRESHOLD] = buffer_read_int() / 100 // CAMBLOOMTHRE
+		value[e_value.CAM_BLOOM_INTENSITY] = buffer_read_int() / 100 // CAMBLOOMOFFS
 	}
 }
 

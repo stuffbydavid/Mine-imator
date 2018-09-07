@@ -86,6 +86,7 @@ if (filename_ext(fn) = ".midata")
 	if (ds_map_valid(programmap))
 	{
 		room_speed = value_get_real(programmap[?"fps"], room_speed)
+		
 		if (!dev_mode)
 			setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 		if (!directory_exists_lib(setting_project_folder))
@@ -129,6 +130,7 @@ if (filename_ext(fn) = ".midata")
 		setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
 		setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
 		setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
+		setting_smooth_camera = value_get_real(interfacemap[?"smooth_camera"], setting_smooth_camera)
 	
 		setting_toolbar_location = value_get_string(interfacemap[?"toolbar_location"], setting_toolbar_location)
 		setting_toolbar_size = value_get_real(interfacemap[?"toolbar_size"], setting_toolbar_size)

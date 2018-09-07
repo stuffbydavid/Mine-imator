@@ -20,17 +20,23 @@ log("High Quality", yesno(popup_exportimage.high_quality))
 log("Size", project_video_width, project_video_height)
 
 app_update_cameras(popup_exportimage.high_quality)
+
+render_active = "image"
+
 render_start(null, timeline_camera)
+
 if (popup_exportimage.high_quality)
 	render_high()
 else
 	render_low()
+	
 surf = render_done()
 surface_save_lib(surf, fn)
 
 render_watermark = false
 render_background = true
 render_hidden = false
+render_active = null
 
 // Clean up
 render_free()

@@ -20,7 +20,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	with (part.shape_list[|s])
 	{
 		vbufmap[? id] = vbuffer_default
-		if (type = "block" && isbent)
+		if (type = "block" && isbent && bend_shape)
 			vbufmap[? id] = model_shape_generate_block(bend)
 		else if (type = "plane")
 		{
@@ -29,7 +29,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 				if (ds_map_valid(alphamap))
 					vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[?id])
 			}
-			else if (isbent)
+			else if (isbent && bend_shape)
 				vbufmap[? id] = model_shape_generate_plane(bend)
 		}
 	}
