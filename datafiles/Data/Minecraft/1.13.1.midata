@@ -3286,6 +3286,11 @@
 			"id": "minecraft:turtle_egg"
 		},
 		{
+			"name": "bubble_column",
+			"waterlogged": true,
+			"id": "minecraft:bubble_column"
+		},
+		{
 			"name": "seagrass",
 			"file": "seagrass.json",
 			"waterlogged": true,
