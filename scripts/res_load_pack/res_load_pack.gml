@@ -52,6 +52,10 @@ switch (load_stage)
 	case "blocktextures":
 	{
 		debug("res_load_pack", "blocktextures")
+		
+		// Legacy pack support
+		file_rename_lib(load_assets_dir + mc_textures_directory + "blocks", load_assets_dir + mc_textures_directory + "block")
+		
 		res_load_pack_block_textures()
 		
 		load_stage = "itemtextures"
@@ -67,6 +71,10 @@ switch (load_stage)
 	case "itemtextures":
 	{
 		debug("res_load_pack", "itemtextures")
+		
+		// Legacy pack support
+		file_rename_lib(load_assets_dir + mc_textures_directory + "items", load_assets_dir + mc_textures_directory + "item")
+		
 		res_load_pack_item_textures()
 		res_load_pack_misc()
 		res_update_colors()
