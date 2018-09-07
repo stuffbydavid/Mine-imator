@@ -1,5 +1,5 @@
 {
-	"format": 24,
+	"format": 28,
 	"particles": {
 		"spawn_constant": true,
 		"spawn_amount": 300,
