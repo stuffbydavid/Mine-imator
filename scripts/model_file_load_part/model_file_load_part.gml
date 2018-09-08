@@ -261,6 +261,7 @@ with (new(obj_model_part))
 			bend_invert = vec3(false)
 		
 		// Fixed angle
+		bend_default_angle[Z] = 0
 		if (is_real(bendmap[?"angle"]) && array_length_1d(axis) = 1) // Single
 		{
 			bend_default_angle = vec3(bendmap[?"angle"])
@@ -270,8 +271,6 @@ with (new(obj_model_part))
 			for (var i = 0; i < ds_list_size(bendmap[?"angle"]); i++)
 				bend_default_angle[axis[i]] = ds_list_find_value(bendmap[?"angle"], i)
 		}
-		else
-			bend_default_angle[Z] = 0
 	}
 	else
 	{
