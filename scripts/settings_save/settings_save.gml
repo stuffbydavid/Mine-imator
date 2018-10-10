@@ -119,6 +119,8 @@ json_save_object_start("interface")
 	json_save_var("view_second_location", view_second.location)
 	json_save_var("view_second_width", view_second.width)
 	json_save_var("view_second_height", view_second.height)
+	
+	json_save_var_bool("modelbench_popup_hidden", popup_modelbench.hidden)
 
 json_save_object_done()
 

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.0",
-        "lastchange": "2018.08.25"
+        "lastchange": "2018.10.10"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -22,6 +22,8 @@
         "openprojecttip": "Open an existing project.",
         "website": "Website",
         "websitetip": "Visit the Mine-imator website.",
+        "tutorials": "Tutorials",
+        "tutorialstip": "Watch some helpful video tutorials for using Mine-imator.",
         "forums": "Forums",
         "forumstip": "Visit the Mine-imator forums.",
         "upgrade": "Upgrade",
@@ -216,8 +218,8 @@
         "showsecondstip": "Show/hide second and half-second marks on the timeline.",
         "timestamptip": "Shows the marker's current position and the total animation length.",
         "websitetip": "Visit the Mine-imator website.",
+        "tutorialstip": "Watch some helpful video tutorials on using Mine-imator.",
         "forumstip": "Visit the Mine-imator forums.",
-        "contenttip": "Search for new content.",
         "upgradetip": "You're running the Trial version of Mine-imator. Click to upgrade to Full."
     },
     "type/": {
@@ -441,6 +443,16 @@
         "keytip": "Enter the upgrade key.",
         "keypaste": "Paste",
         "keypastetip": "Paste the copied upgrade key."
+    },
+    "modelbench/": {
+        "caption": "Modelbench",
+        "info": "Create your own models for your animation using the tool Modelbench!",
+        "download": "Download",
+        "downloadtip": "Download Modelbench.",
+        "notnow": "Not now",
+        "notnowtip": "Close this popup and download Modelbench later.",
+        "dontshow": "Don't show again",
+        "dontshowtip": "Close this popup and don't remind me again."
     },
     "view/": {
         "rendertip": "Render in high quality mode to enable shaders for added realism.",

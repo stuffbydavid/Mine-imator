@@ -38,16 +38,8 @@ if (window_busy = "bench")
 	window_busy = ""
 	
 // Box
-if (window_busy = "")
-{
-	bench_settings.width += (bench_settings.width_goal - bench_settings.width) / max(1, 3 / delta)
-	bench_settings.height += (bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
-}
-else
-{
-	bench_settings.width = bench_settings.width_goal
-	bench_settings.height = bench_settings.height_goal
-}
+bench_settings.width += (bench_settings.width_goal - bench_settings.width) / max(1, 3 / delta)
+bench_settings.height += (bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
 
 settingsw = round(bench_settings.width)
 settingsh = round(bench_settings.height)

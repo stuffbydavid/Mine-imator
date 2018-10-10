@@ -58,6 +58,10 @@ with (bench_settings)
 		model_tex = null
 		temp_update_model()
 		temp_update_model_shape()
+		
+		with (app)
+			if (!popup_modelbench.hidden)
+				popup_show(popup_modelbench)
 	}
 }
 

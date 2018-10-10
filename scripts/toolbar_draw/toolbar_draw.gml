@@ -130,7 +130,7 @@ if (content_width >= cellsize * 3)
 	}
 	tip_set(text_get("toolbartimestamptip"), dx, dy, 80, 30)
 	draw_label(string_time_seconds(timeline_marker / project_tempo), dx, dy)
-	draw_label(" / "+string_time_seconds(timeline_length / project_tempo), dx, dy + 12, fa_left, fa_top, null, 1, setting_font_bold)
+	draw_label(" / " + string_time_seconds(timeline_length / project_tempo), dx, dy + 12, fa_left, fa_top, null, 1, setting_font_bold)
 }
 
 // Networking
@@ -186,6 +186,15 @@ if (trial_version)
 // Forums
 if (draw_button_normal("toolbarforums", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.FORUMS_SMALL + buttonimage))
 	action_toolbar_forums()
+
+if (content_direction = e_scroll.HORIZONTAL)
+	dx -= buttonsize + 2
+else
+	dy -= buttonsize + 2
+
+// Tutorials
+if (draw_button_normal("toolbartutorials", dx, dy, buttonsize, buttonsize, e_button.NO_TEXT, false, false, true, icons.HELP_SMALL + buttonimage))
+	action_toolbar_tutorials()
 
 if (content_direction = e_scroll.HORIZONTAL)
 	dx -= buttonsize + 2

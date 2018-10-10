@@ -46,5 +46,5 @@ with (new(obj_alert))
 	id.fade_start = current_time
 	id.created = current_time
 	id.iid = iid
-	ds_list_insert(other.alert_list, 0, id)
+	ds_list_insert(app.alert_list, 0, id)
 }
