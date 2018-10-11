@@ -43,17 +43,23 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 				
 			if (tex != null)
 			{
-				var texsize = point3D_sub(to_noscale, from_noscale);
+				// Define texture pixels to use
+				var tw, th, texsize, texsizeuv, texuv, samplepos, samplesize;
+				tw = texture_width(tex)
+				th = texture_height(tex)
+				texsize = point3D_sub(to_noscale, from_noscale)
+				texsizeuv = vec2_div(vec2(texsize[X], texsize[Z]), texture_size)
+				texuv = vec2_div(uv, texture_size)
+				samplepos = point2D(ceil(texuv[X] * tw), ceil(texuv[Y] * th))
+				samplesize = vec2(ceil(texsizeuv[X] * tw), ceil(texsizeuv[Y] * th))
 					
 				// Generate array with the alpha values of the texture
-				var surf, alpha, samplesize;
-				samplesize = vec2(ceil(texsize[X]), ceil(texsize[Z]))
-				surf = surface_create(samplesize[X], samplesize[Y])
+				var surf = surface_create(samplesize[X], samplesize[Y])
 				draw_texture_start()
 				surface_set_target(surf)
 				{
 					draw_clear_alpha(c_black, 0)
-					draw_texture_part(tex, 0, 0, uv[X], uv[Y], samplesize[X], samplesize[Y])
+					draw_texture_part(tex, 0, 0, samplepos[X], samplepos[Y], samplesize[X], samplesize[Y])
 				}
 				surface_reset_target()
 				draw_texture_done()

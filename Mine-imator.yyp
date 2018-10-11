@@ -10463,14 +10463,6 @@
             }
         },
         {
-            "Key": "b0acb206-4b17-4284-8f29-2f34503a1607",
-            "Value": {
-                "id": "512bfbc9-7f24-4961-b97b-4f5ecd8a7917",
-                "resourcePath": "datafiles_yy\\Data\\settings.midata.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "b0b373b1-9c75-4617-9e22-06ed9aacbe15",
             "Value": {
                 "id": "a1221fb9-0d14-4a1b-94e5-91652fc96b71",

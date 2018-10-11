@@ -11,7 +11,7 @@
 // Versions
 #macro mineimator_version			"1.2.0"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2018.09.21"
+#macro mineimator_version_date		"2018.10.14"
 #macro gm_runtime					"2.2.0.258"
 #macro minecraft_version			"1.13.1"
 
@@ -80,6 +80,7 @@
 #macro link_minecraft				"https://www.minecraft.net"
 #macro link_david					"https://www.stuffbydavid.com"
 #macro link_modelbench				"https://www.mineimator.com/modelbench"
+#macro show_modelbench_popup		true
 #macro http_ok						200
 #macro http_bad_request				400
 
