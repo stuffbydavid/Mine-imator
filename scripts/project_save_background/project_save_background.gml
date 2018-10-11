@@ -26,6 +26,7 @@ json_save_object_start("background")
 	json_save_var("sky_clouds_z", background_sky_clouds_z)
 	json_save_var("sky_clouds_size", background_sky_clouds_size)
 	json_save_var("sky_clouds_height", background_sky_clouds_height)
+	json_save_var("sky_clouds_offset", background_sky_clouds_offset)
 	
 	json_save_var_bool("ground_show", background_ground_show)
 	json_save_var("ground_name", background_ground_name)
@@ -36,15 +37,15 @@ json_save_object_start("background")
 	else
 		json_save_var("biome", background_biome.name)
 	
-	json_save_var_color("foliage_color", background_biome_color_foliage)
-	json_save_var_color("grass_color", background_biome_color_grass)
-	json_save_var_color("water_color", background_biome_color_water)
-	
 	json_save_var_color("sky_color", background_sky_color)
 	json_save_var_color("sky_clouds_color", background_sky_clouds_color)
 	json_save_var_color("sunlight_color", background_sunlight_color)
 	json_save_var_color("ambient_color", background_ambient_color)
 	json_save_var_color("night_color", background_night_color)
+	
+	json_save_var_color("foliage_color", background_foliage_color)
+	json_save_var_color("grass_color", background_grass_color)
+	json_save_var_color("water_color", background_water_color)
 	
 	json_save_var_bool("fog_show", background_fog_show)
 	json_save_var_bool("fog_sky", background_fog_sky)

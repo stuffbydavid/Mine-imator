@@ -64,6 +64,7 @@ background_sunlight_follow = false
 background_sunlight_strength = 0
 
 background_sky_clouds_show = true
+background_sky_clouds_update = false
 background_sky_clouds_tex = mc_res
 background_sky_clouds_tex.count++
 background_sky_clouds_flat = false
@@ -72,6 +73,7 @@ background_sky_clouds_speed = 1
 background_sky_clouds_z = 1000
 background_sky_clouds_size = 192
 background_sky_clouds_height = 64
+background_sky_clouds_offset = 0
 background_sky_update_clouds()
 
 background_ground_show = true
@@ -82,9 +84,9 @@ background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, backgr
 background_ground_update_texture()
 
 background_biome = biome_list[|2]
-background_biome_color_foliage = c_plains_biome_foliage
-background_biome_color_grass = c_plains_biome_grass
-background_biome_color_water = c_plains_biome_water
+background_foliage_color = c_plains_biome_foliage
+background_grass_color = c_plains_biome_grass
+background_water_color = c_plains_biome_water
 
 with (obj_biome)
 {

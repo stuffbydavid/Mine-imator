@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.0",
-        "lastchange": "2018.08.25"
+        "lastchange": "2018.09.22"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1873,6 +1873,8 @@
             "cloudssizetip": "Size of cloud blocks (if resource pack is used).",
             "cloudsheight": "Clouds height",
             "cloudsheighttip": "The height of clouds.",
+            "cloudsoffset": "Clouds offset",
+            "cloudsoffsettip": "The offset of the clouds position.",
             "time": "Time",
             "timetip": "Modify the time of the day.",
             "rotation": "Rotation",

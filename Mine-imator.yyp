@@ -4850,7 +4850,7 @@
             "Key": "54ee181b-88eb-46f8-93c8-283ba8c13deb",
             "Value": {
                 "id": "807903d4-fcc4-4e29-8abe-df38f2a2b3d0",
-                "resourcePath": "scripts\\action_background_biome_color_foliage\\action_background_biome_color_foliage.yy",
+                "resourcePath": "scripts\\action_background_foliage_color\\action_background_foliage_color.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5858,7 +5858,7 @@
             "Key": "64dfe6c3-2133-4f00-9095-adaa31c56390",
             "Value": {
                 "id": "1c025ac0-f4b6-45fb-9c22-14b3e431a249",
-                "resourcePath": "scripts\\action_background_biome_color_water\\action_background_biome_color_water.yy",
+                "resourcePath": "scripts\\action_background_water_color\\action_background_water_color.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -6167,6 +6167,14 @@
             }
         },
         {
+            "Key": "6959ca24-0034-4953-a6d7-eeff8d3fffb0",
+            "Value": {
+                "id": "5677e15f-4c3e-4d44-bbd5-1179c1d5c3ad",
+                "resourcePath": "scripts\\project_load_update_values\\project_load_update_values.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "696d1e5b-6f18-407e-8d42-a814c5ca1cce",
             "Value": {
                 "id": "292355b5-c072-4af8-b77d-7a651cf2fdc1",
@@ -6178,7 +6186,7 @@
             "Key": "697a1de9-85fe-4d0c-b435-1ec147416628",
             "Value": {
                 "id": "01ce352f-067b-44da-984d-cc5ecc728a68",
-                "resourcePath": "scripts\\action_background_biome_color_grass\\action_background_biome_color_grass.yy",
+                "resourcePath": "scripts\\action_background_grass_color\\action_background_grass_color.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12367,6 +12375,14 @@
             }
         },
         {
+            "Key": "d1b508c6-45be-49b6-a141-da35ba1db8e2",
+            "Value": {
+                "id": "db6b7018-7d51-4acd-92c8-880abb203a53",
+                "resourcePath": "scripts\\action_background_sky_clouds_offset\\action_background_sky_clouds_offset.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "d1e15547-b20e-4f9e-b224-1e0d1a7a22d6",
             "Value": {
                 "id": "b777cd88-9ac5-405c-b194-716e59e67b96",
@@ -15250,8 +15266,8 @@
     "script_order": [
         "0273369f-8dd5-477d-b200-9a8cd5961bc9",
         "faa08f8e-54ab-495e-b30f-b65ddd32d649",
-        "54ee181b-88eb-46f8-93c8-283ba8c13deb",
         "697a1de9-85fe-4d0c-b435-1ec147416628",
+        "54ee181b-88eb-46f8-93c8-283ba8c13deb",
         "64dfe6c3-2133-4f00-9095-adaa31c56390",
         "f8045dae-aa94-44c3-a54f-a0059dfd3189",
         "c468715e-119d-4320-a2d7-e97c57b5ba58",
@@ -15278,6 +15294,7 @@
         "57022aea-3004-48a8-aee5-d22d1fb602e6",
         "faac1a37-bef4-4ea7-b8e6-384c2c679307",
         "9f61daef-bdef-4313-ae99-4ed9d6be1572",
+        "d1b508c6-45be-49b6-a141-da35ba1db8e2",
         "7e51bbe3-5ee9-4ff2-b2d2-5c8ca2bba395",
         "e6b5b711-c0d0-4ebf-b88e-6806c3c44731",
         "dfa880f4-5b9b-47f1-8983-55cc89465785",
@@ -16394,6 +16411,7 @@
         "6d6f62a7-8628-47db-b9df-0ef5035e5c51",
         "152a73d8-a814-4e29-8e74-18c076db470b",
         "9b54e38a-5026-486b-9dd3-99279f40cff1",
+        "6959ca24-0034-4953-a6d7-eeff8d3fffb0",
         "2b16cb31-9690-49cb-921b-a018dbad8a5c",
         "045bdadf-61a7-4419-a0a0-f47af87aaa93",
         "2c96fe77-2dce-4b39-a6a1-547f45a1cb74",

@@ -21,10 +21,7 @@ vec4 getColor(vec2 txcoord)
 	if(ycoord < 0.0)
 		ycoord = ycoord * -1.0;
 
-	//if(txcoord.x > 1.0 || txcoord.x < 0.0 || txcoord.y > 1.0 || txcoord.y < 0.0)
-	//	return vec4(0,0,0,texture2D(gm_BaseTexture, txcoord).a);
-	//else
-		return texture2D(gm_BaseTexture, vec2(xcoord, ycoord));
+	return texture2D(gm_BaseTexture, vec2(xcoord, ycoord));
 }
 
 

@@ -7,7 +7,7 @@ if (!ds_map_valid(map))
 	return 0
 
 background_loaded = true
-	
+
 background_image_show = value_get_real(map[?"image_show"], background_image_show)
 if (background_image != null)
 	background_image.count--
@@ -37,11 +37,12 @@ background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], backgroun
 background_sky_clouds_z = value_get_real(map[?"sky_clouds_z"], background_sky_clouds_z)
 background_sky_clouds_size = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size)
 background_sky_clouds_height = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_height)
+background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
 
 background_ground_show = value_get_real(map[?"ground_show"], background_ground_show)
 background_ground_name = value_get_string(map[?"ground_name"], background_ground_name)
 
-if (load_format < e_project.FORMAT_120)
+if (load_format < e_project.FORMAT_120_PRE_1)
 {
 	background_ground_name = string_replace(background_ground_name, "blocks/", "block/")
 	var newname = ds_map_find_key(legacy_block_texture_name_map, background_ground_name);
@@ -56,15 +57,16 @@ background_ground_tex.count--
 background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
 
 background_biome = find_biome(value_get_string(map[?"biome"], background_biome.name))
-background_biome_color_foliage = value_get_color(map[?"foliage_color"], background_biome_color_foliage)
-background_biome_color_grass = value_get_color(map[?"grass_color"], background_biome_color_grass)
-background_biome_color_water = value_get_color(map[?"water_color"], background_biome_color_water)
-	
+
 background_sky_color = value_get_color(map[?"sky_color"], background_sky_color)
 background_sky_clouds_color = value_get_color(map[?"sky_clouds_color"], background_sky_clouds_color)
 background_sunlight_color = value_get_color(map[?"sunlight_color"], background_sunlight_color)
 background_ambient_color = value_get_color(map[?"ambient_color"], background_ambient_color)
 background_night_color = value_get_color(map[?"night_color"], background_night_color)
+
+background_grass_color = value_get_color(map[?"grass_color"], background_grass_color)
+background_foliage_color = value_get_color(map[?"foliage_color"], background_foliage_color)
+background_water_color = value_get_color(map[?"water_color"], background_water_color)
 
 background_fog_show = value_get_real(map[?"fog_show"], background_fog_show)
 background_fog_sky = value_get_real(map[?"fog_sky"], background_fog_sky)

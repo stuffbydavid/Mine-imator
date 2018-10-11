@@ -9,13 +9,13 @@ var biome;
 if (argument_count > 0)
 	biome = argument[0]
 else
-	biome = app.background_biome;
+	biome = app.background_biome
 
 if (biome.name = "custom")
 {
-	color_grass = app.background_biome_color_grass
-	color_foliage = app.background_biome_color_foliage
-	color_water = app.background_biome_color_water
+	color_grass = app.background_grass_color
+	color_foliage = app.background_foliage_color
+	color_water = app.background_water_color
 }
 else
 {

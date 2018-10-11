@@ -36,6 +36,9 @@ switch (vid)
 	case e_value.BG_SUNLIGHT_COLOR:
 	case e_value.BG_AMBIENT_COLOR:
 	case e_value.BG_NIGHT_COLOR:
+	case e_value.BG_GRASS_COLOR:
+	case e_value.BG_FOLIAGE_COLOR:
+	case e_value.BG_WATER_COLOR:
 	case e_value.BG_FOG_COLOR:
 	case e_value.BG_FOG_OBJECT_COLOR: return clamp(val, c_black, c_white)
 	case e_value.BEND_ANGLE_X:

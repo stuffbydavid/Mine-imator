@@ -88,6 +88,6 @@ if (load_format >= e_project.FORMAT_CB_100)
 	if (custombiome)
 		background_biome = biome_list[| 0]
 		
-	background_biome_color_foliage = buffer_read_int()
-	background_biome_color_grass = background_biome_color_foliage
+	background_foliage_color = buffer_read_int()
+	background_grass_color = background_foliage_color
 }

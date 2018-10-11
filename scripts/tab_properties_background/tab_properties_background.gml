@@ -147,6 +147,11 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	draw_dragger("backgroundskycloudsheight", dx, dy, dw, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height, capwid)
 	tab_next()
 	
+	// Cloud offset
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudsoffset", dx, dy, dw, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset, capwid)
+	tab_next()
+	
 	dx -= 4
 	dw += 4
 	checkbox_expand_end()
@@ -253,13 +258,13 @@ draw_button_color("backgroundnightcolor", dx, dy, wid, background_night_color, c
 if (custombiome)
 {
 	// Grass color
-	draw_button_color("backgroundgrasscolor", dx + wid + 8, dy, wid, background_biome_color_grass, c_plains_biome_grass, false, action_background_biome_color_grass)
+	draw_button_color("backgroundgrasscolor", dx + wid + 8, dy, wid, background_grass_color, c_plains_biome_grass, false, action_background_grass_color)
 	tab_next()
 
 	// Foliage & Water color
 	tab_control_color()
-	draw_button_color("backgroundfoliagecolor", dx, dy, wid, background_biome_color_foliage, c_plains_biome_foliage, false, action_background_biome_color_foliage)
-	draw_button_color("backgroundwatercolor", dx + wid + 8, dy, wid, background_biome_color_water, c_plains_biome_water, false, action_background_biome_color_water)
+	draw_button_color("backgroundfoliagecolor", dx, dy, wid, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
+	draw_button_color("backgroundwatercolor", dx + wid + 8, dy, wid, background_water_color, c_plains_biome_water, false, action_background_water_color)
 	tab_next()
 }
 else

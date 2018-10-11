@@ -9,14 +9,14 @@
 #macro dev_mode_rotate_blocks		dev_mode && true
 
 // Versions
-#macro mineimator_version			"1.2.0 PRE-RELEASE 2"
+#macro mineimator_version			"1.2.0 PRE-RELEASE 3"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2018.09.08"
 #macro gm_runtime					"2.1.5.246"
 #macro minecraft_version			"1.13.1"
 
 // File formats
-#macro project_format				e_project.FORMAT_120
+#macro project_format				e_project.FORMAT_120_PRE_3
 #macro settings_format				e_settings.FORMAT_120
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_120
 

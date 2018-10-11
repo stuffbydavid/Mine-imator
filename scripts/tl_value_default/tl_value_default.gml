@@ -41,20 +41,36 @@ switch (argument0)
 	case e_value.CAM_HEIGHT: return 720
 	case e_value.CAM_SIZE_USE_PROJECT: return true
 	case e_value.CAM_SIZE_KEEP_ASPECT_RATIO: return true
+	case e_value.BG_IMAGE_SHOW: return app.background_image_show
 	case e_value.BG_SKY_MOON_PHASE: return app.background_sky_moon_phase
 	case e_value.BG_SKY_TIME: return app.background_sky_time
 	case e_value.BG_SKY_ROTATION: return app.background_sky_rotation
+	case e_value.BG_SUNLIGHT_RANGE: return app.background_sunlight_range
+	case e_value.BG_SUNLIGHT_FOLLOW: return app.background_sunlight_follow
+	case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
+	case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show
 	case e_value.BG_SKY_CLOUDS_SPEED: return app.background_sky_clouds_speed
+	case e_value.BG_SKY_CLOUDS_Z: return app.background_sky_clouds_z
+	case e_value.BG_SKY_CLOUDS_OFFSET: return app.background_sky_clouds_offset
+	case e_value.BG_GROUND_SHOW: return app.background_ground_show
 	case e_value.BG_SKY_COLOR: return app.background_sky_color
 	case e_value.BG_SKY_CLOUDS_COLOR: return app.background_sky_clouds_color
 	case e_value.BG_SUNLIGHT_COLOR: return app.background_sunlight_color
 	case e_value.BG_AMBIENT_COLOR: return app.background_ambient_color
 	case e_value.BG_NIGHT_COLOR: return app.background_night_color
+	case e_value.BG_GRASS_COLOR: return app.background_grass_color
+	case e_value.BG_FOLIAGE_COLOR: return app.background_foliage_color
+	case e_value.BG_WATER_COLOR: return app.background_water_color
+	case e_value.BG_FOG_SHOW: return app.background_fog_show
+	case e_value.BG_FOG_SKY: return app.background_fog_sky
+	case e_value.BG_FOG_CUSTOM_COLOR: return app.background_fog_color_custom
 	case e_value.BG_FOG_COLOR: return app.background_fog_color
+	case e_value.BG_FOG_CUSTOM_OBJECT_COLOR: return app.background_fog_object_color_custom
 	case e_value.BG_FOG_OBJECT_COLOR: return app.background_fog_object_color
 	case e_value.BG_FOG_DISTANCE: return app.background_fog_distance
 	case e_value.BG_FOG_SIZE: return app.background_fog_size
 	case e_value.BG_FOG_HEIGHT: return app.background_fog_height
+	case e_value.BG_WIND: return app.background_wind
 	case e_value.BG_WIND_SPEED: return app.background_wind_speed
 	case e_value.BG_WIND_STRENGTH: return app.background_wind_strength
 	case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed

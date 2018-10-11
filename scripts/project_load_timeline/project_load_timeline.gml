@@ -17,7 +17,7 @@ with (new(obj_timeline))
 	
 	temp = value_get_save_id(map[?"temp"], temp)
 	color = value_get_color(map[?"color"], color)
-	hide= value_get_real(map[?"hide"], hide)
+	hide = value_get_real(map[?"hide"], hide)
 	lock = value_get_real(map[?"lock"], lock)
 	depth = value_get_real(map[?"depth"], depth)
 	
@@ -44,7 +44,7 @@ with (new(obj_timeline))
 			var blockmap = map[?"block"];
 			if (ds_map_valid(blockmap))
 			{
-				if (load_format < e_project.FORMAT_120)
+				if (load_format < e_project.FORMAT_120_PRE_1)
 				{
 					// Read legacy block
 					var bid = value_get_real(blockmap[?"legacy_id"], 2);
@@ -99,6 +99,7 @@ with (new(obj_timeline))
 					value[v] = other.value_default[v]
 					
 				project_load_values(kfmap[?key], value)
+				project_load_update_values()
 				
 				other.keyframe_array[position] = id
 			}

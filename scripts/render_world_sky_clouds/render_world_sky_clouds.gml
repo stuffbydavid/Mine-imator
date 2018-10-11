@@ -35,7 +35,7 @@ if (!background_fog_sky)
 var size, xo, yo, num, xx
 size = background_sky_clouds_size * 32
 xo = (cam_from[X] div size) * size
-yo = (cam_from[Y] div size) * size - (background_sky_clouds_speed * (current_step * 0.25 + background_sky_time * 100) mod size)
+yo = (cam_from[Y] div size) * size - (background_sky_clouds_speed * (current_step * 0.25 + background_sky_time * 100) mod size) + background_sky_clouds_offset
 num = (ceil(background_fog_distance / size) + 1) * size
 xx = -num
 while (xx < num)

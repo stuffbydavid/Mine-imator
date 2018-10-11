@@ -27,6 +27,9 @@ switch (vid)
 	case e_value.BG_SUNLIGHT_COLOR:
 	case e_value.BG_AMBIENT_COLOR:
 	case e_value.BG_NIGHT_COLOR:
+	case e_value.BG_GRASS_COLOR:
+	case e_value.BG_FOLIAGE_COLOR:
+	case e_value.BG_WATER_COLOR:
 	case e_value.BG_FOG_COLOR:
 	case e_value.BG_FOG_OBJECT_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
 	case e_value.CAM_WIDTH:
@@ -43,7 +46,13 @@ switch (vid)
 	case e_value.CAM_COLOR_CORRECTION:
 	case e_value.CAM_SIZE_USE_PROJECT:
 	case e_value.CAM_SIZE_KEEP_ASPECT_RATIO:
+	case e_value.BG_IMAGE_SHOW:
 	case e_value.BG_SKY_MOON_PHASE:
+	case e_value.BG_SUNLIGHT_FOLLOW:
+	case e_value.BG_SKY_CLOUDS_SHOW:
+	case e_value.BG_GROUND_SHOW:
+	case e_value.BG_FOG_SHOW:
+	case e_value.BG_WIND:
 	case e_value.VISIBLE:
 	case e_value.TEXTURE_OBJ:
 	case e_value.SOUND_OBJ:

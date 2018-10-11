@@ -76,25 +76,47 @@ timeline_marker_previous = timeline_marker
 // Background
 if (bgobject)
 {
-		
+	background_image_show					= bgobject.value[e_value.BG_IMAGE_SHOW]
 	background_sky_moon_phase				= bgobject.value[e_value.BG_SKY_MOON_PHASE]
 	background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 	background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
+	background_sunlight_range				= bgobject.value[e_value.BG_SUNLIGHT_RANGE]
+	background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
+	background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
 	background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
+	background_sky_clouds_z					= bgobject.value[e_value.BG_SKY_CLOUDS_Z]
+	background_sky_clouds_offset			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET]
+	background_ground_show					= bgobject.value[e_value.BG_GROUND_SHOW]
 	background_sky_color					= bgobject.value[e_value.BG_SKY_COLOR]
 	background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
 	background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
 	background_ambient_color				= bgobject.value[e_value.BG_AMBIENT_COLOR]
 	background_night_color					= bgobject.value[e_value.BG_NIGHT_COLOR]
+	background_grass_color					= bgobject.value[e_value.BG_GRASS_COLOR]
+	background_foliage_color				= bgobject.value[e_value.BG_FOLIAGE_COLOR]
+	background_water_color					= bgobject.value[e_value.BG_WATER_COLOR]
+	background_fog_show						= bgobject.value[e_value.BG_FOG_SHOW]
+	background_fog_sky						= bgobject.value[e_value.BG_FOG_SKY]
+	background_fog_color_custom				= bgobject.value[e_value.BG_FOG_CUSTOM_COLOR]
 	background_fog_color					= bgobject.value[e_value.BG_FOG_COLOR]
+	background_fog_object_color_custom		= bgobject.value[e_value.BG_FOG_CUSTOM_OBJECT_COLOR]
 	background_fog_object_color				= bgobject.value[e_value.BG_FOG_OBJECT_COLOR]
 	background_fog_distance					= bgobject.value[e_value.BG_FOG_DISTANCE]
 	background_fog_size						= bgobject.value[e_value.BG_FOG_SIZE]
 	background_fog_height					= bgobject.value[e_value.BG_FOG_HEIGHT]
+	background_wind							= bgobject.value[e_value.BG_WIND]
 	background_wind_speed					= bgobject.value[e_value.BG_WIND_SPEED]
 	background_wind_strength				= bgobject.value[e_value.BG_WIND_STRENGTH]
-	background_wind_strength				= bgobject.value[e_value.BG_WIND_STRENGTH]
 	background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
+	
+	if (background_biome = biome_list[| 0])
+	{
+		with (obj_resource)
+			res_update_colors()
+
+		properties.library.preview.update = true
+	}
+	
 }
 
 // Colors

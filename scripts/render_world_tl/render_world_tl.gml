@@ -93,7 +93,7 @@ shader_texture_filter_mipmap = (app.setting_texture_filtering && texture_filteri
 shader_blend_color = value_inherit[e_value.RGB_MUL]
 
 if (foliage_tint)
-	shader_blend_color = color_multiply(shader_blend_color, app.background_biome_color_foliage)
+	shader_blend_color = color_multiply(shader_blend_color, app.background_foliage_color)
 
 shader_blend_alpha = value_inherit[e_value.ALPHA]
 render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)

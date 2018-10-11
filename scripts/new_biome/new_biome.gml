@@ -31,8 +31,10 @@ with (new(obj_biome))
 	
 	if (biome_base != null)
 	{
-		if (ds_exists(biome_base.biome_variants, ds_type_list))
+		if (biome_variants != null)
+		{
 			ds_list_add(biome_base.biome_variants, id)
+		}
 		else
 		{
 			biome_base.biome_variants = ds_list_create()

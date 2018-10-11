@@ -48,9 +48,9 @@ with (mc_assets)
 				minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 			
 			app.background_biome = biome_list[|2]
-			app.background_biome_color_foliage = c_plains_biome_foliage
-			app.background_biome_color_grass = c_plains_biome_grass
-			app.background_biome_color_water = c_plains_biome_water
+			app.background_foliage_color = c_plains_biome_foliage
+			app.background_grass_color = c_plains_biome_grass
+			app.background_water_color = c_plains_biome_water
 			
 			load_assets_stage = "textures"
 			load_assets_progress = 0.4
