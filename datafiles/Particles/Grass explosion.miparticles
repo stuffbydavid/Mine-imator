@@ -362,7 +362,7 @@
 			"type": "block",
 			"name": "",
 			"block": {
-				"name": "grass",
+				"name": "grass_block",
 				"state": {
 				},
 				"tex": "default",

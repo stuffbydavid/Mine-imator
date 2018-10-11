@@ -88,6 +88,8 @@ setting_view_second_location = "right_bottom"
 setting_view_second_width = 440
 setting_view_second_height = 280
 
+setting_modelbench_popup_hidden = false
+
 setting_key_new = ord("N")
 setting_key_new_control = true
 setting_key_import_asset = ord("I")

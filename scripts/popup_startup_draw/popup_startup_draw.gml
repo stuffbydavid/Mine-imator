@@ -63,10 +63,15 @@ if (trial_version)
 		popup_switch(popup_upgrade)
 	dy += dh + 8
 }
+	
+// Tutorials
+if (draw_button_normal("startuptutorials", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.HELP_SMALL))
+	action_toolbar_tutorials()
+dy += dh + 8
 
 // Website
-dw = floor(dw / 2-5)
 dh = 32
+dw = floor(dw / 2-5)
 if (draw_button_normal("startupwebsite", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.WEBSITE_SMALL))
 	action_toolbar_website()
 

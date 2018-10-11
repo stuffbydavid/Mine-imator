@@ -1,7 +1,7 @@
 /// app_startup_interface_popups()
 
 // Startup
-popup_startup = new_popup("startup", popup_startup_draw, 760, 515, true)
+popup_startup = new_popup("startup", popup_startup_draw, 760, 586, true)
 with (popup_startup)
 	recent_scroll = new(obj_scrollbar)
 
@@ -19,7 +19,7 @@ with (popup_newproject)
 }
 
 // Open
-popup_open = new_popup("open", popup_open_draw, 760, 500, true)
+popup_open = new_popup("open", popup_open_draw, 760, 520, true)
 with (popup_open)
 	recent_scroll = new(obj_scrollbar)
 
@@ -140,3 +140,8 @@ with (popup_exportimage)
 popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 600, 600, true)
 with (popup_upgrade)
 	tbx_key = new_textbox(true, 8, "")
+
+// Modelbench ad
+popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 650, 600, true)
+with (popup_modelbench)
+	hidden = app.setting_modelbench_popup_hidden

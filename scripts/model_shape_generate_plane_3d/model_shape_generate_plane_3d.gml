@@ -42,10 +42,13 @@ else
 }
 
 // Define texture coordinates to use
-var texsize, texuv, samplesize;
+var texsize, texuv, samplesize, texscale, texsizescale, ptexsize;
 texsize = point3D_sub(to_noscale, from_noscale)
 texuv = vec2_div(uv, texture_size)
-samplesize = vec2(ceil(texsize[X]), ceil(texsize[Z]))
+samplesize = vec2(array_length_2d(alpha, 0), array_height_2d(alpha))
+texscale = vec2(ceil(texsize[X]) / samplesize[X], ceil(texsize[Z]) / samplesize[Y])
+texsizescale = vec2_div(texture_size, texscale)
+ptexsize = vec2_div(vec2(1 - 1 / 256), texsizescale)
 
 // Start position and bounds
 var sharpbend, bendsize, bendstart, bendend, invangle;
@@ -122,7 +125,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 			if (inner = samplesize[Y] - 1 && frac(texsize[Z]) > 0)
 				seginnersize = frac(texsize[Z])
 		}
-		seginnerpos += seginnersize * scale[seginneraxis]
+		seginnerpos += seginnersize * scale[seginneraxis] * texscale[arrinneraxis]
 	}
 	
 	// Pixel size
@@ -137,7 +140,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 		if (outer = samplesize[Y] - 1 && frac(texsize[Z]) > 0)
 			segoutersize = frac(texsize[Z])
 	}
-	segouterpos += segoutersize * scale[segouteraxis]
+	segouterpos += segoutersize * scale[segouteraxis] * texscale[arrouteraxis]
 }
 
 // Create triangles
@@ -190,10 +193,8 @@ for (var outer = 0; outer < samplesize[arrouteraxis]; outer++)
 		}
 			
 		// Texture
-		var ptex, ptexsize, t1, t2, t3, t4;
-		ptex = point2D(texuv[X] + ax / texture_size[X], texuv[Y] + ay / texture_size[Y])
-		ptexsize = vec2_div(vec2(1 - 1 / 256), texture_size)
-		
+		var ptex, t1, t2, t3, t4;
+		ptex = point2D(texuv[X] + ax / texsizescale[X], texuv[Y] + ay / texsizescale[Y])
 		t1 = ptex
 		t2 = point2D(ptex[X] + ptexsize[X], ptex[Y])
 		t3 = point2D(ptex[X] + ptexsize[X], ptex[Y] + ptexsize[Y])

@@ -169,6 +169,8 @@ if (filename_ext(fn) = ".midata")
 		setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 		setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 		setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
+		
+		setting_modelbench_popup_hidden = value_get_real(interfacemap[?"modelbench_popup_hidden"], setting_modelbench_popup_hidden)
 	}
 	
 	// Controls

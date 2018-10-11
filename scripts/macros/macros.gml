@@ -2,21 +2,21 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						false
+#macro dev_mode						true
 #macro dev_mode_debug_schematics	dev_mode && false
 #macro dev_mode_debug_names			dev_mode && true
 #macro dev_mode_debug_unused		dev_mode && true
 #macro dev_mode_rotate_blocks		dev_mode && true
 
 // Versions
-#macro mineimator_version			"1.2.0 PRE-RELEASE 3"
+#macro mineimator_version			"1.2.0"
 #macro mineimator_version_extra		""
-#macro mineimator_version_date		"2018.09.08"
-#macro gm_runtime					"2.1.5.246"
+#macro mineimator_version_date		"2018.10.14"
+#macro gm_runtime					"2.2.0.258"
 #macro minecraft_version			"1.13.1"
 
 // File formats
-#macro project_format				e_project.FORMAT_120_PRE_3
+#macro project_format				e_project.FORMAT_120
 #macro settings_format				e_settings.FORMAT_120
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_120
 
@@ -68,6 +68,7 @@
 // Links
 #macro link_article_drivers			"https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
 #macro link_website					"https://www.mineimator.com"
+#macro link_tutorials				"https://www.mineimator.com/tutorials"
 #macro link_download				"https://www.mineimator.com/download"
 #macro link_upgrade					"https://www.mineimator.com/upgrade"
 #macro link_assets					"https://www.mineimator.com/assets/"
@@ -78,6 +79,8 @@
 #macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
 #macro link_minecraft				"https://www.minecraft.net"
 #macro link_david					"https://www.stuffbydavid.com"
+#macro link_modelbench				"https://www.mineimator.com/modelbench"
+#macro show_modelbench_popup		true
 #macro http_ok						200
 #macro http_bad_request				400
 

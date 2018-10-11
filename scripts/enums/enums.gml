@@ -27,7 +27,7 @@ enum e_project
 	FORMAT_110		  = 26,
 	FORMAT_113		  = 27,
 	FORMAT_120_PRE_1  = 28,
-	FORMAT_120_PRE_3  = 29
+	FORMAT_120		  = 29
 }
 
 enum e_settings
@@ -342,6 +342,9 @@ enum icons
 	WEBSITE_SMALL, 
 	WEBSITE_MEDIUM, 
 	WEBSITE_BIG,
+	HELP_SMALL, 
+	HELP_MEDIUM, 
+	HELP_BIG,
 	FORUMS_SMALL, 
 	FORUMS_MEDIUM, 
 	FORUMS_BIG,
