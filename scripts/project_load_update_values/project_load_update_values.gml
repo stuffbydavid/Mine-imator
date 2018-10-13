@@ -1,7 +1,7 @@
 /// project_load_update_values()
 /// @desc Updates values in keyframes if/because they were not animatable in previous versions
 
-if (load_format < e_project.FORMAT_120)
+if (load_format < e_project.FORMAT_120_PRE_3)
 {
 	if (timeline.type = e_tl_type.BACKGROUND)
 	{

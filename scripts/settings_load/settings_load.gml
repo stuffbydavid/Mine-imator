@@ -289,16 +289,16 @@ if (filename_ext(fn) = ".midata")
 		setting_render_aa_power = value_get_real(rendermap[?"render_aa_power"], setting_render_aa_power)
 		
 		setting_render_watermark = value_get_real(rendermap[?"render_watermark"], setting_render_watermark)
-		setting_render_watermark_filename = value_get_real(rendermap[?"render_watermark_filename"], setting_render_watermark_filename)
+		setting_render_watermark_filename = value_get_string(rendermap[?"render_watermark_filename"], setting_render_watermark_filename)
 		
 		if (!file_exists_lib(setting_render_watermark_filename))
 			setting_render_watermark_filename = ""
 		else if (setting_render_watermark_filename != "")
 			action_setting_render_watermark_open(setting_render_watermark_filename)
 			
-		setting_render_watermark_anchor_x = value_get_real(rendermap[?"render_watermark_anchor_x"], setting_render_watermark_anchor_x)
-		setting_render_watermark_anchor_y = value_get_real(rendermap[?"render_watermark_anchor_y"], setting_render_watermark_anchor_y)
-		setting_render_watermark_scale = value_get_real(rendermap[?"render_watermark_scake"], setting_render_watermark_scale)
+		setting_render_watermark_anchor_x = value_get_string(rendermap[?"render_watermark_anchor_x"], setting_render_watermark_anchor_x)
+		setting_render_watermark_anchor_y = value_get_string(rendermap[?"render_watermark_anchor_y"], setting_render_watermark_anchor_y)
+		setting_render_watermark_scale = value_get_real(rendermap[?"render_watermark_scale"], setting_render_watermark_scale)
 		setting_render_watermark_alpha = value_get_real(rendermap[?"render_watermark_alpha"], setting_render_watermark_alpha)
 		
 		setting_export_movie_format = value_get_string(rendermap[?"export_movie_format"], setting_export_movie_format)
