@@ -2,21 +2,21 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	dev_mode && false
 #macro dev_mode_debug_names			dev_mode && true
 #macro dev_mode_debug_unused		dev_mode && true
 #macro dev_mode_rotate_blocks		dev_mode && true
 
 // Versions
-#macro mineimator_version			"1.2.0"
+#macro mineimator_version			"1.2.0 PRE-RELEASE 3"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2018.10.14"
 #macro gm_runtime					"2.2.0.258"
 #macro minecraft_version			"1.13.1"
 
 // File formats
-#macro project_format				e_project.FORMAT_120
+#macro project_format				e_project.FORMAT_120_PRE_3
 #macro settings_format				e_settings.FORMAT_120
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_120
 
