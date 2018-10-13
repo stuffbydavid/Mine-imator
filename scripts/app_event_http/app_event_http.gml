@@ -17,23 +17,28 @@ if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 				// New assets available
 				if (ds_map_valid(newversionmap) && !file_exists_lib(minecraft_directory + newversionmap[?"version"] + ".zip"))
 				{
-					// Get info about assets
-					setting_minecraft_assets_new_version = newversionmap[?"version"]
-					setting_minecraft_assets_new_format = newversionmap[?"format"]
-					setting_minecraft_assets_new_changes = newversionmap[?"changes"]
-					if (is_string(newversionmap[?"image"]))
+					// Continue with current or newer formats only
+					if (newversionmap[?"format"] >= minecraft_assets_format)
 					{
-						// Download image
-						setting_minecraft_assets_new_image = mc_file_directory + newversionmap[?"image"]
-						assets_http_image = http_get_file(link_assets + newversionmap[?"image"], setting_minecraft_assets_new_image)
+						// Get info about assets
+						setting_minecraft_assets_new_version = newversionmap[?"version"]
+						setting_minecraft_assets_new_format = newversionmap[?"format"]
+						setting_minecraft_assets_new_changes = newversionmap[?"changes"]
+					
+						if (is_string(newversionmap[?"image"]))
+						{
+							// Download image
+							setting_minecraft_assets_new_image = mc_file_directory + newversionmap[?"image"]
+							assets_http_image = http_get_file(link_assets + newversionmap[?"image"], setting_minecraft_assets_new_image)
+						}
+						else
+							setting_minecraft_assets_new_image = ""
+				
+						// Alert
+						alert_show(text_get("alertnewassetstitle", setting_minecraft_assets_new_version), text_get("alertnewassetstext"), icons.CHEST_SMALL)
+				
+						log("New assets found", setting_minecraft_assets_new_version)
 					}
-					else
-						setting_minecraft_assets_new_image = ""
-				
-					// Alert
-					alert_show(text_get("alertnewassetstitle", setting_minecraft_assets_new_version), text_get("alertnewassetstext"), icons.CHEST_SMALL)
-				
-					log("New assets found", setting_minecraft_assets_new_version)
 				}
 				else
 					log("Using the latest assets")
