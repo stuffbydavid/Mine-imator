@@ -153,7 +153,7 @@ padding = 10
 
 if (content_direction = e_scroll.HORIZONTAL)
 {
-	content_width = 300 + (buttonsize + 2) * (2 + trial_version)
+	content_width = 360 + (buttonsize + 2) * (2 + trial_version)
 	content_height = boxh - padding * 2
 	content_x = boxx + boxw - content_width - padding
 	content_y = boxy + padding
