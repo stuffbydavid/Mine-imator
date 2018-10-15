@@ -10,9 +10,9 @@
 
 // Versions
 #macro mineimator_version			"1.2.0 PRE-RELEASE 3"
-#macro mineimator_version_extra		""
+#macro mineimator_version_extra		"3d plane fix"
 #macro mineimator_version_date		"2018.10.14"
-#macro gm_runtime					"2.2.0.258"
+#macro gm_runtime					"2.1.5.246"
 #macro minecraft_version			"1.13.1"
 
 // File formats
