@@ -46,7 +46,6 @@ var texsize, texuv, samplesize, texscale, texsizescale, ptexsize;
 texsize = point3D_sub(to_noscale, from_noscale)
 texuv = vec2_div(uv, texture_size)
 samplesize = vec2(array_length_2d(alpha, 0), array_height_2d(alpha))
-//samplesize = vec2(array_height_2d(alpha), array_length_2d(alpha, 0))
 texscale = vec2(ceil(texsize[X]) / samplesize[X], ceil(texsize[Z]) / samplesize[Y])
 texsizescale = vec2_div(texture_size, texscale)
 ptexsize = vec2_div(vec2(1 - 1 / 256), texsizescale)
