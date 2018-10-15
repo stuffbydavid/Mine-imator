@@ -80,7 +80,7 @@
 #macro link_minecraft				"https://www.minecraft.net"
 #macro link_david					"https://www.stuffbydavid.com"
 #macro link_modelbench				"https://www.mineimator.com/modelbench"
-#macro show_modelbench_popup		true
+#macro show_modelbench_popup		false
 #macro http_ok						200
 #macro http_bad_request				400
 
