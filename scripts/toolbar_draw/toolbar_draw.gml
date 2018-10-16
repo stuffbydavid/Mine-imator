@@ -162,7 +162,7 @@ if (content_direction = e_scroll.HORIZONTAL)
 }
 else
 {
-	content_height = 70 + (buttonsize + 2) * (2 + trial_version)
+	content_height = 130 + (buttonsize + 2) * (2 + trial_version)
 	content_width = boxw - padding * 2
 	content_x = boxx + padding
 	content_y = boxy + boxh - content_height - padding
