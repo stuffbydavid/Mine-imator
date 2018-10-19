@@ -5,7 +5,6 @@
 var bgobject, updatevalues;
 updatevalues = (timeline_marker_previous != timeline_marker)
 bgobject = null
-timeline_camera = null
 background_light_amount = 1
 background_light_data[0] = 0
 
@@ -32,13 +31,6 @@ with (obj_timeline)
 			else
 				cam_goalzoom = null
 		}
-		
-		// Find camera
-		if (app.timeline_camera = null && value_inherit[e_value.VISIBLE] && !hide)
-			app.timeline_camera = id
-			
-		if (selected)
-			app.timeline_camera = id
 	}
 	
 	// Update spawner
@@ -71,6 +63,17 @@ with (obj_timeline)
 if (updatevalues)
 	tl_update_matrix()
 
+// Find camera
+timeline_camera = null
+with (obj_timeline)
+{
+	if (type = e_tl_type.CAMERA && (selected || (value_inherit[e_value.VISIBLE] && !hide)))
+	{
+		app.timeline_camera = id
+		break
+	}
+}
+	
 timeline_marker_previous = timeline_marker
 
 // Background
