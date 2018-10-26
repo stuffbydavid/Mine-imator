@@ -70,6 +70,8 @@ else if (segouteraxis = Z)
 // Precalculate points
 var y1p, y2p;
 var segouterpos = 0;
+var inflateouter = (inflate / samplesize[arrouteraxis]) * 2;
+var inflateinner = (inflate / samplesize[arrinneraxis]) * 2;
 for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 {
 	var seginnerpos = 0;
@@ -125,7 +127,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 			if (inner = samplesize[Y] - 1 && frac(texsize[Z]) > 0)
 				seginnersize = frac(texsize[Z])
 		}
-		seginnerpos += seginnersize * scale[seginneraxis] * texscale[arrinneraxis]
+		seginnerpos += (seginnersize + inflateinner) * scale[seginneraxis] * texscale[arrinneraxis]
 	}
 	
 	// Pixel size
@@ -140,7 +142,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 		if (outer = samplesize[Y] - 1 && frac(texsize[Z]) > 0)
 			segoutersize = frac(texsize[Z])
 	}
-	segouterpos += segoutersize * scale[segouteraxis] * texscale[arrouteraxis]
+	segouterpos += (seginnersize + inflateouter) * scale[segouteraxis] * texscale[arrouteraxis]
 }
 
 // Create triangles

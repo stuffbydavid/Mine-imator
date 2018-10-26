@@ -84,6 +84,7 @@ if (bgobject)
 	background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 	background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
 	background_sunlight_range				= bgobject.value[e_value.BG_SUNLIGHT_RANGE]
+	background_sunlight_follow				= bgobject.value[e_value.BG_SUNLIGHT_FOLLOW]
 	background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
 	background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
 	background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]

@@ -353,6 +353,6 @@ with (new(obj_model_part))
 	// Set file to contain 3D planes
 	if (has_3d_plane)
 		root.has_3d_plane = true
-		
+	
 	return id
 }

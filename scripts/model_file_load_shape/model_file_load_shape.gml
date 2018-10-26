@@ -123,18 +123,23 @@ with (new(obj_model_shape))
 	if (type = "plane")
 		to_noscale[Y] = from_noscale[Y]
 	
+	// Inflate (optional)
+	inflate = vec3(value_get_real(map[?"inflate"], 0))
+	if (type = "plane")
+		inflate[Y] = 0
+	
 	// Position (optional)
 	position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
 	position = point3D_mul(position_noscale, other.scale)
 		
 	// Rotation (optional)
 	rotation = value_get_point3D(map[?"rotation"], vec3(0, 0, 0))
-		
+	
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
 	scale = vec3_mul(scale, other.scale)
-	from = point3D_mul(from_noscale, scale)
-	to = point3D_mul(to_noscale, scale)
+	from = point3D_mul(point3D_sub(from_noscale, inflate), scale)
+	to = point3D_mul(point3D_add(to_noscale, inflate), scale)
 	
 	// 3D plane (optional)
 	is3d = false
