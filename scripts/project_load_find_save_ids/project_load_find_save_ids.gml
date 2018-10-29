@@ -7,9 +7,15 @@ while (!is_undefined(key))
 {
 	if (save_id_map[?key] != "root" && save_id_map[?key] != "default") // Skip removed objects
 	{
-		var obj = save_id_find(save_id_map[?key]);
-		if (is_real(save_id_map[?key]) || obj != null)
-			save_id_map[?key] = save_id_create()
+		// Avoid duplicates in existing objects or previously generated save ids
+		if (is_real(save_id_map[?key]) || save_id_find(save_id_map[?key]) != null)
+		{
+			var sid;
+			do
+				sid = save_id_create()
+			until (is_undefined(ds_map_find_value(save_id_map, sid)))
+			save_id_map[?key] = sid
+		}
 	}
 	key = ds_map_find_next(save_id_map, key)
 }
