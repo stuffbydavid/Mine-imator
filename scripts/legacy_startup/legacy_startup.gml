@@ -37,6 +37,15 @@ legacy_block_05_texture_list = map[?"legacy_block_05_textures"]
 legacy_block_07_demo_texture_list = map[?"legacy_block_07_demo_textures"]
 legacy_block_100_texture_list = map[?"legacy_block_100_textures"]
 
+for (var i = 0; i < 256; i++)
+{
+	for (var d = 0; d < 16; d++)
+	{
+		legacy_block_obj[i, d] = null
+		legacy_block_state_id[i, d] = 0
+	}
+}
+
 // Items
 legacy_item_texture_name_map = map[?"legacy_item_texture_name"]
 

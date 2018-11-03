@@ -246,9 +246,6 @@ with (mc_assets)
 					curid = string_get_real(key)
 					curmap = ds_map_find_value(legacy_block_id, key)
 					legacy_block_set[curid] = true
-					
-					if (curid=71)
-						debug("")
 	
 					// Look for block object from ID
 					var newid, block, statevars;
