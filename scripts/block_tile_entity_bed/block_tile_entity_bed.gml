@@ -10,7 +10,7 @@ if (!is_real(colorid))
 
 var colorarr = array("white", "orange", "magenta", "light_blue",
 					 "yellow", "lime", "pink", "gray",
-					 "silver", "cyan", "purple", "blue",
+					 "light_gray", "cyan", "purple", "blue",
 					 "brown", "green", "red", "black");
 
 if (colorid >= array_length_1d(colorarr))
