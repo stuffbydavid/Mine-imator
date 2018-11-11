@@ -50,6 +50,8 @@ with (new(obj_template))
 						itemname = newname
 				}
 				item_slot = ds_list_find_index(mc_assets.item_texture_list, itemname)
+				if (item_slot < 0)
+					item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
 			}
 			else
 				item_slot = value_get_real(itemmap[?"slot"], item_slot)
