@@ -1,14 +1,19 @@
-/// app_update_cameras(highquality)
+/// app_update_cameras(highquality, movie)
 /// @arg highquality
+/// @arg movie
 /// @desc Updates surface of all required cameras.
 
+var highquality, movie;
+highquality = argument0
+movie = argument1
+
 // Only main view is visible and not real time rendering, no need to update
-if (!view_second.show && view_render && !view_render_real_time && window_state != "export_movie")
+if (!view_second.show && view_render && !view_render_real_time && window_state != "export_movie" && !movie)
 	return 0
 
 with (obj_timeline)
 {
-	if (!value_inherit[e_value.VISIBLE] || !type_is_shape(type) || (app.view_render && hq_hiding) || (!app.view_render && lq_hiding))
+	if (!type_is_shape(type) || !tl_get_visible())
 		continue
 	
 	var texobj;
@@ -39,7 +44,7 @@ with (obj_timeline)
 	with (app)
 	{
 		render_start(other.cam_surf_tmp, other.id)
-		if (argument0)
+		if (highquality)
 			render_high()
 		else
 			render_low()

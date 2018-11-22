@@ -145,4 +145,7 @@ background_light_data[6] = color_get_blue(background_sunlight_color_final) / 255
 background_light_data[7] = background_sunlight_range * 2
 
 // Cameras
-app_update_cameras(view_render)
+if (window_state = "export_movie")
+	app_update_cameras(exportmovie_high_quality, true)
+else
+	app_update_cameras(view_render, false)

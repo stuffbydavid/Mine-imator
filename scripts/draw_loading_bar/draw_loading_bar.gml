@@ -16,7 +16,7 @@ perc = argument4
 text = argument5
 
 surfwid = floor(wid * perc)
-if (surfwid > 0)
+if (surfwid > 1 && perc <= 1)
 {
 	var col = draw_get_color();
 	surf = surface_create(surfwid, hei)

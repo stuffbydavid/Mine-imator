@@ -19,7 +19,7 @@ log("Watermark", yesno(render_watermark))
 log("High Quality", yesno(popup_exportimage.high_quality))
 log("Size", project_video_width, project_video_height)
 
-app_update_cameras(popup_exportimage.high_quality)
+app_update_cameras(popup_exportimage.high_quality, false)
 
 render_active = "image"
 

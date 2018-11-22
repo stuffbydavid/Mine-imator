@@ -70,8 +70,8 @@ else if (segouteraxis = Z)
 // Precalculate points
 var y1p, y2p;
 var segouterpos = 0;
-var inflateouter = 0//(inflate / samplesize[arrouteraxis]) * 2;
-var inflateinner = 0//(inflate / samplesize[arrinneraxis]) * 2;
+var inflateouter = (inflate[X] / samplesize[arrouteraxis]) * 2;
+var inflateinner = (inflate[X] / samplesize[arrinneraxis]) * 2;
 for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 {
 	var seginnerpos = 0;
