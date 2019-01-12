@@ -47,6 +47,9 @@ with (new(obj_model_part))
 	// Description (optional)
 	description = value_get_string(map[?"description"], "")
 	
+	// Is apart of a banner model
+	is_banner = other.is_banner
+	
 	// Texture (optional)
 	if (is_string(map[?"texture"]))
 	{

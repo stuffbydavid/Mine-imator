@@ -26,3 +26,4 @@ menu_model_state_current = null
 menu_block_current = null
 menu_block_state = null
 menu_block_state_current = null
+menu_count = 0

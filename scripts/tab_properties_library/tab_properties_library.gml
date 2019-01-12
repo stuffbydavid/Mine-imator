@@ -74,6 +74,17 @@ switch (temp_edit.type)
 			tab_toggle(template_editor)
 		tab_next()
 		
+		// Banner editor
+		if (temp_edit.model_name = "banner")
+		{
+			tab_control(24)
+			wid = text_max_width("benchopeneditor") + 20
+			if (draw_button_normal("benchopeneditor", dx + capwid, dy, wid, 24, e_button.TEXT, popup = popup_bannereditor, true, true))
+				popup_bannereditor_show(temp_edit)
+				
+			tab_next()
+		}
+		
 		// Skin
 		var tex = null;
 		with (temp_edit.model_tex)
@@ -187,6 +198,17 @@ switch (temp_edit.type)
 		if (draw_button_normal("librarybodypartchange", dx + dw - wid, dy, wid, 24, e_button.TEXT, template_editor.show, true, true))
 			tab_toggle(template_editor)
 		tab_next()
+		
+		// Banner editor
+		if (temp_edit.model_name = "banner")
+		{
+			tab_control(24)
+			wid = text_max_width("benchopeneditor") + 20
+			if (draw_button_normal("benchopeneditor", dx + capwid, dy, wid, 24, e_button.TEXT, popup = popup_bannereditor, true, true))
+				popup_bannereditor_show(temp_edit)
+				
+			tab_next()
+		}
 		
 		// Skin
 		var tex = null;

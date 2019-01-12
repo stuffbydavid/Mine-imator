@@ -36,6 +36,7 @@ to.inherit_visibility = inherit_visibility
 to.inherit_bend = inherit_bend
 to.inherit_texture = inherit_texture
 to.inherit_glow_color = inherit_glow_color
+to.inherit_select = inherit_select
 to.scale_resize = scale_resize
 to.rot_point_custom = rot_point_custom
 to.rot_point = point3D_copy(rot_point)

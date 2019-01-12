@@ -1,7 +1,7 @@
 /// app_startup_interface()
 
 window_maximize()
-	
+
 app_startup_interface_timeline()
 app_startup_interface_export_movie()
 app_startup_interface_menus()

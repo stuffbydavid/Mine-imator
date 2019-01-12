@@ -131,6 +131,10 @@ draw_button_color("settingscolortimelinemarks", dx, dy, wid, setting_color_timel
 draw_button_color("settingscolortimelineboxselect", dx + wid + 8, dy, wid, setting_color_timeline_select_box, c_blue, false, action_setting_color_timeline_select_box)
 tab_next()
 
+tab_control_color()
+draw_button_color("settingscolorviewportselection", dx, dy, wid, setting_color_viewport_selection, c_white, false, action_setting_color_viewport_selection)
+tab_next()
+
 tab_control(24)
 
 if (draw_button_normal("settingscoloropen", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.BROWSE))

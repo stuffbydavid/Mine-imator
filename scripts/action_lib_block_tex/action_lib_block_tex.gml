@@ -29,6 +29,16 @@ with (temp_edit)
 	block_tex.count--
 	block_tex = res
 	block_tex.count++
+	
+	// Update banner skins
+	with (obj_timeline)
+	{
+		if (type = e_tl_type.SPECIAL_BLOCK && part_root != null)
+		{
+			if (part_root.temp = temp_edit)
+				array_add(banner_update, id)
+		}
+	}
 }
 
 lib_preview.update = true

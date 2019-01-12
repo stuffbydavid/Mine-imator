@@ -45,6 +45,9 @@ if (!is_undefined(uniform_map[?"uBlockBrightness"]) && uniform_map[?"uBlockBrigh
 if (!is_undefined(uniform_map[?"uLightBleed"]) && uniform_map[?"uLightBleed"] > -1)
 	render_set_uniform("uLightBleed", bool_to_float(app.setting_light_bleeding))
 
+// Texture drawing
+render_set_uniform("uMask", bool_to_float(shader_mask))
+
 // Init script
 if (script > -1)
 	script_execute(script)

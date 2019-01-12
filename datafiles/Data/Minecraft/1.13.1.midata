@@ -1,6 +1,6 @@
 {
 	"version": "1.13.1",
-	"patch": 3,
+	"patch": 4,
 	"format": 4,
 	"characters": [
 		{
@@ -289,8 +289,8 @@
 			"file": "vex.mimodel",
 			"states": {
 				"charging": [
-					{ "value": "true", "texture": "entity/illager/vex" },
-					{ "value": "false", "texture": "entity/illager/vex_charging" }
+					{ "value": "true", "texture": "entity/illager/vex_charging" },
+					{ "value": "false", "texture": "entity/illager/vex" }
 				]
 			},
 			"default_state": "charging=false"
@@ -579,7 +579,14 @@
 		},
 		{
 			"name": "banner",
-			"file": "banner.mimodel"
+			"file": "standing_banner.mimodel",
+            "states": {
+                "variant": [
+                    { "value": "standing" },
+                    { "value": "wall", "file": "wall_banner.mimodel"}
+                ]
+            },
+            "default_state": "variant=standing"
 		},
 		{
 			"name": "armor_stand",
@@ -2794,6 +2801,130 @@
 			"file": "slime_block.json",
 			"id": "minecraft:slime_block"
 		},
+        {
+            "name": "standing_banner",
+            "type": "banners",
+            "states": {
+                "rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],
+                "color": [
+					{ "value": "red" },
+					{ "value": "white" },
+					{ "value": "orange" },
+					{ "value": "magenta" },
+					{ "value": "light_blue" },
+					{ "value": "yellow" },
+					{ "value": "lime" },
+					{ "value": "pink" },
+					{ "value": "gray" },
+					{ "value": "light_gray" },
+					{ "value": "cyan" },
+					{ "value": "purple" },
+					{ "value": "blue" },
+					{ "value": "brown" },
+					{ "value": "green" },
+					{ "value": "black" }
+				]
+            },
+            "default_state": "rotation=0,color=white",
+            "timeline": {
+                "model": "banner",
+                "model_state": "variant=standing",
+                "is_banner": true,
+                "position": [ 8, 0, 8 ],
+                "rotation": {
+                    "rotation=0": [ 0, 0, 0 ],
+                    "rotation=1": [ 0, -22.5, 0 ],
+                    "rotation=2": [ 0, -45, 0 ],
+                    "rotation=3": [ 0, -67.5, 0 ],
+                    "rotation=4": [ 0, -90, 0 ],
+                    "rotation=5": [ 0, -112.5, 0 ],
+                    "rotation=6": [ 0, -135, 0 ],
+                    "rotation=7": [ 0, -157.5, 0 ],
+                    "rotation=8": [ 0, 180, 0 ],
+                    "rotation=9": [ 0, 157.5, 0 ],
+                    "rotation=10": [ 0, 135, 0 ],
+                    "rotation=11": [ 0, 112.5, 0 ],
+                    "rotation=12": [ 0, 90, 0 ],
+                    "rotation=13": [ 0, 67.5, 0 ],
+                    "rotation=14": [ 0, 45, 0 ],
+                    "rotation=15": [ 0, 22.5, 0 ]
+                }
+            },
+            "id": {
+                "minecraft:white_banner": "color=white",
+                "minecraft:orange_banner": "color=orange",
+                "minecraft:magenta_banner": "color=magenta",
+                "minecraft:light_blue_banner": "color=light_blue",
+                "minecraft:yellow_banner": "color=yellow",
+                "minecraft:lime_banner": "color=lime",
+                "minecraft:pink_banner": "color=pink",
+                "minecraft:gray_banner": "color=gray",
+                "minecraft:light_gray_banner": "color=light_gray",
+                "minecraft:cyan_banner": "color=cyan",
+                "minecraft:purple_banner": "color=purple",
+                "minecraft:blue_banner": "color=blue",
+                "minecraft:brown_banner": "color=brown",
+                "minecraft:green_banner": "color=green",
+                "minecraft:red_banner": "color=red",
+                "minecraft:black_banner": "color=black"
+            }
+        },
+        {
+            "name": "wall_banner",
+            "type": "banners",
+            "states": {
+                "facing": [ "north", "south", "east", "west" ],
+                "color": [
+					{ "value": "red" },
+					{ "value": "white" },
+					{ "value": "orange" },
+					{ "value": "magenta" },
+					{ "value": "light_blue" },
+					{ "value": "yellow" },
+					{ "value": "lime" },
+					{ "value": "pink" },
+					{ "value": "gray" },
+					{ "value": "light_gray" },
+					{ "value": "cyan" },
+					{ "value": "purple" },
+					{ "value": "blue" },
+					{ "value": "brown" },
+					{ "value": "green" },
+					{ "value": "black" }
+				]
+            },
+            "default_state": "facing=west,color=white",
+            "timeline": {
+                "model": "banner",
+                "model_state": "variant=wall",
+                "is_banner": true,
+                "position": [ 8, -8, 8 ],
+                "rotation": {
+                    "facing=north": [ 0, 180, 0 ],
+                    "facing=south": [ 0, 0, 0 ],
+                    "facing=east": [ 0, 90, 0 ],
+                    "facing=west": [ 0, -90, 0 ]
+                }
+            },
+            "id": {
+                "minecraft:white_wall_banner": "color=white",
+                "minecraft:orange_wall_banner": "color=orange",
+                "minecraft:magenta_wall_banner": "color=magenta",
+                "minecraft:light_blue_wall_banner": "color=light_blue",
+                "minecraft:yellow_wall_banner": "color=yellow",
+                "minecraft:lime_wall_banner": "color=lime",
+                "minecraft:pink_wall_banner": "color=pink",
+                "minecraft:gray_wall_banner": "color=gray",
+                "minecraft:light_gray_wall_banner": "color=light_gray",
+                "minecraft:cyan_wall_banner": "color=cyan",
+                "minecraft:purple_wall_banner": "color=purple",
+                "minecraft:blue_wall_banner": "color=blue",
+                "minecraft:brown_wall_banner": "color=brown",
+                "minecraft:green_wall_banner": "color=green",
+                "minecraft:red_wall_banner": "color=red",
+                "minecraft:black_wall_banner": "color=black"
+            }
+        },
 		{
 			"name": "prismarine",
 			"states": {
@@ -3543,7 +3674,46 @@
 	"model_textures": [
 		"entity/alex",
 		"entity/arrow",
-		"entity/banner_base",
+				"entity/banner_base",
+        "entity/banner/base",
+        "entity/banner/border",
+        "entity/banner/bricks",
+        "entity/banner/circle",
+        "entity/banner/creeper",
+        "entity/banner/cross",
+        "entity/banner/curly_border",
+        "entity/banner/diagonal_left",
+        "entity/banner/diagonal_right",
+        "entity/banner/diagonal_up_left",
+        "entity/banner/diagonal_up_right",
+        "entity/banner/flower",
+        "entity/banner/gradient",
+        "entity/banner/gradient_up",
+        "entity/banner/half_horizontal",
+        "entity/banner/half_horizontal_bottom",
+        "entity/banner/half_vertical",
+        "entity/banner/half_vertical_right",
+        "entity/banner/mojang",
+        "entity/banner/rhombus",
+        "entity/banner/skull",
+        "entity/banner/small_stripes",
+        "entity/banner/square_bottom_left",
+        "entity/banner/square_bottom_right",
+        "entity/banner/square_top_left",
+        "entity/banner/square_top_right",
+        "entity/banner/straight_cross",
+        "entity/banner/stripe_bottom",
+        "entity/banner/stripe_center",
+        "entity/banner/stripe_downleft",
+        "entity/banner/stripe_downright",
+        "entity/banner/stripe_left",
+        "entity/banner/stripe_middle",
+        "entity/banner/stripe_right",
+        "entity/banner/stripe_top",
+        "entity/banner/triangle_bottom",
+        "entity/banner/triangle_top",
+        "entity/banner/triangles_bottom",
+        "entity/banner/triangles_top",
 		"entity/bat",
 		"entity/blaze",
 		"entity/chicken",

@@ -26,6 +26,12 @@ switch (argument0)
 	case e_value.CAM_DOF_RANGE: return 200
 	case e_value.CAM_DOF_FADE_SIZE: return 100
 	case e_value.CAM_DOF_BLUR_SIZE: return .01
+	case e_value.CAM_DOF_FRINGE_RED:
+	case e_value.CAM_DOF_FRINGE_GREEN:
+	case e_value.CAM_DOF_FRINGE_BLUE: return 1
+	case e_value.CAM_DOF_FRINGE_ANGLE_RED: return 90
+	case e_value.CAM_DOF_FRINGE_ANGLE_GREEN: return -135
+	case e_value.CAM_DOF_FRINGE_ANGLE_BLUE: return -45
 	case e_value.CAM_BLOOM_THRESHOLD: return .85
 	case e_value.CAM_BLOOM_INTENSITY: return .4
 	case e_value.CAM_BLOOM_RADIUS: return 1
@@ -34,6 +40,9 @@ switch (argument0)
 	case e_value.CAM_CONTRAST: return 0
 	case e_value.CAM_BRIGHTNESS: return 0
 	case e_value.CAM_SATURATION: return 1
+	case e_value.CAM_GRAIN_STRENGTH: return .10
+	case e_value.CAM_GRAIN_SATURATION: return .10
+	case e_value.CAM_GRAIN_SIZE: return 1
 	case e_value.CAM_VIGNETTE_RADIUS: return 1
 	case e_value.CAM_VIGNETTE_SOFTNESS: return 0.5
 	case e_value.CAM_VIGNETTE_STRENGTH: return 1
@@ -48,6 +57,8 @@ switch (argument0)
 	case e_value.BG_SUNLIGHT_RANGE: return app.background_sunlight_range
 	case e_value.BG_SUNLIGHT_FOLLOW: return app.background_sunlight_follow
 	case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
+	case e_value.BG_DESATURATE_NIGHT: return app.background_desaturate_night
+	case e_value.BG_DESATURATE_NIGHT_AMOUNT: return app.background_desaturate_night_amount
 	case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show
 	case e_value.BG_SKY_CLOUDS_SPEED: return app.background_sky_clouds_speed
 	case e_value.BG_SKY_CLOUDS_Z: return app.background_sky_clouds_z

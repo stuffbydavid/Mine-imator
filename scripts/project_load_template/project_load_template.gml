@@ -15,14 +15,14 @@ with (new(obj_template))
 	
 	type = ds_list_find_index(temp_type_name_list, value_get_string(map[?"type"]))
 	name = value_get_string(map[?"name"], name)
-
+	
 	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 	{
 		if (load_format = e_project.FORMAT_110_PRE_1)
 			model_tex = value_get_save_id(map[?"skin"], model_tex)
 		else
 			model_tex = value_get_save_id(map[?"model_tex"], model_tex)
-			
+		
 		var modelmap = map[?"model"];
 		if (ds_map_valid(modelmap))
 		{
@@ -30,6 +30,29 @@ with (new(obj_template))
 			model_state = value_get_state_vars(modelmap[?"state"])
 			if (type = e_temp_type.BODYPART)
 				model_part_name = value_get_string(modelmap[?"part_name"], model_part_name)
+			
+			// Banner values
+			if (model_name = "banner")
+			{
+				var base_color, pattern_list, color_list; 
+				base_color = value_get_string(map[?"banner_base_color"], "white")
+				pattern_list = map[?"banner_pattern_list"]
+				color_list = map[?"banner_color_list"]
+				
+				banner_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
+				
+				if (ds_list_valid(pattern_list))
+				{
+					for (var p = 0; p < ds_list_size(pattern_list); p++)
+						array_add(banner_pattern_list, pattern_list[|p])
+				}
+				
+				if (ds_list_valid(color_list))
+				{
+					for (var c = 0; c < ds_list_size(color_list); c++)
+						array_add(banner_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
+				}
+			}
 		}
 	}
 	else if (type = e_temp_type.ITEM)

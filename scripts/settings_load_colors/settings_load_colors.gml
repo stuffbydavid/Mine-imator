@@ -27,3 +27,4 @@ setting_color_timeline_text = value_get_color(map[?"timeline_text"], setting_col
 setting_color_timeline_select = value_get_color(map[?"timeline_select"], setting_color_timeline_select)
 setting_color_timeline_marks = value_get_color(map[?"timeline_marks"], setting_color_timeline_marks)
 setting_color_timeline_select_box = value_get_color(map[?"timeline_select_box"], setting_color_timeline_select_box)
+setting_color_viewport_selection = value_get_color(map[?"viewport_selection"], setting_color_viewport_selection)

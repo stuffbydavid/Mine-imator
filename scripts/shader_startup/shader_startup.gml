@@ -3,8 +3,11 @@
 globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap;
 globalvar shader_blend_color, shader_blend_alpha;
 
-// Init shaders
+// Texture drawing
+globalvar shader_mask;
+shader_mask = false
 
+// Init shaders
 log("Shader init")
 log("shaders_are_supported", yesno(shaders_are_supported()))
 
@@ -46,7 +49,9 @@ if (!err)
 	new_shader("shader_blur")
 	new_shader("shader_color_correction")
 	new_shader("shader_vignette")
-
+	new_shader("shader_noise")
+	new_shader("shader_high_light_desaturate")
+	
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
 	shader_texture_filter_mipmap = false
@@ -77,7 +82,10 @@ if (err)
 // Set special uniforms
 
 with (shader_map[?shader_border])
+{
 	new_shader_uniform("uTexSize")
+	new_shader_uniform("uColor")
+}
 
 with (shader_map[?shader_color_camera])
 {
@@ -133,6 +141,9 @@ with (shader_map[?shader_depth_point])
 	new_shader_uniform("uFar")
 }
 
+with (shader_map[?shader_draw_texture])
+	new_shader_uniform("uMask")
+
 with (shader_map[?shader_replace])
 	new_shader_uniform("uReplaceColor")
 
@@ -152,11 +163,13 @@ with (shader_map[?shader_high_dof])
 	new_shader_uniform("uFadeSize")
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
+	new_shader_uniform("uFringe")
+	new_shader_uniform("uFringeAngle")
+	new_shader_uniform("uFringeStrength")
 }
 
 with (shader_map[?shader_high_fog])
 {
-	
 	new_shader_uniform("uCameraPos")
 }
 
@@ -168,6 +181,12 @@ with (shader_map[?shader_high_fog_apply])
 
 with (shader_map[?shader_high_light_apply])
 	new_shader_uniform("uAmbientColor")
+	
+with (shader_map[?shader_high_light_desaturate])
+{
+	new_shader_sampler("uShadowBuffer")
+	new_shader_uniform("uAmount")
+}
 
 with (shader_map[?shader_high_light_night])
 {
@@ -330,6 +349,14 @@ with (shader_map[?shader_vignette])
 	new_shader_uniform("uRadius")
 	new_shader_uniform("uSoftness")
 	new_shader_uniform("uStrength")
+}
+
+with (shader_map[?shader_noise])
+{
+	new_shader_uniform("uStrength")
+	new_shader_uniform("uSaturation")
+	new_shader_uniform("uSize")
+	new_shader_uniform("uScreenSize")
 }
 
 return true

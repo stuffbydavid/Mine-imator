@@ -66,7 +66,16 @@ else if (menu_block_current != null)
 	name = "blockstate" + name
 }
 else
-	cap = text_get(name) + ":"
+{
+	if (type = e_menu.LIST_NUM)
+	{
+		cap = text_get(name, menu_count) + ":"
+		name = name + string(menu_count)
+	}
+	else
+		cap = text_get(name) + ":"
+}
+	
 
 draw_label(cap, xx, yy + hei / 2, fa_left, fa_middle)
 

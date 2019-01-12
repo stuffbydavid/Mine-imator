@@ -7,6 +7,10 @@ uniform float uFadeSize;
 uniform float uNear;
 uniform float uFar;
 
+uniform int uFringe;
+uniform vec3 uFringeAngle;
+uniform vec3 uFringeStrength;
+
 varying vec2 vTexCoord;
 
 const float pi = 3.14159265;
@@ -43,6 +47,42 @@ float getBackBlur(float d)
 	return clamp((d - (uDepth + uRange)) / uFadeSize, 0.0, 1.0);
 }
 
+vec4 getFringe(vec2 coord, float blur)
+{
+	vec4 baseColor = texture2D(gm_BaseTexture, coord);
+	
+	if (uFringe < 1)
+		return baseColor;
+	
+	float fringeSize = texelSize.x * blur * screenSampleSize;
+	
+	vec2 redOffset = vec2(cos(uFringeAngle.x), sin(uFringeAngle.x)) * (uFringeStrength.x * fringeSize);
+	float redDepth = getDepth(coord + redOffset);
+	float redBlur = getBlur(redDepth);
+	float red = texture2D(gm_BaseTexture, coord + redOffset).r * redBlur;
+	
+	vec2 greenOffset = vec2(cos(uFringeAngle.y), sin(uFringeAngle.y)) * (uFringeStrength.y * fringeSize);
+	float greenDepth = getDepth(coord + greenOffset);
+	float greenBlur = getBlur(greenDepth);
+	float green = texture2D(gm_BaseTexture, coord + greenOffset).g * greenBlur;
+	
+	vec2 blueOffset = vec2(cos(uFringeAngle.z), sin(uFringeAngle.z)) * (uFringeStrength.z * fringeSize);
+	float blueDepth = getDepth(coord + blueOffset);
+	float blueBlur = getBlur(blueDepth);
+	float blue = texture2D(gm_BaseTexture, coord + blueOffset).b * blueBlur;
+	
+	if (red > baseColor.r)
+		baseColor.r = red;
+		
+	if (green > baseColor.g)
+		baseColor.g = green;
+		
+	if (blue > baseColor.b)
+		baseColor.b = blue;
+	
+	return baseColor;
+}
+
 void main()
 {
 	float myDepth = getDepth(vTexCoord);
@@ -71,7 +111,7 @@ void main()
 		
 		if (mul > 0.0)
 		{
-			colorAdd += texture2D(gm_BaseTexture, tex) * mul;
+			colorAdd += getFringe(tex, sampleBlur) * mul;
 			colorDiv += mul;
 		}
 		

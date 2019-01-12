@@ -38,6 +38,35 @@ with (new(obj_timeline))
 				model_name = value_get_string(modelmap[?"name"], "")
 				model_state = value_get_state_vars(modelmap[?"state"])
 			}
+			
+			part_root = value_get_save_id(map[?"part_root"], part_root)
+				
+			// Banner values
+			is_banner = value_get_real(map[?"is_banner"], is_banner)
+			
+			if (is_banner)
+			{
+				var base_color, pattern_list, color_list; 
+				base_color = value_get_string(map[?"banner_base_color"], "white")
+				pattern_list = map[?"banner_pattern_list"]
+				color_list = map[?"banner_color_list"]
+				
+				banner_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
+				
+				if (ds_list_valid(pattern_list))
+				{
+					banner_pattern_list = array()
+					for (var p = 0; p < ds_list_size(pattern_list); p++)
+						array_add(banner_pattern_list, pattern_list[|p])
+				}
+				
+				if (ds_list_valid(color_list))
+				{
+					banner_color_list = array()
+					for (var c = 0; c < ds_list_size(color_list); c++)
+						array_add(banner_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
+				}
+			}
 		}
 		else if (type = e_temp_type.BLOCK)
 		{

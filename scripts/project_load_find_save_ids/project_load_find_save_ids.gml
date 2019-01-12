@@ -122,6 +122,8 @@ with (obj_timeline)
 	if (part_of = null && temp != null)
 		temp.count++
 		
+	part_root = save_id_find(save_id_map[?part_root])
+		
 	// Set part list
 	if (part_list != null)
 		for (var i = 0; i < ds_list_size(part_list); i++)

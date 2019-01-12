@@ -62,7 +62,12 @@ if (is_real(map[?"has_text"]))
 	
 if (tl_has_text)
 	tl_text_position = value_get_point3D(map[?"text_position"], point3D(0, 0, 0))
-		
+
+// Is a banner
+tl_is_banner = false
+if (is_real(map[?"is_banner"]))
+	tl_is_banner = map[?"is_banner"]
+	
 // Rotation point
 tl_rot_point = point3D(0, 0, 0)
 tl_rot_point_state_amount = 0

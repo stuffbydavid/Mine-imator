@@ -520,6 +520,22 @@ switch (menu_name)
 		
 		// Default
 		var texobj = temp.model_tex;
+		
+		// Animatable special block in scenery
+		if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+		{
+			if (tl_edit.part_root.type = e_tl_type.SCENERY)
+			{
+				with (tl_edit.part_root.temp)
+				{
+					if (block_tex.type = e_res_type.PACK)
+						texobj = block_tex
+					else
+						texobj = model_tex
+				}
+			}
+		}
+		
 		if (texobj = null)
 		{
 			texobj = temp.model
@@ -571,15 +587,32 @@ switch (menu_name)
 	
 	// Timeline frame block texture
 	case "frameeditorblocktex":
-	{
+	{	
 		// Default
-		menu_add_item(null, text_get("listdefault", tl_edit.temp.block_tex.display_name), tl_edit.temp.block_tex.block_preview_texture)
+		var texobj = tl_edit.temp.block_tex;
+		
+		// Animatable block in scenery
+		if (tl_edit.type = e_tl_type.BLOCK && tl_edit.part_of != null)
+		{
+			if (tl_edit.part_of.type = e_tl_type.SCENERY)
+			{
+				var temp = tl_edit.part_of.temp;
+				
+				with (temp)
+				{
+					if (block_tex.type = e_res_type.PACK || block_tex.type = e_res_type.BLOCK_SHEET)
+						texobj = block_tex
+				}
+			}
+		}
+		
+		menu_add_item(null, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
 			var res = res_list.display_list[|i];
-			if (res != tl_edit.temp.block_tex && res.block_sheet_texture != null)
+			if (res != texobj && res.block_sheet_texture != null)
 				menu_add_item(res, res.display_name, res.block_preview_texture)
 		}
 		
@@ -740,6 +773,25 @@ switch (menu_name)
 		menu_add_item(24, "24")
 		menu_add_item(30, "30")
 		menu_add_item(60, "60")
+		
+		break
+	}
+	
+	// Banner pattern
+	case "modelbannerpattern":
+	{
+		menu_item_w = 32
+		menu_item_h = 32
+		
+		
+	}
+	
+	// Minecraft color
+	case "modelbannerbasecolor":
+	case "modelbannerpatterncolor":
+	{
+		for (var i = 0; i < ds_list_size(minecraft_color_list); i++)
+			menu_add_item(minecraft_color_list[|i], "modelpartstatevalue" + minecraft_color_name_list[|i])
 		
 		break
 	}

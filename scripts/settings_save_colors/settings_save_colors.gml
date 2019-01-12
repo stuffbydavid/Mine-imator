@@ -23,5 +23,6 @@ json_save_object_start("colors")
 	json_save_var_color("timeline_select", setting_color_timeline_select)
 	json_save_var_color("timeline_marks", setting_color_timeline_marks)
 	json_save_var_color("timeline_select_box", setting_color_timeline_select_box)
+	json_save_var_color("viewport_selection", setting_color_viewport_selection)
 
 json_save_object_done()

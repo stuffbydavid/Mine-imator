@@ -59,7 +59,10 @@ with (new(obj_model_file))
 		
 	// Description (optional)
 	description = value_get_string(map[?"description"], "")
-		
+	
+	// Is a banner
+	is_banner = (name = "banner" || name = "wall_banner")
+	
 	// Texture
 	texture_name = map[?"texture"]
 	texture_inherit = id

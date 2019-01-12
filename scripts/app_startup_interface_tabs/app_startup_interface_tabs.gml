@@ -60,6 +60,8 @@ with (properties)
 	{
 		tbx_sunlight_strength = new_textbox_decimals()
 		tbx_sunlight_strength.suffix = "%"
+		tbx_desaturate_night_amount = new_textbox_decimals()
+		tbx_desaturate_night_amount.suffix = "%"
 		tbx_sky_clouds_fade_distance = new_textbox_integer()
 		tbx_sky_clouds_z = new_textbox_ndecimals()
 		tbx_sky_clouds_size = new_textbox_decimals()
@@ -452,6 +454,18 @@ with (frame_editor)
 		tbx_dof_fade_size = new_textbox_decimals()
 		tbx_dof_blur_size = new_textbox_decimals()
 		tbx_dof_blur_size.suffix = "%"
+		tbx_dof_fringe_angle_red = new_textbox_ndecimals()
+		tbx_dof_fringe_angle_red.suffix = "°"
+		tbx_dof_fringe_angle_green = new_textbox_ndecimals()
+		tbx_dof_fringe_angle_green.suffix = "°"
+		tbx_dof_fringe_angle_blue = new_textbox_ndecimals()
+		tbx_dof_fringe_angle_blue.suffix = "°"
+		tbx_dof_fringe_red = new_textbox_integer()
+		tbx_dof_fringe_red.suffix = "%"
+		tbx_dof_fringe_green = new_textbox_integer()
+		tbx_dof_fringe_green.suffix = "%"
+		tbx_dof_fringe_blue = new_textbox_integer()
+		tbx_dof_fringe_blue.suffix = "%"
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
 		tbx_bloom_threshold = new_textbox_integer()
@@ -466,12 +480,23 @@ with (frame_editor)
 		tbx_brightness.suffix = "%"
 		tbx_saturation = new_textbox_integer()
 		tbx_saturation.suffix = "%"
+		tbx_grain_strength = new_textbox_ninteger()
+		tbx_grain_strength.suffix = "%"
+		tbx_grain_saturation = new_textbox_integer()
+		tbx_grain_saturation.suffix = "%"
+		tbx_grain_size = new_textbox_integer()
 		tbx_vignette_radius = new_textbox_integer()
 		tbx_vignette_radius.suffix = "%"
 		tbx_vignette_softness = new_textbox_integer()
 		tbx_vignette_softness.suffix = "%"
 		tbx_vignette_strength = new_textbox_integer()
 		tbx_vignette_strength.suffix = "%"
+		
+		snap_fringe_enabled = false
+		snap_fringe_size = 22.5
+		fringe_copy = array(0, 0, 0, 0, 0, 0)
+		tbx_snap_fringe = new_textbox_decimals()
+		tbx_snap_fringe.text = string(snap_fringe_size)
 	}
 	
 	// Texture

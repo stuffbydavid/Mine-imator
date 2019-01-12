@@ -22,6 +22,7 @@ model_shape_vbuffer_map = null
 model_shape_alpha_map = null
 part_of = null
 part_list = null
+part_root = null
 scenery_animate = false
 
 for (var v = 0; v < e_value.amount; v++)
@@ -70,6 +71,7 @@ inherit_visibility = true
 inherit_bend = false
 inherit_texture = false
 inherit_glow_color = true
+inherit_select = false
 scale_resize = true
 rot_point_custom = false
 rot_point = point3D(0, 0, 0)
@@ -99,6 +101,14 @@ matrix = 0
 update_matrix = true
 bend_rot_last = vec3(0)
 bend_model_part_last = null
+
+// Only used if the timeline is a banner special block in a schematic
+is_banner = false
+banner_base_color = null
+banner_pattern_list = null
+banner_color_list = null
+
+banner_skin = null
 
 text_vbuffer = null
 text_texture = null

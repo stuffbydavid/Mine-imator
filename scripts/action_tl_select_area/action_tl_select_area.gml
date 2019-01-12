@@ -23,9 +23,14 @@ else
 		history_save_tl_select()
 		
 	for (var t = stl; t <= etl; t++)
+	{
 		with (tree_visible_list[|t])
+		{
+			tl_update_recursive_select()
 			tl_select()
-			
+		}
+	}
+	
 	with (hobj)
 		history_save_tl_select_new()
 }

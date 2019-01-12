@@ -5,6 +5,7 @@ globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
 globalvar biome_list, videotemplate_list, videoquality_list;
 globalvar language_english_map, language_map;
 globalvar camera_values_list, camera_values_copy, camera_use_default_list;
+globalvar minecraft_color_name_list, minecraft_color_list, minecraft_banner_pattern_list, minecraft_banner_pattern_short_list;
 
 // Values
 value_name_list = ds_list_create()
@@ -55,6 +56,13 @@ ds_list_add(value_name_list,
 	"CAM_DOF_RANGE",
 	"CAM_DOF_FADE_SIZE",
 	"CAM_DOF_BLUR_SIZE",
+	"CAM_DOF_FRINGE",
+	"CAM_DOF_FRINGE_ANGLE_RED",
+	"CAM_DOF_FRINGE_ANGLE_GREEN",
+	"CAM_DOF_FRINGE_ANGLE_BLUE",
+	"CAM_DOF_FRINGE_RED",
+	"CAM_DOF_FRINGE_GREEN",
+	"CAM_DOF_FRINGE_BLUE",
 	"CAM_BLOOM",
 	"CAM_BLOOM_THRESHOLD",
 	"CAM_BLOOM_INTENSITY",
@@ -64,6 +72,10 @@ ds_list_add(value_name_list,
 	"CAM_CONTRAST",
 	"CAM_BRIGHTNESS",
 	"CAM_SATURATION",
+	"CAM_GRAIN",
+	"CAM_GRAIN_STRENGTH",
+	"CAM_GRAIN_SATURATION",
+	"CAM_GRAIN_SIZE",
 	"CAM_VIGNETTE",
 	"CAM_VIGNETTE_RADIUS",
 	"CAM_VIGNETTE_SOFTNESS",
@@ -79,6 +91,8 @@ ds_list_add(value_name_list,
 	"BG_SUNLIGHT_RANGE",
 	"BG_SUNLIGHT_FOLLOW",
 	"BG_SUNLIGHT_STRENGTH",
+	"BG_DESATURATE_NIGHT",
+	"BG_DESATURATE_NIGHT_AMOUNT",
 	"BG_SKY_CLOUDS_SHOW",
 	"BG_SKY_CLOUDS_SPEED",
 	"BG_SKY_CLOUDS_Z",
@@ -118,70 +132,27 @@ ds_list_add(value_name_list,
 
 // Camera values
 camera_values_list = ds_list_create()
-ds_list_add(camera_values_list,
-	e_value.CAM_FOV,
-	e_value.CAM_ROTATE,
-	e_value.CAM_ROTATE_DISTANCE,
-	e_value.CAM_ROTATE_ANGLE_XY,
-	e_value.CAM_ROTATE_ANGLE_Z,
-	e_value.CAM_DOF,
-	e_value.CAM_DOF_DEPTH,
-	e_value.CAM_DOF_RANGE,
-	e_value.CAM_DOF_FADE_SIZE,
-	e_value.CAM_DOF_BLUR_SIZE,
-	e_value.CAM_BLOOM,
-	e_value.CAM_BLOOM_THRESHOLD,
-	e_value.CAM_BLOOM_INTENSITY,
-	e_value.CAM_BLOOM_RADIUS,
-	e_value.CAM_BLOOM_BLEND,
-	e_value.CAM_COLOR_CORRECTION,
-	e_value.CAM_CONTRAST,
-	e_value.CAM_BRIGHTNESS,
-	e_value.CAM_SATURATION,
-	e_value.CAM_VIGNETTE,
-	e_value.CAM_VIGNETTE_RADIUS,
-	e_value.CAM_VIGNETTE_SOFTNESS,
-	e_value.CAM_VIGNETTE_STRENGTH,
-	e_value.CAM_WIDTH,
-	e_value.CAM_HEIGHT,
-	e_value.CAM_SIZE_USE_PROJECT,
-	e_value.CAM_SIZE_KEEP_ASPECT_RATIO
-)
+
+for (var i = e_value.CAM_FOV; i <= e_value.CAM_HEIGHT; i++)
+	ds_list_add(camera_values_list, i)
 
 camera_values_copy = ds_list_create()
 for (var i = 0; i < ds_list_size(camera_values_list); i++)
 	camera_values_copy[|i] = tl_value_default(camera_values_list[|i])
 
 camera_use_default_list = ds_list_create()
-ds_list_add(camera_use_default_list,
-	true,	// CAM_FOV
-	false,	// CAM_ROTATE
-	true,	// CAM_ROTATE_DISTANCE
-	true,	// CAM_ROTATE_ANGLE_XY
-	true,	// CAM_ROTATE_ANGLE_Z
-	false,	// CAM_DOF
-	true,	// CAM_DOF_DEPTH
-	true,	// CAM_DOF_RANGE
-	true,	// CAM_DOF_FADE_SIZE
-	true,	// CAM_DOF_BLUR_SIZE
-	false,	// CAM_BLOOM
-	true,	// CAM_BLOOM_THRESHOLD
-	true,	// CAM_BLOOM_INTENSITY
-	true,	// CAM_BLOOM_RADIUS
-	true,	// CAM_BLOOM_BLEND
-	false,	// CAM_COLOR_CORRECTION
-	true,	// CAM_CONTRAST
-	true,	// CAM_BRIGHTNESS
-	true,	// CAM_SATURATION
-	false,	// CAM_VIGNETTE
-	true,	// CAM_VIGNETTE_RADIUS
-	true,	// CAM_VIGNETTE_SOFTNESS
-	true,	// CAM_VIGNETTE_STRENGTH
-	null,	// CAM_WIDTH
-	null,	// CAM_HEIGHT
-	true,	// CAM_SIZE_USE_PROJECT
-	true	// CAM_SIZE_KEEP_ASPECT_RATIO
-)
+
+for (var i = 0; i < ds_list_size(camera_values_list); i++)
+{
+	var valueid = e_value.CAM_FOV + i;
+	
+	if (tl_value_is_bool(valueid))
+		camera_use_default_list[|i] = false
+	else if (valueid = e_value.CAM_WIDTH || valueid = e_value.CAM_HEIGHT)
+		camera_use_default_list[|i] = null
+	else
+		camera_use_default_list[|i] = true
+}
 
 // Template types
 temp_type_name_list = ds_list_create()
@@ -309,7 +280,7 @@ ds_list_add(videoquality_list,
 	new_videoquality("high", 2500000),
 	new_videoquality("medium", 1200000),
 	new_videoquality("low", 700000),
-	new_videoquality("verylow", 350000),
+	new_videoquality("verylow", 350000)
 )
 
 // Language
@@ -322,3 +293,130 @@ ds_map_copy(language_map, language_english_map)
 // Biomes
 biome_list = ds_list_create()
 ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))
+
+// Minecraft colors
+minecraft_color_name_list = ds_list_create()
+ds_list_add(minecraft_color_name_list,
+	"white",
+	"orange",
+	"magenta",
+	"light_blue",
+	"yellow",
+	"lime",
+	"pink",
+	"gray",
+	"light_gray",
+	"cyan",
+	"purple",
+	"blue",
+	"brown",
+	"green",
+	"red",
+	"black"
+)
+
+minecraft_color_list = ds_list_create()
+ds_list_add(minecraft_color_list,
+	c_minecraft_white,
+	c_minecraft_orange,
+	c_minecraft_magenta,
+	c_minecraft_light_blue,
+	c_minecraft_yellow,
+	c_minecraft_lime,
+	c_minecraft_pink,
+	c_minecraft_gray,
+	c_minecraft_light_gray,
+	c_minecraft_cyan,
+	c_minecraft_purple,
+	c_minecraft_blue,
+	c_minecraft_brown,
+	c_minecraft_green,
+	c_minecraft_red,
+	c_minecraft_black
+)
+
+minecraft_banner_pattern_list = ds_list_create()
+ds_list_add(minecraft_banner_pattern_list,
+	"base",
+	"border",
+	"bricks",
+	"circle",
+	"creeper",
+	"cross",
+	"curly_border",
+	"diagonal_left",
+	"diagonal_right",
+	"diagonal_up_left",
+	"diagonal_up_right",
+	"flower",
+	"gradient",
+	"gradient_up",
+	"half_horizontal",
+	"half_horizontal_bottom",
+	"half_vertical",
+	"half_vertical_right",
+	"mojang",
+	"rhombus",
+	"skull",
+	"small_stripes",
+	"square_bottom_left",
+	"square_bottom_right",
+	"square_top_left",
+	"square_top_right",
+	"straight_cross",
+	"stripe_bottom",
+	"stripe_center",
+	"stripe_downleft",
+	"stripe_downright",
+	"stripe_left",
+	"stripe_middle",
+	"stripe_right",
+	"stripe_top",
+	"triangle_bottom",
+	"triangle_top",
+	"triangles_bottom",
+	"triangles_top"
+)
+
+minecraft_banner_pattern_short_list = ds_list_create()
+ds_list_add(minecraft_banner_pattern_short_list,
+	"",
+	"bo",
+	"bri",
+	"mc",
+	"cre",
+	"cr",
+	"cbo",
+	"ld",
+	"rud",
+	"lud",
+	"rd",
+	"flo",
+	"gra",
+	"gru",
+	"hh",
+	"hhb",
+	"vh",
+	"vhr",
+	"moj",
+	"mr",
+	"sku",
+	"ss",
+	"bl",
+	"br",
+	"tl",
+	"tr",
+	"sc",
+	"bs",
+	"cs",
+	"dls",
+	"drs",
+	"ls",
+	"ms",
+	"rs",
+	"ts",
+	"bt",
+	"tt",
+	"tts",
+	"bts"
+)

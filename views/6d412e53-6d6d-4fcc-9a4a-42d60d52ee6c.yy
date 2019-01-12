@@ -22,7 +22,8 @@
         "e0933075-e1f9-43cf-9f97-d3888ca8bfa9",
         "4505c8d6-899c-4cf6-b4fd-381619a55a27",
         "953736d1-d2a0-4c38-b538-19f0e8946c53",
-        "15449039-8db6-4bba-a7cb-d528a965eaac"
+        "15449039-8db6-4bba-a7cb-d528a965eaac",
+        "22251dc5-893d-4218-a3d4-62cfb7c3ec32"
     ],
     "filterType": "GMScript",
     "folderName": "Color",

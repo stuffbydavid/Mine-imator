@@ -70,6 +70,70 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	draw_meter("frameeditorcameradofblursize", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_BLUR_SIZE] * 100, 48, 0, 10, 1, 0, tab.camera.tbx_dof_blur_size, action_tl_frame_cam_dof_blur_size)
 	tab_next()
 	
+	tab_control_checkbox()
+	draw_checkbox("frameeditorcameradoffringe", dx, dy, tl_edit.value[e_value.CAM_DOF_FRINGE], action_tl_frame_cam_dof_fringe)
+	tab_next()
+	
+	if (tl_edit.value[e_value.CAM_DOF_FRINGE])
+	{
+		var snapval, capwid;
+		snapval = tab.camera.snap_fringe_enabled * tab.camera.snap_fringe_size
+	
+		tab_control(100)
+		axis_edit = X
+		draw_wheel("frameeditorcameradoffringeanglered", dx + floor(dw * 0.25) - 25, dy + 50, c_red, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_RED], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_RED], snapval, false, tab.camera.tbx_dof_fringe_angle_red, action_tl_frame_cam_dof_fringe_angle)
+	
+		axis_edit = Y
+		draw_wheel("frameeditorcameradoffringeanglegreen", dx + floor(dw * 0.5), dy + 50, c_green, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], snapval, false, tab.camera.tbx_dof_fringe_angle_green, action_tl_frame_cam_dof_fringe_angle)
+	
+		axis_edit = Z
+		draw_wheel("frameeditorcameradoffringeangleblue", dx + floor(dw * 0.75) + 25, dy + 50, c_blue, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], snapval, false, tab.camera.tbx_dof_fringe_angle_blue, action_tl_frame_cam_dof_fringe_angle)
+		tab_next()
+		
+		// Angle snap
+		tab_control(24)
+		
+		if (draw_button_normal("frameeditorcameradoffringesnap", dx, dy, 24, 24, e_button.NO_TEXT, tab.camera.snap_fringe_enabled, false, true, icons.GRID))
+			tab.camera.snap_fringe_enabled = !tab.camera.snap_fringe_enabled
+		
+		if (tab.camera.snap_fringe_enabled)
+		{
+			capwid = text_caption_width("frameeditorcameradoffringesnapsize")
+			if (draw_inputbox("frameeditorcameradoffringesnapsize", dx + dw - capwid - 50, dy + 4, capwid + 50, "", tab.camera.tbx_snap_fringe, null))
+				tab.camera.snap_fringe_size = string_get_real(tab.camera.tbx_snap_fringe.text, 0)
+		}
+		tab_next()
+		
+		capwid = text_caption_width("frameeditorcameradoffringered", "frameeditorcameradoffringegreen", "frameeditorcameradoffringeblue")
+		
+		tab_control_meter()
+		draw_meter("frameeditorcameradoffringered", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FRINGE_RED] * 100, 48, 0, 300, 100, 0, tab.camera.tbx_dof_fringe_red, action_tl_frame_cam_dof_fringe_red, capwid)
+		tab_next()
+	
+		tab_control_meter()
+		draw_meter("frameeditorcameradoffringegreen", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FRINGE_GREEN] * 100, 48, 0, 300, 100, 0, tab.camera.tbx_dof_fringe_green, action_tl_frame_cam_dof_fringe_green, capwid)
+		tab_next()
+	
+		tab_control_meter()
+		draw_meter("frameeditorcameradoffringeblue", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE] * 100, 48, 0, 300, 100, 0, tab.camera.tbx_dof_fringe_blue, action_tl_frame_cam_dof_fringe_blue, capwid)
+		tab_next()
+		
+		// Tools
+		tab_control(24)
+		
+		if (draw_button_normal("frameeditorcameradoffringereset", dx + 25 * 0, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.RESET))
+			action_tl_frame_cam_dof_fringe_all(array(tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_RED], tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], tl_edit.value[e_value.CAM_DOF_FRINGE_RED], tl_edit.value[e_value.CAM_DOF_FRINGE_GREEN], tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE]))
+		
+		if (draw_button_normal("frameeditorcameradoffringecopy", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.COPY))
+			tab.camera.fringe_copy = array(tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_RED], tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE],
+										   tl_edit.value[e_value.CAM_DOF_FRINGE_RED], tl_edit.value[e_value.CAM_DOF_FRINGE_GREEN], tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE])
+		
+		if (draw_button_normal("frameeditorcameradoffringepaste", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.PASTE))
+			action_tl_frame_cam_dof_fringe_all(tab.camera.fringe_copy)
+		
+		tab_next()
+	}
+	
 	tab_control(24)
 	capwid = text_caption_width("frameeditorcameradofforeground")
 	
@@ -139,6 +203,34 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	
 	tab_control_meter()
 	draw_meter("frameeditorcameracolorcorrectionsaturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_SATURATION] * 100), 50, 0, 200, 100, 1, tab.camera.tbx_saturation, action_tl_frame_cam_clrcor_saturation, capwid)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
+// Grain
+tab_control_checkbox_expand()
+draw_checkbox_expand("frameeditorcameragrain", dx, dy, tl_edit.value[e_value.CAM_GRAIN], action_tl_frame_cam_grain, checkbox_expand_frameeditor_grain, action_checkbox_expand_frameeditor_grain)
+tab_next()
+if (tl_edit.value[e_value.CAM_GRAIN] && checkbox_expand_frameeditor_grain)
+{
+	dx += 4
+	dw -= 4
+	
+	capwid = text_caption_width("frameeditorcameragrainstrength", "frameeditorcameragrainsaturation" ,"frameeditorcameragrainsize")
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameragrainstrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_GRAIN_STRENGTH] * 100), 50, -100, 100, 10, 1, tab.camera.tbx_grain_strength, action_tl_frame_cam_grain_strength, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameragrainsaturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_GRAIN_SATURATION] * 100), 50, 0, 100, 10, 1, tab.camera.tbx_grain_saturation, action_tl_frame_cam_grain_saturation, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameragrainsize", dx, dy, dw, tl_edit.value[e_value.CAM_GRAIN_SIZE], 50, 1, 10, 1, 1, tab.camera.tbx_grain_size, action_tl_frame_cam_grain_size, capwid)
 	tab_next()
 	
 	dx -= 4

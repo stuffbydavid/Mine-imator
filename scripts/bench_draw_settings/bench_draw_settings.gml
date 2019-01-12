@@ -78,11 +78,18 @@ else
 			}
 			
 			// Model
-			draw_label(labeltext + ":", dx, dy + 8, fa_left, fa_middle)
+			if (draw_button_normal(labeltext + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, test(bench_settings.list_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+				bench_settings.list_extend = !bench_settings.list_extend
+			
+			//draw_label(labeltext + ":", dx + 24, dy + 8, fa_left, fa_middle)
 			dy += 22
-			listh = 200 + bench_settings.height_custom
-			sortlist_draw(list, dx, dy, dw, listh, bench_settings.model_name)
-			dy += listh + 30
+			
+			if (bench_settings.list_extend)
+			{
+				listh = 200 + bench_settings.height_custom
+				sortlist_draw(list, dx, dy, dw, listh, bench_settings.model_name)
+				dy += listh + 30
+			}
 			
 			// States
 			var model, statelen;
@@ -119,6 +126,19 @@ else
 				tex = res_get_model_texture(model_part_get_texture_name(part, app.bench_settings.model_texture_name_map))
 			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 40, bench_settings.model_tex, text, action_bench_model_tex, tex, null, capwid)
 			dy += 40
+			
+			// Banner editor
+			if (bench_settings.model_name = "banner")
+			{
+				dy += 8
+				
+				var wid = text_max_width("benchopeneditor") + 20;
+				if (draw_button_normal("benchopeneditor", dx, dy, wid, 24, e_button.TEXT, popup = popup_bannereditor, true, true))
+					popup_bannereditor_show(bench_settings)
+				
+				dy += 24
+			}
+			
 			break
 		}
 		
@@ -149,9 +169,11 @@ else
 				res = mc_res
 			
 			// Preview
-			draw_label(text_get("typeitem") + ":", dx, dy + 8, fa_left, fa_middle)
+			if (draw_button_normal(text_get("typeitem") + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, test(bench_settings.list_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+				bench_settings.list_extend = !bench_settings.list_extend
+			
 			if (res.item_sheet_texture != null)
-				draw_texture_slot(res.item_sheet_texture, bench_settings.item_slot, dx + capwid, dy, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+				draw_texture_slot(res.item_sheet_texture, bench_settings.item_slot, dx + (capwid + 24), dy, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			else
 			{
 				var scale = min(16 / texture_width(res.texture), 16 / texture_height(res.texture));
@@ -160,7 +182,7 @@ else
 			dy += 22
 			
 			// Item select
-			if (res.item_sheet_texture != null)
+			if (res.item_sheet_texture != null && bench_settings.list_extend)
 			{
 				var slots = test((res.type = e_res_type.PACK), ds_list_size(mc_assets.item_texture_list), (res.item_sheet_size[X] * res.item_sheet_size[Y]));
 				listh = 200 + bench_settings.height_custom
@@ -192,11 +214,16 @@ else
 			capwid = text_caption_width("benchblocktex")
 			
 			// Block
-			draw_label(text_get("benchblock") + ":", dx, dy + 8, fa_left, fa_middle)
+			if (draw_button_normal(text_get("benchblock") + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, test(bench_settings.list_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+				bench_settings.list_extend = !bench_settings.list_extend
 			dy += 22
-			listh = 200 + bench_settings.height_custom
-			sortlist_draw(bench_settings.block_list, dx, dy, dw, listh, bench_settings.block_name)
-			dy += listh + 30
+			
+			if (bench_settings.list_extend)
+			{
+				listh = 200 + bench_settings.height_custom
+				sortlist_draw(bench_settings.block_list, dx, dy, dw, listh, bench_settings.block_name)
+				dy += listh + 30
+			}
 			
 			// States
 			var block, statelen;

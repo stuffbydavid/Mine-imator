@@ -49,7 +49,8 @@ with (bench_settings)
 	height_goal = app.bench_height
 	width_custom = 0
 	height_custom = 0
-
+	list_extend = true
+	
 	// Default settings
 	temp_event_create()
 	model_name = default_model

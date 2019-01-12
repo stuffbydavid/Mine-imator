@@ -62,6 +62,8 @@ background_sky_rotation = 0
 background_sunlight_range = 2000
 background_sunlight_follow = false
 background_sunlight_strength = 0
+background_desaturate_night = false
+background_desaturate_night_amount = 0
 
 background_sky_clouds_show = true
 background_sky_clouds_update = false

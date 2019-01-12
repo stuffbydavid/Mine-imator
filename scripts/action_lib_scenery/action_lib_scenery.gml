@@ -35,7 +35,10 @@ else
 			
 		res = new_res(fn, e_res_type.SCHEMATIC)
 		if (res.replaced)
+		{
+			res_edit = res
 			action_res_replace(fn)
+		}
 		else
 			with (res)
 				res_load()

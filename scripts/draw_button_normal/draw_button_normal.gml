@@ -57,13 +57,15 @@ if (pressed)
 // Get text
 if (type = e_button.NO_TEXT)
 	text = ""
-else
+else if (type != e_button.LABEL)
 	text = text_get(name)
-	
+else
+	text = name
+
 if (wid < 0)
 	wid = string_width(text) + 20
 
-if (type = e_button.CAPTION)
+if (type = e_button.CAPTION || type = e_button.LABEL)
 {
 	mouseon = app_mouse_box(xx, yy, wid + 5 + string_width(text), hei)
 	tip_set(tip, xx, yy, wid + 5 + string_width(text), hei)
@@ -121,7 +123,7 @@ if (icon != null)
 if (text != "")
 {
 	var textx, texty;
-	if (type = e_button.CAPTION)
+	if (type = e_button.CAPTION || type = e_button.LABEL)
 	{
 		textx = xx + wid + 5
 		texty = yy + hei / 2 - 1

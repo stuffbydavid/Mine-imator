@@ -15,6 +15,27 @@ json_save_object_start()
 			if (type = e_temp_type.BODYPART)
 				json_save_var("part_name", model_part_name)
 		json_save_object_done()
+		
+		// Banner values
+		if (model_name = "banner")
+		{
+			json_save_var("banner_base_color", minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_base_color)])
+			debug(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_base_color)], banner_base_color)
+			
+			json_save_array_start("banner_pattern_list")
+			
+				for (var p = 0; p < array_length_1d(banner_pattern_list); p++)
+					json_save_array_value(banner_pattern_list[p])
+			
+			json_save_array_done()
+			
+			json_save_array_start("banner_color_list")
+			
+				for (var c = 0; c < array_length_1d(banner_color_list); c++)
+					json_save_array_value(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_color_list[c])])
+			
+			json_save_array_done()
+		}
 	}
 	else if (type = e_temp_type.ITEM)
 	{

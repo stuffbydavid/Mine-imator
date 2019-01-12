@@ -1,4 +1,4 @@
-/// json_save_var_save_id(name, vars)
+/// json_save_var_state_vars(name, vars)
 /// @arg name
 /// @arg vars
 

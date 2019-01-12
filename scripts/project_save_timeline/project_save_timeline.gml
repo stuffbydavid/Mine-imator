@@ -36,6 +36,37 @@ json_save_object_start()
 		}
 		
 		json_save_var_save_id("part_of", part_of)
+		
+		if (part_root != null)
+			json_save_var_save_id("part_root", part_root)
+		
+		// Banner values
+		if (is_banner && banner_base_color != null)
+		{
+			json_save_var_bool("is_banner", is_banner)
+			
+			json_save_var("banner_base_color", minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_base_color)])
+			
+			if (array_length_1d(banner_pattern_list) > 0)
+			{
+				json_save_array_start("banner_pattern_list")
+			
+					for (var p = 0; p < array_length_1d(banner_pattern_list); p++)
+						json_save_array_value(banner_pattern_list[p])
+			
+				json_save_array_done()
+			}
+			
+			if (array_length_1d(banner_color_list) > 0)
+			{
+				json_save_array_start("banner_color_list")
+			
+					for (var c = 0; c < array_length_1d(banner_color_list); c++)
+						json_save_array_value(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_color_list[c])])
+			
+				json_save_array_done()
+			}
+		}
 	}
 	
 	if (part_list != null)

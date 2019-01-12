@@ -68,4 +68,7 @@ with (bench_settings)
 	
 	with (preview)
 		update = true
+		
+	if (model_name = "banner")
+		array_add(banner_update, id)
 }

@@ -7,8 +7,25 @@ var texobj = argument0;
 
 if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA ||  // Check if empty or a camera
 	(texobj.model_texture = null && texobj.model_texture_map = null)) // Not a valid model texture, use the library setting
-	texobj = model_tex
-			
+{
+	// Animatable block in scenery, use scenery's library setting(If it's a pack)
+	if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK)
+	{
+		if (part_of.type = e_tl_type.SCENERY)
+		{
+			with (part_of)
+			{
+				if (temp.block_tex.type = e_res_type.PACK)
+					texobj = temp.block_tex
+				else
+					texobj = model_tex
+			}
+		}
+	}
+	else
+		texobj = model_tex
+}	
+
 if (texobj = null) // Use the model's texture
 {
 	texobj = model

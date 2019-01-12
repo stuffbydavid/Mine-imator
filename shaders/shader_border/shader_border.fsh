@@ -1,4 +1,5 @@
 uniform vec2 uTexSize;
+uniform vec4 uColor;
 
 varying vec2 vTexCoord;
 
@@ -18,7 +19,7 @@ void main()
 		 || isHighlight(vec2(-size, size))
 		 || isHighlight(vec2(size, -size))
 		 || isHighlight(vec2(-size, -size)))
-		 gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+		 gl_FragColor = uColor;
 	else
 		discard;
 }

@@ -45,6 +45,19 @@ with (new(obj_block_tl))
 		text_position = block.tl_text_position
 	}
 	
+	// Get banner patterns
+	is_banner = block.tl_is_banner
+	if (is_banner)
+	{
+		with (mc_builder)
+		{
+			var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
+			other.banner_color = block_banner_color_map[?ind]
+			other.banner_patterns = block_banner_patterns_map[?ind]
+			other.banner_pattern_colors = block_banner_pattern_colors_map[?ind]
+		}
+	}
+	
 	rot_point = block.tl_rot_point
 	position = block.tl_position
 	rotation = block.tl_rotation

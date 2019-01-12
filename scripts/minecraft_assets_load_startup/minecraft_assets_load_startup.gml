@@ -6,7 +6,7 @@ globalvar mc_assets, mc_builder, mc_res;
 globalvar load_assets_stage, load_assets_progress, load_assets_block_index;
 globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
-globalvar noise_surf;
+globalvar noise_surf, banner_update;
 
 mc_assets = new(obj_minecraft_assets)
 mc_builder = new(obj_builder)
@@ -20,6 +20,8 @@ load_assets_type_map = null
 load_assets_block_index = 0
 window_set_size(460, 320)
 alarm[0] = 1
+
+banner_update = array()
 
 // Create default resource
 with (mc_res)

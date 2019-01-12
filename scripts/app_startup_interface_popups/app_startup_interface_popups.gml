@@ -145,3 +145,24 @@ with (popup_upgrade)
 popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 650, 600, true)
 with (popup_modelbench)
 	hidden = app.setting_modelbench_popup_hidden
+	
+// Banner editor
+popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 729, 540, true)
+with (popup_bannereditor)
+{
+	banner_edit = null
+	pattern_scroll = new(obj_scrollbar)
+	pattern_scroll.snap_value = 40
+	prev_base_color = c_white
+	
+	pattern_list_edit = ds_list_create()
+	pattern_color_list_edit = ds_list_create()
+	
+	prev_pattern_list = array()
+	prev_pattern_color = array()
+	
+	pattern_sprites = array()
+	
+	res_ratio = 1
+	pattern_resource = mc_res
+}

@@ -12,8 +12,13 @@ else
 			history_save_tl_select()
 			
 	for (var t = 0; t < ds_list_size(tree_list); t++)
+	{
 		with (tree_list[|t])
+		{
+			tl_update_recursive_select()
 			tl_select()
+		}
+	}
 }
 
 app_update_tl_edit()

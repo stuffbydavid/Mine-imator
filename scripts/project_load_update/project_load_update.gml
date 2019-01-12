@@ -41,6 +41,9 @@ with (obj_template)
 		else
 			temp_update_model_timeline_tree()
 	}
+	
+	if (model_name = "banner")
+		array_add(banner_update, id)
 }
 
 with (obj_timeline)
@@ -82,6 +85,9 @@ with (obj_timeline)
 	// Show position window
 	if (model_part != null)
 		value_type_show[e_value_type.POSITION] = model_part.show_position
+	
+	if (is_banner)
+		array_add(banner_update, id)
 }
 
 with (obj_particle_type)

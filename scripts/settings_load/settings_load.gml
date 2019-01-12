@@ -330,6 +330,7 @@ if (filename_ext(fn) = ".midata")
 		checkbox_expand_frameeditor_dof = value_get_string(checkboxmap[?"frameeditor_dof"], checkbox_expand_frameeditor_dof)
 		checkbox_expand_frameeditor_bloom = value_get_string(checkboxmap[?"frameeditor_bloom"], checkbox_expand_frameeditor_bloom)
 		checkbox_expand_frameeditor_clrcor = value_get_string(checkboxmap[?"frameeditor_clrcor"], checkbox_expand_frameeditor_clrcor)
+		checkbox_expand_frameeditor_grain = value_get_string(checkboxmap[?"frameeditor_grain"], checkbox_expand_frameeditor_grain)
 		checkbox_expand_frameeditor_vignette = value_get_string(checkboxmap[?"frameeditor_vignette"], checkbox_expand_frameeditor_vignette)
 	}
 }

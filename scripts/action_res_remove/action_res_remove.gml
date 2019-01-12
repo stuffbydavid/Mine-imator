@@ -41,6 +41,10 @@ with (obj_template)
 	}
 	else
 		temp_update()
+		
+	// Update banner
+	if (type = e_temp_type.SPECIAL_BLOCK && model_file.is_banner)
+		array_add(banner_update, id)
 }
 
 // Restore old timelines

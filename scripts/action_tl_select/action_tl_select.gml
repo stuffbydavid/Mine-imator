@@ -51,9 +51,16 @@ else
 	
 	// Select
 	if (!shift)
+	{
 		tl_deselect_all()
+	}
 	with (tl)
+	{
+		if (!keyboard_check(vk_control))
+			tl_update_recursive_select()
+		
 		tl_select()
+	}
 }
 
 app_update_tl_edit()

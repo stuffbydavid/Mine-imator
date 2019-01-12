@@ -28,6 +28,10 @@ block_state_id_current = 0
 block_render_model = null
 block_text_map = ds_map_create()
 
+block_banner_color_map = ds_map_create()
+block_banner_patterns_map = ds_map_create()
+block_banner_pattern_colors_map = ds_map_create()
+
 block_tl_add = false
 block_tl_list = null
 block_color = null

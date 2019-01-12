@@ -265,6 +265,7 @@ json_save_object_start("checkbox_expand")
 	json_save_var_bool("frameeditor_dof", checkbox_expand_frameeditor_dof)
 	json_save_var_bool("frameeditor_bloom", checkbox_expand_frameeditor_bloom)
 	json_save_var_bool("frameeditor_clrcor", checkbox_expand_frameeditor_clrcor)
+	json_save_var_bool("frameeditor_grain", checkbox_expand_frameeditor_grain)
 	json_save_var_bool("frameeditor_vignette", checkbox_expand_frameeditor_vignette)
 
 json_save_object_done()

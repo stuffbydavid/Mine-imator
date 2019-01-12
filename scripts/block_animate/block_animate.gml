@@ -11,6 +11,7 @@ with (new(obj_timeline))
 	// Set to be a part of the schematic
 	inherit_rot_point = true
 	part_of = root
+	part_root = root
 	ds_list_add(root.part_list, id)
 	tl_set_parent(root)
 	
@@ -28,7 +29,11 @@ with (new(obj_timeline))
 		if (model_file != null)
 		{
 			for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
-				ds_list_add(part_list, tl_new_part(model_file.file_part_list[|p]))
+			{
+				var partl = tl_new_part(model_file.file_part_list[|p]);
+				partl.part_root = root
+				ds_list_add(part_list, partl)
+			}
 			
 			tl_update_part_list(model_file, id)
 		}
@@ -114,5 +119,26 @@ with (new(obj_timeline))
 			tl_update()
 			tl_update_values()
 		}
+	}
+	
+	// Pass in banner data
+	if (other.is_banner)
+	{
+		banner_base_color = other.banner_color
+		banner_pattern_list = array_copy_1d(other.banner_patterns)
+		banner_color_list = array_copy_1d(other.banner_pattern_colors)
+		
+		is_banner = true
+		
+		var stand = tree_list[|0];
+		stand.banner_skin = banner_skin
+		stand.is_banner = true
+		
+		var banner = stand.tree_list[|0];
+		banner.banner_skin = banner_skin
+		banner.is_banner = true
+		
+		// Update
+		array_add(banner_update, id)
 	}
 }

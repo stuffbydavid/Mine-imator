@@ -66,7 +66,10 @@ with (temp_edit)
 	model_tex = res
 	if (model_tex != null)
 		model_tex.count++
-		
+	
+	if (model_name = "banner")
+		array_add(banner_update, temp_edit)
+	
 	temp_update_model_shape()
 }
 

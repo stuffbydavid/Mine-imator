@@ -99,6 +99,19 @@ tab_control_meter()
 draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 tab_next()
 
+// Desaturate night
+tab_control_checkbox()
+draw_checkbox("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
+tab_next()
+
+// Desaturate amount
+if (background_desaturate_night)
+{
+	tab_control_meter()
+	draw_meter("backgrounddesaturatenightamount", dx, dy, dw, round(background_desaturate_night_amount * 100), 64, 0, 100, 0, 1, tab.background.tbx_desaturate_night_amount, action_background_desaturate_night_amount)
+	tab_next()
+}
+
 // Clouds
 tab_control_checkbox_expand()
 draw_checkbox_expand("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, checkbox_expand_background_clouds, action_checkbox_expand_background_clouds)

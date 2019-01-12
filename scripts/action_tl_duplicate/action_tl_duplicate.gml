@@ -41,6 +41,7 @@ else
 	{
 		with (root_copy)
 		{
+			tl_update_recursive_select()
 			tl_select()
 			tl_set_parent(other.parent)
 		}

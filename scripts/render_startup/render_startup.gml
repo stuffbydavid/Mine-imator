@@ -7,7 +7,7 @@ globalvar render_view_current, render_width, render_height, render_ratio, render
 		  render_light_spot_sharpness, render_light_matrix, proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far,
 		  render_proj_from, render_active;
 
-globalvar render_camera_bloom, render_camera_dof, render_camera_color_correction, render_camera_vignette, render_overlay;
+globalvar render_camera_bloom, render_camera_dof, render_camera_color_correction, render_camera_grain, render_camera_vignette, render_overlay;
 
 log("Render init")
 	
@@ -31,6 +31,7 @@ render_camera = null
 render_camera_bloom = false
 render_camera_dof = false
 render_camera_color_correction = false
+render_camera_grain = false
 render_camera_vignette = false
 render_overlay = false
 

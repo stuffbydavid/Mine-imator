@@ -13,6 +13,11 @@ to.model_name = model_name
 to.model_state = array_copy_1d(model_state)
 to.model_part_name = model_part_name
 
+to.banner_base_color = banner_base_color
+to.banner_pattern_list = array_copy_1d(banner_pattern_list)
+to.banner_color_list = array_copy_1d(banner_color_list)
+to.banner_skin = sprite_duplicate(banner_skin)
+
 to.item_tex = item_tex
 to.item_slot = item_slot
 to.item_3d = item_3d

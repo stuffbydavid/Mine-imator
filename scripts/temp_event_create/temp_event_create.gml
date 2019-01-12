@@ -28,6 +28,11 @@ model_state = array()
 model_part_name = ""
 model_part = null
 
+banner_base_color = c_minecraft_white
+banner_pattern_list = array()
+banner_color_list = array()
+banner_skin = null
+
 item_tex = null
 item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
 item_vbuffer = null

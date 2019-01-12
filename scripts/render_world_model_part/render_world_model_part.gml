@@ -67,6 +67,43 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	with (res)
 		render_set_texture(res_get_model_texture(shapetexname))
 	
+	// Banner rendering
+	if (part.is_banner)
+	{
+		// Preview/timeline
+		if (object_index = obj_preview)
+		{
+			if (sprite_exists(select.banner_skin))
+				render_set_texture(select.banner_skin)
+		}
+		else
+		{
+			// Only use banner skin if timeline is using its template's resource
+			var tempres = null;
+			
+			with (tlobject.temp)
+				tempres = temp_get_model_texobj(null)
+			
+			if (res = tempres)
+				if (sprite_exists(tlobject.temp.banner_skin))
+					render_set_texture(tlobject.temp.banner_skin)
+		}
+	}
+	
+	if (tlobject != null)
+	{
+		// Only use banner skin if timeline is using its template's resource
+		var tempres = null;
+		
+		with (tlobject.temp)
+			tempres = temp_get_model_texobj(null)
+		
+		if (res = tempres)
+			if (sprite_exists(tlobject.banner_skin))
+				render_set_texture(tlobject.banner_skin)
+	}
+	
+	
 	// Blend color
 	var minecraft_color = c_white;
 	if (colornamemap != null)

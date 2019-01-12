@@ -32,7 +32,7 @@ else
 	
 	with (tl)
 		tl_select()
-			
+	
 	for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
 		tl_keyframe_select(tl.keyframe_list[|k])
 }
