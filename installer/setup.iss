@@ -1,4 +1,8 @@
-; Put the program files in the "Mine-imator" folder, be careful not to run it!
+; 1. Put the program files in the "Mine-imator" folder, be careful not to run it!
+; 2. Create empty "Projects" and "Skins" folders (Git doesn't support this...)
+; 3. Compile the installer
+; 4. .zip the Mine-imator folder
+; 5. Upload the generated Mine-imator installer.exe and Mine-imator.zip
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
