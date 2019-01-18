@@ -795,4 +795,20 @@ switch (menu_name)
 		
 		break
 	}
+	case "settingscubistplatform":
+	{
+		var platformcount = cubist_get_platform_count()
+		for(var i = 0; i < platformcount; i++){
+			menu_add_item(i, cubist_get_platform_name(i))
+		}
+		break;
+	}
+	case "settingscubistdevice":
+	{
+		var devicecount = cubist_get_device_count()
+		for(var i = 0; i < devicecount; i++){
+			menu_add_item(i, cubist_get_device_name(i))
+		}
+		break;
+	}
 }

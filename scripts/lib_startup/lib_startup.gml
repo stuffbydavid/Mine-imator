@@ -2,10 +2,11 @@
 
 log("External library init")
 
-var pathfile, pathmovie, pathwindow;
+var pathfile, pathmovie, pathwindow, pathcubist;
 pathfile = "Data\\file.dll"
 pathmovie = "Data\\movie.dll"
 pathwindow = "Data\\window.dll"
+pathcubist = "Data\\cubist.dll"
 
 if (!file_exists(pathfile))
 	return missing_file(pathfile)
@@ -15,6 +16,9 @@ if (!file_exists(pathmovie))
 	
 if (!file_exists(pathwindow))
 	return missing_file(pathwindow)
+
+if (!file_exists(pathcubist))
+	return missing_file(pathcubist)
 
 globalvar lib_open_url, lib_execute, lib_unzip, lib_gzunzip, lib_file_rename, lib_file_copy, lib_file_delete, lib_file_exists, lib_json_file_convert_unicode;
 globalvar file_copy_temp, lib_directory_create, lib_directory_exists, lib_directory_delete;
@@ -56,6 +60,21 @@ log("External library", pathwindow)
 lib_window_maximize = external_define(pathwindow, "window_maximize", dll_cdecl, ty_real, 1, ty_string)
 lib_window_set_focus = external_define(pathwindow, "window_set_focus", dll_cdecl, ty_real, 1, ty_string)
 
+globalvar lib_cubist_init, lib_cubist_destroy, lib_cubist_clear_buffers, lib_cubist_start_render, lib_cubist_get_image, lib_cubist_get_platform_count, lib_cubist_get_platform_name, lib_cubist_set_platform, lib_cubist_get_device_count, lib_cubist_get_device_name, lib_cubist_set_device
+
+log("External library", pathcubist)
+lib_cubist_init = external_define(pathcubist, "cubist_init", dll_cdecl, ty_real, 0)
+lib_cubist_get_platform_count = external_define(pathcubist, "cubist_get_platform_count", dll_cdecl, ty_real, 0)
+lib_cubist_get_platform_name = external_define(pathcubist, "cubist_get_platform_name", dll_cdecl, ty_string, 1, ty_real)
+lib_cubist_set_platform = external_define(pathcubist, "cubist_set_platform", dll_cdecl, ty_real, 1, ty_real)
+
+lib_cubist_get_device_count = external_define(pathcubist, "cubist_get_device_count", dll_cdecl, ty_real, 0)
+lib_cubist_get_device_name = external_define(pathcubist, "cubist_get_device_name", dll_cdecl, ty_string, 1, ty_real)
+lib_cubist_set_device = external_define(pathcubist, "cubist_set_device", dll_cdecl, ty_real, 1, ty_real)
+
+log("Cubist magic number", external_call(lib_cubist_init))
+
+
 // Check for crashes
 if (startup_last_crash)
 {
@@ -67,3 +86,6 @@ if (startup_last_crash)
 }
 
 return true
+
+
+

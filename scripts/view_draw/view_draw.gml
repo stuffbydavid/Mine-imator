@@ -237,7 +237,7 @@ if (view = view_second || !view_second.show)
 	
 	if (renderbuttonsize > content_width)
 		renderbuttonsize = 0
-		
+			
 	renderbuttonpadding = 5
 	renderbuttonx = boxx + boxw - renderbuttonpadding - renderbuttonsize
 	renderbuttony = boxy + boxh - renderbuttonpadding - renderbuttonsize

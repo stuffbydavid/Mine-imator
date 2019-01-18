@@ -31,7 +31,7 @@ if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content
 if (argument_count > 9)
 	tex = argument[9]
 else
-	tex = null
+	tex = null	
 	
 if (argument_count > 10)
 	icon = argument[10]

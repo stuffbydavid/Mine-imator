@@ -7,6 +7,19 @@ uniform float uSize;
 
 uniform vec2 uScreenSize;
 
+vec4 rnm(vec2 tc){
+	float noise = sin(dot(tc + vec2(uTime,uTime), vec2(12.9898, 78.233))) * 43758.5453;
+	float noiseR = fract(noise) * 2.0 - 1.0;
+	float noiseG = fract(noise * 1.2154) * 2.0 - 1.0;
+	float noiseB = fract(noise * 1.3453) * 2.0 - 1.0;
+	float noiseA = fract(noise * 1.3647) * 2.0 - 1.0;
+	return vec4(noiseR,noiseG,noiseB,noiseA);
+}
+
+float fade(float t){
+	return t*t*t*(t*(t*6.0-15.0)+10.0)
+}
+
 vec4 hsbtorgb(vec4 c)
 {
 	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
@@ -23,6 +36,10 @@ float random(vec2 coord)
 void main()
 {
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
+
+
+
+	/*
 	
 	vec2 randomCoord = (((floor((vTexCoord * uScreenSize) / uSize)) * uSize) / uScreenSize) + (1.0 / uScreenSize) * uSize;
 	
@@ -35,6 +52,6 @@ void main()
 	noisecolor.rgb = mix(satIntensity, noisecolor.rgb, uSaturation);
 		
 	baseColor.rgb += vec3(noisecolor.rgb) * uStrength;//vec3(random(randomCoord), random(randomCoord * vec2(3.0, -2.0)), random(randomCoord * vec2(2.0, -5.0))) * uStrength;
-	
+	*/
 	gl_FragColor = vec4(baseColor);
 }

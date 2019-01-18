@@ -39,6 +39,8 @@ if (setting_render_ssao && checkbox_expand_settings_ssao)
 	checkbox_expand_end()
 }
 
+
+
 // Shadows
 tab_control_checkbox_expand()
 draw_checkbox_expand("settingsrendershadows", dx, dy, setting_render_shadows, action_setting_render_shadows, checkbox_expand_settings_shadows, action_checkbox_expand_settings_shadows)
@@ -228,3 +230,9 @@ if (setting_render_watermark)
 		}
 	}
 }
+
+
+
+
+
+

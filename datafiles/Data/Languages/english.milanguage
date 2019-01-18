@@ -2834,6 +2834,7 @@
         "render": "Render",
         "rendertip": "Change program settings about high quality rendering.",
         "render/": {
+
             "cameraeffects": "Camera effects",
             "cameraeffectstip": "Enable camera effects in rendered images. (DOF, bloom, color correction and vignette)",
             "ssao": "SSAO",
@@ -2905,6 +2906,19 @@
             "watermarkscaletip": "The scale of the watermark.",
             "watermarkalpha": "Alpha",
             "watermarkalphatip": "The transparency of the watermark."
+        },
+        "cubist": "Cubist",
+        "cubist/":{
+            "platform": "Platform",
+            "device": "Device",
+            "ao":"Ambient Occlusion",
+            "ao/":{
+                "strength":"Strength"
+            },
+            "error/":{
+                "noplatform": "No OpenCL Platforms Found",
+                "nodevice": "No OpenCL-Capable Devices Found"
+            }
         }
     }
 }

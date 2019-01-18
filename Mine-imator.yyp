@@ -791,6 +791,14 @@
             }
         },
         {
+            "Key": "0cb4e5cb-14cd-4c44-b0fc-6dcb95603415",
+            "Value": {
+                "id": "f229298d-985b-4bfd-a2d9-876e8164faa6",
+                "resourcePath": "scripts\\action_setting_cubist_device\\action_setting_cubist_device.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "0cbda60e-bd19-473c-8d34-a2b3091ab955",
             "Value": {
                 "id": "a57b9771-235e-4aed-bcee-7c3e75062813",
@@ -1884,6 +1892,14 @@
                 "id": "81f8e4ee-fa1e-4454-8aac-5b5eb10ce94c",
                 "resourcePath": "shaders\\shader_color_glow\\shader_color_glow.yy",
                 "resourceType": "GMShader"
+            }
+        },
+        {
+            "Key": "1dba6c36-13cb-43cb-91b6-6e40d29a403b",
+            "Value": {
+                "id": "72347b2b-62c7-4da5-8eda-7af102c1a65d",
+                "resourcePath": "views\\1dba6c36-13cb-43cb-91b6-6e40d29a403b.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -3711,6 +3727,14 @@
             }
         },
         {
+            "Key": "40183e90-7aa6-47fb-825a-afad3b8ca1e7",
+            "Value": {
+                "id": "baea059d-7c9e-4ded-8091-3ab3a1719cb1",
+                "resourcePath": "scripts\\tab_settings_cubist\\tab_settings_cubist.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "40456f9e-6f00-4ce6-927b-556d67c9dd34",
             "Value": {
                 "id": "dec3cb6b-6557-4903-94b0-303b78625c2a",
@@ -4403,6 +4427,14 @@
             "Value": {
                 "id": "622ea9cb-2752-4415-b610-98f85f362e09",
                 "resourcePath": "scripts\\block_get_state_id_state_vars\\block_get_state_id_state_vars.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "4b38062e-c337-4454-a454-09f095ef620d",
+            "Value": {
+                "id": "46c03964-8684-4a1d-a272-06bd61dbdb80",
+                "resourcePath": "scripts\\cubist_get_platform_name\\cubist_get_platform_name.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5811,6 +5843,14 @@
             "Value": {
                 "id": "b4716c32-de9e-4f8a-a5c7-d04c7930b009",
                 "resourcePath": "scripts\\file_dialog_open_language\\file_dialog_open_language.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "625a935e-c244-41a6-939a-275826440eb4",
+            "Value": {
+                "id": "3d9838e6-2bb3-485c-8831-ab1a07868cdb",
+                "resourcePath": "scripts\\action_setting_cubist_ao_strength\\action_setting_cubist_ao_strength.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -7943,6 +7983,14 @@
             }
         },
         {
+            "Key": "86df8fab-8b61-4b3f-a7b6-612aa0adabd7",
+            "Value": {
+                "id": "df0d3454-7906-407d-9aa4-fcd13baa37ed",
+                "resourcePath": "scripts\\action_setting_cubist_platform\\action_setting_cubist_platform.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "86e153c7-35d2-49a8-97f9-61bfad6b49b7",
             "Value": {
                 "id": "6f3bed5f-0cbc-4589-8019-ecf7c4d0e597",
@@ -8971,6 +9019,14 @@
             "Value": {
                 "id": "f86b76ea-2f63-488f-bede-9350885f9b54",
                 "resourcePath": "scripts\\tab_properties_resources\\tab_properties_resources.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "94a0d26f-8ebf-4919-9f26-b5a399fa8d4a",
+            "Value": {
+                "id": "9c563a87-de30-43e3-88d5-dfd672ebdfaa",
+                "resourcePath": "scripts\\cubist_get_device_count\\cubist_get_device_count.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10031,6 +10087,14 @@
             }
         },
         {
+            "Key": "a572201d-85bb-4c34-8fd6-bfadddb12ed5",
+            "Value": {
+                "id": "b124790c-d56b-4f46-8148-c611a736d4ee",
+                "resourcePath": "scripts\\cubist_get_device_name\\cubist_get_device_name.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "a58e133c-e930-4d83-b69b-ad6ed3b47ae6",
             "Value": {
                 "id": "469b8cd2-0e34-4de2-9417-61de26d481db",
@@ -10092,6 +10156,14 @@
                 "id": "054556ea-0fec-45d5-a38f-d58a1fd54907",
                 "resourcePath": "views\\a60669ec-4cf5-453d-8f2e-7bf4445b621b.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "a60dad29-02a0-49c7-91c9-0195426cb007",
+            "Value": {
+                "id": "ee990384-081a-44c6-8ec7-31e3c88c63fb",
+                "resourcePath": "scripts\\action_setting_cubist_ao\\action_setting_cubist_ao.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -12335,6 +12407,14 @@
             }
         },
         {
+            "Key": "cb44b53d-74bb-429f-94bf-830e1512be80",
+            "Value": {
+                "id": "f3758355-f00f-4d63-a7d4-1c870e237ca0",
+                "resourcePath": "scripts\\cubist_set_platform\\cubist_set_platform.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "cbc91817-2b9c-4fb3-92c3-edd866b1a803",
             "Value": {
                 "id": "f3b201c7-3b84-4b72-bd60-ccaf8726c90d",
@@ -13003,6 +13083,14 @@
             "Value": {
                 "id": "2ef13129-d1ff-424f-bee8-495bb2f9d83a",
                 "resourcePath": "scripts\\action_background_sky_moon_phase\\action_background_sky_moon_phase.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "d62e0353-fb98-46aa-a5ac-9fa8a80f2df5",
+            "Value": {
+                "id": "1fef6c68-3c60-461c-95ea-68dec061a1a4",
+                "resourcePath": "scripts\\cubist_set_device\\cubist_set_device.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14183,6 +14271,14 @@
             }
         },
         {
+            "Key": "ec0315b2-d123-4575-a2f6-b4745fbb5f72",
+            "Value": {
+                "id": "a3ab2116-bebc-4e89-8f54-e91b80ab38f9",
+                "resourcePath": "scripts\\action_checkbox_expand_cubist_ao\\action_checkbox_expand_cubist_ao.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ec12610b-6dc3-4261-814a-63cf0692d927",
             "Value": {
                 "id": "63620fe5-8580-499e-ad65-9158356476d8",
@@ -14243,6 +14339,14 @@
             "Value": {
                 "id": "f6262bed-e963-4bce-9410-c191c8cae86b",
                 "resourcePath": "views\\ec8f44a1-fe0d-4a60-a438-5b937b716b5f.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "ecb0a49c-902b-41b0-a382-7a6391deb9fc",
+            "Value": {
+                "id": "20f06b66-61a3-4006-a42e-bdca6f18a957",
+                "resourcePath": "views\\ecb0a49c-902b-41b0-a382-7a6391deb9fc.yy",
                 "resourceType": "GMFolder"
             }
         },
@@ -14460,6 +14564,14 @@
                 "id": "cbc7c12b-e687-45a7-b2f6-ec9a3bbe921d",
                 "resourcePath": "scripts\\history_save_bench\\history_save_bench.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "ef883431-30f4-408a-ac67-05828545c02e",
+            "Value": {
+                "id": "4c629a99-23f4-46f0-9024-8c3e8ed120ce",
+                "resourcePath": "datafiles_yy\\Data\\cubist.dll.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -14771,6 +14883,14 @@
             "Value": {
                 "id": "8c112eb1-b530-401c-88db-99a4ba23a39c",
                 "resourcePath": "scripts\\action_setting_slow_modifier\\action_setting_slow_modifier.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "f49908af-528e-4bed-b06d-cf51d46f8e2d",
+            "Value": {
+                "id": "5b8c00cc-e655-4122-892f-9388f76145a2",
+                "resourcePath": "scripts\\cubist_get_platform_count\\cubist_get_platform_count.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -15923,6 +16043,10 @@
         "7cc583d4-fcc8-4f3f-998a-92352177cb6f",
         "fef8ba86-f0cd-4366-8e3f-2b962b2f5ee1",
         "b0857442-3819-4cca-a51e-4dc674213c2f",
+        "0cb4e5cb-14cd-4c44-b0fc-6dcb95603415",
+        "86df8fab-8b61-4b3f-a7b6-612aa0adabd7",
+        "a60dad29-02a0-49c7-91c9-0195426cb007",
+        "625a935e-c244-41a6-939a-275826440eb4",
         "91067981-3912-416e-902f-dea19030c730",
         "a76b1b89-8f93-4d51-9516-0f7705c6d024",
         "d16dbc5d-50a0-4706-b478-a7786d9424b7",
@@ -16377,6 +16501,7 @@
         "fe2a867d-51a4-4d5a-bda2-f8ef3d34589d",
         "650f706b-3130-4016-8a26-a3ab7374e210",
         "905ff21b-5dea-4676-8e23-a0221c71c6b7",
+        "ec0315b2-d123-4575-a2f6-b4745fbb5f72",
         "234fcbf3-0895-40d2-97f3-c6a598fa2455",
         "89372e21-2d9e-4be3-b2b8-f1c7b24432e6",
         "57c5d9b6-1451-451e-9d32-006f68dff24d",
@@ -16429,6 +16554,7 @@
         "cee6d82c-7876-469a-841e-bcf4840cfcee",
         "1bfad37a-0f47-40ee-9f19-e65fbb920d4f",
         "b50fd69b-cff1-4add-b85a-a81e87307878",
+        "40183e90-7aa6-47fb-825a-afad3b8ca1e7",
         "882c3709-72c8-4990-a5b9-0c369d776024",
         "d3b69494-c143-4420-8c45-20c4a7e17e8b",
         "f06db03b-b2b3-4f8b-ac52-cf6993f9e174",
@@ -16486,6 +16612,12 @@
         "0b08b77c-926b-4654-a610-0bbedd3808f7",
         "255b9e1b-979b-440a-af51-db008047330c",
         "50ed4a8d-989c-41fc-8b7c-0808afbd58c2",
+        "f49908af-528e-4bed-b06d-cf51d46f8e2d",
+        "4b38062e-c337-4454-a454-09f095ef620d",
+        "cb44b53d-74bb-429f-94bf-830e1512be80",
+        "d62e0353-fb98-46aa-a5ac-9fa8a80f2df5",
+        "94a0d26f-8ebf-4919-9f26-b5a399fa8d4a",
+        "a572201d-85bb-4c34-8fd6-bfadddb12ed5",
         "74666be9-e566-4d06-8ffd-95923d1814ce",
         "247b16a5-1176-4902-bdc4-ccbabfd6419d",
         "33eb3119-4cd0-4ed5-9db5-89c04e64cbd7",

@@ -589,5 +589,12 @@ with (settings)
 		tbx_watermark_alpha = new_textbox_integer()
 		tbx_watermark_alpha.suffix = "%"
 	}
+	
+	// Render
+	cubist = tab_add_category("settingscubist", tab_settings_cubist, false)
+	with (cubist)
+	{
+		tbx_ao_strength = new_textbox_decimals()
+	}
 }
 

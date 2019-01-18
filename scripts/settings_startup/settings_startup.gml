@@ -202,6 +202,15 @@ setting_export_image_remove_background = false
 setting_export_image_include_hidden = false
 setting_export_image_high_quality = true
 
+
+setting_cubist_platform = 0
+setting_cubist_device = 0
+setting_cubist_ao = 0
+setting_cubist_ao_strength = 0
+setting_cubist_ao_samples = 15
+setting_cubist_ao_distance = 5
+
+
 checkbox_expand_settings_ssao = true
 checkbox_expand_settings_shadows = true
 checkbox_expand_settings_glow = true
@@ -217,6 +226,8 @@ checkbox_expand_frameeditor_bloom = true
 checkbox_expand_frameeditor_clrcor = true
 checkbox_expand_frameeditor_vignette = true
 checkbox_expand_frameeditor_grain = true
+checkbox_expand_setting_cubist_ao = true
+
 
 settings_load()
 
