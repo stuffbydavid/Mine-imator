@@ -205,6 +205,10 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	draw_meter("frameeditorcameracolorcorrectionsaturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_SATURATION] * 100), 50, 0, 200, 100, 1, tab.camera.tbx_saturation, action_tl_frame_cam_clrcor_saturation, capwid)
 	tab_next()
 	
+	tab_control_color()
+	draw_button_color("frameeditorcameracolorcorrectioncolorburn", dx, dy, dw, tl_edit.value[e_value.CAM_COLOR_BURN], c_white, false, action_tl_frame_cam_clrcor_color_burn)
+	tab_next()
+	
 	dx -= 4
 	dw += 4
 	checkbox_expand_end()

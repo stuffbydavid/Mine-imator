@@ -178,7 +178,8 @@
         "textures": "Loading textures...",
         "biomes": "Loading biomes...",
         "models": "Loading characters...",
-        "blocks": "Loading blocks..."
+        "blocks": "Loading blocks...",
+        "loadingblock": "Loading block"
     },
     "newproject/": {
         "caption": "New project",
@@ -458,9 +459,10 @@
     },
     "bannereditor/": {
         "caption": "Banner editor",
-        "basecolor": "Base color",
         "patterns": "Patterns",
+        "background": "Background",
         "patterncolor": "Pattern color",
+        "backgroundcolor": "Background color",
         "patterntype": "Pattern type",
         "removetip": "Remove the pattern from the banner.",
         "newtip": "Add a banner pattern.",
@@ -2515,6 +2517,8 @@
             "colorcorrectionbrightnesstip": "The amount of additional brightness in the render.",
             "colorcorrectionsaturation": "Saturation",
             "colorcorrectionsaturationtip": "Determines how saturated the final render will be.",
+            "colorcorrectioncolorburn": "Color burn",
+            "colorcorrectioncolorburntip": "Applies a color to the render with a Color Burn blend mode.",
             "grain": "Film grain",
             "graintip": "Overlays noise on the render.",
             "grainstrength": "Strength",
@@ -2823,8 +2827,8 @@
         "texturefilteringtip": "Enable texture filtering (mip-mapping).",
         "texturefilteringlevel": "Texture filtering level",
         "texturefilteringleveltip": "The level of the texture filtering (mip-mapping).",
-        "transparenttexturefiltering": "Transparent texture filtering",
-        "transparenttexturefilteringtip": "Enable texture filtering (mip-mapping) for transparent textures.",
+        "transparentblocktexturefiltering": "Transparent block texture filtering",
+        "transparentblocktexturefilteringtip": "Enable texture filtering (mip-mapping) for transparent blocks.",
         "blockbrightness": "Glowing block brightness",
         "blockbrightnesstip": "Sets the brightness of certain blocks in schematics (Lava, Fire, Torches, Glowstone, Redstone Lamps etc.) and bright model shapes.",
         "blockglow": "Glow bright blocks and models",

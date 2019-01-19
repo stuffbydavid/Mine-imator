@@ -33,4 +33,7 @@ draw_image(spr_load_assets, 0, content_x + content_width / 2, content_y)
 // Loading
 draw_loading_bar(content_x, content_y + content_height - 40, content_width, 40, load_assets_progress, text_get("loadassets" + load_assets_stage, app.setting_minecraft_assets_version))
 
+if (load_assets_block_name != "")
+	draw_label(text_get("loadassetsloadingblock") + ": " + load_assets_block_name, content_x, content_y + content_height - 60)
+
 current_step++

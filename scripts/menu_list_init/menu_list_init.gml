@@ -776,23 +776,4 @@ switch (menu_name)
 		
 		break
 	}
-	
-	// Banner pattern
-	case "modelbannerpattern":
-	{
-		menu_item_w = 32
-		menu_item_h = 32
-		
-		
-	}
-	
-	// Minecraft color
-	case "modelbannerbasecolor":
-	case "modelbannerpatterncolor":
-	{
-		for (var i = 0; i < ds_list_size(minecraft_color_list); i++)
-			menu_add_item(minecraft_color_list[|i], "modelpartstatevalue" + minecraft_color_name_list[|i])
-		
-		break
-	}
 }

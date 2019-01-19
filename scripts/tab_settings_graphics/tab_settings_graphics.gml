@@ -29,6 +29,11 @@ tab_next()
 
 if (setting_texture_filtering)
 {
+	// Transparent block texture filtering
+	tab_control_checkbox()
+	draw_checkbox("settingstransparentblocktexturefiltering", dx, dy, setting_transparent_block_texture_filtering, action_setting_transparent_block_texture_filtering)
+	tab_next()
+	
 	// Texture filtering level
 	tab_control_meter()
 	draw_meter("settingstexturefilteringlevel", dx, dy, dw, setting_texture_filtering_level, 48, 0, 5, 1, 1, tab.graphics.tbx_texture_filtering_level, action_setting_texture_filtering_level)

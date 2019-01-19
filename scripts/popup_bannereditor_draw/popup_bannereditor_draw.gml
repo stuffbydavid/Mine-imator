@@ -54,19 +54,19 @@ dx += (20 * 8) + 16
 draw_separator_vertical(dx, dy, 320)
 
 dx += 16 + 2
-	
+
 // Pattern list
 var listy = dy;
 var listh = 44;
 var listw = 232;
 var listcount = ds_list_size(patternlist) + 1;
-	
+
 draw_label(text_get("bannereditorpatterns") + ":", dx, listy + 4 + 9, fa_left, fa_bottom)
 listy += 16
-	
+
 popup_bannereditor.pattern_scroll.snap_value = listh
 scrollbar_draw(popup_bannereditor.pattern_scroll, "vertical", dx + listw - 15, dy, listh * 7, listcount * listh)
-	
+
 for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcount; i++)
 {
 	var dw = listw - (15 * popup_bannereditor.pattern_scroll.needed);
@@ -75,29 +75,37 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 	
 	if (listy + listh > (dy + 16) + (listh * 7))
 		break
-		
+	
 	var mouseon = app_mouse_box(dx, listy, dw, listh);
 	var selectmouseon, selectwidth;
 	selectmouseon = false
-	selectwidth = dw - ((28 + (30 * (listcount > 1))) * mouseon) * notbase
-		
+	selectwidth = dw - ((28 + (30 * (listcount > 2))) * mouseon) * notbase
+	
 	if (mouseon)
 	{
 		popup_mouseon = false
 		mouse_cursor = cr_handpoint
 		selectmouseon = app_mouse_box(dx, listy, selectwidth, listh)
 	}
-		
+	
 	var pattern = test(notbase, ds_list_find_index(minecraft_banner_pattern_list, patternlist[|patternindex]), 0);
 	
 	if (popup_bannereditor.banner_pattern_edit = i || (selectmouseon && (mouse_left || mouse_left_released)))
 	{
 		draw_box(dx, listy, selectwidth, listh, false, setting_color_highlight, 1)
-		draw_sprite_ext(popup_bannereditor.pattern_sprites[pattern], 0, dx + 30 + 8, listy + 2, 1 / popup_bannereditor.res_ratio, 1 / popup_bannereditor.res_ratio, 0, c_white, 1)
+		draw_sprite_ext(popup_bannereditor.pattern_sprites[pattern], 0, dx + 38, listy + 2, 1 / popup_bannereditor.res_ratio, 1 / popup_bannereditor.res_ratio, 0, setting_color_highlight_text, 1)
+		
+		if (i = 0)
+			draw_label(text_get("bannereditorbackground"), dx + 38 + (20 * (1 / popup_bannereditor.res_ratio)) + 8, listy + listh/2, fa_left, fa_middle, setting_color_highlight_text, 1, setting_font_bold)
 	}
 	else
-		draw_sprite_ext(popup_bannereditor.pattern_sprites[pattern], 0, dx + 30 + 8, listy + 2, 1 / popup_bannereditor.res_ratio, 1 / popup_bannereditor.res_ratio, 0, c_black, 1)
+	{
+		draw_sprite_ext(popup_bannereditor.pattern_sprites[pattern], 0, dx + 30 + 8, listy + 2, 1 / popup_bannereditor.res_ratio, 1 / popup_bannereditor.res_ratio, 0, setting_color_text, 1)
 		
+		if (i = 0)
+			draw_label(text_get("bannereditorbackground"), dx + 38 + (20 * (1 / popup_bannereditor.res_ratio)) + 8, listy + listh/2, fa_left, fa_middle, setting_color_text, 1, setting_font_bold)
+	}
+	
 	if (selectmouseon && mouse_left_released)
 	{
 		if (popup_bannereditor.banner_pattern_edit = i)
@@ -105,7 +113,7 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 		else
 			popup_bannereditor.banner_pattern_edit = i
 	}
-		
+	
 	// Buttons
 	if (mouseon && notbase)
 	{
@@ -119,10 +127,10 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 					var swappattern, swapcolor;
 					swappattern = patternlist[|patternindex - 1]
 					swapcolor = colorlist[|patternindex - 1]
-						
+					
 					patternlist[|patternindex - 1] = patternlist[|patternindex]
 					colorlist[|patternindex - 1] = colorlist[|patternindex]
-						
+					
 					patternlist[|patternindex] = swappattern
 					colorlist[|patternindex] = swapcolor
 				}
@@ -136,16 +144,16 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 					var swappattern, swapcolor;
 					swappattern = patternlist[|patternindex + 1]
 					swapcolor = colorlist[|patternindex + 1]
-						
+					
 					patternlist[|patternindex + 1] = patternlist[|patternindex]
 					colorlist[|patternindex + 1] = colorlist[|patternindex]
-						
+					
 					patternlist[|patternindex] = swappattern
 					colorlist[|patternindex] = swapcolor
 				}
 			}
 		}
-			
+		
 		// Remove
 		if (draw_button_normal("bannereditorremove", dx + dw - 24, listy + listh / 2-10, 20, 20, e_button.NO_TEXT, false, false, true, icons.CLOSE))
 		{
@@ -153,63 +161,61 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 			ds_list_delete(colorlist, patternindex)
 			
 			popup_bannereditor.banner_pattern_edit--
-			
 			i++
-			//if (ds_list_size(patternlist) = 0 || i = popup_bannereditor.banner_pattern_edit)
-			//	popup_bannereditor.banner_pattern_edit = -1
-				
-			continue
+			
+			break
 		}
 	}
-		
+	
 	var color = test(notbase, colorlist[|patternindex], banner.banner_base_color);
 	
 	draw_box(dx + 10, listy + 12, 20, 20, false, color, 1)
 	draw_box(dx + 10, listy + 12, 20, 20, false, c_black, .25)
 	draw_box(dx + 10 + 2, listy + 12 + 2, 20 - 4, 20 - 4, false, color, 1)
-		
+	
 	listy += listh
 }
 
 dx += 232 + 16
-	
+
 draw_separator_vertical(dx, dy, 320)
-	
+
 dx += 16 + 2
 
 // Selected pattern options
 if (popup_bannereditor.banner_pattern_edit > -1)
 {
 	// Draw color options
-	var buttonx, buttony, padding, buttonsize, buttonmouseon, color;
+	var label, buttonx, buttony, padding, buttonsize, buttonmouseon, color;
+	label = test(popup_bannereditor.banner_pattern_edit = 0, text_get("bannereditorbackgroundcolor"), text_get("bannereditorpatterncolor"))
 	buttonx = dx + 3
 	buttony = dy
 	padding = 2
 	buttonsize = 24
 	buttonmouseon = false
 	color = c_white
-		
-	draw_label(text_get("bannereditorpatterncolor") + ":", dx, buttony + 4 + 9, fa_left, fa_bottom)
+	
+	draw_label(label + ":", dx, buttony + 4 + 9, fa_left, fa_bottom)
 	buttony += 16
-		
+	
 	for (var c = 0; c < ds_list_size(minecraft_color_list); c++)
 	{
 		color = minecraft_color_list[|c]
 		buttonmouseon = app_mouse_box(buttonx, buttony, buttonsize, buttonsize)
-	
+		
 		if (buttonmouseon)
 			draw_box(buttonx - 1, buttony - 1, buttonsize + 2, buttonsize + 2, false, c_black, .5)
-	
+		
 		draw_box(buttonx, buttony, buttonsize, buttonsize, false, color, 1)
 		draw_box(buttonx, buttony, buttonsize, buttonsize, false, c_black, .25)
 		draw_box(buttonx + 2, buttony + 2, buttonsize - 4, buttonsize - 4, false, color, 1)
-	
+		
 		if (buttonmouseon)
 		{
 			draw_box(buttonx, buttony, buttonsize, buttonsize, false, c_black, .25 + (mouse_left * .25))
 			popup_mouseon = false
 			mouse_cursor = cr_handpoint
-				
+			
 			if (mouse_left_released)
 			{
 				if (popup_bannereditor.banner_pattern_edit = 0)
@@ -247,7 +253,7 @@ if (popup_bannereditor.banner_pattern_edit > -1)
 		
 		for (var p = 1; p < ds_list_size(minecraft_banner_pattern_list); p++)
 		{
-			draw_sprite_ext(popup_bannereditor.pattern_sprites[array_length_1d(popup_bannereditor.pattern_sprites) - 1], 0, buttonx, buttony, (1 / popup_bannereditor.res_ratio), (1 / popup_bannereditor.res_ratio), 0, c_white, 1)
+			draw_sprite_ext(popup_bannereditor.pattern_sprites[array_length_1d(popup_bannereditor.pattern_sprites) - 1], 0, buttonx, buttony, (1 / popup_bannereditor.res_ratio), (1 / popup_bannereditor.res_ratio), 0, banner.banner_base_color, 1)
 			draw_sprite_ext(popup_bannereditor.pattern_sprites[p], 0, buttonx, buttony, (1 / popup_bannereditor.res_ratio), (1 / popup_bannereditor.res_ratio), 0, colorlist[|popup_bannereditor.banner_pattern_edit - 1], 1)
 			
 			buttonmouseon = app_mouse_box(buttonx, buttony, 20, 40)
@@ -263,7 +269,7 @@ if (popup_bannereditor.banner_pattern_edit > -1)
 			}
 			
 			buttonx += (buttonwidth + padding)
-	
+			
 			// Can we draw another button? If not, move down
 			if (buttonx + (buttonsize + padding) > dx + 232)
 			{

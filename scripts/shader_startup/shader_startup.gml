@@ -341,6 +341,7 @@ with (shader_map[?shader_color_correction])
 	new_shader_uniform("uContrast")
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uSaturation")
+	new_shader_uniform("uColorBurn")
 }
 
 with (shader_map[?shader_vignette])

@@ -323,7 +323,7 @@ if (background_fog_show)
 #region Apply Environment effects
 
 // Render directly to target?
-if (!render_camera_bloom && !render_camera_dof && !setting_render_aa && !render_overlay && !render_camera_color_correction && !render_camera_grain && !render_camera_vignette)
+if (render_effects_done)
 {
 	render_target = surface_require(render_target, render_width, render_height)
 	finalsurf = render_target
@@ -442,7 +442,7 @@ surface_reset_target()
 // Post processing starts here, finalsurf will ping-pong between [0] and [1] if effects are enabled
 
 #region Put finalsurf in [0] if there's any post processing
-if (render_camera_bloom || render_camera_dof || setting_render_glow || setting_render_aa || render_overlay || render_camera_color_correction || render_camera_vignette)
+if (!render_effects_done)
 {
 	var prevsurf = finalsurf;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
@@ -456,6 +456,7 @@ if (render_camera_bloom || render_camera_dof || setting_render_glow || setting_r
 	}
 	surface_reset_target()
 }
+render_update_effects()
 #endregion
 
 #region Bloom
@@ -538,7 +539,7 @@ if (render_camera_bloom)
 	// Apply Bloom
 	
 	// Render directly to target?
-	if (!setting_render_glow && !render_camera_dof && !setting_render_aa && !render_overlay && !render_camera_color_correction && !render_camera_grain && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -566,6 +567,7 @@ if (render_camera_bloom)
 	}
 	surface_reset_target()
 }
+render_update_effects()
 #endregion
 
 #region DOF
@@ -587,7 +589,7 @@ if (render_camera_dof)
 	surface_reset_target()
 	
 	// Render directly to target?
-	if (!setting_render_glow && !setting_render_aa && !render_overlay && !render_camera_color_correction && !render_camera_grain && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -623,10 +625,12 @@ if (render_camera_dof)
 	surface_reset_target()
 	
 }
+render_update_effects()
+
 #endregion
 
 #region Glow
-if (setting_render_glow)
+if (render_glow)
 {
 	var prevsurf, glowcolorsurf, glowsurf, glowfalloffsurf;
 	prevsurf = finalsurf
@@ -696,7 +700,7 @@ if (setting_render_glow)
 	// Apply Glow
 	
 	// Render directly to target?
-	if (!setting_render_glow_falloff && !setting_render_aa && !render_overlay && !render_camera_color_correction && !render_camera_grain && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -724,10 +728,12 @@ if (setting_render_glow)
 	}
 	surface_reset_target()
 }
+render_update_effects()
+
 #endregion
 
 #region Glow (Falloff)
-if (setting_render_glow && setting_render_glow_falloff)
+if (render_glow && setting_render_glow_falloff)
 {
 	var prevsurf, glowfalloffsurf;
 	prevsurf = finalsurf
@@ -795,7 +801,7 @@ if (setting_render_glow && setting_render_glow_falloff)
 	// Apply Glow
 	
 	// Render directly to target?
-	if (!setting_render_aa && !render_overlay && !render_camera_color_correction && !render_camera_grain && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -823,15 +829,17 @@ if (setting_render_glow && setting_render_glow_falloff)
 	}
 	surface_reset_target()
 }
+render_update_effects()
+
 #endregion
 
 #region AA
-if (setting_render_aa)
+if (render_aa)
 {
 	var prevsurf = finalsurf;
 
 	// Render directly to target?
-	if (!render_overlay && !render_camera_color_correction && !render_camera_grain && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -869,6 +877,8 @@ if (setting_render_aa)
 	}
 	surface_reset_target()
 }
+render_update_effects()
+
 #endregion
 
 #region Color correction
@@ -877,7 +887,7 @@ if (render_camera_color_correction)
 	var prevsurf = finalsurf;
 	
 	// Render directly to target?
-	if (!render_overlay && !render_camera_grain && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -903,6 +913,8 @@ if (render_camera_color_correction)
 	surface_reset_target()
 	
 }
+render_update_effects()
+
 #endregion
 
 #region Grain
@@ -911,7 +923,7 @@ if (render_camera_grain)
 	var prevsurf = finalsurf;
 	
 	// Render directly to target?
-	if (!render_overlay && !render_camera_vignette)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -937,6 +949,8 @@ if (render_camera_grain)
 	surface_reset_target()
 	
 }
+render_update_effects()
+
 #endregion
 
 #region Vignette
@@ -945,7 +959,7 @@ if (render_camera_vignette)
 	var prevsurf = finalsurf;
 	
 	// Render directly to target?
-	if (!render_overlay)
+	if (render_effects_done)
 	{
 		render_target = surface_require(render_target, render_width, render_height)
 		finalsurf = render_target
@@ -971,6 +985,8 @@ if (render_camera_vignette)
 	surface_reset_target()
 	
 }
+render_update_effects()
+
 #endregion
 
 #region 2D overlay (camera colors/watermark)

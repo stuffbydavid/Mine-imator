@@ -22,6 +22,7 @@ switch (vid)
 	case e_value.GLOW_COLOR:
 	case e_value.LIGHT_COLOR:
 	case e_value.CAM_BLOOM_BLEND:
+	case e_value.CAM_COLOR_BURN:
 	case e_value.BG_SKY_COLOR:
 	case e_value.BG_SKY_CLOUDS_COLOR:
 	case e_value.BG_SUNLIGHT_COLOR:
@@ -42,8 +43,10 @@ switch (vid)
 	case e_value.ATTRACTOR:
 	case e_value.CAM_ROTATE:
 	case e_value.CAM_DOF:
+	case e_value.CAM_DOF_FRINGE:
 	case e_value.CAM_BLOOM:
 	case e_value.CAM_COLOR_CORRECTION:
+	case e_value.CAM_GRAIN:
 	case e_value.CAM_SIZE_USE_PROJECT:
 	case e_value.CAM_SIZE_KEEP_ASPECT_RATIO:
 	case e_value.BG_IMAGE_SHOW:

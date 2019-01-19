@@ -7,7 +7,8 @@ globalvar render_view_current, render_width, render_height, render_ratio, render
 		  render_light_spot_sharpness, render_light_matrix, proj_from, proj_matrix, view_proj_matrix, proj_depth_near, proj_depth_far,
 		  render_proj_from, render_active;
 
-globalvar render_camera_bloom, render_camera_dof, render_camera_color_correction, render_camera_grain, render_camera_vignette, render_overlay;
+globalvar render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof, render_glow,
+		  render_glow_falloff, render_camera_color_correction, render_camera_grain, render_camera_vignette, render_aa, render_overlay;
 
 log("Render init")
 	
@@ -28,11 +29,19 @@ render_width = 1
 render_height = 1
 render_ratio = 1
 render_camera = null
+
+render_effects_done = false
+render_effects_list = ds_list_create()
+render_effects_progress = 0
+
 render_camera_bloom = false
 render_camera_dof = false
+render_glow = false
+render_glow_falloff = false
 render_camera_color_correction = false
 render_camera_grain = false
 render_camera_vignette = false
+render_aa = false
 render_overlay = false
 
 render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)

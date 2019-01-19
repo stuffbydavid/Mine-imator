@@ -40,6 +40,7 @@ switch (argument0)
 	case e_value.CAM_CONTRAST: return 0
 	case e_value.CAM_BRIGHTNESS: return 0
 	case e_value.CAM_SATURATION: return 1
+	case e_value.CAM_COLOR_BURN: return c_white
 	case e_value.CAM_GRAIN_STRENGTH: return .10
 	case e_value.CAM_GRAIN_SATURATION: return .10
 	case e_value.CAM_GRAIN_SIZE: return 1

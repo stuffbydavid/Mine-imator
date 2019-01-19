@@ -196,10 +196,11 @@ json_save_object_start("graphics")
 	json_save_var_bool("liquid_animation", setting_liquid_animation)
 	json_save_var_bool("noisy_grass_water", setting_noisy_grass_water)
 	json_save_var_bool("texture_filtering", setting_texture_filtering)
+	json_save_var_bool("transparent_block_texture_filtering", setting_transparent_block_texture_filtering)
 	json_save_var("texture_filtering_level", setting_texture_filtering_level)
 	json_save_var("block_brightness", setting_block_brightness)
-	json_save_var("block_glow", setting_block_glow)
-	json_save_var("light_bleeding", setting_light_bleeding)
+	json_save_var_bool("block_glow", setting_block_glow)
+	json_save_var_bool("light_bleeding", setting_light_bleeding)
 
 json_save_object_done()
 

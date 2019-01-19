@@ -156,6 +156,7 @@ setting_schematic_remove_edges = false
 setting_liquid_animation = true
 setting_noisy_grass_water = false
 setting_texture_filtering = true
+setting_transparent_block_texture_filtering = false
 setting_texture_filtering_level = 1
 setting_block_brightness = 0.75
 setting_block_glow = true

@@ -55,6 +55,13 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 }
 
+// Disable mipmapping on transparent blocks
+if (!app.setting_transparent_block_texture_filtering)
+{
+	var maxmip = gpu_get_tex_max_mip();
+	gpu_set_tex_max_mip(0)
+}
+
 // DEPTH 1
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL]))
@@ -81,18 +88,19 @@ if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES]))
 	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 }
 
+if (!app.setting_transparent_block_texture_filtering)
+	gpu_set_tex_max_mip(maxmip)
+
 // DEPTH 2
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL]))
 	vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL])
-
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
 {
 	render_set_texture(texani)
 	vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
 }
-
 
 if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))
 {
