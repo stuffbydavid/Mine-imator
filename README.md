@@ -1,7 +1,7 @@
 # Mine-imator
 
 <p align="center">
-  <img src="https://www.mineimator.com/images/index_head_program.png" width=800/>
+  <img src="https://www.mineimator.com/images/index_head_program.jpg" width=800/>
   <br/>
   <br/>
   <img src="https://www.mineimator.com/images/index_head_logo.png" width=800/>
