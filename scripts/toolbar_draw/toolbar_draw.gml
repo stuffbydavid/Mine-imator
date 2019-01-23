@@ -117,6 +117,7 @@ tip = text_get("toolbarplaytip", text_control_name(setting_key_play, setting_key
 toolbar_draw_button("toolbarplay", false, true, test(timeline_playing, icons.PAUSE, icons.PLAY), action_toolbar_play, tip)
 toolbar_draw_button("toolbarstop", false, true, icons.STOP, action_toolbar_play_stop)
 toolbar_draw_button("toolbarrepeat", timeline_repeat, true, icons.LOOP, action_toolbar_play_repeat)
+toolbar_draw_button("toolbarseamlessrepeat", timeline_seamless_repeat, true, icons.LOOP_SEAMLESS, action_toolbar_seamless_repeat)
 toolbar_draw_button("toolbarshowseconds", timeline_show_seconds, true, icons.SHOW_SECONDS, action_toolbar_show_seconds)
 
 // Timestamp

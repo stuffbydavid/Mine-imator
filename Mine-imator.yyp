@@ -1135,6 +1135,14 @@
             }
         },
         {
+            "Key": "11f692dd-f076-49a5-bb6c-ea4a3bdf1c4e",
+            "Value": {
+                "id": "4788839b-f739-4e50-a346-504f08a4825e",
+                "resourcePath": "scripts\\action_toolbar_seamless_repeat\\action_toolbar_seamless_repeat.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1217b831-1eec-4b05-8633-8177764262c7",
             "Value": {
                 "id": "6e6d1e2e-87d9-4d8d-9abe-758a5f2d8a52",
@@ -7219,6 +7227,14 @@
             "Value": {
                 "id": "e65e7fc0-7e8c-4779-a839-d837ee7a8cbe",
                 "resourcePath": "scripts\\action_lib_pc_type_list\\action_lib_pc_type_list.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "7a6b1f9a-abab-4331-9e9f-3be2992844ad",
+            "Value": {
+                "id": "0a411ab6-708a-4d12-adea-9e3131eaf588",
+                "resourcePath": "scripts\\project_load_set_part_root\\project_load_set_part_root.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -16179,6 +16195,7 @@
         "e75fc93d-54ff-4847-8af0-72357ba7a8c4",
         "ab11294b-4eb7-4820-9459-71fda5719e48",
         "c99a4dcc-bbc9-46a9-9d68-ee4b8625c165",
+        "11f692dd-f076-49a5-bb6c-ea4a3bdf1c4e",
         "c1b5d8a5-b103-495a-8b93-f0bbfba15bcb",
         "1cb91c04-5774-48c2-8e2b-544cd51b1fe5",
         "1d21d27c-264f-4cd4-a553-99f520426ea6",
@@ -16742,6 +16759,7 @@
         "d31a91a1-a70e-4197-8be6-333d9e372f76",
         "ed69b0d8-754c-4581-a03c-809f4fcc1745",
         "895351db-5c0c-4a6f-bfbe-ed5552fd1184",
+        "7a6b1f9a-abab-4331-9e9f-3be2992844ad",
         "fdaf580a-3505-46f3-ae1c-7bc0f33f3862",
         "429ccf5b-3558-4ef5-87cb-16db739b01ef",
         "4d4f8630-a68a-4b96-806e-09cd215ce8c1",

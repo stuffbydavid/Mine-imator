@@ -3,7 +3,7 @@
 if (timeline_playing)
 {
 	timeline_marker = timeline_playing_start_marker + ((current_time - timeline_playing_start_time) / 1000) * project_tempo
-	if (timeline_repeat)
+	if (timeline_repeat || timeline_seamless_repeat)
 	{
 		if (timeline_region_end != null)
 		{

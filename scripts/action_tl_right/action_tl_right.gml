@@ -2,7 +2,7 @@
 
 timeline_marker += project_tempo / room_speed
 
-if (timeline_repeat)
+if (timeline_repeat || timeline_seamless_repeat)
 {
 	if (timeline_region_end != null)
 	{

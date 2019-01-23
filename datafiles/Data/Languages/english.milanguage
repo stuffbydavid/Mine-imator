@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.2",
-        "lastchange": "2019.01.12"
+        "lastchange": "2019.01.22"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -216,6 +216,7 @@
         "playtip": "Play/Pause the animation from the marker's position.\n(%1: Play from marker)\n(%2: Play from beginning)",
         "stoptip": "Stop playing the animation.",
         "repeattip": "Repeat the animation after the marker passes the final keyframe.",
+        "seamlessrepeattip": "Repeat the animation while animating keyframes seamlessly.",
         "showsecondstip": "Show/hide second and half-second marks on the timeline.",
         "timestamptip": "Shows the marker's current position and the total animation length.",
         "websitetip": "Visit the Mine-imator website.",

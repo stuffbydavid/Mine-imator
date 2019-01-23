@@ -202,28 +202,32 @@ with (mc_assets)
 				return false
 			}
 			
-			if (load_assets_block_index = ds_list_size(blockslist))
+			repeat(20)
 			{
-				load_assets_stage = "done"
-				break
-			}
+			
+				if (load_assets_block_index = ds_list_size(blockslist))
+				{
+					load_assets_stage = "done"
+					break
+				}
 				
-			var blockmap, block;
-			blockmap = blockslist[|load_assets_block_index]
-			block = block_load(blockmap, load_assets_type_map)
-			if (!block)
-			{
-				log("Could not load block")
-				continue
-			}
+				var blockmap, block;
+				blockmap = blockslist[|load_assets_block_index]
+				block = block_load(blockmap, load_assets_type_map)
+				if (!block)
+				{
+					log("Could not load block")
+					continue
+				}
 		
-			// Save name in load_assets_map
-			block_name_map[?block.name] = block
+				// Save name in load_assets_map
+				block_name_map[?block.name] = block
 			
-			ds_list_add(block_list, block)
+				ds_list_add(block_list, block)
 			
-			load_assets_block_name = block.name
-			load_assets_block_index++
+				load_assets_block_name = block.name
+				load_assets_block_index++
+			}
 			
 			load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blockslist))
 	

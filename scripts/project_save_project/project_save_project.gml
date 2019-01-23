@@ -12,6 +12,7 @@ json_save_object_start("project")
 
 	json_save_object_start("timeline")
 		json_save_var_bool("repeat", timeline_repeat)
+		json_save_var_bool("seamless_repeat", timeline_seamless_repeat)
 		json_save_var_bool("show_seconds", timeline_show_seconds)
 		json_save_var("marker", timeline_marker)
 		json_save_var("list_width", timeline.list_width)

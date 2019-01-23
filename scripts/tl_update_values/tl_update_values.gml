@@ -14,10 +14,87 @@ for (var k = 0; k < ds_list_size(keyframe_list); k++)
 	keyframe_current = keyframe_list[|k]
 }
 
-// Get progress
-var p = 0;
-if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-	p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position);
+// Seamless region looping
+var loopstart, loopend;
+if (app.timeline_region_start != null)
+{
+	loopstart = app.timeline_region_start
+	loopend = app.timeline_region_end
+}
+else
+{
+	loopstart = 0
+	loopend = app.timeline_length
+}
+
+if (app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker <= loopend)
+{
+	// Change keyframes so the animation is seamless
+	var lastkf, loopnext, loopprev;
+	lastkf = ds_list_size(keyframe_list) - 1
+	loopnext = false
+	loopprev = false
+	
+	if (keyframe_next = keyframe_current || keyframe_next.position > loopend) // Continue into the first keyframe
+	{
+		// Get first keyframe in timeline region
+		for (var k = 0; k < ds_list_size(keyframe_list); k++)
+		{
+			var kf = keyframe_list[|k];
+	
+			if (kf.position < loopstart || kf.position > loopend)
+				continue
+			else
+			{
+				if (kf.position < keyframe_next.position)
+					keyframe_next = kf
+			}
+		}
+	
+		loopnext = true
+	}
+	else if (keyframe_current = null || keyframe_current.position < loopstart) // Continue from last keyframe
+	{
+		// Get last keyframe in timeline region
+		for (var k = 0; k < ds_list_size(keyframe_list); k++)
+		{
+			var kf = keyframe_list[|k];
+	
+			if (kf.position < loopstart || kf.position > loopend)
+				continue
+			else
+			{
+				if (keyframe_current = null || kf.position > keyframe_current.position)
+					keyframe_current = kf
+			}
+		}
+	
+		loopprev = true
+	}
+
+	// Get progress
+	var p, regionsize, easep;
+	p = 0
+	var regionsize = loopend - loopstart;
+	if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
+	{
+		if (loopnext)
+			p = (app.timeline_marker - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
+		else if (loopprev)
+			p = ((app.timeline_marker + regionsize) - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
+		else
+			p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
+	}
+	else
+		keyframe_current = keyframe_next
+}
+else
+{
+	// Get progress
+	var p = 0;
+	if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
+		p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position);
+}
 
 // Transition
 tl_update_values_ease(e_value.TRANSITION, "instant", 0)

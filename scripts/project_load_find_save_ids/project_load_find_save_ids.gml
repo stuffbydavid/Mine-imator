@@ -121,9 +121,19 @@ with (obj_timeline)
 	part_of = save_id_find(save_id_map[?part_of])
 	if (part_of = null && temp != null)
 		temp.count++
-		
-	part_root = save_id_find(save_id_map[?part_root])
-		
+	
+	// Part root(Update special blocks in old projects)
+	if (load_format < e_project.FORMAT_122)
+	{
+		if (part_root = null && part_of != null && part_of.type = e_tl_type.SCENERY && type = e_tl_type.SPECIAL_BLOCK)
+		{
+			part_root = part_of
+			project_load_set_part_root(part_of)
+		}
+	}
+	else
+		part_root = save_id_find(save_id_map[?part_root])
+	
 	// Set part list
 	if (part_list != null)
 		for (var i = 0; i < ds_list_size(part_list); i++)

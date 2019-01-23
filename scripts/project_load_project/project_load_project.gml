@@ -19,6 +19,7 @@ var tlmap = map[?"timeline"];
 if (ds_map_valid(tlmap))
 {
 	timeline_repeat = value_get_real(tlmap[?"repeat"], timeline_repeat)
+	timeline_seamless_repeat = value_get_real(tlmap[?"seamless_repeat"], timeline_seamless_repeat)
 	timeline_show_seconds = value_get_real(tlmap[?"show_seconds"], timeline_show_seconds)
 	timeline_marker = value_get_real(tlmap[?"marker"], timeline_marker)
 	timeline.list_width = value_get_real(tlmap[?"list_width"], timeline.list_width)
