@@ -27,7 +27,7 @@ else
 	loopend = app.timeline_length
 }
 
-if (app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker <= loopend)
+if (app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker < loopend)
 {
 	// Change keyframes so the animation is seamless
 	var lastkf, loopnext, loopprev;
