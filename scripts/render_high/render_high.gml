@@ -935,6 +935,10 @@ if (render_camera_grain)
 		nextfinalpos = !nextfinalpos
 	}
 	
+	// Noise texture
+	render_grain_noise = surface_require(render_grain_noise, floor(render_width/8), floor(render_height/8))
+	render_generate_noise(floor(render_width/8), floor(render_height/8), render_grain_noise)
+	
 	surface_set_target(finalsurf)
 	{
 		draw_clear_alpha(c_black, 0)

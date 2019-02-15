@@ -56,7 +56,11 @@ else
 		if (value[vid] != nval)
 			update_matrix = true
 		
-		value[vid] = tl_value_clamp(vid, nval)
+		if (add)
+			value[vid] = tl_value_clamp(vid, nval)
+		else
+			value[vid] = nval
+		
 		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
 			value[e_value.SOUND_OBJ].count++
 	}
@@ -75,7 +79,11 @@ else
 			else
 				nval = value[vid] * add + val;
 			
-			value[vid] = tl_value_clamp(vid, nval)
+			if (add)
+				value[vid] = tl_value_clamp(vid, nval)
+			else
+				value[vid] = nval
+			
 			history_data.kf_set_new_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 		}
 	}

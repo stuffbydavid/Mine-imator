@@ -38,7 +38,7 @@ if (draw_button_normal("bannereditornew", buttonx, buttony, 24, 24, e_button.NO_
 {
 	if (popup_bannereditor.banner_pattern_edit > -1)
 	{
-		ds_list_insert(patternlist, popup_bannereditor.banner_pattern_edit, minecraft_banner_pattern_list[|0])
+		ds_list_insert(patternlist, popup_bannereditor.banner_pattern_edit, minecraft_banner_pattern_list[|1])
 		ds_list_insert(colorlist, popup_bannereditor.banner_pattern_edit, c_minecraft_white)
 		popup_bannereditor.banner_pattern_edit++
 	}

@@ -21,6 +21,6 @@ with (res_edit)
 
 with (obj_template)
 	if (item_tex = res_edit)
-		temp_update_item()
+		render_generate_item()
 	
 lib_preview.update = true

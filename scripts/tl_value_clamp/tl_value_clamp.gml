@@ -47,6 +47,10 @@ switch (vid)
 	case e_value.CAM_FOV: return clamp(val, 1, 170)
 	case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 	case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)
+	case e_value.CAM_SHAKE_VERTICAL_SPEED:
+	case e_value.CAM_SHAKE_HORIZONTAL_SPEED: return clamp(val, 0, 8)
+	case e_value.CAM_SHAKE_VERTICAL_STRENGTH:
+	case e_value.CAM_SHAKE_HORIZONTAL_STRENGTH: return clamp(val, 0, 8)
 	case e_value.CAM_WIDTH:
 	case e_value.CAM_HEIGHT: return max(1, val)
 	case e_value.BG_SKY_MOON_PHASE: return clamp(val, 0, 7)

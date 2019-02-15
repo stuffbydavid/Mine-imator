@@ -11,7 +11,7 @@ if (type = e_temp_type.CHARACTER ||
 	temp_update_model_shape()
 }
 else if (type = e_temp_type.ITEM)
-	temp_update_item()
+	render_generate_item()
 else if (type = e_temp_type.BLOCK)
 	temp_update_block()
 else if (type_is_shape(type))

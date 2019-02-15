@@ -13,7 +13,8 @@
         "39a1842b-01a0-4495-ae0b-f606ae7d0921",
         "bd4ff8a4-4712-4820-958f-dbde80eaa9fe",
         "6ee23556-ca97-4b3e-bf50-fd0c420581f1",
-        "204092b2-451a-48ef-83ab-05f9563f7f04"
+        "204092b2-451a-48ef-83ab-05f9563f7f04",
+        "9b3213fc-174a-4d2e-b744-6b37b294c668"
     ],
     "filterType": "GMScript",
     "folderName": "Keyframes",

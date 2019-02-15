@@ -16,7 +16,7 @@ else
 with (temp_edit)
 {
 	item_slot = slot
-	temp_update_item()
+	render_generate_item()
 }
 
 lib_preview.update = true

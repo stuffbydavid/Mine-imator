@@ -84,9 +84,14 @@ json_save_object_start()
 	json_save_object_start("keyframes")
 	
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
+		{
 			with (keyframe_list[|k])
+			{
+				keyframe_update_item_name()
 				project_save_values(string(position), value, other.value_default)
-
+			}
+		}
+		
 	json_save_object_done()
 	
 	// Only include parent in the file if it's also saved

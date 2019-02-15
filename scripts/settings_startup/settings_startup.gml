@@ -213,11 +213,14 @@ checkbox_expand_background_ground = true
 checkbox_expand_background_fog = true
 checkbox_expand_background_wind = true
 checkbox_expand_frameeditor_rotatepoint = true
+checkbox_expand_frameeditor_camshake = true
 checkbox_expand_frameeditor_dof = true
 checkbox_expand_frameeditor_bloom = true
 checkbox_expand_frameeditor_clrcor = true
 checkbox_expand_frameeditor_vignette = true
 checkbox_expand_frameeditor_grain = true
+
+checkbox_expand_frameeditor_itemslot = true
 
 settings_load()
 

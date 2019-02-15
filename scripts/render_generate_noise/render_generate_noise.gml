@@ -1,11 +1,18 @@
-/// render_generate_noise(width, height)
+/// render_generate_noise(width, height, [surface])
 /// @arg width
 /// @arg height
+/// @arg [surface]
 
 var w, h, surf;
-w = argument0
-h = argument1
-surf = surface_create(w, h)
+w = argument[0]
+h = argument[1]
+surf = null
+
+if (argument_count > 2)
+	surf = argument[2]
+
+if (!surface_exists(surf))
+	surf = surface_create(w, h)
 
 surface_set_target(surf)
 {
@@ -18,7 +25,7 @@ surface_set_target(surf)
 			var r, g, b, mag;
 			r = random(1)
 			g = random(1)
-			b = 0.5
+			b = random(1)//0.5
 		
 			mag = sqrt(r * r + g * g + b * b)
 			r /= mag

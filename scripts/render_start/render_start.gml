@@ -83,5 +83,6 @@ draw_set_color(c_white)
 draw_set_alpha(1)
 
 render_update_text()
+render_update_item()
 
 camera_apply(cam_render)

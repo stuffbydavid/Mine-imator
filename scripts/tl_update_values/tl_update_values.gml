@@ -183,6 +183,13 @@ if (value_type[e_value_type.CAMERA])
 	tl_update_values_ease(e_value.CAM_ROTATE_DISTANCE, trans, p)
 	tl_update_values_ease(e_value.CAM_ROTATE_ANGLE_XY, trans, p)
 	tl_update_values_ease(e_value.CAM_ROTATE_ANGLE_Z, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_VERTICAL_OFFSET, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_VERTICAL_SPEED, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_VERTICAL_STRENGTH, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_HORIZONTAL_OFFSET, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_HORIZONTAL_SPEED, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_HORIZONTAL_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.CAM_DOF, trans, p)
 	tl_update_values_ease(e_value.CAM_DOF_DEPTH, trans, p)
 	tl_update_values_ease(e_value.CAM_DOF_RANGE, trans, p)
@@ -277,6 +284,14 @@ if (value_type[e_value_type.TEXT])
 {
 	tl_update_values_ease(e_value.TEXT, trans, p)
 	tl_update_values_ease(e_value.TEXT_FONT, trans, p)
+}
+
+// Item
+if (value_type[e_value_type.ITEM])
+{
+	tl_update_values_ease(e_value.CUSTOM_ITEM_SLOT, trans, p)
+	tl_update_values_ease(e_value.ITEM_SLOT, trans, p)
+	tl_update_values_ease(e_value.TEXTURE_OBJ, trans, p)
 }
 
 // Visible

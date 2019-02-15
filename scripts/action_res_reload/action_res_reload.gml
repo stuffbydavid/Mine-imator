@@ -27,7 +27,7 @@ with (obj_template)
 	if (scenery = res_edit)
 		temp_set_scenery(scenery, !app.history_undo, hobj)
 	else if (item_tex = res_edit)
-		temp_update_item()
+		render_generate_item()
 	else if (model = res_edit)
 	{
 		temp_update_model()

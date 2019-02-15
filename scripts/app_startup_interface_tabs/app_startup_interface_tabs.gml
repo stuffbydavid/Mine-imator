@@ -449,6 +449,18 @@ with (frame_editor)
 		tbx_rotate_angle_xy.suffix = "°"
 		tbx_rotate_angle_z = new_textbox_ndecimals()
 		tbx_rotate_angle_z.suffix = "°"
+		tbx_shake_strength = new_textbox_decimals()
+		tbx_shake_strength.suffix = "%"
+		tbx_shake_voffset = new_textbox_ndecimals()
+		tbx_shake_vspeed = new_textbox_decimals()
+		tbx_shake_vspeed.suffix = "%"
+		tbx_shake_vstrength = new_textbox_decimals()
+		tbx_shake_vstrength.suffix = "%"
+		tbx_shake_hoffset = new_textbox_ndecimals()
+		tbx_shake_hspeed = new_textbox_decimals()
+		tbx_shake_hspeed.suffix = "%"
+		tbx_shake_hstrength = new_textbox_decimals()
+		tbx_shake_hstrength.suffix = "%"
 		tbx_dof_depth = new_textbox_decimals()
 		tbx_dof_range = new_textbox_decimals()
 		tbx_dof_fade_size = new_textbox_decimals()
@@ -476,7 +488,7 @@ with (frame_editor)
 		tbx_bloom_radius.suffix = "%"
 		tbx_contrast = new_textbox_integer()
 		tbx_contrast.suffix = "%"
-		tbx_brightness = new_textbox_integer()
+		tbx_brightness = new_textbox_ninteger()
 		tbx_brightness.suffix = "%"
 		tbx_saturation = new_textbox_integer()
 		tbx_saturation.suffix = "%"
@@ -516,6 +528,14 @@ with (frame_editor)
 	text = tab_add_category("frameeditortext", tab_frame_editor_text, false)
 	with (text)
 		tbx_text = new_textbox(false, 0, "")
+		
+	// Item
+	item = tab_add_category("frameeditoritem", tab_frame_editor_item, false)
+	with (item)
+	{
+		item_scroll = new(obj_scrollbar)
+		item_slot = new_textbox_integer()
+	}
 	
 	// Keyframe
 	keyframe = tab_add_category("frameeditorkeyframe", tab_frame_editor_keyframe, false)

@@ -69,6 +69,22 @@ with (obj_timeline)
 		}
 	}
 	
+	// Set item slot if item name is set
+	if (type = e_tl_type.ITEM)
+	{
+		for (var i = 0; i < ds_list_size(keyframe_list); i++)
+		{
+			with (keyframe_list[|i])
+			{
+				if (value[e_value.ITEM_NAME] != "")
+					value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, value[e_value.ITEM_NAME])
+				
+				if (value[e_value.ITEM_SLOT] < 0)
+					value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, default_item)
+			}
+		}
+	}
+	
 	// Update
 	tl_update()
 	tl_update_values()

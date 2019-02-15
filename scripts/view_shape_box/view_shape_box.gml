@@ -1,7 +1,7 @@
 /// view_shape_box(point1, point2, [matrix])
 /// @arg point1
 /// @arg point2
-/// @arg matrix
+/// @arg [matrix]
 /// @desc Renders a box shape.
 
 var p1, p2, points;

@@ -139,6 +139,13 @@ for (var k = 0; k < num; k++)
 				value[e_value.BEND_ANGLE_X + legacyaxis] = value[e_value.BEND_ANGLE_LEGACY]
 				value[e_value.BEND_ANGLE_LEGACY] = 0
 			}
+			
+			// Set item slot if item name is set
+			if (value[e_value.ITEM_NAME] != "")
+				value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, value[e_value.ITEM_NAME])
+				
+			if (value[e_value.ITEM_SLOT] < 0)
+				value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, default_item)
 		}
 		
 		with (tladd)

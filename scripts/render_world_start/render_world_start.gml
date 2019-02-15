@@ -22,12 +22,31 @@ if (!render_camera) // Use work camera
 }
 else
 {
-	var pos_lookat = point3D_mul_matrix(point3D(0, 1, 0), render_camera.matrix);
-	cam_from = point3D_copy(render_camera.world_pos)
+	var mat = render_camera.matrix;
+	var pos = render_camera.world_pos;
+	
+	// Camera shake
+	if (render_camera.value[e_value.CAM_SHAKE])
+	{
+		var shakerot = vec3(
+			sin((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] / 5.0)) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
+			0,
+			sin((current_step + render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] / 10.0)) * render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH]
+		);
+		
+		shakerot = vec3_mul(shakerot, render_camera.value[e_value.CAM_SHAKE_STRENGTH])
+		
+		var shakemat = matrix_create(shakerot, vec3(0), vec3(1));
+		mat = matrix_multiply(shakemat, mat)
+		pos = point3D(mat[MAT_X], mat[MAT_Y], mat[MAT_Z])
+	}
+	
+	var pos_lookat = point3D_mul_matrix(point3D(0, 1, 0), mat);
+	cam_from = point3D_copy(pos)
 	cam_to = point3D_copy(pos_lookat)
-	cam_up[X] = render_camera.matrix[8]
-	cam_up[Y] = render_camera.matrix[9]
-	cam_up[Z] = render_camera.matrix[10]
+	cam_up[X] = mat[8]
+	cam_up[Y] = mat[9]
+	cam_up[Z] = mat[10]
 	cam_fov = render_camera.value[e_value.CAM_FOV]
 }
 

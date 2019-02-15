@@ -57,7 +57,7 @@ else
 with (bench_settings)
 {
 	item_tex = res
-	temp_update_item()
+	render_generate_item()
 }
 
 bench_settings.preview.update = true

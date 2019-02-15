@@ -79,6 +79,10 @@ globalvar render_ssao_kernel, render_ssao_noise;
 render_ssao_kernel = render_generate_sample_kernel(16)
 render_ssao_noise = null
 
+// Grain
+globalvar render_grain_noise;
+render_grain_noise = null
+
 // Render modes
 globalvar render_mode, render_mode_shader_map, render_shader_obj;
 render_mode_shader_map = ds_map_create()

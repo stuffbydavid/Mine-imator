@@ -105,7 +105,7 @@ if (window_focus = string(tbx))
 	if (textbox_draw(tbx, xx + wid - valuewid + 16, yy + hei / 2 - 8, valuewid - 16, 18))
 	{
 		var tbxval = string_get_real(tbx.text, 0)
-		tbxval = clamp(tbxval, minval, maxval)
+		tbxval = clamp(tbxval, -no_limit, no_limit)
 		tbxval = snap(tbxval, snapval)
 		script_execute(script, tbxval, false)
 	}

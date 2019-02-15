@@ -67,7 +67,8 @@ with (obj_keyframe)
 		json_save_var("position", position - firstpos)
 		if (ismodel && timeline.part_of != null)
 			json_save_var("part_name", timeline.model_part_name)
-			
+		
+		keyframe_update_item_name()
 		project_save_values("values", value, timeline.value_default)
 	
 	json_save_object_done()

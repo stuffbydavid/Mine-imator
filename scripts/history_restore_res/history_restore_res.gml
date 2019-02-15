@@ -43,7 +43,7 @@ with (res)
 		{
 			item_tex.count--
 			item_tex = res
-			temp_update_item()
+			render_generate_item()
 		}
 	}
 			

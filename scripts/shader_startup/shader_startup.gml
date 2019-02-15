@@ -354,6 +354,7 @@ with (shader_map[?shader_vignette])
 
 with (shader_map[?shader_noise])
 {
+	new_shader_sampler("uNoiseBuffer")
 	new_shader_uniform("uStrength")
 	new_shader_uniform("uSaturation")
 	new_shader_uniform("uSize")

@@ -23,6 +23,13 @@ switch (argument0)
 	case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
 	case e_value.CAM_FOV: return 45
 	case e_value.CAM_ROTATE_DISTANCE: return 100
+	case e_value.CAM_SHAKE_STRENGTH: return .25
+	case e_value.CAM_SHAKE_VERTICAL_OFFSET:
+	case e_value.CAM_SHAKE_HORIZONTAL_OFFSET: return 0
+	case e_value.CAM_SHAKE_VERTICAL_SPEED:
+	case e_value.CAM_SHAKE_HORIZONTAL_SPEED: return 1
+	case e_value.CAM_SHAKE_VERTICAL_STRENGTH:
+	case e_value.CAM_SHAKE_HORIZONTAL_STRENGTH: return 1
 	case e_value.CAM_DOF_RANGE: return 200
 	case e_value.CAM_DOF_FADE_SIZE: return 100
 	case e_value.CAM_DOF_BLUR_SIZE: return .01
@@ -92,7 +99,8 @@ switch (argument0)
 	case e_value.TEXT_FONT: return null
 	case e_value.SOUND_VOLUME: return 1
 	case e_value.VISIBLE: return true
-	case e_value.TEXT: return ""
+	case e_value.TEXT: 
+	case e_value.ITEM_NAME: return ""
 	case e_value.TRANSITION: return "linear"
 }
 

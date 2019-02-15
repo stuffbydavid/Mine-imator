@@ -43,6 +43,58 @@ if (tl_edit.value[e_value.CAM_ROTATE] && checkbox_expand_frameeditor_rotatepoint
 	checkbox_expand_end()
 }
 
+// Camera shake
+tab_control_checkbox_expand()
+draw_checkbox_expand("frameeditorcameracamerashake", dx, dy, tl_edit.value[e_value.CAM_SHAKE], action_tl_frame_cam_shake, checkbox_expand_frameeditor_camshake, action_checkbox_expand_frameeditor_camshake)
+tab_next()
+if (tl_edit.value[e_value.CAM_SHAKE] && checkbox_expand_frameeditor_camshake)
+{
+	dx += 4
+	dw -= 4
+	
+	// Shake strength
+	tab_control_meter()
+	draw_meter("frameeditorcameracamerashakestrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH] * 100), 48, 0, 800, 25, 1, tab.camera.tbx_shake_strength, action_tl_frame_cam_shake_strength)
+	tab_next()
+	
+	capwid = text_caption_width("frameeditorcameracamerashakehoffset", "frameeditorcameracamerashakehspeed", "frameeditorcameracamerashakehstrength",
+								"frameeditorcameracamerashakevoffset", "frameeditorcameracamerashakevspeed", "frameeditorcameracamerashakevstrength")
+	
+	// Vertical offset
+	tab_control_dragger()
+	draw_dragger("frameeditorcameracamerashakevoffset", dx, dy, dw, tl_edit.value[e_value.CAM_SHAKE_VERTICAL_OFFSET], 1, -no_limit, no_limit, 0, 0, tab.camera.tbx_shake_voffset, action_tl_frame_cam_shake_voffset, capwid)
+	tab_next()
+	
+	// Horizontal offset
+	tab_control_dragger()
+	draw_dragger("frameeditorcameracamerashakehoffset", dx, dy, dw, tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET], 1, -no_limit, no_limit, 0, 0, tab.camera.tbx_shake_hoffset, action_tl_frame_cam_shake_hoffset, capwid)
+	tab_next()
+	
+	// Vertical speed
+	tab_control_meter()
+	draw_meter("frameeditorcameracamerashakevspeed", dx, dy, dw, round(tl_edit.value[e_value.CAM_SHAKE_VERTICAL_SPEED] * 100), 48, 0, 500, 100, 1, tab.camera.tbx_shake_vspeed, action_tl_frame_cam_shake_vspeed, capwid)
+	tab_next()
+	
+	// Horizontal speed
+	tab_control_meter()
+	draw_meter("frameeditorcameracamerashakehspeed", dx, dy, dw, round(tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] * 100), 48, 0, 500, 100, 1, tab.camera.tbx_shake_hspeed, action_tl_frame_cam_shake_hspeed, capwid)
+	tab_next()
+	
+	// Vertical strength
+	tab_control_meter()
+	draw_meter("frameeditorcameracamerashakevstrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH] * 100), 48, 0, 800, 100, 1, tab.camera.tbx_shake_vstrength, action_tl_frame_cam_shake_vstrength, capwid)
+	tab_next()
+	
+	// Horizontal strength
+	tab_control_meter()
+	draw_meter("frameeditorcameracamerashakehstrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH] * 100), 48, 0, 800, 100, 1, tab.camera.tbx_shake_hstrength, action_tl_frame_cam_shake_hstrength, capwid)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
 // DOF
 tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof, checkbox_expand_frameeditor_dof, action_checkbox_expand_frameeditor_dof)

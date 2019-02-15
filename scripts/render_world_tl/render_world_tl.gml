@@ -147,7 +147,10 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 		
 		case e_tl_type.ITEM:
 		{
-			render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_tex)
+			if (item_vbuffer = null)
+				render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_tex)
+			else
+				render_world_item(item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, item_res)
 			break
 		}
 		

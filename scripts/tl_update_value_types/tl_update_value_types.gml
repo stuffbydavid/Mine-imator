@@ -78,6 +78,10 @@ if (type != e_tl_type.ITEM &&
 if (type = e_tl_type.TEXT)
 	value_type[e_value_type.TEXT] = true
 
+// Item
+if (type = e_tl_type.ITEM)
+	value_type[e_value_type.ITEM] = true
+	
 // Rotation point
 value_type[e_value_type.ROT_POINT] = true
 if (type = e_tl_type.PARTICLE_SPAWNER ||

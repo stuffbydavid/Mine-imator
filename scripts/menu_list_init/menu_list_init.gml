@@ -619,6 +619,26 @@ switch (menu_name)
 		break
 	}
 	
+	// Timeline frame item texture
+	case "frameeditoritemitemtex":
+	{
+		// Default
+		var texobj = tl_edit.temp.item_tex;
+		menu_add_item(null, text_get("listdefault", texobj.display_name))
+		
+		// Add existing resources
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+		{
+			var res = res_list.display_list[|i];
+				
+			if (res.type = e_res_type.TEXTURE)
+				menu_add_item(res, res.display_name, res.texture)
+			else if (res.item_sheet_texture != null)
+				menu_add_item(res, res.display_name, res.block_preview_texture)
+		}
+		break
+	}
+	
 	// Timeline frame shape texture
 	case "frameeditorshapetex":
 	{

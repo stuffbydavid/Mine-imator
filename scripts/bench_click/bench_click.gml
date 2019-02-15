@@ -46,7 +46,7 @@ with (bench_settings)
 		
 	// Switch to item
 	if (type = e_tl_type.ITEM)
-		temp_update_item()
+		render_generate_item()
 	
 	// Switch to shape
 	if (type_is_shape(type))

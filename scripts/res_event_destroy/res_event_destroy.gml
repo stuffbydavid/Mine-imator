@@ -136,7 +136,7 @@ with (obj_template)
 	{
 		item_tex = mc_res
 		item_tex.count++
-		temp_update_item()
+		render_generate_item()
 	}
 	
 	if (block_tex = other.id)
@@ -169,7 +169,7 @@ with (app.bench_settings)
 	if (item_tex = other.id)
 	{
 		item_tex = mc_res
-		temp_update_item()
+		render_generate_item()
 	}
 	
 	if (block_tex = other.id)

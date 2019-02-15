@@ -60,7 +60,7 @@ with (temp_edit)
 	item_tex.count--
 	item_tex = res
 	item_tex.count++
-	temp_update_item()
+	render_generate_item()
 }
 
 lib_preview.update = true

@@ -263,11 +263,13 @@ json_save_object_start("checkbox_expand")
 	json_save_var_bool("background_fog", checkbox_expand_background_fog)
 	json_save_var_bool("background_wind", checkbox_expand_background_wind)
 	json_save_var_bool("frameeditor_rotatepoint", checkbox_expand_frameeditor_rotatepoint)
+	json_save_var_bool("frameeditor_camshake", checkbox_expand_frameeditor_camshake)
 	json_save_var_bool("frameeditor_dof", checkbox_expand_frameeditor_dof)
 	json_save_var_bool("frameeditor_bloom", checkbox_expand_frameeditor_bloom)
 	json_save_var_bool("frameeditor_clrcor", checkbox_expand_frameeditor_clrcor)
 	json_save_var_bool("frameeditor_grain", checkbox_expand_frameeditor_grain)
 	json_save_var_bool("frameeditor_vignette", checkbox_expand_frameeditor_vignette)
+	json_save_var_bool("frameeditor_itemslot", checkbox_expand_frameeditor_itemslot)
 
 json_save_object_done()
 

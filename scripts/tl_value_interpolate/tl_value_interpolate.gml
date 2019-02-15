@@ -34,7 +34,8 @@ switch (vid)
 	case e_value.BG_FOG_COLOR:
 	case e_value.BG_FOG_OBJECT_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
 	case e_value.CAM_WIDTH:
-	case e_value.CAM_HEIGHT: return round(val1 + p * (val2 - val1)) // No decimals
+	case e_value.CAM_HEIGHT:
+	case e_value.ITEM_SLOT: return round(val1 + p * (val2 - val1)) // No decimals
 	case e_value.SPAWN:
 	case e_value.FREEZE:
 	case e_value.CLEAR:
@@ -65,6 +66,7 @@ switch (vid)
 	case e_value.SOUND_END:
 	case e_value.TEXT:
 	case e_value.TEXT_FONT:
+	case e_value.CUSTOM_ITEM_SLOT:
 	case e_value.TRANSITION: return val1 // No interpolation
 }
 

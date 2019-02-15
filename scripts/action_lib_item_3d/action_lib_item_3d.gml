@@ -16,7 +16,7 @@ else
 with (temp_edit)
 {
 	item_3d = is3d
-	temp_update_item()
+	render_generate_item()
 	temp_update_rot_point()
 }
 

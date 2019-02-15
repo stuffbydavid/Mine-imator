@@ -26,7 +26,6 @@ else
 	base_seed = random(current_step);
 	
 random_set_seed(base_seed)
-
 	
 pt.time_to_live = value_random(temp.pc_destroy_at_time_seconds, temp.pc_destroy_at_time_israndom, temp.pc_destroy_at_time_random_min, temp.pc_destroy_at_time_random_max) * 60
 

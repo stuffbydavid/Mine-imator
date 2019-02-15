@@ -1936,6 +1936,36 @@
 				"5": "id=minecraft:peony"
 			}
 		},
+        "176": {
+            "id": "minecraft:white_banner",
+            "data": {
+				"0": "rotation=0",
+				"1": "rotation=1",
+				"2": "rotation=2",
+				"3": "rotation=3",
+				"4": "rotation=4",
+				"5": "rotation=5",
+				"6": "rotation=6",
+				"7": "rotation=7",
+				"8": "rotation=8",
+				"9": "rotation=9",
+				"10": "rotation=10",
+				"11": "rotation=11",
+				"12": "rotation=12",
+				"13": "rotation=13",
+				"14": "rotation=14",
+				"15": "rotation=15"
+			}
+        },
+        "177": {
+            "id": "minecraft:white_wall_banner",
+            "data": {
+				"2": "facing=north",
+				"3": "facing=south",
+				"4": "facing=west",
+				"5": "facing=east"
+			}
+        },
 		"178": {
 			"id": "minecraft:daylight_detector",
 			"data": {

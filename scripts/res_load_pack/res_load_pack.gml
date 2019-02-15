@@ -86,7 +86,7 @@ switch (load_stage)
 		// Update project and load next in the queue
 		with (obj_template)
 			if (item_tex = other.id)
-				temp_update_item()
+				render_generate_item()
 					
 		with (obj_particle_type)
 			if (sprite_tex = other.id)
@@ -94,7 +94,7 @@ switch (load_stage)
 				
 		with (app.bench_settings)
 			if (item_tex = other.id)
-				temp_update_item()
+				render_generate_item()
 				
 		with (app)
 		{

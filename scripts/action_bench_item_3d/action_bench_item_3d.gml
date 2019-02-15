@@ -4,7 +4,7 @@
 with (bench_settings)
 {
 	item_3d = argument0
-	temp_update_item()
+	render_generate_item()
 }
 
 bench_settings.preview.update = true

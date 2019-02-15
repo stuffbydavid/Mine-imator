@@ -1,8 +1,10 @@
 /// block_render_model_generate(model)
-/// @arg models
+/// @arg model
 /// @desc Generate triangles from the render model.
 
 var model = argument0;
+
+instance_activate_object(model)
 
 with (model)
 {
@@ -31,6 +33,7 @@ with (model)
 	// Generate elements
 	for (var e = 0; e < element_amount; e++)
 	{
+		instance_activate_object(element[e])
 		with (element[e])
 		{
 			var x1, x2, y1, y2, z1, z2, mat, color;
@@ -169,5 +172,6 @@ with (model)
 				vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, face_uv_zn_2_x, face_uv_zn_2_y, face_uv_zn_3_x, face_uv_zn_3_y, face_uv_zn_0_x, face_uv_zn_0_y, color, 1, false, mat)
 			}
 		}
+		instance_deactivate_object(element[e])
 	}
 }
