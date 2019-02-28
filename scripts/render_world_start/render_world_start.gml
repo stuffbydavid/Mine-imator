@@ -28,10 +28,14 @@ else
 	// Camera shake
 	if (render_camera.value[e_value.CAM_SHAKE])
 	{
+		
 		var shakerot = vec3(
-			sin((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] / 5.0)) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
+			simplex((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] / 5.0), 0.0) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
 			0,
-			sin((current_step + render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] / 10.0)) * render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH]
+			simplex((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] / 5.0), 1.0) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
+			//sin((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] / 5.0)) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
+			//0,
+			//sin((current_step + render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] / 10.0)) * render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH]
 		);
 		
 		shakerot = vec3_mul(shakerot, render_camera.value[e_value.CAM_SHAKE_STRENGTH])

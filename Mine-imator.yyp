@@ -6647,6 +6647,14 @@
             }
         },
         {
+            "Key": "6d21d88b-2ef6-46e8-8b67-35a7dec2321e",
+            "Value": {
+                "id": "bde50596-6f9a-443c-a5c5-6d20733d5056",
+                "resourcePath": "scripts\\simplex\\simplex.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "6d412e53-6d6d-4fcc-9a4a-42d60d52ee6c",
             "Value": {
                 "id": "9b8721c2-7e16-4c3c-960c-385fa3bdba88",
@@ -8028,6 +8036,14 @@
                 "id": "e9d3315b-39cb-4b1d-b261-58eb11da3fed",
                 "resourcePath": "scripts\\project_backup\\project_backup.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "85c52ebe-7328-4539-883d-f12cc82b6e86",
+            "Value": {
+                "id": "2f74e24d-6b8f-47ea-9a7c-c5b21095b162",
+                "resourcePath": "datafiles_yy\\Data\\Math.dll.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -15695,6 +15711,14 @@
             }
         },
         {
+            "Key": "fe271537-c3c7-4741-b263-3c05578f2b0f",
+            "Value": {
+                "id": "da35a5dd-cf56-409e-878e-dde3b8f57aac",
+                "resourcePath": "views\\fe271537-c3c7-4741-b263-3c05578f2b0f.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "fe2a867d-51a4-4d5a-bda2-f8ef3d34589d",
             "Value": {
                 "id": "2c745e36-5a8f-4a92-8622-ea28571fe58b",
@@ -16743,6 +16767,7 @@
         "255b9e1b-979b-440a-af51-db008047330c",
         "50ed4a8d-989c-41fc-8b7c-0808afbd58c2",
         "74666be9-e566-4d06-8ffd-95923d1814ce",
+        "6d21d88b-2ef6-46e8-8b67-35a7dec2321e",
         "247b16a5-1176-4902-bdc4-ccbabfd6419d",
         "33eb3119-4cd0-4ed5-9db5-89c04e64cbd7",
         "5c300fe4-c5ff-4e3f-a9e6-83d3956d81e7",

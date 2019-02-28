@@ -2,10 +2,11 @@
 
 log("External library init")
 
-var pathfile, pathmovie, pathwindow;
+var pathfile, pathmovie, pathwindow, pathMath;
 pathfile = "Data\\file.dll"
 pathmovie = "Data\\movie.dll"
 pathwindow = "Data\\window.dll"
+pathMath = "Data\\Math.dll"
 
 if (!file_exists(pathfile))
 	return missing_file(pathfile)
@@ -58,6 +59,14 @@ lib_window_set_focus = external_define(pathwindow, "window_set_focus", dll_cdecl
 
 // Check for crashes
 if (startup_last_crash)
+
+log("External library", pathMath)
+globalvar lib_math_simplex1d, lib_math_simplex2d, lib_math_simplex3d, lib_math_simplex4d;
+lib_math_simplex1d = external_define(pathMath, "simplex1D", dll_cdecl, ty_real, 1, ty_real)
+lib_math_simplex2d = external_define(pathMath, "simplex2D", dll_cdecl, ty_real, 2, ty_real, ty_real)
+lib_math_simplex3d = external_define(pathMath, "simplex3D", dll_cdecl, ty_real, 3, ty_real, ty_real, ty_real)
+lib_math_simplex4d = external_define(pathMath, "simplex4D", dll_cdecl, ty_real, 4, ty_real, ty_real, ty_real, ty_real)
+
 {
 	if (show_question("Do you want to report the crash now via the Mine-imator forums? In your bug report, provide instructions how to recreate the bug and the log contents. If the issue concerns a specific animation, upload its folder as a .zip.")) 
 	{
