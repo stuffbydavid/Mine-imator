@@ -30,9 +30,9 @@ else
 	{
 		
 		var shakerot = vec3(
-			simplex((current_step + render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] * 0.1), 3.0) * render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH],
+			simplex((current_step + render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] * 0.025), 3.0) * render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH],
 			0,
-			simplex((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] * 0.1), 0.0) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
+			simplex((current_step + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] * 0.025), 0.0) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
 		);
 		
 		shakerot = vec3_mul(shakerot, render_camera.value[e_value.CAM_SHAKE_STRENGTH])
