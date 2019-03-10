@@ -6650,7 +6650,7 @@
             "Key": "6d21d88b-2ef6-46e8-8b67-35a7dec2321e",
             "Value": {
                 "id": "bde50596-6f9a-443c-a5c5-6d20733d5056",
-                "resourcePath": "scripts\\simplex\\simplex.yy",
+                "resourcePath": "scripts\\simplex_lib\\simplex_lib.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -8042,7 +8042,7 @@
             "Key": "85c52ebe-7328-4539-883d-f12cc82b6e86",
             "Value": {
                 "id": "2f74e24d-6b8f-47ea-9a7c-c5b21095b162",
-                "resourcePath": "datafiles_yy\\Data\\Math.dll.yy",
+                "resourcePath": "datafiles_yy\\Data\\math.dll.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -8483,6 +8483,14 @@
             "Value": {
                 "id": "864ea801-64ea-4324-ac08-a16c19274f50",
                 "resourcePath": "scripts\\action_background_sky_clouds_z\\action_background_sky_clouds_z.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "8c22d3b6-e0ab-4666-9061-a050794b988b",
+            "Value": {
+                "id": "85057b9d-67cb-4ee1-ae72-a302e79866e5",
+                "resourcePath": "scripts\\action_setting_search_variants\\action_setting_search_variants.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -16142,6 +16150,7 @@
         "efc75f18-1f26-4d40-a34d-f701c9fd8039",
         "8f1424c8-9632-4655-8f00-2e439958a1af",
         "f9dc7de9-731c-41c2-b1bc-e80899e1d9d6",
+        "8c22d3b6-e0ab-4666-9061-a050794b988b",
         "696d1e5b-6f18-407e-8d42-a814c5ca1cce",
         "36c57c76-2b1d-4184-b361-d1375a7c7522",
         "ca264763-7f4c-4fb1-9ce8-f2f151e6c902",
@@ -16757,6 +16766,7 @@
         "e750dc52-7619-4f86-baf5-46499343a1fd",
         "841b2cc0-9501-4104-bcca-39455bc94248",
         "4c7d2cb6-6205-450f-a19c-eb9460e33f15",
+        "6d21d88b-2ef6-46e8-8b67-35a7dec2321e",
         "dc3d3101-eb95-4cec-917e-a8ad076da6ec",
         "ea33c6f1-d6b8-4f3e-8cea-6c3ace9de2bc",
         "5ffc8c42-f2df-438e-bee9-112d68f5f04d",
@@ -16767,7 +16777,6 @@
         "255b9e1b-979b-440a-af51-db008047330c",
         "50ed4a8d-989c-41fc-8b7c-0808afbd58c2",
         "74666be9-e566-4d06-8ffd-95923d1814ce",
-        "6d21d88b-2ef6-46e8-8b67-35a7dec2321e",
         "247b16a5-1176-4902-bdc4-ccbabfd6419d",
         "33eb3119-4cd0-4ed5-9db5-89c04e64cbd7",
         "5c300fe4-c5ff-4e3f-a9e6-83d3956d81e7",

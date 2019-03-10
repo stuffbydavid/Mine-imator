@@ -43,7 +43,7 @@ else
 
 // Remove non-matched items from list
 var check = string_lower(slist.filter_tbx.text);
-if (slist.filter && check != "")
+if (slist.filter && check != "" && ((slist != bench_settings.block_list && slist != template_editor.block_list) || !setting_search_variants))
 {
 	for (var p = 0; p < ds_list_size(slist.display_list); p++)
 	{
@@ -58,6 +58,55 @@ if (slist.filter && check != "")
 				break
 			}
 		}
+		
+		if (!match)
+		{
+			ds_list_delete(slist.display_list, p)
+			p--
+		}
+	}
+}
+else if (slist.filter && check != "" && (slist = bench_settings.block_list || slist = template_editor.block_list)) // If variant types contain name, include base block(Block list)
+{
+	for (var p = 0; p < ds_list_size(slist.display_list); p++)
+	{
+		var val, match;
+		val = slist.display_list[|p]
+		match = false
+
+		var baseblock = val;//string(sortlist_column_get(slist, val, 0));
+		var blockobj = mc_assets.block_name_map[?baseblock];
+		var variantmatch = false;
+		
+		var statearr = array_copy_1d(blockobj.default_state);
+		var statelen = array_length_1d(statearr);
+		
+		// Search for matching variants
+		for (var i = 0; i < statelen; i += 2)
+		{
+			var state = statearr[i];
+			var statename = text_get("blockstate" + state);
+			
+			var statecurrent = blockobj.states_map[?state];
+			
+			for (var s = 0; s < statecurrent.value_amount; s++)
+			{
+				if (string_count(check, string_lower(minecraft_asset_get_name("blockstatevalue", statecurrent.value_name[s]))) > 0)
+				{
+					variantmatch = true
+					break
+				}
+			}
+			
+			if (string_count(check, string_lower(statename)) > 0)
+				variantmatch = true
+			
+			if (variantmatch)
+				break
+		}
+		
+		if ((string_count(check, string_lower(baseblock)) > 0) || variantmatch)
+			match = true
 		
 		if (!match)
 		{

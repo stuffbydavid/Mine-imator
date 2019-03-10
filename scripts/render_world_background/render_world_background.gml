@@ -16,4 +16,21 @@ if (background_image_show) // Draw image
 	}
 }
 else // Draw night
-	draw_box(0, 0, render_width, render_height, false, c_black, background_sky_night_alpha() * 0.95)
+	draw_box(0, 0, render_width, render_height, false, hex_to_color("#020204"), background_sky_night_alpha())// * 0.95)
+
+// Sunrise/sunset
+var cam_xyangle, p, backgroundcolor;
+backgroundcolor = c_black
+cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
+		
+// Sunset
+p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 180, 1) * .25
+backgroundcolor = merge_color(backgroundcolor, background_fog_color_final, background_sunset_alpha * p)
+		
+// Sunrise
+p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 270)) / 180, 1) * .25
+backgroundcolor = merge_color(backgroundcolor, background_fog_color_final, background_sunrise_alpha * p)
+
+gpu_set_blendmode(bm_add)
+draw_box(0, 0, render_width, render_height, false, backgroundcolor, 1)
+gpu_set_blendmode(bm_normal)

@@ -81,6 +81,7 @@ json_save_object_start("interface")
 	json_save_var_bool("timeline_select_jump", setting_timeline_select_jump)
 	json_save_var_bool("z_is_up", setting_z_is_up)
 	json_save_var_bool("smooth_camera", setting_smooth_camera)
+	json_save_var_bool("search_variants", setting_search_variants)
 	
 	json_save_var("toolbar_location", toolbar_location)
 	json_save_var("toolbar_size", toolbar_size)

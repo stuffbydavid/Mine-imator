@@ -172,3 +172,8 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingssmoothcamera", dx, dy, setting_smooth_camera, action_setting_smooth_camera)
 tab_next()
+
+// Variant search
+tab_control_checkbox()
+draw_checkbox("settingssearchvariants", dx, dy, setting_search_variants, action_setting_search_variants)
+tab_next()

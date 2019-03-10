@@ -1,4 +1,5 @@
 /// background_sky_night_alpha()
+/// @desc 
 
 var t, a, x1, x2, x3, x4;
 x1 = 70

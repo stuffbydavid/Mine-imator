@@ -2750,6 +2750,8 @@
         "zisuptip": "The Z axis represents up/down, rather than Y.",
         "smoothcamera": "Smooth work camera",
         "smoothcameratip": "The work camera will ease to a stop when rotating around a point.",
+        "searchvariants": "Search variants in block search",
+        "searchvariantstip": "Includes blocks with matching variant names when searching for blocks in the workbench or library.",
         "controls": "Controls",
         "controlstip": "Change the keyboard controls used in the program.",
         "interfaceshortcuts": "Interface shortcuts",

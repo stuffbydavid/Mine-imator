@@ -49,6 +49,7 @@ setting_timeline_compact = false
 setting_timeline_select_jump = true
 setting_z_is_up = false
 setting_smooth_camera = true
+setting_search_variants = true
 
 setting_toolbar_location = "top"
 setting_toolbar_size = 90

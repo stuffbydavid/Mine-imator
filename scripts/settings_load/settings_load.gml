@@ -131,7 +131,8 @@ if (filename_ext(fn) = ".midata")
 		setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
 		setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
 		setting_smooth_camera = value_get_real(interfacemap[?"smooth_camera"], setting_smooth_camera)
-	
+		setting_search_variants = value_get_real(interfacemap[?"search_variants"], setting_search_variants)
+		
 		setting_toolbar_location = value_get_string(interfacemap[?"toolbar_location"], setting_toolbar_location)
 		setting_toolbar_size = value_get_real(interfacemap[?"toolbar_size"], setting_toolbar_size)
 

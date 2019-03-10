@@ -55,7 +55,7 @@ if (background_fog_show && background_fog_sky)
 	//shader_texture_filter_linear = true
 	render_set_uniform_color("uBlendColor", background_fog_color_final, 1)
 	render_set_texture(background_fog_texture)
-	vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(1, 1, background_fog_height / 1000))
+	vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(1, 1, (background_fog_height / 1000) + ((background_fog_height / 1000) * max(background_sunrise_alpha, background_sunset_alpha))))
 	//shader_texture_filter_linear = false
 	
 	gpu_set_texrepeat(true)
