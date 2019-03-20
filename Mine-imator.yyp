@@ -7119,6 +7119,14 @@
             }
         },
         {
+            "Key": "75d29d26-b073-479d-9d6b-c1244fe9a698",
+            "Value": {
+                "id": "6359ce43-e1d4-4d7f-8f12-f37c57a69c2e",
+                "resourcePath": "scripts\\math_lib_startup\\math_lib_startup.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "7653e6bb-f61f-4902-977b-b3ff256d2a5b",
             "Value": {
                 "id": "fdec2408-840c-4178-9575-caa64a58e056",
@@ -16766,6 +16774,7 @@
         "e750dc52-7619-4f86-baf5-46499343a1fd",
         "841b2cc0-9501-4104-bcca-39455bc94248",
         "4c7d2cb6-6205-450f-a19c-eb9460e33f15",
+        "75d29d26-b073-479d-9d6b-c1244fe9a698",
         "6d21d88b-2ef6-46e8-8b67-35a7dec2321e",
         "dc3d3101-eb95-4cec-917e-a8ad076da6ec",
         "ea33c6f1-d6b8-4f3e-8cea-6c3ace9de2bc",

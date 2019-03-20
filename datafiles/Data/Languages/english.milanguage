@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David & Nimi",
-        "forversion": "1.2.2",
-        "lastchange": "2019.01.22"
+        "forversion": "1.2.3",
+        "lastchange": "2019.03.20"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -15,7 +15,7 @@
         "credits1tip": "Click to visit David's site.",
         "credits2": ", based on the game ",
         "credits2tip": "Click to visit the Minecraft site.",
-        "credits3": "Code by %1 and %2, design by %3",
+        "credits3": "Code by %1, %2 and %3, design by %4",
         "newproject": "New project",
         "newprojecttip": "Create a new project.",
         "openproject": "Open project",

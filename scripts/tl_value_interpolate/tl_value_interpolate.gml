@@ -43,6 +43,7 @@ switch (vid)
 	case e_value.SEED:
 	case e_value.ATTRACTOR:
 	case e_value.CAM_ROTATE:
+	case e_value.CAM_SHAKE:
 	case e_value.CAM_DOF:
 	case e_value.CAM_DOF_FRINGE:
 	case e_value.CAM_BLOOM:

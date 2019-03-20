@@ -58,12 +58,7 @@ lib_window_maximize = external_define(pathwindow, "window_maximize", dll_cdecl, 
 lib_window_set_focus = external_define(pathwindow, "window_set_focus", dll_cdecl, ty_real, 1, ty_string)
 
 // Math library
-log("External library", pathmath)
-globalvar lib_math_simplex1d, lib_math_simplex2d, lib_math_simplex3d, lib_math_simplex4d;
-lib_math_simplex1d = external_define(pathmath, "simplex1D", dll_cdecl, ty_real, 1, ty_real)
-lib_math_simplex2d = external_define(pathmath, "simplex2D", dll_cdecl, ty_real, 2, ty_real, ty_real)
-lib_math_simplex3d = external_define(pathmath, "simplex3D", dll_cdecl, ty_real, 3, ty_real, ty_real, ty_real)
-lib_math_simplex4d = external_define(pathmath, "simplex4D", dll_cdecl, ty_real, 4, ty_real, ty_real, ty_real, ty_real)
+math_lib_startup(pathmath)
 
 // Check for crashes
 if (startup_last_crash)
