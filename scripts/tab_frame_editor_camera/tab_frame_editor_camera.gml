@@ -211,7 +211,7 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	dx += 4
 	dw -= 4
 	
-	capwid = text_caption_width("frameeditorcamerabloomthreshold", "frameeditorcamerabloomintensity", "frameeditorcamerabloomradius")
+	capwid = text_caption_width("frameeditorcamerabloomthreshold", "frameeditorcamerabloomintensity", "frameeditorcamerabloomradius", "frameeditorcamerabloomratio")
 	
 	tab_control_meter()
 	draw_meter("frameeditorcamerabloomthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_THRESHOLD] * 100), 50, 0, 100, 85, 1, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold, capwid)
@@ -223,6 +223,10 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	
 	tab_control_meter()
 	draw_meter("frameeditorcamerabloomintensity", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_INTENSITY] * 100), 50, 0, 300, 40, 1, tab.camera.tbx_bloom_intensity, action_tl_frame_cam_bloom_intensity, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcamerabloomratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_RATIO] * 100), 50, -100, 100, 0, 1, tab.camera.tbx_bloom_ratio, action_tl_frame_cam_bloom_ratio, capwid)
 	tab_next()
 	
 	tab_control_color()

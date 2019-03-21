@@ -74,7 +74,7 @@ else if (slist.filter && check != "" && (slist = bench_settings.block_list || sl
 		val = slist.display_list[|p]
 		match = false
 
-		var baseblock = val;//string(sortlist_column_get(slist, val, 0));
+		var baseblock = val;
 		var blockobj = mc_assets.block_name_map[?baseblock];
 		var variantmatch = false;
 		

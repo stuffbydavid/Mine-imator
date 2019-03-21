@@ -1687,6 +1687,14 @@
             }
         },
         {
+            "Key": "19f0fb28-a8f3-4f6b-9810-cdb2c3c02c6d",
+            "Value": {
+                "id": "f3ccdeb5-e1aa-4696-ad90-a63dee9d23bc",
+                "resourcePath": "scripts\\action_tl_frame_cam_bloom_ratio\\action_tl_frame_cam_bloom_ratio.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1a11b449-c63f-4625-b91f-181ca9d82490",
             "Value": {
                 "id": "9420fc1d-7375-408f-8de7-d4f7ccd18993",
@@ -16235,6 +16243,7 @@
         "73072463-0c31-4ddc-b855-058fc03a8f96",
         "129c3e76-e4c3-4d7b-986d-e79a239a06ca",
         "d2bd46b5-447a-4105-b5fa-f6ff6667b81a",
+        "19f0fb28-a8f3-4f6b-9810-cdb2c3c02c6d",
         "0eb48ecb-8f44-4614-bb6a-bef7b0ebed3a",
         "40da9edd-f3c6-48b4-b56d-1026f3d66cc0",
         "db237b62-7984-4fcd-a459-cff853ed40ad",

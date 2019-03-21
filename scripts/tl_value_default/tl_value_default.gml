@@ -42,6 +42,7 @@ switch (argument0)
 	case e_value.CAM_BLOOM_THRESHOLD: return .85
 	case e_value.CAM_BLOOM_INTENSITY: return .4
 	case e_value.CAM_BLOOM_RADIUS: return 1
+	case e_value.CAM_BLOOM_RATIO: return 0
 	case e_value.CAM_BLOOM_BLEND: return c_white
 	case e_value.CAM_COLOR_CORRECTION: return false
 	case e_value.CAM_CONTRAST: return 0

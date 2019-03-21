@@ -2524,6 +2524,8 @@
             "bloomintensitytip": "The intensity of the bloom effect.",
             "bloomradius": "Radius",
             "bloomradiustip": "The radius of the bloom effect.",
+            "bloomratio": "Anamorphic ratio",
+            "bloomratiotip": "The horizontal/vertical ratio of the bloom effect.",
             "bloomblend": "Blend color",
             "bloomblendtip": "The blend color of the bloom effect (RGB multiply).",
             "colorcorrection": "Color correction",

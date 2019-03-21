@@ -513,16 +513,16 @@ if (render_camera_bloom)
 			surface_set_target(bloomsurftemp)
 			{
 				with (render_shader_obj)
-					shader_blur_set(render_width, radius, 1, 0)
+					shader_blur_set(render_width, radius, 1 + render_camera.value[e_value.CAM_BLOOM_RATIO], 0)
 				draw_surface_exists(bloomsurf, 0, 0)
 			}
 			surface_reset_target()
-		
+			
 			// Vertical
 			surface_set_target(bloomsurf)
 			{
 				with (render_shader_obj)
-					shader_blur_set(render_height, radius, 0, 1)
+					shader_blur_set(render_height, radius, 0, 1 - render_camera.value[e_value.CAM_BLOOM_RATIO])
 				draw_surface_exists(bloomsurftemp, 0, 0)
 			}
 			surface_reset_target()

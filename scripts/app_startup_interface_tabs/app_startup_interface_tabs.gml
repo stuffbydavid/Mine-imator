@@ -486,6 +486,8 @@ with (frame_editor)
 		tbx_bloom_intensity.suffix = "%"
 		tbx_bloom_radius = new_textbox_integer()
 		tbx_bloom_radius.suffix = "%"
+		tbx_bloom_ratio = new_textbox_ninteger()
+		tbx_bloom_ratio.suffix = "%"
 		tbx_contrast = new_textbox_integer()
 		tbx_contrast.suffix = "%"
 		tbx_brightness = new_textbox_ninteger()
