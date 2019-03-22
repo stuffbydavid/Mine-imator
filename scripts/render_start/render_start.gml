@@ -9,6 +9,11 @@ render_camera = argument[1]
 render_width = project_video_width
 render_height = project_video_height
 
+// General rendering effects
+render_glow = setting_render_glow
+render_glow_falloff = setting_render_glow && setting_render_glow_falloff
+render_aa = setting_render_aa
+
 // Use camera settings
 if (render_camera != null)
 {
@@ -19,10 +24,15 @@ if (render_camera != null)
 	}
 	
 	render_camera_bloom = (setting_render_camera_effects && render_camera.value[e_value.CAM_BLOOM])
+	render_camera_lens_dirt = (setting_render_camera_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null)
 	render_camera_dof = (setting_render_camera_effects && render_camera.value[e_value.CAM_DOF])
 	render_camera_color_correction = (setting_render_camera_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION])
 	render_camera_grain = (setting_render_camera_effects && render_camera.value[e_value.CAM_GRAIN])
 	render_camera_vignette = (setting_render_camera_effects && render_camera.value[e_value.CAM_VIGNETTE])
+	
+	render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW]))
+	render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]
+	render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW]
 	
 	render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
 							render_camera.value[e_value.BRIGHTNESS] > 0 || 
@@ -41,13 +51,17 @@ else
 	render_camera_color_correction = false
 	render_camera_grain = false
 	render_camera_vignette = false
+	
+	render_camera_lens_dirt = false
+	render_camera_lens_dirt_bloom = false
+	render_camera_lens_dirt_glow = false
+	
 	render_camera_colors = false
 }
 
-// General rendering effects
-render_glow = setting_render_glow
-render_glow_falloff = setting_render_glow && setting_render_glow_falloff
-render_aa = setting_render_aa
+
+
+
 
 // Argument overwrites size
 if (argument_count > 2)
@@ -66,6 +80,7 @@ ds_list_add(render_effects_list,
 	render_camera_dof,
 	render_glow,
 	render_glow_falloff,
+	render_camera_lens_dirt,
 	render_aa,
 	render_camera_color_correction,
 	render_camera_grain,

@@ -459,6 +459,21 @@ if (!render_effects_done)
 render_update_effects()
 #endregion
 
+#region Initialize lens surface
+var lenssurf = null;
+if (render_camera_lens_dirt)
+{
+	render_surface_lens = surface_require(render_surface_lens, render_width, render_height)
+	lenssurf = render_surface_lens
+	
+	surface_set_target(lenssurf)
+	{
+		draw_clear_alpha(c_black, 1)
+	}
+	surface_reset_target()
+}
+#endregion
+
 #region Bloom
 if (render_camera_bloom)
 {
@@ -566,6 +581,33 @@ if (render_camera_bloom)
 			shader_clear()
 	}
 	surface_reset_target()
+	
+	// Add to lens
+	if (render_camera_lens_dirt_bloom)
+	{
+		render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+		prevsurf = render_surface[4]
+		
+		surface_set_target(prevsurf)
+		{
+			draw_surface(lenssurf, 0, 0)
+		}
+		surface_reset_target()
+		
+		surface_set_target(lenssurf)
+		{
+			render_shader_obj = shader_map[?shader_add]
+			with (render_shader_obj)
+			{
+				shader_set(shader)
+				shader_add_set(bloomsurf, render_camera.value[e_value.CAM_BLOOM_INTENSITY], render_camera.value[e_value.CAM_BLOOM_BLEND])
+			}
+			draw_surface_exists(prevsurf, 0, 0)
+			with (render_shader_obj)
+				shader_clear()
+		}
+		surface_reset_target()
+	}
 }
 render_update_effects()
 #endregion
@@ -727,6 +769,35 @@ if (render_glow)
 			shader_clear()
 	}
 	surface_reset_target()
+	
+	// Add to lens
+	if (render_camera_lens_dirt_glow)
+	{
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		prevsurf = render_surface[3]
+		
+		surface_set_target(prevsurf)
+		{
+			draw_clear_alpha(c_black, 1)
+			draw_surface(lenssurf, 0, 0)
+		}
+		surface_reset_target()
+		
+		surface_set_target(lenssurf)
+		{
+			draw_clear_alpha(c_black, 1)
+			render_shader_obj = shader_map[?shader_add]
+			with (render_shader_obj)
+			{
+				shader_set(shader)
+				shader_add_set(glowsurf, app.setting_render_glow_intensity, c_white)
+			}
+			draw_surface_exists(prevsurf, 0, 0)
+			with (render_shader_obj)
+				shader_clear()
+		}
+		surface_reset_target()
+	}
 }
 render_update_effects()
 
@@ -828,9 +899,129 @@ if (render_glow && setting_render_glow_falloff)
 			shader_clear()
 	}
 	surface_reset_target()
+	
+	// Add to lens
+	if (render_camera_lens_dirt_glow)
+	{
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		prevsurf = render_surface[3]
+		
+		surface_set_target(prevsurf)
+		{
+			draw_clear_alpha(c_black, 1)
+			draw_surface(lenssurf, 0, 0)
+		}
+		surface_reset_target()
+		
+		surface_set_target(lenssurf)
+		{
+			draw_clear_alpha(c_black, 1)
+			render_shader_obj = shader_map[?shader_add]
+			with (render_shader_obj)
+			{
+				shader_set(shader)
+				shader_add_set(glowsurf, app.setting_render_glow_intensity, c_white)
+			}
+			draw_surface_exists(prevsurf, 0, 0)
+			with (render_shader_obj)
+				shader_clear()
+		}
+		surface_reset_target()
+	}
 }
 render_update_effects()
 
+#endregion
+
+#region Lens dirt
+if (render_camera_lens_dirt)
+{
+	// Blur lens surface
+	var lenssurftemp, prevsurf;
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	lenssurftemp = render_surface[3]
+	prevsurf = finalsurf
+	
+	render_shader_obj = shader_map[?shader_blur]
+	with (render_shader_obj)
+		shader_set(shader)
+		
+	// Radius changes based on the render height to make it consistant with the size of the render
+	var baseradius = ((render_camera.value[e_value.CAM_LENS_DIRT_RADIUS] * 10) * render_height / 500);
+	gpu_set_tex_repeat(false)
+	gpu_set_texfilter(true)
+
+	for (var i = 0; i < 3; i++)
+	{
+		var radius = baseradius / (1 + 1.333 * i);
+
+		// Horizontal
+		surface_set_target(lenssurftemp)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_width, radius, 1, 0)
+			draw_surface_exists(lenssurf, 0, 0)
+		}
+		surface_reset_target()
+			
+		// Vertical
+		surface_set_target(lenssurf)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_height, radius, 0, 1)
+			draw_surface_exists(lenssurftemp, 0, 0)
+		}
+		surface_reset_target()
+	}
+		
+	with (render_shader_obj)
+		shader_clear()
+	
+	gpu_set_tex_repeat(true)
+	gpu_set_texfilter(false)
+	
+	// Multiply lens with dirt
+	gpu_set_blendmode_ext(bm_zero, bm_src_color)
+	surface_set_target(lenssurf)
+	{
+		var texobj = render_camera.value[e_value.TEXTURE_OBJ];
+		draw_image_box_cover(texobj.texture, 0, 0, render_width, render_height)
+	}
+	surface_reset_target()
+	gpu_set_blendmode(bm_normal)
+	
+	// Apply lens dirt
+	
+	// Render directly to target?
+	if (render_effects_done)
+	{
+		render_target = surface_require(render_target, render_width, render_height)
+		finalsurf = render_target
+	}
+	else
+	{
+		render_surface[nextfinalpos] = surface_require(render_surface[nextfinalpos], render_width, render_height)
+		finalsurf = render_surface[nextfinalpos]
+		nextfinalpos = !nextfinalpos
+	}
+	
+	surface_set_target(finalsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		
+		render_shader_obj = shader_map[?shader_add]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_add_set(lenssurf, render_camera.value[e_value.CAM_LENS_DIRT_INTENSITY] * 10, c_white, render_camera.value[e_value.CAM_LENS_DIRT_POWER])
+		}
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+}
+render_update_effects()
 #endregion
 
 #region AA

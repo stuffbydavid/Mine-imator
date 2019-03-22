@@ -444,11 +444,13 @@ with (frame_editor)
 		tbx_fov = new_textbox_integer()
 		tbx_fov.suffix = "°"
 		tbx_ratio = new_textbox_decimals()
+		
 		tbx_rotate_distance = new_textbox_decimals()
 		tbx_rotate_angle_xy = new_textbox_ndecimals()
 		tbx_rotate_angle_xy.suffix = "°"
 		tbx_rotate_angle_z = new_textbox_ndecimals()
 		tbx_rotate_angle_z.suffix = "°"
+		
 		tbx_shake_strength = new_textbox_decimals()
 		tbx_shake_strength.suffix = "%"
 		tbx_shake_voffset = new_textbox_ndecimals()
@@ -461,6 +463,7 @@ with (frame_editor)
 		tbx_shake_hspeed.suffix = "%"
 		tbx_shake_hstrength = new_textbox_decimals()
 		tbx_shake_hstrength.suffix = "%"
+		
 		tbx_dof_depth = new_textbox_decimals()
 		tbx_dof_range = new_textbox_decimals()
 		tbx_dof_fade_size = new_textbox_decimals()
@@ -478,8 +481,10 @@ with (frame_editor)
 		tbx_dof_fringe_green.suffix = "%"
 		tbx_dof_fringe_blue = new_textbox_integer()
 		tbx_dof_fringe_blue.suffix = "%"
+		
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
+		
 		tbx_bloom_threshold = new_textbox_integer()
 		tbx_bloom_threshold.suffix = "%"
 		tbx_bloom_intensity = new_textbox_integer()
@@ -488,17 +493,29 @@ with (frame_editor)
 		tbx_bloom_radius.suffix = "%"
 		tbx_bloom_ratio = new_textbox_ninteger()
 		tbx_bloom_ratio.suffix = "%"
+		
+		tbx_lens_dirt_radius = new_textbox_integer()
+		tbx_lens_dirt_radius.suffix = "%"
+		tbx_lens_dirt_intensity = new_textbox_integer()
+		tbx_lens_dirt_intensity.suffix = "%"
+		tbx_lens_dirt_power = new_textbox_integer()
+		tbx_lens_dirt_power.suffix = "%"
+		
 		tbx_contrast = new_textbox_integer()
 		tbx_contrast.suffix = "%"
 		tbx_brightness = new_textbox_ninteger()
 		tbx_brightness.suffix = "%"
 		tbx_saturation = new_textbox_integer()
 		tbx_saturation.suffix = "%"
+		tbx_vibrance = new_textbox_integer()
+		tbx_vibrance.suffix = "%"
+		
 		tbx_grain_strength = new_textbox_ninteger()
 		tbx_grain_strength.suffix = "%"
 		tbx_grain_saturation = new_textbox_integer()
 		tbx_grain_saturation.suffix = "%"
 		tbx_grain_size = new_textbox_integer()
+		
 		tbx_vignette_radius = new_textbox_integer()
 		tbx_vignette_radius.suffix = "%"
 		tbx_vignette_softness = new_textbox_integer()

@@ -8,7 +8,7 @@ tab_control_meter()
 draw_meter("frameeditorcamerafov", dx, dy, dw, tl_edit.value[e_value.CAM_FOV], 50, 1, 170, 45, 1, tab.camera.tbx_fov, action_tl_frame_cam_fov, capwid)
 tab_next()
 
-// Rotate point 
+// Rotate point
 tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate, checkbox_expand_frameeditor_rotatepoint, action_checkbox_expand_frameeditor_rotatepoint)
 tab_next()
@@ -238,6 +238,69 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	checkbox_expand_end()
 }
 
+// Lens dirt
+tab_control_checkbox_expand()
+draw_checkbox_expand("frameeditorcameralensdirt", dx, dy, tl_edit.value[e_value.CAM_LENS_DIRT], action_tl_frame_cam_lens_dirt, checkbox_expand_frameeditor_lensdirt, action_checkbox_expand_frameeditor_lensdirt)
+tab_next()
+if (tl_edit.value[e_value.CAM_LENS_DIRT] && checkbox_expand_frameeditor_lensdirt)
+{
+	dx += 4
+	dw -= 4
+	
+	// Lens dirt texture(TEXTURE_OBJ)
+	var texobj, tex;
+	texobj = tl_edit.value[e_value.TEXTURE_OBJ]
+	tex = null
+
+
+
+	var text;
+	
+	if (texobj != null)
+		text = texobj.display_name
+	else
+		text = text_get("listnone")
+
+	if (texobj = null)
+		text = text_get("listdefault", text)
+	
+	if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
+		tex = texobj.texture
+	
+	tab_control(40)
+	draw_button_menu("frameeditorcameralensdirttexture", e_menu.LIST, dx, dy, dw, 40, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, tex)
+	tab_next()
+	
+	// Affected by bloom
+	tab_control_checkbox()
+	draw_checkbox("frameeditorcameralensdirtbloom", dx, dy, tl_edit.value[e_value.CAM_LENS_DIRT_BLOOM], action_tl_frame_cam_lens_dirt_bloom)
+	tab_next()
+	
+	// Affected by glow
+	tab_control_checkbox()
+	draw_checkbox("frameeditorcameralensdirtglow", dx, dy, tl_edit.value[e_value.CAM_LENS_DIRT_GLOW], action_tl_frame_cam_lens_dirt_glow)
+	tab_next()
+	
+	// Radius
+	tab_control_meter()
+	draw_meter("frameeditorcameralensdirtradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_LENS_DIRT_RADIUS] * 100), 50, 0, 300, 50, 1, tab.camera.tbx_lens_dirt_radius, action_tl_frame_cam_lens_dirt_radius, capwid)
+	tab_next()
+	
+	// Intensity
+	tab_control_meter()
+	draw_meter("frameeditorcameralensdirtintensity", dx, dy, dw, round(tl_edit.value[e_value.CAM_LENS_DIRT_INTENSITY] * 100), 50, 0, 200, 80, 1, tab.camera.tbx_lens_dirt_intensity, action_tl_frame_cam_lens_dirt_intensity, capwid)
+	tab_next()
+	
+	// Power
+	tab_control_meter()
+	draw_meter("frameeditorcameralensdirtpower", dx, dy, dw, round(tl_edit.value[e_value.CAM_LENS_DIRT_POWER] * 100), 50, 100, 500, 150, 1, tab.camera.tbx_lens_dirt_power, action_tl_frame_cam_lens_dirt_power, capwid)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
 // Color correction
 tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcameracolorcorrection", dx, dy, tl_edit.value[e_value.CAM_COLOR_CORRECTION], action_tl_frame_cam_clrcor, checkbox_expand_frameeditor_clrcor, action_checkbox_expand_frameeditor_clrcor)
@@ -259,6 +322,10 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	
 	tab_control_meter()
 	draw_meter("frameeditorcameracolorcorrectionsaturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_SATURATION] * 100), 50, 0, 200, 100, 1, tab.camera.tbx_saturation, action_tl_frame_cam_clrcor_saturation, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracolorcorrectionvibrance", dx, dy, dw, round(tl_edit.value[e_value.CAM_VIBRANCE] * 100), 50, 0, 100, 0, 1, tab.camera.tbx_vibrance, action_tl_frame_cam_clrcor_vibrance, capwid)
 	tab_next()
 	
 	tab_control_color()

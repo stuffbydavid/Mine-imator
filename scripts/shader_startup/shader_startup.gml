@@ -325,8 +325,9 @@ with (shader_map[?shader_high_bloom_threshold])
 with (shader_map[?shader_add])
 {
 	new_shader_sampler("uAddTexture")
-	new_shader_uniform("uAmount")
 	new_shader_uniform("uBlendColor")
+	new_shader_uniform("uAmount")
+	new_shader_uniform("uPower")
 }
 
 with (shader_map[?shader_blur])
@@ -341,6 +342,7 @@ with (shader_map[?shader_color_correction])
 	new_shader_uniform("uContrast")
 	new_shader_uniform("uBrightness")
 	new_shader_uniform("uSaturation")
+	new_shader_uniform("uVibrance")
 	new_shader_uniform("uColorBurn")
 }
 

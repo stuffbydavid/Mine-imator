@@ -217,6 +217,7 @@ checkbox_expand_frameeditor_rotatepoint = true
 checkbox_expand_frameeditor_camshake = true
 checkbox_expand_frameeditor_dof = true
 checkbox_expand_frameeditor_bloom = true
+checkbox_expand_frameeditor_lensdirt = true
 checkbox_expand_frameeditor_clrcor = true
 checkbox_expand_frameeditor_vignette = true
 checkbox_expand_frameeditor_grain = true

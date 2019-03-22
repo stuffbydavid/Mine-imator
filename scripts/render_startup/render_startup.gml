@@ -8,7 +8,8 @@ globalvar render_view_current, render_width, render_height, render_ratio, render
 		  render_proj_from, render_active;
 
 globalvar render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof, render_glow,
-		  render_glow_falloff, render_camera_color_correction, render_camera_grain, render_camera_vignette, render_aa, render_overlay;
+		  render_glow_falloff, render_camera_color_correction, render_camera_grain, render_camera_vignette, render_aa, render_overlay,
+		  render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow;
 
 log("Render init")
 	
@@ -43,6 +44,9 @@ render_camera_grain = false
 render_camera_vignette = false
 render_aa = false
 render_overlay = false
+render_camera_lens_dirt = true
+render_camera_lens_dirt_bloom = true
+render_camera_lens_dirt_glow = true
 
 render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 render_list = ds_list_create()
@@ -82,6 +86,10 @@ render_ssao_noise = null
 // Grain
 globalvar render_grain_noise;
 render_grain_noise = null
+
+// Lens(For adding glow and bloom for lens dirt)
+globalvar render_surface_lens;
+render_surface_lens = null
 
 // Render modes
 globalvar render_mode, render_mode_shader_map, render_shader_obj;

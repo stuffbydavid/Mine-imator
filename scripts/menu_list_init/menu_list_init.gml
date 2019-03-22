@@ -666,7 +666,22 @@ switch (menu_name)
 			
 		break
 	}
-	 
+	
+	// Camera lens dirt texture
+	case "frameeditorcameralensdirttexture":
+	{
+		menu_add_item(null, text_get("listdefault", text_get("listnone")))
+		
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+		{
+			var res = res_list.display_list[|i];
+			if (res.texture)
+				menu_add_item(res, res.display_name, res.texture)
+		}
+			
+		break
+	}
+	
 	// Sound
 	case "frameeditorsound":
 	{

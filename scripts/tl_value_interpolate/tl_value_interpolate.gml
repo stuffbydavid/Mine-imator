@@ -47,6 +47,9 @@ switch (vid)
 	case e_value.CAM_DOF:
 	case e_value.CAM_DOF_FRINGE:
 	case e_value.CAM_BLOOM:
+	case e_value.CAM_LENS_DIRT:
+	case e_value.CAM_LENS_DIRT_BLOOM:
+	case e_value.CAM_LENS_DIRT_GLOW:
 	case e_value.CAM_COLOR_CORRECTION:
 	case e_value.CAM_GRAIN:
 	case e_value.CAM_SIZE_USE_PROJECT:

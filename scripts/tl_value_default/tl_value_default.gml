@@ -44,10 +44,16 @@ switch (argument0)
 	case e_value.CAM_BLOOM_RADIUS: return 1
 	case e_value.CAM_BLOOM_RATIO: return 0
 	case e_value.CAM_BLOOM_BLEND: return c_white
+	case e_value.CAM_LENS_DIRT_BLOOM: return true
+	case e_value.CAM_LENS_DIRT_GLOW: return true
+	case e_value.CAM_LENS_DIRT_RADIUS: return .5
+	case e_value.CAM_LENS_DIRT_INTENSITY: return .8
+	case e_value.CAM_LENS_DIRT_POWER: return 1.5
 	case e_value.CAM_COLOR_CORRECTION: return false
 	case e_value.CAM_CONTRAST: return 0
 	case e_value.CAM_BRIGHTNESS: return 0
 	case e_value.CAM_SATURATION: return 1
+	case e_value.CAM_VIBRANCE: return 0
 	case e_value.CAM_COLOR_BURN: return c_white
 	case e_value.CAM_GRAIN_STRENGTH: return .10
 	case e_value.CAM_GRAIN_SATURATION: return .10

@@ -40,6 +40,6 @@ var tex = res.block_preview_texture;
 if (tex = null)
 	tex = res.texture
 
-tab_control(40)
+tab_control(48)
 draw_button_menu("frameeditoritemitemtex", e_menu.LIST, dx, dy, dw, 40, tl_edit.value[e_value.TEXTURE_OBJ], res.display_name, action_tl_frame_texture_obj, tex)
 tab_next()
