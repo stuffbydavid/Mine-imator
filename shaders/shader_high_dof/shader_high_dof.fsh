@@ -7,6 +7,10 @@ uniform float uFadeSize;
 uniform float uNear;
 uniform float uFar;
 
+//uniform float uBias;
+//uniform float uThreshold;
+//uniform float uGain;
+
 uniform int uFringe;
 uniform vec3 uFringeAngle;
 uniform vec3 uFringeStrength;
@@ -15,9 +19,9 @@ varying vec2 vTexCoord;
 
 const float pi = 3.14159265;
 const float tau = pi * 2.0;
-const int samples = 24;
-const int ringDetail = 6;
-const int totalSamples = 144; // samples * ringDetail
+
+const int samplesMultiplier = 5;
+const int rings = 8;
 
 float screenSampleSize = uScreenSize.y * uBlurSize;
 vec2 texelSize = 1.0 / uScreenSize;
@@ -29,7 +33,7 @@ float unpackDepth(vec4 c)
 
 float getDepth(vec2 coord)
 {
-	return uNear+ unpackDepth(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
+	return uNear + unpackDepth(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
 }
 
 float getBlur(float d)
@@ -47,9 +51,9 @@ float getBackBlur(float d)
 	return clamp((d - (uDepth + uRange)) / uFadeSize, 0.0, 1.0);
 }
 
-vec4 getFringe(vec2 coord, float blur)
+vec4 getFringe(vec2 coord, float blur, vec4 color)
 {
-	vec4 baseColor = texture2D(gm_BaseTexture, coord);
+	vec4 baseColor = color;
 	
 	if (uFringe < 1)
 		return baseColor;
@@ -59,26 +63,33 @@ vec4 getFringe(vec2 coord, float blur)
 	vec2 redOffset = vec2(cos(uFringeAngle.x), sin(uFringeAngle.x)) * (uFringeStrength.x * fringeSize);
 	float redDepth = getDepth(coord + redOffset);
 	float redBlur = getBlur(redDepth);
-	float red = texture2D(gm_BaseTexture, coord + redOffset).r * redBlur;
+	baseColor.r = texture2D(gm_BaseTexture, coord + redOffset * redBlur).r;
 	
 	vec2 greenOffset = vec2(cos(uFringeAngle.y), sin(uFringeAngle.y)) * (uFringeStrength.y * fringeSize);
 	float greenDepth = getDepth(coord + greenOffset);
 	float greenBlur = getBlur(greenDepth);
-	float green = texture2D(gm_BaseTexture, coord + greenOffset).g * greenBlur;
+	baseColor.g = texture2D(gm_BaseTexture, coord + greenOffset * greenBlur).g;
 	
 	vec2 blueOffset = vec2(cos(uFringeAngle.z), sin(uFringeAngle.z)) * (uFringeStrength.z * fringeSize);
 	float blueDepth = getDepth(coord + blueOffset);
 	float blueBlur = getBlur(blueDepth);
-	float blue = texture2D(gm_BaseTexture, coord + blueOffset).b * blueBlur;
+	baseColor.b = texture2D(gm_BaseTexture, coord + blueOffset * blueBlur).b;
 	
-	if (red > baseColor.r)
-		baseColor.r = red;
-		
-	if (green > baseColor.g)
-		baseColor.g = green;
-		
-	if (blue > baseColor.b)
-		baseColor.b = blue;
+	return baseColor;
+}
+
+vec4 getColor(vec2 coord, float blur)
+{
+	vec4 baseColor = texture2D(gm_BaseTexture, coord);
+	
+	baseColor = getFringe(coord, blur, baseColor);
+	
+	/*
+	vec3 lumCo = vec3(0.299,0.587,0.114);
+	float lum = dot(baseColor.rgb, lumCo);
+	float thresh = max((lum - uThreshold) * uGain, 0.0);
+	baseColor.rgb = baseColor.rgb + mix(vec3(0.0), baseColor.rgb, vec3(thresh * blur));
+	*/
 	
 	return baseColor;
 }
@@ -94,31 +105,41 @@ void main()
 	float colorDiv = 0.0;
 	vec4 colorAdd = vec4(0.0);
 	
-	gl_FragColor = texture2D(gm_BaseTexture, vTexCoord);
+	float weightStrength = 1.0;
+	int ringSamples;
 	
-	for (int i = 0; i < totalSamples; i++)
+	colorAdd = texture2D(gm_BaseTexture, vTexCoord);
+	gl_FragColor = colorAdd;
+	
+	for (int i = 1; i < rings; i++)
 	{
-		float angle = (float(i / ringDetail) / float(samples)) * tau;
-		float dis = 1.0 - mod(float(i),float(ringDetail)) / float(ringDetail);
-		dis *= (myFrontBlur + myBackBlur);
-		vec2 offset = vec2(cos(angle), sin(angle)) * dis * screenSampleSize;
-		vec2 tex = vTexCoord + texelSize * offset;
-		float sampleDepth = getDepth(tex);
-		float sampleBlur = getBlur(sampleDepth);
+		ringSamples = i * samplesMultiplier;
 		
-		
-		float mul = (1.0 - (1.0 - sampleBlur) * myBackBlur);
-		
-		if (mul > 0.0)
+		for (int j = 0; j < ringSamples; j++)
 		{
-			colorAdd += getFringe(tex, sampleBlur) * mul;
-			colorDiv += mul;
+			float angleStep = tau / float(ringSamples);
+			float dis = float(i) / float(samplesMultiplier);
+			dis *= myFrontBlur + myBackBlur;
+			vec2 offset = vec2(cos(float(j) * angleStep), sin(float(j) * angleStep)) * dis * screenSampleSize;
+			vec2 tex = vTexCoord + texelSize * offset;
+			float sampleDepth = getDepth(tex);
+			float sampleBlur = getBlur(sampleDepth);
+			
+			float bias = 1.0;//mix(1.0, float(i) / float(samplesMultiplier), uBias);
+			float mul = (1.0 - (1.0 - sampleBlur) * myBackBlur) * bias;	
+			
+			blur += getFrontBlur(sampleDepth);
+			if (mul > 0.0)
+			{
+				colorAdd += getColor(tex, sampleBlur) * mul;
+				colorDiv += mul;
+			}
+			
+			weightStrength += bias; 
 		}
-		
-		blur += getFrontBlur(sampleDepth);
 	}
 	
-	blur /= float(totalSamples);
+	blur /= weightStrength;
 	blur += myFrontBlur + myBackBlur;
 	
 	colorAdd *= blur;

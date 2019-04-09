@@ -17,16 +17,15 @@ with (model)
 	if (vertex_brightness = null)
 		vertex_brightness = brightness
 	
-	// Sample noisemap if noisy grass and water are enabled
+	// Apply noise
 	var noiseoff = c_white;
 	if (mc_builder.block_current != null)
 	{
-		if (surface_exists(noise_surf) && app.setting_noisy_grass_water && (mc_builder.block_current.name = "grass_block" || mc_builder.block_current.name = "grass"))
+		if (app.setting_noisy_grass_water && (mc_builder.block_current.name = "grass_block" || mc_builder.block_current.name = "grass"))
 		{
-			var samplex, sampley;
-			samplex = abs(mc_builder.build_pos_x mod 512)
-			sampley = abs(mc_builder.build_pos_y mod 512)
-			noiseoff = surface_getpixel(noise_surf, samplex, sampley)
+			var noise = (1.0 - abs(simplex_lib(mc_builder.build_pos_x / 32, mc_builder.build_pos_y / 32)) * 0.15) * 255;
+			noise -= (abs(simplex_lib(mc_builder.build_pos_x, mc_builder.build_pos_y)) * 0.075) * 255
+			noiseoff = make_color_rgb(noise, noise, noise)
 		}
 	}
 	

@@ -11,7 +11,7 @@ render_surface_time = 0
 #region SSAO
 if (setting_render_ssao)
 {
-	var depthsurf, normalsurf, brightnesssurf, colorsurf;
+	var depthsurf, normalsurf, brightnesssurf;
 
 	// Get depth and normal information
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
@@ -108,7 +108,7 @@ if (setting_render_shadows)
 				point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
 				point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), 
 				background_light_data[3], background_light_data[7], 
-				cam_fov, background_sunlight_color_final
+				45, background_sunlight_color_final
 			)
 			render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 			render_world_done()
@@ -644,7 +644,6 @@ if (render_camera_dof)
 	}
 	
 	// Apply DOF
-	
 	surface_set_target(finalsurf)
 	{
 		draw_clear_alpha(c_black, 0)

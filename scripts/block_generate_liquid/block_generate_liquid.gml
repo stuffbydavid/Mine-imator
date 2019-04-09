@@ -168,12 +168,11 @@ var color, alpha;
 color = c_white
 alpha = 1
 
+// Apply noise
 if (app.setting_noisy_grass_water && block_current.name = "water")
 {
-	var samplex, sampley;
-	samplex = abs(mc_builder.build_pos_x mod 512)
-	sampley = abs(mc_builder.build_pos_y mod 512)
-	color = surface_getpixel(noise_surf, samplex, sampley)
+	var noise = (1.0 - abs(simplex_lib(mc_builder.build_pos_x / 32, mc_builder.build_pos_y / 32)) * 0.15) * 255;
+	color = make_color_rgb(noise, noise, noise)
 }
 
 // Falling

@@ -61,6 +61,10 @@ for (var i = 1; i <= len; i++)
 }
 
 // Finally, check that the string ends with at least one digit or a decimal point
-if (state >= 2) 
+if (str = "-" || str = ".")
+	return 0
+
+if (state >= 2)
 	return real(str)
+
 return inv

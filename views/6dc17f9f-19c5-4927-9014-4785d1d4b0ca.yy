@@ -11,8 +11,7 @@
         "6c335c30-675d-4517-9e36-6180f304ad81",
         "138e86fe-50e2-4956-9618-b84cd5c39959",
         "b61693d3-35aa-41e6-b0d2-7a8c4989d117",
-        "bbd55d9d-5bc3-4ba2-b27d-f0a41f22a7bc",
-        "47fa609c-4483-4dea-9564-6fc6fc7f1245"
+        "bbd55d9d-5bc3-4ba2-b27d-f0a41f22a7bc"
     ],
     "filterType": "GMSprite",
     "folderName": "Textures",

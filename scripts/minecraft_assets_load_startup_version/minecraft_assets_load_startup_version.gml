@@ -51,12 +51,4 @@ load_assets_dir = load_assets_startup_dir
 load_assets_state_file_map = ds_map_create() // filename -> model
 load_assets_model_file_map = ds_map_create() // filename -> model
 
-// Noise map surface for noisy grass/water from Minecraft: Bedrock Edition
-noise_surf = surface_create(sprite_get_width(spr_noise), sprite_get_height(spr_noise))
-surface_set_target(noise_surf)
-{
-	draw_sprite(spr_noise, 0, 0, 0)
-}
-surface_reset_target()
-
 return true
