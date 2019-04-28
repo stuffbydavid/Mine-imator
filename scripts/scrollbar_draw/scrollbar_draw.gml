@@ -84,9 +84,9 @@ if (mouseinarea && window_busy = "")
 		if (sb.press < 1)
 		{
 			if (dir)
-				sb.value += test((mouse_x < xx + barpos), -size, size)
+				sb.value += ((mouse_x < xx + barpos) ? -size : size)
 			else
-				sb.value += test((mouse_y < yy + barpos), -size, size)
+				sb.value += ((mouse_y < yy + barpos) ? -size : size)
 			sb.value = snap(sb.value, sb.snap_value)
 		}
 		
@@ -136,10 +136,10 @@ pressed = (window_busy = "scrollbar" && window_focus = string(sb))
 if (dir = e_scroll.HORIZONTAL)
 {
 	draw_box(xx, yy, size, barsizeadj, false, backcolor, 1)
-	draw_box(xx + barpos, yy, barsize, barsizeadj, false, test(pressed, pressedcolor, color), 1)	
+	draw_box(xx + barpos, yy, barsize, barsizeadj, false, (pressed ? pressedcolor : color), 1)	
 }
 else
 {
 	draw_box(xx, yy, barsizeadj, size, false, backcolor, 1)
-	draw_box(xx, yy + barpos, barsizeadj, barsize, false, test(pressed, pressedcolor, color), 1)
+	draw_box(xx, yy + barpos, barsizeadj, barsize, false, (pressed ? pressedcolor : color), 1)
 }

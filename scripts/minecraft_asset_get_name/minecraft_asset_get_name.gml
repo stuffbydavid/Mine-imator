@@ -14,8 +14,8 @@ if (string_digits(name) = name)
 
 // Non-existing
 if (!text_exists(type + name))
-	return test(dev_mode_debug_names, "?????? [" + name + "]", string_format_snakecase(name))
+	return (dev_mode_debug_names ? "?????? [" + name + "]" : string_format_snakecase(name))
 	
 // Existing
 else
-	return text_get(type + name) + test(dev_mode_debug_names, " [" + name + "]", "")
+	return text_get(type + name) + (dev_mode_debug_names ? " [" + name + "]" : "")

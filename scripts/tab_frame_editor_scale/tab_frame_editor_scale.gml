@@ -17,12 +17,12 @@ else
 	draw_dragger("frameeditorscalex", dx, dy, dw, tl_edit.value[e_value.SCA_X], max(0.0001, tl_edit.value[e_value.SCA_X] / 50), snapval, no_limit, 1, snapval, tab.scale.tbx_x, action_tl_frame_scale, capwid)
 	tab_next()
 	
-	axis_edit = test(setting_z_is_up, Y, Z)
+	axis_edit = (setting_z_is_up ? Y : Z)
 	tab_control_dragger()
 	draw_dragger("frameeditorscaley", dx, dy, dw, tl_edit.value[e_value.SCA_X + axis_edit], max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50), snapval, no_limit, 1, snapval, tab.scale.tbx_y, action_tl_frame_scale, capwid)
 	tab_next()
 	
-	axis_edit = test(setting_z_is_up, Z, Y)
+	axis_edit = (setting_z_is_up ? Z : Y)
 	tab_control_dragger()
 	draw_dragger("frameeditorscalez", dx, dy, dw, tl_edit.value[e_value.SCA_X + axis_edit], max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50), snapval, no_limit, 1, snapval, tab.scale.tbx_z, action_tl_frame_scale, capwid)
 	tab_next()

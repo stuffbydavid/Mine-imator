@@ -24,7 +24,7 @@ surface_set_target(surf)
 	// World
 	render_world_start()
 	render_world_sky()
-	render_world(test(render_lights, e_render_mode.COLOR_FOG_LIGHTS, e_render_mode.COLOR_FOG))
+	render_world(render_lights ? e_render_mode.COLOR_FOG_LIGHTS : e_render_mode.COLOR_FOG)
 	render_world_done()
 	
 	// Alpha fix

@@ -64,7 +64,7 @@ t3 = vec2(wid, hei)
 t4 = vec2(0, hei)
 
 // Convert coordinates to 0-1
-ysize = test(is3d, 1, 0)
+ysize = (is3d ? 1 : 0)
 tsize = vec2(wid, hei)
 t1 = vec2_div(t1, tsize)
 t2 = vec2_div(t2, tsize)

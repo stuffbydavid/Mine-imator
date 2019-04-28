@@ -296,14 +296,14 @@ else
 	// Set Zs
 	var myz, sidezxp, sidezxn, sidezyp, sidezyn;
 	myz = 14 - (level / 7) * 13.5
-	sidezxp = test((sidelevelxp div 8), block_size, (14 - (sidelevelxp / 7 * 13.5)))
-	sidezxn = test((sidelevelxn div 8), block_size, (14 - (sidelevelxn / 7 * 13.5)))
-	sidezyp = test((sidelevelyp div 8), block_size, (14 - (sidelevelyp / 7 * 13.5)))
-	sidezyn = test((sidelevelyn div 8), block_size, (14 - (sidelevelyn / 7 * 13.5)))
-	corner0z = test((corner0level div 8), block_size, (14 - (corner0level / 7 * 13.5)))
-	corner1z = test((corner1level div 8), block_size, (14 - (corner1level / 7 * 13.5)))
-	corner2z = test((corner2level div 8), block_size, (14 - (corner2level / 7 * 13.5)))
-	corner3z = test((corner3level div 8), block_size, (14 - (corner3level / 7 * 13.5)))
+	sidezxp = ((sidelevelxp div 8) ? block_size : (14 - (sidelevelxp / 7 * 13.5)))
+	sidezxn = ((sidelevelxn div 8) ? block_size : (14 - (sidelevelxn / 7 * 13.5)))
+	sidezyp = ((sidelevelyp div 8) ? block_size : (14 - (sidelevelyp / 7 * 13.5)))
+	sidezyn = ((sidelevelyn div 8) ? block_size : (14 - (sidelevelyn / 7 * 13.5)))
+	corner0z = ((corner0level div 8) ? block_size : (14 - (corner0level / 7 * 13.5)))
+	corner1z = ((corner1level div 8) ? block_size : (14 - (corner1level / 7 * 13.5)))
+	corner2z = ((corner2level div 8) ? block_size : (14 - (corner2level / 7 * 13.5)))
+	corner3z = ((corner3level div 8) ? block_size : (14 - (corner3level / 7 * 13.5)))
 	
 	// Max corner levels
 	corner0z = max(corner0z, sidezxn, sidezyn, myz)

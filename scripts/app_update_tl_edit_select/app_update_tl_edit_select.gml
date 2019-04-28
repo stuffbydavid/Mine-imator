@@ -76,7 +76,7 @@ with (obj_timeline)
 		// Show export button?
 		if (checkexport)
 		{
-			var obj = test((part_of != null), part_of, id);
+			var obj = ((part_of != null) ? part_of : id);
 			if (checkexportobj = null)
 			{
 				checkexportobj = obj

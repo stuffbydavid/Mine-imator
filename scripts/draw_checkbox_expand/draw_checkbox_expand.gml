@@ -51,14 +51,14 @@ if (checkboxmouseon)
 
 // Expand box
 if ((expandmouseon || expanded) && checked)
-	draw_box_rounded(xx, yy, expandwidth, 16, test(expandpressed || expanded, setting_color_buttons_pressed, setting_color_buttons), 1)
+	draw_box_rounded(xx, yy, expandwidth, 16, ((expandpressed || expanded) ? setting_color_buttons_pressed : setting_color_buttons), 1)
 
-draw_image(spr_icons, icons.EXPAND, xx + round(expandwidth/2), (yy + 8) + ((expandpressed || expanded) && checked), 1, 1, test((expandmouseon || expanded) && checked, setting_color_buttons_text, setting_color_boxes_text), test(checked, 1, 0.5))
+draw_image(spr_icons, icons.EXPAND, xx + round(expandwidth/2), (yy + 8) + ((expandpressed || expanded) && checked), 1, 1, ((expandmouseon || expanded) && checked ? setting_color_buttons_text : setting_color_boxes_text), (checked ? 1 : 0.5))
 
 xx += (expandwidth + 4)
 
 // Checkbox
-draw_image(spr_checkbox, 0, xx, yy, 1, 1, test(checkboxpressed, setting_color_boxes_pressed, setting_color_boxes), 1)
+draw_image(spr_checkbox, 0, xx, yy, 1, 1, (checkboxpressed ? setting_color_boxes_pressed : setting_color_boxes), 1)
 
 if (checked)
 	draw_image(spr_icons, icons.CHECK, xx + ceil(size / 2), yy + ceil(size / 2), 1, 1, setting_color_boxes_text, 1)

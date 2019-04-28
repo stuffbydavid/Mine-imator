@@ -21,7 +21,7 @@ else
 var base_seed = 0;
 
 if (is_timeline && pt.creator.value[e_value.CUSTOM_SEED])
-	base_seed = test(temp.pc_spawn_constant, ds_list_size(particle_list), pt.creator.single_fire_count) + pt.creator.value[e_value.SEED]
+	base_seed = (temp.pc_spawn_constant ? ds_list_size(particle_list) : pt.creator.single_fire_count) + pt.creator.value[e_value.SEED]
 else
 {
 	randomize()

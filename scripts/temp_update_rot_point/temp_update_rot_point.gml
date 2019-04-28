@@ -3,7 +3,7 @@
 
 rot_point = point3D(0, 0, 0)
 
-var rep = test(block_repeat_enable, block_repeat, vec3(1));
+var rep = (block_repeat_enable ? block_repeat : vec3(1));
 
 switch (type)
 {

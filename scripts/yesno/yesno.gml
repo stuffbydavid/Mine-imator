@@ -1,4 +1,4 @@
 /// yesno(bool)
 /// @arg bool
 
-return test(argument0, "yes", "no")
+return argument0 ? "yes" : "no"

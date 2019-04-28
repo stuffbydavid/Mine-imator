@@ -39,7 +39,7 @@ dy += 10
 capwid = text_caption_width("settingsfont")
 
 tab_control(18)
-var fn = test((setting_font_filename = ""), text_get("settingsfontdefault"), setting_font_filename);
+var fn = (setting_font_filename = "") ? text_get("settingsfontdefault") : setting_font_filename;
 draw_label(text_get("settingsfont") + ":", dx, dy)
 draw_label(string_limit(fn, dw - capwid), dx + capwid, dy)
 tip_wrap = false

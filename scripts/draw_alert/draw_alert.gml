@@ -47,7 +47,7 @@ textw = content_x + content_width - textx - 10
 if (alert.icon != null)
 {
 	var size, iconimage;
-	size = test((content_direction = e_scroll.HORIZONTAL), alert_height, alert_width)
+	size = content_direction = e_scroll.HORIZONTAL ? alert_height : alert_width
 	if (size >= 50)
 	{
 		iconsize = 60
@@ -63,7 +63,7 @@ if (alert.icon != null)
 		iconsize = 20
 		iconimage = 0
 	}
-	draw_image(spr_icons_big, alert.icon + iconimage - icons.WEBSITE_SMALL, content_x + test((content_width < 100), (content_width / 2), (5 + iconsize / 2)), content_y + content_height / 2, 1, 1, setting_color_alerts_text, 1)
+	draw_image(spr_icons_big, alert.icon + iconimage - icons.WEBSITE_SMALL, content_x + (content_width < 100 ? (content_width / 2) : (5 + iconsize / 2)), content_y + content_height / 2, 1, 1, setting_color_alerts_text, 1)
 	textx += iconsize
 	textw -= iconsize
 }
