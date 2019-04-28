@@ -134,6 +134,12 @@ with (new(obj_block))
 		random_offset = map[?"random_offset"]
 	else
 		random_offset = false
+		
+	// Random offset(X & Y)
+	if (is_real(map[?"random_offset_xz"]))
+		random_offset_xy = map[?"random_offset_xz"]
+	else
+		random_offset_xy = false
 	
 	// Wind
 	var windmap = map[?"wind"];
@@ -168,6 +174,7 @@ with (new(obj_block))
 	// Has timeline
 	var timelinemap = map[?"timeline"];
 	timeline = false
+	model_double = false
 	if (ds_map_valid(timelinemap))
 		block_load_timeline(timelinemap, typemap[?timelinemap])
 		

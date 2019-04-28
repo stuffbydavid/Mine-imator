@@ -192,6 +192,12 @@ with (obj_particle_type)
 		sprite_tex = mc_res
 		sprite_tex.count++
 	}
+	
+	if (sprite_template_tex = other.id)
+	{
+		sprite_template_tex = mc_res
+		sprite_template_tex.count++
+	}	
 }
 
 with (obj_keyframe)

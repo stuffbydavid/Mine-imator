@@ -1,5 +1,8 @@
 /// block_set_tripwire()
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var east, west, south, north;
 east = "false"
 west = "false"

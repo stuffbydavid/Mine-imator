@@ -121,27 +121,20 @@ if (type != e_tl_type.PARTICLE_SPAWNER)
 	{
 		case e_tl_type.BODYPART:
 		{
-			if (model_part = null)
+			if (model_part = null || render_res = null)
 				break
 			
-			var res;
-			with (temp)
-				res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-			render_world_model_part(model_part, res, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, self)
+			render_world_model_part(model_part, render_res, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, self)
 			break
 		}
 			   
 		case e_tl_type.SCENERY:
 		case e_tl_type.BLOCK:
 		{
-			var res;
-			with (temp)
-				res = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-				
 			if (type = e_tl_type.BLOCK)
-				render_world_block(temp.block_vbuffer, res, true, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)))
+				render_world_block(temp.block_vbuffer, render_res, true, test(temp.block_repeat_enable, temp.block_repeat, vec3(1)), temp)
 			else if (temp.scenery)
-				render_world_scenery(temp.scenery, res, temp.block_repeat_enable, temp.block_repeat)
+				render_world_scenery(temp.scenery, render_res, temp.block_repeat_enable, temp.block_repeat)
 			break
 		}
 		

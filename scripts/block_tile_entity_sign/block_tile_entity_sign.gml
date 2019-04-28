@@ -1,9 +1,11 @@
 /// block_tile_entity_sign(map)
 /// @arg map
 
-var map, text;
+var map, text, colorname, color;
 map = argument0
 text = ""
+colorname = value_get_string(map[?"Color"], "black")
+color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, colorname)]
 
 for (var i = 0; i < 4; i++)
 {
@@ -33,3 +35,4 @@ for (var i = 0; i < 4; i++)
 
 var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
 block_text_map[?ind] = text
+block_text_color_map[?ind] = color

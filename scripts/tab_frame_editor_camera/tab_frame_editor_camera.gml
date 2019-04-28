@@ -122,6 +122,18 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	draw_meter("frameeditorcameradofblursize", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_BLUR_SIZE] * 100, 48, 0, 10, 1, 0, tab.camera.tbx_dof_blur_size, action_tl_frame_cam_dof_blur_size)
 	tab_next()
 	
+	tab_control_meter()
+	draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 100), 48, 0, 200, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameradofthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_THRESHOLD] * 100), 48, 0, 100, 0, 1, tab.camera.tbx_dof_threshold, action_tl_frame_cam_dof_threshold)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameradofgain", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_GAIN] * 100), 48, 0, 100, 0, 1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
+	tab_next()
+	
 	tab_control_checkbox()
 	draw_checkbox("frameeditorcameradoffringe", dx, dy, tl_edit.value[e_value.CAM_DOF_FRINGE], action_tl_frame_cam_dof_fringe)
 	tab_next()

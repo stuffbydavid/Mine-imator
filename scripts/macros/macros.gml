@@ -13,10 +13,10 @@
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2019.03.10"
 #macro gm_runtime					"2.2.2.326"
-#macro minecraft_version			"1.13.1"
+#macro minecraft_version			"1.14"
 
 // File formats
-#macro project_format				e_project.FORMAT_122
+#macro project_format				e_project.FORMAT_123_PRE_2
 #macro settings_format				e_settings.FORMAT_120
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_120
 
@@ -86,9 +86,9 @@
 
 // Textures
 #macro block_sheet_width			32
-#macro block_sheet_height			16
+#macro block_sheet_height			32
 #macro block_sheet_ani_width		32
-#macro block_sheet_ani_height		1
+#macro block_sheet_ani_height		2
 #macro block_sheet_ani_frames		64
 #macro item_sheet_width				32
 #macro item_sheet_height			16
@@ -155,6 +155,8 @@
 #macro default_block				"grass_block"
 #macro default_item					"item/diamond_sword"
 #macro default_ground				"block/grass_block_top"
+#macro particle_sheet				-4
+#macro particle_template			-5
 
 // World
 #macro block_size					16

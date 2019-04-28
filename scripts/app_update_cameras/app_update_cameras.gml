@@ -28,7 +28,7 @@ with (obj_timeline)
 
 with (obj_particle)
 {
-	if (type.temp = null || !type_is_shape(type.temp.type))
+	if (type.temp = particle_sheet || type.temp = particle_template || !type_is_shape(type.temp.type))
 		continue
 		
 	if (type.temp.shape_tex != null && type.temp.shape_tex.type = e_tl_type.CAMERA)

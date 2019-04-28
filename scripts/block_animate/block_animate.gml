@@ -85,9 +85,10 @@ with (new(obj_timeline))
 	// Add text
 	if (other.has_text)
 	{
-		var text, textpos;
+		var text, textpos, textcolor;
 		text = other.text
 		textpos = other.text_position
+		textcolor = other.text_color
 		
 		if (part_list = null)
 			part_list = ds_list_create()
@@ -112,7 +113,7 @@ with (new(obj_timeline))
 			value_default[e_value.SCA_X] = 0.165
 			value_default[e_value.SCA_Y] = 0.165
 			value_default[e_value.SCA_Z] = 0.165
-			value_default[e_value.RGB_MUL] = c_black
+			value_default[e_value.RGB_MUL] = textcolor
 			value_type_show[e_value_type.POSITION] = false
 			value_type_show[e_value_type.ROTATION] = false
 			

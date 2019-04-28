@@ -43,6 +43,7 @@ with (temp)
 				ptype_copy(ptype)
 				ptype.creator = temp
 				ptype.sprite_tex.count++
+				ptype.sprite_template_tex.count++
 				with (ptype)
 					ptype_update_sprite_vbuffers()
 				ds_list_add(temp.pc_type_list, ptype)

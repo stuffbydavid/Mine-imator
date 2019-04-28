@@ -31,12 +31,17 @@ if (block_current.set_script > -1)
 	else
 		ret = null
 }
-		
+
+var tlvalid = (block_tl_add = null || block_tl_add) && block_current.timeline && block_tl_list != null && ret != null;
+
 // Has timeline
-if ((block_tl_add = null || block_tl_add) && block_current.timeline && block_tl_list != null && ret != null)
+if (tlvalid && !block_current.model_double)
 	ds_list_add(block_tl_list, block_get_timeline(block_current, block_state_id_current))
 else
 {
+	if (tlvalid && block_current.model_double)
+		ds_list_add(block_tl_list, block_get_timeline(block_current, block_state_id_current))
+	
 	// Look for the render model of the current state
 	if (ret = 0 && block_current.state_id_model_obj != null)
 	{

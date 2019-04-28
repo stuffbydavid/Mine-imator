@@ -97,6 +97,7 @@ if (filename_ext(fn) = ".midata")
 		setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)
 		setting_spawn_objects = value_get_real(programmap[?"spawn_objects"], setting_spawn_objects)
 		setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
+		setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
 	}
 	
 	// Interface

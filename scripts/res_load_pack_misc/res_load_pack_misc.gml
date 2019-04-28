@@ -10,12 +10,6 @@ if (colormap_grass_texture != null)
 
 if (colormap_foliage_texture != null)
 	texture_free(colormap_foliage_texture)
-
-if (particles_texture[0] != null)
-	texture_free(particles_texture[0])
-
-if (particles_texture[1] != null)
-	texture_free(particles_texture[1])
 	
 if (sun_texture != null)
 	texture_free(sun_texture)
@@ -47,18 +41,6 @@ if (!file_exists_lib(load_assets_dir + mc_foliage_image_file) && id != mc_res)
 	colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
 else
 	colormap_foliage_texture = texture_create(load_assets_dir + mc_foliage_image_file)
-
-// Particles
-if (!file_exists_lib(load_assets_dir + mc_particles_image_file) && id != mc_res)
-	particles_texture[0] = texture_duplicate(mc_res.particles_texture[0])
-else
-	particles_texture[0] = texture_create(load_assets_dir + mc_particles_image_file)
-	
-// Explosion
-if (!file_exists_lib(load_assets_dir + mc_explosion_image_file) && id != mc_res)
-	particles_texture[1] = texture_duplicate(mc_res.particles_texture[1])
-else
-	particles_texture[1] = texture_create(load_assets_dir + mc_explosion_image_file)
 
 // Sun
 if (!file_exists_lib(load_assets_dir + mc_sun_image_file) && id != mc_res)

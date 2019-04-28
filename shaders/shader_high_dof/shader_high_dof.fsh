@@ -7,9 +7,9 @@ uniform float uFadeSize;
 uniform float uNear;
 uniform float uFar;
 
-//uniform float uBias;
-//uniform float uThreshold;
-//uniform float uGain;
+uniform float uBias;
+uniform float uThreshold;
+uniform float uGain;
 
 uniform int uFringe;
 uniform vec3 uFringeAngle;
@@ -84,12 +84,11 @@ vec4 getColor(vec2 coord, float blur)
 	
 	baseColor = getFringe(coord, blur, baseColor);
 	
-	/*
+	// Boost brightness using threshold and gain strengthen Bokeh highlights
 	vec3 lumCo = vec3(0.299,0.587,0.114);
 	float lum = dot(baseColor.rgb, lumCo);
 	float thresh = max((lum - uThreshold) * uGain, 0.0);
 	baseColor.rgb = baseColor.rgb + mix(vec3(0.0), baseColor.rgb, vec3(thresh * blur));
-	*/
 	
 	return baseColor;
 }
@@ -125,7 +124,7 @@ void main()
 			float sampleDepth = getDepth(tex);
 			float sampleBlur = getBlur(sampleDepth);
 			
-			float bias = 1.0;//mix(1.0, float(i) / float(samplesMultiplier), uBias);
+			float bias = mix(1.0, float(i) / float(samplesMultiplier), uBias);
 			float mul = (1.0 - (1.0 - sampleBlur) * myBackBlur) * bias;	
 			
 			blur += getFrontBlur(sampleDepth);

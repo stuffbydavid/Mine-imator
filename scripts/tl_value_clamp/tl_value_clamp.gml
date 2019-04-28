@@ -6,6 +6,9 @@ var vid, val;
 vid = argument0
 val = argument1
 
+if (app.setting_unlimited_values)
+	return clamp(val, -no_limit, no_limit)
+
 switch (vid)
 {
 	case e_value.POS_X:

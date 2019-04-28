@@ -13,6 +13,10 @@ render_set_uniform("uFadeSize", render_camera.value[e_value.CAM_DOF_FADE_SIZE])
 render_set_uniform("uNear", cam_near)
 render_set_uniform("uFar", cam_far)
 
+render_set_uniform("uBias", render_camera.value[e_value.CAM_DOF_BIAS])
+render_set_uniform("uThreshold", render_camera.value[e_value.CAM_DOF_THRESHOLD])
+render_set_uniform("uGain", render_camera.value[e_value.CAM_DOF_GAIN])
+
 render_set_uniform_int("uFringe", bool_to_float(render_camera.value[e_value.CAM_DOF_FRINGE]))
 render_set_uniform_vec3("uFringeAngle", -degtorad(render_camera.value[e_value.CAM_DOF_FRINGE_ANGLE_RED] + 180), -degtorad(render_camera.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN] + 180), -degtorad(render_camera.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE] + 180))
 render_set_uniform_vec3("uFringeStrength", render_camera.value[e_value.CAM_DOF_FRINGE_RED], render_camera.value[e_value.CAM_DOF_FRINGE_GREEN], render_camera.value[e_value.CAM_DOF_FRINGE_BLUE])

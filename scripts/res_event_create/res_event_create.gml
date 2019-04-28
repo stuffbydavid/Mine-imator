@@ -51,6 +51,8 @@ item_sheet_size = vec2(item_sheet_width, item_sheet_height)
 particles_texture[0] = null
 particles_texture[1] = null
 
+particle_texture_map = null
+
 block_vbuffer = null
 scenery_tl_add = null
 scenery_tl_list = null

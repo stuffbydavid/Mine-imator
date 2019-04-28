@@ -117,8 +117,9 @@ text_res = null
 text_3d = false
 
 item_vbuffer = null
-item_texture = null
 item_slot = 0
 item_res = null
 item_3d = true
 item_custom_slot = false
+
+render_res = null

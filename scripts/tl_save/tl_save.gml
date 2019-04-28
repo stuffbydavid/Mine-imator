@@ -22,6 +22,7 @@ if (temp)
 				temp.save = true
 				
 			sprite_tex.save = true
+			sprite_template_tex.save = true
 		}
 	}
 }

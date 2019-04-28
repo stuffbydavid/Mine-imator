@@ -78,6 +78,10 @@ with (res)
 		with (save_id_find(save.usage_sprite_tex_save_id[s]))
 			sprite_tex = res
 			
+	for (var s = 0; s < save.usage_sprite_template_tex_amount; s++)
+		with (save_id_find(save.usage_sprite_template_tex_save_id[s]))
+			sprite_template_tex = res
+	
 	// Restore keyframe usage
 	for (var s = 0; s < save.usage_kf_texture_amount; s++)
 		with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
@@ -159,6 +163,7 @@ with (res)
 	count += save.usage_shape_tex_amount
 	count += save.usage_text_font_amount
 	count += save.usage_sprite_tex_amount
+	count += save.usage_sprite_template_tex_amount
 	count += save.usage_kf_sound_amount
 	count += save.usage_background_image
 	count += save.usage_background_sky_sun_tex

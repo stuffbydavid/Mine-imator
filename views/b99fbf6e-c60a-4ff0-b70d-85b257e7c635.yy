@@ -22,7 +22,8 @@
         "d73d23a4-e552-433c-8bac-ef52f78cac6f",
         "da201581-9c5b-47d1-8136-f23544ee2821",
         "98c6a178-39e7-4191-9ac6-b91f2b0c0570",
-        "70d087ab-dcb9-4ac9-976d-41a2877bd791"
+        "70d087ab-dcb9-4ac9-976d-41a2877bd791",
+        "32bacb17-85e8-4397-baaf-c2d1ed0b49b4"
     ],
     "filterType": "GMObject",
     "folderName": "Minecraft",

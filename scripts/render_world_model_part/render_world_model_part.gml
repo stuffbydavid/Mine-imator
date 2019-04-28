@@ -23,11 +23,13 @@ if (part.shape_list = null)
 	
 var parttexname, mat;
 parttexname = model_part_get_texture_name(part, texnamemap)
-mat = matrix_get(matrix_world)
+
+if (!tlobject)
+	mat = matrix_get(matrix_world)
 
 for (var s = 0; s < ds_list_size(part.shape_list); s++)
 {
-	var shape, planevbuf;
+	var shape;
 	shape = part.shape_list[|s];
 	
 	// Hidden?
@@ -129,7 +131,11 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	}
 	
 	// Shape matrix
-	var rendermatrix = matrix_multiply(shape.matrix, mat);
+	var rendermatrix;
+	if (tlobject)
+		rendermatrix  =matrix_multiply(shape.matrix, matrix)
+	else
+		rendermatrix = matrix_multiply(shape.matrix, mat)
 	
 	// Bounce
 	if (shape.item_bounce)
@@ -156,12 +162,10 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		rendermatrix = matrix_multiply(rotmat, rendermatrix)
 	}
 	
-	// Main part mesh
-	matrix_set(matrix_world, rendermatrix)
-			
 	// Pick vertex buffer from map if available
 	if (shapevbuffermap != null && !is_undefined(shapevbuffermap[?shape]))
-		vbuffer_render(shapevbuffermap[?shape])
+		vbuffer_render_matrix(shapevbuffermap[?shape], rendermatrix)
 }
 
-matrix_set(matrix_world, mat)
+if (!tlobject)
+	matrix_set(matrix_world, mat)

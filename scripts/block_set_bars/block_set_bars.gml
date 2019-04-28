@@ -1,6 +1,9 @@
 /// block_set_bars()
 /// @desc Connects to other bars and panes or solid faces.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var east, west, south, north;
 east = "false"
 west = "false"

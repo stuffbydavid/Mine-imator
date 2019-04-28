@@ -21,12 +21,22 @@ else
 var base_seed = 0;
 
 if (is_timeline && pt.creator.value[e_value.CUSTOM_SEED])
-	base_seed = test(temp.pc_spawn_constant, ds_list_size(particle_list), pt.creator.single_fire_count) + pt.creator.value[e_value.SEED];
+	base_seed = test(temp.pc_spawn_constant, ds_list_size(particle_list), pt.creator.single_fire_count) + pt.creator.value[e_value.SEED]
 else
-	base_seed = random(current_step);
-	
+{
+	randomize()
+	base_seed = random(current_step)
+}
+
 random_set_seed(base_seed)
-	
+
+// Random frame(Sprite template)
+if (pt.type.sprite_template_still_frame && pt.type.sprite_template_random_frame && pt.type.temp = particle_template)
+{
+	var template = particle_template_map[?pt.type.sprite_template];
+	pt.frame = random(template.frames)
+}
+
 pt.time_to_live = value_random(temp.pc_destroy_at_time_seconds, temp.pc_destroy_at_time_israndom, temp.pc_destroy_at_time_random_min, temp.pc_destroy_at_time_random_max) * 60
 
 // Position
@@ -72,6 +82,9 @@ pt.anispeed = value_random(type.sprite_animation_speed, type.sprite_animation_sp
 
 for (var a = X; a <= Z; a++)
 {
+	// Angle
+	pt.angle[a] = value_random(type.angle[a * type.angle_extend], type.angle_israndom[a * type.angle_extend], type.angle_random_min[a * type.angle_extend], type.angle_random_max[a * type.angle_extend])
+	
 	// Speed
 	pt.spd[a] = value_random(type.spd[a * type.spd_extend], type.spd_israndom[a * type.spd_extend], type.spd_random_min[a * type.spd_extend], type.spd_random_max[a * type.spd_extend]) / 60
 	pt.spd_add[a] = value_random(type.spd_add[a * type.spd_extend], type.spd_add_israndom[a * type.spd_extend], type.spd_add_random_min[a * type.spd_extend], type.spd_add_random_max[a * type.spd_extend]) / 60
@@ -90,7 +103,18 @@ for (var a = X; a <= Z; a++)
 			pt.rot_spd_mul[a] = sqrt(pt.rot_spd_mul[a])
 }
 
-// Angle (Sprites)
+// Convert angle to vector
+pt.angle = vec3_normalize(vec3_mul_matrix(vec3(0, 0, 1), matrix_create(vec3(0), pt.angle, vec3(1))))
+
+// Angle strength
+pt.angle_strength = value_random(type.angle_strength, type.angle_strength_israndom, type.angle_strength_random_min, type.angle_strength_random_max) / 60
+pt.angle_strength_add = value_random(type.angle_strength_add, type.angle_strength_add_israndom, type.angle_strength_add_random_min, type.angle_strength_add_random_max) / 60
+pt.angle_strength_mul = value_random(type.angle_strength_mul, type.angle_strength_mul_israndom, type.angle_strength_mul_random_min, type.angle_strength_mul_random_max)
+if (pt.angle_strength_mul != 1)
+	repeat (5)
+		pt.angle_strength_mul = sqrt(pt.angle_strength_mul)
+			
+// Sprite angle
 pt.sprite_angle = value_random(type.sprite_angle, type.sprite_angle_israndom, type.sprite_angle_random_min, type.sprite_angle_random_max)
 pt.sprite_angle_add = value_random(type.sprite_angle_add, type.sprite_angle_add_israndom, type.sprite_angle_add_random_min, type.sprite_angle_add_random_max) / 60
 

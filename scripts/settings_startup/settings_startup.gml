@@ -23,6 +23,7 @@ setting_backup_time = 10
 setting_backup_amount = 3
 setting_spawn_objects = true
 setting_spawn_cameras = true
+setting_unlimited_values = false
 
 setting_tip_show = true
 setting_tip_delay = 0.35

@@ -12,8 +12,12 @@ json_save_object_start()
 		json_save_object_start("model")
 			json_save_var("name", model_name)
 			json_save_var_state_vars("state", model_state)
+			
 			if (type = e_temp_type.BODYPART)
 				json_save_var("part_name", model_part_name)
+			else
+				json_save_var("model_version", mc_assets.model_name_map[?model_name].version)
+				
 		json_save_object_done()
 		
 		// Banner values

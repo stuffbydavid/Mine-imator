@@ -41,3 +41,8 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingsspawncameras", dx, dy, setting_spawn_cameras, action_setting_spawn_cameras)
 tab_next()
+
+// Unlimited values
+tab_control_checkbox()
+draw_checkbox("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
+tab_next()

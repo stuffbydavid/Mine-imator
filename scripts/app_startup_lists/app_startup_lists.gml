@@ -2,10 +2,11 @@
 
 globalvar value_name_list, transition_list;
 globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
-globalvar biome_list, videotemplate_list, videoquality_list;
+globalvar videotemplate_list, videoquality_list;
 globalvar language_english_map, language_map;
 globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 globalvar minecraft_color_name_list, minecraft_color_list, minecraft_banner_pattern_list, minecraft_banner_pattern_short_list;
+globalvar biome_list, particle_template_list, particle_template_map;
 
 // Values
 value_name_list = ds_list_create()
@@ -64,6 +65,9 @@ ds_list_add(value_name_list,
 	"CAM_DOF_RANGE",
 	"CAM_DOF_FADE_SIZE",
 	"CAM_DOF_BLUR_SIZE",
+	"CAM_DOF_BIAS",
+	"CAM_DOF_THRESHOLD",
+	"CAM_DOF_GAIN",
 	"CAM_DOF_FRINGE",
 	"CAM_DOF_FRINGE_ANGLE_RED",
 	"CAM_DOF_FRINGE_ANGLE_GREEN",
@@ -314,6 +318,10 @@ ds_map_copy(language_map, language_english_map)
 biome_list = ds_list_create()
 ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))
 
+// Particles
+particle_template_list = ds_list_create()
+particle_template_map = ds_map_create()
+
 // Minecraft colors
 minecraft_color_name_list = ds_list_create()
 ds_list_add(minecraft_color_name_list,
@@ -356,87 +364,5 @@ ds_list_add(minecraft_color_list,
 )
 
 minecraft_banner_pattern_list = ds_list_create()
-ds_list_add(minecraft_banner_pattern_list,
-	"base",
-	"border",
-	"bricks",
-	"circle",
-	"creeper",
-	"cross",
-	"curly_border",
-	"diagonal_left",
-	"diagonal_right",
-	"diagonal_up_left",
-	"diagonal_up_right",
-	"flower",
-	"gradient",
-	"gradient_up",
-	"half_horizontal",
-	"half_horizontal_bottom",
-	"half_vertical",
-	"half_vertical_right",
-	"mojang",
-	"rhombus",
-	"skull",
-	"small_stripes",
-	"square_bottom_left",
-	"square_bottom_right",
-	"square_top_left",
-	"square_top_right",
-	"straight_cross",
-	"stripe_bottom",
-	"stripe_center",
-	"stripe_downleft",
-	"stripe_downright",
-	"stripe_left",
-	"stripe_middle",
-	"stripe_right",
-	"stripe_top",
-	"triangle_bottom",
-	"triangle_top",
-	"triangles_bottom",
-	"triangles_top"
-)
 
 minecraft_banner_pattern_short_list = ds_list_create()
-ds_list_add(minecraft_banner_pattern_short_list,
-	"",
-	"bo",
-	"bri",
-	"mc",
-	"cre",
-	"cr",
-	"cbo",
-	"ld",
-	"rud",
-	"lud",
-	"rd",
-	"flo",
-	"gra",
-	"gru",
-	"hh",
-	"hhb",
-	"vh",
-	"vhr",
-	"moj",
-	"mr",
-	"sku",
-	"ss",
-	"bl",
-	"br",
-	"tl",
-	"tr",
-	"sc",
-	"bs",
-	"cs",
-	"dls",
-	"drs",
-	"ls",
-	"ms",
-	"rs",
-	"ts",
-	"bt",
-	"tt",
-	"tts",
-	"bts"
-)

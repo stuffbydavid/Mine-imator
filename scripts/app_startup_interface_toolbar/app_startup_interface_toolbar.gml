@@ -85,7 +85,7 @@ with (bench_settings)
 	block_list.script = action_bench_block_name
 	sortlist_column_add(block_list, "blockname", 0)
 	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-		if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "")
+		if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
 			sortlist_add(block_list, mc_assets.block_list[|b].name)
 	block_tbx_data = new_textbox_integer()
 

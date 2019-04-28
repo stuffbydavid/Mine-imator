@@ -44,7 +44,7 @@ with (mc_assets)
 		// Load biomes
 		case "biomes":
 		{
-			with(mc_res)
+			with (mc_res)
 				minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 			
 			app.background_biome = biome_list[|2]
@@ -56,7 +56,7 @@ with (mc_assets)
 			load_assets_progress = 0.4
 			break;
 		}
-
+		
 		// Load textures
 		case "textures":
 		{
@@ -118,20 +118,65 @@ with (mc_assets)
 			}
 	
 			ds_list_copy(item_texture_list, itemtextureslist)
-	
+			
+			// Particle textures
+			var particletextureslist = load_assets_map[?"particle_textures"];
+			if (is_undefined(particletextureslist))
+			{
+				log("No particle textures found")
+				return false
+			}
+			
+			ds_list_copy(particle_texture_list, particletextureslist)
+			
 			// Create sheets and texture depth
 			with (mc_res)
 			{
 				res_load_pack_model_textures()
 				res_load_pack_block_textures()
 				res_load_pack_item_textures()
+				res_load_pack_particle_textures()
 				res_load_pack_misc()
 				res_update_colors(biome_list[|2])
 			}
 		
+			load_assets_stage = "misc"
+			load_assets_progress = 0.45
+			break
+		}
+		
+		// Misc. assets
+		case "misc":
+		{	
+			// Particle Templates
+			if (is_undefined(load_assets_map[?"particles"]))
+			{
+				log("No particle list found")
+				return false
+			}
+			
+			with (mc_res)
+				minecraft_assets_load_particles(load_assets_map[?"particles"]);
+			
+			// Banner info
+			if (is_undefined(load_assets_map[?"banner_patterns"]))
+			{
+				log("No banner patterns list found")
+				return false
+			}
+			
+			var patternlist = load_assets_map[?"banner_patterns"];
+			
+			for (var i = 0; i < ds_list_size(patternlist); i++)
+			{
+				var pattern = patternlist[|i];
+				ds_list_add(minecraft_banner_pattern_list, pattern[|0])
+				ds_list_add(minecraft_banner_pattern_short_list, pattern[|1])
+			}
+			
 			load_assets_stage = "models"
 			load_assets_progress = 0.5
-			break
+			break;
 		}
 		
 		// Load models
@@ -202,7 +247,7 @@ with (mc_assets)
 				return false
 			}
 			
-			repeat(20)
+			repeat (20)
 			{
 			
 				if (load_assets_block_index = ds_list_size(blockslist))

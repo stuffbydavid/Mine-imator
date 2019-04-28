@@ -11,12 +11,18 @@ if (history_undo)
 		with (save_id_find(history_data.kf_add_tl_save_id[k]))
 			with (keyframe_list[|history_data.kf_add_index[k]])
 				instance_destroy()
-			
+	
 	// Restore keyframes
 	for (var k = 0; k < history_data.kf_set_amount; k++)
-		with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
-			for (var v = 0; v < history_data.par_set_amount; v++)
-				value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], history_data.kf_set_new_value[k, v], history_data.kf_set_old_value[k, v])
+	{
+		var kf = save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]];
+		if (kf != undefined)
+		{
+			with (kf)
+				for (var v = 0; v < history_data.par_set_amount; v++)
+					value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], history_data.kf_set_new_value[k, v], history_data.kf_set_old_value[k, v])
+		}
+	}
 }
 else if (history_redo)
 {
@@ -56,10 +62,7 @@ else
 		if (value[vid] != nval)
 			update_matrix = true
 		
-		if (add)
-			value[vid] = tl_value_clamp(vid, nval)
-		else
-			value[vid] = nval
+		value[vid] = tl_value_clamp(vid, nval)
 		
 		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
 			value[e_value.SOUND_OBJ].count++
@@ -79,10 +82,7 @@ else
 			else
 				nval = value[vid] * add + val;
 			
-			if (add)
-				value[vid] = tl_value_clamp(vid, nval)
-			else
-				value[vid] = nval
+			value[vid] = tl_value_clamp(vid, nval)
 			
 			history_data.kf_set_new_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 		}

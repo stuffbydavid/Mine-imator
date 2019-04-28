@@ -89,7 +89,7 @@ switch (load_stage)
 				render_generate_item()
 					
 		with (obj_particle_type)
-			if (sprite_tex = other.id)
+			if (sprite_tex = other.id || sprite_template_tex = other.id)
 				ptype_update_sprite_vbuffers()
 				
 		with (app.bench_settings)

@@ -1,6 +1,9 @@
 /// block_set_stairs()
 /// @desc Defines logic for connecting adjacent stairs.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var shape, half, facing;
 shape = "straight"
 half = block_get_state_id_value(block_current, block_state_id_current, "half")

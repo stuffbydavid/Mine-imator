@@ -28,6 +28,68 @@ with (new(obj_template))
 		{
 			model_name = value_get_string(modelmap[?"name"], model_name)
 			model_state = value_get_state_vars(modelmap[?"state"])
+			
+			// Update legacy model name 
+			if (legacy_model_names_map[?model_name] != undefined)
+				model_name = legacy_model_names_map[?model_name]
+			
+			// Update legacy model state values
+			if (legacy_model_state_values_map[?model_name] != undefined)
+			{
+				var modelmap, statename;
+				modelmap = legacy_model_state_values_map[?model_name]
+				
+				for (var i = 0; i < array_length_1d(model_state); i += 2)
+				{
+					statename = model_state[i]
+					
+					if (modelmap[?statename] != undefined)
+					{
+						var statemap, statevalue;
+						statemap = modelmap[?statename]
+						statevalue = model_state[i + 1]
+						
+						// Replace model state value with value from map
+						if (statemap[?statevalue] != undefined)
+							model_state[i + 1] = statemap[?statevalue]
+					}
+				}
+			}
+			
+			// Update legacy model states
+			if (legacy_model_states_map[?model_name] != undefined)
+			{
+				var modelmap, statename;
+				modelmap = legacy_model_states_map[?model_name]
+				
+				for (var i = 0; i < array_length_1d(model_state); i += 2)
+				{
+					statename = model_state[i]
+					
+					// Replace state name
+					if (modelmap[?statename] != undefined)
+						model_state[i] = modelmap[?statename]
+				}
+			}
+			
+			// Model version
+			if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
+			{
+				model_version = value_get_real(modelmap[?"model_version"], 0)
+				if (mc_assets.model_name_map[?model_name].version > model_version)
+				{
+					load_update_tree = true
+					
+					// Add new states
+					if (array_length_1d(model_state) != array_length_1d(mc_assets.model_name_map[?model_name].default_state))
+					{
+						var statesprev = array_copy_1d(model_state);
+						model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
+						state_vars_add(model_state, statesprev)
+					}
+				}
+			}
+			
 			if (type = e_temp_type.BODYPART)
 				model_part_name = value_get_string(modelmap[?"part_name"], model_part_name)
 			
@@ -107,6 +169,11 @@ with (new(obj_template))
 			else
 			{
 				block_name = value_get_string(blockmap[?"name"], block_name)
+				
+				// Update legacy block name
+				if (legacy_block_names_map[?block_name] != undefined)
+					block_name = legacy_block_names_map[?block_name]
+				
 				block_state = value_get_state_vars(blockmap[?"state"])
 			}
 			

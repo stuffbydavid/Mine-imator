@@ -6,13 +6,18 @@ save_id = save_id_create()
 creator = null
 
 name = ""
-temp = null
+temp = particle_template
 text = text_get("particleeditortypetextsample")
 spawn_rate = 0
 sprite_vbuffer_amount = 0
 sprite_vbuffer[0] = null
 sprite_tex = null
 sprite_tex_image = 0
+sprite_template = "generic"
+sprite_template_tex = mc_res
+sprite_template_still_frame = false
+sprite_template_random_frame = false
+sprite_template_reverse = true
 sprite_frame_width = 8
 sprite_frame_height = 8
 sprite_frame_start = 7
@@ -23,12 +28,30 @@ sprite_animation_speed_random_min = 5
 sprite_animation_speed_random_max = 10
 sprite_animation_onend = 0 // 0 = stop, 1 = loop, 2 = reverse
 
+angle_extend = false
 spd_extend = false
 rot_extend = false
 rot_spd_extend = false
 
+angle = vec3(0)
+angle_israndom = vec3(true)
+angle_random_min = vec3(0)
+angle_random_max = vec3(360)
+angle_strength = 20
+angle_strength_israndom = true
+angle_strength_random_min = 0
+angle_strength_random_max = 20
+angle_strength_add = 0
+angle_strength_add_israndom = false
+angle_strength_add_random_min = -1
+angle_strength_add_random_max = 1
+angle_strength_mul = 1
+angle_strength_mul_israndom = false
+angle_strength_mul_random_min = 0.75
+angle_strength_mul_random_max = 0.9
+
 spd = vec3(0)
-spd_israndom = vec3(true)
+spd_israndom = vec3(false)
 spd_random_min = vec3(-20)
 spd_random_max = vec3(20)
 spd_add = vec3(0)

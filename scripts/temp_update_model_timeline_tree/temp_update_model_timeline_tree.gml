@@ -1,4 +1,4 @@
-/// temp_update_model_timelines([historyobject])
+/// temp_update_model_timeline_tree([historyobject])
 /// @arg [historyobject]
 /// @desc Update timelines of the changed model.
 

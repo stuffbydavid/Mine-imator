@@ -36,8 +36,10 @@ switch (slist.column_name[col])
 		return string_remove_newline(value.name)
 		
 	case "particleeditortypekind":
-		if (value.temp < 0)
-			return text_get("particleeditortypesprite")
+		if (value.temp = particle_sheet)
+			return text_get("particleeditortypespritesheet")
+		else if (value.temp = particle_template)
+			return text_get("particleeditortypetemplate")
 		else
 			return string_remove_newline(value.temp.display_name)
 			

@@ -1,6 +1,9 @@
 /// block_set_redstone_repeater()
 /// @desc Set locked state.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 if (block_get_state_id_value(block_current, block_state_id_current, "locked") = "true")
 	return 0
 	

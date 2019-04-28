@@ -21,6 +21,7 @@ with (save)
 	usage_shape_tex_amount = 0
 	usage_text_font_amount = 0
 	usage_sprite_tex_amount = 0
+	usage_sprite_template_tex_amount = 0
 	usage_kf_texture_amount = 0
 	usage_tl_texture_amount = 0
 	usage_kf_sound_amount = 0
@@ -86,6 +87,12 @@ with (obj_particle_type)
 	{
 		save.usage_sprite_tex_save_id[save.usage_sprite_tex_amount] = save_id
 		save.usage_sprite_tex_amount++
+	}
+	
+	if (sprite_template_tex = res)
+	{
+		save.usage_sprite_template_tex_save_id[save.usage_sprite_template_tex_amount] = save_id
+		save.usage_sprite_template_tex_amount++
 	}
 }
 

@@ -15,4 +15,10 @@ else
 
 ptype_edit.temp = temp
 
+if (temp = particle_sheet || temp = particle_template)
+{
+	with (ptype_edit)
+		ptype_update_sprite_vbuffers()
+}
+
 tab_template_editor_particles_preview_restart()

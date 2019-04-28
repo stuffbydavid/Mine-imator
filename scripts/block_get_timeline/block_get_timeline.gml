@@ -39,8 +39,12 @@ with (new(obj_block_tl))
 		{
 			var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
 			other.text = block_text_map[?ind]
+			other.text_color = block_text_color_map[?ind]
 			if (is_undefined(other.text))
+			{
 				other.text = ""
+				other.text_color = c_black
+			}
 		}
 		text_position = block.tl_text_position
 	}

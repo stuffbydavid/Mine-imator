@@ -8,7 +8,7 @@ var res = background_sky_clouds_tex;
 if (!res.ready)
 	res = mc_res
 
-// If using story mode clouds, slowly make them disspear the closer the camera is to them
+// If using story mode clouds, slowly make them dissapear the closer the camera is to them
 var alphay;
 if (background_sky_clouds_story_mode)
 	alphay = percent(cam_from[Z], background_sky_clouds_z, background_sky_clouds_z - 250)

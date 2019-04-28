@@ -12,6 +12,9 @@ else
 block_color = make_color_rgb(red * 255, 0, 0)
 vertex_brightness = powreal
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var east, west, south, north;
 east = "none"
 west = "none"

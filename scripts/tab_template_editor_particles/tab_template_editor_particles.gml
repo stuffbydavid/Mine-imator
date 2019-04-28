@@ -233,14 +233,16 @@ tab_next()
 
 if (ptype_edit = null)
 	return 0
-	
+
 capwid = text_caption_width("particleeditortypename", 
-					  "particleeditortypespawnrate", 
-					  "particleeditortypetemp", 
-					  "particleeditortypespritetex", 
-					  "particleeditortypespriteteximage", 
-					  "particleeditortypetext")
-					  
+						"particleeditortypespawnrate", 
+						"particleeditortypetemp", 
+						"particleeditortypespritetex", 
+						"particleeditortypespriteteximage",
+						"particleeditortypespritetemplatepack", 
+						"particleeditortypespritetemplate",
+						"particleeditortypetext")
+
 // Name
 tab_control_inputbox()
 tab.tbx_type_name.text = ptype_edit.name
@@ -257,77 +259,118 @@ if (ds_list_size(temp_edit.pc_type_list) > 1)
 
 // Template
 tab_control(32)
-text = text_get("particleeditortypesprite")
+text = text_get("particleeditortypespritesheet")
+if (ptype_edit.temp = particle_template)
+	text = text_get("particleeditortypetemplate")
 if (ptype_edit.temp)
 	text = ptype_edit.temp.display_name
 draw_button_menu("particleeditortypetemp", e_menu.LIST, dx, dy, dw, 32, ptype_edit.temp, text, action_lib_pc_type_temp, null, null, capwid)
 tab_next()
 
 // Sprite
-if (!ptype_edit.temp)
+if (ptype_edit.temp < 0)
 {
-	// Texture
-	tab_control(40)
-	draw_button_menu("particleeditortypespritetex", e_menu.LIST, dx, dy, dw, 40, ptype_edit.sprite_tex, ptype_edit.sprite_tex.display_name, action_lib_pc_type_sprite_tex, ptype_edit.sprite_tex.particles_texture[ptype_edit.sprite_tex_image], null, capwid)
-	tab_next()
-	
-	// Image
-	tab_control_checkbox()
-	draw_label(text_get("particleeditortypespriteteximage") + ":", dx, dy)
-	if (ptype_edit.sprite_tex.type = e_res_type.PACK)
+	// Sprite sheet
+	if (ptype_edit.temp = particle_sheet)
 	{
-		draw_radiobutton("particleeditortypespriteteximage1", dx + capwid, dy, 0, ptype_edit.sprite_tex_image = 0, action_lib_pc_type_sprite_tex_image)
-		draw_radiobutton("particleeditortypespriteteximage2", dx + capwid + floor((dw - capwid) * 0.5), dy, 1, ptype_edit.sprite_tex_image = 1, action_lib_pc_type_sprite_tex_image)
+		// Texture
+		tab_control(40)
+		draw_button_menu("particleeditortypespritetex", e_menu.LIST, dx, dy, dw, 40, ptype_edit.sprite_tex, ptype_edit.sprite_tex.display_name, action_lib_pc_type_sprite_tex, ptype_edit.sprite_tex.particles_texture[ptype_edit.sprite_tex_image], null, capwid)
+		tab_next()
+	
+		// Image
+		tab_control_checkbox()
+		draw_label(text_get("particleeditortypespriteteximage") + ":", dx, dy)
+		if (ptype_edit.sprite_tex.type = e_res_type.PACK)
+		{
+			draw_radiobutton("particleeditortypespriteteximage1", dx + capwid, dy, 0, ptype_edit.sprite_tex_image = 0, action_lib_pc_type_sprite_tex_image)
+			draw_radiobutton("particleeditortypespriteteximage2", dx + capwid + floor((dw - capwid) * 0.5), dy, 1, ptype_edit.sprite_tex_image = 1, action_lib_pc_type_sprite_tex_image)
+		}
+		tab_next()
+	
+		// Frames
+		tab_template_editor_particles_framebox()
+	
+		// Frame width / height
+		capwid = text_caption_width("particleeditortypespriteframewidth", 
+								  "particleeditortypespriteframestart", 
+								  "particleeditortypespriteframeend")
+	
+		tab.tbx_type_sprite_frame_width.suffix = " " + text_get("particleeditorpixels")
+		tab.tbx_type_sprite_frame_height.suffix = " " + text_get("particleeditorpixels")
+	
+		tab_control_dragger()
+		draw_dragger("particleeditortypespriteframewidth", dx, dy, dw, ptype_edit.sprite_frame_width, 1 / 10, 1, no_limit, 8, 1, tab.tbx_type_sprite_frame_width, action_lib_pc_type_sprite_frame_width, capwid)
+		tab_next()
+	
+		tab_control_dragger()
+		draw_dragger("particleeditortypespriteframeheight", dx, dy, dw, ptype_edit.sprite_frame_height, 1 / 10, 1, no_limit, 8, 1, tab.tbx_type_sprite_frame_height, action_lib_pc_type_sprite_frame_height, capwid)
+		tab_next()
+	
+		// Frames
+		tab_control_dragger()
+		draw_dragger("particleeditortypespriteframestart", dx, dy, dw, ptype_edit.sprite_frame_start, 1 / 10, 0, no_limit, 7, 1, tab.tbx_type_sprite_frame_start, action_lib_pc_type_sprite_frame_start, capwid)
+		tab_next()
+	
+		tab_control_dragger()
+		draw_dragger("particleeditortypespriteframeend", dx, dy, dw, ptype_edit.sprite_frame_end, 1 / 10, 0, no_limit, 0, 1, tab.tbx_type_sprite_frame_end, action_lib_pc_type_sprite_frame_end, capwid)
+		tab_next()
 	}
-	tab_next()
+	else // Particle template
+	{
+		// Texture
+		tab_control(40)
+		draw_button_menu("particleeditortypespritetemplatepack", e_menu.LIST, dx, dy, dw, 40, ptype_edit.sprite_template_tex, ptype_edit.sprite_template_tex.display_name, action_lib_pc_type_sprite_template_tex, ptype_edit.sprite_template_tex.block_preview_texture, null, capwid)
+		tab_next()
+		
+		// Template
+		tab_control(24)
+		draw_button_menu("particleeditortypespritetemplate", e_menu.LIST, dx, dy, dw, 24, ptype_edit.sprite_template, text_get("particleeditortypespritetemplate" + ptype_edit.sprite_template), action_lib_pc_type_sprite_template, null, null, capwid)
+		tab_next()
+		
+		// Still frame
+		tab_control_checkbox()
+		draw_checkbox("particleeditortypespritetemplatestillframe", dx, dy, ptype_edit.sprite_template_still_frame, action_lib_pc_type_sprite_template_still_frame)
+		tab_next()
+		
+		// Random frame
+		if (ptype_edit.sprite_template_still_frame)
+		{
+			tab_control_checkbox()
+			draw_checkbox("particleeditortypespritetemplaterandomframe", dx, dy, ptype_edit.sprite_template_random_frame, action_lib_pc_type_sprite_template_random_frame)
+			tab_next()
+		}
+		else
+		{
+			// Reverse template animation
+			tab_control_checkbox()
+			draw_checkbox("particleeditortypespritetemplatereverse", dx, dy, ptype_edit.sprite_template_reverse, action_lib_pc_type_sprite_template_reverse)
+			tab_next()
+		}
+	}
 	
-	// Frames
-	tab_template_editor_particles_framebox()
+	if (!(ptype_edit.sprite_template_still_frame && ptype_edit.temp = particle_template))
+	{
+		// Animation speed
+		tab.tbx_type_sprite_animation_speed.suffix = test(ptype_edit.sprite_animation_speed_israndom, "", " " + text_get("particleeditorfps"))
+		tab.tbx_type_sprite_animation_speed_random.suffix = " " + text_get("particleeditorfps")
+		tab_template_editor_particles_value("particleeditortypespriteanimationspeed", 
+			ptype_edit.sprite_animation_speed, ptype_edit.sprite_animation_speed_israndom, ptype_edit.sprite_animation_speed_random_min, ptype_edit.sprite_animation_speed_random_max, 
+			1 / 25, 0, no_limit, array(5, 5, 10), 0, 
+			array(tab.tbx_type_sprite_animation_speed, tab.tbx_type_sprite_animation_speed_random), 
+			array(action_lib_pc_type_sprite_animation_speed, action_lib_pc_type_sprite_animation_speed_israndom, action_lib_pc_type_sprite_animation_speed_random_min, action_lib_pc_type_sprite_animation_speed_random_max))
 	
-	// Frame width / height
-	capwid = text_caption_width("particleeditortypespriteframewidth", 
-							  "particleeditortypespriteframestart", 
-							  "particleeditortypespriteframeend")
+		// On animation end
+		tab_control(16)
+		draw_label(text_get("particleeditortypespriteanimationonend"), dx, dy)
+		tab_next()
 	
-	tab.tbx_type_sprite_frame_width.suffix = " " + text_get("particleeditorpixels")
-	tab.tbx_type_sprite_frame_height.suffix = " " + text_get("particleeditorpixels")
-	
-	tab_control_dragger()
-	draw_dragger("particleeditortypespriteframewidth", dx, dy, dw, ptype_edit.sprite_frame_width, 1 / 10, 1, no_limit, 8, 1, tab.tbx_type_sprite_frame_width, action_lib_pc_type_sprite_frame_width, capwid)
-	tab_next()
-	
-	tab_control_dragger()
-	draw_dragger("particleeditortypespriteframeheight", dx, dy, dw, ptype_edit.sprite_frame_height, 1 / 10, 1, no_limit, 8, 1, tab.tbx_type_sprite_frame_height, action_lib_pc_type_sprite_frame_height, capwid)
-	tab_next()
-	
-	// Frames
-	tab_control_dragger()
-	draw_dragger("particleeditortypespriteframestart", dx, dy, dw, ptype_edit.sprite_frame_start, 1 / 10, 0, no_limit, 7, 1, tab.tbx_type_sprite_frame_start, action_lib_pc_type_sprite_frame_start, capwid)
-	tab_next()
-	
-	tab_control_dragger()
-	draw_dragger("particleeditortypespriteframeend", dx, dy, dw, ptype_edit.sprite_frame_end, 1 / 10, 0, no_limit, 0, 1, tab.tbx_type_sprite_frame_end, action_lib_pc_type_sprite_frame_end, capwid)
-	tab_next()
-	
-	// Animation speed
-	tab.tbx_type_sprite_animation_speed.suffix = test(ptype_edit.sprite_animation_speed_israndom, "", " " + text_get("particleeditorfps"))
-	tab.tbx_type_sprite_animation_speed_random.suffix = " " + text_get("particleeditorfps")
-	tab_template_editor_particles_value("particleeditortypespriteanimationspeed", 
-		ptype_edit.sprite_animation_speed, ptype_edit.sprite_animation_speed_israndom, ptype_edit.sprite_animation_speed_random_min, ptype_edit.sprite_animation_speed_random_max, 
-		1 / 25, 0, no_limit, array(5, 5, 10), 0, 
-		array(tab.tbx_type_sprite_animation_speed, tab.tbx_type_sprite_animation_speed_random), 
-		array(action_lib_pc_type_sprite_animation_speed, action_lib_pc_type_sprite_animation_speed_israndom, action_lib_pc_type_sprite_animation_speed_random_min, action_lib_pc_type_sprite_animation_speed_random_max))
-	
-	// On animation end
-	tab_control(16)
-	draw_label(text_get("particleeditortypespriteanimationonend"), dx, dy)
-	tab_next()
-	
-	tab_control_checkbox()
-	draw_radiobutton("particleeditortypespriteanimationonendstop", dx, dy, 0, ptype_edit.sprite_animation_onend = 0, action_lib_pc_type_sprite_animation_onend)
-	draw_radiobutton("particleeditortypespriteanimationonendloop", dx + floor(dw * 0.3), dy, 1, ptype_edit.sprite_animation_onend = 1, action_lib_pc_type_sprite_animation_onend)
-	draw_radiobutton("particleeditortypespriteanimationonendreverse", dx + floor(dw * 0.6), dy, 2, ptype_edit.sprite_animation_onend = 2, action_lib_pc_type_sprite_animation_onend)
-	tab_next()
+		tab_control_checkbox()
+		draw_radiobutton("particleeditortypespriteanimationonendstop", dx, dy, 0, ptype_edit.sprite_animation_onend = 0, action_lib_pc_type_sprite_animation_onend)
+		draw_radiobutton("particleeditortypespriteanimationonendloop", dx + floor(dw * 0.3), dy, 1, ptype_edit.sprite_animation_onend = 1, action_lib_pc_type_sprite_animation_onend)
+		draw_radiobutton("particleeditortypespriteanimationonendreverse", dx + floor(dw * 0.6), dy, 2, ptype_edit.sprite_animation_onend = 2, action_lib_pc_type_sprite_animation_onend)
+		tab_next()
+	}
 	
 	// Preview
 	tab_control(14)
@@ -343,6 +386,81 @@ else if (ptype_edit.temp.type = e_temp_type.TEXT) // Text field
 	draw_inputbox("particleeditortypetext", dx, dy, dw, "", tab.tbx_type_text, action_lib_pc_type_text, capwid, 100)
 	tab_next()
 }
+
+// Angle + Angle speed
+capwid = test(ptype_edit.angle_extend, text_caption_width("particleeditortypeanglex", "particleeditortypeangley", "particleeditortypeanglez", 
+														  "particleeditortypeanglestrength", "particleeditortypeanglestrengthadd", "particleeditortypeanglestrengthmul"),
+									 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglestrength", "particleeditortypeanglestrengthadd",
+														"particleeditortypeanglestrengthmul"))
+
+tab_control(14)
+if (draw_button_normal("particleeditortypeangleextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.angle_extend, false, true, test(ptype_edit.angle_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+	action_lib_pc_type_angle_extend(!ptype_edit.angle_extend)
+tab_next()
+
+tab.tbx_type_xangle.suffix = "°" + test(ptype_edit.angle_israndom[X], "", text_get("particleeditorpersecond"))
+tab.tbx_type_xangle_random.suffix = "°" + text_get("particleeditorpersecond")
+tab.tbx_type_yangle.suffix = "°" + test(ptype_edit.angle_israndom[sn], "", text_get("particleeditorpersecond"))
+tab.tbx_type_yangle_random.suffix = "°" + text_get("particleeditorpersecond")
+tab.tbx_type_zangle.suffix = "°" + test(ptype_edit.angle_israndom[ud], "", text_get("particleeditorpersecond"))
+tab.tbx_type_zangle_random.suffix = "°" + text_get("particleeditorpersecond")
+
+axis_edit = X
+tab_template_editor_particles_value("particleeditortypeangle" + test(ptype_edit.angle_extend, "x", "xyz"), 
+	ptype_edit.angle[X], ptype_edit.angle_israndom[X], ptype_edit.angle_random_min[X], ptype_edit.angle_random_max[X], 
+	1 / 4, -no_limit, no_limit, array(0, 0, 360), 0, 
+	array(tab.tbx_type_xangle, tab.tbx_type_xangle_random), 
+	array(action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max), 
+	capwid)
+
+if (ptype_edit.angle_extend)
+{
+	axis_edit = sn
+	tab_template_editor_particles_value("particleeditortypeangley", 
+		ptype_edit.angle[sn], ptype_edit.angle_israndom[sn], ptype_edit.angle_random_min[sn], ptype_edit.angle_random_max[sn], 
+		1 / 4, -no_limit, no_limit, array(0, 0, 360), 0, 
+		array(tab.tbx_type_yangle, tab.tbx_type_yangle_random), 
+		array(action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max), 
+		capwid)
+	
+	axis_edit = ud
+	tab_template_editor_particles_value("particleeditortypeanglez", 
+		ptype_edit.angle[ud], ptype_edit.angle_israndom[ud], ptype_edit.angle_random_min[ud], ptype_edit.angle_random_max[ud], 
+		1 / 4, -no_limit, no_limit, array(0, 0, 360), 0, 
+		array(tab.tbx_type_zangle, tab.tbx_type_zangle_random), 
+		array(action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max), 
+		capwid)
+}
+
+tab.tbx_type_angle_strength.suffix = test(ptype_edit.angle_strength_israndom, "", text_get("particleeditorpersecond"))
+tab.tbx_type_angle_strength_random.suffix = text_get("particleeditorpersecond")
+tab.tbx_type_angle_strength_add.suffix = test(ptype_edit.angle_strength_add_israndom, "", text_get("particleeditorpersecond"))
+tab.tbx_type_angle_strength_add_random.suffix = text_get("particleeditorpersecond")
+tab.tbx_type_angle_strength_mul.suffix = test(ptype_edit.angle_strength_mul_israndom, "", text_get("particleeditorpersecond"))
+tab.tbx_type_angle_strength_mul_random.suffix = text_get("particleeditorpersecond")
+
+tab_template_editor_particles_value("particleeditortypeanglestrength", 
+	ptype_edit.angle_strength, ptype_edit.angle_strength_israndom, ptype_edit.angle_strength_random_min, ptype_edit.angle_strength_random_max, 
+	1 / 4, -no_limit, no_limit, array(20, 0, 20), 0, 
+	array(tab.tbx_type_angle_strength, tab.tbx_type_angle_strength_random), 
+	array(action_lib_pc_type_angle_strength, action_lib_pc_type_angle_strength_israndom, action_lib_pc_type_angle_strength_random_min, action_lib_pc_type_angle_strength_random_max), 
+	capwid)
+	
+tab_template_editor_particles_value("particleeditortypeanglestrengthadd", 
+	ptype_edit.angle_strength_add, ptype_edit.angle_strength_add_israndom, ptype_edit.angle_strength_add_random_min, ptype_edit.angle_strength_add_random_max, 
+	1 / 4, -no_limit, no_limit, array(0, -1, 1), 0, 
+	array(tab.tbx_type_angle_strength_add, tab.tbx_type_angle_strength_add_random), 
+	array(action_lib_pc_type_angle_strength_add, action_lib_pc_type_angle_strength_add_israndom, action_lib_pc_type_angle_strength_add_random_min, action_lib_pc_type_angle_strength_add_random_max), 
+	capwid)
+	
+tab_template_editor_particles_value("particleeditortypeanglestrengthmul", 
+	ptype_edit.angle_strength_mul, ptype_edit.angle_strength_mul_israndom, ptype_edit.angle_strength_mul_random_min, ptype_edit.angle_strength_mul_random_max, 
+	1 / 4, -no_limit, no_limit, array(1, 0.75, 0.9), 0, 
+	array(tab.tbx_type_angle_strength_mul, tab.tbx_type_angle_strength_mul_random), 
+	array(action_lib_pc_type_angle_strength_mul, action_lib_pc_type_angle_strength_mul_israndom, action_lib_pc_type_angle_strength_mul_random_min, action_lib_pc_type_angle_strength_mul_random_max), 
+	capwid)
+
+dy += 10
 
 // Speed
 capwid = test(ptype_edit.spd_extend, text_caption_width("particleeditortypespeedx", "particleeditortypespeedy", "particleeditortypespeedz", 
@@ -614,7 +732,7 @@ if (ptype_edit.temp)
 }
 
 // Sprite angle
-if (ptype_edit.temp = null)
+if (ptype_edit.temp = particle_sheet || ptype_edit.temp = particle_template)
 {
 	capwid = text_caption_width("particleeditortypespriteangle", "particleeditortypespriteangleadd")
 

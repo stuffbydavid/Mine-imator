@@ -302,7 +302,8 @@ switch (menu_name)
 	// Particle editor type library source
 	case "particleeditortypetemp":
 	{
-		menu_add_item(null, text_get("particleeditortypesprite"))
+		menu_add_item(particle_template, text_get("particleeditortypetemplate"))
+		menu_add_item(particle_sheet, text_get("particleeditortypespritesheet"))
 		
 		for (var i = 0; i < ds_list_size(lib_list.display_list); i++)
 		{
@@ -314,7 +315,7 @@ switch (menu_name)
 		break
 	}
 	
-	// Block texture
+	// Sprite sheet texture
 	case "particleeditortypespritetex":
 	{
 		var img = ptype_edit.sprite_tex_image;
@@ -333,6 +334,44 @@ switch (menu_name)
 				menu_add_item(res, res.display_name, res.particles_texture[img])
 		}
 		
+		break
+	}
+	
+	// Sprite template pack
+	case "particleeditortypespritetemplatepack":
+	{
+		var img = ptype_edit.sprite_tex_image;
+		
+		// Add from file
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		
+		// Default
+		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
+		
+		// Add existing resources (Only packs allowed)
+		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+		{
+			var res = res_list.display_list[|i];
+			if (res != mc_res && res.type = e_res_type.PACK)
+				menu_add_item(res, res.display_name, res.block_preview_texture)
+		}
+		
+		break
+	}
+	
+	// Sprite templates
+	case "particleeditortypespritetemplate":
+	{
+		for (var i = 0; i < ds_list_size(particle_template_list); i++)
+		{
+			var temp = particle_template_list[|i];
+			
+			if (temp.animated)
+				menu_add_item(temp.name, text_get("particleeditortypespritetemplate" + temp.name) + " " + text_get("particleeditortypespritetemplateframes", temp.frames))
+			else
+				menu_add_item(temp.name, text_get("particleeditortypespritetemplate" + temp.name))
+			
+		}
 		break
 	}
 	

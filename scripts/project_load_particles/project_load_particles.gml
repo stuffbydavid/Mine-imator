@@ -45,12 +45,33 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		creator = other.id
 	
 		name = value_get_string(ptypemap[?"name"], name)
-		temp = value_get_save_id(ptypemap[?"temp"], temp)
+		
+		if (load_format < e_project.FORMAT_123_PRE_2)
+		{
+			temp = value_get_save_id(ptypemap[?"temp"], particle_sheet)
+		}
+		else
+		{
+			var temptype = value_get_string(ptypemap[?"temp_type"], "sheet");
+			
+			if (temptype = "sheet")
+				temp = particle_sheet
+			else if (temptype = "template")
+				temp = particle_template
+			else
+				temp = value_get_save_id(ptypemap[?"temp"], particle_sheet)
+		}
+		
 		text = value_get_string(ptypemap[?"text"], text)
 		spawn_rate = value_get_real(ptypemap[?"spawn_rate"], spawn_rate)
 		
 		sprite_tex = value_get_save_id(ptypemap[?"sprite_tex"], sprite_tex)
-		sprite_tex_image= value_get_real(ptypemap[?"sprite_tex_image"], sprite_tex_image)
+		sprite_tex_image = value_get_real(ptypemap[?"sprite_tex_image"], sprite_tex_image)
+		sprite_template_tex = value_get_save_id(ptypemap[?"sprite_template_tex"], sprite_template_tex)
+		sprite_template = value_get_string(ptypemap[?"sprite_template"], sprite_template)
+		sprite_template_still_frame = value_get_real(ptypemap[?"sprite_template_still_frame"], sprite_template_still_frame)
+		sprite_template_random_frame = value_get_real(ptypemap[?"sprite_template_random_frame"], sprite_template_random_frame)
+		sprite_template_reverse = value_get_real(ptypemap[?"sprite_template_reverse"], sprite_template_reverse)
 		sprite_frame_width = value_get_real(ptypemap[?"sprite_frame_width"], sprite_frame_width)
 		sprite_frame_height = value_get_real(ptypemap[?"sprite_frame_height"], sprite_frame_height)
 		sprite_frame_start = value_get_real(ptypemap[?"sprite_frame_start"], sprite_frame_start)
@@ -60,6 +81,31 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		sprite_animation_speed_random_min = value_get_real(ptypemap[?"sprite_animation_speed_random_min"], sprite_animation_speed_random_min)
 		sprite_animation_speed_random_max = value_get_real(ptypemap[?"sprite_animation_speed_random_max"], sprite_animation_speed_random_max)
 		sprite_animation_onend = value_get_real(ptypemap[?"sprite_animation_onend"], sprite_animation_onend)
+		
+		angle_extend = value_get_real(ptypemap[?"angle_extend"], angle_extend)
+		angle = value_get_point3D(ptypemap[?"angle"], angle)
+		angle_israndom = value_get_point3D(ptypemap[?"angle_israndom"], angle_israndom)
+		angle_random_min = value_get_point3D(ptypemap[?"angle_random_min"], angle_random_min)
+		angle_random_max = value_get_point3D(ptypemap[?"angle_random_max"], angle_random_max)
+		angle_strength = value_get_real(ptypemap[?"angle_strength"], angle_strength)
+		angle_strength_israndom = value_get_real(ptypemap[?"angle_strength_israndom"], angle_strength_israndom)
+		angle_strength_random_min = value_get_real(ptypemap[?"angle_strength_random_min"], angle_strength_random_min)
+		angle_strength_random_max = value_get_real(ptypemap[?"angle_strength_random_max"], angle_strength_random_max)
+		angle_strength_add = value_get_real(ptypemap[?"angle_strength_add"], angle_strength_add)
+		angle_strength_add_israndom = value_get_real(ptypemap[?"angle_strength_add_israndom"], angle_strength_add_israndom)
+		angle_strength_add_random_min = value_get_real(ptypemap[?"angle_strength_add_random_min"], angle_strength_add_random_min)
+		angle_strength_add_random_max = value_get_real(ptypemap[?"angle_strength_add_random_max"], angle_strength_add_random_max)
+		angle_strength_mul = value_get_real(ptypemap[?"angle_strength_mul"], angle_strength_mul)
+		angle_strength_mul_israndom = value_get_real(ptypemap[?"angle_strength_mul_israndom"], angle_strength_mul_israndom)
+		angle_strength_mul_random_min = value_get_real(ptypemap[?"angle_strength_mul_random_min"], angle_strength_mul_random_min)
+		angle_strength_mul_random_max = value_get_real(ptypemap[?"angle_strength_mul_random_max"], angle_strength_mul_random_max)
+		
+		// Launch angle can mess up old particles, set strength to 0
+		if (load_format < e_project.FORMAT_123_PRE_2)
+		{
+			angle_strength = 0
+			angle_strength_israndom = false
+		}
 		
 		spd_extend = value_get_real(ptypemap[?"spd_extend"], spd_extend)
 		spd = value_get_point3D(ptypemap[?"spd"], spd)

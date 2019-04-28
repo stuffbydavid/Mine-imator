@@ -176,9 +176,12 @@ with (obj_particle_type)
 	if (!is_undefined(save_id_map[?load_id]))
 		save_id = save_id_map[?load_id]
 	
-	temp = save_id_find(save_id_map[?temp])
+	if (temp != particle_sheet && temp != particle_template)
+		temp = save_id_find(save_id_map[?temp])
+	
 	sprite_tex = save_id_find(save_id_map[?sprite_tex])
-
+	sprite_template_tex = save_id_find(save_id_map[?sprite_template_tex])
+	
 	// Update counters if not loaded via the workbench particle preview
 	if (temp_creator != app.bench_settings)
 		sprite_tex.count++

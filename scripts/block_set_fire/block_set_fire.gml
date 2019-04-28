@@ -1,6 +1,9 @@
 /// block_set_fire()
 /// @desc Locates non-air blocks.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var east, west, south, north, up;
 east = "false"
 west = "false"

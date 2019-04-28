@@ -36,7 +36,7 @@ with (obj_template)
 	
 	if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL || type = e_temp_type.BODYPART)
 	{
-		if (load_format >= e_project.FORMAT_110_PRE_1)
+		if (load_format >= e_project.FORMAT_110_PRE_1 && !load_update_tree)
 			temp_update_model_timeline_parts()
 		else
 			temp_update_model_timeline_tree()

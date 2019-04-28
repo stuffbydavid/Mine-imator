@@ -102,7 +102,7 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 				}
 			
 				// Calculate animation frame
-				if (!pt.type.temp)
+				if (pt.type.temp = particle_sheet)
 				{
 					var ani = particle_get_animation_percent((pt.spawntime + pt.freezetime), pt.type.sprite_frame_start, pt.type.sprite_frame_end, pt.anispeed, pt.type.sprite_animation_onend);
 					if (ani = 1 && temp.pc_destroy_at_animation_finish && pt.type.sprite_animation_onend = 0) // Animation end
@@ -112,8 +112,27 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 					}
 					pt.frame = round(pt.type.sprite_frame_start + (pt.type.sprite_frame_end - pt.type.sprite_frame_start) * ani)
 				}
-			
-			
+				else if (pt.type.temp = particle_template)
+				{
+					// Update particle frame if frame isn't animation is static
+					if (!pt.type.sprite_template_still_frame)
+					{
+						var template = particle_template_map[?pt.type.sprite_template];
+					
+						var startf, endf;
+						startf = pt.type.sprite_template_reverse ? (template.frames - 1) : 0
+						endf = pt.type.sprite_template_reverse ? 0 : (template.frames - 1)
+					
+						var ani = particle_get_animation_percent((pt.spawntime + pt.freezetime), startf, endf, pt.anispeed, pt.type.sprite_animation_onend);
+						if (ani = 1 && temp.pc_destroy_at_animation_finish && pt.type.sprite_animation_onend = 0) // Animation end
+						{
+							with (pt) instance_destroy()
+							continue
+						}
+						pt.frame = round(startf + (endf - startf) * ani)
+					}
+				}
+				
 				if (is_timeline)
 				{
 					// Don't bother updating if hidden
@@ -124,14 +143,21 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 					if (!app.view_main.particles && (!app.view_second.particles || !app.view_second.show) && app.window_state != "export_movie")
 						continue
 				}
-			
+				
+				// Angle
+				for (var a = X; a <= Z; a++)
+					pt.pos[a] += pt.angle[a] * pt.angle_strength
+				
+				pt.angle_strength += pt.angle_strength_add
+				pt.angle_strength *= pt.angle_strength_mul
+				
 				// Speed
 				for (var a = X; a <= Z; a++)
 				{
 					pt.pos[a] += pt.spd[a]
 					pt.spd[a] += pt.spd_add[a]
 					pt.spd[a] *= pt.spd_mul[a]
-					if (pt.type.temp != null)
+					if (pt.type.temp)
 					{
 						pt.rot[a] += pt.rot_spd[a]
 						pt.rot_spd[a] += pt.rot_spd_add[a]

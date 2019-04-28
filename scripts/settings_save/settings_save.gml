@@ -58,6 +58,7 @@ json_save_object_start("program")
 	json_save_var("backup_amount", setting_backup_amount)
 	json_save_var_bool("spawn_objects", setting_spawn_objects)
 	json_save_var_bool("spawn_cameras", setting_spawn_cameras)
+	json_save_var_bool("unlimited_values", setting_unlimited_values)
 
 json_save_object_done()
 

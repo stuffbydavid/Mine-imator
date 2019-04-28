@@ -1,6 +1,9 @@
 /// block_set_fence()
 /// @desc Connects to other fences with the same material, fence gates and solid adjacent faces.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var east, west, south, north, variant;
 east = "false"
 west = "false"

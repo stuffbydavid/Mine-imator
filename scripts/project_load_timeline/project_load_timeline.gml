@@ -160,6 +160,7 @@ with (new(obj_timeline))
 		inherit_bend = value_get_real(inheritmap[?"bend"], inherit_bend)
 		inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
 		inherit_glow_color = value_get_real(inheritmap[?"glow_color"], inherit_glow_color)
+		inherit_select = value_get_real(inheritmap[?"select"], inherit_select)
 	}
 	
 	scale_resize = value_get_real(map[?"scale_resize"], scale_resize)

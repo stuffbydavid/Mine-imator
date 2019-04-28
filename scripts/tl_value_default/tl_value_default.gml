@@ -33,6 +33,9 @@ switch (argument0)
 	case e_value.CAM_DOF_RANGE: return 200
 	case e_value.CAM_DOF_FADE_SIZE: return 100
 	case e_value.CAM_DOF_BLUR_SIZE: return .01
+	case e_value.CAM_DOF_BIAS: return 0
+	case e_value.CAM_DOF_THRESHOLD: return 0
+	case e_value.CAM_DOF_GAIN: return 0
 	case e_value.CAM_DOF_FRINGE_RED:
 	case e_value.CAM_DOF_FRINGE_GREEN:
 	case e_value.CAM_DOF_FRINGE_BLUE: return 1

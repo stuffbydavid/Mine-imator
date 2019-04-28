@@ -128,7 +128,7 @@ with (template_editor)
 	block_list.script = action_lib_block_name
 	sortlist_column_add(block_list, "blockname", 0)
 	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-		if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "")
+		if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
 			sortlist_add(block_list, mc_assets.block_list[|b].name)
 	
 	// Special block list
@@ -188,6 +188,19 @@ with (template_editor)
 	
 	tbx_type_sprite_animation_speed = new_textbox_decimals()
 	tbx_type_sprite_animation_speed_random = new_textbox_decimals()
+	
+	tbx_type_xangle = new_textbox_ndecimals()
+	tbx_type_xangle_random = new_textbox_ndecimals()
+	tbx_type_yangle = new_textbox_ndecimals()
+	tbx_type_yangle_random = new_textbox_ndecimals()
+	tbx_type_zangle = new_textbox_ndecimals()
+	tbx_type_zangle_random = new_textbox_ndecimals()
+	tbx_type_angle_strength = new_textbox_ndecimals()
+	tbx_type_angle_strength_random = new_textbox_ndecimals()
+	tbx_type_angle_strength_add = new_textbox_ndecimals()
+	tbx_type_angle_strength_add_random = new_textbox_ndecimals()
+	tbx_type_angle_strength_mul = new_textbox_ndecimals()
+	tbx_type_angle_strength_mul_random = new_textbox_ndecimals()
 	
 	tbx_type_xspd = new_textbox_ndecimals()
 	tbx_type_xspd_random = new_textbox_ndecimals()
@@ -258,9 +271,9 @@ with (template_editor)
 	tbx_type_alpha.suffix = "%"
 	tbx_type_alpha_random = new_textbox_integer()
 	tbx_type_alpha_random.suffix = "%"
-	tbx_type_alpha_add = new_textbox_integer()
+	tbx_type_alpha_add = new_textbox_ninteger()
 	tbx_type_alpha_add.suffix = "%"
-	tbx_type_alpha_add_random = new_textbox_integer()
+	tbx_type_alpha_add_random = new_textbox_ninteger()
 	tbx_type_alpha_add_random.suffix = "%"
 	
 	tbx_type_color_mix_time = new_textbox_decimals()
@@ -469,6 +482,12 @@ with (frame_editor)
 		tbx_dof_fade_size = new_textbox_decimals()
 		tbx_dof_blur_size = new_textbox_decimals()
 		tbx_dof_blur_size.suffix = "%"
+		tbx_dof_bias = new_textbox_integer()
+		tbx_dof_bias.suffix = "%"
+		tbx_dof_threshold = new_textbox_integer()
+		tbx_dof_threshold.suffix = "%"
+		tbx_dof_gain = new_textbox_integer()
+		tbx_dof_gain.suffix = "%"
 		tbx_dof_fringe_angle_red = new_textbox_ndecimals()
 		tbx_dof_fringe_angle_red.suffix = "°"
 		tbx_dof_fringe_angle_green = new_textbox_ndecimals()

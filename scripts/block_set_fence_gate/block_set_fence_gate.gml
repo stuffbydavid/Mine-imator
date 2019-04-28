@@ -1,6 +1,9 @@
 /// block_set_fence_gate()
 /// @desc Connects to fences and cobblestone walls in the same direction.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return 0
+
 var block, facing, inwall;
 facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 inwall = "false"

@@ -55,6 +55,10 @@ else // Uses own block model with default state
 	tl_has_model_state = false
 }
 
+// Render block model with timeline model?
+if (is_real(map[?"model_double"]))
+	model_double = map[?"model_double"]
+
 // Text
 tl_has_text = false
 if (is_real(map[?"has_text"]))

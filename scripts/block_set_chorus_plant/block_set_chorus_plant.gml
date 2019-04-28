@@ -1,6 +1,9 @@
 /// block_set_chorus_plant()
 /// @desc Connects to other chorus plants, chorus flowers and end stone below.
 
+if (builder_scenery && !builder_scenery_legacy)
+	return null
+
 var east, west, south, north, up, down;
 east = "false"
 west = "false"

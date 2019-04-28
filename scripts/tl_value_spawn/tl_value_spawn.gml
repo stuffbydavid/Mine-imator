@@ -43,6 +43,10 @@ else if (parent = app && part_of = null && type != e_tl_type.FOLDER && value_typ
 		value[e_value.POS_Z] += 16
 }
 
+// Disable SSAO on particles by default
+if (type = e_tl_type.PARTICLE_SPAWNER)
+	ssao = false
+
 // Set defaults
 for (var v = 0; v < e_value.amount; v++)
 	value_default[v] = value[v]

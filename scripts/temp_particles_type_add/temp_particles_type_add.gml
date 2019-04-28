@@ -10,6 +10,8 @@ ptype.name = text_get("particleeditortypedefault", string(ds_list_size(pc_type_l
 ptype.spawn_rate = 1 / ds_list_size(pc_type_list)
 ptype.sprite_tex = mc_res
 ptype.sprite_tex.count++
+ptype.sprite_template_tex = mc_res
+ptype.sprite_template_tex.count++
 
 // Update models
 with (ptype)

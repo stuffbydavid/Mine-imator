@@ -28,6 +28,8 @@ model_state = array()
 model_part_name = ""
 model_part = null
 
+load_update_tree = false
+
 banner_base_color = c_minecraft_white
 banner_pattern_list = array()
 banner_color_list = array()
@@ -46,6 +48,9 @@ block_name = default_block
 block_state = array()
 block_tex = null
 block_vbuffer = null
+block_vbuffer_depth0 = false
+block_vbuffer_depth1 = false
+block_vbuffer_depth2 = false
 block_repeat_enable = false
 block_repeat = vec3(1)
 

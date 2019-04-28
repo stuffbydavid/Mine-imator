@@ -10,7 +10,7 @@ shader_blend_color = color_multiply(prevcolor, color)
 shader_blend_alpha *= alpha
 render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 
-if (temp != null)
+if (temp != particle_sheet && temp != particle_template)
 {
 	var scenery, rep, off;
 	off = point3D(0, 0, 0)
@@ -154,16 +154,45 @@ if (temp != null)
 }
 else // Sprite
 {
-	var res = type.sprite_tex;
-	if (!res.ready)
-		res = mc_res
+	if (type.temp = particle_sheet)
+	{
+		var res = type.sprite_tex;
+		if (!res.ready)
+			res = mc_res
 	
-	render_set_texture(res.particles_texture[type.sprite_tex_image])
+		render_set_texture(res.particles_texture[type.sprite_tex_image])
+	}
+	else
+	{
+		var template = particle_template_map[?type.sprite_template];
+		var res = type.sprite_template_tex;
+		if (!res.ready)
+			res = mc_res
+		
+		var texname = template.texture_list[|frame];
+		
+		var tex = res.particle_texture_map[?texname];
+		
+		if (tex = undefined)
+		{
+			shader_blend_color = prevcolor
+			shader_blend_alpha = prevalpha
+			
+			return 0
+		}
+		else
+			render_set_texture(tex)
+	}
 	
 	var xyang, zang, m;
 	xyang = 90 + point_direction(pos[X], pos[Y], proj_from[X], proj_from[Y])
 	zang = -point_zdirection(pos[X], pos[Y], pos[Z], proj_from[X], proj_from[Y], proj_from[Z])
-	m = max(0, frame - min(type.sprite_frame_start, type.sprite_frame_end)) mod type.sprite_vbuffer_amount
+	
+	if (type.temp = particle_sheet)
+		m = max(0, frame - min(type.sprite_frame_start, type.sprite_frame_end)) mod type.sprite_vbuffer_amount
+	else
+		m = max(0, frame) mod type.sprite_vbuffer_amount
+	
 	matrix_set(matrix_world, matrix_create(pos, vec3(zang, sprite_angle, xyang), vec3(scale)))
 	
 	vbuffer_render(type.sprite_vbuffer[m])

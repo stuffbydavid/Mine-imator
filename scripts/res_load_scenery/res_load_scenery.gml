@@ -66,6 +66,7 @@ switch (load_stage)
 			
 			// Get format
 			legacy = is_undefined(schematicmap[?"Palette"])
+			mc_builder.builder_scenery_legacy = legacy
 			
 			// Get size
 			mc_builder.build_size[X] = schematicmap[?"Width"]
@@ -428,6 +429,7 @@ switch (load_stage)
 	// Read blocks
 	case "blocks":
 	{
+		mc_builder.builder_scenery = true
 		// Set models
 		with (mc_builder)
 		{
@@ -437,6 +439,7 @@ switch (load_stage)
 						
 			build_pos_z++
 		}
+		mc_builder.builder_scenery = false
 		
 		if (mc_builder.build_pos_z = mc_builder.build_size_z)
 		{
@@ -462,6 +465,7 @@ switch (load_stage)
 	// Generate model
 	case "model":
 	{
+		mc_builder.builder_scenery = true
 		with (mc_builder)
 		{
 			for (build_pos_y = 0; build_pos_y < build_size_y; build_pos_y++)
@@ -470,6 +474,7 @@ switch (load_stage)
 					
 			build_pos_z++
 		}
+		mc_builder.builder_scenery = false
 		
 		// All done
 		if (mc_builder.build_pos_z = mc_builder.build_size_z)

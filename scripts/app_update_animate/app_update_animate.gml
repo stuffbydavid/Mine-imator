@@ -2,9 +2,10 @@
 /// @desc Handles the playing of various animations. Runs once per step.
 
 // Go through timelines
-var bgobject, updatevalues;
+var bgobject, updatevalues, cameraarr;
 updatevalues = (timeline_marker_previous != timeline_marker)
 bgobject = null
+cameraarr = array()
 background_light_amount = 1
 background_light_data[0] = 0
 
@@ -14,8 +15,14 @@ with (obj_timeline)
 	if (updatevalues)
 		tl_update_values()
 	
+	// Update render resource
+	if (tl_get_visible())
+		render_update_tl_resource()
+	
 	if (type = e_tl_type.CAMERA)
 	{
+		array_add(cameraarr, id)
+		
 		// Animated zoom
 		if (app.window_busy = "") 
 		{
@@ -65,15 +72,16 @@ if (updatevalues)
 
 // Find camera
 timeline_camera = null
-with (obj_timeline)
+for (var i = 0; i < array_length_1d(cameraarr); i++)
 {
-	if (type = e_tl_type.CAMERA && (selected || (value_inherit[e_value.VISIBLE] && !hide)))
+	var cam = cameraarr[i];
+		
+	if (cam.selected || (cam.value_inherit[e_value.VISIBLE] && !cam.hide))
 	{
-		app.timeline_camera = id
+		timeline_camera = cam
 		break
 	}
 }
-	
 timeline_marker_previous = timeline_marker
 
 // Background

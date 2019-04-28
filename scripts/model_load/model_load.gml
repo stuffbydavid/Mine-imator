@@ -40,6 +40,9 @@ with (new(obj_model))
 	else
 		texture_name_map = null
 	
+	// Version
+	version = value_get_real(map[?"version"], 0)
+	
 	// Read states and their possible values
 	states_map = null
 	if (ds_map_valid(map[?"states"]))

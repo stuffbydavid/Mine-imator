@@ -18,7 +18,7 @@ with (obj_timeline)
 }
 		
 with (obj_particle_type)
-	if (temp != null && temp.type = e_temp_type.TEXT)
+	if ((temp != particle_sheet && temp != particle_template) && temp.type = e_temp_type.TEXT)
 		render_generate_text(id.text, temp.text_font, temp.text_3d)
 		
 with (obj_preview)
