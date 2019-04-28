@@ -94,6 +94,9 @@ if (!ssao)
 
 render_set_uniform_int("uBlockGlow", app.setting_block_glow)
 
+if (bleed_light)
+	render_set_uniform("uBleedLight", bool_to_float(bleed_light))
+
 var prevblend = gpu_get_blendmode();
 
 if (glow)
@@ -216,3 +219,6 @@ if (!ssao)
 
 if (glow && only_render_glow)
 	gpu_set_blendmode(prevblend)
+	
+if (bleed_light)
+	render_set_uniform("uBleedLight", 0)

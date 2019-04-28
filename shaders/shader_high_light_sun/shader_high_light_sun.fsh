@@ -19,6 +19,7 @@ uniform int uBlurQuality;
 uniform float uBlurSize;
 
 uniform float uDiffuseBoost;
+uniform float uBleedLight;
 
 varying vec3 vPosition;
 varying float vDepth;
@@ -43,7 +44,7 @@ void main()
 	{
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));	
-		dif = clamp(dif + vLightBleed, 0.0, 1.0);
+		dif = clamp(dif + min(1.0, vLightBleed + uBleedLight), 0.0, 1.0);
 		
 		float shadow = 0.0;
 	
@@ -58,7 +59,7 @@ void main()
 			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 			{
 				// Blur size(Increase if there's light bleeding)
-				float blurSize = uBlurSize + (.2 * vLightBleed);
+				float blurSize = uBlurSize + (.2 * min(1.0, vLightBleed + uBleedLight));
 				
 				// Calculate bias
 				float bias = 1.0 + (uLightFar / fragDepth) * blurSize;

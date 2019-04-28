@@ -54,6 +54,7 @@ to.wind_terrain = wind_terrain
 to.hq_hiding = hq_hiding
 to.lq_hiding = lq_hiding
 to.foliage_tint = foliage_tint
+to.bleed_light = bleed_light
 
 if (part_of != null && part_of != "")
 {

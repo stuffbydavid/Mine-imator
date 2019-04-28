@@ -219,6 +219,7 @@ with (shader_map[?shader_high_light_point])
 	new_shader_sampler("uDepthBufferZn")
 	new_shader_uniform("uBlurQuality")
 	new_shader_uniform("uBlurSize")
+	new_shader_uniform("uBleedLight")
 }
 
 with (shader_map[?shader_high_light_point_shadowless])
@@ -249,6 +250,7 @@ with (shader_map[?shader_high_light_spot])
 	new_shader_sampler("uDepthBuffer")
 	new_shader_uniform("uBlurQuality")
 	new_shader_uniform("uBlurSize")
+	new_shader_uniform("uBleedLight")
 }
 
 with (shader_map[?shader_high_light_sun])
@@ -269,6 +271,7 @@ with (shader_map[?shader_high_light_sun])
 	new_shader_uniform("uBlurQuality")
 	new_shader_uniform("uBlurSize")
 	new_shader_uniform("uDiffuseBoost")
+	new_shader_uniform("uBleedLight")
 }
 
 with (shader_map[?shader_high_ssao])

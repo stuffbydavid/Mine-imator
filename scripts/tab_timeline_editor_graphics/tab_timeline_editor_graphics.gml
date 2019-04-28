@@ -61,7 +61,12 @@ if (tl_edit.type != e_tl_type.POINT_LIGHT && tl_edit.type != e_tl_type.SPOT_LIGH
 	// Foliage tint
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorfoliagetint", dx, dy, tl_edit.foliage_tint, action_tl_foliage_tint)
+	
+	// Bleed light
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorbleedlight", dx + floor(dw * 0.5), dy, tl_edit.bleed_light, action_tl_bleed_light)
 	tab_next()
+	
 }
 else
 {

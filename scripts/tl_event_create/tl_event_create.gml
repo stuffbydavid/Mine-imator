@@ -89,6 +89,7 @@ wind_terrain = true
 hq_hiding = false
 lq_hiding = false
 foliage_tint = false
+bleed_light = false
 
 particle_list = null
 

@@ -20,6 +20,8 @@ uniform sampler2D uDepthBuffer;
 uniform int uBlurQuality;
 uniform float uBlurSize;
 
+uniform float uBleedLight;
+
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
@@ -48,7 +50,7 @@ void main()
 		{
 			// Diffuse factor
 			dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));
-			dif = clamp(dif + vLightBleed, 0.0, 1.0);
+			dif = clamp(dif + min(1.0, vLightBleed + uBleedLight), 0.0, 1.0);
 			
 			// Attenuation factor
 			dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
@@ -62,7 +64,7 @@ void main()
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 				{
 					// Blur size(Increase if there's light bleeding)
-					float blurSize = uBlurSize + (.2 * vLightBleed);
+					float blurSize = uBlurSize + (.2 * min(1.0, vLightBleed + uBleedLight));
 					
 					// Create circle
 					dif *= 1.0 - clamp((distance(fragCoord, vec2(0.5, 0.5)) - 0.5 * uLightSpotSharpness) / (0.5 * max(0.01, 1.0 - uLightSpotSharpness)), 0.0, 1.0);
