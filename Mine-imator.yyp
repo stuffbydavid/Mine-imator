@@ -5583,6 +5583,14 @@
             }
         },
         {
+            "Key": "5bb62dcf-8b48-468c-8dc6-009aec014a55",
+            "Value": {
+                "id": "2769a3db-08ac-43bd-af75-ad1edf1cd6f6",
+                "resourcePath": "datafiles_yy\\Data\\import.exe.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "5c1ee956-fc7d-4002-abaa-4c127c9bb894",
             "Value": {
                 "id": "f38c11ef-1c95-44c1-96a9-76dd5b3d73e5",
@@ -7220,14 +7228,6 @@
                 "id": "54f2f723-6cca-423c-8415-6c2cd47926b3",
                 "resourcePath": "scripts\\action_setting_tip_delay\\action_setting_tip_delay.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "748e097a-087c-4cb6-b5db-c20c0603dd71",
-            "Value": {
-                "id": "d0ffdada-fb92-4610-a594-a69a2336e7e3",
-                "resourcePath": "datafiles_yy\\Data\\import.exe.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

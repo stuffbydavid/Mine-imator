@@ -186,6 +186,7 @@ if (value_type[e_value_type.CAMERA])
 	tl_update_values_ease(e_value.CAM_ROTATE_ANGLE_Z, trans, p)
 	
 	tl_update_values_ease(e_value.CAM_SHAKE, trans, p)
+	tl_update_values_ease(e_value.CAM_SHAKE_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.CAM_SHAKE_VERTICAL_OFFSET, trans, p)
 	tl_update_values_ease(e_value.CAM_SHAKE_VERTICAL_SPEED, trans, p)
 	tl_update_values_ease(e_value.CAM_SHAKE_VERTICAL_STRENGTH, trans, p)
