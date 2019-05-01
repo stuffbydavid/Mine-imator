@@ -6,7 +6,10 @@ gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], false)
 
 render_set_uniform_vec2("uScreenSize", render_width, render_height)
 
-render_set_uniform("uBlurSize", render_camera.value[e_value.CAM_DOF_BLUR_SIZE])
+var blursize = vec2(1 + render_camera.value[e_value.CAM_DOF_BLUR_RATIO], 1 - render_camera.value[e_value.CAM_DOF_BLUR_RATIO]);
+blursize = vec2_mul(blursize, render_camera.value[e_value.CAM_DOF_BLUR_SIZE])
+
+render_set_uniform_vec2("uBlurSize", blursize[X], blursize[Y])
 render_set_uniform("uDepth", render_camera.value[e_value.CAM_DOF_DEPTH])
 render_set_uniform("uRange", render_camera.value[e_value.CAM_DOF_RANGE])
 render_set_uniform("uFadeSize", render_camera.value[e_value.CAM_DOF_FADE_SIZE])

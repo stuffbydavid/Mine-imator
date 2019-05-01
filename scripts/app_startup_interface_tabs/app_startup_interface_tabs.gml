@@ -482,6 +482,8 @@ with (frame_editor)
 		tbx_dof_fade_size = new_textbox_decimals()
 		tbx_dof_blur_size = new_textbox_decimals()
 		tbx_dof_blur_size.suffix = "%"
+		tbx_dof_blur_ratio = new_textbox_integer()
+		tbx_dof_blur_ratio.suffix = "%"
 		tbx_dof_bias = new_textbox_integer()
 		tbx_dof_bias.suffix = "%"
 		tbx_dof_threshold = new_textbox_integer()

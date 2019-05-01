@@ -12135,6 +12135,14 @@
             }
         },
         {
+            "Key": "c1b2caa9-a193-4e47-8fe3-837b4f565630",
+            "Value": {
+                "id": "cb53d2a0-2400-49fa-aaa4-4ec0fb832248",
+                "resourcePath": "scripts\\action_tl_frame_cam_dof_blur_ratio\\action_tl_frame_cam_dof_blur_ratio.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "c1b5d8a5-b103-495a-8b93-f0bbfba15bcb",
             "Value": {
                 "id": "d77b0da7-42b2-4c8a-b822-30c5c72dc55c",
@@ -16593,6 +16601,7 @@
         "3cbca06b-7c86-449e-acd2-ccfe1cce5cd1",
         "32e9da40-acf2-4fb1-9b71-61f790d52fb4",
         "41ab289a-b31b-4af8-be26-5101f8cf0353",
+        "c1b2caa9-a193-4e47-8fe3-837b4f565630",
         "2fbcba6d-00ca-4bc5-9826-dea965572346",
         "f3e7837b-afb5-480e-800a-c804fedce817",
         "502cdc6e-2728-4e83-9387-f1bdb5a7294e",

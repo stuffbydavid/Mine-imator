@@ -2640,6 +2640,8 @@
             "doffadesizetip": "The size of the fade between focused and non-focused areas.",
             "dofblursize": "Blur size",
             "dofblursizetip": "The size of the blur in unfocused areas in percentage of the whole screen.",
+            "dofblurratio": "Anamorphic ratio",
+            "dofblurratiotip": "The horizontal/vertical ratio of the DOF effect.",
             "dofbias": "Edge bias",
             "dofbiastip": "Determines how strong bokeh edges shouls appear.",
             "dofthreshold": "Bokeh threshold",

@@ -123,6 +123,10 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	tab_next()
 	
 	tab_control_meter()
+	draw_meter("frameeditorcameradofblurratio", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100, 48, -100, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
+	tab_next()
+	
+	tab_control_meter()
 	draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 100), 48, 0, 200, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
 	tab_next()
 	

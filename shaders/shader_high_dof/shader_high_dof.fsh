@@ -1,6 +1,6 @@
 uniform sampler2D uDepthBuffer;
 uniform vec2 uScreenSize;
-uniform float uBlurSize;
+uniform vec2 uBlurSize;
 uniform float uDepth;
 uniform float uRange;
 uniform float uFadeSize;
@@ -23,7 +23,7 @@ const float tau = pi * 2.0;
 const int samplesMultiplier = 5;
 const int rings = 8;
 
-float screenSampleSize = uScreenSize.y * uBlurSize;
+vec2 screenSampleSize = uScreenSize.y * uBlurSize;
 vec2 texelSize = 1.0 / uScreenSize;
 
 float unpackDepth(vec4 c)
@@ -58,7 +58,7 @@ vec4 getFringe(vec2 coord, float blur, vec4 color)
 	if (uFringe < 1)
 		return baseColor;
 	
-	float fringeSize = texelSize.x * blur * screenSampleSize;
+	vec2 fringeSize = texelSize.x * blur * screenSampleSize;
 	
 	vec2 redOffset = vec2(cos(uFringeAngle.x), sin(uFringeAngle.x)) * (uFringeStrength.x * fringeSize);
 	float redDepth = getDepth(coord + redOffset);
@@ -100,7 +100,7 @@ void main()
 	float myBackBlur = getBackBlur(myDepth);
 	
 	float blur = 0.0;
-	float maxdis = screenSampleSize * screenSampleSize + screenSampleSize * screenSampleSize;
+	vec2 maxdis = screenSampleSize * screenSampleSize + screenSampleSize * screenSampleSize;
 	float colorDiv = 0.0;
 	vec4 colorAdd = vec4(0.0);
 	
