@@ -128,6 +128,8 @@ if (timeline_region_start != null)
 		if (x2 < barw)
 			draw_image(spr_marker, 1, barx + x2, bary, 1, content_height + barh, setting_color_highlight, 1)
 	}
+	
+	
 }
 
 // Frames
@@ -1033,6 +1035,8 @@ if (window_busy = "timelinecreateregion" || window_busy = "timelinesetregionstar
 	
 	project_changed = true
 	
+	
+	
 	if (window_busy = "timelinesetregionend")
 	{
 		if (timeline_mouse_pos >= timeline_region_pos)
@@ -1045,6 +1049,8 @@ if (window_busy = "timelinecreateregion" || window_busy = "timelinesetregionstar
 			timeline_region_end = timeline_region_pos
 			timeline_region_start = timeline_mouse_pos
 		}
+		
+		
 	}
 	else
 	{
@@ -1069,6 +1075,9 @@ if (window_busy = "timelinecreateregion" || window_busy = "timelinesetregionstar
 		}
 		window_busy = ""
 	}
+	
+	
+	
 }
 
 // Move marker
@@ -1173,3 +1182,35 @@ if (tlw > 16)
 // Horizontal scrollbar
 if (content_height > 0 && (!timeline_playing || !setting_timeline_autoscroll))
 	scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 30, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw))
+
+
+
+
+if(timeline_region_start){
+	regionx1 = floor(timeline_region_start * timeline_zoom - timeline.hor_scroll.value)
+	regionx2 = floor(timeline_region_end * timeline_zoom - timeline.hor_scroll.value)
+	var text = text_get("toolbarselectedrange", timeline_region_start, timeline_region_end, timeline_region_end - timeline_region_start)
+	var stringWidth = string_width(text)
+	var boxX = clamp(barx + (regionx1 + regionx2) / 2 - stringWidth/2, barx + 20, barx + barw - stringWidth - 30) 
+	var boxY = bary - 20
+	draw_set_alpha(1)
+	
+	draw_set_color(setting_color_tips)
+	draw_box_rounded(boxX - 5, boxY, stringWidth + 10, 20, setting_color_tips, 1, 
+	true,true,true,true, 
+	4, spr_rounded_4)
+	draw_set_color(setting_color_tips_text)
+	draw_text(boxX, boxY, text)
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
