@@ -2335,7 +2335,8 @@
         "cutkeyframestip": "Cut the selected keyframes.",
         "pastekeyframestip": "Paste the copied keyframes.",
         "removekeyframestip": "Remove the selected keyframes.",
-        "exportkeyframestip": "Export the selected keyframes."
+        "exportkeyframestip": "Export the selected keyframes.",
+        "selectedrange": "%1 - %2 (%3 frames selected)"
     },
     "timelineeditor/": {
         "info": "Info",
