@@ -60,8 +60,8 @@ for (var i = 1; i <= len; i++)
 		return inv
 }
 
-// Finally, check that the string ends with at least one digit or a decimal point
-if (str = "-" || str = ".")
+// Finally, check if the string only contains minus symbols or decimals
+if (string_replace(string_replace(str, "-", ""), ".", "") = "")
 	return 0
 
 if (state >= 2)
