@@ -22,8 +22,8 @@ solidzp = (block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)
 solidzn = (block_face_min_depth_zn = e_block_depth.DEPTH0 && block_face_full_zn)
 
 // Waterlogged: No water around, no need to render
-if (waterlogged && !matchxp && !matchxn && !matchyp && !matchyn && !matchzp && !matchzn)
-	return 0
+//if (waterlogged && !matchxp && !matchxn && !matchyp && !matchyn && !matchzp && !matchzn)
+//	return 0
 
 // Match with waterlogged
 matchxp = (matchxp || (!build_edge_xp && builder_get_waterlogged(build_pos_x + 1, build_pos_y, build_pos_z)))
@@ -148,7 +148,7 @@ topflow = true
 topangle = 0
 
 // Corners
-var level = block_state_id_current;
+var level = waterlogged ? 0 : block_state_id_current;
 var corner0z, corner1z, corner2z, corner3z, minz, averagez;
 
 // Wave
@@ -195,38 +195,6 @@ else
 	sidelevelyp = level
 	sidelevelyn = level
 	
-	if (!build_edge_xp)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) = block_current)
-			sidelevelxp = 8
-		else if (matchxp)
-			sidelevelxp = builder_get(block_state_id, build_pos_x + 1, build_pos_y, build_pos_z)
-	}
-	
-	if (!build_edge_xn)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1) = block_current)
-			sidelevelxn = 8
-		else if (matchxn)
-			sidelevelxn = builder_get(block_state_id, build_pos_x - 1, build_pos_y, build_pos_z)
-	}
-	
-	if (!build_edge_yp)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1) = block_current)
-			sidelevelyp = 8
-		else if (matchyp)
-			sidelevelyp = builder_get(block_state_id, build_pos_x, build_pos_y + 1, build_pos_z)
-	}
-		
-	if (!build_edge_yn)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1) = block_current)
-			sidelevelyn = 8
-		else if (matchyn)
-			sidelevelyn = builder_get(block_state_id, build_pos_x, build_pos_y - 1, build_pos_z)
-	}
-		
 	// Level at corners
 	var corner0level, corner1level, corner2level, corner3level;
 	corner0level = level
@@ -234,36 +202,73 @@ else
 	corner2level = level
 	corner3level = level
 	
-	if (!build_edge_xn && !build_edge_yn)
+	if (!waterlogged)
 	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z + 1) = block_current)
-			corner0level = 8
-		else if (builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z) = block_current)
-			corner0level = builder_get(block_state_id, build_pos_x - 1, build_pos_y - 1, build_pos_z)
-	}
+		// Side levels
+		if (!build_edge_xp)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) = block_current)
+				sidelevelxp = 8
+			else if (matchxp)
+				sidelevelxp = builder_get(block_state_id, build_pos_x + 1, build_pos_y, build_pos_z)
+		}
 	
-	if (!build_edge_xp && !build_edge_yn)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z + 1) = block_current)
-			corner1level = 8
-		else if (builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z) = block_current)
-			corner1level = builder_get(block_state_id, build_pos_x + 1, build_pos_y - 1, build_pos_z)
-	}
+		if (!build_edge_xn)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1) = block_current)
+				sidelevelxn = 8
+			else if (matchxn)
+				sidelevelxn = builder_get(block_state_id, build_pos_x - 1, build_pos_y, build_pos_z)
+		}
 	
-	if (!build_edge_xp && !build_edge_yp)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z + 1) = block_current)
-			corner2level = 8
-		else if (builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z) = block_current)
-			corner2level = builder_get(block_state_id, build_pos_x + 1, build_pos_y + 1, build_pos_z)
-	}
+		if (!build_edge_yp)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1) = block_current)
+				sidelevelyp = 8
+			else if (matchyp)
+				sidelevelyp = builder_get(block_state_id, build_pos_x, build_pos_y + 1, build_pos_z)
+		}
+		
+		if (!build_edge_yn)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1) = block_current)
+				sidelevelyn = 8
+			else if (matchyn)
+				sidelevelyn = builder_get(block_state_id, build_pos_x, build_pos_y - 1, build_pos_z)
+		}
+		
+		// Corner levels
+		if (!build_edge_xn && !build_edge_yn)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z + 1) = block_current)
+				corner0level = 8
+			else if (builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z) = block_current)
+				corner0level = builder_get(block_state_id, build_pos_x - 1, build_pos_y - 1, build_pos_z)
+		}
 	
-	if (!build_edge_xn && !build_edge_yp)
-	{
-		if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z + 1) = block_current)
-			corner3level = 8
-		else if (builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z) = block_current)
-			corner3level = builder_get(block_state_id, build_pos_x - 1, build_pos_y + 1, build_pos_z)
+		if (!build_edge_xp && !build_edge_yn)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z + 1) = block_current)
+				corner1level = 8
+			else if (builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z) = block_current)
+				corner1level = builder_get(block_state_id, build_pos_x + 1, build_pos_y - 1, build_pos_z)
+		}
+	
+		if (!build_edge_xp && !build_edge_yp)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z + 1) = block_current)
+				corner2level = 8
+			else if (builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z) = block_current)
+				corner2level = builder_get(block_state_id, build_pos_x + 1, build_pos_y + 1, build_pos_z)
+		}
+	
+		if (!build_edge_xn && !build_edge_yp)
+		{
+			if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z + 1) = block_current)
+				corner3level = 8
+			else if (builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z) = block_current)
+				corner3level = builder_get(block_state_id, build_pos_x - 1, build_pos_y + 1, build_pos_z)
+		}
 	}
 	
 	// Set top face flow

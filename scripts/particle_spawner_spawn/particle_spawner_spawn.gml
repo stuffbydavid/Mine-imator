@@ -107,12 +107,12 @@ for (var a = X; a <= Z; a++)
 pt.angle = vec3_normalize(vec3_mul_matrix(vec3(0, 0, 1), matrix_create(vec3(0), pt.angle, vec3(1))))
 
 // Angle strength
-pt.angle_strength = value_random(type.angle_strength, type.angle_strength_israndom, type.angle_strength_random_min, type.angle_strength_random_max) / 60
-pt.angle_strength_add = value_random(type.angle_strength_add, type.angle_strength_add_israndom, type.angle_strength_add_random_min, type.angle_strength_add_random_max) / 60
-pt.angle_strength_mul = value_random(type.angle_strength_mul, type.angle_strength_mul_israndom, type.angle_strength_mul_random_min, type.angle_strength_mul_random_max)
-if (pt.angle_strength_mul != 1)
+pt.angle_speed = value_random(type.angle_speed, type.angle_speed_israndom, type.angle_speed_random_min, type.angle_speed_random_max) / 60
+pt.angle_speed_add = value_random(type.angle_speed_add, type.angle_speed_add_israndom, type.angle_speed_add_random_min, type.angle_speed_add_random_max) / 60
+pt.angle_speed_mul = value_random(type.angle_speed_mul, type.angle_speed_mul_israndom, type.angle_speed_mul_random_min, type.angle_speed_mul_random_max)
+if (pt.angle_speed_mul != 1)
 	repeat (5)
-		pt.angle_strength_mul = sqrt(pt.angle_strength_mul)
+		pt.angle_speed_mul = sqrt(pt.angle_speed_mul)
 			
 // Sprite angle
 pt.sprite_angle = value_random(type.sprite_angle, type.sprite_angle_israndom, type.sprite_angle_random_min, type.sprite_angle_random_max)

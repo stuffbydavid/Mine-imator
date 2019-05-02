@@ -123,11 +123,11 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("frameeditorcameradofblurratio", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100, 48, -100, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
+	draw_meter("frameeditorcameradofblurratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100), 48, -100, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 100), 48, 0, 200, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
+	draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 10), 48, 0, 100, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
 	tab_next()
 	
 	tab_control_meter()
@@ -135,7 +135,7 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("frameeditorcameradofgain", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_GAIN] * 100), 48, 0, 100, 0, 1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
+	draw_meter("frameeditorcameradofgain", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_GAIN] * 100), 48, 0, 200, 0, 1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
 	tab_next()
 	
 	tab_control_checkbox()
@@ -175,15 +175,15 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 		capwid = text_caption_width("frameeditorcameradoffringered", "frameeditorcameradoffringegreen", "frameeditorcameradoffringeblue")
 		
 		tab_control_meter()
-		draw_meter("frameeditorcameradoffringered", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FRINGE_RED] * 100, 48, 0, 300, 100, 0, tab.camera.tbx_dof_fringe_red, action_tl_frame_cam_dof_fringe_red, capwid)
+		draw_meter("frameeditorcameradoffringered", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_FRINGE_RED] * 100), 48, 0, 300, 100, 1, tab.camera.tbx_dof_fringe_red, action_tl_frame_cam_dof_fringe_red, capwid)
 		tab_next()
 	
 		tab_control_meter()
-		draw_meter("frameeditorcameradoffringegreen", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FRINGE_GREEN] * 100, 48, 0, 300, 100, 0, tab.camera.tbx_dof_fringe_green, action_tl_frame_cam_dof_fringe_green, capwid)
+		draw_meter("frameeditorcameradoffringegreen", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_FRINGE_GREEN] * 100), 48, 0, 300, 100, 1, tab.camera.tbx_dof_fringe_green, action_tl_frame_cam_dof_fringe_green, capwid)
 		tab_next()
 	
 		tab_control_meter()
-		draw_meter("frameeditorcameradoffringeblue", dx, dy, dw, tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE] * 100, 48, 0, 300, 100, 0, tab.camera.tbx_dof_fringe_blue, action_tl_frame_cam_dof_fringe_blue, capwid)
+		draw_meter("frameeditorcameradoffringeblue", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE] * 100), 48, 0, 300, 100, 1, tab.camera.tbx_dof_fringe_blue, action_tl_frame_cam_dof_fringe_blue, capwid)
 		tab_next()
 		
 		// Tools

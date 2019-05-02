@@ -104,7 +104,7 @@ void main()
 	float colorDiv = 0.0;
 	vec4 colorAdd = vec4(0.0);
 	
-	float weightStrength = 1.0;
+	float weightStrength = 0.0;
 	int ringSamples;
 	
 	colorAdd = texture2D(gm_BaseTexture, vTexCoord);

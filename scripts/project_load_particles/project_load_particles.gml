@@ -87,24 +87,24 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		angle_israndom = value_get_point3D(ptypemap[?"angle_israndom"], angle_israndom)
 		angle_random_min = value_get_point3D(ptypemap[?"angle_random_min"], angle_random_min)
 		angle_random_max = value_get_point3D(ptypemap[?"angle_random_max"], angle_random_max)
-		angle_strength = value_get_real(ptypemap[?"angle_strength"], angle_strength)
-		angle_strength_israndom = value_get_real(ptypemap[?"angle_strength_israndom"], angle_strength_israndom)
-		angle_strength_random_min = value_get_real(ptypemap[?"angle_strength_random_min"], angle_strength_random_min)
-		angle_strength_random_max = value_get_real(ptypemap[?"angle_strength_random_max"], angle_strength_random_max)
-		angle_strength_add = value_get_real(ptypemap[?"angle_strength_add"], angle_strength_add)
-		angle_strength_add_israndom = value_get_real(ptypemap[?"angle_strength_add_israndom"], angle_strength_add_israndom)
-		angle_strength_add_random_min = value_get_real(ptypemap[?"angle_strength_add_random_min"], angle_strength_add_random_min)
-		angle_strength_add_random_max = value_get_real(ptypemap[?"angle_strength_add_random_max"], angle_strength_add_random_max)
-		angle_strength_mul = value_get_real(ptypemap[?"angle_strength_mul"], angle_strength_mul)
-		angle_strength_mul_israndom = value_get_real(ptypemap[?"angle_strength_mul_israndom"], angle_strength_mul_israndom)
-		angle_strength_mul_random_min = value_get_real(ptypemap[?"angle_strength_mul_random_min"], angle_strength_mul_random_min)
-		angle_strength_mul_random_max = value_get_real(ptypemap[?"angle_strength_mul_random_max"], angle_strength_mul_random_max)
+		angle_speed = value_get_real(ptypemap[?"angle_speed"], angle_speed)
+		angle_speed_israndom = value_get_real(ptypemap[?"angle_speed_israndom"], angle_speed_israndom)
+		angle_speed_random_min = value_get_real(ptypemap[?"angle_speed_random_min"], angle_speed_random_min)
+		angle_speed_random_max = value_get_real(ptypemap[?"angle_speed_random_max"], angle_speed_random_max)
+		angle_speed_add = value_get_real(ptypemap[?"angle_speed_add"], angle_speed_add)
+		angle_speed_add_israndom = value_get_real(ptypemap[?"angle_speed_add_israndom"], angle_speed_add_israndom)
+		angle_speed_add_random_min = value_get_real(ptypemap[?"angle_speed_add_random_min"], angle_speed_add_random_min)
+		angle_speed_add_random_max = value_get_real(ptypemap[?"angle_speed_add_random_max"], angle_speed_add_random_max)
+		angle_speed_mul = value_get_real(ptypemap[?"angle_speed_mul"], angle_speed_mul)
+		angle_speed_mul_israndom = value_get_real(ptypemap[?"angle_speed_mul_israndom"], angle_speed_mul_israndom)
+		angle_speed_mul_random_min = value_get_real(ptypemap[?"angle_speed_mul_random_min"], angle_speed_mul_random_min)
+		angle_speed_mul_random_max = value_get_real(ptypemap[?"angle_speed_mul_random_max"], angle_speed_mul_random_max)
 		
 		// Launch angle can mess up old particles, set strength to 0
 		if (load_format < e_project.FORMAT_123_PRE_2)
 		{
-			angle_strength = 0
-			angle_strength_israndom = false
+			angle_speed = 0
+			angle_speed_israndom = false
 		}
 		
 		spd_extend = value_get_real(ptypemap[?"spd_extend"], spd_extend)

@@ -13,4 +13,7 @@ with (obj_template)
 with (obj_timeline)
 	tl_update_type_name()
 
+with (obj_popup)
+	caption = text_get(name + "caption")
+
 settings_save()

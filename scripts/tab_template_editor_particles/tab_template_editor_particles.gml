@@ -389,21 +389,21 @@ else if (ptype_edit.temp.type = e_temp_type.TEXT) // Text field
 
 // Angle + Angle speed
 capwid = (ptype_edit.angle_extend ? text_caption_width("particleeditortypeanglex", "particleeditortypeangley", "particleeditortypeanglez", 
-														  "particleeditortypeanglestrength", "particleeditortypeanglestrengthadd", "particleeditortypeanglestrengthmul") :
-									 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglestrength", "particleeditortypeanglestrengthadd",
-														"particleeditortypeanglestrengthmul"))
+														  "particleeditortypeanglespeed", "particleeditortypeanglespeedadd", "particleeditortypeanglespeedmul") :
+									 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglespeed", "particleeditortypeanglespeedadd",
+														"particleeditortypeanglespeedmul"))
 
 tab_control(14)
 if (draw_button_normal("particleeditortypeangleextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.angle_extend, false, true, (ptype_edit.angle_extend ? icons.ARROW_DOWN : icons.ARROW_RIGHT)))
 	action_lib_pc_type_angle_extend(!ptype_edit.angle_extend)
 tab_next()
 
-tab.tbx_type_xangle.suffix = "°" + (ptype_edit.angle_israndom[X] ? "" : text_get("particleeditorpersecond"))
-tab.tbx_type_xangle_random.suffix = "°" + text_get("particleeditorpersecond")
-tab.tbx_type_yangle.suffix = "°" + (ptype_edit.angle_israndom[sn] ? "" : text_get("particleeditorpersecond"))
-tab.tbx_type_yangle_random.suffix = "°" + text_get("particleeditorpersecond")
-tab.tbx_type_zangle.suffix = "°" + (ptype_edit.angle_israndom[ud] ? "" : text_get("particleeditorpersecond"))
-tab.tbx_type_zangle_random.suffix = "°" + text_get("particleeditorpersecond")
+tab.tbx_type_xangle.suffix = "°"
+tab.tbx_type_xangle_random.suffix = "°"
+tab.tbx_type_yangle.suffix = "°"
+tab.tbx_type_yangle_random.suffix = "°"
+tab.tbx_type_zangle.suffix = "°"
+tab.tbx_type_zangle_random.suffix = "°"
 
 axis_edit = X
 tab_template_editor_particles_value("particleeditortypeangle" + (ptype_edit.angle_extend ? "x" : "xyz"), 
@@ -432,32 +432,32 @@ if (ptype_edit.angle_extend)
 		capwid)
 }
 
-tab.tbx_type_angle_strength.suffix = (ptype_edit.angle_strength_israndom ? "" : text_get("particleeditorpersecond"))
-tab.tbx_type_angle_strength_random.suffix = text_get("particleeditorpersecond")
-tab.tbx_type_angle_strength_add.suffix = (ptype_edit.angle_strength_add_israndom ? "" : text_get("particleeditorpersecond"))
-tab.tbx_type_angle_strength_add_random.suffix = text_get("particleeditorpersecond")
-tab.tbx_type_angle_strength_mul.suffix = (ptype_edit.angle_strength_mul_israndom ? "" : text_get("particleeditorpersecond"))
-tab.tbx_type_angle_strength_mul_random.suffix = text_get("particleeditorpersecond")
+tab.tbx_type_angle_speed.suffix = (ptype_edit.angle_speed_israndom ? "" : text_get("particleeditorpersecond"))
+tab.tbx_type_angle_speed_random.suffix = text_get("particleeditorpersecond")
+tab.tbx_type_angle_speed_add.suffix = (ptype_edit.angle_speed_add_israndom ? "" : text_get("particleeditorpersecond"))
+tab.tbx_type_angle_speed_add_random.suffix = text_get("particleeditorpersecond")
+tab.tbx_type_angle_speed_mul.suffix = (ptype_edit.angle_speed_mul_israndom ? "" : text_get("particleeditorpersecond"))
+tab.tbx_type_angle_speed_mul_random.suffix = text_get("particleeditorpersecond")
 
-tab_template_editor_particles_value("particleeditortypeanglestrength", 
-	ptype_edit.angle_strength, ptype_edit.angle_strength_israndom, ptype_edit.angle_strength_random_min, ptype_edit.angle_strength_random_max, 
+tab_template_editor_particles_value("particleeditortypeanglespeed", 
+	ptype_edit.angle_speed, ptype_edit.angle_speed_israndom, ptype_edit.angle_speed_random_min, ptype_edit.angle_speed_random_max, 
 	1 / 4, -no_limit, no_limit, array(20, 0, 20), 0, 
-	array(tab.tbx_type_angle_strength, tab.tbx_type_angle_strength_random), 
-	array(action_lib_pc_type_angle_strength, action_lib_pc_type_angle_strength_israndom, action_lib_pc_type_angle_strength_random_min, action_lib_pc_type_angle_strength_random_max), 
+	array(tab.tbx_type_angle_speed, tab.tbx_type_angle_speed_random), 
+	array(action_lib_pc_type_angle_speed, action_lib_pc_type_angle_speed_israndom, action_lib_pc_type_angle_speed_random_min, action_lib_pc_type_angle_speed_random_max), 
 	capwid)
 	
-tab_template_editor_particles_value("particleeditortypeanglestrengthadd", 
-	ptype_edit.angle_strength_add, ptype_edit.angle_strength_add_israndom, ptype_edit.angle_strength_add_random_min, ptype_edit.angle_strength_add_random_max, 
+tab_template_editor_particles_value("particleeditortypeanglespeedadd", 
+	ptype_edit.angle_speed_add, ptype_edit.angle_speed_add_israndom, ptype_edit.angle_speed_add_random_min, ptype_edit.angle_speed_add_random_max, 
 	1 / 4, -no_limit, no_limit, array(0, -1, 1), 0, 
-	array(tab.tbx_type_angle_strength_add, tab.tbx_type_angle_strength_add_random), 
-	array(action_lib_pc_type_angle_strength_add, action_lib_pc_type_angle_strength_add_israndom, action_lib_pc_type_angle_strength_add_random_min, action_lib_pc_type_angle_strength_add_random_max), 
+	array(tab.tbx_type_angle_speed_add, tab.tbx_type_angle_speed_add_random), 
+	array(action_lib_pc_type_angle_speed_add, action_lib_pc_type_angle_speed_add_israndom, action_lib_pc_type_angle_speed_add_random_min, action_lib_pc_type_angle_speed_add_random_max), 
 	capwid)
 	
-tab_template_editor_particles_value("particleeditortypeanglestrengthmul", 
-	ptype_edit.angle_strength_mul, ptype_edit.angle_strength_mul_israndom, ptype_edit.angle_strength_mul_random_min, ptype_edit.angle_strength_mul_random_max, 
+tab_template_editor_particles_value("particleeditortypeanglespeedmul", 
+	ptype_edit.angle_speed_mul, ptype_edit.angle_speed_mul_israndom, ptype_edit.angle_speed_mul_random_min, ptype_edit.angle_speed_mul_random_max, 
 	1 / 4, -no_limit, no_limit, array(1, 0.75, 0.9), 0, 
-	array(tab.tbx_type_angle_strength_mul, tab.tbx_type_angle_strength_mul_random), 
-	array(action_lib_pc_type_angle_strength_mul, action_lib_pc_type_angle_strength_mul_israndom, action_lib_pc_type_angle_strength_mul_random_min, action_lib_pc_type_angle_strength_mul_random_max), 
+	array(tab.tbx_type_angle_speed_mul, tab.tbx_type_angle_speed_mul_random), 
+	array(action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max), 
 	capwid)
 
 dy += 10

@@ -410,7 +410,7 @@
             "Key": "05ce5bd0-8579-4e5b-8d0c-4344b6410cb6",
             "Value": {
                 "id": "70d944c1-6806-4013-98eb-8c438a393ac9",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_mul_random_min\\action_lib_pc_type_angle_strength_mul_random_min.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_mul_random_min\\action_lib_pc_type_angle_speed_mul_random_min.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -1554,7 +1554,7 @@
             "Key": "1724f8da-4879-41e4-92e7-094ce579ae11",
             "Value": {
                 "id": "352d49eb-c1d2-4c21-a2d7-02c6388480c9",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength\\action_lib_pc_type_angle_strength.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed\\action_lib_pc_type_angle_speed.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -1882,7 +1882,7 @@
             "Key": "1c3c27a3-f676-41fb-bd69-f0cb21ea6382",
             "Value": {
                 "id": "01000275-2189-44c5-823a-5eacd8c6e746",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_add\\action_lib_pc_type_angle_strength_add.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_add\\action_lib_pc_type_angle_speed_add.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -2402,7 +2402,7 @@
             "Key": "24f1961d-2fe1-4ae3-a988-17ca9b3cd814",
             "Value": {
                 "id": "6d486194-ba5d-438d-a5b0-fdf8bf3af275",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_add_random_min\\action_lib_pc_type_angle_strength_add_random_min.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_add_random_min\\action_lib_pc_type_angle_speed_add_random_min.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -4250,7 +4250,7 @@
             "Key": "468f425d-7ae9-4ffc-8925-866ee60d6513",
             "Value": {
                 "id": "b6dfe5b3-c318-4f4d-a601-7e1f7973bd32",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_random_max\\action_lib_pc_type_angle_strength_random_max.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_random_max\\action_lib_pc_type_angle_speed_random_max.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5538,7 +5538,7 @@
             "Key": "5a2d057e-d232-403d-8861-a2f55e2dd6b4",
             "Value": {
                 "id": "738a8545-a139-470f-b206-0f347f1c8738",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_random_min\\action_lib_pc_type_angle_strength_random_min.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_random_min\\action_lib_pc_type_angle_speed_random_min.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -7314,7 +7314,7 @@
             "Key": "770e6fad-e878-4cea-b4cb-dbcef2e5b99e",
             "Value": {
                 "id": "8ae7f048-6a94-416f-a95d-386946bb1785",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_mul\\action_lib_pc_type_angle_strength_mul.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_mul\\action_lib_pc_type_angle_speed_mul.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -7442,7 +7442,7 @@
             "Key": "7977e4fb-8191-49dd-a81d-83e4c12c17ac",
             "Value": {
                 "id": "009db6d2-5d9f-48c8-9765-55001e3b61e8",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_mul_israndom\\action_lib_pc_type_angle_strength_mul_israndom.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_mul_israndom\\action_lib_pc_type_angle_speed_mul_israndom.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -8122,7 +8122,7 @@
             "Key": "83921f70-1581-4d46-9995-fe7ead3dcd51",
             "Value": {
                 "id": "acc65824-2e75-4306-bf00-db61c5b66f22",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_add_random_max\\action_lib_pc_type_angle_strength_add_random_max.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_add_random_max\\action_lib_pc_type_angle_speed_add_random_max.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11250,7 +11250,7 @@
             "Key": "b25e9538-e1ac-4eab-9972-0aacb44fea52",
             "Value": {
                 "id": "999cb865-0591-4c80-a8a8-b6ab4f6dbc86",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_mul_random_max\\action_lib_pc_type_angle_strength_mul_random_max.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_mul_random_max\\action_lib_pc_type_angle_speed_mul_random_max.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12362,7 +12362,7 @@
             "Key": "c510ead3-95b8-4e51-b059-9116caa5ad8a",
             "Value": {
                 "id": "49850e5d-1324-488e-97d1-eb305ec934ce",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_add_israndom\\action_lib_pc_type_angle_strength_add_israndom.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_add_israndom\\action_lib_pc_type_angle_speed_add_israndom.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -15258,7 +15258,7 @@
             "Key": "f32c4df0-0cbc-4864-bfa5-60c12ae8da84",
             "Value": {
                 "id": "98f45574-099b-42ce-856a-33fc575fcf5b",
-                "resourcePath": "scripts\\action_lib_pc_type_angle_strength_israndom\\action_lib_pc_type_angle_strength_israndom.yy",
+                "resourcePath": "scripts\\action_lib_pc_type_angle_speed_israndom\\action_lib_pc_type_angle_speed_israndom.yy",
                 "resourceType": "GMScript"
             }
         },

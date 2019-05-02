@@ -146,10 +146,10 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 				
 				// Angle
 				for (var a = X; a <= Z; a++)
-					pt.pos[a] += pt.angle[a] * pt.angle_strength
+					pt.pos[a] += pt.angle[a] * pt.angle_speed
 				
-				pt.angle_strength += pt.angle_strength_add
-				pt.angle_strength *= pt.angle_strength_mul
+				pt.angle_speed += pt.angle_speed_add
+				pt.angle_speed *= pt.angle_speed_mul
 				
 				// Speed
 				for (var a = X; a <= Z; a++)
