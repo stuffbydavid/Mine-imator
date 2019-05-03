@@ -75,6 +75,7 @@ inherit_select = false
 scale_resize = true
 rot_point_custom = false
 rot_point = point3D(0, 0, 0)
+rot_point_render = point3D(0, 0, 0)
 backfaces = false
 texture_blur = false
 texture_filtering = false

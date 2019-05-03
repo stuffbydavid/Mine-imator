@@ -242,8 +242,14 @@ content_mouseon = !popup_mouseon
 
 tip_set(text_get("toolbarbenchtip"), benchx, benchy, boxsize, boxsize - 5)
 
+if (benchrot <> 0)
+	gpu_set_tex_filter(true)
+
 draw_image(spr_bench, buttonimage, floor(benchx + boxsize / 2), floor(benchy + boxsize / 2), benchscale, benchscale, null, 1 - bench_show_ani * 0.5, benchrot)
 draw_set_alpha(1)
+
+if (benchrot <> 0)
+	gpu_set_tex_filter(false)
 
 // Resizing and moving
 resizemouseon = false

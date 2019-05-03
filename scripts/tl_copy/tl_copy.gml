@@ -40,6 +40,7 @@ to.inherit_select = inherit_select
 to.scale_resize = scale_resize
 to.rot_point_custom = rot_point_custom
 to.rot_point = point3D_copy(rot_point)
+to.rot_point_render = point3D_copy(rot_point_render)
 to.backfaces = backfaces
 to.texture_blur = texture_blur
 to.texture_filtering = texture_filtering

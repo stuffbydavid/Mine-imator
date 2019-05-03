@@ -94,7 +94,7 @@ if (object_index != app && update_matrix)
 	world_pos = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
 	
 	// Add rotation point
-	matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point, -1), vec3(0), vec3(1)), matrix)
+	matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point_render, -1), vec3(0), vec3(1)), matrix)
 	
 	// Scale for position controls
 	value_inherit[e_value.SCA_X] = 1
