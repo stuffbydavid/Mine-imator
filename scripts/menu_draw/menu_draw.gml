@@ -233,10 +233,10 @@ if (!app_mouse_box(menu_x + menu_w - 30, yy, 30 * menu_scroll.needed, h) && mous
 		menu_value = mouseitem.value
 		temp_edit = menu_temp_edit
 		
-		if (mouseitem.script != null)
-			script_execute(mouseitem.script, null)
-		else if (menu_type = e_menu.TIMELINE)
+		if (menu_type = e_menu.TIMELINE)
 			script_execute(menu_script, menu_value, 0)
+		else if (mouseitem.script != null)
+			script_execute(mouseitem.script, null)
 		else
 			script_execute(menu_script, menu_value)
 		app_mouse_clear()

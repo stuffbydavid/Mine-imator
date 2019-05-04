@@ -4,6 +4,7 @@
 
 var item = new(obj_menuitem);
 item.value = argument0
+item.script = null
 
 app.menu_item[app.menu_amount] = item
 app.menu_amount++

@@ -7,7 +7,14 @@ vid = argument0
 val = argument1
 
 if (app.setting_unlimited_values)
-	return clamp(val, -no_limit, no_limit)
+{
+	if (tl_value_is_string(vid))
+		return val
+	else if (tl_value_is_color(vid))
+		return clamp(val, c_black, c_white)
+	else
+		return clamp(val, -no_limit, no_limit)
+}
 
 switch (vid)
 {
