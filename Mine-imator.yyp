@@ -3375,6 +3375,14 @@
             }
         },
         {
+            "Key": "364ec738-a94a-431e-8c5a-5e950187614a",
+            "Value": {
+                "id": "cf9bbeb3-b975-4dff-8cf4-2a6bf25d6d7d",
+                "resourcePath": "datafiles_yy\\Particles\\Huge smoke.miparticles.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "36c57c76-2b1d-4184-b361-d1375a7c7522",
             "Value": {
                 "id": "26c9df68-9a38-4aca-936f-51587c3f62de",
@@ -6764,6 +6772,14 @@
                 "id": "46ebd8e9-0f83-4d24-baf8-30e3ccaeee54",
                 "resourcePath": "scripts\\text_control_name\\text_control_name.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "6cdfdf44-17cc-4edc-b0d5-be36d498ebbe",
+            "Value": {
+                "id": "92b117da-bcd7-49f0-ae87-a9ff7c21514b",
+                "resourcePath": "datafiles_yy\\Particles\\Firework blast.miparticles.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
