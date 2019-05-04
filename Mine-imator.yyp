@@ -12231,6 +12231,14 @@
             }
         },
         {
+            "Key": "c2ae9bf8-f10a-4d90-bbb2-98b840348b6d",
+            "Value": {
+                "id": "b7737773-8c5a-40a9-8f51-3054cd8be4d0",
+                "resourcePath": "scripts\\render_world_tl_reset\\render_world_tl_reset.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "c3046351-3811-4a4a-9efc-10452b48705a",
             "Value": {
                 "id": "40763a71-006c-4665-9700-7d90df2576c0",
@@ -17377,6 +17385,7 @@
         "0b30b9c4-3562-4413-a991-999ae5627936",
         "62eecf06-5233-4aa2-aa19-bf432e0a2cd6",
         "f65ac4fb-4d67-4b3b-9414-85bc167bef8f",
+        "c2ae9bf8-f10a-4d90-bbb2-98b840348b6d",
         "de249af6-f215-4bd8-954f-c69ba04398b2",
         "41afb076-42c6-4776-bfec-a876d2298ce3",
         "de0c12d8-4514-40b8-8cf1-878a3ccfdb5b",

@@ -14,9 +14,10 @@ if (is_undefined(sampler) || sampler < 0)
 // Set filter
 if (gpu_get_texfilter_ext(sampler) != shader_texture_filter_linear)
 	gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)
-	
-if (gpu_get_tex_mip_enable() != (shader_texture_filter_mipmap ? mip_on : mip_off))
-	gpu_set_tex_mip_enable(shader_texture_filter_mipmap ? mip_on : mip_off)
+
+var mode = (shader_texture_filter_mipmap ? mip_on : mip_off);
+if (gpu_get_tex_mip_enable() != mode)
+	gpu_set_tex_mip_enable(mode)
 
 if (gpu_get_tex_mip_filter_ext(sampler) != tf_linear)
 	gpu_set_tex_mip_filter_ext(sampler, tf_linear)

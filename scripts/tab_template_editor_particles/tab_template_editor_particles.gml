@@ -455,7 +455,7 @@ tab_template_editor_particles_value("particleeditortypeanglespeedadd",
 	
 tab_template_editor_particles_value("particleeditortypeanglespeedmul", 
 	ptype_edit.angle_speed_mul, ptype_edit.angle_speed_mul_israndom, ptype_edit.angle_speed_mul_random_min, ptype_edit.angle_speed_mul_random_max, 
-	1 / 4, -no_limit, no_limit, array(1, 0.75, 0.9), 0, 
+	1 / 4, 0, no_limit, array(1, 0.75, 0.9), 0, 
 	array(tab.tbx_type_angle_speed_mul, tab.tbx_type_angle_speed_mul_random), 
 	array(action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max), 
 	capwid)

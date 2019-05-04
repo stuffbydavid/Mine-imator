@@ -58,22 +58,24 @@ if (rotate && (!dev_mode || dev_mode_rotate_blocks))
 
 // DEPTH 0
 if (render_depth0)
-{
+{	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL])
-
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
-	{
-		render_set_texture(texani)
-		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])
-		render_set_texture(tex)
-	}
 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_grass), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+	}
+	
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
+	{
+		render_set_texture(texani)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])
+		
+		if (render_depth1 || render_depth2)
+			render_set_texture(tex)
 	}
 }
 
@@ -82,24 +84,17 @@ if (render_depth1)
 {
 	var filterprev;
 	
-	// Disable mipmapping on transparent blocks
-	if (!app.setting_transparent_block_texture_filtering)
+	// Disable texture filtering on transparent blocks
+	if (app.setting_texture_filtering && !app.setting_transparent_block_texture_filtering)
 	{
-		filterprev = shader_texture_filter_mipmap
-		shader_texture_filter_mipmap = false
+		filterprev = gpu_get_tex_mip_bias()
+		gpu_set_tex_mip_bias(-16)
 		render_set_texture(tex)
 	}
-
+	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL])
-
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
-	{
-		render_set_texture(texani)
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
-		render_set_texture(tex)
-	}
-
+	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_grass), shader_blend_alpha)
@@ -113,9 +108,18 @@ if (render_depth1)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	}
-
-	if (!app.setting_transparent_block_texture_filtering)
-		shader_texture_filter_mipmap = filterprev
+	
+	if (app.setting_texture_filtering && !app.setting_transparent_block_texture_filtering)
+		gpu_set_tex_mip_bias(filterprev)
+	
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
+	{
+		render_set_texture(texani)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
+		
+		if (render_depth2)
+			render_set_texture(tex)
+	}
 }
 
 // DEPTH 2

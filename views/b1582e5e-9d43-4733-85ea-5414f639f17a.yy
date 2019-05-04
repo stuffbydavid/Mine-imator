@@ -21,7 +21,8 @@
         "8835145f-ad50-47bb-a49c-0d750535f11c",
         "0b30b9c4-3562-4413-a991-999ae5627936",
         "62eecf06-5233-4aa2-aa19-bf432e0a2cd6",
-        "f65ac4fb-4d67-4b3b-9414-85bc167bef8f"
+        "f65ac4fb-4d67-4b3b-9414-85bc167bef8f",
+        "c2ae9bf8-f10a-4d90-bbb2-98b840348b6d"
     ],
     "filterType": "GMScript",
     "folderName": "World",

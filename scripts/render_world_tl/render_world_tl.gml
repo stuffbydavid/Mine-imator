@@ -197,13 +197,6 @@ else if (render_particles)
 			render_world_particle()
 }
 
-// Reset
-matrix_world_reset()
-render_set_culling(true)
-shader_texture_surface = false
-shader_texture_filter_linear = false
-shader_texture_filter_mipmap = false
-
 render_set_uniform("uBrightness", 0)
 
 if (colors_ext)
