@@ -1,7 +1,7 @@
 /// render_world_sky_clouds()
 /// @desc Renders the cloud models.
 
-if (!background_sky_clouds_show || !render_background)
+if (!background_sky_clouds_show || !render_background || render_mode = e_render_mode.HIGH_SSAO_DEPTH_NORMAL)
 	return 0
 
 var res = background_sky_clouds_tex;
