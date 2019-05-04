@@ -60,9 +60,15 @@ for (var i = 1; i <= len; i++)
 		return inv
 }
 
+// Additional checking/changes to make sure it works with real()
+
 // Finally, check if the string only contains minus symbols or decimals
 if (string_replace(string_replace(str, "-", ""), ".", "") = "")
-	return 0
+	return inv
+
+// real() function doesn't like "-." being used, so a 0 must be inserted
+if (string_contains(str, "-."))
+	str = string_replace(str, "-.", "-0.")
 
 if (state >= 2)
 	return real(str)

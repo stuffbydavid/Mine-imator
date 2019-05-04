@@ -711,6 +711,9 @@ switch (menu_name)
 	{
 		menu_add_item(null, text_get("listdefault", text_get("listnone")))
 		
+		// Import from file
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE, action_tl_frame_cam_lens_dirt_tex_browse)
+		
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 		{
 			var res = res_list.display_list[|i];
