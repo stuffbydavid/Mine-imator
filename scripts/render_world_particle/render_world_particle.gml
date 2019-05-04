@@ -171,7 +171,11 @@ else // Sprite
 		
 		var texname = template.texture_list[|frame];
 		
-		var tex = res.particle_texture_map[?texname];
+		var tex;
+		if (ds_map_exists(res.particle_texture_map, texname))
+			tex = res.particle_texture_map[?texname];
+		else
+			tex = mc_res.particle_texture_map[?texname];
 		
 		if (tex = undefined)
 		{

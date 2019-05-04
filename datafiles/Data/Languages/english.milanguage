@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.3",
-        "lastchange": "2019.04.28"
+        "lastchange": "2019.05.04"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2646,7 +2646,7 @@
             "dofbiastip": "Determines how strong bokeh edges shouls appear.",
             "dofthreshold": "Bokeh threshold",
             "dofthresholdtip": "The threshold for bokeh highlights.",
-            "dofgain": "Bokeh gain",
+            "dofgain": "Bokeh highlights",
             "dofgaintip": "The strength of bokeh highlights.",
             "dofforeground": "Foreground",
             "dofforegroundtip": "Focus on foreground objects and blur out the background.",

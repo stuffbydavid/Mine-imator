@@ -76,6 +76,7 @@ switch (load_stage)
 		file_rename_lib(load_assets_dir + mc_textures_directory + "items", load_assets_dir + mc_textures_directory + "item")
 		
 		res_load_pack_item_textures()
+		res_load_pack_particle_textures()
 		res_load_pack_misc()
 		res_update_colors()
 		
