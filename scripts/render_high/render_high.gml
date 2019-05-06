@@ -124,7 +124,7 @@ if (setting_render_shadows)
 	{
 		draw_clear(c_white)
 		render_world_start()
-		render_world(sunout ? e_render_mode.HIGH_LIGHT_SUN : e_render_mode.HIGH_LIGHT_NIGHT)
+		render_world(test(sunout, e_render_mode.HIGH_LIGHT_SUN, e_render_mode.HIGH_LIGHT_NIGHT))
 		render_world_done()
 	}
 	surface_reset_target()
@@ -718,7 +718,7 @@ if (render_glow)
 		{
 			with (render_shader_obj)
 				shader_blur_set(render_width, radius, 1, 0)
-			draw_surface_exists((i = 0 ? glowcolorsurf : glowsurf), 0, 0)
+			draw_surface_exists(test(i = 0, glowcolorsurf, glowsurf), 0, 0)
 		}
 		surface_reset_target()
 		

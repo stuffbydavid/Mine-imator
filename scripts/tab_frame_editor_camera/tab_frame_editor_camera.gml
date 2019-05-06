@@ -429,7 +429,7 @@ else
 }
 
 tab_control(24)
-draw_button_menu("frameeditorcameravideosize", e_menu.LIST, dx, dy, dw, 24, (tl_edit.value[e_value.CAM_SIZE_USE_PROJECT] ? null : tab.camera.video_template), text, action_tl_frame_cam_video_template, null, null, capwid)
+draw_button_menu("frameeditorcameravideosize", e_menu.LIST, dx, dy, dw, 24, test(tl_edit.value[e_value.CAM_SIZE_USE_PROJECT], null, tab.camera.video_template), text, action_tl_frame_cam_video_template, null, null, capwid)
 tab_next()
 
 // Custom

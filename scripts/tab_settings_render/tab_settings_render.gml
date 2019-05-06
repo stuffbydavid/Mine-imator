@@ -173,7 +173,7 @@ if (setting_render_watermark)
 		
 		// Watermark Image
 		tab_control(18)
-		var fn = (setting_render_watermark_filename = "") ? text_get("settingsrenderwatermarkdefault") : setting_render_watermark_filename;
+		var fn = test((setting_render_watermark_filename = ""), text_get("settingsrenderwatermarkdefault"), setting_render_watermark_filename);
 		draw_label(text_get("settingsrenderwatermarkimage") + ":", dx, dy)
 		draw_label(string_limit(fn, dw - capwid), dx + capwid, dy)
 		tip_wrap = false

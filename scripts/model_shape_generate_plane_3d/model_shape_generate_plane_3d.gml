@@ -53,7 +53,7 @@ ptexsize = vec2_div(vec2(1 - 1 / 256), texsizescale)
 // Start position and bounds
 var sharpbend, bendsize, bendstart, bendend, invangle;
 sharpbend = app.setting_bend_style = "blocky" && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]
-bendsize = (bend_size = null ? (app.setting_bend_style = "realistic" ? 4 : 1) : bend_size)
+bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
 
 if (segouteraxis = X)
@@ -119,7 +119,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 		var seginnersize = 1;
 		if (arrinneraxis = X)
 		{
-			if (inner = (texture_mirror ? 0 : (samplesize[X] - 1)) && frac(texsize[X]) > 0)
+			if (inner = test(texture_mirror, 0, samplesize[X] - 1) && frac(texsize[X]) > 0)
 				seginnersize = frac(texsize[X])
 		}
 		else if (arrinneraxis = Y)
@@ -134,7 +134,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 	var segoutersize = 1;
 	if (arrouteraxis = X)
 	{
-		if (outer = (texture_mirror ? 0 : (samplesize[X] - 1)) && frac(texsize[X]) > 0)
+		if (outer = test(texture_mirror, 0, samplesize[X] - 1) && frac(texsize[X]) > 0)
 			segoutersize = frac(texsize[X])
 	}
 	else if (arrouteraxis = Y)

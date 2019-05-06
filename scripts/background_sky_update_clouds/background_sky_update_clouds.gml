@@ -6,7 +6,7 @@ var tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col, colsidesdark, c
 if (!background_sky_clouds_tex.ready)
 	return 0
 
-tex = ((background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture)
+tex = test((background_sky_clouds_tex.type = e_res_type.PACK), background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture)
 texwid = texture_width(tex)
 texhei = texture_height(tex)
 texsize = max(texwid, texhei)
@@ -122,7 +122,7 @@ if (!background_sky_clouds_flat)
 	}
 }
 
-col = (background_sky_clouds_flat ? coltop: colbottom)
+col = test(background_sky_clouds_flat, coltop, colbottom)
 
 vertex_add(0, 0, 0, 0, 0, -1, 0, 0, col, 1)
 vertex_add(0, cloudsize, 0, 0, 0, -1, 0, 1, col, 1)

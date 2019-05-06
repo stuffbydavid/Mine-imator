@@ -247,7 +247,7 @@ if (filename_ext(fn) = ".midata")
 	if (ds_map_valid(graphicsmap))
 	{
 		if (load_format < e_settings.FORMAT_120)
-			setting_bend_style = value_get_real(graphicsmap[?"bend_pinch"], true) ? "realistic" : "blocky"
+			setting_bend_style = test(value_get_real(graphicsmap[?"bend_pinch"], true), "realistic", "blocky")
 		else
 			setting_bend_style = value_get_string(graphicsmap[?"bend_style"], setting_bend_style)
 		

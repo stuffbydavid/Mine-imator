@@ -116,7 +116,7 @@ with (new(obj_block_load_state_file))
 							{
 								var val = curcondmap[?cond];
 								if (ds_map_find_value(jsontypemap[?curcondmap], cond) = e_json_type.BOOL) // Booleans must be string
-									val = (val ? "true" : "false")
+									val = test(val, "true", "false")
 									
 								if (string_contains(val, "|")) // OR
 									state_vars_set_value(condvars, cond, string_split(val, "|"))
@@ -144,7 +144,7 @@ with (new(obj_block_load_state_file))
 						{
 							var val = whenmap[?cond];
 							if (ds_map_find_value(jsontypemap[?whenmap], cond) = e_json_type.BOOL) // Booleans must be string
-								val = (val ? "true" : "false")
+								val = test(val, "true", "false")
 								
 							if (string_contains(val, "|")) // OR
 								state_vars_set_value(condvars, cond, string_split(val, "|"))

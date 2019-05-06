@@ -74,7 +74,7 @@ for (var c = 0; c < slist.columns; c++)
 	// Button
 	icon = null
 	if (slist.column_sort = c)
-		icon = (slist.sort_asc ? icons.ARROW_UP_SMALL : icons.ARROW_DOWN_SMALL)
+		icon = test(slist.sort_asc, icons.ARROW_UP_SMALL, icons.ARROW_DOWN_SMALL)
 		
 	if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1)))
 	{
@@ -122,7 +122,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 		if (c = slist.columns - 1 && slist.scroll.needed)
 			wid -= 30
 		text = string_limit(string(sortlist_column_get(slist, value, c)), wid)
-		draw_label(text, dx, dy + itemh / 2, fa_left, fa_middle, ((select = value) ? setting_color_highlight_text : null), 1)
+		draw_label(text, dx, dy + itemh / 2, fa_left, fa_middle, test((select = value), setting_color_highlight_text, null), 1)
 	}
 	
 	if (app_mouse_box(xx, dy, dw, itemh) && content_mouseon)

@@ -40,7 +40,7 @@ var glowenabled = tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA];
 capwid = text_caption_width("frameeditormixpercent", "frameeditorbrightness")
 
 tab_control_color()
-draw_button_color("frameeditormixcolor", dx, dy, (glowenabled ? halfwid : dw), tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
+draw_button_color("frameeditormixcolor", dx, dy, test(glowenabled, halfwid, dw), tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
 
 if (glowenabled)
 	draw_button_color("frameeditorglowcolor", dx + halfwid + 8, dy, halfwid, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)

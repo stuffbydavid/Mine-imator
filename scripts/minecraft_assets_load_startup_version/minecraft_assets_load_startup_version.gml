@@ -46,7 +46,7 @@ var patch = load_assets_map[?"patch"];
 if (!is_real(patch))
 	patch = 1
 
-load_assets_startup_dir = mc_file_directory + version + (patch > 1 ? "_" + string(patch) : "") + "\\"
+load_assets_startup_dir = mc_file_directory + version + test(patch > 1, "_" + string(patch), "") + "\\"
 load_assets_dir = load_assets_startup_dir
 load_assets_state_file_map = ds_map_create() // filename -> model
 load_assets_model_file_map = ds_map_create() // filename -> model

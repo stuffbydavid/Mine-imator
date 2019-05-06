@@ -67,12 +67,12 @@ for (var f = min(ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end); f 
 	if (f = ptype_edit.sprite_frame_start)
 	{
 		col = c_green
-		draw_label(text_get("particleeditortypespriteframeboxstart"), bx + floor(fwid / 2), min(by + (ptype_edit.sprite_frame_start > ptype_edit.sprite_frame_end ? fhei : -14), yy + size), fa_center, fa_top, col, 1)
+		draw_label(text_get("particleeditortypespriteframeboxstart"), bx + floor(fwid / 2), min(by + test((ptype_edit.sprite_frame_start > ptype_edit.sprite_frame_end), fhei, -14), yy + size), fa_center, fa_top, col, 1)
 	}
 	else if (f = ptype_edit.sprite_frame_end)
 	{
 		col = c_blue
-		draw_label(text_get("particleeditortypespriteframeboxend"), bx + floor(fwid / 2), min(by + (ptype_edit.sprite_frame_start < ptype_edit.sprite_frame_end ? fhei : -14), yy + size), fa_center, fa_top, col, 1)
+		draw_label(text_get("particleeditortypespriteframeboxend"), bx + floor(fwid / 2), min(by + test((ptype_edit.sprite_frame_start < ptype_edit.sprite_frame_end), fhei, -14), yy + size), fa_center, fa_top, col, 1)
 	}
 	draw_box(bx, by, fwid, fhei, true, col, 0.75)
 }

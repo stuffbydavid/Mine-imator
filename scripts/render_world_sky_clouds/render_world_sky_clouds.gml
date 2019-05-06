@@ -18,7 +18,7 @@ else
 // Shading
 render_set_uniform_int("uIsSky", 1)
 render_set_uniform_int("uSSAOEnable", 0)
-render_set_uniform_color("uBlendColor", merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha), (background_sky_clouds_story_mode ? 1 - min(background_night_alpha, 0.95) : (.8 - min(background_night_alpha, 0.75))) * alphay)
+render_set_uniform_color("uBlendColor", merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha), test(background_sky_clouds_story_mode, 1 - min(background_night_alpha, 0.95), .8 - min(background_night_alpha, 0.75)) * alphay)
 render_set_uniform_color("uGlowColor", c_black, 1)
 render_set_uniform_int("uGlowTexture", 0)
 

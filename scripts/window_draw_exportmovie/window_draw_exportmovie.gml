@@ -40,10 +40,10 @@ timeleftmins = timeleftmins mod 60
 
 timeleftstr = ""
 if (timelefthours > 0)
-	timeleftstr += text_get(((timelefthours = 1) ? "exportmovietimelefthour" : "exportmovietimelefthours"), string(timelefthours)) + ", "
+	timeleftstr += text_get(test((timelefthours = 1), "exportmovietimelefthour", "exportmovietimelefthours"), string(timelefthours)) + ", "
 if (timeleftmins > 0)
-	timeleftstr += text_get(((timeleftmins = 1) ? "exportmovietimeleftminute" : "exportmovietimeleftminutes"), string(timeleftmins)) + " " + text_get("exportmovietimeleftand") + " "
-timeleftstr += text_get(((timeleftsecs = 1) ? "exportmovietimeleftsecond" : "exportmovietimeleftseconds"), string(timeleftsecs))
+	timeleftstr += text_get(test((timeleftmins = 1), "exportmovietimeleftminute", "exportmovietimeleftminutes"), string(timeleftmins)) + " " + text_get("exportmovietimeleftand") + " "
+timeleftstr += text_get(test((timeleftsecs = 1), "exportmovietimeleftsecond", "exportmovietimeleftseconds"), string(timeleftsecs))
 
 draw_label(text_get("exportmovietimeleft", timeleftstr), content_x + content_width / 2, content_y + content_height - 80, fa_center, fa_middle, null, 1, setting_font_big)
 

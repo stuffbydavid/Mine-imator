@@ -50,14 +50,14 @@ if (tl_edit.value_type[e_value_type.ROT_POINT])
 		draw_dragger("timelineeditorrotpointx", dx, dy, dw, tl_edit.rot_point[X], mul, -no_limit, no_limit, def[X], snapval, tab.info.tbx_rot_point_x, action_tl_rotpoint, capwid)
 		tab_next()
 		
-		axis_edit = (setting_z_is_up ? Y : Z)
+		axis_edit = test(setting_z_is_up, Y, Z)
 		tab_control_dragger()
 		if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
 			tab.info.rot_point_mouseon = true
 		draw_dragger("timelineeditorrotpointy", dx, dy, dw, tl_edit.rot_point[axis_edit], mul, -no_limit, no_limit, def[axis_edit], snapval, tab.info.tbx_rot_point_y, action_tl_rotpoint, capwid)
 		tab_next()
 		
-		axis_edit = (setting_z_is_up ? Z : Y)
+		axis_edit = test(setting_z_is_up, Z, Y)
 		tab_control_dragger()
 		if (app_mouse_box(dx, dy, dw, 18) && content_mouseon)
 			tab.info.rot_point_mouseon = true

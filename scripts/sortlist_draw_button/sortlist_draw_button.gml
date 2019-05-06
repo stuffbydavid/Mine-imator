@@ -35,7 +35,7 @@ if (mouseon)
 }
 
 // Box
-draw_box_rounded(xx, yy, w, h, (pressed ? setting_color_buttons_pressed : setting_color_buttons), 1, isfirst, islast, false, false)
+draw_box_rounded(xx, yy, w, h, test(pressed, setting_color_buttons_pressed, setting_color_buttons), 1, isfirst, islast, false, false)
 
 // Separator
 if (!pressed && !isfirst)

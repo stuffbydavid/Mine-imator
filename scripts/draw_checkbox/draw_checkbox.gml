@@ -32,7 +32,7 @@ if (mouseon)
 }
 
 // Box
-draw_image(spr_checkbox, 0, xx, yy, 1, 1, (pressed ? setting_color_boxes_pressed : setting_color_boxes), 1)
+draw_image(spr_checkbox, 0, xx, yy, 1, 1, test(pressed, setting_color_boxes_pressed, setting_color_boxes), 1)
 
 if (checked)
 	draw_image(spr_icons, icons.CHECK, xx + ceil(size / 2), yy + ceil(size / 2), 1, 1, setting_color_boxes_text, 1)
