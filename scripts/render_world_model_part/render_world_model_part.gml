@@ -133,7 +133,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	// Shape matrix
 	var rendermatrix;
 	if (tlobject)
-		rendermatrix  =matrix_multiply(shape.matrix, matrix)
+		rendermatrix = matrix_multiply(shape.matrix, matrix_render)
 	else
 		rendermatrix = matrix_multiply(shape.matrix, mat)
 	
