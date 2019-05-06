@@ -4,6 +4,9 @@
 
 var obj = argument0;
 
+if (obj = "")
+	return ""
+
 if (instance_exists(obj))
 	return obj.save_id
 

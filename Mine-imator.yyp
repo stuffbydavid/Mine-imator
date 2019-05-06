@@ -4175,6 +4175,14 @@
             }
         },
         {
+            "Key": "43ed18ac-3625-46c2-ae38-350186552fdd",
+            "Value": {
+                "id": "aa1090d6-fa66-4d9c-91a8-a518ad650746",
+                "resourcePath": "datafiles_yy\\Data\\Languages\\french.milanguage.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "43f97938-7f4f-4d07-8d1e-feb44b33dcdb",
             "Value": {
                 "id": "7eb4c7a2-498a-47a0-afb1-f7f102f0c901",
@@ -6396,14 +6404,6 @@
                 "id": "6b42a11a-7abe-4c2b-bdd8-39daee7b248d",
                 "resourcePath": "shaders\\shader_high_light_point_shadowless\\shader_high_light_point_shadowless.yy",
                 "resourceType": "GMShader"
-            }
-        },
-        {
-            "Key": "67652f6e-cca1-414d-aeb2-ad13ba830537",
-            "Value": {
-                "id": "a254bb9f-1c18-4521-9a05-34e576eeb2c3",
-                "resourcePath": "datafiles_yy\\Data\\Languages\\french.milanguage.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

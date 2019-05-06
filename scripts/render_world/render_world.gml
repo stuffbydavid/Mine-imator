@@ -45,3 +45,6 @@ render_world_tl_reset()
 
 with (render_shader_obj)
 	shader_clear()
+
+if (gpu_get_tex_filter())
+	gpu_set_tex_filter(false)

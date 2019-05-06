@@ -5,6 +5,7 @@ particlesize = null
 explosionsize = null
 particlelist = ds_list_create()
 explosionlist = ds_list_create()
+surf = null
 
 // Free old
 if (particle_texture_map != null)
@@ -19,10 +20,16 @@ if (particle_texture_map != null)
 }
 
 if (particles_texture[0] != null)
+{
 	texture_free(particles_texture[0])
+	particles_texture[0] = null
+}
 
 if (particles_texture[1] != null)
+{
 	texture_free(particles_texture[1])
+	particles_texture[1] = null
+}
 
 // Create new
 debug_timer_start()
@@ -104,14 +111,15 @@ if (particles_texture[0] = null)
 		}
 		gpu_set_blendmode(bm_normal)
 	}
+	surface_reset_target()
+	draw_texture_done()
 }
-surface_reset_target()
-draw_texture_done()
 
 if (surface_exists(surf))
 {
 	particles_texture[0] = texture_surface(surf)
 	surface_free(surf)
+	surf = null
 }
 
 // Particle sheet 2(Explosion)
@@ -142,9 +150,9 @@ if (particles_texture[1] = null)
 		}
 		gpu_set_blendmode(bm_normal)
 	}
+	surface_reset_target()
+	draw_texture_done()
 }
-surface_reset_target()
-draw_texture_done()
 
 if (surface_exists(surf))
 {

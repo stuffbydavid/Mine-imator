@@ -2643,7 +2643,7 @@
             "dofblurratio": "Anamorphic ratio",
             "dofblurratiotip": "The horizontal/vertical ratio of the DOF effect.",
             "dofbias": "Edge bias",
-            "dofbiastip": "Determines how strong bokeh edges shouls appear.",
+            "dofbiastip": "Determines how strong bokeh edges should appear.",
             "dofthreshold": "Bokeh threshold",
             "dofthresholdtip": "The threshold for bokeh highlights.",
             "dofgain": "Bokeh highlights",

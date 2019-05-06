@@ -47,6 +47,13 @@ else if (parent = app && part_of = null && type != e_tl_type.FOLDER && value_typ
 if (type = e_tl_type.PARTICLE_SPAWNER)
 	ssao = false
 
+// Set rotation point to template's by default
+if (temp != null)
+{
+	rot_point = temp.rot_point
+	tl_update_rot_point()
+}
+
 // Set defaults
 for (var v = 0; v < e_value.amount; v++)
 	value_default[v] = value[v]

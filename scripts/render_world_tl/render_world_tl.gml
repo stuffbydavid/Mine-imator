@@ -197,6 +197,8 @@ else if (render_particles)
 			render_world_particle()
 }
 
+matrix_world_reset()
+shader_texture_surface = false
 render_set_uniform("uBrightness", 0)
 
 if (colors_ext)
