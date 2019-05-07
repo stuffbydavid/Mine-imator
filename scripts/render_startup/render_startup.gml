@@ -87,9 +87,17 @@ render_ssao_noise = null
 globalvar render_grain_noise;
 render_grain_noise = null
 
-// Lens(For adding glow and bloom for lens dirt)
-globalvar render_surface_lens;
+// Effect surfaces
+globalvar render_surface_ssao, render_surface_shadows, render_surface_fog, render_surface_lens, render_surface_post, render_post_index;
+render_surface_ssao = null
+render_surface_shadows = null
+render_surface_fog = null
 render_surface_lens = null
+
+render_surface_post[0] = null
+render_surface_post[1] = null
+
+render_post_index = 0
 
 // Render modes
 globalvar render_mode, render_mode_shader_map, render_shader_obj;

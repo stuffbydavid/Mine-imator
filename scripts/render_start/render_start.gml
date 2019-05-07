@@ -59,10 +59,6 @@ else
 	render_camera_colors = false
 }
 
-
-
-
-
 // Argument overwrites size
 if (argument_count > 2)
 {
@@ -89,8 +85,10 @@ ds_list_add(render_effects_list,
 )
 render_effects_progress = 0
 render_update_effects()
-
 render_effects_progress = 0
+
+// Reset post processing surface index
+render_post_index = 0
 
 render_prev_color = draw_get_color()
 render_prev_alpha = draw_get_alpha()
