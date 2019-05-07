@@ -22,6 +22,7 @@ if (background_fog_show)
 finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
 render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
 
+/*
 surface_free(render_surface_ssao)
 render_surface_ssao = null
 
@@ -30,39 +31,10 @@ render_surface_shadows = null
 
 surface_free(render_surface_fog)
 render_surface_fog = null
+*/
 
-// Post processing starts here, finalsurf will ping-pong between [0] and [1] if effects are enabled
-
-#region Put finalsurf in [0] if there's any post processing
-if (!render_effects_done)
-{
-	var prevsurf = finalsurf;
-	render_surface_post[0] = surface_require(render_surface_post[0], render_width, render_height)
-	finalsurf = render_surface_post[0]
-	render_post_index = !render_post_index
-	
-	surface_set_target(finalsurf)
-	{
-		draw_clear_alpha(c_black, 0)
-		draw_surface_exists(prevsurf, 0, 0)
-	}
-	surface_reset_target()
-}
-render_update_effects()
-#endregion
-
-#region Initialize lens surface
-if (render_camera_lens_dirt)
-{
-	render_surface_lens = surface_require(render_surface_lens, render_width, render_height)
-	
-	surface_set_target(render_surface_lens)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
-}
-#endregion
+// Start post processing
+render_high_post_start(finalsurf)
 
 // Bloom
 if (render_camera_bloom)

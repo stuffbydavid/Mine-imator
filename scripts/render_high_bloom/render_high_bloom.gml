@@ -3,8 +3,8 @@
 
 var prevsurf, bloomsurf, resultsurf;
 prevsurf = argument0
-render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-bloomsurf = render_surface[2]
+render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+bloomsurf = render_surface[0]
 	
 // Bloom threshold
 surface_set_target(bloomsurf)
@@ -29,11 +29,11 @@ surface_set_target(bloomsurf)
 surface_reset_target()
 	
 // Blur
-if (render_camera.value[e_value.CAM_BLOOM_RADIUS] > 0)
+if (render_camera.value[e_value.CAM_BLOOM_RADIUS] > 0 && render_camera.value[e_value.CAM_BLOOM_INTENSITY] > 0)
 {
 	var bloomsurftemp;
-	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-	bloomsurftemp = render_surface[3]
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	bloomsurftemp = render_surface[1]
 		
 	render_shader_obj = shader_map[?shader_blur]
 	with (render_shader_obj)
@@ -97,8 +97,8 @@ surface_reset_target()
 // Add to lens
 if (render_camera_lens_dirt_bloom)
 {
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
-	prevsurf = render_surface[4]
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	prevsurf = render_surface[2]
 		
 	surface_set_target(prevsurf)
 	{

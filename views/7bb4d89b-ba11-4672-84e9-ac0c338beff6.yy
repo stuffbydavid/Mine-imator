@@ -12,7 +12,8 @@
         "a1aa58fd-2738-45d4-9c7f-c8ea72fa5a02",
         "33341c53-c904-4d5d-93a9-a0421dd14998",
         "c8400bf5-c74e-4e7a-b0c9-5b4c94174005",
-        "5b44a764-784d-4514-b681-a0633ba878cc"
+        "5b44a764-784d-4514-b681-a0633ba878cc",
+        "98e77f64-b027-4f8a-b49f-83a5503dbf1a"
     ],
     "filterType": "GMScript",
     "folderName": "Post processing",
