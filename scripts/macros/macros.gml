@@ -12,7 +12,7 @@
 #macro mineimator_version			"1.2.3"
 #macro mineimator_version_extra		""
 #macro mineimator_version_date		"2019.05.04"
-#macro gm_runtime					"2.2.2.326"
+#macro gm_runtime					GM_runtime_version
 #macro minecraft_version			"1.14"
 
 // File formats
