@@ -60,7 +60,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	// Change texture if name is in shape texture map
 	if (shapetexnamemap != null)
 	{
-		var maptexname = shapetexnamemap[? shape.description];
+		var maptexname = shapetexnamemap[?shape.description];
 		if (!is_undefined(maptexname))
 			shapetexname = maptexname
 	}

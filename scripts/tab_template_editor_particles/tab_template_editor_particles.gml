@@ -432,11 +432,11 @@ if (ptype_edit.angle_extend)
 		capwid)
 }
 
-tab.tbx_type_angle_speed.suffix = (ptype_edit.angle_speed_israndom ? "" : text_get("particleeditorpersecond"))
+tab.tbx_type_angle_speed.suffix = test(ptype_edit.angle_speed_israndom, "", text_get("particleeditorpersecond"))
 tab.tbx_type_angle_speed_random.suffix = text_get("particleeditorpersecond")
-tab.tbx_type_angle_speed_add.suffix = (ptype_edit.angle_speed_add_israndom ? "" : text_get("particleeditorpersecond"))
+tab.tbx_type_angle_speed_add.suffix = test(ptype_edit.angle_speed_add_israndom, "", text_get("particleeditorpersecond"))
 tab.tbx_type_angle_speed_add_random.suffix = text_get("particleeditorpersecond")
-tab.tbx_type_angle_speed_mul.suffix = (ptype_edit.angle_speed_mul_israndom ? "" : text_get("particleeditorpersecond"))
+tab.tbx_type_angle_speed_mul.suffix = test(ptype_edit.angle_speed_mul_israndom, "", text_get("particleeditorpersecond"))
 tab.tbx_type_angle_speed_mul_random.suffix = text_get("particleeditorpersecond")
 
 tab_template_editor_particles_value("particleeditortypeanglespeed", 

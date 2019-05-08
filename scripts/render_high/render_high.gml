@@ -22,17 +22,6 @@ if (background_fog_show)
 finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
 render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
 
-/*
-surface_free(render_surface_ssao)
-render_surface_ssao = null
-
-surface_free(render_surface_shadows)
-render_surface_shadows = null
-
-surface_free(render_surface_fog)
-render_surface_fog = null
-*/
-
 // Start post processing
 render_high_post_start(finalsurf)
 

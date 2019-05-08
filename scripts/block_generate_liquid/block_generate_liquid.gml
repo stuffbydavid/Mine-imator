@@ -148,7 +148,7 @@ topflow = true
 topangle = 0
 
 // Corners
-var level = waterlogged ? 0 : block_state_id_current;
+var level = test(waterlogged, 0, block_state_id_current);
 var corner0z, corner1z, corner2z, corner3z, minz, averagez;
 
 // Wave

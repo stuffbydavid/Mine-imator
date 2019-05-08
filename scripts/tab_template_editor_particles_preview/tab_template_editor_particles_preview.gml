@@ -42,8 +42,8 @@ else
 	var template = particle_template_map[?ptype_edit.sprite_template];
 	
 	var startf, endf;
-	startf = ptype_edit.sprite_template_reverse ? (template.frames - 1) : 0
-	endf = ptype_edit.sprite_template_reverse ? 0 : (template.frames - 1)
+	startf = test(ptype_edit.sprite_template_reverse, (template.frames - 1), 0)
+	endf = test(ptype_edit.sprite_template_reverse, 0, (template.frames - 1))
 	
 	ani = particle_get_animation_percent(particle_editor_preview_start, startf, endf, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
 	frame = round(startf + (endf - startf) * ani) * !ptype_edit.sprite_template_still_frame
