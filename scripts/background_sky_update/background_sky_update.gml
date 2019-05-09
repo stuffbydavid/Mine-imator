@@ -14,13 +14,11 @@ if (!background_fog_color_custom) // Fog color
 		
 		// Sunset
 		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 180, 1)
-		//background_fog_color_final = merge_color(background_fog_color_final, hex_to_color("CE9562"), clamp(background_night_alpha * 2 * p, 0, 1))
-		background_fog_color_final = merge_color(background_fog_color_final, merge_color(hex_to_color("B2353B"), hex_to_color("C04E37"), background_sunset_alpha), background_sunset_alpha * p)
+		background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_sunset_start, c_sunset_end, background_sunset_alpha), background_sunset_alpha * p)
 		
 		// Sunrise
 		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 270)) / 180, 1)
-		//background_fog_color_final = merge_color(background_fog_color_final, hex_to_color("CE9562"), background_night_alpha * p)
-		background_fog_color_final = merge_color(background_fog_color_final, merge_color(hex_to_color("B2353B"), hex_to_color("C04E37"), background_sunrise_alpha), background_sunrise_alpha * p)
+		background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_sunset_start, c_sunset_end, background_sunrise_alpha), background_sunrise_alpha * p)
 	}
 	
 	if (!background_fog_object_color_custom)

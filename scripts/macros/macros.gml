@@ -110,9 +110,11 @@
 #macro c_clouds_top					make_color_rgb(255, 255, 255)
 #macro c_clouds_sideslight			make_color_rgb(215, 222, 234)
 #macro c_clouds_sidesdark			make_color_rgb(194, 201, 215)
-#macro c_plains_biome_foliage       make_color_rgb(119, 171, 47)
-#macro c_plains_biome_grass         make_color_rgb(145, 189, 89)
-#macro c_plains_biome_water         make_color_rgb(62, 117, 225)
+#macro c_plains_biome_foliage		make_color_rgb(119, 171, 47)
+#macro c_plains_biome_grass			make_color_rgb(145, 189, 89)
+#macro c_plains_biome_water			make_color_rgb(62, 117, 225)
+#macro c_sunset_start				hex_to_color("B2353B")
+#macro c_sunset_end					hex_to_color("C04E37")
 
 // Minecraft color palette
 #macro c_minecraft_white			hex_to_color("E9ECEC")	

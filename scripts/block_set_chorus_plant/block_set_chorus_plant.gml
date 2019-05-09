@@ -2,7 +2,7 @@
 /// @desc Connects to other chorus plants, chorus flowers and end stone below.
 
 if (builder_scenery && !builder_scenery_legacy)
-	return null
+	return 0
 
 var east, west, south, north, up, down;
 east = "false"
