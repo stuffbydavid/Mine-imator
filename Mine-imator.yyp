@@ -1906,7 +1906,7 @@
             "Key": "1c5be2fa-7946-4cb2-86e5-50f2d59ddde4",
             "Value": {
                 "id": "11a3a60a-7b32-4f14-865a-3e7027d53237",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.midata.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.1.midata.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -14434,7 +14434,7 @@
             "Key": "e3b48279-0b7d-42a5-83e0-eff4482df93e",
             "Value": {
                 "id": "414f079d-69ae-43e0-9ab3-187bd0925369",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.zip.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.1.zip.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
