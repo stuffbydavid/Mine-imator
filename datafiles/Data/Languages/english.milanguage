@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David & Nimi",
-        "forversion": "1.2.4",
-        "lastchange": "2019.05.16"
+        "forversion": "1.2.3",
+        "lastchange": "2019.05.04"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1756,7 +1756,7 @@
                     "lava": "Lava",
                     "nautilus": "Nautilus",
                     "note": "Note",
-                    "sga": "Standard galactic",
+                    "sga": "Enchantment letters",
                     "spark": "Spark",
                     "spell": "Spell",
                     "splash": "Splash",
