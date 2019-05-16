@@ -8,4 +8,4 @@ render_set_uniform_vec2("uScreenSize", render_width, render_height)
 
 render_set_uniform("uStrength", render_camera.value[e_value.CAM_GRAIN_STRENGTH])
 render_set_uniform("uSaturation", render_camera.value[e_value.CAM_GRAIN_SATURATION])
-render_set_uniform("uSize", vec2_mul(vec2(ceil(render_width/8), ceil(render_height/8)), render_camera.value[e_value.CAM_GRAIN_SIZE]))
+render_set_uniform("uSize", vec2_mul(vec2(max(ceil(render_width/8), ceil(render_height/8))), render_camera.value[e_value.CAM_GRAIN_SIZE]))

@@ -106,9 +106,8 @@ void main()
 	
 	float weightStrength = 0.0;
 	int ringSamples;
-	
-	colorAdd = texture2D(gm_BaseTexture, vTexCoord);
-	gl_FragColor = colorAdd;
+
+	gl_FragColor = texture2D(gm_BaseTexture, vTexCoord);
 	
 	for (int i = 1; i < rings; i++)
 	{

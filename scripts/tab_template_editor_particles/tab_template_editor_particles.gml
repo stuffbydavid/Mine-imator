@@ -389,9 +389,9 @@ else if (ptype_edit.temp.type = e_temp_type.TEXT) // Text field
 
 // Angle + Angle speed
 capwid = test(ptype_edit.angle_extend, text_caption_width("particleeditortypeanglex", "particleeditortypeangley", "particleeditortypeanglez", 
-														  "particleeditortypeanglestrength", "particleeditortypeanglestrengthadd", "particleeditortypeanglestrengthmul"),
-									 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglestrength", "particleeditortypeanglestrengthadd",
-														"particleeditortypeanglestrengthmul"))
+														  "particleeditortypeanglespeed", "particleeditortypeanglespeedadd", "particleeditortypeanglespeedmul"),
+									 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglespeed", "particleeditortypeanglespeedadd",
+														"particleeditortypeanglespeedmul"))
 
 tab_control(14)
 if (draw_button_normal("particleeditortypeangleextend", dx, dy, 16, 16, e_button.CAPTION, ptype_edit.angle_extend, false, true, test(ptype_edit.angle_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))

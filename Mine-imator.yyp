@@ -8343,14 +8343,6 @@
             }
         },
         {
-            "Key": "85c52ebe-7328-4539-883d-f12cc82b6e86",
-            "Value": {
-                "id": "2f74e24d-6b8f-47ea-9a7c-c5b21095b162",
-                "resourcePath": "datafiles_yy\\Data\\math.dll.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "860f0792-a0af-47ab-b726-2699a63c4757",
             "Value": {
                 "id": "5be985a3-670e-455a-aee2-925c0a7e9197",
@@ -9092,6 +9084,14 @@
                 "id": "5b6859cf-472a-40b3-9e91-d43acb8d413e",
                 "resourcePath": "scripts\\point4D_mul_matrix\\point4D_mul_matrix.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "8fda5618-bb97-4009-800d-c3fb74084c80",
+            "Value": {
+                "id": "e9950a94-d74a-4cb4-b273-edc68bffc07b",
+                "resourcePath": "datafiles_yy\\Data\\math.dll.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -17144,14 +17144,14 @@
         "d44487e9-41ca-4d04-bae7-f587a2854f01",
         "800857b8-4a0b-45f6-ae12-1c600cd45e31",
         "94747d33-957f-4b29-9919-b8588dd89137",
+        "b967a6af-3401-4a5c-81c4-4bfc0d9dced9",
+        "6ddf004b-c366-4309-ad77-16b8961e2bce",
+        "39990f10-8cc9-41f3-bc62-3428f5501c48",
         "a6ca0191-aa77-4aac-8698-330b36a83c36",
         "e3493487-808a-4260-8e30-cb9260dd86c0",
         "21e34bb4-8300-4dec-a29c-16d03e4f96b0",
         "cc01ec13-f884-486d-9a9b-311cc62b9634",
         "42d5849f-2f4f-47d3-923f-41bf1a0db600",
-        "b967a6af-3401-4a5c-81c4-4bfc0d9dced9",
-        "6ddf004b-c366-4309-ad77-16b8961e2bce",
-        "39990f10-8cc9-41f3-bc62-3428f5501c48",
         "e7e444ee-9d54-4df2-87ca-29539f9f44d3",
         "f5c9c78b-e3e8-4dbb-8c6e-4689d95f68c5",
         "254435f1-be0a-4847-ae1d-ac991f2f1d14",

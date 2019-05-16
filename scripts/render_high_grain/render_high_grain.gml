@@ -4,10 +4,11 @@
 var prevsurf, resultsurf;
 prevsurf = argument0
 resultsurf = render_high_get_apply_surf()
-	
+
 // Noise texture
-render_grain_noise = surface_require(render_grain_noise, floor(render_width/8), floor(render_height/8))
-render_generate_noise(ceil(render_width/8), ceil(render_height/8), render_grain_noise)
+var size = max(ceil(render_width/8), ceil(render_height/8));
+render_grain_noise = surface_require(render_grain_noise, size, size)
+render_generate_noise(size, size, render_grain_noise)
 	
 surface_set_target(resultsurf)
 {

@@ -1,4 +1,4 @@
-/// shader_vignette
+/// shader_noise
 
 attribute vec3 in_Position;
 attribute vec4 in_Colour;
