@@ -47,7 +47,7 @@ else
 	cam_up[X] = mat[8]
 	cam_up[Y] = mat[9]
 	cam_up[Z] = mat[10]
-	cam_fov = tl_value_clamp(e_value.CAM_FOV, render_camera.value[e_value.CAM_FOV])
+	cam_fov = max(1, render_camera.value[e_value.CAM_FOV])
 }
 
 cam_near = 1
