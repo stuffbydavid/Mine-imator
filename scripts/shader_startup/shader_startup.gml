@@ -358,6 +358,7 @@ with (shader_map[?shader_vignette])
 	new_shader_uniform("uRadius")
 	new_shader_uniform("uSoftness")
 	new_shader_uniform("uStrength")
+	new_shader_uniform("uColor")
 }
 
 with (shader_map[?shader_noise])

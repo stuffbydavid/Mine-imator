@@ -5,6 +5,8 @@ uniform float uRadius;
 uniform float uSoftness;
 uniform float uStrength;
 
+uniform vec4 uColor;
+
 void main()
 {
 	vec2 centerCoord = (vTexCoord) - vec2(0.5);
@@ -15,7 +17,7 @@ void main()
 	// Get base
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
 	
-	baseColor.rgb = mix(baseColor.rgb, baseColor.rgb * vec3(amount), uStrength);
+	baseColor.rgb = mix(baseColor.rgb, mix(uColor.rgb, baseColor.rgb, amount), uStrength);
 	
 	gl_FragColor = baseColor;
 }

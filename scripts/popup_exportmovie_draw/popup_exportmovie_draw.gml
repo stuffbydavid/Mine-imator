@@ -61,6 +61,13 @@ if (popup.format = "png")
 	tab_control_checkbox()
 	draw_checkbox("exportmovieremovebackground", dx, dy, popup.remove_background, action_toolbar_exportmovie_remove_background)
 	tab_next()
+	
+	if (popup.remove_background)
+	{
+		tab_control(32)
+		draw_label(string_wrap(text_get("exportmovieblendmodewarning"), dw), dx, dy)
+		tab_next()
+	}
 }
 else
 {

@@ -242,6 +242,7 @@ if (value_type[e_value_type.CAMERA])
 	tl_update_values_ease(e_value.CAM_VIGNETTE_RADIUS, trans, p)
 	tl_update_values_ease(e_value.CAM_VIGNETTE_SOFTNESS, trans, p)
 	tl_update_values_ease(e_value.CAM_VIGNETTE_STRENGTH, trans, p)
+	tl_update_values_ease(e_value.CAM_VIGNETTE_COLOR, trans, p)
 	
 	tl_update_values_ease(e_value.CAM_WIDTH, trans, p)
 	tl_update_values_ease(e_value.CAM_HEIGHT, trans, p)

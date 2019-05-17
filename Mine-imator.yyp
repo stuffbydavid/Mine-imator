@@ -871,6 +871,14 @@
             }
         },
         {
+            "Key": "0cfdf3df-b56f-4a7b-93de-c9cd9fb1c6dd",
+            "Value": {
+                "id": "825e1bce-b20d-48a0-9a5e-a4b3d2f938df",
+                "resourcePath": "scripts\\action_tl_blend_mode_tree\\action_tl_blend_mode_tree.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "0d3aa3a4-3057-4fd3-aa9c-a4f964963233",
             "Value": {
                 "id": "9142a8ed-d53b-4def-bebe-28fd595966c8",
@@ -5647,6 +5655,14 @@
             }
         },
         {
+            "Key": "5b54ef4a-b564-416f-8dcb-06b57b59cff3",
+            "Value": {
+                "id": "5fcf48af-a7fe-4b8b-ba0f-2994a60582a1",
+                "resourcePath": "scripts\\action_tl_blend_mode\\action_tl_blend_mode.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "5ba90d04-be79-4f08-8d32-f2ee45040e8a",
             "Value": {
                 "id": "939e5d9a-d98c-46d0-a36b-6c70bade7fdd",
@@ -7347,6 +7363,14 @@
             "Value": {
                 "id": "7c477f04-3849-43f1-8eca-506dfca2feab",
                 "resourcePath": "scripts\\action_setting_minecraft_assets_version\\action_setting_minecraft_assets_version.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "75b96026-0bc1-4d8e-8bd9-64d861c7aa2b",
+            "Value": {
+                "id": "874c905b-ba85-4e3d-af02-1fa2120d08ed",
+                "resourcePath": "scripts\\action_tl_frame_cam_vignette_color\\action_tl_frame_cam_vignette_color.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -16854,6 +16878,7 @@
         "153b3da4-066f-4534-b8ee-cafbd32c6920",
         "5f6bfc9d-780f-46c0-a0bd-f9cbd7c738e6",
         "aeb746ca-9e62-4f59-999e-3486372e11db",
+        "75b96026-0bc1-4d8e-8bd9-64d861c7aa2b",
         "d16dbc5d-50a0-4706-b478-a7786d9424b7",
         "8a74c9c6-b77f-4111-8449-0830d923c568",
         "ee7300fb-c4a5-42ee-a1ed-f243db211109",
@@ -16934,6 +16959,8 @@
         "0eaef659-4072-4297-8da0-60aa59bfa534",
         "4a54a9ad-6af6-4432-bcac-9f4b9343403f",
         "646a5ac7-3f46-41d8-b3a3-60f8663a4141",
+        "5b54ef4a-b564-416f-8dcb-06b57b59cff3",
+        "0cfdf3df-b56f-4a7b-93de-c9cd9fb1c6dd",
         "6a0a6c9c-558d-4c7f-a2b4-5fbbeef58784",
         "233841c9-5823-4be4-be96-490e563c2eb6",
         "e1520a39-87e5-44fe-a693-381fe8869490",

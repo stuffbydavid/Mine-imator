@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David & Nimi",
-        "forversion": "1.2.3",
-        "lastchange": "2019.05.04"
+        "forversion": "1.2.4",
+        "lastchange": "2019.05.17"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -392,6 +392,7 @@
         "includeaudiotip": "Includes audio tracks in the exported video, if any.",
         "removebackground": "Remove background",
         "removebackgroundtip": "Make the background transparent in the images.",
+		"blendmodewarning": "Warning: Custom object blend modes may not appear correctly with no background to blend with.",
         "includehidden": "Include hidden objects",
         "includehiddentip": "Whether objects hidden in the timeline should be included in the video.",
         "highquality": "High quality rendering",
@@ -428,6 +429,7 @@
         "includehiddentip": "Whether objects hidden in the timeline should be included in the image (does not apply to the \"Visible\" checkbox in keyframes).",
         "removebackground": "Remove background",
         "removebackgroundtip": "Make the background transparent in the image.",
+		"blendmodewarning": "Warning: Custom object blend modes may not appear correctly with no background to blend with.",
         "highquality": "High quality rendering",
         "highqualitytip": "Enable shaders for high quality rendering in the image.",
         "save": "Save",
@@ -2445,6 +2447,15 @@
         "foliagetinttip": "Whether or not the object should be tinted with the current biome's foliage color.",
         "bleedlight": "Bleed light",
         "bleedlighttip": "Whether light should cast through the object and only be shaded by casted shadows.",
+		"blendmode": "Blend mode",
+        "blendmodetip": "The blend mode that should be used when rendering the object.",
+		"blendmode/": {
+			"normal": "Normal",
+			"add": "Add",
+			"subtract": "Subtract",
+			"multiply": "Multiply",
+			"screen": "Screen"
+		},
         "audio": "Audio",
         "audiotip": "Manage the audio timeline.",
         "audioadd": "Add sound",
@@ -2726,6 +2737,8 @@
             "vignettesoftnesstip": "The softness of the vignette effect.",
             "vignettestrength": "Strength",
             "vignettestrengthtip": "How visible the vignette effect is.",
+			"vignettecolor": "Vignette color",
+            "vignettecolortip": "The color of the vignette effect.",
             "videosize": "Camera size",
             "videosizetip": "The size of the camera view. Can be set to either the project settings or a custom value for this keyframe. This will not affect the size when exporting as a movie file, only when saving as a PNG image/sequence and when using this camera as a texture.",
             "videosizeuseproject": "Use project settings",

@@ -853,4 +853,13 @@ switch (menu_name)
 		
 		break
 	}
+	
+	// Blend mode
+	case "timelineeditorblendmode":
+	{
+		for (var i = 0; i < ds_list_size(blend_mode_list); i++)
+			menu_add_item(blend_mode_list[|i], text_get("timelineeditorblendmode" + blend_mode_list[|i]))
+		
+		break
+	}
 }

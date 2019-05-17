@@ -41,6 +41,9 @@ switch (vid)
 	case e_value.MIX_COLOR:
 	case e_value.GLOW_COLOR:
 	case e_value.LIGHT_COLOR:
+	case e_value.CAM_BLOOM_BLEND:
+	case e_value.CAM_COLOR_BURN:
+	case e_value.CAM_VIGNETTE_COLOR:
 	case e_value.BG_SKY_COLOR: 
 	case e_value.BG_SKY_CLOUDS_COLOR:
 	case e_value.BG_SUNLIGHT_COLOR:

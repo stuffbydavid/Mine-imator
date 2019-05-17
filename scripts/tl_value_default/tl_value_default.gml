@@ -65,6 +65,7 @@ switch (argument0)
 	case e_value.CAM_VIGNETTE_RADIUS: return 1
 	case e_value.CAM_VIGNETTE_SOFTNESS: return 0.5
 	case e_value.CAM_VIGNETTE_STRENGTH: return 1
+	case e_value.CAM_VIGNETTE_COLOR: return c_black
 	case e_value.CAM_WIDTH: return 1280
 	case e_value.CAM_HEIGHT: return 720
 	case e_value.CAM_SIZE_USE_PROJECT: return true

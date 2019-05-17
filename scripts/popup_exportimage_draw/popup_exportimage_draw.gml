@@ -31,6 +31,13 @@ tab_control_checkbox()
 draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_exportimage_remove_background)
 tab_next()
 
+if (popup.remove_background)
+{
+	tab_control(40)
+	draw_label(string_wrap(text_get("exportimageblendmodewarning"), dw), dx, dy)
+	tab_next()
+}
+
 // Include hidden
 tab_control_checkbox()
 draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportimage_include_hidden)

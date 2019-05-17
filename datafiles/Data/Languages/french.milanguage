@@ -3,8 +3,8 @@
     "file/": {
         "language": "Français",
         "translator": "Voxy",
-        "forversion": "1.2.3",
-        "lastchange": "2019.05.02"
+        "forversion": "1.2.4",
+        "lastchange": "2019.05.16"
     },
     "startup/": {
         "caption": "Démarrage",
@@ -2892,6 +2892,8 @@
             "vignettesoftnesstip": "La taille de la transition de l'effet de vignettage.",
             "vignettestrength": "Intensité",
             "vignettestrengthtip": "L'intensité de l'effet de vignettage.",
+			"vignettecolor": "Couleur du vignettage",
+            "vignettecolortip": "La couleur de l'effet de vignettage.",
             "videosize": "Dimensions",
             "videosizetip": "La taille de la vue de la caméra. Cela n'affectera pas les vidéos rendues, mais les modifications seront prises en compte lors du rendu d'une séquence d'images ou si la caméra est utilisée comme texture.",
             "videosizeuseproject": "Utiliser paramètres du projet",

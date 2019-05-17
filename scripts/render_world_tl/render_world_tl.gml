@@ -97,8 +97,24 @@ render_set_uniform_int("uBlockGlow", app.setting_block_glow)
 if (bleed_light)
 	render_set_uniform("uBleedLight", bool_to_float(bleed_light))
 
-var prevblend = gpu_get_blendmode();
+var prevblend = null;
 
+// Object blend mode
+if (blend_mode != "normal" && (render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS || render_mode = e_render_mode.ALPHA_FIX))
+{
+	if (render_mode = e_render_mode.ALPHA_FIX)
+		return 0
+	
+	prevblend = gpu_get_blendmode()
+	
+	var blend = blend_mode_map[? blend_mode];
+	if (is_array(blend))
+		gpu_set_blendmode_ext(blend[0], blend[1])
+	else
+		gpu_set_blendmode(blend)
+}
+
+// Glow
 if (glow)
 {
 	render_set_uniform_int("uGlow", 1)
@@ -106,7 +122,10 @@ if (glow)
 	render_set_uniform_color("uGlowColor", value_inherit[e_value.GLOW_COLOR], 1)
 	
 	if (only_render_glow)
+	{
+		prevblend = gpu_get_blendmode()
 		gpu_set_blendmode(bm_add)
+	}
 }
 else
 {
@@ -209,8 +228,9 @@ if (!fog)
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", 1)
 
-if (glow && only_render_glow)
+if (prevblend != null)
 	gpu_set_blendmode(prevblend)
+	
 	
 if (bleed_light)
 	render_set_uniform("uBleedLight", 0)

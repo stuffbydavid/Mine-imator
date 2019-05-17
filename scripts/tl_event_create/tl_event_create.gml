@@ -91,6 +91,7 @@ hq_hiding = false
 lq_hiding = false
 foliage_tint = false
 bleed_light = false
+blend_mode = "normal"
 
 particle_list = null
 

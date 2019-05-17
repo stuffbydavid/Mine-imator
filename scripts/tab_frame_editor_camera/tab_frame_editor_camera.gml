@@ -404,6 +404,10 @@ if (tl_edit.value[e_value.CAM_VIGNETTE] && checkbox_expand_frameeditor_vignette)
 	draw_meter("frameeditorcameravignettestrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_VIGNETTE_STRENGTH] * 100), 50, 0, 100, 100, 1, tab.camera.tbx_vignette_strength, action_tl_frame_cam_vignette_strength, capwid)
 	tab_next()
 	
+	tab_control_color()
+	draw_button_color("frameeditorcameravignettecolor", dx, dy, dw, tl_edit.value[e_value.CAM_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_vignette_color)
+	tab_next()
+	
 	dx -= 4
 	dw += 4
 	checkbox_expand_end()
