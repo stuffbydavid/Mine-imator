@@ -4,7 +4,7 @@
         "language": "Français",
         "translator": "Voxy",
         "forversion": "1.2.4",
-        "lastchange": "2019.05.16"
+        "lastchange": "2019.05.18"
     },
     "startup/": {
         "caption": "Démarrage",
@@ -393,6 +393,7 @@
         "includeaudiotip": "Inclure la piste audio dans le fichier vidéo.",
         "removebackground": "Arrière-plan transparent",
         "removebackgroundtip": "Rendre l'arrière-plan de chaque image transparent.",
+		"blendmodewarning": "Avertissement : Les objets avec un mode de fusion risquent de ne pas s'afficher correctement si l'arrière-plan est transparent.",
         "includehidden": "Inclure les objets masqués",
         "includehiddentip": "Inclure ou non les objets masqués dans la ligne du temps.",
         "highquality": "Rendu haute qualité",
@@ -429,6 +430,7 @@
         "includehiddentip": "Inclure ou non les objets masqués dans la ligne du temps.",
         "removebackground": "Arrière-plan transparent",
         "removebackgroundtip": "Rendre l'arrière-plan de l'image transparent.",
+		"blendmodewarning": "Avertissement : Les objets avec un mode de fusion risquent de ne pas s'afficher correctement si l'arrière-plan est transparent.",
         "highquality": "Rendu haute qualité",
         "highqualitytip": "Activer les shaders pour un rendu de l'image de meilleure qualité.",
         "save": "Enregistrer",
@@ -2609,6 +2611,15 @@
         "foliagetinttip": "Teinter le feuillage selon les couleurs du biome sélectionné",
 		"bleedlight": "Diffusion de la lumière",
         "bleedlighttip": "Faire que la lumière se diffuse au travers de l'instance, n'affichant que les ombres projetées par d'autres objets.",
+		"blendmode": "Mode de fusion",
+        "blendmodetip": "Le mode de fusion à utiliser pour le rendu de l'objet.",
+		"blendmode/": {
+			"normal": "Normal",
+			"add": "Ajout",
+			"subtract": "Soustraction",
+			"multiply": "Produit",
+			"screen": "Superposition"
+		},
         "audio": "Audio",
         "audiotip": "Gérer la ligne du temps de l'audio.",
         "audioadd": "Ajouter un son",
