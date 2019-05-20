@@ -226,7 +226,7 @@ vertex_brightness = 0
 vertex_light_bleeding = 0
 
 // Waterlogged
-if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z))
+if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z) && !app.setting_remove_waterlogged_water)
 {
 	block_current = mc_assets.block_name_map[?"water"]
 	block_generate_liquid(true)

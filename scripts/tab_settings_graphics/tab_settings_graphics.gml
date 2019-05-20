@@ -20,6 +20,9 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingsnoisygrasswater", dx, dy, setting_noisy_grass_water, action_setting_noisy_grass_water)
 tab_next()
+tab_control_checkbox()
+draw_checkbox("settingsremovewaterloggedwater", dx, dy, setting_remove_waterlogged_water, action_setting_remove_waterlogged_water)
+tab_next()
 dy += 10
 
 // Texture filtering

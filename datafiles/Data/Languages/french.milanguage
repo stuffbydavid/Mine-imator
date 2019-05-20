@@ -4,7 +4,7 @@
         "language": "Français",
         "translator": "Voxy",
         "forversion": "1.2.4",
-        "lastchange": "2019.05.18"
+        "lastchange": "2019.05.20"
     },
     "startup/": {
         "caption": "Démarrage",
@@ -3209,6 +3209,8 @@
         "liquidanimationtip": "Activer les vagues sur l'eau et la lave.",
         "noisygrasswater": "Variation de la couleur de l'herbe",
         "noisygrasswatertip": "Faire varier la couleur de l'herbe pour un rendu similaire à \"Minecraft: Bedrock Edition\". (L'importation des blocs et des terrains sera ralentie.)",
+		"removewaterloggedwater": "Retirer l'eau des blocs submergés",
+		"removewaterloggedwatertip": "Retirer les blocs d'eau générés au sein des blocs submergés.",
 		"texturefiltering": "Filtrage des textures",
         "texturefilteringtip": "Activer le filtrage des textures pour améliorer la qualité des textures lointaines.",
         "texturefilteringlevel": "Niveau de filtrage",

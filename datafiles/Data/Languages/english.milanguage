@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.4",
-        "lastchange": "2019.05.17"
+        "lastchange": "2019.05.20"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -3040,6 +3040,8 @@
         "liquidanimationtip": "Enable a wave animation for water and lava.",
         "noisygrasswater": "Noise effect on grass/water",
         "noisygrasswatertip": "Enable a noise effect on grass and water to resemble their appearence from \"Minecraft: Bedrock Edition\". (Will cause scenery and blocks to generate slower.)",
+		"removewaterloggedwater": "Remove waterlogged water",
+		"removewaterloggedwatertip": "Remove water generated from waterlogged blocks.",
         "texturefiltering": "Texture filtering",
         "texturefilteringtip": "Enable texture filtering (mip-mapping).",
         "texturefilteringlevel": "Texture filtering level",
