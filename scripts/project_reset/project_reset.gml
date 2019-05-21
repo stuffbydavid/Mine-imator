@@ -113,7 +113,7 @@ background_fog_object_color_custom = 0
 background_fog_object_color = c_sky
 background_fog_distance = 10000
 background_fog_size = 2000
-background_fog_height = 1000
+background_fog_height = 1250
 
 background_wind = true
 background_wind_speed = 0.1

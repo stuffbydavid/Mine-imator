@@ -101,7 +101,7 @@
 #macro c_highlight					make_color_rgb(132, 159, 204)
 #macro c_alerts						make_color_rgb(240, 255, 159)
 #macro c_controls					make_color_rgb(40, 40, 40)
-#macro c_sky						make_color_rgb(145, 185, 255)
+#macro c_sky						make_color_rgb(137, 175, 253)
 #macro c_clouds						make_color_rgb(255, 255, 255)
 #macro c_sunlight					make_color_rgb(252, 255, 199)
 #macro c_ambient					make_color_rgb(105, 110, 161)
