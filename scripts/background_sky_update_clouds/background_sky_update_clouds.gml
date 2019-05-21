@@ -14,10 +14,11 @@ hei = 0
 
 if (background_sky_clouds_story_mode)
 {
-	colsidesdark = make_color_rgb(216, 230, 255)
-	colsideslight = make_color_rgb(216, 230, 255)
-	coltop = make_color_rgb(216, 230, 255)
-	colbottom = make_color_rgb(216, 230, 255)
+	// Story Mode in-game tint: make_color_rgb(216, 230, 255)
+	colsidesdark = c_white
+	colsideslight = c_white
+	coltop = c_white
+	colbottom = c_white
 	topalpha = 0
 }
 else
