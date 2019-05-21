@@ -552,7 +552,7 @@
 		"43": {
 			"data": {
 				"0x1+0x2+0x4": {
-					"0": "id=minecraft:stone_slab,type=double",
+					"0": "id=minecraft:smooth_stone_slab,type=double",
 					"1": "id=minecraft:sandstone_slab,type=double",
 					"2": "id=minecraft:petrified_oak_slab,type=double",
 					"3": "id=minecraft:cobblestone_slab,type=double",
@@ -566,7 +566,7 @@
 		"44": {
 			"data": {
 				"0x1+0x2+0x4": {
-					"0": "id=minecraft:stone_slab",
+					"0": "id=minecraft:smooth_stone_slab",
 					"1": "id=minecraft:sandstone_slab",
 					"2": "id=minecraft:petrified_oak_slab",
 					"3": "id=minecraft:cobblestone_slab",
