@@ -19,6 +19,10 @@ else if (load_assets_stage = "exit")
 {
 	window_state = ""
 	app_startup_interface()
+	
+	// Deactivate instances for better performance
+	instance_deactivate_object(obj_deactivate)
+	
 	return 0
 }
 

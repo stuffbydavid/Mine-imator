@@ -2,7 +2,7 @@
     "id": "e11f0c5c-7979-4c5c-80ef-07b316268d28",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_minecraft_assets_parent",
+    "name": "obj_deactivate",
     "eventList": [
         
     ],

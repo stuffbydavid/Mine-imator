@@ -17,6 +17,7 @@ if (part.shape_list = null)
 	
 for (var s = 0; s < ds_list_size(part.shape_list); s++)
 {
+	instance_activate_object(part.shape_list[|s])
 	with (part.shape_list[|s])
 	{
 		vbufmap[? id] = vbuffer_default
@@ -33,4 +34,5 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 				vbufmap[? id] = model_shape_generate_plane(bend)
 		}
 	}
+	instance_deactivate_object(part.shape_list[|s])
 }

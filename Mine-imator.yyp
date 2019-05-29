@@ -14354,7 +14354,7 @@
             "Key": "e11f0c5c-7979-4c5c-80ef-07b316268d28",
             "Value": {
                 "id": "dfc8e9a8-3859-428d-be06-81ab580d1a38",
-                "resourcePath": "objects\\obj_minecraft_assets_parent\\obj_minecraft_assets_parent.yy",
+                "resourcePath": "objects\\obj_deactivate\\obj_deactivate.yy",
                 "resourceType": "GMObject"
             }
         },

@@ -90,11 +90,13 @@ background_foliage_color = c_plains_biome_foliage
 background_grass_color = c_plains_biome_grass
 background_water_color = c_plains_biome_water
 
+instance_activate_object(obj_biome)
 with (obj_biome)
 {
 	if (biome_base = null)
 		selected_variant = 0
 }
+instance_deactivate_object(obj_biome)
 
 with (mc_res)
 	res_update_colors()

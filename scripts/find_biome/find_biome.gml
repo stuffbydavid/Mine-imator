@@ -11,6 +11,7 @@ if (load_format < e_project.FORMAT_120_PRE_1)
 		findname = legacy_biomes_map[? findname]
 }
 
+instance_activate_object(obj_biome)
 with (obj_biome)
 {
 	if (name = findname)
@@ -24,5 +25,6 @@ with (obj_biome)
 			return id
 	}
 }
+instance_deactivate_object(obj_biome)
 
 return null

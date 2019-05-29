@@ -61,7 +61,6 @@ for (var b = 0; b < ds_list_size(map); b++)
 				{
 					// Name
 					name = variant[?"name"]
-					//display_name = minecraft_asset_get_name("biome", name)
 					
 					// Foliage
 					txy = array_copy_2d(other.txy)

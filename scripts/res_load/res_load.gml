@@ -147,6 +147,7 @@ switch (type)
 	
 	case e_res_type.MODEL:
 	{
+		instance_activate_object(model_file)
 		with (model_file)
 			instance_destroy()
 			

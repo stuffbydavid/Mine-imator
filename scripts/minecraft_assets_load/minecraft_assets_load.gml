@@ -391,9 +391,6 @@ with (mc_assets)
 				buffer_delete(load_assets_block_preview_ani_buffer)
 				
 				log("Loaded assets successfully")
-				
-				// Deactivate for better performance
-				instance_deactivate_object(obj_minecraft_assets_parent)
 			}
 			
 			break
