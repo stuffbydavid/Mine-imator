@@ -10,7 +10,8 @@
         "b5db553b-4699-47b1-bbdf-2b51534135d5",
         "589dbfb8-b131-431f-b5e9-65c1426ab942",
         "222f8102-de88-4dec-b82b-1dde31aa7433",
-        "77a669f9-f693-4ec9-b13d-b38290b1718e"
+        "77a669f9-f693-4ec9-b13d-b38290b1718e",
+        "b24a1df6-9d13-4a18-8ca7-12ddec042dd5"
     ],
     "filterType": "GMScript",
     "folderName": "Background",

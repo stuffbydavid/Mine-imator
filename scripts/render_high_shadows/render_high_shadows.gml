@@ -7,6 +7,9 @@ var sunout = (background_sunlight_color_final != c_black);
 // Sun
 if (sunout)
 {
+	// Update camera (position) if not previously initialized
+	render_world_start()
+	
 	// Depth
 	render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
 	surface_set_target(render_surface_sun_buffer)

@@ -11423,6 +11423,14 @@
             }
         },
         {
+            "Key": "b24a1df6-9d13-4a18-8ca7-12ddec042dd5",
+            "Value": {
+                "id": "d1f87c18-06a1-42d0-bfbd-3927cc36041b",
+                "resourcePath": "scripts\\background_sky_update_sun\\background_sky_update_sun.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "b24e96f4-288a-4c18-b598-605eb96866ba",
             "Value": {
                 "id": "31414ee5-4ade-4b78-bc42-4674e5409f00",
@@ -17103,6 +17111,7 @@
         "589dbfb8-b131-431f-b5e9-65c1426ab942",
         "222f8102-de88-4dec-b82b-1dde31aa7433",
         "77a669f9-f693-4ec9-b13d-b38290b1718e",
+        "b24a1df6-9d13-4a18-8ca7-12ddec042dd5",
         "97f7079a-18f1-48cb-a5b8-f804a8144534",
         "c9c69997-e2ea-41a4-b2ae-5bddeb021a97",
         "3bff00b2-c1f9-4074-8cfd-1d9170ab595d",

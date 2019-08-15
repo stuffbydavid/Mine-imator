@@ -9,6 +9,9 @@ basesurf = argument0
 shadowsurf = argument1
 fogsurf = argument2
 
+if ((!setting_render_shadows || !background_desaturate_night) && !background_fog_show)
+	return 0
+
 // Copy into seperate surface
 render_surface[4] = surface_require(render_surface[4], render_width, render_height);
 var scenesurf = render_surface[4];

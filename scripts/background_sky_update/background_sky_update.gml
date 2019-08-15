@@ -25,3 +25,6 @@ if (!background_fog_color_custom) // Fog color
 		background_fog_object_color_final = background_fog_color_final
 	
 }
+
+// Sun position
+background_sky_update_sun()
