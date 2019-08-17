@@ -88,6 +88,7 @@ timeline_marker_previous = timeline_marker
 if (bgobject)
 {
 	background_image_show					= bgobject.value[e_value.BG_IMAGE_SHOW]
+	background_image_rotation				= bgobject.value[e_value.BG_IMAGE_ROTATION]
 	background_sky_moon_phase				= bgobject.value[e_value.BG_SKY_MOON_PHASE]
 	background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 	background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]

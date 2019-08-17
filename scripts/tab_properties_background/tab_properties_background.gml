@@ -33,13 +33,24 @@ if (background_image_show)
 		draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 24, background_image_type, text_get("backgroundimagetype" + background_image_type), action_background_image_type, null, null, capwid)
 		tab_next()
 		
-		if (background_image_type = "image") // Background stretch
+		// Background stretch
+		if (background_image_type = "image")
 		{
 			tab_control(24)
 			draw_checkbox("backgroundimagestretch", dx, dy + 3, background_image_stretch, action_background_image_stretch)
 			tab_next()
 		}
-		else if (background_image_type = "box") // Background box mapped
+		
+		// Rotation
+		if (background_image_type != "image")
+		{
+			tab_control_meter()
+			draw_meter("backgroundimagerotation", dx, dy, dw, background_image_rotation, 48, 0, 360, 0, 1, tab.background.tbx_background_rotation, action_background_image_rotation)
+			tab_next()
+		}
+		
+		// Background box mapped
+		if (background_image_type = "box") 
 		{
 			tab_control(24)
 			draw_checkbox("backgroundimageboxmapped", dx, dy + 3, background_image_box_mapped, action_background_image_box_mapped)
@@ -50,7 +61,7 @@ if (background_image_show)
 					action_background_image_save_map()
 			}
 			tab_next()
-		} 
+		}
 	}
 }
 else

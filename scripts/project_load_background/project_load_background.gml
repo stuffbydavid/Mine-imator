@@ -15,6 +15,7 @@ background_image = value_get_save_id(map[?"image"], background_image)
 background_image_type = value_get_string(map[?"image_type"], background_image_type)
 background_image_stretch = value_get_real(map[?"image_stretch"], background_image_stretch)
 background_image_box_mapped = value_get_real(map[?"image_box_mapped"], background_image_box_mapped)
+background_image_rotation = value_get_real(map[?"image_rotation"], background_image_rotation)
 
 background_sky_sun_tex.count--
 background_sky_sun_tex = value_get_save_id(map[?"sky_sun_tex"], background_sky_sun_tex)

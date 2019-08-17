@@ -10583,6 +10583,14 @@
             }
         },
         {
+            "Key": "a4a47985-b168-454e-af5c-d65c53746237",
+            "Value": {
+                "id": "0e5b24c7-8a37-4be5-a465-bf8ebb9a963d",
+                "resourcePath": "scripts\\action_background_image_rotation\\action_background_image_rotation.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "a4be9636-1b90-4d3e-a691-12d2b7a13d6c",
             "Value": {
                 "id": "d367bffa-49fc-4426-81d0-7f4bc36fd02a",
@@ -16454,6 +16462,7 @@
         "009b78d7-7f8b-456f-a81b-d0ecfc712567",
         "a05fdd43-d8c5-459f-9f5f-579823255bde",
         "eec51573-5ea0-4db9-930f-12085d0a5b63",
+        "a4a47985-b168-454e-af5c-d65c53746237",
         "b0942aa0-5eb2-4cc1-bf86-a6817061296d",
         "199f7e52-985c-4f21-8edd-03cd93acd127",
         "c561f212-589a-48df-809d-278680dc76f5",

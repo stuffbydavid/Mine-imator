@@ -41,7 +41,7 @@ if (background_image_show && background_image != null && background_image_type !
 	
 	render_set_uniform_color("uBlendColor", c_white, 1)
 	render_set_texture(background_image.texture)
-	vbuffer_render(vbuf, cam_from)
+	vbuffer_render(vbuf, cam_from, point3D(0, 0, background_image_rotation))
 }
 
 // Fog
@@ -70,7 +70,7 @@ if (!background_image_show)
 	if (background_night_alpha > 0)
 	{
 		if (background_sky_stars_vbuffer = null)
-			background_sky_stars_vbuffer = vbuffer_create_cube(dis * 0.8, point2D(0, 0), point2D(2, 2), false, false, true, false)// vbuffer_create_sphere(dis * 0.8, point2D(0, 0), point2D(6, 6), 8, true)
+			background_sky_stars_vbuffer = vbuffer_create_cube(dis * 0.8, point2D(0, 0), point2D(2, 2), false, false, true, false)/
 			
 		render_set_uniform_color("uBlendColor", c_white, 0.4 * background_night_alpha)
 		render_set_texture(background_sky_stars_texture)

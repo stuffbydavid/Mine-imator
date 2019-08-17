@@ -50,6 +50,7 @@ background_image = null
 background_image_type = "image"
 background_image_stretch = true
 background_image_box_mapped = false
+background_image_rotation = 0
 
 background_sky_sun_tex = mc_res
 background_sky_sun_tex.count++

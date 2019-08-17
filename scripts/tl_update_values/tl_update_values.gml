@@ -254,6 +254,7 @@ if (value_type[e_value_type.CAMERA])
 if (value_type[e_value_type.BACKGROUND])
 {
 	tl_update_values_ease(e_value.BG_IMAGE_SHOW, trans, p)
+	tl_update_values_ease(e_value.BG_IMAGE_ROTATION, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_MOON_PHASE, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_TIME, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_ROTATION, trans, p)
