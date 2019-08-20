@@ -8,6 +8,16 @@ tab_control_meter()
 draw_meter("frameeditorcamerafov", dx, dy, dw, tl_edit.value[e_value.CAM_FOV], 50, 1, 170, 45, 1, tab.camera.tbx_fov, action_tl_frame_cam_fov, capwid)
 tab_next()
 
+// Blade amount
+tab_control_meter()
+draw_meter("frameeditorcamerabladeamount", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_AMOUNT], 50, 0, 16, 0, 1, tab.camera.tbx_blade_amount, action_tl_frame_cam_blade_amount, capwid)
+tab_next()
+
+// Blade angle
+tab_control_meter()
+draw_meter("frameeditorcamerabladeangle", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_ANGLE], 50, 0, 360, 0, 1, tab.camera.tbx_blade_angle, action_tl_frame_cam_blade_angle, capwid)
+tab_next()
+
 // Rotate point
 tab_control_checkbox_expand()
 draw_checkbox_expand("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate, checkbox_expand_frameeditor_rotatepoint, action_checkbox_expand_frameeditor_rotatepoint)
@@ -242,7 +252,7 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("frameeditorcamerabloomratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_RATIO] * 100), 50, -100, 100, 0, 1, tab.camera.tbx_bloom_ratio, action_tl_frame_cam_bloom_ratio, capwid)
+	draw_meter("frameeditorcamerabloomratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_RATIO] * 100), 50, 0, 100, 0, 1, tab.camera.tbx_bloom_ratio, action_tl_frame_cam_bloom_ratio, capwid)
 	tab_next()
 	
 	tab_control_color()

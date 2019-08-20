@@ -11247,6 +11247,14 @@
             }
         },
         {
+            "Key": "afc43d40-a344-4c0f-9814-4dc18d4cb85b",
+            "Value": {
+                "id": "f884cb3b-fe92-4d58-8b8d-fb6bb18c10cf",
+                "resourcePath": "scripts\\action_tl_frame_cam_blade_angle\\action_tl_frame_cam_blade_angle.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "afe9f3cb-8937-4a88-9a60-f51bfec4da8b",
             "Value": {
                 "id": "5c6d8330-e93d-469b-9a28-4746b95c48c9",
@@ -15495,6 +15503,14 @@
             }
         },
         {
+            "Key": "f2d1a067-089b-458d-ab13-39b890edcd7a",
+            "Value": {
+                "id": "3fff3707-e08d-4227-99b0-d4bed2d040d4",
+                "resourcePath": "scripts\\action_tl_frame_cam_blade_amount\\action_tl_frame_cam_blade_amount.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f2e7a755-23d3-4dd4-8fc0-41d7e50c1cd7",
             "Value": {
                 "id": "408d5e1a-eb4c-463f-9bfe-0d927782fbb2",
@@ -16910,6 +16926,8 @@
         "ee7300fb-c4a5-42ee-a1ed-f243db211109",
         "8ea35987-3e28-4012-8974-fa1290c466a3",
         "f2e7a755-23d3-4dd4-8fc0-41d7e50c1cd7",
+        "f2d1a067-089b-458d-ab13-39b890edcd7a",
+        "afc43d40-a344-4c0f-9814-4dc18d4cb85b",
         "9924aff5-187b-4685-b673-384f5133ab55",
         "3873533c-e435-4549-abf8-9ba632217362",
         "df994fb1-04e3-4bdf-8ed0-a0d478f67aa5",

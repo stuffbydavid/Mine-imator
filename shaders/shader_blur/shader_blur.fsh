@@ -1,6 +1,6 @@
 varying vec2 vTexCoord;
 
-uniform float uResolution;
+uniform vec2 uScreenSize;
 uniform float uRadius;
 uniform vec2 uDirection;
 
@@ -29,24 +29,21 @@ void main()
 {
 	vec4 blurResult = vec4(0.0);
 	
-	float blurAmount = uRadius/uResolution; 
-	
-	float horStep = uDirection.x;
-	float verStep = uDirection.y;
+	vec2 blurAmount = uRadius/uScreenSize;
     
 	// 9-tap guassian filter
     
-	blurResult += getColor(vec2(vTexCoord.x - 4.0 * blurAmount * horStep, vTexCoord.y - 4.0 * blurAmount * verStep)) * 0.0162162162;
-	blurResult += getColor(vec2(vTexCoord.x - 3.0 * blurAmount * horStep, vTexCoord.y - 3.0 * blurAmount * verStep)) * 0.0540540541;
-	blurResult += getColor(vec2(vTexCoord.x - 2.0 * blurAmount * horStep, vTexCoord.y - 2.0 * blurAmount * verStep)) * 0.1216216216;
-	blurResult += getColor(vec2(vTexCoord.x - 1.0 * blurAmount * horStep, vTexCoord.y - 1.0 * blurAmount * verStep)) * 0.1945945946;
+	blurResult += getColor(vec2(vTexCoord - 4.0 * blurAmount * uDirection)) * 0.0162162162;
+	blurResult += getColor(vec2(vTexCoord - 3.0 * blurAmount * uDirection)) * 0.0540540541;
+	blurResult += getColor(vec2(vTexCoord - 2.0 * blurAmount * uDirection)) * 0.1216216216;
+	blurResult += getColor(vec2(vTexCoord - 1.0 * blurAmount * uDirection)) * 0.1945945946;
 	
 	blurResult += getColor(vec2(vTexCoord.x, vTexCoord.y)) * 0.2270270270;
 	
-	blurResult += getColor(vec2(vTexCoord.x + 1.0 * blurAmount * horStep, vTexCoord.y + 1.0 * blurAmount * verStep)) * 0.1945945946;
-	blurResult += getColor(vec2(vTexCoord.x + 2.0 * blurAmount * horStep, vTexCoord.y + 2.0 * blurAmount * verStep)) * 0.1216216216;
-	blurResult += getColor(vec2(vTexCoord.x + 3.0 * blurAmount * horStep, vTexCoord.y + 3.0 * blurAmount * verStep)) * 0.0540540541;
-	blurResult += getColor(vec2(vTexCoord.x + 4.0 * blurAmount * horStep, vTexCoord.y + 4.0 * blurAmount * verStep)) * 0.0162162162;
+	blurResult += getColor(vec2(vTexCoord + 1.0 * blurAmount * uDirection)) * 0.1945945946;
+	blurResult += getColor(vec2(vTexCoord + 2.0 * blurAmount * uDirection)) * 0.1216216216;
+	blurResult += getColor(vec2(vTexCoord + 3.0 * blurAmount * uDirection)) * 0.0540540541;
+	blurResult += getColor(vec2(vTexCoord + 4.0 * blurAmount * uDirection)) * 0.0162162162;
 
 	gl_FragColor = blurResult;
 }

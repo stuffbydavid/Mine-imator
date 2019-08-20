@@ -180,6 +180,9 @@ if (value_type[e_value_type.CAMERA])
 {
 	tl_update_values_ease(e_value.CAM_FOV, trans, p)
 	
+	tl_update_values_ease(e_value.CAM_BLADE_AMOUNT, trans, p)
+	tl_update_values_ease(e_value.CAM_BLADE_ANGLE, trans, p)
+	
 	tl_update_values_ease(e_value.CAM_ROTATE, trans, p)
 	tl_update_values_ease(e_value.CAM_ROTATE_DISTANCE, trans, p)
 	tl_update_values_ease(e_value.CAM_ROTATE_ANGLE_XY, trans, p)

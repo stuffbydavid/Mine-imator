@@ -338,7 +338,7 @@ with (shader_map[?shader_add])
 
 with (shader_map[?shader_blur])
 {
-	new_shader_uniform("uResolution")
+	new_shader_uniform("uScreenSize")
 	new_shader_uniform("uRadius")
 	new_shader_uniform("uDirection")
 }

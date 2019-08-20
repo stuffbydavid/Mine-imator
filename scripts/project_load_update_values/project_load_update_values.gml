@@ -1,5 +1,5 @@
 /// project_load_update_values()
-/// @desc Updates values in keyframes if/because they were not animatable in previous versions
+/// @desc Updates values from previous versions
 
 if (load_format < e_project.FORMAT_120_PRE_3)
 {
@@ -27,4 +27,10 @@ if (load_format < e_project.FORMAT_120_PRE_3)
 		
 		value[e_value.BG_WIND] = app.background_wind
 	}
+}
+
+if (load_format < e_project.FORMAT_125)
+{
+	if (timeline.type = e_tl_type.CAMERA)
+		value[e_value.CAM_BLOOM_RATIO] = max(0, value[e_value.CAM_BLOOM_RATIO])
 }

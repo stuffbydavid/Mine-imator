@@ -458,6 +458,9 @@ with (frame_editor)
 		look_at_rotate = true
 		tbx_fov = new_textbox_integer()
 		tbx_fov.suffix = "°"
+		tbx_blade_amount = new_textbox_integer()
+		tbx_blade_angle = new_textbox_integer()
+		tbx_blade_angle.suffix = "°"
 		tbx_ratio = new_textbox_decimals()
 		
 		tbx_rotate_distance = new_textbox_decimals()
@@ -514,7 +517,7 @@ with (frame_editor)
 		tbx_bloom_intensity.suffix = "%"
 		tbx_bloom_radius = new_textbox_integer()
 		tbx_bloom_radius.suffix = "%"
-		tbx_bloom_ratio = new_textbox_ninteger()
+		tbx_bloom_ratio = new_textbox_integer()
 		tbx_bloom_ratio.suffix = "%"
 		
 		tbx_lens_dirt_radius = new_textbox_integer()

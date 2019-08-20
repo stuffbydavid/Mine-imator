@@ -22,6 +22,8 @@ switch (argument0)
 	case e_value.LIGHT_SPOT_RADIUS: return 50
 	case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
 	case e_value.CAM_FOV: return 45
+	case e_value.CAM_BLADE_AMOUNT: return 0
+	case e_value.CAM_BLADE_ANGLE: return 0
 	case e_value.CAM_ROTATE_DISTANCE: return 100
 	case e_value.CAM_SHAKE_STRENGTH: return .25
 	case e_value.CAM_SHAKE_VERTICAL_OFFSET:
