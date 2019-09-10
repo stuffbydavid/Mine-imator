@@ -25,6 +25,11 @@ render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
 // Start post processing
 render_high_post_start(finalsurf)
 
+// Anti-Aliasing(FXAA)
+if (render_aa)
+	finalsurf = render_high_aa(finalsurf)
+render_update_effects()
+
 // Bloom
 if (render_camera_bloom)
 	finalsurf = render_high_bloom(finalsurf)
@@ -48,11 +53,6 @@ render_update_effects()
 // Lens dirt overlay
 if (render_camera_lens_dirt)
 	finalsurf = render_high_lens_dirt(finalsurf)
-render_update_effects()
-
-// Anti-Aliasing(FXAA)
-if (render_aa)
-	finalsurf = render_high_aa(finalsurf)
 render_update_effects()
 
 // Color correction

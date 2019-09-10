@@ -1,7 +1,7 @@
 /// render_high_bloom(basesurf)
 /// @arg basesurf
 
-var prevsurf, thresholdsurf, resultsurf;
+var prevsurf, thresholdsurf, resultsurf, lensprev;
 prevsurf = argument0
 render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 thresholdsurf = render_surface[0]
@@ -100,7 +100,6 @@ for (var b = 0; b < blades; b++)
 	gpu_set_tex_repeat(true)
 	gpu_set_texfilter(false)
 	
-	
 	// Add to surface
 	surface_set_target(resultsurf)
 	{
@@ -112,32 +111,21 @@ for (var b = 0; b < blades; b++)
 			shader_set(shader)
 			shader_add_set(bloomsurf, render_camera.value[e_value.CAM_BLOOM_INTENSITY], render_camera.value[e_value.CAM_BLOOM_BLEND])
 		}
-		draw_blank(0, 0, render_width, render_height)
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
 			shader_clear()
 	}
 	surface_reset_target()
 	
-	// Update previous surface for next blades
-	if (b < blades)
-	{
-		surface_set_target(prevsurf)
-		{
-			draw_clear_alpha(c_black, 0)
-			draw_surface_exists(resultsurf, 0, 0)
-		}
-		surface_reset_target()
-	}
-	
 	// Add to lens
 	if (render_camera_lens_dirt_bloom)
 	{
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		prevsurf = render_surface[2]
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		lensprev = render_surface[3]
 		
-		surface_set_target(prevsurf)
+		surface_set_target(lensprev)
 		{
+			draw_clear_alpha(c_black, 0)
 			draw_surface(render_surface_lens, 0, 0)
 		}
 		surface_reset_target()
@@ -150,9 +138,20 @@ for (var b = 0; b < blades; b++)
 				shader_set(shader)
 				shader_add_set(bloomsurf, render_camera.value[e_value.CAM_BLOOM_INTENSITY], render_camera.value[e_value.CAM_BLOOM_BLEND])
 			}
-			draw_surface_exists(prevsurf, 0, 0)
+			draw_surface_exists(lensprev, 0, 0)
 			with (render_shader_obj)
 				shader_clear()
+		}
+		surface_reset_target()
+	}
+	
+	// Update previous surface for next blades
+	if (b < blades)
+	{
+		surface_set_target(prevsurf)
+		{
+			draw_clear_alpha(c_black, 0)
+			draw_surface_exists(resultsurf, 0, 0)
 		}
 		surface_reset_target()
 	}

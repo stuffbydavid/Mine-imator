@@ -83,6 +83,13 @@ globalvar render_ssao_kernel, render_ssao_noise;
 render_ssao_kernel = render_generate_sample_kernel(16)
 render_ssao_noise = null
 
+// DOF
+globalvar render_dof_blades, render_dof_rotation, render_dof_ration, render_dof_samples, render_dof_weight_samples, render_dof_sample_amount;
+render_dof_blades = -1
+render_dof_rotation = -1
+render_dof_ration = -1
+render_generate_dof_samples(0, 0, 0)
+
 // Grain
 globalvar render_grain_noise;
 render_grain_noise = null

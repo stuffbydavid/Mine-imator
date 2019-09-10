@@ -32,5 +32,8 @@ if (load_format < e_project.FORMAT_120_PRE_3)
 if (load_format < e_project.FORMAT_125)
 {
 	if (timeline.type = e_tl_type.CAMERA)
+	{
 		value[e_value.CAM_BLOOM_RATIO] = max(0, value[e_value.CAM_BLOOM_RATIO])
+		value[e_value.CAM_DOF_BLUR_RATIO] = max(0, value[e_value.CAM_DOF_BLUR_RATIO])
+	}
 }

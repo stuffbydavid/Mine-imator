@@ -32,6 +32,8 @@ if (!err)
 	new_shader("shader_replace")
 	new_shader("shader_high_aa")
 	new_shader("shader_high_dof")
+	new_shader("shader_high_dof_coc")
+	new_shader("shader_high_dof_coc_blur")
 	new_shader("shader_high_fog")
 	new_shader("shader_high_fog_apply")
 	new_shader("shader_high_light_apply")
@@ -155,20 +157,34 @@ with (shader_map[?shader_high_aa])
 
 with (shader_map[?shader_high_dof])
 {
-	new_shader_sampler("uDepthBuffer")
+	new_shader_sampler("uBlurBuffer")
 	new_shader_uniform("uScreenSize")
 	new_shader_uniform("uBlurSize")
-	new_shader_uniform("uDepth")
-	new_shader_uniform("uRange")
-	new_shader_uniform("uFadeSize")
-	new_shader_uniform("uNear")
-	new_shader_uniform("uFar")
 	new_shader_uniform("uBias")
 	new_shader_uniform("uThreshold")
 	new_shader_uniform("uGain")
 	new_shader_uniform("uFringe")
 	new_shader_uniform("uFringeAngle")
 	new_shader_uniform("uFringeStrength")
+	new_shader_uniform("uSampleAmount")
+	new_shader_uniform("uSamples")
+	new_shader_uniform("uWeightSamples")
+}
+
+with (shader_map[?shader_high_dof_coc])
+{
+	new_shader_sampler("uDepthBuffer")
+	new_shader_uniform("uDepth")
+	new_shader_uniform("uRange")
+	new_shader_uniform("uFadeSize")
+	new_shader_uniform("uNear")
+	new_shader_uniform("uFar")
+}
+
+with (shader_map[?shader_high_dof_coc_blur])
+{
+	new_shader_uniform("uScreenSize")
+	new_shader_uniform("uPixelCheck")
 }
 
 with (shader_map[?shader_high_fog])

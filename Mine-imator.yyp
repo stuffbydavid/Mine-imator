@@ -2687,6 +2687,14 @@
             }
         },
         {
+            "Key": "2a0228a7-9235-4e4f-baf7-4373f09d1a6a",
+            "Value": {
+                "id": "d5acc634-4398-40e7-a0df-40605024a455",
+                "resourcePath": "scripts\\render_generate_dof_samples\\render_generate_dof_samples.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "2a0774b5-b930-4f7d-9463-48ca336e90c2",
             "Value": {
                 "id": "00658abf-c403-464c-9218-43563be84b47",
@@ -6479,6 +6487,14 @@
             }
         },
         {
+            "Key": "670a568f-a0c6-478c-8a77-9a1e9001527d",
+            "Value": {
+                "id": "d128f178-58d0-425f-aaaf-2af1e39ab504",
+                "resourcePath": "scripts\\shader_high_dof_coc_set\\shader_high_dof_coc_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "671774b2-2e96-4d5f-9230-44af0853061a",
             "Value": {
                 "id": "fdbba95b-d42e-48ae-8c2b-5ef5953adb23",
@@ -9911,6 +9927,14 @@
             }
         },
         {
+            "Key": "9c2645ba-e3ad-4af0-9c8c-c9009eea9c3b",
+            "Value": {
+                "id": "18ef4c41-276d-40b4-8d9d-0cd19433f617",
+                "resourcePath": "shaders\\shader_high_dof_coc_blur\\shader_high_dof_coc_blur.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "9c272666-6485-423d-921d-7739994cfc2e",
             "Value": {
                 "id": "3065be9b-e060-4c38-b840-21994ba92e1a",
@@ -12287,6 +12311,14 @@
             }
         },
         {
+            "Key": "c0761784-ea69-4156-bced-3045c929bb41",
+            "Value": {
+                "id": "9d59d480-31a1-4b08-9d59-bf1cc35e6d23",
+                "resourcePath": "scripts\\shader_high_dof_coc_blur_set\\shader_high_dof_coc_blur_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "c0800ec6-e057-4821-b312-ca5c6214277a",
             "Value": {
                 "id": "07f02cef-1ec5-4b7c-88a3-fbc87cb2fd45",
@@ -12372,6 +12404,14 @@
                 "id": "d77b0da7-42b2-4c8a-b822-30c5c72dc55c",
                 "resourcePath": "scripts\\action_toolbar_settings\\action_toolbar_settings.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "c1b78b9c-7529-46f2-89af-d463a91de769",
+            "Value": {
+                "id": "07bd66cf-c1b3-4fbf-aa88-7db65992b38b",
+                "resourcePath": "views\\c1b78b9c-7529-46f2-89af-d463a91de769.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -12887,19 +12927,19 @@
             }
         },
         {
-            "Key": "c95fa203-39fb-4580-ab9e-3e704573442b",
-            "Value": {
-                "id": "da1c6fa9-1405-479b-bb47-8b6bd6481ce0",
-                "resourcePath": "views\\c95fa203-39fb-4580-ab9e-3e704573442b.yy",
-                "resourceType": "GMFolder"
-            }
-        },
-        {
             "Key": "c9704155-3ad8-4f2d-a08d-6cc17c3f658e",
             "Value": {
                 "id": "129de556-7d05-4014-aeda-72f8c41ffc27",
                 "resourcePath": "scripts\\temp_event_create\\temp_event_create.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "c97484f4-1cd1-4a77-95be-03fc49c34410",
+            "Value": {
+                "id": "fc33fced-db58-4250-a1cc-40b7e96352b4",
+                "resourcePath": "shaders\\shader_high_dof_coc\\shader_high_dof_coc.yy",
+                "resourceType": "GMShader"
             }
         },
         {
@@ -17629,6 +17669,8 @@
         "b047310c-1b15-4979-8610-648ca4b4408b",
         "a4a1fdf3-fe37-466f-a7bf-dae43dc08545",
         "24e770eb-ce30-484e-a884-a5193814e4fb",
+        "670a568f-a0c6-478c-8a77-9a1e9001527d",
+        "c0761784-ea69-4156-bced-3045c929bb41",
         "0ad4b906-f2e5-48ae-9335-ee6e6c480e33",
         "cc278d07-147f-4cc7-a6e6-5a640dd24459",
         "792a6026-f3b8-45be-b60d-cc4328981f77",
@@ -17695,6 +17737,7 @@
         "6d1f571e-c64e-4009-ad97-bd59538e8eb5",
         "d81d45ac-d36f-475e-ac3b-25f51dfce708",
         "53af2cc8-9436-45dd-a70a-2e3577f2d588",
+        "2a0228a7-9235-4e4f-baf7-4373f09d1a6a",
         "0cddfc93-4a4c-47ec-99c8-371cf4597f03",
         "b3554a5b-f09e-4906-8d79-ada2064abad5",
         "1e8461ab-4fd6-4561-98b6-1fcf2a8dd1b0",
