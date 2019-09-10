@@ -1,8 +1,11 @@
 /// background_ground_update_texture()
 /// @desc Updates the ground sprite depending on the chosen slot and texture.
 
-if (!background_ground_tex.ready)
+if (!background_ground_tex.ready || (background_ground_slot = background_ground_slot_prev && background_ground_tex.save_id = background_ground_tex_prev))
 	return 0
+
+background_ground_slot_prev = background_ground_slot
+background_ground_tex_prev = background_ground_tex.save_id
 
 // Clear old
 if (background_ground_ani)

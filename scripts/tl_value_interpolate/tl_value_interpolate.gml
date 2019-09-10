@@ -62,6 +62,7 @@ switch (vid)
 	case e_value.BG_DESATURATE_NIGHT:
 	case e_value.BG_SKY_CLOUDS_SHOW:
 	case e_value.BG_GROUND_SHOW:
+	case e_value.BG_GROUND_SLOT:
 	case e_value.BG_FOG_SHOW:
 	case e_value.BG_WIND:
 	case e_value.VISIBLE:

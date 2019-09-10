@@ -102,6 +102,7 @@ if (bgobject)
 	background_sky_clouds_z					= bgobject.value[e_value.BG_SKY_CLOUDS_Z]
 	background_sky_clouds_offset			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET]
 	background_ground_show					= bgobject.value[e_value.BG_GROUND_SHOW]
+	background_ground_slot					= bgobject.value[e_value.BG_GROUND_SLOT]
 	background_sky_color					= bgobject.value[e_value.BG_SKY_COLOR]
 	background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
 	background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
@@ -132,6 +133,7 @@ if (bgobject)
 		properties.library.preview.update = true
 	}
 	
+	background_ground_update_texture()
 }
 
 // Colors

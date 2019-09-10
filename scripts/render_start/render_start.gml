@@ -72,11 +72,11 @@ render_overlay = (render_camera_colors || render_watermark)
 // Effects must be in the order they're done in rendering
 ds_list_clear(render_effects_list)
 ds_list_add(render_effects_list,
-	render_aa,
-	render_camera_bloom,
 	render_camera_dof,
+	render_camera_bloom,
 	render_glow,
 	render_glow_falloff,
+	render_aa,
 	render_camera_lens_dirt,
 	render_camera_color_correction,
 	render_camera_grain,

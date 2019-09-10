@@ -10,7 +10,15 @@ else if (history_redo)
 else
 {
 	slot = argument0
-	history_set_var(action_background_ground_slot, background_ground_slot, slot, false)
+	if (action_tl_select_single(null, e_tl_type.BACKGROUND))
+	{
+		tl_value_set_start(action_background_ground_slot, true)
+		tl_value_set(e_value.BG_GROUND_SLOT, slot, false)
+		tl_value_set_done()
+		return 0
+	}
+	
+	history_set_var(action_background_ground_slot, background_ground_slot, slot, true)
 }
 
 background_ground_slot = slot

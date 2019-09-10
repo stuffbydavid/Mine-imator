@@ -36,4 +36,9 @@ if (load_format < e_project.FORMAT_125)
 		value[e_value.CAM_BLOOM_RATIO] = max(0, value[e_value.CAM_BLOOM_RATIO])
 		value[e_value.CAM_DOF_BLUR_RATIO] = max(0, value[e_value.CAM_DOF_BLUR_RATIO])
 	}
+	
+	if (timeline.type = e_tl_type.BACKGROUND)
+	{
+		value[e_value.BG_GROUND_SLOT] = app.background_ground_slot
+	}
 }

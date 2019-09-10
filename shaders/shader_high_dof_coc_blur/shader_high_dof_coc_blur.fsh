@@ -8,7 +8,7 @@ varying vec2 vTexCoord;
 void main()
 {
 	// Turn the pixel into a texel
-	vec2 texelCheck = ((uPixelCheck / uScreenSize) * 2.0);
+	vec2 texelCheck = (uPixelCheck / uScreenSize) * 2.0;
 	
 	// Set up weights
 	float weights[SAMPLES + 1];
@@ -22,9 +22,7 @@ void main()
 	float myFrontBlur = texture2D(gm_BaseTexture, vTexCoord).r;
 	float myBackBlur = texture2D(gm_BaseTexture, vTexCoord).g;
 	float frontBlur = myFrontBlur * weights[0];
-	float backBlur = myBackBlur * weights[0];
 	float totalFrontWeight = weights[0];
-	float totalBackWeight = weights[0];
 	
 	// Sample surrounding pixels
 	for (int i = 0; i < SAMPLES; i += 1)
@@ -32,34 +30,19 @@ void main()
 		// Get the sample uv coordinates
 		vec2 sampleOffset = float(i + 1) * texelCheck;
 		
-		
 		// Positive direction
 		vec2 sampleCoords = vTexCoord + sampleOffset;
 		
-		// Front
 		float weight = weights[i + 1];
 		frontBlur += texture2D(gm_BaseTexture, sampleCoords).r * weight;
 		totalFrontWeight += weight;
 		
-		// Back
-		weight = myBackBlur * texture2D(gm_BaseTexture, sampleCoords).g * weights[i + 1];
-		backBlur += texture2D(gm_BaseTexture, sampleCoords).g * weight;
-		totalBackWeight += weight;
-		
-		
 		// Negative direction
 		sampleCoords = vTexCoord - sampleOffset;
 		
-		// Front
-		weight = weights[i + 1];
 		frontBlur += texture2D(gm_BaseTexture, sampleCoords).r * weight;
 		totalFrontWeight += weight;
-		
-		// Back
-		weight = myBackBlur * texture2D(gm_BaseTexture, sampleCoords).g * weights[i + 1];
-		backBlur += texture2D(gm_BaseTexture, sampleCoords).g * weight;
-		totalBackWeight += weight;
 	}
 	
-	gl_FragColor = vec4(max(frontBlur / totalFrontWeight, myFrontBlur), backBlur / totalBackWeight, 0.0, 1.0);
+	gl_FragColor = vec4(max(frontBlur / totalFrontWeight, myFrontBlur), myBackBlur, 0.0, 1.0);
 }
