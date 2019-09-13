@@ -8,7 +8,9 @@
         "e1e2110f-d3d1-4e70-afd1-c4170253bfda",
         "718a3dca-9518-4901-815d-173ed995b1a5",
         "032f02d4-8c78-4b7c-8624-88b25cc7a627",
-        "2cc6d6d5-136c-482d-ab2d-c18d5ae02588"
+        "2cc6d6d5-136c-482d-ab2d-c18d5ae02588",
+        "9e7555b7-075f-4696-bec0-c033758f7e7a",
+        "05488b28-518b-4e4b-9d66-5556035ca5fb"
     ],
     "filterType": "GMShader",
     "folderName": "Effects",

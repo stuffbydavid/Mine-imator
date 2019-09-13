@@ -253,6 +253,9 @@ else
 
 if (content_width > 0 && content_height > 0)
 {
+	// Draw background
+	draw_box(content_x, content_y, content_width, content_height, false, c_black, 1)
+	
 	// Match aspect ratio
 	if (view.aspect_ratio)
 	{
@@ -268,8 +271,6 @@ if (content_width > 0 && content_height > 0)
 			wid = project_video_width
 			hei = project_video_height
 		}
-			
-		draw_box(content_x, content_y, content_width, content_height, false, c_black, 1) // Background
 		
 		if (wid / hei < content_width / content_height)
 		{

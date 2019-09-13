@@ -53,6 +53,8 @@ if (!err)
 	new_shader("shader_vignette")
 	new_shader("shader_noise")
 	new_shader("shader_high_light_desaturate")
+	new_shader("shader_ca")
+	new_shader("shader_distort")
 	
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -384,6 +386,19 @@ with (shader_map[?shader_noise])
 	new_shader_uniform("uSaturation")
 	new_shader_uniform("uSize")
 	new_shader_uniform("uScreenSize")
+}
+
+with (shader_map[?shader_ca])
+{
+	new_shader_uniform("uBlurAmount")
+	new_shader_uniform("uColorOffset")
+	new_shader_uniform("uDistortChannels")
+}
+
+with (shader_map[?shader_distort])
+{
+	new_shader_uniform("uDistortAmount")
+	new_shader_uniform("uRepeatImage")
 }
 
 return true

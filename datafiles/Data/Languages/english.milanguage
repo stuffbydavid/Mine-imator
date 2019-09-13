@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.5",
-        "lastchange": "2019.08.19"
+        "lastchange": "2019.09.12"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2745,6 +2745,24 @@
             "vignettestrengthtip": "How visible the vignette effect is.",
 			"vignettecolor": "Vignette color",
             "vignettecolortip": "The color of the vignette effect.",
+            "ca": "Chromatic aberration",
+            "catip": "Enable a chromatic aberration effect.",
+            "cabluramount": "Blur amount",
+            "cabluramounttip": "The blur amount for the RGB channels.",
+            "cadistortchannels": "Distort RGB channels",
+            "cadistortchannelstip": "Distort RGB channels by offset amount instead of scaling.",
+            "caredoffset": "Red offset",
+            "caredoffsettip": "The offset amount for the red channel.",
+            "cagreenoffset": "Green offset",
+            "cagreenoffsettip": "The offset amount for the green channel.",
+            "cablueoffset": "Blue offset",
+            "cablueoffsettip": "The offset amount for the blue channel.",
+            "distort": "Distort",
+            "distorttip": "Enable a distortion effect.",
+            "distortrepeat": "Repeat image",
+            "distortrepeattip": "Repeat the image when the distortion effect makes the image smaller.",
+            "distortamount": "Distort amount",
+            "distortamounttip": "The amount of distortion to warp the image with.",
             "videosize": "Camera size",
             "videosizetip": "The size of the camera view. Can be set to either the project settings or a custom value for this keyframe. This will not affect the size when exporting as a movie file, only when saving as a PNG image/sequence and when using this camera as a texture.",
             "videosizeuseproject": "Use project settings",
@@ -3064,7 +3082,7 @@
         "rendertip": "Change program settings about high quality rendering.",
         "render/": {
             "cameraeffects": "Camera effects",
-            "cameraeffectstip": "Enable camera effects in rendered images. (DOF, bloom, color correction and vignette)",
+            "cameraeffectstip": "Enable camera effects in rendered images.",
             "ssao": "SSAO",
             "ssaotip": "Enable SSAO (Screen Space Ambient Occlusion) in rendered images.",
             "ssao/": {

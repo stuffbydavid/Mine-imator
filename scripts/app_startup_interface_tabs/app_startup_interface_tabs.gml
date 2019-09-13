@@ -549,6 +549,18 @@ with (frame_editor)
 		tbx_vignette_strength = new_textbox_integer()
 		tbx_vignette_strength.suffix = "%"
 		
+		tbx_ca_blur_amount = new_textbox_integer()
+		tbx_ca_blur_amount.suffix = "%"
+		tbx_ca_red_offset = new_textbox_integer()
+		tbx_ca_red_offset.suffix = "%"
+		tbx_ca_green_offset = new_textbox_integer()
+		tbx_ca_green_offset.suffix = "%"
+		tbx_ca_blue_offset = new_textbox_integer()
+		tbx_ca_blue_offset.suffix = "%"
+		
+		tbx_distort_amount = new_textbox_ninteger()
+		tbx_distort_amount.suffix = "%"
+		
 		snap_fringe_enabled = false
 		snap_fringe_size = 22.5
 		fringe_copy = array(0, 0, 0, 0, 0, 0)

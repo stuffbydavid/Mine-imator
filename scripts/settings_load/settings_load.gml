@@ -338,6 +338,8 @@ if (filename_ext(fn) = ".midata")
 		checkbox_expand_frameeditor_clrcor = value_get_string(checkboxmap[?"frameeditor_clrcor"], checkbox_expand_frameeditor_clrcor)
 		checkbox_expand_frameeditor_grain = value_get_string(checkboxmap[?"frameeditor_grain"], checkbox_expand_frameeditor_grain)
 		checkbox_expand_frameeditor_vignette = value_get_string(checkboxmap[?"frameeditor_vignette"], checkbox_expand_frameeditor_vignette)
+		checkbox_expand_frameeditor_ca = value_get_string(checkboxmap[?"frameeditor_ca"], checkbox_expand_frameeditor_ca)
+		checkbox_expand_frameeditor_distort = value_get_string(checkboxmap[?"frameeditor_distort"], checkbox_expand_frameeditor_distort)
 		checkbox_expand_frameeditor_itemslot = value_get_string(checkboxmap[?"frameeditor_itemslot"], checkbox_expand_frameeditor_itemslot)
 	}
 }

@@ -54,6 +54,11 @@ switch (vid)
 	case e_value.CAM_LENS_DIRT_GLOW:
 	case e_value.CAM_COLOR_CORRECTION:
 	case e_value.CAM_GRAIN:
+	case e_value.CAM_VIGNETTE:
+	case e_value.CAM_CA:
+	case e_value.CAM_CA_DISTORT_CHANNELS:
+	case e_value.CAM_DISTORT:
+	case e_value.CAM_DISTORT_REPEAT:
 	case e_value.CAM_SIZE_USE_PROJECT:
 	case e_value.CAM_SIZE_KEEP_ASPECT_RATIO:
 	case e_value.BG_IMAGE_SHOW:

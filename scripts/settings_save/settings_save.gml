@@ -273,6 +273,8 @@ json_save_object_start("checkbox_expand")
 	json_save_var_bool("frameeditor_clrcor", checkbox_expand_frameeditor_clrcor)
 	json_save_var_bool("frameeditor_grain", checkbox_expand_frameeditor_grain)
 	json_save_var_bool("frameeditor_vignette", checkbox_expand_frameeditor_vignette)
+	json_save_var_bool("frameeditor_ca", checkbox_expand_frameeditor_ca)
+	json_save_var_bool("frameeditor_distort", checkbox_expand_frameeditor_distort)
 	json_save_var_bool("frameeditor_itemslot", checkbox_expand_frameeditor_itemslot)
 
 json_save_object_done()

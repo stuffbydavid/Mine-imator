@@ -423,6 +423,65 @@ if (tl_edit.value[e_value.CAM_VIGNETTE] && checkbox_expand_frameeditor_vignette)
 	checkbox_expand_end()
 }
 
+// Chromatic aberration
+tab_control_checkbox_expand()
+draw_checkbox_expand("frameeditorcameraca", dx, dy, tl_edit.value[e_value.CAM_CA], action_tl_frame_cam_ca, checkbox_expand_frameeditor_ca, action_checkbox_expand_frameeditor_ca)
+tab_next()
+if (tl_edit.value[e_value.CAM_CA] && checkbox_expand_frameeditor_ca)
+{
+	dx += 4
+	dw -= 4
+	
+	capwid = text_caption_width("frameeditorcameracabluramount", "frameeditorcameracaredoffset", "frameeditorcameracagreenoffset", "frameeditorcameracablueoffset")
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracabluramount", dx, dy, dw, round(tl_edit.value[e_value.CAM_CA_BLUR_AMOUNT] * 100), 50, 0, 100, 5, 1, tab.camera.tbx_ca_blur_amount, action_tl_frame_cam_ca_blur_amount)
+	tab_next()
+	
+	tab_control_checkbox()
+	draw_checkbox("frameeditorcameracadistortchannels", dx, dy, tl_edit.value[e_value.CAM_CA_DISTORT_CHANNELS], action_tl_frame_cam_ca_distort_channels)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracaredoffset", dx, dy, dw, round(tl_edit.value[e_value.CAM_CA_RED_OFFSET] * 100), 50, 0, 100, 12, 1, tab.camera.tbx_ca_red_offset, action_tl_frame_cam_ca_red_offset, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracagreenoffset", dx, dy, dw, round(tl_edit.value[e_value.CAM_CA_GREEN_OFFSET] * 100), 50, 0, 100, 8, 1, tab.camera.tbx_ca_green_offset, action_tl_frame_cam_ca_green_offset, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameracablueoffset", dx, dy, dw, round(tl_edit.value[e_value.CAM_CA_BLUE_OFFSET] * 100), 50, 0, 100, 4, 1, tab.camera.tbx_ca_blue_offset, action_tl_frame_cam_ca_blue_offset, capwid)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
+// Distort
+tab_control_checkbox_expand()
+draw_checkbox_expand("frameeditorcameradistort", dx, dy, tl_edit.value[e_value.CAM_DISTORT], action_tl_frame_cam_distort, checkbox_expand_frameeditor_distort, action_checkbox_expand_frameeditor_distort)
+tab_next()
+if (tl_edit.value[e_value.CAM_DISTORT] && checkbox_expand_frameeditor_distort)
+{
+	dx += 4
+	dw -= 4
+	
+	tab_control_checkbox()
+	draw_checkbox("frameeditorcameradistortrepeat", dx, dy, tl_edit.value[e_value.CAM_DISTORT_REPEAT], action_tl_frame_cam_distort_repeat)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("frameeditorcameradistortamount", dx, dy, dw, round(tl_edit.value[e_value.CAM_DISTORT_AMOUNT] * 100), 50, -100, 100, 5, 1, tab.camera.tbx_distort_amount, action_tl_frame_cam_distort_amount)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+	
+
 capwid = text_caption_width("frameeditorcameravideosize", "projectvideosizecustomwidth")
 
 // Camera size

@@ -29,6 +29,8 @@ if (render_camera != null)
 	render_camera_color_correction = (setting_render_camera_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION])
 	render_camera_grain = (setting_render_camera_effects && render_camera.value[e_value.CAM_GRAIN])
 	render_camera_vignette = (setting_render_camera_effects && render_camera.value[e_value.CAM_VIGNETTE])
+	render_camera_ca = (setting_render_camera_effects && render_camera.value[e_value.CAM_CA])
+	render_camera_distort = (setting_render_camera_effects && render_camera.value[e_value.CAM_DISTORT])
 	
 	render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW]))
 	render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]
@@ -51,6 +53,8 @@ else
 	render_camera_color_correction = false
 	render_camera_grain = false
 	render_camera_vignette = false
+	render_camera_ca = false
+	render_camera_distort = false
 	
 	render_camera_lens_dirt = false
 	render_camera_lens_dirt_bloom = false
@@ -77,6 +81,8 @@ ds_list_add(render_effects_list,
 	render_glow,
 	render_glow_falloff,
 	render_aa,
+	render_camera_ca,
+	render_camera_distort,
 	render_camera_lens_dirt,
 	render_camera_color_correction,
 	render_camera_grain,

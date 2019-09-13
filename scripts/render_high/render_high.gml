@@ -50,6 +50,16 @@ if (render_aa)
 	finalsurf = render_high_aa(finalsurf)
 render_update_effects()
 
+// Chromatic aberration
+if (render_camera_ca)
+	finalsurf = render_high_ca(finalsurf)
+render_update_effects()
+
+// Distort
+if (render_camera_distort)
+	finalsurf = render_high_distort(finalsurf)
+render_update_effects()
+
 // Lens dirt overlay
 if (render_camera_lens_dirt)
 	finalsurf = render_high_lens_dirt(finalsurf)

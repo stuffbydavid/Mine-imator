@@ -8,8 +8,8 @@ globalvar render_view_current, render_width, render_height, render_ratio, render
 		  render_proj_from, render_active;
 
 globalvar render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof, render_glow,
-		  render_glow_falloff, render_camera_color_correction, render_camera_grain, render_camera_vignette, render_aa, render_overlay,
-		  render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow;
+		  render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
+		  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow;
 
 log("Render init")
 	
@@ -39,6 +39,8 @@ render_camera_bloom = false
 render_camera_dof = false
 render_glow = false
 render_glow_falloff = false
+render_camera_ca = false
+render_camera_distort = false
 render_camera_color_correction = false
 render_camera_grain = false
 render_camera_vignette = false

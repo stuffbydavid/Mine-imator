@@ -247,6 +247,17 @@ if (value_type[e_value_type.CAMERA])
 	tl_update_values_ease(e_value.CAM_VIGNETTE_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.CAM_VIGNETTE_COLOR, trans, p)
 	
+	tl_update_values_ease(e_value.CAM_CA, trans, p)
+	tl_update_values_ease(e_value.CAM_CA_BLUR_AMOUNT, trans, p)
+	tl_update_values_ease(e_value.CAM_CA_DISTORT_CHANNELS, trans, p)
+	tl_update_values_ease(e_value.CAM_CA_RED_OFFSET, trans, p)
+	tl_update_values_ease(e_value.CAM_CA_GREEN_OFFSET, trans, p)
+	tl_update_values_ease(e_value.CAM_CA_BLUE_OFFSET, trans, p)
+	
+	tl_update_values_ease(e_value.CAM_DISTORT, trans, p)
+	tl_update_values_ease(e_value.CAM_DISTORT_REPEAT, trans, p)
+	tl_update_values_ease(e_value.CAM_DISTORT_AMOUNT, trans, p)
+	
 	tl_update_values_ease(e_value.CAM_WIDTH, trans, p)
 	tl_update_values_ease(e_value.CAM_HEIGHT, trans, p)
 	tl_update_values_ease(e_value.CAM_SIZE_USE_PROJECT, trans, p)
