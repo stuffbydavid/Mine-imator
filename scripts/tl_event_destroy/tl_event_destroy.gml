@@ -27,6 +27,10 @@ with (obj_template)
 	if (shape_tex = other.id)
 		shape_tex = null
 
+with (obj_bench_settings) 
+	if (shape_tex = other.id) 
+		shape_tex = null 
+
 with (obj_timeline)
 {
 	if (value[e_value.TEXTURE_OBJ] = other.id)
