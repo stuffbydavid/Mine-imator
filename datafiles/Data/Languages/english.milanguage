@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.5",
-        "lastchange": "2019.09.12"
+        "lastchange": "2019.09.14"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2616,7 +2616,7 @@
             "fov": "Field of view",
             "fovtip": "How wide the lens of the camera is.",
 			"bladeamount": "Blades",
-            "bladeamounttip": "The amount of blades the camera has. Changes the appearance of Bloom.",
+            "bladeamounttip": "The amount of blades the camera has. Changes the appearance of bloom and DOF.",
 			"bladeangle": "Blade angle",
             "bladeangletip": "The rotation angle of blades.",
             "rotate": "Rotate around a point",
