@@ -3,8 +3,8 @@
     "file/": {
         "language": "Français",
         "translator": "Voxy",
-        "forversion": "1.2.4",
-        "lastchange": "2019.05.20"
+        "forversion": "1.2.5",
+        "lastchange": "2019.09.13"
     },
     "startup/": {
         "caption": "Démarrage",
@@ -2185,7 +2185,9 @@
             "boxmapped": "Texture mappée",
             "boxmappedtip": "Définir si les faces de la skybox utilisent différentes parties de l'image.",
             "savemap": "Exporter le mappage",
-            "savemaptip": "Sauvegarder le gabarit à utiliser pour la skybox."
+            "savemaptip": "Sauvegarder le gabarit à utiliser pour la skybox.",
+			"rotation": "Rotation",
+			"rotationtip": "La rotation de la skybox/skysphere."
         },
         "sky/": {
             "suntex": "Texture du soleil",
@@ -2779,6 +2781,10 @@
         "camera/": {
             "fov": "Champ de vue",
             "fovtip": "La largeur de l'objectif de la caméra.",
+			"bladeamount": "Lames",
+            "bladeamounttip": "Le nombre de lames du diaphragme de la caméra. Modifie l'aspect du flou lumineux et de la profondeur de champ.",
+			"bladeangle": "Angle des lames",
+            "bladeangletip": "L'angle de rotation des lames.",
             "rotate": "Rotation autour d'un point",
             "rotatetip": "Effectuer les rotations de caméra autour d'un point dans l'espace.",
             "rotatepoint": "Point de rotation",
@@ -2829,7 +2835,7 @@
             "dofforegroundtip": "Effectuer la mise au point sur l'avant-plan de la scène et flouter l'arrière-plan.",
             "dofbackground": "Arrière-plan",
             "dofbackgroundtip": "Effectuer la mise au point sur l'arrière-plan de la scène et flouter l'avant-plan.",
-			"doffringe": "Abberation chromatique",
+			"doffringe": "Franges de couleur",
             "doffringetip": "Décomposer les couleurs des zones floues.",
             "doffringeanglered": "R",
             "doffringeangleredtip": "Angle de la frange du canal rouge.",
@@ -2905,6 +2911,24 @@
             "vignettestrengthtip": "L'intensité de l'effet de vignettage.",
 			"vignettecolor": "Couleur du vignettage",
             "vignettecolortip": "La couleur de l'effet de vignettage.",
+			"ca": "Aberration chromatique",
+            "catip": "Activer un effet d'aberration chromatique sur l'image.",
+            "cabluramount": "Quantité de flou",
+            "cabluramounttip": "La quantité de flou appliqué sur les couches RVB.",
+            "cadistortchannels": "Déformer les couches RVB",
+            "cadistortchannelstip": "Déformer les couches RVB au lieu de les étirer.",
+            "caredoffset": "Décalage sur R",
+            "caredoffsettip": "Le décalage à appliquer sur la couche rouge.",
+            "cagreenoffset": "Décalage sur V",
+            "cagreenoffsettip": "Le décalage à appliquer sur la couche verte.",
+            "cablueoffset": "Décalage sur B",
+            "cablueoffsettip": "Le décalage à appliquer sur la couche bleue.",
+            "distort": "Distortion",
+            "distorttip": "Appliquer un effet de distortion de lentille à l'image.",
+            "distortrepeat": "Répéter",
+            "distortrepeattip": "Répéter l'image quand la distortion la rend plus petite.",
+            "distortamount": "Taux de distortion",
+            "distortamounttip": "Le taux de distortion déformant l'image.",
             "videosize": "Dimensions",
             "videosizetip": "La taille de la vue de la caméra. Cela n'affectera pas les vidéos rendues, mais les modifications seront prises en compte lors du rendu d'une séquence d'images ou si la caméra est utilisée comme texture.",
             "videosizeuseproject": "Utiliser paramètres du projet",
