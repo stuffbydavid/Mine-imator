@@ -1,5 +1,5 @@
 {
-	"version": "1.14.1",
+	"version": "1.14.4",
 	"patch": 0,
 	"format": 5,
 	"characters": [
@@ -1495,7 +1495,7 @@
 				"minecraft:mossy_stone_brick_slab": "variant=mossy_stone_brick",
 				"minecraft:polished_diorite_slab": "variant=polished_driorite",
 				"minecraft:mossy_cobblestone_slab": "variant=mossy_cobblestone",
-				"minecraft:end_stone_slab": "variant=end_stone",
+				"minecraft:end_stone_brick_slab": "variant=end_stone_brick",
 				"minecraft:smooth_sandstone_slab": "variant=smooth_sandstone",
 				"minecraft:smooth_quartz_slab": "variant=smooth_quartz",
 				"minecraft:smooth_red_sandstone_slab": "variant=smooth_red_sandstone",
@@ -1559,6 +1559,10 @@
 				"up": [ "false", "true" ]
 			},
 			"brightness": 1,
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
 			"id": "minecraft:fire"
 		},
 		{
@@ -4082,6 +4086,10 @@
 					{ "value": "true", "brightness": 0.75 }
 				]
 			},
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
 			"default_state": "facing=west,lit=true",
 			"id": "minecraft:campfire"
 		},
@@ -4090,6 +4098,10 @@
 			"file": "sweet_berry_bush.json",
 			"states": {
 				"age": [ "0", "1", "2", "3" ]
+			},
+			"wind": {
+				"axis": "all",
+				"ymin": 0
 			},
 			"default_state": "age=0",
 			"id": "minecraft:sweet_berry_bush"
