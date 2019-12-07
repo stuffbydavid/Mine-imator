@@ -1,28 +1,22 @@
-/// model_shape_get_bend_scale(bendstart, bendend, weight, start, [segmentposition], [bend])
+/// model_shape_get_bend_scale(bendstart, bendend, weight, start, bendpos, bend)
 /// @arg bendstart
 /// @arg bendend
 /// @arg weight
 /// @arg start
-/// @arg [segmentposition]
-/// @arg [bend]
+/// @arg bendpos
+/// @arg bend
 /// @desc Returns a scale for blocky bending to adjust pinching.
 
-var bendstart, bendend, weight, start, segpos, bend;
+var bendstart, bendend, weight, start, bendpos, bend;
 var bendscale
-bendstart = argument[0]
-bendend = argument[1]
-weight = argument[2]
-start = argument[3]
-segpos = null
-bend = bend_default_angle
+bendstart = argument0
+bendend = argument1
+weight = argument2
+start = argument3
+bendpos = argument4
+bend = argument5
 
-if (argument_count > 4)
-	segpos = argument[4]
-
-if (argument_count > 5)
-	bend = argument[5]
-
-if (segpos > bendstart && segpos < bendend)
+if (bendpos > bendstart && bendpos < bendend)
 {
 	if (weight <= 0.5)
 		bendscale = vec3(weight * 2)

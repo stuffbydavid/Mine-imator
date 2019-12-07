@@ -150,6 +150,9 @@ with (new(obj_model_shape))
 			other.has_3d_plane = true
 	}
 	
+	// Locked shape
+	locked = value_get_real(map[?"locked"], false)
+	
 	// Bending
 	bend_shape = value_get_real(map[?"bend"], true)
 	bend_part = other.bend_part

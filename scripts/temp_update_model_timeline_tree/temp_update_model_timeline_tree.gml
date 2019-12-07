@@ -115,6 +115,8 @@ with (obj_timeline)
 					lock_bend = part.lock_bend
 					part_mixing_shapes = part.part_mixing_shapes
 					value_type_show[e_value_type.POSITION] = part.show_position
+					value_type_show[e_value_type.ROTATION] = part.show_rotation
+					value_type_show[e_value_type.SCALE] = part.show_scale
 					tlexists = true
 					break
 				}	

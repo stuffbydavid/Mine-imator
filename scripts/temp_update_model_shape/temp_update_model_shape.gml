@@ -42,7 +42,7 @@ for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
 	if (ds_list_find_index(model_hide_list, part.name) < 0)
 	{
 		model_part_fill_shape_alpha_map(part, model_shape_alpha_map, res, model_texture_name_map, model_shape_texture_name_map)
-		model_part_fill_shape_vbuffer_map(part, model_shape_vbuffer_map, model_shape_alpha_map, part.bend_default_angle)
+		model_part_fill_shape_vbuffer_map(part, model_shape_vbuffer_map, model_shape_alpha_map, part.bend_inherit_angle)
 	}
 }
 

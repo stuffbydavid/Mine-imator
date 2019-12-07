@@ -103,16 +103,23 @@ with (new(obj_model_part))
 	position_noscale = value_get_point3D(map[?"position"])
 	position = point3D_mul(position_noscale, other.scale)
 	
-	show_position = false
-	if (is_real(map[?"show_position"]))
-		show_position = map[?"show_position"]
-		
 	// Rotation (optional)
 	rotation = value_get_point3D(map[?"rotation"], vec3(0, 0, 0))
-		
+	
 	// Scale (optional)
 	scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
 	scale = vec3_mul(scale, other.scale)
+	
+	// Keyframe tab states
+	show_position = value_get_real(map[?"show_position"], false)
+	show_rotation = value_get_real(map[?"show_rotation"], false)
+	show_scale = value_get_real(map[?"show_scale"], false)
+	
+	// Locked timeline
+	if (other.object_index = obj_model_part && other.locked)
+		locked = true
+	else
+		locked = value_get_real(map[?"locked"], false)
 	
 	// Locked to parent bend half?
 	lock_bend = true
@@ -147,6 +154,9 @@ with (new(obj_model_part))
 	if (!is_undefined(map[?"bend"]))
 	{
 		var bendmap = map[?"bend"]
+		
+		// Inherit angles
+		bend_inherit = value_get_real(bendmap[?"inherit_bend"], false)
 		
 		// Offset
 		if (!is_real(bendmap[?"offset"]))
@@ -320,6 +330,13 @@ with (new(obj_model_part))
 			for (var i = 0; i < ds_list_size(bendmap[?"angle"]); i++)
 				bend_default_angle[axis[i]] = ds_list_find_value(bendmap[?"angle"], i)
 		}
+		
+		// Inherit parent bend
+		bend_inherit_angle[Z] = 0
+		if (bend_inherit)
+			bend_inherit_angle = point3D_add(bend_default_angle, other.bend_inherit_angle)
+		else
+			bend_inherit_angle = bend_default_angle
 	}
 	else
 	{
@@ -327,6 +344,8 @@ with (new(obj_model_part))
 		bend_axis[Z] = false
 		bend_direction[Z] = 0
 		bend_default_angle[Z] = 0
+		bend_inherit_angle[Z] = 0
+		bend_inherit = false
 		bend_offset = 0
 		bend_size = null
 		bend_invert = false
@@ -340,7 +359,7 @@ with (new(obj_model_part))
 	// Matrix used when rendering preview/particle
 	default_matrix = matrix_create(position, rotation, vec3(1))
 	if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
-		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_default_angle, point3D(0, 0, 0)))
+		default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_inherit_angle, point3D(0, 0, 0)))
 	
 	// Default bounds
 	bounds_start = point3D(no_limit, no_limit, no_limit)

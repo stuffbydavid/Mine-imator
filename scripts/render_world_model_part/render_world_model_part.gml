@@ -36,6 +36,10 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
 		continue
 	
+	// Click mode
+	if (render_mode = e_render_mode.CLICK && shape.locked)
+		continue
+	
 	// Check alpha if valid to render
 	if (shape.color_alpha = 0)
 		continue

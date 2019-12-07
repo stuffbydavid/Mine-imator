@@ -6,6 +6,7 @@ with (frame_editor)
 	position.enabled = false
 	rotation.show = false
 	rotation.enabled = false
+	scale.show = false
 	scale.enabled = false
 	bend.show = false
 	bend.enabled = false
@@ -145,6 +146,9 @@ with (obj_timeline)
 		
 	if (value_type_show[e_value_type.ROTATION])
 		app.frame_editor.rotation.show = true
+	
+	if (value_type_show[e_value_type.SCALE])
+		app.frame_editor.scale.show = true
 		
 	if (value_type_show[e_value_type.BEND])
 		app.frame_editor.bend.show = true
