@@ -25,7 +25,10 @@ for (var i = X; i <= Z; i++)
 		continue
 	
 	// Clamp to a valid angle
-	bend[i] = tl_value_clamp(e_value.BEND_ANGLE_X + i, bend[i])
+	//bend[i] = tl_value_clamp(e_value.BEND_ANGLE_X + i, bend[i])
+	
+	// Limit by bend range
+	bend[i] = clamp(bend[i], part.bend_direction_min[i], part.bend_direction_max[i])
 	
 	// Invert
 	if (part.bend_invert[i])
@@ -34,12 +37,6 @@ for (var i = X; i <= Z; i++)
 	// Reset if not defined
 	if (!part.bend_axis[i])
 		bend[i] = 0
-		
-	// Limit by direction
-	else if (part.bend_direction[i] = e_bend.FORWARD)
-		bend[i] = min(0, -bend[i])
-	else if (part.bend_direction[i] = e_bend.BACKWARD)
-		bend[i] = max(0, bend[i])
 }
 
 // Get position

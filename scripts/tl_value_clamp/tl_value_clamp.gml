@@ -60,7 +60,7 @@ switch (vid)
 	case e_value.BG_FOG_OBJECT_COLOR: return clamp(val, c_black, c_white)
 	case e_value.BEND_ANGLE_X:
 	case e_value.BEND_ANGLE_Y:
-	case e_value.BEND_ANGLE_Z: return clamp(val, -130, 130)
+	case e_value.BEND_ANGLE_Z: return clamp(val, -180, 180)
 	case e_value.CAM_FOV: return clamp(val, 1, 170)
 	case e_value.CAM_BLADE_AMOUNT: return clamp(val, 0, 32)
 	case e_value.CAM_BLADE_ANGLE: return clamp(val, 0, 360)

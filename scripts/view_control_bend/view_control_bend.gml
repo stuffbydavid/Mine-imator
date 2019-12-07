@@ -36,7 +36,7 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && view_contr
 		axis = view_control_edit - e_value.BEND_ANGLE_X
 		ang = point_direction(mouse_x - content_x, mouse_y - content_y, view_control_pos[X], view_control_pos[Y])
 		prevang = point_direction(mouse_previous_x - content_x, mouse_previous_y - content_y, view_control_pos[X], view_control_pos[Y])
-		rot = angle_difference_fix(ang, prevang) * negate(view_control_flip) * negate(part.bend_invert[axis]) * negate(part.bend_direction[axis] != e_bend.FORWARD) * negate(axis = Y || axis = Z)
+		rot = angle_difference_fix(ang, prevang) * negate(view_control_flip) * negate(part.bend_invert[axis]) * negate(axis = X)
 		view_control_value += rot
 		
 		// Snap

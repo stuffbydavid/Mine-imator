@@ -5,10 +5,11 @@
 var bend = argument0;
 		
 // Plane dimensions
-var x1, x2, y1, z1, z2, size;
+var x1, x2, y1, z1, z2, size, scalef;
 x1 = from[X];	y1 = from[Y];	z1 = from[Z]
 x2 = to[X];						z2 = to[Z]
 size = point3D_sub(to, from)
+scalef = 0.005
 
 // Find whether the shape is bent
 var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
@@ -19,6 +20,8 @@ if (isbent)
 {
 	if (bend_part = e_part.LEFT || bend_part = e_part.RIGHT)
 		segaxis = X
+	else if (bend_part = e_part.BACK || bend_part = e_part.FRONT)
+		segaxis = Z
 	else if (bend_part = e_part.LOWER || bend_part = e_part.UPPER)
 		segaxis = Z
 }
@@ -50,12 +53,17 @@ if (texture_mirror)
 // Start position and bounds
 var detail = 2;
 var sharpbend, bendsize, bendstart, bendend, bendsegsize, invangle;
-sharpbend = app.setting_bend_style = "blocky" && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]
+sharpbend = (app.setting_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
 bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
-bendsegsize = bendsize / detail;
-invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
+detail = test(sharpbend, 2, max(bendsize, 2))
 
-var p1, p2, p3, p4, n1, n2;
+if ((bend_size != null && bend_size >= 1) && scale[segaxis] > .5)
+	detail /= scale[segaxis]
+
+bendsegsize = bendsize / detail;
+invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
+
+var p1, p2, n1, n2;
 var texp1;
 
 if (segaxis = X)
@@ -66,7 +74,7 @@ if (segaxis = X)
 	p2 = point3D(x1, y1, z1)
 	texp1 = tex1[X]
 }
-else if (segaxis = Z)
+else if (segaxis = Z || segaxis = Y)
 {
 	bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
 	bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
@@ -80,7 +88,7 @@ var mat;
 if (isbent) // Apply start bend
 {
 	// Angle
-	var startp;
+	var startp, bendvec;
 	if (bendstart > 0) // Below bend, no angle
 		startp = 0
 	else if (bendend < 0) // Above bend, apply full angle
@@ -91,7 +99,14 @@ if (isbent) // Apply start bend
 	if (invangle)
 		startp = 1 - startp
 	
-	mat = model_part_get_bend_matrix(id, vec3_mul(bend, startp), vec3(0))
+	bendvec = model_shape_get_bend(bend, startp)
+	
+	// Blocky bending
+	var startscale = vec3(0);
+	if (sharpbend)
+		startscale = model_shape_get_bend_scale(bendstart, bendend, startp, true, 0, bend)
+	
+	mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(startscale, vec3(1 + (startp * 0))))
 }
 else // Apply rotation only
 	mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
@@ -115,7 +130,7 @@ while (segpos < size[segaxis])
 	var segsize;
 	var np1, np2;
 	var nn1, nn2;
-	var ntexp1, ntexp2, ntexp3;
+	var ntexp1;
 	
 	// Find segment size
 	if (!isbent || segpos >= bendend) // No/Above bend
@@ -154,7 +169,7 @@ while (segpos < size[segaxis])
 	// Apply transform
 	if (isbent)  // Apply segment bend
 	{
-		var segp;
+		var segp, bendvec;
 		if (segpos < bendstart) // Below bend, no angle
 			segp = 0
 		else if (segpos >= bendend) // Above bend, apply full angle
@@ -165,7 +180,14 @@ while (segpos < size[segaxis])
 		if (invangle)
 			segp = 1 - segp
 			
-		mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0))
+		bendvec = model_shape_get_bend(bend, segp)
+	
+		// Blocky bending
+		var bendscale = vec3(0);
+		if (sharpbend)
+			startscale = model_shape_get_bend_scale(bendstart, bendend, segp, true, segpos, bend)
+		
+		mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(bendscale, vec3(1)))
 	}
 	else // Apply rotation only
 		mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
@@ -174,6 +196,16 @@ while (segpos < size[segaxis])
 	np2 = point3D_mul_matrix(np2, mat)
 	nn1 = vec3_normalize(vec3_mul_matrix(vec3(0, 1, 0), mat))
 	nn2 = vec3_normalize(vec3_mul_matrix(vec3(0, -1, 0), mat))
+	
+	// Sharp lighting
+	if (sharpbend)
+	{
+		n1 = null
+		n2 = null
+		
+		nn1 = null
+		nn2 = null
+	}
 	
 	// Add faces
 	var t1, t2, t3, t4;

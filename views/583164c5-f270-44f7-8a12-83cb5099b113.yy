@@ -4,8 +4,8 @@
     "mvc": "1.1",
     "name": "583164c5-f270-44f7-8a12-83cb5099b113",
     "children": [
-        "e3b48279-0b7d-42a5-83e0-eff4482df93e",
-        "1c5be2fa-7946-4cb2-86e5-50f2d59ddde4"
+        "9e5da75b-9cc8-4325-bf9f-453213e37a6d",
+        "5f36e833-7dc6-4b64-88f0-a3ba8aca7798"
     ],
     "filterType": "GMIncludedFile",
     "folderName": "Minecraft",

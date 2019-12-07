@@ -13,7 +13,7 @@ switch (vid)
 	case e_value.SCA_Y:
 	case e_value.SCA_Z: return 1 + val
 	case e_value.LIGHT_COLOR: return c_white - val
-	case e_value.BEND_ANGLE_LEGACY: return val * 130
+	case e_value.BEND_ANGLE_LEGACY: return val * 130 // Pre-1.2.6 bend limit
 	case e_value.LIGHT_RANGE: return (1 - val) * 250
 	case e_value.TRANSITION:
 	{

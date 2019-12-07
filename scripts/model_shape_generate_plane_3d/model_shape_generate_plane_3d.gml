@@ -15,7 +15,7 @@ var x1, x2, y1, y2, z1, z2, size, scalef;
 x1 = from[X];	y1 = from[Y];			 z1 = from[Z]
 x2 = to[X];		y2 = from[Y] + scale[Y]; z2 = to[Z]
 size = point3D_sub(to, from)
-scalef = 0.01 // Used to combat Z-fighting
+scalef = 0.005 // Used to combat Z-fighting
 
 // Find whether the shape is bent
 var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
@@ -30,6 +30,11 @@ if (isbent)
 		arrouteraxis = Y; arrinneraxis = X;
 	}
 	else if (bend_part = e_part.LOWER || bend_part = e_part.UPPER)
+	{
+		segouteraxis = X; seginneraxis = Z;
+		arrouteraxis = X; arrinneraxis = Y;
+	}
+	else
 	{
 		segouteraxis = X; seginneraxis = Z;
 		arrouteraxis = X; arrinneraxis = Y;
@@ -52,19 +57,19 @@ ptexsize = vec2_div(vec2(1 - 1 / 256), texsizescale)
 
 // Start position and bounds
 var sharpbend, bendsize, bendstart, bendend, invangle;
-sharpbend = app.setting_bend_style = "blocky" && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]
+sharpbend = (app.setting_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
 bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
-invangle = (bend_part = e_part.LOWER || bend_part = e_part.LEFT)
+invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 
 if (segouteraxis = X)
 {
-	bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
-	bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
+	bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
+	bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
 }
 else if (segouteraxis = Z)
 {
-	bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
-	bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
+	bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
+	bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
 }
 
 // Precalculate points
@@ -93,7 +98,7 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 		var mat;
 		if (isbent) // Apply segment bending
 		{
-			var segp;
+			var segp, bendvec;
 			if (seginnerpos < bendstart) // No/below bend, no angle
 				segp = 0
 			else if (seginnerpos >= bendend) // Above bend, apply full angle
@@ -104,7 +109,20 @@ for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 			if (invangle)
 				segp = 1 - segp
 			
-			mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0), vec3(1 + segp * scalef))
+			bendvec = model_shape_get_bend(bend, segp)
+			
+			// Blocky bending
+			var bendscale = vec3(0);
+			if (sharpbend)
+			{	
+				if (segp != 0.5)
+					segp = round(segp)
+				
+				bendscale = model_shape_get_bend_scale(bendstart, bendend, segp, false, seginnerpos, bend)
+				bendvec = vec3_mul(bend, segp)
+			}
+			
+			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef)))
 		}
 		else // Apply rotation only
 			mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)

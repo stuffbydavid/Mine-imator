@@ -38,17 +38,20 @@ else
 var snapval = tab.bend.snap_enabled * tab.bend.snap_size;
 if (axislen > 0)
 {
-	tab_control(100)
 	var n = 0;
 	for (var i = 0; i < 3; i++)
 	{
 		axis_edit = axis[i]
 		if (!tl_edit.model_part.bend_axis[axis_edit])
 			continue
-		draw_wheel("frameeditorbend" + axisname[i], dx + floor(wheelx[n]), dy + 50, c_aqua, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], -130, 130, tl_edit.model_part.bend_default_angle[axis_edit], snapval, false, tab.bend.tbx_wheel[i], action_tl_frame_bend_angle, rad, spr)
+		
+		tab_control_meter()
+		draw_meter("frameeditorbend" + axisname[i], dx, dy, dw, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], 48, tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], 0, snapval, tab.bend.tbx_wheel[i], action_tl_frame_bend_angle)
+		tab_next()
+		
 		n++
 	}
-	tab_next()
+	
 }
 
 // Tools

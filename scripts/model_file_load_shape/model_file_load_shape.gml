@@ -154,7 +154,8 @@ with (new(obj_model_shape))
 	bend_shape = value_get_real(map[?"bend"], true)
 	bend_part = other.bend_part
 	bend_axis = other.bend_axis
-	bend_direction = other.bend_direction
+	bend_direction_min = other.bend_direction_min
+	bend_direction_max = other.bend_direction_max
 	bend_default_angle = other.bend_default_angle
 	bend_offset = other.bend_offset
 	bend_size = other.bend_size

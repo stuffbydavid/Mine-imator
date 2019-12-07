@@ -101,10 +101,14 @@ if (texture_mirror)
 }
 
 // Start position and bounds
-var detail = 2;
-var sharpbend, bendsize, bendstart, bendend, bendsegsize, invangle;
-sharpbend = app.setting_bend_style = "blocky" && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]
+var sharpbend, bendsize, detail, bendstart, bendend, bendsegsize, invangle;
+sharpbend = (app.setting_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
 bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
+detail = test(sharpbend, 2, max(bendsize, 2))
+
+if ((bend_size != null && bend_size >= 1) && scale[segaxis] > .5)
+	detail /= scale[segaxis]
+
 bendsegsize = bendsize / detail;
 invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 
@@ -177,7 +181,7 @@ switch (segaxis)
 var mat;
 if (isbent) // Apply start bend
 {
-	var startp;
+	var startp, bendvec;
 	if (bendstart > 0) // Below bend, no angle
 		startp = 0
 	else if (bendend < 0) // Above bend, apply full angle
@@ -188,45 +192,14 @@ if (isbent) // Apply start bend
 	if (invangle)
 		startp = 1 - startp
 	
+	bendvec = model_shape_get_bend(bend, startp)
+	
 	// Blocky bending
+	var startscale = vec3(0);
 	if (sharpbend)
-	{
-		var bendsca;
-		bendsca = 0
-		
-		if (bendstart < 0 && bendend > 0)
-		{
-			if (startp <= 0.5)
-				bendsca = startp * 2
-			else
-				bendsca = (1 - startp) * 2
-			
-			var bendang = bend[X];
-			
-			if (bend_direction[X] = e_bend.FORWARD)
-				bendang = min(0, -bendang)
-				
-			if (bend_direction[X] = e_bend.BACKWARD)
-				bendang = max(0, bendang)
-			
-			bendang = abs(bendang)
-			
-			if (bendang > 90)
-				bendang -= (bendang - 90) * 2
-			
-			var bendperc = percent(bendang, 0, 90);
-			bendperc = clamp(bendperc, 0, 1)
-			bendsca *= bendperc
-			
-			bendsca = ease("easeincubic", bendsca)
-			
-			bendsca /= 2.5
-		}
-		
-		mat = model_part_get_bend_matrix(id, vec3_mul(bend, startp), vec3(0), vec3(1, 1 + bendsca, 1 + bendsca))
-	}
-	else
-		mat = model_part_get_bend_matrix(id, vec3_mul(bend, startp), vec3(0))
+		startscale = model_shape_get_bend_scale(bendstart, bendend, startp, true, 0, bend)
+
+	mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(vec3(1), startscale))
 }
 else // Apply rotation only
 	mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
@@ -364,56 +337,28 @@ while (true)
 	// Apply transform
 	if (isbent) // Apply segment bend
 	{
-		var segp;
+		var segp, bendvec;
 		if (segpos < bendstart) // Below bend, no angle
 			segp = 0
 		else if (segpos >= bendend) // Above bend, apply full angle
 			segp = 1
 		else // Inside bend, apply partial angle
 			segp = (1 - (bendend - segpos) / bendsize)
-			
+		
 		if (invangle)
 			segp = 1 - segp
+			
+		bendvec = model_shape_get_bend(bend, segp)
 		
-		// X-axis sharp bending
+		// Blocky bending
+		var bendscale = vec3(0);
 		if (sharpbend)
 		{
-			var bendsca;
-			bendsca = 0
-		
-			if (segpos > bendstart && segpos < bendend)
-			{
-				if (segp <= 0.5)
-					bendsca = segp * 2
-				else
-					bendsca = (1 - segp) * 2
-			
-				var bendang = bend[X];
-			
-				if (bend_direction[X] = e_bend.FORWARD)
-					bendang = min(0, -bendang)
-				
-				if (bend_direction[X] = e_bend.BACKWARD)
-					bendang = max(0, bendang)
-			
-				bendang = abs(bendang)
-			
-				if (bendang > 90)
-					bendang -= (bendang - 90) * 2
-			
-				var bendperc = percent(bendang, 0, 90);
-				bendperc = clamp(bendperc, 0, 1)
-				bendsca *= bendperc
-			
-				bendsca = ease("easeincubic", bendsca)
-			
-				bendsca /= 2.5
-			}
-		
-			mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0), vec3(1 + segp * scalef, (1 + bendsca) + segp * scalef, (1 + bendsca) + segp * scalef))
+			bendscale = model_shape_get_bend_scale(bendstart, bendend, segp, false, segpos, bend)
+			bendvec = vec3_mul(bend, segp)
 		}
-		else
-			mat = model_part_get_bend_matrix(id, vec3_mul(bend, segp), vec3(0), vec3(1 + segp * scalef))
+		
+		mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef)))
 	}
 	else // Apply rotation only
 		mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
@@ -422,10 +367,27 @@ while (true)
 	np2 = point3D_mul_matrix(np2, mat)
 	np3 = point3D_mul_matrix(np3, mat)
 	np4 = point3D_mul_matrix(np4, mat)
-	nn1 = vec3_normalize(vec3_mul_matrix(nn1, mat))
-	nn2 = vec3_normalize(vec3_mul_matrix(nn2, mat))
-	nn3 = vec3_normalize(vec3_mul_matrix(nn3, mat))
-	nn4 = vec3_normalize(vec3_mul_matrix(nn4, mat))
+	
+	// Sharp lighting
+	if (sharpbend)
+	{
+		n1 = null
+		n2 = null
+		n3 = null
+		n4 = null
+		
+		nn1 = null
+		nn2 = null
+		nn3 = null
+		nn4 = null
+	}
+	else
+	{
+		nn1 = vec3_normalize(vec3_mul_matrix(nn1, mat))
+		nn2 = vec3_normalize(vec3_mul_matrix(nn2, mat))
+		nn3 = vec3_normalize(vec3_mul_matrix(nn3, mat))
+		nn4 = vec3_normalize(vec3_mul_matrix(nn4, mat))
+	}
 	
 	// Add surrounding faces
 	var t1, t2, t3, t4;

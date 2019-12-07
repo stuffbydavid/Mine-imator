@@ -1919,14 +1919,6 @@
             }
         },
         {
-            "Key": "1c5be2fa-7946-4cb2-86e5-50f2d59ddde4",
-            "Value": {
-                "id": "11a3a60a-7b32-4f14-865a-3e7027d53237",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.1.midata.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "1c89a80a-1f5a-4110-b9b5-7254b76b2965",
             "Value": {
                 "id": "affcc4b9-6d9a-43a9-9bf1-cf7c37a91f1b",
@@ -5511,6 +5503,14 @@
             }
         },
         {
+            "Key": "57c00d98-0cbf-4b4d-b8ea-0281b5d5ca41",
+            "Value": {
+                "id": "e41afd3b-7f60-45f2-9355-d9023ddfe733",
+                "resourcePath": "scripts\\model_shape_get_bend\\model_shape_get_bend.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "57c5d9b6-1451-451e-9d32-006f68dff24d",
             "Value": {
                 "id": "c003bb24-4668-4544-86d4-28c09d1c5f8e",
@@ -5980,6 +5980,14 @@
                 "id": "6c658326-415e-4616-9466-db3a2c16cffb",
                 "resourcePath": "scripts\\popup_close\\popup_close.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "5f36e833-7dc6-4b64-88f0-a3ba8aca7798",
+            "Value": {
+                "id": "35454193-bdd4-46b7-b2e6-a6288fd12c30",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.4.zip.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -9087,6 +9095,14 @@
             }
         },
         {
+            "Key": "8e980400-f130-4255-8ae6-58ce00642b7a",
+            "Value": {
+                "id": "2b5db71e-6c2e-4986-bc05-6add3c1b5868",
+                "resourcePath": "scripts\\model_shape_get_bend_scale\\model_shape_get_bend_scale.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "8ea35987-3e28-4012-8974-fa1290c466a3",
             "Value": {
                 "id": "bb44cc53-c8c6-4b8b-ba3c-d182b0ecac82",
@@ -10140,6 +10156,14 @@
                 "id": "75b43e40-9010-4513-a83c-83d0a3c6cca2",
                 "resourcePath": "scripts\\render_select\\render_select.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "9e5da75b-9cc8-4325-bf9f-453213e37a6d",
+            "Value": {
+                "id": "1fc8e7ad-9ef8-4537-825f-c77404e25de8",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.4.midata.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -14655,14 +14679,6 @@
             }
         },
         {
-            "Key": "e3b48279-0b7d-42a5-83e0-eff4482df93e",
-            "Value": {
-                "id": "414f079d-69ae-43e0-9ab3-187bd0925369",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.1.zip.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "e3be2dce-28e7-48d3-8143-6670bac3e84a",
             "Value": {
                 "id": "aa6da303-1f85-4ff3-9b75-1bdef45f0dc3",
@@ -17809,6 +17825,8 @@
         "efcffa2c-ef5e-4d2a-813b-dc4a3306fd86",
         "f65b3f15-ac19-4236-bb30-ade55ad76bff",
         "6cf8ef5a-306f-4fd8-bef7-5888a5079364",
+        "8e980400-f130-4255-8ae6-58ce00642b7a",
+        "57c00d98-0cbf-4b4d-b8ea-0281b5d5ca41",
         "cc84bf27-b266-4f6b-87df-5503fee82581",
         "0d6bd3a0-16f2-4046-ad8f-68f5eef4462e",
         "f4f44af1-1534-4494-957e-ccb6e55ed3a3",

@@ -215,8 +215,33 @@ with (new(obj_model_part))
 			return null
 		}
 		
-		// Direction
+		// Bend range(Minimum)
+		bend_direction_min = vec3(-180)
+		if (is_real(bendmap[?"direction_min"]) && array_length_1d(axis) = 1) // Single
+		{
+			bend_direction_min[axis[0]] = bendmap[?"direction_min"]
+		}
+		else if (ds_list_valid(bendmap[?"direction_min"])) // Multi
+		{
+			for (var i = 0; i < ds_list_size(bendmap[?"direction_min"]); i++)
+				bend_direction_min[axis[i]] = ds_list_find_value(bendmap[?"direction_min"], i)
+		}
+		
+		// Bend range(Maximum)
+		bend_direction_max = vec3(180)
+		if (is_real(bendmap[?"direction_max"]) && array_length_1d(axis) = 1) // Single
+		{
+			bend_direction_max[axis[0]] = bendmap[?"direction_max"]
+		}
+		else if (ds_list_valid(bendmap[?"direction_max"])) // Multi
+		{
+			for (var i = 0; i < ds_list_size(bendmap[?"direction_max"]); i++)
+				bend_direction_max[axis[i]] = ds_list_find_value(bendmap[?"direction_max"], i)
+		}
+		
+		// Direction(Legacy)
 		bend_direction = array(0, 0, 0)
+		bend_direction_legacy = false
 		if (is_string(bendmap[?"direction"])) // Single
 		{
 			switch (bendmap[?"direction"])
@@ -228,6 +253,7 @@ with (new(obj_model_part))
 					log("Invalid parameter \"direction\"")
 					return null
 			}
+			bend_direction_legacy = true
 		}
 		else if (ds_list_valid(bendmap[?"direction"])) // Multi
 		{
@@ -242,12 +268,8 @@ with (new(obj_model_part))
 						log("Invalid parameter \"direction\"")
 						return null
 				}
+				bend_direction_legacy = true
 			}
-		}
-		else
-		{
-			log("Missing parameter \"direction\"")
-			return null
 		}
 		
 		// Invert
@@ -262,6 +284,30 @@ with (new(obj_model_part))
 		}
 		else
 			bend_invert = vec3(false)
+		
+		// Convert legacy direction to limits
+		if (bend_direction_legacy)
+		{
+			for (var i = X; i <= Z; i++)
+			{
+				if (bend_direction[i] = e_bend.BOTH)
+				{
+					bend_direction_min[i] = -180
+					bend_direction_max[i] = 180
+				}
+				else if (bend_direction[i] = e_bend.FORWARD)
+				{
+					bend_direction_min[i] = 0
+					bend_direction_max[i] = 180
+					bend_invert[i] = !bend_invert[i] // 'forward' previously inverted angle
+				}
+				else
+				{
+					bend_direction_min[i] = 0
+					bend_direction_max[i] = 180
+				}
+			}
+		}
 		
 		// Fixed angle
 		bend_default_angle[Z] = 0
@@ -285,6 +331,8 @@ with (new(obj_model_part))
 		bend_size = null
 		bend_invert = false
 		bend_pos_offset = vec3(0)
+		bend_direction_min = vec3(-180)
+		bend_direction_max = vec3(180)
 	}
 		
 	matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
