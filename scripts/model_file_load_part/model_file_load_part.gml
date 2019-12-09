@@ -1,13 +1,15 @@
-/// model_file_load_part(map, root, resource)
+/// model_file_load_part(map, root, resource, model)
 /// @arg map
 /// @arg root
 /// @arg resource
+/// @arg model
 /// @desc Adds a part from the given map (JSON object) and returns its instance.
 
-var map, root, res;
+var map, root, res, model;
 map = argument0
 root = argument1
 res = argument2
+model = argument3
 
 // Check invisible
 if (!is_undefined(map[?"visible"]) && !map[?"visible"])
@@ -43,6 +45,16 @@ with (new(obj_model_part))
 	
 	if (res = null && dev_mode_debug_names && !text_exists("modelpart" + name))
 		log("model/part/" + name + dev_mode_name_translation_message)
+	
+	// Depth
+	depth = value_get_real(map[?"depth"], 0)
+	
+	var pos;
+	for (pos = 0; pos < ds_list_size(model.render_part_list); pos++)
+		if (model.render_part_list[|pos].depth > depth)
+			break
+		
+	ds_list_insert(model.render_part_list, pos, id)
 	
 	// Description (optional)
 	description = value_get_string(map[?"description"], "")
@@ -396,7 +408,7 @@ with (new(obj_model_part))
 		part_list = ds_list_create()
 		for (var p = 0; p < ds_list_size(partlist); p++)
 		{
-			var part = model_file_load_part(partlist[|p], root, res)
+			var part = model_file_load_part(partlist[|p], root, res, model)
 			if (part = null) // Something went wrong
 				return null
 			if (part > 0)

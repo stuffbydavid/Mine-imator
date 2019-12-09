@@ -26,6 +26,8 @@ with (new(obj_timeline))
 	value_type_show[e_value_type.SCALE] = part.show_scale
 	part_parent_save_id = ""
 	
+	depth = part.depth
+	
 	tl_set_parent(other.id)
 	tl_update_depth()
 	tl_value_spawn()

@@ -98,11 +98,12 @@ with (new(obj_model_file))
 	
 	// Read all the parts of the root
 	var partlist = map[?"parts"]
+	render_part_list = ds_list_create()
 	file_part_list = ds_list_create()
 	part_list = ds_list_create()
 	for (var p = 0; p < ds_list_size(partlist); p++)
 	{
-		var part = model_file_load_part(partlist[|p], id, res)
+		var part = model_file_load_part(partlist[|p], id, res, id)
 		if (part = null)
 			return null
 		if (part > 0)
