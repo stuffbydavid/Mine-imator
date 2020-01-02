@@ -18,7 +18,7 @@ if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA ||  // Check i
 				if (temp.block_tex.type = e_res_type.PACK)
 					texobj = temp.block_tex
 				else
-					texobj = model_tex
+					texobj = mc_res
 			}
 		}
 	}

@@ -126,3 +126,4 @@ item_3d = true
 item_custom_slot = false
 
 render_res = null
+model_tex = null
