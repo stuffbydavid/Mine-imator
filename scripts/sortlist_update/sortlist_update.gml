@@ -43,7 +43,7 @@ else
 
 // Remove non-matched items from list
 var check = string_lower(slist.filter_tbx.text);
-if (slist.filter && check != "" && ((slist != bench_settings.block_list && slist != template_editor.block_list) || !setting_search_variants))
+if (slist.filter && check != "" && (slist != bench_settings.block_list && slist != template_editor.block_list))
 {
 	for (var p = 0; p < ds_list_size(slist.display_list); p++)
 	{
@@ -70,42 +70,47 @@ else if (slist.filter && check != "" && (slist = bench_settings.block_list || sl
 {
 	for (var p = 0; p < ds_list_size(slist.display_list); p++)
 	{
-		var val, match;
-		val = slist.display_list[|p]
+		var baseblock, match;
+		baseblock = slist.display_list[|p]
 		match = false
-
-		var baseblock = val;
-		var blockobj = mc_assets.block_name_map[?baseblock];
-		var variantmatch = false;
 		
-		var statearr = array_copy_1d(blockobj.default_state);
-		var statelen = array_length_1d(statearr);
-		
-		// Search for matching variants
-		for (var i = 0; i < statelen; i += 2)
+		// Variant search
+		if (setting_search_variants)
 		{
-			var state = statearr[i];
-			var statename = text_get("blockstate" + state);
-			
-			var statecurrent = blockobj.states_map[?state];
-			
-			for (var s = 0; s < statecurrent.value_amount; s++)
+			var blockobj = mc_assets.block_name_map[?baseblock];
+			var variantmatch = false;
+		
+			var statearr = array_copy_1d(blockobj.default_state);
+			var statelen = array_length_1d(statearr);
+		
+			// Search for matching variants
+			for (var i = 0; i < statelen; i += 2)
 			{
-				if (string_count(check, string_lower(minecraft_asset_get_name("blockstatevalue", statecurrent.value_name[s]))) > 0)
+				var state = statearr[i];
+				var statename = text_get("blockstate" + state);
+			
+				var statecurrent = blockobj.states_map[?state];
+			
+				for (var s = 0; s < statecurrent.value_amount; s++)
 				{
-					variantmatch = true
-					break
+					if (string_count(check, string_lower(minecraft_asset_get_name("blockstatevalue", statecurrent.value_name[s]))) > 0)
+					{
+						variantmatch = true
+						break
+					}
 				}
+			
+				if (string_count(check, string_lower(statename)) > 0)
+					variantmatch = true
+			
+				if (variantmatch)
+					break
 			}
 			
-			if (string_count(check, string_lower(statename)) > 0)
-				variantmatch = true
-			
-			if (variantmatch)
-				break
+			match = variantmatch
 		}
 		
-		if ((string_count(check, string_lower(baseblock)) > 0) || variantmatch)
+		if (!match && string_count(check, string_lower(minecraft_asset_get_name("block", baseblock))) > 0)
 			match = true
 		
 		if (!match)
