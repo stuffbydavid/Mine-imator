@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David & Nimi",
-        "forversion": "1.2.5",
-        "lastchange": "2019.09.14"
+        "forversion": "1.2.6",
+        "lastchange": "2019.12.12"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -678,6 +678,7 @@
         "ravager": "Ravager",
         "pillager": "Pillager",
         "wandering_trader": "Wandering Trader",
+        "bee": "Bee",
         "part/": {
             "body": "Body",
             "right_arm": "Right arm",
@@ -852,7 +853,13 @@
             "front_body": "Front body",
             "back_body": "Back body",
             "bell": "Bell",
-            "camera": "Camera"
+            "camera": "Camera",
+            "right_antenna": "Right antenna",
+            "left_antenna": "Left antenna",
+            "right_middle_leg": "Right middle leg",
+            "left_middle_leg": "Left middle leg",
+            "stinger": "Stinger",
+            "lock": "Lock"
         },
         "state/": {
             "variant": "Variant",
@@ -875,8 +882,9 @@
             "hanging": "Hanging",
             "profession": "Profession",
             "biome": "Biome",
-            "profession_level": "Profession Level",
+            "profession_level": "Profession level",
             "collar": "Collar",
+            "crack_amount": "Crack amount",
             "value/": {
                 "steve": "Steve",
                 "alex": "Alex",
@@ -1008,7 +1016,11 @@
                 "jellie": "Jellie",
                 "persian": "Persian",
                 "ragdoll": "Ragdoll",
-                "tabby": "Tabby"
+                "tabby": "Tabby",
+                "low": "Low",
+                "high": "High",
+                "normal_nectar": "Normal (With nectar)",
+                "angry_nectar": "Angry (With nectar)"
             }
         }
     },
@@ -1261,6 +1273,10 @@
         "campfire": "Campfire",
         "sweet_berry_bush": "Sweet Berry Bush",
         "jigsaw_block": "Jigsaw Block",
+        "bee_nest": "Bee Nest",
+        "beehive": "Beehive",
+        "honey_block": "Honey Block",
+        "honeycomb_block": "Honeycomb Block",
         "state/": {
             "variant": "Variant",
             "snowy": "Snowy",
@@ -1317,6 +1333,7 @@
             "attachment": "Attachment",
             "hanging": "Hanging",
             "wood": "Wood",
+            "honey_level": "Honey level",
             "value/": {
                 "true": "Yes",
                 "false": "No",

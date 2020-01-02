@@ -40,7 +40,7 @@ with (popup_bannereditor)
 		// Create new pattern sprites
 		res_ratio = ceil(sprite_get_width(res.model_texture_map[?"entity/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner_base"]))
 		
-		shader_mask = true
+		shader_mask = (res.pack_format < e_minecraft_pack.FORMAT_115)
 		for (var i = 0; i < ds_list_size(minecraft_banner_pattern_list); i++)
 		{
 			var bannername = minecraft_banner_pattern_list[|i];

@@ -1,41 +1,41 @@
-/// minecraft_banner_generate(color, patterns, colors, [resource])
+/// minecraft_banner_generate(color, patterns, colors, [res])
 /// @arg color
 /// @arg patterns
 /// @arg colors
-/// @arg [resource]
+/// @arg [res]
 /// @desc Generates and returns a banner skin using banner data
 
-var color, patternlist, colorlist, resource;
+var color, patternlist, colorlist, res;
 var skinratio, maskarray, bannerskin;
 color = argument[0]
 patternlist = argument[1]
 colorlist = argument[2]
-resource = mc_res
+res = mc_res
 
 if (argument_count > 3)
-	resource = argument[3]
+	res = argument[3]
 
 skinratio = 1
 maskarray = array()
 
 // Don't bother generating patterns with colors
-if (resource.type = e_res_type.SKIN)
-	return sprite_duplicate(resource.model_texture);
+if (res.type = e_res_type.SKIN)
+	return sprite_duplicate(res.model_texture);
 
 // Get the max size to generate banner skin
-skinratio = max(skinratio, ceil(sprite_get_width(resource.model_texture_map[?"entity/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner_base"])))
+skinratio = max(skinratio, ceil(sprite_get_width(res.model_texture_map[?"entity/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner_base"])))
 for (var i = 0; i < ds_list_size(minecraft_banner_pattern_list); i++)
 {
 	var bannername = minecraft_banner_pattern_list[|i];
-	skinratio = max(skinratio, ceil(sprite_get_width(resource.model_texture_map[?"entity/banner/" + bannername]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner/" + bannername])))
+	skinratio = max(skinratio, ceil(sprite_get_width(res.model_texture_map[?"entity/banner/" + bannername]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner/" + bannername])))
 }
 
 // Generate masks
-shader_mask = true
+shader_mask = (res.pack_format < e_minecraft_pack.FORMAT_115)
 for (var i = 0; i < ds_list_size(minecraft_banner_pattern_list); i++)
 {
 	var bannername = minecraft_banner_pattern_list[|i];
-	array_add(maskarray, texture_create_crop(resource.model_texture_map[?"entity/banner/" + bannername], 0, 0, 42 * skinratio, 41 * skinratio))
+	array_add(maskarray, texture_create_crop(res.model_texture_map[?"entity/banner/" + bannername], 0, 0, 42 * skinratio, 41 * skinratio))
 }
 shader_mask = false
 
@@ -46,7 +46,7 @@ surface_set_target(bannersurf)
 {
 	draw_clear_alpha(c_black, 0)
 	
-	draw_image(resource.model_texture_map[?"entity/banner_base"], 0, 0, 0)
+	draw_image(res.model_texture_map[?"entity/banner_base"], 0, 0, 0)
 	
 	draw_image(maskarray[0], 0, 0, 0, 1, 1, color, 1)
 	
@@ -59,7 +59,7 @@ surface_set_target(bannersurf)
 	draw_texture_start()
 	
 	gpu_set_blendmode_ext(bm_zero, bm_src_color)
-	draw_texture_part(resource.model_texture_map[?"entity/banner_base"], 0, 0, 0, 0, 42 * skinratio, 41 * skinratio)
+	draw_texture_part(res.model_texture_map[?"entity/banner_base"], 0, 0, 0, 0, 42 * skinratio, 41 * skinratio)
 	gpu_set_blendmode(bm_normal)
 	
 	draw_texture_done()

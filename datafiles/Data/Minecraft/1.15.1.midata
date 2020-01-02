@@ -1,5 +1,5 @@
 {
-	"version": "1.14.4",
+	"version": "1.15.1",
 	"patch": 0,
 	"format": 5,
 	"characters": [
@@ -314,6 +314,7 @@
 					{ "value": "swamp", "shape_texture": { "biome": "entity/villager/type/swamp", "biome_hat": "entity/villager/type/swamp" } }
 				],
 				"profession_level": [
+					{ "value": "none", "shape_hide": [ "profession_level" ] },
 					{ "value": "novice", "shape_texture": { "profession_level": "entity/villager/profession_level/stone" } },
 					{ "value": "apprentice", "shape_texture": { "profession_level": "entity/villager/profession_level/iron" } },
 					{ "value": "journeyman", "shape_texture": { "profession_level": "entity/villager/profession_level/gold" } },
@@ -321,7 +322,7 @@
 					{ "value": "master", "shape_texture": { "profession_level": "entity/villager/profession_level/diamond" } }
 				]
 			},
-			"default_state": "profession=nitwit,biome=plains,profession_level=novice"
+			"default_state": "profession=nitwit,biome=plains,profession_level=none"
 		},
 		{
 			"name": "illager",
@@ -381,6 +382,7 @@
 					{ "value": "swamp", "shape_texture": { "biome": "entity/zombie_villager/type/swamp", "biome_hat": "entity/zombie_villager/type/swamp" } }
 				],
 				"profession_level": [
+					{ "value": "none", "shape_hide": [ "profession_level" ] },
 					{ "value": "novice", "shape_texture": { "profession_level": "entity/zombie_villager/profession_level/stone" } },
 					{ "value": "apprentice", "shape_texture": { "profession_level": "entity/zombie_villager/profession_level/iron" } },
 					{ "value": "journeyman", "shape_texture": { "profession_level": "entity/zombie_villager/profession_level/gold" } },
@@ -388,7 +390,7 @@
 					{ "value": "master", "shape_texture": { "profession_level": "entity/zombie_villager/profession_level/diamond" } }
 				]
 			},
-			"default_state": "profession=nitwit,biome=plains,profession_level=novice"
+			"default_state": "profession=nitwit,biome=plains,profession_level=none"
 		},
 		{
 			"name": "witch",
@@ -396,7 +398,16 @@
 		},
 		{
 			"name": "iron_golem",
-			"file": "iron_golem.mimodel"
+			"file": "iron_golem.mimodel",
+			"states": {
+				"crack_amount": [
+					{ "value": "none", "shape_hide": [ "crack" ] },
+					{ "value": "low", "shape_texture": { "crack": "entity/iron_golem/iron_golem_crackiness_low" } },
+					{ "value": "medium", "shape_texture": { "crack": "entity/iron_golem/iron_golem_crackiness_medium" } },
+					{ "value": "high", "shape_texture": { "crack": "entity/iron_golem/iron_golem_crackiness_high" } }
+				]
+			},
+			"default_state": "crack_amount=none"
 		},
 		{
 			"name": "snow_golem",
@@ -612,6 +623,19 @@
 		{
 			"name": "wandering_trader",
 			"file": "wandering_trader.mimodel"
+		},
+		{
+			"name": "bee",
+			"file": "bee.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "normal", "texture": "entity/bee/bee"},
+					{ "value": "normal_nectar", "texture": "entity/bee/bee_nectar"},
+					{ "value": "angry", "texture": "entity/bee/bee_angry"},
+					{ "value": "angry_nectar", "texture": "entity/bee/bee_angry_nectar"}
+				]
+			},
+			"default_state": "variant=normal"
 		}
 	],
 	"special_blocks": [
@@ -623,9 +647,9 @@
 					{ "value": "normal_double", "file": "chest_double.mimodel" },
 					{ "value": "ender", "file": "chest.mimodel", "texture": "entity/chest/ender" },
 					{ "value": "trapped", "file": "chest.mimodel", "texture": "entity/chest/trapped" },
-					{ "value": "trapped_double", "file": "chest_double.mimodel", "texture": "entity/chest/trapped_double" },
+					{ "value": "trapped_double", "file": "chest_double.mimodel", "shape_texture": { "left": "entity/chest/trapped_left", "right": "entity/chest/trapped_right"} },
 					{ "value": "christmas", "file": "chest.mimodel", "texture": "entity/chest/christmas" },
-					{ "value": "christmas_double", "file": "chest_double.mimodel", "texture": "entity/chest/christmas_double" }
+					{ "value": "christmas_double", "file": "chest_double.mimodel", "shape_texture": { "left": "entity/chest/christmas_left", "right": "entity/chest/christmas_right"} }
 				]
 			},
 			"default_state": "variant=normal"
@@ -4114,6 +4138,36 @@
 			},
 			"default_state": "facing=west",
 			"id": "minecraft:jigsaw"
+		},
+		{
+			"name": "bee_nest",
+			"file": "bee_nest.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"honey_level": [ "0", "1", "2", "3", "4", "5" ]
+			},
+			"default_state": "facing=west,honey_level=0",
+			"id": "minecraft:bee_nest"
+		},
+		{
+			"name": "beehive",
+			"file": "beehive.json",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"honey_level": [ "0", "1", "2", "3", "4", "5" ]
+			},
+			"default_state": "facing=west,honey_level=0",
+			"id": "minecraft:beehive"
+		},
+		{
+			"name": "honey_block",
+			"file": "honey_block.json",
+			"id": "minecraft:honey_block"
+		},
+		{
+			"name": "honeycomb_block",
+			"file": "honeycomb_block.json",
+			"id": "minecraft:honeycomb_block"
 		}
 	],
 	"model_textures": [
@@ -4171,7 +4225,10 @@
 		"entity/endermite",
 		"entity/guardian",
 		"entity/guardian_elder",
-		"entity/iron_golem",
+		"entity/iron_golem/iron_golem",
+		"entity/iron_golem/iron_golem_crackiness_low",
+		"entity/iron_golem/iron_golem_crackiness_medium",
+		"entity/iron_golem/iron_golem_crackiness_high",
 		"entity/lead_knot",
 		"entity/minecart",
 		"entity/shield_base_nopattern",
@@ -4216,12 +4273,15 @@
 		"entity/cat/red",
 		"entity/cat/siamese",
 		"entity/chest/christmas",
-		"entity/chest/christmas_double",
+		"entity/chest/christmas_left",
+		"entity/chest/christmas_right",
 		"entity/chest/ender",
 		"entity/chest/normal",
-		"entity/chest/normal_double",
+		"entity/chest/normal_left",
+		"entity/chest/normal_right",
 		"entity/chest/trapped",
-		"entity/chest/trapped_double",
+		"entity/chest/trapped_left",
+		"entity/chest/trapped_right",
 		"entity/cow/cow",
 		"entity/cow/red_mooshroom",
 		"block/red_mushroom",
@@ -4445,7 +4505,12 @@
 		"entity/cat/ragdoll",
 		"entity/cat/tabby",
 		"entity/cat/white",
-		"entity/cat/cat_collar"
+		"entity/cat/cat_collar",
+		"entity/bee/bee",
+		"entity/bee/bee_nectar",
+		"entity/bee/bee_angry",
+		"entity/bee/bee_angry_nectar",
+		"entity/bee/bee_stinger"
 	],
 	"block_textures": [
 		"block/stone",
@@ -4996,7 +5061,20 @@
 		"block/sweet_berry_bush_stage3",
 		"block/jigsaw_bottom",
 		"block/jigsaw_side",
-		"block/jigsaw_top"
+		"block/jigsaw_top",
+		"block/bee_nest_front",
+		"block/bee_nest_front_honey",
+		"block/bee_nest_side",
+		"block/bee_nest_top",
+		"block/bee_nest_bottom",
+		"block/beehive_front",
+		"block/beehive_front_honey",
+		"block/beehive_side",
+		"block/beehive_end",
+		"block/honey_block_bottom",
+		"block/honey_block_side",
+		"block/honey_block_top",
+		"block/honeycomb_block"
 	],
 	"block_textures_animated": [
 		"block/water_still",
@@ -5363,6 +5441,8 @@
 		"item/crossbow_pulling_2",
 		"item/crossbow_standby",
 		"item/suspicious_stew",
+		"item/honey_bottle",
+		"item/honeycomb",
 		"",
 		"item/clock_00",
 		"item/clock_01",

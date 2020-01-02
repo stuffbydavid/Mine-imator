@@ -28,6 +28,7 @@ model_shape_hide_list = null
 model_shape_vbuffer_map = null
 model_shape_alpha_map = null
 player_skin = false
+pack_format = e_minecraft_pack.LATEST
 
 block_sheet_texture = null
 block_sheet_ani_texture = null

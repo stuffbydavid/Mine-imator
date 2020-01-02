@@ -1983,6 +1983,14 @@
             }
         },
         {
+            "Key": "1d26639c-11ca-4564-8011-476a3e4670ff",
+            "Value": {
+                "id": "354f9c8c-950e-440e-8735-63fad33521b1",
+                "resourcePath": "scripts\\res_load_pack_version\\res_load_pack_version.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1d3e0804-7052-494d-b22e-454eb37be4d5",
             "Value": {
                 "id": "72c7ac6c-53b4-4cbb-8910-3fe68e9d4fba",
@@ -5988,14 +5996,6 @@
                 "id": "6c658326-415e-4616-9466-db3a2c16cffb",
                 "resourcePath": "scripts\\popup_close\\popup_close.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "5f36e833-7dc6-4b64-88f0-a3ba8aca7798",
-            "Value": {
-                "id": "35454193-bdd4-46b7-b2e6-a6288fd12c30",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.4.zip.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -10015,6 +10015,14 @@
             }
         },
         {
+            "Key": "9bf75a12-aed4-41d0-a5be-c4ad673c9306",
+            "Value": {
+                "id": "560dd651-62cd-4768-862a-6b269cfd8536",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.15.1.midata.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "9c0a65ac-2277-44e9-b24a-667ee9c9aad3",
             "Value": {
                 "id": "7a3fa9dd-6eea-41ee-bdf7-6dee84be67ff",
@@ -10172,14 +10180,6 @@
                 "id": "75b43e40-9010-4513-a83c-83d0a3c6cca2",
                 "resourcePath": "scripts\\render_select\\render_select.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "9e5da75b-9cc8-4325-bf9f-453213e37a6d",
-            "Value": {
-                "id": "1fc8e7ad-9ef8-4537-825f-c77404e25de8",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.14.4.midata.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -14887,6 +14887,14 @@
             }
         },
         {
+            "Key": "e698835c-931b-40fd-bf8d-3d13a827d599",
+            "Value": {
+                "id": "153d9175-5701-4f7c-8c94-42c08f178631",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.15.1.zip.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "e69e9301-804f-45d2-88ad-18066ba104ea",
             "Value": {
                 "id": "eb5b13bc-f388-46a4-b5f3-56c68cc08692",
@@ -18014,6 +18022,7 @@
         "325aadc3-33a4-4f31-a433-9ed6295223ca",
         "f716150a-cd25-4013-8b5d-6a08f30cba6a",
         "e67dbb8c-112b-44e3-9e0f-6183d63127c7",
+        "1d26639c-11ca-4564-8011-476a3e4670ff",
         "cd00baf8-7792-440f-afa6-1603c0b4df29",
         "8c9d8e56-19ad-49ea-b0cb-03a1d99be613",
         "8a60c663-7962-42ef-9ea1-e354ef255d48",

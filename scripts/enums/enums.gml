@@ -61,6 +61,17 @@ enum e_minecraft_assets
 	FORMAT_123		  = 5
 }
 
+enum e_minecraft_pack
+{
+	FORMAT_161		  = 1,
+	FORMAT_19		  = 2,
+	FORMAT_111		  = 3,
+	FORMAT_113		  = 4,
+	FORMAT_115		  = 5,
+	
+	LATEST			  = 5
+}
+
 // Value types
 enum e_value_type
 {
