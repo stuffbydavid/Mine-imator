@@ -225,7 +225,7 @@ var segpos = 0;
 while (true)
 {
 	// End face
-	if (segpos = size[segaxis])
+	if (segpos >= size[segaxis])
 	{
 		switch (segaxis)
 		{
@@ -276,7 +276,7 @@ while (true)
 	}
 	
 	// Advance
-	segpos += segsize
+	segpos += max(segsize, 0.005)
 	
 	// Find next points/normals
 	switch (segaxis)

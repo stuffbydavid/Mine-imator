@@ -124,8 +124,6 @@ with (new(obj_model_part))
 	
 	// Keyframe tab states
 	show_position = value_get_real(map[?"show_position"], false)
-	show_rotation = value_get_real(map[?"show_rotation"], false)
-	show_scale = value_get_real(map[?"show_scale"], false)
 	
 	// Locked timeline
 	if (other.object_index = obj_model_part && other.locked)

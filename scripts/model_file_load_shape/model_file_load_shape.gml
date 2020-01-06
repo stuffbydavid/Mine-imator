@@ -101,8 +101,13 @@ with (new(obj_model_shape))
 	// Invert (optional)
 	invert = value_get_real(map[?"invert"], false)
 	
-	// Hide backface (optional, 2D surfaces only)
-	hide_backface = value_get_real(map[?"hide_backface"], false)
+	// Hide front/back plane faces
+	hide_front = value_get_real(map[?"hide_front"], false)
+	hide_back = value_get_real(map[?"hide_back"], false)
+	
+	// Hide backface (old name, for legacy support)
+	if (is_real(map[?"hide_backface"]))
+		hide_back = map[?"hide_backface"]
 	
 	// Face camera (optional, overrides rotation when rendering)
 	face_camera = value_get_real(map[?"face_camera"], false)
@@ -126,7 +131,19 @@ with (new(obj_model_shape))
 	// Inflate (optional)
 	inflate = vec3(value_get_real(map[?"inflate"], 0))
 	if (type = "plane")
-		inflate[Y] = 0
+		to_noscale[Y] = from_noscale[Y]
+	
+	// 3D plane (optional)
+	is3d = false
+	if (type = "plane")
+	{
+		is3d = value_get_real(map[?"3d"], false)
+		if (is3d)
+		{
+			other.has_3d_plane = true
+			to_noscale[Y] += 1
+		}
+	}
 	
 	// Position (optional)
 	position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
@@ -140,15 +157,6 @@ with (new(obj_model_shape))
 	scale = vec3_mul(scale, other.scale)
 	from = point3D_mul(point3D_sub(from_noscale, inflate), scale)
 	to = point3D_mul(point3D_add(to_noscale, inflate), scale)
-	
-	// 3D plane (optional)
-	is3d = false
-	if (type = "plane")
-	{
-		is3d = value_get_real(map[?"3d"], false)
-		if (is3d)
-			other.has_3d_plane = true
-	}
 	
 	// Locked shape
 	locked = value_get_real(map[?"locked"], false)

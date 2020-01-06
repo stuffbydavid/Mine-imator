@@ -6,7 +6,6 @@ with (frame_editor)
 	position.enabled = false
 	rotation.show = false
 	rotation.enabled = false
-	scale.show = false
 	scale.enabled = false
 	bend.show = false
 	bend.enabled = false

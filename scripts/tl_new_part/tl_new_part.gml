@@ -22,8 +22,6 @@ with (new(obj_timeline))
 	colors_ext = part_mixing_shapes
 	
 	value_type_show[e_value_type.POSITION] = part.show_position
-	value_type_show[e_value_type.ROTATION] = part.show_rotation
-	value_type_show[e_value_type.SCALE] = part.show_scale
 	part_parent_save_id = ""
 	
 	depth = part.depth

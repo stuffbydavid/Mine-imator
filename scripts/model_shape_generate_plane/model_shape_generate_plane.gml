@@ -148,7 +148,7 @@ while (segpos < size[segaxis])
 	}
 	
 	// Advance
-	segpos += segsize
+	segpos += max(segsize, 0.005)
 	if (segaxis = X)
 	{
 		// Right points
@@ -217,11 +217,14 @@ while (segpos < size[segaxis])
 		t4 = vec2(texp1, tex3[Y])
 		
 		// South
-		vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, n1, nn1, nn1, c_white, 1, invert)
-		vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, nn1, n1, n1, c_white, 1, invert)
+		if (!hide_front)
+		{
+			vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, n1, nn1, nn1, c_white, 1, invert)
+			vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, nn1, n1, n1, c_white, 1, invert)
+		}
 		
 		// North
-		if (!hide_backface)
+		if (!hide_back)
 		{
 			vbuffer_add_triangle(np1, p1, np2, t2, t1, t3, nn2, n2, nn2, c_white, 1, invert)
 			vbuffer_add_triangle(p2, np2, p1, t4, t3, t1, n2, nn2, n2, c_white, 1, invert)
@@ -235,11 +238,14 @@ while (segpos < size[segaxis])
 		t4 = vec2(tex1[X], texp1)
 		
 		// South
-		vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, nn1, nn1, n1, c_white, 1, invert)
-		vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, n1, n1, nn1, c_white, 1, invert)
+		if (!hide_front)
+		{
+			vbuffer_add_triangle(np1, np2, p2, t1, t2, t3, nn1, nn1, n1, c_white, 1, invert)
+			vbuffer_add_triangle(p2, p1, np1, t3, t4, t1, n1, n1, nn1, c_white, 1, invert)
+		}
 		
 		// North
-		if (!hide_backface)
+		if (!hide_back)
 		{
 			vbuffer_add_triangle(np2, np1, p2, t2, t1, t3, nn2, nn2, n2, c_white, 1, invert)
 			vbuffer_add_triangle(p1, p2, np1, t4, t3, t1, n2, n2, nn2, c_white, 1, invert)
