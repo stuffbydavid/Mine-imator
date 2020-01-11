@@ -78,6 +78,9 @@ switch (vid)
 	case e_value.SOUND_END:
 	case e_value.TEXT:
 	case e_value.TEXT_FONT:
+	case e_value.TEXT_HALIGN:
+	case e_value.TEXT_VALIGN:
+	case e_value.TEXT_AA:
 	case e_value.CUSTOM_ITEM_SLOT:
 	case e_value.TRANSITION: return val1 // No interpolation
 }

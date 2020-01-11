@@ -20,3 +20,25 @@ else
 tab_control(32)
 draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
 tab_next()
+
+capwid = text_caption_width("frameeditortextalignment", "frameeditortexthalign", "frameeditortextvalign")
+
+// Alignment
+tab_control(15)
+draw_label(text_get("frameeditortextalignment") + ":", dx, dy)
+tab_next()
+
+// Horizontal
+tab_control(24)
+draw_button_menu("frameeditortexthalign", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_HALIGN], text_get("frameeditortext" + tl_edit.value[e_value.TEXT_HALIGN]), action_tl_frame_text_halign, null, null, capwid)
+tab_next()
+
+// Vertical
+tab_control(24)
+draw_button_menu("frameeditortextvalign", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_VALIGN], text_get("frameeditortext" + tl_edit.value[e_value.TEXT_VALIGN]), action_tl_frame_text_valign, null, null, capwid)
+tab_next()
+	
+// Anti-aliasing
+tab_control_checkbox()
+draw_checkbox("frameeditortextaa", dx, dy, tl_edit.value[e_value.TEXT_AA], action_tl_frame_text_aa)
+tab_next()

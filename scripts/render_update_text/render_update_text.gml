@@ -14,7 +14,7 @@ with (obj_timeline)
 	if (font = null)
 		font = temp.text_font
 		
-	render_generate_text(text, font, temp.text_3d)
+	render_generate_text(text, font, temp.text_3d, value[e_value.TEXT_HALIGN], value[e_value.TEXT_VALIGN], value[e_value.TEXT_AA])
 }
 		
 with (obj_particle_type)

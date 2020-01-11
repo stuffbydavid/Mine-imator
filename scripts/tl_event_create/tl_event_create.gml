@@ -118,6 +118,9 @@ text_texture = null
 text_string = ""
 text_res = null
 text_3d = false
+text_halign_prev = "center"
+text_valign_prev = "center"
+text_aa_prev = true
 
 item_vbuffer = null
 item_slot = 0

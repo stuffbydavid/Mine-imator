@@ -93,6 +93,9 @@ if (font_exists(font))
 if (font_exists(font_preview))
 	font_delete(font_preview)
 
+if (font_exists(font_no_aa))
+	font_delete(font_no_aa)
+
 // Free sound
 if (sound_index != null)
 	audio_free_buffer_sound(sound_index)

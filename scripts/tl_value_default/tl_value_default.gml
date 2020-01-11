@@ -122,6 +122,8 @@ switch (argument0)
 	case e_value.VISIBLE: return true
 	case e_value.TEXT: 
 	case e_value.ITEM_NAME: return ""
+	case e_value.TEXT_HALIGN:
+	case e_value.TEXT_VALIGN: return "center"
 	case e_value.TRANSITION: return "linear"
 }
 

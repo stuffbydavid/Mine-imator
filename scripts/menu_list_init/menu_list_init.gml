@@ -854,6 +854,25 @@ switch (menu_name)
 		break
 	}
 	
+	// Text alignment
+	case "frameeditortexthalign":
+	{
+		menu_add_item("left", text_get("frameeditortextleft"), null, 0)
+		menu_add_item("center", text_get("frameeditortextcenter"), null, 0)
+		menu_add_item("right", text_get("frameeditortextright"), null, 0)
+		
+		break
+	}
+	
+	case "frameeditortextvalign":
+	{
+		menu_add_item("top", text_get("frameeditortexttop"), null, 0)
+		menu_add_item("center", text_get("frameeditortextcenter"), null, 0)
+		menu_add_item("bottom", text_get("frameeditortextbottom"), null, 0)
+		
+		break
+	}
+	
 	// Blend mode
 	case "timelineeditorblendmode":
 	{

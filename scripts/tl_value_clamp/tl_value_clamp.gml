@@ -8,7 +8,7 @@ val = argument1
 
 if (app.setting_unlimited_values)
 {
-	if (tl_value_is_string(vid))
+	if (tl_value_is_string(vid) || tl_value_is_bool(vid))
 		return val
 	else if (tl_value_is_color(vid))
 		return clamp(val, c_black, c_white)
@@ -82,6 +82,8 @@ switch (vid)
 	case e_value.SOUND_VOLUME: return clamp(val, 0, 1)
 	case e_value.SOUND_START: return max(val, 0)
 	case e_value.TEXT:
+	case e_value.TEXT_HALIGN:
+	case e_value.TEXT_VALIGN:
 	case e_value.TRANSITION: return val
 }
 

@@ -324,6 +324,9 @@ if (value_type[e_value_type.TEXT])
 {
 	tl_update_values_ease(e_value.TEXT, trans, p)
 	tl_update_values_ease(e_value.TEXT_FONT, trans, p)
+	tl_update_values_ease(e_value.TEXT_HALIGN, trans, p)
+	tl_update_values_ease(e_value.TEXT_VALIGN, trans, p)
+	tl_update_values_ease(e_value.TEXT_AA, trans, p)
 }
 
 // Item

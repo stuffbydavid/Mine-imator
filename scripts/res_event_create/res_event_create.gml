@@ -63,6 +63,7 @@ texture = null
 
 font = null
 font_preview = null
+font_no_aa = null
 font_minecraft = false
 
 sound_buffer = null

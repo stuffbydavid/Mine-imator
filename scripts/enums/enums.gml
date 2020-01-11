@@ -30,7 +30,7 @@ enum e_project
 	FORMAT_120_PRE_3  = 29,
 	FORMAT_122		  = 30,
 	FORMAT_123_PRE_2  = 31,
-	FORMAT_125  = 32
+	FORMAT_125		  = 32
 }
 
 enum e_settings
@@ -251,6 +251,9 @@ enum e_value
 	SOUND_END,
 	TEXT,
 	TEXT_FONT,
+	TEXT_HALIGN,
+	TEXT_VALIGN,
+	TEXT_AA,
 	CUSTOM_ITEM_SLOT,
 	ITEM_SLOT,
 	ITEM_NAME,

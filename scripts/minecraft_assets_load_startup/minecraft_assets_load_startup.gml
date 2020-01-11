@@ -33,6 +33,7 @@ with (mc_res)
 	font_minecraft = true
 	font = new_minecraft_font()
 	font_preview = font
+	font_no_aa = font
 }
 
 // Load assets from version in settings, if it fails, reset to default

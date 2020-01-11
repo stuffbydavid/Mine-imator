@@ -2824,7 +2824,19 @@
             "text": "Text",
             "texttip": "The piece of text this object should display (will overwrite the timeline setting if not empty).",
             "font": "Font",
-            "fonttip": "Change the font used, to the regular Minecraft or from a TrueType font file (.ttf)."
+            "fonttip": "Change the font used, to the regular Minecraft or from a TrueType font file (.ttf).",
+            "alignment": "Alignment",
+            "halign": "Horizontal",
+            "haligntip": "The horizontal alignment of text.",
+            "valign": "Vertical",
+            "valigntip": "The vertical alignment of text.",
+            "left": "Left",
+            "center": "Center",
+            "right": "Right",
+            "top": "Top",
+            "bottom": "Bottom",
+            "aa": "AA",
+            "aatip": "Enable AA (Anti Aliasing) to get rid of sharp edges on fonts. (Not reccomended for 3D text.)"
         },
         "item": "Item",
         "item/": {

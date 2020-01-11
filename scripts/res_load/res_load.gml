@@ -117,14 +117,19 @@ switch (type)
 			
 		if (font_exists(font_preview))
 			font_delete(font_preview)
-			
+		
+		if (font_exists(font_no_aa))
+			font_delete(font_no_aa)
+		
 		font = font_add_lib(fn, 48, false, false)
+		font_no_aa = font_add_lib(fn, 48, false, false, false)
 		font_preview = font_add_lib(fn, 12, false, false)
 		
 		if (!font)
 		{
 			font = new_minecraft_font()
 			font_preview = new_minecraft_font()
+			font_no_aa = new_minecraft_font()
 			font_minecraft = true
 		}
 		
