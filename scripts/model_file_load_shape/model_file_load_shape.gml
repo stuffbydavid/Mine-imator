@@ -138,11 +138,15 @@ with (new(obj_model_shape))
 	if (type = "plane")
 	{
 		is3d = value_get_real(map[?"3d"], false)
+		
+		// 3D planes expand on Y axis, 2D planes don't
 		if (is3d)
 		{
 			other.has_3d_plane = true
 			to_noscale[Y] += 1
 		}
+		else
+			inflate[Y] = 0
 	}
 	
 	// Position (optional)
