@@ -30,14 +30,16 @@ if (window_busy = "rendercontrol" && view_control_edit_view = view && view_contr
 	
 	if (!mouse_still)
 	{
-		var axis, ang, prevang, rot, snapval;
+		var axis, ang, prevang, rot, mul, snapval;
 		
 		// Find rotate amount
 		axis = view_control_edit - e_value.BEND_ANGLE_X
 		ang = point_direction(mouse_x - content_x, mouse_y - content_y, view_control_pos[X], view_control_pos[Y])
 		prevang = point_direction(mouse_previous_x - content_x, mouse_previous_y - content_y, view_control_pos[X], view_control_pos[Y])
 		rot = angle_difference_fix(ang, prevang) * negate(view_control_flip) * negate(part.bend_invert[axis]) * negate(axis = X)
-		view_control_value += rot
+		mul = min(1, (part.bend_direction_max[axis] - part.bend_direction_min[axis]) / 90)
+		
+		view_control_value += rot * mul
 		
 		// Snap
 		snapval = frame_editor.bend.snap_enabled * frame_editor.bend.snap_size
