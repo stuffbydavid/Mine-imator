@@ -1517,7 +1517,7 @@
 				"minecraft:polished_granite_slab": "variant=polished_granite",
 				"minecraft:smooth_redstone_slab": "variant=smooth_redstone",
 				"minecraft:mossy_stone_brick_slab": "variant=mossy_stone_brick",
-				"minecraft:polished_diorite_slab": "variant=polished_driorite",
+				"minecraft:polished_diorite_slab": "variant=polished_diorite",
 				"minecraft:mossy_cobblestone_slab": "variant=mossy_cobblestone",
 				"minecraft:end_stone_brick_slab": "variant=end_stone_brick",
 				"minecraft:smooth_sandstone_slab": "variant=smooth_sandstone",
@@ -1606,6 +1606,7 @@
 					{ "value": "acacia", "file": "acacia_stairs.json" },
 					{ "value": "dark_oak", "file": "dark_oak_stairs.json" },
 					{ "value": "cobblestone", "file": "cobblestone_stairs.json" },
+					{ "value": "mossy_cobblestone", "file": "mossy_cobblestone_stairs.json" },
 					{ "value": "brick", "file": "brick_stairs.json" },
 					{ "value": "stone_brick", "file": "stone_brick_stairs.json" },
 					{ "value": "nether_brick", "file": "nether_brick_stairs.json" },
@@ -1627,7 +1628,8 @@
 					{ "value": "andesite", "file": "andesite_stairs.json" },
 					{ "value": "red_nether_brick", "file": "red_nether_brick_stairs.json" },
 					{ "value": "polished_andesite", "file": "polished_andesite_stairs.json" },
-					{ "value": "diorite", "file": "diorite_stairs.json" }
+					{ "value": "diorite", "file": "diorite_stairs.json" },
+					{ "value": "polished_diorite", "file": "polished_diorite_stairs.json" }
 				],
 				"facing": [ "north", "south", "east", "west" ],
 				"half": [ "top", "bottom" ],
@@ -1642,6 +1644,7 @@
 				"minecraft:acacia_stairs": "variant=acacia",
 				"minecraft:dark_oak_stairs": "variant=dark_oak",
 				"minecraft:cobblestone_stairs": "variant=cobblestone",
+				"minecraft:mossy_cobblestone_stairs": "variant=mossy_cobblestone",
 				"minecraft:brick_stairs": "variant=brick",
 				"minecraft:stone_brick_stairs": "variant=stone_brick",
 				"minecraft:nether_brick_stairs": "variant=nether_brick",
@@ -1663,7 +1666,8 @@
 				"minecraft:andesite_stairs": "variant=andesite",
 				"minecraft:red_nether_brick_stairs": "variant=red_nether_brick",
 				"minecraft:polished_andesite_stairs": "variant=polished_andesite",
-				"minecraft:diorite_stairs": "variant=diorite"
+				"minecraft:diorite_stairs": "variant=diorite",
+				"minecraft:polished_diorite_stairs": "variant=polished_diorite"
 			}
 		},
 		{
@@ -2735,7 +2739,7 @@
 			"id": {
 				"minecraft:cobblestone_wall": "variant=cobblestone",
 				"minecraft:mossy_cobblestone_wall": "variant=mossy_cobblestone",
-				"minecraft:bric_wallk": "variant=brick",
+				"minecraft:brick_wall": "variant=brick",
 				"minecraft:prismarine_wall": "variant=prismarine",
 				"minecraft:red_sandstone_wall": "variant=red_sandstone",
 				"minecraft:mossy_stone_brick_wall": "variant=mossy_stone_brick",
