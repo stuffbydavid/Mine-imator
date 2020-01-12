@@ -62,7 +62,7 @@ with (bench_settings)
 		// Modelbench popup
 		if (show_modelbench_popup)
 			with (app)
-				if (!popup_modelbench.hidden)
+				if (!popup_modelbench.hidden && !popup_modelbench.not_now)
 					popup_show(popup_modelbench)
 	}
 }

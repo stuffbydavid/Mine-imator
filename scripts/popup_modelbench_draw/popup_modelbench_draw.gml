@@ -26,6 +26,7 @@ dy = content_y + content_height - dh
 
 if (draw_button_normal("modelbenchnotnow", dx, dy, dw, dh))
 {
+	popup_modelbench.not_now = true
 	popup_close()
 }
 	

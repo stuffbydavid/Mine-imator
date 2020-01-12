@@ -144,8 +144,11 @@ with (popup_upgrade)
 // Modelbench ad
 popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 650, 600, true)
 with (popup_modelbench)
+{
 	hidden = app.setting_modelbench_popup_hidden
-	
+	not_now = false
+}
+
 // Banner editor
 popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 729, 540, true)
 with (popup_bannereditor)
