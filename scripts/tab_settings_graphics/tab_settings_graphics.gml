@@ -53,6 +53,14 @@ tab_control_checkbox()
 draw_checkbox("settingsblockglow", dx, dy, setting_block_glow, action_setting_block_glow)
 tab_next()
 
+// Glow threshold
+if (setting_block_glow)
+{
+	tab_control_meter()
+	draw_meter("settingsblockglowthreshold", dx, dy, dw, round(setting_block_glow_threshold * 100), 48, 0, 100, 75, 0, tab.graphics.tbx_block_glow_threshold, action_setting_block_glow_threshold)
+	tab_next()
+}
+
 // Foliage light bleeding
 tab_control_checkbox()
 draw_checkbox("settingslightbleeding", dx, dy, setting_light_bleeding, action_setting_light_bleeding)

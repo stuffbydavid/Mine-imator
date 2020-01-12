@@ -637,6 +637,8 @@ with (settings)
 		tbx_texture_filtering_level = new_textbox_integer()
 		tbx_block_brightness = new_textbox_decimals()
 		tbx_block_brightness.suffix = "%"
+		tbx_block_glow_threshold = new_textbox_decimals()
+		tbx_block_glow_threshold.suffix = "%"
 	}
 	
 	// Render

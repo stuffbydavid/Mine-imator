@@ -259,6 +259,7 @@ if (filename_ext(fn) = ".midata")
 		setting_transparent_block_texture_filtering = value_get_real(graphicsmap[?"transparent_block_texture_filtering"], setting_transparent_block_texture_filtering)
 		setting_texture_filtering_level = value_get_real(graphicsmap[?"texture_filtering_level"], setting_texture_filtering_level)
 		setting_block_brightness = value_get_real(graphicsmap[?"block_brightness"], setting_block_brightness)
+		setting_block_glow_threshold = value_get_real(graphicsmap[?"block_glow_threshold"], setting_block_glow_threshold)
 		setting_block_glow = value_get_real(graphicsmap[?"block_glow"], setting_block_glow)
 		setting_light_bleeding = value_get_real(graphicsmap[?"light_bleeding"], setting_light_bleeding)
 	}

@@ -339,6 +339,7 @@ with (shader_map[?shader_color_glow])
 	new_shader_uniform("uGlowColor")
 	new_shader_uniform("uBlockGlow")
 	new_shader_uniform("uBlockBrightness")
+	new_shader_uniform("uGlowThreshold")
 }
 
 with (shader_map[?shader_high_bloom_threshold])

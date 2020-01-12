@@ -20,6 +20,7 @@ uniform float uFogSize;
 uniform float uFogHeight;
 
 uniform vec3 uCameraPosition;
+uniform float uGlowThreshold;
 
 varying vec3 vPosition;
 varying float vDepth;
@@ -72,7 +73,10 @@ void main()
 	// Glow isn't enabled on object, but bright blocks should still glow
 	if (uGlow < 1 && uBlockGlow > 0)
 	{
-		baseColor.rgb *= vec3(vBrightness);
+		if (((baseColor.r + baseColor.g + baseColor.b) / 3.0) > uGlowThreshold)
+			baseColor.rgb *= vec3(vBrightness);
+		else
+			baseColor.rgb *= vec3(0.0);
 	}
 	else
 	{

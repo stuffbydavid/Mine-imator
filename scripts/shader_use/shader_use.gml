@@ -41,6 +41,10 @@ if (!is_undefined(uniform_map[?"uCameraPosition"]) && uniform_map[?"uCameraPosit
 if (!is_undefined(uniform_map[?"uBlockBrightness"]) && uniform_map[?"uBlockBrightness"] > -1)
 	render_set_uniform("uBlockBrightness", app.setting_block_brightness)
 	
+// Block brightness threshold
+if (!is_undefined(uniform_map[?"uGlowThreshold"]) && uniform_map[?"uGlowThreshold"] > -1)
+	render_set_uniform("uGlowThreshold", app.setting_block_glow_threshold)
+	
 // Light bleeding
 if (!is_undefined(uniform_map[?"uLightBleed"]) && uniform_map[?"uLightBleed"] > -1)
 	render_set_uniform("uLightBleed", bool_to_float(app.setting_light_bleeding))

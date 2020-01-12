@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.6",
-        "lastchange": "2019.12.12"
+        "lastchange": "2020.01.12"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -3105,6 +3105,8 @@
         "blockbrightnesstip": "Sets the brightness of certain blocks in schematics (Lava, Fire, Torches, Glowstone, Redstone Lamps etc.) and bright model shapes.",
         "blockglow": "Glow bright blocks and models",
         "blockglowtip": "Enables the glow effect on blocks and model shapes depending on their brightness.",
+        "blockglowthreshold": "Glow color threshold",
+        "blockglowthresholdtip": "Determines how bright a pixel has to be on a block's texture to glow.",
         "lightbleeding": "Foliage light bleeding",
         "lightbleedingtip": "Enables light bleeding on foliage and other various plants.",
         "render": "Render",

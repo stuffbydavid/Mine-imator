@@ -163,6 +163,7 @@ setting_transparent_block_texture_filtering = false
 setting_texture_filtering_level = 1
 setting_block_brightness = 0.75
 setting_block_glow = true
+setting_block_glow_threshold = 0.75
 setting_light_bleeding = true
 
 setting_render_camera_effects = true
