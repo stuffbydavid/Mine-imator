@@ -10,14 +10,14 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{EF61A1AA-5F85-4E94-ACC6-D5650A312AE6}}
 AppName=Mine-imator
-AppVersion=1.2.5
-ApPVerName=Mine-imator 1.2.5
+AppVersion=1.2.6
+ApPVerName=Mine-imator 1.2.6
 AppPublisher=David Norgren
 AppPublisherURL=https://www.stuffbydavid.com
 AppContact=https://www.mineimator.com
 AppSupportURL=https://www.mineimator.com
 AppUpdatesURL=https://www.mineimator.com
-AppCopyright=(c)2019 David Norgren
+AppCopyright=(c)2020 David Norgren
 DefaultDirName={%USERPROFILE}\Mine-imator
 DefaultGroupName=Mine-imator
 OutputDir=.

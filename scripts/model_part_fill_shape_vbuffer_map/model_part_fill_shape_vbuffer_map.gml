@@ -12,6 +12,10 @@ alphamap = argument2
 bend = argument3
 isbent = !vec3_equals(bend, vec3(0))
 
+// Clamp
+for (var i = X; i <= Z; i++)
+	bend[X + i] = clamp(bend[X + i], part.bend_direction_min[i], part.bend_direction_max[i])
+
 if (part.shape_list = null)
 	return 0
 	

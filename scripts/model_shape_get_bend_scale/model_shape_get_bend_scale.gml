@@ -8,7 +8,7 @@
 /// @desc Returns a scale for blocky bending to adjust pinching.
 
 var bendstart, bendend, weight, start, bendpos, bend;
-var bendscale
+var bendscale;
 bendstart = argument0
 bendend = argument1
 weight = argument2
@@ -28,10 +28,6 @@ if (bendpos > bendstart && bendpos < bendend)
 		bendaxis = X
 	else if (vec3_equals(bend_axis, vec3(false, true, false)))
 		bendaxis = Y
-	
-	// Clamp
-	for (var i = X; i <= Z; i++)
-		bend[X + i] = clamp(bend[X + i], bend_direction_min[i], bend_direction_max[i])
 	
 	bendang = abs(bend[bendaxis])
 	

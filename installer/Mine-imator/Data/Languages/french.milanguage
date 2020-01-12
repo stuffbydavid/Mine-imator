@@ -3,8 +3,8 @@
     "file/": {
         "language": "Français",
         "translator": "Voxy",
-        "forversion": "1.2.5",
-        "lastchange": "2019.09.13"
+        "forversion": "1.2.6",
+        "lastchange": "2020.01.12"
     },
     "startup/": {
         "caption": "Démarrage",
@@ -681,6 +681,7 @@
         "wandering_trader": "Marchant ambulant",
 		"end_crystal": "Cristal de l'End",
 		"evoker_fangs": "Mâchoires d'évocateur",
+        "bee": "Abeille",
         "part/": {
             "body": "Corps",
             "right_arm": "Bras droit",
@@ -857,7 +858,13 @@
 			"right_front_fin": "Nageoire avant droite",
 			"right_wing_2": "Aile droite 2",
 			"trident": "Trident",
-			"bell": "Cloche"
+			"bell": "Cloche",
+            "right_antenna": "Antenne droite",
+            "left_antenna": "Antenne gauche",
+            "right_middle_leg": "Jambe du milieu à droite",
+            "left_middle_leg": "Jambe du milieu à gauche",
+            "stinger": "Dard",
+            "lock": "Verrou"
         },
         "state/": {
             "variant": "Variante",
@@ -882,6 +889,7 @@
             "biome": "Biome",
             "profession_level": "Niveau de profession",
             "collar": "Collier",
+            "crack_amount": "Niveau de détérioration",
             "value/": {
                 "steve": "Steve",
                 "alex": "Alex",
@@ -1026,7 +1034,11 @@
                 "jellie": "Jellie",
                 "persian": "Persan",
                 "ragdoll": "Ragdoll",
-                "tabby": "Tabby"
+                "tabby": "Tabby",
+                "low": "Bas",
+                "high": "Haut",
+                "normal_nectar": "Normal (avec nectar)",
+                "angry_nectar": "Hostile (avec nectar)"
             }
         }
     },
@@ -1392,6 +1404,10 @@
         "sweet_berry_bush": "Buisson à baies sucrées",
         "jigsaw_block": "Bloc puzzle",
 		"wall": "Muret",
+        "bee_nest": "Nid d'abeilles",
+        "beehive": "Ruche",
+        "honey_block": "Bloc de miel",
+        "honeycomb_block": "Bloc de rayon de miel",
         "state/": {
             "variant": "Variante",
             "snowy": "Enneigée",
@@ -1449,6 +1465,7 @@
             "attachment": "Attache",
             "hanging": "Suspendu",
             "wood": "Bois",
+            "honey_level": "Quantité de miel",
             "value/": {
                 "true": "Oui",
                 "false": "Non",
@@ -2563,8 +2580,8 @@
             "colortip": "Faire que l'instance hérite des effets de couleur de son parent.",
             "visibility": "Visibilité",
             "visibilitytip": "Faire que l'instance hérite de la visibilité de son parent.",
-            "bend": "Pli",
-            "bendtip": "Faire que l'instance hérite des paramètres de pli de son parent.",
+            "bend": "Articulation",
+            "bendtip": "Faire que l'instance hérite des paramètres d'articulation de son parent.",
             "texture": "Texture",
             "texturetip": "Faire que l'instance hérite des modifications de texture de son parent.",
 			"glowcolor": "Couleur de la lueur",
@@ -2686,20 +2703,20 @@
             "snapsize": "Taille de grille",
             "snapsizetip": "La taille de la grille de magnétisme."
         },
-        "bend": "Pli",
-        "bendtip": "Modifier le pli de la partie de l'instance.",
+        "bend": "Articulation",
+        "bendtip": "Modifier l'articulation de la partie de l'instance.",
         "bend/": {
-            "wheel": "Pli",
-            "wheeltip": "Modifier la valeur du pli.",
+            "wheel": "Articulation",
+            "wheeltip": "Modifier la valeur d'articulation.",
 			"x": "X",
-            "xtip": "Modifier la valeur du pli le long de l'axe X.",
+            "xtip": "Modifier la valeur d'articulation le long de l'axe X.",
             "y": "Y",
-            "ytip": "Modifier la valeur du pli le long de l'axe Y.",
+            "ytip": "Modifier la valeur d'articulation le long de l'axe Y.",
             "z": "Z",
-            "ztip": "Modifier la valeur du pli le long de l'axe Z.",
-            "resettip": "Réinitialiser la valeur du pli.",
-            "copytip": "Copier la valeur du pli actuelle.",
-            "pastetip": "Coller la valeur du pli copiée.",
+            "ztip": "Modifier la valeur d'articulation le long de l'axe Z.",
+            "resettip": "Réinitialiser la valeur d'articulation.",
+            "copytip": "Copier la valeur d'articulation actuelle.",
+            "pastetip": "Coller la valeur d'articulation copiée.",
             "snaptip": "Activer le magnétisme sur la grille.",
             "snapsize": "Taille de grille",
             "snapsizetip": "La taille de la grille de magnétisme."
@@ -2974,7 +2991,19 @@
             "text": "Texte",
             "texttip": "Le texte que l'instance affichera (Remplacera celui du gabarit dans la ligne du temps).",
             "font": "Police",
-            "fonttip": "Modifier la police utilisée parmi la police Minecraft ou un fichier de police TrueType (.ttf)."
+            "fonttip": "Modifier la police utilisée parmi la police Minecraft ou un fichier de police TrueType (.ttf).",
+            "alignment": "Alignement",
+            "halign": "Horizontal",
+            "haligntip": "L'alignement horizontal du texte.",
+            "valign": "Vertical",
+            "valigntip": "L'alignement vertical du texte.",
+            "left": "Gauche",
+            "center": "Centré",
+            "right": "Droit",
+            "top": "Dessus",
+            "bottom": "Dessous",
+            "aa": "Anti-crénelage",
+            "aatip": "Lisser les bords des lettres. (Déconseillé pour du texte en 3D.)"
         },
 		"item": "Objet",
         "item/": {
@@ -3220,11 +3249,11 @@
         "slowmodifiertip": "Le rapport de vitesse des mouvements de caméras plus lents.",
         "graphics": "Graphismes",
         "graphicstip": "Modifier l'apparence des instances et textures dans l'animation.",
-        "bendstyle": "Style de pli des modèles",
+        "bendstyle": "Style d'articulation des modèles",
         "bendstylerealistic": "Réaliste",
-        "bendstylerealistictip": "Utiliser un style de pli réaliste avec un effet de pincement.",
+        "bendstylerealistictip": "Utiliser un style d'articulation réaliste avec un effet de pincement.",
         "bendstyleblocky": "Carré",
-        "bendstyleblockytip": "Utiliser un style de pli carré.",
+        "bendstyleblockytip": "Utiliser un style d'articulation carré.",
         "schematicaddtimelines": "Instancer les blocs spéciaux dans les décors",
         "schematicaddtimelinestip": "Créer des instances pour les blocs spéciaux dans la ligne du temps lors de l'importation d'un décor.",
         "schematicremoveedges": "Retirer les bords des grands décors",
@@ -3247,6 +3276,8 @@
         "blockbrightnesstip": "Définir la luminosité des blocs ou modèles émettant de la lumière (Lave, feu, torches, pierre lumineuse, lampes de redstone, etc.)",
 		"blockglow": "Blocs et modèles luisants",
         "blockglowtip": "Activer l'effet de lueur sur les blocs et modèles selon leur luminosité.",
+        "blockglowthreshold": "Tolérance de couleur de lueur",
+        "blockglowthresholdtip": "Détermine la luminosité minimale d'une texture pour qu'elle luise.",
 		"lightbleeding": "Végétation diffuse la lumière",
         "lightbleedingtip": "Activer la diffusion de la lumière au travers du feuillage et des plantes.",
         "render": "Rendu",

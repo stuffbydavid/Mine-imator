@@ -452,7 +452,6 @@ midy = y1 + block_size / 2
 midz = z1 + averagez
 
 // Move waterlogged sides in to prevent Z fighting a little
-/*
 if (waterlogged)
 {
 	var indent = 0.05;
@@ -473,7 +472,6 @@ if (waterlogged)
 	if (!matchyn)
 		y1 += indent
 }
-*/
 
 corner0z += z1
 corner1z += z1
