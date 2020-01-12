@@ -205,15 +205,15 @@ else
 	if (!waterlogged)
 	{
 		// Side levels
-		if (!build_edge_xp)
+		if (!build_edge_xp && !builder_get_waterlogged(build_pos_x + 1, build_pos_y, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y, build_pos_z + 1) = block_current)
-				sidelevelxp = 8
+				sidelevelxp = 8	
 			else if (matchxp)
 				sidelevelxp = builder_get(block_state_id, build_pos_x + 1, build_pos_y, build_pos_z)
 		}
 	
-		if (!build_edge_xn)
+		if (!build_edge_xn && !builder_get_waterlogged(build_pos_x - 1, build_pos_y, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y, build_pos_z + 1) = block_current)
 				sidelevelxn = 8
@@ -221,7 +221,7 @@ else
 				sidelevelxn = builder_get(block_state_id, build_pos_x - 1, build_pos_y, build_pos_z)
 		}
 	
-		if (!build_edge_yp)
+		if (!build_edge_yp && !builder_get_waterlogged(build_pos_x, build_pos_y + 1, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z + 1) = block_current)
 				sidelevelyp = 8
@@ -229,7 +229,7 @@ else
 				sidelevelyp = builder_get(block_state_id, build_pos_x, build_pos_y + 1, build_pos_z)
 		}
 		
-		if (!build_edge_yn)
+		if (!build_edge_yn && !builder_get_waterlogged(build_pos_x, build_pos_y - 1, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x, build_pos_y - 1, build_pos_z + 1) = block_current)
 				sidelevelyn = 8
@@ -238,7 +238,7 @@ else
 		}
 		
 		// Corner levels
-		if (!build_edge_xn && !build_edge_yn)
+		if (!build_edge_xn && !build_edge_yn && !builder_get_waterlogged(build_pos_x - 1, build_pos_y - 1, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y - 1, build_pos_z + 1) = block_current)
 				corner0level = 8
@@ -246,7 +246,7 @@ else
 				corner0level = builder_get(block_state_id, build_pos_x - 1, build_pos_y - 1, build_pos_z)
 		}
 	
-		if (!build_edge_xp && !build_edge_yn)
+		if (!build_edge_xp && !build_edge_yn && !builder_get_waterlogged(build_pos_x + 1, build_pos_y - 1, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y - 1, build_pos_z + 1) = block_current)
 				corner1level = 8
@@ -254,7 +254,7 @@ else
 				corner1level = builder_get(block_state_id, build_pos_x + 1, build_pos_y - 1, build_pos_z)
 		}
 	
-		if (!build_edge_xp && !build_edge_yp)
+		if (!build_edge_xp && !build_edge_yp && !builder_get_waterlogged(build_pos_x + 1, build_pos_y + 1, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x + 1, build_pos_y + 1, build_pos_z + 1) = block_current)
 				corner2level = 8
@@ -262,7 +262,7 @@ else
 				corner2level = builder_get(block_state_id, build_pos_x + 1, build_pos_y + 1, build_pos_z)
 		}
 	
-		if (!build_edge_xn && !build_edge_yp)
+		if (!build_edge_xn && !build_edge_yp && !builder_get_waterlogged(build_pos_x - 1, build_pos_y + 1, build_pos_z))
 		{
 			if (!build_edge_zp && builder_get(block_obj, build_pos_x - 1, build_pos_y + 1, build_pos_z + 1) = block_current)
 				corner3level = 8
@@ -450,6 +450,30 @@ x2 = x1 + block_size; y2 = y1 + block_size; z2 = z1 + minz;
 midx = x1 + block_size / 2
 midy = y1 + block_size / 2
 midz = z1 + averagez
+
+// Move waterlogged sides in to prevent Z fighting a little
+/*
+if (waterlogged)
+{
+	var indent = 0.05;
+	
+	// X+
+	if (!matchxp)
+		x2 -= indent
+	
+	// X-
+	if (!matchxn)
+		x1 += indent
+	
+	// Y+
+	if (!matchyp)
+		y2 -= indent
+	
+	// Y-
+	if (!matchyn)
+		y1 += indent
+}
+*/
 
 corner0z += z1
 corner1z += z1
