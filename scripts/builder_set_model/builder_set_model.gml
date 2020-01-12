@@ -46,7 +46,7 @@ else
 	if (ret = 0 && block_current.state_id_model_obj != null)
 	{
 		var modelobj = block_current.state_id_model_obj[block_state_id_current];
-		if (modelobj != null)
+		if (modelobj != null && !is_undefined(modelobj))
 		{
 			var brightness = block_current.state_id_brightness[block_state_id_current];
 			

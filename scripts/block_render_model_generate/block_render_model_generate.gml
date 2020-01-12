@@ -174,3 +174,5 @@ with (model)
 		instance_deactivate_object(element[e])
 	}
 }
+
+instance_deactivate_object(model)
