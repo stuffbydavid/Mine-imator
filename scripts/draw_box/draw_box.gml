@@ -22,7 +22,7 @@ if (argument_count > 5)
 	alpha *= argument[6]
 }
 
-draw_primitive_begin(test(outline, pr_linestrip, pr_trianglefan))
+draw_primitive_begin(outline ? pr_linestrip : pr_trianglefan)
 
 draw_vertex_color(xx, yy, color, alpha)
 draw_vertex_color(xx + ww, yy, color, alpha)

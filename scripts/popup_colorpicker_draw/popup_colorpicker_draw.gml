@@ -58,7 +58,7 @@ if (window_busy = "colorpickerhuepick")
 dx += 20 + 8
 
 // Preview
-draw_box(dx, dy, 140, 20, false, test(popup.hsb_mode, rgb_to_hsb(popup.color), popup.color), 1)
+draw_box(dx, dy, 140, 20, false, popup.hsb_mode ? rgb_to_hsb(popup.color) : popup.color, 1)
 draw_box(dx, dy, 140, 20, true, c_black, 0.5)
 dy += 24 + 10
 
@@ -72,7 +72,7 @@ if (!popup.hsb_mode)
 	}
 }
 
-if (draw_inputbox("colorpickerhue", dx + test(popup.hsb_mode, 0, 68), dy, 70, "", popup.tbx_hue, null, 30))
+if (draw_inputbox("colorpickerhue", dx + (popup.hsb_mode ? 0 : 68), dy, 70, "", popup.tbx_hue, null, 30))
 {
 	popup.hue = min(255, string_get_real(popup.tbx_hue.text, 0))
 	popup_colorpicker_update(popup.tbx_hue, make_color_hsv(popup.hue, popup.saturation, popup.brightness), false)
@@ -88,7 +88,7 @@ if (!popup.hsb_mode)
 	}
 }
 
-if (draw_inputbox("colorpickersaturation", dx + test(popup.hsb_mode, 0, 68), dy, 70, "", popup.tbx_saturation, null, 30))
+if (draw_inputbox("colorpickersaturation", dx + (popup.hsb_mode ? 0 : 68), dy, 70, "", popup.tbx_saturation, null, 30))
 {
 	popup.saturation = min(255, string_get_real(popup.tbx_saturation.text, 0))
 	popup_colorpicker_update(popup.tbx_saturation, make_color_hsv(popup.hue, popup.saturation, popup.brightness), false)
@@ -104,7 +104,7 @@ if (!popup.hsb_mode)
 	}
 }
 
-if (draw_inputbox("colorpickerbrightness", dx + test(popup.hsb_mode, 0, 68), dy, 70, "", popup.tbx_brightness, null, 30))
+if (draw_inputbox("colorpickerbrightness", dx + (popup.hsb_mode ? 0 : 68), dy, 70, "", popup.tbx_brightness, null, 30))
 {
 	popup.brightness = min(255, string_get_real(popup.tbx_brightness.text, 0))
 	popup_colorpicker_update(popup.tbx_brightness, make_color_hsv(popup.hue, popup.saturation, popup.brightness), false)

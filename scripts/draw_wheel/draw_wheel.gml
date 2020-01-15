@@ -21,8 +21,8 @@ xx = argument[1]
 yy = argument[2]
 color = argument[3]
 value = argument[4]
-minval = test(setting_unlimited_values, -no_limit, argument[5])
-maxval = test(setting_unlimited_values,  no_limit, argument[6])
+minval = (setting_unlimited_values ? -no_limit : argument[5])
+maxval = (setting_unlimited_values ?  no_limit : argument[6])
 def = argument[7]
 snapval = argument[8]
 limit = argument[9]
@@ -51,7 +51,7 @@ else
 	text = string(value) + tbx.suffix
 labelx = xx - floor(string_width(text) / 4)
 labelw = rad
-labely = yy + test((modval > 180 || modval = 0), -24, 8)
+labely = yy + ((modval > 180 || modval = 0) ? -24 : 8)
 tip_set(text_get(name + "tip") + "\n" + text_get("wheeltip"), xx - rad, yy - rad, rad * 2, rad * 2)
 
 // Background

@@ -93,7 +93,7 @@ surface_set_target(resultsurf)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_add_set(glowsurf, test(glowfalloff, app.setting_render_glow_falloff_intensity, app.setting_render_glow_intensity), c_white)
+		shader_add_set(glowsurf, glowfalloff ? app.setting_render_glow_falloff_intensity : app.setting_render_glow_intensity, c_white)
 	}
 	draw_surface_exists(prevsurf, 0, 0)
 	with (render_shader_obj)

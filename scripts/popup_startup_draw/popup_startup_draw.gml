@@ -12,8 +12,8 @@ draw_image(spr_logo, 0, dx, dy)
 dx += 175
 dy += 115
 
-extratext = test(mineimator_version_extra = "", "", " (" + mineimator_version_extra + ")")
-draw_label(text_get("startupversion", text_get(test(trial_version, "startuptrial", "startupfull")), mineimator_version + extratext, mineimator_version_date), dx, dy)
+extratext = (mineimator_version_extra = "" ? "" : " (" + mineimator_version_extra + ")")
+draw_label(text_get("startupversion", text_get((trial_version ? "startuptrial" : "startupfull")), mineimator_version + extratext, mineimator_version_date), dx, dy)
 dy += string_height(" ")
 
 // David

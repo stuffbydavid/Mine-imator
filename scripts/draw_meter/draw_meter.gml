@@ -118,7 +118,7 @@ if (window_focus = string(tbx))
 else
 	draw_label(string(value) + tbx.suffix, xx + wid-valuewid + 16, yy + hei / 2, fa_left, fa_middle)
 	
-dragval = test(window_busy = name, meter_drag_value , value)
+dragval = (window_busy = name ? meter_drag_value: value)
 dragx = xx + capwid + floor(percent(dragval, minval, maxval) * linewid)
 dragy = yy + hei / 2
 
@@ -129,4 +129,4 @@ draw_image(spr_meter, 1, dragx, dragy, (xx + capwid + linewid) - dragx - 2, 1, s
 draw_image(spr_meter, 2, xx + capwid + linewid - 2, dragy, 1, 1, setting_color_background, 1)
 
 // Dragger
-draw_image(spr_circle_12, 0, dragx, dragy, 1, 1, test(window_busy = name, setting_color_buttons_pressed, setting_color_buttons), 1)
+draw_image(spr_circle_12, 0, dragx, dragy, 1, 1, window_busy = name ? setting_color_buttons_pressed : setting_color_buttons, 1)

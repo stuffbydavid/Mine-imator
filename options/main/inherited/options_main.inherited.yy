@@ -5,8 +5,7 @@
     "option_lastchanged": "02 May 2019 19:55:02",
     "option_sci_usesci": false,
     "option_mips_for_3d_textures": false,
-    "option_game_speed": 60,
-    "option_allow_game_statistics": false
+    "option_game_speed": 60
 }←be5f1418-b31b-48af-a023-f04cdf6e5121|{
     "textureGroups": {
         "Additions": [

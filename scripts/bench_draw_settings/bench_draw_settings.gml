@@ -78,7 +78,7 @@ else
 			}
 			
 			// Model
-			if (draw_button_normal(labeltext + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, test(bench_settings.list_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+			if (draw_button_normal(labeltext + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, bench_settings.list_extend ? icons.ARROW_DOWN : icons.ARROW_RIGHT))
 				bench_settings.list_extend = !bench_settings.list_extend
 			
 			//draw_label(labeltext + ":", dx + 24, dy + 8, fa_left, fa_middle)
@@ -169,7 +169,7 @@ else
 				res = mc_res
 			
 			// Preview
-			if (draw_button_normal(text_get("typeitem") + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, test(bench_settings.list_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+			if (draw_button_normal(text_get("typeitem") + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, bench_settings.list_extend ? icons.ARROW_DOWN : icons.ARROW_RIGHT))
 				bench_settings.list_extend = !bench_settings.list_extend
 			
 			if (res.item_sheet_texture != null)
@@ -184,7 +184,7 @@ else
 			// Item select
 			if (res.item_sheet_texture != null && bench_settings.list_extend)
 			{
-				var slots = test((res.type = e_res_type.PACK), ds_list_size(mc_assets.item_texture_list), (res.item_sheet_size[X] * res.item_sheet_size[Y]));
+				var slots = ((res.type = e_res_type.PACK) ? ds_list_size(mc_assets.item_texture_list) : (res.item_sheet_size[X] * res.item_sheet_size[Y]));
 				listh = 200 + bench_settings.height_custom
 				draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, listh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8
@@ -214,7 +214,7 @@ else
 			capwid = text_caption_width("benchblocktex")
 			
 			// Block
-			if (draw_button_normal(text_get("benchblock") + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, test(bench_settings.list_extend, icons.ARROW_DOWN, icons.ARROW_RIGHT)))
+			if (draw_button_normal(text_get("benchblock") + ":", dx, dy, 16, 16, e_button.LABEL, bench_settings.list_extend, false, true, bench_settings.list_extend ? icons.ARROW_DOWN : icons.ARROW_RIGHT))
 				bench_settings.list_extend = !bench_settings.list_extend
 			dy += 22
 			

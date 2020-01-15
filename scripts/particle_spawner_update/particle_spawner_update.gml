@@ -120,8 +120,8 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 						var template = particle_template_map[?pt.type.sprite_template];
 					
 						var startf, endf;
-						startf = test(pt.type.sprite_template_reverse, (template.frames - 1), 0)
-						endf = test(pt.type.sprite_template_reverse, 0, (template.frames - 1))
+						startf = (pt.type.sprite_template_reverse ? (template.frames - 1) : 0)
+						endf = (pt.type.sprite_template_reverse ? 0 : (template.frames - 1))
 					
 						var ani = particle_get_animation_percent((pt.spawntime + pt.freezetime), startf, endf, pt.anispeed, pt.type.sprite_animation_onend);
 						if (ani = 1 && temp.pc_destroy_at_animation_finish && pt.type.sprite_animation_onend = 0) // Animation end

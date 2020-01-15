@@ -143,7 +143,7 @@ background_sunrise_alpha = background_sky_rise_set_alpha(true)
 background_sunlight_color_final = merge_color(merge_color(background_sunlight_color, c_red, max(background_sunrise_alpha, background_sunset_alpha) * 0.75), c_black, background_night_alpha)
 background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 background_fog_color_final = background_fog_color
-background_fog_object_color_final = test(background_fog_object_color_custom, background_fog_object_color, background_fog_color_final)
+background_fog_object_color_final = (background_fog_object_color_custom ? background_fog_object_color : background_fog_color_final)
 
 // Cameras
 if (window_state = "export_movie")

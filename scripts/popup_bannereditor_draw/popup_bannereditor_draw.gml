@@ -88,7 +88,7 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 		selectmouseon = app_mouse_box(dx, listy, selectwidth, listh)
 	}
 	
-	var pattern = test(notbase, ds_list_find_index(minecraft_banner_pattern_list, patternlist[|patternindex]), 0);
+	var pattern = (notbase ? ds_list_find_index(minecraft_banner_pattern_list, patternlist[|patternindex]) : 0);
 	
 	if (popup_bannereditor.banner_pattern_edit = i || (selectmouseon && (mouse_left || mouse_left_released)))
 	{
@@ -167,7 +167,7 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 		}
 	}
 	
-	var color = test(notbase, colorlist[|patternindex], banner.banner_base_color);
+	var color = (notbase ? colorlist[|patternindex] : banner.banner_base_color);
 	
 	draw_box(dx + 10, listy + 12, 20, 20, false, color, 1)
 	draw_box(dx + 10, listy + 12, 20, 20, false, c_black, .25)
@@ -187,7 +187,7 @@ if (popup_bannereditor.banner_pattern_edit > -1)
 {
 	// Draw color options
 	var label, buttonx, buttony, padding, buttonsize, buttonmouseon, color;
-	label = test(popup_bannereditor.banner_pattern_edit = 0, text_get("bannereditorbackgroundcolor"), text_get("bannereditorpatterncolor"))
+	label = (popup_bannereditor.banner_pattern_edit = 0 ? text_get("bannereditorbackgroundcolor") : text_get("bannereditorpatterncolor"))
 	buttonx = dx + 3
 	buttony = dy
 	padding = 2

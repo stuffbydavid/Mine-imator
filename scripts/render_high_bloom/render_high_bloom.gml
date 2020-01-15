@@ -34,7 +34,7 @@ surface_reset_target()
 // Repeat for each blade
 var blades, bladerot;
 blades = max(1, render_camera.value[e_value.CAM_BLADE_AMOUNT]/2)
-blades = test(frac(blades) > 0, render_camera.value[e_value.CAM_BLADE_AMOUNT], blades)
+blades = (frac(blades) > 0 ? render_camera.value[e_value.CAM_BLADE_AMOUNT] : blades)
 for (var b = 0; b < blades; b++)
 {
 	bladerot = degtorad((180/blades) * b)

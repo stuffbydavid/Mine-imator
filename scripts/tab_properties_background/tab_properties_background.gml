@@ -70,7 +70,7 @@ else
 	capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
 	
 	// Sun
-	tex = test((background_sky_sun_tex.type = e_res_type.PACK), background_sky_sun_tex.sun_texture, background_sky_sun_tex.texture)
+	tex = ((background_sky_sun_tex.type = e_res_type.PACK) ? background_sky_sun_tex.sun_texture : background_sky_sun_tex.texture)
 	tab_control(40)
 	draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, 40, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, tex, null, capwid)
 	tab_next()
@@ -146,7 +146,7 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	capwid = text_caption_width("backgroundskycloudstex", "backgroundskycloudsspeed", "backgroundskycloudsz", "backgroundskycloudssize", "backgroundskycloudsheight")
 	
 	// Cloud texture
-	var tex = test((background_sky_clouds_tex.type = e_res_type.PACK), background_sky_clouds_tex.clouds_texture, background_sky_clouds_tex.texture);
+	var tex = ((background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture);
 	tab_control(40)
 	draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, 40, background_sky_clouds_tex, background_sky_clouds_tex.display_name, action_background_sky_clouds_tex, tex, null, capwid)
 	tab_next()
@@ -158,7 +158,7 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	
 	// Cloud Z / Y
 	tab_control_dragger()
-	draw_dragger("backgroundskyclouds" + test(setting_z_is_up, "z", "y"), dx, dy, dw, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
+	draw_dragger("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, dw, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
 	tab_next()
 	
 	// Cloud size
@@ -241,7 +241,7 @@ if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_va
 
 // Background colors
 var custombiome = (background_biome.name = "custom")
-var wid = test(custombiome, floor(dw / 2) - 4, dw);
+var wid = (custombiome ? floor(dw / 2) - 4 : dw);
 var pxpad = 8 * custombiome;
 
 tab_control(20)

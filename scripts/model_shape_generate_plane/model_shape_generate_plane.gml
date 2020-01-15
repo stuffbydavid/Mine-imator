@@ -54,8 +54,8 @@ if (texture_mirror)
 var detail = 2;
 var sharpbend, bendsize, bendstart, bendend, bendsegsize, invangle;
 sharpbend = (app.setting_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
-bendsize = test(bend_size = null, test(app.setting_bend_style = "realistic", 4, 1), bend_size)
-detail = test(sharpbend, 2, max(bendsize, 2))
+bendsize = (bend_size = null ? (app.setting_bend_style = "realistic" ? 4 : 1) : bend_size)
+detail = (sharpbend ? 2 : max(bendsize, 2))
 
 if ((bend_size != null && bend_size >= 1) && scale[segaxis] > .5)
 	detail /= scale[segaxis]
