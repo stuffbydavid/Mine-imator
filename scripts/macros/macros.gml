@@ -9,9 +9,9 @@
 #macro dev_mode_rotate_blocks		dev_mode && true
 
 // Versions
-#macro mineimator_version			"1.2.6"
-#macro mineimator_version_extra		""
-#macro mineimator_version_date		"2020.01.12"
+#macro mineimator_version			"1.3.0"
+#macro mineimator_version_extra		"Pre-alpha 1"
+#macro mineimator_version_date		"2020.01.14"
 #macro gm_runtime					GM_runtime_version
 #macro minecraft_version			"1.15.1"
 
