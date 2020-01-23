@@ -5079,6 +5079,14 @@
             }
         },
         {
+            "Key": "50985cf8-1bb3-4327-a10d-6e2e0ed6e8d2",
+            "Value": {
+                "id": "7db29b91-87ce-439c-91c6-b86133e65b59",
+                "resourcePath": "scripts\\action_background_leaves_jungle_color\\action_background_leaves_jungle_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "50b47d70-b551-4c5a-a112-37b0bc9d6a41",
             "Value": {
                 "id": "8f88a2ea-3741-4a16-afc4-69beaa16c96f",
@@ -10871,6 +10879,14 @@
             }
         },
         {
+            "Key": "a6cf07cc-b4e8-4fab-8ddc-3dd96363577d",
+            "Value": {
+                "id": "b9aa2c3c-c8fb-4d07-9e9d-04f040e43e56",
+                "resourcePath": "scripts\\action_background_leaves_oak_color\\action_background_leaves_oak_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "a6d57a1d-81f7-4246-8e67-de5cff933a75",
             "Value": {
                 "id": "ede9626c-a37a-456b-b1f2-07e338c73b7c",
@@ -11931,6 +11947,14 @@
             "Value": {
                 "id": "1b31b552-c498-4b7a-9eb0-4e8ac1e944bc",
                 "resourcePath": "scripts\\string_limit_ext\\string_limit_ext.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "b694fcc2-049e-4591-9858-35749b4a351e",
+            "Value": {
+                "id": "6c05b93d-aa3f-40b1-ba4c-9fb5cfc71bb0",
+                "resourcePath": "scripts\\action_background_leaves_spruce_color\\action_background_leaves_spruce_color.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -13767,6 +13791,14 @@
             }
         },
         {
+            "Key": "d3dcb3c3-3c64-4934-90cf-ca80555c4de1",
+            "Value": {
+                "id": "c9dbcfca-59c5-4812-8197-2cccfb40ae06",
+                "resourcePath": "scripts\\action_background_leaves_acacia_color\\action_background_leaves_acacia_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "d4075385-f0c5-4fcb-8541-645bd492844a",
             "Value": {
                 "id": "e36e86c9-d7a8-4b3e-9c5b-4db97c80d963",
@@ -15151,6 +15183,14 @@
             }
         },
         {
+            "Key": "ea7de97d-6568-47ec-b740-be6aa2b401ab",
+            "Value": {
+                "id": "e37228e7-6780-44b9-8a97-92abcc2b6049",
+                "resourcePath": "scripts\\action_background_leaves_birch_color\\action_background_leaves_birch_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "eab677d0-1ba0-4467-8d2d-69a067d4a4b0",
             "Value": {
                 "id": "921721d9-4cb5-4413-8584-c0961813efbb",
@@ -16367,6 +16407,14 @@
             }
         },
         {
+            "Key": "fae80f1e-d314-42cb-ad30-c2b3e0e1c94e",
+            "Value": {
+                "id": "93be8b10-79b6-4e8c-84dc-4368c943e1b2",
+                "resourcePath": "scripts\\action_background_leaves_dark_oak_color\\action_background_leaves_dark_oak_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "fae8c17d-3145-45ea-b91b-ec387de87cb3",
             "Value": {
                 "id": "d79ebb68-c9e0-4fe2-875f-ebf41053c5df",
@@ -16741,6 +16789,12 @@
         "697a1de9-85fe-4d0c-b435-1ec147416628",
         "54ee181b-88eb-46f8-93c8-283ba8c13deb",
         "64dfe6c3-2133-4f00-9095-adaa31c56390",
+        "a6cf07cc-b4e8-4fab-8ddc-3dd96363577d",
+        "b694fcc2-049e-4591-9858-35749b4a351e",
+        "ea7de97d-6568-47ec-b740-be6aa2b401ab",
+        "50985cf8-1bb3-4327-a10d-6e2e0ed6e8d2",
+        "d3dcb3c3-3c64-4934-90cf-ca80555c4de1",
+        "fae80f1e-d314-42cb-ad30-c2b3e0e1c94e",
         "f8045dae-aa94-44c3-a54f-a0059dfd3189",
         "c468715e-119d-4320-a2d7-e97c57b5ba58",
         "69d7311e-d878-41ae-956e-04a3bb90c7ff",

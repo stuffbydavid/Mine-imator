@@ -52,6 +52,13 @@ with (mc_assets)
 			app.background_grass_color = c_plains_biome_grass
 			app.background_water_color = c_plains_biome_water
 			
+			app.background_leaves_oak_color = c_plains_biome_foliage
+			app.background_leaves_spruce_color = c_plains_biome_foliage_2
+			app.background_leaves_birch_color = c_plains_biome_foliage_2
+			app.background_leaves_jungle_color = c_plains_biome_foliage
+			app.background_leaves_acacia_color = c_plains_biome_foliage
+			app.background_leaves_dark_oak_color = c_plains_biome_foliage
+			
 			load_assets_stage = "textures"
 			load_assets_progress = 0.4
 			break;

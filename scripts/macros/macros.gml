@@ -16,7 +16,7 @@
 #macro minecraft_version			"1.15.1"
 
 // File formats
-#macro project_format				e_project.FORMAT_125
+#macro project_format				e_project.FORMAT_130
 #macro settings_format				e_settings.FORMAT_120
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_123
 
@@ -111,6 +111,7 @@
 #macro c_clouds_sideslight			make_color_rgb(215, 222, 234)
 #macro c_clouds_sidesdark			make_color_rgb(194, 201, 215)
 #macro c_plains_biome_foliage		make_color_rgb(119, 171, 47)
+#macro c_plains_biome_foliage_2		make_color_rgb(98, 168, 87)
 #macro c_plains_biome_grass			make_color_rgb(145, 189, 89)
 #macro c_plains_biome_water			make_color_rgb(62, 117, 225)
 #macro c_sunset_start				hex_to_color("B2353B")

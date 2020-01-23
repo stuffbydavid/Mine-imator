@@ -389,13 +389,24 @@ with (new(obj_block_render_model))
 							{
 								if (is_real(col))
 									face_texture_color[nd] = col
-								else if (col = "grass")
-									face_block_vbuffer[nd] = e_block_vbuffer.GRASS
-								else if (col = "leaves")
-									face_block_vbuffer[nd] = e_block_vbuffer.LEAVES
+								else
+								{
+									switch (col)
+									{
+										case "grass":			face_block_vbuffer[nd] = e_block_vbuffer.GRASS;				break;
+										case "foliage":			face_block_vbuffer[nd] = e_block_vbuffer.FOLIAGE;			break;
+										
+										case "oak_leaves":		face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_OAK;		break;
+										case "spruce_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_SPRUCE;		break;
+										case "birch_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_BIRCH;		break;
+										case "jungle_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_JUNGLE;		break;
+										case "acacia_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_ACACIA;		break;
+										case "dark_oak_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_DARK_OAK;	break;
+									}	
+								}
 							}
 						}
-					
+						
 						texpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
 						texsize = vec2(sheetwidth * block_size, sheetheight * block_size)
 						
@@ -422,12 +433,25 @@ with (new(obj_block_render_model))
 							
 									if (face_texture_color[nd] > -1)
 										col = color_multiply(col, face_texture_color[nd])
-									else if (face_block_vbuffer[nd] = e_block_vbuffer.GRASS)
-										col = color_multiply(col, mc_res.color_grass)
-									else if (face_block_vbuffer[nd] = e_block_vbuffer.LEAVES)
-										col = color_multiply(col, mc_res.color_foliage)
-									else if (face_block_vbuffer[nd] = e_block_vbuffer.WATER)
-										col = color_multiply(col, mc_res.color_water)
+									else
+									{
+										var rescol = null;
+										switch (face_block_vbuffer[nd])
+										{
+											case e_block_vbuffer.GRASS:				rescol = mc_res.color_grass;			break;
+											case e_block_vbuffer.FOLIAGE:			rescol = mc_res.color_foliage;			break;
+											case e_block_vbuffer.WATER:				rescol = mc_res.color_water;			break;
+											case e_block_vbuffer.LEAVES_OAK:		rescol = mc_res.color_leaves_oak;		break;
+											case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_leaves_spruce;	break;
+											case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_leaves_birch;		break;
+											case e_block_vbuffer.LEAVES_JUNGLE:		rescol = mc_res.color_leaves_jungle;	break;
+											case e_block_vbuffer.LEAVES_ACACIA:		rescol = mc_res.color_leaves_acacia;	break;
+											case e_block_vbuffer.LEAVES_DARK_OAK:	rescol = mc_res.color_leaves_dark_oak;	break;
+										}
+										
+										if (rescol != null)
+											col = color_multiply(rescol, face_texture_color[nd])
+									}
 										
 									if (nd = e_dir.UP)
 									{

@@ -89,9 +89,15 @@ background_ground_tex_prev = null
 background_ground_update_texture()
 
 background_biome = biome_list[|2]
-background_foliage_color = c_plains_biome_foliage
 background_grass_color = c_plains_biome_grass
+background_foliage_color = c_plains_biome_foliage
 background_water_color = c_plains_biome_water
+background_leaves_oak_color = c_plains_biome_foliage
+background_leaves_spruce_color = c_plains_biome_foliage_2
+background_leaves_birch_color = c_plains_biome_foliage_2
+background_leaves_jungle_color = c_plains_biome_foliage
+background_leaves_acacia_color = c_plains_biome_foliage
+background_leaves_dark_oak_color = c_plains_biome_foliage
 
 instance_activate_object(obj_biome)
 with (obj_biome)

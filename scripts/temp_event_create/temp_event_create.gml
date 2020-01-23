@@ -48,9 +48,6 @@ block_name = default_block
 block_state = array()
 block_tex = null
 block_vbuffer = null
-block_vbuffer_depth0 = false
-block_vbuffer_depth1 = false
-block_vbuffer_depth2 = false
 block_repeat_enable = false
 block_repeat = vec3(1)
 

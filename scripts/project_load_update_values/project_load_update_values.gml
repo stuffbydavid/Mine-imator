@@ -1,6 +1,7 @@
 /// project_load_update_values()
 /// @desc Updates values from previous versions
 
+// More background values can be keyframed (1.2.0)
 if (load_format < e_project.FORMAT_120_PRE_3)
 {
 	if (timeline.type = e_tl_type.BACKGROUND)
@@ -29,6 +30,7 @@ if (load_format < e_project.FORMAT_120_PRE_3)
 	}
 }
 
+// Changed how anamorphic effects work, keyframable ground texture (1.2.5)
 if (load_format < e_project.FORMAT_125)
 {
 	if (timeline.type = e_tl_type.CAMERA)
@@ -38,7 +40,23 @@ if (load_format < e_project.FORMAT_125)
 	}
 	
 	if (timeline.type = e_tl_type.BACKGROUND)
-	{
 		value[e_value.BG_GROUND_SLOT] = app.background_ground_slot
-	}
+}
+
+// Seperated leaf colors for custom biome setting (1.3.0)
+if (load_format < e_project.FORMAT_130)
+{
+	app.background_leaves_oak_color = app.background_foliage_color
+	app.background_leaves_spruce_color = c_plains_biome_foliage_2
+	app.background_leaves_birch_color = c_plains_biome_foliage_2
+	app.background_leaves_jungle_color = app.background_foliage_color
+	app.background_leaves_acacia_color = app.background_foliage_color
+	app.background_leaves_dark_oak_color = app.background_foliage_color
+	
+	value[e_value.BG_LEAVES_OAK_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
+	value[e_value.BG_LEAVES_SPRUCE_COLOR] = app.background_leaves_spruce_color
+	value[e_value.BG_LEAVES_BIRCH_COLOR] = app.background_leaves_birch_color
+	value[e_value.BG_LEAVES_JUNGLE_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
+	value[e_value.BG_LEAVES_ACACIA_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
+	value[e_value.BG_LEAVES_DARK_OAK_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 }

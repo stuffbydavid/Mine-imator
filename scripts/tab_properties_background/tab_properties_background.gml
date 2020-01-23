@@ -239,60 +239,91 @@ if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_va
 	tab_next()
 }
 
-// Background colors
-var custombiome = (background_biome.name = "custom")
-var wid = (custombiome ? floor(dw / 2) - 4 : dw);
-var pxpad = 8 * custombiome;
+// Biome colors
+if (background_biome.name = "custom")
+{
+	tab_control(20)
+	draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_top)
+	tab_next()
+
+	// Grass
+	tab_control_color()
+	draw_button_color("backgroundgrasscolor", dx, dy, dw, background_grass_color, c_plains_biome_grass, false, action_background_grass_color)
+	tab_next()
+
+	// Foliage
+	tab_control_color()
+	draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
+	tab_next()
+	
+	// Water
+	tab_control_color()
+	draw_button_color("backgroundwatercolor", dx, dy, dw, background_water_color, c_plains_biome_water, false, action_background_water_color)
+	tab_next()
+	
+	tab_control(20)
+	draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_top)
+	tab_next()
+	
+	// Oak leaves
+	tab_control_color()
+	draw_button_color("backgroundleavesoakcolor", dx, dy, dw, background_leaves_oak_color, c_plains_biome_foliage, false, action_background_leaves_oak_color)
+	tab_next()
+	
+	// Spruce leaves
+	tab_control_color()
+	draw_button_color("backgroundleavessprucecolor", dx, dy, dw, background_leaves_spruce_color, c_plains_biome_foliage_2, false, action_background_leaves_spruce_color)
+	tab_next()
+	
+	// Birch
+	tab_control_color()
+	draw_button_color("backgroundleavesbirchcolor", dx, dy, dw, background_leaves_birch_color, c_plains_biome_foliage_2, false, action_background_leaves_birch_color)
+	tab_next()
+	
+	// Jungle
+	tab_control_color()
+	draw_button_color("backgroundleavesjunglecolor", dx, dy, dw, background_leaves_jungle_color, c_plains_biome_foliage, false, action_background_leaves_jungle_color)
+	tab_next()
+	
+	// Acacia
+	tab_control_color()
+	draw_button_color("backgroundleavesacaciacolor", dx, dy, dw, background_leaves_acacia_color, c_plains_biome_foliage, false, action_background_leaves_acacia_color)
+	tab_next()
+	
+	// Dark oak
+	tab_control_color()
+	draw_button_color("backgroundleavesdarkoakcolor", dx, dy, dw, background_leaves_dark_oak_color, c_plains_biome_foliage, false, action_background_leaves_dark_oak_color)
+	tab_next()
+}
 
 tab_control(20)
-draw_label(text_get("backgroundcolor") + ":", dx, dy, fa_left, fa_top)
+draw_label(text_get("backgroundscenecolors") + ":", dx, dy, fa_left, fa_top)
 tab_next()
 
-// Sky & Clouds color
+// Sky
 tab_control_color()
-draw_button_color("backgroundskycolor", dx, dy, wid, background_sky_color, c_sky, false, action_background_sky_color)
-
-if (!custombiome)
-{
-	tab_next()
-	tab_control_color()
-}
-
-draw_button_color("backgroundskycloudscolor", dx + (wid + pxpad) * custombiome, dy, wid, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color)
+draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, c_sky, false, action_background_sky_color)
 tab_next()
 
-// Sun light & Ambient color
+// Clouds
 tab_control_color()
-draw_button_color("backgroundsunlightcolor", dx, dy, wid, background_sunlight_color, c_sunlight, false, action_background_sunlight_color)
-
-if (!custombiome)
-{
-	tab_next()
-	tab_control_color()
-}
-
-draw_button_color("backgroundambientcolor", dx + (wid + pxpad) * custombiome, dy, wid, background_ambient_color, c_ambient, false, action_background_ambient_color)
+draw_button_color("backgroundskycloudscolor", dx, dy, dw, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color)
 tab_next()
 
-// Night color
+// Sun light
 tab_control_color()
-draw_button_color("backgroundnightcolor", dx, dy, wid, background_night_color, c_night, false, action_background_night_color)
+draw_button_color("backgroundsunlightcolor", dx, dy, dw, background_sunlight_color, c_sunlight, false, action_background_sunlight_color)
+tab_next()
 
-// Biome colors
-if (custombiome)
-{
-	// Grass color
-	draw_button_color("backgroundgrasscolor", dx + wid + 8, dy, wid, background_grass_color, c_plains_biome_grass, false, action_background_grass_color)
-	tab_next()
+// Ambient
+tab_control_color()
+draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color)
+tab_next()
 
-	// Foliage & Water color
-	tab_control_color()
-	draw_button_color("backgroundfoliagecolor", dx, dy, wid, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
-	draw_button_color("backgroundwatercolor", dx + wid + 8, dy, wid, background_water_color, c_plains_biome_water, false, action_background_water_color)
-	tab_next()
-}
-else
-	tab_next()
+// Night
+tab_control_color()
+draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
+tab_next()
 
 // Show fog
 tab_control_checkbox_expand()
