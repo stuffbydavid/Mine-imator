@@ -56,6 +56,12 @@ switch (vid)
 	case e_value.BG_GRASS_COLOR:
 	case e_value.BG_FOLIAGE_COLOR:
 	case e_value.BG_WATER_COLOR:
+	case e_value.BG_LEAVES_OAK_COLOR:
+	case e_value.BG_LEAVES_SPRUCE_COLOR:
+	case e_value.BG_LEAVES_BIRCH_COLOR:
+	case e_value.BG_LEAVES_JUNGLE_COLOR:
+	case e_value.BG_LEAVES_ACACIA_COLOR:
+	case e_value.BG_LEAVES_DARK_OAK_COLOR:
 	case e_value.BG_FOG_COLOR:
 	case e_value.BG_FOG_OBJECT_COLOR: return clamp(val, c_black, c_white)
 	case e_value.BEND_ANGLE_X:

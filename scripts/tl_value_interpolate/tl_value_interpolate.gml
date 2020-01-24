@@ -32,6 +32,12 @@ switch (vid)
 	case e_value.BG_GRASS_COLOR:
 	case e_value.BG_FOLIAGE_COLOR:
 	case e_value.BG_WATER_COLOR:
+	case e_value.BG_LEAVES_OAK_COLOR:
+	case e_value.BG_LEAVES_SPRUCE_COLOR:
+	case e_value.BG_LEAVES_BIRCH_COLOR:
+	case e_value.BG_LEAVES_JUNGLE_COLOR:
+	case e_value.BG_LEAVES_ACACIA_COLOR:
+	case e_value.BG_LEAVES_DARK_OAK_COLOR:
 	case e_value.BG_FOG_COLOR:
 	case e_value.BG_FOG_OBJECT_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
 	case e_value.CAM_BLADE_AMOUNT:

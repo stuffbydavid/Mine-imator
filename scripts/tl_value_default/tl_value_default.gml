@@ -101,6 +101,12 @@ switch (argument0)
 	case e_value.BG_GRASS_COLOR: return app.background_grass_color
 	case e_value.BG_FOLIAGE_COLOR: return app.background_foliage_color
 	case e_value.BG_WATER_COLOR: return app.background_water_color
+	case e_value.BG_LEAVES_OAK_COLOR: return app.background_leaves_oak_color
+	case e_value.BG_LEAVES_SPRUCE_COLOR: return app.background_leaves_spruce_color
+	case e_value.BG_LEAVES_BIRCH_COLOR: return app.background_leaves_birch_color
+	case e_value.BG_LEAVES_JUNGLE_COLOR: return app.background_leaves_jungle_color
+	case e_value.BG_LEAVES_ACACIA_COLOR: return app.background_leaves_acacia_color
+	case e_value.BG_LEAVES_DARK_OAK_COLOR: return app.background_leaves_dark_oak_color
 	case e_value.BG_FOG_SHOW: return app.background_fog_show
 	case e_value.BG_FOG_SKY: return app.background_fog_sky
 	case e_value.BG_FOG_CUSTOM_COLOR: return app.background_fog_color_custom
