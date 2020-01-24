@@ -3,7 +3,7 @@
 
 var value = argument0;
 
-if (is_real(value))
+if (is_real(value) || is_int32(value) || is_int64(value))
 	buffer_write_string(string_decimals(value))
 else if (is_array(value))
 	json_save_array(value, array_length_1d(value))
