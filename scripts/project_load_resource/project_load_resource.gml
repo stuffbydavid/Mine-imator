@@ -22,7 +22,10 @@ with (new(obj_resource))
 		item_sheet_size = value_get_point2D(map[?"item_sheet_size"], item_sheet_size)
 		
 	if (type = e_res_type.SCHEMATIC)
+	{
 		scenery_tl_add = value_get_real(map[?"scenery_tl_add"], true)
+		scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
+	}
 	
 	sortlist_add(app.res_list, id)
 }

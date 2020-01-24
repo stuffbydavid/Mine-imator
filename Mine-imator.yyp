@@ -1567,6 +1567,14 @@
             }
         },
         {
+            "Key": "16c21131-50bb-4b6a-9b14-08fd89f61c34",
+            "Value": {
+                "id": "e4e81050-d69a-4b9c-9a70-a27ade128020",
+                "resourcePath": "scripts\\block_tile_entity_skull\\block_tile_entity_skull.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1705ddcc-9011-4c55-9fc4-86c564982455",
             "Value": {
                 "id": "bb002212-013d-4ee2-a405-644d9c6541a0",
@@ -17880,6 +17888,7 @@
         "fc43ed94-999b-42d4-a13d-21e35895d2e5",
         "e06ebcce-6036-4c1b-86f9-efd3b947054f",
         "3391dfcb-7f72-4511-8702-8aeea7c1748d",
+        "16c21131-50bb-4b6a-9b14-08fd89f61c34",
         "43510332-6418-42b7-b78d-6bb182e09d46",
         "efda307f-0c36-479c-baa9-f73b0d88123b",
         "4b29e5fe-e08b-41a1-880f-5f8adc439826",

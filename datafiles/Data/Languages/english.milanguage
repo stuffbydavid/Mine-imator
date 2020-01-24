@@ -662,6 +662,7 @@
         "tripwire_hook": "Tripwire Hook",
         "enchantment_table": "Enchantment Table",
         "end_crystal": "End Crystal",
+        "mob_head": "Mob Head",
         "banner": "Banner",
         "standing_banner": "Standing Banner",
         "wall_banner": "Wall Banner",
@@ -669,6 +670,7 @@
         "bed": "Bed",
         "shulker_box": "Shulker Box",
         "shulker_spark": "Shulker Spark",
+        "dragon_head": "Dragon Head",
         "camera": "Camera",
         "trident": "Trident",
         "conduit": "Conduit",
@@ -885,6 +887,7 @@
             "profession_level": "Profession level",
             "collar": "Collar",
             "crack_amount": "Crack amount",
+            "character": "Character",
             "value/": {
                 "steve": "Steve",
                 "alex": "Alex",
@@ -960,6 +963,7 @@
                 "sticky": "Sticky",
                 "standing": "Standing",
                 "wall": "On Wall",
+                "ground": "On Ground",
                 "normal_double": "Normal (Double)",
                 "ender": "Ender",
                 "trapped": "Trapped",
@@ -1020,7 +1024,9 @@
                 "low": "Low",
                 "high": "High",
                 "normal_nectar": "Normal (With nectar)",
-                "angry_nectar": "Angry (With nectar)"
+                "angry_nectar": "Angry (With nectar)",
+                "player": "Player",
+                "creeper": "Creeper"
             }
         }
     },
@@ -1213,6 +1219,10 @@
         "double_plant": "Double Plant",
         "daylight_detector_inverted": "Inverted Daylight Sensor",
         "red_sandstone": "Red Sandstone",
+        "mob_head": "Mob Head",
+        "mob_wall_head": "Mob Wall Head",
+        "dragon_head": "Dragon Head",
+        "dragon_wall_head": "Dragon Wall Head",
         "standing_banner": "Standing Banner",
         "wall_banner": "Wall Banner",
         "end_rod": "End Rod",
@@ -1334,6 +1344,7 @@
             "hanging": "Hanging",
             "wood": "Wood",
             "honey_level": "Honey level",
+            "character": "Character",
             "value/": {
                 "true": "Yes",
                 "false": "No",
@@ -1494,7 +1505,12 @@
                 "end_stone_brick": "End Stone Brick",
                 "red_nether_brick": "Red Nether Brick",
                 "smooth": "Smooth",
-                "cut_red_sandstone": "Cut Red Sandstone"
+                "cut_red_sandstone": "Cut Red Sandstone",
+                "player": "Player",
+                "zombie": "Zombie",
+                "creeper": "Creeper",
+                "skeleton": "Skeleton",
+                "wither_skeleton": "Wither Skeleton"
             }
         }
     },
@@ -2299,6 +2315,7 @@
         "captionpieceof": "Importing a piece of %1",
         "open": "Opening file...",
         "blocks": "Reading blocks...",
+        "download": "Downloading skins... (%1 / %2, %3 failed)",
         "model": "Creating 3D model...",
         "pieceof": "Piece of %1",
         "addtimelines": "%1 blocks were found in the terrain that can be animated.\n\nDo you want to add these as individual timelines? (This could decrease performance)"

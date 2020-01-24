@@ -66,6 +66,7 @@ block_vbuffer = null
 scenery_tl_add = null
 scenery_tl_list = null
 scenery_size = vec3(0)
+scenery_download_skins = true
 
 texture = null
 

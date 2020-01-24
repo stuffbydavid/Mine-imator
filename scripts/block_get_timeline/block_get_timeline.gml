@@ -62,6 +62,20 @@ with (new(obj_block_tl))
 		}
 	}
 	
+	// Skull resource
+	with (mc_builder)
+	{
+		var ind = builder_get_index(build_pos_x, build_pos_y, build_pos_z);
+		
+		if (block_skull_map[?ind] != undefined)
+		{
+			var userid = block_skull_map[?ind];
+			other.texture = block_skull_res_map[?userid]
+		}
+		else
+			other.texture = null
+	}
+	
 	rot_point = block.tl_rot_point
 	position = block.tl_position
 	rotation = block.tl_rotation

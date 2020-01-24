@@ -134,6 +134,10 @@ with (obj_timeline)
 	else
 		part_root = save_id_find(save_id_map[?part_root])
 	
+	// Default texture
+	if (value_default[e_value.TEXTURE_OBJ] != null)
+		value_default[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_OBJ]])
+	
 	// Set part list
 	if (part_list != null)
 		for (var i = 0; i < ds_list_size(part_list); i++)

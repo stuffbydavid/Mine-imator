@@ -13,7 +13,10 @@ json_save_object_start()
 		json_save_var_point2D("item_sheet_size", item_sheet_size)
 		
 	if (type = e_res_type.SCHEMATIC)
+	{
 		json_save_var_bool("scenery_tl_add", scenery_tl_add)
+		json_save_var_bool("scenery_download_skins", scenery_download_skins)
+	}
 	
 	if (load_folder != save_folder)
 		res_save()

@@ -732,6 +732,23 @@
 			"file": "end_crystal.mimodel"
 		},
 		{
+			"name": "mob_head",
+			"states": {
+				"variant": [
+					{ "value": "ground", "file": "mob_head.mimodel" },
+					{ "value": "wall", "file": "mob_wall_head.mimodel" }
+				],
+				"character": [
+					{ "value": "player", "texture": "entity/steve" },
+					{ "value": "zombie", "texture": "entity/zombie/zombie" },
+					{ "value": "creeper", "texture": "entity/creeper/creeper" },
+					{ "value": "skeleton", "texture": "entity/skeleton/skeleton" },
+					{ "value": "wither_skeleton", "texture": "entity/skeleton/wither_skeleton" }
+				]
+			},
+			"default_state": "variant=ground,character=player"
+		},
+		{
 			"name": "banner",
 			"file": "standing_banner.mimodel",
 			"states": {
@@ -807,6 +824,16 @@
 		{
 			"name": "shulker_spark",
 			"file": "shulker_spark.mimodel"
+		},
+		{
+			"name": "dragon_head",
+			"states": {
+				"variant": [
+					{ "value": "ground", "file": "dragon_head.mimodel" },
+					{ "value": "wall", "file": "dragon_wall_head.mimodel" }
+				]
+			},
+			"default_state": "variant=ground"
 		},
 		{
 			"name": "trident",
@@ -3344,6 +3371,132 @@
 				"minecraft:cut_red_sandstone": "variant=cut_sandstone",
 				"minecraft:smooth_red_sandstone": "variant=smooth_sandstone"
 			}
+		},
+		{
+			"name": "mob_head",
+			"states": {
+				"rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],
+				"character": [ "player", "zombie", "creeper", "skeleton", "wither_skeleton" ]
+			},
+			"default_state": "rotation=0,character=player",
+			"timeline": {
+				"model": "mob_head",
+				"model_state": {
+					"character=player": "variant=ground,character=player",
+					"character=zombie": "variant=ground,character=zombie",
+					"character=creeper": "variant=ground,character=creeper",
+					"character=skeleton": "variant=ground,character=skeleton",
+					"character=wither_skeleton": "variant=ground,character=wither_skeleton"
+				},
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"rotation=0": [ 0, 180, 0 ],
+					"rotation=1": [ 0, 157.5, 0 ],
+					"rotation=2": [ 0, 135, 0 ],
+					"rotation=3": [ 0, 112.5, 0 ],
+					"rotation=4": [ 0, 90, 0 ],
+					"rotation=5": [ 0, 67.5, 0 ],
+					"rotation=6": [ 0, 45, 0 ],
+					"rotation=7": [ 0, 22.5, 0 ],
+					"rotation=8": [ 0, 0, 0 ],
+					"rotation=9": [ 0, -22.5, 0 ],
+					"rotation=10": [ 0, -45, 0 ],
+					"rotation=11": [ 0, -67.5, 0 ],
+					"rotation=12": [ 0, -90, 0 ],
+					"rotation=13": [ 0, -112.5, 0 ],
+					"rotation=14": [ 0, -135, 0 ],
+					"rotation=15": [ 0, -157.5, 0 ]
+				}
+			},
+			"id": {
+				"minecraft:player_head": "character=player",
+				"minecraft:zombie_head": "character=zombie",
+				"minecraft:creeper_head": "character=creeper",
+				"minecraft:skeleton_skull": "character=skeleton",
+				"minecraft:wither_skeleton_skull": "character=wither_skeleton"
+			}
+		},
+		{
+			"name": "mob_wall_head",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ],
+				"character": [ "player", "zombie", "creeper", "skeleton", "wither_skeleton" ]
+			},
+			"default_state": "facing=west,character=player",
+			"timeline": {
+				"model": "mob_head",
+				"model_state": {
+					"character=player": "variant=wall, character=player",
+					"character=zombie": "variant=wall, character=zombie",
+					"character=creeper": "variant=wall, character=creeper",
+					"character=skeleton": "variant=wall, character=skeleton",
+					"character=wither_skeleton": "variant=wall, character=wither_skeleton"
+				},
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
+			"id": {
+				"minecraft:player_wall_head": "character=player",
+				"minecraft:zombie_wall_head": "character=zombie",
+				"minecraft:creeper_wall_head": "character=creeper",
+				"minecraft:skeleton_wall_skull": "character=skeleton",
+				"minecraft:wither_skeleton_wall_skull": "character=wither_skeleton"
+			}
+		},
+		{
+			"name": "dragon_head",
+			"states": {
+				"rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
+			},
+			"default_state": "rotation=0",
+			"timeline": {
+				"model": "dragon_head",
+				"model_state": "variant=ground",
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"rotation=0": [ 0, 180, 0 ],
+					"rotation=1": [ 0, 157.5, 0 ],
+					"rotation=2": [ 0, 135, 0 ],
+					"rotation=3": [ 0, 112.5, 0 ],
+					"rotation=4": [ 0, 90, 0 ],
+					"rotation=5": [ 0, 67.5, 0 ],
+					"rotation=6": [ 0, 45, 0 ],
+					"rotation=7": [ 0, 22.5, 0 ],
+					"rotation=8": [ 0, 0, 0 ],
+					"rotation=9": [ 0, -22.5, 0 ],
+					"rotation=10": [ 0, -45, 0 ],
+					"rotation=11": [ 0, -67.5, 0 ],
+					"rotation=12": [ 0, -90, 0 ],
+					"rotation=13": [ 0, -112.5, 0 ],
+					"rotation=14": [ 0, -135, 0 ],
+					"rotation=15": [ 0, -157.5, 0 ]
+				}
+			},
+			"id": "minecraft:dragon_head"
+		},
+		{
+			"name": "dragon_wall_head",
+			"states": {
+				"facing": [ "north", "south", "east", "west" ]
+			},
+			"default_state": "facing=west",
+			"timeline": {
+				"model": "dragon_head",
+				"model_state": "variant=wall",
+				"position": [ 8, 0, 8 ],
+				"rotation": {
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
+			"id": "minecraft:dragon_wall_head"
 		},
 		{
 			"name": "end_rod",

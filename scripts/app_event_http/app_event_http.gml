@@ -146,22 +146,43 @@ else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 else if (async_load[?"id"] = http_downloadskin && async_load[?"status"] < 1)
 {
 	http_downloadskin = null
-	popup_downloadskin.fail_message = text_get("errordownloadskininternet")
 	
-	if (popup_downloadskin.texture)
+	// Download skin popup
+	if (popup = popup_downloadskin)
 	{
-		texture_free(popup_downloadskin.texture)
-		popup_downloadskin.texture = null
+		popup_downloadskin.fail_message = text_get("errordownloadskininternet")
+	
+		if (popup_downloadskin.texture)
+		{
+			texture_free(popup_downloadskin.texture)
+			popup_downloadskin.texture = null
+		}
+	}
+	else // Scenery builder
+	{
+		mc_builder.block_skull_texture = null
+		mc_builder.block_skull_texture_fail = false
 	}
 	
 	if (async_load[?"status"] = 0)
 	{
-		popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
+		if (popup = popup_downloadskin)
+			popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
+		else
+			mc_builder.block_skull_texture_fail = true
 		
 		if (async_load[?"http_status"] = http_ok && file_exists_lib(download_image_file))
 		{
-			popup_downloadskin.texture = texture_create(download_image_file)
-			popup_downloadskin.fail_message = ""
+			if (popup = popup_downloadskin)
+			{
+				popup_downloadskin.texture = texture_create(download_image_file)
+				popup_downloadskin.fail_message = ""
+			}
+			else
+			{
+				mc_builder.block_skull_texture = texture_create(download_image_file)
+				mc_builder.block_skull_texture_fail = false
+			}
 		}
 	}
 }

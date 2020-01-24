@@ -15,3 +15,7 @@ block_render_model = ds_grid_create(build_size_sqrt, build_size_sqrt)
 ds_grid_clear(block_render_model, null)
 ds_map_clear(block_text_map)
 ds_map_clear(block_text_color_map)
+
+ds_map_clear(block_skull_map)
+ds_map_clear(block_skull_res_map)
+ds_map_clear(block_skull_texture_map)

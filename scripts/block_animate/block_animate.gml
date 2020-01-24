@@ -79,6 +79,13 @@ with (new(obj_timeline))
 	}
 	value_type_show[e_value_type.POSITION] = false
 	
+	// Texture
+	if (other.texture != null)
+	{
+		value_default[e_value.TEXTURE_OBJ] = other.texture
+		value_default[e_value.TEXTURE_OBJ].count++
+	}
+	
 	tl_update()
 	tl_update_values()
 	

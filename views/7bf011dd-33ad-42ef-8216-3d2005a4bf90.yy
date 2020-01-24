@@ -6,7 +6,8 @@
     "children": [
         "fc43ed94-999b-42d4-a13d-21e35895d2e5",
         "e06ebcce-6036-4c1b-86f9-efd3b947054f",
-        "3391dfcb-7f72-4511-8702-8aeea7c1748d"
+        "3391dfcb-7f72-4511-8702-8aeea7c1748d",
+        "16c21131-50bb-4b6a-9b14-08fd89f61c34"
     ],
     "filterType": "GMScript",
     "folderName": "Tile entity",
