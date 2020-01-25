@@ -5,7 +5,7 @@ var prevsurf, depthsurf, cocsurf, resultsurf;
 prevsurf = argument0
 
 // Get depth
-render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+render_surface[0] = surface_require(render_surface[0], render_width, render_height, true)
 depthsurf = render_surface[0]
 surface_set_target(depthsurf)
 {

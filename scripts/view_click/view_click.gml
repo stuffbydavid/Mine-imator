@@ -5,7 +5,10 @@
 var view, cam, surf;
 view = argument0
 cam = argument1
+
+surface_depth_disable(false)
 surf = surface_create(content_width, content_height)
+surface_depth_disable(true)
 
 render_camera = cam
 render_ratio = content_width / content_height

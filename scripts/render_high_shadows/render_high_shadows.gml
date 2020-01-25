@@ -11,7 +11,7 @@ if (sunout)
 	render_world_start()
 	
 	// Depth
-	render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
+	render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
 	surface_set_target(render_surface_sun_buffer)
 	{
 		draw_clear(c_white)
@@ -29,7 +29,7 @@ if (sunout)
 }
 
 // Create initial shadow surface from sun
-render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+render_surface[1] = surface_require(render_surface[1], render_width, render_height, true)
 resultsurf = render_surface[1]
 surface_set_target(resultsurf)
 {
@@ -70,7 +70,7 @@ with (obj_timeline)
 			if (d = e_dir.DOWN || d = e_dir.UP)
 				look[Y] -= 0.0001
 			
-			render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size)
+			render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size, true)
 			surface_set_target(render_surface_point_buffer[d])
 			{
 				draw_clear(c_white)
@@ -86,7 +86,7 @@ with (obj_timeline)
 		// Shadows
 		with (app)
 		{
-			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+			render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
 			resultsurftemp = render_surface[2]
 			surface_set_target(resultsurftemp)
 			{
@@ -104,7 +104,7 @@ with (obj_timeline)
 		var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 			
 		// Depth
-		render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size)
+		render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size, true)
 		surface_set_target(render_surface_spot_buffer)
 		{
 			draw_clear(c_white)
@@ -122,7 +122,7 @@ with (obj_timeline)
 		// Shadows
 		with (app)
 		{
-			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+			render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
 			resultsurftemp = render_surface[2]
 			surface_set_target(resultsurftemp)
 			{

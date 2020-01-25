@@ -13,7 +13,7 @@ if ((!setting_render_shadows || !background_desaturate_night) && !background_fog
 	return 0
 
 // Copy into seperate surface
-render_surface[4] = surface_require(render_surface[4], render_width, render_height);
+render_surface[4] = surface_require(render_surface[4], render_width, render_height, true);
 var scenesurf = render_surface[4];
 
 surface_set_target(scenesurf)

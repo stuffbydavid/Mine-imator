@@ -5,12 +5,12 @@ var surf;
 
 if (!render_overlay)
 {
-	render_target = surface_require(render_target, render_width, render_height)
+	render_target = surface_require(render_target, render_width, render_height, true)
 	surf = render_target
 }
 else
 {
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height, true)
 	surf = render_surface[0]
 }
 
@@ -45,7 +45,7 @@ surface_reset_target()
 // Apply colors
 if (render_overlay)
 {
-	render_target = surface_require(render_target, render_width, render_height)
+	render_target = surface_require(render_target, render_width, render_height, true)
 	surface_set_target(render_target)
 	{
 		draw_clear_alpha(c_black, 0)

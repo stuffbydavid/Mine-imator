@@ -19,6 +19,7 @@ window_set_focus()
 window_set_min_width(100)
 window_set_min_height(100)
 window_set_caption("Mine-imator")
+surface_depth_disable(true)
 
 window_state = ""
 window_busy = ""

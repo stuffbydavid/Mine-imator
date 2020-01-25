@@ -10,12 +10,12 @@ shadowsurf = argument1
 // Render directly to target?
 if (render_effects_done)
 {
-	render_target = surface_require(render_target, render_width, render_height)
+	render_target = surface_require(render_target, render_width, render_height, true)
 	resultsurf = render_target
 }
 else
 {
-	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height, true)
 	resultsurf = render_surface[3]
 }
 

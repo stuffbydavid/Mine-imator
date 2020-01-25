@@ -52,7 +52,7 @@ with (obj_timeline)
 	}
 	
 	// Re-use the same two surfaces
-	cam_surf = surface_require(cam_surf, render_width, render_height)
+	cam_surf = surface_require(cam_surf, render_width, render_height, true)
 	
 	var tmp = cam_surf;
 	cam_surf = cam_surf_tmp

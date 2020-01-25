@@ -2,7 +2,7 @@
 
 var resultsurf;
 
-render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
 resultsurf = render_surface[2]
 surface_set_target(resultsurf)
 {

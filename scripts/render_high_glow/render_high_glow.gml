@@ -9,7 +9,7 @@ glowfalloff = false
 if (argument_count > 1)
 	glowfalloff = argument[1]
 
-render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+render_surface[0] = surface_require(render_surface[0], render_width, render_height, true)
 render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 glowcolorsurf = render_surface[0]
 glowsurf = render_surface[1]

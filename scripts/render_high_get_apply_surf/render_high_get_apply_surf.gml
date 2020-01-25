@@ -5,7 +5,7 @@ var surf;
 
 if (render_effects_done)
 {
-	render_target = surface_require(render_target, render_width, render_height)
+	render_target = surface_require(render_target, render_width, render_height, true)
 	surf = render_target
 }
 else

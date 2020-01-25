@@ -3,7 +3,7 @@
 
 var basesurf = argument0;
 
-render_target = surface_require(render_target, render_width, render_height)
+render_target = surface_require(render_target, render_width, render_height, true)
 surface_set_target(render_target)
 {
 	draw_clear_alpha(c_black, 0)

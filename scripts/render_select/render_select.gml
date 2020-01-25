@@ -2,7 +2,7 @@
 /// @arg selectsurface
 
 // Draw selection on separate surface
-var hlsurf = surface_require(argument0, render_width, render_height);
+var hlsurf = surface_require(argument0, render_width, render_height, true);
 
 surface_set_target(hlsurf)
 {
