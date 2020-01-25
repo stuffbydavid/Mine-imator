@@ -140,6 +140,8 @@ background_night_alpha = 0
 background_sunset_alpha = 0
 background_sunrise_alpha = 0
 
+background_time = 0
+
 timeline.hor_scroll.value = 0
 timeline.ver_scroll.value = 0
 

@@ -156,3 +156,6 @@ if (window_state = "export_movie")
 	app_update_cameras(exportmovie_high_quality, true)
 else
 	app_update_cameras(view_render, false)
+
+// Update background time
+background_time = (timeline_marker / project_tempo) * 60

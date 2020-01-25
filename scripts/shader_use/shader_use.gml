@@ -11,7 +11,7 @@ render_set_uniform_color("uBlendColor", c_white, 1)
 // Set wind
 if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 {
-	render_set_uniform("uTime", current_step)
+	render_set_uniform("uTime", app.background_time)
 	render_set_uniform("uWindEnable", 0)
 	render_set_uniform("uWindTerrain", 1)
 	render_set_uniform("uWindSpeed", app.background_wind * app.background_wind_speed)

@@ -31,7 +31,7 @@ if (rotate)
 {
 	var d, t, offz, mat, rotz, rotmat;
 	d = 60 * 6
-	t = current_step mod d * 360
+	t = app.background_time mod d * 360
 	offz = t/360
 	mat = matrix_get(matrix_world)
 	rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
@@ -43,7 +43,7 @@ if (bounce)
 {
 	var d, t, offz;
 	d = 60 * 3
-	t = current_step mod d * 2
+	t = app.background_time mod d * 2
 	if (t < d)
 		offz = ease("easeinoutquad", t / d) * 2 - 1
 	else
