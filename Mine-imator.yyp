@@ -7783,6 +7783,14 @@
             }
         },
         {
+            "Key": "7ae49b4f-ca5a-469b-9dfe-6ec1a392d455",
+            "Value": {
+                "id": "366dda64-a7a9-4bee-a297-37a088c7c7e3",
+                "resourcePath": "scripts\\vec3_reflect\\vec3_reflect.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "7b166821-255c-4eba-a2e7-8cf5819566b4",
             "Value": {
                 "id": "96162b34-6f50-4f26-aa83-1a2c3458e8d4",
@@ -18386,6 +18394,7 @@
         "17de00b1-b220-4b6e-8350-4206cc6a8a6b",
         "52a8dca0-2260-4f68-b1ee-4b75ed738392",
         "7ee25964-2425-4a0e-b18d-020acf540506",
+        "7ae49b4f-ca5a-469b-9dfe-6ec1a392d455",
         "5895f350-c7b9-403f-8e9e-e140883cd7d8",
         "577a04e6-641e-4cb0-b303-4625e64a797f",
         "4336bb7a-d9ef-43f2-8cb9-b76bf7c2d7de",

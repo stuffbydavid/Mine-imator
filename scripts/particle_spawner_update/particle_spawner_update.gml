@@ -225,6 +225,10 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 								
 								pt.spd_mul[X] *= 0.995
 								pt.spd_mul[X] *= 0.995
+								
+								// Reflect angle
+								pt.angle = vec3_reflect(pt.angle, vec3(0, 0, 1))
+								pt.angle_speed *= pt.type.bounce_factor
 							}
 						
 							// Keep above ground
@@ -234,7 +238,9 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 					else
 					{
 						var boxstart, boxend;
-					
+						boxstart = null
+						boxend = null
+						
 						// Spawn region
 						if (temp.pc_bounding_box_type = "spawn")
 						{
@@ -262,9 +268,13 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 											pt.rot_spd[a] *= -0.5
 										}
 									}
+									
+									// Reflect angle
+									pt.angle = vec3_reflect(pt.angle, vec3_normalize(vec3_sub(pt.pos, world_pos)))
+									pt.angle_speed *= pt.type.bounce_factor
+									
 									pt.pos = point3D_add(world_pos, vec3_mul(vec3_normalize(point3D_sub(pt.pos, world_pos)), temp.pc_spawn_region_sphere_radius))
 								}
-								continue
 							}
 							else if (temp.pc_spawn_region_type = "cube")
 							{
@@ -293,38 +303,75 @@ if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 								boxend[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_end[a]
 							}
 						}
-					
-						for (var a = X; a <= Z; a++) 
+						
+						// Calculate box bounding box
+						if (boxstart != null)
 						{
-							if (pt.pos[a] < boxstart[a] || pt.pos[a] > boxend[a])
+							var normal = null;
+						
+							// Reflect off faces
+							if (pt.pos[X] < boxstart[X])
+								normal = vec3(1, 0, 0)
+						
+							if (pt.pos[X] > boxend[X])
+								normal = vec3(-1, 0, 0)	
+						
+							if (pt.pos[Y] < boxstart[Y])
+								normal = vec3(0, 1, 0)
+						
+							if (pt.pos[Y] > boxend[Y])
+								normal = vec3(0, -1, 0)	
+						
+							if (pt.pos[Z] < boxstart[Z])
+								normal = vec3(0, 0, 1)
+						
+							if (pt.pos[Z] > boxend[Z])
+								normal = vec3(0, 0, -1)	
+						
+							// Reflect angle
+							if (normal != null)
 							{
-								// Keep within box
 								hit_bounding_box = true
-								pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
-								if (pt.type.bounce)
+							
+								for (var a = X; a <= Z; a++) 
+									pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
+							
+								pt.angle = vec3_reflect(pt.angle, normal)
+								pt.angle_speed *= pt.type.bounce_factor
+							}
+						
+							for (var a = X; a <= Z; a++) 
+							{
+								if (pt.pos[a] < boxstart[a] || pt.pos[a] > boxend[a])
 								{
-									// Invert speed
-									pt.spd[a] *= -pt.type.bounce_factor 
+									hit_bounding_box = true
 								
-									if (abs(pt.spd[a]) < 0.25)
-										pt.spd[a] = 0
+									// Keep within box
+									pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
+									if (pt.type.bounce)
+									{
+										// Invert speed
+										pt.spd[a] *= -pt.type.bounce_factor 
+								
+										if (abs(pt.spd[a]) < 0.25)
+											pt.spd[a] = 0
 									
-									// Flip and slow down rotation
-									for (var b = X; b <= Z; b++)
-										pt.rot_spd[b] *= -0.5
+										// Flip and slow down rotation
+										for (var b = X; b <= Z; b++)
+											pt.rot_spd[b] *= -0.5
+									}
 								}
 							}
 						}
 					}
 				}
 				
-				if (hit_bounding_box && temp.pc_destroy_at_bounding_box)
-				{
-					with (pt)
-						instance_destroy()
-					continue
-				}
-				
+				// Destroy particle
+				if (hit_bounding_box && temp.pc_destroy_at_bounding_box) 
+				{ 
+					instance_destroy(pt) 
+					continue 
+				} 
 			}
 		}
 	}

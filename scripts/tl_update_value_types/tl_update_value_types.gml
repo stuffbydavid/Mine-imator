@@ -30,7 +30,7 @@ if (type = e_tl_type.CAMERA)
 value_type[e_value_type.POSITION] = true
 
 // Rotation
-if (type != e_tl_type.PARTICLE_SPAWNER && type != e_tl_type.POINT_LIGHT)
+if (type != e_tl_type.POINT_LIGHT)
 	value_type[e_value_type.ROTATION] = true
 
 // Scale

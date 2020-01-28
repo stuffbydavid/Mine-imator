@@ -38,7 +38,7 @@ if (object_index != app && update_matrix)
 	matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
 	
 	// No scale or "resize" mode
-	if (scale_resize || !inherit_scale)
+	if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
 	{
 		// Get actual scale
 		tl = id

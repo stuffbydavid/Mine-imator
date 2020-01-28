@@ -106,6 +106,13 @@ for (var a = X; a <= Z; a++)
 // Convert angle to vector
 pt.angle = vec3_normalize(vec3_mul_matrix(vec3(0, 0, 1), matrix_create(vec3(0), pt.angle, vec3(1))))
 
+// Rotate angle
+if (is_timeline)
+{
+	pt.angle = vec3_mul_matrix(pt.angle, pt.creator.matrix_render)
+	pt.angle = vec3_normalize(pt.angle)
+}
+
 // Angle strength
 pt.angle_speed = value_random(type.angle_speed, type.angle_speed_israndom, type.angle_speed_random_min, type.angle_speed_random_max) / 60
 pt.angle_speed_add = value_random(type.angle_speed_add, type.angle_speed_add_israndom, type.angle_speed_add_random_min, type.angle_speed_add_random_max) / 60
