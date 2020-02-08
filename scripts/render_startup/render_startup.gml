@@ -24,6 +24,7 @@ gpu_set_texrepeat(true)
 gpu_set_ztestenable(false)
 gpu_set_zwriteenable(false)
 render_set_culling(true)
+gpu_set_tex_max_mip(4)
 
 render_view_current = null
 render_width = 1
