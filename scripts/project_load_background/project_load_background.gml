@@ -67,7 +67,12 @@ background_night_color = value_get_color(map[?"night_color"], background_night_c
 
 background_grass_color = value_get_color(map[?"grass_color"], background_grass_color)
 background_foliage_color = value_get_color(map[?"foliage_color"], background_foliage_color)
-background_water_color = value_get_color(map[?"water_color"], background_water_color)
+background_leaves_oak_color = value_get_color(map[?"leaves_oak_color"], background_leaves_oak_color)
+background_leaves_spruce_color = value_get_color(map[?"leaves_spruce_color"], background_leaves_spruce_color)
+background_leaves_birch_color = value_get_color(map[?"leaves_birch_color"], background_leaves_birch_color)
+background_leaves_jungle_color = value_get_color(map[?"leaves_jungle_color"], background_leaves_jungle_color)
+background_leaves_acacia_color = value_get_color(map[?"leaves_acacia_color"], background_leaves_acacia_color)
+background_leaves_dark_oak_color = value_get_color(map[?"leaves_dark_oak_color"], background_leaves_dark_oak_color)
 
 background_fog_show = value_get_real(map[?"fog_show"], background_fog_show)
 background_fog_sky = value_get_real(map[?"fog_sky"], background_fog_sky)

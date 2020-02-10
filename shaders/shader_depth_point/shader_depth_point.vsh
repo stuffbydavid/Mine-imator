@@ -48,8 +48,8 @@ void main()
 {
 	vTexCoord = in_TextureCoord;
 	
-	vec3 pos = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
-	pos += getWindAngle(in_Position);
+	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
+	vPosition += getWindAngle(in_Position);
 	
-	gl_Position = gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(pos, 1.0));
+	gl_Position = gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 }
