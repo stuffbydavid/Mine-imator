@@ -130,6 +130,10 @@ background_wind = true
 background_wind_speed = 0.1
 background_wind_strength = 0.5
 
+background_wind_direction = 45
+background_wind_directional_speed = 0.2
+background_wind_directional_strength = 1.5
+
 background_opaque_leaves = false
 background_texture_animation_speed = 0.25
 

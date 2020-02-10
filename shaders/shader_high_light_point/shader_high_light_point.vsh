@@ -24,6 +24,16 @@ uniform float uWindEnable;
 uniform float uWindTerrain;
 uniform float uWindSpeed;
 uniform float uWindStrength;
+uniform float uWindDirection;
+uniform float uWindDirectionalSpeed;
+uniform float uWindDirectionalStrength;
+
+// GPU Gems 3: Chapter 6
+#define PI 3.14159265
+float getNoise(float v)
+{
+	return cos(v * PI) * cos(v * 3.0 * PI) * cos(v * 5.0 * PI) * cos(v * 7.0 * PI) + sin(v * 5.0 * PI) * 0.1;
+}
 
 vec3 getWind()
 {
@@ -34,14 +44,23 @@ vec3 getWind()
 	);
 }
 
+vec3 getWindAngle(vec3 pos)
+{
+	vec2 angle = vec2(cos(uWindDirection), sin(uWindDirection));
+	float strength = dot(pos.xy/16.0, angle) / dot(angle, angle);
+	float diroff = getNoise((((uTime * uWindDirectionalSpeed) - (strength / 3.0) - (pos.z/64.0)) * .075));
+	return vec3(angle * diroff, 0.0) * (1.0 - step(max(in_Wave.x * uWindTerrain, uWindEnable), 0.0)) * uWindDirectionalStrength;
+}
+
 void main()
 {
-	vec3 off = getWind();
-	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + off, 1.0)).xyz;
+	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
+	vPosition += getWindAngle(in_Position);
+	
 	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
 	vTexCoord = in_TextureCoord;
 	vBrightness = in_Wave.z * uBlockBrightness + uBrightness / float(uLightAmount);
 	vLightBleed = in_Wave.w * uLightBleed;
 	
-	gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position + off, 1.0);
+	gl_Position = gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 }

@@ -129,6 +129,9 @@ if (bgobject)
 	background_wind							= bgobject.value[e_value.BG_WIND]
 	background_wind_speed					= bgobject.value[e_value.BG_WIND_SPEED]
 	background_wind_strength				= bgobject.value[e_value.BG_WIND_STRENGTH]
+	background_wind_direction				= bgobject.value[e_value.BG_WIND_DIRECTION]
+	background_wind_directional_speed		= bgobject.value[e_value.BG_WIND_DIRECTIONAL_SPEED]
+	background_wind_directional_strength	= bgobject.value[e_value.BG_WIND_DIRECTIONAL_STRENGTH]
 	background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
 	
 	if (background_biome = biome_list[| 0])

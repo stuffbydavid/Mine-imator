@@ -119,6 +119,9 @@ switch (argument0)
 	case e_value.BG_WIND: return app.background_wind
 	case e_value.BG_WIND_SPEED: return app.background_wind_speed
 	case e_value.BG_WIND_STRENGTH: return app.background_wind_strength
+	case e_value.BG_WIND_DIRECTION: return app.background_wind_direction
+	case e_value.BG_WIND_DIRECTIONAL_SPEED: return app.background_wind_directional_speed
+	case e_value.BG_WIND_DIRECTIONAL_STRENGTH: return app.background_wind_directional_strength
 	case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed
 	case e_value.ATTRACTOR:
 	case e_value.TEXTURE_OBJ:

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.01.22"
+        "lastchange": "2020.02.09"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2174,7 +2174,10 @@
             "speed": "Wind speed",
             "speedtip": "How fast the wind should blow.",
             "strength": "Wind strength",
-            "strengthtip": "How strong the wind should blow."
+            "strengthtip": "How strong the wind should blow.",
+            "direction": "Wind direction",
+            "directionalspeed": "Directional speed",
+            "directionalstrength": "Directional strength"
         },
         "opaqueleaves": "Opaque leaves",
         "opaqueleavestip": "Use opaque leaves that you can't see through, like the \"Fast graphics\" setting in Minecraft.",

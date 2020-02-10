@@ -309,6 +309,9 @@ if (value_type[e_value_type.BACKGROUND])
 	tl_update_values_ease(e_value.BG_WIND, trans, p)
 	tl_update_values_ease(e_value.BG_WIND_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.BG_WIND_SPEED, trans, p)
+	tl_update_values_ease(e_value.BG_WIND_DIRECTION, trans, p)
+	tl_update_values_ease(e_value.BG_WIND_DIRECTIONAL_SPEED, trans, p)
+	tl_update_values_ease(e_value.BG_WIND_DIRECTIONAL_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.BG_TEXTURE_ANI_SPEED, trans, p)
 }
 

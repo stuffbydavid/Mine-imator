@@ -3911,6 +3911,14 @@
             }
         },
         {
+            "Key": "3ebf93f5-7f64-4e24-ac26-5aa6c40a6255",
+            "Value": {
+                "id": "e6d900b2-74ce-41f1-be58-a39d200f1a91",
+                "resourcePath": "scripts\\action_background_wind_direction\\action_background_wind_direction.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "3edc47c5-dcdb-4cca-aa79-01d615b7037d",
             "Value": {
                 "id": "a43a390c-c6c5-4024-b8a9-225499048dd3",
@@ -4283,6 +4291,14 @@
             "Value": {
                 "id": "c3d9c121-6f94-4e6f-b22b-d61aca2068ad",
                 "resourcePath": "scripts\\popup_exportmovie_draw\\popup_exportmovie_draw.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "4431a7e8-eb58-4c86-9ea7-8539bcbe6b0c",
+            "Value": {
+                "id": "e9905312-10c9-4aa5-b671-05160955b52b",
+                "resourcePath": "scripts\\action_background_wind_directional_speed\\action_background_wind_directional_speed.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11919,6 +11935,14 @@
             }
         },
         {
+            "Key": "b5ec6554-a2be-422f-8093-1054890e0293",
+            "Value": {
+                "id": "960d7838-160c-4d37-89cb-c9764f0a0506",
+                "resourcePath": "scripts\\action_background_wind_directional_strength\\action_background_wind_directional_strength.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "b60c2308-4ba3-45d2-9c3c-4de684013256",
             "Value": {
                 "id": "ae1d48b5-d072-44f1-80c9-bdc212e64d5a",
@@ -16852,6 +16876,9 @@
         "ba4ec927-4978-444e-ab62-88c37b2f2930",
         "6277ceb9-6930-441c-9d05-6399acc1dd39",
         "4be46ccc-cea1-418f-a5ea-306f4d5a2165",
+        "3ebf93f5-7f64-4e24-ac26-5aa6c40a6255",
+        "4431a7e8-eb58-4c86-9ea7-8539bcbe6b0c",
+        "b5ec6554-a2be-422f-8093-1054890e0293",
         "5110df47-c5cf-4d8e-a313-8f01f2bd00f5",
         "46bc281e-2d22-402e-8042-7dfabce4121d",
         "eb7b8a81-9fa5-4aa8-a101-be45fdfab75c",

@@ -394,7 +394,8 @@ if (background_wind && checkbox_expand_background_wind)
 	dx += 4
 	dw -= 4
 	
-	capwid = text_caption_width("backgroundwindstrength", "backgroundwindamount")
+	capwid = text_caption_width("backgroundwindstrength", "backgroundwindamount", "backgroundwinddirectionangle",
+								"backgroundwinddirectionalspeed", "backgroundwinddirectionalstrength")
 	
 	// Wind strength
 	tab_control_meter()
@@ -404,6 +405,21 @@ if (background_wind && checkbox_expand_background_wind)
 	// Wind amount
 	tab_control_meter()
 	draw_meter("backgroundwindstrength", dx, dy, dw, background_wind_strength, 64, 0, 8, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength, capwid)
+	tab_next()
+	
+	// Wind angle
+	tab_control_meter()
+	draw_meter("backgroundwinddirection", dx, dy, dw, background_wind_direction, 64, -180, 180, 45, 1, tab.background.tbx_wind_direction, action_background_wind_direction, capwid)
+	tab_next()
+	
+	// Wind direction speed
+	tab_control_meter()
+	draw_meter("backgroundwinddirectionalspeed", dx, dy, dw, round(background_wind_directional_speed * 100), 64, 0, 100, 20, 1, tab.background.tbx_wind_directional_speed, action_background_wind_directional_speed, capwid)
+	tab_next()
+	
+	// Wind direction strength
+	tab_control_meter()
+	draw_meter("backgroundwinddirectionalstrength", dx, dy, dw, background_wind_directional_strength, 64, 0, 8, 1.5, 0.05, tab.background.tbx_wind_directional_strength, action_background_wind_directional_strength, capwid)
 	tab_next()
 	
 	dx -= 4

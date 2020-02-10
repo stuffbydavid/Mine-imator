@@ -82,6 +82,9 @@ background_fog_height = value_get_real(map[?"fog_height"], background_fog_height
 background_wind = value_get_real(map[?"wind"], background_wind)
 background_wind_speed = value_get_real(map[?"wind_speed"], background_wind_speed)
 background_wind_strength = value_get_real(map[?"wind_strength"], background_wind_strength)
+background_wind_direction = value_get_real(map[?"wind_direction"], background_wind_direction)
+background_wind_directional_speed = value_get_real(map[?"wind_directional_speed"], background_wind_directional_speed)
+background_wind_directional_strength = value_get_real(map[?"wind_directional_strength"], background_wind_directional_strength)
 
 background_opaque_leaves = value_get_real(map[?"opaque_leaves"], background_opaque_leaves)
 background_texture_animation_speed = value_get_real(map[?"texture_animation_speed"], background_texture_animation_speed)

@@ -22,6 +22,9 @@ with (new(obj_shader))
 	new_shader_uniform("uWindTerrain")
 	new_shader_uniform("uWindSpeed")
 	new_shader_uniform("uWindStrength")
+	new_shader_uniform("uWindDirection")
+	new_shader_uniform("uWindDirectionalSpeed")
+	new_shader_uniform("uWindDirectionalStrength")
 	
 	// Fog
 	new_shader_uniform("uFogShow")

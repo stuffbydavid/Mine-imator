@@ -16,6 +16,10 @@ if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	render_set_uniform("uWindTerrain", 1)
 	render_set_uniform("uWindSpeed", app.background_wind * app.background_wind_speed)
 	render_set_uniform("uWindStrength", app.background_wind_strength) 
+	
+	render_set_uniform("uWindDirection", degtorad(app.background_wind_direction)) 
+	render_set_uniform("uWindDirectionalSpeed", app.background_wind_directional_speed * .1) 
+	render_set_uniform("uWindDirectionalStrength", app.background_wind * app.background_wind_directional_strength) 
 }
 
 // Set fog
