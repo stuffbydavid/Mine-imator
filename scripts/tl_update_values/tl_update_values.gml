@@ -164,6 +164,7 @@ if (value_type[e_value_type.PARTICLES])
 if (value_type[e_value_type.LIGHT])
 {
 	tl_update_values_ease(e_value.LIGHT_COLOR, trans, p)
+	tl_update_values_ease(e_value.LIGHT_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.LIGHT_RANGE, trans, p)
 	tl_update_values_ease(e_value.LIGHT_FADE_SIZE, trans, p)
 	

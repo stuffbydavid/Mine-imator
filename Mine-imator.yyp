@@ -4471,6 +4471,14 @@
             }
         },
         {
+            "Key": "4797b1d4-3df5-4575-a565-0ad742ab0b86",
+            "Value": {
+                "id": "8be56497-3293-43fa-b565-a3b1f9ad502a",
+                "resourcePath": "scripts\\action_tl_frame_light_strength\\action_tl_frame_light_strength.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "47d6b510-8068-4798-9c36-341a7896365b",
             "Value": {
                 "id": "ff68a734-46c1-4aba-81bd-f7012feb7a1c",
@@ -17325,6 +17333,7 @@
         "3cda34dd-8072-4352-a1ce-af7360636a86",
         "c9376bd6-3a03-4328-936c-85e856acddb7",
         "818fdf2f-ec5b-4212-b80f-203239b6dfa4",
+        "4797b1d4-3df5-4575-a565-0ad742ab0b86",
         "f3ccb8b9-19a7-4c28-a23c-a4d064afd473",
         "efca32ae-6428-4fe0-ad89-fb30bb5318c4",
         "211e8217-c90e-41a3-a6db-2b9a05d9c3bb",

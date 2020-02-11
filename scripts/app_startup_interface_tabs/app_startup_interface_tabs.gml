@@ -60,7 +60,7 @@ with (properties)
 	{
 		tbx_background_rotation = new_textbox_decimals()
 		tbx_background_rotation.suffix = "°"
-		tbx_sunlight_strength = new_textbox_decimals()
+		tbx_sunlight_strength = new_textbox_integer()
 		tbx_sunlight_strength.suffix = "%"
 		tbx_desaturate_night_amount = new_textbox_decimals()
 		tbx_desaturate_night_amount.suffix = "%"
@@ -448,6 +448,8 @@ with (frame_editor)
 		copy_spot_sharpness = 0.5
 		has_spotlight = false
 		tbx_range = new_textbox_decimals()
+		tbx_strength = new_textbox_integer()
+		tbx_strength.suffix = "%"
 		tbx_fade_size = new_textbox_integer()
 		tbx_fade_size.suffix = "%"
 		tbx_spot_radius = new_textbox_decimals()

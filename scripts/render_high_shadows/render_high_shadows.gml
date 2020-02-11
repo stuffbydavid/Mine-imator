@@ -19,7 +19,7 @@ if (sunout)
 			point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
 			point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), 
 			background_light_data[3], background_light_data[7], 
-			45, background_sunlight_color_final
+			45, background_sunlight_color_final, 1 + background_sunlight_strength
 		)
 		render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 		render_world_done()
@@ -74,8 +74,7 @@ with (obj_timeline)
 			surface_set_target(render_surface_point_buffer[d])
 			{
 				draw_clear(c_white)
-				render_world_start_light(world_pos, point3D_add(world_pos, look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE])
-				
+				render_world_start_light(world_pos, point3D_add(world_pos, look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE])
 				render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 				
 				render_world_done()
@@ -109,7 +108,7 @@ with (obj_timeline)
 		{
 			draw_clear(c_white)
 			
-			render_world_start_light(world_pos, lookat, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
+			render_world_start_light(world_pos, lookat, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
 			
 			// Only render depth for shadows if the light source isn't shadowless
 			if (shadows)
@@ -171,9 +170,9 @@ if (ds_list_size(render_shadowless_point_list) > 0)
 			render_shadowless_point_data[render_shadowless_point_amount * 8 + 1] = light.world_pos[Y]
 			render_shadowless_point_data[render_shadowless_point_amount * 8 + 2] = light.world_pos[Z]
 			render_shadowless_point_data[render_shadowless_point_amount * 8 + 3] = light.value[e_value.LIGHT_RANGE]
-			render_shadowless_point_data[render_shadowless_point_amount * 8 + 4] = color_get_red(light.value[e_value.LIGHT_COLOR]) / 255
-			render_shadowless_point_data[render_shadowless_point_amount * 8 + 5] = color_get_green(light.value[e_value.LIGHT_COLOR]) / 255
-			render_shadowless_point_data[render_shadowless_point_amount * 8 + 6] = color_get_blue(light.value[e_value.LIGHT_COLOR]) / 255
+			render_shadowless_point_data[render_shadowless_point_amount * 8 + 4] = (color_get_red(light.value[e_value.LIGHT_COLOR]) / 255) * light.value[e_value.LIGHT_STRENGTH]
+			render_shadowless_point_data[render_shadowless_point_amount * 8 + 5] = (color_get_green(light.value[e_value.LIGHT_COLOR]) / 255) * light.value[e_value.LIGHT_STRENGTH]
+			render_shadowless_point_data[render_shadowless_point_amount * 8 + 6] = (color_get_blue(light.value[e_value.LIGHT_COLOR]) / 255) * light.value[e_value.LIGHT_STRENGTH]
 			render_shadowless_point_data[render_shadowless_point_amount * 8 + 7] = light.value[e_value.LIGHT_FADE_SIZE]
 			render_shadowless_point_amount++
 			remaininglights--

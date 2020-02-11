@@ -59,9 +59,9 @@ with (obj_timeline)
 		app.background_light_data[app.background_light_amount * 8 + 1] = world_pos[Y]
 		app.background_light_data[app.background_light_amount * 8 + 2] = world_pos[Z]
 		app.background_light_data[app.background_light_amount * 8 + 3] = value[e_value.LIGHT_RANGE]
-		app.background_light_data[app.background_light_amount * 8 + 4] = color_get_red(value[e_value.LIGHT_COLOR]) / 255
-		app.background_light_data[app.background_light_amount * 8 + 5] = color_get_green(value[e_value.LIGHT_COLOR]) / 255
-		app.background_light_data[app.background_light_amount * 8 + 6] = color_get_blue(value[e_value.LIGHT_COLOR]) / 255
+		app.background_light_data[app.background_light_amount * 8 + 4] = (color_get_red(value[e_value.LIGHT_COLOR]) / 255) * value[e_value.LIGHT_STRENGTH]
+		app.background_light_data[app.background_light_amount * 8 + 5] = (color_get_green(value[e_value.LIGHT_COLOR]) / 255) * value[e_value.LIGHT_STRENGTH]
+		app.background_light_data[app.background_light_amount * 8 + 6] = (color_get_blue(value[e_value.LIGHT_COLOR]) / 255) * value[e_value.LIGHT_STRENGTH]
 		app.background_light_data[app.background_light_amount * 8 + 7] = 1
 		app.background_light_amount++
 	}

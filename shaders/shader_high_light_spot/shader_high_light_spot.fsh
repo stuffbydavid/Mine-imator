@@ -10,6 +10,7 @@ uniform int uIsWater;
 
 uniform vec3 uLightPosition;
 uniform vec4 uLightColor;
+uniform float uLightStrength;
 uniform float uLightNear;
 uniform float uLightFar;
 uniform float uLightFadeSize;
@@ -105,9 +106,10 @@ void main()
 	
 		// Calculate light
 		if (uIsWater == 1)
-			light = uLightColor.rgb * dif;
+			light = uLightColor.rgb * uLightStrength * dif;
 		else
-			light = uLightColor.rgb * dif * (1.0 - shadow);
+			light = uLightColor.rgb * uLightStrength * dif * (1.0 - shadow);
+		
 		light = mix(light, vec3(1.0), vBrightness);
 	}
 		

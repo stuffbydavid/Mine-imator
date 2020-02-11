@@ -17,6 +17,7 @@ switch (argument0)
 	case e_value.SEED: return ceil(random(32000))
 	case e_value.FORCE: return 1
 	case e_value.LIGHT_COLOR: return c_white
+	case e_value.LIGHT_STRENGTH: return 1
 	case e_value.LIGHT_RANGE: return 250
 	case e_value.LIGHT_FADE_SIZE: return 0.5
 	case e_value.LIGHT_SPOT_RADIUS: return 50

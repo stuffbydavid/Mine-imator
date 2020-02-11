@@ -25,6 +25,7 @@ switch (vid)
 	case e_value.SCA_Y:
 	case e_value.SCA_Z: return max(val, 0.0001)
 	case e_value.BG_SUNLIGHT_STRENGTH:
+	case e_value.LIGHT_STRENGTH:
 	case e_value.ALPHA:
 	case e_value.MIX_PERCENT:
 	case e_value.BRIGHTNESS:
