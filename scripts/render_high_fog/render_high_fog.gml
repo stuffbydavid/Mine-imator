@@ -2,8 +2,8 @@
 
 var resultsurf;
 
-render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
-resultsurf = render_surface[2]
+render_surface[0] = surface_require(render_surface[0], render_width, render_height, true, true)
+resultsurf = render_surface[0]
 surface_set_target(resultsurf)
 {
 	draw_clear(c_black)

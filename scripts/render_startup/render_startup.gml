@@ -131,3 +131,4 @@ render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS] = shader_high
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_NIGHT] = shader_high_light_night
 render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
 render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
+render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace

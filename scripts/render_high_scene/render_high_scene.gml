@@ -1,11 +1,17 @@
-/// render_high_composite(ssaosurf, shadowsurf)
+/// render_high_scene(ssaosurf, shadowsurf)
 /// @arg ssaosurf
 /// @arg shadowsurf
 /// @desc Applies SSAO and shadows onto the scene
 
-var ssaosurf, shadowsurf, resultsurf;
+var ssaosurf, shadowsurf, scenesurf, masksurf, resultsurf;
 ssaosurf = argument0
 shadowsurf = argument1
+
+render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
+scenesurf = render_surface[2]
+
+render_surface[4] = surface_require(render_surface[4], render_width, render_height, true)
+masksurf = render_surface[4]
 
 // Render directly to target?
 if (render_effects_done)
@@ -19,7 +25,7 @@ else
 	resultsurf = render_surface[3]
 }
 
-surface_set_target(resultsurf)
+surface_set_target(scenesurf)
 {
 	// Background
 	draw_clear_alpha(c_black, 0)
@@ -34,22 +40,6 @@ surface_set_target(resultsurf)
 	// 2D mode
 	render_set_projection_ortho(0, 0, render_width, render_height, 0)
 	
-	// Multiply by SSAO
-	gpu_set_blendmode_ext(bm_zero, bm_src_color)
-	if (setting_render_ssao)
-		draw_surface_exists(ssaosurf, 0, 0)
-	
-	// Multiply by shadows
-	if (setting_render_shadows)
-	{
-		render_shader_obj = shader_map[?shader_high_light_apply]
-		with (render_shader_obj)
-			shader_use()
-		draw_surface_exists(shadowsurf, 0, 0)
-		with (render_shader_obj)
-			shader_clear()
-	}
-	
 	// Alpha fix
 	gpu_set_blendmode_ext(bm_src_color, bm_one) 
 	if (render_background)
@@ -61,6 +51,34 @@ surface_set_target(resultsurf)
 		render_world_done()
 	}
 	gpu_set_blendmode(bm_normal)
+}
+surface_reset_target()
+
+surface_set_target(masksurf)
+{
+	draw_clear(c_black)
+	render_world_start()
+	render_world(e_render_mode.SCENE_TEST)
+	render_world_done()
+}
+surface_reset_target()
+
+surface_set_target(resultsurf)
+{
+	draw_clear_alpha(c_black, 0)
+	
+	// Apply lighting surfaces
+	render_shader_obj = shader_map[?shader_high_lighting_apply]
+	with (render_shader_obj)
+	{
+		shader_set(shader)
+		shader_high_lighting_apply_set(ssaosurf, shadowsurf, masksurf)
+	}
+	draw_surface_exists(scenesurf, 0, 0)
+	with (render_shader_obj)
+		shader_clear()
+		
+	//draw_surface_exists(masksurf, 0, 0)
 }
 surface_reset_target()
 

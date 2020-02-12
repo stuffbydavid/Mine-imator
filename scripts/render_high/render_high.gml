@@ -14,12 +14,13 @@ if (setting_render_ssao)
 if (setting_render_shadows)
 	render_surface_shadows = render_high_shadows()
 
+// Composite current effects onto the scene
+finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
+
 // Fog
 if (background_fog_show)
 	render_surface_fog = render_high_fog()
 
-// Composite current effects onto the scene
-finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
 render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
 
 // Start post processing

@@ -55,6 +55,7 @@ if (!err)
 	new_shader("shader_high_light_desaturate")
 	new_shader("shader_ca")
 	new_shader("shader_distort")
+	new_shader("shader_high_lighting_apply")
 	
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -402,6 +403,16 @@ with (shader_map[?shader_distort])
 {
 	new_shader_uniform("uDistortAmount")
 	new_shader_uniform("uRepeatImage")
+}
+
+with (shader_map[?shader_high_lighting_apply])
+{
+	new_shader_sampler("uSSAO")
+	new_shader_sampler("uShadows")
+	new_shader_sampler("uMask")
+	new_shader_uniform("uSSAOEnabled")
+	new_shader_uniform("uShadowsEnabled")
+	new_shader_uniform("uAmbientColor")
 }
 
 return true

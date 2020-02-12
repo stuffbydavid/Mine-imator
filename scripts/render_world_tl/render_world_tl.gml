@@ -36,6 +36,9 @@ if (render_mode = e_render_mode.CLICK)
 	render_set_uniform_color("uReplaceColor", id, 1)
 }
 
+if (render_mode = e_render_mode.SCENE_TEST)
+	render_set_uniform_color("uReplaceColor", c_white, 1)
+
 // Outlined?
 else if (render_mode = e_render_mode.SELECT && !parent_is_selected && !selected)
 	return 0
