@@ -31,6 +31,9 @@ if (render_mode != e_render_mode.CLICK &&
 	render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH &&
 	render_mode != e_render_mode.ALPHA_TEST)
 {
+	if (render_mode = e_render_mode.SCENE_TEST)
+		render_set_uniform_color("uReplaceColor", c_white, 1)
+	
 	render_world_ground()
 	render_world_sky_clouds()
 	render_world_tl_reset()

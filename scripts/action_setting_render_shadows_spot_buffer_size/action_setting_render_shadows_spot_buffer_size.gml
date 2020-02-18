@@ -6,3 +6,5 @@ if (argument0 >= 8192)
 		return 0
 
 setting_render_shadows_spot_buffer_size = argument0
+
+render_samples = -1

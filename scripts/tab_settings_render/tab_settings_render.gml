@@ -68,11 +68,11 @@ if (setting_render_shadows && checkbox_expand_settings_shadows)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("settingsrendershadowsblurquality", dx, dy, dw, setting_render_shadows_blur_quality, 48, 1, 64, 20, 1, tab.render.tbx_shadows_blur_quality, action_setting_render_shadows_blur_quality, capwid)
+	draw_meter("settingsrendershadowssamples", dx, dy, dw, setting_render_shadows_samples, 50, 1, 256, 16, 1, tab.render.tbx_shadow_samples, action_setting_render_shadows_samples)
 	tab_next()
 	
-	tab_control_meter()
-	draw_meter("settingsrendershadowsblursize", dx, dy, dw, round(setting_render_shadows_blur_size * 100), 48, 0, 400, 100, 1, tab.render.tbx_shadows_blur_size, action_setting_render_shadows_blur_size, capwid)
+	tab_control_checkbox()
+	draw_checkbox("settingsrendershadowssuncolored", dx, dy, setting_render_shadows_sun_colored, action_setting_render_shadows_sun_colored)
 	tab_next()
 	
 	dx -= 4

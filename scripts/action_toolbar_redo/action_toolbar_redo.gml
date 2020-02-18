@@ -20,3 +20,5 @@ log("Redo", script_get_name(history_data.script))
 history_redo = true
 script_execute(history_data.script)
 history_redo = false
+
+render_samples = -1

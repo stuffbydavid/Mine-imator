@@ -110,6 +110,11 @@ tab_control_meter()
 draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 tab_next()
 
+// Sunlight angle
+tab_control_dragger()
+draw_dragger("backgroundsunlightangle", dx, dy, dw, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle)
+tab_next()
+
 // Desaturate night
 tab_control_checkbox()
 draw_checkbox("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)

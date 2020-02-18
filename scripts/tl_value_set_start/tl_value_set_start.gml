@@ -78,3 +78,4 @@ else
 }
 
 history_data.par_set_n = 0
+render_samples = -1

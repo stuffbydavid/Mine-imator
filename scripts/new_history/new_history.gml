@@ -1,6 +1,8 @@
 /// new_history(script)
 /// @arg script
 
+render_samples = -1
+
 with (new(obj_history))
 {
 	script = argument0

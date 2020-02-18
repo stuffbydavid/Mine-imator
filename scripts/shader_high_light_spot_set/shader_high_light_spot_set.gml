@@ -18,13 +18,3 @@ render_set_uniform("uLightSpotSharpness", render_light_spot_sharpness)
 
 texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_spot_buffer))
 gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], true)
-
-if (app.setting_render_shadows_blur_size > 0)
-	render_set_uniform_int("uBlurQuality", app.setting_render_shadows_blur_quality)
-else
-	render_set_uniform_int("uBlurQuality", 1)
-
-if (app.setting_render_shadows_blur_quality > 1)
-	render_set_uniform("uBlurSize", app.setting_render_shadows_blur_size)
-else
-	render_set_uniform("uBlurSize", 0)

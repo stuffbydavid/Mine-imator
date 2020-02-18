@@ -62,6 +62,7 @@ with (properties)
 		tbx_background_rotation.suffix = "°"
 		tbx_sunlight_strength = new_textbox_integer()
 		tbx_sunlight_strength.suffix = "%"
+		tbx_sunlight_angle = new_textbox_decimals()
 		tbx_desaturate_night_amount = new_textbox_decimals()
 		tbx_desaturate_night_amount.suffix = "%"
 		tbx_sky_clouds_fade_distance = new_textbox_integer()
@@ -447,6 +448,7 @@ with (frame_editor)
 		copy_spot_radius = 50
 		copy_spot_sharpness = 0.5
 		has_spotlight = false
+		tbx_size = new_textbox_decimals()
 		tbx_range = new_textbox_decimals()
 		tbx_strength = new_textbox_integer()
 		tbx_strength.suffix = "%"
@@ -657,9 +659,7 @@ with (settings)
 		tbx_ssao_power = new_textbox_integer()
 		tbx_ssao_power.suffix = "%"
 		tbx_ssao_blur_passes = new_textbox_integer()
-		tbx_shadows_blur_quality = new_textbox_integer()
-		tbx_shadows_blur_size = new_textbox_integer()
-		tbx_shadows_blur_size.suffix = "%"
+		tbx_shadow_samples = new_textbox_integer()
 		tbx_glow_radius = new_textbox_integer()
 		tbx_glow_radius.suffix = "%"
 		tbx_glow_intensity = new_textbox_integer()

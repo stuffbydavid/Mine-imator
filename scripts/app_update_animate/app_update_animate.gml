@@ -95,6 +95,7 @@ if (bgobject)
 	background_sunlight_range				= bgobject.value[e_value.BG_SUNLIGHT_RANGE]
 	background_sunlight_follow				= bgobject.value[e_value.BG_SUNLIGHT_FOLLOW]
 	background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
+	background_sunlight_angle				= bgobject.value[e_value.BG_SUNLIGHT_ANGLE]
 	background_desaturate_night				= bgobject.value[e_value.BG_DESATURATE_NIGHT]
 	background_desaturate_night_amount		= bgobject.value[e_value.BG_DESATURATE_NIGHT_AMOUNT]
 	background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]

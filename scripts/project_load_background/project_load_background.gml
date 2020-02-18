@@ -28,6 +28,7 @@ background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_ro
 background_sunlight_range = value_get_real(map[?"sunlight_range"], background_sunlight_range)
 background_sunlight_follow = value_get_real(map[?"sunlight_follow"], background_sunlight_follow)
 background_sunlight_strength = value_get_real(map[?"sunlight_strength"], background_sunlight_strength)
+background_sunlight_angle = value_get_real(map[?"sunlight_angle"], background_sunlight_angle)
 
 background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 background_sky_clouds_flat = value_get_real(map[?"sky_clouds_flat"], background_sky_clouds_flat)

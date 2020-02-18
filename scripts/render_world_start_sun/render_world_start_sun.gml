@@ -1,0 +1,34 @@
+/// render_world_start_sun(from, to)
+/// @arg from
+/// @arg to
+/// @desc Render the scene from the sun's point of view.
+
+render_light_from = argument0
+render_light_to = argument1
+render_light_near = world_size/2
+render_light_far = -world_size/2
+render_light_fov = 45
+render_light_color = background_sunlight_color_final
+render_light_strength = 1 + background_sunlight_strength
+
+gpu_set_ztestenable(true)
+gpu_set_zwriteenable(true)
+
+var mV = matrix_build_lookat(render_light_from[X], render_light_from[Y], render_light_from[Z], 
+							 render_light_to[X], render_light_to[Y], render_light_to[Z],
+							 0, 0, 1);
+
+var mP = matrix_create_ortho(-background_sunlight_range/2, background_sunlight_range/2, background_sunlight_range/2, -background_sunlight_range/2, render_light_near, render_light_far);
+
+camera_set_view_mat(cam_render, mV)
+camera_set_proj_mat(cam_render, mP)
+camera_apply(cam_render)
+
+render_proj_from = render_light_from
+proj_matrix = matrix_get(matrix_projection)
+view_proj_matrix = matrix_multiply(matrix_get(matrix_view), matrix_get(matrix_projection))
+
+proj_depth_near = render_light_near
+proj_depth_far = render_light_far
+
+render_light_matrix = view_proj_matrix

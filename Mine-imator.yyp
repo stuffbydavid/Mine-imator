@@ -191,6 +191,14 @@
             }
         },
         {
+            "Key": "0291e9e5-10d6-462f-a0bf-d2dc28a361e6",
+            "Value": {
+                "id": "ea38a887-eb13-4deb-bc2b-d1ddfecc5caf",
+                "resourcePath": "scripts\\action_background_sunlight_angle\\action_background_sunlight_angle.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "02a3b795-f56e-4a73-b0f7-c7421d4568b8",
             "Value": {
                 "id": "e5353d7a-30c5-460f-a83e-cc95057bfe02",
@@ -548,6 +556,14 @@
                 "id": "0447617d-1abf-49dd-8da2-55058c240e30",
                 "resourcePath": "scripts\\app_startup_interface\\app_startup_interface.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "07b2b49a-9c94-4e94-9789-61b861451817",
+            "Value": {
+                "id": "43a3bdf7-719d-4fc4-8a5e-27b39a8717ef",
+                "resourcePath": "shaders\\shader_high_light_color\\shader_high_light_color.yy",
+                "resourceType": "GMShader"
             }
         },
         {
@@ -1471,6 +1487,14 @@
             }
         },
         {
+            "Key": "14a1be77-37d3-4672-88fd-9ef0a5478b72",
+            "Value": {
+                "id": "c0d4a727-c6bc-4357-b67f-4727bedae272",
+                "resourcePath": "scripts\\shader_high_shadows_unpack_set\\shader_high_shadows_unpack_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "14b9c668-b085-4ef4-bd64-6ae641e6d427",
             "Value": {
                 "id": "baddd45b-d76d-42c5-980c-a5befe101f47",
@@ -2027,6 +2051,14 @@
             "Value": {
                 "id": "1d926a91-18e3-4352-8b97-dc09f3ceb18c",
                 "resourcePath": "scripts\\action_tl_keyframe_create\\action_tl_keyframe_create.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "1d83f882-bbc8-4943-af5a-910b760af1f4",
+            "Value": {
+                "id": "9143a317-4594-4d70-92e3-6b9e0333ee63",
+                "resourcePath": "scripts\\action_setting_render_shadows_sun_colored\\action_setting_render_shadows_sun_colored.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -3783,6 +3815,14 @@
             }
         },
         {
+            "Key": "3c94d60e-d663-4fcd-a0ab-40b4efe8b402",
+            "Value": {
+                "id": "0e175af3-7f31-4f88-bf99-9aa00b76504b",
+                "resourcePath": "shaders\\shader_replace_alpha\\shader_replace_alpha.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "3cb27132-4a01-4b02-a83c-879f1544b64d",
             "Value": {
                 "id": "388570ec-2ff9-4188-a6ec-ff384101de4f",
@@ -4751,6 +4791,14 @@
             }
         },
         {
+            "Key": "4b48f387-1ae9-435b-92d6-f81704a6fc81",
+            "Value": {
+                "id": "6bc7acbd-d00d-4dfd-a9e1-0f4d261758ca",
+                "resourcePath": "scripts\\action_setting_render_shadows_samples\\action_setting_render_shadows_samples.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "4b9621ed-3a54-43f7-a0b7-38f886b2cc26",
             "Value": {
                 "id": "50d1e348-df32-4451-b7b1-1beb7af28357",
@@ -5111,6 +5159,14 @@
             }
         },
         {
+            "Key": "506118bd-9cf1-4278-93fb-808198a6fce7",
+            "Value": {
+                "id": "cb2ac8d6-6378-4e5f-aa14-062dbdad0ca3",
+                "resourcePath": "scripts\\render_world_start_sun\\render_world_start_sun.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "50985cf8-1bb3-4327-a10d-6e2e0ed6e8d2",
             "Value": {
                 "id": "7db29b91-87ce-439c-91c6-b86133e65b59",
@@ -5228,6 +5284,14 @@
                 "id": "a3d43dcf-337b-4d72-948f-0c5d2248704e",
                 "resourcePath": "scripts\\rgb_to_hsb\\rgb_to_hsb.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "52e64b76-9a5a-4149-8e4b-b78ccc52353a",
+            "Value": {
+                "id": "4503208e-f60a-4d08-b76c-adb01fe04a30",
+                "resourcePath": "shaders\\shader_high_shadows_add\\shader_high_shadows_add.yy",
+                "resourceType": "GMShader"
             }
         },
         {
@@ -7147,6 +7211,14 @@
             "Value": {
                 "id": "ec1cc337-6720-4a91-bef1-26cca82ada46",
                 "resourcePath": "scripts\\ptype_copy\\ptype_copy.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "6ef77993-05ef-4c8b-bef6-fd5bc8dc4ddc",
+            "Value": {
+                "id": "a10447e8-7091-4da2-8a05-00314a2f64b4",
+                "resourcePath": "scripts\\shader_depth_ortho_set\\shader_depth_ortho_set.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9946,7 +10018,7 @@
             "Key": "992925d2-52fe-4179-ba4a-199d76a331ea",
             "Value": {
                 "id": "35855a9e-38d4-4ab5-b1de-2d5a12dc9028",
-                "resourcePath": "scripts\\shader_color_fog_set\\shader_color_fog_set.yy",
+                "resourcePath": "scripts\\shader_high_light_color_set\\shader_high_light_color_set.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10715,6 +10787,14 @@
             "Value": {
                 "id": "0560dd96-20c5-47f7-b72a-c4a6f4133016",
                 "resourcePath": "scripts\\popup_modelbench_draw\\popup_modelbench_draw.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "a44720b2-90a5-4d8e-92af-2e88be706fdf",
+            "Value": {
+                "id": "fffc49d5-a55e-4ca3-a290-57d6cd95d291",
+                "resourcePath": "scripts\\shader_high_shadows_add_set\\shader_high_shadows_add_set.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11815,14 +11895,6 @@
             }
         },
         {
-            "Key": "b4725d5c-8cf2-450d-a5e0-c0c51dcf8188",
-            "Value": {
-                "id": "43caeb07-5ce7-4286-b680-61a405e984c2",
-                "resourcePath": "scripts\\action_setting_render_shadows_blur_size\\action_setting_render_shadows_blur_size.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "b489677e-4a4f-41f8-a0a0-f4da1de722cb",
             "Value": {
                 "id": "87f2322d-fe76-41fb-9e31-c815ae538add",
@@ -12020,6 +12092,14 @@
                 "id": "0124eecd-baef-433a-b12b-99b1af80de34",
                 "resourcePath": "views\\b69f9005-7620-4bb7-a567-95d816dd71a0.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "b6c3a17f-7b59-4e32-88ed-47b20ff7899b",
+            "Value": {
+                "id": "c382fb62-516a-4db4-833e-c23d7cb8d027",
+                "resourcePath": "scripts\\matrix_create_ortho\\matrix_create_ortho.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -12275,6 +12355,14 @@
             "Value": {
                 "id": "30111089-6051-4cde-b9ab-94240d5a365f",
                 "resourcePath": "scripts\\matrix_create\\matrix_create.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "bc406af3-2592-4a00-88ff-acedf8d077dc",
+            "Value": {
+                "id": "91480ed1-6b1f-40ca-9f1d-c8bcc34431ee",
+                "resourcePath": "scripts\\action_tl_frame_light_size\\action_tl_frame_light_size.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12636,6 +12724,14 @@
                 "id": "934b6194-48eb-4ae5-a96b-13bf3ce57dc8",
                 "resourcePath": "scripts\\tl_value_set_start\\tl_value_set_start.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "c1cbd473-3c46-468e-bfdb-1c8f1e7abd24",
+            "Value": {
+                "id": "8f7a1866-d71b-45c4-ba48-5b6864eb1323",
+                "resourcePath": "shaders\\shader_high_shadows_unpack\\shader_high_shadows_unpack.yy",
+                "resourceType": "GMShader"
             }
         },
         {
@@ -15415,6 +15511,14 @@
             }
         },
         {
+            "Key": "ec4e8d88-7992-4340-900b-c276fcb55371",
+            "Value": {
+                "id": "70cad8e6-e9f3-483a-837f-7063566dfcac",
+                "resourcePath": "shaders\\shader_depth_ortho\\shader_depth_ortho.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "ec52d7b5-2b6f-47cc-8c45-c705b4694d9a",
             "Value": {
                 "id": "f2cbdca6-ce2f-405d-a7f3-76b6865d8561",
@@ -16615,14 +16719,6 @@
             }
         },
         {
-            "Key": "fc65f735-a092-4f31-b7ee-4c9ce898dc9c",
-            "Value": {
-                "id": "bc0ca1c5-b6a6-4bb1-8c92-5621ab8f6a41",
-                "resourcePath": "scripts\\action_setting_render_shadows_blur_quality\\action_setting_render_shadows_blur_quality.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "fceb2eb9-9760-4873-ae6b-e62ec292b81b",
             "Value": {
                 "id": "20261466-8511-440d-a062-dec270dac378",
@@ -16907,6 +17003,7 @@
         "46bc281e-2d22-402e-8042-7dfabce4121d",
         "eb7b8a81-9fa5-4aa8-a101-be45fdfab75c",
         "6071760e-754a-425a-a475-a0b5ab9682e4",
+        "0291e9e5-10d6-462f-a0bf-d2dc28a361e6",
         "8ecb4efc-89e3-44f2-b02c-5c746bcd6232",
         "46f6ef6b-fa20-4bff-9e10-0b1bb105ecb1",
         "525ee58c-45a5-4e3b-a448-d15848851384",
@@ -17239,11 +17336,11 @@
         "64ab90bc-72a3-42dd-ba19-e5a57ec5bd1f",
         "e0afac2e-d90b-4ed8-ba7a-e1723169c9cd",
         "2d65d089-7d2c-4de4-9a5d-f21755c0703a",
-        "fc65f735-a092-4f31-b7ee-4c9ce898dc9c",
-        "b4725d5c-8cf2-450d-a5e0-c0c51dcf8188",
         "3369adfe-f69a-40d3-9bc5-565bdcecf702",
         "41ff16d2-4700-4a0f-8b4f-e109e34ced54",
         "224eac4f-b7bb-4955-b548-ed3fe198f03f",
+        "4b48f387-1ae9-435b-92d6-f81704a6fc81",
+        "1d83f882-bbc8-4943-af5a-910b760af1f4",
         "29033827-7374-4f9c-8753-c02b0785ad7e",
         "11f313c7-0b22-450b-893f-c1493d62c7f6",
         "dbafb95d-97d8-4883-a736-b6fa2d99fc4b",
@@ -17350,6 +17447,7 @@
         "c9376bd6-3a03-4328-936c-85e856acddb7",
         "818fdf2f-ec5b-4212-b80f-203239b6dfa4",
         "4797b1d4-3df5-4575-a565-0ad742ab0b86",
+        "bc406af3-2592-4a00-88ff-acedf8d077dc",
         "f3ccb8b9-19a7-4c28-a23c-a4d064afd473",
         "efca32ae-6428-4fe0-ad89-fb30bb5318c4",
         "211e8217-c90e-41a3-a6db-2b9a05d9c3bb",
@@ -18061,8 +18159,11 @@
         "03c7002f-4a83-4cd1-8128-3873f253b371",
         "91f7487c-7f3a-4306-a95d-ccf7e047e98b",
         "99d3b3f3-0b9b-4c1c-ba84-d9046247aa7d",
+        "a44720b2-90a5-4d8e-92af-2e88be706fdf",
+        "14a1be77-37d3-4672-88fd-9ef0a5478b72",
         "0bb3f0f1-8cbd-46b7-b774-e82fb09e01ea",
         "9ff39a74-b1fc-4174-bd91-6f279795051a",
+        "6ef77993-05ef-4c8b-bef6-fd5bc8dc4ddc",
         "4768652a-a850-4af1-a949-139bd12b332c",
         "2949d2d7-a68c-4b26-af56-c4d75e210f47",
         "21f3e457-f7c4-4f91-bed1-684d30be661a",
@@ -18092,6 +18193,7 @@
         "89f476a7-e2e6-400f-ae7e-5bf019a54305",
         "8835145f-ad50-47bb-a49c-0d750535f11c",
         "0b30b9c4-3562-4413-a991-999ae5627936",
+        "506118bd-9cf1-4278-93fb-808198a6fce7",
         "62eecf06-5233-4aa2-aa19-bf432e0a2cd6",
         "f65ac4fb-4d67-4b3b-9414-85bc167bef8f",
         "c2ae9bf8-f10a-4d90-bbb2-98b840348b6d",
@@ -18413,6 +18515,7 @@
         "f5353bec-c334-46ef-a6f3-5b4d0b06a0c3",
         "efebe4b8-7a5b-4d0c-a2e5-bb2fe955c364",
         "57fb7074-c967-4cb6-8444-2e979bd4a37a",
+        "b6c3a17f-7b59-4e32-88ed-47b20ff7899b",
         "9e2ec87c-ae2a-4caf-9a42-e6b040b45404",
         "943bfd63-2bc5-4aeb-bb88-7b88fb4c2c6c",
         "1ba7e9ef-c134-4434-b934-be6245d5939b",

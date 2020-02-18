@@ -137,6 +137,13 @@ else
 	render_set_uniform_color("uGlowColor", c_black, 1)
 }
 
+// Multiply for sun color
+if (render_mode = e_render_mode.HIGH_LIGHT_SUN_COLOR)
+{
+	prevblend = gpu_get_blendmode()
+	gpu_set_blendmode_ext(bm_zero, bm_src_color)
+}
+
 // Render
 if (type != e_tl_type.PARTICLE_SPAWNER)
 {

@@ -18,7 +18,8 @@ json_save_object_start("background")
 	json_save_var("sunlight_range", background_sunlight_range)
 	json_save_var_bool("sunlight_follow", background_sunlight_follow)
 	json_save_var("sunlight_strength", background_sunlight_strength)
-
+	json_save_var("sunlight_angle", background_sunlight_angle)
+	
 	json_save_var_bool("sky_clouds_show", background_sky_clouds_show)
 	json_save_var_bool("sky_clouds_flat", background_sky_clouds_flat)
 	json_save_var_bool("sky_clouds_story_mode", background_sky_clouds_story_mode)

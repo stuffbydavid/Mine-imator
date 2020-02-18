@@ -18,6 +18,7 @@ switch (argument0)
 	case e_value.FORCE: return 1
 	case e_value.LIGHT_COLOR: return c_white
 	case e_value.LIGHT_STRENGTH: return 1
+	case e_value.LIGHT_SIZE: return 2
 	case e_value.LIGHT_RANGE: return 250
 	case e_value.LIGHT_FADE_SIZE: return 0.5
 	case e_value.LIGHT_SPOT_RADIUS: return 50
@@ -86,6 +87,7 @@ switch (argument0)
 	case e_value.BG_SUNLIGHT_RANGE: return app.background_sunlight_range
 	case e_value.BG_SUNLIGHT_FOLLOW: return app.background_sunlight_follow
 	case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
+	case e_value.BG_SUNLIGHT_ANGLE: return app.background_sunlight_angle
 	case e_value.BG_DESATURATE_NIGHT: return app.background_desaturate_night
 	case e_value.BG_DESATURATE_NIGHT_AMOUNT: return app.background_desaturate_night_amount
 	case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show

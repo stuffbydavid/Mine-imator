@@ -29,13 +29,3 @@ gpu_set_texrepeat_ext(sampler_map[?"uDepthBufferYp"], false)
 gpu_set_texrepeat_ext(sampler_map[?"uDepthBufferYn"], false)
 gpu_set_texrepeat_ext(sampler_map[?"uDepthBufferZp"], false)
 gpu_set_texrepeat_ext(sampler_map[?"uDepthBufferZn"], false)
-
-if (app.setting_render_shadows_blur_size > 0)
-	render_set_uniform_int("uBlurQuality", app.setting_render_shadows_blur_quality)
-else
-	render_set_uniform_int("uBlurQuality", 1)
-
-if (app.setting_render_shadows_blur_quality > 1)
-	render_set_uniform("uBlurSize", app.setting_render_shadows_blur_size)
-else
-	render_set_uniform("uBlurSize", 0)

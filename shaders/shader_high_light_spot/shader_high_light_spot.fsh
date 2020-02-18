@@ -18,9 +18,6 @@ uniform float uLightSpotSharpness;
 
 uniform sampler2D uDepthBuffer;
 
-uniform int uBlurQuality;
-uniform float uBlurSize;
-
 uniform float uBleedLight;
 
 varying vec3 vPosition;
@@ -44,7 +41,7 @@ void main()
 	else
 	{
 		float dif = 0.0;
-		float shadow = 0.0;
+		float shadow = 1.0;
 		
 		// Check if not behind the spot light
 		if (vScreenCoord.w > 0.0)
@@ -64,40 +61,15 @@ void main()
 				// Texture position must be valid
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 				{
-					// Blur size(Increase if there's light bleeding)
-					float blurSize = uBlurSize + (.2 * min(1.0, vLightBleed + uBleedLight));
-					
 					// Create circle
 					dif *= 1.0 - clamp((distance(fragCoord, vec2(0.5, 0.5)) - 0.5 * uLightSpotSharpness) / (0.5 * max(0.01, 1.0 - uLightSpotSharpness)), 0.0, 1.0);
-				
+					
 					// Calculate bias
 					float bias = 0.1 * (uLightFar / fragDepth);
-				
-					// Calculate sample size
-					float sampleSize = uBlurSize / fragDepth;
-				
-					// Find shadow				
-					for (int i = 0; i < MAXSAMPLES; i++)
-					{
-						if (i < uBlurQuality)
-						{
-							// Sample from circle
-							float angle = (float(i) / float(uBlurQuality)) * TAU;
-							vec2 off = vec2(cos(angle), sin(angle));
-						
-							// Get sample depth
-							vec2 sampleCoord = fragCoord + off * sampleSize;
-							float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, sampleCoord)) * (uLightFar - uLightNear);
-						
-							// Add to shadow
-							shadow += ((fragDepth - bias) > sampleDepth) ? 1.0 : 0.0;
-						}
-						else
-							break;
-					}
-				
-					shadow /= float(uBlurQuality);
-				
+					
+					// Shadow
+					float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, fragCoord)) * (uLightFar - uLightNear);
+					shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 				} 
 				else
 					dif = 0.0;
@@ -108,7 +80,7 @@ void main()
 		if (uIsWater == 1)
 			light = uLightColor.rgb * uLightStrength * dif;
 		else
-			light = uLightColor.rgb * uLightStrength * dif * (1.0 - shadow);
+			light = uLightColor.rgb * uLightStrength * dif * shadow;
 		
 		light = mix(light, vec3(1.0), vBrightness);
 	}

@@ -166,6 +166,7 @@ if (value_type[e_value_type.LIGHT])
 	tl_update_values_ease(e_value.LIGHT_COLOR, trans, p)
 	tl_update_values_ease(e_value.LIGHT_STRENGTH, trans, p)
 	tl_update_values_ease(e_value.LIGHT_RANGE, trans, p)
+	tl_update_values_ease(e_value.LIGHT_RANGE, trans, p)
 	tl_update_values_ease(e_value.LIGHT_FADE_SIZE, trans, p)
 	
 	// Spotlight
@@ -276,6 +277,7 @@ if (value_type[e_value_type.BACKGROUND])
 	tl_update_values_ease(e_value.BG_SUNLIGHT_RANGE, trans, p)
 	tl_update_values_ease(e_value.BG_SUNLIGHT_FOLLOW, trans, p)
 	tl_update_values_ease(e_value.BG_SUNLIGHT_STRENGTH, trans, p)
+	tl_update_values_ease(e_value.BG_SUNLIGHT_ANGLE, trans, p)
 	tl_update_values_ease(e_value.BG_DESATURATE_NIGHT, trans, p)
 	tl_update_values_ease(e_value.BG_DESATURATE_NIGHT_AMOUNT, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_CLOUDS_SHOW, trans, p)
@@ -392,3 +394,6 @@ if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_ma
 	if (value[e_value.CLEAR])
 		particle_spawner_clear()
 }
+
+// Update shadows
+render_samples = -1

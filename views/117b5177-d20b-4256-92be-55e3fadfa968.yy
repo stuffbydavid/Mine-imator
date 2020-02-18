@@ -11,7 +11,8 @@
         "197d2774-fcd7-491c-b6c1-dedcb7fb4a7d",
         "f5353bec-c334-46ef-a6f3-5b4d0b06a0c3",
         "efebe4b8-7a5b-4d0c-a2e5-bb2fe955c364",
-        "57fb7074-c967-4cb6-8444-2e979bd4a37a"
+        "57fb7074-c967-4cb6-8444-2e979bd4a37a",
+        "b6c3a17f-7b59-4e32-88ed-47b20ff7899b"
     ],
     "filterType": "GMScript",
     "folderName": "Matrix",

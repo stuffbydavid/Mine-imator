@@ -2,7 +2,7 @@
 /// @arg surface
 /// @arg width
 /// @arg height
-/// @arg [depth,
+/// @arg [depth
 /// @arg [free]]
 
 var surf, w, h, starttime, surfdepth, free;

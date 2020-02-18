@@ -1,6 +1,6 @@
 /// tab_frame_editor_light()
 
-var capwid = text_caption_width("frameeditorlightstrength", "frameeditorlightrange", "frameeditorlightfadesize", "frameeditorlightspotradius", "frameeditorlightspotsharpness")
+var capwid = text_caption_width("frameeditorlightstrength", "frameeditorlightrange", "frameeditorlightsize", "frameeditorlightfadesize", "frameeditorlightspotradius", "frameeditorlightspotsharpness")
 
 tab_control_color()
 draw_button_color("frameeditorlightcolor", dx, dy, dw, tl_edit.value[e_value.LIGHT_COLOR], c_white, false, action_tl_frame_light_color)
@@ -8,6 +8,10 @@ tab_next()
 
 tab_control_meter()
 draw_meter("frameeditorlightstrength", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_STRENGTH] * 100), 56, 0, 100, 100, 1, tab.light.tbx_strength, action_tl_frame_light_strength, capwid)
+tab_next()
+
+tab_control_dragger()
+draw_dragger("frameeditorlightsize", dx, dy, dw, tl_edit.value[e_value.LIGHT_SIZE], .05, 0, no_limit, 2, .05, tab.light.tbx_size, action_tl_frame_light_size, capwid)
 tab_next()
 
 tab_control_dragger()

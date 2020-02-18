@@ -217,8 +217,8 @@ setting_render_shadows_point_buffer_size = buffer_read_int()
 
 if (load_format >= e_settings.FORMAT_100)
 {
-	setting_render_shadows_blur_quality = buffer_read_byte()
-	setting_render_shadows_blur_size = buffer_read_double()
+	/*setting_render_shadows_blur_quality =*/ buffer_read_byte()
+	/*setting_render_shadows_blur_size =*/ buffer_read_double()
 	
 	/*setting_render_dof =*/ buffer_read_byte()
 	/*setting_render_dof_blur_size =*/ buffer_read_double()

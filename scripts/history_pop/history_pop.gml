@@ -24,3 +24,5 @@ if (history_pos > 0)
 }
 
 history_pos = 0
+
+render_samples = -1

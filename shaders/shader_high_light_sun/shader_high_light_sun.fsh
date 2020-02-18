@@ -9,6 +9,7 @@ uniform int uIsSky;
 uniform int uIsWater;
 
 uniform vec3 uLightPosition;
+uniform vec3 uLightDirection;
 uniform vec4 uLightColor;
 uniform float uLightStrength;
 uniform float uLightNear;
@@ -16,8 +17,8 @@ uniform float uLightFar;
 
 uniform sampler2D uDepthBuffer;
 
-uniform int uBlurQuality;
-uniform float uBlurSize;
+uniform int uColoredShadows;
+uniform sampler2D uColorBuffer;
 
 uniform float uBleedLight;
 
@@ -38,54 +39,40 @@ void main()
 {
 	vec3 light;
 	
+	vec2 tex = vTexCoord;
+	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
+		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
+	vec4 baseColor = texture2D(uTexture, tex);
+	
 	if (uIsSky > 0)
 		light = vec3(1.0);
 	else
 	{
 		// Diffuse factor
-		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));	
+		float dif = max(0.0, dot(normalize(vNormal), uLightDirection));	
 		dif = clamp(dif + min(1.0, vLightBleed + uBleedLight), 0.0, 1.0);
 		
-		float shadow = 0.0;
+		vec3 shadow = vec3(1.0);
 	
 		if (dif > 0.0 && vBrightness < 1.0)
 		{
-			float fragDepth = min(vScreenCoord.z, uLightFar);
-			vec2 fragCoord = (vec2(vScreenCoord.x, -vScreenCoord.y) / vScreenCoord.z + 1.0) / 2.0;
+			float fragDepth = vScreenCoord.z * .5 + .5;
+			vec2 fragCoord = vec2(vScreenCoord.x, -vScreenCoord.y) * .5 + .5;
 		
 			// Texture position must be valid
-			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
-			{
-				// Blur size(Increase if there's light bleeding)
-				float blurSize = uBlurSize + (.2 * min(1.0, vLightBleed + uBleedLight));
-				
+			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0)
+			{	
 				// Calculate bias
-				float bias = 1.0 + (uLightFar / fragDepth) * blurSize;
-			
-				// Calculate sample size
-				float sampleSize = blurSize / fragDepth;
-			
+				float bias = (1.0 + (.2 * min(1.0, vLightBleed + uBleedLight))) / abs(uLightFar - uLightNear);
+				
+				// Colored shadows
+				if (uColoredShadows > 0)
+					if (baseColor.a * uBlendColor.a == 1.0)
+						shadow = texture2D(uColorBuffer, fragCoord).rgb;
+				
 				// Find shadow
-				for (int i = 0; i < MAXSAMPLES; i++)
-				{
-					if (i < uBlurQuality)
-					{
-						// Sample from circle
-						float angle = (float(i) / float(uBlurQuality)) * TAU;
-						vec2 off = vec2(cos(angle), sin(angle));
-					
-						// Get sample depth
-						vec2 sampleCoord = fragCoord + off * sampleSize;
-						float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, sampleCoord)) * (uLightFar - uLightNear);
-					
-						// Add to shadow
-						shadow += ((fragDepth - bias) > sampleDepth) ? 1.0 : 0.0;
-					}
-					else
-						break;
-				}
-			
-				shadow /= float(uBlurQuality);
+				float sampleDepth = unpackDepth(texture2D(uDepthBuffer, fragCoord));
+				shadow *= ((fragDepth - bias) > sampleDepth) ? vec3(0.0) : vec3(1.0);
 			}
 		}
 	
@@ -93,16 +80,12 @@ void main()
 		if (uIsWater == 1)
 			light = uLightColor.rgb * uLightStrength * dif;
 		else
-			light = uLightColor.rgb * uLightStrength * dif * (1.0 - shadow);
+			light = uLightColor.rgb * uLightStrength * dif * shadow;
 			
 		light = mix(light, vec3(1.0), vBrightness);
 	}
 	
 	// Set final color
-	vec2 tex = vTexCoord;
-	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
-		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
-	vec4 baseColor = texture2D(uTexture, tex);
 	gl_FragColor = vec4(light, uBlendColor.a * baseColor.a);
 	
 	if (gl_FragColor.a == 0.0)

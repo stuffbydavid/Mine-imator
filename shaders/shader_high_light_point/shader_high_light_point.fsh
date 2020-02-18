@@ -23,9 +23,6 @@ uniform sampler2D uDepthBufferYn;
 uniform sampler2D uDepthBufferZp;
 uniform sampler2D uDepthBufferZn;
 
-uniform int uBlurQuality;
-uniform float uBlurSize;
-
 uniform float uBleedLight;
 
 varying vec3 vPosition;
@@ -78,7 +75,7 @@ void main()
 		light = vec3(1.0);
 	else
 	{
-		float shadow = 0.0;
+		float shadow = 1.0;
 	
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition))); 
@@ -143,41 +140,20 @@ void main()
 				fragCoord = getShadowMapCoord(vec3(0.0, -1.0, 0.0));
 			}
 			
-			// Blur size(Increase if there's light bleeding)
-			float blurSize = uBlurSize + (.2 * min(1.0, vLightBleed + uBleedLight));
+			// Calculate bias
+			float bias = 1.0 + (.2 * min(1.0, vLightBleed + uBleedLight));
 			
-			// Calculate shadow
+			// Shadow
 			float fragDepth = distance(vPosition, uLightPosition);
-			float sampleSize = blurSize / fragDepth;
-			float bias =  1.0 + 2.0 * blurSize;
-		
-			for (int i = 0; i < MAXSAMPLES; i++)
-			{
-				if (i < uBlurQuality)
-				{
-					// Sample from circle
-					float angle = (float(i) / float(uBlurQuality)) * TAU;
-					vec2 off = vec2(cos(angle), sin(angle));
-				
-					// Get sample coordinate and depth
-					vec2 sampleCoord = fragCoord + off * sampleSize;
-					float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, sampleCoord));
-				
-					// Add to shadow
-					shadow += ((fragDepth - bias) > sampleDepth) ? 1.0 : 0.0;
-				}
-				else
-					break;
-			}
-		
-			shadow /= float(uBlurQuality);
+			float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, fragCoord));
+			shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 		}
 	
 		// Calculate light
 		if (uIsWater == 1)
 			light = uLightColor.rgb * uLightStrength * dif;
 		else
-			light = uLightColor.rgb * uLightStrength * dif * (1.0 - shadow);
+			light = uLightColor.rgb * uLightStrength * dif * shadow;
 		
 		light = mix(light, vec3(1.0), vBrightness);
 	}

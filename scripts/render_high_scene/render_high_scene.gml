@@ -1,11 +1,11 @@
-/// render_high_scene(ssaosurf, shadowsurf)
+/// render_high_scene(ssaosurf, shadowssurf)
 /// @arg ssaosurf
-/// @arg shadowsurf
+/// @arg shadowssurf
 /// @desc Applies SSAO and shadows onto the scene
 
-var ssaosurf, shadowsurf, scenesurf, masksurf, resultsurf;
+var ssaosurf, shadowssurf, scenesurf, masksurf, resultsurf;
 ssaosurf = argument0
-shadowsurf = argument1
+shadowssurf = argument1
 
 render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
 scenesurf = render_surface[2]
@@ -60,6 +60,14 @@ surface_set_target(masksurf)
 	render_world_start()
 	render_world(e_render_mode.SCENE_TEST)
 	render_world_done()
+	
+	// 2D mode
+	render_set_projection_ortho(0, 0, render_width, render_height, 0)
+	
+	// Alpha fix
+	gpu_set_blendmode_ext(bm_src_color, bm_one) 
+	draw_box(0, 0, render_width, render_height, false, c_black, 1)
+	gpu_set_blendmode(bm_normal)
 }
 surface_reset_target()
 
@@ -72,13 +80,11 @@ surface_set_target(resultsurf)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_lighting_apply_set(ssaosurf, shadowsurf, masksurf)
+		shader_high_lighting_apply_set(ssaosurf, shadowssurf, masksurf)
 	}
 	draw_surface_exists(scenesurf, 0, 0)
 	with (render_shader_obj)
 		shader_clear()
-		
-	//draw_surface_exists(masksurf, 0, 0)
 }
 surface_reset_target()
 
