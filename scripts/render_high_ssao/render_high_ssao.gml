@@ -3,9 +3,9 @@
 var depthsurf, normalsurf, brightnesssurf, resultsurf;
 
 // Get depth and normal information
-render_surface[1] = surface_require(render_surface[1], render_width, render_height, true)
-render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
-render_surface[3] = surface_require(render_surface[3], render_width, render_height, true)
+render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
+render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
+render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
 depthsurf = render_surface[1]
 normalsurf = render_surface[2]
 brightnesssurf = render_surface[3]

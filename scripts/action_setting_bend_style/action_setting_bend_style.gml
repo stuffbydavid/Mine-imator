@@ -2,6 +2,7 @@
 /// @arg value
 
 setting_bend_style = argument0
+render_samples = -1
 
 // Force update timeline meshes
 with (obj_timeline)

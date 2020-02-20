@@ -409,7 +409,7 @@ switch (load_stage)
 		if (mc_builder.file_map != "")
 			app.popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
 		else
-			app.popup_loading.caption = text_get("loadscenerycaption", other.filename)
+			app.popup_loading.caption = text_get("loadscenerycaption", filename)
 		
 		mc_builder.block_skull_texture_count = ds_map_size(mc_builder.block_skull_texture_map)
 		mc_builder.block_skull_finish_count = 0
@@ -481,18 +481,33 @@ switch (load_stage)
 				// Create new resource with downloaded texture
 				if (block_skull_texture != null)
 				{
-					var res;
-					with (app)
+					var res = null;
+					
+					// Use existing skin resource
+					with (obj_resource)
 					{
-						directory_create_lib(skins_directory)
-						var fn = skins_directory + mc_builder.block_skull_texture_name + ".png"
-						file_copy_lib(download_image_file, fn)
+						if (filename_name(mc_builder.block_skull_texture_name) = filename)
+						{
+							res = id
+							break
+						}
+					}
+					
+					// Create new skin resource
+					if (res = null)
+					{
+						with (app)
+						{
+							directory_create_lib(skins_directory)
+							var fn = skins_directory + mc_builder.block_skull_texture_name + ".png"
+							file_copy_lib(download_image_file, fn)
 						
-						res = new_res(fn, e_res_type.DOWNLOADED_SKIN)
-						res.player_skin = true
+							res = new_res(fn, e_res_type.DOWNLOADED_SKIN)
+							res.player_skin = true
 						
-						with (res)
-							res_load()
+							with (res)
+								res_load()
+						}
 					}
 					
 					block_skull_res_map[?block_skull_texture_name] = res

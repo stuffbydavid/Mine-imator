@@ -43,6 +43,9 @@ exportmovie_surface = render_done()
 
 render_active = null
 
+// Free surfaces to prevent memory issues
+render_free()
+
 if (exportmovie_format = "png")
 {
 	// Save image

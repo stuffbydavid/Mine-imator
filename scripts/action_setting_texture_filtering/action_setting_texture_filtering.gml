@@ -2,3 +2,4 @@
 /// @arg filtering
 
 setting_texture_filtering = argument0
+render_samples = -1

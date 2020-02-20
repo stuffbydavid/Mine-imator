@@ -16,7 +16,7 @@ else
 	if (action_tl_select_single(null, e_tl_type.BACKGROUND))
 	{
 		tl_value_set_start(action_background_sunlight_angle, true)
-		tl_value_set(e_value.BG_SUNLIGHT_STRENGTH, val, add)
+		tl_value_set(e_value.BG_SUNLIGHT_ANGLE, val, add)
 		tl_value_set_done()
 		return 0
 	}

@@ -12,17 +12,7 @@ if (setting_render_ssao)
 
 // Shadows
 if (setting_render_shadows)
-{
-	var s = 1;
-	if (render_active = "image" || render_active = "movie")
-	{
-		render_samples = -1
-		s = setting_render_shadows_samples
-	}
-	
-	for (var i = 0; i < s; i++)
-		render_high_shadows()
-}
+	render_high_shadows(render_active = "image" || render_active = "movie")
 
 // Composite current effects onto the scene
 finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
