@@ -1,13 +1,13 @@
 /// render_high_shadows(export)
 /// @arg export
 
-var export, resultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist, refresh;
+var export, resultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
 export = argument0
 sampleoffset = point3D(0, 0, 0)
 sunout = (background_sunlight_color_final != c_black)
 samplestart = 0
+sampleend = 0
 lightlist = array()
-refresh = false
 
 // Set samples to setting
 if (!export)
@@ -18,7 +18,7 @@ if (!export)
 		render_shadows_matrix = array_copy_1d(view_proj_matrix)
 		render_shadows_size = point2D(render_width, render_height)
 		render_samples = 0
-		refresh = true
+		render_shadows_clear = true
 	}
 	
 	if (render_samples >= setting_render_shadows_samples)
@@ -142,7 +142,7 @@ for (var s = samplestart; s < sampleend; s++)
 		draw_clear_alpha(c_black, 1)
 		draw_surface_exists(render_surface_sun_shadows_expo, 0, 0)
 		
-		if (s = 0 || refresh)
+		if (s = 0 || render_shadows_clear)
 			draw_clear_alpha(c_black, 1)
 	}
 	surface_reset_target()
@@ -152,7 +152,7 @@ for (var s = samplestart; s < sampleend; s++)
 		draw_clear_alpha(c_black, 1)
 		draw_surface_exists(render_surface_sun_shadows_dec, 0, 0)
 		
-		if (s = 0 || refresh)
+		if (s = 0 || render_shadows_clear)
 			draw_clear_alpha(c_black, 1)
 	}
 	surface_reset_target()
@@ -184,7 +184,7 @@ surface_set_target(render_surface_shadows)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_shadows_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec)
+		shader_high_shadows_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_samples)
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)
@@ -334,7 +334,7 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(light_shadows_exponent_surf, 0, 0)
 		
-				if (s = 0 || refresh)
+				if (s = 0 || render_shadows_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
@@ -344,7 +344,7 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(light_shadows_decimal_surf, 0, 0)
 		
-				if (s = 0 || refresh)
+				if (s = 0 || render_shadows_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
@@ -375,7 +375,7 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_shadows_unpack_set(other.light_shadows_exponent_surf, other.light_shadows_decimal_surf)
+				shader_high_shadows_unpack_set(other.light_shadows_exponent_surf, other.light_shadows_decimal_surf, render_samples)
 			}
 			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)

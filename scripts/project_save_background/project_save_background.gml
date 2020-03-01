@@ -55,6 +55,12 @@ json_save_object_start("background")
 	json_save_var_color("leaves_acacia_color", background_leaves_acacia_color)
 	json_save_var_color("leaves_dark_oak_color", background_leaves_dark_oak_color)
 	
+	json_save_var_bool("volumetric_rays", background_volumetric_rays)
+	json_save_var("volumetric_rays_scatter", background_volumetric_rays_scatter)
+	json_save_var("volumetric_rays_density", background_volumetric_rays_density)
+	json_save_var_color("volumetric_rays_color", background_volumetric_rays_color)
+	json_save_var_color("volumetric_rays_emissive", background_volumetric_rays_emissive)
+	
 	json_save_var_bool("fog_show", background_fog_show)
 	json_save_var_bool("fog_sky", background_fog_sky)
 	json_save_var_bool("fog_color_custom", background_fog_color_custom)

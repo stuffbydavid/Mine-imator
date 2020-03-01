@@ -128,6 +128,37 @@ if (background_desaturate_night)
 	tab_next()
 }
 
+// Volumetric fog
+tab_control_checkbox_expand()
+draw_checkbox_expand("backgroundvolumetricrays", dx, dy, background_volumetric_rays, action_background_volumetric_rays, checkbox_expand_background_volumetric_rays, action_checkbox_expand_background_volumetric_rays)
+tab_next()
+
+if (background_volumetric_rays && checkbox_expand_background_volumetric_rays)
+{
+	dx += 4
+	dw -= 4
+	
+	tab_control_meter()
+	draw_meter("backgroundvolumetricraysscatter", dx, dy, dw, background_volumetric_rays_scatter, 64, -1, 1, 0, 0.001, tab.background.tbx_volumetric_rays_scatter, action_background_volumetric_rays_scatter)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("backgroundvolumetricraysdensity", dx, dy, dw, round(background_volumetric_rays_density * 100), 64, 0, 100, 20, 1, tab.background.tbx_volumetric_rays_density, action_background_volumetric_rays_density)
+	tab_next()
+	
+	tab_control_color()
+	draw_button_color("backgroundvolumetricrayscolor", dx, dy, dw, background_volumetric_rays_color, c_white, false, action_background_volumetric_rays_color)
+	tab_next()
+	
+	tab_control_color()
+	draw_button_color("backgroundvolumetricraysemissive", dx, dy, dw, background_volumetric_rays_emissive, c_black, false, action_background_volumetric_rays_emissive)
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
 // Clouds
 tab_control_checkbox_expand()
 draw_checkbox_expand("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, checkbox_expand_background_clouds, action_checkbox_expand_background_clouds)

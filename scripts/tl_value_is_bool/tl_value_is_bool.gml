@@ -10,6 +10,7 @@ return (vid = e_value.SPAWN ||
 		vid = e_value.BG_IMAGE_SHOW ||
 		vid = e_value.BG_SKY_CLOUDS_SHOW ||
 		vid = e_value.BG_GROUND_SHOW ||
+		vid = e_value.BG_VOLUMETRIC_RAYS ||
 		vid = e_value.BG_FOG_SHOW ||
 		vid = e_value.BG_WIND ||
 		vid = e_value.CAM_ROTATE ||

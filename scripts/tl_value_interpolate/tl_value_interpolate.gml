@@ -38,6 +38,8 @@ switch (vid)
 	case e_value.BG_LEAVES_JUNGLE_COLOR:
 	case e_value.BG_LEAVES_ACACIA_COLOR:
 	case e_value.BG_LEAVES_DARK_OAK_COLOR:
+	case e_value.BG_VOLUMETRIC_RAYS_COLOR:
+	case e_value.BG_VOLUMETRIC_RAYS_EMISSIVE:
 	case e_value.BG_FOG_COLOR:
 	case e_value.BG_FOG_OBJECT_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
 	case e_value.CAM_BLADE_AMOUNT:
@@ -74,6 +76,7 @@ switch (vid)
 	case e_value.BG_SKY_CLOUDS_SHOW:
 	case e_value.BG_GROUND_SHOW:
 	case e_value.BG_GROUND_SLOT:
+	case e_value.BG_VOLUMETRIC_RAYS:
 	case e_value.BG_FOG_SHOW:
 	case e_value.BG_WIND:
 	case e_value.VISIBLE:

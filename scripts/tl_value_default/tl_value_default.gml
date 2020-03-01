@@ -110,6 +110,11 @@ switch (argument0)
 	case e_value.BG_LEAVES_JUNGLE_COLOR: return app.background_leaves_jungle_color
 	case e_value.BG_LEAVES_ACACIA_COLOR: return app.background_leaves_acacia_color
 	case e_value.BG_LEAVES_DARK_OAK_COLOR: return app.background_leaves_dark_oak_color
+	case e_value.BG_VOLUMETRIC_RAYS: return app.background_volumetric_rays
+	case e_value.BG_VOLUMETRIC_RAYS_SCATTER: return app.background_volumetric_rays_scatter
+	case e_value.BG_VOLUMETRIC_RAYS_DENSITY: return app.background_volumetric_rays_density
+	case e_value.BG_VOLUMETRIC_RAYS_COLOR: return app.background_volumetric_rays_color
+	case e_value.BG_VOLUMETRIC_RAYS_EMISSIVE: return app.background_volumetric_rays_emissive
 	case e_value.BG_FOG_SHOW: return app.background_fog_show
 	case e_value.BG_FOG_SKY: return app.background_fog_sky
 	case e_value.BG_FOG_CUSTOM_COLOR: return app.background_fog_color_custom

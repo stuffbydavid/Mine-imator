@@ -61,6 +61,7 @@ if (!err)
 	new_shader("shader_high_lighting_apply")
 	new_shader("shader_high_shadows_add")
 	new_shader("shader_high_shadows_unpack")
+	new_shader("shader_high_volumetric_rays")
 	
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -449,6 +450,24 @@ with (shader_map[?shader_depth_ortho])
 {
 	new_shader_uniform("uBlendColor")
 	new_shader_uniform("uColoredShadows")
+}
+
+with (shader_map[?shader_high_volumetric_rays])
+{
+	new_shader_uniform("uNear")
+	new_shader_uniform("uFar")
+	new_shader_uniform("uLightNear")
+	new_shader_uniform("uLightFar")
+	new_shader_uniform("uScattering")
+	new_shader_uniform("uDensity")
+	new_shader_uniform("uColor")
+	new_shader_uniform("uSunColor")
+	new_shader_uniform("uEmissiveColor")
+	new_shader_uniform("uSunMatrix")
+	new_shader_uniform("uViewMatrixInv")
+	new_shader_uniform("uProjMatrixInv")
+	new_shader_sampler("uDepthBuffer")
+	new_shader_sampler("uSunDepthBuffer")
 }
 
 return true

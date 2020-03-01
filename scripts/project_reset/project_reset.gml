@@ -117,6 +117,12 @@ background_sunlight_color = c_sunlight
 background_ambient_color = c_ambient
 background_night_color = c_night
 
+background_volumetric_rays = false
+background_volumetric_rays_scatter = 0
+background_volumetric_rays_density = 0.2
+background_volumetric_rays_color = c_white
+background_volumetric_rays_emissive = c_black
+
 background_fog_show = true
 background_fog_sky = true
 background_fog_color_custom = 0

@@ -30,10 +30,11 @@ gpu_set_zwriteenable(true)
 render_set_projection(render_light_from, render_light_to, vec3(0, 0, 1), render_light_fov, 1, 1, render_light_far)
 
 render_proj_from = render_light_from
-proj_matrix = matrix_get(matrix_projection)
-view_proj_matrix = matrix_multiply(matrix_get(matrix_view), matrix_get(matrix_projection))
+light_proj_matrix = matrix_get(matrix_projection)
+light_view_matrix = matrix_get(matrix_view)
+light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)
 
 proj_depth_near = render_light_near
 proj_depth_far = render_light_far
 
-render_light_matrix = view_proj_matrix
+render_light_matrix = light_view_proj_matrix

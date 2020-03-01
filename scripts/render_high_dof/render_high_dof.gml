@@ -11,7 +11,7 @@ surface_set_target(depthsurf)
 {
 	draw_clear(c_white)
 	render_world_start()
-	render_world(e_render_mode.HIGH_DOF_DEPTH)
+	render_world(e_render_mode.DEPTH)
 	render_world_done()
 }
 surface_reset_target()

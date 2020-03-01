@@ -4,7 +4,8 @@ globalvar render_view_current, render_width, render_height, render_ratio, render
 		  render_target, render_surface, render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights,
 		  render_particles, render_hidden, render_background, render_watermark, render_light_amount, render_light_from,
 		  render_light_to, render_light_near, render_light_far, render_light_fov, render_light_color, render_light_strength,
-		  render_light_fade_size, render_light_spot_sharpness, render_light_matrix, proj_from, proj_matrix, view_proj_matrix,
+		  render_light_fade_size, render_light_spot_sharpness, render_light_matrix, render_sun_matrix, render_sun_direction,
+		  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix, light_view_proj_matrix,
 		  proj_depth_near, proj_depth_far, render_proj_from, render_active;
 
 globalvar render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof, render_glow,
@@ -109,6 +110,11 @@ render_surface_sun_shadows_dec = null
 render_surface_fog = null
 render_surface_lens = null
 
+globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_shadows_clear;
+render_surface_sun_volume_expo = null
+render_surface_sun_volume_dec = null
+render_shadows_clear = false
+
 render_surface_post[0] = null
 render_surface_post[1] = null
 
@@ -130,7 +136,7 @@ render_mode_shader_map[?e_render_mode.COLOR_FOG_LIGHTS] = shader_color_fog_light
 render_mode_shader_map[?e_render_mode.ALPHA_FIX] = shader_alpha_fix
 render_mode_shader_map[?e_render_mode.ALPHA_TEST] = shader_alpha_test
 render_mode_shader_map[?e_render_mode.HIGH_SSAO_DEPTH_NORMAL] = shader_high_ssao_depth_normal
-render_mode_shader_map[?e_render_mode.HIGH_DOF_DEPTH] = shader_depth
+render_mode_shader_map[?e_render_mode.DEPTH] = shader_depth
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_DEPTH] = shader_depth_ortho
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT_DEPTH] = shader_depth
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_DEPTH] = shader_depth_point

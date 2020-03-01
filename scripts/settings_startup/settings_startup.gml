@@ -214,6 +214,7 @@ checkbox_expand_settings_aa = true
 checkbox_expand_settings_watermark = true
 checkbox_expand_background_clouds = true
 checkbox_expand_background_ground = true
+checkbox_expand_background_volumetric_rays = true
 checkbox_expand_background_fog = true
 checkbox_expand_background_wind = true
 checkbox_expand_frameeditor_rotatepoint = true

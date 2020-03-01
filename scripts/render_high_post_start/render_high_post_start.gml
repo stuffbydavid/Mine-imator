@@ -1,11 +1,11 @@
 /// render_high_post_start(basesurf)
 /// @arg basesurf
 
-var basesurf = argument0;
+var prevsurf, basesurf;
+prevsurf = argument0
 
 if (!render_effects_done)
 {
-	var prevsurf = basesurf;
 	render_surface_post[0] = surface_require(render_surface_post[0], render_width, render_height)
 	basesurf = render_surface_post[0]
 	render_post_index = !render_post_index
@@ -30,3 +30,5 @@ if (render_camera_lens_dirt)
 	}
 	surface_reset_target()
 }
+
+return basesurf
