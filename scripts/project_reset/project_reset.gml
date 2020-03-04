@@ -63,7 +63,7 @@ background_sky_rotation = 0
 background_sunlight_range = 2000
 background_sunlight_follow = false
 background_sunlight_strength = 0
-background_sunlight_angle = .5
+background_sunlight_angle = .526
 background_desaturate_night = false
 background_desaturate_night_amount = 0
 
@@ -118,6 +118,7 @@ background_ambient_color = c_ambient
 background_night_color = c_night
 
 background_volumetric_rays = false
+background_volumetric_rays_sky = false
 background_volumetric_rays_scatter = 0
 background_volumetric_rays_density = 0.2
 background_volumetric_rays_color = c_white

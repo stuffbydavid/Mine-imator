@@ -1,7 +1,3 @@
-#define PI 3.14159265
-#define TAU PI * 2.0
-#define MAXSAMPLES 64
-
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 uniform vec4 uBlendColor;
@@ -65,7 +61,7 @@ void main()
 					dif *= 1.0 - clamp((distance(fragCoord, vec2(0.5, 0.5)) - 0.5 * uLightSpotSharpness) / (0.5 * max(0.01, 1.0 - uLightSpotSharpness)), 0.0, 1.0);
 					
 					// Calculate bias
-					float bias = 0.1 * (uLightFar / fragDepth);
+					float bias = 1.0 + (.2 * min(1.0, vLightBleed + uBleedLight));
 					
 					// Shadow
 					float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, fragCoord)) * (uLightFar - uLightNear);

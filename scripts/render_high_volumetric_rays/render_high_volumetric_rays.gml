@@ -7,23 +7,25 @@ prevsurf = argument0
 export = argument1
 sampleoffset = vec3(0)
 
-if (render_samples < min(setting_render_shadows_samples, 32) || render_shadows_clear || export)
+if (render_samples < setting_render_shadows_samples || render_shadows_clear || export)
 {
 	if (export)
 	{
-		framesamples = min(setting_render_shadows_samples, 32)
+		framesamples = setting_render_shadows_samples
 		render_samples = framesamples
 	}
 	else
 		framesamples = 1
 	
+	// Render whole world for depth, but only store a limited range
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height, true, true)
 	depthsurf = render_surface[0]
 	surface_set_target(depthsurf)
 	{
-		draw_clear(c_white)
-		render_world_start(2000)
-		render_world(e_render_mode.DEPTH)
+		draw_clear_alpha(c_white, background_volumetric_rays_sky)
+		render_world_start()
+		proj_depth_far = max(2000, background_sunlight_range)
+		render_world(e_render_mode.DEPTH_NO_SKY)
 		render_world_done()
 	}
 	surface_reset_target()
@@ -146,7 +148,7 @@ surface_set_target(resultsurf)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_shadows_unpack_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, min(render_samples, 32))
+		shader_high_shadows_unpack_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples)
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)

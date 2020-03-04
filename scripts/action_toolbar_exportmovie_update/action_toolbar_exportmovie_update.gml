@@ -59,6 +59,11 @@ else
 {
 	// Save to movie
 	buffer_get_surface(exportmovie_buffer, exportmovie_surface, 0, 0, 0)
+	
+	// Surface buffer GM bug
+	repeat (buffer_get_size(exportmovie_buffer))
+		buffer_write(exportmovie_buffer, buffer_u8, 0)
+	
 	buffer_save(exportmovie_buffer, temp_file)
 	
 	var err = movie_frame(temp_file);

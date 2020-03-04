@@ -77,6 +77,7 @@ switch (vid)
 	case e_value.BG_GROUND_SHOW:
 	case e_value.BG_GROUND_SLOT:
 	case e_value.BG_VOLUMETRIC_RAYS:
+	case e_value.BG_VOLUMETRIC_RAYS_SKY:
 	case e_value.BG_FOG_SHOW:
 	case e_value.BG_WIND:
 	case e_value.VISIBLE:

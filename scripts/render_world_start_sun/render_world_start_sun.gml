@@ -5,8 +5,8 @@
 
 render_light_from = argument0
 render_light_to = argument1
-render_light_near = world_size/2
-render_light_far = -world_size/2
+render_sun_near = world_size/2
+render_sun_far = -world_size/2
 render_light_fov = 45
 render_light_color = background_sunlight_color_final
 render_light_strength = 1 + background_sunlight_strength
@@ -18,7 +18,7 @@ var mV = matrix_build_lookat(render_light_from[X], render_light_from[Y], render_
 							 render_light_to[X], render_light_to[Y], render_light_to[Z],
 							 0, 0, 1);
 
-var mP = matrix_create_ortho(-background_sunlight_range/2, background_sunlight_range/2, background_sunlight_range/2, -background_sunlight_range/2, render_light_near, render_light_far);
+var mP = matrix_create_ortho(-background_sunlight_range/2, background_sunlight_range/2, background_sunlight_range/2, -background_sunlight_range/2, render_sun_near, render_sun_far);
 
 camera_set_view_mat(cam_render, mV)
 camera_set_proj_mat(cam_render, mP)
@@ -29,8 +29,8 @@ light_proj_matrix = matrix_get(matrix_projection)
 light_view_matrix = matrix_get(matrix_view)
 light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)
 
-proj_depth_near = render_light_near
-proj_depth_far = render_light_far
+proj_depth_near = render_sun_near
+proj_depth_far = render_sun_far
 
 render_sun_matrix = light_view_proj_matrix
 render_sun_direction = vec3_normalize(point3D_sub(render_light_from, render_light_to))

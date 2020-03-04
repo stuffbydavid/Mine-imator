@@ -12887,6 +12887,14 @@
             }
         },
         {
+            "Key": "c2c262dc-38d8-439f-afc8-8d54fa9a1aa4",
+            "Value": {
+                "id": "c6dd3592-f6f4-4f01-ab26-3aa353743d3a",
+                "resourcePath": "scripts\\action_background_volumetric_rays_sky\\action_background_volumetric_rays_sky.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "c3046351-3811-4a4a-9efc-10452b48705a",
             "Value": {
                 "id": "40763a71-006c-4665-9700-7d90df2576c0",
@@ -17055,6 +17063,7 @@
         "d429f732-0608-4f1c-9b58-d537cda03cdd",
         "72897204-1ded-447b-88a7-90c79be3b660",
         "0f243be7-c6d2-4492-a7ce-cdc28faef839",
+        "c2c262dc-38d8-439f-afc8-8d54fa9a1aa4",
         "5c582e19-cfd7-47a7-8602-79c68f9762f1",
         "b091d257-2edc-43e1-9248-9e84700dd18d",
         "0eba918b-2735-4aef-8790-c463b737eac3",

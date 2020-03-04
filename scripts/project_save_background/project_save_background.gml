@@ -56,6 +56,7 @@ json_save_object_start("background")
 	json_save_var_color("leaves_dark_oak_color", background_leaves_dark_oak_color)
 	
 	json_save_var_bool("volumetric_rays", background_volumetric_rays)
+	json_save_var_bool("volumetric_rays_sky", background_volumetric_rays_sky)
 	json_save_var("volumetric_rays_scatter", background_volumetric_rays_scatter)
 	json_save_var("volumetric_rays_density", background_volumetric_rays_density)
 	json_save_var_color("volumetric_rays_color", background_volumetric_rays_color)

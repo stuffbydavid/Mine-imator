@@ -2,11 +2,11 @@
 /// @arg depth
 /// @arg sundepth
 
-render_set_uniform("uNear", cam_near)
-render_set_uniform("uFar", cam_far)
+render_set_uniform("uNear", proj_depth_near)
+render_set_uniform("uFar", proj_depth_far)
 
-render_set_uniform("uLightNear", render_light_near)
-render_set_uniform("uLightFar", render_light_far)
+render_set_uniform("uSunNear", render_sun_near)
+render_set_uniform("uSunFar", render_sun_far)
 
 render_set_uniform("uScattering", app.background_volumetric_rays_scatter)
 render_set_uniform("uDensity", app.background_volumetric_rays_density)
@@ -28,3 +28,4 @@ texture_set_stage(sampler_map[?"uSunDepthBuffer"], surface_get_texture(argument1
 gpu_set_texfilter_ext(sampler_map[?"uSunDepthBuffer"], true)
 
 render_set_uniform_vec3("uCameraPosition", cam_from[X], cam_from[Y], cam_from[Z])
+render_set_uniform_vec2("uScreenSize", render_width, render_height)

@@ -1,7 +1,3 @@
-#define PI 3.14159265
-#define TAU PI * 2.0
-#define MAXSAMPLES 64
-
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 uniform vec4 uBlendColor;
@@ -12,8 +8,8 @@ uniform vec3 uLightPosition;
 uniform vec3 uLightDirection;
 uniform vec4 uLightColor;
 uniform float uLightStrength;
-uniform float uLightNear;
-uniform float uLightFar;
+uniform float uSunNear;
+uniform float uSunFar;
 
 uniform sampler2D uDepthBuffer;
 
@@ -63,7 +59,7 @@ void main()
 			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0)
 			{	
 				// Calculate bias
-				float bias = (1.0 + (.2 * min(1.0, vLightBleed + uBleedLight))) / abs(uLightFar - uLightNear);
+				float bias = (1.0 + (.2 * min(1.0, vLightBleed + uBleedLight))) / abs(uSunFar - uSunNear);
 				
 				// Colored shadows
 				if (uColoredShadows > 0)

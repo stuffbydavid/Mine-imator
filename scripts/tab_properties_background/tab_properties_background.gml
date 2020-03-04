@@ -138,6 +138,10 @@ if (background_volumetric_rays && checkbox_expand_background_volumetric_rays)
 	dx += 4
 	dw -= 4
 	
+	tab_control_checkbox()
+	draw_checkbox("backgroundvolumetricrayssky", dx, dy, background_volumetric_rays_sky, action_background_volumetric_rays_sky)
+	tab_next()
+	
 	tab_control_meter()
 	draw_meter("backgroundvolumetricraysscatter", dx, dy, dw, background_volumetric_rays_scatter, 64, -1, 1, 0, 0.001, tab.background.tbx_volumetric_rays_scatter, action_background_volumetric_rays_scatter)
 	tab_next()

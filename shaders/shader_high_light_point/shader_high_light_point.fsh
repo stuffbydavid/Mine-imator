@@ -1,7 +1,5 @@
 #define SQRT05 0.707106781
 #define PI 3.14159265
-#define TAU PI * 2.0
-#define MAXSAMPLES 64
 
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
