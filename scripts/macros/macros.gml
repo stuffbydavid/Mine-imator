@@ -13,7 +13,7 @@
 #macro mineimator_version_extra		"Pre-alpha 1"
 #macro mineimator_version_date		"2020.01.14"
 #macro gm_runtime					GM_runtime_version
-#macro minecraft_version			"1.15.1"
+#macro minecraft_version			"20w10a"
 
 // File formats
 #macro project_format				e_project.FORMAT_130

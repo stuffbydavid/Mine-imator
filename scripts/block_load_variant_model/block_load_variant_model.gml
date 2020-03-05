@@ -12,7 +12,10 @@ if (is_undefined(map[?"model"]))
 }
 			
 // Model
-var blockmodel = block_load_model_file(load_assets_dir + mc_models_directory + map[?"model"] + ".json")
+var blockname, blockmodel;
+blockname = string_replace(map[?"model"], "minecraft:", "")
+blockmodel = block_load_model_file(load_assets_dir + mc_models_directory + blockname + ".json")
+
 if (!blockmodel)
 	return false
 				

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.03.04"
+        "lastchange": "2020.03.05"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -601,7 +601,6 @@
         "enderman": "Enderman",
         "slime": "Slime",
         "ghast": "Ghast",
-        "zombie_pigman": "Zombie Pigman",
         "chicken": "Chicken",
         "cow": "Cow",
         "mooshroom": "Mooshroom",
@@ -681,6 +680,9 @@
         "pillager": "Pillager",
         "wandering_trader": "Wandering Trader",
         "bee": "Bee",
+        "piglin": "Piglin",
+        "zombified_piglin": "Zombified piglin",
+        "hoglin": "Hoglin",
         "part/": {
             "body": "Body",
             "right_arm": "Right arm",
@@ -1026,7 +1028,10 @@
                 "normal_nectar": "Normal (With nectar)",
                 "angry_nectar": "Angry (With nectar)",
                 "player": "Player",
-                "creeper": "Creeper"
+                "creeper": "Creeper",
+                "zombified": "Zombified",
+                "crimson": "Crimson",
+                "warped": "Warped"
             }
         }
     },
@@ -1237,7 +1242,7 @@
         "chain_command_block": "Chain Command Block",
         "frosted_ice": "Frosted Ice",
         "magma_block": "Magma Block",
-        "nether_wart_block": "Nether Wart Block",
+        "wart_block": "Wart Block",
         "red_nether_bricks": "Red Nether Bricks",
         "bone_block": "Bone Block",
         "observer": "Observer",
@@ -1287,6 +1292,20 @@
         "beehive": "Beehive",
         "honey_block": "Honey Block",
         "honeycomb_block": "Honeycomb Block",
+        "nylium": "Nylium",
+        "crimson_fungus": "Crimson Fungus",
+        "crimson_roots": "Crimson Roots",
+        "warped_fungus": "Warped Fungus",
+        "warped_roots": "Warped Roots",
+        "nether_sprouts": "Nether sprouts",
+        "weeping_vines": "Weeping Vines",
+        "shroomlight": "Shroomlight",
+        "basalt": "Basalt",
+        "ancient_debris": "Ancient Debris",
+        "netherite_block": "Netherite Block",
+        "soul_soil": "Soul Soil",
+        "soul_fire": "Soul Fire",
+        "crying_obsidian": "Crying Obsidian",
         "state/": {
             "variant": "Variant",
             "snowy": "Snowy",
@@ -1510,7 +1529,19 @@
                 "zombie": "Zombie",
                 "creeper": "Creeper",
                 "skeleton": "Skeleton",
-                "wither_skeleton": "Wither Skeleton"
+                "wither_skeleton": "Wither Skeleton",
+                "crimson": "Crimson",
+                "crimson_hyphae": "Crimson Hyphae",
+                "crimson_stem": "Crimson Stem",
+                "warped": "Warped",
+                "warped_hyphae": "Warped Hyphae",
+                "warped_stem": "Warped Stem",
+                "soul_fire": "Soul Fire",
+                "tall": "Tall",
+                "normal": "Normal",
+                "nether": "Nether",
+                "weeping_vines": "Weeping Vines",
+                "weeping_vines_plant": "Weeping Vines Plant"
             }
         }
     },

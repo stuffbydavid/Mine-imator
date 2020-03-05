@@ -4168,7 +4168,8 @@
 	"legacy_model_names":
 	{
 		"fangs": "evoker_fangs",
-		"ender_crystal": "end_crystal"
+		"ender_crystal": "end_crystal",
+		"zombie_pigman": "piglin"
 	},
 	"legacy_model_states":
 	{
@@ -4198,6 +4199,11 @@
 		"llama": {
 			"variant": {
 				"normal": "creamy"
+			}
+		},
+		"piglin": {
+			"variant": {
+				"normal": "zombified"
 			}
 		}
 	},

@@ -3119,6 +3119,14 @@
             }
         },
         {
+            "Key": "2febeda0-01dd-4531-9aa5-af21120f0a0f",
+            "Value": {
+                "id": "8e122771-4cf2-48b3-8c04-d41c0af9a511",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\20w10a.zip.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "3038411e-d72c-4310-a7cd-76aef4b045b0",
             "Value": {
                 "id": "0ddadf54-467f-4ee6-bce3-46bae8e19022",
@@ -10183,14 +10191,6 @@
             }
         },
         {
-            "Key": "9bf75a12-aed4-41d0-a5be-c4ad673c9306",
-            "Value": {
-                "id": "560dd651-62cd-4768-862a-6b269cfd8536",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.15.1.midata.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "9c0a65ac-2277-44e9-b24a-667ee9c9aad3",
             "Value": {
                 "id": "7a3fa9dd-6eea-41ee-bdf7-6dee84be67ff",
@@ -12711,6 +12711,14 @@
             }
         },
         {
+            "Key": "c0a0a7a3-e07e-4e3e-a13f-2116c6e2260e",
+            "Value": {
+                "id": "65b5f79e-1d06-44f4-b865-bc9f263b78c6",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\20w10a.midata.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "c0d521ef-17c0-4d30-9f05-39dd71e1bef4",
             "Value": {
                 "id": "3bb25bb0-6ecd-460e-957b-5442d0b9ead2",
@@ -15172,14 +15180,6 @@
                 "id": "2b19c1d6-bdeb-4634-8bc2-00431410086f",
                 "resourcePath": "scripts\\action_toolbar_exportmovie_include_hidden\\action_toolbar_exportmovie_include_hidden.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "e698835c-931b-40fd-bf8d-3d13a827d599",
-            "Value": {
-                "id": "153d9175-5701-4f7c-8c94-42c08f178631",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.15.1.zip.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

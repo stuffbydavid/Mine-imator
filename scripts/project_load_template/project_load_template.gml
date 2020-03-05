@@ -33,29 +33,6 @@ with (new(obj_template))
 			if (legacy_model_names_map[?model_name] != undefined)
 				model_name = legacy_model_names_map[?model_name]
 			
-			// Update legacy model state values
-			if (legacy_model_state_values_map[?model_name] != undefined)
-			{
-				var modelmap, statename;
-				modelmap = legacy_model_state_values_map[?model_name]
-				
-				for (var i = 0; i < array_length_1d(model_state); i += 2)
-				{
-					statename = model_state[i]
-					
-					if (modelmap[?statename] != undefined)
-					{
-						var statemap, statevalue;
-						statemap = modelmap[?statename]
-						statevalue = model_state[i + 1]
-						
-						// Replace model state value with value from map
-						if (statemap[?statevalue] != undefined)
-							model_state[i + 1] = statemap[?statevalue]
-					}
-				}
-			}
-			
 			// Update legacy model states
 			if (legacy_model_states_map[?model_name] != undefined)
 			{
@@ -86,6 +63,29 @@ with (new(obj_template))
 						var statesprev = array_copy_1d(model_state);
 						model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 						state_vars_add(model_state, statesprev)
+					}
+					
+					// Update legacy model state values
+					if (legacy_model_state_values_map[?model_name] != undefined)
+					{
+						var modelmap, statename;
+						modelmap = legacy_model_state_values_map[?model_name]
+				
+						for (var i = 0; i < array_length_1d(model_state); i += 2)
+						{
+							statename = model_state[i]
+					
+							if (modelmap[?statename] != undefined)
+							{
+								var statemap, statevalue;
+								statemap = modelmap[?statename]
+								statevalue = model_state[i + 1]
+						
+								// Replace model state value with value from map
+								if (statemap[?statevalue] != undefined)
+									model_state[i + 1] = statemap[?statevalue]
+							}
+						}
 					}
 				}
 			}
