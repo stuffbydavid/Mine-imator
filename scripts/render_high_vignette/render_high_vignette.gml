@@ -1,4 +1,4 @@
-/// render_high_grain(basesurf)
+/// render_high_vignette(basesurf)
 /// @arg basesurf
 
 var prevsurf, resultsurf;

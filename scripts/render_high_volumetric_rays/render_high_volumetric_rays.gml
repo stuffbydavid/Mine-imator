@@ -37,9 +37,8 @@ if (render_samples < setting_render_shadows_samples || render_shadows_clear || e
 		{
 			if (s > 1)
 			{
-				var oseed = random_get_seed();
 				random_set_seed(s)
-	
+				
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
@@ -48,7 +47,6 @@ if (render_samples < setting_render_shadows_samples || render_shadows_clear || e
 				sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
-				random_set_seed(oseed)
 			}
 			
 			// Depth

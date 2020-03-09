@@ -69,7 +69,6 @@ for (var s = samplestart; s < sampleend; s++)
 		// Scatter position
 		if (s > 1)
 		{
-			var oseed = random_get_seed();
 			random_set_seed(s)
 	
 			var xyang, zang, dis;
@@ -80,7 +79,6 @@ for (var s = samplestart; s < sampleend; s++)
 			sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 			sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 			sampleoffset[Z] = lengthdir_z(dis, zang)
-			random_set_seed(oseed)
 		}
 	
 		// Update camera (position) if not previously initialized
@@ -223,9 +221,8 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 	
 			if (s > 1)
 			{
-				var oseed = random_get_seed();
 				random_set_seed(s)
-	
+				
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
@@ -233,7 +230,6 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 				sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
-				random_set_seed(oseed)
 			}
 	
 			if (type = e_tl_type.POINT_LIGHT)
