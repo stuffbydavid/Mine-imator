@@ -33,7 +33,7 @@ else
 		if (!file_exists_lib(fn))
 			return 0
 			
-		res = new_res(fn, e_res_type.SCHEMATIC)
+		res = new_res(fn, e_res_type.SCENERY)
 		if (res.replaced)
 		{
 			res_edit = res

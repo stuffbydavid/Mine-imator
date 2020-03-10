@@ -72,7 +72,7 @@ switch (type)
 		break
 	}
 		
-	case e_res_type.SCHEMATIC:
+	case e_res_type.SCENERY:
 	case e_res_type.FROM_WORLD:
 	{
 		ready = false

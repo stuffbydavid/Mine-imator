@@ -1,5 +1,5 @@
 /// res_load_scenery()
-/// @desc Creates vertex buffers from a schematic or blocks file.
+/// @desc Creates vertex buffers from a schematic, structure, or blocks file.
 ///		  The process is split into three steps for opening, reading and generating.
 
 var fname, openerr, rootmap;
@@ -328,7 +328,227 @@ switch (load_stage)
 				}
 			}
 		}
-		
+		else if (filename_ext(fname) = ".nbt") // .nbt file (Structures)
+		{
+			var structuremap, structureversion, sizemap;
+			
+			log("Loading .nbt", fname)
+			debug_timer_start()
+			
+			// GZunzip
+			file_delete_lib(temp_file)
+			gzunzip(fname, temp_file)
+			
+			if (!file_exists_lib(temp_file))
+			{
+				log("Structure error", "gzunzip")
+				break
+			}
+			
+			buffer_current = buffer_load(temp_file)
+			openerr = true
+			
+			// Read NBT structure
+			rootmap = nbt_read_tag_compound()
+			if (rootmap = null)
+				break
+			
+			debug_timer_stop("res_load_scenery, Parse NBT")
+			
+			structuremap = rootmap[?""]
+			
+			// Check DataVersion tag
+			structureversion = 1
+			
+			if (!is_undefined(structuremap[?"DataVersion"]))
+				structureversion = structuremap[?"DataVersion"]
+			
+			if (structureversion < 2000)
+			{
+				log("Structure error", "Unsupported format, version too low")
+				break
+			}
+			
+			// Get size
+			sizemap = structuremap[?"size"]
+			mc_builder.build_size[X] = sizemap[|X]
+			mc_builder.build_size[Y] = sizemap[|Z]
+			mc_builder.build_size[Z] = sizemap[|Y]
+			log("Size", mc_builder.build_size)
+			
+			if (mc_builder.build_size[X] <= 0 || 
+				mc_builder.build_size[Y] <= 0 || 
+				mc_builder.build_size[Z] <= 0)
+			{
+				log("Structure error", "Size cannot be 0")
+				break
+			}
+			
+			// Get palette
+			var paletteslist, palettelist;
+			paletteslist = structuremap[?"palettes"]
+			
+			// Pick random palette from list or use single palette
+			if (ds_list_valid(paletteslist))
+			{
+				var palette = irandom(ds_list_size(paletteslist));
+				palettelist = paletteslist[|palette]
+			}
+			else
+			{
+				palettelist = structuremap[?"palette"]
+				if (!ds_list_valid(palettelist))
+				{
+					log("Structure error", "Palette not found")
+					break
+				}
+			}	
+			
+			// Create block & state ID lookup
+			for (var i = 0; i < ds_list_size(palettelist); i++)
+			{
+				paletteblocks[i] = null
+				palettestateids[i] = null
+				palettewaterlogged[i] = false
+			}
+			
+			// Read palette
+			for (var i = 0; i < ds_list_size(palettelist); i++)
+			{
+				var block, blockmap, mcid, propertiesmap, propertiesarr, key;
+				blockmap = palettelist[|i]
+				mcid = blockmap[?"Name"]
+				block = mc_assets.block_id_map[?mcid]
+				propertiesarr = null
+				
+				if (!is_undefined(block))
+				{
+					var vars = array();
+					
+					// ID specific vars
+					if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?mcid]))
+						state_vars_add(vars, block.id_state_vars_map[?mcid])
+					
+					// Read Properties tag
+					propertiesmap = blockmap[?"Properties"]
+					if (!is_undefined(propertiesmap))
+					{
+						key = ds_map_find_first(propertiesmap)
+						
+						// Build properties array from map keys and values
+						var index = 0;
+						for (var j = 0; j < ds_map_size(propertiesmap); j++)
+						{
+							if (!string_contains(key, "_NBT_"))
+							{
+								propertiesarr[index * 2] = key
+								propertiesarr[index * 2 + 1] = propertiesmap[?key]
+								index++
+							}
+							
+							key = ds_map_find_next(propertiesmap, key)
+						}
+					}
+					
+					// Properties vars
+					state_vars_add(vars, propertiesarr)
+					
+					paletteblocks[i] = block
+					palettestateids[i] = block_get_state_id(block, vars)
+					
+					// Check waterlogged status
+					if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true")
+						palettewaterlogged[i] = true
+				}
+			}
+			
+			// Get block list
+			var blocklist = structuremap[?"blocks"]
+			if (!ds_list_valid(blocklist))
+			{
+				log("Structure error", "Block list not found")
+				break
+			}
+			
+			// Parse blocks states
+			with (mc_builder)
+			{
+				debug_timer_start()
+				builder_start()
+				
+				buffer_seek(block_obj, buffer_seek_start, 0)
+				buffer_seek(block_state_id, buffer_seek_start, 0)
+				buffer_seek(block_waterlogged, buffer_seek_start, 0)
+				
+				// Fill with default values
+				buffer_fill(block_obj, 0, buffer_s32, null, build_size_total * 4)
+				buffer_fill(block_state_id, 0, buffer_s32, null, build_size_total * 4)
+				buffer_fill(block_waterlogged, 0, buffer_u8, false, build_size_total)
+				
+				for (var i = 0; i < ds_list_size(blocklist); i++)
+				{
+					var blockmap, pos, state, index, block, stateid, waterlogged, entity, blocknbt;
+					blockmap = blocklist[|i]
+					pos = blockmap[?"pos"]
+					state = blockmap[?"state"]
+					index = builder_get_index(pos[|X], pos[|Z], pos[|Y])
+					
+					block = paletteblocks[state]
+					stateid = palettestateids[state]
+					waterlogged = palettewaterlogged[state]
+					entity = null
+					
+					// Tile entity/jigsaw
+					blocknbt = blockmap[?"nbt"];
+					if (!is_undefined(blocknbt))
+					{
+						var finalstate, eid, script;
+						finalstate = blocknbt[?"final_state"]
+						
+						if (!is_undefined(finalstate))
+						{
+							// Replace jigsaw with final_state value
+							block = mc_assets.block_id_map[?finalstate]
+							
+							if (is_undefined(block))
+								continue
+							
+							var vars = array();
+							
+							// ID specific vars
+							if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?finalstate]))
+								state_vars_add(vars, block.id_state_vars_map[?finalstate])
+							
+							stateid = block_get_state_id(block, vars)
+						}
+						else
+							entity = blocknbt[?"id"]
+					}
+					
+					buffer_poke(block_obj, index * 4, buffer_s32, block)
+					buffer_poke(block_state_id, index * 4, buffer_s32, stateid)
+					buffer_poke(block_waterlogged, index, buffer_u8, waterlogged)
+					
+					// Execute tile entity script
+					if (entity != null)
+					{
+						script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""))
+						if (script > -1)
+						{
+							build_pos_x = pos[|X]
+							build_pos_y = pos[|Z]
+							build_pos_z = pos[|Y]
+							block_current = builder_get(block_obj, build_pos_x, build_pos_y, build_pos_z)
+							block_state_id_current = builder_get(block_state_id, build_pos_x, build_pos_y, build_pos_z)
+							script_execute(script, blocknbt)
+						}
+					}
+				}
+			}
+			
+			debug_timer_stop("res_load_scenery, Parse blocks")
+			
+		}
 		// .blocks file (legacy)
 		else 
 		{
@@ -609,7 +829,7 @@ switch (load_stage)
 				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
 				if (type = e_res_type.FROM_WORLD) // Rename world import file
 				{
-					type = e_res_type.SCHEMATIC
+					type = e_res_type.SCENERY
 					var newname = filename_get_unique(app.project_folder + "\\" + display_name + ".schematic");
 					filename = filename_name(newname)
 					display_name = filename_new_ext(filename, "")

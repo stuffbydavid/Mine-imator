@@ -114,7 +114,7 @@ if (res_edit.filename != "") // Filename
 	draw_label(text_get("resourcesfilename") + ":", dx, dy + 12, fa_left, fa_middle)
 	draw_label(string_limit(string_remove_newline(res_edit.filename), dw - capwid - wid), dx + capwid, dy + 12, fa_left, fa_middle)
 	
-	if (res_edit.type != e_res_type.SCHEMATIC)
+	if (res_edit.type != e_res_type.SCENERY)
 		if (draw_button_normal("resourcesfilenameopen", dx + dw - wid, dy, wid, 24))
 			open_url(project_folder + "\\" + res_edit.filename)
 			

@@ -7,9 +7,6 @@ with (new(obj_resource))
 	save_id_map[?load_id] = load_id
 	
 	var typename = buffer_read_string_int()
-	
-	if (typename = "scenery")
-		typename = "schematic"
 		
 	if (typename = "item")
 		typename = "itemsheet"

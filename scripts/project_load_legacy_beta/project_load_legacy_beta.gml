@@ -386,7 +386,7 @@ for (var a = 0; a < load.lib_amount; a++)
 						load_id = loadid++
 						save_id_map[?load_id] = load_id
 		
-						type = e_res_type.SCHEMATIC
+						type = e_res_type.SCENERY
 						filename = filename_name(load.lib_scenery_source[a])
 						scenery_tl_add = false
 						

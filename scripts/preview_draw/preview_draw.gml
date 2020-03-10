@@ -33,7 +33,7 @@ if (preview.select.object_index = obj_resource)
 	playbutton = (preview.select.type = e_res_type.SOUND)
 	isplaying = audio_is_playing(preview.sound_play_index)
 	exportbutton = true
-	is3d = (preview.select.type = e_res_type.SCHEMATIC || preview.select.type = e_res_type.MODEL)
+	is3d = (preview.select.type = e_res_type.SCENERY || preview.select.type = e_res_type.MODEL)
 }
 else
 {
@@ -161,7 +161,7 @@ with (preview)
 							break
 						}
 						
-						case e_res_type.SCHEMATIC:
+						case e_res_type.SCENERY:
 						{
 							var displaysize = vec3_mul(vec3_mul(select.scenery_size, rep), vec3(block_size));
 							prevcam_zoom = max(32, displaysize[X], displaysize[Y], displaysize[Z]) * 1.5
@@ -284,7 +284,7 @@ with (preview)
 				{
 					switch (select.type)
 					{
-						case e_res_type.SCHEMATIC:
+						case e_res_type.SCENERY:
 							if (select.ready)
 								render_world_block(select.block_vbuffer, mc_res, true, select.scenery_size)
 							break

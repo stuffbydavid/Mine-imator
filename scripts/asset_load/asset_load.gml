@@ -76,8 +76,9 @@ switch (ext)
 		return true
 	
 	case ".schematic":
+	case ".nbt":
 	case ".blocks":
-		log("Opening schematic", fn)
+		log("Opening scenery", fn)
 		action_lib_scenery_load(fn)
 		return true
 		

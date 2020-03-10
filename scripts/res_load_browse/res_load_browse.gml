@@ -9,7 +9,7 @@ switch (type)
 		fn = file_dialog_open_pack()
 		break
 	
-	case e_res_type.SCHEMATIC:
+	case e_res_type.SCENERY:
 		fn = file_dialog_open_scenery()
 		break
 	
