@@ -332,6 +332,8 @@ switch (load_stage)
 		{
 			var structuremap, structureversion, sizemap;
 			
+			scenery_structure = true
+			
 			log("Loading .nbt", fname)
 			debug_timer_start()
 			
@@ -391,8 +393,8 @@ switch (load_stage)
 			// Pick random palette from list or use single palette
 			if (ds_list_valid(paletteslist))
 			{
-				var palette = irandom(ds_list_size(paletteslist));
-				palettelist = paletteslist[|palette]
+				scenery_palette_size = ds_list_size(paletteslist)
+				palettelist = paletteslist[|scenery_palette mod scenery_palette_size]
 			}
 			else
 			{
@@ -497,6 +499,20 @@ switch (load_stage)
 					stateid = palettestateids[state]
 					waterlogged = palettewaterlogged[state]
 					entity = null
+					
+					// Integrity test
+					random_set_seed(index)
+					
+					if (other.scenery_integrity_invert)
+					{
+						if (random(1) < other.scenery_integrity)
+							continue
+					}
+					else
+					{
+						if (random(1) > other.scenery_integrity)
+							continue
+					}
 					
 					// Tile entity/jigsaw
 					blocknbt = blockmap[?"nbt"];

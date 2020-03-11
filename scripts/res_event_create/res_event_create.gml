@@ -67,6 +67,11 @@ scenery_tl_add = null
 scenery_tl_list = null
 scenery_size = vec3(0)
 scenery_download_skins = true
+scenery_structure = false
+scenery_integrity = 1
+scenery_integrity_invert = false
+scenery_palette = 0
+scenery_palette_size = 0
 
 texture = null
 

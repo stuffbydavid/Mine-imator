@@ -34,6 +34,10 @@ with (new(obj_resource))
 	{
 		scenery_tl_add = value_get_real(map[?"scenery_tl_add"], true)
 		scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
+		
+		scenery_palette = value_get_real(map[?"scenery_palette"], scenery_palette)
+		scenery_integrity = value_get_real(map[?"scenery_integrity"], scenery_integrity)
+		scenery_integrity_invert = value_get_real(map[?"scenery_integrity_invert"], scenery_integrity_invert)
 	}
 	
 	sortlist_add(app.res_list, id)

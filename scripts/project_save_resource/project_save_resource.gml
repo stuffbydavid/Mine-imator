@@ -16,6 +16,10 @@ json_save_object_start()
 	{
 		json_save_var_bool("scenery_tl_add", scenery_tl_add)
 		json_save_var_bool("scenery_download_skins", scenery_download_skins)
+		
+		json_save_var("scenery_palette", scenery_palette)
+		json_save_var("scenery_integrity", scenery_integrity)
+		json_save_var_bool("scenery_integrity_invert", scenery_integrity_invert)
 	}
 	
 	if (load_folder != save_folder)

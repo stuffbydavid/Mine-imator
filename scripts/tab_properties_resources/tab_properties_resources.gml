@@ -101,6 +101,29 @@ else if (res_edit.type = e_res_type.ITEM_SHEET)
 	draw_dragger("resourcesitemsheetsizeheight", dx, dy, dw, res_edit.item_sheet_size[Y], 1 / 10, 1, no_limit, item_sheet_height, 1, tab.resources.tbx_item_sheet_height, action_res_item_sheet_size, capwid)
 	tab_next()
 }
+else if (res_edit.scenery_structure)
+{
+	if (res_edit.scenery_palette_size > 0)
+	{
+		tab_control(24)
+		draw_button_menu("resourcesscenerystructurepalette", e_menu.LIST, dx, dy, dw, 24, res_edit.scenery_palette, text_get("resourcesscenerystructurepalettenumber", res_edit.scenery_palette + 1), action_res_scenery_palette)
+		tab_next()
+		
+		/*
+		tab_control_meter()
+		draw_meter("resourcesscenerystructurepalette", dx, dy, dw, res_edit.scenery_palette, 64, 0, res_edit.scenery_palette_size - 1, 0, 1, tab.resources.tbx_scenery_palette, action_res_scenery_palette)
+		tab_next()
+		*/
+	}
+	
+	tab_control_meter()
+	draw_meter("resourcesscenerystructureintegrity", dx, dy, dw, round(res_edit.scenery_integrity * 100), 64, 0, 100, 100, 1, tab.resources.tbx_scenery_integrity, action_res_scenery_integrity)
+	tab_next()
+	
+	tab_control_checkbox()
+	draw_checkbox("resourcesscenerystructureintegrityinvert", dx, dy, res_edit.scenery_integrity_invert, action_res_scenery_integrity_invert)
+	tab_next()
+}
 
 if (res_edit.filename != "") // Filename
 {

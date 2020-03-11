@@ -104,6 +104,11 @@ with (properties)
 		
 		tbx_item_sheet_width = new_textbox_integer()
 		tbx_item_sheet_height = new_textbox_integer()
+		
+		tbx_scenery_integrity = new_textbox_integer()
+		tbx_scenery_integrity.suffix = "%"
+		
+		tbx_scenery_palette = new_textbox_integer()
 	}
 }
 

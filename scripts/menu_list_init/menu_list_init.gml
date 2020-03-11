@@ -549,6 +549,15 @@ switch (menu_name)
 		break
 	}
 	
+	// Resource pack preview skin
+	case "resourcesscenerystructurepalette":
+	{
+		for (var p = 0; p < res_edit.scenery_palette_size; p++)
+			menu_add_item(p, text_get("resourcesscenerystructurepalettenumber", p + 1))
+		
+		break
+	}
+	
 	// Timeline frame skin
 	case "frameeditorchartex":
 	case "frameeditorspblocktex":
