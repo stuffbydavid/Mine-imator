@@ -12482,7 +12482,7 @@
             "Key": "bd4878d5-a3b5-4e33-b8dc-aa9bb87d0f7a",
             "Value": {
                 "id": "4befa2cc-ec3c-4de1-821f-24b5e2928797",
-                "resourcePath": "scripts\\action_setting_schematic_remove_edges\\action_setting_schematic_remove_edges.yy",
+                "resourcePath": "scripts\\action_setting_scenery_remove_edges\\action_setting_scenery_remove_edges.yy",
                 "resourceType": "GMScript"
             }
         },

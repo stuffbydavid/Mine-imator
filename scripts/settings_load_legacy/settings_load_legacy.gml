@@ -188,7 +188,7 @@ setting_slow_modifier = buffer_read_double()
 /*setting_bend_round_default = */buffer_read_byte()
 /*setting_bend_detail = */buffer_read_int()
 /*setting_bend_scale = */buffer_read_double()
-setting_schematic_remove_edges = buffer_read_byte()
+setting_scenery_remove_edges = buffer_read_byte()
 
 if (load_format >= e_settings.FORMAT_106)
 	setting_liquid_animation = buffer_read_byte()

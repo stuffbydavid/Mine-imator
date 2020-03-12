@@ -154,7 +154,7 @@ setting_fast_modifier = 3
 setting_slow_modifier = 0.25
 
 setting_bend_style = "realistic"
-setting_schematic_remove_edges = false
+setting_scenery_remove_edges = false
 setting_liquid_animation = true
 setting_noisy_grass_water = false
 setting_remove_waterlogged_water = false

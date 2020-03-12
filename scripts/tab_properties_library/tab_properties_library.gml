@@ -99,7 +99,7 @@ switch (temp_edit.type)
 	
 	case e_temp_type.SCENERY:
 	{
-		// Schematic
+		// Scenery
 		var text;
 		if (temp_edit.scenery != null)
 			text = temp_edit.scenery.display_name

@@ -8,7 +8,7 @@ with (new(obj_timeline))
 {
 	temp = id
 	
-	// Set to be a part of the schematic
+	// Set to be a part of scenery
 	inherit_rot_point = true
 	part_of = root
 	part_root = root

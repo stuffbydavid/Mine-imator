@@ -12,7 +12,7 @@ dy += 10
 
 // Scenery
 tab_control_checkbox()
-draw_checkbox("settingsschematicremoveedges", dx, dy, setting_schematic_remove_edges, action_setting_schematic_remove_edges)
+draw_checkbox("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges)
 tab_next()
 tab_control_checkbox()
 draw_checkbox("settingsliquidanimation", dx, dy, setting_liquid_animation, action_setting_liquid_animation)

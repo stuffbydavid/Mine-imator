@@ -194,7 +194,7 @@ json_save_object_done()
 json_save_object_start("graphics")
 
 	json_save_var("bend_style", setting_bend_style)
-	json_save_var_bool("schematic_remove_edges", setting_schematic_remove_edges)
+	json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)
 	json_save_var_bool("liquid_animation", setting_liquid_animation)
 	json_save_var_bool("noisy_grass_water", setting_noisy_grass_water)
 	json_save_var_bool("remove_waterlogged_water", setting_remove_waterlogged_water)

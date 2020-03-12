@@ -4,7 +4,7 @@
 
 var fname, openerr, rootmap;
 fname = load_folder + "\\" + filename
-openerr = false
+openerr = ""
 rootmap = null
 
 switch (load_stage)
@@ -44,7 +44,7 @@ switch (load_stage)
 			}
 			
 			buffer_current = buffer_load(temp_file)
-			openerr = true
+			openerr = "errorloadschematic"
 		
 			// Read NBT structure
 			rootmap = nbt_read_tag_compound();
@@ -348,7 +348,7 @@ switch (load_stage)
 			}
 			
 			buffer_current = buffer_load(temp_file)
-			openerr = true
+			openerr = "errorloadscenery"
 			
 			// Read NBT structure
 			rootmap = nbt_read_tag_compound()
@@ -617,7 +617,7 @@ switch (load_stage)
 		
 		debug_timer_start()
 
-		openerr = false
+		openerr = ""
 		
 		// Free file buffer
 		buffer_delete(buffer_current)
@@ -886,10 +886,10 @@ switch (load_stage)
 if (rootmap != null)
 	ds_map_destroy(rootmap)
 
-// Schematic error
-if (openerr)
+// Scenery error
+if (openerr != "")
 {
-	error("errorloadschematic")
+	error(openerr)
 	buffer_delete(buffer_current)
 	with (app)
 		load_next()

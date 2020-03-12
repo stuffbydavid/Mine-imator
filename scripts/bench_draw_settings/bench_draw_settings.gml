@@ -145,9 +145,9 @@ else
 		case e_temp_type.SCENERY:
 		{
 			var capwid, text, tex;
-			capwid = text_caption_width("benchschematic", "benchblocktex")
+			capwid = text_caption_width("benchscenery", "benchblocktex")
 			
-			// Schematic
+			// Scenery
 			text = text_get("listnone")
 			if (bench_settings.scenery != null)
 				text = bench_settings.scenery.display_name

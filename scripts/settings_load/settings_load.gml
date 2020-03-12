@@ -251,7 +251,11 @@ if (filename_ext(fn) = ".midata")
 		else
 			setting_bend_style = value_get_string(graphicsmap[?"bend_style"], setting_bend_style)
 		
-		setting_schematic_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_schematic_remove_edges)
+		if (load_format < e_settings.FORMAT_130)
+			setting_scenery_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_scenery_remove_edges)
+		else
+			setting_scenery_remove_edges = value_get_real(graphicsmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
+		
 		setting_liquid_animation = value_get_real(graphicsmap[?"liquid_animation"], setting_liquid_animation)
 		setting_noisy_grass_water = value_get_real(graphicsmap[?"noisy_grass_water"], setting_noisy_grass_water)
 		setting_remove_waterlogged_water = value_get_real(graphicsmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
