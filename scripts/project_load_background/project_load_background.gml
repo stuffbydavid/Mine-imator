@@ -32,6 +32,9 @@ background_sunlight_angle = value_get_real(map[?"sunlight_angle"], background_su
 
 background_twilight = value_get_real(map[?"twilight"], background_twilight)
 
+background_desaturate_night = value_get_real(map[?"desaturate_night"], background_desaturate_night)
+background_desaturate_night_amount = value_get_real(map[?"desaturate_night_amount"], background_desaturate_night_amount)
+
 background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 background_sky_clouds_flat = value_get_real(map[?"sky_clouds_flat"], background_sky_clouds_flat)
 background_sky_clouds_story_mode = value_get_real(map[?"sky_clouds_story_mode"], background_sky_clouds_story_mode)

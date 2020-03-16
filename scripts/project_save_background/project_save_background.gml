@@ -22,6 +22,9 @@ json_save_object_start("background")
 	
 	json_save_var_bool("twilight", background_twilight)
 	
+	json_save_var_bool("desaturate_night", background_desaturate_night)
+	json_save_var("desaturate_night_amount", background_desaturate_night_amount)
+	
 	json_save_var_bool("sky_clouds_show", background_sky_clouds_show)
 	json_save_var_bool("sky_clouds_flat", background_sky_clouds_flat)
 	json_save_var_bool("sky_clouds_story_mode", background_sky_clouds_story_mode)
