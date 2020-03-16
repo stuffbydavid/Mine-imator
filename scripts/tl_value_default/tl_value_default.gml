@@ -88,6 +88,7 @@ switch (argument0)
 	case e_value.BG_SUNLIGHT_FOLLOW: return app.background_sunlight_follow
 	case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
 	case e_value.BG_SUNLIGHT_ANGLE: return app.background_sunlight_angle
+	case e_value.BG_TWILIGHT: return app.background_twilight
 	case e_value.BG_DESATURATE_NIGHT: return app.background_desaturate_night
 	case e_value.BG_DESATURATE_NIGHT_AMOUNT: return app.background_desaturate_night_amount
 	case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show

@@ -14295,6 +14295,14 @@
             }
         },
         {
+            "Key": "d6ebcdfd-7a21-4e4e-8f6c-2cc29d2b4647",
+            "Value": {
+                "id": "5751ec18-c562-43db-ac43-af850dd42bc4",
+                "resourcePath": "scripts\\action_background_twilight\\action_background_twilight.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "d73d23a4-e552-433c-8bac-ef52f78cac6f",
             "Value": {
                 "id": "ec7d3e53-5028-45b5-b9b3-4bd7cc512125",
@@ -17124,6 +17132,7 @@
         "0291e9e5-10d6-462f-a0bf-d2dc28a361e6",
         "8ecb4efc-89e3-44f2-b02c-5c746bcd6232",
         "46f6ef6b-fa20-4bff-9e10-0b1bb105ecb1",
+        "d6ebcdfd-7a21-4e4e-8f6c-2cc29d2b4647",
         "525ee58c-45a5-4e3b-a448-d15848851384",
         "5c3e7e46-edd3-478b-985e-309b55847bf0",
         "6438822a-d57c-480b-8972-d01117f2f14d",

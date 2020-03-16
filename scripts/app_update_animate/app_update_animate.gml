@@ -96,6 +96,7 @@ if (bgobject)
 	background_sunlight_follow				= bgobject.value[e_value.BG_SUNLIGHT_FOLLOW]
 	background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
 	background_sunlight_angle				= bgobject.value[e_value.BG_SUNLIGHT_ANGLE]
+	background_twilight						= bgobject.value[e_value.BG_TWILIGHT]
 	background_desaturate_night				= bgobject.value[e_value.BG_DESATURATE_NIGHT]
 	background_desaturate_night_amount		= bgobject.value[e_value.BG_DESATURATE_NIGHT_AMOUNT]
 	background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
@@ -156,7 +157,9 @@ if (bgobject)
 background_night_alpha = background_sky_night_alpha()
 background_sunset_alpha = background_sky_rise_set_alpha(false)
 background_sunrise_alpha = background_sky_rise_set_alpha(true)
-background_sunlight_color_final = merge_color(merge_color(background_sunlight_color, c_red, max(background_sunrise_alpha, background_sunset_alpha) * 0.75), c_black, background_night_alpha)
+
+var twilight_color = merge_color(background_sunlight_color, background_twilight ? c_red : c_white, max(background_sunrise_alpha, background_sunset_alpha) * 0.75);
+background_sunlight_color_final = merge_color(twilight_color, c_black, background_night_alpha)
 background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 background_fog_color_final = background_fog_color
 background_fog_object_color_final = (background_fog_object_color_custom ? background_fog_object_color : background_fog_color_final)

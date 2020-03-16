@@ -64,6 +64,7 @@ background_sunlight_range = 2000
 background_sunlight_follow = false
 background_sunlight_strength = 0
 background_sunlight_angle = .526
+background_twilight = true
 background_desaturate_night = false
 background_desaturate_night_amount = 0
 
