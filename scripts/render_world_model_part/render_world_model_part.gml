@@ -146,7 +146,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
 		var d, t, offz;
 		d = 60 * 3
-		t = current_step mod d * 2
+		t = app.background_time mod d * 2
 		if (t < d)
 			offz = ease("easeinoutquad", t / d) * 2 - 1
 		else
