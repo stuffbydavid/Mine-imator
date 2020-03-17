@@ -29,8 +29,5 @@ light_proj_matrix = matrix_get(matrix_projection)
 light_view_matrix = matrix_get(matrix_view)
 light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)
 
-proj_depth_near = render_sun_near
-proj_depth_far = render_sun_far
-
 render_sun_matrix = light_view_proj_matrix
 render_sun_direction = vec3_normalize(point3D_sub(render_light_from, render_light_to))

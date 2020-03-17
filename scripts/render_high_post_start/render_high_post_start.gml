@@ -17,6 +17,9 @@ if (!render_effects_done)
 	}
 	surface_reset_target()
 }
+else
+	basesurf = render_high_get_apply_surf()
+
 render_update_effects()
 
 // Initialize lens surface if needed

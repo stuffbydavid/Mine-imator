@@ -24,7 +24,7 @@ SamplerState uTexture : register(s1);
 
 float4 packDepth(float f)
 {
-	return float4(floor(f * 255.0) / 255.0, frac(f * 255.0), frac(f * 255.0 * 255.0), 1.0);
+	 return float4(floor(f * 255.0) / 255.0, frac(f * 255.0), frac(f * 255.0 * 255.0), 1.0);
 }
 
 float4 packNormal(float3 n)

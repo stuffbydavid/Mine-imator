@@ -13,10 +13,14 @@ surface_set_target_ext(0, depthsurf)
 surface_set_target_ext(1, normalsurf)
 surface_set_target_ext(2, brightnesssurf)
 {
-	draw_clear_alpha(c_white, 0)
+	gpu_set_blendmode_ext(bm_one, bm_zero)
+	
+	draw_clear_alpha(c_black, 0)
 	render_world_start(5000)
 	render_world(e_render_mode.HIGH_SSAO_DEPTH_NORMAL)
 	render_world_done()
+	
+	gpu_set_blendmode(bm_normal)
 }
 surface_reset_target()
 	

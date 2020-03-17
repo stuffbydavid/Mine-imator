@@ -88,12 +88,16 @@ for (var s = samplestart; s < sampleend; s++)
 		render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
 		surface_set_target(render_surface_sun_buffer)
 		{
+			gpu_set_blendmode_ext(bm_one, bm_zero)
+			
 			draw_clear(c_white)
 			render_world_start_sun(
 				point3D(background_light_data[0] + sampleoffset[X], background_light_data[1] + sampleoffset[Y], background_light_data[2] + sampleoffset[Z]), 
 				point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0))
 			render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 			render_world_done()
+			
+			gpu_set_blendmode(bm_normal)
 		}
 		surface_reset_target()
 	
@@ -251,11 +255,15 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 					render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size, true)
 					surface_set_target(render_surface_point_buffer[d])
 					{
+						gpu_set_blendmode_ext(bm_one, bm_zero)
+						
 						draw_clear(c_white)
 						render_world_start_light(point3D_add(world_pos, sampleoffset), point3D_add(point3D_add(world_pos, sampleoffset), look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE])
 						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 				
 						render_world_done()
+						
+						gpu_set_blendmode(bm_normal)
 					}
 					surface_reset_target()
 				}
@@ -284,6 +292,8 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size, true)
 				surface_set_target(render_surface_spot_buffer)
 				{
+					gpu_set_blendmode_ext(bm_one, bm_zero)
+					
 					draw_clear(c_white)
 			
 					render_world_start_light(point3D_add(world_pos, sampleoffset), point3D_add(lookat, sampleoffset), 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
@@ -293,6 +303,8 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 						render_world(e_render_mode.HIGH_LIGHT_SPOT_DEPTH)
 			
 					render_world_done()
+					
+					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
 		

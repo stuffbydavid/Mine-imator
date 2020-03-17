@@ -25,7 +25,7 @@ varying float vLightBleed;
 
 float unpackDepth(vec4 c)
 {
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
+	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0) + c.a / (255.0 * 255.0 * 255.0);
 }
 
 void main() 

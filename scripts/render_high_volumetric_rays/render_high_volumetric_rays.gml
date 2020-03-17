@@ -22,11 +22,18 @@ if (render_samples < setting_render_shadows_samples || render_shadows_clear || e
 	depthsurf = render_surface[0]
 	surface_set_target(depthsurf)
 	{
-		draw_clear_alpha(c_white, background_volumetric_rays_sky)
-		render_world_start()
-		proj_depth_far = max(2000, background_sunlight_range)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
+		
+		if (background_volumetric_rays_sky)
+			draw_clear_alpha(c_white, 1)
+		else
+			draw_clear_alpha(c_black, 0)
+		
+		render_world_start(10000)
 		render_world(e_render_mode.DEPTH_NO_SKY)
 		render_world_done()
+		
+		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	
@@ -53,12 +60,16 @@ if (render_samples < setting_render_shadows_samples || render_shadows_clear || e
 			render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
 			surface_set_target(render_surface_sun_buffer)
 			{
+				gpu_set_blendmode_ext(bm_one, bm_zero)
+				
 				draw_clear(c_white)
 				render_world_start_sun(
 					point3D(background_light_data[0] + sampleoffset[X], background_light_data[1] + sampleoffset[Y], background_light_data[2] + sampleoffset[Z]), 
 					point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0))
 				render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 				render_world_done()
+				
+				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
 		}

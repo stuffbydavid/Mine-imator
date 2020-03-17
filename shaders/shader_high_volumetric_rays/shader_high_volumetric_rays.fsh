@@ -66,7 +66,7 @@ vec3 posFromBuffer(vec2 coord, float depth)
 
 float unpackDepth(vec4 c)
 {
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
+	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0) + c.a / (255.0 * 255.0 * 255.0);
 }
 
 float getShadow(vec3 pos)
@@ -92,8 +92,8 @@ float getShadow(vec3 pos)
 
 void main()
 {
-	vec4 depth = texture2D(uDepthBuffer, vTexCoord);
-	vec3 wp = posFromBuffer(vTexCoord, unpackDepth(depth));
+	float depth = unpackDepth(texture2D(uDepthBuffer, vTexCoord));
+	vec3 wp = posFromBuffer(vTexCoord, depth);
     vec3 startPos = uCameraPosition;
 	
     vec3 rayVector = wp - startPos;
@@ -134,5 +134,8 @@ void main()
         currentPos += stepSize;
     }
 	
-    gl_FragColor = vec4(result.rgb * result.a * depth.a, 1.0);
+	if (depth > 0.0)
+		gl_FragColor = vec4(result.rgb * result.a, 1.0);
+	else
+		discard;
 }

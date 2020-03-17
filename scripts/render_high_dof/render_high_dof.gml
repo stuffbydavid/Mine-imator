@@ -9,10 +9,14 @@ render_surface[0] = surface_require(render_surface[0], render_width, render_heig
 depthsurf = render_surface[0]
 surface_set_target(depthsurf)
 {
+	gpu_set_blendmode_ext(bm_one, bm_zero)
+	
 	draw_clear(c_white)
 	render_world_start()
 	render_world(e_render_mode.DEPTH)
 	render_world_done()
+	
+	gpu_set_blendmode(bm_normal)
 }
 surface_reset_target()
 
