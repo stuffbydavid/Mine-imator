@@ -117,8 +117,8 @@ with (preview)
 		select.type = e_temp_type.PARTICLE_SPAWNER ||
 		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin)))
 		update = true
-
-	surface = surface_require(surface, size, size, is3d)
+	
+	surface = surface_require(surface, size, size, true)
 
 	if (update) 
 	{
