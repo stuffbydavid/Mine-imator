@@ -12,6 +12,15 @@ if (string_pos("assets/minecraft_", name) = 1)
 if (res = null)
 	return name
 
+// Legacy name
+if (string_pos("blocks/", name) = 1)
+{
+	name = string_replace(name, "blocks/", "block/")
+	
+	var newname = ds_map_find_key(legacy_block_texture_name_map, name);
+	name = (newname = undefined ? name : newname)
+}
+
 fn = load_folder + "\\" + id.name + "\\" + name + ".png" // Look in exported folder
 if (!file_exists_lib(fn)) // Look in the same folder
 	fn = load_folder + "\\" + name + ".png"
