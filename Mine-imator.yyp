@@ -3122,7 +3122,7 @@
             "Key": "2febeda0-01dd-4531-9aa5-af21120f0a0f",
             "Value": {
                 "id": "8e122771-4cf2-48b3-8c04-d41c0af9a511",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\20w10a.zip.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\20w12a.zip.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -12730,7 +12730,7 @@
             "Key": "c0a0a7a3-e07e-4e3e-a13f-2116c6e2260e",
             "Value": {
                 "id": "65b5f79e-1d06-44f4-b865-bc9f263b78c6",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\20w10a.midata.yy",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\20w12a.midata.yy",
                 "resourceType": "GMIncludedFile"
             }
         },

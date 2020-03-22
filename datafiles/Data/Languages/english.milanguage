@@ -1293,6 +1293,7 @@
         "beehive": "Beehive",
         "honey_block": "Honey Block",
         "honeycomb_block": "Honeycomb Block",
+        "target_block": "Target Block",
         "nylium": "Nylium",
         "crimson_fungus": "Crimson Fungus",
         "crimson_roots": "Crimson Roots",
@@ -1300,13 +1301,16 @@
         "warped_roots": "Warped Roots",
         "nether_sprouts": "Nether sprouts",
         "weeping_vines": "Weeping Vines",
+        "twisting_vines": "Twisting Vines",
         "shroomlight": "Shroomlight",
         "basalt": "Basalt",
         "ancient_debris": "Ancient Debris",
         "netherite_block": "Netherite Block",
         "soul_soil": "Soul Soil",
         "soul_fire": "Soul Fire",
+        "nether_gold_ore": "Nether Gold Ore",
         "crying_obsidian": "Crying Obsidian",
+        "respawn_anchor": "Respawn Anchor",
         "state/": {
             "variant": "Variant",
             "snowy": "Snowy",
@@ -1365,6 +1369,7 @@
             "wood": "Wood",
             "honey_level": "Honey level",
             "character": "Character",
+            "charges": "Charges",
             "value/": {
                 "true": "Yes",
                 "false": "No",
@@ -1542,7 +1547,10 @@
                 "normal": "Normal",
                 "nether": "Nether",
                 "weeping_vines": "Weeping Vines",
-                "weeping_vines_plant": "Weeping Vines Plant"
+                "weeping_vines_plant": "Weeping Vines Plant",
+                "twisting_vines": "Twisting Vines",
+                "twisting_vines_plant": "Twisting Vines Plant",
+                "polished_basalt": "Polished Basalt"
             }
         }
     },
@@ -1827,7 +1835,8 @@
                     "spark": "Spark",
                     "spell": "Spell",
                     "splash": "Splash",
-                    "sweep": "Sweep"
+                    "sweep": "Sweep",
+                    "soul": "Soul"
                 },
                 "teximage": "Image",
                 "teximage1": "Sheet 1",

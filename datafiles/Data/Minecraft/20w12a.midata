@@ -1,5 +1,5 @@
 {
-	"version": "20w10a",
+	"version": "20w12a",
 	"patch": 0,
 	"format": 5,
 	"characters": [
@@ -4431,6 +4431,11 @@
 			"id": "minecraft:honeycomb_block"
 		},
 		{
+			"name": "target_block",
+			"file": "target.json",
+			"id": "minecraft:target"
+		},
+		{
 			"name": "nylium",
 			"states": {
 				"variant": [
@@ -4447,27 +4452,8 @@
 		{
 			"name": "crimson_fungus",
 			"file": "crimson_fungus.json",
+			"light_bleeding": 1,
 			"id": "minecraft:crimson_fungus"
-		},
-		{
-			"name": "crimson_roots",
-			"file": "crimson_roots.json",
-			"id": "minecraft:crimson_roots"
-		},
-		{
-			"name": "warped_fungus",
-			"file": "warped_fungus.json",
-			"id": "minecraft:warped_fungus"
-		},
-		{
-			"name": "warped_roots",
-			"file": "warped_roots.json",
-			"id": "minecraft:warped_roots"
-		},
-		{
-			"name": "nether_sprouts",
-			"file": "nether_sprouts.json",
-			"id": "minecraft:nether_sprouts"
 		},
 		{
 			"name": "weeping_vines",
@@ -4477,10 +4463,50 @@
 					{ "value": "weeping_vines", "file": "weeping_vines.json" }
 				]
 			},
-			"default_state": "variant=weeping_vines_plant",
+			"default_state": "variant=weeping_vines",
+			"light_bleeding": 1,
 			"id": {
 				"minecraft:weeping_vines_plant": "variant=weeping_vines_plant",
 				"minecraft:weeping_vines": "variant=weeping_vines"
+			}
+		},
+		{
+			"name": "crimson_roots",
+			"file": "crimson_roots.json",
+			"light_bleeding": 1,
+			"id": "minecraft:crimson_roots"
+		},
+		{
+			"name": "warped_fungus",
+			"file": "warped_fungus.json",
+			"light_bleeding": 1,
+			"id": "minecraft:warped_fungus"
+		},
+		{
+			"name": "warped_roots",
+			"file": "warped_roots.json",
+			"light_bleeding": 1,
+			"id": "minecraft:warped_roots"
+		},
+		{
+			"name": "nether_sprouts",
+			"file": "nether_sprouts.json",
+			"light_bleeding": 1,
+			"id": "minecraft:nether_sprouts"
+		},
+		{
+			"name": "twisting_vines",
+			"states": {
+				"variant": [
+					{ "value": "twisting_vines_plant", "file": "twisting_vines_plant.json" },
+					{ "value": "twisting_vines", "file": "twisting_vines.json" }
+				]
+			},
+			"default_state": "variant=twisting_vines",
+			"light_bleeding": 1,
+			"id": {
+				"minecraft:twisting_vines_plant": "variant=twisting_vines_plant",
+				"minecraft:twisting_vines": "variant=twisting_vines"
 			}
 		},
 		{
@@ -4491,12 +4517,18 @@
 		},
 		{
 			"name": "basalt",
-			"file": "basalt.json",
 			"states": {
+				"variant": [
+					{ "value": "normal", "file": "basalt.json" },
+					{ "value": "polished_basalt", "file": "polished_basalt.json" }
+				],
 				"axis": [ "x", "y", "z" ]
 			},
-			"default_state": "axis=y",
-			"id": "minecraft:basalt"
+			"default_state": "variant=normal,axis=y",
+			"id": {
+				"minecraft:basalt": "variant=normal",
+				"minecraft:polished_basalt": "variant=polished_basalt"
+			}
 		},
 		{
 			"name": "ancient_debris",
@@ -4532,9 +4564,23 @@
 			"id": "minecraft:soul_fire"
 		},
 		{
+			"name": "nether_gold_ore",
+			"file": "nether_gold_ore.json",
+			"id": "minecraft:nether_gold_ore"
+		},
+		{
 			"name": "crying_obsidian",
 			"file": "crying_obsidian.json",
 			"id": "minecraft:crying_obsidian"
+		},
+		{
+			"name": "respawn_anchor",
+			"file": "respawn_anchor.json",
+			"states": {
+				"charges": [ "0", "1", "2", "3", "4" ]
+			},
+			"default_state": "charges=0",
+			"id": "minecraft:respawn_anchor"
 		}
 	],
 	"model_textures": [
@@ -5446,6 +5492,8 @@
 		"block/honey_block_side",
 		"block/honey_block_top",
 		"block/honeycomb_block",
+		"block/target_side",
+		"block/target_top",
 		"block/crimson_stem_top",
 		"block/stripped_crimson_stem",
 		"block/stripped_crimson_stem_top",
@@ -5470,17 +5518,29 @@
 		"block/warped_fungus",
 		"block/weeping_vines_plant",
 		"block/weeping_vines",
+		"block/twisting_vines_plant",
+		"block/twisting_vines",
 		"block/nether_sprouts",
 		"block/warped_wart_block",
 		"block/shroomlight",
 		"block/basalt_top",
 		"block/basalt_side",
+		"block/polished_basalt_top",
+		"block/polished_basalt_side",
 		"block/ancient_debris_side",
 		"block/ancient_debris_top",
 		"block/netherite_block",
 		"block/soul_fire_torch",
 		"block/soul_soil",
-		"block/crying_obsidian"
+		"block/nether_gold_ore",
+		"block/crying_obsidian",
+		"block/respawn_anchor_bottom",
+		"block/respawn_anchor_side0",
+		"block/respawn_anchor_side1",
+		"block/respawn_anchor_side2",
+		"block/respawn_anchor_side3",
+		"block/respawn_anchor_side4",
+		"block/respawn_anchor_top_off"
 	],
 	"block_textures_animated": [
 		"block/water_still",
@@ -5520,7 +5580,8 @@
 		"block/warped_stem",
 		"block/soul_fire_0",
 		"block/soul_fire_1",
-		"block/soul_fire_lantern"
+		"block/soul_fire_lantern",
+		"block/respawn_anchor_top"
 	],
 	"block_textures_color": {
 		"block/grass_block_top": "grass",
@@ -6092,7 +6153,18 @@
 		"particle/sweep_4",
 		"particle/sweep_5",
 		"particle/sweep_6",
-		"particle/sweep_7"
+		"particle/sweep_7",
+		"particle/soul_0",
+		"particle/soul_1",
+		"particle/soul_2",
+		"particle/soul_3",
+		"particle/soul_4",
+		"particle/soul_5",
+		"particle/soul_6",
+		"particle/soul_7",
+		"particle/soul_8",
+		"particle/soul_9",
+		"particle/soul_10"
 	],
 	"particles": [
 		{
@@ -6218,6 +6290,11 @@
 		{
 			"name": "note",
 			"texture": "particle/note"
+		},
+		{
+			"name": "soul",
+			"texture": "particle/soul",
+			"frames": 11
 		}
 	],
 	"biomes": [
