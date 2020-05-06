@@ -20,10 +20,12 @@ gpu_set_alphatestref(0)
 gpu_set_texfilter(false)
 gpu_set_tex_mip_enable(mip_off)
 gpu_set_tex_mip_filter(tf_linear)
+gpu_set_tex_max_mip(4)
 gpu_set_texrepeat(true)
 gpu_set_ztestenable(false)
 gpu_set_zwriteenable(false)
 render_set_culling(true)
+
 
 render_view_current = null
 render_width = 1
