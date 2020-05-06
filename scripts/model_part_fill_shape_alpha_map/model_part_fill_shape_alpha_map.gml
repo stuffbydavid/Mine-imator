@@ -20,7 +20,6 @@ if (part.shape_list = null)
 var parttexname = model_part_get_texture_name(part, texnamemap);
 for (var s = 0; s < ds_list_size(part.shape_list); s++)
 {
-	instance_activate_object(part.shape_list[|s])
 	with (part.shape_list[|s])
 	{
 		if (type = "plane" && is3d)
@@ -69,5 +68,4 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 			}
 		}
 	}
-	instance_deactivate_object(part.shape_list[|s])
 }
