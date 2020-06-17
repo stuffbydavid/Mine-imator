@@ -36,7 +36,7 @@ with (new(obj_block_load_model_file))
 	// Parent
 	parent = null
 	if (res = null && is_string(map[?"parent"]))
-		parent = block_load_model_file(load_assets_dir + mc_models_directory + map[?"parent"] + ".json")
+		parent = block_load_model_file(load_assets_dir + mc_models_directory + string_replace(map[?"parent"], "minecraft:", "") + ".json")
 		
 	// Textures
 	texture_map = null
@@ -50,6 +50,8 @@ with (new(obj_block_load_model_file))
 			for (var i = 0; i < ds_list_size(map[?"textures"]); i++)
 			{
 				var texname = ds_list_find_value(map[?"textures"], i);
+				texname = string_replace(texname, "minecraft:", "")
+				
 				texture_map[?string(i)] = block_load_model_file_texture(texname, res)
 			}
 		}
@@ -61,6 +63,8 @@ with (new(obj_block_load_model_file))
 			while (!is_undefined(key))
 			{
 				var texname = ds_map_find_value(map[?"textures"], key);
+				texname = string_replace(texname, "minecraft:", "")
+				
 				texture_map[?key] = block_load_model_file_texture(texname, res)
 				key = ds_map_find_next(map[?"textures"], key)
 			}

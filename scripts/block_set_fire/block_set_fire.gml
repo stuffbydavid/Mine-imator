@@ -4,12 +4,13 @@
 if (builder_scenery && !builder_scenery_legacy)
 	return 0
 
-var east, west, south, north, up;
+var east, west, south, north, up, variant;
 east = "false"
 west = "false"
 south = "false"
 north = "false"
 up = "false"
+variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
 
 if (!build_edge_xp)
 {
@@ -46,6 +47,6 @@ if (!build_edge_zp)
 		up = "true"
 }
 
-block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "up", up))
+block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", east, "west", west, "south", south, "north", north, "up", up))
 
 return 0

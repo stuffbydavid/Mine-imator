@@ -3,8 +3,8 @@
     "file/": {
         "language": "English",
         "translator": "David & Nimi",
-        "forversion": "1.2.6",
-        "lastchange": "2020.01.12"
+        "forversion": "1.2.7",
+        "lastchange": "2020.05.17"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1020,7 +1020,8 @@
                 "low": "Low",
                 "high": "High",
                 "normal_nectar": "Normal (With nectar)",
-                "angry_nectar": "Angry (With nectar)"
+                "angry_nectar": "Angry (With nectar)",
+                "shooting": "Shooting"
             }
         }
     },
@@ -1227,7 +1228,7 @@
         "chain_command_block": "Chain Command Block",
         "frosted_ice": "Frosted Ice",
         "magma_block": "Magma Block",
-        "nether_wart_block": "Nether Wart Block",
+        "wart_block": "Wart Block",
         "red_nether_bricks": "Red Nether Bricks",
         "bone_block": "Bone Block",
         "observer": "Observer",
@@ -1277,6 +1278,27 @@
         "beehive": "Beehive",
         "honey_block": "Honey Block",
         "honeycomb_block": "Honeycomb Block",
+        "target_block": "Target Block",
+        "nylium": "Nylium",
+        "crimson_fungus": "Crimson Fungus",
+        "crimson_roots": "Crimson Roots",
+        "warped_fungus": "Warped Fungus",
+        "warped_roots": "Warped Roots",
+        "nether_sprouts": "Nether sprouts",
+        "weeping_vines": "Weeping Vines",
+        "twisting_vines": "Twisting Vines",
+        "shroomlight": "Shroomlight",
+        "basalt": "Basalt",
+        "ancient_debris": "Ancient Debris",
+        "netherite_block": "Netherite Block",
+        "soul_soil": "Soul Soil",
+        "soul_fire": "Soul Fire",
+        "nether_gold_ore": "Nether Gold Ore",
+        "crying_obsidian": "Crying Obsidian",
+        "respawn_anchor": "Respawn Anchor",
+        "lodestone": "Lodestone",
+        "blackstone": "Blackstone",
+        "chain": "Chain",
         "state/": {
             "variant": "Variant",
             "snowy": "Snowy",
@@ -1334,6 +1356,8 @@
             "hanging": "Hanging",
             "wood": "Wood",
             "honey_level": "Honey level",
+            "character": "Character",
+            "charges": "Charges",
             "value/": {
                 "true": "Yes",
                 "false": "No",
@@ -1494,7 +1518,35 @@
                 "end_stone_brick": "End Stone Brick",
                 "red_nether_brick": "Red Nether Brick",
                 "smooth": "Smooth",
-                "cut_red_sandstone": "Cut Red Sandstone"
+                "cut_red_sandstone": "Cut Red Sandstone",
+                "crimson": "Crimson",
+                "crimson_hyphae": "Crimson Hyphae",
+                "crimson_stem": "Crimson Stem",
+                "warped": "Warped",
+                "warped_hyphae": "Warped Hyphae",
+                "warped_stem": "Warped Stem",
+                "soul_fire": "Soul Fire",
+                "tall": "Tall",
+                "normal": "Normal",
+                "nether": "Nether",
+                "weeping_vines": "Weeping Vines",
+                "weeping_vines_plant": "Weeping Vines Plant",
+                "twisting_vines": "Twisting Vines",
+                "twisting_vines_plant": "Twisting Vines Plant",
+                "polished_basalt": "Polished Basalt",
+                "blackstone": "Blackstone",
+                "gilded_blackstone": "Gilded Blackstone",
+                "polished_blackstone": "Polished Blackstone",
+                "chiseled_polished_blackstone": "Chisled Polished Blackstone",
+                "polished_blackstone_bricks": "Polished Blackstone Bricks",
+                "cracked_polished_blackstone_bricks": "Cracked Polished Blackstone Bricks",
+                "soul_torch": "Soul Torch",
+                "warped_fungus": "Warped Fungus",
+                "warped_roots": "Warped Roots",
+                "crimson_fungus": "Crimson Fungus",
+                "crimson_roots": "Crimson Roots",
+                "soul_latern": "Soul Lantern",
+                "soul_campfire": "Soul Campfire"
             }
         }
     },
@@ -1779,7 +1831,8 @@
                     "spark": "Spark",
                     "spell": "Spell",
                     "splash": "Splash",
-                    "sweep": "Sweep"
+                    "sweep": "Sweep",
+                    "soul": "Soul"
                 },
                 "teximage": "Image",
                 "teximage1": "Sheet 1",
@@ -2235,7 +2288,12 @@
         "eroded_badlands": "Eroded Badlands",
         "modified_wooded_badlands_plateau": "Modified Wooded Badlands Plateau",
         "modified_badlands_plateau": "Modified Badlands Plateau",
-        "the_void": "The Void"
+        "the_void": "The Void",
+        "nether_wastes": "Nether Wastes",
+        "crimson_forest": "Crimson Forest",
+        "warped_forest": "Warped Forest",
+        "soulsand_valley": "Soulsand Valley",
+        "basalt_delta": "Basalt Deltas"
     },
     "resources": "Resources",
     "resourcestip": "Manage your imported files.",

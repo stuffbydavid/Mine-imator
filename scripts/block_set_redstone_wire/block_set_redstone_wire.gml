@@ -15,6 +15,9 @@ vertex_brightness = powreal
 if (builder_scenery && !builder_scenery_legacy)
 	return 0
 
+if (!builder_scenery && build_size_total = 1)
+	return 0
+
 var east, west, south, north;
 east = "none"
 west = "none"
@@ -110,7 +113,7 @@ if (!build_edge_yp)
 	}
 	
 	if (south = "none" && !build_edge_zn && !(block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)) // Check down
-	{
+	{ 
 		block = builder_get(block_obj, build_pos_x, build_pos_y + 1, build_pos_z - 1)
 		if (block = block_current)
 			south = "side"
@@ -147,6 +150,15 @@ if (!build_edge_yn)
 		if (block = block_current)
 			north = "side"
 	}
+}
+
+// Not connected, set to cross shape
+if (east = "none" && west = "none" && south = "none" && north = "none")
+{
+	east = "side"
+	west = "side"
+	south = "side"
+	north = "side"
 }
 
 block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "power", pow))

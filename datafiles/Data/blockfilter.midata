@@ -1,7 +1,6 @@
 {
-	"active": true,
+	"active": false,
 	"invert": false,
 	"blocks": [
-		"stone"
 	]
 }

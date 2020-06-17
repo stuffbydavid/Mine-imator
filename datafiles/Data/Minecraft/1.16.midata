@@ -1,5 +1,5 @@
 {
-	"version": "1.15.1",
+	"version": "1.16",
 	"patch": 0,
 	"format": 5,
 	"characters": [
@@ -59,11 +59,14 @@
 		},
 		{
 			"name": "ghast",
-			"file": "ghast.mimodel"
-		},
-		{
-			"name": "zombie_pigman",
-			"file": "zombie_pigman.mimodel"
+			"file": "ghast.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "normal", "texture": "entity/ghast/ghast" },
+					{ "value": "shooting", "texture": "entity/ghast/ghast_shooting" }
+				]
+			},
+			"default_state": "variant=normal"
 		},
 		{
 			"name": "chicken",
@@ -248,6 +251,7 @@
 		{
 			"name": "llama",
 			"file": "llama.mimodel",
+			"version": 1,
 			"states": {
 				"variant": [
 					{ "value": "brown", "texture": "entity/llama/brown" },
@@ -636,6 +640,42 @@
 				]
 			},
 			"default_state": "variant=normal"
+		},
+		{
+			"name": "piglin",
+			"version": 1,
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "piglin.mimodel" },
+					{ "value": "zombified", "file": "zombified_piglin.mimodel" }
+				]
+			},
+			"default_state": "variant=normal"
+		},
+		{
+			"name": "hoglin",
+			"states": {
+				"variant": [
+					{ "value": "hoglin", "file": "hoglin.mimodel"},
+					{ "value": "zoglin", "file": "zoglin.mimodel"}
+				]
+			},
+			"default_state": "variant=hoglin"
+		},
+		{
+			"name": "strider",
+			"file": "strider.mimodel",
+			"states": {
+				"cold": [
+					{ "value": "false" },
+					{ "value": "true", "texture": "entity/strider/strider_cold" }
+				],
+				"saddle": [
+					{ "value": "false", "shape_hide": [ "saddle" ] },
+					{ "value": "true" }
+				]
+			},
+			"default_state": "cold=false,saddle=false"
 		}
 	],
 	"special_blocks": [
@@ -683,7 +723,9 @@
 					{ "value": "birch", "texture": "entity/signs/birch" },
 					{ "value": "jungle", "texture": "entity/signs/jungle" },
 					{ "value": "acacia", "texture": "entity/signs/acacia" },
-					{ "value": "darkoak", "texture": "entity/signs/dark_oak" }
+					{ "value": "darkoak", "texture": "entity/signs/dark_oak" },
+					{ "value": "crimson", "texture": "entity/signs/crimson" },
+					{ "value": "warped", "texture": "entity/signs/warped" }
 				]
 			},
 			"default_state": "variant=standing,wood=oak"
@@ -900,7 +942,9 @@
 					{ "value": "birch", "file": "birch_planks.json" },
 					{ "value": "jungle", "file": "jungle_planks.json" },
 					{ "value": "acacia", "file": "acacia_planks.json" },
-					{ "value": "dark_oak", "file": "dark_oak_planks.json" }
+					{ "value": "dark_oak", "file": "dark_oak_planks.json" },
+					{ "value": "crimson", "file": "crimson_planks.json" },
+					{ "value": "warped", "file": "warped_planks.json" }
 				]	
 			},
 			"default_state": "variant=oak",
@@ -910,7 +954,9 @@
 				"minecraft:birch_planks": "variant=birch",
 				"minecraft:jungle_planks": "variant=jungle",
 				"minecraft:acacia_planks": "variant=acacia",
-				"minecraft:dark_oak_planks": "variant=dark_oak"
+				"minecraft:dark_oak_planks": "variant=dark_oak",
+				"minecraft:crimson_planks": "variant=crimson",
+				"minecraft:warped_planks": "variant=warped"
 			}
 		},
 		{
@@ -1022,7 +1068,9 @@
 					{ "value": "birch", "file": "birch_wood.json" },
 					{ "value": "jungle", "file": "jungle_wood.json" },
 					{ "value": "acacia", "file": "acacia_wood.json" },
-					{ "value": "dark_oak", "file": "dark_oak_wood.json" }
+					{ "value": "dark_oak", "file": "dark_oak_wood.json" },
+					{ "value": "crimson_hyphae", "file": "crimson_hyphae.json" },
+					{ "value": "warped_hyphae", "file": "warped_hyphae.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -1033,7 +1081,9 @@
 				"minecraft:birch_wood": "variant=birch",
 				"minecraft:jungle_wood": "variant=jungle",
 				"minecraft:acacia_wood": "variant=acacia",
-				"minecraft:dark_oak_wood": "variant=dark_oak"
+				"minecraft:dark_oak_wood": "variant=dark_oak",
+				"minecraft:crimson_hyphae": "variant=crimson_hyphae",
+				"minecraft:warped_hyphae": "variant=warped_hyphae"
 			}
 		},
 		{
@@ -1045,7 +1095,9 @@
 					{ "value": "birch", "file": "stripped_birch_wood.json" },
 					{ "value": "jungle", "file": "stripped_jungle_wood.json" },
 					{ "value": "acacia", "file": "stripped_acacia_wood.json" },
-					{ "value": "dark_oak", "file": "stripped_dark_oak_wood.json" }
+					{ "value": "dark_oak", "file": "stripped_dark_oak_wood.json" },
+					{ "value": "crimson_hyphae", "file": "stripped_crimson_hyphae.json" },
+					{ "value": "warped_hyphae", "file": "stripped_warped_hyphae.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -1056,7 +1108,9 @@
 				"minecraft:stripped_birch_wood": "variant=birch",
 				"minecraft:stripped_jungle_wood": "variant=jungle",
 				"minecraft:stripped_acacia_wood": "variant=acacia",
-				"minecraft:stripped_dark_oak_wood": "variant=dark_oak"
+				"minecraft:stripped_dark_oak_wood": "variant=dark_oak",
+				"minecraft:stripped_crimson_hyphae": "variant=crimson_hyphae",
+				"minecraft:stripped_warped_hyphae": "variant=warped_hyphae"
 			}
 		},
 		{
@@ -1068,7 +1122,9 @@
 					{ "value": "birch", "file": "birch_log.json" },
 					{ "value": "jungle", "file": "jungle_log.json" },
 					{ "value": "acacia", "file": "acacia_log.json" },
-					{ "value": "dark_oak", "file": "dark_oak_log.json" }
+					{ "value": "dark_oak", "file": "dark_oak_log.json" },
+					{ "value": "crimson_stem", "file": "crimson_stem.json" },
+					{ "value": "warped_stem", "file": "warped_stem.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -1079,7 +1135,9 @@
 				"minecraft:birch_log": "variant=birch",
 				"minecraft:jungle_log": "variant=jungle",
 				"minecraft:acacia_log": "variant=acacia",
-				"minecraft:dark_oak_log": "variant=dark_oak"
+				"minecraft:dark_oak_log": "variant=dark_oak",
+				"minecraft:crimson_stem": "variant=crimson_stem",
+				"minecraft:warped_stem": "variant=warped_stem"
 			}
 		},
 		{
@@ -1091,7 +1149,9 @@
 					{ "value": "birch", "file": "stripped_birch_log.json" },
 					{ "value": "jungle", "file": "stripped_jungle_log.json" },
 					{ "value": "acacia", "file": "stripped_acacia_log.json" },
-					{ "value": "dark_oak", "file": "stripped_dark_oak_log.json" }
+					{ "value": "dark_oak", "file": "stripped_dark_oak_log.json" },
+					{ "value": "crimson_stem", "file": "stripped_crimson_stem.json" },
+					{ "value": "warped_stem", "file": "stripped_warped_stem.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -1102,7 +1162,9 @@
 				"minecraft:stripped_birch_log": "variant=birch",
 				"minecraft:stripped_jungle_log": "variant=jungle",
 				"minecraft:stripped_acacia_log": "variant=acacia",
-				"minecraft:stripped_dark_oak_log": "variant=dark_oak"
+				"minecraft:stripped_dark_oak_log": "variant=dark_oak",
+				"minecraft:stripped_crimson_stem": "variant=crimson_stem",
+				"minecraft:stripped_warped_stem": "variant=warped_stem"
 			}
 		},
 		{
@@ -1486,7 +1548,12 @@
 					{ "value": "andesite", "file": "andesite_slab.json"},
 					{ "value": "red_nether_brick", "file": "red_nether_brick_slab.json"},
 					{ "value": "polished_andesite", "file": "polished_andesite_slab.json"},
-					{ "value": "diorite", "file": "diorite_slab.json"}
+					{ "value": "diorite", "file": "diorite_slab.json"},
+					{ "value": "crimson", "file": "crimson_slab.json"},
+					{ "value": "warped", "file": "warped_slab.json"},
+					{ "value": "blackstone", "file": "blackstone_slab.json"},
+					{ "value": "polished_blackstone", "file": "polished_blackstone_slab.json"},
+					{ "value": "polished_blackstone_brick", "file": "polished_blackstone_brick_slab.json"}
 				],
 				"type": [ "top", "bottom", "double" ]
 			},
@@ -1527,7 +1594,12 @@
 				"minecraft:andesite_slab": "variant=andesite",
 				"minecraft:red_nether_brick_slab": "variant=red_nether_brick",
 				"minecraft:polished_andesite_slab": "variant=polished_andesite",
-				"minecraft:diorite_slab": "variant=diorite"
+				"minecraft:diorite_slab": "variant=diorite",
+				"minecraft:crimson_slab": "variant=crimson",
+				"minecraft:warped_slab": "variant=warped",
+				"minecraft:blackstone_slab": "variant=blackstone",
+				"minecraft:polished_blackstone_slab": "variant=polished_blackstone",
+				"minecraft:polished_blackstone_brick_slab": "variant=polished_blackstone_brick"
 			}
 		},
 		{
@@ -1557,37 +1629,55 @@
 		},
 		{
 			"name": "torch",
-			"file": "torch.json",
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "torch.json" },
+					{ "value": "soul_torch", "file": "soul_torch.json" }
+				]
+			},
+			"default_state": "variant=normal",
 			"brightness": 0.75,
-			"id": "minecraft:torch"
+			"id": {
+				"minecraft:torch": "variant=normal",
+				"minecraft:soul_torch": "variant=soul_torch"
+			}
 		},
 		{
 			"name": "wall_torch",
-			"file": "wall_torch.json",
 			"states": {
+				"variant": [
+					{ "value": "normal", "file": "wall_torch.json" },
+					{ "value": "soul_torch", "file": "soul_wall_torch.json" }
+				],
 				"facing": [ "north", "east", "south", "west" ]
 			},
-			"default_state": "facing=east",
+			"default_state": "facing=east,variant=normal",
 			"brightness": 0.75,
-			"id": "minecraft:wall_torch"
+			"id": {
+				"minecraft:wall_torch": "variant=normal",
+				"minecraft:soul_wall_torch": "variant=soul_torch"
+			}
 		},
 		{
 			"name": "fire",
-			"file": "fire.json",
 			"type": "fire",
 			"states": {
+				"variant": [
+					{ "value": "normal", "file": "fire.json" },
+					{ "value": "soul_fire", "file": "soul_fire.json" }
+				],
 				"east": [ "false", "true" ],
 				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
 				"south": [ "false", "true" ],
 				"up": [ "false", "true" ]
 			},
+			"default_state": "variant=normal",
 			"brightness": 1,
-			"wind": {
-				"axis": "all",
-				"ymin": 8
-			},
-			"id": "minecraft:fire"
+			"id": {
+				"minecraft:fire": "variant=normal",
+				"minecraft:soul_fire": "variant=soul_fire"
+			}
 		},
 		{
 			"name": "spawner",
@@ -1629,7 +1719,12 @@
 					{ "value": "red_nether_brick", "file": "red_nether_brick_stairs.json" },
 					{ "value": "polished_andesite", "file": "polished_andesite_stairs.json" },
 					{ "value": "diorite", "file": "diorite_stairs.json" },
-					{ "value": "polished_diorite", "file": "polished_diorite_stairs.json" }
+					{ "value": "polished_diorite", "file": "polished_diorite_stairs.json" },
+					{ "value": "crimson", "file": "crimson_stairs.json" },
+					{ "value": "warped", "file": "warped_stairs.json" },
+					{ "value": "blackstone", "file": "blackstone_stairs.json"},
+					{ "value": "polished_blackstone", "file": "polished_blackstone_stairs.json"},
+					{ "value": "polished_blackstone_brick", "file": "polished_blackstone_brick_stairs.json"}
 				],
 				"facing": [ "north", "south", "east", "west" ],
 				"half": [ "top", "bottom" ],
@@ -1667,7 +1762,12 @@
 				"minecraft:red_nether_brick_stairs": "variant=red_nether_brick",
 				"minecraft:polished_andesite_stairs": "variant=polished_andesite",
 				"minecraft:diorite_stairs": "variant=diorite",
-				"minecraft:polished_diorite_stairs": "variant=polished_diorite"
+				"minecraft:polished_diorite_stairs": "variant=polished_diorite",
+				"minecraft:crimson_stairs": "variant=crimson",
+				"minecraft:warped_stairs": "variant=warped",
+				"minecraft:blackstone_stairs": "variant=blackstone",
+				"minecraft:polished_blackstone_stairs": "variant=polished_blackstone",
+				"minecraft:polished_blackstone_brick_stairs": "variant=polished_blackstone_brick"
 			}
 		},
 		{
@@ -1710,7 +1810,7 @@
 				"north": [ "none", "side", "up" ],
 				"south": [ "none", "side", "up" ]
 			},
-			"default_state": "power=0",
+			"default_state": "power=0,east=side,west=side,north=side,south=side",
 			"id": "minecraft:redstone_wire"
 		},
 		{
@@ -1764,7 +1864,7 @@
 		{
 			"name": "sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak" ],
+				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "crimson", "warped" ],
 				"rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
 			},
 			"default_state": "rotation=0,wood=oak",
@@ -1776,7 +1876,9 @@
 					"wood=birch": "wood=birch,variant=standing",
 					"wood=jungle": "wood=jungle,variant=standing",
 					"wood=acacia": "wood=acacia,variant=standing",
-					"wood=dark_oak": "wood=darkoak,variant=standing"
+					"wood=dark_oak": "wood=darkoak,variant=standing",
+					"wood=crimson": "wood=crimson,variant=standing",
+					"wood=warped": "wood=warped,variant=standing"
 				},
 				"has_text": true,
 				"text_position": [ 0, 13.6, 0.8 ],
@@ -1806,7 +1908,9 @@
 				"minecraft:birch_sign": "wood=birch",
 				"minecraft:jungle_sign": "wood=jungle",
 				"minecraft:acacia_sign": "wood=acacia",
-				"minecraft:dark_oak_sign": "wood=dark_oak"
+				"minecraft:dark_oak_sign": "wood=dark_oak",
+				"minecraft:crimson_sign": "wood=crimson",
+				"minecraft:warped_sign": "wood=warped"
 			}
 		},
 		{
@@ -1820,7 +1924,9 @@
 					{ "value": "jungle", "file": "jungle_door.json" },
 					{ "value": "acacia", "file": "acacia_door.json" },
 					{ "value": "dark_oak", "file": "dark_oak_door.json" },
-					{ "value": "iron", "file": "iron_door.json" }
+					{ "value": "iron", "file": "iron_door.json" },
+					{ "value": "crimson", "file": "crimson_door.json" },
+					{ "value": "warped", "file": "warped_door.json" }
 				],
 				"hinge": [ "right", "left" ],
 				"facing": [ "north", "south", "east", "west" ],
@@ -1852,7 +1958,9 @@
 				"minecraft:jungle_door": "variant=jungle",
 				"minecraft:acacia_door": "variant=acacia",
 				"minecraft:dark_oak_door": "variant=dark_oak",
-				"minecraft:iron_door": "variant=iron"
+				"minecraft:iron_door": "variant=iron",
+				"minecraft:crimson_door": "variant=crimson",
+				"minecraft:warped_door": "variant=warped"
 			}
 		},
 		{
@@ -1876,7 +1984,7 @@
 		{
 			"name": "wall_sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak" ],
+				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "crimson", "warped" ],
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"timeline": {
@@ -1887,7 +1995,9 @@
 					"wood=birch": "wood=birch,variant=wall",
 					"wood=jungle": "wood=jungle,variant=wall",
 					"wood=acacia": "wood=acacia,variant=wall",
-					"wood=dark_oak": "wood=darkoak,variant=wall"
+					"wood=dark_oak": "wood=darkoak,variant=wall",
+					"wood=crimson": "wood=crimson,variant=wall",
+					"wood=warped": "wood=warped,variant=wall"
 				},
 				"has_text": true,
 				"text_position": [ 0, 8.2, 1.5 ],
@@ -1911,7 +2021,9 @@
 				"minecraft:birch_wall_sign": "wood=birch",
 				"minecraft:jungle_wall_sign": "wood=jungle",
 				"minecraft:acacia_wall_sign": "wood=acacia",
-				"minecraft:dark_oak_wall_sign": "wood=dark_oak"
+				"minecraft:dark_oak_wall_sign": "wood=dark_oak",
+				"minecraft:crimson_wall_sign": "wood=crimson",
+				"minecraft:warped_wall_sign": "wood=warped"
 			}
 		},
 		{
@@ -1963,7 +2075,10 @@
 					{ "value": "birch", "file": "birch_pressure_plate.json" },
 					{ "value": "jungle", "file": "jungle_pressure_plate.json" },
 					{ "value": "acacia", "file": "acacia_pressure_plate.json" },
-					{ "value": "dark_oak", "file": "dark_oak_pressure_plate.json" }
+					{ "value": "dark_oak", "file": "dark_oak_pressure_plate.json" },
+					{ "value": "crimson", "file": "crimson_pressure_plate.json" },
+					{ "value": "warped", "file": "warped_pressure_plate.json" },
+					{ "value": "polished_blackstone", "file": "polished_blackstone_pressure_plate.json" }
 				],
 				"powered": [ "false", "true" ]
 			},
@@ -1979,7 +2094,10 @@
 				"minecraft:birch_pressure_plate": "variant=birch",
 				"minecraft:jungle_pressure_plate": "variant=jungle",
 				"minecraft:acacia_pressure_plate": "variant=acacia",
-				"minecraft:dark_oak_pressure_plate": "variant=dark_oak"
+				"minecraft:dark_oak_pressure_plate": "variant=dark_oak",
+				"minecraft:crimson_pressure_plate": "variant=crimson",
+				"minecraft:warped_pressure_plate": "variant=warped",
+				"minecraft:polished_blackstone_pressure_plate": "variant=polished_blackstone"
 			}
 		},
 		{
@@ -2030,7 +2148,10 @@
 					{ "value": "birch", "file": "birch_button.json" },
 					{ "value": "jungle", "file": "jungle_button.json" },
 					{ "value": "acacia", "file": "acacia_button.json" },
-					{ "value": "dark_oak", "file": "dark_oak_button.json" }
+					{ "value": "dark_oak", "file": "dark_oak_button.json" },
+					{ "value": "crimson", "file": "crimson_button.json" },
+					{ "value": "warped", "file": "warped_button.json" },
+					{ "value": "polished_blackstone", "file": "polished_blackstone_button.json" }
 				],
 				"face": [ "ceiling", "wall", "floor" ],
 				"facing": [ "north", "south", "east", "west" ],
@@ -2069,7 +2190,10 @@
 				"minecraft:birch_button": "variant=birch",
 				"minecraft:jungle_button": "variant=jungle",
 				"minecraft:acacia_button": "variant=acacia",
-				"minecraft:dark_oak_button": "variant=dark_oak"
+				"minecraft:dark_oak_button": "variant=dark_oak",
+				"minecraft:crimson_button": "variant=crimson",
+				"minecraft:warped_button": "variant=warped",
+				"minecraft:polished_blackstone_button": "variant=polished_blackstone"
 			}
 		},
 		{
@@ -2125,7 +2249,9 @@
 					{ "value": "jungle", "file": "jungle_fence.json" },
 					{ "value": "acacia", "file": "acacia_fence.json" },
 					{ "value": "dark_oak", "file": "dark_oak_fence.json" },
-					{ "value": "nether_brick", "file": "nether_brick_fence.json" }
+					{ "value": "nether_brick", "file": "nether_brick_fence.json" },
+					{ "value": "crimson", "file": "crimson_fence.json" },
+					{ "value": "warped", "file": "warped_fence.json" }
 				],
 				"east": [ "false", "true" ],
 				"west": [ "false", "true" ],
@@ -2141,7 +2267,9 @@
 				"minecraft:jungle_fence": "variant=jungle",
 				"minecraft:acacia_fence": "variant=acacia",
 				"minecraft:dark_oak_fence": "variant=dark_oak",
-				"minecraft:nether_brick_fence": "variant=nether_brick"
+				"minecraft:nether_brick_fence": "variant=nether_brick",
+				"minecraft:crimson_fence": "variant=crimson",
+				"minecraft:warped_fence": "variant=warped"
 			}
 		},
 		{
@@ -2268,7 +2396,9 @@
 					{ "value": "jungle", "file": "jungle_trapdoor.json" },
 					{ "value": "acacia", "file": "acacia_trapdoor.json" },
 					{ "value": "dark_oak", "file": "dark_oak_trapdoor.json" },
-					{ "value": "iron", "file": "iron_trapdoor.json" }
+					{ "value": "iron", "file": "iron_trapdoor.json" },
+					{ "value": "crimson", "file": "crimson_trapdoor.json" },
+					{ "value": "warped", "file": "warped_trapdoor.json" }
 				],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "false", "true" ],
@@ -2310,7 +2440,9 @@
 				"minecraft:jungle_trapdoor": "variant=jungle",
 				"minecraft:acacia_trapdoor": "variant=acacia",
 				"minecraft:dark_oak_trapdoor": "variant=dark_oak",
-				"minecraft:iron_trapdoor": "variant=iron"
+				"minecraft:iron_trapdoor": "variant=iron",
+				"minecraft:crimson_trapdoor": "variant=crimson",
+				"minecraft:warped_trapdoor": "variant=warped"
 			}
 		},
 		{
@@ -2499,7 +2631,9 @@
 					{ "value": "birch", "file": "birch_fence_gate.json" },
 					{ "value": "jungle", "file": "jungle_fence_gate.json" },
 					{ "value": "acacia", "file": "acacia_fence_gate.json" },
-					{ "value": "dark_oak", "file": "dark_oak_fence_gate.json" }
+					{ "value": "dark_oak", "file": "dark_oak_fence_gate.json" },
+					{ "value": "crimson", "file": "crimson_fence_gate.json" },
+					{ "value": "warped", "file": "warped_fence_gate.json" }
 				],
 				"facing": [ "north", "south", "east", "west" ],
 				"open": [ "false", "true" ],
@@ -2512,7 +2646,9 @@
 				"minecraft:birch_fence_gate": "variant=birch",
 				"minecraft:jungle_fence_gate": "variant=jungle",
 				"minecraft:acacia_fence_gate": "variant=acacia",
-				"minecraft:dark_oak_fence_gate": "variant=dark_oak"
+				"minecraft:dark_oak_fence_gate": "variant=dark_oak",
+				"minecraft:crimson_fence_gate": "variant=crimson",
+				"minecraft:warped_fence_gate": "variant=warped"
 			}
 		},
 		{
@@ -2727,15 +2863,18 @@
 					{ "value": "red_nether_brick", "file": "red_nether_brick_wall.json" },
 					{ "value": "sandstone", "file": "sandstone_wall.json" },
 					{ "value": "end_stone_brick", "file": "end_stone_brick_wall.json" },
-					{ "value": "diorite", "file": "diorite_wall.json" }
+					{ "value": "diorite", "file": "diorite_wall.json" },
+					{ "value": "blackstone", "file": "blackstone_wall.json" },
+					{ "value": "polished_blackstone", "file": "polished_blackstone_wall.json" },
+					{ "value": "polished_blackstone_brick", "file": "polished_blackstone_brick_wall.json" }
 				],
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
-				"north": [ "false", "true" ],
-				"south": [ "false", "true" ],
+				"east": [ "none", "low", "tall"],
+				"west": [ "none", "low", "tall"],
+				"north": [ "none", "low", "tall"],
+				"south": [ "none", "low", "tall"],
 				"up": [ "false", "true" ]
 			},
-			"default_state": "variant=cobblestone,east=false,west=false,north=false,south=false,up=true",
+			"default_state": "variant=cobblestone",
 			"id": {
 				"minecraft:cobblestone_wall": "variant=cobblestone",
 				"minecraft:mossy_cobblestone_wall": "variant=mossy_cobblestone",
@@ -2750,7 +2889,10 @@
 				"minecraft:red_nether_brick_wall": "variant=red_nether_brick",
 				"minecraft:sandstone_wall": "variant=sandstone",
 				"minecraft:end_stone_brick_wall": "variant=end_stone_brick",
-				"minecraft:diorite_wall": "variant=diorite"
+				"minecraft:diorite_wall": "variant=diorite",
+				"minecraft:blackstone_wall": "variant=blackstone",
+				"minecraft:polished_blackstone_wall": "variant=polished_blackstone",
+				"minecraft:polished_blackstone_brick_wall": "variant=polished_blackstone_brick"
 			}
 		},
 		{
@@ -2781,7 +2923,11 @@
 					{ "value": "oxeye_daisy", "file": "potted_oxeye_daisy.json" },
 					{ "value": "cornflower", "file": "potted_cornflower.json" },
 					{ "value": "lily_of_the_valley", "file": "potted_lily_of_the_valley.json" },
-					{ "value": "wither_rose", "file": "potted_wither_rose.json" }
+					{ "value": "wither_rose", "file": "potted_wither_rose.json" },
+					{ "value": "warped_fungus", "file": "potted_warped_fungus.json" },
+					{ "value": "warped_roots", "file": "potted_warped_roots.json" },
+					{ "value": "crimson_fungus", "file": "potted_crimson_fungus.json" },
+					{ "value": "crimson_roots", "file": "potted_crimson_roots.json" }
 				]
 			},
 			"default_state": "contents=poppy",
@@ -2809,7 +2955,11 @@
 				"minecraft:potted_pink_tulip": "contents=pink_tulip",
 				"minecraft:potted_cornflower": "contents=cornflower",
 				"minecraft:potted_lily_of_the_valley": "contents=lily_of_the_valley",
-				"minecraft:potted_wither_rose": "contents=wither_rose"
+				"minecraft:potted_wither_rose": "contents=wither_rose",
+				"minecraft:potted_warped_fungus": "contents=warped_fungus",
+				"minecraft:potted_warped_roots": "contents=warped_roots",
+				"minecraft:potted_crimson_fungus": "contents=crimson_fungus",
+				"minecraft:potted_crimson_roots": "contents=crimson_roots"
 			}
 		},
 		{
@@ -3453,9 +3603,18 @@
 			"id": "minecraft:magma_block"
 		},
 		{
-			"name": "nether_wart_block",
-			"file": "nether_wart_block.json",
-			"id": "minecraft:nether_wart_block"
+			"name": "wart_block",
+			"states": {
+				"type": [
+					{ "value": "nether", "file": "nether_wart_block.json" },
+					{ "value": "warped", "file": "warped_wart_block.json" }
+				]
+			},
+			"default_state": "type=nether",
+			"id": {
+				"minecraft:nether_wart_block": "type=nether",
+				"minecraft:warped_wart_block": "type=warped"
+			}
 		},
 		{
 			"name": "red_nether_bricks",
@@ -4096,18 +4255,27 @@
 		},
 		{
 			"name": "lantern",
-			"file": "lantern.json",
 			"states": {
+				"variant": [
+					{ "value": "normal", "file": "lantern.json" },
+					{ "value": "soul_lantern", "file": "soul_lantern.json" }
+				],
 				"hanging": [ "true", "false" ]
 			},
 			"brightness": 0.75,
-			"default_state": "hanging=false",
-			"id": "minecraft:lantern"
+			"default_state": "variant=normal,hanging=false",
+			"id": {
+				"minecraft:lantern": "variant=normal",
+				"minecraft:soul_lantern": "variant=soul_lantern"
+			}
 		},
 		{
 			"name": "campfire",
-			"file": "campfire.json",
 			"states": {
+				"variant": [
+					{ "value": "normal", "file": "campfire.json" },
+					{ "value": "soul_campfire", "file": "soul_campfire.json" }
+				],
 				"facing": [ "north", "south", "east", "west" ],
 				"lit": [ 
 					{ "value": "false" },
@@ -4118,7 +4286,7 @@
 				"axis": "all",
 				"ymin": 8
 			},
-			"default_state": "facing=west,lit=true",
+			"default_state": "variant=normal,facing=west,lit=true",
 			"id": "minecraft:campfire"
 		},
 		{
@@ -4172,6 +4340,202 @@
 			"name": "honeycomb_block",
 			"file": "honeycomb_block.json",
 			"id": "minecraft:honeycomb_block"
+		},
+		{
+			"name": "target_block",
+			"file": "target.json",
+			"id": "minecraft:target"
+		},
+		{
+			"name": "nylium",
+			"states": {
+				"variant": [
+					{ "value": "crimson", "file": "crimson_nylium.json" },
+					{ "value": "warped", "file": "warped_nylium.json" }
+				]
+			},
+			"default_state": "variant=crimson",
+			"id": {
+				"minecraft:crimson_nylium": "variant=crimson",
+				"minecraft:warped_nylium": "variant=warped"
+			}
+		},
+		{
+			"name": "crimson_fungus",
+			"file": "crimson_fungus.json",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
+			"id": "minecraft:crimson_fungus"
+		},
+		{
+			"name": "weeping_vines",
+			"type": "weeping_vines",
+			"require_models": true,
+			"states": {
+				"variant": [
+					{ "value": "weeping_vines_plant", "file": "weeping_vines_plant.json" },
+					{ "value": "weeping_vines", "file": "weeping_vines.json" }
+				]
+			},
+			"default_state": "variant=weeping_vines",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all"
+			},
+			"id": {
+				"minecraft:weeping_vines_plant": "variant=weeping_vines_plant",
+				"minecraft:weeping_vines": "variant=weeping_vines"
+			}
+		},
+		{
+			"name": "crimson_roots",
+			"file": "crimson_roots.json",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
+			"id": "minecraft:crimson_roots"
+		},
+		{
+			"name": "warped_fungus",
+			"file": "warped_fungus.json",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
+			"id": "minecraft:warped_fungus"
+		},
+		{
+			"name": "warped_roots",
+			"file": "warped_roots.json",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
+			"id": "minecraft:warped_roots"
+		},
+		{
+			"name": "nether_sprouts",
+			"file": "nether_sprouts.json",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all",
+				"ymin": 8
+			},
+			"id": "minecraft:nether_sprouts"
+		},
+		{
+			"name": "twisting_vines",
+			"type": "twisting_vines",
+			"require_models": true,
+			"states": {
+				"variant": [
+					{ "value": "twisting_vines_plant", "file": "twisting_vines_plant.json" },
+					{ "value": "twisting_vines", "file": "twisting_vines.json" }
+				]
+			},
+			"default_state": "variant=twisting_vines",
+			"light_bleeding": 1,
+			"wind": {
+				"axis": "all"
+			},
+			"id": {
+				"minecraft:twisting_vines_plant": "variant=twisting_vines_plant",
+				"minecraft:twisting_vines": "variant=twisting_vines"
+			}
+		},
+		{
+			"name": "shroomlight",
+			"file": "shroomlight.json",
+			"brightness": 1,
+			"id": "minecraft:shroomlight"
+		},
+		{
+			"name": "basalt",
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "basalt.json" },
+					{ "value": "polished_basalt", "file": "polished_basalt.json" }
+				],
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "variant=normal,axis=y",
+			"id": {
+				"minecraft:basalt": "variant=normal",
+				"minecraft:polished_basalt": "variant=polished_basalt"
+			}
+		},
+		{
+			"name": "ancient_debris",
+			"file": "ancient_debris.json",
+			"id": "minecraft:ancient_debris"
+		},
+		{
+			"name": "netherite_block",
+			"file": "netherite_block.json",
+			"id": "minecraft:netherite_block"
+		},
+		{
+			"name": "soul_soil",
+			"file": "soul_soil.json",
+			"id": "minecraft:soul_soil"
+		},
+		{
+			"name": "nether_gold_ore",
+			"file": "nether_gold_ore.json",
+			"id": "minecraft:nether_gold_ore"
+		},
+		{
+			"name": "crying_obsidian",
+			"file": "crying_obsidian.json",
+			"id": "minecraft:crying_obsidian"
+		},
+		{
+			"name": "respawn_anchor",
+			"file": "respawn_anchor.json",
+			"states": {
+				"charges": [ "0", "1", "2", "3", "4" ]
+			},
+			"default_state": "charges=0",
+			"id": "minecraft:respawn_anchor"
+		},
+		{
+			"name": "lodestone",
+			"file": "lodestone.json",
+			"id": "minecraft:lodestone"
+		},
+		{
+			"name": "blackstone",
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "blackstone.json" },
+					{ "value": "gilded_blackstone", "file": "gilded_blackstone.json" },
+					{ "value": "polished_blackstone", "file": "polished_blackstone.json" },
+					{ "value": "chiseled_polished_blackstone", "file": "chiseled_polished_blackstone.json" },
+					{ "value": "polished_blackstone_bricks", "file": "polished_blackstone_bricks.json" },
+					{ "value": "cracked_polished_blackstone_bricks", "file": "cracked_polished_blackstone_bricks.json" }
+				]
+			},
+			"default_state": "variant=normal",
+			"id": {
+				"minecraft:blackstone": "variant=normal",
+				"minecraft:gilded_blackstone": "variant=gilded_blackstone",
+				"minecraft:polished_blackstone": "variant=polished_blackstone",
+				"minecraft:chiseled_polished_blackstone": "variant=chiseled_polished_blackstone",
+				"minecraft:polished_blackstone_bricks": "variant=polished_blackstone_bricks",
+				"minecraft:cracked_polished_blackstone_bricks": "variant=cracked_polished_blackstone_bricks"
+			}
+		},
+		{
+			"name": "chain",
+			"file": "chain.json",
+			"id": "minecraft:chain"
 		}
 	],
 	"model_textures": [
@@ -4218,6 +4582,7 @@
 		"entity/banner/triangles_bottom",
 		"entity/banner/triangles_top",
 		"entity/banner/globe",
+		"entity/banner/piglin",
 		"entity/bat",
 		"entity/blaze",
 		"entity/chicken",
@@ -4241,13 +4606,14 @@
 		"entity/signs/dark_oak",
 		"entity/signs/jungle",
 		"entity/signs/oak",
+		"entity/signs/crimson",
+		"entity/signs/warped",
 		"entity/signs/spruce",
 		"entity/silverfish",
 		"entity/snow_golem",
 		"entity/squid",
 		"entity/steve",
 		"entity/witch",
-		"entity/zombie_pigman",
 		"entity/armorstand/wood",
 		"entity/bear/polarbear",
 		"entity/bed/black",
@@ -4514,7 +4880,14 @@
 		"entity/bee/bee_nectar",
 		"entity/bee/bee_angry",
 		"entity/bee/bee_angry_nectar",
-		"entity/bee/bee_stinger"
+		"entity/bee/bee_stinger",
+		"entity/piglin/piglin",
+		"entity/piglin/zombified_piglin",
+		"entity/hoglin/hoglin",
+		"entity/hoglin/zoglin",
+		"entity/strider/strider",
+		"entity/strider/strider_cold",
+		"entity/strider/strider_saddle"
 	],
 	"block_textures": [
 		"block/stone",
@@ -5078,7 +5451,68 @@
 		"block/honey_block_bottom",
 		"block/honey_block_side",
 		"block/honey_block_top",
-		"block/honeycomb_block"
+		"block/honeycomb_block",
+		"block/target_side",
+		"block/target_top",
+		"block/crimson_stem_top",
+		"block/stripped_crimson_stem",
+		"block/stripped_crimson_stem_top",
+		"block/crimson_planks",
+		"block/crimson_door_bottom",
+		"block/crimson_door_top",
+		"block/crimson_trapdoor",
+		"block/crimson_nylium",
+		"block/crimson_nylium_side",
+		"block/crimson_roots",
+		"block/crimson_roots_pot",
+		"block/crimson_fungus",
+		"block/warped_stem_top",
+		"block/stripped_warped_stem",
+		"block/stripped_warped_stem_top",
+		"block/warped_planks",
+		"block/warped_door_bottom",
+		"block/warped_door_top",
+		"block/warped_trapdoor",
+		"block/warped_nylium",
+		"block/warped_nylium_side",
+		"block/warped_roots",
+		"block/warped_roots_pot",
+		"block/warped_fungus",
+		"block/weeping_vines_plant",
+		"block/weeping_vines",
+		"block/twisting_vines_plant",
+		"block/twisting_vines",
+		"block/nether_sprouts",
+		"block/warped_wart_block",
+		"block/shroomlight",
+		"block/basalt_top",
+		"block/basalt_side",
+		"block/polished_basalt_top",
+		"block/polished_basalt_side",
+		"block/ancient_debris_side",
+		"block/ancient_debris_top",
+		"block/netherite_block",
+		"block/soul_torch",
+		"block/soul_soil",
+		"block/nether_gold_ore",
+		"block/crying_obsidian",
+		"block/respawn_anchor_bottom",
+		"block/respawn_anchor_side0",
+		"block/respawn_anchor_side1",
+		"block/respawn_anchor_side2",
+		"block/respawn_anchor_side3",
+		"block/respawn_anchor_side4",
+		"block/respawn_anchor_top_off",
+		"block/lodestone_side",
+		"block/lodestone_top",
+		"block/blackstone",
+		"block/blackstone_top",
+		"block/gilded_blackstone",
+		"block/polished_blackstone",
+		"block/chiseled_polished_blackstone",
+		"block/polished_blackstone_bricks",
+		"block/cracked_polished_blackstone_bricks",
+		"block/chain"
 	],
 	"block_textures_animated": [
 		"block/water_still",
@@ -5113,7 +5547,15 @@
 		"block/stonecutter_saw",
 		"block/lantern",
 		"block/campfire_fire",
-		"block/campfire_log_lit"
+		"block/campfire_log_lit",
+		"block/crimson_stem",
+		"block/warped_stem",
+		"block/soul_fire_0",
+		"block/soul_fire_1",
+		"block/soul_lantern",
+		"block/respawn_anchor_top opaque",
+		"block/soul_campfire_fire",
+		"block/soul_campfire_log_lit"
 	],
 	"block_textures_color": {
 		"block/grass_block_top" : "grass",
@@ -5385,6 +5827,7 @@
 		"item/diamond_horse_armor",
 		"item/golden_horse_armor",
 		"item/iron_horse_armor",
+		"item/leather_horse_armor",
 		"item/lead",
 		"item/name_tag",
 		"item/iron_nugget",
@@ -5400,6 +5843,7 @@
 		"item/music_disc_11",
 		"item/music_disc_wait",
 		"item/music_disc_13",
+		"item/music_disc_pigstep",
 		"item/structure_void",
 		"item/shulker_shell",
 		"item/filled_map_markings",
@@ -5447,6 +5891,21 @@
 		"item/suspicious_stew",
 		"item/honey_bottle",
 		"item/honeycomb",
+		"item/netherite_scrap",
+		"item/netherite_ingot",
+		"item/netherite_helmet",
+		"item/netherite_chestplate",
+		"item/netherite_leggings",
+		"item/netherite_boots",
+		"item/netherite_sword",
+		"item/netherite_shovel",
+		"item/netherite_pickaxe",
+		"item/netherite_axe",
+		"item/netherite_hoe",
+		"item/soul_lantern",
+		"item/soul_campfire",
+		"item/warped_fungus_on_a_stick",
+		"item/chain",
 		"",
 		"item/clock_00",
 		"item/clock_01",
@@ -5672,7 +6131,18 @@
 		"particle/sweep_4",
 		"particle/sweep_5",
 		"particle/sweep_6",
-		"particle/sweep_7"
+		"particle/sweep_7",
+		"particle/soul_0",
+		"particle/soul_1",
+		"particle/soul_2",
+		"particle/soul_3",
+		"particle/soul_4",
+		"particle/soul_5",
+		"particle/soul_6",
+		"particle/soul_7",
+		"particle/soul_8",
+		"particle/soul_9",
+		"particle/soul_10"
 	],
 	"particles": [
 		{
@@ -5798,6 +6268,11 @@
 		{
 			"name": "note",
 			"texture": "particle/note"
+		},
+		{
+			"name": "soul",
+			"texture": "particle/soul",
+			"frames": 11
 		}
 	],
 	"biomes": [
@@ -5995,7 +6470,24 @@
 		{
 			"name": "nether",
 			"foliage": [ 0, 255 ],
-			"water": "#3E75E1"
+			"water": "#3E75E1",
+			"variant": [
+				{
+					"name": "nether_wastes"
+				},
+				{
+					"name": "crimson_forest"
+				},
+				{
+					"name": "warped_forest"
+				},
+				{
+					"name": "soulsand_valley"
+				},
+				{
+					"name": "basalt_deltas"
+				}
+			]
 		},
 		{
 			"name": "the_end",
@@ -6194,6 +6686,7 @@
 		["triangle_top", "tt"],
 		["triangles_bottom", "tts"],
 		["triangles_top", "bts"],
-		["globe", "glb"]
+		["globe", "glb"],
+		["piglin", "pig"]
 	]
 }

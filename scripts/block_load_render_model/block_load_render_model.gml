@@ -354,11 +354,13 @@ with (new(obj_block_render_model))
 					
 						if (slot < 0) // Not in static sheet, is it animated?
 						{
-							if (opaque)
-								slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
 							if (slot < 0)
 								slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname)
-						
+							
+							// Check for tags
+							if (slot < 0)
+								slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
+							
 							if (slot < 0) // Missing texture, skip face
 							{
 								face_render[nd] = false
