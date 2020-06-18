@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.7",
-        "lastchange": "2020.05.17"
+        "lastchange": "2020.05.18"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -3172,6 +3172,8 @@
         "render/": {
             "cameraeffects": "Camera effects",
             "cameraeffectstip": "Enable camera effects in rendered images.",
+            "dofquality": "Depth of field quality",
+            "dofqualitytip": "Determines the amount of samples there will be for bokeh.",
             "ssao": "SSAO",
             "ssaotip": "Enable SSAO (Screen Space Ambient Occlusion) in rendered images.",
             "ssao/": {

@@ -645,6 +645,7 @@ with (settings)
 	render = tab_add_category("settingsrender", tab_settings_render, false)
 	with (render)
 	{
+		tbx_dof_quality = new_textbox_integer()
 		tbx_ssao_range = new_textbox_decimals()
 		tbx_ssao_radius = new_textbox_decimals()
 		tbx_ssao_power = new_textbox_integer()

@@ -211,6 +211,7 @@ json_save_object_done()
 json_save_object_start("render")
 
 	json_save_var_bool("render_camera_effects", setting_render_camera_effects)
+	json_save_var("render_dof_quality", setting_render_dof_quality)
 	
 	json_save_var_bool("render_ssao", setting_render_ssao)
 	json_save_var("render_ssao_radius", setting_render_ssao_radius)

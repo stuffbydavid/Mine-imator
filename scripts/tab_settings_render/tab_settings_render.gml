@@ -5,6 +5,15 @@ tab_control_checkbox()
 draw_checkbox("settingsrendercameraeffects", dx, dy, setting_render_camera_effects, action_setting_render_camera_effects)
 tab_next()
 
+if (setting_render_camera_effects)
+{
+	tab_control_dragger()
+	draw_meter("settingsrenderdofquality", dx, dy, dw, setting_render_dof_quality, 50, 1, 5, 5, 1, tab.render.tbx_dof_quality, action_setting_render_dof_quality)
+	tab_next()
+
+	dy += 10
+}
+
 // SSAO
 tab_control_checkbox_expand()
 draw_checkbox_expand("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao, checkbox_expand_settings_ssao, action_checkbox_expand_settings_ssao)

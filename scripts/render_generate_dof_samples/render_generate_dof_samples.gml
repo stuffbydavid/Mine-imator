@@ -9,11 +9,11 @@ blades = argument0
 rotation = argument1
 ratio = argument2
 
-if (render_dof_blades = blades && render_dof_rotation = rotation && render_dof_ration = ratio)
+if (render_dof_blades = blades && render_dof_rotation = rotation && render_dof_ration = ratio && render_dof_quality = app.setting_render_dof_quality)
 	return 0
 
 rings = 14
-samples = 5
+samples = app.setting_render_dof_quality
 rotoff = (pi*2) / (360/270)
 
 // Clear previous data
@@ -24,9 +24,10 @@ render_dof_sample_amount = 0
 render_dof_blades = blades
 render_dof_rotation = rotation
 render_dof_ration = ratio
+render_dof_quality = samples
 
 // Calculate all possible sample positions
-for (var i = 1; i < rings; i ++)
+for (var i = 0; i < rings; i++)
 {
 	var ringsamples = i * samples;
 	for (var j = 0; j < ringsamples; j++)
@@ -52,7 +53,7 @@ for (var i = 0; i < render_dof_sample_amount; i++)
 	if (blades > 2)
 	{
 		var scale, inblades, anglestep, prevcornerpos, cornerpos;
-		scale = .95
+		scale = 1
 		inblades = false
 		anglestep = ((pi*2)/blades) * (blades - 1)
 		prevcornerpos = point2D(cos(anglestep + rotoff) * scale, sin(anglestep + rotoff) * scale)

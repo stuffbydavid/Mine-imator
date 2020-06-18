@@ -269,6 +269,7 @@ if (filename_ext(fn) = ".midata")
 	if (ds_map_valid(rendermap))
 	{
 		setting_render_camera_effects = value_get_real(rendermap[?"render_camera_effects"], setting_render_camera_effects)
+		setting_render_dof_quality = value_get_real(rendermap[?"render_dof_quality"], setting_render_dof_quality)
 		
 		setting_render_ssao = value_get_real(rendermap[?"render_ssao"], setting_render_ssao)
 		setting_render_ssao_radius = value_get_real(rendermap[?"render_ssao_radius"], setting_render_ssao_radius)
