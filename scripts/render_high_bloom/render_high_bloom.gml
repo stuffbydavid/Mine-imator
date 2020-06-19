@@ -32,9 +32,10 @@ surface_set_target(thresholdsurf)
 surface_reset_target()
 
 // Repeat for each blade
-var blades, bladerot;
+var blades, bladerot, bladestrength;
 blades = max(1, render_camera.value[e_value.CAM_BLADE_AMOUNT]/2)
 blades = test(frac(blades) > 0, render_camera.value[e_value.CAM_BLADE_AMOUNT], blades)
+
 for (var b = 0; b < blades; b++)
 {
 	bladerot = degtorad((180/blades) * b)
@@ -101,6 +102,13 @@ for (var b = 0; b < blades; b++)
 	gpu_set_texfilter(false)
 	
 	// Add to surface
+	if (b = 0)
+		bladestrength = lerp(1, 1/blades, render_camera.value[e_value.CAM_BLOOM_RATIO])
+	else
+		bladestrength = lerp(0, 1/blades, render_camera.value[e_value.CAM_BLOOM_RATIO])
+
+	bladestrength *= render_camera.value[e_value.CAM_BLOOM_INTENSITY]
+	
 	surface_set_target(resultsurf)
 	{
 		draw_clear_alpha(c_black, 0)
@@ -109,7 +117,7 @@ for (var b = 0; b < blades; b++)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_add_set(bloomsurf, render_camera.value[e_value.CAM_BLOOM_INTENSITY], render_camera.value[e_value.CAM_BLOOM_BLEND])
+			shader_add_set(bloomsurf, bladestrength, render_camera.value[e_value.CAM_BLOOM_BLEND])
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
