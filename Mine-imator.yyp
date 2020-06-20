@@ -10970,7 +10970,7 @@
             "Key": "a80e9a96-f11c-4cad-849b-80d2e80b440f",
             "Value": {
                 "id": "b462d421-16f5-4a42-8561-38fc441e74fb",
-                "resourcePath": "scripts\\array_set_ds_list\\array_set_ds_list.yy",
+                "resourcePath": "scripts\\ds_list_create_array\\ds_list_create_array.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -18229,13 +18229,13 @@
         "e45806af-2c10-4c45-b753-b6f607b7c22a",
         "3f384dea-cbe7-4a24-adf1-00b6303158d9",
         "8f092e0f-6c11-414f-9718-de0046c9cf1a",
-        "a80e9a96-f11c-4cad-849b-80d2e80b440f",
         "32b5a491-7332-4a4a-aab7-1c4f9a550d2b",
         "56fc05dc-8c2d-4fe2-88f7-80d9ec14a95b",
         "ec52d7b5-2b6f-47cc-8c45-c705b4694d9a",
         "901fa757-e6bc-42c7-bb85-d4aacb6f422f",
         "942fa358-28a3-4cb0-a6f0-68a034f99452",
         "52c85819-253c-438f-b0a5-8b961a144f8b",
+        "a80e9a96-f11c-4cad-849b-80d2e80b440f",
         "d6cb8c6c-cff7-4496-b89e-cbcf7cd6c7fb",
         "dbb2e2c8-3d89-4074-874a-122916d80f84",
         "fd6886e2-a34e-438a-a590-2de58e22c1e5",

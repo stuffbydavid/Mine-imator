@@ -1,4 +1,4 @@
-/// array_set_ds_list(id)
+/// ds_list_create_array(id)
 /// @arg id
 /// @desc Converts a ds list to an array and returns it
 
