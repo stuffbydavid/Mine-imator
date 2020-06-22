@@ -8,7 +8,7 @@ tab_next()
 if (setting_render_camera_effects)
 {
 	tab_control_dragger()
-	draw_meter("settingsrenderdofquality", dx, dy, dw, setting_render_dof_quality, 50, 1, 5, 5, 1, tab.render.tbx_dof_quality, action_setting_render_dof_quality)
+	draw_meter("settingsrenderdofquality", dx, dy, dw, setting_render_dof_quality, 50, 1, 5, 3, 1, tab.render.tbx_dof_quality, action_setting_render_dof_quality)
 	tab_next()
 
 	dy += 10

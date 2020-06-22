@@ -2670,7 +2670,19 @@
 		{
 			"name": "nether_bricks",
 			"file": "nether_bricks.json",
-			"id": "minecraft:nether_bricks"
+			"states": {
+				"variant": [
+					{ "value": "normal", "file": "nether_bricks.json" },
+					{ "value": "cracked", "file": "cracked_nether_bricks.json" },
+					{ "value": "chiseled", "file": "chiseled_nether_bricks.json" }
+				]
+			},
+			"default_state": "variant=normal",
+			"id": {
+				"minecraft:nether_bricks": "variant=normal",
+				"minecraft:cracked_nether_bricks": "variant=cracked",
+				"minecraft:chiseled_nether_bricks": "variant=chiseled"
+			}
 		},
 		{
 			"name": "nether_wart",
@@ -3109,7 +3121,8 @@
 					{ "value": "default", "file": "quartz_block.json" },
 					{ "value": "chiseled", "file": "chiseled_quartz_block.json" },
 					{ "value": "pillar", "file": "quartz_pillar.json" },
-					{ "value": "smooth", "file": "smooth_quartz.json" }
+					{ "value": "smooth", "file": "smooth_quartz.json" },
+					{ "value": "bricks", "file": "quartz_bricks.json" }
 				],
 				"axis": [ "x", "y", "z" ]
 			},
@@ -3118,7 +3131,8 @@
 				"minecraft:quartz_block": "variant=default",
 				"minecraft:chiseled_quartz_block": "variant=chiseled",
 				"minecraft:quartz_pillar": "variant=pillar",
-				"minecraft:smooth_quartz": "variant=smooth"
+				"minecraft:smooth_quartz": "variant=smooth",
+				"minecraft:quartz_bricks": "variant=bricks"
 			}
 		},
 		{
@@ -4306,9 +4320,9 @@
 			"name": "jigsaw_block",
 			"file": "jigsaw.json",
 			"states": {
-				"facing": [ "north", "south", "east", "west", "up", "down" ]
+				"orientation": [ "down_east", "down_north", "down_south", "down_west", "east_up", "north_up", "south_up", "up_east", "up_north", "up_south", "up_west", "west_up" ]
 			},
-			"default_state": "facing=west",
+			"default_state": "orientation=north_up",
 			"id": "minecraft:jigsaw"
 		},
 		{
@@ -5439,6 +5453,7 @@
 		"block/jigsaw_bottom",
 		"block/jigsaw_side",
 		"block/jigsaw_top",
+		"block/jigsaw_lock",
 		"block/bee_nest_front",
 		"block/bee_nest_front_honey",
 		"block/bee_nest_side",
@@ -5512,7 +5527,10 @@
 		"block/chiseled_polished_blackstone",
 		"block/polished_blackstone_bricks",
 		"block/cracked_polished_blackstone_bricks",
-		"block/chain"
+		"block/chain",
+		"block/cracked_nether_bricks",
+		"block/chiseled_nether_bricks",
+		"block/quartz_bricks"
 	],
 	"block_textures_animated": [
 		"block/water_still",
@@ -5875,7 +5893,6 @@
 		"item/brown_dye",
 		"item/black_dye",
 		"item/white_dye",
-		"item/leather_horse_armor",
 		"item/creeper_banner_pattern",
 		"item/flower_banner_pattern",
 		"item/globe_banner_pattern",
@@ -5906,6 +5923,12 @@
 		"item/soul_campfire",
 		"item/warped_fungus_on_a_stick",
 		"item/chain",
+		"item/nether_sprouts",
+		"item/piglin_banner_pattern",
+		"item/crimson_door",
+		"item/crimson_sign",
+		"item/warped_door",
+		"item/warped_sign",
 		"",
 		"item/clock_00",
 		"item/clock_01",
