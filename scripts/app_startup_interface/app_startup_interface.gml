@@ -31,3 +31,7 @@ else
 	project_reset()
 	popup_show(popup_startup)
 }
+
+// Save settings file if it doesn't exist, used for external uses
+if (!file_exists_lib(settings_file))
+	settings_save()

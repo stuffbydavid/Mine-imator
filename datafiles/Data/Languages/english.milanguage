@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.2.7",
-        "lastchange": "2020.05.22"
+        "lastchange": "2020.06.27"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -1372,7 +1372,6 @@
             "hanging": "Hanging",
             "wood": "Wood",
             "honey_level": "Honey level",
-            "character": "Character",
             "charges": "Charges",
             "orientation": "Orientation",
             "value/": {
@@ -1863,7 +1862,8 @@
                     "spell": "Spell",
                     "splash": "Splash",
                     "sweep": "Sweep",
-                    "soul": "Soul"
+                    "soul": "Soul",
+                    "soul_fire_flame": "Soul Fire Flame"
                 },
                 "teximage": "Image",
                 "teximage1": "Sheet 1",
