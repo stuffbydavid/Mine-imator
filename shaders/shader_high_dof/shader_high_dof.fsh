@@ -82,6 +82,9 @@ void main()
 		// Sample positions
 		for (int i = 0; i < 512; i++)
 		{
+			if (i > uSampleAmount)
+				break;
+			
 			if (uWeightSamples[i] < 0.05)
 				continue;
 			
@@ -99,11 +102,8 @@ void main()
 				colorAdd += getColor(tex, sampleBlur) * mul;
 				colorDiv += mul;
 			}
-				
-			weightStrength += bias;
 			
-			if (i > uSampleAmount)
-				break;
+			weightStrength += bias;
 		}
 		
 		blur /= weightStrength;

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.03.15"
+        "lastchange": "2020.07.05"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -682,8 +682,10 @@
         "wandering_trader": "Wandering Trader",
         "bee": "Bee",
         "piglin": "Piglin",
-        "zombified_piglin": "Zombified piglin",
+        "zombified_piglin": "Zombified Piglin",
         "hoglin": "Hoglin",
+        "zoglin": "Zoglin",
+        "strider": "Strider",
         "part/": {
             "body": "Body",
             "right_arm": "Right arm",
@@ -864,7 +866,13 @@
             "right_middle_leg": "Right middle leg",
             "left_middle_leg": "Left middle leg",
             "stinger": "Stinger",
-            "lock": "Lock"
+            "lock": "Lock",
+            "right_top_hair": "Right Top Hair",
+            "right_middle_hair": "Right Middle Hair",
+            "right_bottom_hair": "Right Bottom Hair",
+            "left_top_hair": "Left Top Hair",
+            "left_middle_hair": "Left Middle Hair",
+            "left_bottom_hair": "Left Bottom Hair"
         },
         "state/": {
             "variant": "Variant",
@@ -891,6 +899,7 @@
             "collar": "Collar",
             "crack_amount": "Crack amount",
             "character": "Character",
+            "cold": "Cold",
             "value/": {
                 "steve": "Steve",
                 "alex": "Alex",
@@ -1028,11 +1037,14 @@
                 "high": "High",
                 "normal_nectar": "Normal (With nectar)",
                 "angry_nectar": "Angry (With nectar)",
-                "player": "Player",
-                "creeper": "Creeper",
+                "shooting": "Shooting",
                 "zombified": "Zombified",
+                "hoglin": "Hoglin",
+                "zoglin": "Zoglin",
                 "crimson": "Crimson",
-                "warped": "Warped"
+                "warped": "Warped",
+                "player": "Player",
+                "creeper": "Creeper"
             }
         }
     },
@@ -1305,12 +1317,15 @@
         "shroomlight": "Shroomlight",
         "basalt": "Basalt",
         "ancient_debris": "Ancient Debris",
-        "netherite_block": "Netherite Block",
+        "netherite_block": "Block of Netherite",
         "soul_soil": "Soul Soil",
         "soul_fire": "Soul Fire",
         "nether_gold_ore": "Nether Gold Ore",
         "crying_obsidian": "Crying Obsidian",
         "respawn_anchor": "Respawn Anchor",
+        "lodestone": "Lodestone",
+        "blackstone": "Blackstone",
+        "chain": "Chain",
         "state/": {
             "variant": "Variant",
             "snowy": "Snowy",
@@ -1368,8 +1383,8 @@
             "hanging": "Hanging",
             "wood": "Wood",
             "honey_level": "Honey level",
-            "character": "Character",
             "charges": "Charges",
+            "orientation": "Orientation",
             "value/": {
                 "true": "Yes",
                 "false": "No",
@@ -1550,7 +1565,34 @@
                 "weeping_vines_plant": "Weeping Vines Plant",
                 "twisting_vines": "Twisting Vines",
                 "twisting_vines_plant": "Twisting Vines Plant",
-                "polished_basalt": "Polished Basalt"
+                "polished_basalt": "Polished Basalt",
+                "blackstone": "Blackstone",
+                "gilded_blackstone": "Gilded Blackstone",
+                "polished_blackstone": "Polished Blackstone",
+                "chiseled_polished_blackstone": "Chisled Polished Blackstone",
+                "polished_blackstone_bricks": "Polished Blackstone Bricks",
+                "cracked_polished_blackstone_bricks": "Cracked Polished Blackstone Bricks",
+                "soul_torch": "Soul Torch",
+                "warped_fungus": "Warped Fungus",
+                "warped_roots": "Warped Roots",
+                "crimson_fungus": "Crimson Fungus",
+                "crimson_roots": "Crimson Roots",
+                "soul_lantern": "Soul Lantern",
+                "soul_campfire": "Soul Campfire",
+                "bricks": "Bricks",
+                "polished_blackstone_brick": "Polished Blackstone Brick",
+                "down_east": "Down East",
+                "down_north": "Down North",
+                "down_south": "Down South",
+                "down_west": "Down West",
+                "east_up": "East Up",
+                "north_up": "North Up",
+                "south_up": "South Up",
+                "up_east": "Up East",
+                "up_north": "Up North",
+                "up_south": "Up South",
+                "up_west": "Up West",
+                "west_up": "West Up"
             }
         }
     },
@@ -1836,7 +1878,8 @@
                     "spell": "Spell",
                     "splash": "Splash",
                     "sweep": "Sweep",
-                    "soul": "Soul"
+                    "soul": "Soul",
+                    "soul_fire_flame": "Soul Fire Flame"
                 },
                 "teximage": "Image",
                 "teximage1": "Sheet 1",
@@ -2316,7 +2359,12 @@
         "eroded_badlands": "Eroded Badlands",
         "modified_wooded_badlands_plateau": "Modified Wooded Badlands Plateau",
         "modified_badlands_plateau": "Modified Badlands Plateau",
-        "the_void": "The Void"
+        "the_void": "The Void",
+        "nether_wastes": "Nether Wastes",
+        "crimson_forest": "Crimson Forest",
+        "warped_forest": "Warped Forest",
+        "soulsand_valley": "Soulsand Valley",
+        "basalt_delta": "Basalt Deltas"
     },
     "resources": "Resources",
     "resourcestip": "Manage your imported files.",
@@ -3200,6 +3248,8 @@
         "render/": {
             "cameraeffects": "Camera effects",
             "cameraeffectstip": "Enable camera effects in rendered images.",
+            "dofquality": "Depth of field quality",
+            "dofqualitytip": "Determines the amount of samples there will be for bokeh.",
             "ssao": "SSAO",
             "ssaotip": "Enable SSAO (Screen Space Ambient Occlusion) in rendered images.",
             "ssao/": {

@@ -167,6 +167,7 @@ setting_block_glow_threshold = 0.75
 setting_light_bleeding = true
 
 setting_render_camera_effects = true
+setting_render_dof_quality = 3
 setting_render_ssao = true
 setting_render_ssao_radius = 12
 setting_render_ssao_power = 1

@@ -64,6 +64,15 @@ with (copy)
 		}
 	}
 	
+	if (other.is_banner && other.banner_base_color != null)
+	{
+		is_banner = true
+		banner_base_color = other.banner_base_color
+		banner_pattern_list = array_copy_1d(other.banner_pattern_list)
+		banner_color_list = array_copy_1d(other.banner_color_list)
+		array_add(banner_update, id)
+	}
+	
 	// Update
 	tl_update()
 	tl_update_values()

@@ -79,6 +79,17 @@ with (save)
 		}
 	}
 	
+	// Banner data
+	is_banner = false
+	
+	if (tl.is_banner && tl.banner_base_color != null)
+	{
+		is_banner = true
+		banner_base_color = tl.banner_base_color
+		banner_pattern_list = array_copy_1d(tl.banner_pattern_list)
+		banner_color_list = array_copy_1d(tl.banner_color_list)
+	}
+	
 	// Save tree recursively
 	tree_amount = ds_list_size(tl.tree_list)
 	for (var t = 0; t < tree_amount; t++)

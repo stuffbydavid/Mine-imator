@@ -76,6 +76,19 @@ with (new(obj_block_load_model_file))
 	var elementslist = map[?"elements"];
 	if (!is_undefined(elementslist))
 	{
+		var sortsize, sizelist;
+		
+		if (ds_list_size(elementslist) > 0)
+		{
+			sortsize = true
+			sizelist = ds_list_create()
+		}
+		else
+		{
+			sortsize = false
+			sizelist = null
+		}
+		
 		for (var i = 0; i < ds_list_size(elementslist); i++)
 		{
 			with (new(obj_block_load_element))
@@ -85,6 +98,8 @@ with (new(obj_block_load_model_file))
 				// From/To
 				from = value_get_point3D(elementmap[?"from"])
 				to = value_get_point3D(elementmap[?"to"])
+				size = point3D_sub(to, from)
+				volume = size[X] * size[Y] * size[Z]
 				
 				// Rotation
 				var rotationmap = elementmap[?"rotation"];
@@ -158,8 +173,28 @@ with (new(obj_block_load_model_file))
 						face_render[f] = false
 				}
 				
-				other.element[other.element_amount++] = id
+				if (sortsize)
+				{
+					var pos;
+					for (pos = 0; pos < ds_list_size(sizelist); pos++)
+						if (sizelist[|pos].volume > volume)
+							break
+		
+					ds_list_insert(sizelist, pos, id)
+					
+					other.element_amount++
+				}
+				else
+				{
+					other.element[other.element_amount++] = id
+				}
 			}
+		}
+		
+		if (sortsize)
+		{
+			element = ds_list_create_array(sizelist)
+			ds_list_destroy(sizelist)
 		}
 	}
 	

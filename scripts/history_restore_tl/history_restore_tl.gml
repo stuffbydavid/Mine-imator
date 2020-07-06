@@ -38,6 +38,16 @@ with (tl)
 	
 	ds_list_insert(parent.tree_list, parent_tree_index, id)
 	
+	// Restore banner data
+	if (save.is_banner)
+	{
+		is_banner = true
+		banner_base_color = save.banner_base_color
+		banner_pattern_list = array_copy_1d(save.banner_pattern_list)
+		banner_color_list = array_copy_1d(save.banner_color_list)
+		array_add(banner_update, id)
+	}
+	
 	// Update
 	tl_update_scenery_part()
 	tl_update()

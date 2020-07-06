@@ -158,7 +158,20 @@ with (obj_timeline)
 
 if (timeline_settings_import_loop_tl != null)
 {
-	var name = timeline_settings_import_loop_tl.temp.model_name;
+	// Use walk/run cycles based on model file name, if they don't exist, use cycles based on model
+	var name = timeline_settings_import_loop_tl.temp.model_file.name;
 	timeline_settings_walk_fn = load_assets_startup_dir + mc_loops_directory + name + "_walk.miframes"
 	timeline_settings_run_fn = load_assets_startup_dir + mc_loops_directory + name + "_run.miframes"
+	
+	if (!file_exists(timeline_settings_walk_fn))
+	{
+		name = timeline_settings_import_loop_tl.temp.model_name
+		timeline_settings_walk_fn = load_assets_startup_dir + mc_loops_directory + name + "_walk.miframes"
+	}
+	
+	if (!file_exists(timeline_settings_run_fn))
+	{
+		name = timeline_settings_import_loop_tl.temp.model_name
+		timeline_settings_run_fn = load_assets_startup_dir + mc_loops_directory + name + "_run.miframes"
+	}
 }

@@ -167,7 +167,7 @@ for (var i = round(popup_bannereditor.pattern_scroll.value / listh); i < listcou
 		}
 	}
 	
-	var color = (notbase ? colorlist[|patternindex] : banner.banner_base_color);
+	var color = notbase ? colorlist[|patternindex] : banner.banner_base_color;
 	
 	draw_box(dx + 10, listy + 12, 20, 20, false, color, 1)
 	draw_box(dx + 10, listy + 12, 20, 20, false, c_black, .25)
@@ -187,7 +187,7 @@ if (popup_bannereditor.banner_pattern_edit > -1)
 {
 	// Draw color options
 	var label, buttonx, buttony, padding, buttonsize, buttonmouseon, color;
-	label = (popup_bannereditor.banner_pattern_edit = 0 ? text_get("bannereditorbackgroundcolor") : text_get("bannereditorpatterncolor"))
+	label = popup_bannereditor.banner_pattern_edit = 0 ? text_get("bannereditorbackgroundcolor") : text_get("bannereditorpatterncolor")
 	buttonx = dx + 3
 	buttony = dy
 	padding = 2
@@ -299,12 +299,12 @@ if (draw_button_normal("bannereditorok", dx, dy, dw, 32))
 	if (banner = temp_edit)
 	{
 		properties.library.preview.update = true
-		action_lib_model_banner(banner.banner_base_color, array_set_ds_list(patternlist), array_set_ds_list(colorlist))
+		action_lib_model_banner(banner.banner_base_color, ds_list_create_array(patternlist), ds_list_create_array(colorlist))
 	}
 	else if (banner.object_index = obj_bench_settings)
 	{
-		banner.banner_pattern_list = array_set_ds_list(patternlist)
-		banner.banner_color_list = array_set_ds_list(colorlist)
+		banner.banner_pattern_list = ds_list_create_array(patternlist)
+		banner.banner_color_list = ds_list_create_array(colorlist)
 		
 		array_add(banner_update, banner)
 		

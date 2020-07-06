@@ -1,8 +1,8 @@
 {
-    "id": "a80e9a96-f11c-4cad-849b-80d2e80b440f",
+    "id": "3bec19a9-103a-455b-b400-c84357200993",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "array_set_ds_list",
+    "name": "action_setting_render_dof_quality",
     "IsCompatibility": false,
     "IsDnD": false
 }

@@ -5,6 +5,15 @@ tab_control_checkbox()
 draw_checkbox("settingsrendercameraeffects", dx, dy, setting_render_camera_effects, action_setting_render_camera_effects)
 tab_next()
 
+if (setting_render_camera_effects)
+{
+	tab_control_dragger()
+	draw_meter("settingsrenderdofquality", dx, dy, dw, setting_render_dof_quality, 50, 1, 5, 3, 1, tab.render.tbx_dof_quality, action_setting_render_dof_quality)
+	tab_next()
+
+	dy += 10
+}
+
 // SSAO
 tab_control_checkbox_expand()
 draw_checkbox_expand("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao, checkbox_expand_settings_ssao, action_checkbox_expand_settings_ssao)
@@ -68,11 +77,11 @@ if (setting_render_shadows && checkbox_expand_settings_shadows)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("settingsrendershadowssamples", dx, dy, dw, setting_render_shadows_samples, 50, 1, 256, 16, 1, tab.render.tbx_shadow_samples, action_setting_render_shadows_samples)
+	draw_meter("settingsrendershadowssamples", dx, dy, dw, setting_render_shadows_samples, 50, 1, 256, 16, 1, tab.render.tbx_shadow_samples, action_setting_render_shadows_samples) 
 	tab_next()
 	
 	tab_control_checkbox()
-	draw_checkbox("settingsrendershadowssuncolored", dx, dy, setting_render_shadows_sun_colored, action_setting_render_shadows_sun_colored)
+	draw_checkbox("settingsrendershadowssuncolored", dx, dy, setting_render_shadows_sun_colored, action_setting_render_shadows_sun_colored) 
 	tab_next()
 	
 	dx -= 4
