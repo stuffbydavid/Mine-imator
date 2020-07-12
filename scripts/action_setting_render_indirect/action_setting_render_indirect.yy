@@ -1,8 +1,8 @@
 {
-    "id": "14a1be77-37d3-4672-88fd-9ef0a5478b72",
+    "id": "fe8c35e1-028c-4943-9bc0-5723fff6a199",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "shader_high_shadows_unpack_set",
+    "name": "action_setting_render_indirect",
     "IsCompatibility": false,
     "IsDnD": false
 }

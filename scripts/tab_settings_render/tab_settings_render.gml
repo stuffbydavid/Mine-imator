@@ -89,6 +89,36 @@ if (setting_render_shadows && checkbox_expand_settings_shadows)
 	checkbox_expand_end()
 }
 
+tab_control_checkbox_expand()
+draw_checkbox_expand("settingsrenderindirect", dx, dy, setting_render_indirect, action_setting_render_indirect, checkbox_expand_settings_indirect, action_checkbox_expand_settings_indirect)
+tab_next()
+
+if (setting_render_indirect && checkbox_expand_settings_indirect)
+{
+	dx += 4
+	dw -= 4
+	
+	var capwid = text_caption_width("settingsrenderindirectquality", 
+									"settingsrenderindirectstrength", 
+									"settingsrenderindirectrange")
+	
+	tab_control(24)
+	draw_button_menu("settingsrenderindirectquality", e_menu.LIST, dx, dy, dw, 24, setting_render_indirect_quality, text_get("settingsrenderindirectquality" + string(setting_render_indirect_quality)), action_setting_render_indirect_quality, null, null, capwid)
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("settingsrenderindirectstrength", dx, dy, dw, round(setting_render_indirect_strength * 100), 50, 0, 1000, 150, 1, tab.render.tbx_indirect_strength, action_setting_render_indirect_strength, capwid) 
+	tab_next()
+	
+	tab_control_meter()
+	draw_dragger("settingsrenderindirectrange", dx, dy, dw, setting_render_indirect_range, setting_render_indirect_range / 200, 1, no_limit, 32, 1, tab.render.tbx_indirect_range, action_setting_render_indirect_range, capwid) 
+	tab_next()
+	
+	dx -= 4
+	dw += 4
+	checkbox_expand_end()
+}
+
 // Glow
 tab_control_checkbox_expand()
 draw_checkbox_expand("settingsrenderglow", dx, dy, setting_render_glow, action_setting_render_glow, checkbox_expand_settings_glow, action_checkbox_expand_settings_glow)

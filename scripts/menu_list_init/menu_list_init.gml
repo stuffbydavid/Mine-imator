@@ -793,6 +793,17 @@ switch (menu_name)
 		break
 	}
 	
+	// Indirect lighting quality
+	case "settingsrenderindirectquality":
+	{
+		menu_add_item(0, text_get("settingsrenderindirectquality0"), null, 0)
+		menu_add_item(1, text_get("settingsrenderindirectquality1"), null, 0)
+		menu_add_item(2, text_get("settingsrenderindirectquality2"), null, 0)
+		menu_add_item(3, text_get("settingsrenderindirectquality3"), null, 0)
+		
+		break
+	}
+	
 	// Watermark position
 	case "settingsrenderwatermarkpositionx":
 	{

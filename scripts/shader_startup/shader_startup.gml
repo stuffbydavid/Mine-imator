@@ -60,8 +60,10 @@ if (!err)
 	new_shader("shader_distort")
 	new_shader("shader_high_lighting_apply")
 	new_shader("shader_high_shadows_add")
-	new_shader("shader_high_shadows_unpack")
+	new_shader("shader_high_samples_unpack")
 	new_shader("shader_high_volumetric_rays")
+	new_shader("shader_high_indirect_depth_normal")
+	new_shader("shader_high_indirect")
 	
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -427,9 +429,12 @@ with (shader_map[?shader_high_lighting_apply])
 	new_shader_sampler("uSSAO")
 	new_shader_sampler("uShadows")
 	new_shader_sampler("uMask")
+	new_shader_sampler("uIndirect")
 	new_shader_uniform("uSSAOEnabled")
+	new_shader_uniform("uIndirectEnabled")
 	new_shader_uniform("uShadowsEnabled")
 	new_shader_uniform("uAmbientColor")
+	new_shader_uniform("uIndirectStrength")
 }
 
 with (shader_map[?shader_high_shadows_add])
@@ -439,11 +444,11 @@ with (shader_map[?shader_high_shadows_add])
 	new_shader_sampler("uShadow")
 }
 
-with (shader_map[?shader_high_shadows_unpack])
+with (shader_map[?shader_high_samples_unpack])
 {
-	new_shader_sampler("uShadowExp")
-	new_shader_sampler("uShadowDec")
-	new_shader_uniform("uShadowsStrength")
+	new_shader_sampler("uSamplesExp")
+	new_shader_sampler("uSamplesDec")
+	new_shader_uniform("uSamplesStrength")
 }
 
 with (shader_map[?shader_depth_ortho])
@@ -469,6 +474,31 @@ with (shader_map[?shader_high_volumetric_rays])
 	new_shader_sampler("uDepthBuffer")
 	new_shader_sampler("uSunDepthBuffer")
 	new_shader_uniform("uScreenSize")
+}
+
+with (shader_map[?shader_high_indirect_depth_normal])
+{
+	new_shader_uniform("uNear")
+	new_shader_uniform("uFar")
+}
+
+with (shader_map[?shader_high_indirect])
+{
+	new_shader_sampler("uDiffuseBuffer")
+	new_shader_sampler("uLightingBuffer")
+	new_shader_sampler("uDepthBuffer")
+	new_shader_sampler("uNormalBuffer")
+	new_shader_sampler("uNormalBufferExp")
+	new_shader_uniform("uNear")
+	new_shader_uniform("uFar")
+	new_shader_uniform("uProjMatrix")
+	new_shader_uniform("uProjMatrixInv")
+	new_shader_uniform("uViewMatrix")
+	new_shader_uniform("uViewMatrixInv")
+	new_shader_uniform("uStepSize")
+	new_shader_uniform("uStepAmount")
+	new_shader_uniform("uRays")
+	new_shader_uniform("uKernel")
 }
 
 return true

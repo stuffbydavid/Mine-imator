@@ -1506,7 +1506,7 @@
             "Key": "14a1be77-37d3-4672-88fd-9ef0a5478b72",
             "Value": {
                 "id": "c0d4a727-c6bc-4357-b67f-4727bedae272",
-                "resourcePath": "scripts\\shader_high_shadows_unpack_set\\shader_high_shadows_unpack_set.yy",
+                "resourcePath": "scripts\\shader_high_samples_unpack_set\\shader_high_samples_unpack_set.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -4295,6 +4295,14 @@
             }
         },
         {
+            "Key": "431bcb83-3744-41db-a896-5e1331f31bfc",
+            "Value": {
+                "id": "994f0932-02ad-436d-a80d-e835b5e50264",
+                "resourcePath": "scripts\\shader_high_indirect_depth_normal_set\\shader_high_indirect_depth_normal_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "43336dea-7933-481f-b810-db4b6c33c99a",
             "Value": {
                 "id": "ee1819fa-dd6c-432c-a138-6b16e9ff0c95",
@@ -5347,6 +5355,14 @@
             "Value": {
                 "id": "4c0ea541-39b2-4c60-9805-470883ccb8cd",
                 "resourcePath": "scripts\\texture_create\\texture_create.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "538b4ee4-da7f-4a85-a2c3-ff527001d9cf",
+            "Value": {
+                "id": "58a77c59-fed3-4671-918b-b2bd8b064576",
+                "resourcePath": "scripts\\action_setting_render_indirect_range\\action_setting_render_indirect_range.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -6939,6 +6955,14 @@
             "Value": {
                 "id": "b3137721-2fbb-4cc6-9445-66548fc92a08",
                 "resourcePath": "scripts\\action_tl_inherit_glow_color\\action_tl_inherit_glow_color.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "6a7ef9a0-3254-4aba-9fa8-bdf192328f14",
+            "Value": {
+                "id": "459c78dc-a648-4b19-8d7f-b5530881e143",
+                "resourcePath": "scripts\\action_checkbox_expand_settings_indirect\\action_checkbox_expand_settings_indirect.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9503,6 +9527,14 @@
             }
         },
         {
+            "Key": "9117dc6e-a5d1-4546-85db-6ecd07beaf24",
+            "Value": {
+                "id": "3914ee47-a44e-4b81-bd3a-da7078c1e549",
+                "resourcePath": "scripts\\render_high_indirect\\render_high_indirect.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "915e85ef-0919-4fde-a54f-91e978bd0147",
             "Value": {
                 "id": "b4d4d890-7b66-465d-9fa6-d16153e306a5",
@@ -9819,6 +9851,14 @@
             "Value": {
                 "id": "e878cba5-1f4c-4829-88c8-22dccae03a6a",
                 "resourcePath": "scripts\\shader_noise_set\\shader_noise_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "95362f1d-f6bb-43ff-8219-6ef3b35e7968",
+            "Value": {
+                "id": "25c04e29-9ea7-43f5-a016-69bc04601a1d",
+                "resourcePath": "scripts\\action_setting_render_indirect_quality\\action_setting_render_indirect_quality.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10691,6 +10731,14 @@
             "Value": {
                 "id": "2c98e946-b542-4deb-8550-f83a876ca67a",
                 "resourcePath": "scripts\\new_textbox_ndecimals\\new_textbox_ndecimals.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "a1a820ec-83f2-4f38-bbbf-b3c81bed04aa",
+            "Value": {
+                "id": "53eeb1ec-d48c-4467-b5f9-c6a163859ab9",
+                "resourcePath": "scripts\\action_setting_render_indirect_strength\\action_setting_render_indirect_strength.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12271,6 +12319,14 @@
             }
         },
         {
+            "Key": "b796396d-30b0-484f-a197-3b1c6e4fc168",
+            "Value": {
+                "id": "81242cc7-6825-4a9c-ac5a-551c9742f904",
+                "resourcePath": "views\\b796396d-30b0-484f-a197-3b1c6e4fc168.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "b7afc525-755a-4d8b-98d6-9fb6a6c2d6ea",
             "Value": {
                 "id": "2ce38bf2-09d0-4816-8d8e-0d1db111d9b3",
@@ -12850,7 +12906,7 @@
             "Key": "c1cbd473-3c46-468e-bfdb-1c8f1e7abd24",
             "Value": {
                 "id": "8f7a1866-d71b-45c4-ba48-5b6864eb1323",
-                "resourcePath": "shaders\\shader_high_shadows_unpack\\shader_high_shadows_unpack.yy",
+                "resourcePath": "shaders\\shader_high_samples_unpack\\shader_high_samples_unpack.yy",
                 "resourceType": "GMShader"
             }
         },
@@ -14735,6 +14791,14 @@
             }
         },
         {
+            "Key": "dd922697-2d2a-473d-9b1a-e9af358c13e2",
+            "Value": {
+                "id": "5890e79d-8a45-4971-8496-9a3856abd5fa",
+                "resourcePath": "scripts\\shader_high_indirect_set\\shader_high_indirect_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "dda0472c-955b-449c-b8cc-6046c5e1f524",
             "Value": {
                 "id": "cfab390f-4228-4026-ac95-c843949a26e2",
@@ -15607,6 +15671,14 @@
             }
         },
         {
+            "Key": "ec020ec6-900e-4289-9883-e1719620fd10",
+            "Value": {
+                "id": "fcf839ae-908a-4524-b7e7-ba461376b63a",
+                "resourcePath": "shaders\\shader_high_indirect\\shader_high_indirect.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "ec12610b-6dc3-4261-814a-63cf0692d927",
             "Value": {
                 "id": "63620fe5-8580-499e-ad65-9158356476d8",
@@ -16004,6 +16076,14 @@
                 "id": "748d7a73-b2ec-45ea-b5ca-d9ced9c26239",
                 "resourcePath": "scripts\\tab_add_category\\tab_add_category.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "f09faebf-54ba-436c-a292-d75cfa983b68",
+            "Value": {
+                "id": "576eab0b-4fbd-4792-8bfd-6dca3692cf2c",
+                "resourcePath": "shaders\\shader_high_indirect_depth_normal\\shader_high_indirect_depth_normal.yy",
+                "resourceType": "GMShader"
             }
         },
         {
@@ -16991,6 +17071,14 @@
             }
         },
         {
+            "Key": "fe8c35e1-028c-4943-9bc0-5723fff6a199",
+            "Value": {
+                "id": "278cc2ee-3623-4dc4-8372-4a3c8256f703",
+                "resourcePath": "scripts\\action_setting_render_indirect\\action_setting_render_indirect.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "fe9137c3-02bf-444c-aef6-0ea162f74cc1",
             "Value": {
                 "id": "0799f00b-2c17-469b-b627-3cac0d6891f8",
@@ -17490,6 +17578,10 @@
         "c0191d48-17e7-4906-94b5-b0960b4e070a",
         "64ab90bc-72a3-42dd-ba19-e5a57ec5bd1f",
         "e0afac2e-d90b-4ed8-ba7a-e1723169c9cd",
+        "fe8c35e1-028c-4943-9bc0-5723fff6a199",
+        "95362f1d-f6bb-43ff-8219-6ef3b35e7968",
+        "a1a820ec-83f2-4f38-bbbf-b3c81bed04aa",
+        "538b4ee4-da7f-4a85-a2c3-ff527001d9cf",
         "2d65d089-7d2c-4de4-9a5d-f21755c0703a",
         "3369adfe-f69a-40d3-9bc5-565bdcecf702",
         "41ff16d2-4700-4a0f-8b4f-e109e34ced54",
@@ -18011,6 +18103,7 @@
         "7e4e6561-570c-491c-93b9-6f95d73480c4",
         "17e9c68e-0b46-4dd6-b28d-cde0e9a69a0f",
         "4204c980-cdeb-49c5-b81a-7fcef44d1e24",
+        "6a7ef9a0-3254-4aba-9fa8-bdf192328f14",
         "da1b2647-497f-40cc-863a-a605212361e1",
         "fe2a867d-51a4-4d5a-bda2-f8ef3d34589d",
         "650f706b-3130-4016-8a26-a3ab7374e210",
@@ -18288,6 +18381,7 @@
         "98e77f64-b027-4f8a-b49f-83a5503dbf1a",
         "71acce5c-3193-4508-bf00-0bdd4e98a7c7",
         "df40db60-e668-4caf-951d-0832bd0a6001",
+        "9117dc6e-a5d1-4546-85db-6ecd07beaf24",
         "84f0d4d3-0456-437b-bf2a-77c1b020a865",
         "65eea893-8188-4540-bf73-3724f28c5930",
         "4610967d-2e4d-4400-b477-15d0243ea0c1",
@@ -18316,11 +18410,13 @@
         "cacc96e7-2789-4294-a6e8-7150d0a5563a",
         "958bf315-da57-45d0-b482-7c01d5656508",
         "03c7002f-4a83-4cd1-8128-3873f253b371",
+        "431bcb83-3744-41db-a896-5e1331f31bfc",
         "91f7487c-7f3a-4306-a95d-ccf7e047e98b",
         "99d3b3f3-0b9b-4c1c-ba84-d9046247aa7d",
         "a44720b2-90a5-4d8e-92af-2e88be706fdf",
         "14a1be77-37d3-4672-88fd-9ef0a5478b72",
         "b6787206-0fe9-4b77-823b-56332cdfcde3",
+        "dd922697-2d2a-473d-9b1a-e9af358c13e2",
         "0bb3f0f1-8cbd-46b7-b774-e82fb09e01ea",
         "9ff39a74-b1fc-4174-bd91-6f279795051a",
         "6ef77993-05ef-4c8b-bef6-fd5bc8dc4ddc",

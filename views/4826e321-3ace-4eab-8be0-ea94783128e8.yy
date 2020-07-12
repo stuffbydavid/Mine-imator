@@ -19,11 +19,13 @@
         "cacc96e7-2789-4294-a6e8-7150d0a5563a",
         "958bf315-da57-45d0-b482-7c01d5656508",
         "03c7002f-4a83-4cd1-8128-3873f253b371",
+        "431bcb83-3744-41db-a896-5e1331f31bfc",
         "91f7487c-7f3a-4306-a95d-ccf7e047e98b",
         "99d3b3f3-0b9b-4c1c-ba84-d9046247aa7d",
         "a44720b2-90a5-4d8e-92af-2e88be706fdf",
         "14a1be77-37d3-4672-88fd-9ef0a5478b72",
-        "b6787206-0fe9-4b77-823b-56332cdfcde3"
+        "b6787206-0fe9-4b77-823b-56332cdfcde3",
+        "dd922697-2d2a-473d-9b1a-e9af358c13e2"
     ],
     "filterType": "GMScript",
     "folderName": "High quality",

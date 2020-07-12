@@ -103,14 +103,21 @@ render_generate_dof_samples(0, 0, 0)
 globalvar render_grain_noise;
 render_grain_noise = null
 
+// Indirect lighting
+globalvar render_indirect_kernel;
+render_indirect_kernel = render_generate_sample_kernel(16)
+
 // Effect surfaces
-globalvar render_surface_ssao, render_surface_shadows, render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post, render_post_index;
+globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec, render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post, render_post_index;
 render_surface_ssao = null
 render_surface_shadows = null
 render_surface_sun_shadows_expo = null
 render_surface_sun_shadows_dec = null
 render_surface_fog = null
 render_surface_lens = null
+render_surface_indirect = null
+render_surface_indirect_expo = null
+render_surface_indirect_dec = null
 
 globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_shadows_clear;
 render_surface_sun_volume_expo = null
@@ -152,3 +159,4 @@ render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
 render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
 render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
 render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_COLOR] = shader_high_light_color
+render_mode_shader_map[?e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL] = shader_high_indirect_depth_normal

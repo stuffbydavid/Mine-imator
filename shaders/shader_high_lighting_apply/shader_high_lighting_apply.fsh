@@ -4,9 +4,14 @@ uniform sampler2D uSSAO;
 uniform int uShadowsEnabled;
 uniform sampler2D uShadows;
 
+uniform sampler2D uIndirect;
+uniform int uIndirectEnabled;
+uniform float uIndirectStrength;
+
 uniform sampler2D uMask;
 
 uniform vec4 uAmbientColor;
+
 
 varying vec2 vTexCoord;
 
@@ -21,6 +26,9 @@ void main()
 	{
 		light = uAmbientColor.rgb;
 		light += texture2D(uShadows, vTexCoord).rgb;
+		
+		if (uIndirectEnabled > 0)
+			light += texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
 	}
 	
 	// Multiply light and ao with diffuse

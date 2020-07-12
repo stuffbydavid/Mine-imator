@@ -6,13 +6,17 @@ var starttime, finalsurf;
 starttime = current_time
 render_surface_time = 0
 
-// SSAO
+// SSAO (Render surface 0)
 if (setting_render_ssao)
 	render_surface_ssao = render_high_ssao()
 
-// Shadows
+// Shadows (Use unique surface)
 if (setting_render_shadows)
 	render_high_shadows(render_active = "image" || render_active = "movie")
+
+// Global Illumination (Use unique surface)
+if (setting_render_shadows && setting_render_indirect)
+	render_high_indirect(render_active = "image" || render_active = "movie")
 
 // Composite current effects onto the scene
 finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
@@ -91,4 +95,8 @@ if (render_overlay)
 	render_high_overlay(finalsurf)
 
 render_shadows_clear = false
+
+if (render_samples < setting_render_shadows_samples)
+	render_samples++
+
 render_time = current_time - starttime - render_surface_time

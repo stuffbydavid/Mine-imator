@@ -168,26 +168,36 @@ setting_light_bleeding = true
 
 setting_render_camera_effects = true
 setting_render_dof_quality = 3
+
 setting_render_ssao = true
 setting_render_ssao_radius = 12
 setting_render_ssao_power = 1
 setting_render_ssao_samples = 16
 setting_render_ssao_blur_passes = 2
 setting_render_ssao_color = c_black
+
 setting_render_shadows = true
 setting_render_shadows_sun_buffer_size = 2048
 setting_render_shadows_spot_buffer_size = 512
 setting_render_shadows_point_buffer_size = 256
 setting_render_shadows_samples = 16
 setting_render_shadows_sun_colored = false
+
+setting_render_indirect = true
+setting_render_indirect_quality = 1
+setting_render_indirect_strength = 1.5
+setting_render_indirect_range = 86
+
 setting_render_glow = true
 setting_render_glow_radius = 1
 setting_render_glow_intensity = 1
 setting_render_glow_falloff = false
 setting_render_glow_falloff_radius = 2
 setting_render_glow_falloff_intensity = 1
+
 setting_render_aa = true
 setting_render_aa_power = 1
+
 setting_render_watermark = trial_version
 setting_render_watermark_image = spr_watermark
 setting_render_watermark_filename = ""
@@ -210,6 +220,7 @@ setting_export_image_high_quality = true
 
 checkbox_expand_settings_ssao = true
 checkbox_expand_settings_shadows = true
+checkbox_expand_settings_indirect = true
 checkbox_expand_settings_glow = true
 checkbox_expand_settings_aa = true
 checkbox_expand_settings_watermark = true

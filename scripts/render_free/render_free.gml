@@ -13,6 +13,10 @@ surface_free(render_surface_sun_shadows_dec)
 surface_free(render_surface_sun_volume_expo)
 surface_free(render_surface_sun_volume_dec)
 
+surface_free(render_surface_indirect)
+surface_free(render_surface_indirect_expo)
+surface_free(render_surface_indirect_dec)
+
 surface_free(render_surface_sun_buffer)
 surface_free(render_surface_sun_color_buffer)
 surface_free(render_surface_spot_buffer)

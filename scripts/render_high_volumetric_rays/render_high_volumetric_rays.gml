@@ -153,11 +153,11 @@ surface_set_target(resultsurf)
 	// Screen blend mode
 	gpu_set_blendmode_ext_sepalpha(bm_one, bm_inv_src_color, bm_dest_alpha, bm_one)
 	
-	render_shader_obj = shader_map[?shader_high_shadows_unpack]
+	render_shader_obj = shader_map[?shader_high_samples_unpack]
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_shadows_unpack_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples)
+		shader_high_samples_unpack_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples)
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)

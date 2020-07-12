@@ -26,8 +26,6 @@ if (!export)
 	
 	samplestart = render_samples
 	sampleend = render_samples + 1
-	
-	render_samples++
 }
 else
 {
@@ -182,11 +180,11 @@ surface_set_target(render_surface_shadows)
 	draw_clear_alpha(c_black, 1)
 	gpu_set_blendmode(bm_add)
 	
-	render_shader_obj = shader_map[?shader_high_shadows_unpack]
+	render_shader_obj = shader_map[?shader_high_samples_unpack]
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_shadows_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_samples)
+		shader_high_samples_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_samples)
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)
@@ -379,11 +377,11 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 		{
 			gpu_set_blendmode(bm_add)
 		
-			render_shader_obj = shader_map[?shader_high_shadows_unpack]
+			render_shader_obj = shader_map[?shader_high_samples_unpack]
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_shadows_unpack_set(other.light_shadows_exponent_surf, other.light_shadows_decimal_surf, render_samples)
+				shader_high_samples_unpack_set(other.light_shadows_exponent_surf, other.light_shadows_decimal_surf, render_samples)
 			}
 			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)
