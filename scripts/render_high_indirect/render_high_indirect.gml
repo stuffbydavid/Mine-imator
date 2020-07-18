@@ -32,16 +32,16 @@ for (var s = samplestart; s < sampleend; s++)
 	render_indirect_kernel = render_generate_sample_kernel(16)
 	
 	// Render depth & normal data
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
 	depthsurf = render_surface[1]
 
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
 	normalsurf = render_surface[2]
 
-	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
 	normalsurf2 = render_surface[3]
 
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height, true, true)
 	diffusesurf = render_surface[4]
 
 	surface_set_target_ext(0, depthsurf)

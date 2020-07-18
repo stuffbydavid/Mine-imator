@@ -111,7 +111,7 @@ if (setting_render_indirect && checkbox_expand_settings_indirect)
 	tab_next()
 	
 	tab_control_meter()
-	draw_dragger("settingsrenderindirectrange", dx, dy, dw, setting_render_indirect_range, setting_render_indirect_range / 200, 1, no_limit, 32, 1, tab.render.tbx_indirect_range, action_setting_render_indirect_range, capwid) 
+	draw_dragger("settingsrenderindirectrange", dx, dy, dw, setting_render_indirect_range, setting_render_indirect_range / 200, 1, no_limit, 86, 1, tab.render.tbx_indirect_range, action_setting_render_indirect_range, capwid) 
 	tab_next()
 	
 	dx -= 4

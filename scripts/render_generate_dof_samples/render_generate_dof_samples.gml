@@ -9,7 +9,7 @@ blades = argument0
 rotation = argument1
 ratio = argument2
 
-if (render_dof_blades = blades && render_dof_rotation = rotation && render_dof_ration = ratio && render_dof_quality = app.setting_render_dof_quality)
+if (render_dof_blades = blades && render_dof_rotation = rotation && render_dof_ratio = ratio && render_dof_quality = app.setting_render_dof_quality)
 	return 0
 
 rings = 14
@@ -23,7 +23,7 @@ render_dof_sample_amount = 0
 
 render_dof_blades = blades
 render_dof_rotation = rotation
-render_dof_ration = ratio
+render_dof_ratio = ratio
 render_dof_quality = samples
 
 // Calculate all possible sample positions

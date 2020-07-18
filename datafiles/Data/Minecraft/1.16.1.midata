@@ -774,6 +774,23 @@
 			"file": "end_crystal.mimodel"
 		},
 		{
+			"name": "mob_head",
+			"states": {
+				"variant": [
+					{ "value": "ground", "file": "mob_head.mimodel" },
+					{ "value": "wall", "file": "mob_wall_head.mimodel" }
+				],
+				"character": [
+					{ "value": "player", "texture": "entity/steve" },
+					{ "value": "zombie", "texture": "entity/zombie/zombie" },
+					{ "value": "creeper", "texture": "entity/creeper/creeper" },
+					{ "value": "skeleton", "texture": "entity/skeleton/skeleton" },
+					{ "value": "wither_skeleton", "texture": "entity/skeleton/wither_skeleton" }
+				]
+			},
+			"default_state": "variant=ground,character=player"
+		},
+		{
 			"name": "banner",
 			"file": "standing_banner.mimodel",
 			"states": {
@@ -849,6 +866,16 @@
 		{
 			"name": "shulker_spark",
 			"file": "shulker_spark.mimodel"
+		},
+		{
+			"name": "dragon_head",
+			"states": {
+				"variant": [
+					{ "value": "ground", "file": "dragon_head.mimodel" },
+					{ "value": "wall", "file": "dragon_wall_head.mimodel" }
+				]
+			},
+			"default_state": "variant=ground"
 		},
 		{
 			"name": "trident",
@@ -3512,7 +3539,8 @@
 				"minecraft:cut_red_sandstone": "variant=cut_sandstone",
 				"minecraft:smooth_red_sandstone": "variant=smooth_sandstone"
 			}
-		},{
+		},
+		{
 			"name": "mob_head",
 			"states": {
 				"rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],

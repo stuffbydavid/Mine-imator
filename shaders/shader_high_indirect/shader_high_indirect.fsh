@@ -79,7 +79,7 @@ vec3 hash(vec3 a)
 }
 
 // Casts ray from camera for n amount of steps given a step amount and direction
-vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth)
+vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth, inout vec4 giColor)
 {
 	direction *= uStepSize;
 	
@@ -89,7 +89,8 @@ vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth)
 	vec4 projectedCoord;
 	vec2 screenCoord = vec2(1.0);
 	
-	float bias = getDepth(vTexCoord) * 50.0;
+	float bias = getDepth(vTexCoord) * 200.0;
+	vec3 screenNormal = getNormal(vTexCoord);
 	
 	for (int i = 0; i < MAXSTEPS; i++)
 	{
@@ -113,22 +114,15 @@ vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth)
 			bool rangeCheck = (abs(dDepth) < (float(uStepAmount) * uStepSize));
 			
 			// Check if sampled surface can realistically bounce light onto origin surface
-			bool bounceCheck = (max(0.0, dot(direction, getNormal(screenCoord))) < 1.0);
+			bool bounceCheck = (max(0.0, dot(normalize(direction), getNormal(screenCoord))) < 1.0);
 			
-			// Collision check based on view Z-direction of ray
+			// Collision check
 			if (rangeCheck && bounceCheck)
 			{
-				if (direction.z > 0.0)
-				{
-					// Don't need to worry about surface being occluded
-					if (startPos.z < screenPos.z)
-						return screenCoord;
-				}
-				else
-				{
-					if (startPos.z > screenPos.z)
-						return screenCoord;
-				}
+				vec3 light = texture2D(uLightingBuffer, screenCoord).rgb * texture2D(uDiffuseBuffer, screenCoord).rgb;
+				
+				giColor.rgb += light;
+				return screenCoord;
 			}
 		}
 		
@@ -138,6 +132,9 @@ vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth)
 			dDepth = 1.0;
 			break;
 		}
+		
+		if (rayPos.z > uFar)
+			return screenCoord;
 		
 		steps++;
 	}
@@ -178,13 +175,7 @@ void main()
 		// Get ray direction
 		vec3 rayDir = normalize(kernelBasis * uKernel[i]);
 		
-		coords = rayTrace(rayDir, rayPos, dDepth);
-		
-		if (dDepth <= 0.0)
-		{
-			vec3 light = (texture2D(uLightingBuffer, coords).rgb * texture2D(uDiffuseBuffer, coords).rgb);
-			giColor.rgb += light;
-		}
+		coords = rayTrace(rayDir, rayPos, dDepth, giColor);
 		
 		if (i >= uRays)
 			break;

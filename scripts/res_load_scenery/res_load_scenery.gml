@@ -663,8 +663,9 @@ switch (load_stage)
 	// Download skins for custom skulls
 	case "download":
 	{	
+		
 		// Finished
-		if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !scenery_download_skins)
+		if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !mc_builder.block_tl_add)
 		{
 			with (app)
 			{
@@ -673,7 +674,10 @@ switch (load_stage)
 			}
 			
 			load_stage = "blocks"
-			scenery_download_skins = false
+			
+			if (mc_builder.block_skull_fail_count = 0)
+				scenery_download_skins = false
+			
 			break
 		}
 		
@@ -703,7 +707,7 @@ switch (load_stage)
 				}
 					
 				// Resource doesn't exist, download texture
-				if (exists = false)
+				if (exists = false && other.scenery_download_skins)
 				{
 					app.http_downloadskin = http_get_file(ds_map_find_value(block_skull_texture_map, block_skull_texture_name), download_image_file)
 					block_skull_download_time = current_time
@@ -722,7 +726,7 @@ switch (load_stage)
 					// Use existing skin resource
 					with (obj_resource)
 					{
-						if (filename_name(mc_builder.block_skull_texture_name) = filename)
+						if (filename_name(mc_builder.block_skull_texture_name) = filename_change_ext(filename, ""))
 						{
 							res = id
 							break
