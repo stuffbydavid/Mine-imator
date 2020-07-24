@@ -19,6 +19,8 @@ render_set_uniform("uViewMatrix", view_proj_matrix)
 render_set_uniform("uViewMatrixInv", matrix_inverse(view_proj_matrix))
 
 render_set_uniform("uKernel", render_indirect_kernel)
+render_set_uniform("uOffset", render_indirect_offset)
+render_set_uniform_color("uAmbientColor", app.background_ambient_color_final, 1)
 
 var stepsize, stepamount, raycount;
 

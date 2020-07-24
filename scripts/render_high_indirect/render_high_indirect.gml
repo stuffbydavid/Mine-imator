@@ -31,6 +31,9 @@ for (var s = samplestart; s < sampleend; s++)
 	random_set_seed(s)
 	render_indirect_kernel = render_generate_sample_kernel(16)
 	
+	for (var i = 0; i < 16; i++)
+		render_indirect_offset[i] = random_range(0, 1)
+	
 	// Render depth & normal data
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
 	depthsurf = render_surface[1]

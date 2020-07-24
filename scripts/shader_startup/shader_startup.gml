@@ -499,6 +499,8 @@ with (shader_map[?shader_high_indirect])
 	new_shader_uniform("uStepAmount")
 	new_shader_uniform("uRays")
 	new_shader_uniform("uKernel")
+	new_shader_uniform("uOffset")
+	new_shader_uniform("uAmbientColor")
 }
 
 return true

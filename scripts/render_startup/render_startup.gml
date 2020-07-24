@@ -105,8 +105,9 @@ globalvar render_grain_noise;
 render_grain_noise = null
 
 // Indirect lighting
-globalvar render_indirect_kernel;
+globalvar render_indirect_kernel, render_indirect_offset;
 render_indirect_kernel = render_generate_sample_kernel(16)
+render_indirect_offset = null
 
 // Effect surfaces
 globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec, render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post, render_post_index;

@@ -19,9 +19,12 @@ uniform float uNear;
 uniform float uFar;
 
 uniform vec3 uKernel[MAXRAYS];
+uniform float uOffset[MAXRAYS];
 uniform float uStepSize;
 uniform int uStepAmount;
 uniform int uRays;
+
+uniform vec4 uAmbientColor;
 
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
@@ -79,7 +82,7 @@ vec3 hash(vec3 a)
 }
 
 // Casts ray from camera for n amount of steps given a step amount and direction
-vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth, inout vec4 giColor)
+vec2 rayTrace(int sample, vec3 direction, inout vec3 rayPos, out float dDepth, inout vec4 giColor)
 {
 	direction *= uStepSize;
 	
@@ -91,6 +94,8 @@ vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth, inout vec4 gi
 	
 	float bias = getDepth(vTexCoord) * 200.0;
 	vec3 screenNormal = getNormal(vTexCoord);
+	
+	rayPos += direction * uOffset[sample];
 	
 	for (int i = 0; i < MAXSTEPS; i++)
 	{
@@ -110,20 +115,47 @@ vec2 rayTrace(vec3 direction, inout vec3 rayPos, out float dDepth, inout vec4 gi
 		// Check distance bias
 		if (screenPos.z <= (rayPos.z - bias))
 		{
-			// Check if sampled surface is within reasible range
-			bool rangeCheck = (abs(dDepth) < (float(uStepAmount) * uStepSize));
+			// Refine ray result
+			for (int i = 0; i < 10; i++)
+			{
+				projectedCoord = uProjMatrix * vec4(rayPos, 1.0);
+				screenCoord = (projectedCoord.xy / projectedCoord.w) * 0.5 + 0.5;
+		
+				if (screenCoord.x < 0.0 || screenCoord.x > 1.0 || screenCoord.y < 0.0 || screenCoord.y > 1.0)
+					break;
+				
+				screenCoord.y = 1.0 - screenCoord.y;
+				screenPos = posFromBuffer(screenCoord, getDepth(screenCoord));
+				
+				dDepth = screenPos.z - rayPos.z;
+				
+				direction *= 0.5;
+				if (dDepth > 0.0)
+					rayPos += direction;
+				else
+					rayPos -= direction;
+			}
 			
-			// Check if sampled surface can realistically bounce light onto origin surface
-			bool bounceCheck = (max(0.0, dot(normalize(direction), getNormal(screenCoord))) < 1.0);
+			// Get final screen position
+			rayPos += direction;
+			projectedCoord = uProjMatrix * vec4(rayPos, 1.0);
+			screenCoord = (projectedCoord.xy / projectedCoord.w) * 0.5 + 0.5;
+		
+			if (screenCoord.x < 0.0 || screenCoord.x > 1.0 || screenCoord.y < 0.0 || screenCoord.y > 1.0)
+				break;
+				
+			screenCoord.y = 1.0 - screenCoord.y;
+			screenPos = posFromBuffer(screenCoord, getDepth(screenCoord));
+			
+			// Check if sampled surface is within reasible range
+			float dis = clamp(abs(distance(screenPos, startPos)), 0.0, (float(uStepAmount) * uStepSize));
+			float falloff = 1.0 - pow(clamp((dis / (float(uStepAmount) * uStepSize)), 0.0, 1.0), 2.0);
 			
 			// Collision check
-			if (rangeCheck && bounceCheck)
-			{
-				vec3 light = texture2D(uLightingBuffer, screenCoord).rgb * texture2D(uDiffuseBuffer, screenCoord).rgb;
-				
-				giColor.rgb += light;
-				return screenCoord;
-			}
+			vec3 light = (texture2D(uLightingBuffer, screenCoord).rgb + uAmbientColor.rgb) * texture2D(uDiffuseBuffer, screenCoord).rgb;
+			
+			giColor.rgb += light * falloff;
+			return screenCoord;
 		}
 		
 		// Break loop if steps reach max
@@ -175,7 +207,7 @@ void main()
 		// Get ray direction
 		vec3 rayDir = normalize(kernelBasis * uKernel[i]);
 		
-		coords = rayTrace(rayDir, rayPos, dDepth, giColor);
+		coords = rayTrace(i, rayDir, rayPos, dDepth, giColor);
 		
 		if (i >= uRays)
 			break;

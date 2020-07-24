@@ -186,7 +186,7 @@ setting_render_shadows_sun_colored = false
 setting_render_indirect = true
 setting_render_indirect_quality = 1
 setting_render_indirect_strength = 1.5
-setting_render_indirect_range = 86
+setting_render_indirect_range = 192
 
 setting_render_glow = true
 setting_render_glow_radius = 1
