@@ -61,7 +61,8 @@ if (!err)
 	new_shader("shader_high_lighting_apply")
 	new_shader("shader_high_shadows_add")
 	new_shader("shader_high_samples_unpack")
-	new_shader("shader_high_volumetric_rays")
+	new_shader("shader_high_volumetric_fog")
+	new_shader("shader_high_volumetric_fog_apply")
 	new_shader("shader_high_indirect_depth_normal")
 	new_shader("shader_high_indirect")
 	
@@ -457,23 +458,39 @@ with (shader_map[?shader_depth_ortho])
 	new_shader_uniform("uColoredShadows")
 }
 
-with (shader_map[?shader_high_volumetric_rays])
+with (shader_map[?shader_high_volumetric_fog])
 {
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
 	new_shader_uniform("uSunNear")
 	new_shader_uniform("uSunFar")
+	new_shader_uniform("uOffset")
 	new_shader_uniform("uScattering")
 	new_shader_uniform("uDensity")
-	new_shader_uniform("uColor")
-	new_shader_uniform("uSunColor")
-	new_shader_uniform("uEmissiveColor")
+	new_shader_uniform("uFogHeight")
+	new_shader_uniform("uFogHeightFade")
+	new_shader_uniform("uFogNoiseScale")
+	new_shader_uniform("uFogNoiseContrast")
+	
+	new_shader_uniform("uFogWind")
 	new_shader_uniform("uSunMatrix")
 	new_shader_uniform("uViewMatrixInv")
 	new_shader_uniform("uProjMatrixInv")
 	new_shader_sampler("uDepthBuffer")
 	new_shader_sampler("uSunDepthBuffer")
 	new_shader_uniform("uScreenSize")
+	new_shader_uniform("uSunDirection")
+}
+
+with (shader_map[?shader_high_volumetric_fog_apply])
+{
+	new_shader_sampler("uSamplesExp")
+	new_shader_sampler("uSamplesDec")
+	new_shader_uniform("uSamplesStrength")
+	new_shader_uniform("uColor")
+	new_shader_uniform("uSunColor")
+	new_shader_uniform("uAmbientColor")
+	new_shader_uniform("uFogBrightness")
 }
 
 with (shader_map[?shader_high_indirect_depth_normal])

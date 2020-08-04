@@ -80,6 +80,17 @@ background_leaves_jungle_color = value_get_color(map[?"leaves_jungle_color"], ba
 background_leaves_acacia_color = value_get_color(map[?"leaves_acacia_color"], background_leaves_acacia_color)
 background_leaves_dark_oak_color = value_get_color(map[?"leaves_dark_oak_color"], background_leaves_dark_oak_color)
 
+background_volumetric_fog = value_get_real(map[?"volumetric_fog"], background_volumetric_fog)
+background_volumetric_fog_scatter = value_get_real(map[?"volumetric_fog_scatter"], background_volumetric_fog_scatter)
+background_volumetric_fog_density = value_get_real(map[?"volumetric_fog_density"], background_volumetric_fog_density)
+background_volumetric_fog_height = value_get_real(map[?"volumetric_fog_height"], background_volumetric_fog_height)
+background_volumetric_fog_height_fade = value_get_real(map[?"volumetric_fog_height_fade"], background_volumetric_fog_height_fade)
+background_volumetric_fog_noise_scale = value_get_real(map[?"volumetric_fog_noise_scale"], background_volumetric_fog_noise_scale)
+background_volumetric_fog_noise_contrast = value_get_real(map[?"volumetric_fog_noise_contrast"], background_volumetric_fog_noise_contrast)
+background_volumetric_fog_brightness = value_get_real(map[?"volumetric_fog_brightness"], background_volumetric_fog_brightness)
+background_volumetric_fog_wind = value_get_real(map[?"volumetric_fog_wind"], background_volumetric_fog_wind)
+background_volumetric_fog_color = value_get_color(map[?"volumetric_fog_color"], background_volumetric_fog_color)
+
 background_fog_show = value_get_real(map[?"fog_show"], background_fog_show)
 background_fog_sky = value_get_real(map[?"fog_sky"], background_fog_sky)
 background_fog_color_custom = value_get_real(map[?"fog_color_custom"], background_fog_color_custom)

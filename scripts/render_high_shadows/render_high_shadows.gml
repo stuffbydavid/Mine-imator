@@ -21,7 +21,7 @@ if (!export)
 		render_shadows_clear = true
 	}
 	
-	if (render_samples >= setting_render_shadows_samples)
+	if (render_samples > setting_render_shadows_samples)
 		return 0
 	
 	samplestart = render_samples
@@ -184,7 +184,7 @@ surface_set_target(render_surface_shadows)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_samples_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_samples)
+		shader_high_samples_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, min(render_samples, app.setting_render_shadows_samples))
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)

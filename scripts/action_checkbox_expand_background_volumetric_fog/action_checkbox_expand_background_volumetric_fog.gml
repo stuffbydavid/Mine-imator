@@ -1,0 +1,3 @@
+/// action_checkbox_expand_background_volumetric_fog(expand)
+
+checkbox_expand_background_volumetric_fog = argument0

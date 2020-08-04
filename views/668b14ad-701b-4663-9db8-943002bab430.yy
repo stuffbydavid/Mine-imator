@@ -14,11 +14,15 @@
         "d429f732-0608-4f1c-9b58-d537cda03cdd",
         "72897204-1ded-447b-88a7-90c79be3b660",
         "0f243be7-c6d2-4492-a7ce-cdc28faef839",
-        "c2c262dc-38d8-439f-afc8-8d54fa9a1aa4",
         "5c582e19-cfd7-47a7-8602-79c68f9762f1",
-        "b091d257-2edc-43e1-9248-9e84700dd18d",
         "0eba918b-2735-4aef-8790-c463b737eac3",
-        "91ff2052-78f8-4504-8273-76322c34c0b8"
+        "91ff2052-78f8-4504-8273-76322c34c0b8",
+        "d15e9cd0-3a1a-4794-a3be-b083f70d9cb3",
+        "5c0b9d4b-033c-4fa8-b7ac-17e0d241a631",
+        "1d8bbc48-0489-4607-ad67-e07cccf0faf0",
+        "cdf18ff3-d1db-4a9e-b843-2cd657a45da5",
+        "768c5700-e75b-48bc-8461-a379b28b2266",
+        "ef63d63a-1f53-4cca-8e4f-7e2c6680f76f"
     ],
     "filterType": "GMScript",
     "folderName": "Fog",

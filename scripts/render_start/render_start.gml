@@ -76,7 +76,7 @@ render_overlay = (render_camera_colors || render_watermark)
 // Effects must be in the order they're done in rendering
 ds_list_clear(render_effects_list)
 ds_list_add(render_effects_list,
-	app.setting_render_shadows && app.background_volumetric_rays,
+	app.setting_render_shadows && app.background_volumetric_fog,
 	render_camera_dof,
 	render_camera_bloom,
 	render_glow,

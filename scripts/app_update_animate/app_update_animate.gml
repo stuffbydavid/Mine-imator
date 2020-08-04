@@ -119,12 +119,16 @@ if (bgobject)
 	background_leaves_jungle_color			= bgobject.value[e_value.BG_LEAVES_JUNGLE_COLOR]
 	background_leaves_acacia_color			= bgobject.value[e_value.BG_LEAVES_ACACIA_COLOR]
 	background_leaves_dark_oak_color		= bgobject.value[e_value.BG_LEAVES_DARK_OAK_COLOR]
-	background_volumetric_rays				= bgobject.value[e_value.BG_VOLUMETRIC_RAYS]
-	background_volumetric_rays_sky			= bgobject.value[e_value.BG_VOLUMETRIC_RAYS_SKY]
-	background_volumetric_rays_scatter		= bgobject.value[e_value.BG_VOLUMETRIC_RAYS_SCATTER]
-	background_volumetric_rays_density		= bgobject.value[e_value.BG_VOLUMETRIC_RAYS_DENSITY]
-	background_volumetric_rays_color		= bgobject.value[e_value.BG_VOLUMETRIC_RAYS_COLOR]
-	background_volumetric_rays_emissive		= bgobject.value[e_value.BG_VOLUMETRIC_RAYS_EMISSIVE]
+	background_volumetric_fog				= bgobject.value[e_value.BG_VOLUMETRIC_FOG]
+	background_volumetric_fog_scatter		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_SCATTER]
+	background_volumetric_fog_density		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_DENSITY]
+	background_volumetric_fog_height		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_HEIGHT]
+	background_volumetric_fog_height_fade	= bgobject.value[e_value.BG_VOLUMETRIC_FOG_HEIGHT_FADE]
+	background_volumetric_fog_noise_scale	= bgobject.value[e_value.BG_VOLUMETRIC_FOG_NOISE_SCALE]
+	background_volumetric_fog_noise_contrast= bgobject.value[e_value.BG_VOLUMETRIC_FOG_NOISE_CONTRAST]
+	background_volumetric_fog_brightness	= bgobject.value[e_value.BG_VOLUMETRIC_FOG_BRIGHTNESS]
+	background_volumetric_fog_wind			= bgobject.value[e_value.BG_VOLUMETRIC_FOG_WIND]
+	background_volumetric_fog_color			= bgobject.value[e_value.BG_VOLUMETRIC_FOG_COLOR]
 	background_fog_show						= bgobject.value[e_value.BG_FOG_SHOW]
 	background_fog_sky						= bgobject.value[e_value.BG_FOG_SKY]
 	background_fog_color_custom				= bgobject.value[e_value.BG_FOG_CUSTOM_COLOR]
@@ -171,4 +175,9 @@ else
 	app_update_cameras(view_render, false)
 
 // Update background time
+background_time_prev = background_time
 background_time = (timeline_marker / project_tempo) * 60
+
+// Update shadows
+if (background_time_prev != background_time)
+	render_samples = -1

@@ -1,3 +1,0 @@
-/// action_checkbox_expand_background_volumetric_rays(expand)
-
-checkbox_expand_background_volumetric_rays = argument0

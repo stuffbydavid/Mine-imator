@@ -109,6 +109,10 @@ globalvar render_indirect_kernel, render_indirect_offset;
 render_indirect_kernel = render_generate_sample_kernel(16)
 render_indirect_offset = null
 
+// Volumetric fog
+globalvar render_volumetric_fog_offset;
+render_volumetric_fog_offset = 0
+
 // Effect surfaces
 globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec, render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post, render_post_index;
 render_surface_ssao = null

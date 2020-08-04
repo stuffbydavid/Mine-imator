@@ -8,7 +8,7 @@ export = argument0
 // Set samples to setting
 if (!export)
 {
-	if (render_samples >= setting_render_shadows_samples)
+	if (render_samples > setting_render_shadows_samples)
 		return 0
 	
 	samplestart = render_samples
@@ -149,7 +149,7 @@ surface_set_target(render_surface_indirect)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_samples_unpack_set(render_surface_indirect_expo, render_surface_indirect_dec, render_samples)
+		shader_high_samples_unpack_set(render_surface_indirect_expo, render_surface_indirect_dec, min(render_samples, app.setting_render_shadows_samples))
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)

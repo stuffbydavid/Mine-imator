@@ -31,8 +31,8 @@ render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
 finalsurf = render_high_post_start(finalsurf)
 
 // Sun volumetrics
-if (setting_render_shadows && background_volumetric_rays)
-	finalsurf = render_high_volumetric_rays(finalsurf, render_active = "image" || render_active = "movie")
+if (setting_render_shadows && background_volumetric_fog)
+	finalsurf = render_high_volumetric_fog(finalsurf, render_active = "image" || render_active = "movie")
 render_update_effects()
 
 // DOF
@@ -96,7 +96,7 @@ if (render_overlay)
 
 render_shadows_clear = false
 
-if (render_samples < setting_render_shadows_samples)
+if (render_samples <= setting_render_shadows_samples)
 	render_samples++
 
 render_time = current_time - starttime - render_surface_time

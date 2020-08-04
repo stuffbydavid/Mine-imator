@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.07.12"
+        "lastchange": "2020.08.03"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -2233,14 +2233,17 @@
             "acaciacolor": "Acacia",
             "darkoakcolor": "Dark oak"
         },
-        "volumetricrays": "Volumetric rays",
-        "volumetricrays/": {
-            "sky": "Affect sky",
+        "volumetricfog": "Volumetric fog",
+        "volumetricfog/": {
             "scatter": "Scatter",
             "density": "Density",
-            "extinction": "Extinction",
             "color": "Blend color",
-            "emissive": "Emissive color"
+            "height": "Height",
+            "heightfade": "Height fade",
+            "noisecontrast": "Noise contrast",
+            "noisescale": "Noise scale",
+            "brightness": "Brightness",
+            "wind": "Wind influence"
         },
         "fog": "Show fog",
         "fogtip": "Whether to show a fog effect.",

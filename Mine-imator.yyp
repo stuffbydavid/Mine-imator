@@ -367,6 +367,14 @@
             }
         },
         {
+            "Key": "053fc3d4-a9e6-4f85-8ea1-6e7c2d1dc835",
+            "Value": {
+                "id": "352ee794-1f92-4364-976d-a7962648958a",
+                "resourcePath": "scripts\\shader_high_volumetric_fog_apply_set\\shader_high_volumetric_fog_apply_set.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "05488b28-518b-4e4b-9d66-5556035ca5fb",
             "Value": {
                 "id": "59827a7d-ecb9-45c0-8346-c82a943ffc2a",
@@ -1034,7 +1042,7 @@
             "Key": "0eba918b-2735-4aef-8790-c463b737eac3",
             "Value": {
                 "id": "5dd10acb-85b7-42a6-85a3-e481e702855f",
-                "resourcePath": "scripts\\action_background_volumetric_rays_scatter\\action_background_volumetric_rays_scatter.yy",
+                "resourcePath": "scripts\\action_background_volumetric_fog_scatter\\action_background_volumetric_fog_scatter.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -1066,7 +1074,7 @@
             "Key": "0f243be7-c6d2-4492-a7ce-cdc28faef839",
             "Value": {
                 "id": "4e2b495d-a4e9-4468-9ccc-a85a7861511e",
-                "resourcePath": "scripts\\action_background_volumetric_rays\\action_background_volumetric_rays.yy",
+                "resourcePath": "scripts\\action_background_volumetric_fog\\action_background_volumetric_fog.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -2079,6 +2087,14 @@
             }
         },
         {
+            "Key": "1d8bbc48-0489-4607-ad67-e07cccf0faf0",
+            "Value": {
+                "id": "a09a0297-541e-441a-ae6f-bc81f703f1b2",
+                "resourcePath": "scripts\\action_background_volumetric_fog_noise_scale\\action_background_volumetric_fog_noise_scale.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1daf63bb-956a-45bb-abce-851badf1487a",
             "Value": {
                 "id": "81f8e4ee-fa1e-4454-8aac-5b5eb10ce94c",
@@ -2842,7 +2858,7 @@
             "Key": "2b567ade-a621-444f-9780-afd3f54a68aa",
             "Value": {
                 "id": "0cac8a14-f766-4bec-8470-cd22ff4fd7ad",
-                "resourcePath": "scripts\\action_checkbox_expand_background_volumetric_rays\\action_checkbox_expand_background_volumetric_rays.yy",
+                "resourcePath": "scripts\\action_checkbox_expand_background_volumetric_fog\\action_checkbox_expand_background_volumetric_fog.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5791,6 +5807,14 @@
             }
         },
         {
+            "Key": "595ad313-d210-48e7-9fe7-a2bb1680dafd",
+            "Value": {
+                "id": "40b33fef-fa61-4028-b403-4a38c88a4e64",
+                "resourcePath": "shaders\\shader_high_volumetric_fog_apply\\shader_high_volumetric_fog_apply.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "597da3da-b8f0-4919-9b38-8c574061097f",
             "Value": {
                 "id": "e78aa83e-5de6-496f-88e8-683bab13dc6a",
@@ -5903,6 +5927,14 @@
             }
         },
         {
+            "Key": "5c0b9d4b-033c-4fa8-b7ac-17e0d241a631",
+            "Value": {
+                "id": "4eb60640-c112-4805-bec8-345fbea7c2c6",
+                "resourcePath": "scripts\\action_background_volumetric_fog_height_fade\\action_background_volumetric_fog_height_fade.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "5c1ee956-fc7d-4002-abaa-4c127c9bb894",
             "Value": {
                 "id": "f38c11ef-1c95-44c1-96a9-76dd5b3d73e5",
@@ -5946,7 +5978,7 @@
             "Key": "5c582e19-cfd7-47a7-8602-79c68f9762f1",
             "Value": {
                 "id": "e690a42b-6f6f-4677-bfcb-fc57d82199ad",
-                "resourcePath": "scripts\\action_background_volumetric_rays_color\\action_background_volumetric_rays_color.yy",
+                "resourcePath": "scripts\\action_background_volumetric_fog_color\\action_background_volumetric_fog_color.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -7707,6 +7739,14 @@
             "Value": {
                 "id": "c045ae5c-5377-45a9-b3d2-36629360fa26",
                 "resourcePath": "scripts\\action_lib_pc_type_alpha_random_max\\action_lib_pc_type_alpha_random_max.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "768c5700-e75b-48bc-8461-a379b28b2266",
+            "Value": {
+                "id": "090455df-cc8f-4ca0-98a3-0006f0e43262",
+                "resourcePath": "scripts\\action_background_volumetric_fog_brightness\\action_background_volumetric_fog_brightness.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9586,7 +9626,7 @@
             "Key": "91ff2052-78f8-4504-8273-76322c34c0b8",
             "Value": {
                 "id": "15680213-d33e-45ca-b428-54dbb7247def",
-                "resourcePath": "scripts\\action_background_volumetric_rays_density\\action_background_volumetric_rays_density.yy",
+                "resourcePath": "scripts\\action_background_volumetric_fog_density\\action_background_volumetric_fog_density.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11570,7 +11610,7 @@
             "Key": "ad5a5124-a998-4a76-9d72-04bf51b60622",
             "Value": {
                 "id": "3bc63f7e-87b1-4760-8d61-e97b413449c7",
-                "resourcePath": "shaders\\shader_high_volumetric_rays\\shader_high_volumetric_rays.yy",
+                "resourcePath": "shaders\\shader_high_volumetric_fog\\shader_high_volumetric_fog.yy",
                 "resourceType": "GMShader"
             }
         },
@@ -11755,14 +11795,6 @@
             "Value": {
                 "id": "7a850965-fe0f-45ce-a064-7391cad2bf92",
                 "resourcePath": "scripts\\action_setting_render_watermark_scale\\action_setting_render_watermark_scale.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "b091d257-2edc-43e1-9248-9e84700dd18d",
-            "Value": {
-                "id": "7066b610-bef1-43a4-986d-73e00939cedb",
-                "resourcePath": "scripts\\action_background_volumetric_rays_emissive\\action_background_volumetric_rays_emissive.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12242,7 +12274,7 @@
             "Key": "b6787206-0fe9-4b77-823b-56332cdfcde3",
             "Value": {
                 "id": "5edc980e-b946-48ba-a41e-9003284ba35b",
-                "resourcePath": "scripts\\shader_high_volumetric_rays_set\\shader_high_volumetric_rays_set.yy",
+                "resourcePath": "scripts\\shader_high_volumetric_fog_set\\shader_high_volumetric_fog_set.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12999,14 +13031,6 @@
             }
         },
         {
-            "Key": "c2c262dc-38d8-439f-afc8-8d54fa9a1aa4",
-            "Value": {
-                "id": "c6dd3592-f6f4-4f01-ab26-3aa353743d3a",
-                "resourcePath": "scripts\\action_background_volumetric_rays_sky\\action_background_volumetric_rays_sky.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "c3046351-3811-4a4a-9efc-10452b48705a",
             "Value": {
                 "id": "40763a71-006c-4665-9700-7d90df2576c0",
@@ -13735,6 +13759,14 @@
             }
         },
         {
+            "Key": "cdf18ff3-d1db-4a9e-b843-2cd657a45da5",
+            "Value": {
+                "id": "cda6c656-81c8-4a58-98a8-38a09da4114c",
+                "resourcePath": "scripts\\action_background_volumetric_fog_noise_contrast\\action_background_volumetric_fog_noise_contrast.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ce02db13-6b42-4481-8ce4-c2f299a850e6",
             "Value": {
                 "id": "401e346b-289e-4b9c-a2fc-448d6a87adb5",
@@ -13907,6 +13939,14 @@
             "Value": {
                 "id": "569088b7-31c5-4149-be7c-5d63e988e989",
                 "resourcePath": "scripts\\draw_surface_exists\\draw_surface_exists.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "d15e9cd0-3a1a-4794-a3be-b083f70d9cb3",
+            "Value": {
+                "id": "b3c55e94-13ae-454f-b0cc-d3485a6a8bc5",
+                "resourcePath": "scripts\\action_background_volumetric_fog_height\\action_background_volumetric_fog_height.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -15991,6 +16031,14 @@
             }
         },
         {
+            "Key": "ef63d63a-1f53-4cca-8e4f-7e2c6680f76f",
+            "Value": {
+                "id": "1195fc68-a382-4d44-854b-2da127038927",
+                "resourcePath": "scripts\\action_background_volumetric_fog_wind\\action_background_volumetric_fog_wind.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "efc75f18-1f26-4d40-a34d-f701c9fd8039",
             "Value": {
                 "id": "559feca3-e87a-426a-87c4-01163c91e487",
@@ -16570,7 +16618,7 @@
             "Key": "f7f052a2-2e7b-4778-8ade-4f68bbd4744f",
             "Value": {
                 "id": "6dee2264-e995-48d6-9b85-79718c3a2dce",
-                "resourcePath": "scripts\\render_high_volumetric_rays\\render_high_volumetric_rays.yy",
+                "resourcePath": "scripts\\render_high_volumetric_fog\\render_high_volumetric_fog.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -17207,11 +17255,15 @@
         "d429f732-0608-4f1c-9b58-d537cda03cdd",
         "72897204-1ded-447b-88a7-90c79be3b660",
         "0f243be7-c6d2-4492-a7ce-cdc28faef839",
-        "c2c262dc-38d8-439f-afc8-8d54fa9a1aa4",
         "5c582e19-cfd7-47a7-8602-79c68f9762f1",
-        "b091d257-2edc-43e1-9248-9e84700dd18d",
         "0eba918b-2735-4aef-8790-c463b737eac3",
         "91ff2052-78f8-4504-8273-76322c34c0b8",
+        "d15e9cd0-3a1a-4794-a3be-b083f70d9cb3",
+        "5c0b9d4b-033c-4fa8-b7ac-17e0d241a631",
+        "1d8bbc48-0489-4607-ad67-e07cccf0faf0",
+        "cdf18ff3-d1db-4a9e-b843-2cd657a45da5",
+        "768c5700-e75b-48bc-8461-a379b28b2266",
+        "ef63d63a-1f53-4cca-8e4f-7e2c6680f76f",
         "78adcc28-a685-41cf-9df7-6a44d1101fb7",
         "68cbe83f-7f17-42aa-99a7-c954005dd951",
         "4a65d5eb-6314-49ab-b696-664d8863bdb1",
@@ -18415,6 +18467,7 @@
         "99d3b3f3-0b9b-4c1c-ba84-d9046247aa7d",
         "a44720b2-90a5-4d8e-92af-2e88be706fdf",
         "14a1be77-37d3-4672-88fd-9ef0a5478b72",
+        "053fc3d4-a9e6-4f85-8ea1-6e7c2d1dc835",
         "b6787206-0fe9-4b77-823b-56332cdfcde3",
         "dd922697-2d2a-473d-9b1a-e9af358c13e2",
         "0bb3f0f1-8cbd-46b7-b774-e82fb09e01ea",
