@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.08.03"
+        "lastchange": "2020.09.07"
     },
     "startup/": {
         "caption": "Startup screen",
@@ -3293,8 +3293,10 @@
                     "2": "High",
                     "3": "Best"
                 },
+                "blurpasses": "Lighting blur passes",
                 "strength": "Lighting strength",
-                "range": "Lighting range"
+                "range": "Lighting range",
+                "scatter": "Lighting scatter"
             },
             "glow": "Glow",
             "glowtip": "Enable the glow effect from objects that have it enabled.",

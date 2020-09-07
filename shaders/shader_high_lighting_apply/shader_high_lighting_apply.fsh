@@ -12,7 +12,6 @@ uniform sampler2D uMask;
 
 uniform vec4 uAmbientColor;
 
-
 varying vec2 vTexCoord;
 
 void main()
@@ -24,11 +23,17 @@ void main()
 	
 	if (uShadowsEnabled > 0)
 	{
-		light = uAmbientColor.rgb;
-		light += texture2D(uShadows, vTexCoord).rgb;
+		vec3 direct = texture2D(uShadows, vTexCoord).rgb;
+		vec3 GI = vec3(0.0);
 		
+		// Calculate GI
 		if (uIndirectEnabled > 0)
-			light += texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
+		{
+			GI = texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
+			//GI = max(vec3(0.0), GI - (direct.rgb));
+		}
+		
+		light = uAmbientColor.rgb + direct + GI;
 	}
 	
 	// Multiply light and ao with diffuse

@@ -98,20 +98,30 @@ if (setting_render_indirect && checkbox_expand_settings_indirect)
 	dx += 4
 	dw -= 4
 	
-	var capwid = text_caption_width("settingsrenderindirectquality", 
+	var capwid = text_caption_width("settingsrenderindirectquality",
+									"settingsrenderindirectblurpasses",
 									"settingsrenderindirectstrength", 
-									"settingsrenderindirectrange")
+									"settingsrenderindirectrange",
+									"settingsrenderindirectscatter")
 	
 	tab_control(24)
 	draw_button_menu("settingsrenderindirectquality", e_menu.LIST, dx, dy, dw, 24, setting_render_indirect_quality, text_get("settingsrenderindirectquality" + string(setting_render_indirect_quality)), action_setting_render_indirect_quality, null, null, capwid)
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("settingsrenderindirectstrength", dx, dy, dw, round(setting_render_indirect_strength * 100), 50, 0, 1000, 150, 1, tab.render.tbx_indirect_strength, action_setting_render_indirect_strength, capwid) 
+	draw_meter("settingsrenderindirectblurpasses", dx, dy, dw, setting_render_indirect_blur_passes, 50, 0, 8, 2, 1, tab.render.tbx_indirect_blur_passes, action_setting_render_indirect_blur_passes, capwid)
 	tab_next()
 	
 	tab_control_meter()
-	draw_dragger("settingsrenderindirectrange", dx, dy, dw, setting_render_indirect_range, setting_render_indirect_range / 200, 1, no_limit, 192, 1, tab.render.tbx_indirect_range, action_setting_render_indirect_range, capwid) 
+	draw_meter("settingsrenderindirectstrength", dx, dy, dw, round(setting_render_indirect_strength * 100), 50, 0, 1000, 150, 1, tab.render.tbx_indirect_strength, action_setting_render_indirect_strength, capwid) 
+	tab_next()
+	
+	tab_control_dragger()
+	draw_dragger("settingsrenderindirectrange", dx, dy, dw, setting_render_indirect_range, setting_render_indirect_range / 200, 1, no_limit, 256, 1, tab.render.tbx_indirect_range, action_setting_render_indirect_range, capwid) 
+	tab_next()
+	
+	tab_control_meter()
+	draw_meter("settingsrenderindirectscatter", dx, dy, dw, round(setting_render_indirect_scatter * 100), 50, 0, 100, 100, 1, tab.render.tbx_indirect_scatter, action_setting_render_indirect_scatter, capwid) 
 	tab_next()
 	
 	dx -= 4

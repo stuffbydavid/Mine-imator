@@ -9,6 +9,7 @@ uniform sampler2D uLightingBuffer;
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uNormalBufferExp;
+uniform sampler2D uBrightnessBuffer;
 
 // Camera data
 uniform mat4 uProjMatrix;
@@ -24,7 +25,7 @@ uniform float uStepSize;
 uniform int uStepAmount;
 uniform int uRays;
 
-uniform vec4 uAmbientColor;
+uniform float uDiffuseScatter;
 
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
@@ -81,51 +82,55 @@ vec3 hash(vec3 a)
 	return fract((a.xxy + a.yxx) * a.zyx);
 }
 
-// Casts ray from camera for n amount of steps given a step amount and direction
-vec2 rayTrace(int sample, vec3 direction, inout vec3 rayPos, out float dDepth, inout vec4 giColor)
+// Update screen position and UV coordinate based on ray position
+bool updateCoord(inout vec4 projectedCoord, inout vec2 screenCoord, inout vec3 screenPos, vec3 rayPos)
 {
-	direction *= uStepSize;
+	projectedCoord = uProjMatrix * vec4(rayPos, 1.0);
+	screenCoord = (projectedCoord.xy / projectedCoord.w) * 0.5 + 0.5;
+	
+	if (screenCoord.x < 0.0 || screenCoord.x > 1.0 || screenCoord.y < 0.0 || screenCoord.y > 1.0)
+		return false;
+	
+	screenCoord.y = 1.0 - screenCoord.y;
+	screenPos = posFromBuffer(screenCoord, getDepth(screenCoord));
+	
+	return true;
+}
+
+// Casts ray from camera for n amount of steps given a step amount and direction
+void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 giColor)
+{
+	vec4 projectedCoord;
+	vec2 screenCoord;
+	
+	float dDepth = -1.0;
+	int steps = 0;
 	
 	vec3 startPos = rayPos;
 	vec3 screenPos = vec3(rayPos);
-	int steps = 0;
-	vec4 projectedCoord;
-	vec2 screenCoord = vec2(1.0);
 	
-	float bias = getDepth(vTexCoord) * 200.0;
-	vec3 screenNormal = getNormal(vTexCoord);
-	
+	direction *= uStepSize;
 	rayPos += direction * uOffset[sample];
 	
+	// Trace ray steps
 	for (int i = 0; i < MAXSTEPS; i++)
 	{
+		// Move ray position in direction
 		rayPos += direction;
 		
-		projectedCoord = uProjMatrix * vec4(rayPos, 1.0);
-		screenCoord = (projectedCoord.xy / projectedCoord.w) * 0.5 + 0.5;
-		
-		if (screenCoord.x < 0.0 || screenCoord.x > 1.0 || screenCoord.y < 0.0 || screenCoord.y > 1.0)
+		// Update 2D/3D coordinates
+		if (!updateCoord(projectedCoord, screenCoord, screenPos, rayPos))
 			break;
 		
-		screenCoord.y = 1.0 - screenCoord.y;
-		screenPos = posFromBuffer(screenCoord, getDepth(screenCoord));
-		
-		dDepth = screenPos.z - rayPos.z;
-		
-		// Check distance bias
+		// Check for collision
 		if (screenPos.z <= (rayPos.z - bias))
 		{
-			// Refine ray result
+			// Refine ray position
 			for (int i = 0; i < 10; i++)
 			{
-				projectedCoord = uProjMatrix * vec4(rayPos, 1.0);
-				screenCoord = (projectedCoord.xy / projectedCoord.w) * 0.5 + 0.5;
-		
-				if (screenCoord.x < 0.0 || screenCoord.x > 1.0 || screenCoord.y < 0.0 || screenCoord.y > 1.0)
+				// Update 2D/3D coordinates
+				if (!updateCoord(projectedCoord, screenCoord, screenPos, rayPos))
 					break;
-				
-				screenCoord.y = 1.0 - screenCoord.y;
-				screenPos = posFromBuffer(screenCoord, getDepth(screenCoord));
 				
 				dDepth = screenPos.z - rayPos.z;
 				
@@ -138,83 +143,75 @@ vec2 rayTrace(int sample, vec3 direction, inout vec3 rayPos, out float dDepth, i
 			
 			// Get final screen position
 			rayPos += direction;
-			projectedCoord = uProjMatrix * vec4(rayPos, 1.0);
-			screenCoord = (projectedCoord.xy / projectedCoord.w) * 0.5 + 0.5;
-		
-			if (screenCoord.x < 0.0 || screenCoord.x > 1.0 || screenCoord.y < 0.0 || screenCoord.y > 1.0)
+			
+			// Update 2D/3D coordinates
+			if (!updateCoord(projectedCoord, screenCoord, screenPos, rayPos))
 				break;
+			
+			// Check if surface is emmisive, if not, check for diffuse angle
+			float dif = 1.0;
+			float falloff = 1.0;
+			
+			if (texture2D(uBrightnessBuffer, screenCoord).r < 0.001)
+			{
+				vec3 rayDir = normalize(startPos - screenPos);
+				vec3 sampleNormal = normalize(getNormal(screenCoord));
 				
-			screenCoord.y = 1.0 - screenCoord.y;
-			screenPos = posFromBuffer(screenCoord, getDepth(screenCoord));
+				dif = max(0.0, dot(sampleNormal, rayDir));
+			}
+			else
+			{
+				// Check if sampled surface is within reasible range
+				float dis = clamp(abs(distance(screenPos, startPos)), 0.0, (float(uStepAmount) * uStepSize));
+				falloff = 1.0 - pow(clamp((dis / (float(uStepAmount) * uStepSize)), 0.0, 1.0), 2.0);
+			}
 			
-			// Check if sampled surface is within reasible range
-			float dis = clamp(abs(distance(screenPos, startPos)), 0.0, (float(uStepAmount) * uStepSize));
-			float falloff = 1.0 - pow(clamp((dis / (float(uStepAmount) * uStepSize)), 0.0, 1.0), 2.0);
-			
-			// Collision check
-			vec3 light = (texture2D(uLightingBuffer, screenCoord).rgb + uAmbientColor.rgb) * texture2D(uDiffuseBuffer, screenCoord).rgb;
-			
-			giColor.rgb += light * falloff;
-			return screenCoord;
+			vec3 light = texture2D(uDiffuseBuffer, screenCoord).rgb * texture2D(uLightingBuffer, screenCoord).rgb;
+			giColor += light * falloff * dif;
+			return;
 		}
 		
 		// Break loop if steps reach max
 		if (steps > uStepAmount)
-		{
-			dDepth = 1.0;
 			break;
-		}
-		
-		if (rayPos.z > uFar)
-			return screenCoord;
 		
 		steps++;
 	}
-	
-	dDepth = 1.0;
-	return screenCoord;
 }
 
 void main()
 {
 	// Sample buffers
-	vec3 viewPos = posFromBuffer(vTexCoord, getDepth(vTexCoord));
+	float originDepth = getDepth(vTexCoord);
+	vec3 viewPos = posFromBuffer(vTexCoord, originDepth);
+	vec3 worldPos = vec3(vec4(viewPos, 1.0) * uViewMatrixInv);
+	
+	// Get normal
 	vec3 normal = getNormal(vTexCoord);
 	
-	vec3 wp = vec3(vec4(viewPos, 1.0) * uViewMatrixInv);
-	
-	vec3 rayPos = viewPos;
-	
-	vec2 coords = vec2(0.0);
-	float dDepth = -1.0;
-	
-	vec4 giColor = vec4(0.0, 0.0, 0.0, 0.0);
-	
-	// Only do reflections on visible surfaces
-	vec3 randVec = ((vec3(hash(wp)) - 0.5) * 2.0);
+	// RT collision bias
+	float bias = originDepth * 200.0;
 	
 	// Construct kernel basis matrix
+	vec3 randVec = ((vec3(hash(worldPos)) - 0.5) * 2.0);
 	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
 	vec3 bitangent = cross(normal, tangent);
 	mat3 kernelBasis = mat3(tangent, bitangent, normal);
 	
 	// Sample rays
+	vec3 giColor = vec3(0.0);
+	
 	for (int i = 0; i < MAXRAYS; i++)
 	{
-		rayPos = viewPos;
-		dDepth = -1.0;
-		
 		// Get ray direction
 		vec3 rayDir = normalize(kernelBasis * uKernel[i]);
-		
-		coords = rayTrace(i, rayDir, rayPos, dDepth, giColor);
+		rayDir = mix(normalize(reflect(viewPos, normal)), rayDir, uDiffuseScatter);
+		rayTrace(i, rayDir, viewPos, bias, giColor);
 		
 		if (i >= uRays)
 			break;
 	}
 	
-	giColor.rgb /= float(uRays);
-	
-	gl_FragColor = giColor;
-	gl_FragColor.a = 1.0;
+	giColor /= float(uRays);
+	gl_FragColor = vec4(giColor, 1.0);
 }

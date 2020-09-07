@@ -678,9 +678,12 @@ with (settings)
 		tbx_ssao_power.suffix = "%"
 		tbx_ssao_blur_passes = new_textbox_integer()
 		tbx_shadow_samples = new_textbox_integer()
+		tbx_indirect_blur_passes = new_textbox_integer()
 		tbx_indirect_strength = new_textbox_integer()
 		tbx_indirect_strength.suffix = "%"
 		tbx_indirect_range = new_textbox_decimals()
+		tbx_indirect_scatter = new_textbox_integer()
+		tbx_indirect_scatter.suffix = "%"
 		tbx_glow_radius = new_textbox_integer()
 		tbx_glow_radius.suffix = "%"
 		tbx_glow_intensity = new_textbox_integer()

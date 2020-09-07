@@ -1,5 +1,6 @@
 uniform float2 uTexScale;
 uniform float4 uBlendColor;
+uniform float uBrightness;
 
 struct FSInput
 {
@@ -15,6 +16,7 @@ struct FSOutput
 	float4 Color0 : SV_Target0;
 	float4 Color1 : SV_Target1;
 	float4 Color2 : SV_Target2;
+	float4 Color3 : SV_Target3;
 };
 
 Texture2D uTextureT : register(t1);
@@ -68,6 +70,9 @@ FSOutput main(FSInput IN) : SV_TARGET
 	OUT.Color1.a = 1.0;
 	OUT.Color2.a = 1.0;
 	
+	// Brightness
+	float br = max(0.0, uBlendColor.a * (uBrightness + IN.Custom.z));
+	OUT.Color3 = float4(br, br, br, 1.0);
 	
 	return OUT;
 }

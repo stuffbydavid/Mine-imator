@@ -31,7 +31,7 @@ setting_tip_delay = 0.35
 setting_view_grid_size_hor = 3
 setting_view_grid_size_ver = 3
 setting_view_real_time_render = true
-setting_view_real_time_render_time = 100
+setting_view_real_time_render_time = 1000
 
 font_main = font_add_lib(data_directory + "opensans.ttf", 10, false, false)
 font_main_bold = font_add_lib(data_directory + "opensansbold.ttf", 10, false, false)
@@ -184,9 +184,11 @@ setting_render_shadows_samples = 16
 setting_render_shadows_sun_colored = false
 
 setting_render_indirect = true
-setting_render_indirect_quality = 1
+setting_render_indirect_quality = 0
+setting_render_indirect_blur_passes = 2
 setting_render_indirect_strength = 1.5
-setting_render_indirect_range = 192
+setting_render_indirect_range = 256
+setting_render_indirect_scatter = 1
 
 setting_render_glow = true
 setting_render_glow_radius = 1

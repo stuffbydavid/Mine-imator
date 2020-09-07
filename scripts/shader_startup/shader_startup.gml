@@ -497,6 +497,7 @@ with (shader_map[?shader_high_indirect_depth_normal])
 {
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
+	new_shader_uniform("uBrightness")
 }
 
 with (shader_map[?shader_high_indirect])
@@ -506,6 +507,7 @@ with (shader_map[?shader_high_indirect])
 	new_shader_sampler("uDepthBuffer")
 	new_shader_sampler("uNormalBuffer")
 	new_shader_sampler("uNormalBufferExp")
+	new_shader_sampler("uBrightnessBuffer")
 	new_shader_uniform("uNear")
 	new_shader_uniform("uFar")
 	new_shader_uniform("uProjMatrix")
@@ -517,7 +519,7 @@ with (shader_map[?shader_high_indirect])
 	new_shader_uniform("uRays")
 	new_shader_uniform("uKernel")
 	new_shader_uniform("uOffset")
-	new_shader_uniform("uAmbientColor")
+	new_shader_uniform("uDiffuseScatter")
 }
 
 return true

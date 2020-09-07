@@ -227,9 +227,11 @@ json_save_object_start("render")
 	json_save_var_bool("render_shadows_sun_colored", setting_render_shadows_sun_colored)
 	
 	json_save_var_bool("render_indirect", setting_render_indirect)
+	json_save_var("render_indirect_blur_passes", setting_render_indirect_blur_passes)
 	json_save_var("render_indirect_quality", setting_render_indirect_quality)
 	json_save_var("render_indirect_strength", setting_render_indirect_strength)
 	json_save_var("render_indirect_range", setting_render_indirect_range)
+	json_save_var("render_indirect_scatter", setting_render_indirect_scatter)
 	
 	json_save_var_bool("render_glow", setting_render_glow)
 	json_save_var("render_glow_radius", setting_render_glow_radius)
