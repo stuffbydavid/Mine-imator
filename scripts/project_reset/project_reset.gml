@@ -119,6 +119,7 @@ background_ambient_color = c_ambient
 background_night_color = c_night
 
 background_volumetric_fog = false
+background_volumetric_fog_rays = false
 background_volumetric_fog_scatter = 0
 background_volumetric_fog_density = 0.2
 background_volumetric_fog_color = c_white

@@ -61,6 +61,7 @@ json_save_object_start("background")
 	json_save_var_color("leaves_dark_oak_color", background_leaves_dark_oak_color)
 	
 	json_save_var_bool("volumetric_fog", background_volumetric_fog)
+	json_save_var_bool("volumetric_fog_rays", background_volumetric_fog_rays)
 	json_save_var("volumetric_fog_scatter", background_volumetric_fog_scatter)
 	json_save_var("volumetric_fog_density", background_volumetric_fog_density)
 	json_save_var("volumetric_fog_height", background_volumetric_fog_height)

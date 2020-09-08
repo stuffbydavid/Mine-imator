@@ -1535,6 +1535,14 @@
             }
         },
         {
+            "Key": "150acba0-52a8-48f7-9daf-be53dfcdb17e",
+            "Value": {
+                "id": "7ef8842b-cca1-4b94-8be7-adb08e3eae56",
+                "resourcePath": "scripts\\action_background_volumetric_fog_rays\\action_background_volumetric_fog_rays.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "152a73d8-a814-4e29-8e74-18c076db470b",
             "Value": {
                 "id": "0261fa6a-83d6-4f4c-be97-a45b6f87704f",
@@ -17271,6 +17279,7 @@
         "d429f732-0608-4f1c-9b58-d537cda03cdd",
         "72897204-1ded-447b-88a7-90c79be3b660",
         "0f243be7-c6d2-4492-a7ce-cdc28faef839",
+        "150acba0-52a8-48f7-9daf-be53dfcdb17e",
         "5c582e19-cfd7-47a7-8602-79c68f9762f1",
         "0eba918b-2735-4aef-8790-c463b737eac3",
         "91ff2052-78f8-4504-8273-76322c34c0b8",

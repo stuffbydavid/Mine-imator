@@ -471,6 +471,7 @@ with (shader_map[?shader_high_volumetric_fog])
 	new_shader_uniform("uFogHeightFade")
 	new_shader_uniform("uFogNoiseScale")
 	new_shader_uniform("uFogNoiseContrast")
+	new_shader_uniform("uRaysOnly")
 	
 	new_shader_uniform("uFogWind")
 	new_shader_uniform("uSunMatrix")
@@ -491,6 +492,7 @@ with (shader_map[?shader_high_volumetric_fog_apply])
 	new_shader_uniform("uSunColor")
 	new_shader_uniform("uAmbientColor")
 	new_shader_uniform("uFogBrightness")
+	new_shader_uniform("uRaysOnly")
 }
 
 with (shader_map[?shader_high_indirect_depth_normal])

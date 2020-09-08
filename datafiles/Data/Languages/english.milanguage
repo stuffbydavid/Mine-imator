@@ -2235,6 +2235,7 @@
         },
         "volumetricfog": "Volumetric fog",
         "volumetricfog/": {
+            "rays": "Only render rays",
             "scatter": "Scatter",
             "density": "Density",
             "color": "Blend color",

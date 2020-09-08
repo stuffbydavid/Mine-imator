@@ -143,37 +143,47 @@ if (background_volumetric_fog && checkbox_expand_background_volumetric_fog)
 	dx += 4
 	dw -= 4
 	
-	tab_control_dragger()
-	draw_dragger("backgroundvolumetricfogheight", dx, dy, dw, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height)
+	tab_control_checkbox()
+	draw_checkbox("backgroundvolumetricfograys", dx, dy, background_volumetric_fog_rays, action_background_volumetric_fog_rays)
 	tab_next()
 	
-	tab_control_dragger()
-	draw_dragger("backgroundvolumetricfogheightfade", dx, dy, dw, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade)
-	tab_next()
+	if (!background_volumetric_fog_rays)
+	{
+		tab_control_dragger()
+		draw_dragger("backgroundvolumetricfogheight", dx, dy, dw, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height)
+		tab_next()
 	
-	tab_control_dragger()
-	draw_dragger("backgroundvolumetricfognoisescale", dx, dy, dw, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale)
-	tab_next()
+		tab_control_dragger()
+		draw_dragger("backgroundvolumetricfogheightfade", dx, dy, dw, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade)
+		tab_next()
 	
-	tab_control_meter()
-	draw_meter("backgroundvolumetricfognoisecontrast", dx, dy, dw, round(background_volumetric_fog_noise_contrast * 100), 64, 0, 1500, 0, 1, tab.background.tbx_volumetric_fog_noise_contrast, action_background_volumetric_fog_noise_contrast)
-	tab_next()
+		tab_control_dragger()
+		draw_dragger("backgroundvolumetricfognoisescale", dx, dy, dw, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale)
+		tab_next()
 	
-	tab_control_meter()
-	draw_meter("backgroundvolumetricfogscatter", dx, dy, dw, background_volumetric_fog_scatter, 64, -1, 1, 0, 0.001, tab.background.tbx_volumetric_fog_scatter, action_background_volumetric_fog_scatter)
-	tab_next()
+		tab_control_meter()
+		draw_meter("backgroundvolumetricfognoisecontrast", dx, dy, dw, round(background_volumetric_fog_noise_contrast * 100), 64, 0, 1500, 0, 1, tab.background.tbx_volumetric_fog_noise_contrast, action_background_volumetric_fog_noise_contrast)
+		tab_next()
+	
+		tab_control_meter()
+		draw_meter("backgroundvolumetricfogscatter", dx, dy, dw, background_volumetric_fog_scatter, 64, -1, 1, 0, 0.001, tab.background.tbx_volumetric_fog_scatter, action_background_volumetric_fog_scatter)
+		tab_next()
+	}
 	
 	tab_control_meter()
 	draw_meter("backgroundvolumetricfogdensity", dx, dy, dw, round(background_volumetric_fog_density * 100), 64, 0, 100, 20, 1, tab.background.tbx_volumetric_fog_density, action_background_volumetric_fog_density)
 	tab_next()
 	
-	tab_control_meter()
-	draw_meter("backgroundvolumetricfogwind", dx, dy, dw, round(background_volumetric_fog_wind * 100), 64, 0, 500, 100, 1, tab.background.tbx_volumetric_fog_wind, action_background_volumetric_fog_wind)
-	tab_next()
+	if (!background_volumetric_fog_rays)
+	{
+		tab_control_meter()
+		draw_meter("backgroundvolumetricfogwind", dx, dy, dw, round(background_volumetric_fog_wind * 100), 64, 0, 500, 100, 1, tab.background.tbx_volumetric_fog_wind, action_background_volumetric_fog_wind)
+		tab_next()
 	
-	tab_control_meter()
-	draw_meter("backgroundvolumetricfogbrightness", dx, dy, dw, round(background_volumetric_fog_brightness * 100), 64, 0, 100, 0, 1, tab.background.tbx_volumetric_fog_brightness, action_background_volumetric_fog_brightness)
-	tab_next()
+		tab_control_meter()
+		draw_meter("backgroundvolumetricfogbrightness", dx, dy, dw, round(background_volumetric_fog_brightness * 100), 64, 0, 100, 0, 1, tab.background.tbx_volumetric_fog_brightness, action_background_volumetric_fog_brightness)
+		tab_next()
+	}
 	
 	tab_control_color()
 	draw_button_color("backgroundvolumetricfogcolor", dx, dy, dw, background_volumetric_fog_color, c_white, false, action_background_volumetric_fog_color)

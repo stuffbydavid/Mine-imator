@@ -120,6 +120,7 @@ if (bgobject)
 	background_leaves_acacia_color			= bgobject.value[e_value.BG_LEAVES_ACACIA_COLOR]
 	background_leaves_dark_oak_color		= bgobject.value[e_value.BG_LEAVES_DARK_OAK_COLOR]
 	background_volumetric_fog				= bgobject.value[e_value.BG_VOLUMETRIC_FOG]
+	background_volumetric_fog_rays			= bgobject.value[e_value.BG_VOLUMETRIC_FOG_RAYS]
 	background_volumetric_fog_scatter		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_SCATTER]
 	background_volumetric_fog_density		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_DENSITY]
 	background_volumetric_fog_height		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_HEIGHT]

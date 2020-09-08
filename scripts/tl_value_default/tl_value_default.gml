@@ -112,6 +112,7 @@ switch (argument0)
 	case e_value.BG_LEAVES_ACACIA_COLOR: return app.background_leaves_acacia_color
 	case e_value.BG_LEAVES_DARK_OAK_COLOR: return app.background_leaves_dark_oak_color
 	case e_value.BG_VOLUMETRIC_FOG: return app.background_volumetric_fog
+	case e_value.BG_VOLUMETRIC_FOG_RAYS: return app.background_volumetric_fog_rays
 	case e_value.BG_VOLUMETRIC_FOG_SCATTER: return app.background_volumetric_fog_scatter
 	case e_value.BG_VOLUMETRIC_FOG_DENSITY: return app.background_volumetric_fog_density
 	case e_value.BG_VOLUMETRIC_FOG_HEIGHT: return app.background_volumetric_fog_height

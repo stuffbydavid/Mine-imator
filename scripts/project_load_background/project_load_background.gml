@@ -81,6 +81,7 @@ background_leaves_acacia_color = value_get_color(map[?"leaves_acacia_color"], ba
 background_leaves_dark_oak_color = value_get_color(map[?"leaves_dark_oak_color"], background_leaves_dark_oak_color)
 
 background_volumetric_fog = value_get_real(map[?"volumetric_fog"], background_volumetric_fog)
+background_volumetric_fog_rays = value_get_real(map[?"volumetric_fog_rays"], background_volumetric_fog_rays)
 background_volumetric_fog_scatter = value_get_real(map[?"volumetric_fog_scatter"], background_volumetric_fog_scatter)
 background_volumetric_fog_density = value_get_real(map[?"volumetric_fog_density"], background_volumetric_fog_density)
 background_volumetric_fog_height = value_get_real(map[?"volumetric_fog_height"], background_volumetric_fog_height)

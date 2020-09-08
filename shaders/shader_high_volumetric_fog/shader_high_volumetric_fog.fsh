@@ -10,6 +10,7 @@ uniform float uSunFar;
 
 uniform mat4 uOffset;
 
+uniform int uRaysOnly;
 uniform float uScattering;
 uniform float uDensity;
 
@@ -236,18 +237,35 @@ void main()
 	
 	float sampleDensity;
 	
+	// Volumetric rays
+	float raysOpacity = 1.0;
+	float extinction = mix((1.0 - uDensity), 0.0, 0.5);
+	
 	// Sample steps along ray
     for (int i = 0; i < STEPS; i++)
     {	
-		sampleDensity = stepLength * getDensity(rayPos, fogOffset);
+		// Volumetric fog
+		if (uRaysOnly == 0)
+		{
+			sampleDensity = stepLength * getDensity(rayPos, fogOffset);
 		
-		float extinction = sampleDensity;
-		fogTransmittance *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
+			float extinction = sampleDensity;
+			fogTransmittance *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
 		
-		fogLight += getLight(rayPos) * sampleDensity * fogTransmittance * scatter;
-		fogOpacity += sampleDensity;
+			fogLight += getLight(rayPos) * sampleDensity * fogTransmittance * scatter;
+			fogOpacity += sampleDensity;
+		}
+		else // Only calculate volumetric rays
+		{
+			fogLight += getLight(rayPos) * mix(uDensity, 0.0, 0.5);
+			raysOpacity *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
+		}
+		
 		rayPos += stepSize;
 	}
+	
+	if (uRaysOnly == 1)
+		fogLight *= raysOpacity;
 	
 	fogOpacity = clamp(fogOpacity, 0.0, 1.0);
 	fogLight = clamp(fogLight, 0.0, 4.0) * 0.25;
