@@ -67,4 +67,4 @@ if (argument_count > 5)
 }
 
 if (argument_count > 7)
-	draw_set_font(setting_font)
+	draw_set_font(font_emphasis)

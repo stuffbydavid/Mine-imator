@@ -28,7 +28,8 @@
         "forumstip": "Visit the Mine-imator forums.",
         "upgrade": "Upgrade",
         "upgradetip": "You're running the Trial version of Mine-imator. Click to upgrade to Full.",
-        "recent": "Recent projects"
+        "recent": "Recent projects",
+        "loadingassets": "Loading assets, please wait..."
     },
     "recent/": {
         "none": "No recent projects",
@@ -176,15 +177,6 @@
         "later": "Later",
         "download": "Download",
         "downloading": "Downloading..."
-    },
-    "loadassets/": {
-        "unzip": "Extracting %1 resources...",
-        "textures": "Loading textures...",
-        "biomes": "Loading biomes...",
-        "misc": "Loading misc. assets...",
-        "models": "Loading characters...",
-        "blocks": "Loading blocks...",
-        "loadingblock": "Loading block"
     },
     "newproject/": {
         "caption": "New project",

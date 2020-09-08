@@ -30,6 +30,8 @@ if (!legacy_startup())
 	
 app_startup_lists()
 app_startup_window()
+app_startup_themes()
+app_startup_fonts()
 
 alert_startup()
 json_startup()

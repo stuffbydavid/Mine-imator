@@ -19,7 +19,7 @@ load_assets_map = null
 load_assets_type_map = null
 load_assets_block_index = 0
 load_assets_block_name = ""
-window_set_size(460, 320)
+window_set_size(400, 240)
 alarm[0] = 1
 
 banner_update = array()

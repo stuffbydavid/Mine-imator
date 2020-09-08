@@ -23,4 +23,6 @@ app_update_backup()
 app_update_recent()
 app_update_work_camera()
 app_update_caption()
+app_update_interface()
+
 current_step += 60 / room_speed

@@ -13,7 +13,9 @@
         "2eadb11b-9a02-41e0-9823-4a0e0948df6f",
         "49dc7810-d090-4839-9498-69b785898971",
         "cbc91817-2b9c-4fb3-92c3-edd866b1a803",
-        "c827ae4d-03ec-4926-8930-c4abfa178968"
+        "c827ae4d-03ec-4926-8930-c4abfa178968",
+        "15614c5a-635f-4804-8460-f2b1b9eeaca5",
+        "d3789a36-fc63-4642-82f1-aee04b4d2ebe"
     ],
     "filterType": "GMScript",
     "folderName": "Startup",

@@ -8,7 +8,7 @@ if (!minecraft_assets_load())
 }
 
 // Background
-draw_clear(setting_color_interface)
+draw_clear(c_background)
 
 if (load_assets_stage = "done")
 {
@@ -26,22 +26,14 @@ else if (load_assets_stage = "exit")
 	return 0
 }
 
-content_x = 25
-content_y = 25
-content_width = window_width - 50
-content_height = window_height - 50
+content_x = 28
+content_y = 28
+content_width = window_width - 56
+content_height = window_height - 56
 
-// To keep the user somewhat entertained
-draw_image(spr_load_assets, 0, content_x + content_width / 2, content_y)
+draw_label(text_get("startuploadingassets"), window_width / 2, window_height - 34, fa_middle, fa_bottom, c_accent, 1, font_heading)
 
-// Loading
-draw_loading_bar(content_x, content_y + content_height - 40, content_width, 40, load_assets_progress, text_get("loadassets" + load_assets_stage, app.setting_minecraft_assets_version))
-
-if (load_assets_block_name != "")
-{
-	var label = text_exists("block" + load_assets_block_name) ? text_get("block" + load_assets_block_name) : load_assets_block_name;
-	
-	draw_label(text_get("loadassetsloadingblock") + ": " + label, content_x, content_y + content_height - 60)
-}
+draw_box(0, window_height - 8, window_width, 8, false, c_background_secondary, 1)
+draw_box(0, window_height - 8, window_width * load_assets_progress, 8, false, c_accent, 1)
 
 current_step++

@@ -33,9 +33,14 @@ setting_view_grid_size_ver = 3
 setting_view_real_time_render = true
 setting_view_real_time_render_time = 1000
 
-font_main = font_add_lib(data_directory + "opensans.ttf", 10, false, false)
-font_main_bold = font_add_lib(data_directory + "opensansbold.ttf", 10, false, false)
-font_main_big = font_add_lib(data_directory + "opensansbold.ttf", 16, false, false)
+setting_theme = theme_light
+setting_accent = 3
+setting_accent_custom = hex_to_color("03A9F4")
+
+// TODO: Remove when Inventory is full implemented
+font_main = font_add_lib(fonts_directory + "noto_regular.ttf", 10, false, false)
+font_main_bold = font_add_lib(fonts_directory + "noto_bold.ttf", 10, false, false)
+font_main_big = font_add_lib(fonts_directory + "noto_bold.ttf", 16, false, false)
 
 setting_font = font_main
 setting_font_bold = font_main_bold
@@ -245,5 +250,6 @@ checkbox_expand_frameeditor_distort = true
 checkbox_expand_frameeditor_itemslot = true
 
 settings_load()
+interface_update()
 
 texture_set_mipmap_level(setting_texture_filtering_level)
