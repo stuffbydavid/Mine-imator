@@ -645,7 +645,7 @@ while (true)
 		break
 	
 	tip_set_shortcut(setting_key_remove_timelines, setting_key_remove_timelines_control)
-	if (draw_button_normal("timelineremove", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.REMOVE))
+	if (draw_button_normal("timelineremove", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.DELETE))
 		action_tl_remove()
 	
 	dx += 25
@@ -667,7 +667,7 @@ while (true)
 		break
 		
 	tip_set_shortcut(setting_key_remove_keyframes, setting_key_remove_keyframes_control)
-	if (draw_button_normal("timelineremovekeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.REMOVE_KEYFRAMES))
+	if (draw_button_normal("timelineremovekeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.DELETE_KEYFRAMES))
 		action_tl_keyframes_remove()
 	dx -= 25
 	if (dx < 10 + 25 * 4)

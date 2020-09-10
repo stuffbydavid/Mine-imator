@@ -3,7 +3,7 @@
 
 recent_add_wait = false
 
-// Find project in list
+// Find model in list
 var obj = null;
 for (var i = 0; i < ds_list_size(recent_list); i++)
 {
@@ -14,7 +14,7 @@ for (var i = 0; i < ds_list_size(recent_list); i++)
 			
 		obj = id
 		ds_list_delete_value(app.recent_list, id)
-		if (thumbnail != null)
+        if (thumbnail != null)
 			texture_free(thumbnail)
 	}
 	
@@ -32,19 +32,23 @@ surf = render_done()
 surface_save_lib(surf, thumbnailfn)
 surface_free(surf)
 
-// Project not added, create new object
+// Model not added, create new object
 if (obj = null)
 	obj = new(obj_recent)
 
 // Store data
 with (obj)
 {
-	filename = app.project_file
 	name = app.project_name
 	author = app.project_author
 	description = app.project_description
 	thumbnail = texture_create(thumbnailfn)
+    
+	filename = app.project_file
+	last_opened = date_current_datetime()
+	pinned = false
 	ds_list_insert(app.recent_list, 0, id)
 }
 
-settings_save()
+recent_update()
+recent_save()

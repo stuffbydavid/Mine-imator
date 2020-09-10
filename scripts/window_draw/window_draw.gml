@@ -18,12 +18,20 @@ if (window_state = "export_movie")
 	return 0
 }
 
-panel_area_draw()
-window_draw_glow()
-toolbar_draw()
-window_draw_cover()
-window_draw_timeline_move()
-toolbar_draw_alerts()
+if (window_state = "startup")
+{
+	window_draw_startup()
+}
+else
+{
+	panel_area_draw()
+	window_draw_glow()
+	toolbar_draw()
+	window_draw_cover()
+	window_draw_timeline_move()
+	toolbar_draw_alerts()
+}
+
 if (!bench_show_ani)
 	popup_draw()
 menu_draw()

@@ -223,7 +223,7 @@ tab_control(24)
 if (draw_button_normal("particleeditortypeadd", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.CREATE))
 	action_lib_pc_type_add()
 	
-if (draw_button_normal("particleeditortyperemove", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.REMOVE))
+if (draw_button_normal("particleeditortyperemove", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.DELETE))
 	action_lib_pc_type_remove()
 	
 if (draw_button_normal("particleeditortypeduplicate", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (ptype_edit != null), icons.DUPLICATE))

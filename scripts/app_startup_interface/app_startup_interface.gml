@@ -10,6 +10,7 @@ app_startup_interface_panels()
 app_startup_interface_tabs()
 app_startup_interface_toolbar()
 app_startup_interface_views()
+app_startup_micro_animations()
 
 textbox_startup()
 history_startup()
@@ -29,5 +30,4 @@ if (dev_mode)
 else
 {
 	project_reset()
-	popup_show(popup_startup)
 }

@@ -2,7 +2,7 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						false
+#macro dev_mode						true
 #macro dev_mode_debug_schematics	dev_mode && false
 #macro dev_mode_debug_names			dev_mode && true
 #macro dev_mode_debug_unused		dev_mode && true
@@ -11,6 +11,7 @@
 // Versions
 #macro mineimator_version			"1.3.0"
 #macro mineimator_version_extra		"Alpha 7"
+#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
 #macro mineimator_version_date		"2020.09.07"
 #macro gm_runtime					GM_runtime_version
 #macro minecraft_version			"1.16.1"
@@ -35,6 +36,7 @@
 #macro language_file				languages_directory + "english.milanguage"
 #macro import_file					data_directory + "import.exe"
 #macro settings_file				data_directory + "settings.midata"
+#macro recent_file					data_directory + "recent.midata"
 #macro legacy_file					data_directory + "legacy.midata"
 #macro block_preview_file			data_directory + "blockpreview.midata"
 #macro key_file						data_directory + "key.midata"

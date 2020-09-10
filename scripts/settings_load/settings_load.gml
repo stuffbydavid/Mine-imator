@@ -52,6 +52,7 @@ if (filename_ext(fn) = ".midata")
 	}
 	
 	// Recent files
+	/*
 	var fileslist = map[?"recent_files"];
 	if (ds_list_valid(fileslist))
 	{
@@ -75,6 +76,7 @@ if (filename_ext(fn) = ".midata")
 			}
 		}
 	}
+	*/
 	
 	// Closed alerts
 	var alertslist = map[?"closed_alerts"];

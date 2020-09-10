@@ -27,7 +27,7 @@ if (draw_button_normal("librarynew", dx, dy, 24, 24, e_button.NO_TEXT, false, fa
 if (draw_button_normal("libraryanimate", dx + 25 * 1, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.ANIMATE))
 	action_lib_animate()
 	
-if (draw_button_normal("libraryremove", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.REMOVE))
+if (draw_button_normal("libraryremove", dx + 25 * 2, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.DELETE))
 	action_lib_remove()
 	
 if (draw_button_normal("libraryduplicate", dx + 25 * 3, dy, 24, 24, e_button.NO_TEXT, false, false, (temp_edit != null), icons.DUPLICATE))

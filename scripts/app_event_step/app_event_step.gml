@@ -24,5 +24,6 @@ app_update_recent()
 app_update_work_camera()
 app_update_caption()
 app_update_interface()
+app_update_micro_animations()
 
 current_step += 60 / room_speed

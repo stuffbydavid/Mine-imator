@@ -17,7 +17,7 @@ if (load_assets_stage = "done")
 }
 else if (load_assets_stage = "exit")
 {
-	window_state = ""
+	window_state = "startup"
 	app_startup_interface()
 	
 	// Deactivate instances for better performance

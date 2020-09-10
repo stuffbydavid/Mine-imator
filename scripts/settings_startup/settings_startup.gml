@@ -11,8 +11,8 @@ setting_minecraft_assets_new_image = ""
 setting_project_folder = projects_directory
 
 recent_list = ds_list_create()
-recent_thumbnail_width = 110
-recent_thumbnail_height = 58
+recent_thumbnail_width = 240
+recent_thumbnail_height = 180
 recent_add_wait = false
 
 closed_alert_list = ds_list_create()
@@ -248,6 +248,11 @@ checkbox_expand_frameeditor_ca = true
 checkbox_expand_frameeditor_distort = true
 
 checkbox_expand_frameeditor_itemslot = true
+
+// New UI settings
+setting_reduced_motion = false
+snackbar_mouseon = false
+context_menu_mouseon = false
 
 settings_load()
 interface_update()
