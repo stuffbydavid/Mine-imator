@@ -65,6 +65,7 @@ if (!err)
 	new_shader("shader_high_volumetric_fog_apply")
 	new_shader("shader_high_indirect_depth_normal")
 	new_shader("shader_high_indirect")
+	new_shader("shader_scissor")
 	
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
@@ -522,6 +523,12 @@ with (shader_map[?shader_high_indirect])
 	new_shader_uniform("uKernel")
 	new_shader_uniform("uOffset")
 	new_shader_uniform("uDiffuseScatter")
+}
+
+with (shader_map[?shader_scissor])
+{
+	new_shader_uniform("uBox")
+	new_shader_uniform("uScreenSize")
 }
 
 return true

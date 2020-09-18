@@ -35,6 +35,7 @@ else
 if (!bench_show_ani)
 	popup_draw()
 menu_draw()
+menu_settings_draw()
 if (bench_show_ani)
 	popup_draw()
 tip_draw()

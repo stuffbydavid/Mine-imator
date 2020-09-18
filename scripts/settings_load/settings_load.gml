@@ -51,33 +51,6 @@ if (filename_ext(fn) = ".midata")
 		}
 	}
 	
-	// Recent files
-	/*
-	var fileslist = map[?"recent_files"];
-	if (ds_list_valid(fileslist))
-	{
-		for (var i = 0; i < ds_list_size(fileslist); i++)
-		{
-			var curfile = fileslist[|i];
-			with (new(obj_recent))
-			{
-				filename = value_get_string(curfile[?"filename"])
-				name = value_get_string(curfile[?"name"])
-				author = value_get_string(curfile[?"author"])
-				description = value_get_string(curfile[?"description"])
-		
-				var thumbnailfn = filename_path(filename) + "thumbnail.png";
-				if (file_exists_lib(thumbnailfn))
-					thumbnail = texture_create(thumbnailfn)
-				else
-					thumbnail = null
-		
-				ds_list_add(app.recent_list, id)
-			}
-		}
-	}
-	*/
-	
 	// Closed alerts
 	var alertslist = map[?"closed_alerts"];
 	if (ds_list_valid(alertslist))

@@ -1,8 +1,8 @@
 {
-    "id": "29b3d00c-cd05-4dc3-92e4-84a175b08c74",
+    "id": "26551f03-aee4-4744-97df-1f0c6ab3131a",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "action_recent_sort_filename",
+    "name": "scissor_done",
     "IsCompatibility": false,
     "IsDnD": false
 }

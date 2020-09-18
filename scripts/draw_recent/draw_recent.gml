@@ -35,7 +35,7 @@ if (mode = "simple")
 		// Remove
 		if (hover)
 		{
-			if (draw_button_icon("recentdelete", iconx, recenty + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove"))
+			if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove"))
 				action_recent_remove(item)
 			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 28, 28)
 		}
@@ -82,7 +82,6 @@ if (mode = "list")
 	
 	// Set scrollbar
 	var liststart = 0;
-	recent_scrollbar.snap_value = 44
 	
 	if ((recent_list_amount * 44) > hei - 28)
 	{
@@ -105,22 +104,8 @@ if (mode = "list")
 	// File name
 	draw_label(text_get("recentfilename"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	
-	var filenamesort = (recent_sort_mode = e_recent_sort.filename_ascend || recent_sort_mode = e_recent_sort.filename_descend);
-	if (app_mouse_box(namex, recenty, namewidth, 28) || filenamesort)
-	{
-		if (draw_button_icon("recentfilenamesort", namex + string_width(text_get("recentfilename")) + 12, recenty, 28, 28, filenamesort, icons.SORT_DOWN + (recent_sort_mode = e_recent_sort.filename_ascend)))
-			action_recent_sort_filename()
-	}
-	
 	// Last opened
 	draw_label(text_get("recentlastopened"), timex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-	
-	var datesort = (recent_sort_mode = e_recent_sort.date_ascend || recent_sort_mode = e_recent_sort.date_descend);
-	if (app_mouse_box(timex, recenty, timewidth, 28) || datesort)
-	{
-		if (draw_button_icon("recentrecentsort", timex + string_width(text_get("recentlastopened")) + 12, recenty, 28, 28, datesort, icons.SORT_DOWN + (recent_sort_mode = e_recent_sort.date_ascend)))
-			action_recent_sort_date()
-	}
 	
 	recenty += 28
 	
@@ -146,7 +131,7 @@ if (mode = "list")
 		// Remove
 		if (hover)
 		{
-			if (draw_button_icon("recentdelete", iconx, recenty + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove"))
+			if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove"))
 				action_recent_remove(item)
 			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 28, 28)
 		}
@@ -155,7 +140,7 @@ if (mode = "list")
 		// Oh yeah. Pin it
 		if (hover || item.pinned)
 		{
-			if (draw_button_icon("recentpin" + item.name, iconx, recenty + 8, 28, 28, item.pinned, icons.PIN, null, false, "tooltippin"))
+			if (draw_button_icon("recentpin" + string(item), iconx, recenty + 8, 28, 28, item.pinned, icons.PIN, null, false, "tooltippin"))
 				action_recent_pin(item)
 			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 28, 28)
 		}
@@ -196,83 +181,94 @@ if (mode = "grid")
 {
 	// Set scrollbar
 	var liststart = 0;
-	recent_scrollbar.snap_value = 256
 	
 	if ((recent_list_amount * 256) > hei)
 	{
 		window_scroll_focus = string(recent_scrollbar)
 		
-		scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 8, yy + 28, hei - 28, ceil(recent_list_amount/4) * 256)
-		liststart = snap(recent_scrollbar.value / 256, 1) * 4
-		wid -= 12
+		scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 8, yy, hei, ceil(recent_list_amount/4) * 256)
+		liststart = recent_scrollbar.value
 	}
 	
 	// Draw grid cards
-	var cardx, cardy, item, hover, mouseon;
+	var cardx, cardy, item, areamouseon, hover, mouseon;
 	cardx = dx
-	cardy = dy
+	cardy = dy - liststart
+	areamouseon = app_mouse_box(xx, yy, wid, hei)
 	
-	for (var i = liststart; i < recent_list_amount; i++)
+	scissor_start(xx - 2, yy - 1, wid + 4, hei + 2)
+	
+	for (var i = 0; i < recent_list_amount; i++)
 	{
-		item = recent_list_display[|i];
-		hover = app_mouse_box(cardx, cardy, 240, 240) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon;
-		mouseon = hover
-		
-		// Animation
-		microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
-		
-		// Card hover
-		draw_box(cardx, cardy, 240, 240, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.HOVER])
-		draw_box_hover(cardx, cardy, 240, 240, mcroani_arr[e_mcroani.HOVER])
-		draw_box(cardx, cardy, 240, 240, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
-		
-		// Card outline
-		draw_outline(cardx, cardy, 240, 240, 1, item.pinned ? c_accent : c_border, item.pinned ? 1 : a_border)
-		
-		draw_sprite(item.thumbnail, 0, cardx, cardy)
-		
-		var gradalpha = (item.pinned ? .5 : .5 * mcroani_arr[e_mcroani.HOVER]);
-		draw_gradient(cardx, cardy, 240, 180/2, c_text_main, gradalpha, gradalpha, 0, 0)
-		
-		// Icons
-		var iconx = cardx + 240 - 8;
-		iconx -= 28
-		
-		// Oh yeah. Pin it
-		if (hover || item.pinned)
+		// Only draw card if visible
+		if (cardy < yy + hei || cardy + 240 + 16 > yy)
 		{
-			if (draw_button_icon("recentpin" + item.name, iconx, cardy + 8, 28, 28, item.pinned, icons.PIN, null, false, "tooltippin", null, true))
-				action_recent_pin(item)
+			item = recent_list_display[|i];
+			hover = areamouseon && app_mouse_box(cardx, cardy, 240, 240) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon;
+			mouseon = hover
 			
-			mouseon = mouseon && !app_mouse_box(iconx, cardy + 8, 28, 28)
-		}
-		iconx -= 28
-		
-		// Remove
-		if (hover)
-		{
-			if (draw_button_icon("recentdelete", iconx, cardy + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove", null, true))
-				action_recent_remove(item)
+			// Animation
+			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 			
-			mouseon = mouseon && !app_mouse_box(iconx, cardy + 8, 28, 28)
-		}
-		
-		microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
-		microani_update(hover, hover && mouse_left, false)
-		
-		draw_label(item.name, cardx + 15, cardy + 209, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
-		
-		draw_label(recent_time_string(item.last_opened), cardx + 15, cardy + 228, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_value)
-		
-		// Load model
-		if (mouseon)
-		{
-			mouse_cursor = cr_handpoint
+			// Card hover
+			draw_box(cardx, cardy, 240, 240, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.HOVER])
+			draw_box_hover(cardx, cardy, 240, 240, mcroani_arr[e_mcroani.HOVER])
+			draw_box(cardx, cardy, 240, 240, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
 			
-			if (mouse_left_released)
+			// Card outline
+			draw_outline(cardx, cardy, 240, 240, 1, item.pinned ? c_accent : c_border, item.pinned ? 1 : a_border)
+			
+			if (item.thumbnail != null)
+				draw_sprite(item.thumbnail, 0, cardx, cardy)
+			else
+				draw_sprite(spr_missing_thumbnail, 0, cardx, cardy)
+			
+			// Icons
+			var iconwid, iconx;
+			iconwid = ((hover || item.pinned) * 36) + (hover * 32)
+			iconx = cardx + 240 - 12 - 28
+			mouseon = mouseon && !app_mouse_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 36)
+			
+			if (hover || item.pinned)
 			{
-				project_load(item.filename)
-				return 0
+				draw_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 36, false, c_background, 1)
+				draw_outline(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 36, 1, c_border, a_border)
+			}
+			
+			// Oh yeah. Pin it
+			if (hover || item.pinned)
+			{
+				if (draw_button_icon("recentpin" + string(item), iconx, cardy + 12, 28, 28, item.pinned, icons.PIN, null, false, "tooltippin", null))
+					action_recent_pin(item)
+			}
+			iconx -= 32
+			
+			// Remove
+			if (hover)
+			{
+				if (draw_button_icon("recentdelete", iconx, cardy + 12, 28, 28, false, icons.DELETE, null, false, "tooltipremove", null,))
+					action_recent_remove(item)
+			}
+			
+			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
+			microani_update(hover, hover && mouse_left, false)
+			
+			draw_label(item.name, cardx + 15, cardy + 209, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
+			
+			draw_label(recent_time_string(item.last_opened), cardx + 15, cardy + 228, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_value)
+			
+			// Load model
+			if (mouseon)
+			{
+				mouse_cursor = cr_handpoint
+			
+				if (mouse_left_released)
+				{
+					project_load(item.filename)
+				
+					scissor_done()
+					return 0
+				}
 			}
 		}
 		
@@ -284,6 +280,11 @@ if (mode = "grid")
 			cardy += 240 + 16
 		}
 	}
+	
+	scissor_done()
+	
+	var gradalpha = .25 * percent(liststart, 0, 25);
+	draw_gradient(xx, yy - 1, wid, 16, c_black, gradalpha, gradalpha, 0, 0)
 }
 
 // Update list if anything has changed

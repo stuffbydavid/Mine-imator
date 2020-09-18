@@ -32,6 +32,8 @@ app_startup_lists()
 app_startup_window()
 app_startup_themes()
 app_startup_fonts()
+app_startup_interface_lists()
+
 app_startup_recent()
 
 alert_startup()

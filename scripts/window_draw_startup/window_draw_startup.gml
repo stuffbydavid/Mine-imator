@@ -82,7 +82,13 @@ if (recent_list_amount > 0)
 	draw_label(text_get("startuprecentprojects"), dx, dy + 16, fa_left, fa_middle, c_accent, 1)
 	
 	var labelwid = string_width(text_get("startuprecentprojects"));
-	draw_button_borderless(text_get("startupsortby"), dx + labelwid + 16, dy, null, null, icons.SORT_DOWN)
+	
+	if (draw_button_borderless("startupsortby", dx + labelwid + 16, dy, null, null, icons.SORT_DOWN))
+		menu_settings_set(dx + labelwid + 16, dy + 36, "startupsortby")
+	
+	if (settings_menu_name = "startupsortby")
+		current_mcroani.holding = true
+	
 	dy += 72
 	
 	var listheight;
