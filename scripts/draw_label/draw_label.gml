@@ -8,7 +8,7 @@
 /// @arg alpha
 /// @arg [font]]]	
 
-var str, xx, yy, halign, valign, color, alpha, font;
+var str, xx, yy, halign, valign, color, alpha, font, fontold;
 var oldcolor, oldalpha;
 str = argument[0]
 xx = argument[1]
@@ -47,6 +47,8 @@ if (argument_count > 5)
 if (argument_count > 7)
 {
 	font = argument[7]
+	fontold = draw_get_font()
+	
 	draw_set_font(font)
 }
 
@@ -67,4 +69,4 @@ if (argument_count > 5)
 }
 
 if (argument_count > 7)
-	draw_set_font(font_emphasis)
+	draw_set_font(fontold)

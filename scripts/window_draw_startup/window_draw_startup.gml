@@ -4,7 +4,7 @@ content_x = 0
 content_y = 0
 content_width = window_width
 content_height = window_height
-content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon// && !snackbar_mouseon && !context_menu_mouseon
+content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon
 
 // Draw background
 draw_clear_alpha(c_background, 1)
@@ -18,8 +18,8 @@ draw_image(spr_startup_right, pattern, window_width, 0)
 draw_sprite(spr_logo, 0, window_width / 2, 96)
 
 // Version
-var trial = (trial_version ? text_get("startuptrial") : "");
-draw_button_text(text_get("startupversion", mineimator_version_full + " " + trial), (window_width / 2) + 259, 130, null, null)
+var trial = (trial_version ? " " + text_get("startuptrial") : "");
+draw_button_text(text_get("startupversion", mineimator_version_full + trial), (window_width / 2) + 259, 130, popup_show, popup_about)
 
 dy = 240
 dw = min(window_width - 48, 1008)
@@ -46,7 +46,11 @@ else
 
 // New model
 dx -= newprojectwidth
-draw_button_primary("startupnewproject", dx, dy, newprojectwidth, project_create, icons.NEW_PROJECT)
+if (draw_button_primary("startupnewproject", dx, dy, newprojectwidth, null, icons.NEW_PROJECT))
+{
+	popup_newproject_clear()
+	popup_show(popup_newproject)
+}
 
 if (recent_list_amount > 0)
 	dx -= 12 + browsewidth
@@ -54,7 +58,11 @@ else
 	dx = centerx 
 
 // Browse
-draw_button_secondary("startupbrowse", dx, dy, browsewidth, project_load, icons.BROWSE)
+if (draw_button_secondary("startupbrowse", dx, dy, browsewidth, project_load, icons.BROWSE))
+{
+	if (window_state = "startup")
+		window_state = ""
+}
 
 // List style
 if (recent_list_amount > 0)

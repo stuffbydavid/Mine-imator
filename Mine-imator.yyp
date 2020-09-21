@@ -919,6 +919,14 @@
             }
         },
         {
+            "Key": "0ca9547b-ae1f-4bb0-983a-db3ac30e07e1",
+            "Value": {
+                "id": "ce910156-2cf8-4f3e-bb5d-fdd8d57059cf",
+                "resourcePath": "views\\0ca9547b-ae1f-4bb0-983a-db3ac30e07e1.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "0cbda60e-bd19-473c-8d34-a2b3091ab955",
             "Value": {
                 "id": "a57b9771-235e-4aed-bcee-7c3e75062813",
@@ -8679,6 +8687,14 @@
             }
         },
         {
+            "Key": "8068d882-aa19-4756-ba69-5e5b3d1d2b4c",
+            "Value": {
+                "id": "0ceb1ca5-f080-4a61-a700-be4c25a8312c",
+                "resourcePath": "scripts\\draw_textfield\\draw_textfield.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "80c1f8e6-a7ea-4e1d-991a-1ae83fe6184b",
             "Value": {
                 "id": "a211927e-05ae-4556-999d-4368b522c3e5",
@@ -8803,6 +8819,14 @@
             "Value": {
                 "id": "383096b3-f92c-42f4-a04a-fed33cce9745",
                 "resourcePath": "scripts\\action_lib_pc_type_rot_spd_israndom\\action_lib_pc_type_rot_spd_israndom.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "827aa96d-d245-49a2-9935-0eb567d7a89e",
+            "Value": {
+                "id": "e510a197-1a53-468e-9d44-361602543bf8",
+                "resourcePath": "scripts\\popup_about_draw\\popup_about_draw.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -14319,6 +14343,14 @@
             }
         },
         {
+            "Key": "d0636bf8-1c8f-4d80-a446-2e94359bf236",
+            "Value": {
+                "id": "dd5ba0a0-3954-416e-8ff9-772903c2b57b",
+                "resourcePath": "views\\d0636bf8-1c8f-4d80-a446-2e94359bf236.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "d09fbace-b7d5-4e12-b64e-dd1617247459",
             "Value": {
                 "id": "5fbb51b9-cb5a-4065-b2be-36ca44108c89",
@@ -18678,6 +18710,7 @@
         "5cd59315-9b06-4f1e-949a-70f9fe2c0f57",
         "895de4ec-8187-4d98-bc3d-b14d4611d922",
         "1c92ca58-e837-493c-ada7-b2157a7c82d8",
+        "8068d882-aa19-4756-ba69-5e5b3d1d2b4c",
         "11d7c337-27ad-41b7-8eb2-8ecc2e0e8043",
         "ebba11ec-cd3b-43db-8db4-0c10c1d4a33d",
         "228fb97e-0464-419a-ac68-0e86f83806e2",
@@ -18762,6 +18795,7 @@
         "9822adfc-3f99-423d-b842-a69a4de4c378",
         "5df38c33-926c-421f-8f6d-41304796e51e",
         "f83760c1-e6bc-49d1-bbe5-ce7f69762eb8",
+        "827aa96d-d245-49a2-9935-0eb567d7a89e",
         "234fcbf3-0895-40d2-97f3-c6a598fa2455",
         "89372e21-2d9e-4be3-b2b8-f1c7b24432e6",
         "57c5d9b6-1451-451e-9d32-006f68dff24d",

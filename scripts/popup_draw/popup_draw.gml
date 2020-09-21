@@ -2,6 +2,9 @@
 
 var boxx, boxy, boxw, boxh
 
+if (popup != null && popup.block)
+	draw_box(0, 0, window_width, window_height, false, c_black, popup_ani * 0.45)
+
 // Animate
 if (popup_ani_type = "show")
 {
@@ -62,14 +65,9 @@ content_width = boxw
 content_height = boxh
 content_tab = null
 
-draw_drop_shadow(boxx, boxy, boxw, boxh)
-draw_box(boxx, boxy, boxw, boxh, false, setting_color_interface, 1)
-
-// Caption
-draw_set_font(setting_font_bold)
-draw_label(string_limit(string_remove_newline(popup.caption), boxw - 20), boxx + 10, boxy + 5)
-draw_set_font(setting_font)
-draw_separator_horizontal(boxx + 10, boxy + 25, boxw - 20)
+draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1)
+draw_box(boxx, boxy, boxw, boxh, false, c_background, 1)
+draw_outline(boxx, boxy, boxw, boxh, 1, c_overlay, a_overlay)
 
 // Move
 if (window_busy = "popupclick")
@@ -98,17 +96,40 @@ else
 }
 
 // Draw contents
-content_x = boxx + 30
-content_y = boxy + 50
-content_width = boxw - 60
-content_height = boxh - 80
+content_x = boxx
+content_y = boxy
+content_width = boxw
+content_height = boxh 
 content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
 
 dx = content_x
 dy = content_y
 dw = content_width
 dh = content_height
-script_execute(popup.script)
+
+dx_start = dx
+dy_start = dy
+
+// Adjust padding, add header
+if (!popup.custom)
+{
+	dy += 8
+	dx += 16
+	dw -= 32
+	dh -= 16
+	
+	// Caption
+	draw_label(text_get(popup.name + "caption"), dx, dy + 14, fa_left, fa_middle, c_accent, 1, font_heading)
+	
+	// Close
+	if (draw_button_icon(popup.name + "close", content_x + content_width - 40, dy, 28, 28, false, icons.CLOSE, null, false))
+		popup_close()
+	
+	dy += 44
+}
+
+if (popup.script != null)
+	script_execute(popup.script)
 
 if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
 	window_busy = "popupclick"

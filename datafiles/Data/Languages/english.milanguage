@@ -4,11 +4,13 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.09.18"
+        "lastchange": "2020.09.21"
     },
     "tooltip/": {
         "remove": "Remove",
-		"pin": "Pin"
+        "pin": "Pin",
+        "changefolder": "Change folder",
+        "downloadskin": "Download skin"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -20,6 +22,16 @@
         "loadingassets": "Loading assets, please wait...",
         "sortby": "SORT BY"
     },
+    "about/": {
+		"version": "Version %1",
+        "releasedate": ", released %1",
+        "minecraftpre": "Based on the game ",
+        "minecraft": "Minecraft",
+        "createdby": "CREATED BY",
+		"development": "DEVELOPMENT",
+		"uibranding": "UI & BRANDING",
+		"betatesting": "BETA TESTING"
+	},
     "recent/": {
 		"lastopened": "Last opened",
 		"lastopened/": {
@@ -75,10 +87,6 @@
     "error/": {
         "loadassets": "The Minecraft assets could not be loaded. Try re-installing Mine-imator. See the log for details.",
         "loadassetscaption": "Load assets error",
-        "newprojectexists": "The chosen folder already exists. Change it to something else.",
-        "newprojectexistscaption": "New project error",
-        "newprojectinvalid": "Please enter an unique valid folder name.",
-        "newprojectinvalidcaption": "New project error",
         "newprojectaccess": "The project could not be saved in this location. Try another folder by clicking \"Change\".",
         "newprojectaccesscaption": "New project error",
         "filecorrupted": "The file has been corrupted or was created in a deprecated version of Mine-imator. See the log for more details. Try loading a backup file if one is available (change the filter in the file browser).",
@@ -113,7 +121,7 @@
         "exportmoviecaption": "Movie export error",
         "upgrade": "Invalid key!",
         "upgradecaption": "Upgrade error",
-        "downloadskinuser": "The user \"%1\" does not exist",
+        "downloadskinuser": "The user \"%1\" does not exist.",
         "downloadskininternet": "Could not download skin, check your internet connection."
     },
     "question/": {
@@ -184,21 +192,12 @@
     },
     "newproject/": {
         "caption": "New project",
-        "name": "Name",
-        "nametip": "Enter the name of the project.\n(This can be changed later)",
-        "namedefault": "New Project",
-        "author": "Author",
-        "authortip": "Enter the author of the project.\n(This can be empty and changed later)",
-        "description": "Description",
-        "descriptiontip": "Enter a description of the project.\n(This can be empty and changed later)",
-        "folder": "Folder",
-        "foldertip": "The folder where all the project resources are saved.",
-        "folderchange": "Change",
-        "folderchangetip": "Choose the folder to save the project files in.",
-        "create": "Create",
-        "createtip": "Create a new project.",
-        "cancel": "Cancel",
-        "canceltip": "Stop creating a new project and close this popup."
+        "name": "Project name",
+        "location": "Project location",
+        "namedefault": "New project",
+        "create": "CREATE PROJECT",
+        "nameempty": "Project folder name cannot be empty.",
+        "nameexists": "Project folder already exists."
     },
     "toolbar/": {
         "benchtip": "Click to open the workbench.",
@@ -329,15 +328,9 @@
     "downloadskin/": {
         "caption": "Download skin",
         "username": "Username",
-        "usernametip": "The Minecraft username to download the skin from.",
-        "getskin": "Get skin",
-        "getskintip": "Fetch the skin of the entered username.",
         "downloading": "Downloading...",
         "name": "Skin of %1",
-        "done": "Done",
-        "donetip": "Confirm and use this skin.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup without using the skin."
+        "done": "DONE"
     },
     "open/": {
         "caption": "Open project",
@@ -349,10 +342,7 @@
     },
     "saveas/": {
         "caption": "Save project as",
-        "save": "Save",
-        "savetip": "Save a new project into the given folder.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup."
+        "save": "SAVE"
     },
     "exportmovie/": {
         "caption": "Export movie",

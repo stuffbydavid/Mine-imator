@@ -1,12 +1,15 @@
 /// app_startup_interface_popups()
 
+// About
+popup_about = new_popup("about", popup_about_draw, 542, 480, false, true)
+
 // Startup
 popup_startup = new_popup("startup", popup_startup_draw, 760, 586, true)
 with (popup_startup)
 	recent_scroll = new(obj_scrollbar)
 
 // New project
-popup_newproject = new_popup("newproject", popup_newproject_draw, 450, 380, true)
+popup_newproject = new_popup("newproject", popup_newproject_draw, 440, 212, true)
 with (popup_newproject)
 {
 	folder = ""
@@ -75,7 +78,7 @@ with (popup_loading)
 }
 
 // Download skin
-popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 420, 260, true)
+popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 400, 312, true)
 with (popup_downloadskin)
 {
 	value_script = null

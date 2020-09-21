@@ -27,6 +27,7 @@ if (dev_mode)
 {
 	popup_newproject_clear()
 	project_create()
+	window_state = ""
 }
 else
 {
