@@ -22,3 +22,5 @@ enum e_mcroani
 	ACTIVE_LINEAR,
 	DISABLED_LINEAR
 }
+
+radiobutton_animation_group = null

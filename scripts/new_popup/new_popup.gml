@@ -1,10 +1,11 @@
-/// new_popup(name, script, width, height, block, [custom])
+/// new_popup(name, script, width, height, block, [custom, [revert]])
 /// @arg name
 /// @arg script
 /// @arg width
 /// @arg height
 /// @arg block
-/// @arg [custom]
+/// @arg [custom
+/// @arg [revert]]
 
 var popup = new(obj_popup);
 
@@ -21,5 +22,10 @@ if (argument_count > 5)
 	popup.custom = argument[5]
 else
 	popup.custom = false
+
+if (argument_count > 6)
+	popup.revert = argument[6]
+else
+	popup.revert = false
 
 return popup

@@ -1,4 +1,4 @@
-/// draw_inputbox(name, x, y, width, height, placeholder, textbox, script, [disabled, [error]])
+/// draw_inputbox(name, x, y, width, height, placeholder, textbox, script, [disabled, [error, [font, [center]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -8,9 +8,11 @@
 /// @arg textbox
 /// @arg script
 /// @arg [disabled
-/// @arg [error]]
+/// @arg [error
+/// @arg [font
+/// @arg [center]]]]
 
-var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font;
+var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, center;
 var update;
 
 inputname = argument[0]
@@ -23,6 +25,8 @@ tbx = argument[6]
 script = argument[7]
 disabled = false
 err = false
+font = font_value
+center = false
 
 if (argument_count > 8)
 	disabled = argument[8]
@@ -30,9 +34,14 @@ if (argument_count > 8)
 if (argument_count > 9)
 	err = argument[9]
 
+if (argument_count > 10)
+	font = argument[10]
+
+if (argument_count > 11)
+	center = argument[11]
+
 capwid = string_width(text_get(inputname))
 padding = 3
-font = null
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
@@ -75,23 +84,34 @@ if (string_contains(inputname, "search"))
 }
 
 // Textbox
-draw_set_font(font_value)
+draw_set_font(font)
+
+var textx = (center ? xx + w/2 : xx + padding + 7);
 
 if (disabled)
 {
-	draw_label(string_limit(tbx.text, w - padding * 2), xx + padding + 7, yy + h - 6, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_value)
+	draw_label(string_limit(tbx.text, w - padding * 2), textx, (yy + h/2), center ? fa_center : fa_left, fa_bottom, c_text_tertiary, a_text_tertiary)
 	update = false
 }
-else
-	update = textbox_draw(tbx, xx + 10, yy + 6, w - 20, h - 9) // ,false)
+
+// Placeholder label
+if (tbx.text = "" && placeholder != "")
+    draw_label(string_limit(placeholder, w - padding * 2), textx, (yy + h/2), center ? fa_center : fa_left, fa_center, c_text_tertiary, a_text_tertiary)
+
+if (!disabled)
+{
+	if (center && (tbx.text != ""))
+	{
+		var textwid = min(w, string_width(tbx.text));
+		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 6, textwid, h - 9) // ,false)
+	}
+	else
+		update = textbox_draw(tbx, xx + 10, yy + 6, w - 20, h - 9) // ,false)
+}
 
 // Textbox context menu
 //if (window_focus = string(tbx))
 //	context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_value_type.NONE, null, null)
-
-// Placeholder label
-if (tbx.text = "" && placeholder != "")
-    draw_label(string_limit(placeholder, w - padding * 2), xx + padding + 7, yy + 22, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_value)
 
 // Disabled overlay
 draw_box(xx, yy, w, h, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])

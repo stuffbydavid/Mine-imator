@@ -4,10 +4,7 @@
 var key = argument0;
 
 if (!key_valid(key))
-{
-	error("errorupgrade")
 	return false
-}
 
 var f = file_text_open_write(temp_file);
 if (f > -1)

@@ -9,7 +9,7 @@ with (popup_startup)
 	recent_scroll = new(obj_scrollbar)
 
 // New project
-popup_newproject = new_popup("newproject", popup_newproject_draw, 440, 212, true)
+popup_newproject = new_popup("newproject", popup_newproject_draw, 380, 212, true)
 with (popup_newproject)
 {
 	folder = ""
@@ -78,7 +78,7 @@ with (popup_loading)
 }
 
 // Download skin
-popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 400, 312, true)
+popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 300, 312, true)
 with (popup_downloadskin)
 {
 	value_script = null
@@ -90,7 +90,7 @@ with (popup_downloadskin)
 }
 
 // Import image
-popup_importimage = new_popup("importimage", popup_importimage_draw, 300, 280, true)
+popup_importimage = new_popup("importimage", popup_importimage_draw, 236, 312, true)
 with (popup_importimage)
 {
 	filename = ""
@@ -98,7 +98,7 @@ with (popup_importimage)
 }
 
 // Import item sheet
-popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 500, 520, true)
+popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 288, 488, true)
 with (popup_importitemsheet)
 {
 	filename = ""
@@ -140,9 +140,12 @@ with (popup_exportimage)
 }
 
 // Upgrade
-popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 600, 600, true)
+popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 360, 520, true, false, true)
 with (popup_upgrade)
+{
 	tbx_key = new_textbox(true, 8, "")
+	warntext = ""
+}
 
 // Modelbench ad
 popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 650, 600, true)

@@ -4,13 +4,14 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.09.21"
+        "lastchange": "2020.09.26"
     },
     "tooltip/": {
         "remove": "Remove",
         "pin": "Pin",
         "changefolder": "Change folder",
-        "downloadskin": "Download skin"
+        "downloadskin": "Download skin",
+        "pastekey": "Paste key"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -427,18 +428,8 @@
     },
     "upgrade/": {
         "caption": "Upgrade",
-        "info1": "You are using the Trial version of Mine-imator. When exporting your project into a movie file or image, there will be a watermark in the bottom right corner.",
-        "info2": "To remove the watermark, visit the Mine-imator upgrade web page:",
-        "button": "Upgrade",
-        "buttontip": "Visit the website to upgrade Mine-imator.",
-        "continue": "Continue",
-        "continuetip": "Continue using the entered key.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup without upgrading.",
-        "key": "Key",
-        "keytip": "Enter the upgrade key.",
-        "keypaste": "Paste",
-        "keypastetip": "Paste the copied upgrade key."
+        "info": "You are currently using a trial version of Mine-imator. You have access to all the program’s features, but your exports will be watermarked. To customize or remove the watermark, get an upgrade key from the link below, and enter it here.",
+        "continue": "UPGRADE"
     },
     "modelbench/": {
         "caption": "Modelbench",
@@ -2431,35 +2422,20 @@
     },
     "importimage/": {
         "caption": "Import image",
-        "info": "Select the type of image",
+        "type": "Image type",
         "skin": "Skin",
-        "skintip": "A player or mob skin to be used by a character.",
         "itemsheet": "Item sheet",
-        "itemsheettip": "A grid of images to be used by items.",
         "blocksheet": "Block sheet",
-        "blocksheettip": "A grid of blocks used as terrain.",
         "particlesheet": "Particle sheet",
-        "particlesheettip": "A grid of sprite textures used by particle creators.",
         "texture": "Texture",
-        "texturetip": "A simple picture used as a texture.",
-        "ok": "OK",
-        "oktip": "Confirm setting and close this popup.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup without importing the image."
+        "ok": "OK"
     },
     "importitemsheet/": {
         "caption": "Import item sheet",
-        "issheet": "Is item sheet",
-        "issheettip": "Whether this image is a grid of multiple items",
-        "info": "Number of items in the image",
-        "width": "Items horizontally",
-        "widthtip": "The number of items in the image sheet horizontally.",
-        "height": "Items vertically",
-        "heighttip": "The number of items in the image sheet verically.",
-        "ok": "OK",
-        "oktip": "Confirm setting and close this popup.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup without importing the item sheet."
+        "issheet": "Item sheet",
+        "rows": "Rows",
+        "columns": "Columns",
+        "ok": "OK"
     },
     "timeline/": {
         "empty": "Nothing here yet! Click the workbench to get started.",

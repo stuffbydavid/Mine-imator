@@ -119,11 +119,16 @@ if (!popup.custom)
 	dh -= 16
 	
 	// Caption
-	draw_label(text_get(popup.name + "caption"), dx, dy + 14, fa_left, fa_middle, c_accent, 1, font_heading)
+	draw_label(text_get(popup.name + "caption"), dx, dy + 16, fa_left, fa_middle, c_accent, 1, font_heading)
 	
 	// Close
-	if (draw_button_icon(popup.name + "close", content_x + content_width - 40, dy, 28, 28, false, icons.CLOSE, null, false))
-		popup_close()
+	if (draw_button_icon(popup.name + "close", content_x + content_width - 40, dy + 2, 28, 28, false, icons.CLOSE, null, false))
+	{
+		if (popup.revert && popup_switch_from)
+			popup_switch(popup_switch_from)
+		else
+			popup_close()
+	}
 	
 	dy += 44
 }

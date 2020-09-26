@@ -1,48 +1,76 @@
-/// draw_radiobutton(name, x, y, value, checked, script)
+/// draw_radiobutton(name, x, y, value, active, script)
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg value
-/// @arg checked
+/// @arg active
 /// @arg script
 
-var name, xx, yy, value, checked, script;
-var size, rad, caption, wid, mouseon, pressed;
-name = argument0
-xx = argument1
-yy = argument2
-value = argument3
-checked = argument4
-script = argument5
+var name, xx, yy, value, active, script;
+var w, h, mouseon, pressed;
+name = text_get(argument[0])
+xx = argument[1]
+yy = argument[2]
+value = argument[3]
+active = argument[4]
+script = argument[5]
 
-size = 16
-if (xx + size < content_x || xx > content_x + content_width || yy + size < content_y || yy > content_y + content_height)
-	return 0
-	
-rad = size / 2
-caption = text_get(name)
-wid = size + string_width(caption) + 10
-tip_set(text_get(name + "tip"), xx, yy, wid, size)
+draw_set_font(font_emphasis)
+
+w = 28 + string_width(name)
+h = 28
 
 // Mouse
-mouseon = (app_mouse_box(xx, yy, wid, size) && content_mouseon)
+var mouseon, mouseclick;
+mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "")
+mouseclick = mouseon && mouse_left
+
 pressed = false
+
 if (mouseon)
 {
-	if (mouse_left || mouse_left_released)
-		pressed = true
-	mouse_cursor = cr_handpoint
+    if (mouse_left || mouse_left_released)
+        pressed = true
+	
+    mouse_cursor = cr_handpoint
 }
 
-// Circle
-draw_image(spr_circle_16, 0, xx + rad, yy + rad, 1, 1, pressed ? setting_color_boxes_pressed : setting_color_boxes, 1)
+// Set micro animation before drawing
+microani_set(argument[0], script, mouseon, mouseclick, active)
 
-if (checked)
-	draw_image(spr_circle_8, 0, xx + rad, yy + rad, 1, 1, setting_color_buttons, 1)
+var buttonx, buttony;
+buttonx = xx + 10
+buttony = (yy + (28/2))
 
-// Caption
-draw_label(caption, xx + size + 8, yy + size / 2, fa_left, fa_middle)
+// Draw button
+var buttoncolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.PRESS]);
+buttoncolor = merge_color(buttoncolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+
+var buttonalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.PRESS]);
+buttonalpha = lerp(buttonalpha, 1, mcroani_arr[e_mcroani.ACTIVE])
+
+// Off
+draw_image(spr_radiobutton, 0, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * (1 - mcroani_arr[e_mcroani.ACTIVE]) * (1 - mcroani_arr[e_mcroani.HOVER]))
+
+// Off (hover)
+draw_image(spr_radiobutton, 1, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * (1 - mcroani_arr[e_mcroani.ACTIVE]) * (mcroani_arr[e_mcroani.HOVER]))
+
+// On
+draw_image(spr_radiobutton, 2, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * mcroani_arr[e_mcroani.ACTIVE] * (1 - mcroani_arr[e_mcroani.RADIO_HOVER]))
+
+// Draw hover outline
+draw_image(spr_radiobutton_hover, 0, buttonx, buttony, 1, 1, c_accent_hover, a_accent_hover * mcroani_arr[e_mcroani.HOVER])
+
+// Label
+draw_label(name, xx + 28, yy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_value)
+
+microani_update(mouseon, mouseclick, active)
 
 // Press
 if (pressed && mouse_left_released)
-	script_execute(script, value)
+{
+	if (script != null)
+		script_execute(script, value)
+	
+	return true
+}

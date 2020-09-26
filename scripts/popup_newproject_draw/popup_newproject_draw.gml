@@ -22,12 +22,12 @@ if (warntext != "")
 
 // Project location
 tab_control(40)
-draw_label(text_get("newprojectlocation") + ":", dx, dy + 20, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
+draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
 
 var directory = "...\\" + directory_name(setting_project_folder) + string_remove_newline(popup.folder);
 
-draw_label(directory, dx, dy + 34, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_caption)
-if (draw_button_icon("newprojectchangefolder", dx + dw - 20, dy + 8, 24, 24, false, icons.FOLDER_EDIT, null, null, "tooltipchangefolder"))
+draw_label(directory, dx, dy + 38, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
+if (draw_button_icon("newprojectchangefolder", dx + dw - 20, dy + 12, 24, 24, false, icons.FOLDER_EDIT, null, null, "tooltipchangefolder"))
 {
 	var fn = file_dialog_save_project(popup.folder)
 	if (fn != "")
