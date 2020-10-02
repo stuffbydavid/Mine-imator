@@ -1,22 +1,32 @@
-/// textbox_draw(textbox, x, y, width, height)
+/// textbox_draw(textbox, x, y, width, height, [contextmenu])
 /// @arg textbox
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
+/// @arg contextmenu
 /// @desc Draws a box with editable text at the given position and with the given dimensions.
 
-var tbx, xx, yy, w, h;
-var col_normal, changetext, deletetext, inserttext, lineheight, mouseover;
+var tbx, xx, yy, w, h, contextmenu;
+var changetext, deletetext, inserttext, lineheight, mouseover;
 var a, b, c, l, p, k, ww, hh, str;
 	
-tbx = argument0
-xx = argument1
-yy = argument2
-w = argument3
-h = argument4
-col_normal = setting_color_boxes_text
-	
+tbx = argument[0]
+xx = argument[1]
+yy = argument[2]
+w = argument[3]
+h = argument[4]
+contextmenu = true
+
+if (argument_count > 5)
+	contextmenu = argument[5]
+
+// Colors
+var textnormal, highlight, texthighlight;
+textnormal = c_text_main
+highlight = c_accent
+texthighlight = c_white
+
 if (tbx.last_text != tbx.text)
 {
 	str = tbx.text
@@ -48,9 +58,12 @@ deletetext = 0
 inserttext = ""
 lineheight = string_height(" ")
 mouseover = (content_mouseon && app_mouse_box(xx, yy, w, h))
-	
+
 if (window_focus = string(tbx))
 {
+	//if (contextmenu)
+	//	context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_value_type.NONE, null, null)
+	
 	var keys, key_press, action;
 	textbox_isediting = true
 	textbox_isediting_respond = true
@@ -107,7 +120,7 @@ if (window_focus = string(tbx))
 	if (!mouse_left && window_busy = string(tbx) + "click")
 		window_busy = ""
 	
-	if (mouse_left_pressed && !keyboard_check(vk_shift))
+	if ((mouse_left_pressed && !keyboard_check(vk_shift) && !context_menu_mouseon) || (tbx.single_line && keyboard_check_pressed(vk_enter)))
 		window_focus = ""
 	
 	if (!tbx.read_only && window_busy = "" && !keyboard_check(vk_control))
@@ -186,19 +199,25 @@ if (window_focus = string(tbx))
 	}
 		
 	action = -1
-	if (keyboard_check(vk_control) && window_busy = "") // Ctrl commands
+	if ((keyboard_check(vk_control) && window_busy = "") || context_menu_tbx_action) // Ctrl commands
 	{
-		if (!tbx.read_only && keyboard_check_pressed(ord("X")))
+		if ((!tbx.read_only && keyboard_check_pressed(ord("X"))) || context_menu_tbx_cut)
 			action = 0
 			
-		if (keyboard_check_pressed(ord("C")))
+		if (keyboard_check_pressed(ord("C")) || context_menu_tbx_copy)
 			action = 1
 			
-		if (!tbx.read_only && key_press[ord("V")])
+		if ((!tbx.read_only && key_press[ord("V")]) || context_menu_tbx_paste)
 			action = 2
 			
-		if (keyboard_check_pressed(ord("A")))
+		if (keyboard_check_pressed(ord("A")) || context_menu_tbx_select_all)
 			action = 4
+			
+		context_menu_tbx_action = false
+		context_menu_tbx_cut = false
+		context_menu_tbx_copy = false
+		context_menu_tbx_paste = false
+		context_menu_tbx_select_all = false
 	}
 	
 	switch (action)
@@ -1001,27 +1020,27 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 			
 			if (str[0] != "") // Text before or outside selection
 			{
-				draw_set_color(col_normal)
+				draw_set_color(textnormal)
 				draw_text(xx, yy, str[0])
 			}
 			
 			if (str[1] != "") // Selected text
 			{
-				draw_set_color(setting_color_highlight)
+				draw_set_color(highlight)
 				draw_rectangle(min(xx + w, xx + string_width(str[0])), yy, min(xx + w, xx + string_width(str[0] + str[1])), yy + lineheight, false)
-				draw_set_color(setting_color_highlight_text)
+				draw_set_color(texthighlight)
 				draw_text(xx + string_width(str[0]), yy, str[1])
 			}
 			
 			if (str[2] != "") // Text after selection
 			{
-				draw_set_color(col_normal)
+				draw_set_color(textnormal)
 				draw_text(xx + string_width(str[0] + str[1]), yy, str[2])
 			}
 		}
 		else // Unselected
 		{
-			draw_set_color(col_normal)
+			draw_set_color(textnormal)
 			draw_text(xx, yy, string_copy(tbx.line[0], tbx.start + 1, tbx.chars) + tbx.suffix)
 		}
 	}
@@ -1055,27 +1074,27 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 			
 			if (str[0] != "") // Text before or outside selection
 			{
-				draw_set_color(col_normal)
+				draw_set_color(textnormal)
 				draw_text(xx, yy + ly, str[0])
 			}
 			
 			if (str[1] != "") // Selected text
 			{
-				draw_set_color(setting_color_highlight)
+				draw_set_color(highlight)
 				draw_rectangle(min(xx + w, xx + string_width(str[0])), yy + ly, min(xx + w, xx + string_width(str[0] + str[1])), yy + ly + lineheight, false)
-				draw_set_color(setting_color_highlight_text)
+				draw_set_color(texthighlight)
 				draw_text(xx + string_width(str[0]), yy + ly, str[1])
 			}
 			
 			if (str[2] != "") // Text after selection
 			{
-				draw_set_color(col_normal)
+				draw_set_color(textnormal)
 				draw_text(xx + string_width(str[0] + str[1]), yy + ly, str[2])
 			}
 		} 
 		else // Unselected line
 		{
-			draw_set_color(col_normal)
+			draw_set_color(textnormal)
 			draw_text(xx, yy + ly, tbx.line[l])
 		}
 	}
@@ -1095,7 +1114,7 @@ if (window_focus = string(tbx) && !tbx.read_only)
 	
 	if (a >= 0 && a <= w && b >= 0 && b + lineheight <= h && (current_time - textbox_marker) mod 1000 < 500)
 	{
-		draw_set_color(0)
+		draw_set_color(c_text_main)
 		draw_line(xx + a, yy + b, xx + a, yy + b+lineheight)
 	}
 }
@@ -1115,11 +1134,10 @@ else if (textbox_mouseover = tbx)
 {
 	textbox_mouseover = -1
 	mouse_cursor = cr_default
+	
 }
 
 tbx.last_text = tbx.text
 tbx.last_width = w
-	
-draw_set_color(setting_color_text)
 
 return (inserttext != "" || deletetext != 0)

@@ -21,6 +21,9 @@ script = argument7
 
 if (draw_button_normal(name, xx, yy, wid, 32, e_button.TEXT, popup = popup_colorpicker && popup_colorpicker.value_name = name, true, true, icons.COLOR, hsbmode ? rgb_to_hsb(color) : color))
 {
+	popup_colorpicker_show(name, color, def, script)
+	
+	/*
 	if (popup = popup_colorpicker && popup_colorpicker.value_script = script)
 		popup_close()
 	else
@@ -61,4 +64,5 @@ if (draw_button_normal(name, xx, yy, wid, 32, e_button.TEXT, popup = popup_color
 		popup_colorpicker.tbx_brightness.text = string(popup_colorpicker.brightness)
 		popup_colorpicker.tbx_hexadecimal.text = color_to_hex(color)
 	}
+	*/
 }

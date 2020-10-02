@@ -15,6 +15,7 @@ app_startup_micro_animations()
 
 textbox_startup()
 history_startup()
+textfield_group_reset()
 
 background_ground_startup()
 background_sky_startup()

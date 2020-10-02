@@ -40,7 +40,7 @@ with (popup_saveas)
 }
 
 // Color picker
-popup_colorpicker = new_popup("colorpicker", popup_colorpicker_draw, 440, 340, false)
+popup_colorpicker = new_popup("colorpicker", popup_colorpicker_draw, 228, 440, false, true)
 with (popup_colorpicker)
 {
 	value_name = ""
@@ -50,7 +50,6 @@ with (popup_colorpicker)
 	hue = 0
 	saturation = 0
 	value = 0
-	hsb_mode = false
 	tbx_red = new_textbox(1, 3, "0123456789")
 	tbx_green = new_textbox(1, 3, "0123456789")
 	tbx_blue = new_textbox(1, 3, "0123456789")
@@ -60,15 +59,12 @@ with (popup_colorpicker)
 	tbx_hexadecimal = new_textbox(1, 6, "0123456789ABCDEFabcdef")
 	tbx_red.next_tbx = tbx_green
 	tbx_green.next_tbx = tbx_blue
-	tbx_blue.next_tbx = tbx_hue
-	tbx_hue.next_tbx = tbx_saturation
-	tbx_saturation.next_tbx = tbx_brightness
-	tbx_brightness.next_tbx = tbx_hexadecimal
+	tbx_blue.next_tbx = tbx_hexadecimal
 	tbx_hexadecimal.next_tbx = tbx_red
 }
 
 // Loading
-popup_loading = new_popup("loading", popup_loading_draw, 400, 115, true)
+popup_loading = new_popup("loading", popup_loading_draw, 400, 56, true, true)
 with (popup_loading)
 {
 	load_object = null

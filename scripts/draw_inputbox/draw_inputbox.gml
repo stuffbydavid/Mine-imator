@@ -103,10 +103,10 @@ if (!disabled)
 	if (center && (tbx.text != ""))
 	{
 		var textwid = min(w, string_width(tbx.text));
-		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 6, textwid, h - 9) // ,false)
+		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 5, textwid, h - 9) // ,false)
 	}
 	else
-		update = textbox_draw(tbx, xx + 10, yy + 6, w - 20, h - 9) // ,false)
+		update = textbox_draw(tbx, xx + 10, yy + 5, w - 20, h - 9) // ,false)
 }
 
 // Textbox context menu
