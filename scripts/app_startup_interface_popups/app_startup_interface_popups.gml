@@ -156,22 +156,31 @@ with (popup_modelbench)
 }
 
 // Banner editor
-popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 729, 540, true)
+popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 653, 506, true, true)
 with (popup_bannereditor)
 {
+	preview = new(obj_preview)
+	preview.fov = 30
+	
+	layer_scrollbar = new(obj_scrollbar)
+	//layer_scrollbar.snap_value = 48
+	
+	layer_remove = null
+	layer_edit = null
+	
 	banner_edit = null
-	pattern_scroll = new(obj_scrollbar)
-	pattern_scroll.snap_value = 40
-	prev_base_color = c_white
+	banner_edit_preview = null
 	
 	pattern_list_edit = ds_list_create()
 	pattern_color_list_edit = ds_list_create()
-	
-	prev_pattern_list = array()
-	prev_pattern_color = array()
 	
 	pattern_sprites = array()
 	
 	res_ratio = 1
 	pattern_resource = mc_res
+	
+	update = false
+	layer_move = null
+	layer_move_x = 0
+	layer_move_y = 0
 }

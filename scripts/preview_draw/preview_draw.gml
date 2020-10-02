@@ -1,25 +1,27 @@
-/// preview_draw(preview, x, y, size)
+/// preview_draw(preview, x, y, width, height)
 /// @arg preview
 /// @arg x
 /// @arg y
-/// @arg size
+/// @arg width
+/// @arg height
 /// @desc Draws a preview window.
 
-var preview, xx, yy, size;
+var preview, xx, yy, width, height;
 var is3d, mouseon, butw, playbutton, isplaying, exportbutton;
 preview = argument0
 xx = argument1
 yy = argument2
-size = argument3
+width = argument3
+height = argument4
 
-if (xx + size < content_x || xx > content_x + content_width || yy + size < content_y || yy > content_y + content_height)
+if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 	return 0
 
-mouseon = app_mouse_box(xx, yy, size, size)
+mouseon = app_mouse_box(xx, yy, width, height)
 butw = text_max_width("previewspawn") + 20
 
 // Background
-draw_box(xx, yy, size, size, false, setting_color_background, 1)
+draw_box(xx, yy, width, height, false, c_background_secondary, 1)
 
 if (!instance_exists(preview.select))
 {
@@ -42,9 +44,9 @@ else
 	is3d = true
 }
 
-if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + size - butw, yy + size - 24, butw, 24)) ||
-	(playbutton && app_mouse_box(xx + size - 48, yy + size - 24, 24, 24)) ||
-	(exportbutton && app_mouse_box(xx + size - 24, yy + size - 24, 24, 24)))
+if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + width - butw, yy + height - 24, butw, 24)) ||
+	(playbutton && app_mouse_box(xx + width - 48, yy + height - 24, 24, 24)) ||
+	(exportbutton && app_mouse_box(xx + width - 24, yy + height - 24, 24, 24)))
 	mouseon = false
 
 // Dragging controls
@@ -97,8 +99,8 @@ if (window_focus = string(preview))
 	if (m != 1)
 	{
 		preview.goalzoom = clamp(preview.goalzoom * m, 0.1, 100)
-		preview.goalxoff = preview.xoff + (mouse_x - (xx + size / 2)) / preview.zoom - (mouse_x - (xx + size / 2)) / preview.goalzoom
-		preview.goalyoff = preview.yoff + (mouse_y - (yy + size / 2)) / preview.zoom - (mouse_y - (yy + size / 2)) / preview.goalzoom
+		preview.goalxoff = preview.xoff + (mouse_x - (xx + width / 2)) / preview.zoom - (mouse_x - (xx + width / 2)) / preview.goalzoom
+		preview.goalyoff = preview.yoff + (mouse_y - (yy + height / 2)) / preview.zoom - (mouse_y - (yy + height / 2)) / preview.goalzoom
 	}
 	zd = (preview.goalzoom - preview.zoom) / max(1, 5 / delta)
 	if (zd != 0)
@@ -118,7 +120,7 @@ with (preview)
 		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin)))
 		update = true
 	
-	surface = surface_require(surface, size, size, true)
+	surface = surface_require(surface, width, height, true)
 
 	if (update) 
 	{
@@ -253,13 +255,14 @@ with (preview)
 					lengthdir_y(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
 					lengthdir_z(prevcam_zoom, zangle)
 				)
-			
+				render_ratio = width/height
+				
 				render_update_text()
 				
 				gpu_set_ztestenable(true)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_render)
-				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), 60, 1, 1, 32000)
+				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), preview.fov, render_ratio, 1, 32000)
 				
 				render_mode = e_render_mode.PREVIEW
 				render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
@@ -429,8 +432,8 @@ with (preview)
 							draw_set_font(select.font_preview)
 						
 						var dx, dy, color;
-						dx = size / 2 - xoff * zoom
-						dy = size / 2 - yoff * zoom
+						dx = width / 2 - xoff * zoom
+						dy = height / 2 - yoff * zoom
 						color = draw_get_color()
 						draw_set_color(c_white)
 						draw_set_halign(fa_center)
@@ -449,7 +452,7 @@ with (preview)
 							break
 						
 						var wid, wavehei, prec, alpha;
-						wid = size - 20
+						wid = width - 20
 						wavehei = 32
 						prec = sample_rate / sample_avg_per_sec
 						alpha = draw_get_alpha()
@@ -460,8 +463,8 @@ with (preview)
 							ind = floor((dx / wid) * select.sound_samples) div prec
 							maxv = select.sound_max_sample[ind]
 							minv = select.sound_min_sample[ind]
-							draw_vertex_color(10 + dx, size / 2-maxv * wavehei, app.setting_color_buttons, alpha)
-							draw_vertex_color(10 + dx, size / 2-minv * wavehei + 1, app.setting_color_buttons, alpha)
+							draw_vertex_color(10 + dx, width / 2-maxv * wavehei, app.setting_color_buttons, alpha)
+							draw_vertex_color(10 + dx, width / 2-minv * wavehei + 1, app.setting_color_buttons, alpha)
 						}
 						draw_primitive_end()
 						break
@@ -545,12 +548,12 @@ with (preview)
 					{
 						preview_reset_view()
 						
-						zoom = (size - padding * 2) / max(tw, th)
+						zoom = (max(width, height) - padding * 2) / max(tw, th)
 						goalzoom = zoom
 						reset_view = false
 					}
-					dx = size / 2 - (tw / 2 + xoff) * zoom
-					dy = size / 2 - (th / 2 + yoff) * zoom
+					dx = width / 2 - (tw / 2 + xoff) * zoom
+					dy = height / 2 - (th / 2 + yoff) * zoom
 					draw_texture(tex, dx, dy, zoom, zoom)
 				}
 			
@@ -571,12 +574,12 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 {
 	if (preview.select.pc_spawn_constant)
 	{
-		if (draw_button_normal("previewspawn", xx + size - butw, yy + size - 24, butw, 24, e_button.TEXT, preview.spawn_active, true, true))
+		if (draw_button_normal("previewspawn", xx + width - butw, yy + height - 24, butw, 24, e_button.TEXT, preview.spawn_active, true, true))
 			preview.spawn_active = !preview.spawn_active
 	}
 	else
 	{
-		if (draw_button_normal("previewspawn", xx + size - butw, yy + size - 24, butw, 24))
+		if (draw_button_normal("previewspawn", xx + width - butw, yy + height - 24, butw, 24))
 			preview.fire = true
 	}
 }
@@ -584,7 +587,7 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 // Play button
 if (playbutton)
 {
-	if (draw_button_normal((isplaying ? "previewstop" : "previewplay"), xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, isplaying ? icons.STOP : icons.PLAY))
+	if (draw_button_normal((isplaying ? "previewstop" : "previewplay"), xx + width - 50, yy + height - 24, 24, 24, e_button.NO_TEXT, false, true, true, isplaying ? icons.STOP : icons.PLAY))
 	{
 		if (isplaying)
 			audio_stop_sound(preview.sound_play_index)
@@ -595,5 +598,5 @@ if (playbutton)
 		
 // Save button
 if (exportbutton)
-	if (draw_button_normal("previewexport", xx + size - 24, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, icons.EXPORT))
+	if (draw_button_normal("previewexport", xx + width - 24, yy + height - 24, 24, 24, e_button.NO_TEXT, false, true, true, icons.EXPORT))
 		action_res_export()

@@ -56,14 +56,6 @@ surface_set_target(bannersurf)
 		draw_image(maskarray[pattern], 0, 0, 0, 1, 1, colorlist[i], 1)
 	}
 	
-	draw_texture_start()
-	
-	gpu_set_blendmode_ext(bm_zero, bm_src_color)
-	draw_texture_part(res.model_texture_map[?"entity/banner_base"], 0, 0, 0, 0, 42 * skinratio, 41 * skinratio)
-	gpu_set_blendmode(bm_normal)
-	
-	draw_texture_done()
-	
 	// Alpha fix
 	gpu_set_blendmode_ext(bm_src_color, bm_one) 
 	draw_image(maskarray[0], 0, 0, 0, 1, 1, c_black, 1)

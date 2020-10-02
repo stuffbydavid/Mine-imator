@@ -40,7 +40,7 @@ else
 	dh -= 32 + 5
 	
 	// Preview
-	preview_draw(bench_settings.preview, dx + floor(dw / 2) - 80, dy, 160)
+	preview_draw(bench_settings.preview, dx + floor(dw / 2) - 80, dy, 160, 160)
 	dy += 160 + 10
 	dh -= 160 + 10
 	

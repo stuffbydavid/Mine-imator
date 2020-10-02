@@ -4,7 +4,7 @@ var capwid;
 
 // Preview selected resource
 tab_control(160)
-preview_draw(res_preview, dx + floor(dw / 2) - 80, dy, 160)
+preview_draw(res_preview, dx + floor(dw / 2) - 80, dy, 160, 160)
 tab_next()
 
 // List

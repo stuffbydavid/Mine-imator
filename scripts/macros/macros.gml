@@ -2,7 +2,7 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						false
+#macro dev_mode						true
 #macro dev_mode_debug_schematics	dev_mode && false
 #macro dev_mode_debug_names			dev_mode && true
 #macro dev_mode_debug_unused		dev_mode && true
@@ -121,7 +121,7 @@
 #macro c_sunset_end					hex_to_color("C04E37")
 
 // Minecraft color palette
-#macro c_minecraft_white			hex_to_color("E9ECEC")	
+#macro c_minecraft_white			hex_to_color("F4F4F4")	
 #macro c_minecraft_orange			hex_to_color("F07613")	
 #macro c_minecraft_magenta			hex_to_color("BD44B3")	
 #macro c_minecraft_light_blue		hex_to_color("3AAFD9")	

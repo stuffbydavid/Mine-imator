@@ -58,7 +58,7 @@ else
 	dx = centerx 
 
 // Browse
-if (draw_button_secondary("startupbrowse", dx, dy, browsewidth, project_load, icons.BROWSE))
+if (draw_button_secondary("startupbrowse", dx, dy, null, project_load, icons.BROWSE))
 {
 	if (window_state = "startup")
 		window_state = ""

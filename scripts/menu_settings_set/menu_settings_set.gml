@@ -8,6 +8,7 @@ xx = argument0
 yy = argument1
 name = argument2
 
+settings_menu_busy_prev = window_busy
 window_busy = "settingsmenu"
 app_mouse_clear()
 

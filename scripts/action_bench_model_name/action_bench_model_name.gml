@@ -16,6 +16,8 @@ with (bench_settings)
 	temp_update_model_shape()
 	model_shape_update_color()
 	
+	temp_patterns_reset()
+	
 	with (preview)
 	{
 		preview_reset_view()

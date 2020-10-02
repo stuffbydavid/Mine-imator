@@ -1,4 +1,4 @@
-/// draw_button_secondary(name, x, y, width, height, script, [icon])
+/// draw_button_secondary(name, x, y, width, script, [icon])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -20,14 +20,16 @@ if (argument_count > 5)
 
 draw_set_font(font_button)
 
-var textwidth = string_width(text_get(name)) + 28;
-width = textwidth
+var textwidth = string_width(text_get(name));
 
 if (icon != null)
 {
-	width += 28
+	textwidth += 24
 	height = 36
 }
+
+if (width = null)
+	width = textwidth + 28
 
 var mouseon, mouseclick;
 mouseon = app_mouse_box(xx, yy, width, height) && content_mouseon
@@ -54,14 +56,15 @@ labelalpha = lerp(labelalpha, a_accent_pressed, mcroani_arr[e_mcroani.PRESS])
 draw_box(xx, yy, width, height, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
 draw_outline(xx + 1, yy + 1, width - 2, height - 2, 1, bordercolor, borderalpha)
 
-var textx = xx;
-if (icon != null)
-	textx += 28
-
-draw_label(text_get(name), textx + textwidth/2, yy + height/2, fa_center, fa_middle, labelcolor, labelalpha)
+var textx = floor(xx + width/2 - textwidth/2);
 
 if (icon != null)
-	draw_image(spr_icons, icon, xx + 18, yy + 18, 1, 1, labelcolor, labelalpha)
+{
+	draw_image(spr_icons, icon, textx + 10, yy + 18, 1, 1, labelcolor, labelalpha)
+	textx += 32
+}
+
+draw_label(text_get(name), textx, yy + height/2, fa_left, fa_middle, labelcolor, labelalpha)
 
 microani_update(mouseon, mouseclick, false)
 

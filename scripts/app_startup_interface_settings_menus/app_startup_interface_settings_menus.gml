@@ -17,3 +17,4 @@ settings_menu_script = null
 
 settings_menu_list = null
 settings_menu_amount = 0
+settings_menu_busy_prev = ""

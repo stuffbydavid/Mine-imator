@@ -1,4 +1,4 @@
-/// settings_menu_draw()
+/// menu_settings_draw()
 
 // Animation
 if (settings_menu_ani_type = "hide") //Hide
@@ -86,7 +86,7 @@ if (settings_menu_script)
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"
-		window_busy = ""
+		window_busy = settings_menu_busy_prev
 	}
 }
 else
@@ -95,7 +95,7 @@ else
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"
-		window_busy = ""
+		window_busy = settings_menu_busy_prev
 	}
 }
 

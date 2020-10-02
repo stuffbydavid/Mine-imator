@@ -1711,6 +1711,14 @@
             }
         },
         {
+            "Key": "170ec1dd-c9cd-42be-b512-34015684e026",
+            "Value": {
+                "id": "f250fd4e-7f23-48a3-a1c0-a7eb8adfd63f",
+                "resourcePath": "scripts\\temp_patterns_reset\\temp_patterns_reset.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1724f8da-4879-41e4-92e7-094ce579ae11",
             "Value": {
                 "id": "352d49eb-c1d2-4c21-a2d7-02c6388480c9",
@@ -4292,6 +4300,14 @@
                 "id": "908b316a-aa36-47d3-bd69-1cc885cee1ff",
                 "resourcePath": "objects\\obj_template\\obj_template.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "41022194-825a-4887-ba7e-9f8487a721be",
+            "Value": {
+                "id": "38abb82e-eec9-4abd-857c-eeae0bdb819b",
+                "resourcePath": "scripts\\popup_bannereditor_edit_layer\\popup_bannereditor_edit_layer.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -15575,6 +15591,14 @@
             }
         },
         {
+            "Key": "e0ffaff7-5b7b-4894-9c99-2e621fb5555b",
+            "Value": {
+                "id": "6c642c28-85c1-43b6-9b71-27533bc914e9",
+                "resourcePath": "scripts\\popup_bannereditor_draw_layer\\popup_bannereditor_draw_layer.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "e11bf2f0-afda-4217-b121-497bf48ffe38",
             "Value": {
                 "id": "f670ea6d-0049-4170-ba08-9cb8cbdd476d",
@@ -18840,7 +18864,9 @@
         "f83760c1-e6bc-49d1-bbe5-ce7f69762eb8",
         "827aa96d-d245-49a2-9935-0eb567d7a89e",
         "234fcbf3-0895-40d2-97f3-c6a598fa2455",
+        "e0ffaff7-5b7b-4894-9c99-2e621fb5555b",
         "89372e21-2d9e-4be3-b2b8-f1c7b24432e6",
+        "41022194-825a-4887-ba7e-9f8487a721be",
         "57c5d9b6-1451-451e-9d32-006f68dff24d",
         "c00433de-9b80-4fe6-b687-edeb30f3fa8a",
         "24800d99-0704-47a0-ac7e-a00b59b9bc6d",
@@ -19345,6 +19371,7 @@
         "05389884-966f-4027-b501-f1100930c8d8",
         "d3043940-1951-461f-95b5-ac47e5d34388",
         "f929b2c9-3032-43c4-9eda-b2e8f2aebf9c",
+        "170ec1dd-c9cd-42be-b512-34015684e026",
         "13b5a44b-ec03-41c3-86f4-79a8b0f45913",
         "2d57ad24-48f4-4b85-8a91-70aa500774cb",
         "138fb617-b1bb-42b8-a879-61c48201d5de",

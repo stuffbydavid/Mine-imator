@@ -15,6 +15,7 @@ texture = null
 reset_view = false
 sound_play_index = null
 
+fov = 60
 world_pos = point3D(0, 0, 0)
 preview_reset_view()
 particle_spawner_init()

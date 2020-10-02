@@ -249,6 +249,7 @@ setting_reduced_motion = false
 snackbar_mouseon = false
 context_menu_mouseon = false
 context_menu_value = null
+setting_wind_enable = true
 
 settings_load()
 interface_update()

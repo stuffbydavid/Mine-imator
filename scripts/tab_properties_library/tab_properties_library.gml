@@ -2,7 +2,7 @@
 
 // Preview selected template
 tab_control(160)
-preview_draw(tab.library.preview, dx + floor(dw / 2) - 80, dy, 160)
+preview_draw(tab.library.preview, dx + floor(dw / 2) - 80, dy, 160, 160)
 tab_next()
 
 // List
