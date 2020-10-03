@@ -35,8 +35,8 @@ if (ds_list_size(recent_list) = 0)
 draw_set_font(font_button)
 
 var newprojectwidth, browsewidth, centerx;
-newprojectwidth = string_width(text_get("startupnewproject")) + (28 * 2)
-browsewidth = string_width(text_get("startupbrowse")) + (28 * 2)
+newprojectwidth = string_width(text_get("startupnewproject")) + button_icon_padding
+browsewidth = string_width(text_get("startupbrowse")) + button_icon_padding
 centerx = round((window_width / 2) - ((browsewidth + newprojectwidth) / 2))
 
 if (ds_list_size(recent_list) > 0)
@@ -44,9 +44,9 @@ if (ds_list_size(recent_list) > 0)
 else
 	dx = centerx + (browsewidth + 24 + newprojectwidth)
 
-// New model
+// New project
 dx -= newprojectwidth
-if (draw_button_primary("startupnewproject", dx, dy, newprojectwidth, null, icons.NEW_PROJECT))
+if (draw_button_primary("startupnewproject", dx, dy, null, null, icons.NEW_PROJECT))
 {
 	popup_newproject_clear()
 	popup_show(popup_newproject)
@@ -118,9 +118,6 @@ else
 	midy = snap(192 + ((window_height - 192) / 1.75), 2)
 	
 	// Only draw splash if it fits well on screen
-	
-	/*
-	if ((midy + (sprite_get_height(spr_ashley_splash) / 1.75)) < (window_height - 50))
-		draw_image(spr_ashley_splash, 0, midx, midy)
-	*/
+	if ((midy + (sprite_get_height(spr_jonathan_splash) / 1.75)) < (window_height - 50))
+		draw_image(spr_jonathan_splash, 0, midx, midy)
 }

@@ -20,16 +20,36 @@ if (argument_count > 5)
 
 draw_set_font(font_button)
 
-var textwidth = string_width(text_get(name));
+var textwidth, textx;
+textwidth = string_width(text_get(name))
 
 if (icon != null)
 {
-	textwidth += 24
 	height = 36
+	
+	// Icon + padding between
+	textwidth += 32
 }
 
+// Add padding for dynamic width
 if (width = null)
-	width = textwidth + 28
+{
+	// Icon, 8px left - 16px right
+	if (icon != null)
+	{
+		textwidth += 24
+		textx = xx + 8
+	}
+	else // No icon, 16px left - 16px right
+	{
+		textwidth += 32
+		textx = xx + 16
+	}
+	
+	width = textwidth
+}
+else
+	textx = floor(xx + width/2 - textwidth/2)
 
 var mouseon, mouseclick;
 mouseon = app_mouse_box(xx, yy, width, height) && content_mouseon
@@ -55,8 +75,6 @@ labelalpha = lerp(labelalpha, a_accent_pressed, mcroani_arr[e_mcroani.PRESS])
 
 draw_box(xx, yy, width, height, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
 draw_outline(xx + 1, yy + 1, width - 2, height - 2, 1, bordercolor, borderalpha)
-
-var textx = floor(xx + width/2 - textwidth/2);
 
 if (icon != null)
 {

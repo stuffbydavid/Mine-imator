@@ -81,33 +81,12 @@ if (argument_count > 7)
 		
 		return 0
 	}
-	
-	if (strhei mod 2 && valign = fa_center)
-		yy -= frac(strhei / 2)
-	
-	if (strwid mod 2 && halign = fa_middle)
-		xx -= frac(strwid / 2)	
 }
 
 if (argument_count > 8)
 {
     seperation = argument[8]
     width = argument[9]
-}
-	
-if (argument_count > 3)
-{
-	if (halign = fa_middle)
-	{
-		xx = round(xx - (strwid / 2))
-		draw_set_halign(fa_left)
-	}
-	
-	if (valign = fa_center)
-	{
-		yy = round(yy - (strhei / 2))
-		draw_set_valign(fa_top)
-	}
 }
 
 draw_text_ext(xx, yy, str, seperation, width)

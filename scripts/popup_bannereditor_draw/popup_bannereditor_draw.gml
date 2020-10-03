@@ -114,7 +114,7 @@ if ((listy < listystart + listh) && (listy + 48 > listystart))
 scissor_done()
 
 draw_set_font(font_button)
-var buttonx = string_width(text_get("bannereditordone")) + 28;
+var buttonx = string_width(text_get("bannereditordone")) + button_padding;
 
 // Done
 if (draw_button_primary("bannereditordone", dx_start + dw - buttonx, dy_start + dh - 28, null, null))
@@ -141,7 +141,7 @@ if (draw_button_primary("bannereditordone", dx_start + dw - buttonx, dy_start + 
 	popup_close()
 }
 
-buttonx += 10 + (string_width(text_get("bannereditorcancel")) + 28)
+buttonx += 10 + (string_width(text_get("bannereditorcancel")) + button_padding)
 
 // Cancel
 if (draw_button_secondary("bannereditorcancel", dx_start + dw - buttonx, dy_start + dh - 28, null, null))

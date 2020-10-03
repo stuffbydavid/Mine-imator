@@ -33,20 +33,44 @@ if (yy > content_y + content_height || yy + height < content_y)
 
 draw_set_font(font_button)
 
-var textwidth = string_width(text_get(name)) + 28;
-width = textwidth
+var textwidth, textx;
+textwidth = string_width(text_get(name))
 
 if (icon != null)
 {
-	width += 28
 	height = 36
+	
+	// Icon + padding between
+	textwidth += 32
 }
+
+// Add padding for dynamic width
+if (width = null)
+{
+	// Icon, 8px left - 16px right
+	if (icon != null)
+	{
+		textwidth += 24
+		textx = 8
+	}
+	else // No icon, 16px left - 16px right
+	{
+		textwidth += 32
+		textx = 16
+	}
+	
+	width = textwidth
+}
+else
+	textx = floor(width/2 - textwidth/2)
 
 // Set anchor
 if (anchor = fa_center)
 	xx = xx + (dw/2) - (width/2)
 else if (anchor = fa_right)
 	xx = xx + dw - width
+
+textx += xx
 
 var mouseon, mouseclick;
 mouseon = app_mouse_box(xx, yy, width, height) && content_mouseon && !disabled
@@ -76,8 +100,7 @@ draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])
 draw_box_bevel(xx, yy, width, height, 1)
 
 // Adjust text color based on button color for contrast
-var textx, darkcolor, lightcolor, color, alpha;
-textx = xx
+var darkcolor, lightcolor, color, alpha;
 
 if (color_get_lum(c_button_text) > color_get_lum(c_text_main))
 {
@@ -98,12 +121,12 @@ color = merge_color(color, c_button_text, mcroani_arr[e_mcroani.DISABLED])
 alpha = lerp(alpha, a_button_text, mcroani_arr[e_mcroani.DISABLED])
 
 if (icon != null)
-	textx += 28
+{
+	draw_image(spr_icons, icon, textx + 10, yy + 18, 1, 1, color, 1)
+	textx += 32
+}
 
-draw_label(text_get(name), floor(textx + textwidth/2), yy + height/2, fa_center, fa_middle, color, alpha)
-
-if (icon != null)
-	draw_image(spr_icons, icon, xx + 18, yy + 18, 1, 1, color, 1)
+draw_label(text_get(name), textx, yy + height/2, fa_left, fa_middle, color, alpha)
 
 microani_update(mouseon, mouseclick, false, disabled)
 

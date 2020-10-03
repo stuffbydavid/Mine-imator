@@ -7,3 +7,4 @@ value_goal = 0
 press = 0
 needed = false
 atend = false
+value_ease = true

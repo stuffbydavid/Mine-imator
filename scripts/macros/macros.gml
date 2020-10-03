@@ -151,6 +151,8 @@
 #macro view_3d_control_size			0.225
 #macro view_3d_control_width		20
 #macro view_3d_box_size				12
+#macro button_padding				32
+#macro button_icon_padding			56
 
 // Values
 #macro null							noone
