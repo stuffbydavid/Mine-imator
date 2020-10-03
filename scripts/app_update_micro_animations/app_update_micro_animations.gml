@@ -17,6 +17,15 @@ with (obj_scrollbar)
 	}
 }
 
+// Scrollbar margin offset
+with (obj_tab)
+{
+	if (app.setting_reduced_motion)
+		scrollbar_margin = scrollbar_margin_goal
+	else
+		scrollbar_margin += (scrollbar_margin_goal - scrollbar_margin) / max(1, 5 / delta)
+}
+
 // Component animations
 with (obj_micro_animation)
 {	

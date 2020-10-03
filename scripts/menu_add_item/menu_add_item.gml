@@ -1,4 +1,4 @@
-/// draw_menu_add_item(value, text, [texture, [icon, [script]]])
+/// menu_add_item(value, text, [texture, [icon, [script]]])
 /// @arg value
 /// @arg text
 /// @arg [texture

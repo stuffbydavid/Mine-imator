@@ -35,7 +35,7 @@ if (argument_count > 8)
 	disabled = argument[8]
 
 if (argument_count > 9)
-	tip = text_get(argument[9])
+	tip = argument[9]
 	
 if (argument_count > 10)
 	sprite = argument[10]
@@ -52,15 +52,15 @@ if (small)
 {
 	mouseon = (content_mouseon && !disabled && app_mouse_box(xx, yy, wid, hei))
 	
-	if (mouseon)
-		tip_set(tip, xx, yy, wid, hei)
+	if (mouseon && tip != "")
+		tip_set(text_get(tip), xx, yy, wid, hei)
 }
 else
 {
 	mouseon = (content_mouseon && !disabled && app_mouse_box(xx + 2, yy + 2, wid - 4, hei - 4))
 	
-	if (mouseon)
-		tip_set(tip, xx + 2, yy + 2, wid - 4, hei - 4)
+	if (mouseon && tip != "")
+		tip_set(text_get(tip), xx + 2, yy + 2, wid - 4, hei - 4)
 }
 
 if (mouseon)

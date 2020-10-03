@@ -240,7 +240,7 @@ if (load_format >= e_settings.FORMAT_100)
 	setting_panel_left_top_size = buffer_read_double()
 	setting_panel_right_top_size = buffer_read_double()
 	
-	var locarr = array("left_bottom", "right_bottom", "bottom", "top", "left_top", "right_top");
+	var locarr = array("left_secondary", "right_secondary", "bottom", "top", "left", "right");
 	setting_properties_location = locarr[buffer_read_byte()]
 	setting_ground_editor_location = locarr[buffer_read_byte()]
 	setting_template_editor_location = locarr[buffer_read_byte()]

@@ -4,12 +4,13 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.10.01"
+        "lastchange": "2020.10.03"
     },
     "tooltip/": {
         "remove": "Remove",
         "pin": "Pin",
         "changefolder": "Change folder",
+        "openfolder": "Open folder",
         "downloadskin": "Download skin",
         "pastekey": "Paste key"
     },
@@ -1571,20 +1572,12 @@
             }
         }
     },
-    "project": "Project",
+    "project": "PROJECT",
     "project/": {
-        "projecttip": "Change information about the opened project and playback speed.",
         "name": "Name",
-        "nametip": "Enter a name for your project.",
         "author": "Author",
-        "authortip": "Enter the author of the project.",
         "description": "Description",
-        "descriptiontip": "Enter a decription of the project.",
-        "folder": "Folder",
-        "folderopen": "Open",
-        "folderopentip": "Open the folder of the project in the explorer.",
-        "videosize": "Size",
-        "videosizetip": "The size of exported movies and images (in pixels).",
+        "videosize": "Render size",
         "videosizetemplate/": {
             "avatar": "Avatar",
             "hd_720p": "HD 720p",
@@ -1598,15 +1591,11 @@
         },
         "videosizecustom": "Custom",
         "videosizecustomwidth": "Width",
-        "videosizecustomwidthtip": "Enter the width (in pixels) of exported movies and images.",
         "videosizecustomheight": "Height",
-        "videosizecustomheighttip": "Enter the height (in pixels) of exported movies and images.",
         "videosizecustomkeepaspectratio": "Keep aspect ratio",
-        "videosizecustomkeepaspectratiotip": "The width/height ratio will remain the same, regardless of video size.",
-        "tempo": "Tempo",
-        "tempotip": "The playback speed of the animation, measured in the amount of timeline ticks passed by the marker in one second."
+        "tempo": "Tempo"
     },
-    "library": "Library",
+    "library": "LIBRARY",
     "library/": {
         "librarytip": "Here you can find re-usable templates for the objects in your project.",
         "newtip": "Create a new template.",
@@ -2080,7 +2069,7 @@
         "v": "V",
         "hex": "Hex"
     },
-    "background": "Background",
+    "background": "BACKGROUND",
     "backgroundtip": "Change settings that alter the background and atmosphere of the world.",
     "background/": {
         "showsky": "Show sky",
@@ -2332,7 +2321,7 @@
         "soulsand_valley": "Soulsand Valley",
         "basalt_delta": "Basalt Deltas"
     },
-    "resources": "Resources",
+    "resources": "RESOURCES",
     "resourcestip": "Manage your imported files.",
     "resources/": {
         "newtip": "Add a new resource from a file.",

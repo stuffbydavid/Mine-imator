@@ -1,19 +1,26 @@
 /// panel_draw_content()
 
-var minw, minh, maxh;
-minw = 300
+var minw, minh, maxh, dividew;
+minw = 288
 minh = 160
 maxh = 0
 
-dx = content_x + 15
-dy = content_y + 10
-dw = content_width - 30
-dh = content_height - 20
+dx = content_x + 12
+dy = content_y + 14
+dw = content_width - 24
+dh = content_height
 tab = content_tab
+dividew = content_width
 
 if (content_direction = e_scroll.VERTICAL)
 {
-	dw -= 30 * tab.scroll.needed
+	if (tab.scroll.needed)
+		tab.scrollbar_margin_goal = 1
+	else
+		tab.scrollbar_margin_goal = 0
+	
+	dividew -= (tab.scrollbar_margin * 12)
+	dw -= (tab.scrollbar_margin * 12)
 	dy -= tab.scroll.value
 }
 else
@@ -29,6 +36,9 @@ else
 		dh = minh
 	}
 }
+
+if (tab.scroll.needed && content_mouseon)
+	window_scroll_focus = string(tab.scroll)
 
 dx_start = dx
 dy_start = dy
@@ -47,9 +57,20 @@ if (!tab.script)
 			catamount++
 		}
 	}
-	columns = clamp(floor(dw / minw), 1, catamount)
-	dw = ceil((dw - 8*(columns - 1)) / columns)
+	
+	columns = 1
+	dw = ceil((dw - 8 * (columns - 1)) / columns)
 	c = 0
+	
+	dy = dy_start
+	dh = dh_start
+	
+	// Content at top of categories
+	if (tab.header_script)
+	{
+		script_execute(tab.header_script)
+		maxh = max(dy - dy_start, maxh)
+	}
 	
 	for (var col = 0; col < columns; col++)
 	{
@@ -58,28 +79,34 @@ if (!tab.script)
 		if (col = columns - 1)
 			cats = catamount - c
 		
-		dy = dy_start
-		dh = dh_start
 		repeat (cats)
 		{
 			// Hide button
-			tab_control(16)
-			if (draw_button_normal(cat[c].name, dx - 3, dy, 16, 16, e_button.CAPTION, cat[c].show, false, true, cat[c].show ? icons.ARROW_DOWN : icons.ARROW_RIGHT))
+			tab_control(24)
+			draw_label(text_get(cat[c].name), dx, dy + 13, fa_left, fa_center, c_text_tertiary, a_text_tertiary, font_subheading)
+			if (draw_button_icon(cat[c].name + "close", dx + dw - 20, dy, 24, 24, cat[c].show, null, null, null, "", spr_arrow_ani))
 				cat[c].show = !cat[c].show
 			tab_next()
 			
+			// Set copy name
+			context_menu_copy_category = cat[c]
+			
 			// Draw contents
-			if (cat[c].show)
-			{
+			if (cat[c].show && cat[c].script)
 				script_execute(cat[c].script)
-				dy += 10
+			
+			if (c < catamount - 1)
+			{
+				dy += 20
+				draw_divide(content_x, dy - 13, dividew - 1)
 			}
+			
+			// Reset copy name
+			context_menu_copy_category = null
 			
 			maxh = max(dy - dy_start, maxh)
 			c++
 		}
-		if (col < columns - 1)
-			dx += dw + 8
 	}
 	
 }
@@ -89,11 +116,8 @@ else
 	maxh = dy - dy_start
 }
 
-if (tab != timeline) // Scrollbar
-{
-	content_mouseon = !popup_mouseon
-	if (content_direction = e_scroll.VERTICAL)
-		scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + content_width - 35, content_y, content_height, maxh + 15, setting_color_buttons, setting_color_buttons_pressed, setting_color_background)
-	else
-		scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
-}
+// Scrollbar
+if (content_direction = e_scroll.VERTICAL)
+	scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + (content_width - (9 + (3 * tab.scrollbar_margin))) + 3, content_y, content_height, maxh + 15, c_accent, c_accent_hover, c_black)
+else
+	scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)

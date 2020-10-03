@@ -71,6 +71,7 @@ dw_start = 0
 dh_start = 0
 tab = null
 tab_control_h = 0
+tab_collapse = false
 
 // Tips
 tip_show = false

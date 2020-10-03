@@ -13,8 +13,8 @@
 /// @arg [captionwidth
 /// @arg [tip]]]]
 
-var name, type, xx, yy, wid, hei, value, text, script, tex, icon, capwid, cap, tip;
-var flip, imgsize, mouseon, pressed, textoff, roundtop, roundbottom;
+var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption;
+var flip, mouseon, cap;
 name = argument[0]
 type = argument[1]
 xx = argument[2] 
@@ -25,97 +25,95 @@ value = argument[6]
 text = argument[7]
 script = argument[8]
 
-if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
-	return 0
-	
 if (argument_count > 9)
-	tex = argument[9]
+	disabled = argument[9]
 else
-	tex = null
+	disabled = false
 	
 if (argument_count > 10)
-	icon = argument[10]
+	tex = argument[10]
+else
+	tex = null
+
+if (argument_count > 11)
+	icon = argument[11]
 else
 	icon = null
 
-if (argument_count > 11)
-	capwid = argument[11]
-else
-	capwid = text_caption_width(name)
-	
 if (argument_count > 12)
-	tip = argument[12]
+	caption = argument[12]
 else
-	tip = text_get(name + "tip")
-	
-flip = (yy + hei + hei * 4>window_height)
-imgsize = hei - 4
-
-// Tip
-tip_set(tip, xx, yy, wid, hei)
+	caption = ""
 
 // Caption
 if (menu_model_current != null)
 {
-	cap = minecraft_asset_get_name("modelstate", name) + ":"
+	cap = minecraft_asset_get_name("modelstate", name)
 	name = "modelstate" + name
 }
 else if (menu_block_current != null)
 {
-	cap = minecraft_asset_get_name("blockstate", name) + ":"
+	cap = minecraft_asset_get_name("blockstate", name)
 	name = "blockstate" + name
 }
 else
 {
 	if (type = e_menu.LIST_NUM)
 	{
-		cap = text_get(name, menu_count) + ":"
+		cap = text_get(name, menu_count)
 		name = name + string(menu_count)
 	}
 	else
-		cap = text_get(name) + ":"
+		cap = text_get(name)
 }
-	
 
-draw_label(cap, xx, yy + hei / 2, fa_left, fa_middle)
+flip = (yy + hei + hei * 4 > window_height)
 
-// Mouse
-xx += capwid
-wid -= capwid
-mouseon = app_mouse_box(xx, yy, wid, hei)
+microani_set(name, null, false, false, false)
 
-if (!content_mouseon)
-	mouseon = false
-	
-pressed = false
-if (mouseon)
+var textcolor, textalpha;
+textcolor = merge_color(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+textalpha = lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+// Caption
+if (dh > (hei + 20))
 {
-	if (mouse_left || mouse_left_released)
-		pressed = true
-	frame = true
-	mouse_cursor = cr_handpoint
+	draw_label(cap, xx, yy + 16, fa_left, fa_bottom, textcolor, textalpha, font_emphasis)
+	yy += 20
 }
-
-if (menu_name = name)
-	pressed = true
 
 // Button
-roundtop = (menu_name != name || !menu_flip)
-roundbottom = (menu_name != name || menu_flip)
-draw_box_rounded(xx, yy, wid, hei, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1, roundtop, roundtop, roundbottom, roundbottom)
+var bordercolor, borderalpha;
+bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
+borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.PRESS])
+borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
 
-// Sprite
-if (icon != null)
-	draw_image(spr_icons, icon, xx + 2 + imgsize / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
-else if (tex != null)
-	draw_texture(tex, xx + 4, yy + 2 + pressed, imgsize / texture_width(tex), imgsize / texture_height(tex))
+if (menu_name = name)
+	draw_box(xx, yy, wid, hei, false, c_background, 1)
 
-// Text
-textoff = ((tex || icon) ? (imgsize - 4) : 0)
-draw_label(string_limit(string_remove_newline(text), wid - textoff - hei - 8), xx + hei / 2 + textoff, yy + hei / 2 + pressed, fa_left, fa_middle, setting_color_buttons_text, 1)
+draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha)
+draw_box_hover(xx - 1, yy - 1, wid + 2, hei + 2, mcroani_arr[e_mcroani.HOVER])
+
+// Mouse
+mouseon = app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon
+
+if (mouseon)
+	mouse_cursor = cr_handpoint
+
+// Item
+var item = list_item_add(text, null, caption, tex, icon, -1, null, false, false);
+item.disabled = disabled
+list_item_draw(item, xx, yy, wid, hei, false, 8)
+instance_destroy(item)
 
 // Arrow
-draw_image(spr_icons, flip ? icons.ARROW_UP : icons.ARROW_DOWN, xx + wid - hei / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
+draw_image(spr_arrow_up_down_ani, (mcroani_arr[e_mcroani.ACTIVE] * 15), xx + wid - hei / 2, yy + hei / 2, 1, 1, textcolor, textalpha)
+
+// Disabled overlay
+draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
+
+microani_update(mouseon, mouseon && mouse_left, (menu_name = name ? !flip : flip), disabled)
 
 // Update menu position
 if (menu_name = name)
@@ -148,16 +146,20 @@ if (mouseon && mouse_left_released)
 	menu_include_tl_edit = (menu_name != "timelineeditorparent")
 	menu_model_state = menu_model_state_current
 	menu_block_state = menu_block_state_current
+	menu_margin = 8
+	
+	//menu_list_init()
 	
 	// Init
 	menu_clear()
 	if (type = e_menu.LIST)
-		menu_list_init()
+		menu_list = list_init(menu_name)
 	else if (type = e_menu.TIMELINE)
 		menu_timeline_init()
 	else
 		menu_transition_init()
 	
+	menu_amount = ds_list_size(menu_list.item)
 	menu_focus_selected()
 		
 	// Flip

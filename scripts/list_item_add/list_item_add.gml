@@ -12,7 +12,12 @@
 var item, name, value, caption, thumbnail, lefticon, righticon, script, divider, interact;
 name = argument[0]
 value = argument[1]
-caption = argument[2]
+
+if (argument_count > 2)
+	caption = argument[2]
+else
+	caption = ""
+
 thumbnail = null
 lefticon = null
 righticon = null

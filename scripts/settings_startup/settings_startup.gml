@@ -53,23 +53,23 @@ setting_smooth_camera = true
 setting_search_variants = true
 
 setting_toolbar_location = "top"
-setting_toolbar_size = 90
+setting_toolbar_size = 36
 
-setting_panel_left_bottom_size = 380
-setting_panel_right_bottom_size = 380
+setting_panel_left_bottom_size = 300
+setting_panel_right_bottom_size = 300
 setting_panel_bottom_size = 205
 setting_panel_top_size = 205
-setting_panel_left_top_size = 380
-setting_panel_right_top_size = 380
+setting_panel_left_top_size = 300
+setting_panel_right_top_size = 300
 
-setting_properties_location = "right_top"
-setting_ground_editor_location = "right_bottom"
-setting_template_editor_location = "right_bottom"
+setting_properties_location = "right"
+setting_ground_editor_location = "right_secondary"
+setting_template_editor_location = "right_secondary"
 setting_timeline_location = "bottom"
-setting_timeline_editor_location = "right_top"
-setting_frame_editor_location = "right_bottom"
+setting_timeline_editor_location = "right"
+setting_frame_editor_location = "right_secondary"
 setting_frame_editor_color_advanced = false
-setting_settings_location = "right_bottom"
+setting_settings_location = "right_secondary"
 
 setting_view_split = 0.5
 

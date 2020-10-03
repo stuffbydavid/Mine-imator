@@ -398,7 +398,7 @@ if (window_busy = "toolbarresize")
 			break
 	}
 	
-	toolbar_size = clamp(toolbar_size, 45, 160)
+	toolbar_size = clamp(toolbar_size, 36, 160)
 	if (!mouse_left)
 		window_busy = ""
 }
