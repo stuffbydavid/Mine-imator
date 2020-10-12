@@ -1,4 +1,4 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap)
+/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,8 +7,9 @@
 /// @arg min
 /// @arg max
 /// @arg snap
+/// @arg [showcaption]
 
-var name, xx, yy, wid, mul, minval, maxval, snapval;
+var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption;
 var fieldx, fieldwid, fieldupdate, hei;
 name = argument[0]
 xx = argument[1]
@@ -18,16 +19,27 @@ mul = argument[4]
 minval = argument[5]
 maxval = argument[6]
 snapval = argument[7]
+showcaption = false
+
+if (argument_count > 8)
+	showcaption = argument[8]
 
 fieldx = xx
 fieldwid = ((wid - 4) - (2 * (textfield_amount - 1)))/textfield_amount
 fieldupdate = null
-hei = 28
+hei = 28 + (20 * showcaption)
 
 if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 {
 	textfield_group_reset()
 	return 0
+}
+
+if (showcaption)
+{
+	draw_label(text_get(name), xx, yy + 16, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+	hei = 28
+	yy += 20
 }
 
 // Draw field backgrounds

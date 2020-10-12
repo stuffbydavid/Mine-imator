@@ -115,7 +115,7 @@ if (window_focus = string(preview))
 // Render
 with (preview)
 {
-	if (!surface_exists(surface) || surface_get_width(surface) < 0 ||
+	if (!surface_exists(surface) || surface_get_width(surface) < 0 || surface_get_width(surface) != width || surface_get_height(surface) != height ||
 		select.type = e_temp_type.PARTICLE_SPAWNER ||
 		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin)))
 		update = true

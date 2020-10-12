@@ -16,7 +16,11 @@ settings_menu_name = name
 settings_menu_ani = 0
 settings_menu_ani_type = "show"
 
+settings_menu_sortlist = ""
+
 // Init
+settings_menu_scroll.value_goal = 0
+settings_menu_scroll.value = 0
 settings_menu_primary = false
 settings_menu_x = xx
 settings_menu_y = yy

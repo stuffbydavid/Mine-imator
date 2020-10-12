@@ -21,9 +21,6 @@ icon = argument6
 isfirst = argument7
 islast = argument8
 
-// Tip
-tip_set(text_get(name + "tip") + "\n" + text_get("columntip"), xx, yy, w - 5, h)
-
 // Mouse
 mouseon = (app_mouse_box(xx, yy, w - 5, h) && content_mouseon && mouse_cursor = cr_default)
 pressed = highlight
@@ -34,23 +31,41 @@ if (mouseon)
 	mouse_cursor = cr_handpoint
 }
 
-// Box
-draw_box_rounded(xx, yy, w, h, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1, isfirst, islast, false, false)
+if (pressed)
+	draw_box(xx, yy, w, h, false, c_overlay, a_overlay)
 
 // Separator
-if (!pressed && !isfirst)
-{
-	render_set_culling(false)
-	draw_line_width_color(xx - 2, yy + 6, xx - 2, yy + h - 6, 2, setting_color_buttons_pressed, setting_color_buttons_pressed)
-	render_set_culling(true)
-}
+if (!isfirst)
+	draw_line_ext(xx - 1, yy + 8, xx - 1, yy + h - 8, c_border, a_border)
 
 // Icon
 if (icon != null)
-	draw_image(spr_icons, icon, xx + w - h / 2, yy + h / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
-	
+	draw_image(spr_icons, icon, xx + w - 18, yy + h / 2 + pressed, 1, 1, c_text_secondary, a_text_secondary)
+
+draw_set_font(font_emphasis)
+
 // Text
-draw_label(string_limit(text_get(name), w - 4 - (icon != null) * 20), xx + floor(w / 2), yy + h / 2 + pressed, fa_center, fa_middle, setting_color_buttons_text, 1)
+if (!islast || isfirst)
+{
+	draw_label(string_limit(text_get(name), w - 16 - (icon != null) * 28), xx + 8, yy + h / 2 + pressed, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+}
+else
+{
+	var textlimit, textx;
+	
+	if (icon = null)
+	{
+		textlimit = string_limit(text_get(name), w - 16)
+		textx = xx + w - 8
+	}
+	else
+	{
+		textlimit = string_limit(text_get(name), w - 48)
+		textx = xx + w - 32
+	}
+	
+	draw_label(textlimit, textx, yy + h / 2 + pressed, fa_right, fa_middle, c_text_secondary, a_text_secondary)
+}
 
 // Check click
 if (mouseon && mouse_left_released)

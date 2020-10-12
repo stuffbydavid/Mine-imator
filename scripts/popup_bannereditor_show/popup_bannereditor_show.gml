@@ -16,8 +16,6 @@ with (popup_bannereditor)
 	with (banner_edit)
 		other.banner_edit_preview = instance_copy(false)
 	
-	banner_edit_preview.model_tex = null
-	
 	preview.select = banner_edit_preview
 	preview.last_select = banner_edit_preview
 	
@@ -35,6 +33,8 @@ with (popup_bannereditor)
 		res = mc_res
 	else
 		res = banner_edit.model_tex
+	
+	banner_edit_preview.model_tex = res
 	
 	// Generate pattern sprites
 	if (pattern_resource != res || array_length_1d(pattern_sprites) = 0)

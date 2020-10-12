@@ -1,4 +1,4 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script, [texture, [icon, [captionwidth, [tip]]]])
+/// draw_button_menu(name, type, x, y, width, height, value, text, script, [disabled, [texture, [icon, [caption]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -8,10 +8,10 @@
 /// @arg value
 /// @arg text
 /// @arg script
+/// @arg [disabled
 /// @arg [texture
 /// @arg [icon
-/// @arg [captionwidth
-/// @arg [tip]]]]
+/// @arg [caption]]]
 
 var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption;
 var flip, mouseon, cap;

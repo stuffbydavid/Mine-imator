@@ -19,7 +19,7 @@ switch (slist.column_name[col])
 	case "libtype":
 		return text_get("type" + temp_type_name_list[|value.type])
 		
-	case "libcount":
+	case "libinstances":
 		return value.count
 		
 	case "charname":

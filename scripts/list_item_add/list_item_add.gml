@@ -1,13 +1,13 @@
-/// list_item_add(name, value, caption, [thumbnail, left_icon, right_icon, script, [divider, [interact]]])
+/// list_item_add(name, value, [caption, [thumbnail, left_icon, right_icon, script, [divider, [interact]]]])
 /// @arg name
 /// @arg value
-/// @arg caption
+/// @arg [caption
 /// @arg [thumbnail
 /// @arg left_icon
 /// @arg right_icon
 /// @arg script
 /// @arg [divider
-/// @arg [interact]]]
+/// @arg [interact]]]]
 
 var item, name, value, caption, thumbnail, lefticon, righticon, script, divider, interact;
 name = argument[0]

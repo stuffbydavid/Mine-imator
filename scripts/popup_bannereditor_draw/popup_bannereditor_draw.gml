@@ -119,12 +119,7 @@ var buttonx = string_width(text_get("bannereditordone")) + button_padding;
 // Done
 if (draw_button_primary("bannereditordone", dx_start + dw - buttonx, dy_start + dh - 28, null, null))
 {
-	if (popup.banner_edit = temp_edit)
-	{
-		properties.library.preview.update = true
-		action_lib_model_banner(popup.banner_edit_preview.banner_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
-	}
-	else if (popup.banner_edit.object_index = obj_bench_settings)
+	if (popup.banner_edit.object_index = obj_bench_settings)
 	{
 		popup.banner_edit.banner_pattern_list = ds_list_create_array(popup.pattern_list_edit)
 		popup.banner_edit.banner_color_list = ds_list_create_array(popup.pattern_color_list_edit)
@@ -134,8 +129,10 @@ if (draw_button_primary("bannereditordone", dx_start + dw - buttonx, dy_start + 
 		
 		bench_settings.preview.update = true
 	}
+	else if (popup.banner_edit = temp_edit)
+		action_lib_model_banner(popup.banner_edit_preview.banner_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
 	
-	instance_destroy(popup.banner_edit_preview)
+	instance_destroy(popup.banner_edit_preview, false)
 	popup.banner_edit_preview = null
 	
 	popup_close()
@@ -146,7 +143,9 @@ buttonx += 10 + (string_width(text_get("bannereditorcancel")) + button_padding)
 // Cancel
 if (draw_button_secondary("bannereditorcancel", dx_start + dw - buttonx, dy_start + dh - 28, null, null))
 {
-	instance_destroy(popup.banner_edit_preview)
+	array_add(banner_update, popup.banner_edit)
+	
+	instance_destroy(popup.banner_edit_preview, false)
 	popup.banner_edit_preview = null
 	
 	popup_close()

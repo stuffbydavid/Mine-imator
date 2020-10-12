@@ -6,24 +6,23 @@
 /// @arg [script]]]
 /// @desc Adds a new item to the dropdown menu.
 
-var item = new(obj_menuitem);
-item.value = argument[0]
-item.text = string_remove_newline(argument[1])
+var value, text, tex, icon, script;
+value = argument[0]
+text = string_remove_newline(argument[1])
 
 if (argument_count > 2)
-	item.tex = argument[2]
+	tex = argument[2]
 else
-	item.tex = null
+	tex = null
 
 if (argument_count > 3)
-	item.icon = argument[3]
+	icon = argument[3]
 else
-	item.icon = null
+	icon = null
 	
 if (argument_count > 4)
-	item.script = argument[4]
+	script = argument[4]
 else
-	item.script = null
+	script = null
 
-app.menu_item[app.menu_amount] = item
-app.menu_amount++
+list_item_add(text, value, "", tex, icon, null, script)
