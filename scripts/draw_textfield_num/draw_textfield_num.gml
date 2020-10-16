@@ -1,4 +1,4 @@
-/// draw_textfield_num(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [disabled, [right_side]])
+/// draw_textfield_num(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [disabled, [right_side, [capwidth]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -12,10 +12,11 @@
 /// @arg textbox
 /// @arg script
 /// @arg [disabled
-/// @arg [right_side]]
+/// @arg [right_side
+/// @arg [capwidth]]]
 
-var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, disabled, right_side;
-var capwidth, hei, fieldx;
+var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, disabled, right_side, capwidth;
+var namewidth, hei, fieldx;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -36,11 +37,16 @@ if (argument_count > 12)
 
 if (argument_count > 13)
 	right_side = argument[13]
-
+	
 draw_set_font(font_emphasis)
 
 hei = 28
-capwidth = string_width(text_get(name)) + 10
+namewidth = string_width(text_get(name))
+
+if (argument_count > 14)
+	capwidth = argument[14]
+else
+	capwidth = namewidth + 10
 
 if (xx + wid + capwidth < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	return 0
@@ -69,7 +75,7 @@ draw_box_hover(fieldx, yy, wid, hei, max(mcroani_arr[e_mcroani.HOVER], mcroani_a
 draw_label(text_get(name), xx, yy + 21, fa_left, fa_bottom, labelcolor, labelalpha, font_emphasis)
 
 // Drag
-if (app_mouse_box(xx, yy, capwidth, hei) && content_mouseon && window_focus != string(tbx) && !disabled)
+if (app_mouse_box(xx, yy, namewidth, hei) && content_mouseon && window_focus != string(tbx) && !disabled)
 {
 	mouse_cursor = cr_size_we
 	

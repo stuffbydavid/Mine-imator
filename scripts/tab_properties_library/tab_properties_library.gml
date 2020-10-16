@@ -109,7 +109,6 @@ switch (temp_edit.type)
 	case e_temp_type.ITEM:
 	{
 		var wid, res;
-		wid = text_max_width("libraryitemchange") + 20
 		res = temp_edit.item_tex
 		if (!res.ready)
 			res = mc_res
@@ -128,7 +127,7 @@ switch (temp_edit.type)
 		{
 			draw_texture_slot(res.item_sheet_texture, temp_edit.item_slot, dx + wid + 18, dy + 6, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			
-			if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))
+			if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT, null, false, "tooltipchangeitem"))
 				tab_toggle(template_editor)
 		}
 		else

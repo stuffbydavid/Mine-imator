@@ -7,7 +7,7 @@
 /// @arg [color
 /// @arg alpha
 /// @arg [font
-/// @arg seperation
+/// @arg [seperation
 /// @arg [width]]]]
 
 var str, xx, yy, halign, valign, color, alpha, font, seperation, width;

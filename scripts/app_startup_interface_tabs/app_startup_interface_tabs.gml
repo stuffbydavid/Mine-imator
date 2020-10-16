@@ -60,6 +60,9 @@ with (properties)
 	{
 		tbx_background_rotation = new_textbox_decimals()
 		tbx_background_rotation.suffix = "°"
+		tbx_sky_time = new_textbox(true, 10, "-:0123456789")
+		tbx_sky_rotation = new_textbox_ndecimals()
+		tbx_sky_rotation.suffix = "°"
 		tbx_sunlight_strength = new_textbox_integer()
 		tbx_sunlight_strength.suffix = "%"
 		tbx_sunlight_angle = new_textbox_decimals()

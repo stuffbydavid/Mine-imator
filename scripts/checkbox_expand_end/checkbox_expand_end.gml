@@ -1,3 +1,4 @@
 /// checkbox_expand_end()
 
-dy += 4
+draw_divide(dx, dy, dw)
+dy += 8

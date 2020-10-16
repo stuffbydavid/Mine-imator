@@ -396,7 +396,7 @@ switch (name)
 		menu_add_item(null, text_get("listnone"))
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -447,7 +447,7 @@ switch (name)
 	case "backgroundskymoontex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.moon_texture[background_sky_moon_phase])

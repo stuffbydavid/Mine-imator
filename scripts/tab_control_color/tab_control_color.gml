@@ -1,3 +1,3 @@
 /// tab_control_color()
 
-tab_control(32)
+tab_control(28)
