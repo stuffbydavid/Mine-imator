@@ -1,12 +1,14 @@
-/// menu_settings_set(x, y, name)
+/// menu_settings_set(x, y, name, buttonheight)
 /// @arg x
 /// @arg y
 /// @arg name
+/// @arg buttonheight
 
-var xx, yy, name;
+var xx, yy, name, buttonheight;
 xx = argument0
 yy = argument1
 name = argument2
+buttonheight = argument3
 
 settings_menu_busy_prev = window_busy
 window_busy = "settingsmenu"
@@ -31,3 +33,5 @@ settings_menu_w = settings_menu_list.width
 
 if ((settings_menu_x + (settings_menu_w/2)) > window_width)
 	settings_menu_x += window_width - (settings_menu_x + (settings_menu_w/2))
+
+settings_menu_button_h = buttonheight

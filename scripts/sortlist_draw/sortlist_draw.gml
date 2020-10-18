@@ -1,20 +1,26 @@
-/// sortlist_draw(sortlist, x, y, width, height, select)
+/// sortlist_draw(sortlist, x, y, width, height, select, [filter])
 /// @arg sortlist
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg select
+/// @arg [filter]
 /// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 
-var slist, xx, yy, w, h, select;
+var slist, xx, yy, w, h, select, filter;
 var itemh, colsh, dy;
-slist = argument0
-xx = argument1
-yy = argument2
-w = argument3
-h = argument4
-select = argument5
+slist = argument[0]
+xx = argument[1]
+yy = argument[2]
+w = argument[3]
+h = argument[4]
+select = argument[5]
+
+if (argument_count > 6)
+	filter = argument[6]
+else
+	filter = true
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
@@ -26,17 +32,20 @@ itemh = 28
 colsh = 28
 
 // Draw filter
-if (draw_button_icon("listfilter" + string(slist), xx, yy, 28, 28, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
+if (filter)
 {
-	menu_settings_set(xx, yy + 28, "startupsortby")
-	settings_menu_script = sortlist_filters_draw
-	settings_menu_sortlist = slist
+	if (draw_button_icon("listfilter" + string(slist), xx, yy, 28, 28, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
+	{
+		menu_settings_set(xx, yy + 28, "listfilter" + string(slist), 28)
+		settings_menu_script = sortlist_filters_draw
+		settings_menu_sortlist = slist
+	}
+
+	if (settings_menu_name = "listfilter" + string(slist))
+		current_mcroani.holding = true
 }
 
-if (settings_menu_name = "startupsortby")
-	current_mcroani.holding = true
-
-if (draw_inputbox("listsearch" + string(slist), xx + 44, yy, w - 44, 28, text_get("listsearch"), slist.search_tbx, null))
+if (draw_inputbox("listsearch" + string(slist), xx + (44 * filter), yy, w - (44 * filter), 28, text_get("listsearch"), slist.search_tbx, null))
 {
 	slist.search = (slist.search_tbx.text != "")
 	

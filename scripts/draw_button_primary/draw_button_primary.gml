@@ -66,7 +66,7 @@ else
 
 // Set anchor
 if (anchor = fa_center)
-	xx = xx + (dw/2) - (width/2)
+	xx = floor(xx + (dw/2) - (width/2))
 else if (anchor = fa_right)
 	xx = xx + dw - width
 

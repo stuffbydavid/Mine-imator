@@ -11,6 +11,8 @@ settings_menu_y = 0
 settings_menu_w = 0
 settings_menu_h = 0
 
+settings_menu_button_h = 0
+
 settings_menu_amount = 0
 settings_menu_primary = false
 settings_menu_script = null

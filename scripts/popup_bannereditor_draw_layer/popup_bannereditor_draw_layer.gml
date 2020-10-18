@@ -75,7 +75,7 @@ if (mouseon && !dragging)
 {
 	if (draw_button_icon(editname, actionx - 28, yy + height/2 - 14, 28, 28, settings_menu_name = editname, icons.EDIT))
 	{
-		menu_settings_set(actionx - 28, yy + height/2 + 14, editname)
+		menu_settings_set(actionx - 28, yy + height/2 + 14, editname, 28)
 		settings_menu_script = popup_bannereditor_edit_layer
 		settings_menu_busy_prev = "popup" + popup.name
 		popup_bannereditor.layer_edit = index

@@ -47,7 +47,7 @@ else
 }
 
 // Background
-draw_box(xx, yy, wid, hei, false, setting_color_background, 1)
+draw_box(xx, yy, wid, hei, false, c_background_secondary, 1)
 
 dx = xx
 dy = yy
@@ -64,7 +64,7 @@ slotwid = clamp(floor(texture_width(tex) / slotsx), 16, 64)
 slothei = clamp(floor(texture_height(tex) / slotsy), 16, 64)
 itemwid = slotwid + off * 2
 itemhei = slothei + off * 2
-itemsx = floor((wid - 30 * scroll.needed) / itemwid)
+itemsx = floor((wid - 14 * scroll.needed) / itemwid)
 itemsy = ceil(items / itemsx)
 
 for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
@@ -86,7 +86,7 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 	}
 	else
 	{
-		curtex = anitex[block_texture_get_frame()]
+		curtex = anitex[block_texture_get_frame(true)]
 		curslot = i - slots
 		curslotsx = anislotsx
 		curslotsy = anislotsy
@@ -96,7 +96,10 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 	
 	// Highlight if selected
 	if (select = i)
-		draw_box(dx, dy, itemwid, itemhei, false, setting_color_highlight, 1)
+	{
+		//draw_box(dx, dy, itemwid, itemhei, false, c_accent_overlay, a_accent_overlay)
+		draw_outline(dx, dy, itemwid, itemhei, 2, c_accent, 1)
+	}
 	
 	// Item
 	draw_texture_slot(curtex, curslot, dx + off, dy + off, slotwid, slothei, curslotsx, curslotsy, col)
@@ -125,4 +128,4 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 
 // Scrollbar
 scroll.snap_value = itemhei
-scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 30, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei)
+scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 10, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei)

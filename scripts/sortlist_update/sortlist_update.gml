@@ -137,5 +137,15 @@ if (!ds_list_empty(slist.filter_list))
 				p--
 			}
 		}
+		
+		// Resource filter (type)
+		if (settings_menu_sortlist = app.properties.resources.list)
+		{
+			if (ds_list_find_index(slist.filter_list, res_type_name_list[|item.type]) = -1)
+			{
+				ds_list_delete(slist.display_list, p)
+				p--
+			}
+		}
 	}
 }
