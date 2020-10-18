@@ -309,7 +309,7 @@ switch (temp_edit.type)
 			{
 				tab_control(36)
 				
-				if (draw_button_secondary("libraryshapetexsavemap", dx, dy, dw, null, icons.EXPORT_IMAGE))
+				if (draw_button_secondary("libraryshapetexsavemap", dx, dy, dw, null, icons.TEXTURE_EXPORT))
 					action_lib_shape_save_map()
 				
 				tab_next()

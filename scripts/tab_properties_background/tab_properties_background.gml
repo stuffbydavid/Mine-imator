@@ -62,7 +62,7 @@ if (background_image_show)
 			{
 				tab_control(36)
 				
-				if (draw_button_secondary("backgroundimagesavemap", dx, dy, dw, null, icons.EXPORT_IMAGE))
+				if (draw_button_secondary("backgroundimagesavemap", dx, dy, dw, null, icons.TEXTURE_EXPORT))
 					action_background_image_save_map()
 				
 				tab_next()

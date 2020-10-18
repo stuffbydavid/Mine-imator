@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.10.16"
+        "lastchange": "2020.10.17"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -22,8 +22,20 @@
             "duplicate": "Duplicate template",
             "remove": "Remove template"
         },
+        "resource/": {
+            "new": "Add resource",
+            "remove": "Remove resource",
+            "reload": "Reload resource",
+            "replace": "Replace resource",
+            "open": "Open resource in external program",
+            "save": "Save resource"
+        },
         "changeitem": "Change item",
-        "changeground": "Change ground"
+        "changeground": "Change ground",
+        "play": "Play",
+        "stop": "Stop",
+        "pause": "Pause",
+        "spawnparticles": "Spawn particles"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -44,7 +56,7 @@
 		"development": "DEVELOPMENT",
 		"uibranding": "UI & BRANDING",
 		"betatesting": "BETA TESTING"
-	},
+    },
     "recent/": {
 		"lastopened": "Last opened",
 		"lastopened/": {
@@ -463,6 +475,9 @@
         "done": "DONE",
         "cancel": "CANCEL"
     },
+    "loading/": {
+        "stagedone": "(%1% Done)"
+    },
     "view/": {
         "rendertip": "Render in high quality mode to enable shaders for added realism.",
         "renderfps": "Render FPS: %1",
@@ -499,13 +514,6 @@
     "tipshortcut": "Shortcut",
     "keycontroltip": "(Click: Change key, Right click: Reset)",
     "keycontrolpress": "Press a key...",
-    "preview/": {
-        "spawn": "Spawn",
-        "spawntip": "Activate or deactivate the particle spawner.",
-        "playtip": "Play the sound.",
-        "stoptip": "Stop playing the sound.",
-        "exporttip": "Save a copy of the selected image/sound/scenery to the hard drive."
-    },
     "key/": {
         "left": "Left",
         "right": "Right",
@@ -2227,33 +2235,20 @@
         "basalt_delta": "Basalt Deltas"
     },
     "resources": "RESOURCES",
-    "resourcestip": "Manage your imported files.",
     "resources/": {
-        "newtip": "Add a new resource from a file.",
-        "removetip": "Remove the selected resource.",
-        "reloadtip": "Re-load the selected resource from the hard drive.",
-        "replacetip": "Replace the selected resource with a new file.",
         "pack/": {
-            "image": "Pack image to view",
-            "imagetip": "Choose the image to view in the preview window.",
+            "image": "Resource pack asset",
             "image/": {
                 "modeltexture": "Texture to view",
-                "modeltexturetip": "Choose the model texture to view in the preview window.",
-                "blocksheet": "Sheet to view",
-                "blocksheetstatic": "Static",
-                "blocksheetstatictip": "View the block sheet for static block textures.",
-                "blocksheetanimated": "Animated",
-                "blocksheetanimatedtip": "View the block sheet for animated block textures.",
-                "colormap": "Map to view",
-                "colormapgrass": "Grass color",
-                "colormapgrasstip": "View the map used when coloring grass.",
-                "colormapfoliage": "Foliage color",
-                "colormapfoliagetip": "View the map used when coloring foliage.",
-                "particles": "Image to view",
-                "particlesimage1": "Sheet 1",
-                "particlesimage1tip": "View sheet 1 (general).",
-                "particlesimage2": "Sheet 2",
-                "particlesimage2tip": "View sheet 2 (explosions)."
+                "blocksheet": "Block sheet",
+                "blocksheetstatic": "STATIC",
+                "blocksheetanimated": "ANIMATED",
+                "colormap": "Color map",
+                "colormapgrass": "GRASS",
+                "colormapfoliage": "FOLIAGE",
+                "particles": "Particle sheet",
+                "particlesimage1": "SHEET 1",
+                "particlesimage2": "SHEET 2"
             },
             "preview": "Pack image",
             "modeltextures": "Model textures",
@@ -2265,17 +2260,13 @@
             "moontexture": "Moon texture",
             "cloudtexture": "Cloud texture"
         },
-        "itemsheetsizewidth": "Items horizontally",
-        "itemsheetsizewidthtip": "The number of items this sheet contains horizontally.",
-        "itemsheetsizeheight": "Items vertically",
-        "itemsheetsizeheighttip": "The number of items this sheet contains horizontally.",
+        "itemsheetsizerows": "Rows",
+        "itemsheetsizecolumns": "Columns",
         "scenerystructurepalette": "Palette",
         "scenerystructurepalettenumber": "Palette %1",
         "scenerystructureintegrity": "Integrity",
         "scenerystructureintegrityinvert": "Invert integrity filter",
-        "filename": "Filename",
-        "filenameopen": "Open",
-        "filenameopentip": "Open the file of this resource."
+        "filename": "Filename"
     },
     "loadscenery/": {
         "caption": "Importing %1",

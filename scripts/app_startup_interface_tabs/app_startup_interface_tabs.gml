@@ -110,8 +110,8 @@ with (properties)
 		list.can_deselect = true
 		list.script = action_res_list
 		sortlist_column_add(list, "resname", 0)
-		sortlist_column_add(list, "restype", 0.45)
-		sortlist_column_add(list, "rescount", 0.75)
+		sortlist_column_add(list, "restype", 0.35)
+		sortlist_column_add(list, "rescount", 0.65)
 		sortlist_add(list, mc_res)
 		
 		tbx_item_sheet_width = new_textbox_integer()
@@ -119,8 +119,6 @@ with (properties)
 		
 		tbx_scenery_integrity = new_textbox_integer()
 		tbx_scenery_integrity.suffix = "%"
-		
-		tbx_scenery_palette = new_textbox_integer()
 	}
 }
 

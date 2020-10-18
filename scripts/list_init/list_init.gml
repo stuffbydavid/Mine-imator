@@ -480,7 +480,7 @@ switch (name)
 	case "backgroundskycloudstex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), spr_icons, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.clouds_texture)
