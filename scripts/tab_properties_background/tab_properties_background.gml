@@ -112,12 +112,12 @@ capwid = text_max_width("backgroundsunlightrange", "backgroundsunlightangle") + 
 
 // Sunlight range
 tab_control_inputbox()
-draw_textfield_num("backgroundsunlightrange", dx, dy, 86, background_sunlight_range, background_sunlight_range / 100, 400, world_size, 2000, 10, tab.background.tbx_sunlight_range, action_background_sunlight_range, false, false, capwid)
+draw_dragger("backgroundsunlightrange", dx, dy, 86, background_sunlight_range, background_sunlight_range / 100, 400, world_size, 2000, 10, tab.background.tbx_sunlight_range, action_background_sunlight_range, capwid)
 tab_next()
 
 // Sunlight angle
 tab_control_inputbox()
-draw_textfield_num("backgroundsunlightangle", dx, dy, 86, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, false, false, capwid)
+draw_dragger("backgroundsunlightangle", dx, dy, 86, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, capwid)
 tab_next()
 
 // Sunlight strength
@@ -177,27 +177,27 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	
 	// Cloud speed
 	tab_control_inputbox()
-	draw_textfield_num("backgroundskycloudsspeed", dx, dy, 86, background_sky_clouds_speed, 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed, false, false, capwid)
+	draw_dragger("backgroundskycloudsspeed", dx, dy, 86, background_sky_clouds_speed, 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed, capwid)
 	tab_next()
 	
 	// Cloud Z / Y
 	tab_control_inputbox()
-	draw_textfield_num("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, 86, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, false, false, capwid)
+	draw_dragger("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, 86, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
 	tab_next()
 	
 	// Cloud size
 	tab_control_inputbox()
-	draw_textfield_num("backgroundskycloudssize", dx, dy, 86, background_sky_clouds_size, 5, 16, no_limit, 192, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size, false, false, capwid)
+	draw_dragger("backgroundskycloudssize", dx, dy, 86, background_sky_clouds_size, 5, 16, no_limit, 192, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size, capwid)
 	tab_next()
 	
 	// Cloud height
 	tab_control_inputbox()
-	draw_textfield_num("backgroundskycloudsheight", dx, dy, 86, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height, false, false, capwid)
+	draw_dragger("backgroundskycloudsheight", dx, dy, 86, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height, capwid)
 	tab_next()
 	
 	// Cloud offset
 	tab_control_inputbox()
-	draw_textfield_num("backgroundskycloudsoffset", dx, dy, 86, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset, false, false, capwid)
+	draw_dragger("backgroundskycloudsoffset", dx, dy, 86, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset, capwid)
 	tab_next()
 	
 	checkbox_expand_end()
@@ -388,17 +388,17 @@ if (background_fog_show && checkbox_expand_background_fog)
 	
 	// Fog distance
 	tab_control_inputbox()
-	draw_textfield_num("backgroundfogdistance", dx, dy, 86, background_fog_distance, background_fog_distance / 100, 10, world_size, 10000, 10, tab.background.tbx_fog_distance, action_background_fog_distance, false, false, capwid)
+	draw_dragger("backgroundfogdistance", dx, dy, 86, background_fog_distance, background_fog_distance / 100, 10, world_size, 10000, 10, tab.background.tbx_fog_distance, action_background_fog_distance, capwid)
 	tab_next()
 	
 	// Fog size
 	tab_control_inputbox()
-	draw_textfield_num("backgroundfogsize", dx, dy, 86, background_fog_size, background_fog_size / 100, 10, world_size, 2000, 10, tab.background.tbx_fog_size, action_background_fog_size, false, false, capwid)
+	draw_dragger("backgroundfogsize", dx, dy, 86, background_fog_size, background_fog_size / 100, 10, world_size, 2000, 10, tab.background.tbx_fog_size, action_background_fog_size, capwid)
 	tab_next()
 	
 	// Fog height
 	tab_control_inputbox()
-	draw_textfield_num("backgroundfogheight", dx, dy, 86, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height, false, false, capwid)
+	draw_dragger("backgroundfogheight", dx, dy, 86, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height, capwid)
 	tab_next()
 	
 	checkbox_expand_end()
@@ -422,15 +422,15 @@ if (background_volumetric_fog && checkbox_expand_background_volumetric_fog)
 		capwid = text_max_width("backgroundvolumetricfogheight", "backgroundvolumetricfogheightfade", "backgroundvolumetricfognoisescale") + 10
 		
 		tab_control_inputbox()
-		draw_textfield_num("backgroundvolumetricfogheight", dx, dy, 86, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height, false, false, capwid)
+		draw_dragger("backgroundvolumetricfogheight", dx, dy, 86, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height, capwid)
 		tab_next()
 		
 		tab_control_inputbox()
-		draw_textfield_num("backgroundvolumetricfogheightfade", dx, dy, 86, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade, false, false, capwid)
+		draw_dragger("backgroundvolumetricfogheightfade", dx, dy, 86, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade, capwid)
 		tab_next()
 		
 		tab_control_inputbox()
-		draw_textfield_num("backgroundvolumetricfognoisescale", dx, dy, 86, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale, false, false, capwid)
+		draw_dragger("backgroundvolumetricfognoisescale", dx, dy, 86, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale, capwid)
 		tab_next()
 		
 		tab_control_meter()
@@ -507,5 +507,5 @@ tab_next()
 
 // Animation speed
 tab_control_inputbox()
-draw_textfield_num("backgroundtextureanimationspeed", dx, dy, 86, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
+draw_dragger("backgroundtextureanimationspeed", dx, dy, 86, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
 tab_next()

@@ -1,7 +1,7 @@
 /// tab_template_editor_particles_preview()
 
 var size, xx, yy;
-size = 64
+size = 128
 tab_control(size)
 
 xx = floor(dx + dw / 2 - size / 2)
@@ -13,7 +13,7 @@ if (xx + size < content_x || xx > content_x + content_width || yy + size < conte
 	return 0
 }
 
-tip_set(text_get("particleeditortypespriteanimationpreviewtip"), xx, yy, size, size)
+draw_box(xx, yy, size, size, false, c_background_secondary, 1)
 
 var res, tex, swid, fwid, fhei, ani, frame, framesx, scale;
 
@@ -32,7 +32,6 @@ if (ptype_edit.temp = particle_sheet)
 
 	scale = min(size / fwid, size / fhei)
 
-	draw_box(xx, yy, size, size, false, c_black, 0.1)
 	draw_texture_start()
 	draw_texture_part(tex, xx, yy, (frame mod framesx) * fwid, (frame div framesx) * fhei, fwid, fhei, scale, scale)
 	draw_texture_done()
@@ -46,7 +45,9 @@ else
 	endf = (ptype_edit.sprite_template_reverse ? 0 : (template.frames - 1))
 	
 	ani = particle_get_animation_percent(particle_editor_preview_start, startf, endf, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
-	frame = round(startf + (endf - startf) * ani) * !ptype_edit.sprite_template_still_frame
+	ani *= !ptype_edit.sprite_template_still_frame
+	
+	frame = round(startf + (endf - startf) * ani)
 	
 	var res = ptype_edit.sprite_template_tex;
 	if (!res.ready)
@@ -57,14 +58,18 @@ else
 	tex = res.particle_texture_map[?texname]
 	
 	scale = min(size / texture_width(tex), size / texture_height(tex))
-
-	draw_box(xx, yy, size, size, false, c_black, 0.1)
+	
 	draw_texture_start()
 	draw_texture_part(tex, xx, yy, 0, 0, texture_width(tex), texture_height(tex), scale, scale)
 	draw_texture_done()
 }
 
-if (draw_button_normal("", xx + size - 16, yy + size - 16, 16, 16, e_button.NO_TEXT, false, true, true, icons.ARROW_RIGHT_SMALL))
-	tab_template_editor_particles_preview_restart()
+draw_box(xx, yy + size - 4, size * ani, 4, false, c_accent, 1)
+
+if (ptype_edit.temp = particle_sheet || (ptype_edit.temp = particle_template && !ptype_edit.sprite_template_still_frame))
+{
+	if (draw_button_icon("particlesresetpreview", xx + size + 4, yy + size - 28, 28, 28, false, icons.RESET, null, false, "tooltipparticlesresetpreview"))
+		tab_template_editor_particles_preview_restart()
+}
 
 tab_next()

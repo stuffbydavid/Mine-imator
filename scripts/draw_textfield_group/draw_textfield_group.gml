@@ -60,6 +60,12 @@ for (var i = 0; i < textfield_amount; i++)
 	mouseon = app_mouse_box(fieldx, yy + 2, fieldwid, hei - 4) && content_mouseon
 	boxwid = fieldwid
 	
+	if (textfield_min != null)
+	{
+		minval = textfield_min[i]
+		maxval = textfield_max[i]
+	}
+	
 	//if (context_menu_copy_category)
 	//	context_menu_area(fieldx, yy, boxwid, hei, "contextmenuvalue", textfield_value[i], e_value_type.NUMBER, textfield_script[i], textfield_default[i])
 	
@@ -92,7 +98,9 @@ for (var i = 0; i < textfield_amount; i++)
 	
 	// Textbox
 	draw_set_font(font_value)
-	var update = textbox_draw(textfield_textbox[i], fieldx + boxwid - string_width(textfield_textbox[i].text) - 9, yy + (hei/2) - 9, string_width(textfield_textbox[i].text), 18);
+	var text = textfield_textbox[i].text + textfield_textbox[i].suffix;
+	
+	var update = textbox_draw(textfield_textbox[i], fieldx + boxwid - string_width(text) - 9, yy + (hei/2) - 9, string_width(text), 18);
 	
 	// Textbox press
 	if (app_mouse_box(fieldx + 28, yy, boxwid - 28, hei) && content_mouseon && window_focus != string(textfield_textbox[i]))
@@ -148,7 +156,7 @@ for (var i = 0; i < textfield_amount; i++)
 	if (window_busy = textfield_name[i] + "drag")
 	{ 
 		mouse_cursor = cr_none
-		dragger_drag_value += (mouse_x - mouse_click_x) * mul * dragger_multiplier
+		dragger_drag_value += (mouse_x - mouse_click_x) * (textfield_mul[i] = null ? mul : textfield_mul[i]) * dragger_multiplier
 		window_mouse_set(mouse_click_x, mouse_click_y)
 		
 		var d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - textfield_value[i];

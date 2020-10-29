@@ -363,7 +363,7 @@ switch (temp_edit.type)
 		{
 			// Detail
 			tab_control_inputbox()
-			draw_textfield_num("libraryshapedetail", dx, dy, 86, temp_edit.shape_detail, 1 / 4, 4, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
+			draw_dragger("libraryshapedetail", dx, dy, 86, temp_edit.shape_detail, 1 / 4, 4, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
 			tab_next()
 		}
 		else if (temp_edit.type = e_temp_type.SURFACE)

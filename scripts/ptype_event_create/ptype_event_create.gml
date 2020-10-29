@@ -28,6 +28,11 @@ sprite_animation_speed_random_min = 5
 sprite_animation_speed_random_max = 10
 sprite_animation_onend = 0 // 0 = stop, 1 = loop, 2 = reverse
 
+angle_collapse = true
+spd_collapse = true
+rot_collapse = true
+rot_spd_collapse = true
+
 angle_extend = false
 spd_extend = false
 rot_extend = false

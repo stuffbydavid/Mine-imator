@@ -4,13 +4,13 @@
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg contextmenu
+/// @arg [contextmenu]
 /// @desc Draws a box with editable text at the given position and with the given dimensions.
 
 var tbx, xx, yy, w, h, contextmenu;
 var changetext, deletetext, inserttext, lineheight, mouseover;
 var a, b, c, l, p, k, ww, hh, str;
-	
+
 tbx = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -120,7 +120,7 @@ if (window_focus = string(tbx))
 	if (!mouse_left && window_busy = string(tbx) + "click")
 		window_busy = ""
 	
-	if ((mouse_left_pressed && !keyboard_check(vk_shift) && !context_menu_mouseon) || (tbx.single_line && keyboard_check_pressed(vk_enter)))
+	if (!mouseover && (mouse_left_pressed && !keyboard_check(vk_shift) && !context_menu_mouseon) || (tbx.single_line && keyboard_check_pressed(vk_enter)))
 		window_focus = ""
 	
 	if (!tbx.read_only && window_busy = "" && !keyboard_check(vk_control))
@@ -853,7 +853,7 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 	if (ly + lineheight > h) // Exit if beyond box
 		break
 	
-	if ((mouseover && window_busy = "") || window_busy = string(tbx))
+	if ((window_busy = "" && window_focus = string(tbx)) || window_busy = string(tbx))
 	{
 		if (l = tbx.lines - 1) 
 			hh = h-ly

@@ -36,6 +36,7 @@
         "8b38534f-b94d-444a-b91f-86010e6d6c94",
         "88b52bcd-abc8-4abb-a247-1b3dbd204e4e",
         "fef3a352-43ad-4f12-a7ed-00f3c5f6fc6b",
+        "e3b342fa-a1ad-4b5b-a0a6-c85cd0ecc9bc",
         "0677d648-dc2f-41f5-9164-a17758781acb",
         "9360206c-0631-4889-b8bd-af135a17c587",
         "10d177b2-1bec-4430-9436-ff585869d143",
@@ -48,7 +49,8 @@
         "6c730969-40db-41da-984f-b3dcc46e2428",
         "f0ad35bd-0553-4b1d-aefa-94e4c0569f62",
         "31000fe2-a92c-4c0e-a0be-4599d699bebd",
-        "86cffcf9-dd8e-410a-b707-d4d3d0a66db1"
+        "86cffcf9-dd8e-410a-b707-d4d3d0a66db1",
+        "702f9f2f-ccfd-4fd9-89cd-874877b6b352"
     ],
     "filterType": "GMScript",
     "folderName": "Components",

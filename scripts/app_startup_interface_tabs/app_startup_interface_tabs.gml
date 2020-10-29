@@ -228,6 +228,13 @@ with (template_editor)
 	tbx_type_angle_speed_mul = new_textbox_ndecimals()
 	tbx_type_angle_speed_mul_random = new_textbox_ndecimals()
 	
+	tbx_type_xangle.suffix = "°"
+	tbx_type_xangle_random.suffix = "°"
+	tbx_type_yangle.suffix = "°"
+	tbx_type_yangle_random.suffix = "°"
+	tbx_type_zangle.suffix = "°"
+	tbx_type_zangle_random.suffix = "°"
+	
 	tbx_type_xspd = new_textbox_ndecimals()
 	tbx_type_xspd_random = new_textbox_ndecimals()
 	tbx_type_yspd = new_textbox_ndecimals()
@@ -279,6 +286,25 @@ with (template_editor)
 	tbx_type_zrot_spd_mul = new_textbox_ndecimals()
 	tbx_type_zrot_spd_mul_random = new_textbox_ndecimals()
 	
+	tbx_type_xrot_spd.suffix = "°"
+	tbx_type_xrot_spd_random.suffix = "°"
+	tbx_type_yrot_spd.suffix = "°"
+	tbx_type_yrot_spd_random.suffix = "°"
+	tbx_type_zrot_spd.suffix = "°"
+	tbx_type_zrot_spd_random.suffix = "°"
+	tbx_type_xrot_spd_add.suffix = "°"
+	tbx_type_xrot_spd_add_random.suffix = "°"
+	tbx_type_yrot_spd_add.suffix = "°"
+	tbx_type_yrot_spd_add_random.suffix = "°"
+	tbx_type_zrot_spd_add.suffix = "°"
+	tbx_type_zrot_spd_add_random.suffix = "°"
+	tbx_type_xrot_spd_mul.suffix = "°"
+	tbx_type_xrot_spd_mul_random.suffix = "°"
+	tbx_type_yrot_spd_mul.suffix = "°"
+	tbx_type_yrot_spd_mul_random.suffix = "°"
+	tbx_type_zrot_spd_mul.suffix = "°"
+	tbx_type_zrot_spd_mul_random.suffix = "°"
+	
 	tbx_type_sprite_angle = new_textbox_ndecimals()
 	tbx_type_sprite_angle.suffix = "°"
 	tbx_type_sprite_angle_random = new_textbox_ndecimals()
@@ -286,6 +312,9 @@ with (template_editor)
 	tbx_type_sprite_angle_add = new_textbox_ndecimals()
 	tbx_type_sprite_angle_add.suffix = "°"
 	tbx_type_sprite_angle_add_random = new_textbox_ndecimals()
+	tbx_type_sprite_angle_add_random.suffix = "°"
+	
+	tbx_type_sprite_angle_add.suffix = "°"
 	tbx_type_sprite_angle_add_random.suffix = "°"
 	
 	tbx_type_scale = new_textbox_ndecimals()

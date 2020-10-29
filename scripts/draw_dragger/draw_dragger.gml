@@ -1,4 +1,4 @@
-/// draw_dragger(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [captionwidth, [tip]])
+/// draw_dragger(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [captionwidth, [showcaption, [disabled]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -12,75 +12,102 @@
 /// @arg textbox
 /// @arg script
 /// @arg [captionwidth
-/// @arg [tip]]
+/// @arg [showcaption
+/// @arg [disabled]]]
 
-var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwid, tip;
-var hei, text;
+var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth, showcaption, disabled;
+var caption, hei, fieldx, dragmouseon;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
 wid = argument[3]
 value = argument[4]
 mul = argument[5]
-minval = (setting_unlimited_values ? -no_limit : argument[6])
-maxval = (setting_unlimited_values ? no_limit : argument[7])
+minval = argument[6]
+maxval = argument[7]
 def = argument[8]
 snapval = argument[9]
 tbx = argument[10]
 script = argument[11]
 
+draw_set_font(font_emphasis)
+caption = text_get(name)
+
 if (argument_count > 12)
-	capwid = argument[12]
+	capwidth = argument[12]
 else
-	capwid = text_caption_width(name)
-	
+	capwidth = null
+
 if (argument_count > 13)
-	tip = argument[13]
-else 
-	tip = text_get(name + "tip")
-	
-tip += "\n" + text_get("draggertip")
+	showcaption = argument[13]
+else
+	showcaption = true
 
-hei = 18 
-text = text_get(name)
+if (argument_count > 14)
+	disabled = argument[14]
+else
+	disabled = false
 
-if (text != "")
-	draw_label(text + ":", xx, yy + hei / 2, fa_left, fa_middle)
+hei = 28
 
-if (window_focus != string(tbx))
-	tip_set(tip, xx, yy, capwid + string_width(string(value) + tbx.suffix) + 32, hei)
-	
-if (app_mouse_box(xx + capwid, yy, wid - capwid, hei) && content_mouseon && window_focus != string(tbx))
-{
+if (capwidth = null && showcaption)
+	capwidth = string_width(caption) + 8
+else if (!showcaption)
+	capwidth = 0
+
+if (xx + wid + capwidth < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
+	return 0
+
+//if (!disabled)
+//	context_menu_area(xx, yy, wid + capwidth, hei, "contextmenuvalue", value, e_value_type.NUMBER, script, def)
+
+fieldx = xx + capwidth
+
+dragmouseon = app_mouse_box(xx, yy, capwidth + wid, hei) && content_mouseon && (window_focus != string(tbx)) && !disabled
+
+// Drag
+if (dragmouseon && mouse_left_pressed)
+	window_busy = name + "press"
+
+if (draw_inputbox(name, fieldx, yy, wid, 28, string(def), tbx, null, disabled))
+	script_execute(script, clamp(string_get_real(tbx.text, def), minval, maxval), false)
+
+// Set cursor
+if (dragmouseon)
 	mouse_cursor = cr_size_we
-	
-	if (mouse_left_pressed)
-	{
-		window_focus = name
-		window_busy = name + "press"
-	}
-	
-	// Reset to 0
-	if (mouse_right_pressed && def != no_limit)
-	{
-		window_focus = name
-		script_execute(script, clamp(snap(def, snapval), minval, maxval), 0)
-	}
-}
+
+// Use microanimation from inputbox to determine color
+var labelcolor, labelalpha;
+labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
+labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+draw_box_hover(fieldx, yy, wid, hei, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE]) * (1 - mcroani_arr[e_mcroani.DISABLED]))
+
+if (showcaption)
+	draw_label(caption, xx, yy + 14, fa_left, fa_middle, labelcolor, labelalpha, font_emphasis)
 
 // Mouse pressed
 if (window_busy = name + "press")
-{ 
+{
 	mouse_cursor = cr_size_we
 	
-	if (!mouse_left) // Type
+	if (!mouse_left)
 	{
-		tbx.text = string_decimals(value)
-		window_focus = string(tbx)
 		window_busy = ""
+		app_mouse_clear()
+		
+		// Select textbox
+		if (app_mouse_box(fieldx, yy, wid, hei) && !disabled)
+		{
+			tbx.text = string_decimals(value)
+			window_focus = string(tbx)
+			window_busy = ""
+		}
 	}
-	
-	if (mouse_dx != 0)
+	else if (mouse_dx != 0)
 	{
 		dragger_drag_value = value
 		window_busy = name + "drag" // Start dragging
@@ -90,12 +117,16 @@ if (window_busy = name + "press")
 // Is dragging
 if (window_busy = name + "drag")
 { 
-	mouse_cursor = cr_size_we
-	dragger_drag_value += mouse_dx * mul
-
+	mouse_cursor = cr_none
+	dragger_drag_value += (mouse_x - mouse_click_x) * mul * dragger_multiplier
+	window_mouse_set(mouse_click_x, mouse_click_y)
+	
 	var d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - value;
 	if (d <> 0)
+	{
 		script_execute(script, d, true)
+		tbx.text = string_decimals(value + d)
+	}
 	
 	if (!mouse_left)
 	{
@@ -104,23 +135,6 @@ if (window_busy = name + "drag")
 	}
 }
 
-// Mouse wheel
-if (window_busy = "" && window_focus = name && mouse_wheel != 0)
-{
-	var newval;
-	if (snapval = 0)
-		newval = clamp(value - mouse_wheel * mul, minval, maxval)
-	else
-		newval = clamp(value - mouse_wheel * snapval, minval, maxval)
-	
-	script_execute(script, newval - value, true)
-}
-
-// Textbox
-if (window_focus = string(tbx))
-{
-	if (textbox_draw(tbx, xx + capwid, yy + hei / 2 - 8, wid - capwid, 18))
-		script_execute(script, clamp(snap(string_get_real(tbx.text, 0), snapval), minval, maxval), false)
-}
-else
-	draw_label(string(value) + tbx.suffix, xx + capwid, yy + hei / 2, fa_left, fa_middle)
+// Idle
+if (window_busy != name + "drag" && window_busy != name + "press" && window_focus != string(tbx))
+	tbx.text = string_decimals(value)

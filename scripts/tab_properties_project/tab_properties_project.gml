@@ -56,11 +56,11 @@ tab_next()
 if (project_video_template = 0)
 {
 	tab_control(28)
-	draw_textfield_num("projectvideosizecustomwidth", dx, dy, 86, project_video_width, 1, 1, no_limit, 1280, 1, tab.project.tbx_video_size_custom_width, action_project_video_width)
+	draw_dragger("projectvideosizecustomwidth", dx, dy, 86, project_video_width, 1, 1, no_limit, 1280, 1, tab.project.tbx_video_size_custom_width, action_project_video_width)
 	tab_next()
 	
 	tab_control(28)
-	draw_textfield_num("projectvideosizecustomheight", dx, dy, 86, project_video_height, 1, 1, no_limit, 720, 1, tab.project.tbx_video_size_custom_height, action_project_video_width)
+	draw_dragger("projectvideosizecustomheight", dx, dy, 86, project_video_height, 1, 1, no_limit, 720, 1, tab.project.tbx_video_size_custom_height, action_project_video_width)
 	tab_next()
 	
 	tab_control_switch()

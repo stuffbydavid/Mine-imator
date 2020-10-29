@@ -641,12 +641,12 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 {
 	if (preview.select.pc_spawn_constant)
 	{
-		if (draw_button_icon("previewspawn", xx + width - 40, yy + height - 40, 28, 28, preview.spawn_active, icons.PARTICLES, null, false, "tooltipspawnparticles"))
+		if (draw_button_icon("previewspawn", xx + width - 40, yy + height - 40, 28, 28, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 			preview.spawn_active = !preview.spawn_active
 	}
 	else
 	{
-		if (draw_button_icon("previewspawn", xx + width - 40, yy + height - 40, 28, 28, false, icons.PARTICLES, null, false, "tooltipspawnparticles"))
+		if (draw_button_icon("previewspawn", xx + width - 40, yy + height - 40, 28, 28, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 			preview.fire = true
 	}
 }

@@ -6,6 +6,6 @@
 var wid = 0;
 for (var a = 0; a < argument_count; a++)
 	if (text_exists(argument[a]))
-		wid = max(wid, string_width(text_get(argument[a]) + ":") + 20)
+		wid = max(wid, string_width(text_get(argument[a])) + 8)
 
 return wid

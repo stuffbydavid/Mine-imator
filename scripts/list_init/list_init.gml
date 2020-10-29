@@ -306,9 +306,20 @@ switch (name)
 	// Particle editor spawn region type
 	case "particleeditorspawnregiontype":
 	{
-		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), spr_icons, icons.SPHERE)
-		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), spr_icons, icons.CUBE)
-		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), spr_icons, icons.BOX)
+		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), null, icons.SPHERE)
+		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), null, icons.CUBE)
+		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), null, icons.BOX)
+		
+		break
+	}
+	
+	// Particle editor bounding box
+	case "particleeditorboundingbox":
+	{
+		menu_add_item("none", text_get("particleeditorboundingboxtypenone"))
+		menu_add_item("spawn", text_get("particleeditorboundingboxtypespawn"))
+		menu_add_item("ground", text_get("particleeditorboundingboxtypeground"))
+		menu_add_item("custom", text_get("particleeditorboundingboxtypecustom"))
 		
 		break
 	}

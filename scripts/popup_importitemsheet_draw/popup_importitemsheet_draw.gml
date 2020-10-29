@@ -53,12 +53,12 @@ if (popup.is_sheet)
 	// Size
 	axis_edit = X
 	tab_control(28)
-	draw_textfield_num("importitemsheetrows", dx, dy, 86, popup.sheet_size[X], 1 / 10, 1, no_limit, popup.sheet_size_def[X], 1, popup.tbx_sheet_width, action_toolbar_importitemsheet_sheet_size)
+	draw_dragger("importitemsheetrows", dx, dy, 86, popup.sheet_size[X], 1 / 10, 1, no_limit, popup.sheet_size_def[X], 1, popup.tbx_sheet_width, action_toolbar_importitemsheet_sheet_size)
 	tab_next()
 	
 	axis_edit = Y
 	tab_control(28)
-	draw_textfield_num("importitemsheetcolumns", dx, dy, 86, popup.sheet_size[Y], 1 / 10, 1, no_limit, popup.sheet_size_def[Y], 1, popup.tbx_sheet_height, action_toolbar_importitemsheet_sheet_size)
+	draw_dragger("importitemsheetcolumns", dx, dy, 86, popup.sheet_size[Y], 1 / 10, 1, no_limit, popup.sheet_size_def[Y], 1, popup.tbx_sheet_height, action_toolbar_importitemsheet_sheet_size)
 	tab_next()
 }
 

@@ -46,9 +46,8 @@ padding = 3
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
 
-var mouseon, mouseclick;
+var mouseon;
 mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "" || window_busy = string(tbx) + "click") && !disabled
-mouseclick = mouseon && mouse_left
 
 microani_set(string(tbx) + inputname, script, mouseon || window_focus = string(tbx), false, (mouseon && mouse_left) || (window_focus = string(tbx)))
 
@@ -103,10 +102,10 @@ if (!disabled)
 	if (center && (tbx.text != ""))
 	{
 		var textwid = min(w, string_width(tbx.text));
-		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 5, textwid, h - 9) // ,false)
+		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 5, textwid, h - 9, true) // ,false)
 	}
 	else
-		update = textbox_draw(tbx, xx + 10, yy + 5, w - 20, h - 9) // ,false)
+		update = textbox_draw(tbx, xx + 10, yy + 5, w - 20, h - 9, true) // ,false)
 }
 
 // Textbox context menu
@@ -115,6 +114,12 @@ if (!disabled)
 
 // Disabled overlay
 draw_box(xx, yy, w, h, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
+
+if (mouseon && mouse_left_pressed && (window_focus != string(tbx)))
+{
+	window_focus = string(tbx)
+	app_mouse_clear()
+}
 
 if (update && (script != null))
     script_execute(script, tbx.text)
