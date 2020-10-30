@@ -11,11 +11,11 @@ if (res = null)
 if (!res.ready)
 	res = mc_res
 
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditoritemcustomitemslot", dx, dy, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], action_tl_frame_custom_item_slot, checkbox_expand_frameeditor_itemslot, action_checkbox_expand_frameeditor_itemslot)
+tab_control_collapse()
+draw_collapse("frameeditoritemcustomitemslot", dx, dy, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], action_tl_frame_custom_item_slot, setting_collapse_frameeditor_itemslot, action_collapse_frameeditor_itemslot)
 tab_next()
 
-if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && checkbox_expand_frameeditor_itemslot)
+if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && setting_collapse_frameeditor_itemslot)
 {
 	dx += 4
 	dw -= 4
@@ -31,7 +31,7 @@ if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && checkbox_expand_frameeditor_items
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Image

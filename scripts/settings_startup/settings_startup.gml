@@ -28,7 +28,7 @@ setting_view_grid_size_ver = 3
 setting_view_real_time_render = true
 setting_view_real_time_render_time = 1000
 
-setting_theme = theme_darker
+setting_theme = theme_light
 setting_accent = 3
 setting_accent_custom = hex_to_color("03A9F4")
 
@@ -220,29 +220,28 @@ setting_export_image_remove_background = false
 setting_export_image_include_hidden = false
 setting_export_image_high_quality = true
 
-checkbox_expand_settings_ssao = true
-checkbox_expand_settings_shadows = true
-checkbox_expand_settings_indirect = true
-checkbox_expand_settings_glow = true
-checkbox_expand_settings_aa = true
-checkbox_expand_settings_watermark = true
-checkbox_expand_background_clouds = true
-checkbox_expand_background_ground = true
-checkbox_expand_background_volumetric_fog = true
-checkbox_expand_background_fog = true
-checkbox_expand_background_wind = true
-checkbox_expand_frameeditor_rotatepoint = true
-checkbox_expand_frameeditor_camshake = true
-checkbox_expand_frameeditor_dof = true
-checkbox_expand_frameeditor_bloom = true
-checkbox_expand_frameeditor_lensdirt = true
-checkbox_expand_frameeditor_clrcor = true
-checkbox_expand_frameeditor_grain = true
-checkbox_expand_frameeditor_vignette = true
-checkbox_expand_frameeditor_ca = true
-checkbox_expand_frameeditor_distort = true
-
-checkbox_expand_frameeditor_itemslot = true
+setting_collapse_settings_ssao = false
+setting_collapse_settings_shadows = false
+setting_collapse_settings_indirect = false
+setting_collapse_settings_glow = false
+setting_collapse_settings_aa = false
+setting_collapse_settings_watermark = false
+setting_collapse_background_clouds = false
+setting_collapse_background_ground = false
+setting_collapse_background_volumetric_fog = false
+setting_collapse_background_fog = false
+setting_collapse_background_wind = false
+setting_collapse_frameeditor_rotatepoint = false
+setting_collapse_frameeditor_camshake = false
+setting_collapse_frameeditor_dof = false
+setting_collapse_frameeditor_bloom = false
+setting_collapse_frameeditor_lensdirt = false
+setting_collapse_frameeditor_clrcor = false
+setting_collapse_frameeditor_grain = false
+setting_collapse_frameeditor_vignette = false
+setting_collapse_frameeditor_ca = false
+setting_collapse_frameeditor_distort = false
+setting_collapse_frameeditor_itemslot = false
 
 // New UI settings
 setting_reduced_motion = false

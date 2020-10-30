@@ -19,7 +19,7 @@ if (content_direction = e_scroll.VERTICAL)
 	else
 		tab.scrollbar_margin_goal = 0
 	
-	dividew -= (tab.scrollbar_margin * 12)
+	dividew -= floor(tab.scrollbar_margin * 12)
 	dw -= (tab.scrollbar_margin * 12)
 	dy -= tab.scroll.value
 }

@@ -6,6 +6,7 @@ dy += 184
 dy += 18
 
 // Info
+draw_set_font(font_value)
 draw_label(string_limit_ext(text_get("upgradeinfo"), dw + 8, dh), dx, dy, fa_left, fa_top, c_text_main, a_text_main, font_value)
 
 dy += 126

@@ -19,11 +19,11 @@ draw_meter("frameeditorcamerabladeangle", dx, dy, dw, tl_edit.value[e_value.CAM_
 tab_next()
 
 // Rotate point
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate, checkbox_expand_frameeditor_rotatepoint, action_checkbox_expand_frameeditor_rotatepoint)
+tab_control_collapse()
+draw_collapse("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate, setting_collapse_frameeditor_rotatepoint, action_collapse_frameeditor_rotatepoint)
 tab_next()
 
-if (tl_edit.value[e_value.CAM_ROTATE] && checkbox_expand_frameeditor_rotatepoint)
+if (tl_edit.value[e_value.CAM_ROTATE] && setting_collapse_frameeditor_rotatepoint)
 {
 	dx += 4
 	dw -= 4
@@ -50,14 +50,14 @@ if (tl_edit.value[e_value.CAM_ROTATE] && checkbox_expand_frameeditor_rotatepoint
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Camera shake
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameracamerashake", dx, dy, tl_edit.value[e_value.CAM_SHAKE], action_tl_frame_cam_shake, checkbox_expand_frameeditor_camshake, action_checkbox_expand_frameeditor_camshake)
+tab_control_collapse()
+draw_collapse("frameeditorcameracamerashake", dx, dy, tl_edit.value[e_value.CAM_SHAKE], action_tl_frame_cam_shake, setting_collapse_frameeditor_camshake, action_collapse_frameeditor_camshake)
 tab_next()
-if (tl_edit.value[e_value.CAM_SHAKE] && checkbox_expand_frameeditor_camshake)
+if (tl_edit.value[e_value.CAM_SHAKE] && setting_collapse_frameeditor_camshake)
 {
 	dx += 4
 	dw -= 4
@@ -102,14 +102,14 @@ if (tl_edit.value[e_value.CAM_SHAKE] && checkbox_expand_frameeditor_camshake)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // DOF
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof, checkbox_expand_frameeditor_dof, action_checkbox_expand_frameeditor_dof)
+tab_control_collapse()
+draw_collapse("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof, setting_collapse_frameeditor_dof, action_collapse_frameeditor_dof)
 tab_next()
-if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
+if (tl_edit.value[e_value.CAM_DOF] && setting_collapse_frameeditor_dof)
 {
 	dx += 4
 	dw -= 4
@@ -225,14 +225,14 @@ if (tl_edit.value[e_value.CAM_DOF] && checkbox_expand_frameeditor_dof)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Bloom
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcamerabloom", dx, dy, tl_edit.value[e_value.CAM_BLOOM], action_tl_frame_cam_bloom, checkbox_expand_frameeditor_bloom, action_checkbox_expand_frameeditor_bloom)
+tab_control_collapse()
+draw_collapse("frameeditorcamerabloom", dx, dy, tl_edit.value[e_value.CAM_BLOOM], action_tl_frame_cam_bloom, setting_collapse_frameeditor_bloom, action_collapse_frameeditor_bloom)
 tab_next()
-if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
+if (tl_edit.value[e_value.CAM_BLOOM] && setting_collapse_frameeditor_bloom)
 {
 	dx += 4
 	dw -= 4
@@ -261,14 +261,14 @@ if (tl_edit.value[e_value.CAM_BLOOM] && checkbox_expand_frameeditor_bloom)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Lens dirt
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameralensdirt", dx, dy, tl_edit.value[e_value.CAM_LENS_DIRT], action_tl_frame_cam_lens_dirt, checkbox_expand_frameeditor_lensdirt, action_checkbox_expand_frameeditor_lensdirt)
+tab_control_collapse()
+draw_collapse("frameeditorcameralensdirt", dx, dy, tl_edit.value[e_value.CAM_LENS_DIRT], action_tl_frame_cam_lens_dirt, setting_collapse_frameeditor_lensdirt, action_collapse_frameeditor_lensdirt)
 tab_next()
-if (tl_edit.value[e_value.CAM_LENS_DIRT] && checkbox_expand_frameeditor_lensdirt)
+if (tl_edit.value[e_value.CAM_LENS_DIRT] && setting_collapse_frameeditor_lensdirt)
 {
 	dx += 4
 	dw -= 4
@@ -324,14 +324,14 @@ if (tl_edit.value[e_value.CAM_LENS_DIRT] && checkbox_expand_frameeditor_lensdirt
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Color correction
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameracolorcorrection", dx, dy, tl_edit.value[e_value.CAM_COLOR_CORRECTION], action_tl_frame_cam_clrcor, checkbox_expand_frameeditor_clrcor, action_checkbox_expand_frameeditor_clrcor)
+tab_control_collapse()
+draw_collapse("frameeditorcameracolorcorrection", dx, dy, tl_edit.value[e_value.CAM_COLOR_CORRECTION], action_tl_frame_cam_clrcor, setting_collapse_frameeditor_clrcor, action_collapse_frameeditor_clrcor)
 tab_next()
-if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_clrcor)
+if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && setting_collapse_frameeditor_clrcor)
 {
 	dx += 4
 	dw -= 4
@@ -360,14 +360,14 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && checkbox_expand_frameeditor_c
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Grain
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameragrain", dx, dy, tl_edit.value[e_value.CAM_GRAIN], action_tl_frame_cam_grain, checkbox_expand_frameeditor_grain, action_checkbox_expand_frameeditor_grain)
+tab_control_collapse()
+draw_collapse("frameeditorcameragrain", dx, dy, tl_edit.value[e_value.CAM_GRAIN], action_tl_frame_cam_grain, setting_collapse_frameeditor_grain, action_collapse_frameeditor_grain)
 tab_next()
-if (tl_edit.value[e_value.CAM_GRAIN] && checkbox_expand_frameeditor_grain)
+if (tl_edit.value[e_value.CAM_GRAIN] && setting_collapse_frameeditor_grain)
 {
 	dx += 4
 	dw -= 4
@@ -388,14 +388,14 @@ if (tl_edit.value[e_value.CAM_GRAIN] && checkbox_expand_frameeditor_grain)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Vignette
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameravignette", dx, dy, tl_edit.value[e_value.CAM_VIGNETTE], action_tl_frame_cam_vignette, checkbox_expand_frameeditor_vignette, action_checkbox_expand_frameeditor_vignette)
+tab_control_collapse()
+draw_collapse("frameeditorcameravignette", dx, dy, tl_edit.value[e_value.CAM_VIGNETTE], action_tl_frame_cam_vignette, setting_collapse_frameeditor_vignette, action_collapse_frameeditor_vignette)
 tab_next()
-if (tl_edit.value[e_value.CAM_VIGNETTE] && checkbox_expand_frameeditor_vignette)
+if (tl_edit.value[e_value.CAM_VIGNETTE] && setting_collapse_frameeditor_vignette)
 {
 	dx += 4
 	dw -= 4
@@ -420,14 +420,14 @@ if (tl_edit.value[e_value.CAM_VIGNETTE] && checkbox_expand_frameeditor_vignette)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Chromatic aberration
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameraca", dx, dy, tl_edit.value[e_value.CAM_CA], action_tl_frame_cam_ca, checkbox_expand_frameeditor_ca, action_checkbox_expand_frameeditor_ca)
+tab_control_collapse()
+draw_collapse("frameeditorcameraca", dx, dy, tl_edit.value[e_value.CAM_CA], action_tl_frame_cam_ca, setting_collapse_frameeditor_ca, action_collapse_frameeditor_ca)
 tab_next()
-if (tl_edit.value[e_value.CAM_CA] && checkbox_expand_frameeditor_ca)
+if (tl_edit.value[e_value.CAM_CA] && setting_collapse_frameeditor_ca)
 {
 	dx += 4
 	dw -= 4
@@ -456,14 +456,14 @@ if (tl_edit.value[e_value.CAM_CA] && checkbox_expand_frameeditor_ca)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Distort
-tab_control_checkbox_expand()
-draw_checkbox_expand("frameeditorcameradistort", dx, dy, tl_edit.value[e_value.CAM_DISTORT], action_tl_frame_cam_distort, checkbox_expand_frameeditor_distort, action_checkbox_expand_frameeditor_distort)
+tab_control_collapse()
+draw_collapse("frameeditorcameradistort", dx, dy, tl_edit.value[e_value.CAM_DISTORT], action_tl_frame_cam_distort, setting_collapse_frameeditor_distort, action_collapse_frameeditor_distort)
 tab_next()
-if (tl_edit.value[e_value.CAM_DISTORT] && checkbox_expand_frameeditor_distort)
+if (tl_edit.value[e_value.CAM_DISTORT] && setting_collapse_frameeditor_distort)
 {
 	dx += 4
 	dw -= 4
@@ -478,7 +478,7 @@ if (tl_edit.value[e_value.CAM_DISTORT] && checkbox_expand_frameeditor_distort)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 	
 

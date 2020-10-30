@@ -150,11 +150,11 @@ if (background_desaturate_night)
 
 // Clouds
 tab_control_switch()
-draw_button_collapse("backgroundskycloudsshow", checkbox_expand_background_clouds, action_checkbox_expand_background_clouds, !background_sky_clouds_show)
+draw_button_collapse("backgroundskycloudsshow", setting_collapse_background_clouds, action_collapse_background_clouds, !background_sky_clouds_show)
 draw_switch("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, false)
 tab_next()
 
-if (background_sky_clouds_show && checkbox_expand_background_clouds)
+if (background_sky_clouds_show && setting_collapse_background_clouds)
 {
 	// Flat clouds
 	tab_control_switch()
@@ -200,18 +200,18 @@ if (background_sky_clouds_show && checkbox_expand_background_clouds)
 	draw_dragger("backgroundskycloudsoffset", dx, dy, 86, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset, capwid)
 	tab_next()
 	
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Ground
 tab_control_switch()
-draw_button_collapse("backgroundgroundshow", checkbox_expand_background_ground, action_checkbox_expand_background_ground, !background_ground_show)
+draw_button_collapse("backgroundgroundshow", setting_collapse_background_ground, action_collapse_background_ground, !background_ground_show)
 draw_switch("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show, false)
 tab_next()
 
 capwid = text_caption_width("backgroundground", "backgroundgroundtex")
 
-if (background_ground_show && checkbox_expand_background_ground)
+if (background_ground_show && setting_collapse_background_ground)
 {
 	var wid, res;
 	res = background_ground_tex
@@ -243,7 +243,7 @@ if (background_ground_show && checkbox_expand_background_ground)
 	draw_button_menu("backgroundgroundtex", e_menu.LIST, dx, dy, dw, 36, background_ground_tex, background_ground_tex.display_name, action_background_ground_tex, false, background_ground_tex.block_preview_texture)
 	tab_next()
 	
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Biome
@@ -347,11 +347,11 @@ tab_next()
 
 // Show fog
 tab_control_switch()
-draw_button_collapse("backgroundfog", checkbox_expand_background_fog, action_checkbox_expand_background_fog, !background_fog_show)
+draw_button_collapse("backgroundfog", setting_collapse_background_fog, action_collapse_background_fog, !background_fog_show)
 draw_switch("backgroundfog", dx, dy, background_fog_show, action_background_fog_show, false)
 tab_next()
 
-if (background_fog_show && checkbox_expand_background_fog)
+if (background_fog_show && setting_collapse_background_fog)
 {
 	// Sky fog
 	tab_control_switch()
@@ -401,16 +401,16 @@ if (background_fog_show && checkbox_expand_background_fog)
 	draw_dragger("backgroundfogheight", dx, dy, 86, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height, capwid)
 	tab_next()
 	
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Volumetric fog
 tab_control_switch()
-draw_button_collapse("backgroundvolumetricfog", checkbox_expand_background_volumetric_fog, action_checkbox_expand_background_volumetric_fog, !background_volumetric_fog)
+draw_button_collapse("backgroundvolumetricfog", setting_collapse_background_volumetric_fog, action_collapse_background_volumetric_fog, !background_volumetric_fog)
 draw_switch("backgroundvolumetricfog", dx, dy, background_volumetric_fog, action_background_volumetric_fog, false)
 tab_next()
 
-if (background_volumetric_fog && checkbox_expand_background_volumetric_fog)
+if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 {
 	tab_control_switch()
 	draw_switch("backgroundvolumetricfograys", dx, dy, background_volumetric_fog_rays, action_background_volumetric_fog_rays, false)
@@ -461,16 +461,16 @@ if (background_volumetric_fog && checkbox_expand_background_volumetric_fog)
 	draw_button_color("backgroundvolumetricfogcolor", dx, dy, dw, background_volumetric_fog_color, c_white, false, action_background_volumetric_fog_color)
 	tab_next()
 	
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Wind
 tab_control_switch()
-draw_button_collapse("backgroundwind", checkbox_expand_background_wind, action_checkbox_expand_background_wind, !background_wind)
+draw_button_collapse("backgroundwind", setting_collapse_background_wind, action_collapse_background_wind, !background_wind)
 draw_switch("backgroundwind", dx, dy, background_wind, action_background_wind, false)
 tab_next()
 
-if (background_wind && checkbox_expand_background_wind)
+if (background_wind && setting_collapse_background_wind)
 {
 	// Wind strength
 	tab_control_meter()
@@ -497,7 +497,7 @@ if (background_wind && checkbox_expand_background_wind)
 	draw_meter("backgroundwinddirectionalstrength", dx, dy, dw, background_wind_directional_strength, 64, 0, 8, 1.5, 0.05, tab.background.tbx_wind_directional_strength, action_background_wind_directional_strength)
 	tab_next()
 	
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Fast graphics

@@ -1,10 +1,11 @@
 /// tab_template_editor_particles()
 
-var capwid, setx, wid, text, suffix;
+var capwid, setx, wid, text, suffix, dividew;
 var sn, ud;
 sn = (setting_z_is_up ? Y : Z) // South/north axis
 ud = (setting_z_is_up ? Z : Y) // Up/down axis
 suffix = text_get("particleeditorpersecond")
+dividew = content_width - floor(tab.scrollbar_margin * 12)
 
 // Settings
 setx = dx + dw - 28
@@ -38,7 +39,7 @@ draw_label_value(dx, dy, setx - dx, 28, text_get("particleeditorcount"), string(
 
 tab_next()
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 #region SPAWNING
@@ -153,7 +154,7 @@ else if (temp_edit.pc_bounding_box_type = "custom")
 	tab_next()
 }
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 #endregion
@@ -205,7 +206,7 @@ if (temp_edit.pc_destroy_at_time)
 #endregion
 #region PARTICLE EMITTERS
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 tab_control(16)
@@ -395,7 +396,7 @@ else if (ptype_edit.temp.type = e_temp_type.TEXT) // Text field
 #endregion
 #region TRAJECTORY
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 tab_control(16)
@@ -471,7 +472,7 @@ if (!ptype_edit.angle_collapse)
 		array(action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max), 
 		capwid, true, suffix)
 	
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Speed
@@ -588,7 +589,7 @@ if (!ptype_edit.spd_collapse)
 
 if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = particle_template))
 {
-	draw_divide(content_x, dy, content_width)
+	draw_divide(content_x, dy, dividew)
 	dy += 12
 
 	tab_control(16)
@@ -644,7 +645,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 					capwid)
 			}
 			
-			checkbox_expand_end()
+			tab_collapse_end()
 		}
 		
 		// Rotation speed
@@ -780,7 +781,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 #endregion
 #region SCALE
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 tab_control(16)
@@ -809,7 +810,7 @@ dy += 10
 #endregion
 #region APPEARANCE
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 tab_control(16)
@@ -898,7 +899,7 @@ if (ptype_edit.color_mix_enabled)
 #endregion
 #region SIMULATION
 
-draw_divide(content_x, dy, content_width)
+draw_divide(content_x, dy, dividew)
 dy += 12
 
 tab_control(16)

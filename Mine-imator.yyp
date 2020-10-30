@@ -215,14 +215,6 @@
             }
         },
         {
-            "Key": "02a8af47-9d6e-40cb-b246-00c256acf2b3",
-            "Value": {
-                "id": "ca883b70-e735-426e-8a5a-a41d21026a1d",
-                "resourcePath": "scripts\\tab_control_checkbox_expand\\tab_control_checkbox_expand.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "02c2c9ba-4224-4f69-a421-55f7ddade8e6",
             "Value": {
                 "id": "0a6be4e5-3e35-48da-81f0-3432bd4447ab",
@@ -594,7 +586,7 @@
             "Key": "07c963a2-415e-44d1-abb4-615d81dc6c51",
             "Value": {
                 "id": "fbf8cf1b-d7ba-4567-81f1-6858f8bca166",
-                "resourcePath": "scripts\\action_checkbox_expand_background_wind\\action_checkbox_expand_background_wind.yy",
+                "resourcePath": "scripts\\action_collapse_background_wind\\action_collapse_background_wind.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -1778,7 +1770,7 @@
             "Key": "17e9c68e-0b46-4dd6-b28d-cde0e9a69a0f",
             "Value": {
                 "id": "fec51ee6-0803-4b8b-aeca-5ee06bfb04b7",
-                "resourcePath": "scripts\\action_checkbox_expand_settings_ssao\\action_checkbox_expand_settings_ssao.yy",
+                "resourcePath": "scripts\\action_collapse_settings_ssao\\action_collapse_settings_ssao.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -3018,7 +3010,7 @@
             "Key": "2b567ade-a621-444f-9780-afd3f54a68aa",
             "Value": {
                 "id": "0cac8a14-f766-4bec-8470-cd22ff4fd7ad",
-                "resourcePath": "scripts\\action_checkbox_expand_background_volumetric_fog\\action_checkbox_expand_background_volumetric_fog.yy",
+                "resourcePath": "scripts\\action_collapse_background_volumetric_fog\\action_collapse_background_volumetric_fog.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -3122,7 +3114,7 @@
             "Key": "2cf520d5-aff4-46de-8f89-2e8b68d83ddc",
             "Value": {
                 "id": "80a608d6-1201-4245-81c5-cedb3015b0b3",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_lensdirt\\action_checkbox_expand_frameeditor_lensdirt.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_lensdirt\\action_collapse_frameeditor_lensdirt.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -4458,7 +4450,7 @@
             "Key": "4204c980-cdeb-49c5-b81a-7fcef44d1e24",
             "Value": {
                 "id": "52d6d6be-a3a0-4339-82d5-3be9db4abcf0",
-                "resourcePath": "scripts\\action_checkbox_expand_settings_shadows\\action_checkbox_expand_settings_shadows.yy",
+                "resourcePath": "scripts\\action_collapse_settings_shadows\\action_collapse_settings_shadows.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -4546,7 +4538,7 @@
             "Key": "43336dea-7933-481f-b810-db4b6c33c99a",
             "Value": {
                 "id": "ee1819fa-dd6c-432c-a138-6b16e9ff0c95",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_distort\\action_checkbox_expand_frameeditor_distort.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_distort\\action_collapse_frameeditor_distort.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -4570,7 +4562,7 @@
             "Key": "4395a657-ca3d-42e9-96d9-831a38342b59",
             "Value": {
                 "id": "cbd84e2b-2f65-47e3-a828-37ff19350917",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_dof\\action_checkbox_expand_frameeditor_dof.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_dof\\action_collapse_frameeditor_dof.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5114,7 +5106,7 @@
             "Key": "4bc141ec-a37d-4b8b-9757-d4b72969207e",
             "Value": {
                 "id": "bbe6d980-82cf-42f6-b00f-4835163d228f",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_grain\\action_checkbox_expand_frameeditor_grain.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_grain\\action_collapse_frameeditor_grain.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -6674,7 +6666,7 @@
             "Key": "615d0c65-5cff-4930-9c8e-4f41f83accb8",
             "Value": {
                 "id": "da372e39-2d02-43ad-b01a-0c7fb7e99c0b",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_clrcor\\action_checkbox_expand_frameeditor_clrcor.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_clrcor\\action_collapse_frameeditor_clrcor.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -6930,7 +6922,7 @@
             "Key": "650f706b-3130-4016-8a26-a3ab7374e210",
             "Value": {
                 "id": "88e67810-a07d-4be2-8297-1f1d54038140",
-                "resourcePath": "scripts\\action_checkbox_expand_settings_watermark\\action_checkbox_expand_settings_watermark.yy",
+                "resourcePath": "scripts\\action_collapse_settings_watermark\\action_collapse_settings_watermark.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -7354,7 +7346,7 @@
             "Key": "6a7ef9a0-3254-4aba-9fa8-bdf192328f14",
             "Value": {
                 "id": "459c78dc-a648-4b19-8d7f-b5530881e143",
-                "resourcePath": "scripts\\action_checkbox_expand_settings_indirect\\action_checkbox_expand_settings_indirect.yy",
+                "resourcePath": "scripts\\action_collapse_settings_indirect\\action_collapse_settings_indirect.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -8250,7 +8242,7 @@
             "Key": "78815be3-e359-4659-b196-cebab1bf0367",
             "Value": {
                 "id": "9f676eaa-d07b-4208-8d08-7a0f88f961b2",
-                "resourcePath": "scripts\\draw_checkbox_expand\\draw_checkbox_expand.yy",
+                "resourcePath": "scripts\\draw_collapse\\draw_collapse.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -8650,7 +8642,7 @@
             "Key": "7e4e6561-570c-491c-93b9-6f95d73480c4",
             "Value": {
                 "id": "43ae6192-dd98-401c-90de-686709f0488c",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_itemslot\\action_checkbox_expand_frameeditor_itemslot.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_itemslot\\action_collapse_frameeditor_itemslot.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9098,7 +9090,7 @@
             "Key": "84596201-996c-47d5-a0d2-3b852c372f6e",
             "Value": {
                 "id": "91ba73be-25aa-4a06-8441-4e1863c474ca",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_camshake\\action_checkbox_expand_frameeditor_camshake.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_camshake\\action_collapse_frameeditor_camshake.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9922,7 +9914,7 @@
             "Key": "8f99c78c-dff8-43c9-b2ab-4230dc42238e",
             "Value": {
                 "id": "e587588f-04f6-4e63-86bd-2221a2fb7486",
-                "resourcePath": "scripts\\action_checkbox_expand_background_ground\\action_checkbox_expand_background_ground.yy",
+                "resourcePath": "scripts\\action_collapse_background_ground\\action_collapse_background_ground.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -9970,7 +9962,7 @@
             "Key": "905ff21b-5dea-4676-8e23-a0221c71c6b7",
             "Value": {
                 "id": "c064ac97-5f55-48d6-a9ba-148f391987ac",
-                "resourcePath": "scripts\\checkbox_expand_end\\checkbox_expand_end.yy",
+                "resourcePath": "scripts\\tab_collapse_end\\tab_collapse_end.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -10435,6 +10427,14 @@
             "Value": {
                 "id": "e8971fe0-31d1-4f03-bdc8-1ebbdc4f1ff4",
                 "resourcePath": "scripts\\action_tl_keyframes_sound_resize_start\\action_tl_keyframes_sound_resize_start.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "95caef5d-544a-446a-bdf4-3a021020a70c",
+            "Value": {
+                "id": "4d2ba00e-9f37-4508-89ab-19fd78cb1e8d",
+                "resourcePath": "scripts\\tab_control_collapse\\tab_control_collapse.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -11738,7 +11738,7 @@
             "Key": "a70f35f5-3e0b-4119-b5a8-0973c3e3cceb",
             "Value": {
                 "id": "de58d192-e48f-4172-b37a-15cbe7e3608f",
-                "resourcePath": "scripts\\action_checkbox_expand_background_fog\\action_checkbox_expand_background_fog.yy",
+                "resourcePath": "scripts\\action_collapse_background_fog\\action_collapse_background_fog.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12922,7 +12922,7 @@
             "Key": "b7afc525-755a-4d8b-98d6-9fb6a6c2d6ea",
             "Value": {
                 "id": "2ce38bf2-09d0-4816-8d8e-0d1db111d9b3",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_vignette\\action_checkbox_expand_frameeditor_vignette.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_vignette\\action_collapse_frameeditor_vignette.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -13546,7 +13546,7 @@
             "Key": "c1da8242-802d-4fa2-bf2a-57ca1f7afd38",
             "Value": {
                 "id": "fff94d32-1b89-48a3-81ab-893f2335e3ef",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_rotatepoint\\action_checkbox_expand_frameeditor_rotatepoint.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_rotatepoint\\action_collapse_frameeditor_rotatepoint.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -15306,7 +15306,7 @@
             "Key": "da1b2647-497f-40cc-863a-a605212361e1",
             "Value": {
                 "id": "a369ad71-a6a0-4cee-880f-de146c6bde54",
-                "resourcePath": "scripts\\action_checkbox_expand_settings_glow\\action_checkbox_expand_settings_glow.yy",
+                "resourcePath": "scripts\\action_collapse_settings_glow\\action_collapse_settings_glow.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -16466,7 +16466,7 @@
             "Key": "eba85b0f-c255-403c-9895-52633b147ade",
             "Value": {
                 "id": "71dca11c-01a3-4475-89a4-c29754948ed8",
-                "resourcePath": "scripts\\action_checkbox_expand_background_clouds\\action_checkbox_expand_background_clouds.yy",
+                "resourcePath": "scripts\\action_collapse_background_clouds\\action_collapse_background_clouds.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -16498,7 +16498,7 @@
             "Key": "ebd5b8b7-ca02-4502-a707-e3dbf0c77a92",
             "Value": {
                 "id": "16da3d4b-6032-45cf-a4b8-58be6a1ed688",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_bloom\\action_checkbox_expand_frameeditor_bloom.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_bloom\\action_collapse_frameeditor_bloom.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -16538,7 +16538,7 @@
             "Key": "ec191320-1c95-4d36-bd23-0046a072f99c",
             "Value": {
                 "id": "8b8e4253-87b4-46ce-9009-ad7eb16210de",
-                "resourcePath": "scripts\\action_checkbox_expand_frameeditor_ca\\action_checkbox_expand_frameeditor_ca.yy",
+                "resourcePath": "scripts\\action_collapse_frameeditor_ca\\action_collapse_frameeditor_ca.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -18002,7 +18002,7 @@
             "Key": "fe2a867d-51a4-4d5a-bda2-f8ef3d34589d",
             "Value": {
                 "id": "2c745e36-5a8f-4a92-8622-ea28571fe58b",
-                "resourcePath": "scripts\\action_checkbox_expand_settings_aa\\action_checkbox_expand_settings_aa.yy",
+                "resourcePath": "scripts\\action_collapse_settings_aa\\action_collapse_settings_aa.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -18970,8 +18970,8 @@
         "9d500899-f782-407e-8d4c-cebdc4beafe6",
         "5cbada96-8bb3-4155-9763-c081e697ce33",
         "82f81bcb-83ac-456f-ac76-df6f68d9720a",
+        "95caef5d-544a-446a-bdf4-3a021020a70c",
         "10bd3e29-6f3f-4d3a-8d5d-a976103edcfe",
-        "02a8af47-9d6e-40cb-b246-00c256acf2b3",
         "3b7669be-bcb4-4ab1-9b92-d80e2475c1c4",
         "17f2e99d-bc0d-48d9-8615-fb5410a9f14b",
         "fb344be8-ec6b-4d0c-8b82-ff3568d3ad4a",
@@ -18984,6 +18984,7 @@
         "7ceb610c-5b00-4122-82e1-478f3aea5fdc",
         "f08080da-6b8a-402f-918c-cb0f876bd515",
         "e7bc8a20-0a3f-46d2-b1ca-5039c7b94f23",
+        "905ff21b-5dea-4676-8e23-a0221c71c6b7",
         "0583c8b2-9b84-4357-8580-4bb6593a546a",
         "20da9fa0-be59-46fc-b1b6-cec6f3395b1d",
         "4a394d43-a11b-48ed-86d2-ab2299bf8b66",
@@ -19085,7 +19086,6 @@
         "da1b2647-497f-40cc-863a-a605212361e1",
         "fe2a867d-51a4-4d5a-bda2-f8ef3d34589d",
         "650f706b-3130-4016-8a26-a3ab7374e210",
-        "905ff21b-5dea-4676-8e23-a0221c71c6b7",
         "9532227c-4438-4888-8288-e85531b811c9",
         "9822adfc-3f99-423d-b842-a69a4de4c378",
         "5df38c33-926c-421f-8f6d-41304796e51e",

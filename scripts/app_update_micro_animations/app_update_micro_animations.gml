@@ -13,7 +13,7 @@ with (obj_scrollbar)
 		if (app.setting_reduced_motion)
 			value = value_goal
 		else
-			value += (value_goal - value) / max(1, 4 / delta)
+			value += floor((value_goal - value) / max(1, 4 / delta))
 	}
 }
 

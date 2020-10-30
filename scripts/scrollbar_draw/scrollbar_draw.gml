@@ -127,8 +127,8 @@ if (window_focus = string(sb) || (window_focus = "" && content_mouseon))
 	}
 }
 
-sb.value = round(clamp(sb.value, 0, maxsize - size))
-sb.value_goal = round(clamp(sb.value_goal, 0, maxsize - size))
+sb.value = floor(clamp(sb.value, 0, maxsize - size))
+sb.value_goal = floor(clamp(sb.value_goal, 0, maxsize - size))
 
 barpos = min(size - barsize, floor(sb.value * (size / maxsize)))
 pressed = (window_busy = "scrollbar" && window_focus = string(sb))

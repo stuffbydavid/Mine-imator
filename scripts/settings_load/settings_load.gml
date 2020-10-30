@@ -305,32 +305,39 @@ if (filename_ext(fn) = ".midata")
 		setting_export_image_high_quality = value_get_string(rendermap[?"export_image_high_quality"], setting_export_image_high_quality)
 	}
 	
-	// Expandable checkboxes
-	var checkboxmap = map[?"checkbox_expand"];
-	if (ds_map_valid(checkboxmap))
+	// Collapsible content
+	var name;
+	
+	if (load_format < e_settings.FORMAT_130)
+		name = "checkbox_expand"
+	else
+		name = "collapse"
+	
+	var collapsemap = map[?name];
+	if (ds_map_valid(collapsemap))
 	{
-		checkbox_expand_settings_ssao = value_get_string(checkboxmap[?"settings_ssso"], checkbox_expand_settings_ssao)
-		checkbox_expand_settings_shadows = value_get_string(checkboxmap[?"settings_shadows"], checkbox_expand_settings_shadows)
-		checkbox_expand_settings_indirect = value_get_string(checkboxmap[?"settings_indirect"], checkbox_expand_settings_indirect)
-		checkbox_expand_settings_glow = value_get_string(checkboxmap[?"settings_glow"], checkbox_expand_settings_glow)
-		checkbox_expand_settings_aa = value_get_string(checkboxmap[?"settings_aa"], checkbox_expand_settings_aa)
-		checkbox_expand_settings_watermark = value_get_string(checkboxmap[?"settings_watermark"], checkbox_expand_settings_watermark)
-		checkbox_expand_background_clouds = value_get_string(checkboxmap[?"background_clouds"], checkbox_expand_background_clouds)
-		checkbox_expand_background_ground = value_get_string(checkboxmap[?"backgound_ground"], checkbox_expand_background_ground)
-		checkbox_expand_background_volumetric_fog = value_get_string(checkboxmap[?"background_volumetric_fog"], checkbox_expand_background_volumetric_fog)
-		checkbox_expand_background_fog = value_get_string(checkboxmap[?"background_fog"], checkbox_expand_background_fog)
-		checkbox_expand_background_wind = value_get_string(checkboxmap[?"background_wind"], checkbox_expand_background_wind)
-		checkbox_expand_frameeditor_rotatepoint = value_get_string(checkboxmap[?"frameeditor_rotatepoint"], checkbox_expand_frameeditor_rotatepoint)
-		checkbox_expand_frameeditor_camshake = value_get_string(checkboxmap[?"frameeditor_camshake"], checkbox_expand_frameeditor_camshake)
-		checkbox_expand_frameeditor_dof = value_get_string(checkboxmap[?"frameeditor_dof"], checkbox_expand_frameeditor_dof)
-		checkbox_expand_frameeditor_bloom = value_get_string(checkboxmap[?"frameeditor_bloom"], checkbox_expand_frameeditor_bloom)
-		checkbox_expand_frameeditor_lensdirt = value_get_string(checkboxmap[?"frameeditor_lensdirt"], checkbox_expand_frameeditor_lensdirt)
-		checkbox_expand_frameeditor_clrcor = value_get_string(checkboxmap[?"frameeditor_clrcor"], checkbox_expand_frameeditor_clrcor)
-		checkbox_expand_frameeditor_grain = value_get_string(checkboxmap[?"frameeditor_grain"], checkbox_expand_frameeditor_grain)
-		checkbox_expand_frameeditor_vignette = value_get_string(checkboxmap[?"frameeditor_vignette"], checkbox_expand_frameeditor_vignette)
-		checkbox_expand_frameeditor_ca = value_get_string(checkboxmap[?"frameeditor_ca"], checkbox_expand_frameeditor_ca)
-		checkbox_expand_frameeditor_distort = value_get_string(checkboxmap[?"frameeditor_distort"], checkbox_expand_frameeditor_distort)
-		checkbox_expand_frameeditor_itemslot = value_get_string(checkboxmap[?"frameeditor_itemslot"], checkbox_expand_frameeditor_itemslot)
+		setting_collapse_settings_ssao = value_get_string(collapsemap[?"settings_ssso"], setting_collapse_settings_ssao)
+		setting_collapse_settings_shadows = value_get_string(collapsemap[?"settings_shadows"], setting_collapse_settings_shadows)
+		setting_collapse_settings_indirect = value_get_string(collapsemap[?"settings_indirect"], setting_collapse_settings_indirect)
+		setting_collapse_settings_glow = value_get_string(collapsemap[?"settings_glow"], setting_collapse_settings_glow)
+		setting_collapse_settings_aa = value_get_string(collapsemap[?"settings_aa"], setting_collapse_settings_aa)
+		setting_collapse_settings_watermark = value_get_string(collapsemap[?"settings_watermark"], setting_collapse_settings_watermark)
+		setting_collapse_background_clouds = value_get_string(collapsemap[?"background_clouds"], setting_collapse_background_clouds)
+		setting_collapse_background_ground = value_get_string(collapsemap[?"backgound_ground"], setting_collapse_background_ground)
+		setting_collapse_background_volumetric_fog = value_get_string(collapsemap[?"background_volumetric_fog"], setting_collapse_background_volumetric_fog)
+		setting_collapse_background_fog = value_get_string(collapsemap[?"background_fog"], setting_collapse_background_fog)
+		setting_collapse_background_wind = value_get_string(collapsemap[?"background_wind"], setting_collapse_background_wind)
+		setting_collapse_frameeditor_rotatepoint = value_get_string(collapsemap[?"frameeditor_rotatepoint"], setting_collapse_frameeditor_rotatepoint)
+		setting_collapse_frameeditor_camshake = value_get_string(collapsemap[?"frameeditor_camshake"], setting_collapse_frameeditor_camshake)
+		setting_collapse_frameeditor_dof = value_get_string(collapsemap[?"frameeditor_dof"], setting_collapse_frameeditor_dof)
+		setting_collapse_frameeditor_bloom = value_get_string(collapsemap[?"frameeditor_bloom"], setting_collapse_frameeditor_bloom)
+		setting_collapse_frameeditor_lensdirt = value_get_string(collapsemap[?"frameeditor_lensdirt"], setting_collapse_frameeditor_lensdirt)
+		setting_collapse_frameeditor_clrcor = value_get_string(collapsemap[?"frameeditor_clrcor"], setting_collapse_frameeditor_clrcor)
+		setting_collapse_frameeditor_grain = value_get_string(collapsemap[?"frameeditor_grain"], setting_collapse_frameeditor_grain)
+		setting_collapse_frameeditor_vignette = value_get_string(collapsemap[?"frameeditor_vignette"], setting_collapse_frameeditor_vignette)
+		setting_collapse_frameeditor_ca = value_get_string(collapsemap[?"frameeditor_ca"], setting_collapse_frameeditor_ca)
+		setting_collapse_frameeditor_distort = value_get_string(collapsemap[?"frameeditor_distort"], setting_collapse_frameeditor_distort)
+		setting_collapse_frameeditor_itemslot = value_get_string(collapsemap[?"frameeditor_itemslot"], setting_collapse_frameeditor_itemslot)
 	}
 }
 

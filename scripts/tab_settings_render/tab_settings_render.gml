@@ -15,11 +15,11 @@ if (setting_render_camera_effects)
 }
 
 // SSAO
-tab_control_checkbox_expand()
-draw_checkbox_expand("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao, checkbox_expand_settings_ssao, action_checkbox_expand_settings_ssao)
+tab_control_collapse()
+draw_collapse("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao, setting_collapse_settings_ssao, action_collapse_settings_ssao)
 tab_next()
 
-if (setting_render_ssao && checkbox_expand_settings_ssao)
+if (setting_render_ssao && setting_collapse_settings_ssao)
 {
 	dx += 4
 	dw -= 4
@@ -45,15 +45,15 @@ if (setting_render_ssao && checkbox_expand_settings_ssao)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Shadows
-tab_control_checkbox_expand()
-draw_checkbox_expand("settingsrendershadows", dx, dy, setting_render_shadows, action_setting_render_shadows, checkbox_expand_settings_shadows, action_checkbox_expand_settings_shadows)
+tab_control_collapse()
+draw_collapse("settingsrendershadows", dx, dy, setting_render_shadows, action_setting_render_shadows, setting_collapse_settings_shadows, action_collapse_settings_shadows)
 tab_next()
 
-if (setting_render_shadows && checkbox_expand_settings_shadows)
+if (setting_render_shadows && setting_collapse_settings_shadows)
 {
 	dx += 4
 	dw -= 4
@@ -86,14 +86,14 @@ if (setting_render_shadows && checkbox_expand_settings_shadows)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
-tab_control_checkbox_expand()
-draw_checkbox_expand("settingsrenderindirect", dx, dy, setting_render_indirect, action_setting_render_indirect, checkbox_expand_settings_indirect, action_checkbox_expand_settings_indirect)
+tab_control_collapse()
+draw_collapse("settingsrenderindirect", dx, dy, setting_render_indirect, action_setting_render_indirect, setting_collapse_settings_indirect, action_collapse_settings_indirect)
 tab_next()
 
-if (setting_render_indirect && checkbox_expand_settings_indirect)
+if (setting_render_indirect && setting_collapse_settings_indirect)
 {
 	dx += 4
 	dw -= 4
@@ -126,15 +126,15 @@ if (setting_render_indirect && checkbox_expand_settings_indirect)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Glow
-tab_control_checkbox_expand()
-draw_checkbox_expand("settingsrenderglow", dx, dy, setting_render_glow, action_setting_render_glow, checkbox_expand_settings_glow, action_checkbox_expand_settings_glow)
+tab_control_collapse()
+draw_collapse("settingsrenderglow", dx, dy, setting_render_glow, action_setting_render_glow, setting_collapse_settings_glow, action_collapse_settings_glow)
 tab_next()
 
-if (setting_render_glow && checkbox_expand_settings_glow)
+if (setting_render_glow && setting_collapse_settings_glow)
 {
 	dx += 4
 	dw -= 4
@@ -170,15 +170,15 @@ if (setting_render_glow && checkbox_expand_settings_glow)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // AA
-tab_control_checkbox_expand()
-draw_checkbox_expand("settingsrenderaa", dx, dy, setting_render_aa, action_setting_render_aa, checkbox_expand_settings_aa, action_checkbox_expand_settings_aa)
+tab_control_collapse()
+draw_collapse("settingsrenderaa", dx, dy, setting_render_aa, action_setting_render_aa, setting_collapse_settings_aa, action_collapse_settings_aa)
 tab_next()
 
-if (setting_render_aa && checkbox_expand_settings_aa)
+if (setting_render_aa && setting_collapse_settings_aa)
 {
 	dx += 4
 	dw -= 4
@@ -189,7 +189,7 @@ if (setting_render_aa && checkbox_expand_settings_aa)
 	
 	dx -= 4
 	dw += 4
-	checkbox_expand_end()
+	tab_collapse_end()
 }
 
 // Watermark
@@ -200,8 +200,8 @@ if (trial_version)
 }
 else
 {
-	tab_control_checkbox_expand()
-	draw_checkbox_expand("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark, checkbox_expand_settings_watermark, action_checkbox_expand_settings_watermark)
+	tab_control_collapse()
+	draw_collapse("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark, setting_collapse_settings_watermark, action_collapse_settings_watermark)
 }
 
 tab_next()
@@ -209,7 +209,7 @@ tab_next()
 if (setting_render_watermark)
 {
 	
-	if (!trial_version && checkbox_expand_settings_watermark)
+	if (!trial_version && setting_collapse_settings_watermark)
 	{
 		dx += 4
 		dw -= 4
@@ -265,7 +265,7 @@ if (setting_render_watermark)
 		
 		dx -= 4
 		dw += 4
-		checkbox_expand_end()
+		tab_collapse_end()
 	}
 	else
 	{

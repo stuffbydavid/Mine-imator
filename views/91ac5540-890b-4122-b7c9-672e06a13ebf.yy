@@ -25,8 +25,7 @@
         "6a7ef9a0-3254-4aba-9fa8-bdf192328f14",
         "da1b2647-497f-40cc-863a-a605212361e1",
         "fe2a867d-51a4-4d5a-bda2-f8ef3d34589d",
-        "650f706b-3130-4016-8a26-a3ab7374e210",
-        "905ff21b-5dea-4676-8e23-a0221c71c6b7"
+        "650f706b-3130-4016-8a26-a3ab7374e210"
     ],
     "filterType": "GMScript",
     "folderName": "Expandables",
