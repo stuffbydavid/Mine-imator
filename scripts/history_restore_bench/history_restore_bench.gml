@@ -28,10 +28,12 @@ with (bench_settings)
 		}
 	}
 	temp_creator = app
-		
+	
 	// Restore particle types
 	if (type = e_temp_type.PARTICLE_SPAWNER) 
 	{
+		temp_particles_type_clear()
+		
 		for (var p = 0; p < save.pc_type_amount; p++)
 			history_restore_ptype(save.pc_type_save_obj[p], id)
 		temp_particles_restart()

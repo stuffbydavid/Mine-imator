@@ -7,6 +7,9 @@ var save, ptype;
 save = argument0
 ptype = new(obj_particle_type)
 
+// Creating new particle type will offset save ids
+save_id_seed--
+
 with (save)
 	ptype_copy(ptype)
 	
