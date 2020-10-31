@@ -98,5 +98,5 @@ if (update = popup.tbx_brightness)
 dy += 28 + 12
 
 // Hex
-if (draw_textfield("colorpickerhex", dx + 16, dy, 196, 28, null, popup.tbx_hexadecimal, null, "", "left"))
+if (draw_textfield("colorpickerhex", dx + 16, dy, 196, 28, popup.tbx_hexadecimal, null, "", "left"))
 	popup_colorpicker_update(popup.tbx_hexadecimal, hex_to_color(popup.tbx_hexadecimal.text), true)

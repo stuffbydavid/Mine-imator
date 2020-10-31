@@ -247,7 +247,7 @@ capwid = text_caption_width("particleeditortypename",
 tab.tbx_type_name.text = ptype_edit.name
 
 tab_control_inputbox()
-draw_textfield("particleeditortypename", dx, dy, dw, 28, tab.tbx_type_name.text, tab.tbx_type_name, action_lib_pc_type_name, "", "left")
+draw_textfield("particleeditortypename", dx, dy, dw, 28, tab.tbx_type_name, action_lib_pc_type_name, "", "left")
 tab_next()
 
 // Spawn rate
@@ -389,7 +389,7 @@ else if (ptype_edit.temp.type = e_temp_type.TEXT) // Text field
 {
 	tab_control(108)
 	tab.tbx_type_text.text = ptype_edit.text
-	draw_textfield("particleeditortypetext", dx, dy, dw, 88, "", tab.tbx_type_text, action_lib_pc_type_text, "", "top")
+	draw_textfield("particleeditortypetext", dx, dy, dw, 88, tab.tbx_type_text, action_lib_pc_type_text, "", "top")
 	tab_next()
 }
 

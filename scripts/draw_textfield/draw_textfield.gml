@@ -1,40 +1,38 @@
-/// draw_textfield(name, x, y, width, height, value, textbox, script, [placeholder, [labelpos, [error]]])
+/// draw_textfield(name, x, y, width, height, textbox, script, [placeholder, [labelpos, [error]]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg value
 /// @arg textbox
 /// @arg script
 /// @arg [placeholder
 /// @arg [labelpos
 /// @arg [error]]]
 
-var name, xx, yy, w, h, value, textbox, script, placeholder, labelpos, err;
+var name, xx, yy, w, h, textbox, script, placeholder, labelpos, err;
 var update, capwidth;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
 w = argument[3]
 h = argument[4]
-value = argument[5]
-textbox = argument[6]
-script = argument[7]
+textbox = argument[5]
+script = argument[6]
 placeholder = ""
 labelpos = "top"
 err = false
 
 capwidth = 0
 
-if (argument_count > 8)
-	placeholder = argument[8]
+if (argument_count > 7)
+	placeholder = argument[7]
 	
-if (argument_count > 9)
-	labelpos = argument[9]
+if (argument_count > 8)
+	labelpos = argument[8]
 
-if (argument_count > 10)
-	err = argument[10]
+if (argument_count > 9)
+	err = argument[9]
 
 draw_set_font(font_emphasis)
 

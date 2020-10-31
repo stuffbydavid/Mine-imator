@@ -9,7 +9,7 @@ else if (directory_exists_lib(setting_project_folder + popup_newproject.folder))
 	warntext = text_get("newprojectnameexists")
 
 tab_control(48)
-if (draw_textfield("newprojectname", dx, dy, dw, 28, popup.folder, popup.tbx_name, null, text_get("newprojectname"), "top", warntext != ""))
+if (draw_textfield("newprojectname", dx, dy, dw, 28, popup.tbx_name, null, text_get("newprojectname"), "top", warntext != ""))
 	popup.folder = filename_get_valid(popup.tbx_name.text)
 tab_next()
 

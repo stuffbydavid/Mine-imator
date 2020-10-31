@@ -109,8 +109,8 @@ if (!disabled)
 }
 
 // Textbox context menu
-//if (window_focus = string(tbx))
-//	context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_value_type.NONE, null, null)
+if (window_focus = string(tbx))
+	context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_context_type.NONE, null, null)
 
 // Disabled overlay
 draw_box(xx, yy, w, h, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])

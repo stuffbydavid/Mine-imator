@@ -11,7 +11,7 @@ xx = argument0
 yy = argument1
 w = argument2
 h = argument3
-caption = argument4
+caption = argument4 + ": "
 value = argument5
 
 draw_set_font(font_emphasis)

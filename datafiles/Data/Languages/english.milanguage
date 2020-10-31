@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.10.30"
+        "lastchange": "2020.10.31"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -45,6 +45,25 @@
             "delete": "Delete emitter",
             "resetpreview": "Reset preview",
             "random": "Use random values"
+        }
+    },
+    "contextmenu/": {
+        "textbox/": {
+            "cut": "Cut",
+            "copy": "Copy",
+            "paste": "Paste",
+            "selectall": "Select all"
+        },
+        "value/": {
+            "cut": "Cut",
+            "copy": "Copy",
+            "paste": "Paste",
+            "reset": "Reset"
+        },
+        "group/": {
+            "copy": "Copy all values",
+            "paste": "Paste all values",
+            "reset": "Reset all values"
         }
     },
     "startup/": {
@@ -1675,7 +1694,7 @@
         "done": "DONE"
     },
     "particleeditor/": {
-        "count": "Particles: ",
+        "count": "Particles",
         "random": "Random",
         "randomtip": "Use a random value for each particle.",
         "spawn/": {
@@ -2189,29 +2208,16 @@
         "selectedrange": "%1 - %2 (%3 frames selected)"
     },
     "timelineeditor/": {
-        "info": "Info",
-        "infotip": "Modify the information about the object.",
+        "info": "INFO",
         "name": "Name",
-        "nametip": "The name of the object.",
         "text": "Text",
-        "texttip": "The piece of text this object should display.",
         "textsample": "Sample text",
         "type": "Type",
         "rotpoint/": {
             "custom": "Custom rotation point",
-            "customtip": "Use your own point of rotation relative to the object position.",
             "x": "X",
-            "xtip": "The X value of the rotation point.",
             "y": "Y",
-            "ytip": "The Y value of the rotation point.",
-            "z": "Z",
-            "ztip": "The Z value of the rotation point.",
-            "resettip": "Reset to the default rotation point.",
-            "copytip": "Copy the rotation point.",
-            "pastetip": "Paste the copied rotation point.",
-            "snaptip": "Snap the XYZ values to a grid.",
-            "snapsize": "Grid size",
-            "snapsizetip": "The size of the grid that the XYZ values should snap to."
+            "z": "Z"
         },
         "hierarchy": "Hierarchy",
         "hierarchytip": "Modify the parent and what properties the object should inherit.",

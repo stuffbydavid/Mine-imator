@@ -2,10 +2,10 @@
 /// @arg name
 /// @desc Makes a list and returns it based on name
 
-var name, list;
+var name;
 name = argument0
-list = list_new()
-list_edit = list
+
+list_init_start()
 
 // Model state
 if (menu_model_current != null)
@@ -22,16 +22,7 @@ if (menu_block_current != null)
 }
 
 if (menu_model_current != null || menu_block_current != null)
-{
-	list_update_width(list)
-
-	if (ds_list_size(list.item) > 0 && list.item[|0].divider)
-		list.item[|0].divider = false
-
-	list_edit = null
-
-	return list
-}
+	return list_init_end()
 
 switch (name)
 {
@@ -937,11 +928,4 @@ switch (name)
 	}
 }
 
-list_update_width(list)
-
-if (ds_list_size(list.item) > 0 && list.item[|0].divider)
-	list.item[|0].divider = false
-
-list_edit = null
-
-return list
+return list_init_end()

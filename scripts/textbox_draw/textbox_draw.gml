@@ -61,8 +61,8 @@ mouseover = (content_mouseon && app_mouse_box(xx, yy, w, h))
 
 if (window_focus = string(tbx))
 {
-	//if (contextmenu)
-	//	context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_value_type.NONE, null, null)
+	if (contextmenu)
+		context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_context_type.NONE, null, null)
 	
 	var keys, key_press, action;
 	textbox_isediting = true
@@ -116,9 +116,6 @@ if (window_focus = string(tbx))
 		else
 			textbox_key_delay[k] = 0
 	}
-		
-	if (!mouse_left && window_busy = string(tbx) + "click")
-		window_busy = ""
 	
 	if (!mouseover && (mouse_left_pressed && !keyboard_check(vk_shift) && !context_menu_mouseon) || (tbx.single_line && keyboard_check_pressed(vk_enter)))
 		window_focus = ""

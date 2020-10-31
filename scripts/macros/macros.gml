@@ -153,6 +153,7 @@
 #macro view_3d_box_size				12
 #macro button_padding				32
 #macro button_icon_padding			56
+#macro snap_min						0.000001
 
 // Values
 #macro null							noone

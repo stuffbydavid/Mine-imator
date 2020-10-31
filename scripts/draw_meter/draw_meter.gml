@@ -42,6 +42,8 @@ linewid = wid - valuewid - 6
 
 mouseon = app_mouse_box(xx - 8, yy, linewid + 16, hei) && content_mouseon
 
+context_menu_area(linex, yy, linewid, hei, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
+
 // Click on meter
 if (mouseon)
 {

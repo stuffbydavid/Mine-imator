@@ -3,7 +3,7 @@
 // Project name
 tab.project.tbx_name.text = project_name
 tab_control(48)
-if (draw_textfield("projectname", dx, dy, dw, 28, project_name, tab.project.tbx_name, null, "", "top"))
+if (draw_textfield("projectname", dx, dy, dw, 28, tab.project.tbx_name, null, "", "top"))
 {
 	project_changed = true
 	project_name = tab.project.tbx_name.text
@@ -13,7 +13,7 @@ tab_next()
 // Project author
 tab.project.tbx_author.text = project_author
 tab_control(48)
-if (draw_textfield("projectauthor", dx, dy, dw, 28, project_author, tab.project.tbx_author, null, "", "top"))
+if (draw_textfield("projectauthor", dx, dy, dw, 28, tab.project.tbx_author, null, "", "top"))
 {
 	project_changed = true
 	project_author = tab.project.tbx_author.text
@@ -23,7 +23,7 @@ tab_next()
 // Project description
 tab.project.tbx_description.text = project_description
 tab_control(108)
-if (draw_textfield("projectdescription", dx, dy, dw, 88, project_description, tab.project.tbx_description, null, "", "top"))
+if (draw_textfield("projectdescription", dx, dy, dw, 88, tab.project.tbx_description, null, "", "top"))
 {
 	project_changed = true
 	project_description = tab.project.tbx_description.text

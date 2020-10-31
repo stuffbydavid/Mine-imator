@@ -12,6 +12,7 @@ app_startup_interface_tabs()
 app_startup_interface_toolbar()
 app_startup_interface_views()
 app_startup_micro_animations()
+app_startup_interface_context_menu()
 togglebutton_reset()
 
 textbox_startup()

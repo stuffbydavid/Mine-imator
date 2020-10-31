@@ -33,7 +33,7 @@ if (temp_edit = null)
 // Name
 tab_control(28)
 tab.library.tbx_name.text = temp_edit.name
-draw_textfield("libraryname", dx, dy, dw, 28, temp_edit.display_name, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
+draw_textfield("libraryname", dx, dy, dw, 28, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
 tab_next()
 
 switch (temp_edit.type)
@@ -47,14 +47,7 @@ switch (temp_edit.type)
 		
 		// Model
 		tab_control(28)
-		
-		draw_set_font(font_emphasis)
-		wid = string_width(text_get(text) + ":")
-		
-		draw_label(text_get(text) + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		
-		if (temp_edit.model_file != null)
-			draw_label(minecraft_asset_get_name("model", temp_edit.model_file.name), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		draw_label_value(dx, dy, dw, 28, text_get(text), temp_edit.model_file != null ? minecraft_asset_get_name("model", temp_edit.model_file.name) : "")
 		
 		// Change
 		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))
@@ -171,12 +164,7 @@ switch (temp_edit.type)
 	{
 		// Block
 		tab_control(28)
-		
-		draw_set_font(font_emphasis)
-		wid = string_width(text_get("typeblock") + ":")
-		
-		draw_label(text_get("typeblock") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		draw_label(minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		draw_label_value(dx, dy, dw, 28, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
 		
 		// Change
 		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))
@@ -194,21 +182,15 @@ switch (temp_edit.type)
 	
 	case e_temp_type.BODYPART:
 	{
-		tab_control(28)
-		
-		draw_set_font(font_emphasis)
-		var wid = string_width(text_get("typebodypart") + ":");
-		
-		draw_label(text_get("typebodypart") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		
 		var text;
 		
 		if (temp_edit.model_file != null)
 			text = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
 		else
 			text = text_get("librarybodypartunknown")
-		
-		draw_label(text, dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+			
+		tab_control(28)
+		draw_label_value(dx, dy, dw, 28, text_get("typebodypart"), text)
 		
 		// Change
 		if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))

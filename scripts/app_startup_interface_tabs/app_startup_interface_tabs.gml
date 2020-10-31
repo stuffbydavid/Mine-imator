@@ -361,17 +361,11 @@ with (timeline_editor)
 	info = tab_add_category("timelineeditorinfo", tab_timeline_editor_info, true)
 	with (info)
 	{
-		rot_point_mouseon = false
-		rot_point_snap = false
-		rot_point_snap_size = 1
-		rot_point_copy = point3D(0, 0, 0)
 		tbx_name = new_textbox(true, 0, "")
 		tbx_text = new_textbox(false, 0, "")
 		tbx_rot_point_x = new_textbox_ndecimals()
 		tbx_rot_point_y = new_textbox_ndecimals()
 		tbx_rot_point_z = new_textbox_ndecimals()
-		tbx_rot_point_snap = new_textbox_decimals()
-		tbx_rot_point_snap.text = string(rot_point_snap_size)
 	}
 	
 	// Hierarchy

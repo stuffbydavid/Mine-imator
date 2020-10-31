@@ -47,7 +47,9 @@ dragger_drag_value = 0
 meter_drag_value = 0
 wheel_drag_value = 0
 wheel_drag_moon = false
+
 dragger_multiplier = 1
+dragger_snap = false
 
 sortlist_resize = null
 sortlist_resize_column = 0

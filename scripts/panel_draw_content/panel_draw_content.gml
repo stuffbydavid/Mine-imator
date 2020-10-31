@@ -88,9 +88,6 @@ if (!tab.script)
 				cat[c].show = !cat[c].show
 			tab_next()
 			
-			// Set copy name
-			context_menu_copy_category = cat[c]
-			
 			// Draw contents
 			if (cat[c].show && cat[c].script)
 				script_execute(cat[c].script)
@@ -100,9 +97,6 @@ if (!tab.script)
 				dy += 20
 				draw_divide(content_x, dy - 13, dividew - 1)
 			}
-			
-			// Reset copy name
-			context_menu_copy_category = null
 			
 			maxh = max(dy - dy_start, maxh)
 			c++

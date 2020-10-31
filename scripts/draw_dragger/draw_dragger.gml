@@ -58,8 +58,8 @@ else if (!showcaption)
 if (xx + wid + capwidth < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	return 0
 
-//if (!disabled)
-//	context_menu_area(xx, yy, wid + capwidth, hei, "contextmenuvalue", value, e_value_type.NUMBER, script, def)
+if (!disabled)
+	context_menu_area(xx, yy, wid + capwidth, hei, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
 
 fieldx = xx + capwidth
 

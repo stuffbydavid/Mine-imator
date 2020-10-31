@@ -243,20 +243,14 @@ setting_collapse_frameeditor_ca = false
 setting_collapse_frameeditor_distort = false
 setting_collapse_frameeditor_itemslot = false
 
+// Snap
+setting_snap = false
+setting_snap_size_position = 1
+
 // New UI settings
 setting_reduced_motion = false
 snackbar_mouseon = false
 setting_wind_enable = true
-
-// Context menu stuff
-context_menu_mouseon = false
-context_menu_value = null
-context_menu_copy_category = null
-context_menu_tbx_action = false
-context_menu_tbx_cut = false
-context_menu_tbx_copy = false
-context_menu_tbx_paste = false
-context_menu_tbx_select_all = false
 
 settings_load()
 interface_update()

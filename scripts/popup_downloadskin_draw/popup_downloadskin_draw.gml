@@ -2,7 +2,7 @@
 
 // Username input
 tab_control(48)
-draw_textfield("downloadskinusername", dx, dy, dw - 32, 28, popup.tbx_username.text, popup.tbx_username, null, "", "top")
+draw_textfield("downloadskinusername", dx, dy, dw - 32, 28, popup.tbx_username, null, "", "top")
 
 // Download button
 var download = keyboard_check_pressed(vk_enter);
