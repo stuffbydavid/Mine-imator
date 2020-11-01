@@ -23,7 +23,7 @@ if (argument_count <= 7)
 	strwid = string_width(str)
 	strhei = string_height(str)
 	
-	if (xx + strwid < 0 || xx > content_x + content_width || yy + strhei < 0 || yy > content_y + content_height)
+	if (xx + strwid < content_x || xx > content_x + content_width || yy + strhei < content_y || yy > content_y + content_height)
 		return 0
 }
 

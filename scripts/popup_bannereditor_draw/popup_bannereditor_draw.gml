@@ -43,7 +43,7 @@ listystart = listy
 listh = 48 * 7
 insertpos = popup.layer_move
 
-scrollbar_draw(popup.layer_scrollbar, e_scroll.VERTICAL, dx + listw - 6, listy, listh, (ds_list_size(popup.pattern_list_edit) + 1) * 48)
+scrollbar_draw(popup.layer_scrollbar, e_scroll.VERTICAL, dx + listw - 12, listy, listh, (ds_list_size(popup.pattern_list_edit) + 1) * 48)
 
 if (popup.layer_scrollbar.needed)
 {

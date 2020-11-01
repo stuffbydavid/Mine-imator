@@ -30,8 +30,10 @@ var itemsx, itemsy;
 itemsx = 1
 itemsy = menu_amount
 
-var yy, h;
-h = ease(((menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), menu_ani) * min(itemsy, menu_show_amount) * menu_item_h
+var yy, listh, h;
+listh = ease(((menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), menu_ani) * min(itemsy, menu_show_amount) * menu_item_h
+h = listh + (12 * menu_scroll_horizontal.needed)
+
 yy = (menu_flip ? (menu_y - h) : (menu_y + menu_button_h))
 
 if (h > 2)
@@ -54,27 +56,41 @@ content_height = h
 if (window_busy = "menu")
 	window_busy = ""
 
-// Scrollbar
+// Scrollbars
 content_mouseon = app_mouse_box(menu_x, yy, menu_w, h)
 if (menu_ani_type = "")
 {
-	if (menu_scroll.needed && content_mouseon)
-		window_scroll_focus = string(menu_scroll)
+	if (menu_scroll_vertical.needed && content_mouseon)
+		window_scroll_focus = string(menu_scroll_vertical)
 	
-	menu_scroll.snap_value = menu_item_h
-	scrollbar_draw(menu_scroll, e_scroll.VERTICAL, menu_x + menu_w - 9, yy, h, (itemsy * menu_item_h))
+	if (menu_scroll_horizontal.needed && content_mouseon && keyboard_check(vk_shift))
+		window_scroll_focus = string(menu_scroll_horizontal)
+	
+	menu_scroll_vertical.snap_value = menu_item_h
+	scrollbar_draw(menu_scroll_vertical, e_scroll.VERTICAL, menu_x + menu_w - 12, yy, listh, (itemsy * menu_item_h))
+	
+	scrollbar_draw(menu_scroll_horizontal, e_scroll.HORIZONTAL, menu_x, yy + h - 12, menu_w - (12 * menu_scroll_vertical.needed), menu_list.width)
 }
 else
-	menu_scroll.needed = false
+{
+	menu_scroll_vertical.needed = false
+	menu_scroll_horizontal.needed = false
+}
+
+content_width = menu_w - (12 * menu_scroll_vertical.needed)
+content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
+
+scissor_start(content_x, content_y, content_width, content_height)
 
 var mouseitem = null;
 draw_set_font(font_value)
 switch (menu_type)
 {
 	case e_menu.LIST: // Normal list with images and caption
+	case e_menu.TIMELINE:
 	{
 		var dy = yy;
-		for (var m = round(menu_scroll.value / menu_item_h); m < menu_amount; m++)
+		for (var m = round(menu_scroll_vertical.value / menu_item_h); m < menu_amount; m++)
 		{
 			var item, itemy, itemh;
 			
@@ -85,7 +101,7 @@ switch (menu_type)
 			itemy = dy
 			itemh = menu_item_h
 			
-			list_item_draw(item, menu_x, itemy, menu_w - 12 * menu_scroll.needed, menu_item_h, menu_value = item.value, menu_margin)
+			list_item_draw(item, menu_x, itemy, content_width, menu_item_h, menu_value = item.value, menu_margin, -menu_scroll_horizontal.value)
 			
 			if (item.hover)
 				mouseitem = item
@@ -97,8 +113,21 @@ switch (menu_type)
 	
 }
 
+scissor_done()
+
+if (menu_type = e_menu.TIMELINE && menu_tl_extend)
+{
+	app_mouse_clear()
+	action_tl_extend(menu_tl_extend)
+	list_destroy(menu_list)
+	menu_list = menu_timeline_init()
+	menu_amount = ds_list_size(menu_list.item)
+	
+	menu_tl_extend = null
+}
+
 // Check click
-if (!app_mouse_box(menu_x + menu_w - 12, yy, 12 * menu_scroll.needed, h) && mouse_left_released)
+if (!(menu_scroll_vertical.needed && menu_scroll_vertical.mouseon) && !(menu_scroll_horizontal.needed && menu_scroll_horizontal.mouseon) && mouse_left_released)
 {
 	menu_ani = 1
 	menu_ani_type = "hide"

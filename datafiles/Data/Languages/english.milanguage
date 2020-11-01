@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.10.31"
+        "lastchange": "2020.11.1"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -45,7 +45,9 @@
             "delete": "Delete emitter",
             "resetpreview": "Reset preview",
             "random": "Use random values"
-        }
+        },
+        "expand": "Expand",
+        "collapse": "Collapse"
     },
     "contextmenu/": {
         "textbox/": {
@@ -2219,52 +2221,31 @@
             "y": "Y",
             "z": "Z"
         },
-        "hierarchy": "Hierarchy",
-        "hierarchytip": "Modify the parent and what properties the object should inherit.",
+        "hierarchy": "HIERARCHY",
         "parent": "Parent",
-        "parenttip": "Change the parent that the object should be locked to.",
         "lockbendright": "Right half",
-        "lockbendrighttip": "The object is locked to the right half of the body part.",
         "lockbendleft": "Left half",
-        "lockbendlefttip": "The object is locked to the left half of the body part.",
         "lockbendfront": "Front half",
-        "lockbendfronttip": "The object is locked to the front half of the body part.",
         "lockbendback": "Back half",
-        "lockbendbacktip": "The object is locked to the back half of the body part.",
         "lockbendlower": "Lower half",
-        "lockbendlowertip": "The object is locked to the lower half of the body part.",
         "lockbendupper": "Upper half",
-        "lockbenduppertip": "The object is locked to the upper half of the body part.",
         "inherit": "Inherit...",
         "inherit/": {
             "position": "Position",
-            "positiontip": "Whether the object will inherit the position of the parent.",
             "rotation": "Rotation",
-            "rotationtip": "Whether the object will inherit the rotation of the parent.",
             "rotpoint": "Rotation point",
-            "rotpointtip": "Whether the object will inherit rotation point changes of the parent.",
             "scale": "Scale",
-            "scaletip": "Whether the object will inherit the scale of the parent.",
             "alpha": "Alpha",
-            "alphatip": "Whether the object will inherit the alpha of the parent.",
             "color": "Color",
-            "colortip": "Whether the object will inherit the color effects of the parent.",
             "visibility": "Visibility",
-            "visibilitytip": "Whether the object will inherit visibility changes of the parent.",
             "bend": "Bend",
-            "bendtip": "Whether the object will inherit bending changes of the parent.",
             "texture": "Texture",
-            "texturetip": "Whether the object will inherit the texture modifier of the parent.",
             "glowcolor": "Glow color",
-            "glowcolortip": "Whether the object will inherit the glow color of its parent.",
-            "select": "Select",
-            "selecttip": "Whether the object will be selected when its parent is selected."
+            "select": "Select"
         },
         "scalemode": "Scale mode",
-        "scalemoderesize": "Resize",
-        "scalemoderesizetip": "The object will be resized when the parent is scaled.",
-        "scalemodestretch": "Stretch",
-        "scalemodestretchtip": "The object will be stretched when the parent is scaled.",
+        "scalemoderesize": "RESIZE",
+        "scalemodestretch": "STRETCH",
         "graphics": "Graphics",
         "graphicstip": "Change settings that alter the appearence of the object.",
         "textureblur": "Blur texture",

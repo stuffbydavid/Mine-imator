@@ -87,7 +87,7 @@ if (mode = "list")
 	{
 		window_scroll_focus = string(recent_scrollbar)
 		
-		scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid - 9, yy + 28, hei - 28, recent_list_amount * 44)
+		scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid - 12, yy + 28, hei - 28, recent_list_amount * 44)
 		liststart = snap(recent_scrollbar.value / 44, 1)
 		wid -= 12
 	}
@@ -186,7 +186,7 @@ if (mode = "grid")
 	{
 		window_scroll_focus = string(recent_scrollbar)
 		
-		scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 8, yy, hei, ceil(recent_list_amount/4) * 256)
+		scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 12, yy, hei, ceil(recent_list_amount/4) * 256)
 		liststart = recent_scrollbar.value
 	}
 	

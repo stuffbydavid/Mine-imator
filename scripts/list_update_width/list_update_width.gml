@@ -12,7 +12,7 @@ item = null
 for (var i = 0; i < ds_list_size(list.item); i++)
 {
 	item = list.item[|i]
-	width = 12
+	width = 12 + item.indent
 
 	// Thumbnail(Assuming height of list is 36)
 	if (item.thumbnail)

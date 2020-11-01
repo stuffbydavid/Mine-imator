@@ -1,14 +1,15 @@
-/// list_item_draw(item, x, y, width, height, [toggled, [margin]])
+/// list_item_draw(item, x, y, width, height, [toggled, [margin, [xoffset]]])
 /// @arg item
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg [toggled
-/// @arg [margin]]
+/// @arg [margin
+/// @arg [xoffset]]]
 /// @desc Draws a list item with icons/buttons
 
-var item, xx, yy, width, height, toggled, margin, components, name;
+var item, xx, yy, width, height, toggled, margin, xoffset, components, name;
 var leftp, rightp, middley, mousehover, hover, textcolor, textalpha, iconcolor, iconalpha;
 item = argument[0]
 xx = argument[1]
@@ -17,6 +18,7 @@ width = argument[3]
 height = argument[4]
 toggled = false
 margin = 12
+xoffset = 0
 components = 0
 
 if (item.list != null && item.list.get_name)
@@ -29,6 +31,9 @@ if (argument_count > 5)
 
 if (argument_count > 6)
 	margin = argument[6]
+
+if (argument_count > 7)
+	xoffset = argument[7]
 
 if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 	return 0
@@ -75,6 +80,8 @@ rightp = margin
 middley = yy + height/2
 mousehover = app_mouse_box(xx, yy, width, height) && !item.disabled && content_mouseon
 hover = mousehover
+
+leftp += (item.indent + xoffset)
 
 // Thumbnail
 if (item.thumbnail)
@@ -152,7 +159,7 @@ if (item.caption != "")
 	rightp += string_width(item.caption)
 }
 
-if (leftp > margin)
+if (leftp > (margin + item.indent + xoffset))
 	leftp += 12
 
 // Text

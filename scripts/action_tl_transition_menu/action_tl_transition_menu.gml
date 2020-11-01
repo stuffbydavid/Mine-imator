@@ -2,7 +2,7 @@
 /// @desc Shortcut to show the transition menu.
 
 window_busy = "menu"
-window_focus = string(menu_scroll)
+window_focus = string(menu_scroll_vertical)
 app_mouse_clear()
 	
 menu_name = "timelinetransition"

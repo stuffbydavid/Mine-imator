@@ -14,8 +14,9 @@ if (tl_edit.part_of = null)
 		text = text_get("timelinenone")
 	else
 		text = string_remove_newline(par.display_name)
-	tab_control(32)
-	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 32, par, text, action_tl_parent)
+	
+	tab_control_menu(28)
+	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 28, par, text, action_tl_parent)
 	tab_next()
 	
 	if (!tl_edit.value_type[e_value_type.HIERARCHY])
@@ -25,125 +26,98 @@ if (tl_edit.part_of = null)
 	if (par != app && par.type = e_temp_type.BODYPART && par.model_part != null && par.model_part.bend_part != null)
 	{
 		var partname = array("right", "left", "front", "back", "upper", "lower");
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend)
+		tab_control_switch()
+		draw_switch("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend, true)
 		tab_next()
 	}
 }
 	
 if (par != app)
 {
-	tab_control(18)
-	draw_label(text_get("timelineeditorinherit"), dx, dy)
+	tab_control(20)
+	draw_label(text_get("timelineeditorinherit"), dx, dy + 10, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	tab_next()
 	
-	// Draw checkboxes
-	var checkboxes, checkboxesmod;
-	checkboxes = 0
-	checkboxesmod = 0
+	tab_set_collumns(true, floor(content_width/150))
 	
-	for (var i = 0; i < 11; i++)
+	// Position
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorinheritposition", dx, dy, tl_edit.inherit_position, action_tl_inherit_position)
+	tab_next()
+	
+	// Rotation
+	if (tl_edit.value_type[e_value_type.ROTATION])
 	{
-		if (checkboxesmod = 0)
-			tab_control_checkbox()
-		
-		switch (i)
-		{
-			case 0: draw_checkbox("timelineeditorinheritposition", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_position, action_tl_inherit_position); break
-			
-			case 1:
-			{
-				if (tl_edit.value_type[e_value_type.ROTATION])
-				{
-					draw_checkbox("timelineeditorinheritrotation", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_rotation, action_tl_inherit_rotation)
-					break
-				}
-				else
-					continue
-			}
-			
-			case 2: draw_checkbox("timelineeditorinheritrotpoint", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point) break
-			
-			case 3:
-			{
-				if (tl_edit.value_type[e_value_type.SCALE])
-				{
-					draw_checkbox("timelineeditorinheritscale", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_scale, action_tl_inherit_scale)
-					break
-				}
-				else
-					continue
-			}
-			
-			case 4:
-			{
-				if (tl_edit.value_type[e_value_type.COLOR])
-				{
-					draw_checkbox("timelineeditorinheritalpha", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_alpha, action_tl_inherit_alpha)
-					break
-				}
-				else
-					continue
-			}
-			
-			case 5:
-			{
-				if (tl_edit.value_type[e_value_type.COLOR])
-				{
-					draw_checkbox("timelineeditorinheritcolor", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_color, action_tl_inherit_color)
-					break
-				}
-				else
-					continue
-			}
-			
-			case 6: draw_checkbox("timelineeditorinheritvisibility", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_visibility, action_tl_inherit_visibility); break
-			
-			case 7: draw_checkbox("timelineeditorinheritbend", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_bend, action_tl_inherit_bend); break
-			
-			case 8: 
-			{
-				if (tl_edit.value_type[e_value_type.TEXTURE])
-				{
-					draw_checkbox("timelineeditorinherittexture", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_texture, action_tl_inherit_texture)
-					break
-				}
-				else
-					continue
-			}
-			
-			case 9: 
-			{
-				if (!tl_edit.value_type[e_value_type.CAMERA])
-				{
-					draw_checkbox("timelineeditorinheritglowcolor", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)
-					break
-				}
-				else
-					continue
-			}
-			
-			case 10: draw_checkbox("timelineeditorinheritselect", dx + floor(dw * 0.33 * checkboxesmod), dy, tl_edit.inherit_select, action_tl_inherit_select); break
-		}
-		
-		checkboxes++
-		checkboxesmod = checkboxes mod 3
-		
-		if (checkboxesmod = 0)
-			tab_next()
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritrotation", dx, dy, tl_edit.inherit_rotation, action_tl_inherit_rotation)
+		tab_next()
 	}
 	
-	if (checkboxesmod != 0)
+	// Rotation point
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorinheritrotpoint", dx, dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
+	tab_next()
+	
+	// Scale
+	if (tl_edit.value_type[e_value_type.SCALE])
+	{
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritscale", dx, dy, tl_edit.inherit_scale, action_tl_inherit_scale)
 		tab_next()
-			
-			
+	}
+	
+	// Color
+	if (tl_edit.value_type[e_value_type.COLOR])
+	{
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritalpha", dx, dy, tl_edit.inherit_alpha, action_tl_inherit_alpha)
+		tab_next()
+		
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritcolor", dx, dy, tl_edit.inherit_color, action_tl_inherit_color)
+		tab_next()
+	}
+	
+	// Visibility
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorinheritvisibility", dx, dy, tl_edit.inherit_visibility, action_tl_inherit_visibility)
+	tab_next()
+	
+	// Bend
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorinheritbend", dx, dy, tl_edit.inherit_bend, action_tl_inherit_bend)
+	tab_next()
+	
+	// Texture
+	if (tl_edit.value_type[e_value_type.TEXTURE])
+	{
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinherittexture", dx, dy, tl_edit.inherit_texture, action_tl_inherit_texture)
+		tab_next()
+	}
+	
+	// Glow color
+	if (!tl_edit.value_type[e_value_type.CAMERA])
+	{
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritglowcolor", dx, dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)
+		tab_next()
+	}
+	
+	// Select
+	tab_control_checkbox()
+	draw_checkbox("timelineeditorinheritselect", dx, dy, tl_edit.inherit_select, action_tl_inherit_select)
+	tab_next()	
+	
+	tab_set_collumns(false)
+	
 	// Scale mode
 	if (tl_edit.value_type[e_value_type.SCALE] && tl_edit.inherit_scale)
 	{
-		tab_control_checkbox()
-		draw_label(text_get("timelineeditorscalemode") + ":", dx, dy)
-		draw_radiobutton("timelineeditorscalemoderesize", dx + floor(dw * 0.25), dy, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)
-		draw_radiobutton("timelineeditorscalemodestretch", dx + floor(dw * 0.5), dy, 0, tl_edit.scale_resize = 0, action_tl_scale_resize)
+		tab_control_togglebutton()
+		togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)
+		togglebutton_add("timelineeditorscalemodestretch", null, 0, tl_edit.scale_resize = 0, action_tl_scale_resize)
+		draw_togglebutton("timelineeditorscalemode", dx, dy)
 		tab_next()
 	}
 }

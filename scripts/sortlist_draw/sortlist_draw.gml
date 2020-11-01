@@ -182,4 +182,4 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 
 // Scrollbar
 slist.scroll.snap_value = itemh
-scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 7, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
+scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)

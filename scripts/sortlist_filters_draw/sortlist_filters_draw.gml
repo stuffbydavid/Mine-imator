@@ -60,6 +60,6 @@ if ((settings_menu_y + settings_menu_h) > window_height)
 
 if ((dy - content_y) > 256)
 {
-	scrollbar_draw(settings_menu_scroll, e_scroll.VERTICAL, content_x + content_width - 10, content_y, content_height, dy - content_y)
+	scrollbar_draw(settings_menu_scroll, e_scroll.VERTICAL, content_x + content_width - 12, content_y, content_height, dy - content_y)
 	window_scroll_focus = string(settings_menu_scroll)
 }

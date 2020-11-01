@@ -75,6 +75,11 @@ tab = null
 tab_control_h = 0
 tab_collapse = false
 
+tab_collumns = false
+tab_collumns_index = 0
+tab_collumns_width = 0
+tab_collumns_count = 2
+
 // Tips
 tip_show = false
 tip_alpha = 0

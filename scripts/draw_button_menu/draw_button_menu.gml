@@ -126,7 +126,7 @@ if (menu_name = name)
 if (mouseon && mouse_left_released)
 {
 	window_busy = "menu"
-	window_focus = string(menu_scroll)
+	window_focus = string(menu_scroll_vertical)
 	app_mouse_clear()
 	
 	menu_name = name
@@ -152,10 +152,11 @@ if (mouseon && mouse_left_released)
 	
 	// Init
 	menu_clear()
+	
 	if (type = e_menu.LIST)
 		menu_list = list_init(menu_name)
 	else if (type = e_menu.TIMELINE)
-		menu_timeline_init()
+		menu_list = menu_timeline_init()
 	else
 		menu_transition_init()
 	

@@ -117,5 +117,7 @@ if (mouseon && mouse_left_released)
 	if (script != null)
 		script_execute(script, !value)
 	
+	app_mouse_clear()
+	
 	return true
 }

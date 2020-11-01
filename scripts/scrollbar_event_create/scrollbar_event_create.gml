@@ -8,3 +8,4 @@ press = 0
 needed = false
 atend = false
 value_ease = true
+mouseon = false

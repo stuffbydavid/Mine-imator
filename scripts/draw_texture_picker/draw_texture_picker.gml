@@ -128,4 +128,4 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 
 // Scrollbar
 scroll.snap_value = itemhei
-scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 10, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei)
+scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 12, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei)
