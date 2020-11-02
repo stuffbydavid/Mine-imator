@@ -2274,9 +2274,7 @@
 			"screen": "Screen"
 		},
         "audio": "AUDIO",
-        "audiotip": "Manage the audio timeline.",
-        "audioadd": "ADD SOUND",
-        "audioaddtip": "Load an audio file and add it to the timeline."
+        "audioadd": "ADD SOUND"
     },
     "frameeditor/": {
         "position": "Position",
