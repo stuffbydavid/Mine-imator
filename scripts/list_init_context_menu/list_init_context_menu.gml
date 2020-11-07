@@ -7,22 +7,23 @@ list_init_start()
 
 switch (name)
 {
-	// Context menu
+	// Component values
 	case "contextmenuvalue":
 	case "contextmenucategory":
 	{	
-		// Combine scale
-		/*
-		if (context_menu_copy_group != null && context_menu_copy_group.name = "scale")
+		// Rotation loops
+		if (context_menu_group = e_context_group.ROTATION)
 		{
-			var text = (setting_combine_scale ? "contextmenuseperatescale" : "contextmenucombinescale");
-			list_item_add(text_get(text), null, "", null, icons.TOOLSET_SCALE, null, action_category_combine_scale, true)
+			var text = (frame_editor.rotation.loops ? "contextmenugroupdisableloops" : "contextmenugroupenableloops");
+			list_item_add(text_get(text), null, "", null, icons.LOOPS, null, action_group_rotation_loops, true)
 		}
 		
-		// Offset centering
-		if (context_menu_copy_group != null && context_menu_copy_group = element_editor.pivot_offset)
-			list_item_add(text_get("contextmenucenteraxis"), null, "", null, icons.PIVOT, null, action_el_offset_center, true)
-		*/
+		// Combine scale
+		if (context_menu_group = e_context_group.SCALE)
+		{
+			var text = (frame_editor.scale.scale_all ? "contextmenuscaleseperate" : "contextmenuscalecombine");
+			list_item_add(text_get(text), null, "", null, icons.TOOLSET_SCALE, null, action_group_combine_scale, true)
+		}
 		
 		// Single value copy-paste
 		if (name = "contextmenuvalue")
@@ -50,6 +51,9 @@ switch (name)
 			list_item_add(text_get("contextmenugroupcopy"), null, "", null, icons.COPY_ALL, null, action_group_copy, true)
 			list_item_add(text_get("contextmenugrouppaste"), null, "", null, icons.PASTE_ALL, null, action_group_paste, false)
 			list_item_add(text_get("contextmenugroupreset"), null, "", null, icons.RESET_ALL, null, action_group_reset, false)
+			
+			if (context_menu_group = e_context_group.POSITION)
+				list_item_add(text_get("contextmenugroupcopyglobalposition"), null, "", null, icons.COPY_ALL, null, action_group_copy_global, true)
 		}
 		
 		

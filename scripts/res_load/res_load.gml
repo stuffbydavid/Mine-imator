@@ -3,6 +3,8 @@
 
 var fn = load_folder + "\\" + filename;
 
+debug(type)
+
 debug("Loading " + res_type_name_list[|type], fn)
 
 // Load from file

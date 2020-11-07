@@ -37,10 +37,6 @@ if (tl_edit.value_type[e_value_type.ROT_POINT])
 		else
 			def = point3D(0, 0, 0)
 		
-		context_menu_group = e_context_group.ROT_POINT
-		
-		tab_control(28)
-		
 		axis_edit = X
 		textfield_group_add("timelineeditorrotpointx", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_x)
 		
@@ -50,9 +46,12 @@ if (tl_edit.value_type[e_value_type.ROT_POINT])
 		axis_edit = (setting_z_is_up ? Z : Y)
 		textfield_group_add("timelineeditorrotpointz", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_z)
 		
+		context_menu_group_temp = e_context_group.ROT_POINT
+		
+		tab_control_dragger()
 		draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false)
 		tab_next()
 		
-		context_menu_group = null
+		context_menu_group_temp = null
 	}
 }

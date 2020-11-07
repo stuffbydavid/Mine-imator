@@ -66,7 +66,7 @@ for (var i = 0; i < textfield_amount; i++)
 		maxval = textfield_max[i]
 	}
 	
-	if (context_menu_group != null)
+	if (context_menu_group_temp != null)
 		context_menu_area(fieldx, yy, boxwid, hei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
 	
 	// Adjust draw width to cover dividers
@@ -121,7 +121,7 @@ for (var i = 0; i < textfield_amount; i++)
 			window_busy = textfield_name[i] + "press"
 	
 		// Reset to 0
-		if (context_menu_group = null && mouse_right_pressed && textfield_default[i] != no_limit)
+		if (context_menu_group_temp = null && mouse_right_pressed && textfield_default[i] != no_limit)
 		{
 			window_focus = textfield_name[i]
 			

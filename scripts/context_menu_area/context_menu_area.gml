@@ -25,6 +25,7 @@ if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
 	context_menu_copy_axis_edit = axis_edit
 	context_menu_busy_prev = window_busy
 	window_busy = "contextmenu"
+	context_menu_group = context_menu_group_temp
 	
 	// Get current font
 	font = draw_get_font()

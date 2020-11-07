@@ -388,14 +388,9 @@ with (frame_editor)
 	position = tab_add_category("frameeditorposition", tab_frame_editor_position, false)
 	with (position)
 	{
-		snap_enabled = false
-		snap_size = 16
-		copy = point3D(0, 0, 0)
 		tbx_x = new_textbox_ndecimals()
 		tbx_y = new_textbox_ndecimals()
 		tbx_z = new_textbox_ndecimals()
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
 	}
 	
 	// Rotation
@@ -403,20 +398,12 @@ with (frame_editor)
 	with (rotation)
 	{
 		loops = false
-		snap_enabled = false
-		snap_size = 15
-		copy = point3D(0, 0, 0)
-		tbx_x = new_textbox_ndecimals()
+		tbx_x = new_textbox(true, 10, "x-.0123456789")
 		tbx_x.suffix = "°"
-		tbx_y = new_textbox_ndecimals()
+		tbx_y = new_textbox(true, 10, "x-.0123456789")
 		tbx_y.suffix = "°"
-		tbx_z = new_textbox_ndecimals()
+		tbx_z = new_textbox(true, 10, "x-.0123456789")
 		tbx_z.suffix = "°"
-		tbx_loops_x = new_textbox_ndecimals()
-		tbx_loops_y = new_textbox_ndecimals()
-		tbx_loops_z = new_textbox_ndecimals()
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
 	}
 	
 	// Scale
@@ -424,14 +411,9 @@ with (frame_editor)
 	with (scale)
 	{
 		scale_all = true
-		snap_enabled = false
-		snap_size = 0.25
-		copy = point3D(1, 1, 1)
 		tbx_x = new_textbox_decimals()
 		tbx_y = new_textbox_decimals()
 		tbx_z = new_textbox_decimals()
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
 	}
 	
 	// Bend

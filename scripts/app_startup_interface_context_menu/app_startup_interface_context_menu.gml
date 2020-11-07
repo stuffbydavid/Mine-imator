@@ -8,8 +8,19 @@ enum e_context_type {
 	COLOR
 }
 
+/*
+	Update:
+	action_group_reset
+	action_group_copy
+	action_group_paste
+*/
+
 enum e_context_group {
-	ROT_POINT
+	ROT_POINT,
+	POSITION,
+	ROTATION,
+	SCALE,
+	BEND
 }
 
 context_group_copy_list = ds_list_create()
@@ -46,4 +57,5 @@ context_menu_tbx_paste = false
 context_menu_tbx_select_all = false
 
 // Copy/paste categories
+context_menu_group_temp = null
 context_menu_group = null

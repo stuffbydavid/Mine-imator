@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.11.1"
+        "lastchange": "2020.11.6"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -65,8 +65,13 @@
         "group/": {
             "copy": "Copy all values",
             "paste": "Paste all values",
-            "reset": "Reset all values"
-        }
+            "reset": "Reset all values",
+            "copyglobalposition": "Copy global position",
+            "disableloops": "Disable loops",
+            "enableloops": "Enable loops"
+        },
+        "scaleseperate": "Seperate scale",
+        "scalecombine": "Combine scale"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -2277,79 +2282,30 @@
         "audioadd": "ADD SOUND"
     },
     "frameeditor/": {
-        "position": "Position",
-        "positiontip": "Modify the object's location in space.",
+        "position": "POSITION",
         "position/": {
             "x": "X",
-            "xtip": "The X value of the object's position.",
             "y": "Y",
-            "ytip": "The Y value of the object's position.",
-            "z": "Z",
-            "ztip": "The Z value of the object's position.",
-            "resettip": "Reset the position to the spawn location.",
-            "copytip": "Copy the selected position.",
-            "pastetip": "Paste the copied position.",
-            "snaptip": "Snap the XYZ values to a grid.",
-            "snapsize": "Grid size",
-            "snapsizetip": "The size of the grid that the XYZ values should snap to."
+            "z": "Z"
         },
-        "rotation": "Rotation",
-        "rotationtip": "Modify the object's rotation.",
+        "rotation": "ROTATION",
         "rotation/": {
             "x": "X",
-            "xtip": "The rotation along the X axis.",
             "y": "Y",
-            "ytip": "The rotation along the Y axis.",
-            "z": "Z",
-            "ztip": "The rotation along the Z axis.",
-            "resettip": "Reset the rotation to the default values.",
-            "loopstip": "Display the rotation in whole loops and values between 0 and 360.",
-            "copytip": "Copy the selected rotation.",
-            "pastetip": "Paste the copied rotation.",
-            "loopsx": "Loops",
-            "loopsxtip": "The amount of loops along the X axis.",
-            "loopsy": "",
-            "loopsytip": "The amount of loops along the Y axis.",
-            "loopsz": "",
-            "loopsztip": "The amount of loops along the Z axis.",
-            "snaptip": "Snap the XYZ values to a grid.",
-            "snapsize": "Grid size",
-            "snapsizetip": "The size of the grid that the XYZ values should snap to."
+            "z": "Z"
         },
-        "scale": "Scale",
-        "scaletip": "Modify the object's scale.",
+        "scale": "SCALE",
         "scale/": {
             "xyz": "XYZ",
-            "xyztip": "The scale factor in all directions.",
             "x": "X",
-            "xtip": "The scale factor along the X axis.",
             "y": "Y",
-            "ytip": "The scale factor along the Y axis.",
-            "z": "Z",
-            "ztip": "The scale factor along the Z axis.",
-            "resettip": "Reset the scale to the default values.",
-            "alltip": "Scale in all directions at the same time.",
-            "copytip": "Copy the selected scaling values.",
-            "pastetip": "Paste the copied scaling.",
-            "snaptip": "Snap the XYZ values to a grid.",
-            "snapsize": "Grid size",
-            "snapsizetip": "The size of the grid that the XYZ values should snap to."
+            "z": "Z"
         },
-        "bend": "Bend",
-        "bendtip": "Modify the bending of the body part.",
+        "bend": "BEND",
         "bend/": {
             "x": "X",
-            "xtip": "Change how much the body part should bend along the X axis.",
             "y": "Y",
-            "ytip": "Change how much the body part should bend along the Y axis.",
-            "z": "Z",
-            "ztip": "Change how much the body part should bend along the Z axis.",
-            "resettip": "Reset the bending to the default value.",
-            "copytip": "Copy the selected bending value.",
-            "pastetip": "Paste the copied bending.",
-            "snaptip": "Snap the bending value to a grid.",
-            "snapsize": "Grid size",
-            "snapsizetip": "The size of the grid that the bending value should snap to."
+            "z": "Z"
         },
         "color": "Color",
         "colortip": "Modify the color effects of the object.",
