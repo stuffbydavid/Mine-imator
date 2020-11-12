@@ -19,8 +19,8 @@ def = argument[5]
 tip = ""
 disabled = false
 
-if (argument_count > 6 && argument[6] != "")
-	tip = text_get(argument[6])
+if (argument_count > 6)
+	tip = argument[6]
 
 if (argument_count > 7)
 	disabled = argument[7]
@@ -72,7 +72,7 @@ draw_box(switchx, switchy, 24, 16, false, backgroundcolor, backgroundalpha)
 var buttonx = switchx + 2 + (10 * mcroani_arr[e_mcroani.ACTIVE]);
 var buttony = switchy + 2;
 var buttoncolor = c_accent_overlay;
-var buttonalpha = lerp(0, a_accent_overlay, mcroani_arr[e_mcroani.PRESS]);
+var buttonalpha = a_accent_overlay * mcroani_arr[e_mcroani.PRESS];
 draw_box(buttonx, buttony, 10, 12, false, c_white, 1)
 draw_box(buttonx, buttony, 10, 12, false, buttoncolor, buttonalpha)
 draw_box_bevel(buttonx, buttony, 10, 12, 1, true)
@@ -93,14 +93,14 @@ if (tip != "")
 {
 	mouseon = app_mouse_box(xx + string_width(name) + 8, yy + 4, 20, 20) && content_mouseon && !disabled
 	
-	microani_set(argument[0] + "help", null, mouseon, false, false)
+	microani_set(tip, null, mouseon, false, false)
 	buttoncolor = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
 	buttonalpha = lerp(a_text_tertiary, a_text_secondary, mcroani_arr[e_mcroani.HOVER]) * lerp(1, .5, mcroani_arr[e_mcroani.DISABLED])
 	
 	draw_image(spr_icons, icons.HELP, xx + string_width(name) + 10 + 8, yy + 14, 1, 1, buttoncolor, buttonalpha)
 	
 	if (!disabled)
-		tip_set(text_get(argument[0] + "help"), xx + string_width(name) + 8, yy + 4, 20, 20)
+		tip_set(text_get(tip), xx + string_width(name) + 8, yy + 4, 20, 20)
 	
 	microani_update(mouseon, false, false, disabled)
 }

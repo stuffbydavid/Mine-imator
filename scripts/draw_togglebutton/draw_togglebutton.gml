@@ -1,14 +1,19 @@
-/// draw_togglebutton(name, x, y)
+/// draw_togglebutton(name, x, y, [labels])
 /// @arg name
 /// @arg x
 /// @arg y
+/// @arg [labels]
 /// @desc Displays togglebutton options
 
-var name, xx, yy;
+var name, xx, yy, labels;
 var h, w, buttonx, buttonh, buttoncount, buttonsize, mouseon, script, scriptvalue, axis;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
+labels = true
+
+if (argument_count > 3)
+	labels = argument[3]
 
 h = 52
 w = dw
@@ -51,24 +56,23 @@ for (var i = 0; i < buttoncount; i++)
 	// Draw base button
 	var backgroundcolor, backgroundalpha;
 	backgroundcolor = merge_color(c_overlay, c_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-	backgroundalpha = lerp(0, a_overlay, min(1.0, mcroani_arr[e_mcroani.HOVER] + mcroani_arr[e_mcroani.ACTIVE]))
+	backgroundalpha = a_overlay * min(1.0, mcroani_arr[e_mcroani.HOVER] + mcroani_arr[e_mcroani.ACTIVE])
 	backgroundalpha = lerp(backgroundalpha, a_accent_overlay, mcroani_arr[e_mcroani.PRESS])
 	draw_box(buttonx, yy, buttonsize, buttonh, false, backgroundcolor, backgroundalpha)
 	
 	var labelcolor, labelalpha;
 	
-	
 	var icon = togglebutton_icon[i];
 	
 	var buttonname, totalwidth, startx;
-	buttonname = text_get(togglebutton_name[i])
-	totalwidth = string_width(buttonname) + (icon = null ? 0 : 24 + 8)
-	startx = snap(buttonx + (buttonsize/2) - (totalwidth/2), 2)
+	buttonname = (labels ? text_get(togglebutton_name[i]) : "")
+	totalwidth = (labels ? string_width(buttonname) : 0) + (icon = null ? 0 : 24 + 8)
+	startx = floor(buttonx + (buttonsize/2) - (totalwidth/2))
 	
-	if (buttonname = "")
+	if (buttonname = "" || !labels)
 	{
 		totalwidth = 20
-		startx = snap(buttonx + (buttonsize/2) - (totalwidth/2), 2)
+		startx = floor(buttonx + (buttonsize/2) - (totalwidth/2))
 		
 		labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
 		labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
@@ -89,7 +93,8 @@ for (var i = 0; i < buttoncount; i++)
 	}
 	
 	// Text
-	draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, labelcolor, labelalpha)
+	if (labels)
+		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, labelcolor, labelalpha)
 	
 	if (i > 0)
 		draw_box(buttonx, yy + 4, 1, buttonh - 8, false, c_border, a_border)

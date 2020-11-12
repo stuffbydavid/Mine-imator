@@ -85,17 +85,19 @@ if (string_contains(inputname, "search"))
 // Textbox
 draw_set_font(font)
 
-var textx = (center ? xx + w/2 : xx + padding + 7);
+var textx, texty;
+textx = (center ? xx + w/2 : xx + 10)
+texty = (center ? yy + h/2 : yy + 5)
 
 if (disabled)
 {
-	draw_label(string_limit(tbx.text, w - padding * 2), textx, (yy + h/2), center ? fa_center : fa_left, fa_bottom, c_text_tertiary, a_text_tertiary)
+	draw_label(string_limit(tbx.text, w - padding * 2), textx, texty, center ? fa_center : fa_left, center ? fa_bottom : fa_top, c_text_tertiary, a_text_tertiary)
 	update = false
 }
 
 // Placeholder label
 if (tbx.text = "" && placeholder != "")
-    draw_label(string_limit(placeholder, w - padding * 2), textx, (yy + h/2), center ? fa_center : fa_left, fa_center, c_text_tertiary, a_text_tertiary)
+    draw_label(string_limit(placeholder, w - padding * 2), textx, texty, center ? fa_center : fa_left, center ? fa_center : fa_top, c_text_tertiary, a_text_tertiary)
 
 if (!disabled)
 {

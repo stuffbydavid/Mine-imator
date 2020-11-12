@@ -316,7 +316,7 @@ if (background_biome.name = "custom")
 	tab_next()
 }
 
-dy += 20 
+dy += 20
 draw_label(text_get("backgroundscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
 dy += 8
 

@@ -38,7 +38,7 @@ draw_box(xx, yy, 28, 28, false, color, 1)
 
 var buttoncolor, buttonalpha;
 buttoncolor = merge_color(c_white, c_black, mcroani_arr[e_mcroani.PRESS])
-buttonalpha = lerp(0, .17, mcroani_arr[e_mcroani.HOVER] * (1 - mcroani_arr[e_mcroani.PRESS]))
+buttonalpha = .17 * (mcroani_arr[e_mcroani.HOVER] * (1 - mcroani_arr[e_mcroani.PRESS]))
 buttonalpha = lerp(buttonalpha, .20, mcroani_arr[e_mcroani.PRESS])
 
 draw_box(xx, yy, 28, 28, false, buttoncolor, buttonalpha)

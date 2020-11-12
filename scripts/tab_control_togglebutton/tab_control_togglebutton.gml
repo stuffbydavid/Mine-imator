@@ -1,3 +1,3 @@
 /// tab_control_togglebutton()
 
-tab_control(56)
+tab_control(52)

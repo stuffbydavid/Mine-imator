@@ -44,7 +44,7 @@ draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])
 // Box
 var backgroundcolor, backgroundalpha, labelcolor, labelalpha;
 backgroundcolor = merge_color(c_overlay, c_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-backgroundalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+backgroundalpha = a_overlay * mcroani_arr[e_mcroani.HOVER]
 backgroundalpha = lerp(backgroundalpha, a_accent_overlay, mcroani_arr[e_mcroani.PRESS])
 
 labelcolor = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])

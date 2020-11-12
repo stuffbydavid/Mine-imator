@@ -60,6 +60,6 @@ else
 if (tl_edit.value[e_value.TEXTURE_OBJ] = null)
 	text = text_get("listdefault", text)
 
-tab_control(40)
-draw_button_menu(name, e_menu.LIST, dx, dy, dw, 40, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, tex)
+tab_control_menu(36)
+draw_button_menu(name, e_menu.LIST, dx, dy, dw, 36, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, false, tex)
 tab_next()

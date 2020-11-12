@@ -45,4 +45,10 @@ switch (context_menu_group)
 		action_tl_frame_bend_angle_xyz(tl_edit.model_part.bend_default_angle)
 		return 0;
 	}
+	
+	case e_context_group.LIGHT:
+	{
+		action_tl_frame_set_light(c_white, 1, 2, 250, 0.5, 50, 0.5)
+		return 0;
+	}
 }

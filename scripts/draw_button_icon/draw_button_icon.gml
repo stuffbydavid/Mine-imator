@@ -74,7 +74,7 @@ draw_box_hover(xx, yy, wid, hei, mcroani_arr[e_mcroani.HOVER])
 // Background
 var backgroundcolor, backgroundalpha;
 backgroundcolor = merge_color(c_accent_overlay, c_overlay, mcroani_arr[e_mcroani.ACTIVE])
-backgroundalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.ACTIVE])
+backgroundalpha = a_overlay * mcroani_arr[e_mcroani.ACTIVE]
 
 backgroundalpha = lerp(backgroundalpha, 0, mcroani_arr[e_mcroani.HOVER])
 
