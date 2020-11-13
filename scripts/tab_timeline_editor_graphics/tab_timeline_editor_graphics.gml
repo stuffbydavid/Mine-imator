@@ -55,7 +55,7 @@ if (tl_edit.type != e_tl_type.POINT_LIGHT && tl_edit.type != e_tl_type.SPOT_LIGH
 	if (tl_edit.glow)
 	{
 		tab_control_checkbox()
-		draw_checkbox("timelineeditorglowtexture", dx + floor(dw * 0.5), dy, tl_edit.glow_texture, action_tl_glow_texture)
+		draw_checkbox("timelineeditorglowtexture", dx, dy, tl_edit.glow_texture, action_tl_glow_texture)
 		tab_next()
 		
 		tab_control_checkbox()

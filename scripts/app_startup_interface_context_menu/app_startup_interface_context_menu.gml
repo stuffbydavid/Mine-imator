@@ -21,7 +21,8 @@ enum e_context_group {
 	ROTATION,
 	SCALE,
 	BEND,
-	LIGHT
+	LIGHT,
+	COLOR
 }
 
 context_group_copy_list = ds_list_create()

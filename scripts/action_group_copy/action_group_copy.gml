@@ -41,4 +41,13 @@ switch (group)
 												tl_edit.value[e_value.LIGHT_SPOT_SHARPNESS])
 		return;
 	}
+	
+	case e_context_group.COLOR:
+	{
+		context_group_copy_list[|group] = array(tl_edit.value[e_value.ALPHA], tl_edit.value[e_value.RGB_ADD], tl_edit.value[e_value.RGB_SUB], 
+												tl_edit.value[e_value.RGB_MUL], tl_edit.value[e_value.HSB_ADD], tl_edit.value[e_value.HSB_SUB],
+												tl_edit.value[e_value.HSB_MUL], tl_edit.value[e_value.GLOW_COLOR], tl_edit.value[e_value.MIX_COLOR],
+												tl_edit.value[e_value.MIX_PERCENT], tl_edit.value[e_value.BRIGHTNESS])
+		return;
+	}
 }

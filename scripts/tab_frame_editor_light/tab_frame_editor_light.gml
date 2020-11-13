@@ -6,7 +6,7 @@ draw_set_font(font_emphasis)
 var capwid = text_caption_width("frameeditorlightrange", "frameeditorlightsize");
 
 tab_control_color()
-draw_button_color("frameeditorlightcolor", dx, dy, dw, tl_edit.value[e_value.LIGHT_COLOR], c_white, false, action_tl_frame_light_color)
+draw_button_color("frameeditorlightcolor", dx, dy, dw, tl_edit.value[e_value.LIGHT_COLOR], c_white, false, action_tl_frame_light_color, tab.light.tbx_light_color)
 tab_next()
 
 tab_control_dragger()

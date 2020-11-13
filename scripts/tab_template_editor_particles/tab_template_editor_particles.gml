@@ -859,15 +859,15 @@ draw_button_icon("particleeditorrandomcolor", dx + dw - 28, dy, 28, 28, ptype_ed
 if (ptype_edit.color_israndom)
 {
 	name = ptype_edit.color_mix_enabled ? "particleeditortypecolorstartcolor1" : "particleeditortypecolorcolor1"
-	draw_button_color(name, dx, dy, floor(wid/2), ptype_edit.color_random_start, c_gray, false, action_lib_pc_type_color_random_start)
+	draw_button_color(name, dx, dy, floor(wid/2), ptype_edit.color_random_start, c_gray, false, action_lib_pc_type_color_random_start, tab.tbx_type_color_random_start)
 	
 	name = ptype_edit.color_mix_enabled ? "particleeditortypecolorstartcolor2" : "particleeditortypecolorcolor2"
-	draw_button_color(name, dx + floor(wid/2), dy, floor(wid/2), ptype_edit.color_random_end, c_white, false, action_lib_pc_type_color_random_end)
+	draw_button_color(name, dx + floor(wid/2), dy, floor(wid/2), ptype_edit.color_random_end, c_white, false, action_lib_pc_type_color_random_end, tab.tbx_type_color_random_end)
 }
 else
 {
 	name = ptype_edit.color_mix_enabled ? "particleeditortypecolorstartcolor" : "particleeditortypecolorcolor"
-	draw_button_color(name, dx, dy, wid, ptype_edit.color, c_white, false, action_lib_pc_type_color)
+	draw_button_color(name, dx, dy, wid, ptype_edit.color, c_white, false, action_lib_pc_type_color, tab.tbx_type_color)
 }
 tab_next()
 
@@ -881,11 +881,11 @@ if (ptype_edit.color_mix_enabled)
 	draw_button_icon("particleeditorrandommixcolor", dx + dw - 28, dy, 28, 28, ptype_edit.color_mix_israndom, icons.RANDOM, action_lib_pc_type_color_mix_israndom, false, "tooltipparticlesrandom")
 	if (ptype_edit.color_mix_israndom)
 	{
-		draw_button_color("particleeditortypecolorendcolor1", dx, dy, floor(wid/2), ptype_edit.color_mix_random_start, c_gray, false, action_lib_pc_type_color_mix_random_start)
-		draw_button_color("particleeditortypecolorendcolor2", dx + floor(wid/2), dy, floor(wid/2), ptype_edit.color_mix_random_end, c_white, false, action_lib_pc_type_color_mix_random_end)
+		draw_button_color("particleeditortypecolorendcolor1", dx, dy, floor(wid/2), ptype_edit.color_mix_random_start, c_gray, false, action_lib_pc_type_color_mix_random_start, tab.tbx_type_color_mix_start)
+		draw_button_color("particleeditortypecolorendcolor2", dx + floor(wid/2), dy, floor(wid/2), ptype_edit.color_mix_random_end, c_white, false, action_lib_pc_type_color_mix_random_end, tab.tbx_type_color_mix_end)
 	}
 	else
-		draw_button_color("particleeditortypecolorendcolor", dx, dy, wid, ptype_edit.color_mix, c_black, false, action_lib_pc_type_color_mix)
+		draw_button_color("particleeditortypecolorendcolor", dx, dy, wid, ptype_edit.color_mix, c_black, false, action_lib_pc_type_color_mix, tab.tbx_type_color_mix)
 	tab_next()
 
 	tab_template_editor_particles_value("particleeditortypecolormixtime", 

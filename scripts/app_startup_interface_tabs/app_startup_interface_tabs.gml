@@ -99,6 +99,27 @@ with (properties)
 		tbx_wind_directional_strength = new_textbox_decimals()
 		tbx_sunlight_range = new_textbox_integer()
 		tbx_texture_animation_speed = new_textbox_ndecimals()
+		
+		tbx_color_grass = new_textbox_hex()
+		tbx_color_foliage = new_textbox_hex()
+		tbx_color_water = new_textbox_hex()
+		tbx_color_leaves_oak = new_textbox_hex()
+		tbx_color_leaves_spruce = new_textbox_hex()
+		tbx_color_leaves_birch = new_textbox_hex()
+		tbx_color_leaves_jungle = new_textbox_hex()
+		tbx_color_leaves_acacia = new_textbox_hex()
+		tbx_color_leaves_dark_oak = new_textbox_hex()
+		
+		tbx_color_sky = new_textbox_hex()
+		tbx_color_clouds = new_textbox_hex()
+		tbx_color_sunlight = new_textbox_hex()
+		tbx_color_ambient = new_textbox_hex()
+		tbx_color_night = new_textbox_hex()
+		
+		tbx_color_fog = new_textbox_hex()
+		tbx_color_object_fog = new_textbox_hex()
+		
+		tbx_color_fog_volume = new_textbox_hex()
 	}
 	
 	// Resources
@@ -334,6 +355,14 @@ with (template_editor)
 	tbx_type_color_mix_time = new_textbox_decimals()
 	tbx_type_color_mix_time_random = new_textbox_decimals()
 	
+	tbx_type_color = new_textbox_hex()
+	tbx_type_color_random_start = new_textbox_hex()
+	tbx_type_color_random_end = new_textbox_hex()
+	
+	tbx_type_color_mix = new_textbox_hex()
+	tbx_type_color_mix_start = new_textbox_hex()
+	tbx_type_color_mix_end = new_textbox_hex()
+	
 	tbx_type_bounce_factor = new_textbox_decimals()
 }
 
@@ -438,17 +467,17 @@ with (frame_editor)
 	with (color)
 	{
 		advanced = app.setting_frame_editor_color_advanced
-		copy_alpha = 1
-		copy_rgb_add = c_black
-		copy_rgb_sub = c_black
-		copy_rgb_mul = c_white
-		copy_hsb_add = c_black
-		copy_hsb_sub = c_black
-		copy_hsb_mul = c_white
-		copy_mix_color = c_black
-		copy_glow_color = c_white
-		copy_mix_percent = 0
-		copy_brightness = 0
+		
+		tbx_rgb_add = new_textbox_hex()
+		tbx_rgb_sub = new_textbox_hex()
+		tbx_rgb_mul = new_textbox_hex()
+		tbx_hsv_add = new_textbox_hex()
+		tbx_hsv_sub = new_textbox_hex()
+		tbx_hsv_mul = new_textbox_hex()
+		
+		tbx_color_mix = new_textbox_hex()
+		tbx_color_glow = new_textbox_hex()
+		
 		tbx_alpha = new_textbox_integer()
 		tbx_alpha.suffix = "%"
 		tbx_mix_percent = new_textbox_integer()
@@ -469,11 +498,6 @@ with (frame_editor)
 	light = tab_add_category("frameeditorlight", tab_frame_editor_light, false)
 	with (light)
 	{
-		copy_color = c_white
-		copy_range = 250
-		copy_fade_size = 0.5
-		copy_spot_radius = 50
-		copy_spot_sharpness = 0.5
 		has_spotlight = false
 		tbx_size = new_textbox_decimals()
 		tbx_range = new_textbox_decimals()
@@ -484,6 +508,7 @@ with (frame_editor)
 		tbx_spot_radius = new_textbox_decimals()
 		tbx_spot_sharpness = new_textbox_integer()
 		tbx_spot_sharpness.suffix = "%"
+		tbx_light_color = new_textbox_hex()
 	}
 	
 	// Camera
@@ -497,7 +522,6 @@ with (frame_editor)
 		tbx_blade_amount = new_textbox_integer()
 		tbx_blade_angle = new_textbox_integer()
 		tbx_blade_angle.suffix = "°"
-		tbx_ratio = new_textbox_decimals()
 		
 		tbx_rotate_distance = new_textbox_decimals()
 		tbx_rotate_angle_xy = new_textbox_ndecimals()
@@ -555,6 +579,7 @@ with (frame_editor)
 		tbx_bloom_radius.suffix = "%"
 		tbx_bloom_ratio = new_textbox_integer()
 		tbx_bloom_ratio.suffix = "%"
+		tbx_bloom_blend = new_textbox_hex()
 		
 		tbx_lens_dirt_radius = new_textbox_integer()
 		tbx_lens_dirt_radius.suffix = "%"
@@ -571,6 +596,7 @@ with (frame_editor)
 		tbx_saturation.suffix = "%"
 		tbx_vibrance = new_textbox_integer()
 		tbx_vibrance.suffix = "%"
+		tbx_color_burn = new_textbox_hex()
 		
 		tbx_grain_strength = new_textbox_ninteger()
 		tbx_grain_strength.suffix = "%"
@@ -584,6 +610,7 @@ with (frame_editor)
 		tbx_vignette_softness.suffix = "%"
 		tbx_vignette_strength = new_textbox_integer()
 		tbx_vignette_strength.suffix = "%"
+		tbx_color_vignette = new_textbox_hex()
 		
 		tbx_ca_blur_amount = new_textbox_integer()
 		tbx_ca_blur_amount.suffix = "%"
@@ -687,6 +714,7 @@ with (settings)
 		tbx_ssao_power = new_textbox_integer()
 		tbx_ssao_power.suffix = "%"
 		tbx_ssao_blur_passes = new_textbox_integer()
+		tbx_ssao_color = new_textbox_hex()
 		tbx_shadow_samples = new_textbox_integer()
 		tbx_indirect_blur_passes = new_textbox_integer()
 		tbx_indirect_strength = new_textbox_integer()

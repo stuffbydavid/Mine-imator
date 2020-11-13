@@ -256,7 +256,7 @@ if (tl_edit.value[e_value.CAM_BLOOM] && setting_collapse_frameeditor_bloom)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorcamerabloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend)
+	draw_button_color("frameeditorcamerabloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend, tab.camera.tbx_bloom_blend)
 	tab_next()
 	
 	dx -= 4
@@ -355,7 +355,7 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && setting_collapse_frameeditor_
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorcameracolorcorrectioncolorburn", dx, dy, dw, tl_edit.value[e_value.CAM_COLOR_BURN], c_white, false, action_tl_frame_cam_clrcor_color_burn)
+	draw_button_color("frameeditorcameracolorcorrectioncolorburn", dx, dy, dw, tl_edit.value[e_value.CAM_COLOR_BURN], c_white, false, action_tl_frame_cam_clrcor_color_burn, tab.camera.tbx_color_burn)
 	tab_next()
 	
 	dx -= 4
@@ -415,7 +415,7 @@ if (tl_edit.value[e_value.CAM_VIGNETTE] && setting_collapse_frameeditor_vignette
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorcameravignettecolor", dx, dy, dw, tl_edit.value[e_value.CAM_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_vignette_color)
+	draw_button_color("frameeditorcameravignettecolor", dx, dy, dw, tl_edit.value[e_value.CAM_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_vignette_color, tab.camera.tbx_color_vignette)
 	tab_next()
 	
 	dx -= 4

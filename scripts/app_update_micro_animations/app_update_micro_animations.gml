@@ -191,6 +191,49 @@ with (obj_micro_animation)
 	
 	#endregion
 	
+	#region Custom
+	
+	if (custom_ease)
+	{
+		if (app.setting_reduced_motion)
+		{
+			custom_ani = custom
+			custom_ani_ease = custom
+		
+			custom_base = custom_ani
+			custom_prev = custom
+		
+			custom_offset = 0.0
+			custom_offset_ani = 0.0
+		}
+		else
+		{
+			if (custom != custom_prev || steps_alive = 0)
+			{
+				custom_base = custom_ani
+				custom_prev = custom
+				custom_offset_ani = 0.0
+			
+				if (!custom)
+					custom_offset = -custom_base
+				else
+					custom_offset = 1.0 - custom_base
+			}
+		
+			custom_offset_ani += (constantspeed * spd) * delta
+			custom_offset_ani_ease = ease((custom ? outease : inease), custom_offset_ani)
+			custom_offset_ani = clamp(custom_offset_ani, 0, 1)
+		
+			custom_ani = custom_base + (custom_offset * custom_offset_ani)
+			custom_ani = clamp(custom_ani, 0, 1)
+		
+			custom_ani_ease = custom_base + (custom_offset * custom_offset_ani_ease)
+			custom_ani_ease = clamp(custom_ani_ease, 0, 1)
+		}
+	}
+	
+	#endregion
+	
 	steps_alive++
 	steps_hidden++
 }

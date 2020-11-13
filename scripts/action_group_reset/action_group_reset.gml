@@ -51,4 +51,10 @@ switch (context_menu_group)
 		action_tl_frame_set_light(c_white, 1, 2, 250, 0.5, 50, 0.5)
 		return 0;
 	}
+	
+	case e_context_group.COLOR:
+	{
+		action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, c_black, 0, 0)
+		return 0;
+	}
 }

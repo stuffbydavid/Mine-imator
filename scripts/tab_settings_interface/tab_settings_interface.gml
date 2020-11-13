@@ -91,6 +91,7 @@ tab_control(20)
 draw_label(text_get("settingscolor") + ":", dx, dy, fa_left, fa_top)
 tab_next()
 
+/*
 tab_control_color()
 draw_button_color("settingscolorinterface", dx, dy, wid, setting_color_interface, c_main, false, action_setting_color_interface)
 draw_button_color("settingscolortext", dx + wid + 8, dy, wid, setting_color_text, c_text, false, action_setting_color_text)
@@ -134,6 +135,7 @@ tab_next()
 tab_control_color()
 draw_button_color("settingscolorviewportselection", dx, dy, wid, setting_color_viewport_selection, c_white, false, action_setting_color_viewport_selection)
 tab_next()
+*/
 
 tab_control(24)
 

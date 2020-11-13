@@ -265,85 +265,97 @@ if (background_biome.name = "custom")
 	dy += 20 
 	draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
 	dy += 8
-
+	
+	tab_set_collumns(true, floor(content_width/150))
+	
 	// Grass
 	tab_control_color()
-	draw_button_color("backgroundgrasscolor", dx, dy, dw, background_grass_color, c_plains_biome_grass, false, action_background_grass_color)
+	draw_button_color("backgroundgrasscolor", dx, dy, dw, background_grass_color, c_plains_biome_grass, false, action_background_grass_color, tab.background.tbx_color_grass)
 	tab_next()
 
 	// Foliage
 	tab_control_color()
-	draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
+	draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color, tab.background.tbx_color_foliage)
 	tab_next()
 	
 	// Water
 	tab_control_color()
-	draw_button_color("backgroundwatercolor", dx, dy, dw, background_water_color, c_plains_biome_water, false, action_background_water_color)
+	draw_button_color("backgroundwatercolor", dx, dy, dw, background_water_color, c_plains_biome_water, false, action_background_water_color, tab.background.tbx_color_water)
 	tab_next()
+	
+	tab_set_collumns(false)
 	
 	dy += 20 
 	draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
 	dy += 8
 	
+	tab_set_collumns(true, floor(content_width/150))
+	
 	// Oak leaves
 	tab_control_color()
-	draw_button_color("backgroundleavesoakcolor", dx, dy, dw, background_leaves_oak_color, c_plains_biome_foliage, false, action_background_leaves_oak_color)
+	draw_button_color("backgroundleavesoakcolor", dx, dy, dw, background_leaves_oak_color, c_plains_biome_foliage, false, action_background_leaves_oak_color, tab.background.tbx_color_leaves_oak)
 	tab_next()
 	
 	// Spruce leaves
 	tab_control_color()
-	draw_button_color("backgroundleavessprucecolor", dx, dy, dw, background_leaves_spruce_color, c_plains_biome_foliage_2, false, action_background_leaves_spruce_color)
+	draw_button_color("backgroundleavessprucecolor", dx, dy, dw, background_leaves_spruce_color, c_plains_biome_foliage_2, false, action_background_leaves_spruce_color, tab.background.tbx_color_leaves_spruce)
 	tab_next()
 	
 	// Birch
 	tab_control_color()
-	draw_button_color("backgroundleavesbirchcolor", dx, dy, dw, background_leaves_birch_color, c_plains_biome_foliage_2, false, action_background_leaves_birch_color)
+	draw_button_color("backgroundleavesbirchcolor", dx, dy, dw, background_leaves_birch_color, c_plains_biome_foliage_2, false, action_background_leaves_birch_color, tab.background.tbx_color_leaves_birch)
 	tab_next()
 	
 	// Jungle
 	tab_control_color()
-	draw_button_color("backgroundleavesjunglecolor", dx, dy, dw, background_leaves_jungle_color, c_plains_biome_foliage, false, action_background_leaves_jungle_color)
+	draw_button_color("backgroundleavesjunglecolor", dx, dy, dw, background_leaves_jungle_color, c_plains_biome_foliage, false, action_background_leaves_jungle_color, tab.background.tbx_color_leaves_jungle)
 	tab_next()
 	
 	// Acacia
 	tab_control_color()
-	draw_button_color("backgroundleavesacaciacolor", dx, dy, dw, background_leaves_acacia_color, c_plains_biome_foliage, false, action_background_leaves_acacia_color)
+	draw_button_color("backgroundleavesacaciacolor", dx, dy, dw, background_leaves_acacia_color, c_plains_biome_foliage, false, action_background_leaves_acacia_color, tab.background.tbx_color_leaves_acacia)
 	tab_next()
 	
 	// Dark oak
 	tab_control_color()
-	draw_button_color("backgroundleavesdarkoakcolor", dx, dy, dw, background_leaves_dark_oak_color, c_plains_biome_foliage, false, action_background_leaves_dark_oak_color)
+	draw_button_color("backgroundleavesdarkoakcolor", dx, dy, dw, background_leaves_dark_oak_color, c_plains_biome_foliage, false, action_background_leaves_dark_oak_color, tab.background.tbx_color_leaves_dark_oak)
 	tab_next()
+	
+	tab_set_collumns(false)
 }
 
 dy += 20
 draw_label(text_get("backgroundscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
 dy += 8
 
+tab_set_collumns(true, floor(content_width/150))
+
 // Sky
 tab_control_color()
-draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, c_sky, false, action_background_sky_color)
+draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, c_sky, false, action_background_sky_color, tab.background.tbx_color_sky)
 tab_next()
 
 // Clouds
 tab_control_color()
-draw_button_color("backgroundskycloudscolor", dx, dy, dw, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color)
+draw_button_color("backgroundskycloudscolor", dx, dy, dw, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color, tab.background.tbx_color_clouds)
 tab_next()
 
 // Sun light
 tab_control_color()
-draw_button_color("backgroundsunlightcolor", dx, dy, dw, background_sunlight_color, c_sunlight, false, action_background_sunlight_color)
+draw_button_color("backgroundsunlightcolor", dx, dy, dw, background_sunlight_color, c_sunlight, false, action_background_sunlight_color, tab.background.tbx_color_sunlight)
 tab_next()
 
 // Ambient
 tab_control_color()
-draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color)
+draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color, tab.background.tbx_color_ambient)
 tab_next()
 
 // Night
 tab_control_color()
-draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
+draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color, tab.background.tbx_color_night)
 tab_next()
+
+tab_set_collumns(false)
 
 // Show fog
 tab_control_switch()
@@ -367,7 +379,7 @@ if (background_fog_show && setting_collapse_background_fog)
 	if (background_fog_color_custom)
 	{
 		tab_control_color()
-		draw_button_color("backgroundfogcolor", dx, dy, dw, background_fog_color, c_sky, false, action_background_fog_color)
+		draw_button_color("backgroundfogcolor", dx, dy, dw, background_fog_color, c_sky, false, action_background_fog_color, tab.background.tbx_color_fog)
 		tab_next()
 	}
 	
@@ -379,7 +391,7 @@ if (background_fog_show && setting_collapse_background_fog)
 	if (background_fog_object_color_custom)
 	{
 		tab_control_color()
-		draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky, false, action_background_fog_object_color)
+		draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky, false, action_background_fog_object_color, tab.background.tbx_color_object_fog)
 		tab_next()
 	}
 	
@@ -458,7 +470,7 @@ if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 	}
 	
 	tab_control_color()
-	draw_button_color("backgroundvolumetricfogcolor", dx, dy, dw, background_volumetric_fog_color, c_white, false, action_background_volumetric_fog_color)
+	draw_button_color("backgroundvolumetricfogcolor", dx, dy, dw, background_volumetric_fog_color, c_white, false, action_background_volumetric_fog_color, tab.background.tbx_color_fog_volume)
 	tab_next()
 	
 	tab_collapse_end()

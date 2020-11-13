@@ -39,7 +39,7 @@ if (setting_render_ssao && setting_collapse_settings_ssao)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("settingsrenderssaocolor", dx, dy, dw, setting_render_ssao_color, c_black, false, action_setting_render_ssao_color)
+	draw_button_color("settingsrenderssaocolor", dx, dy, dw, setting_render_ssao_color, c_black, false, action_setting_render_ssao_color, tab.render.tbx_ssao_color)
 	tab_next()
 	dy += 10
 	

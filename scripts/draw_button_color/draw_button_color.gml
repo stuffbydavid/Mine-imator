@@ -1,4 +1,4 @@
-/// draw_button_color(name, x, y, w, color, default, hsbmode, script)
+/// draw_button_color(name, x, y, w, color, default, hsbmode, script, tbx)
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,55 +7,97 @@
 /// @arg default
 /// @arg hsbmode
 /// @arg script
+/// @arg tbx
 
-var name, xx, yy, w, color, def, hsbmode, script;
-var w, h, mouseon, mouseclick;
-name = argument0
-xx = argument1
-yy = argument2
-w = argument3
-color = argument4
-def = argument5
-hsbmode = argument6
-script = argument7
+var name, xx, yy, w, color, def, hsbmode, script, tbx;
+var w, h, mouseon, mouseclick, swatchmouseon, swatchclick, update;
+name = argument[0]
+xx = argument[1]
+yy = argument[2]
+w = argument[3]
+color = argument[4]
+def = argument[5]
+hsbmode = argument[6]
+script = argument[7]
+tbx = null
 
-h = 28
-mouseon = app_mouse_box(xx, yy, 28, 28) && content_mouseon
-mouseclick = mouseon && mouse_left
+if (argument_count > 8)
+	tbx = argument[8]
+
+w = 100
+h = 48
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
 
+yy += 20
+h = 28
+
+mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon
+mouseclick = mouseon && mouse_left
+
+swatchmouseon = app_mouse_box(xx, yy, h, h) && content_mouseon
+swatchclick = mouseon && mouse_left
+
 if (mouseon)
 	mouse_cursor = cr_handpoint
 
-context_menu_area(xx, yy, 28, 28, "contextmenuvalue", color, e_context_type.COLOR, script, def)
+context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
+microani_set(name, script, mouseon, mouseclick, popup = popup_colorpicker && popup_colorpicker.value_name = name, 1, true)
 
-microani_set(name, script, mouseon, mouseclick, popup = popup_colorpicker && popup_colorpicker.value_name = "settingsaccentcolor")
+// Caption
+draw_label(text_get(name), xx, yy - 4, fa_left, fa_bottom, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), font_emphasis)
 
-// Draw button background
-draw_box(xx, yy, 28, 28, false, color, 1)
+// Color preview
+draw_box(xx, yy, h, h, false, color, 1)
 
-var buttoncolor, buttonalpha;
-buttoncolor = merge_color(c_white, c_black, mcroani_arr[e_mcroani.PRESS])
-buttonalpha = .17 * (mcroani_arr[e_mcroani.HOVER] * (1 - mcroani_arr[e_mcroani.PRESS]))
-buttonalpha = lerp(buttonalpha, .20, mcroani_arr[e_mcroani.PRESS])
+// Draw button outline
+var bordercolor, borderalpha;
+bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
+borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+bordercolor = merge_color(bordercolor, c_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
+borderalpha = lerp(borderalpha, a_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
+bordercolor = merge_color(bordercolor, c_border, mcroani_arr[e_mcroani.DISABLED])
+borderalpha = lerp(borderalpha, a_border, mcroani_arr[e_mcroani.DISABLED])
 
-draw_box(xx, yy, 28, 28, false, buttoncolor, buttonalpha)
-draw_outline(xx + 2, yy + 2, 24, 24, 2, (color_get_lum(color) > 150 ? c_black : c_white), a_border)
+draw_outline(xx, yy, w, h, 1, bordercolor, borderalpha, true)
 
-// Colorpicker icon
+// Button swatch
 var iconcolor, iconalpha;
 iconcolor = (color_get_lum(color) > 150 ? c_black : c_white)
 iconalpha = (color_get_lum(color) > 150 ? 0.5 : 1)
-draw_image(spr_icons, icons.EYEDROPPER, xx + 14, yy + 14, 1, 1, iconcolor, iconalpha * max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
 
-// Hover effect
-draw_box_hover(xx, yy, 28, 28, mcroani_arr[e_mcroani.HOVER])
+// Color button doesn't have disabled state, use disabled ease for swatch hover
+draw_image(spr_icons, icons.EYEDROPPER, xx + floor(h/2), yy + floor(h/2), 1, 1, iconcolor, iconalpha * mcroani_arr[e_mcroani.CUSTOM])
 
-draw_label(text_get(name), floor(xx + 28 + 12), yy + 14, fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), font_emphasis)
+// Color button hover
+draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.HOVER])
 
-microani_update(mouseon, mouseclick, popup = popup_colorpicker && popup_colorpicker.value_name = name)
+// Hex input
+draw_set_font(font_value)
+xx += 28 + 10
+w -= 28 + 10
 
-if (mouseon && mouse_left_released)
+draw_label("#", xx, yy + 5, fa_left, fa_top, c_text_secondary, a_text_secondary)
+xx += string_width("#")
+w -= string_width("#")
+
+update = textbox_draw(tbx, xx, yy + 5, w, h - 9, true)
+
+if (update && (script != null))
+	script_execute(script, hex_to_color(tbx.text))
+
+microani_update(mouseon || window_focus = string(tbx), mouseclick, (popup = popup_colorpicker && popup_colorpicker.value_name = name) || window_focus = string(tbx), false, swatchmouseon)
+
+// Idle update
+if (window_focus != string(tbx) && color_to_hex(color) != tbx.text)
+	tbx.text = color_to_hex(color)
+
+if (swatchmouseon && mouse_left_released)
 	popup_colorpicker_show(name, color, def, script)
+
+if (mouseon && !swatchmouseon && mouse_left_pressed && (window_focus != string(tbx)))
+{
+	window_focus = string(tbx)
+	app_mouse_clear()
+}

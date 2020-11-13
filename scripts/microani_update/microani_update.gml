@@ -13,4 +13,7 @@ if (current_mcroani != null)
 	
 	if (argument_count > 3)
 		current_mcroani.disabled = argument[3]
+	
+	if (argument_count > 4)
+		current_mcroani.custom = argument[4]
 }
