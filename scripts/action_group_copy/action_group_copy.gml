@@ -50,4 +50,19 @@ switch (group)
 												tl_edit.value[e_value.MIX_PERCENT], tl_edit.value[e_value.BRIGHTNESS])
 		return;
 	}
+	
+	case e_context_group.CAMERA:
+	{
+		var arr = array_create(ds_list_size(camera_values_list), null);
+		
+		for (var i = 0; i < ds_list_size(camera_values_list); i++)
+		{
+			var vid = camera_values_list[|i];
+			arr[i] = tl_edit.value[vid]
+		}
+		
+		context_group_copy_list[|group] = arr
+		
+		return;
+	}
 }

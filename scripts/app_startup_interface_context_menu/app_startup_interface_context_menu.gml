@@ -22,7 +22,8 @@ enum e_context_group {
 	SCALE,
 	BEND,
 	LIGHT,
-	COLOR
+	COLOR,
+	CAMERA
 }
 
 context_group_copy_list = ds_list_create()

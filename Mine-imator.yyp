@@ -7879,14 +7879,6 @@
             }
         },
         {
-            "Key": "6f4163b1-ea3b-4d81-819a-73137edf0292",
-            "Value": {
-                "id": "428ebfee-c69a-4df3-b8ba-7c30c6ac0887",
-                "resourcePath": "scripts\\action_tl_frame_cam_dof_foreground\\action_tl_frame_cam_dof_foreground.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "6f918b3e-cfd8-4b97-94e8-eed6fa24a0d9",
             "Value": {
                 "id": "1f5f9763-ddb0-4f46-8068-da9e27b26111",
@@ -13703,14 +13695,6 @@
             }
         },
         {
-            "Key": "c1a56005-06f4-4a9c-a083-9720efca5029",
-            "Value": {
-                "id": "805727b6-5c3f-485a-93ae-8c9588c2c755",
-                "resourcePath": "scripts\\action_tl_frame_cam_dof_background\\action_tl_frame_cam_dof_background.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "c1b2caa9-a193-4e47-8fe3-837b4f565630",
             "Value": {
                 "id": "cb53d2a0-2400-49fa-aaa4-4ec0fb832248",
@@ -18853,8 +18837,6 @@
         "f6dc59bb-b9d5-4607-91ff-c96b59d0ae8a",
         "ddade72c-4195-4245-aee2-8313ccc31671",
         "dd2e1dc8-6c99-4fdc-b6dd-e981b6633f92",
-        "c1a56005-06f4-4a9c-a083-9720efca5029",
-        "6f4163b1-ea3b-4d81-819a-73137edf0292",
         "5ebb7723-efbd-4963-92bd-6feae2227ab8",
         "3cbca06b-7c86-449e-acd2-ccfe1cce5cd1",
         "32e9da40-acf2-4fb1-9b71-61f790d52fb4",

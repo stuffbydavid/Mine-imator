@@ -57,4 +57,10 @@ switch (context_menu_group)
 		action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, c_black, 0, 0)
 		return 0;
 	}
+	
+	case e_context_group.CAMERA:
+	{
+		action_tl_frame_set_camera(camera_use_default_list, true)
+		return 0;
+	}
 }

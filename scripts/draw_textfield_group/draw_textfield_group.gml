@@ -66,8 +66,7 @@ for (var i = 0; i < textfield_amount; i++)
 		maxval = textfield_max[i]
 	}
 	
-	if (context_menu_group_temp != null)
-		context_menu_area(fieldx, yy, boxwid, hei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
+	context_menu_area(fieldx, yy, boxwid, hei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
 	
 	// Adjust draw width to cover dividers
 	if (i <= textfield_amount - 1)

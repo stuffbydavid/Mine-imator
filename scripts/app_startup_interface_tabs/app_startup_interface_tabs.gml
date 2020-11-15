@@ -623,12 +623,6 @@ with (frame_editor)
 		
 		tbx_distort_amount = new_textbox_ninteger()
 		tbx_distort_amount.suffix = "%"
-		
-		snap_fringe_enabled = false
-		snap_fringe_size = 22.5
-		fringe_copy = array(0, 0, 0, 0, 0, 0)
-		tbx_snap_fringe = new_textbox_decimals()
-		tbx_snap_fringe.text = string(snap_fringe_size)
 	}
 	
 	// Texture
