@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.11.15"
+        "lastchange": "2020.11.17"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -2457,15 +2457,11 @@
         "blocktex": "Texture",
         "shapetex": "Texture",
         "modeltex": "Texture",
-        "sound": "Sound",
-        "soundtip": "Change the current sound playing.",
+        "sound": "SOUND",
         "sound/": {
             "volume": "Volume",
-            "volumetip": "Change the volume of the selected sound, in percentage of the original file.",
             "start": "Start time",
-            "starttip": "The time in the file that the sound should start at.",
             "end": "End time",
-            "endtip": "The time, relative to the end of the file, that the sound should end at. Use a positive value for looping.",
             "seconds": "seconds"
         },
         "text": "TEXT",
@@ -2484,47 +2480,33 @@
             "itemslot": "Item slot",
             "itemtex": "Image"
         },
-        "keyframe": "Keyframe",
-        "keyframetip": "Modify keyframe settings.",
+        "keyframe": "KEYFRAME",
         "transition": "Transition",
-        "transitiontip": "The easing function used to the next keyframe.",
-        "visible": "Visible",
-        "visibletip": "Whether the object is visible."
+        "visible": "Visible"
     },
     "transition/": {
+        "menu/": {
+            "other": "OTHER",
+            "easein": "EASE IN",
+            "easeout": "EASE OUT",
+            "easeinout": "EASE IN & OUT"
+        },
         "linear": "Linear",
         "instant": "Instant",
         "ease/": {
-            "inquad": "Ease in (quadratic)",
-            "outquad": "Ease out (quadratic)",
-            "inoutquad": "Ease in and out (quadratic)",
-            "incubic": "Ease in (cubic)",
-            "outcubic": "Ease out (cubic)",
-            "inoutcubic": "Ease in and out (cubic)",
-            "inquart": "Ease in (quart)",
-            "outquart": "Ease out (quart)",
-            "inoutquart": "Ease in and out (quart)",
-            "inquint": "Ease in (quint)",
-            "outquint": "Ease out (quint)",
-            "inoutquint": "Ease in and out (quint)",
-            "insine": "Ease in (sine)",
-            "outsine": "Ease out (sine)",
-            "inoutsine": "Ease in and out (sine)",
-            "inexpo": "Ease in (exponential)",
-            "outexpo": "Ease out (exponential)",
-            "inoutexpo": "Ease in and out (exponential)",
-            "incirc": "Ease in (circular)",
-            "outcirc": "Ease out (circular)",
-            "inoutcirc": "Ease in and out (circular)",
-            "inelastic": "Ease in (elastic)",
-            "outelastic": "Ease out (elastic)",
-            "inoutelastic": "Ease in and out (elastic)",
-            "inback": "Ease in (back)",
-            "outback": "Ease out (back)",
-            "inoutback": "Ease in and out (back)",
-            "inbounce": "Ease in (bounce)",
-            "outbounce": "Ease out (bounce)",
-            "inoutbounce": "Ease in and out (bounce)"
+            "in": "%1 (Ease in)",
+            "out": "%1 (Ease out)",
+            "inout": "%1 (Ease in & out)",
+            "quad": "Quadratic",
+            "cubic": "Cubic",
+            "quart": "Quartic",
+            "quint": "Quintic",
+            "sine": "Sine",
+            "expo": "Exponential",
+            "circ": "Circular",
+            "elastic": "Elastic",
+            "back": "Back",
+            "bounce": "Bounce"
         }
     },
     "settings/": {

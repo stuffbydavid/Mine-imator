@@ -12,7 +12,7 @@ yy = argument1
 width = argument2
 height = argument3
 color = argument4
-alpha = argument5
+alpha = argument5 * draw_get_alpha()
 
 var slicesize, offset, drawx, drawy;
 slicesize = 27

@@ -26,12 +26,15 @@ else if (menu_ani_type = "show") //Show
 if (menu_name = "")
 	return 0
 
+if (menu_steps = 0)
+	draw_set_alpha(0)
+
 var itemsx, itemsy;
 itemsx = 1
 itemsy = menu_amount
 
 var yy, listh, h;
-listh = ease(((menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), menu_ani) * min(itemsy, menu_show_amount) * menu_item_h
+listh = ease(((menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), menu_ani) * (menu_type != e_menu.TRANSITION_LIST ? min(itemsy, menu_show_amount) * menu_item_h : menu_height)
 h = listh + (12 * menu_scroll_horizontal.needed)
 
 yy = (menu_flip ? (menu_y - h) : (menu_y + menu_button_h))
@@ -58,7 +61,7 @@ if (window_busy = "menu")
 
 // Scrollbars
 content_mouseon = app_mouse_box(menu_x, yy, menu_w, h)
-if (menu_ani_type = "")
+if (menu_ani_type = "" && menu_type != e_menu.TRANSITION_LIST)
 {
 	if (menu_scroll_vertical.needed && content_mouseon)
 		window_scroll_focus = string(menu_scroll_vertical)
@@ -111,6 +114,120 @@ switch (menu_type)
 		break
 	}
 	
+	case e_menu.TRANSITION_LIST:
+	{
+		var dxstart, dystart, dx, dy;
+		dxstart = menu_x + 12
+		dx = dxstart
+		
+		dystart = yy
+		dy = dystart + 12
+		
+		// Other
+		dy += 14
+		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+		
+		for (var i = 0; i < ds_list_size(transition_list); i++)
+		{
+			if (!string_contains(transition_list[|i], "ease"))
+			{
+				if (dx + 46 > menu_x + menu_w)
+				{
+					dx = dxstart
+					dy += 46
+				}
+				
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					menu_transition = transition_list[|i]
+				
+				dx += 46
+			}
+		}
+		dy += 36 + 10
+		dx = dxstart
+		
+		// Ease in
+		dy += 14
+		draw_label(text_get("transitionmenueasein"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+		
+		for (var i = 0; i < ds_list_size(transition_list); i++)
+		{
+			if (string_contains(transition_list[|i], "easein") &&
+				!string_contains(transition_list[|i], "easeinout"))
+			{
+				if (dx + 46 > menu_x + menu_w)
+				{
+					dx = dxstart
+					dy += 46
+				}
+				
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					menu_transition = transition_list[|i]
+				
+				dx += 46
+			}
+		}
+		dx = dxstart
+		dy += 46
+		
+		// Ease out
+		dy += 14
+		draw_label(text_get("transitionmenueaseout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+		
+		for (var i = 0; i < ds_list_size(transition_list); i++)
+		{
+			if (string_contains(transition_list[|i], "easeout"))
+			{
+				if (dx + 46 > menu_x + menu_w)
+				{
+					dx = dxstart
+					dy += 46
+				}
+				
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					menu_transition = transition_list[|i]
+				
+				dx += 46
+			}
+		}
+		dx = dxstart
+		dy += 46
+		
+		// Ease in & out
+		dy += 14
+		draw_label(text_get("transitionmenueaseinout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+		
+		for (var i = 0; i < ds_list_size(transition_list); i++)
+		{
+			if (string_contains(transition_list[|i], "easeinout"))
+			{
+				if (dx + 46 > menu_x + menu_w)
+				{
+					dx = dxstart
+					dy += 46
+				}
+				
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					menu_transition = transition_list[|i]
+				
+				dx += 46
+			}
+		}
+		dx = dxstart
+		dy += 46
+		
+		menu_height = dy - dystart
+		
+		if (dy > window_height)
+			menu_flip = true
+		
+		break
+	}
+	
 }
 
 scissor_done()
@@ -129,9 +246,7 @@ if (menu_type = e_menu.TIMELINE && menu_tl_extend)
 // Check click
 if (!(menu_scroll_vertical.needed && menu_scroll_vertical.mouseon) && !(menu_scroll_horizontal.needed && menu_scroll_horizontal.mouseon) && mouse_left_released)
 {
-	menu_ani = 1
-	menu_ani_type = "hide"
-	window_busy = ""
+	var close = false;
 	
 	if (mouseitem)
 	{
@@ -143,10 +258,34 @@ if (!(menu_scroll_vertical.needed && menu_scroll_vertical.mouseon) && !(menu_scr
 		else
 			script_execute(menu_script, menu_value)
 		
-		app_mouse_clear()
+		app_mouse_clear()	
 	}
 	
+	if (menu_type = e_menu.TRANSITION_LIST)
+	{
+		if (menu_transition != null)
+		{
+			script_execute(menu_script, menu_transition)
+			close = true
+		}
+		else if (!content_mouseon)
+			close = true
+	}
+	else
+		close = true
+	
+	if (close)
+	{
+		menu_ani = 1
+		menu_ani_type = "hide"
+		window_busy = ""
+	}
 }
+
+if (menu_steps = 0)
+	draw_set_alpha(1)
+
+menu_steps++
 
 if (window_busy = "" && menu_ani_type != "hide")
 	window_busy = "menu"

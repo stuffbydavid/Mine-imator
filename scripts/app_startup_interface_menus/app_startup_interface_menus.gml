@@ -29,3 +29,6 @@ menu_count = 0
 menu_tl_extend = null
 menu_scroll_vertical = new(obj_scrollbar)
 menu_scroll_horizontal = new(obj_scrollbar)
+menu_height = 0
+menu_transition = null
+menu_steps = 0

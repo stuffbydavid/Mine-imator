@@ -87,7 +87,7 @@ leftp += (item.indent + xoffset)
 if (item.thumbnail)
 {
 	var thumbsize = height - 8;
-	draw_image(item.thumbnail, 0, xx + leftp, middley - thumbsize/2, thumbsize / texture_width(item.thumbnail), thumbsize / texture_height(item.thumbnail), c_white, 1)
+	draw_image(item.thumbnail, 0, xx + leftp, middley - thumbsize/2, thumbsize / texture_width(item.thumbnail), thumbsize / texture_height(item.thumbnail), item.thumbnail_blend, item.thumbnail_alpha)
 	leftp += thumbsize
 	components++
 }

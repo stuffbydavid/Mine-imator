@@ -12303,6 +12303,14 @@
             }
         },
         {
+            "Key": "ac7b74e7-d889-4a1e-9f7d-5a48482218ff",
+            "Value": {
+                "id": "c1a20f87-7ef6-4551-8040-65eead2a67b0",
+                "resourcePath": "scripts\\draw_button_transition\\draw_button_transition.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ac7b9b8e-51cb-4342-8128-38cc7b6cf15f",
             "Value": {
                 "id": "c6042915-cdf3-4b3d-bf6e-0b9393372846",
@@ -19346,6 +19354,7 @@
         "31000fe2-a92c-4c0e-a0be-4599d699bebd",
         "86cffcf9-dd8e-410a-b707-d4d3d0a66db1",
         "702f9f2f-ccfd-4fd9-89cd-874877b6b352",
+        "ac7b74e7-d889-4a1e-9f7d-5a48482218ff",
         "cc99e841-fb31-4013-821d-143182bf22ec",
         "24a2ec7e-305f-4aee-b5d0-9902736f056f",
         "21aadba0-29c9-425b-838b-a65e1a75673e",

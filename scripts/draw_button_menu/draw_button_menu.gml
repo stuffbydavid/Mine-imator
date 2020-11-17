@@ -104,6 +104,13 @@ if (mouseon)
 // Item
 var item = list_item_add(text, null, caption, tex, icon, -1, null, false, false);
 item.disabled = disabled
+
+if (type = e_menu.TRANSITION_LIST)
+{
+	item.thumbnail_blend = c_text_secondary
+	item.thumbnail_alpha = a_text_secondary
+}
+
 list_item_draw(item, xx, yy, wid, hei, false, 8)
 instance_destroy(item)
 
@@ -147,8 +154,8 @@ if (mouseon && mouse_left_released)
 	menu_model_state = menu_model_state_current
 	menu_block_state = menu_block_state_current
 	menu_margin = 8
-	
-	//menu_list_init()
+	menu_transition = null
+	menu_steps = 0
 	
 	// Init
 	menu_clear()
@@ -158,7 +165,7 @@ if (mouseon && mouse_left_released)
 	else if (type = e_menu.TIMELINE)
 		menu_list = menu_timeline_init()
 	else
-		menu_transition_init()
+		menu_list = menu_transition_init()
 	
 	menu_amount = ds_list_size(menu_list.item)
 	menu_focus_selected()

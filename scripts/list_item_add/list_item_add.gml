@@ -44,6 +44,8 @@ item.name = name
 item.value = value
 item.caption = caption
 item.thumbnail = thumbnail
+item.thumbnail_blend = c_white
+item.thumbnail_alpha = 1
 
 item.icon_left = lefticon
 item.actions_left = null
