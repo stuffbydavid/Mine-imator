@@ -5,6 +5,7 @@ var tlx, tly, tlw, tlh, tlstartpos;
 var listx, listy, listw, listh;
 var mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
 var mousemovetl, mousemoveindex, movehltl, movehlpos;
+var headerx, headery, headerw, headerh;
 var barx, bary, barw, barh;
 var framestep, framehighlight, f;
 var markerx, markery;
@@ -13,23 +14,35 @@ var regionx1, regionx2;
 content_mouseon = true
 
 // Background
-draw_box(content_x, content_y, content_width, content_height, false, setting_color_background, 1)
+draw_box(content_x, content_y, content_width, content_height, false, c_background, 1)
 
 // Init
-itemh = (setting_timeline_compact ? 18 : 24)
+itemh = 24//(setting_timeline_compact ? 18 : 24)
 itemhalf = itemh / 2
-indent = 16
+indent = 22 // 32
+
+// Header
+headerw = content_width
+headerh = 32
+headerx = content_x
+headery = content_y
+
+// Bar
+barw = content_width - tab.list_width
+barh = 24
+barx = content_x + min(timeline.list_width, content_width)
+bary = content_y + headerh
 
 // List
 listx = content_x
 listw = min(timeline.list_width, content_width)
-listy = content_y
-listh = floor((content_height - 30) / itemh) * itemh
+listy = content_y + (headerh + barh)
+listh = floor((content_height - (headerh + barh) - 12) / itemh) * itemh
 
 // Timeline
 tlx = content_x + listw
-tly = content_y
-tlw = content_width - 30 * timeline.ver_scroll.needed - listw
+tly = content_y + (headerh + barh)
+tlw = content_width - (12 * timeline.ver_scroll.needed) - listw
 tlh = listh
 
 // Adjust by panel location
@@ -49,34 +62,147 @@ if (timeline_marker < tlstartpos || timeline_marker > tlstartpos + tlw / timelin
 	timeline_insert_pos = tlstartpos
 else
 	timeline_insert_pos = timeline_marker
-	
-// Bar
-barw = content_width - tab.list_width
-barh = 28
-barx = tlx
-bary = tly - barh
 
 // Mouse
-mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !popup_mouseon)
-mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon)
-mousetl = floor((mouse_y - content_y + timeline.ver_scroll.value) / itemh)
+mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+mousetl = floor((mouse_y - tly + timeline.ver_scroll.value) / itemh)
 mousetlname = null
 mousekf = null
 mousekfstart = null
 mousekfend = null
+
 if (mousetl >= 0 && mousetl < ds_list_size(tree_visible_list))
 	mousetl = tree_visible_list[|mousetl]
 else
 	mousetl = null
+	
 mousemovetl = null
 mousemoveindex = null
 movehltl = null
 movehlpos = null
 timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom))
 
+// Timeline header
+var timex, timelabel;
+timex = headerx + 8
+
+// Current time
+draw_set_font(font_heading)
+timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo)
+draw_label(timelabel, timex, headery + headerh - 6, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
+timex += string_width(timelabel)
+
+// Time length
+draw_set_font(font_subheading)
+timelabel = timeline_show_frames ? " / " + string(timeline_length) : " / " + string_time_seconds(timeline_length / project_tempo)
+draw_label(timelabel, timex, headery + headerh - 7, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
+timex += string_width(timelabel)
+
+// Time selected
+if (timeline_region_start != null && (timeline_region_start != timeline_region_end))
+{
+	timelabel = " (" + (timeline_show_frames ? string(timeline_region_end - timeline_region_start) : string_time_seconds((timeline_region_end - timeline_region_start) / project_tempo)) + ")"
+	draw_label(timelabel, timex, headery + headerh - 7, fa_left, fa_bottom, c_accent, a_accent)
+	timex += string_width(timelabel)
+}
+
+timex += 8
+
+// Click to switch time display
+if (app_mouse_box(headerx, headery, timex, headerh))
+{
+	mouse_cursor = cr_handpoint
+	
+	if (mouse_left_released)
+		timeline_show_frames = !timeline_show_frames
+}
+
+
+var buttonsxstart, buttonsx, buttonsy;
+buttonsxstart = (timeline_settings_w = null ? 0 : floor((headerx + headerw/2) - timeline_settings_w/2))
+buttonsx = max(timex, buttonsxstart)
+buttonsy = headery + 4
+
+// Previous keyframe
+draw_button_icon("timelinepreviouskeyframe", buttonsx, buttonsy, 24, 24, false, icons.PREVIOUS_KEYFRAME, action_tl_keyframe_previous, timeline_playing, "tooltiptlpreviouskeyframe")
+buttonsx += 24 + 6
+
+// Previous frame
+if (draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.PREVIOUS_FRAME, null, timeline_playing, "tooltiptlpreviousframe"))
+	timeline_marker = max(((floor(timeline_marker) != timeline_marker) ? floor(timeline_marker) : timeline_marker - 1), 0)
+
+buttonsx += 24 + 6
+
+draw_divide_vertical(buttonsx, buttonsy + 2, 20)
+buttonsx += 6
+
+// Stop
+draw_button_icon("timelinestop", buttonsx, buttonsy, 24, 24, false, icons.STOP, action_tl_play_stop, false, "tooltiptlstop")
+buttonsx += 24 + 6
+
+// Play
+draw_button_icon("timelineplay", buttonsx, buttonsy, 24, 24, false, timeline_playing ? icons.PAUSE : icons.PLAY, action_tl_play, false, timeline_playing ? "tooltiptlpause" : "tooltiptlplay")
+buttonsx += 24 + 6
+
+// Skip to region start and play
+if (draw_button_icon("timelineplayregion", buttonsx, buttonsy, 24, 24, false, icons.PLAY_REGION, null, timeline_region_start = null, "tooltiptlplayregion"))
+{
+	timeline_marker = timeline_region_start
+	
+	if (timeline_playing)
+		action_tl_play()
+	
+	action_tl_play()
+}
+
+buttonsx += 24 + 6
+
+draw_divide_vertical(buttonsx, buttonsy + 2, 20)
+buttonsx += 6
+
+// Next frame
+if (draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.NEXT_FRAME, null, timeline_playing, "tooltiptlnextframe"))
+	timeline_marker = ((ceil(timeline_marker) != timeline_marker) ? ceil(timeline_marker) : timeline_marker + 1)
+buttonsx += 24 + 6
+
+// Next keyframe
+draw_button_icon("timelinenextkeyframe", buttonsx, buttonsy, 24, 24, false, icons.NEXT_KEYFRAME, action_tl_keyframe_next, timeline_playing, "tooltiptlnextkeyframe")
+buttonsx += 24 + 6
+
+timeline_settings_w = (buttonsx - buttonsxstart)
+
+
+buttonsxstart = (timeline_settings_right_w = null ? 0 : headerx + headerw - timeline_settings_right_w - 8)
+buttonsx = max(buttonsx, buttonsxstart)
+buttonsxstart = buttonsx
+
+// Show intervals
+draw_button_icon("timelineintervals", buttonsx, buttonsy, 24, 24, timeline_intervals_show, icons.INTERVALS, action_tl_intervals_show, false, timeline_intervals_show ? "tooltiptlhideintervals" : "tooltiptlshowintervals")
+buttonsx += 24
+
+draw_settings_button("timelinesettingstimer", buttonsx, buttonsy, 12, 24, false, tl_intervals_settings_draw)
+buttonsx += 12 + 6
+
+// Loop
+var tooltip;
+
+if (!timeline_repeat && !timeline_seamless_repeat)
+	tooltip = "tooltiptlenableloop"
+else if (timeline_repeat && !timeline_seamless_repeat)
+	tooltip = "tooltiptlenableseamlessloop"
+else
+	tooltip = "tooltiptldisableloop"
+
+draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.LOOP_SEAMLESS : icons.LOOP, action_tl_play_repeat, false, tooltip)
+buttonsx += 24 + 2
+
+timeline_settings_right_w = (buttonsx - buttonsxstart)
+
+
 // Empty
 if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100)
-	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor(content_height / 2), fa_center, fa_middle, null, 0.3, setting_font_big)
+	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor((content_height - (headerh + barh)) / 2), fa_center, fa_middle, c_text_tertiary, a_text_tertiary, font_startup)
 
 // Keyframe backgrounds
 dy = tly
@@ -84,27 +210,25 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
 	if (dy + itemh > tly + tlh)
 		break
-		
+	
 	dx = tlx
 	var tl = tree_visible_list[|t];
 	
-	draw_box(dx, dy, tlw, itemh - 1, false, setting_color_interface, 1)
+	draw_divide(dx, dy + itemh, tlw)
 	
 	// Select highlight
-	if (tl.selected)
-		draw_box(dx, dy, tlw, itemh - 1, false, setting_color_timeline_select, 1)
-	else
-		draw_box(dx, dy, tlw, itemh - 1, false, c_black, 0.025 + 0.04 * (t mod 2))
+	if (tl.selected || tl.list_mouseon)
+		draw_box(dx, dy, tlw, itemh, false, c_accent_overlay, a_accent_overlay)
 	
 	// Hidden
 	if (tl.hide)
-		draw_box(dx, dy, tlw, itemh - 1, false, c_black, 0.25)
+		draw_box(dx, dy, tlw, itemh, false, c_background_secondary, .5)
 	
 	dy += itemh
 }
 
 // Timeline bar
-draw_box(barx, bary, barw, barh - 1, false, setting_color_timeline, 1)
+draw_box(content_x, bary, content_width, barh, false, c_background_secondary, 1)
 
 // Timeline region
 if (timeline_region_start != null)
@@ -120,13 +244,24 @@ if (timeline_region_start != null)
 		x1 = clamp(x1, 0, barw)
 		x2 = clamp(x2, 0, barw)
 		
-		draw_box(barx + x1, bary, x2 - x1, barh - 1, false, setting_color_highlight, 1)
+		// Area overlay
+		draw_box(barx + x1, bary, x2 - x1, content_height, false, c_accent_overlay, a_accent_overlay)
 		
-		if (x1 >= 0)
-			draw_image(spr_marker, 1, barx + x1, bary, 1, content_height + barh, setting_color_highlight, 1)
-			
-		if (x2 < barw)
-			draw_image(spr_marker, 1, barx + x2, bary, 1, content_height + barh, setting_color_highlight, 1)
+		x1 = regionx1
+		x2 = regionx2
+		
+		// Start/end markers
+		if (x1 >= 0 && x1 <= barw)
+		{
+			draw_image(spr_marker_region, 0, barx + x1, bary, 1, 1, c_accent, 1)
+			draw_box(barx + x1, bary, 2, content_height, false, c_accent, 1)
+		}
+		
+		if (x2 >= 0 && x2 <= barw)
+		{
+			draw_image(spr_marker_region, 1, barx + x2 + 10, bary, 1, 1, c_accent, 1)
+			draw_box(barx + x2, bary, 2, content_height, false, c_accent, 1)
+		}
 	}
 }
 
@@ -160,9 +295,12 @@ if (timeline_zoom < 0.5)
 
 f = floor(timeline.hor_scroll.value / (timeline_zoom * framestep)) * framestep
 
+draw_set_valign(fa_bottom)
+draw_set_font(font_subheading)
+
 for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < barw; dx += timeline_zoom * framestep)
 {
-	var highlight, linex, color, linecolor, alpha, fullsec, halfsec, inregion;
+	var highlight, linex, color, linecolor, linealpha, alpha, fullsec, halfsec, inregion;
 	highlight = ((f mod framehighlight) = 0)
 	linex = floor(barx + dx)
 	alpha = 1
@@ -170,64 +308,49 @@ for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < 
 	halfsec = false
 	inregion = false
 	
-	if (timeline_region_start != null && f >= timeline_region_start && f <= timeline_region_end)
+	color = c_text_secondary
+	alpha = a_text_secondary
+	linecolor = c_text_main
+	linealpha = a_text_main
+	
+	// Frame highlight
+	if (project_file != "" && instance_exists(obj_timeline) && timeline_intervals_show)
 	{
-		inregion = true
-		color = setting_color_highlight_text
-	}
-	else
-		color = setting_color_timeline_text
-	
-	linecolor = color
-	
-	if (project_file != "" && instance_exists(obj_timeline) && timeline_show_seconds)
-	{
-		if (f mod (project_tempo/2) = 0 && f > 0)
+		if (((timeline_interval_offset - f) mod timeline_interval_size) = 0 && f > 0)
 		{
-			fullsec = false
-			halfsec = true
-			alpha = 0.35
-			linecolor = setting_color_timeline_marks
+			color = c_accent
+			alpha = 1
+			
+			linecolor = c_accent
+			linealpha = .5
+			
+			draw_line_ext(linex, tly, linex, tly + (ds_list_size(tree_visible_list) * itemh), linecolor, linealpha)
 		}
-	
-		if (f mod project_tempo = 0 && f > 0)
-		{
-			fullsec = true
-			halfsec = false
-			alpha = .8
-			linecolor = setting_color_timeline_marks
-		}
-		
-		if (fullsec || halfsec)
-			color = setting_color_timeline_marks
 	}
-	
-	// Horizontal line at base of notches of timeline bar
-	if ((fullsec || halfsec) && !inregion)
-		draw_line_ext(linex - 2, bary + barh - 1, linex + 1, bary + barh - 1, color, 1)
-	
-	// Line through timeline
-	if (fullsec || halfsec)
-		draw_line_ext(linex, bary + barh - 1, linex, content_y + content_height, linecolor, alpha)
-	
-	if (inregion)
-		linecolor = setting_color_highlight_text
 	
 	// Vertical notch in timeline bar
-	draw_line_ext(linex, (bary + barh - 3 - 2 * highlight) - 2 * (fullsec || halfsec), linex, bary + barh - 1, linecolor, 1)
+	draw_line_ext(linex, (bary + barh - (highlight ? 4 : 2)), linex, bary + barh, linecolor, linealpha)
 	
 	if (highlight)
 	{
 		var oldcol = draw_get_color();
+		var oldalpha = draw_get_alpha();
+		
 		draw_set_color(color)
+		draw_set_alpha(alpha * oldalpha)
 		draw_set_halign((f = 0) ? fa_left : fa_center)
-		draw_text(linex, bary + 5, string(f))
+		
+		draw_text(linex, bary + barh - 4, string(f))
+		
 		draw_set_halign(fa_left)
 		draw_set_color(oldcol)
+		draw_set_alpha(oldalpha)
 	}
 		
 	f += framestep
 }
+
+
 
 // Keyframes
 dy = tly
@@ -262,13 +385,15 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				var boxw = tl_keyframe_length(kf) * timeline_zoom;
 				if (dx + boxw < tlx)
 					continue
-				draw_box(dx, dy, boxw, itemh, false, c_black, 0.1)
+				
+				draw_box(dx, dy, boxw, itemh, false, c_text_tertiary, a_text_tertiary)
 			}
 			else
 			{
 				if (dx < tlx)
 					continue
-				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, tl.color, 0.1)
+				
+				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
 			}
 		}
 	}
@@ -303,10 +428,10 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			wavehei = itemhalf * kf.value[e_value.SOUND_VOLUME]
 			alpha = draw_get_alpha()
 			
-			// Background
+			// Audio background
 			if (kf.selected)
-				draw_box(boxx, dy, boxw, itemh, false, setting_color_buttons_pressed, 1)
-				
+				draw_box(boxx, dy, boxw, itemh, false, c_hover, a_hover)
+			
 			// Draw samples
 			draw_primitive_begin(pr_linelist)
 			for (var xx = 0; xx < boxw; xx++)
@@ -320,8 +445,8 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 					draw_primitive_end()
 					draw_primitive_begin(pr_linelist)
 				}
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_white : tl.color, alpha)
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_white : tl.color, alpha)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_accent : c_text_secondary, kf.selected ? 1 : a_text_secondary)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_accent : c_text_secondary, kf.selected ? 1 : a_text_secondary)
 			}
 			draw_primitive_end()
 			
@@ -345,13 +470,15 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				nextdx = tlx + tlw
 				if (k < ds_list_size(tl.keyframe_list) - 1)
 					nextdx = min(nextdx, tlx + floor(tl.keyframe_list[|k + 1].position * timeline_zoom - timeline.hor_scroll.value))
+				
+				// Block out area
 				if (curdx < nextdx && nextdx >= 0)
-					draw_box(curdx, dy, nextdx - curdx, itemh - 1, false, c_black, 0.25)
+					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_text_tertiary, a_text_tertiary)
 			}
 			
 			if (dx > tlx + tlw)
 				break
-				
+			
 			if (dx < tlx)
 				continue
 			
@@ -359,14 +486,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			// Sprite
 			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
-			
-			if (kf.selected)
-				image = 2
-				
-			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_white : tl.color, 1)
-			
-			if (kf.selected)
-				draw_image(spr_keyframe, 3, dx + 1, dy + itemhalf, 1, 1, setting_color_highlight, 1)
+			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : c_text_secondary, kf.selected ? 1 : a_text_secondary)
 		}
 		
 		if (mouse && mouseintl && !tl.lock)
@@ -385,10 +505,19 @@ if (window_busy = "timelineselectkeyframes")
 	x1 = clamp(mouse_click_x + (timeline_select_starth - timeline.hor_scroll.value), tlx, tlx + tlw)
 	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), tly, tly + tlh)
 	x2 = clamp(mouse_x, tlx, tlx + tlw)
-	y2 = clamp(mouse_y, tly, tly + tlh)
+	y2 = clamp(mouse_y, tly, tly + tlh) - y1
+	
+	if (x2 < x1)
+	{
+		var swap = x1;
+		x1 = x2
+		x2 = swap
+	}
+	x2 -= x1
+	
 	render_set_culling(false)
-	draw_box(x1, y1, x2 - x1, y2 - y1, false, setting_color_timeline_select_box, 0.25)
-	draw_box(x1, y1, x2 - x1, y2 - y1, true, setting_color_timeline_select_box, 1)
+	draw_box(x1, y1, x2, y2, false, c_accent_overlay, a_accent_overlay)
+	draw_outline(x1, y1, x2, y2, 2, c_accent, 1, true)
 	render_set_culling(true)
 	
 	if (!mouse_left)
@@ -450,53 +579,168 @@ if (timeline_playing && setting_timeline_autoscroll && window_busy = "")
 	}
 	
 	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+	timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 }
 
 if (markerx >= 0 && markerx < tlw)
 {
-	draw_image(spr_marker, 0, tlx + 1 + markerx, content_y - barh + markery, 1, 1, setting_color_timeline_text, 1)
-	draw_image(spr_marker, 1, tlx + 1 + markerx, content_y - barh + markery + 8, 1, content_height + barh - 8-markery, setting_color_timeline_text, 1)
+	draw_image(spr_marker, 0, tlx + 1 + markerx, bary + barh, 1, 1, c_accent, 1)
+	draw_box(tlx + markerx, bary + barh, 2, content_height, false, c_accent, 1)
 }
 
 // Timeline list
-draw_box(content_x, tly, listw, content_height, false, setting_color_interface, 1)
+var tl, buttonsize, buttonpad;
+var itemx, itemy, itemw, itemhover, buttonhover, minw, xx, xright;
+buttonsize = 16
+buttonpad = (itemh - buttonsize)/2
+
+draw_box(content_x, bary, listw, barh, false, c_background_secondary, 1)
+draw_box(content_x, listy, listw, content_height, false, c_background, 1)
+draw_box(content_x + listw, tly - barh, 1, content_height - headerh, false, c_border, a_border)
+
+// Context menu
+if (mouseinnames && mousetl != null && mousetl.list_mouseon)
+	context_menu_area(listx, listy, listw, listh, "timelinelist", mousetl, null, null, null)
+
 dy = listy
 for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
-	var tl, level, mouse, w, textcol, name;
-	var showkeyframes, showlock, showhide;
-	
 	if (dy + itemh > listy + listh)
 		break
 	
 	tl = tree_visible_list[|t]
-	level = tl.level
-	dx = listx + 5 + level * indent
-	w = listw - 5
-	textcol = setting_color_text
+	itemx = content_x + 8 + (indent * tl.level)
+	itemy = dy
+	itemw = listw - 8 - (indent * tl.level)
+	itemhover = (tl = mousetl) && mouseinnames
+	buttonhover = false
 	
-	// Select highlight
-	if (tl.selected)
+	// Hovering
+	if (itemhover)
+		mouse_cursor = cr_handpoint
+	
+	if (itemhover && mouse_left && tl.list_mouseon)
+		draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
+	else if (tl.selected || itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
+		draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
+	
+	xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock))
+	
+	// Hide/mute
+	if (itemhover || tl.hide)
 	{
-		draw_box(content_x, dy, listw, itemh - 1, false, setting_color_timeline_select, 1)
-		draw_set_font(setting_font_bold)
+		if (tl.type != e_tl_type.AUDIO)
+		{
+			// Hide
+			if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, icons.SHOW + tl.hide, null, false, tl.hide ? "tooltiptlshow" : "tooltiptlhide"))
+				action_tl_hide(tl)
+		}
+		else
+		{
+			// Mute
+			if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, icons.SOUND + tl.hide, null, false, tl.hide ? "tooltiptlunmute" : "tooltiptlmute"))
+				action_tl_hide(tl)
+		}
+		
+		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
 	}
-	else if (window_busy = "timelinemove")
+	xx -= (buttonsize + 4) * (itemhover || tl.lock)
+	
+	// Lock
+	if (itemhover || tl.lock)
+	{
+		if (draw_button_icon("timelinelock" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.lock, icons.UNLOCK + tl.lock, null, false, (tl.lock ? "tooltiptlunlock" : "tooltiptllock")))
+			action_tl_lock(tl)
+		
+		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+	}
+	
+	minw = xx - itemx
+	xright = xx
+	
+	xx = itemx + 4
+	minw -= 4
+	
+	// Expand/collapse children
+	if (ds_list_size(tl.tree_list) > 0 && (((xx + 20 + 8) - xright) < minw))
+	{
+		if (draw_button_icon("timelineexpand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand"), spr_arrow_small_ani))
+			action_tl_extend(tl)
+		
+		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+	}
+	xx += (buttonsize + 4)
+	minw -= (buttonsize + 4)
+	
+	// Timeline icon
+	var iconcolor, iconalpha;
+	
+	if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
+	{
+		iconcolor = c_accent
+		iconalpha = 1
+	}
+	else
+	{
+		iconcolor = c_text_tertiary
+		iconalpha = a_text_tertiary
+	}
+	
+	if (tl.type != null && (((xx + 28 + 8) - xright) < minw))
+		draw_image(spr_icons, timeline_icon_list[|tl.type], xx + 10, itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
+	
+	xx += 28
+	minw -= 28
+	
+	tl.list_mouseon = itemhover && !buttonhover
+	
+	// Timeline name
+	var namecolor, namealpha, name;
+	
+	if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
+	{
+		namecolor = c_accent
+		namealpha = 1
+	}
+	else
+	{
+		namecolor = c_text_main
+		namealpha = a_text_main
+	}
+	
+	draw_set_font(font_value)
+	name = string_limit(tl.display_name, minw)
+	if (dev_mode)
+		name += " [" + string(tl.save_id) + "]"
+	
+	if (name != "")
+		draw_label(name, xx, itemy + (itemh/2), fa_left, fa_middle, namecolor, namealpha, font_value)
+	
+	if (window_busy = "timelineclick")
+	{
+		window_busy = ""
+		
+		if (app_mouse_box(xx, itemy, string_width(name), itemh))
+			mousetlname = tl
+		
+		window_busy = "timelineclick"
+	}
+	
+	if (window_busy = "timelinemove")
 	{
 		// Move highlight
 		if (timeline_move_highlight_tl = tl)
 		{
-			draw_box(content_x, dy, listw, itemh - 1, false, setting_color_highlight, 1)
-			textcol = setting_color_highlight_text
+			draw_box(content_x, dy, listw, itemh, false, c_hover, a_hover)
 		}
 		else if (timeline_move_highlight_tl = null)
 		{
 			if (timeline_move_highlight_pos = t)
-				draw_box(content_x, max(tly, dy - 2), listw, 4, false, setting_color_highlight, 1)
+				draw_box(content_x, max(tly, dy - 2), listw, 4, false, c_hover, a_hover)
 			else if (timeline_move_highlight_pos = t + 1)
-				draw_box(content_x, dy + itemh - 2, listw, 4, false, setting_color_highlight, 1)
+				draw_box(content_x, dy + itemh - 2, listw, 4, false, c_hover, a_hover)
 		}
-	
+		
 		// Set move target
 		var index = ds_list_find_index(tl.parent.tree_list, tl);
 		if ((mouse_y >= dy || t = timeline_list_first) && mouse_y < dy + 8)
@@ -533,181 +777,11 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		
 	}
 	
-	// Hide
-	if ((mouseinnames && tl = mousetl) || (window_busy = "timelineclick" && timeline_select = tl))
-	{
-		showkeyframes = true
-		showlock = true
-		showhide = true
-		
-		if (app_mouse_box(content_x + w - 16 * 3, dy, 16 * 3, itemh) && mouse_left_pressed)
-		{
-			window_focus = string(timeline.ver_scroll)
-			
-			if (app_mouse_box(content_x + w - 16 * 1, dy, 16, itemh))
-				action_tl_hide(tl)
-				
-			if (app_mouse_box(content_x + w - 16 * 2, dy, 16, itemh))
-				action_tl_lock(tl)
-				
-			if (app_mouse_box(content_x + w - 16 * 3, dy, 16, itemh))
-				action_tl_select_keyframes(tl)
-				
-			app_mouse_clear()
-		}
-		timeline_move_off_x = dx - mouse_x
-		timeline_move_off_y = dy - mouse_y
-	}
-	else
-	{
-		showkeyframes = false
-		showlock = tl.lock
-		showhide = tl.hide
-	}
-	
-	if (showkeyframes)
-	{
-		tip_set(text_get("timelinekeyframestip"), content_x + w - 16 * 3, dy, 16, itemh)
-		draw_image(spr_icons, icons.KEYFRAME, content_x + w - 16 * 3 + 8, dy + itemh / 2, 1, 1, setting_color_text, 1)
-	}
-	
-	if (showlock)
-	{
-		tip_set(text_get("timelinelocktip"), content_x + w - 16 * 2, dy, 16, itemh)
-		draw_image(spr_icons, tl.lock ? icons.LOCK : icons.UNLOCK, content_x + w - 8 - 16 * 1, dy + itemh / 2, 1, 1, setting_color_text, 1)
-	}
-	
-	if (showhide)
-	{
-		tip_set(text_get(((tl.type = e_tl_type.AUDIO) ? "timelinemutetip" : "timelinehidetip")), content_x + w - 16 * 1, dy, 16, itemh)
-		draw_image(spr_icons, (tl.type = e_tl_type.AUDIO) ? (tl.hide ? icons.MUTE : icons.SOUND) : (tl.hide ? icons.HIDE : icons.SHOW), content_x + w - 8 - 16 * 0, dy + itemh / 2, 1, 1, setting_color_text, 1)
-	}
-	
-	if (showkeyframes)
-		w -= 16 * 3
-	else if (showlock)
-		w -= 16 * 2
-	else if (showhide)
-		w -= 16 * 1
-	
-	// Expander / Collapser
-	if (ds_list_size(tl.tree_list) > 0 && dx - listx + 10 < w)
-	{
-		if (app_mouse_box(listx, dy, dx - listx + 10, itemh) && mouse_left_pressed)
-		{
-			window_focus = string(timeline.ver_scroll)
-			action_tl_extend(tl)
-			app_mouse_clear()
-		}
-		draw_image(spr_icons, tl.tree_extend ? icons.ARROW_DOWN_TINY : icons.ARROW_RIGHT_TINY, dx + 2, dy + itemh / 2, 1, 1, textcol, 1)
-		dx += 10
-	}
-	
-	// Name
-	name = string_limit(string_remove_newline(tl.display_name), w - (dx - listx))
-	if (dev_mode)
-		name += " [" + string(tl.save_id) + "]"
-		
-	if (window_busy = "timelineclick")
-	{
-		window_busy = ""
-		if (app_mouse_box(dx, dy, string_width(name), itemh))
-			mousetlname = tl
-		window_busy = "timelineclick"
-	}
-	draw_label(name, dx, dy + itemh / 2, fa_left, fa_middle, textcol, 1)
-	
-	draw_set_font(setting_font)
 	dy += itemh
 }
 
-// Tools
-dx = listx + 5
-dy = listy + content_height - 28
-
-while (true)
-{
-	// Right
-	tip_set_shortcut(setting_key_folder, setting_key_folder_control)
-	if (draw_button_normal("timelinefolder", dx, dy, 24, 24, e_button.NO_TEXT, false, false, true, icons.FOLDER))
-		action_tl_folder()
-
-	dx += 25
-	if (dx + 25 > listx + listw - 5)
-		break
-		
-	tip_set_shortcut(setting_key_duplicate_timelines, setting_key_duplicate_timelines_control)
-	if (draw_button_normal("timelineduplicate", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.DUPLICATE))
-		action_tl_duplicate()
-		
-	dx += 25
-	if (dx + 25 > listx + listw - 5)
-		break
-	
-	tip_set_shortcut(setting_key_remove_timelines, setting_key_remove_timelines_control)
-	if (draw_button_normal("timelineremove", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.DELETE))
-		action_tl_remove()
-	
-	dx += 25
-	if (dx + 25 > listx + listw - 5)
-		break
-		
-	if (draw_button_normal("timelinesave", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings, icons.EXPORT))
-		object_save()
-		
-	// Left
-	dx = listx + listw - 5-25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	if (draw_button_normal("timelineexportkeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes_export, icons.EXPORT_KEYFRAMES))
-		keyframes_save()
-	dx -= 25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	tip_set_shortcut(setting_key_remove_keyframes, setting_key_remove_keyframes_control)
-	if (draw_button_normal("timelineremovekeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.DELETE_KEYFRAMES))
-		action_tl_keyframes_remove()
-	dx -= 25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	tip_set_shortcut(setting_key_paste_keyframes, setting_key_paste_keyframes_control)
-	if (draw_button_normal("timelinepastekeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, (copy_kf_amount > 0), icons.PASTE_KEYFRAMES))
-		action_tl_keyframes_paste(timeline_insert_pos)
-	dx -= 25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	tip_set_shortcut(setting_key_cut_keyframes, setting_key_cut_keyframes_control)
-	if (draw_button_normal("timelinecutkeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.CUT_KEYFRAMES))
-		action_tl_keyframes_cut()
-	dx -= 25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	tip_set_shortcut(setting_key_copy_keyframes, setting_key_copy_keyframes_control)
-	if (draw_button_normal("timelinecopykeyframes", dx, dy, 24, 24, e_button.NO_TEXT, false, false, timeline_settings_keyframes, icons.COPY_KEYFRAMES))
-		tl_keyframes_copy()
-	dx -= 25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	if (draw_button_normal("timelinerun", dx, dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_run_fn), icons.RUN))
-		action_tl_load_loop(timeline_settings_run_fn)
-	dx -= 25
-	if (dx < 10 + 25 * 4)
-		break
-		
-	if (draw_button_normal("timelinewalk", dx, dy, 24, 24, e_button.NO_TEXT, false, false, file_exists_lib(timeline_settings_walk_fn), icons.WALK))
-		action_tl_load_loop(timeline_settings_walk_fn)
-	
-	break
-}
-
 // Resize list
-if (app_mouse_box(tlx - 5, content_y - 20, 5, content_height + 20))
+if (app_mouse_box(tlx - 5, tly - barh, 5, content_height - headerh))
 {
 	mouse_cursor = cr_size_we
 	if (mouse_left_pressed)
@@ -720,7 +794,7 @@ if (app_mouse_box(tlx - 5, content_y - 20, 5, content_height + 20))
 if (window_busy = "timelinelistresize")
 {
 	mouse_cursor = cr_size_we
-	tab.list_width = clamp(timeline_list_resize_start + (mouse_x - mouse_click_x), 100, content_width)
+	tab.list_width = clamp(timeline_list_resize_start + (mouse_x - mouse_click_x), 128, content_width)
 	if (!mouse_left)
 		window_busy = ""
 }
@@ -729,7 +803,7 @@ if (window_busy = "timelinelistresize")
 if (window_busy = "" && mouseinnames)
 {
 	mouse_cursor = cr_handpoint
-	if (mouse_left_pressed)
+	if (mouse_left_pressed && (mousetl = null || mousetl.list_mouseon))
 	{
 		window_busy = "timelineclick"
 		timeline_select = mousetl
@@ -739,8 +813,8 @@ if (window_busy = "" && mouseinnames)
 }
 
 // Transition menu
-if (window_busy = "" && mouseintl && mouse_right_pressed && tl_edit)
-	action_tl_transition_menu(tl_edit.value[e_value.TRANSITION])
+if (window_busy = "" && mouseintl && mouse_right_released)
+	context_menu_area(content_x, content_y, content_width, content_height, "timeline", null, null, null, null)
 
 // Sound resize
 if (mousekfstart)
@@ -770,7 +844,7 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 	if (mouse_left_pressed)
 	{
 		window_focus = "timeline"
-		action_toolbar_play_break()
+		action_tl_play_break()
 		
 		if (mousekf)
 		{
@@ -864,12 +938,21 @@ if (window_busy = "timelineselect")
 	mouse_cursor = cr_handpoint
 	
 	x1 = clamp(mouse_click_x, content_x, tlx)
-	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), content_y, content_y + tlh)
+	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), listy, listy + tlh)
 	x2 = clamp(mouse_x, content_x, tlx)
-	y2 = clamp(mouse_y, content_y, content_y + tlh)
+	y2 = clamp(mouse_y, listy, listy + tlh) - y1
+	
+	if (x2 < x1)
+	{
+		var swap = x1;
+		x1 = x2
+		x2 = swap
+	}
+	x2 -= x1
+	
 	render_set_culling(false)
-	draw_box(x1, y1, x2 - x1, y2 - y1, false, c_blue, 0.25)
-	draw_box(x1, y1, x2 - x1, y2 - y1, true, c_blue, 1)
+	draw_box(x1, y1, x2, y2, false, c_accent_overlay, a_accent_overlay)
+	draw_outline(x1, y1, x2, y2, 2, c_accent, 1, true)
 	render_set_culling(true)
 	
 	if (!mouse_left)
@@ -878,8 +961,8 @@ if (window_busy = "timelineselect")
 		{
 			var stl, etl, tmp;
 			
-			stl = (mouse_click_y - content_y + timeline_select_startv) / itemh
-			etl = (mouse_y - content_y + timeline.ver_scroll.value) / itemh
+			stl = (mouse_click_y - listy + timeline_select_startv) / itemh
+			etl = (mouse_y - listy + timeline.ver_scroll.value) / itemh
 			
 			if (stl > etl)
 			{
@@ -962,7 +1045,7 @@ if (window_busy = "timelineclickkeyframes")
 			action_tl_deselect_all()
 			
 		timeline_marker = timeline_mouse_pos
-		action_toolbar_play_jump()
+		action_tl_play_jump()
 		window_busy = ""
 	}
 }
@@ -975,7 +1058,7 @@ if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, bar
 	// Change region
 	if (timeline_region_start != null)
 	{
-		if (app_mouse_box(barx + regionx1, bary, 8, barh))
+		if (app_mouse_box(barx + regionx1 - 8, bary, 8, barh))
 		{
 			mouse_cursor = cr_size_we
 			if (mouse_left_pressed)
@@ -985,7 +1068,7 @@ if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, bar
 				timeline_region_pos = timeline_region_end
 			}
 		}
-		else if (app_mouse_box(barx + regionx2 - 8, bary, 8, barh))
+		else if (app_mouse_box(barx + regionx2, bary, 8, barh))
 		{
 			mouse_cursor = cr_size_we
 			if (mouse_left_pressed)
@@ -1010,7 +1093,7 @@ if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, bar
 		window_focus = "timeline"
 		window_busy = "timelinecreateregion"
 		timeline_region_pos = timeline_mouse_pos
-		action_toolbar_play_break()
+		action_tl_play_break()
 	}
 }
 
@@ -1080,13 +1163,13 @@ if (window_busy = "timelinemarker")
 	{
 		window_busy = ""
 		timeline_marker = round(timeline_marker)
-		action_toolbar_play_jump()
+		action_tl_play_jump()
 		app_mouse_clear()
 	}
 }
 
 // Zoom
-if (window_focus = "timeline" && window_busy = "" && mouse_wheel <> 0)
+if (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0)
 {
 	var m = (1 - 0.5 * mouse_wheel);
 	timeline_zoom_goal = clamp(timeline_zoom_goal * m, 0.25, 32)
@@ -1094,20 +1177,11 @@ if (window_focus = "timeline" && window_busy = "" && mouse_wheel <> 0)
 		timeline_zoom_goal = round(timeline_zoom_goal)
 		
 	// Convert current and new mouse position to frames, then get difference and add it
-	timeline_hscroll_goalvalue = round(
+	timeline.hor_scroll.value_goal = round(
 		timeline.hor_scroll.value +
 		((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal
 	) 
 }
-
-if (timeline_zoom != timeline_zoom_goal)
-{
-	timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 2 / delta)
-	timeline.hor_scroll.value += (timeline_hscroll_goalvalue - timeline.hor_scroll.value) / max(1, 2 / delta)
-	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
-}
-else
-	timeline_hscroll_goalvalue = timeline.hor_scroll.value
 
 // Move view
 if (window_busy = "timelinedrag")
@@ -1122,6 +1196,9 @@ if (window_busy = "timelinedrag")
 		timeline.ver_scroll.value = snap(timeline.ver_scroll.value, timeline.ver_scroll.snap_value)
 		window_busy = ""
 	}
+	
+	timeline.ver_scroll.value_goal = timeline.ver_scroll.value
+	timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 }
 
 // Move view when selecting
@@ -1132,8 +1209,9 @@ if (window_busy = "timelinemove" || window_busy = "timelineselect")
 		
 	if (mouse_y > tly + tlh)
 		timeline.ver_scroll.value += 8
-		
+	
 	timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
+	timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 }
 
 // Move view when selecting/moving keyframes
@@ -1159,36 +1237,31 @@ if (window_busy = "timelineselectkeyframes" ||
 		
 	timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
 	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+	
+	timeline.ver_scroll.value_goal = timeline.ver_scroll.value
+	timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 }
 
-content_mouseon = (app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left"] || tab.panel = panel_map[?"left_secondary"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
+content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon //(app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left"] || tab.panel = panel_map[?"left_secondary"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
 
 // Vertical scrollbar
 if (tlw > 16)
 {
 	timeline.ver_scroll.snap_value = itemh
-	scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 30, tly, tlh, ds_list_size(tree_visible_list) * itemh)
+	scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 12, tly, tlh, ds_list_size(tree_visible_list) * itemh)
 }
 
 // Horizontal scrollbar
-if (content_height > 0 && (!timeline_playing || !setting_timeline_autoscroll))
-	scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 30, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw))
+if (content_height > (barh + headerh + 12) && (!timeline_playing || !setting_timeline_autoscroll))
+	scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 12, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw))
 
-if (timeline_region_start != null && (timeline_region_start != timeline_region_end))
+if (content_mouseon)
 {
-	regionx1 = floor(timeline_region_start * timeline_zoom - timeline.hor_scroll.value)
-	regionx2 = floor(timeline_region_end * timeline_zoom - timeline.hor_scroll.value)
+	window_scroll_focus = string(timeline.ver_scroll)
 	
-	var text, textwidth, boxx, boxy;
-	text = text_get("timelineselectedrange", timeline_region_start, timeline_region_end, timeline_region_end - timeline_region_start)
-	textwidth = string_width(text)
-	boxx = round(clamp(barx + (regionx1 + regionx2) / 2 - textwidth/2, barx + 20, barx + barw - textwidth - 30))
-	boxy = bary - 24
+	if (keyboard_check(vk_shift))
+		window_scroll_focus = string(timeline.hor_scroll)
 	
-	draw_box_rounded(boxx - 5, boxy, textwidth + 10, 20, setting_color_tips, 1, true, true, true, true, 4, spr_rounded_4)
-	
-	var prevcolor = draw_get_color();
-	draw_set_color(setting_color_tips_text)
-	draw_text(boxx, boxy, text)
-	draw_set_color(prevcolor)
+	if (keyboard_check(vk_control))
+		window_scroll_focus = "timelinezoom"
 }

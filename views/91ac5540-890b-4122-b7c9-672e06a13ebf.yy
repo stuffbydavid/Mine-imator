@@ -28,7 +28,7 @@
         "650f706b-3130-4016-8a26-a3ab7374e210"
     ],
     "filterType": "GMScript",
-    "folderName": "Expandables",
+    "folderName": "Collapse",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

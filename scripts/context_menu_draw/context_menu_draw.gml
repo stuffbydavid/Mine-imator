@@ -24,7 +24,7 @@ for (var i = 0; i < context_menu_level_amount; i++)
 // Update list items that trigger additional menus
 with (obj_list_item)
 {
-	if (disabled || context_menu_name = "" || (app.context_menu_mouseon_level > 0 && (app.context_menu_level[|1].name = context_menu_name)))
+	if (disabled || (context_menu_name = "" && context_menu_script = null) || (app.context_menu_mouseon_level > 0 && (app.context_menu_level[|1].name = context_menu_name)))
 		continue
 	
 	if (id = other.context_menu_mouseon_item)
@@ -32,13 +32,13 @@ with (obj_list_item)
 	else
 		hovertime -= 60 / room_speed
 	
-	hovertime = clamp(hovertime, 0, 15)
+	hovertime = clamp(hovertime, 0, 3)
 	
-	if (!context_menu_active && hovertime = 15)
+	if (!context_menu_active && hovertime = 3)
 	{
 		context_menu_active = true
 		with (app)
-			context_menu_add_level(other.context_menu_name, other.draw_x, other.draw_y)
+			context_menu_add_level(other.context_menu_name, other.draw_x, other.draw_y, other)
 	}
 	
 	if (context_menu_active && hovertime = 0)

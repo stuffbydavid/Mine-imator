@@ -60,6 +60,9 @@ item.disabled = false
 item.hovertime = 0
 item.context_menu_name = ""
 item.context_menu_active = false
+item.context_menu_script = null
+item.context_menu_width = 0
+item.context_menu_height = 0
 
 item.draw_x = 0
 item.draw_y = 0

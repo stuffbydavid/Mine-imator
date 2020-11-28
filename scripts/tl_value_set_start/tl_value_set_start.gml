@@ -8,7 +8,7 @@ combine = argument1
 
 with (app)
 {
-	action_toolbar_play_break()
+	action_tl_play_break()
 	timeline_marker = round(timeline_marker)
 }
 

@@ -1,10 +1,10 @@
 /// window_draw_timeline_move_tree(parent)
 /// @arg parent
 
-var par, itemh, indent;
+var par, itemh, indent, iconcolor, iconalpha, namecolor, namealpha;
 par = argument0
-itemh = (setting_timeline_compact ? 18 : 24)
-indent = 16
+itemh = 24//(setting_timeline_compact ? 18 : 24)
+indent = 22
 
 for (var t = 0; t < ds_list_size(par.tree_list); t++)
 {
@@ -13,15 +13,40 @@ for (var t = 0; t < ds_list_size(par.tree_list); t++)
 	px = dx
 	xoff = 0
 	
+	dx += 4
+	
 	if (ds_list_size(tl.tree_list) > 0)
+		draw_image(spr_icons, tl.tree_extend ? icons.ARROW_DOWN_TINY : icons.ARROW_RIGHT_TINY, dx + 8, dy + itemh / 2, 1, 1, c_text_secondary, a_text_secondary)
+	
+	dx += 20
+	
+	if (tl.selected)
 	{
-		draw_image(spr_icons, tl.tree_extend ? icons.ARROW_DOWN_TINY : icons.ARROW_RIGHT_TINY, dx + 2, dy + itemh / 2, 1, 1, setting_color_text, 1)
-		xoff = 10
+		iconcolor = c_accent
+		iconalpha = 1
+		
+		namecolor = c_accent
+		namealpha = 1
+	}
+	else
+	{
+		iconcolor = c_text_tertiary
+		iconalpha = a_text_tertiary
+		
+		namecolor = c_text_main
+		namealpha = a_text_main
 	}
 	
-	draw_label(string_remove_newline(tl.display_name), dx + xoff, dy + itemh / 2, fa_left, fa_middle, null, 1, tl.selected ? setting_font_bold : setting_font)
+	// Icon
+	if (tl.type != null)
+	{
+		draw_image(spr_icons, timeline_icon_list[|tl.type], dx + 10, dy + (itemh/2), 1, 1, iconcolor, iconalpha)
+		dx += 28
+	}
 	
-	dx += indent
+	draw_label(string_remove_newline(tl.display_name), dx, dy + itemh / 2, fa_left, fa_middle, namecolor, namealpha, font_value)
+	
+	dx = px + indent
 	dy += itemh
 	
 	if (tl.tree_extend)

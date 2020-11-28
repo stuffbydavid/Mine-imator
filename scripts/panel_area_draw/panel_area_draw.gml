@@ -75,7 +75,7 @@ if (window_busy = "panelresize")
 	else if (panel_resize = panel_map[?"bottom"])
 	{
 		mouse_cursor = cr_size_ns
-		panel_resize.size = max(50, panel_resize_size - (mouse_y - mouse_click_y))
+		panel_resize.size = max(32, panel_resize_size - (mouse_y - mouse_click_y))
 	}
 	else if (panel_resize = panel_map[?"top"])
 	{

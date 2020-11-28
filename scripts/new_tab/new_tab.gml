@@ -10,6 +10,7 @@ tab.panel = panel_map[?argument[0]]
 tab.show = argument[1]
 tab.closeable = !tab.show
 tab.scroll = new(obj_scrollbar)
+tab.movable = true
 
 if (argument_count > 2)
 	tab.header_script = argument[2]

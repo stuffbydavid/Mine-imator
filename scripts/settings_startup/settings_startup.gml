@@ -57,7 +57,7 @@ setting_toolbar_size = 36
 
 setting_panel_left_bottom_size = 300
 setting_panel_right_bottom_size = 300
-setting_panel_bottom_size = 205
+setting_panel_bottom_size = 300
 setting_panel_top_size = 205
 setting_panel_left_top_size = 300
 setting_panel_right_top_size = 300

@@ -40,7 +40,8 @@ h = listh + (12 * menu_scroll_horizontal.needed)
 yy = (menu_flip ? (menu_y - h) : (menu_y + menu_button_h))
 
 if (h > 2)
-	draw_outline(menu_x, (menu_flip ? yy : yy + 2), menu_w, h - 2, 1, c_border, a_border)
+	draw_outline(menu_x, (menu_flip ? yy : yy + (2 * !menu_floating)), menu_w, h - (2 * !menu_floating), 1, c_border, a_border)
+
 draw_box(menu_x, yy, menu_w, h, false, c_background, 1)
 draw_line_ext(menu_x, (menu_flip ? yy + h : yy), menu_x + menu_w, (menu_flip ? yy + h : yy), c_overlay, a_overlay)
 
@@ -116,114 +117,7 @@ switch (menu_type)
 	
 	case e_menu.TRANSITION_LIST:
 	{
-		var dxstart, dystart, dx, dy;
-		dxstart = menu_x + 12
-		dx = dxstart
-		
-		dystart = yy
-		dy = dystart + 12
-		
-		// Other
-		dy += 14
-		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-		dy += 12
-		
-		for (var i = 0; i < ds_list_size(transition_list); i++)
-		{
-			if (!string_contains(transition_list[|i], "ease"))
-			{
-				if (dx + 46 > menu_x + menu_w)
-				{
-					dx = dxstart
-					dy += 46
-				}
-				
-				if (draw_button_transition(dx, dy, transition_list[|i]))
-					menu_transition = transition_list[|i]
-				
-				dx += 46
-			}
-		}
-		dy += 36 + 10
-		dx = dxstart
-		
-		// Ease in
-		dy += 14
-		draw_label(text_get("transitionmenueasein"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-		dy += 12
-		
-		for (var i = 0; i < ds_list_size(transition_list); i++)
-		{
-			if (string_contains(transition_list[|i], "easein") &&
-				!string_contains(transition_list[|i], "easeinout"))
-			{
-				if (dx + 46 > menu_x + menu_w)
-				{
-					dx = dxstart
-					dy += 46
-				}
-				
-				if (draw_button_transition(dx, dy, transition_list[|i]))
-					menu_transition = transition_list[|i]
-				
-				dx += 46
-			}
-		}
-		dx = dxstart
-		dy += 46
-		
-		// Ease out
-		dy += 14
-		draw_label(text_get("transitionmenueaseout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-		dy += 12
-		
-		for (var i = 0; i < ds_list_size(transition_list); i++)
-		{
-			if (string_contains(transition_list[|i], "easeout"))
-			{
-				if (dx + 46 > menu_x + menu_w)
-				{
-					dx = dxstart
-					dy += 46
-				}
-				
-				if (draw_button_transition(dx, dy, transition_list[|i]))
-					menu_transition = transition_list[|i]
-				
-				dx += 46
-			}
-		}
-		dx = dxstart
-		dy += 46
-		
-		// Ease in & out
-		dy += 14
-		draw_label(text_get("transitionmenueaseinout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-		dy += 12
-		
-		for (var i = 0; i < ds_list_size(transition_list); i++)
-		{
-			if (string_contains(transition_list[|i], "easeinout"))
-			{
-				if (dx + 46 > menu_x + menu_w)
-				{
-					dx = dxstart
-					dy += 46
-				}
-				
-				if (draw_button_transition(dx, dy, transition_list[|i]))
-					menu_transition = transition_list[|i]
-				
-				dx += 46
-			}
-		}
-		dx = dxstart
-		dy += 46
-		
-		menu_height = dy - dystart
-		
-		if (dy > window_height)
-			menu_flip = true
+		menu_transition = menu_transitions(menu_x, yy, menu_w, menu_height)
 		
 		break
 	}

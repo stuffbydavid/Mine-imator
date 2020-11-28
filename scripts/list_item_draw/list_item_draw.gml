@@ -41,7 +41,6 @@ if (xx + width < content_x || xx > content_x + content_width || yy + height < co
 if (item.list != null && item.list.update)
 	return 0
 
-list_item_last = item.value
 item.draw_x = xx
 item.draw_y = yy
 
@@ -72,7 +71,7 @@ else
 
 if (item.hover && mouse_left && item.interact)
 	draw_box(xx, yy, width, height, false, c_accent_overlay, a_accent_overlay)
-else if ((item.hover || toggled || (item.hover && mouse_left_released) || ((context_menu_value = list_item_last) && list_item_last != null)) && item.interact)
+else if ((item.hover || toggled || (item.hover && mouse_left_released)) && item.interact)
 	draw_box(xx, yy, width, height, false, c_overlay, a_overlay)
 
 leftp = margin

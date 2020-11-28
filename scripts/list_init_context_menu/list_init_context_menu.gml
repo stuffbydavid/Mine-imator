@@ -83,6 +83,64 @@ switch (name)
 		list_item_add(text_get("contextmenutextboxselectall"), null, ctrl + "A", null, icons.SELECT_ALL, null, action_textbox_select_all, false)
 		break
 	}
+	
+	// Timeline object list
+	case "timelinelist":
+	{
+		list_item_add(text_get("contextmenutladdfolder"), null, "", null, icons.FOLDER, null, action_tl_folder, true)
+		list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
+		list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.EXPAND, null, action_tl_extend_children)	
+		list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.COLLAPSE, null, action_tl_collapse_children)
+		
+		list_item_add(text_get("contextmenutlduplicate"), null, "", null, icons.DUPLICATE, null, action_tl_duplicate, true)
+		list_item_last.disabled = (tl_edit = null)
+		
+		list_item_add(text_get("contextmenutldelete"), null, "", null, icons.DELETE, null, action_tl_remove)
+		list_item_last.disabled = (tl_edit = null)
+		
+		list_item_add(text_get("contextmenutlexport"), null, "", null, icons.EXPORT, null, object_save)
+		list_item_last.disabled = !timeline_settings
+		
+		list_item_add(text_get("contextmenutlselectall"), null, "", null, icons.SELECT_ALL, null, action_tl_select_all, true)
+		list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.EXPAND, null, action_tl_extend_all)	
+		list_item_add(text_get("contextmenutlcollapseall"), null, "", null, icons.COLLAPSE, null, action_tl_collapse_all)
+		
+		break
+	}
+	
+	// Timeline
+	case "timeline":
+	{
+		list_item_add(text_get("contextmenutlkeyframestransition"), null, "", null, icons.TRANSITION, icons.ARROW_RIGHT_SMALL, null, true)
+		list_item_last.disabled = !timeline_settings_keyframes
+		list_item_last.context_menu_script = menu_transitions
+		list_item_last.context_menu_width = 244
+		list_item_last.context_menu_height = 438
+		
+		list_item_add(text_get("contextmenutlkeyframescut"), null, "", null, icons.CUT_KEYFRAMES, null, action_tl_keyframes_cut, true)
+		list_item_last.disabled = !timeline_settings_keyframes
+		
+		list_item_add(text_get("contextmenutlkeyframescopy"), null, "", null, icons.COPY_KEYFRAMES, null, tl_keyframes_copy)
+		list_item_last.disabled = !timeline_settings_keyframes
+		
+		list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, "", null, icons.PASTE_KEYFRAMES, null, action_tl_keyframes_paste)
+		list_item_last.disabled = (copy_kf_amount = 0)
+		
+		list_item_add(text_get("contextmenutlkeyframesdelete"), null, "", null, icons.DELETE_KEYFRAMES, null, action_tl_keyframes_remove)
+		list_item_last.disabled = !timeline_settings_keyframes
+		
+		list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.EXPORT_KEYFRAMES, null, keyframes_save)
+		list_item_last.disabled = !timeline_settings_keyframes_export
+		
+		list_item_add(text_get("contextmenutlkeyframeswalk"), timeline_settings_walk_fn, "", null, icons.WALK, null, action_tl_load_loop, true)
+		list_item_last.disabled = !file_exists_lib(timeline_settings_walk_fn)
+		
+		list_item_add(text_get("contextmenutlkeyframesrun"), timeline_settings_run_fn, "", null, icons.RUN, null, action_tl_load_loop)
+		list_item_last.disabled = !file_exists_lib(timeline_settings_run_fn)
+		
+		break
+	}
+
 }
 
 return list_init_end()

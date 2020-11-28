@@ -32,3 +32,4 @@ menu_scroll_horizontal = new(obj_scrollbar)
 menu_height = 0
 menu_transition = null
 menu_steps = 0
+menu_floating = false

@@ -67,7 +67,7 @@ else
 		cap = text_get(name)
 }
 
-flip = (yy + hei + hei * 4 > window_height)
+flip = (yy + hei + hei * 8 > window_height)
 
 microani_set(name, null, false, false, false)
 
@@ -156,6 +156,7 @@ if (mouseon && mouse_left_released)
 	menu_margin = 8
 	menu_transition = null
 	menu_steps = 0
+	menu_floating = false
 	
 	// Init
 	menu_clear()

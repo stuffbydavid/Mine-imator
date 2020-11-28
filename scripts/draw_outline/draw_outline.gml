@@ -31,8 +31,8 @@ if (inline)
 {
 	xx += size
 	yy += size
-	ww -= size * 2
-	hh -= size * 2
+	ww -= size*2
+	hh -= size*2
 }
 
 // Top

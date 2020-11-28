@@ -103,10 +103,10 @@ else
 if (sprite != spr_icons && sprite != null)
 {
 	var frame = floor((sprite_get_number(sprite) - 1) * mcroani_arr[e_mcroani.ACTIVE_LINEAR]);
-	draw_image(sprite, frame, xx + wid/2, yy + wid/2, 1, 1, iconcolor, iconalpha)
+	draw_image(sprite, frame, xx + wid/2, yy + hei/2, 1, 1, iconcolor, iconalpha)
 }
 else // Icon
-	draw_image(spr_icons, icon, xx + wid/2, yy + wid/2, 1, 1, merge_color(iconcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE]), lerp(iconalpha, 1, mcroani_arr[e_mcroani.ACTIVE]))
+	draw_image(spr_icons, icon, xx + wid/2, yy + hei/2, 1, 1, merge_color(iconcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE]), lerp(iconalpha, 1, mcroani_arr[e_mcroani.ACTIVE]))
 
 draw_set_alpha(prevalpha)
 

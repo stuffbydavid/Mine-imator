@@ -39,7 +39,7 @@ if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
 		context_menu_value_default = argument[8]
 	}
 	
-	context_menu_add_level(name, mouse_x, mouse_y)
+	context_menu_add_level(name, mouse_x + 1, mouse_y)
 	
 	if (font != draw_get_font())
 		draw_set_font(font)

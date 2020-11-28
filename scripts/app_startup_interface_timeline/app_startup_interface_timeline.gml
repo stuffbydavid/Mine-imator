@@ -8,7 +8,9 @@ timeline_playing_start_hor_scroll = 0
 
 timeline_repeat = false
 timeline_seamless_repeat = false
-timeline_show_seconds = true
+timeline_intervals_show = false
+timeline_interval_size = 24
+timeline_interval_offset = 0
 timeline_list_first = 0
 timeline_list_visible = 0
 timeline_mouse_pos = null
@@ -22,6 +24,7 @@ timeline_zoom = 16
 timeline_zoom_goal = 16
 timeline_camera = null
 timeline_insert_pos = 0
+timeline_show_frames = false
 
 timeline_move_obj = null
 timeline_move_highlight_tl = null
@@ -50,3 +53,6 @@ copy_kf_tl_model_part_name[0] = null
 
 tree_list = ds_list_create()
 tree_visible_list = ds_list_create()
+
+timeline_settings_w = 0
+timeline_settings_right_w = 0

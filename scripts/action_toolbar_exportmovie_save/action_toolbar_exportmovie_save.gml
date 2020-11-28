@@ -127,4 +127,4 @@ exportmovie_frame = 0
 exportmovie_start = current_time
  
 timeline_marker = exportmovie_marker_start
-action_toolbar_play_start()
+action_tl_play_start()

@@ -20,7 +20,15 @@ if (ds_map_valid(tlmap))
 {
 	timeline_repeat = value_get_real(tlmap[?"repeat"], timeline_repeat)
 	timeline_seamless_repeat = value_get_real(tlmap[?"seamless_repeat"], timeline_seamless_repeat)
-	timeline_show_seconds = value_get_real(tlmap[?"show_seconds"], timeline_show_seconds)
+	
+	if (load_format < e_project.FORMAT_130)
+		timeline_intervals_show = value_get_real(tlmap[?"show_seconds"], timeline_intervals_show)
+	else
+		timeline_intervals_show = value_get_real(tlmap[?"intervals_show"], timeline_intervals_show)
+	
+	timeline_interval_size = value_get_real(tlmap[?"interval_size"], timeline_interval_size)
+	timeline_interval_offset = value_get_real(tlmap[?"interval_offset"], timeline_interval_offset)
+	
 	timeline_marker = value_get_real(tlmap[?"marker"], timeline_marker)
 	timeline.list_width = value_get_real(tlmap[?"list_width"], timeline.list_width)
 	timeline.hor_scroll.value = value_get_real(tlmap[?"hor_scroll"], timeline.hor_scroll.value)

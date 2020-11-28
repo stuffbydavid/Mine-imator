@@ -60,6 +60,7 @@ lock_bend = true
 tree_array = 0
 tree_list = ds_list_create()
 tree_extend = false
+list_mouseon = false
 
 inherit_position = true
 inherit_rotation = true

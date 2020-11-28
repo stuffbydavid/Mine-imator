@@ -112,28 +112,6 @@ toolbar_draw_button("toolbarundo", false, (history_pos < history_amount), icons.
 tip_set_shortcut(setting_key_redo, setting_key_redo_control)
 toolbar_draw_button("toolbarredo", false, (history_pos > 0), icons.REDO, action_toolbar_redo)
 
-toolbar_draw_group(3)
-tip = text_get("toolbarplaytip", text_control_name(setting_key_play, setting_key_play_control), text_control_name(setting_key_play_beginning, setting_key_play_beginning_control))
-toolbar_draw_button("toolbarplay", false, true, timeline_playing ? icons.PAUSE : icons.PLAY, action_toolbar_play, tip)
-toolbar_draw_button("toolbarstop", false, true, icons.STOP, action_toolbar_play_stop)
-toolbar_draw_button("toolbarrepeat", timeline_repeat, true, icons.LOOP, action_toolbar_play_repeat)
-toolbar_draw_button("toolbarseamlessrepeat", timeline_seamless_repeat, true, icons.LOOP_SEAMLESS, action_toolbar_seamless_repeat)
-toolbar_draw_button("toolbarshowseconds", timeline_show_seconds, true, icons.SHOW_SECONDS, action_toolbar_show_seconds)
-
-// Timestamp
-if (content_width >= cellsize * 3)
-{
-	dx += 10
-	if (dx + 80 > content_x + content_width) 
-	{
-		dx = content_x
-		dy += 30
-	}
-	tip_set(text_get("toolbartimestamptip"), dx, dy, 80, 30)
-	draw_label(string_time_seconds(timeline_marker / project_tempo), dx, dy)
-	draw_label(" / " + string_time_seconds(timeline_length / project_tempo), dx, dy + 12, fa_left, fa_top, null, 1, setting_font_bold)
-}
-
 // Networking
 if (boxsize < 70)
 {

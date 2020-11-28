@@ -37,7 +37,7 @@ else
 	}
 }
 
-if (tab.scroll.needed && content_mouseon)
+if (tab.scroll.needed && content_mouseon && tab != timeline)
 	window_scroll_focus = string(tab.scroll)
 
 dx_start = dx
@@ -110,8 +110,11 @@ else
 	maxh = dy - dy_start
 }
 
-// Scrollbar
-if (content_direction = e_scroll.VERTICAL)
-	scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + 32)
-else
-	scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
+if (tab != timeline)
+{
+	// Scrollbar
+	if (content_direction = e_scroll.VERTICAL)
+		scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + 32)
+	else
+		scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
+}

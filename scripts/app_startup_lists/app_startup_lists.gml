@@ -8,6 +8,7 @@ globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 globalvar minecraft_color_name_list, minecraft_color_list, minecraft_banner_pattern_list, minecraft_banner_pattern_short_list;
 globalvar biome_list, particle_template_list, particle_template_map;
 globalvar blend_mode_list, blend_mode_map;
+globalvar timeline_icon_list;
 
 // Values
 value_name_list = ds_list_create()
@@ -423,3 +424,51 @@ ds_map_add(blend_mode_map, "add", bm_add)
 ds_map_add(blend_mode_map, "subtract", bm_subtract)
 ds_map_add(blend_mode_map, "multiply", array(bm_zero, bm_src_color))
 ds_map_add(blend_mode_map, "screen", array(bm_one, bm_inv_src_color))
+
+// List of icons in sync with e_tl_type
+/*
+	CHARACTER,
+	SPECIAL_BLOCK,
+	SCENERY,
+	ITEM,
+	BLOCK,
+	BODYPART,
+	PARTICLE_SPAWNER,
+	TEXT,
+	CUBE,
+	CONE,
+	CYLINDER,
+	SPHERE,
+	SURFACE,
+	MODEL,
+	CAMERA,
+	SPOT_LIGHT,
+	POINT_LIGHT,
+	FOLDER,
+	BACKGROUND,
+	AUDIO
+*/
+
+timeline_icon_list = ds_list_create()
+ds_list_add(timeline_icon_list,
+	icons.TL_CHARACTER,
+	icons.TL_SPECIAL_BLOCK,
+	icons.TL_SCENERY,
+	icons.TL_ITEM,
+	icons.TL_BLOCK,
+	icons.TL_BODYPART,
+	icons.TL_PARTICLES,
+	icons.TL_TEXT,
+	icons.TL_CUBE,
+	icons.TL_CONE,
+	icons.TL_CYLINDER,
+	icons.TL_SPHERE,
+	icons.TL_PLANE,
+	icons.TL_MODEL,
+	icons.TL_CAMERA,
+	icons.TL_SPOT_LIGHT,
+	icons.TL_POINT_LIGHT,
+	icons.OPEN_PROJECT,
+	icons.TL_BACKGROUND,
+	icons.TL_AUDIO
+)

@@ -8,13 +8,17 @@ outease = "easeoutcirc"
 // Scrollbars
 with (obj_scrollbar)
 {
-	if (value_ease)
-	{
-		if (app.setting_reduced_motion)
-			value = value_goal
-		else
-			value += floor((value_goal - value) / max(1, 4 / delta))
-	}
+	if (app.setting_reduced_motion || !value_ease)
+		value = value_goal
+	else
+		value += floor((value_goal - value) / max(1, 4 / delta))
+}
+
+// Timeline zoom
+if (timeline_zoom != timeline_zoom_goal)
+{
+	timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 4 / delta)
+	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
 }
 
 // Scrollbar margin offset

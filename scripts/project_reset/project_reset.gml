@@ -164,7 +164,7 @@ background_time_prev = 0
 timeline.hor_scroll.value = 0
 timeline.ver_scroll.value = 0
 
-action_toolbar_play_break()
+action_tl_play_break()
 timeline_repeat = false
 timeline_marker = 0
 timeline_marker_previous = 0

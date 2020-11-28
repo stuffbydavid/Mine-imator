@@ -371,15 +371,19 @@ ptype_list = template_editor.type_list
 // Timeline
 timeline = new_tab(setting_timeline_location, true)
 timeline.script = tab_timeline
+timeline.movable = false
 with (timeline)
 {
+	tbx_interval_size = new_textbox_integer()
+	tbx_interval_offset = new_textbox_integer()
+	
 	list_width = 320
 	
 	hor_scroll = new(obj_scrollbar)
-	hor_scroll.value_ease = false
+	//hor_scroll.value_ease = false
 	
 	ver_scroll = new(obj_scrollbar)
-	ver_scroll.value_ease = false
+	//ver_scroll.value_ease = false
 }
 
 // Timeline editor

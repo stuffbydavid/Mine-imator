@@ -1,28 +1,53 @@
-/// context_menu_add_level(name, x, y)
+/// context_menu_add_level(name, x, y, [item])
 /// @arg name
 /// @arg x
 /// @arg y
+/// @arg [item]
 
-var name, xx, yy, level;
-name = argument0
-xx = argument1
-yy = argument2
+var name, xx, yy, name, script, level;
+name = argument[0]
+xx = argument[1]
+yy = argument[2]
+item = null
+
+if (argument_count > 3)
+	item = argument[3]
+
+if (item != null)
+	script = item.context_menu_script
+else
+	script = null
+
 level = new(obj_context_menu_level)
 
 level.name = name
-level.level_list = list_init_context_menu(name)
-level.level = context_menu_level_amount
-
 level.level_x = xx
 level.level_y = yy
-level.level_width = level.level_list.width + 8
-level.level_height = (ds_list_size(level.level_list.item) * 28) + 8
+level.level = context_menu_level_amount
 
-for (var i = 0; i < ds_list_size(level.level_list.item); i++)
+// Calculate level size
+if (script = null)
 {
-	var item = level.level_list.item[|i];
-	if (item.divider)
-		level.level_height += 8
+	level.level_list = list_init_context_menu(name)
+	level.level_width = level.level_list.width + 8
+	level.level_height = (ds_list_size(level.level_list.item) * 28) + 8
+	level.script = null
+	
+	for (var i = 0; i < ds_list_size(level.level_list.item); i++)
+	{
+		var item = level.level_list.item[|i];
+		if (item.divider)
+			level.level_height += 8
+	}
+}
+else
+{
+	level.level_list = null
+	level.level_width = item.context_menu_width
+	level.level_height = item.context_menu_height
+	level.level_script = script
+	
+	level.level_y -= level.level_height/2
 }
 
 // Base level already exists
@@ -30,9 +55,11 @@ if (context_menu_level_amount > 0)
 {
 	// TODO: Move next to previous menu
 	if ((level.level_x + level.level_width + context_menu_level[|0].level_width) < window_width)
-		level.level_x += context_menu_level[|0].level_width
+		level.level_x += (context_menu_level[|0].level_width + 1)
 	else
-		level.level_x -= level.level_width
+		level.level_x -= (level.level_width + 1)
+	
+	level.level_y -= 4
 }
 
 if (level.level_x + level.level_width > window_width)

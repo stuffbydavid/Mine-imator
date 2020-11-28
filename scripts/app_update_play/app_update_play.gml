@@ -8,9 +8,9 @@ if (timeline_playing)
 		if (timeline_region_end != null)
 		{
 			if (timeline_marker >= timeline_region_end)
-				action_toolbar_play_beginning()
+				action_tl_play_beginning()
 		}
 		else if (timeline_marker >= timeline_length && timeline_length > 0)
-			action_toolbar_play_beginning()
+			action_tl_play_beginning()
 	}
 }

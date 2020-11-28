@@ -3,7 +3,7 @@
 if (history_pos = history_amount)
 	return 0
 
-action_toolbar_play_break()
+action_tl_play_break()
 	
 history_data = history[history_pos]
 temp_edit = save_id_find(history_data.save_temp_edit)

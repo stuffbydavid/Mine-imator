@@ -17,7 +17,7 @@ else
 	list_item_add(string_remove_newline(tl.display_name), tl)
 	
 	if (ds_list_size(tl.tree_list))
-		list_item_add_action(list_item_last, string(tl) + "extend", menu_timeline_extend, tl.tree_extend, tl, icons.ADD, "left", tl.tree_extend ? "tooltipcollapse" : "tooltipexpand", spr_arrow_small_ani)
+		list_item_add_action(list_item_last, string(tl) + "extend", menu_timeline_extend, tl.tree_extend, tl, icons.ADD, "left", tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand", spr_arrow_small_ani)
 }
 
 list_item_last.indent = max(0, level * 32)

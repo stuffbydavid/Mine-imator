@@ -40,10 +40,10 @@ if (window_busy = "" && !textbox_isediting)
 		action_toolbar_redo()
 	
 	if (keyboard_check_pressed(setting_key_play) && app_check_control(setting_key_play_control))
-		script_execute(timeline_playing ? action_toolbar_play_stop : action_toolbar_play)
+		script_execute(timeline_playing ? action_tl_play_stop : action_tl_play)
 	
 	if (keyboard_check_pressed(setting_key_play_beginning) && app_check_control(setting_key_play_beginning_control))
-		action_toolbar_play_beginning()
+		action_tl_play_beginning()
 		
 	if (!timeline_playing)
 	{
