@@ -51,6 +51,7 @@ if (mouseon && mouse_left_released)
 	settings_menu_primary = primary
 	settings_menu_x = xx + ((width/2) * settings_menu_primary)
 	settings_menu_y = yy + height + (2 * settings_menu_primary)
+	settings_menu_button_h = height
 	
 	// Primary style
 	if (script)

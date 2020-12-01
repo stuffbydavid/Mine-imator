@@ -34,10 +34,10 @@ else
 
 if (!bench_show_ani)
 	popup_draw()
-menu_draw()
 if (bench_show_ani)
 	popup_draw()
 menu_settings_draw()
+menu_draw()
 context_menu_draw()
 tip_draw()
 debug_info_draw()

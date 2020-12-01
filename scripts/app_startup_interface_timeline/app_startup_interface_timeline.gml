@@ -56,3 +56,9 @@ tree_visible_list = ds_list_create()
 
 timeline_settings_w = 0
 timeline_settings_right_w = 0
+
+timeline_show_markers = true
+timeline_marker_list = ds_list_create()
+timeline_marker_current = null
+timeline_marker_edit = null
+timeline_marker_edit_offset = 0

@@ -1,4 +1,4 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script, [disabled, [texture, [icon, [caption]]]])
+/// draw_button_menu(name, type, x, y, width, height, value, text, script, [disabled, [texture, [icon, [caption, [texcolor, texalpha]]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -11,9 +11,11 @@
 /// @arg [disabled
 /// @arg [texture
 /// @arg [icon
-/// @arg [caption]]]
+/// @arg [caption
+/// @arg [texcolor
+/// @arg texalpha]]]]]
 
-var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption;
+var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha;
 var flip, mouseon, cap;
 name = argument[0]
 type = argument[1]
@@ -44,6 +46,17 @@ if (argument_count > 12)
 	caption = argument[12]
 else
 	caption = ""
+
+if (argument_count > 13)
+{
+	texcolor = argument[13]
+	texalpha = argument[14]
+}
+else
+{
+	texcolor = c_white
+	texalpha = 1
+}
 
 // Caption
 if (menu_model_current != null)
@@ -110,6 +123,11 @@ if (type = e_menu.TRANSITION_LIST)
 	item.thumbnail_blend = c_text_secondary
 	item.thumbnail_alpha = a_text_secondary
 }
+else
+{
+	item.thumbnail_blend = texcolor
+	item.thumbnail_alpha = texalpha
+}
 
 list_item_draw(item, xx, yy, wid, hei, false, 8)
 instance_destroy(item)
@@ -133,7 +151,7 @@ if (menu_name = name)
 if (mouseon && mouse_left_released)
 {
 	window_busy = "menu"
-	window_focus = string(menu_scroll_vertical)
+	//window_focus = string(menu_scroll_vertical)
 	app_mouse_clear()
 	
 	menu_name = name
@@ -170,7 +188,7 @@ if (mouseon && mouse_left_released)
 	
 	menu_amount = ds_list_size(menu_list.item)
 	menu_focus_selected()
-		
+	
 	// Flip
 	if (menu_flip)
 		menu_show_amount = floor((menu_y * 0.9) / menu_item_h)

@@ -64,9 +64,15 @@ if (context_menu_level_amount > 0)
 
 if (level.level_x + level.level_width > window_width)
 	level.level_x += window_width - (level.level_x + level.level_width)
-		
+
 if (level.level_y + level.level_height > window_height)
-	level.level_y += window_height - (level.level_y + level.level_height)
+{
+	// If less than half of the menu is off-screen, place menu at bottom of window
+	if (level.level_y + level.level_height/2 < window_height)
+		level.level_y += window_height - (level.level_y + level.level_height)
+	else
+		level.level_y -= level.level_height
+}
 
 ds_list_add(context_menu_level, level)
 context_menu_level_amount++

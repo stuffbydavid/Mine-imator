@@ -376,6 +376,7 @@ with (timeline)
 {
 	tbx_interval_size = new_textbox_integer()
 	tbx_interval_offset = new_textbox_integer()
+	tbx_markername = new_textbox(true, 0, "")
 	
 	list_width = 320
 	

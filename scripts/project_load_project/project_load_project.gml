@@ -36,6 +36,7 @@ if (ds_map_valid(tlmap))
 	timeline_zoom_goal = timeline_zoom
 	timeline_region_start = value_get_real(tlmap[?"region_start"], timeline_region_start)
 	timeline_region_end = value_get_real(tlmap[?"region_end"], timeline_region_end)
+	timeline_show_markers = value_get_real(tlmap[?"show_markers"], timeline_show_markers)
 }
 
 var cammap = map[?"work_camera"];

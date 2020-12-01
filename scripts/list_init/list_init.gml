@@ -899,12 +899,26 @@ switch (name)
 		break
 	}
 	
+	// Project sort
 	case "startupsortby":
 	{
 		list_item_add(text_get("recentsortdatenewest"), e_recent_sort.date_newest, "", null, null, null, action_recent_sort)
 		list_item_add(text_get("recentsortdateoldest"), e_recent_sort.date_oldest, "", null, null, null, action_recent_sort)
 		list_item_add(text_get("recentsortnameaz"), e_recent_sort.name_az, "", null, null, null, action_recent_sort)
 		list_item_add(text_get("recentsortnameza"), e_recent_sort.name_za, "", null, null, null, action_recent_sort)
+		
+		break;
+	}
+	
+	// Accent color
+	case "timelinemarkercolor":
+	{
+		for (var i = 0; i <= 8; i++)
+		{
+			list_item_add(text_get("timelinemarkercolor" + string(i)), i, "", spr_16, null, null, null)
+			list_item_last.thumbnail_blend = setting_theme.accent_list[i]
+		}
+		
 		break;
 	}
 }

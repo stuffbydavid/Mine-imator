@@ -27,4 +27,8 @@ with (obj_particle_type)
 	if (save_id = saveid)
 		return id
 
+with (obj_marker)
+	if (save_id = saveid)
+		return id
+
 return null

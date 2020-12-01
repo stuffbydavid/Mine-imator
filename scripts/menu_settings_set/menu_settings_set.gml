@@ -12,6 +12,7 @@ buttonheight = argument3
 
 settings_menu_busy_prev = window_busy
 window_busy = "settingsmenu"
+window_focus = ""
 app_mouse_clear()
 
 settings_menu_name = name

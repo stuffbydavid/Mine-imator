@@ -110,6 +110,7 @@ if (window_focus = string(sb) || (window_focus = "" && content_mouseon))
 		if (!mouse_left)
 		{
 			window_busy = ""
+			window_focus = ""
 			sb.value = snap(sb.value, sb.snap_value)
 			sb.value_goal = sb.value
 			app_mouse_clear()

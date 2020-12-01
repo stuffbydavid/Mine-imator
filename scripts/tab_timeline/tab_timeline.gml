@@ -6,12 +6,14 @@ var listx, listy, listw, listh;
 var mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
 var mousemovetl, mousemoveindex, movehltl, movehlpos;
 var headerx, headery, headerw, headerh;
+var markerbarshow, markerbarx, markerbary, markerbarw, markerbarh, markerh;
 var barx, bary, barw, barh;
 var framestep, framehighlight, f;
 var markerx, markery;
 var regionx1, regionx2;
 
 content_mouseon = true
+markerbarshow = (ds_list_size(timeline_marker_list) > 0) && timeline_show_markers
 
 // Background
 draw_box(content_x, content_y, content_width, content_height, false, c_background, 1)
@@ -35,15 +37,29 @@ bary = content_y + headerh
 
 // List
 listx = content_x
-listw = min(timeline.list_width, content_width)
 listy = content_y + (headerh + barh)
-listh = floor((content_height - (headerh + barh) - 12) / itemh) * itemh
+listw = min(timeline.list_width, content_width)
+listh = floor((content_height - (headerh + barh) - (12 + (24 * markerbarshow))) / itemh) * itemh
 
 // Timeline
 tlx = content_x + listw
 tly = content_y + (headerh + barh)
 tlw = content_width - (12 * timeline.ver_scroll.needed) - listw
 tlh = listh
+
+// Marker bar
+markerbarx = tlx
+markerbary = (content_y + content_height) - ((12 * timeline.hor_scroll.needed) + 24)
+markerbarw = tlw
+markerbarh = 24
+
+if (markerbary <= tly || !markerbarshow)
+{
+	markerbary += markerbarh
+	markerbarh = 0
+}
+
+markerh = max(0, markerbary - tly)
 
 // Adjust by panel location
 if (tab.panel = panel_map[?"left"] || tab.panel = panel_map[?"left_secondary"])
@@ -201,7 +217,7 @@ timeline_settings_right_w = (buttonsx - buttonsxstart)
 
 
 // Empty
-if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100)
+if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
 	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor((content_height - (headerh + barh)) / 2), fa_center, fa_middle, c_text_tertiary, a_text_tertiary, font_startup)
 
 // Keyframe backgrounds
@@ -245,7 +261,7 @@ if (timeline_region_start != null)
 		x2 = clamp(x2, 0, barw)
 		
 		// Area overlay
-		draw_box(barx + x1, bary, x2 - x1, content_height, false, c_accent_overlay, a_accent_overlay)
+		draw_box(barx + x1, bary, x2 - x1, markerh + barh, false, c_accent_overlay, a_accent_overlay)
 		
 		x1 = regionx1
 		x2 = regionx2
@@ -254,13 +270,13 @@ if (timeline_region_start != null)
 		if (x1 >= 0 && x1 <= barw)
 		{
 			draw_image(spr_marker_region, 0, barx + x1, bary, 1, 1, c_accent, 1)
-			draw_box(barx + x1, bary, 2, content_height, false, c_accent, 1)
+			draw_box(barx + x1, bary, 1, markerh + barh, false, c_accent, 1)
 		}
 		
 		if (x2 >= 0 && x2 <= barw)
 		{
 			draw_image(spr_marker_region, 1, barx + x2 + 10, bary, 1, 1, c_accent, 1)
-			draw_box(barx + x2, bary, 2, content_height, false, c_accent, 1)
+			draw_box(barx + x2, bary, 1, markerh + barh, false, c_accent, 1)
 		}
 	}
 }
@@ -346,11 +362,133 @@ for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < 
 		draw_set_color(oldcol)
 		draw_set_alpha(oldalpha)
 	}
-		
+	
 	f += framestep
 }
 
-
+// Markers
+if (markerbarh != 0)
+{
+	var barmouseon, markx, markeditx, marky, markw, markh, marker, color, name, markermouseon, markermouseonx;
+	barmouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh)
+	markermouseon = null
+	
+	draw_set_font(font_emphasis)
+	draw_set_halign(fa_left)
+	draw_set_valign(fa_bottom)
+	draw_set_color(c_background)
+	
+	// Background
+	draw_box(markerbarx, markerbary, markerbarw, markerbarh, false, c_background_secondary, 1)
+	
+	scissor_start(tlx, bary, tlw, ((markerbary + markerbarh) - bary) - 4)
+	
+	// Draw markers
+	for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
+	{
+		marker = timeline_marker_list[|i]
+		color = setting_theme.accent_list[marker.color]
+		name = marker.name + (dev_mode_debug_names ? " [" + marker.save_id + "]" : "")
+		
+		markx = tlx + floor(marker.pos * timeline_zoom - timeline.hor_scroll.value)
+		markeditx = tlx + floor(marker.edit_pos * timeline_zoom - timeline.hor_scroll.value)
+		marky = markerbary + 4
+		markw = max(32, string_width(name) + 8)
+		markh = 16
+		
+		if ((markx > tlx + tlw) || (markx + markw < tlx))
+			continue
+		
+		// Ghost header
+		if (marker.edit_pos != null)
+			draw_image(spr_marker, 0, markeditx, tly, 1, 1, c_text_tertiary, a_text_tertiary)
+		
+		// Marker header
+		draw_image(spr_marker, 0, markx, tly, 1, 1, color, 1)
+		
+		// Marker stripe
+		for (var j = 0; j < ceil((markerbary - tly) / 32) + 1; j += 1)
+		{
+			// Ghost
+			if (marker.edit_pos != null)
+				draw_image(spr_marker_stripe, 0, markeditx, tly + (j * 32), 1, 1, c_text_tertiary, a_text_tertiary)
+			
+			// Color
+			draw_image(spr_marker_stripe, 0, markx, tly + (j * 32), 1, 1, color, 1)	
+		}
+		
+		draw_box(markx, marky, markw, markh, false, color, 1)
+		draw_text(markx + 4, marky + 16, name)
+		
+		if (barmouseon && app_mouse_box(markx, marky, markw, markh))
+		{
+			mouse_cursor = cr_size_we
+			markermouseon = marker
+			markermouseonx = markx
+		}
+	}
+	
+	scissor_done()
+	
+	// Mouse on marker
+	if (markermouseon != null)
+	{
+		// Right click
+		context_menu_area(markerbarx, markerbary, markerbarw, markerbarh, "timelinemarker", markermouseon, null, null, null)
+		
+		// Start moving
+		if (mouse_left_pressed)
+		{
+			window_busy = "timelinemovemarker"
+			markermouseon.edit_pos = markermouseon.pos
+			timeline_marker_edit = markermouseon
+			timeline_marker_edit_offset = mouse_x - markermouseonx
+		}
+	}
+			
+	if (window_busy = "timelinemovemarker")
+	{
+		var fail, mousepos;
+		fail = false
+		mousepos = max(0, round(((mouse_x - timeline_marker_edit_offset) - tlx + timeline.hor_scroll.value) / timeline_zoom))
+		
+		if (round(mousepos) != timeline_marker_edit.pos)
+		{
+			timeline_marker_edit.pos = round(mousepos)
+			marker_list_sort()
+		}
+		
+		mouse_cursor = cr_size_we
+		
+		if (mouse_left_released)
+		{
+			// Check if position is already occupied
+			for (var j = 0; j < ds_list_size(timeline_marker_list); j++)
+			{
+				if (timeline_marker_edit = timeline_marker_list[|j])
+					continue
+				
+				if (timeline_marker_edit.pos = timeline_marker_list[|j].pos)
+				{
+					fail = true
+					break
+				}
+			}
+			
+			// Restore old position
+			if (fail)
+				timeline_marker_edit.pos = timeline_marker_edit.edit_pos
+			else // Save action
+				action_tl_marker_pos(timeline_marker_edit.pos)
+			
+			window_busy = ""
+			timeline_marker_edit.edit_pos = null
+			timeline_marker_edit = null
+			timeline_marker_edit_offset = 0
+			marker_list_sort()
+		}
+	}
+}
 
 // Keyframes
 dy = tly
@@ -473,7 +611,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				
 				// Block out area
 				if (curdx < nextdx && nextdx >= 0)
-					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_text_tertiary, a_text_tertiary)
+					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_background_secondary, .5)
 			}
 			
 			if (dx > tlx + tlw)
@@ -584,8 +722,8 @@ if (timeline_playing && setting_timeline_autoscroll && window_busy = "")
 
 if (markerx >= 0 && markerx < tlw)
 {
-	draw_image(spr_marker, 0, tlx + 1 + markerx, bary + barh, 1, 1, c_accent, 1)
-	draw_box(tlx + markerx, bary + barh, 2, content_height, false, c_accent, 1)
+	draw_image(spr_marker_playback, 0, tlx + 1 + markerx, bary + barh, 1, 1, c_accent, 1)
+	draw_box(tlx + markerx, bary + barh, 2, markerh, false, c_accent, 1)
 }
 
 // Timeline list
@@ -595,7 +733,7 @@ buttonsize = 16
 buttonpad = (itemh - buttonsize)/2
 
 draw_box(content_x, bary, listw, barh, false, c_background_secondary, 1)
-draw_box(content_x, listy, listw, content_height, false, c_background, 1)
+draw_box(content_x, listy, listw, content_height - (headerh + barh), false, c_background, 1)
 draw_box(content_x + listw, tly - barh, 1, content_height - headerh, false, c_border, a_border)
 
 // Context menu
@@ -1221,7 +1359,8 @@ if (window_busy = "timelineselectkeyframes" ||
 	window_busy = "timelinesetregionstart" || 
 	window_busy = "timelinesetregionend" || 
 	window_busy = "timelineresizesounds" || 
-	window_busy = "timelinesetsoundend")
+	window_busy = "timelinesetsoundend" ||
+	window_busy = "timelinemovemarker")
 {
 	if (mouse_x < tlx)
 		timeline.hor_scroll.value -= 15

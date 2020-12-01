@@ -79,10 +79,14 @@ if (settings_menu_primary)
 
 draw_set_alpha(1)
 
+// Flip
+if ((settings_menu_y + settings_menu_h) > window_height)
+	settings_menu_y -= (settings_menu_button_h + settings_menu_h)
+
 // Check click
 if (settings_menu_script)
 {
-	if (mouse_left_released && !app_mouse_box(settings_menu_x, settings_menu_y, settings_menu_w, settings_menu_h) && !context_menu_mouseon)
+	if (mouse_left_released && !app_mouse_box(settings_menu_x, settings_menu_y, settings_menu_w, settings_menu_h) && !context_menu_mouseon && (menu_name = "") && (window_focus = ""))
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"
@@ -91,7 +95,7 @@ if (settings_menu_script)
 }
 else
 {
-	if (mouse_left_released)
+	if (mouse_left_pressed)
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"

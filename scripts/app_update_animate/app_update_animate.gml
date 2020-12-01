@@ -182,3 +182,12 @@ background_time = (timeline_marker / project_tempo) * 60
 // Update shadows
 if (background_time_prev != background_time)
 	render_samples = -1
+
+// Update current marker
+timeline_marker_current = null
+
+for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
+{
+	if (timeline_marker >= timeline_marker_list[|i].pos)
+		timeline_marker_current = timeline_marker_list[|i]
+}

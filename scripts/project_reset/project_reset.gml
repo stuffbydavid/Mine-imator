@@ -42,6 +42,9 @@ with (obj_resource)
 with (obj_keyframe)
 	instance_destroy()
 
+with (obj_marker)
+	instance_destroy()
+
 with (mc_res)
 	count = 0
 
@@ -173,6 +176,8 @@ timeline_zoom = 16
 timeline_zoom_goal = 16
 timeline_camera = null
 copy_kf_amount = 0
+
+timeline_show_markers = true
 
 ds_list_clear(tree_list)
 ds_list_clear(tree_visible_list)

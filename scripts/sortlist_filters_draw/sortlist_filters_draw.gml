@@ -55,9 +55,6 @@ scissor_done()
 settings_menu_w = 186
 settings_menu_h = min(dy - content_y, 256)
 
-if ((settings_menu_y + settings_menu_h) > window_height)
-	settings_menu_y -= (settings_menu_button_h + settings_menu_h)
-
 if ((dy - content_y) > 256)
 {
 	scrollbar_draw(settings_menu_scroll, e_scroll.VERTICAL, content_x + content_width - 12, content_y, content_height, dy - content_y)

@@ -111,12 +111,14 @@ switch (name)
 	// Timeline
 	case "timeline":
 	{
+		// Transition
 		list_item_add(text_get("contextmenutlkeyframestransition"), null, "", null, icons.TRANSITION, icons.ARROW_RIGHT_SMALL, null, true)
 		list_item_last.disabled = !timeline_settings_keyframes
 		list_item_last.context_menu_script = menu_transitions
 		list_item_last.context_menu_width = 244
 		list_item_last.context_menu_height = 438
 		
+		// Keyframes
 		list_item_add(text_get("contextmenutlkeyframescut"), null, "", null, icons.CUT_KEYFRAMES, null, action_tl_keyframes_cut, true)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
@@ -132,15 +134,45 @@ switch (name)
 		list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.EXPORT_KEYFRAMES, null, keyframes_save)
 		list_item_last.disabled = !timeline_settings_keyframes_export
 		
+		// Walk/run cycles
 		list_item_add(text_get("contextmenutlkeyframeswalk"), timeline_settings_walk_fn, "", null, icons.WALK, null, action_tl_load_loop, true)
 		list_item_last.disabled = !file_exists_lib(timeline_settings_walk_fn)
 		
 		list_item_add(text_get("contextmenutlkeyframesrun"), timeline_settings_run_fn, "", null, icons.RUN, null, action_tl_load_loop)
 		list_item_last.disabled = !file_exists_lib(timeline_settings_run_fn)
 		
+		// Add marker
+		list_item_add(text_get("contextmenutlmarkeradd"), null, "", null, icons.MARKER_ADD, null, action_tl_marker_new, true)
+		
+		// Check if position is available
+		if (timeline_show_markers)
+		{
+			for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
+			{
+				if (timeline_marker_list[|i].pos = round(app.timeline_marker))
+				{
+					list_item_last.disabled = true
+					break
+				}
+			}
+		}
+		else
+			list_item_last.disabled = true
+		
+		// Show/hide markers
+		list_item_add(timeline_show_markers ? text_get("contextmenutlmarkerhide") : text_get("contextmenutlmarkershow"), !timeline_show_markers, "", null, icons.SHOW + timeline_show_markers, null, action_tl_markers_show)
+		
 		break
 	}
-
+	
+	// Marker
+	case "timelinemarker":
+	{
+		list_item_add(text_get("contextmenutlmarkeredit"), context_menu_value, "", null, icons.EDIT, null, action_tl_marker_editor, true)
+		list_item_add(text_get("contextmenutlmarkerdelete"), null, "", null, icons.DELETE, null, action_tl_marker_delete)
+		
+		break
+	}
 }
 
 return list_init_end()
