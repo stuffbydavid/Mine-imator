@@ -2,6 +2,7 @@
 
 mouse_left = false
 mouse_left_pressed = false
+mouse_left_double_pressed = false
 mouse_left_released = false
 mouse_right = false
 mouse_right_pressed = false

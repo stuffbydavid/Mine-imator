@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.11.30"
+        "lastchange": "2020.12.04"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -55,8 +55,7 @@
             "play": "Play",
             "playregion": "Play at region",
             "pause": "Pause",
-            "showintervals": "Show intervals",
-            "hideintervals": "Hide intervals",
+            "settings": "Timeline settings",
             "disableloop": "Disable looping",
             "enableloop": "Enable looping",
             "enableseamlessloop": "Enable seamless looping",
@@ -113,8 +112,6 @@
                 "transition": "Transition..."
             },
             "marker/": {
-                "show": "Show markers",
-                "hide": "Hide markers",
                 "add": "Add marker",
                 "edit": "Edit marker",
                 "delete": "Delete marker"
@@ -2265,8 +2262,11 @@
         "removekeyframestip": "Remove the selected keyframes.",
         "exportkeyframestip": "Export the selected keyframes.",
         "frame": "Frame %1",
-        "intervalsize": "Size",
-        "intervaloffset": "Offset",
+        "intervalshow": "Show intervals",
+        "intervalsize": "Interval size",
+        "intervaloffset": "Interval offset",
+        "compact": "Compact view",
+        "markers": "Markers",
         "marker/": {
             "new": "New marker",
             "label": "Label",
@@ -2671,8 +2671,6 @@
         },
         "timelineautoscroll": "Auto-scroll when playing animation",
         "timelineautoscrolltip": "When playing the animation, the timeline view will automatically scroll along with the marker.",
-        "timelinecompact": "Compact timeline list",
-        "timelinecompacttip": "Show more timelines in the list.",
         "timelineselectjump": "Jump to selected object in timeline list",
         "timelineselectjumptip": "When selecting an object in the 3D view, it will be revealed in the timeline list.",
         "zisup": "Z is up",

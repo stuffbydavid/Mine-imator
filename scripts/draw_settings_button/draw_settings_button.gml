@@ -41,6 +41,7 @@ microani_set(name, null, mouseon, mouseclick, false)
 if (mouseon && mouse_left_released)
 {
 	window_busy = "settingsmenu"
+	window_focus = ""
 	app_mouse_clear()
 	
 	settings_menu_name = name

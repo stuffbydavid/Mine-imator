@@ -41,7 +41,7 @@ if (argument_count > 11)
 	center = argument[11]
 
 capwid = string_width(text_get(inputname))
-padding = 3
+padding = (h - 22) / 2
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
@@ -71,23 +71,24 @@ draw_outline(xx + 1, yy + 1, w - 2, h - 2, 1, bordercolor, borderalpha)
 // Error icon
 if (err)
 {
-	draw_image(spr_icons, icons.ALERT, xx + w - 14, yy + h - 14, 1, 1, c_error, 1)
+	draw_image(spr_icons, icons.ALERT, xx + w - 14, yy + (h/2), 1, 1, c_error, 1)
 	w -= 28
 }
 
 // Search icon
 if (string_contains(inputname, "search"))
 {
-	draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + h - 14, 1, 1, bordercolor, borderalpha)
+	draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + (h/2), 1, 1, bordercolor, borderalpha)
 	w -= 28
 }
 
 // Textbox
 draw_set_font(font)
 
-var textx, texty;
+var tbxh, textx, texty;
+tbxh = max(19, h - 9)
 textx = (center ? xx + w/2 : xx + 10)
-texty = (center ? yy + h/2 : yy + 5)
+texty = (center ? yy + h/2 : yy + floor(h/2) - ceil(tbxh/2))
 
 if (disabled)
 {
@@ -104,10 +105,12 @@ if (!disabled)
 	if (center && (tbx.text != ""))
 	{
 		var textwid = min(w, string_width(tbx.text));
-		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 5, textwid, h - 9, true) // ,false)
+		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 5, textwid, h - 9)
 	}
 	else
-		update = textbox_draw(tbx, xx + 10, yy + 5, w - 20, h - 9, true) // ,false)
+	{
+		update = textbox_draw(tbx, xx + 10, texty, w - 20, tbxh)
+	}
 }
 
 // Textbox context menu

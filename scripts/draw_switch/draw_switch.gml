@@ -25,10 +25,10 @@ if (argument_count > 6)
 if (argument_count > 7)
 	disabled = argument[7]
 
-switchx = (xx + dw - 24)
-switchy = (yy + (28/2) - 8)
 w = dw
 h = 28
+switchx = (xx + dw - 24)
+switchy = (yy + (h/2) - 8)
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0

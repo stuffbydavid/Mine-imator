@@ -159,9 +159,6 @@ switch (name)
 		else
 			list_item_last.disabled = true
 		
-		// Show/hide markers
-		list_item_add(timeline_show_markers ? text_get("contextmenutlmarkerhide") : text_get("contextmenutlmarkershow"), !timeline_show_markers, "", null, icons.SHOW + timeline_show_markers, null, action_tl_markers_show)
-		
 		break
 	}
 	

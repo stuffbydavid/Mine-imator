@@ -54,6 +54,7 @@ colors_ext = false
 part_mixing_shapes = false
 
 level = 0
+level_display = []
 parent = null
 parent_is_selected = false
 lock_bend = true

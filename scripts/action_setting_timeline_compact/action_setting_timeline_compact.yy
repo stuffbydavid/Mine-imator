@@ -1,5 +1,5 @@
 {
-    "id": "ca264763-7f4c-4fb1-9ce8-f2f151e6c902",
+    "id": "63575cba-6e6a-4825-9234-8d7cf206cb56",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "action_setting_timeline_compact",

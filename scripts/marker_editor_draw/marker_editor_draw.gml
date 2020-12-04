@@ -3,12 +3,12 @@
 dx = content_x + 12
 dy = content_y + 12
 
-timeline.tbx_markername.text = timeline_marker_edit.name
+timeline.tbx_marker_name.text = timeline_marker_edit.name
 
 // Name
 tab_control_menu(28)
-if (draw_textfield("timelinemarkerlabel", dx, dy, settings_menu_w - 24, 28, timeline.tbx_markername, null))
-	action_tl_marker_edit(timeline.tbx_markername.text, timeline_marker_edit.color)
+if (draw_textfield("timelinemarkerlabel", dx, dy, settings_menu_w - 24, 28, timeline.tbx_marker_name, null))
+	action_tl_marker_edit(timeline.tbx_marker_name.text, timeline_marker_edit.color)
 tab_next()
 
 // Color

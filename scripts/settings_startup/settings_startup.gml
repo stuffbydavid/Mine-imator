@@ -46,7 +46,6 @@ setting_language_filename = language_file
 action_setting_color_reset()
 
 setting_timeline_autoscroll = true
-setting_timeline_compact = false
 setting_timeline_select_jump = true
 setting_z_is_up = false
 setting_smooth_camera = true

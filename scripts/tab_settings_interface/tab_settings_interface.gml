@@ -158,10 +158,6 @@ draw_checkbox("settingstimelineautoscroll", dx, dy, setting_timeline_autoscroll,
 tab_next()
 
 tab_control_checkbox()
-draw_checkbox("settingstimelinecompact", dx, dy, setting_timeline_compact, action_setting_timeline_compact)
-tab_next()
-
-tab_control_checkbox()
 draw_checkbox("settingstimelineselectjump", dx, dy, setting_timeline_select_jump, action_setting_timeline_select_jump)
 tab_next()
 
