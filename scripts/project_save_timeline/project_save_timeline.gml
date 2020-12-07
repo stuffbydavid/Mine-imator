@@ -10,6 +10,7 @@ json_save_object_start()
 	json_save_var_color("color", color)
 	json_save_var_bool("hide", hide)
 	json_save_var_bool("lock", lock)
+	json_save_var_bool("ghost", ghost)
 	json_save_var("depth", depth)
 	
 	if (type = e_temp_type.BODYPART)

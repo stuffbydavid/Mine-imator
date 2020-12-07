@@ -39,6 +39,7 @@ if (filter)
 		menu_settings_set(xx, yy + 28, "listfilter" + string(slist), 28)
 		settings_menu_script = sortlist_filters_draw
 		settings_menu_sortlist = slist
+		settings_menu_h_max = 256
 	}
 
 	if (settings_menu_name = "listfilter" + string(slist))

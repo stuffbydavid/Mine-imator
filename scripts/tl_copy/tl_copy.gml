@@ -11,6 +11,7 @@ to.text = text
 to.color = color
 to.lock = lock
 to.hide = hide
+to.ghost = ghost
 to.depth = depth
 
 to.lock_bend = lock_bend

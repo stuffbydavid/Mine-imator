@@ -10,6 +10,7 @@ settings_menu_x = 0
 settings_menu_y = 0
 settings_menu_w = 0
 settings_menu_h = 0
+settings_menu_h_max = null
 
 settings_menu_button_h = 0
 

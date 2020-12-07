@@ -1,9 +1,5 @@
 /// tl_settings_draw()
 
-dx = content_x + 12
-dy = content_y + 12
-dw = settings_menu_w - (12 * 2)
-
 draw_set_font(font_emphasis)
 var draggerwid, switchwid;
 draggerwid = text_max_width("timelineintervalsize", "timelineintervaloffset") + 16
@@ -35,4 +31,3 @@ draw_switch("timelinecompact", dx, dy, setting_timeline_compact, action_setting_
 tab_next()
 
 settings_menu_w = max(draggerwid + 64, switchwid) + 24
-settings_menu_h = dy - content_y

@@ -14,9 +14,6 @@ if (settings_menu_sortlist = app.properties.resources.list)
 if (typelist = null)
 	return 0
 
-dx = content_x + 8
-dy = content_y + 8
-
 scissor_start(content_x, content_y, settings_menu_w, settings_menu_h)
 
 if (settings_menu_scroll.needed)
@@ -53,10 +50,3 @@ for (var i = 0; i < ds_list_size(typelist); i++)
 scissor_done()
 
 settings_menu_w = 186
-settings_menu_h = min(dy - content_y, 256)
-
-if ((dy - content_y) > 256)
-{
-	scrollbar_draw(settings_menu_scroll, e_scroll.VERTICAL, content_x + content_width - 12, content_y, content_height, dy - content_y)
-	window_scroll_focus = string(settings_menu_scroll)
-}

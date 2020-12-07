@@ -27,6 +27,7 @@ settings_menu_scroll.value = 0
 settings_menu_primary = false
 settings_menu_x = xx
 settings_menu_y = yy
+settings_menu_h_max = null
 
 settings_menu_list = list_init(settings_menu_name)
 settings_menu_amount = ds_list_size(settings_menu_list.item)

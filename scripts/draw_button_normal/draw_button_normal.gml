@@ -104,12 +104,7 @@ if (icon != null)
 	if (type = e_button.TEXT)
 		iconx -= string_width(text) / 2
 		
-	if (icon = icons.COLOR)
-	{
-		draw_image(spr_icons, icon, iconx, icony, 1, 1, iconblend, 1)
-		draw_image(spr_icons, icons.COLOR_FRAME, iconx, icony, 1, 1, c_black, 0.5)
-	}
-	else if (icon >= icons.RENDER_SMALL)
+	if (icon >= icons.RENDER_SMALL)
 		draw_image(spr_icons_render, icon - icons.RENDER_SMALL, iconx, icony, 1, 1, c_white, 1 - 0.75 * !view_render)
 	else if (icon >= icons.UPGRADE_SMALL)
 		draw_image(spr_icons_big, icon - icons.WEBSITE_SMALL, iconx, icony, 1, 1, c_yellow, 1)

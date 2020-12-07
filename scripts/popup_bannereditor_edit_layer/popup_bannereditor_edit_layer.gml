@@ -1,8 +1,5 @@
 /// popup_bannereditor_edit_layer()
 
-dx = content_x + 8
-dy = content_y + 8
-
 draw_label(text_get("bannereditorcolors"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 dy += 18
 
@@ -30,23 +27,24 @@ for (var i = 0; i < 16; i++)
 	colorsx += 24
 }
 
-dy += 20 + 16
+dy += 20 + 8
 
 if (popup_bannereditor.layer_edit != -1)
 {
+	dy += 8
 	draw_label(text_get("bannereditorpatterns"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 18
-
+	
 	var patternsx, patternsy;
 	patternsx = dx
 	patternsy = dy
-
+	
 	var p = 1;
 	for (; p < ds_list_size(minecraft_banner_pattern_list); p++)
 	{
 		draw_box(patternsx, dy, 20, 40, false, c_background_secondary, 1)
 		draw_image(popup_bannereditor.pattern_sprites[p], 0, patternsx, dy, (1 / popup_bannereditor.res_ratio), (1 / popup_bannereditor.res_ratio), c_text_main, a_text_main)
-	
+		
 		if (app_mouse_box(patternsx, dy, 20, 40))
 		{
 			mouse_cursor = cr_handpoint
@@ -59,19 +57,18 @@ if (popup_bannereditor.layer_edit != -1)
 		}
 		
 		patternsx += 24
-	
+		
 		if ((p mod 16) = 0)
 		{
 			patternsx = dx
 			dy += 44
 		}
 	}
-
+	
 	if ((p mod 16) != 0)
 		dy += 44
 	
-	dy += 8
+	dy += 4
 }
 
-settings_menu_w = 396
-settings_menu_h = dy - content_y
+settings_menu_w = 24 + ((24 * 16) - 4)

@@ -14,6 +14,7 @@ text = text_get("timelineeditortextsample")
 color = make_color_hsv(random(255), 255, 128)
 lock = false
 hide = false
+ghost = false
 depth = 0
 
 model_part = null
@@ -56,10 +57,12 @@ part_mixing_shapes = false
 level = 0
 level_display = []
 parent = null
+parent_filter = null
 parent_is_selected = false
 lock_bend = true
 tree_array = 0
 tree_list = ds_list_create()
+tree_list_filter = ds_list_create()
 tree_extend = false
 list_mouseon = false
 

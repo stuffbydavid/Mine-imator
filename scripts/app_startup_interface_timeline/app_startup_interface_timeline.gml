@@ -53,7 +53,10 @@ copy_kf_tl_part_of_save_id[0] = ""
 copy_kf_tl_model_part_name[0] = null
 
 tree_list = ds_list_create()
+tree_list_filter = ds_list_create()
 tree_visible_list = ds_list_create()
+tree_update_parent_filter = app
+tree_update_extend = false
 
 timeline_settings_w = 0
 timeline_settings_right_w = 0

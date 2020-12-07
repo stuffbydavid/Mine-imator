@@ -742,9 +742,20 @@ draw_box(content_x, bary, listw, content_height - headerh, false, c_background, 
 draw_divide_vertical(content_x + listw, tly - barh, content_height - headerh)
 draw_divide(content_x, bary + 1, listw)
 
+// Filter
+if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts, icons.FILTER, null, false, "tooltiptlfilter"))
+{
+	menu_settings_set(listx + 8, bary + 28, "timelinefilter", 24)
+	settings_menu_script = tl_filter_draw
+}
+
+if (settings_menu_name = "timelinefilter")
+	current_mcroani.holding = true
+
+
 // Draw search bar
 timeline.tbx_search.text = timeline_search
-draw_textfield("timelinesearch", listx + 3, bary + 4, listw - 7, 24, timeline.tbx_search, action_tl_search, text_get("listsearch"), "none")
+draw_textfield("timelinesearch", listx + (24 + 16), bary + 4, listw - (24 + 24), 24, timeline.tbx_search, action_tl_search, text_get("listsearch"), "none")
 
 // Context menu
 if (mouseinnames && mousetl != null && mousetl.list_mouseon)
@@ -772,7 +783,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	else if (tl.selected || itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
 		draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 	
-	xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock))
+	xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))
 	
 	// Hide/mute
 	if (itemhover || tl.hide)
@@ -792,7 +803,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		
 		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
 	}
-	xx -= (buttonsize + 4) * (itemhover || tl.lock)
+	xx -= (buttonsize + 4) * (itemhover || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost))
 	
 	// Lock
 	if (itemhover || tl.lock)
@@ -801,6 +812,20 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			action_tl_lock(tl)
 		
 		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+	}
+	
+	// Ghost toggle
+	if (!setting_timeline_hide_ghosts)
+	{
+		xx -= (buttonsize + 4) * (itemhover || tl.ghost)
+		
+		if (itemhover || tl.ghost)
+		{
+			if (draw_button_icon("timelineghosttl" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.ghost, icons.GHOST, null, false, (tl.ghost ? "tooltiptlunghost" : "tooltiptlghost")))
+				action_tl_ghost(tl)
+			
+			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+		}
 	}
 	
 	minw = xx - itemx
@@ -821,7 +846,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			{
 				if (i = (tl.level - 1))
 				{
-					if (tl.parent != app && tl.parent.tree_list[|ds_list_size(tl.parent.tree_list) - 1] = tl)
+					if (tl.parent != app && tl.parent_filter.tree_list_filter[|ds_list_size(tl.parent_filter.tree_list_filter) - 1] = tl)
 						index = 2
 					else
 						index = 1
@@ -839,7 +864,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	// Extent timeline tree
 	if (tlhierarchy)
 	{
-		if (ds_list_size(tl.tree_list) > 0 && (((xx + buttonsize + 8) - xright) < minw))
+		if (ds_list_size(tl.tree_list_filter) > 0 && (((xx + buttonsize + 8) - xright) < minw))
 		{
 			if (draw_button_icon("timelineexpand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand"), spr_arrow_small_ani))
 				action_tl_extend(tl)
@@ -961,19 +986,19 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	}
 	
 	// Folder icons
-	if (!setting_timeline_compact && tl.type = e_tl_type.FOLDER && !tl.tree_extend && ds_list_size(tl.tree_list) > 0)
+	if (!setting_timeline_compact && tl.type = e_tl_type.FOLDER && !tl.tree_extend && ds_list_size(tl.tree_list_filter) > 0)
 	{
 		xx += string_width(name) + 16
 		minw -= string_width(name) + 16
 		
-		for (var i = 0; i < ds_list_size(tl.tree_list); i++)
+		for (var i = 0; i < ds_list_size(tl.tree_list_filter); i++)
 		{
 			if ((xx + (24 + 16) - xright) < minw)
 			{
-				if (((xx + ((24 * 2) + 16) - xright) < (minw - 24)) || (i = ds_list_size(tl.tree_list) - 1))
-					draw_image(spr_icons, timeline_icon_list[|tl.tree_list[|i].type], xx + 10, itemy + (itemh/2), 1, 1, c_border, a_border)
+				if (((xx + ((24 * 2) + 16) - xright) < (minw - 24)) || (i = ds_list_size(tl.tree_list_filter) - 1))
+					draw_image(spr_icons, timeline_icon_list[|tl.tree_list_filter[|i].type], xx + 10, itemy + (itemh/2), 1, 1, c_border, a_border)
 				else
-					draw_label(string(ds_list_size(tl.tree_list) - i) + "+", xx + 10, itemy + (itemh/2), fa_center, fa_middle, c_border, a_border, font_emphasis)
+					draw_label(string(ds_list_size(tl.tree_list_filter) - i) + "+", xx + 10, itemy + (itemh/2), fa_center, fa_middle, c_border, a_border, font_emphasis)
 			}
 			else
 				break
@@ -999,28 +1024,28 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		}
 		
 		// Set move target
-		var index = ds_list_find_index(tl.parent.tree_list, tl);
+		var index = ds_list_find_index(tl.parent_filter.tree_list_filter, tl);
 		if ((mouse_y >= dy || t = timeline_list_first) && mouse_y < dy + 8)
 		{
-			mousemovetl = tl.parent
+			mousemovetl = tl.parent_filter
 			mousemoveindex = index
 			movehlpos = t
 		}
 		else if (mouse_y > dy + itemh - 8)
 		{
-			if (tl.tree_extend && ds_list_size(tl.tree_list) > 0)
+			if (tl.tree_extend && ds_list_size(tl.tree_list_filter) > 0)
 			{
 				mousemovetl = tl
 				mousemoveindex = 0
 			}
-			else if (tl.parent != app && index = ds_list_size(tl.parent.tree_list) - 1)
+			else if (tl.parent_filter != app && index = ds_list_size(tl.parent_filter.tree_list_filter) - 1)
 			{
-				mousemovetl = tl.parent.parent
-				mousemoveindex = ds_list_find_index(tl.parent.parent.tree_list, tl.parent) + 1
+				mousemovetl = tl.parent_filter.parent_filter
+				mousemoveindex = ds_list_find_index(tl.parent_filter.parent_filter.tree_list_filter, tl.parent_filter) + 1
 			}
 			else
 			{
-				mousemovetl = tl.parent
+				mousemovetl = tl.parent_filter
 				mousemoveindex = index + 1
 			}
 			movehlpos = t + 1

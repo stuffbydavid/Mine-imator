@@ -13,6 +13,14 @@ for (var t = 0; t < ds_list_size(par.tree_list); t++)
 	px = dx
 	xoff = 0
 	
+	if (!tl_update_list_filter(tl))
+	{
+		if (tl.tree_extend)
+			window_draw_timeline_move_tree(tl)
+		
+		continue
+	}
+	
 	dx += 4
 	
 	if (ds_list_size(tl.tree_list) > 0)

@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.12.04"
+        "lastchange": "2020.12.06"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -66,7 +66,10 @@
             "mute": "Mute",
             "unmute": "Unmute",
             "lock": "Lock",
-            "unlock": "Unlock"
+            "unlock": "Unlock",
+            "ghost": "Set ghost timeline",
+            "unghost": "Unset ghost timeline",
+            "filter": "Filter timelines"
         }
     },
     "contextmenu/": {
@@ -2266,7 +2269,8 @@
         "intervalsize": "Interval size",
         "intervaloffset": "Interval offset",
         "compact": "Compact view",
-        "markers": "Markers",
+        "hideghosts": "Hide ghost timelines",
+        "markers": "Show markers",
         "marker/": {
             "new": "New marker",
             "label": "Label",

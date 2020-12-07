@@ -27,7 +27,7 @@ if (tl > 0)
 {
 	// Find timeline to select
 	if (!tl_edit && !keyboard_check(vk_control))
-		while (tl.parent != app && !tl.parent.lock)
+		while (tl.parent != app && !tl.parent.lock && tl_update_list_filter(tl.parent))
 			tl = tl.parent
 			
 	// Select

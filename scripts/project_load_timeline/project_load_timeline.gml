@@ -19,6 +19,7 @@ with (new(obj_timeline))
 	color = value_get_color(map[?"color"], color)
 	hide = value_get_real(map[?"hide"], hide)
 	lock = value_get_real(map[?"lock"], lock)
+	ghost = value_get_real(map[?"ghost"], ghost)
 	depth = value_get_real(map[?"depth"], depth)
 	
 	if (type = e_temp_type.BODYPART)

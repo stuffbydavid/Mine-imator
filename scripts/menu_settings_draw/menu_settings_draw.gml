@@ -45,7 +45,26 @@ draw_box(content_x, content_y, content_width, content_height, false, c_backgroun
 
 if (settings_menu_script)
 {
+	dx = content_x + 12
+	dy = content_y + 12
+	dw = settings_menu_w - 24
+	
 	script_execute(settings_menu_script)
+	
+	dy += 4
+	
+	if (settings_menu_h_max = null)
+		settings_menu_h = dy - content_y
+	else
+	{
+		settings_menu_h = min(dy - content_y, settings_menu_h_max)
+
+		if ((dy - content_y) > settings_menu_h_max)
+		{
+			scrollbar_draw(settings_menu_scroll, e_scroll.VERTICAL, content_x + content_width - 12, content_y, content_height, dy - content_y)
+			window_scroll_focus = string(settings_menu_scroll)
+		}
+	}
 }
 else
 {

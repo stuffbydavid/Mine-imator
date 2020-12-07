@@ -1,8 +1,5 @@
 /// marker_editor_draw()
 
-dx = content_x + 12
-dy = content_y + 12
-
 timeline.tbx_marker_name.text = timeline_marker_edit.name
 
 // Name
@@ -20,7 +17,6 @@ tab_control_menu(28)
 draw_button_menu("timelinemarkercolor", e_menu.LIST, dx, dy, settings_menu_w - 24, 28, timeline_marker_edit.color, text, action_tl_marker_color, false, spr_16, null, "", color, 1)
 tab_next()
 //draw_label(text_get("timelinemarkercolors"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
-dy += 4
 
 /*
 var colorsx;
@@ -44,4 +40,3 @@ dy += 20 + 16
 */
 
 settings_menu_w = 216
-settings_menu_h = dy - content_y
