@@ -16,7 +16,7 @@ with (new(obj_timeline))
 	name = value_get_string(map[?"name"], name)
 	
 	temp = value_get_save_id(map[?"temp"], temp)
-	color = value_get_color(map[?"color"], color)
+	color_tag = value_get_real(map[?"color_tag"], color_tag)
 	hide = value_get_real(map[?"hide"], hide)
 	lock = value_get_real(map[?"lock"], lock)
 	ghost = value_get_real(map[?"ghost"], ghost)

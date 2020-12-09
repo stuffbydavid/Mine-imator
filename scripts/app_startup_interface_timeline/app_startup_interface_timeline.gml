@@ -57,6 +57,7 @@ tree_list_filter = ds_list_create()
 tree_visible_list = ds_list_create()
 tree_update_parent_filter = app
 tree_update_extend = false
+tree_update_color = null
 
 timeline_settings_w = 0
 timeline_settings_right_w = 0
@@ -69,3 +70,5 @@ timeline_marker_edit_offset = 0
 
 timeline_search = ""
 timeline_rename = null
+
+timeline_hide_color_tag = array_create(9, false)

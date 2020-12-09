@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.12.06"
+        "lastchange": "2020.12.08"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -118,7 +118,20 @@
                 "add": "Add marker",
                 "edit": "Edit marker",
                 "delete": "Delete marker"
-            }
+            },
+            "colortag": "Color tag..."
+        },
+        "color/": {
+            "none": "None",
+            "0": "Red",
+            "1": "Orange",
+            "2": "Yellow",
+            "3": "Green",
+            "4": "Forest green",
+            "5": "Teal",
+            "6": "Blue",
+            "7": "Purple",
+            "8": "Pink"
         },
         "scaleseperate": "Seperate scale",
         "scalecombine": "Combine scale",
@@ -2269,7 +2282,9 @@
         "intervalsize": "Interval size",
         "intervaloffset": "Interval offset",
         "compact": "Compact view",
+        "filtertags": "Filter out tags",
         "hideghosts": "Hide ghost timelines",
+        "hideghoststip": "When enabled, all timelines with the \"Ghost\" toggle will be hidden from the timeline list.",
         "markers": "Show markers",
         "marker/": {
             "new": "New marker",

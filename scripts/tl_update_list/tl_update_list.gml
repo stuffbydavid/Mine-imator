@@ -10,6 +10,7 @@ if (root)
 {
 	app.tree_update_parent_filter = app
 	app.tree_update_extend = true
+	app.tree_update_color = null
 	ds_list_clear(tree_visible_list)
 	ds_list_clear(tree_list_filter)
 	level = -1
@@ -23,6 +24,9 @@ else
 	
 	// Set parent in "filtered" timeline
 	parent_filter = app.tree_update_parent_filter
+	
+	if (color_tag != null)
+		app.tree_update_color = color_tag
 	
 	// Only add visible timelines
 	if (tl_update_list_filter(id))
@@ -42,14 +46,16 @@ else
 	}
 }
 
-var update, extend;
+var update, extend, color;
 update = app.tree_update_parent_filter
 extend = app.tree_update_extend
+color = app.tree_update_color
 
 for (var t = 0; t < ds_list_size(tree_list); t++)
 {
 	app.tree_update_parent_filter = update
 	app.tree_update_extend = extend
+	app.tree_update_color = color
 	
 	with (tree_list[|t])
 		tl_update_list(false)

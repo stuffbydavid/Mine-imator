@@ -89,7 +89,11 @@ switch (name)
 	{
 		list_item_add(text_get("contextmenutladdfolder"), null, "", null, icons.FOLDER, null, action_tl_folder, true)
 		list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
-		list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.EXPAND, null, action_tl_extend_children)	
+		
+		list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.ARROW_RIGHT_SMALL, null)
+		list_item_last.context_menu_name = "color"
+		
+		list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.EXPAND, null, action_tl_extend_children)
 		list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.COLLAPSE, null, action_tl_collapse_children)
 		
 		list_item_add(text_get("contextmenutlduplicate"), null, "", null, icons.DUPLICATE, null, action_tl_duplicate, true)
@@ -167,6 +171,20 @@ switch (name)
 	{
 		list_item_add(text_get("contextmenutlmarkeredit"), context_menu_value, "", null, icons.EDIT, null, action_tl_marker_editor, true)
 		list_item_add(text_get("contextmenutlmarkerdelete"), null, "", null, icons.DELETE, null, action_tl_marker_delete)
+		
+		break
+	}
+	
+	// Accent color picker
+	case "color":
+	{
+		list_item_add(text_get("contextmenucolornone"), null, "", null, icons.CLOSE, null, action_tl_color_tag_remove, true)
+		
+		for (var i = 0; i <= 8; i++)
+		{
+			list_item_add(text_get("contextmenucolor" + string(i)), i, "", spr_16, null, null, action_tl_color_tag)
+			list_item_last.thumbnail_blend = setting_theme.accent_list[i]
+		}
 		
 		break
 	}

@@ -17,8 +17,11 @@ settings_menu_button_h = 0
 settings_menu_amount = 0
 settings_menu_primary = false
 settings_menu_script = null
+settings_menu_above = false
 
 settings_menu_list = null
 settings_menu_amount = 0
 settings_menu_busy_prev = ""
 settings_menu_scroll = new(obj_scrollbar)
+
+settings_menu_steps = 0

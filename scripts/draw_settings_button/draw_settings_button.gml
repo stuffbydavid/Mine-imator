@@ -53,6 +53,8 @@ if (mouseon && mouse_left_released)
 	settings_menu_x = xx + ((width/2) * settings_menu_primary)
 	settings_menu_y = yy + height + (2 * settings_menu_primary)
 	settings_menu_button_h = height
+	settings_menu_above = false
+	settings_menu_steps = 0
 	
 	// Primary style
 	if (script)
@@ -66,8 +68,8 @@ if (mouseon && mouse_left_released)
 		settings_menu_amount = ds_list_size(settings_menu_list.item)
 		settings_menu_w = settings_menu_list.width
 	
-		if ((settings_menu_x + (settings_menu_w/2)) > window_width)
-			settings_menu_x += window_width - (settings_menu_x + (settings_menu_w/2))
+		//if ((settings_menu_x + (settings_menu_w/2)) > window_width)
+		//	settings_menu_x += window_width - (settings_menu_x + (settings_menu_w/2))
 	}
 }
 

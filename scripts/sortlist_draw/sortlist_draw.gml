@@ -36,7 +36,7 @@ if (filter)
 {
 	if (draw_button_icon("listfilter" + string(slist), xx, yy, 28, 28, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
 	{
-		menu_settings_set(xx, yy + 28, "listfilter" + string(slist), 28)
+		menu_settings_set(xx, yy, "listfilter" + string(slist), 28)
 		settings_menu_script = sortlist_filters_draw
 		settings_menu_sortlist = slist
 		settings_menu_h_max = 256
@@ -46,10 +46,9 @@ if (filter)
 		current_mcroani.holding = true
 }
 
-if (draw_inputbox("listsearch" + string(slist), xx + (44 * filter), yy, w - (44 * filter), 28, text_get("listsearch"), slist.search_tbx, null))
+if (draw_inputbox("listsearch" + string(slist), xx + (36 * filter), yy, w - (36 * filter), 28, text_get("listsearch"), slist.search_tbx, null))
 {
 	slist.search = (slist.search_tbx.text != "")
-	
 	sortlist_update(slist)
 }
 

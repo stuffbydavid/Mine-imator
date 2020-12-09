@@ -12,4 +12,8 @@ if (app.setting_timeline_hide_ghosts && tl.ghost)
 if (app.timeline_search != "" && !string_contains(string_upper(tl.display_name), string_upper(app.timeline_search)))
 	return false
 
+// Filtered color
+if (app.tree_update_color != null && app.timeline_hide_color_tag[app.tree_update_color])
+	return false
+
 return true

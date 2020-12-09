@@ -28,15 +28,25 @@ if (settings_menu_name = "")
 var settingsmenuease = ease(((settings_menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), settings_menu_ani);
 
 content_x = settings_menu_x - (ceil(settings_menu_w/2) * settings_menu_primary)
-content_y = settings_menu_y + ((16 * settingsmenuease) * settings_menu_primary)
+content_y = settings_menu_y
 content_width = settings_menu_w
 content_height = (settings_menu_script ? settings_menu_h : (28 * settings_menu_amount))
-content_mouseon = app_mouse_box_busy(content_x, content_y, content_width, content_height, "settingsmenu")
+
+// Ease position
+if (settings_menu_above)
+	content_y = ((content_y - content_height) + 16) - (16 * settingsmenuease)
+else
+	content_y = ((content_y + settings_menu_button_h) - 16) + (16 * settingsmenuease)
 
 if (window_busy = "settingsmenu")
 	window_busy = ""
 
-draw_set_alpha(settingsmenuease)
+content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
+
+if (settings_menu_steps < 2)
+	draw_set_alpha(0)
+else
+	draw_set_alpha(settingsmenuease)
 
 draw_dropshadow(content_x, content_y, content_width, content_height, c_black, settingsmenuease)
 draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border * settingsmenuease)
@@ -100,12 +110,12 @@ draw_set_alpha(1)
 
 // Flip
 if ((settings_menu_y + settings_menu_h) > window_height)
-	settings_menu_y -= (settings_menu_button_h + settings_menu_h)
+	settings_menu_above = true
 
 // Check click
 if (settings_menu_script)
 {
-	if (mouse_left_released && !app_mouse_box(settings_menu_x, settings_menu_y, settings_menu_w, settings_menu_h) && !context_menu_mouseon && (menu_name = "") && (window_focus = ""))
+	if (mouse_left_released && !app_mouse_box(content_x, content_y, content_width, content_height) && !context_menu_mouseon && (menu_name = "") && (window_focus = ""))
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"
@@ -121,6 +131,8 @@ else
 		window_busy = settings_menu_busy_prev
 	}
 }
+
+settings_menu_steps++
 
 if (window_busy = "" && settings_menu_ani_type != "hide")
 	window_busy = "settingsmenu"

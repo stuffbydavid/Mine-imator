@@ -197,8 +197,9 @@ buttonsxstart = buttonsx
 // Timeline settings
 if (draw_button_icon("timelinesettings", buttonsx, buttonsy, 24, 24, false, icons.TIMER, null, false, "tooltiptlsettings"))
 {
-	menu_settings_set(buttonsx, buttonsy + 24, "timelinesettings", 24)
+	menu_settings_set(buttonsx, buttonsy, "timelinesettings", 24)
 	settings_menu_script = tl_settings_draw
+	settings_menu_above = true
 }
 
 if (settings_menu_name = "timelinesettings")
@@ -543,6 +544,16 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	}
 	
 	// Draw keyframes
+	var framecolor, framealpha;
+	framecolor = c_text_secondary
+	framealpha = a_text_secondary
+	
+	if (tl.color_tag != null)
+	{
+		framecolor = setting_theme.accent_list[tl.color_tag]
+		framealpha = .75	
+	}
+	
 	for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
 	{
 		var kf, mouse, sound;
@@ -589,8 +600,8 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 					draw_primitive_end()
 					draw_primitive_begin(pr_linelist)
 				}
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_accent : c_text_secondary, kf.selected ? 1 : a_text_secondary)
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_accent : c_text_secondary, kf.selected ? 1 : a_text_secondary)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
 			}
 			draw_primitive_end()
 			
@@ -630,7 +641,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			// Sprite
 			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
-			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : c_text_secondary, kf.selected ? 1 : a_text_secondary)
+			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
 		}
 		
 		if (mouse && mouseintl && !tl.lock)
@@ -743,15 +754,15 @@ draw_divide_vertical(content_x + listw, tly - barh, content_height - headerh)
 draw_divide(content_x, bary + 1, listw)
 
 // Filter
-if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts, icons.FILTER, null, false, "tooltiptlfilter"))
+if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || !array_equals(timeline_hide_color_tag, array_create(array_length_1d(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
 {
-	menu_settings_set(listx + 8, bary + 28, "timelinefilter", 24)
+	menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
 	settings_menu_script = tl_filter_draw
+	settings_menu_above = true
 }
 
 if (settings_menu_name = "timelinefilter")
 	current_mcroani.holding = true
-
 
 // Draw search bar
 timeline.tbx_search.text = timeline_search
@@ -859,6 +870,10 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		
 			connectx += indent
 		}
+		
+		// No tree, extend 
+		if (tl.parent_filter != app && !setting_timeline_compact && ds_list_size(tl.tree_list_filter) = 0 && (((connectx + 24 + 8) - xright) < minw))
+			draw_image(spr_connect, 3, connectx - 2, itemy, 1, 1, c_border, a_border)
 	}
 	
 	// Extent timeline tree
@@ -899,13 +914,25 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	
 		if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 		{
-			iconcolor = c_accent
+			if (tl.color_tag = null)
+				iconcolor = c_accent
+			else
+				iconcolor = setting_theme.accent_list[tl.color_tag]
+			
 			iconalpha = 1
 		}
 		else
 		{
-			iconcolor = c_text_tertiary
-			iconalpha = a_text_tertiary
+			if (tl.color_tag = null)
+			{
+				iconcolor = c_text_tertiary
+				iconalpha = a_text_tertiary
+			}
+			else
+			{
+				iconcolor = setting_theme.accent_list[tl.color_tag]
+				iconalpha = .75
+			}
 		}
 		
 		if (tl.type != null && (((xx + buttonsize + 8) - xright) < minw))
@@ -945,23 +972,36 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	}
 	else
 	{
+		var backalpha;
+		
 		// Draw name
 		if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 		{
-			namecolor = c_accent
+			if (tl.color_tag = null)
+				namecolor = c_accent
+			else
+				namecolor = c_background
+			
 			namealpha = 1
+			backalpha = 1
 		}
 		else
 		{
 			namecolor = c_text_main
 			namealpha = a_text_main
+			backalpha = .25
 		}
 		
 		if (dev_mode)
 			name += " [" + string(tl.save_id) + "]"
 		
 		if (name != "")
+		{
+			if (tl.color_tag != null)
+				draw_box_rounded(xx - 4, itemy + itemh/2 - 8, string_width(name) + 8, 16, setting_theme.accent_list[tl.color_tag], backalpha)
+			
 			draw_label(name, xx, itemy + (itemh/2), fa_left, fa_middle, namecolor, namealpha, font_value)
+		}
 	}
 	
 	if (window_busy = "timelineclick")

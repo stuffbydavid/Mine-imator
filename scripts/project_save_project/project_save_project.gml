@@ -23,6 +23,7 @@ json_save_object_start("project")
 		json_save_var_nullable("region_start", timeline_region_start)
 		json_save_var_nullable("region_end", timeline_region_end)
 		json_save_var_bool("show_markers", timeline_show_markers)
+		json_save_var("hide_color_tag", timeline_hide_color_tag)
 	json_save_object_done()
 
 	json_save_object_start("work_camera")

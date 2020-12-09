@@ -92,7 +92,7 @@ if (recent_list_amount > 0)
 	var labelwid = string_width(text_get("startuprecentprojects"));
 	
 	if (draw_button_borderless("startupsortby", dx + labelwid + 16, dy, null, null, icons.SORT_DOWN))
-		menu_settings_set(dx + labelwid + 16, dy + 36, "startupsortby", 36)
+		menu_settings_set(dx + labelwid + 16, dy, "startupsortby", 36)
 	
 	if (settings_menu_name = "startupsortby")
 		current_mcroani.holding = true
