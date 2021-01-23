@@ -26,9 +26,7 @@ if (!directory_exists_lib(dirname))
 
 log("Saving project as new", dirname)
 
-project_name = popup_saveas.tbx_name.text;
-project_author = popup_saveas.tbx_author.text;
-project_description = popup_saveas.tbx_description.text;
+project_name = popup_saveas.tbx_name.text
 
 load_folder = project_folder
 project_folder = dirname

@@ -81,12 +81,11 @@ if (!tab.script)
 		
 		repeat (cats)
 		{
-			// Hide button
 			tab_control(24)
-			draw_label(text_get(cat[c].name), dx, dy + 13, fa_left, fa_center, c_text_tertiary, a_text_tertiary, font_subheading)
-			if (draw_button_icon(cat[c].name + "close", dx + dw - 20, dy, 24, 24, cat[c].show, null, null, null, "", spr_arrow_ani))
-				cat[c].show = !cat[c].show
-			tab_next()
+			draw_subheader(cat[c], content_x + 4, dy + 4)
+			tab_next(false)
+			
+			dy += floor(8 * mcroani_arr[e_mcroani.ACTIVE])
 			
 			// Draw contents
 			if (cat[c].show && cat[c].script)
@@ -94,8 +93,9 @@ if (!tab.script)
 			
 			if (c < catamount - 1)
 			{
-				dy += 20
-				draw_divide(content_x, dy - 13, dividew - 1)
+				dy += 8
+				draw_divide(content_x, dy, dividew - 1)
+				dy += 8
 			}
 			
 			maxh = max(dy - dy_start, maxh)

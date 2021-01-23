@@ -3,13 +3,13 @@
 if (tl_edit.type != e_tl_type.POINT_LIGHT && tl_edit.type != e_tl_type.SPOT_LIGHT)
 {
 	// Blend mode
-	tab_control_menu(28)
-	draw_button_menu("timelineeditorblendmode", e_menu.LIST, dx, dy, dw, 28, tl_edit.blend_mode, text_get("timelineeditorblendmode" + tl_edit.blend_mode), action_tl_blend_mode)
+	tab_control_menu()
+	draw_button_menu("timelineeditorblendmode", e_menu.LIST, dx, dy, dw, 24, tl_edit.blend_mode, text_get("timelineeditorblendmode" + tl_edit.blend_mode), action_tl_blend_mode)
 	tab_next()
 	
 	// Depth
 	tab_control_dragger()
-	draw_dragger("timelineeditordepth", dx, dy, 86, tl_edit.depth, 0.1, -no_limit, no_limit, 0, 1, tab.graphics.tbx_depth, action_tl_depth)
+	draw_dragger("timelineeditordepth", dx, dy, dragger_width, tl_edit.depth, 0.1, -no_limit, no_limit, 0, 1, tab.graphics.tbx_depth, action_tl_depth)
 	tab_next()
 	
 	tab_set_collumns(true, floor(content_width/150))

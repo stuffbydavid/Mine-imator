@@ -4,17 +4,16 @@
 /// @arg width
 /// @arg height
 
-var xx, yy, wid, hei;
-var dxstart, dystart, dx, dy, transition;
+var xx, yy, wid, hei, transition;
 xx = argument0
 yy = argument1
 wid = argument2
 hei = argument3
 
-dxstart = xx + 12
-dx = dxstart
-dystart = yy
-dy = dystart + 12
+dx_start = xx + 12
+dx = dx_start
+dy_start = yy
+dy = dy_start + 12
 transition = null
 
 // Other
@@ -28,7 +27,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 	{
 		if (dx + 46 > xx + wid)
 		{
-			dx = dxstart
+			dx = dx_start
 			dy += 46
 		}
 		
@@ -39,7 +38,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 	}
 }
 dy += 36 + 10
-dx = dxstart
+dx = dx_start
 
 // Ease in
 dy += 14
@@ -53,7 +52,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 	{
 		if (dx + 46 > xx + wid)
 		{
-			dx = dxstart
+			dx = dx_start
 			dy += 46
 		}
 		
@@ -63,7 +62,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 		dx += 46
 	}
 }
-dx = dxstart
+dx = dx_start
 dy += 46
 
 // Ease out
@@ -77,7 +76,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 	{
 		if (dx + 46 > xx + wid)
 		{
-			dx = dxstart
+			dx = dx_start
 			dy += 46
 		}
 		
@@ -87,7 +86,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 		dx += 46
 	}
 }
-dx = dxstart
+dx = dx_start
 dy += 46
 
 // Ease in & out
@@ -101,7 +100,7 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 	{
 		if (dx + 46 > xx + wid)
 		{
-			dx = dxstart
+			dx = dx_start
 			dy += 46
 		}
 		
@@ -111,17 +110,8 @@ for (var i = 0; i < ds_list_size(transition_list); i++)
 		dx += 46
 	}
 }
-dx = dxstart
+dx = dx_start
 dy += 46
-
-// Drop down menu
-if (menu_type = e_menu.TRANSITION_LIST)
-{
-	menu_height = dy - dystart
-
-	if (dy > window_height)
-		menu_flip = true
-}
 
 // Context menu
 if (context_menu_name != "" && transition != null)
@@ -130,6 +120,8 @@ if (context_menu_name != "" && transition != null)
 	context_menu_close()
 	
 	app_mouse_clear()
+	
+	return true
 }
 
 return transition

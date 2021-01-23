@@ -59,7 +59,7 @@ if (limit)
 else
 	text = string_decimals(value) + tbx.suffix
 
-draw_set_font(font_value)
+draw_set_font(font_digits)
 
 labelw = rad
 labeltextw = capwid + string_width(text)
@@ -68,11 +68,11 @@ labelx = xx - (labeltextw/2) + capwid
 labely = yy + 36
 
 // Background
-draw_image(sprite, 0, xx, yy, 1, 1, c_text_secondary, a_text_secondary)
+draw_image(sprite, 0, xx, yy, 1, 1, c_border, a_border)
 
 // Bar
 gpu_set_tex_filter(true)
-draw_image(spr_dial_dash, 0, xx, yy, .5, .5, color, 1, value - 45)
+draw_image(spr_dial_dash, 0, xx, yy, .5, .5, color, 1, value + 45)
 gpu_set_tex_filter(false)
 
 // Dragging
@@ -111,12 +111,14 @@ if (app_mouse_box(xx - rad - 10, yy - rad - 10, rad * 2 + 20, rad * 2 + 20) && c
 	
 }
 
+/*
+
 // Textbox
 draw_label(text_get(name) + ":", xx - (labeltextw/2), labely, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
-draw_set_font(font_value)
+draw_set_font(font_digits)
 if (window_focus = string(tbx))
 {
-	if (textbox_draw(tbx, labelx, labely - 8, labeltextw, 18))
+	if (textbox_draw(tbx, labelx, labely - 7, labeltextw, 18))
 	{
 		var str, loops, val;
 		str = string_upper(tbx.text)
@@ -139,10 +141,10 @@ if (window_focus = string(tbx))
 	}
 }
 else
-	draw_label(text, labelx, labely, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+	draw_label(text, labelx, labely - 7, fa_left, fa_top, c_text_main, a_text_main)
 
 // Textbox click
-if (app_mouse_box(labelx - capwid, labely - 8, labeltextw, 16))
+if (app_mouse_box(labelx - capwid, labely - 7, labeltextw, 16))
 {
 	mouse_cursor = cr_handpoint
 	
@@ -163,3 +165,4 @@ if (app_mouse_box(labelx - capwid, labely - 8, labeltextw, 16))
 		window_focus = string(tbx)
 	}
 }
+*/

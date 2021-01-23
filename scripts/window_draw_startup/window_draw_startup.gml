@@ -27,7 +27,7 @@ dw = min(window_width - 48, 1008)
 // No recent projects text
 if (ds_list_size(recent_list) = 0)
 {
-	draw_label(text_get("recentnone"), window_width / 2, dy, fa_center, fa_middle, c_text_tertiary, a_text_tertiary, font_startup)
+	draw_label(text_get("recentnone"), window_width / 2, dy, fa_center, fa_middle, c_text_secondary, a_text_secondary, font_body_big)
 	dy += 48
 }
 
@@ -46,7 +46,7 @@ else
 
 // New project
 dx -= newprojectwidth
-if (draw_button_primary("startupnewproject", dx, dy, null, null, icons.NEW_PROJECT))
+if (draw_button_label("startupnewproject", dx, dy, null, icons.NEW_PROJECT))
 {
 	popup_newproject_clear()
 	popup_show(popup_newproject)
@@ -55,10 +55,10 @@ if (draw_button_primary("startupnewproject", dx, dy, null, null, icons.NEW_PROJE
 if (recent_list_amount > 0)
 	dx -= 12 + browsewidth
 else
-	dx = centerx 
+	dx = centerx
 
 // Browse
-if (draw_button_secondary("startupbrowse", dx, dy, null, project_load, icons.BROWSE))
+if (draw_button_label("startupbrowse", dx, dy, null, icons.BROWSE, e_button.PRIMARY, project_load))
 {
 	if (window_state = "startup")
 		window_state = ""
@@ -67,7 +67,7 @@ if (draw_button_secondary("startupbrowse", dx, dy, null, project_load, icons.BRO
 // List style
 if (recent_list_amount > 0)
 {
-	if (draw_button_icon("startuprecentdisplay", dx - 28 - 8, dy + 4, 28, 28, false, recent_display_mode = "grid" ? icons.RECENT_LIST : icons.RECENT_GRID))
+	if (draw_button_icon("startuprecentdisplay", dx - 24 - 8, dy + 4, 24, 24, false, recent_display_mode = "grid" ? icons.RECENT_LIST : icons.RECENT_GRID))
 	{
 		if (recent_display_mode = "list")
 			recent_display_mode = "grid"
@@ -91,11 +91,11 @@ if (recent_list_amount > 0)
 	
 	var labelwid = string_width(text_get("startuprecentprojects"));
 	
-	if (draw_button_borderless("startupsortby", dx + labelwid + 16, dy, null, null, icons.SORT_DOWN))
-		menu_settings_set(dx + labelwid + 16, dy, "startupsortby", 36)
+	if (draw_button_label("startupsortby", dx + labelwid + 16, dy, null, icons.SORT_DOWN, e_button.TERTIARY))
+		menu_settings_set(dx + labelwid + 16, dy, "startupsortby", 32)
 	
-	if (settings_menu_name = "startupsortby")
-		current_mcroani.holding = true
+	if (settings_menu_name = "startupsortby" && settings_menu_ani_type != "hide")
+		current_mcroani.value = true
 	
 	dy += 72
 	
@@ -112,7 +112,7 @@ if (recent_list_amount > 0)
 }
 else
 {
-	// Ashley splash
+	// Jonathan splash
 	var midx, midy;
 	midx = snap(window_width / 2, 2)
 	midy = snap(192 + ((window_height - 192) / 1.75), 2)
@@ -121,3 +121,4 @@ else
 	if ((midy + (sprite_get_height(spr_jonathan_splash) / 1.75)) < (window_height - 50))
 		draw_image(spr_jonathan_splash, 0, midx, midy)
 }
+

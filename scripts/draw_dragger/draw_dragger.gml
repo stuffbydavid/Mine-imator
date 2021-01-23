@@ -48,7 +48,7 @@ if (argument_count > 14)
 else
 	disabled = false
 
-hei = 28
+hei = 24
 
 if (capwidth = null && showcaption)
 	capwidth = string_width(caption) + 8
@@ -67,30 +67,10 @@ dragmouseon = app_mouse_box(xx, yy, capwidth + wid, hei) && content_mouseon && (
 
 // Drag
 if (dragmouseon && mouse_left_pressed)
-	window_busy = name + "press"
-
-if (draw_inputbox(name, fieldx, yy, wid, 28, string(def), tbx, null, disabled))
-	script_execute(script, clamp(string_get_real(tbx.text, def), minval, maxval), false)
-
-// Set cursor
-if (dragmouseon)
-	mouse_cursor = cr_size_we
-
-// Use microanimation from inputbox to determine color
-var labelcolor, labelalpha;
-labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-
-labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
-labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-
-draw_box_hover(fieldx, yy, wid, hei, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE]) * (1 - mcroani_arr[e_mcroani.DISABLED]))
-
-if (showcaption)
-	draw_label(caption, xx, yy + 14, fa_left, fa_middle, labelcolor, labelalpha, font_emphasis)
+	window_focus = name + "press"
 
 // Mouse pressed
-if (window_busy = name + "press")
+if (window_focus = name + "press")
 {
 	mouse_cursor = cr_size_we
 	
@@ -111,6 +91,7 @@ if (window_busy = name + "press")
 	{
 		dragger_drag_value = value
 		window_busy = name + "drag" // Start dragging
+		window_focus = ""
 	}
 }
 
@@ -134,6 +115,27 @@ if (window_busy = name + "drag")
 		app_mouse_clear()
 	}
 }
+
+if (draw_inputbox(name, fieldx, yy, wid, hei, string(def), tbx, null, disabled, false, font_digits, e_inputbox.RIGHT))
+	script_execute(script, clamp(string_get_real(tbx.text, def), minval, maxval), false)
+
+if (window_busy = name + "drag")
+	current_mcroani.value = true
+
+// Set cursor
+if (dragmouseon)
+	mouse_cursor = cr_size_we
+
+// Use microanimation from inputbox to determine color
+var labelcolor, labelalpha;
+labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
+labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+if (showcaption)
+	draw_label(caption, xx, yy + hei/2, fa_left, fa_middle, labelcolor, labelalpha, font_emphasis)
 
 // Idle
 if (window_busy != name + "drag" && window_busy != name + "press" && window_focus != string(tbx))

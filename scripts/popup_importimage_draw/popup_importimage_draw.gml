@@ -25,8 +25,8 @@ draw_radiobutton("importimagetexture", dx, dy, e_res_type.TEXTURE, popup.type = 
 tab_next()
 
 // Ok
-dx = content_x + 16
-if (draw_button_primary("importimageok", dx, dy_start + dh - 28, null, null, null, fa_right))
+tab_control_button_label()
+if (draw_button_label("importimageok", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 {
 	if (popup.type = e_res_type.ITEM_SHEET)
 		popup_importitemsheet_show(popup.filename, null)
@@ -36,3 +36,4 @@ if (draw_button_primary("importimageok", dx, dy_start + dh - 28, null, null, nul
 		popup_close()
 	}
 }
+tab_next()

@@ -68,7 +68,7 @@ draw_box(xx, yy + size - 4, size * ani, 4, false, c_accent, 1)
 
 if (ptype_edit.temp = particle_sheet || (ptype_edit.temp = particle_template && !ptype_edit.sprite_template_still_frame))
 {
-	if (draw_button_icon("particlesresetpreview", xx + size + 4, yy + size - 28, 28, 28, false, icons.RESET, null, false, "tooltipparticlesresetpreview"))
+	if (draw_button_icon("particlesresetpreview", xx + size + 4, yy + size - 24, 24, 24, false, icons.RESET, null, false, "tooltipparticlesresetpreview"))
 		tab_template_editor_particles_preview_restart()
 }
 

@@ -1,8 +1,10 @@
-/// microani_update(hover, click, active, [disabled])
+/// microani_update(hover, click, active, [disabled, [custom, [goal]]])
 /// @arg hover
 /// @arg click
 /// @arg active
-/// @arg [disabled]
+/// @arg [disabled
+/// @arg [custom
+/// @arg [goal]]]
 /// @desc Updates the current micro animation
 
 if (current_mcroani != null)
@@ -16,4 +18,7 @@ if (current_mcroani != null)
 	
 	if (argument_count > 4)
 		current_mcroani.custom = argument[4]
+		
+	if (argument_count > 5)
+		current_mcroani.goal_value = argument[5]
 }

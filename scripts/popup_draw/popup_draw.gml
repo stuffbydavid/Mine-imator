@@ -1,11 +1,24 @@
 /// popup_draw()
 
-var boxx, boxy, boxw, boxh
+var boxx, boxy, boxw, boxh, closex, closey;
 
 if (popup != null && popup.block)
 	draw_box(0, 0, window_width, window_height, false, c_black, popup_ani * 0.45)
 
 // Animate
+if (popup_ani = 1)
+{
+	var off = (popup_height_goal - popup_height) / max(1, 4 / delta);
+	
+	if (off != 0)
+	{
+		popup_height += off
+		popup.offset_y += off/2
+	}
+}
+else
+	popup_height = popup_height_goal
+
 if (popup_ani_type = "show")
 {
 	popup_ani = min(1, popup_ani + 0.05 * delta)
@@ -48,10 +61,10 @@ if (window_busy = "popup" + popup.name)
 
 // Box
 boxw = popup.width
-boxh = popup.height
+boxh = floor(popup_height)
 
-boxx = popup.offset_x + window_width / 2 - boxw / 2
-boxy = popup.offset_y + window_height / 2 - boxh / 2
+boxx = floor(popup.offset_x) + window_width / 2 - boxw / 2
+boxy = floor(popup.offset_y) + window_height / 2 - boxh / 2
 boxy += ease("easeincirc", 1 - popup_ani) * (window_height - boxy)
 
 boxx = floor(boxx)
@@ -67,7 +80,7 @@ content_tab = null
 
 draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1)
 draw_box(boxx, boxy, boxw, boxh, false, c_background, 1)
-draw_outline(boxx, boxy, boxw, boxh, 1, c_overlay, a_overlay)
+draw_outline(boxx, boxy, boxw, boxh, 1, c_border, a_border, true)
 
 // Move
 if (window_busy = "popupclick")
@@ -113,28 +126,47 @@ dy_start = dy
 // Adjust padding, add header
 if (!popup.custom)
 {
-	dy += 8
-	dx += 16
-	dw -= 32
-	dh -= 16
+	dy += 12
+	dx += 12
+	dw -= 24
+	dh -= 12
 	
 	// Caption
-	draw_label(text_get(popup.name + "caption"), dx, dy + 16, fa_left, fa_middle, c_accent, 1, font_heading)
+	draw_label(text_get(popup.name + "caption"), dx, dy + 12, fa_left, fa_middle, c_accent, 1, font_heading)
 	
-	// Close
-	if (draw_button_icon(popup.name + "close", content_x + content_width - 40, dy + 2, 28, 28, false, icons.CLOSE, null, false))
+	closex = dx + dw - 24
+	closey = dy
+	
+	dy += (24 + 12)
+}
+else
+{
+	closex = (dx + dw) - (24 + 12)
+	closey = dy + 12
+}
+
+// Close
+if (popup.close_button)
+{
+	if (draw_button_icon(popup.name + "close", closex, closey, 24, 24, false, icons.CLOSE, null, false))
 	{
 		if (popup.revert && popup_switch_from)
 			popup_switch(popup_switch_from)
 		else
 			popup_close()
 	}
-	
-	dy += 44
 }
 
 if (popup.script != null)
 	script_execute(popup.script)
+
+if (popup.custom)
+{
+	popup_height_goal = popup.height
+	popup_height = popup_height_goal
+}
+else
+	popup_height_goal = ceil((((dy - 8) - dy_start) + 12) / 2) * 2
 
 if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
 	window_busy = "popupclick"

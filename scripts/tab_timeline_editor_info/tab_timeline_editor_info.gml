@@ -1,17 +1,17 @@
 /// tab_properties_info()
 
 // Name
-tab_control_menu(28)
+tab_control_textfield()
 tab.info.tbx_name.text = tl_edit.name
-draw_textfield("timelineeditorname", dx, dy, dw, 28, tab.info.tbx_name, action_tl_name, string_remove_newline(tl_edit.display_name), "top")
+draw_textfield("timelineeditorname", dx, dy, dw, 24, tab.info.tbx_name, action_tl_name, string_remove_newline(tl_edit.display_name), "top")
 tab_next()
 
 if (tl_edit.type = e_temp_type.TEXT)
 {
 	// Text
-	tab_control_menu(88)
+	tab_control_textfield(true, 76)
 	tab.info.tbx_text.text = tl_edit.text
-	draw_textfield("timelineeditortext", dx, dy, dw, 88, tab.info.tbx_text, action_tl_text, "", "top")
+	draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.info.tbx_text, action_tl_text, "", "top")
 	tab_next()
 }
 
@@ -48,7 +48,7 @@ if (tl_edit.value_type[e_value_type.ROT_POINT])
 		
 		context_menu_group_temp = e_context_group.ROT_POINT
 		
-		tab_control_dragger()
+		tab_control_textfield_group(false)
 		draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false)
 		tab_next()
 		

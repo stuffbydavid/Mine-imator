@@ -10,7 +10,7 @@
 /// @arg [labelpos
 /// @arg [error]]]
 
-var name, xx, yy, w, h, textbox, script, placeholder, labelpos, err;
+var name, xx, yy, w, h, textbox, script, placeholder, labelpos, err, fieldy;
 var update, capwidth;
 name = argument[0]
 xx = argument[1]
@@ -24,6 +24,7 @@ labelpos = "top"
 err = false
 
 capwidth = 0
+fieldy = yy
 
 if (argument_count > 7)
 	placeholder = argument[7]
@@ -37,16 +38,16 @@ if (argument_count > 9)
 draw_set_font(font_emphasis)
 
 if (labelpos = "top")
-	yy += 48 - 28
+	fieldy += (label_height + 8)
 else if (labelpos = "none")
 	capwidth = 0
 else
-	capwidth = string_width(text_get(name)) + 10
+	capwidth = string_width(text_get(name)) + 8
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
 
-update = draw_inputbox(name, xx + capwidth, yy, w - capwidth, h, placeholder, textbox, script, false, err)
+update = draw_inputbox(name, xx + capwidth, fieldy, w - capwidth, h, placeholder, textbox, script, false, err)
 
 // Use microanimation from inputbox to determine color
 draw_set_font(font_emphasis)
@@ -61,11 +62,9 @@ if (err)
 	labelalpha = 1
 }
 
-draw_box_hover(xx + capwidth, yy, w - capwidth, h, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE]))
-
 if (labelpos = "top")
-	draw_label(text_get(name), xx, yy - 8, fa_left, fa_bottom, labelcolor, labelalpha)
+	draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, labelcolor, labelalpha)
 else if (labelpos != "none")
-	draw_label(text_get(name), xx, yy + 21, fa_left, fa_bottom, labelcolor, labelalpha)
+	draw_label(text_get(name), xx, yy + h/2, fa_left, fa_middle, labelcolor, labelalpha)
 
 return update

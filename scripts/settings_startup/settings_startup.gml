@@ -28,7 +28,7 @@ setting_view_grid_size_ver = 3
 setting_view_real_time_render = true
 setting_view_real_time_render_time = 1000
 
-setting_theme = theme_darker
+setting_theme = theme_light
 setting_accent = 3
 setting_accent_custom = hex_to_color("03A9F4")
 

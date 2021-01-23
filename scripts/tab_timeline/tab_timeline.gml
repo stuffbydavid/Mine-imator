@@ -202,8 +202,8 @@ if (draw_button_icon("timelinesettings", buttonsx, buttonsy, 24, 24, false, icon
 	settings_menu_above = true
 }
 
-if (settings_menu_name = "timelinesettings")
-	current_mcroani.holding = true
+if (settings_menu_name = "timelinesettings" && settings_menu_ani_type != "hide")
+	current_mcroani.value = true
 
 buttonsx += 24 + 6
 
@@ -222,10 +222,9 @@ buttonsx += 24 + 2
 
 timeline_settings_right_w = (buttonsx - buttonsxstart)
 
-
 // Empty
 if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
-	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor((content_height - (headerh + barh)) / 2), fa_center, fa_middle, c_text_tertiary, a_text_tertiary, font_startup)
+	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor((content_height - (headerh + barh)) / 2), fa_center, fa_middle, c_text_secondary, a_text_secondary, font_body_big)
 
 // Keyframe backgrounds
 dy = tly
@@ -531,7 +530,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				if (dx + boxw < tlx)
 					continue
 				
-				draw_box(dx, dy, boxw, itemh, false, c_text_tertiary, a_text_tertiary)
+				draw_box(dx, dy, boxw, itemh, false, c_border, a_border)
 			}
 			else
 			{
@@ -585,7 +584,10 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			// Audio background
 			if (kf.selected)
-				draw_box(boxx, dy, boxw, itemh, false, c_hover, a_hover)
+			{
+				draw_box(boxx, dy, boxw, itemh, false, c_background, 1)
+				draw_box(boxx, dy, boxw, itemh, false, c_accent_overlay, a_accent_overlay)
+			}
 			
 			// Draw samples
 			draw_primitive_begin(pr_linelist)
@@ -761,8 +763,8 @@ if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_time
 	settings_menu_above = true
 }
 
-if (settings_menu_name = "timelinefilter")
-	current_mcroani.holding = true
+if (settings_menu_name = "timelinefilter" && settings_menu_ani_type != "hide")
+	current_mcroani.value = true
 
 // Draw search bar
 timeline.tbx_search.text = timeline_search
@@ -881,7 +883,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	{
 		if (ds_list_size(tl.tree_list_filter) > 0 && (((xx + buttonsize + 8) - xright) < minw))
 		{
-			if (draw_button_icon("timelineexpand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand"), spr_arrow_small_ani))
+			if (draw_button_icon("timelineexpand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand"), spr_chevron_ani))
 				action_tl_extend(tl)
 		
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
@@ -935,11 +937,11 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			}
 		}
 		
-		if (tl.type != null && (((xx + buttonsize + 8) - xright) < minw))
+		if (tl.type != null && (((xx + 24) - xright) < minw))
 			draw_image(spr_icons, timeline_icon_list[|tl.type], xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
 		
-		xx += (buttonsize + 8)
-		minw -= (buttonsize + 8)
+		xx += 24
+		minw -= 24
 	}
 	xx += 1
 	
@@ -957,7 +959,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		if (tl.name = "")
 			draw_label(tl.display_name, xx, itemy + (itemh/2), fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_value)
 		
-		if (textbox_draw(timeline.tbx_rename, xx, itemy + (itemh/2) - 9, minw, 20, true))
+		if (textbox_draw(timeline.tbx_rename, xx, itemy + (itemh/2) - 8, minw, 20, true))
 			action_tl_name_single(timeline.tbx_rename.text)
 		
 		if (window_focus != string(timeline.tbx_rename))
@@ -1133,8 +1135,8 @@ if (window_busy = "" && mouseinnames)
 	}
 }
 
-// Transition menu
-if (window_busy = "" && mouseintl && mouse_right_released)
+// Context menu
+if (window_busy = "" && mouseintl)
 	context_menu_area(content_x, content_y, content_width, content_height, "timeline", null, null, null, null)
 
 // Sound resize

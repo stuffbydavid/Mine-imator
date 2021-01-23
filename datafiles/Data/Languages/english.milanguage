@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2020.12.08"
+        "lastchange": "2021.01.22"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -142,11 +142,11 @@
         "trial": "TRIAL",
         "full": "FULL",
         "version": "v %1",
-        "newproject": "NEW PROJECT",
-        "browse": "BROWSE...",
+        "newproject": "New project",
+        "browse": "Browse...",
         "recentprojects": "Recent projects",
         "loadingassets": "Loading assets, please wait...",
-        "sortby": "SORT BY"
+        "sortby": "Sort by"
     },
     "about/": {
 		"version": "Version %1",
@@ -321,7 +321,7 @@
         "name": "Project name",
         "location": "Project location",
         "namedefault": "New project",
-        "create": "CREATE PROJECT",
+        "create": "Create project",
         "nameempty": "Project folder name cannot be empty.",
         "nameexists": "Project folder already exists."
     },
@@ -446,7 +446,7 @@
         "modeltip": "Load a model from an external file.",
         "modeltex": "Texture",
         "modeltextip": "Change the texture to a previously loaded skin or external image.",
-        "openeditor": "OPEN BANNER EDITOR",
+        "openeditor": "Open banner editor",
         "create": "Create",
         "createtip": "Create a new object using the selected settings."
     },
@@ -455,7 +455,7 @@
         "username": "Username",
         "downloading": "Downloading...",
         "name": "Skin of %1",
-        "done": "DONE"
+        "done": "Done"
     },
     "open/": {
         "caption": "Open project",
@@ -467,7 +467,7 @@
     },
     "saveas/": {
         "caption": "Save project as",
-        "save": "SAVE"
+        "save": "Save"
     },
     "exportmovie/": {
         "caption": "Export movie",
@@ -553,7 +553,7 @@
     "upgrade/": {
         "caption": "Upgrade",
         "info": "You are currently using a trial version of Mine-imator. You have access to all the program’s features, but your exports will be watermarked. To customize or remove the watermark, get an upgrade key from the link below, and enter it here.",
-        "continue": "UPGRADE"
+        "continue": "Upgrade"
     },
     "modelbench/": {
         "caption": "Modelbench",
@@ -567,14 +567,14 @@
     },
     "bannereditor/": {
         "caption": "Banner editor",
-        "addlayer": "ADD LAYER",
+        "addlayer": "Add layer",
         "layer": "Layer %1",
         "base": "Base",
         "layers": "LAYERS",
         "colors": "COLORS",
         "patterns": "PATTERNS",
-        "done": "DONE",
-        "cancel": "CANCEL"
+        "done": "Done",
+        "cancel": "Cancel"
     },
     "loading/": {
         "stagedone": "(%1% Done)"
@@ -1713,6 +1713,7 @@
     "library": "LIBRARY",
     "library/": {
         "name": "Name",
+        "blockmodel": "Block model",
         "charmodel": "Model",
         "charmodelchange": "Change",
         "skin": "Skin",
@@ -1737,14 +1738,14 @@
         "repeatx": "X",
         "repeaty": "Y",
         "repeatz": "Z",
-        "particleeditoropen": "OPEN PARTICLE EDITOR",
+        "particleeditoropen": "Open particle editor",
         "textfont": "Font",
         "text3d": "3D",
         "textfacecamera": "Face camera",
         "shape/": {
             "tex": "Texture",
             "texmapped": "Mapped texture",
-            "texsavemap": "EXPORT MAP",
+            "texsavemap": "Export map",
             "texoffset": "Offset",
             "texhoffset": "H",
             "texvoffset": "V",
@@ -1763,7 +1764,7 @@
     },
     "templateeditor/": {
         "bodypart": "Body part",
-        "done": "DONE"
+        "done": "Done"
     },
     "particleeditor/": {
         "count": "Particles",
@@ -1772,8 +1773,8 @@
         "spawn/": {
             "caption": "SPAWNING",
             "type": "Spawn type",
-            "constant": "CONSTANT",
-            "burst": "BURST",
+            "constant": "Constant",
+            "burst": "Burst",
             "amount": "Spawn",
             "region": "Spawn in region",
             "region/": {
@@ -1874,8 +1875,8 @@
                     "soul_fire_flame": "Soul Fire Flame"
                 },
                 "teximage": "Image",
-                "teximage1": "SHEET 1",
-                "teximage2": "SHEET 2",
+                "teximage1": "Sheet 1",
+                "teximage2": "Sheet 2",
                 "frame/": {
                     "boxstart": "Start",
                     "boxend": "End",
@@ -1888,9 +1889,9 @@
                     "speed": "Animation speed",
                     "speedisrandom": "Random",
                     "onend": "On animation end...",
-                    "onendstop": "STOP",
-                    "onendloop": "LOOP",
-                    "onendreverse": "REVERSE"
+                    "onendstop": "Stop",
+                    "onendloop": "Loop",
+                    "onendreverse": "Reverse"
                 }
             },
             "trajectory": "TRAJECTORY",
@@ -1951,8 +1952,10 @@
             "initialscale": "Initial scale",
             "scaleadd": "Scale change",
             "appearance": "APPEARANCE",
-            "alpha": "Opacity",
-            "alphaadd": "Opacity change",
+            "opacity": "Opacity",
+            "opacityadd": "Opacity change",
+            "opacitymininput": "",
+            "opacitymaxinput": "To",
             "color/": {
                 "start": "Start",
                 "end": "End",
@@ -1995,8 +1998,8 @@
     "background": "BACKGROUND",
     "background/": {
         "sky": "Sky",
-        "skyminecraft": "MINECRAFT",
-        "skycustom": "CUSTOM",
+        "skyminecraft": "Minecraft",
+        "skycustom": "Custom",
         "image": "Image",
         "image/": {
             "type": "Type",
@@ -2005,7 +2008,7 @@
             "typebox": "Skybox",
             "stretch": "Stretch to fit",
             "boxmapped": "Mapped texture",
-            "savemap": "EXPORT MAP",
+            "savemap": "Export map",
 			"rotation": "Rotation"
         },
         "sky/": {
@@ -2100,7 +2103,7 @@
         "textureanimationspeed": "Texture animation speed"
     },
     "groundeditor/": {
-        "done": "DONE"
+        "done": "Done"
     },
     "biome/": {
         "custom": "Custom",
@@ -2191,14 +2194,14 @@
             "image/": {
                 "modeltexture": "Texture to view",
                 "blocksheet": "Block sheet",
-                "blocksheetstatic": "STATIC",
-                "blocksheetanimated": "ANIMATED",
+                "blocksheetstatic": "Static",
+                "blocksheetanimated": "Animated",
                 "colormap": "Color map",
-                "colormapgrass": "GRASS",
-                "colormapfoliage": "FOLIAGE",
+                "colormapgrass": "Grass",
+                "colormapfoliage": "Foliage",
                 "particles": "Particle sheet",
-                "particlesimage1": "SHEET 1",
-                "particlesimage2": "SHEET 2"
+                "particlesimage1": "Sheet 1",
+                "particlesimage2": "Sheet 2"
             },
             "preview": "Pack image",
             "modeltextures": "Model textures",
@@ -2247,14 +2250,14 @@
         "blocksheet": "Block sheet",
         "particlesheet": "Particle sheet",
         "texture": "Texture",
-        "ok": "OK"
+        "ok": "Ok"
     },
     "importitemsheet/": {
         "caption": "Import item sheet",
         "issheet": "Item sheet",
         "rows": "Rows",
         "columns": "Columns",
-        "ok": "OK"
+        "ok": "Ok"
     },
     "timeline/": {
         "empty": "Nothing here yet! Click the workbench to get started.",
@@ -2338,8 +2341,8 @@
             "select": "Select"
         },
         "scalemode": "Scale mode",
-        "scalemoderesize": "RESIZE",
-        "scalemodestretch": "STRETCH",
+        "scalemoderesize": "Resize",
+        "scalemodestretch": "Stretch",
         "graphics": "GRAPHICS",
         "textureblur": "Blur texture",
         "texturefiltering": "Texture filtering",
@@ -2368,7 +2371,7 @@
 			"screen": "Screen"
 		},
         "audio": "AUDIO",
-        "audioadd": "ADD SOUND"
+        "audioadd": "Add sound"
     },
     "frameeditor/": {
         "position": "POSITION",
@@ -2546,6 +2549,7 @@
         "modeltex": "Texture",
         "sound": "SOUND",
         "sound/": {
+            "file": "File",
             "volume": "Volume",
             "start": "Start time",
             "end": "End time",

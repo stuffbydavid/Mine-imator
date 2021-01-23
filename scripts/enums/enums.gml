@@ -572,16 +572,37 @@ enum e_menu
 	LIST,
 	TIMELINE,
 	TRANSITION_LIST,
-	LIST_NUM
+	LIST_NUM,
+	TEMPLATE
 }
 
 // Buttons
 enum e_button
 {
+	PRIMARY,
+	SECONDARY,
+	TERTIARY,
+	
 	NO_TEXT,
 	TEXT,
 	CAPTION,
 	LABEL
+}
+
+// Input box types
+enum e_inputbox
+{
+	LEFT,
+	RIGHT,
+	BIG
+}
+
+// Button anchor
+enum e_anchor
+{
+	LEFT,
+	CENTER,
+	RIGHT
 }
 
 // Options

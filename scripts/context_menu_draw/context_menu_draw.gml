@@ -32,9 +32,9 @@ with (obj_list_item)
 	else
 		hovertime -= 60 / room_speed
 	
-	hovertime = clamp(hovertime, 0, 3)
+	hovertime = clamp(hovertime, 0, 15)
 	
-	if (!context_menu_active && hovertime = 3)
+	if (!context_menu_active && hovertime = 15)
 	{
 		context_menu_active = true
 		with (app)

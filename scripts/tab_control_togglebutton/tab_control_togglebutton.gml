@@ -1,3 +1,3 @@
 /// tab_control_togglebutton()
 
-tab_control(52)
+tab_control(32 + (label_height + 8))

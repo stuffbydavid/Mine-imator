@@ -1,4 +1,4 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption])
+/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, alpha, [drag]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,10 +7,13 @@
 /// @arg min
 /// @arg max
 /// @arg snap
-/// @arg [showcaption]
+/// @arg [showcaption
+/// @arg [stack
+/// @arg alpha
+/// @arg [drag]]]
 
-var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption;
-var fieldx, fieldwid, fieldupdate, hei;
+var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption, stack, alpha, drag;
+var fieldx, fieldy, fieldwid, fieldupdate, hei, dragw, vertical, mouseon;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -20,14 +23,28 @@ minval = argument[5]
 maxval = argument[6]
 snapval = argument[7]
 showcaption = false
+stack = true
+alpha = 1
+drag = true
 
 if (argument_count > 8)
 	showcaption = argument[8]
 
+if (argument_count > 9)
+	stack = argument[9]
+
+if (argument_count > 10)
+	alpha = argument[10]
+
+if (argument_count > 11)
+	drag = argument[11]
+
+vertical = (wid < 225) && stack
 fieldx = xx
-fieldwid = ((wid - 4) - (2 * (textfield_amount - 1)))/textfield_amount
+fieldy = yy
+fieldwid = vertical ? wid : (wid/textfield_amount)
 fieldupdate = null
-hei = 28 + (20 * showcaption)
+hei = (vertical ? (24 * textfield_amount) : 24) + ((label_height + 8) * showcaption)
 
 if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 {
@@ -35,30 +52,80 @@ if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content
 	return 0
 }
 
+mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
+
+// Last textfield has 'active' animation, will need that for label color and border
+
+microani_set(string(textfield_textbox[textfield_amount - 1]) + textfield_name[textfield_amount - 1], textfield_script[textfield_amount - 1], false, false, false, false, 1, false)
+
+var active = current_mcroani.custom;
+microani_set(name, null, mouseon || active, false, false)
+microani_update(mouseon || active, false, false)
+
+if (alpha = null)
+	alpha = mcroani_arr[e_mcroani.HOVER]
+
 if (showcaption)
 {
-	draw_label(text_get(name), xx, yy + 16, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
-	hei = 28
-	yy += 20
+	draw_label(text_get(name), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+	yy += (label_height + 8)
 }
+
+hei = 24
+fieldx = xx
+fieldy = yy
+dragw = 16
 
 // Draw field backgrounds
-draw_outline(xx + 1, yy + 1, wid - 2, hei - 2, 1, c_border, a_border)
+if (vertical)
+	draw_outline(fieldx, fieldy, wid, textfield_amount * hei, 1, c_border, a_border * alpha, true)
+else
+	draw_outline(fieldx, fieldy, wid, hei, 1, c_border, a_border * alpha, true)
+
+draw_set_font(font_emphasis)
 for (var i = 0; i < textfield_amount; i++)
-{
+{	
 	if (i > 0)
-		draw_box(fieldx, yy + 1, 1, hei - 2, false, c_border, a_border)
-	fieldx += (fieldwid + 2)
+	{
+		if (vertical)
+			draw_box(fieldx + 1, fieldy - 1, fieldwid - 2, 1, false, c_border, a_border * alpha)
+		else
+			draw_box(fieldx, fieldy + 1, 1, hei - 2, false, c_border, a_border * alpha)
+	}
+	
+	if (vertical)
+		fieldy += hei
+	else
+		fieldx += fieldwid
+	
+	// Get max dragging width from labels
+	dragw = max(dragw, string_width(text_get(textfield_name[i])) + 16)
 }
-fieldx = xx + 2
+
+fieldx = xx
+fieldy = yy
 
 // Draw fields
-var mouseon, boxwid, update, labelcolor, labelalpha;
+var boxwid, boxhei, boxy, update, active;
+active = false
+
 for (var i = 0; i < textfield_amount; i++)
 {
 	axis_edit = textfield_axis[i]
-	mouseon = app_mouse_box(fieldx, yy + 2, fieldwid, hei - 4) && content_mouseon
+	boxhei = hei
 	boxwid = fieldwid
+	boxy = fieldy
+	
+	if (i < (textfield_amount - 1) && !vertical)
+		boxwid += 1
+	
+	if (i != 0 && vertical)
+	{
+		boxhei += 1
+		boxy -= 1
+	}
+	
+	mouseon = app_mouse_box(fieldx, boxy, boxwid, boxhei) && content_mouseon
 	
 	if (textfield_min != null)
 	{
@@ -66,45 +133,41 @@ for (var i = 0; i < textfield_amount; i++)
 		maxval = textfield_max[i]
 	}
 	
-	context_menu_area(fieldx, yy, boxwid, hei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
-	
-	// Adjust draw width to cover dividers
-	if (i <= textfield_amount - 1)
-		boxwid -= 1
+	context_menu_area(fieldx, boxy, boxwid, boxhei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
 	
 	microani_set(string(textfield_textbox[i]) + textfield_name[i], textfield_script[i], mouseon || window_focus = string(textfield_textbox[i]), false, (mouseon && mouse_left) || (window_focus = string(textfield_textbox[i])))
 	
-	// Field label
-	var labelcolor, labelalpha;
-	labelcolor = (textfield_icon[i] = null ? c_text_secondary : c_text_tertiary)
-	labelcolor = merge_color(labelcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-	labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	
-	labelalpha = (textfield_icon[i] = null ? a_text_secondary : a_text_tertiary)
-	labelalpha = lerp(labelalpha, 1, mcroani_arr[e_mcroani.ACTIVE])
-	labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	// Draw base button
+	var focus, linecolor, linealpha;
+	focus = max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE])
+	linecolor = merge_color(c_border, c_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+	linecolor = merge_color(linecolor, c_accent, focus)
+	linealpha = lerp(0, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+	linealpha = lerp(linealpha, a_accent, focus) * alpha
 	
 	if (textfield_icon[i] = null)
-		draw_label(text_get(textfield_name[i]), fieldx + 8, yy + (hei/2), fa_left, fa_middle, labelcolor, labelalpha, font_emphasis)
+		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 	else
-		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), yy + (hei/2), 1, 1, labelcolor, labelalpha)
+		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 	
-	draw_outline(fieldx - 1, yy + 1, boxwid + 2, hei - 2, 1, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+	// Outline
+	draw_outline(fieldx, boxy, boxwid, boxhei, 1, c_background, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
+	draw_outline(fieldx, boxy, boxwid, boxhei, 1, linecolor, linealpha, true)
 	
-	draw_box_hover(fieldx - 2, yy, boxwid + 4, hei, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE]) * (1 - mcroani_arr[e_mcroani.DISABLED]))
+	draw_box_hover(fieldx, boxy, boxwid, boxhei, mcroani_arr[e_mcroani.PRESS])
 	
-	microani_update(mouseon || window_focus = string(textfield_textbox[i]), false, window_focus = string(textfield_textbox[i]), false)
+	active = (active || window_focus = string(textfield_textbox[i]))
+	microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]), false, active)
 	
 	// Textbox
-	draw_set_font(font_value)
-	var text = textfield_textbox[i].text + textfield_textbox[i].suffix;
+	draw_set_font(font_digits)
 	
-	var update = textbox_draw(textfield_textbox[i], fieldx + boxwid - string_width(text) - 9, yy + (hei/2) - 9, string_width(text), 18);
+	var update = textbox_draw(textfield_textbox[i], fieldx + dragw, boxy + (boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true);
 	
 	// Textbox press
-	if (app_mouse_box(fieldx + 28, yy, boxwid - 28, hei) && content_mouseon && window_focus != string(textfield_textbox[i]))
+	if (app_mouse_box(fieldx + dragw, boxy, boxwid - (8 + dragw), boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]))
 	{
-		if (mouse_left_pressed)
+		if (mouse_left_released)
 		{
 			window_focus = string(textfield_textbox[i])
 			window_busy = ""
@@ -112,7 +175,7 @@ for (var i = 0; i < textfield_amount; i++)
 	}
 	
 	// Drag
-	if (app_mouse_box(fieldx + 2, yy, 24, 24) && content_mouseon && window_focus != string(textfield_textbox[i]))
+	if (app_mouse_box(fieldx + 8, boxy, dragw, boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]) && drag)
 	{
 		mouse_cursor = cr_size_we
 	
@@ -188,7 +251,10 @@ for (var i = 0; i < textfield_amount; i++)
 	if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && !fieldupdate)
 		textfield_textbox[i].text = string_decimals(textfield_value[i])
 	
-	fieldx += (fieldwid + 2)
+	if (vertical)
+		fieldy += hei
+	else
+		fieldx += fieldwid
 }
 
 textfield_group_reset()

@@ -15,8 +15,8 @@ if (tl_edit.part_of = null)
 	else
 		text = string_remove_newline(par.display_name)
 	
-	tab_control_menu(28)
-	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 28, par, text, action_tl_parent)
+	tab_control_menu()
+	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 24, par, text, action_tl_parent)
 	tab_next()
 	
 	if (!tl_edit.value_type[e_value_type.HIERARCHY])

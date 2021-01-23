@@ -15,70 +15,115 @@
 /// @arg scriptmin
 /// @arg scriptmax
 
-var name, xx, yy, wid, minval, maxval, snapval, valuemin, valuemax, defmin, defmax, tbxmin, tbxmax, scriptmin, scriptmax;
-var hei, linex, linewid, dragxmin, dragxmax, dragy, mouseon, mouseonmin, mouseonmax;
+var name, xx, yy, wid, minrange, maxrange, snapval, minval, maxval, mindef, maxdef, mintbx, maxtbx, minscript, maxscript;
+var thumbhei, hei, mouseon, slidermouseon, textfocus, linex, linewid, trackx, trackwid, thumby, minthumbpos, maxthumbpos, minmouseon, maxmouseon;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
 wid = argument[3]
-minval = argument[4]
-maxval = argument[5]
+minrange = argument[4]
+maxrange = argument[5]
 snapval = argument[6]
-valuemin = argument[7]
-valuemax = argument[8]
-defmin = argument[9]
-defmax = argument[10]
-tbxmin = argument[11]
-tbxmax = argument[12]
-scriptmin = argument[13]
-scriptmax = argument[14]
+minval = argument[7]
+maxval = argument[8]
+mindef = argument[9]
+maxdef = argument[10]
+mintbx = argument[11]
+maxtbx = argument[12]
+minscript = argument[13]
+maxscript = argument[14]
 
-valuewid = 48
-hei = 30
+thumbhei = 20
+hei = (thumbhei + 24)
 
 if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	return 0
 
+mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
+slidermouseon = app_mouse_box(xx, yy + 24, wid, thumbhei) && content_mouseon
+
+// Combo textfield, border visibility depends on mouse position
+microani_set(name, null, false, false, false)
+
+textfield_group_add(name + "mininput", minval, mindef, minscript, X, mintbx, null, 0, minrange, min(maxval, maxrange))
+textfield_group_add(name + "maxinput", maxval, maxdef, maxscript, X, maxtbx, null, 0, maxrange, max(minval, minrange))
+draw_textfield_group(name, (xx + wid - 128) + 8, yy, 128, 0, null, null, snapval, false, false, mcroani_arr[e_mcroani.CUSTOM], false)
+
+textfocus = mcroani_arr[e_mcroani.CUSTOM]
+
 // Caption
-draw_label(text_get(name), xx, yy + 15, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
-yy += 18
+microani_set(name, null, window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, false, false, 1, false)
+microani_update(window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, window_busy = name + "min" || window_busy = name + "max", false, mouseon || textfocus)
 
-linewid = wid - (valuewid * 2)
-linex = xx + valuewid
-mouseon = app_mouse_box(linex - 8, yy, linewid + 16, hei) && content_mouseon
-draw_set_font(font_value)
+var labelcolor, labelalpha;
+labelcolor = merge_color(c_text_secondary, c_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
+labelalpha = lerp(a_text_secondary, a_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
+draw_label(text_get(name), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha, font_emphasis)
 
-// Type(Minimum)
-if (app_mouse_box(xx, yy, valuewid, hei) && content_mouseon && mouse_left_pressed)
+// Slider
+yy += 24
+
+linex = xx
+linewid = wid
+trackx = linex + 6
+trackwid = linewid - 12
+
+thumby = yy + thumbhei / 2
+
+minthumbpos = (window_busy = name + "min" ? meter_drag_value : minval)
+minthumbpos = trackx + floor(percent(minthumbpos, minrange, maxrange) * trackwid) - 6
+
+maxthumbpos = (window_busy = name + "max" ? meter_drag_value : maxval)
+maxthumbpos = trackx + floor(percent(maxthumbpos, minrange, maxrange) * trackwid) - 6
+
+minmouseon = app_mouse_box(minthumbpos, thumby - 10, 12, 20) && content_mouseon
+maxmouseon = app_mouse_box(maxthumbpos, thumby - 10, 12, 20) && content_mouseon
+
+// Click on thumbs
+if (slidermouseon && window_busy = "")
 {
-	tbxmin.text = string_decimals(valuemin)
-	window_focus = string(tbxmin)
-}
-
-// Type(Maximum)
-if (app_mouse_box(linex + linewid, yy, valuewid, hei) && content_mouseon && mouse_left_pressed)
-{
-	tbxmax.text = string_decimals(valuemax)
-	window_focus = string(tbxmax)
+	if (minmouseon || maxmouseon)
+		mouse_cursor = cr_handpoint
+	
+	if (mouse_left_pressed) // Start dragging
+	{
+		if (minmouseon)
+		{
+			window_busy = name + "min"
+			meter_drag_value = minval
+		}
+		else if (maxmouseon)
+		{
+			window_busy = name + "max"
+			meter_drag_value = maxval
+		}
+		window_focus = name
+	}
+	
+	if (mouse_right_pressed)
+	{
+		script_execute(minscript, mindef, false)
+		script_execute(maxscript, maxdef, false)
+	}
 }
 
 // Dragging
 if (window_busy = name + "min" || window_busy = name + "max")
 {
 	mouse_cursor = cr_handpoint
-	meter_drag_value = clamp(minval + (mouse_x - linex) * (max(1, (maxval - minval)) / linewid), minval, maxval)
+	meter_drag_value = clamp(minrange + (mouse_x - linex) * (max(1, (maxrange - minrange)) / linewid), minrange, maxrange)
 	
 	if (window_busy = name + "min")
 	{
-		var d = min(snap(meter_drag_value, snapval), valuemax) - valuemin;
+		var d = min(snap(meter_drag_value, snapval), maxval) - minval;
 		if (d <> 0)
-			script_execute(scriptmin, d, true)
+			script_execute(minscript, d, true)
 	}
 	else
 	{
-		var d = max(snap(meter_drag_value, snapval), valuemin) - valuemax;
+		var d = max(snap(meter_drag_value, snapval), minval) - maxval;
 		if (d <> 0)
-			script_execute(scriptmax, d, true)
+			script_execute(maxscript, d, true)
 	}
 	
 	if (!mouse_left)
@@ -88,99 +133,51 @@ if (window_busy = name + "min" || window_busy = name + "max")
 	}
 }
 
-// Textbox(Minimum)
-if (window_focus = string(tbxmin))
-{
-	var textsize = string_width(tbxmin.text);
-	var suffixsize = string_width(tbxmin.suffix);
-	if (textbox_draw(tbxmin, xx, yy + hei / 2 - 8, textsize + suffixsize, 18))
-	{
-		var tbxval = string_get_real(tbxmin.text, 0)
-		tbxval = clamp(tbxval, minval, maxval)
-		tbxval = min(tbxval, valuemax)
-		
-		script_execute(scriptmin, tbxval, false)
-	}
-}
-else
-	draw_label(string_decimals(valuemin) + tbxmin.suffix, xx, yy + hei / 2, fa_left, fa_middle, c_text_main, a_text_main)
-
-// Textbox(Maximum)
-if (window_focus = string(tbxmax))
-{
-	var textsize = string_width(tbxmax.text);
-	var suffixsize = string_width(tbxmax.suffix);
-	if (textbox_draw(tbxmax, xx + wid - textsize - suffixsize, yy + hei / 2 - 8, textsize + suffixsize, 18))
-	{
-		var tbxval = string_get_real(tbxmax.text, 0)
-		tbxval = clamp(tbxval, minval, maxval)
-		tbxval = max(tbxval, valuemin)
-		
-		script_execute(scriptmax, tbxval, false)
-	}
-}
-else
-	draw_label(string_decimals(valuemax) + tbxmax.suffix, xx + wid, yy + hei / 2, fa_right, fa_middle, c_text_main, a_text_main)
-
-dragxmin = (window_busy = name + "min" ? meter_drag_value : valuemin)
-dragxmax = (window_busy = name + "max" ? meter_drag_value : valuemax)
-
-dragy = yy + hei / 2
-
-// Snap thumbs
-dragxmin = floor(percent(dragxmin, minval, maxval) * linewid)
-dragxmax = floor(percent(dragxmax, minval, maxval) * linewid)
-mouseonmin = app_mouse_box(linex + dragxmin - 6, dragy - 10, 12, 20)
-mouseonmax = app_mouse_box(linex + dragxmax - 6, dragy - 10, 12, 20)
-
-// Click on thumbs
-if (mouseon && window_busy = "")
-{
-	mouse_cursor = cr_handpoint
-	if (mouse_left_pressed) // Start dragging
-	{
-		if (mouseonmin)
-		{
-			window_busy = name + "min"
-			meter_drag_value = valuemin
-		}
-		else if (mouseonmax)
-		{
-			window_busy = name + "max"
-			meter_drag_value = valuemax
-		}
-		window_focus = name
-	}
-	
-	if (mouse_right_pressed)
-	{
-		script_execute(scriptmin, defmin, false)
-		script_execute(scriptmax, defmax, false)
-	}
-}
-
-// Line
+// Clamp positions during drag
 if (window_busy = name + "min")
-	dragxmin = min(dragxmin, dragxmax)
+	minthumbpos = min(minthumbpos, maxthumbpos)
 if (window_busy = name + "max")
-	dragxmax = max(dragxmin, dragxmax)
+	maxthumbpos = max(minthumbpos, maxthumbpos)
 
-draw_box(linex, dragy - 1, dragxmin + 1, 2, false, c_text_secondary, a_text_secondary)
-draw_box(linex + dragxmin, dragy - 1, (dragxmax - dragxmin) + 1, 2, false, c_accent, 1)
-draw_box(linex + dragxmax, dragy - 1, (linewid - dragxmax) + 1, 2, false, c_text_secondary, a_text_secondary)
+// Rail line
+var color, alpha;
+color = merge_color(c_text_tertiary, c_text_secondary, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
+color = merge_color(color, c_border, mcroani_arr[e_mcroani.DISABLED])
+alpha = lerp(a_text_tertiary, a_text_secondary, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
+alpha = lerp(alpha, a_border, mcroani_arr[e_mcroani.DISABLED])
 
-microani_set(name + "min", scriptmin, (window_busy = name + "min") || mouseonmin, mouseonmin && mouse_left, false)
-microani_update((window_busy = name + "min") || mouseonmin, mouseonmin && mouse_left, false)
+draw_box(linex, thumby - 1, minthumbpos - linex, 2, false, color, alpha)
+draw_box(maxthumbpos, thumby - 1, (linex + linewid) - maxthumbpos, 2, false, color, alpha)
 
-// Dragger(Minimum)
-draw_box(linex + dragxmin - 6, dragy - 10, 12, 20, false, c_accent, 1)
-draw_box_bevel(linex + dragxmin - 6, dragy - 10, 12, 20, 1)
-draw_box_hover(linex + dragxmin - 6, dragy - 10, 12, 20, mcroani_arr[e_mcroani.HOVER])
+// Selected region
+color = merge_color(c_accent, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+alpha = merge_color(a_accent, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+draw_box(minthumbpos, thumby - 1, maxthumbpos - minthumbpos, 2, false, color, alpha)
 
-microani_set(name + "max", scriptmax, (window_busy = name + "max") || mouseonmax, mouseonmax && mouse_left, false)
-microani_update((window_busy = name + "max") || mouseonmax, mouseonmax && mouse_left, false)
+// Minimum dragger
+microani_set(name + "min", minscript, (window_busy = name + "min") || minmouseon, minmouseon && mouse_left, false)
+microani_update((window_busy = name + "min") || minmouseon, minmouseon && mouse_left, false)
 
-// Dragger(Maximum)
-draw_box(linex + dragxmax - 6, dragy - 10, 12, 20, false, c_accent, 1)
-draw_box_bevel(linex + dragxmax - 6, dragy - 10, 12, 20, 1)
-draw_box_hover(linex + dragxmax - 6, dragy - 10, 12, 20, mcroani_arr[e_mcroani.HOVER])
+color = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
+color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
+color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+draw_box(minthumbpos, thumby - 10, 12, 20, false, c_background, 1)
+draw_box(minthumbpos, thumby - 10, 12, 20, false, color, alpha)
+draw_box_bevel(minthumbpos, thumby - 10, 12, 20, 1)
+draw_box_hover(minthumbpos, thumby - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])
+
+// Maximum dragger
+microani_set(name + "max", maxscript, (window_busy = name + "max") || maxmouseon, maxmouseon && mouse_left, false)
+microani_update((window_busy = name + "max") || maxmouseon, maxmouseon && mouse_left, false)
+
+color = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
+color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
+color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+draw_box(maxthumbpos, thumby - 10, 12, 20, false, c_background, 1)
+draw_box(maxthumbpos, thumby - 10, 12, 20, false, color, alpha)
+draw_box_bevel(maxthumbpos, thumby - 10, 12, 20, 1)
+draw_box_hover(maxthumbpos, thumby - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])

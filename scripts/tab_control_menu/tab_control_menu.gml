@@ -2,6 +2,6 @@
 /// @arg size
 
 if (argument_count > 0)
-	tab_control(20 + argument[0])
+	tab_control((label_height + 8) + argument[0])
 else
-	tab_control(48)
+	tab_control(label_height + 32)

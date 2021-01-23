@@ -3,10 +3,6 @@
 // Header
 draw_box(dx, dy, dw, 128, false, c_overlay, a_overlay)
 
-// Close
-if (draw_button_icon("aboutclose", dx + dw - 12 - 28, dy + 8, 28, 28, false, icons.CLOSE, null, false))
-	popup_close()
-
 // Logo
 gpu_set_tex_filter(true)
 draw_sprite_ext(spr_logo, 0, dx + dw / 2, dy + 54, .75, .75, 0, c_white, draw_get_alpha())

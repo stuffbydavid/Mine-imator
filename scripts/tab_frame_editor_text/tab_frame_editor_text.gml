@@ -10,8 +10,8 @@ if (tl_edit.value[e_value.TEXT_FONT] = null)
 else
 	text = tl_edit.value[e_value.TEXT_FONT].display_name
 
-tab_control_menu(28)
-draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 28, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
+tab_control_menu()
+draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
 tab_next()
 
 // Font Anti-aliasing
@@ -50,7 +50,7 @@ dw = dwold
 dx = dxold
 
 // Text
-tab_control_menu(88)
+tab_control_textfield(true, 76)
 tab.text.tbx_text.text = tl_edit.value[e_value.TEXT]
-draw_textfield("timelineeditortext", dx, dy, dw, 88, tab.text.tbx_text, action_tl_frame_text, tl_edit.text, "top")
+draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.text.tbx_text, action_tl_frame_text, tl_edit.text, "top")
 tab_next()

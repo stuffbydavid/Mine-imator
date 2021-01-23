@@ -21,8 +21,8 @@ else
 		text = text_get("projectvideosizecustom")
 }
 
-tab_control_menu(28)
-draw_button_menu("frameeditorcameravideosize", e_menu.LIST, dx, dy, dw, 28, tl_edit.value[e_value.CAM_SIZE_USE_PROJECT] ? null : tab.camera.video_template, text, action_tl_frame_cam_video_template)
+tab_control_menu()
+draw_button_menu("frameeditorcameravideosize", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_SIZE_USE_PROJECT] ? null : tab.camera.video_template, text, action_tl_frame_cam_video_template)
 tab_next()
 
 // Custom
@@ -32,11 +32,11 @@ if (tab.camera.video_template = 0)
 	capwid = text_caption_width("frameeditorcameravideosizecustomwidth", "frameeditorcameravideosizecustomheight")
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameravideosizecustomwidth", dx, dy, 86, tl_edit.value[e_value.CAM_WIDTH], 1, 1, no_limit, 1280, 1, tab.camera.tbx_video_size_custom_width, action_tl_frame_cam_width)
+	draw_dragger("frameeditorcameravideosizecustomwidth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_WIDTH], 1, 1, no_limit, 1280, 1, tab.camera.tbx_video_size_custom_width, action_tl_frame_cam_width)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameravideosizecustomheight", dx, dy, 86, tl_edit.value[e_value.CAM_HEIGHT], 1, 1, no_limit, 720, 1, tab.camera.tbx_video_size_custom_height, action_tl_frame_cam_height)
+	draw_dragger("frameeditorcameravideosizecustomheight", dx, dy, dragger_width, tl_edit.value[e_value.CAM_HEIGHT], 1, 1, no_limit, 720, 1, tab.camera.tbx_video_size_custom_height, action_tl_frame_cam_height)
 	tab_next()
 	
 	tab_control_switch()
@@ -67,15 +67,27 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_ROTATE] && setting_collapse_frameeditor_rotatepoint)
 {
-	// XY / Z angle
-	tab_control(68)
-	draw_wheel("frameeditorcamerarotateanglexy", dx + floor(dw * 0.3), dy + 24, c_aqua, tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY], -no_limit, no_limit, 0, 0, false, tab.camera.tbx_rotate_angle_xy, action_tl_frame_cam_rotate_angle_xy)
-	draw_wheel("frameeditorcamerarotateanglez", dx + floor(dw * 0.7), dy + 24, c_aqua, tl_edit.value[e_value.CAM_ROTATE_ANGLE_Z], -89.9, 89.9, 0, 0, false, tab.camera.tbx_rotate_angle_z, action_tl_frame_cam_rotate_angle_z)
+	tab_collapse_start()
+	
+	// XY / Z angle wheels
+	var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
+	
+	tab_control_wheel()
+	draw_wheel("frameeditorcamerarotateanglexywheel", dx + floor(dw * 0.25), dy + 24, c_aqua, tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY], -no_limit, no_limit, 0, 0, false, tab.camera.tbx_rotate_angle_xy, action_tl_frame_cam_rotate_angle_xy)
+	draw_wheel("frameeditorcamerarotateanglezwheel", dx + floor(dw * 0.75), dy + 24, c_aqua, tl_edit.value[e_value.CAM_ROTATE_ANGLE_Z], -89.9, 89.9, 0, 0, false, tab.camera.tbx_rotate_angle_z, action_tl_frame_cam_rotate_angle_z)
+	tab_next()
+	
+	// Textboxes
+	textfield_group_add("frameeditorcamerarotateanglexy", tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY], 0, action_tl_frame_cam_rotate_angle_xy, axis_edit, tab.camera.tbx_rotate_angle_xy, null, .1, -no_limit, no_limit)
+	textfield_group_add("frameeditorcamerarotateanglez", tl_edit.value[e_value.CAM_ROTATE_ANGLE_Z], 0, action_tl_frame_cam_rotate_angle_z, axis_edit, tab.camera.tbx_rotate_angle_z, null, .1, -89.9, 89.9)
+	
+	tab_control_textfield(false)
+	draw_textfield_group("frameeditorcamerarotateangle", dx, dy, dw, 0.1, 0, 0, snapval, false, true, null)
 	tab_next()
 	
 	// Distance
 	tab_control_dragger()
-	draw_dragger("frameeditorcamerarotatedistance", dx, dy, 86, tl_edit.value[e_value.CAM_ROTATE_DISTANCE], 1, 1, no_limit, 100, 0, tab.camera.tbx_rotate_distance, action_tl_frame_cam_rotate_distance)
+	draw_dragger("frameeditorcamerarotatedistance", dx, dy, dragger_width, tl_edit.value[e_value.CAM_ROTATE_DISTANCE], 1, 1, no_limit, 100, 0, tab.camera.tbx_rotate_distance, action_tl_frame_cam_rotate_distance)
 	tab_next()
 	
 	// Look at
@@ -94,29 +106,34 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_SHAKE] && setting_collapse_frameeditor_camshake)
 {
+	tab_collapse_start()
+	
 	// Shake strength
 	tab_control_meter()
 	draw_meter("frameeditorcameracamerashakemasterstrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH] * 100), 48, 0, 800, 25, 1, tab.camera.tbx_shake_strength, action_tl_frame_cam_shake_strength)
 	tab_next()
 	
 	// Offset
-	tab_control_menu(28)
 	textfield_group_add("frameeditorcameracamerashakeoffsetv", tl_edit.value[e_value.CAM_SHAKE_VERTICAL_OFFSET], 0, action_tl_frame_cam_shake_voffset, X, tab.camera.tbx_shake_voffset, null, 1, -no_limit, no_limit)
 	textfield_group_add("frameeditorcameracamerashakeoffseth", tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET], 0, action_tl_frame_cam_shake_hoffset, X, tab.camera.tbx_shake_hoffset, null, 1, -no_limit, no_limit)
+	
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorcameracamerashakeoffset", dx, dy, dw, null, null, null, .01, true)
 	tab_next()
 	
 	// Speed
-	tab_control_menu(28)
 	textfield_group_add("frameeditorcameracamerashakespeedv", round(tl_edit.value[e_value.CAM_SHAKE_VERTICAL_SPEED] * 100), 100, action_tl_frame_cam_shake_vspeed, X, tab.camera.tbx_shake_vspeed, null, 1, 0, no_limit)
 	textfield_group_add("frameeditorcameracamerashakespeedh", round(tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] * 100), 100, action_tl_frame_cam_shake_hspeed, X, tab.camera.tbx_shake_hspeed, null, 1, 0, no_limit)
+	
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorcameracamerashakespeed", dx, dy, dw, null, null, null, .01, true)
 	tab_next()
 	
 	// Strength
-	tab_control_menu(28)
 	textfield_group_add("frameeditorcameracamerashakestrengthv", round(tl_edit.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH] * 100), 100, action_tl_frame_cam_shake_vstrength, X, tab.camera.tbx_shake_vstrength, null, 1, 0, no_limit)
 	textfield_group_add("frameeditorcameracamerashakestrengthh", round(tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH] * 100), 100, action_tl_frame_cam_shake_hstrength, X, tab.camera.tbx_shake_hstrength, null, 1, 0, no_limit)
+	
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorcameracamerashakestrength", dx, dy, dw, null, null, null, .01, true)
 	tab_next()
 	
@@ -131,19 +148,21 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_DOF] && setting_collapse_frameeditor_dof)
 {
+	tab_collapse_start()
+	
 	draw_set_font(font_emphasis)
 	capwid = text_caption_width("frameeditorcameradofdepth", "frameeditorcameradofrange", "frameeditorcameradoffadesize")
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameradofdepth", dx, dy, 86, tl_edit.value[e_value.CAM_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_DOF_DEPTH] / 50), 0, world_size, 0, 0, tab.camera.tbx_dof_depth, action_tl_frame_cam_dof_depth, capwid)
+	draw_dragger("frameeditorcameradofdepth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_DOF_DEPTH] / 50), 0, world_size, 0, 0, tab.camera.tbx_dof_depth, action_tl_frame_cam_dof_depth, capwid)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameradofrange", dx, dy, 86, tl_edit.value[e_value.CAM_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera.tbx_dof_range, action_tl_frame_cam_dof_range, capwid)
+	draw_dragger("frameeditorcameradofrange", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera.tbx_dof_range, action_tl_frame_cam_dof_range, capwid)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameradoffadesize", dx, dy, 86, tl_edit.value[e_value.CAM_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera.tbx_dof_fade_size, action_tl_frame_cam_dof_fade_size, capwid)
+	draw_dragger("frameeditorcameradoffadesize", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera.tbx_dof_fade_size, action_tl_frame_cam_dof_fade_size, capwid)
 	tab_next()
 	
 	tab_control_meter()
@@ -175,21 +194,33 @@ if (tl_edit.value[e_value.CAM_DOF] && setting_collapse_frameeditor_dof)
 		var snapval, capwid;
 		snapval = (dragger_snap ? setting_snap_size_rotation : 0.1)
 		
-		tab_control(68)
+		tab_control_wheel()
 		axis_edit = X
-		draw_wheel("frameeditorcameradoffringeanglered", dx + floor(dw * 0.25) - 25, dy + 24, c_red, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_RED], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_RED], snapval, false, tab.camera.tbx_dof_fringe_angle_red, action_tl_frame_cam_dof_fringe_angle)
-		
+		draw_wheel("frameeditorcameradoffringeangleredwheel", floor(dx + dw/6), dy + 24, c_red, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_RED], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_RED], snapval, false, tab.camera.tbx_dof_fringe_angle_red, action_tl_frame_cam_dof_fringe_angle)
 		axis_edit = Y
-		draw_wheel("frameeditorcameradoffringeanglegreen", dx + floor(dw * 0.5), dy + 24, c_green, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], snapval, false, tab.camera.tbx_dof_fringe_angle_green, action_tl_frame_cam_dof_fringe_angle)
-		
-		axis_edit = Z
-		draw_wheel("frameeditorcameradoffringeangleblue", dx + floor(dw * 0.75) + 25, dy + 24, c_blue, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], snapval, false, tab.camera.tbx_dof_fringe_angle_blue, action_tl_frame_cam_dof_fringe_angle)
+		draw_wheel("frameeditorcameradoffringeanglegreenwheel", floor(dx + dw/2), dy + 24, c_green, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], snapval, false, tab.camera.tbx_dof_fringe_angle_green, action_tl_frame_cam_dof_fringe_angle)
+		axis_edit = Y
+		draw_wheel("frameeditorcameradoffringeanglebluewheel", floor(dx + dw - dw/6), dy + 24, c_blue, tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], -no_limit, no_limit, tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], snapval, false, tab.camera.tbx_dof_fringe_angle_blue, action_tl_frame_cam_dof_fringe_angle)
 		tab_next()
 		
-		tab_control_menu(28)
+		// Textboxes
+		axis_edit = X
+		textfield_group_add("frameeditorcameradoffringeanglered", tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_RED], tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_RED], action_tl_frame_cam_dof_fringe_angle, axis_edit, tab.camera.tbx_dof_fringe_angle_red)
+		axis_edit = Y
+		textfield_group_add("frameeditorcameradoffringeanglegreen", tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_GREEN], action_tl_frame_cam_dof_fringe_angle, axis_edit, tab.camera.tbx_dof_fringe_angle_green)
+		axis_edit = Z
+		textfield_group_add("frameeditorcameradoffringeangleblue", tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], action_tl_frame_cam_dof_fringe_angle, axis_edit, tab.camera.tbx_dof_fringe_angle_blue)
+		
+		tab_control_textfield(false)
+		draw_textfield_group("frameeditorcameradoffringeangle", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, null)
+		tab_next()
+		
+		// Offset
 		textfield_group_add("frameeditorcameradoffringered", round(tl_edit.value[e_value.CAM_DOF_FRINGE_RED] * 100), 100, action_tl_frame_cam_dof_fringe_red, X, tab.camera.tbx_dof_fringe_red)
 		textfield_group_add("frameeditorcameradoffringegreen", round(tl_edit.value[e_value.CAM_DOF_FRINGE_GREEN] * 100), 100, action_tl_frame_cam_dof_fringe_green, X, tab.camera.tbx_dof_fringe_green)
 		textfield_group_add("frameeditorcameradoffringeblue", round(tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE] * 100), 100, action_tl_frame_cam_dof_fringe_blue, X, tab.camera.tbx_dof_fringe_blue)
+		
+		tab_control_textfield_group()
 		draw_textfield_group("frameeditorcameradoffringeoffset", dx, dy, dw, 1, 0, no_limit, 1, true)
 		tab_next()
 	}
@@ -205,6 +236,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_BLOOM] && setting_collapse_frameeditor_bloom)
 {
+	tab_collapse_start()
+	
 	tab_control_meter()
 	draw_meter("frameeditorcamerabloomthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_THRESHOLD] * 100), 50, 0, 100, 85, 1, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold)
 	tab_next()
@@ -236,6 +269,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_LENS_DIRT] && setting_collapse_frameeditor_lensdirt)
 {
+	tab_collapse_start()
+	
 	// Lens dirt texture(TEXTURE_OBJ)
 	var texobj, tex;
 	texobj = tl_edit.value[e_value.TEXTURE_OBJ]
@@ -294,6 +329,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && setting_collapse_frameeditor_clrcor)
 {
+	tab_collapse_start()
+	
 	tab_control_meter()
 	draw_meter("frameeditorcameracolorcorrectioncontrast", dx, dy, dw, round(tl_edit.value[e_value.CAM_CONTRAST] * 100), 50, 0, 100, 0, 1, tab.camera.tbx_contrast, action_tl_frame_cam_clrcor_contrast)
 	tab_next()
@@ -325,6 +362,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_GRAIN] && setting_collapse_frameeditor_grain)
 {
+	tab_collapse_start()
+	
 	tab_control_meter()
 	draw_meter("frameeditorcameragrainstrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_GRAIN_STRENGTH] * 100), 50, -100, 100, 10, 1, tab.camera.tbx_grain_strength, action_tl_frame_cam_grain_strength)
 	tab_next()
@@ -348,6 +387,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_VIGNETTE] && setting_collapse_frameeditor_vignette)
 {
+	tab_collapse_start()
+	
 	tab_control_meter()
 	draw_meter("frameeditorcameravignetteradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_VIGNETTE_RADIUS] * 100), 50, 0, 100, 100, 1, tab.camera.tbx_vignette_radius, action_tl_frame_cam_vignette_radius)
 	tab_next()
@@ -375,6 +416,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_CA] && setting_collapse_frameeditor_ca)
 {
+	tab_collapse_start()
+	
 	tab_control_meter()
 	draw_meter("frameeditorcameracabluramount", dx, dy, dw, round(tl_edit.value[e_value.CAM_CA_BLUR_AMOUNT] * 100), 50, 0, 100, 5, 1, tab.camera.tbx_ca_blur_amount, action_tl_frame_cam_ca_blur_amount)
 	tab_next()
@@ -383,10 +426,11 @@ if (tl_edit.value[e_value.CAM_CA] && setting_collapse_frameeditor_ca)
 	draw_switch("frameeditorcameracadistortchannels", dx, dy, tl_edit.value[e_value.CAM_CA_DISTORT_CHANNELS], action_tl_frame_cam_ca_distort_channels, false)
 	tab_next()
 	
-	tab_control_menu(28)
 	textfield_group_add("frameeditorcameracaredoffset", round(tl_edit.value[e_value.CAM_CA_RED_OFFSET] * 100), 12, action_tl_frame_cam_ca_red_offset, X, tab.camera.tbx_ca_red_offset)
 	textfield_group_add("frameeditorcameracagreenoffset", round(tl_edit.value[e_value.CAM_CA_GREEN_OFFSET] * 100), 12, action_tl_frame_cam_ca_green_offset, X, tab.camera.tbx_ca_green_offset)
 	textfield_group_add("frameeditorcameracablueoffset", round(tl_edit.value[e_value.CAM_CA_BLUE_OFFSET] * 100), 12, action_tl_frame_cam_ca_blue_offset, X, tab.camera.tbx_ca_blue_offset)
+	
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorcameracaoffset", dx, dy, dw, 1, 0, no_limit, 1, true)
 	tab_next()
 	
@@ -401,6 +445,8 @@ tab_next()
 
 if (tl_edit.value[e_value.CAM_DISTORT] && setting_collapse_frameeditor_distort)
 {
+	tab_collapse_start()
+	
 	tab_control_switch()
 	draw_switch("frameeditorcameradistortrepeat", dx, dy, tl_edit.value[e_value.CAM_DISTORT_REPEAT], action_tl_frame_cam_distort_repeat, false)
 	tab_next()

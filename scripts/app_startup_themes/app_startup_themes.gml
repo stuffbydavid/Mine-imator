@@ -16,14 +16,14 @@ update_interface_wait = false
 a_accent = 1
 a_accent_hover = 1
 a_accent_pressed = 1
-a_hover = .47
-a_accent_overlay = .11
+a_hover = .45
+a_accent_overlay = .10
 
-a_text_main = .91
-a_text_secondary = .57
-a_text_tertiary = .36
+a_text_main = .9
+a_text_secondary = .6
+a_text_tertiary = .35
 
-a_border = .14
+a_border = .15
 a_overlay = .05
 
 var theme_edit;

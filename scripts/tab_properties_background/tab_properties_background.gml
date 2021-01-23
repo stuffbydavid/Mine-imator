@@ -31,8 +31,8 @@ if (background_image_show)
 	if (background_image != null)
 	{
 		// Image type
-		tab_control_menu(28)
-		draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 28, background_image_type, text_get("backgroundimagetype" + background_image_type), action_background_image_type)
+		tab_control_menu()
+		draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 24, background_image_type, text_get("backgroundimagetype" + background_image_type), action_background_image_type)
 		tab_next()
 		
 		// Background stretch
@@ -60,9 +60,9 @@ if (background_image_show)
 			
 			if (background_image_box_mapped)
 			{
-				tab_control(36)
+				tab_control_button_label()
 				
-				if (draw_button_secondary("backgroundimagesavemap", dx, dy, dw, null, icons.TEXTURE_EXPORT))
+				if (draw_button_label("backgroundimagesavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
 					action_background_image_save_map()
 				
 				tab_next()
@@ -111,13 +111,13 @@ draw_set_font(font_emphasis)
 capwid = text_max_width("backgroundsunlightrange", "backgroundsunlightangle") + 10
 
 // Sunlight range
-tab_control_inputbox()
-draw_dragger("backgroundsunlightrange", dx, dy, 86, background_sunlight_range, background_sunlight_range / 100, 400, world_size, 2000, 10, tab.background.tbx_sunlight_range, action_background_sunlight_range, capwid)
+tab_control_dragger()
+draw_dragger("backgroundsunlightrange", dx, dy, dragger_width, background_sunlight_range, background_sunlight_range / 100, 400, world_size, 2000, 10, tab.background.tbx_sunlight_range, action_background_sunlight_range, capwid)
 tab_next()
 
 // Sunlight angle
-tab_control_inputbox()
-draw_dragger("backgroundsunlightangle", dx, dy, 86, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, capwid)
+tab_control_dragger()
+draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, capwid)
 tab_next()
 
 // Sunlight strength
@@ -156,6 +156,8 @@ tab_next()
 
 if (background_sky_clouds_show && setting_collapse_background_clouds)
 {
+	tab_collapse_start()
+	
 	// Flat clouds
 	tab_control_switch()
 	draw_switch("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat, false)
@@ -176,28 +178,28 @@ if (background_sky_clouds_show && setting_collapse_background_clouds)
 	capwid = text_max_width("backgroundskycloudsspeed", "backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), "backgroundskycloudssize", "backgroundskycloudsheight", "backgroundskycloudsoffset") + 10
 	
 	// Cloud speed
-	tab_control_inputbox()
-	draw_dragger("backgroundskycloudsspeed", dx, dy, 86, background_sky_clouds_speed, 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, background_sky_clouds_speed, 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed, capwid)
 	tab_next()
 	
 	// Cloud Z / Y
-	tab_control_inputbox()
-	draw_dragger("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, 86, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, dragger_width, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z, capwid)
 	tab_next()
 	
 	// Cloud size
-	tab_control_inputbox()
-	draw_dragger("backgroundskycloudssize", dx, dy, 86, background_sky_clouds_size, 5, 16, no_limit, 192, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudssize", dx, dy, dragger_width, background_sky_clouds_size, 5, 16, no_limit, 192, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size, capwid)
 	tab_next()
 	
 	// Cloud height
-	tab_control_inputbox()
-	draw_dragger("backgroundskycloudsheight", dx, dy, 86, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudsheight", dx, dy, dragger_width, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height, capwid)
 	tab_next()
 	
 	// Cloud offset
-	tab_control_inputbox()
-	draw_dragger("backgroundskycloudsoffset", dx, dy, 86, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudsoffset", dx, dy, dragger_width, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset, capwid)
 	tab_next()
 	
 	tab_collapse_end()
@@ -213,13 +215,15 @@ capwid = text_caption_width("backgroundground", "backgroundgroundtex")
 
 if (background_ground_show && setting_collapse_background_ground)
 {
+	tab_collapse_start()
+	
 	var wid, res;
 	res = background_ground_tex
 	if (!res.ready)
 		res = mc_res
 	
 	// Change ground
-	tab_control(28)
+	tab_control(24)
 	
 	draw_set_font(font_emphasis)
 	wid = string_width(text_get("backgroundground") + ":")
@@ -233,7 +237,7 @@ if (background_ground_show && setting_collapse_background_ground)
 	else
 		draw_texture_slot(res.block_sheet_texture, background_ground_slot, dx + wid + 18, dy + 6, 16, 16, block_sheet_width, block_sheet_height, block_texture_get_blend(background_ground_name, res))
 	
-	if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 28, 28, ground_editor.show, icons.EDIT, null, false, "tooltipchangeground"))
+	if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 24, 24, ground_editor.show, icons.EDIT, null, false, "tooltipchangeground"))
 		tab_toggle(ground_editor)
 	
 	tab_next()
@@ -247,15 +251,15 @@ if (background_ground_show && setting_collapse_background_ground)
 }
 
 // Biome
-tab_control_menu(28)
-draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 28, background_biome, minecraft_asset_get_name("biome", background_biome.name), action_background_biome)
+tab_control_menu()
+draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome.name), action_background_biome)
 tab_next()
 
 if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_variants))
 {
 	// Biome variant
-	tab_control_menu(28)
-	draw_button_menu("backgroundbiomevariant", e_menu.LIST, dx, dy, dw, 28, background_biome.selected_variant, minecraft_asset_get_name("biome", background_biome.biome_variants[|background_biome.selected_variant].name), action_background_biome_variant)
+	tab_control_menu()
+	draw_button_menu("backgroundbiomevariant", e_menu.LIST, dx, dy, dw, 24, background_biome.selected_variant, minecraft_asset_get_name("biome", background_biome.biome_variants[|background_biome.selected_variant].name), action_background_biome_variant)
 	tab_next()
 }
 
@@ -365,6 +369,8 @@ tab_next()
 
 if (background_fog_show && setting_collapse_background_fog)
 {
+	tab_collapse_start()
+	
 	// Sky fog
 	tab_control_switch()
 	draw_switch("backgroundfogsky", dx, dy, background_fog_sky, action_background_fog_sky, true)
@@ -399,18 +405,18 @@ if (background_fog_show && setting_collapse_background_fog)
 	capwid = text_max_width("backgroundfogdistance", "backgroundfogsize", "backgroundfogheight") + 10
 	
 	// Fog distance
-	tab_control_inputbox()
-	draw_dragger("backgroundfogdistance", dx, dy, 86, background_fog_distance, background_fog_distance / 100, 10, world_size, 10000, 10, tab.background.tbx_fog_distance, action_background_fog_distance, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundfogdistance", dx, dy, dragger_width, background_fog_distance, background_fog_distance / 100, 10, world_size, 10000, 10, tab.background.tbx_fog_distance, action_background_fog_distance, capwid)
 	tab_next()
 	
 	// Fog size
-	tab_control_inputbox()
-	draw_dragger("backgroundfogsize", dx, dy, 86, background_fog_size, background_fog_size / 100, 10, world_size, 2000, 10, tab.background.tbx_fog_size, action_background_fog_size, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundfogsize", dx, dy, dragger_width, background_fog_size, background_fog_size / 100, 10, world_size, 2000, 10, tab.background.tbx_fog_size, action_background_fog_size, capwid)
 	tab_next()
 	
 	// Fog height
-	tab_control_inputbox()
-	draw_dragger("backgroundfogheight", dx, dy, 86, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height, capwid)
+	tab_control_dragger()
+	draw_dragger("backgroundfogheight", dx, dy, dragger_width, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height, capwid)
 	tab_next()
 	
 	tab_collapse_end()
@@ -424,6 +430,8 @@ tab_next()
 
 if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 {
+	tab_collapse_start()
+	
 	tab_control_switch()
 	draw_switch("backgroundvolumetricfograys", dx, dy, background_volumetric_fog_rays, action_background_volumetric_fog_rays, false)
 	tab_next()
@@ -433,16 +441,16 @@ if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 		draw_set_font(font_emphasis)
 		capwid = text_max_width("backgroundvolumetricfogheight", "backgroundvolumetricfogheightfade", "backgroundvolumetricfognoisescale") + 10
 		
-		tab_control_inputbox()
-		draw_dragger("backgroundvolumetricfogheight", dx, dy, 86, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height, capwid)
+		tab_control_dragger()
+		draw_dragger("backgroundvolumetricfogheight", dx, dy, dragger_width, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height, capwid)
 		tab_next()
 		
-		tab_control_inputbox()
-		draw_dragger("backgroundvolumetricfogheightfade", dx, dy, 86, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade, capwid)
+		tab_control_dragger()
+		draw_dragger("backgroundvolumetricfogheightfade", dx, dy, dragger_width, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade, capwid)
 		tab_next()
 		
-		tab_control_inputbox()
-		draw_dragger("backgroundvolumetricfognoisescale", dx, dy, 86, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale, capwid)
+		tab_control_dragger()
+		draw_dragger("backgroundvolumetricfognoisescale", dx, dy, dragger_width, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale, capwid)
 		tab_next()
 		
 		tab_control_meter()
@@ -484,6 +492,8 @@ tab_next()
 
 if (background_wind && setting_collapse_background_wind)
 {
+	tab_collapse_start()
+	
 	// Wind strength
 	tab_control_meter()
 	draw_meter("backgroundwindspeed", dx, dy, dw, round(background_wind_speed * 100), 64, 0, 100, 10, 1, tab.background.tbx_wind_speed, action_background_wind_speed)
@@ -518,6 +528,6 @@ draw_switch("backgroundopaqueleaves", dx, dy, background_opaque_leaves, action_b
 tab_next()
 
 // Animation speed
-tab_control_inputbox()
-draw_dragger("backgroundtextureanimationspeed", dx, dy, 86, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
+tab_control_dragger()
+draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
 tab_next()

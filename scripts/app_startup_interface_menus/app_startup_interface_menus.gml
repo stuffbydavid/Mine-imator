@@ -33,3 +33,4 @@ menu_height = 0
 menu_transition = null
 menu_steps = 0
 menu_floating = false
+menu_list = null

@@ -750,7 +750,7 @@ switch (name)
 	}
 	
 	// Sound
-	case "frameeditorsound":
+	case "frameeditorsoundfile":
 	{
 		// Default
 		menu_add_item(null, text_get("listnone"))

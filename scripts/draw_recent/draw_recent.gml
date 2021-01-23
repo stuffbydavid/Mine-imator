@@ -30,16 +30,16 @@ if (mode = "simple")
 		
 		// Icons
 		var iconx = xx + wid - 8;
-		iconx -= 28
+		iconx -= 24
 		
 		// Remove
 		if (hover)
 		{
-			if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove"))
+			if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
 				action_recent_remove(item)
-			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 28, 28)
+			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 		}
-		iconx -= 28
+		iconx -= 24
 		
 		// Name
 		draw_label(string_limit(filename_name(item.name), (iconx - xx) - 12), xx + 12, recenty + 22, fa_left, fa_middle, c_text_main, a_text_main)
@@ -126,23 +126,23 @@ if (mode = "list")
 		
 		// Icons
 		var iconx = xx + wid - 8;
-		iconx -= 28
+		iconx -= 24
 		
 		// Remove
 		if (hover)
 		{
-			if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 28, 28, false, icons.DELETE, null, false, "tooltipremove"))
+			if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
 				action_recent_remove(item)
-			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 28, 28)
+			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 		}
-		iconx -= 28
+		iconx -= 24
 		
 		// Oh yeah. Pin it
 		if (hover || item.pinned)
 		{
-			if (draw_button_icon("recentpin" + string(item), iconx, recenty + 8, 28, 28, item.pinned, icons.PIN, null, false, "tooltippin"))
+			if (draw_button_icon("recentpin" + string(item), iconx, recenty + 8, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
 				action_recent_pin(item)
-			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 28, 28)
+			mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 		}
 		
 		// Seperator
@@ -225,28 +225,28 @@ if (mode = "grid")
 			
 			// Icons
 			var iconwid, iconx;
-			iconwid = ((hover || item.pinned) * 36) + (hover * 32)
-			iconx = cardx + 240 - 12 - 28
-			mouseon = mouseon && !app_mouse_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 36)
+			iconwid = 4 + ((hover || item.pinned) * 28) + (hover * 28)
+			iconx = cardx + 240 - 12 - 24
+			mouseon = mouseon && !app_mouse_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 32)
 			
 			if (hover || item.pinned)
 			{
-				draw_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 36, false, c_background, 1)
-				draw_outline(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 36, 1, c_border, a_border)
+				draw_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 32, false, c_background, 1)
+				draw_outline(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 32, 1, c_border, a_border, true)
 			}
 			
 			// Oh yeah. Pin it
 			if (hover || item.pinned)
 			{
-				if (draw_button_icon("recentpin" + string(item), iconx, cardy + 12, 28, 28, item.pinned, icons.PIN, null, false, "tooltippin", null))
+				if (draw_button_icon("recentpin" + string(item), iconx, cardy + 12, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin", null))
 					action_recent_pin(item)
 			}
-			iconx -= 32
+			iconx -= 28
 			
 			// Remove
 			if (hover)
 			{
-				if (draw_button_icon("recentdelete", iconx, cardy + 12, 28, 28, false, icons.DELETE, null, false, "tooltipremove", null,))
+				if (draw_button_icon("recentdelete", iconx, cardy + 12, 24, 24, false, icons.DELETE, null, false, "tooltipremove", null))
 					action_recent_remove(item)
 			}
 			

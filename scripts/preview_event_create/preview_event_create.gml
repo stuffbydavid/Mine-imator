@@ -19,6 +19,7 @@ sound_play_index = null
 sound_playing = false
 
 fov = 60
+xy_lock = false
 world_pos = point3D(0, 0, 0)
 preview_reset_view()
 particle_spawner_init()

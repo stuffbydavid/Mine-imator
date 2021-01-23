@@ -1,26 +1,16 @@
 /// popup_bannereditor_draw()
 
-dy += 8
-dx += 16
-dw -= 32
-dh -= 16
-	
-// Caption
-draw_label(text_get(popup.name + "caption"), dx, dy + 16, fa_left, fa_middle, c_accent, 1, font_heading)
-
-dy += 44
-
 dx_start = dx
 
 // Banner preview
 popup.preview.update = true
 setting_wind_enable = false
-preview_draw(popup.preview, dx, dy, 240, 375)
+preview_draw(popup.preview, dx, dy, 200, 332)
 setting_wind_enable = true
 
-dx += 240 + 8
+dx += 200 + 8
 
-draw_separator_vertical(dx, dy + 4, 375 - 8)
+draw_separator_vertical(dx, dy + 4, 332 - 8)
 dx += 8
 
 var listy, listw;
@@ -28,7 +18,7 @@ listy = dy
 listw = dw - (dx - dx_start)
 
 // Add layer
-if (draw_button_secondary("bannereditoraddlayer", dx, dy, listw, null, icons.ADD))
+if (draw_button_label("bannereditoraddlayer", dx, dy, listw, icons.ADD, e_button.SECONDARY))
 {
 	ds_list_add(popup.pattern_list_edit, minecraft_banner_pattern_list[|1])
 	ds_list_add(popup.pattern_color_list_edit, c_minecraft_black)
@@ -40,7 +30,7 @@ listy += (36 + 8)
 // Draw layers
 var listystart, listh, insertpos;
 listystart = listy
-listh = 48 * 7
+listh = 48 * 6
 insertpos = popup.layer_move
 
 scrollbar_draw(popup.layer_scrollbar, e_scroll.VERTICAL, dx + listw - 12, listy, listh, (ds_list_size(popup.pattern_list_edit) + 1) * 48)
@@ -113,11 +103,14 @@ if ((listy < listystart + listh) && (listy + 48 > listystart))
 
 scissor_done()
 
+dy += 325 + 8
+
 draw_set_font(font_button)
 var buttonx = string_width(text_get("bannereditordone")) + button_padding;
 
 // Done
-if (draw_button_primary("bannereditordone", dx_start + dw - buttonx, dy_start + dh - 28, null, null))
+tab_control_button_label()
+if (draw_button_label("bannereditordone", dx_start + dw - buttonx, dy_start + dh - 32))
 {
 	if (popup.banner_edit.object_index = obj_bench_settings)
 	{
@@ -138,10 +131,10 @@ if (draw_button_primary("bannereditordone", dx_start + dw - buttonx, dy_start + 
 	popup_close()
 }
 
-buttonx += 10 + (string_width(text_get("bannereditorcancel")) + button_padding)
+buttonx += 12 + (string_width(text_get("bannereditorcancel")) + button_padding)
 
 // Cancel
-if (draw_button_secondary("bannereditorcancel", dx_start + dw - buttonx, dy_start + dh - 28, null, null))
+if (draw_button_label("bannereditorcancel", dx_start + dw - buttonx, dy_start + dh - 32, null, null, e_button.SECONDARY))
 {
 	array_add(banner_update, popup.banner_edit)
 	
@@ -150,6 +143,7 @@ if (draw_button_secondary("bannereditorcancel", dx_start + dw - buttonx, dy_star
 	
 	popup_close()
 }
+tab_next()
 
 if (popup.layer_remove != null)
 {

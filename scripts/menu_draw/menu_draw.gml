@@ -10,6 +10,8 @@ if (menu_ani_type = "hide") //Hide
 		menu_ani = 0
 		menu_name = ""
 		list_destroy(menu_list)
+		menu_list = null
+		
 		return 0
 	}
 }
@@ -39,18 +41,20 @@ h = listh + (12 * menu_scroll_horizontal.needed)
 
 yy = (menu_flip ? (menu_y - h) : (menu_y + menu_button_h))
 
-if (h > 2)
-	draw_outline(menu_x, (menu_flip ? yy : yy + (2 * !menu_floating)), menu_w, h - (2 * !menu_floating), 1, c_border, a_border)
-
 draw_box(menu_x, yy, menu_w, h, false, c_background, 1)
-draw_line_ext(menu_x, (menu_flip ? yy + h : yy), menu_x + menu_w, (menu_flip ? yy + h : yy), c_overlay, a_overlay)
+
+if (h > 2)
+	draw_outline(menu_x, yy, menu_w, h, 1, c_border, a_border, true)
+
+// Hide outline touching button
+draw_box(menu_x + 1, yy + (menu_flip), menu_w - 2, h - 1, false, c_background, 1)
 
 // Drop shadow
 var shadowy, shadowh, shadowani;
 shadowy = (menu_flip ? yy : yy - menu_button_h)
 shadowh = h + menu_button_h
 shadowani = ease(((menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), menu_ani)
-draw_dropshadow(menu_x - 1, shadowy - 1, menu_w + 2, shadowh + 2, c_black, shadowani)
+draw_dropshadow(menu_x, shadowy, menu_w, shadowh, c_black, shadowani)
 
 content_x = menu_x
 content_y = yy
@@ -84,8 +88,6 @@ else
 content_width = menu_w - (12 * menu_scroll_vertical.needed)
 content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
 
-scissor_start(content_x, content_y, content_width, content_height)
-
 var mouseitem = null;
 draw_set_font(font_value)
 switch (menu_type)
@@ -117,14 +119,19 @@ switch (menu_type)
 	
 	case e_menu.TRANSITION_LIST:
 	{
+		scissor_start(content_x, content_y, content_width, content_height)
+		
 		menu_transition = menu_transitions(menu_x, yy, menu_w, menu_height)
+		
+		if (menu_transition != null)
+			mouse_left_released = true
+		
+		scissor_done()
 		
 		break
 	}
 	
 }
-
-scissor_done()
 
 if (menu_type = e_menu.TIMELINE && menu_tl_extend)
 {

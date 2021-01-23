@@ -26,7 +26,7 @@ if (tl_edit.value[e_value.CUSTOM_SEED])
 {
 	// Seed
 	tab_control_dragger()
-	draw_dragger("frameeditorparticlesseed", dx, dy, dw, tl_edit.value[e_value.SEED], 0.1, 0, 32000, 0, 1, tab.particles.tbx_seed, action_tl_frame_seed)
+	draw_dragger("frameeditorparticlesseed", dx, dy, dragger_width, tl_edit.value[e_value.SEED], 0.1, 0, 32000, 0, 1, tab.particles.tbx_seed, action_tl_frame_seed)
 	tab_next()
 }
 
@@ -36,14 +36,14 @@ if (tl_edit.value[e_value.ATTRACTOR] != null)
 else
 	text = text_get("listnone")
 
-tab_control_menu(28)
-draw_button_menu("frameeditorparticlesattractor", e_menu.TIMELINE, dx, dy, dw, 28, tl_edit.value[e_value.ATTRACTOR], text, action_tl_frame_attractor)
+tab_control_menu()
+draw_button_menu("frameeditorparticlesattractor", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.ATTRACTOR], text, action_tl_frame_attractor)
 tab_next()
 
 // Force
 if (tl_edit.value[e_value.ATTRACTOR])
 {
 	tab_control_dragger()
-	draw_dragger("frameeditorparticlesforce", dx, dy, 86, tl_edit.value[e_value.FORCE], 1 / 50, -no_limit, no_limit, 1, 0, tab.particles.tbx_force, action_tl_frame_force)
+	draw_dragger("frameeditorparticlesforce", dx, dy, dragger_width, tl_edit.value[e_value.FORCE], 1 / 50, -no_limit, no_limit, 1, 0, tab.particles.tbx_force, action_tl_frame_force)
 	tab_next()
 }

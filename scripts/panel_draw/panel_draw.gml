@@ -3,7 +3,7 @@
 
 var panel;
 var boxx, boxy, boxw, boxh, resizemouseon, padding;
-var tabtitle, tabx, tabw, tabmaxw, tabsw, tabsh, tablistmouseon, tabmouseon;
+var tabtitle, tabx, tabw, tabmaxw, tabsw, tabswprev, tabsh, tablistmouseon, tabmouseon;
 var dx, dy;
 
 panel = argument0
@@ -89,7 +89,7 @@ boxh = ceil(boxh)
 draw_box(boxx, boxy, boxw, boxh, false, c_background, 1)
 
 // Content
-tabsh = min(boxh, 28)
+tabsh = min(boxh, 24)
 content_tab = panel.tab_list[panel.tab_selected]
 content_x = boxx
 content_y = boxy + (tabsh * content_tab.movable)
@@ -101,6 +101,7 @@ content_y = boxy
 
 // Tabs
 tabsw = 0
+tabswprev = 0
 tabmaxw = boxw
 padding = 10
 tablistmouseon = null
@@ -108,62 +109,117 @@ tabmouseon = false
 
 if (content_tab.movable)
 {
-	for (var t = 0; t < panel.tab_list_amount; t++)
+	if (panel.tab_list_amount > 0)
 	{
-		var tab, sel;
-		tab = panel.tab_list[t]
-		sel = (panel.tab_selected = t)
+		// Get full width of all tabs
+		for (var t = 0; t < panel.tab_list_amount; t++)
+		{
+			var tab, sel;
+			tab = panel.tab_list[t]
+			sel = (panel.tab_selected = t)
+			
+			tabtitle[t] = tab_get_title(tab)
+			
+			draw_set_font(sel ? font_emphasis : font_value)
+			tabw[t] = string_width(tabtitle[t])
+			
+			if (tab.closeable)
+				tabw[t] += 36
+			else
+				tabw[t] += 16
+			
+			tabswprev += tabw[t]
+		}
 	
-		tabtitle[t] = tab_get_title(tab)
+		// Adjust tab widths
+		var selnamew, unselnamew;
+		selnamew = tabw[panel.tab_selected];
+		unselnamew = max(28, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Set new unactive tab save
+		selnamew = min(selnamew, 144, boxw - (unselnamew * (panel.tab_list_amount - 1))) // Update tab size based on new unactive tab save
+		unselnamew = max(28, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Update unactive tab size based on new active tab size
+		unselnamew = min(unselnamew, 144)
 	
-		draw_set_font(font_emphasis)
-		tabw[t] = string_width(tabtitle[t]) + 16
-	
-		if (tab.closeable)
-			tabw[t] += 26
-	
-		tabw[t] = min(tabw[t], tabmaxw)
-		tabsw += tabw[t]
+		for (var t = 0; t < panel.tab_list_amount; t++)
+		{
+			var tab, sel;
+			tab = panel.tab_list[t]
+			sel = (panel.tab_selected = t)
+		
+			if (sel)
+			{
+				tabw[t] = min(144, tabw[t], selnamew)
+				tabsw += tabw[t]
+			}
+			else
+			{
+				tabw[t] = min(144, tabw[t], unselnamew)
+				tabsw += tabw[t]
+			}
+		}
 	}
-
+	
 	dx = boxx
 	dy = boxy
 	content_mouseon = !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon
-
+	
 	// Tabs background
 	draw_box(dx, dy, tabmaxw, tabsh, false, c_background_secondary, 1)
-
+	
 	draw_box(dx, dy + tabsh, tabmaxw, 1, false, c_border, a_border)
-
+	
 	for (var t = 0; t < panel.tab_list_amount; t++)
 	{
-		var tab, sel, dw, dh;
+		var tab, sel, dw, dh, hover;
 		tab = panel.tab_list[t]
 		sel = (panel.tab_selected = t)
-	
+		
 		tabx[t] = dx
-	
+		
 		dw = tabw[t]
 		dh = tabsh
-	
+		hover = false
+		
+		// Mouseon
+		if (app_mouse_box(dx, dy, dw, dh))
+		{
+			hover = true
+			
+			if (!app_mouse_box(dx + dw - (20 * tab.closeable), dy + 4, 16 * tab.closeable, 16))
+			{
+				if (!sel)
+				{
+					tablistmouseon = t
+					mouse_cursor = cr_handpoint
+				}
+				else
+					tabmouseon = true
+			}
+		}
+		
 		if (sel)
 			draw_box(dx, dy, dw, dh + 1, false, c_background, 1)
-	
-		tabtitle[t] = string_limit(tabtitle[t], dw - (26 * tab.closeable))
-	
+		
+		var limit = dw - 16;
+		
+		if (hover && tab.closeable)
+			limit -= 20
+		
+		draw_set_font(sel ? font_emphasis : font_value)
+		tabtitle[t] = string_limit(tabtitle[t], limit)
+		
 		// Close button
-		if (tab.closeable)
+		if (tab.closeable && hover)
 		{
-			if (draw_button_icon("tabclose" + string(tab), dx + dw - 26, dy + 2, 24, 24, false, icons.CLOSE_SMALL))
+			if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL))
 			{
 				tab_close(tab)
 				return 0
 			}
 		}
-	
+		
 		// Label
-		draw_label(tabtitle[t], dx + 8, round(dy + (dh/2)), fa_left, fa_center, (sel ? c_accent : c_text_secondary), (sel ? 1 : a_text_secondary), font_emphasis)
-	
+		draw_label(tabtitle[t], floor(dx + 8), round(dy + (dh/2)), fa_left, fa_center, (sel ? c_accent : (hover ? c_text_main : c_text_secondary)), (sel ? 1 : (hover ? a_text_main : a_text_secondary)), sel ? font_emphasis : font_value)
+		
 		// Outline/border
 		if (sel)
 		{
@@ -177,22 +233,10 @@ if (content_tab.movable)
 			if (t < panel.tab_list_amount)
 			{
 				if (panel.tab_selected != t + 1)
-					draw_box(dx + dw, dy + 2, 1, dh - 4, false, c_border, a_border)
+					draw_box(dx + dw, dy, 1, dh, false, c_border, a_border)
 			}
 		}
-	
-		// Click
-		if (app_mouse_box(dx, dy, dw, dh) && !app_mouse_box(dx + dw - (26 * tab.closeable), dy + 2, 24 * tab.closeable, 24))
-		{
-			if (!sel)
-			{
-				tablistmouseon = t
-				mouse_cursor = cr_handpoint
-			}
-			else
-				tabmouseon = true
-		}
-	
+		
 		// List glow
 		tab.glow = max(0, tab.glow - 0.05)
 		if (window_busy = "tabmove")
@@ -206,19 +250,19 @@ if (content_tab.movable)
 			}
 			window_busy = "tabmove"
 		}
-	
+		
 		if (tab.glow > 0)
 			draw_box(dx, dy, dw, dh, false, c_accent, tab.glow * glow_alpha)
-	
+		
 		dx += tabw[t]
 	}
-
+	
 	// Panel edge
 	if (panel = panel_map[?"right"] || panel = panel_map[?"right_secondary"])
 		draw_box(boxx, boxy, 1, boxh, false, c_border, a_border)
 	else
 		draw_box(boxx + boxw - 1, boxy, 1, boxh, false, c_border, a_border)
-
+	
 	panel.list_glow = max(0, panel.list_glow - 0.05 * delta)
 	if (tabmaxw > tabsw)
 	{
@@ -234,12 +278,12 @@ if (content_tab.movable)
 			}
 			window_busy = "tabmove"
 		}
-	
+		
 		// Glow for new tab
 		if (panel.list_glow > 0)
 			draw_box(boxx + tabsw, boxy, min(tab_move_width, tabmaxw - tabsw), tabsh, false, c_accent, panel.list_glow * glow_alpha)
 	}
-
+	
 	// Glow
 	if (content_tab.glow > 0)
 		draw_box(boxx, boxy + tabsh, boxw, boxh - tabsh, false, c_accent, content_tab.glow * glow_alpha)

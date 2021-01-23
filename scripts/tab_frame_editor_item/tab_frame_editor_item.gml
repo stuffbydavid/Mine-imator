@@ -18,11 +18,10 @@ tab_next()
 
 if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && setting_collapse_frameeditor_itemslot)
 {
-	dx += 4
-	dw -= 4
+	tab_collapse_start()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditoritemitemslot", dx, dy, 86, tl_edit.value[e_value.ITEM_SLOT], .1, 0, no_limit, 0, 1, tab.item.item_slot, action_tl_frame_item_slot)
+	draw_dragger("frameeditoritemitemslot", dx, dy, dragger_width, tl_edit.value[e_value.ITEM_SLOT], .1, 0, no_limit, 0, 1, tab.item.item_slot, action_tl_frame_item_slot)
 	tab_next()
 	
 	var slots = ((res.type = e_res_type.PACK) ? ds_list_size(mc_assets.item_texture_list) : (res.item_sheet_size[X] * res.item_sheet_size[Y]));
@@ -30,8 +29,6 @@ if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && setting_collapse_frameeditor_item
 	draw_texture_picker(tl_edit.value[e_value.ITEM_SLOT], res.item_sheet_texture, dx, dy, dw, 200, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item.item_scroll, action_tl_frame_item_slot)
 	tab_next()
 	
-	dx -= 4
-	dw += 4
 	tab_collapse_end()
 }
 
@@ -41,6 +38,6 @@ var tex = res.block_preview_texture;
 if (tex = null)
 	tex = res.texture
 
-tab_control_menu(36)
-draw_button_menu("frameeditoritemitemtex", e_menu.LIST, dx, dy, dw, 36, tl_edit.value[e_value.TEXTURE_OBJ], res.display_name, action_tl_frame_texture_obj, false, tex)
+tab_control_menu()
+draw_button_menu("frameeditoritemitemtex", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXTURE_OBJ], res.display_name, action_tl_frame_texture_obj, false, tex)
 tab_next()

@@ -20,6 +20,6 @@ if (argument_count > 1)
 	tab_collumns_count = argument[1]
 else
 	tab_collumns_count = 2
-	
+
 tab_collumns_index = 0
 tab_collumns_width = dw

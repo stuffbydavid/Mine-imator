@@ -84,29 +84,30 @@ flip = (yy + hei + hei * 8 > window_height)
 
 microani_set(name, null, false, false, false)
 
-var textcolor, textalpha;
-textcolor = merge_color(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-textalpha = lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha;
+textcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+textcolor = merge_color(textcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+textalpha = lerp(a_text_secondary, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 // Caption
-if (dh > (hei + 20))
+if (dh > (hei + (label_height + 8)))
 {
-	draw_label(cap, xx, yy + 16, fa_left, fa_bottom, textcolor, textalpha, font_emphasis)
-	yy += 20
+	draw_label(cap, xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_emphasis)
+	yy += (label_height + 8)
 }
 
 // Button
-var bordercolor, borderalpha;
 bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
-borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
 bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.PRESS])
+borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
 borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
 
 if (menu_name = name)
 	draw_box(xx, yy, wid, hei, false, c_background, 1)
 
-draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha)
-draw_box_hover(xx - 1, yy - 1, wid + 2, hei + 2, mcroani_arr[e_mcroani.HOVER])
+draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha, true)
+draw_box_hover(xx, yy, wid, hei, mcroani_arr[e_mcroani.PRESS])
 
 // Mouse
 mouseon = app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon
@@ -129,16 +130,20 @@ else
 	item.thumbnail_alpha = texalpha
 }
 
-list_item_draw(item, xx, yy, wid, hei, false, 8)
+list_item_draw(item, xx, yy, wid, hei, false, null, null, false)
 instance_destroy(item)
 
-// Arrow
-draw_image(spr_arrow_up_down_ani, (mcroani_arr[e_mcroani.ACTIVE] * 15), xx + wid - hei / 2, yy + hei / 2, 1, 1, textcolor, textalpha)
+// Chevron
+chevroncolor = merge_color(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+chevronalpha = lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+draw_image(spr_chevrons, 0, xx + wid - hei / 2, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - mcroani_arr[e_mcroani.CUSTOM_LINEAR]))
+draw_image(spr_chevrons, 1, xx + wid - hei / 2, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * mcroani_arr[e_mcroani.CUSTOM_LINEAR])
 
 // Disabled overlay
 draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
 
-microani_update(mouseon, mouseon && mouse_left, (menu_name = name ? !flip : flip), disabled)
+microani_update(mouseon, mouseon && mouse_left, (menu_name = name && menu_ani_type != "hide"), disabled, ((menu_name = name && menu_ani_type != "hide") ? !flip : flip))
 
 // Update menu position
 if (menu_name = name)
@@ -171,7 +176,7 @@ if (mouseon && mouse_left_released)
 	menu_include_tl_edit = (menu_name != "timelineeditorparent")
 	menu_model_state = menu_model_state_current
 	menu_block_state = menu_block_state_current
-	menu_margin = 8
+	menu_margin = 0//8
 	menu_transition = null
 	menu_steps = 0
 	menu_floating = false
@@ -183,10 +188,10 @@ if (mouseon && mouse_left_released)
 		menu_list = list_init(menu_name)
 	else if (type = e_menu.TIMELINE)
 		menu_list = menu_timeline_init()
-	else
+	else if (type = e_menu.TRANSITION_LIST)
 		menu_list = menu_transition_init()
 	
-	menu_amount = ds_list_size(menu_list.item)
+	menu_amount = menu_list = null ? 0 : ds_list_size(menu_list.item)
 	menu_focus_selected()
 	
 	// Flip

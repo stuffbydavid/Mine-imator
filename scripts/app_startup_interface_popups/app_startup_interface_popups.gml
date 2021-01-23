@@ -1,42 +1,32 @@
 /// app_startup_interface_popups()
 
 // About
-popup_about = new_popup("about", popup_about_draw, 542, 480, false, true)
+popup_about = new_popup("about", popup_about_draw, 542, 480, false, true, false, true)
 
-// Startup
+// Startup REMOVE
 popup_startup = new_popup("startup", popup_startup_draw, 760, 586, true)
 with (popup_startup)
 	recent_scroll = new(obj_scrollbar)
 
 // New project
-popup_newproject = new_popup("newproject", popup_newproject_draw, 380, 212, true)
+popup_newproject = new_popup("newproject", popup_newproject_draw, 380, 0, true)
 with (popup_newproject)
 {
 	folder = ""
 	tbx_name = new_textbox(true, 0, "")
-	tbx_author = new_textbox(true, 0, "")
-	tbx_description = new_textbox(false, 0, "")
-	tbx_name.next_tbx = tbx_author
-	tbx_author.next_tbx = tbx_description
-	tbx_description.next_tbx = tbx_name
 }
 
-// Open
+// Open REMOVE
 popup_open = new_popup("open", popup_open_draw, 760, 520, true)
 with (popup_open)
 	recent_scroll = new(obj_scrollbar)
 
 // Save as
-popup_saveas = new_popup("saveas", popup_saveas_draw, 450, 380, true)
+popup_saveas = new_popup("saveas", popup_saveas_draw, 380, 0, true)
 with (popup_saveas)
 {
 	folder = ""
 	tbx_name = new_textbox(true, 0, "")
-	tbx_author = new_textbox(true, 0, "")
-	tbx_description = new_textbox(false, 0, "")
-	tbx_name.next_tbx = tbx_author
-	tbx_author.next_tbx = tbx_description
-	tbx_description.next_tbx = tbx_name
 }
 
 // Color picker
@@ -74,7 +64,7 @@ with (popup_loading)
 }
 
 // Download skin
-popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 300, 312, true)
+popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 300, 0, true)
 with (popup_downloadskin)
 {
 	value_script = null
@@ -86,7 +76,7 @@ with (popup_downloadskin)
 }
 
 // Import image
-popup_importimage = new_popup("importimage", popup_importimage_draw, 236, 312, true)
+popup_importimage = new_popup("importimage", popup_importimage_draw, 236, 0, true)
 with (popup_importimage)
 {
 	filename = ""
@@ -94,7 +84,7 @@ with (popup_importimage)
 }
 
 // Import item sheet
-popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 288, 488, true)
+popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 288, 0, true)
 with (popup_importitemsheet)
 {
 	filename = ""
@@ -107,7 +97,7 @@ with (popup_importitemsheet)
 	tbx_sheet_height = new_textbox_integer()
 }
 
-// Export movie
+// Export movie REMOVE
 popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 500, 380, true)
 with (popup_exportmovie)
 {
@@ -124,7 +114,7 @@ with (popup_exportmovie)
 	tbx_bit_rate = new_textbox_integer()
 }
 
-// Export image
+// Export image REMOVE
 popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 500, 322, true)
 with (popup_exportimage)
 {
@@ -136,14 +126,14 @@ with (popup_exportimage)
 }
 
 // Upgrade
-popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 360, 520, true, false, true)
+popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 360, 0, true, false, true)
 with (popup_upgrade)
 {
 	tbx_key = new_textbox(true, 8, "")
 	warntext = ""
 }
 
-// Modelbench ad
+// Modelbench ad REMOVE
 popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 650, 600, true)
 with (popup_modelbench)
 {
@@ -152,14 +142,14 @@ with (popup_modelbench)
 }
 
 // Banner editor
-popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 653, 506, true, true)
+popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 550, 506, true, false, false, false)
 with (popup_bannereditor)
 {
 	preview = new(obj_preview)
-	preview.fov = 30
+	preview.fov = 25
+	preview.xy_lock = true
 	
 	layer_scrollbar = new(obj_scrollbar)
-	//layer_scrollbar.snap_value = 48
 	
 	layer_remove = null
 	layer_edit = null

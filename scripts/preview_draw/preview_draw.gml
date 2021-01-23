@@ -54,7 +54,7 @@ if (playbutton && mouseon != preview.mouseon_prev)
 // Dragging controls
 if (mouseon && content_mouseon && !playbutton)
 {
-	mouse_cursor = cr_size_all
+	mouse_cursor = (!is3d ? cr_size_all : (!preview.xy_lock ? cr_size_all : cr_size_we))
 	if (mouse_left_pressed)
 	{
 		window_busy = (is3d ? "previewrotate" : "previewmove")
@@ -71,10 +71,15 @@ if (window_focus = string(preview))
 	var zd, m;
 	if (window_busy = "previewrotate")
 	{
-		mouse_cursor = cr_size_all
+		mouse_cursor = !preview.xy_lock ? cr_size_all : cr_size_we
 		preview.xyangle = preview.clickxyangle + (mouse_click_x - mouse_x) * 0.75
-		preview.zangle = preview.clickzangle - (mouse_click_y - mouse_y)
-		preview.zangle = clamp(preview.zangle, -89.9, 89.9)
+		
+		if (!preview.xy_lock)
+		{
+			preview.zangle = preview.clickzangle - (mouse_click_y - mouse_y)
+			preview.zangle = clamp(preview.zangle, -89.9, 89.9)
+		}
+		
 		preview.update = true
 		if (!mouse_left)
 		{
@@ -97,7 +102,7 @@ if (window_focus = string(preview))
 		}
 	}
 	
-	m = (1 - 0.25 * mouse_wheel)
+	m = (1 - 0.25 * mouse_wheel * !preview.xy_lock)
 	if (m != 1)
 	{
 		preview.goalzoom = clamp(preview.goalzoom * m, 0.1, 100)
@@ -632,8 +637,8 @@ with (preview)
 // Button background
 if ((preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER) || playbutton)
 {
-	draw_box(xx + width - 44, yy + height - 44, 36, 36, false, c_background, 1)
-	draw_outline(xx + width - 44, yy + height - 44, 36, 36, 1, c_border, a_border)
+	draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_background, 1)
+	draw_outline(xx + width - 40, yy + height - 40, 32, 32, 1, c_border, a_border, true)
 }
 
 // Particle button
@@ -641,12 +646,12 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 {
 	if (preview.select.pc_spawn_constant)
 	{
-		if (draw_button_icon("previewspawn", xx + width - 40, yy + height - 40, 28, 28, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+		if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 			preview.spawn_active = !preview.spawn_active
 	}
 	else
 	{
-		if (draw_button_icon("previewspawn", xx + width - 40, yy + height - 40, 28, 28, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+		if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 			preview.fire = true
 	}
 }
@@ -654,7 +659,7 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 // Play button
 if (playbutton)
 {
-	if (draw_button_icon("previewplay", xx + width - 40, yy + height - 40, 28, 28, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
+	if (draw_button_icon("previewplay", xx + width - 36, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
 	{
 		if (isplaying)
 		{

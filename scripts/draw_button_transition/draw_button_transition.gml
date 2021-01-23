@@ -15,29 +15,14 @@ if (tl_edit != null)
 else
 	active = false
 
-draw_box(xx, yy, 36, 36, false, press ? c_accent_overlay : c_overlay, a_overlay * (active || mouseon))
-draw_image(transition_texture_map[?transition], 0, xx, yy, 1, 1, active ? c_accent : c_text_secondary, active ? 1 : a_text_secondary)
-
-if (mouseon)
+tipname = transition
+	
+if (tipname != "linear" && tipname != "instant")
 {
-	draw_box_hover(xx, yy, 36, 36, 1)
-	
-	tipname = transition
-	
-	if (tipname != "linear" && tipname != "instant")
-	{
-		tipname = string_replace(tipname, "easeinout", "")
-		tipname = string_replace(tipname, "easein", "")
-		tipname = string_replace(tipname, "easeout", "")
-		tipname = "ease" + tipname
-	}
-	
-	tip_set(text_get("transition" + tipname), xx, yy, 36, 36)
-	
-	mouse_cursor = cr_handpoint
-	
-	if (mouse_left_released)
-		return true				
+	tipname = string_replace(tipname, "easeinout", "")
+	tipname = string_replace(tipname, "easein", "")
+	tipname = string_replace(tipname, "easeout", "")
+	tipname = "ease" + tipname
 }
 
-return false
+return draw_button_icon("menu" + transition, xx, yy, 36, 36, active, null, null, false, "transition" + tipname, transition_texture_map[?transition])

@@ -13,11 +13,11 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 {
 	item = list.item[|i]
 	width = 12 + item.indent
-
+	
 	// Thumbnail(Assuming height of list is 36)
 	if (item.thumbnail)
-		width += 32
-
+		width += 24
+	
 	// Left actions
 	if (item.actions_left != null)
 	{
@@ -27,7 +27,7 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 	
 	// Left icon
 	if (item.icon_left)
-		width += 24
+		width += 24 + 4
 
 	// Text
 	draw_set_font(font_value)
@@ -50,7 +50,7 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 	
 	// Right icon
 	if (item.icon_right)
-		width += 24
+		width += 24 + 4
 	
 	// Caption
 	if (item.caption != "")

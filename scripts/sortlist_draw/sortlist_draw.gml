@@ -9,7 +9,7 @@
 /// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 
 var slist, xx, yy, w, h, select, filter;
-var itemh, colsh, dy;
+var colmouseon, itemh, colsh, dy;
 slist = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -26,37 +26,39 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 	return 0
 
 // Item height
-itemh = 28
+itemh = 24
 
 // Columns
-colsh = 28
+colsh = 24
 
 // Draw filter
 if (filter)
 {
-	if (draw_button_icon("listfilter" + string(slist), xx, yy, 28, 28, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
+	if (draw_button_icon("listfilter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
 	{
-		menu_settings_set(xx, yy, "listfilter" + string(slist), 28)
+		menu_settings_set(xx, yy, "listfilter" + string(slist), 24)
 		settings_menu_script = sortlist_filters_draw
 		settings_menu_sortlist = slist
 		settings_menu_h_max = 256
 	}
 
-	if (settings_menu_name = "listfilter" + string(slist))
-		current_mcroani.holding = true
+	if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
+		current_mcroani.value = true
 }
 
-if (draw_inputbox("listsearch" + string(slist), xx + (36 * filter), yy, w - (36 * filter), 28, text_get("listsearch"), slist.search_tbx, null))
+if (draw_textfield("listsearch" + string(slist), xx + (32 * filter), yy, w - (32 * filter), 24, slist.search_tbx, null, text_get("listsearch"), "none"))
 {
 	slist.search = (slist.search_tbx.text != "")
 	sortlist_update(slist)
 }
 
-h -= 36
-yy += 36
+h -= 32
+yy += 32
 
 if (h < colsh)
 	return 0
+
+colmouseon = app_mouse_box(xx, yy, w, colsh) && content_mouseon
 
 // Dragging
 if (window_busy = "sortlist_resize" && sortlist_resize = slist)
@@ -104,8 +106,8 @@ for (var c = 0; c < slist.columns; c++)
 	icon = null
 	if (slist.column_sort = c)
 		icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
-		
-	if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1)))
+	
+	if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), colmouseon))
 	{
 		if (slist.column_sort = c)
 		{
@@ -125,10 +127,12 @@ for (var c = 0; c < slist.columns; c++)
 }
 
 // Items
-dy = yy + colsh
+dy = (yy + colsh) + 10
+
+draw_divide(xx + 1, dy - 3, w - 2)
 
 // Outline
-draw_outline(xx, yy, w, h, 1, c_border, a_border)
+draw_outline(xx, yy, w, h, 1, c_border, a_border, true)
 
 // List
 draw_set_font(font_value)
@@ -144,10 +148,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 	dw = w - 12 * slist.scroll.needed
 	
 	if (select = value)
-		draw_box(xx, dy, dw, itemh, false, c_overlay, a_overlay)
-	
-	if (i != round(slist.scroll.value / itemh))
-		draw_line_ext(xx, dy, xx + dw, dy, c_border, a_border)
+		draw_box(xx, dy, dw, itemh, false, c_accent_overlay, a_accent_overlay)
 	
 	for (var c = 0; c < slist.columns; c++)
 	{
@@ -182,4 +183,4 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 
 // Scrollbar
 slist.scroll.snap_value = itemh
-scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
+scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (colsh + 10), floor((h - (colsh + 10)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)

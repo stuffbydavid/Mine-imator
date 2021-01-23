@@ -8,34 +8,36 @@ suffix = text_get("particleeditorpersecond")
 dividew = content_width - floor(tab.scrollbar_margin * 12)
 
 // Settings
-setx = dx + dw - 28
-tab_control(28)
+setx = dx + dw - 24
+tab_control(24)
 
-if (draw_button_icon("particleeditorexport", setx, dy, 28, 28, false, icons.EXPORT, null, false, "tooltipparticlesexport"))
+if (draw_button_icon("particleeditorexport", setx, dy, 24, 24, false, icons.EXPORT, null, false, "tooltipparticlesexport"))
 	action_lib_pc_open()
-setx -= 32
+setx -= 28
 
-if (draw_button_icon("particleeditorimport", setx, dy, 28, 28, false, icons.IMPORT_ASSET, null, false, "tooltipparticlesimport"))
+if (draw_button_icon("particleeditorimport", setx, dy, 24, 24, false, icons.IMPORT_ASSET, null, false, "tooltipparticlesimport"))
 	action_lib_pc_open()
 setx -= 4
 
-draw_divide_vertical(setx, dy, 28)
-setx -= 32
+draw_divide_vertical(setx, dy, 24)
+setx -= 28
 
 tip_set_shortcut(setting_key_clear_particles, setting_key_clear_particles_control)
-if (draw_button_icon("particleeditorclear", setx, dy, 28, 28, false, icons.DELETE, null, false, "tooltipparticlesclear"))
+if (draw_button_icon("particleeditorclear", setx, dy, 24, 24, false, icons.DELETE, null, false, "tooltipparticlesclear"))
 	action_lib_pc_clear()
-setx -= 32
+setx -= 28
 
-tip_set_shortcut(setting_key_spawn_particles, setting_key_spawn_particles_control)
 if (!temp_edit.pc_spawn_constant)
 {
-	if (draw_button_icon("particleeditorspawn", setx, dy, 28, 28, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+	tip_set_shortcut(setting_key_spawn_particles, setting_key_spawn_particles_control)
+	
+	if (draw_button_icon("particleeditorspawn", setx, dy, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 		action_lib_pc_spawn()
-	setx -= 32
+	
+	setx -= 28
 }
 
-draw_label_value(dx, dy, setx - dx, 28, text_get("particleeditorcount"), string(instance_number(obj_particle)))
+draw_label_value(dx, dy, setx - dx, 24, text_get("particleeditorcount"), string(instance_number(obj_particle)))
 
 tab_next()
 
@@ -55,7 +57,7 @@ togglebutton_add("particleeditorspawnburst", null, 0, !temp_edit.pc_spawn_consta
 draw_togglebutton("particleeditorspawntype", dx, dy)
 tab_next()
 
-tab_control_inputbox()
+tab_control_dragger()
 draw_dragger("particleeditorspawnamount", dx, dy, 64, temp_edit.pc_spawn_amount, temp_edit.pc_spawn_constant ? 2 : (1 / 5), 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount)
 draw_set_font(font_emphasis)
 
@@ -78,32 +80,34 @@ if (temp_edit.pc_spawn_region_use)
 		case "box":		icon = icons.BOX		break
 	}
 	
-	tab_control_menu(28)
-	draw_button_menu("particleeditorspawnregiontype", e_menu.LIST, dx, dy, dw, 28, temp_edit.pc_spawn_region_type, text_get("particleeditorspawnregiontype" + temp_edit.pc_spawn_region_type), action_lib_pc_spawn_region_type, false, null, icon)
+	tab_control_menu()
+	draw_button_menu("particleeditorspawnregiontype", e_menu.LIST, dx, dy, dw, 24, temp_edit.pc_spawn_region_type, text_get("particleeditorspawnregiontype" + temp_edit.pc_spawn_region_type), action_lib_pc_spawn_region_type, false, null, icon)
 	tab_next()
 	
 	switch (temp_edit.pc_spawn_region_type)
 	{
 		case "sphere":
-			tab_control_inputbox()
+			tab_control_dragger()
 			draw_dragger("particleeditorspawnregionsphereradius", dx, dy, 64, temp_edit.pc_spawn_region_sphere_radius, temp_edit.pc_spawn_region_sphere_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_sphere_radius, action_lib_pc_spawn_region_sphere_radius)
 			tab_next()
 			break
 			
 		case "cube":
-			tab_control_inputbox()
+			tab_control_dragger()
 			draw_dragger("particleeditorspawnregioncubesize", dx, dy, 64, temp_edit.pc_spawn_region_cube_size, temp_edit.pc_spawn_region_cube_size / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_cube_size, action_lib_pc_spawn_region_cube_size)
 			tab_next()
 			break
 			
 		case "box":
-			tab_control(48)
+			
 			axis_edit = X
 			textfield_group_add("particleeditorspawnregionboxxsize", temp_edit.pc_spawn_region_box_size[axis_edit], 200, action_lib_pc_spawn_region_box_size, axis_edit, tab.tbx_spawn_region_box_xsize, null, temp_edit.pc_spawn_region_box_size[axis_edit] / 100)
 			axis_edit = sn
 			textfield_group_add("particleeditorspawnregionboxysize", temp_edit.pc_spawn_region_box_size[axis_edit], 200, action_lib_pc_spawn_region_box_size, axis_edit, tab.tbx_spawn_region_box_ysize, null, temp_edit.pc_spawn_region_box_size[axis_edit] / 100)
 			axis_edit = ud
 			textfield_group_add("particleeditorspawnregionboxzsize", temp_edit.pc_spawn_region_box_size[axis_edit], 200, action_lib_pc_spawn_region_box_size, axis_edit, tab.tbx_spawn_region_box_zsize, null, temp_edit.pc_spawn_region_box_size[axis_edit] / 100)
+			
+			tab_control_textfield_group()
 			draw_textfield_group("particleeditorspawnregionboxsize", dx, dy, dw, null, 0, no_limit, 0, true)
 			tab_next()
 			
@@ -115,37 +119,39 @@ if (temp_edit.pc_spawn_region_use)
 }
 
 // Bounding box
-tab_control_menu(28)
-draw_button_menu("particleeditorboundingbox", e_menu.LIST, dx, dy, dw, 28, temp_edit.pc_bounding_box_type, text_get("particleeditorboundingboxtype" + temp_edit.pc_bounding_box_type), action_lib_pc_bounding_box_type)
+tab_control_menu()
+draw_button_menu("particleeditorboundingbox", e_menu.LIST, dx, dy, dw, 24, temp_edit.pc_bounding_box_type, text_get("particleeditorboundingboxtype" + temp_edit.pc_bounding_box_type), action_lib_pc_bounding_box_type)
 tab_next()
 
 if (temp_edit.pc_bounding_box_type = "ground")
 {
-	tab_control_inputbox()
+	tab_control_dragger()
 	draw_dragger("particleeditorboundingboxground" + (setting_z_is_up ? "z" : "y"), dx, dy, 64, temp_edit.pc_bounding_box_ground_z, 0.1, -no_limit, no_limit, 0, 0, tab.tbx_bounding_box_ground_z, action_lib_pc_bounding_box_ground_z)
 	tab_next()
 }
 else if (temp_edit.pc_bounding_box_type = "custom")
 {
 	// "From" position
-	tab_control(48)
 	axis_edit = X
 	textfield_group_add("particleeditorboundingboxfromx", temp_edit.pc_bounding_box_custom_start[axis_edit], -100, action_lib_pc_bounding_box_custom_start, axis_edit, tab.tbx_bounding_box_custom_xstart, null, 1, -no_limit, temp_edit.pc_bounding_box_custom_end[axis_edit])
 	axis_edit = sn
 	textfield_group_add("particleeditorboundingboxfromy", temp_edit.pc_bounding_box_custom_start[axis_edit], -100, action_lib_pc_bounding_box_custom_start, axis_edit, tab.tbx_bounding_box_custom_ystart, null, 1, -no_limit, temp_edit.pc_bounding_box_custom_end[axis_edit])
 	axis_edit = ud
 	textfield_group_add("particleeditorboundingboxfromz", temp_edit.pc_bounding_box_custom_start[axis_edit], -100, action_lib_pc_bounding_box_custom_start, axis_edit, tab.tbx_bounding_box_custom_zstart, null, 1, -no_limit, temp_edit.pc_bounding_box_custom_end[axis_edit])
+	
+	tab_control_textfield_group()
 	draw_textfield_group("particleeditorboundingboxcustomfrom", dx, dy, dw, 1, 0, no_limit, 0, true)
 	tab_next()
 	
 	// "To" position
-	tab_control(48)
 	axis_edit = X
 	textfield_group_add("particleeditorboundingboxtox", temp_edit.pc_bounding_box_custom_end[axis_edit], 100, action_lib_pc_bounding_box_custom_end, axis_edit, tab.tbx_bounding_box_custom_xend, null, 1, temp_edit.pc_bounding_box_custom_start[axis_edit], no_limit)
 	axis_edit = sn
 	textfield_group_add("particleeditorboundingboxtoy", temp_edit.pc_bounding_box_custom_end[axis_edit], 100, action_lib_pc_bounding_box_custom_end, axis_edit, tab.tbx_bounding_box_custom_yend, null, 1, temp_edit.pc_bounding_box_custom_start[axis_edit], no_limit)
 	axis_edit = ud
 	textfield_group_add("particleeditorboundingboxtoz", temp_edit.pc_bounding_box_custom_end[axis_edit], 100, action_lib_pc_bounding_box_custom_end, axis_edit, tab.tbx_bounding_box_custom_zend, null, 1, temp_edit.pc_bounding_box_custom_start[axis_edit], no_limit)
+	
+	tab_control_textfield_group()
 	draw_textfield_group("particleeditorboundingboxcustomto", dx, dy, dw, 1, 0, no_limit, 0, true)
 	tab_next()
 	
@@ -218,15 +224,15 @@ sortlist_draw(tab.type_list, dx, dy, dw, tab_control_h, ptype_edit, false)
 tab_next()
 
 // Tools
-tab_control(28)
+tab_control(24)
 
-if (draw_button_icon("particleeditortypeadd", dx, dy, 28, 28, false, icons.CREATE, null, false, "tooltipparticlesadd"))
+if (draw_button_icon("particleeditortypeadd", dx, dy, 24, 24, false, icons.CREATE, null, false, "tooltipparticlesadd"))
 	action_lib_pc_type_add()
 
-if (draw_button_icon("particleeditortypeduplicate", dx + 32, dy, 28, 28, false, icons.DUPLICATE, null, ptype_edit = null, "tooltipparticlesduplicate"))
+if (draw_button_icon("particleeditortypeduplicate", dx + 28, dy, 24, 24, false, icons.DUPLICATE, null, ptype_edit = null, "tooltipparticlesduplicate"))
 	action_lib_pc_type_duplicate()
 
-if (draw_button_icon("particleeditortypedelete", dx + (32 * 2), dy, 28, 28, false, icons.DELETE, null, ptype_edit = null, "tooltipparticlesdelete"))
+if (draw_button_icon("particleeditortypedelete", dx + (28 * 2), dy, 24, 24, false, icons.DELETE, null, ptype_edit = null, "tooltipparticlesdelete"))
 	action_lib_pc_type_remove()
 	
 tab_next()
@@ -246,8 +252,8 @@ capwid = text_caption_width("particleeditortypename",
 // Name
 tab.tbx_type_name.text = ptype_edit.name
 
-tab_control_inputbox()
-draw_textfield("particleeditortypename", dx, dy, dw, 28, tab.tbx_type_name, action_lib_pc_type_name, "", "left")
+tab_control_dragger()
+draw_textfield("particleeditortypename", dx, dy, dw, 24, tab.tbx_type_name, action_lib_pc_type_name, "", "left")
 tab_next()
 
 // Spawn rate
@@ -259,7 +265,7 @@ if (ds_list_size(temp_edit.pc_type_list) > 1)
 }
 
 // Template
-tab_control_menu(28)
+tab_control_menu()
 
 text = text_get("particleeditortypespritesheet")
 if (ptype_edit.temp = particle_template)
@@ -267,7 +273,7 @@ if (ptype_edit.temp = particle_template)
 if (ptype_edit.temp)
 	text = ptype_edit.temp.display_name
 
-draw_button_menu("particleeditortypetemp", e_menu.LIST, dx, dy, dw, 28, ptype_edit.temp, text, action_lib_pc_type_temp)
+draw_button_menu("particleeditortypetemp", e_menu.LIST, dx, dy, dw, 24, ptype_edit.temp, text, action_lib_pc_type_temp)
 tab_next()
 
 // Sprite
@@ -300,7 +306,7 @@ if (ptype_edit.temp < 0)
 		tab.tbx_type_sprite_frame_width.suffix = text_get("particleeditorpixels")
 		tab.tbx_type_sprite_frame_height.suffix = text_get("particleeditorpixels")
 		
-		tab_control(48)
+		tab_control_textfield_group()
 		textfield_group_add("particleeditortypespriteframewidth", ptype_edit.sprite_frame_width, 8, action_lib_pc_type_sprite_frame_width, axis_edit, tab.tbx_type_sprite_frame_width)
 		textfield_group_add("particleeditortypespriteframeheight", ptype_edit.sprite_frame_height, 8, action_lib_pc_type_sprite_frame_height, axis_edit, tab.tbx_type_sprite_frame_height)
 		draw_textfield_group("particleeditortypespriteframesize", dx, dy, dw, 1 / 10, 1, no_limit, 1, true)
@@ -317,7 +323,7 @@ if (ptype_edit.temp < 0)
 		caption = text_get("particleeditortypespriteframeframes")
 		capwid = string_width(caption) + 8
 		
-		tab_control_inputbox()
+		tab_control_dragger()
 		draw_label(caption, dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 		
 		draw_dragger("particleeditortypespriteframestart", dx + capwid, dy, 48, ptype_edit.sprite_frame_start, 1 / 10, 0, no_limit, 7, 1, tab.tbx_type_sprite_frame_start, action_lib_pc_type_sprite_frame_start, null, false)
@@ -339,8 +345,8 @@ if (ptype_edit.temp < 0)
 		tab_next()
 		
 		// Template
-		tab_control_menu(28)
-		draw_button_menu("particleeditortypespritetemplate", e_menu.LIST, dx, dy, dw, 28, ptype_edit.sprite_template, text_get("particleeditortypespritetemplate" + ptype_edit.sprite_template), action_lib_pc_type_sprite_template, false)
+		tab_control_menu()
+		draw_button_menu("particleeditortypespritetemplate", e_menu.LIST, dx, dy, dw, 24, ptype_edit.sprite_template, text_get("particleeditortypespritetemplate" + ptype_edit.sprite_template), action_lib_pc_type_sprite_template, false)
 		tab_next()
 		
 		// Still frame
@@ -409,11 +415,13 @@ tab_control_switch()
 if (draw_button_collapse("particleeditortypeangle", !ptype_edit.angle_collapse, null, false))
 	ptype_edit.angle_collapse = !ptype_edit.angle_collapse
 
-draw_label(text_get("particleeditortypeangle"), dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("particleeditortypeangle"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
 if (!ptype_edit.angle_collapse)
 {
+	tab_collapse_start()
+	
 	capwid = (ptype_edit.angle_extend ? text_caption_width("particleeditortypeanglex", "particleeditortypeangley", "particleeditortypeanglez", 
 														  "particleeditortypeanglespeed", "particleeditortypeanglespeedadd", "particleeditortypeanglespeedmul") :
 									 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglespeed", "particleeditortypeanglespeedadd",
@@ -481,11 +489,13 @@ tab_control_switch()
 if (draw_button_collapse("particleeditortypespeed", !ptype_edit.spd_collapse, null, false))
 	ptype_edit.spd_collapse = !ptype_edit.spd_collapse
 
-draw_label(text_get("particleeditortypespeed"), dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("particleeditortypespeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
 if (!ptype_edit.spd_collapse)
 {
+	tab_collapse_start()
+	
 	capwid = (ptype_edit.spd_extend ? text_caption_width("particleeditortypespeedx", "particleeditortypespeedy", "particleeditortypespeedz", 
 															"particleeditortypespeedxadd", "particleeditortypespeedyadd", "particleeditortypespeedzadd", 
 															"particleeditortypespeedxmul", "particleeditortypespeedymul", "particleeditortypespeedzmul") :
@@ -581,7 +591,7 @@ if (!ptype_edit.spd_collapse)
 			capwid, true, suffix)
 	}
 	
-	dy += 8
+	tab_collapse_end()
 }
 
 #endregion
@@ -604,11 +614,13 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 		if (draw_button_collapse("particleeditortyperotationinitial", !ptype_edit.rot_collapse, null, false))
 			ptype_edit.rot_collapse = !ptype_edit.rot_collapse
 
-		draw_label(text_get("particleeditortyperotationinitial"), dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(text_get("particleeditortyperotationinitial"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 		tab_next()
 		
 		if (!ptype_edit.rot_collapse)
 		{
+			tab_collapse_start()
+			
 			// Rotation
 			capwid = (ptype_edit.rot_extend ? text_caption_width("particleeditortyperotationx", "particleeditortyperotationy", "particleeditortyperotationz") :
 												 text_caption_width("particleeditortyperotationxyz"))
@@ -654,11 +666,13 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 		if (draw_button_collapse("particleeditortyperotationspeed", !ptype_edit.rot_spd_collapse, null, false))
 			ptype_edit.rot_spd_collapse = !ptype_edit.rot_spd_collapse
 		
-		draw_label(text_get("particleeditortyperotationspeed"), dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(text_get("particleeditortyperotationspeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 		tab_next()
 		
 		if (!ptype_edit.rot_spd_collapse)
 		{
+			tab_collapse_start()
+			
 			capwid = (ptype_edit.rot_spd_extend ? text_caption_width("particleeditortyperotationspeedx", "particleeditortyperotationspeedy", "particleeditortyperotationspeedz", 
 																		"particleeditortyperotationspeedxadd", "particleeditortyperotationspeedyadd", "particleeditortyperotationspeedzadd", 
 																		"particleeditortyperotationspeedxmul", "particleeditortyperotationspeedymul", "particleeditortyperotationspeedzmul") :
@@ -752,7 +766,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 					capwid, true, suffix)
 			}
 			
-			dy += 8
+			tab_collapse_end()
 		}
 	}
 
@@ -775,7 +789,6 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 			array(tab.tbx_type_sprite_angle_add, tab.tbx_type_sprite_angle_add_random), 
 			array(action_lib_pc_type_sprite_angle_add, action_lib_pc_type_sprite_angle_add_israndom, action_lib_pc_type_sprite_angle_add_random_min, action_lib_pc_type_sprite_angle_add_random_max), 
 			capwid, true, suffix)
-		dy += 10
 	}
 }
 #endregion
@@ -821,16 +834,16 @@ tab_next()
 tab_control_meter()
 
 // Randomize alpha
-draw_button_icon("particleeditorrandomalpha", dx + dw - 28, dy - 7, 28, 28, ptype_edit.alpha_israndom, icons.RANDOM, action_lib_pc_type_alpha_israndom, false, "tooltipparticlesrandom")
+draw_button_icon("particleeditorrandomalpha", dx + dw - 24, dy, 24, 24, ptype_edit.alpha_israndom, icons.RANDOM, action_lib_pc_type_alpha_israndom, false, "tooltipparticlesrandom")
 
 if (ptype_edit.alpha_israndom)
-	draw_meter_range("particleeditortypealpha", dx, dy, dw - 36, 0, 100, 1, round(ptype_edit.alpha_random_min * 100), round(ptype_edit.alpha_random_max * 100), 0, 100, tab.tbx_type_alpha, tab.tbx_type_alpha_random, action_lib_pc_type_alpha_random_min, action_lib_pc_type_alpha_random_max)
+	draw_meter_range("particleeditortypeopacity", dx, dy, dw - 36, 0, 100, 1, round(ptype_edit.alpha_random_min * 100), round(ptype_edit.alpha_random_max * 100), 0, 100, tab.tbx_type_alpha, tab.tbx_type_alpha_random, action_lib_pc_type_alpha_random_min, action_lib_pc_type_alpha_random_max)
 else
-	draw_meter("particleeditortypealpha", dx, dy, dw - 36, round(ptype_edit.alpha * 100), 60, 0, 100, 100, 1, tab.tbx_type_alpha, action_lib_pc_type_alpha)
+	draw_meter("particleeditortypeopacity", dx, dy, dw - 36, round(ptype_edit.alpha * 100), 60, 0, 100, 100, 1, tab.tbx_type_alpha, action_lib_pc_type_alpha)
 tab_next()
 
 // Alpha change
-tab_template_editor_particles_value("particleeditortypealphaadd", 
+tab_template_editor_particles_value("particleeditortypeopacityadd", 
 	ptype_edit.alpha_add * 100, ptype_edit.alpha_add_israndom, ptype_edit.alpha_add_random_min * 100, ptype_edit.alpha_add_random_max * 100, 
 	1 / 2, -no_limit, no_limit, array(0, -10, -5), 0, 
 	array(tab.tbx_type_alpha_add, tab.tbx_type_alpha_add_random), 
@@ -839,8 +852,9 @@ tab_template_editor_particles_value("particleeditortypealphaadd",
 
 
 // Color
-var name, wid;
+var name, wid, colwid;
 wid = (dw - 36)
+colwid = floor((wid- 8)/2)
 
 // Color mix
 tab_control_switch()
@@ -855,14 +869,14 @@ if (ptype_edit.color_mix_enabled)
 }
 
 tab_control_color()
-draw_button_icon("particleeditorrandomcolor", dx + dw - 28, dy, 28, 28, ptype_edit.color_israndom, icons.RANDOM, action_lib_pc_type_color_israndom, false, "tooltipparticlesrandom")
+draw_button_icon("particleeditorrandomcolor", dx + dw - 24, dy + (tab_control_h/2) - 12, 24, 24, ptype_edit.color_israndom, icons.RANDOM, action_lib_pc_type_color_israndom, false, "tooltipparticlesrandom")
 if (ptype_edit.color_israndom)
 {
 	name = ptype_edit.color_mix_enabled ? "particleeditortypecolorstartcolor1" : "particleeditortypecolorcolor1"
-	draw_button_color(name, dx, dy, floor(wid/2), ptype_edit.color_random_start, c_gray, false, action_lib_pc_type_color_random_start, tab.tbx_type_color_random_start)
+	draw_button_color(name, dx, dy, colwid, ptype_edit.color_random_start, c_gray, false, action_lib_pc_type_color_random_start, tab.tbx_type_color_random_start)
 	
 	name = ptype_edit.color_mix_enabled ? "particleeditortypecolorstartcolor2" : "particleeditortypecolorcolor2"
-	draw_button_color(name, dx + floor(wid/2), dy, floor(wid/2), ptype_edit.color_random_end, c_white, false, action_lib_pc_type_color_random_end, tab.tbx_type_color_random_end)
+	draw_button_color(name, dx + colwid + 8, dy, colwid, ptype_edit.color_random_end, c_white, false, action_lib_pc_type_color_random_end, tab.tbx_type_color_random_end)
 }
 else
 {
@@ -878,11 +892,11 @@ if (ptype_edit.color_mix_enabled)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_icon("particleeditorrandommixcolor", dx + dw - 28, dy, 28, 28, ptype_edit.color_mix_israndom, icons.RANDOM, action_lib_pc_type_color_mix_israndom, false, "tooltipparticlesrandom")
+	draw_button_icon("particleeditorrandommixcolor", dx + dw - 24, dy + (tab_control_h/2) - 12, 24, 24, ptype_edit.color_mix_israndom, icons.RANDOM, action_lib_pc_type_color_mix_israndom, false, "tooltipparticlesrandom")
 	if (ptype_edit.color_mix_israndom)
 	{
-		draw_button_color("particleeditortypecolorendcolor1", dx, dy, floor(wid/2), ptype_edit.color_mix_random_start, c_gray, false, action_lib_pc_type_color_mix_random_start, tab.tbx_type_color_mix_start)
-		draw_button_color("particleeditortypecolorendcolor2", dx + floor(wid/2), dy, floor(wid/2), ptype_edit.color_mix_random_end, c_white, false, action_lib_pc_type_color_mix_random_end, tab.tbx_type_color_mix_end)
+		draw_button_color("particleeditortypecolorendcolor1", dx, dy, colwid, ptype_edit.color_mix_random_start, c_gray, false, action_lib_pc_type_color_mix_random_start, tab.tbx_type_color_mix_start)
+		draw_button_color("particleeditortypecolorendcolor2", dx + colwid + 8, dy, colwid, ptype_edit.color_mix_random_end, c_white, false, action_lib_pc_type_color_mix_random_end, tab.tbx_type_color_mix_end)
 	}
 	else
 		draw_button_color("particleeditortypecolorendcolor", dx, dy, wid, ptype_edit.color_mix, c_black, false, action_lib_pc_type_color_mix, tab.tbx_type_color_mix)
@@ -930,7 +944,7 @@ if (ptype_edit.bounding_box)
 	
 	if (ptype_edit.bounce)
 	{
-		tab_control_inputbox()
+		tab_control_dragger()
 		draw_dragger("particleeditortypebouncefactor", dx, dy, 64, ptype_edit.bounce_factor, 1 / 100, 0, no_limit, 0.5, 0, tab.tbx_type_bounce_factor, action_lib_pc_type_bounce_factor)
 		tab_next()
 	}

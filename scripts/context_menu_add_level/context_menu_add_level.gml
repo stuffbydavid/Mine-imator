@@ -24,13 +24,14 @@ level.name = name
 level.level_x = xx
 level.level_y = yy
 level.level = context_menu_level_amount
+level.ani = 0
 
 // Calculate level size
 if (script = null)
 {
 	level.level_list = list_init_context_menu(name)
 	level.level_width = level.level_list.width + 8
-	level.level_height = (ds_list_size(level.level_list.item) * 28) + 8
+	level.level_height = (ds_list_size(level.level_list.item) * 24) + 8
 	level.script = null
 	
 	for (var i = 0; i < ds_list_size(level.level_list.item); i++)
@@ -55,7 +56,7 @@ if (context_menu_level_amount > 0)
 {
 	// TODO: Move next to previous menu
 	if ((level.level_x + level.level_width + context_menu_level[|0].level_width) < window_width)
-		level.level_x += (context_menu_level[|0].level_width + 1)
+		level.level_x += (context_menu_level[|0].level_width)
 	else
 		level.level_x -= (level.level_width + 1)
 	

@@ -63,24 +63,24 @@ if (!base)
 	// Remove layer
 	if (mouseon && !dragging)
 	{
-		if (draw_button_icon("bannereditorremovelayer" + string(index), actionx - 28, yy + height/2 - 14, 28, 28, false, icons.DELETE))
+		if (draw_button_icon("bannereditorremovelayer" + string(index), actionx - 24, yy + height/2 - 14, 24, 24, false, icons.DELETE))
 			popup_bannereditor.layer_remove = index
 		
-		actionx -= 32
+		actionx -= 28
 	}
 }
 
 // Edit layer
 if (mouseon && !dragging)
 {
-	if (draw_button_icon(editname, actionx - 28, yy + height/2 - 14, 28, 28, settings_menu_name = editname, icons.EDIT))
+	if (draw_button_icon(editname, actionx - 24, yy + height/2 - 14, 24, 24, settings_menu_name = editname, icons.EDIT))
 	{
-		menu_settings_set(actionx - 28, yy + height/2 + 14, editname, 28)
+		menu_settings_set(actionx - 24, yy + height/2 - 14, editname, 24)
 		settings_menu_script = popup_bannereditor_edit_layer
 		settings_menu_busy_prev = "popup" + popup.name
 		popup_bannereditor.layer_edit = index
 	}
 	
-	if (settings_menu_name = editname)
-		current_mcroani.holding = true	
+	if (settings_menu_name = editname && settings_menu_ani_type != "hide")
+		current_mcroani.value = true	
 }

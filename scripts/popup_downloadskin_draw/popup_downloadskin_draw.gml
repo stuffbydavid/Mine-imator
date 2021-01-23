@@ -1,13 +1,13 @@
 /// popup_downloadskin_draw()
 
 // Username input
-tab_control(48)
-draw_textfield("downloadskinusername", dx, dy, dw - 32, 28, popup.tbx_username, null, "", "top")
+tab_control_textfield()
+draw_textfield("downloadskinusername", dx, dy, dw - 28, 24, popup.tbx_username, null)
 
 // Download button
 var download = keyboard_check_pressed(vk_enter);
 
-if (draw_button_icon("downloadskindownload", dx + dw - 24, dy + 20, 28, 28, false, icons.DOWNLOAD_SKIN, null, popup.tbx_username.text = "" || http_downloadskin != null, "tooltipdownloadskin"))
+if (draw_button_icon("downloadskindownload", dx + dw - 24, dy + 18, 24, 24, false, icons.DOWNLOAD_SKIN, null, popup.tbx_username.text = "" || http_downloadskin != null, "tooltipdownloadskin"))
 	download = true
 
 if (download && (popup.tbx_username.text != "" && http_downloadskin = null))
@@ -38,15 +38,19 @@ else if (popup.fail_message != "")
 tab_next()
 
 // Skin preview
-dx = content_x + content_width / 2 - 64
-draw_box(dx, dy, 128, 128, false, c_background_secondary, 1)
+var previewx = content_x + content_width / 2 - 64;
+
+tab_control(128)
+draw_box(previewx, dy, 128, 128, false, c_background_secondary, 1)
 if (popup.texture)
-	draw_texture(popup.texture, dx, dy, 2, 2)
+	draw_texture(popup.texture, previewx, dy, 2, 2)
+tab_next()
 
 // Done
-dx = content_x + 16
-if (draw_button_primary("downloadskindone", dx, dy_start + dh - 28, null, null, null, fa_right, !popup.texture))
+tab_control_button_label()
+if (draw_button_label("downloadskindone", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT, !popup.texture))
 {
 	popup_close()
 	script_execute(popup.value_script, e_option.DOWNLOAD_SKIN_DONE)
 }
+tab_next()

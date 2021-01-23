@@ -1,4 +1,4 @@
-/// list_item_draw(item, x, y, width, height, [toggled, [margin, [xoffset]]])
+/// list_item_draw(item, x, y, width, height, [toggled, [margin, [xoffset, [animation]]]])
 /// @arg item
 /// @arg x
 /// @arg y
@@ -6,20 +6,22 @@
 /// @arg height
 /// @arg [toggled
 /// @arg [margin
-/// @arg [xoffset]]]
+/// @arg [xoffset
+/// @arg [animation]]]
 /// @desc Draws a list item with icons/buttons
 
-var item, xx, yy, width, height, toggled, margin, xoffset, components, name;
-var leftp, rightp, middley, mousehover, hover, textcolor, textalpha, iconcolor, iconalpha;
+var item, xx, yy, width, height, toggled, margin, xoffset, components, animation, name;
+var leftp, rightp, middley, mousehover, hover, scissor;
 item = argument[0]
 xx = argument[1]
 yy = argument[2]
 width = argument[3]
 height = argument[4]
 toggled = false
-margin = 12
+margin = 0
 xoffset = 0
 components = 0
+animation = true
 
 if (item.list != null && item.list.get_name)
 	name = text_get(item.name)
@@ -30,10 +32,15 @@ if (argument_count > 5)
 	toggled = argument[5]
 
 if (argument_count > 6)
-	margin = argument[6]
+	if (argument[6] != null)
+		margin = argument[6]
 
 if (argument_count > 7)
-	xoffset = argument[7]
+	if (argument[7] != null)
+		xoffset = argument[7]
+
+if (argument_count > 8)
+	animation = argument[8]
 
 if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 	return 0
@@ -45,21 +52,33 @@ item.draw_x = xx
 item.draw_y = yy
 
 if (item.divider)
-	draw_divide(xx, yy - 4, width - 1)
+	draw_divide(xx + 4, yy - 4, width - 8)
 
-if (item.disabled)
+var textcolor, textalpha, iconcolor, iconalpha, backcolor, backalpha, focus;
+
+if (animation)
 {
-	textcolor = c_text_tertiary
-	textalpha = a_text_tertiary
-	iconcolor = c_text_tertiary
-	iconalpha = a_text_tertiary
-}
-else if ((toggled || (item.hover && mouse_left) || (item.hover && mouse_left_released)) && item.interact)
-{
-	textcolor = c_accent
-	textalpha = a_accent
-	iconcolor = c_accent
-	iconalpha = a_accent
+	microani_set(string(item), "", item.hover, item.hover && mouse_left && item.interact, toggled && item.interact, item.disabled)
+	microani_update(item.hover, item.hover && mouse_left && item.interact, toggled && item.interact, item.disabled)
+
+	focus = max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS])
+
+	textcolor = merge_color(c_text_main, c_accent, focus)
+	textcolor = merge_color(textcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	textalpha = lerp(a_text_main, a_accent, focus)
+	textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+	iconcolor = merge_color(c_text_tertiary, c_accent, focus)
+	iconcolor = merge_color(iconcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	iconalpha = lerp(a_text_tertiary, a_accent, focus)
+	iconalpha = lerp(iconalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+	backcolor = merge_color(c_overlay, c_accent_overlay, focus)
+	backalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+	backalpha = lerp(backalpha, a_accent_overlay, focus)
+
+	draw_box(xx, yy, width, height, false, backcolor, backalpha)
+	draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.PRESS])
 }
 else
 {
@@ -67,12 +86,9 @@ else
 	textalpha = a_text_main
 	iconcolor = c_text_tertiary
 	iconalpha = a_text_tertiary
-}
-
-if (item.hover && mouse_left && item.interact)
-	draw_box(xx, yy, width, height, false, c_accent_overlay, a_accent_overlay)
-else if ((item.hover || toggled || (item.hover && mouse_left_released)) && item.interact)
-	draw_box(xx, yy, width, height, false, c_overlay, a_overlay)
+	backcolor = c_black
+	backalpha = 0
+} 
 
 leftp = margin
 rightp = margin
@@ -82,12 +98,23 @@ hover = mousehover
 
 leftp += (item.indent + xoffset)
 
+if (leftp < 0)
+{
+	scissor = true
+	scissor_start(xx, yy, width, height)
+}
+else
+	scissor = false
+
 // Thumbnail
+var imgsize = height - 8;
+
 if (item.thumbnail)
 {
-	var thumbsize = height - 8;
-	draw_image(item.thumbnail, 0, xx + leftp, middley - thumbsize/2, thumbsize / texture_width(item.thumbnail), thumbsize / texture_height(item.thumbnail), item.thumbnail_blend, item.thumbnail_alpha)
-	leftp += thumbsize
+	leftp += 4
+	
+	draw_image(item.thumbnail, 0, xx + leftp, middley - imgsize/2, imgsize / texture_width(item.thumbnail), imgsize / texture_height(item.thumbnail), item.thumbnail_blend, item.thumbnail_alpha)
+	leftp += imgsize
 	components++
 }
 
@@ -108,17 +135,22 @@ if (item.actions_left != null)
 }
 
 // Left icon
-if (item.icon_left != null)
+if (item.icon_left != null && item.icon_left != -1)
 {
-	leftp += 4 * (components > 0)
+	var iconsize = max(imgsize, 24);
 	
-	if (item.icon_left != -1)
-		draw_image(spr_icons, item.icon_left, xx + leftp + 10, middley, 1, 1, iconcolor, iconalpha)
+	if (iconsize > 24)
+		leftp += 4
 	
-	leftp += 20
+	draw_image(spr_icons, item.icon_left, xx + leftp + iconsize/2, middley, 1, 1, iconcolor, iconalpha)
+	leftp += iconsize
+	components++
 }
 
-components = 0
+if (components = 0)
+	leftp += 6
+else
+	leftp += 4
 
 // Right actions
 if (item.actions_right != null)
@@ -142,9 +174,20 @@ if (item.icon_right != null)
 	rightp += 4 * (components > 0)
 	
 	if (item.icon_right != -1)
-		draw_image(spr_icons, item.icon_right, (xx + width - rightp) - 10, middley, 1, 1, iconcolor, iconalpha)
+		draw_image(spr_icons, item.icon_right, (xx + width - rightp) - 12, middley, 1, 1, iconcolor, iconalpha)
 	
-	rightp += 20
+	rightp += 24
+	components++
+}
+
+// Toggled tick
+if (toggled)
+{
+	rightp += 4 * (components > 0)
+	
+	draw_image(spr_icons, icons.CHECK, (xx + width - rightp) - 12, middley, 1, 1, iconcolor, iconalpha)
+	
+	rightp += 24
 	components++
 }
 
@@ -158,14 +201,19 @@ if (item.caption != "")
 	rightp += string_width(item.caption)
 }
 
-if (leftp > (margin + item.indent + xoffset))
-	leftp += 12
+//if ((leftp > (margin + item.indent + xoffset)))
+//	leftp += 12
+//else
+//	leftp += 4
 
 // Text
 draw_set_font(font_value)
 
 var textwidth = width - (leftp + rightp) - 8;
 draw_label(string_limit(name, textwidth), xx + leftp, middley, fa_left, fa_middle, textcolor, textalpha)
+
+if (scissor)
+	scissor_done()
 
 item.hover = hover
 if (hover && item.interact)

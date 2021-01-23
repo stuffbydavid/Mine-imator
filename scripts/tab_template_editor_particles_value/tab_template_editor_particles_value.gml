@@ -53,17 +53,17 @@ wid = 64
 if (capwid = null)
 	capwid = (caption != "" ? string_width(caption) + 8 : 0) * showcaption
 
-tab_control(28)
-draw_button_icon("particleeditorrandom" + name, dx + dw - 28, dy, 28, 28, israndom, icons.RANDOM, scripts[1], false, "tooltipparticlesrandom")
+tab_control_dragger()
+draw_button_icon("particleeditorrandom" + name, dx + dw - 24, dy, 24, 24, israndom, icons.RANDOM, scripts[1], false, "tooltipparticlesrandom")
 
 if (israndom)
 {
 	if (showcaption)
 	{
-		draw_label(caption, dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(caption, dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 		tab_next(false)
 		
-		tab_control(28)
+		tab_control_dragger()
 		capwid = 0
 	}
 	
@@ -71,7 +71,7 @@ if (israndom)
 	capwid += wid + 8
 	
 	draw_set_font(font_value)
-	draw_label(text_get("particleeditorto"), dx + capwid, dy + 14, fa_left, fa_middle, c_text_main, a_text_main)
+	draw_label(text_get("particleeditorto"), dx + capwid, dy + 12, fa_left, fa_middle, c_text_main, a_text_main)
 	capwid += string_width(text_get("particleeditorto")) + 8
 	
 	draw_dragger(name + "max", dx + capwid, dy, wid, randommax, mul, randommin, maxval, def[2], snapval, tbx[1], scripts[3], null, false)
@@ -84,6 +84,6 @@ else
 }
 
 if (suffix != "")
-	draw_label(suffix, dx + capwid, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+	draw_label(suffix, dx + capwid, dy + 12, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 
 tab_next()

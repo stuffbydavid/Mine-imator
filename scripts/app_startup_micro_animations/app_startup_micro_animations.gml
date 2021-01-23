@@ -4,7 +4,7 @@
 globalvar mcroani_arr, current_mcroani;
 globalvar microanis, microani_hover, microani_click, microani_value;
 
-mcroani_arr = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+mcroani_arr = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 current_mcroani = null
 
 microanis = ds_map_create()
@@ -22,7 +22,6 @@ enum e_mcroani
 	PRESS_LINEAR,
 	ACTIVE_LINEAR,
 	DISABLED_LINEAR,
-	CUSTOM_LINEAR
+	CUSTOM_LINEAR,
+	GOAL_EASE
 }
-
-radiobutton_animation_group = null

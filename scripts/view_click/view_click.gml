@@ -29,7 +29,7 @@ if (tl > 0)
 	if (!tl_edit && !keyboard_check(vk_control))
 		while (tl.parent != app && !tl.parent.lock && tl_update_list_filter(tl.parent))
 			tl = tl.parent
-			
+	
 	// Select
 	action_tl_select(tl)
 	
@@ -41,19 +41,19 @@ if (tl > 0)
 		for (pos = 0; pos < ds_list_size(tree_visible_list); pos++)
 			if (tree_visible_list[|pos] = tl)
 				break
-				
+		
 		if (pos < timeline_list_first || pos >= timeline_list_first + timeline_list_visible)
 		{
 			// Set scrollbar
 			var newval = pos - floor(timeline_list_visible / 2);
 			newval = min(newval, ds_list_size(tree_visible_list) - timeline_list_visible)
 			newval = max(0, newval)
-			timeline.ver_scroll.value = newval * timeline.ver_scroll.snap_value
+			timeline.ver_scroll.value_goal = newval * timeline.ver_scroll.snap_value
 		}
 	}
 }
 else
 	if (!keyboard_check(vk_shift))
 		action_tl_deselect_all()
-	
+
 surface_free(surf)

@@ -13,18 +13,21 @@ dy += 126
 
 // Upgrade link
 draw_set_font(font_value_bold)
-draw_button_text("mineimator.com/upgrade", dx + dw/2 - string_width("mineimator.com/upgrade")/2, dy, open_url, "http://mineimator.com/upgrade", "http://mineimator.com/upgrade", font_value_bold)
+draw_button_text("mineimator.com/upgrade", floor(dx + dw/2 - string_width("mineimator.com/upgrade")/2), dy, open_url, "http://mineimator.com/upgrade", "http://mineimator.com/upgrade", font_value_bold)
 
 dy += 18
 
 // Upgrade key textbox
 var wid = 196;
-draw_inputbox("upgrade", dx + dw/2 - wid/2, dy, wid, 48, "XXXXXXXX", popup_upgrade.tbx_key, null, false, false, font_upgrade, true)
 
-if (draw_button_icon("upgradekeypaste", dx + dw/2 + wid/2 + 8, dy + 10, 28, 28, false, icons.PASTE, null, false, "tooltippastekey"))
+tab_control(48)
+draw_inputbox("upgrade", dx + dw/2 - wid/2, dy, wid, 48, "XXXXXXXX", popup_upgrade.tbx_key, null, false, false, font_upgrade, e_inputbox.BIG)
+draw_box_hover(dx + dw/2 - wid/2, dy, wid, 48, mcroani_arr[e_mcroani.PRESS])
+
+if (draw_button_icon("upgradekeypaste", dx + dw/2 + wid/2 + 8, dy + 10, 24, 24, false, icons.PASTE, null, false, "tooltippastekey"))
 	popup_upgrade.tbx_key.text = string(clipboard_get_text())
 
-dy += 56
+tab_next()
 
 if (popup_upgrade.warntext != "")
 {
@@ -33,7 +36,8 @@ if (popup_upgrade.warntext != "")
 	tab_next()
 }
 
-if (draw_button_primary("upgradecontinue", dx, dy_start + dh - 36, null, null, icons.UPGRADE, fa_right))
+tab_control_button_label()
+if (draw_button_label("upgradecontinue", dx + dw, dy_start + dh - 32, null, icons.UPGRADE, e_button.PRIMARY, null, e_anchor.RIGHT))
 {
 	var upgrade = trial_upgrade(popup_upgrade.tbx_key.text);
 	
@@ -47,3 +51,4 @@ if (draw_button_primary("upgradecontinue", dx, dy_start + dh - 36, null, null, i
 	else
 		popup_upgrade.warntext = "errorupgrade"
 }
+tab_next()

@@ -27,7 +27,7 @@ if (settings_menu_name = "")
 
 var settingsmenuease = ease(((settings_menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), settings_menu_ani);
 
-content_x = settings_menu_x - (ceil(settings_menu_w/2) * settings_menu_primary)
+content_x = settings_menu_x - (round(settings_menu_w/2) * settings_menu_primary)
 content_y = settings_menu_y
 content_width = settings_menu_w
 content_height = (settings_menu_script ? settings_menu_h : (28 * settings_menu_amount))
@@ -37,6 +37,8 @@ if (settings_menu_above)
 	content_y = ((content_y - content_height) + 16) - (16 * settingsmenuease)
 else
 	content_y = ((content_y + settings_menu_button_h) - 16) + (16 * settingsmenuease)
+
+content_y = round(content_y)
 
 if (window_busy = "settingsmenu")
 	window_busy = ""
@@ -49,9 +51,8 @@ else
 	draw_set_alpha(settingsmenuease)
 
 draw_dropshadow(content_x, content_y, content_width, content_height, c_black, settingsmenuease)
-draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border * settingsmenuease)
-
 draw_box(content_x, content_y, content_width, content_height, false, c_background, 1)
+draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border * settingsmenuease, true)
 
 if (settings_menu_script)
 {
@@ -124,7 +125,7 @@ if (settings_menu_script)
 }
 else
 {
-	if (mouse_left_pressed)
+	if (mouse_left_released && !context_menu_mouseon && (menu_name = "") && (window_focus = ""))
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"

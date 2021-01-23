@@ -1,12 +1,14 @@
-/// new_transition_texture_map(width, height, padding)
+/// new_transition_texture_map(width, height, padding, center)
 /// @arg width
 /// @arg height
 /// @arg padding
+/// @arg center
 
-var w, h, wp, hp, padding, surf, surfaa, map, quality, aa;
+var w, h, wp, hp, padding, center, surf, surfaa, map, quality, aa;
 w = argument0
 h = argument1
 padding = argument2
+center = argument3
 
 map = ds_map_create()
 aa = 4
@@ -48,6 +50,9 @@ for (var t = 0; t < ds_list_size(transition_list); t++)
 	gpu_set_tex_filter(false)
 	
 	map[?transition_list[|t]] = texture_surface(surfaa)
+	
+	if (center)
+		sprite_set_offset(map[?transition_list[|t]], w/2, h/2)
 }
 
 surface_free(surf)

@@ -1,4 +1,4 @@
-/// draw_inputbox(name, x, y, width, height, placeholder, textbox, script, [disabled, [error, [font, [center]]]])
+/// draw_inputbox(name, x, y, width, height, placeholder, textbox, script, [disabled, [error, [font, [type, [alpha]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -10,9 +10,10 @@
 /// @arg [disabled
 /// @arg [error
 /// @arg [font
-/// @arg [center]]]]
+/// @arg [type
+/// @arg [alpha]]]]]
 
-var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, center;
+var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha;
 var update;
 
 inputname = argument[0]
@@ -26,7 +27,8 @@ script = argument[7]
 disabled = false
 err = false
 font = font_value
-center = false
+type = e_inputbox.LEFT
+alpha = 1
 
 if (argument_count > 8)
 	disabled = argument[8]
@@ -38,7 +40,10 @@ if (argument_count > 10)
 	font = argument[10]
 
 if (argument_count > 11)
-	center = argument[11]
+	type = argument[11]
+
+if (argument_count > 12)
+	alpha = argument[12]
 
 capwid = string_width(text_get(inputname))
 padding = (h - 22) / 2
@@ -54,19 +59,20 @@ microani_set(string(tbx) + inputname, script, mouseon || window_focus = string(t
 // Field background
 var bordercolor, borderalpha;
 bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
-borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
 bordercolor = merge_color(bordercolor, c_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
-borderalpha = lerp(borderalpha, a_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
 bordercolor = merge_color(bordercolor, c_border, mcroani_arr[e_mcroani.DISABLED])
-borderalpha = lerp(borderalpha, a_border, mcroani_arr[e_mcroani.DISABLED])
+borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+borderalpha = lerp(borderalpha, a_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
+borderalpha = lerp(borderalpha, a_border, mcroani_arr[e_mcroani.DISABLED]) * alpha
 
 if (err)
 {
 	bordercolor = c_error
-	borderalpha = 1
+	borderalpha = 1 * alpha
 }
 
-draw_outline(xx + 1, yy + 1, w - 2, h - 2, 1, bordercolor, borderalpha)
+draw_outline(xx, yy, w, h, 1, bordercolor, borderalpha, true)
+draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])
 
 // Error icon
 if (err)
@@ -85,33 +91,59 @@ if (string_contains(inputname, "search"))
 // Textbox
 draw_set_font(font)
 
-var tbxh, textx, texty;
-tbxh = max(19, h - 9)
-textx = (center ? xx + w/2 : xx + 10)
-texty = (center ? yy + h/2 : yy + floor(h/2) - ceil(tbxh/2))
+var tbxh, placeholderx, textx, texty, textvalign, texthalign;
+tbxh = max(string_height(" "), h - 9)
+
+if (type = e_inputbox.LEFT || type = e_inputbox.RIGHT)
+{
+	textx = xx + 8
+	texty = yy + floor(h/2) - ceil(tbxh/2)
+	texthalign = fa_left
+	textvalign = fa_top
+	placeholderx = textx
+	
+	if (type = e_inputbox.RIGHT)
+	{
+		placeholderx = xx + w - 8
+		texthalign = fa_right
+	}
+}
+else
+{
+	textx = xx + w/2
+	texty = yy + 38
+	texthalign = fa_center
+	textvalign = fa_bottom
+	
+	placeholderx = textx
+}
+
+if (font = font_digits)
+	texty += 1
 
 if (disabled)
 {
-	draw_label(string_limit(tbx.text, w - padding * 2), textx, texty, center ? fa_center : fa_left, center ? fa_bottom : fa_top, c_text_tertiary, a_text_tertiary)
+	draw_label(string_limit(tbx.text, w - padding * 2), placeholderx, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
 	update = false
 }
 
 // Placeholder label
 if (tbx.text = "" && placeholder != "")
-    draw_label(string_limit(placeholder, w - padding * 2), textx, texty, center ? fa_center : fa_left, center ? fa_center : fa_top, c_text_tertiary, a_text_tertiary)
+    draw_label(string_limit(placeholder, w - padding * 2), placeholderx, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
 
 if (!disabled)
 {
-	if (center && (tbx.text != ""))
+	if (type = e_inputbox.BIG)
 	{
-		var textwid = min(w, string_width(tbx.text));
+		var textwid = min(w, string_width(tbx.text + tbx.suffix));
 		update = textbox_draw(tbx, xx + w/2 - textwid/2, yy + 5, textwid, h - 9)
 	}
 	else
-	{
-		update = textbox_draw(tbx, xx + 10, texty, w - 20, tbxh)
-	}
+		update = textbox_draw(tbx, textx, texty, w - 16, tbxh, true, type = e_inputbox.RIGHT)
 }
+
+if (mouseon)
+	mouse_cursor = cr_beam
 
 // Textbox context menu
 if (window_focus = string(tbx))
@@ -120,7 +152,7 @@ if (window_focus = string(tbx))
 // Disabled overlay
 draw_box(xx, yy, w, h, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
 
-if (mouseon && mouse_left_pressed && (window_focus != string(tbx)))
+if (mouseon && mouse_left_released && (window_focus != string(tbx)))
 {
 	window_focus = string(tbx)
 	app_mouse_clear()
@@ -130,6 +162,6 @@ if (update && (script != null))
     script_execute(script, tbx.text)
 
 // Input boxes don't use a holding animation, but need a warning animation
-microani_update(mouseon || window_focus = string(tbx), false, window_focus = string(tbx), disabled)
+microani_update(mouseon || window_focus = string(tbx), (mouseon && mouse_left) && window_focus != string(tbx), window_focus = string(tbx), disabled)
 
 return update

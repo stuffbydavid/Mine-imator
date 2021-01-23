@@ -10,11 +10,11 @@ draw_button_color("frameeditorlightcolor", dx, dy, dw, tl_edit.value[e_value.LIG
 tab_next()
 
 tab_control_dragger()
-draw_dragger("frameeditorlightsize", dx, dy, 86, tl_edit.value[e_value.LIGHT_SIZE], .05, 0, no_limit, 2, .05, tab.light.tbx_size, action_tl_frame_light_size, capwid)
+draw_dragger("frameeditorlightsize", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_SIZE], .05, 0, no_limit, 2, .05, tab.light.tbx_size, action_tl_frame_light_size, capwid)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("frameeditorlightrange", dx, dy, 86, tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_RANGE] / 100, 0, no_limit, 250, 0, tab.light.tbx_range, action_tl_frame_light_range, capwid)
+draw_dragger("frameeditorlightrange", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_RANGE] / 100, 0, no_limit, 250, 0, tab.light.tbx_range, action_tl_frame_light_range, capwid)
 tab_next()
 
 tab_control_meter()

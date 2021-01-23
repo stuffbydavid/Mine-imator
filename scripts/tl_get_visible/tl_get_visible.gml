@@ -1,5 +1,8 @@
 /// tl_get_visible()
 
+if (render_view_current = null)
+	return true
+
 if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden))
 	return false
 

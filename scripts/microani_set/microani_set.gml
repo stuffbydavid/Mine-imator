@@ -1,27 +1,37 @@
-/// microani_set(name, script, hover, click, active, [speed, [custom]])
+/// microani_set(name, script, hover, click, active, [disabled, [speed, [custom, [goalval]]]])
 /// @arg name
 /// @arg script
 /// @arg hover
 /// @arg click
 /// @arg active
+/// @arg [disabled
 /// @arg [speed
-/// @arg [custom]]
+/// @arg [custom
+/// @arg [goalval]]]]
 /// @desc Sets the global micro animation
 
-var name, script, hover, click, active, spd, custom;
+var name, script, hover, click, active, disabled, spd, custom, goalval;
 name = argument[0]
 script = argument[1]
 hover = argument[2]
 click = argument[3]
 active = argument[4]
+disabled = false
 spd = 1
 custom = false
+goalval = 0
 
 if (argument_count > 5)
-	spd = argument[5]
+	disabled = argument[5]
 
 if (argument_count > 6)
-	custom = argument[6]
+	spd = argument[6]
+
+if (argument_count > 7)
+	custom = argument[7]
+
+if (argument_count > 8)
+	goalval = argument[8]
 
 if (true)
 {
@@ -30,9 +40,8 @@ if (true)
 	// Create micro animation object if it doesn't already exist
 	if (!ds_map_exists(microanis, name + string(script)))
 	{
-		animation = new_animation(name + string(script), active)
+		animation = new_animation(name + string(script), active, hover, click, disabled, custom, goalval)
 		animation.spd = spd
-		animation.custom_ease = custom
 	}
 	else
 		animation = ds_map_find_value(microanis, name + string(script))
@@ -51,6 +60,8 @@ if (true)
 	mcroani_arr[e_mcroani.ACTIVE] = current_mcroani.value_ani_ease
 	mcroani_arr[e_mcroani.DISABLED] = current_mcroani.disabled_ani_ease
 	mcroani_arr[e_mcroani.CUSTOM] = current_mcroani.custom_ani_ease
+	
+	mcroani_arr[e_mcroani.GOAL_EASE] = current_mcroani.goal_ease
 }
 else
 {

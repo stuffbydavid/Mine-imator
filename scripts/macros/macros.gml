@@ -151,9 +151,11 @@
 #macro view_3d_control_size			0.225
 #macro view_3d_control_width		20
 #macro view_3d_box_size				12
-#macro button_padding				32
-#macro button_icon_padding			56
+#macro button_padding				24
+#macro button_icon_padding			52
 #macro snap_min						0.000001
+#macro dragger_width				74
+#macro label_height					9
 
 // Values
 #macro null							noone

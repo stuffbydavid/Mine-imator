@@ -1,3 +1,5 @@
 /// tab_timeline_editor_audio()
 
-draw_button_primary("timelineeditoraudioadd", dx, dy, null, action_tl_add_sound, null, fa_center)
+tab_control_button_label()
+draw_button_label("timelineeditoraudioadd", floor(dx + dw/2), dy, null, null, e_button.PRIMARY, action_tl_add_sound, e_anchor.CENTER)
+tab_next()

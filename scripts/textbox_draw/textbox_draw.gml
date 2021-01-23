@@ -1,15 +1,16 @@
-/// textbox_draw(textbox, x, y, width, height, [contextmenu])
+/// textbox_draw(textbox, x, y, width, height, [contextmenu, [right]])
 /// @arg textbox
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg [contextmenu]
+/// @arg [contextmenu
+/// @arg [right]]
 /// @desc Draws a box with editable text at the given position and with the given dimensions.
 
-var tbx, xx, yy, w, h, contextmenu;
+var tbx, xx, yy, w, h, contextmenu, right;
 var changetext, deletetext, inserttext, lineheight, mouseover;
-var a, b, c, l, p, k, ww, hh, str;
+var a, b, c, l, p, k, ww, hh, str, textx;
 
 tbx = argument[0]
 xx = argument[1]
@@ -17,15 +18,22 @@ yy = argument[2]
 w = argument[3]
 h = argument[4]
 contextmenu = true
+right = false
 
 if (argument_count > 5)
 	contextmenu = argument[5]
 
+if (argument_count > 6)
+	right = argument[6]
+
 // Colors
-var textnormal, highlight, texthighlight;
+var prevalpha, textnormal, textnormala, highlight, texthighlight, texthighlighta;
+prevalpha = draw_get_alpha()
 textnormal = c_text_main
+textnormala = a_text_main * prevalpha
 highlight = c_accent
-texthighlight = c_white
+texthighlight = c_button_text
+texthighlighta = a_button_text * prevalpha
 
 if (tbx.last_text != tbx.text)
 {
@@ -838,10 +846,13 @@ else // Wordwrapping
 	
 	tbx.start = max(0, min(tbx.start, tbx.lines - floor(h / lineheight)))
 }
-	
+
 // Draw text and selection
 draw_set_halign(fa_left)
 draw_set_valign(fa_top)
+
+var limit = string_width(string_limit(tbx.text + tbx.suffix, w, ""));
+textx = xx + ((w - min(w, limit)) * right)
 
 for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 {
@@ -886,7 +897,7 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 					{
 						b = string_width(string_char_at(tbx.line[l], a + 1))
 						ww += b
-						if (mouse_x < xx + ww - b / 2)
+						if (mouse_x < textx + ww - b / 2)
 							break
 					}
 					
@@ -1018,27 +1029,32 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 			if (str[0] != "") // Text before or outside selection
 			{
 				draw_set_color(textnormal)
-				draw_text(xx, yy, str[0])
+				draw_set_alpha(textnormala)
+				draw_text(textx, yy, str[0])
 			}
 			
 			if (str[1] != "") // Selected text
 			{
 				draw_set_color(highlight)
-				draw_rectangle(min(xx + w, xx + string_width(str[0])), yy, min(xx + w, xx + string_width(str[0] + str[1])), yy + lineheight, false)
+				draw_set_alpha(1)
+				draw_rectangle(min(textx + w, textx + string_width(str[0])), yy, min(textx + w, textx + string_width(str[0] + str[1])), yy + lineheight, false)
 				draw_set_color(texthighlight)
-				draw_text(xx + string_width(str[0]), yy, str[1])
+				draw_set_alpha(texthighlighta)
+				draw_text(textx + string_width(str[0]), yy, str[1])
 			}
 			
 			if (str[2] != "") // Text after selection
 			{
 				draw_set_color(textnormal)
-				draw_text(xx + string_width(str[0] + str[1]), yy, str[2])
+				draw_set_alpha(textnormala)
+				draw_text(textx + string_width(str[0] + str[1]), yy, str[2])
 			}
 		}
 		else // Unselected
 		{
 			draw_set_color(textnormal)
-			draw_text(xx, yy, string_copy(tbx.line[0], tbx.start + 1, tbx.chars) + tbx.suffix)
+			draw_set_alpha(textnormala)
+			draw_text(textx, yy, string_copy(tbx.line[0], tbx.start + 1, tbx.chars) + tbx.suffix)
 		}
 	}
 	else
@@ -1072,27 +1088,32 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 			if (str[0] != "") // Text before or outside selection
 			{
 				draw_set_color(textnormal)
-				draw_text(xx, yy + ly, str[0])
+				draw_set_alpha(textnormala)
+				draw_text(textx, yy + ly, str[0])
 			}
 			
 			if (str[1] != "") // Selected text
 			{
 				draw_set_color(highlight)
-				draw_rectangle(min(xx + w, xx + string_width(str[0])), yy + ly, min(xx + w, xx + string_width(str[0] + str[1])), yy + ly + lineheight, false)
+				draw_set_alpha(1)
+				draw_rectangle(min(textx + w, textx + string_width(str[0])), yy + ly, min(textx + w, textx + string_width(str[0] + str[1])), yy + ly + lineheight, false)
 				draw_set_color(texthighlight)
-				draw_text(xx + string_width(str[0]), yy + ly, str[1])
+				draw_set_alpha(texthighlighta)
+				draw_text(textx + string_width(str[0]), yy + ly, str[1])
 			}
 			
 			if (str[2] != "") // Text after selection
 			{
 				draw_set_color(textnormal)
-				draw_text(xx + string_width(str[0] + str[1]), yy + ly, str[2])
+				draw_set_alpha(textnormala)
+				draw_text(textx + string_width(str[0] + str[1]), yy + ly, str[2])
 			}
 		} 
 		else // Unselected line
 		{
 			draw_set_color(textnormal)
-			draw_text(xx, yy + ly, tbx.line[l])
+			draw_set_alpha(textnormala)
+			draw_text(textx, yy + ly, tbx.line[l])
 		}
 	}
 }
@@ -1111,11 +1132,15 @@ if (window_focus = string(tbx) && !tbx.read_only)
 	
 	if (a >= 0 && a <= w && b >= 0 && b + lineheight <= h && (current_time - textbox_marker) mod 1000 < 500)
 	{
-		draw_set_color(c_text_main)
-		draw_line(xx + a, yy + b, xx + a, yy + b+lineheight)
+		draw_set_color(textnormal)
+		draw_set_color(textnormala)
+		draw_line(textx + a, yy + b, textx + a, yy + b+lineheight)
 	}
 }
-	
+
+draw_set_color(c_white)
+draw_set_alpha(prevalpha)
+
 if (window_focus = string(tbx))
 	textbox_lastfocus = tbx
 else if (window_focus = "")

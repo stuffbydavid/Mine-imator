@@ -323,7 +323,8 @@ ds_list_add(transition_list,
 )
 
 log("Make transitions")
-transition_texture_map = new_transition_texture_map(36, 36, 6)
+transition_texture_map = new_transition_texture_map(36, 36, 6, true)
+transition_texture_small_map = new_transition_texture_map(24, 24, 3, false)
 log("Transitions OK")
 
 // Video templates

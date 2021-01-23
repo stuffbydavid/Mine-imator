@@ -6,10 +6,10 @@ dy += 8
 draw_label(text_get(popup.value_name), dx + 16, dy + 14, fa_left, fa_middle, c_accent, 1, font_heading)
 
 // Close
-if (draw_button_icon("colorpickerclose", dx + dw - 12 - 28, dy, 28, 28, false, icons.CLOSE, null, false))
+if (draw_button_icon("colorpickerclose", dx + dw - 12 - 24, dy, 24, 24, false, icons.CLOSE, null, false))
 	popup_close()
 
-dy += 28 + 8
+dy += 24 + 8
 
 // Saturation / Brightness picker
 draw_sprite_general(spr_colorpicker, 0, 0, 0, 228, 228, dx, dy, 1, 1, 0, c_white, make_color_hsv(popup.hue, 255, 255), make_color_hsv(popup.hue, 255, 255), c_white, draw_get_alpha())
@@ -98,5 +98,5 @@ if (update = popup.tbx_brightness)
 dy += 28 + 12
 
 // Hex
-if (draw_textfield("colorpickerhex", dx + 16, dy, 196, 28, popup.tbx_hexadecimal, null, "", "left"))
+if (draw_textfield("colorpickerhex", dx + 16, dy, 196, 24, popup.tbx_hexadecimal, null, "", "left"))
 	popup_colorpicker_update(popup.tbx_hexadecimal, hex_to_color(popup.tbx_hexadecimal.text), true)

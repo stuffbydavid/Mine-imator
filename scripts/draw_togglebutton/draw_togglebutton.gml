@@ -15,7 +15,7 @@ labels = true
 if (argument_count > 3)
 	labels = argument[3]
 
-h = 52
+h = 32 + (label_height + 8)
 w = dw
 
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
@@ -24,25 +24,40 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 	return 0
 }
 
+// Label
+draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+
+yy += (label_height + 8)
 buttonx = xx
-buttonh = 28
+buttonh = 32
 
 buttoncount = array_length_1d(togglebutton_name)
-buttonsize = round(w/buttoncount)
+buttonsize = w/buttoncount
 mouseon = false
 script = null
 scriptvalue = null
 axis = X
 
-draw_label(text_get(name), xx, yy + 16, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
-yy += 24
-
-draw_outline(xx, yy, w, buttonh, 1, c_border, a_border)
-
-draw_set_font(font_button)
-
+// Draw frame
+draw_outline(xx, yy, w, buttonh, 1, c_border, a_border, true)
 for (var i = 0; i < buttoncount; i++)
 {	
+	if (i > 0)
+		draw_box(buttonx, yy + 1, 1, buttonh - 2, false, c_border, a_border)
+	
+	buttonx += buttonsize
+}
+buttonx = xx
+
+// Draw combo buttons
+var boxwid;
+for (var i = 0; i < buttoncount; i++)
+{	
+	boxwid = buttonsize
+	
+	if (i < (buttoncount - 1))
+		boxwid += 1
+	
 	mouseon = false
 	
 	if (app_mouse_box(buttonx, yy, buttonsize, buttonh) && content_mouseon)
@@ -54,52 +69,57 @@ for (var i = 0; i < buttoncount; i++)
 	microani_set(name + togglebutton_name[i], null, mouseon, mouseon && mouse_left, togglebutton_active[i])
 	
 	// Draw base button
-	var backgroundcolor, backgroundalpha;
-	backgroundcolor = merge_color(c_overlay, c_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-	backgroundalpha = a_overlay * min(1.0, mcroani_arr[e_mcroani.HOVER] + mcroani_arr[e_mcroani.ACTIVE])
-	backgroundalpha = lerp(backgroundalpha, a_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-	draw_box(buttonx, yy, buttonsize, buttonh, false, backgroundcolor, backgroundalpha)
+	var focus, backcolor, backalpha, linecolor, linealpha, contentcolor, contentalpha;
+	focus = max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE])
 	
-	var labelcolor, labelalpha;
+	backcolor = merge_color(c_overlay, c_accent_overlay, focus)
+	backalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+	backalpha = lerp(backalpha, a_accent_overlay, focus)
+	backalpha = lerp(backalpha, 0, mcroani_arr[e_mcroani.DISABLED])
+	
+	contentcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+	contentcolor = merge_color(contentcolor, c_accent, focus)
+	contentalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+	contentalpha = lerp(contentalpha, 1, focus)
+	
+	linecolor = merge_color(c_border, c_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+	linecolor = merge_color(linecolor, c_accent, focus)
+	linealpha = lerp(0, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+	linealpha = lerp(linealpha, a_accent, focus)
+	
+	draw_box(buttonx, yy, boxwid, buttonh, false, backcolor, backalpha)
 	
 	var icon = togglebutton_icon[i];
 	
 	var buttonname, totalwidth, startx;
 	buttonname = (labels ? text_get(togglebutton_name[i]) : "")
 	totalwidth = (labels ? string_width(buttonname) : 0) + (icon = null ? 0 : 24 + 8)
-	startx = floor(buttonx + (buttonsize/2) - (totalwidth/2))
+	startx = floor(buttonx + (boxwid/2) - (totalwidth/2))
 	
 	if (buttonname = "" || !labels)
 	{
-		totalwidth = 20
-		startx = floor(buttonx + (buttonsize/2) - (totalwidth/2))
-		
-		labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-		labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
-	}
-	else
-	{
-		labelcolor = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
-		labelcolor = merge_color(labelcolor, c_accent_pressed, min(1.0, mcroani_arr[e_mcroani.PRESS] + mcroani_arr[e_mcroani.ACTIVE]))
-		labelalpha = lerp(1, a_accent_hover, mcroani_arr[e_mcroani.HOVER])
-		labelalpha = lerp(labelalpha, a_accent_pressed, min(1.0, mcroani_arr[e_mcroani.PRESS] + mcroani_arr[e_mcroani.ACTIVE]))
+		totalwidth = 24
+		startx = floor(buttonx + (boxwid/2) - (totalwidth/2))
 	}
 	
 	// Icon
 	if (icon != null)
 	{
-		draw_image(spr_icons, icon, startx + 10, yy + (buttonh/2), 1, 1, labelcolor, labelalpha)
-		startx += 20 + 8
+		draw_image(spr_icons, icon, startx + 12, yy + (buttonh/2), 1, 1, contentcolor, contentalpha)
+		startx += 24 + 8
 	}
 	
 	// Text
 	if (labels)
-		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, labelcolor, labelalpha)
+		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, contentcolor, contentalpha)
 	
-	if (i > 0)
-		draw_box(buttonx, yy + 4, 1, buttonh - 8, false, c_border, a_border)
+	// Outline
+	draw_outline(buttonx, yy, boxwid, buttonh, 1, c_background, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
+	draw_outline(buttonx, yy, boxwid, buttonh, 1, linecolor, linealpha, true)
 	
-	microani_update(mouseon, mouseon && mouse_left, togglebutton_active[i])
+	draw_box_hover(buttonx, yy, boxwid, buttonh, mcroani_arr[e_mcroani.PRESS])
+	
+	microani_update(mouseon && !mouse_left, mouseon && mouse_left, togglebutton_active[i])
 	
 	// Execute script with value
 	if (mouseon && mouse_left_released)
@@ -114,9 +134,13 @@ for (var i = 0; i < buttoncount; i++)
 	
 	buttonx += buttonsize
 }
+
+draw_set_font(font_button)
+
 buttonx = xx
 
 // Repeat drawing for hover
+/*
 for (var i = 0; i < buttoncount; i++)
 {
 	mouseon = false
@@ -132,6 +156,7 @@ for (var i = 0; i < buttoncount; i++)
 	draw_box_hover(buttonx, yy, buttonsize, buttonh, mcroani_arr[e_mcroani.HOVER])
 	buttonx += buttonsize
 }
+*/
 
 // Execute script
 if (script != null)

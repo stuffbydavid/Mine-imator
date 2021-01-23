@@ -1,3 +1,3 @@
 /// tab_control_inputbox()
 
-tab_control(28)
+tab_control(24)

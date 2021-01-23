@@ -238,6 +238,26 @@ with (obj_micro_animation)
 	
 	#endregion
 	
+	#region Goal value
+	
+	if (custom_goal_ease && (goal_ease != goal_value))
+	{
+		if (app.setting_reduced_motion)
+			goal_ease = goal_value
+		else
+		{
+			var valadd = (goal_value - goal_ease) / max(1, 3 / delta);
+			goal_ease += valadd
+			
+			if (abs(valadd) < 0.01)
+				goal_ease = goal_value
+			
+			goal_ease = clamp(goal_ease, 0, 1)
+		}
+	}
+	
+	#endregion
+	
 	steps_alive++
 	steps_hidden++
 }

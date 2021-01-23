@@ -11,18 +11,18 @@ sortlist_draw(tab.library.list, dx, dy, dw, tab_control_h, temp_edit)
 tab_next()
 
 // Tools
-tab_control(28)
+tab_control(24)
 
-if (draw_button_icon("librarynew", dx, dy, 28, 28, false, icons.CREATE, null, false, "tooltiptemplatenew"))
+if (draw_button_icon("librarynew", dx, dy, 24, 24, false, icons.CREATE, null, false, "tooltiptemplatenew"))
 	bench_open = true
 
-if (draw_button_icon("libraryanimate", dx + 32, dy, 28, 28, false, icons.ANIMATE, null, temp_edit = null, "tooltiptemplateanimate"))
+if (draw_button_icon("libraryanimate", dx + 28, dy, 24, 24, false, icons.ANIMATE, null, temp_edit = null, "tooltiptemplateanimate"))
 	action_lib_animate()
 
-if (draw_button_icon("libraryduplicate", dx + (32 * 2), dy, 28, 28, false, icons.DUPLICATE, null, temp_edit = null, "tooltiptemplateduplicate"))
+if (draw_button_icon("libraryduplicate", dx + (28 * 2), dy, 24, 24, false, icons.DUPLICATE, null, temp_edit = null, "tooltiptemplateduplicate"))
 	action_lib_duplicate()
 
-if (draw_button_icon("libraryremove", dx + (32 * 3), dy, 28, 28, false, icons.DELETE, null, temp_edit = null, "tooltiptemplateremove"))
+if (draw_button_icon("libraryremove", dx + (28 * 3), dy, 24, 24, false, icons.DELETE, null, temp_edit = null, "tooltiptemplateremove"))
 	action_lib_remove()
 
 tab_next()
@@ -31,9 +31,9 @@ if (temp_edit = null)
 	return 0
 
 // Name
-tab_control(28)
+tab_control_textfield(false)
 tab.library.tbx_name.text = temp_edit.name
-draw_textfield("libraryname", dx, dy, dw, 28, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
+draw_textfield("libraryname", dx, dy, dw, 24, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
 tab_next()
 
 switch (temp_edit.type)
@@ -46,11 +46,11 @@ switch (temp_edit.type)
 		wid = text_max_width("librarycharmodelchange") + 20
 		
 		// Model
-		tab_control(28)
-		draw_label_value(dx, dy, dw, 28, text_get(text), temp_edit.model_file != null ? minecraft_asset_get_name("model", temp_edit.model_file.name) : "")
+		tab_control(24)
+		draw_label_value(dx, dy, dw - 32, 24, text_get(text), temp_edit.model_file != null ? minecraft_asset_get_name("model", temp_edit.model_file.name) : "")
 		
 		// Change
-		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))
+		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT))
 			tab_toggle(template_editor)
 			
 		tab_next()
@@ -58,12 +58,15 @@ switch (temp_edit.type)
 		// Banner editor
 		if (temp_edit.model_name = "banner")
 		{
-			tab_control(28)
+			tab_control_button_label()
 			
-			if (draw_button_secondary("benchopeneditor", dx, dy, dw, null))
+			if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
 				popup_bannereditor_show(temp_edit)
 			
 			tab_next()
+			
+			if (popup = popup_bannereditor)
+				current_mcroani.value = true
 		}
 		
 		// Skin
@@ -107,7 +110,7 @@ switch (temp_edit.type)
 			res = mc_res
 		
 		// Item image
-		tab_control(28)
+		tab_control(24)
 		
 		draw_set_font(font_emphasis)
 		wid = string_width(text_get("typeitem") + ":")
@@ -120,7 +123,7 @@ switch (temp_edit.type)
 		{
 			draw_texture_slot(res.item_sheet_texture, temp_edit.item_slot, dx + wid + 18, dy + 6, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			
-			if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT, null, false, "tooltipchangeitem"))
+			if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT, null, false, "tooltipchangeitem"))
 				tab_toggle(template_editor)
 		}
 		else
@@ -163,11 +166,11 @@ switch (temp_edit.type)
 	case e_temp_type.BLOCK:
 	{
 		// Block
-		tab_control(28)
-		draw_label_value(dx, dy, dw, 28, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
+		tab_control(24)
+		draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
 		
 		// Change
-		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))
+		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT))
 			tab_toggle(template_editor)
 			
 		tab_next()
@@ -189,21 +192,21 @@ switch (temp_edit.type)
 		else
 			text = text_get("librarybodypartunknown")
 			
-		tab_control(28)
-		draw_label_value(dx, dy, dw, 28, text_get("typebodypart"), text)
+		tab_control(24)
+		draw_label_value(dx, dy, dw, 24, text_get("typebodypart"), text)
 		
 		// Change
-		if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 28, 28, template_editor.show, icons.EDIT))
+		if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT))
 			tab_toggle(template_editor)
-			
+		
 		tab_next()
 		
 		// Banner editor
 		if (temp_edit.model_name = "banner")
 		{
-			tab_control(28)
+			tab_control_button_label()
 			
-			if (draw_button_secondary("benchopeneditor", dx, dy, dw, null))
+			if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
 				popup_bannereditor_show(temp_edit)
 			
 			tab_next()
@@ -223,16 +226,16 @@ switch (temp_edit.type)
 	
 	case e_temp_type.PARTICLE_SPAWNER:
 	{
-		tab_control(28)
+		tab_control_button_label()
 		
-		if (draw_button_secondary("libraryparticleeditoropen", dx, dy, dw, null))
+		if (draw_button_label("libraryparticleeditoropen", dx, dy, dw, null, e_button.SECONDARY))
 		{
 			tab_template_editor_update_ptype_list()
 			tab_toggle(template_editor)
 		}
 		
 		if (template_editor.show)
-			current_mcroani.holding = true
+			current_mcroani.value = true
 		
 		tab_next()
 		
@@ -242,8 +245,8 @@ switch (temp_edit.type)
 	case e_temp_type.TEXT:
 	{
 		// Font
-		tab_control_menu(28)
-		draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 28, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font)
+		tab_control_menu()
+		draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 24, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font)
 		tab_next()
 		
 		// 3D / Face camera
@@ -289,9 +292,9 @@ switch (temp_edit.type)
 			
 			if (temp_edit.shape_tex_mapped)
 			{
-				tab_control(36)
+				tab_control_button_label()
 				
-				if (draw_button_secondary("libraryshapetexsavemap", dx, dy, dw, null, icons.TEXTURE_EXPORT))
+				if (draw_button_label("libraryshapetexsavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
 					action_lib_shape_save_map()
 				
 				tab_next()
@@ -304,16 +307,18 @@ switch (temp_edit.type)
 			if (!temp_edit.shape_tex_mapped)
 			{
 				// Offset
-				tab_control(48)
 				textfield_group_add("libraryshapetexhoffset", temp_edit.shape_tex_hoffset, 0, action_lib_shape_tex_hoffset, axis_edit, tab.library.tbx_shape_tex_hoffset)
 				textfield_group_add("libraryshapetexvoffset", temp_edit.shape_tex_voffset, 0, action_lib_shape_tex_voffset, axis_edit, tab.library.tbx_shape_tex_voffset)
+				
+				tab_control_textfield_group()
 				draw_textfield_group("libraryshapetexoffset", dx, dy, dw, 1 / 100, -no_limit, no_limit, 0, true)
 				tab_next()
 				
 				// Repeat
-				tab_control(48)
 				textfield_group_add("libraryshapetexhrepeat", temp_edit.shape_tex_hrepeat, 0, action_lib_shape_tex_hrepeat, axis_edit, tab.library.tbx_shape_tex_hrepeat)
 				textfield_group_add("libraryshapetexvrepeat", temp_edit.shape_tex_vrepeat, 0, action_lib_shape_tex_vrepeat, axis_edit, tab.library.tbx_shape_tex_vrepeat)
+				
+				tab_control_textfield_group()
 				draw_textfield_group("libraryshapetexrepeat", dx, dy, dw, 1 / 100, 0, no_limit, 0, true)
 				tab_next()
 			}
@@ -344,8 +349,8 @@ switch (temp_edit.type)
 		if (temp_edit.type = e_temp_type.SPHERE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
 			// Detail
-			tab_control_inputbox()
-			draw_dragger("libraryshapedetail", dx, dy, 86, temp_edit.shape_detail, 1 / 4, 4, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
+			tab_control_dragger()
+			draw_dragger("libraryshapedetail", dx, dy, dragger_width, temp_edit.shape_detail, 1 / 4, 4, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
 			tab_next()
 		}
 		else if (temp_edit.type = e_temp_type.SURFACE)
@@ -367,8 +372,8 @@ switch (temp_edit.type)
 			text = text_get("listnone")
 		
 		// Model
-		tab_control_menu(28)
-		draw_button_menu("librarymodel", e_menu.LIST, dx, dy, dw, 28, temp_edit.model, text, action_lib_model, false, null)
+		tab_control_menu()
+		draw_button_menu("librarymodel", e_menu.LIST, dx, dy, dw, 24, temp_edit.model, text, action_lib_model, false, null)
 		tab_next()
 		
 		// Texture
@@ -413,7 +418,7 @@ if (temp_edit.type = e_temp_type.SCENERY || temp_edit.type = e_temp_type.BLOCK)
 		axis_edit = (setting_z_is_up ? Z : Y)
 		textfield_group_add("libraryrepeatz", temp_edit.block_repeat[axis_edit], 1, action_lib_block_repeat, axis_edit, tab.library.tbx_repeat_z)
 		
-		tab_control_inputbox()
+		tab_control_textfield_group(false)
 		draw_textfield_group("libraryrepeat", dx, dy, dw, 1 / 10, 1, 1000, 1)
 		tab_next()
 	}

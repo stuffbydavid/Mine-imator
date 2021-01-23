@@ -3,6 +3,7 @@
 steps_alive = 0
 steps_hidden = 0
 custom_ease = false
+custom_goal_ease = false
 
 // Values
 hover = 0
@@ -29,3 +30,6 @@ value_ani_ease = 0
 holding_ani_ease = 0
 disabled_ani_ease = 0
 custom_ani_ease = 0
+
+goal_value = 0
+goal_ease = 0

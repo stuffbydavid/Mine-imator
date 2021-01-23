@@ -40,6 +40,7 @@ xx += margin
 
 barsize = clamp(5, floor((size / maxsize) * size), size)
 barpos = min(size - barsize, floor(sb.value * (size / maxsize)))
+margin = 0
 
 if (dir = e_scroll.HORIZONTAL)
 {
@@ -58,25 +59,17 @@ if (mouseinarea)
 {
 	mouse_cursor = cr_handpoint
 	
-	if (mouse_left_pressed) // Start dragging
-	{
-		window_focus = string(sb)
-		if (mouseinbar)
-			window_busy = "scrollbar"
-	}
-	
-	if (mouse_left && !mouseinbar) // Page jump
+	if (!mouse_left_pressed && mouse_left && !mouseinbar) // Page jump
 	{
 		sb.press--
 		if (sb.press < 1)
 		{
 			if (dir)
-				sb.value_goal += ((mouse_x < xx + barpos) ? -size : size)
+				sb.value_goal += ((mouse_x < xx + barpos) ? -size : size) / 4
 			else
-				sb.value_goal += ((mouse_y < yy + barpos) ? -size : size)
+				sb.value_goal += ((mouse_y < yy + barpos) ? -size : size) / 4
 			
             sb.value_goal = snap(sb.value_goal, sb.snap_value)
-			
 			sb.value = snap(sb.value, sb.snap_value)
 		}
 		
@@ -84,6 +77,11 @@ if (mouseinarea)
 			sb.press = 10
 		else if (sb.press = 0)
 			sb.press = 2
+	}
+	else if (mouse_left && mouseinbar) // Start dragging
+	{
+		window_focus = string(sb)
+		window_busy = "scrollbar"
 	}
 }
 if (!mouse_left)
@@ -95,7 +93,7 @@ if (window_busy = "" && content_mouseon)
 	if (window_scroll_focus_prev = string(sb))
 	{
 		if (sb.snap_value = 0)
-			sb.value_goal += (mouse_wheel * 15) * 4
+			sb.value_goal += mouse_wheel * 120
 		else
 			sb.value_goal += (mouse_wheel * sb.snap_value) * 4
 	}
