@@ -28,7 +28,7 @@ else
 	text = text_get("transition" + trans)
 
 tab_control_menu(32)
-draw_button_menu("frameeditortransition", e_menu.TRANSITION_LIST, dx, dy, dw, 32, tl_edit.value[e_value.TRANSITION], text, action_tl_frame_transition, false, transition_texture_small_map[?tl_edit.value[e_value.TRANSITION]])
+draw_button_menu("frameeditortransition", e_menu.TRANSITION_LIST, dx, dy, dw, 32, tl_edit.value[e_value.TRANSITION], text, menu_transitions, false, transition_texture_small_map[?tl_edit.value[e_value.TRANSITION]])
 tab_next()
 
 // Visible

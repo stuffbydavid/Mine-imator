@@ -116,7 +116,7 @@ if ((settings_menu_y + settings_menu_h) > window_height)
 // Check click
 if (settings_menu_script)
 {
-	if (mouse_left_released && !app_mouse_box(content_x, content_y, content_width, content_height) && !context_menu_mouseon && (menu_name = "") && (window_focus = ""))
+	if (mouse_left_released && !app_mouse_box(content_x, content_y, content_width, content_height) && !context_menu_mouseon && (ds_list_size(menu_list) = 0) && (window_focus = ""))
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"
@@ -125,7 +125,7 @@ if (settings_menu_script)
 }
 else
 {
-	if (mouse_left_released && !context_menu_mouseon && (menu_name = "") && (window_focus = ""))
+	if (mouse_left_released && !context_menu_mouseon && (ds_list_size(menu_list) = 0) && (window_focus = ""))
 	{
 		settings_menu_ani = 1
 		settings_menu_ani_type = "hide"

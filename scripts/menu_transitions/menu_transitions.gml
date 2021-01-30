@@ -123,5 +123,15 @@ if (context_menu_name != "" && transition != null)
 	
 	return true
 }
+else if (transition != null) // Drop down menu
+{
+	action_tl_frame_transition(transition)
+	
+	menu_current.menu_ani = 1
+	menu_current.menu_ani_type = "hide"
+	window_busy = ""
+	
+	return true
+}
 
 return transition

@@ -139,20 +139,21 @@ draw_set_font(font_value)
 
 for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
 {
-	var value, dw;
+	var value, dw, selected;
 	
 	if (dy + itemh > yy + h)
 		break
 	
 	value = slist.display_list[|i]
 	dw = w - 12 * slist.scroll.needed
+	selected = (select = value)
 	
-	if (select = value)
+	if (selected)
 		draw_box(xx, dy, dw, itemh, false, c_accent_overlay, a_accent_overlay)
 	
 	for (var c = 0; c < slist.columns; c++)
 	{
-		var dx, text, wid, islast;
+		var dx, text, wid, islast, ;
 		dx = xx + floor(slist.column_x[c] * w) + 8
 		wid = slist.column_w[c] - 8
 		if (c = slist.columns - 1 && slist.scroll.needed)
@@ -160,8 +161,14 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 		
 		islast = (c = slist.columns - 1) && (c != 0)
 		
+		if (slist.columns = 1 && selected)
+		{
+			draw_image(spr_icons, icons.CHECK, xx + dw - 16, dy + itemh/2, 1, 1, c_accent, 1)
+			wid -= 32
+		}
+		
 		text = string_limit(string(sortlist_column_get(slist, value, c)), wid)
-		draw_label(text, dx + ((wid - 8) * islast), dy + itemh / 2, islast ? fa_right : fa_left, fa_middle, (select = value) ? c_accent : c_text_main, (select = value) ? 1 : a_text_main)
+		draw_label(text, dx + ((wid - 8) * islast), dy + itemh / 2, islast ? fa_right : fa_left, fa_middle, selected ? c_accent : c_text_main, selected ? 1 : a_text_main)
 	}
 	
 	if (app_mouse_box(xx, dy, dw, itemh) && content_mouseon)
@@ -169,8 +176,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
 		{
-			window_focus = string(slist.scroll)
-			if (slist.can_deselect && select = value)
+			if (slist.can_deselect && selected)
 				script_execute(slist.script, null)
 			else
 				script_execute(slist.script, value)

@@ -1,13 +1,15 @@
-/// menu_add_timeline(timeline, level)
+/// menu_add_timeline(timeline, level, menu)
 /// @arg timeline
 /// @arg level
+/// @arg menu
 /// @desc Adds a new timeline to the dropdown menu.
 
-var tl, level, item;
+var tl, level, menu;
 tl = argument0
 level = argument1
+menu = argument2
 
-if (tl = tl_edit && !menu_include_tl_edit)
+if (tl = tl_edit && !menu.menu_include_tl_edit)
 	return 0
 
 if (tl = null)
@@ -40,4 +42,4 @@ if (tl = null)
 	tl = app
 	
 for (var t = 0; t < ds_list_size(tl.tree_list); t++)
-	menu_add_timeline(tl.tree_list[|t], level + 1)
+	menu_add_timeline(tl.tree_list[|t], level + 1, menu)

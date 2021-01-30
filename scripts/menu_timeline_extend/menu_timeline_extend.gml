@@ -1,3 +1,3 @@
 /// menu_timeline_extend(tl)
 
-menu_tl_extend = argument0
+menu_current.menu_tl_extend = argument0

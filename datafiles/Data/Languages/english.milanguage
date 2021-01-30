@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.01.22"
+        "lastchange": "2021.01.29"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -1713,6 +1713,7 @@
     "library": "LIBRARY",
     "library/": {
         "name": "Name",
+        "changeblock": "Change block",
         "blockmodel": "Block model",
         "charmodel": "Model",
         "charmodelchange": "Change",
@@ -1763,8 +1764,7 @@
         "modeltex": "Texture"
     },
     "templateeditor/": {
-        "bodypart": "Body part",
-        "done": "Done"
+        "bodypart": "Body part"
     },
     "particleeditor/": {
         "count": "Particles",
@@ -2101,9 +2101,6 @@
         },
         "opaqueleaves": "Opaque leaves",
         "textureanimationspeed": "Texture animation speed"
-    },
-    "groundeditor/": {
-        "done": "Done"
     },
     "biome/": {
         "custom": "Custom",

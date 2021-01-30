@@ -19,7 +19,7 @@
 ///		  The script is called when a slot is selected from any of the sheets.
 
 var select, tex, xx, yy, wid, hei, slots, slotsx, slotsy, scroll, script, anitex, anislots, anislotsx, anislotsy, res;
-var dx, dy, off, slotwid, slothei, items, itemwid, itemhei, itemsx, itemsy;
+var tx, ty, off, slotwid, slothei, items, itemwid, itemhei, itemsx, itemsy;
 select = argument[0]
 tex = argument[1]
 xx = argument[2]
@@ -46,11 +46,11 @@ else
 	res = null
 }
 
-// Background
-draw_box(xx, yy, wid, hei, false, c_background_secondary, 1)
+// Outline
+draw_outline(xx, yy, wid, hei, 1, c_border, a_border)
 
-dx = xx
-dy = yy
+tx = xx
+ty = yy
 off = 2
 
 // Get number of  active slots in the sheets
@@ -70,6 +70,8 @@ itemsy = ceil(items / itemsx)
 for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 {
 	var col, curtex, curslot, curslotsx, curslotsy;
+	
+	draw_box(tx + off, ty + off, slotwid, slothei, false, c_background_secondary, 1)
 	
 	// Texture color
 	col = c_white
@@ -97,13 +99,13 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 	// Highlight if selected
 	if (select = i)
 	{
-		//draw_box(dx, dy, itemwid, itemhei, false, c_accent_overlay, a_accent_overlay)
-		draw_outline(dx, dy, itemwid, itemhei, 2, c_accent, 1)
+		//draw_box(tx, ty, itemwid, itemhei, false, c_accent_overlay, a_accent_overlay)
+		draw_outline(tx + off, ty + off, slotwid, slothei, 2, c_accent, 1)
 	}
 	
 	// Item
-	draw_texture_slot(curtex, curslot, dx + off, dy + off, slotwid, slothei, curslotsx, curslotsy, col)
-	if (app_mouse_box(dx, dy, itemwid, itemhei) && content_mouseon)
+	draw_texture_slot(curtex, curslot, tx + off, ty + off, slotwid, slothei, curslotsx, curslotsy, col)
+	if (app_mouse_box(tx, ty, itemwid, itemhei) && content_mouseon)
 	{
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
@@ -115,12 +117,13 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 	}
 	
 	// Advance
-	dx += itemwid
-	if (dx + itemwid > xx + itemsx * itemwid)
+	tx += itemwid
+	if (tx + itemwid > xx + itemsx * itemwid)
 	{
-		dx = xx
-		dy += itemhei
-		if (dy + itemhei > yy + hei)
+		tx = xx
+		ty += itemhei
+		
+		if (ty + itemhei > yy + hei)
 			break
 	}
 	
@@ -129,3 +132,4 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 // Scrollbar
 scroll.snap_value = itemhei
 scrollbar_draw(scroll, e_scroll.VERTICAL, xx + wid - 12, yy, floor(hei / itemhei) * itemhei, itemsy * itemhei)
+

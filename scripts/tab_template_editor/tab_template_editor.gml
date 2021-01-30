@@ -8,7 +8,7 @@ if (!instance_exists(temp_edit))
 
 // Modify draw area
 if (temp_edit.type != e_temp_type.PARTICLE_SPAWNER)
-	dh -= (36 + 34)
+	dh -= 28
 
 switch (temp_edit.type)
 {
@@ -39,13 +39,20 @@ switch (temp_edit.type)
 		// Model
 		var statelen, statesh;
 		statelen = array_length_1d(temp_edit.model_state)
-		statesh = 52 * (statelen / 2) + ((temp_edit.type = e_temp_type.BODYPART) ? 52 : 0);
+		statesh = 32 * (statelen / 2) + ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0);
 		sortlist_draw(list, dx, dy, dw, dh - statesh, temp_edit.model_name, false)
 		
 		// States
 		var model = mc_assets.model_name_map[?temp_edit.model_name];
 		statelen = array_length_1d(temp_edit.model_state)
-		statesh = 52 * (statelen / 2) + ((temp_edit.type = e_temp_type.BODYPART) ? 52 : 0)
+		statesh = 32 * (statelen / 2) + ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0)
+		
+		draw_set_font(font_emphasis)
+		for (var i = 0; i < statelen; i += 2)
+		{
+			var state = temp_edit.model_state[i];
+			capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state)) + 8)
+		}
 		
 		var dyy = (dy + dh - statesh) + 8;
 		for (var i = 0; i < statelen; i += 2)
@@ -53,14 +60,14 @@ switch (temp_edit.type)
 			var state = temp_edit.model_state[i];
 			menu_model_current = model
 			menu_model_state_current = model.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), (temp_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state)
-			dyy += 52
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), (temp_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
+			dyy += 32
 		}
 		menu_model_current = null
 		
 		// Bodypart
 		if (temp_edit.type = e_temp_type.BODYPART)
-			draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name)
+			draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, capwid)
 		
 		if (content_mouseon)
 			window_scroll_focus = string(list.scroll)
@@ -73,14 +80,22 @@ switch (temp_edit.type)
 		// Block
 		var statelen, statesh;
 		statelen = array_length_1d(temp_edit.block_state)
-		statesh = 52 * (statelen / 2)
+		statesh = 32 * (statelen / 2)
 		sortlist_draw(tab.block_list, dx, dy, dw, dh - statesh, temp_edit.block_name, false)
 		
 		// States
 		var block;
 		block = mc_assets.block_name_map[?temp_edit.block_name]
 		statelen = array_length_1d(temp_edit.block_state)
-		statesh = 52 * (statelen / 2)
+		statesh = 32 * (statelen / 2)
+		capwid = 0
+		
+		draw_set_font(font_emphasis)
+		for (var i = 0; i < statelen; i += 2)
+		{
+			var state = temp_edit.block_state[i];
+			capwid = max(capwid, string_width(minecraft_asset_get_name("blockstate", state)) + 8)
+		}
 		
 		var dyy = (dy + dh - statesh) + 8;
 		for (var i = 0; i < statelen; i += 2)
@@ -88,8 +103,8 @@ switch (temp_edit.type)
 			var state = temp_edit.block_state[i];
 			menu_block_current = block
 			menu_block_state_current = block.states_map[?state]
-			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 28, temp_edit.block_state[i + 1], minecraft_asset_get_name("blockstatevalue", temp_edit.block_state[i + 1]), action_lib_block_state)
-			dyy += 52
+			draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state[i + 1], minecraft_asset_get_name("blockstatevalue", temp_edit.block_state[i + 1]), action_lib_block_state, false, null, null, "", c_white, 1, capwid)
+			dyy += 32
 		}
 		menu_block_current = null
 		
@@ -128,7 +143,3 @@ switch (temp_edit.type)
 		tab_close(tab)
 		break
 }
-
-dy += dh + 8
-if (draw_button_label("templateeditordone", floor(dx + dw/2), dy, null, null, e_button.PRIMARY, null, e_anchor.CENTER))
-	tab_close(tab)

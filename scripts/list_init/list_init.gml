@@ -35,7 +35,7 @@ switch (name)
 	case "librarybodypartskin":
 	{
 		var temp;
-		if (string_contains(menu_name, "bench"))
+		if (string_contains(menu_current.menu_name, "bench"))
 			temp = bench_settings
 		else
 			temp = temp_edit
@@ -75,7 +75,7 @@ switch (name)
 	case "librarymodeltex":
 	{
 		var temp;
-		if (string_contains(menu_name, "bench"))
+		if (string_contains(menu_current.menu_name, "bench"))
 			temp = bench_settings
 		else
 			temp = temp_edit
@@ -845,7 +845,7 @@ switch (name)
 	case "exportimageimagesize":
 	case "frameeditorcameravideosize":
 	{
-		if (menu_name = "frameeditorcameravideosize")
+		if (menu_current.menu_name = "frameeditorcameravideosize")
 			menu_add_item(null, text_get("frameeditorcameravideosizeuseproject"))
 			
 		for (var i = 0; i < ds_list_size(videotemplate_list); i++)

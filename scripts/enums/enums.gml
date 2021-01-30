@@ -572,8 +572,7 @@ enum e_menu
 	LIST,
 	TIMELINE,
 	TRANSITION_LIST,
-	LIST_NUM,
-	TEMPLATE
+	CONTENT
 }
 
 // Buttons

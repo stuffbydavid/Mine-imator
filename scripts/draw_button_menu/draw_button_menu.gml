@@ -1,4 +1,4 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script, [disabled, [texture, [icon, [caption, [texcolor, texalpha]]]]])
+/// draw_button_menu(name, type, x, y, width, height, value, text, script|menuscript, [disabled, [texture, [icon, [caption, [texcolor, texalpha, [capwid]]]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -7,16 +7,17 @@
 /// @arg height
 /// @arg value
 /// @arg text
-/// @arg script
+/// @arg script|drawscript
 /// @arg [disabled
 /// @arg [texture
 /// @arg [icon
 /// @arg [caption
 /// @arg [texcolor
-/// @arg texalpha]]]]]
+/// @arg texalpha
+/// @arg [capwid]]]]]
 
-var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha;
-var flip, mouseon, cap;
+var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha, capwid;
+var flip, mouseon, cap, menuactive, menuhide, menuid;
 name = argument[0]
 type = argument[1]
 xx = argument[2] 
@@ -31,7 +32,7 @@ if (argument_count > 9)
 	disabled = argument[9]
 else
 	disabled = false
-	
+
 if (argument_count > 10)
 	tex = argument[10]
 else
@@ -58,6 +59,11 @@ else
 	texalpha = 1
 }
 
+if (argument_count > 15)
+	capwid = argument[15]
+else
+	capwid = null
+
 // Caption
 if (menu_model_current != null)
 {
@@ -70,14 +76,21 @@ else if (menu_block_current != null)
 	name = "blockstate" + name
 }
 else
+	cap = text_get(name)
+
+// Check if menu is currently active
+menuactive = false
+menuhide = false
+menuid = null
+
+for (var i = 0; i < ds_list_size(menu_list); i++)
 {
-	if (type = e_menu.LIST_NUM)
+	if (menu_list[|i].menu_name = name)
 	{
-		cap = text_get(name, menu_count)
-		name = name + string(menu_count)
+		menuactive = true
+		menuhide = menu_list[|i].menu_ani_type = "hide"
+		menuid = menu_list[|i]
 	}
-	else
-		cap = text_get(name)
 }
 
 flip = (yy + hei + hei * 8 > window_height)
@@ -91,19 +104,33 @@ textalpha = lerp(a_text_secondary, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 // Caption
-if (dh > (hei + (label_height + 8)))
+if (dh > (hei + (label_height + 8)) && capwid = null)
 {
 	draw_label(cap, xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_emphasis)
 	yy += (label_height + 8)
+}
+else if (capwid != null)
+{
+	draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha, font_emphasis)
+	wid -= capwid
+	xx += capwid
+}
+
+if (menuactive)
+{
+	xx = menuid.menu_x
+	wid = menuid.menu_w
 }
 
 // Button
 bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
 bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.PRESS])
+bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
 borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
 borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
+borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 
-if (menu_name = name)
+if (menuactive)
 	draw_box(xx, yy, wid, hei, false, c_background, 1)
 
 draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha, true)
@@ -143,62 +170,85 @@ draw_image(spr_chevrons, 1, xx + wid - hei / 2, yy + hei / 2, 1, 1, chevroncolor
 // Disabled overlay
 draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
 
-microani_update(mouseon, mouseon && mouse_left, (menu_name = name && menu_ani_type != "hide"), disabled, ((menu_name = name && menu_ani_type != "hide") ? !flip : flip))
+microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
 
 // Update menu position
-if (menu_name = name)
+if (menuactive)
 {
 	menu_x = xx
 	menu_y = yy
 }
 
 // Check click
-if (mouseon && mouse_left_released)
+if (mouseon && mouse_left_released && !menuhide)
 {
+	var m = null;
+	for (var i = 0; i < ds_list_size(menu_list); i++)
+	{
+		if (menu_list[|i].menu_name = name)
+		{
+			m = menu_list[|i]
+			break;
+		}
+	}
+	
+	if (m = null)
+		m = new(obj_menu)
+	
 	window_busy = "menu"
-	//window_focus = string(menu_scroll_vertical)
+	window_focus = ""//string(menu_scroll_vertical)
 	app_mouse_clear()
 	
-	menu_name = name
-	menu_type = type
-	menu_temp_edit = temp_edit
-	menu_script = script
-	menu_value = value
-	menu_ani = 0
-	menu_ani_type = "show"
-	menu_flip = flip
-	menu_x = xx
-	menu_y = yy
-	menu_w = wid
-	menu_button_h = hei
-	menu_item_w = wid
-	menu_item_h = menu_button_h
-	menu_include_tl_edit = (menu_name != "timelineeditorparent")
-	menu_model_state = menu_model_state_current
-	menu_block_state = menu_block_state_current
-	menu_margin = 0//8
-	menu_transition = null
-	menu_steps = 0
-	menu_floating = false
+	m.menu_name = name
+	m.menu_type = type
+	m.menu_temp_edit = temp_edit
+	m.menu_script = script
+	m.menu_value = value
+	m.menu_ani = 0
+	m.menu_ani_type = "show"
+	m.menu_flip = flip
+	m.menu_x = xx
+	m.menu_y = yy
+	m.menu_w = wid
+	m.menu_button_h = hei
+	m.menu_item_w = wid
+	m.menu_item_h = m.menu_button_h
+	m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+	m.menu_margin = 0//8
+	m.menu_transition = null
+	m.menu_steps = 0
+	m.menu_floating = false
+	
+	m.content_x = content_x
+	m.content_width = content_width
+	
+	menu_current = m
 	
 	// Init
-	menu_clear()
+	menu_model_state = menu_model_state_current
+	menu_block_state = menu_block_state_current
 	
 	if (type = e_menu.LIST)
-		menu_list = list_init(menu_name)
+		m.menu_list = list_init(m.menu_name)
 	else if (type = e_menu.TIMELINE)
-		menu_list = menu_timeline_init()
+		m.menu_list = menu_timeline_init(m)
+	
+	/*
 	else if (type = e_menu.TRANSITION_LIST)
-		menu_list = menu_transition_init()
+		m.menu_list = menu_transition_init()
+	*/
 	
-	menu_amount = menu_list = null ? 0 : ds_list_size(menu_list.item)
-	menu_focus_selected()
+	m.menu_amount = m.menu_list = null ? 0 : ds_list_size(m.menu_list.item)
 	
+	with (m)
+		menu_focus_selected()
+		
 	// Flip
-	if (menu_flip)
-		menu_show_amount = floor((menu_y * 0.9) / menu_item_h)
+	if (m.menu_flip)
+		m.menu_show_amount = floor((m.menu_y * 0.9) / m.menu_item_h)
 	else
-		menu_show_amount = floor(((window_height - (menu_y + menu_button_h)) * 0.9) / menu_item_h)
+		m.menu_show_amount = floor(((window_height - (m.menu_y + m.menu_button_h)) * 0.9) / m.menu_item_h)
+	
 	
 	return true
 }
