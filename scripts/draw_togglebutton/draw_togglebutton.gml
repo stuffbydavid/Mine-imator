@@ -1,19 +1,24 @@
-/// draw_togglebutton(name, x, y, [labels])
+/// draw_togglebutton(name, x, y, [labels, [showcaption]])
 /// @arg name
 /// @arg x
 /// @arg y
-/// @arg [labels]
+/// @arg [labels
+/// @arg [showcaption]]
 /// @desc Displays togglebutton options
 
-var name, xx, yy, labels;
+var name, xx, yy, labels, showcaption;
 var h, w, buttonx, buttonh, buttoncount, buttonsize, mouseon, script, scriptvalue, axis;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
 labels = true
+showcaption = true
 
 if (argument_count > 3)
-	labels = argument[3]
+	showcaption = argument[3]
+
+if (argument_count > 4)
+	showcaption = argument[4]
 
 h = 32 + (label_height + 8)
 w = dw
@@ -25,9 +30,12 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 }
 
 // Label
-draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+if (showcaption)
+{
+	draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+	yy += (label_height + 8)
+}
 
-yy += (label_height + 8)
 buttonx = xx
 buttonh = 32
 

@@ -8,6 +8,8 @@ if (settings_menu_ani_type = "hide") //Hide
 	{
 		settings_menu_ani = 0
 		settings_menu_name = ""
+		settings_menu_ani_type = ""
+		window_busy = settings_menu_busy_prev
 		list_destroy(settings_menu_list)
 		return 0
 	}
@@ -40,7 +42,7 @@ else
 
 content_y = round(content_y)
 
-if (window_busy = "settingsmenu")
+if (window_busy = "settingsmenu" && settings_menu_ani_type = "" && settings_menu_ani = 1)
 	window_busy = ""
 
 content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
@@ -69,7 +71,7 @@ if (settings_menu_script)
 	else
 	{
 		settings_menu_h = min(dy - content_y, settings_menu_h_max)
-
+		
 		if ((dy - content_y) > settings_menu_h_max)
 		{
 			scrollbar_draw(settings_menu_scroll, e_scroll.VERTICAL, content_x + content_width - 12, content_y, content_height, dy - content_y)
@@ -110,26 +112,30 @@ if (settings_menu_primary)
 draw_set_alpha(1)
 
 // Flip
-if ((settings_menu_y + settings_menu_h) > window_height)
+if ((content_y + content_height) > window_height)
 	settings_menu_above = true
 
 // Check click
-if (settings_menu_script)
+if (settings_menu_ani_type = "" && mouse_left_released && !context_menu_mouseon && (ds_list_size(menu_list) = 0) && (window_focus = ""))
 {
-	if (mouse_left_released && !app_mouse_box(content_x, content_y, content_width, content_height) && !context_menu_mouseon && (ds_list_size(menu_list) = 0) && (window_focus = ""))
+	if (settings_menu_script)
 	{
-		settings_menu_ani = 1
-		settings_menu_ani_type = "hide"
-		window_busy = settings_menu_busy_prev
+		if (!app_mouse_box(content_x, content_y, content_width, content_height))
+		{
+
+			settings_menu_ani = 1
+			settings_menu_ani_type = "hide"
+			window_busy = "settingsmenu"
+		}
 	}
-}
-else
-{
-	if (mouse_left_released && !context_menu_mouseon && (ds_list_size(menu_list) = 0) && (window_focus = ""))
+	else
 	{
-		settings_menu_ani = 1
-		settings_menu_ani_type = "hide"
-		window_busy = settings_menu_busy_prev
+		if (!context_menu_mouseon)
+		{
+			settings_menu_ani = 1
+			settings_menu_ani_type = "hide"
+			window_busy = "settingsmenu"
+		}
 	}
 }
 

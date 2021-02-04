@@ -1992,8 +1992,10 @@
         "b": "B",
         "h": "H",
         "s": "S",
-        "v": "V",
-        "hex": "Hex"
+        "l": "L",
+        "hex": "Hex",
+        "rgb": "RGB",
+        "hsl": "HSL"
     },
     "background": "BACKGROUND",
     "background/": {

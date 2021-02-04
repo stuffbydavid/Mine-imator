@@ -10,7 +10,7 @@
 /// @arg tbx
 
 var name, xx, yy, w, color, def, hsbmode, script, tbx;
-var w, h, mouseon, mouseclick, swatchmouseon, swatchclick, update;
+var textx, textw, w, h, mouseon, mouseclick, swatchmouseon, swatchclick, update, active;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -20,6 +20,8 @@ def = argument[5]
 hsbmode = argument[6]
 script = argument[7]
 tbx = null
+textx = xx
+textw = w
 
 if (argument_count > 8)
 	tbx = argument[8]
@@ -32,6 +34,7 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 yy += (label_height + 8)
 h = 24
 
+active = (settings_menu_name = "colorpicker" && colorpicker.value_name = name)
 mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon
 mouseclick = mouseon && mouse_left
 
@@ -42,7 +45,7 @@ if (mouseon)
 	mouse_cursor = cr_handpoint
 
 context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
-microani_set(name, script, mouseon, mouseclick, popup = popup_colorpicker && popup_colorpicker.value_name = name, false, 1, true)
+microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
 
 // Caption
 draw_label(text_get(name), xx, yy - 4, fa_left, fa_bottom, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), font_emphasis)
@@ -69,30 +72,30 @@ iconcolor = (color_get_lum(color) > 150 ? c_black : c_white)
 iconalpha = (color_get_lum(color) > 150 ? 0.5 : 1)
 
 // Color button doesn't have disabled state, use disabled ease for swatch hover
-draw_image(spr_icons, icons.EYEDROPPER, xx + floor(h/2), yy + floor(h/2), 1, 1, iconcolor, iconalpha * mcroani_arr[e_mcroani.CUSTOM])
+draw_image(spr_icons, icons.EYEDROPPER, textx + floor(h/2), yy + floor(h/2), 1, 1, iconcolor, iconalpha * mcroani_arr[e_mcroani.CUSTOM])
 
 // Hex input
 draw_set_font(font_value)
-xx += 28
-w -= 28
+textx += 28
+textw -= 28
 
-draw_label("#", xx, yy + 4, fa_left, fa_top, c_text_secondary, a_text_secondary)
-xx += string_width("#")
-w -= string_width("#")
+draw_label("#", textx, yy + 4, fa_left, fa_top, c_text_secondary, a_text_secondary)
+textx += string_width("#")
+textw -= string_width("#")
 
-update = textbox_draw(tbx, xx, yy + 4, w, 18, true)
+update = textbox_draw(tbx, textx, yy + 4, textw, 18, true)
 
 if (update && (script != null))
 	script_execute(script, hex_to_color(tbx.text))
 
-microani_update(mouseon || window_focus = string(tbx), mouseclick, (popup = popup_colorpicker && popup_colorpicker.value_name = name) || window_focus = string(tbx), false, swatchmouseon)
+microani_update(mouseon || window_focus = string(tbx), mouseclick, active || window_focus = string(tbx), false, swatchmouseon)
 
 // Idle update
 if (window_focus != string(tbx) && color_to_hex(color) != tbx.text)
 	tbx.text = color_to_hex(color)
 
 if (swatchmouseon && mouse_left_released)
-	popup_colorpicker_show(name, color, def, script)
+	colorpicker_show(name, color, def, script, xx, yy, w, h)
 
 if (mouseon && !swatchmouseon && mouse_left_pressed && (window_focus != string(tbx)))
 {

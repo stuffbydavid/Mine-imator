@@ -1,4 +1,4 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, alpha, [drag]]])
+/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, [alpha, [drag, [update_values]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -9,10 +9,11 @@
 /// @arg snap
 /// @arg [showcaption
 /// @arg [stack
-/// @arg alpha
-/// @arg [drag]]]
+/// @arg [alpha
+/// @arg [drag
+/// @arg [update_values]]]]
 
-var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption, stack, alpha, drag;
+var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption, stack, alpha, drag, textfield_update;
 var fieldx, fieldy, fieldwid, fieldupdate, hei, dragw, vertical, mouseon;
 name = argument[0]
 xx = argument[1]
@@ -26,6 +27,7 @@ showcaption = false
 stack = true
 alpha = 1
 drag = true
+textfield_update = true
 
 if (argument_count > 8)
 	showcaption = argument[8]
@@ -38,6 +40,9 @@ if (argument_count > 10)
 
 if (argument_count > 11)
 	drag = argument[11]
+
+if (argument_count > 12)
+	textfield_update = argument[12]
 
 vertical = (wid < 225) && stack
 fieldx = xx
@@ -55,7 +60,6 @@ if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content
 mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
 
 // Last textfield has 'active' animation, will need that for label color and border
-
 microani_set(string(textfield_textbox[textfield_amount - 1]) + textfield_name[textfield_amount - 1], textfield_script[textfield_amount - 1], false, false, false, false, 1, false)
 
 var active = current_mcroani.custom;
@@ -181,20 +185,6 @@ for (var i = 0; i < textfield_amount; i++)
 	
 		if (mouse_left_pressed)
 			window_busy = textfield_name[i] + "press"
-	
-		// Reset to 0
-		if (context_menu_group_temp = null && mouse_right_pressed && textfield_default[i] != no_limit)
-		{
-			window_focus = textfield_name[i]
-			
-			if (textfield_script[i] != null)
-				script_execute(textfield_script[i], clamp(snap(textfield_default[i], snapval), minval, maxval), 0)
-			else
-			{
-				textfield_textbox[i].text = string_decimals(textfield_default[i])
-				fieldupdate = textfield_textbox[i]
-			}
-		}
 	}
 	
 	// Mouse pressed
@@ -223,7 +213,7 @@ for (var i = 0; i < textfield_amount; i++)
 		
 		var d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - textfield_value[i];
 		
-		if (d <> 0 && textfield_script[i] != null)
+		if (d <> 0 && textfield_script[i] != null && textfield_update)
 			script_execute(textfield_script[i], d, true)
 		else
 		{

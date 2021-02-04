@@ -20,6 +20,7 @@ name = argument[4]
 if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
 {
 	context_menu_close()
+	app_mouse_clear()
 	
 	context_menu_name = name
 	context_menu_copy_axis_edit = axis_edit

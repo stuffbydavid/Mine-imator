@@ -25,3 +25,5 @@ settings_menu_busy_prev = ""
 settings_menu_scroll = new(obj_scrollbar)
 
 settings_menu_steps = 0
+
+colorpicker_startup()
