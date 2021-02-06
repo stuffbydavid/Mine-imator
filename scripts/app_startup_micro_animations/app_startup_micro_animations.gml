@@ -2,12 +2,13 @@
 /// @desc Sets up micro animations for use with components
 
 globalvar mcroani_arr, current_mcroani;
-globalvar microanis, microani_hover, microani_click, microani_value;
+globalvar microanis, microani_hover, microani_click, microani_value, microani_prefix;
 
 mcroani_arr = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 current_mcroani = null
 
 microanis = ds_map_create()
+microani_prefix = ""
 
 enum e_mcroani
 {

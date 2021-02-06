@@ -23,6 +23,7 @@ app_update_backup()
 app_update_recent()
 app_update_work_camera()
 app_update_caption()
+app_update_toasts()
 app_update_interface()
 app_update_micro_animations()
 

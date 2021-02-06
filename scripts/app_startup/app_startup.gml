@@ -36,7 +36,7 @@ app_startup_interface_lists()
 
 app_startup_recent()
 
-alert_startup()
+toasts_startup()
 json_startup()
 settings_startup()
 project_startup()

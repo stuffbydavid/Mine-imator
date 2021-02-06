@@ -24,7 +24,7 @@ if (mode = "simple")
 	
 	for (var i = 0; i < recent_list_amount; i++)
 	{
-		var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon;
+		var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
 		var mouseon = hover;
 		var item = recent_list[|i];
 		
@@ -113,7 +113,7 @@ if (mode = "list")
 	draw_set_font(font_value)
 	for (var i = liststart; i < recent_list_amount; i++)
 	{
-		var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon;
+		var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
 		mouseon = hover
 		
 		var item = recent_list_display[|i];
@@ -204,7 +204,7 @@ if (mode = "grid")
 		if (cardy < yy + hei || cardy + 240 + 16 > yy)
 		{
 			item = recent_list_display[|i];
-			hover = areamouseon && app_mouse_box(cardx, cardy, 240, 240) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon;
+			hover = areamouseon && app_mouse_box(cardx, cardy, 240, 240) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
 			mouseon = hover
 			
 			// Animation

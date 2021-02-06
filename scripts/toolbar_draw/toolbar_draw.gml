@@ -189,21 +189,6 @@ if (content_direction = e_scroll.HORIZONTAL)
 else
 	dy -= padding
 
-// Alerts
-alert_x = content_x
-alert_y = content_y
-alert_alpha = draw_get_alpha()
-if (content_direction = e_scroll.HORIZONTAL)
-{
-	alert_width = dx - content_x
-	alert_height = content_height
-}
-else
-{
-	alert_width = content_width
-	alert_height = dy - content_y
-}
-
 // Bench
 benchx = boxx
 benchy = boxy
@@ -304,8 +289,7 @@ if (resizemouseon && mouse_left_pressed)
 }
 
 // Start moving
-if (app_mouse_box(boxx, boxy, boxw, boxh) && !app_mouse_box(alert_x, alert_y, alert_width, alert_height) &&
-	mouse_cursor = cr_default && mouse_left_pressed && !popup_mouseon)
+if (app_mouse_box(boxx, boxy, boxw, boxh) && mouse_cursor = cr_default && mouse_left_pressed && !popup_mouseon)
 {
 	window_busy = "toolbarclick"
 }

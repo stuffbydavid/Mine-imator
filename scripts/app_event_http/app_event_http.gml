@@ -13,7 +13,7 @@ if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 			if (ds_list_valid(versionslist))
 			{
 				var newversionmap = versionslist[|ds_list_size(versionslist) - 1];
-			
+				
 				// New assets available
 				if (ds_map_valid(newversionmap) && !file_exists_lib(minecraft_directory + newversionmap[?"version"] + ".zip"))
 				{
@@ -24,7 +24,7 @@ if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 						setting_minecraft_assets_new_version = newversionmap[?"version"]
 						setting_minecraft_assets_new_format = newversionmap[?"format"]
 						setting_minecraft_assets_new_changes = newversionmap[?"changes"]
-					
+						
 						if (is_string(newversionmap[?"image"]))
 						{
 							// Download image
@@ -33,10 +33,11 @@ if (async_load[?"id"] = http_assets && async_load[?"status"] < 1)
 						}
 						else
 							setting_minecraft_assets_new_image = ""
-				
+						
 						// Alert
-						alert_show(text_get("alertnewassetstitle", setting_minecraft_assets_new_version), text_get("alertnewassetstext"), icons.CHEST_SMALL)
-				
+						toast_new(e_toast.INFO, text_get("alertnewassets", setting_minecraft_assets_new_version))
+						toast_last.dismiss_time = no_limit
+						
 						log("New assets found", setting_minecraft_assets_new_version)
 					}
 				}
@@ -109,9 +110,11 @@ else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 				
 				if (ds_map_valid(newsmap))
 				{
-					title = newsmap[?"title"]
+					//title = newsmap[?"title"]
 					text = newsmap[?"text"]
 					icon = newsmap[?"icon"]
+					
+					/*
 					switch (icon)
 					{
 						case "website":		icon = icons.WEBSITE_SMALL;		break
@@ -123,6 +126,7 @@ else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 						case "render":		icon = icons.RENDER_SMALL;		break
 						default:			icon = null;					break
 					}
+					*/
 					
 					button = newsmap[?"button"]
 					buttonurl = newsmap[?"buttonurl"]
@@ -131,8 +135,13 @@ else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 					else
 						iid = null
 					
-					if (!iid || ds_list_find_index(closed_alert_list, iid) < 0)
-						alert_show(title, text, icon, button, buttonurl, null, iid)
+					if (!iid || ds_list_find_index(closed_toast_list, iid) < 0)
+					{
+						toast_new(e_toast.INFO, title)
+						toast_add_action(button, open_url, buttonurl)
+						toast_last.dismiss_time = no_limit
+						toast_last.iid = iid
+					}
 				}
 			}
 			ds_map_destroy(decodedmap)

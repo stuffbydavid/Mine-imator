@@ -38,13 +38,13 @@ if (true)
 	var animation;
 	
 	// Create micro animation object if it doesn't already exist
-	if (!ds_map_exists(microanis, name + string(script)))
+	if (!ds_map_exists(microanis, microani_prefix + (name + string(script))))
 	{
 		animation = new_animation(name + string(script), active, hover, click, disabled, custom, goalval)
 		animation.spd = spd
 	}
 	else
-		animation = ds_map_find_value(microanis, name + string(script))
+		animation = ds_map_find_value(microanis, microani_prefix + (name + string(script)))
 	
 	current_mcroani = animation
 	current_mcroani.steps_hidden = 0

@@ -95,7 +95,7 @@ content_x = boxx
 content_y = boxy + (tabsh * content_tab.movable)
 content_width = boxw
 content_height = boxh - (tabsh * content_tab.movable)
-content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 panel_draw_content()
 content_y = boxy
 
@@ -160,7 +160,7 @@ if (content_tab.movable)
 	
 	dx = boxx
 	dy = boxy
-	content_mouseon = !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon
+	content_mouseon = !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Tabs background
 	draw_box(dx, dy, tabmaxw, tabsh, false, c_background_secondary, 1)
@@ -294,7 +294,7 @@ resizemouseon = false
 if (panel = panel_map[?"left"] || panel = panel_map[?"left_secondary"])
 {
 	draw_gradient(boxx + boxw, boxy, shadow_size, boxh, c_black, shadow_alpha, 0, 0, shadow_alpha)
-	if (app_mouse_box(boxx + boxw - 5, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+	if (app_mouse_box(boxx + boxw - 5, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	{
 		mouse_cursor = cr_size_we
 		resizemouseon = true
@@ -303,7 +303,7 @@ if (panel = panel_map[?"left"] || panel = panel_map[?"left_secondary"])
 else if (panel = panel_map[?"right"] || panel = panel_map[?"right_secondary"])
 {
 	draw_gradient(boxx - shadow_size, boxy, shadow_size, boxh, c_black, 0, shadow_alpha, shadow_alpha, 0)
-	if (app_mouse_box(boxx, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+	if (app_mouse_box(boxx, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	{
 		mouse_cursor = cr_size_we
 		resizemouseon = true
@@ -312,7 +312,7 @@ else if (panel = panel_map[?"right"] || panel = panel_map[?"right_secondary"])
 else if (panel = panel_map[?"bottom"]) 
 {
 	draw_gradient(boxx, boxy - shadow_size, boxw, shadow_size, c_black, 0, 0, shadow_alpha, shadow_alpha) 
-	if (app_mouse_box(boxx, boxy, boxw, 5) && tablistmouseon = null && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+	if (app_mouse_box(boxx, boxy, boxw, 5) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	{
 		mouse_cursor = cr_size_ns
 		resizemouseon = true 

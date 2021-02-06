@@ -1,5 +1,7 @@
 /// micro_animation_event_create()
 
+key = ""
+
 steps_alive = 0
 steps_hidden = 0
 custom_ease = false

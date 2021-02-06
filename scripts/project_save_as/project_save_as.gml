@@ -41,4 +41,5 @@ popup_close()
 
 project_save()
 
-alert_show(text_get("alertprojectsavedtitle"), text_get("alertprojectsaveastext"), null, "alertprojectcreatedbutton", project_folder, 5000)
+toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))
+toast_add_action("alertprojectcreatedview", open_url, project_folder)

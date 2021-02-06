@@ -10,7 +10,7 @@ setting_minecraft_assets_new_image = ""
 
 setting_project_folder = projects_directory
 
-closed_alert_list = ds_list_create()
+closed_toast_list = ds_list_create()
 
 backup_next = 0
 setting_backup = true
@@ -252,7 +252,7 @@ setting_snap_size_scale = 1
 
 // New UI settings
 setting_reduced_motion = false
-snackbar_mouseon = false
+toast_mouseon = false
 setting_wind_enable = true
 
 settings_load()

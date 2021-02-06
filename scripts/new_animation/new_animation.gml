@@ -8,12 +8,14 @@
 /// @arg [goal]]]
 
 var microanimation = new(obj_micro_animation)
-ds_map_add(microanis, argument[0], microanimation)
+ds_map_add(microanis, microani_prefix + argument[0], microanimation)
 
 if (argument_count > 1)
 {
 	with (microanimation)
 	{
+		key = microani_prefix + argument[0]
+		
 		value = argument[1]
 		value_ani = value
 		value_ani_ease = value

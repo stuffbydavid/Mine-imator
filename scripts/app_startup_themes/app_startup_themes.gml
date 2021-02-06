@@ -70,6 +70,11 @@ theme_edit.cyan = hex_to_color("51C2FF")
 theme_edit.yellow = hex_to_color("FFD969")
 theme_edit.magenta = hex_to_color("FF37E8")
 
+theme_edit.toast_color[e_toast.INFO] = hex_to_color("1F8EF3")
+theme_edit.toast_color[e_toast.POSITIVE] = hex_to_color("61C159")
+theme_edit.toast_color[e_toast.WARNING] = hex_to_color("FFC01E")
+theme_edit.toast_color[e_toast.NEGATIVE] = hex_to_color("FF1D0F")
+
 #endregion
 
 #region Dark theme
@@ -114,6 +119,11 @@ theme_edit.cyan = hex_to_color("51C2FF")
 theme_edit.yellow = hex_to_color("FFD969")
 theme_edit.magenta = hex_to_color("FF37E8")
 
+theme_edit.toast_color[e_toast.INFO] = hex_to_color("7EC1FF")
+theme_edit.toast_color[e_toast.POSITIVE] = hex_to_color("64E879")
+theme_edit.toast_color[e_toast.WARNING] = hex_to_color("FFEB36")
+theme_edit.toast_color[e_toast.NEGATIVE] = hex_to_color("FF7A72")
+
 #endregion
 
 #region Darker theme
@@ -157,5 +167,10 @@ theme_edit.pink = hex_to_color("FF5FFF")
 theme_edit.cyan = hex_to_color("51C2FF")
 theme_edit.yellow = hex_to_color("FFD969")
 theme_edit.magenta = hex_to_color("FF37E8")
+
+theme_edit.toast_color[e_toast.INFO] = hex_to_color("7EC1FF")
+theme_edit.toast_color[e_toast.POSITIVE] = hex_to_color("64E879")
+theme_edit.toast_color[e_toast.WARNING] = hex_to_color("FFEB36")
+theme_edit.toast_color[e_toast.NEGATIVE] = hex_to_color("FF7A72")
 
 #endregion

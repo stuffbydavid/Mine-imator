@@ -508,6 +508,8 @@ enum icons
 	TRANSITION,
 	MARKER_ADD,
 	TAG,
+	INFO,
+	WARNING_TRIANGLE,
 	
 	WEBSITE_SMALL, 
 	WEBSITE_MEDIUM, 
@@ -704,4 +706,13 @@ enum e_nbt
 	TAG_INT_ARRAY	= 11,
 	TAG_LONG_ARRAY	= 12,
 	amount
+}
+
+// Toasts
+enum e_toast
+{
+	INFO,
+	POSITIVE,
+	WARNING,
+	NEGATIVE
 }

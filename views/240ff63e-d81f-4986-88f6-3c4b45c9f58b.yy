@@ -12,7 +12,8 @@
         "ad9f3f07-dc2e-4960-8529-c99e6e841971",
         "6afe4723-2ca1-4806-a667-ec3b88937f81",
         "6292d01d-aafa-42eb-845e-56c35fdd1363",
-        "84d9376a-3cd4-4b38-99ca-1a54b8b25b92"
+        "84d9376a-3cd4-4b38-99ca-1a54b8b25b92",
+        "655dfc6d-1d21-483d-94f9-563688d23d2b"
     ],
     "filterType": "GMScript",
     "folderName": "Window",

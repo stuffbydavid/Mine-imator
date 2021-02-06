@@ -42,10 +42,10 @@ json_save_array_start("recent_files")
 	
 json_save_array_done()
 
-json_save_array_start("closed_alerts")
+json_save_array_start("closed_toasts")
 
-	for (var i = 0; i < ds_list_size(closed_alert_list); i++)
-		json_save_array_value(closed_alert_list[|i])
+	for (var i = 0; i < ds_list_size(closed_toast_list); i++)
+		json_save_array_value(closed_toast_list[|i])
 		
 json_save_array_done()
 

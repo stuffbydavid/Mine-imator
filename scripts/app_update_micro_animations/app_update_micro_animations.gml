@@ -33,8 +33,12 @@ with (obj_tab)
 // Component animations
 with (obj_micro_animation)
 {	
-	if (steps_hidden > 60)
-		continue
+	// Delete after 3 seconds
+	if (steps_hidden > 60 * 3)
+	{
+		ds_map_delete(microanis, key)
+		instance_destroy()
+	}
 	
 	#region Hover
 	

@@ -29,7 +29,6 @@ else
 	toolbar_draw()
 	window_draw_cover()
 	window_draw_timeline_move()
-	toolbar_draw_alerts()
 }
 
 if (!bench_show_ani)
@@ -37,6 +36,7 @@ if (!bench_show_ani)
 if (bench_show_ani)
 	popup_draw()
 menu_settings_draw()
+window_draw_toasts()
 menu_draw()
 context_menu_draw()
 tip_draw()

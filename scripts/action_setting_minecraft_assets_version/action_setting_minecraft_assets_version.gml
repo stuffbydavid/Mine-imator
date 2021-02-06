@@ -4,5 +4,5 @@
 if (setting_minecraft_assets_version != argument0)
 {
 	setting_minecraft_assets_version = argument0
-	alert_show(text_get("alertrestartprogramtitle"), text_get("alertrestartprogramtext"), null, "", "", 5000)
+	toast_new(e_toast.NEGATIVE, text_get("alertrestartprogram"))
 }

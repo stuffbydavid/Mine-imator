@@ -12,7 +12,6 @@ var framestep, framehighlight, f;
 var markerx, markery;
 var regionx1, regionx2;
 
-content_mouseon = true
 markerbarshow = (ds_list_size(timeline_marker_list) > 0) && timeline_show_markers
 
 // Background
@@ -81,8 +80,8 @@ else
 	timeline_insert_pos = timeline_marker
 
 // Mouse
-mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
-mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon)
+mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 mousetl = floor((mouse_y - tly + timeline.ver_scroll.value) / itemh)
 mousetlname = null
 mousekf = null
@@ -103,6 +102,7 @@ timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / 
 // Timeline header
 var timex, timelabel;
 timex = headerx + 8
+content_mouseon = app_mouse_box(headerx, headery, headerw, headerh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 
 // Current time
 draw_set_font(font_heading)
@@ -221,6 +221,7 @@ draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || 
 buttonsx += 24 + 2
 
 timeline_settings_right_w = (buttonsx - buttonsxstart)
+content_mouseon = app_mouse_box(barx, bary, barw, barh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 
 // Empty
 if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
@@ -378,6 +379,7 @@ if (markerbarh != 0)
 	var barmouseon, markx, markeditx, marky, markw, markh, marker, color, name, markermouseon, markermouseonx;
 	barmouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh)
 	markermouseon = null
+	content_mouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	draw_set_font(font_emphasis)
 	draw_set_halign(fa_left)
@@ -495,6 +497,8 @@ if (markerbarh != 0)
 		}
 	}
 }
+
+content_mouseon = true
 
 // Keyframes
 dy = tly
@@ -1374,7 +1378,7 @@ if (window_busy = "timelineclickkeyframes")
 }
 
 // Bar
-if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, barh - 5 * (tab.panel = panel_map[?"bottom"])) && !popup_mouseon)
+if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, barh - 5 * (tab.panel = panel_map[?"bottom"])) && !popup_mouseon && !context_menu_mouseon && !toast_mouseon)
 {
 	mouse_cursor = cr_handpoint
 	
@@ -1569,7 +1573,7 @@ if (window_busy = "timelineselectkeyframes" ||
 	timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 }
 
-content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !snackbar_mouseon && !context_menu_mouseon //(app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left"] || tab.panel = panel_map[?"left_secondary"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
+content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon //(app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left"] || tab.panel = panel_map[?"left_secondary"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
 
 // Vertical scrollbar
 if (tlw > 16)

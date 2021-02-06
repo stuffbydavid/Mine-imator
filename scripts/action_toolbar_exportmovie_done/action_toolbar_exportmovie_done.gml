@@ -25,4 +25,5 @@ if (exportmovie_format = "png")
 else
 	fn = exportmovie_filename
 
-alert_show(text_get("alertexportmovietitle"), "", icons.SAVE_SMALL, "alertexportmoviebutton", fn, 5000)
+toast_new(e_toast.POSITIVE, text_get("alertexportmovie"))
+toast_add_action("alertexportmovieview", open_url, fn)
