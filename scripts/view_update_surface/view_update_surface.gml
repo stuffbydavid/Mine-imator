@@ -9,11 +9,14 @@ cam = argument1
 render_view_current = view
 
 // Render
-render_lights = view.lights
+render_lights = (view.quality != e_view_mode.FLAT)
+render_fog = view.fog
 render_particles = view.particles
+render_effects = view.effects
+render_quality = view.quality
 render_start(view.surface, cam, content_width, content_height)
 
-if (view.render)
+if (view.quality = e_view_mode.RENDER)
 {
 	render_high()
 	
@@ -27,7 +30,7 @@ if (view.render)
 else
 	render_low()
 
-if (view.controls)
+if (view.overlays && view.gizmos)
 {
 	// Selection
 	if (tl_edit_amount > 0)

@@ -25,7 +25,7 @@ if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 // Set fog
 if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)
 {
-	var fog = (render_lights && app.background_fog_show);
+	var fog = (render_fog && app.background_fog_show);
 	render_set_uniform_int("uFogShow", bool_to_float(fog))
 
 	if (fog)

@@ -27,3 +27,10 @@ settings_menu_scroll = new(obj_scrollbar)
 settings_menu_steps = 0
 
 colorpicker_startup()
+
+tbx_grid_rows = new_textbox_integer()
+tbx_grid_columns = new_textbox_integer()
+
+tbx_snap_position = new_textbox_decimals()
+tbx_snap_rotation = new_textbox_decimals()
+tbx_snap_scale = new_textbox_decimals()

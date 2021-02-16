@@ -21,7 +21,7 @@ if (!export)
 		render_shadows_clear = true
 	}
 	
-	if (render_samples > setting_render_shadows_samples)
+	if (render_samples >= setting_render_shadows_samples)
 		return 0
 	
 	samplestart = render_samples

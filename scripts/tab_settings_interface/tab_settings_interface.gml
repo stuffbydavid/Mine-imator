@@ -13,15 +13,6 @@ if (setting_tip_show)
 tab_next()
 dy += 10
 
-// View
-capwid = text_caption_width("settingsviewgridsizehor") + 15
-
-tab_control_dragger()
-draw_dragger("settingsviewgridsizehor", dx, dy, capwid, setting_view_grid_size_hor, 0.05, 1, 10, 3, 1, tab.interface.tbx_view_grid_size_hor, action_setting_view_grid_size_hor)
-draw_label("x", dx + capwid, dy + 17, fa_left, fa_bottom)
-draw_dragger("settingsviewgridsizever", dx + capwid, dy, dw - capwid, setting_view_grid_size_ver, 0.05, 1, 10, 3, 1, tab.interface.tbx_view_grid_size_ver, action_setting_view_grid_size_ver, 15, text_get("settingsviewgridsizehortip"))
-tab_next()
-
 tab_control_checkbox()
 draw_checkbox("settingsviewrealtimerender", dx, dy, setting_view_real_time_render, action_setting_view_real_time_render)
 tab_next()

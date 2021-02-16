@@ -234,7 +234,7 @@ if (wind)
 if (!wind_terrain)
 	render_set_uniform("uWindTerrain", 1)
 if (!fog)
-	render_set_uniform_int("uFogShow", (render_lights && app.background_fog_show))
+	render_set_uniform_int("uFogShow", (render_fog && app.background_fog_show))
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", 1)
 

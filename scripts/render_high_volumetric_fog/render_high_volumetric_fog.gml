@@ -43,6 +43,9 @@ if (render_samples <= setting_render_shadows_samples || render_shadows_clear || 
 	
 	for (var s = samplestart; s < sampleend; s++)
 	{
+		if (render_samples >= setting_render_shadows_samples)
+			continue
+		
 		random_set_seed(s)
 		
 		// Render sun depth buffer
@@ -160,7 +163,7 @@ surface_set_target(resultsurf)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_volumetric_fog_apply_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, min(render_samples, app.setting_render_shadows_samples))
+		shader_high_volumetric_fog_apply_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, (export ? app.setting_render_shadows_samples : render_samples))
 	}
 	draw_surface_exists(prevsurf, 0, 0)
 	with (render_shader_obj)

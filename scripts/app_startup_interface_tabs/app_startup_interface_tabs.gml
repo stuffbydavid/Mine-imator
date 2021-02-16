@@ -679,8 +679,6 @@ with (settings)
 	with (interface)
 	{
 		tbx_tip_delay = new_textbox_decimals()
-		tbx_view_grid_size_hor = new_textbox_integer()
-		tbx_view_grid_size_ver = new_textbox_integer()
 		tbx_view_real_time_render_time = new_textbox_integer()
 	}
 	

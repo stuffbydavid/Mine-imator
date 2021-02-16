@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.01.29"
+        "lastchange": "2021.02.13"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -566,8 +566,39 @@
         "stagedone": "(%1% Done)"
     },
     "view/": {
-        "rendertip": "Render in high quality mode to enable shaders for added realism.",
-        "renderfps": "Render FPS: %1",
+        "mode/": {
+            "flat": "Flat mode",
+            "shaded": "Shaded mode",
+            "render": "Render mode",
+            "fog": "Minecraft fog"
+        },
+        "overlay/": {
+            "grid": "Grid",
+            "grid/": {
+                "rows": "Rows",
+                "columns": "Columns"
+            },
+            "gizmos": "Gizmos",
+            "aspectratio":"Aspect ratio"
+        },
+        "snap/": {
+            "move": "Move",
+            "rotate": "Rotate",
+            "scale": "Scale",
+            "absolute": "Absolute snapping",
+            "enable": "Enable snapping",
+            "disable": "Disable snapping"
+        },
+        "close": "Close view",
+        "secondenable": "Enable secondary viewport",
+        "seconddisable": "Disable secondary viewport",
+        "particlesenable": "Show particles",
+        "particlesdisable": "Hide particles",
+        "overlaysenable": "Enable overlays",
+        "overlaysdisable": "Disable overlays",
+        "effectsenable": "Enable post-processing",
+        "effectsdisable": "Disable post-processing",
+        "renderfps": "%1 FPS (%2/%3 samples)",
         "rendertime": "Rendered in %1 seconds",
         "workcamera": "Work camera",
         "activecamera": "Active camera (%1)",
@@ -575,8 +606,9 @@
         "controlstip": "Toggle controls, wireframes and highlights in the view.",
         "lightstip": "Toggle lighting and fog in the view.",
         "particlestip": "Toggle particles in the view.",
-        "gridtip": "Toggle grid (size changeable in settings).",
-        "aspectratiotip": "Toggle aspect ratio of the exported video.",
+        "grid": "Grid",
+        "aspectratio": "Aspect ratio",
+        "gizmos": "Gizmos",
         "closetip": "Close this view."
     },
     "tab/": {
@@ -2617,9 +2649,6 @@
         "tipdelay": "Delay",
         "tipdelayseconds": "seconds",
         "tipdelaytip": "The delay between the cursor hovering over a control and a tip appearing.",
-        "viewgridsizehor": "View grid size",
-        "viewgridsizehortip": "The size of the view grid.",
-        "viewgridsizever": "",
         "viewrealtimerender": "Real time rendering",
         "viewrealtimerendertip": "Enable real time rendering when activating shaders.",
         "viewrealtimerendertime": "Max render time",

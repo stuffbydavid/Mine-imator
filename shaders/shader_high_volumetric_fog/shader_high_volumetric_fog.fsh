@@ -238,7 +238,7 @@ void main()
 	float sampleDensity;
 	
 	// Volumetric rays
-	float raysOpacity = 0.0;
+	float raysOpacity = 1.0;
 	float extinction = mix((1.0 - uDensity), 0.0, 0.5);
 	
 	// Sample steps along ray
@@ -257,14 +257,12 @@ void main()
 		}
 		else // Only calculate volumetric rays
 		{
-			//fogLight += getLight(rayPos) * mix(uDensity, 0.0, 0.5);
-			raysOpacity += getLight(rayPos) * (stepLength * (uDensity * .01)) * .2;//*= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
+			fogLight += getLight(rayPos) * mix(uDensity, 0.0, 0.5);
+			raysOpacity *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
 		}
 		
 		rayPos += stepSize;
 	}
-	
-	raysOpacity = clamp(raysOpacity, 0.0, 1.0);
 	
 	if (uRaysOnly == 1)
 		fogLight *= raysOpacity;
@@ -273,5 +271,5 @@ void main()
 	fogLight = clamp(fogLight, 0.0, 4.0) * 0.25;
 	
 	// Alpha channel isn't reliable, use RGB for data
-	gl_FragColor = vec4(raysOpacity, fogLight, 0.0, 1.0);
+	gl_FragColor = vec4(fogOpacity, fogLight, 0.0, 1.0);
 }

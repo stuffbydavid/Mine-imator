@@ -41,8 +41,8 @@ setting_tip_delay = buffer_read_double()
 
 if (load_format >= e_settings.FORMAT_100)
 {
-	setting_view_grid_size_hor = buffer_read_byte()
-	setting_view_grid_size_ver = buffer_read_byte()
+	/*setting_view_grid_size_hor = */buffer_read_byte()
+	/*setting_view_grid_size_ver = */buffer_read_byte()
 }
 if (load_format >= e_settings.FORMAT_103)
 {
@@ -251,16 +251,16 @@ if (load_format >= e_settings.FORMAT_100)
 	
 	setting_view_split = buffer_read_double()
 	
-	setting_view_main_controls = buffer_read_byte()
-	setting_view_main_lights = buffer_read_byte()
+	setting_view_main_overlays = buffer_read_byte()
+	/*setting_view_main_lights*/ = buffer_read_byte()
 	setting_view_main_particles = buffer_read_byte()
 	setting_view_main_grid = buffer_read_byte()
 	setting_view_main_aspect_ratio = buffer_read_byte()
 	setting_view_main_location = buffer_read_string_int()
 	
 	setting_view_second_show = buffer_read_byte()
-	setting_view_second_controls = buffer_read_byte()
-	setting_view_second_lights = buffer_read_byte()
+	setting_view_second_overlays = buffer_read_byte()
+	/*setting_view_second_lights*/ = buffer_read_byte()
 	setting_view_second_particles = buffer_read_byte()
 	setting_view_second_grid = buffer_read_byte()
 	setting_view_second_aspect_ratio = buffer_read_byte()

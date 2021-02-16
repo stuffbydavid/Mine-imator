@@ -12,7 +12,10 @@
         "a7c9c661-c9e2-49f9-aaf8-95a10b8176b8",
         "b9c4979c-01cd-471d-b559-9abf8dcafd27",
         "32883665-ba61-4248-9a11-48734292b807",
-        "e3be2dce-28e7-48d3-8143-6670bac3e84a"
+        "e3be2dce-28e7-48d3-8143-6670bac3e84a",
+        "a6832b02-4f16-48c0-82b4-08f65ccd9abc",
+        "96587c09-f4e2-417f-a39d-d7e1528b977c",
+        "10af6493-ba4a-48c5-b9f9-b11f84b0c733"
     ],
     "filterType": "GMScript",
     "folderName": "View",

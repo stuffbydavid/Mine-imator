@@ -46,11 +46,7 @@ if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content
 	return 0
 
 mouseon = (content_mouseon && !disabled && app_mouse_box(xx, yy, wid, hei))
-
-if (sprite != spr_icons && icon = null)
-	icon = 0
-
-animated = (sprite != spr_icons && sprite != null && sprite_get_number(sprite) > 1)
+animated = (sprite != spr_icons && sprite != null && icon = null && sprite_get_number(sprite) > 1)
 
 if (mouseon)
 	mouse_cursor = cr_handpoint

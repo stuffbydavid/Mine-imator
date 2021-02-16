@@ -39,3 +39,5 @@ if ((settings_menu_x + (settings_menu_w/2)) > window_width)
 	settings_menu_x += window_width - (settings_menu_x + (settings_menu_w/2))
 
 settings_menu_button_h = buttonheight
+
+settings_menu_view = null

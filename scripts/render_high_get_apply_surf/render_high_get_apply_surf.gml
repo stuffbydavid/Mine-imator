@@ -1,11 +1,11 @@
 /// render_high_get_apply_surf()
-/// @desc Updates which slot the final surface should be on on
+/// @desc Updates which slot the final surface should be on
 
 var surf;
 
 if (render_effects_done)
 {
-	render_target = surface_require(render_target, render_width, render_height, true)
+	render_target = surface_require(render_target, render_width, render_height)
 	surf = render_target
 }
 else

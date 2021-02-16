@@ -81,9 +81,7 @@ if (filename_ext(fn) = ".midata")
 	{
 		setting_tip_show = value_get_real(interfacemap[?"tip_show"], setting_tip_show)
 		setting_tip_delay = value_get_real(interfacemap[?"tip_delay"], setting_tip_delay)
-
-		setting_view_grid_size_hor = value_get_real(interfacemap[?"view_grid_size_hor"], setting_view_grid_size_hor)
-		setting_view_grid_size_ver = value_get_real(interfacemap[?"view_grid_size_ver"], setting_view_grid_size_ver)
+		
 		setting_view_real_time_render = value_get_real(interfacemap[?"view_real_time_render"], setting_view_real_time_render)
 		setting_view_real_time_render_time = value_get_real(interfacemap[?"view_real_time_render_time"], setting_view_real_time_render_time)
 
@@ -131,19 +129,23 @@ if (filename_ext(fn) = ".midata")
 		
 		setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)
 		
-		setting_view_main_controls = value_get_real(interfacemap[?"view_main_controls"], setting_view_main_controls)
-		setting_view_main_lights = value_get_real(interfacemap[?"view_main_lights"], setting_view_main_lights)
-		setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
-		setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
+		setting_view_main_overlays = value_get_real(interfacemap[?"view_main_overlays"], setting_view_main_overlays)
 		setting_view_main_aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], setting_view_main_aspect_ratio)
+		setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
+		setting_view_main_gizmos = value_get_real(interfacemap[?"view_main_gizmos"], setting_view_main_gizmos)
+		setting_view_main_fog = value_get_real(interfacemap[?"view_main_fog"], setting_view_main_fog)
+		setting_view_main_effects = value_get_real(interfacemap[?"view_main_effects"], setting_view_main_effects)
+		setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
 		setting_view_main_location = value_get_string(interfacemap[?"view_main_location"], setting_view_main_location)
 		
 		setting_view_second_show = value_get_real(interfacemap[?"view_second_show"], setting_view_second_show)
-		setting_view_second_controls = value_get_real(interfacemap[?"view_second_controls"], setting_view_second_controls)
-		setting_view_second_lights = value_get_real(interfacemap[?"view_second_lights"], setting_view_second_lights)
-		setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
-		setting_view_second_grid = value_get_real(interfacemap[?"view_second_grid"], setting_view_second_grid)
+		setting_view_second_overlays = value_get_real(interfacemap[?"view_second_overlays"], setting_view_second_overlays)
 		setting_view_second_aspect_ratio = value_get_real(interfacemap[?"view_second_aspect_ratio"], setting_view_second_aspect_ratio)
+		setting_view_second_grid = value_get_real(interfacemap[?"view_second_grid"], setting_view_second_grid)
+		setting_view_second_gizmos = value_get_real(interfacemap[?"view_second_gizmos"], setting_view_second_gizmos)
+		setting_view_second_fog = value_get_real(interfacemap[?"view_second_fog"], setting_view_second_fog)
+		setting_view_second_effects = value_get_real(interfacemap[?"view_second_effects"], setting_view_second_effects)
+		setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
 		setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 		setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 		setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
@@ -248,7 +250,6 @@ if (filename_ext(fn) = ".midata")
 	var rendermap = map[?"render"];
 	if (ds_map_valid(rendermap))
 	{
-		setting_render_camera_effects = value_get_real(rendermap[?"render_camera_effects"], setting_render_camera_effects)
 		setting_render_dof_quality = value_get_real(rendermap[?"render_dof_quality"], setting_render_dof_quality)
 		
 		setting_render_ssao = value_get_real(rendermap[?"render_ssao"], setting_render_ssao)

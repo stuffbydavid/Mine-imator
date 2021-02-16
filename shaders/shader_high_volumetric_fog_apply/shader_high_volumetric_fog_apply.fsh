@@ -32,7 +32,7 @@ void main()
 	if (uRaysOnly == 0)
 		baseColor.rgb = mix(baseColor.rgb, fogColor, opacity);
 	else
-		baseColor.rgb = mix(baseColor.rgb, uColor.rgb, opacity);//baseColor.rgb += (uSunColor.rgb * uColor.rgb * color);
+		baseColor.rgb += (uSunColor.rgb * uColor.rgb * color);
 	
 	gl_FragColor = baseColor;
 }

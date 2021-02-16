@@ -510,6 +510,10 @@ enum icons
 	TAG,
 	INFO,
 	WARNING_TRIANGLE,
+	QUALITY_FLAT,
+	QUALITY_RENDERED,
+	WAND,
+	FIREWORKS,
 	
 	WEBSITE_SMALL, 
 	WEBSITE_MEDIUM, 
@@ -566,6 +570,14 @@ enum e_render_mode
 	SCENE_TEST,
 	HIGH_LIGHT_SUN_COLOR,
 	HIGH_INDIRECT_DEPTH_NORMAL
+}
+
+// Viewport render mode
+enum e_view_mode
+{
+	FLAT,
+	SHADED,
+	RENDER
 }
 
 // Menus

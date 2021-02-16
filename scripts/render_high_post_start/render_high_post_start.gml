@@ -4,26 +4,23 @@
 var prevsurf, basesurf;
 prevsurf = argument0
 
-if (!render_effects_done)
+// Are there any post processing effects?
+render_effects_progress = -1
+render_update_effects()
+
+basesurf = render_high_get_apply_surf()
+
+surface_set_target(basesurf)
 {
-	render_surface_post[0] = surface_require(render_surface_post[0], render_width, render_height)
-	basesurf = render_surface_post[0]
-	render_post_index = !render_post_index
-	
-	surface_set_target(basesurf)
-	{
-		draw_clear_alpha(c_black, 0)
-		draw_surface_exists(prevsurf, 0, 0)
-	}
-	surface_reset_target()
+	draw_clear_alpha(c_black, 0)
+	draw_surface_exists(prevsurf, 0, 0)
 }
-else
-	basesurf = render_high_get_apply_surf()
+surface_reset_target()
 
 render_update_effects()
 
 // Initialize lens surface if needed
-if (render_camera_lens_dirt)
+if (render_camera_lens_dirt && !render_effects_done)
 {
 	render_surface_lens = surface_require(render_surface_lens, render_width, render_height)
 	

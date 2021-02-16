@@ -24,23 +24,29 @@ view_glow_left = 0
 view_split = setting_view_split
 
 view_main = new(obj_view)
-view_main.controls = setting_view_main_controls
-view_main.lights = setting_view_main_lights
-view_main.particles = setting_view_main_particles
-view_main.grid = setting_view_main_grid
+view_main.overlays = setting_view_main_overlays
 view_main.aspect_ratio = setting_view_main_aspect_ratio
+view_main.grid = setting_view_main_grid
+view_main.gizmos = setting_view_main_gizmos
+view_main.fog = setting_view_main_fog
+view_main.effects = setting_view_main_effects
+view_main.particles = setting_view_main_particles
 view_main.location = setting_view_main_location
+view_main.quality = e_view_mode.SHADED
 
 view_second = new(obj_view)
 view_second.show = setting_view_second_show
-view_second.controls = setting_view_second_controls
-view_second.lights = setting_view_second_lights
-view_second.particles = setting_view_second_particles
-view_second.grid = setting_view_second_grid
+view_second.overlays = setting_view_second_overlays
 view_second.aspect_ratio = setting_view_second_aspect_ratio
+view_second.grid = setting_view_second_grid
+view_second.gizmos = setting_view_second_gizmos
+view_second.fog = setting_view_second_fog
+view_second.effects = setting_view_second_effects
+view_second.particles = setting_view_second_particles
 view_second.location = setting_view_second_location
 view_second.width = setting_view_second_width
 view_second.height = setting_view_second_height
+view_second.quality = e_view_mode.SHADED
 
 view_render = false
 view_render_real_time = true

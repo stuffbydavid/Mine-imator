@@ -23,8 +23,6 @@ setting_unlimited_values = false
 setting_tip_show = true
 setting_tip_delay = 0.35
 
-setting_view_grid_size_hor = 3
-setting_view_grid_size_ver = 3
 setting_view_real_time_render = true
 setting_view_real_time_render_time = 1000
 
@@ -50,7 +48,7 @@ setting_timeline_compact = false
 setting_timeline_select_jump = true
 setting_timeline_hide_ghosts = false
 setting_z_is_up = false
-setting_smooth_camera = true
+setting_smooth_camera = false
 setting_search_variants = true
 
 setting_toolbar_location = "top"
@@ -74,19 +72,23 @@ setting_settings_location = "right_secondary"
 
 setting_view_split = 0.5
 
-setting_view_main_controls = true
-setting_view_main_lights = true
-setting_view_main_particles = true
-setting_view_main_grid = false
+setting_view_main_overlays = true
 setting_view_main_aspect_ratio = false
+setting_view_main_grid = false
+setting_view_main_gizmos = true
+setting_view_main_fog = true
+setting_view_main_effects = true
+setting_view_main_particles = true
 setting_view_main_location = "full"
 
 setting_view_second_show = false
-setting_view_second_controls = false
-setting_view_second_lights = true
-setting_view_second_particles = true
-setting_view_second_grid = false
+setting_view_second_overlays = true
 setting_view_second_aspect_ratio = true
+setting_view_second_grid = false
+setting_view_second_gizmos = false
+setting_view_second_fog = true
+setting_view_second_effects = true
+setting_view_second_particles = true
 setting_view_second_location = "right_bottom"
 setting_view_second_width = 440
 setting_view_second_height = 280
@@ -167,7 +169,6 @@ setting_block_glow = true
 setting_block_glow_threshold = 0.75
 setting_light_bleeding = true
 
-setting_render_camera_effects = true
 setting_render_dof_quality = 3
 
 setting_render_ssao = true
@@ -246,6 +247,7 @@ setting_collapse_frameeditor_itemslot = false
 
 // Snap
 setting_snap = false
+setting_snap_absolute = true
 setting_snap_size_position = 1
 setting_snap_size_rotation = 15
 setting_snap_size_scale = 1
