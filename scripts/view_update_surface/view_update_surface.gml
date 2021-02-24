@@ -68,25 +68,49 @@ if (view.overlays && view.gizmos)
 			// Controls
 			if (tl_edit != null && tl_edit != cam)
 			{
-				if (!tl_edit.hide && tl_edit.value_inherit[e_value.VISIBLE] && (!(view.render && tl_edit.hq_hiding) && !(!view.render && tl_edit.lq_hiding)))
-				{
-					if (tl_edit.value_type[e_value_type.POSITION] && frame_editor.position.show)
-						view_control_position(view)
-					if (tl_edit.value_type[e_value_type.ROTATION] && frame_editor.rotation.show)
-						view_control_rotation(view)
-					if (tl_edit.value_type[e_value_type.BEND] && frame_editor.bend.show)
-						view_control_bend(view)
-					if (tl_edit.value_type[e_value_type.CAMERA] && tl_edit.value[e_value.CAM_ROTATE] && frame_editor.camera.show)
-						view_control_camera(view)
-						
-					view.control_mouseon_last = view.control_mouseon
-					view.control_mouseon = null
-				}
+				var vis = false;
+				
+				with (tl_edit)
+					vis = tl_get_visible()
 				
 				// Update 2D position
 				tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
 				tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= content_width || tl_edit.world_pos_2d[Y] >= content_height)
+				
+				if (vis)
+				{
+					view_control_ratio = 1//max(1, (100 / content_height) * 1.25)
+					
+					if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && (setting_tool = e_view_tool.SCALE || setting_tool = e_view_tool.TRANSFORM))
+						view_control_scale(view)
+					
+					if (tl_edit.value_type[e_value_type.CAMERA] && tl_edit.value[e_value.CAM_ROTATE])
+						view_control_camera(view)
+					
+					if (tl_edit.value_type[e_value_type.TRANSFORM_POS] && (setting_tool = e_view_tool.MOVE || setting_tool = e_view_tool.TRANSFORM))
+						view_control_position(view)
+					
+					if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && (setting_tool = e_view_tool.ROTATE || setting_tool = e_view_tool.TRANSFORM))
+						view_control_rotation(view)
+					
+					if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_tool = e_view_tool.BEND)
+						view_control_bend(view)
+					
+					view.control_mouseon_last = view.control_mouseon
+					view.control_mouseon = null
+					
+					if (window_busy = "rendercontrol" && view_control_edit_view = view)
+						app_mouse_wrap(content_x, content_y, content_width, content_height)
+						
+					if (!tl_edit.world_pos_2d_error)
+						draw_circle_ext(tl_edit.world_pos_2d[X] + 1, tl_edit.world_pos_2d[Y] + 1, 6, false, 64, c_white, 1)
+				}
 			}
+			
+			// Alpha fix
+			gpu_set_blendmode_ext(bm_src_color, bm_one)
+			draw_box(0, 0, render_width, render_height, false, c_black, 1)
+			gpu_set_blendmode(bm_normal)
 			
 		}
 		surface_reset_target()

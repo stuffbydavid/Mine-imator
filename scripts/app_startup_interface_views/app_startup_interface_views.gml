@@ -33,6 +33,7 @@ view_main.effects = setting_view_main_effects
 view_main.particles = setting_view_main_particles
 view_main.location = setting_view_main_location
 view_main.quality = e_view_mode.SHADED
+view_main.tool = e_view_tool.TRANSFORM
 
 view_second = new(obj_view)
 view_second.show = setting_view_second_show
@@ -47,13 +48,25 @@ view_second.location = setting_view_second_location
 view_second.width = setting_view_second_width
 view_second.height = setting_view_second_height
 view_second.quality = e_view_mode.SHADED
+view_second.tool = e_view_tool.SELECT
 
 view_render = false
 view_render_real_time = true
 
+view_control_ratio = 1
 view_control_edit = null
 view_control_edit_view = null
 view_control_vec = vec2(0, 0)
 view_control_pos = vec2(0, 0)
 view_control_flip = false
 view_control_value = 0
+view_control_move_distance = 0
+view_control_scale_coords = vec2(0)
+view_control_scale_amount = 1
+view_control_value_scale = vec3(1)
+view_control_matrix = null
+view_control_length = null
+view_control_ray_dir = vec3(0)
+view_control_plane_normal = vec3(0)
+view_control_plane_origin = vec3(0)
+view_control_plane = false

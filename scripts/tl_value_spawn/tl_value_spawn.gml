@@ -38,7 +38,7 @@ else if (type = e_tl_type.BACKGROUND)
 }
 
 // Spawn at work camera position
-else if (parent = app && part_of = null && type != e_tl_type.FOLDER && value_type[e_value_type.POSITION])
+else if (parent = app && part_of = null && type != e_tl_type.FOLDER && value_type[e_value_type.TRANSFORM_POS])
 {
 	if (!app.setting_spawn_objects)
 		return 0

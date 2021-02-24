@@ -114,7 +114,6 @@ with (obj_timeline)
 					ds_list_add(other.part_list, id)
 					lock_bend = part.lock_bend
 					part_mixing_shapes = part.part_mixing_shapes
-					value_type_show[e_value_type.POSITION] = part.show_position
 					tlexists = true
 					break
 				}	

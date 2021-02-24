@@ -26,23 +26,26 @@ value_type[e_value_type.GRAPHICS] = true
 if (type = e_tl_type.CAMERA)
 	value_type[e_value_type.GRAPHICS] = false
 
+// Transform
+value_type[e_value_type.TRANSFORM] = true
+
 // Position
-value_type[e_value_type.POSITION] = true
+value_type[e_value_type.TRANSFORM_POS] = true
 
 // Rotation
 if (type != e_tl_type.POINT_LIGHT)
-	value_type[e_value_type.ROTATION] = true
+	value_type[e_value_type.TRANSFORM_ROT] = true
 
 // Scale
 if (type != e_tl_type.PARTICLE_SPAWNER &&
 	type != e_tl_type.CAMERA &&
 	type != e_tl_type.POINT_LIGHT &&
 	type != e_tl_type.SPOT_LIGHT)
-	value_type[e_value_type.SCALE] = true
+	value_type[e_value_type.TRANSFORM_SCA] = true
 
 // Bend
 if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != null)
-	value_type[e_value_type.BEND] = true
+	value_type[e_value_type.TRANSFORM_BEND] = true
 
 // Color
 if (type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)

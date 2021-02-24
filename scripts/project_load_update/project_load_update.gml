@@ -98,10 +98,6 @@ with (obj_timeline)
 			scenery_animate = true
 	}
 	
-	// Show tab
-	if (model_part != null)
-		value_type_show[e_value_type.POSITION] = model_part.show_position
-	
 	if (is_banner)
 		array_add(banner_update, id)
 }

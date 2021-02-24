@@ -72,7 +72,7 @@ if (alpha = null)
 if (showcaption)
 {
 	draw_label(text_get(name), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
-	yy += (label_height + 8)
+	yy += (label_height + 12)
 }
 
 hei = 24

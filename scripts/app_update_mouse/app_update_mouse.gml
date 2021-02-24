@@ -34,6 +34,12 @@ if (mouse_previous_x != mouse_x || mouse_previous_y != mouse_y)
 else
 	mouse_still++
 
+if (mouse_left_released || mouse_right_released)
+{
+	mouse_wrap_x = 0
+	mouse_wrap_y = 0
+}
+
 window_scroll_focus_prev = window_scroll_focus
 window_scroll_focus = ""
 

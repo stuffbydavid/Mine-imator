@@ -1,5 +1,6 @@
 /// app_update_work_camera()
 
+/*
 if (window_busy = "")
 {
 	if (tl_edit != null) 
@@ -15,6 +16,7 @@ if (window_busy = "")
 	else
 		cam_work_focus_tl = null
 }
+*/
 
 cam_work_zoom += (cam_work_zoom_goal - cam_work_zoom) / max(1, 4 / delta)
 

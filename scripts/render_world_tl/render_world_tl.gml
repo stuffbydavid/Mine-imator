@@ -59,7 +59,7 @@ if (type = e_tl_type.PARTICLE_SPAWNER ||
 		return 0
 }
 
-if (value_inherit[e_value.ALPHA] = 0)
+if ((value_inherit[e_value.ALPHA] * 1000) = 0)
 	return 0
 
 // Set render options

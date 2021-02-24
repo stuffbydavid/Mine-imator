@@ -41,7 +41,7 @@ for (var s = 0; s < ds_list_size(part.shape_list); s++)
 		continue
 	
 	// Check alpha if valid to render
-	if (shape.color_alpha = 0)
+	if ((shape.color_alpha * 1000) = 0)
 		continue
 	
 	// Does the part need to move a certain amount for this shape to render?

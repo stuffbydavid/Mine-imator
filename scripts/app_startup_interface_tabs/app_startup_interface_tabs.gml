@@ -420,6 +420,40 @@ with (timeline_editor)
 frame_editor = new_tab(setting_frame_editor_location, false)
 with (frame_editor)
 {
+	// Transform
+	transform = tab_add_category("frameeditortransform", tab_frame_editor_transform, false)
+	with (transform)
+	{
+		// Position
+		tbx_pos_x = new_textbox_ndecimals()
+		tbx_pos_y = new_textbox_ndecimals()
+		tbx_pos_z = new_textbox_ndecimals()
+		
+		// Rotation
+		loops = false
+		tbx_rot_x = new_textbox(true, 10, "x-.0123456789")
+		tbx_rot_x.suffix = "°"
+		tbx_rot_y = new_textbox(true, 10, "x-.0123456789")
+		tbx_rot_y.suffix = "°"
+		tbx_rot_z = new_textbox(true, 10, "x-.0123456789")
+		tbx_rot_z.suffix = "°"
+		
+		// Scale
+		scale_all = false
+		tbx_sca_x = new_textbox_decimals()
+		tbx_sca_y = new_textbox_decimals()
+		tbx_sca_z = new_textbox_decimals()
+		
+		// Bend
+		tbx_bend[0] = new_textbox_ndecimals()
+		tbx_bend[0].suffix = "°"
+		tbx_bend[1] = new_textbox_ndecimals()
+		tbx_bend[1].suffix = "°"
+		tbx_bend[2] = new_textbox_ndecimals()
+		tbx_bend[2].suffix = "°"
+	}
+	
+	/*
 	// Position
 	position = tab_add_category("frameeditorposition", tab_frame_editor_position, false)
 	with (position)
@@ -468,6 +502,7 @@ with (frame_editor)
 		tbx_snap = new_textbox_decimals()
 		tbx_snap.text = string(snap_size)
 	}
+	*/
 	
 	// Color
 	color = tab_add_category("frameeditorcolor", tab_frame_editor_color, false)

@@ -14,14 +14,14 @@ switch (name)
 		// Rotation loops
 		if (context_menu_group = e_context_group.ROTATION)
 		{
-			var text = (frame_editor.rotation.loops ? "contextmenugroupdisableloops" : "contextmenugroupenableloops");
+			var text = (frame_editor.transform.loops ? "contextmenugroupdisableloops" : "contextmenugroupenableloops");
 			list_item_add(text_get(text), null, "", null, icons.LOOPS, null, action_group_rotation_loops, true)
 		}
 		
 		// Combine scale
 		if (context_menu_group = e_context_group.SCALE)
 		{
-			var text = (frame_editor.scale.scale_all ? "contextmenuscaleseperate" : "contextmenuscalecombine");
+			var text = (frame_editor.transform.scale_all ? "contextmenuscaleseperate" : "contextmenuscalecombine");
 			list_item_add(text_get(text), null, "", null, icons.TOOLSET_SCALE, null, action_group_combine_scale, true)
 		}
 		

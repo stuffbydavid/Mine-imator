@@ -11,3 +11,5 @@ control_mouseon_last = null
 render = false
 width = 440
 height = 280
+toolbar_height = 0
+toolbar_mouseon = false

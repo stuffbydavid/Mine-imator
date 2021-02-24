@@ -101,7 +101,7 @@ tl_update_values_ease(e_value.TRANSITION, "instant", 0)
 var trans = value[e_value.TRANSITION];
 
 // Position
-if (value_type[e_value_type.POSITION])
+if (value_type[e_value_type.TRANSFORM_POS])
 {
 	tl_update_values_ease(e_value.POS_X, trans, p)
 	tl_update_values_ease(e_value.POS_Y, trans, p)
@@ -109,7 +109,7 @@ if (value_type[e_value_type.POSITION])
 }
 
 // Rotation
-if (value_type[e_value_type.ROTATION])
+if (value_type[e_value_type.TRANSFORM_ROT])
 {
 	tl_update_values_ease(e_value.ROT_X, trans, p)
 	tl_update_values_ease(e_value.ROT_Y, trans, p)
@@ -117,7 +117,7 @@ if (value_type[e_value_type.ROTATION])
 }
 
 // Scale
-if (value_type[e_value_type.SCALE])
+if (value_type[e_value_type.TRANSFORM_SCA])
 {
 	tl_update_values_ease(e_value.SCA_X, trans, p)
 	tl_update_values_ease(e_value.SCA_Y, trans, p)
@@ -125,7 +125,7 @@ if (value_type[e_value_type.SCALE])
 }
 
 // Bend
-if (value_type[e_value_type.BEND])
+if (value_type[e_value_type.TRANSFORM_BEND])
 {
 	tl_update_values_ease(e_value.BEND_ANGLE_X, trans, p)
 	tl_update_values_ease(e_value.BEND_ANGLE_Y, trans, p)

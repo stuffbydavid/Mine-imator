@@ -77,10 +77,12 @@ enum e_minecraft_pack
 // Value types
 enum e_value_type
 {
-	POSITION,
-	ROTATION,
-	SCALE,
-	BEND,
+	TRANSFORM,
+	TRANSFORM_POS,
+	TRANSFORM_ROT,
+	TRANSFORM_SCA,
+	TRANSFORM_BEND,
+	
 	COLOR,
 	PARTICLES,
 	LIGHT,
@@ -514,6 +516,12 @@ enum icons
 	QUALITY_RENDERED,
 	WAND,
 	FIREWORKS,
+	TOOL_SELECT,
+	TOOL_MOVE,
+	TOOL_ROTATE,
+	TOOL_SCALE,
+	TOOL_BEND,
+	TOOL_TRANSFORM,
 	
 	WEBSITE_SMALL, 
 	WEBSITE_MEDIUM, 
@@ -727,4 +735,44 @@ enum e_toast
 	POSITIVE,
 	WARNING,
 	NEGATIVE
+}
+
+// Viewport tools
+enum e_view_tool
+{
+	SELECT,
+	MOVE,
+	ROTATE,
+	SCALE,
+	BEND,
+	TRANSFORM,
+	amount
+}
+
+enum e_view_control
+{
+	POS_X,
+	POS_Y,
+	POS_Z,
+	POS_XY,
+	POS_XZ,
+	POS_YZ,
+	POS_PAN,
+	
+	ROT_X,
+	ROT_Y,
+	ROT_Z,
+	
+	SCA_X,
+	SCA_Y,
+	SCA_Z,
+	SCA_XYZ,
+	
+	BEND_X,
+	BEND_Y,
+	BEND_Z,
+	
+	ROT_ANGLE_XY,
+	ROT_ANGLE_Z,
+	ROT_DISTANCE
 }

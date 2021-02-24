@@ -1,6 +1,6 @@
 /// tab_frame_editor_bend()
 
-if (tl_edit.model_part = null || tl_edit.model_part.bend_part = null)
+if (tl_edit.model_part = null || tl_edit.model_part.bend_part = null || !tl_edit.value_type[e_value_type.TRANSFORM_BEND])
 	return 0
 
 var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
@@ -28,7 +28,7 @@ if (axislen > 0)
 			continue
 		
 		tab_control_meter()
-		draw_meter("frameeditorbend" + axisname[i], dx, dy, dw, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], 48, tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], 0, snapval, tab.bend.tbx_wheel[i], action_tl_frame_bend_angle)
+		draw_meter("frameeditorbend" + axisname[i], dx, dy, dw, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], 48, tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], 0, snapval, tab.transform.tbx_bend[i], action_tl_frame_bend_angle)
 		tab_next()
 	}
 }

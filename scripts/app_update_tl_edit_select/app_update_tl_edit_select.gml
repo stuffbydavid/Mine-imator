@@ -2,6 +2,9 @@
 
 with (frame_editor)
 {
+	transform.show = false
+	transform.enabled = false
+	/*
 	position.show = false
 	position.enabled = false
 	rotation.show = false
@@ -9,6 +12,7 @@ with (frame_editor)
 	scale.enabled = false
 	bend.show = false
 	bend.enabled = false
+	*/
 	color.enabled = false
 	particles.enabled = false
 	light.enabled = false
@@ -89,19 +93,10 @@ with (obj_timeline)
 			}
 		}
 	}
-		
+	
 	// Set enabled
-	if (value_type[e_value_type.POSITION])
-		app.frame_editor.position.enabled = true
-		
-	if (value_type[e_value_type.ROTATION])
-		app.frame_editor.rotation.enabled = true
-		
-	if (value_type[e_value_type.SCALE])
-		app.frame_editor.scale.enabled = true
-		
-	if (value_type[e_value_type.BEND])
-		app.frame_editor.bend.enabled = true
+	if (value_type[e_value_type.TRANSFORM])
+		app.frame_editor.transform.enabled = true
 		
 	if (value_type[e_value_type.COLOR])
 		app.frame_editor.color.enabled = true
@@ -138,20 +133,10 @@ with (obj_timeline)
 		
 	if (value_type[e_value_type.AUDIO])
 		app.timeline_editor.audio.enabled = true
-		
-	// Set shown
-	if (value_type_show[e_value_type.POSITION])
-		app.frame_editor.position.show = true
-		
-	if (value_type_show[e_value_type.ROTATION])
-		app.frame_editor.rotation.show = true
 	
-	if (value_type_show[e_value_type.SCALE])
-		app.frame_editor.scale.show = true
-		
-	if (value_type_show[e_value_type.BEND])
-		app.frame_editor.bend.show = true
-		
+	// Set shown
+	app.frame_editor.transform.show = true
+	
 	if (value_type_show[e_value_type.CAMERA])
 		app.frame_editor.camera.show = true
 }

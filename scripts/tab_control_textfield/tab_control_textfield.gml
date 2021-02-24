@@ -14,4 +14,4 @@ if (argument_count > 1)
 else
 	size = 24
 
-tab_control(size + ((label_height + 8) * toplabel))
+tab_control(size + ((label_height + 12) * toplabel))

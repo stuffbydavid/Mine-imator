@@ -245,16 +245,16 @@ setting_collapse_frameeditor_ca = false
 setting_collapse_frameeditor_distort = false
 setting_collapse_frameeditor_itemslot = false
 
-// Snap
+// Viewport
 setting_snap = false
 setting_snap_absolute = true
 setting_snap_size_position = 1
 setting_snap_size_rotation = 15
 setting_snap_size_scale = 1
+setting_tool = e_view_tool.SELECT
 
 // New UI settings
 setting_reduced_motion = false
-toast_mouseon = false
 setting_wind_enable = true
 
 settings_load()

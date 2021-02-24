@@ -46,7 +46,7 @@ if (par != app)
 	tab_next()
 	
 	// Rotation
-	if (tl_edit.value_type[e_value_type.ROTATION])
+	if (tl_edit.value_type[e_value_type.TRANSFORM_ROT])
 	{
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorinheritrotation", dx, dy, tl_edit.inherit_rotation, action_tl_inherit_rotation)
@@ -59,7 +59,7 @@ if (par != app)
 	tab_next()
 	
 	// Scale
-	if (tl_edit.value_type[e_value_type.SCALE])
+	if (tl_edit.value_type[e_value_type.TRANSFORM_SCA])
 	{
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorinheritscale", dx, dy, tl_edit.inherit_scale, action_tl_inherit_scale)
@@ -112,7 +112,7 @@ if (par != app)
 	tab_set_collumns(false)
 	
 	// Scale mode
-	if (tl_edit.value_type[e_value_type.SCALE] && tl_edit.inherit_scale)
+	if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale)
 	{
 		tab_control_togglebutton()
 		togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)

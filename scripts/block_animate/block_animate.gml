@@ -77,7 +77,6 @@ with (new(obj_timeline))
 		value_default[e_value.ROT_Y] = other.rotation[Y]
 		value_default[e_value.ROT_Z] = other.rotation[Z]
 	}
-	value_type_show[e_value_type.POSITION] = false
 	
 	// Texture
 	if (other.texture != null)
@@ -121,8 +120,6 @@ with (new(obj_timeline))
 			value_default[e_value.SCA_Y] = 0.165
 			value_default[e_value.SCA_Z] = 0.165
 			value_default[e_value.RGB_MUL] = textcolor
-			value_type_show[e_value_type.POSITION] = false
-			value_type_show[e_value_type.ROTATION] = false
 			
 			tl_update()
 			tl_update_values()

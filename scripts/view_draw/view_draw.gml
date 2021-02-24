@@ -127,7 +127,7 @@ if (view = view_second)
 	cam = timeline_camera
 else
 	cam = null
-	
+
 // Caption
 padding = 4
 captionx = boxx + 12
@@ -343,7 +343,7 @@ if (content_width > 0 && content_height > 0)
 	content_y = floor(content_y)
 	content_width = ceil(content_width)
 	content_height = ceil(content_height)
-	content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && view.mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && view.mouseon && !view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	
 	if (!view.quality = e_view_mode.RENDER || view_render_real_time)
 		view_update(view, cam)
@@ -371,6 +371,16 @@ if (content_width > 0 && content_height > 0)
 		}
 	}
 }
+
+// Revert content size for overlays
+content_x = boxx
+content_y = boxy + captionh
+content_width = boxw
+content_height = boxh - captionh
+
+// Toolbar
+if (view = view_main)
+	view_toolbar_draw(view, boxx + 8, boxy + captionh + 8)
 
 // Moving / Resizing
 if (view = view_second) 
@@ -575,42 +585,15 @@ if (mouseonresizesplit && (mouse_cursor = cr_default || content_mouseon))
 // Render info
 if (view.quality = e_view_mode.RENDER)
 {
-	var infopadding, infox, infoy, infow, infoh, infotext;
+	var infotext;
 	
 	if (view_render_real_time)
-	{
 		infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), setting_render_shadows_samples)
-	}
 	else
 		infotext = ""
 	
 	draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .5, font_caption)
 	draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
-	
-	/*
-	
-	draw_set_font(setting_font_big)
-	
-	if (view_render_real_time)
-		infotext = text_get("viewrenderfps", string(fps))
-	else
-		infotext = text_get("viewrendertime", string_format(render_time / 1000, 1, 2))
-	
-	infopadding = 5
-	infow = string_width(infotext) + 10
-	infoh = 35
-	
-	if ((infow + infopadding * 2 < content_width) && (infoh + infopadding * 2 < content_height))
-	{
-		infox = boxx + infopadding
-		infoy = boxy + boxh - infoh - infopadding
-		
-		draw_box(infox, infoy, infow, infoh, false, c_black, 0.25)
-		draw_label(infotext, infox + infopadding, infoy + floor(infoh / 2), fa_left, fa_middle, c_white, 1)
-	}
-	
-	draw_set_font(setting_font)
-	*/
 }
 
 // Mouse on

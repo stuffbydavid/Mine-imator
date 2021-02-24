@@ -148,7 +148,7 @@
 #macro glow_alpha					0.75
 #macro shadow_size					5
 #macro shadow_alpha					0.1
-#macro view_3d_control_size			0.225
+#macro view_3d_control_size			0.175
 #macro view_3d_control_width		20
 #macro view_3d_box_size				12
 #macro button_padding				24

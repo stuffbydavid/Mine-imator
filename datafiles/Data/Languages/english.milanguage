@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.02.13"
+        "lastchange": "2021.02.20"
     },
     "tooltip/": {
         "showoptions": "Show options",
@@ -566,6 +566,14 @@
         "stagedone": "(%1% Done)"
     },
     "view/": {
+        "tool/": {
+            "selecttip": "Select tool",
+            "movetip": "Move tool",
+            "rotatetip": "Rotate tool",
+            "scaletip": "Scale tool",
+            "bendtip": "Bend tool",
+            "transformtip": "Transform tool"
+        },
         "mode/": {
             "flat": "Flat mode",
             "shaded": "Shaded mode",
@@ -2391,30 +2399,30 @@
         "audioadd": "Add sound"
     },
     "frameeditor/": {
-        "position": "POSITION",
+        "transform": "TRANSFORM",
+        "position": "Position",
         "position/": {
             "x": "X",
             "y": "Y",
             "z": "Z"
         },
-        "rotation": "ROTATION",
+        "rotation": "Rotation",
         "rotation/": {
             "x": "X",
             "y": "Y",
             "z": "Z"
         },
-        "scale": "SCALE",
+        "scale": "Scale",
         "scale/": {
             "xyz": "XYZ",
             "x": "X",
             "y": "Y",
             "z": "Z"
         },
-        "bend": "BEND",
         "bend/": {
-            "x": "X",
-            "y": "Y",
-            "z": "Z"
+            "x": "Bend X",
+            "y": "Bend Y",
+            "z": "Bend Z"
         },
         "color": "COLOR",
         "opacity": "Opacity",

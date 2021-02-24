@@ -53,11 +53,22 @@ if (window_focus = string(view))
 		
 		if ((!cam || !cam.lock) && mouse_move > 5)
 		{
-			view_click_x = display_mouse_get_x()
-			view_click_y = display_mouse_get_y()
-			window_busy = "viewrotatecamera"
-			if (cam)
-				action_tl_select_single(cam)
+			if (keyboard_check(vk_shift))
+			{
+				window_busy = "viewpancamera"
+				window_focus = string(view)
+				
+				if (cam)
+					action_tl_select_single(cam)
+			}
+			else
+			{
+				view_click_x = display_mouse_get_x()
+				view_click_y = display_mouse_get_y()
+				window_busy = "viewrotatecamera"
+				if (cam)
+					action_tl_select_single(cam)
+			}
 		}
 		
 		if (!mouse_left)
@@ -89,6 +100,18 @@ if (window_focus = string(view))
 		camera_control_move(cam, view_click_x, view_click_y)
 		
 		if (!mouse_right)
+		{
+			camera_work_set_focus()
+			window_busy = ""
+		}
+	}
+	
+	// Pan camera
+	if (window_busy = "viewpancamera")
+	{
+		camera_control_pan(cam)
+		
+		if (!mouse_left)
 		{
 			camera_work_set_focus()
 			window_busy = ""

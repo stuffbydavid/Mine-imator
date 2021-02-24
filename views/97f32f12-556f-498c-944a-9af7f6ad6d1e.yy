@@ -10,7 +10,8 @@
         "1ee3b2a6-531a-459a-99e3-b943e588b999",
         "22062aaf-a0fc-4cc2-91e3-0b2c30e27423",
         "a5455211-231f-4d9c-9a70-68b846fc0fef",
-        "bb1e874b-6bbf-42ae-9990-51a39944818f"
+        "bb1e874b-6bbf-42ae-9990-51a39944818f",
+        "0fcede24-0834-4a22-82b1-742cee0f6fd3"
     ],
     "filterType": "GMScript",
     "folderName": "Camera",
