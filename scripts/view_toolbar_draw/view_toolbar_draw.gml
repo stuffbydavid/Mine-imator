@@ -36,14 +36,23 @@ draw_outline(xx, yy, width, height, 1, c_border, a_border, true)
 xx += 4
 yy += 4
 
-// TODO: Workbench button
+tip_force_right = true
 
+// Workbench
+if (draw_button_icon("viewworkbench", xx, yy, 24, 24, (bench_show_ani_type = "show" || bench_show_ani = 1), icons.WORKBENCH, null, false, "viewworkbenchtip"))
+{
+	bench_settings.posy = yy - 4
+	bench_settings.posx = xx + 28
+	
+	bench_hover_ani = 0
+	bench_click_ani = 1
+	bench_show_ani_type = "show"
+	window_busy = "bench"
+}
 yy += 24 + padding
 
 draw_divide(xx, yy, 24)
 yy += 1 + padding
-
-tip_force_right = true
 
 // Select tool
 if (draw_button_icon("viewtoolselect", xx, yy, 24, 24, setting_tool = e_view_tool.SELECT, icons.TOOL_SELECT, null, false, "viewtoolselecttip"))

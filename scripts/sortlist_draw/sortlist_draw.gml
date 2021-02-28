@@ -1,15 +1,16 @@
-/// sortlist_draw(sortlist, x, y, width, height, select, [filter])
+/// sortlist_draw(sortlist, x, y, width, height, select, [filter, [name]])
 /// @arg sortlist
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg select
-/// @arg [filter]
+/// @arg [filter
+/// @arg [name]]
 /// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 
-var slist, xx, yy, w, h, select, filter;
-var colmouseon, itemh, colsh, dy;
+var slist, xx, yy, w, h, select, filter, name;
+var colmouseon, searchx, searchw, itemh, colsh, dy;
 slist = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -22,8 +23,16 @@ if (argument_count > 6)
 else
 	filter = true
 
+if (argument_count > 7)
+	name = argument[7]
+else
+	name = ""
+
 if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
+
+searchx = xx
+searchw = w
 
 // Item height
 itemh = 24
@@ -32,7 +41,7 @@ itemh = 24
 colsh = 24
 
 // Draw filter
-if (filter)
+if (filter && name = "")
 {
 	if (draw_button_icon("listfilter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
 	{
@@ -44,9 +53,22 @@ if (filter)
 
 	if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
 		current_mcroani.value = true
+	
+	searchx += 32
+	searchw -= 32
 }
 
-if (draw_textfield("listsearch" + string(slist), xx + (32 * filter), yy, w - (32 * filter), 24, slist.search_tbx, null, text_get("listsearch"), "none"))
+// Name
+if (name != "")
+{
+	draw_set_font(font_emphasis)
+	draw_label(string_limit(name, w - 144), xx, yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	
+	searchx += (w - 144)
+	searchw -= (w - 144)
+}
+
+if (draw_textfield("listsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
 {
 	slist.search = (slist.search_tbx.text != "")
 	sortlist_update(slist)

@@ -247,6 +247,15 @@ switch (name)
 		break
 	}
 	
+	// Shape type
+	case "benchshapetype":
+	{
+		for (var i = 0; i < ds_list_size(e_shape_type.amount) - 2; i++)
+			menu_add_item(i, text_get("type" + tl_type_name_list[|e_tl_type.CUBE + i]))
+		
+		break
+	}
+	
 	// Shape texture
 	case "benchshapetex":
 	case "libraryshapetex":

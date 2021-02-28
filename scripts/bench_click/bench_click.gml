@@ -49,7 +49,7 @@ with (bench_settings)
 		render_generate_item()
 	
 	// Switch to shape
-	if (type_is_shape(type))
+	if (type = e_tl_type.SHAPE)
 		temp_update_shape()
 		
 	// Switch to model
@@ -60,10 +60,12 @@ with (bench_settings)
 		temp_update_model_shape()
 		
 		// Modelbench popup
+		/*
 		if (show_modelbench_popup)
 			with (app)
 				if (!popup_modelbench.hidden && !popup_modelbench.not_now)
 					popup_show(popup_modelbench)
+		*/
 	}
 }
 

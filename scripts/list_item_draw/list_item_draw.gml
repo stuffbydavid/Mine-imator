@@ -139,7 +139,7 @@ if (item.icon_left != null && item.icon_left != -1)
 {
 	var iconsize = max(imgsize, 24);
 	
-	if (iconsize > 24)
+	if (iconsize >= 24)
 		leftp += 4
 	
 	draw_image(spr_icons, item.icon_left, xx + leftp + iconsize/2, middley, 1, 1, iconcolor, iconalpha)

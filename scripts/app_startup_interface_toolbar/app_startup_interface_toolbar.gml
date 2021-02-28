@@ -15,6 +15,30 @@ bench_show_ani = 0
 bench_width = 410
 bench_height = 325
 
+bench_type_list = list_new()
+bench_type_list.get_name = true
+list_edit = bench_type_list
+
+list_item_add("typechar", e_tl_type.CHARACTER, "", null, icons.TL_CHARACTER, null, bench_click)
+list_item_add("typebodypart", e_tl_type.BODYPART, "", null, icons.TL_BODYPART, null, bench_click)
+list_item_add("typemodel", e_tl_type.MODEL, "", null, icons.TL_MODEL, null, bench_click)
+
+list_item_add("typeitem", e_tl_type.ITEM, "", null, icons.TL_ITEM, null, bench_click)
+list_item_add("typescenery", e_tl_type.SCENERY, "", null, icons.TL_SCENERY, null, bench_click)
+list_item_add("typeblock", e_tl_type.BLOCK, "", null, icons.TL_BLOCK, null, bench_click)
+list_item_add("typespblock", e_tl_type.SPECIAL_BLOCK, "", null, icons.TL_SPECIAL_BLOCK, null, bench_click)
+
+list_item_add("typeshape", e_tl_type.SHAPE, "", null, icons.SHAPES, null, bench_click)
+list_item_add("typetext", e_tl_type.TEXT, "", null, icons.TL_TEXT, null, bench_click)
+
+list_item_add("typecamera", e_tl_type.CAMERA, "", null, icons.TL_CAMERA, null, bench_click)
+list_item_add("typeparticles", e_tl_type.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
+list_item_add("typelightsource", e_tl_type.LIGHT_SOURCE, "", null, icons.TL_POINT_LIGHT, null, bench_click)
+list_item_add("typeaudio", e_tl_type.AUDIO, "", null, icons.TL_AUDIO, null, bench_click)
+
+list_edit = null
+
+/*
 bench_type_list = ds_list_create()
 ds_list_add(bench_type_list,
 	e_tl_type.CHARACTER,
@@ -37,19 +61,18 @@ ds_list_add(bench_type_list,
 	e_tl_type.AUDIO,
 	e_tl_type.MODEL
 )
+*/
 
 // Workbench settings
 bench_settings = new(obj_bench_settings)
 with (bench_settings)
 {
+	posx = 0
+	posy = 0
+	
 	// Size
-	width = 0
-	width_goal = 0
 	height = 0
 	height_goal = app.bench_height
-	width_custom = 0
-	height_custom = 0
-	list_extend = true
 	
 	// Default settings
 	temp_event_create()
@@ -66,10 +89,13 @@ with (bench_settings)
 	block_tex = mc_res
 	text_font = mc_res
 	particle_preset = ""
+	type = e_temp_type.CHARACTER
+	shape_type = e_shape_type.SURFACE
+	light_type = e_tl_type.POINT_LIGHT
 	
 	// Preview window
 	preview = new(obj_preview)
-
+	
 	// Character list
 	char_list = new(obj_sortlist)
 	char_list.script = action_bench_model_name

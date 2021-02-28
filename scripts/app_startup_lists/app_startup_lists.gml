@@ -263,7 +263,9 @@ ds_list_add(tl_type_name_list,
 	"pointlight",
 	"folder",
 	"background",
-	"audio"
+	"audio",
+	"shape",
+	"lightsource"
 )
 
 // Resource types

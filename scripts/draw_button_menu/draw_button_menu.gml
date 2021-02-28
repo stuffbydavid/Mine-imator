@@ -52,6 +52,12 @@ if (argument_count > 13)
 {
 	texcolor = argument[13]
 	texalpha = argument[14]
+	
+	if (texcolor = null)
+		texcolor = c_white
+	
+	if (texalpha = null)
+		texalpha = 1
 }
 else
 {

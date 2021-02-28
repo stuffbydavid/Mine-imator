@@ -9,8 +9,6 @@ var tip;
 padding = 5
 cellsize = 30
 
-bench_draw()
-
 if (window_busy = "toolbarmove")
 {
 	offx = mouse_x - mouse_click_x
@@ -189,31 +187,6 @@ if (content_direction = e_scroll.HORIZONTAL)
 else
 	dy -= padding
 
-// Bench
-benchx = boxx
-benchy = boxy
-if (content_direction = e_scroll.HORIZONTAL)
-	benchx += 5
-else
-	benchy += 5
-
-benchscale = 1 - 0.2 * ease("easeinexpo", bench_click_ani)
-benchrot = sin(bench_hover_ani * pi * 5) * (1 - abs(bench_hover_ani * 2 - 1)) * 10
-bench_hover_ani = max(0, bench_hover_ani - 0.01 * delta)
-bench_click_ani = max(0, bench_click_ani - 0.05 * delta)
-content_mouseon = !popup_mouseon
-
-tip_set(text_get("toolbarbenchtip"), benchx, benchy, boxsize, boxsize - 5)
-
-if (benchrot <> 0)
-	gpu_set_tex_filter(true)
-
-draw_image(spr_bench, buttonimage, floor(benchx + boxsize / 2), floor(benchy + boxsize / 2), benchscale, benchscale, null, 1 - bench_show_ani * 0.5, benchrot)
-draw_set_alpha(1)
-
-if (benchrot <> 0)
-	gpu_set_tex_filter(false)
-
 // Resizing and moving
 resizemouseon = false
 switch (toolbar_location)
@@ -253,32 +226,6 @@ switch (toolbar_location)
 			resizemouseon = true
 		}
 		break
-}
-
-// Mouse on bench
-if (!resizemouseon && app_mouse_box(benchx, benchy, boxsize, boxsize - 5) && !popup_mouseon)
-{
-	mouse_cursor = cr_handpoint
-	if (bench_hover_ani = 0)
-		bench_hover_ani = 1
-	
-	if (mouse_left_pressed)
-	{
-		bench_hover_ani = 0
-		bench_click_ani = 1
-		bench_show_ani_type = "show"
-		window_busy = "bench"
-	}
-}
-
-// Open
-if (bench_open)
-{
-	bench_open = false
-	bench_hover_ani = 0
-	bench_click_ani = 1
-	bench_show_ani_type = "show"
-	window_busy = "bench"
 }
 
 // Start resizing

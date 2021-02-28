@@ -23,7 +23,7 @@ else
 	
 	if (type_is_timeline(bench_settings.type)) // Timeline
 	{
-		tl = new_tl(bench_settings.type)
+		tl = new_tl(bench_settings.type = e_tl_type.LIGHT_SOURCE ? bench_settings.light_type : bench_settings.type)
 		with (hobj)
 		{
 			spawn_save_id[spawn_amount] = tl.save_id

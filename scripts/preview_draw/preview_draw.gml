@@ -416,7 +416,8 @@ with (preview)
 									render_world_particle()
 							break
 						}
-					
+						
+						case e_tl_type.SHAPE:
 						case e_temp_type.CUBE: 
 						case e_temp_type.CONE: 
 						case e_temp_type.CYLINDER: 

@@ -331,7 +331,10 @@ enum e_tl_type
 	POINT_LIGHT,
 	FOLDER,
 	BACKGROUND,
-	AUDIO
+	AUDIO,
+	
+	LIGHT_SOURCE,
+	SHAPE
 } // Update app_startup_lists() when adding types
 
 // Resource types
@@ -352,6 +355,17 @@ enum e_res_type
 	SOUND,
 	MODEL
 } // Update app_startup_lists() when adding types
+
+// Shape types
+enum e_shape_type
+{
+	CUBE,
+	CONE,
+	CYLINDER,
+	SPHERE,
+	SURFACE,
+	amount
+}
 
 // Model format
 enum e_model_format
@@ -522,6 +536,8 @@ enum icons
 	TOOL_SCALE,
 	TOOL_BEND,
 	TOOL_TRANSFORM,
+	WORKBENCH,
+	SHAPES,
 	
 	WEBSITE_SMALL, 
 	WEBSITE_MEDIUM, 

@@ -166,7 +166,7 @@ if (popup.custom)
 	popup_height = popup_height_goal
 }
 else
-	popup_height_goal = ceil((((dy - 8) - dy_start) + 12) / 2) * 2
+	popup_height_goal = ceil((dy - dy_start) / 2) * 2
 
 if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
 	window_busy = "popupclick"
