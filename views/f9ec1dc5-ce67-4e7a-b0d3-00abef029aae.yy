@@ -11,7 +11,6 @@
         "1cd9317a-132f-422e-a5ba-83c85759157c",
         "afe9f3cb-8937-4a88-9a60-f51bfec4da8b",
         "b039353e-8497-40fe-a598-fd725749f96f",
-        "c83a7bb1-e6fa-4075-8766-eb1e2a6d4387",
         "67ad71a4-1e3b-4395-852e-3e671ed0b8d3",
         "2858cb0a-f589-4619-aa6e-b3465831c181",
         "95cd423a-40ca-48a1-a1f2-4446b91dc95c",
@@ -21,10 +20,7 @@
         "c99a4dcc-bbc9-46a9-9d68-ee4b8625c165",
         "c1b5d8a5-b103-495a-8b93-f0bbfba15bcb",
         "1d21d27c-264f-4cd4-a553-99f520426ea6",
-        "3111b600-d13b-44df-9afc-2f75296c133f",
-        "89c0ca86-58c4-4154-a83b-a3abdbf47eae",
-        "70757d08-9cb3-473f-b292-5b354d9c11c7",
-        "4dcbaf66-9de0-442d-931c-91f1172083b1"
+        "3111b600-d13b-44df-9afc-2f75296c133f"
     ],
     "filterType": "GMScript",
     "folderName": "Toolbar",

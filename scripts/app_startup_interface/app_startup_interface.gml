@@ -13,6 +13,7 @@ app_startup_interface_toolbar()
 app_startup_interface_views()
 app_startup_micro_animations()
 app_startup_interface_context_menu()
+app_startup_interface_sidemenu()
 togglebutton_reset()
 
 textbox_startup()

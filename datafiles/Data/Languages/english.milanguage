@@ -4,9 +4,11 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.02.27"
+        "lastchange": "2021.03.01"
     },
     "tooltip/": {
+        "sidemenuclose": "Close side menu",
+        "sidemenuopen": "Open side menu",
         "showoptions": "Show options",
 		"hideoptions": "Hide options",
         "remove": "Remove",
@@ -312,29 +314,8 @@
         "nameexists": "Project folder already exists."
     },
     "toolbar/": {
-        "benchtip": "Click to open the workbench.",
-        "newprojecttip": "Create a new project.",
-        "importassettip": "Import an asset (object, keyframes, particles, scenery, sound, image or another animation) into the project.",
-        "openprojecttip": "Open an existing project.",
-        "saveprojecttip": "Save the current project.",
-        "saveprojectastip": "Save the current project as a new copy.",
-        "exportmovietip": "Export the animation to a movie file.",
-        "exportimagetip": "Export the current frame to an image file.",
-        "openfoldertip": "Open the project folder.",
-        "viewsecondtip": "Toggle the secondary view.",
-        "settingstip": "Open the settings.",
-        "undotip": "Undo the latest action.",
-        "redotip": "Redo the latest undo.",
-        "playtip": "Play/Pause the animation from the marker's position.\n(%1: Play from marker)\n(%2: Play from beginning)",
-        "stoptip": "Stop playing the animation.",
-        "repeattip": "Repeat the animation after the marker passes the final keyframe.",
-        "seamlessrepeattip": "Repeat the animation while animating keyframes seamlessly.",
-        "showsecondstip": "Show/hide second and half-second marks on the timeline.",
-        "timestamptip": "Shows the marker's current position and the total animation length.",
-        "websitetip": "Visit the Mine-imator website.",
-        "tutorialstip": "Watch some helpful video tutorials about Mine-imator's features.",
-        "forumstip": "Visit the Mine-imator forums.",
-        "upgradetip": "You're running the Trial version of Mine-imator. Click to upgrade to Full."
+        "undotip": "Undo",
+        "redotip": "Redo"
     },
     "type/": {
         "char": "Character",

@@ -1,6 +1,8 @@
 /// popup_startup_draw()
 /// @desc Startup/welcome screen.
 
+
+/*
 var extratext, credittext, creditname;
 
 // Logo
@@ -65,7 +67,7 @@ if (trial_version)
 		popup_switch(popup_upgrade)
 	dy += dh + 8
 }
-	
+
 // Tutorials
 if (draw_button_normal("startuptutorials", dx, dy, dw, dh, e_button.TEXT, false, true, true, icons.HELP_SMALL))
 	action_toolbar_tutorials()
@@ -90,3 +92,4 @@ dh = content_height - (dy - content_y)
 draw_label(text_get("startuprecent") + ":", dx, dy - 22)
 
 draw_recent(dx, dy, dw, dh, popup_startup.recent_scroll)
+*/
