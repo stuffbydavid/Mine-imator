@@ -45,7 +45,7 @@ tab_next()
 
 // Is sheet
 tab_control_switch()
-draw_switch("importitemsheetissheet", dx, dy, popup.is_sheet, action_toolbar_importitemsheet_is_sheet, false)
+draw_switch("importitemsheetissheet", dx, dy, popup.is_sheet, action_toolbar_importitemsheet_is_sheet)
 tab_next()
 
 if (popup.is_sheet)

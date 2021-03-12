@@ -10,7 +10,7 @@
 /// @arg [disabled]]]]]]
 
 var name, xx, yy, w, h, icon, type, script, anchor, disabled;
-var cap, capwid, customw, mouseon, mouseclick;
+var font, cap, capwid, customw, mouseon, mouseclick;
 name = argument[0]
 xx = argument[1]
 yy = argument[2]
@@ -42,8 +42,11 @@ if (argument_count > 8)
 
 cap = text_get(name)
 
+h = (type != e_button.TOOLBAR ? 32 : toolbar_size)
+font = (type != e_button.TOOLBAR ? font_button : font_value)
+
 // Calculate width/position
-draw_set_font(font_button)
+draw_set_font(font)
 capwid = string_width(cap)
 
 if (w = null)

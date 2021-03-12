@@ -27,7 +27,7 @@ if (tl_edit.part_of = null)
 	{
 		var partname = array("right", "left", "front", "back", "upper", "lower");
 		tab_control_switch()
-		draw_switch("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend, true)
+		draw_switch("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend)
 		tab_next()
 	}
 }

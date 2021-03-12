@@ -15,7 +15,7 @@ if (history_undo)
 else
 {
 	var hobj;
-	marker = context_menu_value
+	marker = list_item_value
 	
 	if (!history_redo)
 	{

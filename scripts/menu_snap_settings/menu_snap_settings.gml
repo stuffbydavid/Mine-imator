@@ -22,7 +22,7 @@ draw_divide(content_x, dy, content_width)
 dy += 8
 
 tab_control_switch()
-draw_switch("viewsnapabsolute", dx, dy, setting_snap_absolute, action_setting_snap_absolute, true)
+draw_switch("viewsnapabsolute", dx, dy, setting_snap_absolute, action_setting_snap_absolute)
 tab_next()
 
 settings_menu_w = (max(draggerwid + 64, switchwid) + 24)

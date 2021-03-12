@@ -119,7 +119,7 @@ for (var i = 0; i < buttoncount; i++)
 	
 	// Text
 	if (labels)
-		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, contentcolor, contentalpha)
+		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, contentcolor, contentalpha, font_button)
 	
 	// Outline
 	draw_outline(buttonx, yy, boxwid, buttonh, 1, c_background, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
@@ -143,7 +143,7 @@ for (var i = 0; i < buttoncount; i++)
 	buttonx += buttonsize
 }
 
-draw_set_font(font_button)
+
 
 buttonx = xx
 

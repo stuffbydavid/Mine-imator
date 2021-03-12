@@ -27,7 +27,7 @@ else
 	var hobj = history_save_var_start(action_tl_color_tag, false);
 	
 	// Apply to selected objects
-	if (context_menu_value.selected)
+	if (list_item_value.selected)
 	{
 		with (obj_timeline)
 		{
@@ -42,7 +42,7 @@ else
 	}
 	else // Only apply to right-clicked object
 	{
-		with (context_menu_value)
+		with (list_item_value)
 		{
 			with (hobj)
 				history_save_var(other.id, other.color_tag, argument0)

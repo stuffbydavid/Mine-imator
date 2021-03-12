@@ -4,7 +4,7 @@
         "language": "English",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.03.01"
+        "lastchange": "2021.03.12"
     },
     "tooltip/": {
         "sidemenuclose": "Close side menu",
@@ -315,7 +315,40 @@
     },
     "toolbar/": {
         "undotip": "Undo",
-        "redotip": "Redo"
+        "redotip": "Redo",
+        "file": "File",
+        "file/": {
+            "new": "New project...",
+            "open": "Open project",
+            "recent": "Open recent...",
+            "save": "Save project",
+            "saveas": "Save project as...",
+            "import": "Import asset..."
+        },
+        "edit": "Edit",
+        "edit/": {
+            "undo": "Undo",
+            "redo": "Redo",
+            "duplicate": "Duplicate instance",
+            "delete": "Delete instance",
+            "preferences": "Preferences..."
+        },
+        "render": "Render",
+        "render/": {
+            "image": "Render image...",
+            "animation": "Render animation..."
+        },
+        "view": "View",
+        "view/": {
+            "reset": "Reset work camera"
+        },
+        "help": "Help",
+        "help/": {
+            "about": "About Mine-imator...",
+            "tutorials": "Tutorials...",
+            "report": "Report a bug...",
+            "forums": "Visit the forums..."
+        }
     },
     "type/": {
         "char": "Character",
@@ -401,13 +434,9 @@
     "exportmovie/": {
         "caption": "Export movie",
         "videosize": "Video size",
-        "videosizetip": "Choose the size of the exported video.",
         "videosizecustomwidth": "Width",
-        "videosizecustomwidthtip": "Enter the width (in pixels) of the exported video.",
         "videosizecustomheight": "Height",
-        "videosizecustomheighttip": "Enter the height (in pixels) of the exported video.",
         "videosizecustomkeepaspectratio": "Keep aspect ratio",
-        "videosizecustomkeepaspectratiotip": "The width/height ratio will remain the same, regardless of video size.",
         "format": "Format",
         "format/": {
             "tip": "Choose the file format of the exported movie.",
@@ -427,22 +456,13 @@
             "custom": "Custom"
         },
         "bitrate": "Bit rate",
-        "bitratetip": "The amount of data in each frame of the video.",
         "framerate": "Framerate",
-        "frameratetip": "The amount of frames in one second of video. Increasing will improve smoothness, but increase render time and video size. This will not affect the animation speed.",
         "includeaudio": "Include audio",
-        "includeaudiotip": "Includes audio tracks in the exported video, if any.",
         "removebackground": "Remove background",
-        "removebackgroundtip": "Make the background transparent in the images.",
 		"blendmodewarning": "Warning: Custom object blend modes may not appear correctly with no background to blend with.",
         "includehidden": "Include hidden objects",
-        "includehiddentip": "Whether objects hidden in the timeline should be included in the video.",
         "highquality": "High quality rendering",
-        "highqualitytip": "Enable shaders for high quality rendering in the video.",
         "save": "Save",
-        "savetip": "Click to choose a file location and start rendering.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup.",
         "frame": "Frame %1 out of %2",
         "timeleft": "Your movie will be done in %1",
         "timeleft/": {
@@ -460,24 +480,15 @@
     "exportimage/": {
         "caption": "Export image",
         "imagesize": "Image size",
-        "imagesizetip": "The size of the exported image (in pixels).",
         "imagesizecustomwidth": "Width",
-        "imagesizecustomwidthtip": "Enter the width (in pixels) of the exported image.",
         "imagesizecustomheight": "Height",
-        "imagesizecustomheighttip": "Enter the height (in pixels) of the exported image.",
         "imagesizecustomkeepaspectratio": "Keep aspect ratio",
-        "imagesizecustomkeepaspectratiotip": "The width/height ratio will remain the same, regardless of image size.",
         "includehidden": "Include hidden objects",
-        "includehiddentip": "Whether objects hidden in the timeline should be included in the image (does not apply to the \"Visible\" checkbox in keyframes).",
         "removebackground": "Remove background",
-        "removebackgroundtip": "Make the background transparent in the image.",
 		"blendmodewarning": "Warning: Custom object blend modes may not appear correctly with no background to blend with.",
         "highquality": "High quality rendering",
-        "highqualitytip": "Enable shaders for high quality rendering in the image.",
         "save": "Save",
-        "savetip": "Save the selected frame into an image.",
         "cancel": "Cancel",
-        "canceltip": "Close this popup."
     },
     "upgrade/": {
         "caption": "Upgrade",

@@ -26,5 +26,6 @@ app_update_caption()
 app_update_toasts()
 app_update_interface()
 app_update_micro_animations()
+app_update_lists()
 
 current_step += 60 / room_speed

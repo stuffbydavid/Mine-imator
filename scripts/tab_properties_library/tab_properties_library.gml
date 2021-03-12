@@ -145,19 +145,19 @@ switch (temp_edit.type)
 		
 		// Graphics
 		tab_control_switch()
-		draw_switch("libraryitem3d", dx, dy, temp_edit.item_3d, action_lib_item_3d, true)
+		draw_switch("libraryitem3d", dx, dy, temp_edit.item_3d, action_lib_item_3d)
 		tab_next()
 		
 		tab_control_switch()
-		draw_switch("libraryitemfacecamera", dx, dy, temp_edit.item_face_camera, action_lib_item_face_camera, false)
+		draw_switch("libraryitemfacecamera", dx, dy, temp_edit.item_face_camera, action_lib_item_face_camera)
 		tab_next()
 		
 		tab_control_switch()
-		draw_switch("libraryitembounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce, false)
+		draw_switch("libraryitembounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce)
 		tab_next()
 		
 		tab_control_switch()
-		draw_switch("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin, false)
+		draw_switch("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
 		tab_next()
 
 		break
@@ -251,11 +251,11 @@ switch (temp_edit.type)
 		
 		// 3D / Face camera
 		tab_control_switch()
-		draw_switch("librarytext3d", dx, dy, temp_edit.text_3d, action_lib_text_3d, false)
+		draw_switch("librarytext3d", dx, dy, temp_edit.text_3d, action_lib_text_3d)
 		tab_next()
 		
 		tab_control_switch()
-		draw_switch("librarytextfacecamera", dx, dy, temp_edit.text_face_camera, action_lib_text_face_camera, false)
+		draw_switch("librarytextfacecamera", dx, dy, temp_edit.text_face_camera, action_lib_text_face_camera)
 		tab_next()
 		
 		break
@@ -287,7 +287,7 @@ switch (temp_edit.type)
 		if (temp_edit.type = e_temp_type.CUBE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
 			tab_control_switch()
-			draw_switch("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, false)
+			draw_switch("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
 			tab_next()
 			
 			if (temp_edit.shape_tex_mapped)
@@ -325,11 +325,11 @@ switch (temp_edit.type)
 			
 			// Mirror
 			tab_control_switch()
-			draw_switch("libraryshapetexhmirror", dx, dy, temp_edit.shape_tex_hmirror, action_lib_shape_tex_hmirror, false)
+			draw_switch("libraryshapetexhmirror", dx, dy, temp_edit.shape_tex_hmirror, action_lib_shape_tex_hmirror)
 			tab_next()
 			
 			tab_control_switch()
-			draw_switch("libraryshapetexvmirror", dx, dy, temp_edit.shape_tex_vmirror, action_lib_shape_tex_vmirror, false)
+			draw_switch("libraryshapetexvmirror", dx, dy, temp_edit.shape_tex_vmirror, action_lib_shape_tex_vmirror)
 			tab_next()
 		}
 		
@@ -337,13 +337,13 @@ switch (temp_edit.type)
 		if (temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
 			tab_control_switch()
-			draw_switch("libraryshapeclosed", dx, dy, temp_edit.shape_closed, action_lib_shape_closed, true)
+			draw_switch("libraryshapeclosed", dx, dy, temp_edit.shape_closed, action_lib_shape_closed)
 			tab_next()
 		}
 		
 		// Invert
 		tab_control_switch()
-		draw_switch("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert, false)
+		draw_switch("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert)
 		tab_next()
 		
 		if (temp_edit.type = e_temp_type.SPHERE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
@@ -357,7 +357,7 @@ switch (temp_edit.type)
 		{
 			// Face camera
 			tab_control_switch()
-			draw_switch("libraryshapefacecamera", dx, dy, temp_edit.shape_face_camera, action_lib_shape_face_camera, false)
+			draw_switch("libraryshapefacecamera", dx, dy, temp_edit.shape_face_camera, action_lib_shape_face_camera)
 			tab_next()
 		}
 		break
@@ -404,7 +404,7 @@ switch (temp_edit.type)
 if (temp_edit.type = e_temp_type.SCENERY || temp_edit.type = e_temp_type.BLOCK)
 {
 	tab_control_switch()
-	draw_switch("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable, false)
+	draw_switch("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)
 	tab_next()
 	
 	if (temp_edit.block_repeat_enable)

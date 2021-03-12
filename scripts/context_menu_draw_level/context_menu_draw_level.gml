@@ -53,7 +53,7 @@ if (level.level_list != null)
 		if (item.divider)
 			dy += 8
 		
-		list_item_draw(item, dx, dy + 24 * i, dw, 24, false, 4)
+		list_item_draw(item, dx, dy + 24 * i, dw, 24, false)
 		
 		if (item.context_menu_active)
 			current_mcroani.value = true

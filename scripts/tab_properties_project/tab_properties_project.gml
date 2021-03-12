@@ -67,7 +67,7 @@ if (project_video_template = 0)
 	tab_next()
 	
 	tab_control_switch()
-	draw_switch("projectvideosizecustomkeepaspectratio", dx, dy, project_video_keep_aspect_ratio, action_project_video_keep_aspect_ratio, true)
+	draw_switch("projectvideosizecustomkeepaspectratio", dx, dy, project_video_keep_aspect_ratio, action_project_video_keep_aspect_ratio)
 	tab_next()
 }
 

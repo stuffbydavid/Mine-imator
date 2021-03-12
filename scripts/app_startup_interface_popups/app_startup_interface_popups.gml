@@ -91,7 +91,7 @@ with (popup_exportmovie)
 }
 
 // Export image REMOVE
-popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 500, 322, true)
+popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 350, null, true)
 with (popup_exportimage)
 {
 	remove_background = app.setting_export_image_remove_background

@@ -39,7 +39,7 @@ if (background_image_show)
 		if (background_image_type = "image")
 		{
 			tab_control_switch()
-			draw_switch("backgroundimagestretch", dx, dy, background_image_stretch, action_background_image_stretch, true)
+			draw_switch("backgroundimagestretch", dx, dy, background_image_stretch, action_background_image_stretch)
 			tab_next()
 		}
 		
@@ -55,7 +55,7 @@ if (background_image_show)
 		if (background_image_type = "box") 
 		{
 			tab_control_switch()
-			draw_switch("backgroundimageboxmapped", dx, dy, background_image_box_mapped, action_background_image_box_mapped, false)
+			draw_switch("backgroundimageboxmapped", dx, dy, background_image_box_mapped, action_background_image_box_mapped)
 			tab_next()
 			
 			if (background_image_box_mapped)
@@ -127,17 +127,17 @@ tab_next()
 
 // Follow camera
 tab_control_switch()
-draw_switch("backgroundsunlightfollow", dx, dy, background_sunlight_follow, action_background_sunlight_follow, false)
+draw_switch("backgroundsunlightfollow", dx, dy, background_sunlight_follow, action_background_sunlight_follow)
 tab_next()
 
 // Twilight
 tab_control_switch()
-draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, true)
+draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight)
 tab_next()
 
 // Desaturate night
 tab_control_switch()
-draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night, false)
+draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
 tab_next()
 
 // Desaturate amount
@@ -151,7 +151,7 @@ if (background_desaturate_night)
 // Clouds
 tab_control_switch()
 draw_button_collapse("backgroundskycloudsshow", setting_collapse_background_clouds, action_collapse_background_clouds, !background_sky_clouds_show)
-draw_switch("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show, false)
+draw_switch("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show)
 tab_next()
 
 if (background_sky_clouds_show && setting_collapse_background_clouds)
@@ -160,12 +160,12 @@ if (background_sky_clouds_show && setting_collapse_background_clouds)
 	
 	// Flat clouds
 	tab_control_switch()
-	draw_switch("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat, false)
+	draw_switch("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
 	tab_next()
 	
 	// 'Story mode' clouds
 	tab_control_switch()
-	draw_switch("backgroundskycloudsstorymode", dx, dy, background_sky_clouds_story_mode, action_background_sky_clouds_story_mode, false)
+	draw_switch("backgroundskycloudsstorymode", dx, dy, background_sky_clouds_story_mode, action_background_sky_clouds_story_mode)
 	tab_next()
 	
 	// Cloud texture
@@ -208,7 +208,7 @@ if (background_sky_clouds_show && setting_collapse_background_clouds)
 // Ground
 tab_control_switch()
 draw_button_collapse("backgroundgroundshow", setting_collapse_background_ground, action_collapse_background_ground, !background_ground_show)
-draw_switch("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show, false)
+draw_switch("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show)
 tab_next()
 
 capwid = text_caption_width("backgroundground", "backgroundgroundtex")
@@ -364,7 +364,7 @@ tab_set_collumns(false)
 // Show fog
 tab_control_switch()
 draw_button_collapse("backgroundfog", setting_collapse_background_fog, action_collapse_background_fog, !background_fog_show)
-draw_switch("backgroundfog", dx, dy, background_fog_show, action_background_fog_show, false)
+draw_switch("backgroundfog", dx, dy, background_fog_show, action_background_fog_show)
 tab_next()
 
 if (background_fog_show && setting_collapse_background_fog)
@@ -373,12 +373,12 @@ if (background_fog_show && setting_collapse_background_fog)
 	
 	// Sky fog
 	tab_control_switch()
-	draw_switch("backgroundfogsky", dx, dy, background_fog_sky, action_background_fog_sky, true)
+	draw_switch("backgroundfogsky", dx, dy, background_fog_sky, action_background_fog_sky)
 	tab_next()
 	
 	// Custom color && Custom object fog color
 	tab_control_switch()
-	draw_switch("backgroundfogcolorcustom", dx, dy, background_fog_color_custom, action_background_fog_color_custom, false)
+	draw_switch("backgroundfogcolorcustom", dx, dy, background_fog_color_custom, action_background_fog_color_custom)
 	tab_next()
 	
 	// Fog color
@@ -391,7 +391,7 @@ if (background_fog_show && setting_collapse_background_fog)
 	
 	// Object fog color
 	tab_control_switch()
-	draw_switch("backgroundfogobjectcolorcustom", dx, dy, background_fog_object_color_custom, action_background_fog_object_color_custom, false)
+	draw_switch("backgroundfogobjectcolorcustom", dx, dy, background_fog_object_color_custom, action_background_fog_object_color_custom)
 	tab_next()
 	
 	if (background_fog_object_color_custom)
@@ -425,7 +425,7 @@ if (background_fog_show && setting_collapse_background_fog)
 // Volumetric fog
 tab_control_switch()
 draw_button_collapse("backgroundvolumetricfog", setting_collapse_background_volumetric_fog, action_collapse_background_volumetric_fog, !background_volumetric_fog)
-draw_switch("backgroundvolumetricfog", dx, dy, background_volumetric_fog, action_background_volumetric_fog, false)
+draw_switch("backgroundvolumetricfog", dx, dy, background_volumetric_fog, action_background_volumetric_fog)
 tab_next()
 
 if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
@@ -433,7 +433,7 @@ if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 	tab_collapse_start()
 	
 	tab_control_switch()
-	draw_switch("backgroundvolumetricfograys", dx, dy, background_volumetric_fog_rays, action_background_volumetric_fog_rays, false)
+	draw_switch("backgroundvolumetricfograys", dx, dy, background_volumetric_fog_rays, action_background_volumetric_fog_rays)
 	tab_next()
 	
 	if (!background_volumetric_fog_rays)
@@ -487,7 +487,7 @@ if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 // Wind
 tab_control_switch()
 draw_button_collapse("backgroundwind", setting_collapse_background_wind, action_collapse_background_wind, !background_wind)
-draw_switch("backgroundwind", dx, dy, background_wind, action_background_wind, false)
+draw_switch("backgroundwind", dx, dy, background_wind, action_background_wind)
 tab_next()
 
 if (background_wind && setting_collapse_background_wind)
@@ -524,7 +524,7 @@ if (background_wind && setting_collapse_background_wind)
 
 // Fast graphics
 tab_control_switch()
-draw_switch("backgroundopaqueleaves", dx, dy, background_opaque_leaves, action_background_opaque_leaves, false)
+draw_switch("backgroundopaqueleaves", dx, dy, background_opaque_leaves, action_background_opaque_leaves)
 tab_next()
 
 // Animation speed

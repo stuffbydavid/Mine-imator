@@ -1,29 +1,27 @@
-/// draw_switch(name, x, y, active, script, default, [tip, [disabled]])
+/// draw_switch(name, x, y, active, script, [tip, [disabled]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
-/// @arg default
 /// @arg [tip
 /// @arg [disabled]]
 
-var name, xx, yy, active, script, def, tip, disabled;
+var name, xx, yy, active, script, tip, disabled;
 var switchx, switchy, w, h, mouseon, pressed, thumbgoal;
 name = text_get(argument[0])
 xx = argument[1]
 yy = argument[2]
 active = argument[3]
 script = argument[4]
-def = argument[5]
 tip = ""
 disabled = false
 
-if (argument_count > 6)
-	tip = argument[6]
+if (argument_count > 5)
+	tip = argument[5]
 
-if (argument_count > 7)
-	disabled = argument[7]
+if (argument_count > 6)
+	disabled = argument[6]
 
 w = dw
 h = 24

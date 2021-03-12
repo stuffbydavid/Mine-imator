@@ -4,22 +4,22 @@ var text;
 
 // Spawn
 tab_control_checkbox()
-draw_switch("frameeditorparticlesspawn", dx, dy, tl_edit.value[e_value.SPAWN], action_tl_frame_spawn, true)
+draw_switch("frameeditorparticlesspawn", dx, dy, tl_edit.value[e_value.SPAWN], action_tl_frame_spawn)
 tab_next()
 
 // Freeze
 tab_control_checkbox()
-draw_switch("frameeditorparticlesfreeze", dx, dy, tl_edit.value[e_value.FREEZE], action_tl_frame_freeze, false)
+draw_switch("frameeditorparticlesfreeze", dx, dy, tl_edit.value[e_value.FREEZE], action_tl_frame_freeze)
 tab_next()
 
 // Clear
 tab_control_checkbox()
-draw_switch("frameeditorparticlesclear", dx, dy, tl_edit.value[e_value.CLEAR], action_tl_frame_clear, false)
+draw_switch("frameeditorparticlesclear", dx, dy, tl_edit.value[e_value.CLEAR], action_tl_frame_clear)
 tab_next()
 
 // Custom seed
 tab_control_checkbox()
-draw_switch("frameeditorparticlescustomseed", dx, dy, tl_edit.value[e_value.CUSTOM_SEED], action_tl_frame_custom_seed, false)
+draw_switch("frameeditorparticlescustomseed", dx, dy, tl_edit.value[e_value.CUSTOM_SEED], action_tl_frame_custom_seed)
 tab_next()
 
 if (tl_edit.value[e_value.CUSTOM_SEED])

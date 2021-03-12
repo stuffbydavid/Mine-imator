@@ -10,6 +10,7 @@ if (settings_menu_ani_type = "hide") //Hide
 		settings_menu_name = ""
 		settings_menu_ani_type = ""
 		window_busy = settings_menu_busy_prev
+		context_menu_close()
 		list_destroy(settings_menu_list)
 		return 0
 	}
@@ -87,7 +88,7 @@ else
 
 	for (var i = 0; i < settings_menu_amount; i++)
 	{
-		list_item_draw(settings_menu_list.item[|i], itemx, itemy, content_width, 28, false, 4)
+		list_item_draw(settings_menu_list.item[|i], itemx, itemy, content_width, 28, false)
 		itemy += 28
 	}
 }
@@ -122,10 +123,10 @@ if (settings_menu_ani_type = "" && mouse_left_released && !context_menu_mouseon 
 	{
 		if (!app_mouse_box(content_x, content_y, content_width, content_height))
 		{
-
 			settings_menu_ani = 1
 			settings_menu_ani_type = "hide"
 			window_busy = "settingsmenu"
+			context_menu_close()
 		}
 	}
 	else
@@ -135,6 +136,7 @@ if (settings_menu_ani_type = "" && mouse_left_released && !context_menu_mouseon 
 			settings_menu_ani = 1
 			settings_menu_ani_type = "hide"
 			window_busy = "settingsmenu"
+			context_menu_close()
 		}
 	}
 }

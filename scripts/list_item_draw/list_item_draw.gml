@@ -31,9 +31,14 @@ else
 if (argument_count > 5)
 	toggled = argument[5]
 
+if (item.toggled)
+	toggled = true
+
 if (argument_count > 6)
 	if (argument[6] != null)
 		margin = argument[6]
+
+margin = 0
 
 if (argument_count > 7)
 	if (argument[7] != null)
@@ -51,6 +56,7 @@ if (item.list != null && item.list.update)
 item.draw_x = xx
 item.draw_y = yy
 
+// Draw divider below item
 if (item.divider)
 	draw_divide(xx + 4, yy - 4, width - 8)
 
@@ -88,7 +94,7 @@ else
 	iconalpha = a_text_tertiary
 	backcolor = c_black
 	backalpha = 0
-} 
+}
 
 leftp = margin
 rightp = margin
@@ -106,15 +112,25 @@ if (leftp < 0)
 else
 	scissor = false
 
-// Thumbnail
-var imgsize = height - 8;
+// Image/icon size
+var imgsize, iconsize;
+imgsize = height - 8
+iconsize = max(imgsize, 24)
 
 if (item.thumbnail)
 {
-	leftp += 4
+	if (height <= 24)
+		leftp += 8
+	else
+		leftp += 4
 	
 	draw_image(item.thumbnail, 0, xx + leftp, middley - imgsize/2, imgsize / texture_width(item.thumbnail), imgsize / texture_height(item.thumbnail), item.thumbnail_blend, item.thumbnail_alpha)
-	leftp += imgsize
+	
+	if (height > 24)
+		leftp += imgsize - 4
+	else	
+		leftp += imgsize
+	
 	components++
 }
 
@@ -137,33 +153,25 @@ if (item.actions_left != null)
 // Left icon
 if (item.icon_left != null && item.icon_left != -1)
 {
-	var iconsize = max(imgsize, 24);
-	
-	if (iconsize >= 24)
-		leftp += 4
+	leftp += 4
 	
 	draw_image(spr_icons, item.icon_left, xx + leftp + iconsize/2, middley, 1, 1, iconcolor, iconalpha)
-	leftp += iconsize
+	leftp += (iconsize - 4)
 	components++
 }
-
-if (components = 0)
-	leftp += 6
-else
-	leftp += 4
 
 // Right actions
 if (item.actions_right != null)
 {
 	for (var i = 0; i < ds_list_size(item.actions_right); i += 7)
 	{
-		rightp += 4 * (components > 0)
+		rightp += 4// * (components > 0)
 		
 		if (draw_button_icon(item.actions_right[|i], (xx + width - rightp) - 20, middley - 10, 20, 20, item.actions_right[|i + 1], item.actions_right[|i + 3], null, false, item.actions_right[|i + 5], item.actions_right[|i + 6]))
 			script_execute(item.actions_right[|i + 4], item.actions_right[|i + 2])
 		
 		hover = (hover && !app_mouse_box((xx + width - rightp) - 20, middley - 10, 20, 20))
-		rightp += 20
+		rightp += 16
 		components++
 	}
 }
@@ -171,10 +179,10 @@ if (item.actions_right != null)
 // Right icon
 if (item.icon_right != null)
 {
-	rightp += 4 * (components > 0)
+	rightp += 4
 	
 	if (item.icon_right != -1)
-		draw_image(spr_icons, item.icon_right, (xx + width - rightp) - 12, middley, 1, 1, iconcolor, iconalpha)
+		draw_image(spr_icons, item.icon_right, (xx + width - rightp) - iconsize/2, middley, 1, 1, iconcolor, iconalpha)
 	
 	rightp += 24
 	components++
@@ -183,9 +191,9 @@ if (item.icon_right != null)
 // Toggled tick
 if (toggled)
 {
-	rightp += 4 * (components > 0)
+	rightp += 4
 	
-	draw_image(spr_icons, icons.CHECK, (xx + width - rightp) - 12, middley, 1, 1, iconcolor, iconalpha)
+	draw_image(spr_icons, icons.CHECK, (xx + width - rightp) - iconsize/2, middley, 1, 1, iconcolor, iconalpha)
 	
 	rightp += 24
 	components++
@@ -194,7 +202,7 @@ if (toggled)
 // Caption
 if (item.caption != "")
 {
-	rightp += 4
+	rightp += 8
 	
 	draw_set_font(font_caption)
 	draw_label(item.caption, xx + width - rightp, middley, fa_right, fa_center, c_text_tertiary, a_text_tertiary)
@@ -207,6 +215,8 @@ if (item.caption != "")
 //	leftp += 4
 
 // Text
+leftp += 8 + (4 * (height > 24))
+
 draw_set_font(font_value)
 
 var textwidth = width - (leftp + rightp) - 8;
@@ -221,8 +231,7 @@ if (hover && item.interact)
 
 if (item.script && hover && mouse_left_released)
 {
-	if (item.value != null)
-		script_execute(item.script, item.value)
-	else
-		script_execute(item.script)
+	list_item_script = item.script
+	list_item_script_value = item.value
+	list_item_value = context_menu_value
 }

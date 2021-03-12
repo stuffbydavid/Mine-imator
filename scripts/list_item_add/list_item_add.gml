@@ -69,6 +69,7 @@ item.draw_y = 0
 
 item.interact = interact
 item.indent = 0
+item.toggled = false
 
 if (list_edit != null)
 {

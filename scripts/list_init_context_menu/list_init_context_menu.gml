@@ -188,6 +188,84 @@ switch (name)
 		
 		break
 	}
+	
+	// File menu
+	case "toolbarfile":
+	{
+		list_item_add(text_get("toolbarfilenew"), null, text_control_name(setting_key_new, setting_key_new_control), null, icons.NEW_PROJECT, null, action_toolbar_new)
+		list_item_add(text_get("toolbarfileopen"), null, text_control_name(setting_key_open, setting_key_open_control), null, icons.OPEN_PROJECT, null, action_toolbar_open)
+		list_item_add(text_get("toolbarfilerecent"), null, "", null, icons.RECENTS, icons.ARROW_RIGHT_SMALL, null)
+		list_item_last.context_menu_name = "toolbarfilerecent"
+		
+		list_item_add(text_get("toolbarfilesave"), null, text_control_name(setting_key_save, setting_key_save_control), null, icons.SAVE_PROJECT, null, action_toolbar_save, true)
+		list_item_add(text_get("toolbarfilesaveas"), null, "", null, icons.SAVE_PROJECT_AS, null, action_toolbar_save_as)
+		
+		list_item_add(text_get("toolbarfileimport"), null, text_control_name(setting_key_import_asset, setting_key_import_asset_control), null, icons.IMPORT_ASSET, null, action_toolbar_import_asset, true)
+		
+		break
+	}
+	
+	case "toolbarfilerecent":
+	{
+		var recent;
+		
+		for (var i = 0; i < min(ds_list_size(recent_list), 10); i++)
+		{
+			recent = recent_list[|i]
+			list_item_add(recent.name, recent.filename, "", null, null, null, action_toolbar_open)
+		}
+		
+		break
+	}
+	
+	// Edit menu
+	case "toolbaredit":
+	{
+		list_item_add(text_get("toolbareditundo"), null, text_control_name(setting_key_undo, setting_key_undo_control), null, icons.UNDO, null, action_toolbar_undo)
+		list_item_add(text_get("toolbareditredo"), null, text_control_name(setting_key_redo, setting_key_redo_control), null, icons.REDO, null, action_toolbar_redo)
+		
+		list_item_add(text_get("toolbareditduplicate"), null, text_control_name(setting_key_duplicate_timelines, setting_key_duplicate_timelines_control), null, icons.DUPLICATE, null, action_tl_duplicate, true)
+		list_item_last.disabled = (tl_edit = null)
+		
+		list_item_add(text_get("toolbareditdelete"), null, text_control_name(setting_key_remove_timelines, setting_key_remove_timelines_control), null, icons.DELETE, null, action_tl_remove)
+		list_item_last.disabled = (tl_edit = null)
+		
+		list_item_add(text_get("toolbareditpreferences"), settings, "", null, icons.SETTINGS, null, settings.show ? tab_close : tab_show, true)
+		list_item_last.toggled = settings.show
+		
+		break
+	}
+	
+	// Render menu
+	case "toolbarrender":
+	{
+		list_item_add(text_get("toolbarrenderimage"), null, "", null, icons.EXPORT_IMAGE, null, action_toolbar_export_image)
+		list_item_add(text_get("toolbarrenderanimation"), null, "", null, icons.EXPORT_MOVIE, null, action_toolbar_export_movie)
+		
+		break
+	}
+	
+	// View menu
+	case "toolbarview":
+	{
+		list_item_add(text_get("toolbarviewreset"), null, "", null, icons.TL_CAMERA, null, camera_work_reset)
+		
+		break
+	}
+	
+	// Help menu
+	case "toolbarhelp":
+	{
+		list_item_add(text_get("toolbarhelpabout"), popup_about, "", null, icons.INFO, null, popup_show)
+		
+		list_item_add(text_get("toolbarhelptutorials"), link_tutorials, "", null, icons.TUTORIALS, null, open_url)
+		
+		list_item_add(text_get("toolbarhelpreport"), link_forums_bugs, "", null, icons.BUG, null, open_url, true)
+		list_item_add(text_get("toolbarhelpforums"), link_forums, "", null, icons.SPEECH_BUBBLE, null, open_url)
+		
+		break
+	}
+	
 }
 
 return list_init_end()

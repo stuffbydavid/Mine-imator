@@ -52,7 +52,7 @@ setting_smooth_camera = false
 setting_search_variants = true
 
 setting_toolbar_location = "top"
-setting_toolbar_size = 36
+setting_toolbar_size = 28
 
 setting_panel_left_bottom_size = 300
 setting_panel_right_bottom_size = 300

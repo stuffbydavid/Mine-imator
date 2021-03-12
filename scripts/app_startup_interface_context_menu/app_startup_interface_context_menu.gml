@@ -51,7 +51,6 @@ context_menu_mouseon_item = null
 context_menu_mouseon_reset = false
 
 context_menu_busy_prev = ""
-context_menu_close_trigger = false
 
 // Textbox
 context_menu_tbx_action = false

@@ -6,6 +6,8 @@ toolbar_size = setting_toolbar_size
 toolbar_rows = 0
 toolbar_resize_size = 0
 
+toolbar_menu_active = false
+
 // Workbench
 bench_open = false
 bench_hover_ani = 0

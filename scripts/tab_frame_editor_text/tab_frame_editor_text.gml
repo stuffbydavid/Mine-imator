@@ -16,7 +16,7 @@ tab_next()
 
 // Font Anti-aliasing
 tab_control_switch()
-draw_switch("frameeditortextaa", dx, dy, tl_edit.value[e_value.TEXT_AA], action_tl_frame_text_aa, true, "frameeditortextaatip")
+draw_switch("frameeditortextaa", dx, dy, tl_edit.value[e_value.TEXT_AA], action_tl_frame_text_aa, "frameeditortextaatip")
 tab_next()
 
 // Alignment

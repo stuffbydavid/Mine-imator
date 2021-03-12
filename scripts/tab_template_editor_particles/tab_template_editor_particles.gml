@@ -67,7 +67,7 @@ tab_next()
 
 // Spawn region
 tab_control_switch()
-draw_switch("particleeditorspawnregion", dx, dy, temp_edit.pc_spawn_region_use, action_lib_pc_spawn_region_use, false)
+draw_switch("particleeditorspawnregion", dx, dy, temp_edit.pc_spawn_region_use, action_lib_pc_spawn_region_use)
 tab_next()
 
 if (temp_edit.pc_spawn_region_use)
@@ -156,7 +156,7 @@ else if (temp_edit.pc_bounding_box_type = "custom")
 	tab_next()
 	
 	tab_control_switch()
-	draw_switch("particleeditorboundingboxrelative", dx, dy, temp_edit.pc_bounding_box_relative, action_lib_pc_bounding_box_relative, false)
+	draw_switch("particleeditorboundingboxrelative", dx, dy, temp_edit.pc_bounding_box_relative, action_lib_pc_bounding_box_relative)
 	tab_next()
 }
 
@@ -351,21 +351,21 @@ if (ptype_edit.temp < 0)
 		
 		// Still frame
 		tab_control_switch()
-		draw_switch("particleeditortypespritetemplatestillframe", dx, dy, ptype_edit.sprite_template_still_frame, action_lib_pc_type_sprite_template_still_frame, false)
+		draw_switch("particleeditortypespritetemplatestillframe", dx, dy, ptype_edit.sprite_template_still_frame, action_lib_pc_type_sprite_template_still_frame)
 		tab_next()
 		
 		// Random frame
 		if (ptype_edit.sprite_template_still_frame)
 		{
 			tab_control_switch()
-			draw_switch("particleeditortypespritetemplaterandomframe", dx, dy, ptype_edit.sprite_template_random_frame, action_lib_pc_type_sprite_template_random_frame, false)
+			draw_switch("particleeditortypespritetemplaterandomframe", dx, dy, ptype_edit.sprite_template_random_frame, action_lib_pc_type_sprite_template_random_frame)
 			tab_next()
 		}
 		else
 		{
 			// Reverse template animation
 			tab_control_switch()
-			draw_switch("particleeditortypespritetemplatereverse", dx, dy, ptype_edit.sprite_template_reverse, action_lib_pc_type_sprite_template_reverse, true)
+			draw_switch("particleeditortypespritetemplatereverse", dx, dy, ptype_edit.sprite_template_reverse, action_lib_pc_type_sprite_template_reverse)
 			tab_next()
 		}
 	}
@@ -429,7 +429,7 @@ if (!ptype_edit.angle_collapse)
 	
 	// Extend XYZ settings
 	tab_control_switch()
-	draw_switch("particleeditortypeangleextend", dx, dy, ptype_edit.angle_extend, action_lib_pc_type_angle_extend, false)
+	draw_switch("particleeditortypeangleextend", dx, dy, ptype_edit.angle_extend, action_lib_pc_type_angle_extend)
 	tab_next()
 	
 	axis_edit = X
@@ -503,7 +503,7 @@ if (!ptype_edit.spd_collapse)
 
 	// Extend XYZ settings
 	tab_control_switch()
-	draw_switch("particleeditortypespeedextend", dx, dy, ptype_edit.spd_extend, action_lib_pc_type_spd_extend, false)
+	draw_switch("particleeditortypespeedextend", dx, dy, ptype_edit.spd_extend, action_lib_pc_type_spd_extend)
 	tab_next()
 
 	axis_edit = X
@@ -627,7 +627,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 			
 			// Extend XYZ settings
 			tab_control_switch()
-			draw_switch("particleeditortyperotationextend", dx, dy, ptype_edit.rot_extend, action_lib_pc_type_rot_extend, false)
+			draw_switch("particleeditortyperotationextend", dx, dy, ptype_edit.rot_extend, action_lib_pc_type_rot_extend)
 			tab_next()
 			
 			axis_edit = X
@@ -680,7 +680,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 			
 			// Extend XYZ settings
 			tab_control_switch()
-			draw_switch("particleeditortyperotationspeedextend", dx, dy, ptype_edit.rot_spd_extend, action_lib_pc_type_rot_spd_extend, false)
+			draw_switch("particleeditortyperotationspeedextend", dx, dy, ptype_edit.rot_spd_extend, action_lib_pc_type_rot_spd_extend)
 			tab_next()
 			
 			axis_edit = X
@@ -858,7 +858,7 @@ colwid = floor((wid- 8)/2)
 
 // Color mix
 tab_control_switch()
-draw_switch("particleeditortypecolormixenabled", dx, dy, ptype_edit.color_mix_enabled, action_lib_pc_type_color_mix_enabled, false)
+draw_switch("particleeditortypecolormixenabled", dx, dy, ptype_edit.color_mix_enabled, action_lib_pc_type_color_mix_enabled)
 tab_next()
 
 if (ptype_edit.color_mix_enabled)
@@ -922,16 +922,16 @@ tab_next()
 
 // Spawn region
 tab_control_switch()
-draw_switch("particleeditortypespawnregion", dx, dy, ptype_edit.spawn_region, action_lib_pc_type_spawn_region, true)
+draw_switch("particleeditortypespawnregion", dx, dy, ptype_edit.spawn_region, action_lib_pc_type_spawn_region)
 tab_next()
 
 // Orbit attractor
 tab_control_switch()
-draw_switch("particleeditortypeorbit", dx, dy, ptype_edit.orbit, action_lib_pc_type_orbit, false)
+draw_switch("particleeditortypeorbit", dx, dy, ptype_edit.orbit, action_lib_pc_type_orbit)
 tab_next()
 
 tab_control_switch()
-draw_switch("particleeditortypeboundingbox", dx, dy, ptype_edit.bounding_box, action_lib_pc_type_bounding_box, true)
+draw_switch("particleeditortypeboundingbox", dx, dy, ptype_edit.bounding_box, action_lib_pc_type_bounding_box)
 tab_next()
 
 // Bounding box
@@ -939,7 +939,7 @@ if (ptype_edit.bounding_box)
 {
 	// Bounce
 	tab_control_switch()
-	draw_switch("particleeditortypebounce", dx, dy + 1, ptype_edit.bounce, action_lib_pc_type_bounce, true)
+	draw_switch("particleeditortypebounce", dx, dy + 1, ptype_edit.bounce, action_lib_pc_type_bounce)
 	tab_next()
 	
 	if (ptype_edit.bounce)

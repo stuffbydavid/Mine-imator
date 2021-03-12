@@ -24,7 +24,7 @@ tab_next()
 if (tl_edit.value_type[e_value_type.ROT_POINT])
 {
 	tab_control_switch()
-	draw_switch("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom, null)
+	draw_switch("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)
 	tab_next()
 	
 	if (tl_edit.rot_point_custom)

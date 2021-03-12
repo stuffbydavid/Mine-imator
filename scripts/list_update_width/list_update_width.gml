@@ -12,7 +12,7 @@ item = null
 for (var i = 0; i < ds_list_size(list.item); i++)
 {
 	item = list.item[|i]
-	width = 12 + item.indent
+	width = 4 + item.indent
 	
 	// Thumbnail(Assuming height of list is 36)
 	if (item.thumbnail)
@@ -22,7 +22,7 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 	if (item.actions_left != null)
 	{
 		for (var j = 0; j < ds_list_size(item.actions_left); j += 6)
-			width += 24
+			width += 20
 	}
 	
 	// Left icon
@@ -39,13 +39,13 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 for (var i = 0; i < ds_list_size(list.item); i++)
 {
 	item = list.item[|i]
-	width = 12
+	width = 0
 
 	// Right actions
 	if (item.actions_right != null)
 	{
 		for (var j = 0; j < ds_list_size(item.actions_right); j += 6)
-			width += 24
+			width += 20
 	}
 	
 	// Right icon
@@ -53,13 +53,13 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 		width += 24 + 4
 	
 	// Tick
-	width += 24 + 4
+	//width += 24 + 4
 	
 	// Caption
 	if (item.caption != "")
 	{
 		draw_set_font(font_caption)
-		width += string_width(item.caption) + 4
+		width += string_width(item.caption) + 8
 	}
 	
 	maxwidthright = max(width, maxwidthright)

@@ -15,3 +15,4 @@ if (popup.block)
 	window_busy = "popup" + popup.name
 
 action_tl_play_break()
+context_menu_close()

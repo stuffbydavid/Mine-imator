@@ -115,7 +115,7 @@ else if (res_edit.scenery_structure)
 	tab_next()
 	
 	tab_control_switch()
-	draw_switch("resourcesscenerystructureintegrityinvert", dx, dy, res_edit.scenery_integrity_invert, action_res_scenery_integrity_invert, false)
+	draw_switch("resourcesscenerystructureintegrityinvert", dx, dy, res_edit.scenery_integrity_invert, action_res_scenery_integrity_invert)
 	tab_next()
 }
 

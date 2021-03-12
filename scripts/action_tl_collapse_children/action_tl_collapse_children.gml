@@ -18,7 +18,7 @@ else
 {
 	var hobj = history_save_var_start(action_tl_collapse_children, false);
 	
-	action_tl_extend_children_tree(context_menu_value, false, hobj)
+	action_tl_extend_children_tree(list_item_value, false, hobj)
 }
 
 tl_update_list()

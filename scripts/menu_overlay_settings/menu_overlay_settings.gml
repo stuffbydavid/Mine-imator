@@ -8,12 +8,12 @@ switchwid = text_max_width("viewoverlayaspectratio", "viewoverlaygrid") + 16 + 2
 capwid = max(draggerwid, settings_menu_w - (64 + 24))
 
 tab_control_switch()
-if (draw_switch("viewoverlayaspectratio", dx, dy, settings_menu_view.aspect_ratio, null, true))
+if (draw_switch("viewoverlayaspectratio", dx, dy, settings_menu_view.aspect_ratio, null))
 	settings_menu_view.aspect_ratio = !settings_menu_view.aspect_ratio
 tab_next()
 
 tab_control_switch()
-if (draw_switch("viewoverlaygizmos", dx, dy, settings_menu_view.gizmos, null, true))
+if (draw_switch("viewoverlaygizmos", dx, dy, settings_menu_view.gizmos, null))
 	settings_menu_view.gizmos = !settings_menu_view.gizmos
 tab_next()
 
@@ -21,7 +21,7 @@ draw_divide(content_x, dy, content_width)
 dy += 8
 
 tab_control_switch()
-if (draw_switch("viewoverlaygrid", dx, dy, settings_menu_view.grid, null, true))
+if (draw_switch("viewoverlaygrid", dx, dy, settings_menu_view.grid, null))
 	settings_menu_view.grid = !settings_menu_view.grid
 tab_next()
 

@@ -62,8 +62,7 @@ with (obj_list_item)
 
 // Close menu
 if (((mouse_left_pressed || mouse_right_pressed) && !context_menu_mouseon) || 
-	(mouse_left_released && (!context_menu_mouseon || (context_menu_mouseon_item != null && !context_menu_mouseon_item.disabled && context_menu_mouseon_item.context_menu_name = ""))) ||
-	context_menu_close_trigger)
+	(mouse_left_released && (!context_menu_mouseon || (context_menu_mouseon_item != null && !context_menu_mouseon_item.disabled && context_menu_mouseon_item.context_menu_name = ""))))
 	context_menu_close()
 
 if (window_busy = "" && context_menu_name != "")
