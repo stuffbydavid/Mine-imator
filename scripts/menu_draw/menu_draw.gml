@@ -45,13 +45,13 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 	yy = (m.menu_flip ? (m.menu_y - menuh) : (m.menu_y + m.menu_button_h)) 
 	
 	// Draw
-	draw_box(m.menu_x, yy, m.menu_w, menuh, false, c_background, 1)
+	draw_box(m.menu_x, yy, m.menu_w, menuh, false, c_level_middle, 1)
 	
 	if (menuh > 2)
 		draw_outline(m.menu_x, yy, m.menu_w, menuh, 1, c_border, a_border, true)
 	
 	// Hide outline touching button
-	draw_box(m.menu_x + 1, yy + (m.menu_flip), m.menu_w - 2, menuh - 1, false, c_background, 1)
+	draw_box(m.menu_x + 1, yy + (m.menu_flip), m.menu_w - 2, menuh - 1, false, c_level_middle, 1)
 	
 	// Drop shadow
 	var shadowy, shadowh, shadowani;

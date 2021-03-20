@@ -22,9 +22,9 @@ if (text = "")
 	return 0
 
 if (checkmouse)
-	showtip = setting_tip_show && app_mouse_box(xx, yy, w, h) && content_mouseon
+	showtip = app_mouse_box(xx, yy, w, h) && content_mouseon
 else
-	showtip = setting_tip_show
+	showtip = false
 
 if (showtip)
 {

@@ -21,7 +21,7 @@ mouseon = app_mouse_box(xx, yy, width, height)
 setplaytime = null
 
 // Background
-draw_box(xx, yy, width, height, false, c_background_secondary, 1)
+draw_box(xx, yy, width, height, false, c_level_bottom, 1)
 
 if (!instance_exists(preview.select))
 {
@@ -131,7 +131,7 @@ with (preview)
 		update = true
 	
 	// Item animation
-	if (select.object_index != obj_template && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
+	if (select.object_index = obj_template && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
 		update = true
 	
 	// Playing audio
@@ -517,7 +517,7 @@ with (preview)
 							if (mouseon && setplaytime = null)
 							{
 								if ((dx / wid) < mouseperc)
-									wavecolor = merge_color(wavecolor, c_background, .25)
+									wavecolor = merge_color(wavecolor, c_level_middle, .25)
 							}
 							
 							if (dx > 0 && dx mod 500 = 0) // GM bug
@@ -638,7 +638,7 @@ with (preview)
 // Button background
 if ((preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER) || playbutton)
 {
-	draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_background, 1)
+	draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_level_middle, 1)
 	draw_outline(xx + width - 40, yy + height - 40, 32, 32, 1, c_border, a_border, true)
 }
 

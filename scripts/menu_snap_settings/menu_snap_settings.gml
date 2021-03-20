@@ -7,15 +7,15 @@ switchwid = text_max_width("viewsnapabsolute") + 16 + 24
 capwid = max(draggerwid, settings_menu_w - (64 + 24))
 
 tab_control_dragger()
-draw_dragger("viewsnapmove", dx, dy, 64, setting_snap_size_position, 0.01, snap_min, no_limit, 1, snap_min, tbx_snap_position, action_setting_snap_size_position, capwid)
+draw_dragger("viewsnapmove", dx, dy, 64, setting_snap_size_position, 0.01, snap_min, no_limit, 1, snap_min, tbx_snap_position, action_setting_snap_size_position)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("viewsnaprotate", dx, dy, 64, setting_snap_size_rotation, 0.01, snap_min, no_limit, 15, snap_min, tbx_snap_rotation, action_setting_snap_size_rotation, capwid)
+draw_dragger("viewsnaprotate", dx, dy, 64, setting_snap_size_rotation, 0.01, snap_min, no_limit, 15, snap_min, tbx_snap_rotation, action_setting_snap_size_rotation)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("viewsnapscale", dx, dy, 64, setting_snap_size_scale, 0.01, snap_min, no_limit, 1, snap_min, tbx_snap_scale, action_setting_snap_size_scale, capwid)
+draw_dragger("viewsnapscale", dx, dy, 64, setting_snap_size_scale, 0.01, snap_min, no_limit, 1, snap_min, tbx_snap_scale, action_setting_snap_size_scale)
 tab_next()
 
 draw_divide(content_x, dy, content_width)

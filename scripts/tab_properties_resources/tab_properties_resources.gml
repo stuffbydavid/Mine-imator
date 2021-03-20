@@ -86,19 +86,15 @@ if (res_edit.type = e_res_type.PACK)
 }
 else if (res_edit.type = e_res_type.ITEM_SHEET)
 {
-	// Sheet size
-	draw_set_font(font_emphasis)
-	capwid = text_caption_width("resourcesitemsheetsizerows", "resourcesitemsheetsizecolumns")
-	
 	// Size
 	axis_edit = X
 	tab_control_dragger()
-	draw_dragger("resourcesitemsheetsizerows", dx, dy, dragger_width, res_edit.item_sheet_size[X], 1 / 10, 1, no_limit, item_sheet_width, 1, tab.resources.tbx_item_sheet_width, action_res_item_sheet_size, capwid)
+	draw_dragger("resourcesitemsheetsizerows", dx, dy, dragger_width, res_edit.item_sheet_size[X], 1 / 10, 1, no_limit, item_sheet_width, 1, tab.resources.tbx_item_sheet_width, action_res_item_sheet_size)
 	tab_next()
 		
 	axis_edit = Y
 	tab_control_dragger()
-	draw_dragger("resourcesitemsheetsizecolumns", dx, dy, dragger_width, res_edit.item_sheet_size[Y], 1 / 10, 1, no_limit, item_sheet_height, 1, tab.resources.tbx_item_sheet_height, action_res_item_sheet_size, capwid)
+	draw_dragger("resourcesitemsheetsizecolumns", dx, dy, dragger_width, res_edit.item_sheet_size[Y], 1 / 10, 1, no_limit, item_sheet_height, 1, tab.resources.tbx_item_sheet_height, action_res_item_sheet_size)
 	tab_next()
 }
 else if (res_edit.scenery_structure)

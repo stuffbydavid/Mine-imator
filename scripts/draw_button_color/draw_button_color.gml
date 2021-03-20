@@ -51,6 +51,7 @@ microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
 draw_label(text_get(name), xx, yy - 4, fa_left, fa_bottom, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), font_emphasis)
 
 // Color preview
+draw_box(xx, yy, w, h, false, c_level_top, draw_get_alpha())
 draw_box(xx + 4, yy + 4, 16, 16, false, color, 1)
 draw_outline(xx + 4, yy + 4, 16, 16, 1, c_border, a_border, 1)
 

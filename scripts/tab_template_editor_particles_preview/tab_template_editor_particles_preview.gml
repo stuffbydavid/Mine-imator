@@ -13,7 +13,7 @@ if (xx + size < content_x || xx > content_x + content_width || yy + size < conte
 	return 0
 }
 
-draw_box(xx, yy, size, size, false, c_background_secondary, 1)
+draw_box(xx, yy, size, size, false, c_level_bottom, 1)
 
 var res, tex, swid, fwid, fhei, ani, frame, framesx, scale;
 

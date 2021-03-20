@@ -1,5 +1,8 @@
 /// tab_settings_controls()
 
+// TODO: Update when overhauling control inputs
+/* 
+
 var capwid, capwid2;
 	
 // Interface
@@ -178,19 +181,22 @@ draw_keycontrol("settingskeyslow", dx + floor(dw * 0.5), dy, dw * 0.5, setting_k
 tab_next()
 
 capwid = text_caption_width("settingsmovespeed", "settingslooksensitivity", "settingsfastmodifier", "settingsslowmodifier")
+*/
 
 tab_control_dragger()
-draw_dragger("settingsmovespeed", dx, dy, dw, setting_move_speed, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_move_speed, action_setting_move_speed, capwid)
+draw_dragger("settingsmovespeed", dx, dy, dragger_width, setting_move_speed, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_move_speed, action_setting_move_speed)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("settingslooksensitivity", dx, dy, dw, setting_look_sensitivity, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_look_sensitivity, action_setting_look_sensitivity, capwid)
+draw_dragger("settingslooksensitivity", dx, dy, dragger_width, setting_look_sensitivity, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_look_sensitivity, action_setting_look_sensitivity)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("settingsfastmodifier", dx, dy, dw, setting_fast_modifier, 0.01, 0, no_limit, 3, 0, tab.controls.tbx_fast_modifier, action_setting_fast_modifier, capwid)
+draw_dragger("settingsfastmodifier", dx, dy, dragger_width, setting_fast_modifier, 0.01, 0, no_limit, 3, 0, tab.controls.tbx_fast_modifier, action_setting_fast_modifier)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("settingsslowmodifier", dx, dy, dw, setting_slow_modifier, 0.01, 0, no_limit, 0.25, 0, tab.controls.tbx_slow_modifier, action_setting_slow_modifier, capwid)
+draw_dragger("settingsslowmodifier", dx, dy, dragger_width, setting_slow_modifier, 0.01, 0, no_limit, 0.25, 0, tab.controls.tbx_slow_modifier, action_setting_slow_modifier)
 tab_next()
+
+

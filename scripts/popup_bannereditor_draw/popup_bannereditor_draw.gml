@@ -49,7 +49,7 @@ scissor_start(dx, listystart, listw, listh)
 if (mouse_y < listy && popup.layer_move != null)
 {
 	insertpos = ds_list_size(popup.pattern_list_edit)
-	draw_box(dx, listy, listw, 48, false, c_background_secondary, 1)
+	draw_box(dx, listy, listw, 48, false, c_level_bottom, 1)
 	listy += 48
 }
 
@@ -72,7 +72,7 @@ for (var i = ds_list_size(popup.pattern_list_edit) - 1; i >= 0; i--)
 				if (mouse_y >= listy)
 				{
 					insertpos = i + 1
-					draw_box(dx, listy, listw, 48, false, c_background_secondary, 1)
+					draw_box(dx, listy, listw, 48, false, c_level_bottom, 1)
 					
 					listy += 48
 					
@@ -94,7 +94,7 @@ for (var i = ds_list_size(popup.pattern_list_edit) - 1; i >= 0; i--)
 if (mouse_y >= listy && popup.layer_move != null)
 {
 	insertpos = 0
-	draw_box(dx, listy, listw, 48, false, c_background_secondary, 1)
+	draw_box(dx, listy, listw, 48, false, c_level_bottom, 1)
 	listy += 48
 }
 
@@ -175,7 +175,7 @@ if (popup.layer_move != null)
 	mouse_cursor = cr_size_all
 	
 	draw_dropshadow(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, c_black, 1)
-	draw_box(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, false, c_background, 1)
+	draw_box(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, false, c_level_middle, 1)
 	popup_bannereditor_draw_layer(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, popup.layer_move, false)
 	
 	// Insert layer

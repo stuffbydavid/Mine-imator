@@ -40,7 +40,7 @@ if (mouseon)
 microani_set(argument[0], script, mouseon, mouseclick, active)
 
 var checkboxx, checkboxy;
-checkboxx = xx + 4
+checkboxx = xx
 checkboxy = yy + (h/2) - 8
 
 var offcolor, offalpha, oncolor, onalpha, color, alpha;
@@ -62,13 +62,13 @@ alpha = lerp(alpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 // Draw checkbox
 draw_outline(checkboxx, checkboxy, 16, 16, 2 + (6 * mcroani_arr[e_mcroani.ACTIVE]), color, alpha, true)
-draw_image(spr_checkbox_tick, 0, checkboxx + 8, checkboxy + 8, 1, 1, c_background, 1 * mcroani_arr[e_mcroani.ACTIVE])
+draw_image(spr_checkbox_tick, 0, checkboxx + 8, checkboxy + 8, 1, 1, c_level_middle, 1 * mcroani_arr[e_mcroani.ACTIVE])
 
 // Draw hover outline
 draw_box_hover(checkboxx, checkboxy, 16, 16, mcroani_arr[e_mcroani.PRESS])
 
 // Label
-draw_label(name, xx + 28, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
+draw_label(name, xx + 24, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
 
 microani_update(mouseon, mouseclick, active)
 

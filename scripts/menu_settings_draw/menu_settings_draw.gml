@@ -54,7 +54,7 @@ else
 	draw_set_alpha(settingsmenuease)
 
 draw_dropshadow(content_x, content_y, content_width, content_height, c_black, settingsmenuease)
-draw_box(content_x, content_y, content_width, content_height, false, c_background, 1)
+draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
 draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border * settingsmenuease, true)
 
 if (settings_menu_script)
@@ -96,7 +96,7 @@ else
 // Draw arrow
 if (settings_menu_primary)
 {
-	draw_image(spr_tooltip_arrow, 0, settings_menu_x, content_y, 1, 1, c_background, settingsmenuease)
+	draw_image(spr_tooltip_arrow, 0, settings_menu_x, content_y, 1, 1, c_level_middle, settingsmenuease)
 
 	// Highlight arrow with top item
 	if (settings_menu_amount > 0 && settings_menu_list.item[|0].hover)

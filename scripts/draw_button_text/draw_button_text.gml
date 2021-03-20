@@ -28,20 +28,23 @@ wid = string_width(text)
 hei = string_height(text)
 mouseon = app_mouse_box(xx, yy - hei, wid, hei)
 
+microani_set(text, script, mouseon, mouseon && mouse_left, false)
+
 draw_label(text, xx, yy, fa_left, fa_bottom, c_accent, a_accent)
+draw_line_ext(xx, yy, xx + wid, yy, c_accent, a_accent * mcroani_arr[e_mcroani.HOVER])
 
 if (mouseon)
 {
-	if (!mouse_left)
-	{
-		mouse_cursor = cr_handpoint
+	mouse_cursor = cr_handpoint
 		
-		if (tip != "")
-			tip_set(tip, xx, yy - hei, wid, hei)
-	}
-	
-	draw_line_ext(xx, yy, xx + wid, yy, c_accent, a_accent)
+	if (tip != "")
+		tip_set(tip, xx, yy - hei, wid, hei)
 	
 	if (mouse_left_released && script != null)
+	{
 		script_execute(script, value)
+		app_mouse_clear()
+	}
 }
+
+microani_update(mouseon, mouseon && mouse_left, false)

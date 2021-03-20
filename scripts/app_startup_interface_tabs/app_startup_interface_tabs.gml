@@ -743,13 +743,12 @@ with (settings)
 	with (render)
 	{
 		tbx_dof_quality = new_textbox_integer()
-		tbx_ssao_range = new_textbox_decimals()
 		tbx_ssao_radius = new_textbox_decimals()
 		tbx_ssao_power = new_textbox_integer()
 		tbx_ssao_power.suffix = "%"
 		tbx_ssao_blur_passes = new_textbox_integer()
 		tbx_ssao_color = new_textbox_hex()
-		tbx_shadow_samples = new_textbox_integer()
+		tbx_samples = new_textbox_integer()
 		tbx_indirect_blur_passes = new_textbox_integer()
 		tbx_indirect_strength = new_textbox_integer()
 		tbx_indirect_strength.suffix = "%"

@@ -108,9 +108,12 @@ draw_box(xx, yy, w, h, false, backcolor, backalpha)
 if (type = e_button.PRIMARY)
 	draw_box_bevel(xx, yy, w, h, 1)
 
-// Outline
+// Background
 if (type = e_button.SECONDARY)
+{
+	draw_box(xx, yy, w, h, false, c_level_top, draw_get_alpha())
 	draw_outline(xx, yy, w, h, 1, linecolor, linealpha, 1)
+}
 
 // Focus ring
 draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])

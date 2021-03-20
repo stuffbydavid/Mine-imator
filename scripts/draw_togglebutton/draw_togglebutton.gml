@@ -15,7 +15,7 @@ labels = true
 showcaption = true
 
 if (argument_count > 3)
-	showcaption = argument[3]
+	labels = argument[3]
 
 if (argument_count > 4)
 	showcaption = argument[4]
@@ -47,6 +47,7 @@ scriptvalue = null
 axis = X
 
 // Draw frame
+draw_box(xx, yy, w, buttonh, false, c_level_top, draw_get_alpha())
 draw_outline(xx, yy, w, buttonh, 1, c_border, a_border, true)
 for (var i = 0; i < buttoncount; i++)
 {	
@@ -122,7 +123,7 @@ for (var i = 0; i < buttoncount; i++)
 		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, contentcolor, contentalpha, font_button)
 	
 	// Outline
-	draw_outline(buttonx, yy, boxwid, buttonh, 1, c_background, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
+	draw_outline(buttonx, yy, boxwid, buttonh, 1, c_level_middle, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
 	draw_outline(buttonx, yy, boxwid, buttonh, 1, linecolor, linealpha, true)
 	
 	draw_box_hover(buttonx, yy, boxwid, buttonh, mcroani_arr[e_mcroani.PRESS])

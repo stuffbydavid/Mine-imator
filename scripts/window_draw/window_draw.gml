@@ -21,6 +21,7 @@ if (window_state = "export_movie")
 if (window_state = "startup")
 {
 	window_draw_startup()
+	window_draw_cover()
 }
 else
 {
@@ -32,12 +33,9 @@ else
 	window_draw_timeline_move()
 }
 
-if (!bench_show_ani)
-	popup_draw()
-if (bench_show_ani)
-	popup_draw()
-menu_settings_draw()
 window_draw_toasts()
+popup_draw()
+menu_settings_draw()
 menu_draw()
 context_menu_draw()
 tip_draw()

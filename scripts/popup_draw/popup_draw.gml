@@ -2,9 +2,6 @@
 
 var boxx, boxy, boxw, boxh, closex, closey;
 
-if (popup != null && popup.block)
-	draw_box(0, 0, window_width, window_height, false, c_black, popup_ani * 0.45)
-
 // Animate
 if (popup_ani = 1)
 {
@@ -21,29 +18,28 @@ else
 
 if (popup_ani_type = "show")
 {
-	popup_ani = min(1, popup_ani + 0.05 * delta)
+	popup_ani = min(1, popup_ani + 0.075 * delta)
 	if (popup_ani = 1)
 		popup_ani_type = ""
 }
 else if (popup_ani_type = "hide")
 {
-	popup_ani = max(0, popup_ani - 0.1 * delta)
-	if (popup_ani = 0)
+	popup_ani = max(0, popup_ani - 0.075 * delta)
+	
+	if (popup_switch_to)
 	{
-		if (popup_switch_to)
-		{
-			popup = popup_switch_to
-			popup_switch_to = null
-			popup_ani_type = "show"
-			window_busy = ""
-		}
-		else
-		{
-			window_busy = ""
-			popup = null
-			popup_ani_type = ""
-			popup_switch_from = null
-		}
+		popup_ani = 0
+		popup = popup_switch_to
+		popup_switch_to = null
+		popup_ani_type = "show"
+		window_busy = ""
+	}
+	else if (popup_ani = 0)
+	{
+		window_busy = ""
+		popup = null
+		popup_ani_type = ""
+		popup_switch_from = null
 	}
 }
 
@@ -52,6 +48,8 @@ if (!popup)
 	popup_mouseon = false
 	return 0
 }
+
+draw_set_alpha(ease("easeoutcirc", popup_ani))
 
 if (window_busy = "popupmove")
 	draw_set_alpha(0.5)
@@ -62,10 +60,8 @@ if (window_busy = "popup" + popup.name)
 // Box
 boxw = popup.width
 boxh = floor(popup_height)
-
 boxx = floor(popup.offset_x) + window_width / 2 - boxw / 2
 boxy = floor(popup.offset_y) + window_height / 2 - boxh / 2
-boxy += ease("easeincirc", 1 - popup_ani) * (window_height - boxy)
 
 boxx = floor(boxx)
 boxy = floor(boxy)
@@ -76,11 +72,12 @@ content_x = boxx
 content_y = boxy
 content_width = boxw
 content_height = boxh
+content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
 content_tab = null
 
-draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1)
-draw_box(boxx, boxy, boxw, boxh, false, c_background, 1)
-draw_outline(boxx, boxy, boxw, boxh, 1, c_border, a_border, true)
+draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1) 
+draw_box(boxx, boxy, boxw, boxh, false, c_level_middle, 1) 
+draw_outline(boxx, boxy, boxw, boxh, 1, c_border, a_border, true) 
 
 // Move
 if (window_busy = "popupclick")
@@ -109,12 +106,6 @@ else
 }
 
 // Draw contents
-content_x = boxx
-content_y = boxy
-content_width = boxw
-content_height = boxh 
-content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
-
 dx = content_x
 dy = content_y
 dw = content_width
@@ -160,7 +151,7 @@ if (popup.close_button)
 if (popup.script != null)
 	script_execute(popup.script)
 
-if (popup.custom)
+if (popup.custom || popup.height != null)
 {
 	popup_height_goal = popup.height
 	popup_height = popup_height_goal

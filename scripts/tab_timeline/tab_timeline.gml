@@ -15,7 +15,7 @@ var regionx1, regionx2;
 markerbarshow = (ds_list_size(timeline_marker_list) > 0) && timeline_show_markers
 
 // Background
-draw_box(content_x, content_y, content_width, content_height, false, c_background, 1)
+draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
 
 // Init
 itemh = setting_timeline_compact ? 20 : 24
@@ -245,13 +245,13 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	
 	// Hidden
 	if (tl.hide)
-		draw_box(dx, dy, tlw, itemh, false, c_background_secondary, .5)
+		draw_box(dx, dy, tlw, itemh, false, c_level_bottom, .5)
 	
 	dy += itemh
 }
 
 // Timeline bar
-draw_box(barx, bary, barw, barh, false, c_background_secondary, 1)
+draw_box(barx, bary, barw, barh, false, c_level_bottom, 1)
 
 // Timeline region
 if (timeline_region_start != null)
@@ -384,10 +384,10 @@ if (markerbarh != 0)
 	draw_set_font(font_emphasis)
 	draw_set_halign(fa_left)
 	draw_set_valign(fa_bottom)
-	draw_set_color(c_background)
+	draw_set_color(c_level_middle)
 	
 	// Background
-	draw_box(markerbarx, markerbary, markerbarw, markerbarh, false, c_background_secondary, 1)
+	draw_box(markerbarx, markerbary, markerbarw, markerbarh, false, c_level_bottom, 1)
 	
 	scissor_start(tlx, bary, tlw, ((markerbary + markerbarh) - bary) - 4)
 	
@@ -589,7 +589,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			// Audio background
 			if (kf.selected)
 			{
-				draw_box(boxx, dy, boxw, itemh, false, c_background, 1)
+				draw_box(boxx, dy, boxw, itemh, false, c_level_middle, 1)
 				draw_box(boxx, dy, boxw, itemh, false, c_accent_overlay, a_accent_overlay)
 			}
 			
@@ -634,7 +634,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				
 				// Block out area
 				if (curdx < nextdx && nextdx >= 0)
-					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_background_secondary, .5)
+					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_level_bottom, .5)
 			}
 			
 			if (dx > tlx + tlw)
@@ -755,7 +755,7 @@ var itemx, itemy, itemw, itemhover, buttonhover, minw, xx, xright;
 buttonsize = 16
 buttonpad = (itemh - buttonsize)/2
 
-draw_box(content_x, bary, listw, content_height - headerh, false, c_background, 1)
+draw_box(content_x, bary, listw, content_height - headerh, false, c_level_middle, 1)
 draw_divide_vertical(content_x + listw, tly - barh, content_height - headerh)
 draw_divide(content_x, bary + 1, listw)
 
@@ -986,7 +986,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			if (tl.color_tag = null)
 				namecolor = c_accent
 			else
-				namecolor = c_background
+				namecolor = c_level_middle
 			
 			namealpha = 1
 			backalpha = 1

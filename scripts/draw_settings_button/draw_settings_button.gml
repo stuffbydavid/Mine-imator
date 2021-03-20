@@ -90,7 +90,7 @@ if (primary)
 	draw_box_bevel(xx, yy, width, height, 1)
 	
 	// Icon
-	draw_image(spr_arrow_up_down_ani, mcroani_arr[e_mcroani.ACTIVE] * 15, xx + width/2, yy + height/2, 1 , 1, c_background, 1)
+	draw_image(spr_arrow_up_down_ani, mcroani_arr[e_mcroani.ACTIVE] * 15, xx + width/2, yy + height/2, 1 , 1, c_level_middle, 1)
 	
 	// Accent accent hover outline
 	draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])

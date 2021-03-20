@@ -80,6 +80,8 @@ fieldx = xx
 fieldy = yy
 dragw = 16
 
+draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_level_top, alpha * draw_get_alpha())
+
 // Draw field backgrounds
 if (vertical)
 	draw_outline(fieldx, fieldy, wid, textfield_amount * hei, 1, c_border, a_border * alpha, true)
@@ -155,7 +157,7 @@ for (var i = 0; i < textfield_amount; i++)
 		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 	
 	// Outline
-	draw_outline(fieldx, boxy, boxwid, boxhei, 1, c_background, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
+	draw_outline(fieldx, boxy, boxwid, boxhei, 1, c_level_middle, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
 	draw_outline(fieldx, boxy, boxwid, boxhei, 1, linecolor, linealpha, true)
 	
 	draw_box_hover(fieldx, boxy, boxwid, boxhei, mcroani_arr[e_mcroani.PRESS])

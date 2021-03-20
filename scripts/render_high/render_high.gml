@@ -28,9 +28,9 @@ if (background_fog_show)
 render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
 render_post(finalsurf)
 
-render_shadows_clear = false
+render_samples_clear = false
 
-if (render_samples < setting_render_shadows_samples)
+if (render_samples < setting_render_samples)
 	render_samples++
 
 render_time = current_time - starttime - render_surface_time

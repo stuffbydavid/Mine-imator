@@ -20,7 +20,7 @@ for (var i = 0; i <= 8; i++)
 	if (timeline_hide_color_tag[i])
 	{
 		draw_box(px, dy, 20, 20, false, c_text_tertiary, a_text_tertiary)
-		draw_image(spr_icons, icons.CLOSE_SMALL, px + 10, dy + 10, 1, 1, c_background, 1)
+		draw_image(spr_icons, icons.CLOSE_SMALL, px + 10, dy + 10, 1, 1, c_level_middle, 1)
 	}
 	
 	if (app_mouse_box(px, dy, 20, 20))

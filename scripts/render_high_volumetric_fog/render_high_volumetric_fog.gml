@@ -11,13 +11,13 @@ sampleend = 0
 
 render_volumetric_fog_offset = 1
 
-if (render_samples <= setting_render_shadows_samples || render_shadows_clear || export)
+if (render_samples <= setting_render_samples || render_samples_clear || export)
 {
 	if (export)
 	{
 		samplestart = 0
-		sampleend = setting_render_shadows_samples
-		render_samples = setting_render_shadows_samples
+		sampleend = setting_render_samples
+		render_samples = setting_render_samples
 	}
 	else
 	{
@@ -43,7 +43,7 @@ if (render_samples <= setting_render_shadows_samples || render_shadows_clear || 
 	
 	for (var s = samplestart; s < sampleend; s++)
 	{
-		if (render_samples >= setting_render_shadows_samples)
+		if (render_samples >= setting_render_samples)
 			continue
 		
 		random_set_seed(s)
@@ -119,7 +119,7 @@ if (render_samples <= setting_render_shadows_samples || render_shadows_clear || 
 			draw_clear_alpha(c_black, 1)
 			draw_surface_exists(render_surface_sun_volume_expo, 0, 0)
 		
-			if ((export && s = 0) || render_shadows_clear)
+			if ((export && s = 0) || render_samples_clear)
 				draw_clear_alpha(c_black, 1)
 		}
 		surface_reset_target()
@@ -129,7 +129,7 @@ if (render_samples <= setting_render_shadows_samples || render_shadows_clear || 
 			draw_clear_alpha(c_black, 1)
 			draw_surface_exists(render_surface_sun_volume_dec, 0, 0)
 		
-			if ((export && s = 0) || render_shadows_clear)
+			if ((export && s = 0) || render_samples_clear)
 				draw_clear_alpha(c_black, 1)
 		}
 		surface_reset_target()
@@ -163,7 +163,7 @@ surface_set_target(resultsurf)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_volumetric_fog_apply_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, (export ? app.setting_render_shadows_samples : render_samples))
+		shader_high_volumetric_fog_apply_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, (export ? app.setting_render_samples : render_samples))
 	}
 	draw_surface_exists(prevsurf, 0, 0)
 	with (render_shader_obj)

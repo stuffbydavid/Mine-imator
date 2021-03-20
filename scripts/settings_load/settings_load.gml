@@ -79,17 +79,8 @@ if (filename_ext(fn) = ".midata")
 	var interfacemap = map[?"interface"];
 	if (ds_map_valid(interfacemap))
 	{
-		setting_tip_show = value_get_real(interfacemap[?"tip_show"], setting_tip_show)
-		setting_tip_delay = value_get_real(interfacemap[?"tip_delay"], setting_tip_delay)
-		
 		setting_view_real_time_render = value_get_real(interfacemap[?"view_real_time_render"], setting_view_real_time_render)
 		setting_view_real_time_render_time = value_get_real(interfacemap[?"view_real_time_render_time"], setting_view_real_time_render_time)
-
-		setting_font_filename = value_get_string(interfacemap[?"font_filename"], setting_font_filename)
-		if (!file_exists_lib(setting_font_filename))
-			setting_font_filename = ""
-		else if (setting_font_filename != "")
-			action_setting_font_open(setting_font_filename)
 		
 		setting_language_filename = value_get_string(interfacemap[?"language_filename"], setting_language_filename)
 		if (!file_exists_lib(setting_language_filename))
@@ -98,8 +89,6 @@ if (filename_ext(fn) = ".midata")
 		if (setting_language_filename != language_file)
 			language_load(setting_language_filename, language_map)
 		
-		settings_load_colors(interfacemap[?"colors"])
-
 		setting_timeline_autoscroll = value_get_real(interfacemap[?"timeline_autoscroll"], setting_timeline_autoscroll)
 		setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
 		setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
@@ -250,6 +239,7 @@ if (filename_ext(fn) = ".midata")
 	var rendermap = map[?"render"];
 	if (ds_map_valid(rendermap))
 	{
+		setting_render_samples = value_get_real(rendermap[?"render_samples"], setting_render_samples)
 		setting_render_dof_quality = value_get_real(rendermap[?"render_dof_quality"], setting_render_dof_quality)
 		
 		setting_render_ssao = value_get_real(rendermap[?"render_ssao"], setting_render_ssao)
@@ -262,7 +252,6 @@ if (filename_ext(fn) = ".midata")
 		setting_render_shadows_sun_buffer_size = value_get_real(rendermap[?"render_shadows_sun_buffer_size"], setting_render_shadows_sun_buffer_size)
 		setting_render_shadows_spot_buffer_size = value_get_real(rendermap[?"render_shadows_spot_buffer_size"], setting_render_shadows_spot_buffer_size)
 		setting_render_shadows_point_buffer_size = value_get_real(rendermap[?"render_shadows_point_buffer_size"], setting_render_shadows_point_buffer_size)
-		setting_render_shadows_samples = value_get_real(rendermap[?"render_shadows_samples"], setting_render_shadows_samples)
 		setting_render_shadows_sun_colored = value_get_real(rendermap[?"render_shadows_sun_colored"], setting_render_shadows_sun_colored)
 		
 		setting_render_indirect = value_get_real(rendermap[?"render_indirect"], setting_render_indirect)
@@ -318,6 +307,8 @@ if (filename_ext(fn) = ".midata")
 	var collapsemap = map[?name];
 	if (ds_map_valid(collapsemap))
 	{
+		setting_collapse_settings_backups = value_get_string(collapsemap[?"settings_backups"], setting_collapse_settings_backups)
+		setting_collapse_settings_tex_filter = value_get_string(collapsemap[?"settings_tex_filter"], setting_collapse_settings_tex_filter)
 		setting_collapse_settings_ssao = value_get_string(collapsemap[?"settings_ssso"], setting_collapse_settings_ssao)
 		setting_collapse_settings_shadows = value_get_string(collapsemap[?"settings_shadows"], setting_collapse_settings_shadows)
 		setting_collapse_settings_indirect = value_get_string(collapsemap[?"settings_indirect"], setting_collapse_settings_indirect)

@@ -27,10 +27,12 @@ if (argument_count > 6)
 	right = argument[6]
 
 // Colors
-var prevalpha, textnormal, textnormala, highlight, texthighlight, texthighlighta;
+var prevalpha, textnormal, textnormala, textsuffix, textsuffixa, highlight, texthighlight, texthighlighta;
 prevalpha = draw_get_alpha()
 textnormal = c_text_main
 textnormala = a_text_main * prevalpha
+textsuffix = c_text_tertiary
+textsuffixa = a_text_tertiary
 highlight = c_accent
 texthighlight = c_button_text
 texthighlighta = a_button_text * prevalpha
@@ -1052,9 +1054,15 @@ for (l = tbx.start * !tbx.single_line; l < tbx.lines; l++)
 		}
 		else // Unselected
 		{
+			var text = string_copy(tbx.line[0], tbx.start + 1, tbx.chars);
 			draw_set_color(textnormal)
 			draw_set_alpha(textnormala)
-			draw_text(textx, yy, string_copy(tbx.line[0], tbx.start + 1, tbx.chars) + tbx.suffix)
+			draw_text(textx, yy, text)
+			
+			// Suffix
+			draw_set_color(textsuffix)
+			draw_set_alpha(textsuffixa)
+			draw_text(textx + string_width(text), yy, tbx.suffix)
 		}
 	}
 	else

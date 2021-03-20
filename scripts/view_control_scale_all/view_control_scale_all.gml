@@ -58,7 +58,7 @@ else if (view.control_mouseon_last = e_view_control.SCA_XYZ)
 	
 }
 
-draw_set_color(c_background)
+draw_set_color(c_level_middle)
 
 // Draw circle
 if (view.control_mouseon_last = e_view_control.SCA_XYZ)

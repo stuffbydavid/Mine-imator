@@ -28,15 +28,12 @@ tab_next()
 // Custom
 if (tab.camera.video_template = 0)
 {
-	draw_set_font(font_emphasis)
-	capwid = text_caption_width("frameeditorcameravideosizecustomwidth", "frameeditorcameravideosizecustomheight")
-	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameravideosizecustomwidth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_WIDTH], 1, 1, no_limit, 1280, 1, tab.camera.tbx_video_size_custom_width, action_tl_frame_cam_width, capwid)
+	draw_dragger("frameeditorcameravideosizecustomwidth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_WIDTH], 1, 1, no_limit, 1280, 1, tab.camera.tbx_video_size_custom_width, action_tl_frame_cam_width)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameravideosizecustomheight", dx, dy, dragger_width, tl_edit.value[e_value.CAM_HEIGHT], 1, 1, no_limit, 720, 1, tab.camera.tbx_video_size_custom_height, action_tl_frame_cam_height, capwid)
+	draw_dragger("frameeditorcameravideosizecustomheight", dx, dy, dragger_width, tl_edit.value[e_value.CAM_HEIGHT], 1, 1, no_limit, 720, 1, tab.camera.tbx_video_size_custom_height, action_tl_frame_cam_height)
 	tab_next()
 	
 	tab_control_switch()
@@ -150,19 +147,16 @@ if (tl_edit.value[e_value.CAM_DOF] && setting_collapse_frameeditor_dof)
 {
 	tab_collapse_start()
 	
-	draw_set_font(font_emphasis)
-	capwid = text_caption_width("frameeditorcameradofdepth", "frameeditorcameradofrange", "frameeditorcameradoffadesize")
-	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameradofdepth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_DOF_DEPTH] / 50), 0, world_size, 0, 0, tab.camera.tbx_dof_depth, action_tl_frame_cam_dof_depth, capwid)
+	draw_dragger("frameeditorcameradofdepth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_DOF_DEPTH] / 50), 0, world_size, 0, 0, tab.camera.tbx_dof_depth, action_tl_frame_cam_dof_depth)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameradofrange", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera.tbx_dof_range, action_tl_frame_cam_dof_range, capwid)
+	draw_dragger("frameeditorcameradofrange", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera.tbx_dof_range, action_tl_frame_cam_dof_range)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorcameradoffadesize", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera.tbx_dof_fade_size, action_tl_frame_cam_dof_fade_size, capwid)
+	draw_dragger("frameeditorcameradoffadesize", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera.tbx_dof_fade_size, action_tl_frame_cam_dof_fade_size)
 	tab_next()
 	
 	tab_control_meter()

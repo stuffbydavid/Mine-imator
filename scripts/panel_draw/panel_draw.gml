@@ -86,7 +86,7 @@ boxw = ceil(boxw)
 boxh = ceil(boxh)
 
 // Background
-draw_box(boxx, boxy, boxw, boxh, false, c_background, 1)
+draw_box(boxx, boxy, boxw, boxh, false, c_level_middle, 1)
 
 // Content
 tabsh = min(boxh, 24)
@@ -163,7 +163,7 @@ if (content_tab.movable)
 	content_mouseon = !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Tabs background
-	draw_box(dx, dy, tabmaxw, tabsh, false, c_background_secondary, 1)
+	draw_box(dx, dy, tabmaxw, tabsh, false, c_level_bottom, 1)
 	
 	draw_box(dx, dy + tabsh, tabmaxw, 1, false, c_border, a_border)
 	
@@ -197,7 +197,7 @@ if (content_tab.movable)
 		}
 		
 		if (sel)
-			draw_box(dx, dy, dw, dh + 1, false, c_background, 1)
+			draw_box(dx, dy, dw, dh + 1, false, c_level_middle, 1)
 		
 		var limit = dw - 16;
 		

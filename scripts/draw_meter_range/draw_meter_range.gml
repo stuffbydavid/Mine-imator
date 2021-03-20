@@ -163,7 +163,7 @@ color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], 
 color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
-draw_box(minthumbpos, thumby - 10, 12, 20, false, c_background, 1)
+draw_box(minthumbpos, thumby - 10, 12, 20, false, c_level_middle, 1)
 draw_box(minthumbpos, thumby - 10, 12, 20, false, color, alpha)
 draw_box_bevel(minthumbpos, thumby - 10, 12, 20, 1)
 draw_box_hover(minthumbpos, thumby - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])
@@ -177,7 +177,7 @@ color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], 
 color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
-draw_box(maxthumbpos, thumby - 10, 12, 20, false, c_background, 1)
+draw_box(maxthumbpos, thumby - 10, 12, 20, false, c_level_middle, 1)
 draw_box(maxthumbpos, thumby - 10, 12, 20, false, color, alpha)
 draw_box_bevel(maxthumbpos, thumby - 10, 12, 20, 1)
 draw_box_hover(maxthumbpos, thumby - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])

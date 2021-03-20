@@ -20,8 +20,9 @@ c_overlay = theme.overlay
 c_button_text = theme.button_text
 a_button_text = theme.button_text_alpha
 
-c_background = theme.background
-c_background_secondary = theme.background_secondary
+c_level_top = theme.level_top
+c_level_middle = theme.level_middle
+c_level_bottom = theme.level_bottom
 c_viewport_top = theme.viewport_top
 c_viewport_bottom = theme.viewport_bottom
 c_error = theme.red_error

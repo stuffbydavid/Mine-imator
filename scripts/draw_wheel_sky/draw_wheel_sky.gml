@@ -30,14 +30,14 @@ draw_label(text_get(name), xx, yy - 4, fa_center, fa_bottom, c_text_secondary, a
 sunx = floor(xx + lengthdir_x(rad, value + 90))
 suny = floor(yy + lengthdir_y(rad, value + 90))
 sunmouseon = (app_mouse_box(sunx - 10, suny - 10, 20, 20) && content_mouseon)
-draw_circle_ext(sunx, suny, 14, false, 16, c_background, 1)
+draw_circle_ext(sunx, suny, 14, false, 16, c_level_middle, 1)
 draw_image(spr_icons, icons.SUN, sunx, suny, 1, 1, c_text_secondary, a_text_secondary)
 
 // Moon
 moonx = floor(xx + lengthdir_x(rad, value - 90))
 moony = floor(yy + lengthdir_y(rad, value - 90))
 moonmouseon = (app_mouse_box(moonx - 10, moony - 10, 20, 20) && content_mouseon)
-draw_circle_ext(moonx, moony, 14, false, 16, c_background, 1)
+draw_circle_ext(moonx, moony, 14, false, 16, c_level_middle, 1)
 draw_image(spr_icons, icons.MOON, moonx, moony, 1, 1, c_text_secondary, a_text_secondary)
 
 // Click

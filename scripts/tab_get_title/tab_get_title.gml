@@ -53,7 +53,7 @@ else if (tab = frame_editor)
 		if (tl_edit_amount > 1)
 			name += "..."
 	}
-	return text_get("tabframeeditor", string(round(timeline_marker)), name)
+	return text_get("tabframeeditor", name, string(round(timeline_marker)))
 }
 else if (tab = settings)
 	return text_get("tabsettings")

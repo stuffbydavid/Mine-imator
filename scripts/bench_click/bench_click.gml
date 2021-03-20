@@ -60,12 +60,10 @@ with (bench_settings)
 		temp_update_model_shape()
 		
 		// Modelbench popup
-		/*
 		if (show_modelbench_popup)
 			with (app)
 				if (!popup_modelbench.hidden && !popup_modelbench.not_now)
 					popup_show(popup_modelbench)
-		*/
 	}
 }
 

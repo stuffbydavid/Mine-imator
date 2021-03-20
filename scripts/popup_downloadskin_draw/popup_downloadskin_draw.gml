@@ -41,7 +41,7 @@ tab_next()
 var previewx = content_x + content_width / 2 - 64;
 
 tab_control(128)
-draw_box(previewx, dy, 128, 128, false, c_background_secondary, 1)
+draw_box(previewx, dy, 128, 128, false, c_level_bottom, 1)
 if (popup.texture)
 	draw_texture(popup.texture, previewx, dy, 2, 2)
 tab_next()

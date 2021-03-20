@@ -64,16 +64,10 @@ json_save_object_done()
 
 json_save_object_start("interface")
 
-	json_save_var_bool("tip_show", setting_tip_show)
-	json_save_var("tip_delay", setting_tip_delay)
-
 	json_save_var_bool("view_real_time_render", setting_view_real_time_render)
 	json_save_var("view_real_time_render_time", setting_view_real_time_render_time)
-
-	json_save_var("font_filename", json_string_encode(setting_font_filename))
+	
 	json_save_var("language_filename", json_string_encode(setting_language_filename))
-
-	settings_save_colors()
 
 	json_save_var_bool("timeline_autoscroll", setting_timeline_autoscroll)
 	json_save_var_bool("timeline_compact", setting_timeline_compact)
@@ -213,6 +207,7 @@ json_save_object_done()
 
 json_save_object_start("render")
 
+	json_save_var("render_samples", setting_render_samples)
 	json_save_var("render_dof_quality", setting_render_dof_quality)
 	
 	json_save_var_bool("render_ssao", setting_render_ssao)
@@ -225,7 +220,6 @@ json_save_object_start("render")
 	json_save_var("render_shadows_sun_buffer_size", setting_render_shadows_sun_buffer_size)
 	json_save_var("render_shadows_spot_buffer_size", setting_render_shadows_spot_buffer_size)
 	json_save_var("render_shadows_point_buffer_size", setting_render_shadows_point_buffer_size)
-	json_save_var("render_shadows_samples", setting_render_shadows_samples)
 	json_save_var_bool("render_shadows_sun_colored", setting_render_shadows_sun_colored)
 	
 	json_save_var_bool("render_indirect", setting_render_indirect)
@@ -267,6 +261,8 @@ json_save_object_done()
 
 json_save_object_start("collapse")
 
+	json_save_var_bool("settings_backups", setting_collapse_settings_backups)
+	json_save_var_bool("settings_tex_filter", setting_collapse_settings_tex_filter)
 	json_save_var_bool("settings_ssso", setting_collapse_settings_ssao)
 	json_save_var_bool("settings_shadows", setting_collapse_settings_shadows)
 	json_save_var_bool("settings_indirect", setting_collapse_settings_indirect)

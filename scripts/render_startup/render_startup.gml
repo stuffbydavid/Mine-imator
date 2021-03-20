@@ -131,10 +131,10 @@ render_surface_indirect = null
 render_surface_indirect_expo = null
 render_surface_indirect_dec = null
 
-globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_shadows_clear;
+globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples_clear;
 render_surface_sun_volume_expo = null
 render_surface_sun_volume_dec = null
-render_shadows_clear = false
+render_samples_clear = false
 
 render_surface_post[0] = null
 render_surface_post[1] = null

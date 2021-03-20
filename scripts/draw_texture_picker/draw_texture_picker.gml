@@ -71,7 +71,7 @@ for (var i = round(scroll.value / itemhei) * itemsx; i < items; i++)
 {
 	var col, curtex, curslot, curslotsx, curslotsy;
 	
-	draw_box(tx + off, ty + off, slotwid, slothei, false, c_background_secondary, 1)
+	draw_box(tx + off, ty + off, slotwid, slothei, false, c_level_bottom, 1)
 	
 	// Texture color
 	col = c_white

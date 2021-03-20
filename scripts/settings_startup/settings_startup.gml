@@ -20,9 +20,6 @@ setting_spawn_objects = true
 setting_spawn_cameras = true
 setting_unlimited_values = false
 
-setting_tip_show = true
-setting_tip_delay = 0.35
-
 setting_view_real_time_render = true
 setting_view_real_time_render_time = 1000
 
@@ -38,10 +35,7 @@ font_main_big = font_add_lib(fonts_directory + "noto_bold.ttf", 16, false, false
 setting_font = font_main
 setting_font_bold = font_main_bold
 setting_font_big = font_main_big
-setting_font_filename = ""
 setting_language_filename = language_file
-
-action_setting_color_reset()
 
 setting_timeline_autoscroll = true
 setting_timeline_compact = false
@@ -169,6 +163,7 @@ setting_block_glow = true
 setting_block_glow_threshold = 0.75
 setting_light_bleeding = true
 
+setting_render_samples = 16
 setting_render_dof_quality = 3
 
 setting_render_ssao = true
@@ -182,7 +177,6 @@ setting_render_shadows = true
 setting_render_shadows_sun_buffer_size = 2048
 setting_render_shadows_spot_buffer_size = 512
 setting_render_shadows_point_buffer_size = 256
-setting_render_shadows_samples = 16
 setting_render_shadows_sun_colored = false
 
 setting_render_indirect = true
@@ -222,6 +216,8 @@ setting_export_image_remove_background = false
 setting_export_image_include_hidden = false
 setting_export_image_high_quality = true
 
+setting_collapse_settings_backups = false
+setting_collapse_settings_tex_filter = false
 setting_collapse_settings_ssao = false
 setting_collapse_settings_shadows = false
 setting_collapse_settings_indirect = false

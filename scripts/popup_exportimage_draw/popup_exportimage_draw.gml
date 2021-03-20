@@ -6,21 +6,19 @@ if (project_video_template = 0)
 else
 	text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 
-tab_control_menu(24)
+tab_control_menu()
 draw_button_menu("exportimageimagesize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
 tab_next()
 
 // Custom
 if (project_video_template = 0)
 {
-	var capwid = text_caption_width("exportimageimagesizecustomwidth", "exportimageimagesizecustomheight");
-	
 	tab_control_dragger()
-	draw_dragger("exportimageimagesizecustomwidth", dx, dy, dragger_width, project_video_width, 1, 1, no_limit, 1280, 1, popup.tbx_video_size_custom_width, action_project_video_width, capwid)
+	draw_dragger("exportimageimagesizecustomwidth", dx, dy, dragger_width, project_video_width, 1, 1, no_limit, 1280, 1, popup.tbx_video_size_custom_width, action_project_video_width)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("exportimageimagesizecustomheight", dx, dy, dragger_width, project_video_height, 1, 1, no_limit, 720, 1, popup.tbx_video_size_custom_height, action_project_video_height, capwid)
+	draw_dragger("exportimageimagesizecustomheight", dx, dy, dragger_width, project_video_height, 1, 1, no_limit, 720, 1, popup.tbx_video_size_custom_height, action_project_video_height)
 	tab_next()
 	
 	tab_control_switch()
@@ -34,11 +32,7 @@ draw_switch("exportimageremovebackground", dx, dy, popup.remove_background, acti
 tab_next()
 
 if (popup.remove_background)
-{
-	tab_control(32)
-	draw_label(string_wrap(text_get("exportimageblendmodewarning"), dw), dx, dy, fa_left, fa_top, c_text_main, a_text_main, font_value)
-	tab_next()
-}
+	draw_tooltip_label("exportimageblendmodewarning", icons.ALERT, e_toast.WARNING)
 
 // Include hidden
 tab_control_switch()

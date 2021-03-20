@@ -11,11 +11,11 @@ draw_switch("timelineintervalshow", dx, dy, timeline_intervals_show, action_tl_i
 tab_next()
 
 tab_control_dragger()
-draw_dragger("timelineintervalsize", dx, dy, dragger_width, timeline_interval_size, .1, 1, no_limit, project_tempo, 1, timeline.tbx_interval_size, action_tl_interval_size, draggerwid)
+draw_dragger("timelineintervalsize", dx, dy, dragger_width, timeline_interval_size, .1, 1, no_limit, project_tempo, 1, timeline.tbx_interval_size, action_tl_interval_size)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("timelineintervaloffset", dx, dy, dragger_width, timeline_interval_offset, .1, -no_limit, no_limit, 0, 1, timeline.tbx_interval_offset, action_tl_interval_offset, draggerwid)
+draw_dragger("timelineintervaloffset", dx, dy, dragger_width, timeline_interval_offset, .1, -no_limit, no_limit, 0, 1, timeline.tbx_interval_offset, action_tl_interval_offset)
 tab_next()
 
 // Timeline list

@@ -117,7 +117,7 @@ switch (temp_edit.type)
 		
 		draw_label(text_get("typeitem") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
-		draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_background_secondary, 1)
+		draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 		
 		if (res.item_sheet_texture != null)
 		{

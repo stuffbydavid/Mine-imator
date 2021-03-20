@@ -1,6 +1,6 @@
 /// popup_upgrade_draw()
 
-draw_box(dx, dy, 328, 184, false, c_background_secondary, 1)
+draw_box(dx, dy, 328, 184, false, c_level_bottom, 1)
 dy += 184
 
 dy += 18
@@ -13,7 +13,7 @@ dy += 126
 
 // Upgrade link
 draw_set_font(font_value_bold)
-draw_button_text("mineimator.com/upgrade", floor(dx + dw/2 - string_width("mineimator.com/upgrade")/2), dy, open_url, "http://mineimator.com/upgrade", "http://mineimator.com/upgrade", font_value_bold)
+draw_button_text(link_upgrade, floor(dx + dw/2 - string_width(link_upgrade)/2), dy, open_url, link_upgrade, link_upgrade, font_value_bold)
 
 dy += 18
 

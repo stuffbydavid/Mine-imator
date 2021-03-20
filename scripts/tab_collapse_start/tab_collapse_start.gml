@@ -1,4 +1,4 @@
 /// tab_collapse_start()
 
-dx += 8
-dw -= 8
+dx += 12
+dw -= 12

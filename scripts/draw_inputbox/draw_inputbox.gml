@@ -71,6 +71,7 @@ if (err)
 	borderalpha = 1 * alpha
 }
 
+draw_box(xx, yy, w, h, false, c_level_top, alpha * draw_get_alpha())
 draw_outline(xx, yy, w, h, 1, bordercolor, borderalpha, true)
 draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])
 

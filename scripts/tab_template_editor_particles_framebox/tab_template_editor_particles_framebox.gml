@@ -27,7 +27,7 @@ fhei = min(size, ptype_edit.sprite_frame_height * scale)
 framesx = max(1, floor(swid / ptype_edit.sprite_frame_width))
 mouseframe = floor((clamp(mouse_x - xx, 0, size - 1)) / fwid) + floor((clamp(mouse_y - yy, 0, size - 1)) / fhei) * framesx
 
-draw_box(xx, yy, size, size, false, c_background_secondary, 1)
+draw_box(xx, yy, size, size, false, c_level_bottom, 1)
 draw_texture(tex, xx, yy, scale, scale)
 
 // Click and drag to select frames

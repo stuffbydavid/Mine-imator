@@ -33,7 +33,7 @@ if (!content_mouseon && (levelindex >= context_menu_mouseon_level))
 	context_menu_mouseon_reset = true
 
 draw_dropshadow(dx, dy, dw, dh, c_black, 1)
-draw_box(dx, dy, dw, dh, false, c_background, 1)
+draw_box(dx, dy, dw, dh, false, c_level_middle, 1)
 draw_outline(dx, dy, dw, dh, 1, c_border, a_border, true)
 
 if (level.ani < 1)

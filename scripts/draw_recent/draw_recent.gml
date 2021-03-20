@@ -231,7 +231,7 @@ if (mode = "grid")
 			
 			if (hover || item.pinned)
 			{
-				draw_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 32, false, c_background, 1)
+				draw_box(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 32, false, c_level_middle, 1)
 				draw_outline(cardx + 240 - iconwid - 8, cardy + 8, iconwid, 32, 1, c_border, a_border, true)
 			}
 			

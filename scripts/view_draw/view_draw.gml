@@ -120,7 +120,7 @@ if (window_busy = "viewmove" && view = view_second)
 if (view = view_second)
 	draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1)
 
-draw_box(boxx, boxy, boxw, boxh, false, c_background, 1)
+draw_box(boxx, boxy, boxw, boxh, false, c_level_middle, 1)
 
 // Set camera to use
 if (view = view_second)
@@ -588,7 +588,7 @@ if (view.quality = e_view_mode.RENDER)
 	var infotext;
 	
 	if (view_render_real_time)
-		infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), setting_render_shadows_samples)
+		infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), setting_render_samples)
 	else
 		infotext = ""
 	

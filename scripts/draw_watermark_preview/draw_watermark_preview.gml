@@ -3,7 +3,7 @@
 /// @arg y
 /// @arg width
 
-var xx, yy, width, height;
+var xx, yy, width;
 xx = argument0
 yy = argument1
 width = argument2

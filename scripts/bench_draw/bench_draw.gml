@@ -53,7 +53,7 @@ if (!app_mouse_box(content_x, content_y, content_width, content_height) && mouse
 
 draw_set_alpha(ani)
 draw_dropshadow(content_x, content_y, content_width, content_height, c_black, 1)
-draw_box(content_x, content_y, content_width, content_height, false, c_background, 1)
+draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
 draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 
 scissor_start(content_x, content_y, content_width, content_height)

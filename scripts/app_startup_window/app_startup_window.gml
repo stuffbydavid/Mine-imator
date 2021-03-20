@@ -32,8 +32,6 @@ window_glow_right = 0
 window_glow_bottom = 0
 window_glow_left = 0
 
-window_cover = 1
-
 mouse_cursor = cr_default
 mouse_current_x = 0
 mouse_current_y = 0
@@ -119,3 +117,4 @@ popup_switch_from = null
 popup_mouseon = false
 popup_height = 0
 popup_height_goal = 0
+popup_block = 0

@@ -36,8 +36,8 @@ if (load_format >= e_settings.FORMAT_100_DEMO_5)
 	setting_spawn_cameras = buffer_read_byte()
 }
 
-setting_tip_show = buffer_read_byte()
-setting_tip_delay = buffer_read_double()
+/*setting_tip_show = */buffer_read_byte()
+/*setting_tip_delay = */buffer_read_double()
 
 if (load_format >= e_settings.FORMAT_100)
 {
@@ -50,7 +50,9 @@ if (load_format >= e_settings.FORMAT_103)
 	setting_view_real_time_render_time = buffer_read_int()
 }
 	
-setting_font_filename = buffer_read_string_int()
+/*setting_font_filename = */buffer_read_string_int()
+
+/*
 if (!file_exists_lib(setting_font_filename))
 	setting_font_filename = ""
 
@@ -59,6 +61,7 @@ if (setting_font_filename != "")
 	setting_font = font_add_lib(setting_font_filename, 10, 0, 0)
 	setting_font_bold = font_add_lib(setting_font_filename, 10, 1, 0)
 }
+*/
 
 /*setting_language_filename = */buffer_read_string_int()
 

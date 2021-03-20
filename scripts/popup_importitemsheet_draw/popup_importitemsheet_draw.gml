@@ -25,7 +25,7 @@ previewwid = texwid * scale
 previewhei = texhei * scale
 
 tab_control(previewhei)
-draw_box(previewx, previewy, previewwid, previewhei, false, c_background_secondary, 1)
+draw_box(previewx, previewy, previewwid, previewhei, false, c_level_bottom, 1)
 draw_texture(popup.texture, previewx, previewy, scale, scale)
 
 if (popup.is_sheet)
@@ -51,17 +51,16 @@ tab_next()
 if (popup.is_sheet)
 {
 	draw_set_font(font_emphasis)
-	var capwid = text_max_width("importitemsheetrows", "importitemsheetcolumns") + 10;
 	
 	// Size
 	axis_edit = X
 	tab_control(28)
-	draw_dragger("importitemsheetrows", dx, dy, dragger_width, popup.sheet_size[X], 1 / 10, 1, no_limit, popup.sheet_size_def[X], 1, popup.tbx_sheet_width, action_toolbar_importitemsheet_sheet_size, capwid)
+	draw_dragger("importitemsheetrows", dx, dy, dragger_width, popup.sheet_size[X], 1 / 10, 1, no_limit, popup.sheet_size_def[X], 1, popup.tbx_sheet_width, action_toolbar_importitemsheet_sheet_size)
 	tab_next()
 	
 	axis_edit = Y
 	tab_control(28)
-	draw_dragger("importitemsheetcolumns", dx, dy, dragger_width, popup.sheet_size[Y], 1 / 10, 1, no_limit, popup.sheet_size_def[Y], 1, popup.tbx_sheet_height, action_toolbar_importitemsheet_sheet_size, capwid)
+	draw_dragger("importitemsheetcolumns", dx, dy, dragger_width, popup.sheet_size[Y], 1 / 10, 1, no_limit, popup.sheet_size_def[Y], 1, popup.tbx_sheet_height, action_toolbar_importitemsheet_sheet_size)
 	tab_next()
 }
 

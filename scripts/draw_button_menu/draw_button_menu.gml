@@ -136,9 +136,7 @@ borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
 borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
 borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 
-if (menuactive)
-	draw_box(xx, yy, wid, hei, false, c_background, 1)
-
+draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
 draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha, true)
 draw_box_hover(xx, yy, wid, hei, mcroani_arr[e_mcroani.PRESS])
 

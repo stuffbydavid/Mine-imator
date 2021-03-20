@@ -51,7 +51,7 @@ else
 hei = 24
 
 if (capwidth = null && showcaption)
-	capwidth = string_width(caption) + 8
+	capwidth = dw - wid
 else if (!showcaption)
 	capwidth = 0
 

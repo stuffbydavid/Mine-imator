@@ -42,7 +42,7 @@ if (popup_bannereditor.layer_edit != -1)
 	var p = 1;
 	for (; p < ds_list_size(minecraft_banner_pattern_list); p++)
 	{
-		draw_box(patternsx, dy, 20, 40, false, c_background_secondary, 1)
+		draw_box(patternsx, dy, 20, 40, false, c_level_bottom, 1)
 		draw_image(popup_bannereditor.pattern_sprites[p], 0, patternsx, dy, (1 / popup_bannereditor.res_ratio), (1 / popup_bannereditor.res_ratio), c_text_main, a_text_main)
 		
 		if (app_mouse_box(patternsx, dy, 20, 40))
