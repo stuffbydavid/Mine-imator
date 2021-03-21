@@ -16,11 +16,11 @@ tab_next()
 
 // Backups
 tab_control_switch()
-draw_button_collapse("settingsbackupshow", setting_collapse_settings_backups, action_collapse_settings_backups, !setting_backup)
+draw_button_collapse("backup", collapse_map[?"backup"], null, !setting_backup)
 draw_switch("settingsbackup", dx, dy, setting_backup, action_setting_backup)
 tab_next()
 
-if (setting_backup && setting_collapse_settings_backups)
+if (setting_backup && collapse_map[?"backup"])
 {
 	tab_collapse_start()
 	

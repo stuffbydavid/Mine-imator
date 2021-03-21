@@ -12,11 +12,11 @@ if (!res.ready)
 	res = mc_res
 
 tab_control_switch()
-draw_button_collapse("frameeditoritemcustomitemslot", setting_collapse_frameeditor_itemslot, action_collapse_frameeditor_itemslot, !tl_edit.value[e_value.CUSTOM_ITEM_SLOT])
+draw_button_collapse("itemslot", collapse_map[?"itemslot"], null, !tl_edit.value[e_value.CUSTOM_ITEM_SLOT])
 draw_switch("frameeditoritemcustomitemslot", dx, dy, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], action_tl_frame_custom_item_slot)
 tab_next()
 
-if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && setting_collapse_frameeditor_itemslot)
+if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && collapse_map[?"itemslot"])
 {
 	tab_collapse_start()
 	

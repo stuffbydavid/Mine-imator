@@ -33,9 +33,9 @@ app_startup_window()
 app_startup_themes()
 app_startup_fonts()
 app_startup_interface_lists()
+app_startup_keybinds()
 
 app_startup_recent()
-
 toasts_startup()
 json_startup()
 settings_startup()

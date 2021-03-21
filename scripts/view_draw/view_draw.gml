@@ -191,6 +191,7 @@ if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu
 dx -= dw
 
 // "Render" quality
+tip_set_keybind(e_keybind.RENDER_MODE)
 if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mode.RENDER, icons.QUALITY_RENDERED, null, false, "viewmoderender"))
 {
 	view.quality = e_view_mode.RENDER
@@ -204,6 +205,7 @@ if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mod
 dx -= dw + padding
 
 // "Shaded" quality
+tip_set_keybind(e_keybind.RENDER_MODE)
 if (draw_button_icon("viewmodeshaded", dx, dy, dw, dh, view.quality = e_view_mode.SHADED, icons.LIGHT, null, false, "viewmodeshaded"))
 	view.quality = e_view_mode.SHADED
 dx -= dw + padding
@@ -263,6 +265,7 @@ if (view = view_main)
 		current_mcroani.value = true
 	dx -= dw
 	
+	tip_set_keybind(e_keybind.SNAP)
 	if (draw_button_icon("viewsnap", dx, dy, dw, dh, setting_snap, icons.GRID, null, false, setting_snap ? "viewsnapdisable" : "viewsnapenable"))
 		setting_snap = !setting_snap
 }

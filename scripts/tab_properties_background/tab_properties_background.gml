@@ -147,11 +147,11 @@ if (background_desaturate_night)
 
 // Clouds
 tab_control_switch()
-draw_button_collapse("backgroundskycloudsshow", setting_collapse_background_clouds, action_collapse_background_clouds, !background_sky_clouds_show)
+draw_button_collapse("clouds", collapse_map[?"clouds"], null, !background_sky_clouds_show)
 draw_switch("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show)
 tab_next()
 
-if (background_sky_clouds_show && setting_collapse_background_clouds)
+if (background_sky_clouds_show && collapse_map[?"clouds"])
 {
 	tab_collapse_start()
 	
@@ -201,13 +201,13 @@ if (background_sky_clouds_show && setting_collapse_background_clouds)
 
 // Ground
 tab_control_switch()
-draw_button_collapse("backgroundgroundshow", setting_collapse_background_ground, action_collapse_background_ground, !background_ground_show)
+draw_button_collapse("ground", collapse_map[?"ground"], null, !background_ground_show)
 draw_switch("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show)
 tab_next()
 
 capwid = text_caption_width("backgroundground", "backgroundgroundtex")
 
-if (background_ground_show && setting_collapse_background_ground)
+if (background_ground_show && collapse_map[?"ground"])
 {
 	tab_collapse_start()
 	
@@ -357,11 +357,11 @@ tab_set_collumns(false)
 
 // Show fog
 tab_control_switch()
-draw_button_collapse("backgroundfog", setting_collapse_background_fog, action_collapse_background_fog, !background_fog_show)
+draw_button_collapse("fog", collapse_map[?"fog"], null, !background_fog_show)
 draw_switch("backgroundfog", dx, dy, background_fog_show, action_background_fog_show)
 tab_next()
 
-if (background_fog_show && setting_collapse_background_fog)
+if (background_fog_show && collapse_map[?"fog"])
 {
 	tab_collapse_start()
 	
@@ -415,11 +415,11 @@ if (background_fog_show && setting_collapse_background_fog)
 
 // Volumetric fog
 tab_control_switch()
-draw_button_collapse("backgroundvolumetricfog", setting_collapse_background_volumetric_fog, action_collapse_background_volumetric_fog, !background_volumetric_fog)
+draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], null, !background_volumetric_fog)
 draw_switch("backgroundvolumetricfog", dx, dy, background_volumetric_fog, action_background_volumetric_fog)
 tab_next()
 
-if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
+if (background_volumetric_fog && collapse_map[?"volumetricfog"])
 {
 	tab_collapse_start()
 	
@@ -474,11 +474,11 @@ if (background_volumetric_fog && setting_collapse_background_volumetric_fog)
 
 // Wind
 tab_control_switch()
-draw_button_collapse("backgroundwind", setting_collapse_background_wind, action_collapse_background_wind, !background_wind)
+draw_button_collapse("wind", collapse_map[?"wind"], null, !background_wind)
 draw_switch("backgroundwind", dx, dy, background_wind, action_background_wind)
 tab_next()
 
-if (background_wind && setting_collapse_background_wind)
+if (background_wind && collapse_map[?"wind"])
 {
 	tab_collapse_start()
 	

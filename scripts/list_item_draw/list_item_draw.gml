@@ -205,7 +205,7 @@ if (item.caption != "")
 	rightp += 8
 	
 	draw_set_font(font_caption)
-	draw_label(item.caption, xx + width - rightp, middley, fa_right, fa_center, c_text_tertiary, a_text_tertiary)
+	draw_label(item.caption, xx + width - rightp, middley, fa_right, fa_middle, c_text_tertiary, a_text_tertiary)
 	rightp += string_width(item.caption)
 }
 

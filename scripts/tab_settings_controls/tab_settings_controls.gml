@@ -1,187 +1,143 @@
 /// tab_settings_controls()
 
-// TODO: Update when overhauling control inputs
-/* 
+tab_control(20)
+draw_label(text_get("settingscontrolskeybinds") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_emphasis) 
+tab_next()
 
-var capwid, capwid2;
+// File
+tab_control(24)
+draw_button_collapse("file")
+draw_label(text_get("settingscontrolsfile"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+tab_next()
+
+if (collapse_map[?"file"])
+{
+	tab_collapse_start()
 	
-// Interface
-capwid = text_caption_width("settingskeynew", "settingskeyopen", "settingskeysave", 
-							"settingskeyundo", "settingskeyredo", 
-							"settingskeyselecttimelines", "settingskeyduplicatetimelines", "settingskeyremovetimelines", 
-							"settingskeycopykeyframes", "settingskeycutkeyframes", "settingskeypastekeyframes", "settingskeyremovekeyframes", 
-							"settingskeyspawn", "settingskeyclear", 
-							"settingskeyplay", "settingskeyplaybeginning")
+	draw_keybind(e_keybind.PROJECT_NEW, dx, dy)
+	draw_keybind(e_keybind.PROJECT_OPEN, dx, dy)
+	draw_keybind(e_keybind.PROJECT_SAVE, dx, dy)
+	draw_keybind(e_keybind.IMPORT_ASSET, dx, dy)
+	dy += 8
+	
+	tab_collapse_end()
+}
 
-capwid2 = text_caption_width("settingskeycontrol")
-
-tab_control(15)
-draw_label(text_get("settingsinterfaceshortcuts") + ":", dx, dy)
+// Edit
+tab_control(24)
+draw_button_collapse("edit")
+draw_label(text_get("settingscontrolsedit"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
-tab_control_keycontrol()
-draw_keycontrol("settingskeynew", dx, dy, dw - capwid2, setting_key_new, setting_key_new_control, ord("N"), action_setting_key_new, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_new_control, action_setting_key_new_control)
+if (collapse_map[?"edit"])
+{
+	tab_collapse_start()
+	
+	draw_keybind(e_keybind.UNDO, dx, dy)
+	draw_keybind(e_keybind.REDO, dx, dy)
+	draw_keybind(e_keybind.INSTANCE_DELETE, dx, dy)
+	draw_keybind(e_keybind.INSTANCE_DUPLICATE, dx, dy)
+	draw_keybind(e_keybind.INSTANCE_SELECT, dx, dy)
+	draw_keybind(e_keybind.CREATE_FOLDER, dx, dy)
+	draw_keybind(e_keybind.KEYFRAMES_CREATE, dx, dy)
+	draw_keybind(e_keybind.KEYFRAMES_COPY, dx, dy)
+	draw_keybind(e_keybind.KEYFRAMES_CUT, dx, dy)
+	draw_keybind(e_keybind.KEYFRAMES_PASTE, dx, dy)
+	draw_keybind(e_keybind.KEYFRAMES_DELETE, dx, dy)
+	dy += 8
+	
+	tab_collapse_end()
+}
+
+// Tools
+tab_control(24)
+draw_button_collapse("tools")
+draw_label(text_get("settingscontrolstools"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
-tab_control_keycontrol()
-draw_keycontrol("settingskeyimportasset", dx, dy, dw - capwid2, setting_key_import_asset, setting_key_import_asset_control, ord("I"), action_setting_key_import_asset, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_import_asset_control, action_setting_key_import_asset_control)
+if (collapse_map[?"tools"])
+{
+	tab_collapse_start()
+	
+	draw_keybind(e_keybind.TOOL_SELECT, dx, dy)
+	draw_keybind(e_keybind.TOOL_MOVE, dx, dy)
+	draw_keybind(e_keybind.TOOL_ROTATE, dx, dy)
+	draw_keybind(e_keybind.TOOL_SCALE, dx, dy)
+	draw_keybind(e_keybind.TOOL_BEND, dx, dy)
+	draw_keybind(e_keybind.TOOL_TRANSFORM, dx, dy)
+	draw_keybind(e_keybind.SNAP, dx, dy)
+	dy += 8
+	
+	tab_collapse_end()
+}
+
+// Viewport
+tab_control(24)
+draw_button_collapse("viewport")
+draw_label(text_get("settingscontrolsviewport"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
-tab_control_keycontrol()
-draw_keycontrol("settingskeyopen", dx, dy, dw - capwid2, setting_key_open, setting_key_open_control, ord("O"), action_setting_key_open, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_open_control, action_setting_key_open_control)
+if (collapse_map[?"viewport"])
+{
+	tab_collapse_start()
+	
+	draw_keybind(e_keybind.RENDER_MODE, dx, dy)
+	draw_keybind(e_keybind.PARTICLES_SPAWN, dx, dy)
+	draw_keybind(e_keybind.PARTICLES_CLEAR, dx, dy)
+	dy += 8
+	
+	tab_collapse_end()
+}
+
+// Timeline
+tab_control(24)
+draw_button_collapse("timeline")
+draw_label(text_get("settingscontrolstimeline"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
-tab_control_keycontrol()
-draw_keycontrol("settingskeysave", dx, dy, dw - capwid2, setting_key_save, setting_key_save_control, ord("S"), action_setting_key_save, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_save_control, action_setting_key_save_control)
+if (collapse_map[?"timeline"])
+{
+	tab_collapse_start()
+	
+	draw_keybind(e_keybind.PLAY, dx, dy)
+	draw_keybind(e_keybind.PLAY_BEGINNING, dx, dy)
+	draw_keybind(e_keybind.MARKER_LEFT, dx, dy)
+	draw_keybind(e_keybind.MARKER_RIGHT, dx, dy)
+	dy += 8
+	
+	tab_collapse_end()
+}
+
+// Camera
+tab_control(24)
+draw_button_collapse("camera")
+draw_label(text_get("settingscontrolscamera"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
 tab_next()
 
-tab_control_keycontrol()
-draw_keycontrol("settingskeyundo", dx, dy, dw - capwid2, setting_key_undo, setting_key_undo_control, ord("Z"), action_setting_key_undo, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_undo_control, action_setting_key_undo_control)
+if (collapse_map[?"camera"])
+{
+	tab_collapse_start()
+	
+	draw_keybind(e_keybind.CAM_FORWARD, dx, dy)
+	draw_keybind(e_keybind.CAM_BACK, dx, dy)
+	draw_keybind(e_keybind.CAM_LEFT, dx, dy)
+	draw_keybind(e_keybind.CAM_RIGHT, dx, dy)
+	draw_keybind(e_keybind.CAM_ASCEND, dx, dy)
+	draw_keybind(e_keybind.CAM_DESCEND, dx, dy)
+	draw_keybind(e_keybind.CAM_ROLL_FORWARD, dx, dy)
+	draw_keybind(e_keybind.CAM_ROLL_BACK, dx, dy)
+	draw_keybind(e_keybind.CAM_RESET, dx, dy)
+	draw_keybind(e_keybind.CAM_ROLL_RESET, dx, dy)
+	draw_keybind(e_keybind.CAM_FAST, dx, dy)
+	draw_keybind(e_keybind.CAM_SLOW, dx, dy)
+	dy += 8
+	
+	tab_collapse_end()
+}
+
+tab_control_button_label()
+draw_button_label("settingscontrolsrestoredefaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, keybinds_reset_default, fa_middle)
 tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyredo", dx, dy, dw - capwid2, setting_key_redo, setting_key_redo_control, ord("Y"), action_setting_key_redo, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_redo_control, action_setting_key_redo_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyplay", dx, dy, dw - capwid2, setting_key_play, setting_key_play_control, vk_space, action_setting_key_play, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_play_control, action_setting_key_play_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyplaybeginning", dx, dy, dw - capwid2, setting_key_play_beginning, setting_key_play_beginning_control, vk_enter, action_setting_key_play_beginning, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_play_beginning_control, action_setting_key_play_beginning_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeymovemarkerright", dx, dy, dw - capwid2, setting_key_move_marker_right, setting_key_move_marker_right_control, vk_right, action_setting_key_move_marker_right, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_move_marker_right_control, action_setting_key_move_marker_right_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeymovemarkerleft", dx, dy, dw - capwid2, setting_key_move_marker_left, setting_key_move_marker_left_control, vk_left, action_setting_key_move_marker_left, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_move_marker_left_control, action_setting_key_move_marker_left_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyrender", dx, dy, dw - capwid2, setting_key_render, setting_key_render_control, vk_f5, action_setting_key_render, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_render_control, action_setting_key_render_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyfolder", dx, dy, dw - capwid2, setting_key_folder, setting_key_folder_control, ord("F"), action_setting_key_folder, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_folder_control, action_setting_key_folder_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyselecttimelines", dx, dy, dw - capwid2, setting_key_select_timelines, setting_key_select_timelines_control, ord("A"), action_setting_key_select_timelines, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_select_timelines_control, action_setting_key_select_timelines_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyduplicatetimelines", dx, dy, dw - capwid2, setting_key_duplicate_timelines, setting_key_duplicate_timelines_control, ord("D"), action_setting_key_duplicate_timelines, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_duplicate_timelines_control, action_setting_key_duplicate_timelines_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyremovetimelines", dx, dy, dw - capwid2, setting_key_remove_timelines, setting_key_remove_timelines_control, ord("R"), action_setting_key_remove_timelines, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_remove_timelines_control, action_setting_key_remove_timelines_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeycreatekeyframes", dx, dy, dw - capwid2, setting_key_create_keyframes, setting_key_create_keyframes_control, ord("Q"), action_setting_key_create_keyframes, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_create_keyframes_control, action_setting_key_create_keyframes_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeycopykeyframes", dx, dy, dw - capwid2, setting_key_copy_keyframes, setting_key_copy_keyframes_control, ord("C"), action_setting_key_copy_keyframes, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_copy_keyframes_control, action_setting_key_copy_keyframes_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeycutkeyframes", dx, dy, dw - capwid2, setting_key_cut_keyframes, setting_key_cut_keyframes_control, ord("X"), action_setting_key_cut_keyframes, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_cut_keyframes_control, action_setting_key_cut_keyframes_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeypastekeyframes", dx, dy, dw - capwid2, setting_key_paste_keyframes, setting_key_paste_keyframes_control, ord("V"), action_setting_key_paste_keyframes, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_paste_keyframes_control, action_setting_key_paste_keyframes_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyremovekeyframes", dx, dy, dw - capwid2, setting_key_remove_keyframes, setting_key_remove_keyframes_control, vk_delete, action_setting_key_remove_keyframes, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_remove_keyframes_control, action_setting_key_remove_keyframes_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyspawnparticles", dx, dy, dw - capwid2, setting_key_spawn_particles, setting_key_spawn_particles_control, ord("S"), action_setting_key_spawn_particles, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_spawn_particles_control, action_setting_key_spawn_particles_control)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyclearparticles", dx, dy, dw - capwid2, setting_key_clear_particles, setting_key_clear_particles_control, ord("C"), action_setting_key_clear_particles, capwid)
-draw_checkbox("settingskeycontrol", dx + dw - capwid2, dy, setting_key_clear_particles_control, action_setting_key_clear_particles_control)
-tab_next()
-
-dy += 10
-
-// Cameras
-capwid = text_caption_width("settingskeyforward", 
-							"settingskeyleft", 
-							"settingskeydescend", 
-							"settingskeyrollforward", 
-							"settingskeyreset", 
-							"settingskeyfast") - 10
-
-capwid2 = text_caption_width("settingskeyback", 
-							 "settingskeyright", 
-							 "settingskeyascend", 
-							 "settingskeyrollback", 
-							 "settingskeyrollreset", 
-							 "settingskeyslow") - 10
-
-tab_control(16)
-draw_label(text_get("settingscameracontrols") + ":", dx, dy)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyforward", dx, dy, dw * 0.5, setting_key_forward, 0, ord("W"), action_setting_key_forward, capwid)
-draw_keycontrol("settingskeyback", dx + floor(dw * 0.5), dy, dw * 0.5, setting_key_back, 0, ord("S"), action_setting_key_back, capwid2)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyleft", dx, dy, dw * 0.5, setting_key_left, 0, ord("A"), action_setting_key_left, capwid)
-draw_keycontrol("settingskeyright", dx + floor(dw * 0.5), dy, dw * 0.5, setting_key_right, 0, ord("D"), action_setting_key_right, capwid2)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyascend", dx, dy, dw * 0.5, setting_key_ascend, false, ord("E"), action_setting_key_ascend, capwid)
-draw_keycontrol("settingskeydescend", dx + floor(dw * 0.5), dy, dw * 0.5, setting_key_descend, false, ord("Q"), action_setting_key_descend, capwid2)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyrollforward", dx, dy, dw * 0.5, setting_key_roll_forward, false, ord("Z"), action_setting_key_roll_forward, capwid)
-draw_keycontrol("settingskeyrollback", dx + floor(dw * 0.5), dy, dw * 0.5, setting_key_roll_back, false, ord("C"), action_setting_key_roll_back, capwid2)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyreset", dx, dy, dw * 0.5, setting_key_reset, false, ord("R"), action_setting_key_reset, capwid)
-draw_keycontrol("settingskeyrollreset", dx + floor(dw * 0.5), dy, dw * 0.5, setting_key_roll_reset, false, ord("X"), action_setting_key_roll_reset, capwid2)
-tab_next()
-
-tab_control_keycontrol()
-draw_keycontrol("settingskeyfast", dx, dy, dw * 0.5, setting_key_fast, false, vk_space, action_setting_key_fast, capwid)
-draw_keycontrol("settingskeyslow", dx + floor(dw * 0.5), dy, dw * 0.5, setting_key_slow, false, vk_lshift, action_setting_key_slow, capwid2)
-tab_next()
-
-capwid = text_caption_width("settingsmovespeed", "settingslooksensitivity", "settingsfastmodifier", "settingsslowmodifier")
-*/
 
 tab_control_dragger()
 draw_dragger("settingsmovespeed", dx, dy, dragger_width, setting_move_speed, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_move_speed, action_setting_move_speed)
@@ -198,5 +154,3 @@ tab_next()
 tab_control_dragger()
 draw_dragger("settingsslowmodifier", dx, dy, dragger_width, setting_slow_modifier, 0.01, 0, no_limit, 0.25, 0, tab.controls.tbx_slow_modifier, action_setting_slow_modifier)
 tab_next()
-
-

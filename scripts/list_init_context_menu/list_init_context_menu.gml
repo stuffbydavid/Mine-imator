@@ -105,7 +105,7 @@ switch (name)
 		list_item_add(text_get("contextmenutlexport"), null, "", null, icons.EXPORT, null, object_save)
 		list_item_last.disabled = !timeline_settings
 		
-		list_item_add(text_get("contextmenutlselectall"), null, "", null, icons.SELECT_ALL, null, action_tl_select_all, true)
+		list_item_add(text_get("contextmenutlselectall"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
 		list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.EXPAND, null, action_tl_extend_all)	
 		list_item_add(text_get("contextmenutlcollapseall"), null, "", null, icons.COLLAPSE, null, action_tl_collapse_all)
 		
@@ -123,16 +123,16 @@ switch (name)
 		list_item_last.context_menu_height = 438
 		
 		// Keyframes
-		list_item_add(text_get("contextmenutlkeyframescut"), null, "", null, icons.CUT_KEYFRAMES, null, action_tl_keyframes_cut, true)
+		list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAMES, null, action_tl_keyframes_cut, true)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
-		list_item_add(text_get("contextmenutlkeyframescopy"), null, "", null, icons.COPY_KEYFRAMES, null, tl_keyframes_copy)
+		list_item_add(text_get("contextmenutlkeyframescopy"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_COPY].keybind), null, icons.COPY_KEYFRAMES, null, tl_keyframes_copy)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
-		list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, "", null, icons.PASTE_KEYFRAMES, null, action_tl_keyframes_paste)
+		list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_PASTE].keybind), null, icons.PASTE_KEYFRAMES, null, action_tl_keyframes_paste)
 		list_item_last.disabled = (copy_kf_amount = 0)
 		
-		list_item_add(text_get("contextmenutlkeyframesdelete"), null, "", null, icons.DELETE_KEYFRAMES, null, action_tl_keyframes_remove)
+		list_item_add(text_get("contextmenutlkeyframesdelete"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_DELETE].keybind), null, icons.DELETE_KEYFRAMES, null, action_tl_keyframes_remove)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
 		list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.EXPORT_KEYFRAMES, null, keyframes_save)
@@ -192,15 +192,15 @@ switch (name)
 	// File menu
 	case "toolbarfile":
 	{
-		list_item_add(text_get("toolbarfilenew"), null, text_control_name(setting_key_new, setting_key_new_control), null, icons.NEW_PROJECT, null, action_toolbar_new)
-		list_item_add(text_get("toolbarfileopen"), null, text_control_name(setting_key_open, setting_key_open_control), null, icons.OPEN_PROJECT, null, action_toolbar_open)
+		list_item_add(text_get("toolbarfilenew"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_NEW].keybind), null, icons.NEW_PROJECT, null, action_toolbar_new)
+		list_item_add(text_get("toolbarfileopen"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_OPEN].keybind), null, icons.OPEN_PROJECT, null, action_toolbar_open)
 		list_item_add(text_get("toolbarfilerecent"), null, "", null, icons.RECENTS, icons.ARROW_RIGHT_SMALL, null)
 		list_item_last.context_menu_name = "toolbarfilerecent"
 		
-		list_item_add(text_get("toolbarfilesave"), null, text_control_name(setting_key_save, setting_key_save_control), null, icons.SAVE_PROJECT, null, action_toolbar_save, true)
+		list_item_add(text_get("toolbarfilesave"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE_PROJECT, null, action_toolbar_save, true)
 		list_item_add(text_get("toolbarfilesaveas"), null, "", null, icons.SAVE_PROJECT_AS, null, action_toolbar_save_as)
 		
-		list_item_add(text_get("toolbarfileimport"), null, text_control_name(setting_key_import_asset, setting_key_import_asset_control), null, icons.IMPORT_ASSET, null, action_toolbar_import_asset, true)
+		list_item_add(text_get("toolbarfileimport"), null, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.IMPORT_ASSET, null, action_toolbar_import_asset, true)
 		
 		break
 	}
@@ -221,13 +221,13 @@ switch (name)
 	// Edit menu
 	case "toolbaredit":
 	{
-		list_item_add(text_get("toolbareditundo"), null, text_control_name(setting_key_undo, setting_key_undo_control), null, icons.UNDO, null, action_toolbar_undo)
-		list_item_add(text_get("toolbareditredo"), null, text_control_name(setting_key_redo, setting_key_redo_control), null, icons.REDO, null, action_toolbar_redo)
+		list_item_add(text_get("toolbareditundo"), null, text_control_name(keybinds_map[?e_keybind.UNDO].keybind), null, icons.UNDO, null, action_toolbar_undo)
+		list_item_add(text_get("toolbareditredo"), null, text_control_name(keybinds_map[?e_keybind.REDO].keybind), null, icons.REDO, null, action_toolbar_redo)
 		
-		list_item_add(text_get("toolbareditduplicate"), null, text_control_name(setting_key_duplicate_timelines, setting_key_duplicate_timelines_control), null, icons.DUPLICATE, null, action_tl_duplicate, true)
+		list_item_add(text_get("toolbareditduplicate"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
 		list_item_last.disabled = (tl_edit = null)
 		
-		list_item_add(text_get("toolbareditdelete"), null, text_control_name(setting_key_remove_timelines, setting_key_remove_timelines_control), null, icons.DELETE, null, action_tl_remove)
+		list_item_add(text_get("toolbareditdelete"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
 		list_item_last.disabled = (tl_edit = null)
 		
 		list_item_add(text_get("toolbareditpreferences"), settings, "", null, icons.SETTINGS, null, settings.show ? tab_close : tab_show, true)
@@ -263,6 +263,13 @@ switch (name)
 		list_item_add(text_get("toolbarhelpreport"), link_forums_bugs, "", null, icons.BUG, null, open_url, true)
 		list_item_add(text_get("toolbarhelpforums"), link_forums, "", null, icons.SPEECH_BUBBLE, null, open_url)
 		
+		break
+	}
+	
+	// Keybind
+	case "keybind":
+	{
+		list_item_add(text_get("contextmenurestorekeybind"), context_menu_value, "", null, icons.RESET, null, keybind_restore)
 		break
 	}
 	

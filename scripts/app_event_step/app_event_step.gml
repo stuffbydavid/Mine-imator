@@ -15,6 +15,7 @@ if (window_state = "new_assets" || window_state = "export_movie")
 
 minecraft_update_banners()
 
+app_update_keybinds()
 app_update_keyboard()
 app_update_play()
 app_update_animate()

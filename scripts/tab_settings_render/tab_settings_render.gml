@@ -50,11 +50,11 @@ tab_next()
 
 // SSAO
 tab_control_switch()
-draw_button_collapse("settingsrenderssaoshow", setting_collapse_settings_ssao, action_collapse_settings_ssao, !setting_render_ssao)
+draw_button_collapse("ssao", collapse_map[?"ssao"], null, !setting_render_ssao)
 draw_switch("settingsrenderssao", dx, dy, setting_render_ssao, action_setting_render_ssao)
 tab_next()
 
-if (setting_render_ssao && setting_collapse_settings_ssao)
+if (setting_render_ssao && collapse_map[?"ssao"])
 {
 	tab_collapse_start()
 	
@@ -79,11 +79,11 @@ if (setting_render_ssao && setting_collapse_settings_ssao)
 
 // Shadows
 tab_control_switch()
-draw_button_collapse("settingsrendershadowsshow", setting_collapse_settings_shadows, action_collapse_settings_shadows, !setting_render_shadows)
+draw_button_collapse("shadows", collapse_map[?"shadows"], null, !setting_render_shadows)
 draw_switch("settingsrendershadows", dx, dy, setting_render_shadows, action_setting_render_shadows)
 tab_next()
 
-if (setting_render_shadows && setting_collapse_settings_shadows)
+if (setting_render_shadows && collapse_map[?"shadows"])
 {
 	tab_collapse_start()
 	
@@ -108,11 +108,11 @@ if (setting_render_shadows && setting_collapse_settings_shadows)
 
 // Global illumination
 tab_control_switch()
-draw_button_collapse("settingsrenderindirectshow", setting_collapse_settings_indirect, action_collapse_settings_indirect, !setting_render_indirect)
+draw_button_collapse("indirect", collapse_map[?"indirect"], null, !setting_render_indirect)
 draw_switch("settingsrenderindirect", dx, dy, setting_render_indirect, action_setting_render_indirect)
 tab_next()
 
-if (setting_render_indirect && setting_collapse_settings_indirect)
+if (setting_render_indirect && collapse_map[?"indirect"])
 {
 	tab_collapse_start()
 	
@@ -141,11 +141,11 @@ if (setting_render_indirect && setting_collapse_settings_indirect)
 
 // Glow
 tab_control_switch()
-draw_button_collapse("settingsrenderglowshow", setting_collapse_settings_glow, action_collapse_settings_glow, !setting_render_glow)
+draw_button_collapse("glow", collapse_map[?"glow"], null, !setting_render_glow)
 draw_switch("settingsrenderglow", dx, dy, setting_render_glow, action_setting_render_glow)
 tab_next()
 
-if (setting_render_glow && setting_collapse_settings_glow)
+if (setting_render_glow && collapse_map[?"glow"])
 {
 	tab_collapse_start()
 	
@@ -178,11 +178,11 @@ if (setting_render_glow && setting_collapse_settings_glow)
 
 // AA
 tab_control_switch()
-draw_button_collapse("settingsrenderaashow", setting_collapse_settings_aa, action_collapse_settings_aa, !setting_render_aa)
+draw_button_collapse("aa", collapse_map[?"aa"], null, !setting_render_aa)
 draw_switch("settingsrenderaa", dx, dy, setting_render_aa, action_setting_render_aa)
 tab_next()
 
-if (setting_render_aa && setting_collapse_settings_aa)
+if (setting_render_aa && collapse_map[?"aa"])
 {
 	tab_collapse_start()
 	
@@ -197,7 +197,7 @@ if (setting_render_aa && setting_collapse_settings_aa)
 tab_control_switch()
 
 if (!trial_version)
-	draw_button_collapse("settingsrenderwatermarkshow", setting_collapse_settings_watermark, action_collapse_settings_watermark, !setting_render_watermark)
+	draw_button_collapse("watermark", collapse_map[?"watermark"], null, !setting_render_watermark)
 
 draw_switch("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark)
 tab_next()
@@ -205,7 +205,7 @@ tab_next()
 if (setting_render_watermark)
 {
 	
-	if (!trial_version && setting_collapse_settings_watermark)
+	if (!trial_version && collapse_map[?"watermark"])
 	{
 		tab_collapse_start()
 		

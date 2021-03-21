@@ -55,31 +55,37 @@ draw_divide(xx, yy, 24)
 yy += 1 + padding
 
 // Select tool
+tip_set_keybind(e_keybind.TOOL_SELECT)
 if (draw_button_icon("viewtoolselect", xx, yy, 24, 24, setting_tool = e_view_tool.SELECT, icons.TOOL_SELECT, null, false, "viewtoolselecttip"))
 	setting_tool = e_view_tool.SELECT
 yy += 24 + padding
 
 // Position tool
+tip_set_keybind(e_keybind.TOOL_MOVE)
 if (draw_button_icon("viewtoolmove", xx, yy, 24, 24, setting_tool = e_view_tool.MOVE, icons.TOOL_MOVE, null, false, "viewtoolmovetip"))
 	setting_tool = e_view_tool.MOVE
 yy += 24 + padding
 
 // Rotation tool
+tip_set_keybind(e_keybind.TOOL_ROTATE)
 if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool = e_view_tool.ROTATE, icons.TOOL_ROTATE, null, false, "viewtoolrotatetip"))
 	setting_tool = e_view_tool.ROTATE
 yy += 24 + padding
 
 // Scale tool
+tip_set_keybind(e_keybind.TOOL_SCALE)
 if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool = e_view_tool.SCALE, icons.TOOL_SCALE, null, false, "viewtoolscaletip"))
 	setting_tool = e_view_tool.SCALE
 yy += 24 + padding
 
 // Bend tool
+tip_set_keybind(e_keybind.TOOL_BEND)
 if (draw_button_icon("viewtoolbend", xx, yy, 24, 24, setting_tool = e_view_tool.BEND, icons.TOOL_BEND, null, false, "viewtoolbendtip"))
 	setting_tool = e_view_tool.BEND
 yy += 24 + padding
 
 // Transform tool
+tip_set_keybind(e_keybind.TOOL_TRANSFORM)
 if (draw_button_icon("viewtooltransform", xx, yy, 24, 24, setting_tool = e_view_tool.TRANSFORM, icons.TOOL_TRANSFORM, null, false, "viewtooltransformtip"))
 	setting_tool = e_view_tool.TRANSFORM
 yy += 24 + padding

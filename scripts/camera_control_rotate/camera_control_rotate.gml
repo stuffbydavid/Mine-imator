@@ -34,7 +34,7 @@ if (!cam)
 		camera_work_set_from()
 	}
 	
-	if (keyboard_check_pressed(setting_key_reset))
+	if (keybinds_map[?e_keybind.CAM_RESET].pressed)
 		camera_work_reset()
 }
 else

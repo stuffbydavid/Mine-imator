@@ -26,11 +26,11 @@ tab_next()
 
 // Texture filtering
 tab_control_switch()
-draw_button_collapse("settingstexturefilteringshow", setting_collapse_settings_tex_filter, action_collapse_settings_tex_filter, !setting_texture_filtering)
+draw_button_collapse("texfilter", collapse_map[?"texfilter"], null, !setting_texture_filtering)
 draw_switch("settingstexturefiltering", dx, dy, setting_texture_filtering, action_setting_texture_filtering)
 tab_next()
 
-if (setting_texture_filtering && setting_collapse_settings_tex_filter)
+if (setting_texture_filtering && collapse_map[?"texfilter"])
 {
 	tab_collapse_start()
 	

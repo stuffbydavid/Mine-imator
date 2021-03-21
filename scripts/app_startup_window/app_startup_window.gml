@@ -96,7 +96,7 @@ tip_box_y = 0
 tip_location_x = 0
 tip_location_y = 0
 tip_wrap = true
-tip_shortcut_draw = false
+tip_keybind_draw = false
 tip_arrow_x = 0
 tip_arrow_y = 0
 tip_arrow_xscale = 1
@@ -105,8 +105,7 @@ tip_arrow = 0
 tip_text_array = 0
 tip_force_right = false
 tip_right = false
-tip_shortcut_key = -1
-tip_shortcut_control = false
+tip_keybind = null
 
 // Popups
 popup = null

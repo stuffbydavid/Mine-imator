@@ -31,14 +31,14 @@ render_set_culling(true)
 // Text
 var texty = tip_y + tip_h - 4;
 
-if (tip_shortcut_draw)
-	draw_label(tip_text_shortcut, tip_x + tip_w - 8, texty - 1, fa_right, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
+if (tip_keybind_draw)
+	draw_label(tip_text_keybind, tip_x + tip_w - 8, texty - 1, fa_right, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
 
 for (var i = 0; i < array_length_1d(tip_text_array); i++)
 {
 	var text = tip_text_array[i];
 	
-	if (tip_shortcut_draw)
+	if (tip_keybind_draw)
 		draw_label(text, tip_x + 8, texty - 1, fa_left, fa_bottom, c_text_main, a_text_main, font_caption)
 	else
 		draw_label(text, tip_x + round(tip_w / 2), texty - 1, fa_center, fa_bottom, c_text_main, a_text_main, font_caption)

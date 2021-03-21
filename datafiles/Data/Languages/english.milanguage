@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.03.20"
+        "lastchange": "2021.03.21"
     },
     "tooltip/": {
         "sidemenuclose": "Close side menu",
@@ -74,7 +74,8 @@
             "unghost": "Unset ghost timeline",
             "filter": "Filter timelines"
         },
-        "customaccentcolor": "Custom accent color"
+        "customaccentcolor": "Custom accent color",
+        "editkeybind": "Edit keybind"
     },
     "contextmenu/": {
         "textbox/": {
@@ -140,7 +141,8 @@
         "scaleseperate": "Seperate scale",
         "scalecombine": "Combine scale",
         "advancedcolorsshow": "Show advanced color settings",
-        "advancedcolorshide": "Hide advanced color settings"
+        "advancedcolorshide": "Hide advanced color settings",
+        "restorekeybind": "Restore keybind"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -316,8 +318,6 @@
         "nameexists": "Project folder already exists."
     },
     "toolbar/": {
-        "undotip": "Undo",
-        "redotip": "Redo",
         "file": "File",
         "file/": {
             "new": "New project...",
@@ -421,14 +421,6 @@
         "name": "Skin of %1",
         "done": "Done"
     },
-    "open/": {
-        "caption": "Open project",
-        "recent": "Recent projects",
-        "browse": "Browse",
-        "browsetip": "Open a project from a saved file.",
-        "cancel": "Cancel",
-        "canceltip": "Close this popup."
-    },
     "saveas/": {
         "caption": "Save project as",
         "save": "Save"
@@ -441,7 +433,6 @@
         "videosizecustomkeepaspectratio": "Keep aspect ratio",
         "format": "Format",
         "format/": {
-            "tip": "Choose the file format of the exported movie.",
             "mp4": "MP4",
             "mov": "MOV",
             "wmv": "WMV",
@@ -449,7 +440,6 @@
         },
         "videoquality": "Video quality",
         "videoquality/": {
-            "tip": "Determines the quality and size of the exported video.",
             "verylow": "Very low",
             "low": "Low",
             "medium": "Medium",
@@ -565,13 +555,9 @@
         "workcamera": "Work camera",
         "activecamera": "Active camera (%1)",
         "selectedcamera": "Selected camera (%1)",
-        "controlstip": "Toggle controls, wireframes and highlights in the view.",
-        "lightstip": "Toggle lighting and fog in the view.",
-        "particlestip": "Toggle particles in the view.",
         "grid": "Grid",
         "aspectratio": "Aspect ratio",
-        "gizmos": "Gizmos",
-        "closetip": "Close this view."
+        "gizmos": "Gizmos"
     },
     "tab/": {
         "projectproperties": "Project properties",
@@ -584,17 +570,8 @@
         "ground": "Ground",
         "timelineeditor": "%1 properties",
         "frameeditor": "%1 (Keyframe %2)",
-        "settings": "Preferences",
-        "closetip": "Close this tab."
+        "settings": "Preferences"
     },
-    "expandcollapsetip": "Hide or show options.",
-    "metertip": "(Right click: Reset, Click value: Manual input)",
-    "wheeltip": "(Right click: Reset, Click value: Manual input)",
-    "wheelskytip": "(Right click: Reset)",
-    "draggertip": "(Click and drag: Change, Right click: Reset, Click: Manual input)",
-    "tipshortcut": "Shortcut",
-    "keycontroltip": "(Click: Change key, Right click: Reset)",
-    "keycontrolpress": "Press a key...",
     "key/": {
         "left": "Left",
         "right": "Right",
@@ -628,31 +605,19 @@
         "libtype": "Type",
         "libinstances": "Instances",
         "charname": "Name",
-        "charnametip": "The name of the model.",
         "blockname": "Name",
-        "blocknametip": "The name of the block.",
         "spblockname": "Name",
-        "spblocknametip": "The name of the block.",
         "bodypartmodelname": "Name",
-        "bodypartmodelnametip": "The name of the model.",
         "particleeditortypename": "Name",
-        "particleeditortypenametip": "The name of the particle type.",
         "particleeditortypekind": "Kind",
-        "particleeditortypekindtip": "The kind of the particle type.",
         "particleeditortyperate": "Spawn rate",
-        "particleeditortyperatetip": "The spawn rate of the particle type compared to all the others.",
         "resname": "Name",
-        "resnametip": "The name of the resource.",
         "restype": "Type",
-        "restypetip": "The type of the resource.",
         "rescount": "Use count",
-        "rescounttip": "The amount of times this resource is used throughout the project.",
-        "particlepresetname": "Name",
-        "particlepresetnametip": "The name of the particle preset."
+        "particlepresetname": "Name"
     },
     "list/": {
         "search": "Search...",
-        "searchtip": "Filter the list by entering a specific keyword.",
         "browse": "Browse...",
         "none": "None",
         "default": "Default (%1)"
@@ -1749,7 +1714,6 @@
     "particleeditor/": {
         "count": "Particles",
         "random": "Random",
-        "randomtip": "Use a random value for each particle.",
         "spawn/": {
             "caption": "SPAWNING",
             "type": "Spawn type",
@@ -1794,15 +1758,10 @@
             "animationfinish": "When animation ends",
             "boundingboxtoggle": "On collision with bounding box",
             "amount": "When count exceeds",
-            "amounttip": "Particles will be destroyed if the total amount of particles by this creator exceeds a number.",
             "amountval": "",
-            "amountvaltip": "The maximum number of particles.",
             "timetoggle": "At a time after spawn...",
-            "timetoggletip": "Particles will be destroyed after an amount of time since creation.",
             "time": "After time duration",
-            "timetip": "The amount of time after which particles are destroyed.",
-            "timeisrandom": "Random",
-            "timeisrandomtip": "Use a random value."
+            "timeisrandom": "Random"
         },
         "emitters": "PARTICLE EMITTERS",
         "type/": {
@@ -1811,7 +1770,6 @@
             "spawnrate": "Spawn rate",
             "temp": "Kind",
             "text": "Text",
-            "texttip": "The text to use for particles.",
             "textsample": "Sample text",
             "template": "Sprite (Template)",
             "spritesheet": "Sprite (Sheet)",
@@ -2244,21 +2202,6 @@
         "instanceof": "Instance of %1",
         "partof": "%1 of %2",
         "unusedbodypart": "Unused body part",
-        "keyframestip": "Select all keyframes in this timeline.",
-        "locktip": "Lock this timeline, to disable keyframe selecting and 3D clicking.",
-        "hidetip": "Hide this timeline from the animation.",
-        "mutetip": "Mute all the sounds in this timeline.",
-        "foldertip": "Create a new folder, selected timelines will be put into it.",
-        "duplicatetip": "Duplicate the selected objects.",
-        "removetip": "Remove the selected objects.",
-        "savetip": "Save the selected objects.",
-        "walktip": "Create a walking animation to the next keyframe. To activate, create two keyframes in the character timeline and select the first one.",
-        "runtip": "Create a running animation to the next keyframe. To activate, create two keyframes in the character timeline and select the first one.",
-        "copykeyframestip": "Copy the selected keyframes.",
-        "cutkeyframestip": "Cut the selected keyframes.",
-        "pastekeyframestip": "Paste the copied keyframes.",
-        "removekeyframestip": "Remove the selected keyframes.",
-        "exportkeyframestip": "Export the selected keyframes.",
         "frame": "Frame %1",
         "intervalshow": "Show intervals",
         "intervalsize": "Interval size",
@@ -2335,7 +2278,6 @@
         "wind": "Wind",
         "windterrain": "Terrain wind",
         "depth": "Render depth",
-        "depthtip": "Determines the rendering order of objects and can be used to fix alpha issues. Objects with a lower depth will be drawn before others.",
         "backfaces": "Show backfaces",
         "hqhiding": "HQ hiding",
         "lqhiding": "LQ hiding",
@@ -2398,7 +2340,6 @@
             "clear": "Clear particles",
             "customseed": "Custom seed",
             "seed": "Seed",
-            "seedtip": "Set a custom seed to get repeated explosions.",
             "attractor": "Attractor",
             "force": "Force"
         },
@@ -2455,7 +2396,6 @@
                 "gain": "Highlight boost",
                 "threshold": "Boost threshold",
                 "fringe": "RGB Fringe",
-                "fringetip": "Offset RGB channels in blurred areas.",
                 "fringe/": {
                     "anglered": "R",
                     "anglegreen": "G",
@@ -2610,88 +2550,73 @@
         "smoothcamera": "Smooth work camera",
         "searchvariants": "Search variants in block search",
         "controls": "CONTROLS",
-        "interfaceshortcuts": "Interface shortcuts",
-        "cameracontrols": "Camera controls",
+        "controls/": {
+            "keybinds": "Keybinds",
+            "file": "File",
+            "edit": "Edit",
+            "tools": "Tools",
+            "viewport": "Viewport",
+            "timeline": "Timeline",
+            "camera": "Camera",
+            "restoredefaults": "Restore defaults"
+        },
         "key/": {
-            "control": "Control key",
-            "controltip": "The control key must be pressed for this shortcut to work.",
-            "new": "New project",
-            "newtip": "The key that opens the popup for starting a new project.",
+            "project/": {
+                "new": "New project",
+                "open": "Open project",
+                "save": "Save project"
+            },
             "importasset": "Import asset",
-            "importassettip": "The key that imports an asset into the project.",
-            "open": "Open project",
-            "opentip": "The key for opening an existing project.",
-            "save": "Save project",
-            "savetip": "The key that saves the changes in the opened project.",
             "undo": "Undo",
-            "undotip": "The key that undos the last change.",
             "redo": "Redo",
-            "redotip": "The key that redos the last undo.",
+            "instance/": {
+                "delete": "Delete instances",
+                "duplicate": "Duplicate instances",
+                "select": "Select all instances",
+            },
+            "createfolder": "Create folder",
+            "keyframes/": {
+                "create": "Create keyframes",
+                "copy": "Copy keyframes",
+                "cut": "Cut keyframes",
+                "paste": "Paste keyframes",
+                "delete": "Delete keyframes"
+            },
+            "tool/": {
+                "select": "Select tool",
+                "move": "Move tool",
+                "rotate": "Rotate tool",
+                "scale": "Scale tool",
+                "bend": "Bend tool",
+                "transform": "Multi-transform tool"
+            },
+            "snap": "Toggle snapping",
             "play": "Play animation",
-            "playtip": "The key for playing/pausing the animation.",
             "playbeginning": "Restart animation",
-            "playbeginningtip": "The key for playing the animation from the beginning.",
-            "movemarkerright": "Move marker right",
-            "movemarkerrighttip": "The key that moves the marker right.",
-            "movemarkerleft": "Move marker left",
-            "movemarkerlefttip": "The key that moves the marker left.",
-            "render": "Render high quality",
-            "rendertip": "The key that enables/disables high quality rendering.",
-            "selecttimelines": "Select all timelines",
-            "selecttimelinestip": "The key that selects all timelines, or deselects all when at least one is selected.",
-            "folder": "Create folder",
-            "foldertip": "The key that creates a new folder and puts all selected timelines into it.",
-            "duplicatetimelines": "Duplicate timelines",
-            "duplicatetimelinestip": "The key that duplicates the selected timelines.",
-            "removetimelines": "Remove timelines",
-            "removetimelinestip": "The key that removes the selected timelines.",
-            "createkeyframes": "Create keyframes",
-            "createkeyframestip": "The key that creates keyframes for the selected objects.",
-            "copykeyframes": "Copy keyframes",
-            "copykeyframestip": "The key that copies the selected keyframes.",
-            "cutkeyframes": "Cut keyframes",
-            "cutkeyframestip": "The key that cuts the selected keyframes.",
-            "pastekeyframes": "Paste keyframes",
-            "pastekeyframestip": "The key that pastes the selected keyframes.",
-            "removekeyframes": "Remove keyframes",
-            "removekeyframestip": "The key that removes the selected keyframes.",
-            "spawnparticles": "Spawn particles",
-            "spawnparticlestip": "The key for activating selected particle spawners.",
-            "clearparticles": "Clear particles",
-            "clearparticlestip": "The key for clearing all particles in the world.",
-            "forward": "Forward",
-            "forwardtip": "The key for moving cameras forward.",
-            "back": "Back",
-            "backtip": "The key for moving cameras backwards.",
-            "left": "Left",
-            "lefttip": "The key for moving cameras left.",
-            "right": "Right",
-            "righttip": "The key for moving cameras right.",
-            "ascend": "Ascend",
-            "ascendtip": "The key for ascending cameras.",
-            "descend": "Descend",
-            "descendtip": "The key for descending cameras.",
-            "rollforward": "Roll forward",
-            "rollforwardtip": "The key for rolling cameras forwards.",
-            "rollback": "Roll back",
-            "rollbacktip": "The key for rolling cameras backwards.",
-            "reset": "Reset",
-            "resettip": "The key for resetting the camera.",
-            "rollreset": "Reset roll",
-            "rollresettip": "The key for resetting the camera roll.",
-            "fast": "Faster",
-            "fasttip": "The key for making the camera move faster.",
-            "slow": "Slower",
-            "slowtip": "The key for making the camera move slower."
+            "markerright": "Right",
+            "markerleft": "Left",
+            "rendermode": "Render mode",
+            "particlesspawn": "Spawn particles",
+            "particlesclear": "Clear particles",
+            "cam/": {
+                "forward": "Forward",
+                "back": "Back",
+                "left": "Left",
+                "right": "Right",
+                "ascend": "Ascend",
+                "descend": "Descend",
+                "rollforward": "Roll forward",
+                "rollback": "Roll back",
+                "reset": "Reset",
+                "rollreset": "Reset roll",
+                "fast": "Faster",
+                "slow": "Slower"
+            }
         },
         "movespeed": "Move speed",
-        "movespeedtip": "The speed when moving cameras.",
         "looksensitivity": "Look sensitivity",
-        "looksensitivitytip": "The mouse sensitivity when looking around in cameras.",
         "fastmodifier": "Fast modifier",
-        "fastmodifiertip": "The camera speed modifier when going faster.",
         "slowmodifier": "Slow modifier",
-        "slowmodifiertip": "The camera speed modifier when going slower.",
         "graphics": "GRAPHICS",
         "bendstyle": "Arm/Legs bending style",
         "bendstylerealistic": "Realistic",
@@ -2763,18 +2688,20 @@
             "aa": "AA",
             "aapower": "Strength",
             "watermark": "Watermark",
-            "watermarkupgraderequired": "Upgrade Mine-imator to use a custom watermark.",
-            "watermarkimage": "Image",
-            "watermarkdefault": "Default",
-            "watermarkpositionx": "X position",
-            "watermarkpositiony": "Y position",
-            "watermarkleft": "Left",
-            "watermarkcenter": "Center",
-            "watermarkright": "Right",
-            "watermarktop": "Top",
-            "watermarkbottom": "Bottom",
-            "watermarkscale": "Scale",
-            "watermarkalpha": "Opacity"
+            "watermark/": {
+                "upgraderequired": "Upgrade Mine-imator to use a custom watermark.",
+                "image": "Image",
+                "default": "Default",
+                "positionx": "X position",
+                "positiony": "Y position",
+                "left": "Left",
+                "center": "Center",
+                "right": "Right",
+                "top": "Top",
+                "bottom": "Bottom",
+                "scale": "Scale",
+                "alpha": "Opacity"
+            } 
         }
     }
 }

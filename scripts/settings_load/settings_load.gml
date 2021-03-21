@@ -146,63 +146,14 @@ if (filename_ext(fn) = ".midata")
 	var controlsmap = map[?"controls"];
 	if (ds_map_valid(controlsmap))
 	{
-		setting_key_new = value_get_real(controlsmap[?"key_new"], setting_key_new)
-		setting_key_new_control = value_get_real(controlsmap[?"key_new_control"], setting_key_new_control)
-		setting_key_import_asset = value_get_real(controlsmap[?"key_import_asset"], setting_key_import_asset)
-		setting_key_import_asset_control = value_get_real(controlsmap[?"key_import_asset_control"], setting_key_import_asset_control)
-		setting_key_open = value_get_real(controlsmap[?"key_open"], setting_key_open)
-		setting_key_open_control = value_get_real(controlsmap[?"key_open_control"], setting_key_open_control)
-		setting_key_save = value_get_real(controlsmap[?"key_save"], setting_key_save)
-		setting_key_save_control = value_get_real(controlsmap[?"key_save_control"], setting_key_save_control)
-		setting_key_undo = value_get_real(controlsmap[?"key_undo"], setting_key_undo)
-		setting_key_undo_control = value_get_real(controlsmap[?"key_undo_control"], setting_key_undo_control)
-		setting_key_redo = value_get_real(controlsmap[?"key_redo"], setting_key_redo)
-		setting_key_redo_control = value_get_real(controlsmap[?"key_redo_control"], setting_key_redo_control)
-		setting_key_play = value_get_real(controlsmap[?"key_play"], setting_key_play)
-		setting_key_play_control = value_get_real(controlsmap[?"key_play_control"], setting_key_play_control)
-		setting_key_play_beginning = value_get_real(controlsmap[?"key_play_beginning"], setting_key_play_beginning)
-		setting_key_play_beginning_control = value_get_real(controlsmap[?"key_play_beginning_control"], setting_key_play_beginning_control)
-		setting_key_move_marker_right = value_get_real(controlsmap[?"key_move_marker_right"], setting_key_move_marker_right)
-		setting_key_move_marker_right_control = value_get_real(controlsmap[?"key_move_marker_right_control"], setting_key_move_marker_right_control)
-		setting_key_move_marker_left = value_get_real(controlsmap[?"key_move_marker_left"], setting_key_move_marker_left)
-		setting_key_move_marker_left_control = value_get_real(controlsmap[?"key_move_marker_left_control"], setting_key_move_marker_left_control)
-		setting_key_render = value_get_real(controlsmap[?"key_render"], setting_key_render)
-		setting_key_render_control = value_get_real(controlsmap[?"key_render_control"], setting_key_render_control)
-		setting_key_folder = value_get_real(controlsmap[?"key_folder"], setting_key_folder)
-		setting_key_folder_control = value_get_real(controlsmap[?"key_folder_control"], setting_key_folder_control)
-		setting_key_select_timelines = value_get_real(controlsmap[?"key_select_timelines"], setting_key_select_timelines)
-		setting_key_select_timelines_control = value_get_real(controlsmap[?"key_select_timelines_control"], setting_key_select_timelines_control)
-		setting_key_duplicate_timelines = value_get_real(controlsmap[?"key_duplicate_timelines"], setting_key_duplicate_timelines)
-		setting_key_duplicate_timelines_control = value_get_real(controlsmap[?"key_duplicate_timelines_control"], setting_key_duplicate_timelines_control)
-		setting_key_remove_timelines = value_get_real(controlsmap[?"key_remove_timelines"], setting_key_remove_timelines)
-		setting_key_remove_timelines_control = value_get_real(controlsmap[?"key_remove_timelines_control"], setting_key_remove_timelines_control)
-		setting_key_create_keyframes = value_get_real(controlsmap[?"key_create_keyframes"], setting_key_create_keyframes)
-		setting_key_create_keyframes_control = value_get_real(controlsmap[?"key_create_keyframes_control"], setting_key_create_keyframes_control)
-		setting_key_copy_keyframes = value_get_real(controlsmap[?"key_copy_keyframes"], setting_key_copy_keyframes)
-		setting_key_copy_keyframes_control = value_get_real(controlsmap[?"key_copy_keyframes_control"], setting_key_copy_keyframes_control)
-		setting_key_cut_keyframes = value_get_real(controlsmap[?"key_cut_keyframes"], setting_key_cut_keyframes)
-		setting_key_cut_keyframes_control = value_get_real(controlsmap[?"key_cut_keyframes_control"], setting_key_cut_keyframes_control)
-		setting_key_paste_keyframes = value_get_real(controlsmap[?"key_paste_keyframes"], setting_key_paste_keyframes)
-		setting_key_paste_keyframes_control = value_get_real(controlsmap[?"key_paste_keyframes_control"], setting_key_paste_keyframes_control)
-		setting_key_remove_keyframes = value_get_real(controlsmap[?"key_remove_keyframes"], setting_key_remove_keyframes)
-		setting_key_remove_keyframes_control = value_get_real(controlsmap[?"key_remove_keyframes_control"], setting_key_remove_keyframes_control)
-		setting_key_spawn_particles = value_get_real(controlsmap[?"key_spawn_particles"], setting_key_spawn_particles)
-		setting_key_spawn_particles_control = value_get_real(controlsmap[?"key_spawn_particles_control"], setting_key_spawn_particles_control)
-		setting_key_clear_particles = value_get_real(controlsmap[?"key_clear_particles"], setting_key_clear_particles)
-		setting_key_clear_particles_control = value_get_real(controlsmap[?"key_clear_particles_control"], setting_key_clear_particles_control)
-
-		setting_key_forward = value_get_real(controlsmap[?"key_forward"], setting_key_forward)
-		setting_key_back = value_get_real(controlsmap[?"key_back"], setting_key_back)
-		setting_key_left = value_get_real(controlsmap[?"key_left"], setting_key_left)
-		setting_key_right = value_get_real(controlsmap[?"key_right"], setting_key_right)
-		setting_key_ascend = value_get_real(controlsmap[?"key_ascend"], setting_key_ascend)
-		setting_key_descend = value_get_real(controlsmap[?"key_descend"], setting_key_descend)
-		setting_key_roll_forward = value_get_real(controlsmap[?"key_roll_forward"], setting_key_roll_forward)
-		setting_key_roll_back = value_get_real(controlsmap[?"key_roll_back"], setting_key_roll_back)
-		setting_key_roll_reset = value_get_real(controlsmap[?"key_roll_reset"], setting_key_roll_reset)
-		setting_key_reset = value_get_real(controlsmap[?"key_reset"], setting_key_reset)
-		setting_key_fast = value_get_real(controlsmap[?"key_fast"], setting_key_fast)
-		setting_key_slow = value_get_real(controlsmap[?"key_slow"], setting_key_slow)
+		var obj;
+		
+		for (var i = 0; i < e_keybind.amount; i++)
+		{
+			obj = keybinds_map[?i]
+			obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
+		}
+		
 		setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 		setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)
 		setting_fast_modifier = value_get_real(controlsmap[?"fast_modifier"], setting_fast_modifier)
@@ -297,40 +248,16 @@ if (filename_ext(fn) = ".midata")
 	}
 	
 	// Collapsible content
-	var name;
-	
-	if (load_format < e_settings.FORMAT_130)
-		name = "checkbox_expand"
-	else
-		name = "collapse"
-	
-	var collapsemap = map[?name];
+	var collapsemap = map[?"collapse"];
 	if (ds_map_valid(collapsemap))
 	{
-		setting_collapse_settings_backups = value_get_string(collapsemap[?"settings_backups"], setting_collapse_settings_backups)
-		setting_collapse_settings_tex_filter = value_get_string(collapsemap[?"settings_tex_filter"], setting_collapse_settings_tex_filter)
-		setting_collapse_settings_ssao = value_get_string(collapsemap[?"settings_ssso"], setting_collapse_settings_ssao)
-		setting_collapse_settings_shadows = value_get_string(collapsemap[?"settings_shadows"], setting_collapse_settings_shadows)
-		setting_collapse_settings_indirect = value_get_string(collapsemap[?"settings_indirect"], setting_collapse_settings_indirect)
-		setting_collapse_settings_glow = value_get_string(collapsemap[?"settings_glow"], setting_collapse_settings_glow)
-		setting_collapse_settings_aa = value_get_string(collapsemap[?"settings_aa"], setting_collapse_settings_aa)
-		setting_collapse_settings_watermark = value_get_string(collapsemap[?"settings_watermark"], setting_collapse_settings_watermark)
-		setting_collapse_background_clouds = value_get_string(collapsemap[?"background_clouds"], setting_collapse_background_clouds)
-		setting_collapse_background_ground = value_get_string(collapsemap[?"backgound_ground"], setting_collapse_background_ground)
-		setting_collapse_background_volumetric_fog = value_get_string(collapsemap[?"background_volumetric_fog"], setting_collapse_background_volumetric_fog)
-		setting_collapse_background_fog = value_get_string(collapsemap[?"background_fog"], setting_collapse_background_fog)
-		setting_collapse_background_wind = value_get_string(collapsemap[?"background_wind"], setting_collapse_background_wind)
-		setting_collapse_frameeditor_rotatepoint = value_get_string(collapsemap[?"frameeditor_rotatepoint"], setting_collapse_frameeditor_rotatepoint)
-		setting_collapse_frameeditor_camshake = value_get_string(collapsemap[?"frameeditor_camshake"], setting_collapse_frameeditor_camshake)
-		setting_collapse_frameeditor_dof = value_get_string(collapsemap[?"frameeditor_dof"], setting_collapse_frameeditor_dof)
-		setting_collapse_frameeditor_bloom = value_get_string(collapsemap[?"frameeditor_bloom"], setting_collapse_frameeditor_bloom)
-		setting_collapse_frameeditor_lensdirt = value_get_string(collapsemap[?"frameeditor_lensdirt"], setting_collapse_frameeditor_lensdirt)
-		setting_collapse_frameeditor_clrcor = value_get_string(collapsemap[?"frameeditor_clrcor"], setting_collapse_frameeditor_clrcor)
-		setting_collapse_frameeditor_grain = value_get_string(collapsemap[?"frameeditor_grain"], setting_collapse_frameeditor_grain)
-		setting_collapse_frameeditor_vignette = value_get_string(collapsemap[?"frameeditor_vignette"], setting_collapse_frameeditor_vignette)
-		setting_collapse_frameeditor_ca = value_get_string(collapsemap[?"frameeditor_ca"], setting_collapse_frameeditor_ca)
-		setting_collapse_frameeditor_distort = value_get_string(collapsemap[?"frameeditor_distort"], setting_collapse_frameeditor_distort)
-		setting_collapse_frameeditor_itemslot = value_get_string(collapsemap[?"frameeditor_itemslot"], setting_collapse_frameeditor_itemslot)
+		var key = ds_map_find_first(collapse_map);
+	
+		while (!is_undefined(key))
+		{
+			collapse_map[?key] = value_get_string(collapsemap[?key], collapse_map[?key])
+			key = ds_map_find_next(collapse_map, key)
+		}
 	}
 }
 

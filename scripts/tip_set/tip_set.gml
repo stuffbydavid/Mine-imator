@@ -32,15 +32,15 @@ if (showtip)
 	{
 		tip_text = text
 		
-		if (tip_shortcut_key != -1)
+		if (tip_keybind != null)
 		{
-			tip_shortcut_draw = true
-			tip_text_shortcut = text_control_name(tip_shortcut_key, tip_shortcut_control)
+			tip_keybind_draw = true
+			tip_text_keybind = text_control_name(tip_keybind)
 		}
 		else
 		{
-			tip_shortcut_draw = false
-			tip_text_shortcut = ""
+			tip_keybind_draw = false
+			tip_text_keybind = ""
 		}
 		
 		var fontprev = draw_get_font();
@@ -55,7 +55,7 @@ if (showtip)
 		// Break tip apart based on wrap lines
 		tip_text_array = string_line_array(tip_text_wrap)
 		
-		tip_w = string_width(tip_text_wrap) + (tip_text_shortcut = "" ? 0 : string_width(tip_text_shortcut) + 12)
+		tip_w = string_width(tip_text_wrap) + (tip_text_keybind = "" ? 0 : string_width(tip_text_keybind) + 12)
 		tip_h = 7 * (array_length_1d(tip_text_array) - 1)
 		tip_h += 8 * array_length_1d(tip_text_array)
 		
@@ -140,7 +140,7 @@ if (showtip)
 	tip_box_y = yy
 }
 
-if (tip_shortcut_key != -1)
-	tip_shortcut_key = -1
+if (tip_keybind != null)
+	tip_keybind = null
 
 tip_wrap = true

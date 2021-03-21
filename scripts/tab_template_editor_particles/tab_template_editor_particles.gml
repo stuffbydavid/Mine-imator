@@ -22,14 +22,14 @@ setx -= 4
 draw_divide_vertical(setx, dy, 24)
 setx -= 28
 
-tip_set_shortcut(setting_key_clear_particles, setting_key_clear_particles_control)
+tip_set_keybind(e_keybind.PARTICLES_CLEAR)
 if (draw_button_icon("particleeditorclear", setx, dy, 24, 24, false, icons.DELETE, null, false, "tooltipparticlesclear"))
 	action_lib_pc_clear()
 setx -= 28
 
 if (!temp_edit.pc_spawn_constant)
 {
-	tip_set_shortcut(setting_key_spawn_particles, setting_key_spawn_particles_control)
+	tip_set_keybind(e_keybind.PARTICLES_SPAWN)
 	
 	if (draw_button_icon("particleeditorspawn", setx, dy, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 		action_lib_pc_spawn()

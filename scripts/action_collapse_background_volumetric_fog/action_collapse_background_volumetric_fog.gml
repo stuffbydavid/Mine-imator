@@ -1,3 +1,0 @@
-/// action_collapse_background_volumetric_fog(expand)
-
-setting_collapse_background_volumetric_fog = argument0

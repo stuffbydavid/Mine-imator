@@ -91,11 +91,13 @@ if (load_format >= e_settings.FORMAT_103)
 if (load_format >= e_settings.FORMAT_100)
 	setting_z_is_up = buffer_read_byte()
 
+// Pre-1.3 keybinds not supported, just read buffer data
+
 // Workaround a bug where the keys are saved as "0", causing them to continuously pressed
 var keynew = buffer_read_byte();
-var keynewcontrol = buffer_read_byte();
-var keyimportasset = setting_key_import_asset;
-var keyimportassetcontrol = setting_key_import_asset_control;
+/*var keynewcontrol = */buffer_read_byte();
+var keyimportasset = null;
+var keyimportassetcontrol = null;
 
 if (load_format >= e_settings.FORMAT_100)
 {
@@ -104,9 +106,9 @@ if (load_format >= e_settings.FORMAT_100)
 }
 
 var keyopen = buffer_read_byte();
-var keyopencontrol = buffer_read_byte();
+/*var keyopencontrol = */buffer_read_byte();
 var keysave = buffer_read_byte();
-var keysavecontrol = buffer_read_byte();
+/*var keysavecontrol = */buffer_read_byte();
 
 if (keynew = 0 || keyimportasset = 0 || keyopen = 0 || keysave = 0)
 {
@@ -114,6 +116,7 @@ if (keynew = 0 || keyimportasset = 0 || keyopen = 0 || keysave = 0)
 	return 0
 }
 
+/*
 setting_key_open = keyopen
 setting_key_open_control = keyopencontrol
 setting_key_save =  keysave
@@ -123,66 +126,67 @@ setting_key_new = keynew
 setting_key_new_control = keynewcontrol
 setting_key_import_asset = keyimportasset
 setting_key_import_asset_control = keyimportassetcontrol
+*/
 
 if (load_format >= e_settings.FORMAT_100)
 {
-	setting_key_undo = buffer_read_byte()
-	setting_key_undo_control = buffer_read_byte()
-	setting_key_redo = buffer_read_byte()
-	setting_key_redo_control = buffer_read_byte()
-	setting_key_play = buffer_read_byte()
-	setting_key_play_control = buffer_read_byte()
-	setting_key_play_beginning = buffer_read_byte()
-	setting_key_play_beginning_control = buffer_read_byte()
-	setting_key_move_marker_right = buffer_read_byte()
-	setting_key_move_marker_right_control = buffer_read_byte()
-	setting_key_move_marker_left = buffer_read_byte()
-	setting_key_move_marker_left_control = buffer_read_byte()
-	setting_key_render = buffer_read_byte()
-	setting_key_render_control = buffer_read_byte()
-	setting_key_folder = buffer_read_byte()
-	setting_key_folder_control = buffer_read_byte()
-	setting_key_select_timelines = buffer_read_byte()
-	setting_key_select_timelines_control = buffer_read_byte()
-	setting_key_duplicate_timelines = buffer_read_byte()
-	setting_key_duplicate_timelines_control = buffer_read_byte()
-	setting_key_remove_timelines = buffer_read_byte()
-	setting_key_remove_timelines_control = buffer_read_byte()
+	/*setting_key_undo = */buffer_read_byte()
+	/*setting_key_undo_control = */buffer_read_byte()
+	/*setting_key_redo = */buffer_read_byte()
+	/*setting_key_redo_control = */buffer_read_byte()
+	/*setting_key_play = */buffer_read_byte()
+	/*setting_key_play_control = */buffer_read_byte()
+	/*setting_key_play_beginning = */buffer_read_byte()
+	/*setting_key_play_beginning_control = */buffer_read_byte()
+	/*setting_key_move_marker_right = */buffer_read_byte()
+	/*setting_key_move_marker_right_control = */buffer_read_byte()
+	/*setting_key_move_marker_left = */buffer_read_byte()
+	/*setting_key_move_marker_left_control = */buffer_read_byte()
+	/*setting_key_render = */buffer_read_byte()
+	/*setting_key_render_control = */buffer_read_byte()
+	/*setting_key_folder = */buffer_read_byte()
+	/*setting_key_folder_control = */buffer_read_byte()
+	/*setting_key_select_timelines = */buffer_read_byte()
+	/*setting_key_select_timelines_control = */buffer_read_byte()
+	/*setting_key_duplicate_timelines = */buffer_read_byte()
+	/*setting_key_duplicate_timelines_control = */buffer_read_byte()
+	/*setting_key_remove_timelines = */buffer_read_byte()
+	/*setting_key_remove_timelines_control = */buffer_read_byte()
 }
 
-setting_key_copy_keyframes = buffer_read_byte()
-setting_key_copy_keyframes_control = buffer_read_byte()
-setting_key_cut_keyframes = buffer_read_byte()
-setting_key_cut_keyframes_control = buffer_read_byte()
-setting_key_paste_keyframes = buffer_read_byte()
-setting_key_paste_keyframes_control = buffer_read_byte()
-setting_key_remove_keyframes = buffer_read_byte()
-setting_key_remove_keyframes_control = buffer_read_byte()
-setting_key_spawn_particles = buffer_read_byte()
-setting_key_spawn_particles_control = buffer_read_byte()
-setting_key_clear_particles = buffer_read_byte()
-setting_key_clear_particles_control = buffer_read_byte()
+/*setting_key_copy_keyframes = */buffer_read_byte()
+/*setting_key_copy_keyframes_control = */buffer_read_byte()
+/*setting_key_cut_keyframes = */buffer_read_byte()
+/*setting_key_cut_keyframes_control = */buffer_read_byte()
+/*setting_key_paste_keyframes = */buffer_read_byte()
+/*setting_key_paste_keyframes_control = */buffer_read_byte()
+/*setting_key_remove_keyframes = */buffer_read_byte()
+/*setting_key_remove_keyframes_control = */buffer_read_byte()
+/*setting_key_spawn_particles = */buffer_read_byte()
+/*setting_key_spawn_particles_control = */buffer_read_byte()
+/*setting_key_clear_particles = */buffer_read_byte()
+/*setting_key_clear_particles_control = */buffer_read_byte()
 
 if (load_format < e_settings.FORMAT_100)
 {
-	setting_key_play = buffer_read_byte()
-	setting_key_play_control = buffer_read_byte()
-	setting_key_play_beginning = buffer_read_byte()
-	setting_key_play_beginning_control = buffer_read_byte()
+	/*setting_key_play = */buffer_read_byte()
+	/*setting_key_play_control = */buffer_read_byte()
+	/*setting_key_play_beginning = */buffer_read_byte()
+	/*setting_key_play_beginning_control = */buffer_read_byte()
 }
 
-setting_key_forward = buffer_read_byte()
-setting_key_back = buffer_read_byte()
-setting_key_left = buffer_read_byte()
-setting_key_right = buffer_read_byte()
-setting_key_ascend = buffer_read_byte()
-setting_key_descend = buffer_read_byte()
-setting_key_roll_forward = buffer_read_byte()
-setting_key_roll_back = buffer_read_byte()
-setting_key_roll_reset = buffer_read_byte()
-setting_key_reset = buffer_read_byte()
-setting_key_fast = buffer_read_byte()
-setting_key_slow = buffer_read_byte()
+/*setting_key_forward = */buffer_read_byte()
+/*setting_key_back = */buffer_read_byte()
+/*setting_key_left = */buffer_read_byte()
+/*setting_key_right = */buffer_read_byte()
+/*setting_key_ascend = */buffer_read_byte()
+/*setting_key_descend = */buffer_read_byte()
+/*setting_key_roll_forward = */buffer_read_byte()
+/*setting_key_roll_back = */buffer_read_byte()
+/*setting_key_roll_reset = */buffer_read_byte()
+/*setting_key_reset = */buffer_read_byte()
+/*setting_key_fast = */buffer_read_byte()
+/*setting_key_slow = */buffer_read_byte()
 setting_move_speed = buffer_read_double()
 setting_look_sensitivity = buffer_read_double()
 setting_fast_modifier = buffer_read_double()

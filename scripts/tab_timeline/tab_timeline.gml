@@ -159,6 +159,7 @@ draw_button_icon("timelinestop", buttonsx, buttonsy, 24, 24, false, icons.STOP, 
 buttonsx += 24 + 6
 
 // Play
+tip_set_keybind(e_keybind.PLAY)
 draw_button_icon("timelineplay", buttonsx, buttonsy, 24, 24, false, timeline_playing ? icons.PAUSE : icons.PLAY, action_tl_play, false, timeline_playing ? "tooltiptlpause" : "tooltiptlplay")
 buttonsx += 24 + 6
 

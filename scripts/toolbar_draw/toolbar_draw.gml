@@ -37,18 +37,3 @@ dx += capwid + 8
 capwid = string_width(text_get("toolbarhelp")) + 16
 toolbar_draw_button("toolbarhelp", dx, dy, capwid)
 dx += capwid + 8
-
-/*
-// Side menu
-draw_button_sidemenu(dx, dy, 24, 24)
-dx += (24 + 12)
-
-// Undo
-tip_set_shortcut(setting_key_undo, setting_key_undo_control)
-draw_button_icon("toolbarundo", dx, dy, 24, 24, false, icons.UNDO, action_toolbar_undo, (history_pos >= history_amount), "toolbarundotip")
-dx += (24 + 8)
-
-// Redo
-tip_set_shortcut(setting_key_redo, setting_key_redo_control)
-draw_button_icon("toolbarredo", dx, dy, 24, 24, false, icons.REDO, action_toolbar_redo, (history_pos = 0), "toolbarredotip")
-*/
