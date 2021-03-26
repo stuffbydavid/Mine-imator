@@ -173,6 +173,7 @@ setting_reduced_motion = false
 setting_wind_enable = true
 
 settings_load()
+languages_load()
 interface_update()
 
 texture_set_mipmap_level(setting_texture_filtering_level)

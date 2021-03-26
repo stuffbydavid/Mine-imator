@@ -1,6 +1,8 @@
-/// action_setting_language_load()
+/// action_setting_language_load(fn)
+/// @arg fn
 
-var fn = file_dialog_open_language();
+var fn = argument0;
+
 if (!file_exists_lib(fn))
 	return 0
 

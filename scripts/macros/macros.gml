@@ -34,8 +34,10 @@
 
 // Files
 #macro language_file				languages_directory + "english.milanguage"
+#macro language_index_file			data_directory + "langindex.midata"
 #macro import_file					data_directory + "import.exe"
 #macro settings_file				data_directory + "settings.midata"
+#macro languages_file				data_directory + "languages.midata"
 #macro recent_file					data_directory + "recent.midata"
 #macro legacy_file					data_directory + "legacy.midata"
 #macro block_preview_file			data_directory + "blockpreview.midata"

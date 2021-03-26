@@ -203,11 +203,16 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 			m.menu_ani = 2
 			m.menu_value = mouseitem.value
 			
+			list_item_script = (mouseitem.script = null ? m.menu_script : mouseitem.script)
+			list_item_script_value = m.menu_value
+			
+			/*
 			if (mouseitem.script != null)
 				script_execute(mouseitem.script, null)
 			else
 				script_execute(m.menu_script, m.menu_value)
-				
+			*/
+			
 			app_mouse_clear()
 		}
 		

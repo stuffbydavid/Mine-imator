@@ -930,6 +930,15 @@ switch (name)
 		
 		break;
 	}
+	
+	// Language
+	case "settingslanguage":
+	{
+		with (obj_language)
+			list_item_add(id.name, languages_directory + id.filename, id.locale, null, null, null, action_setting_language_load)
+		
+		break;
+	}
 }
 
 return list_init_end()

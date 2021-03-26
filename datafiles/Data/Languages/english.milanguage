@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.03.21"
+        "lastchange": "2021.03.26"
     },
     "tooltip/": {
         "sidemenuclose": "Close side menu",
@@ -75,7 +75,9 @@
             "filter": "Filter timelines"
         },
         "customaccentcolor": "Custom accent color",
-        "editkeybind": "Edit keybind"
+        "editkeybind": "Edit keybind",
+        "languageadd": "Add language",
+        "languagefolder": "Open languages folder"
     },
     "contextmenu/": {
         "textbox/": {
@@ -2572,7 +2574,7 @@
             "instance/": {
                 "delete": "Delete instances",
                 "duplicate": "Duplicate instances",
-                "select": "Select all instances",
+                "select": "Select all instances"
             },
             "createfolder": "Create folder",
             "keyframes/": {

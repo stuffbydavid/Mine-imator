@@ -38,9 +38,15 @@ tab_next()
 
 dy += 5
 
-// Language TODO: Overhaul language file system
+// Language
 tab_control_menu()
-draw_button_menu("settingslanguage", e_menu.LIST, dx, dy, dw, 24, setting_language_filename, text_get("filelanguage"), action_setting_language, false, null, null, text_get("filelocale"), null, null)
+draw_button_menu("settingslanguage", e_menu.LIST, dx, dy, dw, 24, setting_language_filename, text_get("filelanguage"), null, false, null, null, text_get("filelocale"), null, null)
+tab_next()
+
+tab_control(24)
+if (draw_button_icon("settingslanguagefolder", dx, dy, 24, 24, false, icons.BROWSE, null, false, "tooltiplanguagefolder"))
+	open_url(languages_directory)
+draw_button_icon("settingslanguageadd", dx + 24 + 4, dy, 24, 24, false, icons.ADD, language_add, false, "tooltiplanguageadd")
 tab_next()
 
 // Realtime render

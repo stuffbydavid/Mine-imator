@@ -1,0 +1,14 @@
+{
+	"languages": [
+		{
+			"name": "English",
+			"locale": "en-US",
+			"filename": "english.milanguage"
+		},
+		{
+			"name": "Fran\u00e7ais",
+			"locale": "fr-FR",
+			"filename": "french.milanguage"
+		}
+	]
+}

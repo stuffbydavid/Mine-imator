@@ -359,6 +359,7 @@ language_map = ds_map_create()
 
 language_load(language_file, language_english_map)
 ds_map_copy(language_map, language_english_map)
+langauge_new(language_file)
 
 // Biomes
 biome_list = ds_list_create()

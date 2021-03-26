@@ -327,6 +327,14 @@
             }
         },
         {
+            "Key": "04956b2c-8deb-4369-a727-8d77d93523ee",
+            "Value": {
+                "id": "2643b209-79ce-491e-a464-362b10af50f4",
+                "resourcePath": "scripts\\language_add\\language_add.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "04bc8bac-64a6-45bf-8238-527d18f2a045",
             "Value": {
                 "id": "4bd79077-5ed4-4479-b5a3-e5df82c42f29",
@@ -1575,6 +1583,14 @@
             }
         },
         {
+            "Key": "1559f545-49de-4eda-9f27-e62e8ba2f14f",
+            "Value": {
+                "id": "1e7b1c78-6392-4e33-a635-9d52ff1a78de",
+                "resourcePath": "scripts\\language_remove\\language_remove.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "15614c5a-635f-4804-8460-f2b1b9eeaca5",
             "Value": {
                 "id": "b5f84fa3-a033-45e0-80db-747c78abd5dd",
@@ -1619,6 +1635,14 @@
             "Value": {
                 "id": "2b42ae3e-2110-42cc-a85c-eba5bf079339",
                 "resourcePath": "scripts\\action_lib_bodypart_model_state\\action_lib_bodypart_model_state.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "16325a76-ac2a-4ca7-a20b-38cdfcef8b4d",
+            "Value": {
+                "id": "fef7b915-eea6-4d74-90bc-c1353a40d0c6",
+                "resourcePath": "scripts\\languages_save\\languages_save.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -5719,6 +5743,14 @@
             }
         },
         {
+            "Key": "5493c072-ce93-4376-ac35-96d3985b337d",
+            "Value": {
+                "id": "980d8fb3-b06a-43b8-a128-9b6bbe437a45",
+                "resourcePath": "scripts\\languages_load\\languages_load.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "549545ea-f918-4cf4-a6aa-867bf60b077f",
             "Value": {
                 "id": "a0a38a22-2305-4fef-858e-f7a2069c553e",
@@ -6659,6 +6691,14 @@
             "Value": {
                 "id": "8332e982-5660-463f-99dc-0148a7e0d567",
                 "resourcePath": "scripts\\app_startup\\app_startup.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "60e3d1f0-2c52-41cc-b9dc-ff6879877b27",
+            "Value": {
+                "id": "219911b0-2ff8-49cb-b367-7a5e463feee8",
+                "resourcePath": "scripts\\langauge_new\\langauge_new.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -7876,6 +7916,14 @@
                 "id": "8f22dbc9-06b1-4d80-9169-49167b0a11fc",
                 "resourcePath": "scripts\\file_dialog_open_font\\file_dialog_open_font.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "709e3142-d2b9-4fec-a71c-a5bd79a50216",
+            "Value": {
+                "id": "89d8882b-99b0-4b63-aace-33b2143149cf",
+                "resourcePath": "views\\709e3142-d2b9-4fec-a71c-a5bd79a50216.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -15399,6 +15447,14 @@
             }
         },
         {
+            "Key": "d8926985-f9c7-43e7-82cf-f2b673a201bf",
+            "Value": {
+                "id": "49159a23-a389-4315-8313-2909924308cb",
+                "resourcePath": "objects\\obj_language\\obj_language.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "d8a1cf2b-e54b-43d3-80bd-191da64ceb76",
             "Value": {
                 "id": "12ac7adc-6a12-4e85-a218-5027a73836c9",
@@ -17260,6 +17316,14 @@
                 "id": "26467f7b-5175-4fdd-9698-7f7e076ebba5",
                 "resourcePath": "views\\f21ac450-9596-4c10-84f7-19e8d3208c86.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "f21cd5fc-c31f-4980-9d92-21552d54ca23",
+            "Value": {
+                "id": "7f640353-2b3b-44af-93ab-e6564497d19c",
+                "resourcePath": "datafiles_yy\\Data\\languages.midata.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -19404,6 +19468,11 @@
         "655dfc6d-1d21-483d-94f9-563688d23d2b",
         "e041c170-0422-4eef-804d-ad419f59e74d",
         "15f7d64f-2245-4f80-8a8d-cc7044e94a4e",
+        "04956b2c-8deb-4369-a727-8d77d93523ee",
+        "60e3d1f0-2c52-41cc-b9dc-ff6879877b27",
+        "1559f545-49de-4eda-9f27-e62e8ba2f14f",
+        "16325a76-ac2a-4ca7-a20b-38cdfcef8b4d",
+        "5493c072-ce93-4376-ac35-96d3985b337d",
         "bf734d59-483b-422a-bd0d-7a4ede5bb36d",
         "2467567a-8f27-4b77-b00e-24dc541968a4",
         "684eefd3-fb83-4554-aed1-9834fc504ac1",
