@@ -41,11 +41,11 @@ switch (name)
 			temp = temp_edit
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Download from user
 		if (temp.model_file != null && temp.model_file.player_skin)
-			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
+			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
 		
 		// Default
 		var tex;
@@ -81,11 +81,11 @@ switch (name)
 			temp = temp_edit
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Download from user
 		if (temp.model_file != null && temp.model_file.player_skin)
-			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD_SKIN)
+			menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
 		
 		// Default
 		var texobj = temp.model
@@ -139,10 +139,10 @@ switch (name)
 		menu_add_item(null, text_get("listnone"))
 		
 		// Import from world
-		menu_add_item(e_option.IMPORT_WORLD, text_get("librarysceneryimport"), null, icons.IMPORT_FROM_WORLD)
+		menu_add_item(e_option.IMPORT_WORLD, text_get("librarysceneryimport"), null, icons.SCENERY)
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -160,7 +160,7 @@ switch (name)
 	case "libraryblocktex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
@@ -181,7 +181,7 @@ switch (name)
 	case "libraryitemtex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
@@ -231,7 +231,7 @@ switch (name)
 	case "librarytextfont":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name)
@@ -264,7 +264,7 @@ switch (name)
 		menu_add_item(null, text_get("listnone"))
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -290,7 +290,7 @@ switch (name)
 		menu_add_item(null, text_get("listnone"))
 		
 		// Browse
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Add resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -306,9 +306,9 @@ switch (name)
 	// Particle editor spawn region type
 	case "particleeditorspawnregiontype":
 	{
-		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), null, icons.SPHERE)
-		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), null, icons.CUBE)
-		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), null, icons.BOX)
+		menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), null, icons.BOUNDARY_CIRCLE)
+		menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), null, icons.BOUNDARY_CUBE)
+		menu_add_item("box", text_get("particleeditorspawnregiontypebox"), null, icons.BOUNDARY_BOX)
 		
 		break
 	}
@@ -346,7 +346,7 @@ switch (name)
 		var img = ptype_edit.sprite_tex_image;
 		
 		// Add from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.particles_texture[img])
@@ -368,7 +368,7 @@ switch (name)
 		var img = ptype_edit.sprite_tex_image;
 		
 		// Add from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
@@ -407,7 +407,7 @@ switch (name)
 		menu_add_item(null, text_get("listnone"))
 		
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Add existing resources
 		for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -434,7 +434,7 @@ switch (name)
 	case "backgroundskysuntex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.sun_texture)
@@ -458,7 +458,7 @@ switch (name)
 	case "backgroundskymoontex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.moon_texture[background_sky_moon_phase])
@@ -491,7 +491,7 @@ switch (name)
 	case "backgroundskycloudstex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.clouds_texture)
@@ -515,7 +515,7 @@ switch (name)
 	case "backgroundgroundtex":
 	{
 		// Import from file
-		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.BROWSE)
+		menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 		
 		// Default
 		menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)

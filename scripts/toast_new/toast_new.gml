@@ -10,9 +10,9 @@ toast_amount++
 switch (argument0)
 {
 	case e_toast.INFO: toast.icon = icons.INFO; type = "info"; break;
-	case e_toast.POSITIVE: toast.icon = icons.CHECK; type = "positive"; break;
+	case e_toast.POSITIVE: toast.icon = icons.TICK; type = "positive"; break;
 	case e_toast.WARNING: toast.icon = icons.WARNING_TRIANGLE; type = "warning"; break;
-	case e_toast.NEGATIVE: toast.icon = icons.ALERT; type = "negative"; break;
+	case e_toast.NEGATIVE: toast.icon = icons.WARNING_TRIANGLE; type = "negative"; break;
 	default: toast.icon = icons.HELP; type = "unknown";
 }
 

@@ -73,7 +73,7 @@ iconcolor = (color_get_lum(color) > 150 ? c_black : c_white)
 iconalpha = (color_get_lum(color) > 150 ? 0.5 : 1)
 
 // Color button doesn't have disabled state, use disabled ease for swatch hover
-draw_image(spr_icons, icons.EYEDROPPER, textx + floor(h/2), yy + floor(h/2), 1, 1, iconcolor, iconalpha * mcroani_arr[e_mcroani.CUSTOM])
+draw_image(spr_icons, icons.PICKER, textx + floor(h/2), yy + floor(h/2), 1, 1, iconcolor, iconalpha * mcroani_arr[e_mcroani.CUSTOM])
 
 // Hex input
 draw_set_font(font_value)

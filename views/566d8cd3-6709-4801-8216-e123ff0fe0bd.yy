@@ -10,8 +10,6 @@
         "2fbeffc1-d87e-4b10-91eb-43e113483930",
         "bb78c30f-abe7-4228-9078-b7ac8e294d40",
         "bd77bf76-6478-4cbf-a515-361c5de1affe",
-        "18327271-18af-4603-9480-2f432b765e91",
-        "cfb095e1-d08a-418c-96d6-642718bd80da",
         "80c1f8e6-a7ea-4e1d-991a-1ae83fe6184b",
         "de7631e0-6847-444b-84b2-e8ea13085086",
         "81e23953-8094-4d90-b58c-16fe48c84493",
@@ -35,9 +33,9 @@
         "e15beee1-70e7-4ffa-a302-745ba226cb06",
         "4610d7a7-5936-470e-b1a3-3884cc1f2225",
         "71b18ba4-5cbd-4862-866c-e84f7f8e0598",
-        "8c3af5b3-09df-4844-8924-59df4f6f0163",
         "53bb020a-0353-42ce-99c4-ab41daddd0d8",
-        "c538f5a1-a850-44fc-95f0-cf200fbc6ae7"
+        "c538f5a1-a850-44fc-95f0-cf200fbc6ae7",
+        "720e42c7-7dc6-4a14-b4fa-ade4e0815f90"
     ],
     "filterType": "GMSprite",
     "folderName": "Interface",

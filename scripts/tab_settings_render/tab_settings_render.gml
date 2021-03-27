@@ -10,35 +10,42 @@ var text, icon, type;
 if (setting_render_samples >= 1 && setting_render_samples <= 8)
 {
 	text = "settingsrendersamples0"
-	icon = icons.CHECK
+	icon = icons.TICK
 	type = e_toast.POSITIVE
 }
 
 if (setting_render_samples >= 9 && setting_render_samples <= 32)
 {
 	text = "settingsrendersamples1"
-	icon = icons.CHECK
+	icon = icons.TICK
 	type = e_toast.POSITIVE
 }
 
 if (setting_render_samples >= 33 && setting_render_samples <= 64)
 {
 	text = "settingsrendersamples2"
-	icon = icons.CHECK
+	icon = icons.TICK
 	type = e_toast.POSITIVE
 }
 
 if (setting_render_samples >= 65 && setting_render_samples <= 128)
 {
 	text = "settingsrendersamples3"
-	icon = icons.ALERT
+	icon = icons.WARNING_TRIANGLE
 	type = e_toast.WARNING
 }
 
-if (setting_render_samples >= 129 && setting_render_samples <= 256)
+if (setting_render_samples >= 129 && setting_render_samples <= 192)
 {
 	text = "settingsrendersamples4"
 	icon = icons.WARNING_TRIANGLE
+	type = e_toast.NEGATIVE
+}
+
+if (setting_render_samples >= 193 && setting_render_samples <= 256)
+{
+	text = "settingsrendersamples5"
+	icon = icons.FIRE
 	type = e_toast.NEGATIVE
 }
 
@@ -218,7 +225,7 @@ if (setting_render_watermark)
 		
 		tab_control(24)
 		
-		if (draw_button_icon("settingsrenderwatermarkopen", dx, dy, 24, 24, false, icons.BROWSE))
+		if (draw_button_icon("settingsrenderwatermarkopen", dx, dy, 24, 24, false, icons.FOLDER))
 			action_setting_render_watermark_open()
 		
 		if (draw_button_icon("settingsrenderwatermarkreset", dx + 32, dy, 24, 24, false, icons.RESET))
@@ -254,6 +261,6 @@ if (setting_render_watermark)
 	else
 	{
 		if (trial_version)
-			draw_tooltip_label("settingsrenderwatermarkupgraderequired", icons.UPGRADE, e_toast.INFO)
+			draw_tooltip_label("settingsrenderwatermarkupgraderequired", icons.KEY_ALT, e_toast.INFO)
 	}
 }

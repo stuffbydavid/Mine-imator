@@ -78,7 +78,7 @@ draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])
 // Error icon
 if (err)
 {
-	draw_image(spr_icons, icons.ALERT, xx + w - 14, yy + (h/2), 1, 1, c_error, 1)
+	draw_image(spr_icons, icons.WARNING_TRIANGLE, xx + w - 14, yy + (h/2), 1, 1, c_error, 1)
 	w -= 28
 }
 

@@ -185,7 +185,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 		
 		if (slist.columns = 1 && selected)
 		{
-			draw_image(spr_icons, icons.CHECK, xx + dw - 16, dy + itemh/2, 1, 1, c_accent, 1)
+			draw_image(spr_icons, icons.TICK, xx + dw - 16, dy + itemh/2, 1, 1, c_accent, 1)
 			wid -= 32
 		}
 		

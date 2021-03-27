@@ -193,7 +193,7 @@ if (toggled)
 {
 	rightp += 4
 	
-	draw_image(spr_icons, icons.CHECK, (xx + width - rightp) - iconsize/2, middley, 1, 1, iconcolor, iconalpha)
+	draw_image(spr_icons, icons.TICK, (xx + width - rightp) - iconsize/2, middley, 1, 1, iconcolor, iconalpha)
 	
 	rightp += 24
 	components++

@@ -33,6 +33,7 @@ theme_light = new(obj_theme);
 theme_edit = theme_light
 
 theme_edit.name = "light"
+theme_edit.dark = false
 theme_edit.pattern = 0
 theme_edit.accent_list = array()
 array_add(theme_edit.accent_list, hex_to_color("DB3030"))
@@ -83,6 +84,7 @@ theme_dark = new(obj_theme);
 theme_edit = theme_dark
 
 theme_edit.name = "dark"
+theme_edit.dark = true
 theme_edit.pattern = 0
 theme_edit.accent_list = array()
 array_add(theme_edit.accent_list, hex_to_color("FF7E76"))
@@ -133,6 +135,7 @@ theme_darker = new(obj_theme);
 theme_edit = theme_darker
 
 theme_edit.name = "darker"
+theme_edit.dark = true
 theme_edit.pattern = 0
 theme_edit.accent_list = array()
 array_add(theme_edit.accent_list, hex_to_color("FF7E76"))

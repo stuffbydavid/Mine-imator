@@ -18,7 +18,7 @@ listy = dy
 listw = dw - (dx - dx_start)
 
 // Add layer
-if (draw_button_label("bannereditoraddlayer", dx, dy, listw, icons.ADD, e_button.SECONDARY))
+if (draw_button_label("bannereditoraddlayer", dx, dy, listw, icons.PLUS, e_button.SECONDARY))
 {
 	ds_list_add(popup.pattern_list_edit, minecraft_banner_pattern_list[|1])
 	ds_list_add(popup.pattern_color_list_edit, c_minecraft_black)

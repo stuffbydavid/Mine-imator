@@ -44,9 +44,9 @@ draw_button_menu("settingslanguage", e_menu.LIST, dx, dy, dw, 24, setting_langua
 tab_next()
 
 tab_control(24)
-if (draw_button_icon("settingslanguagefolder", dx, dy, 24, 24, false, icons.BROWSE, null, false, "tooltiplanguagefolder"))
+if (draw_button_icon("settingslanguagefolder", dx, dy, 24, 24, false, icons.FOLDER, null, false, "tooltiplanguagefolder"))
 	open_url(languages_directory)
-draw_button_icon("settingslanguageadd", dx + 24 + 4, dy, 24, 24, false, icons.ADD, language_add, false, "tooltiplanguageadd")
+draw_button_icon("settingslanguageadd", dx + 24 + 4, dy, 24, 24, false, icons.PLUS, language_add, false, "tooltiplanguageadd")
 tab_next()
 
 // Realtime render

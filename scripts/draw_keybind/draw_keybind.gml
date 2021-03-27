@@ -30,7 +30,7 @@ draw_label(text_control_name(window_busy = name ? keybind_edit : keyobj.keybind)
 
 draw_set_alpha(mcroani_arr[e_mcroani.HOVER])
 
-if (draw_button_icon(name + "edit", dx + dw - 24, dy + 2, 24, 24, window_busy = name, icons.EDIT, null, false, "tooltipeditkeybind"))
+if (draw_button_icon(name + "edit", dx + dw - 24, dy + 2, 24, 24, window_busy = name, icons.PENCIL, null, false, "tooltipeditkeybind"))
 {
 	window_busy = name
 	keybind_edit = keybind_new(null)

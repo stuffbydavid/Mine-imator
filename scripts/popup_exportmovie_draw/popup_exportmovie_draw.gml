@@ -68,7 +68,7 @@ if (popup.format = "png")
 	tab_next()
 	
 	if (popup.remove_background)
-		draw_tooltip_label("exportimageblendmodewarning", icons.ALERT, e_toast.WARNING)
+		draw_tooltip_label("exportimageblendmodewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 }
 else
 {
@@ -90,5 +90,5 @@ tab_next()
 
 // Save
 tab_control_button_label()
-draw_button_label("exportmoviesave", dx + dw, dy_start + dh - 32, null, icons.SAVE_PROJECT, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT)
+draw_button_label("exportmoviesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT)
 tab_next()

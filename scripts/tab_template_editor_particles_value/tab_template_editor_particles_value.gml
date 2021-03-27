@@ -54,7 +54,7 @@ if (capwid = null)
 	capwid = (caption != "" ? string_width(caption) + 8 : 0) * showcaption
 
 tab_control_dragger()
-draw_button_icon("particleeditorrandom" + name, dx + dw - 24, dy, 24, 24, israndom, icons.RANDOM, scripts[1], false, "tooltipparticlesrandom")
+draw_button_icon("particleeditorrandom" + name, dx + dw - 24, dy, 24, 24, israndom, icons.RANDOMIZE, scripts[1], false, "tooltipparticlesrandom")
 
 if (israndom)
 {

@@ -15,16 +15,16 @@ tab_next()
 // Tools
 tab_control(24)
 
-if (draw_button_icon("resourcesnew", dx, dy, 24, 24, false, icons.IMPORT, null, false, "tooltipresourcenew"))
+if (draw_button_icon("resourcesnew", dx, dy, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltipresourcenew"))
 	action_toolbar_import_asset()
 
-if (draw_button_icon("previewexport", dx + 28, dy, 24, 24, false, icons.EXPORT, null, !res_edit, "tooltipresourcesave"))
+if (draw_button_icon("previewexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, !res_edit, "tooltipresourcesave"))
 	action_res_export()
 
 if (draw_button_icon("resourcesreload", dx + (28 * 2), dy, 24, 24, false, icons.RELOAD, null, (!res_edit || res_edit = mc_res), "tooltipresourcereload"))
 	action_res_reload()
 
-if (draw_button_icon("resourcesreplace", dx + (28 * 3), dy, 24, 24, false, icons.BROWSE, null, (!res_edit || res_edit = mc_res), "tooltipresourcereplace"))
+if (draw_button_icon("resourcesreplace", dx + (28 * 3), dy, 24, 24, false, icons.FOLDER, null, (!res_edit || res_edit = mc_res), "tooltipresourcereplace"))
 	action_res_replace()
 
 if (draw_button_icon("resourcesremove", dx + (28 * 4), dy, 24, 24, false, icons.DELETE, null, (!res_edit || res_edit = mc_res), "tooltipresourceremove"))
@@ -134,7 +134,7 @@ if (res_edit.filename != "") // Filename
 	draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	
 	// Open in external program
-	if (draw_button_icon("resourcesfilenameopen", dx + dw - 24, dy, 24, 24, false, icons.BROWSE, null, res_edit.type = e_res_type.SCENERY, "tooltipresourceopen"))
+	if (draw_button_icon("resourcesfilenameopen", dx + dw - 24, dy, 24, 24, false, icons.FOLDER, null, res_edit.type = e_res_type.SCENERY, "tooltipresourceopen"))
 		open_url(project_folder + "\\" + res_edit.filename)
 	
 	tab_next()

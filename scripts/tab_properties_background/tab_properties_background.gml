@@ -231,7 +231,7 @@ if (background_ground_show && collapse_map[?"ground"])
 	else
 		draw_texture_slot(res.block_sheet_texture, background_ground_slot, dx + wid + 18, dy + 6, 16, 16, block_sheet_width, block_sheet_height, block_texture_get_blend(background_ground_name, res))
 	
-	if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 24, 24, ground_editor.show, icons.EDIT, null, false, "tooltipchangeground"))
+	if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 24, 24, ground_editor.show, icons.PENCIL, null, false, "tooltipchangeground"))
 		tab_toggle(ground_editor)
 	
 	tab_next()

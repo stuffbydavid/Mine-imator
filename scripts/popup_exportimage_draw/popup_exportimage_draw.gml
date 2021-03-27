@@ -32,7 +32,7 @@ draw_switch("exportimageremovebackground", dx, dy, popup.remove_background, acti
 tab_next()
 
 if (popup.remove_background)
-	draw_tooltip_label("exportimageblendmodewarning", icons.ALERT, e_toast.WARNING)
+	draw_tooltip_label("exportimageblendmodewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 
 // Include hidden
 tab_control_switch()
@@ -46,5 +46,5 @@ tab_next()
 
 // Save
 tab_control_button_label()
-draw_button_label("exportimagesave", dx + dw, dy_start + dh - 32, null, icons.SAVE_PROJECT, e_button.PRIMARY, action_toolbar_exportimage_save, e_anchor.RIGHT)
+draw_button_label("exportimagesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportimage_save, e_anchor.RIGHT)
 tab_next()

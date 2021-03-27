@@ -376,7 +376,7 @@ else
 }
 
 tab_control_button_label()
-if (draw_button_label("benchcreate", dx, dy, dw, icons.CREATE))
+if (draw_button_label("benchcreate", dx, dy, dw, icons.ASSET_ADD))
 {
 	action_bench_create()
 	bench_show_ani_type = "hide"

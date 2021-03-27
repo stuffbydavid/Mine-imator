@@ -2642,7 +2642,8 @@
                 "1": "Recommended for a balance between quality and render times.",
                 "2": "Improved quality, render times may be longer.",
                 "3": "Extended render times, only use if your graphics can can handle it.",
-                "4": "Render times will take a long time, only use if your graphics can can handle it."
+                "4": "Render times will take a long time, only use if your graphics can can handle it.",
+                "5": "Prepare for unforeseen consequences."
             },
             "dofquality": "Depth of field quality",
             "ssao": "Ambient occlusion",

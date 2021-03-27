@@ -118,7 +118,7 @@ else
 	draw_box(xx, yy, width, height, false, backgroundcolor, backgroundalpha)
 	
 	// Icon
-	draw_image(spr_chevrons, e_chevrons.DOWN, xx + width/2, yy + height/2, 1 , 1, buttoncolor, buttonalpha)
+	draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + width/2, yy + height/2, 1 , 1, buttoncolor, buttonalpha)
 	
 	draw_set_alpha(prevalpha)
 	

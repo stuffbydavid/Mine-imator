@@ -8,7 +8,7 @@ globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 globalvar minecraft_color_name_list, minecraft_color_list, minecraft_banner_pattern_list, minecraft_banner_pattern_short_list;
 globalvar biome_list, particle_template_list, particle_template_map;
 globalvar blend_mode_list, blend_mode_map;
-globalvar timeline_icon_list;
+globalvar timeline_icon_list, timeline_icon_list_dark;
 
 // Values
 value_name_list = ds_list_create()
@@ -455,24 +455,48 @@ ds_map_add(blend_mode_map, "screen", array(bm_one, bm_inv_src_color))
 
 timeline_icon_list = ds_list_create()
 ds_list_add(timeline_icon_list,
-	icons.TL_CHARACTER,
-	icons.TL_SPECIAL_BLOCK,
-	icons.TL_SCENERY,
-	icons.TL_ITEM,
-	icons.TL_BLOCK,
-	icons.TL_BODYPART,
-	icons.TL_PARTICLES,
-	icons.TL_TEXT,
-	icons.TL_CUBE,
-	icons.TL_CONE,
-	icons.TL_CYLINDER,
-	icons.TL_SPHERE,
-	icons.TL_PLANE,
-	icons.TL_MODEL,
-	icons.TL_CAMERA,
-	icons.TL_SPOT_LIGHT,
-	icons.TL_POINT_LIGHT,
-	icons.OPEN_PROJECT,
-	icons.TL_BACKGROUND,
-	icons.TL_AUDIO
+	icons.CHARACTER,
+	icons.BLOCK_SPECIAL,
+	icons.SCENERY,
+	icons.ITEM,
+	icons.BLOCK,
+	icons.PART,
+	icons.PARTICLES,
+	icons.TEXT,
+	icons.CUBE,
+	icons.CONE,
+	icons.CYLINDER,
+	icons.SPHERE,
+	icons.PLANE,
+	icons.MODEL,
+	icons.CAMERA,
+	icons.LIGHT_SPOT,
+	icons.LIGHT_POINT,
+	icons.FOLDER,
+	icons.CLOUD,
+	icons.NOTE
+)
+
+timeline_icon_list_dark = ds_list_create()
+ds_list_add(timeline_icon_list_dark,
+	icons.CHARACTER,
+	icons.BLOCK_SPECIAL,
+	icons.SCENERY,
+	icons.ITEM,
+	icons.BLOCK,
+	icons.PART,
+	icons.PARTICLES,
+	icons.TEXT,
+	icons.CUBE__DARK,
+	icons.CONE__DARK,
+	icons.CYLINDER__DARK,
+	icons.SPHERE__DARK,
+	icons.PLANE,
+	icons.MODEL,
+	icons.CAMERA,
+	icons.LIGHT_SPOT,
+	icons.LIGHT_POINT,
+	icons.FOLDER,
+	icons.CLOUD,
+	icons.NOTE
 )

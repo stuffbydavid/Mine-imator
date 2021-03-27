@@ -31,6 +31,7 @@ else
 	draw_label(text_get("newassetstext"), content_x + content_width / 2, content_y + 32, fa_center, fa_top)
 
 	// Download
+	/*
 	if (draw_button_normal("newassetsdownload", content_x + content_width / 2 - 125, content_y + content_height - 40, 120, 40))
 	{
 		if (new_assets_format > minecraft_assets_format)
@@ -60,7 +61,8 @@ else
 			return false
 		}
 	}
-
+	*/
+	
 	// Changes
 	content_y += 65
 	content_height -= 130

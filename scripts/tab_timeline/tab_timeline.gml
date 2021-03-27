@@ -142,11 +142,11 @@ buttonsx = max(timex, buttonsxstart)
 buttonsy = headery + 4
 
 // Previous keyframe
-draw_button_icon("timelinepreviouskeyframe", buttonsx, buttonsy, 24, 24, false, icons.PREVIOUS_KEYFRAME, action_tl_keyframe_previous, timeline_playing, "tooltiptlpreviouskeyframe")
+draw_button_icon("timelinepreviouskeyframe", buttonsx, buttonsy, 24, 24, false, icons.KEYFRAME_PREVIOUS, action_tl_keyframe_previous, timeline_playing, "tooltiptlpreviouskeyframe")
 buttonsx += 24 + 6
 
 // Previous frame
-if (draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.PREVIOUS_FRAME, null, timeline_playing, "tooltiptlpreviousframe"))
+if (draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_PREVIOUS, null, timeline_playing, "tooltiptlpreviousframe"))
 	timeline_marker = max(((floor(timeline_marker) != timeline_marker) ? floor(timeline_marker) : timeline_marker - 1), 0)
 
 buttonsx += 24 + 6
@@ -180,12 +180,12 @@ draw_divide_vertical(buttonsx, buttonsy + 2, 20)
 buttonsx += 6
 
 // Next frame
-if (draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.NEXT_FRAME, null, timeline_playing, "tooltiptlnextframe"))
+if (draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_NEXT, null, timeline_playing, "tooltiptlnextframe"))
 	timeline_marker = ((ceil(timeline_marker) != timeline_marker) ? ceil(timeline_marker) : timeline_marker + 1)
 buttonsx += 24 + 6
 
 // Next keyframe
-draw_button_icon("timelinenextkeyframe", buttonsx, buttonsy, 24, 24, false, icons.NEXT_KEYFRAME, action_tl_keyframe_next, timeline_playing, "tooltiptlnextkeyframe")
+draw_button_icon("timelinenextkeyframe", buttonsx, buttonsy, 24, 24, false, icons.KEYFRAME_NEXT, action_tl_keyframe_next, timeline_playing, "tooltiptlnextkeyframe")
 buttonsx += 24 + 6
 
 timeline_settings_w = (buttonsx - buttonsxstart)
@@ -196,7 +196,7 @@ buttonsx = max(buttonsx, buttonsxstart)
 buttonsxstart = buttonsx
 
 // Timeline settings
-if (draw_button_icon("timelinesettings", buttonsx, buttonsy, 24, 24, false, icons.TIMER, null, false, "tooltiptlsettings"))
+if (draw_button_icon("timelinesettings", buttonsx, buttonsy, 24, 24, false, icons.STOPWATCH, null, false, "tooltiptlsettings"))
 {
 	menu_settings_set(buttonsx, buttonsy, "timelinesettings", 24)
 	settings_menu_script = tl_settings_draw
@@ -218,7 +218,7 @@ else if (timeline_repeat && !timeline_seamless_repeat)
 else
 	tooltip = "tooltiptldisableloop"
 
-draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.LOOP_SEAMLESS : icons.LOOP, action_tl_play_repeat, false, tooltip)
+draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
 buttonsx += 24 + 2
 
 timeline_settings_right_w = (buttonsx - buttonsxstart)
@@ -809,13 +809,13 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		if (tl.type != e_tl_type.AUDIO)
 		{
 			// Hide
-			if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, icons.SHOW + tl.hide, null, false, tl.hide ? "tooltiptlshow" : "tooltiptlhide"))
+			if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.HIDDEN_SMALL : icons.VISIBLE_SMALL, null, false, tl.hide ? "tooltiptlshow" : "tooltiptlhide"))
 				action_tl_hide(tl)
 		}
 		else
 		{
 			// Mute
-			if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, icons.SOUND + tl.hide, null, false, tl.hide ? "tooltiptlunmute" : "tooltiptlmute"))
+			if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.MUTE_SMALL : icons.VOLUME_SMALL, null, false, tl.hide ? "tooltiptlunmute" : "tooltiptlmute"))
 				action_tl_hide(tl)
 		}
 		
@@ -826,7 +826,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	// Lock
 	if (itemhover || tl.lock)
 	{
-		if (draw_button_icon("timelinelock" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.lock, icons.UNLOCK + tl.lock, null, false, (tl.lock ? "tooltiptlunlock" : "tooltiptllock")))
+		if (draw_button_icon("timelinelock" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.lock, tl.lock ? icons.LOCK_SMALL : icons.UNLOCK_SMALL, null, false, (tl.lock ? "tooltiptlunlock" : "tooltiptllock")))
 			action_tl_lock(tl)
 		
 		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
@@ -839,7 +839,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		
 		if (itemhover || tl.ghost)
 		{
-			if (draw_button_icon("timelineghosttl" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.ghost, icons.GHOST, null, false, (tl.ghost ? "tooltiptlunghost" : "tooltiptlghost")))
+			if (draw_button_icon("timelineghosttl" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.ghost, icons.GHOST_SMALL, null, false, (tl.ghost ? "tooltiptlunghost" : "tooltiptlghost")))
 				action_tl_ghost(tl)
 			
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
@@ -942,8 +942,10 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			}
 		}
 		
+		var list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list;
+		
 		if (tl.type != null && (((xx + 24) - xright) < minw))
-			draw_image(spr_icons, timeline_icon_list[|tl.type], xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
+			draw_image(spr_icons, list[|tl.type], xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
 		
 		xx += 24
 		minw -= 24

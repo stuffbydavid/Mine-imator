@@ -13,10 +13,10 @@ tab_next()
 // Tools
 tab_control(24)
 
-if (draw_button_icon("librarynew", dx, dy, 24, 24, false, icons.CREATE, null, false, "tooltiptemplatenew"))
+if (draw_button_icon("librarynew", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltiptemplatenew"))
 	bench_open = true
 
-if (draw_button_icon("libraryanimate", dx + 28, dy, 24, 24, false, icons.ANIMATE, null, temp_edit = null, "tooltiptemplateanimate"))
+if (draw_button_icon("libraryanimate", dx + 28, dy, 24, 24, false, icons.ASSET_INSTANCE, null, temp_edit = null, "tooltiptemplateanimate"))
 	action_lib_animate()
 
 if (draw_button_icon("libraryduplicate", dx + (28 * 2), dy, 24, 24, false, icons.DUPLICATE, null, temp_edit = null, "tooltiptemplateduplicate"))
@@ -50,7 +50,7 @@ switch (temp_edit.type)
 		draw_label_value(dx, dy, dw - 32, 24, text_get(text), temp_edit.model_file != null ? minecraft_asset_get_name("model", temp_edit.model_file.name) : "")
 		
 		// Change
-		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT))
+		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
 			tab_toggle(template_editor)
 			
 		tab_next()
@@ -123,7 +123,7 @@ switch (temp_edit.type)
 		{
 			draw_texture_slot(res.item_sheet_texture, temp_edit.item_slot, dx + wid + 18, dy + 6, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
 			
-			if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT, null, false, "tooltipchangeitem"))
+			if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeitem"))
 				tab_toggle(template_editor)
 		}
 		else
@@ -170,7 +170,7 @@ switch (temp_edit.type)
 		draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
 		
 		// Change
-		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT))
+		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
 			tab_toggle(template_editor)
 			
 		tab_next()
@@ -196,7 +196,7 @@ switch (temp_edit.type)
 		draw_label_value(dx, dy, dw, 24, text_get("typebodypart"), text)
 		
 		// Change
-		if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.EDIT))
+		if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
 			tab_toggle(template_editor)
 		
 		tab_next()

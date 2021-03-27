@@ -37,7 +37,7 @@ if (popup_upgrade.warntext != "")
 }
 
 tab_control_button_label()
-if (draw_button_label("upgradecontinue", dx + dw, dy_start + dh - 32, null, icons.UPGRADE, e_button.PRIMARY, null, e_anchor.RIGHT))
+if (draw_button_label("upgradecontinue", dx + dw, dy_start + dh - 32, null, icons.KEY_ALT, e_button.PRIMARY, null, e_anchor.RIGHT))
 {
 	var upgrade = trial_upgrade(popup_upgrade.tbx_key.text);
 	

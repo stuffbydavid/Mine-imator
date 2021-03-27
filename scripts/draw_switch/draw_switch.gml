@@ -100,7 +100,7 @@ if (tip != "")
 	color = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
 	alpha = lerp(a_text_tertiary, a_text_secondary, mcroani_arr[e_mcroani.HOVER]) * lerp(1, .5, mcroani_arr[e_mcroani.DISABLED])
 	
-	draw_image(spr_icons, icons.HELP, xx + string_width(name) + 16, yy + (h/2), 1, 1, color, alpha)
+	draw_image(spr_icons, icons.HELP_CIRCLE, xx + string_width(name) + 16, yy + (h/2), 1, 1, color, alpha)
 	
 	if (!disabled)
 		tip_set(text_get(tip), xx + string_width(name) + 4, yy + (h/2) - 10, 20, 20)

@@ -25,7 +25,7 @@ for (var t = 0; t < ds_list_size(par.tree_list); t++)
 	
 	if (ds_list_size(tl.tree_list) > 0)
 	{
-		draw_image(spr_icons, tl.tree_extend ? icons.ARROW_DOWN_TINY : icons.ARROW_RIGHT_TINY, dx + 8, dy + itemh / 2, 1, 1, c_text_secondary, a_text_secondary)
+		draw_image(spr_icons, tl.tree_extend ? icons.CHEVRON_DOWN_TINY : icons.CHEVRON_RIGHT_TINY, dx + 8, dy + itemh / 2, 1, 1, c_text_secondary, a_text_secondary)
 		
 		if (setting_timeline_compact)
 			dx += 20

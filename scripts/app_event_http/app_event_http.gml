@@ -114,19 +114,17 @@ else if (async_load[?"id"] = http_alert_news && async_load[?"status"] < 1)
 					text = newsmap[?"text"]
 					icon = newsmap[?"icon"]
 					
-					/*
 					switch (icon)
 					{
-						case "website":		icon = icons.WEBSITE_SMALL;		break
-						case "forums":		icon = icons.FORUMS_SMALL;		break
-						case "save":		icon = icons.SAVE_SMALL;		break
-						case "download":	icon = icons.DOWNLOAD_SMALL;	break
-						case "cake":		icon = icons.CAKE_SMALL;		break
-						case "upgrade":		icon = icons.UPGRADE_SMALL;		break
-						case "render":		icon = icons.RENDER_SMALL;		break
+						case "website":		icon = icons.WORLD;				break
+						case "forums":		icon = icons.SPEECH_BUBBLE;		break
+						case "save":		icon = icons.SAVE;				break
+						case "download":	icon = icons.DOWNLOAD;			break
+						case "cake":		icon = icons.BIRTHDAY;			break
+						case "upgrade":		icon = icons.KEY_ALT;			break
+						case "render":		icon =  (setting_theme.dark ? icons.QUALITY_RENDERED__DARK : icons.QUALITY_RENDERED);	break
 						default:			icon = null;					break
 					}
-					*/
 					
 					button = newsmap[?"button"]
 					buttonurl = newsmap[?"buttonurl"]

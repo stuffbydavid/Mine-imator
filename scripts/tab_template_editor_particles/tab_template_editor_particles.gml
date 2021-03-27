@@ -11,11 +11,11 @@ dividew = content_width - floor(tab.scrollbar_margin * 12)
 setx = dx + dw - 24
 tab_control(24)
 
-if (draw_button_icon("particleeditorexport", setx, dy, 24, 24, false, icons.EXPORT, null, false, "tooltipparticlesexport"))
+if (draw_button_icon("particleeditorexport", setx, dy, 24, 24, false, icons.ASSET_EXPORT, null, false, "tooltipparticlesexport"))
 	action_lib_pc_open()
 setx -= 28
 
-if (draw_button_icon("particleeditorimport", setx, dy, 24, 24, false, icons.IMPORT_ASSET, null, false, "tooltipparticlesimport"))
+if (draw_button_icon("particleeditorimport", setx, dy, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltipparticlesimport"))
 	action_lib_pc_open()
 setx -= 4
 
@@ -75,9 +75,9 @@ if (temp_edit.pc_spawn_region_use)
 	var icon;
 	switch (temp_edit.pc_spawn_region_type)
 	{
-		case "sphere":	icon = icons.SPHERE		break
-		case "cube":	icon = icons.CUBE		break
-		case "box":		icon = icons.BOX		break
+		case "sphere":	icon = icons.BOUNDARY_CIRCLE	break
+		case "cube":	icon = icons.BOUNDARY_CUBE		break
+		case "box":		icon = icons.BOUNDARY_BOX		break
 	}
 	
 	tab_control_menu()
@@ -226,7 +226,7 @@ tab_next()
 // Tools
 tab_control(24)
 
-if (draw_button_icon("particleeditortypeadd", dx, dy, 24, 24, false, icons.CREATE, null, false, "tooltipparticlesadd"))
+if (draw_button_icon("particleeditortypeadd", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltipparticlesadd"))
 	action_lib_pc_type_add()
 
 if (draw_button_icon("particleeditortypeduplicate", dx + 28, dy, 24, 24, false, icons.DUPLICATE, null, ptype_edit = null, "tooltipparticlesduplicate"))
@@ -834,7 +834,7 @@ tab_next()
 tab_control_meter()
 
 // Randomize alpha
-draw_button_icon("particleeditorrandomalpha", dx + dw - 24, dy, 24, 24, ptype_edit.alpha_israndom, icons.RANDOM, action_lib_pc_type_alpha_israndom, false, "tooltipparticlesrandom")
+draw_button_icon("particleeditorrandomalpha", dx + dw - 24, dy, 24, 24, ptype_edit.alpha_israndom, icons.RANDOMIZE, action_lib_pc_type_alpha_israndom, false, "tooltipparticlesrandom")
 
 if (ptype_edit.alpha_israndom)
 	draw_meter_range("particleeditortypeopacity", dx, dy, dw - 36, 0, 100, 1, round(ptype_edit.alpha_random_min * 100), round(ptype_edit.alpha_random_max * 100), 0, 100, tab.tbx_type_alpha, tab.tbx_type_alpha_random, action_lib_pc_type_alpha_random_min, action_lib_pc_type_alpha_random_max)
@@ -869,7 +869,7 @@ if (ptype_edit.color_mix_enabled)
 }
 
 tab_control_color()
-draw_button_icon("particleeditorrandomcolor", dx + dw - 24, dy + (tab_control_h/2) - 12, 24, 24, ptype_edit.color_israndom, icons.RANDOM, action_lib_pc_type_color_israndom, false, "tooltipparticlesrandom")
+draw_button_icon("particleeditorrandomcolor", dx + dw - 24, dy + (tab_control_h/2) - 12, 24, 24, ptype_edit.color_israndom, icons.RANDOMIZE, action_lib_pc_type_color_israndom, false, "tooltipparticlesrandom")
 if (ptype_edit.color_israndom)
 {
 	name = ptype_edit.color_mix_enabled ? "particleeditortypecolorstartcolor1" : "particleeditortypecolorcolor1"
@@ -892,7 +892,7 @@ if (ptype_edit.color_mix_enabled)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_icon("particleeditorrandommixcolor", dx + dw - 24, dy + (tab_control_h/2) - 12, 24, 24, ptype_edit.color_mix_israndom, icons.RANDOM, action_lib_pc_type_color_mix_israndom, false, "tooltipparticlesrandom")
+	draw_button_icon("particleeditorrandommixcolor", dx + dw - 24, dy + (tab_control_h/2) - 12, 24, 24, ptype_edit.color_mix_israndom, icons.RANDOMIZE, action_lib_pc_type_color_mix_israndom, false, "tooltipparticlesrandom")
 	if (ptype_edit.color_mix_israndom)
 	{
 		draw_button_color("particleeditortypecolorendcolor1", dx, dy, colwid, ptype_edit.color_mix_random_start, c_gray, false, action_lib_pc_type_color_mix_random_start, tab.tbx_type_color_mix_start)

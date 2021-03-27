@@ -7,7 +7,7 @@ draw_textfield("downloadskinusername", dx, dy, dw - 28, 24, popup.tbx_username, 
 // Download button
 var download = keyboard_check_pressed(vk_enter);
 
-if (draw_button_icon("downloadskindownload", dx + dw - 24, dy + 18, 24, 24, false, icons.DOWNLOAD_SKIN, null, popup.tbx_username.text = "" || http_downloadskin != null, "tooltipdownloadskin"))
+if (draw_button_icon("downloadskindownload", dx + dw - 24, dy + 18, 24, 24, false, icons.DOWNLOAD, null, popup.tbx_username.text = "" || http_downloadskin != null, "tooltipdownloadskin"))
 	download = true
 
 if (download && (popup.tbx_username.text != "" && http_downloadskin = null))

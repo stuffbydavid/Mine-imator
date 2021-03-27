@@ -73,7 +73,7 @@ if (!base)
 // Edit layer
 if (mouseon && !dragging)
 {
-	if (draw_button_icon(editname, actionx - 24, yy + height/2 - 14, 24, 24, settings_menu_name = editname, icons.EDIT))
+	if (draw_button_icon(editname, actionx - 24, yy + height/2 - 14, 24, 24, settings_menu_name = editname, icons.PENCIL))
 	{
 		menu_settings_set(actionx - 24, yy + height/2 - 14, editname, 24)
 		settings_menu_script = popup_bannereditor_edit_layer

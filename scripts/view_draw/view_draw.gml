@@ -169,7 +169,7 @@ if (view = view_second)
 else
 {
 	// Close/hide second view
-	if (draw_button_icon("viewsecond", dx, dy, dw, dh, view_second.show, icons.VIEW_SECOND, null, false, view_second.show ? "viewseconddisable" : "viewsecondenable"))
+	if (draw_button_icon("viewsecond", dx, dy, dw, dh, view_second.show, icons.VIEWPORT_SECONDARY, null, false, view_second.show ? "viewseconddisable" : "viewsecondenable"))
 		view_second.show = !view_second.show
 }
 
@@ -178,7 +178,7 @@ draw_divide_vertical(dx, dy, dh)
 dx -= 16 + padding
 
 // Quality settings
-if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), 0, null, false, "", spr_chevrons))
+if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), icons.CHEVRON_DOWN_TINY))
 {
 	menu_settings_set(dx, dy, (string(view) + "viewqualitysettings"), 24)
 	settings_menu_view = view
@@ -192,7 +192,7 @@ dx -= dw
 
 // "Render" quality
 tip_set_keybind(e_keybind.RENDER_MODE)
-if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mode.RENDER, icons.QUALITY_RENDERED, null, false, "viewmoderender"))
+if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mode.RENDER, setting_theme.dark ? icons.QUALITY_RENDERED__DARK : icons.QUALITY_RENDERED, null, false, "viewmoderender"))
 {
 	view.quality = e_view_mode.RENDER
 
@@ -206,12 +206,12 @@ dx -= dw + padding
 
 // "Shaded" quality
 tip_set_keybind(e_keybind.RENDER_MODE)
-if (draw_button_icon("viewmodeshaded", dx, dy, dw, dh, view.quality = e_view_mode.SHADED, icons.LIGHT, null, false, "viewmodeshaded"))
+if (draw_button_icon("viewmodeshaded", dx, dy, dw, dh, view.quality = e_view_mode.SHADED, setting_theme.dark ? icons.SPHERE__DARK : icons.SPHERE, null, false, "viewmodeshaded"))
 	view.quality = e_view_mode.SHADED
 dx -= dw + padding
 
 // "Flat" quality
-if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.QUALITY_FLAT, null, false, "viewmodeflat"))
+if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.QUALITY_DRAFT, null, false, "viewmodeflat"))
 	view.quality = e_view_mode.FLAT
 
 dx -= (padding + 1)
@@ -232,7 +232,7 @@ if (draw_button_icon("viewparticles", dx, dy, dw, dh, view.particles, icons.FIRE
 dx -= 16 + padding
 
 // Overlay settings
-if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), 0, null, false, "", spr_chevrons))
+if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), icons.CHEVRON_DOWN_TINY))
 {
 	menu_settings_set(dx, dy, (string(view) + "viewoverlaysettings"), 24)
 	settings_menu_view = view
@@ -244,7 +244,7 @@ if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu
 dx -= dw
 
 // Overlays
-if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.overlays, icons.CONTROLS, null, false, view.overlays ? "viewoverlaysdisable" : "viewoverlaysenable"))
+if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.overlays, icons.OVERLAYS, null, false, view.overlays ? "viewoverlaysdisable" : "viewoverlaysenable"))
 	view.overlays = !view.overlays
 
 // Snap settings
@@ -254,7 +254,7 @@ if (view = view_main)
 	draw_divide_vertical(dx, dy, dh)
 	dx -= 16 + padding
 	
-	if (draw_button_icon("viewsnapsettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewsnapsettings"), 0, null, false, "", spr_chevrons))
+	if (draw_button_icon("viewsnapsettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewsnapsettings"), icons.CHEVRON_DOWN_TINY))
 	{
 		menu_settings_set(dx, dy, (string(view) + "viewsnapsettings"), 24)
 		settings_menu_view = view
@@ -266,7 +266,7 @@ if (view = view_main)
 	dx -= dw
 	
 	tip_set_keybind(e_keybind.SNAP)
-	if (draw_button_icon("viewsnap", dx, dy, dw, dh, setting_snap, icons.GRID, null, false, setting_snap ? "viewsnapdisable" : "viewsnapenable"))
+	if (draw_button_icon("viewsnap", dx, dy, dw, dh, setting_snap, icons.MAGNET, null, false, setting_snap ? "viewsnapdisable" : "viewsnapenable"))
 		setting_snap = !setting_snap
 }
 

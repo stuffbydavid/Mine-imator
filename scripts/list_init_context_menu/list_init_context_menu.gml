@@ -15,21 +15,21 @@ switch (name)
 		if (context_menu_group = e_context_group.ROTATION)
 		{
 			var text = (frame_editor.transform.loops ? "contextmenugroupdisableloops" : "contextmenugroupenableloops");
-			list_item_add(text_get(text), null, "", null, icons.LOOPS, null, action_group_rotation_loops, true)
+			list_item_add(text_get(text), null, "", null, icons.RESET, null, action_group_rotation_loops, true)
 		}
 		
 		// Combine scale
 		if (context_menu_group = e_context_group.SCALE)
 		{
 			var text = (frame_editor.transform.scale_all ? "contextmenuscaleseperate" : "contextmenuscalecombine");
-			list_item_add(text_get(text), null, "", null, icons.TOOLSET_SCALE, null, action_group_combine_scale, true)
+			list_item_add(text_get(text), null, "", null, icons.SCALE, null, action_group_combine_scale, true)
 		}
 		
 		// Advanced colors
 		if (context_menu_group = e_context_group.COLOR)
 		{
 			var text = (frame_editor.color.advanced ? "contextmenuadvancedcolorshide" : "contextmenuadvancedcolorsshow");
-			list_item_add(text_get(text), null, "", null, icons.ADVANCED_COLORS, null, action_group_advanced_colors, true)
+			list_item_add(text_get(text), null, "", null, icons.SLIDERS, null, action_group_advanced_colors, true)
 		}
 		
 		// Single value copy-paste
@@ -90,11 +90,11 @@ switch (name)
 		list_item_add(text_get("contextmenutladdfolder"), null, "", null, icons.FOLDER, null, action_tl_folder, true)
 		list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
 		
-		list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.ARROW_RIGHT_SMALL, null)
+		list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
 		list_item_last.context_menu_name = "color"
 		
-		list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.EXPAND, null, action_tl_extend_children)
-		list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.COLLAPSE, null, action_tl_collapse_children)
+		list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_children)
+		list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.MINIMIZE, null, action_tl_collapse_children)
 		
 		list_item_add(text_get("contextmenutlduplicate"), null, "", null, icons.DUPLICATE, null, action_tl_duplicate, true)
 		list_item_last.disabled = (tl_edit = null)
@@ -102,12 +102,12 @@ switch (name)
 		list_item_add(text_get("contextmenutldelete"), null, "", null, icons.DELETE, null, action_tl_remove)
 		list_item_last.disabled = (tl_edit = null)
 		
-		list_item_add(text_get("contextmenutlexport"), null, "", null, icons.EXPORT, null, object_save)
+		list_item_add(text_get("contextmenutlexport"), null, "", null, icons.ASSET_EXPORT, null, object_save)
 		list_item_last.disabled = !timeline_settings
 		
 		list_item_add(text_get("contextmenutlselectall"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
-		list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.EXPAND, null, action_tl_extend_all)	
-		list_item_add(text_get("contextmenutlcollapseall"), null, "", null, icons.COLLAPSE, null, action_tl_collapse_all)
+		list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_all)	
+		list_item_add(text_get("contextmenutlcollapseall"), null, "", null, icons.MINIMIZE, null, action_tl_collapse_all)
 		
 		break
 	}
@@ -116,33 +116,33 @@ switch (name)
 	case "timeline":
 	{
 		// Transition
-		list_item_add(text_get("contextmenutlkeyframestransition"), null, "", null, icons.TRANSITION, icons.ARROW_RIGHT_SMALL, null, true)
+		list_item_add(text_get("contextmenutlkeyframestransition"), null, "", null, icons.EASE_IN_OUT, icons.CHEVRON_RIGHT_TINY, null, true)
 		list_item_last.disabled = !timeline_settings_keyframes
 		list_item_last.context_menu_script = menu_transitions
 		list_item_last.context_menu_width = 244
 		list_item_last.context_menu_height = 438
 		
 		// Keyframes
-		list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAMES, null, action_tl_keyframes_cut, true)
+		list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAME, null, action_tl_keyframes_cut, true)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
-		list_item_add(text_get("contextmenutlkeyframescopy"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_COPY].keybind), null, icons.COPY_KEYFRAMES, null, tl_keyframes_copy)
+		list_item_add(text_get("contextmenutlkeyframescopy"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_COPY].keybind), null, icons.COPY_KEYFRAME, null, tl_keyframes_copy)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
-		list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_PASTE].keybind), null, icons.PASTE_KEYFRAMES, null, action_tl_keyframes_paste)
+		list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_PASTE].keybind), null, icons.PASTE_KEYFRAME, null, action_tl_keyframes_paste)
 		list_item_last.disabled = (copy_kf_amount = 0)
 		
-		list_item_add(text_get("contextmenutlkeyframesdelete"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_DELETE].keybind), null, icons.DELETE_KEYFRAMES, null, action_tl_keyframes_remove)
+		list_item_add(text_get("contextmenutlkeyframesdelete"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_DELETE].keybind), null, icons.DELETE_KEYFRAME, null, action_tl_keyframes_remove)
 		list_item_last.disabled = !timeline_settings_keyframes
 		
-		list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.EXPORT_KEYFRAMES, null, keyframes_save)
+		list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.SAVE_KEYFRAME, null, keyframes_save)
 		list_item_last.disabled = !timeline_settings_keyframes_export
 		
 		// Walk/run cycles
-		list_item_add(text_get("contextmenutlkeyframeswalk"), timeline_settings_walk_fn, "", null, icons.WALK, null, action_tl_load_loop, true)
+		list_item_add(text_get("contextmenutlkeyframeswalk"), timeline_settings_walk_fn, "", null, icons.WALK_CYCLE, null, action_tl_load_loop, true)
 		list_item_last.disabled = !file_exists_lib(timeline_settings_walk_fn)
 		
-		list_item_add(text_get("contextmenutlkeyframesrun"), timeline_settings_run_fn, "", null, icons.RUN, null, action_tl_load_loop)
+		list_item_add(text_get("contextmenutlkeyframesrun"), timeline_settings_run_fn, "", null, icons.RUN_CYCLE, null, action_tl_load_loop)
 		list_item_last.disabled = !file_exists_lib(timeline_settings_run_fn)
 		
 		// Add marker
@@ -169,7 +169,7 @@ switch (name)
 	// Marker
 	case "timelinemarker":
 	{
-		list_item_add(text_get("contextmenutlmarkeredit"), context_menu_value, "", null, icons.EDIT, null, action_tl_marker_editor, true)
+		list_item_add(text_get("contextmenutlmarkeredit"), context_menu_value, "", null, icons.PENCIL, null, action_tl_marker_editor, true)
 		list_item_add(text_get("contextmenutlmarkerdelete"), null, "", null, icons.DELETE, null, action_tl_marker_delete)
 		
 		break
@@ -192,15 +192,15 @@ switch (name)
 	// File menu
 	case "toolbarfile":
 	{
-		list_item_add(text_get("toolbarfilenew"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_NEW].keybind), null, icons.NEW_PROJECT, null, action_toolbar_new)
-		list_item_add(text_get("toolbarfileopen"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_OPEN].keybind), null, icons.OPEN_PROJECT, null, action_toolbar_open)
-		list_item_add(text_get("toolbarfilerecent"), null, "", null, icons.RECENTS, icons.ARROW_RIGHT_SMALL, null)
+		list_item_add(text_get("toolbarfilenew"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
+		list_item_add(text_get("toolbarfileopen"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
+		list_item_add(text_get("toolbarfilerecent"), null, "", null, icons.RECENTS, icons.CHEVRON_RIGHT_TINY, null)
 		list_item_last.context_menu_name = "toolbarfilerecent"
 		
-		list_item_add(text_get("toolbarfilesave"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE_PROJECT, null, action_toolbar_save, true)
-		list_item_add(text_get("toolbarfilesaveas"), null, "", null, icons.SAVE_PROJECT_AS, null, action_toolbar_save_as)
+		list_item_add(text_get("toolbarfilesave"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
+		list_item_add(text_get("toolbarfilesaveas"), null, "", null, icons.SAVE_AS, null, action_toolbar_save_as)
 		
-		list_item_add(text_get("toolbarfileimport"), null, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.IMPORT_ASSET, null, action_toolbar_import_asset, true)
+		list_item_add(text_get("toolbarfileimport"), null, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
 		
 		break
 	}
@@ -239,8 +239,8 @@ switch (name)
 	// Render menu
 	case "toolbarrender":
 	{
-		list_item_add(text_get("toolbarrenderimage"), null, "", null, icons.EXPORT_IMAGE, null, action_toolbar_export_image)
-		list_item_add(text_get("toolbarrenderanimation"), null, "", null, icons.EXPORT_MOVIE, null, action_toolbar_export_movie)
+		list_item_add(text_get("toolbarrenderimage"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
+		list_item_add(text_get("toolbarrenderanimation"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
 		
 		break
 	}
@@ -248,7 +248,7 @@ switch (name)
 	// View menu
 	case "toolbarview":
 	{
-		list_item_add(text_get("toolbarviewreset"), null, "", null, icons.TL_CAMERA, null, camera_work_reset)
+		list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
 		
 		break
 	}

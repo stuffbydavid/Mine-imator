@@ -12,22 +12,23 @@ bench_type_list = list_new()
 bench_type_list.get_name = true
 list_edit = bench_type_list
 
-list_item_add("typechar", e_tl_type.CHARACTER, "", null, icons.TL_CHARACTER, null, bench_click)
-list_item_add("typebodypart", e_tl_type.BODYPART, "", null, icons.TL_BODYPART, null, bench_click)
-list_item_add("typemodel", e_tl_type.MODEL, "", null, icons.TL_MODEL, null, bench_click)
+list_item_add("typechar", e_tl_type.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
+list_item_add("typebodypart", e_tl_type.BODYPART, "", null, icons.PART, null, bench_click)
+list_item_add("typemodel", e_tl_type.MODEL, "", null, icons.MODEL, null, bench_click)
 
-list_item_add("typeitem", e_tl_type.ITEM, "", null, icons.TL_ITEM, null, bench_click)
-list_item_add("typescenery", e_tl_type.SCENERY, "", null, icons.TL_SCENERY, null, bench_click)
-list_item_add("typeblock", e_tl_type.BLOCK, "", null, icons.TL_BLOCK, null, bench_click)
-list_item_add("typespblock", e_tl_type.SPECIAL_BLOCK, "", null, icons.TL_SPECIAL_BLOCK, null, bench_click)
+list_item_add("typeitem", e_tl_type.ITEM, "", null, icons.ITEM, null, bench_click)
+list_item_add("typescenery", e_tl_type.SCENERY, "", null, icons.SCENERY, null, bench_click)
+list_item_add("typeblock", e_tl_type.BLOCK, "", null, icons.BLOCK, null, bench_click)
+list_item_add("typespblock", e_tl_type.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_click)
 
 list_item_add("typeshape", e_tl_type.SHAPE, "", null, icons.SHAPES, null, bench_click)
-list_item_add("typetext", e_tl_type.TEXT, "", null, icons.TL_TEXT, null, bench_click)
+list_item_add("typetext", e_tl_type.TEXT, "", null, icons.TEXT, null, bench_click)
 
-list_item_add("typecamera", e_tl_type.CAMERA, "", null, icons.TL_CAMERA, null, bench_click)
+list_item_add("typecamera", e_tl_type.CAMERA, "", null, icons.CAMERA, null, bench_click)
 list_item_add("typeparticles", e_tl_type.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
-list_item_add("typelightsource", e_tl_type.LIGHT_SOURCE, "", null, icons.TL_POINT_LIGHT, null, bench_click)
-list_item_add("typeaudio", e_tl_type.AUDIO, "", null, icons.TL_AUDIO, null, bench_click)
+list_item_add("typelightsource", e_tl_type.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
+list_item_add("typeaudio", e_tl_type.AUDIO, "", null, icons.NOTE, null, bench_click)
+list_item_add("typebackground", e_tl_type.BACKGROUND, "", null, icons.CLOUD, null, bench_click)
 
 list_edit = null
 

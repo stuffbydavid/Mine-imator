@@ -1751,14 +1751,6 @@
             }
         },
         {
-            "Key": "18327271-18af-4603-9480-2f432b765e91",
-            "Value": {
-                "id": "f2f3c506-6595-44e7-8c87-7309989e59ae",
-                "resourcePath": "sprites\\spr_icons_big\\spr_icons_big.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "183d1ade-45e9-4784-9086-9982f20aa32c",
             "Value": {
                 "id": "06f1fcf5-d7ce-4e4b-92c4-59f6aab8bfb0",
@@ -8023,6 +8015,14 @@
             }
         },
         {
+            "Key": "720e42c7-7dc6-4a14-b4fa-ade4e0815f90",
+            "Value": {
+                "id": "a1c831ad-ecc1-4eeb-a807-e247cd2c4ae7",
+                "resourcePath": "sprites\\spr_iconsheet\\spr_iconsheet.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "72554b52-66a6-4750-b3ab-15e7e05cdff2",
             "Value": {
                 "id": "65ad60d0-78b3-4a68-9d91-4bb41fccf965",
@@ -9788,14 +9788,6 @@
                 "id": "9941df44-933a-4b3e-b00f-35242adb8dac",
                 "resourcePath": "objects\\obj_videoquality\\obj_videoquality.yy",
                 "resourceType": "GMObject"
-            }
-        },
-        {
-            "Key": "8c3af5b3-09df-4844-8924-59df4f6f0163",
-            "Value": {
-                "id": "a344cfcf-8466-4b8b-a170-303668070fb8",
-                "resourcePath": "sprites\\spr_chevrons\\spr_chevrons.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -13351,14 +13343,6 @@
             }
         },
         {
-            "Key": "bd43e945-59dd-4b8e-880f-858bf9657fdc",
-            "Value": {
-                "id": "f9c0fb73-0f5e-445c-b383-d0087313266d",
-                "resourcePath": "scripts\\draw_button_normal\\draw_button_normal.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "bd4878d5-a3b5-4e33-b8dc-aa9bb87d0f7a",
             "Value": {
                 "id": "4befa2cc-ec3c-4de1-821f-24b5e2928797",
@@ -14716,14 +14700,6 @@
                 "id": "e0e2bab8-3e19-4f28-97b1-b3f8707e8dda",
                 "resourcePath": "scripts\\action_tl_texture_filtering_tree\\action_tl_texture_filtering_tree.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "cfb095e1-d08a-418c-96d6-642718bd80da",
-            "Value": {
-                "id": "3644caf3-c294-4f4a-b5a5-666bec017e1e",
-                "resourcePath": "sprites\\spr_icons_render\\spr_icons_render.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -19329,7 +19305,6 @@
         "13c3a3e0-8897-4b1c-a624-f86848f665a1",
         "90949e30-e660-4f21-ab81-e34fea8ec334",
         "65391e95-e99a-456a-932f-97bdf71a8e3f",
-        "bd43e945-59dd-4b8e-880f-858bf9657fdc",
         "dda0472c-955b-449c-b8cc-6046c5e1f524",
         "67a3fd9d-174d-4c75-8020-81b98e0248ac",
         "604cf407-b2d2-408d-97c9-8af8bbe14e30",
@@ -19361,6 +19336,11 @@
         "21aadba0-29c9-425b-838b-a65e1a75673e",
         "8b5e421e-df76-45b0-97eb-1a9b4d62b65c",
         "cacce3d5-3cbe-490f-b1ad-761f2b2acb3d",
+        "04956b2c-8deb-4369-a727-8d77d93523ee",
+        "60e3d1f0-2c52-41cc-b9dc-ff6879877b27",
+        "1559f545-49de-4eda-9f27-e62e8ba2f14f",
+        "5493c072-ce93-4376-ac35-96d3985b337d",
+        "16325a76-ac2a-4ca7-a20b-38cdfcef8b4d",
         "9532227c-4438-4888-8288-e85531b811c9",
         "9822adfc-3f99-423d-b842-a69a4de4c378",
         "5df38c33-926c-421f-8f6d-41304796e51e",
@@ -19468,11 +19448,6 @@
         "655dfc6d-1d21-483d-94f9-563688d23d2b",
         "e041c170-0422-4eef-804d-ad419f59e74d",
         "15f7d64f-2245-4f80-8a8d-cc7044e94a4e",
-        "04956b2c-8deb-4369-a727-8d77d93523ee",
-        "60e3d1f0-2c52-41cc-b9dc-ff6879877b27",
-        "1559f545-49de-4eda-9f27-e62e8ba2f14f",
-        "16325a76-ac2a-4ca7-a20b-38cdfcef8b4d",
-        "5493c072-ce93-4376-ac35-96d3985b337d",
         "bf734d59-483b-422a-bd0d-7a4ede5bb36d",
         "2467567a-8f27-4b77-b00e-24dc541968a4",
         "684eefd3-fb83-4554-aed1-9834fc504ac1",
