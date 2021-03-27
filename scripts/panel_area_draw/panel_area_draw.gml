@@ -33,6 +33,9 @@ if (window_busy != "toolbarmove")
 	}
 }
 
+// Shortcut bar
+panel_area_height -= (28 * setting_show_shortcuts_bar)
+
 // Set size
 with (obj_panel)
 	size_real = size * (tab_list_amount > 0)

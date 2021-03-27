@@ -28,6 +28,7 @@ else
 	panel_area_draw()
 	window_draw_glow()
 	toolbar_draw()
+	shortcut_bar_draw()
 	bench_draw()
 	window_draw_cover()
 	window_draw_timeline_move()

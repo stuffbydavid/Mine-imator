@@ -44,6 +44,7 @@ setting_timeline_hide_ghosts = false
 setting_z_is_up = false
 setting_smooth_camera = false
 setting_search_variants = true
+setting_show_shortcuts_bar = true
 
 setting_toolbar_location = "top"
 setting_toolbar_size = 28

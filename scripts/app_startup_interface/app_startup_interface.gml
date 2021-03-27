@@ -2,6 +2,7 @@
 
 window_maximize()
 
+app_startup_shortcut_bar()
 app_startup_interface_collapse()
 app_startup_interface_bench()
 app_startup_interface_timeline()

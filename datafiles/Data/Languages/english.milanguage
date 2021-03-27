@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.03.26"
+        "lastchange": "2021.03.27"
     },
     "tooltip/": {
         "sidemenuclose": "Close side menu",
@@ -145,6 +145,27 @@
         "advancedcolorsshow": "Show advanced color settings",
         "advancedcolorshide": "Hide advanced color settings",
         "restorekeybind": "Restore keybind"
+    },
+    "shortcut/": {
+        "select": "Select",
+        "orbit": "Orbit view",
+        "pan": "Pan view",
+        "zoom": "Zoom",
+        "walk": "Walk navigation",
+        "forward": "Forward",
+        "left": "Left",
+        "back": "Back",
+        "right": "Right",
+        "ascend": "Ascend",
+        "descend": "Descend",
+        "faster": "Faster",
+        "slower": "Slower",
+        "rollforward": "Roll forward",
+        "rollback": "Roll back",
+        "rollreset": "Reset roll",
+        "reset": "Reset",
+        "scrollhorizontal": "Scroll horizontally",
+        "scrollvertical": "Scroll vertically"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -344,7 +365,8 @@
         },
         "view": "View",
         "view/": {
-            "reset": "Reset work camera"
+            "reset": "Reset work camera",
+            "shortcutsbar": "Toggle shortcuts bar"
         },
         "help": "Help",
         "help/": {

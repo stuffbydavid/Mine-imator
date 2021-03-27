@@ -106,10 +106,10 @@ else
 	xd += -lengthdir_x(spd, cam.value[e_value.ROT_Z] + 90)
 	yd += -lengthdir_y(spd, cam.value[e_value.ROT_Z] + 90)
 	zd = (keybinds_map[?e_keybind.CAM_ASCEND].active - keybinds_map[?e_keybind.CAM_DESCEND].active) * move
-	zd += (-dsin(cam.value[e_value.ROT_X])) * (keybinds_map[?e_keybind.CAM_FORWARD].active - keybinds_map[?e_keybind.CAM_FORWARD].active) * move
+	zd += (-dsin(cam.value[e_value.ROT_X])) * (keybinds_map[?e_keybind.CAM_FORWARD].active - keybinds_map[?e_keybind.CAM_BACK].active) * move
 	
 	// Roll
-	roll = (keybinds_map[?e_keybind.CAM_ROLL_FORWARD].active - keybinds_map[?e_keybind.CAM_ROLL_BACK].active) * 4 * spdm
+	roll = (keybinds_map[?e_keybind.CAM_ROLL_FORWARD].active - keybinds_map[?e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * delta
 	
 	// Set
 	tl_value_set_start(camera_control_move, true)

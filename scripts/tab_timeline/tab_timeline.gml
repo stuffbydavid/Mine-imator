@@ -1591,6 +1591,8 @@ if (content_height > (barh + headerh + 12) && (!timeline_playing || !setting_tim
 
 if (content_mouseon)
 {
+	shortcut_bar_state = "timeline"
+	
 	window_scroll_focus = string(timeline.ver_scroll)
 	
 	if (keyboard_check(vk_shift))

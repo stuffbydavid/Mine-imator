@@ -920,3 +920,15 @@ enum e_view_control
 	ROT_ANGLE_Z,
 	ROT_DISTANCE
 }
+
+// Mouse controls
+enum e_mouse
+{
+	CLICK_LEFT,
+	CLICK_MIDDLE,
+	CLICK_RIGHT,
+	DRAG_LEFT,
+	DRAG_MIDDLE,
+	DRAG_RIGHT,
+	SCROLL
+}

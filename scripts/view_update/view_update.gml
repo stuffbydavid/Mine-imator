@@ -95,8 +95,12 @@ if (window_focus = string(view))
 	// Move camera
 	if (window_busy = "viewmovecamera")
 	{
-		mouse_cursor = cr_none
+		if (cam = null)
+			shortcut_bar_state = "cameramove"
+		else
+			shortcut_bar_state = "tlcameramove"
 		
+		mouse_cursor = cr_none
 		camera_control_move(cam, view_click_x, view_click_y)
 		
 		if (!mouse_right)

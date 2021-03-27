@@ -348,6 +348,9 @@ if (content_width > 0 && content_height > 0)
 	content_height = ceil(content_height)
 	content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && view.mouseon && !view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	
+	if (content_mouseon)
+		shortcut_bar_state = "viewport"
+	
 	if (!view.quality = e_view_mode.RENDER || view_render_real_time)
 		view_update(view, cam)
 	else if (window_focus = string(view) && !mouse_left && !mouse_right) // Freeze on slow renders bugfix
