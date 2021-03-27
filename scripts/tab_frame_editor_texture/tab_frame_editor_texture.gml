@@ -1,5 +1,8 @@
 /// tab_frame_editor_texture()
 
+if (!tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
+	return 0
+
 var texobj, name, tex;
 tex = null
 

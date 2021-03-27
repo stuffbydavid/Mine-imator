@@ -5535,6 +5535,14 @@
             }
         },
         {
+            "Key": "514fdd5c-2169-42a9-b967-d085a5868068",
+            "Value": {
+                "id": "ccaf8b2e-02dd-4315-aabe-a4509d228099",
+                "resourcePath": "scripts\\tab_frame_editor_material\\tab_frame_editor_material.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "5170f8ff-ab4d-4fd8-b96a-52213e565f92",
             "Value": {
                 "id": "5811c864-2ea7-4fa3-982f-ddc6e45941c0",
@@ -19437,6 +19445,7 @@
         "d20c4345-99ee-415a-b8b4-a39e82fda7a1",
         "68aa7a84-e1cf-4684-bfd7-e9213a1ec18e",
         "13c54802-031c-4c64-a512-b9d8c2a139cb",
+        "514fdd5c-2169-42a9-b967-d085a5868068",
         "2ca1ce75-ba68-4d82-a3dc-ce668b903d85",
         "78d4786d-1e96-4b3e-99f3-ca25f8ac4278",
         "581b0f89-4ed7-41b4-ada3-f9c1cf54df48",

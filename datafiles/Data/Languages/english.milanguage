@@ -2344,7 +2344,7 @@
             "y": "Bend Y",
             "z": "Bend Z"
         },
-        "color": "COLOR",
+        "material": "MATERIAL",
         "opacity": "Opacity",
         "blendcolor": "Blend color",
         "rgbadd": "Add (RGB)",
@@ -2357,6 +2357,12 @@
         "glowcolor": "Glow color",
         "mixpercent": "Mix percent",
         "emission": "Emission",
+        "chartex": "Skin",
+        "spblocktex": "Texture",
+        "bodyparttex": "Skin",
+        "blocktex": "Texture",
+        "shapetex": "Texture",
+        "modeltex": "Texture",
         "particles": "PARTICLES",
         "particles/": {
             "spawn": "Spawn particles",
@@ -2483,13 +2489,6 @@
                 "amount": "Distort amount"
             }
         },
-        "texture": "TEXTURE",
-        "chartex": "Skin",
-        "spblocktex": "Texture",
-        "bodyparttex": "Skin",
-        "blocktex": "Texture",
-        "shapetex": "Texture",
-        "modeltex": "Texture",
         "sound": "SOUND",
         "sound/": {
             "file": "File",

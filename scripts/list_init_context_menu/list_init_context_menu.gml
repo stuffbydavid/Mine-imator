@@ -28,7 +28,7 @@ switch (name)
 		// Advanced colors
 		if (context_menu_group = e_context_group.COLOR)
 		{
-			var text = (frame_editor.color.advanced ? "contextmenuadvancedcolorshide" : "contextmenuadvancedcolorsshow");
+			var text = (frame_editor.material.advanced ? "contextmenuadvancedcolorshide" : "contextmenuadvancedcolorsshow");
 			list_item_add(text_get(text), null, "", null, icons.SLIDERS, null, action_group_advanced_colors, true)
 		}
 		

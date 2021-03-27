@@ -29,7 +29,7 @@ if (tl.value_type[e_value_type.TRANSFORM_BEND])
 	value[e_value.BEND_ANGLE_LEGACY] = buffer_read_double()
 }
 
-if (tl.value_type[e_value_type.COLOR])
+if (tl.value_type[e_value_type.MATERIAL_COLOR])
 {
 	value[e_value.ALPHA] = buffer_read_double()
 	value[e_value.RGB_ADD] = buffer_read_int()
@@ -143,7 +143,7 @@ if (tl.value_type[e_value_type.BACKGROUND])
 	}
 }
 
-if (tl.value_type[e_value_type.TEXTURE])
+if (tl.value_type[e_value_type.MATERIAL_TEXTURE])
 {
 	value[e_value.TEXTURE_OBJ] = project_load_legacy_save_id()
 	if (value[e_value.TEXTURE_OBJ] = "root")

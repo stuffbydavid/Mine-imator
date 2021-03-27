@@ -1139,7 +1139,10 @@ if (window_focus = string(tbx) && !tbx.read_only)
 	}
 	
 	if (a >= 0 && a <= w && b >= 0 && b + lineheight <= h && (current_time - textbox_marker) mod 1000 < 500)
-		draw_line_ext(textx + a, yy + b, textx + a, yy + b+lineheight, textnormal, textnormala)
+	{
+		draw_set_alpha(textnormala)
+		draw_line_ext(textx + a, yy + b, textx + a, yy + b+lineheight, textnormal, 1)
+	}
 }
 
 draw_set_color(c_white)

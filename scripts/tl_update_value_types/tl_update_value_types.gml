@@ -49,7 +49,7 @@ if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != n
 
 // Color
 if (type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
-	value_type[e_value_type.COLOR] = true
+	value_type[e_value_type.MATERIAL_COLOR] = true
 
 // Particles
 if (type = e_tl_type.PARTICLE_SPAWNER)
@@ -75,7 +75,7 @@ if (type != e_tl_type.ITEM &&
 	type != e_tl_type.SPOT_LIGHT &&
 	type != e_tl_type.TEXT &&
 	type != e_tl_type.FOLDER)
-	value_type[e_value_type.TEXTURE] = true
+	value_type[e_value_type.MATERIAL_TEXTURE] = true
 	
 // Text
 if (type = e_tl_type.TEXT)
@@ -92,3 +92,6 @@ if (type = e_tl_type.PARTICLE_SPAWNER ||
 	type = e_tl_type.POINT_LIGHT ||
 	type = e_tl_type.SPOT_LIGHT)
 	value_type[e_value_type.ROT_POINT] = false
+
+// Enable material tab
+value_type[e_value_type.MATERIAL] = (value_type[e_value_type.MATERIAL_COLOR] || value_type[e_value_type.MATERIAL_TEXTURE])

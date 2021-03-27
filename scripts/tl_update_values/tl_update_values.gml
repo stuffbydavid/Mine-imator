@@ -133,7 +133,7 @@ if (value_type[e_value_type.TRANSFORM_BEND])
 }
 
 // Color
-if (value_type[e_value_type.COLOR])
+if (value_type[e_value_type.MATERIAL_COLOR])
 {
 	tl_update_values_ease(e_value.ALPHA, trans, p)
 	tl_update_values_ease(e_value.RGB_ADD, trans, p)
@@ -331,7 +331,7 @@ if (value_type[e_value_type.BACKGROUND])
 }
 
 // Texture
-if (value_type[e_value_type.TEXTURE])
+if (value_type[e_value_type.MATERIAL_TEXTURE])
 	tl_update_values_ease(e_value.TEXTURE_OBJ, trans, p)
 	
 // Sound

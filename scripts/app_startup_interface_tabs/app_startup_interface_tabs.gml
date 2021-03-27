@@ -453,58 +453,32 @@ with (frame_editor)
 		tbx_bend[2].suffix = "°"
 	}
 	
-	/*
-	// Position
-	position = tab_add_category("frameeditorposition", tab_frame_editor_position, false)
-	with (position)
+	// Material
+	material = tab_add_category("frameeditormaterial", tab_frame_editor_material, false)
+	with (material)
 	{
-		tbx_x = new_textbox_ndecimals()
-		tbx_y = new_textbox_ndecimals()
-		tbx_z = new_textbox_ndecimals()
+		advanced = app.setting_frame_editor_color_advanced
+		
+		tbx_rgb_add = new_textbox_hex()
+		tbx_rgb_sub = new_textbox_hex()
+		tbx_rgb_mul = new_textbox_hex()
+		tbx_hsv_add = new_textbox_hex()
+		tbx_hsv_sub = new_textbox_hex()
+		tbx_hsv_mul = new_textbox_hex()
+		
+		tbx_color_mix = new_textbox_hex()
+		tbx_color_glow = new_textbox_hex()
+		
+		tbx_alpha = new_textbox_integer()
+		tbx_alpha.suffix = "%"
+		tbx_mix_percent = new_textbox_integer()
+		tbx_mix_percent.suffix = "%"
+		tbx_brightness = new_textbox_integer()
+		tbx_brightness.suffix = "%"
 	}
-	
-	// Rotation
-	rotation = tab_add_category("frameeditorrotation", tab_frame_editor_rotation, false)
-	with (rotation)
-	{
-		loops = false
-		tbx_x = new_textbox(true, 10, "x-.0123456789")
-		tbx_x.suffix = "°"
-		tbx_y = new_textbox(true, 10, "x-.0123456789")
-		tbx_y.suffix = "°"
-		tbx_z = new_textbox(true, 10, "x-.0123456789")
-		tbx_z.suffix = "°"
-	}
-	
-	// Scale
-	scale = tab_add_category("frameeditorscale", tab_frame_editor_scale, false)
-	with (scale)
-	{
-		scale_all = true
-		tbx_x = new_textbox_decimals()
-		tbx_y = new_textbox_decimals()
-		tbx_z = new_textbox_decimals()
-	}
-	
-	// Bend
-	bend = tab_add_category("frameeditorbend", tab_frame_editor_bend, false)
-	with (bend)
-	{
-		snap_enabled = false
-		snap_size = 15
-		copy = vec3(0)
-		tbx_wheel[0] = new_textbox_ndecimals()
-		tbx_wheel[0].suffix = "°"
-		tbx_wheel[1] = new_textbox_ndecimals()
-		tbx_wheel[1].suffix = "°"
-		tbx_wheel[2] = new_textbox_ndecimals()
-		tbx_wheel[2].suffix = "°"
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
-	}
-	*/
 	
 	// Color
+	/*
 	color = tab_add_category("frameeditorcolor", tab_frame_editor_color, false)
 	with (color)
 	{
@@ -527,6 +501,7 @@ with (frame_editor)
 		tbx_brightness = new_textbox_integer()
 		tbx_brightness.suffix = "%"
 	}
+	*/
 	
 	// Particles
 	particles = tab_add_category("frameeditorparticles", tab_frame_editor_particles, false)
@@ -668,7 +643,7 @@ with (frame_editor)
 	}
 	
 	// Texture
-	texture = tab_add_category("frameeditortexture", tab_frame_editor_texture, false)
+	//texture = tab_add_category("frameeditortexture", tab_frame_editor_texture, false)
 	
 	// Sound
 	sound = tab_add_category("frameeditorsound", tab_frame_editor_sound, true)

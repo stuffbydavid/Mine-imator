@@ -67,7 +67,7 @@ if (par != app)
 	}
 	
 	// Color
-	if (tl_edit.value_type[e_value_type.COLOR])
+	if (tl_edit.value_type[e_value_type.MATERIAL_COLOR])
 	{
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorinheritalpha", dx, dy, tl_edit.inherit_alpha, action_tl_inherit_alpha)
@@ -89,7 +89,7 @@ if (par != app)
 	tab_next()
 	
 	// Texture
-	if (tl_edit.value_type[e_value_type.TEXTURE])
+	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
 	{
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorinherittexture", dx, dy, tl_edit.inherit_texture, action_tl_inherit_texture)

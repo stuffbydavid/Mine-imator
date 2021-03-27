@@ -42,12 +42,13 @@ tip_force_right = true
 bench_settings.posy = yy - 4
 bench_settings.posx = xx + 28
 	
-if (draw_button_icon("viewworkbench", xx, yy, 24, 24, (bench_show_ani_type = "show" || bench_show_ani = 1), icons.WORKBENCH, null, false, "viewworkbenchtip"))
+if (draw_button_icon("viewworkbench", xx, yy, 24, 24, (bench_show_ani_type = "show" || bench_show_ani = 1), icons.WORKBENCH, null, false, "viewworkbenchtip") || bench_open)
 {
 	bench_hover_ani = 0
 	bench_click_ani = 1
 	bench_show_ani_type = "show"
 	window_busy = "bench"
+	bench_open = false
 }
 yy += 24 + padding
 
