@@ -382,7 +382,7 @@ if (markerbarh != 0)
 	markermouseon = null
 	content_mouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	draw_set_halign(fa_left)
 	draw_set_valign(fa_bottom)
 	draw_set_color(c_level_middle)
@@ -542,6 +542,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				if (dx < tlx)
 					continue
 				
+				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
 				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
 			}
 		}
@@ -648,6 +649,8 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			// Sprite
 			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
+			
+			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
 			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
 		}
 		
@@ -1047,7 +1050,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 				if (((xx + ((24 * 2) + 16) - xright) < (minw - 24)) || (i = ds_list_size(tl.tree_list_filter) - 1))
 					draw_image(spr_icons, timeline_icon_list[|tl.tree_list_filter[|i].type], xx + 10, itemy + (itemh/2), 1, 1, c_border, a_border)
 				else
-					draw_label(string(ds_list_size(tl.tree_list_filter) - i) + "+", xx + 10, itemy + (itemh/2), fa_center, fa_middle, c_border, a_border, font_emphasis)
+					draw_label(string(ds_list_size(tl.tree_list_filter) - i) + "+", xx + 10, itemy + (itemh/2), fa_center, fa_middle, c_border, a_border, font_label)
 			}
 			else
 				break

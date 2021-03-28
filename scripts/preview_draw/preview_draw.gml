@@ -471,7 +471,7 @@ with (preview)
 						draw_set_color(color)
 						draw_set_alpha(alpha)
 						
-						draw_set_font(app.font_emphasis)
+						draw_set_font(app.font_label)
 						break
 					}
 				

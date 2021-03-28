@@ -7,7 +7,7 @@ var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
 
 context_menu_group_temp = e_context_group.ROTATION
 
-draw_label(text_get("frameeditorrotation"), dx, dy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("frameeditorrotation"), dx, dy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
 dy += (label_height + 12)
 
 // Wheels

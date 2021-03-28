@@ -7,7 +7,7 @@ var snapval = (dragger_snap ? setting_snap_size_scale : snap_min);
 
 context_menu_group_temp = e_context_group.SCALE
 
-draw_label(text_get("frameeditorscale"), dx, dy - 4, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("frameeditorscale"), dx, dy - 4, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
 dy += (label_height + 8)
 
 if (tab.transform.scale_all) // Simple scaling

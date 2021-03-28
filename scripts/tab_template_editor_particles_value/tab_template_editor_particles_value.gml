@@ -35,7 +35,7 @@ if (argument_count > 12)
 else
 	capwid = null
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 caption = text_get(name)
 
 if (argument_count > 13)
@@ -60,7 +60,7 @@ if (israndom)
 {
 	if (showcaption)
 	{
-		draw_label(caption, dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(caption, dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 		tab_next(false)
 		
 		tab_control_dragger()

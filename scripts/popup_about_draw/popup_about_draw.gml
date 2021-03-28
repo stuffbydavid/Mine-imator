@@ -37,23 +37,23 @@ dx = content_x + 64
 dy += 12
 draw_label(text_get("aboutcreatedby"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 dy += 26
-draw_button_text("David Norgren", dx, dy, open_url, "https://www.stuffbydavid.com", "https://www.stuffbydavid.com", font_emphasis)
+draw_button_text("David Norgren", dx, dy, open_url, "https://www.stuffbydavid.com", "https://www.stuffbydavid.com", font_label)
 
 // Development
 dy += 34
 draw_label(text_get("aboutdevelopment"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 dy += 26
-draw_button_text("David", dx, dy, open_url, "https://twitter.com/stuffbydavidn", "https://twitter.com/stuffbydavidn", font_emphasis)
+draw_button_text("David", dx, dy, open_url, "https://twitter.com/stuffbydavidn", "https://twitter.com/stuffbydavidn", font_label)
 dy += 19
-draw_button_text("Nimi", dx, dy, open_url, "https://twitter.com/NimiKitamura", "https://twitter.com/NimiKitamura", font_emphasis)
+draw_button_text("Nimi", dx, dy, open_url, "https://twitter.com/NimiKitamura", "https://twitter.com/NimiKitamura", font_label)
 dy += 19
-draw_button_text("Marvin", dx, dy, open_url, "https://twitter.com/MineToBlend", "https://twitter.com/MineToBlend", font_emphasis)
+draw_button_text("Marvin", dx, dy, open_url, "https://twitter.com/MineToBlend", "https://twitter.com/MineToBlend", font_label)
 
 // UI/Branding
 dy += 34
 draw_label(text_get("aboutuibranding"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 dy += 26
-draw_button_text("Voxy", dx, dy, open_url, "https://twitter.com/voxybuns", "https://twitter.com/voxybuns", font_emphasis)
+draw_button_text("Voxy", dx, dy, open_url, "https://twitter.com/voxybuns", "https://twitter.com/voxybuns", font_label)
 
 dx += 130 + 24
 dy = content_y + 176
@@ -62,12 +62,12 @@ dy = content_y + 176
 dy += 12
 draw_label(text_get("aboutbetatesting"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 dy += 26
-draw_label("Espresso", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label("Espresso", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 dy += 19
-draw_label("Hozq", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label("Hozq", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 dy += 19
-draw_label("KeepOnChucking", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label("KeepOnChucking", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 dy += 19
-draw_label("Mr.Banders", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label("Mr.Banders", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 dy += 19
-draw_label("SoundsDotZip", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label("SoundsDotZip", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)

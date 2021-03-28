@@ -45,7 +45,7 @@ if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < c
 
 context_menu_area(xx - rad, yy - rad, rad * 2, rad * 2, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 modval = mod_fix(value, 360)
 capwid = string_width(text_get(name) + ":") + 5
@@ -114,7 +114,7 @@ if (app_mouse_box(xx - rad - 10, yy - rad - 10, rad * 2 + 20, rad * 2 + 20) && c
 /*
 
 // Textbox
-draw_label(text_get(name) + ":", xx - (labeltextw/2), labely, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get(name) + ":", xx - (labeltextw/2), labely, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 draw_set_font(font_digits)
 if (window_focus = string(tbx))
 {

@@ -112,7 +112,7 @@ switch (temp_edit.type)
 		// Item image
 		tab_control(24)
 		
-		draw_set_font(font_emphasis)
+		draw_set_font(font_label)
 		wid = string_width(text_get("typeitem") + ":")
 		
 		draw_label(text_get("typeitem") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)

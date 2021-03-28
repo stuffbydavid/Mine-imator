@@ -120,7 +120,7 @@ if (content_tab.movable)
 			
 			tabtitle[t] = tab_get_title(tab)
 			
-			draw_set_font(sel ? font_emphasis : font_value)
+			draw_set_font(sel ? font_label : font_value)
 			tabw[t] = string_width(tabtitle[t])
 			
 			if (tab.closeable)
@@ -204,7 +204,7 @@ if (content_tab.movable)
 		if (hover && tab.closeable)
 			limit -= 20
 		
-		draw_set_font(sel ? font_emphasis : font_value)
+		draw_set_font(sel ? font_label : font_value)
 		tabtitle[t] = string_limit(tabtitle[t], limit)
 		
 		// Close button
@@ -218,7 +218,7 @@ if (content_tab.movable)
 		}
 		
 		// Label
-		draw_label(tabtitle[t], floor(dx + 8), round(dy + (dh/2)), fa_left, fa_center, (sel ? c_accent : (hover ? c_text_main : c_text_secondary)), (sel ? 1 : (hover ? a_text_main : a_text_secondary)), sel ? font_emphasis : font_value)
+		draw_label(tabtitle[t], floor(dx + 8), round(dy + (dh/2)), fa_left, fa_center, (sel ? c_accent : (hover ? c_text_main : c_text_secondary)), (sel ? 1 : (hover ? a_text_main : a_text_secondary)), sel ? font_label : font_value)
 		
 		// Outline/border
 		if (sel)
@@ -326,23 +326,6 @@ if (resizemouseon && mouse_left_pressed)
 	panel_resize = panel
 	panel_resize_size = panel.size_real
 }
-
-// Add shortcuts
-/*
-if (resizemouseon || window_busy = "panelresize")
-{
-	// Add shortcuts
-	ds_list_clear(shortcut_bar_list)
-	shortcut_bar_add(null, e_mouse.LEFT_DRAG, "resizearea")
-}
-
-// Add shortcuts
-if (tablistmouseon != null)
-	shortcut_bar_add(null, e_mouse.LEFT_CLICK, "select")
-
-if (tabmouseon || window_busy = "tabmove" || tablistmouseon != null)
-	shortcut_bar_add(null, e_mouse.LEFT_DRAG, "movetab")
-*/
 
 // Move
 if (tabmouseon && mouse_cursor = cr_default && mouse_left_pressed)

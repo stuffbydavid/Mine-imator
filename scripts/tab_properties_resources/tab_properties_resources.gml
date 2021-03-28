@@ -123,7 +123,7 @@ if (res_edit.filename != "") // Filename
 	// Model
 	tab_control(24)
 	
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	wid = string_width(text_get("resourcesfilename") + ":")
 	
 	tip_wrap = false

@@ -89,6 +89,21 @@ if (filename_ext(fn) = ".midata")
 		if (setting_language_filename != language_file)
 			language_load(setting_language_filename, language_map)
 		
+		var themename = theme_light.name;
+		themename = value_get_real(interfacemap[?"theme"], themename)
+		
+		with (obj_theme)
+		{
+			if (themename = name)
+			{
+				setting_theme = id
+				break
+			}
+		}
+		
+		setting_accent = value_get_real(interfacemap[?"accent"], setting_accent)
+		setting_accent = value_get_color(interfacemap[?"accent_custom"], setting_accent_custom)
+		
 		setting_timeline_autoscroll = value_get_real(interfacemap[?"timeline_autoscroll"], setting_timeline_autoscroll)
 		setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
 		setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)

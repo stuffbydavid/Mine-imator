@@ -21,7 +21,7 @@ tab_next()
 
 // Alignment
 dy += 20
-draw_label(text_get("frameeditortextalignment") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
+draw_label(text_get("frameeditortextalignment") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 dy += 8
 
 var dwold, dxold;

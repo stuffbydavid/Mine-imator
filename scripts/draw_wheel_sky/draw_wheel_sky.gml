@@ -24,7 +24,7 @@ if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < c
 	return 0
 
 draw_image(spr_circle_96, 0, xx, yy, 1, 1, c_text_tertiary, a_text_tertiary)
-draw_label(text_get(name), xx, yy - 4, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get(name), xx, yy - 4, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 
 // Sun
 sunx = floor(xx + lengthdir_x(rad, value + 90))

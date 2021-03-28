@@ -1,7 +1,7 @@
 /// popup_importimage_draw()
 
 // Info
-draw_label(text_get("importimagetype") + ":", dx, dy + 14, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("importimagetype") + ":", dx, dy + 14, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 dy += 28
 
 tab_control(28)

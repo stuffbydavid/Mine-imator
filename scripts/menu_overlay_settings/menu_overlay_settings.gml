@@ -1,6 +1,6 @@
 /// menu_overlay_settings()
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 var draggerwid, switchwid;
 draggerwid = text_max_width("viewoverlaygridrows", "viewoverlaygridcolumns") + 16

@@ -4,7 +4,7 @@
 /// @arg name3...
 
 var font = draw_get_font();
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 var wid = 0;
 for (var a = 0; a < argument_count; a++)

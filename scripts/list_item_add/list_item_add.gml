@@ -44,6 +44,7 @@ item.name = name
 item.value = value
 item.caption = caption
 item.thumbnail = thumbnail
+item.thumbnail_backdrop = true
 item.thumbnail_blend = c_white
 item.thumbnail_alpha = 1
 

@@ -47,7 +47,7 @@ switch (temp_edit.type)
 		statelen = array_length_1d(temp_edit.model_state)
 		statesh = 32 * (statelen / 2) + ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0)
 		
-		draw_set_font(font_emphasis)
+		draw_set_font(font_label)
 		for (var i = 0; i < statelen; i += 2)
 		{
 			var state = temp_edit.model_state[i];
@@ -90,7 +90,7 @@ switch (temp_edit.type)
 		statesh = 32 * (statelen / 2)
 		capwid = 0
 		
-		draw_set_font(font_emphasis)
+		draw_set_font(font_label)
 		for (var i = 0; i < statelen; i += 2)
 		{
 			var state = temp_edit.block_state[i];

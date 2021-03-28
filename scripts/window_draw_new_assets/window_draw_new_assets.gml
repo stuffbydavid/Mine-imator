@@ -100,7 +100,7 @@ else
 		if (string_copy(text, 1, 2) = "- ")
 		{
 			text = string_delete(text, 1, 2)
-			draw_label(text, dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+			draw_label(text, dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 			dy += 20
 		}
 		else

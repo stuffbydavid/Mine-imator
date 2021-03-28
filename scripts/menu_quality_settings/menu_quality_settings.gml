@@ -1,6 +1,6 @@
 /// menu_quality_settings()
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 var capwid = text_max_width("viewmodefog") + 16 + 24;
 
 tab_control_switch()

@@ -71,7 +71,7 @@ if (alpha = null)
 
 if (showcaption)
 {
-	draw_label(text_get(name), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+	draw_label(text_get(name), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
 	yy += (label_height + 12)
 }
 
@@ -88,7 +88,7 @@ if (vertical)
 else
 	draw_outline(fieldx, fieldy, wid, hei, 1, c_border, a_border * alpha, true)
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 for (var i = 0; i < textfield_amount; i++)
 {	
 	if (i > 0)
@@ -152,7 +152,7 @@ for (var i = 0; i < textfield_amount; i++)
 	linealpha = lerp(linealpha, a_accent, focus) * alpha
 	
 	if (textfield_icon[i] = null)
-		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	else
 		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 	

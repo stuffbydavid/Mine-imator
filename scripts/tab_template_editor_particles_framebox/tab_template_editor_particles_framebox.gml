@@ -72,14 +72,14 @@ for (var f = min(ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end); f 
 		col = c_accent
 		alpha = 1
 		
-		draw_label(text_get("particleeditortypespriteframeboxstart"), bx + floor(fwid / 2), min(by + (reverse ? 0 : fhei), yy + size), fa_center, reverse ? fa_bottom : fa_top, col, 1, font_emphasis)
+		draw_label(text_get("particleeditortypespriteframeboxstart"), bx + floor(fwid / 2), min(by + (reverse ? 0 : fhei), yy + size), fa_center, reverse ? fa_bottom : fa_top, col, 1, font_label)
 	}
 	else if (f = ptype_edit.sprite_frame_end)
 	{
 		col = c_error
 		alpha = 1
 		
-		draw_label(text_get("particleeditortypespriteframeboxend"), bx + floor(fwid / 2), min(by + (!reverse ? 0 : fhei), yy + size), fa_center, !reverse ? fa_bottom : fa_top, col, 1, font_emphasis)
+		draw_label(text_get("particleeditortypespriteframeboxend"), bx + floor(fwid / 2), min(by + (!reverse ? 0 : fhei), yy + size), fa_center, !reverse ? fa_bottom : fa_top, col, 1, font_label)
 	}
 	
 	if (by + fhei > yy + size)

@@ -15,7 +15,7 @@ value = argument[3]
 active = argument[4]
 script = argument[5]
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 w = 28 + string_width(name)
 h = 28

@@ -219,7 +219,7 @@ if (background_ground_show && collapse_map[?"ground"])
 	// Change ground
 	tab_control(24)
 	
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	wid = string_width(text_get("backgroundground") + ":")
 	
 	draw_label(text_get("backgroundground") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
@@ -261,7 +261,7 @@ if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_va
 if (background_biome.name = "custom")
 {
 	dy += 20 
-	draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
+	draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8
 	
 	tab_set_collumns(true, floor(content_width/150))
@@ -284,7 +284,7 @@ if (background_biome.name = "custom")
 	tab_set_collumns(false)
 	
 	dy += 20 
-	draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
+	draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8
 	
 	tab_set_collumns(true, floor(content_width/150))
@@ -323,7 +323,7 @@ if (background_biome.name = "custom")
 }
 
 dy += 20
-draw_label(text_get("backgroundscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_emphasis) 
+draw_label(text_get("backgroundscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 dy += 8
 
 tab_set_collumns(true, floor(content_width/150))

@@ -8,7 +8,7 @@ yy = dy + (dh / 2)
 padding = 10
 imgpadding = 4
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 // Keyboard shortcut ("0")
 if (shortcut[0] != null)

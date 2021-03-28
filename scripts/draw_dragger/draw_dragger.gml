@@ -30,7 +30,7 @@ snapval = argument[9]
 tbx = argument[10]
 script = argument[11]
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 caption = text_get(name)
 
 if (argument_count > 12)
@@ -135,7 +135,7 @@ labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
 labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 if (showcaption)
-	draw_label(caption, xx, yy + hei/2, fa_left, fa_middle, labelcolor, labelalpha, font_emphasis)
+	draw_label(caption, xx, yy + hei/2, fa_left, fa_middle, labelcolor, labelalpha, font_label)
 
 // Idle
 if (window_busy != name + "drag" && window_busy != name + "press" && window_focus != string(tbx))

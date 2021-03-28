@@ -32,7 +32,7 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 // Label
 if (showcaption)
 {
-	draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_emphasis)
+	draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
 	yy += (label_height + 8)
 }
 

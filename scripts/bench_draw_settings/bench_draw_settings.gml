@@ -155,7 +155,7 @@ else
 			if (!res.ready)
 				res = mc_res
 			
-			draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+			draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 			
 			if (res.item_sheet_texture != null)
 				draw_texture_slot(res.item_sheet_texture, bench_settings.item_slot, dx + capwid, dy + 4, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])

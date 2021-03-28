@@ -1,6 +1,6 @@
 /// menu_snap_settings()
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 var draggerwid, switchwid, capwid;
 draggerwid = text_max_width("viewsnapmove", "viewsnaprotate", "viewsnapscale") + 16
 switchwid = text_max_width("viewsnapabsolute") + 16 + 24

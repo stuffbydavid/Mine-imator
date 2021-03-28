@@ -112,12 +112,12 @@ textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 // Caption
 if (dh > (hei + (label_height + 8)) && capwid = null)
 {
-	draw_label(cap, xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_emphasis)
+	draw_label(cap, xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_label)
 	yy += (label_height + 8)
 }
 else if (capwid != null)
 {
-	draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha, font_emphasis)
+	draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha, font_label)
 	wid -= capwid
 	xx += capwid
 }
@@ -154,6 +154,7 @@ if (type = e_menu.TRANSITION_LIST)
 {
 	item.thumbnail_blend = c_text_secondary
 	item.thumbnail_alpha = a_text_secondary
+	item.thumbnail_backdrop = false
 }
 else
 {
@@ -168,8 +169,8 @@ instance_destroy(item)
 chevroncolor = merge_color(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 chevronalpha = lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
-draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + wid - hei / 2, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - mcroani_arr[e_mcroani.CUSTOM_LINEAR]))
-draw_image(spr_icons, icons.CHEVRON_UP_TINY, xx + wid - hei / 2, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * mcroani_arr[e_mcroani.CUSTOM_LINEAR])
+draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - mcroani_arr[e_mcroani.CUSTOM_LINEAR]))
+draw_image(spr_icons, icons.CHEVRON_UP_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * mcroani_arr[e_mcroani.CUSTOM_LINEAR])
 
 // Disabled overlay
 draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])

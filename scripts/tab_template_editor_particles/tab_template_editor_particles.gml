@@ -59,7 +59,7 @@ tab_next()
 
 tab_control_dragger()
 draw_dragger("particleeditorspawnamount", dx, dy, 64, temp_edit.pc_spawn_amount, temp_edit.pc_spawn_constant ? 2 : (1 / 5), 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount)
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 draw_label((temp_edit.pc_spawn_constant ? text_get("particleeditorperminute") : text_get("particleeditorperburst")), dx + 64 + 16 + string_width(text_get("particleeditorspawnamount")), dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 
@@ -172,7 +172,7 @@ tab_next()
 
 // "Destroy when..." label
 tab_control(16)
-draw_label(text_get("particleeditordestroy"), dx, dy + 8, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("particleeditordestroy"), dx, dy + 8, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 // Destroy after animation
@@ -301,7 +301,7 @@ if (ptype_edit.temp < 0)
 		tab_template_editor_particles_framebox()
 		
 		// Frame width / height
-		draw_set_font(font_emphasis)
+		draw_set_font(font_label)
 		
 		tab.tbx_type_sprite_frame_width.suffix = text_get("particleeditorpixels")
 		tab.tbx_type_sprite_frame_height.suffix = text_get("particleeditorpixels")
@@ -318,13 +318,13 @@ if (ptype_edit.temp < 0)
 		// Frames
 		var caption, capwid;
 		
-		draw_set_font(font_emphasis)
+		draw_set_font(font_label)
 		
 		caption = text_get("particleeditortypespriteframeframes")
 		capwid = string_width(caption) + 8
 		
 		tab_control_dragger()
-		draw_label(caption, dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(caption, dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 		
 		draw_dragger("particleeditortypespriteframestart", dx + capwid, dy, 48, ptype_edit.sprite_frame_start, 1 / 10, 0, no_limit, 7, 1, tab.tbx_type_sprite_frame_start, action_lib_pc_type_sprite_frame_start, null, false)
 		capwid += 48 + 8
@@ -415,7 +415,7 @@ tab_control_switch()
 if (draw_button_collapse("particleeditortypeangle", !ptype_edit.angle_collapse, null, false))
 	ptype_edit.angle_collapse = !ptype_edit.angle_collapse
 
-draw_label(text_get("particleeditortypeangle"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("particleeditortypeangle"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (!ptype_edit.angle_collapse)
@@ -489,7 +489,7 @@ tab_control_switch()
 if (draw_button_collapse("particleeditortypespeed", !ptype_edit.spd_collapse, null, false))
 	ptype_edit.spd_collapse = !ptype_edit.spd_collapse
 
-draw_label(text_get("particleeditortypespeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("particleeditortypespeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (!ptype_edit.spd_collapse)
@@ -614,7 +614,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 		if (draw_button_collapse("particleeditortyperotationinitial", !ptype_edit.rot_collapse, null, false))
 			ptype_edit.rot_collapse = !ptype_edit.rot_collapse
 
-		draw_label(text_get("particleeditortyperotationinitial"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(text_get("particleeditortyperotationinitial"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 		tab_next()
 		
 		if (!ptype_edit.rot_collapse)
@@ -666,7 +666,7 @@ if (ptype_edit.temp || (ptype_edit.temp = particle_sheet || ptype_edit.temp = pa
 		if (draw_button_collapse("particleeditortyperotationspeed", !ptype_edit.rot_spd_collapse, null, false))
 			ptype_edit.rot_spd_collapse = !ptype_edit.rot_spd_collapse
 		
-		draw_label(text_get("particleeditortyperotationspeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+		draw_label(text_get("particleeditortyperotationspeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 		tab_next()
 		
 		if (!ptype_edit.rot_spd_collapse)
@@ -864,7 +864,7 @@ tab_next()
 if (ptype_edit.color_mix_enabled)
 {
 	tab_control(20)
-	draw_label(text_get("particleeditortypecolorstart"), dx, dy + 10, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+	draw_label(text_get("particleeditortypecolorstart"), dx, dy + 10, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	tab_next()
 }
 
@@ -888,7 +888,7 @@ tab_next()
 if (ptype_edit.color_mix_enabled)
 {
 	tab_control(20)
-	draw_label(text_get("particleeditortypecolorend"), dx, dy + 10, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+	draw_label(text_get("particleeditortypecolorend"), dx, dy + 10, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	tab_next()
 	
 	tab_control_color()

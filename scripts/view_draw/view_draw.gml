@@ -28,6 +28,9 @@ if (view = view_second)
 else if (!view_second.show)
 	location = "full"
 
+if (view = view_main && view_second.show && view_main.quality = e_view_mode.RENDER && view_second.quality = e_view_mode.RENDER)
+	view_main.quality = e_view_mode.SHADED
+
 switch (location)
 {	
 	case "top":

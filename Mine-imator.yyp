@@ -13311,14 +13311,6 @@
             }
         },
         {
-            "Key": "bb78c30f-abe7-4228-9078-b7ac8e294d40",
-            "Value": {
-                "id": "9918a059-7e3a-472e-8a0f-575eabdafd0e",
-                "resourcePath": "sprites\\spr_circle_6\\spr_circle_6.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "bbd55d9d-5bc3-4ba2-b27d-f0a41f22a7bc",
             "Value": {
                 "id": "d8cea836-0468-4474-a7fa-eb5e432e2e2e",

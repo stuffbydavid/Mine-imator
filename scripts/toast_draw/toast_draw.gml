@@ -54,7 +54,7 @@ dx += string_width(toast.text) + 16
 // Actions
 if (ds_list_size(toast.actions) > 0)
 {
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	var capwid, multiaction, actiony;
 	capwid = 0
 	multiaction = ds_list_size(toast.actions) > 4

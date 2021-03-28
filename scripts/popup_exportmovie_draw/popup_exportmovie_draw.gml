@@ -63,8 +63,8 @@ tab_next()
 if (popup.format = "png")
 {
 	// Remove background
-	tab_control_switch()
-	draw_switch("exportmovieremovebackground", dx, dy, popup.remove_background, action_toolbar_exportmovie_remove_background)
+	tab_control_checkbox()
+	draw_checkbox("exportmovieremovebackground", dx, dy, popup.remove_background, action_toolbar_exportmovie_remove_background)
 	tab_next()
 	
 	if (popup.remove_background)
@@ -73,19 +73,19 @@ if (popup.format = "png")
 else
 {
 	// Include audio
-	tab_control_switch()
-	draw_switch("exportmovieincludeaudio", dx, dy, popup.include_audio, action_toolbar_exportmovie_include_audio)
+	tab_control_checkbox()
+	draw_checkbox("exportmovieincludeaudio", dx, dy, popup.include_audio, action_toolbar_exportmovie_include_audio)
 	tab_next()
 }
 
 // Include hidden
-tab_control_switch()
-draw_switch("exportmovieincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportmovie_include_hidden)
+tab_control_checkbox()
+draw_checkbox("exportmovieincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportmovie_include_hidden)
 tab_next()
 
 // High quality
-tab_control_switch()
-draw_switch("exportmoviehighquality", dx, dy, popup.high_quality, action_toolbar_exportmovie_high_quality)
+tab_control_checkbox()
+draw_checkbox("exportmoviehighquality", dx, dy, popup.high_quality, action_toolbar_exportmovie_high_quality)
 tab_next()
 
 // Save

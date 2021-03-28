@@ -1,13 +1,13 @@
 /// tab_settings_controls()
 
 tab_control(20)
-draw_label(text_get("settingscontrolskeybinds") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_emphasis) 
+draw_label(text_get("settingscontrolskeybinds") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label) 
 tab_next()
 
 // File
 tab_control(24)
 draw_button_collapse("file")
-draw_label(text_get("settingscontrolsfile"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingscontrolsfile"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (collapse_map[?"file"])
@@ -26,7 +26,7 @@ if (collapse_map[?"file"])
 // Edit
 tab_control(24)
 draw_button_collapse("edit")
-draw_label(text_get("settingscontrolsedit"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingscontrolsedit"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (collapse_map[?"edit"])
@@ -52,7 +52,7 @@ if (collapse_map[?"edit"])
 // Tools
 tab_control(24)
 draw_button_collapse("tools")
-draw_label(text_get("settingscontrolstools"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingscontrolstools"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (collapse_map[?"tools"])
@@ -74,7 +74,7 @@ if (collapse_map[?"tools"])
 // Viewport
 tab_control(24)
 draw_button_collapse("viewport")
-draw_label(text_get("settingscontrolsviewport"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingscontrolsviewport"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (collapse_map[?"viewport"])
@@ -92,7 +92,7 @@ if (collapse_map[?"viewport"])
 // Timeline
 tab_control(24)
 draw_button_collapse("timeline")
-draw_label(text_get("settingscontrolstimeline"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingscontrolstimeline"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (collapse_map[?"timeline"])
@@ -111,7 +111,7 @@ if (collapse_map[?"timeline"])
 // Camera
 tab_control(24)
 draw_button_collapse("camera")
-draw_label(text_get("settingscontrolscamera"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingscontrolscamera"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 tab_next()
 
 if (collapse_map[?"camera"])

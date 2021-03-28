@@ -39,7 +39,7 @@ if (mouseon)
 if (!isfirst && listmouseon)
 	draw_line_ext(xx - 1, yy + 4, xx - 1, yy + h - 4, c_text_tertiary, a_text_tertiary)
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 // Icon spacing
 if (icon != null && mouseon)

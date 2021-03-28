@@ -14,7 +14,7 @@ h = argument3
 caption = argument4 + ": "
 value = argument5
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 caption = string_limit(caption, w)
 capwid = string_width(caption)
 valuex = xx + capwid

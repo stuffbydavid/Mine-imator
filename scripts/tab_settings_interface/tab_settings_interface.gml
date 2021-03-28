@@ -15,7 +15,7 @@ accentboxy = dy + 22
 accentboxw = (dw - (7*4)) / 5
 
 tab_control((48 * 2) + 7 + 22)
-draw_label(text_get("settingsaccentcolor"), dx, accentboxy - 7, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("settingsaccentcolor"), dx, accentboxy - 7, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 
 for (var i = 0; i < 10; i++)
 {

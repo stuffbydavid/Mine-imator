@@ -65,6 +65,7 @@ if (mode = "simple")
 			if (mouse_left_released)
 			{
 				project_load(item.filename)
+				window_state = ""
 				return 0
 			}
 		}
@@ -78,7 +79,7 @@ if (mode = "simple")
 
 if (mode = "list")
 {
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	
 	// Set scrollbar
 	var liststart = 0;
@@ -166,6 +167,7 @@ if (mode = "list")
 			if (mouse_left_released)
 			{
 				project_load(item.filename)
+				window_state = ""
 				return 0
 			}
 		}

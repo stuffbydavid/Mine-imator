@@ -1,6 +1,6 @@
 /// popup_upgrade_draw()
 
-draw_box(dx, dy, 328, 184, false, c_level_bottom, 1)
+draw_sprite(spr_watermark_example, 0, dx, dy)
 dy += 184
 
 dy += 18

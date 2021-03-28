@@ -61,7 +61,7 @@ if (filter && name = "")
 // Name
 if (name != "")
 {
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	draw_label(string_limit(name, w - 144), xx, yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	
 	searchx += (w - 144)

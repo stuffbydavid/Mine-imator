@@ -69,6 +69,10 @@ json_save_object_start("interface")
 	
 	json_save_var("language_filename", json_string_encode(setting_language_filename))
 
+	json_save_var("theme", setting_theme.name)
+	json_save_var("accent", setting_accent)
+	json_save_var_color("accent_custom", setting_accent_custom)
+
 	json_save_var_bool("timeline_autoscroll", setting_timeline_autoscroll)
 	json_save_var_bool("timeline_compact", setting_timeline_compact)
 	json_save_var_bool("timeline_select_jump", setting_timeline_select_jump)

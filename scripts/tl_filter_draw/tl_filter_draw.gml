@@ -1,13 +1,13 @@
 /// tl_filter_draw()
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 var switchwid, colorwid, px;
 switchwid = text_max_width("timelinehideghosts") + 64
 colorwid = (24 * 9) - 4
 
 // Color tags
-draw_label(text_get("timelinefiltertags"), dx, dy + 9, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("timelinefiltertags"), dx, dy + 9, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 dy += 20
 
 tab_control(20)

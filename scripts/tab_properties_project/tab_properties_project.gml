@@ -32,7 +32,7 @@ tab_next()
 
 // Project location
 tab_control(40)
-draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 
 var directory = "...\\" + directory_name(project_folder) + filename_name(filename_dir(project_file));
 

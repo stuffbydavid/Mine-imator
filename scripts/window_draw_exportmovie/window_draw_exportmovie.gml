@@ -49,16 +49,17 @@ timeleftstr += text_get(((timeleftsecs = 1) ? "exportmovietimeleftsecond" : "exp
 draw_label(text_get("exportmovietimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_label_big)
 
 // Bar
-var loadtext, loadw;
+var loadtext, loadw, sw, sh;
 loadtext = text_get("exportmovieloading", string(floor(perc * 100)))
 loadw = framew
+sw = surface_get_width(exportmovie_surface)
+sh = surface_get_height(exportmovie_surface)
 
 // Match frame width
-if (surface_get_width(exportmovie_surface) / surface_get_height(exportmovie_surface) < framew / frameh)
+if (sw / sh < framew / frameh)
 {
-	var scale = frameh / surface_get_height(exportmovie_surface);
-	//xx += (w - scale * sw) / 2
-	loadw = floor(surface_get_width(exportmovie_surface) * scale)
+	var scale = frameh / sh;
+	loadw = floor(sw * scale)
 }
 
 draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, text_get("exportmovieframe", string(exportmovie_frame), string(totalframes)))

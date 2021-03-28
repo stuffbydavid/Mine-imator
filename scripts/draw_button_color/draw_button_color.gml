@@ -48,7 +48,7 @@ context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR,
 microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
 
 // Caption
-draw_label(text_get(name), xx, yy - 4, fa_left, fa_bottom, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), font_emphasis)
+draw_label(text_get(name), xx, yy - 4, fa_left, fa_bottom, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), font_label)
 
 // Color preview
 draw_box(xx, yy, w, h, false, c_level_top, draw_get_alpha())

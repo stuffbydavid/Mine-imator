@@ -50,7 +50,7 @@ tab_next()
 
 if (popup.is_sheet)
 {
-	draw_set_font(font_emphasis)
+	draw_set_font(font_label)
 	
 	// Size
 	axis_edit = X

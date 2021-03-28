@@ -27,21 +27,21 @@ if (project_video_template = 0)
 }
 
 // Remove background
-tab_control_switch()
-draw_switch("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_exportimage_remove_background)
+tab_control_checkbox()
+draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_exportimage_remove_background)
 tab_next()
 
 if (popup.remove_background)
 	draw_tooltip_label("exportimageblendmodewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 
 // Include hidden
-tab_control_switch()
-draw_switch("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportimage_include_hidden)
+tab_control_checkbox()
+draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportimage_include_hidden)
 tab_next()
 
 // High quality
-tab_control_switch()
-draw_switch("exportimagehighquality", dx, dy, popup.high_quality, action_toolbar_exportimage_high_quality)
+tab_control_checkbox()
+draw_checkbox("exportimagehighquality", dx, dy, popup.high_quality, action_toolbar_exportimage_high_quality)
 tab_next()
 
 // Save

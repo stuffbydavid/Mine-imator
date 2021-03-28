@@ -11,8 +11,7 @@ if (window_width != window_get_width() || window_height != window_get_height())
 	
 	xx = window_get_x()
 	yy = window_get_y()
-	room_speed = 200
-	display_reset(0, true)
+	display_reset(0, false)
 	window_set_rectangle(xx, yy, ww, hh)
 	surface_resize(application_surface, ww, hh)
 

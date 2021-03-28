@@ -27,14 +27,6 @@ setting_theme = theme_light
 setting_accent = 3
 setting_accent_custom = hex_to_color("03A9F4")
 
-// TODO: Remove when Inventory is full implemented
-font_main = font_add_lib(fonts_directory + "noto_regular.ttf", 10, false, false)
-font_main_bold = font_add_lib(fonts_directory + "noto_bold.ttf", 10, false, false)
-font_main_big = font_add_lib(fonts_directory + "noto_bold.ttf", 16, false, false)
-
-setting_font = font_main
-setting_font_bold = font_main_bold
-setting_font_big = font_main_big
 setting_language_filename = language_file
 
 setting_timeline_autoscroll = true

@@ -35,7 +35,7 @@ if (argument_count > 8)
 if (argument_count > 9)
 	err = argument[9]
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 if (labelpos = "top")
 	fieldy += (label_height + 8)
@@ -50,7 +50,7 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 update = draw_inputbox(name, xx + capwidth, fieldy, w - capwidth, h, placeholder, textbox, script, false, err)
 
 // Use microanimation from inputbox to determine color
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 
 var labelcolor, labelalpha;
 labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])

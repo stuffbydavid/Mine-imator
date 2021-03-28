@@ -1,6 +1,6 @@
 /// tl_settings_draw()
 
-draw_set_font(font_emphasis)
+draw_set_font(font_label)
 var draggerwid, switchwid;
 draggerwid = text_max_width("timelineintervalsize", "timelineintervaloffset") + 16
 switchwid = text_max_width("timelineintervalshow", "timelinecompact") + 16 + 24

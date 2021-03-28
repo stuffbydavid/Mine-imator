@@ -22,7 +22,7 @@ if (warntext != "")
 
 // Project location
 tab_control(40)
-draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_emphasis)
+draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 
 var directory = "...\\" + directory_name(setting_project_folder) + string_remove_newline(popup.folder);
 
