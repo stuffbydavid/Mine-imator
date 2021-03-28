@@ -4,6 +4,7 @@ textbox_input = keyboard_string
 keyboard_string = ""
 
 app_update_window()
+app_update_micro_animations()
 
 if (window_state = "load_assets")
 	return 0
@@ -26,7 +27,6 @@ app_update_work_camera()
 app_update_caption()
 app_update_toasts()
 app_update_interface()
-app_update_micro_animations()
 app_update_lists()
 
 current_step += 60 / room_speed

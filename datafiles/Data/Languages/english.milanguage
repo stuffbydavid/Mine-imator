@@ -325,9 +325,10 @@
         }
     },
     "newassets/": {
-        "title": "Minecraft %1 assets are available!",
-        "text": "Click \"Download\" below to start using them in your projects.",
-        "later": "Later",
+        "title": "Assets from Minecraft %1 are now available!",
+        "subtitle": "Download them now and start using them in your own projects!",
+        "changelog": "CHANGELOG",
+        "later": "Remind me later",
         "download": "Download",
         "downloading": "Downloading..."
     },
@@ -450,6 +451,7 @@
         "save": "Save"
     },
     "exportmovie/": {
+        "title": "Exporting your movie...",
         "caption": "Export movie",
         "videosize": "Video size",
         "videosizecustomwidth": "Width",
@@ -480,7 +482,7 @@
         "highquality": "High quality rendering",
         "save": "Save",
         "frame": "Frame %1 out of %2",
-        "timeleft": "Your movie will be done in %1",
+        "timeleft": "%1 remaining",
         "timeleft/": {
             "and": "and",
             "hour": "%1 hour",
@@ -490,8 +492,8 @@
             "second": "%1 second",
             "seconds": "%1 seconds"
         },
-        "loading": "%1% done",
-        "stop": "Hold Escape to stop rendering."
+        "stop": "Hold Escape to cancel",
+        "loading": "%1% done"
     },
     "exportimage/": {
         "caption": "Export image",
@@ -530,7 +532,7 @@
         "cancel": "Cancel"
     },
     "loading/": {
-        "stagedone": "(%1% Done)"
+        "stagedone": "%1% complete (%2)"
     },
     "view/": {
         "workbenchtip": "Open workbench",

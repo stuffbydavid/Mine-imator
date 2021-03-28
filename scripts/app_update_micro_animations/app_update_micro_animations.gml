@@ -15,10 +15,13 @@ with (obj_scrollbar)
 }
 
 // Timeline zoom
-if (timeline_zoom != timeline_zoom_goal)
+if (window_state = "")
 {
-	timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 4 / delta)
-	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+	if (timeline_zoom != timeline_zoom_goal)
+	{
+		timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 4 / delta)
+		timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+	}
 }
 
 // Scrollbar margin offset

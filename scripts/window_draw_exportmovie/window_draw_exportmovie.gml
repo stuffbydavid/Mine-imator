@@ -12,25 +12,26 @@ if (!action_toolbar_exportmovie_update())
 totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.frame_rate)
 perc = exportmovie_frame / totalframes
 
-content_width = floor(window_width * 0.8)
+content_width = floor(window_width * 0.5)
 content_height = min(500, floor(window_height * 0.5))
 content_x = floor(window_width / 2 - content_width / 2)
 content_y = floor(window_height / 2 - content_height / 2)
 
 // Background
-draw_clear(setting_color_interface)
-
-// Frame
-draw_label(text_get("exportmovieframe", string(exportmovie_frame), string(totalframes)), content_x + content_width / 2, content_y, fa_center, fa_top, null, 1, setting_font_big)
+draw_clear(c_level_top)
 
 // Current surface
-framew = 600
-frameh = max(10, content_height - 150)
-framex = content_x + content_width / 2 - framew / 2
-framey = content_y + 30
+framew = content_width
+frameh = content_height
+framex = floor(window_width/2 - framew/2)
+framey = floor(window_height/2 - frameh/2)
 
+//draw_box(framex, framey, framew, frameh, false, c_level_bottom, 1)
 draw_surface_box_center(exportmovie_surface, framex, framey, framew, frameh)
-	
+
+content_width = window_width
+content_height = window_height
+
 // Time left
 timeleftsecs = ceil((exportmovie_start + (current_time - exportmovie_start) / perc - current_time) / 1000)
 timeleftmins = timeleftsecs div 60
@@ -45,13 +46,26 @@ if (timeleftmins > 0)
 	timeleftstr += text_get(((timeleftmins = 1) ? "exportmovietimeleftminute" : "exportmovietimeleftminutes"), string(timeleftmins)) + " " + text_get("exportmovietimeleftand") + " "
 timeleftstr += text_get(((timeleftsecs = 1) ? "exportmovietimeleftsecond" : "exportmovietimeleftseconds"), string(timeleftsecs))
 
-draw_label(text_get("exportmovietimeleft", timeleftstr), content_x + content_width / 2, content_y + content_height - 80, fa_center, fa_middle, null, 1, setting_font_big)
+draw_label(text_get("exportmovietimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_label_big)
 
 // Bar
-var loadtext = text_get("exportmovieloading", string(floor(perc * 100)));
-draw_loading_bar(content_x, content_y + content_height - 32, content_width, 32, perc, loadtext)
+var loadtext, loadw;
+loadtext = text_get("exportmovieloading", string(floor(perc * 100)))
+loadw = framew
+
+// Match frame width
+if (surface_get_width(exportmovie_surface) / surface_get_height(exportmovie_surface) < framew / frameh)
+{
+	var scale = frameh / surface_get_height(exportmovie_surface);
+	//xx += (w - scale * sw) / 2
+	loadw = floor(surface_get_width(exportmovie_surface) * scale)
+}
+
+draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, text_get("exportmovieframe", string(exportmovie_frame), string(totalframes)))
 window_set_caption(loadtext + " - Mine-imator")
 
+// Title
+draw_label(text_get("exportmovietitle"), framex + framew / 2, framey - 35, fa_center, fa_bottom, c_accent, 1, font_heading_big)
+
 // Stop
-content_height += 32
-draw_label(text_get("exportmoviestop"), content_x + content_width / 2, content_y + content_height - 24, fa_center, fa_top)
+draw_label(text_get("exportmoviestop"), framex + framew / 2, framey - 16, fa_center, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)

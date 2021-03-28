@@ -14,3 +14,5 @@ font_upgrade = font_add(fonts_directory + "noto_regular.ttf", 18, false, false, 
 font_value_bold = font_add(fonts_directory + "noto_bold.ttf", 9, false, false, 32, 1024)
 font_heading = font_add(fonts_directory + "rubik_medium.ttf", 10, false, false, 32, 1024)
 font_body_big = font_add(fonts_directory + "noto_regular.ttf", 12, false, false, 32, 1024)
+font_heading_big = font_add(fonts_directory + "rubik_medium.ttf", 13, false, false, 32, 1024)
+font_label_big = font_add(fonts_directory + "rubik_medium.ttf", 13, false, false, 32, 1024)

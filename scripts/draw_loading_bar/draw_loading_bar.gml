@@ -7,7 +7,6 @@
 /// @arg text
 
 var xx, yy, wid, hei, perc, text;
-var surf, surfwid;
 xx = argument0
 yy = argument1
 wid = argument2
@@ -15,29 +14,9 @@ hei = argument3
 perc = argument4
 text = argument5
 
-surfwid = floor(wid * perc)
-if (surfwid > 1 && perc <= 1)
-{
-	var col = draw_get_color();
-	surf = surface_create(surfwid, hei)
-	surface_set_target(surf)
-	{
-		draw_clear(setting_color_buttons)
-		draw_set_color(setting_color_buttons_text)
-		draw_set_halign(fa_center)
-		draw_set_valign(fa_middle)
-		draw_text(floor(wid / 2), floor(hei / 2) - 1, text)
-		draw_set_valign(fa_top)
-		draw_set_halign(fa_left)
-		draw_set_color(col)
-	}
-	surface_reset_target()
-}
-else
-	surf = null
+yy += 8
+draw_label(text_get("loadingstagedone", string(floor(perc * 100)), text), xx, yy, fa_left, fa_center, c_text_main, a_text_main, font_value)
+yy += 16
 
-draw_box(xx, yy, wid, hei, false, setting_color_background, 1)
-draw_label(text, xx + floor(wid / 2), yy + floor(hei / 2), fa_center, fa_middle)
-draw_surface_exists(surf, xx, yy)
-
-surface_free(surf)
+draw_box(xx, yy, wid, hei, false, c_border, a_border)
+draw_box(xx, yy, wid * perc, hei, false, c_accent, 1)

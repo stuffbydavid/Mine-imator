@@ -1,4 +1,4 @@
-/// app_startup_interface_collapse()
+/// app_startup_collapse()
 
 globalvar collapse_map;
 collapse_map = ds_map_create()
