@@ -108,7 +108,7 @@ if (temp_edit.pc_spawn_region_use)
 			textfield_group_add("particleeditorspawnregionboxzsize", temp_edit.pc_spawn_region_box_size[axis_edit], 200, action_lib_pc_spawn_region_box_size, axis_edit, tab.tbx_spawn_region_box_zsize, null, temp_edit.pc_spawn_region_box_size[axis_edit] / 100)
 			
 			tab_control_textfield_group()
-			draw_textfield_group("particleeditorspawnregionboxsize", dx, dy, dw, null, 0, no_limit, 0, true)
+			draw_textfield_group("particleeditorspawnregionboxsize", dx, dy, dw, null, 0, no_limit, 0, true, true, true)
 			tab_next()
 			
 			break
@@ -140,7 +140,7 @@ else if (temp_edit.pc_bounding_box_type = "custom")
 	textfield_group_add("particleeditorboundingboxfromz", temp_edit.pc_bounding_box_custom_start[axis_edit], -100, action_lib_pc_bounding_box_custom_start, axis_edit, tab.tbx_bounding_box_custom_zstart, null, 1, -no_limit, temp_edit.pc_bounding_box_custom_end[axis_edit])
 	
 	tab_control_textfield_group()
-	draw_textfield_group("particleeditorboundingboxcustomfrom", dx, dy, dw, 1, 0, no_limit, 0, true)
+	draw_textfield_group("particleeditorboundingboxcustomfrom", dx, dy, dw, 1, 0, no_limit, 0, true, true, true)
 	tab_next()
 	
 	// "To" position
@@ -152,7 +152,7 @@ else if (temp_edit.pc_bounding_box_type = "custom")
 	textfield_group_add("particleeditorboundingboxtoz", temp_edit.pc_bounding_box_custom_end[axis_edit], 100, action_lib_pc_bounding_box_custom_end, axis_edit, tab.tbx_bounding_box_custom_zend, null, 1, temp_edit.pc_bounding_box_custom_start[axis_edit], no_limit)
 	
 	tab_control_textfield_group()
-	draw_textfield_group("particleeditorboundingboxcustomto", dx, dy, dw, 1, 0, no_limit, 0, true)
+	draw_textfield_group("particleeditorboundingboxcustomto", dx, dy, dw, 1, 0, no_limit, 0, true, true, true)
 	tab_next()
 	
 	tab_control_switch()
@@ -309,7 +309,7 @@ if (ptype_edit.temp < 0)
 		tab_control_textfield_group()
 		textfield_group_add("particleeditortypespriteframewidth", ptype_edit.sprite_frame_width, 8, action_lib_pc_type_sprite_frame_width, axis_edit, tab.tbx_type_sprite_frame_width)
 		textfield_group_add("particleeditortypespriteframeheight", ptype_edit.sprite_frame_height, 8, action_lib_pc_type_sprite_frame_height, axis_edit, tab.tbx_type_sprite_frame_height)
-		draw_textfield_group("particleeditortypespriteframesize", dx, dy, dw, 1 / 10, 1, no_limit, 1, true)
+		draw_textfield_group("particleeditortypespriteframesize", dx, dy, dw, 1 / 10, 1, no_limit, 1, true, true, true)
 		tab_next()
 		
 		capwid = text_caption_width("particleeditortypespriteframestart", 

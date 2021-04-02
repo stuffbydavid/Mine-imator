@@ -10,9 +10,9 @@
 
 // Versions
 #macro mineimator_version			"1.3.0"
-#macro mineimator_version_extra		"Alpha 7"
+#macro mineimator_version_extra		"Alpha 9"
 #macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-#macro mineimator_version_date		"2020.09.07"
+#macro mineimator_version_date		"2021.04.01"
 #macro gm_runtime					GM_runtime_version
 #macro minecraft_version			"1.16.1"
 
@@ -168,8 +168,8 @@
 #macro default_block				"grass_block"
 #macro default_item					"item/diamond_sword"
 #macro default_ground				"block/grass_block_top"
-#macro particle_sheet				-4
-#macro particle_template			-5
+#macro particle_sheet				-5
+#macro particle_template			-6
 
 // World
 #macro block_size					16

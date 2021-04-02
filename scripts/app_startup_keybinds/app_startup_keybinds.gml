@@ -18,6 +18,7 @@ enum e_keybind
 	PROJECT_NEW,
 	PROJECT_OPEN,
 	PROJECT_SAVE,
+	PROJECT_SAVE_AS,
 	IMPORT_ASSET,
 	
 	// Editing
@@ -74,6 +75,7 @@ enum e_keybind
 keybind_register("projectnew", e_keybind.PROJECT_NEW, keybind_new("N", true))
 keybind_register("projectopen", e_keybind.PROJECT_OPEN, keybind_new("O", true))
 keybind_register("projectsave", e_keybind.PROJECT_SAVE, keybind_new("S", true))
+keybind_register("projectsaveas", e_keybind.PROJECT_SAVE_AS, keybind_new("S", true, true))
 keybind_register("importasset", e_keybind.IMPORT_ASSET, keybind_new("I", true))
 
 // Editing

@@ -3,6 +3,8 @@
 if (!tl_edit.value_type[e_value_type.TRANSFORM_ROT])
 	return 0
 
+dy += 8
+
 var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
 
 context_menu_group_temp = e_context_group.ROTATION
@@ -33,7 +35,7 @@ axis_edit = (setting_z_is_up ? Z : Y)
 textfield_group_add("frameeditorrotationz", tl_edit.value[e_value.ROT_X + axis_edit], tl_edit.value_default[e_value.ROT_X + axis_edit], action_tl_frame_rot, axis_edit, tab.transform.tbx_rot_z)
 
 tab_control_textfield(false)
-draw_textfield_group("frameeditorrotation", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, null)
+draw_textfield_group("frameeditorrotation", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, true)
 tab_next()
 
 context_menu_group_temp = null

@@ -88,10 +88,10 @@ if (view.overlays && view.gizmos)
 						view_control_camera(view)
 					
 					if (tl_edit.value_type[e_value_type.TRANSFORM_POS] && (setting_tool = e_view_tool.MOVE || setting_tool = e_view_tool.TRANSFORM))
-						view_control_position(view)
+						view_control_move(view)
 					
 					if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && (setting_tool = e_view_tool.ROTATE || setting_tool = e_view_tool.TRANSFORM))
-						view_control_rotation(view)
+						view_control_rotate(view)
 					
 					if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_tool = e_view_tool.BEND)
 						view_control_bend(view)

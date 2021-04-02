@@ -58,16 +58,16 @@ else
 	dx = centerx
 
 // Browse
-if (draw_button_label("startupbrowse", dx, dy, null, icons.FOLDER, e_button.PRIMARY, project_load))
+if (draw_button_label("startupbrowse", dx, dy, null, icons.FOLDER, e_button.PRIMARY))
 {
-	if (window_state = "startup")
+	if (project_load())
 		window_state = ""
 }
 
 // List style
 if (recent_list_amount > 0)
 {
-	if (draw_button_icon("startuprecentdisplay", dx - 24 - 8, dy + 4, 24, 24, false, recent_display_mode = "grid" ? icons.VIEW_LIST : icons.VIEW_GRID))
+	if (draw_button_icon("startuprecentdisplay", dx - 24 - 8, dy + 4, 24, 24, false, recent_display_mode = "grid" ? icons.VIEW_LIST : icons.VIEW_GRID, null, false, recent_display_mode = "grid" ? "tooltipviewlist" : "tooltipviewgrid"))
 	{
 		if (recent_display_mode = "list")
 			recent_display_mode = "grid"

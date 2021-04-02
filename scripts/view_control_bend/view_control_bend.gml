@@ -29,7 +29,7 @@ for (var i = X; i <= Z; i++)
 	}
 	
 	matrix_remove_scale(mat)
-	view_control_rotation_axis(view, e_view_control.BEND_X + i, e_value.BEND_ANGLE_X + i, color, mat, len)
+	view_control_rotate_axis(view, e_view_control.BEND_X + i, e_value.BEND_ANGLE_X + i, color, mat, len)
 }
 
 // Is dragging

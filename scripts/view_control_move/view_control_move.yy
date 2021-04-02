@@ -1,8 +1,8 @@
 {
-    "id": "6b8ac0e5-c169-443e-a30f-6d588e3a0632",
+    "id": "9083951e-cfdc-4f3b-b1ff-f9f3bcc007dd",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "popup_workbench_draw",
+    "name": "view_control_move",
     "IsCompatibility": false,
     "IsDnD": false
 }

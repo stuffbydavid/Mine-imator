@@ -90,19 +90,20 @@ if (filename_ext(fn) = ".midata")
 			language_load(setting_language_filename, language_map)
 		
 		var themename = theme_light.name;
-		themename = value_get_real(interfacemap[?"theme"], themename)
+		themename = value_get_string(interfacemap[?"theme"], themename)
 		
 		with (obj_theme)
 		{
 			if (themename = name)
 			{
-				setting_theme = id
+				app.setting_theme = id
 				break
 			}
 		}
 		
 		setting_accent = value_get_real(interfacemap[?"accent"], setting_accent)
-		setting_accent = value_get_color(interfacemap[?"accent_custom"], setting_accent_custom)
+		setting_accent_custom = value_get_color(interfacemap[?"accent_custom"], setting_accent_custom)
+		update_interface_wait = true
 		
 		setting_timeline_autoscroll = value_get_real(interfacemap[?"timeline_autoscroll"], setting_timeline_autoscroll)
 		setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
@@ -154,6 +155,12 @@ if (filename_ext(fn) = ".midata")
 		setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 		setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 		setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
+		
+		setting_snap = value_get_real(interfacemap[?"snap"], setting_snap)
+		setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
+		setting_snap_size_position = value_get_real(interfacemap[?"snap_size_position"], setting_snap_size_position)
+		setting_snap_size_rotation = value_get_real(interfacemap[?"snap_size_rotation"], setting_snap_size_rotation)
+		setting_snap_size_scale = value_get_real(interfacemap[?"snap_size_scale"], setting_snap_size_scale)
 		
 		setting_modelbench_popup_hidden = value_get_real(interfacemap[?"modelbench_popup_hidden"], setting_modelbench_popup_hidden)
 	}

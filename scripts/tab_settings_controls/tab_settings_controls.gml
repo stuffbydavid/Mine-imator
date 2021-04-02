@@ -17,6 +17,7 @@ if (collapse_map[?"file"])
 	draw_keybind(e_keybind.PROJECT_NEW, dx, dy)
 	draw_keybind(e_keybind.PROJECT_OPEN, dx, dy)
 	draw_keybind(e_keybind.PROJECT_SAVE, dx, dy)
+	draw_keybind(e_keybind.PROJECT_SAVE_AS, dx, dy)
 	draw_keybind(e_keybind.IMPORT_ASSET, dx, dy)
 	dy += 8
 	
@@ -136,7 +137,9 @@ if (collapse_map[?"camera"])
 }
 
 tab_control_button_label()
-draw_button_label("settingscontrolsrestoredefaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, keybinds_reset_default, fa_middle)
+if (draw_button_label("settingscontrolsrestoredefaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, null, fa_middle))
+	if (question(text_get("questionrestorekeybinds")))
+		keybinds_reset_default()
 tab_next()
 
 tab_control_dragger()

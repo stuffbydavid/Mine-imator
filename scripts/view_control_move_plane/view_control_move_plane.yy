@@ -1,8 +1,8 @@
 {
-    "id": "7be5d921-4be7-43c8-8f19-8d6094dfae43",
+    "id": "e7448f4a-0c39-4ecd-bb3a-c44a90eb5e5e",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "view_control_position_pan",
+    "name": "view_control_move_plane",
     "IsCompatibility": false,
     "IsDnD": false
 }

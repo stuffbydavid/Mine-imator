@@ -12,6 +12,28 @@ with (obj_scrollbar)
 		value = value_goal
 	else
 		value += floor((value_goal - value) / max(1, 4 / delta))
+	
+	if (mousenear != mousenear_prev)
+	{
+		mousenear_base = mousenear_ani
+		mousenear_prev = mousenear
+		mousenear_offset_ani = 0.0
+			
+		if (!mousenear)
+			mousenear_offset = -mousenear_base
+		else
+			mousenear_offset = 1.0 - mousenear_base
+	}
+		
+	mousenear_offset_ani += (constantspeed * 1) * delta
+	mousenear_offset_ani_ease = ease((mousenear ? outease : inease), mousenear_offset_ani)
+	mousenear_offset_ani = clamp(mousenear_offset_ani, 0, 1)
+		
+	mousenear_ani = mousenear_base + (mousenear_offset * mousenear_offset_ani)
+	mousenear_ani = clamp(mousenear_ani, 0, 1)
+		
+	mousenear_ani_ease = mousenear_base + (mousenear_offset * mousenear_offset_ani_ease)
+	mousenear_ani_ease = clamp(mousenear_ani_ease, 0, 1)
 }
 
 // Timeline zoom

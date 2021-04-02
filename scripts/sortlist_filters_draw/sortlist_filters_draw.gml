@@ -1,8 +1,9 @@
 /// sortlist_filters_draw()
 
-var typelist, scroll, itemname;
+var typelist, scroll, itemname, capwid;
 typelist = null
 scroll = 0
+capwid = 0
 
 // Filter "type" collumn
 if (settings_menu_sortlist = app.properties.library.list)
@@ -21,6 +22,8 @@ if (settings_menu_scroll.needed)
 else
 	scroll = 0
 
+draw_set_font(font_label)
+
 for (var i = 0; i < ds_list_size(typelist); i++)
 {
 	itemname = typelist[|i]
@@ -31,6 +34,8 @@ for (var i = 0; i < ds_list_size(typelist); i++)
 		if (itemname = "packunzipped" || itemname = "legacyblocksheet" || itemname = "fromworld")
 			continue
 	}
+	
+	capwid = max(capwid, string_width(text_get("type" + itemname)))
 	
 	var active = ds_list_find_index(settings_menu_sortlist.filter_list, typelist[|i]) != -1;
 	
@@ -49,4 +54,4 @@ for (var i = 0; i < ds_list_size(typelist); i++)
 
 scissor_done()
 
-settings_menu_w = 186
+settings_menu_w = (32 + capwid) + 32 + 24

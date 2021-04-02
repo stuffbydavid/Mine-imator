@@ -54,7 +54,7 @@ else
 	draw_set_alpha(settingsmenuease)
 
 draw_dropshadow(content_x, content_y, content_width, content_height, c_black, settingsmenuease)
-draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
+draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
 draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border * settingsmenuease, true)
 
 if (settings_menu_script)

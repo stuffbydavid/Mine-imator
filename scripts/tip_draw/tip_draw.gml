@@ -19,12 +19,12 @@ content_height = tip_h
 
 // Box
 draw_set_alpha(tip_alpha)
-draw_box(tip_x, tip_y, tip_w, tip_h, false, c_level_middle, 1)
+draw_box(tip_x, tip_y, tip_w, tip_h, false, c_level_top, 1)
 draw_outline(tip_x, tip_y, tip_w, tip_h, 1, c_border, a_border, true)
 
 // Arrow
 render_set_culling(false)
-draw_image(spr_tooltip_arrow, tip_arrow * 2, tip_arrow_x, tip_arrow_y, tip_arrow_xscale, tip_arrow_yscale, c_level_middle, 1, tip_right * 90)
+draw_image(spr_tooltip_arrow, tip_arrow * 2, tip_arrow_x, tip_arrow_y, tip_arrow_xscale, tip_arrow_yscale, c_level_top, 1, tip_right * 90)
 draw_image(spr_tooltip_arrow, (tip_arrow * 2) + 1, tip_arrow_x, tip_arrow_y, tip_arrow_xscale, tip_arrow_yscale, c_border, a_border, tip_right * 90)
 render_set_culling(true)
 

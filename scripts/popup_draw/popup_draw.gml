@@ -76,7 +76,7 @@ content_mouseon = app_mouse_box(content_x, content_y, content_width, content_hei
 content_tab = null
 
 draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1) 
-draw_box(boxx, boxy, boxw, boxh, false, c_level_middle, 1) 
+draw_box(boxx, boxy, boxw, boxh, false, c_level_top, 1) 
 draw_outline(boxx, boxy, boxw, boxh, 1, c_border, a_border, true) 
 
 // Move

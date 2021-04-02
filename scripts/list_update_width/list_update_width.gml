@@ -53,7 +53,8 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 		width += 24 + 4
 	
 	// Tick
-	//width += 24 + 4
+	if (item.toggled)
+		width += 24 + 4
 	
 	// Caption
 	if (item.caption != "")

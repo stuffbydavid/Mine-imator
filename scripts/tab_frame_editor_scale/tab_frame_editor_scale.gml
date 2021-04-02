@@ -3,6 +3,8 @@
 if (!tl_edit.value_type[e_value_type.TRANSFORM_SCA])
 	return 0
 
+dy += 8
+
 var snapval = (dragger_snap ? setting_snap_size_scale : snap_min);
 
 context_menu_group_temp = e_context_group.SCALE
@@ -27,7 +29,7 @@ else
 	textfield_group_add("frameeditorscalez", tl_edit.value[e_value.SCA_X + axis_edit], 1, action_tl_frame_scale, axis_edit, tab.transform.tbx_sca_z, null, max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50))
 	
 	tab_control_textfield_group(false)
-	draw_textfield_group("frameeditorscale", dx, dy, dw, 0.1, snap_min, no_limit, snapval)
+	draw_textfield_group("frameeditorscale", dx, dy, dw, 0.1, snap_min, no_limit, snapval, false, true, true)
 	tab_next()
 }
 context_menu_group_temp = null

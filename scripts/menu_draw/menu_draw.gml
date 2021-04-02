@@ -1,7 +1,7 @@
 /// menu_draw()
 /// @desc Draws open dropdown menus
 
-var m, menu_remove, menu_active, listh, menuh, contentmenu, yy;
+var m, menu_remove, menu_active, listh, menuh, contentmenu, yy, aniease;
 menu_remove = null
 menu_current = null
 
@@ -39,26 +39,26 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 		draw_set_alpha(0)
 	
 	// Get draw height/Y
-	listh = ease(((m.menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), m.menu_ani) * (contentmenu ? m.menu_height : min(m.menu_amount, m.menu_show_amount) * m.menu_item_h)
+	aniease = ease(((m.menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), m.menu_ani)
+	listh = aniease * (contentmenu ? m.menu_height : min(m.menu_amount, m.menu_show_amount) * m.menu_item_h)
 	menuh = listh + (12 * m.menu_scroll_horizontal.needed)
 	
 	yy = (m.menu_flip ? (m.menu_y - menuh) : (m.menu_y + m.menu_button_h)) 
 	
 	// Draw
-	draw_box(m.menu_x, yy, m.menu_w, menuh, false, c_level_middle, 1)
+	draw_box(m.menu_x, yy, m.menu_w, menuh, false, c_level_top, 1)
 	
 	if (menuh > 2)
 		draw_outline(m.menu_x, yy, m.menu_w, menuh, 1, c_border, a_border, true)
 	
 	// Hide outline touching button
-	draw_box(m.menu_x + 1, yy + (m.menu_flip), m.menu_w - 2, menuh - 1, false, c_level_middle, 1)
+	draw_box(m.menu_x + 1, yy + (m.menu_flip), m.menu_w - 2, menuh - 1, false, c_level_top, 1)
 	
 	// Drop shadow
-	var shadowy, shadowh, shadowani;
+	var shadowy, shadowh;
 	shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
 	shadowh = menuh + m.menu_button_h
-	shadowani = ease(((m.menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), m.menu_ani)
-	draw_dropshadow(m.menu_x, shadowy, m.menu_w, shadowh, c_black, shadowani)
+	draw_dropshadow(m.menu_x, shadowy, m.menu_w, shadowh, c_black, aniease)
 	
 	content_x = m.menu_x
 	content_y = yy
@@ -78,7 +78,7 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 		if (m.menu_scroll_horizontal.needed && content_mouseon && keyboard_check(vk_shift))
 			window_scroll_focus = string(m.menu_scroll_horizontal)
 		
-		m.menu_scroll_vertical.snap_value = m.menu_item_h
+		//m.menu_scroll_vertical.snap_value = m.menu_item_h
 		scrollbar_draw(m.menu_scroll_vertical, e_scroll.VERTICAL, m.menu_x + m.menu_w - 12, yy, listh, (m.menu_amount * m.menu_item_h))
 		
 		scrollbar_draw(m.menu_scroll_horizontal, e_scroll.HORIZONTAL, m.menu_x, yy + menuh - 12, m.menu_w - (12 * m.menu_scroll_vertical.needed), m.menu_list.width)
@@ -99,16 +99,23 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 		case e_menu.LIST: // Normal list with images and caption
 		case e_menu.TIMELINE:
 		{
-			var starty = yy;
-			for (var j = round(m.menu_scroll_vertical.value / m.menu_item_h); j < m.menu_amount; j++)
+			scissor_start(0, content_y, window_width, content_height)
+			
+			if (!m.menu_flip)
+				yy += (-content_height + (content_height * aniease))
+			
+			if (m.menu_scroll_vertical.needed)
+				yy -= m.menu_scroll_vertical.value
+			
+			for (var j = 0; j < m.menu_amount; j++)
 			{
 				var item, itemy, itemh;
 				
-				if (starty + m.menu_item_h > yy + menuh)
-					break
+				//if (starty + m.menu_item_h > yy + menuh)
+				//	break
 				
 				item = m.menu_list.item[|j]
-				itemy = starty
+				itemy = yy
 				itemh = m.menu_item_h
 				
 				list_item_draw(item, m.menu_x, itemy, content_width, m.menu_item_h, m.menu_value = item.value, m.menu_margin, -m.menu_scroll_horizontal.value)
@@ -116,8 +123,10 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 				if (item.hover)
 					mouseitem = item
 				
-				starty += m.menu_item_h
+				yy += m.menu_item_h
 			}
+			
+			scissor_done()
 			
 			// Adjust component
 			if (m.menu_type = e_menu.LIST)

@@ -2,3 +2,6 @@
 /// @arg jump
 
 setting_timeline_compact = argument0
+
+settings_save()
+

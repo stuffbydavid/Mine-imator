@@ -26,7 +26,7 @@ textfield_group_add("frameeditorpositionz", tl_edit.value[e_value.POS_X + axis_e
 context_menu_group_temp = e_context_group.POSITION
 
 tab_control_textfield_group()
-draw_textfield_group("frameeditorposition", dx, dy, dw, null, -no_limit, no_limit, snapval, true)
+draw_textfield_group("frameeditorposition", dx, dy, dw, null, -no_limit, no_limit, snapval, true, true, true)
 tab_next()
 
 context_menu_group_temp = null

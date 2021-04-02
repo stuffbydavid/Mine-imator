@@ -6,7 +6,6 @@ timeline_playing_start_marker = 0
 timeline_playing_last_marker = 0
 timeline_playing_start_hor_scroll = 0
 
-setting_timeline_compact = false
 timeline_repeat = false
 timeline_seamless_repeat = false
 timeline_intervals_show = false

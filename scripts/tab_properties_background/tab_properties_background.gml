@@ -129,7 +129,7 @@ tab_next()
 
 // Twilight
 tab_control_switch()
-draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight)
+draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
 tab_next()
 
 // Desaturate night

@@ -1,4 +1,4 @@
-/// view_control_position_plane(view, control, axes, color, mat, normal, corner1, corner2, corner3, corner4)
+/// view_control_move_plane(view, control, axes, color, mat, normal, corner1, corner2, corner3, corner4)
 /// @arg view
 /// @arg control
 /// @arg axes

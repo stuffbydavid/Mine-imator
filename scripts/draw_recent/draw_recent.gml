@@ -64,8 +64,9 @@ if (mode = "simple")
 			
 			if (mouse_left_released)
 			{
-				project_load(item.filename)
 				window_state = ""
+				project_load(item.filename)
+				
 				return 0
 			}
 		}
@@ -168,6 +169,7 @@ if (mode = "list")
 			{
 				project_load(item.filename)
 				window_state = ""
+				
 				return 0
 			}
 		}
@@ -267,7 +269,8 @@ if (mode = "grid")
 				if (mouse_left_released)
 				{
 					project_load(item.filename)
-				
+					window_state = ""
+					
 					scissor_done()
 					return 0
 				}

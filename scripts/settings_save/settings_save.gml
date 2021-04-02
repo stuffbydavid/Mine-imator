@@ -124,6 +124,12 @@ json_save_object_start("interface")
 	json_save_var("view_second_width", view_second.width)
 	json_save_var("view_second_height", view_second.height)
 	
+	json_save_var_bool("snap", setting_snap)
+	json_save_var_bool("snap_absolute", setting_snap_absolute)
+	json_save_var("snap_size_position", setting_snap_size_position)
+	json_save_var("snap_size_rotation", setting_snap_size_rotation)
+	json_save_var("snap_size_scale", setting_snap_size_scale)
+	
 	json_save_var_bool("modelbench_popup_hidden", popup_modelbench.hidden)
 
 json_save_object_done()

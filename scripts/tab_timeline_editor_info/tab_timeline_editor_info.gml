@@ -49,7 +49,7 @@ if (tl_edit.value_type[e_value_type.ROT_POINT])
 		context_menu_group_temp = e_context_group.ROT_POINT
 		
 		tab_control_textfield_group(false)
-		draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false)
+		draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false, true, true)
 		tab_next()
 		
 		context_menu_group_temp = null

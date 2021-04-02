@@ -1,4 +1,4 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, [alpha, [drag, [update_values]]]]])
+/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, [axiscolor, [drag, [update_values]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -9,11 +9,11 @@
 /// @arg snap
 /// @arg [showcaption
 /// @arg [stack
-/// @arg [alpha
+/// @arg [axiscolor
 /// @arg [drag
 /// @arg [update_values]]]]
 
-var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption, stack, alpha, drag, textfield_update;
+var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption, stack, axiscolor, drag, textfield_update;
 var fieldx, fieldy, fieldwid, fieldupdate, hei, dragw, vertical, mouseon;
 name = argument[0]
 xx = argument[1]
@@ -25,7 +25,7 @@ maxval = argument[6]
 snapval = argument[7]
 showcaption = false
 stack = true
-alpha = 1
+axiscolor = false
 drag = true
 textfield_update = true
 
@@ -36,7 +36,7 @@ if (argument_count > 9)
 	stack = argument[9]
 
 if (argument_count > 10)
-	alpha = argument[10]
+	axiscolor = argument[10]
 
 if (argument_count > 11)
 	drag = argument[11]
@@ -66,9 +66,6 @@ var active = current_mcroani.custom;
 microani_set(name, null, mouseon || active, false, false)
 microani_update(mouseon || active, false, false)
 
-if (alpha = null)
-	alpha = mcroani_arr[e_mcroani.HOVER]
-
 if (showcaption)
 {
 	draw_label(text_get(name), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
@@ -80,13 +77,13 @@ fieldx = xx
 fieldy = yy
 dragw = 16
 
-draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_level_top, alpha * draw_get_alpha())
+draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_level_top, draw_get_alpha())
 
 // Draw field backgrounds
 if (vertical)
-	draw_outline(fieldx, fieldy, wid, textfield_amount * hei, 1, c_border, a_border * alpha, true)
+	draw_outline(fieldx, fieldy, wid, textfield_amount * hei, 1, c_border, a_border, true)
 else
-	draw_outline(fieldx, fieldy, wid, hei, 1, c_border, a_border * alpha, true)
+	draw_outline(fieldx, fieldy, wid, hei, 1, c_border, a_border, true)
 
 draw_set_font(font_label)
 for (var i = 0; i < textfield_amount; i++)
@@ -94,9 +91,9 @@ for (var i = 0; i < textfield_amount; i++)
 	if (i > 0)
 	{
 		if (vertical)
-			draw_box(fieldx + 1, fieldy - 1, fieldwid - 2, 1, false, c_border, a_border * alpha)
+			draw_box(fieldx + 1, fieldy - 1, fieldwid - 2, 1, false, c_border, a_border)
 		else
-			draw_box(fieldx, fieldy + 1, 1, hei - 2, false, c_border, a_border * alpha)
+			draw_box(fieldx, fieldy + 1, 1, hei - 2, false, c_border, a_border)
 	}
 	
 	if (vertical)
@@ -149,10 +146,28 @@ for (var i = 0; i < textfield_amount; i++)
 	linecolor = merge_color(c_border, c_text_tertiary, mcroani_arr[e_mcroani.HOVER])
 	linecolor = merge_color(linecolor, c_accent, focus)
 	linealpha = lerp(0, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
-	linealpha = lerp(linealpha, a_accent, focus) * alpha
+	linealpha = lerp(linealpha, a_accent, focus)
+	
+	var col = c_text_secondary;
+	var alpha = a_text_secondary;
+	
+	if (axiscolor)
+	{
+		if (i = 0)
+			col = c_axisred
+		else if (i = 1)
+			col = c_axisgreen
+		else
+			col = c_axisblue
+	
+		alpha = 1
+	}
+	
+	
+	
 	
 	if (textfield_icon[i] = null)
-		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, col, alpha, font_label)
 	else
 		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 	

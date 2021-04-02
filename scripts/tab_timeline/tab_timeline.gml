@@ -3,7 +3,7 @@
 var itemh, itemhalf, indent;
 var tlx, tly, tlw, tlh, tlstartpos, tlhierarchy;
 var listx, listy, listw, listh;
-var mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
+var mouseinmarkers, mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
 var mousemovetl, mousemoveindex, movehltl, movehlpos;
 var headerx, headery, headerw, headerh;
 var markerbarshow, markerbarx, markerbary, markerbarw, markerbarh, markerh;
@@ -39,7 +39,7 @@ bary = content_y + headerh
 listx = content_x
 listy = content_y + (headerh + barh)
 listw = min(timeline.list_width, content_width)
-listh = floor((content_height - (headerh + barh) - (12 + (24 * markerbarshow))) / itemh) * itemh
+listh = (content_height - (headerh + barh) - ((12 * timeline.hor_scroll.needed)))
 
 // Timeline
 tlx = content_x + listw
@@ -80,7 +80,8 @@ else
 	timeline_insert_pos = timeline_marker
 
 // Mouse
-mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+mouseinmarkers = (app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 mousetl = floor((mouse_y - tly + timeline.ver_scroll.value) / itemh)
 mousetlname = null
@@ -225,14 +226,35 @@ timeline_settings_right_w = (buttonsx - buttonsxstart)
 content_mouseon = app_mouse_box(barx, bary, barw, barh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 
 // Empty
-if (project_file != "" && !instance_exists(obj_timeline) && tlw > 500 && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
-	draw_label(text_get("timelineempty"), tlx + floor(tlw / 2), tly + floor((content_height - (headerh + barh)) / 2), fa_center, fa_middle, c_text_secondary, a_text_secondary, font_body_big)
+if (project_file != "" && !instance_exists(obj_timeline) && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
+{
+	var textx, texty, textwid, textwid1, textwid2;
+	
+	draw_set_font(font_body_big)
+	textwid1 = string_width(text_get("timelineempty1"))
+	textwid2 = string_width(text_get("timelineempty2"))
+	textwid = (textwid1 + textwid2 + 24)
+	
+	textx = floor((tlx + floor(tlw / 2)) - textwid/2)
+	texty = floor(tly + floor((content_height - (headerh + barh)) / 2))
+	
+	if (tlw > textwid)
+	{
+		draw_label(text_get("timelineempty1"), textx, texty, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		textx += textwid1
+	
+		draw_image(spr_icons, icons.WORKBENCH, textx + 12, texty + 2, 1, 1, c_text_secondary, a_text_secondary)
+		textx += 24
+	
+		draw_label(text_get("timelineempty2"), textx, texty, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	}
+}
 
 // Keyframe backgrounds
 dy = tly
 for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
-	if (dy + itemh > tly + tlh)
+	if (dy > tly + tlh)
 		break
 	
 	dx = tlx
@@ -275,13 +297,13 @@ if (timeline_region_start != null)
 		x2 = regionx2
 		
 		// Start/end markers
-		if (x1 >= 0 && x1 <= barw)
+		if (x1 >= -32 && x1 <= (barw + 32))
 		{
 			draw_image(spr_marker_region, 0, barx + x1, bary, 1, 1, c_accent, 1)
 			draw_box(barx + x1, bary, 1, markerh + barh, false, c_accent, 1)
 		}
 		
-		if (x2 >= 0 && x2 <= barw)
+		if (x2 >= -32 && x2 <= (barw +32))
 		{
 			draw_image(spr_marker_region, 1, barx + x2 + 10, bary, 1, 1, c_accent, 1)
 			draw_box(barx + x2, bary, 1, markerh + barh, false, c_accent, 1)
@@ -372,6 +394,260 @@ for (dx = 1 - (timeline.hor_scroll.value mod (timeline_zoom * framestep)); dx < 
 	}
 	
 	f += framestep
+}
+
+content_mouseon = true
+
+// Keyframes
+dy = tly
+for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
+{
+	if (dy > tly + tlh)
+		break
+		
+	dx = tlx
+	var tl = tree_visible_list[|t];
+	
+	// Draw ghosts
+	if (window_busy = "timelinemovekeyframes")
+	{
+		for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
+		{
+			var kf, sound;
+			kf = tl.keyframe_list[|k]
+			
+			if (!kf.selected)
+				continue
+			
+			sound = kf.value[e_value.SOUND_OBJ]
+			
+			dx = tlx + floor(kf.move_pos * timeline_zoom - timeline.hor_scroll.value)
+			
+			if (dx > tlx + (tlw + 32))
+				break
+			
+			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
+			{
+				var boxw = tl_keyframe_length(kf) * timeline_zoom;
+				if (dx + boxw < tlx)
+					continue
+				
+				draw_box(dx, dy, boxw, itemh, false, c_border, a_border)
+			}
+			else
+			{
+				if (dx < (tlx - 32))
+					continue
+				
+				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
+			}
+		}
+	}
+	
+	// Draw keyframes
+	var framecolor, framealpha;
+	framecolor = c_text_secondary
+	framealpha = a_text_secondary
+	
+	if (tl.color_tag != null)
+	{
+		framecolor = setting_theme.accent_list[tl.color_tag]
+		framealpha = .75	
+	}
+	
+	for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
+	{
+		var kf, mouse, sound;
+		kf = tl.keyframe_list[|k]
+		dx = tlx + floor(kf.position * timeline_zoom - timeline.hor_scroll.value)
+		sound = kf.value[e_value.SOUND_OBJ]
+		
+		if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
+		{
+			var soundlen, boxx, boxw, startsample, samplesshow, prec, wavehei, alpha;
+			
+			if (dx > tlx + tlw)
+				break
+				
+			soundlen = max(0, sound.sound_samples / sample_rate - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END])
+			
+			boxx = max(tlx, dx)
+			boxw = min(tlw, soundlen * project_tempo * timeline_zoom - max(0, tlx - dx))
+			
+			if (boxw <= 0)
+				continue
+			
+			startsample = floor((max(0, tlstartpos - kf.position) / project_tempo + kf.value[e_value.SOUND_START]) * sample_rate)
+			samplesshow = ((boxw / timeline_zoom) / project_tempo) * sample_rate
+			
+			prec = sample_rate / sample_avg_per_sec
+			wavehei = itemhalf * kf.value[e_value.SOUND_VOLUME]
+			alpha = draw_get_alpha()
+			
+			// Audio background
+			if (kf.selected)
+			{
+				draw_box(boxx, dy, boxw, itemh, false, c_level_middle, 1)
+				draw_box(boxx, dy, boxw, itemh, false, c_accent_overlay, a_accent_overlay)
+			}
+			
+			// Draw samples
+			draw_primitive_begin(pr_linelist)
+			for (var xx = 0; xx < boxw; xx++)
+			{
+				var ind, maxv, minv;
+				ind = ((startsample + floor((xx / boxw) * samplesshow)) mod sound.sound_samples) div prec
+				maxv = sound.sound_max_sample[ind]
+				minv = sound.sound_min_sample[ind]
+				if (xx > 0 && xx mod 500 = 0) // GM bug
+				{
+					draw_primitive_end()
+					draw_primitive_begin(pr_linelist)
+				}
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
+				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
+			}
+			draw_primitive_end()
+			
+			mouse = app_mouse_box(boxx - timeline_zoom / 2, dy, boxw + timeline_zoom * 2, itemh)
+			
+			if (kf.selected && boxw > 20)
+			{
+				if (app_mouse_box(boxx, dy, 5, itemh) && mouseintl && !tl.lock)
+					mousekfstart = kf
+				else if (app_mouse_box(boxx + boxw - 5, dy, 5, itemh) && mouseintl && !tl.lock)
+					mousekfend = kf
+			}
+		}
+		else
+		{
+			// Invisible
+			if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO)
+			{
+				var curdx, nextdx;
+				curdx = ((k = 0) ? tlx : max(tlx, dx))
+				nextdx = tlx + tlw
+				if (k < ds_list_size(tl.keyframe_list) - 1)
+					nextdx = min(nextdx, tlx + floor(tl.keyframe_list[|k + 1].position * timeline_zoom - timeline.hor_scroll.value))
+				
+				// Block out area
+				if (curdx < nextdx && nextdx >= 0)
+					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_level_bottom, .5)
+			}
+			
+			if (dx > (tlx + tlw + 32))
+				break
+			
+			if (dx < (tlx - 32))
+				continue
+			
+			mouse = (((mouse_x >= dx - 8 && mouse_x < dx + 8) || timeline_mouse_pos = kf.position) && tl = mousetl)
+			
+			// Sprite
+			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
+			
+			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
+		}
+		
+		if (mouse && mouseintl && !tl.lock)
+			mousekf = kf
+	}
+	
+	dy += itemh
+}
+
+// Selecting keyframes
+if (window_busy = "timelineselectkeyframes")
+{
+	mouse_cursor = cr_handpoint
+	
+	var x1, y1, x2, y2;
+	x1 = clamp(mouse_click_x + (timeline_select_starth - timeline.hor_scroll.value), tlx, tlx + tlw)
+	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), tly, tly + tlh)
+	x2 = clamp(mouse_x, tlx, tlx + tlw)
+	y2 = clamp(mouse_y, tly, tly + tlh) - y1
+	
+	if (x2 < x1)
+	{
+		var swap = x1;
+		x1 = x2
+		x2 = swap
+	}
+	x2 -= x1
+	
+	render_set_culling(false)
+	draw_box(x1, y1, x2, y2, false, c_accent_overlay, a_accent_overlay)
+	draw_outline(x1, y1, x2, y2, 2, c_accent, 1, true)
+	render_set_culling(true)
+	
+	if (!mouse_left)
+	{
+		if (ds_list_size(tree_visible_list) > 0)
+		{
+			var stl, etl, spos, epos, tmp;
+			
+			stl = (mouse_click_y - tly + timeline_select_startv) / itemh
+			etl = (mouse_y - tly + timeline.ver_scroll.value) / itemh
+			spos = (mouse_click_x - tlx + timeline_select_starth) / timeline_zoom
+			epos = (mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom
+			
+			if (stl > etl)
+			{
+				tmp = stl
+				stl = etl
+				etl = tmp
+			}
+			
+			if (spos > epos)
+			{
+				tmp = spos
+				spos = epos
+				epos = tmp
+			}
+			
+			if (stl < ds_list_size(tree_visible_list))
+			{
+				stl = clamp(floor(stl), 0, ds_list_size(tree_visible_list) - 1)
+				etl = clamp(floor(etl), 0, ds_list_size(tree_visible_list) - 1)
+				spos = max(0, round(spos))
+				epos = max(0, round(epos))
+				action_tl_keyframes_select_area(stl, etl, spos, epos)
+			}
+		}
+		window_busy = ""
+		app_mouse_clear()
+	}
+}
+
+// Marker
+markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
+markery = 0
+
+// Auto scrolling
+if (timeline_playing && setting_timeline_autoscroll && window_busy = "")
+{
+	while (markerx < 0)
+	{
+		timeline.hor_scroll.value -= barw
+		markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
+	}
+	
+	while (markerx > barw)
+	{
+		timeline.hor_scroll.value += barw
+		markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
+	}
+	
+	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+	timeline.hor_scroll.value_goal = timeline.hor_scroll.value
+}
+
+if (markerx >= -32 && markerx < (tlw + 32))
+{
+	draw_image(spr_marker_playback, 0, tlx + 1 + markerx, bary + barh, 1, 1, c_accent, 1)
+	draw_box(tlx + markerx, bary + barh, 2, markerh, false, c_accent, 1)
 }
 
 // Markers
@@ -501,258 +777,6 @@ if (markerbarh != 0)
 
 content_mouseon = true
 
-// Keyframes
-dy = tly
-for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
-{
-	if (dy + itemh > tly + tlh)
-		break
-		
-	dx = tlx
-	var tl = tree_visible_list[|t];
-	
-	// Draw ghosts
-	if (window_busy = "timelinemovekeyframes")
-	{
-		for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
-		{
-			var kf, sound;
-			kf = tl.keyframe_list[|k]
-			
-			if (!kf.selected)
-				continue
-			
-			sound = kf.value[e_value.SOUND_OBJ]
-			
-			dx = tlx + floor(kf.move_pos * timeline_zoom - timeline.hor_scroll.value)
-			
-			if (dx > tlx + tlw)
-				break
-			
-			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
-			{
-				var boxw = tl_keyframe_length(kf) * timeline_zoom;
-				if (dx + boxw < tlx)
-					continue
-				
-				draw_box(dx, dy, boxw, itemh, false, c_border, a_border)
-			}
-			else
-			{
-				if (dx < tlx)
-					continue
-				
-				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-				draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
-			}
-		}
-	}
-	
-	// Draw keyframes
-	var framecolor, framealpha;
-	framecolor = c_text_secondary
-	framealpha = a_text_secondary
-	
-	if (tl.color_tag != null)
-	{
-		framecolor = setting_theme.accent_list[tl.color_tag]
-		framealpha = .75	
-	}
-	
-	for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
-	{
-		var kf, mouse, sound;
-		kf = tl.keyframe_list[|k]
-		dx = tlx + floor(kf.position * timeline_zoom - timeline.hor_scroll.value)
-		sound = kf.value[e_value.SOUND_OBJ]
-		
-		if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
-		{
-			var soundlen, boxx, boxw, startsample, samplesshow, prec, wavehei, alpha;
-			
-			if (dx > tlx + tlw)
-				break
-				
-			soundlen = max(0, sound.sound_samples / sample_rate - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END])
-			
-			boxx = max(tlx, dx)
-			boxw = min(tlw, soundlen * project_tempo * timeline_zoom - max(0, tlx - dx))
-			
-			if (boxw <= 0)
-				continue
-			
-			startsample = floor((max(0, tlstartpos - kf.position) / project_tempo + kf.value[e_value.SOUND_START]) * sample_rate)
-			samplesshow = ((boxw / timeline_zoom) / project_tempo) * sample_rate
-			
-			prec = sample_rate / sample_avg_per_sec
-			wavehei = itemhalf * kf.value[e_value.SOUND_VOLUME]
-			alpha = draw_get_alpha()
-			
-			// Audio background
-			if (kf.selected)
-			{
-				draw_box(boxx, dy, boxw, itemh, false, c_level_middle, 1)
-				draw_box(boxx, dy, boxw, itemh, false, c_accent_overlay, a_accent_overlay)
-			}
-			
-			// Draw samples
-			draw_primitive_begin(pr_linelist)
-			for (var xx = 0; xx < boxw; xx++)
-			{
-				var ind, maxv, minv;
-				ind = ((startsample + floor((xx / boxw) * samplesshow)) mod sound.sound_samples) div prec
-				maxv = sound.sound_max_sample[ind]
-				minv = sound.sound_min_sample[ind]
-				if (xx > 0 && xx mod 500 = 0) // GM bug
-				{
-					draw_primitive_end()
-					draw_primitive_begin(pr_linelist)
-				}
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - maxv * wavehei, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
-				draw_vertex_color(boxx + xx + 1, dy + itemhalf - minv * wavehei + 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
-			}
-			draw_primitive_end()
-			
-			mouse = app_mouse_box(boxx - timeline_zoom / 2, dy, boxw + timeline_zoom * 2, itemh)
-			
-			if (kf.selected && boxw > 20)
-			{
-				if (app_mouse_box(boxx, dy, 5, itemh) && mouseintl && !tl.lock)
-					mousekfstart = kf
-				else if (app_mouse_box(boxx + boxw - 5, dy, 5, itemh) && mouseintl && !tl.lock)
-					mousekfend = kf
-			}
-		}
-		else
-		{
-			// Invisible
-			if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO)
-			{
-				var curdx, nextdx;
-				curdx = ((k = 0) ? tlx : max(tlx, dx))
-				nextdx = tlx + tlw
-				if (k < ds_list_size(tl.keyframe_list) - 1)
-					nextdx = min(nextdx, tlx + floor(tl.keyframe_list[|k + 1].position * timeline_zoom - timeline.hor_scroll.value))
-				
-				// Block out area
-				if (curdx < nextdx && nextdx >= 0)
-					draw_box(curdx, dy, nextdx - curdx, itemh, false, c_level_bottom, .5)
-			}
-			
-			if (dx > tlx + tlw)
-				break
-			
-			if (dx < tlx)
-				continue
-			
-			mouse = (((mouse_x >= dx - 8 && mouse_x < dx + 8) || timeline_mouse_pos = kf.position) && tl = mousetl)
-			
-			// Sprite
-			var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
-			
-			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-			draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
-		}
-		
-		if (mouse && mouseintl && !tl.lock)
-			mousekf = kf
-	}
-	
-	dy += itemh
-}
-
-// Selecting keyframes
-if (window_busy = "timelineselectkeyframes")
-{
-	mouse_cursor = cr_handpoint
-	
-	var x1, y1, x2, y2;
-	x1 = clamp(mouse_click_x + (timeline_select_starth - timeline.hor_scroll.value), tlx, tlx + tlw)
-	y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), tly, tly + tlh)
-	x2 = clamp(mouse_x, tlx, tlx + tlw)
-	y2 = clamp(mouse_y, tly, tly + tlh) - y1
-	
-	if (x2 < x1)
-	{
-		var swap = x1;
-		x1 = x2
-		x2 = swap
-	}
-	x2 -= x1
-	
-	render_set_culling(false)
-	draw_box(x1, y1, x2, y2, false, c_accent_overlay, a_accent_overlay)
-	draw_outline(x1, y1, x2, y2, 2, c_accent, 1, true)
-	render_set_culling(true)
-	
-	if (!mouse_left)
-	{
-		if (ds_list_size(tree_visible_list) > 0)
-		{
-			var stl, etl, spos, epos, tmp;
-			
-			stl = (mouse_click_y - tly + timeline_select_startv) / itemh
-			etl = (mouse_y - tly + timeline.ver_scroll.value) / itemh
-			spos = (mouse_click_x - tlx + timeline_select_starth) / timeline_zoom
-			epos = (mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom
-			
-			if (stl > etl)
-			{
-				tmp = stl
-				stl = etl
-				etl = tmp
-			}
-			
-			if (spos > epos)
-			{
-				tmp = spos
-				spos = epos
-				epos = tmp
-			}
-			
-			if (stl < ds_list_size(tree_visible_list))
-			{
-				stl = clamp(floor(stl), 0, ds_list_size(tree_visible_list) - 1)
-				etl = clamp(floor(etl), 0, ds_list_size(tree_visible_list) - 1)
-				spos = max(0, round(spos))
-				epos = max(0, round(epos))
-				action_tl_keyframes_select_area(stl, etl, spos, epos)
-			}
-		}
-		window_busy = ""
-		app_mouse_clear()
-	}
-}
-
-// Marker
-markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
-markery = 0
-
-// Auto scrolling
-if (timeline_playing && setting_timeline_autoscroll && window_busy = "")
-{
-	while (markerx < 0)
-	{
-		timeline.hor_scroll.value -= barw
-		markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
-	}
-	
-	while (markerx > barw)
-	{
-		timeline.hor_scroll.value += barw
-		markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
-	}
-	
-	timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
-	timeline.hor_scroll.value_goal = timeline.hor_scroll.value
-}
-
-if (markerx >= 0 && markerx < tlw)
-{
-	draw_image(spr_marker_playback, 0, tlx + 1 + markerx, bary + barh, 1, 1, c_accent, 1)
-	draw_box(tlx + markerx, bary + barh, 2, markerh, false, c_accent, 1)
-}
-
 // Timeline list
 var tl, buttonsize, buttonpad;
 var itemx, itemy, itemw, itemhover, buttonhover, minw, xx, xright;
@@ -785,7 +809,7 @@ if (mouseinnames && mousetl != null && mousetl.list_mouseon)
 dy = listy
 for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
-	if (dy + itemh > listy + listh)
+	if (dy > listy + listh)
 		break
 	
 	tl = tree_visible_list[|t]
@@ -1191,8 +1215,11 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 				else // Start moving selection
 					action_tl_keyframes_move_start(mousekf)
 			}
-			else if ((timeline_marker >= mousekf.position && timeline_marker <= mousekf.position + tl_keyframe_length(mousekf) && mousekf.timeline.selected) || keyboard_check(vk_shift)) // Select
+			else if ((tl_keyframe_length(mousekf) != 0 && (timeline_marker >= mousekf.position) && (timeline_marker <= mousekf.position + tl_keyframe_length(mousekf))) || (tl_keyframe_length(mousekf) = 0)) // Select
 			{
+				if (!keyboard_check(vk_shift))
+					tl_keyframes_deselect_all()
+				
 				action_tl_keyframe_select(mousekf.timeline, mousekf)
 				action_tl_keyframes_move_start(mousekf)
 			}
@@ -1433,7 +1460,6 @@ if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, bar
 // Set region
 if (window_busy = "timelinecreateregion" || window_busy = "timelinesetregionstart" || window_busy = "timelinesetregionend")
 {
-
 	var release;
 	
 	if (window_busy = "timelinecreateregion")
@@ -1504,7 +1530,7 @@ if (window_busy = "timelinemarker")
 // Zoom
 if (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0)
 {
-	var m = (1 - 0.5 * mouse_wheel);
+	var m = (mouse_wheel = 1 ? .5 : 2);
 	timeline_zoom_goal = clamp(timeline_zoom_goal * m, 0.25, 32)
 	if (timeline_zoom_goal > 1)
 		timeline_zoom_goal = round(timeline_zoom_goal)
@@ -1584,13 +1610,22 @@ content_mouseon = app_mouse_box(content_x, content_y, content_width, content_hei
 // Vertical scrollbar
 if (tlw > 16)
 {
-	timeline.ver_scroll.snap_value = itemh
+	timeline.ver_scroll.snap_value = itemh / 4
+	
+	if (timeline.ver_scroll.needed)
+		draw_box(content_x + content_width - 12, tly, 12, tlh, false, c_level_middle, 1)
+	
 	scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 12, tly, tlh, ds_list_size(tree_visible_list) * itemh)
 }
 
 // Horizontal scrollbar
 if (content_height > (barh + headerh + 12) && (!timeline_playing || !setting_timeline_autoscroll))
+{
+	if (timeline.hor_scroll.needed)
+		draw_box(tlx, content_y + content_height - 12, content_width - listw, 12, false, c_level_middle, 1)
+	
 	scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 12, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw))
+}
 
 if (content_mouseon)
 {

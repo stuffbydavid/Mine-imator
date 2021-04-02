@@ -30,6 +30,9 @@ if (window_busy = "" && !textbox_isediting)
 	if (keybinds_map[?e_keybind.PROJECT_SAVE].pressed)
 		action_toolbar_save()
 	
+	if (keybinds_map[?e_keybind.PROJECT_SAVE_AS].pressed)
+		action_toolbar_save_as()
+	
 	if (keybinds_map[?e_keybind.UNDO].pressed)
 		action_toolbar_undo()
 	

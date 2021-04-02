@@ -79,7 +79,7 @@ if (tl_edit.value[e_value.CAM_ROTATE] && collapse_map[?"rotatepoint"])
 	textfield_group_add("frameeditorcamerarotateanglez", tl_edit.value[e_value.CAM_ROTATE_ANGLE_Z], 0, action_tl_frame_cam_rotate_angle_z, axis_edit, tab.camera.tbx_rotate_angle_z, null, .1, -89.9, 89.9)
 	
 	tab_control_textfield(false)
-	draw_textfield_group("frameeditorcamerarotateangle", dx, dy, dw, 0.1, 0, 0, snapval, false, true, null)
+	draw_textfield_group("frameeditorcamerarotateangle", dx, dy, dw, 0.1, 0, 0, snapval, false, true)
 	tab_next()
 	
 	// Distance
@@ -206,7 +206,7 @@ if (tl_edit.value[e_value.CAM_DOF] && collapse_map[?"dof"])
 		textfield_group_add("frameeditorcameradoffringeangleblue", tl_edit.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], tl_edit.value_default[e_value.CAM_DOF_FRINGE_ANGLE_BLUE], action_tl_frame_cam_dof_fringe_angle, axis_edit, tab.camera.tbx_dof_fringe_angle_blue)
 		
 		tab_control_textfield(false)
-		draw_textfield_group("frameeditorcameradoffringeangle", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, null)
+		draw_textfield_group("frameeditorcameradoffringeangle", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, true)
 		tab_next()
 		
 		// Offset
@@ -215,7 +215,7 @@ if (tl_edit.value[e_value.CAM_DOF] && collapse_map[?"dof"])
 		textfield_group_add("frameeditorcameradoffringeblue", round(tl_edit.value[e_value.CAM_DOF_FRINGE_BLUE] * 100), 100, action_tl_frame_cam_dof_fringe_blue, X, tab.camera.tbx_dof_fringe_blue)
 		
 		tab_control_textfield_group()
-		draw_textfield_group("frameeditorcameradoffringeoffset", dx, dy, dw, 1, 0, no_limit, 1, true)
+		draw_textfield_group("frameeditorcameradoffringeoffset", dx, dy, dw, 1, 0, no_limit, 1, true, true, true)
 		tab_next()
 	}
 	

@@ -20,11 +20,12 @@ else
 	disabled = false
 }
 
-var val = draw_button_icon(name + "collapse", dx - 8, dy + (tab_control_h / 2) - 8, 16, 16, value, null, script, disabled, (value ? "tooltiphideoptions" : "tooltipshowoptions"), spr_chevron_ani)
+var val = draw_button_icon(name + "collapse", dx - 8, dy + (tab_control_h / 2) - 8, 16, 16, value && !disabled, null, script, disabled, (value ? "tooltiphideoptions" : "tooltipshowoptions"), spr_chevron_ani)
 
 dx += 12
 dw -= 12
 tab_collapse = true
+collapse_ani = mcroani_arr[e_mcroani.ACTIVE]
 
 // Interact with collapse map?
 if (val && ds_map_exists(collapse_map, name))

@@ -37,8 +37,8 @@ if (shortcut_bar_state != shortcut_bar_state_prev)
 	
 	if (shortcut_bar_state = "timeline")
 	{
-		shortcut_bar_add(null, e_mouse.SCROLL, "scrollhorizontal")
-		shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.SCROLL, "scrollvertical")
+		shortcut_bar_add(null, e_mouse.SCROLL, "scrollvertical")
+		shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.SCROLL, "scrollhorizontal")
 		shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.SCROLL, "zoom")
 	}
 }

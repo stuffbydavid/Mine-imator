@@ -11,10 +11,10 @@ if (level.ani >= 1)
 	level.ani = 1
 aniease = ease("easeoutexpo", level.ani)
 
-dx = level.level_x
-dy = level.level_y
 dw = level.level_width
 dh = level.level_height * aniease
+dx = level.level_x
+dy = (level.flip ? (level.level_y + (level.level_height - dh)) : level.level_y)
 
 content_x = dx
 content_y = dy
@@ -33,14 +33,14 @@ if (!content_mouseon && (levelindex >= context_menu_mouseon_level))
 	context_menu_mouseon_reset = true
 
 draw_dropshadow(dx, dy, dw, dh, c_black, 1)
-draw_box(dx, dy, dw, dh, false, c_level_middle, 1)
+draw_box(dx, dy, dw, dh, false, c_level_top, 1)
 draw_outline(dx, dy, dw, dh, 1, c_border, a_border, true)
 
 if (level.ani < 1)
 	scissor_start(dx, dy, dw, dh)
 
 // Adjust 
-dy = level.level_y - ((1 - aniease) * level.level_height)
+dy = (level.flip ? dy : (level.level_y - ((1 - aniease) * level.level_height)))
 
 if (level.level_list != null)
 {

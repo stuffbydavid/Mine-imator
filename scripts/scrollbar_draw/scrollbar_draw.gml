@@ -8,8 +8,8 @@
 /// @desc Draws a scrollbar.
 
 var sb, dir, xx, yy, size, maxsize;
-var margin, width, areasize;
-var barsize, barpos, mouseinarea, mouseinbar, pressed;
+var margin, width, areasize, nearsize;
+var barsize, barpos, mouseinarea, mouseinbar, mousenear, pressed;
 sb = argument[0]
 dir = argument[1]
 xx = argument[2]
@@ -20,6 +20,7 @@ maxsize = argument[5]
 width = 6
 margin = 3
 areasize = (width + (margin * 2))
+nearsize = 0
 
 if (size >= maxsize || maxsize = 0)
 {
@@ -34,13 +35,34 @@ sb.atend = (sb.needed && sb.value >= maxsize - size)
 if (!sb.needed || size < 5)
 	return 0
 
-size -= (margin * 2)
-yy += margin
-xx += margin
+// Animate size
+if (dir = e_scroll.HORIZONTAL)
+	sb.mousenear = (app_mouse_box(xx, yy - nearsize, size, areasize + nearsize) && content_mouseon) || window_focus = string(sb)
+else
+	sb.mousenear = (app_mouse_box(xx - nearsize, yy, areasize + nearsize, size) && content_mouseon) || window_focus = string(sb)
 
-barsize = clamp(5, floor((size / maxsize) * size), size)
+var xfar, yfar, xnear, ynear;
+xfar = xx + margin
+yfar = yy + margin
+
+if (dir = e_scroll.HORIZONTAL)
+{
+	xnear = xfar
+	ynear = yy
+}
+else
+{
+	xnear = xx
+	ynear = yfar
+}
+
+width += ((margin * 2) * sb.mousenear_ani_ease)
+xx = lerp(xfar, xnear, sb.mousenear_ani_ease)
+yy = lerp(yfar, ynear, sb.mousenear_ani_ease)
+size -= (margin * 2)
+
+barsize = clamp(16, floor((size / maxsize) * size), size)
 barpos = min(size - barsize, floor(sb.value * (size / maxsize)))
-margin = 0
 
 if (dir = e_scroll.HORIZONTAL)
 {
@@ -59,7 +81,7 @@ if (mouseinarea)
 {
 	mouse_cursor = cr_handpoint
 	
-	if (!mouse_left_pressed && mouse_left && !mouseinbar) // Page jump
+	if (!mouse_left_pressed && mouse_left && !mouseinbar && (dir ? (mouse_x < (xx + barpos) || mouse_x > (xx + barpos + barsize)) : (mouse_y < (yy + barpos) || mouse_y > (yy + barpos + barsize)))) // Page jump
 	{
 		sb.press--
 		if (sb.press < 1)
@@ -144,4 +166,6 @@ else
 {
 	draw_box(xx, yy, width, size, false, c_overlay, a_overlay)
 	draw_box(xx, yy + barpos, width, barsize, false, c_accent, 1)
+	
+	//draw_box(xx - margin - nearsize, yy - margin, areasize + nearsize, size + (margin * 2), false, c_red, .25)
 }

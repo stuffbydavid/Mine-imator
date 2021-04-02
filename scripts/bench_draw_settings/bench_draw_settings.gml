@@ -13,6 +13,8 @@ content_y = dy
 content_width = dw
 content_height = dh
 
+var sy = dy;
+
 // Settings
 if (type_is_timeline(bench_settings.type))
 {
@@ -22,8 +24,13 @@ if (type_is_timeline(bench_settings.type))
 		tab_control_togglebutton()
 		togglebutton_add("typepointlight", null, e_tl_type.POINT_LIGHT, bench_settings.light_type = e_tl_type.POINT_LIGHT, action_bench_light_type)
 		togglebutton_add("typespotlight", null, e_tl_type.SPOT_LIGHT, bench_settings.light_type = e_tl_type.SPOT_LIGHT, action_bench_light_type)
-		draw_togglebutton("benchlight", dx, dy)
+		draw_togglebutton("benchlighttype", dx, dy)
 		tab_next()
+		
+		if (bench_settings.light_type = e_tl_type.POINT_LIGHT)
+			draw_tooltip_label("benchpointlighttip", icons.LIGHT_POINT, e_toast.INFO)
+		else
+			draw_tooltip_label("benchspotlighttip", icons.LIGHT_SPOT, e_toast.INFO)
 	}
 }
 else
@@ -376,9 +383,10 @@ else
 }
 
 tab_control_button_label()
-if (draw_button_label("benchcreate", dx, dy, dw, icons.ASSET_ADD))
+tab_next()
+
+if (draw_button_label("benchcreate", dx, sy + dh - (48), dw, icons.ASSET_ADD))
 {
 	action_bench_create()
 	bench_show_ani_type = "hide"
 }
-tab_next()

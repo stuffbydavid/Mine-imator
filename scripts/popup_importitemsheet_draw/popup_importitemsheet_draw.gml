@@ -18,7 +18,7 @@ if (texhei > texwid)
 else
 {
 	scale = previewsize / texwid
-	previewy += (previewsize - scale * texhei) / 2
+	previewy = dy
 }
 
 previewwid = texwid * scale

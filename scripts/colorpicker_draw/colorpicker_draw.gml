@@ -79,7 +79,7 @@ if (colorpicker.mode = "rgb")
 	textfield_group_add("colorpickerr", color_get_red(colorpicker.color), color_get_red(colorpicker.def), colorpicker_reset_red, X, colorpicker.tbx_red)
 	textfield_group_add("colorpickerg", color_get_green(colorpicker.color), color_get_green(colorpicker.def), colorpicker_reset_green, X, colorpicker.tbx_green)
 	textfield_group_add("colorpickerb", color_get_blue(colorpicker.color), color_get_blue(colorpicker.def), colorpicker_reset_blue, X, colorpicker.tbx_blue)
-	if (draw_textfield_group("colorpickerrgb", dx, dy, 176, 1, 0, 255, 1, false, false, 1, true, false))
+	if (draw_textfield_group("colorpickerrgb", dx, dy, 176, 1, 0, 255, 1, false, false, true, true, false))
 	{
 		colorpicker.red = min(255, string_get_real(colorpicker.tbx_red.text, 0))
 		colorpicker.green = min(255, string_get_real(colorpicker.tbx_green.text, 0))
@@ -93,7 +93,7 @@ else if (colorpicker.mode = "hsl")
 	textfield_group_add("colorpickerh", floor(color_get_hue(colorpicker.color)), floor(color_get_hue(colorpicker.def)), colorpicker_reset_hue, X, colorpicker.tbx_hue)
 	textfield_group_add("colorpickers", floor(color_get_saturation(colorpicker.color)), floor(color_get_saturation(colorpicker.def)), colorpicker_reset_saturation, X, colorpicker.tbx_saturation)
 	textfield_group_add("colorpickerl", floor(color_get_value(colorpicker.color)), floor(color_get_value(colorpicker.def)), colorpicker_reset_brightness, X, colorpicker.tbx_brightness)
-	var update = draw_textfield_group("colorpickerhsl", dx, dy, 176, 1, 0, 255, 1, false, false, 1, true, false);
+	var update = draw_textfield_group("colorpickerhsl", dx, dy, 176, 1, 0, 255, 1, false, false, false, true, false);
 	if (update = colorpicker.tbx_hue)
 	{
 		colorpicker.hue = min(255, string_get_real(colorpicker.tbx_hue.text, 0))

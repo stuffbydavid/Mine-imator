@@ -17,9 +17,9 @@ with (tl_edit)
 
 zang = matrix_multiply(matrix_build(0, 0, 0, 90, 0, tl_edit.value[e_value.CAM_ROTATE_ANGLE_XY] + 90, 1, 1, 1), xyang)
 
-view_control_rotation_axis(view, e_view_control.ROT_ANGLE_XY, e_value.CAM_ROTATE_ANGLE_XY, c_axisyellow, xyang, len)
-view_control_rotation_axis(view, e_view_control.ROT_ANGLE_Z, e_value.CAM_ROTATE_ANGLE_Z, c_axiscyan, zang, len)
-view_control_position_axis(view, e_view_control.ROT_DISTANCE, e_value.CAM_ROTATE_DISTANCE, c_axismagenta, tl_edit.world_pos, tl_edit.world_pos_rotate, false)
+view_control_rotate_axis(view, e_view_control.ROT_ANGLE_XY, e_value.CAM_ROTATE_ANGLE_XY, c_axisyellow, xyang, len)
+view_control_rotate_axis(view, e_view_control.ROT_ANGLE_Z, e_value.CAM_ROTATE_ANGLE_Z, c_axiscyan, zang, len)
+view_control_move_axis(view, e_view_control.ROT_DISTANCE, e_value.CAM_ROTATE_DISTANCE, c_axismagenta, tl_edit.world_pos, tl_edit.world_pos_rotate, false)
 
 // Is dragging
 if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_control_edit = e_view_control.ROT_ANGLE_XY || view_control_edit = e_view_control.ROT_ANGLE_Z))

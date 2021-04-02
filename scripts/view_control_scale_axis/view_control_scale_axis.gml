@@ -38,7 +38,7 @@ end2D = view_shape_project(end3D)
 if (point3D_project_error)
 	return 0
 
-var alpha = percent(abs(vec3_dot(vec3_normalize(vec3_sub(end3D, center3D)), vec3_normalize(vec3_sub(cam_from, center3D)))), .9, .8);
+var alpha = percent(abs(vec3_dot(vec3_normalize(vec3_sub(end3D, center3D)), vec3_normalize(vec3_sub(cam_from, center3D)))), .975, .95);
 
 if ((window_busy = "rendercontrol" && view_control_edit = control) || view.control_mouseon_last = control)
 	alpha = 1

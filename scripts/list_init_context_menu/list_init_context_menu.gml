@@ -87,7 +87,7 @@ switch (name)
 	// Timeline object list
 	case "timelinelist":
 	{
-		list_item_add(text_get("contextmenutladdfolder"), null, "", null, icons.FOLDER, null, action_tl_folder, true)
+		list_item_add(text_get("contextmenutladdfolder"), null, text_control_name(keybinds_map[?e_keybind.CREATE_FOLDER].keybind), null, icons.FOLDER, null, action_tl_folder, true)
 		list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
 		
 		list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
@@ -198,7 +198,7 @@ switch (name)
 		list_item_last.context_menu_name = "toolbarfilerecent"
 		
 		list_item_add(text_get("toolbarfilesave"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
-		list_item_add(text_get("toolbarfilesaveas"), null, "", null, icons.SAVE_AS, null, action_toolbar_save_as)
+		list_item_add(text_get("toolbarfilesaveas"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
 		
 		list_item_add(text_get("toolbarfileimport"), null, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
 		
@@ -250,6 +250,7 @@ switch (name)
 	{
 		list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
 		list_item_add(text_get("toolbarviewshortcutsbar"), null, "", null, icons.KEYBOARD, null, action_setting_shortcuts_bar)
+		list_item_last.toggled = setting_show_shortcuts_bar
 		
 		break
 	}
@@ -263,6 +264,9 @@ switch (name)
 		
 		list_item_add(text_get("toolbarhelpreport"), link_forums_bugs, "", null, icons.BUG, null, open_url, true)
 		list_item_add(text_get("toolbarhelpforums"), link_forums, "", null, icons.SPEECH_BUBBLE, null, open_url)
+		
+		if (trial_version)
+			list_item_add(text_get("toolbarhelpupgrade"), popup_upgrade, "", null, icons.KEY_ALT, null, popup_show, true)
 		
 		break
 	}

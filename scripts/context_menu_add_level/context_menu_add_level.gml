@@ -25,6 +25,7 @@ level.level_x = xx
 level.level_y = yy
 level.level = context_menu_level_amount
 level.ani = 0
+level.flip = false
 
 // Calculate level size
 if (script = null)
@@ -68,11 +69,8 @@ if (level.level_x + level.level_width > window_width)
 
 if (level.level_y + level.level_height > window_height)
 {
-	// If less than half of the menu is off-screen, place menu at bottom of window
-	if (level.level_y + level.level_height/2 < window_height)
-		level.level_y += window_height - (level.level_y + level.level_height)
-	else
-		level.level_y -= level.level_height
+	level.level_y -= level.level_height
+	level.flip = true
 }
 
 ds_list_add(context_menu_level, level)

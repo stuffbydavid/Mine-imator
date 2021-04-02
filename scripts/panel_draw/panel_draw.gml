@@ -201,14 +201,18 @@ if (content_tab.movable)
 		
 		var limit = dw - 16;
 		
-		if (hover && tab.closeable)
+		if ((hover || sel) && tab.closeable)
 			limit -= 20
 		
 		draw_set_font(sel ? font_label : font_value)
+		
+		if (string_width(tabtitle[t]) > limit)
+			tip_set(tabtitle[t], dx, dy, dw, dh)
+		
 		tabtitle[t] = string_limit(tabtitle[t], limit)
 		
 		// Close button
-		if (tab.closeable && hover)
+		if (tab.closeable && (hover || sel))
 		{
 			if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL))
 			{

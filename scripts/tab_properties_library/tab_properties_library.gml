@@ -50,7 +50,7 @@ switch (temp_edit.type)
 		draw_label_value(dx, dy, dw - 32, 24, text_get(text), temp_edit.model_file != null ? minecraft_asset_get_name("model", temp_edit.model_file.name) : "")
 		
 		// Change
-		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
+		if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangemodel"))
 			tab_toggle(template_editor)
 			
 		tab_next()
@@ -143,23 +143,32 @@ switch (temp_edit.type)
 		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 36, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
 		tab_next()
 		
+		var sx;
+		sx = dx_start
+		
+		dx_start = dx
+		tab_set_collumns(true, 2)
+		
 		// Graphics
-		tab_control_switch()
-		draw_switch("libraryitem3d", dx, dy, temp_edit.item_3d, action_lib_item_3d)
+		tab_control_checkbox()
+		draw_checkbox("libraryitem3d", dx, dy, temp_edit.item_3d, action_lib_item_3d)
 		tab_next()
 		
-		tab_control_switch()
-		draw_switch("libraryitemfacecamera", dx, dy, temp_edit.item_face_camera, action_lib_item_face_camera)
+		tab_control_checkbox()
+		draw_checkbox("libraryitemfacecamera", dx, dy, temp_edit.item_face_camera, action_lib_item_face_camera)
 		tab_next()
 		
-		tab_control_switch()
-		draw_switch("libraryitembounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce)
+		tab_control_checkbox()
+		draw_checkbox("libraryitembounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce)
 		tab_next()
 		
-		tab_control_switch()
-		draw_switch("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
+		tab_control_checkbox()
+		draw_checkbox("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
 		tab_next()
-
+		
+		tab_set_collumns(false)
+		dx_start = sx
+		
 		break
 	}
 	
@@ -170,7 +179,7 @@ switch (temp_edit.type)
 		draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
 		
 		// Change
-		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
+		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeblock"))
 			tab_toggle(template_editor)
 			
 		tab_next()
@@ -250,12 +259,12 @@ switch (temp_edit.type)
 		tab_next()
 		
 		// 3D / Face camera
-		tab_control_switch()
-		draw_switch("librarytext3d", dx, dy, temp_edit.text_3d, action_lib_text_3d)
+		tab_control_checkbox()
+		draw_checkbox("librarytext3d", dx, dy, temp_edit.text_3d, action_lib_text_3d)
 		tab_next()
 		
-		tab_control_switch()
-		draw_switch("librarytextfacecamera", dx, dy, temp_edit.text_face_camera, action_lib_text_face_camera)
+		tab_control_checkbox()
+		draw_checkbox("librarytextfacecamera", dx, dy, temp_edit.text_face_camera, action_lib_text_face_camera)
 		tab_next()
 		
 		break
@@ -286,8 +295,8 @@ switch (temp_edit.type)
 		// Mapped
 		if (temp_edit.type = e_temp_type.CUBE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
-			tab_control_switch()
-			draw_switch("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
+			tab_control_checkbox()
+			draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
 			tab_next()
 			
 			if (temp_edit.shape_tex_mapped)
@@ -324,26 +333,26 @@ switch (temp_edit.type)
 			}
 			
 			// Mirror
-			tab_control_switch()
-			draw_switch("libraryshapetexhmirror", dx, dy, temp_edit.shape_tex_hmirror, action_lib_shape_tex_hmirror)
+			tab_control_checkbox()
+			draw_checkbox("libraryshapetexhmirror", dx, dy, temp_edit.shape_tex_hmirror, action_lib_shape_tex_hmirror)
 			tab_next()
 			
-			tab_control_switch()
-			draw_switch("libraryshapetexvmirror", dx, dy, temp_edit.shape_tex_vmirror, action_lib_shape_tex_vmirror)
+			tab_control_checkbox()
+			draw_checkbox("libraryshapetexvmirror", dx, dy, temp_edit.shape_tex_vmirror, action_lib_shape_tex_vmirror)
 			tab_next()
 		}
 		
 		// Closed
 		if (temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 		{
-			tab_control_switch()
-			draw_switch("libraryshapeclosed", dx, dy, temp_edit.shape_closed, action_lib_shape_closed)
+			tab_control_checkbox()
+			draw_checkbox("libraryshapeclosed", dx, dy, temp_edit.shape_closed, action_lib_shape_closed)
 			tab_next()
 		}
 		
 		// Invert
-		tab_control_switch()
-		draw_switch("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert)
+		tab_control_checkbox()
+		draw_checkbox("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert)
 		tab_next()
 		
 		if (temp_edit.type = e_temp_type.SPHERE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
@@ -356,8 +365,8 @@ switch (temp_edit.type)
 		else if (temp_edit.type = e_temp_type.SURFACE)
 		{
 			// Face camera
-			tab_control_switch()
-			draw_switch("libraryshapefacecamera", dx, dy, temp_edit.shape_face_camera, action_lib_shape_face_camera)
+			tab_control_checkbox()
+			draw_checkbox("libraryshapefacecamera", dx, dy, temp_edit.shape_face_camera, action_lib_shape_face_camera)
 			tab_next()
 		}
 		break
@@ -403,8 +412,8 @@ switch (temp_edit.type)
 // Repeat
 if (temp_edit.type = e_temp_type.SCENERY || temp_edit.type = e_temp_type.BLOCK)
 {
-	tab_control_switch()
-	draw_switch("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)
+	tab_control_checkbox()
+	draw_checkbox("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)
 	tab_next()
 	
 	if (temp_edit.block_repeat_enable)

@@ -1,6 +1,8 @@
 /// app_startup_collapse()
 
-globalvar collapse_map;
+globalvar collapse_map, collapse_ani;
+collapse_ani = 1
+
 collapse_map = ds_map_create()
 
 collapse_register("backup")

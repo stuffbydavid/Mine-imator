@@ -3,6 +3,8 @@
 if (tl_edit.model_part = null || tl_edit.model_part.bend_part = null || !tl_edit.value_type[e_value_type.TRANSFORM_BEND])
 	return 0
 
+dy += 8
+
 var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
 
 // Sliders
