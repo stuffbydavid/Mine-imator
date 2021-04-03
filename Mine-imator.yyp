@@ -3738,7 +3738,7 @@
             "Key": "364ec738-a94a-431e-8c5a-5e950187614a",
             "Value": {
                 "id": "cf9bbeb3-b975-4dff-8cf4-2a6bf25d6d7d",
-                "resourcePath": "datafiles_yy\\Particles\\Huge smoke.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\huge_smoke.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -4506,7 +4506,7 @@
             "Key": "428e853e-c12f-4a16-9147-4ac4541e60bc",
             "Value": {
                 "id": "51807ac1-f4e3-4d33-a1d2-9c20b0224ef8",
-                "resourcePath": "datafiles_yy\\Particles\\Default spawner.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\default.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -5234,7 +5234,7 @@
             "Key": "4cb78beb-2ff0-428e-9651-10bfe0dc06d7",
             "Value": {
                 "id": "9839f48b-4bf1-4d5f-8963-6ea64229b013",
-                "resourcePath": "datafiles_yy\\Particles\\Explosion.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\explosion.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -7650,7 +7650,7 @@
             "Key": "6cdfdf44-17cc-4edc-b0d5-be36d498ebbe",
             "Value": {
                 "id": "92b117da-bcd7-49f0-ae87-a9ff7c21514b",
-                "resourcePath": "datafiles_yy\\Particles\\Firework blast.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\firework_blast.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -8122,7 +8122,7 @@
             "Key": "73843714-9aa5-4c28-b077-fe3dbb05b362",
             "Value": {
                 "id": "c89b844d-10c9-44d1-ade0-159d669586b5",
-                "resourcePath": "datafiles_yy\\Particles\\Rain.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\rain.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -9314,7 +9314,7 @@
             "Key": "860f0792-a0af-47ab-b726-2699a63c4757",
             "Value": {
                 "id": "5be985a3-670e-455a-aee2-925c0a7e9197",
-                "resourcePath": "datafiles_yy\\Particles\\Fountain of cakes.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\fountain_of_cakes.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -12250,7 +12250,7 @@
             "Key": "ac0dcada-ac64-4c17-bb3f-a8acd101c09f",
             "Value": {
                 "id": "090f7392-1a75-44d8-9a55-84da3aa76a59",
-                "resourcePath": "datafiles_yy\\Particles\\Snow.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\snow.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -12666,7 +12666,7 @@
             "Key": "b24e96f4-288a-4c18-b598-605eb96866ba",
             "Value": {
                 "id": "31414ee5-4ade-4b78-bc42-4674e5409f00",
-                "resourcePath": "datafiles_yy\\Particles\\High fire.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\high_fire.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -12826,7 +12826,7 @@
             "Key": "b4ae21dd-61cf-41e0-b992-9afc916d2727",
             "Value": {
                 "id": "9aaca391-e14e-4c9a-85d9-960c84958b64",
-                "resourcePath": "datafiles_yy\\Particles\\Low fire.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\low_fire.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -14442,7 +14442,7 @@
             "Key": "cbd0dfe6-6227-4bb9-acb0-8006c9490a1e",
             "Value": {
                 "id": "a1a5719a-5a7e-4434-a98f-1805bd4f62f8",
-                "resourcePath": "datafiles_yy\\Particles\\Grass explosion.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\grass_explosion.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -16330,7 +16330,7 @@
             "Key": "e5de324e-f82d-4d72-989c-89796e847b73",
             "Value": {
                 "id": "8a9a89ff-bc68-4cb9-9e40-dd84e14f2632",
-                "resourcePath": "datafiles_yy\\Particles\\Smoke.miparticles.yy",
+                "resourcePath": "datafiles_yy\\Particles\\smoke.miparticles.yy",
                 "resourceType": "GMIncludedFile"
             }
         },

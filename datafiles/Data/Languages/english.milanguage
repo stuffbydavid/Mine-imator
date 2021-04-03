@@ -5,7 +5,33 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.04.01"
+        "lastchange": "2021.04.03"
+    },
+    "particle/": {
+        "default": "Default spawner",
+        "explosion": "Explosion",
+        "firework_blast": "Firework blast",
+        "fountain_of_cakes": "Fountain of cakes",
+        "grass_explosion": "Grass explosion",
+        "high_fire": "High fire",
+        "low_fire": "Low fire",
+        "rain": "Rain",
+        "snow": "Snow",
+        "smoke": "Smoke",
+        "huge_smoke": "Huge smoke",
+        "type/": {
+            "particle_1": "Particle 1",
+            "smoke": "Smoke",
+            "smoke_black": "Smoke (Black)",
+            "smoke_white": "Smoke (White)",
+            "explosion": "Explosion",
+            "firework": "Firework",
+            "cake": "Cake",
+            "flying_grass": "Flying grass",
+            "fire": "Fire",
+            "rain": "Rain",
+            "snow": "Snow"
+        }
     },
     "tooltip/": {
         "sidemenuclose": "Close side menu",

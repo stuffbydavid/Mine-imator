@@ -26,7 +26,7 @@
 		"types": [
 			{
 				"id": "YS40R2JOZI07LN6V",
-				"name": "Smoke (black)",
+				"name": "smoke_black",
 				"temp_type": "template",
 				"text": "Sample text",
 				"spawn_rate": 0.40604,
@@ -139,7 +139,7 @@
 			},
 			{
 				"id": "E82D3374JTV8QWMF",
-				"name": "Smoke (white)",
+				"name": "smoke_white",
 				"temp_type": "template",
 				"text": "Sample text",
 				"spawn_rate": 0.40229,
@@ -252,7 +252,7 @@
 			},
 			{
 				"id": "5W1I7762C5909I75",
-				"name": "Explosion",
+				"name": "explosion",
 				"temp_type": "template",
 				"text": "Sample text",
 				"spawn_rate": 0.14167,
@@ -365,7 +365,7 @@
 			},
 			{
 				"id": "1S8MQOIG80WU3VT9",
-				"name": "Flying grass",
+				"name": "flying_grass",
 				"temp_type": "templateobj",
 				"temp": "5DD9BLI46EZZL1CE",
 				"text": "Sample text",
