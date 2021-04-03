@@ -461,7 +461,7 @@ if (background_volumetric_fog && collapse_map[?"volumetricfog"])
 		tab_next()
 	
 		tab_control_meter()
-		draw_meter("backgroundvolumetricfogbrightness", dx, dy, dw, round(background_volumetric_fog_brightness * 100), 64, 0, 100, 0, 1, tab.background.tbx_volumetric_fog_brightness, action_background_volumetric_fog_brightness)
+		draw_meter("backgroundvolumetricfogemission", dx, dy, dw, round(background_volumetric_fog_brightness * 100), 64, 0, 100, 0, 1, tab.background.tbx_volumetric_fog_brightness, action_background_volumetric_fog_brightness)
 		tab_next()
 	}
 	

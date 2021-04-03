@@ -67,6 +67,7 @@ enum e_keybind
 	CAM_ROLL_RESET,
 	CAM_FAST,
 	CAM_SLOW,
+	CAM_VIEW_INSTANCE,
 	
 	amount
 }
@@ -124,3 +125,4 @@ keybind_register("camrollreset", e_keybind.CAM_ROLL_RESET, keybind_new("X"))
 keybind_register("camreset", e_keybind.CAM_RESET, keybind_new("R"))
 keybind_register("camfast", e_keybind.CAM_FAST, keybind_new(vk_space))
 keybind_register("camslow", e_keybind.CAM_SLOW, keybind_new(null, false, true))
+keybind_register("camviewinstance", e_keybind.CAM_VIEW_INSTANCE, keybind_new("V"))

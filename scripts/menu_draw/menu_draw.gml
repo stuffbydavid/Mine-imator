@@ -1,7 +1,7 @@
 /// menu_draw()
 /// @desc Draws open dropdown menus
 
-var m, menu_remove, menu_active, listh, menuh, contentmenu, yy, aniease;
+var m, menu_remove, menu_active, listh, menuh, contentmenu, yy, aniease, updatewidth;
 menu_remove = null
 menu_current = null
 
@@ -11,6 +11,7 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 	menu_active = (i = (ds_list_size(menu_list) - 1))
 	menu_current = m
 	contentmenu = (m.menu_type = e_menu.TRANSITION_LIST || m.menu_type = e_menu.CONTENT)
+	updatewidth = false
 	
 	// Animation
 	if (m.menu_ani_type = "hide") //Hide
@@ -78,7 +79,6 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 		if (m.menu_scroll_horizontal.needed && content_mouseon && keyboard_check(vk_shift))
 			window_scroll_focus = string(m.menu_scroll_horizontal)
 		
-		//m.menu_scroll_vertical.snap_value = m.menu_item_h
 		scrollbar_draw(m.menu_scroll_vertical, e_scroll.VERTICAL, m.menu_x + m.menu_w - 12, yy, listh, (m.menu_amount * m.menu_item_h))
 		
 		scrollbar_draw(m.menu_scroll_horizontal, e_scroll.HORIZONTAL, m.menu_x, yy + menuh - 12, m.menu_w - (12 * m.menu_scroll_vertical.needed), m.menu_list.width)
@@ -111,14 +111,18 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 			{
 				var item, itemy, itemh;
 				
-				//if (starty + m.menu_item_h > yy + menuh)
-				//	break
-				
 				item = m.menu_list.item[|j]
 				itemy = yy
 				itemh = m.menu_item_h
 				
-				list_item_draw(item, m.menu_x, itemy, content_width, m.menu_item_h, m.menu_value = item.value, m.menu_margin, -m.menu_scroll_horizontal.value)
+				list_item_draw(item, m.menu_x, itemy, content_width, m.menu_item_h, false, m.menu_margin, -m.menu_scroll_horizontal.value)
+				
+				// Toggle item and update list width
+				if ((m.menu_value = item.value) && !item.toggled)
+				{
+					item.toggled = true
+					updatewidth = true
+				}
 				
 				if (item.hover)
 					mouseitem = item
@@ -131,6 +135,9 @@ for (var i = 0; i < ds_list_size(menu_list); i++)
 			// Adjust component
 			if (m.menu_type = e_menu.LIST)
 			{
+				if (updatewidth)
+					list_update_width(m.menu_list)
+				
 				var w = m.menu_w;
 				m.menu_w = max(m.menu_list.width, m.menu_w)
 				

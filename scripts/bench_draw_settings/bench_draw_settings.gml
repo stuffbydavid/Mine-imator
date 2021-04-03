@@ -46,14 +46,13 @@ else
 		case e_temp_type.SPECIAL_BLOCK:
 		case e_temp_type.BODYPART:
 		{
-			
 			var labeltext, list, texcap, capwid, part;
 			if (bench_settings.type = e_temp_type.CHARACTER)
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.char_list
 				texcap = "benchskin"
-				capwid  = text_caption_width(texcap)
+				capwid = text_caption_width(texcap)
 				part = bench_settings.model_file
 			}
 			else if (bench_settings.type = e_temp_type.SPECIAL_BLOCK)
@@ -61,7 +60,7 @@ else
 				labeltext = text_get("benchblock")
 				list = bench_settings.special_block_list
 				texcap = "benchspblocktex"
-				capwid  = text_caption_width(texcap)
+				capwid = text_caption_width(texcap)
 				part = bench_settings.model_file
 			}
 			else if (bench_settings.type = e_temp_type.BODYPART)
@@ -69,7 +68,7 @@ else
 				labeltext = text_get("benchmodel")
 				list = bench_settings.bodypart_model_list
 				texcap = "benchbodypartskin"
-				capwid  = text_caption_width("benchbodypart", texcap)
+				capwid = text_caption_width("benchbodypart", texcap)
 				part = bench_settings.model_part
 			}
 			
@@ -86,7 +85,7 @@ else
 			for (var i = 0; i < statelen; i += 2)
 			{
 				var state = bench_settings.model_state[i];
-				capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state) + ":") + 8)
+				capwid = max(capwid, text_caption_width(minecraft_asset_get_name("modelstate", state)))
 			}
 			
 			for (var i = 0; i < statelen; i += 2)
@@ -224,6 +223,8 @@ else
 		
 		case e_temp_type.BLOCK:
 		{
+			draw_set_font(font_label)
+			
 			var capwid, text, sprite;
 			capwid = text_caption_width("benchblocktex")
 			
@@ -239,7 +240,7 @@ else
 			for (var i = 0; i < statelen; i += 2)
 			{
 				var state = bench_settings.block_state[i];
-				capwid = max(capwid, string_width(minecraft_asset_get_name("blockstate", state) + ":") + 8)
+				capwid = max(capwid, text_caption_width(minecraft_asset_get_name("blockstate", state)))
 			}
 			
 			for (var i = 0; i < statelen; i += 2)

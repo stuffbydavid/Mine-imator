@@ -131,6 +131,7 @@ if (collapse_map[?"camera"])
 	draw_keybind(e_keybind.CAM_ROLL_RESET, dx, dy)
 	draw_keybind(e_keybind.CAM_FAST, dx, dy)
 	draw_keybind(e_keybind.CAM_SLOW, dx, dy)
+	draw_keybind(e_keybind.CAM_VIEW_INSTANCE, dx, dy)
 	dy += 8
 	
 	tab_collapse_end()

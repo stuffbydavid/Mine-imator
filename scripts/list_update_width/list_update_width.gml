@@ -2,12 +2,13 @@
 /// @arg list
 /// @desc Calculates width of list's components and text
 
-var list, maxwidthleft, maxwidthright, width, item;
+var list, maxwidthleft, maxwidthright, width, item, togglewid;
 list = argument0
 maxwidthleft = 0
 maxwidthright = 0
 width = 0
 item = null
+togglewid = 0
 
 for (var i = 0; i < ds_list_size(list.item); i++)
 {
@@ -54,7 +55,7 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 	
 	// Tick
 	if (item.toggled)
-		width += 24 + 4
+		togglewid = 24 + 4
 	
 	// Caption
 	if (item.caption != "")
@@ -66,4 +67,4 @@ for (var i = 0; i < ds_list_size(list.item); i++)
 	maxwidthright = max(width, maxwidthright)
 }
 
-list.width = maxwidthleft + maxwidthright
+list.width = (maxwidthleft + maxwidthright + togglewid)

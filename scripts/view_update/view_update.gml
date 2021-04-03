@@ -30,6 +30,21 @@ if (content_mouseon && window_busy = "")
 	}
 }
 
+// Jump to object
+if ((window_busy = "" && content_mouseon) && tl_edit != null && tl_edit != cam && !cam && keybinds_map[?e_keybind.CAM_VIEW_INSTANCE].pressed)
+{
+	cam_work_focus = tl_edit.world_pos
+	cam_work_focus_last = point3D_copy(cam_work_focus)
+	
+	camera_work_set_angle()
+	cam_work_angle_look_xy = cam_work_angle_xy
+	cam_work_angle_look_z = -cam_work_angle_z
+	cam_work_zoom_goal = 100
+	camera_work_set_from()
+	
+	cam_work_jump = true
+}
+
 // Mousewheel
 if ((((window_busy = "" && content_mouseon) || (window_busy = "viewrotatecamera" && window_focus = string(view)))) && mouse_wheel <> 0)
 {

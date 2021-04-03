@@ -1,13 +1,16 @@
 /// shortcut_bar_update()
-// keybinds_map[?argument0].keybind
 
 if (shortcut_bar_state != shortcut_bar_state_prev)
 {
 	ds_list_clear(shortcut_bar_list)
 	
-	if (shortcut_bar_state = "viewport")
+	if (shortcut_bar_state = "viewport" || shortcut_bar_state = "viewportcam")
 	{
 		shortcut_bar_add(null, e_mouse.CLICK_LEFT, "select")
+		
+		if (shortcut_bar_state = "viewport")
+			shortcut_bar_add(keybinds_map[?e_keybind.CAM_VIEW_INSTANCE].keybind, null, "viewinstance")
+		
 		shortcut_bar_add(null, e_mouse.DRAG_LEFT, "orbit")
 		shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "pan")
 		shortcut_bar_add(null, e_mouse.SCROLL, "zoom")

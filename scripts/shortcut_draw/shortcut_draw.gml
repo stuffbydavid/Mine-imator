@@ -14,15 +14,16 @@ draw_set_font(font_label)
 if (shortcut[0] != null)
 {
 	var keyboardarray = string_split(text_control_name(shortcut[0]), " + ");
+	
 	for (var i = 0; i < array_length_1d(keyboardarray); i++)
 	{
-		keyboardarray[i] = string_replace(keyboardarray[i], " + ", "")
-		var stringsize = string_width(keyboardarray[i]);
+		var str = string_replace(keyboardarray[i], "+ ", "");
+		var stringsize = string_width(str);
 		
 		draw_box(dx, yy - 8, stringsize + 12, 16, false, c_text_tertiary, a_text_tertiary)
 		draw_box(dx + 2, yy - 6, stringsize + 8, 12, false, c_level_top, 1)
 		
-		draw_label(keyboardarray[i], dx + 6, yy, fa_left, fa_middle, c_text_tertiary, a_text_tertiary)
+		draw_label(str, dx + 6, yy, fa_left, fa_middle, c_text_tertiary, a_text_tertiary)
 		
 		dx += (stringsize + 12) + (i < (array_length_1d(keyboardarray) - 1) ? imgpadding : 0)
 	}

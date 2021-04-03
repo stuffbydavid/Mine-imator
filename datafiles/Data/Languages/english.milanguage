@@ -177,7 +177,7 @@
         "restorekeybind": "Restore keybind"
     },
     "shortcut/": {
-        "select": "Select",
+        "select": "Select instance",
         "orbit": "Orbit view",
         "pan": "Pan view",
         "zoom": "Zoom",
@@ -195,7 +195,8 @@
         "rollreset": "Reset roll",
         "reset": "Reset",
         "scrollhorizontal": "Scroll horizontally",
-        "scrollvertical": "Scroll vertically"
+        "scrollvertical": "Scroll vertically",
+        "viewinstance": "View instance"
     },
     "startup/": {
         "trial": "TRIAL",
@@ -2089,7 +2090,7 @@
             "heightfade": "Height fade",
             "noisecontrast": "Noise contrast",
             "noisescale": "Noise scale",
-            "brightness": "Brightness",
+            "emission": "Emission",
             "wind": "Wind influence"
         },
         "wind": "Wind",
@@ -2332,7 +2333,7 @@
         "texturefiltering": "Texture filtering",
         "shadows": "Cast shadows",
         "rendershadows": "Render shadows",
-        "ssao": "SSAO",
+        "ssao": "Ambient occlusion",
         "glow": "Glow",
         "glowtexture": "Glow affected by texture",
         "onlyrenderglow": "Only render glow",
@@ -2542,7 +2543,7 @@
             "alignment": "Alignment",
             "halign": "Horizontal",
             "valign": "Vertical",
-            "aa": "AA",
+            "aa": "Font anti-aliasing",
             "aatip": "Smooths sharp edges on fonts. (Not reccomended for 3D text.)"
         },
         "item": "ITEM",
@@ -2672,7 +2673,8 @@
                 "reset": "Reset",
                 "rollreset": "Reset roll",
                 "fast": "Faster",
-                "slow": "Slower"
+                "slow": "Slower",
+                "viewinstance": "View instance"
             }
         },
         "movespeed": "Move speed",
@@ -2690,7 +2692,7 @@
         "texturefiltering": "Texture filtering",
         "texturefilteringlevel": "Texture filtering level",
         "transparentblocktexturefiltering": "Transparent block texture filtering",
-        "blockbrightness": "Glowing block brightness",
+        "blockemission": "Glowing block emission",
         "blockglow": "Glow bright blocks and models",
         "blockglowthreshold": "Glow color threshold",
         "lightbleeding": "Foliage light bleeding",
@@ -2748,7 +2750,7 @@
                 "falloffradius": "Secondary radius",
                 "falloffintensity": "Secondary intensity"
             },
-            "aa": "AA",
+            "aa": "Anti-aliasing",
             "aapower": "Strength",
             "watermark": "Watermark",
             "watermark/": {
