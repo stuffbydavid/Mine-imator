@@ -384,8 +384,9 @@ else
 
 tab_control_button_label()
 tab_next()
+dy += 4
 
-if (draw_button_label("benchcreate", dx, sy + dh - (48), dw, icons.ASSET_ADD))
+if (draw_button_label("benchcreate", dx, sy + dh - 56, dw, icons.ASSET_ADD))
 {
 	action_bench_create()
 	bench_show_ani_type = "hide"

@@ -84,7 +84,7 @@ dy += 8
 
 ymax = dy
 
-dy = sdy + 8
+dy = sdy + 12
 dx += 192 + 12
 dw = (content_width - 192) - 24
 
