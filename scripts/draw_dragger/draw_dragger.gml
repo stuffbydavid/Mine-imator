@@ -31,7 +31,7 @@ tbx = argument[10]
 script = argument[11]
 
 draw_set_font(font_label)
-caption = text_get(name)
+caption = string_limit(text_get(name), dw - wid)
 
 if (argument_count > 12)
 	capwidth = argument[12]

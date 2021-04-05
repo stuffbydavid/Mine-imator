@@ -10,14 +10,7 @@ switch (name)
 	// Component values
 	case "contextmenuvalue":
 	case "contextmenucategory":
-	{	
-		// Rotation loops
-		if (context_menu_group = e_context_group.ROTATION)
-		{
-			var text = (frame_editor.transform.loops ? "contextmenugroupdisableloops" : "contextmenugroupenableloops");
-			list_item_add(text_get(text), null, "", null, icons.RESET, null, action_group_rotation_loops, true)
-		}
-		
+	{		
 		// Combine scale
 		if (context_menu_group = e_context_group.SCALE)
 		{

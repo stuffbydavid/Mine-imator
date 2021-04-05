@@ -107,7 +107,7 @@ if (setting_render_shadows && collapse_map[?"shadows"])
 	tab_next()
 	
 	tab_control_switch()
-	draw_switch("settingsrendershadowssuncolored", dx, dy, setting_render_shadows_sun_colored, action_setting_render_shadows_sun_colored) 
+	draw_switch("settingsrendershadowssuncolored", dx, dy, setting_render_shadows_sun_colored, action_setting_render_shadows_sun_colored, "", false, true) 
 	tab_next()
 	
 	tab_collapse_end()

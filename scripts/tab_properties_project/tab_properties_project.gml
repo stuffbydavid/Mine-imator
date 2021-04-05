@@ -60,7 +60,7 @@ if (project_video_template = 0)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("projectvideosizecustomheight", dx, dy, dragger_width, project_video_height, 1, 1, no_limit, 720, 1, tab.project.tbx_video_size_custom_height, action_project_video_width)
+	draw_dragger("projectvideosizecustomheight", dx, dy, dragger_width, project_video_height, 1, 1, no_limit, 720, 1, tab.project.tbx_video_size_custom_height, action_project_video_height)
 	tab_next()
 	
 	tab_control_switch()

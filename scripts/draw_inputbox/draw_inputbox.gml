@@ -13,7 +13,7 @@
 /// @arg [type
 /// @arg [alpha]]]]]
 
-var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha;
+var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha, focused;
 var update;
 
 inputname = argument[0]
@@ -29,6 +29,7 @@ err = false
 font = font_value
 type = e_inputbox.LEFT
 alpha = 1
+focused = (window_focus = string(tbx))
 
 if (argument_count > 8)
 	disabled = argument[8]

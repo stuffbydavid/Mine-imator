@@ -68,7 +68,8 @@ microani_update(mouseon || active, false, false)
 
 if (showcaption)
 {
-	draw_label(text_get(name), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
+	draw_set_font(font_label)
+	draw_label(string_limit(text_get(name), dw), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary)
 	yy += (label_height + 12)
 }
 
@@ -163,9 +164,6 @@ for (var i = 0; i < textfield_amount; i++)
 		alpha = 1
 	}
 	
-	
-	
-	
 	if (textfield_icon[i] = null)
 		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, col, alpha, font_label)
 	else
@@ -242,6 +240,8 @@ for (var i = 0; i < textfield_amount; i++)
 		{
 			window_busy = ""
 			app_mouse_clear()
+			
+			script_execute(textfield_script[i], d, true)
 		}
 	}
 	

@@ -1,13 +1,14 @@
-/// draw_switch(name, x, y, active, script, [tip, [disabled]])
+/// draw_switch(name, x, y, active, script, [tip, [disabled, [experimental]]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
 /// @arg [tip
-/// @arg [disabled]]
+/// @arg [disabled
+/// @arg [experimental]]
 
-var name, xx, yy, active, script, tip, disabled;
+var name, xx, yy, active, script, tip, disabled, ex;
 var switchx, switchy, w, h, mouseon, pressed, thumbgoal;
 name = text_get(argument[0])
 xx = argument[1]
@@ -16,12 +17,16 @@ active = argument[3]
 script = argument[4]
 tip = ""
 disabled = false
+ex = false
 
 if (argument_count > 5)
 	tip = argument[5]
 
 if (argument_count > 6)
 	disabled = argument[6]
+
+if (argument_count > 7)
+	ex = argument[7]
 
 w = dw
 h = 24
@@ -88,11 +93,11 @@ draw_box_hover(switchx, switchy, 20, 14, mcroani_arr[e_mcroani.PRESS])
 
 // Label
 draw_set_font(font_label)
-draw_label(name, xx, yy + (h/2), fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]))
+draw_label(string_limit(name, w - 48), xx, yy + (h/2), fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]))
 
 microani_update(mouseon, mouseclick, active, disabled, 0, thumbgoal)
 
-if (tip != "")
+if (tip != "" || ex)
 {
 	mouseon = app_mouse_box(xx + string_width(name) + 4, yy + (h/2) - 10, 20, 20) && content_mouseon && !disabled
 	
@@ -100,10 +105,10 @@ if (tip != "")
 	color = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
 	alpha = lerp(a_text_tertiary, a_text_secondary, mcroani_arr[e_mcroani.HOVER]) * lerp(1, .5, mcroani_arr[e_mcroani.DISABLED])
 	
-	draw_image(spr_icons, icons.HELP_CIRCLE, xx + string_width(name) + 16, yy + (h/2), 1, 1, color, alpha)
+	draw_image(spr_icons, ex ? icons.BEAKER : icons.HELP_CIRCLE, xx + string_width(name) + 16, yy + (h/2), 1, 1, color, alpha)
 	
 	if (!disabled)
-		tip_set(text_get(tip), xx + string_width(name) + 4, yy + (h/2) - 10, 20, 20)
+		tip_set(ex ? text_get("tooltipexperimental") : text_get(tip), xx + string_width(name) + 4, yy + (h/2) - 10, 20, 20)
 	
 	microani_update(mouseon, false, false, disabled, 0)
 }

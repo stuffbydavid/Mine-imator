@@ -62,7 +62,9 @@ microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, 
 var labelcolor, labelalpha;
 labelcolor = merge_color(c_text_secondary, c_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
 labelalpha = lerp(a_text_secondary, a_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
-draw_label(text_get(name), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha, font_label)
+
+draw_set_font(font_label)
+draw_label(string_limit(text_get(name), dw - 80), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha)
 
 // Slider
 yy += 24

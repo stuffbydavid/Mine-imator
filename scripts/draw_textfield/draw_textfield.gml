@@ -63,7 +63,7 @@ if (err)
 }
 
 if (labelpos = "top")
-	draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, labelcolor, labelalpha)
+	draw_label(string_limit(text_get(name), dw), xx, yy - 3, fa_left, fa_top, labelcolor, labelalpha)
 else if (labelpos != "none")
 	draw_label(text_get(name), xx, yy + h/2, fa_left, fa_middle, labelcolor, labelalpha)
 

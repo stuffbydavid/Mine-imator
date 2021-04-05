@@ -1,4 +1,4 @@
-/// draw_wheel(name, x, y, color, value, min, max, default, snap, limit, textbox, script, [radius, sprite])
+/// draw_wheel(name, x, y, color, value, min, max, default, snap, textbox, script, [radius, sprite])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -8,13 +8,12 @@
 /// @arg max
 /// @arg default
 /// @arg snap
-/// @arg limit
 /// @arg textbox
 /// @arg script
 /// @arg [radius
 /// @arg sprite]
 
-var name, xx, yy, color, value, modval, minval, maxval, def, snapval, limit, tbx, script, rad, sprite;
+var name, xx, yy, color, value, modval, minval, maxval, def, snapval, tbx, script, rad, sprite;
 var capwid, text, labelx, labely, labelw, labeltextw;
 name = argument[0]
 xx = argument[1]
@@ -25,14 +24,13 @@ minval = argument[5]
 maxval = argument[6]
 def = argument[7]
 snapval = argument[8]
-limit = argument[9]
-tbx = argument[10]
-script = argument[11]
+tbx = argument[9]
+script = argument[10]
 
-if (argument_count > 12)
+if (argument_count > 11)
 {
-	rad = argument[12]
-	sprite = argument[13]
+	rad = argument[11]
+	sprite = argument[12]
 }
 else
 {
@@ -110,59 +108,3 @@ if (app_mouse_box(xx - rad - 10, yy - rad - 10, rad * 2 + 20, rad * 2 + 20) && c
 	}
 	
 }
-
-/*
-
-// Textbox
-draw_label(text_get(name) + ":", xx - (labeltextw/2), labely, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
-draw_set_font(font_digits)
-if (window_focus = string(tbx))
-{
-	if (textbox_draw(tbx, labelx, labely - 7, labeltextw, 18))
-	{
-		var str, loops, val;
-		str = string_upper(tbx.text)
-		
-		// Parse loops
-		if (limit && string_count("X", str) = 1)
-		{
-			var looppos, loopstr, valstr;
-			looppos = string_pos("X", str)
-			loopstr = string_copy(str, 1, looppos - 1)
-			valstr = string_delete(str, 1, looppos)
-			
-			loops = string_get_real(loopstr, 0)
-			val = string_get_real(valstr, 0) + (loops * 360)
-		}
-		else
-			val = string_get_real(str, 0)
-		
-		script_execute(script, clamp(val, minval, maxval), false)
-	}
-}
-else
-	draw_label(text, labelx, labely - 7, fa_left, fa_top, c_text_main, a_text_main)
-
-// Textbox click
-if (app_mouse_box(labelx - capwid, labely - 7, labeltextw, 16))
-{
-	mouse_cursor = cr_handpoint
-	
-	if (mouse_left_pressed)
-	{
-		if (limit)
-		{
-			text = string_decimals(modval)
-			
-			if (floor(value/360) != 0)
-				text = string(floor(value/360)) + "x" + text
-			
-			tbx.text = text
-		}
-		else
-			tbx.text = string_decimals(value)
-		
-		window_focus = string(tbx)
-	}
-}
-*/

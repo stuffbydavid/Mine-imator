@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.04.03"
+        "lastchange": "2021.04.04"
     },
     "particle/": {
         "default": "Default spawner",
@@ -107,7 +107,8 @@
         "languageadd": "Add language",
         "languagefolder": "Open languages folder",
         "viewlist": "List view",
-        "viewgrid": "Grid view"
+        "viewgrid": "Grid view",
+        "experimental": "This setting is experimental and is not fully supported."
     },
     "contextmenu/": {
         "textbox/": {
@@ -126,9 +127,7 @@
             "copy": "Copy all values",
             "paste": "Paste all values",
             "reset": "Reset all values",
-            "copyglobalposition": "Copy global position",
-            "disableloops": "Disable loops",
-            "enableloops": "Enable loops"
+            "copyglobalposition": "Copy global position"
         },
         "tl/": {
             "addfolder": "Add folder",
@@ -2726,7 +2725,7 @@
                 "buffersize2048": "Big",
                 "buffersize4096": "Very big",
                 "buffersize8192": "Gigantic",
-                "suncolored": "Colored sun shadows (exp.)"
+                "suncolored": "Colored sun shadows"
             },
             "indirect": "Indirect lighting",
             "indirect/": {

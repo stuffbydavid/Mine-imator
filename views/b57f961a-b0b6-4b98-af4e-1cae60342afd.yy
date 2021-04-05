@@ -18,7 +18,8 @@
         "d20c4345-99ee-415a-b8b4-a39e82fda7a1",
         "68aa7a84-e1cf-4684-bfd7-e9213a1ec18e",
         "13c54802-031c-4c64-a512-b9d8c2a139cb",
-        "514fdd5c-2169-42a9-b967-d085a5868068"
+        "514fdd5c-2169-42a9-b967-d085a5868068",
+        "861160ef-7d4e-49f0-8ac3-12181bf76f33"
     ],
     "filterType": "GMScript",
     "folderName": "Frame editor",

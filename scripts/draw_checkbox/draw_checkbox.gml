@@ -68,7 +68,7 @@ draw_image(spr_checkbox_tick, 0, checkboxx + 8, checkboxy + 8, 1, 1, c_level_mid
 draw_box_hover(checkboxx, checkboxy, 16, 16, mcroani_arr[e_mcroani.PRESS])
 
 // Label
-draw_label(name, xx + 24, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
+draw_label(string_limit(name, dw - 24), xx + 24, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
 
 microani_update(mouseon, mouseclick, active)
 

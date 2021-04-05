@@ -3,14 +3,16 @@
 /// @arg x
 /// @arg y
 
-var cat, xx, yy, h, w, mouseon;
+var cat, xx, yy, h, w, mouseon, cap;
 cat = argument0
 xx = argument1
 yy = argument2
 h = 16
 
 draw_set_font(font_subheading)
-w = h + 4 + string_width(text_get(cat.name))
+cap = string_limit(text_get(cat.name), dw - (h + 4))
+
+w = h + 4 + string_width(cap)
 
 mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon
 
@@ -28,7 +30,7 @@ alpha = lerp(alpha, a_accent, focus)
 frame = floor((sprite_get_number(spr_chevron_ani) - 1) * mcroani_arr[e_mcroani.ACTIVE])
 
 draw_image(spr_chevron_ani, frame, xx + h/2, yy + h/2, 1, 1, color, alpha)
-draw_label(text_get(cat.name), xx + h + 4, yy + (h/2) - 1, fa_left, fa_middle, color, alpha)
+draw_label(cap, xx + h + 4, yy + (h/2) - 1, fa_left, fa_middle, color, alpha)
 
 microani_update(mouseon, mouseon && mouse_left, cat.show)
 

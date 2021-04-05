@@ -94,27 +94,22 @@ if (view_control_edit_view = view && view_control_edit = e_view_control.SCA_XYZ)
 	{
 		var snapval, scaleval;
 		snapval = (dragger_snap ? setting_snap_size_scale : snap_min)
-		scaleval = vec3(view_control_scale_amount)
+		scaleval = view_control_scale_amount
 		
-		for (var i = X; i <= Z; i++)
-		{
-			if (!setting_snap_absolute && dragger_snap)
-				scaleval[i] = snap(scaleval[i], snapval)
-			
-			scaleval[i] = view_control_value_scale[i] * scaleval[i]
-			scaleval[i] = tl_value_clamp(e_value.SCA_X + i, scaleval[i])
-			
-			if (setting_snap_absolute || !dragger_snap)
-				scaleval[i] = snap(scaleval[i], snapval)
-		}
+		if (!setting_snap_absolute && dragger_snap)
+			scaleval = snap(scaleval, snapval)
+		
+		scaleval = view_control_value_scale[X] * scaleval
+		scaleval = tl_value_clamp(e_value.SCA_X, scaleval)
+		
+		if (setting_snap_absolute || !dragger_snap)
+			scaleval = snap(scaleval, snapval)
+		
+		scaleval -= tl_edit.value[e_value.SCA_X]
 		
 		// Update
 		axis_edit = X
-		tl_value_set_start(action_tl_frame_scale, true)
-		tl_value_set(e_value.SCA_X, scaleval[X], false)
-		tl_value_set(e_value.SCA_Y, scaleval[Y], false)
-		tl_value_set(e_value.SCA_Z, scaleval[Z], false)
-		tl_value_set_done()
+		action_tl_frame_scale_all_axis(scaleval, true)
 	}
 	
 	// Release

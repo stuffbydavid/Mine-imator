@@ -1,8 +1,8 @@
 {
-    "id": "fa8c54df-9c95-442c-ae53-05b3c96b4fa6",
+    "id": "861160ef-7d4e-49f0-8ac3-12181bf76f33",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "action_group_rotation_loops",
+    "name": "tab_frame_editor_buttons",
     "IsCompatibility": false,
     "IsDnD": false
 }

@@ -32,7 +32,8 @@ if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y |
 // Label
 if (showcaption)
 {
-	draw_label(text_get(name), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
+	draw_set_font(font_label)
+	draw_label(string_limit(text_get(name), dw), xx, yy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary)
 	yy += (label_height + 8)
 }
 
@@ -101,7 +102,8 @@ for (var i = 0; i < buttoncount; i++)
 	var icon = togglebutton_icon[i];
 	
 	var buttonname, totalwidth, startx;
-	buttonname = (labels ? text_get(togglebutton_name[i]) : "")
+	draw_set_font(font_button)
+	buttonname = string_limit((labels ? text_get(togglebutton_name[i]) : ""), boxwid - 16)
 	totalwidth = (labels ? string_width(buttonname) : 0) + (icon = null ? 0 : 24 + 8)
 	startx = floor(buttonx + (boxwid/2) - (totalwidth/2))
 	
@@ -120,7 +122,10 @@ for (var i = 0; i < buttoncount; i++)
 	
 	// Text
 	if (labels)
-		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, contentcolor, contentalpha, font_button)
+	{
+		draw_set_font(font_button)
+		draw_label(buttonname, startx, yy + (buttonh/2), fa_left, fa_middle, contentcolor, contentalpha)
+	}
 	
 	// Outline
 	draw_outline(buttonx, yy, boxwid, buttonh, 1, c_level_middle, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
