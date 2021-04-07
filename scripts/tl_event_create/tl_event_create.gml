@@ -15,6 +15,7 @@ color_tag = null
 lock = false
 hide = false
 ghost = false
+delete_ready = false
 depth = 0
 
 model_part = null

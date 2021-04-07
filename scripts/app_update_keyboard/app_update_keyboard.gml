@@ -67,10 +67,11 @@ if (window_busy = "" && !textbox_isediting)
 		else
 			action_tl_select_all()
 	}
-	if (keybinds_map[?e_keybind.INSTANCE_DUPLICATE].pressed)
+	
+	if (keybinds_map[?e_keybind.INSTANCE_DUPLICATE].pressed && tl_edit != null)
 		action_tl_duplicate()
 	
-	if (keybinds_map[?e_keybind.INSTANCE_DELETE].pressed)
+	if (keybinds_map[?e_keybind.INSTANCE_DELETE].pressed && tl_edit != null)
 		action_tl_remove()
 	
 	if (keybinds_map[?e_keybind.KEYFRAMES_CREATE].pressed)

@@ -23,11 +23,12 @@ enum e_context_group {
 	BEND,
 	LIGHT,
 	COLOR,
-	CAMERA
+	CAMERA,
+	amount
 }
 
 context_group_copy_list = ds_list_create()
-for (var i = 0; i < ds_list_size(context_group_copy_list); i++)
+for (var i = 0; i < e_context_group.amount; i++)
 	ds_list_add(context_group_copy_list, null)
 
 context_menu_copy_axis_edit = X

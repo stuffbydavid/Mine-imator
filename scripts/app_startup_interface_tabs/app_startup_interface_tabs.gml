@@ -383,6 +383,7 @@ with (timeline)
 	list_width = 320
 	
 	hor_scroll = new(obj_scrollbar)
+	hor_scroll_tl = new(obj_scrollbar)
 	//hor_scroll.value_ease = false
 	
 	ver_scroll = new(obj_scrollbar)

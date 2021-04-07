@@ -46,10 +46,13 @@ switch (name)
 			list_item_add(text_get("contextmenuvaluereset"), null, "", null, icons.RESET, null, action_value_reset, false)
 		}
 		
-		if (context_menu_group != null && context_group_copy_list[|context_menu_group] != null)
+		if (context_menu_group != null)
 		{
 			list_item_add(text_get("contextmenugroupcopy"), null, "", null, icons.COPY_ALL, null, action_group_copy, true)
 			list_item_add(text_get("contextmenugrouppaste"), null, "", null, icons.PASTE_ALL, null, action_group_paste, false)
+			list_item_last.disabled = (context_group_copy_list[|context_menu_group] = null)
+			show_debug_message(context_group_copy_list[|context_menu_group])
+			
 			list_item_add(text_get("contextmenugroupreset"), null, "", null, icons.RESET_ALL, null, action_group_reset, false)
 			
 			if (context_menu_group = e_context_group.POSITION)
@@ -63,17 +66,16 @@ switch (name)
 	// Textboxes
 	case "contextmenutextbox":
 	{
-		var ctrl = text_get("keycontrol") + " + ";
-		list_item_add(text_get("contextmenutextboxcut"), null, ctrl + "X", null, icons.CUT, null, action_textbox_cut, true)
+		list_item_add(text_get("contextmenutextboxcut"), null, text_control_name(keybind_new("X", true)), null, icons.CUT, null, action_textbox_cut, true)
 		list_item_last.disabled = (textbox_select_startpos = textbox_select_endpos)
 		
-		list_item_add(text_get("contextmenutextboxcopy"), null, ctrl + "C", null, icons.COPY, null, action_textbox_copy, false)
+		list_item_add(text_get("contextmenutextboxcopy"), null, text_control_name(keybind_new("C", true)), null, icons.COPY, null, action_textbox_copy, false)
 		list_item_last.disabled = (textbox_select_startpos = textbox_select_endpos)
 		
-		list_item_add(text_get("contextmenutextboxpaste"), null, ctrl + "V", null, icons.PASTE, null, action_textbox_paste, false)
+		list_item_add(text_get("contextmenutextboxpaste"), null, text_control_name(keybind_new("V", true)), null, icons.PASTE, null, action_textbox_paste, false)
 		list_item_last.disabled = (clipboard_get_text() = "" || !clipboard_has_text())
 		
-		list_item_add(text_get("contextmenutextboxselectall"), null, ctrl + "A", null, icons.SELECT_ALL, null, action_textbox_select_all, false)
+		list_item_add(text_get("contextmenutextboxselectall"), null, text_control_name(keybind_new("A", true)), null, icons.SELECT_ALL, null, action_textbox_select_all, false)
 		break
 	}
 	
@@ -82,21 +84,38 @@ switch (name)
 	{
 		list_item_add(text_get("contextmenutladdfolder"), null, text_control_name(keybinds_map[?e_keybind.CREATE_FOLDER].keybind), null, icons.FOLDER, null, action_tl_folder, true)
 		list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
+		list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 		
 		list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
 		list_item_last.context_menu_name = "color"
+		list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 		
 		list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_children)
+		list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+		
 		list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.MINIMIZE, null, action_tl_collapse_children)
+		list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 		
-		list_item_add(text_get("contextmenutlduplicate"), null, "", null, icons.DUPLICATE, null, action_tl_duplicate, true)
-		list_item_last.disabled = (tl_edit = null)
+		list_item_add(text_get("contextmenutlduplicate"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
+		list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 		
-		list_item_add(text_get("contextmenutldelete"), null, "", null, icons.DELETE, null, action_tl_remove)
-		list_item_last.disabled = (tl_edit = null)
+		list_item_add(text_get("contextmenutldelete"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
+		list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 		
 		list_item_add(text_get("contextmenutlexport"), null, "", null, icons.ASSET_EXPORT, null, object_save)
-		list_item_last.disabled = !timeline_settings
+		
+		if (context_menu_value = null)
+			list_item_last.disabled = true
+		else
+		{
+			if (!context_menu_value.selected)
+			{
+				if (context_menu_value.part_of != null)
+					list_item_last.disabled = true
+			}
+			else
+				list_item_last.disabled = !timeline_settings
+		}
 		
 		list_item_add(text_get("contextmenutlselectall"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
 		list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_all)	

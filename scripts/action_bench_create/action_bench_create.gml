@@ -3,9 +3,18 @@
 if (history_undo)
 {
 	with (history_data)
+	{
 		for (var s = 0; s < spawn_amount; s++)
+		{
 			with (save_id_find(spawn_save_id[s]))
+			{
+				if (object_index = obj_timeline)
+					tl_remove_clean()
+				
 				instance_destroy()
+			}
+		}
+	}
 }
 else
 {

@@ -110,7 +110,7 @@ textalpha = lerp(a_text_secondary, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 // Caption
-if (dh > (hei + (label_height + 8)) && capwid = null)
+if (capwid = null)
 {
 	draw_label(string_limit(cap, dw), xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_label)
 	yy += (label_height + 8)

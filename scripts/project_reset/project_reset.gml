@@ -33,10 +33,14 @@ log("Destroying instances")
 
 with (obj_template)
 	instance_destroy()
-	
+
+with (obj_timeline)
+	if (!delete_ready)
+		tl_remove_clean()
+
 with (obj_timeline)
 	instance_destroy()
-	
+
 with (obj_resource)
 	if (id != mc_res)
 		instance_destroy()

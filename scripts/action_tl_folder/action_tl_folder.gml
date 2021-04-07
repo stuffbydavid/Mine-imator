@@ -3,8 +3,13 @@
 if (history_undo)
 {
 	with (history_data)
+	{
 		with (save_id_find(spawn_save_id))
+		{
+			tl_remove_clean()
 			instance_destroy()
+		}
+	}
 }
 else
 {

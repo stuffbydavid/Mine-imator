@@ -1,7 +1,7 @@
 /// tab_timeline()
 
 var itemh, itemhalf, indent;
-var tlx, tly, tlw, tlh, tlstartpos, tlhierarchy;
+var tlx, tly, tlw, tlh, tlmaxw, tlstartpos, tlhierarchy;
 var listx, listy, listw, listh;
 var mouseinmarkers, mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
 var mousemovetl, mousemoveindex, movehltl, movehlpos;
@@ -39,7 +39,7 @@ bary = content_y + headerh
 listx = content_x
 listy = content_y + (headerh + barh)
 listw = min(timeline.list_width, content_width)
-listh = (content_height - (headerh + barh) - ((12 * timeline.hor_scroll.needed)))
+listh = (content_height - (headerh + barh) - ((12 * (timeline.hor_scroll.needed || timeline.hor_scroll_tl.needed))))
 
 // Timeline
 tlx = content_x + listw
@@ -131,6 +131,7 @@ timex += 8
 if (app_mouse_box(headerx, headery, timex, headerh))
 {
 	mouse_cursor = cr_handpoint
+	tip_set(text_get(timeline_show_frames ? "tooltipshowtime" : "tooltipshowframes"), headerx, headery, timex, headerh)
 	
 	if (mouse_left_released)
 		timeline_show_frames = !timeline_show_frames
@@ -303,7 +304,7 @@ if (timeline_region_start != null)
 			draw_box(barx + x1, bary, 1, markerh + barh, false, c_accent, 1)
 		}
 		
-		if (x2 >= -32 && x2 <= (barw +32))
+		if (x2 >= -32 && x2 <= (barw + 32))
 		{
 			draw_image(spr_marker_region, 1, barx + x2 + 10, bary, 1, 1, c_accent, 1)
 			draw_box(barx + x2, bary, 1, markerh + barh, false, c_accent, 1)
@@ -404,7 +405,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
 	if (dy > tly + tlh)
 		break
-		
+	
 	dx = tlx
 	var tl = tree_visible_list[|t];
 	
@@ -803,21 +804,26 @@ timeline.tbx_search.text = timeline_search
 draw_textfield("timelinesearch", listx + (24 + 16), bary + 4, listw - (24 + 24), 24, timeline.tbx_search, action_tl_search, text_get("listsearch"), "none")
 
 // Context menu
-if (mouseinnames && mousetl != null && mousetl.list_mouseon)
+if (mouseinnames)
 	context_menu_area(listx, listy, listw, listh, "timelinelist", mousetl, null, null, null)
 
 dy = listy
+
+var itemmaxw;
+tlmaxw = 0
 for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 {
 	if (dy > listy + listh)
 		break
 	
 	tl = tree_visible_list[|t]
-	itemx = content_x + (indent * tl.level)
+	itemx = (content_x + (indent * tl.level)) - timeline.hor_scroll_tl.value
 	itemy = dy
-	itemw = listw - 8 - (indent * tl.level)
+	itemw = listw - 8 - (indent * tl.level) + timeline.hor_scroll_tl.value
 	itemhover = (tl = mousetl) && mouseinnames
 	buttonhover = false
+	
+	itemmaxw = (indent * tl.level) + 32
 	
 	// Hovering
 	if (itemhover)
@@ -849,6 +855,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
 	}
 	xx -= (buttonsize + 4) * (itemhover || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost))
+	itemmaxw += buttonsize + buttonpad
 	
 	// Lock
 	if (itemhover || tl.lock)
@@ -858,6 +865,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		
 		buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
 	}
+	itemmaxw += buttonsize + buttonpad
 	
 	// Ghost toggle
 	if (!setting_timeline_hide_ghosts)
@@ -872,6 +880,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
 		}
 	}
+	itemmaxw += buttonsize + buttonpad
 	
 	minw = xx - itemx
 	xright = xx
@@ -882,7 +891,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	// Hierarchy connections (If hierarchy is possible)
 	if (tlhierarchy)
 	{
-		var connectx = content_x + 4;
+		var connectx = content_x + 4 - timeline.hor_scroll_tl.value;
 		var index = null;
 		
 		for (var i = 0; i < array_length_1d(tl.level_display); i++)
@@ -976,6 +985,7 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 		
 		xx += 24
 		minw -= 24
+		itemmaxw += 24
 	}
 	xx += 1
 	
@@ -1038,6 +1048,8 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 			
 			draw_label(name, xx, itemy + (itemh/2), fa_left, fa_middle, namecolor, namealpha, font_value)
 		}
+		
+		itemmaxw += string_width(tl.display_name) + 8
 	}
 	
 	if (window_busy = "timelineclick")
@@ -1136,7 +1148,15 @@ for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	}
 	
 	dy += itemh
+	
+	tlmaxw = max(itemmaxw, tlmaxw)
 }
+
+// Timeline list scrollbar
+if (timeline.hor_scroll_tl.needed)
+	draw_box(listx, listy + listh, listw, 12, false, c_level_middle, 1)
+
+scrollbar_draw(timeline.hor_scroll_tl, e_scroll.HORIZONTAL, listx, listy + listh, listw, tlmaxw)
 
 // Resize list
 if (app_mouse_box(tlx - 5, tly - barh, 5, content_height - headerh))
@@ -1610,11 +1630,10 @@ content_mouseon = app_mouse_box(content_x, content_y, content_width, content_hei
 // Vertical scrollbar
 if (tlw > 16)
 {
-	timeline.ver_scroll.snap_value = itemh / 4
-	
 	if (timeline.ver_scroll.needed)
 		draw_box(content_x + content_width - 12, tly, 12, tlh, false, c_level_middle, 1)
-	
+		
+	timeline.ver_scroll.snap_value = itemh / 4
 	scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 12, tly, tlh, ds_list_size(tree_visible_list) * itemh)
 }
 
@@ -1634,7 +1653,12 @@ if (content_mouseon)
 	window_scroll_focus = string(timeline.ver_scroll)
 	
 	if (keyboard_check(vk_shift))
-		window_scroll_focus = string(timeline.hor_scroll)
+	{
+		if (mouseinnames)
+			window_scroll_focus = string(timeline.hor_scroll_tl)
+		else
+			window_scroll_focus = string(timeline.hor_scroll)
+	}
 	
 	if (keyboard_check(vk_control))
 		window_scroll_focus = "timelinezoom"

@@ -47,15 +47,7 @@ draw_set_font(font_label)
 
 modval = mod_fix(value, 360)
 capwid = string_width(text_get(name) + ":") + 5
-if (limit)
-{
-	text = string_decimals(modval) + tbx.suffix
-	
-	if (floor(value/360) != 0)
-		text = string(floor(value/360)) + "x" + text
-}
-else
-	text = string_decimals(value) + tbx.suffix
+text = string_decimals(value) + tbx.suffix
 
 draw_set_font(font_digits)
 
