@@ -7,7 +7,7 @@ var unpinnedlist = ds_list_create();
 var itemslist = ds_list_create();
 ds_list_copy(itemslist, recent_list)
 
-// Seperate recent items into seperate lists
+// Separate recent items into separate lists
 for (var i = 0; i < ds_list_size(itemslist); i++)
 {
 	var item = itemslist[|i];
@@ -26,7 +26,7 @@ for (var i = 0; i < ds_list_size(itemslist); i++)
 }
 ds_list_clear(recent_list_display)
 
-// Sort lists seperately
+// Sort lists separately
 recent_update_sort(pinnedlist)
 recent_update_sort(unpinnedlist)
 

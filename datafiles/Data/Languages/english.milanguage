@@ -171,7 +171,7 @@
             "7": "Purple",
             "8": "Pink"
         },
-        "scaleseperate": "Seperate scale",
+        "scaleseparate": "Separate scale",
         "scalecombine": "Combine scale",
         "advancedcolorsshow": "Show advanced color settings",
         "advancedcolorshide": "Hide advanced color settings",
@@ -1897,7 +1897,7 @@
             "trajectory": "TRAJECTORY",
             "angle": "Launch angle",
             "angle/": {
-                "extend": "Seperate XYZ settings",
+                "extend": "Separate XYZ settings",
                 "xyz": "XYZ Angle",
                 "x": "X Angle",
                 "y": "Y Angle",
@@ -1908,7 +1908,7 @@
             },
             "speed": "Speed",
             "speed/": {
-                "extend": "Seperate XYZ settings",
+                "extend": "Separate XYZ settings",
                 "xyz": "Initial XYZ",
                 "x": "Initial X",
                 "y": "Initial Y",
@@ -1925,14 +1925,14 @@
             "rotation": "ROTATION",
             "rotation/": {
                 "initial": "Initial rotation",
-                "extend": "Seperate XYZ settings",
+                "extend": "Separate XYZ settings",
                 "xyz": "Initial XYZ",
                 "x": "Initial X",
                 "y": "Initial Y",
                 "z": "Initial Z",
                 "speed": "Rotation speed",
                 "speed/": {
-                    "extend": "Seperate XYZ settings",
+                    "extend": "Separate XYZ settings",
                     "xyz": "Initial XYZ",
                     "y": "Initial Y",
                     "z": "Initial Z",
@@ -1980,11 +1980,10 @@
         },
         "perminute": "per minute",
         "perburst": "per burst",
-        "persecond": "/s",
-        "seconds": "seconds",
-        "pixels": "px",
-        "fps": "fps",
-        "to": "to"
+        "pixels": " px",
+        "fps": " fps",
+        "min": "Min",
+        "max": "Max"
     },
     "colorpicker/": {
         "r": "R",
@@ -2593,7 +2592,7 @@
         "fps60": "60",
         "backup": "Automatic backups",
         "backuptime": "Time between backups",
-        "backuptimeminutes": "min",
+        "backuptimeminutes": " min",
         "backupamount": "Max backups",
         "spawnobjects": "Create objects near work camera",
         "spawncameras": "Copy work camera into new cameras",

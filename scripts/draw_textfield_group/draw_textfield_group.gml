@@ -103,7 +103,7 @@ for (var i = 0; i < textfield_amount; i++)
 		fieldx += fieldwid
 	
 	// Get max dragging width from labels
-	dragw = max(dragw, string_width(text_get(textfield_name[i])) + 16)
+	dragw = max(dragw, string_width(text_get(textfield_caption[i] != null ? textfield_caption[i] : textfield_name[i])) + 16)
 }
 
 fieldx = xx
@@ -172,7 +172,7 @@ for (var i = 0; i < textfield_amount; i++)
 	}
 	 
 	if (textfield_icon[i] = null)
-		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, labelcolor, labelalpha, font_label)
+		draw_label(text_get(textfield_caption[i] != null ? textfield_caption[i] : textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, labelcolor, labelalpha, font_label)
 	else
 		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 	

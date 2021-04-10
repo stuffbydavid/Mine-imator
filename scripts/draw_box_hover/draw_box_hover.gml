@@ -4,7 +4,7 @@
 /// @arg width
 /// @arg height
 /// @arg alpha
-/// @desc Drawing seperate full boxes for each side because drawing primitive outlines isn't consistent on all computers
+/// @desc Drawing separate full boxes for each side because drawing primitive outlines isn't consistent on all computers
 
 var xx, yy, width, height, size, color, alpha;
 xx = argument[0]

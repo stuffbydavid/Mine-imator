@@ -4,7 +4,7 @@ var capwid, setx, wid, text, suffix, dividew;
 var sn, ud;
 sn = (setting_z_is_up ? Y : Z) // South/north axis
 ud = (setting_z_is_up ? Z : Y) // Up/down axis
-suffix = text_get("particleeditorpersecond")
+suffix = ""
 dividew = content_width - floor(tab.scrollbar_margin * 12)
 
 // Settings
@@ -57,12 +57,12 @@ togglebutton_add("particleeditorspawnburst", null, 0, !temp_edit.pc_spawn_consta
 draw_togglebutton("particleeditorspawntype", dx, dy)
 tab_next()
 
-tab_control_dragger()
-draw_dragger("particleeditorspawnamount", dx, dy, 64, temp_edit.pc_spawn_amount, temp_edit.pc_spawn_constant ? 2 : (1 / 5), 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount)
 draw_set_font(font_label)
+tab_control_dragger()
+draw_dragger("particleeditorspawnamount", dx, dy, 64, temp_edit.pc_spawn_amount, temp_edit.pc_spawn_constant ? 2 : (1 / 5), 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount, string_width(text_get("particleeditorspawnamount")) + 8)
 
+draw_set_font(font_label)
 draw_label((temp_edit.pc_spawn_constant ? text_get("particleeditorperminute") : text_get("particleeditorperburst")), dx + 64 + 16 + string_width(text_get("particleeditorspawnamount")), dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
-
 tab_next()
 
 // Spawn region
@@ -190,7 +190,7 @@ tab_control_checkbox()
 draw_checkbox("particleeditordestroyamount", dx, dy, temp_edit.pc_destroy_at_amount, action_lib_pc_destroy_at_amount)
 
 wid = text_max_width("particleeditordestroyamount") + 8 + 26
-draw_dragger("particleeditordestroyamountval", dx + wid, dy, 64, temp_edit.pc_destroy_at_amount_val, 1 / 4, 0, no_limit, 200, 1, tab.tbx_destroy_at_amount_val, action_lib_pc_destroy_at_amount_val)
+draw_dragger("particleeditordestroyamountval", dx + wid, dy, 64, temp_edit.pc_destroy_at_amount_val, 1 / 4, 0, no_limit, 200, 1, tab.tbx_destroy_at_amount_val, action_lib_pc_destroy_at_amount_val, wid, false)
 
 tab_next(false)
 
@@ -301,8 +301,6 @@ if (ptype_edit.temp < 0)
 		tab_template_editor_particles_framebox()
 		
 		// Frame width / height
-		draw_set_font(font_label)
-		
 		tab.tbx_type_sprite_frame_width.suffix = text_get("particleeditorpixels")
 		tab.tbx_type_sprite_frame_height.suffix = text_get("particleeditorpixels")
 		
@@ -312,29 +310,11 @@ if (ptype_edit.temp < 0)
 		draw_textfield_group("particleeditortypespriteframesize", dx, dy, dw, 1 / 10, 1, no_limit, 1, true, true, true)
 		tab_next()
 		
-		capwid = text_caption_width("particleeditortypespriteframestart", 
-								  "particleeditortypespriteframeend")
-		
 		// Frames
-		var caption, capwid;
-		
-		draw_set_font(font_label)
-		
-		caption = text_get("particleeditortypespriteframeframes")
-		capwid = string_width(caption) + 8
-		
-		tab_control_dragger()
-		draw_label(caption, dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
-		
-		draw_dragger("particleeditortypespriteframestart", dx + capwid, dy, 48, ptype_edit.sprite_frame_start, 1 / 10, 0, no_limit, 7, 1, tab.tbx_type_sprite_frame_start, action_lib_pc_type_sprite_frame_start, null, false)
-		capwid += 48 + 8
-		
-		draw_set_font(font_value)
-		draw_label(text_get("particleeditorto"), dx + capwid, dy + 14, fa_left, fa_middle, c_text_main, a_text_main)
-		capwid += string_width(text_get("particleeditorto")) + 8
-		
-		draw_dragger("particleeditortypespriteframeend", dx + capwid, dy, 48, ptype_edit.sprite_frame_end, 1 / 10, 0, no_limit, 0, 1, tab.tbx_type_sprite_frame_end, action_lib_pc_type_sprite_frame_end, null, false)
-		
+		tab_control_textfield_group()
+		textfield_group_add("particleeditortypespriteframestart", ptype_edit.sprite_frame_start, 7, action_lib_pc_type_sprite_frame_start, axis_edit, tab.tbx_type_sprite_frame_start, null, 1 / 10, 0, no_limit, "particleeditorfrom")
+		textfield_group_add("particleeditortypespriteframeend", ptype_edit.sprite_frame_end, 0, action_lib_pc_type_sprite_frame_end, axis_edit, tab.tbx_type_sprite_frame_end, null, 1 / 10, 0, no_limit, "particleeditorto")
+		draw_textfield_group("particleeditortypespriteframeframes", dx, dy, dw, null, null, null, 1, true, true)
 		tab_next()
 	}
 	else // Particle template
@@ -480,7 +460,7 @@ if (!ptype_edit.angle_collapse)
 		array(action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max), 
 		capwid, true, suffix)
 	
-	tab_collapse_end()
+	tab_collapse_end(false)
 }
 
 // Speed

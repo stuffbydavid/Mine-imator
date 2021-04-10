@@ -1,4 +1,4 @@
-/// textfield_group_add(name, value, default, script, axis, textbox, [icon, [multiplier]])
+/// textfield_group_add(name, value, default, script, axis, textbox, [icon, [multiplier, [min, max, [caption]]]])
 /// @arg name
 /// @arg value
 /// @arg default
@@ -8,7 +8,8 @@
 /// @arg [icon
 /// @arg [multiplier
 /// @arg [min
-/// @arg max]]]
+/// @arg max
+/// @arg [caption]]]]
 
 textfield_name = array_add(textfield_name, argument[0])
 textfield_value = array_add(textfield_value, argument[1])
@@ -32,5 +33,10 @@ if (argument_count > 8)
 	textfield_min = array_add(textfield_min, argument[8])
 	textfield_max = array_add(textfield_max, argument[9])
 }
+
+if (argument_count > 10)
+	textfield_caption = array_add(textfield_caption, argument[10])
+else
+	textfield_caption = array_add(textfield_caption, null)
 
 textfield_amount = array_length_1d(textfield_name)

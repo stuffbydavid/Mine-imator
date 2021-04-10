@@ -43,7 +43,7 @@ if (load_format < e_project.FORMAT_125)
 		value[e_value.BG_GROUND_SLOT] = app.background_ground_slot
 }
 
-// Seperated leaf colors for custom biome setting (1.3.0)
+// Separated leaf colors for custom biome setting (1.3.0)
 if (load_format < e_project.FORMAT_130_AL9)
 {
 	app.background_leaves_oak_color = app.background_foliage_color

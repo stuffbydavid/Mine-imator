@@ -56,6 +56,12 @@ if (capwid = null)
 tab_control_dragger()
 draw_button_icon("particleeditorrandom" + name, dx + dw - 24, dy, 24, 24, israndom, icons.RANDOMIZE, scripts[1], false, "tooltipparticlesrandom")
 
+var suf1, suf2;
+suf1 = tbx[0].suffix
+suf2 = tbx[1].suffix
+tbx[0].suffix += suffix
+tbx[1].suffix += suffix
+	
 if (israndom)
 {
 	if (showcaption)
@@ -63,27 +69,23 @@ if (israndom)
 		draw_label(caption, dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 		tab_next(false)
 		
-		tab_control_dragger()
+		tab_control_textfield_group(false)
+		dy += 2
+		
 		capwid = 0
 	}
 	
-	draw_dragger(name + "min", dx + capwid, dy, wid, randommin, mul, minval, randommax, def[1], snapval, tbx[0], scripts[2], null, false)
-	capwid += wid + 8
-	
-	draw_set_font(font_value)
-	draw_label(text_get("particleeditorto"), dx + capwid, dy + 12, fa_left, fa_middle, c_text_main, a_text_main)
-	capwid += string_width(text_get("particleeditorto")) + 8
-	
-	draw_dragger(name + "max", dx + capwid, dy, wid, randommax, mul, randommin, maxval, def[2], snapval, tbx[1], scripts[3], null, false)
-	capwid += wid + 8
+	textfield_group_add(name + "min", randommin, def[1], scripts[2], X, tbx[0], null, mul, minval, randommax, "particleeditormin")
+	textfield_group_add(name + "max", randommax, def[2], scripts[3], X, tbx[1], null, mul, randommin, maxval, "particleeditormax")
+	draw_textfield_group(name, dx, dy, dw - (32 * !showcaption), null, null, null, snapval, false)
 }
 else
 {
-	draw_dragger(name, dx, dy, wid, val, mul, minval, maxval, def[0], snapval, tbx[1], scripts[0], capwid, showcaption)
+	draw_dragger(name, dx, dy, dragger_width, val, mul, minval, maxval, def[0], snapval, tbx[1], scripts[0], (dw - (dragger_width + 24 + 8)), showcaption)
 	capwid += wid + 8
 }
 
-if (suffix != "")
-	draw_label(suffix, dx + capwid, dy + 12, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+tbx[0].suffix = suf1
+tbx[1].suffix = suf2
 
 tab_next()

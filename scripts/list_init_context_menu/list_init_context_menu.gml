@@ -14,7 +14,7 @@ switch (name)
 		// Combine scale
 		if (context_menu_group = e_context_group.SCALE)
 		{
-			var text = (frame_editor.transform.scale_all ? "contextmenuscaleseperate" : "contextmenuscalecombine");
+			var text = (frame_editor.transform.scale_all ? "contextmenuscaleseparate" : "contextmenuscalecombine");
 			list_item_add(text_get(text), null, "", null, icons.SCALE, null, action_group_combine_scale, true)
 		}
 		
