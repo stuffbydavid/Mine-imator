@@ -16,36 +16,36 @@ if (tab.material.advanced)
 {
 	// Mul
 	tab_control_color()
-	draw_button_color("frameeditorrgbmul", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul, tab.material.tbx_rgb_mul)
+	draw_button_color("frameeditorrgbmul", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorhsvmul", dx, dy, dw, tl_edit.value[e_value.HSB_MUL], c_white, true, action_tl_frame_hsb_mul, tab.material.tbx_hsv_mul)
+	draw_button_color("frameeditorhsvmul", dx, dy, dw, tl_edit.value[e_value.HSB_MUL], c_white, true, action_tl_frame_hsb_mul)
 	tab_next()
 	
 	// Add
 	tab_control_color()
-	draw_button_color("frameeditorrgbadd", dx, dy, dw, tl_edit.value[e_value.RGB_ADD], c_black, false, action_tl_frame_rgb_add, tab.material.tbx_rgb_add)
+	draw_button_color("frameeditorrgbadd", dx, dy, dw, tl_edit.value[e_value.RGB_ADD], c_black, false, action_tl_frame_rgb_add)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorhsvadd", dx, dy, dw, tl_edit.value[e_value.HSB_ADD], c_black, true, action_tl_frame_hsb_add, tab.material.tbx_hsv_add)
+	draw_button_color("frameeditorhsvadd", dx, dy, dw, tl_edit.value[e_value.HSB_ADD], c_black, true, action_tl_frame_hsb_add)
 	tab_next()
 	
 	// Sub
 	tab_control_color()
-	draw_button_color("frameeditorrgbsub", dx, dy, dw, tl_edit.value[e_value.RGB_SUB], c_black, false, action_tl_frame_rgb_sub, tab.material.tbx_rgb_sub)
+	draw_button_color("frameeditorrgbsub", dx, dy, dw, tl_edit.value[e_value.RGB_SUB], c_black, false, action_tl_frame_rgb_sub)
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorhsvsub", dx, dy, dw, tl_edit.value[e_value.HSB_SUB], c_black, true, action_tl_frame_hsb_sub, tab.material.tbx_hsv_sub)
+	draw_button_color("frameeditorhsvsub", dx, dy, dw, tl_edit.value[e_value.HSB_SUB], c_black, true, action_tl_frame_hsb_sub)
 	tab_next()
 }
 else
 {
 	// Blend color
 	tab_control_color()
-	draw_button_color("frameeditorblendcolor", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul, tab.material.tbx_rgb_mul)
+	draw_button_color("frameeditorblendcolor", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
 	tab_next()
 }
 
@@ -53,13 +53,13 @@ else
 var glowenabled = tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA];
 
 tab_control_color()
-draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color, tab.material.tbx_color_mix)
+draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
 tab_next()
 
 if (glowenabled)
 {
 	tab_control_color()
-	draw_button_color("frameeditorglowcolor", dx, dy, dw, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color, tab.material.tbx_color_glow)
+	draw_button_color("frameeditorglowcolor", dx, dy, dw, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
 	tab_next()
 }	
 

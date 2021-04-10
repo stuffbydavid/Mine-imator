@@ -18,7 +18,8 @@ content_x = floor(window_width / 2 - content_width / 2)
 content_y = floor(window_height / 2 - content_height / 2)
 
 // Background
-draw_clear(c_level_top)
+draw_clear(c_level_middle)
+draw_pattern(0, 0, window_width, window_height)
 
 // Current surface
 framew = content_width

@@ -56,8 +56,10 @@ microani_set(name, null, window_busy = name + "min" || window_busy = name + "max
 microani_update(window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, window_busy = name + "min" || window_busy = name + "max", false, mouseon || textfocus)
 
 var labelcolor, labelalpha;
-labelcolor = merge_color(c_text_secondary, c_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
-labelalpha = lerp(a_text_secondary, a_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
+labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+labelcolor = merge_color(labelcolor, c_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
+labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+labelalpha = lerp(labelalpha, a_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
 draw_label(text_get(name), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha, font_label)
 
 // Slider

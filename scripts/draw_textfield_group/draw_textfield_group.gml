@@ -149,23 +149,30 @@ for (var i = 0; i < textfield_amount; i++)
 	linealpha = lerp(0, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
 	linealpha = lerp(linealpha, a_accent, focus)
 	
-	var col = c_text_secondary;
-	var alpha = a_text_secondary;
+	var labelcolor, labelalpha;
 	
 	if (axiscolor)
 	{
 		if (i = 0)
-			col = c_axisred
+			labelcolor = c_axisred
 		else if (i = 1)
-			col = c_axisgreen
+			labelcolor = c_axisgreen
 		else
-			col = c_axisblue
+			labelcolor = c_axisblue
 	
-		alpha = 1
+		labelalpha = 1
 	}
-	
+	else
+	{
+		labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+		labelcolor = merge_color(labelcolor, c_accent, focus)
+		
+		labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+		labelalpha = lerp(labelalpha, a_accent, focus)
+	}
+	 
 	if (textfield_icon[i] = null)
-		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, col, alpha, font_label)
+		draw_label(text_get(textfield_name[i]), fieldx + 8, boxy + (boxhei/2), fa_left, fa_middle, labelcolor, labelalpha, font_label)
 	else
 		draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 	

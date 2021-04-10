@@ -1238,7 +1238,7 @@ if (window_busy = "" && mouseintl && !mousekfstart && !mousekfend)
 			else if ((tl_keyframe_length(mousekf) != 0 && (timeline_marker >= mousekf.position) && (timeline_marker <= mousekf.position + tl_keyframe_length(mousekf))) || (tl_keyframe_length(mousekf) = 0)) // Select
 			{
 				if (!keyboard_check(vk_shift))
-					tl_keyframes_deselect_all()
+					tl_deselect_all()
 				
 				action_tl_keyframe_select(mousekf.timeline, mousekf)
 				action_tl_keyframes_move_start(mousekf)

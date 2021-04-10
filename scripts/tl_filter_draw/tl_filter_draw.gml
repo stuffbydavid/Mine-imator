@@ -3,8 +3,8 @@
 draw_set_font(font_label)
 
 var switchwid, colorwid, px;
-switchwid = text_max_width("timelinehideghosts") + 64
-colorwid = (24 * 9) - 4
+switchwid = text_max_width("timelinehideghosts") + 16 + 24
+colorwid = max(text_max_width("timelinefiltertags"), (24 * 9) - 4)
 
 // Color tags
 draw_label(text_get("timelinefiltertags"), dx, dy + 9, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
@@ -33,8 +33,6 @@ for (var i = 0; i <= 8; i++)
 			tl_update_list()
 		}
 	}
-	
-	colorwid = max(colorwid, text_max_width("contextmenucolor" + string(i)))
 }
 tab_next()
 

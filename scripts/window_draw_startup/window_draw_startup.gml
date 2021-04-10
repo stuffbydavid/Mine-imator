@@ -7,27 +7,28 @@ content_height = window_height
 content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 
 // Draw background
+var headersize = 144;
 draw_clear_alpha(c_level_middle, 1)
-draw_box(0, 0, window_width, 192, false, c_overlay, a_overlay)
+draw_pattern(0, headersize, window_width, window_height - headersize)
 
-var pattern = (setting_theme = theme_light ? 0 : 1);
-draw_image(spr_startup_left, pattern, 0, 0)
-draw_image(spr_startup_right, pattern, window_width, 0)
+// Header
+draw_box(0, 0, window_width, headersize, false, c_level_top, 1)
+draw_divide(0, headersize + 1, window_width)
 
 // Logo
-draw_sprite(spr_logo, 0, window_width / 2, 96)
+draw_sprite(spr_logo, 0, window_width / 2, headersize/2)
 
 // Version
 var trial = (trial_version ? " " + text_get("startuptrial") : "");
-draw_button_text(text_get("startupversion", mineimator_version_full + trial), (window_width / 2) + 259, 130, popup_switch, popup_about)
+draw_button_text(text_get("startupversion", mineimator_version_full + trial), (window_width / 2) + 259, floor((headersize/2) + (sprite_get_height(spr_logo)/2)) + 3, popup_switch, popup_about)
 
-dy = 240
+dy = headersize + 48
 dw = min(window_width - 48, 1008)
 
 // No recent projects text
 if (ds_list_size(recent_list) = 0)
 {
-	draw_label(text_get("recentnone"), window_width / 2, dy, fa_center, fa_middle, c_text_secondary, a_text_secondary, font_body_big)
+	draw_label(text_get("recentnone"), window_width / 2, dy, fa_center, fa_middle, c_accent, 1, font_heading_big)
 	dy += 48
 }
 
@@ -58,7 +59,7 @@ else
 	dx = centerx
 
 // Browse
-if (draw_button_label("startupbrowse", dx, dy, null, icons.FOLDER, e_button.PRIMARY))
+if (draw_button_label("startupbrowse", dx, dy, null, icons.FOLDER, e_button.SECONDARY))
 {
 	if (project_load())
 		window_state = ""
@@ -115,7 +116,7 @@ else
 	// Jonathan splash
 	var midx, midy;
 	midx = snap(window_width / 2, 2)
-	midy = snap(192 + ((window_height - 192) / 1.75), 2)
+	midy = snap(headersize + ((window_height - headersize) / 1.75), 2)
 	
 	// Only draw splash if it fits well on screen
 	if ((midy + (sprite_get_height(spr_jonathan_splash) / 1.75)) < (window_height - 50))

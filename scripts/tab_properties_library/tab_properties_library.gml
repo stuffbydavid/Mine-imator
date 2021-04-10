@@ -74,8 +74,8 @@ switch (temp_edit.type)
 		with (temp_edit.model_tex)
 			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 		
-		tab_control_menu(36)
-		draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin"), e_menu.LIST, dx, dy, dw, 36, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
+		tab_control_menu(32)
+		draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
 		tab_next()
 		
 		break
@@ -95,8 +95,8 @@ switch (temp_edit.type)
 		tab_next()
 		
 		// Texture
-		tab_control_menu(36)
-		draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 36, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture, null)
+		tab_control_menu(32)
+		draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture, null)
 		tab_next()
 		
 		break
@@ -139,8 +139,8 @@ switch (temp_edit.type)
 		if (tex = null)
 			tex = res.texture
 		
-		tab_control_menu(36)
-		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 36, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
+		tab_control_menu(32)
+		draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
 		tab_next()
 		
 		var sx;
@@ -185,8 +185,8 @@ switch (temp_edit.type)
 		tab_next()
 		
 		// Texture
-		tab_control_menu(36)
-		draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 36, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture)
+		tab_control_menu(32)
+		draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture)
 		tab_next()
 		
 		break
@@ -226,8 +226,8 @@ switch (temp_edit.type)
 		with (temp_edit.model_tex)
 			tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 		
-		tab_control_menu(36)
-		draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 36, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
+		tab_control_menu(32)
+		draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
 		tab_next()
 		
 		break
@@ -288,8 +288,8 @@ switch (temp_edit.type)
 		else
 			text = text_get("listnone")
 		
-		tab_control_menu(36)
-		draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 36, temp_edit.shape_tex, text, action_lib_shape_tex, false, sprite)
+		tab_control_menu(32)
+		draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex, text, action_lib_shape_tex, false, sprite)
 		tab_next()
 		
 		// Mapped
@@ -402,8 +402,8 @@ switch (temp_edit.type)
 		if (temp_edit.model_tex = null)
 			text = text_get("listdefault", text)
 		
-		tab_control_menu(36)
-		draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 36, temp_edit.model_tex, text, action_lib_model_tex, false, tex)
+		tab_control_menu(32)
+		draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, text, action_lib_model_tex, false, tex)
 		tab_next()
 		break	
 	}

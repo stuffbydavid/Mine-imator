@@ -249,7 +249,7 @@ if (tl_edit.value[e_value.CAM_BLOOM] && collapse_map[?"bloom"])
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorcamerabloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend, tab.camera.tbx_bloom_blend)
+	draw_button_color("frameeditorcamerabloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend)
 	tab_next()
 	
 	tab_collapse_end()
@@ -283,8 +283,8 @@ if (tl_edit.value[e_value.CAM_LENS_DIRT] && collapse_map[?"lensdirt"])
 	if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
 		tex = texobj.texture
 	
-	tab_control_menu(36)
-	draw_button_menu("frameeditorcameralensdirttexture", e_menu.LIST, dx, dy, dw, 36, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, false, tex)
+	tab_control_menu(32)
+	draw_button_menu("frameeditorcameralensdirttexture", e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, false, tex)
 	tab_next()
 	
 	// Affected by bloom
@@ -342,7 +342,7 @@ if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && collapse_map[?"clrcor"])
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorcameracolorcorrectioncolorburn", dx, dy, dw, tl_edit.value[e_value.CAM_COLOR_BURN], c_white, false, action_tl_frame_cam_clrcor_color_burn, tab.camera.tbx_color_burn)
+	draw_button_color("frameeditorcameracolorcorrectioncolorburn", dx, dy, dw, tl_edit.value[e_value.CAM_COLOR_BURN], c_white, false, action_tl_frame_cam_clrcor_color_burn)
 	tab_next()
 	
 	tab_collapse_end()
@@ -396,7 +396,7 @@ if (tl_edit.value[e_value.CAM_VIGNETTE] && collapse_map[?"vignette"])
 	tab_next()
 	
 	tab_control_color()
-	draw_button_color("frameeditorcameravignettecolor", dx, dy, dw, tl_edit.value[e_value.CAM_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_vignette_color, tab.camera.tbx_color_vignette)
+	draw_button_color("frameeditorcameravignettecolor", dx, dy, dw, tl_edit.value[e_value.CAM_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_vignette_color)
 	tab_next()
 	
 	tab_collapse_end()

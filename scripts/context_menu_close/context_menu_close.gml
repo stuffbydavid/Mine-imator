@@ -18,3 +18,8 @@ with (obj_context_menu_level)
 	list_destroy(level_list)
 	instance_destroy()
 }
+
+mouse_left = false
+mouse_left_pressed = false
+mouse_left_double_pressed = false
+mouse_click_count = 0

@@ -28,6 +28,7 @@ app_update_animate()
 
 // Render
 render_active = "movie"
+render_quality = (exportmovie_high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
 
 if (exportmovie_format = "png")
 	render_start(exportmovie_surface, timeline_camera)

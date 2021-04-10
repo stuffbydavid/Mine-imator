@@ -3,7 +3,7 @@
 draw_set_font(font_label)
 
 var draggerwid, switchwid;
-draggerwid = text_max_width("viewoverlaygridrows", "viewoverlaygridcolumns") + 16
+draggerwid = text_max_width("viewoverlaygridrows", "viewoverlaygridcolumns") + 16 + dragger_width
 switchwid = text_max_width("viewoverlayaspectratio", "viewoverlaygrid") + 16 + 24
 
 tab_control_switch()
@@ -25,11 +25,11 @@ if (draw_switch("viewoverlaygrid", dx, dy, settings_menu_view.grid, null))
 tab_next()
 
 tab_control_dragger()
-draw_dragger("viewoverlaygridrows", dx, dy, 64, project_grid_rows, 0.05, 1, 10, 3, 1, tbx_grid_rows, action_project_grid_rows, null, true, !settings_menu_view.grid)
+draw_dragger("viewoverlaygridrows", dx, dy, dragger_width, project_grid_rows, 0.05, 1, 10, 3, 1, tbx_grid_rows, action_project_grid_rows, null, true, !settings_menu_view.grid)
 tab_next()
 
 tab_control_dragger()
-draw_dragger("viewoverlaygridcolumns", dx, dy, 64, project_grid_columns, 0.05, 1, 10, 3, 1, tbx_grid_columns, action_project_grid_columns, null, true, !settings_menu_view.grid)
+draw_dragger("viewoverlaygridcolumns", dx, dy, dragger_width, project_grid_columns, 0.05, 1, 10, 3, 1, tbx_grid_columns, action_project_grid_columns, null, true, !settings_menu_view.grid)
 tab_next()
 
-settings_menu_w = (max(draggerwid + 64, switchwid) + 24)
+settings_menu_w = (max(draggerwid, switchwid) + 24)

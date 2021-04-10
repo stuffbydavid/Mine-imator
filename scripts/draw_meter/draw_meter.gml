@@ -60,8 +60,10 @@ microani_set(name, script, (window_busy = name) || slidermouseon, slidermouseon 
 microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, locked, mouseon || (window_busy = name + "inputpress" || window_focus = string(tbx)))
 
 var labelcolor, labelalpha;
-labelcolor = merge_color(c_text_secondary, c_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
-labelalpha = lerp(a_text_secondary, a_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
+labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+labelcolor = merge_color(labelcolor, c_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
+labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+labelalpha = lerp(labelalpha, a_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
 
 draw_set_font(font_label)
 draw_label(string_limit(text_get(name), dw - 80), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha)

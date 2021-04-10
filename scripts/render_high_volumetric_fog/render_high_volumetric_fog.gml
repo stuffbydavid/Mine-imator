@@ -43,7 +43,7 @@ if (render_samples <= setting_render_samples || render_samples_clear || export)
 	
 	for (var s = samplestart; s < sampleend; s++)
 	{
-		if (render_samples >= setting_render_samples)
+		if (render_samples >= setting_render_samples && !export)
 			continue
 		
 		random_set_seed(s)

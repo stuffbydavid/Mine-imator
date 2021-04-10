@@ -93,7 +93,7 @@ draw_box_hover(switchx, switchy, 20, 14, mcroani_arr[e_mcroani.PRESS])
 
 // Label
 draw_set_font(font_label)
-draw_label(string_limit(name, w - 48), xx, yy + (h/2), fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]))
+draw_label(string_limit(name, w - 32), xx, yy + (h/2), fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]))
 
 microani_update(mouseon, mouseclick, active, disabled, 0, thumbgoal)
 

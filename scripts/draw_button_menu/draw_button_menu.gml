@@ -104,9 +104,11 @@ flip = (yy + hei + hei * 8 > window_height)
 microani_set(name, null, false, false, false)
 
 var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha;
-textcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+textcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+textcolor = merge_color(textcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
 textcolor = merge_color(textcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-textalpha = lerp(a_text_secondary, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+textalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+textalpha = lerp(textalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 // Caption
@@ -166,8 +168,12 @@ list_item_draw(item, xx, yy, wid, hei, false, null, null, false)
 instance_destroy(item)
 
 // Chevron
-chevroncolor = merge_color(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-chevronalpha = lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+chevroncolor = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
+chevroncolor = merge_color(chevroncolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+chevroncolor = merge_color(chevroncolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+chevronalpha = lerp(a_text_secondary, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+chevronalpha = lerp(chevronalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+chevronalpha = lerp(chevronalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - mcroani_arr[e_mcroani.CUSTOM_LINEAR]))
 draw_image(spr_icons, icons.CHEVRON_UP_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * mcroani_arr[e_mcroani.CUSTOM_LINEAR])

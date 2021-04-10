@@ -51,7 +51,6 @@ switch (name)
 			list_item_add(text_get("contextmenugroupcopy"), null, "", null, icons.COPY_ALL, null, action_group_copy, true)
 			list_item_add(text_get("contextmenugrouppaste"), null, "", null, icons.PASTE_ALL, null, action_group_paste, false)
 			list_item_last.disabled = (context_group_copy_list[|context_menu_group] = null)
-			show_debug_message(context_group_copy_list[|context_menu_group])
 			
 			list_item_add(text_get("contextmenugroupreset"), null, "", null, icons.RESET_ALL, null, action_group_reset, false)
 			

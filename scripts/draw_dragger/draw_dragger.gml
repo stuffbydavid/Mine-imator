@@ -63,7 +63,7 @@ if (!disabled)
 
 fieldx = xx + capwidth
 
-dragmouseon = app_mouse_box(xx, yy, capwidth + wid, hei) && content_mouseon && (window_focus != string(tbx)) && !disabled
+dragmouseon = app_mouse_box(fieldx, yy, wid, hei) && content_mouseon && (window_focus != string(tbx)) && !disabled
 
 // Drag
 if (dragmouseon && mouse_left_pressed)
@@ -128,10 +128,12 @@ if (dragmouseon)
 
 // Use microanimation from inputbox to determine color
 var labelcolor, labelalpha;
-labelcolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+labelcolor = merge_color(labelcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
 labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
-labelalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.ACTIVE])
+labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+labelalpha = lerp(labelalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
 
 if (showcaption)
