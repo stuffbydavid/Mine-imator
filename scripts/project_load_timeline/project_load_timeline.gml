@@ -129,7 +129,7 @@ with (new(obj_timeline))
 					value[v] = other.value_default[v]
 					
 				project_load_values(kfmap[?key], value)
-				project_load_update_values()
+				project_load_values_update()
 				
 				other.keyframe_array[position] = id
 			}

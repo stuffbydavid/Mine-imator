@@ -81,12 +81,11 @@ background_sky_clouds_show = true
 background_sky_clouds_update = false
 background_sky_clouds_tex = mc_res
 background_sky_clouds_tex.count++
-background_sky_clouds_flat = false
-background_sky_clouds_story_mode = false
+background_sky_clouds_mode = "normal"
 background_sky_clouds_speed = 1
-background_sky_clouds_z = 1000
-background_sky_clouds_size = 192
-background_sky_clouds_height = 64
+background_sky_clouds_height = 1024
+background_sky_clouds_size = 1536
+background_sky_clouds_thickness = 64
 background_sky_clouds_offset = 0
 background_sky_update_clouds()
 

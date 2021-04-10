@@ -155,14 +155,12 @@ if (background_sky_clouds_show && collapse_map[?"clouds"])
 {
 	tab_collapse_start()
 	
-	// Flat clouds
-	tab_control_switch()
-	draw_switch("backgroundskycloudsflat", dx, dy, background_sky_clouds_flat, action_background_sky_clouds_flat)
-	tab_next()
-	
-	// 'Story mode' clouds
-	tab_control_switch()
-	draw_switch("backgroundskycloudsstorymode", dx, dy, background_sky_clouds_story_mode, action_background_sky_clouds_story_mode)
+	// Clouds mode
+	tab_control_togglebutton()
+	togglebutton_add("backgroundskycloudsnormal", null, "normal", background_sky_clouds_mode = "normal", action_background_sky_clouds_mode)
+	togglebutton_add("backgroundskycloudsfaded", null, "faded", background_sky_clouds_mode = "faded", action_background_sky_clouds_mode)
+	togglebutton_add("backgroundskycloudsflat", null, "flat", background_sky_clouds_mode = "flat", action_background_sky_clouds_mode)
+	draw_togglebutton("backgroundskycloudsmode", dx, dy, true, true)
 	tab_next()
 	
 	// Cloud texture
@@ -173,27 +171,27 @@ if (background_sky_clouds_show && collapse_map[?"clouds"])
 	
 	// Cloud speed
 	tab_control_dragger()
-	draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, background_sky_clouds_speed, 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
-	tab_next()
-	
-	// Cloud Z / Y
-	tab_control_dragger()
-	draw_dragger("backgroundskyclouds" + (setting_z_is_up ? "z" : "y"), dx, dy, dragger_width, background_sky_clouds_z, 10, -no_limit, no_limit, 1000, 0, tab.background.tbx_sky_clouds_z, action_background_sky_clouds_z)
-	tab_next()
-	
-	// Cloud size
-	tab_control_dragger()
-	draw_dragger("backgroundskycloudssize", dx, dy, dragger_width, background_sky_clouds_size, 5, 16, no_limit, 192, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size)
-	tab_next()
-	
-	// Cloud height
-	tab_control_dragger()
-	draw_dragger("backgroundskycloudsheight", dx, dy, dragger_width, background_sky_clouds_height, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height)
+	draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
 	tab_next()
 	
 	// Cloud offset
 	tab_control_dragger()
 	draw_dragger("backgroundskycloudsoffset", dx, dy, dragger_width, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset)
+	tab_next()
+	
+	// Cloud height
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudsheight", dx, dy, dragger_width, background_sky_clouds_height, 10, -no_limit, no_limit, 1024, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height)
+	tab_next()
+	
+	// Cloud size
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudssize", dx, dy, dragger_width, background_sky_clouds_size, 5, 16, no_limit, 1536, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size)
+	tab_next()
+	
+	// Cloud thickness
+	tab_control_dragger()
+	draw_dragger("backgroundskycloudsthickness", dx, dy, dragger_width, background_sky_clouds_thickness, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_thickness, action_background_sky_clouds_thickness)
 	tab_next()
 	
 	tab_collapse_end()

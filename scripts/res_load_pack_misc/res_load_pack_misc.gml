@@ -60,4 +60,4 @@ moon_texture = texture_split(moonphases_texture, 4, 2)
 if (!file_exists_lib(load_assets_dir + mc_clouds_image_file) && id != mc_res)
 	clouds_texture = texture_duplicate(mc_res.clouds_texture)
 else
-	clouds_texture = texture_create_fixed(load_assets_dir + mc_clouds_image_file, 32, 32)
+	clouds_texture = texture_create(load_assets_dir + mc_clouds_image_file)

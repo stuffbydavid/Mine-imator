@@ -9,6 +9,8 @@ arr = argument1
 key = ds_map_find_first(map)
 while (!is_undefined(key))
 {
+	key = project_load_values_update_name(key)
+	
 	var index = ds_list_find_index(value_name_list, key);
 	if (index >= 0)
 	{

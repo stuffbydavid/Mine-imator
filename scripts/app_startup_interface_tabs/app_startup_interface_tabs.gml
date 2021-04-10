@@ -69,10 +69,11 @@ with (properties)
 		tbx_desaturate_night_amount = new_textbox_decimals()
 		tbx_desaturate_night_amount.suffix = "%"
 		tbx_sky_clouds_fade_distance = new_textbox_integer()
-		tbx_sky_clouds_z = new_textbox_ndecimals()
+		tbx_sky_clouds_height = new_textbox_ndecimals()
 		tbx_sky_clouds_size = new_textbox_decimals()
-		tbx_sky_clouds_height = new_textbox_decimals()
+		tbx_sky_clouds_thickness = new_textbox_decimals()
 		tbx_sky_clouds_speed = new_textbox_ndecimals()
+		tbx_sky_clouds_speed.suffix = "%"
 		tbx_sky_clouds_offset = new_textbox_ndecimals()
 		tbx_volumetric_fog_scatter = new_textbox_decimals()
 		tbx_volumetric_fog_density = new_textbox_integer()
