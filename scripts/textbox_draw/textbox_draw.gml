@@ -151,27 +151,102 @@ if (window_focus = string(tbx))
 	{
 		if (key_press[vk_right] || key_press[vk_left])
 		{
-			textbox_select_mousepos += (key_press[vk_right] - key_press[vk_left]) // Move marker right or left
-			
-			if (textbox_select_mousepos > string_length(tbx.line[textbox_select_mouseline])) // Check if beyond end of line
+			// Move marker around words
+			if (keyboard_check(vk_control))
 			{
-				if (textbox_select_mouseline < tbx.lines - 1) // Wrap around to next line
+				if (key_press[vk_right])
 				{
-					textbox_select_mouseline++
-					textbox_select_mousepos = 0
+					var char = string_char_at(tbx.text, textbox_select_mousepos + 1);
+					
+					if (char = " " || char = "\n")
+					{
+						textbox_select_mousepos++
+						char = string_char_at(tbx.text, textbox_select_mousepos + 1)
+					}
+					
+					while (true)
+					{
+						char = string_char_at(tbx.text, textbox_select_mousepos + 1)
+						
+						if (char = "" || char = " " || char = "\n")
+							break
+						
+						// End of textbox
+						if (textbox_select_mouseline = tbx.lines - 1 && textbox_select_mousepos >= string_length(tbx.line[textbox_select_mouseline]))
+						{
+							textbox_select_mousepos = string_length(tbx.line[textbox_select_mouseline])
+							break
+						}
+						
+						textbox_select_mousepos++
+						
+						// Skip lines
+						while (textbox_select_mousepos > string_length(tbx.line[textbox_select_mouseline]))
+						{
+							textbox_select_mouseline++
+							textbox_select_mousepos = 0
+						}
+					}
 				}
 				else
-					textbox_select_mousepos--
+				{
+					var char = string_char_at(tbx.text, textbox_select_mousepos);
+					
+					if (char = " " || char = "\n" || textbox_select_mousepos = 0)
+					{
+						textbox_select_mousepos--
+						char = string_char_at(tbx.text, textbox_select_mousepos)
+					}
+					
+					while (true)
+					{
+						char = string_char_at(tbx.text, textbox_select_mousepos)
+						
+						if (char = "" || char = " " || char = "\n" || (tbx.line[textbox_select_mouseline] != "" && textbox_select_mousepos = 0))
+							break
+						
+						// End of textbox
+						if (textbox_select_mouseline = 0 && textbox_select_mousepos <= 0)
+						{
+							textbox_select_mousepos = 0
+							break
+						}
+						
+						textbox_select_mousepos--
+						
+						// Skip lines
+						while (textbox_select_mousepos < 0)
+						{
+							textbox_select_mouseline--
+							textbox_select_mousepos = string_length(tbx.line[textbox_select_mouseline])
+						}
+					}
+				}
 			}
-			if (textbox_select_mousepos < 0) // Check if before start of line
+			else
 			{
-				if (textbox_select_mouseline > 0)
+				textbox_select_mousepos += (key_press[vk_right] - key_press[vk_left]) // Move marker right or left
+			
+				if (textbox_select_mousepos > string_length(tbx.line[textbox_select_mouseline])) // Check if beyond end of line
 				{
-					textbox_select_mouseline--
-					textbox_select_mousepos = string_length(tbx.line[textbox_select_mouseline])
+					if (textbox_select_mouseline < tbx.lines - 1) // Wrap around to next line
+					{
+						textbox_select_mouseline++
+						textbox_select_mousepos = 0
+					}
+					else
+						textbox_select_mousepos--
 				}
-				else
-					textbox_select_mousepos++
+				if (textbox_select_mousepos < 0) // Check if before start of line
+				{
+					if (textbox_select_mouseline > 0)
+					{
+						textbox_select_mouseline--
+						textbox_select_mousepos = string_length(tbx.line[textbox_select_mouseline])
+					}
+					else
+						textbox_select_mousepos++
+				}
 			}
 		}
 		
@@ -287,7 +362,39 @@ if (window_focus = string(tbx))
 			break
 		}
 	}
+	
+	// Home/end controls
+	var line = textbox_select_mouseline;
+	
+	if (keyboard_check_pressed(vk_home))
+	{
+		if (keyboard_check(vk_control))
+			line = 0
 		
+		textbox_select_startline = line
+		textbox_select_startpos = 0
+		textbox_select_endline = line
+		textbox_select_endpos = 0
+		textbox_select_mouseline = line
+		textbox_select_mousepos = 0
+		textbox_select_clickline = line
+		textbox_select_clickpos = 0
+	}
+	else if (keyboard_check_pressed(vk_end))
+	{
+		if (keyboard_check(vk_control))
+			line = tbx.lines - 1
+		
+		line = line
+		textbox_select_startpos = string_length(tbx.line[textbox_select_endline])
+		textbox_select_endline = line
+		textbox_select_endpos = textbox_select_startpos
+		textbox_select_mouseline = line
+		textbox_select_mousepos = textbox_select_startpos
+		textbox_select_clickline = line
+		textbox_select_clickpos = textbox_select_startpos
+	}
+	
 	// Filter
 	if (tbx.filter_chars != "" && inserttext != "")
 	{

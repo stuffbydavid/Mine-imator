@@ -171,7 +171,7 @@ if (background_sky_clouds_show && collapse_map[?"clouds"])
 	
 	// Cloud speed
 	tab_control_dragger()
-	draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 1 / 10, -no_limit, no_limit, 1, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
+	draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 1 / 10, -no_limit, no_limit, 100, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
 	tab_next()
 	
 	// Cloud offset

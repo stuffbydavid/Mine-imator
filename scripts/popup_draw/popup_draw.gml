@@ -5,16 +5,16 @@ var boxx, boxy, boxw, boxh, closex, closey;
 // Animate
 if (popup_ani = 1)
 {
-	var off = (popup_height_goal - popup_height) / max(1, 4 / delta);
+	var off = (popup.custom_height_goal - popup.custom_height) / max(1, 4 / delta);
 	
 	if (off != 0)
 	{
-		popup_height += off
+		popup.custom_height += off
 		popup.offset_y += off/2
 	}
 }
-else
-	popup_height = popup_height_goal
+else if (popup != null)
+	popup.custom_height = popup.custom_height_goal
 
 if (popup_ani_type = "show")
 {
@@ -59,7 +59,7 @@ if (window_busy = "popup" + popup.name)
 
 // Box
 boxw = popup.width
-boxh = floor(popup_height)
+boxh = floor(popup.custom_height)
 boxx = floor(popup.offset_x) + window_width / 2 - boxw / 2
 boxy = floor(popup.offset_y) + window_height / 2 - boxh / 2
 
@@ -153,11 +153,11 @@ if (popup.script != null)
 
 if (popup.custom || popup.height != null)
 {
-	popup_height_goal = popup.height
-	popup_height = popup_height_goal
+	popup.custom_height_goal = popup.height
+	popup.custom_height = popup.custom_height_goal
 }
 else
-	popup_height_goal = ceil((dy - dy_start) / 2) * 2
+	popup.custom_height_goal = ceil((dy - dy_start) / 2) * 2
 
 if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
 	window_busy = "popupclick"

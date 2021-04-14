@@ -114,6 +114,4 @@ popup_ani_type = ""
 popup_switch_to = null
 popup_switch_from = null
 popup_mouseon = false
-popup_height = 0
-popup_height_goal = 0
 popup_block = 0

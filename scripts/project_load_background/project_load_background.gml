@@ -64,9 +64,16 @@ else
 
 background_sky_clouds_tex.count--
 background_sky_clouds_tex = value_get_save_id(map[?"sky_clouds_tex"], background_sky_clouds_tex)
-background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 background_sky_clouds_size = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size)
+background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
+
+// Update cloud size
+if (load_format < e_project.FORMAT_130_AL10)
+{
+	if (app.background_sky_clouds_tex = "default")
+		app.background_sky_clouds_size *= 8
+}
 
 background_ground_show = value_get_real(map[?"ground_show"], background_ground_show)
 background_ground_name = value_get_string(map[?"ground_name"], background_ground_name)

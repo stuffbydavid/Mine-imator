@@ -3,7 +3,7 @@
 /// @desc Converts a value into a string and removes trailing zeroes in the decimal part.
 
 if (floor(argument0) = argument0)
-	return string(argument0)
+	return string(floor(argument0))
 
 var str, p;
 str = string_format(argument0, 1, 5)
