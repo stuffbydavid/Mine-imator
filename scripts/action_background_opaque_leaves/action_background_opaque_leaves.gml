@@ -14,4 +14,4 @@ else
 }
 	
 background_opaque_leaves = opaque
-alert_show(text_get("alertreloadprojecttitle"), text_get("alertreloadprojecttext"), null, "", "", 5000)
+toast_new(e_toast.WARNING, text_get("alertreloadobjects"))

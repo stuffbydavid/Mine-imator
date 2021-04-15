@@ -1,15 +1,7 @@
 /// tab_frame_editor_text()
 
-var capwid = text_caption_width("frameeditortexttext", "frameeditortextfont");
-
 if (tl_edit.temp = null || tl_edit.type != e_tl_type.TEXT)
 	return 0
-	
-// Text
-tab_control(110)
-tab.text.tbx_text.text = tl_edit.value[e_value.TEXT]
-draw_inputbox("frameeditortexttext", dx, dy, dw, tl_edit.text, tab.text.tbx_text, action_tl_frame_text, capwid, 110)
-tab_next()
 
 // Font
 var text;
@@ -17,28 +9,48 @@ if (tl_edit.value[e_value.TEXT_FONT] = null)
 	text = text_get("listdefault", tl_edit.temp.text_font.display_name)
 else
 	text = tl_edit.value[e_value.TEXT_FONT].display_name
-tab_control(32)
-draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
+
+tab_control_menu()
+draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
 tab_next()
 
-capwid = text_caption_width("frameeditortextalignment", "frameeditortexthalign", "frameeditortextvalign")
+// Font Anti-aliasing
+tab_control_switch()
+draw_switch("frameeditortextaa", dx, dy, tl_edit.value[e_value.TEXT_AA], action_tl_frame_text_aa, "frameeditortextaatip")
+tab_next()
 
 // Alignment
-tab_control(15)
-draw_label(text_get("frameeditortextalignment") + ":", dx, dy)
-tab_next()
+dy += 20
+draw_label(text_get("frameeditortextalignment") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
+dy += 8
+
+var dwold, dxold;
+dwold = dw
+dxold = dx
+
+dw = floor(dw/2 - 4)
 
 // Horizontal
-tab_control(24)
-draw_button_menu("frameeditortexthalign", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_HALIGN], text_get("frameeditortext" + tl_edit.value[e_value.TEXT_HALIGN]), action_tl_frame_text_halign, null, null, capwid)
-tab_next()
+tab_control_togglebutton()
+togglebutton_add("frameeditortextleft", icons.ALIGN_LEFT, "left", tl_edit.value[e_value.TEXT_HALIGN] = "left", action_tl_frame_text_halign)
+togglebutton_add("frameeditortextcenter", icons.ALIGN_MIDDLE, "center", tl_edit.value[e_value.TEXT_HALIGN] = "center", action_tl_frame_text_halign)
+togglebutton_add("frameeditortextright", icons.ALIGN_RIGHT, "right", tl_edit.value[e_value.TEXT_HALIGN] = "right", action_tl_frame_text_halign)
+draw_togglebutton("frameeditortexthalign", dx, dy, false)
+
+dx += (dw + 8)
 
 // Vertical
-tab_control(24)
-draw_button_menu("frameeditortextvalign", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_VALIGN], text_get("frameeditortext" + tl_edit.value[e_value.TEXT_VALIGN]), action_tl_frame_text_valign, null, null, capwid)
+togglebutton_add("frameeditortexttop", icons.ALIGN_TOP, "top", tl_edit.value[e_value.TEXT_VALIGN] = "top", action_tl_frame_text_valign)
+togglebutton_add("frameeditortextcenter", icons.ALIGN_CENTER, "center", tl_edit.value[e_value.TEXT_VALIGN] = "center", action_tl_frame_text_valign)
+togglebutton_add("frameeditortextbottom", icons.ALIGN_BOTTOM, "bottom", tl_edit.value[e_value.TEXT_VALIGN] = "bottom", action_tl_frame_text_valign)
+draw_togglebutton("frameeditortextvalign", dx, dy, false)
 tab_next()
-	
-// Anti-aliasing
-tab_control_checkbox()
-draw_checkbox("frameeditortextaa", dx, dy, tl_edit.value[e_value.TEXT_AA], action_tl_frame_text_aa)
+
+dw = dwold
+dx = dxold
+
+// Text
+tab_control_textfield(true, 76)
+tab.text.tbx_text.text = tl_edit.value[e_value.TEXT]
+draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.text.tbx_text, action_tl_frame_text, tl_edit.text, "top")
 tab_next()

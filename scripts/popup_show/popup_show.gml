@@ -14,4 +14,5 @@ log("Show popup", popup.name)
 if (popup.block)
 	window_busy = "popup" + popup.name
 
-action_toolbar_play_break()
+action_tl_play_break()
+context_menu_close()

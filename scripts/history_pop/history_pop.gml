@@ -2,7 +2,7 @@
 /// @desc Clears the history in front of the marker.
 
 project_changed = true
-action_toolbar_play_break()
+action_tl_play_break()
 
 if (history_pos > 0)
 {

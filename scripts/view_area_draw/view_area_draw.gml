@@ -1,9 +1,9 @@
 /// view_area_draw()
 
 // Calculate area
-view_area_x = panel_area_x + panel_map[?"left_top"].size_real + panel_map[?"left_bottom"].size_real
+view_area_x = panel_area_x + panel_map[?"left"].size_real + panel_map[?"left_secondary"].size_real
 view_area_y = panel_area_y + panel_map[?"top"].size_real
-view_area_width = panel_area_width - panel_map[?"left_top"].size_real - panel_map[?"left_bottom"].size_real - panel_map[?"right_top"].size_real - panel_map[?"right_bottom"].size_real
+view_area_width = panel_area_width - panel_map[?"left"].size_real - panel_map[?"left_secondary"].size_real - panel_map[?"right"].size_real - panel_map[?"right_secondary"].size_real
 view_area_height = panel_area_height - panel_map[?"top"].size_real - panel_map[?"bottom"].size_real
 
 // Draw views
@@ -19,7 +19,7 @@ if (window_busy = "viewresizehor" || window_busy = "viewresizeboth") // Horizont
 	else
 		view_second.width = view_resize_width - (mouse_x - mouse_click_x)
 	
-	view_second.width = clamp(view_second.width, 200, view_area_width)
+	view_second.width = clamp(view_second.width, 300, view_area_width)
 	if (!mouse_left)
 		window_busy = ""
 }
@@ -39,7 +39,7 @@ if (window_busy = "viewresizever" || window_busy = "viewresizeboth") // Vertical
 
 if (window_busy = "viewresizeboth") // Both
 {
-	if (view_second.location = "right_top" || view_second.location = "left_bottom")
+	if (view_second.location = "right" || view_second.location = "left_secondary")
 		mouse_cursor = cr_size_nesw
 	else
 		mouse_cursor = cr_size_nwse

@@ -1,3 +1,3 @@
 /// tab_control_meter()
 
-tab_control(30)
+tab_control(44)

@@ -16,7 +16,8 @@
         "27a70621-0ba5-4d02-859b-80e37ad2c542",
         "05389884-966f-4027-b501-f1100930c8d8",
         "d3043940-1951-461f-95b5-ac47e5d34388",
-        "f929b2c9-3032-43c4-9eda-b2e8f2aebf9c"
+        "f929b2c9-3032-43c4-9eda-b2e8f2aebf9c",
+        "170ec1dd-c9cd-42be-b512-34015684e026"
     ],
     "filterType": "GMScript",
     "folderName": "Templates",

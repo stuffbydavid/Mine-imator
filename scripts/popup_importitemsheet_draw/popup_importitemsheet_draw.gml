@@ -18,60 +18,61 @@ if (texhei > texwid)
 else
 {
 	scale = previewsize / texwid
-	previewy += (previewsize - scale * texhei) / 2
+	previewy = dy
 }
 
 previewwid = texwid * scale
 previewhei = texhei * scale
 
-draw_box(previewx, previewy, previewwid, previewhei, false, setting_color_background, 1)
+tab_control(previewhei)
+draw_box(previewx, previewy, previewwid, previewhei, false, c_level_bottom, 1)
 draw_texture(popup.texture, previewx, previewy, scale, scale)
 
 if (popup.is_sheet)
 {
+	var prevalpha = draw_get_alpha();
+	draw_set_alpha(prevalpha * .35)
+	
 	// Grid
-	for (var i = 0; i < popup.sheet_size[X]; i++)
-		draw_line_color(previewx + (i / popup.sheet_size[X]) * previewwid, previewy, previewx + (i / popup.sheet_size[X]) * previewwid, previewy + previewhei, c_gray, c_gray)
-	for (var i = 0; i < popup.sheet_size[Y]; i++)
-		draw_line_color(previewx, previewy + (i / popup.sheet_size[Y]) * previewhei, previewx + previewwid, previewy + (i / popup.sheet_size[Y]) * previewhei, c_gray, c_gray)
+	for (var i = 1; i < popup.sheet_size[X]; i++)
+		draw_line_color(previewx + (i / popup.sheet_size[X]) * previewwid, (previewy - 1), previewx + (i / popup.sheet_size[X]) * previewwid, previewy + previewhei - 1, c_text_main, c_text_main)
+	for (var i = 1; i < popup.sheet_size[Y]; i++)
+		draw_line_color((previewx - 1), previewy + (i / popup.sheet_size[Y]) * previewhei, previewx + previewwid - 1, previewy + (i / popup.sheet_size[Y]) * previewhei, c_text_main, c_text_main)
+	
+	draw_set_alpha(prevalpha)
 }
-
-dy += previewsize + 24
+tab_next()
 
 // Is sheet
-draw_checkbox("importitemsheetissheet", dx, dy, popup.is_sheet, action_toolbar_importitemsheet_is_sheet)
-dy += 32
+tab_control_switch()
+draw_switch("importitemsheetissheet", dx, dy, popup.is_sheet, action_toolbar_importitemsheet_is_sheet)
+tab_next()
 
 if (popup.is_sheet)
 {
-	// Info
-	draw_label(text_get("importitemsheetinfo") + ":", dx, dy)
-	dy += 24
-
+	draw_set_font(font_label)
+	
 	// Size
-	var capwid = text_caption_width("importitemsheetwidth", "importitemsheetheight");
 	axis_edit = X
-	draw_dragger("importitemsheetwidth", dx, dy, dw / 2, popup.sheet_size[X], 1 / 10, 1, no_limit, popup.sheet_size_def[X], 1, popup.tbx_sheet_width, action_toolbar_importitemsheet_sheet_size, capwid)
-	dy += 24
+	tab_control(28)
+	draw_dragger("importitemsheetrows", dx, dy, dragger_width, popup.sheet_size[X], 1 / 10, 1, no_limit, popup.sheet_size_def[X], 1, popup.tbx_sheet_width, action_toolbar_importitemsheet_sheet_size)
+	tab_next()
+	
 	axis_edit = Y
-	draw_dragger("importitemsheetheight", dx, dy, dw / 2, popup.sheet_size[Y], 1 / 10, 1, no_limit, popup.sheet_size_def[Y], 1, popup.tbx_sheet_height, action_toolbar_importitemsheet_sheet_size, capwid)
+	tab_control(28)
+	draw_dragger("importitemsheetcolumns", dx, dy, dragger_width, popup.sheet_size[Y], 1 / 10, 1, no_limit, popup.sheet_size_def[Y], 1, popup.tbx_sheet_height, action_toolbar_importitemsheet_sheet_size)
+	tab_next()
 }
 
-// OK
-dw = 100
-dh = 32
-dx = content_x + content_width / 2 - dw - 4
-dy = content_y + content_height - 32
-if (draw_button_normal("importimageok", dx, dy, dw, 32))
+// Create
+tab_control_button_label()
+if (draw_button_label("importimageok", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 {
 	if (popup.value_script != null)
 		script_execute(popup.value_script, e_option.IMPORT_ITEM_SHEET_DONE)
 	else
 		action_res_image_load(popup.filename, e_res_type.ITEM_SHEET)
+	
 	popup_close()
 }
-
-// Cancel
-dx = content_x + content_width / 2 + 4
-if (draw_button_normal("importimagecancel", dx, dy, dw, 32))
-	popup_close()
+tab_next()

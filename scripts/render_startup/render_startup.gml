@@ -2,7 +2,7 @@
 
 globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_time, render_surface_time,
 		  render_target, render_surface, render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights,
-		  render_particles, render_hidden, render_background, render_watermark, 
+		  render_fog, render_particles, render_hidden, render_background, render_watermark, 
 		  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix, light_view_proj_matrix,
 		  proj_depth_near, proj_depth_far, render_proj_from, render_active;
 
@@ -10,9 +10,10 @@ globalvar render_light_amount, render_light_from, render_light_to, render_light_
 		  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_light_matrix,
 		  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far;
 
-globalvar render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof, render_glow,
-		  render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
-		  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow;
+globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
+		  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
+		  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
+		  render_volumetric_fog, render_quality;
 
 globalvar render_shadows_buffer, render_shadows_size, render_shadows_matrix, render_samples;
 
@@ -37,10 +38,13 @@ render_height = 1
 render_ratio = 1
 render_camera = null
 
+render_effects = false
 render_effects_done = false
 render_effects_list = ds_list_create()
 render_effects_progress = 0
+render_quality = e_view_mode.FLAT
 
+render_volumetric_fog = false
 render_camera_bloom = false
 render_camera_dof = false
 render_glow = false
@@ -58,6 +62,7 @@ render_camera_lens_dirt_glow = true
 
 render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 render_list = ds_list_create()
+render_fog = true
 render_lights = true
 render_particles = true
 render_hidden = false
@@ -126,10 +131,10 @@ render_surface_indirect = null
 render_surface_indirect_expo = null
 render_surface_indirect_dec = null
 
-globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_shadows_clear;
+globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples_clear;
 render_surface_sun_volume_expo = null
 render_surface_sun_volume_dec = null
-render_shadows_clear = false
+render_samples_clear = false
 
 render_surface_post[0] = null
 render_surface_post[1] = null

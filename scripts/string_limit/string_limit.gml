@@ -1,12 +1,17 @@
-/// string_limit(string, width)
+/// string_limit(string, width, [ellipsis])
 /// @arg string
 /// @arg width
+/// @arg [ellipsis]
 
-var str, wid, nstr, pos;
-str = argument0
-wid = argument1
+var str, wid, ellipsis, nstr, pos;
+str = argument[0]
+wid = argument[1]
+ellipsis = "..."
 
-if (string_width("...") > wid)
+if (argument_count > 2)
+	ellipsis = argument[2]
+
+if (string_width(ellipsis) > wid)
 	return ""
 
 if (string_width(str) <= wid) 
@@ -20,7 +25,7 @@ while (pos <= string_length(str))
 	if (char = "\n")
 		char = " "
 		
-	if (string_width(nstr + char + "...") >= wid)
+	if (string_width(nstr + char + ellipsis) >= wid)
 		break
 	
 	nstr += char

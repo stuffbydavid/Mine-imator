@@ -100,12 +100,12 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-draw_set_font(app.setting_font)
+draw_set_font(app.font_value)
 
 // Create texture
 if (text_texture != null)
 	texture_free(text_texture)
-text_texture =  texture_surface(surf)
+text_texture = texture_surface(surf)
 
 // Create vbuffer
 text_vbuffer = vbuffer_start()

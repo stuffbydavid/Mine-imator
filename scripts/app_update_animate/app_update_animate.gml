@@ -101,7 +101,7 @@ if (bgobject)
 	background_desaturate_night_amount		= bgobject.value[e_value.BG_DESATURATE_NIGHT_AMOUNT]
 	background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
 	background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
-	background_sky_clouds_z					= bgobject.value[e_value.BG_SKY_CLOUDS_Z]
+	background_sky_clouds_height			= bgobject.value[e_value.BG_SKY_CLOUDS_HEIGHT]
 	background_sky_clouds_offset			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET]
 	background_ground_show					= bgobject.value[e_value.BG_GROUND_SHOW]
 	background_ground_slot					= bgobject.value[e_value.BG_GROUND_SLOT]
@@ -182,3 +182,12 @@ background_time = (timeline_marker / project_tempo) * 60
 // Update shadows
 if (background_time_prev != background_time)
 	render_samples = -1
+
+// Update current marker
+timeline_marker_current = null
+
+for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
+{
+	if (timeline_marker >= timeline_marker_list[|i].pos)
+		timeline_marker_current = timeline_marker_list[|i]
+}

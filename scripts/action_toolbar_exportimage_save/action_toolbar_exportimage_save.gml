@@ -43,5 +43,7 @@ render_free()
 surface_free(surf)
 
 // Return to program
-alert_show(text_get("alertexportimagetitle"), "", icons.SAVE_SMALL, "alertexportimagebutton", fn, 5000)
+toast_new(e_toast.POSITIVE, text_get("alertexportimage"))
+toast_add_action("alertexportimageview", open_url, fn)
+
 popup_close()

@@ -1,0 +1,28 @@
+/// draw_button_transition(x, y, transition)
+/// @arg x
+/// @arg y
+/// @arg transition
+
+var xx, yy, transition, mouseon, press, active, tipname;
+xx = argument0
+yy = argument1
+transition = argument2
+mouseon = app_mouse_box(xx, yy, 36, 36)
+press = mouseon && mouse_left
+
+if (tl_edit != null)
+	active = tl_edit.value[e_value.TRANSITION] = transition
+else
+	active = false
+
+tipname = transition
+	
+if (tipname != "linear" && tipname != "instant")
+{
+	tipname = string_replace(tipname, "easeinout", "")
+	tipname = string_replace(tipname, "easein", "")
+	tipname = string_replace(tipname, "easeout", "")
+	tipname = "ease" + tipname
+}
+
+return draw_button_icon("menu" + transition, xx, yy, 36, 36, active, null, null, false, "transition" + tipname, transition_texture_map[?transition])

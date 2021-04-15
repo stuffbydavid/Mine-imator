@@ -3,16 +3,19 @@
 
 var surf;
 
-if (!render_overlay)
+//render_effects_progress = -1
+//render_update_effects()
+/*
+if (render_effects_done)
 {
 	render_target = surface_require(render_target, render_width, render_height, true)
 	surf = render_target
 }
 else
-{
+{*/
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height, true)
 	surf = render_surface[0]
-}
+//}
 
 surface_set_target(surf)
 {
@@ -42,28 +45,7 @@ surface_set_target(surf)
 }
 surface_reset_target()
 
-// Apply colors
-if (render_overlay)
-{
-	render_target = surface_require(render_target, render_width, render_height, true)
-	surface_set_target(render_target)
-	{
-		draw_clear_alpha(c_black, 0)
-		
-		if (render_camera_colors)
-		{
-			render_shader_obj = shader_map[?shader_color_camera]
-			with (render_shader_obj)
-				shader_use()
-			draw_surface_exists(render_surface[0], 0, 0)
-			with (render_shader_obj)
-				shader_clear()
-		}
-		else
-			draw_surface_exists(render_surface[0], 0, 0)
-		
-		if (render_watermark)
-			render_watermark_image()
-	}
-	surface_reset_target()
-}
+if (render_effects_done)
+	return 0
+
+render_post(surf)

@@ -1,5 +1,11 @@
 /// app_update_work_camera()
 
+if (cam_work_jump)
+{
+	cam_work_jump = false
+	return 0
+}
+
 if (window_busy = "")
 {
 	if (tl_edit != null) 

@@ -41,8 +41,8 @@ with (properties)
 		list.can_deselect = true
 		list.script = action_lib_list
 		sortlist_column_add(list, "libname", 0)
-		sortlist_column_add(list, "libtype", 0.45)
-		sortlist_column_add(list, "libcount", 0.75)
+		sortlist_column_add(list, "libtype", 0.35)
+		sortlist_column_add(list, "libinstances", 0.65)
 		tbx_name = new_textbox(1, 0, "")
 		tbx_repeat_x = new_textbox_integer()
 		tbx_repeat_y = new_textbox_integer()
@@ -60,16 +60,20 @@ with (properties)
 	{
 		tbx_background_rotation = new_textbox_decimals()
 		tbx_background_rotation.suffix = "°"
+		tbx_sky_time = new_textbox(true, 10, "-:0123456789")
+		tbx_sky_rotation = new_textbox_ndecimals()
+		tbx_sky_rotation.suffix = "°"
 		tbx_sunlight_strength = new_textbox_integer()
 		tbx_sunlight_strength.suffix = "%"
 		tbx_sunlight_angle = new_textbox_decimals()
 		tbx_desaturate_night_amount = new_textbox_decimals()
 		tbx_desaturate_night_amount.suffix = "%"
 		tbx_sky_clouds_fade_distance = new_textbox_integer()
-		tbx_sky_clouds_z = new_textbox_ndecimals()
+		tbx_sky_clouds_height = new_textbox_ndecimals()
 		tbx_sky_clouds_size = new_textbox_decimals()
-		tbx_sky_clouds_height = new_textbox_decimals()
+		tbx_sky_clouds_thickness = new_textbox_decimals()
 		tbx_sky_clouds_speed = new_textbox_ndecimals()
+		tbx_sky_clouds_speed.suffix = "%"
 		tbx_sky_clouds_offset = new_textbox_ndecimals()
 		tbx_volumetric_fog_scatter = new_textbox_decimals()
 		tbx_volumetric_fog_density = new_textbox_integer()
@@ -107,8 +111,8 @@ with (properties)
 		list.can_deselect = true
 		list.script = action_res_list
 		sortlist_column_add(list, "resname", 0)
-		sortlist_column_add(list, "restype", 0.45)
-		sortlist_column_add(list, "rescount", 0.75)
+		sortlist_column_add(list, "restype", 0.35)
+		sortlist_column_add(list, "rescount", 0.65)
 		sortlist_add(list, mc_res)
 		
 		tbx_item_sheet_width = new_textbox_integer()
@@ -116,8 +120,6 @@ with (properties)
 		
 		tbx_scenery_integrity = new_textbox_integer()
 		tbx_scenery_integrity.suffix = "%"
-		
-		tbx_scenery_palette = new_textbox_integer()
 	}
 }
 
@@ -227,6 +229,13 @@ with (template_editor)
 	tbx_type_angle_speed_mul = new_textbox_ndecimals()
 	tbx_type_angle_speed_mul_random = new_textbox_ndecimals()
 	
+	tbx_type_xangle.suffix = "°"
+	tbx_type_xangle_random.suffix = "°"
+	tbx_type_yangle.suffix = "°"
+	tbx_type_yangle_random.suffix = "°"
+	tbx_type_zangle.suffix = "°"
+	tbx_type_zangle_random.suffix = "°"
+	
 	tbx_type_xspd = new_textbox_ndecimals()
 	tbx_type_xspd_random = new_textbox_ndecimals()
 	tbx_type_yspd = new_textbox_ndecimals()
@@ -278,6 +287,25 @@ with (template_editor)
 	tbx_type_zrot_spd_mul = new_textbox_ndecimals()
 	tbx_type_zrot_spd_mul_random = new_textbox_ndecimals()
 	
+	tbx_type_xrot_spd.suffix = "°"
+	tbx_type_xrot_spd_random.suffix = "°"
+	tbx_type_yrot_spd.suffix = "°"
+	tbx_type_yrot_spd_random.suffix = "°"
+	tbx_type_zrot_spd.suffix = "°"
+	tbx_type_zrot_spd_random.suffix = "°"
+	tbx_type_xrot_spd_add.suffix = "°"
+	tbx_type_xrot_spd_add_random.suffix = "°"
+	tbx_type_yrot_spd_add.suffix = "°"
+	tbx_type_yrot_spd_add_random.suffix = "°"
+	tbx_type_zrot_spd_add.suffix = "°"
+	tbx_type_zrot_spd_add_random.suffix = "°"
+	tbx_type_xrot_spd_mul.suffix = "°"
+	tbx_type_xrot_spd_mul_random.suffix = "°"
+	tbx_type_yrot_spd_mul.suffix = "°"
+	tbx_type_yrot_spd_mul_random.suffix = "°"
+	tbx_type_zrot_spd_mul.suffix = "°"
+	tbx_type_zrot_spd_mul_random.suffix = "°"
+	
 	tbx_type_sprite_angle = new_textbox_ndecimals()
 	tbx_type_sprite_angle.suffix = "°"
 	tbx_type_sprite_angle_random = new_textbox_ndecimals()
@@ -285,6 +313,9 @@ with (template_editor)
 	tbx_type_sprite_angle_add = new_textbox_ndecimals()
 	tbx_type_sprite_angle_add.suffix = "°"
 	tbx_type_sprite_angle_add_random = new_textbox_ndecimals()
+	tbx_type_sprite_angle_add_random.suffix = "°"
+	
+	tbx_type_sprite_angle_add.suffix = "°"
 	tbx_type_sprite_angle_add_random.suffix = "°"
 	
 	tbx_type_scale = new_textbox_ndecimals()
@@ -312,11 +343,23 @@ ptype_list = template_editor.type_list
 // Timeline
 timeline = new_tab(setting_timeline_location, true)
 timeline.script = tab_timeline
+timeline.movable = false
 with (timeline)
 {
+	tbx_interval_size = new_textbox_integer()
+	tbx_interval_offset = new_textbox_integer()
+	tbx_marker_name = new_textbox(true, 0, "")
+	tbx_search = new_textbox(true, 0, "")
+	tbx_rename = new_textbox(true, 0, "")
+	
 	list_width = 320
+	
 	hor_scroll = new(obj_scrollbar)
+	hor_scroll_tl = new(obj_scrollbar)
+	//hor_scroll.value_ease = false
+	
 	ver_scroll = new(obj_scrollbar)
+	//ver_scroll.value_ease = false
 }
 
 // Timeline editor
@@ -327,17 +370,11 @@ with (timeline_editor)
 	info = tab_add_category("timelineeditorinfo", tab_timeline_editor_info, true)
 	with (info)
 	{
-		rot_point_mouseon = false
-		rot_point_snap = false
-		rot_point_snap_size = 1
-		rot_point_copy = point3D(0, 0, 0)
 		tbx_name = new_textbox(true, 0, "")
 		tbx_text = new_textbox(false, 0, "")
 		tbx_rot_point_x = new_textbox_ndecimals()
 		tbx_rot_point_y = new_textbox_ndecimals()
 		tbx_rot_point_z = new_textbox_ndecimals()
-		tbx_rot_point_snap = new_textbox_decimals()
-		tbx_rot_point_snap.text = string(rot_point_snap_size)
 	}
 	
 	// Hierarchy
@@ -356,89 +393,45 @@ with (timeline_editor)
 frame_editor = new_tab(setting_frame_editor_location, false)
 with (frame_editor)
 {
-	// Position
-	position = tab_add_category("frameeditorposition", tab_frame_editor_position, false)
-	with (position)
+	// Transform
+	transform = tab_add_category("frameeditortransform", tab_frame_editor_transform, false)
+	with (transform)
 	{
-		snap_enabled = false
-		snap_size = 16
-		copy = point3D(0, 0, 0)
-		tbx_x = new_textbox_ndecimals()
-		tbx_y = new_textbox_ndecimals()
-		tbx_z = new_textbox_ndecimals()
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
-	}
-	
-	// Rotation
-	rotation = tab_add_category("frameeditorrotation", tab_frame_editor_rotation, false)
-	with (rotation)
-	{
+		// Position
+		tbx_pos_x = new_textbox_ndecimals()
+		tbx_pos_y = new_textbox_ndecimals()
+		tbx_pos_z = new_textbox_ndecimals()
+		
+		// Rotation
 		loops = false
-		snap_enabled = false
-		snap_size = 15
-		copy = point3D(0, 0, 0)
-		tbx_x = new_textbox_ndecimals()
-		tbx_x.suffix = "°"
-		tbx_y = new_textbox_ndecimals()
-		tbx_y.suffix = "°"
-		tbx_z = new_textbox_ndecimals()
-		tbx_z.suffix = "°"
-		tbx_loops_x = new_textbox_ndecimals()
-		tbx_loops_y = new_textbox_ndecimals()
-		tbx_loops_z = new_textbox_ndecimals()
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
+		tbx_rot_x = new_textbox(true, 10, "x-.0123456789")
+		tbx_rot_x.suffix = "°"
+		tbx_rot_y = new_textbox(true, 10, "x-.0123456789")
+		tbx_rot_y.suffix = "°"
+		tbx_rot_z = new_textbox(true, 10, "x-.0123456789")
+		tbx_rot_z.suffix = "°"
+		
+		// Scale
+		scale_all = false
+		tbx_sca_x = new_textbox_decimals()
+		tbx_sca_y = new_textbox_decimals()
+		tbx_sca_z = new_textbox_decimals()
+		
+		// Bend
+		tbx_bend[0] = new_textbox_ndecimals()
+		tbx_bend[0].suffix = "°"
+		tbx_bend[1] = new_textbox_ndecimals()
+		tbx_bend[1].suffix = "°"
+		tbx_bend[2] = new_textbox_ndecimals()
+		tbx_bend[2].suffix = "°"
 	}
 	
-	// Scale
-	scale = tab_add_category("frameeditorscale", tab_frame_editor_scale, false)
-	with (scale)
-	{
-		scale_all = true
-		snap_enabled = false
-		snap_size = 0.25
-		copy = point3D(1, 1, 1)
-		tbx_x = new_textbox_decimals()
-		tbx_y = new_textbox_decimals()
-		tbx_z = new_textbox_decimals()
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
-	}
-	
-	// Bend
-	bend = tab_add_category("frameeditorbend", tab_frame_editor_bend, false)
-	with (bend)
-	{
-		snap_enabled = false
-		snap_size = 15
-		copy = vec3(0)
-		tbx_wheel[0] = new_textbox_ndecimals()
-		tbx_wheel[0].suffix = "°"
-		tbx_wheel[1] = new_textbox_ndecimals()
-		tbx_wheel[1].suffix = "°"
-		tbx_wheel[2] = new_textbox_ndecimals()
-		tbx_wheel[2].suffix = "°"
-		tbx_snap = new_textbox_decimals()
-		tbx_snap.text = string(snap_size)
-	}
-	
-	// Color
-	color = tab_add_category("frameeditorcolor", tab_frame_editor_color, false)
-	with (color)
+	// Material
+	material = tab_add_category("frameeditormaterial", tab_frame_editor_material, false)
+	with (material)
 	{
 		advanced = app.setting_frame_editor_color_advanced
-		copy_alpha = 1
-		copy_rgb_add = c_black
-		copy_rgb_sub = c_black
-		copy_rgb_mul = c_white
-		copy_hsb_add = c_black
-		copy_hsb_sub = c_black
-		copy_hsb_mul = c_white
-		copy_mix_color = c_black
-		copy_glow_color = c_white
-		copy_mix_percent = 0
-		copy_brightness = 0
+		
 		tbx_alpha = new_textbox_integer()
 		tbx_alpha.suffix = "%"
 		tbx_mix_percent = new_textbox_integer()
@@ -459,11 +452,6 @@ with (frame_editor)
 	light = tab_add_category("frameeditorlight", tab_frame_editor_light, false)
 	with (light)
 	{
-		copy_color = c_white
-		copy_range = 250
-		copy_fade_size = 0.5
-		copy_spot_radius = 50
-		copy_spot_sharpness = 0.5
 		has_spotlight = false
 		tbx_size = new_textbox_decimals()
 		tbx_range = new_textbox_decimals()
@@ -487,7 +475,6 @@ with (frame_editor)
 		tbx_blade_amount = new_textbox_integer()
 		tbx_blade_angle = new_textbox_integer()
 		tbx_blade_angle.suffix = "°"
-		tbx_ratio = new_textbox_decimals()
 		
 		tbx_rotate_distance = new_textbox_decimals()
 		tbx_rotate_angle_xy = new_textbox_ndecimals()
@@ -586,16 +573,10 @@ with (frame_editor)
 		
 		tbx_distort_amount = new_textbox_ninteger()
 		tbx_distort_amount.suffix = "%"
-		
-		snap_fringe_enabled = false
-		snap_fringe_size = 22.5
-		fringe_copy = array(0, 0, 0, 0, 0, 0)
-		tbx_snap_fringe = new_textbox_decimals()
-		tbx_snap_fringe.text = string(snap_fringe_size)
 	}
 	
 	// Texture
-	texture = tab_add_category("frameeditortexture", tab_frame_editor_texture, false)
+	//texture = tab_add_category("frameeditortexture", tab_frame_editor_texture, false)
 	
 	// Sound
 	sound = tab_add_category("frameeditorsound", tab_frame_editor_sound, true)
@@ -641,8 +622,6 @@ with (settings)
 	with (interface)
 	{
 		tbx_tip_delay = new_textbox_decimals()
-		tbx_view_grid_size_hor = new_textbox_integer()
-		tbx_view_grid_size_ver = new_textbox_integer()
 		tbx_view_real_time_render_time = new_textbox_integer()
 	}
 	
@@ -672,12 +651,12 @@ with (settings)
 	with (render)
 	{
 		tbx_dof_quality = new_textbox_integer()
-		tbx_ssao_range = new_textbox_decimals()
 		tbx_ssao_radius = new_textbox_decimals()
 		tbx_ssao_power = new_textbox_integer()
 		tbx_ssao_power.suffix = "%"
 		tbx_ssao_blur_passes = new_textbox_integer()
-		tbx_shadow_samples = new_textbox_integer()
+		tbx_ssao_color = new_textbox_hex()
+		tbx_samples = new_textbox_integer()
 		tbx_indirect_blur_passes = new_textbox_integer()
 		tbx_indirect_strength = new_textbox_integer()
 		tbx_indirect_strength.suffix = "%"

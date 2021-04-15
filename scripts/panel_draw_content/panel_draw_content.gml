@@ -1,19 +1,26 @@
 /// panel_draw_content()
 
-var minw, minh, maxh;
-minw = 300
+var minw, minh, maxh, dividew;
+minw = 288
 minh = 160
 maxh = 0
 
-dx = content_x + 15
-dy = content_y + 10
-dw = content_width - 30
-dh = content_height - 20
+dx = content_x + 12
+dy = content_y + 14
+dw = content_width - 24
+dh = content_height
 tab = content_tab
+dividew = content_width
 
 if (content_direction = e_scroll.VERTICAL)
 {
-	dw -= 30 * tab.scroll.needed
+	if (tab.scroll.needed)
+		tab.scrollbar_margin_goal = 1
+	else
+		tab.scrollbar_margin_goal = 0
+	
+	dividew -= floor(tab.scrollbar_margin * 12)
+	dw -= (tab.scrollbar_margin * 12)
 	dy -= tab.scroll.value
 }
 else
@@ -29,6 +36,9 @@ else
 		dh = minh
 	}
 }
+
+if (tab.scroll.needed && content_mouseon && tab != timeline)
+	window_scroll_focus = string(tab.scroll)
 
 dx_start = dx
 dy_start = dy
@@ -47,9 +57,20 @@ if (!tab.script)
 			catamount++
 		}
 	}
-	columns = clamp(floor(dw / minw), 1, catamount)
-	dw = ceil((dw - 8*(columns - 1)) / columns)
+	
+	columns = 1
+	dw = ceil((dw - 8 * (columns - 1)) / columns)
 	c = 0
+	
+	dy = dy_start
+	dh = dh_start
+	
+	// Content at top of categories
+	if (tab.header_script)
+	{
+		script_execute(tab.header_script)
+		maxh = max(dy - dy_start, maxh)
+	}
 	
 	for (var col = 0; col < columns; col++)
 	{
@@ -58,28 +79,28 @@ if (!tab.script)
 		if (col = columns - 1)
 			cats = catamount - c
 		
-		dy = dy_start
-		dh = dh_start
 		repeat (cats)
 		{
-			// Hide button
-			tab_control(16)
-			if (draw_button_normal(cat[c].name, dx - 3, dy, 16, 16, e_button.CAPTION, cat[c].show, false, true, cat[c].show ? icons.ARROW_DOWN : icons.ARROW_RIGHT))
-				cat[c].show = !cat[c].show
-			tab_next()
+			tab_control(24)
+			draw_subheader(cat[c], content_x + 4, dy + 4)
+			tab_next(false)
+			
+			dy += floor(8 * mcroani_arr[e_mcroani.ACTIVE])
 			
 			// Draw contents
-			if (cat[c].show)
-			{
+			if (cat[c].show && cat[c].script)
 				script_execute(cat[c].script)
-				dy += 10
+			
+			if (c < catamount - 1)
+			{
+				dy += 8
+				draw_divide(content_x, dy, dividew - 1)
+				dy += 8
 			}
 			
 			maxh = max(dy - dy_start, maxh)
 			c++
 		}
-		if (col < columns - 1)
-			dx += dw + 8
 	}
 	
 }
@@ -89,11 +110,11 @@ else
 	maxh = dy - dy_start
 }
 
-if (tab != timeline) // Scrollbar
+if (tab != timeline)
 {
-	content_mouseon = !popup_mouseon
+	// Scrollbar
 	if (content_direction = e_scroll.VERTICAL)
-		scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + content_width - 35, content_y, content_height, maxh + 15, setting_color_buttons, setting_color_buttons_pressed, setting_color_background)
+		scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + 32)
 	else
 		scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
 }

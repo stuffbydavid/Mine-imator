@@ -36,15 +36,44 @@ background_desaturate_night = value_get_real(map[?"desaturate_night"], backgroun
 background_desaturate_night_amount = value_get_real(map[?"desaturate_night_amount"], background_desaturate_night_amount)
 
 background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
-background_sky_clouds_flat = value_get_real(map[?"sky_clouds_flat"], background_sky_clouds_flat)
-background_sky_clouds_story_mode = value_get_real(map[?"sky_clouds_story_mode"], background_sky_clouds_story_mode)
+background_sky_clouds_mode = value_get_real(map[?"sky_clouds_mode"], background_sky_clouds_mode)
+
+if (load_format < e_project.FORMAT_130_AL9)
+{
+	var faded, flat;
+	faded = false
+	flat = false
+	
+	faded = value_get_real(map[?"sky_clouds_story_mode"], faded)
+	flat = value_get_real(map[?"sky_clouds_flat"], flat)
+	
+	if (faded)
+		background_sky_clouds_mode = "faded"
+	else if (flat)
+		background_sky_clouds_mode = "flat"
+	
+	background_sky_clouds_height = value_get_real(map[?"sky_clouds_z"], background_sky_clouds_height)
+	background_sky_clouds_thickness = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_thickness)
+}
+else
+{
+	background_sky_clouds_mode = value_get_string(map[?"sky_clouds_mode"], background_sky_clouds_mode)
+	background_sky_clouds_height = value_get_real(map[?"sky_clouds_thickness"], background_sky_clouds_height)
+	background_sky_clouds_thickness = value_get_real(map[?"sky_clouds_thickness"], background_sky_clouds_thickness)
+}
+
 background_sky_clouds_tex.count--
 background_sky_clouds_tex = value_get_save_id(map[?"sky_clouds_tex"], background_sky_clouds_tex)
-background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
-background_sky_clouds_z = value_get_real(map[?"sky_clouds_z"], background_sky_clouds_z)
 background_sky_clouds_size = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size)
-background_sky_clouds_height = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_height)
+background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
+
+// Update cloud size
+if (load_format < e_project.FORMAT_130_AL10)
+{
+	if (app.background_sky_clouds_tex = "default")
+		app.background_sky_clouds_size *= 8
+}
 
 background_ground_show = value_get_real(map[?"ground_show"], background_ground_show)
 background_ground_name = value_get_string(map[?"ground_name"], background_ground_name)

@@ -49,7 +49,7 @@ with (bench_settings)
 		render_generate_item()
 	
 	// Switch to shape
-	if (type_is_shape(type))
+	if (type = e_tl_type.SHAPE)
 		temp_update_shape()
 		
 	// Switch to model

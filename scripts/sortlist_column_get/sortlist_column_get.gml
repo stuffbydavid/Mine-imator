@@ -19,7 +19,7 @@ switch (slist.column_name[col])
 	case "libtype":
 		return text_get("type" + temp_type_name_list[|value.type])
 		
-	case "libcount":
+	case "libinstances":
 		return value.count
 		
 	case "charname":
@@ -61,5 +61,8 @@ switch (slist.column_name[col])
 		return value.count
 		
 	case "particlepresetname":
-		return filename_new_ext(filename_name(value), "")
+	{
+		var fn = filename_new_ext(filename_name(value), "");
+		return text_exists("particle" + fn) ? text_get("particle" + fn) : fn;
+	}
 }

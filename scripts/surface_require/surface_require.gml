@@ -13,7 +13,7 @@ h = max(1, argument[2])
 if (argument_count > 3)
 	surfdepth = argument[3]
 else
-	surfdepth = false
+	surfdepth = true
 
 if (argument_count > 4)
 	free = argument[4]

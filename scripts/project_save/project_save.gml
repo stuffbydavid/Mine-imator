@@ -20,6 +20,7 @@ project_save_start(fn, true)
 project_save_project()
 project_save_background()
 project_save_objects()
+project_save_markers()
 project_save_done()
 
 debug_timer_stop("project_save")

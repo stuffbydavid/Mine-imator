@@ -1,64 +1,77 @@
-/// draw_button_color(name, x, y, width, color, default, hsbmode, script)
+/// draw_button_color(name, x, y, w, color, default, hsbmode, script)
 /// @arg name
 /// @arg x
 /// @arg y
-/// @arg width
+/// @arg w
 /// @arg color
 /// @arg default
 /// @arg hsbmode
 /// @arg script
-/// @desc Draws a button that opens the color dialog.
 
-var name, xx, yy, wid, color, def, hsbmode, script;
-name = argument0
-xx = argument1
-yy = argument2
-wid = argument3
-color = argument4
-def = argument5
-hsbmode = argument6
-script = argument7
+var name, xx, yy, w, color, def, hsbmode, script;
+var textx, textw, w, h, mouseon, mouseclick, active;
+name = argument[0]
+xx = argument[1]
+yy = argument[2]
+w = argument[3]
+color = argument[4]
+def = argument[5]
+hsbmode = argument[6]
+script = argument[7]
+textx = xx
+textw = w
 
-if (draw_button_normal(name, xx, yy, wid, 32, e_button.TEXT, popup = popup_colorpicker && popup_colorpicker.value_name = name, true, true, icons.COLOR, hsbmode ? rgb_to_hsb(color) : color))
-{
-	if (popup = popup_colorpicker && popup_colorpicker.value_script = script)
-		popup_close()
-	else
-	{
-		popup_show(popup_colorpicker)
-		popup_colorpicker.value_name = name
-		popup_colorpicker.value_script = script
-		
-		if (text_exists(name + "caption"))
-			popup_colorpicker.caption = text_get(name + "caption")
-		else
-			popup_colorpicker.caption = text_get(name)
-			
-		popup_colorpicker.def = def
-		popup_colorpicker.color = color
-		popup_colorpicker.red = color_get_red(color)
-		popup_colorpicker.green = color_get_green(color)
-		popup_colorpicker.blue = color_get_blue(color)
-		popup_colorpicker.hsb_mode = hsbmode
-		
-		if (hsbmode)
-		{
-			popup_colorpicker.hue = popup_colorpicker.red
-			popup_colorpicker.saturation = popup_colorpicker.green
-			popup_colorpicker.brightness = popup_colorpicker.blue
-		}
-		else
-		{
-			popup_colorpicker.hue = color_get_hue(color)
-			popup_colorpicker.saturation = color_get_saturation(color)
-			popup_colorpicker.brightness = color_get_value(color)
-		}
-		popup_colorpicker.tbx_red.text = string(popup_colorpicker.red)
-		popup_colorpicker.tbx_green.text = string(popup_colorpicker.green)
-		popup_colorpicker.tbx_blue.text = string(popup_colorpicker.blue)
-		popup_colorpicker.tbx_hue.text = string(popup_colorpicker.hue)
-		popup_colorpicker.tbx_saturation.text = string(popup_colorpicker.saturation)
-		popup_colorpicker.tbx_brightness.text = string(popup_colorpicker.brightness)
-		popup_colorpicker.tbx_hexadecimal.text = color_to_hex(color)
-	}
-}
+h = 24
+yy += (label_height + 8)
+
+active = (settings_menu_name = "colorpicker" && colorpicker.value_name = name)
+mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon
+mouseclick = mouseon && mouse_left
+
+if (mouseon)
+	mouse_cursor = cr_handpoint
+
+context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
+microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
+
+// Draw button
+var col, alpha, labelcolor, labelalpha;
+
+// Fill
+col = merge_color(0, c_overlay, mcroani_arr[e_mcroani.HOVER])
+col = merge_color(col, c_accent_overlay, mcroani_arr[e_mcroani.ACTIVE])
+alpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+alpha = lerp(alpha, a_accent_overlay, mcroani_arr[e_mcroani.ACTIVE])
+draw_box(xx, yy, w, h, false, c_level_top, 1)
+draw_box(xx, yy, w, h, false, col, alpha)
+
+// Fill border
+col = merge_color(c_border, c_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+col = merge_color(col, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+alpha = lerp(a_border, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+alpha = lerp(alpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+draw_outline(xx, yy, w, h, 1, col, alpha, true)
+
+// Color
+draw_box(xx + 4, yy + 4, w - 8, h - 8, false, color, 1)
+draw_outline(xx + 4, yy + 4, w - 8, h - 8, 1, c_border, a_border, 1)
+
+// Hover
+draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.HOVER])
+
+// Label
+labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+labelcolor = merge_color(labelcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+labelalpha = lerp(labelalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+draw_set_font(font_label)
+draw_label(string_limit(text_get(name), w - 8), xx, yy - (label_height + 8), fa_left, fa_top, labelcolor, labelalpha)
+
+microani_update(mouseon, mouseclick, active || (mouseon && mouse_left), false)
+
+if (mouseon && mouse_left_released)
+	colorpicker_show(name, color, def, script, xx, yy, w, h)

@@ -3,7 +3,7 @@
 if (history_pos = 0)
 	return 0
 
-action_toolbar_play_break()
+action_tl_play_break()
 
 history_pos--
 

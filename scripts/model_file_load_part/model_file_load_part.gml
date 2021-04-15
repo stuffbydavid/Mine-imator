@@ -123,7 +123,7 @@ with (new(obj_model_part))
 	scale = vec3_mul(scale, other.scale)
 	
 	// Keyframe tab states
-	show_position = value_get_real(map[?"show_position"], false)
+	//show_position = value_get_real(map[?"show_position"], false)
 	
 	// Locked timeline
 	if (other.object_index = obj_model_part && other.locked)

@@ -12,10 +12,13 @@ with (new(obj_timeline))
 	name = buffer_read_string_int()
 	temp = project_load_legacy_save_id()
 	text = buffer_read_string_int()
-	color = buffer_read_int()
+	/*color = */buffer_read_int()
+	
+	/*
 	if (load_format < e_project.FORMAT_100_DEBUG) // Color too bright
 		color = make_color_hsv(color_get_hue(color), 255, 128)
-
+	*/
+	
 	lock = buffer_read_byte()
 	if (load_format < e_project.FORMAT_100_DEBUG)
 		lock = !lock

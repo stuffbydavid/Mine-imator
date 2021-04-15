@@ -1,4 +1,4 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script, [texture, [icon, [captionwidth, [tip]]]])
+/// draw_button_menu(name, type, x, y, width, height, value, text, script|menuscript, [disabled, [texture, [icon, [caption, [texcolor, texalpha, [capwid]]]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -7,14 +7,17 @@
 /// @arg height
 /// @arg value
 /// @arg text
-/// @arg script
+/// @arg script|drawscript
+/// @arg [disabled
 /// @arg [texture
 /// @arg [icon
-/// @arg [captionwidth
-/// @arg [tip]]]]
+/// @arg [caption
+/// @arg [texcolor
+/// @arg texalpha
+/// @arg [capwid]]]]]
 
-var name, type, xx, yy, wid, hei, value, text, script, tex, icon, capwid, cap, tip;
-var flip, imgsize, mouseon, pressed, textoff, roundtop, roundbottom;
+var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha, capwid;
+var flip, mouseon, cap, menuactive, menuhide, menuid;
 name = argument[0]
 type = argument[1]
 xx = argument[2] 
@@ -25,146 +28,238 @@ value = argument[6]
 text = argument[7]
 script = argument[8]
 
-if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
-	return 0
-	
 if (argument_count > 9)
-	tex = argument[9]
+	disabled = argument[9]
+else
+	disabled = false
+
+if (argument_count > 10)
+	tex = argument[10]
 else
 	tex = null
-	
-if (argument_count > 10)
-	icon = argument[10]
+
+if (argument_count > 11)
+	icon = argument[11]
 else
 	icon = null
 
-if (argument_count > 11)
-	capwid = argument[11]
-else
-	capwid = text_caption_width(name)
-	
 if (argument_count > 12)
-	tip = argument[12]
+	caption = argument[12]
 else
-	tip = text_get(name + "tip")
-	
-flip = (yy + hei + hei * 4>window_height)
-imgsize = hei - 4
+	caption = ""
 
-// Tip
-tip_set(tip, xx, yy, wid, hei)
+if (argument_count > 13)
+{
+	texcolor = argument[13]
+	texalpha = argument[14]
+	
+	if (texcolor = null)
+		texcolor = c_white
+	
+	if (texalpha = null)
+		texalpha = 1
+}
+else
+{
+	texcolor = c_white
+	texalpha = 1
+}
+
+if (argument_count > 15)
+	capwid = argument[15]
+else
+	capwid = null
 
 // Caption
 if (menu_model_current != null)
 {
-	cap = minecraft_asset_get_name("modelstate", name) + ":"
+	cap = minecraft_asset_get_name("modelstate", name)
 	name = "modelstate" + name
 }
 else if (menu_block_current != null)
 {
-	cap = minecraft_asset_get_name("blockstate", name) + ":"
+	cap = minecraft_asset_get_name("blockstate", name)
 	name = "blockstate" + name
 }
 else
+	cap = text_get(name)
+
+// Check if menu is currently active
+menuactive = false
+menuhide = false
+menuid = null
+
+for (var i = 0; i < ds_list_size(menu_list); i++)
 {
-	if (type = e_menu.LIST_NUM)
+	if (menu_list[|i].menu_name = name)
 	{
-		cap = text_get(name, menu_count) + ":"
-		name = name + string(menu_count)
+		menuactive = true
+		menuhide = menu_list[|i].menu_ani_type = "hide"
+		menuid = menu_list[|i]
 	}
-	else
-		cap = text_get(name) + ":"
 }
-	
 
-draw_label(cap, xx, yy + hei / 2, fa_left, fa_middle)
+flip = (yy + hei + hei * 8 > window_height)
 
-// Mouse
-xx += capwid
-wid -= capwid
-mouseon = app_mouse_box(xx, yy, wid, hei)
+microani_set(name, null, false, false, false)
 
-if (!content_mouseon)
-	mouseon = false
-	
-pressed = false
-if (mouseon)
+var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha;
+textcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+textcolor = merge_color(textcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+textcolor = merge_color(textcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+textalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+textalpha = lerp(textalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+// Caption
+if (capwid = null)
 {
-	if (mouse_left || mouse_left_released)
-		pressed = true
-	frame = true
-	mouse_cursor = cr_handpoint
+	draw_label(string_limit(cap, dw), xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_label)
+	yy += (label_height + 8)
+}
+else if (capwid != null)
+{
+	draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha, font_label)
+	wid -= capwid
+	xx += capwid
 }
 
-if (menu_name = name)
-	pressed = true
+if (menuactive)
+{
+	xx = menuid.menu_x
+	wid = menuid.menu_w
+}
 
 // Button
-roundtop = (menu_name != name || !menu_flip)
-roundbottom = (menu_name != name || menu_flip)
-draw_box_rounded(xx, yy, wid, hei, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1, roundtop, roundtop, roundbottom, roundbottom)
+bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
+bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.PRESS])
+bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
+borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
 
-// Sprite
-if (icon != null)
-	draw_image(spr_icons, icon, xx + 2 + imgsize / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
-else if (tex != null)
-	draw_texture(tex, xx + 4, yy + 2 + pressed, imgsize / texture_width(tex), imgsize / texture_height(tex))
+draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
+draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha, true)
+draw_box_hover(xx, yy, wid, hei, mcroani_arr[e_mcroani.PRESS])
 
-// Text
-textoff = ((tex || icon) ? (imgsize - 4) : 0)
-draw_label(string_limit(string_remove_newline(text), wid - textoff - hei - 8), xx + hei / 2 + textoff, yy + hei / 2 + pressed, fa_left, fa_middle, setting_color_buttons_text, 1)
+// Mouse
+mouseon = app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon
 
-// Arrow
-draw_image(spr_icons, flip ? icons.ARROW_UP : icons.ARROW_DOWN, xx + wid - hei / 2, yy + hei / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
+if (mouseon)
+	mouse_cursor = cr_handpoint
+
+// Item
+var item = list_item_add(text, null, caption, tex, icon, -1, null, false, false);
+item.disabled = disabled
+
+if (type = e_menu.TRANSITION_LIST)
+{
+	item.thumbnail_blend = c_text_secondary
+	item.thumbnail_alpha = a_text_secondary
+	item.thumbnail_backdrop = false
+}
+else
+{
+	item.thumbnail_blend = texcolor
+	item.thumbnail_alpha = texalpha
+}
+
+list_item_draw(item, xx, yy, wid, hei, false, null, null, false)
+instance_destroy(item)
+
+// Chevron
+chevroncolor = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
+chevroncolor = merge_color(chevroncolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+chevroncolor = merge_color(chevroncolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+chevronalpha = lerp(a_text_secondary, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+chevronalpha = lerp(chevronalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+chevronalpha = lerp(chevronalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+
+draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - mcroani_arr[e_mcroani.CUSTOM_LINEAR]))
+draw_image(spr_icons, icons.CHEVRON_UP_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * mcroani_arr[e_mcroani.CUSTOM_LINEAR])
+
+// Disabled overlay
+draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
+
+microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
 
 // Update menu position
-if (menu_name = name)
+if (menuactive)
 {
 	menu_x = xx
 	menu_y = yy
 }
 
 // Check click
-if (mouseon && mouse_left_released)
+if (mouseon && mouse_left_released && !menuhide)
 {
+	var m = null;
+	for (var i = 0; i < ds_list_size(menu_list); i++)
+	{
+		if (menu_list[|i].menu_name = name)
+		{
+			m = menu_list[|i]
+			break;
+		}
+	}
+	
+	if (m = null)
+		m = new(obj_menu)
+	
 	window_busy = "menu"
-	window_focus = string(menu_scroll)
+	window_focus = ""//string(menu_scroll_vertical)
 	app_mouse_clear()
 	
-	menu_name = name
-	menu_type = type
-	menu_temp_edit = temp_edit
-	menu_script = script
-	menu_value = value
-	menu_ani = 0
-	menu_ani_type = "show"
-	menu_flip = flip
-	menu_x = xx
-	menu_y = yy
-	menu_w = wid
-	menu_button_h = hei
-	menu_item_w = wid
-	menu_item_h = menu_button_h
-	menu_include_tl_edit = (menu_name != "timelineeditorparent")
+	m.menu_name = name
+	m.menu_type = type
+	m.menu_temp_edit = temp_edit
+	m.menu_script = script
+	m.menu_value = value
+	m.menu_ani = 0
+	m.menu_ani_type = "show"
+	m.menu_flip = flip
+	m.menu_x = xx
+	m.menu_y = yy
+	m.menu_w = wid
+	m.menu_button_h = hei
+	m.menu_item_w = wid
+	m.menu_item_h = m.menu_button_h
+	m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+	m.menu_margin = 0//8
+	m.menu_transition = null
+	m.menu_steps = 0
+	m.menu_floating = false
+	
+	m.content_x = content_x
+	m.content_width = content_width
+	
+	menu_current = m
+	
+	// Init
 	menu_model_state = menu_model_state_current
 	menu_block_state = menu_block_state_current
 	
-	// Init
-	menu_clear()
 	if (type = e_menu.LIST)
-		menu_list_init()
+		m.menu_list = list_init(m.menu_name)
 	else if (type = e_menu.TIMELINE)
-		menu_timeline_init()
-	else
-		menu_transition_init()
+		m.menu_list = menu_timeline_init(m)
 	
-	menu_focus_selected()
+	/*
+	else if (type = e_menu.TRANSITION_LIST)
+		m.menu_list = menu_transition_init()
+	*/
+	
+	m.menu_amount = m.menu_list = null ? 0 : ds_list_size(m.menu_list.item)
+	
+	with (m)
+		menu_focus_selected()
 		
 	// Flip
-	if (menu_flip)
-		menu_show_amount = floor((menu_y * 0.9) / menu_item_h)
+	if (m.menu_flip)
+		m.menu_show_amount = floor((m.menu_y * 0.9) / m.menu_item_h)
 	else
-		menu_show_amount = floor(((window_height - (menu_y + menu_button_h)) * 0.9) / menu_item_h)
+		m.menu_show_amount = floor(((window_height - (m.menu_y + m.menu_button_h)) * 0.9) / m.menu_item_h)
+	
 	
 	return true
 }

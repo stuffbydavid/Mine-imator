@@ -58,7 +58,11 @@ if (type = e_temp_type.PARTICLE_SPAWNER)
 	temp_particles_type_clear()
 	
 with (obj_timeline)
-	if (temp = other.id && part_of == null)
+	if (temp = other.id && part_of == null && !delete_ready)
+		tl_remove_clean()
+
+with (obj_timeline)
+	if (delete_ready)
 		instance_destroy()
 
 with (obj_particle_type)

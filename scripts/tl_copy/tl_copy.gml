@@ -8,9 +8,10 @@ to.type = type
 to.name = name
 to.temp = temp
 to.text = text
-to.color = color
+to.color_tag = color_tag
 to.lock = lock
 to.hide = hide
+to.ghost = ghost
 to.depth = depth
 
 to.lock_bend = lock_bend

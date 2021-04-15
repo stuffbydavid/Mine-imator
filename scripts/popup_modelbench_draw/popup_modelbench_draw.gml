@@ -1,38 +1,37 @@
 /// popup_modelbench_draw()
 
-// Info
-draw_label(string_limit_ext(text_get("modelbenchinfo"), dw, dh), dx + content_width / 2, dy, fa_center, fa_top)
+dy += 8
 
 // Screenshot
-draw_image(spr_modelbench_ad, 0, dx + content_width / 2 - 300, dy + 32)
+draw_image(spr_modelbench_ad, 0, dx + dw / 2, dy)
+dy += sprite_get_height(spr_modelbench_ad) + 8
+
+// Info
+draw_label(string_limit_ext(text_get("modelbenchinfo"), dw + 24, dh), dx + dw / 2, dy, fa_center, fa_top, c_text_main, a_text_main, font_value)
+dy += 34 + 16
+
+draw_set_font(font_button)
+var buttonx = string_width(text_get("modelbenchdownload")) + button_padding;
+
+tab_control_button_label()
 
 // Download
-dw = 248
-dh = 64
-dx = content_x + content_width / 2 - dw / 2
-dy = content_y + content_height - 40 - dh
-if (draw_button_normal("modelbenchdownload", dx, dy, dw, dh))
-{
-	open_url(link_modelbench)
-	popup_modelbench.hidden = true
-	popup_close()
-}
-
-// Close options
-dw = 120
-dh = 32
-dx = content_x + content_width / 2 - dw - 4
-dy = content_y + content_height - dh
-
-if (draw_button_normal("modelbenchnotnow", dx, dy, dw, dh))
+if (draw_button_label("modelbenchdownload", dx + dw - buttonx, dy_start + dh - 32))
 {
 	popup_modelbench.not_now = true
 	popup_close()
 }
-	
-dx += dw + 8
-if (draw_button_normal("modelbenchdontshow", dx, dy, dw, dh))
+
+// Not now
+buttonx += 12 + (string_width(text_get("modelbenchnotnow")) + button_padding)
+if (draw_button_label("modelbenchnotnow", dx + dw - buttonx, dy_start + dh - 32, null, null, e_button.SECONDARY))
 {
-	popup_modelbench.hidden = true
+	popup_modelbench.not_now = true
 	popup_close()
 }
+
+// Don't show again
+if (draw_checkbox("modelbenchdontshow", dx, dy, popup_modelbench.hidden, null))
+	popup_modelbench.hidden = !popup_modelbench.hidden
+
+tab_next()

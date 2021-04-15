@@ -191,6 +191,19 @@ with (obj_particle_type)
 		sprite_tex.count++
 }
 
+// Set marker IDs
+with (obj_marker)
+{
+	if (!loaded)
+		continue
+	
+	if (!is_undefined(save_id_map[?load_id]))
+		save_id = save_id_map[?load_id]
+	
+	ds_list_add(app.timeline_marker_list, id)
+}
+marker_list_sort()
+
 // Add to root tree
 for (var i = 0; i < array_length_1d(tree_array); i++)
 	if (tree_array[i] > 0)

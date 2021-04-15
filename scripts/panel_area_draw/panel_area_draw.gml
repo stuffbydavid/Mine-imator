@@ -33,18 +33,21 @@ if (window_busy != "toolbarmove")
 	}
 }
 
+// Shortcut bar
+panel_area_height -= (28 * setting_show_shortcuts_bar)
+
 // Set size
 with (obj_panel)
 	size_real = size * (tab_list_amount > 0)
 
 // Stop panels overlapping
-panel_map[?"left_bottom"].size_real -= max(0, panel_map[?"left_top"].size_real + panel_map[?"left_bottom"].size_real + panel_map[?"right_bottom"].size_real + panel_map[?"right_top"].size_real - panel_area_width)
-panel_map[?"left_top"].size_real -= max(0, panel_map[?"left_top"].size_real + panel_map[?"right_top"].size_real + panel_map[?"right_bottom"].size_real - panel_area_width)
+panel_map[?"left_secondary"].size_real -= max(0, panel_map[?"left"].size_real + panel_map[?"left_secondary"].size_real + panel_map[?"right_secondary"].size_real + panel_map[?"right"].size_real - panel_area_width)
+panel_map[?"left"].size_real -= max(0, panel_map[?"left"].size_real + panel_map[?"right"].size_real + panel_map[?"right_secondary"].size_real - panel_area_width)
 panel_map[?"bottom"].size_real -= max(0, panel_map[?"top"].size_real + panel_map[?"bottom"].size_real - panel_area_height)
 
 // Set max size
-panel_map[?"left_top"].size_real = min(panel_map[?"left_top"].size_real, panel_area_width)
-panel_map[?"right_top"].size_real = min(panel_map[?"right_top"].size_real, panel_area_width)
+panel_map[?"left"].size_real = min(panel_map[?"left"].size_real, panel_area_width)
+panel_map[?"right"].size_real = min(panel_map[?"right"].size_real, panel_area_width)
 panel_map[?"top"].size_real = min(panel_map[?"top"].size_real, panel_area_height)
 panel_map[?"bottom"].size_real = min(panel_map[?"bottom"].size_real, panel_area_height)
 
@@ -52,22 +55,22 @@ panel_map[?"bottom"].size_real = min(panel_map[?"bottom"].size_real, panel_area_
 view_area_draw()
 
 // Draw panels
-panel_draw(panel_map[?"left_bottom"])
-panel_draw(panel_map[?"right_bottom"])
+panel_draw(panel_map[?"left_secondary"])
+panel_draw(panel_map[?"right_secondary"])
 panel_draw(panel_map[?"bottom"])
 panel_draw(panel_map[?"top"])
-panel_draw(panel_map[?"left_top"])
-panel_draw(panel_map[?"right_top"])
+panel_draw(panel_map[?"left"])
+panel_draw(panel_map[?"right"])
 
 // Resizing
 if (window_busy = "panelresize")
 {
-	if (panel_resize = panel_map[?"left_top"] || panel_resize = panel_map[?"left_bottom"])
+	if (panel_resize = panel_map[?"left"] || panel_resize = panel_map[?"left_secondary"])
 	{
 		mouse_cursor = cr_size_we
 		panel_resize.size = max(300, panel_resize_size + (mouse_x - mouse_click_x))
 	}
-	else if (panel_resize = panel_map[?"right_top"] || panel_resize = panel_map[?"right_bottom"])
+	else if (panel_resize = panel_map[?"right"] || panel_resize = panel_map[?"right_secondary"])
 	{
 		mouse_cursor = cr_size_we
 		panel_resize.size = max(300, panel_resize_size - (mouse_x - mouse_click_x))
@@ -75,7 +78,7 @@ if (window_busy = "panelresize")
 	else if (panel_resize = panel_map[?"bottom"])
 	{
 		mouse_cursor = cr_size_ns
-		panel_resize.size = max(50, panel_resize_size - (mouse_y - mouse_click_y))
+		panel_resize.size = max(32, panel_resize_size - (mouse_y - mouse_click_y))
 	}
 	else if (panel_resize = panel_map[?"top"])
 	{
@@ -103,45 +106,45 @@ if (window_busy = "tabmove")
 		righttopw = view_area_width
 		
 		// Top panel
-		if (!panel_map[?"left_top"].size_real || !panel_map[?"left_bottom"].size_real || !panel_map[?"right_top"].size_real || !panel_map[?"right_bottom"].size_real)
+		if (!panel_map[?"left"].size_real || !panel_map[?"left_secondary"].size_real || !panel_map[?"right"].size_real || !panel_map[?"right_secondary"].size_real)
 			toph *= 0.33
 		else if (!panel_map[?"bottom"].size_real)
 			toph *= 0.5
 			
 		// Bottom panel
-		if (!panel_map[?"left_top"].size_real || !panel_map[?"left_bottom"].size_real || !panel_map[?"right_top"].size_real || !panel_map[?"right_bottom"].size_real)
+		if (!panel_map[?"left"].size_real || !panel_map[?"left_secondary"].size_real || !panel_map[?"right"].size_real || !panel_map[?"right_secondary"].size_real)
 			bottomh *= 0.33
 		else if (!panel_map[?"top"].size_real)
 			bottomh *= 0.5
 			
 		// Left top
-		if (!panel_map[?"right_top"].size_real || !panel_map[?"right_bottom"].size_real)
+		if (!panel_map[?"right"].size_real || !panel_map[?"right_secondary"].size_real)
 			lefttopw *= 0.5
-		if (!panel_map[?"left_bottom"].size_real)
+		if (!panel_map[?"left_secondary"].size_real)
 			lefttopw *= 0.5
 			
 		// Left bottom
-		if (!panel_map[?"right_top"].size_real || !panel_map[?"right_bottom"].size_real)
+		if (!panel_map[?"right"].size_real || !panel_map[?"right_secondary"].size_real)
 			leftbottomw *= 0.5
 			
 		// Right top
-		if (!panel_map[?"left_top"].size_real || !panel_map[?"left_bottom"].size_real)
+		if (!panel_map[?"left"].size_real || !panel_map[?"left_secondary"].size_real)
 			righttopw *= 0.5
-		if (!panel_map[?"right_bottom"].size_real)
+		if (!panel_map[?"right_secondary"].size_real)
 			righttopw *= 0.5		
 		
 		if (mouse_y <= view_area_y + toph && !panel_map[?"top"].size_real)
 			tab_move_mouseon_panel = panel_map[?"top"]
 		else if (mouse_y >= view_area_y + view_area_height - bottomh && !panel_map[?"bottom"].size_real)
 			tab_move_mouseon_panel = panel_map[?"bottom"]
-		else if (mouse_x <= view_area_x + lefttopw && !panel_map[?"left_top"].size_real)
-			tab_move_mouseon_panel = panel_map[?"left_top"]
-		else if (mouse_x <= view_area_x + leftbottomw && !panel_map[?"left_bottom"].size_real)
-			tab_move_mouseon_panel = panel_map[?"left_bottom"]
-		else if (mouse_x >= view_area_x + view_area_width - righttopw && !panel_map[?"right_top"].size_real)
-			tab_move_mouseon_panel = panel_map[?"right_top"]
+		else if (mouse_x <= view_area_x + lefttopw && !panel_map[?"left"].size_real)
+			tab_move_mouseon_panel = panel_map[?"left"]
+		else if (mouse_x <= view_area_x + leftbottomw && !panel_map[?"left_secondary"].size_real)
+			tab_move_mouseon_panel = panel_map[?"left_secondary"]
+		else if (mouse_x >= view_area_x + view_area_width - righttopw && !panel_map[?"right"].size_real)
+			tab_move_mouseon_panel = panel_map[?"right"]
 		else
-			tab_move_mouseon_panel = panel_map[?"right_bottom"]
+			tab_move_mouseon_panel = panel_map[?"right_secondary"]
 			
 		tab_move_mouseon_panel.glow = min(1, tab_move_mouseon_panel.glow + 0.1 * delta)
 	}

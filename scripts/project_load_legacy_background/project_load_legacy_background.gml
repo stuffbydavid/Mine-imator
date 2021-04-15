@@ -16,7 +16,9 @@ if (load_format >= e_project.FORMAT_100_DEBUG)
 	
 background_sky_time = buffer_read_double()
 background_sky_clouds_show = buffer_read_byte()
-background_sky_clouds_flat = buffer_read_byte()
+
+var flat = buffer_read_byte();
+background_sky_clouds_mode = (flat ? "flat" : "faded")
 background_sky_clouds_speed = buffer_read_double()
 
 background_ground_show = buffer_read_byte()
@@ -75,9 +77,9 @@ if (load_format >= e_project.FORMAT_100_DEMO_4)
 	
 	background_sky_clouds_tex.count--
 	background_sky_clouds_tex = project_load_legacy_save_id()
-	background_sky_clouds_z = buffer_read_double()
-	background_sky_clouds_size = buffer_read_double()
 	background_sky_clouds_height = buffer_read_double()
+	background_sky_clouds_size = buffer_read_double()
+	background_sky_clouds_thickness = buffer_read_double()
 }
 
 if (load_format >= e_project.FORMAT_CB_100)

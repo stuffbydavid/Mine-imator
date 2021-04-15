@@ -15,17 +15,17 @@ if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	render_set_uniform("uWindEnable", 0)
 	render_set_uniform("uWindTerrain", 1)
 	render_set_uniform("uWindSpeed", app.background_wind * app.background_wind_speed)
-	render_set_uniform("uWindStrength", app.background_wind_strength) 
+	render_set_uniform("uWindStrength", app.background_wind_strength * app.setting_wind_enable)
 	
 	render_set_uniform("uWindDirection", degtorad(app.background_wind_direction)) 
 	render_set_uniform("uWindDirectionalSpeed", app.background_wind * app.background_wind_directional_speed * .1) 
-	render_set_uniform("uWindDirectionalStrength", app.background_wind * app.background_wind_directional_strength) 
+	render_set_uniform("uWindDirectionalStrength", app.background_wind * app.background_wind_directional_strength * app.setting_wind_enable) 
 }
 
 // Set fog
 if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)
 {
-	var fog = (render_lights && app.background_fog_show);
+	var fog = (render_fog && app.background_fog_show);
 	render_set_uniform_int("uFogShow", bool_to_float(fog))
 
 	if (fog)

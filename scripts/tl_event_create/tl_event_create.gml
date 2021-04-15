@@ -11,9 +11,11 @@ name = ""
 display_name = ""
 temp = null
 text = text_get("timelineeditortextsample")
-color = make_color_hsv(random(255), 255, 128)
+color_tag = null
 lock = false
 hide = false
+ghost = false
+delete_ready = false
 depth = 0
 
 model_part = null
@@ -54,12 +56,16 @@ colors_ext = false
 part_mixing_shapes = false
 
 level = 0
+level_display = []
 parent = null
+parent_filter = null
 parent_is_selected = false
 lock_bend = true
 tree_array = 0
 tree_list = ds_list_create()
+tree_list_filter = ds_list_create()
 tree_extend = false
+list_mouseon = false
 
 inherit_position = true
 inherit_rotation = true

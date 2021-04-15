@@ -16,7 +16,10 @@ with (new(obj_resource))
 		
 	if (typename = "particles")
 		typename = "particlesheet"
-		
+	
+	if (typename = "schematic")
+		typename = "scenery"
+	
 	type = ds_list_find_index(res_type_name_list, typename)
 	
 	filename = buffer_read_string_int()

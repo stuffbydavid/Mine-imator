@@ -2,4 +2,4 @@
 /// @arg value
 
 setting_scenery_remove_edges = argument0
-alert_show(text_get("alertreloadprojecttitle"), text_get("alertreloadprojecttext"), null, "", "", 5000)
+toast_new(e_toast.WARNING, text_get("alertreloadobjects"))

@@ -4,6 +4,8 @@
 select = null
 surface = null
 
+mouseon_prev = false
+
 pack_image = "preview"
 pack_model_texture = "entity/steve"
 pack_block_sheet_ani = false
@@ -14,7 +16,10 @@ last_select = null
 texture = null
 reset_view = false
 sound_play_index = null
+sound_playing = false
 
+fov = 45
+xy_lock = false
 world_pos = point3D(0, 0, 0)
 preview_reset_view()
 particle_spawner_init()

@@ -1,30 +1,30 @@
 /// popup_exportimage_draw()
 
-var capwid = text_caption_width("exportimageimagesize", "exportimageimagesizecustomwidth")
-
 // Video size
 if (project_video_template = 0)
 	text = text_get("projectvideosizecustom")
 else
 	text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 
-tab_control(24)
-draw_button_menu("exportimageimagesize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template, null, null, capwid)
+tab_control_menu()
+draw_button_menu("exportimageimagesize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
 tab_next()
 
 // Custom
 if (project_video_template = 0)
 {
 	tab_control_dragger()
-	draw_dragger("exportimageimagesizecustomwidth", dx, dy, 140, project_video_width, 1, 1, no_limit, 1280, 1, popup.tbx_video_size_custom_width, action_project_video_width, capwid)
-	draw_dragger("exportimageimagesizecustomheight", dx + 140, dy, dw - 140, project_video_height, 1, 1, no_limit, 720, 1, popup.tbx_video_size_custom_height, action_project_video_height)
+	draw_dragger("exportimageimagesizecustomwidth", dx, dy, dragger_width, project_video_width, 1, 1, no_limit, 1280, 1, popup.tbx_video_size_custom_width, action_project_video_width)
 	tab_next()
-	tab_control_checkbox()
-	draw_checkbox("exportimageimagesizecustomkeepaspectratio", dx, dy, project_video_keep_aspect_ratio, action_project_video_keep_aspect_ratio)
+	
+	tab_control_dragger()
+	draw_dragger("exportimageimagesizecustomheight", dx, dy, dragger_width, project_video_height, 1, 1, no_limit, 720, 1, popup.tbx_video_size_custom_height, action_project_video_height)
+	tab_next()
+	
+	tab_control_switch()
+	draw_switch("exportimageimagesizecustomkeepaspectratio", dx, dy, project_video_keep_aspect_ratio, action_project_video_keep_aspect_ratio)
 	tab_next()
 }
-
-dy += 10
 
 // Remove background
 tab_control_checkbox()
@@ -32,11 +32,7 @@ draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, ac
 tab_next()
 
 if (popup.remove_background)
-{
-	tab_control(40)
-	draw_label(string_wrap(text_get("exportimageblendmodewarning"), dw), dx, dy)
-	tab_next()
-}
+	draw_tooltip_label("exportimageblendmodewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 
 // Include hidden
 tab_control_checkbox()
@@ -49,14 +45,6 @@ draw_checkbox("exportimagehighquality", dx, dy, popup.high_quality, action_toolb
 tab_next()
 
 // Save
-dw = 100
-dh = 32
-dx = content_x + content_width / 2-dw - 4
-dy = content_y + content_height - 32
-if (draw_button_normal("exportimagesave", dx, dy, dw, 32))
-	action_toolbar_exportimage_save()
-
-// Cancel
-dx = content_x + content_width / 2+4
-if (draw_button_normal("exportimagecancel", dx, dy, dw, 32))
-	popup_close()
+tab_control_button_label()
+draw_button_label("exportimagesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportimage_save, e_anchor.RIGHT)
+tab_next()

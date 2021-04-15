@@ -93,7 +93,7 @@ switch (argument0)
 	case e_value.BG_DESATURATE_NIGHT_AMOUNT: return app.background_desaturate_night_amount
 	case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show
 	case e_value.BG_SKY_CLOUDS_SPEED: return app.background_sky_clouds_speed
-	case e_value.BG_SKY_CLOUDS_Z: return app.background_sky_clouds_z
+	case e_value.BG_SKY_CLOUDS_HEIGHT: return app.background_sky_clouds_height
 	case e_value.BG_SKY_CLOUDS_OFFSET: return app.background_sky_clouds_offset
 	case e_value.BG_GROUND_SHOW: return app.background_ground_show
 	case e_value.BG_GROUND_SLOT: return app.background_ground_slot

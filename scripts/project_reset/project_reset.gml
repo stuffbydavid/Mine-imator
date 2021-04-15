@@ -24,6 +24,8 @@ project_video_height = 720
 project_video_template = find_videotemplate(project_video_width, project_video_height)
 project_video_keep_aspect_ratio = true
 project_tempo = 24
+project_grid_rows = 3
+project_grid_columns = 3
 
 camera_work_reset()
 
@@ -31,15 +33,22 @@ log("Destroying instances")
 
 with (obj_template)
 	instance_destroy()
-	
+
+with (obj_timeline)
+	if (!delete_ready)
+		tl_remove_clean()
+
 with (obj_timeline)
 	instance_destroy()
-	
+
 with (obj_resource)
 	if (id != mc_res)
 		instance_destroy()
 		
 with (obj_keyframe)
+	instance_destroy()
+
+with (obj_marker)
 	instance_destroy()
 
 with (mc_res)
@@ -72,12 +81,11 @@ background_sky_clouds_show = true
 background_sky_clouds_update = false
 background_sky_clouds_tex = mc_res
 background_sky_clouds_tex.count++
-background_sky_clouds_flat = false
-background_sky_clouds_story_mode = false
+background_sky_clouds_mode = "normal"
 background_sky_clouds_speed = 1
-background_sky_clouds_z = 1000
-background_sky_clouds_size = 192
-background_sky_clouds_height = 64
+background_sky_clouds_height = 1024
+background_sky_clouds_size = 1536
+background_sky_clouds_thickness = 64
 background_sky_clouds_offset = 0
 background_sky_update_clouds()
 
@@ -164,7 +172,7 @@ background_time_prev = 0
 timeline.hor_scroll.value = 0
 timeline.ver_scroll.value = 0
 
-action_toolbar_play_break()
+action_tl_play_break()
 timeline_repeat = false
 timeline_marker = 0
 timeline_marker_previous = 0
@@ -173,6 +181,12 @@ timeline_zoom = 16
 timeline_zoom_goal = 16
 timeline_camera = null
 copy_kf_amount = 0
+
+timeline_intervals_show = false
+timeline_interval_size = 24
+timeline_interval_offset = 0
+timeline_show_markers = true
+timeline_hide_color_tag = array_create(9, false)
 
 ds_list_clear(tree_list)
 ds_list_clear(tree_visible_list)

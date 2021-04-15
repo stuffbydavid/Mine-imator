@@ -33,10 +33,7 @@ switch (vid)
 	case e_value.CAM_CONTRAST:
 	case e_value.CAM_VIGNETTE_RADIUS:
 	case e_value.CAM_VIGNETTE_SOFTNESS:
-	case e_value.CAM_VIGNETTE_STRENGTH:
-	case e_value.CAM_CA_RED_OFFSET:
-	case e_value.CAM_CA_GREEN_OFFSET:
-	case e_value.CAM_CA_BLUE_OFFSET: return clamp(val, 0, 1)
+	case e_value.CAM_VIGNETTE_STRENGTH: return clamp(val, 0, 1)
 	case e_value.BG_VOLUMETRIC_FOG_SCATTER: return clamp(val, -1, 1)
 	case e_value.RGB_ADD:
 	case e_value.RGB_SUB:
@@ -76,9 +73,12 @@ switch (vid)
 	case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 	case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)
 	case e_value.CAM_SHAKE_VERTICAL_SPEED:
-	case e_value.CAM_SHAKE_HORIZONTAL_SPEED: return clamp(val, 0, 8)
+	case e_value.CAM_SHAKE_HORIZONTAL_SPEED:
 	case e_value.CAM_SHAKE_VERTICAL_STRENGTH:
-	case e_value.CAM_SHAKE_HORIZONTAL_STRENGTH: return clamp(val, 0, 8)
+	case e_value.CAM_SHAKE_HORIZONTAL_STRENGTH: 
+	case e_value.CAM_CA_RED_OFFSET:
+	case e_value.CAM_CA_GREEN_OFFSET:
+	case e_value.CAM_CA_BLUE_OFFSET: return clamp(val, 0, no_limit)
 	case e_value.CAM_WIDTH:
 	case e_value.CAM_HEIGHT: return max(1, val)
 	case e_value.BG_SKY_MOON_PHASE: return clamp(val, 0, 7)

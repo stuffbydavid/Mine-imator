@@ -29,9 +29,16 @@ if (!legacy_startup())
 	return false
 	
 app_startup_lists()
+app_startup_collapse()
+app_startup_micro_animations()
 app_startup_window()
+app_startup_themes()
+app_startup_fonts()
+app_startup_interface_lists()
+app_startup_keybinds()
 
-alert_startup()
+app_startup_recent()
+toasts_startup()
 json_startup()
 settings_startup()
 project_startup()

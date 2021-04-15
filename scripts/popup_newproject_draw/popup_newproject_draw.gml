@@ -1,29 +1,33 @@
 /// popup_newproject_draw()
 /// @desc Settings for starting a new project.
 
-var capwid = text_caption_width("newprojectname", "newprojectauthor", "newprojectdescription", "newprojectfolder");
+var warntext = "";
 
-// Name
-if (draw_inputbox("newprojectname", dx, dy, dw, "", popup.tbx_name, null, capwid))
+if (popup.folder = "")
+	warntext = text_get("newprojectnameempty")
+else if (directory_exists_lib(setting_project_folder + popup_newproject.folder))
+	warntext = text_get("newprojectnameexists")
+
+tab_control_textfield(true)
+if (draw_textfield("newprojectname", dx, dy, dw, 24, popup.tbx_name, null, text_get("newprojectname"), "top", warntext != ""))
 	popup.folder = filename_get_valid(popup.tbx_name.text)
-dy += 30
+tab_next()
 
-// Author
-draw_inputbox("newprojectauthor", dx, dy, dw, "", popup.tbx_author, null, capwid)
-dy += 30
+if (warntext != "")
+{
+	tab_control(8)
+	draw_label(warntext, dx, dy + 8, fa_left, fa_bottom, c_error, 1, font_caption)
+	tab_next()
+}
 
-// Description
-draw_inputbox("newprojectdescription", dx, dy, dw, "", popup.tbx_description, null, capwid, 152)
-dy += 160
+// Project location
+tab_control(40)
+draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 
-// Folder
-draw_label(text_get("newprojectfolder") + ":", dx, dy + 4)
-draw_label(directory_name(setting_project_folder) + string_remove_newline(popup.folder), dx + capwid, dy + 4)
-tip_set(text_get("newprojectfoldertip"), dx, dy, dw - 60, 24)
+var directory = "...\\" + directory_name(setting_project_folder) + string_remove_newline(popup.folder);
 
-dw = text_caption_width("newprojectfolderchange")
-dx = content_x + content_width - dw
-if (draw_button_normal("newprojectfolderchange", dx, dy, dw, 24))
+draw_label(directory, dx, dy + 38, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
+if (draw_button_icon("newprojectchangefolder", dx + dw - 24, dy + 12, 24, 24, false, icons.FOLDER_EDIT, null, null, "tooltipchangefolder"))
 {
 	var fn = file_dialog_save_project(popup.folder)
 	if (fn != "")
@@ -32,24 +36,16 @@ if (draw_button_normal("newprojectfolderchange", dx, dy, dw, 24))
 		action_setting_project_folder(filename_path(fn))
 	}
 }
+tab_next()
 
 // Create
-dw = 100
-dh = 32
-dx = content_x + content_width / 2-dw - 4
-dy = content_y + content_height - 32
-if (draw_button_normal("newprojectcreate", dx, dy, dw, 32))
+tab_control_button_label()
+if (draw_button_label("newprojectcreate", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT, warntext != ""))
 {
+	if (window_state = "startup")
+		window_state = ""
+	
 	popup_switch_to = null
 	project_create()
 }
-
-// Cancel
-dx = content_x + content_width / 2+4
-if (draw_button_normal("newprojectcancel", dx, dy, dw, 32))
-{ 
-	if (popup_switch_from = popup_startup)
-		popup_switch(popup_switch_from)
-	else
-		popup_close()
-}
+tab_next()

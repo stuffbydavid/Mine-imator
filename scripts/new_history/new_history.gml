@@ -14,6 +14,9 @@ with (new(obj_history))
 	save_axis_edit = axis_edit
 	save_save_id_seed = save_id_seed
 	
+	scale_link_drag = false
+	scale_link_drag_val = 0
+	
 	return id
 }
 

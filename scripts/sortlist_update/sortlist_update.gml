@@ -42,8 +42,8 @@ else
 	ds_list_copy(slist.display_list, slist.list)
 
 // Remove non-matched items from list
-var check = string_lower(slist.filter_tbx.text);
-if (slist.filter && check != "" && (slist != bench_settings.block_list && slist != template_editor.block_list))
+var check = string_lower(slist.search_tbx.text);
+if (slist.search && check != "" && (slist != bench_settings.block_list && slist != template_editor.block_list))
 {
 	for (var p = 0; p < ds_list_size(slist.display_list); p++)
 	{
@@ -66,7 +66,7 @@ if (slist.filter && check != "" && (slist != bench_settings.block_list && slist 
 		}
 	}
 }
-else if (slist.filter && check != "" && (slist = bench_settings.block_list || slist = template_editor.block_list)) // If variant types contain name, include base block(Block list)
+else if (slist.search && check != "" && (slist = bench_settings.block_list || slist = template_editor.block_list)) // If variant types contain name, include base block(Block list)
 {
 	for (var p = 0; p < ds_list_size(slist.display_list); p++)
 	{
@@ -117,6 +117,35 @@ else if (slist.filter && check != "" && (slist = bench_settings.block_list || sl
 		{
 			ds_list_delete(slist.display_list, p)
 			p--
+		}
+	}
+}
+
+// Filter results
+if (!ds_list_empty(slist.filter_list))
+{
+	for (var p = 0; p < ds_list_size(slist.display_list); p++)
+	{
+		var item = slist.display_list[|p];
+		
+		// Library filter (type)
+		if (settings_menu_sortlist = app.properties.library.list)
+		{
+			if (ds_list_find_index(slist.filter_list, temp_type_name_list[|item.type]) = -1)
+			{
+				ds_list_delete(slist.display_list, p)
+				p--
+			}
+		}
+		
+		// Resource filter (type)
+		if (settings_menu_sortlist = app.properties.resources.list)
+		{
+			if (ds_list_find_index(slist.filter_list, res_type_name_list[|item.type]) = -1)
+			{
+				ds_list_delete(slist.display_list, p)
+				p--
+			}
 		}
 	}
 }

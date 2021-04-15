@@ -74,6 +74,6 @@ if (!reload && map != language_english_map)
 	
 		window_set_caption("Error")
 		show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file)
-		window_set_caption("")
+		window_set_caption("Mine-imator")
 	}
 }

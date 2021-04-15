@@ -2,7 +2,7 @@
 /// @desc Defines constants used in the project.
 
 // Debug
-#macro dev_mode						true
+#macro dev_mode						false
 #macro dev_mode_debug_schematics	dev_mode && false
 #macro dev_mode_debug_names			dev_mode && true
 #macro dev_mode_debug_unused		dev_mode && true
@@ -10,19 +10,21 @@
 
 // Versions
 #macro mineimator_version			"1.3.0"
-#macro mineimator_version_extra		"Alpha 6"
-#macro mineimator_version_date		"2020.08.04"
+#macro mineimator_version_extra		"Alpha 9"
+#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
+#macro mineimator_version_date		"2021.04.01"
 #macro gm_runtime					GM_runtime_version
 #macro minecraft_version			"1.16.1"
 
 // File formats
-#macro project_format				e_project.FORMAT_130
-#macro settings_format				e_settings.FORMAT_120
+#macro project_format				e_project.FORMAT_130_AL10
+#macro settings_format				e_settings.FORMAT_130
 #macro minecraft_assets_format		e_minecraft_assets.FORMAT_123
 
 // Directories
 #macro file_directory				game_save_id
 #macro data_directory				working_directory + "Data\\"
+#macro fonts_directory				data_directory + "Fonts\\"
 #macro projects_directory			working_directory + "Projects\\"
 #macro schematics_directory			working_directory + "Schematics\\"
 #macro skins_directory				working_directory + "Skins\\"
@@ -32,8 +34,11 @@
 
 // Files
 #macro language_file				languages_directory + "english.milanguage"
+#macro language_index_file			data_directory + "langindex.midata"
 #macro import_file					data_directory + "import.exe"
 #macro settings_file				data_directory + "settings.midata"
+#macro languages_file				data_directory + "languages.midata"
+#macro recent_file					data_directory + "recent.midata"
 #macro legacy_file					data_directory + "legacy.midata"
 #macro block_preview_file			data_directory + "blockpreview.midata"
 #macro key_file						data_directory + "key.midata"
@@ -118,7 +123,7 @@
 #macro c_sunset_end					hex_to_color("C04E37")
 
 // Minecraft color palette
-#macro c_minecraft_white			hex_to_color("E9ECEC")	
+#macro c_minecraft_white			hex_to_color("F4F4F4")	
 #macro c_minecraft_orange			hex_to_color("F07613")	
 #macro c_minecraft_magenta			hex_to_color("BD44B3")	
 #macro c_minecraft_light_blue		hex_to_color("3AAFD9")	
@@ -145,9 +150,14 @@
 #macro glow_alpha					0.75
 #macro shadow_size					5
 #macro shadow_alpha					0.1
-#macro view_3d_control_size			0.225
+#macro view_3d_control_size			0.175
 #macro view_3d_control_width		20
 #macro view_3d_box_size				12
+#macro button_padding				24
+#macro button_icon_padding			52
+#macro snap_min						0.000001
+#macro dragger_width				74
+#macro label_height					9
 
 // Values
 #macro null							noone
@@ -158,8 +168,8 @@
 #macro default_block				"grass_block"
 #macro default_item					"item/diamond_sword"
 #macro default_ground				"block/grass_block_top"
-#macro particle_sheet				-4
-#macro particle_template			-5
+#macro particle_sheet				-5
+#macro particle_template			-6
 
 // World
 #macro block_size					16

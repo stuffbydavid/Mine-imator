@@ -78,7 +78,7 @@ for (var i = 0; i < 3; i++)
 		
 with (render_shader_obj)
 	shader_clear()
-				
+
 gpu_set_tex_repeat(true)
 gpu_set_texfilter(false)
 

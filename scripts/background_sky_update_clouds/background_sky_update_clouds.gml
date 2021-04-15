@@ -12,7 +12,7 @@ texhei = texture_height(tex)
 texsize = max(texwid, texhei)
 hei = 0
 
-if (background_sky_clouds_story_mode)
+if (background_sky_clouds_mode = "faded")
 {
 	// Story Mode in-game tint: make_color_rgb(216, 230, 255)
 	colsidesdark = c_white
@@ -37,7 +37,7 @@ if (background_sky_clouds_vbuffer)
 background_sky_clouds_vbuffer = vbuffer_start()
 cloudsize = background_sky_clouds_size * 32
 
-if (!background_sky_clouds_flat)
+if (background_sky_clouds_mode != "flat")
 {
 	var surf = surface_create(texwid, texhei);
 	surface_set_target(surf)
@@ -64,7 +64,7 @@ if (!background_sky_clouds_flat)
 	ph = 1 / texhei
 	blockw = cloudsize / texwid
 	blockh = cloudsize / texhei
-	hei = background_sky_clouds_height
+	hei = background_sky_clouds_thickness
 	
 	for (var xx = 0; xx < texwid; xx++)
 	{
@@ -123,7 +123,7 @@ if (!background_sky_clouds_flat)
 	}
 }
 
-col = (background_sky_clouds_flat ? coltop : colbottom)
+col = (background_sky_clouds_mode = "flat" ? coltop : colbottom)
 
 vertex_add(0, 0, 0, 0, 0, -1, 0, 0, col, 1)
 vertex_add(0, cloudsize, 0, 0, 0, -1, 0, 1, col, 1)

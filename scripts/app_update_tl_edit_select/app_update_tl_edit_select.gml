@@ -2,21 +2,15 @@
 
 with (frame_editor)
 {
-	position.show = false
-	position.enabled = false
-	rotation.show = false
-	rotation.enabled = false
-	scale.enabled = false
-	bend.show = false
-	bend.enabled = false
-	color.enabled = false
+	transform.show = false
+	transform.enabled = false
+	material.enabled = false
 	particles.enabled = false
 	light.enabled = false
 	light.has_spotlight = false
 	camera.show = false
 	camera.enabled = false
 	camera.video_template = null
-	texture.enabled = false
 	sound.enabled = false
 	text.enabled = false
 	item.enabled = false
@@ -89,22 +83,13 @@ with (obj_timeline)
 			}
 		}
 	}
-		
+	
 	// Set enabled
-	if (value_type[e_value_type.POSITION])
-		app.frame_editor.position.enabled = true
+	if (value_type[e_value_type.TRANSFORM])
+		app.frame_editor.transform.enabled = true
 		
-	if (value_type[e_value_type.ROTATION])
-		app.frame_editor.rotation.enabled = true
-		
-	if (value_type[e_value_type.SCALE])
-		app.frame_editor.scale.enabled = true
-		
-	if (value_type[e_value_type.BEND])
-		app.frame_editor.bend.enabled = true
-		
-	if (value_type[e_value_type.COLOR])
-		app.frame_editor.color.enabled = true
+	if (value_type[e_value_type.MATERIAL])
+		app.frame_editor.material.enabled = true
 		
 	if (value_type[e_value_type.PARTICLES])
 		app.frame_editor.particles.enabled = true
@@ -117,9 +102,6 @@ with (obj_timeline)
 		
 	if (value_type[e_value_type.CAMERA])
 		app.frame_editor.camera.enabled = true
-		
-	if (value_type[e_value_type.TEXTURE])
-		app.frame_editor.texture.enabled = true
 		
 	if (value_type[e_value_type.SOUND])
 		app.frame_editor.sound.enabled = true
@@ -138,20 +120,10 @@ with (obj_timeline)
 		
 	if (value_type[e_value_type.AUDIO])
 		app.timeline_editor.audio.enabled = true
-		
-	// Set shown
-	if (value_type_show[e_value_type.POSITION])
-		app.frame_editor.position.show = true
-		
-	if (value_type_show[e_value_type.ROTATION])
-		app.frame_editor.rotation.show = true
 	
-	if (value_type_show[e_value_type.SCALE])
-		app.frame_editor.scale.show = true
-		
-	if (value_type_show[e_value_type.BEND])
-		app.frame_editor.bend.show = true
-		
+	// Set shown
+	app.frame_editor.transform.show = true
+	
 	if (value_type_show[e_value_type.CAMERA])
 		app.frame_editor.camera.show = true
 }

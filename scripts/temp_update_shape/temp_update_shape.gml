@@ -3,7 +3,8 @@
 if (shape_vbuffer)
 	vbuffer_destroy(shape_vbuffer)
 
-var rad, thflip, tvflip, tex1, tex2;
+var shapetype, rad, thflip, tvflip, tex1, tex2;
+shapetype = (id = app.bench_settings ? shape_type : type - e_temp_type.CUBE)
 rad = 8
 
 // Set texture
@@ -26,25 +27,25 @@ if (tvflip < 0)
 	tex2[Y] = 1.0 - tex2[Y]
 }
 
-switch (type)
+switch (shapetype)
 {
-	case e_temp_type.SURFACE:
+	case e_shape_type.SURFACE:
 		shape_vbuffer = vbuffer_create_surface(rad, tex1, tex2, shape_invert)
 		break
 		
-	case e_temp_type.CUBE:
+	case e_shape_type.CUBE:
 		shape_vbuffer = vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, shape_invert, shape_tex_mapped)
 		break
 	
-	case e_temp_type.CONE:
+	case e_shape_type.CONE:
 		shape_vbuffer = vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_closed, shape_invert, shape_tex_mapped)
 		break
 		
-	case e_temp_type.CYLINDER:
+	case e_shape_type.CYLINDER:
 		shape_vbuffer = vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_closed, shape_invert, shape_tex_mapped)
 		break
 		
-	case e_temp_type.SPHERE:
+	case e_shape_type.SPHERE:
 		shape_vbuffer = vbuffer_create_sphere(rad, tex1, tex2, shape_detail, shape_invert)
 		break
 }

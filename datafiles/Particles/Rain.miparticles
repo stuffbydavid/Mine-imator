@@ -26,7 +26,7 @@
 		"types": [
 			{
 				"id": "9M7GJ2P3PX682XYM",
-				"name": "Rains",
+				"name": "rain",
 				"temp_type": "template",
 				"text": "Sample text",
 				"spawn_rate": 1,

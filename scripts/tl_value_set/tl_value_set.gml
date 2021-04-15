@@ -1,7 +1,8 @@
-/// tl_value_set(valueid, value, add)
+/// tl_value_set(valueid, value, add, [multiply])
 /// @arg valueid
 /// @arg value
 /// @arg add
+/// @arg [multiply]
 /// @desc Adds the given value to all selected timelines.
 
 if (history_undo)
@@ -39,23 +40,35 @@ else if (history_redo)
 }
 else
 {
-	var vid, val, add;
-	vid = argument0
-	val = argument1
-	add = argument2
-
+	var vid, val, add, mul, tlcount;
+	vid = argument[0]
+	val = argument[1]
+	add = argument[2]
+	mul = (argument_count > 3 ? argument[3] : false)
+	tlcount = 0
+	
 	// Modify timelines
 	with (obj_timeline)
 	{
 		if (!selected)
 			continue
+		
+		if (history_data.scale_link_drag)
+		{
+			if (history_data.par_set_n = history_data.par_set_amount)
+				history_data.tl_set_old_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			
+			value[vid] = history_data.tl_set_old_value[tlcount, history_data.par_set_n]
+		}
+		
 		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
 			value[e_value.SOUND_OBJ].count--
-			
+		
 		var nval;
 		if (tl_value_is_string(vid))
 			nval = val
+		else if (mul)
+			nval = value[vid] * val;
 		else
 			nval = value[vid] * add + val;
 		
@@ -66,6 +79,8 @@ else
 		
 		if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
 			value[e_value.SOUND_OBJ].count++
+		
+		tlcount++
 	}
 	
 	// Save and modify keyframes
@@ -76,9 +91,14 @@ else
 			if (history_data.par_set_n = history_data.par_set_amount)
 				history_data.kf_set_old_value[k, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			
+			if (history_data.scale_link_drag)
+				value[vid] = history_data.kf_set_old_value[k, history_data.par_set_n]
+			
 			var nval;
 			if (tl_value_is_string(vid))
 				nval = val
+			else if (mul)
+				nval = value[vid] * val;
 			else
 				nval = value[vid] * add + val;
 			

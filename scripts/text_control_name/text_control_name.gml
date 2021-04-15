@@ -1,48 +1,59 @@
-/// text_control_name(key, control)
-/// @arg key
-/// @arg control 
+/// text_control_name(keybind)
+/// @arg keybind
 
-var ctrl = "";
-if (argument1)
-	ctrl = text_get("keycontrol") + "+"
-	
-switch (argument0)
+var keybind, char, text;
+keybind = argument0
+
+switch (keybind[e_keybind_key.CHAR])
 {
-	case vk_left:			return ctrl + text_get("keyleft")
-	case vk_right:			return ctrl + text_get("keyright")
-	case vk_up:				return ctrl + text_get("keyup")
-	case vk_down:			return ctrl + text_get("keydown")
-	case vk_enter:			return ctrl + text_get("keyenter")
-	case vk_escape:			return ctrl + text_get("keyescape")
-	case vk_space:			return ctrl + text_get("keyspace")
-	case vk_lshift:			return ctrl + text_get("keyleftshift")
-	case vk_rshift:			return ctrl + text_get("keyrightshift")
-	case vk_lalt:			return ctrl + text_get("keyleftalt")
-	case vk_ralt:			return ctrl + text_get("keyrightalt")
-	case vk_lcontrol:		return ctrl + text_get("keyleftcontrol")
-	case vk_rcontrol:		return ctrl + text_get("keyrightcontrol")
-	case vk_backspace:		return ctrl + text_get("keybackspace")
-	case vk_tab:			return ctrl + text_get("keytab")
-	case vk_home:			return ctrl + text_get("keyhome")
-	case vk_end:			return ctrl + text_get("keyend")
-	case vk_delete:			return ctrl + text_get("keydelete")
-	case vk_insert:			return ctrl + text_get("keyinsert")
-	case vk_pageup:			return ctrl + text_get("keypageup")
-	case vk_pagedown:		return ctrl + text_get("keypagedown")
-	case vk_pause:			return ctrl + text_get("keypause")
-	case vk_printscreen:	return ctrl + text_get("keyprintscreen")
-	case vk_f1:				return ctrl + "F1"
-	case vk_f2:				return ctrl + "F2"
-	case vk_f3:				return ctrl + "F3"
-	case vk_f4:				return ctrl + "F4"
-	case vk_f5:				return ctrl + "F5"
-	case vk_f6:				return ctrl + "F6"
-	case vk_f7:				return ctrl + "F7"
-	case vk_f8:				return ctrl + "F8"
-	case vk_f9:				return ctrl + "F9"
-	case vk_f10:			return ctrl + "F10"
-	case vk_f11:			return ctrl + "F11"
-	case vk_f12:			return ctrl + "F12"
+	case vk_left:			char = text_get("keyleft"); break;
+	case vk_right:			char = text_get("keyright"); break;
+	case vk_up:				char = text_get("keyup"); break;
+	case vk_down:			char = text_get("keydown"); break;
+	case vk_enter:			char = text_get("keyenter"); break;
+	case vk_escape:			char = text_get("keyescape"); break;
+	case vk_space:			char = text_get("keyspace"); break;
+	case vk_lshift:			char = text_get("keyleftshift"); break;
+	case vk_rshift:			char = text_get("keyrightshift"); break;
+	case vk_lalt:			char = text_get("keyleftalt"); break;
+	case vk_ralt:			char = text_get("keyrightalt"); break;
+	case vk_lcontrol:		char = text_get("keyleftcontrol"); break;
+	case vk_rcontrol:		char = text_get("keyrightcontrol"); break;
+	case vk_backspace:		char = text_get("keybackspace"); break;
+	case vk_tab:			char = text_get("keytab"); break;
+	case vk_home:			char = text_get("keyhome"); break;
+	case vk_end:			char = text_get("keyend"); break;
+	case vk_delete:			char = text_get("keydelete"); break;
+	case vk_insert:			char = text_get("keyinsert"); break;
+	case vk_pageup:			char = text_get("keypageup"); break;
+	case vk_pagedown:		char = text_get("keypagedown"); break;
+	case vk_pause:			char = text_get("keypause"); break;
+	case vk_printscreen:	char = text_get("keyprintscreen"); break;
+	case vk_f1:				char = "F1"; break;
+	case vk_f2:				char = "F2"; break;
+	case vk_f3:				char = "F3"; break;
+	case vk_f4:				char = "F4"; break;
+	case vk_f5:				char = "F5"; break;
+	case vk_f6:				char = "F6"; break;
+	case vk_f7:				char = "F7"; break;
+	case vk_f8:				char = "F8"; break;
+	case vk_f9:				char = "F9"; break;
+	case vk_f10:			char = "F10"; break;
+	case vk_f11:			char = "F11"; break;
+	case vk_f12:			char = "F12"; break;
+	case null:				char = ""; break;
+	default:				char = chr(keybind[e_keybind_key.CHAR]); break;
 }
 
-return ctrl + chr(argument0)
+text = char
+
+if (keybind[e_keybind_key.ALT])
+	text = text_get("keyalt") + (text != "" ? (" + " + text) : "")
+
+if (keybind[e_keybind_key.CTRL])
+	text = text_get("keycontrol") + (text != "" ? (" + " + text) : "")
+
+if (keybind[e_keybind_key.SHIFT])
+	text = text_get("keyshift") + (text != "" ? (" + " + text) : "")
+
+return text

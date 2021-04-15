@@ -6,13 +6,18 @@ bannerobj = argument0
 
 with (popup_bannereditor)
 {
+	preview.zoom = .6
+	preview.goalzoom = .6
+	preview.xyangle = 235
+	preview.zangle = 0
+	
 	banner_edit = bannerobj
-	banner_pattern_edit = -1
 	
-	prev_base_color = bannerobj.banner_base_color
+	with (banner_edit)
+		other.banner_edit_preview = instance_copy(false)
 	
-	prev_pattern_list = array_copy_1d(bannerobj.banner_pattern_list)
-	prev_pattern_color = array_copy_1d(bannerobj.banner_color_list)
+	preview.select = banner_edit_preview
+	preview.last_select = banner_edit_preview
 	
 	ds_list_clear(pattern_list_edit)
 	ds_list_clear(pattern_color_list_edit)
@@ -22,14 +27,16 @@ with (popup_bannereditor)
 	
 	for (var i = 0; i < array_length_1d(bannerobj.banner_color_list); i++)
 		ds_list_add(pattern_color_list_edit, bannerobj.banner_color_list[i])
-		
+	
 	var res;
 	if (banner_edit.model_tex.type = e_res_type.SKIN)
 		res = mc_res
 	else
 		res = banner_edit.model_tex
 	
-	// Update pattern sprites
+	banner_edit_preview.model_tex = res
+	
+	// Generate pattern sprites
 	if (pattern_resource != res || array_length_1d(pattern_sprites) = 0)
 	{
 		// Clear previous patterns
@@ -48,11 +55,13 @@ with (popup_bannereditor)
 		}
 		shader_mask = false
 		
-		// Texture
+		// Crop texture
 		array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner_base"], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio))
 		
 		pattern_resource = res
 	}
+	
+	update = true
 }
 
 popup_show(popup_bannereditor)

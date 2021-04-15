@@ -1,25 +1,27 @@
-/// preview_draw(preview, x, y, size)
+/// preview_draw(preview, x, y, width, height)
 /// @arg preview
 /// @arg x
 /// @arg y
-/// @arg size
+/// @arg width
+/// @arg height
 /// @desc Draws a preview window.
 
-var preview, xx, yy, size;
-var is3d, mouseon, butw, playbutton, isplaying, exportbutton;
+var preview, xx, yy, width, height;
+var is3d, mouseon, playbutton, isplaying, setplaytime;
 preview = argument0
 xx = argument1
 yy = argument2
-size = argument3
+width = argument3
+height = argument4
 
-if (xx + size < content_x || xx > content_x + content_width || yy + size < content_y || yy > content_y + content_height)
+if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 	return 0
 
-mouseon = app_mouse_box(xx, yy, size, size)
-butw = text_max_width("previewspawn") + 20
+mouseon = app_mouse_box(xx, yy, width, height)
+setplaytime = null
 
 // Background
-draw_box(xx, yy, size, size, false, setting_color_background, 1)
+draw_box(xx, yy, width, height, false, c_level_bottom, 1)
 
 if (!instance_exists(preview.select))
 {
@@ -31,26 +33,28 @@ if (!instance_exists(preview.select))
 if (preview.select.object_index = obj_resource)
 {
 	playbutton = (preview.select.type = e_res_type.SOUND)
-	isplaying = audio_is_playing(preview.sound_play_index)
-	exportbutton = true
+	isplaying = (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index))
 	is3d = (preview.select.type = e_res_type.SCENERY || preview.select.type = e_res_type.MODEL)
 }
 else
 {
 	playbutton = false
-	exportbutton = false
+	isplaying = false
 	is3d = true
 }
 
-if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + size - butw, yy + size - 24, butw, 24)) ||
-	(playbutton && app_mouse_box(xx + size - 48, yy + size - 24, 24, 24)) ||
-	(exportbutton && app_mouse_box(xx + size - 24, yy + size - 24, 24, 24)))
+if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)) ||
+	(playbutton && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)))
 	mouseon = false
 
+// Update audio hover
+if (playbutton && mouseon != preview.mouseon_prev)
+	preview.update = true
+
 // Dragging controls
-if (mouseon && content_mouseon)
+if (mouseon && content_mouseon && !playbutton)
 {
-	mouse_cursor = cr_size_all
+	mouse_cursor = (!is3d ? cr_size_all : (!preview.xy_lock ? cr_size_all : cr_size_we))
 	if (mouse_left_pressed)
 	{
 		window_busy = (is3d ? "previewrotate" : "previewmove")
@@ -67,10 +71,15 @@ if (window_focus = string(preview))
 	var zd, m;
 	if (window_busy = "previewrotate")
 	{
-		mouse_cursor = cr_size_all
+		mouse_cursor = !preview.xy_lock ? cr_size_all : cr_size_we
 		preview.xyangle = preview.clickxyangle + (mouse_click_x - mouse_x) * 0.75
-		preview.zangle = preview.clickzangle - (mouse_click_y - mouse_y)
-		preview.zangle = clamp(preview.zangle, -89.9, 89.9)
+		
+		if (!preview.xy_lock)
+		{
+			preview.zangle = preview.clickzangle - (mouse_click_y - mouse_y)
+			preview.zangle = clamp(preview.zangle, -89.9, 89.9)
+		}
+		
 		preview.update = true
 		if (!mouse_left)
 		{
@@ -93,12 +102,12 @@ if (window_focus = string(preview))
 		}
 	}
 	
-	m = (1 - 0.25 * mouse_wheel)
+	m = (1 - 0.25 * mouse_wheel * !preview.xy_lock)
 	if (m != 1)
 	{
 		preview.goalzoom = clamp(preview.goalzoom * m, 0.1, 100)
-		preview.goalxoff = preview.xoff + (mouse_x - (xx + size / 2)) / preview.zoom - (mouse_x - (xx + size / 2)) / preview.goalzoom
-		preview.goalyoff = preview.yoff + (mouse_y - (yy + size / 2)) / preview.zoom - (mouse_y - (yy + size / 2)) / preview.goalzoom
+		preview.goalxoff = preview.xoff + (mouse_x - (xx + width / 2)) / preview.zoom - (mouse_x - (xx + width / 2)) / preview.goalzoom
+		preview.goalyoff = preview.yoff + (mouse_y - (yy + height / 2)) / preview.zoom - (mouse_y - (yy + height / 2)) / preview.goalzoom
 	}
 	zd = (preview.goalzoom - preview.zoom) / max(1, 5 / delta)
 	if (zd != 0)
@@ -113,15 +122,32 @@ if (window_focus = string(preview))
 // Render
 with (preview)
 {
-	if (!surface_exists(surface) || surface_get_width(surface) < 0 ||
-		select.type = e_temp_type.PARTICLE_SPAWNER ||
-		(select.object_index != obj_resource && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin)))
+	// Size change
+	if (!surface_exists(surface) || surface_get_width(surface) < 0 || surface_get_width(surface) != width || surface_get_height(surface) != height)
 		update = true
 	
-	surface = surface_require(surface, size, size, true)
+	// Particles
+	if (select.type = e_temp_type.PARTICLE_SPAWNER)
+		update = true
+	
+	// Item animation
+	if (select.object_index = obj_template && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
+		update = true
+	
+	// Playing audio
+	if (isplaying)
+		update = true
+	
+	// Animated block sheet
+	if (select.type = e_res_type.PACK && pack_image = "blocksheet" && pack_block_sheet_ani)
+		update = true
+	
+	surface = surface_require(surface, width, height, true)
 
-	if (update) 
+	if (update)
 	{
+		update = false
+		
 		surface_set_target(surface)
 		{
 			draw_clear_alpha(c_black, 0)
@@ -253,13 +279,14 @@ with (preview)
 					lengthdir_y(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
 					lengthdir_z(prevcam_zoom, zangle)
 				)
-			
+				render_ratio = width/height
+				
 				render_update_text()
 				
 				gpu_set_ztestenable(true)
 				gpu_set_zwriteenable(true)
 				camera_apply(cam_render)
-				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), 60, 1, 1, 32000)
+				render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), preview.fov, render_ratio, 1, 32000)
 				
 				render_mode = e_render_mode.PREVIEW
 				render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
@@ -389,7 +416,8 @@ with (preview)
 									render_world_particle()
 							break
 						}
-					
+						
+						case e_tl_type.SHAPE:
 						case e_temp_type.CUBE: 
 						case e_temp_type.CONE: 
 						case e_temp_type.CYLINDER: 
@@ -428,18 +456,22 @@ with (preview)
 						else
 							draw_set_font(select.font_preview)
 						
-						var dx, dy, color;
-						dx = size / 2 - xoff * zoom
-						dy = size / 2 - yoff * zoom
+						var dx, dy, color, alpha;
+						dx = width / 2 - xoff * zoom
+						dy = height / 2 - yoff * zoom
 						color = draw_get_color()
-						draw_set_color(c_white)
+						alpha = draw_get_alpha()
+						draw_set_color(c_text_main)
+						draw_set_alpha(alpha * a_text_main)
 						draw_set_halign(fa_center)
 						draw_set_valign(fa_middle)
 						draw_text_transformed(dx, dy, "AaBbCc", zoom, zoom, 0)
 						draw_set_valign(fa_top)
 						draw_set_halign(fa_left)
 						draw_set_color(color)
-						draw_set_font(app.setting_font)
+						draw_set_alpha(alpha)
+						
+						draw_set_font(app.font_label)
 						break
 					}
 				
@@ -448,22 +480,61 @@ with (preview)
 						if (!select.ready)
 							break
 						
-						var wid, wavehei, prec, alpha;
-						wid = size - 20
+						var wid, wavehei, prec, alpha, mouseperc;
+						wid = width - 32
 						wavehei = 32
 						prec = sample_rate / sample_avg_per_sec
 						alpha = draw_get_alpha()
+						mouseperc = percent((mouse_x - xx), 16, 16 + wid);
+						
+						if (mouseon)
+						{
+							app.mouse_cursor = cr_handpoint
+							update = true
+						}
+						
 						draw_primitive_begin(pr_linelist)
 						for (var dx = 0; dx < wid; dx++)
 						{
-							var ind, maxv, minv;
+							var ind, maxv, minv, length, wavecolor, wavealpha;
 							ind = floor((dx / wid) * select.sound_samples) div prec
 							maxv = select.sound_max_sample[ind]
 							minv = select.sound_min_sample[ind]
-							draw_vertex_color(10 + dx, size / 2-maxv * wavehei, app.setting_color_buttons, alpha)
-							draw_vertex_color(10 + dx, size / 2-minv * wavehei + 1, app.setting_color_buttons, alpha)
+							length = select.sound_samples / sample_rate
+							wavecolor = c_text_secondary
+							wavealpha = alpha * a_text_secondary
+							
+							if (isplaying)
+							{
+								// If wave is behind play progress, highlight
+								if ((dx / wid) < (audio_sound_get_track_position(sound_play_index) / length))
+								{
+									wavecolor = c_accent
+									wavealpha = alpha
+								}
+							}
+							
+							if (mouseon && setplaytime = null)
+							{
+								if ((dx / wid) < mouseperc)
+									wavecolor = merge_color(wavecolor, c_level_middle, .25)
+							}
+							
+							if (dx > 0 && dx mod 500 = 0) // GM bug
+							{
+								draw_primitive_end()
+								draw_primitive_begin(pr_linelist)
+							}
+							
+							// Set play time
+							if (mouseon && app.mouse_left)
+								setplaytime = (mouseperc * length)
+							
+							draw_vertex_color(16 + dx, height / 2-maxv * wavehei, wavecolor, wavealpha)
+							draw_vertex_color(16 + dx, height / 2-minv * wavehei + 1, wavecolor, wavealpha)
 						}
 						draw_primitive_end()
+						
 						break
 					}
 				
@@ -483,7 +554,7 @@ with (preview)
 								break
 						
 							case "blocksheet":
-								tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame()] : select.block_sheet_texture)
+								tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame(true)] : select.block_sheet_texture)
 								break
 						
 							case "colormap":
@@ -545,12 +616,12 @@ with (preview)
 					{
 						preview_reset_view()
 						
-						zoom = (size - padding * 2) / max(tw, th)
+						zoom = (min(width, height) - padding * 2) / min(tw, th)
 						goalzoom = zoom
 						reset_view = false
 					}
-					dx = size / 2 - (tw / 2 + xoff) * zoom
-					dy = size / 2 - (th / 2 + yoff) * zoom
+					dx = width / 2 - (tw / 2 + xoff) * zoom
+					dy = height / 2 - (th / 2 + yoff) * zoom
 					draw_texture(tex, dx, dy, zoom, zoom)
 				}
 			
@@ -559,11 +630,16 @@ with (preview)
 			gpu_set_blendmode(bm_normal)
 		}
 		surface_reset_target()
-	
-		update = false
 	}
 
 	draw_surface_exists(surface, xx, yy)
+}
+
+// Button background
+if ((preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER) || playbutton)
+{
+	draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_level_middle, 1)
+	draw_outline(xx + width - 40, yy + height - 40, 32, 32, 1, c_border, a_border, true)
 }
 
 // Particle button
@@ -571,29 +647,56 @@ if (preview.select.object_index != obj_resource && preview.select.type = e_temp_
 {
 	if (preview.select.pc_spawn_constant)
 	{
-		if (draw_button_normal("previewspawn", xx + size - butw, yy + size - 24, butw, 24, e_button.TEXT, preview.spawn_active, true, true))
+		if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 			preview.spawn_active = !preview.spawn_active
 	}
 	else
 	{
-		if (draw_button_normal("previewspawn", xx + size - butw, yy + size - 24, butw, 24))
+		if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 			preview.fire = true
 	}
 }
-		
+
 // Play button
 if (playbutton)
 {
-	if (draw_button_normal((isplaying ? "previewstop" : "previewplay"), xx + size - 50, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, isplaying ? icons.STOP : icons.PLAY))
+	if (draw_button_icon("previewplay", xx + width - 36, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
 	{
 		if (isplaying)
+		{
 			audio_stop_sound(preview.sound_play_index)
+			preview.update = true
+		}
 		else
 			preview.sound_play_index = audio_play_sound(res_edit.sound_index, 0, false)
 	}
 }
+
+// Updating audio
+if (setplaytime != null)
+{
+	if (mouse_left_pressed)
+	{
+		// Audio isn't already playing, start it
+		if (!isplaying)
+			preview.sound_play_index = audio_play_sound(res_edit.sound_index, 0, false)
 		
-// Save button
-if (exportbutton)
-	if (draw_button_normal("previewexport", xx + size - 24, yy + size - 24, 24, 24, e_button.NO_TEXT, false, true, true, icons.EXPORT))
-		action_res_export()
+		audio_pause_sound(preview.sound_play_index)
+	}
+	
+	if (mouse_left && audio_is_paused(preview.sound_play_index))
+	{
+		mouse_cursor = cr_handpoint
+		audio_sound_set_track_position(preview.sound_play_index, setplaytime)
+	}	
+}
+else if (audio_is_paused(preview.sound_play_index) && mouse_left_released)
+{
+	audio_resume_sound(preview.sound_play_index)
+}
+
+if (preview.sound_playing != isplaying)
+	preview.update = true
+
+preview.sound_playing = isplaying
+preview.mouseon_prev = mouseon

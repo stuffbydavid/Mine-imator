@@ -3,7 +3,11 @@
 if (history_undo)
 {
 	with (save_id_find(history_data.tl_save_id))
-		instance_destroy()
+		tl_remove_clean()
+		
+	with (obj_timeline)
+		if (delete_ready)
+			instance_destroy()
 }
 else
 {

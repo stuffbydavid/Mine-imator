@@ -1,3 +1,3 @@
 /// tab_control_dragger()
 
-tab_control(18)
+tab_control(24)

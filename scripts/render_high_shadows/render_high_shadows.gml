@@ -18,10 +18,10 @@ if (!export)
 		render_shadows_matrix = array_copy_1d(view_proj_matrix)
 		render_shadows_size = point2D(render_width, render_height)
 		render_samples = 0
-		render_shadows_clear = true
+		render_samples_clear = true
 	}
 	
-	if (render_samples > setting_render_shadows_samples)
+	if (render_samples >= setting_render_samples)
 		return 0
 	
 	samplestart = render_samples
@@ -30,8 +30,8 @@ if (!export)
 else
 {
 	samplestart = 0
-	sampleend = setting_render_shadows_samples
-	render_samples = setting_render_shadows_samples
+	sampleend = setting_render_samples
+	render_samples = setting_render_samples
 }
 
 // Get visible lights
@@ -142,7 +142,7 @@ for (var s = samplestart; s < sampleend; s++)
 		draw_clear_alpha(c_black, 1)
 		draw_surface_exists(render_surface_sun_shadows_expo, 0, 0)
 		
-		if (s = 0 || render_shadows_clear)
+		if (s = 0 || render_samples_clear)
 			draw_clear_alpha(c_black, 1)
 	}
 	surface_reset_target()
@@ -152,7 +152,7 @@ for (var s = samplestart; s < sampleend; s++)
 		draw_clear_alpha(c_black, 1)
 		draw_surface_exists(render_surface_sun_shadows_dec, 0, 0)
 		
-		if (s = 0 || render_shadows_clear)
+		if (s = 0 || render_samples_clear)
 			draw_clear_alpha(c_black, 1)
 	}
 	surface_reset_target()
@@ -184,7 +184,7 @@ surface_set_target(render_surface_shadows)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		shader_high_samples_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, min(render_samples, app.setting_render_shadows_samples))
+		shader_high_samples_unpack_set(render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, min(render_samples, app.setting_render_samples))
 	}
 	draw_blank(0, 0, render_width, render_height)
 	with (render_shader_obj)
@@ -340,7 +340,7 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(light_shadows_exponent_surf, 0, 0)
 		
-				if (s = 0 || render_shadows_clear)
+				if (s = 0 || render_samples_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
@@ -350,7 +350,7 @@ for (var i = 0; i < array_length_1d(lightlist); i++)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(light_shadows_decimal_surf, 0, 0)
 		
-				if (s = 0 || render_shadows_clear)
+				if (s = 0 || render_samples_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()

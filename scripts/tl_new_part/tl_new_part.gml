@@ -21,7 +21,6 @@ with (new(obj_timeline))
 	part_mixing_shapes = part.part_mixing_shapes
 	colors_ext = part_mixing_shapes
 	
-	value_type_show[e_value_type.POSITION] = part.show_position
 	part_parent_save_id = ""
 	
 	depth = part.depth

@@ -18,16 +18,26 @@ if (window_state = "export_movie")
 	return 0
 }
 
-panel_area_draw()
-window_draw_glow()
-toolbar_draw()
-window_draw_cover()
-window_draw_timeline_move()
-toolbar_draw_alerts()
-if (!bench_show_ani)
-	popup_draw()
+if (window_state = "startup")
+{
+	window_draw_startup()
+	window_draw_cover()
+}
+else
+{
+	panel_area_draw()
+	window_draw_glow()
+	toolbar_draw()
+	shortcut_bar_draw()
+	bench_draw()
+	window_draw_cover()
+	window_draw_timeline_move()
+}
+
+window_draw_toasts()
+popup_draw()
+menu_settings_draw()
 menu_draw()
-if (bench_show_ani)
-	popup_draw()
+context_menu_draw()
 tip_draw()
 debug_info_draw()

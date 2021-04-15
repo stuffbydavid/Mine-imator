@@ -35,9 +35,11 @@ else
 		hobj.old_banner_patterns = array_copy_1d(temp_edit.banner_pattern_list)
 		hobj.old_banner_colors = array_copy_1d(temp_edit.banner_color_list)
 	}
+	
 	hobj.new_banner_color = color
 	hobj.new_banner_patterns = patterns
 	hobj.new_banner_colors = colors
+	
 	history[0] = hobj
 }
 

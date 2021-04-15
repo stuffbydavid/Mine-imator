@@ -2,7 +2,7 @@
 
 delta = delta_time / (1000000 / 60)
 
-draw_set_font(setting_font)
-draw_set_color(setting_color_text)
+draw_set_font(font_label)
+draw_set_color(c_text_main)
 
 window_draw()

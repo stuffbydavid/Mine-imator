@@ -1,11 +1,7 @@
 /// bench_draw()
 
-var func, padding;
-var boxx, boxy, boxw, boxh;
-var settingsx, settingsy, settingsw, settingsh;
-var listx, listy, listw, listh;
-var iconsize, dx, dy;
-padding = 5
+var func, ani;
+var sdx, sdy, ymax;
 
 // Animate
 func = ""
@@ -14,214 +10,94 @@ if (bench_show_ani_type = "show")
 	bench_show_ani = min(1, bench_show_ani + 0.1 * delta)
 	if (bench_show_ani = 1)
 		bench_show_ani_type = ""
-	func = (toolbar_location = "top" || toolbar_location = "left" ? "easeincirc" : "easeoutcirc")
+	func = "easeoutexpo"
 }
 else if (bench_show_ani_type = "hide")
 {
 	bench_show_ani = max(0, bench_show_ani - 0.1 * delta)
 	if (bench_show_ani = 0)
 		bench_show_ani_type = ""
-	func = (toolbar_location = "bottom" || toolbar_location = "right" ? "easeoutcirc" : "easeincirc")
+	func = "easeinexpo"
 }
 
 if (bench_show_ani = 0)
 {
-	bench_settings.type = ""
-	bench_settings.width = 0
 	bench_settings.height = 0
-	bench_settings.width_goal = 0
 	bench_settings.height_goal = bench_height
 	return 0
 }
 
-if (window_busy = "bench")
-	window_busy = ""
-	
-// Box
-bench_settings.width += (bench_settings.width_goal - bench_settings.width) / max(1, 3 / delta)
 bench_settings.height += (bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
 
-settingsw = round(bench_settings.width)
-settingsh = round(bench_settings.height)
-boxw = bench_width + settingsw
-boxh = max(bench_height, settingsh)
+if (window_busy = "bench")
+	window_busy = ""
 
-switch (toolbar_location)
-{
-	case "top":
-		boxx = 5
-		boxy = toolbar_size - boxh * ease(func, 1 - bench_show_ani)
-		listx = boxx + padding
-		listy = boxy
-		listw = boxw - settingsw - padding * 2
-		listh = boxh - padding
-		break
-		
-	case "bottom":
-		boxx = 5
-		boxy = window_height - toolbar_size - boxh * ease(func, bench_show_ani)
-		listx = boxx + padding
-		listy = boxy + padding
-		listw = boxw - settingsw - padding * 2
-		listh = boxh - padding
-		break
-		
-	case "left":
-		boxx = toolbar_size - boxw * ease(func, 1 - bench_show_ani)
-		boxy = 5
-		listx = boxx
-		listy = boxy + padding
-		listw = boxw - settingsw - padding
-		listh = boxh - padding * 2
-		break
-		
-	case "right":
-		boxx = window_width - toolbar_size - boxw * ease(func, bench_show_ani)
-		boxy = 5
-		listx = boxx + padding + settingsw
-		listy = boxy + padding
-		listw = boxw - settingsw - padding
-		listh = boxh - padding * 2
-		break
-}
+ani = ease(func, bench_show_ani)
+content_x = bench_settings.posx + (8 * ani)
+content_y = bench_settings.posy
+content_width = 481
+content_height = bench_settings.height
+content_mouseon = !popup_mouseon
 
-draw_drop_shadow(boxx, boxy, boxw, boxh)
-draw_box(boxx, boxy, boxw, boxh, false, setting_color_interface, 1)
-
-// List
-draw_box(listx, listy, listw, listh, false, setting_color_background, 1)
-
-iconsize = 80
-dx = floor(listx)
-dy = floor(listy)
-if (toolbar_location = "bottom")
-	dy = listy + listh - iconsize * 4
-
-for (var l = 0; l < ds_list_size(bench_type_list); l++)
-{
-	var type, sel;
-	type = bench_type_list[|l]
-	sel = (bench_settings.type = type)
-	
-	if (sel)
-		draw_box(dx, dy, iconsize, iconsize, false, setting_color_highlight, 1)
-	draw_image(spr_icons_bench, l, dx + iconsize / 2, dy + iconsize / 2, 1, 1, sel ? setting_color_highlight_text : setting_color_text, 1)
-	
-	if (bench_show_ani = 1)
-		tip_set(text_get("benchtype" + tl_type_name_list[|type] + "tip"), dx, dy, iconsize, iconsize)
-			   
-	if (app_mouse_box(dx, dy, iconsize, iconsize) && bench_show_ani_type = "")
-	{
-		mouse_cursor = cr_handpoint
-		if (mouse_left_pressed)
-		{
-			if (sel)
-			{
-				action_bench_create()
-				bench_show_ani_type = "hide"
-			}
-			else
-				bench_click(type)
-		}
-	}
-
-	dx += iconsize
-	if (dx + iconsize > listx + listw)
-	{
-		dx = listx
-		dy += iconsize
-	}
-}
+dx = content_x
+dy = content_y
+dw = content_width
+dh = content_height
 
 // Hide bench
-if (!app_mouse_box(boxx, boxy, boxw, boxh) && mouse_left_pressed && window_busy = "") 
+if (!app_mouse_box(content_x, content_y, content_width, content_height) && mouse_left_pressed && window_busy = "") 
 {
 	bench_show_ani_type = "hide"
 	app_mouse_clear()
 }
 
-// Settings
-if (bench_settings.type != "")
-{
-	var mouseonresizehor, mouseonresizever;
-	
-	if (toolbar_location = "right")
-	{
-		mouseonresizehor = app_mouse_box(boxx, boxy, padding, boxh)
-		settingsx = boxx
-	}
-	else 
-	{
-		mouseonresizehor = app_mouse_box(boxx + boxw - padding, boxy, padding, boxh)
-		settingsx = boxx + bench_width
-	}
-	settingsy = boxy
-	
-	if (toolbar_location = "bottom")
-		mouseonresizever = app_mouse_box(boxx, boxy, boxw, padding)
-	else
-		mouseonresizever = app_mouse_box(boxx, boxy + boxh - padding, boxw, padding)
-		
-	if (mouseonresizehor && mouseonresizever) // Both
-	{
-		if (toolbar_location = "right" || toolbar_location = "bottom")
-			mouse_cursor = cr_size_nesw
-		else
-			mouse_cursor = cr_size_nwse
-		
-		if (mouse_left_pressed)
-		{
-			window_busy = "benchresizeboth"
-			bench_settings.resize_width = bench_settings.width_custom
-			bench_settings.resize_height = bench_settings.height_custom
-		}
-	}
-	else if (mouseonresizehor) // Horizontal
-	{
-		mouse_cursor = cr_size_we
-		if (mouse_left_pressed)
-		{
-			window_busy = "benchresizehor"
-			bench_settings.resize_width = bench_settings.width_custom
-		}
-	}
-	else if (mouseonresizever) // Vertical
-	{
-		mouse_cursor = cr_size_ns
-		if (mouse_left_pressed)
-		{
-			window_busy = "benchresizever"
-			bench_settings.resize_height = bench_settings.height_custom
-		}
-	}
-	
-	bench_draw_settings(settingsx, settingsy, settingsw, settingsh)
-}
+draw_set_alpha(ani)
+draw_dropshadow(content_x, content_y, content_width, content_height, c_black, 1)
+draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
+draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 
-// Resize
-if (window_busy = "benchresizehor" || window_busy = "benchresizeboth")
-{
-	mouse_cursor = cr_size_we
-	bench_settings.width_custom = max(0, bench_settings.resize_width + negate(toolbar_location = "right") * (mouse_x - mouse_click_x))
-	if (!mouse_left)
-		window_busy = ""
-}
+scissor_start(content_x, content_y, content_width, content_height)
 
-if (window_busy = "benchresizever" || window_busy = "benchresizeboth")
-{
-	mouse_cursor = cr_size_ns
-	bench_settings.height_custom = max(0, bench_settings.resize_height + negate(toolbar_location = "bottom") * (mouse_y - mouse_click_y))
-	if (!mouse_left)
-		window_busy = ""
-}
+// Draw workbench
+sdx = dx
+sdy = dy
 
-if (window_busy = "benchresizeboth")
+dy += 8
+
+// Left, asset types
+var types, divides, lefth;
+types = 13
+divides = 3
+lefth = (types * 32) + (divides * 9)
+for (var i = 0; i < ds_list_size(bench_type_list.item); i++)
 {
-	if (toolbar_location = "right" || toolbar_location = "bottom")
-		mouse_cursor = cr_size_nesw
-	else
-		mouse_cursor = cr_size_nwse
+	list_item_draw(bench_type_list.item[|i], dx, dy, 192, 32, (bench_settings.type = bench_type_list.item[|i].value), 0, 5)
+	dy += 32
+	
+	if (i = 2 || i = 6 || i = 8)
+	{
+		draw_divide(dx + 5, dy + 4, 184)
+		dy += 9
+	}
 }
+dy += 8
+
+ymax = dy
+
+dy = sdy + 12
+dx += 192 + 12
+dw = (content_width - 192) - 24
+
+bench_draw_settings(dx, dy, dw, dh)
+
+ymax = max(dy, ymax)
+dy = ymax
+
+draw_divide_vertical(sdx + 193, sdy, bench_settings.height)
+bench_settings.height_goal = dy - sdy
+
+scissor_done()
+draw_set_alpha(1)
 
 if (window_busy = "" && bench_show_ani_type != "hide")
 	window_busy = "bench"

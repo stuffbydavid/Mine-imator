@@ -43,8 +43,15 @@ for (var i = 0; i < ds_list_size(ptypeslist); i++)
 		load_id = value_get_string(ptypemap[?"id"], save_id)
 		save_id_map[?load_id] = load_id
 		creator = other.id
-	
+		
 		name = value_get_string(ptypemap[?"name"], name)
+		
+		// Translate name
+		if (other = app.bench_settings && text_exists("particletype" + name))
+		{
+			log("translating name")
+			name = text_get("particletype" + name)
+		}
 		
 		if (load_format < e_project.FORMAT_123_PRE_2)
 		{

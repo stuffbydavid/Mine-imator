@@ -1,6 +1,10 @@
 /// action_toolbar_export_movie()
 
 if (trial_version)
-	alert_show(text_get("alerttrialtitle"), text_get("alerttrialtext"), icons.UPGRADE_SMALL, "alerttrialbutton", "", 5000)
+{
+	toast_new(e_toast.WARNING, text_get("alerttrial"))
+	toast_add_action("alerttrialupgrade", popup_switch, popup_upgrade)
+	toast_last.dismiss_time = no_limit
+}
 
 popup_show(popup_exportmovie)

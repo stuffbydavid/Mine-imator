@@ -3,33 +3,33 @@
 
 var tl = argument0;
 
-if (tl.value_type[e_value_type.POSITION])
+if (tl.value_type[e_value_type.TRANSFORM_POS])
 {
 	value[e_value.POS_X] = buffer_read_double()
 	value[e_value.POS_Y] = buffer_read_double()
 	value[e_value.POS_Z] = buffer_read_double()
 }
 
-if (tl.value_type[e_value_type.ROTATION])
+if (tl.value_type[e_value_type.TRANSFORM_ROT])
 {
 	value[e_value.ROT_X] = buffer_read_double()
 	value[e_value.ROT_Y] = buffer_read_double()
 	value[e_value.ROT_Z] = buffer_read_double()
 }
 
-if (tl.value_type[e_value_type.SCALE])
+if (tl.value_type[e_value_type.TRANSFORM_SCA])
 {
 	value[e_value.SCA_X] = buffer_read_double()
 	value[e_value.SCA_Y] = buffer_read_double()
 	value[e_value.SCA_Z] = buffer_read_double()
 }
 
-if (tl.value_type[e_value_type.BEND])
+if (tl.value_type[e_value_type.TRANSFORM_BEND])
 {
 	value[e_value.BEND_ANGLE_LEGACY] = buffer_read_double()
 }
 
-if (tl.value_type[e_value_type.COLOR])
+if (tl.value_type[e_value_type.MATERIAL_COLOR])
 {
 	value[e_value.ALPHA] = buffer_read_double()
 	value[e_value.RGB_ADD] = buffer_read_int()
@@ -143,7 +143,7 @@ if (tl.value_type[e_value_type.BACKGROUND])
 	}
 }
 
-if (tl.value_type[e_value_type.TEXTURE])
+if (tl.value_type[e_value_type.MATERIAL_TEXTURE])
 {
 	value[e_value.TEXTURE_OBJ] = project_load_legacy_save_id()
 	if (value[e_value.TEXTURE_OBJ] = "root")

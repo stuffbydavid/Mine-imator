@@ -16,9 +16,10 @@ with (new(obj_timeline))
 	name = value_get_string(map[?"name"], name)
 	
 	temp = value_get_save_id(map[?"temp"], temp)
-	color = value_get_color(map[?"color"], color)
+	color_tag = value_get_real(map[?"color_tag"], color_tag)
 	hide = value_get_real(map[?"hide"], hide)
 	lock = value_get_real(map[?"lock"], lock)
+	ghost = value_get_real(map[?"ghost"], ghost)
 	depth = value_get_real(map[?"depth"], depth)
 	
 	if (type = e_temp_type.BODYPART)
@@ -128,7 +129,7 @@ with (new(obj_timeline))
 					value[v] = other.value_default[v]
 					
 				project_load_values(kfmap[?key], value)
-				project_load_update_values()
+				project_load_values_update()
 				
 				other.keyframe_array[position] = id
 			}

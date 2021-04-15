@@ -21,6 +21,8 @@ window_set_min_height(100)
 window_set_caption("Mine-imator")
 surface_depth_disable(true)
 
+window_scroll_focus = ""
+window_scroll_focus_prev = ""
 window_state = ""
 window_busy = ""
 window_focus = ""
@@ -30,8 +32,6 @@ window_glow_right = 0
 window_glow_bottom = 0
 window_glow_left = 0
 
-window_cover = 1
-
 mouse_cursor = cr_default
 mouse_current_x = 0
 mouse_current_y = 0
@@ -39,12 +39,19 @@ mouse_previous_x = 0
 mouse_previous_y = 0
 mouse_move = 0
 mouse_still = 0
+mouse_wrap_x = 0
+mouse_wrap_y = 0
+mouse_click_timer = 0
+mouse_click_count = 0
 app_mouse_clear()
 
 dragger_drag_value = 0
 meter_drag_value = 0
 wheel_drag_value = 0
 wheel_drag_moon = false
+
+dragger_multiplier = 1
+dragger_snap = false
 
 sortlist_resize = null
 sortlist_resize_column = 0
@@ -68,6 +75,12 @@ dw_start = 0
 dh_start = 0
 tab = null
 tab_control_h = 0
+tab_collapse = false
+
+tab_collumns = false
+tab_collumns_index = 0
+tab_collumns_width = 0
+tab_collumns_count = 2
 
 // Tips
 tip_show = false
@@ -80,13 +93,19 @@ tip_w = 0
 tip_h = 0
 tip_box_x = 0
 tip_box_y = 0
-tip_maxwid = 270
-tip_padding = 10
 tip_location_x = 0
 tip_location_y = 0
 tip_wrap = true
-tip_shortcut_key = -1
-tip_shortcut_control = false
+tip_keybind_draw = false
+tip_arrow_x = 0
+tip_arrow_y = 0
+tip_arrow_xscale = 1
+tip_arrow_yscale = 1
+tip_arrow = 0
+tip_text_array = 0
+tip_force_right = false
+tip_right = false
+tip_keybind = null
 
 // Popups
 popup = null
@@ -95,3 +114,4 @@ popup_ani_type = ""
 popup_switch_to = null
 popup_switch_from = null
 popup_mouseon = false
+popup_block = 0

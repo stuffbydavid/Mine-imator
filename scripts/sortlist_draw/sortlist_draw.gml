@@ -1,33 +1,86 @@
-/// sortlist_draw(sortlist, x, y, width, height, select)
+/// sortlist_draw(sortlist, x, y, width, height, select, [filter, [name]])
 /// @arg sortlist
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg select
+/// @arg [filter
+/// @arg [name]]
 /// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 
-var slist, xx, yy, w, h, select;
-var itemh, colsh, dy;
-var tbxwid, filterx, filtery;
-slist = argument0
-xx = argument1
-yy = argument2
-w = argument3
-h = argument4
-select = argument5
+var slist, xx, yy, w, h, select, filter, name;
+var colmouseon, searchx, searchw, itemh, colsh, dy;
+slist = argument[0]
+xx = argument[1]
+yy = argument[2]
+w = argument[3]
+h = argument[4]
+select = argument[5]
 
-if (xx + w < content_x || xx > content_x + content_width || yy + h<content_y || yy > content_y + content_height)
+if (argument_count > 6)
+	filter = argument[6]
+else
+	filter = true
+
+if (argument_count > 7)
+	name = argument[7]
+else
+	name = ""
+
+if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	return 0
 
+searchx = xx
+searchw = w
+
 // Item height
-itemh = 28
+itemh = 24
 
 // Columns
-colsh = 32
+colsh = 24
+
+// Draw filter
+if (filter && name = "")
+{
+	if (draw_button_icon("listfilter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
+	{
+		menu_settings_set(xx, yy, "listfilter" + string(slist), 24)
+		settings_menu_script = sortlist_filters_draw
+		settings_menu_sortlist = slist
+		settings_menu_h_max = 256
+	}
+
+	if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
+		current_mcroani.value = true
+	
+	searchx += 32
+	searchw -= 32
+}
+
+// Name
+if (name != "")
+{
+	draw_set_font(font_label)
+	draw_label(string_limit(name, w - 144), xx, yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	
+	searchx += (w - 144)
+	searchw -= (w - 144)
+}
+
+if (draw_textfield("listsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
+{
+	slist.search = (slist.search_tbx.text != "")
+	sortlist_update(slist)
+}
+
+h -= 32
+yy += 32
 
 if (h < colsh)
 	return 0
+
+colmouseon = app_mouse_box(xx, yy, w, colsh) && content_mouseon
 
 // Dragging
 if (window_busy = "sortlist_resize" && sortlist_resize = slist)
@@ -74,9 +127,9 @@ for (var c = 0; c < slist.columns; c++)
 	// Button
 	icon = null
 	if (slist.column_sort = c)
-		icon = (slist.sort_asc ? icons.ARROW_UP_SMALL : icons.ARROW_DOWN_SMALL)
-		
-	if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1)))
+		icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
+	
+	if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), colmouseon))
 	{
 		if (slist.column_sort = c)
 		{
@@ -96,33 +149,48 @@ for (var c = 0; c < slist.columns; c++)
 }
 
 // Items
-dy = yy + colsh
+dy = (yy + colsh) + 10
 
-// Background
-draw_box(xx, yy + colsh, w, h - colsh, false, setting_color_background, 1)
+draw_divide(xx + 1, dy - 3, w - 2)
+
+// Outline
+draw_outline(xx, yy, w, h, 1, c_border, a_border, true)
 
 // List
+draw_set_font(font_value)
+
 for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
 {
-	var value, dw;
+	var value, dw, selected;
 	
 	if (dy + itemh > yy + h)
 		break
-		
+	
 	value = slist.display_list[|i]
-	dw = w - 30 * slist.scroll.needed
-	if (select = value)
-		draw_box(xx, dy, dw, itemh, false, setting_color_highlight, 1)
-		
+	dw = w - 12 * slist.scroll.needed
+	selected = (select = value)
+	
+	if (selected)
+		draw_box(xx, dy, dw, itemh, false, c_accent_overlay, a_accent_overlay)
+	
 	for (var c = 0; c < slist.columns; c++)
 	{
-		var dx, text, wid;
-		dx = xx + floor(slist.column_x[c] * w) + 5
-		wid = slist.column_w[c] - 5
+		var dx, text, wid, islast, ;
+		dx = xx + floor(slist.column_x[c] * w) + 8
+		wid = slist.column_w[c] - 8
 		if (c = slist.columns - 1 && slist.scroll.needed)
-			wid -= 30
+			wid -= 12
+		
+		islast = (c = slist.columns - 1) && (c != 0)
+		
+		if (slist.columns = 1 && selected)
+		{
+			draw_image(spr_icons, icons.TICK, xx + dw - 16, dy + itemh/2, 1, 1, c_accent, 1)
+			wid -= 32
+		}
+		
 		text = string_limit(string(sortlist_column_get(slist, value, c)), wid)
-		draw_label(text, dx, dy + itemh / 2, fa_left, fa_middle, (select = value) ? setting_color_highlight_text : null, 1)
+		draw_label(text, dx + ((wid - 8) * islast), dy + itemh / 2, islast ? fa_right : fa_left, fa_middle, selected ? c_accent : c_text_main, selected ? 1 : a_text_main)
 	}
 	
 	if (app_mouse_box(xx, dy, dw, itemh) && content_mouseon)
@@ -130,8 +198,7 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
 		{
-			window_focus = string(slist.scroll)
-			if (slist.can_deselect && select = value)
+			if (slist.can_deselect && selected)
 				script_execute(slist.script, null)
 			else
 				script_execute(slist.script, value)
@@ -144,29 +211,4 @@ for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_l
 
 // Scrollbar
 slist.scroll.snap_value = itemh
-scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 30, yy + colsh, floor((h - colsh) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
-
-// Filter box
-if (slist.filter)
-{
-	slist.filter_ani = min(slist.filter_ani + 0.1 * delta, 1)
-	tbxwid = ease("easeoutcirc", slist.filter_ani) * 100
-}
-else
-{
-	slist.filter_ani = max(slist.filter_ani - 0.1 * delta, 0)
-	tbxwid = ease("easeincirc", slist.filter_ani) * 100
-}
-filterx = xx + w-tbxwid
-filtery = yy + h+5
-if (draw_button_normal("listsearch", filterx - 18, filtery + 2, 16, 16, e_button.NO_TEXT, slist.filter, false, true, icons.SEARCH)) 
-{
-	slist.filter = !slist.filter
-	sortlist_update(slist)
-	if (slist.filter)
-		window_focus = string(slist.filter_tbx)
-}
-
-if (tbxwid > 0)
-	if (draw_inputbox("listsearch", filterx, filtery, tbxwid, text_get("listsearch"), slist.filter_tbx, null, 0, 20, 1))
-		sortlist_update(slist)
+scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (colsh + 10), floor((h - (colsh + 10)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)

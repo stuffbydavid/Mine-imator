@@ -26,9 +26,7 @@ if (!directory_exists_lib(dirname))
 
 log("Saving project as new", dirname)
 
-project_name = popup_saveas.tbx_name.text;
-project_author = popup_saveas.tbx_author.text;
-project_description = popup_saveas.tbx_description.text;
+project_name = popup_saveas.tbx_name.text
 
 load_folder = project_folder
 project_folder = dirname
@@ -43,4 +41,5 @@ popup_close()
 
 project_save()
 
-alert_show(text_get("alertprojectsavedtitle"), text_get("alertprojectsaveastext"), null, "alertprojectcreatedbutton", project_folder, 5000)
+toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))
+toast_add_action("alertprojectcreatedview", open_url, project_folder)

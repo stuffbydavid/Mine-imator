@@ -19,7 +19,7 @@ if (setting_minecraft_assets_new_version != "")
 	window_state = "new_assets"
 	new_assets_stage = ""
 	new_assets_download_progress = 0
-	window_set_size(700, 580)
+	window_set_size(540, 480)
 	window_set_caption("Mine-imator")
 	alarm[0] = 1
 }

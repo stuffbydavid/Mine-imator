@@ -1,4 +1,4 @@
-/// sortlist_draw_button(name, x, y, width, height, highlight, icon, isfirst, islast)
+/// sortlist_draw_button(name, x, y, width, height, highlight, icon, isfirst, islast, listmouseon)
 /// @arg name
 /// @arg x
 /// @arg y
@@ -8,9 +8,10 @@
 /// @arg icon
 /// @arg isfirst
 /// @arg islast
+/// @arg listmouseon
 
-var name, xx, yy, w, h, highlight, icon, isfirst, islast;
-var pressed, mouseon;
+var name, xx, yy, w, h, highlight, icon, isfirst, islast, listmouseon;
+var pressed, mouseon, wlimit, text;
 name = argument0
 xx = argument1
 yy = argument2
@@ -20,9 +21,8 @@ highlight = argument5
 icon = argument6
 isfirst = argument7
 islast = argument8
-
-// Tip
-tip_set(text_get(name + "tip") + "\n" + text_get("columntip"), xx, yy, w - 5, h)
+listmouseon = argument9
+wlimit = w - 16
 
 // Mouse
 mouseon = (app_mouse_box(xx, yy, w - 5, h) && content_mouseon && mouse_cursor = cr_default)
@@ -31,26 +31,43 @@ if (mouseon)
 {
 	if (mouse_left || mouse_left_released)
 		pressed = true
+	
 	mouse_cursor = cr_handpoint
 }
 
-// Box
-draw_box_rounded(xx, yy, w, h, pressed ? setting_color_buttons_pressed : setting_color_buttons, 1, isfirst, islast, false, false)
-
 // Separator
-if (!pressed && !isfirst)
-{
-	render_set_culling(false)
-	draw_line_width_color(xx - 2, yy + 6, xx - 2, yy + h - 6, 2, setting_color_buttons_pressed, setting_color_buttons_pressed)
-	render_set_culling(true)
-}
+if (!isfirst && listmouseon)
+	draw_line_ext(xx - 1, yy + 4, xx - 1, yy + h - 4, c_text_tertiary, a_text_tertiary)
 
-// Icon
-if (icon != null)
-	draw_image(spr_icons, icon, xx + w - h / 2, yy + h / 2 + pressed, 1, 1, setting_color_buttons_text, 1)
+draw_set_font(font_label)
+
+// Icon spacing
+if (icon != null && mouseon)
+	wlimit -= 28
+
+wlimit = max(0, wlimit)
+text = string_limit(text_get(name), wlimit)
+
+// Draw icon
+if (icon != null && mouseon && wlimit > 28)
+	draw_image(spr_icons, icon, xx + 8 + string_width(text) + 4 + 12, yy + h / 2, 1, 1, c_text_secondary, a_text_secondary)
+
+// Draw label
+if (!islast || isfirst)
+{
+	draw_label(text, xx + 8, yy + h / 2, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+}
+else
+{
+	var textoff;
 	
-// Text
-draw_label(string_limit(text_get(name), w - 4 - (icon != null) * 20), xx + floor(w / 2), yy + h / 2 + pressed, fa_center, fa_middle, setting_color_buttons_text, 1)
+	if (icon != null && mouseon)
+		textoff = 28
+	else
+		textoff = 0
+	
+	draw_label(text, xx + (w - 8) - textoff, yy + h / 2, fa_right, fa_middle, c_text_secondary, a_text_secondary)
+}
 
 // Check click
 if (mouseon && mouse_left_released)

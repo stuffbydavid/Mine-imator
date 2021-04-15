@@ -51,35 +51,10 @@ if (filename_ext(fn) = ".midata")
 		}
 	}
 	
-	// Recent files
-	var fileslist = map[?"recent_files"];
-	if (ds_list_valid(fileslist))
-	{
-		for (var i = 0; i < ds_list_size(fileslist); i++)
-		{
-			var curfile = fileslist[|i];
-			with (new(obj_recent))
-			{
-				filename = value_get_string(curfile[?"filename"])
-				name = value_get_string(curfile[?"name"])
-				author = value_get_string(curfile[?"author"])
-				description = value_get_string(curfile[?"description"])
-		
-				var thumbnailfn = filename_path(filename) + "thumbnail.png";
-				if (file_exists_lib(thumbnailfn))
-					thumbnail = texture_create(thumbnailfn)
-				else
-					thumbnail = null
-		
-				ds_list_add(app.recent_list, id)
-			}
-		}
-	}
-	
 	// Closed alerts
-	var alertslist = map[?"closed_alerts"];
-	if (ds_list_valid(alertslist))
-		ds_list_copy(closed_alert_list, alertslist)
+	var toastslist = map[?"closed_toasts"];
+	if (ds_list_valid(toastslist))
+		ds_list_copy(closed_toast_list, toastslist)
 	
 	// Program
 	var programmap = map[?"program"];
@@ -104,19 +79,8 @@ if (filename_ext(fn) = ".midata")
 	var interfacemap = map[?"interface"];
 	if (ds_map_valid(interfacemap))
 	{
-		setting_tip_show = value_get_real(interfacemap[?"tip_show"], setting_tip_show)
-		setting_tip_delay = value_get_real(interfacemap[?"tip_delay"], setting_tip_delay)
-
-		setting_view_grid_size_hor = value_get_real(interfacemap[?"view_grid_size_hor"], setting_view_grid_size_hor)
-		setting_view_grid_size_ver = value_get_real(interfacemap[?"view_grid_size_ver"], setting_view_grid_size_ver)
 		setting_view_real_time_render = value_get_real(interfacemap[?"view_real_time_render"], setting_view_real_time_render)
 		setting_view_real_time_render_time = value_get_real(interfacemap[?"view_real_time_render_time"], setting_view_real_time_render_time)
-
-		setting_font_filename = value_get_string(interfacemap[?"font_filename"], setting_font_filename)
-		if (!file_exists_lib(setting_font_filename))
-			setting_font_filename = ""
-		else if (setting_font_filename != "")
-			action_setting_font_open(setting_font_filename)
 		
 		setting_language_filename = value_get_string(interfacemap[?"language_filename"], setting_language_filename)
 		if (!file_exists_lib(setting_language_filename))
@@ -125,14 +89,30 @@ if (filename_ext(fn) = ".midata")
 		if (setting_language_filename != language_file)
 			language_load(setting_language_filename, language_map)
 		
-		settings_load_colors(interfacemap[?"colors"])
-
+		var themename = theme_light.name;
+		themename = value_get_string(interfacemap[?"theme"], themename)
+		
+		with (obj_theme)
+		{
+			if (themename = name)
+			{
+				app.setting_theme = id
+				break
+			}
+		}
+		
+		setting_accent = value_get_real(interfacemap[?"accent"], setting_accent)
+		setting_accent_custom = value_get_color(interfacemap[?"accent_custom"], setting_accent_custom)
+		update_interface_wait = true
+		
 		setting_timeline_autoscroll = value_get_real(interfacemap[?"timeline_autoscroll"], setting_timeline_autoscroll)
 		setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
 		setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
+		setting_timeline_hide_ghosts = value_get_real(interfacemap[?"timeline_hide_ghosts"], setting_timeline_hide_ghosts)
 		setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
 		setting_smooth_camera = value_get_real(interfacemap[?"smooth_camera"], setting_smooth_camera)
 		setting_search_variants = value_get_real(interfacemap[?"search_variants"], setting_search_variants)
+		setting_show_shortcuts_bar = value_get_real(interfacemap[?"show_shortcuts_bar"], setting_show_shortcuts_bar)
 		
 		setting_toolbar_location = value_get_string(interfacemap[?"toolbar_location"], setting_toolbar_location)
 		setting_toolbar_size = value_get_real(interfacemap[?"toolbar_size"], setting_toolbar_size)
@@ -155,22 +135,32 @@ if (filename_ext(fn) = ".midata")
 		
 		setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)
 		
-		setting_view_main_controls = value_get_real(interfacemap[?"view_main_controls"], setting_view_main_controls)
-		setting_view_main_lights = value_get_real(interfacemap[?"view_main_lights"], setting_view_main_lights)
-		setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
-		setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
+		setting_view_main_overlays = value_get_real(interfacemap[?"view_main_overlays"], setting_view_main_overlays)
 		setting_view_main_aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], setting_view_main_aspect_ratio)
+		setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
+		setting_view_main_gizmos = value_get_real(interfacemap[?"view_main_gizmos"], setting_view_main_gizmos)
+		setting_view_main_fog = value_get_real(interfacemap[?"view_main_fog"], setting_view_main_fog)
+		setting_view_main_effects = value_get_real(interfacemap[?"view_main_effects"], setting_view_main_effects)
+		setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
 		setting_view_main_location = value_get_string(interfacemap[?"view_main_location"], setting_view_main_location)
 		
 		setting_view_second_show = value_get_real(interfacemap[?"view_second_show"], setting_view_second_show)
-		setting_view_second_controls = value_get_real(interfacemap[?"view_second_controls"], setting_view_second_controls)
-		setting_view_second_lights = value_get_real(interfacemap[?"view_second_lights"], setting_view_second_lights)
-		setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
-		setting_view_second_grid = value_get_real(interfacemap[?"view_second_grid"], setting_view_second_grid)
+		setting_view_second_overlays = value_get_real(interfacemap[?"view_second_overlays"], setting_view_second_overlays)
 		setting_view_second_aspect_ratio = value_get_real(interfacemap[?"view_second_aspect_ratio"], setting_view_second_aspect_ratio)
+		setting_view_second_grid = value_get_real(interfacemap[?"view_second_grid"], setting_view_second_grid)
+		setting_view_second_gizmos = value_get_real(interfacemap[?"view_second_gizmos"], setting_view_second_gizmos)
+		setting_view_second_fog = value_get_real(interfacemap[?"view_second_fog"], setting_view_second_fog)
+		setting_view_second_effects = value_get_real(interfacemap[?"view_second_effects"], setting_view_second_effects)
+		setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
 		setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 		setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 		setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
+		
+		setting_snap = value_get_real(interfacemap[?"snap"], setting_snap)
+		setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
+		setting_snap_size_position = value_get_real(interfacemap[?"snap_size_position"], setting_snap_size_position)
+		setting_snap_size_rotation = value_get_real(interfacemap[?"snap_size_rotation"], setting_snap_size_rotation)
+		setting_snap_size_scale = value_get_real(interfacemap[?"snap_size_scale"], setting_snap_size_scale)
 		
 		setting_modelbench_popup_hidden = value_get_real(interfacemap[?"modelbench_popup_hidden"], setting_modelbench_popup_hidden)
 	}
@@ -179,63 +169,14 @@ if (filename_ext(fn) = ".midata")
 	var controlsmap = map[?"controls"];
 	if (ds_map_valid(controlsmap))
 	{
-		setting_key_new = value_get_real(controlsmap[?"key_new"], setting_key_new)
-		setting_key_new_control = value_get_real(controlsmap[?"key_new_control"], setting_key_new_control)
-		setting_key_import_asset = value_get_real(controlsmap[?"key_import_asset"], setting_key_import_asset)
-		setting_key_import_asset_control = value_get_real(controlsmap[?"key_import_asset_control"], setting_key_import_asset_control)
-		setting_key_open = value_get_real(controlsmap[?"key_open"], setting_key_open)
-		setting_key_open_control = value_get_real(controlsmap[?"key_open_control"], setting_key_open_control)
-		setting_key_save = value_get_real(controlsmap[?"key_save"], setting_key_save)
-		setting_key_save_control = value_get_real(controlsmap[?"key_save_control"], setting_key_save_control)
-		setting_key_undo = value_get_real(controlsmap[?"key_undo"], setting_key_undo)
-		setting_key_undo_control = value_get_real(controlsmap[?"key_undo_control"], setting_key_undo_control)
-		setting_key_redo = value_get_real(controlsmap[?"key_redo"], setting_key_redo)
-		setting_key_redo_control = value_get_real(controlsmap[?"key_redo_control"], setting_key_redo_control)
-		setting_key_play = value_get_real(controlsmap[?"key_play"], setting_key_play)
-		setting_key_play_control = value_get_real(controlsmap[?"key_play_control"], setting_key_play_control)
-		setting_key_play_beginning = value_get_real(controlsmap[?"key_play_beginning"], setting_key_play_beginning)
-		setting_key_play_beginning_control = value_get_real(controlsmap[?"key_play_beginning_control"], setting_key_play_beginning_control)
-		setting_key_move_marker_right = value_get_real(controlsmap[?"key_move_marker_right"], setting_key_move_marker_right)
-		setting_key_move_marker_right_control = value_get_real(controlsmap[?"key_move_marker_right_control"], setting_key_move_marker_right_control)
-		setting_key_move_marker_left = value_get_real(controlsmap[?"key_move_marker_left"], setting_key_move_marker_left)
-		setting_key_move_marker_left_control = value_get_real(controlsmap[?"key_move_marker_left_control"], setting_key_move_marker_left_control)
-		setting_key_render = value_get_real(controlsmap[?"key_render"], setting_key_render)
-		setting_key_render_control = value_get_real(controlsmap[?"key_render_control"], setting_key_render_control)
-		setting_key_folder = value_get_real(controlsmap[?"key_folder"], setting_key_folder)
-		setting_key_folder_control = value_get_real(controlsmap[?"key_folder_control"], setting_key_folder_control)
-		setting_key_select_timelines = value_get_real(controlsmap[?"key_select_timelines"], setting_key_select_timelines)
-		setting_key_select_timelines_control = value_get_real(controlsmap[?"key_select_timelines_control"], setting_key_select_timelines_control)
-		setting_key_duplicate_timelines = value_get_real(controlsmap[?"key_duplicate_timelines"], setting_key_duplicate_timelines)
-		setting_key_duplicate_timelines_control = value_get_real(controlsmap[?"key_duplicate_timelines_control"], setting_key_duplicate_timelines_control)
-		setting_key_remove_timelines = value_get_real(controlsmap[?"key_remove_timelines"], setting_key_remove_timelines)
-		setting_key_remove_timelines_control = value_get_real(controlsmap[?"key_remove_timelines_control"], setting_key_remove_timelines_control)
-		setting_key_create_keyframes = value_get_real(controlsmap[?"key_create_keyframes"], setting_key_create_keyframes)
-		setting_key_create_keyframes_control = value_get_real(controlsmap[?"key_create_keyframes_control"], setting_key_create_keyframes_control)
-		setting_key_copy_keyframes = value_get_real(controlsmap[?"key_copy_keyframes"], setting_key_copy_keyframes)
-		setting_key_copy_keyframes_control = value_get_real(controlsmap[?"key_copy_keyframes_control"], setting_key_copy_keyframes_control)
-		setting_key_cut_keyframes = value_get_real(controlsmap[?"key_cut_keyframes"], setting_key_cut_keyframes)
-		setting_key_cut_keyframes_control = value_get_real(controlsmap[?"key_cut_keyframes_control"], setting_key_cut_keyframes_control)
-		setting_key_paste_keyframes = value_get_real(controlsmap[?"key_paste_keyframes"], setting_key_paste_keyframes)
-		setting_key_paste_keyframes_control = value_get_real(controlsmap[?"key_paste_keyframes_control"], setting_key_paste_keyframes_control)
-		setting_key_remove_keyframes = value_get_real(controlsmap[?"key_remove_keyframes"], setting_key_remove_keyframes)
-		setting_key_remove_keyframes_control = value_get_real(controlsmap[?"key_remove_keyframes_control"], setting_key_remove_keyframes_control)
-		setting_key_spawn_particles = value_get_real(controlsmap[?"key_spawn_particles"], setting_key_spawn_particles)
-		setting_key_spawn_particles_control = value_get_real(controlsmap[?"key_spawn_particles_control"], setting_key_spawn_particles_control)
-		setting_key_clear_particles = value_get_real(controlsmap[?"key_clear_particles"], setting_key_clear_particles)
-		setting_key_clear_particles_control = value_get_real(controlsmap[?"key_clear_particles_control"], setting_key_clear_particles_control)
-
-		setting_key_forward = value_get_real(controlsmap[?"key_forward"], setting_key_forward)
-		setting_key_back = value_get_real(controlsmap[?"key_back"], setting_key_back)
-		setting_key_left = value_get_real(controlsmap[?"key_left"], setting_key_left)
-		setting_key_right = value_get_real(controlsmap[?"key_right"], setting_key_right)
-		setting_key_ascend = value_get_real(controlsmap[?"key_ascend"], setting_key_ascend)
-		setting_key_descend = value_get_real(controlsmap[?"key_descend"], setting_key_descend)
-		setting_key_roll_forward = value_get_real(controlsmap[?"key_roll_forward"], setting_key_roll_forward)
-		setting_key_roll_back = value_get_real(controlsmap[?"key_roll_back"], setting_key_roll_back)
-		setting_key_roll_reset = value_get_real(controlsmap[?"key_roll_reset"], setting_key_roll_reset)
-		setting_key_reset = value_get_real(controlsmap[?"key_reset"], setting_key_reset)
-		setting_key_fast = value_get_real(controlsmap[?"key_fast"], setting_key_fast)
-		setting_key_slow = value_get_real(controlsmap[?"key_slow"], setting_key_slow)
+		var obj;
+		
+		for (var i = 0; i < e_keybind.amount; i++)
+		{
+			obj = keybinds_map[?i]
+			obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
+		}
+		
 		setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 		setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)
 		setting_fast_modifier = value_get_real(controlsmap[?"fast_modifier"], setting_fast_modifier)
@@ -272,7 +213,7 @@ if (filename_ext(fn) = ".midata")
 	var rendermap = map[?"render"];
 	if (ds_map_valid(rendermap))
 	{
-		setting_render_camera_effects = value_get_real(rendermap[?"render_camera_effects"], setting_render_camera_effects)
+		setting_render_samples = value_get_real(rendermap[?"render_samples"], setting_render_samples)
 		setting_render_dof_quality = value_get_real(rendermap[?"render_dof_quality"], setting_render_dof_quality)
 		
 		setting_render_ssao = value_get_real(rendermap[?"render_ssao"], setting_render_ssao)
@@ -285,7 +226,6 @@ if (filename_ext(fn) = ".midata")
 		setting_render_shadows_sun_buffer_size = value_get_real(rendermap[?"render_shadows_sun_buffer_size"], setting_render_shadows_sun_buffer_size)
 		setting_render_shadows_spot_buffer_size = value_get_real(rendermap[?"render_shadows_spot_buffer_size"], setting_render_shadows_spot_buffer_size)
 		setting_render_shadows_point_buffer_size = value_get_real(rendermap[?"render_shadows_point_buffer_size"], setting_render_shadows_point_buffer_size)
-		setting_render_shadows_samples = value_get_real(rendermap[?"render_shadows_samples"], setting_render_shadows_samples)
 		setting_render_shadows_sun_colored = value_get_real(rendermap[?"render_shadows_sun_colored"], setting_render_shadows_sun_colored)
 		
 		setting_render_indirect = value_get_real(rendermap[?"render_indirect"], setting_render_indirect)
@@ -330,32 +270,17 @@ if (filename_ext(fn) = ".midata")
 		setting_export_image_high_quality = value_get_string(rendermap[?"export_image_high_quality"], setting_export_image_high_quality)
 	}
 	
-	// Expandable checkboxes
-	var checkboxmap = map[?"checkbox_expand"];
-	if (ds_map_valid(checkboxmap))
+	// Collapsible content
+	var collapsemap = map[?"collapse"];
+	if (ds_map_valid(collapsemap))
 	{
-		checkbox_expand_settings_ssao = value_get_string(checkboxmap[?"settings_ssso"], checkbox_expand_settings_ssao)
-		checkbox_expand_settings_shadows = value_get_string(checkboxmap[?"settings_shadows"], checkbox_expand_settings_shadows)
-		checkbox_expand_settings_indirect = value_get_string(checkboxmap[?"settings_indirect"], checkbox_expand_settings_indirect)
-		checkbox_expand_settings_glow = value_get_string(checkboxmap[?"settings_glow"], checkbox_expand_settings_glow)
-		checkbox_expand_settings_aa = value_get_string(checkboxmap[?"settings_aa"], checkbox_expand_settings_aa)
-		checkbox_expand_settings_watermark = value_get_string(checkboxmap[?"settings_watermark"], checkbox_expand_settings_watermark)
-		checkbox_expand_background_clouds = value_get_string(checkboxmap[?"background_clouds"], checkbox_expand_background_clouds)
-		checkbox_expand_background_ground = value_get_string(checkboxmap[?"backgound_ground"], checkbox_expand_background_ground)
-		checkbox_expand_background_volumetric_fog = value_get_string(checkboxmap[?"background_volumetric_fog"], checkbox_expand_background_volumetric_fog)
-		checkbox_expand_background_fog = value_get_string(checkboxmap[?"background_fog"], checkbox_expand_background_fog)
-		checkbox_expand_background_wind = value_get_string(checkboxmap[?"background_wind"], checkbox_expand_background_wind)
-		checkbox_expand_frameeditor_rotatepoint = value_get_string(checkboxmap[?"frameeditor_rotatepoint"], checkbox_expand_frameeditor_rotatepoint)
-		checkbox_expand_frameeditor_camshake = value_get_string(checkboxmap[?"frameeditor_camshake"], checkbox_expand_frameeditor_camshake)
-		checkbox_expand_frameeditor_dof = value_get_string(checkboxmap[?"frameeditor_dof"], checkbox_expand_frameeditor_dof)
-		checkbox_expand_frameeditor_bloom = value_get_string(checkboxmap[?"frameeditor_bloom"], checkbox_expand_frameeditor_bloom)
-		checkbox_expand_frameeditor_lensdirt = value_get_string(checkboxmap[?"frameeditor_lensdirt"], checkbox_expand_frameeditor_lensdirt)
-		checkbox_expand_frameeditor_clrcor = value_get_string(checkboxmap[?"frameeditor_clrcor"], checkbox_expand_frameeditor_clrcor)
-		checkbox_expand_frameeditor_grain = value_get_string(checkboxmap[?"frameeditor_grain"], checkbox_expand_frameeditor_grain)
-		checkbox_expand_frameeditor_vignette = value_get_string(checkboxmap[?"frameeditor_vignette"], checkbox_expand_frameeditor_vignette)
-		checkbox_expand_frameeditor_ca = value_get_string(checkboxmap[?"frameeditor_ca"], checkbox_expand_frameeditor_ca)
-		checkbox_expand_frameeditor_distort = value_get_string(checkboxmap[?"frameeditor_distort"], checkbox_expand_frameeditor_distort)
-		checkbox_expand_frameeditor_itemslot = value_get_string(checkboxmap[?"frameeditor_itemslot"], checkbox_expand_frameeditor_itemslot)
+		var key = ds_map_find_first(collapse_map);
+	
+		while (!is_undefined(key))
+		{
+			collapse_map[?key] = value_get_string(collapsemap[?key], collapse_map[?key])
+			key = ds_map_find_next(collapse_map, key)
+		}
 	}
 }
 

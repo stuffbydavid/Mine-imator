@@ -28,9 +28,7 @@ log("Creating project", dirname)
 
 project_reset()
 
-project_name = popup_newproject.tbx_name.text;
-project_author = popup_newproject.tbx_author.text;
-project_description = popup_newproject.tbx_description.text;
+project_name = popup_newproject.tbx_name.text
 
 project_folder = dirname
 project_file = project_folder + "\\" + filename_get_valid(project_name) + ".miproject"
@@ -39,4 +37,5 @@ popup_close()
 
 project_save()
 
-alert_show(text_get("alertprojectcreatedtitle"), text_get("alertprojectcreatedtext"), null, "alertprojectcreatedbutton", project_folder, 5000)
+toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))
+toast_add_action("alertprojectcreatedview", open_url, project_folder)

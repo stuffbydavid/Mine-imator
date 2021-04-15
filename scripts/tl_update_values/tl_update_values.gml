@@ -27,7 +27,7 @@ else
 	loopend = app.timeline_length
 }
 
-if (app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker < loopend)
+if (app.timeline_repeat && app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker < loopend)
 {
 	// Change keyframes so the animation is seamless
 	var lastkf, loopnext, loopprev;
@@ -101,7 +101,7 @@ tl_update_values_ease(e_value.TRANSITION, "instant", 0)
 var trans = value[e_value.TRANSITION];
 
 // Position
-if (value_type[e_value_type.POSITION])
+if (value_type[e_value_type.TRANSFORM_POS])
 {
 	tl_update_values_ease(e_value.POS_X, trans, p)
 	tl_update_values_ease(e_value.POS_Y, trans, p)
@@ -109,7 +109,7 @@ if (value_type[e_value_type.POSITION])
 }
 
 // Rotation
-if (value_type[e_value_type.ROTATION])
+if (value_type[e_value_type.TRANSFORM_ROT])
 {
 	tl_update_values_ease(e_value.ROT_X, trans, p)
 	tl_update_values_ease(e_value.ROT_Y, trans, p)
@@ -117,7 +117,7 @@ if (value_type[e_value_type.ROTATION])
 }
 
 // Scale
-if (value_type[e_value_type.SCALE])
+if (value_type[e_value_type.TRANSFORM_SCA])
 {
 	tl_update_values_ease(e_value.SCA_X, trans, p)
 	tl_update_values_ease(e_value.SCA_Y, trans, p)
@@ -125,7 +125,7 @@ if (value_type[e_value_type.SCALE])
 }
 
 // Bend
-if (value_type[e_value_type.BEND])
+if (value_type[e_value_type.TRANSFORM_BEND])
 {
 	tl_update_values_ease(e_value.BEND_ANGLE_X, trans, p)
 	tl_update_values_ease(e_value.BEND_ANGLE_Y, trans, p)
@@ -133,7 +133,7 @@ if (value_type[e_value_type.BEND])
 }
 
 // Color
-if (value_type[e_value_type.COLOR])
+if (value_type[e_value_type.MATERIAL_COLOR])
 {
 	tl_update_values_ease(e_value.ALPHA, trans, p)
 	tl_update_values_ease(e_value.RGB_ADD, trans, p)
@@ -284,7 +284,7 @@ if (value_type[e_value_type.BACKGROUND])
 	tl_update_values_ease(e_value.BG_DESATURATE_NIGHT_AMOUNT, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_CLOUDS_SHOW, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_CLOUDS_SPEED, trans, p)
-	tl_update_values_ease(e_value.BG_SKY_CLOUDS_Z, trans, p)
+	tl_update_values_ease(e_value.BG_SKY_CLOUDS_HEIGHT, trans, p)
 	tl_update_values_ease(e_value.BG_SKY_CLOUDS_OFFSET, trans, p)
 	tl_update_values_ease(e_value.BG_GROUND_SHOW, trans, p)
 	tl_update_values_ease(e_value.BG_GROUND_SLOT, trans, p)
@@ -331,7 +331,7 @@ if (value_type[e_value_type.BACKGROUND])
 }
 
 // Texture
-if (value_type[e_value_type.TEXTURE])
+if (value_type[e_value_type.MATERIAL_TEXTURE])
 	tl_update_values_ease(e_value.TEXTURE_OBJ, trans, p)
 	
 // Sound

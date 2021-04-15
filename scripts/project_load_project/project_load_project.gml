@@ -14,13 +14,23 @@ project_video_height = value_get_real(map[?"video_height"], project_video_height
 project_video_template = find_videotemplate(project_video_width, project_video_height)
 project_video_keep_aspect_ratio = value_get_real(map[?"video_keep_aspect_ratio"], project_video_keep_aspect_ratio)
 project_tempo = value_get_real(map[?"tempo"], project_tempo)
-	
+project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
+project_grid_columns = value_get_real(map[?"grid_columns"], project_grid_columns)
+
 var tlmap = map[?"timeline"];
 if (ds_map_valid(tlmap))
 {
 	timeline_repeat = value_get_real(tlmap[?"repeat"], timeline_repeat)
 	timeline_seamless_repeat = value_get_real(tlmap[?"seamless_repeat"], timeline_seamless_repeat)
-	timeline_show_seconds = value_get_real(tlmap[?"show_seconds"], timeline_show_seconds)
+	
+	if (load_format < e_project.FORMAT_130_AL9)
+		timeline_intervals_show = value_get_real(tlmap[?"show_seconds"], timeline_intervals_show)
+	else
+		timeline_intervals_show = value_get_real(tlmap[?"intervals_show"], timeline_intervals_show)
+	
+	timeline_interval_size = value_get_real(tlmap[?"interval_size"], timeline_interval_size)
+	timeline_interval_offset = value_get_real(tlmap[?"interval_offset"], timeline_interval_offset)
+	
 	timeline_marker = value_get_real(tlmap[?"marker"], timeline_marker)
 	timeline.list_width = value_get_real(tlmap[?"list_width"], timeline.list_width)
 	timeline.hor_scroll.value = value_get_real(tlmap[?"hor_scroll"], timeline.hor_scroll.value)
@@ -28,6 +38,8 @@ if (ds_map_valid(tlmap))
 	timeline_zoom_goal = timeline_zoom
 	timeline_region_start = value_get_real(tlmap[?"region_start"], timeline_region_start)
 	timeline_region_end = value_get_real(tlmap[?"region_end"], timeline_region_end)
+	timeline_show_markers = value_get_real(tlmap[?"show_markers"], timeline_show_markers)
+	timeline_hide_color_tag = value_get_array(tlmap[?"hide_color_tag"], timeline_hide_color_tag)
 }
 
 var cammap = map[?"work_camera"];

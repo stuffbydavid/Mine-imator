@@ -1,47 +1,54 @@
 /// popup_upgrade_draw()
 
+draw_sprite(spr_watermark_example, 0, dx, dy)
+dy += 184
+
+dy += 18
+
 // Info
-draw_label(string_limit_ext(text_get("upgradeinfo1"), dw, dh), dx, dy)
+draw_set_font(font_value)
+draw_label(string_limit_ext(text_get("upgradeinfo"), dw + 8, dh), dx, dy, fa_left, fa_top, c_text_main, a_text_main, font_value)
 
-dy += 170
-draw_image(spr_watermark_example, 0, dx + dw / 2, dy)
-dy += 130
+dy += 126
 
-draw_label(string_limit_ext(text_get("upgradeinfo2"), dw, dh), dx, dy)
+// Upgrade link
+draw_set_font(font_value_bold)
+draw_button_text(link_upgrade, floor(dx + dw/2 - string_width(link_upgrade)/2), dy, open_url, link_upgrade, link_upgrade, font_value_bold)
 
-// Upgrade
-dy += 40
-if (draw_button_normal("upgradebutton", dx + dw / 2 - 50, dy, 100, 40))
-	open_url(link_upgrade)
-	
-// Enter key
-dy += 70
-draw_inputbox("upgradekey", dx + 70, dy, 290, "", popup_upgrade.tbx_key, null, 50, 40, 4, setting_font_big)
-if (draw_button_normal("upgradekeypaste", dx + 370, dy + 8, 60, 28))
+dy += 18
+
+// Upgrade key textbox
+var wid = 196;
+
+tab_control(48)
+draw_inputbox("upgrade", dx + dw/2 - wid/2, dy, wid, 48, "XXXXXXXX", popup_upgrade.tbx_key, null, false, false, font_upgrade, e_inputbox.BIG)
+draw_box_hover(dx + dw/2 - wid/2, dy, wid, 48, mcroani_arr[e_mcroani.PRESS])
+
+if (draw_button_icon("upgradekeypaste", dx + dw/2 + wid/2 + 8, dy + 10, 24, 24, false, icons.PASTE, null, false, "tooltippastekey"))
 	popup_upgrade.tbx_key.text = string(clipboard_get_text())
-	
-// Continue
-dw = 100
-dh = 32
-dx = content_x + content_width / 2 - dw - 4
-dy = content_y + content_height - 32
-if (draw_button_normal("upgradecontinue", dx, dy, dw, 32))
+
+tab_next()
+
+if (popup_upgrade.warntext != "")
 {
-	if (trial_upgrade(popup_upgrade.tbx_key.text))
+	tab_control(8)
+	draw_label(text_get(popup_upgrade.warntext), dx + dw/2, dy + 8, fa_center, fa_bottom, c_error, 1, font_caption)
+	tab_next()
+}
+
+tab_control_button_label()
+if (draw_button_label("upgradecontinue", dx + dw, dy_start + dh - 32, null, icons.KEY_ALT, e_button.PRIMARY, null, e_anchor.RIGHT))
+{
+	var upgrade = trial_upgrade(popup_upgrade.tbx_key.text);
+	
+	if (upgrade)
 	{
 		if (popup_switch_from)
 			popup_switch(popup_switch_from)
 		else
 			popup_close()
 	}
-}
-
-// Cancel
-dx = content_x + content_width / 2 + 4
-if (draw_button_normal("upgradecancel", dx, dy, dw, 32))
-{
-	if (popup_switch_from)
-		popup_switch(popup_switch_from)
 	else
-		popup_close()
+		popup_upgrade.warntext = "errorupgrade"
 }
+tab_next()

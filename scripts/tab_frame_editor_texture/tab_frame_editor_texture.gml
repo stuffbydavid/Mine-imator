@@ -1,5 +1,8 @@
 /// tab_frame_editor_texture()
 
+if (!tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
+	return 0
+
 var texobj, name, tex;
 tex = null
 
@@ -60,6 +63,6 @@ else
 if (tl_edit.value[e_value.TEXTURE_OBJ] = null)
 	text = text_get("listdefault", text)
 
-tab_control(40)
-draw_button_menu(name, e_menu.LIST, dx, dy, dw, 40, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, tex)
+tab_control_menu(32)
+draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, false, tex)
 tab_next()

@@ -8,6 +8,7 @@ globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 globalvar minecraft_color_name_list, minecraft_color_list, minecraft_banner_pattern_list, minecraft_banner_pattern_short_list;
 globalvar biome_list, particle_template_list, particle_template_map;
 globalvar blend_mode_list, blend_mode_map;
+globalvar timeline_icon_list, timeline_icon_list_dark;
 
 // Values
 value_name_list = ds_list_create()
@@ -135,7 +136,7 @@ ds_list_add(value_name_list,
 	"BG_DESATURATE_NIGHT_AMOUNT",
 	"BG_SKY_CLOUDS_SHOW",
 	"BG_SKY_CLOUDS_SPEED",
-	"BG_SKY_CLOUDS_Z",
+	"BG_SKY_CLOUDS_HEIGHT",
 	"BG_SKY_CLOUDS_OFFSET",
 	"BG_GROUND_SHOW",
 	"BG_GROUND_SLOT",
@@ -262,7 +263,9 @@ ds_list_add(tl_type_name_list,
 	"pointlight",
 	"folder",
 	"background",
-	"audio"
+	"audio",
+	"shape",
+	"lightsource"
 )
 
 // Resource types
@@ -322,8 +325,8 @@ ds_list_add(transition_list,
 )
 
 log("Make transitions")
-transition_texture_map = new_transition_texture_map(60, 60, 12)
-transition_texture_small_map = new_transition_texture_map(36, 36, 2)
+transition_texture_map = new_transition_texture_map(36, 36, 6, true)
+transition_texture_small_map = new_transition_texture_map(24, 24, 3, false)
 log("Transitions OK")
 
 // Video templates
@@ -356,6 +359,7 @@ language_map = ds_map_create()
 
 language_load(language_file, language_english_map)
 ds_map_copy(language_map, language_english_map)
+langauge_new(language_file)
 
 // Biomes
 biome_list = ds_list_create()
@@ -424,3 +428,75 @@ ds_map_add(blend_mode_map, "add", bm_add)
 ds_map_add(blend_mode_map, "subtract", bm_subtract)
 ds_map_add(blend_mode_map, "multiply", array(bm_zero, bm_src_color))
 ds_map_add(blend_mode_map, "screen", array(bm_one, bm_inv_src_color))
+
+// List of icons in sync with e_tl_type
+/*
+	CHARACTER,
+	SPECIAL_BLOCK,
+	SCENERY,
+	ITEM,
+	BLOCK,
+	BODYPART,
+	PARTICLE_SPAWNER,
+	TEXT,
+	CUBE,
+	CONE,
+	CYLINDER,
+	SPHERE,
+	SURFACE,
+	MODEL,
+	CAMERA,
+	SPOT_LIGHT,
+	POINT_LIGHT,
+	FOLDER,
+	BACKGROUND,
+	AUDIO
+*/
+
+timeline_icon_list = ds_list_create()
+ds_list_add(timeline_icon_list,
+	icons.CHARACTER,
+	icons.BLOCK_SPECIAL,
+	icons.SCENERY,
+	icons.ITEM,
+	icons.BLOCK,
+	icons.PART,
+	icons.FIREWORKS,
+	icons.TEXT,
+	icons.CUBE,
+	icons.CONE,
+	icons.CYLINDER,
+	icons.SPHERE,
+	icons.PLANE,
+	icons.MODEL,
+	icons.CAMERA,
+	icons.LIGHT_SPOT,
+	icons.LIGHT_POINT,
+	icons.FOLDER,
+	icons.CLOUD,
+	icons.NOTE
+)
+
+timeline_icon_list_dark = ds_list_create()
+ds_list_add(timeline_icon_list_dark,
+	icons.CHARACTER,
+	icons.BLOCK_SPECIAL,
+	icons.SCENERY,
+	icons.ITEM,
+	icons.BLOCK,
+	icons.PART,
+	icons.FIREWORKS,
+	icons.TEXT,
+	icons.CUBE__DARK,
+	icons.CONE__DARK,
+	icons.CYLINDER__DARK,
+	icons.SPHERE__DARK,
+	icons.PLANE,
+	icons.MODEL,
+	icons.CAMERA,
+	icons.LIGHT_SPOT,
+	icons.LIGHT_POINT,
+	icons.FOLDER,
+	icons.CLOUD,
+	icons.NOTE
+)

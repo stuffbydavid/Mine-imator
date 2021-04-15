@@ -4,10 +4,7 @@
 var key = argument0;
 
 if (!key_valid(key))
-{
-	error("errorupgrade")
 	return false
-}
 
 var f = file_text_open_write(temp_file);
 if (f > -1)
@@ -21,6 +18,5 @@ trial_version = false
 setting_render_watermark = false
 settings_save()
 
-alert_show(text_get("alertupgradedtitle"), text_get("alertupgradedtext"), icons.UPGRADE_SMALL, "", "", 5000)
-
+toast_new(e_toast.POSITIVE, text_get("alertupgraded"))
 return true

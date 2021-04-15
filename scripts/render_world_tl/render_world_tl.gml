@@ -30,7 +30,7 @@ if (!shadows &&
 // Click mode
 if (render_mode = e_render_mode.CLICK)
 {
-	if (selected || lock) // Already selected when clicking?
+	if (selected || lock || !tl_update_list_filter(id)) // Already selected when clicking?
 		return 0
 	
 	render_set_uniform_color("uReplaceColor", id, 1)
@@ -59,7 +59,7 @@ if (type = e_tl_type.PARTICLE_SPAWNER ||
 		return 0
 }
 
-if (value_inherit[e_value.ALPHA] = 0)
+if ((value_inherit[e_value.ALPHA] * 1000) = 0)
 	return 0
 
 // Set render options
@@ -234,7 +234,7 @@ if (wind)
 if (!wind_terrain)
 	render_set_uniform("uWindTerrain", 1)
 if (!fog)
-	render_set_uniform_int("uFogShow", (render_lights && app.background_fog_show))
+	render_set_uniform_int("uFogShow", (render_fog && app.background_fog_show))
 if (!ssao)
 	render_set_uniform_int("uSSAOEnable", 1)
 
