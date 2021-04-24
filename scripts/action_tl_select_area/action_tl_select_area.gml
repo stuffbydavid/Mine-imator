@@ -2,37 +2,38 @@
 /// @arg starttimeline
 /// @arg endtimeline
 
-if (history_undo)
+function action_tl_select_area(stl, etl)
 {
-	with (history_data)
-		history_restore_tl_select()
-}
-else if (history_redo)
-{
-	with (history_data)
-		history_restore_tl_select_new()
-}
-else
-{
-	var stl, etl, hobj;
-	stl = argument0
-	etl = argument1
-	hobj = history_set(action_tl_select_area)
-	
-	with (hobj)
-		history_save_tl_select()
-		
-	for (var t = stl; t <= etl; t++)
+	if (history_undo)
 	{
-		with (tree_visible_list[|t])
+		with (history_data)
+			history_restore_tl_select()
+	}
+	else if (history_redo)
+	{
+		with (history_data)
+			history_restore_tl_select_new()
+	}
+	else
+	{
+		var hobj;
+		hobj = history_set(action_tl_select_area)
+		
+		with (hobj)
+			history_save_tl_select()
+		
+		for (var t = stl; t <= etl; t++)
 		{
-			tl_update_recursive_select()
-			tl_select()
+			with (tree_visible_list[|t])
+			{
+				tl_update_recursive_select()
+				tl_select()
+			}
 		}
+		
+		with (hobj)
+			history_save_tl_select_new()
 	}
 	
-	with (hobj)
-		history_save_tl_select_new()
+	app_update_tl_edit()
 }
-
-app_update_tl_edit()

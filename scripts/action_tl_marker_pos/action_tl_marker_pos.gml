@@ -1,36 +1,39 @@
 /// action_tl_marker_pos(pos)
 /// @arg pos
 
-var marker;
-
-if (history_undo)
+function action_tl_marker_pos()
 {
-	marker = save_id_find(history_data.marker_save_id)
-	marker.pos = history_data.marker_pos_prev
-}
-else
-{
-	var hobj;
+	var marker;
 	
-	if (!history_redo)
+	if (history_undo)
 	{
-		marker = timeline_marker_edit
-		hobj = history_set(action_tl_marker_pos)
-		
-		with (hobj)
-		{
-			marker_save_id = save_id_get(marker)
-			marker_pos_prev = marker.edit_pos
-			marker_pos_new = argument[0]
-		}
-		
-		marker.pos = hobj.marker_pos_new
+		marker = save_id_find(history_data.marker_save_id)
+		marker.pos = history_data.marker_pos_prev
 	}
 	else
 	{
-		with (save_id_find(history_data.marker_save_id))
-			pos = history_data.marker_pos_new
+		var hobj;
+		
+		if (!history_redo)
+		{
+			marker = timeline_marker_edit
+			hobj = history_set(action_tl_marker_pos)
+			
+			with (hobj)
+			{
+				marker_save_id = save_id_get(marker)
+				marker_pos_prev = marker.edit_pos
+				marker_pos_new = pos
+			}
+			
+			marker.pos = hobj.marker_pos_new
+		}
+		else
+		{
+			with (save_id_find(history_data.marker_save_id))
+				pos = history_data.marker_pos_new
+		}
 	}
+	
+	marker_list_sort()
 }
-
-marker_list_sort()

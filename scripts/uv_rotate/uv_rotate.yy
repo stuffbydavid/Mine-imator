@@ -1,8 +1,12 @@
 {
-    "id": "eae8e1a3-b384-437e-9eff-57d799dbb555",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "uv_rotate",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vertex",
+    "path": "folders/Scripts/Utility/Vertex.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "uv_rotate",
+  "tags": [],
+  "resourceType": "GMScript",
 }

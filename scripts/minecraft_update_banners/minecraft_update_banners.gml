@@ -1,16 +1,33 @@
-// minecraft_update_banners()
+/// minecraft_update_banners()
 
-// Update banner template when resources aren't being loaded
-if (banner_update != null && window_busy != "popup" + popup_loading.name)
+function minecraft_update_banners()
 {
-	var banner = banner_update;
-	
-	if (is_array(banner_update))
+	// Update banner template when resources aren't being loaded
+	if (banner_update != null && window_busy != "popup" + popup_loading.name)
 	{
-		for (var i = 0; i < array_length_1d(banner_update); i++)
+		var banner = banner_update;
+		
+		if (is_array(banner_update))
 		{
-			banner = banner_update[i]
-			
+			for (var i = 0; i < array_length(banner_update); i++)
+			{
+				banner = banner_update[i]
+				
+				with (banner)
+				{
+					if (sprite_exists(banner_skin))
+						sprite_delete(banner_skin)
+					
+					var res;
+					with (banner)
+						res = temp_get_model_texobj(null)
+					
+					banner_skin = minecraft_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
+				}
+			}
+		}
+		else
+		{
 			with (banner)
 			{
 				if (sprite_exists(banner_skin))
@@ -23,20 +40,7 @@ if (banner_update != null && window_busy != "popup" + popup_loading.name)
 				banner_skin = minecraft_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
 			}
 		}
-	}
-	else
-	{
-		with (banner)
-		{
-			if (sprite_exists(banner_skin))
-				sprite_delete(banner_skin)
 		
-			var res;
-			with (banner)
-				res = temp_get_model_texobj(null)
-			
-			banner_skin = minecraft_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
-		}
+		banner_update = array()
 	}
-	banner_update = array()
 }

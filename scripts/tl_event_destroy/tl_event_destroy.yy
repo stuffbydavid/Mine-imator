@@ -1,8 +1,12 @@
 {
-    "id": "bf6dd6b6-143b-49e4-9ef2-1fcef4c4f68e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_event_destroy",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_event_destroy",
+  "tags": [],
+  "resourceType": "GMScript",
 }

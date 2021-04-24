@@ -1,8 +1,12 @@
 {
-    "id": "2d3dc0c8-0d82-4596-a2a6-ca0d7ab5495d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_shape_closed",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Shapes",
+    "path": "folders/Scripts/App/Actions/Library/Shapes.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_shape_closed",
+  "tags": [],
+  "resourceType": "GMScript",
 }

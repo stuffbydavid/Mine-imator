@@ -1,8 +1,12 @@
 {
-    "id": "e750dc52-7619-4f86-baf5-46499343a1fd",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "surface_save_lib",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Libraries/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "surface_save_lib",
+  "tags": [],
+  "resourceType": "GMScript",
 }

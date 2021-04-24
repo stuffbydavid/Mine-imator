@@ -1,8 +1,12 @@
 {
-    "id": "b01e897d-ae8a-447e-be72-7d381941846c",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_frame_editor_rotation",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Frame editor",
+    "path": "folders/Scripts/App/Interface/Tabs/Frame editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_frame_editor_rotation",
+  "tags": [],
+  "resourceType": "GMScript",
 }

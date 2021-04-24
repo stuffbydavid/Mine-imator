@@ -2,23 +2,22 @@
 /// @arg array
 /// @arg size
 
-var arr, size;
-arr = argument0
-size = argument1
-
-buffer_write_byte(e_json_char.SQUARE_BEGIN)
-buffer_write_byte(e_json_char.SPACE)
-
-for (var i = 0; i < size; i++)
+function json_save_array(arr, size)
 {
-	if (i > 0)
+	buffer_write_byte(e_json_char.SQUARE_BEGIN)
+	buffer_write_byte(e_json_char.SPACE)
+	
+	for (var i = 0; i < size; i++)
 	{
-		buffer_write_byte(e_json_char.COMMA)
-		buffer_write_byte(e_json_char.SPACE)
+		if (i > 0)
+		{
+			buffer_write_byte(e_json_char.COMMA)
+			buffer_write_byte(e_json_char.SPACE)
+		}
+		
+		json_save_value(arr[@i])
 	}
 	
-	json_save_value(arr[@i])
+	buffer_write_byte(e_json_char.SPACE)
+	buffer_write_byte(e_json_char.SQUARE_END)
 }
-
-buffer_write_byte(e_json_char.SPACE)
-buffer_write_byte(e_json_char.SQUARE_END)

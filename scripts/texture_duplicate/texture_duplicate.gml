@@ -1,4 +1,7 @@
 /// texture_duplicate(texture)
 /// @arg texture
 
-return sprite_duplicate(argument0)
+function texture_duplicate(tex)
+{
+	return sprite_duplicate(tex)
+}

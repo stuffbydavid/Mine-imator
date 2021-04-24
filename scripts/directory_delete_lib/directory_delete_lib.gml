@@ -1,4 +1,7 @@
 /// directory_delete_lib(directory)
 /// @arg directory
 
-return external_call(lib_directory_delete, argument0)
+function directory_delete_lib(dir)
+{
+	return external_call(lib_directory_delete, dir)
+}

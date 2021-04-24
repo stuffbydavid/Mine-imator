@@ -1,4 +1,7 @@
 /// file_dialog_save_project(filename)
 /// @arg filename
 
-return file_dialog_save("", argument0, setting_project_folder, text_get("filedialogsaveprojectcaption"))
+function file_dialog_save_project(fn)
+{
+	return file_dialog_save("", fn, setting_project_folder, text_get("filedialogsaveprojectcaption"))
+}

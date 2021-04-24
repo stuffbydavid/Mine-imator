@@ -1,8 +1,12 @@
 {
-    "id": "02d7da69-1935-47db-991e-bce097fda5f5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_inherit_bend",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Hierarchy",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Hierarchy.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_inherit_bend",
+  "tags": [],
+  "resourceType": "GMScript",
 }

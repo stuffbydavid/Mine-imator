@@ -1,41 +1,42 @@
 /// history_restore_bench(save)
 /// @arg save
 
-var save = argument0;
-
-with (save)
-	temp_copy(app.bench_settings)
-	
-with (bench_settings)
+function history_restore_bench(save)
 {
-	temp_find_save_ids()
-	temp_update()
-		
-	// Restore templates
-	temp_creator = app.bench_settings
-	for (var t = 0; t < save.temp_amount; t++)
+	with (save)
+		temp_copy(app.bench_settings)
+	
+	with (bench_settings)
 	{
-		with (save.temp_save_obj[t])
+		temp_find_save_ids()
+		temp_update()
+		
+		// Restore templates
+		temp_creator = app.bench_settings
+		for (var t = 0; t < save.temp_amount; t++)
 		{
-			var ntemp = new(obj_template);
-			temp_copy(ntemp)
-			with (ntemp)
+			with (save.temp_save_obj[t])
 			{
-				save_id = other.save_id
-				temp_find_save_ids()
-				temp_update()
+				var ntemp = new_obj(obj_template);
+				temp_copy(ntemp)
+				with (ntemp)
+				{
+					save_id = other.save_id
+					temp_find_save_ids()
+					temp_update()
+				}
 			}
 		}
-	}
-	temp_creator = app
-	
-	// Restore particle types
-	if (type = e_temp_type.PARTICLE_SPAWNER) 
-	{
-		temp_particles_type_clear()
+		temp_creator = app
 		
-		for (var p = 0; p < save.pc_type_amount; p++)
-			history_restore_ptype(save.pc_type_save_obj[p], id)
-		temp_particles_restart()
+		// Restore particle types
+		if (type = e_temp_type.PARTICLE_SPAWNER) 
+		{
+			temp_particles_type_clear()
+			
+			for (var p = 0; p < save.pc_type_amount; p++)
+				history_restore_ptype(save.pc_type_save_obj[p], id)
+			temp_particles_restart()
+		}
 	}
 }

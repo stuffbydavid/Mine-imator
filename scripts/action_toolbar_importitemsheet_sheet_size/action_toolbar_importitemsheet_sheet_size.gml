@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-popup_importitemsheet.sheet_size[axis_edit] = popup_importitemsheet.sheet_size[axis_edit] * argument1 + argument0
+function action_toolbar_importitemsheet_sheet_size(val, add)
+{
+	popup_importitemsheet.sheet_size[axis_edit] = popup_importitemsheet.sheet_size[axis_edit] * add + val
+}

@@ -1,8 +1,12 @@
 {
-    "id": "88677dbe-a842-456a-b9e7-2d2ad7b729ca",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_spd",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Speed",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Speed.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_spd",
+  "tags": [],
+  "resourceType": "GMScript",
 }

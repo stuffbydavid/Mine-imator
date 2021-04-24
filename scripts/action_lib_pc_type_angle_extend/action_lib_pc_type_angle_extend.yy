@@ -1,8 +1,12 @@
 {
-    "id": "e59dc9cb-e947-441b-8e60-37eb4dd20d2f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_angle_extend",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Angle",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Angle.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_angle_extend",
+  "tags": [],
+  "resourceType": "GMScript",
 }

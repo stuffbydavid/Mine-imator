@@ -1,29 +1,29 @@
 /// action_tl_deselect(timeline)
 /// @arg timeline
 
-if (history_undo)
+function action_tl_deselect(tl)
 {
-	with (history_data)
-		history_restore_tl_select()
-}
-else
-{
-	var tl;
-	
-	if (!history_redo)
+	if (history_undo)
 	{
-		tl = argument0
-		with (history_set(action_tl_deselect))
-		{
-			tl_save_id = save_id_get(tl)
-			history_save_tl_select()
-		}
+		with (history_data)
+			history_restore_tl_select()
 	}
 	else
-		tl = save_id_find(history_data.tl_save_id)
-
-	with (tl)
-		tl_deselect()
-}
+	{
+		if (!history_redo)
+		{
+			with (history_set(action_tl_deselect))
+			{
+				tl_save_id = save_id_get(tl)
+				history_save_tl_select()
+			}
+		}
+		else
+			tl = save_id_find(history_data.tl_save_id)
+		
+		with (tl)
+			tl_deselect()
+	}
 	
-app_update_tl_edit()
+	app_update_tl_edit()
+}

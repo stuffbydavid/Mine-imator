@@ -1,8 +1,12 @@
 {
-    "id": "04730e04-96c5-4018-93d9-2ee70faa578d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_bench_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Bench",
+    "path": "folders/Scripts/App/Actions/Bench.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_bench_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

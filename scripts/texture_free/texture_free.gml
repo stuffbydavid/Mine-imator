@@ -1,4 +1,7 @@
 /// texture_free(texture)
 /// @arg texture
 
-return sprite_delete(argument0)
+function texture_free(tex)
+{
+	return sprite_delete(tex)
+}

@@ -1,11 +1,14 @@
 /// buffer_load_lib(filename)
 /// @arg filename
 
-if (file_copy_temp)
+function buffer_load_lib(fn)
 {
-	file_delete_lib(temp_file)
-	file_copy_lib(argument0, temp_file)
-	return buffer_load(temp_file)
+	if (file_copy_temp)
+	{
+		file_delete_lib(temp_file)
+		file_copy_lib(fn, temp_file)
+		return buffer_load(temp_file)
+	}
+	else
+		return buffer_load(fn)
 }
-else
-	return buffer_load(argument0)

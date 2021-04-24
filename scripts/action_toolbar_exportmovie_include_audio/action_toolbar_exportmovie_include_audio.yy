@@ -1,8 +1,12 @@
 {
-    "id": "c0e678e4-cd36-42b6-9303-7b7a5efbdedc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_toolbar_exportmovie_include_audio",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Export movie",
+    "path": "folders/Scripts/App/Actions/Toolbar/Export movie.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_toolbar_exportmovie_include_audio",
+  "tags": [],
+  "resourceType": "GMScript",
 }

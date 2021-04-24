@@ -1,8 +1,12 @@
 {
-    "id": "9f46d80a-6bbe-4481-8416-3d6a3a8b44ac",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "value_get_real",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Values",
+    "path": "folders/Scripts/Utility/Values.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "value_get_real",
+  "tags": [],
+  "resourceType": "GMScript",
 }

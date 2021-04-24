@@ -1,8 +1,12 @@
 {
-    "id": "6071760e-754a-425a-a475-a0b5ab9682e4",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_sunlight_strength",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Background",
+    "path": "folders/Scripts/App/Actions/Background.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_sunlight_strength",
+  "tags": [],
+  "resourceType": "GMScript",
 }

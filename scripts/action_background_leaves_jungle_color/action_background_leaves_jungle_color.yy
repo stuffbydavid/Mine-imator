@@ -1,8 +1,12 @@
 {
-    "id": "50985cf8-1bb3-4327-a10d-6e2e0ed6e8d2",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_leaves_jungle_color",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Biome",
+    "path": "folders/Scripts/App/Actions/Background/Biome.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_leaves_jungle_color",
+  "tags": [],
+  "resourceType": "GMScript",
 }

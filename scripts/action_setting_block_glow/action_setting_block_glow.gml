@@ -1,4 +1,7 @@
 /// action_setting_block_glow(value)
 /// @arg value
 
-setting_block_glow = argument0
+function action_setting_block_glow(val)
+{
+	setting_block_glow = val
+}

@@ -1,8 +1,12 @@
 {
-    "id": "42ef410a-cb15-4116-a06a-e7cdd756b9a0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "array_contains",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Array",
+    "path": "folders/Scripts/Utility/Array.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "array_contains",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "9400cdec-f33e-404f-ba1b-4519e774eaef",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "render_high",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Render",
+    "path": "folders/Scripts/Render.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "render_high",
+  "tags": [],
+  "resourceType": "GMScript",
 }

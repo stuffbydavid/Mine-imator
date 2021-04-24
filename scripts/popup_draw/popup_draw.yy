@@ -1,8 +1,12 @@
 {
-    "id": "fa3b9bbb-bdeb-4243-91ce-ec25188d64e5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "popup_draw",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Popup",
+    "path": "folders/Scripts/App/Interface/Components/Popup.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "popup_draw",
+  "tags": [],
+  "resourceType": "GMScript",
 }

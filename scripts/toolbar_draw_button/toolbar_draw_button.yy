@@ -1,8 +1,12 @@
 {
-    "id": "9e044459-4476-4f15-a61a-ebee2c7617be",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "toolbar_draw_button",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Toolbar",
+    "path": "folders/Scripts/App/Interface/Components/Toolbar.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "toolbar_draw_button",
+  "tags": [],
+  "resourceType": "GMScript",
 }

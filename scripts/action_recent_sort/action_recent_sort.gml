@@ -1,6 +1,8 @@
 /// action_recent_sort(sort)
 /// @arg sort
 
-recent_sort_mode = argument0
-
-recent_update()
+function action_recent_sort(sort)
+{
+	recent_sort_mode = sort
+	recent_update()
+}

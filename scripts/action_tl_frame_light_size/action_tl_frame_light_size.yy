@@ -1,8 +1,12 @@
 {
-    "id": "bc406af3-2592-4a00-88ff-acedf8d077dc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_light_size",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Light",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Light.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_light_size",
+  "tags": [],
+  "resourceType": "GMScript",
 }

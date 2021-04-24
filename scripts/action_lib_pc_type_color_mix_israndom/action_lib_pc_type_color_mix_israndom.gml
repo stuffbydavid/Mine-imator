@@ -1,16 +1,10 @@
 /// action_lib_pc_type_color_mix_israndom(israndom)
 /// @arg israndom
 
-var israndom;
-
-if (history_undo)
-	israndom = history_data.old_value
-else if (history_redo)
-	israndom = history_data.new_value
-else
+function action_lib_pc_type_color_mix_israndom(israndom)
 {
-	israndom = argument0
-	history_set_var(action_lib_pc_type_color_mix_israndom, ptype_edit.color_mix_israndom, israndom, false)
+	if (!history_undo && !history_redo)
+		history_set_var(action_lib_pc_type_color_mix_israndom, ptype_edit.color_mix_israndom, israndom, false)
+	
+	ptype_edit.color_mix_israndom = israndom
 }
-
-ptype_edit.color_mix_israndom = israndom

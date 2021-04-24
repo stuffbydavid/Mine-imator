@@ -1,8 +1,12 @@
 {
-    "id": "8b574a68-fbc7-46dc-8afe-438f39e134a3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_inherit_rot_point",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Hierarchy",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Hierarchy.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_inherit_rot_point",
+  "tags": [],
+  "resourceType": "GMScript",
 }

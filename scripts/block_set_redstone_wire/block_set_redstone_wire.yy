@@ -1,8 +1,12 @@
 {
-    "id": "186241f8-77bd-417f-8789-c684db1207a4",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "block_set_redstone_wire",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Types",
+    "path": "folders/Scripts/Minecraft/Blocks/Types.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "block_set_redstone_wire",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "2773c7a3-a55c-4b65-a482-99c59543939d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "new_res",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Resources",
+    "path": "folders/Scripts/Project/Resources.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "new_res",
+  "tags": [],
+  "resourceType": "GMScript",
 }

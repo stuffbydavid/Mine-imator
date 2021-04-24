@@ -4,4 +4,7 @@
 /// @arg x1
 /// @arg x2
 
-return argument2 + ease(argument0, argument1) * (argument3 - argument2)
+function interpolate(func, d, x1, x2)
+{
+	return x1 + ease(func, d) * (x2 - x1)
+}

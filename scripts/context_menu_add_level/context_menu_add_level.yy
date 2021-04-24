@@ -1,8 +1,12 @@
 {
-    "id": "24a2ec7e-305f-4aee-b5d0-9902736f056f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "context_menu_add_level",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Contextual menu",
+    "path": "folders/Scripts/App/Interface/Contextual menu.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "context_menu_add_level",
+  "tags": [],
+  "resourceType": "GMScript",
 }

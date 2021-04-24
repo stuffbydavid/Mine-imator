@@ -1,8 +1,12 @@
 {
-    "id": "a5002786-20f1-4e50-9894-270217f12d7b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_clrcor_brightness",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Color correction",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Color correction.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_clrcor_brightness",
+  "tags": [],
+  "resourceType": "GMScript",
 }

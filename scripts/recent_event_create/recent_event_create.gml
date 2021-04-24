@@ -1,3 +1,6 @@
 /// recent_event_create()
 
-remove = false
+function recent_event_create()
+{
+	remove = false
+}

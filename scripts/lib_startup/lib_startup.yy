@@ -1,8 +1,12 @@
 {
-    "id": "74666be9-e566-4d06-8ffd-95923d1814ce",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "lib_startup",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Libraries",
+    "path": "folders/Scripts/App/Libraries.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "lib_startup",
+  "tags": [],
+  "resourceType": "GMScript",
 }

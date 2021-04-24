@@ -1,3 +1,6 @@
 /// toast_event_destroy()
 
-ds_list_destroy(actions)
+function toast_event_destroy()
+{
+	ds_list_destroy(actions)
+}

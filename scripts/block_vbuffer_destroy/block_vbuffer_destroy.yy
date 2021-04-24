@@ -1,8 +1,12 @@
 {
-    "id": "3f54cd21-a61e-4b83-9fbf-c329438c7fd7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "block_vbuffer_destroy",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vertex buffer",
+    "path": "folders/Scripts/Minecraft/Blocks/Vertex buffer.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "block_vbuffer_destroy",
+  "tags": [],
+  "resourceType": "GMScript",
 }

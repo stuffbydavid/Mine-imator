@@ -1,4 +1,7 @@
 /// action_setting_spawn_objects(spawn)
 /// @arg spawn
 
-setting_spawn_objects = argument0
+function action_setting_spawn_objects(spawn)
+{
+	setting_spawn_objects = spawn
+}

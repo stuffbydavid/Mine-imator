@@ -1,8 +1,12 @@
 {
-    "id": "5c582e19-cfd7-47a7-8602-79c68f9762f1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_volumetric_fog_color",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Volumetric fog",
+    "path": "folders/Scripts/App/Actions/Background/Volumetric fog.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_volumetric_fog_color",
+  "tags": [],
+  "resourceType": "GMScript",
 }

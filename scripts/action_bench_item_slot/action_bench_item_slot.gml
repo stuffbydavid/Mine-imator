@@ -1,10 +1,13 @@
 /// action_bench_item_slot(index)
 /// @arg index
 
-with (bench_settings)
+function action_bench_item_slot(index)
 {
-	item_slot = argument0
-	render_generate_item()
+	with (bench_settings)
+	{
+		item_slot = index
+		render_generate_item()
+	}
+	
+	bench_settings.preview.update = true
 }
-
-bench_settings.preview.update = true

@@ -1,8 +1,12 @@
 {
-    "id": "bbebaf75-16e8-4d3e-8ded-97e89f87098e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "matrix_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Matrix",
+    "path": "folders/Scripts/Utility/Math/Matrix.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "matrix_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

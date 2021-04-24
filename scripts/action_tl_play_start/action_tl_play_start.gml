@@ -1,41 +1,44 @@
 /// action_tl_play_start()
 /// @desc Plays sounds and fires particles on the marker.
 
-audio_stop_all()
-
-with (obj_timeline)
+function action_tl_play_start()
 {
-	if (type = e_tl_type.AUDIO && !hide && app.window_state != "export_movie")
+	audio_stop_all()
+	
+	with (obj_timeline)
 	{
-		for (var k = 0; k < ds_list_size(keyframe_list); k++)
+		if (type = e_tl_type.AUDIO && !hide && app.window_state != "export_movie")
 		{
-			with (keyframe_list[|k])
+			for (var k = 0; k < ds_list_size(keyframe_list); k++)
 			{
-				sound_play_index = null
-				
-				if (value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready)
-					continue
+				with (keyframe_list[|k])
+				{
+					sound_play_index = null
 					
-				if (position + tl_keyframe_length(id) < app.timeline_marker)
-					continue
-				
-				if (position > app.timeline_marker)
-					break
+					if (value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready)
+						continue
 					
-				sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, true)
-				audio_sound_set_track_position(sound_play_index, (value[e_value.SOUND_START] + (app.timeline_marker - position) / app.project_tempo) mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
-				audio_sound_gain(sound_play_index, value[e_value.SOUND_VOLUME], 0)
+					if (position + tl_keyframe_length(id) < app.timeline_marker)
+						continue
+					
+					if (position > app.timeline_marker)
+						break
+					
+					sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, true)
+					audio_sound_set_track_position(sound_play_index, (value[e_value.SOUND_START] + (app.timeline_marker - position) / app.project_tempo) mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
+					audio_sound_gain(sound_play_index, value[e_value.SOUND_VOLUME], 0)
+				}
 			}
 		}
-	}
-	else if (type = e_temp_type.PARTICLE_SPAWNER)
-	{
-		for (var k = 0; k < ds_list_size(keyframe_list); k++)
+		else if (type = e_temp_type.PARTICLE_SPAWNER)
 		{
-			if (keyframe_list[|k].value[e_value.SPAWN] && keyframe_list[|k].position = app.timeline_marker)
+			for (var k = 0; k < ds_list_size(keyframe_list); k++)
 			{
-				fire = true
-				break
+				if (keyframe_list[|k].value[e_value.SPAWN] && keyframe_list[|k].position = app.timeline_marker)
+				{
+					fire = true
+					break
+				}
 			}
 		}
 	}

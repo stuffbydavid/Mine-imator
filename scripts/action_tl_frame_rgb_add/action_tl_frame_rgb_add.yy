@@ -1,8 +1,12 @@
 {
-    "id": "0378f7cc-6737-4752-82f2-c904d9285a7d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_rgb_add",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Material",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Material.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_rgb_add",
+  "tags": [],
+  "resourceType": "GMScript",
 }

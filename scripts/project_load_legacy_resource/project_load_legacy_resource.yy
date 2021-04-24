@@ -1,8 +1,12 @@
 {
-    "id": "c3f4448f-3afc-466b-a11f-c87ab1744f6c",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "project_load_legacy_resource",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Legacy",
+    "path": "folders/Scripts/Project/Load/Legacy.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "project_load_legacy_resource",
+  "tags": [],
+  "resourceType": "GMScript",
 }

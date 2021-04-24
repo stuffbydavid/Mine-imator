@@ -1,8 +1,12 @@
 {
-    "id": "be1a354c-b2b8-402e-9387-325becb40a73",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "colorpicker_reset_brightness",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Colorpicker",
+    "path": "folders/Scripts/App/Interface/Colorpicker.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "colorpicker_reset_brightness",
+  "tags": [],
+  "resourceType": "GMScript",
 }

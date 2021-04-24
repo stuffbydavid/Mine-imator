@@ -2,6 +2,8 @@
 /// @arg value
 /// @arg add
 
-setting_render_indirect_blur_passes = setting_render_indirect_blur_passes * argument1 + argument0
-
-render_samples = -1
+function action_setting_render_indirect_blur_passes(val, add)
+{
+	setting_render_indirect_blur_passes = setting_render_indirect_blur_passes * add + val
+	render_samples = -1
+}

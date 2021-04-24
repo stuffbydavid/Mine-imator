@@ -3,11 +3,14 @@
 /// @arg width
 /// @arg height
 
-with (new(obj_videotemplate))
+function new_videotemplate(name, w, h)
 {
-	name = argument0
-	width = argument1
-	height = argument2
-
-	return id
+	with (new_obj(obj_videotemplate))
+	{
+		id.name = name
+		id.width = w
+		id.height = h
+		
+		return id
+	}
 }

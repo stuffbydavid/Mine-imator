@@ -1,8 +1,12 @@
 {
-    "id": "e1520a39-87e5-44fe-a693-381fe8869490",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_fog",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Graphics",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_fog",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "67a3fd9d-174d-4c75-8020-81b98e0248ac",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "draw_dragger",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Components",
+    "path": "folders/Scripts/App/Interface/Components.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "draw_dragger",
+  "tags": [],
+  "resourceType": "GMScript",
 }

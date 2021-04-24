@@ -1,8 +1,12 @@
 {
-    "id": "6bce0501-5adb-4fce-b0f6-df51f1642fef",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "particles_load",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Load",
+    "path": "folders/Scripts/Project/Load.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "particles_load",
+  "tags": [],
+  "resourceType": "GMScript",
 }

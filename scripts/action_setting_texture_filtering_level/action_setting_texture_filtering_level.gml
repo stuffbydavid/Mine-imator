@@ -2,7 +2,10 @@
 /// @arg value
 /// @arg add
 
-setting_texture_filtering_level = setting_texture_filtering_level * argument1 + argument0
-render_samples = -1
+function action_setting_texture_filtering_level(val, add)
+{
+	setting_texture_filtering_level = setting_texture_filtering_level * add + val
+	render_samples = -1
 
-texture_set_mipmap_level(setting_texture_filtering_level)
+	texture_set_mipmap_level(setting_texture_filtering_level)
+}

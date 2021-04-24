@@ -3,7 +3,10 @@
 /// @arg start
 /// @arg end
 
-if (argument1 = argument2) 
-	return (argument0 < argument1)
+function percent(value, s, e)
+{
+	if (s = e) 
+		return (value < s)
 	
-return clamp((argument0 - argument1) / (argument2 - argument1), 0, 1)
+	return clamp((value - s) / (e - s), 0, 1)
+}

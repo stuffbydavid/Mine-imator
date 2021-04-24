@@ -1,8 +1,12 @@
 {
-    "id": "16325a76-ac2a-4ca7-a20b-38cdfcef8b4d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "languages_save",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Language",
+    "path": "folders/Scripts/App/Interface/Language.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "languages_save",
+  "tags": [],
+  "resourceType": "GMScript",
 }

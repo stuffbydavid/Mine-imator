@@ -3,40 +3,39 @@
 /// @arg vars
 /// @desc Gets a state ID (real number) from the variables, that is used for comparison by the builder.
 
-var block, vars, varslen;
-block = argument0
-vars = argument1
-
-varslen = array_length_1d(vars)
-if (varslen = 0 || block.states_map = null)
-	return 0
-	
-var sid = 0;
-
-for (var i = 0; i < varslen; i += 2)
+function block_get_state_id(block, vars)
 {
-	var statename, valname, state, valid;
-	statename = vars[@ i]
-	valname = vars[@ i + 1]
+	var varslen = array_length(vars);
+	if (varslen = 0 || block.states_map = null)
+		return 0
 	
-	if (statename = "id")
-		continue
+	var sid = 0;
 	
-	state = block.states_map[?statename]
-	if (is_undefined(state))
+	for (var i = 0; i < varslen; i += 2)
 	{
-		debug("Undefined state for block " + block.name + ":" + statename)
-		continue
+		var statename, valname, state, valid;
+		statename = vars[@ i]
+		valname = vars[@ i + 1]
+		
+		if (statename = "id")
+			continue
+		
+		state = block.states_map[?statename]
+		if (is_undefined(state))
+		{
+			debug("Undefined state for block " + block.name + ":" + statename)
+			continue
+		}
+		
+		valid = state.value_map[?valname]
+		if (is_undefined(valid))
+		{
+			debug("Undefined value for block " + block.name + " state " + statename + ": " + valname)
+			continue
+		}
+		
+		sid += state.value_id * valid;
 	}
 	
-	valid = state.value_map[?valname]
-	if (is_undefined(valid))
-	{
-		debug("Undefined value for block " + block.name + " state " + statename + ": " + valname)
-		continue
-	}
-	
-	sid += state.value_id * valid;
+	return sid
 }
-
-return sid

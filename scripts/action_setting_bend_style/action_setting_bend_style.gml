@@ -1,12 +1,15 @@
 /// action_setting_bend_style(value)
 /// @arg value
 
-setting_bend_style = argument0
-render_samples = -1
-
-// Force update timeline meshes
-with (obj_timeline)
+function action_setting_bend_style(style)
 {
-	bend_rot_last = vec3(0)
-	tl_update_model_shape_bend()
+	setting_bend_style = style
+	render_samples = -1
+	
+	// Force update timeline meshes
+	with (obj_timeline)
+	{
+		bend_rot_last = vec3(0)
+		tl_update_model_shape_bend()
+	}
 }

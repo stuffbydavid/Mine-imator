@@ -1,25 +1,26 @@
 /// tl_keyframe_deselect(keyframe)
 /// @arg keyframe
 
-var kf = argument0;
-
-if (!kf.selected)
-	return 0
-	
-kf.selected = false
-
-with (kf.timeline)
+function tl_keyframe_deselect(kf)
 {
-	keyframe_select_amount--
+	if (!kf.selected)
+		return 0
 	
-	if (keyframe_select = kf)
+	kf.selected = false
+	
+	with (kf.timeline)
 	{
-		keyframe_select = null
-		with (obj_keyframe)
-			if (selected && position = other.id)
-				other.keyframe_select = id
+		keyframe_select_amount--
+		
+		if (keyframe_select = kf)
+		{
+			keyframe_select = null
+			with (obj_keyframe)
+				if (selected && position = other.id)
+					other.keyframe_select = id
+		}
+		
+		if (!keyframe_select)
+			tl_deselect()
 	}
-	
-	if (!keyframe_select)
-		tl_deselect()
 }

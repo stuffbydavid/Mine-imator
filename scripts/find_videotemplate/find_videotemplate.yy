@@ -1,8 +1,12 @@
 {
-    "id": "31d6018c-c074-4fb4-8340-91b41387847b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "find_videotemplate",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Project",
+    "path": "folders/Scripts/Project.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "find_videotemplate",
+  "tags": [],
+  "resourceType": "GMScript",
 }

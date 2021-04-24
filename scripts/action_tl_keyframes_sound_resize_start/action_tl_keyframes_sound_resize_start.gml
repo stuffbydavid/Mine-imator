@@ -1,21 +1,24 @@
 /// action_tl_keyframes_sound_resize_start()
 /// @desc Sets position + soundstart + soundend
 
-with (obj_keyframe)
+function action_tl_keyframes_sound_resize_start()
 {
-	if (!selected)
-		continue
-	
-	if (timeline.type != e_tl_type.AUDIO || value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready) // Only affects sounds
+	with (obj_keyframe)
 	{
-		sound_resize_index = null
-		continue
+		if (!selected)
+			continue
+		
+		if (timeline.type != e_tl_type.AUDIO || value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready) // Only affects sounds
+		{
+			sound_resize_index = null
+			continue
+		}
+		
+		sound_resize_index = ds_list_find_index(timeline.keyframe_list, id)
+		sound_resize_pos = position
+		sound_resize_start = value[e_value.SOUND_START]
 	}
 	
-	sound_resize_index = ds_list_find_index(timeline.keyframe_list, id)
-	sound_resize_pos = position
-	sound_resize_start = value[e_value.SOUND_START]
+	timeline_sound_resize_mouse_pos = timeline_mouse_pos
+	window_busy = "timelineresizesounds"
 }
-
-timeline_sound_resize_mouse_pos = timeline_mouse_pos
-window_busy = "timelineresizesounds"

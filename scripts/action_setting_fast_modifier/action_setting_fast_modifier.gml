@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_fast_modifier = setting_fast_modifier * argument1 + argument0
+function action_setting_fast_modifier(val, add)
+{
+	setting_fast_modifier = setting_fast_modifier * val + add
+}

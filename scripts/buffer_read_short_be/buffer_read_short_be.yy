@@ -1,8 +1,12 @@
 {
-    "id": "597da3da-b8f0-4919-9b38-8c574061097f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "buffer_read_short_be",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Read",
+    "path": "folders/Scripts/Utility/File/Buffer/Read.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "buffer_read_short_be",
+  "tags": [],
+  "resourceType": "GMScript",
 }

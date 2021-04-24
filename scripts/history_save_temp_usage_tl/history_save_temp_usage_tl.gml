@@ -4,19 +4,17 @@
 /// @arg treeobj
 /// @desc Saves the affected timelines recursively.
 
-var temp, save, treeobj;
-temp = argument0
-save = argument1
-treeobj = argument2
-
-for (var t = 0; t < ds_list_size(treeobj.tree_list); t++)
+function history_save_temp_usage_tl(temp, save, treeobj)
 {
-	var tl = treeobj.tree_list[|t]
-	if (tl.temp = temp)
+	for (var t = 0; t < ds_list_size(treeobj.tree_list); t++)
 	{
-		save.usage_tl_save_obj[save.usage_tl_amount] = history_save_tl(tl)
-		save.usage_tl_amount++
+		var tl = treeobj.tree_list[|t]
+		if (tl.temp = temp)
+		{
+			save.usage_tl_save_obj[save.usage_tl_amount] = history_save_tl(tl)
+			save.usage_tl_amount++
+		}
+		else
+			history_save_temp_usage_tl(temp, save, tl)
 	}
-	else
-		history_save_temp_usage_tl(temp, save, tl)
 }

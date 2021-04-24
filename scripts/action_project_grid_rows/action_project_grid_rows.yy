@@ -1,8 +1,12 @@
 {
-    "id": "c5f982f3-9b5a-43b4-9490-511edf525eb0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_project_grid_rows",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Project",
+    "path": "folders/Scripts/App/Actions/Project.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_project_grid_rows",
+  "tags": [],
+  "resourceType": "GMScript",
 }

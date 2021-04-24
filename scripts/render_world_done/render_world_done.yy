@@ -1,8 +1,12 @@
 {
-    "id": "32c7b4a0-299d-492e-a14d-f47698d8d0af",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "render_world_done",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "World",
+    "path": "folders/Scripts/Render/World.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "render_world_done",
+  "tags": [],
+  "resourceType": "GMScript",
 }

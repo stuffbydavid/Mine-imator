@@ -1,8 +1,12 @@
 {
-    "id": "242d2c32-2729-460c-937e-38f4e8a1e5f1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_spawn_region_sphere_radius",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Spawn region",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Spawn region.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_spawn_region_sphere_radius",
+  "tags": [],
+  "resourceType": "GMScript",
 }

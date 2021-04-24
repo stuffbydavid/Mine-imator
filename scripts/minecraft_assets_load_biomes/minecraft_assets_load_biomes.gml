@@ -3,102 +3,100 @@
 /// @arg map
 /// @desc Loads biomes from Minecraft version
 
-var list, map;
-list = argument0;
-map = argument1;
-
-// Read all the 'base' biomes
-for (var b = 0; b < ds_list_size(map); b++)
+function minecraft_assets_load_biomes(list, map)
 {
-	var biome = map[|b]
-	var biomeid;
-	with (new(obj_biome))
+	// Read biomes from map
+	for (var b = 0; b < ds_list_size(map); b++)
 	{
-		biomeid = id
-		
-		// Selected biome
-		selected_variant = 0
-		
-		// Name
-		name = biome[?"name"]
-		//display_name = minecraft_asset_get_name("biome", name)
-		
-		// Foliage
-		txy = vec2(0)
-		if (is_string(biome[?"foliage"]))
+		var biome = map[|b]
+		var biomeid;
+		with (new_obj(obj_biome))
 		{
-			color_foliage = hex_to_color(biome[?"foliage"])
-			color_grass = color_foliage
-			hardcoded = true
-		}
-		else
-		{
-			color_foliage = c_white
-			color_grass = c_white
-			txy = value_get_point2D(biome[?"foliage"], vec2(0, 0))
-			hardcoded = false
-		}
-		
-		// Grass
-		if (is_string(biome[?"grass"]))
-			color_grass = hex_to_color(biome[?"grass"])
-		
-		// Water
-		color_water = hex_to_color(biome[?"water"])
-		
-		biome_base = null
-		biome_variants = null
-		
-		// Variants(Optional)
-		if (ds_list_valid(biome[?"variant"]))
-		{
-			biome_variants = ds_list_create()
-			var biomevariants = biome[?"variant"]
-			for (var v = 0; v < ds_list_size(biomevariants); v++)
+			biomeid = id
+			
+			// Selected biome
+			selected_variant = 0
+			
+			// Name
+			name = biome[?"name"]
+			
+			// Foliage
+			txy = vec2(0)
+			if (is_string(biome[?"foliage"]))
 			{
-				var variant = biomevariants[|v];
-				with (new(obj_biome))
+				color_foliage = hex_to_color(biome[?"foliage"])
+				color_grass = color_foliage
+				hardcoded = true
+			}
+			else
+			{
+				color_foliage = c_white
+				color_grass = c_white
+				txy = value_get_point2D(biome[?"foliage"], vec2(0, 0))
+				hardcoded = false
+			}
+			
+			// Grass
+			if (is_string(biome[?"grass"]))
+				color_grass = hex_to_color(biome[?"grass"])
+			
+			// Water
+			color_water = hex_to_color(biome[?"water"])
+			
+			biome_base = null
+			biome_variants = null
+			
+			// Read possible variants
+			if (ds_list_valid(biome[?"variant"]))
+			{
+				biome_variants = ds_list_create()
+				var biomevariants = biome[?"variant"]
+				for (var v = 0; v < ds_list_size(biomevariants); v++)
 				{
-					// Name
-					name = variant[?"name"]
-					
-					// Foliage
-					txy = array_copy_2d(other.txy)
-					hardcoded = other.hardcoded
-					color_foliage = other.color_foliage
-					
-					if (is_string(variant[?"foliage"]))
+					var variant = biomevariants[|v];
+					with (new_obj(obj_biome))
 					{
-						color_foliage = hex_to_color(variant[?"foliage"])
-						hardcoded = true
+						// Name
+						name = variant[?"name"]
+						
+						// Foliage
+						txy = array_copy_1d(other.txy)
+						hardcoded = other.hardcoded
+						color_foliage = other.color_foliage
+						
+						if (is_string(variant[?"foliage"]))
+						{
+							color_foliage = hex_to_color(variant[?"foliage"])
+							hardcoded = true
+						}
+						else if (ds_list_valid(variant[?"foliage"]))
+						{
+							color_foliage = c_white
+							txy = value_get_point2D(variant[?"foliage"], vec2(0, 0))
+							hardcoded = false
+						}
+						
+						// Grass
+						if (is_string(variant[?"grass"]))
+							color_grass = hex_to_color(variant[?"grass"])
+						else
+							color_grass = other.color_grass
+						
+						// Water
+						if (is_string(variant[?"water"]))
+							color_water = hex_to_color(variant[?"water"])
+						else
+							color_water = other.color_water
+						
+						biome_base = biomeid
+						
+						ds_list_add(biome_base.biome_variants, id)
 					}
-					else if (ds_list_valid(variant[?"foliage"]))
-					{
-						color_foliage = c_white
-						txy = value_get_point2D(variant[?"foliage"], vec2(0, 0))
-						hardcoded = false
-					}
-					
-					// Grass
-					if (is_string(variant[?"grass"]))
-						color_grass = hex_to_color(variant[?"grass"])
-					else
-						color_grass = other.color_grass
-					
-					// Water
-					if (is_string(variant[?"water"]))
-						color_water = hex_to_color(variant[?"water"])
-					else
-						color_water = other.color_water
-					
-					biome_base = biomeid
-					
-					ds_list_add(biome_base.biome_variants, id)
 				}
 			}
-		}
 			
+		}
+		
+		ds_list_add(biome_list, biomeid)
 	}
-	
-	ds_list_add(biome_list, biomeid)
 }

@@ -1,8 +1,12 @@
 {
-    "id": "6049c807-ba8d-46ea-9ad7-e1522a250a5e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_update_model_shape",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Update",
+    "path": "folders/Scripts/Project/Timeline/Update.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_update_model_shape",
+  "tags": [],
+  "resourceType": "GMScript",
 }

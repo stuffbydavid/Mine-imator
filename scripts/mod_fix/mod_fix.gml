@@ -2,11 +2,10 @@
 /// @arg x
 /// @arg y
 
-var xx, yy;
-xx = argument0
-yy = argument1
-
-while (xx < 0)
-	xx += yy
-
-return (xx mod yy)
+function mod_fix(xx, yy)
+{
+	while (xx < 0)
+		xx += yy
+	
+	return (xx mod yy)
+}

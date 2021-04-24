@@ -4,27 +4,26 @@
 /// @arg stateid
 /// @desc Returns whether the collection of variables matches the given state ID.
 
-var vars, block, stateid, varslen;
-vars = argument0
-block = argument1
-stateid = argument2
-varslen = array_length_1d(vars)
-
-for (var i = 0; i < varslen; i += 2)
+function state_vars_match_state_id(vars, block, stateid)
 {
-	var name, val, valcomp;
-	name = vars[@ i]
-	val = vars[@ i + 1]
-	valcomp = block_get_state_id_value(block, stateid, name)
+	var varslen = array_length(vars);
 	
-	// Check match
-	if (is_array(val)) // OR
+	for (var i = 0; i < varslen; i += 2)
 	{
-		if (!array_contains(val, valcomp))
+		var name, val, valcomp;
+		name = vars[@ i]
+		val = vars[@ i + 1]
+		valcomp = block_get_state_id_value(block, stateid, name)
+		
+		// Check match
+		if (is_array(val)) // OR
+		{
+			if (!array_contains(val, valcomp))
+				return false
+		}
+		else if (val != valcomp)
 			return false
 	}
-	else if (val != valcomp)
-		return false
+	
+	return true
 }
-
-return true

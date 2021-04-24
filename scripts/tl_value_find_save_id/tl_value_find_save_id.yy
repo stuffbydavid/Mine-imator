@@ -1,8 +1,12 @@
 {
-    "id": "6aeb44ec-b8bc-42db-82bc-d77845555041",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_value_find_save_id",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Values",
+    "path": "folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_value_find_save_id",
+  "tags": [],
+  "resourceType": "GMScript",
 }

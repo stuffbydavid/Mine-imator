@@ -1,8 +1,12 @@
 {
-    "id": "9f6814ab-efe7-44a2-8877-6e8835f87d83",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_spawn_region_box_size",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Spawn region",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Spawn region.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_spawn_region_box_size",
+  "tags": [],
+  "resourceType": "GMScript",
 }

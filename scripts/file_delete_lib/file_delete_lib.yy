@@ -1,8 +1,12 @@
 {
-    "id": "e09022ed-38d9-4860-8737-7dd03a285cfc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "file_delete_lib",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Libraries/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "file_delete_lib",
+  "tags": [],
+  "resourceType": "GMScript",
 }

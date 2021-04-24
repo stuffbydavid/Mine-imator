@@ -1,8 +1,12 @@
 {
-    "id": "e8a55f40-08c5-47d9-99c0-7f6e99b92c91",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "file_dialog_save_keyframes",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Dialogues/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "file_dialog_save_keyframes",
+  "tags": [],
+  "resourceType": "GMScript",
 }

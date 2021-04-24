@@ -1,8 +1,12 @@
 {
-    "id": "b7181a04-f83d-4acf-ae08-aa7c72a1936d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "builder_start",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Builder",
+    "path": "folders/Scripts/Minecraft/Blocks/Builder.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "builder_start",
+  "tags": [],
+  "resourceType": "GMScript",
 }

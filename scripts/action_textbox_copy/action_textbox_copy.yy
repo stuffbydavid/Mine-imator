@@ -1,8 +1,12 @@
 {
-    "id": "9ad5add9-412c-4fb0-94ca-8c7a6412cd4a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_textbox_copy",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Textbox",
+    "path": "folders/Scripts/App/Actions/Context menu/Textbox.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_textbox_copy",
+  "tags": [],
+  "resourceType": "GMScript",
 }

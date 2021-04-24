@@ -1,8 +1,12 @@
 {
-    "id": "d3b69494-c143-4420-8c45-20c4a7e17e8b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_template_editor_particles",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Template editor",
+    "path": "folders/Scripts/App/Interface/Tabs/Template editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_template_editor_particles",
+  "tags": [],
+  "resourceType": "GMScript",
 }

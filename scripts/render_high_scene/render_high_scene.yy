@@ -1,8 +1,12 @@
 {
-    "id": "65eea893-8188-4540-bf73-3724f28c5930",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "render_high_scene",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Scene",
+    "path": "folders/Scripts/Render/High quality/Scene.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "render_high_scene",
+  "tags": [],
+  "resourceType": "GMScript",
 }

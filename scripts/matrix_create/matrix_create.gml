@@ -3,9 +3,7 @@
 /// @arg rotation
 /// @arg scale
 
-var pos, rot, sca;
-pos = argument0
-rot = argument1
-sca = argument2
-
-return matrix_build(pos[@ X], pos[@ Y], pos[@ Z], rot[@ X], rot[@ Y], rot[@ Z], sca[@ X], sca[@ Y], sca[@ Z])
+function matrix_create(pos, rot, sca)
+{
+	return matrix_build(pos[@ X], pos[@ Y], pos[@ Z], rot[@ X], rot[@ Y], rot[@ Z], sca[@ X], sca[@ Y], sca[@ Z])
+}

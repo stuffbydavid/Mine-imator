@@ -1,8 +1,12 @@
 {
-    "id": "afc43d40-a344-4c0f-9814-4dc18d4cb85b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_blade_angle",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Camera",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_blade_angle",
+  "tags": [],
+  "resourceType": "GMScript",
 }

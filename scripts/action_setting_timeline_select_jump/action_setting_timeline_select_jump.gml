@@ -1,4 +1,7 @@
 /// action_setting_timeline_select_jump(jump)
 /// @arg jump
 
-setting_timeline_select_jump = argument0
+function action_setting_timeline_select_jump(jump)
+{
+	setting_timeline_select_jump = jump
+}

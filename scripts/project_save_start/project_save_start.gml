@@ -2,16 +2,19 @@
 /// @arg filename
 /// @arg saveall
 
-json_save_start(argument0)
-json_save_object_start()
-json_save_var("format", project_format)
-json_save_var("created_in", mineimator_version + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
-
-with (obj_template)
-	save = argument1
+function project_save_start(fn, saveall)
+{
+	json_save_start(fn)
+	json_save_object_start()
+	json_save_var("format", project_format)
+	json_save_var("created_in", mineimator_version + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
 	
-with (obj_timeline)
-	save = argument1
+	with (obj_template)
+		save = saveall
 	
-with (obj_resource)
-	save = argument1
+	with (obj_timeline)
+		save = saveall
+	
+	with (obj_resource)
+		save = saveall
+}

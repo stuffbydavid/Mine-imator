@@ -1,8 +1,12 @@
 {
-    "id": "8cfb8be6-0004-4471-b487-8d7c9eaaf48b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_frame_editor_item",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Frame editor",
+    "path": "folders/Scripts/App/Interface/Tabs/Frame editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_frame_editor_item",
+  "tags": [],
+  "resourceType": "GMScript",
 }

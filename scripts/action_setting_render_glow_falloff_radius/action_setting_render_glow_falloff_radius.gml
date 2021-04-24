@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_render_glow_falloff_radius = setting_render_glow_falloff_radius * argument1 + argument0 / 100
+function action_setting_render_glow_falloff_radius(val, add)
+{
+	setting_render_glow_falloff_radius = setting_render_glow_falloff_radius * add + val / 100
+}

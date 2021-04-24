@@ -1,8 +1,12 @@
 {
-    "id": "5b54ef4a-b564-416f-8dcb-06b57b59cff3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_blend_mode",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Graphics",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_blend_mode",
+  "tags": [],
+  "resourceType": "GMScript",
 }

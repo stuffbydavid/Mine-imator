@@ -1,8 +1,12 @@
 {
-    "id": "39990f10-8cc9-41f3-bc62-3428f5501c48",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "toasts_startup",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Toasts",
+    "path": "folders/Scripts/App/Interface/Toasts.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "toasts_startup",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "2fbd370f-4dc8-4e1b-bfbb-a801f4ec5732",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "block_set_vine",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Types",
+    "path": "folders/Scripts/Minecraft/Blocks/Types.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "block_set_vine",
+  "tags": [],
+  "resourceType": "GMScript",
 }

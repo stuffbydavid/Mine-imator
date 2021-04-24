@@ -1,8 +1,12 @@
 {
-    "id": "16a1d35f-0096-4aa4-af47-066807b63257",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "draw_texture",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Texture",
+    "path": "folders/Scripts/Utility/Texture.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "draw_texture",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "3419de57-3c0e-4244-a2cd-37b74354df00",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "panel_tab_list_add",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Panel",
+    "path": "folders/Scripts/App/Interface/Components/Panel.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "panel_tab_list_add",
+  "tags": [],
+  "resourceType": "GMScript",
 }

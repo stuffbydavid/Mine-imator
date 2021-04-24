@@ -1,8 +1,12 @@
 {
-    "id": "9ecf548c-bb36-4501-bddc-cad88d961df7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "trial_upgrade",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Trial",
+    "path": "folders/Scripts/App/Trial.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "trial_upgrade",
+  "tags": [],
+  "resourceType": "GMScript",
 }

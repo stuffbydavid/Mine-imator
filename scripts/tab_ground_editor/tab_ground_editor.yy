@@ -1,8 +1,12 @@
 {
-    "id": "2ca1ce75-ba68-4d82-a3dc-ce668b903d85",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_ground_editor",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Ground editor",
+    "path": "folders/Scripts/App/Interface/Tabs/Ground editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_ground_editor",
+  "tags": [],
+  "resourceType": "GMScript",
 }

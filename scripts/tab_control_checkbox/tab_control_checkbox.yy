@@ -1,8 +1,12 @@
 {
-    "id": "10bd3e29-6f3f-4d3a-8d5d-a976103edcfe",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_control_checkbox",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Control",
+    "path": "folders/Scripts/App/Interface/Components/Tab/Control.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_control_checkbox",
+  "tags": [],
+  "resourceType": "GMScript",
 }

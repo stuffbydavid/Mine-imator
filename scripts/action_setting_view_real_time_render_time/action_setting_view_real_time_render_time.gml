@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_view_real_time_render_time = setting_view_real_time_render_time * argument1 + argument0
+function action_setting_view_real_time_render_time(val, add)
+{
+	setting_view_real_time_render_time = setting_view_real_time_render_time * add + val
+}

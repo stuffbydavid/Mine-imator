@@ -1,3 +1,6 @@
 /// tab_control_collapse()
 
-tab_control(28)
+function tab_control_collapse()
+{
+	tab_control(28)
+}

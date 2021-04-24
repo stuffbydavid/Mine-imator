@@ -1,8 +1,12 @@
 {
-    "id": "1e66b4cc-09fa-4a26-b4a4-7c072bdbe3e9",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "app_update_keybinds",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Update",
+    "path": "folders/Scripts/App/Update.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "app_update_keybinds",
+  "tags": [],
+  "resourceType": "GMScript",
 }

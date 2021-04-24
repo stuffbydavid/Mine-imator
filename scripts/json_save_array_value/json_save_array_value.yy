@@ -1,8 +1,12 @@
 {
-    "id": "309981f5-2504-4e4f-ad26-474672266aee",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "json_save_array_value",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Save",
+    "path": "folders/Scripts/Utility/File/JSON/Save.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "json_save_array_value",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "eac9654f-8318-4b97-85fc-ad8fe7b651d5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_duplicate",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_duplicate",
+  "tags": [],
+  "resourceType": "GMScript",
 }

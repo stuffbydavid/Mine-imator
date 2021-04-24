@@ -2,61 +2,63 @@
 /// @arg list
 /// @desc Sorts a list of models based on the sort mode
 
-var list = argument0;
-var listsize = ds_list_size(list);
-
-var ascend = (recent_sort_mode = e_recent_sort.date_newest || recent_sort_mode = e_recent_sort.name_az);
-var datesort = (recent_sort_mode = e_recent_sort.date_newest || recent_sort_mode = e_recent_sort.date_oldest);
-var datalist = ds_list_create();
-var prevlist = ds_list_create();
-var newlist = ds_list_create();
-
-if (datesort)
+function recent_update_sort(list)
 {
-	for (var i = 0; i < listsize; i++)
-		ds_list_add(datalist, list[|i].last_opened)
+	var listsize, ascend, datesort, datalist, prevlist, newlist;
+	listsize = ds_list_size(list)
+	ascend = (recent_sort_mode = e_recent_sort.date_newest || recent_sort_mode = e_recent_sort.name_az)
+	datesort = (recent_sort_mode = e_recent_sort.date_newest || recent_sort_mode = e_recent_sort.date_oldest)
+	datalist = ds_list_create()
+	prevlist = ds_list_create()
+	newlist = ds_list_create()
 	
-	ds_list_sort(datalist, !ascend)
-	ds_list_copy(prevlist, list)
-	
-	// Look for sorted values and fill list
-	for (var i = 0; i < listsize; i++)
+	if (datesort)
 	{
-		for (var j = 0; j < ds_list_size(prevlist); j++)
+		for (var i = 0; i < listsize; i++)
+			ds_list_add(datalist, list[|i].last_opened)
+		
+		ds_list_sort(datalist, !ascend)
+		ds_list_copy(prevlist, list)
+		
+		// Look for sorted values and fill list
+		for (var i = 0; i < listsize; i++)
 		{
-			if (datalist[|i] = prevlist[|j].last_opened)
+			for (var j = 0; j < ds_list_size(prevlist); j++)
 			{
-				ds_list_add(newlist, prevlist[|j])
-				ds_list_delete(prevlist, j)
-				break
+				if (datalist[|i] = prevlist[|j].last_opened)
+				{
+					ds_list_add(newlist, prevlist[|j])
+					ds_list_delete(prevlist, j)
+					break
+				}
 			}
 		}
 	}
-}
-else
-{	
-	for (var i = 0; i < listsize; i++)
-		ds_list_add(datalist, list[|i].name)
+	else
+	{	
+		for (var i = 0; i < listsize; i++)
+			ds_list_add(datalist, list[|i].name)
+		
+		ds_list_sort(datalist, ascend)
+		ds_list_copy(prevlist, list)
 	
-	ds_list_sort(datalist, ascend)
-	ds_list_copy(prevlist, list)
-	
-	// Look for sorted values and fill list
-	for (var i = 0; i < listsize; i++)
-	{
-		for (var j = 0; j < ds_list_size(prevlist); j++)
+		// Look for sorted values and fill list
+		for (var i = 0; i < listsize; i++)
 		{
-			if (datalist[|i] = prevlist[|j].name)
+			for (var j = 0; j < ds_list_size(prevlist); j++)
 			{
-				ds_list_add(newlist, prevlist[|j])
-				ds_list_delete(prevlist, j)
-				break
+				if (datalist[|i] = prevlist[|j].name)
+				{
+					ds_list_add(newlist, prevlist[|j])
+					ds_list_delete(prevlist, j)
+					break
+				}
 			}
 		}
 	}
+	
+	ds_list_copy(list, newlist)
+	ds_list_destroy(datalist)
+	ds_list_destroy(prevlist)
+	ds_list_destroy(newlist)
 }
-
-ds_list_copy(list, newlist)
-ds_list_destroy(datalist)
-ds_list_destroy(prevlist)
-ds_list_destroy(newlist)

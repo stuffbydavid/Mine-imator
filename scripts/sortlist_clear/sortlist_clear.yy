@@ -1,8 +1,12 @@
 {
-    "id": "febdaaae-93ad-44d5-bb9d-e35f22f4b040",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "sortlist_clear",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Sortlist",
+    "path": "folders/Scripts/App/Interface/Components/Sortlist.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "sortlist_clear",
+  "tags": [],
+  "resourceType": "GMScript",
 }

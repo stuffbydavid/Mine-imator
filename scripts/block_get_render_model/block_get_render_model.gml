@@ -3,38 +3,37 @@
 /// @arg brightness
 /// @desc Returns a random or single model.
 
-var modelobj, brightness;
-modelobj = argument0
-brightness = argument1
-
-instance_activate_object(modelobj)
-
-with (modelobj)
+function block_get_render_model(modelobj, brightness)
 {
-	if (model_amount > 1)
+	instance_activate_object(modelobj)
+	
+	with (modelobj)
 	{
-		// Pick a random model from the list
-		var rand = irandom(total_weight - 1);
-		for (var m = 0; m < model_amount; m++)
+		if (model_amount > 1)
 		{
-			rand -= model[m].weight
-			if (rand <= 0)
+			// Pick a random model from the list
+			var rand = irandom(total_weight - 1);
+			for (var m = 0; m < model_amount; m++)
 			{
-				model[m].brightness = brightness
-				
-				instance_deactivate_object(modelobj)
-				return model[m]
+				rand -= model[m].weight
+				if (rand <= 0)
+				{
+					model[m].brightness = brightness
+					
+					instance_deactivate_object(modelobj)
+					return model[m]
+				}
 			}
 		}
-	}
-	else if (model_amount > 0)
-	{
-		model[0].brightness = brightness
+		else if (model_amount > 0)
+		{
+			model[0].brightness = brightness
+			
+			instance_deactivate_object(modelobj)
+			return model[0]
+		}
 		
 		instance_deactivate_object(modelobj)
-		return model[0]
+		return null
 	}
-	
-	instance_deactivate_object(modelobj)
-	return null
 }

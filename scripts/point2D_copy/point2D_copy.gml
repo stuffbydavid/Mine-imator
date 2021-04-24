@@ -1,4 +1,7 @@
 /// point2D_copy(point)
 /// @arg point
 
-return array_copy_1d(argument0)
+function point2D_copy(p)
+{
+	return array_copy_1d(p)
+}

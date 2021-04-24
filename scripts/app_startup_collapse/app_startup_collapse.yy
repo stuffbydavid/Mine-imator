@@ -1,8 +1,12 @@
 {
-    "id": "378cf612-6481-411c-bb15-070d3bab9cee",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "app_startup_collapse",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Startup",
+    "path": "folders/Scripts/App/Interface/Startup.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "app_startup_collapse",
+  "tags": [],
+  "resourceType": "GMScript",
 }

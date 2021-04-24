@@ -1,8 +1,12 @@
 {
-    "id": "9f24b340-c1d7-4382-80a4-d12614829e7b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "temp_update_shape",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Update",
+    "path": "folders/Scripts/Project/Templates/Update.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "temp_update_shape",
+  "tags": [],
+  "resourceType": "GMScript",
 }

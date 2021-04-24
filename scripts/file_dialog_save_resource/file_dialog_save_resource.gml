@@ -2,4 +2,7 @@
 /// @arg filename
 /// @arg extensions
 
-return file_dialog_save(" * "+argument1 + "|*" + argument1, filename_get_valid(argument0), "", text_get("filedialogsaveresourcecaption"))
+function file_dialog_save_resource(fn, exts)
+{
+	return file_dialog_save(" * " + exts + "|*" + exts, filename_get_valid(fn), "", text_get("filedialogsaveresourcecaption"))
+}

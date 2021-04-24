@@ -1,8 +1,12 @@
 {
-    "id": "5ba90d04-be79-4f08-8d32-f2ee45040e8a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_inherit_color",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Hierarchy",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Hierarchy.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_inherit_color",
+  "tags": [],
+  "resourceType": "GMScript",
 }

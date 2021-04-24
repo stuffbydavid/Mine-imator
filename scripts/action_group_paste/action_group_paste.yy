@@ -1,8 +1,12 @@
 {
-    "id": "04bc8bac-64a6-45bf-8238-527d18f2a045",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_group_paste",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Context menu",
+    "path": "folders/Scripts/App/Actions/Context menu.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_group_paste",
+  "tags": [],
+  "resourceType": "GMScript",
 }

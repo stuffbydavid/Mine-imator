@@ -2,4 +2,7 @@
 /// @arg filename
 /// @arg format
 
-return external_call(lib_movie_start, argument0, argument1)
+function movie_start(fn, format)
+{
+	return external_call(lib_movie_start, fn, format)
+}

@@ -1,4 +1,7 @@
 /// vbuffer_is_empty(vbuffer)
 /// @arg vbuffer
 
-return (vertex_get_number(argument0) = 3)
+function vbuffer_is_empty(vbuf)
+{
+	return (vertex_get_number(vbuf) = 3)
+}

@@ -2,4 +2,7 @@
 /// @arg source
 /// @arg destination
 
-return external_call(lib_json_file_convert_unicode, argument0, argument1)
+function json_file_convert_unicode(src, dest)
+{
+	return external_call(lib_json_file_convert_unicode, src, dest)
+}

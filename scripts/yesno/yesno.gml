@@ -1,4 +1,7 @@
 /// yesno(bool)
 /// @arg bool
 
-return (argument0 ? "yes" : "no")
+function yesno(val)
+{
+	return (val ? "yes" : "no")
+}

@@ -2,5 +2,8 @@
 /// @arg name
 /// @arg open
 
-collapse_map[?argument0] = argument1
-settings_save()
+function action_collapse(name, open)
+{
+	collapse_map[?name] = open
+	settings_save()
+}

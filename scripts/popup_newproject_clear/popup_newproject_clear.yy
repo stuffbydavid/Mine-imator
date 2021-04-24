@@ -1,8 +1,12 @@
 {
-    "id": "4a521bd5-9d13-487c-be5f-1ec53da1ca98",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "popup_newproject_clear",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "New project",
+    "path": "folders/Scripts/App/Interface/Popups/New project.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "popup_newproject_clear",
+  "tags": [],
+  "resourceType": "GMScript",
 }

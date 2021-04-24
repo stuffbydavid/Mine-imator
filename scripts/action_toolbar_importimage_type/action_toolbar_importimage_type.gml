@@ -1,4 +1,7 @@
 /// action_toolbar_importimage_type(type)
 /// @arg type
 
-popup_importimage.type = argument0
+function action_toolbar_importimage_type(type)
+{
+	popup_importimage.type = type
+}

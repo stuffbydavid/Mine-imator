@@ -1,8 +1,12 @@
 {
-    "id": "3cb27132-4a01-4b02-a83c-879f1544b64d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_rot_israndom",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Rotation",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Rotation.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_rot_israndom",
+  "tags": [],
+  "resourceType": "GMScript",
 }

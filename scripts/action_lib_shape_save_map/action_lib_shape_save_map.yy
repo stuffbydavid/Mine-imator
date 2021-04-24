@@ -1,8 +1,12 @@
 {
-    "id": "b9c7bb2f-5bdb-48bf-a8e3-2d90a2aa0503",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_shape_save_map",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Shapes",
+    "path": "folders/Scripts/App/Actions/Library/Shapes.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_shape_save_map",
+  "tags": [],
+  "resourceType": "GMScript",
 }

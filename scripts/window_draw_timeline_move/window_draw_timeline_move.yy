@@ -1,8 +1,12 @@
 {
-    "id": "6292d01d-aafa-42eb-845e-56c35fdd1363",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "window_draw_timeline_move",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Window",
+    "path": "folders/Scripts/App/Interface/Window.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "window_draw_timeline_move",
+  "tags": [],
+  "resourceType": "GMScript",
 }

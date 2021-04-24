@@ -1,8 +1,12 @@
 {
-    "id": "4c32ef09-fd90-4474-a35b-0e0144301117",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "vbuffer_create_cube",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vertex buffer",
+    "path": "folders/Scripts/Utility/Vertex/Vertex buffer.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "vbuffer_create_cube",
+  "tags": [],
+  "resourceType": "GMScript",
 }

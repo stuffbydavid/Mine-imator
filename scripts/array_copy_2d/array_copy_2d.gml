@@ -1,5 +1,13 @@
 /// array_copy_2d(array)
 /// @arg array
 
-argument0[0, 0] = argument0[0, 0]
-return argument0
+function array_copy_2d(arr)
+{
+	var newarr = array();
+	
+	for (var i = 0; i < array_length(arr); i++)
+		for (var j = 0; j < array_length(arr[j]); j++)
+			newarr[i][j] = arr[i][j]
+	
+	return arr
+}

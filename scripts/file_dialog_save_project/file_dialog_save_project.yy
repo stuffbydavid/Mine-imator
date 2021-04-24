@@ -1,8 +1,12 @@
 {
-    "id": "f866227b-33bc-4065-8d64-fe005ddf545b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "file_dialog_save_project",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Dialogues/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "file_dialog_save_project",
+  "tags": [],
+  "resourceType": "GMScript",
 }

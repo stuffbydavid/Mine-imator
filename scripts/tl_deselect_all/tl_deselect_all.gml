@@ -1,21 +1,24 @@
 /// tl_deselect_all()
 /// @desc Deselects all timelines and keyframes.
 
-with (obj_timeline)
+function tl_deselect_all()
 {
-	if (selected)
+	with (obj_timeline)
 	{
-		tl_update_value_types_show()
-		selected = false
-		keyframe_select = null
-		keyframe_select_amount = 0
+		if (selected)
+		{
+			tl_update_value_types_show()
+			selected = false
+			keyframe_select = null
+			keyframe_select_amount = 0
+		}
+		
+		parent_is_selected = false
 	}
 	
-	parent_is_selected = false
+	with (obj_keyframe)
+		selected = false
+	
+	tl_edit_amount = 0
+	tl_edit = null
 }
-
-with (obj_keyframe)
-	selected = false
-
-tl_edit_amount = 0
-tl_edit = null

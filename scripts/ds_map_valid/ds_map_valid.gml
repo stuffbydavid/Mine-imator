@@ -1,4 +1,7 @@
 /// ds_map_valid(id)
 /// @arg id
 
-return (is_real(argument0) && ds_exists(argument0, ds_type_map))
+function ds_map_valid(map)
+{
+	return (is_real(map) && ds_exists(map, ds_type_map))
+}

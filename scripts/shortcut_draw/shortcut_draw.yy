@@ -1,8 +1,12 @@
 {
-    "id": "b03127ed-4c69-4c7e-af8c-230067b7cf17",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shortcut_draw",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Shortcut bar",
+    "path": "folders/Scripts/App/Interface/Shortcut bar.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shortcut_draw",
+  "tags": [],
+  "resourceType": "GMScript",
 }

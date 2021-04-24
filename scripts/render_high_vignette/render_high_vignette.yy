@@ -1,8 +1,12 @@
 {
-    "id": "c8400bf5-c74e-4e7a-b0c9-5b4c94174005",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "render_high_vignette",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Post processing",
+    "path": "folders/Scripts/Render/High quality/Post processing.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "render_high_vignette",
+  "tags": [],
+  "resourceType": "GMScript",
 }

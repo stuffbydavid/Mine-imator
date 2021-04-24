@@ -1,8 +1,12 @@
 {
-    "id": "32883665-ba61-4248-9a11-48734292b807",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "view_update_surface",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "View",
+    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "view_update_surface",
+  "tags": [],
+  "resourceType": "GMScript",
 }

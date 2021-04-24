@@ -1,4 +1,7 @@
-/// action_setting_fps(fps)
-/// @arg fps
+/// action_setting_fps(frames)
+/// @arg frames
 
-room_speed = argument0
+function action_setting_fps(frames)
+{
+	room_speed = frames
+}

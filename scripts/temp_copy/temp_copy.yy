@@ -1,8 +1,12 @@
 {
-    "id": "1607d7d9-5654-44a7-83bf-4a804c3114a6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "temp_copy",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Templates",
+    "path": "folders/Scripts/Project/Templates.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "temp_copy",
+  "tags": [],
+  "resourceType": "GMScript",
 }

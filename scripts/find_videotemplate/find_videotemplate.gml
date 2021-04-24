@@ -2,8 +2,11 @@
 /// @arg width
 /// @arg height
 
-with (obj_videotemplate)
-	if (width = argument0 && height = argument1)
-		return id
-		
-return 0
+function find_videotemplate(w, h)
+{
+	with (obj_videotemplate)
+		if (width = w && height = h)
+			return id
+	
+	return 0
+}

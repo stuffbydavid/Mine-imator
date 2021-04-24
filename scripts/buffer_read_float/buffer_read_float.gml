@@ -1,4 +1,7 @@
 /// buffer_read_float()
 /// @desc Reads a float from the buffer.
 
-return real(buffer_read(buffer_current, buffer_f32))
+function buffer_read_float()
+{
+	return real(buffer_read(buffer_current, buffer_f32))
+}

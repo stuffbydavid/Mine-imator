@@ -1,8 +1,12 @@
 {
-    "id": "cbf3ba7e-ae64-4885-8825-52348d2c4578",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_value_interpolate",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Values",
+    "path": "folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_value_interpolate",
+  "tags": [],
+  "resourceType": "GMScript",
 }

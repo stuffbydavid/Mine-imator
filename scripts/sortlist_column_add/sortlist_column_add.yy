@@ -1,8 +1,12 @@
 {
-    "id": "4a2fb3f0-bf7b-4690-be18-418f9b4a0c46",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "sortlist_column_add",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Sortlist",
+    "path": "folders/Scripts/App/Interface/Components/Sortlist.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "sortlist_column_add",
+  "tags": [],
+  "resourceType": "GMScript",
 }

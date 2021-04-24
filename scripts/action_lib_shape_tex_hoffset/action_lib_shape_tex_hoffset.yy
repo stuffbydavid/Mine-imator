@@ -1,8 +1,12 @@
 {
-    "id": "f439abe7-0277-4a1d-aa59-9e3ae698382c",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_shape_tex_hoffset",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Shapes",
+    "path": "folders/Scripts/App/Actions/Library/Shapes.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_shape_tex_hoffset",
+  "tags": [],
+  "resourceType": "GMScript",
 }

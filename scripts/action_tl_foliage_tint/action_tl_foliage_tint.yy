@@ -1,8 +1,12 @@
 {
-    "id": "1a4071af-a381-4e67-9eb2-cf9b68535fdb",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_foliage_tint",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Graphics",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_foliage_tint",
+  "tags": [],
+  "resourceType": "GMScript",
 }

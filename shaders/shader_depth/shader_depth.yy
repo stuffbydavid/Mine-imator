@@ -1,7 +1,11 @@
 {
-    "id": "b5c3a952-2c07-4ded-931a-cb61014e02df",
-    "modelName": "GMShader",
-    "mvc": "1.0",
-    "name": "shader_depth",
-    "type": 1
+  "type": 1,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Shaders/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_depth",
+  "tags": [],
+  "resourceType": "GMShader",
 }

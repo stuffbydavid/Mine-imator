@@ -1,4 +1,7 @@
 /// texture_height(texture)
 /// @arg texture
 
-return sprite_get_height(argument0)
+function texture_height(tex)
+{
+	return sprite_get_height(tex)
+}

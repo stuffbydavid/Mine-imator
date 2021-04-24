@@ -1,8 +1,12 @@
 {
-    "id": "88ccad89-5e57-4ebc-8b98-52165de92acf",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_blur_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Effects",
+    "path": "folders/Scripts/Render/Shaders/Set/Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_blur_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

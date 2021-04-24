@@ -1,8 +1,12 @@
 {
-    "id": "d1bc33a0-e0cd-48ee-bf6b-b7dbce9c867d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_setting_timeline_hide_ghosts",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/App/Actions/Settings/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_setting_timeline_hide_ghosts",
+  "tags": [],
+  "resourceType": "GMScript",
 }

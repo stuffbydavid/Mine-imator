@@ -1,8 +1,12 @@
 {
-    "id": "29236046-5f6c-4e54-953b-750652b30aac",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "temp_get_block_texobj",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Texture",
+    "path": "folders/Scripts/Project/Templates/Texture.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "temp_get_block_texobj",
+  "tags": [],
+  "resourceType": "GMScript",
 }

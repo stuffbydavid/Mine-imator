@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_snap_size_scale = setting_snap_size_scale * argument1 + argument0
+function action_setting_snap_size_scale(val, add)
+{
+	setting_snap_size_scale = setting_snap_size_scale * add + val
+}

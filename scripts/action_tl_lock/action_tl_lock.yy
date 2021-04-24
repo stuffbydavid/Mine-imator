@@ -1,8 +1,12 @@
 {
-    "id": "9ba8f56a-5769-437f-9e86-70738eeecf9e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_lock",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "List",
+    "path": "folders/Scripts/App/Actions/Timeline/List.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_lock",
+  "tags": [],
+  "resourceType": "GMScript",
 }

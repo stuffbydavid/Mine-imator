@@ -1,3 +1,6 @@
 /// action_toolbar_import_asset()
 
-asset_load()
+function action_toolbar_import_asset()
+{
+	asset_load()
+}

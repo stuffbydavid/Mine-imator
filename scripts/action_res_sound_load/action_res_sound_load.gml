@@ -1,33 +1,34 @@
-/// action_res_sound_load(filenmae)
+/// action_res_sound_load(filename)
 /// @arg filename
 
-if (history_undo)
+function action_res_sound_load(fn)
 {
-	with (history_data)
-		history_destroy_loaded()
-}
-else
-{
-	var fn, res;
-	
-	if (history_redo)
-		fn = history_data.filename
-	else
-		fn = argument0
-		
-	res = new_res(fn, e_res_type.SOUND)
-	res.loaded = true
-	with (res)
-		res_load()
-		
-	if (!history_redo && !res.replaced)
+	if (history_undo)
 	{
-		with (history_set(action_res_sound_load))
+		with (history_data)
+			history_destroy_loaded()
+	}
+	else
+	{
+		var res;
+		
+		if (history_redo)
+			fn = history_data.filename
+		
+		res = new_res(fn, e_res_type.SOUND)
+		res.loaded = true
+		with (res)
+			res_load()
+		
+		if (!history_redo && !res.replaced)
 		{
-			filename = fn
-			history_save_loaded()
+			with (history_set(action_res_sound_load))
+			{
+				filename = fn
+				history_save_loaded()
+			}
 		}
 	}
+	
+	project_reset_loaded()
 }
-
-project_reset_loaded()

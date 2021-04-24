@@ -1,8 +1,12 @@
 {
-    "id": "3ebf93f5-7f64-4e24-ac26-5aa6c40a6255",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_wind_direction",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Wind",
+    "path": "folders/Scripts/App/Actions/Background/Wind.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_wind_direction",
+  "tags": [],
+  "resourceType": "GMScript",
 }

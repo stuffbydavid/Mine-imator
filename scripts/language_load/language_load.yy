@@ -1,8 +1,12 @@
 {
-    "id": "97297622-b963-4479-8f1d-2322e03ed7b0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "language_load",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Text",
+    "path": "folders/Scripts/App/Interface/Text.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "language_load",
+  "tags": [],
+  "resourceType": "GMScript",
 }

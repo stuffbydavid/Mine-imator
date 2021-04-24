@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_render_dof_quality = setting_render_dof_quality * argument1 + argument0
+function action_setting_render_dof_quality(val, add)
+{
+	setting_render_dof_quality = setting_render_dof_quality * add + val
+}

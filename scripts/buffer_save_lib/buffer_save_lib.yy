@@ -1,8 +1,12 @@
 {
-    "id": "2467567a-8f27-4b77-b00e-24dc541968a4",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "buffer_save_lib",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Libraries/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "buffer_save_lib",
+  "tags": [],
+  "resourceType": "GMScript",
 }

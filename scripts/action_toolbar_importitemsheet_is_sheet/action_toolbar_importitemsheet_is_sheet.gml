@@ -1,4 +1,7 @@
 /// action_toolbar_importitemsheet_is_sheet(enable)
 /// @arg enable
 
-popup_importitemsheet.is_sheet = argument0
+function action_toolbar_importitemsheet_is_sheet(enable)
+{
+	popup_importitemsheet.is_sheet = enable
+}

@@ -2,11 +2,12 @@
 /// @arg id
 /// @desc Converts a ds list to an array and returns it
 
-var list, arr;
-list = argument0
-arr = array()
-
-for (var i = 0; i < ds_list_size(list); i++)
-	array_add(arr, list[|i])
-
-return arr
+function ds_list_create_array(list)
+{
+	var arr = array();
+	
+	for (var i = 0; i < ds_list_size(list); i++)
+		array_add(arr, list[|i])
+	
+	return arr
+}

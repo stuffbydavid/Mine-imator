@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_slow_modifier = setting_slow_modifier * argument1 + argument0
+function action_setting_slow_modifier(val, add)
+{
+	setting_slow_modifier = setting_slow_modifier * val + add
+}

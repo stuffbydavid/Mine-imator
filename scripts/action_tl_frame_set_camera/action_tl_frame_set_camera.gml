@@ -2,31 +2,32 @@
 /// @arg valueslist
 /// @arg [reset]
 
-var valueslist, reset;
-valueslist = argument[0]
-reset = false
-
-if (argument_count > 1)
-	reset = argument[1]
-
-tl_value_set_start(action_tl_frame_set_camera, false)
-
-for (var i = 0; i < ds_list_size(camera_values_list); i++)
+function action_tl_frame_set_camera()
 {
-	var vid = camera_values_list[|i];
+	var valueslist, reset;
+	valueslist = argument[0]
+	reset = false
 	
-	if (reset)
+	if (argument_count > 1)
+		reset = argument[1]
+	
+	tl_value_set_start(action_tl_frame_set_camera, false)
+	
+	for (var i = 0; i < ds_list_size(camera_values_list); i++)
 	{
-		if (valueslist[|i] = null)
-			tl_value_set(vid, null, false)
+		var vid = camera_values_list[|i];
+		
+		if (reset)
+		{
+			if (valueslist[|i] = null)
+				tl_value_set(vid, null, false)
 			
-		if (valueslist[|i] = true)
-			tl_value_set(vid, tl_value_default(vid), false)
+			if (valueslist[|i] = true)
+				tl_value_set(vid, tl_value_default(vid), false)
+		}
+		else
+			tl_value_set(vid, valueslist[|i], false)
 	}
-	else
-	{
-		tl_value_set(vid, valueslist[|i], false)
-	}
+	
+	tl_value_set_done()
 }
-
-tl_value_set_done()

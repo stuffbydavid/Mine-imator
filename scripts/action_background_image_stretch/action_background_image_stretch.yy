@@ -1,8 +1,12 @@
 {
-    "id": "46b96781-b0b4-4e6e-b995-1e93296ad7bf",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_image_stretch",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Image",
+    "path": "folders/Scripts/App/Actions/Background/Image.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_image_stretch",
+  "tags": [],
+  "resourceType": "GMScript",
 }

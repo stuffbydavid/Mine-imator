@@ -1,14 +1,17 @@
 /// new_tl(type)
 /// @arg type
 
-with (new(obj_timeline))
+function new_tl(tlype)
 {
-	type = argument0
-	
-	tl_update()
-	
-	tl_set_parent_root()
-	tl_value_spawn()
-	
-	return id
+	with (new_obj(obj_timeline))
+	{
+		type = tlype
+		
+		tl_update()
+		
+		tl_set_parent_root()
+		tl_value_spawn()
+		
+		return id
+	}
 }

@@ -4,6 +4,10 @@
 /// @arg randommin
 /// @arg randommax
 
-if (argument1)
-	return random_range(argument2, argument3)
-return argument0
+function value_random(val, israndom, randommin, randommax)
+{
+	if (israndom)
+		return random_range(randommin, randommax)
+	
+	return val
+}

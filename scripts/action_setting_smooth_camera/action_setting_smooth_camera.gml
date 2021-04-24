@@ -1,4 +1,7 @@
 /// action_setting_smooth_camera(yes)
 /// @arg yes
 
-setting_smooth_camera = argument0
+function action_setting_smooth_camera(yes)
+{
+	setting_smooth_camera = yes
+}

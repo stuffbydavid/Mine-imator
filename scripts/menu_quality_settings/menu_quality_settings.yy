@@ -1,8 +1,12 @@
 {
-    "id": "a6832b02-4f16-48c0-82b4-08f65ccd9abc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "menu_quality_settings",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "View",
+    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "menu_quality_settings",
+  "tags": [],
+  "resourceType": "GMScript",
 }

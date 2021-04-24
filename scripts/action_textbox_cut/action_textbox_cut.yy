@@ -1,8 +1,12 @@
 {
-    "id": "e5d42e31-db5b-4958-8e68-a348ecd152a6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_textbox_cut",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Textbox",
+    "path": "folders/Scripts/App/Actions/Context menu/Textbox.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_textbox_cut",
+  "tags": [],
+  "resourceType": "GMScript",
 }

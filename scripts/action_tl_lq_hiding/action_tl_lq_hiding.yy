@@ -1,8 +1,12 @@
 {
-    "id": "2e4b36d6-5212-4c7e-bf46-558c5b9905e2",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_lq_hiding",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Graphics",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_lq_hiding",
+  "tags": [],
+  "resourceType": "GMScript",
 }

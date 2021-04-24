@@ -1,3 +1,6 @@
 /// colorpicker_set_mode(mode)
 
-colorpicker.mode = argument0
+function colorpicker_set_mode(mode)
+{
+	colorpicker.mode = mode
+}

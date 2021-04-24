@@ -1,8 +1,12 @@
 {
-    "id": "c1b79f26-b175-49af-821d-bd3ca782ebf3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_value_set_start",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Values",
+    "path": "folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_value_set_start",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "9083951e-cfdc-4f3b-b1ff-f9f3bcc007dd",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "view_control_move",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Control",
+    "path": "folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "view_control_move",
+  "tags": [],
+  "resourceType": "GMScript",
 }

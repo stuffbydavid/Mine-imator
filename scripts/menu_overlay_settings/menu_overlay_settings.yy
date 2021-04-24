@@ -1,8 +1,12 @@
 {
-    "id": "10af6493-ba4a-48c5-b9f9-b11f84b0c733",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "menu_overlay_settings",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "View",
+    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "menu_overlay_settings",
+  "tags": [],
+  "resourceType": "GMScript",
 }

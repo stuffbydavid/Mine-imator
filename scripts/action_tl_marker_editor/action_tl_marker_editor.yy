@@ -1,8 +1,12 @@
 {
-    "id": "265a1b8e-52cd-43ec-a31c-baceda417145",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_marker_editor",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Marker",
+    "path": "folders/Scripts/App/Actions/Timeline/Marker.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_marker_editor",
+  "tags": [],
+  "resourceType": "GMScript",
 }

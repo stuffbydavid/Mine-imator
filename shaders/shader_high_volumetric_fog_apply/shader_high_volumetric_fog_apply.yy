@@ -1,7 +1,11 @@
 {
-    "id": "595ad313-d210-48e7-9fe7-a2bb1680dafd",
-    "modelName": "GMShader",
-    "mvc": "1.0",
-    "name": "shader_high_volumetric_fog_apply",
-    "type": 1
+  "type": 1,
+  "parent": {
+    "name": "Volumetrics",
+    "path": "folders/Shaders/High quality/Volumetrics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_volumetric_fog_apply",
+  "tags": [],
+  "resourceType": "GMShader",
 }

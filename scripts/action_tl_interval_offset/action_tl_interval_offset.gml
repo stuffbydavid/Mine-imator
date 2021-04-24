@@ -2,5 +2,8 @@
 /// @arg value
 /// @arg add
 
-project_changed = true
-timeline_interval_offset = timeline_interval_offset * argument1 + argument0
+function action_tl_interval_offset(val, add)
+{
+	project_changed = true
+	timeline_interval_offset = timeline_interval_offset * add + val
+}

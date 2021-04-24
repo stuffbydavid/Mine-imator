@@ -1,3 +1,6 @@
 /// tab_control_checkbox()
 
-tab_control(24)
+function tab_control_checkbox()
+{
+	tab_control(24)
+}

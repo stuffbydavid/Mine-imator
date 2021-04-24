@@ -1,8 +1,12 @@
 {
-    "id": "d5de1a94-77b5-434c-b906-c13925127cfd",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "json_load",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Load",
+    "path": "folders/Scripts/Utility/File/JSON/Load.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "json_load",
+  "tags": [],
+  "resourceType": "GMScript",
 }

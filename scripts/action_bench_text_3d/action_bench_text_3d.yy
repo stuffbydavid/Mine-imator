@@ -1,8 +1,12 @@
 {
-    "id": "bc710bbf-396f-4bae-844f-4426fe1a6fa4",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_bench_text_3d",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Text",
+    "path": "folders/Scripts/App/Actions/Bench/Text.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_bench_text_3d",
+  "tags": [],
+  "resourceType": "GMScript",
 }

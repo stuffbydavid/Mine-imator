@@ -1,8 +1,12 @@
 {
-    "id": "13541fde-d37f-49ae-88cb-dd59c97caac1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "app_startup_interface_lists",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Startup",
+    "path": "folders/Scripts/App/Interface/Startup.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "app_startup_interface_lists",
+  "tags": [],
+  "resourceType": "GMScript",
 }

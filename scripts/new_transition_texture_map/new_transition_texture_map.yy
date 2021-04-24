@@ -1,8 +1,12 @@
 {
-    "id": "a25a806d-511b-43f1-8fca-90e23d7b5981",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "new_transition_texture_map",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "App",
+    "path": "folders/Scripts/App.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "new_transition_texture_map",
+  "tags": [],
+  "resourceType": "GMScript",
 }

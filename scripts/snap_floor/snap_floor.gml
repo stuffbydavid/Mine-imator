@@ -2,7 +2,10 @@
 /// @arg value
 /// @arg x
 
-if (argument1 = 0)
-	return argument0
+function snap_floor(val, xx)
+{
+	if (xx = 0)
+		return val
 	
-return floor(argument0 / argument1) * argument1
+	return floor(val / xx) * xx
+}

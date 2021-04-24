@@ -1,8 +1,12 @@
 {
-    "id": "d35225d5-b53b-4ece-885c-cae44c47942f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "state_vars_match",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "States",
+    "path": "folders/Scripts/Minecraft/States.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "state_vars_match",
+  "tags": [],
+  "resourceType": "GMScript",
 }

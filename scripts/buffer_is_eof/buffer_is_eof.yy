@@ -1,8 +1,12 @@
 {
-    "id": "79329c10-b02c-46db-af7f-96404ad10151",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "buffer_is_eof",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Buffer",
+    "path": "folders/Scripts/Utility/File/Buffer.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "buffer_is_eof",
+  "tags": [],
+  "resourceType": "GMScript",
 }

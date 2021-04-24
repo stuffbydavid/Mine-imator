@@ -1,8 +1,12 @@
 {
-    "id": "f06db03b-b2b3-4f8b-ac52-cf6993f9e174",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_template_editor_particles_framebox",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Template editor",
+    "path": "folders/Scripts/App/Interface/Tabs/Template editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_template_editor_particles_framebox",
+  "tags": [],
+  "resourceType": "GMScript",
 }

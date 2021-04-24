@@ -1,8 +1,12 @@
 {
-    "id": "b620b86b-0063-469c-9020-914f8c629d23",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_update_hide",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Update",
+    "path": "folders/Scripts/Project/Timeline/Update.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_update_hide",
+  "tags": [],
+  "resourceType": "GMScript",
 }

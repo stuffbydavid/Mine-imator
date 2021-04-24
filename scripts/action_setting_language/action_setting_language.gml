@@ -1,9 +1,10 @@
 /// action_setting_language(filename)
 /// @arg filename
 
-var fn = argument0;
+function action_setting_language(fn)
+{
+	setting_language_filename = fn
+	language_load(languages_directory + fn, language_map)
 
-setting_language_filename = fn
-language_load(languages_directory + fn, language_map)
-
-settings_save()
+	settings_save()
+}

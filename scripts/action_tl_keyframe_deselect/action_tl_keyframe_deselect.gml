@@ -2,36 +2,39 @@
 /// @arg timeline
 /// @arg keyframe
 
-if (history_undo)
+function action_tl_keyframe_deselect(timeline, keyframe)
 {
-	with (save_id_find(history_data.tl_save_id))
-		tl_keyframe_select(keyframe_list[|history_data.kf_index])
-}
-else
-{
-	var tl, kf;
-
-	if (history_redo)
+	if (history_undo)
 	{
-		tl = save_id_find(history_data.tl_save_id)
-		kf = tl.keyframe_list[|history_data.kf_index]
+		with (save_id_find(history_data.tl_save_id))
+			tl_keyframe_select(keyframe_list[|history_data.kf_index])
 	}
 	else
 	{
-		tl = argument0
-		kf = argument1
+		var tl, kf;
 		
-		if (!kf.selected)
-			return 0
-		
-		with (history_set(action_tl_keyframe_deselect))
+		if (history_redo)
 		{
-			tl_save_id = save_id_get(tl)
-			kf_index = ds_list_find_index(tl.keyframe_list, kf)
+			tl = save_id_find(history_data.tl_save_id)
+			kf = tl.keyframe_list[|history_data.kf_index]
 		}
+		else
+		{
+			tl = timeline
+			kf = keyframe
+			
+			if (!kf.selected)
+				return 0
+			
+			with (history_set(action_tl_keyframe_deselect))
+			{
+				tl_save_id = save_id_get(tl)
+				kf_index = ds_list_find_index(tl.keyframe_list, kf)
+			}
+		}
+		
+		tl_keyframe_deselect(kf)
 	}
 	
-	tl_keyframe_deselect(kf)
+	app_update_tl_edit()
 }
-
-app_update_tl_edit()

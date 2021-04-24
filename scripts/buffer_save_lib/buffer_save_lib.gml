@@ -2,11 +2,14 @@
 /// @arg buffer
 /// @arg filename
 
-if (file_copy_temp)
+function buffer_save_lib(buffer, fn)
 {
-	file_delete_lib(temp_file)
-	buffer_save(argument0, temp_file)
-	file_copy_lib(temp_file, argument1)
+	if (file_copy_temp)
+	{
+		file_delete_lib(temp_file)
+		buffer_save(buffer, temp_file)
+		file_copy_lib(temp_file, fn)
+	}
+	else
+		buffer_save(buffer, fn)
 }
-else
-	buffer_save(argument0, argument1)

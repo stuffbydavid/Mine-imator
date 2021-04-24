@@ -2,10 +2,13 @@
 /// @arg name
 /// @arg bitrate
 
-with (new(obj_videoquality))
+function new_videoquality(name, bitrate)
 {
-	name = argument0
-	bit_rate = argument1
-	
-	return id
+	with (new_obj(obj_videoquality))
+	{
+		id.name = name
+		id.bit_rate = bitrate
+		
+		return id
+	}
 }

@@ -1,4 +1,7 @@
 /// action_tl_markers_show(show)
 /// @arg show
 
-timeline_show_markers = argument0
+function action_tl_markers_show(show)
+{
+	timeline_show_markers = show
+}

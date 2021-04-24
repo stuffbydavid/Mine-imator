@@ -1,3 +1,6 @@
 /// tab_control_button_label()
 
-tab_control(32)
+function tab_control_button_label()
+{
+	tab_control(32)
+}

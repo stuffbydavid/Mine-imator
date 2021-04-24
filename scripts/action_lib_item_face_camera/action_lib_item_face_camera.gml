@@ -1,17 +1,11 @@
 /// action_lib_item_face_camera(face)
 /// @arg face
 
-var face;
-
-if (history_undo)
-	face = history_data.old_value
-else if (history_redo)
-	face = history_data.new_value
-else
+function action_lib_item_face_camera(face)
 {
-	face = argument0
-	history_set_var(action_lib_item_face_camera, temp_edit.item_face_camera, face, false)
-}
+	if (!history_undo && !history_redo)
+		history_set_var(action_lib_item_face_camera, temp_edit.item_face_camera, face, false)
 	
-temp_edit.item_face_camera = face
-lib_preview.update = true
+	temp_edit.item_face_camera = face
+	lib_preview.update = true
+}

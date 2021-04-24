@@ -1,8 +1,12 @@
 {
-    "id": "57123b84-0b53-4be7-ad00-a44410157fe7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "interpolate",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Math",
+    "path": "folders/Scripts/Utility/Math.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "interpolate",
+  "tags": [],
+  "resourceType": "GMScript",
 }

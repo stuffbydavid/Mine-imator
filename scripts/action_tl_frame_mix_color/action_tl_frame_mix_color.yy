@@ -1,8 +1,12 @@
 {
-    "id": "c98ce413-01df-43ef-8a57-e6a59c634ab8",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_mix_color",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Material",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Material.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_mix_color",
+  "tags": [],
+  "resourceType": "GMScript",
 }

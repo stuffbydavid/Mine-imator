@@ -1,8 +1,12 @@
 {
-    "id": "14a1be77-37d3-4672-88fd-9ef0a5478b72",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_samples_unpack_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_samples_unpack_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

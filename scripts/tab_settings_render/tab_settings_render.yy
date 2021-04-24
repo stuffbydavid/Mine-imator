@@ -1,8 +1,12 @@
 {
-    "id": "b50fd69b-cff1-4add-b85a-a81e87307878",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_settings_render",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Settings",
+    "path": "folders/Scripts/App/Interface/Tabs/Settings.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_settings_render",
+  "tags": [],
+  "resourceType": "GMScript",
 }

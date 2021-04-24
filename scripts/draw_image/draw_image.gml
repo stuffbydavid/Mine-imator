@@ -9,11 +9,14 @@
 /// @arg alpha
 /// @arg [rotation]]]
 
-if (argument_count < 5)
-	draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], 1, 1, 0, c_white, draw_get_alpha())
-else if (argument_count < 7)
-	draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], 0, c_white, draw_get_alpha())
-else if (argument_count < 9)
-	draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], 0, argument[6], argument[7] * draw_get_alpha())
-else
-	draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], argument[8], argument[6], argument[7] * draw_get_alpha())
+function draw_image()
+{
+	if (argument_count < 5)
+		draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], 1, 1, 0, c_white, draw_get_alpha())
+	else if (argument_count < 7)
+		draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], 0, c_white, draw_get_alpha())
+	else if (argument_count < 9)
+		draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], 0, argument[6], argument[7] * draw_get_alpha())
+	else
+		draw_sprite_ext(argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], argument[8], argument[6], argument[7] * draw_get_alpha())
+}

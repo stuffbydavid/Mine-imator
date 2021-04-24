@@ -1,8 +1,12 @@
 {
-    "id": "b288e94d-dc0d-4373-b25e-0816af3840d8",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "type_is_timeline",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "type_is_timeline",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "bd513f03-fe25-416e-8c54-5e886a9b9bba",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "sprite_add_lib",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Libraries/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "sprite_add_lib",
+  "tags": [],
+  "resourceType": "GMScript",
 }

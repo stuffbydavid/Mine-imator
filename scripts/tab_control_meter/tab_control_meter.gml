@@ -1,3 +1,6 @@
 /// tab_control_meter()
 
-tab_control(44)
+function tab_control_meter()
+{
+	tab_control(44)
+}

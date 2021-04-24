@@ -1,14 +1,17 @@
 /// string_to_dir(string)
 /// @arg string
 
-switch (argument0)
+function string_to_dir(str)
 {
-	case "east":	return e_dir.EAST
-	case "west":	return e_dir.WEST
-	case "south":	return e_dir.SOUTH
-	case "north":	return e_dir.NORTH
-	case "up":		return e_dir.UP
-	case "down":	return e_dir.DOWN
+	switch (str)
+	{
+		case "east":	return e_dir.EAST
+		case "west":	return e_dir.WEST
+		case "south":	return e_dir.SOUTH
+		case "north":	return e_dir.NORTH
+		case "up":		return e_dir.UP
+		case "down":	return e_dir.DOWN
+	}
+	
+	return null
 }
-
-return null

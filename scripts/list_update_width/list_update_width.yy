@@ -1,8 +1,12 @@
 {
-    "id": "1baf9cd7-8123-4c22-9628-1681c398c661",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "list_update_width",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Lists",
+    "path": "folders/Scripts/App/Interface/Components/Lists.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "list_update_width",
+  "tags": [],
+  "resourceType": "GMScript",
 }

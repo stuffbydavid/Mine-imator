@@ -2,7 +2,10 @@
 /// @arg value
 /// @arg x
 
-if (argument1 = 0)
-	return argument0
+function snap(val, xx)
+{
+	if (xx = 0)
+		return val
 	
-return round(argument0 / argument1) * argument1
+	return round(val / xx) * xx
+}

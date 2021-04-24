@@ -1,8 +1,12 @@
 {
-    "id": "99d3b3f3-0b9b-4c1c-ba84-d9046247aa7d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_lighting_apply_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_lighting_apply_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "71efa61a-94f6-408b-aac9-6290f7d7dfe6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_sprite_animation_speed_random_min",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Animation speed",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Animation speed.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_sprite_animation_speed_random_min",
+  "tags": [],
+  "resourceType": "GMScript",
 }

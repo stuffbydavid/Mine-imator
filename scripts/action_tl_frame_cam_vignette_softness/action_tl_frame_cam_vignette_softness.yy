@@ -1,8 +1,12 @@
 {
-    "id": "5f6bfc9d-780f-46c0-a0bd-f9cbd7c738e6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_vignette_softness",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vignette",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Vignette.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_vignette_softness",
+  "tags": [],
+  "resourceType": "GMScript",
 }

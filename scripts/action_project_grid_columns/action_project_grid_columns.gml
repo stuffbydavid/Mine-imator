@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-project_grid_columns = project_grid_columns * argument1 + argument0
+function action_project_grid_columns(val, add)
+{
+	project_grid_columns = project_grid_columns * val + add
+}

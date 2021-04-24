@@ -1,8 +1,12 @@
 {
-    "id": "039b348f-4d0f-4b1d-8f49-577792aa1d83",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_parent_tree",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Hierarchy",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Hierarchy.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_parent_tree",
+  "tags": [],
+  "resourceType": "GMScript",
 }

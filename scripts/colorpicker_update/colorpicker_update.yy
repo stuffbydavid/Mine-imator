@@ -1,8 +1,12 @@
 {
-    "id": "c00433de-9b80-4fe6-b687-edeb30f3fa8a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "colorpicker_update",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Colorpicker",
+    "path": "folders/Scripts/App/Interface/Colorpicker.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "colorpicker_update",
+  "tags": [],
+  "resourceType": "GMScript",
 }

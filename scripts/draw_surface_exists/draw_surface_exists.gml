@@ -3,5 +3,8 @@
 /// @arg x
 /// @arg y
 
-if (surface_exists(argument0))
-	draw_surface_ext(argument0, argument1, argument2, 1, 1, 0, c_white, draw_get_alpha())
+function draw_surface_exists(surf, xx, yy)
+{
+	if (surface_exists(surf))
+		draw_surface_ext(surf, xx, yy, 1, 1, 0, c_white, draw_get_alpha())
+}

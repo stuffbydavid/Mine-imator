@@ -1,8 +1,12 @@
 {
-    "id": "caebb211-3c3a-4051-ad95-fc3bc795239a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_play_repeat",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Play",
+    "path": "folders/Scripts/App/Actions/Timeline/Play.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_play_repeat",
+  "tags": [],
+  "resourceType": "GMScript",
 }

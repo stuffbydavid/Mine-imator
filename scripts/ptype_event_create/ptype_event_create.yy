@@ -1,8 +1,12 @@
 {
-    "id": "2d875523-1423-46aa-839d-c7e82fdc87df",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "ptype_event_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Particle type",
+    "path": "folders/Scripts/Project/Particle type.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "ptype_event_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

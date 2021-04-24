@@ -1,8 +1,12 @@
 {
-    "id": "d2282906-6c5c-4975-a9e1-bdf844dc12fa",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_scale_random_min",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Scale",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Scale.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_scale_random_min",
+  "tags": [],
+  "resourceType": "GMScript",
 }

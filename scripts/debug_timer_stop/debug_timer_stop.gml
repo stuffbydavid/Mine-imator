@@ -1,4 +1,7 @@
 /// debug_timer_stop(message)
 /// @arg message
 
-debug(argument0, string(current_time - debug_timer) + " msec")
+function debug_timer_stop(str)
+{
+	debug(str, string(current_time - debug_timer) + " msec")
+}

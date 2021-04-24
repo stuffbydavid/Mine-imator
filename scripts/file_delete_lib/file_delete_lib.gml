@@ -1,4 +1,7 @@
 /// file_delete_lib(filename)
 /// @arg filename
 
-return external_call(lib_file_delete, argument0)
+function file_delete_lib(fn)
+{
+	return external_call(lib_file_delete, fn)
+}

@@ -1,8 +1,12 @@
 {
-    "id": "64dfe6c3-2133-4f00-9095-adaa31c56390",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_water_color",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Biome",
+    "path": "folders/Scripts/App/Actions/Background/Biome.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_water_color",
+  "tags": [],
+  "resourceType": "GMScript",
 }

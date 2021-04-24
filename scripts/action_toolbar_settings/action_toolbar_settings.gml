@@ -1,3 +1,6 @@
 /// action_toolbar_settings()
 
-tab_toggle(settings)
+function action_toolbar_settings()
+{
+	tab_toggle(settings)
+}

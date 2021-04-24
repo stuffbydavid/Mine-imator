@@ -3,4 +3,7 @@
 /// @arg y
 /// @arg width
 
-draw_line_ext(argument0, argument1, argument0 + argument2, argument1, c_border, a_border)
+function draw_divide(xx, yy, w)
+{
+	draw_line_ext(xx, yy, xx + w, yy, c_border, a_border)
+}

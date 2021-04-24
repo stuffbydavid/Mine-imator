@@ -1,8 +1,12 @@
 {
-    "id": "dabdc576-4ab6-4eac-b30e-086472b6938f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_setting_render_ssao_power",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Render",
+    "path": "folders/Scripts/App/Actions/Settings/Render.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_setting_render_ssao_power",
+  "tags": [],
+  "resourceType": "GMScript",
 }

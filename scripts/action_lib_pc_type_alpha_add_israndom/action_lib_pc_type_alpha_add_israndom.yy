@@ -1,8 +1,12 @@
 {
-    "id": "05d7050b-fcfa-4817-bc47-125defcec94a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_alpha_add_israndom",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Alpha",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Alpha.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_alpha_add_israndom",
+  "tags": [],
+  "resourceType": "GMScript",
 }

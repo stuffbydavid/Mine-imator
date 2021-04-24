@@ -1,8 +1,12 @@
 {
-    "id": "ece96df4-fab8-4e55-a0a3-5dab395186fc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_res_reload",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Resources",
+    "path": "folders/Scripts/App/Actions/Resources.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_res_reload",
+  "tags": [],
+  "resourceType": "GMScript",
 }

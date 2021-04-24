@@ -5,6 +5,9 @@
 /// @arg xdirection
 /// @arg ydirection
 
-render_set_uniform_vec2("uScreenSize", argument0, argument1)
-render_set_uniform("uRadius", argument2)
-render_set_uniform_vec2("uDirection", argument3, argument4)
+function shader_blur_set(width, height, radius, xdir, ydir)
+{
+	render_set_uniform_vec2("uScreenSize", width, height)
+	render_set_uniform("uRadius", radius)
+	render_set_uniform_vec2("uDirection", xdir, ydir)
+}

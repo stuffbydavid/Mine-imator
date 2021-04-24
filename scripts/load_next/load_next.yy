@@ -1,8 +1,12 @@
 {
-    "id": "247b16a5-1176-4902-bdc4-ccbabfd6419d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "load_next",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Loading",
+    "path": "folders/Scripts/App/Loading.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "load_next",
+  "tags": [],
+  "resourceType": "GMScript",
 }

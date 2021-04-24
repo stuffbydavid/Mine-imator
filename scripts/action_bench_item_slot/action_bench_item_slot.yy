@@ -1,8 +1,12 @@
 {
-    "id": "027cd08d-e7fe-49c3-83ff-7ea04f7715c3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_bench_item_slot",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Item",
+    "path": "folders/Scripts/App/Actions/Bench/Item.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_bench_item_slot",
+  "tags": [],
+  "resourceType": "GMScript",
 }

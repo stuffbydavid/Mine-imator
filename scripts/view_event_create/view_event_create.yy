@@ -1,8 +1,12 @@
 {
-    "id": "a7c9c661-c9e2-49f9-aaf8-95a10b8176b8",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "view_event_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "View",
+    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "view_event_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

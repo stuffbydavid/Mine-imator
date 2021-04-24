@@ -4,9 +4,12 @@
 /// @arg width
 /// @arg height
 
-render_shader_obj = shader_map[?shader_scissor]
-with (render_shader_obj)
+function scissor_start(xx, yy, w, h)
 {
-	shader_set(shader_scissor)
-	shader_scissor_set(argument0, argument1, argument2, argument3)
+	render_shader_obj = shader_map[?shader_scissor]
+	with (render_shader_obj)
+	{
+		shader_set(shader_scissor)
+		shader_scissor_set(xx, yy, w, h)
+	}
 }

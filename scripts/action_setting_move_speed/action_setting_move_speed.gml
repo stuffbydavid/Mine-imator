@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_move_speed = setting_move_speed * argument1 + argument0
+function action_setting_move_speed(val, add)
+{
+	setting_move_speed = setting_move_speed * val + add
+}

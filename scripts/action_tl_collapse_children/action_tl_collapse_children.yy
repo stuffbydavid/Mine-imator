@@ -1,8 +1,12 @@
 {
-    "id": "36a54564-0060-4397-9e1e-def4a63c6816",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_collapse_children",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "List",
+    "path": "folders/Scripts/App/Actions/Timeline/List.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_collapse_children",
+  "tags": [],
+  "resourceType": "GMScript",
 }

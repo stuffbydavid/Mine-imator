@@ -1,8 +1,12 @@
 {
-    "id": "b358d9f8-a534-4e3e-b7a5-6182248292ad",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_clrcor_saturation",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Color correction",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Color correction.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_clrcor_saturation",
+  "tags": [],
+  "resourceType": "GMScript",
 }

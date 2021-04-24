@@ -1,8 +1,12 @@
 {
-    "id": "edd897fe-a121-4689-9af4-d91553c93198",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_ca_red_offset",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Chromatic abberation",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Chromatic abberation.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_ca_red_offset",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -3,4 +3,7 @@
 /// @arg y
 /// @arg height
 
-draw_line_ext(argument0, argument1, argument0, argument1 + argument2, c_border, a_border)
+function draw_divide_vertical(xx, yy, h)
+{
+	draw_line_ext(xx, yy, xx, yy + h, c_border, a_border)
+}

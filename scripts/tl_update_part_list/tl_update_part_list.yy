@@ -1,8 +1,12 @@
 {
-    "id": "ccb9392d-ebd2-4b7f-afc1-c108603bcfce",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_update_part_list",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Update",
+    "path": "folders/Scripts/Project/Timeline/Update.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_update_part_list",
+  "tags": [],
+  "resourceType": "GMScript",
 }

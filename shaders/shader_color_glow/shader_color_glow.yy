@@ -1,7 +1,11 @@
 {
-    "id": "1daf63bb-956a-45bb-abce-851badf1487a",
-    "modelName": "GMShader",
-    "mvc": "1.0",
-    "name": "shader_color_glow",
-    "type": 1
+  "type": 1,
+  "parent": {
+    "name": "Glow",
+    "path": "folders/Shaders/High quality/Glow.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_color_glow",
+  "tags": [],
+  "resourceType": "GMShader",
 }

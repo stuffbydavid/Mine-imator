@@ -1,12 +1,15 @@
 /// history_destroy_loaded()
 /// @desc Destroy the loaded objects.
 
-for (var i = 0; i < loaded_amount; i++)
+function history_destroy_loaded()
 {
-	with (save_id_find(loaded_save_id[i]))
+	for (var i = 0; i < loaded_amount; i++)
 	{
-		if (object_index = obj_resource && copied)
-			file_delete_lib(app.project_folder + "\\" + filename)
-		instance_destroy()
+		with (save_id_find(loaded_save_id[i]))
+		{
+			if (object_index = obj_resource && copied)
+				file_delete_lib(app.project_folder + "\\" + filename)
+			instance_destroy()
+		}
 	}
 }

@@ -1,8 +1,12 @@
 {
-    "id": "07f04038-e176-47d8-a5cd-f477fb3dde03",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "recent_event_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Recent",
+    "path": "folders/Scripts/App/Recent.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "recent_event_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

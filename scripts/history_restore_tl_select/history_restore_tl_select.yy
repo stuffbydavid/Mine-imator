@@ -1,8 +1,12 @@
 {
-    "id": "c0d521ef-17c0-4d30-9f05-39dd71e1bef4",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "history_restore_tl_select",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Restore",
+    "path": "folders/Scripts/App/History/Restore.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "history_restore_tl_select",
+  "tags": [],
+  "resourceType": "GMScript",
 }

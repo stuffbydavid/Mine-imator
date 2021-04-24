@@ -2,4 +2,7 @@
 /// @arg source
 /// @arg destination
 
-return external_call(lib_gzunzip, argument0, argument1)
+function gzunzip(src, dest)
+{
+	return external_call(lib_gzunzip, src, dest)
+}

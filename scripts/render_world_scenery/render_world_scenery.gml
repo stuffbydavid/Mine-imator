@@ -4,31 +4,28 @@
 /// @arg repeatenable
 /// @arg repeat
 
-var scenery, res;
-scenery = argument0
-res = argument1
-
-if (!scenery.ready)
-	return 0
-	
-if (argument2) // Repeat
+function render_world_scenery(scenery, res, repeatenable, rep)
 {
-	var rep, mat, reppos;
-	rep = argument3
-	mat = matrix_get(matrix_world)
-	for (reppos[X] = 0; reppos[X] < rep[X]; reppos[X]++)
+	if (!scenery.ready)
+		return 0
+	
+	if (repeatenable) // Repeat
 	{
-		for (reppos[Y] = 0; reppos[Y] < rep[Y]; reppos[Y]++)
+		var mat, reppos;
+		mat = matrix_get(matrix_world)
+		for (reppos[X] = 0; reppos[X] < rep[X]; reppos[X]++)
 		{
-			for (reppos[Z] = 0; reppos[Z] < rep[Z]; reppos[Z]++)
+			for (reppos[Y] = 0; reppos[Y] < rep[Y]; reppos[Y]++)
 			{
-				var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size))
-				matrix_set(matrix_world, matrix_multiply(matrix_create(pos, vec3(0), vec3(1)), mat))
-				render_world_block(scenery.block_vbuffer, res, true, scenery.scenery_size)
+				for (reppos[Z] = 0; reppos[Z] < rep[Z]; reppos[Z]++)
+				{
+					var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size))
+					matrix_set(matrix_world, matrix_multiply(matrix_create(pos, vec3(0), vec3(1)), mat))
+					render_world_block(scenery.block_vbuffer, res, true, scenery.scenery_size)
+				}
 			}
 		}
 	}
+	else
+		render_world_block(scenery.block_vbuffer, res, true, scenery.scenery_size)
 }
-else
-	render_world_block(scenery.block_vbuffer, res, true, scenery.scenery_size)
-

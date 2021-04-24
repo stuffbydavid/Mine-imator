@@ -1,4 +1,7 @@
 /// action_setting_render_glow(enable)
 /// @arg enable
 
-setting_render_glow = argument0
+function action_setting_render_glow(enable)
+{
+	setting_render_glow = enable
+}

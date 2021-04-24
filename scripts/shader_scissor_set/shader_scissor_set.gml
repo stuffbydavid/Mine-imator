@@ -4,5 +4,8 @@
 /// @arg width
 /// @arg height
 
-render_set_uniform("uBox", [argument0, argument1, argument2, argument3])
-render_set_uniform("uScreenSize", [1, 1])
+function shader_scissor_set(xx, yy, w, h)
+{
+	render_set_uniform("uBox", [xx, yy, w, h])
+	render_set_uniform("uScreenSize", [1, 1])
+}

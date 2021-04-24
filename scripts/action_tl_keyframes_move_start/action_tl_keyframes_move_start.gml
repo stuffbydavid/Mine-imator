@@ -1,15 +1,18 @@
 /// action_tl_keyframes_move_start(keyframe)
 /// @arg keyframe
 
-with (obj_keyframe)
+function action_tl_keyframes_move_start(keyframe)
 {
-	if (!selected)
-		continue
+	with (obj_keyframe)
+	{
+		if (!selected)
+			continue
 		
-	move_index = ds_list_find_index(timeline.keyframe_list, id)
-	move_pos = position
+		move_index = ds_list_find_index(timeline.keyframe_list, id)
+		move_pos = position
+	}
+	
+	timeline_move_kf = keyframe
+	timeline_move_kf_mouse_pos = timeline_mouse_pos
+	window_busy = "timelinemovekeyframes"
 }
-
-timeline_move_kf = argument0
-timeline_move_kf_mouse_pos = timeline_mouse_pos
-window_busy = "timelinemovekeyframes"

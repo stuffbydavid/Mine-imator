@@ -1,8 +1,12 @@
 {
-    "id": "5e9f2070-0b7f-4f78-b013-fc4a2a88a381",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "keybinds_reset_default",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Keybinds",
+    "path": "folders/Scripts/App/Keybinds.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "keybinds_reset_default",
+  "tags": [],
+  "resourceType": "GMScript",
 }

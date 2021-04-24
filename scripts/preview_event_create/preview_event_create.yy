@@ -1,8 +1,12 @@
 {
-    "id": "ddd95153-4520-4a78-ae23-e04fa9e0ef23",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "preview_event_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Preview",
+    "path": "folders/Scripts/App/Interface/Components/Preview.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "preview_event_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

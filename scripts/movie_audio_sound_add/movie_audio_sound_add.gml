@@ -5,4 +5,7 @@
 /// @arg start
 /// @arg end
 
-return external_call(lib_movie_audio_sound_add, argument0, argument1, argument2, argument3, argument4)
+function movie_audio_sound_add(file, play, volume, start, ed)
+{
+	return external_call(lib_movie_audio_sound_add, file, play, volume, start, ed)
+}

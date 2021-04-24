@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_render_aa_power = setting_render_aa_power * argument1 + argument0 / 100
+function action_setting_render_aa_power(val, add)
+{
+	setting_render_aa_power = setting_render_aa_power * add + val / 100
+}

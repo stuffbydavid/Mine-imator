@@ -1,8 +1,12 @@
 {
-    "id": "d31a91a1-a70e-4197-8be6-333d9e372f76",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "project_load",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Load",
+    "path": "folders/Scripts/Project/Load.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "project_load",
+  "tags": [],
+  "resourceType": "GMScript",
 }

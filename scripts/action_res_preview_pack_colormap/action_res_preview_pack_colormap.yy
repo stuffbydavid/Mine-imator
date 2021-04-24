@@ -1,8 +1,12 @@
 {
-    "id": "0e3f105f-8159-4342-a676-ac634a5f3055",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_res_preview_pack_colormap",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Resources",
+    "path": "folders/Scripts/App/Actions/Resources.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_res_preview_pack_colormap",
+  "tags": [],
+  "resourceType": "GMScript",
 }

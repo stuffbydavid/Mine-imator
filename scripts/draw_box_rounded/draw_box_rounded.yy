@@ -1,8 +1,12 @@
 {
-    "id": "541d130e-aa18-4618-8698-372ab2540db0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "draw_box_rounded",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Draw",
+    "path": "folders/Scripts/Utility/Draw.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "draw_box_rounded",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "fa7a2c52-c7f8-404e-a2ba-49492e593555",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "draw_surface_size",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Surface",
+    "path": "folders/Scripts/Utility/Surface.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "draw_surface_size",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "a5cc5f3d-e566-496a-be7a-57c1bea176c1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "popup_saveas_clear",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Save as",
+    "path": "folders/Scripts/App/Interface/Popups/Save as.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "popup_saveas_clear",
+  "tags": [],
+  "resourceType": "GMScript",
 }

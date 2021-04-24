@@ -1,8 +1,12 @@
 {
-    "id": "5e316480-5d8c-43db-b9d7-d005e502f54e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_clear",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Particles",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Particles.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_clear",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "1ab3e20f-935e-41ad-a0d3-5cafd2d07682",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "file_dialog_open_scenery",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Dialogues/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "file_dialog_open_scenery",
+  "tags": [],
+  "resourceType": "GMScript",
 }

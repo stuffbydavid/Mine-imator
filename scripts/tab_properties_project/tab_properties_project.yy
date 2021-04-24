@@ -1,8 +1,12 @@
 {
-    "id": "7bd2393c-03f9-4694-a036-64551ca0acba",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_properties_project",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Properties",
+    "path": "folders/Scripts/App/Interface/Tabs/Properties.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_properties_project",
+  "tags": [],
+  "resourceType": "GMScript",
 }

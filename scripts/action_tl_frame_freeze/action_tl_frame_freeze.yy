@@ -1,8 +1,12 @@
 {
-    "id": "18ecaeaf-a32b-422b-b4c0-fb7c42f5c129",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_freeze",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Particles",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Particles.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_freeze",
+  "tags": [],
+  "resourceType": "GMScript",
 }

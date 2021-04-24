@@ -1,4 +1,7 @@
 /// file_dialog_save_movie_wmv(filename)
 /// @arg filename
 
-return file_dialog_save(text_get("filedialogsavemoviewmv") + " (*.wmv)|*.wmv", filename_get_valid(argument0), project_folder, text_get("filedialogsavemoviecaption"))
+function file_dialog_save_movie_wmv(fn)
+{
+	return file_dialog_save(text_get("filedialogsavemoviewmv") + " (*.wmv)|*.wmv", filename_get_valid(fn), project_folder, text_get("filedialogsavemoviecaption"))
+}

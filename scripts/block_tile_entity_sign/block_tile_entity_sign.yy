@@ -1,8 +1,12 @@
 {
-    "id": "e06ebcce-6036-4c1b-86f9-efd3b947054f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "block_tile_entity_sign",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Tile entity",
+    "path": "folders/Scripts/Minecraft/Blocks/Tile entity.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "block_tile_entity_sign",
+  "tags": [],
+  "resourceType": "GMScript",
 }

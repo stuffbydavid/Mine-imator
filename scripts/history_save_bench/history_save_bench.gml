@@ -1,44 +1,47 @@
 /// history_save_bench()
 
-var save = new(obj_history_save);
-save.hobj = id
-
-with (bench_settings)
-	temp_copy(save)
-	
-with (save)
+function history_save_bench()
 {
-	temp_get_save_ids()
+	var save = new_obj(obj_history_save);
+	save.hobj = id
 	
-	// Save particle types
-	if (type = e_temp_type.PARTICLE_SPAWNER)
-	{
-		save.pc_type_amount = ds_list_size(app.bench_settings.pc_type_list)
-		for (var p = 0; p < save.pc_type_amount; p++)
-			with (other.id)
-				save.pc_type_save_obj[p] = history_save_ptype(app.bench_settings.pc_type_list[|p])
-	}
+	with (bench_settings)
+		temp_copy(save)
 	
-	// Save templates
-	temp_amount = 0
-	with (obj_template)
+	with (save)
 	{
-		if (creator != app.bench_settings)
-			continue
+		temp_get_save_ids()
 		
-		var tsave = new(obj_history_save);
-		tsave.hobj = save.hobj
-		temp_copy(tsave)
-		
-		with (tsave)
+		// Save particle types
+		if (type = e_temp_type.PARTICLE_SPAWNER)
 		{
-			save_id = other.save_id
-			temp_get_save_ids()
+			save.pc_type_amount = ds_list_size(app.bench_settings.pc_type_list)
+			for (var p = 0; p < save.pc_type_amount; p++)
+				with (other.id)
+					save.pc_type_save_obj[p] = history_save_ptype(app.bench_settings.pc_type_list[|p])
 		}
 		
-		save.temp_save_obj[save.temp_amount] = tsave
-		save.temp_amount++
+		// Save templates
+		temp_amount = 0
+		with (obj_template)
+		{
+			if (creator != app.bench_settings)
+				continue
+			
+			var tsave = new_obj(obj_history_save);
+			tsave.hobj = save.hobj
+			temp_copy(tsave)
+			
+			with (tsave)
+			{
+				save_id = other.save_id
+				temp_get_save_ids()
+			}
+			
+			save.temp_save_obj[save.temp_amount] = tsave
+			save.temp_amount++
+		}
 	}
+	
+	return save
 }
-
-return save

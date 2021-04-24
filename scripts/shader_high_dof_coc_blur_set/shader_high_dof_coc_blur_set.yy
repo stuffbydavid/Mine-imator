@@ -1,8 +1,12 @@
 {
-    "id": "c0761784-ea69-4156-bced-3045c929bb41",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_dof_coc_blur_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_dof_coc_blur_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

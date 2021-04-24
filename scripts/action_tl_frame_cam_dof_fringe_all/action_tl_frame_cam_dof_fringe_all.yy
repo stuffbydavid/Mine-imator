@@ -1,8 +1,12 @@
 {
-    "id": "4e2a3af0-aaa5-4a3a-bcbd-95de9a5c78f6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_dof_fringe_all",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "DoF",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/DoF.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_dof_fringe_all",
+  "tags": [],
+  "resourceType": "GMScript",
 }

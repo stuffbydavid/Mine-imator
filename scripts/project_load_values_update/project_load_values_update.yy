@@ -1,8 +1,12 @@
 {
-    "id": "6959ca24-0034-4953-a6d7-eeff8d3fffb0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "project_load_values_update",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Load",
+    "path": "folders/Scripts/Project/Load.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "project_load_values_update",
+  "tags": [],
+  "resourceType": "GMScript",
 }

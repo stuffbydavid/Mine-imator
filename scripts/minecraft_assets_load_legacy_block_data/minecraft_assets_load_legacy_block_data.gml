@@ -4,82 +4,80 @@
 /// @arg bitmask
 /// @arg base
 
-var curid, map, bitmask, bitbase, key;
-curid = argument0
-map = argument1
-bitmask = argument2
-bitbase = argument3
-
-key = ds_map_find_first(map)
-while (!is_undefined(key))
+function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 {
-	switch (key)
+	var key = ds_map_find_first(map);
+	
+	while (!is_undefined(key))
 	{
-		// Bitmask
-		case "0x1":			minecraft_assets_load_legacy_block_data(curid, map[?key], 1, 1); break
-		case "0x2":			minecraft_assets_load_legacy_block_data(curid, map[?key], 2, 2); break
-		case "0x4":			minecraft_assets_load_legacy_block_data(curid, map[?key], 4, 4); break
-		case "0x8":			minecraft_assets_load_legacy_block_data(curid, map[?key], 8, 8); break
-		case "0x1+0x2":		minecraft_assets_load_legacy_block_data(curid, map[?key], 3, 1); break
-		case "0x1+0x2+0x4":	minecraft_assets_load_legacy_block_data(curid, map[?key], 7, 1); break
-		case "0x4+0x8":		minecraft_assets_load_legacy_block_data(curid, map[?key], 12, 4); break
-		
-		// Number (apply previous bitmask)
-		default:
+		switch (key)
 		{
-			var val, statevars, newid, block;
-			val = string_get_real(key)
-			statevars = string_get_state_vars(map[?key])
-			newid = state_vars_get_value(statevars, "id")
-			block = null
-			if (is_string(newid) && !is_undefined(block_id_map[?newid]))
-				block = block_id_map[?newid]
+			// Bitmask
+			case "0x1":			minecraft_assets_load_legacy_block_data(curid, map[?key], 1, 1); break
+			case "0x2":			minecraft_assets_load_legacy_block_data(curid, map[?key], 2, 2); break
+			case "0x4":			minecraft_assets_load_legacy_block_data(curid, map[?key], 4, 4); break
+			case "0x8":			minecraft_assets_load_legacy_block_data(curid, map[?key], 8, 8); break
+			case "0x1+0x2":		minecraft_assets_load_legacy_block_data(curid, map[?key], 3, 1); break
+			case "0x1+0x2+0x4":	minecraft_assets_load_legacy_block_data(curid, map[?key], 7, 1); break
+			case "0x4+0x8":		minecraft_assets_load_legacy_block_data(curid, map[?key], 12, 4); break
 			
-			// Insert into array
-			if (bitmask > 0)
+			// Number (apply previous bitmask)
+			default:
 			{
-				for (var d = 0; d < 16; d++)
+				var val, statevars, newid, block;
+				val = string_get_real(key)
+				statevars = string_get_state_vars(map[?key])
+				newid = state_vars_get_value(statevars, "id")
+				block = null
+				if (is_string(newid) && !is_undefined(block_id_map[?newid]))
+					block = block_id_map[?newid]
+				
+				// Insert into array
+				if (bitmask > 0)
 				{
-					if ((d & bitmask) / bitbase = val) // Check data value with bitmask
+					for (var d = 0; d < 16; d++)
 					{
-						// State
-						if (legacy_block_state_vars[curid, d] = null)
-							legacy_block_state_vars[curid, d] = array()
-						
-						// ID
-						if (block != null)
+						if ((d & bitmask) / bitbase = val) // Check data value with bitmask
 						{
-							legacy_block_obj[curid, d] = block
-							if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
-								state_vars_add(legacy_block_state_vars[curid, d], block.id_state_vars_map[?newid]) // Add ID-specific vars
+							// State
+							if (legacy_block_state_vars[curid, d] = null)
+								legacy_block_state_vars[curid, d] = array()
+							
+							// ID
+							if (block != null)
+							{
+								legacy_block_obj[curid, d] = block
+								if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+									state_vars_add(legacy_block_state_vars[curid, d], block.id_state_vars_map[?newid]) // Add ID-specific vars
+							}
+							
+							// Overwrite by data specific vars
+							state_vars_add(legacy_block_state_vars[curid, d], statevars)
 						}
-						
-						// Overwrite by data specific vars
-						state_vars_add(legacy_block_state_vars[curid, d], statevars)
 					}
 				}
-			}
-			else
-			{
-				// State
-				if (legacy_block_state_vars[curid, val] = null)
-					legacy_block_state_vars[curid, val] = array()
-				
-				// ID
-				if (block != null)
+				else
 				{
-					legacy_block_obj[curid, val] = block
-					if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
-						state_vars_add(legacy_block_state_vars[curid, val], block.id_state_vars_map[?newid]) // Add ID-specific vars
+					// State
+					if (legacy_block_state_vars[curid, val] = null)
+						legacy_block_state_vars[curid, val] = array()
+					
+					// ID
+					if (block != null)
+					{
+						legacy_block_obj[curid, val] = block
+						if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+							state_vars_add(legacy_block_state_vars[curid, val], block.id_state_vars_map[?newid]) // Add ID-specific vars
+					}
+					
+					// Overwrite by data specific vars
+					state_vars_add(legacy_block_state_vars[curid, val], statevars)
 				}
 				
-				// Overwrite by data specific vars
-				state_vars_add(legacy_block_state_vars[curid, val], statevars)
+				break	
 			}
-			
-			break	
 		}
+		
+		key = ds_map_find_next(map, key)
 	}
-	
-	key = ds_map_find_next(map, key)
 }

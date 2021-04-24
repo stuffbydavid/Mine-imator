@@ -1,8 +1,12 @@
 {
-    "id": "670a568f-a0c6-478c-8a77-9a1e9001527d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_dof_coc_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_dof_coc_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

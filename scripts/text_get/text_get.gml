@@ -3,21 +3,24 @@
 /// @arg val1
 /// @arg val2...
 
-var key, map;
-key = argument[0]
-map = language_map
-
-if (is_undefined(map[?key]))
+function text_get()
 {
-	if (!text_exists(key))
-		return "<No text found for \"" + key + "\">"
+	var key, map;
+	key = argument[0]
+	map = language_map
 	
-	map = language_english_map
+	if (is_undefined(map[?key]))
+	{
+		if (!text_exists(key))
+			return "<No text found for \"" + key + "\">"
+	
+		map = language_english_map
+	}
+	
+	var text = map[?key];
+	
+	for (var a = 1; a < argument_count; a++)
+		text = string_replace(text, "%" + string(a), argument[a])
+	
+	return text
 }
-
-var text = map[?key];
-
-for (var a = 1; a < argument_count; a++)
-	text = string_replace(text, "%" + string(a), argument[a])
-
-return text

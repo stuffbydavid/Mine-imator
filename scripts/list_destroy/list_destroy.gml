@@ -1,4 +1,7 @@
 /// list_destroy(list)
 /// @arg list
 
-instance_destroy(argument0)
+function list_destroy(list)
+{
+	instance_destroy(list)
+}

@@ -2,4 +2,7 @@
 /// @arg string
 /// @arg search
 
-return (string_pos(argument1, argument0) > 0)
+function string_contains(str, search)
+{
+	return (string_pos(search, str) > 0)
+}

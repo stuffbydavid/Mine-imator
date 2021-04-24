@@ -1,8 +1,12 @@
 {
-    "id": "2447f033-8720-406b-952c-a1292d921417",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_settings_draw",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/App/Interface/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_settings_draw",
+  "tags": [],
+  "resourceType": "GMScript",
 }

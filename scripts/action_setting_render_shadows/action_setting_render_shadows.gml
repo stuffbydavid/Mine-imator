@@ -1,6 +1,8 @@
 /// action_setting_render_shadows(enable)
 /// @arg enable
 
-setting_render_shadows = argument0
-
-render_samples = -1
+function action_setting_render_shadows(enable)
+{
+	setting_render_shadows = enable
+	render_samples = -1
+}

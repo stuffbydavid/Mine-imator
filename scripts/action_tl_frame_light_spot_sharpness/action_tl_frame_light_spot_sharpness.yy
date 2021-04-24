@@ -1,8 +1,12 @@
 {
-    "id": "211e8217-c90e-41a3-a6db-2b9a05d9c3bb",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_light_spot_sharpness",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Light",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Light.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_light_spot_sharpness",
+  "tags": [],
+  "resourceType": "GMScript",
 }

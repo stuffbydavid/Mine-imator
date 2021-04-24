@@ -1,5 +1,8 @@
 /// action_setting_texture_filtering(filtering)
 /// @arg filtering
 
-setting_texture_filtering = argument0
-render_samples = -1
+function action_setting_texture_filtering(filtering)
+{
+	setting_texture_filtering = filtering
+	render_samples = -1
+}

@@ -1,8 +1,12 @@
 {
-    "id": "f55bfa91-ad0c-428e-9bc3-10784cd2b64e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_bench_item_face_camera",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Item",
+    "path": "folders/Scripts/App/Actions/Bench/Item.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_bench_item_face_camera",
+  "tags": [],
+  "resourceType": "GMScript",
 }

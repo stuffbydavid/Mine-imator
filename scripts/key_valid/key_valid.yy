@@ -1,8 +1,12 @@
 {
-    "id": "12bb7c4b-bfd7-4c1c-bc61-0ad9bddeeb89",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "key_valid",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Trial",
+    "path": "folders/Scripts/App/Trial.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "key_valid",
+  "tags": [],
+  "resourceType": "GMScript",
 }

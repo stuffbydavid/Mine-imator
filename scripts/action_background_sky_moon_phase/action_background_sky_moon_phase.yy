@@ -1,8 +1,12 @@
 {
-    "id": "d610b84c-895e-4eb4-8bbd-69946d4914be",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_sky_moon_phase",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Sky",
+    "path": "folders/Scripts/App/Actions/Background/Sky.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_sky_moon_phase",
+  "tags": [],
+  "resourceType": "GMScript",
 }

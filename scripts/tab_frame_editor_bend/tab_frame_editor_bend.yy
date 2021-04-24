@@ -1,8 +1,12 @@
 {
-    "id": "9d638ecf-7e92-412a-b5f0-2be383f788ab",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_frame_editor_bend",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Frame editor",
+    "path": "folders/Scripts/App/Interface/Tabs/Frame editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_frame_editor_bend",
+  "tags": [],
+  "resourceType": "GMScript",
 }

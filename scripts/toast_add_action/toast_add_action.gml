@@ -3,6 +3,9 @@
 /// @arg script
 /// @arg value
 
-ds_list_add(toast_last.actions, argument0)
-ds_list_add(toast_last.actions, argument1)
-ds_list_add(toast_last.actions, argument2)
+function toast_add_action(text, script, value)
+{
+	ds_list_add(toast_last.actions, text)
+	ds_list_add(toast_last.actions, script)
+	ds_list_add(toast_last.actions, value)
+}

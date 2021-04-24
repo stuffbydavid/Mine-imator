@@ -1,8 +1,12 @@
 {
-    "id": "935e594e-9d3f-4fbe-b563-73a38dfcbe93",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_keyframe_next",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/App/Actions/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_keyframe_next",
+  "tags": [],
+  "resourceType": "GMScript",
 }

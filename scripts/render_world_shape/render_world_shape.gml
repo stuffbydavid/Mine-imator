@@ -4,20 +4,17 @@
 /// @arg facecamrea
 /// @arg texture
 
-var type, vbuf, facecamera, tex;
-type = argument0
-vbuf = argument1
-facecamera = argument2
-tex = argument3
-
-if (type = e_temp_type.SURFACE && facecamera)
+function render_world_shape(type, vbuf, facecamera, tex)
 {
-	var mat, rotx, rotz;
-	mat = matrix_get(matrix_world);
-	rotx = -point_zdirection(mat[MAT_X], mat[MAT_Y], mat[MAT_Z], proj_from[X], proj_from[Y], proj_from[Z])
-	rotz = 90 + point_direction(mat[MAT_X], mat[MAT_Y], proj_from[X], proj_from[Y])
-	matrix_world_multiply_pre(matrix_build(0, 0, 0, rotx, 0, rotz, 1, 1, 1))
+	if (type = e_temp_type.SURFACE && facecamera)
+	{
+		var mat, rotx, rotz;
+		mat = matrix_get(matrix_world);
+		rotx = -point_zdirection(mat[MAT_X], mat[MAT_Y], mat[MAT_Z], proj_from[X], proj_from[Y], proj_from[Z])
+		rotz = 90 + point_direction(mat[MAT_X], mat[MAT_Y], proj_from[X], proj_from[Y])
+		matrix_world_multiply_pre(matrix_build(0, 0, 0, rotx, 0, rotz, 1, 1, 1))
+	}
+	
+	render_set_texture(tex)
+	vbuffer_render(vbuf)
 }
-
-render_set_texture(tex)
-vbuffer_render(vbuf)

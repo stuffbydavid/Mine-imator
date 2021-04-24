@@ -1,8 +1,12 @@
 {
-    "id": "6d66ea40-5816-4cbf-93b4-163e5bfeb6dd",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_keyframes_remove",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Keyframes",
+    "path": "folders/Scripts/App/Actions/Timeline/Keyframes.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_keyframes_remove",
+  "tags": [],
+  "resourceType": "GMScript",
 }

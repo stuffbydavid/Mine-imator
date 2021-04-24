@@ -1,8 +1,12 @@
 {
-    "id": "c17ccd5b-0dee-47f9-ab0b-54ee593611a6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "texture_create_square",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Texture",
+    "path": "folders/Scripts/Utility/Texture.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "texture_create_square",
+  "tags": [],
+  "resourceType": "GMScript",
 }

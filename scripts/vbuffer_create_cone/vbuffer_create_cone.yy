@@ -1,8 +1,12 @@
 {
-    "id": "3207bd95-0acf-481f-ba2d-50ef148864ce",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "vbuffer_create_cone",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vertex buffer",
+    "path": "folders/Scripts/Utility/Vertex/Vertex buffer.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "vbuffer_create_cone",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "d707f72b-f595-4021-9f60-f78a59f0ce12",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tab_control_button_label",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Control",
+    "path": "folders/Scripts/App/Interface/Components/Tab/Control.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tab_control_button_label",
+  "tags": [],
+  "resourceType": "GMScript",
 }

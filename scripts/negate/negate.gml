@@ -1,7 +1,10 @@
 /// negate(bool)
 /// @arg bool
 
-if (argument0)
-	return -1
-else
-	return 1
+function negate(val)
+{
+	if (val)
+		return -1
+	else
+		return 1
+}

@@ -1,8 +1,12 @@
 {
-    "id": "b44f468d-b995-4a61-9917-595e9fa20bd9",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_extend",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "List",
+    "path": "folders/Scripts/App/Actions/Timeline/List.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_extend",
+  "tags": [],
+  "resourceType": "GMScript",
 }

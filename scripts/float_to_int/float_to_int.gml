@@ -2,9 +2,10 @@
 /// @arg x
 /// @desc Removes the decimal point.
 
-var xx = argument0;
-
-if (xx < 0)
-	return -floor(abs(xx))
-else
-	return floor(xx)
+function float_to_int(xx)
+{
+	if (xx < 0)
+		return -floor(abs(xx))
+	else
+		return floor(xx)
+}

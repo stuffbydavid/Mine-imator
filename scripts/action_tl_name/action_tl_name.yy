@@ -1,8 +1,12 @@
 {
-    "id": "79b33b87-33b6-4bad-a76f-b5d1297fc69b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_name",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Info",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Info.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_name",
+  "tags": [],
+  "resourceType": "GMScript",
 }

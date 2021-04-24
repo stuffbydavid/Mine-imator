@@ -5,7 +5,10 @@
 /// @arg width
 /// @arg height
 
-if (surface_exists(argument0))
-	draw_surface_ext(argument0, argument1, argument2, argument3 / surface_get_width(argument0), argument4 / surface_get_height(argument0), 0, -1, draw_get_alpha())
-else
-	draw_box(argument1, argument2, argument3, argument4, false, c_black, draw_get_alpha())
+function draw_surface_size(surf, xx, yy, w, h)
+{
+	if (surface_exists(surf))
+		draw_surface_ext(surf, xx, yy, w / surface_get_width(surf), h / surface_get_height(surf), 0, -1, draw_get_alpha())
+	else
+		draw_box(xx, yy, w, h, false, c_black, draw_get_alpha())
+}

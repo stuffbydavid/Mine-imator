@@ -1,4 +1,7 @@
 /// action_setting_render_ssao(enable)
 /// @arg enable
 
-setting_render_ssao = argument0
+function action_setting_render_ssao(enable)
+{
+	setting_render_ssao = enable
+}

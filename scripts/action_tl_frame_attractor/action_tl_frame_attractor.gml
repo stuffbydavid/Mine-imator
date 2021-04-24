@@ -1,6 +1,9 @@
 /// action_tl_frame_attractor(attractor)
 /// @arg attractor
 
-tl_value_set_start(action_tl_frame_attractor, false)
-tl_value_set(e_value.ATTRACTOR, argument0, false)
-tl_value_set_done()
+function action_tl_frame_attractor(attractor)
+{
+	tl_value_set_start(action_tl_frame_attractor, false)
+	tl_value_set(e_value.ATTRACTOR, attractor, false)
+	tl_value_set_done()
+}

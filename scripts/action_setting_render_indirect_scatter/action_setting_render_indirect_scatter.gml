@@ -2,6 +2,8 @@
 /// @arg value
 /// @arg add
 
-setting_render_indirect_scatter = setting_render_indirect_scatter * argument1 + argument0 / 100
-
-render_samples = -1
+function action_setting_render_indirect_scatter(val, add)
+{
+	setting_render_indirect_scatter = setting_render_indirect_scatter * add + val / 100
+	render_samples = -1
+}

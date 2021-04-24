@@ -1,8 +1,12 @@
 {
-    "id": "a3e95c28-5c80-4059-81f4-06dfeae11436",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_item_bounce",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Item",
+    "path": "folders/Scripts/App/Actions/Library/Item.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_item_bounce",
+  "tags": [],
+  "resourceType": "GMScript",
 }

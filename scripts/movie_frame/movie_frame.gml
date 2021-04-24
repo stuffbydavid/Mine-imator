@@ -1,4 +1,7 @@
 /// movie_frame(filename)
 /// @arg filename
 
-return external_call(lib_movie_frame, argument0)
+function movie_frame(fn)
+{
+	return external_call(lib_movie_frame, fn)
+}

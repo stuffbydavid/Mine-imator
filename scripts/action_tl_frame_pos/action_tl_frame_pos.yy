@@ -1,8 +1,12 @@
 {
-    "id": "fabe0138-9999-4044-b95e-c8e57ae54752",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_pos",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Position",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Position.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_pos",
+  "tags": [],
+  "resourceType": "GMScript",
 }

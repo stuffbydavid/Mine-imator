@@ -1,23 +1,20 @@
 /// action_background_fog_color_custom(custom)
 /// @arg custom
 
-var custom;
-
-if (history_undo)
-	custom = history_data.old_value
-else if (history_redo)
-	custom = history_data.new_value
-else
+function action_background_fog_color_custom(custom)
 {
-	custom = argument0
-	if (action_tl_select_single(null, e_tl_type.BACKGROUND))
+	if (!history_undo && !history_redo)
 	{
-		tl_value_set_start(action_background_fog_color_custom, true)
-		tl_value_set(e_value.BG_FOG_CUSTOM_COLOR, custom, false)
-		tl_value_set_done()
-		return 0
+		if (action_tl_select_single(null, e_tl_type.BACKGROUND))
+		{
+			tl_value_set_start(action_background_fog_color_custom, true)
+			tl_value_set(e_value.BG_FOG_CUSTOM_COLOR, custom, false)
+			tl_value_set_done()
+			return 0
+		}
+		
+		history_set_var(action_background_fog_color_custom, background_fog_color_custom, custom, false)
 	}
-	history_set_var(action_background_fog_color_custom, background_fog_color_custom, custom, false)
+	
+	background_fog_color_custom = custom
 }
-
-background_fog_color_custom = custom

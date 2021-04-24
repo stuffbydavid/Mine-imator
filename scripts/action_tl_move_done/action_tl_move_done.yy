@@ -1,8 +1,12 @@
 {
-    "id": "410692a4-9546-4b53-b18d-1d55b96f5f2a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_move_done",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Move",
+    "path": "folders/Scripts/App/Actions/Timeline/Move.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_move_done",
+  "tags": [],
+  "resourceType": "GMScript",
 }

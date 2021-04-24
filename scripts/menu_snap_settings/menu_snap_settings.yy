@@ -1,8 +1,12 @@
 {
-    "id": "96587c09-f4e2-417f-a39d-d7e1528b977c",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "menu_snap_settings",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "View",
+    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "menu_snap_settings",
+  "tags": [],
+  "resourceType": "GMScript",
 }

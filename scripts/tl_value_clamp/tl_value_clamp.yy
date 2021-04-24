@@ -1,8 +1,12 @@
 {
-    "id": "80f6f6ac-2dbb-49f3-86a8-bc1ad9116b6d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_value_clamp",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Values",
+    "path": "folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_value_clamp",
+  "tags": [],
+  "resourceType": "GMScript",
 }

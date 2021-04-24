@@ -1,8 +1,12 @@
 {
-    "id": "5b44a764-784d-4514-b681-a0633ba878cc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "render_high_overlay",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Post processing",
+    "path": "folders/Scripts/Render/High quality/Post processing.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "render_high_overlay",
+  "tags": [],
+  "resourceType": "GMScript",
 }

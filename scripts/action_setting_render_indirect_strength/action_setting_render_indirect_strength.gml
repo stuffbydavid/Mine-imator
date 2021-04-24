@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_render_indirect_strength = setting_render_indirect_strength * argument1 + argument0 / 100
+function action_setting_render_indirect_strength(val, add)
+{
+	setting_render_indirect_strength = setting_render_indirect_strength * add + val / 100
+}

@@ -1,8 +1,12 @@
 {
-    "id": "b4f92c9c-d372-47e8-926e-cf227ea73bb0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "popup_importitemsheet_draw",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Import item sheet",
+    "path": "folders/Scripts/App/Interface/Popups/Import item sheet.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "popup_importitemsheet_draw",
+  "tags": [],
+  "resourceType": "GMScript",
 }

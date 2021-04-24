@@ -1,8 +1,12 @@
 {
-    "id": "6902b1ba-1349-4aba-bdd2-c42281e5470e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_value_is_string",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Values",
+    "path": "folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_value_is_string",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "5dcbb77c-f9ba-4908-974b-0872f49fa06e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_toolbar_exportmovie_save",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Export movie",
+    "path": "folders/Scripts/App/Actions/Toolbar/Export movie.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_toolbar_exportmovie_save",
+  "tags": [],
+  "resourceType": "GMScript",
 }

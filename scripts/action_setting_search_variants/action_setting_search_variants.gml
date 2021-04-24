@@ -1,4 +1,7 @@
 /// action_setting_search_variants(yes)
 /// @arg yes
 
-setting_search_variants = argument0
+function action_setting_search_variants(yes)
+{
+	setting_search_variants = yes
+}

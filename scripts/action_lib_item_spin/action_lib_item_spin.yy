@@ -1,8 +1,12 @@
 {
-    "id": "72ae87c3-6499-40ed-9459-fa270e99a997",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_item_spin",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Item",
+    "path": "folders/Scripts/App/Actions/Library/Item.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_item_spin",
+  "tags": [],
+  "resourceType": "GMScript",
 }

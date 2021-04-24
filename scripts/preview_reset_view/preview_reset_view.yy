@@ -1,8 +1,12 @@
 {
-    "id": "9f9aad5b-494c-4659-b12c-8a502929f0a2",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "preview_reset_view",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Preview",
+    "path": "folders/Scripts/App/Interface/Components/Preview.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "preview_reset_view",
+  "tags": [],
+  "resourceType": "GMScript",
 }

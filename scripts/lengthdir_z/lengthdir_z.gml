@@ -2,4 +2,7 @@
 /// @arg length
 /// @arg direction
 
-return -lengthdir_y(argument0, argument1)
+function lengthdir_z(length, dir)
+{
+	return -lengthdir_y(length, dir)
+}

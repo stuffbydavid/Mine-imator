@@ -1,8 +1,12 @@
 {
-    "id": "9a84c50f-484b-4d8e-b9a2-d266e70c3a81",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_update_model_shape_bend",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Update",
+    "path": "folders/Scripts/Project/Timeline/Update.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_update_model_shape_bend",
+  "tags": [],
+  "resourceType": "GMScript",
 }

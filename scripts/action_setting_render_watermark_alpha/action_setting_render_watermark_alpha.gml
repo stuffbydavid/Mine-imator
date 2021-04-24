@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_render_watermark_alpha = setting_render_watermark_alpha * argument1 + argument0 / 100
+function action_setting_render_watermark_alpha(val, add)
+{
+	setting_render_watermark_alpha = setting_render_watermark_alpha * add + val / 100
+}

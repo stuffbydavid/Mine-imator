@@ -1,4 +1,7 @@
 /// action_setting_render_aa(enable)
 /// @arg enable
 
-setting_render_aa = argument0
+function action_setting_render_aa(enable)
+{
+	setting_render_aa = enable
+}

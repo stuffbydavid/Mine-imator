@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_render_glow_radius = setting_render_glow_radius * argument1 + argument0 / 100
+function action_setting_render_glow_radius(val, add)
+{
+	setting_render_glow_radius = setting_render_glow_radius * add + val / 100
+}

@@ -1,8 +1,12 @@
 {
-    "id": "fae8c17d-3145-45ea-b91b-ec387de87cb3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_glow_texture_tree",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Graphics",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_glow_texture_tree",
+  "tags": [],
+  "resourceType": "GMScript",
 }

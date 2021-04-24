@@ -1,9 +1,12 @@
 /// action_bench_shape_tex_map(enable)
 /// @arg enable
 
-with (bench_settings)
+function action_bench_shape_tex_map(enable)
 {
-	shape_tex_mapped = argument0
-	temp_update_shape()
+	with (bench_settings)
+	{
+		shape_tex_mapped = enable
+		temp_update_shape()
+	}
+	bench_settings.preview.update = true
 }
-bench_settings.preview.update = true

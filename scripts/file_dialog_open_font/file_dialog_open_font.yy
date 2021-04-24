@@ -1,8 +1,12 @@
 {
-    "id": "7071c736-d787-496b-977d-a371db6cf88a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "file_dialog_open_font",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/App/Dialogues/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "file_dialog_open_font",
+  "tags": [],
+  "resourceType": "GMScript",
 }

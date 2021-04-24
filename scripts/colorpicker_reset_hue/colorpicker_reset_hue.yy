@@ -1,8 +1,12 @@
 {
-    "id": "097630b0-aab3-443c-be6c-12d3817753e2",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "colorpicker_reset_hue",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Colorpicker",
+    "path": "folders/Scripts/App/Interface/Colorpicker.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "colorpicker_reset_hue",
+  "tags": [],
+  "resourceType": "GMScript",
 }

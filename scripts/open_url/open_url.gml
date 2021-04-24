@@ -1,5 +1,8 @@
 /// open_url(url)
 /// @arg url
 
-log("Open URL", argument0)
-external_call(lib_open_url, argument0)
+function open_url(url)
+{
+	log("Open URL", url)
+	external_call(lib_open_url, url)
+}

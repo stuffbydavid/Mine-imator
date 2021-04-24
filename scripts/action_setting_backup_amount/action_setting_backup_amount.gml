@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_backup_amount = setting_backup_amount * argument1 + argument0
+function action_setting_backup_amount(val, add)
+{
+	setting_backup_amount = setting_backup_amount * add + val
+}

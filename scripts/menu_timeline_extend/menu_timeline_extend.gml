@@ -1,3 +1,7 @@
 /// menu_timeline_extend(tl)
+/// @arg tl
 
-menu_current.menu_tl_extend = argument0
+function menu_timeline_extend(tl)
+{
+	menu_current.menu_tl_extend = tl
+}

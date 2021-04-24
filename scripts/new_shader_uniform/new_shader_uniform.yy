@@ -1,8 +1,12 @@
 {
-    "id": "be1e882c-32e0-4c98-ba98-a47f8355fc7e",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "new_shader_uniform",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Shaders",
+    "path": "folders/Scripts/Render/Shaders.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "new_shader_uniform",
+  "tags": [],
+  "resourceType": "GMScript",
 }

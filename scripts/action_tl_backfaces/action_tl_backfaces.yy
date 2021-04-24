@@ -1,8 +1,12 @@
 {
-    "id": "e442859b-b4d6-4185-a285-d36d5f5b404d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_backfaces",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Graphics",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_backfaces",
+  "tags": [],
+  "resourceType": "GMScript",
 }

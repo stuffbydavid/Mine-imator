@@ -2,16 +2,15 @@
 /// @arg map
 /// @arg value
 
-var map, val, key;
-map = argument0
-val = argument1
-
-key = ds_map_find_first(map)
-while (!is_undefined(key))
+function ds_map_find_key(map, val)
 {
-	if (map[?key] = val)
-		return key
-	key = ds_map_find_next(map, key)
+	var key = ds_map_find_first(map);
+	while (!is_undefined(key))
+	{
+		if (map[?key] = val)
+			return key
+		key = ds_map_find_next(map, key)
+	}
+	
+	return undefined
 }
-
-return undefined

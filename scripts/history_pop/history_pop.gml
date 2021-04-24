@@ -1,28 +1,31 @@
 /// history_pop()
 /// @desc Clears the history in front of the marker.
 
-project_changed = true
-action_tl_play_break()
-
-if (history_pos > 0)
+function history_pop()
 {
-	history_amount -= history_pos
-	for (var h = 0; h < history_amount; h++)
+	project_changed = true
+	action_tl_play_break()
+	
+	if (history_pos > 0)
 	{
-		if (h < history_pos)
+		history_amount -= history_pos
+		for (var h = 0; h < history_amount; h++)
 		{
-			with (history[h])
+			if (h < history_pos)
 			{
-				with (obj_history_save)
-					if (hobj = other.id)
-						instance_destroy()
-				instance_destroy()
+				with (history[h])
+				{
+					with (obj_history_save)
+						if (hobj = other.id)
+							instance_destroy()
+					instance_destroy()
+				}
 			}
+			history[h] = history[h + history_pos]
 		}
-		history[h] = history[h + history_pos]
 	}
+	
+	history_pos = 0
+	
+	render_samples = -1
 }
-
-history_pos = 0
-
-render_samples = -1

@@ -1,8 +1,12 @@
 {
-    "id": "24e770eb-ce30-484e-a884-a5193814e4fb",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_dof_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_dof_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

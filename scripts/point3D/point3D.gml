@@ -3,10 +3,13 @@
 /// @arg y
 /// @arg z
 
-var pnt;
-
-pnt[X] = argument0
-pnt[Y] = argument1
-pnt[Z] = argument2
-
-return pnt
+function point3D(xx, yy, zz)
+{
+	var pnt;
+	
+	pnt[X] = argument0
+	pnt[Y] = argument1
+	pnt[Z] = argument2
+	
+	return pnt
+}

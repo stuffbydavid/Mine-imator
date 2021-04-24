@@ -1,8 +1,12 @@
 {
-    "id": "fc9e1290-846e-4beb-b82a-a7e59d882cb3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "marker_event_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Marker",
+    "path": "folders/Scripts/App/Interface/Timeline/Marker.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "marker_event_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

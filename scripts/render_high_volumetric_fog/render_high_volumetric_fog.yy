@@ -1,8 +1,12 @@
 {
-    "id": "f7f052a2-2e7b-4778-8ade-4f68bbd4744f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "render_high_volumetric_fog",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Post processing",
+    "path": "folders/Scripts/Render/High quality/Post processing.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "render_high_volumetric_fog",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -2,17 +2,18 @@
 /// @arg name
 /// @desc Returns the model texture with the given name from a skin or texture pack.
 
-var name = argument0;
-
-if (!ready)
-	return null
-
-if (model_texture_map != null)
+function res_get_model_texture(name)
 {
-	if (ds_map_exists(model_texture_map, name))
-		return model_texture_map[?name]
-	else
+	if (!ready)
 		return null
+	
+	if (model_texture_map != null)
+	{
+		if (ds_map_exists(model_texture_map, name))
+			return model_texture_map[?name]
+		else
+			return null
+	}
+	else
+		return model_texture
 }
-else
-	return model_texture

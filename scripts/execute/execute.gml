@@ -3,5 +3,8 @@
 /// @arg parameters
 /// @arg wait
 
-log("execute", argument0, argument1, argument2)
-external_call(lib_execute, argument0, argument1, argument2)
+function execute(file, parameters, wait)
+{
+	log("execute", file, parameters, wait)
+	external_call(lib_execute, file, parameters, wait)
+}

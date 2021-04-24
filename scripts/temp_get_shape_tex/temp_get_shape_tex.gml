@@ -1,17 +1,18 @@
 /// temp_get_shape_tex(textureobject)
 /// @arg textureobject
 
-var texobj = argument0;
-
-if (texobj != null)
+function temp_get_shape_tex(texobj)
 {
-	if (texobj.type = e_tl_type.CAMERA)
+	if (texobj != null)
 	{
-		shader_texture_surface = true
-		return texobj.cam_surf
+		if (texobj.type = e_tl_type.CAMERA)
+		{
+			shader_texture_surface = true
+			return texobj.cam_surf
+		}
+		else
+			return texobj.texture
 	}
-	else
-		return texobj.texture
+	
+	return shape_texture
 }
-
-return shape_texture

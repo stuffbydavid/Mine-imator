@@ -1,8 +1,12 @@
 {
-    "id": "068cb219-6207-4c13-8f60-e423916ad580",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_toolbar_importitemsheet_sheet_size",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Import item sheet",
+    "path": "folders/Scripts/App/Actions/Toolbar/Import item sheet.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_toolbar_importitemsheet_sheet_size",
+  "tags": [],
+  "resourceType": "GMScript",
 }

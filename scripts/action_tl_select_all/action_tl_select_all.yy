@@ -1,8 +1,12 @@
 {
-    "id": "e235c018-7464-4f02-872a-68c67d60e412",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_select_all",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Select",
+    "path": "folders/Scripts/App/Actions/Timeline/Select.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_select_all",
+  "tags": [],
+  "resourceType": "GMScript",
 }

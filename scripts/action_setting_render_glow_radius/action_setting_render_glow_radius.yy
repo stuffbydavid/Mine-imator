@@ -1,8 +1,12 @@
 {
-    "id": "e0afac2e-d90b-4ed8-ba7a-e1723169c9cd",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_setting_render_glow_radius",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Render",
+    "path": "folders/Scripts/App/Actions/Settings/Render.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_setting_render_glow_radius",
+  "tags": [],
+  "resourceType": "GMScript",
 }

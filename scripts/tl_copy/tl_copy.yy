@@ -1,8 +1,12 @@
 {
-    "id": "ed143212-1de0-4f18-b513-91d14ab6fcc5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "tl_copy",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Timeline",
+    "path": "folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "tl_copy",
+  "tags": [],
+  "resourceType": "GMScript",
 }

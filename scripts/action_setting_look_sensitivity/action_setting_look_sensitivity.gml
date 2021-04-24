@@ -2,4 +2,7 @@
 /// @arg value
 /// @arg add
 
-setting_look_sensitivity = setting_look_sensitivity * argument1 + argument0
+function action_setting_look_sensitivity(val, add)
+{
+	setting_look_sensitivity = setting_look_sensitivity * val + add
+}

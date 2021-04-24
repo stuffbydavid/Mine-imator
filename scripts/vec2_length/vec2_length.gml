@@ -1,6 +1,7 @@
 /// vec2_length(vector)
 /// @arg vector
 
-var vec = argument0;
-
-return sqrt(vec[@ X] * vec[@ X] + vec[@ Y] * vec[@ Y])
+function vec2_length(vec)
+{
+	return sqrt(vec[@ X] * vec[@ X] + vec[@ Y] * vec[@ Y])
+}

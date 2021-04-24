@@ -1,8 +1,12 @@
 {
-    "id": "a5e25f70-9bef-4045-ad69-d31308b88655",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_rotpoint_custom",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Rotation point",
+    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Info/Rotation point.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_rotpoint_custom",
+  "tags": [],
+  "resourceType": "GMScript",
 }

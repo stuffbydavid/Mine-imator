@@ -1,8 +1,12 @@
 {
-    "id": "c99a4dcc-bbc9-46a9-9d68-ee4b8625c165",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_toolbar_save_as",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Toolbar",
+    "path": "folders/Scripts/App/Actions/Toolbar.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_toolbar_save_as",
+  "tags": [],
+  "resourceType": "GMScript",
 }

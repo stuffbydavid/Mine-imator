@@ -1,8 +1,12 @@
 {
-    "id": "2ef3c344-2e33-4f4a-8bfd-bbbe47867dbf",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_background_sky_rotation",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Sky",
+    "path": "folders/Scripts/App/Actions/Background/Sky.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_background_sky_rotation",
+  "tags": [],
+  "resourceType": "GMScript",
 }

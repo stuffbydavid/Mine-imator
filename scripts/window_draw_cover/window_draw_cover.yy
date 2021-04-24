@@ -1,8 +1,12 @@
 {
-    "id": "9f9914d5-1314-4567-b9a9-8105836a0af7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "window_draw_cover",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Window",
+    "path": "folders/Scripts/App/Interface/Window.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "window_draw_cover",
+  "tags": [],
+  "resourceType": "GMScript",
 }

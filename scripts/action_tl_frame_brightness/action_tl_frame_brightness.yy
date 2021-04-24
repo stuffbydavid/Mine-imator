@@ -1,8 +1,12 @@
 {
-    "id": "837a57ba-9131-4c6a-a5b9-4d419f4208e0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_brightness",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Material",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Material.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_brightness",
+  "tags": [],
+  "resourceType": "GMScript",
 }

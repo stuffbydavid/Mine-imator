@@ -2,11 +2,10 @@
 /// @arg vector
 /// @arg multiplier
 
-var vec, mul;
-vec = argument0
-mul = argument1
-
-if (is_array(mul))
-	return vec2(vec[@ X] * mul[@ X], vec[@ Y] * mul[@ Y])
-else
-	return vec2(vec[@ X] * mul, vec[@ Y] * mul)
+function vec2_mul(vec, mul)
+{
+	if (is_array(mul))
+		return vec2(vec[@ X] * mul[@ X], vec[@ Y] * mul[@ Y])
+	else
+		return vec2(vec[@ X] * mul, vec[@ Y] * mul)
+}

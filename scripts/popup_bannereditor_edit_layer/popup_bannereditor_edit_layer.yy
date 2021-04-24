@@ -1,8 +1,12 @@
 {
-    "id": "41022194-825a-4887-ba7e-9f8487a721be",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "popup_bannereditor_edit_layer",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Banner editor",
+    "path": "folders/Scripts/App/Interface/Popups/Banner editor.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "popup_bannereditor_edit_layer",
+  "tags": [],
+  "resourceType": "GMScript",
 }

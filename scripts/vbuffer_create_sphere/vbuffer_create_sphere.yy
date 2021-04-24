@@ -1,8 +1,12 @@
 {
-    "id": "c06f64bd-029f-49f7-89e0-ce501bd0bec8",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "vbuffer_create_sphere",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vertex buffer",
+    "path": "folders/Scripts/Utility/Vertex/Vertex buffer.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "vbuffer_create_sphere",
+  "tags": [],
+  "resourceType": "GMScript",
 }

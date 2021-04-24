@@ -1,8 +1,12 @@
 {
-    "id": "122a0976-a2cc-41a1-acfa-f7c032275392",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "history_save_res",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Save",
+    "path": "folders/Scripts/App/History/Save.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "history_save_res",
+  "tags": [],
+  "resourceType": "GMScript",
 }

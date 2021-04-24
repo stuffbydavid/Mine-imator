@@ -4,53 +4,52 @@
 /// @arg startposition
 /// @arg endposition
 
-if (history_undo)
+function action_tl_keyframes_select_area(stl, etl, spos, epos)
 {
-	with (history_data)
-		history_restore_tl_select()
-}
-else if (history_redo)
-{
-	with (history_data)
-		history_restore_tl_select_new()
-}
-else
-{
-	var stl, etl, spos, epos, hobj;
-	stl = argument0
-	etl = argument1
-	spos = argument2
-	epos = argument3
-	hobj = history_set(action_tl_keyframes_select_area)
-	
-	with (hobj)
-		history_save_tl_select()
-	
-	for (var t = stl; t <= etl; t++)
+	if (history_undo)
 	{
-		var tl = tree_visible_list[|t];
+		with (history_data)
+			history_restore_tl_select()
+	}
+	else if (history_redo)
+	{
+		with (history_data)
+			history_restore_tl_select_new()
+	}
+	else
+	{
+		var hobj;
+		hobj = history_set(action_tl_keyframes_select_area)
 		
-		if (tl.lock)
-			continue
+		with (hobj)
+			history_save_tl_select()
 		
-		for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
+		for (var t = stl; t <= etl; t++)
 		{
-			var kf, len;
-			kf = tl.keyframe_list[|k]
-			len = tl_keyframe_length(kf)
+			var tl = tree_visible_list[|t];
 			
-			if (kf.selected || kf.position + len < spos)
+			if (tl.lock)
 				continue
+			
+			for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
+			{
+				var kf, len;
+				kf = tl.keyframe_list[|k]
+				len = tl_keyframe_length(kf)
 				
-			if (kf.position > epos)
-				break
+				if (kf.selected || kf.position + len < spos)
+					continue
 				
-			tl_keyframe_select(kf)
+				if (kf.position > epos)
+					break
+				
+				tl_keyframe_select(kf)
+			}
 		}
+		
+		with (hobj)
+			history_save_tl_select_new()
 	}
 	
-	with (hobj)
-		history_save_tl_select_new()
+	app_update_tl_edit()
 }
-
-app_update_tl_edit()

@@ -1,8 +1,12 @@
 {
-    "id": "8c22d3b6-e0ab-4666-9061-a050794b988b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_setting_search_variants",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Interface",
+    "path": "folders/Scripts/App/Actions/Settings/Interface.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_setting_search_variants",
+  "tags": [],
+  "resourceType": "GMScript",
 }

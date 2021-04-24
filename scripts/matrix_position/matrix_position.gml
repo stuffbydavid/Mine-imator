@@ -1,4 +1,7 @@
 /// matrix_position(matrix)
 /// @arg matrix
 
-return point3D(argument0[MAT_X], argument0[MAT_Y], argument0[MAT_Z])
+function matrix_position(mat)
+{
+	return point3D(mat[MAT_X], mat[MAT_Y], mat[MAT_Z])
+}

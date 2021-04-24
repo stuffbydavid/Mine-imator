@@ -1,8 +1,12 @@
 {
-    "id": "b6787206-0fe9-4b77-823b-56332cdfcde3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_volumetric_fog_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_volumetric_fog_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

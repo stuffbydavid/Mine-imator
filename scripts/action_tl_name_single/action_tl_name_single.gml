@@ -1,44 +1,47 @@
 /// action_tl_name_single(name)
 /// @arg name
 
-if (history_undo)
+function action_tl_name_single(name)
 {
-	with (history_data) 
+	if (history_undo)
 	{
-		for (var t = 0; t < save_var_amount; t++)
+		with (history_data) 
 		{
-			with (save_id_find(save_var_save_id[t]))
+			for (var t = 0; t < save_var_amount; t++)
 			{
-				name = other.save_var_old_value[t]
-				tl_update_display_name()
+				with (save_id_find(save_var_save_id[t]))
+				{
+					id.name = other.save_var_old_value[t]
+					tl_update_display_name()
+				}
 			}
 		}
 	}
-}
-else if (history_redo)
-{
-	with (history_data)
+	else if (history_redo)
 	{
-		for (var t = 0; t < save_var_amount; t++)
+		with (history_data)
 		{
-			with (save_id_find(save_var_save_id[t]))
+			for (var t = 0; t < save_var_amount; t++)
 			{
-				name = other.save_var_new_value[t]
-				tl_update_display_name()
+				with (save_id_find(save_var_save_id[t]))
+				{
+					id.name = other.save_var_new_value[t]
+					tl_update_display_name()
+				}
 			}
 		}
 	}
-}
-else
-{
-	var hobj = history_save_var_start(action_tl_name_single, true);
-	
-	with (timeline_rename)
+	else
 	{
-		with (hobj)
-			history_save_var(other.id, other.name, argument0)
+		var hobj = history_save_var_start(action_tl_name_single, true);
+		
+		with (timeline_rename)
+		{
+			with (hobj)
+				history_save_var(other.id, other.name, name)
 			
-		name = argument0
-		tl_update_display_name()
+			id.name = name
+			tl_update_display_name()
+		}
 	}
 }

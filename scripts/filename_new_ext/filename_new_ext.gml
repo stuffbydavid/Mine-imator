@@ -3,19 +3,20 @@
 /// @arg newextension
 /// @desc Changes the filename extension, accepting a new value with a leading dot, eg. ".png"
 
-var fn, newext, p;
-fn = argument0
-newext = argument1
-
-for (p = string_length(fn); p >= 0; p--)
+function filename_new_ext(fn, newext)
 {
-	var c = string_char_at(fn, p);
+	var p;
 	
-	if (p = 0 || c = "\\" || c = "/")
-		return fn + newext
+	for (p = string_length(fn); p >= 0; p--)
+	{
+		var c = string_char_at(fn, p);
 		
-	if (c = ".")
-		break
+		if (p = 0 || c = "\\" || c = "/")
+			return fn + newext
+		
+		if (c = ".")
+			break
+	}
+	
+	return string_copy(fn, 1, p - 1) + newext
 }
-
-return string_copy(fn, 1, p - 1) + newext

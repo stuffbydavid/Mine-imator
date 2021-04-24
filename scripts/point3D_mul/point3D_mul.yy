@@ -1,8 +1,12 @@
 {
-    "id": "abeaacd8-5466-44a2-8bfe-11fd04698e57",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "point3D_mul",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Point",
+    "path": "folders/Scripts/Utility/Math/Point.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "point3D_mul",
+  "tags": [],
+  "resourceType": "GMScript",
 }

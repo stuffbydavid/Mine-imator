@@ -1,8 +1,12 @@
 {
-    "id": "c4f8f7a1-37ff-40ab-ba69-03253d7d865c",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "vec2_normalize",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Vector",
+    "path": "folders/Scripts/Utility/Math/Vector.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "vec2_normalize",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "3cbca06b-7c86-449e-acd2-ccfe1cce5cd1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_tl_frame_cam_dof_depth",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "DoF",
+    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/DoF.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_tl_frame_cam_dof_depth",
+  "tags": [],
+  "resourceType": "GMScript",
 }

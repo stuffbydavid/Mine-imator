@@ -3,11 +3,9 @@
 /// @arg y
 /// @arg z
 
-var xx, yy, zz, t;
-xx = argument0
-yy = argument1
-zz = argument2
+function builder_get_waterlogged(xx, yy, zz)
+{
+	var t = builder_get_index(xx, yy, zz);
 
-t = builder_get_index(xx, yy, zz)
-
-return buffer_peek(block_waterlogged, t, buffer_u8)
+	return buffer_peek(block_waterlogged, t, buffer_u8)
+}

@@ -1,8 +1,12 @@
 {
-    "id": "b047310c-1b15-4979-8610-648ca4b4408b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "shader_high_aa_set",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "High quality",
+    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "shader_high_aa_set",
+  "tags": [],
+  "resourceType": "GMScript",
 }

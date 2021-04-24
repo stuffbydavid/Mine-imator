@@ -1,8 +1,12 @@
 {
-    "id": "21e0a8a0-9cf3-4362-976d-212a7053369f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "project_save_markers",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Save",
+    "path": "folders/Scripts/Project/Save.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "project_save_markers",
+  "tags": [],
+  "resourceType": "GMScript",
 }

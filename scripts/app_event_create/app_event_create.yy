@@ -1,8 +1,12 @@
 {
-    "id": "546fd96c-0c5e-4e8b-b102-1e06f2932cec",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "app_event_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "App",
+    "path": "folders/Scripts/App.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "app_event_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

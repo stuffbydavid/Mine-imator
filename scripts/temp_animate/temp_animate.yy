@@ -1,8 +1,12 @@
 {
-    "id": "28d9bfe6-3203-457b-9cbf-e3d56df22dee",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "temp_animate",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Templates",
+    "path": "folders/Scripts/Project/Templates.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "temp_animate",
+  "tags": [],
+  "resourceType": "GMScript",
 }

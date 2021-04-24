@@ -4,30 +4,33 @@
 /// @arg value2
 /// @arg value3...]
 
-var cap, timestr, valstr;
-
-if (!dev_mode)
-	return argument[argument_count - 1]
-
-cap = string_repeat("\t", debug_indent) + string(argument[0])
-valstr = ""
-
-// Time
-timestr = date_time_string(date_current_datetime()) + " "
-
-// Values
-if (argument_count > 1)
+function debug()
 {
-	valstr = ": "
-	for (var a = 1; a < argument_count; a++)
+	var cap, timestr, valstr;
+	
+	if (!dev_mode)
+		return argument[argument_count - 1]
+	
+	cap = string_repeat("\t", debug_indent) + string(argument[0])
+	valstr = ""
+	
+	// Time
+	timestr = date_time_string(date_current_datetime()) + " "
+	
+	// Values
+	if (argument_count > 1)
 	{
-		valstr += string(argument[a])
-		if (a < argument_count - 1)
-			valstr += ", "
+		valstr = ": "
+		for (var a = 1; a < argument_count; a++)
+		{
+			valstr += string(argument[a])
+			if (a < argument_count - 1)
+				valstr += ", "
+		}
 	}
+	
+	// Debug message
+	show_debug_message(timestr + cap + valstr)
+	
+	return argument[argument_count - 1]
 }
-
-// Debug message
-show_debug_message(timestr + cap + valstr)
-
-return argument[argument_count - 1]

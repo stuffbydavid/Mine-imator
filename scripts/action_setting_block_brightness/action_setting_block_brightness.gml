@@ -2,5 +2,8 @@
 /// @arg value
 /// @arg add
 
-setting_block_brightness = setting_block_brightness * argument1 + argument0 / 100
-render_samples = -1
+function action_setting_block_brightness(val, add)
+{
+	setting_block_brightness = setting_block_brightness * add + val / 100
+	render_samples = -1
+}

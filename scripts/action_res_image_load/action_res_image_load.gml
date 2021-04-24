@@ -2,57 +2,58 @@
 /// @arg filename
 /// @arg type
 
-if (history_undo)
+function action_res_image_load(fn, type)
 {
-	with (history_data)
-		history_destroy_loaded()
-}
-else
-{
-	var fn, type, itemsheetsize, hobj, res;
-	
-	if (history_redo)
+	if (history_undo)
 	{
-		fn = history_data.filename
-		type = history_data.type
-		if (type = e_res_type.ITEM_SHEET)
-			itemsheetsize = history_data.item_sheet_size
+		with (history_data)
+			history_destroy_loaded()
 	}
 	else
 	{
-		fn = argument0
-		type = argument1
-		hobj = history_set(action_res_image_load)
+		var itemsheetsize, hobj, res;
 		
-		if (type = e_res_type.ITEM_SHEET)
+		if (history_redo)
 		{
-			if (popup_importitemsheet.is_sheet)
-				itemsheetsize = popup_importitemsheet.sheet_size
-			else
-				type = e_res_type.TEXTURE
+			fn = history_data.filename
+			type = history_data.type
+			if (type = e_res_type.ITEM_SHEET)
+				itemsheetsize = history_data.item_sheet_size
+		}
+		else
+		{
+			hobj = history_set(action_res_image_load)
+			
+			if (type = e_res_type.ITEM_SHEET)
+			{
+				if (popup_importitemsheet.is_sheet)
+					itemsheetsize = popup_importitemsheet.sheet_size
+				else
+					type = e_res_type.TEXTURE
+			}
+		}
+		
+		res = new_res(fn, type)
+		with (res)
+		{
+			loaded = true
+			if (type = e_res_type.ITEM_SHEET)
+				item_sheet_size = itemsheetsize
+	
+			res_load()
+		}
+		
+		if (!history_redo && !res.replaced)
+		{
+			with (hobj)
+			{
+				filename = fn
+				id.type = type
+				id.item_sheet_size = res.item_sheet_size
+				history_save_loaded()
+			}
 		}
 	}
 	
-	res = new_res(fn, type)
-	with (res)
-	{
-		loaded = true
-		if (type = e_res_type.ITEM_SHEET)
-			item_sheet_size = itemsheetsize
-	
-		res_load()
-	}
-	
-	if (!history_redo && !res.replaced)
-	{
-		with (hobj)
-		{
-			filename = fn
-			id.type = type
-			id.item_sheet_size = res.item_sheet_size
-			history_save_loaded()
-		}
-	}
+	project_reset_loaded()
 }
-
-project_reset_loaded()

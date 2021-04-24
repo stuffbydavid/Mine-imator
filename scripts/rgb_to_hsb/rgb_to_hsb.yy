@@ -1,8 +1,12 @@
 {
-    "id": "52c85819-253c-438f-b0a5-8b961a144f8b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "rgb_to_hsb",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Color",
+    "path": "folders/Scripts/Utility/Color.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "rgb_to_hsb",
+  "tags": [],
+  "resourceType": "GMScript",
 }

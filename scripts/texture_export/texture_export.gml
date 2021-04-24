@@ -2,4 +2,7 @@
 /// @arg texture
 /// @arg filename
 
-return sprite_save_lib(argument0, 0, argument1)
+function texture_export(tex, fn)
+{
+	return sprite_save_lib(tex, 0, fn)
+}

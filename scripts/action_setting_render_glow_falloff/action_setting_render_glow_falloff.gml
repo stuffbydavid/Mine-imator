@@ -1,4 +1,7 @@
 /// action_setting_render_glow_falloff(enable)
 /// @arg enable
 
-setting_render_glow_falloff = argument0
+function action_setting_render_glow_falloff(enable)
+{
+	setting_render_glow_falloff = enable
+}

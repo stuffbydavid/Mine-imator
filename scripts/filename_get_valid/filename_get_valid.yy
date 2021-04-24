@@ -1,8 +1,12 @@
 {
-    "id": "ee1be00e-a2ea-49f3-b3c1-a66ee51fffb3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "filename_get_valid",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "File",
+    "path": "folders/Scripts/Utility/File.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "filename_get_valid",
+  "tags": [],
+  "resourceType": "GMScript",
 }

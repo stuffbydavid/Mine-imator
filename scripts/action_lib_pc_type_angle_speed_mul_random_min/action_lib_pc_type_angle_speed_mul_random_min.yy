@@ -1,8 +1,12 @@
 {
-    "id": "05ce5bd0-8579-4e5b-8d0c-4344b6410cb6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "action_lib_pc_type_angle_speed_mul_random_min",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Angle",
+    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Angle.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "action_lib_pc_type_angle_speed_mul_random_min",
+  "tags": [],
+  "resourceType": "GMScript",
 }

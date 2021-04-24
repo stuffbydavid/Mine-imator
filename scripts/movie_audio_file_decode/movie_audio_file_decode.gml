@@ -2,4 +2,7 @@
 /// @arg source
 /// @arg destination
 
-return external_call(lib_movie_audio_file_decode, argument0, argument1)
+function movie_audio_file_decode(src, dest)
+{
+	return external_call(lib_movie_audio_file_decode, src, dest)
+}

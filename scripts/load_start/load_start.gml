@@ -2,16 +2,19 @@
 /// @arg object
 /// @arg script
 
-popup = popup_loading
-popup_ani = 1
-popup_ani_type = ""
-
-with (popup_loading)
+function load_start(object, script)
 {
-	caption = ""
-	progress = 0
-	load_object = argument0
-	load_script = argument1
+	popup = popup_loading
+	popup_ani = 1
+	popup_ani_type = ""
+	
+	with (popup_loading)
+	{
+		caption = ""
+		progress = 0
+		load_object = object
+		load_script = script
+	}
+	
+	window_busy = "popup" + popup.name
 }
-
-window_busy = "popup" + popup.name
