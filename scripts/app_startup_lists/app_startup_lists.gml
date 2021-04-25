@@ -11,6 +11,7 @@ function app_startup_lists()
 	globalvar biome_list, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
+	globalvar render_pass_list;
 	
 	// Values
 	value_name_list = ds_list_create()
@@ -501,5 +502,16 @@ function app_startup_lists()
 		icons.FOLDER,
 		icons.CLOUD,
 		icons.NOTE
+	)
+	
+	render_pass_list = ds_list_create()
+	ds_list_add(render_pass_list,
+		"final",
+		"depth",
+		"normal",
+		"diffuse",
+		"ao",
+		"shadows",
+		"indirect"
 	)
 }

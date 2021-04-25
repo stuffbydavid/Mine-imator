@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "1.3.0",
-        "lastchange": "2021.04.10"
+        "lastchange": "2021.04.25"
     },
     "particle/": {
         "default": "Default spawner",
@@ -584,7 +584,17 @@
             "flat": "Flat mode",
             "shaded": "Shaded mode",
             "render": "Render mode",
-            "fog": "Minecraft fog"
+            "fog": "Minecraft fog",
+            "pass": "Render pass",
+            "pass/": {
+                "final": "Final",
+                "depth": "Depth (24bit)",
+                "normal": "Normal",
+                "diffuse": "Diffuse",
+                "ao": "Ambient occlusion",
+                "shadows": "Shadows",
+                "indirect": "Indirect"
+            }
         },
         "overlay/": {
             "grid": "Grid",

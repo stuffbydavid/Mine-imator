@@ -8,6 +8,9 @@ function tl_remove_clean()
 	
 	with (tl)
 	{
+		// Deselect
+		tl_deselect()
+		
 		// Remove from render list
 		ds_list_delete_value(render_list, id)
 		

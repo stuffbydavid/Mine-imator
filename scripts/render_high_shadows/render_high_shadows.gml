@@ -101,7 +101,7 @@ function render_high_shadows(export)
 			surface_reset_target()
 			
 			// Color
-			if (setting_render_shadows_sun_colored)
+			if (app.setting_render_shadows_sun_colored)
 			{
 				render_surface_sun_color_buffer = surface_require(render_surface_sun_color_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
 				surface_set_target(render_surface_sun_color_buffer)

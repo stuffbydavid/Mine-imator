@@ -1,7 +1,7 @@
 /// render_high_dof(basesurf)
 /// @arg basesurf
 
-function render_high_dof(argument0)
+function render_high_dof(prevsurf)
 {
 	var depthsurf, cocsurf, resultsurf;
 	

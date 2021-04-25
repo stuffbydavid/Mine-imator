@@ -6,12 +6,23 @@
 
 function render_start()
 {
+	var finalrender = (setting_render_pass = e_render_pass.FINAL);
+	
 	render_target = argument[0]
 	render_camera = argument[1]
 	render_width = project_video_width
 	render_height = project_video_height
 	
+	if (surface_exists(render_pass_surf))
+		surface_free(render_pass_surf)
+	
+	render_pass_surf = null
+	
 	// General rendering effects
+	render_ssao = setting_render_ssao && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.DEPTH_U24 || setting_render_pass = e_render_pass.NORMAL || setting_render_pass = e_render_pass.AO)
+	render_shadows = setting_render_shadows && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.SHADOWS || setting_render_pass = e_render_pass.INDIRECT)
+	render_indirect = setting_render_indirect && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.INDIRECT)
+	
 	render_volumetric_fog = setting_render_shadows && background_volumetric_fog && (render_quality = e_view_mode.RENDER)
 	render_glow = setting_render_glow && (render_quality = e_view_mode.RENDER)
 	render_glow_falloff = setting_render_glow && setting_render_glow_falloff && (render_quality = e_view_mode.RENDER)
@@ -26,18 +37,18 @@ function render_start()
 			render_height = render_camera.value[e_value.CAM_HEIGHT]
 		}
 		
-		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM])
-		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null)
-		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF])
-		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION])
-		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN])
-		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE])
-		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA])
-		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT])
+		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM]) && finalrender
+		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null) && finalrender
+		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF]) && finalrender
+		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION]) && finalrender
+		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN]) && finalrender
+		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE]) && finalrender
+		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA]) && finalrender
+		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT]) && finalrender
 		
-		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW]))
-		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]
-		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW]
+		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW])) && finalrender
+		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM] && finalrender
+		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && finalrender
 		
 		render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
 								render_camera.value[e_value.BRIGHTNESS] > 0 || 

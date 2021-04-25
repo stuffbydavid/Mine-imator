@@ -938,6 +938,15 @@ function list_init(name)
 			
 			break
 		}
+		
+		// Render pass
+		case "viewmodepass":
+		{
+			for (var i = 0; i < ds_list_size(render_pass_list); i++)
+				list_item_add(text_get("viewmodepass" + render_pass_list[|i]), i)
+			
+			break
+		}
 	}
 	
 	return list_init_end()

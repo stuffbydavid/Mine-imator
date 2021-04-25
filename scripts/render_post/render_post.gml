@@ -1,10 +1,8 @@
 /// render_post(surface)
 /// @surface
 
-function render_post(argument0)
+function render_post(finalsurf)
 {
-	var finalsurf = argument0;
-	
 	// Start post processing
 	finalsurf = render_high_post_start(finalsurf);
 	

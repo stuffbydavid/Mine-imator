@@ -181,6 +181,10 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 
 void main()
 {
+	// Perform alpha test to ignore background
+	if (texture2D(uDepthBuffer, vTexCoord).a < 1.0)
+		discard;
+	
 	// Sample buffers
 	float originDepth = getDepth(vTexCoord);
 	vec3 viewPos = posFromBuffer(vTexCoord, originDepth);

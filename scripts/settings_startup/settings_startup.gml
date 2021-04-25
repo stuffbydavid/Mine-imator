@@ -154,6 +154,8 @@ function settings_startup()
 	setting_export_image_include_hidden = false
 	setting_export_image_high_quality = true
 	
+	setting_render_pass = e_render_pass.FINAL
+	
 	// Viewport
 	setting_snap = false
 	setting_snap_absolute = true

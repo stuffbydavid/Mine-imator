@@ -15,9 +15,11 @@ function render_startup()
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
-			  render_volumetric_fog, render_quality;
+			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_quality;
 	
 	globalvar render_shadows_buffer, render_shadows_size, render_shadows_matrix, render_samples;
+	
+	globalvar render_pass_surf;
 	
 	log("Render init")
 	
@@ -61,6 +63,9 @@ function render_startup()
 	render_camera_lens_dirt = true
 	render_camera_lens_dirt_bloom = true
 	render_camera_lens_dirt_glow = true
+	render_ssao = false
+	render_shadows = false
+	render_indirect = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	render_list = ds_list_create()
@@ -148,12 +153,16 @@ function render_startup()
 	render_samples = 0
 	render_shadows_matrix = null
 	
+	// Render pass surf
+	render_pass_surf = null
+	
 	// Render modes
 	globalvar render_mode, render_mode_shader_map, render_shader_obj;
 	render_mode_shader_map = ds_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
 	render_mode_shader_map[?e_render_mode.SELECT] = shader_blend
 	render_mode_shader_map[?e_render_mode.PREVIEW] = shader_color_fog
+	render_mode_shader_map[?e_render_mode.COLOR] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG_LIGHTS] = shader_color_fog_lights
 	render_mode_shader_map[?e_render_mode.ALPHA_FIX] = shader_alpha_fix

@@ -27,7 +27,7 @@ function shader_use()
 	// Set fog
 	if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)
 	{
-		var fog = (render_fog && app.background_fog_show);
+		var fog = (render_fog && app.background_fog_show && render_mode != e_render_mode.COLOR);
 		render_set_uniform_int("uFogShow", bool_to_float(fog))
 		
 		if (fog)

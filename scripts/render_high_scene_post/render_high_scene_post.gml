@@ -6,8 +6,7 @@
 
 function render_high_scene_post(basesurf, shadowsurf, fogsurf)
 {
-	
-	if ((!setting_render_shadows || !background_desaturate_night) && !background_fog_show)
+	if ((!render_shadows || !background_desaturate_night) && !background_fog_show)
 		return 0
 	
 	// Copy into separate surface
@@ -28,7 +27,7 @@ function render_high_scene_post(basesurf, shadowsurf, fogsurf)
 		draw_surface_exists(scenesurf, 0, 0)
 		
 		// Desaturate based on light level
-		if (setting_render_shadows && background_desaturate_night)
+		if (render_shadows && background_desaturate_night)
 		{
 			render_shader_obj = shader_map[?shader_high_light_desaturate]
 			with (render_shader_obj)

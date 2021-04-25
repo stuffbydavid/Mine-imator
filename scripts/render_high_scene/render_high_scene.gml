@@ -34,7 +34,7 @@ function render_high_scene(ssaosurf, shadowssurf)
 		// World
 		render_world_start()
 		render_world_sky()
-		render_world(e_render_mode.COLOR_FOG)
+		render_world(e_render_mode.COLOR)
 		render_world_done()
 		
 		// 2D mode
@@ -53,6 +53,9 @@ function render_high_scene(ssaosurf, shadowssurf)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
+	
+	if (setting_render_pass = e_render_pass.DIFFUSE)
+		render_pass_surf = surface_duplicate(scenesurf)
 	
 	surface_set_target(masksurf)
 	{

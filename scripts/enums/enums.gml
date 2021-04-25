@@ -706,6 +706,7 @@ function enums()
 		CLICK,
 		SELECT,
 		PREVIEW,
+		COLOR,
 		COLOR_FOG,
 		COLOR_FOG_LIGHTS,
 		ALPHA_FIX,
@@ -936,5 +937,17 @@ function enums()
 		DRAG_MIDDLE,
 		DRAG_RIGHT,
 		SCROLL
+	}
+	
+	// Render passes
+	enum e_render_pass
+	{
+		FINAL,
+		DEPTH_U24,
+		NORMAL,
+		DIFFUSE,
+		AO,
+		SHADOWS,
+		INDIRECT
 	}
 }
