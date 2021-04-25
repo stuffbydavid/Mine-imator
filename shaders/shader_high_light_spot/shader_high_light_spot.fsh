@@ -11,6 +11,7 @@ uniform float uLightNear;
 uniform float uLightFar;
 uniform float uLightFadeSize;
 uniform float uLightSpotSharpness;
+uniform vec3 uShadowPosition;
 
 uniform sampler2D uDepthBuffer;
 
@@ -20,6 +21,7 @@ varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
+varying vec4 vShadowCoord;
 varying float vBrightness;
 varying float vLightBleed;
 
@@ -48,27 +50,35 @@ void main()
 			
 			// Attenuation factor
 			dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
-		
+			
 			if (dif > 0.0 && vBrightness < 1.0)
 			{
+				// Spotlight circle
 				float fragDepth = min(vScreenCoord.z, uLightFar);
 				vec2 fragCoord = (vec2(vScreenCoord.x, -vScreenCoord.y) / vScreenCoord.z + 1.0) / 2.0;
-			
+				
 				// Texture position must be valid
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 				{
 					// Create circle
 					dif *= 1.0 - clamp((distance(fragCoord, vec2(0.5, 0.5)) - 0.5 * uLightSpotSharpness) / (0.5 * max(0.01, 1.0 - uLightSpotSharpness)), 0.0, 1.0);
-					
+				} 
+				else
+					dif = 0.0;
+				
+				// Calculate shadow
+				fragDepth = min(vShadowCoord.z, uLightFar);
+				fragCoord = (vec2(vShadowCoord.x, -vShadowCoord.y) / vShadowCoord.z + 1.0) / 2.0;
+				
+				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
+				{
 					// Calculate bias
 					float bias = 1.0 + (.2 * min(1.0, vLightBleed + uBleedLight));
 					
 					// Shadow
 					float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, fragCoord)) * (uLightFar - uLightNear);
 					shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
-				} 
-				else
-					dif = 0.0;
+				}
 			}
 		}
 	

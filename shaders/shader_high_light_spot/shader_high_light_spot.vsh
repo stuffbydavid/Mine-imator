@@ -8,6 +8,7 @@ attribute vec4 in_Wave;
 
 uniform int uLightAmount;
 uniform mat4 uLightMatrix;
+uniform mat4 uShadowMatrix;
 uniform float uBrightness;
 uniform float uBlockBrightness;
 uniform float uLightBleed;
@@ -16,6 +17,7 @@ varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
+varying vec4 vShadowCoord;
 varying float vBrightness;
 varying float vLightBleed;
 
@@ -61,6 +63,7 @@ void main()
 	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
 	vTexCoord = in_TextureCoord;
 	vScreenCoord = uLightMatrix * vec4(vPosition, 1.0);
+	vShadowCoord = uShadowMatrix * vec4(vPosition, 1.0);
 	vBrightness =  in_Wave.z * uBlockBrightness + uBrightness / float(uLightAmount);
 	vLightBleed = in_Wave.w * uLightBleed;
 	

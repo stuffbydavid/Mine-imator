@@ -12,6 +12,7 @@ function shader_high_light_point_set()
 	render_set_uniform("uLightNear", render_light_near)
 	render_set_uniform("uLightFar", render_light_far)
 	render_set_uniform("uLightFadeSize", render_light_fade_size)
+	render_set_uniform_vec3("uShadowPosition", render_shadow_from[X], render_shadow_from[Y], render_shadow_from[Z])
 	
 	texture_set_stage(sampler_map[?"uDepthBufferXp"], surface_get_texture(render_surface_point_buffer[0]))
 	texture_set_stage(sampler_map[?"uDepthBufferXn"], surface_get_texture(render_surface_point_buffer[1]))

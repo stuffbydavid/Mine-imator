@@ -656,8 +656,6 @@ function app_startup_interface_tabs()
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"
 			tbx_indirect_range = new_textbox_decimals()
-			tbx_indirect_scatter = new_textbox_integer()
-			tbx_indirect_scatter.suffix = "%"
 			tbx_glow_radius = new_textbox_integer()
 			tbx_glow_radius.suffix = "%"
 			tbx_glow_intensity = new_textbox_integer()

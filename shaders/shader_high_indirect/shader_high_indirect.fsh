@@ -25,8 +25,6 @@ uniform float uStepSize;
 uniform int uStepAmount;
 uniform int uRays;
 
-uniform float uDiffuseScatter;
-
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
 {
@@ -209,7 +207,6 @@ void main()
 	{
 		// Get ray direction
 		vec3 rayDir = normalize(kernelBasis * uKernel[i]);
-		rayDir = mix(normalize(reflect(viewPos, normal)), rayDir, uDiffuseScatter);
 		rayTrace(i, rayDir, viewPos, bias, giColor);
 		
 		if (i >= uRays)

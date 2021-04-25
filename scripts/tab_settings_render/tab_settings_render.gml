@@ -141,10 +141,6 @@ function tab_settings_render()
 		draw_dragger("settingsrenderindirectrange", dx, dy, dragger_width, setting_render_indirect_range, setting_render_indirect_range / 200, 1, no_limit, 256, 1, tab.render.tbx_indirect_range, action_setting_render_indirect_range) 
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("settingsrenderindirectscatter", dx, dy, dw, round(setting_render_indirect_scatter * 100), 50, 0, 100, 100, 1, tab.render.tbx_indirect_scatter, action_setting_render_indirect_scatter) 
-		tab_next()
-		
 		tab_collapse_end()
 	}
 	

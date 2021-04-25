@@ -13,6 +13,7 @@ uniform float uLightStrength;
 uniform float uLightNear;
 uniform float uLightFar;
 uniform float uLightFadeSize;
+uniform vec3 uShadowPosition;
 
 uniform sampler2D uDepthBufferXp;
 uniform sampler2D uDepthBufferXn;
@@ -47,7 +48,7 @@ vec4 texture2Dmap(int map, vec2 tex)
 vec2 getShadowMapCoord(vec3 look)
 {
 	float tFOV = tan(PI / 4.0);
-	vec3 u, v, toPoint = vPosition - uLightPosition;
+	vec3 u, v, toPoint = vPosition - uShadowPosition;
 	vec2 coord;
 	
 	// Prepare 3D to 2D conversion
@@ -86,12 +87,12 @@ void main()
 		{
 			int buffer;
 			vec2 fragCoord;
-			vec3 toLight = vPosition - uLightPosition;
+			vec3 toLight = vPosition - uShadowPosition;
 			vec4 lookDir = vec4( // Get the direction from the pixel to the light
-				toLight.x / distance(vPosition.xy, uLightPosition.xy),
-				toLight.y / distance(vPosition.xy, uLightPosition.xy),
-				toLight.z / distance(vPosition.xz, uLightPosition.xz),
-				toLight.z / distance(vPosition.yz, uLightPosition.yz)
+				toLight.x / distance(vPosition.xy, uShadowPosition.xy),
+				toLight.y / distance(vPosition.xy, uShadowPosition.xy),
+				toLight.z / distance(vPosition.xz, uShadowPosition.xz),
+				toLight.z / distance(vPosition.yz, uShadowPosition.yz)
 			);
 		
 			// Get shadow map and texture coordinate
@@ -142,7 +143,7 @@ void main()
 			float bias = 1.0 + (.2 * min(1.0, vLightBleed + uBleedLight));
 			
 			// Shadow
-			float fragDepth = distance(vPosition, uLightPosition);
+			float fragDepth = distance(vPosition, uShadowPosition);
 			float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, fragCoord));
 			shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 		}

@@ -2752,8 +2752,7 @@
                 },
                 "blurpasses": "Blur passes",
                 "strength": "Strength",
-                "range": "Range",
-                "scatter": "Lighting scatter"
+                "range": "Range"
             },
             "glow": "Glow",
             "glow/": {

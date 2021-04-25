@@ -67,6 +67,4 @@ function shader_high_indirect_set(depthsurface, normalsurface, normalsurface2, d
 	render_set_uniform("uStepSize", stepsize)
 	render_set_uniform_int("uStepAmount", stepamount)
 	render_set_uniform_int("uRays", raycount)
-	
-	render_set_uniform("uDiffuseScatter", app.setting_render_indirect_scatter)
 }

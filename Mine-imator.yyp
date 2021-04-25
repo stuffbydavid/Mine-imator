@@ -388,7 +388,6 @@
     {"id":{"name":"action_setting_render_indirect_blur_passes","path":"scripts/action_setting_render_indirect_blur_passes/action_setting_render_indirect_blur_passes.yy",},"order":23,},
     {"id":{"name":"action_setting_render_indirect_strength","path":"scripts/action_setting_render_indirect_strength/action_setting_render_indirect_strength.yy",},"order":25,},
     {"id":{"name":"action_setting_render_indirect_range","path":"scripts/action_setting_render_indirect_range/action_setting_render_indirect_range.yy",},"order":27,},
-    {"id":{"name":"action_setting_render_indirect_scatter","path":"scripts/action_setting_render_indirect_scatter/action_setting_render_indirect_scatter.yy",},"order":29,},
     {"id":{"name":"action_setting_render_samples","path":"scripts/action_setting_render_samples/action_setting_render_samples.yy",},"order":31,},
     {"id":{"name":"action_setting_render_shadows","path":"scripts/action_setting_render_shadows/action_setting_render_shadows.yy",},"order":33,},
     {"id":{"name":"action_setting_render_shadows_point_buffer_size","path":"scripts/action_setting_render_shadows_point_buffer_size/action_setting_render_shadows_point_buffer_size.yy",},"order":35,},

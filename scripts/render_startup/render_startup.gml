@@ -6,11 +6,13 @@ function render_startup()
 			  render_target, render_surface, render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights,
 			  render_fog, render_particles, render_hidden, render_background, render_watermark, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix, light_view_proj_matrix,
-			  proj_depth_near, proj_depth_far, render_proj_from, render_active;
+			  spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
+			  render_active;
 	
 	globalvar render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
-			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_light_matrix,
-			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far;
+			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
+			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_light_offset, render_shadow_from,
+			  render_spot_matrix;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,

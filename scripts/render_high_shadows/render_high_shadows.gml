@@ -73,8 +73,7 @@ function render_high_shadows(export)
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
-				dis = ((background_sunlight_angle * (world_size / 2)) / 57.2958)
-				dis = random_range(-dis/2, dis/2)
+				dis = ((background_sunlight_angle * (world_size / 2)) / 57.2958) / 2
 				sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
@@ -91,8 +90,8 @@ function render_high_shadows(export)
 				
 				draw_clear(c_white)
 				render_world_start_sun(
-					point3D(background_light_data[0] + sampleoffset[X], background_light_data[1] + sampleoffset[Y], background_light_data[2] + sampleoffset[Z]), 
-					point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0))
+					point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
+					point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
 				render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 				render_world_done()
 				
@@ -108,8 +107,8 @@ function render_high_shadows(export)
 				{
 					draw_clear(c_white)
 					render_world_start_sun(
-						point3D(background_light_data[0] + sampleoffset[X], background_light_data[1] + sampleoffset[Y], background_light_data[2] + sampleoffset[Z]), 
-						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0))
+						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
+						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
 					render_world(e_render_mode.HIGH_LIGHT_SUN_COLOR)
 					render_world_done()
 				}
@@ -229,7 +228,7 @@ function render_high_shadows(export)
 					var xyang, zang, dis;
 					xyang = random(360)
 					zang = random_range(-180, 180)
-					dis = random_range(-value[e_value.LIGHT_SIZE]/2, value[e_value.LIGHT_SIZE]/2)
+					dis = value[e_value.LIGHT_SIZE]/2
 					sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 					sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 					sampleoffset[Z] = lengthdir_z(dis, zang)
@@ -257,7 +256,7 @@ function render_high_shadows(export)
 							gpu_set_blendmode_ext(bm_one, bm_zero)
 							
 							draw_clear(c_white)
-							render_world_start_light(point3D_add(world_pos, sampleoffset), point3D_add(point3D_add(world_pos, sampleoffset), look), 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE])
+							render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE])
 							render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 							
 							render_world_done()
@@ -294,7 +293,7 @@ function render_high_shadows(export)
 						
 						draw_clear(c_white)
 						
-						render_world_start_light(point3D_add(world_pos, sampleoffset), point3D_add(lookat, sampleoffset), 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
+						render_world_start_light(world_pos, lookat, sampleoffset, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
 						
 						// Only render depth for shadows if the light source isn't shadowless
 						if (shadows)

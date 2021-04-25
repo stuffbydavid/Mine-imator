@@ -1,12 +1,14 @@
-/// render_world_start_sun(from, to)
+/// render_world_start_sun(from, to, offset)
 /// @arg from
 /// @arg to
+/// @arg offset
 /// @desc Render the scene from the sun's point of view.
 
-function render_world_start_sun(from, to)
+function render_world_start_sun(from, to, offset)
 {
 	render_light_from = from
 	render_light_to = to
+	render_light_offset = offset
 	render_sun_near = world_size/2
 	render_sun_far = -world_size/2
 	render_light_fov = 45
@@ -16,8 +18,12 @@ function render_world_start_sun(from, to)
 	gpu_set_ztestenable(true)
 	gpu_set_zwriteenable(true)
 	
-	var mV = matrix_build_lookat(render_light_from[X], render_light_from[Y], render_light_from[Z], 
-								 render_light_to[X], render_light_to[Y], render_light_to[Z],
+	var shadowfrom, shadowto;
+	shadowfrom = point3D_add(render_light_from, render_light_offset)
+	shadowto = render_light_to
+	
+	var mV = matrix_build_lookat(shadowfrom[X], shadowfrom[Y], shadowfrom[Z], 
+								 shadowto[X], shadowto[Y], shadowto[Z],
 								 0, 0, 1);
 	
 	var mP = matrix_create_ortho(-background_sunlight_range/2, background_sunlight_range/2, background_sunlight_range/2, -background_sunlight_range/2, render_sun_near, render_sun_far);
@@ -26,7 +32,7 @@ function render_world_start_sun(from, to)
 	camera_set_proj_mat(cam_render, mP)
 	camera_apply(cam_render)
 	
-	render_proj_from = render_light_from
+	render_proj_from = shadowfrom
 	light_proj_matrix = matrix_get(matrix_projection)
 	light_view_matrix = matrix_get(matrix_view)
 	light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)

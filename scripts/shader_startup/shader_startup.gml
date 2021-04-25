@@ -252,6 +252,7 @@ function shader_startup()
 		new_shader_sampler("uDepthBufferZp")
 		new_shader_sampler("uDepthBufferZn")
 		new_shader_uniform("uBleedLight")
+		new_shader_uniform("uShadowPosition")
 	}
 	
 	with (shader_map[?shader_high_light_point_shadowless])
@@ -273,6 +274,7 @@ function shader_startup()
 		new_shader_uniform("uIsWater")
 		new_shader_uniform("uLightAmount")
 		new_shader_uniform("uLightMatrix")
+		new_shader_uniform("uShadowMatrix")
 		new_shader_uniform("uLightPosition")
 		new_shader_uniform("uLightColor")
 		new_shader_uniform("uLightStrength")
@@ -523,7 +525,6 @@ function shader_startup()
 		new_shader_uniform("uRays")
 		new_shader_uniform("uKernel")
 		new_shader_uniform("uOffset")
-		new_shader_uniform("uDiffuseScatter")
 	}
 	
 	with (shader_map[?shader_scissor])
