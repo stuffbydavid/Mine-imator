@@ -429,7 +429,7 @@ function tab_properties_library()
 			textfield_group_add("libraryrepeatz", temp_edit.block_repeat[axis_edit], 1, action_lib_block_repeat, axis_edit, tab.library.tbx_repeat_z)
 			
 			tab_control_textfield_group(false)
-			draw_textfield_group("libraryrepeat", dx, dy, dw, 1 / 10, 1, 1000, 1)
+			draw_textfield_group("libraryrepeat", dx, dy, dw, 1 / 10, 1, 1000, 1, false, true, true)
 			tab_next()
 		}
 	}
