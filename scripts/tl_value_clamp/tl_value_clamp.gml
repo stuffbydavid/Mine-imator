@@ -27,6 +27,8 @@ function tl_value_clamp(vid, val)
 		case e_value.ALPHA:
 		case e_value.MIX_PERCENT:
 		case e_value.BRIGHTNESS:
+		case e_value.METALLIC:
+		case e_value.ROUGHNESS:
 		case e_value.CAM_BLOOM_THRESHOLD:
 		case e_value.CAM_CONTRAST:
 		case e_value.CAM_VIGNETTE_RADIUS:

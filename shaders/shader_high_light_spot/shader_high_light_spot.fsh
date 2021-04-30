@@ -16,6 +16,7 @@ uniform vec3 uShadowPosition;
 uniform sampler2D uDepthBuffer;
 
 uniform float uBleedLight;
+uniform float uMetallic;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -50,6 +51,9 @@ void main()
 			
 			// Attenuation factor
 			dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
+			
+			// Material
+			dif *= 1.0 - uMetallic;
 			
 			if (dif > 0.0 && vBrightness < 1.0)
 			{

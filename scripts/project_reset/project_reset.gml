@@ -167,6 +167,7 @@ function project_reset()
 	background_night_alpha = 0
 	background_sunset_alpha = 0
 	background_sunrise_alpha = 0
+	background_sky_color_final = c_black
 	
 	background_time = 0
 	background_time_prev = 0

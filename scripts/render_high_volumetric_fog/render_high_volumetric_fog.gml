@@ -26,8 +26,8 @@ function render_high_volumetric_fog(prevsurf, export)
 		}
 		
 		// Render whole world for depth, but only store a limited range
-		render_surface[0] = surface_require(render_surface[0], render_width, render_height, true, true)
-		depthsurf = render_surface[0]
+		render_surface[5] = surface_require(render_surface[5], render_width, render_height, true, true)
+		depthsurf = render_surface[5]
 		surface_set_target(depthsurf)
 		{
 			gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -71,8 +71,8 @@ function render_high_volumetric_fog(prevsurf, export)
 					
 					draw_clear(c_white)
 					render_world_start_sun(
-						point3D(background_light_data[0] + sampleoffset[X], background_light_data[1] + sampleoffset[Y], background_light_data[2] + sampleoffset[Z]), 
-						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0))
+						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
+						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
 					render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 					render_world_done()
 					
@@ -99,7 +99,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				{
 					shader_set(shader)
 					shader_use()
-				
+					
 					shader_high_volumetric_fog_set(depthsurf, render_surface_sun_buffer)
 				}
 				draw_blank(0, 0, render_width, render_height)

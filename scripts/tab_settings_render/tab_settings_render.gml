@@ -144,6 +144,27 @@ function tab_settings_render()
 		tab_collapse_end()
 	}
 	
+	// Reflections
+	tab_control_switch()
+	draw_button_collapse("reflections", collapse_map[?"reflections"], null, !setting_render_reflections)
+	draw_switch("settingsrenderreflections", dx, dy, setting_render_reflections, action_setting_render_reflections)
+	tab_next()
+	
+	if (setting_render_reflections && collapse_map[?"reflections"])
+	{
+		tab_collapse_start()
+		
+		tab_control_meter()
+		draw_meter("settingsrenderreflectionsprecision", dx, dy, dw, round(setting_render_reflections_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_setting_render_reflections_precision)
+		tab_next()
+		
+		tab_control_dragger()
+		draw_dragger("settingsrenderreflectionsthickness", dx, dy, dragger_width, setting_render_reflections_thickness, 1, .001, no_limit, 86, 1, tab.render.tbx_reflections_thickness, action_setting_render_reflections_thickness) 
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
 	// Glow
 	tab_control_switch()
 	draw_button_collapse("glow", collapse_map[?"glow"], null, !setting_render_glow)

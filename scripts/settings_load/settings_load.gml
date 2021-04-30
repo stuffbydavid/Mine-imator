@@ -236,6 +236,10 @@ function settings_load()
 			setting_render_indirect_strength = value_get_real(rendermap[?"render_indirect_strength"], setting_render_indirect_strength)
 			setting_render_indirect_range = value_get_real(rendermap[?"render_indirect_range"], setting_render_indirect_range)
 			
+			setting_render_reflections = value_get_real(rendermap[?"render_reflections"], setting_render_reflections)
+			setting_render_reflections_precision = value_get_real(rendermap[?"render_reflections_precision"], setting_render_reflections_precision)
+			setting_render_reflections_thickness = value_get_real(rendermap[?"render_reflections_thickness"], setting_render_reflections_thickness)
+			
 			setting_render_glow = value_get_real(rendermap[?"render_glow"], setting_render_glow)
 			setting_render_glow_radius = value_get_real(rendermap[?"render_glow_radius"], setting_render_glow_radius)
 			setting_render_glow_intensity = value_get_real(rendermap[?"render_glow_intensity"], setting_render_glow_intensity)

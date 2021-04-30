@@ -1,8 +1,7 @@
-/// shader_high_fog_apply_set(fogbuffer)
-/// @arg fogbuffer
+/// shader_high_reflections_apply_set(reflectionsbuffer)
+/// @arg reflectionsbuffer
 
-function shader_high_fog_apply_set(fogbuffer)
+function shader_high_reflections_apply_set(reflectionsbuffer)
 {
-	texture_set_stage(sampler_map[?"uFogBuffer"], surface_get_texture(fogbuffer))
-	render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
+	texture_set_stage(sampler_map[?"uReflectionsBuffer"], surface_get_texture(reflectionsbuffer))
 }

@@ -17,6 +17,7 @@ uniform int uColoredShadows;
 uniform sampler2D uColorBuffer;
 
 uniform float uBleedLight;
+uniform float uMetallic;
 
 varying vec3 vPosition;
 varying float vDepth;
@@ -47,6 +48,9 @@ void main()
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(vNormal), uLightDirection));	
 		dif = clamp(dif + min(1.0, vLightBleed + uBleedLight), 0.0, 1.0);
+		
+		// Material
+		dif *= 1.0 - uMetallic;
 		
 		vec3 shadow = vec3(1.0);
 	

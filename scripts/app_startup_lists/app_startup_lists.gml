@@ -40,6 +40,8 @@ function app_startup_lists()
 		"GLOW_COLOR",
 		"MIX_PERCENT",
 		"BRIGHTNESS",
+		"METALLIC",
+		"ROUGHNESS",
 		"SPAWN",
 		"FREEZE",
 		"CLEAR",
@@ -512,6 +514,7 @@ function app_startup_lists()
 		"diffuse",
 		"ao",
 		"shadows",
-		"indirect"
+		"indirect",
+		"reflections"
 	)
 }

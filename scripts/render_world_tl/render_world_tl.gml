@@ -87,6 +87,8 @@ function render_world_tl()
 		render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
 	}
 	render_set_uniform("uBrightness", value_inherit[e_value.BRIGHTNESS])
+	render_set_uniform("uMetallic", value_inherit[e_value.METALLIC])
+	render_set_uniform("uRoughness", value_inherit[e_value.ROUGHNESS])
 	
 	if (wind)
 		render_set_uniform("uWindEnable", wind)
@@ -228,6 +230,8 @@ function render_world_tl()
 	matrix_world_reset()
 	shader_texture_surface = false
 	render_set_uniform("uBrightness", 0)
+	render_set_uniform("uMetallic", 0)
+	render_set_uniform("uRoughness", 1)
 	
 	if (colors_ext)
 		render_set_uniform_int("uColorsExt", 0)

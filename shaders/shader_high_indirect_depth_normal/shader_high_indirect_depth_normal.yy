@@ -1,8 +1,8 @@
 {
   "type": 3,
   "parent": {
-    "name": "Indirect lighting",
-    "path": "folders/Shaders/High quality/Indirect lighting.yy",
+    "name": "SSGI",
+    "path": "folders/Shaders/High quality/SSGI.yy",
   },
   "resourceVersion": "1.0",
   "name": "shader_high_indirect_depth_normal",

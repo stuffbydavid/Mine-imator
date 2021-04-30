@@ -593,7 +593,8 @@
                 "diffuse": "Diffuse",
                 "ao": "Ambient occlusion",
                 "shadows": "Shadows",
-                "indirect": "Indirect"
+                "indirect": "Indirect",
+                "reflections": "Reflections"
             }
         },
         "overlay/": {
@@ -2409,6 +2410,8 @@
         "glowcolor": "Glow color",
         "mixpercent": "Mix percent",
         "emission": "Emission",
+        "metallic": "Metallic",
+        "roughness": "Roughness",
         "chartex": "Skin",
         "spblocktex": "Texture",
         "bodyparttex": "Skin",
@@ -2753,6 +2756,11 @@
                 "blurpasses": "Blur passes",
                 "strength": "Strength",
                 "range": "Range"
+            },
+            "reflections": "Reflections",
+            "reflections/": {
+                "precision": "Precision",
+                "thickness": "Thickness"
             },
             "glow": "Glow",
             "glow/": {

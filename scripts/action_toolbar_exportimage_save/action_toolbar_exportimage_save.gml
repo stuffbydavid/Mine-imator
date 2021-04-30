@@ -24,6 +24,7 @@ function action_toolbar_exportimage_save()
 	app_update_cameras(popup_exportimage.high_quality, false)
 	
 	render_active = "image"
+	render_quality = (exportmovie_high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
 	
 	render_start(null, timeline_camera)
 	

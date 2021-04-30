@@ -9,6 +9,9 @@ uniform int uIndirectEnabled;
 uniform float uIndirectStrength;
 
 uniform sampler2D uMask;
+uniform sampler2D uMaterialBuffer;
+uniform int uReflectionsEnabled;
+uniform vec4 uFallbackColor;
 
 uniform vec4 uAmbientColor;
 
@@ -17,9 +20,10 @@ varying vec2 vTexCoord;
 void main()
 {
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
+	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord);
 	
 	// Sum up lighting
-	vec3 light = vec3(1.0);
+	vec3 diffuse = vec3(1.0);
 	
 	if (uShadowsEnabled > 0)
 	{
@@ -28,19 +32,25 @@ void main()
 		
 		// Calculate GI
 		if (uIndirectEnabled > 0)
-		{
 			GI = texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
-			//GI = max(vec3(0.0), GI - (direct.rgb));
-		}
 		
-		light = uAmbientColor.rgb + direct + GI;
+		diffuse = uAmbientColor.rgb + direct + GI;
 	}
 	
 	// Multiply light and ao with diffuse
-	baseColor.rgb *= mix(vec3(1.0), light, texture2D(uMask, vTexCoord).rgb);
+	diffuse *= 1.0 - matColor.r;
+	
+	// "Energy conservation", remove diffuse based on fresnel
+	diffuse *= 1.0 - matColor.b;
+	
+	baseColor.rgb *= mix(vec3(1.0), diffuse, texture2D(uMask, vTexCoord).rgb);
 	
 	if (uSSAOEnabled > 0)
 		baseColor.rgb *= texture2D(uSSAO, vTexCoord).rgb;
+	
+	// If reflections are disabled, add fallback color for fresnel
+	if (uReflectionsEnabled == 0)
+		baseColor.rgb += uFallbackColor.rgb * matColor.b;
 	
 	gl_FragColor = baseColor;
 }

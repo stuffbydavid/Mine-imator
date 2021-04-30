@@ -148,6 +148,8 @@ function tl_update_values()
 		tl_update_values_ease(e_value.GLOW_COLOR, trans, p)
 		tl_update_values_ease(e_value.MIX_PERCENT, trans, p)
 		tl_update_values_ease(e_value.BRIGHTNESS, trans, p)
+		tl_update_values_ease(e_value.METALLIC, trans, p)
+		tl_update_values_ease(e_value.ROUGHNESS, trans, p)
 	}
 	
 	// Particles

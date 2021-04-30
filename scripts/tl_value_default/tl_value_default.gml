@@ -9,6 +9,7 @@ function tl_value_default(valueid)
 		case e_value.SCA_Y:
 		case e_value.SCA_Z: return 1
 		case e_value.ALPHA: return 1
+		case e_value.ROUGHNESS: return 1
 		case e_value.GLOW_COLOR:
 		case e_value.RGB_MUL:
 		case e_value.HSB_MUL: return c_white

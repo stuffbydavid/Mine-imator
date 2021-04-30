@@ -133,6 +133,8 @@ function enums()
 		GLOW_COLOR,
 		MIX_PERCENT,
 		BRIGHTNESS,
+		METALLIC,
+		ROUGHNESS,
 		SPAWN,
 		FREEZE,
 		CLEAR,
@@ -726,7 +728,8 @@ function enums()
 		COLOR_GLOW,
 		SCENE_TEST,
 		HIGH_LIGHT_SUN_COLOR,
-		HIGH_INDIRECT_DEPTH_NORMAL
+		HIGH_INDIRECT_DEPTH_NORMAL,
+		MATERIAL
 	}
 	
 	// Viewport render mode
@@ -948,6 +951,7 @@ function enums()
 		DIFFUSE,
 		AO,
 		SHADOWS,
-		INDIRECT
+		INDIRECT,
+		REFLECTIONS
 	}
 }

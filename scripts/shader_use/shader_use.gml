@@ -9,6 +9,7 @@ function shader_use()
 	shader_blend_color = c_white
 	shader_blend_alpha = 1
 	render_set_uniform_color("uBlendColor", c_white, 1)
+	render_set_uniform("uRoughness", 1)
 	
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)

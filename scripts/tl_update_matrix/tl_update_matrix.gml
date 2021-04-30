@@ -1,7 +1,7 @@
 /// tl_update_matrix()
 /// @desc Updates matrixes and positions.
-function tl_update_matrix() {
-
+function tl_update_matrix()
+{
 	if (object_index != app && update_matrix)
 	{
 		// Get parent matrix
@@ -37,13 +37,13 @@ function tl_update_matrix() {
 		rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 		sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
 		matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
-	
+		
 		// No scale or "resize" mode
 		if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
 		{
 			// Get actual scale
 			tl = id
-		
+			
 			while (true)
 			{
 				var par = tl.parent;
@@ -52,27 +52,27 @@ function tl_update_matrix() {
 				sca = vec3_mul(sca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
 				tl = par
 			}
-		
+			
 			// Remove scale
 			matrix_remove_scale(matrix_parent)
 			var matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), matrix_parent);
 			for (var p = 0; p < 11; p++)
 				matrix[p] = matrixnoscale[p]
-		
+			
 			// Re-add calculated or own scale
 			if (inherit_scale)
 				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), sca), matrix)
 			else
 				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
 		}
-	
+		
 		// Remove old rotation and re-add own
 		if (!inherit_rotation)
 		{
 			matrix_remove_rotation(matrix)
 			matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix) 
 		}
-	
+		
 		// Replace position
 		if (!inherit_position)
 		{
@@ -81,7 +81,7 @@ function tl_update_matrix() {
 			matrix[MAT_Y] = value[e_value.POS_Y]
 			matrix[MAT_Z] = value[e_value.POS_Z]
 		}
-	
+		
 		// Create rotation point
 		if (type = e_tl_type.CAMERA && value[e_value.CAM_ROTATE])
 		{
@@ -90,13 +90,13 @@ function tl_update_matrix() {
 			matrix[MAT_Y] += lengthdir_y(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
 			matrix[MAT_Z] += lengthdir_z(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_Z])
 		}
-	
+		
 		// Set world position
 		world_pos = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
-	
+		
 		// Add rotation point
 		matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point_render, -1), vec3(0), vec3(1)), matrix)
-	
+		
 		// Scale for position controls
 		value_inherit[e_value.SCA_X] = 1
 		value_inherit[e_value.SCA_Y] = 1
@@ -111,12 +111,12 @@ function tl_update_matrix() {
 			value_inherit[e_value.SCA_X] *= par.value[e_value.SCA_X]
 			value_inherit[e_value.SCA_Y] *= par.value[e_value.SCA_Y]
 			value_inherit[e_value.SCA_Z] *= par.value[e_value.SCA_Z]
-		
+			
 			if (!par.inherit_scale)
 				break
 			tl = par
 		}
-	
+		
 		// Inherit
 		var lasttex = value_inherit[e_value.TEXTURE_OBJ];
 		value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
@@ -130,12 +130,14 @@ function tl_update_matrix() {
 		value_inherit[e_value.GLOW_COLOR] = value[e_value.GLOW_COLOR] // Multiplied
 		value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
 		value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
+		value_inherit[e_value.METALLIC] = value[e_value.METALLIC] // Added
+		value_inherit[e_value.ROUGHNESS] = value[e_value.ROUGHNESS] // Added
 		value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
 		value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] // Added
 		value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] // Added
 		value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] // Added
 		value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
-	
+		
 		var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex;
 		inhalpha = true
 		inhcolor = true
@@ -149,25 +151,25 @@ function tl_update_matrix() {
 			var par = tl.parent;
 			if (par = app)
 				break
-		
+			
 			if (!tl.inherit_alpha)
 				inhalpha = false
-		
+			
 			if (!tl.inherit_color)
 				inhcolor = false
 			
 			if (!tl.inherit_glow_color)
 				inhglowcolor = false
-		
+			
 			if (!tl.inherit_visibility)
 				inhvis = false
-		
+			
 			if (!tl.inherit_bend)
 				inhbend = false
-		
+			
 			if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] > 0)
 				inhtex = false
-		
+			
 			if (inhalpha)
 				value_inherit[e_value.ALPHA] *= par.value[e_value.ALPHA]
 			
@@ -182,11 +184,13 @@ function tl_update_matrix() {
 				value_inherit[e_value.MIX_COLOR] = color_add(value_inherit[e_value.MIX_COLOR], par.value[e_value.MIX_COLOR])
 				value_inherit[e_value.MIX_PERCENT] = clamp(value_inherit[e_value.MIX_PERCENT] + par.value[e_value.MIX_PERCENT], 0, 1)
 				value_inherit[e_value.BRIGHTNESS] = clamp(value_inherit[e_value.BRIGHTNESS] + par.value[e_value.BRIGHTNESS], 0, 1)
+				value_inherit[e_value.METALLIC] = clamp(value_inherit[e_value.METALLIC] + par.value[e_value.METALLIC], 0, 1)
+				value_inherit[e_value.ROUGHNESS] = clamp(value_inherit[e_value.ROUGHNESS] + par.value[e_value.ROUGHNESS], 0, 1)
 			}
-		
+			
 			if (inhglowcolor)
 				value_inherit[e_value.GLOW_COLOR] = color_multiply(value_inherit[e_value.GLOW_COLOR], par.value[e_value.GLOW_COLOR])
-		
+			
 			if (inhvis)
 				value_inherit[e_value.VISIBLE] *= par.value[e_value.VISIBLE]
 			
@@ -202,15 +206,14 @@ function tl_update_matrix() {
 			
 			tl = par
 		}
-	
+		
 		colors_ext = (value_inherit[e_value.ALPHA] < 1 ||
 					  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
 					  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
 					  value_inherit[e_value.HSB_MUL] < c_white ||
 					  value_inherit[e_value.MIX_PERCENT] > 0 ||
 					  part_mixing_shapes)
-	
-	
+		
 		// Update 3D planes if texture changed
 		if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && model_part != null && model_part.has_3d_plane)
 			tl_update_model_shape()
@@ -219,19 +222,16 @@ function tl_update_matrix() {
 			tl_update_model_shape_bend()
 	
 	}
-
+	
 	// Update children
 	for (var t = 0; t < ds_list_size(tree_list); t++)
 	{
 		if (object_index != app && update_matrix)
 			tree_list[|t].update_matrix = true
-	
+		
 		with (tree_list[|t])
 			tl_update_matrix()
 	}
-
+	
 	update_matrix = false
-
-
-
 }

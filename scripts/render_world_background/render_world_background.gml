@@ -18,7 +18,7 @@ function render_world_background()
 		}
 	}
 	else // Draw night
-		draw_box(0, 0, render_width, render_height, false, hex_to_color("#020204"), background_sky_night_alpha())// * 0.95)
+		draw_box(0, 0, render_width, render_height, false, background_sky_color_final, 1)// * 0.95)
 	
 	// Sunrise/sunset
 	if (background_twilight)

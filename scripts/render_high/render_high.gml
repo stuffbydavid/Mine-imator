@@ -33,6 +33,15 @@ function render_high()
 	// Composite current effects onto the scene
 	finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
 	
+	// Reflections
+	if (render_reflections)
+	{
+		render_high_reflections(render_active = "image" || render_active = "movie", finalsurf)
+		
+		if (setting_render_pass = e_render_pass.REFLECTIONS)
+			render_pass_surf = surface_duplicate(render_surface_ssr)
+	}
+	
 	// Fog
 	if (background_fog_show)
 		render_surface_fog = render_high_fog()

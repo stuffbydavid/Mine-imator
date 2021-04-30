@@ -4,6 +4,9 @@
 
 function shader_high_volumetric_fog_set(depth, sundepth)
 {
+	if (depth = undefined)
+		return 0
+	
 	render_set_uniform("uNear", proj_depth_near)
 	render_set_uniform("uFar", proj_depth_far)
 	

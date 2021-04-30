@@ -71,9 +71,19 @@ function tab_frame_editor_color()
 	draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 60, 0, 100, 0, 1, tab.material.tbx_mix_percent, action_tl_frame_mix_percent)
 	tab_next()
 	
-	// Brightness
+	// Emission
 	tab_control_meter()
 	draw_meter("frameeditoremission", dx, dy, dw, round(tl_edit.value[e_value.BRIGHTNESS] * 100), 60, 0, 100, 0, 1, tab.material.tbx_brightness, action_tl_frame_brightness)
+	tab_next()
+	
+	// Metallic
+	tab_control_meter()
+	draw_meter("frameeditormetallic", dx, dy, dw, round(tl_edit.value[e_value.METALLIC] * 100), 60, 0, 100, 0, 1, tab.material.tbx_metallic, action_tl_frame_metallic)
+	tab_next()
+	
+	// Roughness
+	tab_control_meter()
+	draw_meter("frameeditorroughness", dx, dy, dw, round(tl_edit.value[e_value.ROUGHNESS] * 100), 60, 0, 100, 100, 1, tab.material.tbx_roughness, action_tl_frame_roughness)
 	tab_next()
 	
 	context_menu_group_temp = null

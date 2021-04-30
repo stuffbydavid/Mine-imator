@@ -102,7 +102,7 @@ function settings_startup()
 	setting_block_glow_threshold = 0.75
 	setting_light_bleeding = true
 	
-	setting_render_samples = 1//16
+	setting_render_samples = 16
 	setting_render_dof_quality = 3
 	
 	setting_render_ssao = true
@@ -122,6 +122,10 @@ function settings_startup()
 	setting_render_indirect_blur_passes = 2
 	setting_render_indirect_strength = 1.5
 	setting_render_indirect_range = 256
+	
+	setting_render_reflections = true
+	setting_render_reflections_precision = .3
+	setting_render_reflections_thickness = 86
 	
 	setting_render_glow = true
 	setting_render_glow_radius = 1

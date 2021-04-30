@@ -17,7 +17,7 @@ function render_startup()
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
-			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_quality;
+			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality;
 	
 	globalvar render_shadows_buffer, render_shadows_size, render_shadows_matrix, render_samples;
 	
@@ -129,7 +129,9 @@ function render_startup()
 	render_volumetric_fog_offset = 0
 	
 	// Effect surfaces
-	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec, render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post, render_post_index;
+	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec,
+		      render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post,
+			  render_post_index, render_surface_ssr, render_surface_ssr_expo, render_surface_ssr_dec;
 	render_surface_ssao = null
 	render_surface_shadows = null
 	render_surface_sun_shadows_expo = null
@@ -139,6 +141,9 @@ function render_startup()
 	render_surface_indirect = null
 	render_surface_indirect_expo = null
 	render_surface_indirect_dec = null
+	render_surface_ssr = null
+	render_surface_ssr_expo = null
+	render_surface_ssr_dec = null
 	
 	globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples_clear;
 	render_surface_sun_volume_expo = null
@@ -185,4 +190,5 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_COLOR] = shader_high_light_color
 	render_mode_shader_map[?e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL] = shader_high_indirect_depth_normal
+	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
 }
