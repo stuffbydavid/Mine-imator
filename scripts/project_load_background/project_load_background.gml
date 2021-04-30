@@ -58,7 +58,7 @@ function project_load_background(map)
 	else
 	{
 		background_sky_clouds_mode = value_get_string(map[?"sky_clouds_mode"], background_sky_clouds_mode)
-		background_sky_clouds_height = value_get_real(map[?"sky_clouds_thickness"], background_sky_clouds_height)
+		background_sky_clouds_height = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_height)
 		background_sky_clouds_thickness = value_get_real(map[?"sky_clouds_thickness"], background_sky_clouds_thickness)
 	}
 	

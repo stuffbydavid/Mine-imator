@@ -34,7 +34,7 @@ function enums()
 		FORMAT_123_PRE_2  = 31,
 		FORMAT_125		  = 32,
 		FORMAT_130_AL9	  = 33,
-		FORMAT_130_AL10	  = 34,
+		FORMAT_130_AL10	  = 34
 	}
 	
 	enum e_settings
