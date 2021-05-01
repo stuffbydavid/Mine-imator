@@ -590,6 +590,7 @@
                 "final": "Final",
                 "depth": "Depth (24bit)",
                 "normal": "Normal",
+                "material": "Material",
                 "diffuse": "Diffuse",
                 "ao": "Ambient occlusion",
                 "shadows": "Shadows",

@@ -96,6 +96,9 @@ function render_high_scene(ssaosurf, shadowssurf)
 	}
 	surface_reset_target()
 	
+	if (setting_render_pass = e_render_pass.MATERIAL)
+		render_pass_surf = surface_duplicate(materialsurf)
+	
 	// Composite
 	surface_set_target(resultsurf)
 	{

@@ -948,6 +948,7 @@ function enums()
 		FINAL,
 		DEPTH_U24,
 		NORMAL,
+		MATERIAL,
 		DIFFUSE,
 		AO,
 		SHADOWS,

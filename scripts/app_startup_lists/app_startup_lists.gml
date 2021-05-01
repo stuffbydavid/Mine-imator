@@ -511,6 +511,7 @@ function app_startup_lists()
 		"final",
 		"depth",
 		"normal",
+		"material",
 		"diffuse",
 		"ao",
 		"shadows",
