@@ -123,4 +123,5 @@ function project_load()
 	}
 	
 	recent_add_wait = true
+	return true
 }

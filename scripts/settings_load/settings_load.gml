@@ -239,6 +239,8 @@ function settings_load()
 			setting_render_reflections = value_get_real(rendermap[?"render_reflections"], setting_render_reflections)
 			setting_render_reflections_precision = value_get_real(rendermap[?"render_reflections_precision"], setting_render_reflections_precision)
 			setting_render_reflections_thickness = value_get_real(rendermap[?"render_reflections_thickness"], setting_render_reflections_thickness)
+			setting_render_reflections_fade_amount = value_get_real(rendermap[?"render_reflections_fade_amount"], setting_render_reflections_fade_amount)
+			setting_render_reflections_halfres = value_get_real(rendermap[?"render_reflections_halfres"], setting_render_reflections_halfres)
 			
 			setting_render_glow = value_get_real(rendermap[?"render_glow"], setting_render_glow)
 			setting_render_glow_radius = value_get_real(rendermap[?"render_glow_radius"], setting_render_glow_radius)

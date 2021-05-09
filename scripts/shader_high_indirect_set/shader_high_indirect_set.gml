@@ -25,46 +25,8 @@ function shader_high_indirect_set(depthsurface, normalsurface, normalsurface2, d
 	render_set_uniform("uKernel", render_indirect_kernel)
 	render_set_uniform("uOffset", render_indirect_offset)
 	
-	var stepsize, stepamount, raycount;
-	
-	switch (app.setting_render_indirect_quality)
-	{
-		// Low
-		case 0:
-		{
-			raycount = 2
-			stepamount = 8
-			break;
-		}
-		
-		// Medium
-		case 1:
-		{
-			raycount = 4
-			stepamount = 16
-			break;
-		}
-		
-		// High
-		case 2:
-		{
-			raycount = 8
-			stepamount = 32
-			break;
-		}
-		
-		// Best
-		case 3:
-		{
-			raycount = 8
-			stepamount = min(100, app.setting_render_indirect_range)
-			break;
-		}
-	}
-	
-	stepsize = app.setting_render_indirect_range / stepamount
-	
-	render_set_uniform("uStepSize", stepsize)
-	render_set_uniform_int("uStepAmount", stepamount)
-	render_set_uniform_int("uRays", raycount)
+	render_set_uniform("uEmissionRange", app.setting_render_indirect_range)
+	render_set_uniform("uStepSize", 10)
+	render_set_uniform_int("uStepAmount", 48)
+	render_set_uniform_int("uRays", 2 + (app.setting_render_indirect_quality * 2))
 }

@@ -195,6 +195,8 @@ function settings_save()
 		json_save_var_bool("render_reflections", setting_render_reflections)
 		json_save_var("render_reflections_precision", setting_render_reflections_precision)
 		json_save_var("render_reflections_thickness", setting_render_reflections_thickness)
+		json_save_var("render_reflections_fade_amount", setting_render_reflections_fade_amount)
+		json_save_var_bool("render_reflections_halfres", setting_render_reflections_halfres)
 		
 		json_save_var_bool("render_glow", setting_render_glow)
 		json_save_var("render_glow_radius", setting_render_glow_radius)

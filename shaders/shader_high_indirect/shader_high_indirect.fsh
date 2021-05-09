@@ -19,6 +19,7 @@ uniform mat4 uViewMatrixInv;
 uniform float uNear;
 uniform float uFar;
 
+uniform float uEmissionRange;
 uniform vec3 uKernel[MAXRAYS];
 uniform float uOffset[MAXRAYS];
 uniform float uStepSize;
@@ -108,11 +109,15 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 	vec3 screenPos = vec3(rayPos);
 	
 	direction *= uStepSize;
-	rayPos += direction * uOffset[sample];
+	rayPos += direction;// * uOffset[sample];
+	
+	float stride = 1.0 + uOffset[sample];
 	
 	// Trace ray steps
 	for (int i = 0; i < MAXSTEPS; i++)
 	{
+		direction *= vec3(stride);
+		
 		// Move ray position in direction
 		rayPos += direction;
 		
@@ -150,7 +155,7 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 			float dif = 1.0;
 			float falloff = 1.0;
 			
-			if (texture2D(uBrightnessBuffer, screenCoord).r < 0.001)
+			if (texture2D(uBrightnessBuffer, screenCoord).r == 0.0)
 			{
 				vec3 rayDir = normalize(startPos - screenPos);
 				vec3 sampleNormal = normalize(getNormal(screenCoord));
@@ -160,8 +165,11 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 			else
 			{
 				// Check if sampled surface is within reasible range
-				float dis = clamp(abs(distance(screenPos, startPos)), 0.0, (float(uStepAmount) * uStepSize));
-				falloff = 1.0 - pow(clamp((dis / (float(uStepAmount) * uStepSize)), 0.0, 1.0), 2.0);
+				if (abs(distance(screenPos, startPos)) > uEmissionRange)
+					falloff = 0.0;
+				
+				float dis = clamp(abs(distance(screenPos, startPos)), 0.0, uEmissionRange);
+				falloff = 1.0 - clamp((dis / uEmissionRange), 0.0, 1.0);
 			}
 			
 			vec3 light = texture2D(uDiffuseBuffer, screenCoord).rgb * texture2D(uLightingBuffer, screenCoord).rgb;

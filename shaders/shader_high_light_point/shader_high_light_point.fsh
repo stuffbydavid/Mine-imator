@@ -61,8 +61,8 @@ vec2 getShadowMapCoord(vec3 look)
 	
 	// Convert
 	toPoint /= dot(toPoint,look);
-	coord.x = (dot(toPoint, v) / (tFOV * tFOV) + 1.0) / 2.0;
-	coord.y = (1.0 - dot(toPoint, u) / (tFOV * tFOV)) / 2.0;
+	coord.x = (dot(toPoint, v) / (tFOV * tFOV) + 1.0) * 0.5;
+	coord.y = (1.0 - dot(toPoint, u) / (tFOV * tFOV)) * 0.5;
 	
 	return coord;
 }

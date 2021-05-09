@@ -162,6 +162,14 @@ function tab_settings_render()
 		draw_dragger("settingsrenderreflectionsthickness", dx, dy, dragger_width, setting_render_reflections_thickness, 1, .001, no_limit, 86, 1, tab.render.tbx_reflections_thickness, action_setting_render_reflections_thickness) 
 		tab_next()
 		
+		tab_control_meter()
+		draw_meter("settingsrenderreflectionsfadeamount", dx, dy, dw, round(setting_render_reflections_fade_amount * 100), 50, 0, 100, 50, 1, tab.render.tbx_reflections_fade_amount, action_setting_render_reflections_fade_amount)
+		tab_next()
+		
+		tab_control_switch()
+		draw_switch("settingsrenderreflectionshalfres", dx, dy, setting_render_reflections_halfres, action_setting_render_reflections_halfres)
+		tab_next()
+		
 		tab_collapse_end()
 	}
 	

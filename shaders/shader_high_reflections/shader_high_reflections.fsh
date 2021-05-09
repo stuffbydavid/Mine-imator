@@ -20,6 +20,7 @@ uniform float uPrecision;
 uniform float uThickness;
 uniform float uOffset[16];
 uniform vec4 uFallbackColor;
+uniform float uFadeAmount;
 
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
@@ -81,12 +82,6 @@ vec2 viewPosToPixel(vec4 viewPos)
 	return viewPos.xy;
 }
 
-// Fresnel Schlick approximation
-float fresnelSchlick(float cosTheta, float F0)
-{
-	return F0 + (1.0 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
-}
-
 // Ray tracer, returns color
 vec3 rayTrace(vec2 originUV)
 {
@@ -94,9 +89,6 @@ vec3 rayTrace(vec2 originUV)
 	
 	// Material from UV
 	vec3 mat = texture2D(uMaterialBuffer, originUV).rgb;
-	float metallic  = mat.r;
-	float roughness = mat.g;
-	float fresnel   = mat.b;
 	
 	// Sample buffers
 	float originDepth = getDepth(originUV);
@@ -106,12 +98,12 @@ vec3 rayTrace(vec2 originUV)
 	
 	vec3 jitt;
 	vec3 rayVector;
-		
+	
 	// Randomize vector until valid
 	for (int i = 0; i < 16; i++)
 	{
-		jitt = mix(vec3(0.0), (vec3(hash(worldPos + float(uOffset[i]))) - 0.5) * 2.0, mix(0.0, 1.0, pow(roughness, 2.5)));
-		rayVector = normalize(reflect(normalize(viewPos.xyz), normal + jitt));
+		jitt = mix(vec3(0.0), (vec3(hash(worldPos + float(uOffset[i]))) - 0.5) * 2.0, mix(0.0, 1.0, pow(mat.g, 2.5)));
+		rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + jitt)));
 			
 		if (dot(rayVector, normal) > 0.0)
 			break;
@@ -122,7 +114,7 @@ vec3 rayTrace(vec2 originUV)
 	
 	// Ray data
 	float raySize       = 5000.0;
-	vec4 rayStartPos    = vec4(viewPos.xyz + (rayVector * 3.0),     1.0);
+	vec4 rayStartPos    = vec4(viewPos.xyz + (rayVector * 3.0),		1.0);
 	vec4 rayEndPos      = vec4(viewPos.xyz + (rayVector * raySize), 1.0);
 	vec2 rayStartPixel  = viewPosToPixel(rayStartPos);
 	vec2 rayEndPixel    = viewPosToPixel(rayEndPos);
@@ -143,8 +135,11 @@ vec3 rayTrace(vec2 originUV)
 	
 	float viewDist = originDepth;
 	float depth    = uThickness;
+	int traceSteps = int(stepDelta);
 	
-	for (int i = 0; i < int(stepDelta); i++)
+	int i = 0;
+	
+	for (i = 0; i < traceSteps; i++)
 	{
 		rayPixel += pixelStepDelta;
 		rayUV     = rayPixel / uScreenSize;
@@ -161,6 +156,12 @@ vec3 rayTrace(vec2 originUV)
 		viewDist  = (rayStartPos.z * rayEndPos.z) / mix(rayEndPos.z, rayStartPos.z, progress);
 		depth     = viewDist - samplePos.z;
 		
+		if (rayUV.x <= 0.0 || rayUV.y <= 0.0 || rayUV.x >= 1.0 || rayUV.y >= 1.0)
+		{
+			vis = 0.0;
+			break;
+		}
+		
 		// Check for collision, if no collision, 
 		if (depth > 0.0 && depth < uThickness)
 		{
@@ -169,19 +170,14 @@ vec3 rayTrace(vec2 originUV)
 		}
 		else
 			progressPrev = progress;
-		
-		if (samplePos.z <= 0.0 || rayUV.x <= 0.0 || rayUV.x >= 1.0 || rayUV.y <= 0.0 || rayUV.y >= 1.0)
-		{
-			vis = 0.0;
-			break;
-		}
 	}
 	
 	// Refine ray UV
 	if (vis < 1.0)
 		refineSteps = 0;
 	
-	progress = progressPrev + ((progress - progressPrev) / 2.0);
+	refineSteps = 0;
+	progress = progressPrev + ((progress - progressPrev) * 0.5);
 	
 	for (int i = 0; i < refineSteps; i++)
 	{
@@ -197,27 +193,27 @@ vec3 rayTrace(vec2 originUV)
 		if (depth > 0.0 && depth < uThickness)
 		{
 			vis = 1.0;
-			progress = progressPrev + ((progress - progressPrev) / 2.0);
+			progress = progressPrev + ((progress - progressPrev) * 0.5);
 		}
 		else
 		{
 			float temp   = progress;
-			progress     = progressPrev + ((progress - progressPrev) / 2.0);
+			progress     = progressPrev + ((progress - progressPrev) * 0.5);
 			progressPrev = temp;
 		}
 	}
-		
+	
 	traceCol = uFallbackColor.rgb;
 	
 	// Visible, must've hit something.
 	if (vis > 0.0)
 	{
-		vis *= (1.0 - clamp(depth / uThickness, 0.0, 1.0));
+		//vis *= (1.0 - clamp(depth / uThickness, 0.0, 1.0));
 		vis *= (1.0 - clamp(length(samplePos - viewPos) / raySize, 0.0, 1.0));
 		vis *= rayVector.z;
 		
 		// Fade by edge
-		vec2 fadeUV = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - rayUV.xy));
+		vec2 fadeUV = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - rayUV.xy)) * uFadeAmount;
 		vis *= clamp(1.0 - (fadeUV.x + fadeUV.y), 0.0, 1.0);
 		
 		// Clamp
@@ -229,7 +225,7 @@ vec3 rayTrace(vec2 originUV)
 	}
 	
 	// Fade based on Fresnel/roughness
-	traceCol *= fresnel;
+	traceCol *= mat.b;
 	
 	return traceCol;
 }

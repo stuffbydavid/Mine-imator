@@ -59,7 +59,7 @@ void main()
 			{
 				// Spotlight circle
 				float fragDepth = min(vScreenCoord.z, uLightFar);
-				vec2 fragCoord = (vec2(vScreenCoord.x, -vScreenCoord.y) / vScreenCoord.z + 1.0) / 2.0;
+				vec2 fragCoord = (vec2(vScreenCoord.x, -vScreenCoord.y) / vScreenCoord.z + 1.0) * 0.5;
 				
 				// Texture position must be valid
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
@@ -72,7 +72,7 @@ void main()
 				
 				// Calculate shadow
 				fragDepth = min(vShadowCoord.z, uLightFar);
-				fragCoord = (vec2(vShadowCoord.x, -vShadowCoord.y) / vShadowCoord.z + 1.0) / 2.0;
+				fragCoord = (vec2(vShadowCoord.x, -vShadowCoord.y) / vShadowCoord.z + 1.0) * 0.5;
 				
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 				{

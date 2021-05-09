@@ -29,7 +29,7 @@ float4 packDepth(float f)
 
 float4 packNormal(float3 n)
 {
-	return float4((n + float3(1.0, 1.0, 1.0)) / 2.0, 1.0);
+	return float4((n + float3(1.0, 1.0, 1.0)) * 0.5, 1.0);
 }
 
 float2 packFloat2(float f)
@@ -49,7 +49,7 @@ FSOutput main(FSInput IN) : SV_TARGET
 	// Depth
 	OUT.Color0 = packDepth(IN.Depth);
 	
-	float3 n = float3((IN.Normal + float3(1.0, 1.0, 1.0)) / 2.0);
+	float3 n = float3((IN.Normal + float3(1.0, 1.0, 1.0)) * 0.5);
 	
 	// Normal X
 	float2 channel = float2(0.0, 0.0);

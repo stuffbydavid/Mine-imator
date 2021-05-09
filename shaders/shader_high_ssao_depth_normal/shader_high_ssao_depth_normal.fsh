@@ -29,7 +29,7 @@ float4 packDepth(float f)
 
 float4 packNormal(float3 n)
 {
-	return float4((n + float3(1.0, 1.0, 1.0)) / 2.0, 1.0);
+	return float4((n + float3(1.0, 1.0, 1.0)) * 0.5, 1.0);
 }
 
 FSOutput main(FSInput IN) : SV_TARGET

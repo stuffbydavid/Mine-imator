@@ -15,8 +15,11 @@ uniform vec4 uLightData[128];
 uniform vec4 uAmbientColor;
 uniform float uBrightness;
 uniform float uBlockBrightness;
+uniform float uMetallic;
+uniform float uRoughness;
 
 varying vec3 vPosition;
+varying vec3 vNormal;
 varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
@@ -58,7 +61,7 @@ vec3 getWindAngle(vec3 pos)
 
 void main()
 {
-	vec3 worldNormal = normalize((gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz);
+	vNormal = normalize((gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz);
 	
 	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
 	vPosition += getWindAngle(in_Position);
@@ -69,7 +72,7 @@ void main()
 		vDiffuse = vec3(1.0);
 	else
 	{
-		vDiffuse = uAmbientColor.rgb;
+		vDiffuse = vec3(0.0);
 		for (int i = 0; i < uLightAmount; i++)
 		{
 			vec4 data1 = uLightData[i * 2];
@@ -81,12 +84,14 @@ void main()
 			att = (i > 0) ? max(0.0, 1.0 - dis / lightRange) : 1.0; // Attenuation factor
 		
 			vec3 toLight = normalize(lightPosition - vPosition);
-			float dif = max(0.0, dot(worldNormal, toLight)) * att; // Diffuse factor
+			float dif = max(0.0, dot(vNormal, toLight)) * att; // Diffuse factor
 			vDiffuse += data2.rgb * dif;
 		}
 	
 		vDiffuse = clamp(vDiffuse, 0.0, 1.0);
 		vDiffuse = mix(vDiffuse, vec3(1.0), in_Wave.z * uBlockBrightness + uBrightness);
+		
+		vDiffuse += uAmbientColor.rgb;
 	}
 	
 	vColor = in_Colour * uBlendColor;

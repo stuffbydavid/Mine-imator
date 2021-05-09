@@ -1,8 +1,12 @@
-/// shader_high_fog_apply_set(fogbuffer)
-/// @arg fogbuffer
+/// shader_high_reflections_apply_set(ssrsurf, materialsurf)
+/// @arg ssrsurf
+/// @arg materialbuffer
 
-function shader_high_fog_apply_set(fogbuffer)
+function shader_high_reflections_apply_set(ssrsurf, materialbuffer)
 {
-	texture_set_stage(sampler_map[?"uFogBuffer"], surface_get_texture(fogbuffer))
-	render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
+	texture_set_stage(sampler_map[?"uReflectionsBuffer"], surface_get_texture(ssrsurf))
+	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(materialbuffer))
+	render_set_uniform_vec2("uScreenSize",
+							render_width,
+							render_height)
 }

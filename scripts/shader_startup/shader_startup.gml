@@ -145,6 +145,9 @@ function shader_startup()
 		new_shader_uniform("uBrightness")
 		new_shader_uniform("uBlockBrightness")
 		new_shader_uniform("uLightBleed")
+		new_shader_uniform("uMetallic")
+		new_shader_uniform("uRoughness")
+		new_shader_uniform("uFallbackColor")
 	}
 	
 	with (shader_map[?shader_depth])
@@ -536,6 +539,7 @@ function shader_startup()
 		new_shader_uniform("uRays")
 		new_shader_uniform("uKernel")
 		new_shader_uniform("uOffset")
+		new_shader_uniform("uEmissionRange")
 	}
 	
 	with (shader_map[?shader_high_reflections])
@@ -556,10 +560,15 @@ function shader_startup()
 		new_shader_uniform("uPrecision")
 		new_shader_uniform("uThickness")
 		new_shader_uniform("uFallbackColor")
+		new_shader_uniform("uFadeAmount")
 	}
 	
 	with (shader_map[?shader_high_reflections_apply])
+	{
 		new_shader_sampler("uReflectionsBuffer")
+		new_shader_sampler("uMaterialBuffer")
+		new_shader_uniform("uScreenSize")
+	}
 	
 	with (shader_map[?shader_high_material])
 	{

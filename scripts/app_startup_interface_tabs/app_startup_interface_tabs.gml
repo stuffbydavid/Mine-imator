@@ -663,6 +663,8 @@ function app_startup_interface_tabs()
 			tbx_reflections_precision = new_textbox_integer()
 			tbx_reflections_precision.suffix = "%"
 			tbx_reflections_thickness = new_textbox_decimals()
+			tbx_reflections_fade_amount = new_textbox_integer()
+			tbx_reflections_fade_amount.suffix = "%"
 			tbx_glow_radius = new_textbox_integer()
 			tbx_glow_radius.suffix = "%"
 			tbx_glow_intensity = new_textbox_integer()

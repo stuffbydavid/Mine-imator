@@ -126,6 +126,8 @@ function settings_startup()
 	setting_render_reflections = true
 	setting_render_reflections_precision = .3
 	setting_render_reflections_thickness = 86
+	setting_render_reflections_halfres = true
+	setting_render_reflections_fade_amount = 1
 	
 	setting_render_glow = true
 	setting_render_glow_radius = 1
