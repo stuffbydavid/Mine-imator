@@ -73,7 +73,7 @@ function render_high_reflections(export, surf)
 		{
 			draw_clear_alpha(c_white, 0)
 			render_world_start(5000)
-			render_world(e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL)
+			render_world(e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL)
 			render_world_done()
 		}
 		surface_reset_target()

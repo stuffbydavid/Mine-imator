@@ -27,6 +27,7 @@ function project_save()
 	
 	debug_timer_stop("project_save")
 	log("Project saved")
+	render_samples = -1
 	
 	if (!string_contains(filename_ext(fn), "backup"))
 	{

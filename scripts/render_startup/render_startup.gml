@@ -190,5 +190,6 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_COLOR] = shader_high_light_color
 	render_mode_shader_map[?e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL] = shader_high_indirect_depth_normal
+	render_mode_shader_map[?e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL] = shader_high_indirect_depth_normal
 	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
 }

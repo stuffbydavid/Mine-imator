@@ -107,7 +107,7 @@ function render_world_tl()
 	var prevblend = null;
 	
 	// Object blend mode
-	if (blend_mode != "normal" && (render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS || render_mode = e_render_mode.ALPHA_FIX))
+	if (blend_mode != "normal" && (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS || render_mode = e_render_mode.ALPHA_FIX))
 	{
 		if (render_mode = e_render_mode.ALPHA_FIX)
 			return 0

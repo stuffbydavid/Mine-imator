@@ -11,6 +11,7 @@ function project_reset()
 	res_edit = null
 	tl_edit = null
 	tl_edit_amount = 0
+	render_samples = -1
 	
 	lib_preview.update = true
 	res_preview.update = true
