@@ -230,64 +230,67 @@ function tab_settings_render()
 	// Watermark
 	tab_control_switch()
 	
-	if (!trial_version)
-		draw_button_collapse("watermark", collapse_map[?"watermark"], null, !setting_render_watermark)
+	if (draw_button_collapse("watermark", collapse_map[?"watermark"], null, false))
+	{
+		if (trial_version)
+		{
+			collapse_map[?"watermark"] = false
+			popup_show(popup_upgrade)
+		}
+	}
 	
-	draw_switch("settingsrenderwatermark", dx, dy, setting_render_watermark, action_setting_render_watermark)
+	draw_label(text_get("settingsrenderwatermark"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	tab_next()
 	
-	if (setting_render_watermark)
+	if (!trial_version && collapse_map[?"watermark"])
 	{
-		if (!trial_version && collapse_map[?"watermark"])
-		{
-			tab_collapse_start()
+		tab_collapse_start()
 			
-			// Watermark Image
-			var fn = ((setting_render_watermark_filename = "") ? text_get("settingsrenderwatermarkdefault") : setting_render_watermark_filename);
+		// Watermark Image
+		var fn = ((setting_render_watermark_filename = "") ? text_get("settingsrenderwatermarkdefault") : setting_render_watermark_filename);
 			
-			tab_control(24)
-			draw_label_value(dx, dy, dw - 32, 24, text_get("settingsrenderwatermarkimage"), fn)
-			tab_next()
+		tab_control(24)
+		draw_label_value(dx, dy, dw - 32, 24, text_get("settingsrenderwatermarkimage"), fn)
+		tab_next()
 			
-			tab_control(24)
+		tab_control(24)
 			
-			if (draw_button_icon("settingsrenderwatermarkopen", dx, dy, 24, 24, false, icons.FOLDER))
-				action_setting_render_watermark_open()
+		if (draw_button_icon("settingsrenderwatermarkopen", dx, dy, 24, 24, false, icons.FOLDER))
+			action_setting_render_watermark_open()
 			
-			if (draw_button_icon("settingsrenderwatermarkreset", dx + 32, dy, 24, 24, false, icons.RESET))
-				action_setting_render_watermark_reset()
+		if (draw_button_icon("settingsrenderwatermarkreset", dx + 32, dy, 24, 24, false, icons.RESET))
+			action_setting_render_watermark_reset()
 			
-			tab_next()
+		tab_next()
 			
-			// X Position
-			tab_control_menu()
-			draw_button_menu("settingsrenderwatermarkpositionx", e_menu.LIST, dx, dy, dw, 24, setting_render_watermark_anchor_x, text_get("settingsrenderwatermark" + setting_render_watermark_anchor_x), action_setting_render_watermark_position_x)
-			tab_next()
+		// X Position
+		tab_control_menu()
+		draw_button_menu("settingsrenderwatermarkpositionx", e_menu.LIST, dx, dy, dw, 24, setting_render_watermark_anchor_x, text_get("settingsrenderwatermark" + setting_render_watermark_anchor_x), action_setting_render_watermark_position_x)
+		tab_next()
 			
-			// Y Position
-			tab_control_menu()
-			draw_button_menu("settingsrenderwatermarkpositiony", e_menu.LIST, dx, dy, dw, 24, setting_render_watermark_anchor_y, text_get("settingsrenderwatermark" + setting_render_watermark_anchor_y), action_setting_render_watermark_position_y)
-			tab_next()
+		// Y Position
+		tab_control_menu()
+		draw_button_menu("settingsrenderwatermarkpositiony", e_menu.LIST, dx, dy, dw, 24, setting_render_watermark_anchor_y, text_get("settingsrenderwatermark" + setting_render_watermark_anchor_y), action_setting_render_watermark_position_y)
+		tab_next()
 			
-			// Scale
-			tab_control_meter()
-			draw_meter("settingsrenderwatermarkscale", dx, dy, dw, round(setting_render_watermark_scale * 100), 48, 0, 1000, 100, 1, tab.render.tbx_watermark_scale, action_setting_render_watermark_scale)
-			tab_next()
+		// Scale
+		tab_control_meter()
+		draw_meter("settingsrenderwatermarkscale", dx, dy, dw, round(setting_render_watermark_scale * 100), 48, 0, 1000, 100, 1, tab.render.tbx_watermark_scale, action_setting_render_watermark_scale)
+		tab_next()
 			
-			// Alpha
-			tab_control_meter()
-			draw_meter("settingsrenderwatermarkalpha", dx, dy, dw, round(setting_render_watermark_alpha * 100), 48, 0, 100, 100, 1, tab.render.tbx_watermark_alpha, action_setting_render_watermark_alpha)
-			tab_next()
+		// Alpha
+		tab_control_meter()
+		draw_meter("settingsrenderwatermarkalpha", dx, dy, dw, round(setting_render_watermark_alpha * 100), 48, 0, 100, 100, 1, tab.render.tbx_watermark_alpha, action_setting_render_watermark_alpha)
+		tab_next()
 			
-			// Preview
-			draw_watermark_preview(dx, dy, dw)
+		// Preview
+		draw_watermark_preview(dx, dy, dw)
 			
-			tab_collapse_end()
-		}
-		else
-		{
-			if (trial_version)
-				draw_tooltip_label("settingsrenderwatermarkupgraderequired", icons.KEY_ALT, e_toast.INFO)
-		}
+		tab_collapse_end()
+	}
+	else
+	{
+		if (trial_version)
+			draw_tooltip_label("settingsrenderwatermarkupgraderequired", icons.KEY_ALT, e_toast.INFO)
 	}
 }

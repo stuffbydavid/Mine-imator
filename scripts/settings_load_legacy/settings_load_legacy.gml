@@ -233,9 +233,11 @@ function settings_load_legacy(fn)
 		setting_render_aa = buffer_read_byte()
 		setting_render_aa_power = buffer_read_double()
 		
-		setting_render_watermark = buffer_read_byte()
+		/*setting_render_watermark*/ = buffer_read_byte()
+		/*
 		if (trial_version)
 			setting_render_watermark = true
+		*/
 		
 		setting_toolbar_location = buffer_read_string_int()
 		setting_toolbar_size = buffer_read_double()

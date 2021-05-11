@@ -139,7 +139,6 @@ function settings_startup()
 	setting_render_aa = true
 	setting_render_aa_power = 1
 	
-	setting_render_watermark = trial_version
 	setting_render_watermark_image = spr_watermark
 	setting_render_watermark_filename = ""
 	setting_render_watermark_anchor_x = "right"
@@ -154,10 +153,12 @@ function settings_startup()
 	setting_export_movie_remove_background = false
 	setting_export_movie_include_hidden = false
 	setting_export_movie_high_quality = true
+	setting_export_movie_watermark = trial_version
 	
 	setting_export_image_remove_background = false
 	setting_export_image_include_hidden = false
 	setting_export_image_high_quality = true
+	setting_export_image_watermark = trial_version
 	
 	setting_render_pass = e_render_pass.FINAL
 	

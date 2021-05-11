@@ -13,7 +13,7 @@ function action_toolbar_exportimage_save()
 	// Render and save
 	render_hidden = popup_exportimage.include_hidden
 	render_background = !popup_exportimage.remove_background
-	render_watermark = setting_render_watermark
+	render_watermark = popup_exportimage.watermark
 	
 	log("Hidden", yesno(render_hidden))
 	log("Render background", yesno(render_background))
@@ -24,7 +24,7 @@ function action_toolbar_exportimage_save()
 	app_update_cameras(popup_exportimage.high_quality, false)
 	
 	render_active = "image"
-	render_quality = (exportmovie_high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
+	render_quality = (popup_exportimage.high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
 	
 	render_start(null, timeline_camera)
 	

@@ -141,9 +141,11 @@ function popup_draw()
 	// Close
 	if (popup.close_button)
 	{
-		if (draw_button_icon(popup.name + "close", closex, closey, 24, 24, false, icons.CLOSE, null, false))
+		var revert = (popup.revert && popup_switch_from && popup_switch_from != popup);
+		
+		if (draw_button_icon(popup.name + "close", closex, closey, 24, 24, false, revert ? icons.ARROW_LEFT : icons.CLOSE, null, false))
 		{
-			if (popup.revert && popup_switch_from)
+			if (revert)
 				popup_switch(popup_switch_from)
 			else
 				popup_close()

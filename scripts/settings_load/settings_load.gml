@@ -252,7 +252,6 @@ function settings_load()
 			setting_render_aa = value_get_real(rendermap[?"render_aa"], setting_render_aa)
 			setting_render_aa_power = value_get_real(rendermap[?"render_aa_power"], setting_render_aa_power)
 			
-			setting_render_watermark = value_get_real(rendermap[?"render_watermark"], setting_render_watermark)
 			setting_render_watermark_filename = value_get_string(rendermap[?"render_watermark_filename"], setting_render_watermark_filename)
 			
 			if (!file_exists_lib(setting_render_watermark_filename))
@@ -272,9 +271,11 @@ function settings_load()
 			setting_export_movie_remove_background = value_get_string(rendermap[?"export_movie_remove_background"], setting_export_movie_remove_background)
 			setting_export_movie_include_hidden = value_get_string(rendermap[?"export_movie_remove_background"], setting_export_movie_include_hidden)
 			setting_export_movie_high_quality = value_get_string(rendermap[?"export_movie_high_quality"], setting_export_movie_high_quality)
+			setting_export_movie_watermark = value_get_string(rendermap[?"export_movie_watermark"], setting_export_movie_watermark)
 			setting_export_image_remove_background = value_get_string(rendermap[?"export_image_remove_background"], setting_export_image_remove_background)
 			setting_export_image_include_hidden = value_get_string(rendermap[?"export_image_include_hidden"], setting_export_image_include_hidden)
 			setting_export_image_high_quality = value_get_string(rendermap[?"export_image_high_quality"], setting_export_image_high_quality)
+			setting_export_image_watermark = value_get_string(rendermap[?"export_image_watermark"], setting_export_image_watermark)
 		}
 		
 		// Collapsible content

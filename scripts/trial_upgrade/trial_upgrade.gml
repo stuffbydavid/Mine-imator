@@ -17,7 +17,8 @@ function trial_upgrade(argument0)
 	file_copy_lib(temp_file, key_file)
 	
 	trial_version = false
-	setting_render_watermark = false
+	popup_exportimage.watermark = false
+	popup_exportmovie.watermark = false
 	settings_save()
 	
 	toast_new(e_toast.POSITIVE, text_get("alertupgraded"))

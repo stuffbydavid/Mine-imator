@@ -77,6 +77,7 @@ function app_startup_interface_popups()
 		remove_background = app.setting_export_movie_remove_background
 		include_hidden = app.setting_export_movie_include_hidden
 		high_quality = app.setting_export_movie_high_quality
+		watermark = app.setting_export_movie_watermark
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
 		tbx_bit_rate = new_textbox_integer()
@@ -89,6 +90,7 @@ function app_startup_interface_popups()
 		remove_background = app.setting_export_image_remove_background
 		include_hidden = app.setting_export_image_include_hidden
 		high_quality = app.setting_export_image_high_quality
+		watermark = app.setting_export_image_watermark
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
 	}

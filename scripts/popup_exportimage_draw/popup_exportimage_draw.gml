@@ -46,6 +46,11 @@ function popup_exportimage_draw()
 	draw_checkbox("exportimagehighquality", dx, dy, popup.high_quality, action_toolbar_exportimage_high_quality)
 	tab_next()
 	
+	// Watermark
+	tab_control_checkbox()
+	draw_checkbox("exportimagewatermark", dx, dy, popup.watermark, action_toolbar_exportimage_watermark)
+	tab_next()
+	
 	// Save
 	tab_control_button_label()
 	draw_button_label("exportimagesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportimage_save, e_anchor.RIGHT)

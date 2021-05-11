@@ -89,6 +89,11 @@ function popup_exportmovie_draw()
 	draw_checkbox("exportmoviehighquality", dx, dy, popup.high_quality, action_toolbar_exportmovie_high_quality)
 	tab_next()
 	
+	// Watermark
+	tab_control_checkbox()
+	draw_checkbox("exportmoviewatermark", dx, dy, popup.watermark, action_toolbar_exportmovie_watermark)
+	tab_next()
+	
 	// Save
 	tab_control_button_label()
 	draw_button_label("exportmoviesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT)

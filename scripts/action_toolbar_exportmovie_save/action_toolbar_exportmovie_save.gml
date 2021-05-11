@@ -121,7 +121,7 @@ function action_toolbar_exportmovie_save()
 	}
 	
 	render_hidden = popup_exportmovie.include_hidden
-	render_watermark = setting_render_watermark
+	render_watermark = popup_exportmovie.watermark
 	
 	window_state = "export_movie"
 	exportmovie_frame = 0
