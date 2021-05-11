@@ -10,7 +10,7 @@ function render_high_scene_post(basesurf, shadowsurf, fogsurf)
 		return 0
 	
 	// Copy into separate surface
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height, true);
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height);
 	var scenesurf = render_surface[4];
 	
 	surface_set_target(scenesurf)

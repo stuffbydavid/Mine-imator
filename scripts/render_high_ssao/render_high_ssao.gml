@@ -2,12 +2,12 @@
 
 function render_high_ssao()
 {
-	var depthsurf, normalsurf, brightnesssurf, resultsurf;
+	var depthsurf, normalsurf, brightnesssurf;
 	
 	// Get depth and normal information
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
-	render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 	depthsurf = render_surface[1]
 	normalsurf = render_surface[2]
 	brightnesssurf = render_surface[3]
@@ -31,9 +31,8 @@ function render_high_ssao()
 		render_ssao_noise = render_generate_noise(4, 4)
 	
 	// Calculate SSAO
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	resultsurf = render_surface[0]
-	surface_set_target(resultsurf)
+	render_surface_ssao = surface_require(render_surface_ssao, render_width, render_height)
+	surface_set_target(render_surface_ssao)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear(c_white)
@@ -66,12 +65,12 @@ function render_high_ssao()
 		{
 			with (render_shader_obj)
 				shader_high_ssao_blur_set(depthsurf, normalsurf, 1, 0)
-			draw_surface_exists(resultsurf, 0, 0)
+			draw_surface_exists(render_surface_ssao, 0, 0)
 		}
 		surface_reset_target()
 		
 		// Vertical
-		surface_set_target(resultsurf)
+		surface_set_target(render_surface_ssao)
 		{
 			with (render_shader_obj)
 				shader_high_ssao_blur_set(depthsurf, normalsurf, 0, 1)
@@ -85,7 +84,7 @@ function render_high_ssao()
 	gpu_set_texrepeat(true)
 	
 	if (setting_render_pass = e_render_pass.AO)
-		render_pass_surf = surface_duplicate(resultsurf)
+		render_pass_surf = surface_duplicate(render_surface_ssao)
 	
 	if (setting_render_pass = e_render_pass.DEPTH_U24)
 		render_pass_surf = surface_duplicate(depthsurf)
@@ -93,5 +92,5 @@ function render_high_ssao()
 	if (setting_render_pass = e_render_pass.NORMAL)
 		render_pass_surf = surface_duplicate(normalsurf)
 	
-	return resultsurf
+	return render_surface_ssao
 }

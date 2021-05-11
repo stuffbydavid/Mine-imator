@@ -60,7 +60,7 @@ function render_high_shadows(export)
 	}
 	
 	// Create initial shadow surface from sun
-	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, true)
+	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height)
 	
 	#region Sun
 	
@@ -86,7 +86,7 @@ function render_high_shadows(export)
 			render_world_start()
 			
 			// Depth
-			render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
+			render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
 			surface_set_target(render_surface_sun_buffer)
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -105,7 +105,7 @@ function render_high_shadows(export)
 			// Color
 			if (app.setting_render_shadows_sun_colored)
 			{
-				render_surface_sun_color_buffer = surface_require(render_surface_sun_color_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
+				render_surface_sun_color_buffer = surface_require(render_surface_sun_color_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_color_buffer)
 				{
 					draw_clear(c_white)
@@ -119,7 +119,7 @@ function render_high_shadows(export)
 			}
 		}
 		
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
+		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 		resultsurftemp = render_surface[2]
 		
 		surface_set_target(resultsurftemp)
@@ -134,8 +134,8 @@ function render_high_shadows(export)
 		var exptemp, dectemp;
 		render_surface_sun_shadows_expo = surface_require(render_surface_sun_shadows_expo, render_width, render_height)
 		render_surface_sun_shadows_dec = surface_require(render_surface_sun_shadows_dec, render_width, render_height)
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
-		render_surface[4] = surface_require(render_surface[4], render_width, render_height, true, true)
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		render_surface[4] = surface_require(render_surface[4], render_width, render_height)
 		exptemp = render_surface[3]
 		dectemp = render_surface[4]
 		
@@ -253,7 +253,7 @@ function render_high_shadows(export)
 						if (d = e_dir.DOWN || d = e_dir.UP)
 							look[Y] -= 0.0001
 						
-						render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size, true)
+						render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size)
 						surface_set_target(render_surface_point_buffer[d])
 						{
 							gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -272,7 +272,7 @@ function render_high_shadows(export)
 					// Shadows
 					with (app)
 					{
-						render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
+						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 						resultsurftemp = render_surface[2]
 						surface_set_target(resultsurftemp)
 						{
@@ -289,7 +289,7 @@ function render_high_shadows(export)
 					var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 					
 					// Depth
-					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size, true)
+					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size)
 					surface_set_target(render_surface_spot_buffer)
 					{
 						gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -311,7 +311,7 @@ function render_high_shadows(export)
 					// Shadows
 					with (app)
 					{
-						render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
+						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 						resultsurftemp = render_surface[2]
 						surface_set_target(resultsurftemp)
 						{
@@ -330,8 +330,8 @@ function render_high_shadows(export)
 				var exptemp, dectemp;
 				light_shadows_exponent_surf = surface_require(light_shadows_exponent_surf, render_width, render_height)
 				light_shadows_decimal_surf = surface_require(light_shadows_decimal_surf, render_width, render_height)
-				render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
-				render_surface[4] = surface_require(render_surface[4], render_width, render_height, true, true)
+				render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+				render_surface[4] = surface_require(render_surface[4], render_width, render_height)
 				exptemp = render_surface[3]
 				dectemp = render_surface[4]
 				

@@ -115,7 +115,7 @@ function tab_settings_render()
 		tab_collapse_end()
 	}
 	
-	// Global illumination
+	// Indirect lighting
 	tab_control_switch()
 	draw_button_collapse("indirect", collapse_map[?"indirect"], null, !setting_render_indirect)
 	draw_switch("settingsrenderindirect", dx, dy, setting_render_indirect, action_setting_render_indirect)

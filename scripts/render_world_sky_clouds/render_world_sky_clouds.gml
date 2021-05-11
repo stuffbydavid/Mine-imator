@@ -4,7 +4,8 @@
 function render_world_sky_clouds()
 {
 	if (!background_sky_clouds_show || !render_background || render_mode = e_render_mode.HIGH_SSAO_DEPTH_NORMAL ||
-		render_mode = e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL || render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.DEPTH_NO_SKY)
+		render_mode = e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL || render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.DEPTH_NO_SKY ||
+		render_mode = e_render_mode.HIGH_LIGHT_SUN_COLOR)
 		return 0
 	
 	var res = background_sky_clouds_tex;

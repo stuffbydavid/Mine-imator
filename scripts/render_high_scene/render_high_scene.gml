@@ -7,24 +7,24 @@ function render_high_scene(ssaosurf, shadowssurf)
 {
 	var scenesurf, masksurf, resultsurf, materialsurf;
 	
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height, true)
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 	scenesurf = render_surface[2]
 	
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height, true)
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
 	masksurf = render_surface[4]
 	
-	render_surface[5] = surface_require(render_surface[5], render_width, render_height, true)
+	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
 	materialsurf = render_surface[5]
 	
 	// Render directly to target?
 	if (render_effects_done)
 	{
-		render_target = surface_require(render_target, render_width, render_height, true)
+		render_target = surface_require(render_target, render_width, render_height)
 		resultsurf = render_target
 	}
 	else
 	{
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height, true)
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 		resultsurf = render_surface[3]
 	}
 	

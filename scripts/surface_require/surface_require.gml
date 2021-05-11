@@ -1,37 +1,22 @@
-/// surface_require(surface, width, height, [depth, [free]])
+/// surface_require(surface, width, height)
 /// @arg surface
 /// @arg width
 /// @arg height
-/// @arg [depth
-/// @arg [free]]
 
-function surface_require()
+function surface_require(surf, w, h)
 {
-	var surf, w, h, starttime, surfdepth, free;
-	surf = argument[0]
-	w = max(1, argument[1])
-	h = max(1, argument[2])
-	
-	if (argument_count > 3)
-		surfdepth = argument[3]
-	else
-		surfdepth = true
-	
-	if (argument_count > 4)
-		free = argument[4]
-	else
-		free = false
+	var starttime;
+	w = max(1, w)
+	h = max(1, h)
 	
 	starttime = current_time
-	
-	surface_depth_disable(!surfdepth)
 	
 	// First usage
 	if (surf < 0)
 		surf = surface_create(w, h)
 	
 	// Corrupted/remake for depth
-	else if (!surface_exists(surf) || surface_get_width(surf) < 0 || free) 
+	else if (!surface_exists(surf) || surface_get_width(surf) < 0) 
 	{
 		surface_free(surf)
 		surf = surface_create(w, h)
@@ -40,8 +25,6 @@ function surface_require()
 	// Wrong size
 	else if (surface_get_width(surf) != w || surface_get_height(surf) != h)
 		surface_resize(surf, w, h)
-	
-	surface_depth_disable(true)
 	
 	render_surface_time += current_time - starttime
 	

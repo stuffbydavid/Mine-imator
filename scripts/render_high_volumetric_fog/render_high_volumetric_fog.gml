@@ -26,7 +26,7 @@ function render_high_volumetric_fog(prevsurf, export)
 		}
 		
 		// Render whole world for depth, but only store a limited range
-		render_surface[5] = surface_require(render_surface[5], render_width, render_height, true, true)
+		render_surface[5] = surface_require(render_surface[5], render_width, render_height)
 		depthsurf = render_surface[5]
 		surface_set_target(depthsurf)
 		{
@@ -64,7 +64,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				}
 				
 				// Depth
-				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size, true)
+				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_buffer)
 				{
 					gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -108,8 +108,8 @@ function render_high_volumetric_fog(prevsurf, export)
 			}
 			surface_reset_target()
 			
-			render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
-			render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
+			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+			render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 			exptemp = render_surface[2]
 			dectemp = render_surface[3]
 			

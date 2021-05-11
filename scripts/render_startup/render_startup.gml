@@ -131,7 +131,7 @@ function render_startup()
 	// Effect surfaces
 	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec,
 		      render_surface_sun_shadows_expo, render_surface_sun_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post,
-			  render_post_index, render_surface_ssr, render_surface_ssr_expo, render_surface_ssr_dec;
+			  render_post_index, render_surface_ssr, render_surface_ssr_expo, render_surface_ssr_dec, render_surface_sample_temp1, render_surface_sample_temp2;
 	render_surface_ssao = null
 	render_surface_shadows = null
 	render_surface_sun_shadows_expo = null
@@ -144,6 +144,8 @@ function render_startup()
 	render_surface_ssr = null
 	render_surface_ssr_expo = null
 	render_surface_ssr_dec = null
+	render_surface_sample_temp1 = null
+	render_surface_sample_temp2 = null
 	
 	globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples_clear;
 	render_surface_sun_volume_expo = null

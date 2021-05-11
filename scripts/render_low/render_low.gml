@@ -4,7 +4,7 @@
 function render_low()
 {
 	var surf;
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height, true)
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surf = render_surface[0]
 	
 	surface_set_target(surf)

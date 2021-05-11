@@ -13,12 +13,20 @@ function render_free()
 	
 	surface_free(render_surface_sun_shadows_expo)
 	surface_free(render_surface_sun_shadows_dec)
+	
 	surface_free(render_surface_sun_volume_expo)
 	surface_free(render_surface_sun_volume_dec)
 	
+	surface_free(render_surface_ssao)
+	surface_free(render_surface_shadows)
 	surface_free(render_surface_indirect)
 	surface_free(render_surface_indirect_expo)
 	surface_free(render_surface_indirect_dec)
+	surface_free(render_surface_ssr_expo)
+	surface_free(render_surface_ssr_dec)
+	
+	surface_free(render_surface_sample_temp1)
+	surface_free(render_surface_sample_temp2)
 	
 	surface_free(render_surface_sun_buffer)
 	surface_free(render_surface_sun_color_buffer)

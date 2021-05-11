@@ -10,6 +10,7 @@ uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uNormalBufferExp;
 uniform sampler2D uBrightnessBuffer;
+uniform sampler2D uIndirectBuffer;
 
 // Camera data
 uniform mat4 uProjMatrix;
@@ -172,7 +173,7 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 				falloff = 1.0 - clamp((dis / uEmissionRange), 0.0, 1.0);
 			}
 			
-			vec3 light = texture2D(uDiffuseBuffer, screenCoord).rgb * texture2D(uLightingBuffer, screenCoord).rgb;
+			vec3 light = texture2D(uDiffuseBuffer, screenCoord).rgb * (texture2D(uLightingBuffer, screenCoord).rgb + texture2D(uIndirectBuffer, screenCoord).rgb);
 			giColor += light * falloff * dif;
 			return;
 		}

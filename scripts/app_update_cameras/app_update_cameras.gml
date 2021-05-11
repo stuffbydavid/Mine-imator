@@ -59,7 +59,7 @@ function app_update_cameras(highquality, movie)
 		}
 		
 		// Re-use the same two surfaces
-		cam_surf = surface_require(cam_surf, render_width, render_height, true)
+		cam_surf = surface_require(cam_surf, render_width, render_height)
 		
 		var tmp = cam_surf;
 		cam_surf = cam_surf_tmp

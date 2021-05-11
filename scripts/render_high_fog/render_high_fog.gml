@@ -4,7 +4,7 @@ function render_high_fog()
 {
 	var resultsurf;
 	
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height, true, true)
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	resultsurf = render_surface[0]
 	surface_set_target(resultsurf)
 	{

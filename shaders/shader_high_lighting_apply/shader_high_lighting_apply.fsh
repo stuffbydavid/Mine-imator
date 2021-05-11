@@ -28,13 +28,13 @@ void main()
 	if (uShadowsEnabled > 0)
 	{
 		vec3 direct = texture2D(uShadows, vTexCoord).rgb;
-		vec3 GI = vec3(0.0);
+		vec3 indirect = vec3(0.0);
 		
-		// Calculate GI
+		// Calculate indirect
 		if (uIndirectEnabled > 0)
-			GI = texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
+			indirect = texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
 		
-		diffuse = uAmbientColor.rgb + direct + GI;
+		diffuse = uAmbientColor.rgb + direct + indirect;
 	}
 	
 	// Multiply light and ao with diffuse

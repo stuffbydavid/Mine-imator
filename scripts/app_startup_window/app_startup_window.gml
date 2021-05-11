@@ -21,7 +21,6 @@ function app_startup_window()
 	window_set_min_width(100)
 	window_set_min_height(100)
 	window_set_caption("Mine-imator")
-	surface_depth_disable(true)
 	
 	window_scroll_focus = ""
 	window_scroll_focus_prev = ""

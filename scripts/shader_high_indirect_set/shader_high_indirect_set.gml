@@ -14,6 +14,7 @@ function shader_high_indirect_set(depthsurface, normalsurface, normalsurface2, d
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(diffusesurf))
 	texture_set_stage(sampler_map[?"uLightingBuffer"], surface_get_texture(shadowsurf))
 	texture_set_stage(sampler_map[?"uBrightnessBuffer"], surface_get_texture(brightnesssurf))
+	texture_set_stage(sampler_map[?"uIndirectBuffer"], surface_get_texture(render_surface_indirect))
 	
 	render_set_uniform("uNear", cam_near)
 	render_set_uniform("uFar", cam_far)

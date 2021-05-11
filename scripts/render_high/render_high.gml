@@ -8,11 +8,11 @@ function render_high()
 	starttime = current_time
 	render_surface_time = 0
 	
-	// SSAO (Render surface 0)
+	// SSAO
 	if (render_ssao)
-		render_surface_ssao = render_high_ssao()
+		render_high_ssao()
 	
-	// Shadows (Use unique surface)
+	// Shadows
 	if (render_shadows)
 	{
 		render_high_shadows(render_active = "image" || render_active = "movie")
@@ -21,7 +21,7 @@ function render_high()
 			render_pass_surf = surface_duplicate(render_surface_shadows)
 	}
 	
-	// Global Illumination (Use unique surface)
+	// Indirect lighting
 	if (render_shadows && render_indirect)
 	{
 		render_high_indirect(render_active = "image" || render_active = "movie")

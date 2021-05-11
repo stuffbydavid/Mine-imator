@@ -1,6 +1,6 @@
 /// render_high_indirect(export)
 /// @arg export
-/// @desc Ray traces shadow surf for light bounces, returns GI lighting buffer
+/// @desc Ray traces shadow surf for light bounces, returns indirect lighting buffer
 
 function render_high_indirect(export)
 {
@@ -22,10 +22,56 @@ function render_high_indirect(export)
 		render_samples = setting_render_samples
 	}
 	
-	var shadowsurf, depthsurf, normalsurf, normalsurf2, diffusesurf, brightnesssurf;
+	var shadowsurf, tempsurf, depthsurf, normalsurf, normalsurf2, diffusesurf, brightnesssurf;
 	shadowsurf = render_surface_shadows
 	
 	render_surface_indirect = surface_require(render_surface_indirect, render_width, render_height)
+	
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	tempsurf = render_surface[0]
+	
+	// Render depth & normal data
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	depthsurf = render_surface[1]
+	
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	normalsurf = render_surface[2]
+	
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	normalsurf2 = render_surface[3]
+	
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+	diffusesurf = render_surface[4]
+	
+	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
+	brightnesssurf = render_surface[5]
+	
+	surface_set_target_ext(0, depthsurf)
+	surface_set_target_ext(1, normalsurf)
+	surface_set_target_ext(2, normalsurf2)
+	surface_set_target_ext(3, brightnesssurf)
+	{
+		draw_clear_alpha(c_white, 0)
+		render_world_start(5000)
+		render_world(e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL)
+		render_world_done()
+	}
+	surface_reset_target()
+		
+	// Render diffuse color
+	surface_set_target(diffusesurf)
+	{
+		// Background
+		draw_clear_alpha(c_black, 0)
+		render_world_background()
+			
+		// World
+		render_world_start()
+		render_world_sky()
+		render_world(e_render_mode.COLOR_FOG)
+		render_world_done()
+	}
+	surface_reset_target()
 	
 	for (var s = samplestart; s < sampleend; s++)
 	{
@@ -35,51 +81,17 @@ function render_high_indirect(export)
 		for (var i = 0; i < 16; i++)
 			render_indirect_offset[i] = random_range(0, 1)
 		
-		// Render depth & normal data
-		render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
-		depthsurf = render_surface[1]
-		
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
-		normalsurf = render_surface[2]
-		
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height, true, true)
-		normalsurf2 = render_surface[3]
-		
-		render_surface[4] = surface_require(render_surface[4], render_width, render_height, true, true)
-		diffusesurf = render_surface[4]
-		
-		render_surface[5] = surface_require(render_surface[5], render_width, render_height, true, true)
-		brightnesssurf = render_surface[5]
-		
-		surface_set_target_ext(0, depthsurf)
-		surface_set_target_ext(1, normalsurf)
-		surface_set_target_ext(2, normalsurf2)
-		surface_set_target_ext(3, brightnesssurf)
+		if (s = 0 || render_samples_clear)
 		{
-			draw_clear_alpha(c_white, 0)
-			render_world_start(5000)
-			render_world(e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL)
-			render_world_done()
+			surface_set_target(render_surface_indirect)
+			{
+				draw_clear_alpha(c_black, 1)
+			}
+			surface_reset_target()
 		}
-		surface_reset_target()
 		
-		// Render diffuse color
-		surface_set_target(diffusesurf)
-		{
-			// Background
-			draw_clear_alpha(c_black, 0)
-			render_world_background()
-			
-			// World
-			render_world_start()
-			render_world_sky()
-			render_world(e_render_mode.COLOR_FOG)
-			render_world_done()
-		}
-		surface_reset_target()
-		
-		// Ray trace GI
-		surface_set_target(render_surface_indirect)
+		// Ray trace indirect
+		surface_set_target(tempsurf)
 		{
 			gpu_set_texrepeat(false)
 		    draw_clear_alpha(c_black, 0)
@@ -102,10 +114,10 @@ function render_high_indirect(export)
 		var exptemp, dectemp;
 		render_surface_indirect_expo = surface_require(render_surface_indirect_expo, render_width, render_height)
 		render_surface_indirect_dec = surface_require(render_surface_indirect_dec, render_width, render_height)
-		render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
-		exptemp = render_surface[1]
-		dectemp = render_surface[2]
+		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, render_width, render_height)
+		render_surface_sample_temp2 = surface_require(render_surface_sample_temp2, render_width, render_height)
+		exptemp = render_surface_sample_temp1
+		dectemp = render_surface_sample_temp2
 		
 		// Draw temporary exponent surface
 		surface_set_target(exptemp)
@@ -138,7 +150,7 @@ function render_high_indirect(export)
 				shader_set(shader)
 				shader_high_shadows_add_set(exptemp, dectemp)
 			}
-			draw_surface_exists(render_surface_indirect, 0, 0)
+			draw_surface_exists(tempsurf, 0, 0)
 			with (render_shader_obj)
 				shader_clear()
 		}
@@ -167,12 +179,6 @@ function render_high_indirect(export)
 	#region Blur result (Using SSAO method)
 	
 	// Render depth & normal data
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height, true, true)
-	depthsurf = render_surface[1]
-	
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height, true, true)
-	normalsurf = render_surface[2]
-	
 	surface_set_target_ext(0, depthsurf)
 	surface_set_target_ext(1, normalsurf)
 	{
@@ -185,16 +191,16 @@ function render_high_indirect(export)
 	
 	repeat (setting_render_indirect_blur_passes)
 	{
-		var gisurftemp;
+		var indirectsurftemp;
 		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		gisurftemp = render_surface[3]
+		indirectsurftemp = render_surface[3]
 		
 		render_shader_obj = shader_map[?shader_high_ssao_blur]
 		with (render_shader_obj)
 			shader_set(shader)
 		
 		// Horizontal
-		surface_set_target(gisurftemp)
+		surface_set_target(indirectsurftemp)
 		{
 			with (render_shader_obj)
 				shader_high_ssao_blur_set(depthsurf, normalsurf, 1, 0)
@@ -207,7 +213,7 @@ function render_high_indirect(export)
 		{
 			with (render_shader_obj)
 				shader_high_ssao_blur_set(depthsurf, normalsurf, 0, 1)
-			draw_surface_exists(gisurftemp, 0, 0)
+			draw_surface_exists(indirectsurftemp, 0, 0)
 		}
 		surface_reset_target()
 		
@@ -222,5 +228,8 @@ function render_high_indirect(export)
 	{
 		surface_free(render_surface_indirect_expo)
 		surface_free(render_surface_indirect_dec)
+		
+		surface_free(render_surface_sample_temp1)
+		surface_free(render_surface_sample_temp2)
 	}
 }

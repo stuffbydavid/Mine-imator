@@ -3,7 +3,7 @@
 
 function render_high_overlay(basesurf)
 {
-	render_target = surface_require(render_target, render_width, render_height, true)
+	render_target = surface_require(render_target, render_width, render_height)
 	surface_set_target(render_target)
 	{
 		draw_clear_alpha(c_black, 0)

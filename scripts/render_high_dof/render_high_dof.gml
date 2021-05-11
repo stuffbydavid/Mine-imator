@@ -6,7 +6,7 @@ function render_high_dof(prevsurf)
 	var depthsurf, cocsurf, resultsurf;
 	
 	// Get depth
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height, true)
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	depthsurf = render_surface[0]
 	surface_set_target(depthsurf)
 	{

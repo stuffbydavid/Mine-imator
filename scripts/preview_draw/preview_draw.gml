@@ -138,7 +138,7 @@ function preview_draw(preview, xx, yy, width, height)
 		if (select.type = e_res_type.PACK && pack_image = "blocksheet" && pack_block_sheet_ani)
 			update = true
 		
-		surface = surface_require(surface, width, height, true)
+		surface = surface_require(surface, width, height)
 		
 		if (update)
 		{
