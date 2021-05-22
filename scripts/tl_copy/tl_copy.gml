@@ -56,7 +56,6 @@ function tl_copy(to)
 	to.hq_hiding = hq_hiding
 	to.lq_hiding = lq_hiding
 	to.foliage_tint = foliage_tint
-	to.bleed_light = bleed_light
 	to.blend_mode = blend_mode
 	
 	if (part_of != null && part_of != "")

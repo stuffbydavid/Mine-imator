@@ -90,11 +90,6 @@ function tab_timeline_editor_graphics()
 		draw_checkbox("timelineeditorfoliagetint", dx, dy, tl_edit.foliage_tint, action_tl_foliage_tint)
 		tab_next()
 		
-		// Bleed light
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorbleedlight", dx, dy, tl_edit.bleed_light, action_tl_bleed_light)
-		tab_next()
-		
 		tab_set_collumns(false)
 	}
 	else

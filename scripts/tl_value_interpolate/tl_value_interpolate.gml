@@ -16,6 +16,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.HSB_MUL:
 		case e_value.MIX_COLOR:
 		case e_value.GLOW_COLOR:
+		case e_value.SUBSURFACE_COLOR:
 		case e_value.LIGHT_COLOR:
 		case e_value.CAM_BLOOM_BLEND:
 		case e_value.CAM_COLOR_BURN:

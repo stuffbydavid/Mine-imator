@@ -150,6 +150,11 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BRIGHTNESS, trans, p)
 		tl_update_values_ease(e_value.METALLIC, trans, p)
 		tl_update_values_ease(e_value.ROUGHNESS, trans, p)
+		tl_update_values_ease(e_value.SUBSURFACE, trans, p)
+		tl_update_values_ease(e_value.SUBSURFACE_RADIUS_RED, trans, p)
+		tl_update_values_ease(e_value.SUBSURFACE_RADIUS_GREEN, trans, p)
+		tl_update_values_ease(e_value.SUBSURFACE_RADIUS_BLUE, trans, p)
+		tl_update_values_ease(e_value.SUBSURFACE_COLOR, trans, p)
 	}
 	
 	// Particles

@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Shadows",
-    "path": "folders/Scripts/Render/High quality/Shadows.yy",
+    "name": "Lighting",
+    "path": "folders/Scripts/Render/High quality/Lighting.yy",
   },
   "resourceVersion": "1.0",
   "name": "render_high_indirect",

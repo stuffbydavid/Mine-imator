@@ -22,18 +22,20 @@ uniform sampler2D uDepthBufferYn;
 uniform sampler2D uDepthBufferZp;
 uniform sampler2D uDepthBufferZn;
 
-uniform float uBleedLight;
+uniform float uSSS;
+uniform vec3 uSSSRadius;
+uniform vec4 uSSSColor;
 uniform float uMetallic;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying float vBrightness;
-varying float vLightBleed;
+varying float vBlockSSS;
 
 float unpackDepth(vec4 c)
 {
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0) + c.a / (255.0 * 255.0 * 255.0);
+	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
 }
 
 vec4 texture2Dmap(int map, vec2 tex)
@@ -70,24 +72,27 @@ vec2 getShadowMapCoord(vec3 look)
 void main()
 {
 	vec3 light;
+	int sssEnabled = (vBlockSSS + uSSS > 0.0 ? 1 : 0);
 	
 	if (uIsSky > 0)
 		light = vec3(1.0);
 	else
 	{
 		float shadow = 1.0;
-	
+		float att = 0.0;
+		vec3 subsurf = vec3(0.0);
+		
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition))); 
-		dif = clamp(dif + min(1.0, vLightBleed + uBleedLight), 0.0, 1.0);
 		
 		// Attenuation factor
-		dif *= 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0); 
+		att = 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0); 
+		dif *= att;
 		
 		// Material
 		dif *= 1.0 - uMetallic;
 		
-		if (dif > 0.0 && vBrightness < 1.0)
+		if ((dif > 0.0 && vBrightness < 1.0) || sssEnabled > 0)
 		{
 			int buffer;
 			vec2 fragCoord;
@@ -144,19 +149,37 @@ void main()
 			}
 			
 			// Calculate bias
-			float bias = 1.0 + (.2 * min(1.0, vLightBleed + uBleedLight));
+			float bias = 1.0;
 			
 			// Shadow
 			float fragDepth = distance(vPosition, uShadowPosition);
 			float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, fragCoord));
 			shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
+			
+			// Get subsurface translucency
+			vec3 dis = vec3(uSSSRadius * max(uSSS, vBlockSSS));
+			float lightdis = (fragDepth + bias) - sampleDepth;
+			
+			subsurf = vec3(vec3(1.0) - clamp(vec3(lightdis) / dis, vec3(0.0), vec3(1.0)));
+			subsurf *= att;
 		}
-	
+		
+		// Translucency
+		float transDif = max(0.0, dot(normalize(-vNormal), normalize(uLightPosition - vPosition)));
+		transDif = clamp(transDif, 0.0, 1.0);
+		subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
+		
+		// Disable translucency on diffuse
+		subsurf *= (dif > 0.0 ? 0.0 : 1.0);
+		
 		// Calculate light
 		if (uIsWater == 1)
 			light = uLightColor.rgb * uLightStrength * dif;
 		else
 			light = uLightColor.rgb * uLightStrength * dif * shadow;
+		
+		light += subsurf;
+		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
 		
 		light = mix(light, vec3(1.0), vBrightness);
 	}

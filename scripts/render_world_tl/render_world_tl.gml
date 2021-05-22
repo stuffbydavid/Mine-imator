@@ -101,8 +101,11 @@ function render_world_tl()
 	
 	render_set_uniform_int("uBlockGlow", app.setting_block_glow)
 	
-	if (bleed_light)
-		render_set_uniform("uBleedLight", bool_to_float(bleed_light))
+	render_set_uniform("uSSS", value_inherit[e_value.SUBSURFACE])
+	render_set_uniform_vec3("uSSSRadius", value_inherit[e_value.SUBSURFACE_RADIUS_RED],
+											value_inherit[e_value.SUBSURFACE_RADIUS_GREEN],
+											value_inherit[e_value.SUBSURFACE_RADIUS_BLUE])
+	render_set_uniform_color("uSSSColor", value_inherit[e_value.SUBSURFACE_COLOR], 1.0)
 	
 	var prevblend = null;
 	
@@ -247,6 +250,10 @@ function render_world_tl()
 	if (prevblend != null)
 		gpu_set_blendmode(prevblend)
 	
-	if (bleed_light)
-		render_set_uniform("uBleedLight", 0)
+	if (value_inherit[e_value.SUBSURFACE] != 0)
+	{
+		render_set_uniform("uSSS", 0)
+		render_set_uniform_vec3("uSSSRadius", 0, 0, 0)
+		render_set_uniform_color("uSSSColor", c_black, 1)
+	}
 }

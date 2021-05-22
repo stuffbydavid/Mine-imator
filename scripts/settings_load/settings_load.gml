@@ -208,7 +208,16 @@ function settings_load()
 			setting_block_brightness = value_get_real(graphicsmap[?"block_brightness"], setting_block_brightness)
 			setting_block_glow_threshold = value_get_real(graphicsmap[?"block_glow_threshold"], setting_block_glow_threshold)
 			setting_block_glow = value_get_real(graphicsmap[?"block_glow"], setting_block_glow)
-			setting_light_bleeding = value_get_real(graphicsmap[?"light_bleeding"], setting_light_bleeding)
+			
+			if (load_format < e_settings.FORMAT_130)
+			{
+				var lightbleed = value_get_real(graphicsmap[?"light_bleeding"], true);
+				
+				// Multiply by default value
+				setting_block_subsurface = lightbleed * 2
+			}
+			else
+				setting_block_subsurface = value_get_real(graphicsmap[?"block_subsurface"], setting_block_subsurface)
 		}
 		
 		// Render
@@ -229,6 +238,9 @@ function settings_load()
 			setting_render_shadows_spot_buffer_size = value_get_real(rendermap[?"render_shadows_spot_buffer_size"], setting_render_shadows_spot_buffer_size)
 			setting_render_shadows_point_buffer_size = value_get_real(rendermap[?"render_shadows_point_buffer_size"], setting_render_shadows_point_buffer_size)
 			setting_render_shadows_sun_colored = value_get_real(rendermap[?"render_shadows_sun_colored"], setting_render_shadows_sun_colored)
+			
+			setting_render_subsurface_samples = value_get_real(rendermap[?"render_subsurface_samples"], setting_render_subsurface_samples)
+			setting_render_subsurface_jitter = value_get_real(rendermap[?"render_subsurface_jitter"], setting_render_subsurface_jitter)
 			
 			setting_render_indirect = value_get_real(rendermap[?"render_indirect"], setting_render_indirect)
 			setting_render_indirect_blur_passes = value_get_real(rendermap[?"render_indirect_blur_passes"], setting_render_indirect_blur_passes)

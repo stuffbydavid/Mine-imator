@@ -11,7 +11,8 @@ uniform mat4 uLightMatrix;
 uniform mat4 uShadowMatrix;
 uniform float uBrightness;
 uniform float uBlockBrightness;
-uniform float uLightBleed;
+
+uniform float uBlockSSS;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -19,7 +20,7 @@ varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
 varying float vBrightness;
-varying float vLightBleed;
+varying float vBlockSSS;
 
 // Wind
 uniform float uTime;
@@ -65,7 +66,7 @@ void main()
 	vScreenCoord = uLightMatrix * vec4(vPosition, 1.0);
 	vShadowCoord = uShadowMatrix * vec4(vPosition, 1.0);
 	vBrightness =  in_Wave.z * uBlockBrightness + uBrightness / float(uLightAmount);
-	vLightBleed = in_Wave.w * uLightBleed;
+	vBlockSSS = uBlockSSS * min(1.0, (in_Wave.w * (uBlockSSS > 0.0 ? 1.0 : 0.0)));
 	
 	gl_Position = gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 }

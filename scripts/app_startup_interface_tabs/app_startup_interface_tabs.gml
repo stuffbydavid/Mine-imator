@@ -441,6 +441,13 @@ function app_startup_interface_tabs()
 			tbx_metallic.suffix = "%"
 			tbx_roughness = new_textbox_integer()
 			tbx_roughness.suffix = "%"
+			tbx_subsurface = new_textbox_decimals()
+			tbx_subsurface_radius[X] = new_textbox_integer()
+			tbx_subsurface_radius[X].suffix = "%"
+			tbx_subsurface_radius[Y] = new_textbox_integer()
+			tbx_subsurface_radius[Y].suffix = "%"
+			tbx_subsurface_radius[Z] = new_textbox_integer()
+			tbx_subsurface_radius[Z].suffix = "%"
 		}
 		
 		// Particles
@@ -644,6 +651,7 @@ function app_startup_interface_tabs()
 			tbx_block_brightness.suffix = "%"
 			tbx_block_glow_threshold = new_textbox_decimals()
 			tbx_block_glow_threshold.suffix = "%"
+			tbx_block_subsurface_radius = new_textbox_decimals()
 		}
 		
 		// Render
@@ -656,6 +664,9 @@ function app_startup_interface_tabs()
 			tbx_ssao_power.suffix = "%"
 			tbx_ssao_blur_passes = new_textbox_integer()
 			tbx_samples = new_textbox_integer()
+			tbx_subsurface_samples = new_textbox_integer()
+			tbx_subsurface_jitter = new_textbox_integer()
+			tbx_subsurface_jitter.suffix = "%"
 			tbx_indirect_blur_passes = new_textbox_integer()
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"

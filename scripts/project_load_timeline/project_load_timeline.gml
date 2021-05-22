@@ -188,7 +188,12 @@ function project_load_timeline(map)
 		hq_hiding = value_get_real(map[?"hq_hiding"], hq_hiding)
 		lq_hiding = value_get_real(map[?"lq_hiding"], lq_hiding)
 		foliage_tint = value_get_real(map[?"foliage_tint"], foliage_tint)
-		bleed_light = value_get_real(map[?"bleed_light"], bleed_light)
+		
+		/*
+		if (project_format < e_project.FORMAT_130_AL14)
+			value_get_real(map[?"bleed_light"], false)
+		*/
+		
 		blend_mode = value_get_string(map[?"blend_mode"], blend_mode)
 	}
 }

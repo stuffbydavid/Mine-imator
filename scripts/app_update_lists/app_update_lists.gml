@@ -5,6 +5,7 @@ function app_update_lists()
 {
 	if (list_item_script != null)
 	{
+		
 		if (list_item_script_value = null)
 			script_execute(list_item_script)
 		else

@@ -42,6 +42,11 @@ function app_startup_lists()
 		"BRIGHTNESS",
 		"METALLIC",
 		"ROUGHNESS",
+		"SUBSURFACE",
+		"SUBSURFACE_RADIUS_RED",
+		"SUBSURFACE_RADIUS_GREEN",
+		"SUBSURFACE_RADIUS_BLUE",
+		"SUBSURFACE_COLOR",
 		"SPAWN",
 		"FREEZE",
 		"CLEAR",
@@ -516,6 +521,7 @@ function app_startup_lists()
 		"ao",
 		"shadows",
 		"indirect",
-		"reflections"
+		"reflections",
+		"subsurface"
 	)
 }

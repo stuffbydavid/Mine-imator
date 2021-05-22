@@ -165,7 +165,7 @@ function settings_save()
 		json_save_var("block_brightness", setting_block_brightness)
 		json_save_var("block_glow_threshold", setting_block_glow_threshold)
 		json_save_var_bool("block_glow", setting_block_glow)
-		json_save_var_bool("light_bleeding", setting_light_bleeding)
+		json_save_var_bool("block_subsurface", setting_block_subsurface)
 		
 	json_save_object_done()
 	
@@ -185,6 +185,9 @@ function settings_save()
 		json_save_var("render_shadows_spot_buffer_size", setting_render_shadows_spot_buffer_size)
 		json_save_var("render_shadows_point_buffer_size", setting_render_shadows_point_buffer_size)
 		json_save_var_bool("render_shadows_sun_colored", setting_render_shadows_sun_colored)
+		
+		json_save_var("render_subsurface_samples", setting_render_subsurface_samples)
+		json_save_var("render_subsurface_jitter", setting_render_subsurface_jitter)
 		
 		json_save_var_bool("render_indirect", setting_render_indirect)
 		json_save_var("render_indirect_blur_passes", setting_render_indirect_blur_passes)

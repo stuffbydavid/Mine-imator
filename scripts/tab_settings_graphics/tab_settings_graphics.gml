@@ -67,8 +67,8 @@ function tab_settings_graphics()
 		tab_next()
 	}
 	
-	// Foliage light bleeding
-	tab_control_switch()
-	draw_switch("settingslightbleeding", dx, dy, setting_light_bleeding, action_setting_light_bleeding)
+	// Block subsurface (Used for simple SSS in scenery)
+	tab_control_dragger()
+	draw_dragger("settingsblocksubsurfaceradius", dx, dy, dragger_width, setting_block_subsurface, .1, 0, no_limit, 2, 0.01, tab.graphics.tbx_block_subsurface_radius, action_setting_block_subsurface)
 	tab_next()
 }

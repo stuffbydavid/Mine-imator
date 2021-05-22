@@ -3,10 +3,10 @@
   "isCompatibility": false,
   "parent": {
     "name": "Graphics",
-    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+    "path": "folders/Scripts/App/Actions/Settings/Graphics.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_tl_bleed_light_tree",
+  "name": "action_setting_block_subsurface",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -100,7 +100,7 @@ function settings_startup()
 	setting_block_brightness = 0.75
 	setting_block_glow = true
 	setting_block_glow_threshold = 0.75
-	setting_light_bleeding = true
+	setting_block_subsurface = 2
 	
 	setting_render_samples = 16
 	setting_render_dof_quality = 3
@@ -116,6 +116,9 @@ function settings_startup()
 	setting_render_shadows_spot_buffer_size = 512
 	setting_render_shadows_point_buffer_size = 256
 	setting_render_shadows_sun_colored = false
+	
+	setting_render_subsurface_samples = 7
+	setting_render_subsurface_jitter = .3
 	
 	setting_render_indirect = true
 	setting_render_indirect_quality = 0

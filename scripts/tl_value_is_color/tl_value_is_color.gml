@@ -11,6 +11,7 @@ function tl_value_is_color(vid)
 			vid = e_value.HSB_MUL ||
 			vid = e_value.MIX_COLOR ||
 			vid = e_value.GLOW_COLOR ||
+			vid = e_value.SUBSURFACE_COLOR ||
 			vid = e_value.LIGHT_COLOR ||
 			vid = e_value.CAM_BLOOM_BLEND ||
 			vid = e_value.CAM_COLOR_BURN ||

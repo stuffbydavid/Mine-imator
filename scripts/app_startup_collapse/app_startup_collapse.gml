@@ -20,6 +20,7 @@ function app_startup_collapse()
 	
 	collapse_register("ssao")
 	collapse_register("shadows")
+	collapse_register("subsurface")
 	collapse_register("indirect")
 	collapse_register("reflections")
 	collapse_register("glow")
@@ -44,4 +45,6 @@ function app_startup_collapse()
 	collapse_register("distort")
 	
 	collapse_register("itemslot")
+	
+	collapse_register("material_subsurface")
 }

@@ -109,10 +109,14 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 	
 	// Snap markers
 	var markers = floor((maxval - minval) / snapval);
-	if (markers <= 32 && !locked)
+	if (markers <= 64 && !locked)
 	{
-		for (var i = 0; i < markers + 1; i++)
-			draw_line_ext(linex + (linewid * (i / markers)), dragy - 6, linex + (linewid * (i / markers)), dragy + 6, c_border, a_border)
+		// Only draw markers if not cramped
+		if ((linewid / markers) > 20)
+		{
+			for (var i = 0; i < markers + 1; i++)
+				draw_line_ext(linex + (linewid * (i / markers)), dragy - 6, linex + (linewid * (i / markers)), dragy + 6, c_border, a_border)
+		}
 		
 		// Snap dragger X
 		dragx = snap(floor(percent(dragval, minval, maxval) * linewid), (linewid / markers))

@@ -59,9 +59,9 @@ function shader_use()
 	if (!is_undefined(uniform_map[?"uGlowThreshold"]) && uniform_map[?"uGlowThreshold"] > -1)
 		render_set_uniform("uGlowThreshold", app.setting_block_glow_threshold)
 	
-	// Light bleeding
-	if (!is_undefined(uniform_map[?"uLightBleed"]) && uniform_map[?"uLightBleed"] > -1)
-		render_set_uniform("uLightBleed", bool_to_float(app.setting_light_bleeding))
+	// Block subsurface scattering
+	if (!is_undefined(uniform_map[?"uBlockSSS"]) && uniform_map[?"uBlockSSS"] > -1)
+		render_set_uniform("uBlockSSS", app.setting_block_subsurface)
 	
 	// Texture drawing
 	render_set_uniform("uMask", bool_to_float(shader_mask))

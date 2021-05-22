@@ -12,7 +12,7 @@ varying vec3 vNormal;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying float vBrightness;
-varying float vLightBleed;
+varying float vSSS;
 
 void main()
 {
@@ -40,7 +40,7 @@ void main()
 			
 			// Diffuse factor
 			float dif = max(0.0, dot(normalize(vNormal), normalize(lightPosition - vPosition)));
-			dif += vLightBleed;
+			dif += vSSS;
 			
 			// Attenuation factor
 			dif *= 1.0 - clamp((distance(vPosition, lightPosition) - lightRange * (1.0 - lightFadeSize)) / (lightRange * lightFadeSize), 0.0, 1.0);

@@ -198,7 +198,7 @@ function builder_generate()
 		vertex_wave = block_current.wind_axis
 		if (block_current.wind_zmin != null)
 			vertex_wave_zmin = block_pos_z + block_current.wind_zmin
-		vertex_light_bleeding = block_current.light_bleeding
+		vertex_subsurface = block_current.subsurface
 		
 		// Requires other render models for states
 		if (block_current.require_models)
@@ -220,12 +220,12 @@ function builder_generate()
 		}
 	}
 	
-	// Reset wind, brightness, and light bleeding
+	// Reset wind, brightness, and subsurface
 	vertex_wave = e_vertex_wave.NONE
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null
 	vertex_brightness = 0
-	vertex_light_bleeding = 0
+	vertex_subsurface = 0
 	
 	// Waterlogged
 	if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z) && !app.setting_remove_waterlogged_water)
@@ -237,6 +237,6 @@ function builder_generate()
 		vertex_wave_zmin = null
 		vertex_wave_zmax = null
 		vertex_brightness = 0
-		vertex_light_bleeding = 0
+		vertex_subsurface = 0
 	}
 }

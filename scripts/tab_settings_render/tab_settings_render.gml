@@ -115,6 +115,27 @@ function tab_settings_render()
 		tab_collapse_end()
 	}
 	
+	// Subsurface scattering
+	tab_control_switch()
+	draw_button_collapse("subsurface", collapse_map[?"subsurface"], null, false)
+	draw_label(text_get("settingsrendersubsurfacescattering"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	tab_next()
+	
+	if (collapse_map[?"subsurface"])
+	{
+		tab_collapse_start()
+		
+		tab_control_meter()
+		draw_meter("settingsrendersubsurfacescatterquality", dx, dy, dw, setting_render_subsurface_samples, 64, 1, 32, 7, 1, tab.render.tbx_subsurface_samples, action_setting_render_subsurface_samples)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("settingsrendersubsurfacescatterjitter", dx, dy, dw, round(setting_render_subsurface_jitter * 100), 64, 0, 100, 30, 1, tab.render.tbx_subsurface_jitter, action_setting_render_subsurface_jitter)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
 	// Indirect lighting
 	tab_control_switch()
 	draw_button_collapse("indirect", collapse_map[?"indirect"], null, !setting_render_indirect)

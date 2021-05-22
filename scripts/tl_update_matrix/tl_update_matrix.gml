@@ -132,6 +132,11 @@ function tl_update_matrix()
 		value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
 		value_inherit[e_value.METALLIC] = value[e_value.METALLIC] // Added
 		value_inherit[e_value.ROUGHNESS] = value[e_value.ROUGHNESS] // Added
+		value_inherit[e_value.SUBSURFACE] = value[e_value.SUBSURFACE] // Added
+		value_inherit[e_value.SUBSURFACE_RADIUS_RED] = value[e_value.SUBSURFACE_RADIUS_RED] // Multiplied
+		value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = value[e_value.SUBSURFACE_RADIUS_GREEN] // Multiplied
+		value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] = value[e_value.SUBSURFACE_RADIUS_BLUE] // Multiplied
+		value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
 		value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
 		value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] // Added
 		value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] // Added
@@ -185,7 +190,12 @@ function tl_update_matrix()
 				value_inherit[e_value.MIX_PERCENT] = clamp(value_inherit[e_value.MIX_PERCENT] + par.value[e_value.MIX_PERCENT], 0, 1)
 				value_inherit[e_value.BRIGHTNESS] = clamp(value_inherit[e_value.BRIGHTNESS] + par.value[e_value.BRIGHTNESS], 0, 1)
 				value_inherit[e_value.METALLIC] = clamp(value_inherit[e_value.METALLIC] + par.value[e_value.METALLIC], 0, 1)
-				value_inherit[e_value.ROUGHNESS] = clamp(value_inherit[e_value.ROUGHNESS] + par.value[e_value.ROUGHNESS], 0, 1)
+				value_inherit[e_value.ROUGHNESS] = clamp(value_inherit[e_value.ROUGHNESS] * par.value[e_value.ROUGHNESS], 0, 1)
+				value_inherit[e_value.SUBSURFACE] = value_inherit[e_value.SUBSURFACE] + par.value[e_value.SUBSURFACE]
+				value_inherit[e_value.SUBSURFACE_RADIUS_RED] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_RED] * par.value[e_value.SUBSURFACE_RADIUS_RED], 0, 1)
+				value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] * par.value[e_value.SUBSURFACE_RADIUS_GREEN], 0, 1)
+				value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] * par.value[e_value.SUBSURFACE_RADIUS_BLUE], 0, 1)
+				value_inherit[e_value.SUBSURFACE_COLOR] = color_multiply(value_inherit[e_value.SUBSURFACE_COLOR], par.value[e_value.SUBSURFACE_COLOR])
 			}
 			
 			if (inhglowcolor)

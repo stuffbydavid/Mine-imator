@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Graphics",
-    "path": "folders/Scripts/App/Actions/Settings/Graphics.yy",
+    "name": "Render",
+    "path": "folders/Scripts/App/Actions/Settings/Render.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_setting_light_bleeding",
+  "name": "action_setting_render_indirect_blur_passes",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Graphics",
-    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+    "name": "Lighting",
+    "path": "folders/Scripts/Render/High quality/Lighting.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_tl_bleed_light",
+  "name": "render_high_subsurface_scatter",
   "tags": [],
   "resourceType": "GMScript",
 }
