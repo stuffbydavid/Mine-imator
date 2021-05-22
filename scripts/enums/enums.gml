@@ -961,7 +961,6 @@ function enums()
 		AO,
 		SHADOWS,
 		INDIRECT,
-		REFLECTIONS,
-		SUBSURFACE
+		REFLECTIONS
 	}
 }

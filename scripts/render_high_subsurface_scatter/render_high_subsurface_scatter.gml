@@ -28,19 +28,16 @@ function render_high_subsurface_scatter(export)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
 	render_surface_sss = surface_require(render_surface_sss, render_width, render_height)
 	
 	ssssurf = render_surface[0]
 	sssrangesurf = render_surface[1]
-	ssscolorsurf = render_surface[2]
-	depthsurf = render_surface[3]
-	sssblursurf = render_surface[4]
+	depthsurf = render_surface[2]
+	sssblursurf = render_surface[3]
 	
 	// Render subsurface properties
 	surface_set_target_ext(0, ssssurf)
 	surface_set_target_ext(1, sssrangesurf)
-	surface_set_target_ext(2, ssscolorsurf)
 	{
 		draw_clear_alpha(c_black, 1)
 		render_world_start(2000)
@@ -89,7 +86,7 @@ function render_high_subsurface_scatter(export)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, ssscolorsurf, depthsurf, render_surface_shadows, render_indirect ? render_surface_indirect : -1, vec2(0, 1))
+				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, depthsurf, render_surface_shadows, vec2(0, 1))
 			}
 			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)
@@ -106,13 +103,26 @@ function render_high_subsurface_scatter(export)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, ssscolorsurf, depthsurf, render_surface_sample_temp1, -1, vec2(1, 0))
+				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, depthsurf, render_surface_sample_temp1, vec2(1, 0))
 			}
 			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)
 				shader_clear()
 		}
 		surface_reset_target()
+		
+		// Not exporting, quick exit
+		if (!export)
+		{
+			surface_set_target(render_surface_shadows)
+			{
+				draw_clear_alpha(c_black, 1)
+				draw_surface_exists(sssblursurf, 0, 0)
+			}
+			surface_reset_target()
+			
+			return 0
+		}
 		
 		// Add sampled result
 		var exptemp, dectemp;

@@ -30,15 +30,6 @@ function render_high()
 			render_pass_surf = surface_duplicate(render_surface_indirect)
 	}
 	
-	// Subsurface scattering blur
-	if (render_shadows)
-	{
-		render_high_subsurface_scatter(render_active = "image" || render_active = "movie")
-		
-		if (setting_render_pass = e_render_pass.SUBSURFACE)
-			render_pass_surf = surface_duplicate(render_surface_shadows)
-	}
-	
 	// Composite current effects onto the scene
 	finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
 	

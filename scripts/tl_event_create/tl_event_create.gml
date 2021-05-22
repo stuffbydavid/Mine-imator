@@ -137,8 +137,4 @@ function tl_event_create()
 	
 	render_res = null
 	model_tex = null
-	
-	// Light sources
-	light_shadows_exponent_surf = null
-	light_shadows_decimal_surf = null
 }

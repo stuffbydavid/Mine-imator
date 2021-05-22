@@ -2,11 +2,9 @@
 
 uniform sampler2D uSSSBuffer;
 uniform sampler2D uSSSRangeBuffer;
-uniform sampler2D uSSSColorBuffer;
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNoiseBuffer;
 uniform sampler2D uDirect;
-uniform sampler2D uIndirect;
 
 // Camera data
 uniform mat4 uProjMatrix;
@@ -18,7 +16,6 @@ uniform vec2 uScreenSize;
 uniform int uSamples;
 uniform vec2 uDirection;
 uniform vec2 uKernel[MAX_SAMPLES];
-uniform int useIndirect;
 uniform float uJitterThreshold;
 
 varying vec2 vTexCoord;
@@ -35,14 +32,7 @@ float getDepth(vec2 coord)
 
 vec3 getLight(vec2 coord)
 {
-	vec3 color;
-	
-	if (useIndirect == 1)
-		color = texture2D(uDirect, coord).rgb + texture2D(uIndirect, coord).rgb;
-	else
-		color = texture2D(uDirect, coord).rgb;
-	
-	return color;
+	return texture2D(uDirect, coord).rgb;
 }
 
 void main()
