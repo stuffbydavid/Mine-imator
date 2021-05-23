@@ -17,6 +17,7 @@ uniform int uSamples;
 uniform vec2 uDirection;
 uniform vec2 uKernel[MAX_SAMPLES];
 uniform float uJitterThreshold;
+uniform float uNoiseSize;
 
 varying vec2 vTexCoord;
 
@@ -50,7 +51,7 @@ void main()
 	
 	vec3 color = getLight(vTexCoord) * uKernel[0].x;
 	
-	float noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize/64.0)).r;
+	float noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r;
 	vec2 randDir = vec2(cos(noise), sin(noise));
 	
 	// Guassian blur

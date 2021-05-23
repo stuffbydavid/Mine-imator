@@ -12,7 +12,10 @@ function shader_high_reflections_set(depthsurface, normalsurface, normalsurface2
 	texture_set_stage(sampler_map[?"uNormalBufferExp"], surface_get_texture(normalsurface2))
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(diffusesurf))
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(materialsurf))
+	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_surf))
+	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	
+	render_set_uniform("uNoiseSize", render_sample_noise_size)
 	render_set_uniform("uNear", cam_near)
 	render_set_uniform("uFar", cam_far)
 	render_set_uniform("uProjMatrix", proj_matrix)
@@ -22,7 +25,10 @@ function shader_high_reflections_set(depthsurface, normalsurface, normalsurface2
 	
 	render_set_uniform("uOffset", render_indirect_offset)
 	
-	render_set_uniform_vec2("uScreenSize", ceil(render_width/2), ceil(render_height/2))
+	if (app.setting_render_reflections_halfres)
+		render_set_uniform_vec2("uScreenSize", ceil(render_width/2), ceil(render_height/2))
+	else
+		render_set_uniform_vec2("uScreenSize", render_width, render_height)
 	
 	render_set_uniform("uPrecision", app.setting_render_reflections_precision)
 	render_set_uniform("uThickness", app.setting_render_reflections_thickness)

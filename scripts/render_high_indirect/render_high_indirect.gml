@@ -75,7 +75,16 @@ function render_high_indirect(export)
 	
 	for (var s = samplestart; s < sampleend; s++)
 	{
+		// Noise texture
 		random_set_seed(s)
+		
+		if (export || !render_sample_noise_exists || !surface_exists(render_sample_noise_surf))
+		{
+			render_sample_noise_surf = surface_require(render_sample_noise_surf, render_sample_noise_size, render_sample_noise_size)
+			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf)
+			render_sample_noise_exists = true
+		}
+		
 		render_indirect_kernel = render_generate_sample_kernel(16)
 		
 		for (var i = 0; i < 16; i++)

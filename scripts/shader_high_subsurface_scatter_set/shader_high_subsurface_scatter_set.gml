@@ -19,9 +19,10 @@ function shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, direc
 	texture_set_stage(sampler_map[?"uDirect"], surface_get_texture(directsurf))
 	gpu_set_texfilter_ext(sampler_map[?"uDirect"], false)
 	
-	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_subsurface_noise_surf))
+	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_surf))
 	gpu_set_texfilter_ext(sampler_map[?"uNoiseBuffer"], false)
 	
+	render_set_uniform("uNoiseSize", render_sample_noise_size)
 	render_set_uniform("uProjMatrix", proj_matrix)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)

@@ -20,8 +20,8 @@ function render_start()
 	
 	// General rendering effects
 	render_ssao = setting_render_ssao && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.DEPTH_U24 || setting_render_pass = e_render_pass.NORMAL || setting_render_pass = e_render_pass.AO || setting_render_pass = e_render_pass.REFLECTIONS)
-	render_shadows = setting_render_shadows && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.SHADOWS || setting_render_pass = e_render_pass.INDIRECT || setting_render_pass = e_render_pass.REFLECTIONS || setting_render_pass = e_render_pass.SUBSURFACE)
-	render_indirect = setting_render_indirect && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.INDIRECT || setting_render_pass = e_render_pass.REFLECTIONS || setting_render_pass = e_render_pass.SUBSURFACE)
+	render_shadows = setting_render_shadows && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.SHADOWS || setting_render_pass = e_render_pass.INDIRECT || setting_render_pass = e_render_pass.REFLECTIONS)
+	render_indirect = setting_render_indirect && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.INDIRECT || setting_render_pass = e_render_pass.REFLECTIONS)
 	render_reflections = setting_render_reflections && (setting_render_pass = e_render_pass.FINAL || setting_render_pass = e_render_pass.REFLECTIONS)
 	
 	render_volumetric_fog = setting_render_shadows && background_volumetric_fog && (render_quality = e_view_mode.RENDER)

@@ -71,8 +71,12 @@ function render_high_subsurface_scatter(export)
 		// Noise texture
 		random_set_seed(s)
 		
-		render_subsurface_noise_surf = surface_require(render_subsurface_noise_surf, 64, 64)
-		render_generate_noise(64, 64, render_subsurface_noise_surf)
+		if (export || !render_sample_noise_exists || !surface_exists(render_sample_noise_surf))
+		{
+			render_sample_noise_surf = surface_require(render_sample_noise_surf, render_sample_noise_size, render_sample_noise_size)
+			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf)
+			render_sample_noise_exists = true
+		}
 	
 		// Calculate subsurface scatter
 		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, render_width, render_height)

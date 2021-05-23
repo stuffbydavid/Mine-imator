@@ -7,6 +7,7 @@ function render_high()
 	
 	starttime = current_time
 	render_surface_time = 0
+	render_sample_noise_exists = false
 	
 	// SSAO
 	if (render_ssao)

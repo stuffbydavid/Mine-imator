@@ -90,6 +90,12 @@ function render_startup()
 	render_surface[4] = null
 	render_surface[5] = null
 	
+	// Noise sampling
+	globalvar render_sample_noise_surf, render_sample_noise_size, render_sample_noise_exists;
+	render_sample_noise_surf = null
+	render_sample_noise_size = 86
+	render_sample_noise_exists = false
+	
 	// Shadows
 	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_sun_color_buffer,
 	render_surface_spot_buffer, render_surface_point_buffer;
@@ -125,10 +131,10 @@ function render_startup()
 	render_indirect_offset = null
 	
 	// Subsurface
-	globalvar render_subsurface_size, render_subsurface_kernel, render_subsurface_noise_surf;
+	globalvar render_subsurface_size, render_subsurface_kernel;
 	render_subsurface_size = (16 * 2) + 1
 	render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
-	render_subsurface_noise_surf = null
+	
 	
 	// Volumetric fog
 	globalvar render_volumetric_fog_offset;

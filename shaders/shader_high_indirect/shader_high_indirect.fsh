@@ -11,6 +11,7 @@ uniform sampler2D uNormalBuffer;
 uniform sampler2D uNormalBufferExp;
 uniform sampler2D uBrightnessBuffer;
 uniform sampler2D uIndirectBuffer;
+uniform sampler2D uNoiseBuffer;
 
 // Camera data
 uniform mat4 uProjMatrix;
@@ -19,6 +20,7 @@ uniform mat4 uViewMatrix;
 uniform mat4 uViewMatrixInv;
 uniform float uNear;
 uniform float uFar;
+uniform vec2 uScreenSize;
 
 uniform float uEmissionRange;
 uniform vec3 uKernel[MAXRAYS];
@@ -26,6 +28,13 @@ uniform float uOffset[MAXRAYS];
 uniform float uStepSize;
 uniform int uStepAmount;
 uniform int uRays;
+uniform float uNoiseSize;
+
+// Get normal Value
+vec3 unpackNormal(vec4 c)
+{
+	return c.rgb * 2.0 - 1.0;
+}
 
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
@@ -71,17 +80,6 @@ float lightFalloff(float dis, float radius)
 	return pow(clamp(1.0 - pow(dis/radius, 4.0), 0.0, 1.0), 2.0) / (pow(dis, 2.0) + 1.0);
 }
 
-// Hash scatter function
-#define SCALE vec3(.8, .8, .8)
-#define K 19.19
-
-vec3 hash(vec3 a)
-{
-	a = fract(a * SCALE);
-	a += dot(a, a.yxz + K);
-	return fract((a.xxy + a.yxx) * a.zyx);
-}
-
 // Update screen position and UV coordinate based on ray position
 bool updateCoord(inout vec4 projectedCoord, inout vec2 screenCoord, inout vec3 screenPos, vec3 rayPos)
 {
@@ -110,7 +108,7 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 	vec3 screenPos = vec3(rayPos);
 	
 	direction *= uStepSize;
-	rayPos += direction;// * uOffset[sample];
+	rayPos += direction;
 	
 	float stride = 1.0 + uOffset[sample];
 	
@@ -204,7 +202,7 @@ void main()
 	float bias = originDepth * 200.0;
 	
 	// Construct kernel basis matrix
-	vec3 randVec = ((vec3(hash(worldPos)) - 0.5) * 2.0);
+	vec3 randVec = unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)));
 	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
 	vec3 bitangent = cross(normal, tangent);
 	mat3 kernelBasis = mat3(tangent, bitangent, normal);

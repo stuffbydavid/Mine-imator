@@ -6,6 +6,7 @@ uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uNormalBufferExp;
 uniform sampler2D uMaterialBuffer;
+uniform sampler2D uNoiseBuffer;
 
 // Camera data
 uniform mat4 uProjMatrix;
@@ -21,6 +22,13 @@ uniform float uThickness;
 uniform float uOffset[16];
 uniform vec4 uFallbackColor;
 uniform float uFadeAmount;
+uniform float uNoiseSize;
+
+// Get normal Value
+vec3 unpackNormal(vec4 c)
+{
+	return c.rgb * 2.0 - 1.0;
+}
 
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
@@ -61,17 +69,6 @@ vec3 getNormal(vec2 coords)
 	return (vec3(unpackFloat2(nExp.r, nDec.r), unpackFloat2(nExp.g, nDec.g), unpackFloat2(nExp.b, nDec.b)) / (255.0 * 255.0)) * 2.0 - 1.0;
 }
 
-// Hash scatter function
-#define SCALE vec3(.8, .8, .8)
-#define K 19.19
-
-vec3 hash(vec3 a)
-{
-	a = fract(a * SCALE);
-	a += dot(a, a.yxz + K);
-	return fract((a.xxy + a.yxx) * a.zyx);
-}
-
 vec2 viewPosToPixel(vec4 viewPos)
 {
 	viewPos     *= uProjMatrix;
@@ -102,7 +99,7 @@ vec3 rayTrace(vec2 originUV)
 	// Randomize vector until valid
 	for (int i = 0; i < 16; i++)
 	{
-		jitt = mix(vec3(0.0), (vec3(hash(worldPos + float(uOffset[i]))) - 0.5) * 2.0, mix(0.0, 1.0, pow(mat.g, 2.5)));
+		jitt = mix(vec3(0.0), unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize))), mix(0.0, 1.0, pow(mat.g, 2.5)));
 		rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + jitt)));
 			
 		if (dot(rayVector, normal) > 0.0)
