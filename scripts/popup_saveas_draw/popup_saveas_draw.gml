@@ -3,24 +3,22 @@
 
 function popup_saveas_draw()
 {
-	var warntext = "";
+	var issue = false;
 	
-	if (popup.folder = "")
-		warntext = text_get("newprojectnameempty")
-	else if (directory_exists_lib(setting_project_folder + popup.folder))
-		warntext = text_get("newprojectnameexists")
+	if (popup.folder = "" || directory_exists_lib(setting_project_folder + popup.folder))
+		issue = true
 	
 	tab_control_textfield(true)
-	if (draw_textfield("newprojectname", dx, dy, dw, 24, popup.tbx_name, null, text_get("newprojectname"), "top", warntext != ""))
-		popup.folder = filename_get_valid(popup.tbx_name.text)
-	tab_next()
-	
-	if (warntext != "")
+	if (draw_textfield("newprojectname", dx, dy, dw, 24, popup.tbx_name, null, text_get("saveascopy", project_name), "top") || issue)
 	{
-		tab_control(8)
-		draw_label(warntext, dx, dy + 8, fa_left, fa_bottom, c_error, 1, font_caption)
-		tab_next()
+		popup.folder = filename_get_valid(popup.tbx_name.text)
+		
+		if (popup.folder = "")
+			popup.folder = text_get("saveascopy", project_name)
+		
+		popup.folder = filename_name(filename_get_unique(setting_project_folder + popup.folder))
 	}
+	tab_next()
 	
 	// Project location
 	tab_control(40)
@@ -42,7 +40,7 @@ function popup_saveas_draw()
 	
 	// Save
 	tab_control_button_label()
-	if (draw_button_label("saveassave", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT, warntext != ""))
+	if (draw_button_label("saveassave", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 		project_save_as()
 	tab_next()
 }

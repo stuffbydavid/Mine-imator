@@ -4,8 +4,8 @@
         "language": "English",
         "locale": "en-US",
         "translator": "David & Nimi",
-        "forversion": "1.3.0",
-        "lastchange": "2021.05.22"
+        "forversion": "2.0.0",
+        "lastchange": "2021.05.23"
     },
     "particle/": {
         "default": "Default spawner",
@@ -368,9 +368,7 @@
         "name": "Project name",
         "location": "Project location",
         "namedefault": "New project",
-        "create": "Create project",
-        "nameempty": "Project folder name cannot be empty.",
-        "nameexists": "Project folder already exists."
+        "create": "Create project"
     },
     "toolbar/": {
         "file": "File",
@@ -482,7 +480,8 @@
     },
     "saveas/": {
         "caption": "Save project as",
-        "save": "Save"
+        "save": "Save",
+        "copy": "%1 copy"
     },
     "exportmovie/": {
         "title": "Exporting your movie...",

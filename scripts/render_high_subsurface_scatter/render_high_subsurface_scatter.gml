@@ -23,7 +23,7 @@ function render_high_subsurface_scatter(export)
 		render_samples = setting_render_samples
 	}
 	
-	var ssssurf, sssrangesurf, ssscolorsurf, depthsurf, sssblursurf;
+	var ssssurf, sssrangesurf, depthsurf, sssblursurf;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
@@ -40,7 +40,7 @@ function render_high_subsurface_scatter(export)
 	surface_set_target_ext(1, sssrangesurf)
 	{
 		draw_clear_alpha(c_black, 1)
-		render_world_start(2000)
+		render_world_start(5000)
 		render_world(e_render_mode.SUBSURFACE)
 		render_world_done()
 	}
@@ -52,7 +52,7 @@ function render_high_subsurface_scatter(export)
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		
 		draw_clear(c_white)
-		render_world_start()
+		render_world_start(5000)
 		render_world(e_render_mode.DEPTH)
 		render_world_done()
 		

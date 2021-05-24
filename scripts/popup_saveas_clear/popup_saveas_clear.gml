@@ -2,6 +2,6 @@
 
 function popup_saveas_clear()
 {
-	popup_saveas.tbx_name.text = project_name + " copy"
-	popup_saveas.folder = filename_name(project_folder) + " copy"
+	popup_saveas.tbx_name.text = text_get("saveascopy", project_name)
+	popup_saveas.folder = text_get("saveascopy", filename_name(project_folder))
 }
