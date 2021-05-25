@@ -1,17 +1,22 @@
-/// render_generate_noise(width, height, [surface])
+/// render_generate_noise(width, height, [surface, [normal]])
 /// @arg width
 /// @arg height
-/// @arg [surface]
+/// @arg [surface
+/// @arg [normal]]
 
 function render_generate_noise()
 {
-	var w, h, surf;
+	var w, h, surf, normal;
 	w = argument[0]
 	h = argument[1]
 	surf = null
+	normal = false
 	
 	if (argument_count > 2)
 		surf = argument[2]
+	
+	if (argument_count > 3)
+		normal = argument[3]
 	
 	if (!surface_exists(surf))
 		surf = surface_create(w, h)
@@ -27,12 +32,15 @@ function render_generate_noise()
 				var r, g, b, mag;
 				r = random(1)
 				g = random(1)
-				b = random(1)//0.5
+				b = random(normal ? 0.5 : 1)
 				
-				mag = sqrt(r * r + g * g + b * b)
-				r /= mag
-				g /= mag
-				b /= mag
+				if (normal)
+				{
+					mag = sqrt(r * r + g * g + b * b)
+					r /= mag
+					g /= mag
+					b /= mag
+				}
 				
 				draw_point_color(xx, yy, make_color_rgb(r * 255, g * 255, b * 255)) 
 			}

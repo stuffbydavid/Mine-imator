@@ -81,7 +81,7 @@ function render_high_indirect(export)
 		if (export || !render_sample_noise_exists || !surface_exists(render_sample_noise_surf))
 		{
 			render_sample_noise_surf = surface_require(render_sample_noise_surf, render_sample_noise_size, render_sample_noise_size)
-			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf)
+			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf, true)
 			render_sample_noise_exists = true
 		}
 		
@@ -187,22 +187,11 @@ function render_high_indirect(export)
 	
 	#region Blur result (Using SSAO method)
 	
-	// Render depth & normal data
-	surface_set_target_ext(0, depthsurf)
-	surface_set_target_ext(1, normalsurf)
-	{
-		draw_clear_alpha(c_white, 0)
-		render_world_start(5000)
-		render_world(e_render_mode.HIGH_SSAO_DEPTH_NORMAL)
-		render_world_done()
-	}
-	surface_reset_target()
-	
 	repeat (setting_render_indirect_blur_passes)
 	{
 		var indirectsurftemp;
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		indirectsurftemp = render_surface[3]
+		render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+		indirectsurftemp = render_surface[4]
 		
 		render_shader_obj = shader_map[?shader_high_ssao_blur]
 		with (render_shader_obj)
@@ -212,7 +201,7 @@ function render_high_indirect(export)
 		surface_set_target(indirectsurftemp)
 		{
 			with (render_shader_obj)
-				shader_high_ssao_blur_set(depthsurf, normalsurf, 1, 0)
+				shader_high_ssao_blur_set(depthsurf, normalsurf2, 1, 0)
 			draw_surface_exists(render_surface_indirect, 0, 0)
 		}
 		surface_reset_target()
@@ -221,7 +210,7 @@ function render_high_indirect(export)
 		surface_set_target(render_surface_indirect)
 		{
 			with (render_shader_obj)
-				shader_high_ssao_blur_set(depthsurf, normalsurf, 0, 1)
+				shader_high_ssao_blur_set(depthsurf, normalsurf2, 0, 1)
 			draw_surface_exists(indirectsurftemp, 0, 0)
 		}
 		surface_reset_target()

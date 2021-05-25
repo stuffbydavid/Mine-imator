@@ -28,7 +28,7 @@ function render_high_ssao()
 	
 	// Noise texture
 	if (!surface_exists(render_ssao_noise))
-		render_ssao_noise = render_generate_noise(4, 4)
+		render_ssao_noise = render_generate_noise(4, 4, null, true)
 	
 	// Calculate SSAO
 	render_surface_ssao = surface_require(render_surface_ssao, render_width, render_height)

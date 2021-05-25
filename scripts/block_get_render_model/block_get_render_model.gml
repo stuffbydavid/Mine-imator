@@ -12,7 +12,7 @@ function block_get_render_model(modelobj, brightness)
 		if (model_amount > 1)
 		{
 			// Pick a random model from the list
-			var rand = irandom(total_weight - 1);
+			var rand = irandom(total_weight - 1) + 1;
 			for (var m = 0; m < model_amount; m++)
 			{
 				rand -= model[m].weight

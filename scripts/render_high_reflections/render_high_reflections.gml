@@ -72,7 +72,7 @@ function render_high_reflections(export, surf)
 		if (export || !render_sample_noise_exists || !surface_exists(render_sample_noise_surf))
 		{
 			render_sample_noise_surf = surface_require(render_sample_noise_surf, render_sample_noise_size, render_sample_noise_size)
-			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf)
+			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf, true)
 			render_sample_noise_exists = true
 		}
 		
