@@ -50,7 +50,7 @@ function render_high_ssao()
 	surface_reset_target()
 	
 	// Blur
-	repeat (setting_render_ssao_blur_passes)
+	repeat (project_render_ssao_blur_passes)
 	{
 		var ssaosurftemp;
 		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
@@ -83,13 +83,13 @@ function render_high_ssao()
 	}
 	gpu_set_texrepeat(true)
 	
-	if (setting_render_pass = e_render_pass.AO)
+	if (project_render_pass = e_render_pass.AO)
 		render_pass_surf = surface_duplicate(render_surface_ssao)
 	
-	if (setting_render_pass = e_render_pass.DEPTH_U24)
+	if (project_render_pass = e_render_pass.DEPTH_U24)
 		render_pass_surf = surface_duplicate(depthsurf)
 	
-	if (setting_render_pass = e_render_pass.NORMAL)
+	if (project_render_pass = e_render_pass.NORMAL)
 		render_pass_surf = surface_duplicate(normalsurf)
 	
 	return render_surface_ssao

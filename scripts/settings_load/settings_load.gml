@@ -75,6 +75,21 @@ function settings_load()
 			setting_spawn_objects = value_get_real(programmap[?"spawn_objects"], setting_spawn_objects)
 			setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
 			setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
+			
+			setting_watermark_filename = value_get_string(rendermap[?"watermark_filename"], setting_watermark_filename)
+			
+			if (!file_exists_lib(setting_watermark_filename))
+				setting_watermark_filename = ""
+			else if (setting_watermark_filename != "")
+				action_setting_watermark_open(setting_watermark_filename)
+			
+			setting_watermark_anchor_x = value_get_string(rendermap[?"watermark_anchor_x"], setting_watermark_anchor_x)
+			setting_watermark_anchor_y = value_get_string(rendermap[?"watermark_anchor_y"], setting_watermark_anchor_y)
+			setting_watermark_scale = value_get_real(rendermap[?"watermark_scale"], setting_watermark_scale)
+			setting_watermark_alpha = value_get_real(rendermap[?"watermark_alpha"], setting_watermark_alpha)
+			
+			setting_scenery_remove_edges = value_get_real(graphicsmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
+			setting_remove_waterlogged_water = value_get_real(graphicsmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
 		}
 		
 		// Interface
@@ -185,109 +200,22 @@ function settings_load()
 			setting_slow_modifier = value_get_real(controlsmap[?"slow_modifier"], setting_slow_modifier)
 		}
 		
-		// Graphics
-		var graphicsmap = map[?"graphics"];
-		if (ds_map_valid(graphicsmap))
+		// Export
+		var exportmap = map[?"export"];
+		if (ds_map_valid(exportmap))
 		{
-			if (load_format < e_settings.FORMAT_120)
-				setting_bend_style = (value_get_real(graphicsmap[?"bend_pinch"], true) ? "realistic" : "blocky")
-			else
-				setting_bend_style = value_get_string(graphicsmap[?"bend_style"], setting_bend_style)
-			
-			if (load_format < e_settings.FORMAT_200)
-				setting_scenery_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_scenery_remove_edges)
-			else
-				setting_scenery_remove_edges = value_get_real(graphicsmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
-			
-			setting_liquid_animation = value_get_real(graphicsmap[?"liquid_animation"], setting_liquid_animation)
-			setting_noisy_grass_water = value_get_real(graphicsmap[?"noisy_grass_water"], setting_noisy_grass_water)
-			setting_remove_waterlogged_water = value_get_real(graphicsmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
-			setting_texture_filtering = value_get_real(graphicsmap[?"texture_filtering"], setting_texture_filtering)
-			setting_transparent_block_texture_filtering = value_get_real(graphicsmap[?"transparent_block_texture_filtering"], setting_transparent_block_texture_filtering)
-			setting_texture_filtering_level = value_get_real(graphicsmap[?"texture_filtering_level"], setting_texture_filtering_level)
-			setting_block_brightness = value_get_real(graphicsmap[?"block_brightness"], setting_block_brightness)
-			setting_block_glow_threshold = value_get_real(graphicsmap[?"block_glow_threshold"], setting_block_glow_threshold)
-			setting_block_glow = value_get_real(graphicsmap[?"block_glow"], setting_block_glow)
-			
-			if (load_format < e_settings.FORMAT_200)
-			{
-				var lightbleed = value_get_real(graphicsmap[?"light_bleeding"], true);
-				
-				// Multiply by default value
-				setting_block_subsurface = lightbleed * 2
-			}
-			else
-				setting_block_subsurface = value_get_real(graphicsmap[?"block_subsurface"], setting_block_subsurface)
-		}
-		
-		// Render
-		var rendermap = map[?"render"];
-		if (ds_map_valid(rendermap))
-		{
-			setting_render_samples = value_get_real(rendermap[?"render_samples"], setting_render_samples)
-			setting_render_dof_quality = value_get_real(rendermap[?"render_dof_quality"], setting_render_dof_quality)
-			
-			setting_render_ssao = value_get_real(rendermap[?"render_ssao"], setting_render_ssao)
-			setting_render_ssao_radius = value_get_real(rendermap[?"render_ssao_radius"], setting_render_ssao_radius)
-			setting_render_ssao_power = value_get_real(rendermap[?"render_ssao_power"], setting_render_ssao_power)
-			setting_render_ssao_blur_passes = value_get_real(rendermap[?"render_ssao_blur_passes"], setting_render_ssao_blur_passes)
-			setting_render_ssao_color = value_get_color(rendermap[?"render_ssao_color"], setting_render_ssao_color)
-			
-			setting_render_shadows = value_get_real(rendermap[?"render_shadows"], setting_render_shadows)
-			setting_render_shadows_sun_buffer_size = value_get_real(rendermap[?"render_shadows_sun_buffer_size"], setting_render_shadows_sun_buffer_size)
-			setting_render_shadows_spot_buffer_size = value_get_real(rendermap[?"render_shadows_spot_buffer_size"], setting_render_shadows_spot_buffer_size)
-			setting_render_shadows_point_buffer_size = value_get_real(rendermap[?"render_shadows_point_buffer_size"], setting_render_shadows_point_buffer_size)
-			setting_render_shadows_sun_colored = value_get_real(rendermap[?"render_shadows_sun_colored"], setting_render_shadows_sun_colored)
-			
-			setting_render_subsurface_samples = value_get_real(rendermap[?"render_subsurface_samples"], setting_render_subsurface_samples)
-			setting_render_subsurface_jitter = value_get_real(rendermap[?"render_subsurface_jitter"], setting_render_subsurface_jitter)
-			
-			setting_render_indirect = value_get_real(rendermap[?"render_indirect"], setting_render_indirect)
-			setting_render_indirect_blur_passes = value_get_real(rendermap[?"render_indirect_blur_passes"], setting_render_indirect_blur_passes)
-			setting_render_indirect_quality = value_get_real(rendermap[?"render_indirect_quality"], setting_render_indirect_quality)
-			setting_render_indirect_strength = value_get_real(rendermap[?"render_indirect_strength"], setting_render_indirect_strength)
-			setting_render_indirect_range = value_get_real(rendermap[?"render_indirect_range"], setting_render_indirect_range)
-			
-			setting_render_reflections = value_get_real(rendermap[?"render_reflections"], setting_render_reflections)
-			setting_render_reflections_precision = value_get_real(rendermap[?"render_reflections_precision"], setting_render_reflections_precision)
-			setting_render_reflections_thickness = value_get_real(rendermap[?"render_reflections_thickness"], setting_render_reflections_thickness)
-			setting_render_reflections_fade_amount = value_get_real(rendermap[?"render_reflections_fade_amount"], setting_render_reflections_fade_amount)
-			setting_render_reflections_halfres = value_get_real(rendermap[?"render_reflections_halfres"], setting_render_reflections_halfres)
-			
-			setting_render_glow = value_get_real(rendermap[?"render_glow"], setting_render_glow)
-			setting_render_glow_radius = value_get_real(rendermap[?"render_glow_radius"], setting_render_glow_radius)
-			setting_render_glow_intensity = value_get_real(rendermap[?"render_glow_intensity"], setting_render_glow_intensity)
-			setting_render_glow_falloff = value_get_real(rendermap[?"render_glow_falloff"], setting_render_glow_falloff)
-			setting_render_glow_falloff_radius = value_get_real(rendermap[?"render_glow_falloff_radius"], setting_render_glow_falloff_radius)
-			setting_render_glow_falloff_intensity = value_get_real(rendermap[?"render_glow_falloff_intensity"], setting_render_glow_falloff_intensity)
-			
-			setting_render_aa = value_get_real(rendermap[?"render_aa"], setting_render_aa)
-			setting_render_aa_power = value_get_real(rendermap[?"render_aa_power"], setting_render_aa_power)
-			
-			setting_render_watermark_filename = value_get_string(rendermap[?"render_watermark_filename"], setting_render_watermark_filename)
-			
-			if (!file_exists_lib(setting_render_watermark_filename))
-				setting_render_watermark_filename = ""
-			else if (setting_render_watermark_filename != "")
-				action_setting_render_watermark_open(setting_render_watermark_filename)
-			
-			setting_render_watermark_anchor_x = value_get_string(rendermap[?"render_watermark_anchor_x"], setting_render_watermark_anchor_x)
-			setting_render_watermark_anchor_y = value_get_string(rendermap[?"render_watermark_anchor_y"], setting_render_watermark_anchor_y)
-			setting_render_watermark_scale = value_get_real(rendermap[?"render_watermark_scale"], setting_render_watermark_scale)
-			setting_render_watermark_alpha = value_get_real(rendermap[?"render_watermark_alpha"], setting_render_watermark_alpha)
-			
-			setting_export_movie_format = value_get_string(rendermap[?"export_movie_format"], setting_export_movie_format)
-			setting_export_movie_frame_rate = value_get_string(rendermap[?"export_movie_frame_rate"], setting_export_movie_frame_rate)
-			setting_export_movie_bit_rate = value_get_string(rendermap[?"export_movie_bit_rate"], setting_export_movie_bit_rate)
-			setting_export_movie_include_audio = value_get_string(rendermap[?"export_movie_include_audio"], setting_export_movie_include_audio)
-			setting_export_movie_remove_background = value_get_string(rendermap[?"export_movie_remove_background"], setting_export_movie_remove_background)
-			setting_export_movie_include_hidden = value_get_string(rendermap[?"export_movie_remove_background"], setting_export_movie_include_hidden)
-			setting_export_movie_high_quality = value_get_string(rendermap[?"export_movie_high_quality"], setting_export_movie_high_quality)
-			setting_export_movie_watermark = value_get_string(rendermap[?"export_movie_watermark"], setting_export_movie_watermark)
-			setting_export_image_remove_background = value_get_string(rendermap[?"export_image_remove_background"], setting_export_image_remove_background)
-			setting_export_image_include_hidden = value_get_string(rendermap[?"export_image_include_hidden"], setting_export_image_include_hidden)
-			setting_export_image_high_quality = value_get_string(rendermap[?"export_image_high_quality"], setting_export_image_high_quality)
-			setting_export_image_watermark = value_get_string(rendermap[?"export_image_watermark"], setting_export_image_watermark)
+			setting_export_movie_format = value_get_string(map[?"export_movie_format"], setting_export_movie_format)
+			setting_export_movie_frame_rate = value_get_string(map[?"export_movie_frame_rate"], setting_export_movie_frame_rate)
+			setting_export_movie_bit_rate = value_get_string(map[?"export_movie_bit_rate"], setting_export_movie_bit_rate)
+			setting_export_movie_include_audio = value_get_string(map[?"export_movie_include_audio"], setting_export_movie_include_audio)
+			setting_export_movie_remove_background = value_get_string(map[?"export_movie_remove_background"], setting_export_movie_remove_background)
+			setting_export_movie_include_hidden = value_get_string(map[?"export_movie_remove_background"], setting_export_movie_include_hidden)
+			setting_export_movie_high_quality = value_get_string(map[?"export_movie_high_quality"], setting_export_movie_high_quality)
+			setting_export_movie_watermark = value_get_string(map[?"export_movie_watermark"], setting_export_movie_watermark)
+			setting_export_image_remove_background = value_get_string(map[?"export_image_remove_background"], setting_export_image_remove_background)
+			setting_export_image_include_hidden = value_get_string(map[?"export_image_include_hidden"], setting_export_image_include_hidden)
+			setting_export_image_high_quality = value_get_string(map[?"export_image_high_quality"], setting_export_image_high_quality)
+			setting_export_image_watermark = value_get_string(map[?"export_image_watermark"], setting_export_image_watermark)
 		}
 		
 		// Collapsible content

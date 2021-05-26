@@ -198,45 +198,45 @@ function settings_load_legacy(fn)
 	setting_scenery_remove_edges = buffer_read_byte()
 	
 	if (load_format >= e_settings.FORMAT_106)
-		setting_liquid_animation = buffer_read_byte()
+		project_render_liquid_animation = buffer_read_byte()
 	
 	if (load_format >= e_settings.FORMAT_100)
 	{
-		setting_texture_filtering = buffer_read_byte()
+		project_render_texture_filtering = buffer_read_byte()
 		/*setting_transparent_texture_filtering = */buffer_read_byte()
 		if (load_format >= e_settings.FORMAT_106_2)
-			setting_block_brightness = buffer_read_double()
+			project_render_block_brightness = buffer_read_double()
 		if (load_format < e_settings.FORMAT_106_3)
 			/*setting_camera_buffer_size=*/buffer_read_int()
 		
-		setting_render_ssao = buffer_read_byte()
-		setting_render_ssao_radius = buffer_read_double()
-		setting_render_ssao_power = buffer_read_double()
-		setting_render_ssao_blur_passes = buffer_read_byte()
-		setting_render_ssao_color = buffer_read_int()
+		project_render_ssao = buffer_read_byte()
+		project_render_ssao_radius = buffer_read_double()
+		project_render_ssao_power = buffer_read_double()
+		project_render_ssao_blur_passes = buffer_read_byte()
+		project_render_ssao_color = buffer_read_int()
 		
-		setting_render_shadows = buffer_read_byte()
+		project_render_shadows = buffer_read_byte()
 	}
 	
-	setting_render_shadows_sun_buffer_size = buffer_read_int()
-	setting_render_shadows_spot_buffer_size = buffer_read_int()
-	setting_render_shadows_point_buffer_size = buffer_read_int()
+	project_render_shadows_sun_buffer_size = buffer_read_int()
+	project_render_shadows_spot_buffer_size = buffer_read_int()
+	project_render_shadows_point_buffer_size = buffer_read_int()
 	
 	if (load_format >= e_settings.FORMAT_100)
 	{
-		/*setting_render_shadows_blur_quality =*/ buffer_read_byte()
-		/*setting_render_shadows_blur_size =*/ buffer_read_double()
+		/*project_render_shadows_blur_quality =*/ buffer_read_byte()
+		/*project_render_shadows_blur_size =*/ buffer_read_double()
 		
-		/*setting_render_dof =*/ buffer_read_byte()
-		/*setting_render_dof_blur_size =*/ buffer_read_double()
+		/*project_render_dof =*/ buffer_read_byte()
+		/*project_render_dof_blur_size =*/ buffer_read_double()
 		
-		setting_render_aa = buffer_read_byte()
-		setting_render_aa_power = buffer_read_double()
+		project_render_aa = buffer_read_byte()
+		project_render_aa_power = buffer_read_double()
 		
-		/*setting_render_watermark*/ = buffer_read_byte()
+		/*setting_watermark*/ = buffer_read_byte()
 		/*
 		if (trial_version)
-			setting_render_watermark = true
+			setting_watermark = true
 		*/
 		
 		setting_toolbar_location = buffer_read_string_int()
@@ -282,9 +282,9 @@ function settings_load_legacy(fn)
 	else
 	{
 		/*setting_camera_buffer_size=*/ buffer_read_int()
-		setting_render_shadows_blur_quality = buffer_read_byte()
-		setting_render_shadows_blur_size = min(buffer_read_double(), 4)
-		/*setting_render_dof_blur_size =*/ buffer_read_double()
+		project_render_shadows_blur_quality = buffer_read_byte()
+		project_render_shadows_blur_size = min(buffer_read_double(), 4)
+		/*project_render_dof_blur_size =*/ buffer_read_double()
 	}
 	
 	if (load_format >= e_settings.FORMAT_106)
@@ -303,7 +303,7 @@ function settings_load_legacy(fn)
 	if (load_format >= e_settings.FORMAT_CB_102)
 	{
 		/*setting_custom_interface = */buffer_read_byte()
-		/*setting_render_bloom = */buffer_read_byte()
+		/*project_render_bloom = */buffer_read_byte()
 	}
 	
 	buffer_delete(buffer_current)

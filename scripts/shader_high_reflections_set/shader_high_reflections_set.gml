@@ -25,13 +25,13 @@ function shader_high_reflections_set(depthsurface, normalsurface, normalsurface2
 	
 	render_set_uniform("uOffset", render_indirect_offset)
 	
-	if (app.setting_render_reflections_halfres)
+	if (app.project_render_reflections_halfres)
 		render_set_uniform_vec2("uScreenSize", ceil(render_width/2), ceil(render_height/2))
 	else
 		render_set_uniform_vec2("uScreenSize", render_width, render_height)
 	
-	render_set_uniform("uPrecision", app.setting_render_reflections_precision)
-	render_set_uniform("uThickness", app.setting_render_reflections_thickness)
+	render_set_uniform("uPrecision", app.project_render_reflections_precision)
+	render_set_uniform("uThickness", app.project_render_reflections_thickness)
 	render_set_uniform_color("uFallbackColor", render_background ? app.background_sky_color_final : c_black, 1)
-	render_set_uniform("uFadeAmount", app.setting_render_reflections_fade_amount)
+	render_set_uniform("uFadeAmount", app.project_render_reflections_fade_amount)
 }

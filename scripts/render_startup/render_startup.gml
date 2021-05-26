@@ -119,7 +119,6 @@ function render_startup()
 	render_dof_rotation = -1
 	render_dof_ratio = -1
 	render_dof_quality = -1
-	render_generate_dof_samples(0, 0, 0)
 	
 	// Grain
 	globalvar render_grain_noise;

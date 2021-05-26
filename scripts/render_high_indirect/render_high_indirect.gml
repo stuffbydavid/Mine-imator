@@ -9,7 +9,7 @@ function render_high_indirect(export)
 	// Set samples to setting
 	if (!export)
 	{
-		if (render_samples >= setting_render_samples)
+		if (render_samples >= project_render_samples)
 			return 0
 		
 		samplestart = render_samples
@@ -18,8 +18,8 @@ function render_high_indirect(export)
 	else
 	{
 		samplestart = 0
-		sampleend = setting_render_samples
-		render_samples = setting_render_samples
+		sampleend = project_render_samples
+		render_samples = project_render_samples
 	}
 	
 	var shadowsurf, tempsurf, depthsurf, normalsurf, normalsurf2, diffusesurf, brightnesssurf;
@@ -175,7 +175,7 @@ function render_high_indirect(export)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_samples_unpack_set(render_surface_indirect_expo, render_surface_indirect_dec, min(render_samples, app.setting_render_samples))
+			shader_high_samples_unpack_set(render_surface_indirect_expo, render_surface_indirect_dec, min(render_samples, app.project_render_samples))
 		}
 		draw_blank(0, 0, render_width, render_height)
 		with (render_shader_obj)
@@ -187,7 +187,7 @@ function render_high_indirect(export)
 	
 	#region Blur result (Using SSAO method)
 	
-	repeat (setting_render_indirect_blur_passes)
+	repeat (project_render_indirect_blur_passes)
 	{
 		var indirectsurftemp;
 		render_surface[4] = surface_require(render_surface[4], render_width, render_height)

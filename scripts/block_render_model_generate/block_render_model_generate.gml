@@ -21,7 +21,7 @@ function block_render_model_generate(model)
 		var noiseoff = c_white;
 		if (mc_builder.block_current != null)
 		{
-			if (app.setting_noisy_grass_water && (mc_builder.block_current.name = "grass_block" || mc_builder.block_current.name = "grass"))
+			if (app.project_render_noisy_grass_water && (mc_builder.block_current.name = "grass_block" || mc_builder.block_current.name = "grass"))
 			{
 				var noise = (1.0 - abs(simplex_lib(mc_builder.build_pos_x / 32, mc_builder.build_pos_y / 32)) * 0.15) * 255;
 				noise -= (abs(simplex_lib(mc_builder.build_pos_x, mc_builder.build_pos_y)) * 0.075) * 255

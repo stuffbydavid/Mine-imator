@@ -33,6 +33,46 @@ function app_startup_interface_tabs()
 			tbx_description.next_tbx = tbx_name
 		}
 		
+		// Render
+		render = tab_add_category("render", tab_properties_render, false)
+		with (render)
+		{
+			tbx_dof_quality = new_textbox_integer()
+			tbx_ssao_radius = new_textbox_decimals()
+			tbx_ssao_power = new_textbox_integer()
+			tbx_ssao_power.suffix = "%"
+			tbx_ssao_blur_passes = new_textbox_integer()
+			tbx_samples = new_textbox_integer()
+			tbx_subsurface_samples = new_textbox_integer()
+			tbx_subsurface_jitter = new_textbox_integer()
+			tbx_subsurface_jitter.suffix = "%"
+			tbx_indirect_blur_passes = new_textbox_integer()
+			tbx_indirect_strength = new_textbox_integer()
+			tbx_indirect_strength.suffix = "%"
+			tbx_indirect_range = new_textbox_decimals()
+			tbx_reflections_precision = new_textbox_integer()
+			tbx_reflections_precision.suffix = "%"
+			tbx_reflections_thickness = new_textbox_decimals()
+			tbx_reflections_fade_amount = new_textbox_integer()
+			tbx_reflections_fade_amount.suffix = "%"
+			tbx_glow_radius = new_textbox_integer()
+			tbx_glow_radius.suffix = "%"
+			tbx_glow_intensity = new_textbox_integer()
+			tbx_glow_intensity.suffix = "%"
+			tbx_glow_falloff_radius = new_textbox_integer()
+			tbx_glow_falloff_radius.suffix = "%"
+			tbx_glow_falloff_intensity = new_textbox_integer()
+			tbx_glow_falloff_intensity.suffix = "%"
+			tbx_aa_power = new_textbox_integer()
+			tbx_aa_power.suffix = "%"
+			tbx_block_brightness = new_textbox_decimals()
+			tbx_block_brightness.suffix = "%"
+			tbx_block_glow_threshold = new_textbox_decimals()
+			tbx_block_glow_threshold.suffix = "%"
+			tbx_block_subsurface_radius = new_textbox_decimals()
+			tbx_texture_filtering_level = new_textbox_integer()
+		}
+		
 		// Library
 		library = tab_add_category("library", tab_properties_library, false)
 		with (library)
@@ -622,6 +662,11 @@ function app_startup_interface_tabs()
 		{
 			tbx_backup_time = new_textbox_integer()
 			tbx_backup_amount = new_textbox_integer()
+			
+			tbx_watermark_scale = new_textbox_integer()
+			tbx_watermark_scale.suffix = "%"
+			tbx_watermark_alpha = new_textbox_integer()
+			tbx_watermark_alpha.suffix = "%"
 		}
 		
 		// Interface
@@ -640,56 +685,6 @@ function app_startup_interface_tabs()
 			tbx_look_sensitivity = new_textbox_decimals()
 			tbx_fast_modifier = new_textbox_decimals()
 			tbx_slow_modifier = new_textbox_decimals()
-		}
-		
-		// Graphics
-		graphics = tab_add_category("settingsgraphics", tab_settings_graphics, false)
-		with (graphics)
-		{
-			tbx_texture_filtering_level = new_textbox_integer()
-			tbx_block_brightness = new_textbox_decimals()
-			tbx_block_brightness.suffix = "%"
-			tbx_block_glow_threshold = new_textbox_decimals()
-			tbx_block_glow_threshold.suffix = "%"
-			tbx_block_subsurface_radius = new_textbox_decimals()
-		}
-		
-		// Render
-		render = tab_add_category("settingsrender", tab_settings_render, false)
-		with (render)
-		{
-			tbx_dof_quality = new_textbox_integer()
-			tbx_ssao_radius = new_textbox_decimals()
-			tbx_ssao_power = new_textbox_integer()
-			tbx_ssao_power.suffix = "%"
-			tbx_ssao_blur_passes = new_textbox_integer()
-			tbx_samples = new_textbox_integer()
-			tbx_subsurface_samples = new_textbox_integer()
-			tbx_subsurface_jitter = new_textbox_integer()
-			tbx_subsurface_jitter.suffix = "%"
-			tbx_indirect_blur_passes = new_textbox_integer()
-			tbx_indirect_strength = new_textbox_integer()
-			tbx_indirect_strength.suffix = "%"
-			tbx_indirect_range = new_textbox_decimals()
-			tbx_reflections_precision = new_textbox_integer()
-			tbx_reflections_precision.suffix = "%"
-			tbx_reflections_thickness = new_textbox_decimals()
-			tbx_reflections_fade_amount = new_textbox_integer()
-			tbx_reflections_fade_amount.suffix = "%"
-			tbx_glow_radius = new_textbox_integer()
-			tbx_glow_radius.suffix = "%"
-			tbx_glow_intensity = new_textbox_integer()
-			tbx_glow_intensity.suffix = "%"
-			tbx_glow_falloff_radius = new_textbox_integer()
-			tbx_glow_falloff_radius.suffix = "%"
-			tbx_glow_falloff_intensity = new_textbox_integer()
-			tbx_glow_falloff_intensity.suffix = "%"
-			tbx_aa_power = new_textbox_integer()
-			tbx_aa_power.suffix = "%"
-			tbx_watermark_scale = new_textbox_integer()
-			tbx_watermark_scale.suffix = "%"
-			tbx_watermark_alpha = new_textbox_integer()
-			tbx_watermark_alpha.suffix = "%"
 		}
 	}
 }

@@ -20,6 +20,7 @@ function project_save()
 	
 	project_save_start(fn, true)
 	project_save_project()
+	project_save_render()
 	project_save_background()
 	project_save_objects()
 	project_save_markers()

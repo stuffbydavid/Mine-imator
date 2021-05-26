@@ -803,46 +803,46 @@ function list_init(name)
 		}
 		
 		// Shadow map detail
-		case "settingsrendershadowssunbuffersize":
-		case "settingsrendershadowsspotbuffersize":
-		case "settingsrendershadowspointbuffersize":
+		case "rendershadowssunbuffersize":
+		case "rendershadowsspotbuffersize":
+		case "rendershadowspointbuffersize":
 		{
-			menu_add_item(256, text_get("settingsrendershadowsbuffersize256") + " (256x256)")
-			menu_add_item(512, text_get("settingsrendershadowsbuffersize512") + " (512x512)")
-			menu_add_item(1024, text_get("settingsrendershadowsbuffersize1024") + " (1024x1024)")
-			menu_add_item(2048, text_get("settingsrendershadowsbuffersize2048") + " (2048x2048)")
-			menu_add_item(4096, text_get("settingsrendershadowsbuffersize4096") + " (4096x4096)")
-			menu_add_item(8192, text_get("settingsrendershadowsbuffersize8192") + " (8192x8192)")
+			menu_add_item(256, text_get("rendershadowsbuffersize256") + " (256x256)")
+			menu_add_item(512, text_get("rendershadowsbuffersize512") + " (512x512)")
+			menu_add_item(1024, text_get("rendershadowsbuffersize1024") + " (1024x1024)")
+			menu_add_item(2048, text_get("rendershadowsbuffersize2048") + " (2048x2048)")
+			menu_add_item(4096, text_get("rendershadowsbuffersize4096") + " (4096x4096)")
+			menu_add_item(8192, text_get("rendershadowsbuffersize8192") + " (8192x8192)")
 			
 			break
 		}
 		
 		// Indirect lighting quality
-		case "settingsrenderindirectquality":
+		case "renderindirectquality":
 		{
-			menu_add_item(0, text_get("settingsrenderindirectquality0"))
-			menu_add_item(1, text_get("settingsrenderindirectquality1"))
-			menu_add_item(2, text_get("settingsrenderindirectquality2"))
-			menu_add_item(3, text_get("settingsrenderindirectquality3"))
+			menu_add_item(0, text_get("renderindirectquality0"))
+			menu_add_item(1, text_get("renderindirectquality1"))
+			menu_add_item(2, text_get("renderindirectquality2"))
+			menu_add_item(3, text_get("renderindirectquality3"))
 			
 			break
 		}
 		
 		// Watermark position
-		case "settingsrenderwatermarkpositionx":
+		case "settingswatermarkpositionx":
 		{
-			menu_add_item("left", text_get("settingsrenderwatermarkleft"))
-			menu_add_item("center", text_get("settingsrenderwatermarkcenter"))
-			menu_add_item("right", text_get("settingsrenderwatermarkright"))
+			menu_add_item("left", text_get("settingswatermarkleft"))
+			menu_add_item("center", text_get("settingswatermarkcenter"))
+			menu_add_item("right", text_get("settingswatermarkright"))
 			
 			break
 		}
 		
-		case "settingsrenderwatermarkpositiony":
+		case "settingswatermarkpositiony":
 		{
-			menu_add_item("top", text_get("settingsrenderwatermarktop"))
-			menu_add_item("center", text_get("settingsrenderwatermarkcenter"))
-			menu_add_item("bottom", text_get("settingsrenderwatermarkbottom"))
+			menu_add_item("top", text_get("settingswatermarktop"))
+			menu_add_item("center", text_get("settingswatermarkcenter"))
+			menu_add_item("bottom", text_get("settingswatermarkbottom"))
 			
 			break
 		}

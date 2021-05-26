@@ -7,7 +7,7 @@ function render_high_subsurface_scatter(export)
 	// Set samples to setting
 	if (!export)
 	{
-		if (render_samples >= setting_render_samples)
+		if (render_samples >= project_render_samples)
 		{
 			render_high_subsurface_scatter_apply()
 			return 0
@@ -19,8 +19,8 @@ function render_high_subsurface_scatter(export)
 	else
 	{
 		samplestart = 0
-		sampleend = setting_render_samples
-		render_samples = setting_render_samples
+		sampleend = project_render_samples
+		render_samples = project_render_samples
 	}
 	
 	var ssssurf, sssrangesurf, depthsurf, sssblursurf;
@@ -60,9 +60,9 @@ function render_high_subsurface_scatter(export)
 	}
 	surface_reset_target()
 	
-	if ((setting_render_subsurface_samples * 2) + 1 != render_subsurface_size)
+	if ((project_render_subsurface_samples * 2) + 1 != render_subsurface_size)
 	{
-		render_subsurface_size = (setting_render_subsurface_samples * 2) + 1
+		render_subsurface_size = (project_render_subsurface_samples * 2) + 1
 		render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
 	}
 	

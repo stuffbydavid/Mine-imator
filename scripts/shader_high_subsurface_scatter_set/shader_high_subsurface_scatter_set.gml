@@ -32,5 +32,5 @@ function shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, direc
 	render_set_uniform_int("uSamples", render_subsurface_size)
 	render_set_uniform("uKernel", render_subsurface_kernel)
 	render_set_uniform_vec2("uDirection", dir[X], dir[Y])
-	render_set_uniform("uJitterThreshold", app.setting_render_subsurface_jitter)
+	render_set_uniform("uJitterThreshold", app.project_render_subsurface_jitter)
 }

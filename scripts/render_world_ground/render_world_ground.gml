@@ -21,7 +21,7 @@ function render_world_ground()
 	render_set_uniform_int("uGlowTexture", 0)
 	
 	// Texture
-	shader_texture_filter_mipmap = app.setting_texture_filtering
+	shader_texture_filter_mipmap = app.project_render_texture_filtering
 	if (background_ground_ani)
 		render_set_texture(background_ground_ani_texture[block_texture_get_frame()])
 	else

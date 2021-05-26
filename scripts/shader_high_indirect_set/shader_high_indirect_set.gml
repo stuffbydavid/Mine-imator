@@ -31,8 +31,8 @@ function shader_high_indirect_set(depthsurface, normalsurface, normalsurface2, d
 	render_set_uniform("uKernel", render_indirect_kernel)
 	render_set_uniform("uOffset", render_indirect_offset)
 	
-	render_set_uniform("uEmissionRange", app.setting_render_indirect_range)
+	render_set_uniform("uEmissionRange", app.project_render_indirect_range)
 	render_set_uniform("uStepSize", 10)
 	render_set_uniform_int("uStepAmount", 48)
-	render_set_uniform_int("uRays", 2 + (app.setting_render_indirect_quality * 2))
+	render_set_uniform_int("uRays", 2 + (app.project_render_indirect_quality * 2))
 }

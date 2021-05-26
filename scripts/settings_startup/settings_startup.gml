@@ -22,6 +22,13 @@ function settings_startup()
 	setting_spawn_cameras = true
 	setting_unlimited_values = false
 	
+	setting_watermark_image = spr_watermark
+	setting_watermark_filename = ""
+	setting_watermark_anchor_x = "right"
+	setting_watermark_anchor_y = "bottom"
+	setting_watermark_scale = 1
+	setting_watermark_alpha = 1
+	
 	setting_view_real_time_render = true
 	setting_view_real_time_render_time = 1000
 	
@@ -89,65 +96,8 @@ function settings_startup()
 	setting_fast_modifier = 3
 	setting_slow_modifier = 0.25
 	
-	setting_bend_style = "realistic"
 	setting_scenery_remove_edges = false
-	setting_liquid_animation = true
-	setting_noisy_grass_water = false
 	setting_remove_waterlogged_water = false
-	setting_texture_filtering = true
-	setting_transparent_block_texture_filtering = false
-	setting_texture_filtering_level = 1
-	setting_block_brightness = 0.75
-	setting_block_glow = true
-	setting_block_glow_threshold = 0.75
-	setting_block_subsurface = 2
-	
-	setting_render_samples = 16
-	setting_render_dof_quality = 3
-	
-	setting_render_ssao = true
-	setting_render_ssao_radius = 12
-	setting_render_ssao_power = 1
-	setting_render_ssao_blur_passes = 2
-	setting_render_ssao_color = c_black
-	
-	setting_render_shadows = true
-	setting_render_shadows_sun_buffer_size = 2048
-	setting_render_shadows_spot_buffer_size = 512
-	setting_render_shadows_point_buffer_size = 256
-	setting_render_shadows_sun_colored = false
-	
-	setting_render_subsurface_samples = 7
-	setting_render_subsurface_jitter = .3
-	
-	setting_render_indirect = true
-	setting_render_indirect_quality = 0
-	setting_render_indirect_blur_passes = 2
-	setting_render_indirect_strength = 1.5
-	setting_render_indirect_range = 256
-	
-	setting_render_reflections = true
-	setting_render_reflections_precision = .3
-	setting_render_reflections_thickness = 86
-	setting_render_reflections_halfres = true
-	setting_render_reflections_fade_amount = 1
-	
-	setting_render_glow = true
-	setting_render_glow_radius = 1
-	setting_render_glow_intensity = 1
-	setting_render_glow_falloff = false
-	setting_render_glow_falloff_radius = 2
-	setting_render_glow_falloff_intensity = 1
-	
-	setting_render_aa = true
-	setting_render_aa_power = 1
-	
-	setting_render_watermark_image = spr_watermark
-	setting_render_watermark_filename = ""
-	setting_render_watermark_anchor_x = "right"
-	setting_render_watermark_anchor_y = "bottom"
-	setting_render_watermark_scale = 1
-	setting_render_watermark_alpha = 1
 	
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30
@@ -163,7 +113,7 @@ function settings_startup()
 	setting_export_image_high_quality = true
 	setting_export_image_watermark = trial_version
 	
-	setting_render_pass = e_render_pass.FINAL
+	project_render_pass = e_render_pass.FINAL
 	
 	// Viewport
 	setting_snap = false
@@ -181,5 +131,5 @@ function settings_startup()
 	languages_load()
 	interface_update()
 	
-	texture_set_mipmap_level(setting_texture_filtering_level)
+	texture_set_mipmap_level(project_render_texture_filtering_level)
 }

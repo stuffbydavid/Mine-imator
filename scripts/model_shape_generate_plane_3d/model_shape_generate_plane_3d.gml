@@ -55,8 +55,8 @@ function model_shape_generate_plane_3d(bend, alpha)
 	
 	// Start position and bounds
 	var sharpbend, bendsize, bendstart, bendend, invangle;
-	sharpbend = (app.setting_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
-	bendsize = (bend_size = null ? (app.setting_bend_style = "realistic" ? 4 : 1) : bend_size)
+	sharpbend = (app.project_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
+	bendsize = (bend_size = null ? (app.project_bend_style = "realistic" ? 4 : 1) : bend_size)
 	invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 	
 	if (segouteraxis = X)

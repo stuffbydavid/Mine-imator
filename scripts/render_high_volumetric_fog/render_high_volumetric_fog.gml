@@ -11,13 +11,13 @@ function render_high_volumetric_fog(prevsurf, export)
 	
 	render_volumetric_fog_offset = 1
 	
-	if (render_samples <= setting_render_samples || render_samples_clear || export)
+	if (render_samples <= project_render_samples || render_samples_clear || export)
 	{
 		if (export)
 		{
 			samplestart = 0
-			sampleend = setting_render_samples
-			render_samples = setting_render_samples
+			sampleend = project_render_samples
+			render_samples = project_render_samples
 		}
 		else
 		{
@@ -43,7 +43,7 @@ function render_high_volumetric_fog(prevsurf, export)
 		
 		for (var s = samplestart; s < sampleend; s++)
 		{
-			if (render_samples >= setting_render_samples && !export)
+			if (render_samples >= project_render_samples && !export)
 				continue
 			
 			random_set_seed(s)
@@ -64,7 +64,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				}
 				
 				// Depth
-				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
+				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_buffer)
 				{
 					gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -163,7 +163,7 @@ function render_high_volumetric_fog(prevsurf, export)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_volumetric_fog_apply_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, (export ? app.setting_render_samples : render_samples))
+			shader_high_volumetric_fog_apply_set(render_surface_sun_volume_expo, render_surface_sun_volume_dec, (export ? app.project_render_samples : render_samples))
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)

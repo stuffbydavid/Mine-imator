@@ -67,7 +67,7 @@ function render_world_tl()
 	// Set render options
 	render_set_culling(!backfaces)
 	shader_texture_filter_linear = texture_blur
-	shader_texture_filter_mipmap = (app.setting_texture_filtering && texture_filtering)
+	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
 	
 	shader_blend_color = value_inherit[e_value.RGB_MUL]
 	
@@ -99,7 +99,7 @@ function render_world_tl()
 	if (!ssao)
 		render_set_uniform_int("uSSAOEnable", ssao)
 	
-	render_set_uniform_int("uBlockGlow", app.setting_block_glow)
+	render_set_uniform_int("uBlockGlow", app.project_render_block_glow)
 	
 	render_set_uniform("uSSS", value_inherit[e_value.SUBSURFACE])
 	render_set_uniform_vec3("uSSSRadius", value_inherit[e_value.SUBSURFACE_RADIUS_RED],

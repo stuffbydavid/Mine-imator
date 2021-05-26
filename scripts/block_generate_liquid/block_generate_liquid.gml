@@ -36,7 +36,7 @@ function block_generate_liquid()
 	matchzn = (matchzn || (!build_edge_zn && builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z - 1)))
 		
 	// To fix wave "gaps"
-	if (app.setting_liquid_animation)
+	if (app.project_render_liquid_animation)
 	{
 		var model;
 		if (matchzp)
@@ -154,7 +154,7 @@ function block_generate_liquid()
 	var corner0z, corner1z, corner2z, corner3z, minz, averagez;
 	
 	// Wave
-	if (app.setting_liquid_animation)
+	if (app.project_render_liquid_animation)
 	{
 		vertex_wave = e_vertex_wave.Z_ONLY
 		
@@ -171,7 +171,7 @@ function block_generate_liquid()
 	alpha = 1
 	
 	// Apply noise
-	if (app.setting_noisy_grass_water && block_current.name = "water")
+	if (app.project_render_noisy_grass_water && block_current.name = "water")
 	{
 		var noise = (1.0 - abs(simplex_lib(mc_builder.build_pos_x / 32, mc_builder.build_pos_y / 32)) * 0.15) * 255;
 		color = make_color_rgb(noise, noise, noise)

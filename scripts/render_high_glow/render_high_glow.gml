@@ -44,9 +44,9 @@ function render_high_glow()
 	var baseradius;
 	
 	if (glowfalloff)
-		baseradius = ((setting_render_glow_radius * setting_render_glow_falloff_radius * 10) * render_height / 500)
+		baseradius = ((project_render_glow_radius * project_render_glow_falloff_radius * 10) * render_height / 500)
 	else
-		baseradius = ((setting_render_glow_radius * 10) * render_height / 500)
+		baseradius = ((project_render_glow_radius * 10) * render_height / 500)
 	
 	gpu_set_tex_repeat(false)
 	gpu_set_texfilter(true)
@@ -95,7 +95,7 @@ function render_high_glow()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_add_set(glowsurf, glowfalloff ? app.setting_render_glow_falloff_intensity : app.setting_render_glow_intensity, c_white)
+			shader_add_set(glowsurf, glowfalloff ? app.project_render_glow_falloff_intensity : app.project_render_glow_intensity, c_white)
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
@@ -123,7 +123,7 @@ function render_high_glow()
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_add_set(glowsurf, app.setting_render_glow_intensity, c_white)
+				shader_add_set(glowsurf, app.project_render_glow_intensity, c_white)
 			}
 			draw_surface_exists(prevsurf, 0, 0)
 			with (render_shader_obj)

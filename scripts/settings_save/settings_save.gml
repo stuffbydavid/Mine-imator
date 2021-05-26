@@ -60,6 +60,13 @@ function settings_save()
 		json_save_var_bool("spawn_objects", setting_spawn_objects)
 		json_save_var_bool("spawn_cameras", setting_spawn_cameras)
 		json_save_var_bool("unlimited_values", setting_unlimited_values)
+		json_save_var("watermark_filename", json_string_encode(setting_watermark_filename))
+		json_save_var("watermark_anchor_x", setting_watermark_anchor_x)
+		json_save_var("watermark_anchor_y", setting_watermark_anchor_y)
+		json_save_var("watermark_scale", setting_watermark_scale)
+		json_save_var("watermark_alpha", setting_watermark_alpha)
+		json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)
+		json_save_var_bool("remove_waterlogged_water", setting_remove_waterlogged_water)
 		
 	json_save_object_done()
 	
@@ -152,70 +159,7 @@ function settings_save()
 		
 	json_save_object_done()
 	
-	json_save_object_start("graphics")
-		
-		json_save_var("bend_style", setting_bend_style)
-		json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)
-		json_save_var_bool("liquid_animation", setting_liquid_animation)
-		json_save_var_bool("noisy_grass_water", setting_noisy_grass_water)
-		json_save_var_bool("remove_waterlogged_water", setting_remove_waterlogged_water)
-		json_save_var_bool("texture_filtering", setting_texture_filtering)
-		json_save_var_bool("transparent_block_texture_filtering", setting_transparent_block_texture_filtering)
-		json_save_var("texture_filtering_level", setting_texture_filtering_level)
-		json_save_var("block_brightness", setting_block_brightness)
-		json_save_var("block_glow_threshold", setting_block_glow_threshold)
-		json_save_var_bool("block_glow", setting_block_glow)
-		json_save_var_bool("block_subsurface", setting_block_subsurface)
-		
-	json_save_object_done()
-	
-	json_save_object_start("render")
-		
-		json_save_var("render_samples", setting_render_samples)
-		json_save_var("render_dof_quality", setting_render_dof_quality)
-		
-		json_save_var_bool("render_ssao", setting_render_ssao)
-		json_save_var("render_ssao_radius", setting_render_ssao_radius)
-		json_save_var("render_ssao_power", setting_render_ssao_power)
-		json_save_var("render_ssao_blur_passes", setting_render_ssao_blur_passes)
-		json_save_var_color("render_ssao_color", setting_render_ssao_color)
-		
-		json_save_var_bool("render_shadows", setting_render_shadows)
-		json_save_var("render_shadows_sun_buffer_size", setting_render_shadows_sun_buffer_size)
-		json_save_var("render_shadows_spot_buffer_size", setting_render_shadows_spot_buffer_size)
-		json_save_var("render_shadows_point_buffer_size", setting_render_shadows_point_buffer_size)
-		json_save_var_bool("render_shadows_sun_colored", setting_render_shadows_sun_colored)
-		
-		json_save_var("render_subsurface_samples", setting_render_subsurface_samples)
-		json_save_var("render_subsurface_jitter", setting_render_subsurface_jitter)
-		
-		json_save_var_bool("render_indirect", setting_render_indirect)
-		json_save_var("render_indirect_blur_passes", setting_render_indirect_blur_passes)
-		json_save_var("render_indirect_quality", setting_render_indirect_quality)
-		json_save_var("render_indirect_strength", setting_render_indirect_strength)
-		json_save_var("render_indirect_range", setting_render_indirect_range)
-		
-		json_save_var_bool("render_reflections", setting_render_reflections)
-		json_save_var("render_reflections_precision", setting_render_reflections_precision)
-		json_save_var("render_reflections_thickness", setting_render_reflections_thickness)
-		json_save_var("render_reflections_fade_amount", setting_render_reflections_fade_amount)
-		json_save_var_bool("render_reflections_halfres", setting_render_reflections_halfres)
-		
-		json_save_var_bool("render_glow", setting_render_glow)
-		json_save_var("render_glow_radius", setting_render_glow_radius)
-		json_save_var("render_glow_intensity", setting_render_glow_intensity)
-		json_save_var_bool("render_glow_falloff", setting_render_glow_falloff)
-		json_save_var("render_glow_falloff_radius", setting_render_glow_falloff_radius)
-		json_save_var("render_glow_falloff_intensity", setting_render_glow_falloff_intensity)
-		
-		json_save_var_bool("render_aa", setting_render_aa)
-		json_save_var("render_aa_power", setting_render_aa_power)
-		
-		json_save_var("render_watermark_filename", json_string_encode(setting_render_watermark_filename))
-		json_save_var("render_watermark_anchor_x", setting_render_watermark_anchor_x)
-		json_save_var("render_watermark_anchor_y", setting_render_watermark_anchor_y)
-		json_save_var("render_watermark_scale", setting_render_watermark_scale)
-		json_save_var("render_watermark_alpha", setting_render_watermark_alpha)
+	json_save_object_start("export")
 		
 		json_save_var("exportmovie_format", popup_exportmovie.format)
 		json_save_var("exportmovie_frame_rate", popup_exportmovie.frame_rate)

@@ -10,7 +10,7 @@ function render_high_reflections(export, surf)
 	// Set samples to setting
 	if (!export)
 	{
-		if (render_samples >= setting_render_samples)
+		if (render_samples >= project_render_samples)
 		{
 			// Apply
 			render_high_reflections_apply(surf)
@@ -23,13 +23,13 @@ function render_high_reflections(export, surf)
 	else
 	{
 		samplestart = 0
-		sampleend = setting_render_samples
-		render_samples = setting_render_samples
+		sampleend = project_render_samples
+		render_samples = project_render_samples
 	}
 	
 	var ssrwidth, ssrheight, depthsurf, normalsurf, normalsurf2, materialsurf, tempsurf;
-	ssrwidth = setting_render_reflections_halfres ? ceil(render_width/2) : render_width
-	ssrheight = setting_render_reflections_halfres ? ceil(render_height/2) : render_height
+	ssrwidth = project_render_reflections_halfres ? ceil(render_width/2) : render_width
+	ssrheight = project_render_reflections_halfres ? ceil(render_height/2) : render_height
 	
 	// Render depth & normal data
 	render_surface[1] = surface_require(render_surface[1], ssrwidth, ssrheight)

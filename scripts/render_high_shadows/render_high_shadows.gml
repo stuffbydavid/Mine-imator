@@ -25,7 +25,7 @@ function render_high_shadows(export)
 			}
 		}
 		
-		if (render_samples >= setting_render_samples)
+		if (render_samples >= project_render_samples)
 			return 0
 		
 		samplestart = render_samples
@@ -34,8 +34,8 @@ function render_high_shadows(export)
 	else
 	{
 		samplestart = 0
-		sampleend = setting_render_samples
-		render_samples = setting_render_samples
+		sampleend = project_render_samples
+		render_samples = project_render_samples
 	}
 	
 	// Get visible lights
@@ -105,7 +105,7 @@ function render_high_shadows(export)
 			render_world_start()
 			
 			// Depth
-			render_surface_sun_buffer = surface_require(render_surface_sun_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
+			render_surface_sun_buffer = surface_require(render_surface_sun_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
 			surface_set_target(render_surface_sun_buffer)
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -122,9 +122,9 @@ function render_high_shadows(export)
 			surface_reset_target()
 			
 			// Color
-			if (app.setting_render_shadows_sun_colored)
+			if (app.project_render_shadows_sun_colored)
 			{
-				render_surface_sun_color_buffer = surface_require(render_surface_sun_color_buffer, setting_render_shadows_sun_buffer_size, setting_render_shadows_sun_buffer_size)
+				render_surface_sun_color_buffer = surface_require(render_surface_sun_color_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_color_buffer)
 				{
 					draw_clear(c_white)
@@ -203,7 +203,7 @@ function render_high_shadows(export)
 						if (d = e_dir.DOWN || d = e_dir.UP)
 							look[Y] -= 0.0001
 						
-						render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.setting_render_shadows_point_buffer_size, app.setting_render_shadows_point_buffer_size)
+						render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.project_render_shadows_point_buffer_size, app.project_render_shadows_point_buffer_size)
 						surface_set_target(render_surface_point_buffer[d])
 						{
 							gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -243,7 +243,7 @@ function render_high_shadows(export)
 					var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 					
 					// Depth
-					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.setting_render_shadows_spot_buffer_size, app.setting_render_shadows_spot_buffer_size)
+					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
 					surface_set_target(render_surface_spot_buffer)
 					{
 						gpu_set_blendmode_ext(bm_one, bm_zero)

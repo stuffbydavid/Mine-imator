@@ -1,0 +1,354 @@
+/// tab_properties_render()
+
+function tab_properties_render()
+{
+	// Render samples
+	tab_control_meter()
+	draw_meter("rendersamples", dx, dy, dw, project_render_samples, 50, 1, 256, 16, 1, tab.render.tbx_samples, action_project_render_samples) 
+	tab_next()
+	
+	// Samples tooltip
+	var text, icon, type;
+	
+	if (project_render_samples >= 1 && project_render_samples <= 8)
+	{
+		text = "rendersamples0"
+		icon = icons.TICK
+		type = e_toast.POSITIVE
+	}
+	
+	if (project_render_samples >= 9 && project_render_samples <= 32)
+	{
+		text = "rendersamples1"
+		icon = icons.TICK
+		type = e_toast.POSITIVE
+	}
+	
+	if (project_render_samples >= 33 && project_render_samples <= 64)
+	{
+		text = "rendersamples2"
+		icon = icons.TICK
+		type = e_toast.POSITIVE
+	}
+	
+	if (project_render_samples >= 65 && project_render_samples <= 128)
+	{
+		text = "rendersamples3"
+		icon = icons.WARNING_TRIANGLE
+		type = e_toast.WARNING
+	}
+	
+	if (project_render_samples >= 129 && project_render_samples <= 192)
+	{
+		text = "rendersamples4"
+		icon = icons.WARNING_TRIANGLE
+		type = e_toast.NEGATIVE
+	}
+	
+	if (project_render_samples >= 193 && project_render_samples <= 256)
+	{
+		text = "rendersamples5"
+		icon = icons.FIRE
+		type = e_toast.NEGATIVE
+	}
+	
+	draw_tooltip_label(text, icon, type)
+	
+	// SSAO
+	tab_control_switch()
+	draw_button_collapse("ssao", collapse_map[?"ssao"], null, !project_render_ssao)
+	draw_switch("renderssao", dx, dy, project_render_ssao, action_project_render_ssao)
+	tab_next()
+	
+	if (project_render_ssao && collapse_map[?"ssao"])
+	{
+		tab_collapse_start()
+		
+		tab_control_dragger()
+		draw_dragger("renderssaoradius", dx, dy, dragger_width, project_render_ssao_radius, project_render_ssao_radius / 200, 0, 256, 12, 0, tab.render.tbx_ssao_radius, action_project_render_ssao_radius)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("renderssaopower", dx, dy, dw, round(project_render_ssao_power * 100), 50, 0, 500, 100, 1, tab.render.tbx_ssao_power, action_project_render_ssao_power)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("renderssaoblurpasses", dx, dy, dw, project_render_ssao_blur_passes, 50, 0, 8, 2, 1, tab.render.tbx_ssao_blur_passes, action_project_render_ssao_blur_passes)
+		tab_next()
+		
+		tab_control_color()
+		draw_button_color("renderssaocolor", dx, dy, dw, project_render_ssao_color, c_black, false, action_project_render_ssao_color)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Shadows
+	tab_control_switch()
+	draw_button_collapse("shadows", collapse_map[?"shadows"], null, !project_render_shadows)
+	draw_switch("rendershadows", dx, dy, project_render_shadows, action_project_render_shadows)
+	tab_next()
+	
+	if (project_render_shadows && collapse_map[?"shadows"])
+	{
+		tab_collapse_start()
+		
+		tab_control_menu()
+		draw_button_menu("rendershadowssunbuffersize", e_menu.LIST, dx, dy, dw, 24, project_render_shadows_sun_buffer_size, text_get("rendershadowsbuffersize" + string(project_render_shadows_sun_buffer_size)) + " (" + string(project_render_shadows_sun_buffer_size) + "x" + string(project_render_shadows_sun_buffer_size) + ")", action_project_render_shadows_sun_buffer_size)
+		tab_next()
+		
+		tab_control_menu()
+		draw_button_menu("rendershadowsspotbuffersize", e_menu.LIST, dx, dy, dw, 24, project_render_shadows_spot_buffer_size, text_get("rendershadowsbuffersize" + string(project_render_shadows_spot_buffer_size)) + " (" + string(project_render_shadows_spot_buffer_size) + "x" + string(project_render_shadows_spot_buffer_size) + ")", action_project_render_shadows_spot_buffer_size)
+		tab_next()
+		
+		tab_control_menu()
+		draw_button_menu("rendershadowspointbuffersize", e_menu.LIST, dx, dy, dw, 24, project_render_shadows_point_buffer_size, text_get("rendershadowsbuffersize" + string(project_render_shadows_point_buffer_size)) + " (" + string(project_render_shadows_point_buffer_size) + "x" + string(project_render_shadows_point_buffer_size) + ")", action_project_render_shadows_point_buffer_size)
+		tab_next()
+		
+		tab_control_switch()
+		draw_switch("rendershadowssuncolored", dx, dy, project_render_shadows_sun_colored, action_project_render_shadows_sun_colored, "", false, true) 
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Subsurface scattering
+	tab_control_switch()
+	draw_button_collapse("subsurface", collapse_map[?"subsurface"], null, false)
+	draw_label(text_get("rendersubsurfacescattering"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	tab_next()
+	
+	if (collapse_map[?"subsurface"])
+	{
+		tab_collapse_start()
+		
+		tab_control_meter()
+		draw_meter("rendersubsurfacescatterquality", dx, dy, dw, project_render_subsurface_samples, 64, 1, 32, 7, 1, tab.render.tbx_subsurface_samples, action_project_render_subsurface_samples)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("rendersubsurfacescatterjitter", dx, dy, dw, round(project_render_subsurface_jitter * 100), 64, 0, 100, 30, 1, tab.render.tbx_subsurface_jitter, action_project_render_subsurface_jitter)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Indirect lighting
+	tab_control_switch()
+	draw_button_collapse("indirect", collapse_map[?"indirect"], null, !project_render_indirect)
+	draw_switch("renderindirect", dx, dy, project_render_indirect, action_project_render_indirect)
+	tab_next()
+	
+	if (project_render_indirect && collapse_map[?"indirect"])
+	{
+		tab_collapse_start()
+		
+		tab_control_menu()
+		draw_button_menu("renderindirectquality", e_menu.LIST, dx, dy, dw, 24, project_render_indirect_quality, text_get("renderindirectquality" + string(project_render_indirect_quality)), action_project_render_indirect_quality)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("renderindirectblurpasses", dx, dy, dw, project_render_indirect_blur_passes, 50, 0, 8, 2, 1, tab.render.tbx_indirect_blur_passes, action_project_render_indirect_blur_passes)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("renderindirectstrength", dx, dy, dw, round(project_render_indirect_strength * 100), 50, 0, 1000, 150, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
+		tab_next()
+		
+		tab_control_dragger()
+		draw_dragger("renderindirectrange", dx, dy, dragger_width, project_render_indirect_range, project_render_indirect_range / 200, 1, no_limit, 256, 1, tab.render.tbx_indirect_range, action_project_render_indirect_range) 
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Reflections
+	tab_control_switch()
+	draw_button_collapse("reflections", collapse_map[?"reflections"], null, !project_render_reflections)
+	draw_switch("renderreflections", dx, dy, project_render_reflections, action_project_render_reflections)
+	tab_next()
+	
+	if (project_render_reflections && collapse_map[?"reflections"])
+	{
+		tab_collapse_start()
+		
+		tab_control_meter()
+		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_reflections_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision)
+		tab_next()
+		
+		tab_control_dragger()
+		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 86, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("renderreflectionsfadeamount", dx, dy, dw, round(project_render_reflections_fade_amount * 100), 50, 0, 100, 50, 1, tab.render.tbx_reflections_fade_amount, action_project_render_reflections_fade_amount)
+		tab_next()
+		
+		tab_control_switch()
+		draw_switch("renderreflectionshalfres", dx, dy, project_render_reflections_halfres, action_project_render_reflections_halfres)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Glow
+	tab_control_switch()
+	draw_button_collapse("glow", collapse_map[?"glow"], null, !project_render_glow)
+	draw_switch("renderglow", dx, dy, project_render_glow, action_project_render_glow)
+	tab_next()
+	
+	if (project_render_glow && collapse_map[?"glow"])
+	{
+		tab_collapse_start()
+		
+		tab_control_meter()
+		draw_meter("renderglowradius", dx, dy, dw, round(project_render_glow_radius * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_radius, action_project_render_glow_radius)
+		tab_next()
+		
+		tab_control_meter()
+		draw_meter("renderglowintensity", dx, dy, dw, round(project_render_glow_intensity * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_intensity, action_project_render_glow_intensity)
+		tab_next()
+		
+		tab_control_switch()
+		draw_switch("renderglowfalloff", dx, dy, project_render_glow_falloff, action_project_render_glow_falloff)
+		tab_next()
+		
+		// Secondary glow
+		if (project_render_glow_falloff)
+		{
+			tab_control_meter()
+			draw_meter("renderglowfalloffradius", dx, dy, dw, round(project_render_glow_falloff_radius * 100), 50, 0, 300, 200, 1, tab.render.tbx_glow_falloff_radius, action_project_render_glow_falloff_radius)
+			tab_next()
+		
+			tab_control_meter()
+			draw_meter("renderglowfalloffintensity", dx, dy, dw, round(project_render_glow_falloff_intensity * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_falloff_intensity, action_project_render_glow_falloff_intensity)
+			tab_next()
+		}
+		
+		tab_collapse_end()
+	}
+	
+	// AA
+	tab_control_switch()
+	draw_button_collapse("aa", collapse_map[?"aa"], null, !project_render_aa)
+	draw_switch("renderaa", dx, dy, project_render_aa, action_project_render_aa)
+	tab_next()
+	
+	if (project_render_aa && collapse_map[?"aa"])
+	{
+		tab_collapse_start()
+		
+		tab_control_meter()
+		draw_meter("renderaapower", dx, dy, dw, round(project_render_aa_power * 100), 48, 0, 300, 100, 1, tab.render.tbx_aa_power, action_project_render_aa_power)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Texture filtering
+	tab_control_switch()
+	draw_button_collapse("texfilter", collapse_map[?"texfilter"], null, !project_render_texture_filtering)
+	draw_switch("rendertexturefiltering", dx, dy, project_render_texture_filtering, action_project_render_texture_filtering)
+	tab_next()
+	
+	if (project_render_texture_filtering && collapse_map[?"texfilter"])
+	{
+		tab_collapse_start()
+		
+		// Transparent block texture filtering
+		tab_control_switch()
+		draw_switch("rendertexturefilteringtransparentblocks", dx, dy, project_render_transparent_block_texture_filtering, action_project_render_transparent_block_texture_filtering)
+		tab_next()
+		
+		// Texture filtering level
+		tab_control_meter()
+		draw_meter("rendertexturefilteringlevel", dx, dy, dw, project_render_texture_filtering_level, 48, 0, 5, 1, 1, tab.render.tbx_texture_filtering_level, action_project_render_texture_filtering_level)
+		tab_next()
+		
+		tab_collapse_end(false)
+	}
+	
+	// Camera effects
+	tab_control_switch()
+	draw_button_collapse("camera_effects", collapse_map[?"camera_effects"], null, false)
+	draw_label(text_get("rendercameraeffects"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	tab_next()
+	
+	if (collapse_map[?"camera_effects"])
+	{
+		tab_collapse_start()
+		
+		// DOF quality
+		tab_control_meter()
+		draw_meter("renderdofquality", dx, dy, dw, project_render_dof_quality, 50, 1, 5, 3, 1, tab.render.tbx_dof_quality, action_project_render_dof_quality)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Models and scenery
+	tab_control_switch()
+	draw_button_collapse("models_scenery", collapse_map[?"models_scenery"], null, false)
+	draw_label(text_get("rendermodelsscenery"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	tab_next()
+	
+	if (collapse_map[?"models_scenery"])
+	{
+		tab_collapse_start()
+		
+		// Bending style
+		tab_control_togglebutton()
+		togglebutton_add("renderbendstylerealistic", null, "realistic", project_bend_style = "realistic", action_project_bend_style)
+		togglebutton_add("renderbendstyleblocky", null, "blocky", project_bend_style = "blocky", action_project_bend_style)
+		draw_togglebutton("renderbendstyle", dx, dy)
+		tab_next()
+		
+		// Liquid waves
+		tab_control_switch()
+		draw_switch("renderliquidanimation", dx, dy, project_render_liquid_animation, action_project_render_liquid_animation)
+		tab_next()
+		
+		// Noisy grass/water
+		tab_control_switch()
+		draw_switch("rendernoisygrasswater", dx, dy, project_render_noisy_grass_water, action_project_render_noisy_grass_water)
+		tab_next()
+		
+		// Block emission
+		tab_control_meter()
+		draw_meter("renderblockemission", dx, dy, dw, round(project_render_block_brightness * 100), 48, 0, 100, 75, 1, tab.render.tbx_block_brightness, action_project_render_block_brightness)
+		tab_next()
+		
+		// Apply glow to bright blocks
+		tab_control_switch()
+		draw_switch("renderblockglow", dx, dy, project_render_block_glow, action_project_render_block_glow)
+		tab_next()
+		
+		// Glow threshold
+		if (project_render_block_glow)
+		{
+			tab_control_meter()
+			draw_meter("renderblockglowthreshold", dx, dy, dw, round(project_render_block_glow_threshold * 100), 48, 0, 100, 75, 1, tab.render.tbx_block_glow_threshold, action_project_render_block_glow_threshold)
+			tab_next()
+		}
+		
+		// Block subsurface (Used for simple SSS in scenery)
+		tab_control_dragger()
+		draw_dragger("renderblocksubsurfaceradius", dx, dy, dragger_width, project_render_block_subsurface, .1, 0, no_limit, 2, 0.01, tab.render.tbx_block_subsurface_radius, action_project_render_block_subsurface)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	tab_control(24)
+	
+	// Import render settings
+	draw_button_icon("renderimport", dx, dy, 24, 24, false, icons.ASSET_IMPORT, action_project_render_import, false, "tooltipimportrender")
+	
+	// Export render settings
+	draw_button_icon("renderexport", dx + (28), dy, 24, 24, false, icons.ASSET_EXPORT, action_project_render_export, false, "tooltipexportrender")
+	
+	// Reset render settings
+	draw_button_icon("renderreset", dx + (28 * 2), dy, 24, 24, false, icons.RESET, action_project_render_reset, false, "tooltipresetrender")
+	
+	tab_next()
+}

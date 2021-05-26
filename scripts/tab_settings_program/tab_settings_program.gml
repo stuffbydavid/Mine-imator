@@ -39,6 +39,76 @@ function tab_settings_program()
 		tab_collapse_end()
 	}
 	
+	#region Watermark
+	
+	tab_control_switch()
+	
+	if (draw_button_collapse("watermark", collapse_map[?"watermark"], null, false))
+	{
+		if (trial_version)
+		{
+			collapse_map[?"watermark"] = false
+			popup_show(popup_upgrade)
+		}
+	}
+	
+	draw_label(text_get("settingswatermark"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	tab_next()
+	
+	if (!trial_version && collapse_map[?"watermark"])
+	{
+		tab_collapse_start()
+		
+		// Watermark Image
+		var fn = ((setting_watermark_filename = "") ? text_get("settingswatermarkdefault") : setting_watermark_filename);
+		
+		tab_control(24)
+		draw_label_value(dx, dy, dw - 32, 24, text_get("settingswatermarkimage"), fn)
+		tab_next()
+		
+		tab_control(24)
+		
+		if (draw_button_icon("settingswatermarkopen", dx, dy, 24, 24, false, icons.FOLDER))
+			action_setting_watermark_open()
+		
+		if (draw_button_icon("settingswatermarkreset", dx + 32, dy, 24, 24, false, icons.RESET))
+			action_setting_watermark_reset()
+		
+		tab_next()
+		
+		// X Position
+		tab_control_menu()
+		draw_button_menu("settingswatermarkpositionx", e_menu.LIST, dx, dy, dw, 24, setting_watermark_anchor_x, text_get("settingswatermark" + setting_watermark_anchor_x), action_setting_watermark_position_x)
+		tab_next()
+		
+		// Y Position
+		tab_control_menu()
+		draw_button_menu("settingswatermarkpositiony", e_menu.LIST, dx, dy, dw, 24, setting_watermark_anchor_y, text_get("settingswatermark" + setting_watermark_anchor_y), action_setting_watermark_position_y)
+		tab_next()
+		
+		// Scale
+		tab_control_meter()
+		draw_meter("settingswatermarkscale", dx, dy, dw, round(setting_watermark_scale * 100), 48, 0, 1000, 100, 1, tab.program.tbx_watermark_scale, action_setting_watermark_scale)
+		tab_next()
+		
+		// Alpha
+		tab_control_meter()
+		draw_meter("settingswatermarkalpha", dx, dy, dw, round(setting_watermark_alpha * 100), 48, 0, 100, 100, 1, tab.program.tbx_watermark_alpha, action_setting_watermark_alpha)
+		tab_next()
+		
+		// Preview
+		draw_watermark_preview(dx, dy, dw)
+		
+		tab_collapse_end()
+	}
+	else
+	{
+		if (trial_version)
+			draw_tooltip_label("settingswatermarkupgraderequired", icons.KEY_ALT, e_toast.INFO)
+	}
+	
+	#endregion
+	
 	// Spawn objects
 	tab_control_switch()
 	draw_switch("settingsspawnobjects", dx, dy, setting_spawn_objects, action_setting_spawn_objects)
@@ -52,5 +122,15 @@ function tab_settings_program()
 	// Unlimited values
 	tab_control_switch()
 	draw_switch("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
+	tab_next()
+	
+	// Remove edges on large scenery
+	tab_control_switch()
+	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges)
+	tab_next()
+	
+	// Remove waterlogged water
+	tab_control_switch()
+	draw_switch("settingsremovewaterloggedwater", dx, dy, setting_remove_waterlogged_water, action_setting_remove_waterlogged_water)
 	tab_next()
 }

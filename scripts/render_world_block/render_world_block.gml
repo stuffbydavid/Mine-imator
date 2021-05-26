@@ -69,7 +69,7 @@ function render_world_block()
 	var filterprev;
 	
 	// Disable texture filtering on transparent blocks
-	if (app.setting_texture_filtering && !app.setting_transparent_block_texture_filtering)
+	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)
 	{
 		filterprev = gpu_get_tex_mip_bias()
 		gpu_set_tex_mip_bias(-16)
@@ -137,7 +137,7 @@ function render_world_block()
 	
 	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	
-	if (app.setting_texture_filtering && !app.setting_transparent_block_texture_filtering)
+	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)
 		gpu_set_tex_mip_bias(filterprev)
 	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))

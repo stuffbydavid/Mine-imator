@@ -88,6 +88,7 @@ function project_load()
 	if (!legacy)
 	{
 		project_load_project(rootmap[?"project"])
+		project_load_render(rootmap[?"render"])
 		project_load_background(rootmap[?"background"])
 		project_load_objects(rootmap)
 		project_load_markers(rootmap[?"markers"])

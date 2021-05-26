@@ -53,15 +53,15 @@ function shader_use()
 	
 	// Block brightness
 	if (!is_undefined(uniform_map[?"uBlockBrightness"]) && uniform_map[?"uBlockBrightness"] > -1)
-		render_set_uniform("uBlockBrightness", app.setting_block_brightness)
+		render_set_uniform("uBlockBrightness", app.project_render_block_brightness)
 	
 	// Block brightness threshold
 	if (!is_undefined(uniform_map[?"uGlowThreshold"]) && uniform_map[?"uGlowThreshold"] > -1)
-		render_set_uniform("uGlowThreshold", app.setting_block_glow_threshold)
+		render_set_uniform("uGlowThreshold", app.project_render_block_glow_threshold)
 	
 	// Block subsurface scattering
 	if (!is_undefined(uniform_map[?"uBlockSSS"]) && uniform_map[?"uBlockSSS"] > -1)
-		render_set_uniform("uBlockSSS", app.setting_block_subsurface)
+		render_set_uniform("uBlockSSS", app.project_render_block_subsurface)
 	
 	// Texture drawing
 	render_set_uniform("uMask", bool_to_float(shader_mask))

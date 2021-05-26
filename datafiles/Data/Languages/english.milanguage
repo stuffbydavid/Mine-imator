@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.05.23"
+        "lastchange": "2021.05.26"
     },
     "particle/": {
         "default": "Default spawner",
@@ -110,7 +110,10 @@
         "viewgrid": "Grid view",
         "experimental": "This setting is experimental and is not fully supported.",
         "showframes": "Show frames",
-        "showtime": "Show time"
+        "showtime": "Show time",
+        "exportrender": "Export render settings",
+        "importrender": "Import render settings",
+        "resetrender": "Reset render settings"
     },
     "contextmenu/": {
         "textbox/": {
@@ -305,7 +308,8 @@
         "stoprender": "Really stop rendering?",
         "assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
         "unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
-        "restorekeybinds": "Are you sure you want to restore all keybinds?"
+        "restorekeybinds": "Are you sure you want to restore all keybinds?",
+        "resetrender": "Are you sure you want to reset all render settings?"
     },
     "filedialog/": {
         "open/": {
@@ -352,7 +356,9 @@
             "color": "Color files",
             "colorcaption": "Save colors",
             "resourcecaption": "Save resource",
-            "projectcaption": "Save project folder"
+            "projectcaption": "Save project folder",
+            "render": "Mine-imator render settings",
+            "rendercaption": "Save render settings"
         }
     },
     "newassets/": {
@@ -1877,6 +1883,91 @@
         "videosizecustomkeepaspectratio": "Keep aspect ratio",
         "tempo": "Tempo"
     },
+    "render": "RENDER",
+    "render/": {
+        "samples": "Samples",
+        "samples/": {
+            "0": "Not recommended for quality, quicker rendering.",
+            "1": "Recommended for a balance between quality and render times.",
+            "2": "Improved quality, render times may be longer.",
+            "3": "Extended render times, only use if your graphics card can handle it.",
+            "4": "Render times will take a long time, only use if your graphics card can handle it.",
+            "5": "Prepare for unforeseen consequences."
+        },
+        "dofquality": "Depth of field quality",
+        "ssao": "Ambient occlusion",
+        "ssao/": {
+            "radius": "Radius",
+            "power": "Strength",
+            "blurpasses": "Blur passes",
+            "color": "Color"
+        },
+        "shadows": "Shadows",
+        "shadows/": {
+            "sunbuffersize": "Sun light buffer size",
+            "spotbuffersize": "Spot light buffer size",
+            "pointbuffersize": "Point light buffer size",
+            "buffersize256": "Very small",
+            "buffersize512": "Small",
+            "buffersize1024": "Medium",
+            "buffersize2048": "Big",
+            "buffersize4096": "Very big",
+            "buffersize8192": "Gigantic",
+            "suncolored": "Colored sun shadows"
+        },
+        "subsurfacescattering": "Subsurface scattering",
+        "subsurfacescatter/":
+        {
+            "quality": "Blur quality",
+            "jitter": "Jitter amount"
+        },
+        "indirect": "Indirect lighting",
+        "indirect/": {
+            "quality": "Ray trace quality",
+            "quality/": {
+                "0": "Low",
+                "1": "Medium",
+                "2": "High",
+                "3": "Best"
+            },
+            "blurpasses": "Blur passes",
+            "strength": "Strength",
+            "range": "Emission range"
+        },
+        "reflections": "Reflections",
+        "reflections/": {
+            "precision": "Precision",
+            "thickness": "Thickness",
+            "halfres": "Half res",
+            "fadeamount": "Edge fade amount"
+        },
+        "glow": "Glow",
+        "glow/": {
+            "radius": "Radius",
+            "intensity": "Intensity",
+            "falloff": "Secondary glow",
+            "falloffradius": "Secondary radius",
+            "falloffintensity": "Secondary intensity"
+        },
+        "texturefiltering": "Texture filtering",
+        "texturefiltering/": {
+            "level": "Texture filtering level",
+            "transparentblocks": "Transparent block texture filtering"
+        },
+        "aa": "Anti-aliasing",
+        "aapower": "Strength",
+        "cameraeffects": "Camera effects",
+        "modelsscenery": "Models and scenery",
+        "bendstyle": "Limb bending style",
+        "bendstylerealistic": "Realistic",
+        "bendstyleblocky": "Blocky",
+        "liquidanimation": "Liquid waves",
+        "noisygrasswater": "Noise effect on grass/water",
+        "blockemission": "Glowing block emission",
+        "blockglow": "Glow bright blocks and models",
+        "blockglowthreshold": "Glow color threshold",
+        "blocksubsurfaceradius": "Block subsurface radius"
+    },
     "library": "LIBRARY",
     "library/": {
         "name": "Name",
@@ -2773,6 +2864,23 @@
         "spawnobjects": "Create objects near work camera",
         "spawncameras": "Copy work camera into new cameras",
         "unlimitedvalues": "Allow unlimited values",
+        "watermark": "Watermark",
+        "watermark/": {
+            "upgraderequired": "Upgrade Mine-imator to use a custom watermark.",
+            "image": "Image",
+            "default": "Default",
+            "positionx": "X position",
+            "positiony": "Y position",
+            "left": "Left",
+            "center": "Center",
+            "right": "Right",
+            "top": "Top",
+            "bottom": "Bottom",
+            "scale": "Scale",
+            "alpha": "Opacity"
+        },
+        "sceneryremoveedges": "Remove edges of large scenery",
+		"removewaterloggedwater": "Remove waterlogged water",
         "interface": "INTERFACE",
         "theme": "Theme",
         "theme/": {
@@ -2859,105 +2967,6 @@
         "movespeed": "Move speed",
         "looksensitivity": "Look sensitivity",
         "fastmodifier": "Fast modifier",
-        "slowmodifier": "Slow modifier",
-        "graphics": "GRAPHICS",
-        "bendstyle": "Arm/Legs bending style",
-        "bendstylerealistic": "Realistic",
-        "bendstyleblocky": "Blocky",
-        "sceneryremoveedges": "Remove edges of large scenery",
-        "liquidanimation": "Water/Lava animation",
-        "noisygrasswater": "Noise effect on grass/water",
-		"removewaterloggedwater": "Remove waterlogged water",
-        "texturefiltering": "Texture filtering",
-        "texturefilteringlevel": "Texture filtering level",
-        "transparentblocktexturefiltering": "Transparent block texture filtering",
-        "blockemission": "Glowing block emission",
-        "blockglow": "Glow bright blocks and models",
-        "blockglowthreshold": "Glow color threshold",
-        "blocksubsurfaceradius": "Block subsurface radius",
-        "render": "RENDER",
-        "render/": {
-            "samples": "Samples",
-            "samples/": {
-                "0": "Not recommended for quality, quicker rendering.",
-                "1": "Recommended for a balance between quality and render times.",
-                "2": "Improved quality, render times may be longer.",
-                "3": "Extended render times, only use if your graphics card can handle it.",
-                "4": "Render times will take a long time, only use if your graphics card can handle it.",
-                "5": "Prepare for unforeseen consequences."
-            },
-            "dofquality": "Depth of field quality",
-            "ssao": "Ambient occlusion",
-            "ssao/": {
-                "radius": "Radius",
-                "power": "Strength",
-                "blurpasses": "Blur passes",
-                "color": "Color"
-            },
-            "shadows": "Shadows",
-            "shadows/": {
-                "sunbuffersize": "Sun light buffer size",
-                "spotbuffersize": "Spot light buffer size",
-                "pointbuffersize": "Point light buffer size",
-                "buffersize256": "Very small",
-                "buffersize512": "Small",
-                "buffersize1024": "Medium",
-                "buffersize2048": "Big",
-                "buffersize4096": "Very big",
-                "buffersize8192": "Gigantic",
-                "suncolored": "Colored sun shadows"
-            },
-            "subsurfacescattering": "Subsurface scattering",
-            "subsurfacescatter/":
-            {
-                "quality": "Blur quality",
-                "jitter": "Jitter amount"
-            },
-            "indirect": "Indirect lighting",
-            "indirect/": {
-                "quality": "Ray trace quality",
-                "quality/": {
-                    "0": "Low",
-                    "1": "Medium",
-                    "2": "High",
-                    "3": "Best"
-                },
-                "blurpasses": "Blur passes",
-                "strength": "Strength",
-                "range": "Emission range"
-            },
-            "reflections": "Reflections",
-            "reflections/": {
-                "precision": "Precision",
-                "thickness": "Thickness",
-                "halfres": "Half res",
-                "fadeamount": "Edge fade amount"
-            },
-            "glow": "Glow",
-            "glow/": {
-                "radius": "Radius",
-                "intensity": "Intensity",
-                "falloff": "Secondary glow",
-                "falloffradius": "Secondary radius",
-                "falloffintensity": "Secondary intensity"
-            },
-            "aa": "Anti-aliasing",
-            "aapower": "Strength",
-            "watermark": "Watermark",
-            "watermark/": {
-                "upgraderequired": "Upgrade Mine-imator to use a custom watermark.",
-                "image": "Image",
-                "default": "Default",
-                "positionx": "X position",
-                "positiony": "Y position",
-                "left": "Left",
-                "center": "Center",
-                "right": "Right",
-                "top": "Top",
-                "bottom": "Bottom",
-                "scale": "Scale",
-                "alpha": "Opacity"
-            } 
-        }
+        "slowmodifier": "Slow modifier"
     }
 }

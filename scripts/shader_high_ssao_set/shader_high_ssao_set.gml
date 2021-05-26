@@ -22,7 +22,7 @@ function shader_high_ssao_set(depthsurface, normalsurface, brightnesssurf)
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
 	
 	render_set_uniform("uKernel", render_ssao_kernel)
-	render_set_uniform("uRadius", app.setting_render_ssao_radius)
-	render_set_uniform("uPower", app.setting_render_ssao_power)
-	render_set_uniform_color("uColor", app.setting_render_ssao_color, 1)
+	render_set_uniform("uRadius", app.project_render_ssao_radius)
+	render_set_uniform("uPower", app.project_render_ssao_power)
+	render_set_uniform_color("uColor", app.project_render_ssao_color, 1)
 }

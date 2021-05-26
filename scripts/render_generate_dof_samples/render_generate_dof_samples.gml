@@ -7,11 +7,11 @@ function render_generate_dof_samples(blades, rotation, ratio)
 {
 	var rings, samples, rotoff;
 	
-	if (render_dof_blades = blades && render_dof_rotation = rotation && render_dof_ratio = ratio && render_dof_quality = app.setting_render_dof_quality)
+	if (render_dof_blades = blades && render_dof_rotation = rotation && render_dof_ratio = ratio && render_dof_quality = app.project_render_dof_quality)
 		return 0
 	
 	rings = 14
-	samples = app.setting_render_dof_quality
+	samples = app.project_render_dof_quality
 	rotoff = (pi*2) / (360/270)
 	
 	// Clear previous data

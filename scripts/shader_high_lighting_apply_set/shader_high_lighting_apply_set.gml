@@ -25,7 +25,7 @@ function shader_high_lighting_apply_set(ssao, shadows, mask, material)
 	render_set_uniform_color("uAmbientColor", app.background_ambient_color_final, 1)
 	
 	render_set_uniform("uIndirectEnabled", render_indirect)
-	render_set_uniform("uIndirectStrength", app.setting_render_indirect_strength)
+	render_set_uniform("uIndirectStrength", app.project_render_indirect_strength)
 	
 	render_set_uniform("uReflectionsEnabled", render_reflections)
 	render_set_uniform_color("uFallbackColor", app.background_sky_color_final, 1)

@@ -8,6 +8,7 @@ function app_startup_collapse()
 	collapse_map = ds_map_create()
 	
 	collapse_register("backup")
+	collapse_register("watermark")
 	
 	collapse_register("file")
 	collapse_register("edit")
@@ -25,7 +26,8 @@ function app_startup_collapse()
 	collapse_register("reflections")
 	collapse_register("glow")
 	collapse_register("aa")
-	collapse_register("watermark")
+	collapse_register("camera_effects")
+	collapse_register("models_scenery")
 	
 	collapse_register("clouds")
 	collapse_register("ground")

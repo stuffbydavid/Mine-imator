@@ -596,7 +596,7 @@ function view_draw(view)
 		var infotext;
 		
 		if (view_render_real_time)
-			infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), setting_render_samples)
+			infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), project_render_samples)
 		else
 			infotext = ""
 		

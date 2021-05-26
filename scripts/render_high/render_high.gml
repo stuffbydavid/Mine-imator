@@ -18,7 +18,7 @@ function render_high()
 	{
 		render_high_shadows(render_active = "image" || render_active = "movie")
 	
-		if (setting_render_pass = e_render_pass.SHADOWS)
+		if (project_render_pass = e_render_pass.SHADOWS)
 			render_pass_surf = surface_duplicate(render_surface_shadows)
 	}
 	
@@ -27,7 +27,7 @@ function render_high()
 	{
 		render_high_indirect(render_active = "image" || render_active = "movie")
 		
-		if (setting_render_pass = e_render_pass.INDIRECT)
+		if (project_render_pass = e_render_pass.INDIRECT)
 			render_pass_surf = surface_duplicate(render_surface_indirect)
 	}
 	
@@ -39,8 +39,8 @@ function render_high()
 	{
 		render_high_reflections(render_active = "image" || render_active = "movie", finalsurf)
 		
-		if (setting_render_pass = e_render_pass.REFLECTIONS)
-			render_pass_surf = surface_duplicate(render_surface_ssr, setting_render_reflections_halfres ? 2 : 1)
+		if (project_render_pass = e_render_pass.REFLECTIONS)
+			render_pass_surf = surface_duplicate(render_surface_ssr, project_render_reflections_halfres ? 2 : 1)
 	}
 	
 	// Fog
@@ -52,10 +52,10 @@ function render_high()
 	
 	render_samples_clear = false
 	
-	if (render_samples < setting_render_samples)
+	if (render_samples < project_render_samples)
 		render_samples++
 	
-	if (setting_render_pass != e_render_pass.FINAL && surface_exists(render_pass_surf))
+	if (project_render_pass != e_render_pass.FINAL && surface_exists(render_pass_surf))
 		surface_copy(render_target, 0, 0, render_pass_surf)
 	
 	render_time = current_time - starttime - render_surface_time
