@@ -16,7 +16,7 @@ function project_load_resource(argument0)
 		
 		var typestr = value_get_string(map[?"type"]);
 		
-		if (load_format < e_project.FORMAT_130_AL9)
+		if (load_format < e_project.FORMAT_200_AL9)
 		{
 			if (typestr = "schematic")
 				typestr = "scenery"

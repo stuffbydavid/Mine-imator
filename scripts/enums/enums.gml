@@ -33,9 +33,9 @@ function enums()
 		FORMAT_122		  = 30,
 		FORMAT_123_PRE_2  = 31,
 		FORMAT_125		  = 32,
-		FORMAT_130_AL9	  = 33,
-		FORMAT_130_AL10	  = 34,
-		FORMAT_130_AL14   = 35
+		FORMAT_200_AL9	  = 33,
+		FORMAT_200_AL10	  = 34,
+		FORMAT_200_AL14   = 35
 	}
 	
 	enum e_settings
@@ -55,7 +55,7 @@ function enums()
 		FORMAT_113		  = 26,
 		FORMAT_114		  = 27,
 		FORMAT_120		  = 28,
-		FORMAT_130		  = 29
+		FORMAT_200		  = 29
 	}
 	
 	enum e_minecraft_assets

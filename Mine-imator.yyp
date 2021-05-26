@@ -2307,7 +2307,6 @@
     {"CopyToMask":-1,"filePath":"datafiles/Data/Fonts","resourceVersion":"1.0","name":"notomono_regular.ttf","resourceType":"GMIncludedFile",},
     {"CopyToMask":153157610357391598,"filePath":"datafiles/Data/Languages","resourceVersion":"1.0","name":"english.milanguage","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data/Languages","resourceVersion":"1.0","name":"french.milanguage","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.16.1.midata","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data","resourceVersion":"1.0","name":"import.exe","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data/Libraries/x32","resourceVersion":"1.0","name":"file.dll","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data","resourceVersion":"1.0","name":"legacy.midata","resourceType":"GMIncludedFile",},
@@ -2326,7 +2325,8 @@
     {"CopyToMask":-1,"filePath":"datafiles/Particles","resourceVersion":"1.0","name":"rain.miparticles","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Particles","resourceVersion":"1.0","name":"snow.miparticles","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Particles","resourceVersion":"1.0","name":"smoke.miparticles","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.16.1.zip","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"21w20a.midata","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"21w20a.zip","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.2.560",

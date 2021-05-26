@@ -11,16 +11,16 @@ function macros()
 	#macro dev_mode_rotate_blocks		dev_mode && true
 	
 	// Versions
-	#macro mineimator_version			"1.3.0"
+	#macro mineimator_version			"2.0.0"
 	#macro mineimator_version_extra		"Alpha 13"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
 	#macro mineimator_version_date		"2021.05.11"
 	#macro gm_runtime					GM_runtime_version
-	#macro minecraft_version			"1.16.1"
+	#macro minecraft_version			"21w20a"
 	
 	// File formats
-	#macro project_format				e_project.FORMAT_130_AL10
-	#macro settings_format				e_settings.FORMAT_130
+	#macro project_format				e_project.FORMAT_200_AL10
+	#macro settings_format				e_settings.FORMAT_200
 	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_123
 	
 	// Directories

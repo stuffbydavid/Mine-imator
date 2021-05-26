@@ -91,7 +91,7 @@ function settings_load_legacy(fn)
 	if (load_format >= e_settings.FORMAT_100)
 		setting_z_is_up = buffer_read_byte()
 	
-	// Pre-1.3 keybinds not supported, just read buffer data
+	// Pre-2.0 keybinds not supported, just read buffer data
 	
 	// Workaround a bug where the keys are saved as "0", causing them to continuously pressed
 	var keynew = buffer_read_byte();

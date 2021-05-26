@@ -1,7 +1,7 @@
 {
   "option_windows_display_name": "Mine-imator",
   "option_windows_executable_name": "Mine-imator",
-  "option_windows_version": "1.3.0.0",
+  "option_windows_version": "2.0.0.0",
   "option_windows_company_info": "www.stuffbydavid.com",
   "option_windows_product_info": "Mine-imator",
   "option_windows_copyright_info": "(c)2021 Stuff by David",

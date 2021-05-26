@@ -194,7 +194,7 @@ function settings_load()
 			else
 				setting_bend_style = value_get_string(graphicsmap[?"bend_style"], setting_bend_style)
 			
-			if (load_format < e_settings.FORMAT_130)
+			if (load_format < e_settings.FORMAT_200)
 				setting_scenery_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_scenery_remove_edges)
 			else
 				setting_scenery_remove_edges = value_get_real(graphicsmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
@@ -209,7 +209,7 @@ function settings_load()
 			setting_block_glow_threshold = value_get_real(graphicsmap[?"block_glow_threshold"], setting_block_glow_threshold)
 			setting_block_glow = value_get_real(graphicsmap[?"block_glow"], setting_block_glow)
 			
-			if (load_format < e_settings.FORMAT_130)
+			if (load_format < e_settings.FORMAT_200)
 			{
 				var lightbleed = value_get_real(graphicsmap[?"light_bleeding"], true);
 				

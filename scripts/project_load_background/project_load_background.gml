@@ -38,7 +38,7 @@ function project_load_background(map)
 	background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 	background_sky_clouds_mode = value_get_real(map[?"sky_clouds_mode"], background_sky_clouds_mode)
 	
-	if (load_format < e_project.FORMAT_130_AL9)
+	if (load_format < e_project.FORMAT_200_AL9)
 	{
 		var faded, flat;
 		faded = false
@@ -69,7 +69,7 @@ function project_load_background(map)
 	background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
 	
 	// Update cloud size
-	if (load_format < e_project.FORMAT_130_AL10)
+	if (load_format < e_project.FORMAT_200_AL10)
 	{
 		if (app.background_sky_clouds_tex = "default")
 			app.background_sky_clouds_size *= 8

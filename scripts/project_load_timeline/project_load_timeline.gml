@@ -190,7 +190,7 @@ function project_load_timeline(map)
 		foliage_tint = value_get_real(map[?"foliage_tint"], foliage_tint)
 		
 		/*
-		if (project_format < e_project.FORMAT_130_AL14)
+		if (project_format < e_project.FORMAT_200_AL14)
 			value_get_real(map[?"bleed_light"], false)
 		*/
 		

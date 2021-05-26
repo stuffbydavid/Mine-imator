@@ -521,7 +521,6 @@ function app_startup_lists()
 		"ao",
 		"shadows",
 		"indirect",
-		"reflections",
-		"subsurface"
+		"reflections"
 	)
 }

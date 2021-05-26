@@ -23,7 +23,7 @@ function project_load_project(map)
 		timeline_repeat = value_get_real(tlmap[?"repeat"], timeline_repeat)
 		timeline_seamless_repeat = value_get_real(tlmap[?"seamless_repeat"], timeline_seamless_repeat)
 		
-		if (load_format < e_project.FORMAT_130_AL9)
+		if (load_format < e_project.FORMAT_200_AL9)
 			timeline_intervals_show = value_get_real(tlmap[?"show_seconds"], timeline_intervals_show)
 		else
 			timeline_intervals_show = value_get_real(tlmap[?"intervals_show"], timeline_intervals_show)

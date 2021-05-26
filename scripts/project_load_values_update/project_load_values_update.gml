@@ -45,8 +45,8 @@ function project_load_values_update()
 			value[e_value.BG_GROUND_SLOT] = app.background_ground_slot
 	}
 	
-	// Separated leaf colors for custom biome setting (1.3.0)
-	if (load_format < e_project.FORMAT_130_AL9)
+	// Separated leaf colors for custom biome setting (2.0.0)
+	if (load_format < e_project.FORMAT_200_AL9)
 	{
 		app.background_leaves_oak_color = app.background_foliage_color
 		app.background_leaves_spruce_color = c_plains_biome_foliage_2
