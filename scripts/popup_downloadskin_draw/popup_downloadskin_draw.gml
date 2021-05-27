@@ -50,7 +50,7 @@ function popup_downloadskin_draw()
 	
 	// Done
 	tab_control_button_label()
-	if (draw_button_label("downloadskindone", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT, !popup.texture))
+	if (draw_button_label("downloadskindone", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT, !popup.texture))
 	{
 		popup_close()
 		script_execute(popup.value_script, e_option.DOWNLOAD_SKIN_DONE)

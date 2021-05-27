@@ -50,7 +50,7 @@ function draw_button_color(name, xx, yy, w, color, def, hslmode, script)
 	draw_outline(xx + 4, yy + 4, w - 8, h - 8, 1, c_border, a_border, 1)
 	
 	// Hover
-	draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.HOVER])
+	draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])
 	
 	// Label
 	labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])

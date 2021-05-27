@@ -68,7 +68,7 @@ function popup_importitemsheet_draw()
 	
 	// Create
 	tab_control_button_label()
-	if (draw_button_label("importimageok", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("importimageok", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		if (popup.value_script != null)
 			script_execute(popup.value_script, e_option.IMPORT_ITEM_SHEET_DONE)

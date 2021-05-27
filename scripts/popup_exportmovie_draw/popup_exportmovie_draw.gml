@@ -96,6 +96,6 @@ function popup_exportmovie_draw()
 	
 	// Save
 	tab_control_button_label()
-	draw_button_label("exportmoviesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT)
+	draw_button_label("exportmoviesave", dx + dw, dy, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT)
 	tab_next()
 }

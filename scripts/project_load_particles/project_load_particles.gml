@@ -47,11 +47,8 @@ function project_load_particles(map)
 			name = value_get_string(ptypemap[?"name"], name)
 			
 			// Translate name
-			if (other = app.bench_settings && text_exists("particletype" + name))
-			{
-				log("translating name")
+			if (other.id = app.bench_settings && text_exists("particletype" + name))
 				name = text_get("particletype" + name)
-			}
 			
 			if (load_format < e_project.FORMAT_123_PRE_2)
 			{

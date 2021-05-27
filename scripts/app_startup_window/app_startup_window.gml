@@ -111,9 +111,9 @@ function app_startup_window()
 	// Popups
 	popup = null
 	popup_ani = 0
+	popup_block_ani = 0
 	popup_ani_type = ""
 	popup_switch_to = null
 	popup_switch_from = null
 	popup_mouseon = false
-	popup_block = 0
 }

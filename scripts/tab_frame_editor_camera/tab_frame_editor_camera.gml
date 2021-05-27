@@ -60,8 +60,7 @@ function tab_frame_editor_camera()
 	
 	// Rotate point
 	tab_control_switch()
-	draw_button_collapse("rotatepoint", collapse_map[?"rotatepoint"], null, !tl_edit.value[e_value.CAM_ROTATE])
-	draw_switch("frameeditorcamerarotate", dx, dy, tl_edit.value[e_value.CAM_ROTATE], action_tl_frame_cam_rotate)
+	draw_button_collapse("rotatepoint", collapse_map[?"rotatepoint"], action_tl_frame_cam_rotate, tl_edit.value[e_value.CAM_ROTATE], "frameeditorcamerarotate")
 	tab_next()
 
 	if (tl_edit.value[e_value.CAM_ROTATE] && collapse_map[?"rotatepoint"])
@@ -99,8 +98,7 @@ function tab_frame_editor_camera()
 	
 	// Camera shake
 	tab_control_switch()
-	draw_button_collapse("camshake", collapse_map[?"camshake"], null, !tl_edit.value[e_value.CAM_SHAKE])
-	draw_switch("frameeditorcameracamerashake", dx, dy, tl_edit.value[e_value.CAM_SHAKE], action_tl_frame_cam_shake)
+	draw_button_collapse("camshake", collapse_map[?"camshake"], action_tl_frame_cam_shake, tl_edit.value[e_value.CAM_SHAKE], "frameeditorcameracamerashake")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_SHAKE] && collapse_map[?"camshake"])
@@ -141,8 +139,7 @@ function tab_frame_editor_camera()
 	
 	// Depth of Field
 	tab_control_switch()
-	draw_button_collapse("dof", collapse_map[?"dof"], null, !tl_edit.value[e_value.CAM_DOF])
-	draw_switch("frameeditorcameradof", dx, dy, tl_edit.value[e_value.CAM_DOF], action_tl_frame_cam_dof)
+	draw_button_collapse("dof", collapse_map[?"dof"], action_tl_frame_cam_dof, tl_edit.value[e_value.CAM_DOF], "frameeditorcameradof")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_DOF] && collapse_map[?"dof"])
@@ -226,8 +223,7 @@ function tab_frame_editor_camera()
 	
 	// Bloom
 	tab_control_switch()
-	draw_button_collapse("bloom", collapse_map[?"bloom"], null, !tl_edit.value[e_value.CAM_BLOOM])
-	draw_switch("frameeditorcamerabloom", dx, dy, tl_edit.value[e_value.CAM_BLOOM], action_tl_frame_cam_bloom)
+	draw_button_collapse("bloom", collapse_map[?"bloom"], action_tl_frame_cam_bloom, tl_edit.value[e_value.CAM_BLOOM], "frameeditorcamerabloom")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_BLOOM] && collapse_map[?"bloom"])
@@ -259,8 +255,7 @@ function tab_frame_editor_camera()
 	
 	// Lens dirt
 	tab_control_switch()
-	draw_button_collapse("lensdirt", collapse_map[?"lensdirt"], null, !tl_edit.value[e_value.CAM_LENS_DIRT])
-	draw_switch("frameeditorcameralensdirt", dx, dy, tl_edit.value[e_value.CAM_LENS_DIRT], action_tl_frame_cam_lens_dirt)
+	draw_button_collapse("lensdirt", collapse_map[?"lensdirt"], action_tl_frame_cam_lens_dirt, tl_edit.value[e_value.CAM_LENS_DIRT], "frameeditorcameralensdirt")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_LENS_DIRT] && collapse_map[?"lensdirt"])
@@ -319,8 +314,7 @@ function tab_frame_editor_camera()
 	
 	// Color correction
 	tab_control_switch()
-	draw_button_collapse("clrcor", collapse_map[?"clrcor"], null, !tl_edit.value[e_value.CAM_COLOR_CORRECTION])
-	draw_switch("frameeditorcameracolorcorrection", dx, dy, tl_edit.value[e_value.CAM_COLOR_CORRECTION], action_tl_frame_cam_clrcor)
+	draw_button_collapse("clrcor", collapse_map[?"clrcor"], action_tl_frame_cam_clrcor, tl_edit.value[e_value.CAM_COLOR_CORRECTION], "frameeditorcameracolorcorrection")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_COLOR_CORRECTION] && collapse_map[?"clrcor"])
@@ -352,8 +346,7 @@ function tab_frame_editor_camera()
 	
 	// Grain
 	tab_control_switch()
-	draw_button_collapse("grain", collapse_map[?"grain"], null, !tl_edit.value[e_value.CAM_GRAIN])
-	draw_switch("frameeditorcameragrain", dx, dy, tl_edit.value[e_value.CAM_GRAIN], action_tl_frame_cam_grain)
+	draw_button_collapse("grain", collapse_map[?"grain"], action_tl_frame_cam_grain, tl_edit.value[e_value.CAM_GRAIN], "frameeditorcameragrain")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_GRAIN] && collapse_map[?"grain"])
@@ -377,8 +370,7 @@ function tab_frame_editor_camera()
 	
 	// Vignette
 	tab_control_switch()
-	draw_button_collapse("vignette", collapse_map[?"vignette"], null, !tl_edit.value[e_value.CAM_VIGNETTE])
-	draw_switch("frameeditorcameravignette", dx, dy, tl_edit.value[e_value.CAM_VIGNETTE], action_tl_frame_cam_vignette)
+	draw_button_collapse("vignette", collapse_map[?"vignette"], action_tl_frame_cam_vignette, tl_edit.value[e_value.CAM_VIGNETTE], "frameeditorcameravignette")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_VIGNETTE] && collapse_map[?"vignette"])
@@ -406,8 +398,7 @@ function tab_frame_editor_camera()
 	
 	// Chromatic aberration
 	tab_control_switch()
-	draw_button_collapse("ca", collapse_map[?"ca"], null, !tl_edit.value[e_value.CAM_CA])
-	draw_switch("frameeditorcameraca", dx, dy, tl_edit.value[e_value.CAM_CA], action_tl_frame_cam_ca)
+	draw_button_collapse("ca", collapse_map[?"ca"], action_tl_frame_cam_ca, tl_edit.value[e_value.CAM_CA], "frameeditorcameraca")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_CA] && collapse_map[?"ca"])
@@ -435,8 +426,7 @@ function tab_frame_editor_camera()
 	
 	// Distort
 	tab_control_switch()
-	draw_button_collapse("distort", collapse_map[?"distort"], null, !tl_edit.value[e_value.CAM_DISTORT])
-	draw_switch("frameeditorcameradistort", dx, dy, tl_edit.value[e_value.CAM_DISTORT], action_tl_frame_cam_distort)
+	draw_button_collapse("distort", collapse_map[?"distort"], action_tl_frame_cam_distort, tl_edit.value[e_value.CAM_DISTORT], "frameeditorcameradistort")
 	tab_next()
 	
 	if (tl_edit.value[e_value.CAM_DISTORT] && collapse_map[?"distort"])

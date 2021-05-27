@@ -55,7 +55,7 @@ function view_control_scale_all(view, mat, radius)
 		}
 	}
 	
-	draw_set_color(c_level_middle)
+	draw_set_color(c_control_white)
 	
 	// Draw circle
 	if (view.control_mouseon_last = e_view_control.SCA_XYZ)

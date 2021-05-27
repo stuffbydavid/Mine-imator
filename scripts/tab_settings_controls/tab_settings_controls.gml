@@ -8,8 +8,7 @@ function tab_settings_controls()
 	
 	// File
 	tab_control(24)
-	draw_button_collapse("file")
-	draw_label(text_get("settingscontrolsfile"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("file", collapse_map[?"file"], null, true, "settingscontrolsfile")
 	tab_next()
 	
 	if (collapse_map[?"file"])
@@ -28,8 +27,7 @@ function tab_settings_controls()
 	
 	// Edit
 	tab_control(24)
-	draw_button_collapse("edit")
-	draw_label(text_get("settingscontrolsedit"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("edit", collapse_map[?"edit"], null, true, "settingscontrolsedit")
 	tab_next()
 	
 	if (collapse_map[?"edit"])
@@ -54,8 +52,7 @@ function tab_settings_controls()
 	
 	// Tools
 	tab_control(24)
-	draw_button_collapse("tools")
-	draw_label(text_get("settingscontrolstools"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("tools", collapse_map[?"tools"], null, true, "settingscontrolstools")
 	tab_next()
 	
 	if (collapse_map[?"tools"])
@@ -76,8 +73,7 @@ function tab_settings_controls()
 	
 	// Viewport
 	tab_control(24)
-	draw_button_collapse("viewport")
-	draw_label(text_get("settingscontrolsviewport"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("viewport", collapse_map[?"viewport"], null, true, "settingscontrolsviewport")
 	tab_next()
 	
 	if (collapse_map[?"viewport"])
@@ -94,8 +90,7 @@ function tab_settings_controls()
 	
 	// Timeline
 	tab_control(24)
-	draw_button_collapse("timeline")
-	draw_label(text_get("settingscontrolstimeline"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("timeline", collapse_map[?"timeline"], null, true, "settingscontrolstimeline")
 	tab_next()
 	
 	if (collapse_map[?"timeline"])
@@ -113,8 +108,7 @@ function tab_settings_controls()
 	
 	// Camera
 	tab_control(24)
-	draw_button_collapse("camera")
-	draw_label(text_get("settingscontrolscamera"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("camera", collapse_map[?"camera"], null, true, "settingscontrolscamera")
 	tab_next()
 	
 	if (collapse_map[?"camera"])

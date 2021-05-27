@@ -89,8 +89,7 @@ function tab_frame_editor_color()
 	#region Subsurface
 	
 	tab_control_switch()
-	draw_button_collapse("material_subsurface", collapse_map[?"material_subsurface"], null, false)
-	draw_label(text_get("frameeditorsubsurface"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("material_subsurface", collapse_map[?"material_subsurface"], null, true, "frameeditorsubsurface")
 	tab_next()
 	
 	if (collapse_map[?"material_subsurface"])

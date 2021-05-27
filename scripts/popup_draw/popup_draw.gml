@@ -47,9 +47,12 @@ function popup_draw()
 	
 	if (!popup)
 	{
+		popup_block_ani = max(0, popup_block_ani - 0.075 * delta)
 		popup_mouseon = false
 		return 0
 	}
+	else
+		popup_block_ani = min(1, popup_block_ani + 0.075 * delta)
 	
 	draw_set_alpha(ease("easeoutcirc", popup_ani))
 	
@@ -153,7 +156,10 @@ function popup_draw()
 	}
 	
 	if (popup.script != null)
+	{
 		script_execute(popup.script)
+		dy += 4
+	}
 	
 	if (popup.custom || popup.height != null)
 	{

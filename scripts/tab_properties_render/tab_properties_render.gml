@@ -56,8 +56,7 @@ function tab_properties_render()
 	
 	// SSAO
 	tab_control_switch()
-	draw_button_collapse("ssao", collapse_map[?"ssao"], null, !project_render_ssao)
-	draw_switch("renderssao", dx, dy, project_render_ssao, action_project_render_ssao)
+	draw_button_collapse("ssao", collapse_map[?"ssao"], action_project_render_ssao, project_render_ssao, "renderssao")
 	tab_next()
 	
 	if (project_render_ssao && collapse_map[?"ssao"])
@@ -85,8 +84,7 @@ function tab_properties_render()
 	
 	// Shadows
 	tab_control_switch()
-	draw_button_collapse("shadows", collapse_map[?"shadows"], null, !project_render_shadows)
-	draw_switch("rendershadows", dx, dy, project_render_shadows, action_project_render_shadows)
+	draw_button_collapse("shadows", collapse_map[?"shadows"], action_project_render_shadows, project_render_shadows, "rendershadows")
 	tab_next()
 	
 	if (project_render_shadows && collapse_map[?"shadows"])
@@ -114,8 +112,7 @@ function tab_properties_render()
 	
 	// Subsurface scattering
 	tab_control_switch()
-	draw_button_collapse("subsurface", collapse_map[?"subsurface"], null, false)
-	draw_label(text_get("rendersubsurfacescattering"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("subsurface", collapse_map[?"subsurface"], null, true, "rendersubsurfacescattering")
 	tab_next()
 	
 	if (collapse_map[?"subsurface"])
@@ -135,8 +132,7 @@ function tab_properties_render()
 	
 	// Indirect lighting
 	tab_control_switch()
-	draw_button_collapse("indirect", collapse_map[?"indirect"], null, !project_render_indirect)
-	draw_switch("renderindirect", dx, dy, project_render_indirect, action_project_render_indirect)
+	draw_button_collapse("indirect", collapse_map[?"indirect"], action_project_render_indirect, project_render_indirect, "renderindirect")
 	tab_next()
 	
 	if (project_render_indirect && collapse_map[?"indirect"])
@@ -164,8 +160,7 @@ function tab_properties_render()
 	
 	// Reflections
 	tab_control_switch()
-	draw_button_collapse("reflections", collapse_map[?"reflections"], null, !project_render_reflections)
-	draw_switch("renderreflections", dx, dy, project_render_reflections, action_project_render_reflections)
+	draw_button_collapse("reflections", collapse_map[?"reflections"], action_project_render_reflections, project_render_reflections, "renderreflections")
 	tab_next()
 	
 	if (project_render_reflections && collapse_map[?"reflections"])
@@ -193,8 +188,7 @@ function tab_properties_render()
 	
 	// Glow
 	tab_control_switch()
-	draw_button_collapse("glow", collapse_map[?"glow"], null, !project_render_glow)
-	draw_switch("renderglow", dx, dy, project_render_glow, action_project_render_glow)
+	draw_button_collapse("glow", collapse_map[?"glow"], action_project_render_glow, project_render_glow, "renderglow")
 	tab_next()
 	
 	if (project_render_glow && collapse_map[?"glow"])
@@ -230,8 +224,7 @@ function tab_properties_render()
 	
 	// AA
 	tab_control_switch()
-	draw_button_collapse("aa", collapse_map[?"aa"], null, !project_render_aa)
-	draw_switch("renderaa", dx, dy, project_render_aa, action_project_render_aa)
+	draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, project_render_aa, "renderaa")
 	tab_next()
 	
 	if (project_render_aa && collapse_map[?"aa"])
@@ -247,8 +240,7 @@ function tab_properties_render()
 	
 	// Texture filtering
 	tab_control_switch()
-	draw_button_collapse("texfilter", collapse_map[?"texfilter"], null, !project_render_texture_filtering)
-	draw_switch("rendertexturefiltering", dx, dy, project_render_texture_filtering, action_project_render_texture_filtering)
+	draw_button_collapse("texfilter", collapse_map[?"texfilter"], action_project_render_texture_filtering, project_render_texture_filtering, "rendertexturefiltering")
 	tab_next()
 	
 	if (project_render_texture_filtering && collapse_map[?"texfilter"])
@@ -265,13 +257,12 @@ function tab_properties_render()
 		draw_meter("rendertexturefilteringlevel", dx, dy, dw, project_render_texture_filtering_level, 48, 0, 5, 1, 1, tab.render.tbx_texture_filtering_level, action_project_render_texture_filtering_level)
 		tab_next()
 		
-		tab_collapse_end(false)
+		tab_collapse_end()
 	}
 	
 	// Camera effects
 	tab_control_switch()
-	draw_button_collapse("camera_effects", collapse_map[?"camera_effects"], null, false)
-	draw_label(text_get("rendercameraeffects"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("camera_effects", collapse_map[?"camera_effects"], null, true, "rendercameraeffects")
 	tab_next()
 	
 	if (collapse_map[?"camera_effects"])
@@ -288,8 +279,7 @@ function tab_properties_render()
 	
 	// Models and scenery
 	tab_control_switch()
-	draw_button_collapse("models_scenery", collapse_map[?"models_scenery"], null, false)
-	draw_label(text_get("rendermodelsscenery"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_button_collapse("models_scenery", collapse_map[?"models_scenery"], null, true, "rendermodelsscenery")
 	tab_next()
 	
 	if (collapse_map[?"models_scenery"])

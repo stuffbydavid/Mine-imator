@@ -4,7 +4,7 @@
 
 function array_contains(arr, value)
 {
-	var len = array_length(argument0);
+	var len = array_length(arr);
 	
 	for (var i = 0; i < len; i++)
 		if (arr[@ i] = value)

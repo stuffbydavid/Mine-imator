@@ -15,17 +15,17 @@ function view_control_bend(view)
 		var mat;
 		if (i = X)
 		{
-			color = c_axiscyan
+			color = c_control_cyan
 			mat = matrix_multiply(matrix_build(0, 0, 0, 0, 90, tl_edit.value[e_value.BEND_ANGLE_Z] * part.bend_axis[Z], 1, 1, 1), tl_edit.matrix)
 		}
 		else if (i = Y)
 		{
-			color = (setting_z_is_up ? c_axisyellow : c_axismagenta)
+			color = (setting_z_is_up ? c_control_yellow : c_control_magenta)
 			mat = matrix_multiply(matrix_build(0, 0, 0, tl_edit.value[e_value.BEND_ANGLE_X] * part.bend_axis[X] + 90, 0, tl_edit.value[e_value.BEND_ANGLE_Z] * part.bend_axis[Z], 1, 1, 1), tl_edit.matrix)
 		}
 		else
 		{
-			color = (setting_z_is_up ? c_axismagenta : c_axisyellow)
+			color = (setting_z_is_up ? c_control_magenta : c_control_yellow)
 			mat = matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1), tl_edit.matrix)
 		}
 		

@@ -130,6 +130,4 @@ function settings_startup()
 	settings_load()
 	languages_load()
 	interface_update()
-	
-	texture_set_mipmap_level(project_render_texture_filtering_level)
 }

@@ -81,6 +81,4 @@ function bench_click(type)
 	}
 
 	bench_clear()
-
-
 }

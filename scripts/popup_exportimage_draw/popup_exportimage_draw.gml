@@ -53,6 +53,6 @@ function popup_exportimage_draw()
 	
 	// Save
 	tab_control_button_label()
-	draw_button_label("exportimagesave", dx + dw, dy_start + dh - 32, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportimage_save, e_anchor.RIGHT)
+	draw_button_label("exportimagesave", dx + dw, dy, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportimage_save, e_anchor.RIGHT)
 	tab_next()
 }

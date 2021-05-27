@@ -18,7 +18,7 @@ function popup_modelbench_draw()
 	tab_control_button_label()
 	
 	// Download
-	if (draw_button_label("modelbenchdownload", dx + dw - buttonx, dy_start + dh - 32))
+	if (draw_button_label("modelbenchdownload", dx + dw - buttonx, dy))
 	{
 		popup_modelbench.not_now = true
 		popup_close()
@@ -26,7 +26,7 @@ function popup_modelbench_draw()
 	
 	// Not now
 	buttonx += 12 + (string_width(text_get("modelbenchnotnow")) + button_padding)
-	if (draw_button_label("modelbenchnotnow", dx + dw - buttonx, dy_start + dh - 32, null, null, e_button.SECONDARY))
+	if (draw_button_label("modelbenchnotnow", dx + dw - buttonx, dy, null, null, e_button.SECONDARY))
 	{
 		popup_modelbench.not_now = true
 		popup_close()

@@ -66,7 +66,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Export movie
-	popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 500, null, true)
+	popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 350, null, true)
 	with (popup_exportmovie)
 	{
 		format = app.setting_export_movie_format

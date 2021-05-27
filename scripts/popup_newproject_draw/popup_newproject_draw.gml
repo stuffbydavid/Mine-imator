@@ -21,13 +21,11 @@ function popup_newproject_draw()
 	tab_next()
 	
 	// Project location
-	tab_control(40)
-	draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
-	
 	var directory = "...\\" + directory_name(setting_project_folder) + string_remove_newline(popup.folder);
 	
-	draw_label(directory, dx, dy + 38, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
-	if (draw_button_icon("newprojectchangefolder", dx + dw - 24, dy + 12, 24, 24, false, icons.FOLDER_EDIT, null, null, "tooltipchangefolder"))
+	tab_control(40)
+	draw_label_value(dx, dy, dw - 28, 40, text_get("newprojectlocation"), directory, true)
+	if (draw_button_icon("newprojectchangefolder", dx + dw - 24, dy + 8, 24, 24, false, icons.FOLDER_EDIT, null, null, "tooltipchangefolder"))
 	{
 		var fn = file_dialog_save_project(popup.folder)
 		if (fn != "")
@@ -40,7 +38,7 @@ function popup_newproject_draw()
 	
 	// Create
 	tab_control_button_label()
-	if (draw_button_label("newprojectcreate", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("newprojectcreate", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		if (window_state = "startup")
 			window_state = ""

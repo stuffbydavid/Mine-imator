@@ -18,8 +18,7 @@ function tab_settings_program()
 	
 	// Backups
 	tab_control_switch()
-	draw_button_collapse("backup", collapse_map[?"backup"], null, !setting_backup)
-	draw_switch("settingsbackup", dx, dy, setting_backup, action_setting_backup)
+	draw_button_collapse("backup", collapse_map[?"backup"], action_setting_backup, setting_backup, "settingsbackup")
 	tab_next()
 	
 	if (setting_backup && collapse_map[?"backup"])
@@ -42,8 +41,7 @@ function tab_settings_program()
 	#region Watermark
 	
 	tab_control_switch()
-	
-	if (draw_button_collapse("watermark", collapse_map[?"watermark"], null, false))
+	if (draw_button_collapse("watermark", collapse_map[?"watermark"], null, true, "settingswatermark"))
 	{
 		if (trial_version)
 		{
@@ -51,8 +49,6 @@ function tab_settings_program()
 			popup_show(popup_upgrade)
 		}
 	}
-	
-	draw_label(text_get("settingswatermark"), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	tab_next()
 	
 	if (!trial_version && collapse_map[?"watermark"])

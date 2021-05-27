@@ -20,7 +20,7 @@ function render_update_text()
 	}
 	
 	with (obj_particle_type)
-		if ((temp != particle_sheet && temp != particle_template) && temp.type = e_temp_type.TEXT)
+		if ((temp != particle_sheet && temp != particle_template) && temp != null && temp.type = e_temp_type.TEXT)
 			render_generate_text(id.text, temp.text_font, temp.text_3d)
 	
 	with (obj_preview)

@@ -15,13 +15,13 @@ function tab_frame_editor_rotation()
 	// Wheels
 	tab_control_wheel()
 	axis_edit = X
-	draw_wheel("frameeditorrotationxwheel", floor(dx + dw/6), dy + 24, c_axisred, tl_edit.value[e_value.ROT_X], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X], snapval, tab.transform.tbx_rot_x, action_tl_frame_rot)
+	draw_wheel("frameeditorrotationxwheel", floor(dx + dw/6), dy + 24, c_control_red, tl_edit.value[e_value.ROT_X], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X], snapval, tab.transform.tbx_rot_x, action_tl_frame_rot)
 	
 	axis_edit = (setting_z_is_up ? Y : Z)
-	draw_wheel("frameeditorrotationywheel", floor(dx + dw/2), dy + 24, c_axisgreen, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.transform.tbx_rot_y, action_tl_frame_rot)
+	draw_wheel("frameeditorrotationywheel", floor(dx + dw/2), dy + 24, c_control_green, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.transform.tbx_rot_y, action_tl_frame_rot)
 	
 	axis_edit = (setting_z_is_up ? Z : Y)
-	draw_wheel("frameeditorrotationzwheel", floor(dx + dw - dw/6), dy + 24, c_axisblue, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.transform.tbx_rot_z, action_tl_frame_rot)
+	draw_wheel("frameeditorrotationzwheel", floor(dx + dw - dw/6), dy + 24, c_control_blue, tl_edit.value[e_value.ROT_X + axis_edit], -no_limit, no_limit, tl_edit.value_default[e_value.ROT_X + axis_edit], snapval, tab.transform.tbx_rot_z, action_tl_frame_rot)
 	tab_next()
 	
 	// Textboxes

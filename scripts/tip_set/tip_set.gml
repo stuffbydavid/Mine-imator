@@ -26,7 +26,7 @@ function tip_set()
 	if (checkmouse)
 		showtip = app_mouse_box(xx, yy, w, h) && content_mouseon
 	else
-		showtip = false
+		showtip = true
 	
 	if (showtip)
 	{

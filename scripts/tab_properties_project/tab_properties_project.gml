@@ -33,15 +33,12 @@ function tab_properties_project()
 	tab_next()
 	
 	// Project location
-	tab_control(40)
-	draw_label(text_get("newprojectlocation"), dx, dy + 20, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
-	
 	var directory = "...\\" + directory_name(project_folder) + filename_name(filename_dir(project_file));
 	
-	draw_label(directory, dx, dy + 38, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
-	if (draw_button_icon("newprojectchangefolder", dx + dw - 24, dy + 10, 24, 24, false, icons.FOLDER, null, null, "tooltipopenfolder"))
+	tab_control(40)
+	draw_label_value(dx, dy, dw - 28, 40, text_get("newprojectlocation"), directory, true)
+	if (draw_button_icon("newprojectchangefolder", dx + dw - 24, dy + 8, 24, 24, false, icons.FOLDER, null, null, "tooltipopenfolder"))
 		action_toolbar_open_folder()
-	
 	tab_next()
 	
 	// Video size

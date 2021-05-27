@@ -72,7 +72,7 @@ function draw_textfield_group()
 	{
 		draw_set_font(font_label)
 		draw_label(string_limit(text_get(name), dw), xx, yy, fa_left, fa_top, c_text_secondary, a_text_secondary)
-		yy += (label_height + 12)
+		yy += (label_height + 8)
 	}
 	
 	hei = 24

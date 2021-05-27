@@ -28,7 +28,7 @@ function popup_importimage_draw()
 	
 	// Ok
 	tab_control_button_label()
-	if (draw_button_label("importimageok", dx + dw, dy_start + dh - 32, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("importimageok", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		if (popup.type = e_res_type.ITEM_SHEET)
 			popup_importitemsheet_show(popup.filename, null)

@@ -11,6 +11,7 @@ function app_startup_themes()
 	globalvar c_border, a_border, c_overlay, a_overlay;
 	globalvar c_level_top, c_level_middle, c_level_bottom, c_button_text, a_button_text;
 	globalvar c_viewport_top, c_viewport_bottom, c_error, c_warning, c_success, c_axisred, c_axisgreen, c_axisblue, c_axiscyan, c_axisyellow, c_axismagenta, c_bend;
+	globalvar c_control_red, c_control_green, c_control_blue, c_control_cyan, c_control_yellow, c_control_magenta, c_control_magenta, c_control_white;
 	
 	update_interface_wait = false
 	
@@ -182,4 +183,13 @@ function app_startup_themes()
 	theme_edit.toast_color[e_toast.NEGATIVE] = hex_to_color("FF7A72")
 	
 	#endregion
+	
+	// View controls use darker theme colors for contrast
+	c_control_red = theme_darker.red
+	c_control_green = theme_darker.green
+	c_control_blue = theme_darker.blue
+	c_control_cyan = theme_darker.cyan
+	c_control_yellow = theme_darker.yellow
+	c_control_magenta = theme_darker.magenta
+	c_control_white = theme_light.level_middle
 }

@@ -62,6 +62,9 @@ function preview_draw(preview, xx, yy, width, height)
 		}
 	}
 	
+	if (!mouseon && content_mouseon && mouse_left_pressed && window_focus = string(preview))
+		window_focus = ""
+	
 	if (window_focus = string(preview))
 	{
 		var zd, m;
@@ -113,6 +116,9 @@ function preview_draw(preview, xx, yy, width, height)
 			preview.xoff += (preview.goalxoff - preview.xoff) / max(1, 5 / delta)
 			preview.yoff += (preview.goalyoff - preview.yoff) / max(1, 5 / delta)
 		}
+		
+		window_scroll_focus = string(preview)
+		window_scroll_focus_prev = string(preview)
 	}
 	
 	// Render
@@ -696,4 +702,10 @@ function preview_draw(preview, xx, yy, width, height)
 	
 	preview.sound_playing = isplaying
 	preview.mouseon_prev = mouseon
+	
+	// Outline and hover
+	microani_set(string(preview), "", mouseon, mouseon && mouse_left, (window_focus = string(preview)) || (mouseon && mouse_left))
+	draw_outline(xx, yy, width, height, 1, c_accent, mcroani_arr[e_mcroani.ACTIVE], true)
+	draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])
+	microani_update(mouseon, mouseon && mouse_left, (window_focus = string(preview)) || (mouseon && mouse_left))
 }

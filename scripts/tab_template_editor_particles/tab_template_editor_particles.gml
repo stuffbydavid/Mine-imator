@@ -394,10 +394,9 @@ function tab_template_editor_particles()
 	// Launch angle
 	tab_control_switch()
 	
-	if (draw_button_collapse("particleeditortypeangle", !ptype_edit.angle_collapse, null, false))
+	if (draw_button_collapse("particleeditortypeangle", !ptype_edit.angle_collapse, null, true, "particleeditortypeangle"))
 		ptype_edit.angle_collapse = !ptype_edit.angle_collapse
 	
-	draw_label(text_get("particleeditortypeangle"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	tab_next()
 	
 	if (!ptype_edit.angle_collapse)
@@ -468,10 +467,9 @@ function tab_template_editor_particles()
 	// Speed
 	tab_control_switch()
 	
-	if (draw_button_collapse("particleeditortypespeed", !ptype_edit.spd_collapse, null, false))
+	if (draw_button_collapse("particleeditortypespeed", !ptype_edit.spd_collapse, null, true, "particleeditortypespeed"))
 		ptype_edit.spd_collapse = !ptype_edit.spd_collapse
 	
-	draw_label(text_get("particleeditortypespeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	tab_next()
 	
 	if (!ptype_edit.spd_collapse)
@@ -592,10 +590,9 @@ function tab_template_editor_particles()
 			// Launch angle
 			tab_control_switch()
 			
-			if (draw_button_collapse("particleeditortyperotationinitial", !ptype_edit.rot_collapse, null, false))
+			if (draw_button_collapse("particleeditortyperotationinitial", !ptype_edit.rot_collapse, null, true, "particleeditortyperotationinitial"))
 				ptype_edit.rot_collapse = !ptype_edit.rot_collapse
 			
-			draw_label(text_get("particleeditortyperotationinitial"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 			tab_next()
 			
 			if (!ptype_edit.rot_collapse)
@@ -644,10 +641,9 @@ function tab_template_editor_particles()
 			// Rotation speed
 			tab_control_switch()
 			
-			if (draw_button_collapse("particleeditortyperotationspeed", !ptype_edit.rot_spd_collapse, null, false))
+			if (draw_button_collapse("particleeditortyperotationspeed", !ptype_edit.rot_spd_collapse, null, true, "particleeditortyperotationspeed"))
 				ptype_edit.rot_spd_collapse = !ptype_edit.rot_spd_collapse
 			
-			draw_label(text_get("particleeditortyperotationspeed"), dx, dy + (tab_control_h / 2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 			tab_next()
 			
 			if (!ptype_edit.rot_spd_collapse)

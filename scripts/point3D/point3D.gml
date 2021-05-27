@@ -7,9 +7,9 @@ function point3D(xx, yy, zz)
 {
 	var pnt;
 	
-	pnt[X] = argument0
-	pnt[Y] = argument1
-	pnt[Z] = argument2
+	pnt[X] = xx
+	pnt[Y] = yy
+	pnt[Z] = zz
 	
 	return pnt
 }

@@ -149,8 +149,7 @@ function tab_properties_background()
 	
 	// Clouds
 	tab_control_switch()
-	draw_button_collapse("clouds", collapse_map[?"clouds"], null, !background_sky_clouds_show)
-	draw_switch("backgroundskycloudsshow", dx, dy, background_sky_clouds_show, action_background_sky_clouds_show)
+	draw_button_collapse("clouds", collapse_map[?"clouds"], action_background_sky_clouds_show, background_sky_clouds_show, "backgroundskycloudsshow")
 	tab_next()
 	
 	if (background_sky_clouds_show && collapse_map[?"clouds"])
@@ -201,8 +200,7 @@ function tab_properties_background()
 	
 	// Ground
 	tab_control_switch()
-	draw_button_collapse("ground", collapse_map[?"ground"], null, !background_ground_show)
-	draw_switch("backgroundgroundshow", dx, dy, background_ground_show, action_background_ground_show)
+	draw_button_collapse("ground", collapse_map[?"ground"], action_background_ground_show, background_ground_show, "backgroundgroundshow")
 	tab_next()
 	
 	capwid = text_caption_width("backgroundground", "backgroundgroundtex")
@@ -357,8 +355,7 @@ function tab_properties_background()
 	
 	// Show fog
 	tab_control_switch()
-	draw_button_collapse("fog", collapse_map[?"fog"], null, !background_fog_show)
-	draw_switch("backgroundfog", dx, dy, background_fog_show, action_background_fog_show)
+	draw_button_collapse("fog", collapse_map[?"fog"], action_background_fog_show, background_fog_show, "backgroundfog")
 	tab_next()
 	
 	if (background_fog_show && collapse_map[?"fog"])
@@ -415,8 +412,7 @@ function tab_properties_background()
 	
 	// Volumetric fog
 	tab_control_switch()
-	draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], null, !background_volumetric_fog)
-	draw_switch("backgroundvolumetricfog", dx, dy, background_volumetric_fog, action_background_volumetric_fog)
+	draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], action_background_volumetric_fog, background_volumetric_fog, "backgroundvolumetricfog")
 	tab_next()
 	
 	if (background_volumetric_fog && collapse_map[?"volumetricfog"])
@@ -474,8 +470,7 @@ function tab_properties_background()
 	
 	// Wind
 	tab_control_switch()
-	draw_button_collapse("wind", collapse_map[?"wind"], null, !background_wind)
-	draw_switch("backgroundwind", dx, dy, background_wind, action_background_wind)
+	draw_button_collapse("wind", collapse_map[?"wind"], action_background_wind, !background_wind, "backgroundwind")
 	tab_next()
 	
 	if (background_wind && collapse_map[?"wind"])

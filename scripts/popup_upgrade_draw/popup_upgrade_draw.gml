@@ -9,9 +9,10 @@ function popup_upgrade_draw()
 	
 	// Info
 	draw_set_font(font_value)
-	draw_label(string_limit_ext(text_get("upgradeinfo"), dw + 8, dh), dx, dy, fa_left, fa_top, c_text_main, a_text_main, font_value)
+	var text = string_limit_ext(text_get("upgradeinfo"), dw + 8, no_limit);
+	draw_label(text, dx, dy, fa_left, fa_top, c_text_main, a_text_main, font_value)
 	
-	dy += 126
+	dy += string_height(text) + 30
 	
 	// Upgrade link
 	draw_set_font(font_value_bold)
@@ -30,6 +31,7 @@ function popup_upgrade_draw()
 		popup_upgrade.tbx_key.text = string(clipboard_get_text())
 	
 	tab_next()
+	dy += 10
 	
 	if (popup_upgrade.warntext != "")
 	{
@@ -39,7 +41,7 @@ function popup_upgrade_draw()
 	}
 	
 	tab_control_button_label()
-	if (draw_button_label("upgradecontinue", dx + dw, dy_start + dh - 32, null, icons.KEY_ALT, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("upgradecontinue", dx + dw, dy, null, icons.KEY_ALT, e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		var upgrade = trial_upgrade(popup_upgrade.tbx_key.text);
 		

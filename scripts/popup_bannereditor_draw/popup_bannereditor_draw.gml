@@ -112,7 +112,7 @@ function popup_bannereditor_draw()
 	
 	// Done
 	tab_control_button_label()
-	if (draw_button_label("bannereditordone", dx_start + dw - buttonx, dy_start + dh - 32))
+	if (draw_button_label("bannereditordone", dx_start + dw - buttonx, dy))
 	{
 		if (popup.banner_edit.object_index = obj_bench_settings)
 		{
@@ -136,7 +136,7 @@ function popup_bannereditor_draw()
 	buttonx += 12 + (string_width(text_get("bannereditorcancel")) + button_padding)
 	
 	// Cancel
-	if (draw_button_label("bannereditorcancel", dx_start + dw - buttonx, dy_start + dh - 32, null, null, e_button.SECONDARY))
+	if (draw_button_label("bannereditorcancel", dx_start + dw - buttonx, dy, null, null, e_button.SECONDARY))
 	{
 		array_add(banner_update, popup.banner_edit)
 		

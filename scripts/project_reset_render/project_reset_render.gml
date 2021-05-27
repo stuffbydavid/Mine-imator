@@ -54,6 +54,7 @@ function project_reset_render()
 	project_render_block_glow_threshold = 0.75
 	project_render_block_subsurface = 2
 	
+	texture_set_mipmap_level(project_render_texture_filtering_level)
 	render_generate_dof_samples(0, 0, 0)
 	render_samples = -1
 	render_samples_clear = true

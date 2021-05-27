@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.05.26"
+        "lastchange": "2021.05.27"
     },
     "particle/": {
         "default": "Default spawner",
@@ -256,7 +256,8 @@
         "reloadobjects": "Reload affected objects to see setting changes.",
         "restartprogram": "Restart Mine-imator to apply setting changes.",
         "download": "Download",
-        "view": "View"
+        "view": "View",
+        "rendersaved": "Render settings saved successfully!"
     },
     "error/": {
         "loadassets": "The Minecraft assets could not be loaded. Try re-installing Mine-imator. See the log for details.",

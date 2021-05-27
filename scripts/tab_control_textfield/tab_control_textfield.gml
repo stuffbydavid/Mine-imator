@@ -16,5 +16,5 @@ function tab_control_textfield()
 	else
 		size = 24
 	
-	tab_control(size + ((label_height + 12) * toplabel))
+	tab_control(size + ((label_height + 8) * toplabel))
 }

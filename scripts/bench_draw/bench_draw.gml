@@ -50,6 +50,7 @@ function bench_draw()
 	if (!app_mouse_box(content_x, content_y, content_width, content_height) && mouse_left_pressed && window_busy = "") 
 	{
 		bench_show_ani_type = "hide"
+		window_focus = ""
 		app_mouse_clear()
 	}
 	
