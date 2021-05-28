@@ -76,20 +76,20 @@ function settings_load()
 			setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
 			setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
 			
-			setting_watermark_filename = value_get_string(rendermap[?"watermark_filename"], setting_watermark_filename)
+			setting_watermark_filename = value_get_string(programmap[?"watermark_filename"], setting_watermark_filename)
 			
 			if (!file_exists_lib(setting_watermark_filename))
 				setting_watermark_filename = ""
 			else if (setting_watermark_filename != "")
 				action_setting_watermark_open(setting_watermark_filename)
 			
-			setting_watermark_anchor_x = value_get_string(rendermap[?"watermark_anchor_x"], setting_watermark_anchor_x)
-			setting_watermark_anchor_y = value_get_string(rendermap[?"watermark_anchor_y"], setting_watermark_anchor_y)
-			setting_watermark_scale = value_get_real(rendermap[?"watermark_scale"], setting_watermark_scale)
-			setting_watermark_alpha = value_get_real(rendermap[?"watermark_alpha"], setting_watermark_alpha)
+			setting_watermark_anchor_x = value_get_string(programmap[?"watermark_anchor_x"], setting_watermark_anchor_x)
+			setting_watermark_anchor_y = value_get_string(programmap[?"watermark_anchor_y"], setting_watermark_anchor_y)
+			setting_watermark_scale = value_get_real(programmap[?"watermark_scale"], setting_watermark_scale)
+			setting_watermark_alpha = value_get_real(programmap[?"watermark_alpha"], setting_watermark_alpha)
 			
-			setting_scenery_remove_edges = value_get_real(graphicsmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
-			setting_remove_waterlogged_water = value_get_real(graphicsmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
+			setting_scenery_remove_edges = value_get_real(programmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
+			setting_remove_waterlogged_water = value_get_real(programmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
 		}
 		
 		// Interface

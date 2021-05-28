@@ -12,16 +12,16 @@ function macros()
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"
-	#macro mineimator_version_extra		"Alpha 13"
+	#macro mineimator_version_extra		"Alpha 14.1"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-	#macro mineimator_version_date		"2021.05.11"
+	#macro mineimator_version_date		"2021.05.27"
 	#macro gm_runtime					GM_runtime_version
-	#macro minecraft_version			"21w20a"
+	#macro minecraft_version			"1.17"
 	
 	// File formats
 	#macro project_format				e_project.FORMAT_200_AL10
 	#macro settings_format				e_settings.FORMAT_200
-	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_123
+	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_200
 	
 	// Directories
 	#macro file_directory				game_save_id

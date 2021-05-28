@@ -22,6 +22,9 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 					var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size))
 					matrix_set(matrix_world, matrix_multiply(matrix_create(pos, vec3(0), vec3(1)), mat))
 					render_world_block(scenery.block_vbuffer, res, true, scenery.scenery_size)
+					
+					if (id.object_index != obj_preview)
+						render_set_uniform("uRoughness", value_inherit[e_value.ROUGHNESS])
 				}
 			}
 		}

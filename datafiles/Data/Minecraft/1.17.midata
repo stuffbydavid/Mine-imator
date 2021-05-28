@@ -1,7 +1,7 @@
 {
-	"version": "21w20a",
+	"version": "1.17",
 	"patch": 0,
-	"format": 5,
+	"format": 6,
 	"characters": [
 		{
 			"name": "human",
@@ -3240,7 +3240,9 @@
 					{ "value": "warped_fungus", "file": "potted_warped_fungus.json" },
 					{ "value": "warped_roots", "file": "potted_warped_roots.json" },
 					{ "value": "crimson_fungus", "file": "potted_crimson_fungus.json" },
-					{ "value": "crimson_roots", "file": "potted_crimson_roots.json" }
+					{ "value": "crimson_roots", "file": "potted_crimson_roots.json" },
+					{ "value": "azalea", "file": "potted_azalea_bush.json" },
+					{ "value": "flowering_azalea", "file": "potted_flowering_azalea_bush.json" }
 				]
 			},
 			"default_state": "contents=poppy",
@@ -3274,7 +3276,9 @@
 				"minecraft:potted_warped_fungus": "contents=warped_fungus",
 				"minecraft:potted_warped_roots": "contents=warped_roots",
 				"minecraft:potted_crimson_fungus": "contents=crimson_fungus",
-				"minecraft:potted_crimson_roots": "contents=crimson_roots"
+				"minecraft:potted_crimson_roots": "contents=crimson_roots",
+				"minecraft:potted_azalea_bush": "contents=azalea",
+				"minecraft:potted_flowering_azalea_bush": "contents=flowering_azalea"
 			}
 		},
 		{
@@ -4982,9 +4986,13 @@
 					{ "value": "green", "file": "green_candle.json" },
 					{ "value": "red", "file": "red_candle.json" },
 					{ "value": "black", "file": "black_candle.json" }
+				],
+				"lit": [ 
+					{ "value": "true", "brightness": 0.75 },
+					{ "value": "false" }
 				]
 			},
-			"default_state": "candles=1,color=normal",
+			"default_state": "candles=1,color=normal,lit=false",
 			"id": {
 				"minecraft:candle": "color=normal",
 				"minecraft:white_candle": "color=white",
@@ -6315,22 +6323,39 @@
 		"block/chiseled_nether_bricks",
 		"block/quartz_bricks",
 		"block/candle",
+		"block/candle_lit",
 		"block/white_candle",
+		"block/white_candle_lit",
 		"block/orange_candle",
+		"block/orange_candle_lit",
 		"block/magenta_candle",
+		"block/magenta_candle_lit",
 		"block/light_blue_candle",
+		"block/light_blue_candle_lit",
 		"block/yellow_candle",
+		"block/yellow_candle_lit",
 		"block/lime_candle",
+		"block/lime_candle_lit",
 		"block/pink_candle",
+		"block/pink_candle_lit",
 		"block/gray_candle",
+		"block/gray_candle_lit",
 		"block/light_gray_candle",
+		"block/light_gray_candle_lit",
 		"block/cyan_candle",
+		"block/cyan_candle_lit",
 		"block/purple_candle",
+		"block/purple_candle_lit",
 		"block/blue_candle",
+		"block/blue_candle_lit",
 		"block/brown_candle",
+		"block/brown_candle_lit",
 		"block/green_candle",
+		"block/green_candle_lit",
 		"block/red_candle",
+		"block/red_candle_lit",
 		"block/black_candle",
+		"block/black_candle_lit",
 		"block/amethyst_block",
 		"block/budding_amethyst",
 		"block/amethyst_cluster",
@@ -6380,6 +6405,12 @@
 		"block/azalea_top",
 		"block/flowering_azalea_side",
 		"block/flowering_azalea_top",
+		"block/potted_azalea_bush_plant",
+		"block/potted_azalea_bush_side",
+		"block/potted_azalea_bush_top",
+		"block/potted_flowering_azalea_bush_plant",
+		"block/potted_flowering_azalea_bush_side",
+		"block/potted_flowering_azalea_bush_top",
 		"block/moss_block",
 		"block/big_dripleaf_side",
 		"block/big_dripleaf_stem",
