@@ -33,6 +33,8 @@ function app_startup_collapse()
 	collapse_register("ground")
 	collapse_register("volumetricfog")
 	collapse_register("fog")
+	collapse_register("fog_ambience")
+	collapse_register("fog_noise")
 	collapse_register("wind")
 	
 	collapse_register("rotatepoint")

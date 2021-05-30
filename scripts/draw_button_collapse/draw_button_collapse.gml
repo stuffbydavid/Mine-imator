@@ -15,7 +15,7 @@ function draw_button_collapse(name, open, script, active, caption)
 	yy = dy + (tab_control_h / 2) - 8
 	wid = string_width(text_get(caption)) + 21
 	
-	mouseon = app_mouse_box(xx, yy, wid, 16) && content_mouseon
+	mouseon = app_mouse_box(xx, yy, wid, 16) && content_mouseon && active
 	mousepress = mouseon && mouse_left
 	mouseclick = mouseon && mouse_left_released
 	
@@ -24,7 +24,7 @@ function draw_button_collapse(name, open, script, active, caption)
 	microani_update(mouseon, mousepress, open && active)
 	
 	// Tip
-	if (mouseon)
+	if (mouseon && active)
 		tip_set(text_get((open ? "tooltiphideoptions" : "tooltipshowoptions")), xx, yy, 16, 16, false)
 	
 	// Cursor

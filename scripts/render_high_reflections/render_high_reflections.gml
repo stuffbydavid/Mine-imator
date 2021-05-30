@@ -10,15 +10,15 @@ function render_high_reflections(export, surf)
 	// Set samples to setting
 	if (!export)
 	{
-		if (render_samples >= project_render_samples)
+		if (render_samples_done)
 		{
 			// Apply
 			render_high_reflections_apply(surf)
 			return 0
 		}
 		
-		samplestart = render_samples
-		sampleend = render_samples + 1
+		samplestart = render_samples - 1
+		sampleend = render_samples
 	}
 	else
 	{
@@ -82,7 +82,7 @@ function render_high_reflections(export, surf)
 			render_indirect_offset[i] = random_range(0, 1)
 		
 		// Clear reflections
-		if (s = 0)
+		if (s = 0 || render_samples_clear)
 		{
 			render_surface_ssr = surface_require(render_surface_ssr, ssrwidth, ssrheight)
 			surface_set_target(render_surface_ssr)
@@ -171,7 +171,7 @@ function render_high_reflections(export, surf)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_samples_unpack_set(render_surface_ssr_expo, render_surface_ssr_dec, min(s))
+				shader_high_samples_unpack_set(render_surface_ssr_expo, render_surface_ssr_dec, render_samples)
 			}
 			draw_blank(0, 0, ssrwidth, ssrheight)
 			with (render_shader_obj)

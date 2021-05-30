@@ -10,12 +10,14 @@ uniform float uSunFar;
 
 uniform mat4 uOffset;
 
-uniform int uRaysOnly;
+uniform int uFogAmbience;
 uniform float uScattering;
 uniform float uDensity;
 
 uniform float uFogHeight;
 uniform float uFogHeightFade;
+
+uniform int uFogNoise;
 uniform float uFogNoiseScale;
 uniform float uFogNoiseContrast;
 
@@ -193,8 +195,13 @@ float getFog(vec3 pos)
 
 float getDensity(vec3 pos, vec3 wind)
 {
-	float fogDensity = simplex3dFractal((pos / uFogNoiseScale) + wind);
-	fogDensity = getFog(pos) * ((fogDensity * .5) + .5);
+	float fogDensity = getFog(pos);
+	
+	if (uFogNoise == 0)
+		return fogDensity * uDensity;
+	
+	float noiseDensity = simplex3dFractal((pos / uFogNoiseScale) + wind);
+	fogDensity *= ((noiseDensity * .5) + .5);
 	return clamp((fogDensity - 0.5) * uFogNoiseContrast + 0.5, 0.0, 1.0) * uDensity;
 }
 
@@ -236,36 +243,27 @@ void main()
 	rayPos += stepSize * offset;
 	
 	float sampleDensity;
-	
-	// Volumetric rays
-	float raysOpacity = 1.0;
-	float extinction = mix((1.0 - uDensity), 0.0, 0.5);
+	float extinction;
 	
 	// Sample steps along ray
     for (int i = 0; i < STEPS; i++)
     {	
-		// Volumetric fog
-		if (uRaysOnly == 0)
-		{
-			sampleDensity = stepLength * getDensity(rayPos, fogOffset);
+		sampleDensity = stepLength * getDensity(rayPos, fogOffset);
 		
-			float extinction = sampleDensity;
+		if (uFogAmbience == 1)
+		{
+			extinction = sampleDensity;
 			fogTransmittance *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
-		
+			
 			fogLight += getLight(rayPos) * sampleDensity * fogTransmittance * scatter;
-			fogOpacity += sampleDensity;
 		}
-		else // Only calculate volumetric rays
-		{
-			fogLight += getLight(rayPos) * mix(uDensity, 0.0, 0.5);
-			raysOpacity *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
-		}
+		else
+			sampleDensity *= getLight(rayPos);
+		
+		fogOpacity += sampleDensity;
 		
 		rayPos += stepSize;
 	}
-	
-	if (uRaysOnly == 1)
-		fogLight *= raysOpacity;
 	
 	fogOpacity = clamp(fogOpacity, 0.0, 1.0);
 	fogLight = clamp(fogLight, 0.0, 4.0) * 0.25;

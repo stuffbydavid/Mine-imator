@@ -45,11 +45,13 @@ function popup_draw()
 		}
 	}
 	
-	if (!popup)
+	if (!popup || (popup_ani_type = "hide" && popup_switch_to = null))
 	{
 		popup_block_ani = max(0, popup_block_ani - 0.075 * delta)
 		popup_mouseon = false
-		return 0
+		
+		if (!popup)
+			return 0
 	}
 	else
 		popup_block_ani = min(1, popup_block_ani + 0.075 * delta)

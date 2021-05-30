@@ -15,14 +15,11 @@ function shader_high_volumetric_fog_set(depth, sundepth)
 	
 	render_set_uniform("uOffset", render_volumetric_fog_offset)
 	
-	render_set_uniform_int("uRaysOnly", app.background_volumetric_fog_rays)
+	render_set_uniform_int("uFogAmbience", app.background_volumetric_fog_ambience)
+	render_set_uniform_int("uFogNoise", app.background_volumetric_fog_noise)
 	
 	render_set_uniform("uScattering", app.background_volumetric_fog_scatter)
-	
-	if (app.background_volumetric_fog_rays)
-		render_set_uniform("uDensity", app.background_volumetric_fog_density)
-	else
-		render_set_uniform("uDensity", app.background_volumetric_fog_density / 100)
+	render_set_uniform("uDensity", app.background_volumetric_fog_density / 100)
 	
 	render_set_uniform("uFogHeight", app.background_volumetric_fog_height)
 	render_set_uniform("uFogHeightFade", app.background_volumetric_fog_height_fade)

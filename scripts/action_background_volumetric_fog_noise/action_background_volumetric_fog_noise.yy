@@ -6,7 +6,7 @@
     "path": "folders/Scripts/App/Actions/Background/Volumetric fog.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_background_volumetric_fog_rays",
+  "name": "action_background_volumetric_fog_noise",
   "tags": [],
   "resourceType": "GMScript",
 }

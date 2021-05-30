@@ -7,8 +7,8 @@ function tab_next()
 	
 	if (tab_collapse)
 	{
-		dx = dx_start
-		dw = dw_start
+		dx -= 12
+		dw += 12
 		
 		tab_collapse = false
 	}

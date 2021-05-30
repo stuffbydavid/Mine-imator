@@ -7,7 +7,7 @@ function render_high()
 	
 	starttime = current_time
 	render_surface_time = 0
-	render_sample_noise_exists = false
+	render_update_samples()
 	
 	// SSAO
 	if (render_ssao)
@@ -51,9 +51,6 @@ function render_high()
 	render_post(finalsurf)
 	
 	render_samples_clear = false
-	
-	if (render_samples < project_render_samples)
-		render_samples++
 	
 	if (project_render_pass != e_render_pass.FINAL && surface_exists(render_pass_surf))
 		surface_copy(render_target, 0, 0, render_pass_surf)

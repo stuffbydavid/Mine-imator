@@ -5,8 +5,7 @@ uniform float uSamplesStrength;
 uniform vec4 uColor;
 uniform vec4 uSunColor;
 uniform vec4 uAmbientColor;
-uniform float uFogBrightness;
-uniform int uRaysOnly;
+uniform int uFogAmbience;
 
 varying vec2 vTexCoord;
 varying vec4 vColor;
@@ -27,12 +26,12 @@ void main()
 	color *= 4.0;
 	
 	vec3 fogLight = (uAmbientColor.rgb + (uSunColor.rgb * color));
-	vec3 fogColor = uColor.rgb * mix(fogLight, vec3(1.0), uFogBrightness);
+	vec3 fogColor = uColor.rgb * fogLight;;
 	
-	if (uRaysOnly == 0)
+	if (uFogAmbience == 1)
 		baseColor.rgb = mix(baseColor.rgb, fogColor, opacity);
 	else
-		baseColor.rgb += (uSunColor.rgb * uColor.rgb * color);
+		baseColor.rgb = mix(baseColor.rgb, uColor.rgb, opacity);//(uSunColor.rgb * uColor.rgb * color);
 	
 	gl_FragColor = baseColor;
 }

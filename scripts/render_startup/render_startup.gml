@@ -19,7 +19,7 @@ function render_startup()
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality;
 	
-	globalvar render_shadows_buffer, render_shadows_size, render_shadows_matrix, render_samples;
+	globalvar render_shadows_buffer, render_matrix, render_samples, render_samples_done, render_target_size;
 	
 	globalvar render_pass_surf;
 	

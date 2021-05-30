@@ -7,14 +7,14 @@ function render_high_subsurface_scatter(export)
 	// Set samples to setting
 	if (!export)
 	{
-		if (render_samples >= project_render_samples)
+		if (render_samples_done)
 		{
 			render_high_subsurface_scatter_apply()
 			return 0
 		}
 		
-		samplestart = render_samples
-		sampleend = render_samples + 1
+		samplestart = render_samples - 1
+		sampleend = render_samples
 	}
 	else
 	{
@@ -183,7 +183,7 @@ function render_high_subsurface_scatter(export)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_samples_unpack_set(render_surface_sss_expo, render_surface_sss_dec, s)
+				shader_high_samples_unpack_set(render_surface_sss_expo, render_surface_sss_dec, render_samples)
 			}
 			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)

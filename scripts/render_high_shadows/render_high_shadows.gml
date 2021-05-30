@@ -13,23 +13,11 @@ function render_high_shadows(export)
 	// Set samples to setting
 	if (!export)
 	{	
-		// Check if sampling should reset
-		if (render_active != "image" && render_active != "movie")
-		{
-			if (render_samples = -1 || !surface_exists(render_surface_shadows_expo) || (!array_equals(render_shadows_matrix, view_proj_matrix)) || (render_shadows_size[X] != render_width) || (render_shadows_size[Y] != render_height))
-			{
-				render_shadows_matrix = array_copy_1d(view_proj_matrix)
-				render_shadows_size = point2D(render_width, render_height)
-				render_samples = 0
-				render_samples_clear = true
-			}
-		}
-		
-		if (render_samples >= project_render_samples)
+		if (render_samples_done)
 			return 0
 		
-		samplestart = render_samples
-		sampleend = render_samples + 1
+		samplestart = render_samples - 1
+		sampleend = render_samples
 	}
 	else
 	{

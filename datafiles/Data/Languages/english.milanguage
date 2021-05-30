@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.05.27"
+        "lastchange": "2021.05.29"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2339,7 +2339,8 @@
         },
         "volumetricfog": "Volumetric fog",
         "volumetricfog/": {
-            "rays": "Only render rays",
+            "ambience": "Fog ambience",
+            "noise": "3D noise",
             "scatter": "Scatter",
             "density": "Density",
             "color": "Blend color",
@@ -2347,7 +2348,6 @@
             "heightfade": "Height fade",
             "noisecontrast": "Noise contrast",
             "noisescale": "Noise scale",
-            "emission": "Emission",
             "wind": "Wind influence"
         },
         "wind": "Wind",

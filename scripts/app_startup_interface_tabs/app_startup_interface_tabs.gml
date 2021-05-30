@@ -125,8 +125,6 @@ function app_startup_interface_tabs()
 			tbx_volumetric_fog_noise_scale = new_textbox_integer()
 			tbx_volumetric_fog_noise_contrast = new_textbox_integer()
 			tbx_volumetric_fog_noise_contrast.suffix = "%"
-			tbx_volumetric_fog_brightness = new_textbox_integer()
-			tbx_volumetric_fog_brightness.suffix = "%"
 			tbx_volumetric_fog_wind = new_textbox_integer()
 			tbx_volumetric_fog_wind.suffix = "%"
 			tbx_fog_distance = new_textbox_integer()
