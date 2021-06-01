@@ -16,27 +16,28 @@ function toolbar_draw()
 	draw_divide(content_x, content_y + content_height, content_width)
 	draw_gradient(content_x, content_y + content_height, content_width, shadow_size, c_black, shadow_alpha, shadow_alpha, 0, 0)
 	
-	var capwid;
+	var capwid, padding;
+	padding = 0
 	
 	draw_set_font(font_value)
 	
 	capwid = string_width(text_get("toolbarfile")) + 16
 	toolbar_draw_button("toolbarfile", dx, dy, capwid)
-	dx += capwid + 8
+	dx += capwid + padding
 	
 	capwid = string_width(text_get("toolbaredit")) + 16
 	toolbar_draw_button("toolbaredit", dx, dy, capwid)
-	dx += capwid + 8
+	dx += capwid + padding
 	
 	capwid = string_width(text_get("toolbarrender")) + 16
 	toolbar_draw_button("toolbarrender", dx, dy, capwid)
-	dx += capwid + 8
+	dx += capwid + padding
 	
 	capwid = string_width(text_get("toolbarview")) + 16
 	toolbar_draw_button("toolbarview", dx, dy, capwid)
-	dx += capwid + 8
+	dx += capwid + padding
 	
 	capwid = string_width(text_get("toolbarhelp")) + 16
 	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
-	dx += capwid + 8
+	dx += capwid + padding
 }

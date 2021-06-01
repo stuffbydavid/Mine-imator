@@ -942,7 +942,7 @@ function list_init(name)
 		// Render pass
 		case "viewmodepass":
 		{
-			for (var i = 0; i < ds_list_size(render_pass_list); i++)
+			for (var i = 0; i < e_render_pass.amount; i++)
 				list_item_add(text_get("viewmodepass" + render_pass_list[|i]), i)
 			
 			break

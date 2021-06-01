@@ -595,7 +595,7 @@
             "fog": "Minecraft fog",
             "pass": "Render pass",
             "pass/": {
-                "final": "Final",
+                "combined": "Combined",
                 "depth": "Depth (24bit)",
                 "normal": "Normal",
                 "material": "Material",
@@ -2033,7 +2033,9 @@
             "caption": "SPAWNING",
             "type": "Spawn type",
             "constant": "Constant",
+            "constanttip": "Spawns a constant stream of particles, useful for things like smoke.",
             "burst": "Burst",
+            "bursttip": "Spawns all the particles at once, like an explosion.",
             "amount": "Spawn",
             "region": "Spawn in region",
             "region/": {

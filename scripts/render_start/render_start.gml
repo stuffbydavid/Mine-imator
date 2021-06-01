@@ -6,7 +6,7 @@
 
 function render_start()
 {
-	var finalrender = (project_render_pass = e_render_pass.FINAL);
+	var finalrender = (project_render_pass = e_render_pass.COMBINED);
 	
 	render_target = argument[0]
 	render_camera = argument[1]
@@ -19,10 +19,10 @@ function render_start()
 	render_pass_surf = null
 	
 	// General rendering effects
-	render_ssao = project_render_ssao && (project_render_pass = e_render_pass.FINAL || project_render_pass = e_render_pass.DEPTH_U24 || project_render_pass = e_render_pass.NORMAL || project_render_pass = e_render_pass.AO || project_render_pass = e_render_pass.REFLECTIONS)
-	render_shadows = project_render_shadows && (project_render_pass = e_render_pass.FINAL || project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
-	render_indirect = project_render_indirect && (project_render_pass = e_render_pass.FINAL || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
-	render_reflections = project_render_reflections && (project_render_pass = e_render_pass.FINAL || project_render_pass = e_render_pass.REFLECTIONS)
+	render_ssao = project_render_ssao && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.DEPTH_U24 || project_render_pass = e_render_pass.NORMAL || project_render_pass = e_render_pass.AO || project_render_pass = e_render_pass.REFLECTIONS)
+	render_shadows = project_render_shadows && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
+	render_indirect = project_render_indirect && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
+	render_reflections = project_render_reflections && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.REFLECTIONS)
 	
 	render_volumetric_fog = project_render_shadows && background_volumetric_fog && (render_quality = e_view_mode.RENDER)
 	render_glow = project_render_glow && (render_quality = e_view_mode.RENDER)

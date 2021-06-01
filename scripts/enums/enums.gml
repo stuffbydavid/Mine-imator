@@ -954,14 +954,15 @@ function enums()
 	// Render passes
 	enum e_render_pass
 	{
-		FINAL,
-		DEPTH_U24,
-		NORMAL,
-		MATERIAL,
+		COMBINED,
 		DIFFUSE,
 		AO,
 		SHADOWS,
 		INDIRECT,
-		REFLECTIONS
+		REFLECTIONS,
+		DEPTH_U24,
+		NORMAL,
+		MATERIAL,
+		amount
 	}
 }

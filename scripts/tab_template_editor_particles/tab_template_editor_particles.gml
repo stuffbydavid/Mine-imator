@@ -59,6 +59,11 @@ function tab_template_editor_particles()
 	draw_togglebutton("particleeditorspawntype", dx, dy)
 	tab_next()
 	
+	if (temp_edit.pc_spawn_constant)
+		draw_tooltip_label("particleeditorspawnconstanttip", icons.PARTICLES, e_toast.INFO)
+	else
+		draw_tooltip_label("particleeditorspawnbursttip", icons.PARTICLES, e_toast.INFO)
+	
 	draw_set_font(font_label)
 	tab_control_dragger()
 	draw_dragger("particleeditorspawnamount", dx, dy, 64, temp_edit.pc_spawn_amount, temp_edit.pc_spawn_constant ? 2 : (1 / 5), 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount, string_width(text_get("particleeditorspawnamount")) + 8)

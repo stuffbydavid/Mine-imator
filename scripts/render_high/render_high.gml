@@ -52,7 +52,7 @@ function render_high()
 	
 	render_samples_clear = false
 	
-	if (project_render_pass != e_render_pass.FINAL && surface_exists(render_pass_surf))
+	if (project_render_pass != e_render_pass.COMBINED && surface_exists(render_pass_surf))
 		surface_copy(render_target, 0, 0, render_pass_surf)
 	
 	render_time = current_time - starttime - render_surface_time

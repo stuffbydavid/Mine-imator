@@ -213,6 +213,12 @@ function panel_draw(panel)
 			// Close button
 			if (tab.closeable && (hover || sel))
 			{
+				if (hover && mouse_middle_pressed)
+				{
+					tab_close(tab)
+					return 0
+				}
+				
 				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL))
 				{
 					tab_close(tab)
