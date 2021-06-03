@@ -228,6 +228,11 @@ vertex_light_bleeding = 0
 // Waterlogged
 if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z) && !app.setting_remove_waterlogged_water)
 {
+	// Restore block position in case of offset
+	block_pos_x = build_pos_x * block_size
+	block_pos_y = build_pos_y * block_size
+	block_pos_z = build_pos_z * block_size
+	
 	block_current = mc_assets.block_name_map[?"water"]
 	block_generate_liquid(true)
 	
