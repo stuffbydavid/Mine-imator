@@ -45,7 +45,7 @@ if (setting_texture_filtering)
 
 // Block brightness
 tab_control_meter()
-draw_meter("settingsblockbrightness", dx, dy, dw, round(setting_block_brightness * 100), 48, 0, 100, 75, 0, tab.graphics.tbx_block_brightness, action_setting_block_brightness)
+draw_meter("settingsblockbrightness", dx, dy, dw, round(setting_block_brightness * 100), 48, 0, 100, 75, 1, tab.graphics.tbx_block_brightness, action_setting_block_brightness)
 tab_next()
 
 // Apply glow to bright blocks
@@ -57,7 +57,7 @@ tab_next()
 if (setting_block_glow)
 {
 	tab_control_meter()
-	draw_meter("settingsblockglowthreshold", dx, dy, dw, round(setting_block_glow_threshold * 100), 48, 0, 100, 75, 0, tab.graphics.tbx_block_glow_threshold, action_setting_block_glow_threshold)
+	draw_meter("settingsblockglowthreshold", dx, dy, dw, round(setting_block_glow_threshold * 100), 48, 0, 100, 75, 1, tab.graphics.tbx_block_glow_threshold, action_setting_block_glow_threshold)
 	tab_next()
 }
 
