@@ -466,7 +466,7 @@ function tab_template_editor_particles()
 			array(action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max), 
 			capwid, true, suffix)
 		
-		tab_collapse_end(false)
+		tab_collapse_end()
 	}
 	
 	// Speed
@@ -575,7 +575,7 @@ function tab_template_editor_particles()
 				capwid, true, suffix)
 		}
 		
-		tab_collapse_end()
+		tab_collapse_end(false)
 	}
 	
 	#endregion

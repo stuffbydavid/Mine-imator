@@ -106,7 +106,6 @@ function settings_save()
 		json_save_var("timeline_location", timeline.panel.location)
 		json_save_var("timeline_editor_location", timeline_editor.panel.location)
 		json_save_var("frame_editor_location", frame_editor.panel.location)
-		json_save_var_bool("frame_editor_color_advanced", frame_editor.material.advanced)
 		json_save_var("settings_location", settings.panel.location)
 		
 		json_save_var("view_split", view_split)

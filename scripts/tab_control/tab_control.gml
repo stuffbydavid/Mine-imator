@@ -8,6 +8,6 @@ function tab_control(height)
 	if (tab_collumns)
 	{
 		dw = (tab_collumns_width - ((tab_collumns_count - 1) * 8)) / tab_collumns_count
-		dx = dx_start + ceil(dw * (tab_collumns_index)) + (8 * tab_collumns_index)
+		dx = tab_collumns_start_x + ceil(dw * (tab_collumns_index)) + (8 * tab_collumns_index)
 	}
 }

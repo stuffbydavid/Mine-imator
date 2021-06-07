@@ -12,27 +12,30 @@ function draw_button_collapse(name, open, script, active, caption)
 	
 	var xx, yy, wid, mouseon, mousepress, mouseclick;
 	xx = dx - 8
-	yy = dy + (tab_control_h / 2) - 8
+	yy = dy + (tab_control_h / 2) - 10
 	wid = string_width(text_get(caption)) + 21
 	
-	mouseon = app_mouse_box(xx, yy, wid, 16) && content_mouseon && active
+	mouseon = app_mouse_box(xx, dy, wid, 24) && content_mouseon && active
 	mousepress = mouseon && mouse_left
 	mouseclick = mouseon && mouse_left_released
 	
+	if (xx + wid < content_x || xx > content_x + content_width || dy + 24 < content_y || dy > content_y + content_height)
+		return 0
+	
 	// Button
-	draw_button_icon(name + "collapse", xx, yy, 16, 16, open && active, null, null, !active, "", spr_chevron_ani)
+	draw_button_icon(name + "collapse", xx, yy, 20, 20, open && active, null, null, !active, "", spr_chevron_ani)
 	microani_update(mouseon, mousepress, open && active)
 	
 	// Tip
-	if (mouseon && active)
-		tip_set(text_get((open ? "tooltiphideoptions" : "tooltipshowoptions")), xx, yy, 16, 16, false)
+	//if (mouseon && active)
+	//	tip_set(text_get((open ? "tooltiphideoptions" : "tooltipshowoptions")), xx, yy, 16, 16, false)
 	
 	// Cursor
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
-	dx += 12
-	dw -= 12
+	dx += 16
+	dw -= 16
 	tab_collapse = true
 	collapse_ani = mcroani_arr[e_mcroani.ACTIVE]
 	

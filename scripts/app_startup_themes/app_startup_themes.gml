@@ -50,8 +50,8 @@ function app_startup_themes()
 	array_add(theme_edit.accent_list, hex_to_color("E93983"))
 	
 	theme_edit.level_top = c_white
-	theme_edit.level_middle = hex_to_color("F8F8F8")
-	theme_edit.level_bottom = hex_to_color("E9E9E9")
+	theme_edit.level_middle = hex_to_color("FAFAFA")
+	theme_edit.level_bottom = hex_to_color("F2F2F2")
 	theme_edit.viewport_top = hex_to_color("F0FFFF")
 	theme_edit.viewport_bottom = hex_to_color("B5E8F2")
 	
@@ -153,7 +153,7 @@ function app_startup_themes()
 	
 	theme_edit.level_top = hex_to_color("1C1C1C")
 	theme_edit.level_middle = hex_to_color("101010")
-	theme_edit.level_bottom = hex_to_color("0A0A0A")
+	theme_edit.level_bottom = hex_to_color("050505")
 	theme_edit.viewport_top = hex_to_color("484848")
 	theme_edit.viewport_bottom = hex_to_color("2B2B2B")
 	

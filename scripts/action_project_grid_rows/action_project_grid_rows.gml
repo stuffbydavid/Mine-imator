@@ -4,5 +4,5 @@
 
 function action_project_grid_rows(val, add)
 {
-	project_grid_rows = project_grid_rows * val + add
+	project_grid_rows = project_grid_rows * add + val
 }

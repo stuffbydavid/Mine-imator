@@ -7,8 +7,8 @@ function tab_next()
 	
 	if (tab_collapse)
 	{
-		dx -= 12
-		dw += 12
+		dx -= 16
+		dw += 16
 		
 		tab_collapse = false
 	}
@@ -20,7 +20,7 @@ function tab_next()
 		if (tab_collumns_index != 0)
 			return 0
 		
-		dx = dx_start
+		dx = tab_collumns_start_x
 	}
 	
 	dy += tab_control_h + (8 * padding)

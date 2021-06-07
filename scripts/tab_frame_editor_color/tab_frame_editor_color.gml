@@ -7,18 +7,21 @@ function tab_frame_editor_color()
 	
 	context_menu_group_temp = e_context_group.COLOR
 	
-	// Alpha
-	tab_control_meter()
-	draw_meter("frameeditoropacity", dx, dy, dw, round(tl_edit.value[e_value.ALPHA] * 100), 56, 0, 100, 100, 1, tab.material.tbx_alpha, action_tl_frame_alpha)
+	#region Texture settings
+	
+	tab_control_switch()
+	draw_button_collapse("material_texture", collapse_map[?"material_texture"], null, true, "frameeditortexture")
 	tab_next()
 	
-	tab_set_collumns(true, floor(content_width/150))
-	
-	if (tab.material.advanced)
+	if (collapse_map[?"material_texture"])
 	{
-		// Mul
+		tab_collapse_start()
+		
+		tab_set_collumns(true, floor(content_width/150))
+		
+		// Mul (/ Blend color)
 		tab_control_color()
-		draw_button_color("frameeditorrgbmul", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
+		draw_button_color("frameeditorblendcolor", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
 		tab_next()
 		
 		tab_control_color()
@@ -42,51 +45,24 @@ function tab_frame_editor_color()
 		tab_control_color()
 		draw_button_color("frameeditorhsvsub", dx, dy, dw, tl_edit.value[e_value.HSB_SUB], c_black, true, action_tl_frame_hsb_sub)
 		tab_next()
-	}
-	else
-	{
-		// Blend color
+		
+		tab_set_collumns(false)
+		
+		// Mix
 		tab_control_color()
-		draw_button_color("frameeditorblendcolor", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
+		draw_button_color("frameeditormixcolor", dx, dy, dw/2, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
 		tab_next()
+		
+		tab_control_meter()
+		draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 60, 0, 100, 0, 1, tab.material.tbx_mix_percent, action_tl_frame_mix_percent)
+		tab_next()
+		
+		tab_collapse_end()
 	}
 	
-	// Mix and glow color
-	var glowenabled = tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA];
+	#endregion
 	
-	tab_control_color()
-	draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
-	tab_next()
-	
-	if (glowenabled)
-	{
-		tab_control_color()
-		draw_button_color("frameeditorglowcolor", dx, dy, dw, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
-		tab_next()
-	}	
-	
-	tab_set_collumns(false)
-	
-	tab_control_meter()
-	draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 60, 0, 100, 0, 1, tab.material.tbx_mix_percent, action_tl_frame_mix_percent)
-	tab_next()
-	
-	// Emission
-	tab_control_meter()
-	draw_meter("frameeditoremission", dx, dy, dw, round(tl_edit.value[e_value.BRIGHTNESS] * 100), 60, 0, 100, 0, 1, tab.material.tbx_brightness, action_tl_frame_brightness)
-	tab_next()
-	
-	// Metallic
-	tab_control_meter()
-	draw_meter("frameeditormetallic", dx, dy, dw, round(tl_edit.value[e_value.METALLIC] * 100), 60, 0, 100, 0, 1, tab.material.tbx_metallic, action_tl_frame_metallic)
-	tab_next()
-	
-	// Roughness
-	tab_control_meter()
-	draw_meter("frameeditorroughness", dx, dy, dw, round(tl_edit.value[e_value.ROUGHNESS] * 100), 60, 0, 100, 100, 1, tab.material.tbx_roughness, action_tl_frame_roughness)
-	tab_next()
-	
-	#region Subsurface
+	#region Subsurface setting
 	
 	tab_control_switch()
 	draw_button_collapse("material_subsurface", collapse_map[?"material_subsurface"], null, true, "frameeditorsubsurface")
@@ -119,6 +95,36 @@ function tab_frame_editor_color()
 	}
 	
 	#endregion
+	
+	// Opacity
+	tab_control_meter()
+	draw_meter("frameeditoropacity", dx, dy, dw, round(tl_edit.value[e_value.ALPHA] * 100), 56, 0, 100, 100, 1, tab.material.tbx_alpha, action_tl_frame_alpha)
+	tab_next()
+	
+	// Metallic
+	tab_control_meter()
+	draw_meter("frameeditormetallic", dx, dy, dw, round(tl_edit.value[e_value.METALLIC] * 100), 60, 0, 100, 0, 1, tab.material.tbx_metallic, action_tl_frame_metallic)
+	tab_next()
+	
+	// Roughness
+	tab_control_meter()
+	draw_meter("frameeditorroughness", dx, dy, dw, round(tl_edit.value[e_value.ROUGHNESS] * 100), 60, 0, 100, 100, 1, tab.material.tbx_roughness, action_tl_frame_roughness)
+	tab_next()
+	
+	// Emission
+	tab_control_meter()
+	draw_meter("frameeditoremission", dx, dy, dw, round(tl_edit.value[e_value.BRIGHTNESS] * 100), 60, 0, 100, 0, 1, tab.material.tbx_brightness, action_tl_frame_brightness)
+	tab_next()
+	
+	// Glow color
+	var glowenabled = tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA];
+	
+	if (glowenabled)
+	{
+		tab_control_color()
+		draw_button_color("frameeditorglowcolor", dx, dy, dw/2, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
+		tab_next()
+	}
 	
 	context_menu_group_temp = null
 }

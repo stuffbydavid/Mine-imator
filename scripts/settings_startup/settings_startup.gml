@@ -63,7 +63,6 @@ function settings_startup()
 	setting_timeline_location = "bottom"
 	setting_timeline_editor_location = "right"
 	setting_frame_editor_location = "right_secondary"
-	setting_frame_editor_color_advanced = false
 	setting_settings_location = "right_secondary"
 	
 	setting_view_split = 0.5

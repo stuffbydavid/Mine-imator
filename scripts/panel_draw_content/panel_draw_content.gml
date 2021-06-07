@@ -67,6 +67,8 @@ function panel_draw_content()
 		dy = dy_start
 		dh = dh_start
 		
+		dy -= 8
+		
 		// Content at top of categories
 		if (tab.header_script)
 		{
@@ -83,19 +85,25 @@ function panel_draw_content()
 			
 			repeat (cats)
 			{
-				tab_control(24)
-				draw_subheader(cat[c], content_x + 4, dy + 4)
+				tab_control(28)
+				draw_subheader(cat[c], content_x + 4, dy, dividew - 4, 28)
 				tab_next(false)
-				
-				dy += floor(8 * mcroani_arr[e_mcroani.ACTIVE])
 				
 				// Draw contents
 				if (cat[c].show && cat[c].script)
-					script_execute(cat[c].script)
-				
-				if (c < catamount - 1)
 				{
-					dy += 8
+					//draw_box(content_x, dy - 8, dividew, content_height, false, c_level_bottom, 1)
+					
+					//dy += floor(8 * mcroani_arr[e_mcroani.ACTIVE])
+					//dy -= 8
+					script_execute(cat[c].script)
+					
+					//draw_box(content_x, dy, dividew, content_height, false, c_level_middle, 1)
+				}
+				
+				if (c < catamount - 1 && cat[c].show && cat[c].script)
+				{
+					//dy += 8
 					draw_divide(content_x, dy, dividew - 1)
 					dy += 8
 				}

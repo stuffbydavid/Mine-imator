@@ -13,10 +13,12 @@ function tab_set_collumns()
 		if (tab_collumns_index != 0)
 			tab_next()
 		
-		dx = dx_start
+		dx = tab_collumns_start_x
 		
 		return 0
 	}
+	else
+		tab_collumns_start_x = dx
 	
 	if (argument_count > 1)
 		tab_collumns_count = argument[1]

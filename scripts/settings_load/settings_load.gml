@@ -147,7 +147,6 @@ function settings_load()
 			setting_timeline_location = value_get_string(interfacemap[?"timeline_location"], setting_timeline_location)
 			setting_timeline_editor_location = value_get_string(interfacemap[?"timeline_editor_location"], setting_timeline_editor_location)
 			setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
-			setting_frame_editor_color_advanced = value_get_real(interfacemap[?"frame_editor_color_advanced"], setting_frame_editor_color_advanced)
 			setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)
 			
 			setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)

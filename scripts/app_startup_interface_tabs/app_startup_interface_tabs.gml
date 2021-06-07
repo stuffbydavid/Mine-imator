@@ -467,8 +467,6 @@ function app_startup_interface_tabs()
 		material = tab_add_category("frameeditormaterial", tab_frame_editor_material, false)
 		with (material)
 		{
-			advanced = app.setting_frame_editor_color_advanced
-			
 			tbx_alpha = new_textbox_integer()
 			tbx_alpha.suffix = "%"
 			tbx_mix_percent = new_textbox_integer()

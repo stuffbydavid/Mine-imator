@@ -133,12 +133,6 @@ function tab_settings_controls()
 		tab_collapse_end()
 	}
 	
-	tab_control_button_label()
-	if (draw_button_label("settingscontrolsrestoredefaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, null, fa_middle))
-		if (question(text_get("questionrestorekeybinds")))
-			keybinds_reset_default()
-	tab_next()
-	
 	tab_control_dragger()
 	draw_dragger("settingsmovespeed", dx, dy, dragger_width, setting_move_speed, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_move_speed, action_setting_move_speed)
 	tab_next()
@@ -153,5 +147,10 @@ function tab_settings_controls()
 	
 	tab_control_dragger()
 	draw_dragger("settingsslowmodifier", dx, dy, dragger_width, setting_slow_modifier, 0.01, 0, no_limit, 0.25, 0, tab.controls.tbx_slow_modifier, action_setting_slow_modifier)
+	tab_next()
+	
+	// Restore controls
+	tab_control_button_label()
+	draw_button_label("settingscontrolsrestoredefaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, action_restore_controls, fa_middle)
 	tab_next()
 }

@@ -82,6 +82,7 @@ function app_startup_window()
 	tab_collumns_index = 0
 	tab_collumns_width = 0
 	tab_collumns_count = 2
+	tab_collumns_start_x = 0
 	
 	// Tips
 	tip_show = false

@@ -18,13 +18,6 @@ function list_init_context_menu(name)
 				list_item_add(text_get(text), null, "", null, icons.SCALE, null, action_group_combine_scale, true)
 			}
 			
-			// Advanced colors
-			if (context_menu_group = e_context_group.COLOR)
-			{
-				var text = (frame_editor.material.advanced ? "contextmenuadvancedcolorshide" : "contextmenuadvancedcolorsshow");
-				list_item_add(text_get(text), null, "", null, icons.SLIDERS, null, action_group_advanced_colors, true)
-			}
-			
 			// Single value copy-paste
 			if (name = "contextmenuvalue")
 			{

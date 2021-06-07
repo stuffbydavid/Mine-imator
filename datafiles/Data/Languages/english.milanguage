@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.05.29"
+        "lastchange": "2021.06.07"
     },
     "particle/": {
         "default": "Default spawner",
@@ -176,8 +176,6 @@
         },
         "scaleseparate": "Separate scale",
         "scalecombine": "Combine scale",
-        "advancedcolorsshow": "Show advanced color settings",
-        "advancedcolorshide": "Hide advanced color settings",
         "restorekeybind": "Restore keybind"
     },
     "shortcut/": {
@@ -2660,6 +2658,7 @@
         "emission": "Emission",
         "metallic": "Metallic",
         "roughness": "Roughness",
+        "texture": "Texture settings",
         "subsurface": "Subsurface",
         "subsurface/": {
             "radius": "Radius",

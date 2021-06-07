@@ -2,8 +2,9 @@
 
 function app_startup_collapse()
 {
-	globalvar collapse_map, collapse_ani;
+	globalvar collapse_map, collapse_ani, collapse_groups;
 	collapse_ani = 1
+	collapse_groups = 0
 	
 	collapse_map = ds_map_create()
 	
@@ -50,5 +51,6 @@ function app_startup_collapse()
 	
 	collapse_register("itemslot")
 	
+	collapse_register("material_texture")
 	collapse_register("material_subsurface")
 }

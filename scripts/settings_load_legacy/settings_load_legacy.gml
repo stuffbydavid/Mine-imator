@@ -277,7 +277,7 @@ function settings_load_legacy(fn)
 		setting_view_second_width = buffer_read_double()
 		setting_view_second_height = buffer_read_double()
 		
-		setting_frame_editor_color_advanced = buffer_read_byte()
+		/*setting_frame_editor_color_advanced*/ = buffer_read_byte()
 	}
 	else
 	{
