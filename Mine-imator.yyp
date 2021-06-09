@@ -307,6 +307,7 @@
     {"id":{"name":"action_lib_shape_tex_mapped","path":"scripts/action_lib_shape_tex_mapped/action_lib_shape_tex_mapped.yy",},"order":19,},
     {"id":{"name":"action_lib_shape_tex_vmirror","path":"scripts/action_lib_shape_tex_vmirror/action_lib_shape_tex_vmirror.yy",},"order":21,},
     {"id":{"name":"action_lib_shape_tex_voffset","path":"scripts/action_lib_shape_tex_voffset/action_lib_shape_tex_voffset.yy",},"order":23,},
+    {"id":{"name":"eval","path":"scripts/eval/eval.yy",},"order":34,},
     {"id":{"name":"action_lib_shape_tex_vrepeat","path":"scripts/action_lib_shape_tex_vrepeat/action_lib_shape_tex_vrepeat.yy",},"order":25,},
     {"id":{"name":"action_lib_text_3d","path":"scripts/action_lib_text_3d/action_lib_text_3d.yy",},"order":1,},
     {"id":{"name":"action_lib_text_face_camera","path":"scripts/action_lib_text_face_camera/action_lib_text_face_camera.yy",},"order":3,},

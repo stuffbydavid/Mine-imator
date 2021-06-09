@@ -119,7 +119,10 @@ function draw_dragger()
 	}
 	
 	if (draw_inputbox(name, fieldx, yy, wid, hei, string(def), tbx, null, disabled, false, font_digits, e_inputbox.RIGHT))
-		script_execute(script, clamp(string_get_real(tbx.text, def), minval, maxval), false)
+	{
+		var text = eval(tbx.text, def);
+		script_execute(script, clamp(text, minval, maxval), false)
+	}
 	
 	if (window_busy = name + "drag")
 		current_mcroani.value = true

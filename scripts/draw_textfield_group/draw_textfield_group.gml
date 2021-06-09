@@ -50,7 +50,7 @@ function draw_textfield_group()
 	fieldx = xx
 	fieldy = yy
 	fieldwid = vertical ? wid : (wid/textfield_amount)
-	fieldupdate = null
+	fieldupdate = undefined
 	hei = (vertical ? (24 * textfield_amount) : 24) + ((label_height + 8) * showcaption)
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
@@ -257,14 +257,16 @@ function draw_textfield_group()
 		// Textbox input update
 		if (update)
 		{
+			var val = eval(textfield_textbox[i].text, textfield_default[i]);
+			
 			if (textfield_script[i] != null)
-				script_execute(textfield_script[i], clamp(string_get_real(textfield_textbox[i].text, textfield_default[i]), minval, maxval), false)
+				script_execute(textfield_script[i], clamp(val, minval, maxval), false)
 			else
-				fieldupdate = textfield_textbox[i]
+				fieldupdate = val
 		}
 		
 		// Idle update
-		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && !fieldupdate)
+		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && fieldupdate = undefined)
 			textfield_textbox[i].text = string_decimals(textfield_value[i])
 		
 		if (vertical)

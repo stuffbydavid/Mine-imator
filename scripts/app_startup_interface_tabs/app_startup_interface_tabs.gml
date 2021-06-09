@@ -441,11 +441,11 @@ function app_startup_interface_tabs()
 			
 			// Rotation
 			loops = false
-			tbx_rot_x = new_textbox(true, 10, "x-.0123456789")
+			tbx_rot_x = new_textbox_ndecimals()
 			tbx_rot_x.suffix = "°"
-			tbx_rot_y = new_textbox(true, 10, "x-.0123456789")
+			tbx_rot_y = new_textbox_ndecimals()
 			tbx_rot_y.suffix = "°"
-			tbx_rot_z = new_textbox(true, 10, "x-.0123456789")
+			tbx_rot_z = new_textbox_ndecimals()
 			tbx_rot_z.suffix = "°"
 			
 			// Scale

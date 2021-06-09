@@ -31,7 +31,7 @@ function action_tl_frame_scale_all_axis(val, add)
 			mul = (oldval + history_data.scale_link_drag_val) / oldval
 		}
 	}
-	else if (historyobj.scale_link_drag) // Stop dragging
+	else if (historyobj != null && historyobj.scale_link_drag) // Stop dragging
 	{
 		tl_value_set_start(action_tl_frame_scale_all_axis, true)
 		
