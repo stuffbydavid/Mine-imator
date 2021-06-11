@@ -9,16 +9,16 @@
 #macro dev_mode_rotate_blocks		dev_mode && true
 
 // Versions
-#macro mineimator_version			"1.2.7"
-#macro mineimator_version_extra		""
-#macro mineimator_version_date		"2020.07.04"
+#macro mineimator_version			"1.2.8"
+#macro mineimator_version_extra		"Release Candidate 1"
+#macro mineimator_version_date		"2021.06.10"
 #macro gm_runtime					GM_runtime_version
-#macro minecraft_version			"1.16.1"
+#macro minecraft_version			"1.17"
 
 // File formats
 #macro project_format				e_project.FORMAT_125
 #macro settings_format				e_settings.FORMAT_120
-#macro minecraft_assets_format		e_minecraft_assets.FORMAT_123
+#macro minecraft_assets_format		e_minecraft_assets.FORMAT_128
 
 // Directories
 #macro file_directory				game_save_id

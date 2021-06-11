@@ -58,7 +58,8 @@ enum e_minecraft_assets
 	FORMAT_110_PRE_2  = 2,
 	FORMAT_113		  = 3,
 	FORMAT_120		  = 4,
-	FORMAT_123		  = 5
+	FORMAT_123		  = 5,
+	FORMAT_128		  = 6
 }
 
 enum e_minecraft_pack

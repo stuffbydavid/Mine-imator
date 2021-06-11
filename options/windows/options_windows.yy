@@ -7,7 +7,7 @@
     "option_windows_borderless": false,
     "option_windows_company_info": "www.stuffbydavid.com",
     "option_windows_copy_exe_to_dest": false,
-    "option_windows_copyright_info": "(c)2020 Stuff by David",
+    "option_windows_copyright_info": "(c)2021 Stuff by David",
     "option_windows_description_info": "Minecraft 3D animation software",
     "option_windows_display_cursor": true,
     "option_windows_display_name": "Mine-imator",
@@ -29,7 +29,7 @@
     "option_windows_texture_page": "2048x2048",
     "option_windows_use_splash": false,
     "option_windows_version": {
-        "build": 7,
+        "build": 8,
         "major": 1,
         "minor": 2,
         "revision": 0
