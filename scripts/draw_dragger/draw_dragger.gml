@@ -120,8 +120,8 @@ function draw_dragger()
 	
 	if (draw_inputbox(name, fieldx, yy, wid, hei, string(def), tbx, null, disabled, false, font_digits, e_inputbox.RIGHT))
 	{
-		var text = eval(tbx.text, def);
-		script_execute(script, clamp(text, minval, maxval), false)
+		var val = eval(tbx.text, def);
+		script_execute(script, clamp(snap(val, snapval), minval, maxval), false)
 	}
 	
 	if (window_busy = name + "drag")

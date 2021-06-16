@@ -260,7 +260,7 @@ function draw_textfield_group()
 			var val = eval(textfield_textbox[i].text, textfield_default[i]);
 			
 			if (textfield_script[i] != null)
-				script_execute(textfield_script[i], clamp(val, minval, maxval), false)
+				script_execute(textfield_script[i], clamp(snap(val, snapval), minval, maxval), false)
 			else
 				fieldupdate = val
 		}

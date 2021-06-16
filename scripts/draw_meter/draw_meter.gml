@@ -32,10 +32,10 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 	
 	if (draw_inputbox(name + "input", (xx + wid - 80) + 8, yy, 80, 24, string(def) + tbx.suffix, tbx, null, false, false, font_digits, e_inputbox.RIGHT, mcroani_arr[e_mcroani.CUSTOM]))
 	{
-		var tbxval = eval(tbx.text, def);
-		tbxval = clamp(tbxval, minval, maxval)
+		var val = eval(tbx.text, def);
+		val = clamp(snap(val, snapval), minval, maxval)
 		
-		script_execute(script, tbxval, false)
+		script_execute(script, val, false)
 	}
 	
 	inputfocus = mcroani_arr[e_mcroani.ACTIVE]

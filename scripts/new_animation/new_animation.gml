@@ -53,7 +53,7 @@ function new_animation()
 		}
 	}
 	
-	microanimation.spd = 1
+	microanimation.spd = 1.5
 	
 	return microanimation
 }

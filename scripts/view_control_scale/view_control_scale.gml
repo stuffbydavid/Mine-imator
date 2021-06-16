@@ -3,7 +3,7 @@
 
 function view_control_scale(view)
 {
-	var vlen, arrowstart, arrowend, mat;
+	var arrowstart, arrowend, mat;
 	
 	// Arrow length
 	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
@@ -33,9 +33,9 @@ function view_control_scale(view)
 		view_control_scale_all(view, mat, len * .6)
 	
 	// Draw each axis
-	view_control_scale_axis(view, e_view_control.SCA_X, e_value.SCA_X, c_control_red, vec3(arrowstart, 0, 0), arrowend, mat, X, vec3(0, -90, 0))
-	view_control_scale_axis(view, e_view_control.SCA_Y, e_value.SCA_Y, (setting_z_is_up ? c_control_green : c_control_blue), vec3(0, arrowstart, 0), arrowend, mat, Y, vec3(90, 0, 0))
-	view_control_scale_axis(view, e_view_control.SCA_Z, e_value.SCA_Z, (setting_z_is_up ? c_control_blue : c_control_green), vec3(0, 0, arrowstart), arrowend, mat, Z, vec3(0))
+	view_control_scale_axis(view, e_view_control.SCA_X, e_value.SCA_X, c_control_red, arrowstart, arrowend, mat, X, vec3(0, -90, 0))
+	view_control_scale_axis(view, e_view_control.SCA_Y, e_value.SCA_Y, (setting_z_is_up ? c_control_green : c_control_blue), arrowstart, arrowend, mat, Y, vec3(90, 0, 0))
+	view_control_scale_axis(view, e_view_control.SCA_Z, e_value.SCA_Z, (setting_z_is_up ? c_control_blue : c_control_green), arrowstart, arrowend, mat, Z, vec3(0))
 	
 	// Is dragging
 	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_X && view_control_edit <= e_view_control.SCA_Z)

@@ -72,4 +72,5 @@ function app_startup_interface_views()
 	view_control_plane_normal = vec3(0)
 	view_control_plane_origin = vec3(0)
 	view_control_plane = false
+	view_control_move_flip_axis = [false, false, false]
 }

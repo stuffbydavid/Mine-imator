@@ -14,6 +14,17 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 {
 	normal = vec3_mul_matrix(normal, mat)
 	
+	for (var i = X; i <= Z; i++)
+	{
+		if (view_control_move_flip_axis[i])
+		{
+			corner1[i] *= -1
+			corner2[i] *= -1
+			corner3[i] *= -1
+			corner4[i] *= -1
+		}
+	}
+	
 	// Corner 1
 	var corner13D, corner12D;
 	corner13D = point3D_mul_matrix(corner1, mat)

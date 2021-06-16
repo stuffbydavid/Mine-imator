@@ -27,6 +27,7 @@ function view_toolbar_draw(view, xx, yy)
 	if (view.toolbar_mouseon)
 		content_mouseon = true
 	
+	draw_dropshadow(xx, yy, width, height, c_black, 1)
 	draw_box(xx, yy, width, height, false, c_level_top, 1)
 	draw_outline(xx, yy, width, height, 1, c_border, a_border, true)
 	

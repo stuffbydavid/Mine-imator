@@ -19,7 +19,7 @@ function microani_set()
 	click = argument[3]
 	active = argument[4]
 	disabled = false
-	spd = 1
+	spd = 1.5
 	custom = false
 	goalval = 0
 	

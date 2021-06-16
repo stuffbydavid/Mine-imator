@@ -11,12 +11,19 @@
 
 function view_control_scale_axis(view, control, vid, color, start, length, mat, axis, rotation)
 {
-	var center3D, start3D, end3D, center2D, start2D, end2D;
-	axis = vec3(axis = X, axis = Y, axis = Z)
+	var s, e, axisarr, center3D, start3D, end3D, center2D, start2D, end2D;
+	axisarr = vec3(axis = X, axis = Y, axis = Z)
+	
+	s = control_pos(start, length, axis, mat, true)
+	e = control_pos(start, length, axis, mat, false)
+	
+	if (view_control_move_flip_axis[axis])
+		length *= -1
 	
 	center3D = point3D_mul_matrix(vec3(0), mat)
-	start3D = point3D_mul_matrix(start, mat)
-	end3D = point3D_mul_matrix(vec3_mul(axis, length), mat)
+	start3D = s
+	
+	end3D = e
 	
 	// Convert to screen
 	center2D = view_shape_project(center3D)
@@ -83,7 +90,7 @@ function view_control_scale_axis(view, control, vid, color, start, length, mat, 
 	view_shape_line_draw(start2D, end2D)
 	
 	var size = (point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size) * .035 * view_control_ratio;
-	view_shape_cube_draw(mat, vec3_mul(axis, length), size)
+	view_shape_cube_draw(mat, vec3_mul(axisarr, length), size)
 	
 	// Check mouse
 	if (content_mouseon && (point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < view_3d_control_width / 2))

@@ -116,7 +116,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 		// Hide line in circle if behind world position
 		if (view_control_edit != control)
 		{	
-			if ((vec3_dot(point3D_sub(start3D, cam_from), v) / vdot) > 1.001)
+			if (control_test_point(start3D, .75))
 			{
 				start3D = end3D
 				start2D = end2D
