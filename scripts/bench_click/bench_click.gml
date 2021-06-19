@@ -5,8 +5,11 @@ function bench_click(type)
 {
 	with (bench_settings)
 	{
+		if (id.type = type)
+			return 0
+		
 		id.type = type
-
+		
 		// Switch to character
 		if (id.type = e_tl_type.CHARACTER)
 		{
@@ -19,7 +22,7 @@ function bench_click(type)
 			temp_update_model()
 			temp_update_model_shape()
 		}
-	
+		
 		// Switch to special block
 		if (id.type = e_tl_type.SPECIAL_BLOCK)
 		{
@@ -32,7 +35,7 @@ function bench_click(type)
 			temp_update_model()
 			temp_update_model_shape()
 		}
-	
+		
 		// Switch to bodypart
 		if (id.type = e_tl_type.BODYPART)
 		{
@@ -41,7 +44,7 @@ function bench_click(type)
 			temp_update_model_part()
 			temp_update_model_shape()
 		}
-	
+		
 		// Switch to block
 		if (id.type = e_tl_type.BLOCK)
 			temp_update_block()
@@ -49,7 +52,7 @@ function bench_click(type)
 		// Switch to item
 		if (id.type = e_tl_type.ITEM)
 			render_generate_item()
-	
+		
 		// Switch to shape
 		if (id.type = e_tl_type.SHAPE)
 			temp_update_shape()
@@ -60,7 +63,7 @@ function bench_click(type)
 			model_tex = null
 			temp_update_model()
 			temp_update_model_shape()
-		
+			
 			// Modelbench popup
 			if (show_modelbench_popup)
 				with (app)
@@ -68,17 +71,18 @@ function bench_click(type)
 						popup_show(popup_modelbench)
 		}
 	}
-
+	
 	// Switch to particles
 	if (bench_settings.type = e_tl_type.PARTICLE_SPAWNER)
 		bench_update_particles_list()
-
+	
 	with (bench_settings.preview)
 	{
 		particle_spawner_clear()
 		preview_reset_view()
 		update = true
 	}
-
+	
 	bench_clear()
+	bench_settings_ani = 0
 }

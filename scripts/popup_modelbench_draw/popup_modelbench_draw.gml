@@ -20,20 +20,17 @@ function popup_modelbench_draw()
 	// Download
 	if (draw_button_label("modelbenchdownload", dx + dw - buttonx, dy))
 	{
-		popup_modelbench.not_now = true
+		open_url(link_modelbench)
 		popup_close()
 	}
 	
 	// Not now
 	buttonx += 12 + (string_width(text_get("modelbenchnotnow")) + button_padding)
 	if (draw_button_label("modelbenchnotnow", dx + dw - buttonx, dy, null, null, e_button.SECONDARY))
-	{
-		popup_modelbench.not_now = true
 		popup_close()
-	}
 	
 	// Don't show again
-	if (draw_checkbox("modelbenchdontshow", dx, dy, popup_modelbench.hidden, null))
+	if (draw_checkbox("modelbenchdontshow", dx, dy + 4, popup_modelbench.hidden, null))
 		popup_modelbench.hidden = !popup_modelbench.hidden
 	
 	tab_next()

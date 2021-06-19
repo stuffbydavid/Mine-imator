@@ -19,10 +19,13 @@ function tl_filter_draw()
 		
 		draw_box(px, dy, 20, 20, false, setting_theme.accent_list[i], 1)
 		
+		microani_set("hidecolortag" + string(i), null, false, false, timeline_hide_color_tag[i])
+		microani_update(false, false, timeline_hide_color_tag[i])
+		
 		if (timeline_hide_color_tag[i])
 		{
-			draw_box(px, dy, 20, 20, false, c_text_tertiary, a_text_tertiary)
-			draw_image(spr_icons, icons.CLOSE_SMALL, px + 10, dy + 10, 1, 1, c_level_middle, 1)
+			draw_box(px, dy, 20, 20, false, c_text_tertiary, a_text_tertiary * mcroani_arr[e_mcroani.ACTIVE])
+			draw_image(spr_icons, icons.CLOSE_SMALL, px + 10, dy + 10, 1, 1, c_level_middle, mcroani_arr[e_mcroani.ACTIVE])
 		}
 		
 		if (app_mouse_box(px, dy, 20, 20))

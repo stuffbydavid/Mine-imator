@@ -51,7 +51,14 @@ function menu_settings_draw()
 	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
 	
 	if (settings_menu_steps < 2)
+	{
+		if (content_x + content_width > window_width)
+		{
+			settings_menu_x -= (settings_menu_w - settings_menu_button_w)
+		}
+		
 		draw_set_alpha(0)
+	}
 	else
 		draw_set_alpha(settingsmenuease)
 	

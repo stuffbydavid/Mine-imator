@@ -1536,11 +1536,11 @@ function tab_timeline()
 	{
 		mouse_cursor = cr_handpoint
 		timeline_marker = max((timeline.hor_scroll.value + mouse_x - barx) / timeline_zoom, 0)
-		timeline_marker = round(timeline_marker)
-		
 		if (!mouse_left)
 		{
 			window_busy = ""
+			timeline_marker = round(timeline_marker)
+			
 			action_tl_play_jump()
 			app_mouse_clear()
 		}

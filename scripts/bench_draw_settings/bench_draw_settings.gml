@@ -15,6 +15,16 @@ function bench_draw_settings(bx, by, bw, bh)
 	content_width = dw
 	content_height = dh
 	
+	var prevalpha;
+	prevalpha = draw_get_alpha()
+	
+	bench_settings_ani += 0.09 * delta
+	bench_settings_ani = clamp(bench_settings_ani, 0, 1)
+	
+	var aniease = ease("easeoutcirc", bench_settings_ani);
+	draw_set_alpha(aniease * prevalpha)
+	dx += -16 + (16 * aniease)
+	
 	var sy = dy;
 	
 	// Settings
@@ -384,6 +394,9 @@ function bench_draw_settings(bx, by, bw, bh)
 			}
 		}
 	}
+	
+	draw_set_alpha(prevalpha)
+	dx = bx
 	
 	tab_control_button_label()
 	tab_next()

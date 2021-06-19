@@ -10,18 +10,17 @@ function app_startup_interface_views()
 	view_click_x = 0
 	view_click_y = 0
 	
-	view_resize_split = 0
 	view_resize_width = 0
 	view_resize_height = 0
 	
-	view_glow_left_top = 0
-	view_glow_top = 0
-	view_glow_right_top = 0
-	view_glow_right = 0
-	view_glow_right_bottom = 0
-	view_glow_bottom = 0
-	view_glow_left_bottom = 0
-	view_glow_left = 0
+	view_glow_left_top = false
+	view_glow_top = false
+	view_glow_right_top = false
+	view_glow_right = false
+	view_glow_right_bottom = false
+	view_glow_bottom = false
+	view_glow_left_bottom = false
+	view_glow_left = false
 	
 	view_split = setting_view_split
 	
@@ -51,6 +50,9 @@ function app_startup_interface_views()
 	view_second.height = setting_view_second_height
 	view_second.quality = e_view_mode.SHADED
 	view_second.tool = e_view_tool.SELECT
+	
+	view_glow_ani = 0
+	view_glow_location_prev = ""
 	
 	view_render = false
 	view_render_real_time = true

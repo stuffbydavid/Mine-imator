@@ -254,7 +254,6 @@ function list_init_context_menu(name)
 			list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
 			list_item_add(text_get("toolbarviewshortcutsbar"), null, "", null, icons.KEYBOARD, null, action_setting_shortcuts_bar)
 			list_item_last.toggled = setting_show_shortcuts_bar
-			
 			break
 		}
 	

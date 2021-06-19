@@ -101,12 +101,6 @@ function macros()
 	#macro item_sheet_height			16
 	
 	// Colors
-	#macro c_main						make_color_rgb(200, 200, 200)
-	#macro c_secondary					make_color_rgb(67, 103, 163)
-	#macro c_text						make_color_rgb(10, 10, 10)
-	#macro c_tips						make_color_rgb(40, 40, 40)
-	#macro c_highlight					make_color_rgb(132, 159, 204)
-	#macro c_alerts						make_color_rgb(240, 255, 159)
 	#macro c_controls					make_color_rgb(40, 40, 40)
 	#macro c_sky						make_color_rgb(137, 175, 253)
 	#macro c_clouds						make_color_rgb(255, 255, 255)
@@ -149,7 +143,7 @@ function macros()
 	#macro sample_avg_per_sec			100
 	
 	// Interface
-	#macro glow_alpha					0.75
+	#macro glow_alpha					0.5
 	#macro shadow_size					5
 	#macro shadow_alpha					0.1
 	#macro view_3d_control_size			0.175

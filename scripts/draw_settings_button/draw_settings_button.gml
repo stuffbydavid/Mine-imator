@@ -54,6 +54,7 @@ function draw_settings_button()
 		settings_menu_primary = primary
 		settings_menu_x = xx + ((width/2) * settings_menu_primary)
 		settings_menu_y = yy + height + (2 * settings_menu_primary)
+		settings_menu_button_w = width
 		settings_menu_button_h = height
 		settings_menu_above = false
 		settings_menu_steps = 0

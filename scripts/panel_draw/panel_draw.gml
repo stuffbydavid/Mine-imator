@@ -7,70 +7,73 @@ function panel_draw(panel)
 	var tabtitle, tabx, tabw, tabmaxw, tabsw, tabswprev, tabsh, tablistmouseon, tabmouseon;
 	var dx, dy;
 	
-	panel.glow = max(0, panel.glow - 0.05)
-	if (panel.size_real < 1 && panel.glow = 0)
+	if (panel.size_real < 1 && !panel.glow)
 		return 0
 	
 	// Calculate box
 	if (panel = panel_map[?"bottom"])
 	{ 
-		boxx = panel_area_x + panel_map[?"left"].size_real 
-		boxy = panel_area_y + panel_area_height - panel.size_real 
-		boxw = panel_area_width - panel_map[?"left"].size_real - panel_map[?"right"].size_real 
-		boxh = panel.size_real 
+		boxx = panel_area_x + panel_map[?"left"].size_real_ani 
+		boxy = panel_area_y + panel_area_height - panel.size_real_ani 
+		boxw = panel_area_width - panel_map[?"left"].size_real_ani - panel_map[?"right"].size_real_ani 
+		boxh = panel.size_real_ani 
 		content_direction = e_scroll.HORIZONTAL 
-		if (panel.glow > 0) 
-			draw_gradient(boxx, boxy + boxh - 100, boxw, 100, c_accent, 0, 0, panel.glow * glow_alpha, panel.glow * glow_alpha) 
+		if (panel.glow) 
+			draw_box(boxx, boxy + boxh - panel.size, boxw, panel.size_glow, false, c_accent, glow_alpha)
 	}
 	else if (panel = panel_map[?"top"]) 
 	{ 
-		boxx = panel_area_x + panel_map[?"left"].size_real 
+		boxx = panel_area_x + panel_map[?"left"].size_real_ani 
 		boxy = panel_area_y 
-		boxw = panel_area_width - panel_map[?"left"].size_real - panel_map[?"right"].size_real 
-		boxh = panel.size_real 
+		boxw = panel_area_width - panel_map[?"left"].size_real_ani - panel_map[?"right"].size_real_ani 
+		boxh = panel.size_real_ani 
 		content_direction = e_scroll.HORIZONTAL 
-		if (panel.glow > 0) 
-			draw_gradient(boxx, boxy, boxw, 100, c_accent, panel.glow * glow_alpha, panel.glow * glow_alpha, 0, 0) 
+		if (panel.glow) 
+			draw_box(boxx, boxy, boxw, panel.size_glow, false, c_accent, glow_alpha) 
 	}
 	else if (panel = panel_map[?"left"])
 	{
 		boxx = panel_area_x
-		boxy = panel_area_y + panel_map[?"top"].size_real 
-		boxw = panel.size_real
-		boxh = panel_area_height - panel_map[?"top"].size_real 
+		boxy = panel_area_y + panel_map[?"top"].size_real_ani 
+		boxw = panel.size_real_ani
+		boxh = panel_area_height - panel_map[?"top"].size_real_ani 
 		content_direction = e_scroll.VERTICAL
-		if (panel.glow > 0)
-			draw_gradient(boxx, boxy, 100, boxh, c_accent, panel.glow * glow_alpha, 0, 0, panel.glow * glow_alpha)
+		
+		if (panel.glow)
+			draw_box(boxx, boxy, panel.size_glow, boxh, false, c_accent, glow_alpha)
 	}
 	else if (panel = panel_map[?"left_secondary"])
 	{
-		boxx = panel_area_x + panel_map[?"left"].size_real
-		boxy = panel_area_y + panel_map[?"top"].size_real 
-		boxw = panel.size_real
-		boxh = panel_area_height - panel_map[?"top"].size_real - panel_map[?"bottom"].size_real 
+		boxx = panel_area_x + panel_map[?"left"].size_real_ani
+		boxy = panel_area_y + panel_map[?"top"].size_real_ani 
+		boxw = panel.size_real_ani
+		boxh = panel_area_height - panel_map[?"top"].size_real_ani - panel_map[?"bottom"].size_real_ani 
 		content_direction = e_scroll.VERTICAL
-		if (panel.glow > 0)
-			draw_gradient(boxx, boxy, 100, boxh, c_accent, panel.glow * glow_alpha, 0, 0, panel.glow * glow_alpha)
+		
+		if (panel.glow)
+			draw_box(boxx, boxy, panel.size_glow, boxh, false, c_accent, glow_alpha)
 	}
 	else if (panel = panel_map[?"right"])
 	{
-		boxx = panel_area_x + panel_area_width - panel.size_real
-		boxy = panel_area_y + panel_map[?"top"].size_real 
-		boxw = panel.size_real
-		boxh = panel_area_height - panel_map[?"top"].size_real 
+		boxx = panel_area_x + panel_area_width - panel.size_real_ani
+		boxy = panel_area_y + panel_map[?"top"].size_real_ani 
+		boxw = panel.size_real_ani
+		boxh = panel_area_height - panel_map[?"top"].size_real_ani 
 		content_direction = e_scroll.VERTICAL
-		if (panel.glow > 0)
-			draw_gradient(boxx + boxw - 100, boxy, 100, boxh, c_accent, 0, panel.glow * glow_alpha, panel.glow * glow_alpha, 0)
+		
+		if (panel.glow)
+			draw_box(boxx + boxw - panel.size_glow, boxy, panel.size_glow, boxh, false, c_accent, glow_alpha)
 	}
 	else if (panel = panel_map[?"right_secondary"])
 	{
-		boxx = panel_area_x + panel_area_width - panel_map[?"right"].size_real - panel.size_real
-		boxy = panel_area_y + panel_map[?"top"].size_real 
-		boxw = panel.size_real
-		boxh = panel_area_height - panel_map[?"top"].size_real - panel_map[?"bottom"].size_real 
+		boxx = panel_area_x + panel_area_width - panel_map[?"right"].size_real_ani - panel.size_real_ani
+		boxy = panel_area_y + panel_map[?"top"].size_real_ani 
+		boxw = panel.size_real_ani
+		boxh = panel_area_height - panel_map[?"top"].size_real_ani - panel_map[?"bottom"].size_real_ani 
 		content_direction = e_scroll.VERTICAL
-		if (panel.glow > 0)
-			draw_gradient(boxx + boxw - 100, boxy, 100, boxh, c_accent, 0, panel.glow * glow_alpha, panel.glow * glow_alpha, 0)
+		
+		if (panel.glow)
+			draw_box(boxx + boxw - panel.size_glow, boxy, panel.size_glow, boxh, false, c_accent, glow_alpha)
 	}
 	
 	if (boxw < 1 || boxh < 1)
@@ -303,29 +306,38 @@ function panel_draw(panel)
 	if (panel = panel_map[?"left"] || panel = panel_map[?"left_secondary"])
 	{
 		draw_gradient(boxx + boxw, boxy, shadow_size, boxh, c_black, shadow_alpha, 0, 0, shadow_alpha)
-		if (app_mouse_box(boxx + boxw - 5, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		if (app_mouse_box(boxx + boxw - 8, boxy, 8, boxh) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
 			mouse_cursor = cr_size_we
 			resizemouseon = true
 		}
+		
+		if (resizemouseon || panel = panel_resize)
+			draw_box(boxx + boxw - 2, boxy, 4, boxh, false, c_hover, a_hover)
 	}
 	else if (panel = panel_map[?"right"] || panel = panel_map[?"right_secondary"])
 	{
 		draw_gradient(boxx - shadow_size, boxy, shadow_size, boxh, c_black, 0, shadow_alpha, shadow_alpha, 0)
-		if (app_mouse_box(boxx, boxy, 5, boxh) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		if (app_mouse_box(boxx, boxy, 8, boxh) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
 			mouse_cursor = cr_size_we
 			resizemouseon = true
 		}
+		
+		if (resizemouseon || panel = panel_resize)
+			draw_box(boxx - 2, boxy, 4, boxh, false, c_hover, a_hover)
 	}
-	else if (panel = panel_map[?"bottom"]) 
+	else if (panel = panel_map[?"bottom"])
 	{
 		draw_gradient(boxx, boxy - shadow_size, boxw, shadow_size, c_black, 0, 0, shadow_alpha, shadow_alpha) 
-		if (app_mouse_box(boxx, boxy, boxw, 5) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		if (app_mouse_box(boxx, boxy, boxw, 8) && tablistmouseon = null && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
 			mouse_cursor = cr_size_ns
-			resizemouseon = true 
-		} 
+			resizemouseon = true
+		}
+		
+		if (resizemouseon || panel = panel_resize)
+			draw_box(boxx, boxy - 2, boxw, 4, false, c_hover, a_hover)
 	}
 	
 	// Resize

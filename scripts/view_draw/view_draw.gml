@@ -35,32 +35,32 @@ function view_draw(view)
 	{	
 		case "top":
 			boxh -= view_area_height * split
-			mouseonresizesplit = app_mouse_box(boxx, boxy + boxh - 5, boxw, 5)
+			mouseonresizesplit = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
 			break
 		
 		case "right":
 			boxx += view_area_width * split
 			boxw -= view_area_width * split
-			mouseonresizesplit = app_mouse_box(boxx, boxy, 5, boxh)
+			mouseonresizesplit = app_mouse_box(boxx, boxy, 8, boxh)
 			break
 		
 		case "bottom":
 			boxy += view_area_height * split
 			boxh -= view_area_height * split
-			mouseonresizesplit = app_mouse_box(boxx, boxy, boxw, 5)
+			mouseonresizesplit = app_mouse_box(boxx, boxy, boxw, 8)
 			break
 		
 		case "left":
 			boxw -= view_area_width * split
-			mouseonresizesplit = app_mouse_box(boxx + boxw - 5, boxy, 5, boxh)
+			mouseonresizesplit = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
 			break
 		
 		case "right_top":
 			boxw = min(view_area_width, view.width)
 			boxh = min(view_area_height, view.height)
 			boxx += view_area_width - boxw
-			mouseonresizehor = app_mouse_box(boxx, boxy, 5, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy + boxh - 5, boxw, 5)
+			mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
+			mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
 			break
 		
 		case "right_bottom":
@@ -68,23 +68,23 @@ function view_draw(view)
 			boxh = min(view_area_height, view.height)
 			boxx += view_area_width - boxw
 			boxy += view_area_height - boxh
-			mouseonresizehor = app_mouse_box(boxx, boxy, 5, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy, boxw, 5)
+			mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
+			mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
 			break
 		
 		case "left_bottom":
 			boxw = min(view_area_width, view.width)
 			boxh = min(view_area_height, view.height)
 			boxy += view_area_height - boxh
-			mouseonresizehor = app_mouse_box(boxx + boxw - 5, boxy, 5, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy, boxw, 5)
+			mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
+			mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
 			break
 		
 		case "left_top":
 			boxw = min(view_area_width, view.width)
 			boxh = min(view_area_height, view.height)
-			mouseonresizehor = app_mouse_box(boxx + boxw - 5, boxy, 5, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy + boxh - 5, boxw, 5)
+			mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
+			mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
 			break
 	}
 	
@@ -97,8 +97,8 @@ function view_draw(view)
 	
 	boxx = floor(boxx)
 	boxy = floor(boxy)
-	boxw = floor(boxw)
-	boxh = floor(boxh)
+	boxw = ceil(boxw)
+	boxh = ceil(boxh)
 	
 	if (boxw < 1 || boxh < 1)
 		return 0
@@ -111,13 +111,13 @@ function view_draw(view)
 	
 	if (window_busy = "viewmove" && view = view_second)
 	{
-		boxx += mouse_x - mouse_click_x
-		boxy += mouse_y - mouse_click_y
+		boxx = mouse_x - (boxw/2)
+		boxy = mouse_y
 	
 		content_x = boxx
 		content_y = boxy
 		
-		draw_set_alpha(0.5)
+		draw_set_alpha(1)
 	}
 	
 	if (view = view_second)
@@ -437,6 +437,8 @@ function view_draw(view)
 			{
 				view_main.location = "full"
 				window_busy = "viewmove"
+				view_glow_ani = 0
+				view_glow_location_prev = ""
 			}
 			else if (!mouse_left)
 				window_busy = ""
@@ -465,40 +467,31 @@ function view_draw(view)
 			if (mouselocation = "_bottom")
 				mouselocation = "bottom"
 			
+			view_glow_left_top = false
+			view_glow_top = false
+			view_glow_right_top = false
+			view_glow_right = false
+			view_glow_right_bottom = false
+			view_glow_bottom = false
+			view_glow_left_bottom = false
+			view_glow_left = false
+			
 			switch (mouselocation)
 			{
-				case "left_top":
-					view_glow_left_top = min(1, view_glow_left_top + 0.1 * delta)
-					break
-				
-				case "top":
-					view_glow_top = min(1, view_glow_top + 0.1 * delta)
-					break
-				
-				case "right_top":
-					view_glow_right_top = min(1, view_glow_right_top + 0.1 * delta)
-					break
-				
-				case "right":
-					view_glow_right = min(1, view_glow_right + 0.1 * delta)
-					break
-				
-				case "right_bottom":
-					view_glow_right_bottom = min(1, view_glow_right_bottom + 0.1 * delta)
-					break
-				
-				case "bottom":
-					view_glow_bottom = min(1, view_glow_bottom + 0.1 * delta)
-					break
-				
-				case "left_bottom":
-					view_glow_left_bottom = min(1, view_glow_left_bottom + 0.1 * delta)
-					break
-				
-				case "left":
-					view_glow_left = min(1, view_glow_left + 0.1 * delta)
-					break
+				case "left_top": view_glow_left_top = true; break;
+				case "top": view_glow_top = true; break;
+				case "right_top": view_glow_right_top = true; break;
+				case "right": view_glow_right = true; break;
+				case "right_bottom": view_glow_right_bottom = true; break;
+				case "bottom": view_glow_bottom = true; break;
+				case "left_bottom": view_glow_left_bottom = true; break;
+				case "left": view_glow_left = true; break;
 			}
+			
+			if (view_glow_location_prev != mouselocation)
+				view_glow_ani = 0
+			
+			view_glow_location_prev = mouselocation
 			
 			if (!mouse_left)
 			{
@@ -535,39 +528,35 @@ function view_draw(view)
 	}
 	else if (window_busy = "viewmove")
 	{
-		view_glow_left_top = max(0, view_glow_left_top - 0.05 * delta)
-		view_glow_top = max(0, view_glow_top - 0.05 * delta)
-		view_glow_right_top = max(0, view_glow_right_top - 0.05 * delta)
-		view_glow_right = max(0, view_glow_right - 0.05 * delta)
-		view_glow_right_bottom = max(0, view_glow_right_bottom - 0.05 * delta)
-		view_glow_bottom = max(0, view_glow_bottom - 0.05 * delta)
-		view_glow_left_bottom = max(0, view_glow_left_bottom - 0.05 * delta)
-		view_glow_left = max(0, view_glow_left - 0.05 * delta)
+		view_glow_ani += 0.035 * delta
+		view_glow_ani = clamp(view_glow_ani, 0, 1)
+		
+		var ani = ceil((view_glow_ani - 16) + (16 * ease("easeoutcirc", view_glow_ani)));
 		
 		// Draw glow
-		if (view_glow_left_top > 0)
-			draw_box(view_area_x, view_area_y, view_second.width, view_second.height, false, c_accent, view_glow_left_top * glow_alpha)
+		if (view_glow_left_top)
+			draw_box(view_area_x, view_area_y, view_second.width + ani, view_second.height + ani, false, c_accent, glow_alpha)
 		
-		if (view_glow_top > 0)
-			draw_gradient(view_area_x, view_area_y, view_area_width, 100, c_accent, view_glow_top, view_glow_top, 0, 0)
+		if (view_glow_top)
+			draw_box(view_area_x, view_area_y, view_area_width, (view_area_height * split) + ani, false, c_accent, glow_alpha)
 		
-		if (view_glow_right_top > 0)
-			draw_box(view_area_x + view_area_width - view_second.width, view_area_y, view_second.width, view_second.height, false, c_accent, view_glow_right_top * glow_alpha)
+		if (view_glow_right_top)
+			draw_box(view_area_x + view_area_width - (view_second.width + ani), view_area_y, view_second.width + ani, view_second.height + ani, false, c_accent, glow_alpha)
 		
-		if (view_glow_right > 0)
-			draw_gradient(view_area_x + view_area_width - 100, view_area_y, 100, view_area_height, c_accent, 0, view_glow_right, view_glow_right, 0)
+		if (view_glow_right)
+			draw_box(view_area_x + view_area_width - (view_area_width * split) - ani, view_area_y, (view_area_width * split) + 8, view_area_height, false, c_accent, glow_alpha)
 		
-		if (view_glow_right_bottom > 0)
-			draw_box(view_area_x + view_area_width - view_second.width, view_area_y + view_area_height - view_second.height, view_second.width, view_second.height, false, c_accent, view_glow_right_bottom * glow_alpha)
+		if (view_glow_right_bottom)
+			draw_box(view_area_x + view_area_width - view_second.width - ani, view_area_y + view_area_height - view_second.height - ani, view_second.width + 8, view_second.height + 8, false, c_accent, glow_alpha)
 		
-		if (view_glow_bottom > 0)
-			draw_gradient(view_area_x, view_area_y + view_area_height - 100, view_area_width, 100, c_accent, 0, 0, view_glow_bottom, view_glow_bottom)
+		if (view_glow_bottom)
+			draw_box(view_area_x, view_area_y + view_area_height - (view_area_height * split) - ani, view_area_width, (view_area_height * split) + 8, false, c_accent, glow_alpha)
 		
-		if (view_glow_left_bottom > 0)
-			draw_box(view_area_x, view_area_y + view_area_height - view_second.height, view_second.width, view_second.height, false, c_accent, view_glow_left_bottom * glow_alpha)
+		if (view_glow_left_bottom)
+			draw_box(view_area_x, view_area_y + view_area_height - view_second.height - ani, view_second.width + ani, view_second.height + 8, false, c_accent, glow_alpha)
 		
-		if (view_glow_left > 0)
-			draw_gradient(view_area_x, view_area_y, 100, view_area_height, c_accent, view_glow_left, 0, 0, view_glow_left)
+		if (view_glow_left)
+			draw_box(view_area_x, view_area_y, (view_area_width * split) + ani, view_area_height, false, c_accent, glow_alpha)
 	}
 	
 	// Resizing split
@@ -590,6 +579,67 @@ function view_draw(view)
 			window_busy = "viewresizesplit" + mouselocation
 	}
 	
+	// Resize guide
+	if (view = view_second)
+	{
+		var linetop, linebottom, lineleft, lineright;
+		linetop = false
+		linebottom = false
+		lineleft = false
+		lineright = false
+		
+		if (location = "top" && (mouseonresizesplit || window_busy = "viewresizesplitver"))
+			linetop = true
+		
+		if (location = "bottom" && (mouseonresizesplit || window_busy = "viewresizesplitver"))
+			linebottom = true
+		
+		if (location = "left" && (mouseonresizesplit || window_busy = "viewresizesplithor"))
+			lineright = true
+		
+		if (location = "right" && (mouseonresizesplit || window_busy = "viewresizesplithor"))
+			lineleft = true
+		
+		if ((mouseonresizever || mouseonresizehor) || (window_busy = "viewresizeboth" || window_busy = "viewresizever" || window_busy = "viewresizehor"))
+		{
+			if (location = "left_top")
+			{
+				lineright = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
+				linetop = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+			}
+			
+			if (location = "right_top")
+			{
+				lineleft = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
+				linetop = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+			}
+			
+			if (location = "left_bottom")
+			{
+				lineright = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
+				linebottom = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+			}
+			
+			if (location = "right_bottom")
+			{
+				lineleft = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
+				linebottom = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+			}
+		}
+		
+		if (linetop)
+			draw_box(boxx, boxy + boxh - 2, boxw, 4, false, c_hover, a_hover)
+		
+		if (linebottom)
+			draw_box(boxx, boxy - 2, boxw, 4, false, c_hover, a_hover)
+		
+		if (lineright)
+			draw_box(boxx + boxw - 2, boxy, 4, boxh, false, c_hover, a_hover)
+		
+		if (lineleft)
+			draw_box(boxx - 2, boxy, 4, boxh, false, c_hover, a_hover)
+	}
+	
 	// Render info
 	if (view.quality = e_view_mode.RENDER)
 	{
@@ -603,6 +653,10 @@ function view_draw(view)
 		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .5, font_caption)
 		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
 	}
+	
+	// Background overlay when moving second view
+	if (window_busy = "viewmove" && view = view_second)
+		draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, .25)
 	
 	// Mouse on
 	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh)

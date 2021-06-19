@@ -7,6 +7,7 @@ function app_startup_interface_bench()
 	bench_click_ani = 0
 	bench_show_ani_type = ""
 	bench_show_ani = 0
+	bench_settings_ani = 0
 	bench_height = 325
 	
 	// Bench types

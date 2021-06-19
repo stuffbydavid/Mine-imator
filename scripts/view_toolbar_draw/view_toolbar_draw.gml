@@ -47,6 +47,7 @@ function view_toolbar_draw(view, xx, yy)
 		bench_show_ani_type = "show"
 		window_busy = "bench"
 		bench_open = false
+		bench_settings_ani = 1
 	}
 	yy += 24 + padding
 	

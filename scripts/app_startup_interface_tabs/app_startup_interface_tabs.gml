@@ -12,6 +12,7 @@ function app_startup_interface_tabs()
 	tab_move_box_width = 0
 	tab_move_box_height = 0
 	tab_move_mouseon_panel = null
+	tab_move_mouseon_panel_prev = null
 	tab_move_mouseon_position = 0
 	
 	// Project properties

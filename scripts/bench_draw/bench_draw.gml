@@ -12,14 +12,14 @@ function bench_draw()
 		bench_show_ani = min(1, bench_show_ani + 0.1 * delta)
 		if (bench_show_ani = 1)
 			bench_show_ani_type = ""
-		func = "easeoutexpo"
+		func = "easeoutcirc"
 	}
 	else if (bench_show_ani_type = "hide")
 	{
 		bench_show_ani = max(0, bench_show_ani - 0.1 * delta)
 		if (bench_show_ani = 0)
 			bench_show_ani_type = ""
-		func = "easeinexpo"
+		func = "easeincirc"
 	}
 	
 	if (bench_show_ani = 0)
@@ -28,8 +28,8 @@ function bench_draw()
 		bench_settings.height_goal = bench_height
 		return 0
 	}
-	
-	bench_settings.height += (bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
+	else
+		bench_settings.height = bench_settings.height_goal;//(bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
 	
 	if (window_busy = "bench")
 		window_busy = ""
@@ -59,7 +59,7 @@ function bench_draw()
 	draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 	
-	scissor_start(content_x, content_y, content_width, content_height)
+	scissor_start(content_x - 4, content_y - 4, content_width + 8, content_height + 8)
 	
 	// Draw workbench
 	sdx = dx
