@@ -18,6 +18,7 @@ function bench_click(type)
 				model_name = default_model
 				model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 			}
+			
 			model_tex = mc_res
 			temp_update_model()
 			temp_update_model_shape()
@@ -31,6 +32,7 @@ function bench_click(type)
 				model_name = default_special_block
 				model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 			}
+			
 			model_tex = mc_res
 			temp_update_model()
 			temp_update_model_shape()

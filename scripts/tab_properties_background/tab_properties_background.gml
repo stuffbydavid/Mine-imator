@@ -48,8 +48,8 @@ function tab_properties_background()
 			// Rotation
 			if (background_image_type != "image")
 			{
-				tab_control_meter()
-				draw_meter("backgroundimagerotation", dx, dy, dw, background_image_rotation, 48, 0, 360, 0, 1, tab.background.tbx_background_rotation, action_background_image_rotation)
+				tab_control_dragger()
+				draw_dragger("backgroundimagerotation", dx, dy, dragger_width, background_image_rotation, .1, -no_limit, no_limit, 0, 1, tab.background.tbx_background_rotation, action_background_image_rotation)
 				tab_next()
 			}
 			
@@ -445,13 +445,13 @@ function tab_properties_background()
 			tab_control_dragger()
 			draw_dragger("backgroundvolumetricfognoisescale", dx, dy, dragger_width, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale)
 			tab_next()
-		
-			tab_control_meter()
-			draw_meter("backgroundvolumetricfognoisecontrast", dx, dy, dw, round(background_volumetric_fog_noise_contrast * 100), 64, 0, 1500, 0, 1, tab.background.tbx_volumetric_fog_noise_contrast, action_background_volumetric_fog_noise_contrast)
+			
+			tab_control_dragger()
+			draw_dragger("backgroundvolumetricfognoisecontrast", dx, dy, dragger_width, round(background_volumetric_fog_noise_contrast * 100), .25, 0, no_limit * 100, 0, 1, tab.background.tbx_volumetric_fog_noise_contrast, action_background_volumetric_fog_noise_contrast)
 			tab_next()
-		
-			tab_control_meter()
-			draw_meter("backgroundvolumetricfogwind", dx, dy, dw, round(background_volumetric_fog_wind * 100), 64, 0, 500, 100, 1, tab.background.tbx_volumetric_fog_wind, action_background_volumetric_fog_wind)
+			
+			tab_control_dragger()
+			draw_dragger("backgroundvolumetricfogwind", dx, dy, dragger_width, round(background_volumetric_fog_wind * 100), .25, 0, no_limit * 100, 100, 1, tab.background.tbx_volumetric_fog_wind, action_background_volumetric_fog_wind)
 			tab_next()
 			
 			tab_collapse_end()
@@ -486,28 +486,28 @@ function tab_properties_background()
 		tab_collapse_start()
 		
 		// Wind strength
-		tab_control_meter()
-		draw_meter("backgroundwindspeed", dx, dy, dw, round(background_wind_speed * 100), 64, 0, 100, 10, 1, tab.background.tbx_wind_speed, action_background_wind_speed)
+		tab_control_dragger()
+		draw_dragger("backgroundwindspeed", dx, dy, dragger_width, round(background_wind_speed * 100), .1, 0, no_limit * 100, 10, 1, tab.background.tbx_wind_speed, action_background_wind_speed)
 		tab_next()
 		
 		// Wind amount
-		tab_control_meter()
-		draw_meter("backgroundwindstrength", dx, dy, dw, background_wind_strength, 64, 0, 8, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength)
+		tab_control_dragger()
+		draw_dragger("backgroundwindstrength", dx, dy, dragger_width, background_wind_strength, .1, 0, no_limit, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength)
 		tab_next()
 		
 		// Wind angle
-		tab_control_meter()
-		draw_meter("backgroundwinddirection", dx, dy, dw, background_wind_direction, 64, -180, 180, 45, 1, tab.background.tbx_wind_direction, action_background_wind_direction)
+		tab_control_dragger()
+		draw_dragger("backgroundwinddirection", dx, dy, dragger_width, background_wind_direction, .1, -no_limit, no_limit, 45, 1, tab.background.tbx_wind_direction, action_background_wind_direction)
 		tab_next()
 		
 		// Wind direction speed
-		tab_control_meter()
-		draw_meter("backgroundwinddirectionalspeed", dx, dy, dw, round(background_wind_directional_speed * 100), 64, 0, 100, 20, 1, tab.background.tbx_wind_directional_speed, action_background_wind_directional_speed)
+		tab_control_dragger()
+		draw_dragger("backgroundwinddirectionalspeed", dx, dy, dragger_width, round(background_wind_directional_speed * 100), .1, 0, no_limit, 20, 1, tab.background.tbx_wind_directional_speed, action_background_wind_directional_speed)
 		tab_next()
 		
 		// Wind direction strength
-		tab_control_meter()
-		draw_meter("backgroundwinddirectionalstrength", dx, dy, dw, background_wind_directional_strength, 64, 0, 8, 1.5, 0.05, tab.background.tbx_wind_directional_strength, action_background_wind_directional_strength)
+		tab_control_dragger()
+		draw_dragger("backgroundwinddirectionalstrength", dx, dy, dragger_width, background_wind_directional_strength, .01, 0, no_limit, 1.5, 0.05, tab.background.tbx_wind_directional_strength, action_background_wind_directional_strength)
 		tab_next()
 		
 		tab_collapse_end()

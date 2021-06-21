@@ -16,6 +16,8 @@ function action_background_volumetric_fog_density(val, add)
 		
 		history_set_var(action_background_volumetric_fog_density, background_volumetric_fog_density, background_volumetric_fog_density * add + val / 100, true)
 	}
+	else
+		val *= 100
 	
 	background_volumetric_fog_density = background_volumetric_fog_density * add + val / 100
 }

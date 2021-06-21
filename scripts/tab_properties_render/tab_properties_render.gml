@@ -67,8 +67,8 @@ function tab_properties_render()
 		draw_dragger("renderssaoradius", dx, dy, dragger_width, project_render_ssao_radius, project_render_ssao_radius / 200, 0, 256, 12, 0, tab.render.tbx_ssao_radius, action_project_render_ssao_radius)
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("renderssaopower", dx, dy, dw, round(project_render_ssao_power * 100), 50, 0, 500, 100, 1, tab.render.tbx_ssao_power, action_project_render_ssao_power)
+		tab_control_dragger()
+		draw_dragger("renderssaopower", dx, dy, dragger_width, round(project_render_ssao_power * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_ssao_power, action_project_render_ssao_power)
 		tab_next()
 		
 		tab_control_meter()
@@ -147,8 +147,8 @@ function tab_properties_render()
 		draw_meter("renderindirectblurpasses", dx, dy, dw, project_render_indirect_blur_passes, 50, 0, 8, 2, 1, tab.render.tbx_indirect_blur_passes, action_project_render_indirect_blur_passes)
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("renderindirectstrength", dx, dy, dw, round(project_render_indirect_strength * 100), 50, 0, 1000, 150, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
+		tab_control_dragger()
+		draw_dragger("renderindirectstrength", dx, dy, dragger_width, round(project_render_indirect_strength * 100), .5, 0, no_limit * 100, 150, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
 		tab_next()
 		
 		tab_control_dragger()
@@ -171,12 +171,12 @@ function tab_properties_render()
 		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_reflections_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision)
 		tab_next()
 		
-		tab_control_dragger()
-		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 86, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
-		tab_next()
-		
 		tab_control_meter()
 		draw_meter("renderreflectionsfadeamount", dx, dy, dw, round(project_render_reflections_fade_amount * 100), 50, 0, 100, 50, 1, tab.render.tbx_reflections_fade_amount, action_project_render_reflections_fade_amount)
+		tab_next()
+		
+		tab_control_dragger()
+		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 86, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
 		tab_next()
 		
 		tab_control_switch()
@@ -195,28 +195,32 @@ function tab_properties_render()
 	{
 		tab_collapse_start()
 		
-		tab_control_meter()
-		draw_meter("renderglowradius", dx, dy, dw, round(project_render_glow_radius * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_radius, action_project_render_glow_radius)
+		tab_control_dragger()
+		draw_dragger("renderglowradius", dx, dy, dragger_width, round(project_render_glow_radius * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_radius, action_project_render_glow_radius)
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("renderglowintensity", dx, dy, dw, round(project_render_glow_intensity * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_intensity, action_project_render_glow_intensity)
+		tab_control_dragger()
+		draw_dragger("renderglowintensity", dx, dy, dragger_width, round(project_render_glow_intensity * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_intensity, action_project_render_glow_intensity)
 		tab_next()
 		
 		tab_control_switch()
-		draw_switch("renderglowfalloff", dx, dy, project_render_glow_falloff, action_project_render_glow_falloff)
+		draw_button_collapse("glow_falloff", collapse_map[?"glow_falloff"], action_project_render_glow_falloff, project_render_glow_falloff, "renderglowfalloff")
 		tab_next()
 		
 		// Secondary glow
-		if (project_render_glow_falloff)
+		if (project_render_glow_falloff && collapse_map[?"glow_falloff"])
 		{
-			tab_control_meter()
-			draw_meter("renderglowfalloffradius", dx, dy, dw, round(project_render_glow_falloff_radius * 100), 50, 0, 300, 200, 1, tab.render.tbx_glow_falloff_radius, action_project_render_glow_falloff_radius)
+			tab_collapse_start()
+			
+			tab_control_dragger()
+			draw_dragger("renderglowfalloffradius", dx, dy, dragger_width, round(project_render_glow_falloff_radius * 100), .5, 0, no_limit * 100, 200, 1, tab.render.tbx_glow_falloff_radius, action_project_render_glow_falloff_radius)
 			tab_next()
-		
-			tab_control_meter()
-			draw_meter("renderglowfalloffintensity", dx, dy, dw, round(project_render_glow_falloff_intensity * 100), 50, 0, 300, 100, 1, tab.render.tbx_glow_falloff_intensity, action_project_render_glow_falloff_intensity)
+			
+			tab_control_dragger()
+			draw_dragger("renderglowfalloffintensity", dx, dy, dragger_width, round(project_render_glow_falloff_intensity * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_falloff_intensity, action_project_render_glow_falloff_intensity)
 			tab_next()
+			
+			tab_collapse_end(false)
 		}
 		
 		tab_collapse_end()

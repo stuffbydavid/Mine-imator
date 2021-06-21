@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.06.07"
+        "lastchange": "2021.06.21"
     },
     "particle/": {
         "default": "Default spawner",
@@ -1946,8 +1946,8 @@
             "radius": "Radius",
             "intensity": "Intensity",
             "falloff": "Secondary glow",
-            "falloffradius": "Secondary radius",
-            "falloffintensity": "Secondary intensity"
+            "falloffradius": "Radius",
+            "falloffintensity": "Intensity"
         },
         "texturefiltering": "Texture filtering",
         "texturefiltering/": {
@@ -2352,9 +2352,9 @@
         },
         "wind": "Wind",
         "wind/": {
-            "speed": "Wind speed",
-            "strength": "Wind strength",
-            "direction": "Wind direction",
+            "speed": "Speed",
+            "strength": "Strength",
+            "direction": "Direction",
             "directionalspeed": "Directional speed",
             "directionalstrength": "Directional strength"
         },
@@ -2737,7 +2737,7 @@
                 "bias": "Edge highlight",
                 "gain": "Highlight boost",
                 "threshold": "Boost threshold",
-                "fringe": "RGB Fringe",
+                "fringe": "Color fringe",
                 "fringe/": {
                     "anglered": "R",
                     "anglegreen": "G",

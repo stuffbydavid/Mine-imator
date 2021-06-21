@@ -65,7 +65,9 @@ function view_control_move_axis()
 			window_busy = "rendercontrol"
 			view_control_edit = control
 			view_control_edit_view = view
-			view_control_flip = view_control_move_flip_axis[vid]
+			
+			if (vid <= Z)
+				view_control_flip = view_control_move_flip_axis[vid]
 			
 			if (control = e_view_control.ROT_DISTANCE)
 				view_control_value = tl_edit.value[e_value.CAM_ROTATE_DISTANCE]

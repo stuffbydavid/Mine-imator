@@ -154,10 +154,10 @@ function view_control_move(view)
 }
 
 // Returns true if position is closer to camera than selected object
-function control_test_point(pos, bias)
+function control_test_point(pos, tlpos, bias)
 {
-	var camdir = point3D_add(cam_from, vec3_mul(vec3_normalize(point3D_sub(cam_from, tl_edit.world_pos)), world_size));
-	var worlddis = clamp(vec3_dot(vec3_sub(tl_edit.world_pos, cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
+	var camdir = point3D_add(cam_from, vec3_mul(vec3_normalize(point3D_sub(cam_from, tlpos)), world_size));
+	var worlddis = clamp(vec3_dot(vec3_sub(tlpos,             cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
 	var pointdis = clamp(vec3_dot(vec3_sub(pos,               cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
 	
 	return (pointdis + bias < worlddis)
@@ -173,7 +173,7 @@ function control_pos(s, e, axis, mat, retstart)
 	
 	if (view_control_edit = null)
 	{
-		if (control_test_point(endpos3d, 0))
+		if (control_test_point(endpos3d, tl_edit.world_pos, 0))
 		{
 			startpos = vec3_mul(startpos, -1)
 			endpos = vec3_mul(endpos, -1)

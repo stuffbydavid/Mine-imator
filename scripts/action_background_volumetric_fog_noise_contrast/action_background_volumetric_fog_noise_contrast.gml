@@ -15,6 +15,8 @@ function action_background_volumetric_fog_noise_contrast(val, add)
 		
 		history_set_var(action_background_volumetric_fog_noise_contrast, background_volumetric_fog_noise_contrast, background_volumetric_fog_noise_contrast * add + val / 100, true)
 	}
+	else
+		val *= 100
 	
 	background_volumetric_fog_noise_contrast = background_volumetric_fog_noise_contrast * add + val / 100
 }

@@ -133,7 +133,10 @@ function draw_inputbox()
 	
 	// Placeholder label
 	if (tbx.text = "" && placeholder != "")
-	    draw_label(string_limit(placeholder, w - padding * 2), placeholderx, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
+	{
+		var suffixwid = string_width(tbx.suffix);
+	    draw_label(string_limit(placeholder, (w - suffixwid) - padding * 2), placeholderx - suffixwid, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
+	}
 	
 	if (!disabled)
 	{

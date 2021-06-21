@@ -33,7 +33,6 @@ function tl_value_clamp(vid, val)
 		case e_value.SUBSURFACE_RADIUS_GREEN:
 		case e_value.SUBSURFACE_RADIUS_BLUE:
 		case e_value.CAM_BLOOM_THRESHOLD:
-		case e_value.CAM_CONTRAST:
 		case e_value.CAM_VIGNETTE_RADIUS:
 		case e_value.CAM_VIGNETTE_SOFTNESS:
 		case e_value.CAM_VIGNETTE_STRENGTH: return clamp(val, 0, 1)

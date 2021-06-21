@@ -115,7 +115,7 @@ function eval(str, def)
 	ds_stack_destroy(ops)
 	
 	if (result = undefined)
-		return def
+		return string_get_real(str, def)
 	else
 		return result
 }

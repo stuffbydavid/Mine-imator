@@ -14,6 +14,8 @@ function action_background_volumetric_fog_wind(val, add)
 		}
 		history_set_var(action_background_volumetric_fog_wind, background_volumetric_fog_wind, background_volumetric_fog_wind * add + val / 100, true)
 	}
+	else
+		val *= 100
 	
 	background_volumetric_fog_wind = background_volumetric_fog_wind * add + val / 100
 }
