@@ -13,7 +13,7 @@ function draw_button_collapse(name, open, script, active, caption)
 	var xx, yy, wid, mouseon, mousepress, mouseclick;
 	xx = dx - 8
 	yy = dy + (tab_control_h / 2) - 10
-	wid = string_width(text_get(caption)) + 21
+	wid = string_width(text_get(caption)) + 26
 	
 	mouseon = app_mouse_box(xx, dy, wid, 24) && content_mouseon && active
 	mousepress = mouseon && mouse_left

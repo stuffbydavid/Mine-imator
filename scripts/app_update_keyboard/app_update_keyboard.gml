@@ -70,6 +70,15 @@ function app_update_keyboard()
 				action_tl_select_all()
 		}
 		
+		if (keybinds_map[?e_keybind.INSTANCE_HIDE].pressed) 
+			action_tl_hide_select(true)
+		
+		if (keybinds_map[?e_keybind.INSTANCE_SHOW_HIDDEN].pressed) 
+			action_tl_hide_select(false)
+		
+		if (keybinds_map[?e_keybind.SECONDARY_VIEW].pressed) 
+			action_setting_secondary_view()
+		
 		if (keybinds_map[?e_keybind.INSTANCE_DUPLICATE].pressed && tl_edit != null)
 			action_tl_duplicate()
 		

@@ -225,12 +225,24 @@ function list_init_context_menu(name)
 		case "toolbaredit":
 		{
 			list_item_add(text_get("toolbareditundo"), null, text_control_name(keybinds_map[?e_keybind.UNDO].keybind), null, icons.UNDO, null, action_toolbar_undo)
+			list_item_last.disabled = (history_pos = history_amount)
+			
 			list_item_add(text_get("toolbareditredo"), null, text_control_name(keybinds_map[?e_keybind.REDO].keybind), null, icons.REDO, null, action_toolbar_redo)
+			list_item_last.disabled = (history_pos = 0)
+			
+			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
+			list_item_last.disabled = (ds_list_size(tree_list) = 0)
 			
 			list_item_add(text_get("toolbareditduplicate"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
 			list_item_last.disabled = (tl_edit = null)
 			
 			list_item_add(text_get("toolbareditdelete"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
+			list_item_last.disabled = (tl_edit = null)
+			
+			list_item_add(text_get("toolbaredithide"), true, text_control_name(keybinds_map[?e_keybind.INSTANCE_HIDE].keybind), null, icons.HIDDEN, null, action_tl_hide_select, true)
+			list_item_last.disabled = (tl_edit = null)
+			
+			list_item_add(text_get("toolbareditshowhidden"), false, text_control_name(keybinds_map[?e_keybind.INSTANCE_SHOW_HIDDEN].keybind), null, icons.VISIBLE, null, action_tl_hide_select)
 			list_item_last.disabled = (tl_edit = null)
 			
 			list_item_add(text_get("toolbareditpreferences"), settings, "", null, icons.SETTINGS, null, settings.show ? tab_close : tab_show, true)
@@ -252,6 +264,10 @@ function list_init_context_menu(name)
 		case "toolbarview":
 		{
 			list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
+			
+			list_item_add(text_get("toolbarviewsecondaryview"), null, text_control_name(keybinds_map[?e_keybind.SECONDARY_VIEW].keybind), null, icons.VIEWPORT_SECONDARY, null, action_setting_secondary_view)
+			list_item_last.toggled = view_second.show
+			
 			list_item_add(text_get("toolbarviewshortcutsbar"), null, "", null, icons.KEYBOARD, null, action_setting_shortcuts_bar)
 			list_item_last.toggled = setting_show_shortcuts_bar
 			break
@@ -262,13 +278,13 @@ function list_init_context_menu(name)
 		{
 			list_item_add(text_get("toolbarhelpabout"), popup_about, "", null, icons.INFO, null, popup_show)
 			
+			if (trial_version)
+				list_item_add(text_get("toolbarhelpupgrade"), popup_upgrade, "", null, icons.KEY_ALT, null, popup_show)
+			
 			list_item_add(text_get("toolbarhelptutorials"), link_tutorials, "", null, icons.TUTORIALS, null, open_url)
 			
 			list_item_add(text_get("toolbarhelpreport"), link_forums_bugs, "", null, icons.BUG, null, open_url, true)
 			list_item_add(text_get("toolbarhelpforums"), link_forums, "", null, icons.SPEECH_BUBBLE, null, open_url)
-			
-			if (trial_version)
-				list_item_add(text_get("toolbarhelpupgrade"), popup_upgrade, "", null, icons.KEY_ALT, null, popup_show, true)
 			
 			break
 		}

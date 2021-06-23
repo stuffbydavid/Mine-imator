@@ -391,8 +391,11 @@
         "edit/": {
             "undo": "Undo",
             "redo": "Redo",
+            "selectall": "Select all",
             "duplicate": "Duplicate instance",
             "delete": "Delete instance",
+            "hide": "Hide instance",
+            "showhidden": "Show hidden",
             "preferences": "Preferences..."
         },
         "render": "Render",
@@ -403,6 +406,7 @@
         "view": "View",
         "view/": {
             "reset": "Reset work camera",
+            "secondaryview": "Show secondary view",
             "shortcutsbar": "Show shortcuts bar"
         },
         "help": "Help",
@@ -2925,7 +2929,9 @@
             "instance/": {
                 "delete": "Delete instances",
                 "duplicate": "Duplicate instances",
-                "select": "Select all instances"
+                "select": "Select all instances",
+                "hide": "Hide instance",
+                "showhidden": "Show hidden"
             },
             "createfolder": "Create folder",
             "keyframes/": {
@@ -2965,7 +2971,8 @@
                 "fast": "Faster",
                 "slow": "Slower",
                 "viewinstance": "View instance"
-            }
+            },
+            "secondaryview": "Secondary view"
         },
         "movespeed": "Move speed",
         "looksensitivity": "Look sensitivity",

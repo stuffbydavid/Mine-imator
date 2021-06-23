@@ -172,6 +172,7 @@ function view_draw(view)
 	else
 	{
 		// Close/hide second view
+		tip_set_keybind(e_keybind.SECONDARY_VIEW)
 		if (draw_button_icon("viewsecond", dx, dy, dw, dh, view_second.show, icons.VIEWPORT_SECONDARY, null, false, view_second.show ? "viewseconddisable" : "viewsecondenable"))
 			view_second.show = !view_second.show
 	}

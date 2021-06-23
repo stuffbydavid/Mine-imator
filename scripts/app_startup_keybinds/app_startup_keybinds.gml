@@ -35,6 +35,8 @@ function app_startup_keybinds()
 		KEYFRAMES_CUT,
 		KEYFRAMES_PASTE,
 		KEYFRAMES_DELETE,
+		INSTANCE_HIDE,
+		INSTANCE_SHOW_HIDDEN,
 		
 		// Timeline
 		PLAY,
@@ -46,6 +48,7 @@ function app_startup_keybinds()
 		RENDER_MODE,
 		PARTICLES_SPAWN,
 		PARTICLES_CLEAR,
+		SECONDARY_VIEW,
 		
 		// Tools
 		TOOL_SELECT,
@@ -87,6 +90,8 @@ function app_startup_keybinds()
 	keybind_register("instancedelete", e_keybind.INSTANCE_DELETE, keybind_new("R", true))
 	keybind_register("instanceduplicate", e_keybind.INSTANCE_DUPLICATE, keybind_new("D", true))
 	keybind_register("instanceselect", e_keybind.INSTANCE_SELECT, keybind_new("A", true))
+	keybind_register("instancehide", e_keybind.INSTANCE_HIDE, keybind_new("H", true))
+	keybind_register("instanceshowhidden", e_keybind.INSTANCE_SHOW_HIDDEN, keybind_new("H", true, false, true))
 	keybind_register("createfolder", e_keybind.CREATE_FOLDER, keybind_new("F", true))
 	keybind_register("keyframescreate", e_keybind.KEYFRAMES_CREATE, keybind_new("Q", true))
 	keybind_register("keyframescopy", e_keybind.KEYFRAMES_COPY, keybind_new("C", true))
@@ -104,6 +109,7 @@ function app_startup_keybinds()
 	keybind_register("rendermode", e_keybind.RENDER_MODE, keybind_new(vk_f5))
 	keybind_register("particlesspawn", e_keybind.PARTICLES_SPAWN, keybind_new("S"))
 	keybind_register("particlesclear", e_keybind.PARTICLES_CLEAR, keybind_new("C"))
+	keybind_register("secondaryview", e_keybind.SECONDARY_VIEW, keybind_new(vk_f6))
 	
 	// Tools
 	keybind_register("toolselect", e_keybind.TOOL_SELECT, keybind_new("W"))
