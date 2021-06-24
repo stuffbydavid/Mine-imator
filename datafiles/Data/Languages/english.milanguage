@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.06.21"
+        "lastchange": "2021.06.23"
     },
     "particle/": {
         "default": "Default spawner",
@@ -307,7 +307,7 @@
         "stoprender": "Really stop rendering?",
         "assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
         "unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
-        "restorekeybinds": "Are you sure you want to restore all keybinds?",
+        "restorekeybinds": "Are you sure you want to restore all controls?",
         "resetrender": "Are you sure you want to reset all render settings?"
     },
     "filedialog/": {

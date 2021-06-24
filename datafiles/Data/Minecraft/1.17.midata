@@ -354,8 +354,8 @@
 			"file": "vex.mimodel",
 			"states": {
 				"charging": [
-					{ "value": "true", "texture": "entity/illager/vex_charging" },
-					{ "value": "false", "texture": "entity/illager/vex" }
+					{ "value": "false", "texture": "entity/illager/vex" },
+					{ "value": "true", "texture": "entity/illager/vex_charging" }
 				]
 			},
 			"default_state": "charging=false"
@@ -508,8 +508,8 @@
 			"name": "turtle",
 			"states": {
 				"has_egg": [
-					{ "value": "false", "file": "turtle.mimodel"},
-					{ "value": "true", "file": "turtle_has_egg.mimodel"}
+					{ "value": "false", "file": "turtle.mimodel" },
+					{ "value": "true", "file": "turtle_has_egg.mimodel" }
 				]
 			},
 			"default_state": "has_egg=false"
@@ -883,8 +883,8 @@
 			"file": "armor_stand.mimodel",
 			"states": {
 				"arms": [
-					{ "value": "true" },
-					{ "value": "false", "hide": [ "right_arm", "left_arm" ] }
+					{ "value": "false", "hide": [ "right_arm", "left_arm" ] },
+					{ "value": "true" }
 				]
 			},
 			"default_state": "arms=false"
@@ -952,12 +952,12 @@
 			"name": "conduit",
 			"states": {
 				"open": [
-					{ "value": "true", "file": "conduit_open.mimodel" },
-					{ "value": "false", "file": "conduit.mimodel" }
+					{ "value": "false", "file": "conduit.mimodel" },
+					{ "value": "true", "file": "conduit_open.mimodel" }
 				],
 				"targeting": [
-					{ "value": "true", "shape_texture": { "center": "entity/conduit/open_eye" } },
-					{ "value": "false" }
+					{ "value": "false" },
+					{ "value": "true", "shape_texture": { "center": "entity/conduit/open_eye" } }
 				]
 			},
 			"default_state": "open=true,targeting=false"
@@ -1333,7 +1333,7 @@
 					{ "value": "acacia", "file": "acacia_leaves.json" },
 					{ "value": "dark_oak", "file": "dark_oak_leaves.json" },
 					{ "value": "azalea", "file": "azalea_leaves.json" },
-					{ "value": "azalea_flowers", "file": "azalea_leaves_flowers.json" }
+					{ "value": "flowering_azalea", "file": "flowering_azalea_leaves.json" }
 				]
 			},
 			"default_state": "variant=oak",
@@ -1349,7 +1349,7 @@
 				"minecraft:acacia_leaves": "variant=acacia",
 				"minecraft:dark_oak_leaves": "variant=dark_oak",
 				"minecraft:azalea_leaves": "variant=azalea",
-				"minecraft:azalea_leaves_flowers": "variant=azalea_flowers"
+				"minecraft:flowering_azalea_leaves": "variant=flowering_azalea"
 			}
 		},
 		{
@@ -1426,7 +1426,7 @@
 			"name": "bed",
 			"type": "bed",
 			"states": {
-				"facing": [ "east", "west", "south", "north" ],
+				"facing": [ "north", "south", "east", "west" ],
 				"part": [ "foot", "head" ],
 				"color": [
 					{ "value": "red" },
@@ -1447,16 +1447,16 @@
 					{ "value": "black" }
 				]
 			},
-			"default_state": "facing=north,part=foot,color=red",
+			"default_state": "facing=west,part=foot,color=red",
 			"timeline": {
 				"model": "bed",
 				"rotation_point": [ 0, 0, 8 ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
-					"facing=east": [ 0, -90, 0 ],
+					"facing=north": [ 0, 0, 0 ],
 					"facing=south": [ 0, 180, 0 ],
-					"facing=west": [ 0, 90, 0 ],
-					"facing=north": [ 0, 0, 0 ]
+					"facing=east": [ 0, -90, 0 ],
+					"facing=west": [ 0, 90, 0 ]
 				}
 			},
 			"id": {
@@ -1485,7 +1485,7 @@
 				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
-			"default_state": "powered=false,shape=north_south",
+			"default_state": "powered=false,shape=east_west",
 			"id": "minecraft:powered_rail"
 		},
 		{
@@ -1495,7 +1495,7 @@
 				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
-			"default_state": "powered=false,shape=north_south",
+			"default_state": "powered=false,shape=east_west",
 			"id": "minecraft:detector_rail"
 		},
 		{
@@ -1512,12 +1512,12 @@
 				"rotation_point": [ 0, 8, 0 ],
 				"position": [ 8, 8, 8 ],
 				"rotation": {
-					"facing=down": [ 90, 0, 0 ],
-					"facing=up": [ -90, 0, 0 ],
 					"facing=north": [ 0, 180, 0 ],
 					"facing=south": [ 0, 0, 0 ],
 					"facing=east": [ 0, 90, 0 ],
-					"facing=west": [ 0, -90, 0 ]
+					"facing=west": [ 0, -90, 0 ],
+					"facing=down": [ 90, 0, 0 ],
+					"facing=up": [ -90, 0, 0 ]
 				}
 			},
 			"id": "minecraft:sticky_piston"
@@ -1562,12 +1562,12 @@
 				"rotation_point": [ 0, 8, 0 ],
 				"position": [ 8, 8, 8 ],
 				"rotation": {
-					"facing=down": [ 90, 0, 0 ],
-					"facing=up": [ -90, 0, 0 ],
 					"facing=north": [ 0, 180, 0 ],
 					"facing=south": [ 0, 0, 0 ],
 					"facing=east": [ 0, 90, 0 ],
-					"facing=west": [ 0, -90, 0 ]
+					"facing=west": [ 0, -90, 0 ],
+					"facing=down": [ 90, 0, 0 ],
+					"facing=up": [ -90, 0, 0 ]
 				}
 			},
 			"id": "minecraft:piston"
@@ -1840,7 +1840,7 @@
 					{ "value": "normal", "file": "wall_torch.json" },
 					{ "value": "soul_torch", "file": "soul_wall_torch.json" }
 				],
-				"facing": [ "north", "east", "south", "west" ]
+				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=east,variant=normal",
 			"brightness": 0.75,
@@ -1857,10 +1857,10 @@
 					{ "value": "normal", "file": "fire.json" },
 					{ "value": "soul_fire", "file": "soul_fire.json" }
 				],
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
 				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
 				"up": [ "false", "true" ]
 			},
 			"default_state": "variant=normal",
@@ -1933,7 +1933,7 @@
 				"half": [ "top", "bottom" ],
 				"shape": [ "straight", "inner_left", "inner_right", "outer_left", "outer_right" ]
 			},
-			"default_state": "variant=oak,facing=north,half=bottom,shape=straight",
+			"default_state": "variant=oak,facing=east,half=bottom,shape=straight",
 			"id": {
 				"minecraft:oak_stairs": "variant=oak",
 				"minecraft:spruce_stairs": "variant=spruce",
@@ -2020,12 +2020,12 @@
 			"require_models": true,
 			"states": {
 				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],
-				"east": [ "none", "side", "up" ],
-				"west": [ "none", "side", "up" ],
 				"north": [ "none", "side", "up" ],
-				"south": [ "none", "side", "up" ]
+				"south": [ "none", "side", "up" ],
+				"east": [ "none", "side", "up" ],
+				"west": [ "none", "side", "up" ]
 			},
-			"default_state": "power=0,east=side,west=side,north=side,south=side",
+			"default_state": "power=0,north=side,south=side,east=side,west=side",
 			"id": "minecraft:redstone_wire"
 		},
 		{
@@ -2080,7 +2080,7 @@
 			"file": "furnace.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"lit": [ "true", "false" ]
+				"lit": [ "false", "true" ]
 			},
 			"default_state": "facing=west,lit=false",
 			"id": "minecraft:furnace"
@@ -2157,7 +2157,7 @@
 				"open": [ "false", "true" ],
 				"half": [ "lower", "upper" ],
 				"location": [ "north_west", "north_east", "south_west", "south_east" ],
-				"direction": [ "east", "south", "west", "north" ]
+				"direction": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "variant=oak,hinge=right,facing=west,open=false",
 			"timeline": {
@@ -2169,10 +2169,10 @@
 					"location=south_east": [ 14.5, 0, 14.5 ]
 				},
 				"rotation": {
-					"direction=east": [ 0, 0, 0 ],
+					"direction=north": [ 0, 90, 0 ],
 					"direction=south": [ 0, -90, 0],
-					"direction=west": [ 0, 180, 0 ],
-					"direction=north": [ 0, 90, 0 ]
+					"direction=east": [ 0, 0, 0 ],
+					"direction=west": [ 0, 180, 0 ]
 				}
 			},
 			"id": {
@@ -2200,9 +2200,9 @@
 			"name": "rail",
 			"file": "rail.json",
 			"states": {
-				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west", "south_east", "south_west", "north_west", "north_east"  ]
+				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west", "north_west", "north_east", "south_east", "south_west"  ]
 			},
-			"default_state": "shape=north_south",
+			"default_state": "shape=east_west",
 			"id": "minecraft:rail"
 		},
 		{
@@ -2226,16 +2226,16 @@
 				"has_text": true,
 				"text_position": [ 0, 8.2, 1.5 ],
 				"position": {
-					"facing=east": [ 0, 0, 8 ],
-					"facing=west": [ 16, 0, 8 ],
+					"facing=north": [ 8, 0, 16 ],
 					"facing=south": [ 8, 0, 0 ],
-					"facing=north": [ 8, 0, 16 ]
+					"facing=east": [ 0, 0, 8 ],
+					"facing=west": [ 16, 0, 8 ]
 				},
 				"rotation": {
-					"facing=east": [ 0, 90, 0 ],
-					"facing=west": [ 0, -90, 0 ],
+					"facing=north": [ 0, 180, 0 ],
 					"facing=south": [ 0, 0, 0 ],
-					"facing=north": [ 0, 180, 0 ]
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
 				}
 			},
 			"default_state": "facing=west,wood=oak",
@@ -2387,7 +2387,7 @@
 				"facing": [ "north", "south", "east", "west" ],
 				"powered": [ "false", "true" ]
 			},
-			"default_state": "variant=stone,face=floor,facing=south,powered=false",
+			"default_state": "variant=stone,face=floor,facing=west,powered=false",
 			"timeline": {
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
@@ -2483,13 +2483,13 @@
 					{ "value": "crimson", "file": "crimson_fence.json" },
 					{ "value": "warped", "file": "warped_fence.json" }
 				],
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
-				"south": [ "false", "true" ]
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ]
 			},
 			"require_models": true,
-			"default_state": "variant=oak,east=false,west=false,north=false,south=false",
+			"default_state": "variant=oak,north=false,south=false,east=false,west=false",
 			"id": {
 				"minecraft:oak_fence": "variant=oak",
 				"minecraft:spruce_fence": "variant=spruce",
@@ -2529,7 +2529,7 @@
 			"states": {
 				"axis": [ "x", "z" ]
 			},
-			"default_state": "axis=x",
+			"default_state": "axis=z",
 			"brightness": 0.5,
 			"id": "minecraft:nether_portal"
 		},
@@ -2571,9 +2571,13 @@
 					{ "value": "green", "file": "green_candle_cake.json" },
 					{ "value": "red", "file": "red_candle_cake.json" },
 					{ "value": "black", "file": "black_candle_cake.json" }
+				],
+				"lit": [ 
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.5 }
 				]
 			},
-			"default_state": "bites=0,candle=none",
+			"default_state": "bites=0,candle=none,lit=false",
 			"id": {
 				"minecraft:cake": "candle=none",
 				"minecraft:candle_cake": "candle=normal",
@@ -2675,30 +2679,30 @@
 			"default_state": "variant=oak,facing=west,open=false,half=bottom",
 			"timeline": {
 				"rotation_point": {
-					"facing=east": [ 1.5, 1.5, 8 ],
-					"facing=west": [ 14.5, 1.5, 8 ],
+					"facing=north": [ 8, 1.5, 14.5 ],
 					"facing=south": [ 8, 1.5, 1.5 ],
-					"facing=north": [ 8, 1.5, 14.5 ]
+					"facing=east": [ 1.5, 1.5, 8 ],
+					"facing=west": [ 14.5, 1.5, 8 ]
 				},
 				"position": {
+					"facing=north,half=bottom": [ 8, 1.5, 14.5 ],
+					"facing=south,half=bottom": [ 8, 1.5, 1.5 ],
 					"facing=east,half=bottom": [ 1.5, 1.5, 8 ],
 					"facing=west,half=bottom": [ 14.5, 1.5, 8 ],
-					"facing=south,half=bottom": [ 8, 1.5, 1.5 ],
-					"facing=north,half=bottom": [ 8, 1.5, 14.5 ],
-					"facing=east,half=top": [ 1.5, 14.5, 8 ],
-					"facing=west,half=top": [ 14.5, 14.5, 8 ],
+					"facing=north,half=top": [ 8, 14.5, 14.5 ],
 					"facing=south,half=top": [ 8, 14.5, 1.5 ],
-					"facing=north,half=top": [ 8, 14.5, 14.5 ]
+					"facing=east,half=top": [ 1.5, 14.5, 8 ],
+					"facing=west,half=top": [ 14.5, 14.5, 8 ]
 				},
 				"rotation": {
+					"facing=north,half=bottom,open=true": [ 90, 0, 0 ],
+					"facing=south,half=bottom,open=true": [ -90, 0, 0 ],
 					"facing=east,half=bottom,open=true": [ 0, 0, 90 ],
 					"facing=west,half=bottom,open=true": [ 0, 0, -90 ],
-					"facing=south,half=bottom,open=true": [ -90, 0, 0 ],
-					"facing=north,half=bottom,open=true": [ 90, 0, 0 ],
-					"facing=east,half=top,open=true": [ 0, 0, -90 ],
-					"facing=west,half=top,open=true": [ 0, 0, 90 ],
+					"facing=north,half=top,open=true": [ -90, 0, 0 ],
 					"facing=south,half=top,open=true": [ 90, 0, 0 ],
-					"facing=north,half=top,open=true": [ -90, 0, 0 ]
+					"facing=east,half=top,open=true": [ 0, 0, -90 ],
+					"facing=west,half=top,open=true": [ 0, 0, 90 ]
 				}
 			},
 			"id": {
@@ -2760,12 +2764,12 @@
 			"name": "brown_mushroom_block",
 			"file": "brown_mushroom_block.json",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"up": [ "true", "false" ],
-				"down": [ "true", "false" ]
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"up": [ "false", "true" ],
+				"down": [ "false", "true" ]
 			},
 			"id": "minecraft:brown_mushroom_block"
 		},
@@ -2773,12 +2777,12 @@
 			"name": "red_mushroom_block",
 			"file": "red_mushroom_block.json",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"up": [ "true", "false" ],
-				"down": [ "true", "false" ]
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"up": [ "false", "true" ],
+				"down": [ "false", "true" ]
 			},
 			"id": "minecraft:red_mushroom_block"
 		},
@@ -2786,12 +2790,12 @@
 			"name": "mushroom_stem",
 			"file": "mushroom_stem.json",
 			"states": {
-				"east": [ "true", "false" ],
-				"west": [ "true", "false" ],
-				"south": [ "true", "false" ],
-				"north": [ "true", "false" ],
-				"up": [ "true", "false" ],
-				"down": [ "true", "false" ]
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"up": [ "false", "true" ],
+				"down": [ "false", "true" ]
 			},
 			"id": "minecraft:mushroom_stem"
 		},
@@ -2800,10 +2804,10 @@
 			"file": "iron_bars.json",
 			"type": "bars",
 			"states": {
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
-				"south": [ "false", "true" ]
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ]
 			},
 			"require_models": true,
 			"id": "minecraft:iron_bars"
@@ -2813,10 +2817,10 @@
 			"file": "glass_pane.json",
 			"type": "bars",
 			"states": {
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
-				"south": [ "false", "true" ]
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ]
 			},
 			"require_models": true,
 			"id": "minecraft:glass_pane"
@@ -2846,7 +2850,7 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ]
 			},
-			"default_state": "facing=east",
+			"default_state": "facing=west",
 			"subsurface": 1,
 			"id": "minecraft:attached_pumpkin_stem"
 		},
@@ -2871,7 +2875,7 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ]
 			},
-			"default_state": "facing=east",
+			"default_state": "facing=west",
 			"id": "minecraft:attached_melon_stem"
 		},
 		{
@@ -2879,13 +2883,13 @@
 			"file": "vine.json",
 			"type": "vine",
 			"states": {
-				"south": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
 				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
 				"up": [ "false", "true" ]
 			},
-			"default_state": "south=false,west=false,north=false,east=false,up=false",
+			"default_state": "north=false,south=false,east=true,west=false,up=false",
 			"subsurface": 1,
 			"wind": {
 				"axis": "all"
@@ -3050,7 +3054,7 @@
 				"facing": [ "north", "south", "east", "west" ],
 				"age": [ "0", "1", "2" ]
 			},
-			"default_state": "facing=west,age=0",
+			"default_state": "facing=east,age=0",
 			"id": "minecraft:cocoa"
 		},
 		{
@@ -3119,10 +3123,10 @@
 			"file": "tripwire.json",
 			"type": "tripwire",
 			"states": {
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
 				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
 				"attached": [ "false", "true" ]
 			},
 			"default_state": "attached=false",
@@ -3176,10 +3180,10 @@
 					{ "value": "deepslate_bricks", "file": "deepslate_brick_wall.json" },
 					{ "value": "deepslate_tiles", "file": "deepslate_tile_wall.json" }
 				],
-				"east": [ "none", "low", "tall"],
-				"west": [ "none", "low", "tall"],
-				"north": [ "none", "low", "tall"],
-				"south": [ "none", "low", "tall"],
+				"north": [ "none", "low", "tall" ],
+				"south": [ "none", "low", "tall" ],
+				"east": [ "none", "low", "tall" ],
+				"west": [ "none", "low", "tall" ],
 				"up": [ "false", "true" ]
 			},
 			"default_state": "variant=cobblestone",
@@ -3507,12 +3511,12 @@
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"mode": [ 
-					{ "value": "subtract", "brightness": 0.75 },
-					"compare"
+					{ "value": "compare" },
+					{ "value": "subtract", "brightness": 0.5 }
 				],
 				"powered": [ 
-					{ "value": "true", "brightness": 0.75 },
-					"false"
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.75 }
 				]
 			},
 			"default_state": "facing=west,mode=compare,powered=false",
@@ -3522,7 +3526,7 @@
 			"name": "daylight_detector",
 			"file": "daylight_detector.json",
 			"states": {
-				"inverted": [ "true", "false" ],
+				"inverted": [ "false", "true" ],
 				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
 			},
 			"default_state": "inverted=false,power=0",
@@ -3575,7 +3579,7 @@
 				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
-			"default_state": "powered=false,shape=north_south",
+			"default_state": "powered=false,shape=east_west",
 			"id": "minecraft:activator_rail"
 		},
 		{
@@ -3652,10 +3656,10 @@
 					{ "value": "red", "file": "red_stained_glass_pane.json" },
 					{ "value": "black", "file": "black_stained_glass_pane.json" }
 				],
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
-				"south": [ "false", "true" ]
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ]
 			},
 			"default_state": "color=white",
 			"id": {
@@ -3962,10 +3966,10 @@
 			"file": "chorus_plant.json",
 			"type": "chorus_plant",
 			"states": {
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
 				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
@@ -4422,9 +4426,9 @@
 					{ "value": "fire", "file": "fire_coral_wall_fan.json" },
 					{ "value": "horn", "file": "horn_coral_wall_fan.json" }
 				],
-				"facing": [ "east", "west", "south", "north" ]
+				"facing": [ "north", "south", "east", "west" ]
 			},
-			"default_state": "variant=tube,facing=east",
+			"default_state": "variant=tube,facing=west",
 			"subsurface": 1,
 			"id": {
 				"minecraft:tube_coral_wall_fan": "variant=tube",
@@ -4506,9 +4510,9 @@
 					{ "value": "fire", "file": "dead_fire_coral_wall_fan.json" },
 					{ "value": "horn", "file": "dead_horn_coral_wall_fan.json" }
 				],
-				"facing": [ "east", "west", "south", "north" ]
+				"facing": [ "north", "south", "east", "west" ]
 			},
-			"default_state": "variant=tube,facing=east",
+			"default_state": "variant=tube,facing=west",
 			"subsurface": 1,
 			"id": {
 				"minecraft:dead_tube_coral_wall_fan": "variant=tube",
@@ -4559,7 +4563,7 @@
 			"name": "scaffolding",
 			"file": "scaffolding.json",
 			"states": {
-				"bottom": [ "true", "false" ]
+				"bottom": [ "false", "true" ]
 			},
 			"default_state": "bottom=false",
 			"id": "minecraft:scaffolding"
@@ -4578,7 +4582,7 @@
 			"file": "barrel.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
-				"open": [ "true", "false" ]
+				"open": [ "false", "true" ]
 			},
 			"default_state": "facing=west,open=false",
 			"id": "minecraft:barrel"
@@ -4588,7 +4592,7 @@
 			"file": "smoker.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"lit": [ "true", "false" ]
+				"lit": [ "false", "true" ]
 			},
 			"default_state": "facing=west,lit=false",
 			"id": "minecraft:smoker"
@@ -4598,7 +4602,7 @@
 			"file": "blast_furnace.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
-				"lit": [ "true", "false" ]
+				"lit": [ "false", "true" ]
 			},
 			"default_state": "facing=west,lit=false",
 			"id": "minecraft:blast_furnace"
@@ -4668,10 +4672,10 @@
 				"model_double": true,
 				"position": [ 8, 13, 8 ],
 				"rotation": {
-					"facing=east": [ 0, -90, 0 ],
+					"facing=north": [ 0, 0, 0 ],
 					"facing=south": [ 0, 180, 0 ],
-					"facing=west": [ 0, 90, 0 ],
-					"facing=north": [ 0, 0, 0 ]
+					"facing=east": [ 0, -90, 0 ],
+					"facing=west": [ 0, 90, 0 ]
 				}
 			},
 			"id": "minecraft:bell"
@@ -4683,7 +4687,7 @@
 					{ "value": "normal", "file": "lantern.json" },
 					{ "value": "soul_lantern", "file": "soul_lantern.json" }
 				],
-				"hanging": [ "true", "false" ]
+				"hanging": [ "false", "true" ]
 			},
 			"brightness": 0.75,
 			"default_state": "variant=normal,hanging=false",
@@ -4729,12 +4733,12 @@
 			"id": "minecraft:sweet_berry_bush"
 		},
 		{
-			"name": "jigsaw_block",
+			"name": "jigsaw",
 			"file": "jigsaw.json",
 			"states": {
-				"orientation": [ "down_east", "down_north", "down_south", "down_west", "east_up", "north_up", "south_up", "up_east", "up_north", "up_south", "up_west", "west_up" ]
+				"orientation": [ "north_up", "south_up", "east_up", "west_up", "up_north", "up_south", "up_east", "up_west", "down_north", "down_south", "down_east", "down_west" ]
 			},
-			"default_state": "orientation=north_up",
+			"default_state": "orientation=west_up",
 			"id": "minecraft:jigsaw"
 		},
 		{
@@ -4768,7 +4772,7 @@
 			"id": "minecraft:honeycomb_block"
 		},
 		{
-			"name": "target_block",
+			"name": "target",
 			"file": "target.json",
 			"id": "minecraft:target"
 		},
@@ -4988,8 +4992,8 @@
 					{ "value": "black", "file": "black_candle.json" }
 				],
 				"lit": [ 
-					{ "value": "true", "brightness": 0.75 },
-					{ "value": "false" }
+					{ "value": "false" },
+					{ "value": "true", "brightness": 0.5 }
 				]
 			},
 			"default_state": "candles=1,color=normal,lit=false",
@@ -5031,20 +5035,20 @@
 			"name": "amethyst",
 			"states": {
 				"variant": [
-					{ "value": "cluster", "file": "amethyst_cluster.json" },
-					{ "value": "large", "file": "large_amethyst_bud.json" },
+					{ "value": "small", "file": "small_amethyst_bud.json" },
 					{ "value": "medium", "file": "medium_amethyst_bud.json" },
-					{ "value": "small", "file": "small_amethyst_bud.json" }
+					{ "value": "large", "file": "large_amethyst_bud.json" },
+					{ "value": "cluster", "file": "amethyst_cluster.json" }
 				],
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
 			"brightness": 0.5,
 			"default_state": "variant=cluster,facing=up",
 			"id": {
-				"minecraft:amethyst_cluster": "variant=cluster",
-				"minecraft:large_amethyst_bud": "variant=large",
+				"minecraft:small_amethyst_bud": "variant=small",
 				"minecraft:medium_amethyst_bud": "variant=medium",
-				"minecraft:small_amethyst_bud": "variant=small"
+				"minecraft:large_amethyst_bud": "variant=large",
+				"minecraft:amethyst_cluster": "variant=cluster"
 			}
 		},
 		{
@@ -5162,16 +5166,16 @@
 			"name": "glow_lichen",
 			"file": "glow_lichen.json",
 			"states": {
-				"east": [ "false", "true" ],
-				"west": [ "false", "true" ],
 				"north": [ "false", "true" ],
 				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
 			"brightness": 0.25,
 			"subsurface": 1,
-			"default_state": "east=true,west=false,north=false,south=false,up=false,down=false",
+			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
 			"id": "minecraft:glow_lichen"
 		},
 		{
@@ -5252,7 +5256,7 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"random_offset_xz": true,
+			"random_offset": true,
 			"subsurface": 1,
 			"wind": {
 				"axis": "all",
@@ -5992,6 +5996,7 @@
 		"block/redstone_dust_dot",
 		"block/redstone_dust_line0",
 		"block/redstone_dust_line1",
+		"block/redstone_dust_overlay",
 		"block/lever",
 		"block/redstone_torch_off",
 		"block/redstone_torch",
@@ -6399,10 +6404,12 @@
 		"block/spore_blossom",
 		"block/spore_blossom_base",
 		"block/azalea_leaves",
-		"block/azalea_leaves_flowers",
+		"block/azalea_leaves opaque",
 		"block/azalea_plant",
 		"block/azalea_side",
 		"block/azalea_top",
+		"block/flowering_azalea_leaves",
+		"block/flowering_azalea_leaves opaque",
 		"block/flowering_azalea_side",
 		"block/flowering_azalea_top",
 		"block/potted_azalea_bush_plant",

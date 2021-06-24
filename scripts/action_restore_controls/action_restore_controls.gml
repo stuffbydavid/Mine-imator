@@ -2,7 +2,7 @@
 
 function action_restore_controls()
 {
-	if (!question(text_get("questionrestorekeybinds")))
+	if (!question(text_get("questionrestorecontrols")))
 		return 0
 	
 	keybinds_reset_default()
