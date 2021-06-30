@@ -16,25 +16,52 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 	if (part.shape_list = null)
 		return 0
 	
+	// Bounding box info
+	var boxdefault = true;
+	bounding_box.reset()
+	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
 		instance_activate_object(part.shape_list[|s])
 		with (part.shape_list[|s])
 		{
+			boxdefault = true
+			
 			vbufmap[? id] = vbuffer_default
 			if (type = "block" && isbent && bend_shape)
+			{
 				vbufmap[? id] = model_shape_generate_block(bend)
+				boxdefault = false
+			}
 			else if (type = "plane")
 			{
 				if (is3d)
 				{
 					if (ds_map_valid(alphamap))
+					{
 						vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[?id])
+						boxdefault = false
+					}
 				}
 				else if (isbent && bend_shape)
+				{
 					vbufmap[? id] = model_shape_generate_plane(bend)
+					boxdefault = false
+				}
 			}
 		}
+		
+		if (boxdefault)
+			bounding_box.merge(part.shape_list[|s].bounding_box_default)
+		else
+		{
+			var shapebox = new bbox();
+			shapebox.set_vbuffer()
+			shapebox.mul_matrix(part.shape_list[|s].matrix)
+			bounding_box.merge(shapebox)
+			delete shapebox
+		}
+		
 		instance_deactivate_object(part.shape_list[|s])
 	}
 }

@@ -7,6 +7,7 @@ function list_new()
 	list.width = 0 // Update using list_update_width
 	list.update = false
 	list.get_name = false
+	list.toggled = false
 	
 	return list
 }

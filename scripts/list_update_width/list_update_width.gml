@@ -10,6 +10,7 @@ function list_update_width(list)
 	width = 0
 	item = null
 	togglewid = 0
+	list.toggled = false
 	
 	for (var i = 0; i < ds_list_size(list.item); i++)
 	{
@@ -56,7 +57,10 @@ function list_update_width(list)
 		
 		// Tick
 		if (item.toggled)
+		{
 			togglewid = 24 + 4
+			list.toggled = true
+		}
 		
 		// Caption
 		if (item.caption != "")

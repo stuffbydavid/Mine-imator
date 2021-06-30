@@ -194,11 +194,12 @@ function list_item_draw()
 	}
 	
 	// Toggled tick
-	if (toggled)
+	if (item.list != null && item.list.toggled)
 	{
 		rightp += 4
 		
-		draw_image(spr_icons, icons.TICK, (xx + width - rightp) - iconsize/2, middley, 1, 1, iconcolor, iconalpha)
+		if (toggled)
+			draw_image(spr_icons, icons.TICK, (xx + width - rightp) - iconsize/2, middley, 1, 1, iconcolor, iconalpha)
 		
 		rightp += 24
 		components++

@@ -15,4 +15,6 @@ function block_vbuffer_start()
 			mc_builder.vbuffer[d, vb] = block_vbuffer[d, vb]
 		}
 	}
+	
+	bounding_box.reset()
 }

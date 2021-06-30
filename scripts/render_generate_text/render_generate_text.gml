@@ -147,4 +147,6 @@ function render_generate_text()
 	vbuffer_add_triangle(p4, p3, p1, t4, t3, t1)
 	
 	vbuffer_done()
+	
+	return true
 }

@@ -3,6 +3,10 @@
 
 function render_world_tl()
 {
+	// Frustum culled
+	if (render_frustum.enabled && bounding_box.start_pos[X] != no_limit && !bounding_box_matrix.frustumVisible(render_frustum))
+		return 0
+	
 	// No 3D representation?
 	if (type = e_tl_type.CHARACTER ||
 		type = e_tl_type.SPECIAL_BLOCK ||
@@ -191,7 +195,7 @@ function render_world_tl()
 				var font = value[e_value.TEXT_FONT];
 				if (font = null)
 					font = temp.text_font
-				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, font)
+				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res)
 				break
 			}
 			

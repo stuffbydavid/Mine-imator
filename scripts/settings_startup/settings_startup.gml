@@ -71,6 +71,7 @@ function settings_startup()
 	setting_view_main_aspect_ratio = false
 	setting_view_main_grid = false
 	setting_view_main_gizmos = true
+	setting_view_main_boxes = false
 	setting_view_main_fog = true
 	setting_view_main_effects = true
 	setting_view_main_particles = true
@@ -81,6 +82,7 @@ function settings_startup()
 	setting_view_second_aspect_ratio = true
 	setting_view_second_grid = false
 	setting_view_second_gizmos = false
+	setting_view_second_boxes = false
 	setting_view_second_fog = true
 	setting_view_second_effects = true
 	setting_view_second_particles = true

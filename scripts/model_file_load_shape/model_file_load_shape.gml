@@ -203,6 +203,8 @@ function model_file_load_shape(map, res)
 				wind_wave_zmax = windmap[?"ymax"]
 		}
 		
+		bounding_box_default = new bbox()
+		
 		// Generate default mesh
 		if (type = "block")
 			vbuffer_default = model_shape_generate_block(vec3(0))
@@ -214,6 +216,9 @@ function model_file_load_shape(map, res)
 			log("Invalid shape type", type)
 			return null
 		}
+		
+		bounding_box_default.set_vbuffer()
+		bounding_box_default.mul_matrix(matrix)
 		
 		// Update bounds
 		var boundsmat = matrix_create(position, rotation, vec3(1))

@@ -230,7 +230,8 @@ function tl_update_matrix()
 		else
 		// Update bend if angle changed
 			tl_update_model_shape_bend()
-	
+		
+		tl_update_bounding_box()
 	}
 	
 	// Update children

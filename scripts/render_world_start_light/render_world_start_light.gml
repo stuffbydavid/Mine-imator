@@ -51,6 +51,9 @@ function render_world_start_light()
 	light_view_matrix = matrix_get(matrix_view)
 	light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)
 	
+	render_frustum.build(light_view_proj_matrix)
+	render_frustum.enabled = true
+	
 	proj_depth_near = render_light_near
 	proj_depth_far = render_light_far
 	

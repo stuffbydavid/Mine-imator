@@ -6,7 +6,7 @@ function menu_overlay_settings()
 	
 	var draggerwid, switchwid;
 	draggerwid = text_max_width("viewoverlaygridrows", "viewoverlaygridcolumns") + 16 + dragger_width
-	switchwid = text_max_width("viewoverlayaspectratio", "viewoverlaygrid") + 16 + 24
+	switchwid = text_max_width("viewoverlayaspectratio", "viewoverlaygizmos", "viewoverlayboundingboxes", "viewoverlaygrid") + 16 + 24
 	
 	tab_control_switch()
 	if (draw_switch("viewoverlayaspectratio", dx, dy, settings_menu_view.aspect_ratio, null))
@@ -16,6 +16,11 @@ function menu_overlay_settings()
 	tab_control_switch()
 	if (draw_switch("viewoverlaygizmos", dx, dy, settings_menu_view.gizmos, null))
 		settings_menu_view.gizmos = !settings_menu_view.gizmos
+	tab_next()
+	
+	tab_control_switch()
+	if (draw_switch("viewoverlayboundingboxes", dx, dy, settings_menu_view.boxes, null))
+		settings_menu_view.boxes = !settings_menu_view.boxes
 	tab_next()
 	
 	draw_divide(content_x, dy, content_width)

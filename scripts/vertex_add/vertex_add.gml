@@ -33,6 +33,15 @@ function vertex_add()
 		vertex_color(vbuffer_current, color, alpha)
 		vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
 		
+		// Seperated for performance
+		vbuffer_xmin = (pos[X] < vbuffer_xmin ? pos[X] : vbuffer_xmin)
+		vbuffer_ymin = (pos[Y] < vbuffer_ymin ? pos[Y] : vbuffer_ymin)
+		vbuffer_zmin = (pos[Z] < vbuffer_zmin ? pos[Z] : vbuffer_zmin)
+		
+		vbuffer_xmax = (pos[X] > vbuffer_xmax ? pos[X] : vbuffer_xmax)
+		vbuffer_ymax = (pos[Y] > vbuffer_ymax ? pos[Y] : vbuffer_ymax)
+		vbuffer_zmax = (pos[Z] > vbuffer_zmax ? pos[Z] : vbuffer_zmax)
+		
 		zz = pos[@ Z]
 	}
 	else
@@ -44,6 +53,15 @@ function vertex_add()
 		else
 			vertex_color(vbuffer_current, -1, 1)
 		vertex_texcoord(vbuffer_current, argument[6], argument[7])
+		
+		// Seperated for performance
+		vbuffer_xmin = (argument[0] < vbuffer_xmin ? argument[0] : vbuffer_xmin)
+		vbuffer_ymin = (argument[1] < vbuffer_ymin ? argument[1] : vbuffer_ymin)
+		vbuffer_zmin = (argument[2] < vbuffer_zmin ? argument[2] : vbuffer_zmin)
+		
+		vbuffer_xmax = (argument[0] > vbuffer_xmax ? argument[0] : vbuffer_xmax)
+		vbuffer_ymax = (argument[1] > vbuffer_ymax ? argument[1] : vbuffer_ymax)
+		vbuffer_zmax = (argument[2] > vbuffer_zmax ? argument[2] : vbuffer_zmax)
 		
 		zz = argument[2]
 	}

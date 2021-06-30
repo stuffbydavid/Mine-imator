@@ -87,4 +87,5 @@ function res_event_create()
 	
 	load_stage = ""
 	load_audio_sample = 0
+	bounding_box = new bbox()
 }

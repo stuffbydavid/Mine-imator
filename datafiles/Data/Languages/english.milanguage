@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.06.23"
+        "lastchange": "2021.06.25"
     },
     "particle/": {
         "default": "Default spawner",
@@ -615,6 +615,7 @@
                 "columns": "Columns"
             },
             "gizmos": "Gizmos",
+            "boundingboxes": "Bounding boxes",
             "aspectratio":"Aspect ratio"
         },
         "snap/": {

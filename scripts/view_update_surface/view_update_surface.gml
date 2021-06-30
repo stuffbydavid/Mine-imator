@@ -28,7 +28,7 @@ function view_update_surface(view, cam)
 	else
 		render_low()
 	
-	if (view.overlays && view.gizmos)
+	if (view.overlays && (view.gizmos || view.boxes))
 	{
 		// Selection
 		if (tl_edit_amount > 0)
@@ -58,13 +58,16 @@ function view_update_surface(view, cam)
 							view_shape_camera(tl)
 						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
-					}
+						
+						if (tl.bounding_box.start_pos[X] != no_limit && view.boxes)
+							view_shape_box(tl.bounding_box_matrix.start_pos, tl.bounding_box_matrix.end_pos)
+					}	
 				}
 				
 				draw_set_color(c_white)
 				
 				// Controls
-				if (tl_edit != null && tl_edit != cam)
+				if (tl_edit != null && tl_edit != cam && view.gizmos)
 				{
 					var vis = false;
 					

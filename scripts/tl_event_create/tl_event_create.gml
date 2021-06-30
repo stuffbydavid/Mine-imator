@@ -137,4 +137,8 @@ function tl_event_create()
 	
 	render_res = null
 	model_tex = null
+	
+	// Bounding box info
+	bounding_box = new bbox()
+	bounding_box_matrix = new bbox()
 }
