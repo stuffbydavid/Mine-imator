@@ -71,7 +71,7 @@ function render_world_start()
 	view_proj_matrix = matrix_multiply(view_matrix, proj_matrix)
 	
 	render_frustum.build(view_proj_matrix)
-	render_frustum.enabled = true
+	render_frustum.active = true
 	
 	proj_depth_near = cam_near
 	proj_depth_far = cam_far

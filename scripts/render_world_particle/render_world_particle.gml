@@ -121,7 +121,7 @@ function render_world_particle()
 			
 			case e_temp_type.BLOCK:
 			{
-				render_world_block(temp.block_vbuffer, temp.block_tex, true, rep) 
+				render_world_block(temp.scenery_chunk_array, temp.block_tex, true, rep) 
 				break
 			}
 			

@@ -2,6 +2,9 @@
 /// @desc Functions library for making and editing bounding boxes
 
 function bbox() constructor {
+	
+	culled = false
+	changed = false
 	start_pos = point3D(no_limit, no_limit, no_limit)
 	end_pos = point3D(-no_limit, -no_limit, -no_limit)
 	self.updatePoints()
@@ -21,6 +24,7 @@ function bbox() constructor {
 	
 	static reset = function()
 	{
+		changed = false
 		start_pos = point3D(no_limit, no_limit, no_limit)
 		end_pos = point3D(-no_limit, -no_limit, -no_limit)
 		
@@ -67,6 +71,9 @@ function bbox() constructor {
 	
 	static merge = function(box)
 	{
+		if (!box.changed)
+			return 0
+		
 		start_pos[X] = min(start_pos[X], box.start_pos[X], box.end_pos[X])
 		start_pos[Y] = min(start_pos[Y], box.start_pos[Y], box.end_pos[Y])
 		start_pos[Z] = min(start_pos[Z], box.start_pos[Z], box.end_pos[Z])
@@ -75,15 +82,28 @@ function bbox() constructor {
 		end_pos[Y] = max(end_pos[Y], box.start_pos[Y], box.end_pos[Y])
 		end_pos[Z] = max(end_pos[Z], box.start_pos[Z], box.end_pos[Z])
 		
+		changed = true
+		self.updatePoints()
+	}
+	
+	static copy_vbuffer = function()
+	{
+		start_pos = point3D(vbuffer_xmin, vbuffer_ymin, vbuffer_zmin)
+		end_pos = point3D(vbuffer_xmax, vbuffer_ymax, vbuffer_zmax)
+		
+		changed = true
 		self.updatePoints()
 	}
 	
 	static set_vbuffer = function()
 	{
-		start_pos = point3D(vbuffer_xmin, vbuffer_ymin, vbuffer_zmin)
-		end_pos = point3D(vbuffer_xmax, vbuffer_ymax, vbuffer_zmax)
+		vbuffer_xmin = start_pos[X]
+		vbuffer_ymin = start_pos[Y]
+		vbuffer_zmin = start_pos[Z]
 		
-		self.updatePoints()
+		vbuffer_xmax = end_pos[X]
+		vbuffer_ymax = end_pos[Y]
+		vbuffer_zmax = end_pos[Z]
 	}
 	
 	static copy = function(box)
@@ -91,6 +111,7 @@ function bbox() constructor {
 		start_pos = array_copy_1d(box.start_pos)
 		end_pos = array_copy_1d(box.end_pos)
 		
+		changed = box.changed
 		self.updatePoints()
 	}
 	
@@ -117,9 +138,28 @@ function bbox() constructor {
 	}
 }
 
+function bbox_update_visible(viewFrustum)
+{
+	with (obj_timeline)
+	{
+		bounding_box_matrix.culled = !bounding_box_matrix.frustumVisible(viewFrustum)
+		
+		if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK)
+		{
+			for (var rx = 0; rx < array_length(scenery_repeat_bounding_box); rx++)
+				for (var ry = 0; ry < array_length(scenery_repeat_bounding_box[0]); ry++)
+					for (var rz = 0; rz < array_length(scenery_repeat_bounding_box[0][0]); rz++)
+						for (var cx = 0; cx < array_length(scenery_repeat_bounding_box[0][0][0]); cx++)
+							for (var cy = 0; cy < array_length(scenery_repeat_bounding_box[0][0][0][0]); cy++)
+								for (var cz = 0; cz < array_length(scenery_repeat_bounding_box[0][0][0][0][0]); cz++)
+									scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].culled = !scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].frustumVisible(viewFrustum)
+		}
+	}
+}
+
 function frustum() constructor {
 	
-	enabled = true
+	active = true
 	p[0] = [ 1,  0,  0, 1]
 	p[1] = [-1,  0,  0, 1]
 	p[2] = [ 0,  1,  0, 1]

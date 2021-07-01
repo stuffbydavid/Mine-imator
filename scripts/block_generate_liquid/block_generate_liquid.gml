@@ -480,7 +480,9 @@ function block_generate_liquid()
 	corner2z += z1
 	corner3z += z1
 	
-	vbuffer_current = vbuffer[dep, vbuf]
+	vbuffer_current = builder_chunk.vbuffer[dep, vbuf]
+	builder_chunk.bounding_box.set_vbuffer()
+	
 	vertex_brightness = block_current.brightness
 	
 	// X+
@@ -542,4 +544,6 @@ function block_generate_liquid()
 		vbuffer_add_triangle(x1, y2, z1, x2, y2, z1, x2, y1, z1, toptex3x, toptex3y, toptex2x, toptex2y, toptex1x, toptex1y, color, alpha)
 		vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, toptex1x, toptex1y, toptex0x, toptex0y, toptex3x, toptex3y, color, alpha)
 	}
+	
+	mc_builder.builder_chunk.bounding_box.copy_vbuffer()
 }

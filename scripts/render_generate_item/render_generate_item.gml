@@ -135,5 +135,5 @@ function render_generate_item()
 	
 	vbuffer_done()
 	
-	bounding_box.set_vbuffer()
+	bounding_box.copy_vbuffer()
 }

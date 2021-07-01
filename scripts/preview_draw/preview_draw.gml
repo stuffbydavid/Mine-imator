@@ -315,14 +315,14 @@ function preview_draw(preview, xx, yy, width, height)
 						{
 							case e_res_type.SCENERY:
 								if (select.ready)
-									render_world_block(select.block_vbuffer, mc_res, true, select.scenery_size)
+									render_world_block(select.scenery_chunk_array, mc_res, true, select.scenery_size)
 								break
 							
 							case e_res_type.MODEL:
 							{
 								if (select.model_format = e_model_format.BLOCK)
 								{
-									render_world_block(select.block_vbuffer, mc_res)
+									render_world_block(select.scenery_chunk_array, mc_res)
 									render_world_block_map(select.model_block_map, select)
 								}
 								else if (select.model_file != null)
@@ -355,7 +355,7 @@ function preview_draw(preview, xx, yy, width, height)
 										res = select.model_tex
 									else
 										res = mc_res
-									render_world_block(select.model.block_vbuffer, res)
+									render_world_block(select.model.scenery_chunk_array, res)
 									
 									with (select)
 										res = temp_get_model_texobj(null)
@@ -390,7 +390,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							
 							case e_temp_type.BLOCK:
-								render_world_block(select.block_vbuffer, select.block_tex, true, rep)
+								render_world_block(select.scenery_chunk_array, select.block_tex, true, rep)
 								break
 							
 							case e_temp_type.BODYPART:

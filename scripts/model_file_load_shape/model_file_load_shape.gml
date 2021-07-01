@@ -217,7 +217,7 @@ function model_file_load_shape(map, res)
 			return null
 		}
 		
-		bounding_box_default.set_vbuffer()
+		bounding_box_default.copy_vbuffer()
 		bounding_box_default.mul_matrix(matrix)
 		
 		// Update bounds

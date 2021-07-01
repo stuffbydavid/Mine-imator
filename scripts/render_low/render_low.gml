@@ -7,6 +7,10 @@ function render_low()
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surf = render_surface[0]
 	
+	render_world_start(world_size)
+	bbox_update_visible(render_frustum)
+	render_world_done()
+	
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)

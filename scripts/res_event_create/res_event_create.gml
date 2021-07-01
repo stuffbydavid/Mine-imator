@@ -65,6 +65,8 @@ function res_event_create()
 	particle_texture_map = null
 	
 	block_vbuffer = null
+	scenery_chunk_array = null
+	
 	scenery_tl_add = null
 	scenery_tl_list = null
 	scenery_size = vec3(0)

@@ -218,6 +218,7 @@ function res_load()
 				model_format = e_model_format.BLOCK
 				model_file = null
 				block_vbuffer = null
+				scenery_chunk_array = null
 				
 				// Load model file
 				var blockmodel = block_load_model_file(fn, id);
@@ -233,7 +234,7 @@ function res_load()
 				var rendermodel = block_load_render_model(blockmodel, vec3(0), false, false, 0, id);
 				
 				// Generate triangles from render model
-				block_vbuffer_start()
+				block_vbuffer_start(point3D(1, 1, 1))
 				with (mc_builder)
 					builder_generate_single(rendermodel)
 				block_vbuffer_done()

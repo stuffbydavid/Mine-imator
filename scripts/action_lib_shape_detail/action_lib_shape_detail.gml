@@ -12,5 +12,6 @@ function action_lib_shape_detail(val, add)
 		shape_detail = shape_detail * add + val
 		temp_update_shape()
 	}
+	
 	lib_preview.update = true
 }

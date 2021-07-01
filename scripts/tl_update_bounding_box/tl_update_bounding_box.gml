@@ -40,6 +40,28 @@ function tl_update_bounding_box()
 		
 		rotmat = matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1))
 		
+		// Delete old chunk bounding boxes
+		if (scenery_repeat_bounding_box != null)
+		{
+			for (reppos[X] = 0; reppos[X] < array_length(scenery_repeat_bounding_box); reppos[X]++)
+			{
+				for (reppos[Y] = 0; reppos[Y] < array_length(scenery_repeat_bounding_box[0]); reppos[Y]++)
+				{
+					for (reppos[Z] = 0; reppos[Z] < array_length(scenery_repeat_bounding_box[0][0]); reppos[Z]++)
+					{
+						var repindex = scenery_repeat_bounding_box[reppos[X]][reppos[Y]][reppos[Z]];
+							
+						for (var cx = 0; cx < array_length(repindex); cx++)
+							for (var cy = 0; cy < array_length(repindex[0]); cy++)
+								for (var cz = 0; cz < array_length(repindex[0][0]); cz++)
+									delete repindex[cx][cy][cz]
+					}
+				}
+			}
+				
+			scenery_repeat_bounding_box = null
+		}
+		
 		if (temp.block_repeat_enable && type = e_tl_type.SCENERY)
 		{
 			for (reppos[X] = 0; reppos[X] < rep[X]; reppos[X]++)
@@ -48,12 +70,32 @@ function tl_update_bounding_box()
 				{
 					for (reppos[Z] = 0; reppos[Z] < rep[Z]; reppos[Z]++)
 					{
+						// Grouped bounding box
 						var pos = vec3_mul(temp.scenery.scenery_size, point3D_mul(reppos, block_size));
 						
 						repbox.copy(bounding_box)
 						repbox.mul_matrix(matrix_multiply(rotmat, matrix_create(pos, vec3(0), vec3(1))))
 						
 						repgroupbox.merge(repbox)
+						
+						// Create chunk bounding boxes
+						for (var cx = 0; cx < array_length(temp.scenery.scenery_chunk_array); cx++)
+						{
+							for (var cy = 0; cy < array_length(temp.scenery.scenery_chunk_array[0]); cy++)
+							{
+								for (var cz = 0; cz < array_length(temp.scenery.scenery_chunk_array[0][0]); cz++)
+								{
+									var box;
+									box = new bbox()
+									
+									box.copy(temp.scenery.scenery_chunk_array[cx][cy][cz].bounding_box)
+									box.mul_matrix(matrix_multiply(rotmat, matrix_create(pos, vec3(0), vec3(1))))
+									box.mul_matrix(matrix_render)
+									
+									scenery_repeat_bounding_box[reppos[X]][reppos[Y]][reppos[Z]][cx][cy][cz] = box
+								}
+							}
+						}
 					}
 				}
 			}
@@ -61,7 +103,29 @@ function tl_update_bounding_box()
 			bounding_box.copy(repgroupbox)
 		}
 		else
+		{
 			bounding_box.mul_matrix(rotmat)
+			
+			var chunks = (temp.type = e_temp_type.SCENERY ? temp.scenery.scenery_chunk_array : temp.scenery_chunk_array);
+			
+			// Create chunk bounding boxes
+			for (var cx = 0; cx < array_length(chunks); cx++)
+			{
+				for (var cy = 0; cy < array_length(chunks[0]); cy++)
+				{
+					for (var cz = 0; cz < array_length(chunks[0][0]); cz++)
+					{
+						var box = new bbox();
+						
+						box.copy(chunks[cx][cy][cz].bounding_box)
+						box.mul_matrix(rotmat)
+						box.mul_matrix(matrix_render)
+						
+						scenery_repeat_bounding_box[0][0][0][cx][cy][cz] = box
+					}
+				}
+			}
+		}
 	}
 	
 	bounding_box_matrix.copy(bounding_box)

@@ -56,7 +56,7 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 		else
 		{
 			var shapebox = new bbox();
-			shapebox.set_vbuffer()
+			shapebox.copy_vbuffer()
 			shapebox.mul_matrix(part.shape_list[|s].matrix)
 			bounding_box.merge(shapebox)
 			delete shapebox

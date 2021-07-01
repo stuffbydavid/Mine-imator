@@ -52,7 +52,7 @@ function temp_update_shape()
 			break
 	}
 	
-	bounding_box.set_vbuffer()
+	bounding_box.copy_vbuffer()
 	
 	with (obj_timeline)
 	{

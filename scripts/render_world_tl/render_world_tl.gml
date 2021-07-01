@@ -4,7 +4,7 @@
 function render_world_tl()
 {
 	// Frustum culled
-	if (render_frustum.enabled && bounding_box.start_pos[X] != no_limit && !bounding_box_matrix.frustumVisible(render_frustum))
+	if (render_frustum.active && bounding_box_matrix.culled)
 		return 0
 	
 	// No 3D representation?
@@ -175,7 +175,7 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp.block_vbuffer, render_res, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp.scenery_chunk_array, render_res, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res, temp.block_repeat_enable, temp.block_repeat)
 				break

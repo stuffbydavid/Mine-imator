@@ -9,6 +9,10 @@ function render_high()
 	render_surface_time = 0
 	render_update_samples()
 	
+	render_world_start()
+	bbox_update_visible(render_frustum)
+	render_world_done()
+	
 	// SSAO
 	if (render_ssao)
 		render_high_ssao()

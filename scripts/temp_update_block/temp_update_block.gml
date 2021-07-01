@@ -3,15 +3,15 @@
 
 function temp_update_block()
 {
-	block_vbuffer_start()
+	if (!dev_mode || dev_mode_rotate_blocks)
+		mc_builder.build_size = (block_repeat_enable ? vec3(block_repeat[Y], block_repeat[X], block_repeat[Z]) : vec3(1))
+	else
+		mc_builder.build_size = (block_repeat_enable ? vec3(block_repeat[X], block_repeat[Y],block_repeat[Z]) : vec3(1))
+	
+	block_vbuffer_start(mc_builder.build_size)
 	
 	with (mc_builder)
 	{
-		if (!dev_mode || dev_mode_rotate_blocks)
-			build_size = (other.block_repeat_enable ? vec3(other.block_repeat[Y], other.block_repeat[X], other.block_repeat[Z]) : vec3(1))
-		else
-			build_size = (other.block_repeat_enable ? vec3(other.block_repeat[X], other.block_repeat[Y], other.block_repeat[Z]) : vec3(1))
-		
 		builder_start()
 		
 		// Set blocks
@@ -38,4 +38,10 @@ function temp_update_block()
 	}
 	
 	block_vbuffer_done()
+	
+	with (obj_timeline)
+	{
+		if (temp.id = other.id)
+			tl_update_bounding_box()
+	}
 }

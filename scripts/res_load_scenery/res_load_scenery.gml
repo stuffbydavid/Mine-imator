@@ -797,7 +797,7 @@ function res_load_scenery()
 				debug_timer_start()
 				
 				// Prepare vbuffers
-				block_vbuffer_start()
+				block_vbuffer_start(point3D(mc_builder.build_size_x, mc_builder.build_size_y, mc_builder.build_size_z))
 				
 				mc_builder.build_pos_z = 0
 				

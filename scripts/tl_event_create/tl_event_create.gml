@@ -141,4 +141,5 @@ function tl_event_create()
 	// Bounding box info
 	bounding_box = new bbox()
 	bounding_box_matrix = new bbox()
+	scenery_repeat_bounding_box = null
 }

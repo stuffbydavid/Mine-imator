@@ -7,6 +7,11 @@ function builder_generate()
 	if (block_current = null)
 		return 0
 	
+	builder_chunk_x = floor(build_pos_x / chunk_size)
+	builder_chunk_y = floor(build_pos_y / chunk_size)
+	builder_chunk_z = floor(build_pos_z / chunk_size)
+	builder_chunk = chunk_array[builder_chunk_x][builder_chunk_y][builder_chunk_z]
+	
 	build_edge_xp = (build_pos_x = build_size_x - 1)
 	build_edge_xn = (build_pos_x = 0)
 	build_edge_yp = (build_pos_y = build_size_y - 1)
@@ -204,7 +209,7 @@ function builder_generate()
 		if (block_current.require_models)
 			builder_set_model(true)
 		
-		// Get model	
+		// Get model
 		var model = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z);
 		if (model != null)
 		{

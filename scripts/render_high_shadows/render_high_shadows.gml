@@ -207,6 +207,10 @@ function render_high_shadows(export)
 						surface_reset_target()
 					}
 					
+					render_world_start()
+					bbox_update_visible(render_frustum)
+					render_world_done()
+					
 					// Shadows
 					with (app)
 					{
@@ -249,6 +253,10 @@ function render_high_shadows(export)
 						gpu_set_blendmode(bm_normal)
 					}
 					surface_reset_target()
+					
+					render_world_start()
+					bbox_update_visible(render_frustum)
+					render_world_done()
 					
 					// Shadows
 					with (app)

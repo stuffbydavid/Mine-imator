@@ -59,8 +59,29 @@ function view_update_surface(view, cam)
 						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
 						
-						if (tl.bounding_box.start_pos[X] != no_limit && view.boxes)
-							view_shape_box(tl.bounding_box_matrix.start_pos, tl.bounding_box_matrix.end_pos)
+						if (view.boxes)
+						{
+							if (tl.scenery_repeat_bounding_box != null)
+							{
+								draw_set_color(c_red)
+								for (var rx = 0; rx < array_length(tl.scenery_repeat_bounding_box); rx++)
+									for (var ry = 0; ry < array_length(tl.scenery_repeat_bounding_box[0]); ry++)
+										for (var rz = 0; rz < array_length(tl.scenery_repeat_bounding_box[0][0]); rz++)
+											for (var cx = 0; cx < array_length(tl.scenery_repeat_bounding_box[0][0][0]); cx++)
+												for (var cy = 0; cy < array_length(tl.scenery_repeat_bounding_box[0][0][0][0]); cy++)
+													for (var cz = 0; cz < array_length(tl.scenery_repeat_bounding_box[0][0][0][0][0]); cz++)
+														if (tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].changed)
+															view_shape_box(tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].start_pos, tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].end_pos)
+							}
+							
+							draw_set_color(c_aqua)
+							draw_set_alpha(.5)
+							
+							if (tl.bounding_box.changed)
+								view_shape_box(tl.bounding_box_matrix.start_pos, tl.bounding_box_matrix.end_pos)
+							
+							draw_set_alpha(1)
+						}
 					}	
 				}
 				

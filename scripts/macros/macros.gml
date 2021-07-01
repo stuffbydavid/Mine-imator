@@ -171,6 +171,7 @@ function macros()
 	#macro block_size					16
 	#macro item_size					16
 	#macro world_size					30000
+	#macro chunk_size					16
 	
 	// Vectors and matrices
 	#macro X							0
