@@ -3,7 +3,7 @@
 
 function bbox() constructor {
 	
-	culled = false
+	frustum_state = e_frustum_state.VISIBLE
 	changed = false
 	start_pos = point3D(no_limit, no_limit, no_limit)
 	end_pos = point3D(-no_limit, -no_limit, -no_limit)
@@ -86,13 +86,15 @@ function bbox() constructor {
 		self.updatePoints()
 	}
 	
-	static copy_vbuffer = function()
+	static copy_vbuffer = function(update)
 	{
-		start_pos = point3D(vbuffer_xmin, vbuffer_ymin, vbuffer_zmin)
-		end_pos = point3D(vbuffer_xmax, vbuffer_ymax, vbuffer_zmax)
+		start_pos = [vbuffer_xmin, vbuffer_ymin, vbuffer_zmin]
+		end_pos = [vbuffer_xmax, vbuffer_ymax, vbuffer_zmax]
 		
 		changed = true
-		self.updatePoints()
+		
+		if (update = undefined && update = true)
+			self.updatePoints()
 	}
 	
 	static set_vbuffer = function()
@@ -115,8 +117,13 @@ function bbox() constructor {
 		self.updatePoints()
 	}
 	
-	static frustumVisible = function(viewFrustum)
+	static getFrustumState = function(viewFrustum)
 	{
+		var inside, outside, onEdge;
+		inside = false
+		outside = false
+		onEdge = false
+		
 		for (var i = 0; i < 6; i++)
 		{
 			var pointInside = false;
@@ -124,35 +131,123 @@ function bbox() constructor {
 			for (var j = 0; j < 8; j++)
 			{
 				if (vec4_dot(viewFrustum.p[i], boxp[j]) > 0)
-				{
 					pointInside = true
-					break
-				}
+				else if (pointInside)
+					onEdge = true
 			}
 			
 			if (!pointInside)
-				return false
+				outside = true
 		}
 		
-		return true
+		if (outside)
+			return e_frustum_state.HIDDEN
+		
+		return onEdge ? e_frustum_state.PARTIAL : e_frustum_state.VISIBLE
 	}
 }
 
 function bbox_update_visible(viewFrustum)
 {
+	var chunks, chunkarray, rep, chunksize;
+	chunks = 0
+	
+	// Update models
 	with (obj_timeline)
 	{
-		bounding_box_matrix.culled = !bounding_box_matrix.frustumVisible(viewFrustum)
+		if (type != e_tl_type.CHARACTER &&
+			type != e_tl_type.SPECIAL_BLOCK &&
+			type != e_tl_type.MODEL)
+			continue
 		
+		if (type = e_tl_type.MODEL && temp.model.model_format = e_model_format.BLOCK)
+			continue
+		
+		bounding_box_matrix.frustum_state = bounding_box_matrix.getFrustumState(viewFrustum)
+		bounding_box_update = false
+		
+		//show_debug_message(bounding_box_matrix.frustum_state)
+		
+		for (var i = 0; i < ds_list_size(part_list); i++)
+		{
+			var part = part_list[|i];
+			
+			if (bounding_box_matrix.frustum_state = e_frustum_state.PARTIAL)
+				part.bounding_box_update = true
+			else
+			{
+				part.bounding_box_update = false
+				part.bounding_box_matrix.frustum_state = bounding_box_matrix.frustum_state
+			}
+		}
+	}
+	
+	with (obj_timeline)
+	{
+		if (!bounding_box_update)
+			continue
+		
+		if (!tl_get_visible())
+			continue
+		
+		bounding_box_matrix.frustum_state = bounding_box_matrix.getFrustumState(viewFrustum)
+		
+		if (bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN)
+			continue
+		
+		// Make a list of all visible chunks vbuffers to render
 		if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK)
 		{
-			for (var rx = 0; rx < array_length(scenery_repeat_bounding_box); rx++)
-				for (var ry = 0; ry < array_length(scenery_repeat_bounding_box[0]); ry++)
-					for (var rz = 0; rz < array_length(scenery_repeat_bounding_box[0][0]); rz++)
-						for (var cx = 0; cx < array_length(scenery_repeat_bounding_box[0][0][0]); cx++)
-							for (var cy = 0; cy < array_length(scenery_repeat_bounding_box[0][0][0][0]); cy++)
-								for (var cz = 0; cz < array_length(scenery_repeat_bounding_box[0][0][0][0][0]); cz++)
-									scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].culled = !scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].frustumVisible(viewFrustum)
+			rep = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
+			chunkarray = (type = e_tl_type.SCENERY ? temp.scenery.scenery_chunk_array : temp.scenery_chunk_array)
+			visible_chunks_array = null
+			chunks = 0
+			chunksize = [array_length(scenery_repeat_bounding_box[0][0][0]),
+						 array_length(scenery_repeat_bounding_box[0][0][0][0]),
+						 array_length(scenery_repeat_bounding_box[0][0][0][0][0])]
+			
+			// Loop through repeat
+			for (var rx = 0; rx < rep[X]; rx++)
+			{
+				for (var ry = 0; ry < rep[Y]; ry++)
+				{
+					for (var rz = 0; rz < rep[Z]; rz++)
+					{
+						// Initialize vbuffer arrays
+						for (var d = 0; d < e_block_depth.amount; d++)
+							for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
+								visible_chunks_array[rx][ry][rz][d][vb] = []
+						
+						// Loop through chunks
+						for (var cx = 0; cx < chunksize[X]; cx++)
+						{
+							for (var cy = 0; cy < chunksize[Y]; cy++)
+							{
+								for (var cz = 0; cz < chunksize[Z]; cz++)
+								{
+									var c = chunkarray[cx][cy][cz];
+									
+									// Chunk is visible somehow, now check vbuffers
+									if (!c.empty && (bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || (scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].getFrustumState(viewFrustum) != e_frustum_state.HIDDEN)))
+									{
+										for (var d = 0; d < e_block_depth.amount; d++)
+										{
+											for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
+											{
+												if (!c.vbuffer_empty[d][vb])
+												{
+													chunks = array_length(visible_chunks_array[rx][ry][rz][d][vb])
+													visible_chunks_array[rx][ry][rz][d][vb][chunks] = c
+												}
+											}
+										}
+									}
+								}	
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

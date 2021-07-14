@@ -62,80 +62,87 @@ function draw_label()
 				return 0
 			}
 		}
-	}
-	
-	if (argument_count > 5)
-	{
-	    color = argument[5]
-	    alpha = argument[6]
 		
-	    if (color != null)
+		// Color/alpha
+		if (argument_count > 5)
 		{
-			oldcolor = draw_get_color()
-	        draw_set_color(color)
-	    }
+		    color = argument[5]
+		    alpha = argument[6]
 		
-	    if (alpha < 1)
-		{
-	        oldalpha = draw_get_alpha()
-			draw_set_alpha(oldalpha * alpha)
-	    }
-	}
-	
-	if (argument_count > 7)
-	{
-	    font = argument[7]
-	    draw_set_font(font)
+		    if (color != null)
+			{
+				oldcolor = draw_get_color()
+		        draw_set_color(color)
+		    }
 		
-		strwid = string_width(str)
-		strhei = string_height(str)
-		
-		if (halign = fa_right)
-			strx = xx - strwid
-		else if (halign = fa_center)
-			strx = xx - strwid/2
-		
-		if (valign = fa_middle)
-			stry = yy - strhei/2
-		else if (valign = fa_bottom)
-			stry = yy - strhei
-		
-		// Reset and return
-		if (strx + strwid < 0 || strx > content_x + content_width || stry + strhei < 0 || stry > content_y + content_height)
-		{
-			draw_set_halign(fa_left)
-			draw_set_valign(fa_top)
+		    if (alpha < 1)
+			{
+		        oldalpha = draw_get_alpha()
+				draw_set_alpha(oldalpha * alpha)
+		    }
 			
+			// Custom font
+			if (argument_count > 7)
+			{
+			    font = argument[7]
+			    draw_set_font(font)
+		
+				strwid = string_width(str)
+				strhei = string_height(str)
+		
+				if (halign = fa_right)
+					strx = xx - strwid
+				else if (halign = fa_center)
+					strx = xx - strwid/2
+		
+				if (valign = fa_middle)
+					stry = yy - strhei/2
+				else if (valign = fa_bottom)
+					stry = yy - strhei
+		
+				// Reset and return
+				if (strx + strwid < 0 || strx > content_x + content_width || stry + strhei < 0 || stry > content_y + content_height)
+				{
+					draw_set_halign(fa_left)
+					draw_set_valign(fa_top)
+			
+					if (color != null)
+						draw_set_color(oldcolor)
+			
+					if (alpha < 1)
+						draw_set_alpha(oldalpha)
+			
+					return 0
+				}
+				
+				// Seperation/width
+				if (argument_count > 8)
+				{
+				    seperation = argument[8]
+				    width = argument[9]
+				}
+			}
+		}
+	}
+	
+	if (seperation = -1 && width = -1)
+		draw_text(xx, yy, str)
+	else
+		draw_text_ext(xx, yy, str, seperation, width)
+	
+	// Reset
+	if (argument_count > 3)
+	{
+	    draw_set_halign(fa_left)
+	    draw_set_valign(fa_top)
+		
+		if (argument_count > 5)
+		{
 			if (color != null)
 				draw_set_color(oldcolor)
 			
 			if (alpha < 1)
 				draw_set_alpha(oldalpha)
-			
-			return 0
 		}
-	}
-	
-	if (argument_count > 8)
-	{
-	    seperation = argument[8]
-	    width = argument[9]
-	}
-	
-	draw_text_ext(xx, yy, str, seperation, width)
-	
-	if (argument_count > 3)
-	{
-	    draw_set_halign(fa_left)
-	    draw_set_valign(fa_top)
-	}
-	
-	if (argument_count > 5)
-	{
-		if (color != null)
-			draw_set_color(oldcolor)
-		
-		if (alpha < 1)
-			draw_set_alpha(oldalpha)
 	}
 }

@@ -30,7 +30,7 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 	// Textbox
 	microani_set(name, script, false, false, false)
 	
-	if (draw_inputbox(name + "input", (xx + wid - 80) + 8, yy, 80, 24, string(def) + tbx.suffix, tbx, null, false, false, font_digits, e_inputbox.RIGHT, mcroani_arr[e_mcroani.CUSTOM]))
+	if (draw_inputbox(name + "input", (xx + wid - 80) + 8, yy, 80, 24, string(def) + tbx.suffix, tbx, null, false, false, font_digits, e_inputbox.RIGHT, microani_arr[e_microani.CUSTOM]))
 	{
 		var val = eval(tbx.text, def);
 		val = clamp(snap(val, snapval), minval, maxval)
@@ -38,7 +38,7 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 		script_execute(script, val, false)
 	}
 	
-	inputfocus = mcroani_arr[e_mcroani.ACTIVE]
+	inputfocus = microani_arr[e_microani.ACTIVE]
 	
 	// Idle
 	if (window_busy = name || (window_busy != name + "inputpress" && window_focus != string(tbx)))
@@ -49,10 +49,10 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 	microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, locked, mouseon || (window_busy = name + "inputpress" || window_focus = string(tbx)))
 	
 	var labelcolor, labelalpha;
-	labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelcolor = merge_color(labelcolor, c_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
-	labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelalpha = lerp(labelalpha, a_accent, max(inputfocus, mcroani_arr[e_mcroani.ACTIVE]))
+	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	labelcolor = merge_color(labelcolor, c_accent, max(inputfocus, microani_arr[e_microani.ACTIVE]))
+	labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	labelalpha = lerp(labelalpha, a_accent, max(inputfocus, microani_arr[e_microani.ACTIVE]))
 	
 	draw_set_font(font_label)
 	draw_label(string_limit(text_get(name), dw - 80), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha)
@@ -127,25 +127,25 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 	
 	// Line
 	var color, alpha;
-	color = merge_color(c_text_tertiary, c_text_secondary, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	color = merge_color(color, c_border, mcroani_arr[e_mcroani.DISABLED])
-	alpha = lerp(a_text_tertiary, a_text_secondary, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	alpha = lerp(alpha, a_border, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_text_tertiary, c_text_secondary, max(microani_arr[e_microani.HOVER], microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	color = merge_color(color, c_border, microani_arr[e_microani.DISABLED])
+	alpha = lerp(a_text_tertiary, a_text_secondary, max(microani_arr[e_microani.HOVER], microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	alpha = lerp(alpha, a_border, microani_arr[e_microani.DISABLED])
 	
 	draw_box(linex + (pos - linex), dragy - 1, linewid - (pos - linex), 2, false, color, alpha)
 	
-	color = merge_color(c_accent, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	alpha = merge_color(a_accent, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_accent, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	alpha = merge_color(a_accent, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	draw_box(linex, dragy - 1, pos - linex, 2, false, color, alpha)
 	
 	// Dragger
-	color = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
+	color = merge_color(color, c_accent_pressed, max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	color = merge_color(color, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	alpha = lerp(1, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	draw_box(pos, dragy - 10, 12, 20, false, c_level_middle, 1)
 	draw_box(pos, dragy - 10, 12, 20, false, color, alpha)
 	draw_box_bevel(pos, dragy - 10, 12, 20, 1)
-	draw_box_hover(pos, dragy - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])
+	draw_box_hover(pos, dragy - 10, 12, 20, microani_arr[e_microani.ACTIVE])
 }

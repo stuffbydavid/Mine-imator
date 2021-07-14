@@ -125,7 +125,7 @@ function draw_dragger()
 	}
 	
 	if (window_busy = name + "drag")
-		current_mcroani.value = true
+		current_microani.value = true
 	
 	// Set cursor
 	if (dragmouseon)
@@ -133,13 +133,13 @@ function draw_dragger()
 	
 	// Use microanimation from inputbox to determine color
 	var labelcolor, labelalpha;
-	labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelcolor = merge_color(labelcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-	labelcolor = merge_color(labelcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	labelcolor = merge_color(labelcolor, c_accent, microani_arr[e_microani.ACTIVE])
+	labelcolor = merge_color(labelcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
 	
-	labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelalpha = lerp(labelalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
-	labelalpha = lerp(labelalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	labelalpha = lerp(labelalpha, a_accent, microani_arr[e_microani.ACTIVE])
+	labelalpha = lerp(labelalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	if (showcaption)
 		draw_label(caption, xx, yy + hei/2, fa_left, fa_middle, labelcolor, labelalpha, font_label)

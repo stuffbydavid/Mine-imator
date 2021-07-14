@@ -705,7 +705,7 @@ function preview_draw(preview, xx, yy, width, height)
 	
 	// Outline and hover
 	microani_set(string(preview), "", mouseon, mouseon && mouse_left, (window_focus = string(preview)) || (mouseon && mouse_left))
-	draw_outline(xx, yy, width, height, 1, c_accent, mcroani_arr[e_mcroani.ACTIVE], true)
-	draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])
+	draw_outline(xx, yy, width, height, 1, c_accent, microani_arr[e_microani.ACTIVE], true)
+	draw_box_hover(xx, yy, width, height, microani_arr[e_microani.HOVER])
 	microani_update(mouseon, mouseon && mouse_left, (window_focus = string(preview)) || (mouseon && mouse_left))
 }

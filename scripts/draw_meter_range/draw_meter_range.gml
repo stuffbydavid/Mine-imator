@@ -33,19 +33,19 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	
 	textfield_group_add(name + "mininput", minval, mindef, minscript, X, mintbx, null, 0, minrange, min(maxval, maxrange))
 	textfield_group_add(name + "maxinput", maxval, maxdef, maxscript, X, maxtbx, null, 0, maxrange, max(minval, minrange))
-	draw_textfield_group(name, (xx + wid - 128) + 8, yy, 128, 0, null, null, snapval, false, false, mcroani_arr[e_mcroani.CUSTOM], false)
+	draw_textfield_group(name, (xx + wid - 128) + 8, yy, 128, 0, null, null, snapval, false, false, microani_arr[e_microani.CUSTOM], false)
 	
-	textfocus = mcroani_arr[e_mcroani.CUSTOM]
+	textfocus = microani_arr[e_microani.CUSTOM]
 	
 	// Caption
 	microani_set(name, null, window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, false, false, 1, false)
 	microani_update(window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, window_busy = name + "min" || window_busy = name + "max", false, mouseon || textfocus)
 	
 	var labelcolor, labelalpha;
-	labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelcolor = merge_color(labelcolor, c_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
-	labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelalpha = lerp(labelalpha, a_accent, max(textfocus, mcroani_arr[e_mcroani.ACTIVE]))
+	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	labelcolor = merge_color(labelcolor, c_accent, max(textfocus, microani_arr[e_microani.ACTIVE]))
+	labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	labelalpha = lerp(labelalpha, a_accent, max(textfocus, microani_arr[e_microani.ACTIVE]))
 	draw_label(text_get(name), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha, font_label)
 	
 	// Slider
@@ -129,44 +129,44 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	
 	// Rail line
 	var color, alpha;
-	color = merge_color(c_text_tertiary, c_text_secondary, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	color = merge_color(color, c_border, mcroani_arr[e_mcroani.DISABLED])
-	alpha = lerp(a_text_tertiary, a_text_secondary, max(mcroani_arr[e_mcroani.HOVER], mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	alpha = lerp(alpha, a_border, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_text_tertiary, c_text_secondary, max(microani_arr[e_microani.HOVER], microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	color = merge_color(color, c_border, microani_arr[e_microani.DISABLED])
+	alpha = lerp(a_text_tertiary, a_text_secondary, max(microani_arr[e_microani.HOVER], microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	alpha = lerp(alpha, a_border, microani_arr[e_microani.DISABLED])
 	
 	draw_box(linex, thumby - 1, minthumbpos - linex, 2, false, color, alpha)
 	draw_box(maxthumbpos, thumby - 1, (linex + linewid) - maxthumbpos, 2, false, color, alpha)
 	
 	// Selected region
-	color = merge_color(c_accent, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	alpha = merge_color(a_accent, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_accent, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	alpha = merge_color(a_accent, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	draw_box(minthumbpos, thumby - 1, maxthumbpos - minthumbpos, 2, false, color, alpha)
 	
 	// Minimum dragger
 	microani_set(name + "min", minscript, (window_busy = name + "min") || minmouseon, minmouseon && mouse_left, false)
 	microani_update((window_busy = name + "min") || minmouseon, minmouseon && mouse_left, false)
 	
-	color = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
+	color = merge_color(color, c_accent_pressed, max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	color = merge_color(color, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	alpha = lerp(1, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	draw_box(minthumbpos, thumby - 10, 12, 20, false, c_level_middle, 1)
 	draw_box(minthumbpos, thumby - 10, 12, 20, false, color, alpha)
 	draw_box_bevel(minthumbpos, thumby - 10, 12, 20, 1)
-	draw_box_hover(minthumbpos, thumby - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])
+	draw_box_hover(minthumbpos, thumby - 10, 12, 20, microani_arr[e_microani.ACTIVE])
 	
 	// Maximum dragger
 	microani_set(name + "max", maxscript, (window_busy = name + "max") || maxmouseon, maxmouseon && mouse_left, false)
 	microani_update((window_busy = name + "max") || maxmouseon, maxmouseon && mouse_left, false)
 	
-	color = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	color = merge_color(color, c_accent_pressed, max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS]))
-	color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	alpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
+	color = merge_color(color, c_accent_pressed, max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
+	color = merge_color(color, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	alpha = lerp(1, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	draw_box(maxthumbpos, thumby - 10, 12, 20, false, c_level_middle, 1)
 	draw_box(maxthumbpos, thumby - 10, 12, 20, false, color, alpha)
 	draw_box_bevel(maxthumbpos, thumby - 10, 12, 20, 1)
-	draw_box_hover(maxthumbpos, thumby - 10, 12, 20, mcroani_arr[e_mcroani.ACTIVE])
+	draw_box_hover(maxthumbpos, thumby - 10, 12, 20, microani_arr[e_microani.ACTIVE])
 }

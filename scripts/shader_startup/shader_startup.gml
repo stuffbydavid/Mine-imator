@@ -2,7 +2,7 @@
 
 function shader_startup()
 {
-	globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap;
+	globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap, shader_check_uniform;
 	globalvar shader_blend_color, shader_blend_alpha;
 	
 	// Texture drawing
@@ -16,6 +16,8 @@ function shader_startup()
 	var err = false;
 	if (!shaders_are_supported())
 		err = true
+	
+	shader_check_uniform = false
 	
 	// Compiled?
 	if (!err)
@@ -142,6 +144,7 @@ function shader_startup()
 		new_shader_uniform("uHSBMul")
 		new_shader_uniform("uMixColor")
 		new_shader_uniform("uLightAmount")
+		new_shader_uniform("uSunDirection")
 		new_shader_uniform("uLightData")
 		new_shader_uniform("uAmbientColor")
 		new_shader_uniform("uBrightness")

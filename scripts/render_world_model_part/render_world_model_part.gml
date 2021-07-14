@@ -14,10 +14,15 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		return 0
 	
 	var parttexname, mat;
-	parttexname = model_part_get_texture_name(part, texnamemap)
+	parttexname = (tlobject ? "" : model_part_get_texture_name(part, texnamemap))
 	
 	if (!tlobject)
 		mat = matrix_get(matrix_world)
+	
+	var texobj, blendcolor, alpha;
+	texobj = null
+	blendcolor = null
+	alpha = null
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
@@ -39,7 +44,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Does the part need to move a certain amount for this shape to render?
 		if (shape.move_required)
 		{
-			if (tlobject = null)
+			if (!tlobject)
 				continue
 			
 			if (!(abs(tlobject.value[e_value.POS_X]) > shape.move_required_array[X] &&
@@ -48,22 +53,30 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				continue
 		}
 		
-		// Get texture (shape texture overrides part texture)
-		var shapetexname = parttexname;
-		if (shape.texture_name != "")
-			shapetexname = shape.texture_name
-		
-		// Change texture if name is in shape texture map
-		if (shapetexnamemap != null)
+		// Set shape texture
+		if (tlobject)
+			render_set_texture(model_part_shape_tex[s])
+		else
 		{
-			var maptexname = shapetexnamemap[?shape.description];
-			if (!is_undefined(maptexname))
-				shapetexname = maptexname
+			// Get texture (shape texture overrides part texture)
+			var shapetexname = parttexname;
+			if (shape.texture_name != "")
+				shapetexname = shape.texture_name
+			
+			// Change texture if name is in shape texture map
+			if (shapetexnamemap != null)
+			{
+				var maptexname = shapetexnamemap[?shape.description];
+				if (!is_undefined(maptexname))
+					shapetexname = maptexname
+			}
+			
+			with (res)
+			{
+				texobj = res_get_model_texture(shapetexname)
+				render_set_texture(texobj)
+			}
 		}
-		
-		// Set shader
-		with (res)
-			render_set_texture(res_get_model_texture(shapetexname))
 		
 		// Banner rendering
 		if (part.is_banner)
@@ -86,35 +99,50 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 					if (sprite_exists(tlobject.temp.banner_skin))
 						render_set_texture(tlobject.temp.banner_skin)
 			}
-		}
-		
-		if (tlobject != null)
-		{
-			// Only use banner skin if timeline is using its template's resource
-			var tempres = null;
 			
-			with (tlobject.temp)
-				tempres = temp_get_model_texobj(null)
-			
-			if (res = tempres)
-				if (sprite_exists(tlobject.banner_skin))
-					render_set_texture(tlobject.banner_skin)
+			if (tlobject != null)
+			{
+				// Only use banner skin if timeline is using its template's resource
+				var tempres = null;
+				
+				with (tlobject.temp)
+					tempres = temp_get_model_texobj(null)
+				
+				if (res = tempres)
+					if (sprite_exists(tlobject.banner_skin))
+						render_set_texture(tlobject.banner_skin)
+			}
 		}
 		
 		// Blend color
-		var minecraft_color = c_white;
+		blendcolor = shape.color_blend
+		alpha = shape.color_alpha
 		if (colornamemap != null)
 		{
 			var color = colornamemap[? shape.description];
 			if (!is_undefined(color))
-				minecraft_color = color
+				blendcolor = color
 		}
 		
-		// Minecraft color (Overrides shapes' blend color)
-		if (minecraft_color = c_white)
-			render_set_uniform_color("uBlendColor", color_multiply(shader_blend_color, shape.color_blend), shader_blend_alpha * shape.color_alpha)
+		// Blend shape color/alpha
+		if (blendcolor != c_white || shape.color_alpha != 1)
+		{
+			blendcolor = color_multiply(shader_blend_color, blendcolor)
+			alpha = shader_blend_alpha * shape.color_alpha
+		}
 		else
-			render_set_uniform_color("uBlendColor", color_multiply(shader_blend_color, minecraft_color), shader_blend_alpha * shape.color_alpha)
+		{
+			blendcolor = shader_blend_color
+			alpha = shader_blend_alpha
+		}
+		
+		// Set color/alpha
+		if (blendcolor != render_blend_prev || alpha != render_alpha_prev)
+		{
+			render_set_uniform_color("uBlendColor", blendcolor, alpha)
+			render_blend_prev = blendcolor
+			render_alpha_prev = alpha
+		}
 		
 		// Mix color
 		if (shape.color_mix_percent > 0)

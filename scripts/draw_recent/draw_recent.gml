@@ -52,10 +52,10 @@ function draw_recent()
 			// Animation
 			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 			
-			draw_box(xx, recenty, wid, 44, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.HOVER])
-			draw_box_hover(xx, recenty, wid, 44, mcroani_arr[e_mcroani.HOVER])
+			draw_box(xx, recenty, wid, 44, false, c_overlay, a_overlay * microani_arr[e_microani.HOVER])
+			draw_box_hover(xx, recenty, wid, 44, microani_arr[e_microani.HOVER])
 			
-			draw_box(xx, recenty, wid, 44, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
+			draw_box(xx, recenty, wid, 44, false, c_accent_overlay, a_accent_overlay * microani_arr[e_microani.PRESS])
 			
 			microani_update(mouseon, mouseon && mouse_left, false)
 			
@@ -155,10 +155,10 @@ function draw_recent()
 			// Animation
 			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 			
-			draw_box(xx, recenty, wid, 44, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.HOVER])
-			draw_box_hover(xx, recenty, wid, 44, mcroani_arr[e_mcroani.HOVER])
+			draw_box(xx, recenty, wid, 44, false, c_overlay, a_overlay * microani_arr[e_microani.HOVER])
+			draw_box_hover(xx, recenty, wid, 44, microani_arr[e_microani.HOVER])
 			
-			draw_box(xx, recenty, wid, 44, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
+			draw_box(xx, recenty, wid, 44, false, c_accent_overlay, a_accent_overlay * microani_arr[e_microani.PRESS])
 			
 			microani_update(mouseon, mouseon && mouse_left, false)
 			
@@ -217,9 +217,9 @@ function draw_recent()
 				microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 				
 				// Card hover
-				draw_box(cardx, cardy, 240, 240, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.HOVER])
-				draw_box_hover(cardx, cardy, 240, 240, mcroani_arr[e_mcroani.HOVER])
-				draw_box(cardx, cardy, 240, 240, false, c_accent_overlay, a_accent_overlay * mcroani_arr[e_mcroani.PRESS])
+				draw_box(cardx, cardy, 240, 240, false, c_overlay, a_overlay * microani_arr[e_microani.HOVER])
+				draw_box_hover(cardx, cardy, 240, 240, microani_arr[e_microani.HOVER])
+				draw_box(cardx, cardy, 240, 240, false, c_accent_overlay, a_accent_overlay * microani_arr[e_microani.PRESS])
 				
 				// Card outline
 				draw_outline(cardx, cardy, 240, 240, 1, item.pinned ? c_accent : c_border, item.pinned ? 1 : a_border)

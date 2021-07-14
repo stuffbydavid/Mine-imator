@@ -24,6 +24,9 @@ function draw_outline()
 	{
 		color = argument[5]
 		alpha *= argument[6]
+		
+		if (alpha = 0)
+			return 0
 	}
 	
 	if (argument_count > 7)
@@ -33,8 +36,8 @@ function draw_outline()
 	{
 		xx += size
 		yy += size
-		ww -= size*2
-		hh -= size*2
+		ww -= size * 2
+		hh -= size * 2
 	}
 	
 	// Top

@@ -10,8 +10,5 @@ function list_item_event_destroy()
 	
 	// Delete micro animation
 	if (ds_map_exists(microanis, string(id)))
-	{
-		instance_destroy(microanis[?string(id)])
-		ds_map_delete(microanis, string(id))
-	}
+		ds_list_add(microani_delete_list, microanis[?string(id)])
 }

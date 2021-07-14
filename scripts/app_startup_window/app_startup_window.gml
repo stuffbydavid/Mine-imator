@@ -117,4 +117,7 @@ function app_startup_window()
 	popup_switch_to = null
 	popup_switch_from = null
 	popup_mouseon = false
+	
+	// Set garbage collector
+	gc_target_frame_time(0)
 }

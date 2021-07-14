@@ -13,9 +13,16 @@ function render_set_texture(tex)
 		return 0
 	
 	// Set filter
-	gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)
-	gpu_set_tex_mip_enable(shader_texture_filter_mipmap ? mip_on : mip_off)
-	gpu_set_tex_mip_filter_ext(sampler, tf_linear)
+	var mipactive = shader_texture_filter_mipmap ? mip_on : mip_off;
+	
+	if (gpu_get_texfilter_ext(sampler) != shader_texture_filter_linear)
+		gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)
+	
+	if (gpu_get_tex_mip_enable() != mipactive)
+		gpu_set_tex_mip_enable(mipactive)
+	
+	if (tex = render_texture_prev)
+		return 0
 	
 	// Surface
 	if (shader_texture_surface)
@@ -49,4 +56,6 @@ function render_set_texture(tex)
 	
 	render_set_uniform_vec2("uTexScale", scalex, scaley)
 	gpu_set_texrepeat_ext(sampler, true)
+	
+	render_texture_prev = tex
 }

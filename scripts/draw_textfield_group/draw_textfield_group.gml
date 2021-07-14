@@ -64,7 +64,7 @@ function draw_textfield_group()
 	// Last textfield has 'active' animation, will need that for label color and border
 	microani_set(string(textfield_textbox[textfield_amount - 1]) + textfield_name[textfield_amount - 1], textfield_script[textfield_amount - 1], false, false, false, false, 1, false)
 	
-	var active = current_mcroani.custom;
+	var active = current_microani.custom;
 	microani_set(name, null, mouseon || active, false, false)
 	microani_update(mouseon || active, false, false)
 	
@@ -145,10 +145,10 @@ function draw_textfield_group()
 		
 		// Draw base button
 		var focus, linecolor, linealpha;
-		focus = max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE])
-		linecolor = merge_color(c_border, c_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+		focus = max(microani_arr[e_microani.PRESS], microani_arr[e_microani.ACTIVE])
+		linecolor = merge_color(c_border, c_text_tertiary, microani_arr[e_microani.HOVER])
 		linecolor = merge_color(linecolor, c_accent, focus)
-		linealpha = lerp(0, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+		linealpha = lerp(0, a_text_tertiary, microani_arr[e_microani.HOVER])
 		linealpha = lerp(linealpha, a_accent, focus)
 		
 		var labelcolor, labelalpha;
@@ -166,10 +166,10 @@ function draw_textfield_group()
 		}
 		else
 		{
-			labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+			labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
 			labelcolor = merge_color(labelcolor, c_accent, focus)
 			
-			labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+			labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 			labelalpha = lerp(labelalpha, a_accent, focus)
 		}
 		
@@ -179,10 +179,10 @@ function draw_textfield_group()
 			draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + (boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 		
 		// Outline
-		draw_outline(fieldx, boxy, boxwid, boxhei, 1, c_level_middle, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
+		draw_outline(fieldx, boxy, boxwid, boxhei, 1, c_level_middle, max(focus, microani_arr[e_microani.HOVER]), true)
 		draw_outline(fieldx, boxy, boxwid, boxhei, 1, linecolor, linealpha, true)
 		
-		draw_box_hover(fieldx, boxy, boxwid, boxhei, mcroani_arr[e_mcroani.PRESS])
+		draw_box_hover(fieldx, boxy, boxwid, boxhei, microani_arr[e_microani.PRESS])
 		
 		active = (active || window_focus = string(textfield_textbox[i]))
 		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]), false, active)

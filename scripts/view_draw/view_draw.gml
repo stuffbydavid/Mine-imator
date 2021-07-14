@@ -190,7 +190,7 @@ function view_draw(view)
 	}
 	
 	if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
-		current_mcroani.value = true
+		current_microani.value = true
 	
 	dx -= dw
 	
@@ -244,7 +244,7 @@ function view_draw(view)
 	}
 	
 	if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu_ani_type != "hide")
-		current_mcroani.value = true
+		current_microani.value = true
 	dx -= dw
 	
 	// Overlays
@@ -266,7 +266,7 @@ function view_draw(view)
 		}
 		
 		if (settings_menu_name = (string(view) + "viewsnapsettings") && settings_menu_ani_type != "hide")
-			current_mcroani.value = true
+			current_microani.value = true
 		dx -= dw
 		
 		tip_set_keybind(e_keybind.SNAP)

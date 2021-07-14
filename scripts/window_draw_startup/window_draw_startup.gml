@@ -98,7 +98,7 @@ function window_draw_startup()
 			menu_settings_set(dx + labelwid + 16, dy, "startupsortby", 32)
 		
 		if (settings_menu_name = "startupsortby" && settings_menu_ani_type != "hide")
-			current_mcroani.value = true
+			current_microani.value = true
 		
 		dy += 72
 		

@@ -61,12 +61,12 @@ function draw_inputbox()
 	
 	// Field background
 	var bordercolor, borderalpha;
-	bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
-	bordercolor = merge_color(bordercolor, c_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
-	bordercolor = merge_color(bordercolor, c_border, mcroani_arr[e_mcroani.DISABLED])
-	borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
-	borderalpha = lerp(borderalpha, a_accent, max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE]))
-	borderalpha = lerp(borderalpha, a_border, mcroani_arr[e_mcroani.DISABLED]) * alpha
+	bordercolor = merge_color(c_border, c_text_secondary, microani_arr[e_microani.HOVER])
+	bordercolor = merge_color(bordercolor, c_accent, max(microani_arr[e_microani.PRESS], microani_arr[e_microani.ACTIVE]))
+	bordercolor = merge_color(bordercolor, c_border, microani_arr[e_microani.DISABLED])
+	borderalpha = lerp(a_border, a_text_secondary, microani_arr[e_microani.HOVER])
+	borderalpha = lerp(borderalpha, a_accent, max(microani_arr[e_microani.PRESS], microani_arr[e_microani.ACTIVE]))
+	borderalpha = lerp(borderalpha, a_border, microani_arr[e_microani.DISABLED]) * alpha
 	
 	if (err)
 	{
@@ -76,7 +76,7 @@ function draw_inputbox()
 	
 	draw_box(xx, yy, w, h, false, c_level_top, alpha * draw_get_alpha())
 	draw_outline(xx, yy, w, h, 1, bordercolor, borderalpha, true)
-	draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])
+	draw_box_hover(xx, yy, w, h, microani_arr[e_microani.PRESS])
 	
 	// Error icon
 	if (err)
@@ -157,7 +157,7 @@ function draw_inputbox()
 		context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_context_type.NONE, null, null)
 	
 	// Disabled overlay
-	draw_box(xx, yy, w, h, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
+	draw_box(xx, yy, w, h, false, c_overlay, a_overlay * microani_arr[e_microani.DISABLED])
 	
 	if (mouseon && mouse_left_released && (window_focus != string(tbx)))
 	{

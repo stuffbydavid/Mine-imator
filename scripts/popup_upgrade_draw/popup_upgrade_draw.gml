@@ -25,7 +25,7 @@ function popup_upgrade_draw()
 	
 	tab_control(48)
 	draw_inputbox("upgrade", dx + dw/2 - wid/2, dy, wid, 48, "XXXXXXXX", popup_upgrade.tbx_key, null, false, false, font_upgrade, e_inputbox.BIG)
-	draw_box_hover(dx + dw/2 - wid/2, dy, wid, 48, mcroani_arr[e_mcroani.PRESS])
+	draw_box_hover(dx + dw/2 - wid/2, dy, wid, 48, microani_arr[e_microani.PRESS])
 	
 	if (draw_button_icon("upgradekeypaste", dx + dw/2 + wid/2 + 8, dy + 10, 24, 24, false, icons.PASTE, null, false, "tooltippastekey"))
 		popup_upgrade.tbx_key.text = string(clipboard_get_text())

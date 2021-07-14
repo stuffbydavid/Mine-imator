@@ -37,7 +37,7 @@ function draw_button_collapse(name, open, script, active, caption)
 	dx += 16
 	dw -= 16
 	tab_collapse = true
-	collapse_ani = mcroani_arr[e_mcroani.ACTIVE]
+	collapse_ani = microani_arr[e_microani.ACTIVE]
 	
 	// Switch/label
 	if (script)

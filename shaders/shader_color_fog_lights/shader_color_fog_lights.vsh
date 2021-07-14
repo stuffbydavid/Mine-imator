@@ -11,6 +11,7 @@ uniform int uIsGround;
 uniform int uIsSky;
 
 uniform int uLightAmount;
+uniform vec3 uSunDirection;
 uniform vec4 uLightData[128];
 uniform vec4 uAmbientColor;
 uniform float uBrightness;
@@ -83,7 +84,7 @@ void main()
 			dis = distance(vPosition, lightPosition);
 			att = (i > 0) ? max(0.0, 1.0 - dis / lightRange) : 1.0; // Attenuation factor
 		
-			vec3 toLight = normalize(lightPosition - vPosition);
+			vec3 toLight = (i > 0) ? normalize(lightPosition - vPosition) : uSunDirection;
 			float dif = max(0.0, dot(vNormal, toLight)) * att; // Diffuse factor
 			vDiffuse += data2.rgb * dif;
 		}

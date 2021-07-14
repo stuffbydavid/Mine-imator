@@ -94,7 +94,7 @@ function panel_draw_content()
 				{
 					//draw_box(content_x, dy - 8, dividew, content_height, false, c_level_bottom, 1)
 					
-					//dy += floor(8 * mcroani_arr[e_mcroani.ACTIVE])
+					//dy += floor(8 * microani_arr[e_microani.ACTIVE])
 					//dy -= 8
 					script_execute(cat[c].script)
 					

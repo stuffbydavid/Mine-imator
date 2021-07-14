@@ -10,6 +10,7 @@ function app_update_animate()
 	cameraarr = array()
 	background_light_amount = 1
 	background_light_data[0] = 0
+	background_sun_direction = vec3(0)
 	
 	with (obj_timeline)
 	{
@@ -17,9 +18,16 @@ function app_update_animate()
 		if (updatevalues)
 			tl_update_values()
 		
+		tex_obj = value_inherit[e_value.TEXTURE_OBJ]
+		
 		// Update render resource
-		if (tl_get_visible())
-			render_update_tl_resource()
+		if ((tex_obj != tex_obj_prev) || app.history_resource_update)
+		{
+			if (tl_get_visible())
+				render_update_tl_resource()
+		}
+		
+		tex_obj_prev = tex_obj
 		
 		if (type = e_tl_type.CAMERA)
 		{
@@ -171,7 +179,7 @@ function app_update_animate()
 	background_fog_color_final = background_fog_color
 	background_fog_object_color_final = (background_fog_object_color_custom ? background_fog_object_color : background_fog_color_final)
 	
-	background_sky_color_final = merge_color(background_sky_color, hex_to_color("#020204"), background_sky_night_alpha())
+	background_sky_color_final = merge_color(background_sky_color, $020204, background_sky_night_alpha())
 	
 	// Cameras
 	if (window_state = "export_movie")
@@ -195,4 +203,6 @@ function app_update_animate()
 		if (timeline_marker >= timeline_marker_list[|i].pos)
 			timeline_marker_current = timeline_marker_list[|i]
 	}
+	
+	history_resource_update = false
 }

@@ -78,10 +78,10 @@ function draw_settings_button()
 	
 	if (primary)
 	{
-		buttoncolor = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER] * (1 - mcroani_arr[e_mcroani.PRESS]))
-		buttoncolor = merge_color(buttoncolor, c_accent_pressed, mcroani_arr[e_mcroani.PRESS])
-		buttonalpha = lerp(1, a_accent_hover, mcroani_arr[e_mcroani.HOVER] * (1 - mcroani_arr[e_mcroani.PRESS]))
-		buttonalpha = lerp(buttonalpha, a_accent_pressed, mcroani_arr[e_mcroani.PRESS])
+		buttoncolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER] * (1 - microani_arr[e_microani.PRESS]))
+		buttoncolor = merge_color(buttoncolor, c_accent_pressed, microani_arr[e_microani.PRESS])
+		buttonalpha = lerp(1, a_accent_hover, microani_arr[e_microani.HOVER] * (1 - microani_arr[e_microani.PRESS]))
+		buttonalpha = lerp(buttonalpha, a_accent_pressed, microani_arr[e_microani.PRESS])
 		
 		// Button background
 		draw_box(xx, yy, width, height, false, buttoncolor, buttonalpha)
@@ -90,29 +90,29 @@ function draw_settings_button()
 		draw_box_bevel(xx, yy, width, height, 1)
 		
 		// Icon
-		draw_image(spr_arrow_up_down_ani, mcroani_arr[e_mcroani.ACTIVE] * 15, xx + width/2, yy + height/2, 1 , 1, c_level_middle, 1)
+		draw_image(spr_arrow_up_down_ani, microani_arr[e_microani.ACTIVE] * 15, xx + width/2, yy + height/2, 1 , 1, c_level_middle, 1)
 		
 		// Accent accent hover outline
-		draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])
+		draw_box_hover(xx, yy, width, height, microani_arr[e_microani.HOVER])
 		
 		microani_update(mouseon || menuactive, mouseclick || menuactive, menuactive, disabled)
 	}
 	else
 	{
 		var backgroundcolor, backgroundalpha;
-		backgroundcolor = c_overlay//merge_color(c_overlay, c_overlay, mcroani_arr[e_mcroani.ACTIVE])
-		backgroundalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.ACTIVE])
+		backgroundcolor = c_overlay//merge_color(c_overlay, c_overlay, microani_arr[e_microani.ACTIVE])
+		backgroundalpha = lerp(0, a_overlay, microani_arr[e_microani.ACTIVE])
 	
-		backgroundalpha = lerp(backgroundalpha, 0, mcroani_arr[e_mcroani.HOVER])
+		backgroundalpha = lerp(backgroundalpha, 0, microani_arr[e_microani.HOVER])
 		
-		backgroundcolor = merge_color(backgroundcolor, c_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-		backgroundalpha = lerp(backgroundalpha, a_accent_overlay, mcroani_arr[e_mcroani.PRESS])
+		backgroundcolor = merge_color(backgroundcolor, c_accent_overlay, microani_arr[e_microani.PRESS])
+		backgroundalpha = lerp(backgroundalpha, a_accent_overlay, microani_arr[e_microani.PRESS])
 		
-		buttoncolor = merge_color(c_text_secondary, c_accent, min(1, mcroani_arr[e_mcroani.PRESS] + mcroani_arr[e_mcroani.ACTIVE]))
-		buttonalpha = lerp(a_text_secondary, 1, min(1, mcroani_arr[e_mcroani.PRESS] + mcroani_arr[e_mcroani.ACTIVE]))
+		buttoncolor = merge_color(c_text_secondary, c_accent, min(1, microani_arr[e_microani.PRESS] + microani_arr[e_microani.ACTIVE]))
+		buttonalpha = lerp(a_text_secondary, 1, min(1, microani_arr[e_microani.PRESS] + microani_arr[e_microani.ACTIVE]))
 		
 		var prevalpha = draw_get_alpha();
-		draw_set_alpha(prevalpha * lerp(1, .5, mcroani_arr[e_mcroani.DISABLED]))
+		draw_set_alpha(prevalpha * lerp(1, .5, microani_arr[e_microani.DISABLED]))
 		
 		// Button background
 		draw_box(xx, yy, width, height, false, backgroundcolor, backgroundalpha)
@@ -126,5 +126,5 @@ function draw_settings_button()
 	}
 	
 	// Accent accent hover outline
-	draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.HOVER])
+	draw_box_hover(xx, yy, width, height, microani_arr[e_microani.HOVER])
 }

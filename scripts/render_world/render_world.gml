@@ -9,6 +9,8 @@ function render_world(mode)
 	with (render_shader_obj)
 		shader_use()
 	
+	shader_check_uniform = true
+	
 	render_world_tl_reset()
 	
 	// Render negative depth
@@ -52,4 +54,6 @@ function render_world(mode)
 	
 	if (gpu_get_tex_filter())
 		gpu_set_tex_filter(false)
+	
+	shader_check_uniform = false
 }

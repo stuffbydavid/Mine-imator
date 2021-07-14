@@ -12,12 +12,5 @@ function scrollbar_event_create()
 	value_ease = true
 	mouseon = false
 	
-	mousenear = false
-	mousenear_prev = false
-	mousenear_ani = 0
-	mousenear_ani_ease = 0
-	mousenear_base = 0
-	mousenear_offset = 0
-	mousenear_offset_ani = 0
-	mousenear_offset_ani_ease = 0
+	mousenear = new value_animation()
 }

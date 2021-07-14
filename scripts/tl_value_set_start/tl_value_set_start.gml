@@ -77,4 +77,5 @@ function tl_value_set_start(script, combine)
 	
 	history_data.par_set_n = 0
 	render_samples = -1
+	history_resource_update = true
 }

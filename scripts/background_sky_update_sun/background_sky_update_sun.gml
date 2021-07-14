@@ -11,6 +11,12 @@ function background_sky_update_sun()
 	if (background_sky_time = 0)
 		background_light_data[0] += 0.1
 	
+	var sunfrom, sunto;
+	sunfrom = vec3(background_light_data[0], background_light_data[1], background_light_data[2])
+	sunto = point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0)
+	
+	background_sun_direction = vec3_normalize(point3D_sub(sunfrom, sunto))
+	
 	background_light_data[3] = range / 2
 	background_light_data[4] = color_get_red(background_sunlight_color_final) / 255
 	background_light_data[5] = color_get_green(background_sunlight_color_final) / 255

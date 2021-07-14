@@ -82,21 +82,21 @@ function draw_togglebutton()
 		
 		// Draw base button
 		var focus, backcolor, backalpha, linecolor, linealpha, contentcolor, contentalpha;
-		focus = max(mcroani_arr[e_mcroani.PRESS], mcroani_arr[e_mcroani.ACTIVE])
+		focus = max(microani_arr[e_microani.PRESS], microani_arr[e_microani.ACTIVE])
 		
 		backcolor = merge_color(c_overlay, c_accent_overlay, focus)
-		backalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+		backalpha = lerp(0, a_overlay, microani_arr[e_microani.HOVER])
 		backalpha = lerp(backalpha, a_accent_overlay, focus)
-		backalpha = lerp(backalpha, 0, mcroani_arr[e_mcroani.DISABLED])
+		backalpha = lerp(backalpha, 0, microani_arr[e_microani.DISABLED])
 		
-		contentcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+		contentcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
 		contentcolor = merge_color(contentcolor, c_accent, focus)
-		contentalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+		contentalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 		contentalpha = lerp(contentalpha, 1, focus)
 		
-		linecolor = merge_color(c_border, c_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+		linecolor = merge_color(c_border, c_text_tertiary, microani_arr[e_microani.HOVER])
 		linecolor = merge_color(linecolor, c_accent, focus)
-		linealpha = lerp(0, a_text_tertiary, mcroani_arr[e_mcroani.HOVER])
+		linealpha = lerp(0, a_text_tertiary, microani_arr[e_microani.HOVER])
 		linealpha = lerp(linealpha, a_accent, focus)
 		
 		draw_box(buttonx, yy, boxwid, buttonh, false, backcolor, backalpha)
@@ -130,10 +130,10 @@ function draw_togglebutton()
 		}
 		
 		// Outline
-		draw_outline(buttonx, yy, boxwid, buttonh, 1, c_level_middle, max(focus, mcroani_arr[e_mcroani.HOVER]), true)
+		draw_outline(buttonx, yy, boxwid, buttonh, 1, c_level_middle, max(focus, microani_arr[e_microani.HOVER]), true)
 		draw_outline(buttonx, yy, boxwid, buttonh, 1, linecolor, linealpha, true)
 		
-		draw_box_hover(buttonx, yy, boxwid, buttonh, mcroani_arr[e_mcroani.PRESS])
+		draw_box_hover(buttonx, yy, boxwid, buttonh, microani_arr[e_microani.PRESS])
 		
 		microani_update(mouseon && !mouse_left, mouseon && mouse_left, togglebutton_active[i])
 		

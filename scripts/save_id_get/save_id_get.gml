@@ -7,6 +7,9 @@ function save_id_get(obj)
 	if (obj = "")
 		return ""
 	
+	if (obj = particle_sheet || obj = particle_template)
+		return obj
+	
 	if (instance_exists(obj))
 		return obj.save_id
 	

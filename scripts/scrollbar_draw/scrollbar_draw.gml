@@ -32,9 +32,9 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 	
 	// Animate size
 	if (dir = e_scroll.HORIZONTAL)
-		sb.mousenear = (app_mouse_box(xx, yy - nearsize, size, areasize + nearsize) && content_mouseon) || window_focus = string(sb)
+		sb.mousenear.value = (app_mouse_box(xx, yy - nearsize, size, areasize + nearsize) && content_mouseon) || window_focus = string(sb)
 	else
-		sb.mousenear = (app_mouse_box(xx - nearsize, yy, areasize + nearsize, size) && content_mouseon) || window_focus = string(sb)
+		sb.mousenear.value = (app_mouse_box(xx - nearsize, yy, areasize + nearsize, size) && content_mouseon) || window_focus = string(sb)
 	
 	var xfar, yfar, xnear, ynear;
 	xfar = xx + margin
@@ -51,9 +51,9 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		ynear = yfar
 	}
 	
-	width += ((margin * 2) * sb.mousenear_ani_ease)
-	xx = lerp(xfar, xnear, sb.mousenear_ani_ease)
-	yy = lerp(yfar, ynear, sb.mousenear_ani_ease)
+	width += ((margin * 2) * sb.mousenear.value_ani_ease)
+	xx = lerp(xfar, xnear, sb.mousenear.value_ani_ease)
+	yy = lerp(yfar, ynear, sb.mousenear.value_ani_ease)
 	size -= (margin * 2)
 	
 	barsize = clamp(16, floor((size / maxsize) * size), size)

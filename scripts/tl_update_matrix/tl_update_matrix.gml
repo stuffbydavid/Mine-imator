@@ -244,5 +244,17 @@ function tl_update_matrix()
 			tl_update_matrix()
 	}
 	
+	// Update model bounding boxes
+	if (object_index = app)
+	{
+		with (obj_timeline)
+		{
+			if (type = e_tl_type.CHARACTER ||
+				type = e_tl_type.SPECIAL_BLOCK ||
+				(type = e_tl_type.MODEL && temp.model.model_format = e_model_format.MIMODEL))
+					tl_update_bounding_box()
+		}
+	}
+	
 	update_matrix = false
 }

@@ -12,7 +12,7 @@ function shader_high_reflections_set(depthsurface, normalsurface, normalsurface2
 	texture_set_stage(sampler_map[?"uNormalBufferExp"], surface_get_texture(normalsurface2))
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(diffusesurf))
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(materialsurf))
-	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_surf))
+	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	
 	render_set_uniform("uNoiseSize", render_sample_noise_size)

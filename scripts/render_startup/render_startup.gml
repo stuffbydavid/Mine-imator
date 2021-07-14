@@ -7,7 +7,7 @@ function render_startup()
 			  render_fog, render_particles, render_hidden, render_background, render_watermark, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix, light_view_proj_matrix,
 			  spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
-			  render_active, render_frustum, render_scenery_repeat;
+			  render_active, render_frustum, render_repeat;
 	
 	globalvar render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
@@ -20,6 +20,8 @@ function render_startup()
 			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality;
 	
 	globalvar render_shadows_buffer, render_matrix, render_samples, render_samples_done, render_target_size;
+	
+	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
 	
 	globalvar render_pass_surf;
 	
@@ -82,7 +84,7 @@ function render_startup()
 	render_surface_time = 0
 	render_active = null
 	render_frustum = new frustum()
-	render_scenery_repeat = vec3(0)
+	render_repeat = vec3(0)
 	
 	render_target = null
 	render_surface[0] = null
@@ -93,10 +95,10 @@ function render_startup()
 	render_surface[5] = null
 	
 	// Noise sampling
-	globalvar render_sample_noise_surf, render_sample_noise_size, render_sample_noise_exists;
-	render_sample_noise_surf = null
+	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array;
+	render_sample_noise_texture = null
 	render_sample_noise_size = 86
-	render_sample_noise_exists = false
+	render_sample_noise_texture_array = []
 	
 	// Shadows
 	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_sun_color_buffer,
@@ -181,6 +183,10 @@ function render_startup()
 	
 	// Render pass surf
 	render_pass_surf = null
+	
+	render_blend_prev = null
+	render_alpha_prev = null
+	render_texture_prev = null
 	
 	// Render modes
 	globalvar render_mode, render_mode_shader_map, render_shader_obj;

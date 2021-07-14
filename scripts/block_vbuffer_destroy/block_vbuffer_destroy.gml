@@ -2,8 +2,12 @@
 
 function block_vbuffer_destroy()
 {
-	for (var cx = 0; cx < mc_builder.builder_chunk_size_x; cx++)
-		for (var cy = 0; cy < mc_builder.builder_chunk_size_y; cy++)
-			for (var cz = 0; cz < mc_builder.builder_chunk_size_z; cz++)
+	var size = [array_length(scenery_chunk_array),
+				array_length(scenery_chunk_array[0]),
+				array_length(scenery_chunk_array[0][0])];
+	
+	for (var cx = 0; cx < size[X]; cx++)
+		for (var cy = 0; cy < size[Y]; cy++)
+			for (var cz = 0; cz < size[Z]; cz++)
 				scenery_chunk_array[cx][cy][cz].destroy()
 }

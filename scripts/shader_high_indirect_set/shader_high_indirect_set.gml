@@ -16,7 +16,7 @@ function shader_high_indirect_set(depthsurface, normalsurface, normalsurface2, d
 	texture_set_stage(sampler_map[?"uBrightnessBuffer"], surface_get_texture(brightnesssurf))
 	texture_set_stage(sampler_map[?"uIndirectBuffer"], surface_get_texture(render_surface_indirect))
 	
-	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_surf))
+	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	
 	render_set_uniform("uNoiseSize", render_sample_noise_size)

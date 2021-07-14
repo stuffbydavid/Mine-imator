@@ -1,11 +1,25 @@
 /// tl_update_bounding_box()
 
+function model_update_bounding_box(root, box)
+{
+	for (var i = 0; i < ds_list_size(root.tree_list); i++)
+	{
+		var c = root.tree_list[|i];
+			
+		if (c.part_of = null)
+			continue
+		else
+		{
+			box.merge(c.bounding_box_matrix)
+			model_update_bounding_box(c, box)
+		}
+	}
+}
+
 function tl_update_bounding_box()
 {
 	// No 3D representation
-	if (type = e_tl_type.CHARACTER ||
-		type = e_tl_type.SPECIAL_BLOCK ||
-		type = e_tl_type.FOLDER ||
+	if (type = e_tl_type.FOLDER ||
 		type = e_tl_type.BACKGROUND ||
 		type = e_tl_type.AUDIO ||
 		type = e_tl_type.PARTICLE_SPAWNER ||
@@ -22,9 +36,18 @@ function tl_update_bounding_box()
 	if (type = e_tl_type.ITEM && !value[e_value.CUSTOM_ITEM_SLOT])
 		bounding_box.copy(temp.bounding_box)
 	
+	// Block model
+	if (type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.BLOCK)
+		bounding_box.copy(temp.model.bounding_box)
+	
+	// Scenery objects(?)
+	if (temp = null)
+		return 0
+	
 	if (temp.scenery != null && type = e_tl_type.SCENERY)
 		bounding_box.copy(temp.scenery.bounding_box)
 	
+	// Calculate block/scenery repeat
 	if (type = e_tl_type.BLOCK || type = e_tl_type.SCENERY)
 	{
 		var size, rotmat, reppos, rep, repbox, repgroupbox;
@@ -43,17 +66,23 @@ function tl_update_bounding_box()
 		// Delete old chunk bounding boxes
 		if (scenery_repeat_bounding_box != null)
 		{
-			for (reppos[X] = 0; reppos[X] < array_length(scenery_repeat_bounding_box); reppos[X]++)
+			var oldsize = [array_length(scenery_repeat_bounding_box),
+						   array_length(scenery_repeat_bounding_box[0]),
+						   array_length(scenery_repeat_bounding_box[0][0])];
+			
+			for (reppos[X] = 0; reppos[X] < oldsize[X]; reppos[X]++)
 			{
-				for (reppos[Y] = 0; reppos[Y] < array_length(scenery_repeat_bounding_box[0]); reppos[Y]++)
+				for (reppos[Y] = 0; reppos[Y] < oldsize[Y]; reppos[Y]++)
 				{
-					for (reppos[Z] = 0; reppos[Z] < array_length(scenery_repeat_bounding_box[0][0]); reppos[Z]++)
+					for (reppos[Z] = 0; reppos[Z] < oldsize[Z]; reppos[Z]++)
 					{
 						var repindex = scenery_repeat_bounding_box[reppos[X]][reppos[Y]][reppos[Z]];
-							
-						for (var cx = 0; cx < array_length(repindex); cx++)
-							for (var cy = 0; cy < array_length(repindex[0]); cy++)
-								for (var cz = 0; cz < array_length(repindex[0][0]); cz++)
+						
+						var repindexsize = [array_length(repindex), array_length(repindex[0]), array_length(repindex[0][0])];
+						  
+						for (var cx = 0; cx < repindexsize[X]; cx++)
+							for (var cy = 0; cy < repindexsize[Y]; cy++)
+								for (var cz = 0; cz < repindexsize[Z]; cz++)
 									delete repindex[cx][cy][cz]
 					}
 				}
@@ -78,12 +107,16 @@ function tl_update_bounding_box()
 						
 						repgroupbox.merge(repbox)
 						
+						var size = [array_length(temp.scenery.scenery_chunk_array),
+									array_length(temp.scenery.scenery_chunk_array[0]),
+									array_length(temp.scenery.scenery_chunk_array[0][0])]
+						
 						// Create chunk bounding boxes
-						for (var cx = 0; cx < array_length(temp.scenery.scenery_chunk_array); cx++)
+						for (var cx = 0; cx < size[X]; cx++)
 						{
-							for (var cy = 0; cy < array_length(temp.scenery.scenery_chunk_array[0]); cy++)
+							for (var cy = 0; cy < size[Y]; cy++)
 							{
-								for (var cz = 0; cz < array_length(temp.scenery.scenery_chunk_array[0][0]); cz++)
+								for (var cz = 0; cz < size[Z]; cz++)
 								{
 									var box;
 									box = new bbox()
@@ -107,13 +140,14 @@ function tl_update_bounding_box()
 			bounding_box.mul_matrix(rotmat)
 			
 			var chunks = (temp.type = e_temp_type.SCENERY ? temp.scenery.scenery_chunk_array : temp.scenery_chunk_array);
+			var chunkssize = [array_length(chunks), array_length(chunks[0]), array_length(chunks[0][0])];
 			
 			// Create chunk bounding boxes
-			for (var cx = 0; cx < array_length(chunks); cx++)
+			for (var cx = 0; cx < chunkssize[X]; cx++)
 			{
-				for (var cy = 0; cy < array_length(chunks[0]); cy++)
+				for (var cy = 0; cy < chunkssize[Y]; cy++)
 				{
-					for (var cz = 0; cz < array_length(chunks[0][0]); cz++)
+					for (var cz = 0; cz < chunkssize[Z]; cz++)
 					{
 						var box = new bbox();
 						
@@ -126,6 +160,17 @@ function tl_update_bounding_box()
 				}
 			}
 		}
+	}
+	
+	// Calculate bounding box covering entire model
+	if (type = e_tl_type.CHARACTER ||
+		type = e_tl_type.SPECIAL_BLOCK ||
+		(type = e_tl_type.MODEL && temp.model.model_format = e_model_format.MIMODEL))
+	{
+		bounding_box.reset()
+		model_update_bounding_box(id, bounding_box)
+		bounding_box_matrix.copy(bounding_box)
+		return 0
 	}
 	
 	bounding_box_matrix.copy(bounding_box)

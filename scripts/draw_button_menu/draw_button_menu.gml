@@ -106,12 +106,12 @@ function draw_button_menu()
 	microani_set(name, null, false, false, false)
 	
 	var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha;
-	textcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	textcolor = merge_color(textcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-	textcolor = merge_color(textcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	textalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	textalpha = lerp(textalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
-	textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	textcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	textcolor = merge_color(textcolor, c_accent, microani_arr[e_microani.ACTIVE])
+	textcolor = merge_color(textcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	textalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	textalpha = lerp(textalpha, a_accent, microani_arr[e_microani.ACTIVE])
+	textalpha = lerp(textalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	// Caption
 	if (capwid = null)
@@ -133,16 +133,16 @@ function draw_button_menu()
 	}
 	
 	// Button
-	bordercolor = merge_color(c_border, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
-	bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.PRESS])
-	bordercolor = merge_color(bordercolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-	borderalpha = lerp(a_border, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
-	borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
-	borderalpha = lerp(borderalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+	bordercolor = merge_color(c_border, c_text_secondary, microani_arr[e_microani.HOVER])
+	bordercolor = merge_color(bordercolor, c_accent, microani_arr[e_microani.PRESS])
+	bordercolor = merge_color(bordercolor, c_accent, microani_arr[e_microani.ACTIVE])
+	borderalpha = lerp(a_border, a_text_secondary, microani_arr[e_microani.HOVER])
+	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.PRESS])
+	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
 	draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
 	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha, true)
-	draw_box_hover(xx, yy, wid, hei, mcroani_arr[e_mcroani.PRESS])
+	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Mouse
 	mouseon = app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon
@@ -170,18 +170,18 @@ function draw_button_menu()
 	instance_destroy(item)
 	
 	// Chevron
-	chevroncolor = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
-	chevroncolor = merge_color(chevroncolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-	chevroncolor = merge_color(chevroncolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	chevronalpha = lerp(a_text_secondary, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
-	chevronalpha = lerp(chevronalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
-	chevronalpha = lerp(chevronalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	chevroncolor = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
+	chevroncolor = merge_color(chevroncolor, c_accent, microani_arr[e_microani.ACTIVE])
+	chevroncolor = merge_color(chevroncolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	chevronalpha = lerp(a_text_secondary, a_text_secondary, microani_arr[e_microani.HOVER])
+	chevronalpha = lerp(chevronalpha, a_accent, microani_arr[e_microani.ACTIVE])
+	chevronalpha = lerp(chevronalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
-	draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - mcroani_arr[e_mcroani.CUSTOM_LINEAR]))
-	draw_image(spr_icons, icons.CHEVRON_UP_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * mcroani_arr[e_mcroani.CUSTOM_LINEAR])
+	draw_image(spr_icons, icons.CHEVRON_DOWN_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * (1 - microani_arr[e_microani.CUSTOM_LINEAR]))
+	draw_image(spr_icons, icons.CHEVRON_UP_TINY, xx + wid - 12, yy + hei / 2, 1, 1, chevroncolor, chevronalpha * microani_arr[e_microani.CUSTOM_LINEAR])
 	
 	// Disabled overlay
-	draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * mcroani_arr[e_mcroani.DISABLED])
+	draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * microani_arr[e_microani.DISABLED])
 	
 	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
 	

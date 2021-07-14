@@ -69,24 +69,24 @@ function list_item_draw()
 		microani_set(string(item), "", item.hover, item.hover && mouse_left && item.interact, toggled && item.interact, item.disabled)
 		microani_update(item.hover, item.hover && mouse_left && item.interact, toggled && item.interact, item.disabled)
 		
-		focus = max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS])
+		focus = max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS])
 		
 		textcolor = merge_color(c_text_main, c_accent, focus)
-		textcolor = merge_color(textcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+		textcolor = merge_color(textcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
 		textalpha = lerp(a_text_main, a_accent, focus)
-		textalpha = lerp(textalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+		textalpha = lerp(textalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 		
 		iconcolor = merge_color(c_text_tertiary, c_accent, focus)
-		iconcolor = merge_color(iconcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+		iconcolor = merge_color(iconcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
 		iconalpha = lerp(a_text_tertiary, a_accent, focus)
-		iconalpha = lerp(iconalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+		iconalpha = lerp(iconalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 		
 		backcolor = merge_color(c_overlay, c_accent_overlay, focus)
-		backalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+		backalpha = lerp(0, a_overlay, microani_arr[e_microani.HOVER])
 		backalpha = lerp(backalpha, a_accent_overlay, focus)
 		
 		draw_box(xx, yy, width, height, false, backcolor, backalpha)
-		draw_box_hover(xx, yy, width, height, mcroani_arr[e_mcroani.PRESS])
+		draw_box_hover(xx, yy, width, height, microani_arr[e_microani.PRESS])
 	}
 	else
 	{

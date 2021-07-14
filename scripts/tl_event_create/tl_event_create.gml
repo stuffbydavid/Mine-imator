@@ -136,10 +136,16 @@ function tl_event_create()
 	item_custom_slot = false
 	
 	render_res = null
+	
+	tex_obj = null
+	tex_obj_prev = -5
+	
 	model_tex = null
 	
 	// Bounding box info
 	bounding_box = new bbox()
 	bounding_box_matrix = new bbox()
 	scenery_repeat_bounding_box = null
+	visible_chunks_array = null
+	bounding_box_update = true
 }

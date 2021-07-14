@@ -14,7 +14,7 @@ function microani_set()
 {
 	var name, script, hover, click, active, disabled, spd, custom, goalval;
 	name = argument[0]
-	script = argument[1]
+	script = string(argument[1])
 	hover = argument[2]
 	click = argument[3]
 	active = argument[4]
@@ -35,44 +35,38 @@ function microani_set()
 	if (argument_count > 8)
 		goalval = argument[8]
 	
-	if (true)
+	var aniname, animation;
+	aniname = microani_prefix + (name + script)
+	animation = microanis[?aniname]
+	
+	// Create micro animation object if it doesn't already exist
+	if (animation = undefined)
 	{
-		var animation;
+		animation = new micro_animation(aniname)
+		animation.active.init(active)
+		animation.hover.init(hover)
+		animation.holding.init(click)
+		animation.disable.init(disabled)
+		animation.custom.init(custom)
 		
-		// Create micro animation object if it doesn't already exist
-		if (!ds_map_exists(microanis, microani_prefix + (name + string(script))))
-		{
-			animation = new_animation(name + string(script), active, hover, click, disabled, custom, goalval)
-			animation.spd = spd
-		}
-		else
-			animation = ds_map_find_value(microanis, microani_prefix + (name + string(script)))
-		
-		current_mcroani = animation
-		current_mcroani.steps_hidden = 0
-		
-		mcroani_arr[e_mcroani.HOVER_LINEAR] = current_mcroani.hover_ani
-		mcroani_arr[e_mcroani.PRESS_LINEAR] = current_mcroani.holding_ani
-		mcroani_arr[e_mcroani.ACTIVE_LINEAR] = current_mcroani.value_ani
-		mcroani_arr[e_mcroani.DISABLED_LINEAR] = current_mcroani.disabled_ani
-		mcroani_arr[e_mcroani.CUSTOM_LINEAR] = current_mcroani.custom_ani
-		
-		mcroani_arr[e_mcroani.HOVER] = current_mcroani.hover_ani_ease
-		mcroani_arr[e_mcroani.PRESS] = current_mcroani.holding_ani_ease
-		mcroani_arr[e_mcroani.ACTIVE] = current_mcroani.value_ani_ease
-		mcroani_arr[e_mcroani.DISABLED] = current_mcroani.disabled_ani_ease
-		mcroani_arr[e_mcroani.CUSTOM] = current_mcroani.custom_ani_ease
-		
-		mcroani_arr[e_mcroani.GOAL_EASE] = current_mcroani.goal_ease
+		animation.goal_value = goalval
+		animation.goal_ease = goalval
 	}
-	else
-	{
-		mcroani_arr[e_mcroani.HOVER] = hover
-		mcroani_arr[e_mcroani.PRESS] = click
-		mcroani_arr[e_mcroani.ACTIVE] = active
 		
-		mcroani_arr[e_mcroani.HOVER_LINEAR] = hover
-		mcroani_arr[e_mcroani.PRESS_LINEAR] = click
-		mcroani_arr[e_mcroani.ACTIVE_LINEAR] = active
-	}
+	current_microani = animation
+	current_microani.steps_hidden = 0
+		
+	microani_arr[e_microani.HOVER_LINEAR] = current_microani.hover.value_ani_linear
+	microani_arr[e_microani.PRESS_LINEAR] = current_microani.holding.value_ani_linear
+	microani_arr[e_microani.ACTIVE_LINEAR] = current_microani.active.value_ani_linear
+	microani_arr[e_microani.DISABLED_LINEAR] = current_microani.disable.value_ani_linear
+	microani_arr[e_microani.CUSTOM_LINEAR] = current_microani.custom.value_ani_linear
+		
+	microani_arr[e_microani.HOVER] = current_microani.hover.value_ani_ease
+	microani_arr[e_microani.PRESS] = current_microani.holding.value_ani_ease
+	microani_arr[e_microani.ACTIVE] = current_microani.active.value_ani_ease
+	microani_arr[e_microani.DISABLED] = current_microani.disable.value_ani_ease
+	microani_arr[e_microani.CUSTOM] = current_microani.custom.value_ani_ease
+		
+	microani_arr[e_microani.GOAL_EASE] = current_microani.goal_ease
 }

@@ -965,4 +965,12 @@ function enums()
 		MATERIAL,
 		amount
 	}
+	
+	// Frustum state
+	enum e_frustum_state
+	{
+		HIDDEN,
+		VISIBLE,
+		PARTIAL
+	}
 }

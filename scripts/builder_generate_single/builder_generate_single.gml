@@ -23,6 +23,6 @@ function builder_generate_single(model)
 	block_pos_y = 0
 	block_pos_z = 0
 	block_color = null
-	
+	builder_chunk = chunk_array[0][0][0]
 	block_render_model_generate(model)
 }

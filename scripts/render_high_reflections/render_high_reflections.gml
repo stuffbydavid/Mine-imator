@@ -69,12 +69,7 @@ function render_high_reflections(export, surf)
 	{
 		random_set_seed(s)
 		
-		if (export || !render_sample_noise_exists || !surface_exists(render_sample_noise_surf))
-		{
-			render_sample_noise_surf = surface_require(render_sample_noise_surf, render_sample_noise_size, render_sample_noise_size)
-			render_generate_noise(render_sample_noise_size, render_sample_noise_size, render_sample_noise_surf, true)
-			render_sample_noise_exists = true
-		}
+		render_sample_noise_texture = render_get_noise_texture(s)
 		
 		render_indirect_kernel = render_generate_sample_kernel(16)
 		

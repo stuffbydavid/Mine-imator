@@ -9,6 +9,7 @@ function new_shader(name)
 		shader = asset_get_index(name)
 		script = asset_get_index(name + "_set")
 		uniform_map = ds_map_create()
+		uniform_value_map = ds_map_create()
 		sampler_map = ds_map_create()
 		
 		// Set common uniforms

@@ -10,7 +10,7 @@ function tab_frame_editor_buttons()
 		context_menu_group = context_menu_group_temp
 	
 	name = "buttons" + string(context_menu_group_temp)
-	alpha = mcroani_arr[e_mcroani.HOVER]
+	alpha = microani_arr[e_microani.HOVER]
 	
 	draw_set_alpha(alpha)
 	

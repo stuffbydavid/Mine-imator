@@ -7,11 +7,6 @@ function builder_generate()
 	if (block_current = null)
 		return 0
 	
-	builder_chunk_x = floor(build_pos_x / chunk_size)
-	builder_chunk_y = floor(build_pos_y / chunk_size)
-	builder_chunk_z = floor(build_pos_z / chunk_size)
-	builder_chunk = chunk_array[builder_chunk_x][builder_chunk_y][builder_chunk_z]
-	
 	build_edge_xp = (build_pos_x = build_size_x - 1)
 	build_edge_xn = (build_pos_x = 0)
 	build_edge_yp = (build_pos_y = build_size_y - 1)
@@ -180,6 +175,12 @@ function builder_generate()
 	block_pos_y = build_pos_y * block_size
 	block_pos_z = build_pos_z * block_size
 	block_color = null
+	
+	// Chunk position
+	builder_chunk_x = floor(build_pos_x / chunk_size)
+	builder_chunk_y = floor(build_pos_y / chunk_size)
+	builder_chunk_z = floor(build_pos_z / chunk_size)
+	builder_chunk = chunk_array[builder_chunk_x][builder_chunk_y][builder_chunk_z]
 	
 	// Random X & Y offset
 	if ((block_current.random_offset || block_current.random_offset_xy) && build_size_x * build_size_y * build_size_z > 1)

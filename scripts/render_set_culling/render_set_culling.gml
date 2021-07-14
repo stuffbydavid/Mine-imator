@@ -3,5 +3,10 @@
 
 function render_set_culling(enable)
 {
-	gpu_set_cullmode(enable ? cull_counterclockwise : cull_noculling)
+	var mode = (enable ? cull_counterclockwise : cull_noculling);
+	
+	if (mode = gpu_get_cullmode())
+		return 0
+	
+	gpu_set_cullmode(mode)
 }

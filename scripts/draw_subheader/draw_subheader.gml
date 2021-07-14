@@ -17,17 +17,17 @@ function draw_subheader(cat, xx, yy, w, h)
 	microani_set(cat.name + "close", null, false, false, cat.show, false)
 	
 	var color, alpha, focus, frame;
-	focus = max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS])
+	focus = max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS])
 	
-	color = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
+	color = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
 	color = merge_color(color, c_accent, focus)
-	color = merge_color(color, c_accent_hover, mcroani_arr[e_mcroani.HOVER] * mcroani_arr[e_mcroani.ACTIVE])
-	color = merge_color(color, c_accent_pressed, mcroani_arr[e_mcroani.PRESS] * mcroani_arr[e_mcroani.ACTIVE])
+	color = merge_color(color, c_accent_hover, microani_arr[e_microani.HOVER] * microani_arr[e_microani.ACTIVE])
+	color = merge_color(color, c_accent_pressed, microani_arr[e_microani.PRESS] * microani_arr[e_microani.ACTIVE])
 	
-	alpha = lerp(a_text_tertiary, a_text_secondary, mcroani_arr[e_mcroani.HOVER])
+	alpha = lerp(a_text_tertiary, a_text_secondary, microani_arr[e_microani.HOVER])
 	alpha = lerp(alpha, a_accent, focus)
 	
-	frame = floor((sprite_get_number(spr_chevron_ani) - 1) * mcroani_arr[e_mcroani.ACTIVE])
+	frame = floor((sprite_get_number(spr_chevron_ani) - 1) * microani_arr[e_microani.ACTIVE])
 	
 	draw_image(spr_chevron_ani, frame, xx + 8, yy + h/2, 1, 1, color, alpha)
 	draw_label(cap, xx + 20, yy + (h/2) - 1, fa_left, fa_middle, color, alpha)

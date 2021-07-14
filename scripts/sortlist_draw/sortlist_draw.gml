@@ -54,7 +54,7 @@ function sortlist_draw()
 		}
 		
 		if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
-			current_mcroani.value = true
+			current_microani.value = true
 		
 		searchx += 32
 		searchw -= 32

@@ -814,6 +814,9 @@ function res_load_scenery()
 		// Generate model
 		case "model":
 		{
+			// Force garbage collection to keep memory 'low'
+			gc_collect()
+			
 			mc_builder.builder_scenery = true
 			with (mc_builder)
 			{

@@ -85,6 +85,7 @@ function res_load_pack()
 			res_update_colors()
 			
 			ready = true
+			app.history_resource_update = true
 			
 			log("Pack loaded")
 			

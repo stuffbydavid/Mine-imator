@@ -39,23 +39,23 @@ function draw_radiobutton(name, xx, yy, value, active, script)
 	buttony = (yy + (28/2))
 	
 	// Draw button
-	var buttoncolor = merge_color(c_text_secondary, c_accent, mcroani_arr[e_mcroani.PRESS]);
-	buttoncolor = merge_color(buttoncolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
+	var buttoncolor = merge_color(c_text_secondary, c_accent, microani_arr[e_microani.PRESS]);
+	buttoncolor = merge_color(buttoncolor, c_accent, microani_arr[e_microani.ACTIVE])
 	
-	var buttonalpha = lerp(a_text_secondary, 1, mcroani_arr[e_mcroani.PRESS]);
-	buttonalpha = lerp(buttonalpha, 1, mcroani_arr[e_mcroani.ACTIVE])
+	var buttonalpha = lerp(a_text_secondary, 1, microani_arr[e_microani.PRESS]);
+	buttonalpha = lerp(buttonalpha, 1, microani_arr[e_microani.ACTIVE])
 	
 	// Off
-	draw_image(spr_radiobutton, 0, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * (1 - mcroani_arr[e_mcroani.ACTIVE]) * (1 - mcroani_arr[e_mcroani.HOVER]))
+	draw_image(spr_radiobutton, 0, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * (1 - microani_arr[e_microani.ACTIVE]) * (1 - microani_arr[e_microani.HOVER]))
 	
 	// Off (hover)
-	draw_image(spr_radiobutton, 1, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * (1 - mcroani_arr[e_mcroani.ACTIVE]) * (mcroani_arr[e_mcroani.HOVER]))
+	draw_image(spr_radiobutton, 1, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * (1 - microani_arr[e_microani.ACTIVE]) * (microani_arr[e_microani.HOVER]))
 	
 	// On
-	draw_image(spr_radiobutton, 2, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * mcroani_arr[e_mcroani.ACTIVE] * (1 - mcroani_arr[e_mcroani.RADIO_HOVER]))
+	draw_image(spr_radiobutton, 2, buttonx, buttony, 1, 1, buttoncolor, buttonalpha * microani_arr[e_microani.ACTIVE] * (1 - microani_arr[e_microani.RADIO_HOVER]))
 	
 	// Draw hover outline
-	draw_image(spr_radiobutton_hover, 0, buttonx, buttony, 1, 1, c_accent_hover, a_accent_hover * mcroani_arr[e_mcroani.HOVER])
+	draw_image(spr_radiobutton_hover, 0, buttonx, buttony, 1, 1, c_accent_hover, a_accent_hover * microani_arr[e_microani.HOVER])
 	
 	// Label
 	draw_label(text, xx + 28, yy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_value)

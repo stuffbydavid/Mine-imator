@@ -8,5 +8,6 @@ function history_startup()
 	history_pos = 0
 	history_undo = 0
 	history_redo = 0
+	history_resource_update = false
 	history_data = null
 }

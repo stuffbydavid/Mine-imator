@@ -55,10 +55,10 @@ function draw_textfield()
 	draw_set_font(font_label)
 	
 	var labelcolor, labelalpha;
-	labelcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelcolor = merge_color(labelcolor, c_accent, mcroani_arr[e_mcroani.ACTIVE])
-	labelalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	labelalpha = lerp(labelalpha, a_accent, mcroani_arr[e_mcroani.ACTIVE])
+	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	labelcolor = merge_color(labelcolor, c_accent, microani_arr[e_microani.ACTIVE])
+	labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	labelalpha = lerp(labelalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
 	if (err)
 	{

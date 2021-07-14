@@ -66,37 +66,37 @@ function draw_switch()
 	
 	// Draw background
 	var offcolor, offalpha, oncolor, onalpha, color, alpha;
-	offcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	offcolor = merge_color(offcolor, c_accent, mcroani_arr[e_mcroani.PRESS])
-	offalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	offalpha = lerp(offalpha, a_accent, mcroani_arr[e_mcroani.PRESS])
+	offcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	offcolor = merge_color(offcolor, c_accent, microani_arr[e_microani.PRESS])
+	offalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	offalpha = lerp(offalpha, a_accent, microani_arr[e_microani.PRESS])
 	
-	oncolor = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	oncolor = merge_color(oncolor, c_accent_pressed, mcroani_arr[e_mcroani.PRESS])
-	onalpha = lerp(a_accent, a_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	onalpha = lerp(onalpha, a_accent_pressed, mcroani_arr[e_mcroani.PRESS])
+	oncolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
+	oncolor = merge_color(oncolor, c_accent_pressed, microani_arr[e_microani.PRESS])
+	onalpha = lerp(a_accent, a_accent_hover, microani_arr[e_microani.HOVER])
+	onalpha = lerp(onalpha, a_accent_pressed, microani_arr[e_microani.PRESS])
 	
-	color = merge_color(offcolor, oncolor, mcroani_arr[e_mcroani.ACTIVE])
-	alpha = lerp(offalpha, onalpha, mcroani_arr[e_mcroani.ACTIVE])
+	color = merge_color(offcolor, oncolor, microani_arr[e_microani.ACTIVE])
+	alpha = lerp(offalpha, onalpha, microani_arr[e_microani.ACTIVE])
 	
-	color = merge_color(color, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	alpha = lerp(alpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	color = merge_color(color, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	alpha = lerp(alpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	draw_box(switchx, switchy, 20, 14, false, color, alpha)
 	
 	// Draw button
 	var buttonx, buttony;
-	buttonx = switchx + 2 + floor(8 * mcroani_arr[e_mcroani.GOAL_EASE])
+	buttonx = switchx + 2 + floor(8 * microani_arr[e_microani.GOAL_EASE])
 	buttony = switchy + 2
 	draw_box(buttonx, buttony, 8, 10, false, c_button_text, 1)
 	draw_box_bevel(buttonx, buttony, 8, 10, 1, setting_theme.name = "light")
 	
 	// Draw hover outline
-	draw_box_hover(switchx, switchy, 20, 14, mcroani_arr[e_mcroani.PRESS])
+	draw_box_hover(switchx, switchy, 20, 14, microani_arr[e_microani.PRESS])
 	
 	// Label
 	draw_set_font(font_label)
-	draw_label(string_limit(text, w - 32), xx, yy + (h/2), fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED]))
+	draw_label(string_limit(text, w - 32), xx, yy + (h/2), fa_left, fa_middle, lerp(c_text_secondary, c_text_tertiary, microani_arr[e_microani.DISABLED]), lerp(a_text_secondary, a_text_tertiary, microani_arr[e_microani.DISABLED]))
 	
 	microani_update(mouseon, mouseclick, active, disabled, 0, thumbgoal)
 	
@@ -105,8 +105,8 @@ function draw_switch()
 		mouseon = app_mouse_box(xx + string_width(text) + 4, yy + (h/2) - 10, 20, 20) && content_mouseon && !disabled
 		
 		microani_set(tip, null, mouseon, false, false)
-		color = merge_color(c_text_tertiary, c_text_secondary, mcroani_arr[e_mcroani.HOVER])
-		alpha = lerp(a_text_tertiary, a_text_secondary, mcroani_arr[e_mcroani.HOVER]) * lerp(1, .5, mcroani_arr[e_mcroani.DISABLED])
+		color = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
+		alpha = lerp(a_text_tertiary, a_text_secondary, microani_arr[e_microani.HOVER]) * lerp(1, .5, microani_arr[e_microani.DISABLED])
 		
 		draw_image(spr_icons, ex ? icons.BEAKER : icons.HELP_CIRCLE, xx + string_width(text) + 16, yy + (h/2), 1, 1, color, alpha)
 		

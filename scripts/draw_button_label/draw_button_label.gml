@@ -75,14 +75,14 @@ function draw_button_label()
 		mouse_cursor = cr_handpoint
 	
 	var focus, backcolor, backalpha, linecolor, linealpha, contentcolor, contentalpha, contentx;
-	focus = max(mcroani_arr[e_mcroani.ACTIVE], mcroani_arr[e_mcroani.PRESS])
+	focus = max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS])
 	
 	if (type = e_button.PRIMARY)
 	{
-		backcolor = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
+		backcolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
 		backcolor = merge_color(backcolor, c_accent_pressed, focus)
-		backcolor = merge_color(backcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-		backalpha = lerp(1, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+		backcolor = merge_color(backcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
+		backalpha = lerp(1, a_text_tertiary, microani_arr[e_microani.DISABLED])
 		
 		contentcolor = c_button_text
 		contentalpha = a_button_text
@@ -90,13 +90,13 @@ function draw_button_label()
 	else
 	{
 		backcolor = merge_color(c_overlay, c_accent_overlay, focus)
-		backalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
+		backalpha = lerp(0, a_overlay, microani_arr[e_microani.HOVER])
 		backalpha = lerp(backalpha, a_accent_overlay, focus)
-		backalpha = lerp(backalpha, 0, mcroani_arr[e_mcroani.DISABLED])
+		backalpha = lerp(backalpha, 0, microani_arr[e_microani.DISABLED])
 		
-		contentcolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
+		contentcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
 		contentcolor = merge_color(contentcolor, c_accent, focus)
-		contentalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
+		contentalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 		contentalpha = lerp(contentalpha, 1, focus)
 		
 		linecolor = merge_color(c_border, c_accent, focus)
@@ -118,7 +118,7 @@ function draw_button_label()
 	}
 	
 	// Focus ring
-	draw_box_hover(xx, yy, w, h, mcroani_arr[e_mcroani.PRESS])
+	draw_box_hover(xx, yy, w, h, microani_arr[e_microani.PRESS])
 	
 	if (customw)
 		contentx = floor((xx + w/2) - ((capwid + (icon = null ? 0 : 32)) / 2))

@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Micro animations",
-    "path": "folders/Scripts/App/Interface/Micro animations.yy",
+    "name": "Render",
+    "path": "folders/Scripts/Render.yy",
   },
   "resourceVersion": "1.0",
-  "name": "new_animation",
+  "name": "render_update_uniform",
   "tags": [],
   "resourceType": "GMScript",
 }

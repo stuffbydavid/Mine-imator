@@ -33,7 +33,7 @@ function draw_button_text()
 	microani_set(text, script, mouseon, mouseon && mouse_left, false)
 	
 	draw_label(text, xx, yy, fa_left, fa_bottom, c_accent, a_accent)
-	draw_line_ext(xx, yy, xx + wid, yy, c_accent, a_accent * mcroani_arr[e_mcroani.HOVER])
+	draw_line_ext(xx, yy, xx + wid, yy, c_accent, a_accent * microani_arr[e_microani.HOVER])
 	
 	if (mouseon)
 	{

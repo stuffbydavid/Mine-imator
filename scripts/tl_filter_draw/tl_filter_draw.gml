@@ -24,8 +24,8 @@ function tl_filter_draw()
 		
 		if (timeline_hide_color_tag[i])
 		{
-			draw_box(px, dy, 20, 20, false, c_text_tertiary, a_text_tertiary * mcroani_arr[e_mcroani.ACTIVE])
-			draw_image(spr_icons, icons.CLOSE_SMALL, px + 10, dy + 10, 1, 1, c_level_middle, mcroani_arr[e_mcroani.ACTIVE])
+			draw_box(px, dy, 20, 20, false, c_text_tertiary, a_text_tertiary * microani_arr[e_microani.ACTIVE])
+			draw_image(spr_icons, icons.CLOSE_SMALL, px + 10, dy + 10, 1, 1, c_level_middle, microani_arr[e_microani.ACTIVE])
 		}
 		
 		if (app_mouse_box(px, dy, 20, 20))

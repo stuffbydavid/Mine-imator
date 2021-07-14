@@ -49,7 +49,7 @@ function toolbar_draw_button(name, xx, yy, wid)
 	}
 	
 	if (context_menu_name = name)
-		current_mcroani.value = true
+		current_microani.value = true
 	
 	if (context_menu_name != "")
 		window_busy = "contextmenu"

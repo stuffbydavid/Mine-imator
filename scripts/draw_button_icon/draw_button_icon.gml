@@ -56,47 +56,47 @@ function draw_button_icon()
 	microani_set(name, script, mouseon, mouseon && mouse_left, value)
 	
 	// Hover outline
-	draw_box_hover(xx, yy, wid, hei, mcroani_arr[e_mcroani.PRESS])
+	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Background
 	var onbackcolor, onbackalpha, oniconcolor, oniconalpha, offbackcolor, offbackalpha, officoncolor, officonalpha;
 	
 	offbackcolor = c_overlay
-	offbackcolor = merge_color(offbackcolor, c_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-	offbackalpha = lerp(0, a_overlay, mcroani_arr[e_mcroani.HOVER])
-	offbackalpha = lerp(offbackalpha, a_accent_overlay, mcroani_arr[e_mcroani.PRESS])
+	offbackcolor = merge_color(offbackcolor, c_accent_overlay, microani_arr[e_microani.PRESS])
+	offbackalpha = lerp(0, a_overlay, microani_arr[e_microani.HOVER])
+	offbackalpha = lerp(offbackalpha, a_accent_overlay, microani_arr[e_microani.PRESS])
 	
-	onbackcolor = merge_color(c_accent_overlay, c_overlay, mcroani_arr[e_mcroani.HOVER])
-	onbackcolor = merge_color(onbackcolor, c_accent_overlay, mcroani_arr[e_mcroani.PRESS])
-	onbackalpha = lerp(a_accent_overlay, a_overlay, mcroani_arr[e_mcroani.HOVER])
-	onbackalpha = lerp(onbackalpha, a_accent_overlay, mcroani_arr[e_mcroani.PRESS])
+	onbackcolor = merge_color(c_accent_overlay, c_overlay, microani_arr[e_microani.HOVER])
+	onbackcolor = merge_color(onbackcolor, c_accent_overlay, microani_arr[e_microani.PRESS])
+	onbackalpha = lerp(a_accent_overlay, a_overlay, microani_arr[e_microani.HOVER])
+	onbackalpha = lerp(onbackalpha, a_accent_overlay, microani_arr[e_microani.PRESS])
 	
-	onbackcolor = merge_color(offbackcolor, onbackcolor, mcroani_arr[e_mcroani.ACTIVE] * !animated)
-	onbackalpha = lerp(offbackalpha, onbackalpha, mcroani_arr[e_mcroani.ACTIVE] * !animated)
-	onbackalpha = lerp(onbackalpha, 0, mcroani_arr[e_mcroani.DISABLED])
+	onbackcolor = merge_color(offbackcolor, onbackcolor, microani_arr[e_microani.ACTIVE] * !animated)
+	onbackalpha = lerp(offbackalpha, onbackalpha, microani_arr[e_microani.ACTIVE] * !animated)
+	onbackalpha = lerp(onbackalpha, 0, microani_arr[e_microani.DISABLED])
 	
-	officoncolor = merge_color(c_text_secondary, c_text_main, mcroani_arr[e_mcroani.HOVER])
-	officoncolor = merge_color(officoncolor, c_accent, mcroani_arr[e_mcroani.PRESS])
-	officonalpha = lerp(a_text_secondary, a_text_main, mcroani_arr[e_mcroani.HOVER])
-	officonalpha = lerp(officonalpha, 1, mcroani_arr[e_mcroani.PRESS])
+	officoncolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	officoncolor = merge_color(officoncolor, c_accent, microani_arr[e_microani.PRESS])
+	officonalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	officonalpha = lerp(officonalpha, 1, microani_arr[e_microani.PRESS])
 	
-	oniconcolor = merge_color(c_accent, c_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	oniconcolor = merge_color(oniconcolor, c_accent_pressed, mcroani_arr[e_mcroani.PRESS])
-	oniconalpha = merge_color(a_accent, a_accent_hover, mcroani_arr[e_mcroani.HOVER])
-	oniconalpha = merge_color(oniconalpha, a_accent_pressed, mcroani_arr[e_mcroani.PRESS])
+	oniconcolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
+	oniconcolor = merge_color(oniconcolor, c_accent_pressed, microani_arr[e_microani.PRESS])
+	oniconalpha = merge_color(a_accent, a_accent_hover, microani_arr[e_microani.HOVER])
+	oniconalpha = merge_color(oniconalpha, a_accent_pressed, microani_arr[e_microani.PRESS])
 	
-	oniconcolor = merge_color(officoncolor, oniconcolor, mcroani_arr[e_mcroani.ACTIVE] * !animated)
-	oniconalpha = lerp(officonalpha, oniconalpha, mcroani_arr[e_mcroani.ACTIVE] * !animated)
+	oniconcolor = merge_color(officoncolor, oniconcolor, microani_arr[e_microani.ACTIVE] * !animated)
+	oniconalpha = lerp(officonalpha, oniconalpha, microani_arr[e_microani.ACTIVE] * !animated)
 	
-	oniconcolor = merge_color(oniconcolor, c_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
-	oniconalpha = lerp(oniconalpha, a_text_tertiary, mcroani_arr[e_mcroani.DISABLED])
+	oniconcolor = merge_color(oniconcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	oniconalpha = lerp(oniconalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	draw_box(xx, yy, wid, hei, false, onbackcolor, onbackalpha)
 	
 	// Animated icon(if 'icon' is a sprite)
 	if (animated)
 	{
-		var frame = floor((sprite_get_number(sprite) - 1) * mcroani_arr[e_mcroani.ACTIVE]);
+		var frame = floor((sprite_get_number(sprite) - 1) * microani_arr[e_microani.ACTIVE]);
 		draw_image(sprite, frame, xx + wid/2, yy + hei/2, 1, 1, oniconcolor, oniconalpha)
 	}
 	else // Icon
