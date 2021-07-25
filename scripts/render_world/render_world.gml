@@ -11,15 +11,20 @@ function render_world(mode)
 	
 	shader_check_uniform = true
 	
+	var renderlistsize, tl;
+	renderlistsize = ds_list_size(render_list)
+	
 	render_world_tl_reset()
 	
 	// Render negative depth
 	var i;
-	for (i = 0; i < ds_list_size(render_list); i++)
+	for (i = 0; i < renderlistsize; i++)
 	{
-		var tl = render_list[|i];
+		tl = render_list[|i]
+		
 		if (tl.depth >= 0)
 			break
+		
 		with (tl)
 			render_world_tl()
 	}
@@ -43,7 +48,7 @@ function render_world(mode)
 	}
 	
 	// Positive depth
-	for (; i < ds_list_size(render_list); i++)
+	for (; i < renderlistsize; i++)
 		with (render_list[|i])
 			render_world_tl()
 	

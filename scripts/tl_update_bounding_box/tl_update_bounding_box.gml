@@ -1,17 +1,18 @@
 /// tl_update_bounding_box()
 
-function model_update_bounding_box(root, box)
+function model_update_bounding_box(modelroot, root, box)
 {
 	for (var i = 0; i < ds_list_size(root.tree_list); i++)
 	{
-		var c = root.tree_list[|i];
-			
-		if (c.part_of = null)
-			continue
-		else
+		with (root.tree_list[|i])
 		{
-			box.merge(c.bounding_box_matrix)
-			model_update_bounding_box(c, box)
+			if (render_visible && ((value_inherit[e_value.ALPHA] * 1000) != 0))
+			{
+				ds_list_add(modelroot.model_timeline_list, id)
+				box.merge(bounding_box_matrix)
+			}
+		
+			model_update_bounding_box(modelroot, id, box)
 		}
 	}
 }
@@ -60,6 +61,10 @@ function tl_update_bounding_box()
 			size = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
 		else
 			size = temp.scenery.scenery_size
+		
+		// Not ready
+		if (type = e_tl_type.SCENERY && temp.scenery.scenery_chunk_array = null)
+			return 0
 		
 		rotmat = matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1))
 		
@@ -134,6 +139,9 @@ function tl_update_bounding_box()
 			}
 			
 			bounding_box.copy(repgroupbox)
+			
+			delete repgroupbox
+			delete repbox
 		}
 		else
 		{
@@ -163,15 +171,23 @@ function tl_update_bounding_box()
 	}
 	
 	// Calculate bounding box covering entire model
+	/*
 	if (type = e_tl_type.CHARACTER ||
 		type = e_tl_type.SPECIAL_BLOCK ||
 		(type = e_tl_type.MODEL && temp.model.model_format = e_model_format.MIMODEL))
 	{
 		bounding_box.reset()
-		model_update_bounding_box(id, bounding_box)
+		
+		if (model_timeline_list = null)
+			model_timeline_list = ds_list_create()
+		else
+			ds_list_clear(model_timeline_list)
+		
+		model_update_bounding_box(id, id, bounding_box)
 		bounding_box_matrix.copy(bounding_box)
 		return 0
 	}
+	*/
 	
 	bounding_box_matrix.copy(bounding_box)
 	bounding_box_matrix.mul_matrix(matrix_render)

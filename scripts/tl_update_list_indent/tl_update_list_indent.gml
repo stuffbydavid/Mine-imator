@@ -3,7 +3,7 @@
 
 function tl_update_list_indent(tllevel)
 {
-	level = tllevel
+	indent_level = tllevel
 	
 	if (parent_filter != app)
 	{
@@ -23,6 +23,6 @@ function tl_update_list_indent(tllevel)
 	for (var t = 0; t < ds_list_size(tree_list_filter); t++)
 	{
 		with (tree_list_filter[|t])
-			tl_update_list_indent(other.level + 1)
+			tl_update_list_indent(other.indent_level + 1)
 	}
 }

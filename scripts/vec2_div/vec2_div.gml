@@ -5,7 +5,7 @@
 function vec2_div(vec, d)
 {
 	if (is_array(d))
-		return vec2(vec[@ X] / d[@ X], vec[@ Y] / d[@ Y])
+		return [vec[@ X] / d[@ X], vec[@ Y] / d[@ Y]]
 	else
-		return vec2(vec[@ X] / d, vec[@ Y] / d)
+		return [vec[@ X] / d, vec[@ Y] / d]
 }

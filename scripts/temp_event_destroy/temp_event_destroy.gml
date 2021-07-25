@@ -54,7 +54,8 @@ function temp_event_destroy()
 	if (item_vbuffer != null)
 		vbuffer_destroy(item_vbuffer)
 	
-	block_vbuffer_destroy()
+	if (type = e_temp_type.BLOCK || type = e_temp_type.SCENERY)
+		block_vbuffer_destroy()
 	
 	if (type = e_temp_type.PARTICLE_SPAWNER)
 		temp_particles_type_clear()

@@ -49,6 +49,8 @@ function tl_event_create()
 	keyframe_next = null
 	keyframe_select = null
 	keyframe_select_amount = 0
+	keyframe_animate = false
+	keyframe_use_next = false
 	
 	world_pos = point3D(0, 0, 0)
 	world_pos_rotate = point3D(0, 0, 0)
@@ -108,6 +110,7 @@ function tl_event_create()
 	cam_goalzoom = null
 	
 	matrix = 0
+	matrix_render = MAT_IDENTITY
 	update_matrix = true
 	bend_rot_last = vec3(0)
 	bend_model_part_last = null
@@ -145,7 +148,12 @@ function tl_event_create()
 	// Bounding box info
 	bounding_box = new bbox()
 	bounding_box_matrix = new bbox()
+	bounding_box_children = new bbox()
+	bounding_box_children_list = 0
+	
 	scenery_repeat_bounding_box = null
 	visible_chunks_array = null
 	bounding_box_update = true
+	render_visible = true
+	model_timeline_list = null
 }

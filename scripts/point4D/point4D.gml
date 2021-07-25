@@ -6,12 +6,5 @@
 
 function point4D(xx, yy, zz, w)
 {
-	var pnt;
-	
-	pnt[X] = xx
-	pnt[Y] = yy
-	pnt[Z] = zz
-	pnt[W] = w
-	
-	return pnt
+	return [xx, yy, zz, w]
 }

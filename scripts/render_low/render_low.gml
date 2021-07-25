@@ -8,7 +8,7 @@ function render_low()
 	surf = render_surface[0]
 	
 	render_world_start()
-	bbox_update_visible(render_frustum)
+	bbox_update_visible()
 	render_world_done()
 	
 	surface_set_target(surf)

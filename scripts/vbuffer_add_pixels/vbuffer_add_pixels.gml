@@ -112,8 +112,8 @@ function vbuffer_add_pixels()
 				p2 = point3D(px + pxs, 1, pz)
 				p3 = point3D(px + pxs, 0, pz)
 				p4 = point3D(px + pxs, 0, pz - pzs)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, false, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, false, mat)
 			}
 			
 			// West face
@@ -123,8 +123,8 @@ function vbuffer_add_pixels()
 				p2 = point3D(px, 0, pz)
 				p3 = point3D(px, 1, pz)
 				p4 = point3D(px, 1, pz - pzs)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, false, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, false, mat)
 			}
 			
 			// Above face
@@ -134,8 +134,8 @@ function vbuffer_add_pixels()
 				p2 = point3D(px, 0, pz)
 				p3 = point3D(px + pxs, 0, pz)
 				p4 = point3D(px + pxs, 1, pz)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, false, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, false, mat)
 			}
 			
 			// Below face
@@ -145,8 +145,8 @@ function vbuffer_add_pixels()
 				p2 = point3D(px, 1, pz - pzs)
 				p3 = point3D(px + pxs, 1, pz - pzs)
 				p4 = point3D(px + pxs, 0, pz - pzs)
-				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, null, null, false, mat)
-				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, null, null, false, mat)
+				vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, false, mat)
+				vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, false, mat)
 			}
 			
 			pz -= pzs

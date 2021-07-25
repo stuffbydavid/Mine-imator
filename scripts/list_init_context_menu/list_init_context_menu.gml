@@ -195,15 +195,15 @@ function list_init_context_menu(name)
 		// File menu
 		case "toolbarfile":
 		{
-			list_item_add(text_get("toolbarfilenew"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
-			list_item_add(text_get("toolbarfileopen"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
-			list_item_add(text_get("toolbarfilerecent"), null, "", null, icons.RECENTS, icons.CHEVRON_RIGHT_TINY, null)
+			list_item_add(text_get("toolbarfilenew"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
+			list_item_add(text_get("toolbarfileopen"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
+			list_item_add(text_get("toolbarfilerecent"), undefined, "", null, icons.RECENTS, icons.CHEVRON_RIGHT_TINY, null)
 			list_item_last.context_menu_name = "toolbarfilerecent"
 			
-			list_item_add(text_get("toolbarfilesave"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
-			list_item_add(text_get("toolbarfilesaveas"), null, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
+			list_item_add(text_get("toolbarfilesave"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
+			list_item_add(text_get("toolbarfilesaveas"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
 			
-			list_item_add(text_get("toolbarfileimport"), null, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
+			list_item_add(text_get("toolbarfileimport"), undefined, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
 			
 			break
 		}

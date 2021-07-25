@@ -1,12 +1,18 @@
-/// tl_update_list([root])
-/// @arg [root]
+/// tl_update_list([root, level])
+/// @arg [root
+/// @arg level]
 
 function tl_update_list()
 {
-	var root = true;
+	var root, tllevel;
+	root = true
+	tllevel = -1
 	
 	if (argument_count > 0)
+	{
 		root = argument[0]
+		tllevel = argument[1]
+	}
 	
 	if (root)
 	{
@@ -15,12 +21,14 @@ function tl_update_list()
 		app.tree_update_color = null
 		ds_list_clear(tree_visible_list)
 		ds_list_clear(tree_list_filter)
+		ds_list_clear(project_timeline_list)
 		level = -1
+		indent_level = -1
 	}
 	else
 	{
 		// Clear
-		level = 0
+		level = tllevel
 		level_display = []
 		ds_list_clear(tree_list_filter)
 		
@@ -46,6 +54,9 @@ function tl_update_list()
 			// Update "filtered" parent ID
 			app.tree_update_parent_filter = id
 		}
+		
+		// Add to list of timelines
+		ds_list_add(app.project_timeline_list, id)
 	}
 	
 	var update, extend, color;
@@ -60,7 +71,7 @@ function tl_update_list()
 		app.tree_update_color = color
 		
 		with (tree_list[|t])
-			tl_update_list(false)
+			tl_update_list(false, other.level + 1)
 	}
 	
 	// Connect hierarchy and indent of visible timelines

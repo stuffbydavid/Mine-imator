@@ -3,23 +3,39 @@
 
 function bbox() constructor {
 	
-	frustum_state = e_frustum_state.VISIBLE
+	frustum_state = e_frustum_state.INIT
+	frustum_state_prev = frustum_state
 	changed = false
-	start_pos = point3D(no_limit, no_limit, no_limit)
-	end_pos = point3D(-no_limit, -no_limit, -no_limit)
-	self.updatePoints()
+	start_pos = [no_limit, no_limit, no_limit]
+	end_pos = [-no_limit, -no_limit, -no_limit]
+	size = no_limit*2
+	center = [0, 0, 0]
 	
 	static updatePoints = function()
 	{
-		boxp[0] = point4D(start_pos[X], start_pos[Y], start_pos[Z], 1)
-		boxp[1] = point4D(start_pos[X], end_pos[Y],   start_pos[Z], 1)
-		boxp[2] = point4D(end_pos[X],   end_pos[Y],   start_pos[Z], 1)
-		boxp[3] = point4D(end_pos[X],   start_pos[Y], start_pos[Z], 1)
+		/*
+		boxp[0] = point3D(start_pos[X], start_pos[Y], start_pos[Z])
+		boxp[1] = point3D(start_pos[X], end_pos[Y],   start_pos[Z])
+		boxp[2] = point3D(end_pos[X],   end_pos[Y],   start_pos[Z])
+		boxp[3] = point3D(end_pos[X],   start_pos[Y], start_pos[Z])
 		
-		boxp[4] = point4D(start_pos[X], start_pos[Y], end_pos[Z], 1)
-		boxp[5] = point4D(start_pos[X], end_pos[Y],   end_pos[Z], 1)
-		boxp[6] = point4D(end_pos[X],   end_pos[Y],   end_pos[Z], 1)
-		boxp[7] = point4D(end_pos[X],   start_pos[Y], end_pos[Z], 1)
+		boxp[4] = point3D(start_pos[X], start_pos[Y], end_pos[Z])
+		boxp[5] = point3D(start_pos[X], end_pos[Y],   end_pos[Z])
+		boxp[6] = point3D(end_pos[X],   end_pos[Y],   end_pos[Z])
+		boxp[7] = point3D(end_pos[X],   start_pos[Y], end_pos[Z])
+		*/
+		
+		// Convert points to cube
+		center[X] = start_pos[X] + ((end_pos[X] - start_pos[X]) * .5)
+		center[Y] = start_pos[Y] + ((end_pos[Y] - start_pos[Y]) * .5)
+		center[Z] = start_pos[Z] + ((end_pos[Z] - start_pos[Z]) * .5)
+		size = point_distance_3d(start_pos[X], start_pos[Y], start_pos[Z], center[X], center[Y], center[Z])
+		
+		//center = point3D_add(start_pos, point3D_mul(point3D_sub(end_pos, start_pos), .5))
+		//size = point3D_distance(start_pos, center)
+		
+		//start_pos = point3D_sub(center, vec3(size * .5))
+		//end_pos = point3D_add(center, vec3(size * .5))
 	}
 	
 	static reset = function()
@@ -33,37 +49,50 @@ function bbox() constructor {
 	
 	static mul_matrix = function(mat)
 	{
-		var p;
-		p[0] = point3D(start_pos[X], start_pos[Y], start_pos[Z])
-		p[1] = point3D(start_pos[X], end_pos[Y],   start_pos[Z])
-		p[2] = point3D(end_pos[X],   end_pos[Y],   start_pos[Z])
-		p[3] = point3D(end_pos[X],   start_pos[Y], start_pos[Z])
+		var p, np, i, corner, xx, yy, zz;
+		p = array_create(8, array_create(3))
+		np = array_create(8, array_create(3))
+		p[0] = [start_pos[X], start_pos[Y], start_pos[Z]]
+		p[1] = [start_pos[X], end_pos[Y],   start_pos[Z]]
+		p[2] = [end_pos[X],   end_pos[Y],   start_pos[Z]]
+		p[3] = [end_pos[X],   start_pos[Y], start_pos[Z]]
 		
-		p[4] = point3D(start_pos[X], start_pos[Y], end_pos[Z])
-		p[5] = point3D(start_pos[X], end_pos[Y],   end_pos[Z])
-		p[6] = point3D(end_pos[X],   end_pos[Y],   end_pos[Z])
-		p[7] = point3D(end_pos[X],   start_pos[Y], end_pos[Z])
+		p[4] = [start_pos[X], start_pos[Y], end_pos[Z]]
+		p[5] = [start_pos[X], end_pos[Y],   end_pos[Z]]
+		p[6] = [end_pos[X],   end_pos[Y],   end_pos[Z]]
+		p[7] = [end_pos[X],   start_pos[Y], end_pos[Z]]
 		
-		for (var i = 0; i < 8; i++)
-			p[i] = point3D_mul_matrix(p[i], mat)
+		// Apply matrix
+		i = 0
+		repeat (8)
+		{
+			xx = p[i][X]
+			yy = p[i][Y]
+			zz = p[i][Z]
+			
+			np[i][X] = mat[@ 0] * xx + mat[@ 4] * yy + mat[@ 8]  * zz + mat[@ 12]
+			np[i][Y] = mat[@ 1] * xx + mat[@ 5] * yy + mat[@ 9]  * zz + mat[@ 13]
+			np[i][Z] = mat[@ 2] * xx + mat[@ 6] * yy + mat[@ 10] * zz + mat[@ 14]
+			
+			i++
+		}
 		
 		start_pos = point3D(no_limit, no_limit, no_limit)
 		end_pos = point3D(-no_limit, -no_limit, -no_limit)
 		
-		var sp, ep;
-		sp = point3D(no_limit, no_limit, no_limit)
-		ep = point3D(-no_limit, -no_limit, -no_limit)
-		
-		for (var i = 0; i < 8; i++)
+		i = 0
+		repeat (8)
 		{
-			var corner = p[i];
-			start_pos[X] = min(start_pos[X], corner[X])
-			start_pos[Y] = min(start_pos[Y], corner[Y])
-			start_pos[Z] = min(start_pos[Z], corner[Z])
+			corner = np[i]
+			start_pos[X] = start_pos[X] < corner[X] ? start_pos[X] : corner[X]
+			start_pos[Y] = start_pos[Y] < corner[Y] ? start_pos[Y] : corner[Y]
+			start_pos[Z] = start_pos[Z] < corner[Z] ? start_pos[Z] : corner[Z]
 			
-			end_pos[X] = max(end_pos[X], corner[X])
-			end_pos[Y] = max(end_pos[Y], corner[Y])
-			end_pos[Z] = max(end_pos[Z], corner[Z])
+			end_pos[X] = end_pos[X] > corner[X] ? end_pos[X] : corner[X]
+			end_pos[Y] = end_pos[Y] > corner[Y] ? end_pos[Y] : corner[Y]
+			end_pos[Z] = end_pos[Z] > corner[Z] ? end_pos[Z] : corner[Z]
+			
+			i++
 		}
 		
 		self.updatePoints()
@@ -74,13 +103,20 @@ function bbox() constructor {
 		if (!box.changed)
 			return 0
 		
-		start_pos[X] = min(start_pos[X], box.start_pos[X], box.end_pos[X])
-		start_pos[Y] = min(start_pos[Y], box.start_pos[Y], box.end_pos[Y])
-		start_pos[Z] = min(start_pos[Z], box.start_pos[Z], box.end_pos[Z])
-			
+		start_pos[X] = (start_pos[X] < box.start_pos[X] ? start_pos[X] : box.start_pos[X])//min(start_pos[X], box.start_pos[X], box.end_pos[X])
+		start_pos[Y] = (start_pos[Y] < box.start_pos[Y] ? start_pos[Y] : box.start_pos[Y])//min(start_pos[Y], box.start_pos[Y], box.end_pos[Y])
+		start_pos[Z] = (start_pos[Z] < box.start_pos[Z] ? start_pos[Z] : box.start_pos[Z])//min(start_pos[Z], box.start_pos[Z], box.end_pos[Z])
+		
+		
+		end_pos[X] = (end_pos[X] > box.end_pos[X] ? end_pos[X] : box.end_pos[X])
+		end_pos[Y] = (end_pos[Y] > box.end_pos[Y] ? end_pos[Y] : box.end_pos[Y])
+		end_pos[Z] = (end_pos[Z] > box.end_pos[Z] ? end_pos[Z] : box.end_pos[Z])
+		
+		/*
 		end_pos[X] = max(end_pos[X], box.start_pos[X], box.end_pos[X])
 		end_pos[Y] = max(end_pos[Y], box.start_pos[Y], box.end_pos[Y])
 		end_pos[Z] = max(end_pos[Z], box.start_pos[Z], box.end_pos[Z])
+		*/
 		
 		changed = true
 		self.updatePoints()
@@ -117,86 +153,121 @@ function bbox() constructor {
 		self.updatePoints()
 	}
 	
-	static getFrustumState = function(viewFrustum)
+	static updateFrustumState = function()
 	{
-		var inside, outside, onEdge;
-		inside = false
-		outside = false
-		onEdge = false
+		frustum_state_prev = frustum_state
 		
-		for (var i = 0; i < 6; i++)
+		if (frustum_state = e_frustum_state.INIT)
 		{
-			var pointInside = false;
-			
-			for (var j = 0; j < 8; j++)
-			{
-				if (vec4_dot(viewFrustum.p[i], boxp[j]) > 0)
-					pointInside = true
-				else if (pointInside)
-					onEdge = true
-			}
-			
-			if (!pointInside)
-				outside = true
+			frustum_state = e_frustum_state.PARTIAL
+			return 0
 		}
 		
-		if (outside)
-			return e_frustum_state.HIDDEN
+		if (size > no_limit)
+			return 0
 		
-		return onEdge ? e_frustum_state.PARTIAL : e_frustum_state.VISIBLE
+		//var side, sidex, sidey, sidez, sidew, point, outside, pointInside, i, j, distance;
+		//outside = false
+		
+		var i, side, distance;
+		
+		i = 0
+		repeat (6)
+		{
+			side = render_frustum.p[i]
+
+			distance = ((side[X] * center[X]) + (side[Y] * center[Y]) + (side[Z] * center[Z]) + side[W])
+			
+			if (abs(distance) <= size)
+			{
+				frustum_state = e_frustum_state.PARTIAL
+				return 0
+			}
+			else if (distance < -size)
+			{
+				frustum_state = e_frustum_state.HIDDEN
+				return 0
+			}
+			
+			i++
+		}
+		
+		frustum_state = e_frustum_state.VISIBLE//outside ? e_frustum_state.PARTIAL : e_frustum_state.VISIBLE
 	}
 }
 
-function bbox_update_visible(viewFrustum)
+function bbox_update_visible()
 {
 	var chunks, chunkarray, rep, chunksize;
 	chunks = 0
 	
 	// Update models
-	with (obj_timeline)
+	for (var i = 0; i < ds_list_size(project_model_list); i++)
 	{
-		if (type != e_tl_type.CHARACTER &&
-			type != e_tl_type.SPECIAL_BLOCK &&
-			type != e_tl_type.MODEL)
-			continue
-		
-		if (type = e_tl_type.MODEL && temp.model.model_format = e_model_format.BLOCK)
-			continue
-		
-		bounding_box_matrix.frustum_state = bounding_box_matrix.getFrustumState(viewFrustum)
-		bounding_box_update = false
-		
-		//show_debug_message(bounding_box_matrix.frustum_state)
-		
-		for (var i = 0; i < ds_list_size(part_list); i++)
+		with (project_model_list[|i])
 		{
-			var part = part_list[|i];
+			if (type = e_tl_type.MODEL && temp.model.model_format = e_model_format.BLOCK)
+				continue
+			
+			if (model_timeline_list = null)
+				continue
+			
+			bounding_box_matrix.updateFrustumState()
+			bounding_box_update = false
 			
 			if (bounding_box_matrix.frustum_state = e_frustum_state.PARTIAL)
-				part.bounding_box_update = true
+			{
+				for (var j = 0; j < ds_list_size(model_timeline_list); j++)
+				{
+					var tl = model_timeline_list[|j];
+					
+					if (!tl.render_visible)
+						continue
+					
+					tl.bounding_box_update = true
+				}
+			}
 			else
 			{
-				part.bounding_box_update = false
-				part.bounding_box_matrix.frustum_state = bounding_box_matrix.frustum_state
+				for (var j = 0; j < ds_list_size(model_timeline_list); j++)
+				{
+					var tl = model_timeline_list[|j];
+					
+					if (!tl.render_visible)
+						continue
+					
+					tl.bounding_box_update = false
+					tl.bounding_box_matrix.frustum_state = bounding_box_matrix.frustum_state
+				}
 			}
 		}
 	}
 	
+	// Update timelines
 	with (obj_timeline)
 	{
-		if (!bounding_box_update)
+		if (!render_visible ||
+			!bounding_box_update || 
+			type = e_tl_type.CHARACTER ||
+			type = e_tl_type.SPECIAL_BLOCK ||
+			type = e_tl_type.FOLDER ||
+			type = e_tl_type.BACKGROUND ||
+			type = e_tl_type.AUDIO)
 			continue
 		
-		if (!tl_get_visible())
+		if (type = e_tl_type.SCENERY && !temp.scenery.ready)
 			continue
 		
-		bounding_box_matrix.frustum_state = bounding_box_matrix.getFrustumState(viewFrustum)
+		bounding_box_matrix.updateFrustumState()
 		
-		if (bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN)
+		if (bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN)
+			continue
+		
+		if (bounding_box_matrix.frustum_state_prev = bounding_box_matrix.frustum_state)
 			continue
 		
 		// Make a list of all visible chunks vbuffers to render
-		if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK)
+		if (((type = e_tl_type.SCENERY || type = e_tl_type.BLOCK) && scenery_repeat_bounding_box != null))
 		{
 			rep = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
 			chunkarray = (type = e_tl_type.SCENERY ? temp.scenery.scenery_chunk_array : temp.scenery_chunk_array)
@@ -227,8 +298,16 @@ function bbox_update_visible(viewFrustum)
 								{
 									var c = chunkarray[cx][cy][cz];
 									
+									var addchunk = (bounding_box_matrix.frustum_state != e_frustum_state.HIDDEN);
+									
+									if (!addchunk)
+									{
+										scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].updateFrustumState()
+										addchunk = (scenery_repeat_bounding_box.frustum_state != e_frustum_state.HIDDEN)
+									}
+									
 									// Chunk is visible somehow, now check vbuffers
-									if (!c.empty && (bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || (scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].getFrustumState(viewFrustum) != e_frustum_state.HIDDEN)))
+									if (!c.empty && addchunk)
 									{
 										for (var d = 0; d < e_block_depth.amount; d++)
 										{
@@ -255,21 +334,16 @@ function bbox_update_visible(viewFrustum)
 function frustum() constructor {
 	
 	active = true
-	p[0] = [ 1,  0,  0, 1]
-	p[1] = [-1,  0,  0, 1]
-	p[2] = [ 0,  1,  0, 1]
-	p[3] = [ 0, -1,  0, 1]
-	p[4] = [ 0,  0,  0, 1]
-	p[5] = [ 0,  0, -1, 1]
+	self.reset()
 	
 	static reset = function()
 	{
-		p[0] = [ 1,  0,  0, 1]
-		p[1] = [-1,  0,  0, 1]
-		p[2] = [ 0,  1,  0, 1]
-		p[3] = [ 0, -1,  0, 1]
-		p[4] = [ 0,  0,  0, 1]
-		p[5] = [ 0,  0, -1, 1]
+		p[0] = [ 1,  0,  0, 1] // Left
+		p[1] = [-1,  0,  0, 1] // Right
+		p[2] = [ 0,  1,  0, 1] // Bottom
+		p[3] = [ 0, -1,  0, 1] // Top
+		p[4] = [ 0,  0,  1, 1] // Behind view
+		p[5] = [ 0,  0, -1, 1] // Beyond view
 	}
 	
 	static build = function(matVP)

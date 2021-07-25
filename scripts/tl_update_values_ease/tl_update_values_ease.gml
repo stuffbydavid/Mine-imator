@@ -1,21 +1,29 @@
-/// tl_update_values_ease(valueid, transition, percent)
+/// tl_update_values_ease(valueid)
 /// @arg valueid
-/// @arg transition
-/// @arg percent
 
-function tl_update_values_ease(vid, trans, p)
+function tl_update_values_ease(vid)
 {
-	var val;
+	var oldval, curval, nextval, val;
+	oldval = value[vid]
 	
-	if (keyframe_current != null && keyframe_next != null && keyframe_current != keyframe_next)
-		val = tl_value_interpolate(vid, ease(trans, p), keyframe_current.value[vid], keyframe_next.value[vid])
-	else if (keyframe_next != null)
+	if (keyframe_animate)
+	{
+		curval = keyframe_current.value[vid]
+		nextval = keyframe_next.value[vid]
+		
+		if (((oldval = curval) && (curval = nextval)))
+			return 0
+		
+		val = tl_value_interpolate(vid, keyframe_progress_ease, curval, nextval)
+	}
+	else if (keyframe_use_next)
 		val = keyframe_next.value[vid]
 	else
 		val = value_default[vid]
 	
-	if (value[vid] != val)
+	if (oldval != val)
+	{
 		update_matrix = true
-	
-	value[vid] = val
+		value[vid] = val
+	}
 }

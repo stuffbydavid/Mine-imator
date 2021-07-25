@@ -1,7 +1,7 @@
-/// tl_update_model_shape_bend()
+/// tl_update_model_shape_bend(add)
 /// @desc Updates the shapes of the model part if the bending was changed since the last call.
 
-function tl_update_model_shape_bend()
+function tl_update_model_shape_bend(add)
 {
 	var bend = vec3(value_inherit[e_value.BEND_ANGLE_X],
 					value_inherit[e_value.BEND_ANGLE_Y],

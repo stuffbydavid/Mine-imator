@@ -817,13 +817,13 @@ function tab_timeline()
 			break
 		
 		tl = tree_visible_list[|t]
-		itemx = (content_x + (indent * tl.level)) - timeline.hor_scroll_tl.value
+		itemx = (content_x + (indent * tl.indent_level)) - timeline.hor_scroll_tl.value
 		itemy = dy
-		itemw = listw - 8 - (indent * tl.level) + timeline.hor_scroll_tl.value
+		itemw = listw - 8 - (indent * tl.indent_level) + timeline.hor_scroll_tl.value
 		itemhover = (tl = mousetl) && mouseinnames
 		buttonhover = false
 		
-		itemmaxw = (indent * tl.level) + 32
+		itemmaxw = (indent * tl.indent_level) + 32
 		
 		// Hovering
 		if (itemhover)
@@ -898,7 +898,7 @@ function tab_timeline()
 			{
 				if (tl.level_display[i] && (((connectx + 24 + 8) - xright) < minw))
 				{
-					if (i = (tl.level - 1))
+					if (i = (tl.indent_level - 1))
 					{
 						if (tl.parent != app && tl.parent_filter.tree_list_filter[|ds_list_size(tl.parent_filter.tree_list_filter) - 1] = tl)
 							index = 2

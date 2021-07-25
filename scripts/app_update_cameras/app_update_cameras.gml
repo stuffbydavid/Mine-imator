@@ -11,7 +11,7 @@ function app_update_cameras(highquality, movie)
 	
 	with (obj_timeline)
 	{
-		if (!type_is_shape(type) || !tl_get_visible())
+		if (!render_visible || !type_is_shape(type))
 			continue
 		
 		var texobj;
@@ -35,7 +35,7 @@ function app_update_cameras(highquality, movie)
 	
 	with (obj_timeline)
 	{
-		if (type != e_tl_type.CAMERA || !cam_surf_required)
+		if (!render_visible || type != e_tl_type.CAMERA || !cam_surf_required)
 			continue
 		
 		// Only update surface is needed

@@ -56,7 +56,7 @@ function temp_update_shape()
 	
 	with (obj_timeline)
 	{
-		if (temp.id = other.id)
+		if (temp != null && temp.id = other.id)
 			tl_update_bounding_box()
 	}
 }

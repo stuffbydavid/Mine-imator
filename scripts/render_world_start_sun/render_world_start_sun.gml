@@ -40,7 +40,7 @@ function render_world_start_sun(from, to, offset)
 	// Frustum culling is wack in ortho, disable it for now
 	render_frustum.build(light_view_proj_matrix)
 	render_frustum.active = false
-	bbox_update_visible(render_frustum)
+	bbox_update_visible()
 	
 	render_sun_matrix = light_view_proj_matrix
 	render_sun_direction = background_sun_direction

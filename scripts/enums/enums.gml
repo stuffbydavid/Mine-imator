@@ -971,6 +971,7 @@ function enums()
 	{
 		HIDDEN,
 		VISIBLE,
-		PARTIAL
+		PARTIAL,
+		INIT
 	}
 }

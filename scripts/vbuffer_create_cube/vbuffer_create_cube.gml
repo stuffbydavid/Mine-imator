@@ -38,8 +38,8 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 		}
 	}
 	
-	vbuffer_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex1[Y], c_white, 1, invert)
-	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tex1[X], tex2[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
+	vbuffer_add_triangle(rad, rad, -rad, rad, rad, rad, rad, -rad, rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex1[Y], invert)
+	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, rad, rad, -rad, -rad, tex1[X], tex2[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], invert)
 	
 	// X-
 	if (mapped)
@@ -66,8 +66,8 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 		}
 	}
 	
-	vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y], c_white, 1, invert)
-	vbuffer_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], c_white, 1, invert)
+	vbuffer_add_triangle(-rad, rad, rad, -rad, rad, -rad, -rad, -rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y], invert)
+	vbuffer_add_triangle(-rad, -rad, rad, -rad, rad, -rad, -rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], invert)
 	
 	// Y+
 	if (mapped)
@@ -89,8 +89,8 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 		}
 	}
 	
-	vbuffer_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
-	vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y], c_white, 1, invert)
+	vbuffer_add_triangle(-rad, rad, rad, rad, rad, rad, rad, rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex2[X], tex2[Y], invert)
+	vbuffer_add_triangle(-rad, rad, -rad, -rad, rad, rad, rad, rad, -rad, tex1[X], tex2[Y], tex1[X], tex1[Y], tex2[X], tex2[Y], invert)
 	
 	// Y-
 	if (mapped)
@@ -112,8 +112,8 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 		}
 	}
 	
-	vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y], c_white, 1, invert)
-	vbuffer_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], c_white, 1, invert)
+	vbuffer_add_triangle(rad, -rad, rad, -rad, -rad, rad, rad, -rad, -rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y], invert)
+	vbuffer_add_triangle(-rad, -rad, rad, -rad, -rad, -rad, rad, -rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], invert)
 	
 	// Z+
 	if (mapped)
@@ -135,8 +135,8 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 		}
 	}
 	
-	vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y], c_white, 1, invert)
-	vbuffer_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], c_white, 1, invert)
+	vbuffer_add_triangle(-rad, -rad, rad, rad, -rad, rad, -rad, rad, rad, tex1[X], tex1[Y], tex2[X], tex1[Y], tex1[X], tex2[Y], invert)
+	vbuffer_add_triangle(rad, -rad, rad, rad, rad, rad, -rad, rad, rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex2[Y], invert)
 	
 	// Z-
 	if (mapped)
@@ -158,8 +158,8 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 		}
 	}
 	
-	vbuffer_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex1[X], tex2[Y], tex1[X], tex1[Y], c_white, 1, invert)
-	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y], c_white, 1, invert)
+	vbuffer_add_triangle(rad, -rad, -rad, -rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex2[Y], tex1[X], tex2[Y], tex1[X], tex1[Y], invert)
+	vbuffer_add_triangle(rad, rad, -rad, rad, -rad, -rad, -rad, rad, -rad, tex2[X], tex1[Y], tex2[X], tex2[Y], tex1[X], tex1[Y], invert)
 	
 	return vbuffer_done()
 }

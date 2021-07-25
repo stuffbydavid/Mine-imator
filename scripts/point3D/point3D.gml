@@ -5,11 +5,5 @@
 
 function point3D(xx, yy, zz)
 {
-	var pnt;
-	
-	pnt[X] = xx
-	pnt[Y] = yy
-	pnt[Z] = zz
-	
-	return pnt
+	return [xx, yy, zz]
 }

@@ -5,8 +5,6 @@
 
 function render_update_uniform(name, val, isarray)
 {
-	return true
-	
 	if (!shader_check_uniform)
 		return true
 	

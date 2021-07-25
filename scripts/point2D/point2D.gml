@@ -4,10 +4,5 @@
 
 function point2D(xx, yy)
 {
-	var pnt;
-	
-	pnt[X] = xx
-	pnt[Y] = yy
-	
-	return pnt
+	return [xx, yy]
 }

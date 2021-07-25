@@ -14,6 +14,12 @@ function builder_event_create()
 	build_pos_y = 0
 	build_pos_z = 0
 	
+	build_chunk_size = 0
+	build_chunk_size_y = 0
+	build_chunk_size_z = 0
+	build_chunk_size_total = 0
+	build_chunk_progress = 0
+	
 	build_edge_xp = false
 	build_edge_xn = false
 	build_edge_yp = false

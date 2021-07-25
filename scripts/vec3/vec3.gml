@@ -3,22 +3,10 @@
 /// @arg y
 /// @arg z
 
-function vec3()
+function vec3(xx, yy, zz)
 {
-	var vec;
-
-	if (argument_count = 1)
-	{
-		vec[X] = argument[0]
-		vec[Y] = argument[0]
-		vec[Z] = argument[0]
-	}
+	if (yy = undefined)
+		return [xx, xx, xx]
 	else
-	{
-		vec[X] = argument[0]
-		vec[Y] = argument[1]
-		vec[Z] = argument[2]
-	}
-	
-	return vec
+		return [xx, yy, zz]
 }

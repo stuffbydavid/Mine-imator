@@ -7,6 +7,7 @@ function app_event_step()
 	
 	app_update_window()
 	app_update_micro_animations()
+	app_update_gc()
 	
 	if (window_state = "load_assets")
 		return 0

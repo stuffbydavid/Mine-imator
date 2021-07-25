@@ -23,7 +23,7 @@ function app_update_animate()
 		// Update render resource
 		if ((tex_obj != tex_obj_prev) || app.history_resource_update)
 		{
-			if (tl_get_visible())
+			if (render_visible)
 				render_update_tl_resource()
 		}
 		

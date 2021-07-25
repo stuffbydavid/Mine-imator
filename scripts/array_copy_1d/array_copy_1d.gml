@@ -3,10 +3,10 @@
 
 function array_copy_1d(arr)
 {
-	if (array_length(arr) = 0)
+	if (!is_array(arr))
 		return array()
 	
-	var newarr = array();
+	var newarr = [];
 	array_copy(newarr, 0, arr, 0, array_length(arr))
 	return newarr
 }

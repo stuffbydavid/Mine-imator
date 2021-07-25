@@ -53,7 +53,7 @@ function render_world_start_light()
 	
 	render_frustum.build(light_view_proj_matrix)
 	render_frustum.active = true
-	bbox_update_visible(render_frustum)
+	bbox_update_visible()
 	
 	proj_depth_near = render_light_near
 	proj_depth_far = render_light_far

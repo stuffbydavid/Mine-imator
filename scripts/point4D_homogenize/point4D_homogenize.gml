@@ -3,5 +3,5 @@
 
 function point4D_homogenize(pnt)
 {
-	return point3D(pnt[@ X] / pnt[@ W], pnt[@ Y] / pnt[@ W], pnt[@ Z] / pnt[@ W])
+	return [pnt[@ X] / pnt[@ W], pnt[@ Y] / pnt[@ W], pnt[@ Z] / pnt[@ W]]
 }

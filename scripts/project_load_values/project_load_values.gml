@@ -8,9 +8,8 @@ function project_load_values(map, arr)
 	
 	while (!is_undefined(key))
 	{
-		key = project_load_values_update_name(key)
+		var index = ds_list_find_index(value_name_list, project_load_values_update_name(key));
 		
-		var index = ds_list_find_index(value_name_list, key);
 		if (index >= 0)
 		{
 			if (tl_value_is_bool(index))

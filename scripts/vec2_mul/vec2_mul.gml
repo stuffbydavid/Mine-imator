@@ -5,7 +5,7 @@
 function vec2_mul(vec, mul)
 {
 	if (is_array(mul))
-		return vec2(vec[@ X] * mul[@ X], vec[@ Y] * mul[@ Y])
+		return [vec[@ X] * mul[@ X], vec[@ Y] * mul[@ Y]]
 	else
-		return vec2(vec[@ X] * mul, vec[@ Y] * mul)
+		return [vec[@ X] * mul, vec[@ Y] * mul]
 }

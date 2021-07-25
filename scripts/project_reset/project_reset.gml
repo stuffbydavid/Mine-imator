@@ -32,6 +32,11 @@ function project_reset()
 	project_grid_rows = 3
 	project_grid_columns = 3
 	
+	app_update_step = 0
+	app_update_index = 0
+	
+	ds_list_clear(project_model_list)
+	
 	camera_work_reset()
 	
 	log("Destroying instances")
@@ -83,6 +88,8 @@ function project_reset()
 	
 	ds_list_clear(tree_list)
 	ds_list_clear(tree_visible_list)
+	ds_list_clear(project_timeline_list)
+	
 	app_update_tl_edit()
 	
 	for (var v = 0; v < e_value.amount; v++)

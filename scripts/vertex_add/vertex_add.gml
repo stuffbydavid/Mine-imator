@@ -1,69 +1,57 @@
-/// vertex_add(x, y, z, nx, ny, nz, tx, ty, [color, alpha])
-/// vertex_add(pos, normal, texcoord, [color, alpha])
+/// vertex_add(x, y, z, nx, ny, nz, tx, ty)
+/// vertex_add(pos, normal, texcoord)
 /// @arg pos
 /// @arg normal
 /// @arg texcoord
-/// @arg [color
-/// @arg alpha]
 
 function vertex_add()
 {
-	var zz;
+	var xx, yy, zz;
 	
 	if (argument_count < 8)
 	{
-		var pos, normal, texcoord, color, alpha;
+		var pos, normal, texcoord;
 		pos = argument[0]
 		normal = argument[1]
 		texcoord = argument[2]
 		
-		if (argument_count > 3)
-		{
-			color = argument[3]
-			alpha = argument[4]
-		}
-		else
-		{
-			color = -1
-			alpha = 1
-		}
+		xx = pos[@ X]
+		yy = pos[@ Y]
+		zz = pos[@ Z]
 		
-		vertex_position_3d(vbuffer_current, pos[@ X], pos[@ Y], pos[@ Z])
+		vertex_position_3d(vbuffer_current, xx, yy, pos[@ Z])
 		vertex_normal(vbuffer_current, normal[@ X], normal[@ Y], normal[@ Z])
-		vertex_color(vbuffer_current, color, alpha)
+		vertex_color(vbuffer_current, vertex_rgb, vertex_alpha)
 		vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
 		
 		// Seperated for performance
-		vbuffer_xmin = (pos[X] < vbuffer_xmin ? pos[X] : vbuffer_xmin)
-		vbuffer_ymin = (pos[Y] < vbuffer_ymin ? pos[Y] : vbuffer_ymin)
-		vbuffer_zmin = (pos[Z] < vbuffer_zmin ? pos[Z] : vbuffer_zmin)
+		vbuffer_xmin = (xx < vbuffer_xmin ? xx : vbuffer_xmin)
+		vbuffer_ymin = (yy < vbuffer_ymin ? yy : vbuffer_ymin)
+		vbuffer_zmin = (zz < vbuffer_zmin ? zz : vbuffer_zmin)
 		
-		vbuffer_xmax = (pos[X] > vbuffer_xmax ? pos[X] : vbuffer_xmax)
-		vbuffer_ymax = (pos[Y] > vbuffer_ymax ? pos[Y] : vbuffer_ymax)
-		vbuffer_zmax = (pos[Z] > vbuffer_zmax ? pos[Z] : vbuffer_zmax)
-		
-		zz = pos[@ Z]
+		vbuffer_xmax = (xx > vbuffer_xmax ? xx : vbuffer_xmax)
+		vbuffer_ymax = (yy > vbuffer_ymax ? yy : vbuffer_ymax)
+		vbuffer_zmax = (zz > vbuffer_zmax ? zz : vbuffer_zmax)
 	}
 	else
 	{
-		vertex_position_3d(vbuffer_current, argument[0], argument[1], argument[2])
+		xx = argument[0]
+		yy = argument[1]
+		zz = argument[2]
+		
+		vertex_position_3d(vbuffer_current, xx, yy, zz)
 		vertex_normal(vbuffer_current, argument[3], argument[4], argument[5])
-		if (argument_count > 8)
-			vertex_color(vbuffer_current, argument[8], argument[9])
-		else
-			vertex_color(vbuffer_current, -1, 1)
+		vertex_color(vbuffer_current, vertex_rgb, vertex_alpha)
 		vertex_texcoord(vbuffer_current, argument[6], argument[7])
 		
 		// Seperated for performance
-		vbuffer_xmin = (argument[0] < vbuffer_xmin ? argument[0] : vbuffer_xmin)
-		vbuffer_ymin = (argument[1] < vbuffer_ymin ? argument[1] : vbuffer_ymin)
-		vbuffer_zmin = (argument[2] < vbuffer_zmin ? argument[2] : vbuffer_zmin)
+		vbuffer_xmin = (xx < vbuffer_xmin ? xx : vbuffer_xmin)
+		vbuffer_ymin = (yy < vbuffer_ymin ? yy : vbuffer_ymin)
+		vbuffer_zmin = (zz < vbuffer_zmin ? zz : vbuffer_zmin)
 		
-		vbuffer_xmax = (argument[0] > vbuffer_xmax ? argument[0] : vbuffer_xmax)
-		vbuffer_ymax = (argument[1] > vbuffer_ymax ? argument[1] : vbuffer_ymax)
-		vbuffer_zmax = (argument[2] > vbuffer_zmax ? argument[2] : vbuffer_zmax)
-		
-		zz = argument[2]
+		vbuffer_xmax = (xx > vbuffer_xmax ? xx : vbuffer_xmax)
+		vbuffer_ymax = (yy > vbuffer_ymax ? yy : vbuffer_ymax)
+		vbuffer_zmax = (zz > vbuffer_zmax ? zz : vbuffer_zmax)
 	}
 	
 	var wavexy, wavez;
@@ -88,5 +76,5 @@ function vertex_add()
 	}
 	
 	// Custom
-	vertex_float4(vbuffer_current, wavexy, wavez, vertex_brightness, vertex_subsurface)
+	vertex_float4(vbuffer_current, 0, 0, vertex_brightness, vertex_subsurface)
 }

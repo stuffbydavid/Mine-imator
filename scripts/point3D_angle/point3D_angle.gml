@@ -9,5 +9,5 @@ function point3D_angle(from, to)
 	yaw = arctan2(dir[X], dir[Y]) * 180/pi
 	pitch = arctan2(sqrt(power(dir[X], 2) + power(dir[Y], 2)), dir[Z]) * 180/pi
 	
-	return point3D(pitch, 0, yaw)
+	return [pitch, 0, yaw]
 }

@@ -3,6 +3,5 @@
 
 function vec2_normalize(vec)
 {
-	var len = vec2_length(vec);
-	return vec2_div(vec, len)
+	return vec2_div(vec, vec2_length(vec))
 }

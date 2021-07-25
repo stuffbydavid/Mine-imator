@@ -6,6 +6,9 @@ function view_update_surface(view, cam)
 {
 	render_view_current = view
 	
+	with (obj_timeline)
+		render_visible = tl_get_visible()
+	
 	// Render
 	render_lights = (view.quality != e_view_mode.FLAT)
 	render_fog = view.fog
@@ -59,10 +62,7 @@ function view_update_surface(view, cam)
 						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
 						
-						draw_set_color(c_red)
-						draw_set_alpha(1)
-						
-						if (view.boxes && tl.bounding_box_matrix.frustum_state != e_frustum_state.HIDDEN)
+						if (view.boxes && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
 						{
 							if (tl.scenery_repeat_bounding_box != null)
 							{
@@ -72,7 +72,6 @@ function view_update_surface(view, cam)
 											  array_length(tl.scenery_repeat_bounding_box[0][0][0]),
 											  array_length(tl.scenery_repeat_bounding_box[0][0][0][0]),
 											  array_length(tl.scenery_repeat_bounding_box[0][0][0][0][0])];
-								
 								
 								for (var rx = 0; rx < chunks[0]; rx++)
 									for (var ry = 0; ry < chunks[1]; ry++)
@@ -84,17 +83,23 @@ function view_update_surface(view, cam)
 															view_shape_box(tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].start_pos, tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].end_pos)
 							}
 							
-							draw_set_color(c_red)
-							draw_set_alpha(.75)
-							
-							if (tl.bounding_box.changed)
+							if (tl.bounding_box_matrix.changed)
 							{
+								draw_set_color(c_red)
+								draw_set_alpha(.75)
+								
 								if (tl.bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE)
 									draw_set_color(c_lime)
 								else if (tl.bounding_box_matrix.frustum_state = e_frustum_state.PARTIAL)
 									draw_set_color(c_yellow)
 								
-								view_shape_box(tl.bounding_box_matrix.start_pos, tl.bounding_box_matrix.end_pos)
+								if (tl.model_timeline_list != null)
+								{
+									draw_set_color(c_aqua)
+									draw_set_alpha(1)
+								}
+								
+								view_shape_box(tl.bounding_box_matrix.start_pos, tl.bounding_box_matrix.end_pos)	
 							}
 							
 							draw_set_alpha(1)
@@ -107,10 +112,7 @@ function view_update_surface(view, cam)
 				// Controls
 				if (tl_edit != null && tl_edit != cam && view.gizmos)
 				{
-					var vis = false;
-					
-					with (tl_edit)
-						vis = tl_get_visible()
+					var vis = tl_edit.render_visible;
 					
 					// Update 2D position
 					tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
