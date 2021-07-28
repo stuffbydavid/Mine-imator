@@ -354,7 +354,7 @@ function view_draw(view)
 		if (content_mouseon)
 			shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
 		
-		if (!view.quality = e_view_mode.RENDER || view_render_real_time)
+		if (view.quality != e_view_mode.RENDER || view_render_real_time)
 			view_update(view, cam)
 		else if (window_focus = string(view) && !mouse_left && !mouse_right) // Freeze on slow renders bugfix
 			window_busy = ""

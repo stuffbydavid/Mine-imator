@@ -1742,6 +1742,7 @@
     {"id":{"name":"json_save_array_start","path":"scripts/json_save_array_start/json_save_array_start.yy",},"order":5,},
     {"id":{"name":"json_save_array_value","path":"scripts/json_save_array_value/json_save_array_value.yy",},"order":7,},
     {"id":{"name":"json_save_done","path":"scripts/json_save_done/json_save_done.yy",},"order":9,},
+    {"id":{"name":"shader_reset_uniforms","path":"scripts/shader_reset_uniforms/shader_reset_uniforms.yy",},"order":16,},
     {"id":{"name":"shader_high_subsurface_scatter","path":"shaders/shader_high_subsurface_scatter/shader_high_subsurface_scatter.yy",},"order":1,},
     {"id":{"name":"json_save_indent","path":"scripts/json_save_indent/json_save_indent.yy",},"order":11,},
     {"id":{"name":"json_save_object_done","path":"scripts/json_save_object_done/json_save_object_done.yy",},"order":13,},

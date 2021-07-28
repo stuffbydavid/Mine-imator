@@ -23,6 +23,14 @@ function render_startup()
 	
 	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
 	
+	// Update shader_reset_uniforms()
+	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
+			  shader_uniform_hsb_sub, shader_uniform_hsb_mul, shader_uniform_mix_color, shader_uniform_mix_percent,
+			  shader_uniform_brightness, shader_uniform_metallic, shader_uniform_roughness, shader_uniform_wind,
+			  shader_uniform_wind_terrain, shader_uniform_fog, shader_uniform_ssao, shader_uniform_sss, shader_uniform_sss_red,
+			  shader_uniform_sss_green, shader_uniform_sss_blue, shader_uniform_sss_color, shader_uniform_glow, shader_uniform_glow_texture,
+			  shader_uniform_glow_color;
+	
 	globalvar render_pass_surf;
 	
 	log("Render init")
@@ -39,6 +47,7 @@ function render_startup()
 	gpu_set_zwriteenable(false)
 	render_set_culling(true)
 	gpu_set_tex_max_mip(4)
+	shader_reset_uniforms()
 	
 	render_view_current = null
 	render_width = 1

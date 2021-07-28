@@ -79,17 +79,27 @@ function render_world_tl()
 		shader_blend_color = color_multiply(shader_blend_color, app.background_foliage_color)
 	
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
+	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
-	//if (shader_blend_color != render_blend_prev || shader_blend_alpha != render_alpha_prev)
-	//{
-		render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
-	//	render_blend_prev = shader_blend_color
-	//	render_alpha_prev = shader_blend_alpha
-	//}
-	
-	render_set_uniform_int("uColorsExt", colors_ext)
-	if (colors_ext)
+	if (colors_ext != shader_uniform_color_ext ||
+        value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
+        value_inherit[e_value.RGB_SUB] != shader_uniform_rgb_sub ||
+        value_inherit[e_value.HSB_ADD] != shader_uniform_hsb_add ||
+        value_inherit[e_value.HSB_SUB] != shader_uniform_hsb_sub ||
+        value_inherit[e_value.HSB_MUL] != shader_uniform_hsb_mul ||
+        value_inherit[e_value.MIX_COLOR] != shader_uniform_mix_color ||
+        value_inherit[e_value.MIX_PERCENT] != shader_uniform_mix_percent)
 	{
+		shader_uniform_color_ext = colors_ext
+		shader_uniform_rgb_add = value_inherit[e_value.RGB_ADD]
+        shader_uniform_rgb_sub = value_inherit[e_value.RGB_SUB]
+        shader_uniform_hsb_add = value_inherit[e_value.HSB_ADD]
+        shader_uniform_hsb_sub = value_inherit[e_value.HSB_SUB]
+        shader_uniform_hsb_mul = value_inherit[e_value.HSB_MUL]
+        shader_uniform_mix_color = value_inherit[e_value.MIX_COLOR]
+        shader_uniform_mix_percent = value_inherit[e_value.MIX_PERCENT]
+
+		render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
 		render_set_uniform_color("uRGBAdd", value_inherit[e_value.RGB_ADD], 1)
 		render_set_uniform_color("uRGBSub", value_inherit[e_value.RGB_SUB], 1)
 		render_set_uniform_color("uHSBAdd", value_inherit[e_value.HSB_ADD], 1)
@@ -98,26 +108,71 @@ function render_world_tl()
 		render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
 	}
 	
-	render_set_uniform("uBrightness", value_inherit[e_value.BRIGHTNESS])
-	render_set_uniform("uMetallic", value_inherit[e_value.METALLIC])
-	render_set_uniform("uRoughness", value_inherit[e_value.ROUGHNESS])
+	if (value_inherit[e_value.BRIGHTNESS] != shader_uniform_brightness)
+	{
+		shader_uniform_brightness = value_inherit[e_value.BRIGHTNESS]
+		render_set_uniform("uBrightness", shader_uniform_brightness)
+	}
 	
-	if (wind)
-		render_set_uniform("uWindEnable", wind)
-	if (!wind_terrain)
-		render_set_uniform("uWindTerrain", wind_terrain)
-	if (!fog)
-	render_set_uniform_int("uFogShow", fog)
-	if (!ssao)
-		render_set_uniform_int("uSSAOEnable", ssao)
+	if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+	{
+		shader_uniform_metallic = value_inherit[e_value.METALLIC]
+		render_set_uniform("uMetallic", shader_uniform_metallic)
+	}
 	
-	render_set_uniform_int("uBlockGlow", app.project_render_block_glow)
+	if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+	{
+		shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+		render_set_uniform("uRoughness", shader_uniform_roughness)
+	}
 	
-	render_set_uniform("uSSS", value_inherit[e_value.SUBSURFACE])
-	render_set_uniform_vec3("uSSSRadius", value_inherit[e_value.SUBSURFACE_RADIUS_RED],
-											value_inherit[e_value.SUBSURFACE_RADIUS_GREEN],
-											value_inherit[e_value.SUBSURFACE_RADIUS_BLUE])
-	render_set_uniform_color("uSSSColor", value_inherit[e_value.SUBSURFACE_COLOR], 1.0)
+	if (wind != shader_uniform_wind)
+	{
+		shader_uniform_wind = wind
+		render_set_uniform("uWindEnable", shader_uniform_wind)
+	}
+	
+	if (wind_terrain != shader_uniform_wind_terrain)
+	{
+		shader_uniform_wind_terrain = wind_terrain
+		render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
+	}
+	
+	if (fog != shader_uniform_fog)
+	{
+		shader_uniform_fog = fog
+		render_set_uniform_int("uFogShow", shader_uniform_fog)
+	}
+	
+	if (ssao != shader_uniform_ssao)
+    {
+        shader_uniform_ssao = ssao
+		render_set_uniform_int("uSSAOEnable", shader_uniform_ssao)
+    }
+
+	if (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
+        value_inherit[e_value.SUBSURFACE_RADIUS_RED] != shader_uniform_sss_red ||
+        value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] != shader_uniform_sss_green ||
+        value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] != shader_uniform_sss_blue ||
+        value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
+	{
+        shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
+
+        if (shader_uniform_sss != 0)
+        {
+            render_set_uniform("uSSS", value_inherit[e_value.SUBSURFACE])
+            render_set_uniform_vec3("uSSSRadius", value_inherit[e_value.SUBSURFACE_RADIUS_RED],
+                                                    value_inherit[e_value.SUBSURFACE_RADIUS_GREEN],
+                                                    value_inherit[e_value.SUBSURFACE_RADIUS_BLUE])
+            render_set_uniform_color("uSSSColor", value_inherit[e_value.SUBSURFACE_COLOR], 1.0) 
+        }
+        else
+        {
+            render_set_uniform("uSSS", 0)
+            render_set_uniform_vec3("uSSSRadius", 0.0, 0.0, 0.0)
+            render_set_uniform_color("uSSSColor", c_black, 0.0)
+        }
+	}
 	
 	var prevblend = null;
 	
@@ -137,23 +192,32 @@ function render_world_tl()
 	}
 	
 	// Glow
-	if (glow)
+	if (glow != shader_uniform_glow ||
+        glow_texture != shader_uniform_glow_texture ||
+        value_inherit[e_value.GLOW_COLOR] != shader_uniform_glow_color)
 	{
-		render_set_uniform_int("uGlow", 1)
-		render_set_uniform_int("uGlowTexture", glow_texture)
-		render_set_uniform_color("uGlowColor", value_inherit[e_value.GLOW_COLOR], 1)
-		
-		if (only_render_glow)
-		{
-			prevblend = gpu_get_blendmode()
-			gpu_set_blendmode(bm_add)
-		}
-	}
-	else
-	{
-		render_set_uniform_int("uGlow", 0)
-		render_set_uniform_int("uGlowTexture", 0)
-		render_set_uniform_color("uGlowColor", c_black, 1)
+        shader_uniform_glow = glow
+        shader_uniform_glow_texture = glow_texture
+        shader_uniform_glow_color = value_inherit[e_value.GLOW_COLOR]
+        
+        if (shader_uniform_glow)
+        {
+            render_set_uniform_int("uGlow", 1)
+            render_set_uniform_int("uGlowTexture", glow_texture)
+            render_set_uniform_color("uGlowColor", shader_uniform_glow_color, 1)
+            
+            if (only_render_glow)
+            {
+                prevblend = gpu_get_blendmode()
+                gpu_set_blendmode(bm_add)
+            }
+        }
+        else
+        {
+            render_set_uniform_int("uGlow", 0)
+            render_set_uniform_int("uGlowTexture", 0)
+            render_set_uniform_color("uGlowColor", c_black, 0)
+        }
 	}
 	
 	// Multiply for sun color
@@ -244,27 +308,6 @@ function render_world_tl()
 	
 	matrix_world_reset()
 	shader_texture_surface = false
-	render_set_uniform("uBrightness", 0)
-	render_set_uniform("uMetallic", 0)
-	render_set_uniform("uRoughness", 1)
-	
-	if (colors_ext)
-		render_set_uniform_int("uColorsExt", 0)
-	if (wind)
-		render_set_uniform("uWindEnable", 0)
-	if (!wind_terrain)
-		render_set_uniform("uWindTerrain", 1)
-	if (!fog)
-		render_set_uniform_int("uFogShow", (render_fog && app.background_fog_show))
-	if (!ssao)
-		render_set_uniform_int("uSSAOEnable", 1)
-	
-	if (value_inherit[e_value.SUBSURFACE] != 0)
-	{
-		render_set_uniform("uSSS", 0)
-		render_set_uniform_vec3("uSSSRadius", 0, 0, 0)
-		render_set_uniform_color("uSSSColor", c_black, 1)
-	}
 	
 	if (prevblend != null)
 		gpu_set_blendmode(prevblend)

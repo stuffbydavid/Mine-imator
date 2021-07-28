@@ -69,9 +69,8 @@ function block_render_model_generate(model)
 					if (face_block_vbuffer_xp = e_block_vbuffer.GRASS)
 						vertex_rgb = noiseoff
 					
-					vbuffer_add_quad([x2, y2, z2], [x2, y1, z2], [x2, y1, z1], [x2, y2, z1], 
-									 [face_uv_xp_0_x, face_uv_xp_0_y], [face_uv_xp_1_x, face_uv_xp_1_y], [face_uv_xp_2_x, face_uv_xp_2_y], [face_uv_xp_3_x, face_uv_xp_3_y],
-									 mat)
+					vbuffer_add_triangle(x2, y2, z2, x2, y1, z2, x2, y1, z1, face_uv_xp_0_x, face_uv_xp_0_y, face_uv_xp_1_x, face_uv_xp_1_y, face_uv_xp_2_x, face_uv_xp_2_y, false, mat)
+					vbuffer_add_triangle(x2, y1, z1, x2, y2, z1, x2, y2, z2, face_uv_xp_2_x, face_uv_xp_2_y, face_uv_xp_3_x, face_uv_xp_3_y, face_uv_xp_0_x, face_uv_xp_0_y, false, mat)
 					
 					mc_builder.builder_chunk.bounding_box.copy_vbuffer(false)
 				}
@@ -92,9 +91,8 @@ function block_render_model_generate(model)
 					if (face_block_vbuffer_xn = e_block_vbuffer.GRASS)
 						vertex_rgb = noiseoff
 					
-					vbuffer_add_quad([x1, y1, z2], [x1, y2, z2], [x1, y2, z1], [x1, y1, z1], 
-									 [face_uv_xn_0_x, face_uv_xn_0_y], [face_uv_xn_1_x, face_uv_xn_1_y], [face_uv_xn_2_x, face_uv_xn_2_y], [face_uv_xn_3_x, face_uv_xn_3_y],
-									 mat)
+					vbuffer_add_triangle(x1, y1, z2, x1, y2, z2, x1, y2, z1, face_uv_xn_0_x, face_uv_xn_0_y, face_uv_xn_1_x, face_uv_xn_1_y, face_uv_xn_2_x, face_uv_xn_2_y, false, mat)
+					vbuffer_add_triangle(x1, y2, z1, x1, y1, z1, x1, y1, z2, face_uv_xn_2_x, face_uv_xn_2_y, face_uv_xn_3_x, face_uv_xn_3_y, face_uv_xn_0_x, face_uv_xn_0_y, false, mat)
 					
 					mc_builder.builder_chunk.bounding_box.copy_vbuffer(false)
 				}
@@ -115,9 +113,8 @@ function block_render_model_generate(model)
 					if (face_block_vbuffer_yp = e_block_vbuffer.GRASS)
 						vertex_rgb = noiseoff
 					
-					vbuffer_add_quad([x1, y2, z2], [x2, y2, z2], [x2, y2, z1], [x1, y2, z1], 
-									 [face_uv_yp_0_x, face_uv_yp_0_y], [face_uv_yp_1_x, face_uv_yp_1_y], [face_uv_yp_2_x, face_uv_yp_2_y], [face_uv_yp_3_x, face_uv_yp_3_y],
-									 mat)
+					vbuffer_add_triangle(x1, y2, z2, x2, y2, z2, x2, y2, z1, face_uv_yp_0_x, face_uv_yp_0_y, face_uv_yp_1_x, face_uv_yp_1_y, face_uv_yp_2_x, face_uv_yp_2_y, false, mat)
+					vbuffer_add_triangle(x2, y2, z1, x1, y2, z1, x1, y2, z2, face_uv_yp_2_x, face_uv_yp_2_y, face_uv_yp_3_x, face_uv_yp_3_y, face_uv_yp_0_x, face_uv_yp_0_y, false, mat)
 					
 					mc_builder.builder_chunk.bounding_box.copy_vbuffer(false)
 				}
@@ -138,9 +135,8 @@ function block_render_model_generate(model)
 					if (face_block_vbuffer_yn = e_block_vbuffer.GRASS)
 						vertex_rgb = noiseoff
 					
-					vbuffer_add_quad([x2, y1, z2], [x1, y1, z2], [x1, y1, z1], [x2, y1, z1], 
-									 [face_uv_yn_0_x, face_uv_yn_0_y], [face_uv_yn_1_x, face_uv_yn_1_y], [face_uv_yn_2_x, face_uv_yn_2_y], [face_uv_yn_3_x, face_uv_yn_3_y],
-									 mat)
+					vbuffer_add_triangle(x2, y1, z2, x1, y1, z2, x1, y1, z1, face_uv_yn_0_x, face_uv_yn_0_y, face_uv_yn_1_x, face_uv_yn_1_y, face_uv_yn_2_x, face_uv_yn_2_y, false, mat)
+					vbuffer_add_triangle(x1, y1, z1, x2, y1, z1, x2, y1, z2, face_uv_yn_2_x, face_uv_yn_2_y, face_uv_yn_3_x, face_uv_yn_3_y, face_uv_yn_0_x, face_uv_yn_0_y, false, mat)
 					
 					mc_builder.builder_chunk.bounding_box.copy_vbuffer(false)
 				}
@@ -161,9 +157,8 @@ function block_render_model_generate(model)
 					if (face_block_vbuffer_zp = e_block_vbuffer.GRASS)
 						vertex_rgb = noiseoff
 					
-					vbuffer_add_quad([x1, y1, z2], [x2, y1, z2], [x2, y2, z2], [x1, y2, z2], 
-									 [face_uv_zp_0_x, face_uv_zp_0_y], [face_uv_zp_1_x, face_uv_zp_1_y], [face_uv_zp_2_x, face_uv_zp_2_y], [face_uv_zp_3_x, face_uv_zp_3_y],
-									 mat)
+					vbuffer_add_triangle(x1, y1, z2, x2, y1, z2, x2, y2, z2, face_uv_zp_0_x, face_uv_zp_0_y, face_uv_zp_1_x, face_uv_zp_1_y, face_uv_zp_2_x, face_uv_zp_2_y, false, mat)
+					vbuffer_add_triangle(x2, y2, z2, x1, y2, z2, x1, y1, z2, face_uv_zp_2_x, face_uv_zp_2_y, face_uv_zp_3_x, face_uv_zp_3_y, face_uv_zp_0_x, face_uv_zp_0_y, false, mat)
 					
 					mc_builder.builder_chunk.bounding_box.copy_vbuffer(false)
 				}
@@ -184,9 +179,8 @@ function block_render_model_generate(model)
 					if (face_block_vbuffer_zn = e_block_vbuffer.GRASS)
 						vertex_rgb = noiseoff
 					
-					vbuffer_add_quad([x1, y2, z1], [x2, y2, z1], [x2, y1, z1], [x1, y1, z1], 
-									 [face_uv_zn_0_x, face_uv_zn_0_y], [face_uv_zn_1_x, face_uv_zn_1_y], [face_uv_zn_2_x, face_uv_zn_2_y], [face_uv_zn_3_x, face_uv_zn_3_y],
-									 mat)
+					vbuffer_add_triangle(x1, y2, z1, x2, y2, z1, x2, y1, z1, face_uv_zn_0_x, face_uv_zn_0_y, face_uv_zn_1_x, face_uv_zn_1_y, face_uv_zn_2_x, face_uv_zn_2_y, false, mat)
+					vbuffer_add_triangle(x2, y1, z1, x1, y1, z1, x1, y2, z1, face_uv_zn_2_x, face_uv_zn_2_y, face_uv_zn_3_x, face_uv_zn_3_y, face_uv_zn_0_x, face_uv_zn_0_y, false, mat)
 					
 					mc_builder.builder_chunk.bounding_box.copy_vbuffer(false)
 				}

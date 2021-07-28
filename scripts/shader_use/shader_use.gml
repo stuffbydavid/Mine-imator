@@ -66,6 +66,9 @@ function shader_use()
 	// Texture drawing
 	render_set_uniform("uMask", bool_to_float(shader_mask))
 	
+	// Block glow
+	render_set_uniform_int("uBlockGlow", app.project_render_block_glow)
+	
 	// Init script
 	if (script > -1)
 		script_execute(script)
