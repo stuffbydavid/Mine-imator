@@ -17,8 +17,6 @@ function app_event_step()
 	if (window_state = "new_assets" || window_state = "export_movie")
 		return 0
 	
-	minecraft_update_banners()
-	
 	app_update_keybinds()
 	app_update_keyboard()
 	app_update_play()
@@ -31,6 +29,7 @@ function app_event_step()
 	app_update_toasts()
 	app_update_interface()
 	app_update_lists()
+	app_update_minecraft_resources()
 	
 	current_step += 60 / room_speed
 }

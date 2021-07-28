@@ -1,11 +1,11 @@
-/// minecraft_banner_generate(color, patterns, colors, [res])
+/// minecraft_update_banner_generate(color, patterns, colors, [res])
 /// @arg color
 /// @arg patterns
 /// @arg colors
 /// @arg [res]
 /// @desc Generates and returns a banner skin using banner data
 
-function minecraft_banner_generate()
+function minecraft_update_banner_generate()
 {
 	var color, patternlist, colorlist, res;
 	var skinratio, maskarray, bannerskin;

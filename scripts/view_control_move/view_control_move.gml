@@ -167,12 +167,13 @@ function control_pos(s, e, axis, mat, retstart)
 {
 	var startpos = vec3(0); startpos[axis] = s;
 	var endpos = vec3(0); endpos[axis] = e;
-	var endpos3d = endpos; 
-	endpos3d[axis] = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
-	endpos3d = point3D_mul_matrix(endpos3d, mat)
 	
 	if (view_control_edit = null)
 	{
+		var endpos3d = vec3(0);
+		endpos3d[axis] = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
+		endpos3d = point3D_mul_matrix(endpos3d, mat)
+		
 		if (control_test_point(endpos3d, tl_edit.world_pos, 0))
 		{
 			startpos = vec3_mul(startpos, -1)

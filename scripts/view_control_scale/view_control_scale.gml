@@ -3,7 +3,7 @@
 
 function view_control_scale(view)
 {
-	var arrowstart, arrowend, mat;
+	var len, arrowstart, arrowend, mat;
 	
 	// Arrow length
 	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio

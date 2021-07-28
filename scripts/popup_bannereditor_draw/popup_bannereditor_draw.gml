@@ -161,7 +161,7 @@ function popup_bannereditor_draw()
 		if (popup.banner_edit_preview.banner_skin)
 			sprite_delete(popup.banner_edit_preview.banner_skin)
 		
-		popup.banner_edit_preview.banner_skin = minecraft_banner_generate(popup.banner_edit_preview.banner_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
+		popup.banner_edit_preview.banner_skin = minecraft_update_banner_generate(popup.banner_edit_preview.banner_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
 		
 		popup.update = false
 	}

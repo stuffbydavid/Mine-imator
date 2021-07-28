@@ -12,8 +12,7 @@
 function view_control_scale_axis(view, control, vid, color, start, length, mat, axis, rotation)
 {
 	var s, e, axisarr, center3D, start3D, end3D, center2D, start2D, end2D;
-	axisarr = vec3(axis = X, axis = Y, axis = Z)
-	
+	axisarr = [axis = X, axis = Y, axis = Z]
 	s = control_pos(start, length, axis, mat, true)
 	e = control_pos(start, length, axis, mat, false)
 	

@@ -10,32 +10,10 @@
 /// @arg [goalval]]]]
 /// @desc Sets the global micro animation
 
-function microani_set()
+function microani_set(name, script, hover, click, active, disabled = false, spd = 1.5, custom = false, goalval = 0)
 {
-	var name, script, hover, click, active, disabled, spd, custom, goalval;
-	name = argument[0]
-	script = string(argument[1])
-	hover = argument[2]
-	click = argument[3]
-	active = argument[4]
-	disabled = false
-	spd = 1.5
-	custom = false
-	goalval = 0
-	
-	if (argument_count > 5)
-		disabled = argument[5]
-	
-	if (argument_count > 6)
-		spd = argument[6]
-	
-	if (argument_count > 7)
-		custom = argument[7]
-	
-	if (argument_count > 8)
-		goalval = argument[8]
-	
 	var aniname, animation;
+	script = string(argument[1])
 	aniname = microani_prefix + (name + script)
 	animation = microanis[?aniname]
 	

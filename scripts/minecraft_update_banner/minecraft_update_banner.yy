@@ -3,10 +3,10 @@
   "isCompatibility": false,
   "parent": {
     "name": "Update",
-    "path": "folders/Scripts/Project/Timeline/Update.yy",
+    "path": "folders/Scripts/Minecraft/Update.yy",
   },
   "resourceVersion": "1.0",
-  "name": "tl_update_bounding_box_trees",
+  "name": "minecraft_update_banner",
   "tags": [],
   "resourceType": "GMScript",
 }

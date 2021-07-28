@@ -14,5 +14,5 @@ function temp_patterns_reset()
 	
 	banner_base_color = c_minecraft_white
 	
-	banner_skin = minecraft_banner_generate(banner_base_color, banner_pattern_list, banner_color_list)
+	banner_skin = minecraft_update_banner_generate(banner_base_color, banner_pattern_list, banner_color_list)
 }

@@ -88,21 +88,28 @@ function render_world_tl()
 	//}
 	
 	render_set_uniform_int("uColorsExt", colors_ext)
-	render_set_uniform_color("uRGBAdd", value_inherit[e_value.RGB_ADD], 1)
-	render_set_uniform_color("uRGBSub", value_inherit[e_value.RGB_SUB], 1)
-	render_set_uniform_color("uHSBAdd", value_inherit[e_value.HSB_ADD], 1)
-	render_set_uniform_color("uHSBSub", value_inherit[e_value.HSB_SUB], 1)
-	render_set_uniform_color("uHSBMul", value_inherit[e_value.HSB_MUL], 1)
-	render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
+	if (colors_ext)
+	{
+		render_set_uniform_color("uRGBAdd", value_inherit[e_value.RGB_ADD], 1)
+		render_set_uniform_color("uRGBSub", value_inherit[e_value.RGB_SUB], 1)
+		render_set_uniform_color("uHSBAdd", value_inherit[e_value.HSB_ADD], 1)
+		render_set_uniform_color("uHSBSub", value_inherit[e_value.HSB_SUB], 1)
+		render_set_uniform_color("uHSBMul", value_inherit[e_value.HSB_MUL], 1)
+		render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
+	}
 	
 	render_set_uniform("uBrightness", value_inherit[e_value.BRIGHTNESS])
 	render_set_uniform("uMetallic", value_inherit[e_value.METALLIC])
 	render_set_uniform("uRoughness", value_inherit[e_value.ROUGHNESS])
 	
-	render_set_uniform("uWindEnable", wind)
-	render_set_uniform("uWindTerrain", wind_terrain)
+	if (wind)
+		render_set_uniform("uWindEnable", wind)
+	if (!wind_terrain)
+		render_set_uniform("uWindTerrain", wind_terrain)
+	if (!fog)
 	render_set_uniform_int("uFogShow", fog)
-	render_set_uniform_int("uSSAOEnable", ssao)
+	if (!ssao)
+		render_set_uniform_int("uSSAOEnable", ssao)
 	
 	render_set_uniform_int("uBlockGlow", app.project_render_block_glow)
 	
@@ -237,6 +244,27 @@ function render_world_tl()
 	
 	matrix_world_reset()
 	shader_texture_surface = false
+	render_set_uniform("uBrightness", 0)
+	render_set_uniform("uMetallic", 0)
+	render_set_uniform("uRoughness", 1)
+	
+	if (colors_ext)
+		render_set_uniform_int("uColorsExt", 0)
+	if (wind)
+		render_set_uniform("uWindEnable", 0)
+	if (!wind_terrain)
+		render_set_uniform("uWindTerrain", 1)
+	if (!fog)
+		render_set_uniform_int("uFogShow", (render_fog && app.background_fog_show))
+	if (!ssao)
+		render_set_uniform_int("uSSAOEnable", 1)
+	
+	if (value_inherit[e_value.SUBSURFACE] != 0)
+	{
+		render_set_uniform("uSSS", 0)
+		render_set_uniform_vec3("uSSSRadius", 0, 0, 0)
+		render_set_uniform_color("uSSSColor", c_black, 1)
+	}
 	
 	if (prevblend != null)
 		gpu_set_blendmode(prevblend)

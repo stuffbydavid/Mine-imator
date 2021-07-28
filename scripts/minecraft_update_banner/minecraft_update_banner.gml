@@ -1,6 +1,6 @@
-/// minecraft_update_banners()
+/// minecraft_update_banner()
 
-function minecraft_update_banners()
+function minecraft_update_banner()
 {
 	// Update banner template when resources aren't being loaded
 	if (banner_update != null && window_busy != "popup" + popup_loading.name)
@@ -22,7 +22,7 @@ function minecraft_update_banners()
 					with (banner)
 						res = temp_get_model_texobj(null)
 					
-					banner_skin = minecraft_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
+					banner_skin = minecraft_update_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
 				}
 			}
 		}
@@ -37,7 +37,7 @@ function minecraft_update_banners()
 				with (banner)
 					res = temp_get_model_texobj(null)
 				
-				banner_skin = minecraft_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
+				banner_skin = minecraft_update_banner_generate(banner_base_color, banner_pattern_list, banner_color_list, res)
 			}
 		}
 		
