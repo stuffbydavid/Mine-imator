@@ -800,7 +800,8 @@
 					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
 					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
 					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
-					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" }
+					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
+					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" }
 				]
 			},
 			"default_state": "variant=mojang"
@@ -831,7 +832,8 @@
 					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
 					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
 					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
-					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" }
+					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
+					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" }
 				]
 			},
 			"default_state": "variant=normal"
@@ -5697,7 +5699,8 @@
 		"entity/mineimator/cape_translator",
 		"entity/mineimator/cape_translator_chinese",
 		"entity/mineimator/cape_turtle",
-		"entity/mineimator/cape_birthday"
+		"entity/mineimator/cape_birthday",
+		"entity/mineimator/cape_migrator"
 	],
 	"block_textures": [
 		"block/stone",
@@ -7048,7 +7051,6 @@
 		"particle/explosion_15",
 		"particle/flame",
 		"particle/flash",
-		"particle/footprint",
 		"particle/generic_0",
 		"particle/generic_1",
 		"particle/generic_2",
@@ -7243,10 +7245,6 @@
 			"name": "flash",
 			"texture": "particle/flash",
 			"size": 32
-		},
-		{
-			"name": "footprint",
-			"texture": "particle/footprint"
 		},
 		{
 			"name": "glint",

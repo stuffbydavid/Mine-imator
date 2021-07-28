@@ -124,7 +124,7 @@ function tab_properties_render()
 		tab_next()
 		
 		tab_control_meter()
-		draw_meter("rendersubsurfacescatterjitter", dx, dy, dw, round(project_render_subsurface_jitter * 100), 64, 0, 100, 30, 1, tab.render.tbx_subsurface_jitter, action_project_render_subsurface_jitter)
+		draw_meter("rendersubsurfacescatterjitter", dx, dy, dw, round(project_render_subsurface_jitter * 100), 64, 1, 100, 30, 1, tab.render.tbx_subsurface_jitter, action_project_render_subsurface_jitter)
 		tab_next()
 		
 		tab_collapse_end()

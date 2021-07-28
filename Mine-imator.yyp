@@ -1839,7 +1839,6 @@
     {"id":{"name":"string_decimals","path":"scripts/string_decimals/string_decimals.yy",},"order":3,},
     {"id":{"name":"string_format_snakecase","path":"scripts/string_format_snakecase/string_format_snakecase.yy",},"order":5,},
     {"id":{"name":"string_get_real","path":"scripts/string_get_real/string_get_real.yy",},"order":7,},
-    {"id":{"name":"keyframe_lib","path":"scripts/keyframe_lib/keyframe_lib.yy",},"order":22,},
     {"id":{"name":"string_line_array","path":"scripts/string_line_array/string_line_array.yy",},"order":9,},
     {"id":{"name":"string_limit","path":"scripts/string_limit/string_limit.yy",},"order":11,},
     {"id":{"name":"string_limit_ext","path":"scripts/string_limit_ext/string_limit_ext.yy",},"order":13,},
@@ -2361,8 +2360,8 @@
     {"CopyToMask":-1,"filePath":"datafiles/Particles","resourceVersion":"1.0","name":"Snow.miparticles","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Particles","resourceVersion":"1.0","name":"Rain.miparticles","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Particles","resourceVersion":"1.0","name":"Smoke.miparticles","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.17.midata","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.17.zip","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.17.1.midata","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.17.1.zip","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.3.574",

@@ -156,4 +156,5 @@ function tl_event_create()
 	bounding_box_update = true
 	render_visible = true
 	model_timeline_list = null
+	scenery_update_chunks = false
 }

@@ -260,10 +260,12 @@ function bbox_update_visible()
 		
 		bounding_box_matrix.updateFrustumState()
 		
-		if (bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN)
+		if ((bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN) && !scenery_update_chunks)
 			continue
 		
-		if (bounding_box_matrix.frustum_state_prev = bounding_box_matrix.frustum_state)
+		scenery_update_chunks = false
+		
+		if ((bounding_box_matrix.frustum_state_prev = bounding_box_matrix.frustum_state) && !scenery_update_chunks)
 			continue
 		
 		// Make a list of all visible chunks vbuffers to render
