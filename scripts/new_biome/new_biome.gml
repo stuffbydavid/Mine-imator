@@ -8,26 +8,26 @@
 /// @arg water
 /// @arg base
 
-function new_biome(argument0, argument1, argument2, argument3, argument4, argument5, argument6, argument7)
+function new_biome(name, tx, ty, hardcoded, grass, foliage, water, base)
 {
 	with (new_obj(obj_biome))
 	{
 		// Name
-		name = argument0
+		id.name = argument0
 		display_name = minecraft_asset_get_name("biome", name)
 		
 		// Coordinates
-		txy[0] = argument1
-		txy[1] = argument2
+		txy[0] = tx
+		txy[1] = ty
 		
 		// Color
-		hardcoded = argument3
-		color_grass = argument4
-		color_foliage = argument5
-		color_water = argument6
+		id.hardcoded = hardcoded
+		color_grass = grass
+		color_foliage = foliage
+		color_water = water
 		
 		// Variants
-		biome_base = argument7
+		biome_base = base
 		biome_variants = null
 		selected_variant = 0
 		
