@@ -252,13 +252,14 @@ function bbox_update_visible()
 			type = e_tl_type.SPECIAL_BLOCK ||
 			type = e_tl_type.FOLDER ||
 			type = e_tl_type.BACKGROUND ||
-			type = e_tl_type.AUDIO)
+			type = e_tl_type.AUDIO ||
+			type = e_tl_type.CAMERA)
 			continue
 		
 		// Objects in scenery don't use template objects
-		if (temp.object_index != obj_timeline)
+		if (part_root = null && temp != null && temp.object_index = obj_template)
 		{
-			if (temp.scenery = null && !scenery_update_chunks)
+			if (type = e_tl_type.SCENERY && temp.scenery = null && !scenery_update_chunks)
 				continue
 			else
 			{

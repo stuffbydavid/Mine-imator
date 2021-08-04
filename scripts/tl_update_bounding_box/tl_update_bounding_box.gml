@@ -45,9 +45,6 @@ function tl_update_bounding_box()
 	if (temp = null)
 		return 0
 	
-	if (temp.object_index = obj_timeline && type = e_tl_type.SCENERY)
-		bounding_box.copy(temp.scenery.bounding_box)
-	
 	// Calculate block/scenery repeat
 	if (type = e_tl_type.BLOCK || type = e_tl_type.SCENERY)
 	{
