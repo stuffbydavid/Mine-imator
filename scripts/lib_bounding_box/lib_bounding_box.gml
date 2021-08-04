@@ -255,18 +255,27 @@ function bbox_update_visible()
 			type = e_tl_type.AUDIO)
 			continue
 		
-		if (type = e_tl_type.SCENERY && !temp.scenery.ready)
-			continue
+		// Objects in scenery don't use template objects
+		if (temp.object_index != obj_timeline)
+		{
+			if (temp.scenery = null && !scenery_update_chunks)
+				continue
+			else
+			{
+				if (type = e_tl_type.SCENERY && temp.scenery != null && !temp.scenery.ready)
+					continue
+			}
+		}
 		
 		bounding_box_matrix.updateFrustumState()
 		
 		if ((bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN) && !scenery_update_chunks)
 			continue
 		
-		scenery_update_chunks = false
-		
 		if ((bounding_box_matrix.frustum_state_prev = bounding_box_matrix.frustum_state) && !scenery_update_chunks)
 			continue
+		
+		scenery_update_chunks = false
 		
 		// Make a list of all visible chunks vbuffers to render
 		if (((type = e_tl_type.SCENERY || type = e_tl_type.BLOCK) && scenery_repeat_bounding_box != null))

@@ -45,7 +45,7 @@ function tl_update_bounding_box()
 	if (temp = null)
 		return 0
 	
-	if (temp.scenery != null && type = e_tl_type.SCENERY)
+	if (temp.object_index = obj_timeline && type = e_tl_type.SCENERY)
 		bounding_box.copy(temp.scenery.bounding_box)
 	
 	// Calculate block/scenery repeat
@@ -56,6 +56,10 @@ function tl_update_bounding_box()
 		rep = temp.block_repeat
 		repbox = new bbox()
 		repgroupbox = new bbox()
+		
+		// No scenery to use
+		if (temp.scenery = null)
+			return 0
 		
 		if (type = e_tl_type.BLOCK)
 			size = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
