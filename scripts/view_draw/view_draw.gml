@@ -126,10 +126,14 @@ function view_draw(view)
 	draw_box(boxx, boxy, boxw, boxh, false, c_level_middle, 1)
 	
 	// Set camera to use
-	if (view = view_second)
+	
+	// View camera doesn't exist, set to active camera
+	if (view.camera != -4 && view.camera != -5 && !instance_exists(view.camera))
+		view.camera = -5
+	
+	cam = view.camera
+	if (cam = -5)
 		cam = timeline_camera
-	else
-		cam = null
 	
 	// Caption
 	padding = 4
@@ -275,14 +279,43 @@ function view_draw(view)
 	}
 	
 	// Camera name
-	if (!cam)
-		camname = text_get("viewworkcamera")
-	else if (cam.selected)
-		camname = text_get("viewselectedcamera", string_remove_newline(cam.display_name))
-	else
-		camname = text_get("viewactivecamera", string_remove_newline(cam.display_name))
+	var listname, menuactive;
+	listname = (view = view_main ? "viewcameramain" : "viewcamerasecond");
+	menuactive = false
 	
-	draw_label(string_limit(camname, dx - captionx), captionx, boxy + floor(captionh/2), fa_left, fa_middle, c_text_main, a_text_main, font_value)
+	with (obj_menu)
+	{
+		if (menu_name = listname)
+		{
+			menuactive = true
+			break
+		}
+	}
+	
+	if (view.camera = -4 && cam = -4)
+		camname = text_get("viewworkcamera")
+	else if (view.camera = -5)
+		camname = text_get("viewactivecamera", (cam = -4 ? text_get("viewworkcamera") : string_remove_newline(cam.display_name)))
+	else
+		camname = cam.display_name
+	
+	draw_set_font(font_value)
+	
+	if (draw_button_menu(listname, e_menu.LIST_SEAMLESS, captionx - 8, dy, min(string_width(camname) + 52, dx - captionx), 24, view.camera, camname, action_view_camera))
+		settings_menu_view = view
+	
+	current_microani.fade.value = 1//(app_mouse_box(captionx, dy, 128, 24) || (window_busy = "menu"))
+	
+	/*
+	if (draw_button_icon("viewcamera", captionx, dy, 16, 24, settings_menu_name = listname, icons.CHEVRON_DOWN_TINY))
+	{
+		settings_menu_view = view
+		menu_settings_set(captionx, dy, listname, 24)
+		settings_menu_script = null//menu_quality_settings
+	}
+	*/
+	
+	//draw_label(string_limit(camname, dx - captionx), captionx + 24, boxy + floor(captionh/2), fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	
 	microani_prefix = ""
 	scissor_done()

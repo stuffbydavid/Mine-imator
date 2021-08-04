@@ -14,6 +14,16 @@ function project_save_project()
 		json_save_var("grid_rows", project_grid_rows)
 		json_save_var("grid_columns", project_grid_columns)
 		
+		if (view_main.camera = -4 || view_main.camera = -5)
+			json_save_var("view_main_camera", view_main.camera)
+		else
+			json_save_var("view_main_camera", save_id_get(view_main.camera))
+		
+		if (view_second.camera = -4 || view_second.camera = -5)
+			json_save_var("view_second_camera", view_second.camera)
+		else
+			json_save_var("view_second_camera", save_id_get(view_second.camera))
+		
 		json_save_object_start("timeline")
 			json_save_var_bool("repeat", timeline_repeat)
 			json_save_var_bool("seamless_repeat", timeline_seamless_repeat)

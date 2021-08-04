@@ -26,6 +26,7 @@ function microani_set(name, script, hover, click, active, disabled = false, spd 
 		animation.holding.init(click)
 		animation.disable.init(disabled)
 		animation.custom.init(custom)
+		animation.fade.init(1)
 		
 		animation.goal_value = goalval
 		animation.goal_ease = goalval
@@ -39,12 +40,14 @@ function microani_set(name, script, hover, click, active, disabled = false, spd 
 	microani_arr[e_microani.ACTIVE_LINEAR] = current_microani.active.value_ani_linear
 	microani_arr[e_microani.DISABLED_LINEAR] = current_microani.disable.value_ani_linear
 	microani_arr[e_microani.CUSTOM_LINEAR] = current_microani.custom.value_ani_linear
+	microani_arr[e_microani.FADE_LINEAR] = current_microani.fade.value_ani_linear
 		
 	microani_arr[e_microani.HOVER] = current_microani.hover.value_ani_ease
 	microani_arr[e_microani.PRESS] = current_microani.holding.value_ani_ease
 	microani_arr[e_microani.ACTIVE] = current_microani.active.value_ani_ease
 	microani_arr[e_microani.DISABLED] = current_microani.disable.value_ani_ease
 	microani_arr[e_microani.CUSTOM] = current_microani.custom.value_ani_ease
+	microani_arr[e_microani.FADE] = current_microani.fade.value_ani_ease
 		
 	microani_arr[e_microani.GOAL_EASE] = current_microani.goal_ease
 }

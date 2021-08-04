@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.06.25"
+        "lastchange": "2021.08.03"
     },
     "particle/": {
         "default": "Default spawner",
@@ -608,6 +608,11 @@
                 "reflections": "Reflections"
             }
         },
+        "camera/": {
+            "work": "Work camera",
+            "active": "Active camera (%1)",
+            "selected": "Selected camera (%1)"
+        },
         "overlay/": {
             "grid": "Grid",
             "grid/": {
@@ -1204,6 +1209,7 @@
                 "prismarine": "Prismarine",
                 "turtle": "Turtle",
                 "birthday": "Birthday",
+                "migrator": "Migrator",
                 "spectral": "Spectral",
                 "tipped": "Tipped",
                 "squid": "Squid",

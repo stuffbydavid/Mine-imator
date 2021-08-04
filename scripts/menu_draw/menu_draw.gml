@@ -99,6 +99,7 @@ function menu_draw()
 		switch (m.menu_type)
 		{
 			case e_menu.LIST: // Normal list with images and caption
+			case e_menu.LIST_SEAMLESS:
 			case e_menu.TIMELINE:
 			{
 				scissor_start(0, content_y, window_width, content_height)
@@ -135,10 +136,13 @@ function menu_draw()
 				scissor_done()
 				
 				// Adjust component
-				if (m.menu_type = e_menu.LIST)
+				if (m.menu_type = e_menu.LIST || m.menu_type = e_menu.LIST_SEAMLESS)
 				{
 					if (updatewidth)
+					{
 						list_update_width(m.menu_list)
+						m.menu_list.width += 12
+					}
 					
 					var w = m.menu_w;
 					m.menu_w = max(m.menu_list.width, m.menu_w)

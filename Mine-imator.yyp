@@ -1294,6 +1294,7 @@
     {"id":{"name":"block_set_stairs","path":"scripts/block_set_stairs/block_set_stairs.yy",},"order":33,},
     {"id":{"name":"block_set_tripwire","path":"scripts/block_set_tripwire/block_set_tripwire.yy",},"order":35,},
     {"id":{"name":"block_set_vine","path":"scripts/block_set_vine/block_set_vine.yy",},"order":37,},
+    {"id":{"name":"action_view_camera","path":"scripts/action_view_camera/action_view_camera.yy",},"order":0,},
     {"id":{"name":"block_set_wall","path":"scripts/block_set_wall/block_set_wall.yy",},"order":39,},
     {"id":{"name":"block_set_kelp","path":"scripts/block_set_kelp/block_set_kelp.yy",},"order":41,},
     {"id":{"name":"block_set_twisting_vines","path":"scripts/block_set_twisting_vines/block_set_twisting_vines.yy",},"order":43,},
@@ -2320,6 +2321,7 @@
     {"folderPath":"folders/Scripts/App/Actions/Project/Render/Texture filtering.yy","order":54,"resourceVersion":"1.0","name":"Texture filtering","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/App/Actions/Project/Render/Camera effects.yy","order":55,"resourceVersion":"1.0","name":"Camera effects","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Minecraft/Update.yy","order":16,"resourceVersion":"1.0","name":"Update","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts/App/Actions/Project/View.yy","order":8,"resourceVersion":"1.0","name":"View","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

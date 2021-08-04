@@ -38,6 +38,4 @@ function menu_settings_set(xx, yy, name, buttonheight)
 	
 	settings_menu_button_h = buttonheight
 	settings_menu_button_w = 16
-	
-	settings_menu_view = null
 }

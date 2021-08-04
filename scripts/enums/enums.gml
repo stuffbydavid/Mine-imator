@@ -753,6 +753,7 @@ function enums()
 	enum e_menu
 	{
 		LIST,
+		LIST_SEAMLESS,
 		TIMELINE,
 		TRANSITION_LIST,
 		CONTENT

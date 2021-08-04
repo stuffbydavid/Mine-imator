@@ -23,12 +23,14 @@ function app_startup_micro_animations()
 		ACTIVE,
 		DISABLED,
 		CUSTOM,
+		FADE,
 		HOVER_LINEAR,
 		RADIO_HOVER_LINEAR,
 		PRESS_LINEAR,
 		ACTIVE_LINEAR,
 		DISABLED_LINEAR,
 		CUSTOM_LINEAR,
+		FADE_LINEAR,
 		GOAL_EASE
 	}
 }
@@ -48,6 +50,8 @@ function micro_animation(name) constructor
 	holding = new value_animation()
 	disable = new value_animation()
 	custom = new value_animation()
+	fade = new value_animation()
+	fade.init(1)
 	
 	goal_value = 0
 	goal_ease = 0
@@ -58,13 +62,15 @@ function micro_animation(name) constructor
 			active.value_ani_linear != active.value ||
 			holding.value_ani_linear != holding.value ||
 			disable.value_ani_linear != disable.value ||
-			custom.value_ani_linear != custom.value)
+			custom.value_ani_linear != custom.value ||
+			fade.value_ani_linear != fade.value)
 		{
 			active.update(spd)
 			hover.update(spd)
 			holding.update(spd)
 			disable.update(spd)
 			custom.update(spd)
+			fade.update(spd)
 		}
 		
 		if (goal_ease != goal_value)

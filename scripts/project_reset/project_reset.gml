@@ -31,6 +31,8 @@ function project_reset()
 	project_tempo = 24
 	project_grid_rows = 3
 	project_grid_columns = 3
+	view_main.camera = -4
+	view_second.camera = -5
 	
 	app_update_step = 0
 	app_update_index = 0

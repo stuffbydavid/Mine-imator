@@ -8,6 +8,66 @@ function render_world_tl_reset()
 	shader_texture_filter_linear = false
 	shader_texture_filter_mipmap = false
 	
+	// Mix color
+	shader_uniform_rgb_add = c_black
+    shader_uniform_rgb_sub = c_black
+    shader_uniform_hsb_add = c_black
+    shader_uniform_hsb_sub = c_black
+    shader_uniform_hsb_mul = c_white
+    shader_uniform_mix_color = c_black
+    shader_uniform_mix_percent = 0
+
+	render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
+	render_set_uniform_color("uRGBAdd", shader_uniform_rgb_add, 1)
+	render_set_uniform_color("uRGBSub", shader_uniform_rgb_sub, 1)
+	render_set_uniform_color("uHSBAdd", shader_uniform_hsb_add, 1)
+	render_set_uniform_color("uHSBSub", shader_uniform_hsb_sub, 1)
+	render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
+	render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
+	
+	// Brightness
+	shader_uniform_brightness = 0
+	render_set_uniform("uBrightness", shader_uniform_brightness)
+	
+	// Metallic
+	shader_uniform_metallic = 0
+	render_set_uniform("uMetallic", 0)
+	
+	// Roughness
+	shader_uniform_roughness = 1
+	render_set_uniform("uRoughness", shader_uniform_roughness)
+	
+	// Wind
+	shader_uniform_wind = false
+	shader_uniform_wind_terrain = false
+	render_set_uniform("uWindEnable", shader_uniform_wind)
+	render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
+	
+	// Fog
+	shader_uniform_fog = true
+	render_set_uniform_int("uFogShow", shader_uniform_fog)
+	
+	// SSAO
+	shader_uniform_ssao = true
+	render_set_uniform_int("uSSAOEnable", shader_uniform_ssao)
+	
+	// SSS
+	shader_uniform_sss = 0
+	shader_uniform_sss_red = 0
+	shader_uniform_sss_green = 0
+	shader_uniform_sss_blue = 0
+	shader_uniform_sss_color = c_white
+	render_set_uniform("uSSS", shader_uniform_sss)
+    render_set_uniform_vec3("uSSSRadius", shader_uniform_sss_red,
+                                          shader_uniform_sss_green,
+                                          shader_uniform_sss_blue)
+	render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0) 
+	
+	// Glow
+	shader_uniform_glow = false
+    shader_uniform_glow_texture = false
+    shader_uniform_glow_color = c_white
+	
 	render_texture_prev = null
 	render_blend_prev = null
 	render_alpha_prev = null

@@ -222,4 +222,11 @@ function project_load_find_save_ids()
 		for (var t = 0; t < ds_list_size(tree_list); t++)
 			with (tree_list[|t])
 				tl_update_hide()
+	
+	// Viewport cameras
+	if (view_main.camera != -4 && view_main.camera != -5)
+		view_main.camera = save_id_find(view_main.camera)
+	
+	if (view_second.camera != -4 && view_second.camera != -5)
+		view_second.camera = save_id_find(view_second.camera)
 }

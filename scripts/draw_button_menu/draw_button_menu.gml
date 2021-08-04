@@ -105,25 +105,32 @@ function draw_button_menu()
 	
 	microani_set(name, null, false, false, false)
 	
-	var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha;
+	var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha, fadealpha, animation;
 	textcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
 	textcolor = merge_color(textcolor, c_accent, microani_arr[e_microani.ACTIVE])
 	textcolor = merge_color(textcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
 	textalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 	textalpha = lerp(textalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	textalpha = lerp(textalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
+	fadealpha = microani_arr[e_microani.FADE]
+	animation = current_microani
 	
 	// Caption
-	if (capwid = null)
+	if (type != e_menu.LIST_SEAMLESS)
 	{
-		draw_label(string_limit(cap, dw), xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_label)
-		yy += (label_height + 8)
-	}
-	else if (capwid != null)
-	{
-		draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha, font_label)
-		wid -= capwid
-		xx += capwid
+		if (capwid = null)
+		{
+			draw_label(string_limit(cap, dw), xx, yy - 3, fa_left, fa_top, textcolor, textalpha, font_label)
+			yy += (label_height + 8)
+		}
+		else if (capwid != null)
+		{
+			draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha, font_label)
+			wid -= capwid
+			xx += capwid
+		}
+		
+		animation.fade.value = 1
 	}
 	
 	if (menuactive)
@@ -141,7 +148,8 @@ function draw_button_menu()
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
 	draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
-	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha, true)
+	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha * fadealpha, true)
+	
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Mouse
@@ -241,7 +249,7 @@ function draw_button_menu()
 		menu_model_state = menu_model_state_current
 		menu_block_state = menu_block_state_current
 		
-		if (type = e_menu.LIST)
+		if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS)
 			m.menu_list = list_init(m.menu_name)
 		else if (type = e_menu.TIMELINE)
 			m.menu_list = menu_timeline_init(m)
@@ -257,8 +265,10 @@ function draw_button_menu()
 		else
 			m.menu_show_amount = floor(((window_height - (m.menu_y + m.menu_button_h)) * 0.9) / m.menu_item_h)
 		
+		current_microani = animation
 		return true
 	}
 	
+	current_microani = animation
 	return false
 }

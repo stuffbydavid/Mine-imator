@@ -100,12 +100,12 @@ function render_world_tl()
         shader_uniform_mix_percent = value_inherit[e_value.MIX_PERCENT]
 
 		render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
-		render_set_uniform_color("uRGBAdd", value_inherit[e_value.RGB_ADD], 1)
-		render_set_uniform_color("uRGBSub", value_inherit[e_value.RGB_SUB], 1)
-		render_set_uniform_color("uHSBAdd", value_inherit[e_value.HSB_ADD], 1)
-		render_set_uniform_color("uHSBSub", value_inherit[e_value.HSB_SUB], 1)
-		render_set_uniform_color("uHSBMul", value_inherit[e_value.HSB_MUL], 1)
-		render_set_uniform_color("uMixColor", value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT])
+		render_set_uniform_color("uRGBAdd", shader_uniform_rgb_add, 1)
+		render_set_uniform_color("uRGBSub", shader_uniform_rgb_sub, 1)
+		render_set_uniform_color("uHSBAdd", shader_uniform_hsb_add, 1)
+		render_set_uniform_color("uHSBSub", shader_uniform_hsb_sub, 1)
+		render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
+		render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
 	}
 	
 	if (value_inherit[e_value.BRIGHTNESS] != shader_uniform_brightness)
@@ -157,14 +157,18 @@ function render_world_tl()
         value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
 	{
         shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
-
+		shader_uniform_sss_red = value_inherit[e_value.SUBSURFACE_RADIUS_RED]
+		shader_uniform_sss_green = value_inherit[e_value.SUBSURFACE_RADIUS_GREEN]
+		shader_uniform_sss_blue = value_inherit[e_value.SUBSURFACE_RADIUS_BLUE]
+		shader_uniform_sss_color = value_inherit[e_value.SUBSURFACE_COLOR]
+		
         if (shader_uniform_sss != 0)
         {
-            render_set_uniform("uSSS", value_inherit[e_value.SUBSURFACE])
-            render_set_uniform_vec3("uSSSRadius", value_inherit[e_value.SUBSURFACE_RADIUS_RED],
-                                                    value_inherit[e_value.SUBSURFACE_RADIUS_GREEN],
-                                                    value_inherit[e_value.SUBSURFACE_RADIUS_BLUE])
-            render_set_uniform_color("uSSSColor", value_inherit[e_value.SUBSURFACE_COLOR], 1.0) 
+            render_set_uniform("uSSS", shader_uniform_sss)
+            render_set_uniform_vec3("uSSSRadius", shader_uniform_sss_red,
+                                                    shader_uniform_sss_green,
+                                                    shader_uniform_sss_blue)
+            render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0) 
         }
         else
         {

@@ -947,6 +947,24 @@ function list_init(name)
 			
 			break
 		}
+		
+		// View camera
+		case "viewcameramain":
+		case "viewcamerasecond":
+		{
+			list_item_add(text_get("viewcamerawork"), -4)
+			
+			var tlname = (timeline_camera = -4 ? text_get("viewcamerawork") : timeline_camera.display_name);
+			
+			list_item_add(text_get("viewcameraactive", tlname), -5)
+			//list_item_last.toggled = (settings_menu_view.camera = -5)
+			
+			with (obj_timeline)
+				if (type = e_tl_type.CAMERA)
+					list_item_add(display_name, id)
+			
+			break
+		}
 	}
 	
 	return list_init_end()
