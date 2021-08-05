@@ -34,22 +34,22 @@ function render_high_reflections(export, surf)
 	// Render depth & normal data
 	render_surface[1] = surface_require(render_surface[1], ssrwidth, ssrheight)
 	depthsurf = render_surface[1]
-		
+	
 	render_surface[2] = surface_require(render_surface[2], ssrwidth, ssrheight)
 	normalsurf = render_surface[2]
-		
+	
 	render_surface[4] = surface_require(render_surface[4], ssrwidth, ssrheight)
 	normalsurf2 = render_surface[4]
-		
+	
 	render_surface[5] = surface_require(render_surface[5], ssrwidth, ssrheight)
 	materialsurf = render_surface[5]
-		
+	
 	surface_set_target_ext(0, depthsurf)
 	surface_set_target_ext(1, normalsurf)
 	surface_set_target_ext(2, normalsurf2)
 	{
 		draw_clear_alpha(c_white, 0)
-		render_world_start(5000)
+		render_world_start()
 		render_world(e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL)
 		render_world_done()
 	}
@@ -58,8 +58,8 @@ function render_high_reflections(export, surf)
 	// Material data
 	surface_set_target(materialsurf)
 	{
-		draw_clear_alpha(c_white, 1)
-		render_world_start(5000)
+		draw_clear_alpha(c_white, 0)
+		render_world_start()
 		render_world(e_render_mode.MATERIAL)
 		render_world_done()
 	}
@@ -199,8 +199,8 @@ function render_high_reflections_apply(surf)
 	var materialsurf = render_surface[2];
 	surface_set_target(materialsurf)
 	{
-		draw_clear_alpha(c_white, 1)
-		render_world_start(5000)
+		draw_clear_alpha(c_white, 0)
+		render_world_start()
 		render_world(e_render_mode.MATERIAL)
 		render_world_done()
 	}

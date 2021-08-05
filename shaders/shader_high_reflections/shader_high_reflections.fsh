@@ -206,6 +206,7 @@ vec3 rayTrace(vec2 originUV)
 	if (vis > 0.0)
 	{
 		//vis *= (1.0 - clamp(depth / uThickness, 0.0, 1.0));
+		
 		vis *= (1.0 - clamp(length(samplePos - viewPos) / raySize, 0.0, 1.0));
 		vis *= rayVector.z;
 		
@@ -222,7 +223,7 @@ vec3 rayTrace(vec2 originUV)
 	}
 	
 	// Fade based on Fresnel/roughness
-	traceCol *= mat.b;
+	//traceCol *= mat.b;
 	
 	return traceCol;
 }
@@ -231,9 +232,15 @@ void main()
 {
 	// Perform alpha test to ignore background
 	if (texture2D(uDepthBuffer, vTexCoord).a < 1.0)
-		discard;
-	
-	vec3 result = rayTrace(vTexCoord);
-	
-	gl_FragColor = vec4(result, 1.0);
+	{
+		if (texture2D(uMaterialBuffer, vTexCoord).a < 1.0)
+			discard;
+		else
+			gl_FragColor = uFallbackColor;
+	}
+	else
+	{
+		vec3 result = rayTrace(vTexCoord);
+		gl_FragColor = vec4(result, 1.0);
+	}
 }
