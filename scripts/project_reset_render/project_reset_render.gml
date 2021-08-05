@@ -27,8 +27,8 @@ function project_reset_render()
 	project_render_indirect_range = 256
 	
 	project_render_reflections = true
-	project_render_reflections_precision = .3
-	project_render_reflections_thickness = 86
+	project_render_reflections_precision = .75
+	project_render_reflections_thickness = 12
 	project_render_reflections_halfres = true
 	project_render_reflections_fade_amount = 1
 	

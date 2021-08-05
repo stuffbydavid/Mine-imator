@@ -31,7 +31,13 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 					render_world_block(scenery.scenery_chunk_array, res, true, scenery.scenery_size)
 					
 					if (id.object_index != obj_preview)
-						render_set_uniform("uRoughness", value_inherit[e_value.ROUGHNESS])
+					{
+						if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+						{
+							shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+							render_set_uniform("uRoughness", shader_uniform_roughness)
+						}
+					}
 				}
 			}
 		}

@@ -179,7 +179,7 @@ function app_update_animate()
 	background_fog_color_final = background_fog_color
 	background_fog_object_color_final = (background_fog_object_color_custom ? background_fog_object_color : background_fog_color_final)
 	
-	background_sky_color_final = merge_color(background_sky_color, $020204, background_sky_night_alpha())
+	background_sky_color_final = merge_color(background_sky_color, hex_to_color("020204"), background_sky_night_alpha())
 	
 	// Cameras
 	if (window_state = "export_movie")

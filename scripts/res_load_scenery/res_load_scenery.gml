@@ -878,6 +878,7 @@ function res_load_scenery()
 				// Next
 				with (app)
 				{
+					tl_update_list()
 					tl_update_matrix()
 					load_next()
 				}

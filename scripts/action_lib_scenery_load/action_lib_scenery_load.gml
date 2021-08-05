@@ -50,6 +50,7 @@ function action_lib_scenery_load(fn)
 	}
 	
 	project_reset_loaded()
+	
 	tl_update_list()
 	tl_update_matrix()
 }

@@ -197,25 +197,25 @@ function tl_update_matrix()
 				
 				if (inhcolor)
 				{
-					if (par.value[e_value.RGB_ADD] != $000000)
+					if (par.value[e_value.RGB_ADD] != c_black)
 						value_inherit[e_value.RGB_ADD] = color_add(value_inherit[e_value.RGB_ADD], par.value[e_value.RGB_ADD])
 					
-					if (par.value[e_value.RGB_SUB] != $000000)
+					if (par.value[e_value.RGB_SUB] != c_black)
 						value_inherit[e_value.RGB_SUB] = color_add(value_inherit[e_value.RGB_SUB], par.value[e_value.RGB_SUB])
 					
-					if (par.value[e_value.RGB_MUL] != $FFFFFF)
+					if (par.value[e_value.RGB_MUL] != c_white)
 						value_inherit[e_value.RGB_MUL] = color_multiply(value_inherit[e_value.RGB_MUL], par.value[e_value.RGB_MUL])
 					
-					if (par.value[e_value.HSB_ADD] != $000000)
+					if (par.value[e_value.HSB_ADD] != c_black)
 						value_inherit[e_value.HSB_ADD] = color_add(value_inherit[e_value.HSB_ADD], par.value[e_value.HSB_ADD])
 					
-					if (par.value[e_value.HSB_SUB] != $000000)
+					if (par.value[e_value.HSB_SUB] != c_black)
 						value_inherit[e_value.HSB_SUB] = color_add(value_inherit[e_value.HSB_SUB], par.value[e_value.HSB_SUB])
 					
-					if (par.value[e_value.HSB_MUL] != $FFFFFF)
+					if (par.value[e_value.HSB_MUL] != c_white)
 						value_inherit[e_value.HSB_MUL] = color_multiply(value_inherit[e_value.HSB_MUL], par.value[e_value.HSB_MUL])
 					
-					if (par.value[e_value.MIX_COLOR] != $000000)
+					if (par.value[e_value.MIX_COLOR] != c_black)
 						value_inherit[e_value.MIX_COLOR] = color_add(value_inherit[e_value.MIX_COLOR], par.value[e_value.MIX_COLOR])
 					
 					value_inherit[e_value.MIX_PERCENT] = clamp(value_inherit[e_value.MIX_PERCENT] + par.value[e_value.MIX_PERCENT], 0, 1)
@@ -227,11 +227,11 @@ function tl_update_matrix()
 					value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] * par.value[e_value.SUBSURFACE_RADIUS_GREEN], 0, 1)
 					value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] * par.value[e_value.SUBSURFACE_RADIUS_BLUE], 0, 1)
 					
-					if (par.value[e_value.SUBSURFACE_COLOR] != $FFFFFF)
+					if (par.value[e_value.SUBSURFACE_COLOR] != c_white)
 						value_inherit[e_value.SUBSURFACE_COLOR] = color_multiply(value_inherit[e_value.SUBSURFACE_COLOR], par.value[e_value.SUBSURFACE_COLOR])
 				}
 				
-				if (inhglowcolor && (par.value[e_value.GLOW_COLOR] != $FFFFFF))
+				if (inhglowcolor && (par.value[e_value.GLOW_COLOR] != c_white))
 					value_inherit[e_value.GLOW_COLOR] = color_multiply(value_inherit[e_value.GLOW_COLOR], par.value[e_value.GLOW_COLOR])
 				
 				if (inhvis)

@@ -208,7 +208,13 @@ function render_world_block()
 			render_set_texture(texani)
 			render_set_uniform_color("uBlendColor", color_multiply(blend, res.color_water), shader_blend_alpha)
 			render_set_uniform_int("uIsWater", 1)
-			render_set_uniform("uRoughness", .2)
+			
+			if (shader_uniform_roughness != 0.2)
+			{
+				shader_uniform_roughness = 0.2
+				render_set_uniform("uRoughness", shader_uniform_roughness)
+			}
+			
 			render_chunks_vbuffer(chunks, e_block_depth.DEPTH2, e_block_vbuffer.WATER)
 			render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 			render_set_uniform_int("uIsWater", 0)

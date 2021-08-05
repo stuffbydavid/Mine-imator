@@ -67,7 +67,7 @@ function res_update_colors()
 		color_leaves_dark_oak = foliagecolor
 		color_foliage = foliagecolor
 		
-		color_leaves_spruce = $62A857
+		color_leaves_spruce = hex_to_color("62A857")
 		color_leaves_birch = color_leaves_spruce
 	}
 }

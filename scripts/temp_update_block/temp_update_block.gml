@@ -41,7 +41,7 @@ function temp_update_block()
 	
 	with (obj_timeline)
 	{
-		if (temp != null && temp.id = other.id)
+		if (temp != null && (temp.id = other.id || temp = id))
 		{
 			tl_update_bounding_box()
 			scenery_update_chunks = true

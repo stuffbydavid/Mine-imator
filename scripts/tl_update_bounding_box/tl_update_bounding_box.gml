@@ -54,10 +54,6 @@ function tl_update_bounding_box()
 		repbox = new bbox()
 		repgroupbox = new bbox()
 		
-		// No scenery to use
-		if (temp.scenery = null)
-			return 0
-		
 		if (type = e_tl_type.BLOCK)
 			size = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
 		else
@@ -144,11 +140,17 @@ function tl_update_bounding_box()
 			delete repgroupbox
 			delete repbox
 		}
-		else
+		else // Not repeat
 		{
 			bounding_box.mul_matrix(rotmat)
 			
-			var chunks = (temp.type = e_temp_type.SCENERY ? temp.scenery.scenery_chunk_array : temp.scenery_chunk_array);
+			var chunks;
+			
+			if (temp.type = e_temp_type.SCENERY) // Scenery
+				chunks = temp.scenery.scenery_chunk_array
+			else
+				chunks = temp.scenery_chunk_array // Block
+			
 			var chunkssize = [array_length(chunks), array_length(chunks[0]), array_length(chunks[0][0])];
 			
 			// Create chunk bounding boxes

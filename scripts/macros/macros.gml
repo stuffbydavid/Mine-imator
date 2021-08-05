@@ -115,26 +115,26 @@ function macros()
 	#macro c_plains_biome_foliage_2		make_color_rgb(98, 168, 87)
 	#macro c_plains_biome_grass			make_color_rgb(145, 189, 89)
 	#macro c_plains_biome_water			make_color_rgb(62, 117, 225)
-	#macro c_sunset_start				$B2353B
-	#macro c_sunset_end					$C04E37
+	#macro c_sunset_start				hex_to_color("B2353B")
+	#macro c_sunset_end					hex_to_color("C04E37")
 	
 	// Minecraft color palette
-	#macro c_minecraft_white			$F4F4F4
-	#macro c_minecraft_orange			$F07613
-	#macro c_minecraft_magenta			$BD44B3
-	#macro c_minecraft_light_blue		$3AAFD9
-	#macro c_minecraft_yellow			$F8C627
-	#macro c_minecraft_lime				$70B919
-	#macro c_minecraft_pink				$ED8DAC
-	#macro c_minecraft_gray				$3E4447
-	#macro c_minecraft_light_gray		$8E8E86
-	#macro c_minecraft_cyan				$158991
-	#macro c_minecraft_purple			$792AAC
-	#macro c_minecraft_blue				$35399D
-	#macro c_minecraft_brown			$724728
-	#macro c_minecraft_green			$546D1B
-	#macro c_minecraft_red				$A12722
-	#macro c_minecraft_black			$141519
+	#macro c_minecraft_white			hex_to_color("F4F4F4")
+	#macro c_minecraft_orange			hex_to_color("F07613")
+	#macro c_minecraft_magenta			hex_to_color("BD44B3")
+	#macro c_minecraft_light_blue		hex_to_color("3AAFD9")
+	#macro c_minecraft_yellow			hex_to_color("F8C627")
+	#macro c_minecraft_lime				hex_to_color("70B919")
+	#macro c_minecraft_pink				hex_to_color("ED8DAC")
+	#macro c_minecraft_gray				hex_to_color("3E4447")
+	#macro c_minecraft_light_gray		hex_to_color("8E8E86")
+	#macro c_minecraft_cyan				hex_to_color("158991")
+	#macro c_minecraft_purple			hex_to_color("792AAC")
+	#macro c_minecraft_blue				hex_to_color("35399D")
+	#macro c_minecraft_brown			hex_to_color("724728")
+	#macro c_minecraft_green			hex_to_color("546D1B")
+	#macro c_minecraft_red				hex_to_color("A12722")
+	#macro c_minecraft_black			hex_to_color("141519")
 	
 	// Audio
 	#macro sample_rate					44100

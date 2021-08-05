@@ -76,5 +76,5 @@ function vertex_add()
 	}
 	
 	// Custom
-	vertex_float4(vbuffer_current, 0, 0, vertex_brightness, vertex_subsurface)
+	vertex_float4(vbuffer_current, wavexy, wavez, vertex_brightness, vertex_subsurface)
 }

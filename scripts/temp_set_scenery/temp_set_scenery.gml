@@ -105,9 +105,14 @@ function temp_set_scenery(res, animate, hobj)
 		}
 		
 		// Destroy
-		while (ds_list_size(part_list) > 0)
-			with (part_list[|0])
+		for (var i = 0; i < ds_list_size(part_list); i++)
+			tl_remove_clean(part_list[|i])
+		
+		with (obj_timeline)
+			if (delete_ready)
 				instance_destroy()
+		
+		ds_list_clear(part_list)
 	}
 	
 	scenery = res
@@ -135,6 +140,12 @@ function temp_set_scenery(res, animate, hobj)
 		{
 			temp_update_display_name()
 			temp_update_rot_point()
+		}
+		
+		with (obj_timeline)
+		{
+			if (temp = other.id)
+				scenery_update_chunks = true
 		}
 	}
 }

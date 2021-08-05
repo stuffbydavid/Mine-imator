@@ -4,10 +4,10 @@
 function block_vbuffer_start(size)
 {
 	// Initialize chunks
-	mc_builder.build_chunk_size = ceil(size[X]/chunk_size)
+	mc_builder.build_chunk_size_x = ceil(size[X]/chunk_size)
 	mc_builder.build_chunk_size_y = ceil(size[Y]/chunk_size)
 	mc_builder.build_chunk_size_z = ceil(size[Z]/chunk_size)
-	mc_builder.build_chunk_size_total = (mc_builder.build_chunk_size * mc_builder.build_chunk_size_y * mc_builder.build_chunk_size_z)
+	mc_builder.build_chunk_size_total = (mc_builder.build_chunk_size_x * mc_builder.build_chunk_size_y * mc_builder.build_chunk_size_z)
 	mc_builder.build_chunk_progress = 0
 	
 	if (scenery_chunk_array != null)
@@ -27,7 +27,7 @@ function block_vbuffer_start(size)
 	
 	scenery_chunk_array = null
 	
-	for (var cx = 0; cx < mc_builder.build_chunk_size; cx++)
+	for (var cx = 0; cx < mc_builder.build_chunk_size_x; cx++)
 		for (var cy = 0; cy < mc_builder.build_chunk_size_y; cy++)
 			for (var cz = 0; cz < mc_builder.build_chunk_size_z; cz++)
 				scenery_chunk_array[cx][cy][cz] = new chunk()

@@ -23,6 +23,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	texobj = null
 	blendcolor = null
 	alpha = null
+	render_blend_prev = null
+	render_alpha_prev = null
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
@@ -125,7 +127,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		// Blend shape color/alpha
-		if (blendcolor != c_white || shape.color_alpha != 1)
+		if (blendcolor != c_white || alpha != 1)
 		{
 			blendcolor = color_multiply(shader_blend_color, blendcolor)
 			alpha = shader_blend_alpha * shape.color_alpha
