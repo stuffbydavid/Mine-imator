@@ -166,9 +166,6 @@ function bbox() constructor {
 		if (size > no_limit)
 			return 0
 		
-		//var side, sidex, sidey, sidez, sidew, point, outside, pointInside, i, j, distance;
-		//outside = false
-		
 		var i, side, distance;
 		
 		i = 0
@@ -192,7 +189,7 @@ function bbox() constructor {
 			i++
 		}
 		
-		frustum_state = e_frustum_state.VISIBLE//outside ? e_frustum_state.PARTIAL : e_frustum_state.VISIBLE
+		frustum_state = e_frustum_state.VISIBLE
 	}
 }
 

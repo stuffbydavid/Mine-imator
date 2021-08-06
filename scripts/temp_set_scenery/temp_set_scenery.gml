@@ -105,8 +105,8 @@ function temp_set_scenery(res, animate, hobj)
 		}
 		
 		// Destroy
-		for (var i = 0; i < ds_list_size(part_list); i++)
-			tl_remove_clean(part_list[|i])
+		while (ds_list_size(part_list) > 0)
+			tl_remove_clean(part_list[|0])
 		
 		with (obj_timeline)
 			if (delete_ready)

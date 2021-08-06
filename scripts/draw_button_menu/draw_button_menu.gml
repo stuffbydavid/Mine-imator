@@ -86,6 +86,9 @@ function draw_button_menu()
 	else
 		cap = text_get(name)
 	
+	if (menu_bench)
+		name = "bench" + name
+	
 	// Check if menu is currently active
 	menuactive = false
 	menuhide = false

@@ -829,7 +829,7 @@ function tab_timeline()
 		if (itemhover)
 			mouse_cursor = cr_handpoint
 		
-		if (itemhover && mouse_left && tl.list_mouseon)
+		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
 		else if (tl.selected || itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)

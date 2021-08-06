@@ -52,6 +52,8 @@ function bench_draw_settings(bx, by, bw, bh)
 		dy += 144 + 8
 		
 		// Settings
+		menu_bench = true
+		
 		switch (bench_settings.type)
 		{
 			case e_temp_type.CHARACTER:
@@ -393,6 +395,8 @@ function bench_draw_settings(bx, by, bw, bh)
 				break
 			}
 		}
+		
+		menu_bench = false
 	}
 	
 	draw_set_alpha(prevalpha)

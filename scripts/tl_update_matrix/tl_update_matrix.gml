@@ -281,7 +281,7 @@ function tl_update_matrix()
 	}
 	
 	// Update model bounding boxes
-	if (object_index = app)
+	with (app)
 	{
 		ds_list_clear(project_model_list)
 		
@@ -305,6 +305,7 @@ function tl_update_matrix()
 				}
 		}
 	}
+	
 	
 	update_matrix = false
 }

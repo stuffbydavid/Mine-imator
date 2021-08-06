@@ -12,4 +12,5 @@ function app_startup_interface_menus()
 	menu_block_current = null
 	menu_block_state = null
 	menu_block_state_current = null
+	menu_bench = false
 }

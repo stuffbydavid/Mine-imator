@@ -39,12 +39,24 @@ function temp_update_block()
 	
 	block_vbuffer_done()
 	
-	with (obj_timeline)
+	if (object_index = obj_timeline || object_index = obj_template)
 	{
-		if (temp != null && (temp.id = other.id || temp = id))
+		// Updating scenery part
+		if (object_index = obj_timeline && temp = id)
 		{
 			tl_update_bounding_box()
 			scenery_update_chunks = true
+		}
+		else
+		{
+			with (obj_timeline)
+			{
+				if (temp != null && (temp.id = other.id))
+				{
+					tl_update_bounding_box()
+					scenery_update_chunks = true
+				}
+			}
 		}
 	}
 }

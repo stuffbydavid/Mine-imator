@@ -49,7 +49,7 @@ function tl_update_bounding_box()
 	if (type = e_tl_type.BLOCK || type = e_tl_type.SCENERY)
 	{
 		var size, rotmat, reppos, rep, repbox, repgroupbox;
-		size = 1
+		size = vec3(0)
 		rep = temp.block_repeat
 		repbox = new bbox()
 		repgroupbox = new bbox()
@@ -57,10 +57,10 @@ function tl_update_bounding_box()
 		if (type = e_tl_type.BLOCK)
 			size = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
 		else
-			size = temp.scenery.scenery_size
+			size = (temp.scenery != null ? temp.scenery.scenery_size: vec3(0))
 		
 		// Not ready
-		if (type = e_tl_type.SCENERY && temp.scenery.scenery_chunk_array = null)
+		if (type = e_tl_type.SCENERY && temp.scenery != null && temp.scenery.scenery_chunk_array = null)
 			return 0
 		
 		rotmat = matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1))
@@ -92,6 +92,10 @@ function tl_update_bounding_box()
 				
 			scenery_repeat_bounding_box = null
 		}
+		
+		// No scenery resource
+		if (type = e_tl_type.SCENERY && temp.scenery = null)
+			return 0
 		
 		if (temp.block_repeat_enable && type = e_tl_type.SCENERY)
 		{
