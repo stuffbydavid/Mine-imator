@@ -106,7 +106,7 @@ function tl_update_values()
 	keyframe_use_next = (keyframe_next != null)
 	
 	// Marker is past all keyframes, no need to update
-	if ((oldkf = keyframe_current) && (keyframe_current = keyframe_list[|ds_list_size(keyframe_list) - 1]))
+	if (app.timeline_playing && (oldkf = keyframe_current) && (keyframe_current = keyframe_list[|ds_list_size(keyframe_list) - 1]))
 		return 0
 	
 	// Transition

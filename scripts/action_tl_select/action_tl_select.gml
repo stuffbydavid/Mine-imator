@@ -58,7 +58,6 @@ function action_tl_select(tl)
 		with (tl)
 		{
 			tl_update_recursive_select()
-			
 			tl_select()
 		}
 	}

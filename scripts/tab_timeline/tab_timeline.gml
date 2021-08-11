@@ -85,7 +85,7 @@ function tab_timeline()
 	mouseinmarkers = (app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mousetl = floor((mouse_y - tly + timeline.ver_scroll.value) / itemh)
+	mousetl = floor((mouse_y - tly + (round(timeline.ver_scroll.value / itemh) * itemh)) / itemh)
 	mousetlname = null
 	mousekf = null
 	mousekfstart = null
@@ -1236,10 +1236,11 @@ function tab_timeline()
 				}
 				else if ((tl_keyframe_length(mousekf) != 0 && (timeline_marker >= mousekf.position) && (timeline_marker <= mousekf.position + tl_keyframe_length(mousekf))) || (tl_keyframe_length(mousekf) = 0)) // Select
 				{
-					if (!keyboard_check(vk_shift))
-						tl_deselect_all()
+					if (keyboard_check(vk_shift))
+						action_tl_keyframe_select(mousekf.timeline, mousekf)
+					else
+						action_tl_keyframe_select_single(mousekf.timeline, mousekf)
 					
-					action_tl_keyframe_select(mousekf.timeline, mousekf)
 					action_tl_keyframes_move_start(mousekf)
 				}
 				else

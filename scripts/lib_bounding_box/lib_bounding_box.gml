@@ -199,9 +199,9 @@ function bbox_update_visible()
 	chunks = 0
 	
 	// Update models
-	for (var i = 0; i < ds_list_size(project_model_list); i++)
+	for (var i = 0; i < ds_list_size(app.project_model_list); i++)
 	{
-		with (project_model_list[|i])
+		with (app.project_model_list[|i])
 		{
 			if (type = e_tl_type.MODEL && temp.model.model_format = e_model_format.BLOCK)
 				continue
@@ -218,8 +218,8 @@ function bbox_update_visible()
 				{
 					var tl = model_timeline_list[|j];
 					
-					if (!tl.render_visible)
-						continue
+					//if (!tl.render_visible)
+					//	continue
 					
 					tl.bounding_box_update = true
 				}
@@ -230,8 +230,8 @@ function bbox_update_visible()
 				{
 					var tl = model_timeline_list[|j];
 					
-					if (!tl.render_visible)
-						continue
+					//if (!tl.render_visible)
+					//	continue
 					
 					tl.bounding_box_update = false
 					tl.bounding_box_matrix.frustum_state = bounding_box_matrix.frustum_state
@@ -243,8 +243,8 @@ function bbox_update_visible()
 	// Update timelines
 	with (obj_timeline)
 	{
-		if (!render_visible ||
-			!bounding_box_update || 
+		if (!bounding_box_update || 
+			(type = e_tl_type.MODEL && temp.model.model_format = e_model_format.MIMODEL) ||
 			type = e_tl_type.CHARACTER ||
 			type = e_tl_type.SPECIAL_BLOCK ||
 			type = e_tl_type.FOLDER ||

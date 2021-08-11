@@ -188,6 +188,7 @@ function render_startup()
 	// Shadow surf
 	render_shadows_buffer = null
 	render_samples = 0
+	render_samples_done = false
 	render_shadows_matrix = null
 	
 	// Render pass surf

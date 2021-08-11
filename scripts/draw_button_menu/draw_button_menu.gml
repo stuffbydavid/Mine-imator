@@ -19,7 +19,7 @@
 function draw_button_menu()
 {
 	var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha, capwid;
-	var flip, mouseon, cap, menuactive, menuhide, menuid;
+	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid;
 	name = argument[0]
 	type = argument[1]
 	xx = argument[2] 
@@ -87,7 +87,9 @@ function draw_button_menu()
 		cap = text_get(name)
 	
 	if (menu_bench)
-		name = "bench" + name
+		nameid = "bench" + name
+	else
+		nameid = name
 	
 	// Check if menu is currently active
 	menuactive = false
@@ -96,7 +98,7 @@ function draw_button_menu()
 	
 	for (var i = 0; i < ds_list_size(menu_list); i++)
 	{
-		if (menu_list[|i].menu_name = name)
+		if (menu_list[|i].menu_name = nameid)
 		{
 			menuactive = true
 			menuhide = menu_list[|i].menu_ani_type = "hide"
@@ -106,7 +108,7 @@ function draw_button_menu()
 	
 	flip = (yy + hei + hei * 8 > window_height)
 	
-	microani_set(name, null, false, false, false)
+	microani_set(nameid, null, false, false, false)
 	
 	var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha, fadealpha, animation;
 	textcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
@@ -209,7 +211,7 @@ function draw_button_menu()
 		var m = null;
 		for (var i = 0; i < ds_list_size(menu_list); i++)
 		{
-			if (menu_list[|i].menu_name = name)
+			if (menu_list[|i].menu_name = nameid)
 			{
 				m = menu_list[|i]
 				break;
@@ -223,7 +225,7 @@ function draw_button_menu()
 		window_focus = ""//string(menu_scroll_vertical)
 		app_mouse_clear()
 		
-		m.menu_name = name
+		m.menu_name = nameid
 		m.menu_type = type
 		m.menu_temp_edit = temp_edit
 		m.menu_script = script
@@ -253,7 +255,7 @@ function draw_button_menu()
 		menu_block_state = menu_block_state_current
 		
 		if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS)
-			m.menu_list = list_init(m.menu_name)
+			m.menu_list = list_init(name)
 		else if (type = e_menu.TIMELINE)
 			m.menu_list = menu_timeline_init(m)
 		

@@ -110,5 +110,7 @@ function project_load_update()
 	
 	tl_update_length()
 	tl_update_list()
+	
+	app.update_matrix = true
 	tl_update_matrix()
 }

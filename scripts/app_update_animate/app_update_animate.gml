@@ -24,10 +24,11 @@ function app_update_animate()
 		if ((tex_obj != tex_obj_prev) || app.history_resource_update)
 		{
 			if (render_visible)
+			{
 				render_update_tl_resource()
+				tex_obj_prev = tex_obj
+			}
 		}
-		
-		tex_obj_prev = tex_obj
 		
 		if (type = e_tl_type.CAMERA)
 		{

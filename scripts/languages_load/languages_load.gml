@@ -7,7 +7,7 @@ function languages_load()
 	if (!file_exists_lib(fn))
 		return 0
 	
-	log("Loading languges", fn)
+	log("Loading languages", fn)
 	
 	// Decode
 	var map = json_load(fn);

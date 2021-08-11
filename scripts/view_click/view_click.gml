@@ -21,6 +21,7 @@ function view_click(view, cam)
 	surface_reset_target()
 	
 	var tl = surface_getpixel(surf, mouse_x - content_x, mouse_y - content_y);
+	
 	if (tl > 0)
 	{
 		// Find timeline to select
@@ -46,7 +47,7 @@ function view_click(view, cam)
 				var newval = pos - floor(timeline_list_visible / 2);
 				newval = min(newval, ds_list_size(tree_visible_list) - timeline_list_visible)
 				newval = max(0, newval)
-				timeline.ver_scroll.value_goal = newval * timeline.ver_scroll.snap_value
+				timeline.ver_scroll.value_goal = newval * 4 * timeline.ver_scroll.snap_value
 			}
 		}
 	}
