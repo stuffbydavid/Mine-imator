@@ -22,7 +22,7 @@ function view_control_scale_all(view, mat, radius)
 			return 0
 		
 		coord = view_control_scale_coords
-		view_control_scale_amount = point_distance((mouse_wrap_x * content_width) + mouse_x - content_x, (mouse_wrap_y * content_height) + mouse_y - content_y, view_control_scale_coords[X], view_control_scale_coords[Y]) / radius2D
+		view_control_scale_amount = point_distance((mouse_wrap_x * content_width) + mouse_x - content_x, (mouse_wrap_y * content_height) + mouse_y - content_y, view_control_scale_coords[X], view_control_scale_coords[Y]) / view_control_scale_start
 	}
 	else if (view.control_mouseon_last = e_view_control.SCA_XYZ)
 	{
@@ -35,7 +35,8 @@ function view_control_scale_all(view, mat, radius)
 			view_control_value_scale[Z] = tl_edit.value[e_value.SCA_Z]
 			view_control_edit = e_view_control.SCA_XYZ
 			view_control_edit_view = view
-			view_control_scale_amount = point_distance(mouse_x - content_x, mouse_y - content_y, coord[X], coord[Y]) / radius2D
+			view_control_scale_start = point_distance(mouse_x - content_x, mouse_y - content_y, coord[X], coord[Y])
+			view_control_scale_amount = 1
 			view_control_scale_coords[X] = coord[X]
 			view_control_scale_coords[Y] = coord[Y]
 			view_control_matrix = mat

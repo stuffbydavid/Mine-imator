@@ -71,6 +71,7 @@ function app_startup_interface_views()
 	view_control_move_distance = 0
 	view_control_scale_coords = vec2(0)
 	view_control_scale_amount = 1
+	view_control_scale_start = 0
 	view_control_value_scale = vec3(1)
 	view_control_matrix = null
 	view_control_length = null

@@ -929,6 +929,9 @@ function enums()
 		SCA_X,
 		SCA_Y,
 		SCA_Z,
+		SCA_XY,
+		SCA_XZ,
+		SCA_YZ,
 		SCA_XYZ,
 		
 		BEND_X,
