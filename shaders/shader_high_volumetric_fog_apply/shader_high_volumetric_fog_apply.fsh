@@ -26,12 +26,12 @@ void main()
 	color *= 4.0;
 	
 	vec3 fogLight = (uAmbientColor.rgb + (uSunColor.rgb * color));
-	vec3 fogColor = uColor.rgb * fogLight;;
+	vec3 fogColor = uColor.rgb * fogLight;
 	
 	if (uFogAmbience == 1)
 		baseColor.rgb = mix(baseColor.rgb, fogColor, opacity);
 	else
-		baseColor.rgb = mix(baseColor.rgb, uColor.rgb, opacity);//(uSunColor.rgb * uColor.rgb * color);
+		baseColor.rgb = mix(baseColor.rgb, uColor.rgb, opacity);
 	
 	gl_FragColor = baseColor;
 }

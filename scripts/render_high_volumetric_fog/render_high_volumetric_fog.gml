@@ -30,8 +30,8 @@ function render_high_volumetric_fog(prevsurf, export)
 		depthsurf = render_surface[5]
 		surface_set_target(depthsurf)
 		{
-			gpu_set_blendmode_ext(bm_one, bm_zero)
 			draw_clear_alpha(c_white, 1)
+			gpu_set_blendmode_ext(bm_one, bm_zero)
 			
 			render_world_start(10000)
 			render_world(e_render_mode.DEPTH_NO_SKY)
@@ -56,8 +56,7 @@ function render_high_volumetric_fog(prevsurf, export)
 					var xyang, zang, dis;
 					xyang = random(360)
 					zang = random_range(-180, 180)
-					dis = ((background_sunlight_angle * (world_size / 2)) / 57.2958)
-					dis = random_range(-dis/2, dis/2)
+					dis = ((background_sunlight_angle * (world_size / 2)) / 57.2958) / 2
 					sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 					sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 					sampleoffset[Z] = lengthdir_z(dis, zang)
@@ -67,9 +66,9 @@ function render_high_volumetric_fog(prevsurf, export)
 				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_buffer)
 				{
+					draw_clear(c_white)
 					gpu_set_blendmode_ext(bm_one, bm_zero)
 					
-					draw_clear(c_white)
 					render_world_start_sun(
 						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
 						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
@@ -79,6 +78,10 @@ function render_high_volumetric_fog(prevsurf, export)
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
+				
+				render_world_start()
+				bbox_update_visible()
+				render_world_done()
 			}
 			
 			// Render and apply volumetric fog
@@ -99,7 +102,6 @@ function render_high_volumetric_fog(prevsurf, export)
 				{
 					shader_set(shader)
 					shader_use()
-					
 					shader_high_volumetric_fog_set(depthsurf, render_surface_sun_buffer)
 				}
 				draw_blank(0, 0, render_width, render_height)
@@ -119,7 +121,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(render_surface_sun_volume_expo, 0, 0)
 				
-				if ((export && s = 0) || render_samples_clear)
+				if ((export && s = 1) || render_samples_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
@@ -129,7 +131,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(render_surface_sun_volume_dec, 0, 0)
 				
-				if ((export && s = 0) || render_samples_clear)
+				if ((export && s = 1) || render_samples_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
