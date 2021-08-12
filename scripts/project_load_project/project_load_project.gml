@@ -30,6 +30,7 @@ function project_load_project(map)
 		else
 			timeline_intervals_show = value_get_real(tlmap[?"intervals_show"], timeline_intervals_show)
 		
+		timeline_frame_snap = value_get_real(tlmap[?"frame_snap"], timeline_frame_snap)
 		timeline_interval_size = value_get_real(tlmap[?"interval_size"], timeline_interval_size)
 		timeline_interval_offset = value_get_real(tlmap[?"interval_offset"], timeline_interval_offset)
 		

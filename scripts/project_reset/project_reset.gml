@@ -86,6 +86,7 @@ function project_reset()
 	timeline_interval_size = 24
 	timeline_interval_offset = 0
 	timeline_show_markers = true
+	timeline_frame_snap = true
 	timeline_hide_color_tag = array_create(9, false)
 	
 	ds_list_clear(tree_list)

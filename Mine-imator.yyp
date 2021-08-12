@@ -528,6 +528,7 @@
     {"id":{"name":"action_tl_frame_light_spot_sharpness","path":"scripts/action_tl_frame_light_spot_sharpness/action_tl_frame_light_spot_sharpness.yy",},"order":13,},
     {"id":{"name":"action_tl_frame_set_light","path":"scripts/action_tl_frame_set_light/action_tl_frame_set_light.yy",},"order":15,},
     {"id":{"name":"action_tl_frame_attractor","path":"scripts/action_tl_frame_attractor/action_tl_frame_attractor.yy",},"order":1,},
+    {"id":{"name":"action_tl_frame_snap","path":"scripts/action_tl_frame_snap/action_tl_frame_snap.yy",},"order":14,},
     {"id":{"name":"action_tl_frame_clear","path":"scripts/action_tl_frame_clear/action_tl_frame_clear.yy",},"order":3,},
     {"id":{"name":"action_tl_frame_custom_seed","path":"scripts/action_tl_frame_custom_seed/action_tl_frame_custom_seed.yy",},"order":5,},
     {"id":{"name":"action_tl_frame_force","path":"scripts/action_tl_frame_force/action_tl_frame_force.yy",},"order":7,},

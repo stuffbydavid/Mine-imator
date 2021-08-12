@@ -5,7 +5,7 @@ function tl_settings_draw()
 	draw_set_font(font_label)
 	var draggerwid, switchwid;
 	draggerwid = text_max_width("timelineintervalsize", "timelineintervaloffset") + 16
-	switchwid = text_max_width("timelineintervalshow", "timelinecompact") + 16 + 24
+	switchwid = text_max_width("timelineintervalshow", "timelinecompact", "timelineframesnap") + 16 + 24
 	
 	// Intervals
 	tab_control_switch()
@@ -26,6 +26,10 @@ function tl_settings_draw()
 	
 	tab_control_switch()
 	draw_switch("timelinemarkers", dx, dy, timeline_show_markers, action_tl_markers_show)
+	tab_next()
+	
+	tab_control_switch()
+	draw_switch("timelineframesnap", dx, dy, timeline_frame_snap, action_tl_frame_snap)
 	tab_next()
 	
 	tab_control_switch()

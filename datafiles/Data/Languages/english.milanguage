@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.08.03"
+        "lastchange": "2021.08.12"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2546,6 +2546,7 @@
         "hideghosts": "Hide ghost timelines",
         "hideghoststip": "When enabled, all timelines with the \"Ghost\" toggle will be hidden from the timeline list.",
         "markers": "Show markers",
+        "framesnap": "Snap playback marker",
         "marker/": {
             "new": "New marker",
             "label": "Label",

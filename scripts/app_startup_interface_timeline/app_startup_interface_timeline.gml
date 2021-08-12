@@ -17,6 +17,7 @@ function app_startup_interface_timeline()
 	timeline_list_visible = 0
 	timeline_mouse_pos = null
 	timeline_marker = 0
+	timeline_marker_move = 0
 	timeline_marker_previous = 0
 	timeline_region_start = null
 	timeline_region_end = null

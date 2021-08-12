@@ -49,8 +49,14 @@ function app_update_keyboard()
 		
 		if (!timeline_playing)
 		{
+			if (keybinds_map[?e_keybind.MARKER_RIGHT].pressed)
+				timeline_marker_move = timeline_marker
+			
 			if (keybinds_map[?e_keybind.MARKER_RIGHT].active)
 				action_tl_right()
+			
+			if (keybinds_map[?e_keybind.MARKER_LEFT].pressed)
+				timeline_marker_move = timeline_marker
 			
 			if (keybinds_map[?e_keybind.MARKER_LEFT].active)
 				action_tl_left()

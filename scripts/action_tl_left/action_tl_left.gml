@@ -2,7 +2,12 @@
 
 function action_tl_left()
 {
-	timeline_marker -= project_tempo / room_speed
+	timeline_marker_move -= project_tempo / room_speed
+	
+	if (timeline_frame_snap)
+		timeline_marker = round(timeline_marker_move)
+	else
+		timeline_marker = timeline_marker_move
 	
 	if (timeline_repeat)
 	{
@@ -16,4 +21,5 @@ function action_tl_left()
 	}
 	
 	timeline_marker = max(0, timeline_marker)
+	timeline_marker_move = max(0, timeline_marker_move)
 }

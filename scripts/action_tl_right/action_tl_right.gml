@@ -2,7 +2,12 @@
 
 function action_tl_right()
 {
-	timeline_marker += project_tempo / room_speed
+	timeline_marker_move += project_tempo / room_speed
+	
+	if (timeline_frame_snap)
+		timeline_marker = round(timeline_marker_move)
+	else
+		timeline_marker = timeline_marker_move
 	
 	if (timeline_repeat || timeline_seamless_repeat)
 	{
