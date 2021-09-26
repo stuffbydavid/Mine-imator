@@ -40,7 +40,13 @@ function res_load_audio()
 			
 			log("Loading audio", fname)
 			
-			sound_buffer = buffer_load(temp_file)
+			// Can't process audio with growing buffer, convert to fixed size
+			var buffertemp = buffer_load(temp_file);
+			
+			sound_buffer = buffer_create(buffer_get_size(buffertemp), buffer_fixed, 2)
+			buffer_copy(buffertemp, 0, buffer_get_size(buffertemp), sound_buffer, 0)
+			buffer_delete(buffertemp)
+			
 			sound_index = audio_create_buffer_sound(sound_buffer, buffer_s16, sample_rate, 0, buffer_get_size(sound_buffer), audio_stereo)
 			sound_samples = buffer_get_size(sound_buffer) / sample_size
 			

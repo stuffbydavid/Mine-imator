@@ -545,7 +545,6 @@ function list_init(name)
 					if (res != mc_res && res.block_sheet_texture != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
-				
 			}
 			
 			break
@@ -693,7 +692,7 @@ function list_init(name)
 		case "frameeditorblockmaterialtex":
 		case "frameeditorblocknormaltex":
 		{	
-			var texobj;
+			var texobj = null;
 			
 			// Default
 			if (name = "frameeditorblockmaterialtex")
@@ -722,7 +721,7 @@ function list_init(name)
 							if (block_normal_tex.type = e_res_type.PACK || block_normal_tex.type = e_res_type.BLOCK_SHEET)
 								texobj = block_normal_tex
 						}
-						else if ("frameeditorblocktex")
+						else if (name = "frameeditorblocktex")
 						{
 							if (block_tex.type = e_res_type.PACK || block_tex.type = e_res_type.BLOCK_SHEET)
 								texobj = block_tex
