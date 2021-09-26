@@ -1974,7 +1974,7 @@
         "bendstyle": "Limb bending style",
         "bendstylerealistic": "Realistic",
         "bendstyleblocky": "Blocky",
-        "randomblocks": "Random blocks",
+        "randomblocks": "Random block models",
         "liquidanimation": "Liquid waves",
         "noisygrasswater": "Noise effect on grass/water",
         "blockemission": "Glowing block emission",
