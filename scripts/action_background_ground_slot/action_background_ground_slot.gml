@@ -18,4 +18,6 @@ function action_background_ground_slot(slot)
 	
 	background_ground_slot = slot
 	background_ground_update_texture()
+	background_ground_update_normal_texture()
+	background_ground_update_material_texture()
 }

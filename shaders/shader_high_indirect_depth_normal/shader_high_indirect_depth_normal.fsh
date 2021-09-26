@@ -1,6 +1,9 @@
 uniform float2 uTexScale;
+uniform float2 uNormalTexScale;
+uniform float2 uMaterialTexScale;
 uniform float4 uBlendColor;
 uniform float uBrightness;
+uniform int uIsWater;
 
 struct FSInput
 {
@@ -9,6 +12,11 @@ struct FSInput
 	float Depth : DEPTH;
 	float3 Normal : NORMAL;
 	float3 Custom : TEXCOORD1;
+	float3 WorldPosition : TEXCOORD2;
+	float3x3 WorldInv : TEXCOORD3;
+	float3x3 WorldViewInv : TEXCOORD6;
+	float Time: TEXCOORD9;
+	float WindDirection: TEXCOORD10;
 };
 
 struct FSOutput
@@ -21,6 +29,12 @@ struct FSOutput
 
 Texture2D uTextureT : register(t1);
 SamplerState uTexture : register(s1);
+
+Texture2D uNormalTextureT : register(t2);
+SamplerState uNormalTexture : register(s2);
+
+Texture2D uMaterialTextureT : register(t3);
+SamplerState uMaterialTexture : register(s3);
 
 float4 packDepth(float f)
 {
@@ -37,6 +51,46 @@ float2 packFloat2(float f)
 	return float2(floor(f / 255.0) / 255.0, frac(f / 255.0));
 }
 
+float3 getMappedNormal(float3 normal, float3 worldPos, float2 uv, float wind, float time)
+{
+	// Get edge derivatives
+	float3 posDx = ddx(worldPos);
+	float3 posDy = ddy(worldPos);
+	float2 texDx = ddx(uv);
+	float2 texDy = ddy(uv);
+	
+	// Calculate tangent/bitangent
+	float3 posPx = cross(normal, posDx);
+	float3 posPy = cross(posDy, normal);
+	float3 T = posPy * texDx.x + posPx * texDy.x;
+	float3 B = posPy * texDx.y + posPx * texDy.y;
+	
+	// Create a Scale-invariant frame
+	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);
+	
+	// Build TBN matrix to transform mapped normal with mesh
+	float3x3 TBN = float3x3(T * float3(invmax, invmax, invmax), B * float3(invmax, invmax, invmax), normal);
+	
+	// Get normal value from normal map
+	float2 normtex = fmod(uv * uNormalTexScale, uNormalTexScale);
+	
+	if (uIsWater > 0)
+	{
+		float2 angle = float2(cos(wind), sin(wind)) * .125 * time;
+		normtex = (worldPos.xy + angle) / 128.0;
+	}
+	
+	float3 normalCoord = uNormalTextureT.Sample(uNormalTexture, normtex).rgb * 2.0 - 1.0;
+	
+	if (uIsWater > 0)
+		normalCoord = lerp(normalCoord, float3(0.0, 0.0, 1.0), .9);
+	
+	if (normalCoord.z <= 0.0)
+		return normal;
+	
+	return normalize(mul(normalCoord, TBN));
+}
+
 FSOutput main(FSInput IN) : SV_TARGET
 {
 	FSOutput OUT;
@@ -49,7 +103,11 @@ FSOutput main(FSInput IN) : SV_TARGET
 	// Depth
 	OUT.Color0 = packDepth(IN.Depth);
 	
-	float3 n = float3((IN.Normal + float3(1.0, 1.0, 1.0)) * 0.5);
+	float3 n = getMappedNormal(normalize(IN.Normal), IN.WorldPosition, IN.TexCoord, IN.WindDirection, IN.Time);
+	n = normalize(mul(n, IN.WorldInv));
+	n = normalize(mul(IN.WorldViewInv, n));
+	n = packNormal(n).xyz;
+	//n = normalize(normalize(IN.Normal) + normalize(n * 0.5));//normalize(lerp(n, IN.Normal, .5));
 	
 	// Normal X
 	float2 channel = float2(0.0, 0.0);
@@ -71,7 +129,10 @@ FSOutput main(FSInput IN) : SV_TARGET
 	OUT.Color2.a = 1.0;
 	
 	// Brightness
-	float br = max(0.0, uBlendColor.a * (uBrightness + IN.Custom.z));
+	float2 matTex = fmod(IN.TexCoord * uMaterialTexScale, uMaterialTexScale);
+	float matColor = uMaterialTextureT.Sample(uMaterialTexture, tex).b;
+	
+	float br = max(0.0, uBlendColor.a * (uBrightness + IN.Custom.z)) * matColor;
 	OUT.Color3 = float4(br, br, br, 1.0);
 	
 	return OUT;

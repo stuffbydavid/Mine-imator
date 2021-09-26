@@ -107,6 +107,12 @@ function res_load_pack()
 				if (background_ground_tex = other.id)
 					background_ground_update_texture()
 				
+				if (background_ground_material_tex = other.id)
+					background_ground_update_material_texture()
+				
+				if (background_ground_normal_tex = other.id)
+					background_ground_update_normal_texture()
+				
 				if (background_sky_clouds_tex = other.id)
 					background_sky_update_clouds()
 				

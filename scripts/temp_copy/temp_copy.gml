@@ -32,6 +32,8 @@ function temp_copy(to)
 	to.block_name = block_name
 	to.block_state = array_copy_1d(block_state)
 	to.block_tex = block_tex
+	to.block_material_tex = block_material_tex
+	to.block_normal_tex = block_normal_tex
 	
 	to.scenery = scenery
 	

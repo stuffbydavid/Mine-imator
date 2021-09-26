@@ -7,5 +7,5 @@ function camera_work_set_focus()
 	cam_work_focus[Z] = cam_work_from[Z] + lengthdir_z(cam_work_zoom, cam_work_angle_look_z)
 	
 	if (vec3_equals(cam_work_from, cam_work_focus))
-		cam_work_focus = point3D_add(cam_work_focus, 0.0001)
+		cam_work_focus = vec3_add(cam_work_focus, 0.0001)
 }

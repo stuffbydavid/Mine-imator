@@ -89,8 +89,15 @@ function project_load_background(map)
 	background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
 	if (background_ground_slot < 0) // Animated
 		background_ground_slot = ds_list_size(mc_assets.block_texture_list) + ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_name)
+		
 	background_ground_tex.count--
 	background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
+	
+	background_ground_material_tex.count--
+	background_ground_material_tex = value_get_save_id(map[?"ground_material_tex"], background_ground_material_tex)
+	
+	background_ground_normal_tex.count--
+	background_ground_normal_tex = value_get_save_id(map[?"ground_normal_tex"], background_ground_normal_tex)
 	
 	background_biome = find_biome(value_get_string(map[?"biome"], background_biome.name))
 	

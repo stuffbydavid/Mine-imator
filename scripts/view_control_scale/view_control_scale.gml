@@ -191,6 +191,10 @@ function view_control_scale(view)
 			view_control_matrix = null
 			view_control_length = null
 			view_control_value = 0
+			
+			// End dragging
+			axis_edit = X
+			action_tl_frame_scale_all_axis(0, false)
 		}
 	}
 }

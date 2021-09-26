@@ -27,8 +27,8 @@ function project_reset_render()
 	project_render_indirect_range = 256
 	
 	project_render_reflections = true
-	project_render_reflections_precision = .75
-	project_render_reflections_thickness = 12
+	project_render_reflections_precision = .3
+	project_render_reflections_thickness = 1
 	project_render_reflections_halfres = true
 	project_render_reflections_fade_amount = 1
 	
@@ -53,6 +53,7 @@ function project_reset_render()
 	project_render_block_glow = true
 	project_render_block_glow_threshold = 0.75
 	project_render_block_subsurface = 2
+	project_render_random_blocks = true
 	
 	texture_set_mipmap_level(project_render_texture_filtering_level)
 	render_generate_dof_samples(0, 0, 0)

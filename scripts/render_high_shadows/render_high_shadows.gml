@@ -188,6 +188,13 @@ function render_high_shadows(export)
 						continue
 					}
 					
+					var atlasx, atlasy, atlassize;
+					atlasx = 0
+					atlasy = 0
+					atlassize = app.project_render_shadows_point_buffer_size
+					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2)
+					render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize)
+					
 					// Depth
 					for (var d = e_dir.EAST; d < e_dir.amount; d++)
 					{
@@ -195,8 +202,7 @@ function render_high_shadows(export)
 						if (d = e_dir.DOWN || d = e_dir.UP)
 							look[Y] -= 0.0001
 						
-						render_surface_point_buffer[d] = surface_require(render_surface_point_buffer[d], app.project_render_shadows_point_buffer_size, app.project_render_shadows_point_buffer_size)
-						surface_set_target(render_surface_point_buffer[d])
+						surface_set_target(render_surface_point_buffer)
 						{
 							gpu_set_blendmode_ext(bm_one, bm_zero)
 							
@@ -209,6 +215,26 @@ function render_high_shadows(export)
 							gpu_set_blendmode(bm_normal)
 						}
 						surface_reset_target()
+						
+						surface_set_target(render_surface_point_atlas_buffer)
+						{
+							draw_surface(render_surface_point_buffer, atlasx, atlasy)
+						}
+						surface_reset_target()
+						
+						atlasx += atlassize
+						
+						if (atlasx = (atlassize * 3))
+						{
+							atlasx = 0
+							atlasy += atlassize
+						}
+					}
+					
+					if (keyboard_check_released(ord("L")))
+					{
+						var a = file_dialog_save_image("");
+						surface_save_lib(render_surface_point_atlas_buffer, a)
 					}
 					
 					// Shadows

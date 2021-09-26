@@ -57,6 +57,10 @@ function tab_properties_resources()
 			
 			case "blocksheet":
 			{
+				tab_control_menu()
+				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material, false)
+				tab_next()
+				
 				tab_control_togglebutton()
 				togglebutton_add("resourcespackimageblocksheetstatic", null, 0, !res_preview.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)
 				togglebutton_add("resourcespackimageblocksheetanimated", null, 1, res_preview.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)

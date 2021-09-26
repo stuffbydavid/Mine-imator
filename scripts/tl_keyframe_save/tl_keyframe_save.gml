@@ -17,6 +17,12 @@ function tl_keyframe_save(kf)
 				tl_save()
 	}
 	
+	if (kf.value[e_value.TEXTURE_MATERIAL_OBJ] > 0)
+		kf.value[e_value.TEXTURE_MATERIAL_OBJ].save = true
+	
+	if (kf.value[e_value.TEXTURE_NORMAL_OBJ] > 0)
+		kf.value[e_value.TEXTURE_NORMAL_OBJ].save = true
+	
 	if (kf.value[e_value.SOUND_OBJ] != null)
 		kf.value[e_value.SOUND_OBJ].save = true
 	

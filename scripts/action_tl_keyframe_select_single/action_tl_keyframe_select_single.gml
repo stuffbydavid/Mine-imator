@@ -26,7 +26,7 @@ function action_tl_keyframe_select_single(timeline, keyframe)
 			tl = timeline
 			kf = keyframe
 			
-			with (history_set(action_tl_keyframe_select))
+			with (history_set(action_tl_keyframe_select_single))
 			{
 				tl_save_id = save_id_get(tl)
 				kf_index = ds_list_find_index(tl.keyframe_list, kf)

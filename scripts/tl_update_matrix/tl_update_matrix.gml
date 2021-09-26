@@ -159,6 +159,8 @@ function tl_update_matrix()
 			value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] // Added
 			value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] // Added
 			value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
+			value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = value[e_value.TEXTURE_MATERIAL_OBJ] // Overwritten
+			value_inherit[e_value.TEXTURE_NORMAL_OBJ] = value[e_value.TEXTURE_NORMAL_OBJ] // Overwritten
 			
 			inhalpha = true
 			inhcolor = true
@@ -245,7 +247,11 @@ function tl_update_matrix()
 				}
 				
 				if (inhtex)
+				{
 					value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]
+					value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = par.value[e_value.TEXTURE_MATERIAL_OBJ]
+					value_inherit[e_value.TEXTURE_NORMAL_OBJ] = par.value[e_value.TEXTURE_NORMAL_OBJ]
+				}
 				
 				tl = par
 			}

@@ -3,7 +3,10 @@
 
 function render_update_tl_resource()
 {
-	var res = null;
+	var diffuseres, materialres, normalres;
+	diffuseres = null
+	materialres = null
+	normalres = null
 	
 	switch (type)
 	{
@@ -16,7 +19,7 @@ function render_update_tl_resource()
 				break
 			
 			with (temp)
-				res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
+				diffuseres = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 			
 			model_part_tex_name = model_part_get_texture_name(model_part, temp.model_texture_name_map)
 			
@@ -41,7 +44,7 @@ function render_update_tl_resource()
 						shapetexname = maptexname
 				}
 				
-				with (res)
+				with (diffuseres)
 					other.model_part_shape_tex[i] = res_get_model_texture(shapetexname)
 			}
 			
@@ -52,9 +55,15 @@ function render_update_tl_resource()
 		case e_tl_type.BLOCK:
 		{
 			with (temp)
-				res = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
+			{
+				diffuseres = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
+				materialres = temp_get_block_tex_material_obj(other.value_inherit[e_value.TEXTURE_MATERIAL_OBJ])
+				normalres = temp_get_block_tex_normal_obj(other.value_inherit[e_value.TEXTURE_NORMAL_OBJ])
+			}
 		}
 	}
 	
-	render_res = res
+	render_res_diffuse = diffuseres
+	render_res_material = materialres
+	render_res_normal = normalres
 }

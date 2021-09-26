@@ -19,6 +19,7 @@ uniform vec2 uScreenSize;
 
 uniform float uPrecision;
 uniform float uThickness;
+uniform vec3 uKernel[16];
 uniform float uOffset[16];
 uniform vec4 uFallbackColor;
 uniform float uFadeAmount;
@@ -93,28 +94,54 @@ vec3 rayTrace(vec2 originUV)
 	vec3 worldPos = vec3(vec4(viewPos.xyz, 1.0) * uViewMatrixInv);
 	vec3 normal = getNormal(originUV);
 	
-	vec3 jitt;
-	vec3 rayVector;
+	vec3 jitt = vec3(0.0);
+	
+	// Not physically accurate, but looks nice and.. fast maybe?
+	float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
+	vec3 randVec = unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)));
+	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
+	vec3 bitangent = cross(normal, tangent);
+	mat3 kernelBasis = mat3(tangent, bitangent, normal);
+	
+	vec3 reflectVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal)));
+	vec3 rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
+	float rayVis = 1.0;//max(0.0, dot(reflectVector, rayVector));
+	
+	if (dot(rayVector, normal) <= 0.01)
+		rayVis = 0.0;
+	
+	//rayVector = mix(rayVector, kernelBasis * uKernel[0], roughness);
+	
+	/*
+	float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
+	normal += mix(vec3(0.0), unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize))), roughness);
+	vec3 rayVector = vec3(0.0);
 	
 	// Randomize vector until valid
 	for (int i = 0; i < 16; i++)
 	{
-		jitt = mix(vec3(0.0), unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize))), mix(0.0, 1.0, pow(mat.g, 2.5)));
+		jitt = (uKernel[i] * roughness);
 		rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + jitt)));
-			
-		if (dot(rayVector, normal) > 0.0)
+		
+		if (dot(rayVector, normal) < 0.0)
 			break;
 	}
+	*/
 	
 	// Pixel coord on texture
 	vec2 pixelCoord = uScreenSize / originUV;
 	
 	// Ray data
 	float raySize       = 5000.0;
-	vec4 rayStartPos    = vec4(viewPos.xyz + (rayVector * 3.0),		1.0);
-	vec4 rayEndPos      = vec4(viewPos.xyz + (rayVector * raySize), 1.0);
-	vec2 rayStartPixel  = viewPosToPixel(rayStartPos);
-	vec2 rayEndPixel    = viewPosToPixel(rayEndPos);
+	vec3 rayStartPos    = viewPos.xyz;
+	vec3 rayEndPos      = rayStartPos + (rayVector * raySize);
+	
+	// Clip to near camera plane
+	if (rayEndPos.z < uNear)
+		rayEndPos       = rayStartPos + (rayVector * (rayStartPos.z - uNear));
+	
+	vec2 rayStartPixel  = viewPosToPixel(vec4(rayStartPos, 1.0));
+	vec2 rayEndPixel    = viewPosToPixel(vec4(rayEndPos, 1.0));
 	vec2 rayPixel       = rayStartPixel;
 	vec2 rayUV          = rayPixel / uScreenSize;
 	
@@ -132,9 +159,12 @@ vec3 rayTrace(vec2 originUV)
 	
 	float viewDist = originDepth;
 	float depth    = uThickness;
+	float rayThickness = uThickness;
 	int traceSteps = int(stepDelta);
 	
 	int i = 0;
+	bool viewClip = false;
+	float rayZ = (rayStartPos.z * rayEndPos.z);
 	
 	for (i = 0; i < traceSteps; i++)
 	{
@@ -150,30 +180,32 @@ vec3 rayTrace(vec2 originUV)
 		
 		progress  = clamp(progress, 0.0, 1.0);
 		
-		viewDist  = (rayStartPos.z * rayEndPos.z) / mix(rayEndPos.z, rayStartPos.z, progress);
-		depth     = viewDist - samplePos.z;
+		viewDist  = rayZ / mix(rayEndPos.z, rayStartPos.z, progress);
+		depth     = samplePos.z - viewDist;
+		
+		rayThickness = (uThickness * max(1.0, viewDist/25.0));
 		
 		if (rayUV.x <= 0.0 || rayUV.y <= 0.0 || rayUV.x >= 1.0 || rayUV.y >= 1.0)
 		{
 			vis = 0.0;
+			viewClip = true;
 			break;
 		}
 		
-		// Check for collision, if no collision, 
-		if (depth > 0.0 && depth < uThickness)
+		// Check for collision
+		if (depth < 0.0 && depth > -rayThickness)
 		{
 			vis = 1.0;
 			break;
 		}
-		else
-			progressPrev = progress;
+		
+		progressPrev = progress;
 	}
 	
 	// Refine ray UV
 	if (vis < 1.0)
 		refineSteps = 0;
 	
-	refineSteps = 0;
 	progress = progressPrev + ((progress - progressPrev) * 0.5);
 	
 	for (int i = 0; i < refineSteps; i++)
@@ -184,10 +216,12 @@ vec3 rayTrace(vec2 originUV)
 		
 		samplePos = posFromBuffer(rayUV, getDepth(rayUV));
 		
-		viewDist  = (rayStartPos.z * rayEndPos.z) / mix(rayEndPos.z, rayStartPos.z, progress);
-		depth     = viewDist - samplePos.z;
+		viewDist  = rayZ / mix(rayEndPos.z, rayStartPos.z, progress);
+		depth     = samplePos.z - viewDist;
 		
-		if (depth > 0.0 && depth < uThickness)
+		rayThickness = (uThickness * max(1.0, viewDist/25.0));
+		
+		if (depth < 0.0 && depth > -rayThickness)
 		{
 			vis = 1.0;
 			progress = progressPrev + ((progress - progressPrev) * 0.5);
@@ -205,10 +239,22 @@ vec3 rayTrace(vec2 originUV)
 	// Visible, must've hit something.
 	if (vis > 0.0)
 	{
-		//vis *= (1.0 - clamp(depth / uThickness, 0.0, 1.0));
+		//vis *= (1.0 - clamp(depth / rayThickness, 0.0, 1.0));
 		
+		vis *= rayVis;
+		
+		// Bruh
 		vis *= (1.0 - clamp(length(samplePos - viewPos) / raySize, 0.0, 1.0));
-		vis *= rayVector.z;
+		
+		// Fade based on angle relation to ray
+		vec3 hitNormal = getNormal(rayUV);
+		if (dot(rayVector, hitNormal) > 0.01)
+			vis = 0.0;
+		
+		// Fade based on ray vector Z
+		//vis *= clamp((rayVector.z - -0.034) / (-0.033 - -0.034), 0.0, 1.0);
+		
+		//vis *= rayVector.z;
 		
 		// Fade by edge
 		vec2 fadeUV = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - rayUV.xy)) * uFadeAmount;
@@ -218,7 +264,8 @@ vec3 rayTrace(vec2 originUV)
 		vis = clamp(vis, 0.0, 1.0);
 		
 		// Mix in fallback via fresnel if ray hit a reflective surface ¯\_(ツ)_/¯
-		vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).b);
+		vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).r);
+		//vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).b);
 		traceCol = mix(traceCol, surfCol, vis);
 	}
 	
@@ -230,17 +277,23 @@ vec3 rayTrace(vec2 originUV)
 
 void main()
 {
+	vec4 mat, result;
+	mat = texture2D(uMaterialBuffer, vTexCoord);
+	result = vec4(0.0, 0.0, 0.0, 1.0);
+	
 	// Perform alpha test to ignore background
 	if (texture2D(uDepthBuffer, vTexCoord).a < 1.0)
 	{
-		if (texture2D(uMaterialBuffer, vTexCoord).a < 1.0)
-			discard;
+		if (mat.a < 1.0)
+			result = vec4(0.0);
 		else
-			gl_FragColor = uFallbackColor;
+			result = uFallbackColor;
 	}
 	else
 	{
-		vec3 result = rayTrace(vTexCoord);
-		gl_FragColor = vec4(result, 1.0);
+		if (mat.b > 0.0)
+			result = vec4(rayTrace(vTexCoord), 1.0);
 	}
+	
+	gl_FragColor = result;
 }

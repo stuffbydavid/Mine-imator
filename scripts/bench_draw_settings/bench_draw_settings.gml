@@ -151,7 +151,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_temp_type.SCENERY:
 			{
 				var capwid, text, tex;
-				capwid = text_caption_width("benchscenery", "benchblocktex")
+				capwid = text_caption_width("benchscenery", "benchblocktex", "benchblockmaterialtex", "benchblocknormaltex")
 				
 				// Scenery
 				text = text_get("listnone")
@@ -163,6 +163,14 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 				// Texture
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
+				dy += 40
+				
+				// Material texture
+				draw_button_menu("benchblockmaterialtex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_material_tex, bench_settings.block_material_tex.display_name, action_bench_block_material_tex, false, bench_settings.block_material_tex.block_preview_texture, null, "", null, null, capwid)
+				dy += 40
+				
+				// Normal texture
+				draw_button_menu("benchblocknormaltex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_normal_tex, bench_settings.block_normal_tex.display_name, action_bench_block_normal_tex, false, bench_settings.block_normal_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				break
 			}
@@ -240,7 +248,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_set_font(font_label)
 				
 				var capwid, text, sprite;
-				capwid = text_caption_width("benchblocktex")
+				capwid = text_caption_width("benchblocktex", "benchblockmaterialtex", "benchblocknormaltex")
 				
 				tab_control_sortlist(6)
 				sortlist_draw(bench_settings.block_list, dx, dy, dw, tab_control_h, bench_settings.block_name, false, text_get("benchblock"))
@@ -269,6 +277,14 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 				// Texture
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
+				dy += 40
+				
+				// Material texture
+				draw_button_menu("benchblockmaterialtex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_material_tex, bench_settings.block_material_tex.display_name, action_bench_block_material_tex, false, bench_settings.block_material_tex.block_preview_texture, null, "", null, null, capwid)
+				dy += 40
+				
+				// Normal texture
+				draw_button_menu("benchblocknormaltex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_normal_tex, bench_settings.block_normal_tex.display_name, action_bench_block_normal_tex, false, bench_settings.block_normal_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
 				window_scroll_focus = string(bench_settings.block_list.scroll)

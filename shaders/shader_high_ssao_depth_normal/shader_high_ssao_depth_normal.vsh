@@ -17,6 +17,9 @@ struct VSOutput
 	float Depth : DEPTH;
 	float3 Normal : NORMAL;
 	float3 Custom : TEXCOORD1;
+	float3 WorldPosition : TEXCOORD2;
+	float3x3 WorldInv : TEXCOORD3;
+	float3x3 WorldViewInv : TEXCOORD6;
 };
 
 // Wind
@@ -101,11 +104,16 @@ VSOutput main(VSInput IN)
 	OUT.Position = mul(gm_Matrices[MATRIX_PROJECTION], mul(gm_Matrices[MATRIX_VIEW], float4(pos, 1.0)));
 	OUT.TexCoord = IN.TexCoord;
 	
+	// World position
+	OUT.WorldPosition = pos;
+	
 	// Depth
 	OUT.Depth = (OUT.Position.z - uNear) / (uFar - uNear);
 	
 	// Normal
-	OUT.Normal = normalize(mul(inverse(gm_Matrices[MATRIX_WORLD_VIEW]), IN.Normal));
+	OUT.WorldInv     = inverse(gm_Matrices[MATRIX_WORLD]);
+	OUT.WorldViewInv = inverse(gm_Matrices[MATRIX_WORLD_VIEW]);
+	OUT.Normal       = mul(gm_Matrices[MATRIX_WORLD], float4(IN.Normal, 0.0)).xyz;//mul(gm_Matrices[MATRIX_WORLD], float4(IN.Normal, 0.0)).xyz;
 	
 	// Custom
 	OUT.Custom = IN.Custom;

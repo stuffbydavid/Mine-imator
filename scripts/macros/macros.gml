@@ -12,14 +12,14 @@ function macros()
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"
-	#macro mineimator_version_extra		"Alpha 16.5"
+	#macro mineimator_version_extra		"Alpha 17"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
 	#macro mineimator_version_date		"2021.08.11"
 	#macro gm_runtime					GM_runtime_version
 	#macro minecraft_version			"1.17.1"
 	
 	// File formats
-	#macro project_format				e_project.FORMAT_200_AL10
+	#macro project_format				e_project.FORMAT_200_AL17
 	#macro settings_format				e_settings.FORMAT_200
 	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_128
 	
@@ -117,6 +117,7 @@ function macros()
 	#macro c_plains_biome_water			make_color_rgb(62, 117, 225)
 	#macro c_sunset_start				hex_to_color("B2353B")
 	#macro c_sunset_end					hex_to_color("C04E37")
+	#macro c_normal						make_color_rgb(127, 127, 255)
 	
 	// Minecraft color palette
 	#macro c_minecraft_white			hex_to_color("F4F4F4")

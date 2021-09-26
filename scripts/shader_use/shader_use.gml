@@ -33,18 +33,15 @@ function shader_use()
 		var fog = (render_fog && app.background_fog_show && render_mode != e_render_mode.COLOR);
 		render_set_uniform_int("uFogShow", bool_to_float(fog))
 		
-		if (fog)
-		{
-			render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
-			render_set_uniform("uFogDistance", app.background_fog_distance)
+		render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
+		render_set_uniform("uFogDistance", app.background_fog_distance)
 			
-			if (app.background_twilight)
-				render_set_uniform("uFogSize", app.background_fog_size + (app.background_fog_size * 3 * max(app.background_sunrise_alpha, app.background_sunset_alpha)))
-			else
-				render_set_uniform("uFogSize", app.background_fog_size)
+		if (app.background_twilight)
+			render_set_uniform("uFogSize", app.background_fog_size + (app.background_fog_size * 3 * max(app.background_sunrise_alpha, app.background_sunset_alpha)))
+		else
+			render_set_uniform("uFogSize", app.background_fog_size)
 			
-			render_set_uniform("uFogHeight", app.background_fog_height)
-		}
+		render_set_uniform("uFogHeight", app.background_fog_height)
 	}
 	
 	// Set camera position

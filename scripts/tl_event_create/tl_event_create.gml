@@ -138,7 +138,9 @@ function tl_event_create()
 	item_3d = true
 	item_custom_slot = false
 	
-	render_res = null
+	render_res_diffuse = null
+	render_res_material = null
+	render_res_normal = null
 	
 	tex_obj = null
 	tex_obj_prev = -5

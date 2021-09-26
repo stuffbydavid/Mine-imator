@@ -83,6 +83,8 @@ function action_bench_create()
 					{
 						block_tex.count--
 						block_tex = null
+						block_material_tex = null
+						block_normal_tex = null
 						block_state = array()
 					}
 					

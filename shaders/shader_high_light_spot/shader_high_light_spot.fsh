@@ -18,7 +18,6 @@ uniform sampler2D uDepthBuffer;
 uniform float uSSS;
 uniform vec3 uSSSRadius;
 uniform vec4 uSSSColor;
-uniform float uMetallic;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -27,6 +26,48 @@ varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
 varying float vBrightness;
 varying float vBlockSSS;
+
+uniform sampler2D uMaterialTexture;
+uniform vec2 uMaterialTexScale;
+uniform sampler2D uNormalTexture;
+uniform vec2 uNormalTexScale;
+
+#extension GL_OES_standard_derivatives : enable
+vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
+{
+	if (uIsWater == 1)
+		return normal;
+	
+	// Get edge derivatives
+	vec3 posDx = dFdx(worldPos);
+	vec3 posDy = dFdy(worldPos);
+	vec2 texDx = dFdx(uv);
+	vec2 texDy = dFdy(uv);
+	
+	// Calculate tangent/bitangent
+	vec3 posPx = cross(normal, posDx);
+	vec3 posPy = cross(posDy, normal);
+	vec3 T = posPy * texDx.x + posPx * texDy.x;
+	vec3 B = posPy * texDx.y + posPx * texDy.y;
+	
+	// Create a Scale-invariant frame
+	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
+	
+	// Build TBN matrix to transform mapped normal with mesh
+	mat3 TBN = mat3(T * invmax, B * invmax, normal);
+	
+	// Get normal value from normal map
+	vec2 normtex = uv;
+	if (uNormalTexScale.x < 1.0 || uNormalTexScale.y < 1.0)
+		normtex = mod(normtex * uNormalTexScale, uNormalTexScale); // GM sprite bug workaround
+	
+	vec3 normalCoord = texture2D(uNormalTexture, normtex).rgb * 2.0 - 1.0;
+	
+	if (normalCoord.z < 0.0)
+		return normal;
+	
+	return normalize(TBN * normalCoord);
+}
 
 float unpackDepth(vec4 c)
 {
@@ -42,6 +83,16 @@ void main()
 		light = vec3(1.0);
 	else
 	{
+		// Get material data
+		vec2 matTex = vTexCoord;
+		if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
+			matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
+		
+		vec3 mat = texture2D(uMaterialTexture, matTex).rgb;
+		float brightness = (vBrightness * mat.b);
+		
+		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
+		
 		float dif = 0.0;
 		float difMask = 0.0;
 		float shadow = 1.0;
@@ -52,16 +103,13 @@ void main()
 		if (vScreenCoord.w > 0.0)
 		{
 			// Diffuse factor
-			dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition)));
+			dif = max(0.0, dot(normalize(normal), normalize(uLightPosition - vPosition)));
 			
 			// Attenuation factor
 			att = 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
 			dif *= att;
 			
-			// Material
-			dif *= 1.0 - uMetallic;
-			
-			if ((dif > 0.0 && vBrightness < 1.0) || sssEnabled > 0)
+			if ((dif > 0.0 && brightness < 1.0) || sssEnabled > 0)
 			{
 				// Spotlight circle
 				float fragDepth = min(vScreenCoord.z, uLightFar);
@@ -102,7 +150,7 @@ void main()
 		}
 		
 		// Translucency
-		float transDif = max(0.0, dot(normalize(-vNormal), normalize(uLightPosition - vPosition)));
+		float transDif = max(0.0, dot(normalize(-normal), normalize(uLightPosition - vPosition)));
 		transDif = clamp(transDif, 0.0, 1.0);
 		subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
 		
@@ -118,7 +166,7 @@ void main()
 		light += subsurf * difMask;
 		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
 		
-		light = mix(light, vec3(1.0), vBrightness);
+		light = mix(light, vec3(1.0), brightness);
 	}
 		
 	// Set final color

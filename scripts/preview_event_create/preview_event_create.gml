@@ -9,6 +9,7 @@ function preview_event_create()
 	mouseon_prev = false
 	
 	pack_image = "preview"
+	pack_image_material = "diffuse"
 	pack_model_texture = "entity/steve"
 	pack_block_sheet_ani = false
 	pack_colormap = 0

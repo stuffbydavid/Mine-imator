@@ -77,8 +77,8 @@ function tab_template_editor_particles_value()
 			capwid = 0
 		}
 		
-		textfield_group_add(name + "min", randommin, def[1], scripts[2], X, tbx[0], null, mul, minval, randommax, "particleeditormin")
-		textfield_group_add(name + "max", randommax, def[2], scripts[3], X, tbx[1], null, mul, randommin, maxval, "particleeditormax")
+		textfield_group_add(name + "min", randommin, def[1], scripts[2], axis_edit, tbx[0], null, mul, minval, randommax, "particleeditormin")
+		textfield_group_add(name + "max", randommax, def[2], scripts[3], axis_edit, tbx[1], null, mul, randommin, maxval, "particleeditormax")
 		draw_textfield_group(name, dx, dy, dw - (32 * !showcaption), null, null, null, snapval, false)
 	}
 	else

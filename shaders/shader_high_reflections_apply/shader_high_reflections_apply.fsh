@@ -1,5 +1,6 @@
 uniform sampler2D uReflectionsBuffer;
 uniform sampler2D uMaterialBuffer;
+uniform sampler2D uDiffuseBuffer;
 
 uniform vec2 uScreenSize;
 uniform int uHalfRes;
@@ -16,6 +17,10 @@ void main()
 {
 	vec4 mat = texture2D(uMaterialBuffer, vTexCoord);
 	vec4 base = texture2D(gm_BaseTexture, vTexCoord);
+	vec4 specTint = texture2D(uDiffuseBuffer, vTexCoord);
+	specTint.rgb = mix(vec3(1.0), specTint.rgb, mat.r) * mat.b;
+	
+	vec3 spec = vec3(0.0);
 	
 	if (mat.a > 0.0)
 	{
@@ -35,12 +40,14 @@ void main()
 				if (refCol.a != 0.0)
 					refCol.rgb /= refCol.a;
 			
-				base.rgb += (refCol.rgb * mat.b);
+				spec = specTint.rgb * refCol.rgb;
 			}
 		}
 		else
-			base.rgb += texture2D(uReflectionsBuffer, vTexCoord).rgb * mat.b;
+			spec = specTint.rgb * texture2D(uReflectionsBuffer, vTexCoord).rgb;
 	}
+	
+	base.rgb += spec;
 	
 	gl_FragColor = vec4(base);
 }

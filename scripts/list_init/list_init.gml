@@ -156,7 +156,11 @@ function list_init(name)
 		
 		// Block texture
 		case "benchblocktex":
+		case "benchblockmaterialtex":
+		case "benchblocknormaltex":
 		case "libraryblocktex":
+		case "libraryblockmaterialtex":
+		case "libraryblocknormaltex":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -512,6 +516,8 @@ function list_init(name)
 		
 		// Background ground texture
 		case "backgroundgroundtex":
+		case "backgroundgroundmaterialtex":
+		case "backgroundgroundnormaltex":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -523,8 +529,23 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != mc_res && res.block_sheet_texture != null)
-					menu_add_item(res, res.display_name, res.block_preview_texture)
+				
+				if (name = "backgroundgroundmaterialtex") // Material
+				{
+					if (res != mc_res && res.block_sheet_material_texture != null)
+						menu_add_item(res, res.display_name, res.block_preview_texture)
+				}
+				else if (name = "backgroundgroundnormaltex") // Normal
+				{
+					if (res != mc_res && res.block_sheet_normal_texture != null)
+						menu_add_item(res, res.display_name, res.block_preview_texture)
+				}
+				else // Diffuse
+				{
+					if (res != mc_res && res.block_sheet_texture != null)
+						menu_add_item(res, res.display_name, res.block_preview_texture)
+				}
+				
 			}
 			
 			break
@@ -560,6 +581,16 @@ function list_init(name)
 			menu_add_item("suntexture", text_get("resourcespacksuntexture"))
 			menu_add_item("moontexture", text_get("resourcespackmoontexture"))
 			menu_add_item("cloudtexture", text_get("resourcespackcloudtexture"))
+			
+			break
+		}
+		
+		// Resource pack material option
+		case "resourcespackmaterial":
+		{
+			menu_add_item("diffuse", text_get("resourcespackmaterialdiffuse"))
+			menu_add_item("material", text_get("resourcespackmaterialmaterial"))
+			menu_add_item("normal", text_get("resourcespackmaterialnormal"))
 			
 			break
 		}
@@ -659,9 +690,18 @@ function list_init(name)
 		
 		// Timeline frame block texture
 		case "frameeditorblocktex":
+		case "frameeditorblockmaterialtex":
+		case "frameeditorblocknormaltex":
 		{	
+			var texobj;
+			
 			// Default
-			var texobj = tl_edit.temp.block_tex;
+			if (name = "frameeditorblockmaterialtex")
+				texobj = tl_edit.temp.block_material_tex
+			else if (name = "frameeditorblocknormaltex")
+				texobj = tl_edit.temp.block_normal_tex
+			else if (name = "frameeditorblocktex")
+				texobj = tl_edit.temp.block_tex
 			
 			// Animatable block in scenery
 			if (tl_edit.type = e_tl_type.BLOCK && tl_edit.part_of != null)
@@ -672,8 +712,21 @@ function list_init(name)
 					
 					with (temp)
 					{
-						if (block_tex.type = e_res_type.PACK || block_tex.type = e_res_type.BLOCK_SHEET)
-							texobj = block_tex
+						if (name = "frameeditorblockmaterialtex")
+						{
+							if (block_material_tex.type = e_res_type.PACK || block_material_tex.type = e_res_type.BLOCK_SHEET)
+								texobj = block_material_tex
+						}
+						else if (name = "frameeditorblocknormaltex")
+						{
+							if (block_normal_tex.type = e_res_type.PACK || block_normal_tex.type = e_res_type.BLOCK_SHEET)
+								texobj = block_normal_tex
+						}
+						else if ("frameeditorblocktex")
+						{
+							if (block_tex.type = e_res_type.PACK || block_tex.type = e_res_type.BLOCK_SHEET)
+								texobj = block_tex
+						}
 					}
 				}
 			}

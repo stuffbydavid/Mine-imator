@@ -48,6 +48,8 @@ function history_restore_res(save)
 			}
 		}
 		
+		#region Block textures
+		
 		for (var s = 0; s < save.usage_block_tex_amount; s++)
 		{
 			with (save_id_find(save.usage_block_tex_save_id[s]))
@@ -56,6 +58,26 @@ function history_restore_res(save)
 				block_tex = res
 			}
 		}
+		
+		for (var s = 0; s < save.usage_block_material_tex_amount; s++)
+		{
+			with (save_id_find(save.usage_block_material_tex_save_id[s]))
+			{
+				block_material_tex.count--
+				block_material_tex = res
+			}
+		}
+		
+		for (var s = 0; s < save.usage_block_normal_tex_amount; s++)
+		{
+			with (save_id_find(save.usage_block_normal_tex_save_id[s]))
+			{
+				block_normal_tex.count--
+				block_normal_tex = res
+			}
+		}
+		
+		#endregion
 		
 		for (var s = 0; s < save.usage_scenery_amount; s++)
 			with (save_id_find(save.usage_scenery_save_id[s]))
@@ -88,6 +110,14 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = res
 		
+		for (var s = 0; s < save.usage_kf_material_texture_amount; s++)
+			with (save_id_find(save.usage_kf_material_texture_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_material_texture_index[s]].value[e_value.TEXTURE_MATERIAL_OBJ] = res
+		
+		for (var s = 0; s < save.usage_kf_normal_texture_amount; s++)
+			with (save_id_find(save.usage_kf_normal_texture_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_normal_texture_index[s]].value[e_value.TEXTURE_NORMAL_OBJ] = res
+		
 		for (var s = 0; s < save.usage_kf_sound_amount; s++)
 			with (save_id_find(save.usage_kf_sound_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_sound_index[s]].value[e_value.SOUND_OBJ] = res
@@ -102,6 +132,24 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_tl_texture_save_id[s]))
 			{
 				value[e_value.TEXTURE_OBJ] = res
+				update_matrix = true
+			}
+		}
+		
+		for (var s = 0; s < save.usage_tl_material_texture_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_material_texture_save_id[s]))
+			{
+				value[e_value.TEXTURE_MATERIAL_OBJ] = res
+				update_matrix = true
+			}
+		}
+		
+		for (var s = 0; s < save.usage_tl_normal_texture_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_normal_texture_save_id[s]))
+			{
+				value[e_value.TEXTURE_NORMAL_OBJ] = res
 				update_matrix = true
 			}
 		}
@@ -156,10 +204,32 @@ function history_restore_res(save)
 			}
 		}
 		
+		if (save.usage_background_ground_material_tex)
+		{
+			with (app)
+			{
+				background_ground_material_tex.count--
+				background_ground_material_tex = res
+				background_ground_update_material_texture()
+			}
+		}
+		
+		if (save.usage_background_ground_normal_tex)
+		{
+			with (app)
+			{
+				background_ground_normal_tex.count--
+				background_ground_normal_tex = res
+				background_ground_update_normal_texture()
+			}
+		}
+		
 		count += save.usage_model_amount
 		count += save.usage_model_tex_amount
 		count += save.usage_item_tex_amount
 		count += save.usage_block_tex_amount
+		count += save.usage_block_material_tex_amount
+		count += save.usage_block_normal_tex_amount
 		count += save.usage_scenery_amount
 		count += save.usage_shape_tex_amount
 		count += save.usage_text_font_amount

@@ -40,11 +40,21 @@ function project_reset_background()
 	background_ground_show = true
 	background_ground_tex = mc_res
 	background_ground_tex.count++
+	background_ground_material_tex = mc_res
+	background_ground_material_tex.count++
+	background_ground_normal_tex = mc_res
+	background_ground_normal_tex.count++
 	background_ground_name = default_ground
 	background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
 	background_ground_slot_prev = null
+	background_ground_slot_normal = null
+	background_ground_slot_material = null
 	background_ground_tex_prev = null
+	background_ground_material_tex_prev = null
+	background_ground_normal_tex_prev = null
 	background_ground_update_texture()
+	background_ground_update_material_texture()
+	background_ground_update_normal_texture()
 	
 	background_biome = biome_list[|2]
 	background_grass_color = c_plains_biome_grass

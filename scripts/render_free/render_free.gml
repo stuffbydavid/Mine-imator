@@ -37,6 +37,6 @@ function render_free()
 	surface_free(render_surface_sun_buffer)
 	surface_free(render_surface_sun_color_buffer)
 	surface_free(render_surface_spot_buffer)
-	for (var d = 0; d < 6; d++)
-		surface_free(render_surface_point_buffer[d])
+	surface_free(render_surface_point_buffer)
+	surface_free(render_surface_point_atlas_buffer)
 }

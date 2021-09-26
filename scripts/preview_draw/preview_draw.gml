@@ -556,8 +556,16 @@ function preview_draw(preview, xx, yy, width, height)
 									break
 								
 								case "blocksheet":
-									tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame(true)] : select.block_sheet_texture)
+								{
+									if (pack_image_material = "diffuse")
+										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame(true)] : select.block_sheet_texture)
+									else if (pack_image_material = "material")
+										tex = (pack_block_sheet_ani ? select.block_sheet_ani_material_texture[block_texture_get_frame(true)] : select.block_sheet_material_texture)
+									else if (pack_image_material = "normal")
+										tex = (pack_block_sheet_ani ? select.block_sheet_ani_normal_texture[block_texture_get_frame(true)] : select.block_sheet_normal_texture)
+									
 									break
+								}
 								
 								case "colormap":
 									tex = (pack_colormap ? select.colormap_foliage_texture : select.colormap_grass_texture)

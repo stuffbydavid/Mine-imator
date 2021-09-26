@@ -33,7 +33,11 @@ function res_event_create()
 	pack_format = e_minecraft_pack.LATEST
 	
 	block_sheet_texture = null
+	block_sheet_material_texture = null
+	block_sheet_normal_texture = null
 	block_sheet_ani_texture = null
+	block_sheet_ani_material_texture = null
+	block_sheet_ani_normal_texture = null
 	block_sheet_depth_list = null
 	block_sheet_ani_depth_list = null
 	block_preview_texture = null

@@ -33,8 +33,12 @@ function action_lib_scenery_load(fn)
 			type = e_temp_type.SCENERY
 			scenery = res
 			scenery.count++
+			
 			block_tex = mc_res
-			mc_res.count++
+			block_material_tex = mc_res
+			block_normal_tex = mc_res
+			mc_res.count += 3
+			
 			temp_update_display_name()
 			loaded = true
 			with (temp_animate())

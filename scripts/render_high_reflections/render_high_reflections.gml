@@ -1,7 +1,7 @@
 /// render_high_reflections(export, surf)
 /// @arg export
 /// @arg surf
-/// @desc Ray traces scene with lighting
+/// @desc Ray traces scene with reflections
 
 function render_high_reflections(export, surf)
 {
@@ -44,23 +44,24 @@ function render_high_reflections(export, surf)
 	render_surface[5] = surface_require(render_surface[5], ssrwidth, ssrheight)
 	materialsurf = render_surface[5]
 	
-	surface_set_target_ext(0, depthsurf)
-	surface_set_target_ext(1, normalsurf)
-	surface_set_target_ext(2, normalsurf2)
-	{
-		draw_clear_alpha(c_white, 0)
-		render_world_start()
-		render_world(e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL)
-		render_world_done()
-	}
-	surface_reset_target()
-		
 	// Material data
 	surface_set_target(materialsurf)
 	{
 		draw_clear_alpha(c_white, 0)
 		render_world_start()
 		render_world(e_render_mode.MATERIAL)
+		render_world_done()
+	}
+	surface_reset_target()
+	
+	// Depth and normal data
+	surface_set_target_ext(0, depthsurf)
+	surface_set_target_ext(1, normalsurf)
+	surface_set_target_ext(2, normalsurf2)
+	{
+		draw_clear_alpha(c_white, 0)
+		render_world_start(2000)
+		render_world(e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL)
 		render_world_done()
 	}
 	surface_reset_target()
@@ -101,7 +102,7 @@ function render_high_reflections(export, surf)
 		    with (render_shader_obj)
 		    {
 		        shader_set(shader)
-		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf)
+		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf, ssrwidth, ssrheight)
 		    }
 			
 		    draw_blank(0, 0, ssrwidth, ssrheight)
@@ -206,6 +207,23 @@ function render_high_reflections_apply(surf)
 	}
 	surface_reset_target()
 	
+	// Render diffuse color
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+	var diffusesurf = render_surface[4];
+	surface_set_target(diffusesurf)
+	{
+		// Background
+		draw_clear_alpha(c_black, 0)
+		render_world_background()
+		
+		// World
+		render_world_start()
+		render_world_sky()
+		render_world(e_render_mode.COLOR)
+		render_world_done()
+	}
+	surface_reset_target()
+	
 	// Apply reflections
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	var applysurf = render_surface[1];
@@ -218,7 +236,7 @@ function render_high_reflections_apply(surf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_reflections_apply_set(render_surface_ssr, materialsurf)
+			shader_high_reflections_apply_set(render_surface_ssr, materialsurf, diffusesurf)
 		}
 		
 		draw_surface_exists(surf, 0, 0)

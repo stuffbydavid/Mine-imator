@@ -101,6 +101,16 @@ function tab_properties_library()
 			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture, null)
 			tab_next()
 			
+			// Material texture
+			tab_control_menu(32)
+			draw_button_menu("libraryblockmaterialtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_material_tex, temp_edit.block_material_tex.display_name, action_lib_block_material_tex, false, temp_edit.block_material_tex.block_preview_texture, null)
+			tab_next()
+			
+			// Normal texture
+			tab_control_menu(32)
+			draw_button_menu("libraryblocknormaltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_normal_tex, temp_edit.block_normal_tex.display_name, action_lib_block_normal_tex, false, temp_edit.block_normal_tex.block_preview_texture, null)
+			tab_next()
+			
 			break
 		}
 		
@@ -189,6 +199,16 @@ function tab_properties_library()
 			// Texture
 			tab_control_menu(32)
 			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture)
+			tab_next()
+			
+			// Material texture
+			tab_control_menu(32)
+			draw_button_menu("libraryblockmaterialtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_material_tex, temp_edit.block_material_tex.display_name, action_lib_block_material_tex, false, temp_edit.block_material_tex.block_preview_texture, null)
+			tab_next()
+			
+			// Normal texture
+			tab_control_menu(32)
+			draw_button_menu("libraryblocknormaltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_normal_tex, temp_edit.block_normal_tex.display_name, action_lib_block_normal_tex, false, temp_edit.block_normal_tex.block_preview_texture, null)
 			tab_next()
 			
 			break

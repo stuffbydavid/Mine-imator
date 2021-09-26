@@ -57,7 +57,7 @@ function render_high_indirect(export)
 		render_world_done()
 	}
 	surface_reset_target()
-		
+	
 	// Render diffuse color
 	surface_set_target(diffusesurf)
 	{

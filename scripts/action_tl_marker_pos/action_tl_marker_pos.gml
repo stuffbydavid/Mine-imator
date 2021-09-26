@@ -1,5 +1,4 @@
-/// action_tl_marker_pos(pos)
-/// @arg pos
+/// action_tl_marker_pos()
 
 function action_tl_marker_pos()
 {
@@ -23,7 +22,7 @@ function action_tl_marker_pos()
 			{
 				marker_save_id = save_id_get(marker)
 				marker_pos_prev = marker.edit_pos
-				marker_pos_new = pos
+				marker_pos_new = marker.pos
 			}
 			
 			marker.pos = hobj.marker_pos_new

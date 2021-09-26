@@ -65,6 +65,9 @@ function res_load()
 			else
 				block_sheet_texture = texture_create(fn)
 			
+			block_sheet_material_texture = texture_duplicate(block_sheet_texture)
+			block_sheet_normal_texture = texture_duplicate(block_sheet_texture)
+			
 			colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
 			colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
 			

@@ -40,7 +40,13 @@ function project_load_find_save_ids()
 		
 		background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
 		background_ground_tex.count++
-	
+		
+		background_ground_material_tex = save_id_find(save_id_map[?background_ground_material_tex])
+		background_ground_material_tex.count++
+		
+		background_ground_normal_tex = save_id_find(save_id_map[?background_ground_normal_tex])
+		background_ground_normal_tex.count++
+		
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
 		{
 			background_sky_sun_tex = save_id_find(save_id_map[?background_sky_sun_tex])
@@ -70,6 +76,8 @@ function project_load_find_save_ids()
 		model_tex = save_id_find(save_id_map[?model_tex])
 		item_tex = save_id_find(save_id_map[?item_tex])
 		block_tex = save_id_find(save_id_map[?block_tex])
+		block_material_tex = save_id_find(save_id_map[?block_material_tex])
+		block_normal_tex = save_id_find(save_id_map[?block_normal_tex])
 		scenery = save_id_find(save_id_map[?scenery])
 		shape_tex = save_id_find(save_id_map[?shape_tex])
 		text_font = save_id_find(save_id_map[?text_font])
@@ -136,9 +144,15 @@ function project_load_find_save_ids()
 		else
 			part_root = save_id_find(save_id_map[?part_root])
 		
-		// Default texture
+		// Default textures
 		if (value_default[e_value.TEXTURE_OBJ] != null)
 			value_default[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_OBJ]])
+		
+		if (value_default[e_value.TEXTURE_MATERIAL_OBJ] != null)
+			value_default[e_value.TEXTURE_MATERIAL_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_MATERIAL_OBJ]])
+		
+		if (value_default[e_value.TEXTURE_NORMAL_OBJ] != null)
+			value_default[e_value.TEXTURE_NORMAL_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_NORMAL_OBJ]])
 		
 		// Set part list
 		if (part_list != null)
@@ -163,10 +177,22 @@ function project_load_find_save_ids()
 			continue
 		
 		value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
+		
 		if (value[e_value.TEXTURE_OBJ] = "none")
 			value[e_value.TEXTURE_OBJ] = 0
 		else
 			value[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_OBJ]])
+		
+		if (value[e_value.TEXTURE_MATERIAL_OBJ] = "none")
+			value[e_value.TEXTURE_MATERIAL_OBJ] = 0
+		else
+			value[e_value.TEXTURE_MATERIAL_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_MATERIAL_OBJ]])
+		
+		if (value[e_value.TEXTURE_NORMAL_OBJ] = "none")
+			value[e_value.TEXTURE_NORMAL_OBJ] = 0
+		else
+			value[e_value.TEXTURE_NORMAL_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_NORMAL_OBJ]])
+		
 		value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
 		if (value[e_value.SOUND_OBJ] != null)
 			value[e_value.SOUND_OBJ].count++

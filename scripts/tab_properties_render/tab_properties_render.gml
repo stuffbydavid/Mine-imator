@@ -168,7 +168,7 @@ function tab_properties_render()
 		tab_collapse_start()
 		
 		tab_control_meter()
-		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_reflections_precision * 100), 50, 0, 100, 75, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision)
+		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_reflections_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision)
 		tab_next()
 		
 		tab_control_meter()
@@ -176,7 +176,7 @@ function tab_properties_render()
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 8, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
+		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 1, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
 		tab_next()
 		
 		tab_control_switch()
@@ -295,6 +295,11 @@ function tab_properties_render()
 		togglebutton_add("renderbendstylerealistic", null, "realistic", project_bend_style = "realistic", action_project_bend_style)
 		togglebutton_add("renderbendstyleblocky", null, "blocky", project_bend_style = "blocky", action_project_bend_style)
 		draw_togglebutton("renderbendstyle", dx, dy)
+		tab_next()
+		
+		// Random blocks
+		tab_control_switch()
+		draw_switch("renderrandomblocks", dx, dy, project_render_random_blocks, action_project_render_random_blocks)
 		tab_next()
 		
 		// Liquid waves

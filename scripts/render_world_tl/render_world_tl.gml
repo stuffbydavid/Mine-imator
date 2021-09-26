@@ -83,8 +83,8 @@ function render_world_tl()
 	
 	if (colors_ext != shader_uniform_color_ext ||
         value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
+		value_inherit[e_value.HSB_ADD] != shader_uniform_hsb_add ||
         value_inherit[e_value.RGB_SUB] != shader_uniform_rgb_sub ||
-        value_inherit[e_value.HSB_ADD] != shader_uniform_hsb_add ||
         value_inherit[e_value.HSB_SUB] != shader_uniform_hsb_sub ||
         value_inherit[e_value.HSB_MUL] != shader_uniform_hsb_mul ||
         value_inherit[e_value.MIX_COLOR] != shader_uniform_mix_color ||
@@ -92,8 +92,8 @@ function render_world_tl()
 	{
 		shader_uniform_color_ext = colors_ext
 		shader_uniform_rgb_add = value_inherit[e_value.RGB_ADD]
+		shader_uniform_hsb_add = value_inherit[e_value.HSB_ADD]
         shader_uniform_rgb_sub = value_inherit[e_value.RGB_SUB]
-        shader_uniform_hsb_add = value_inherit[e_value.HSB_ADD]
         shader_uniform_hsb_sub = value_inherit[e_value.HSB_SUB]
         shader_uniform_hsb_mul = value_inherit[e_value.HSB_MUL]
         shader_uniform_mix_color = value_inherit[e_value.MIX_COLOR]
@@ -101,8 +101,8 @@ function render_world_tl()
 
 		render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
 		render_set_uniform_color("uRGBAdd", shader_uniform_rgb_add, 1)
-		render_set_uniform_color("uRGBSub", shader_uniform_rgb_sub, 1)
 		render_set_uniform_color("uHSBAdd", shader_uniform_hsb_add, 1)
+		render_set_uniform_color("uRGBSub", shader_uniform_rgb_sub, 1)
 		render_set_uniform_color("uHSBSub", shader_uniform_hsb_sub, 1)
 		render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
 		render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
@@ -173,8 +173,8 @@ function render_world_tl()
         else
         {
             render_set_uniform("uSSS", 0)
-            render_set_uniform_vec3("uSSSRadius", 0.0, 0.0, 0.0)
-            render_set_uniform_color("uSSSColor", c_black, 0.0)
+            render_set_uniform_vec3("uSSSRadius", 1.0, 1.0, 1.0)
+            render_set_uniform_color("uSSSColor", c_white, 0.0)
         }
 	}
 	
@@ -236,14 +236,21 @@ function render_world_tl()
 	{
 		matrix_set(matrix_world, matrix_render)
 		
+		// Reset material textures for other timelines
+		if (type != e_tl_type.SCENERY && type != e_tl_type.BLOCK)
+		{
+			render_set_texture(spr_default_material, "Material")
+			render_set_texture(spr_default_normal, "Normal")
+		}
+		
 		switch (type)
 		{
 			case e_tl_type.BODYPART:
 			{
-				if (model_part = null || render_res = null)
+				if (model_part = null || render_res_diffuse = null)
 					break
 				
-				render_world_model_part(model_part, render_res, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, self)
+				render_world_model_part(model_part, render_res_diffuse, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, self)
 				break
 			}
 			
@@ -251,9 +258,9 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp.scenery_chunk_array, render_res, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp.scenery_chunk_array, [render_res_diffuse, render_res_material, render_res_normal], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
-					render_world_scenery(temp.scenery, render_res, temp.block_repeat_enable, temp.block_repeat)
+					render_world_scenery(temp.scenery, [render_res_diffuse, render_res_material, render_res_normal], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			

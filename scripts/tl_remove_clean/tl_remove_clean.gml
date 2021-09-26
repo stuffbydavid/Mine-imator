@@ -46,6 +46,12 @@ function tl_remove_clean()
 			if (value[e_value.TEXTURE_OBJ] = other.id)
 				value[e_value.TEXTURE_OBJ] = null
 			
+			if (value[e_value.TEXTURE_MATERIAL_OBJ] = other.id)
+				value[e_value.TEXTURE_MATERIAL_OBJ] = null
+			
+			if (value[e_value.TEXTURE_NORMAL_OBJ] = other.id)
+				value[e_value.TEXTURE_NORMAL_OBJ] = null
+			
 			if (value[e_value.ATTRACTOR] = other.id)
 				value[e_value.ATTRACTOR] = null
 			
@@ -53,6 +59,12 @@ function tl_remove_clean()
 				update_matrix = true
 			
 			if (value_inherit[e_value.TEXTURE_OBJ] = other.id) 
+				update_matrix = true
+			
+			if (value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = other.id) 
+				update_matrix = true
+			
+			if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = other.id) 
 				update_matrix = true
 		}
 		
@@ -63,6 +75,12 @@ function tl_remove_clean()
 			
 			if (value[e_value.TEXTURE_OBJ] = other.id)
 				value[e_value.TEXTURE_OBJ] = null
+			
+			if (value[e_value.TEXTURE_MATERIAL_OBJ] = other.id)
+				value[e_value.TEXTURE_MATERIAL_OBJ] = null
+			
+			if (value[e_value.TEXTURE_NORMAL_OBJ] = other.id)
+				value[e_value.TEXTURE_NORMAL_OBJ] = null
 		}
 		
 		if (app.timeline_camera = id)

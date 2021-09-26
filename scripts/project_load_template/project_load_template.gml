@@ -178,6 +178,18 @@ function project_load_template(map)
 				}
 				
 				block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
+				
+				if (load_format >= e_project.FORMAT_200_AL17)
+				{
+					block_material_tex = value_get_save_id(blockmap[?"material_tex"], block_material_tex)
+					block_normal_tex = value_get_save_id(blockmap[?"normal_tex"], block_normal_tex)
+				}
+				else
+				{
+					block_material_tex = "default"
+					block_normal_tex = "default"
+				}
+				
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 				block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 			}
@@ -189,6 +201,18 @@ function project_load_template(map)
 			if (ds_map_valid(blockmap))
 			{
 				block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
+				
+				if (load_format >= e_project.FORMAT_200_AL17)
+				{
+					block_material_tex = value_get_save_id(blockmap[?"material_tex"], block_material_tex)
+					block_normal_tex = value_get_save_id(blockmap[?"normal_tex"], block_normal_tex)
+				}
+				else
+				{
+					block_material_tex = "default"
+					block_normal_tex = "default"
+				}
+				
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 				block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 			}

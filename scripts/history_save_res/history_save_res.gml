@@ -17,12 +17,16 @@ function history_save_res(res)
 		usage_model_tex_amount = 0
 		usage_item_tex_amount = 0
 		usage_block_tex_amount = 0
+		usage_block_material_tex_amount = 0
+		usage_block_normal_tex_amount = 0
 		usage_scenery_amount = 0
 		usage_shape_tex_amount = 0
 		usage_text_font_amount = 0
 		usage_sprite_tex_amount = 0
 		usage_sprite_template_tex_amount = 0
 		usage_kf_texture_amount = 0
+		usage_kf_material_texture_amount = 0
+		usage_kf_normal_texture_amount = 0
 		usage_tl_texture_amount = 0
 		usage_kf_sound_amount = 0
 		usage_tl_sound_amount = 0
@@ -60,6 +64,18 @@ function history_save_res(res)
 		{
 			save.usage_block_tex_save_id[save.usage_block_tex_amount] = save_id
 			save.usage_block_tex_amount++
+		}
+		
+		if (block_material_tex = res)
+		{
+			save.usage_block_material_tex_save_id[save.usage_block_material_tex_amount] = save_id
+			save.usage_block_material_tex_amount++
+		}
+		
+		if (block_normal_tex = res)
+		{
+			save.usage_block_normal_tex_save_id[save.usage_block_normal_tex_amount] = save_id
+			save.usage_block_normal_tex_amount++
 		}
 		
 		if (scenery = res)
@@ -157,6 +173,12 @@ function history_save_res(res)
 		
 		if (background_ground_tex = res)
 			save.usage_background_ground_tex = true
+		
+		if (background_ground_material_tex = res)
+			save.usage_background_ground_material_tex = true
+		
+		if (background_ground_normal_tex = res)
+			save.usage_background_ground_normal_tex = true
 	}
 	
 	return save

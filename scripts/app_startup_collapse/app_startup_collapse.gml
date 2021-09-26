@@ -53,6 +53,7 @@ function app_startup_collapse()
 	
 	collapse_register("itemslot")
 	
-	collapse_register("material_texture")
+	collapse_register("material_color")
+	collapse_register("material_surface")
 	collapse_register("material_subsurface")
 }

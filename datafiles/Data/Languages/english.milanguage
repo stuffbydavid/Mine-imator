@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.08.12"
+        "lastchange": "2021.09.26"
     },
     "particle/": {
         "default": "Default spawner",
@@ -457,6 +457,8 @@
         "skin": "Skin",
         "scenery": "Scenery",
         "blocktex": "Texture",
+        "blockmaterialtex": "Material map",
+        "blocknormaltex": "Normal map",
         "itemtex": "Image",
         "item3d": "3D",
         "itemfacecamera": "Face camera",
@@ -1972,6 +1974,7 @@
         "bendstyle": "Limb bending style",
         "bendstylerealistic": "Realistic",
         "bendstyleblocky": "Blocky",
+        "randomblocks": "Random blocks",
         "liquidanimation": "Liquid waves",
         "noisygrasswater": "Noise effect on grass/water",
         "blockemission": "Glowing block emission",
@@ -1997,6 +2000,8 @@
         "itembounce": "Bounce",
         "itemspin": "Spin",
         "blocktex": "Texture",
+        "blockmaterialtex": "Material map",
+        "blocknormaltex": "Normal map",
         "blockchange": "Change",
         "spblockmodel": "Block",
         "spblocktex": "Texture",
@@ -2316,6 +2321,8 @@
         "groundshow": "Ground",
         "ground": "Ground",
         "groundtex": "Texture",
+        "groundmaterialtex": "Material map",
+        "groundnormaltex": "Normal map",
         "biome": "Biome",
         "biomevariant": "Variant",
         "scenecolors": "Scene colors",
@@ -2473,6 +2480,12 @@
                 "particles": "Particle sheet",
                 "particlesimage1": "Sheet 1",
                 "particlesimage2": "Sheet 2"
+            },
+            "material": "Material",
+            "material/": {
+                "diffuse": "Diffuse",
+                "material": "Material",
+                "normal": "Normal"
             },
             "preview": "Pack image",
             "modeltextures": "Model textures",
@@ -2670,8 +2683,9 @@
         "emission": "Emission",
         "metallic": "Metallic",
         "roughness": "Roughness",
-        "texture": "Texture settings",
-        "subsurface": "Subsurface",
+        "color": "Color properties",
+        "surface": "Surface properties",
+        "subsurface": "Subsurface properties",
         "subsurface/": {
             "radius": "Radius",
             "radius/": {
@@ -2685,6 +2699,8 @@
         "spblocktex": "Texture",
         "bodyparttex": "Skin",
         "blocktex": "Texture",
+        "blockmaterialtex": "Material map",
+        "blocknormaltex": "Normal map",
         "shapetex": "Texture",
         "modeltex": "Texture",
         "particles": "PARTICLES",

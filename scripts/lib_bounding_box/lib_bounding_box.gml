@@ -312,7 +312,7 @@ function bbox_update_visible()
 									if (!addchunk)
 									{
 										scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].updateFrustumState()
-										addchunk = (scenery_repeat_bounding_box.frustum_state != e_frustum_state.HIDDEN)
+										addchunk = (scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].frustum_state != e_frustum_state.HIDDEN)
 									}
 									
 									// Chunk is visible somehow, now check vbuffers

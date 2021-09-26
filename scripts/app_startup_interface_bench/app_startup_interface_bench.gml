@@ -59,6 +59,8 @@ function app_startup_interface_bench()
 		model_tex = mc_res
 		item_tex = mc_res
 		block_tex = mc_res
+		block_material_tex = mc_res
+		block_normal_tex = mc_res
 		text_font = mc_res
 		particle_preset = ""
 		type = e_temp_type.CHARACTER

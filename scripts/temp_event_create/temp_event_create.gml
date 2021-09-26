@@ -49,6 +49,8 @@ function temp_event_create()
 	block_name = default_block
 	block_state = array()
 	block_tex = null
+	block_material_tex = null
+	block_normal_tex = null
 	block_vbuffer = null
 	scenery_chunk_array = null
 	block_repeat_enable = false

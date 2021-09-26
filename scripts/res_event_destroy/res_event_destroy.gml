@@ -39,9 +39,23 @@ function res_event_destroy()
 	if (block_sheet_texture != null)
 		texture_free(block_sheet_texture)
 	
+	if (block_sheet_material_texture != null)
+		texture_free(block_sheet_material_texture)
+	
+	if (block_sheet_normal_texture != null)
+		texture_free(block_sheet_normal_texture)
+	
 	if (block_sheet_ani_texture != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
 			texture_free(block_sheet_ani_texture[f])
+	
+	if (block_sheet_ani_material_texture != null)
+		for (var f = 0; f < block_sheet_ani_frames; f++)
+			texture_free(block_sheet_ani_material_texture[f])
+	
+	if (block_sheet_ani_normal_texture != null)
+		for (var f = 0; f < block_sheet_ani_frames; f++)
+			texture_free(block_sheet_ani_normal_texture[f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)
@@ -151,6 +165,18 @@ function res_event_destroy()
 			block_tex.count++
 		}
 		
+		if (block_material_tex = other.id)
+		{
+			block_material_tex = mc_res
+			block_material_tex.count++
+		}
+		
+		if (block_normal_tex = other.id)
+		{
+			block_normal_tex = mc_res
+			block_normal_tex.count++
+		}
+		
 		if (scenery = other.id) 
 			scenery = null
 		
@@ -180,6 +206,12 @@ function res_event_destroy()
 		
 		if (block_tex = other.id)
 			block_tex = mc_res
+		
+		if (block_material_tex = other.id)
+			block_material_tex = mc_res
+		
+		if (block_normal_tex = other.id)
+			block_normal_tex = mc_res
 		
 		if (shape_tex = other.id)
 			shape_tex = null
@@ -211,6 +243,12 @@ function res_event_destroy()
 		if (value[e_value.TEXTURE_OBJ] = other.id)
 			value[e_value.TEXTURE_OBJ] = null
 		
+		if (value[e_value.TEXTURE_MATERIAL_OBJ] = other.id)
+			value[e_value.TEXTURE_MATERIAL_OBJ] = null
+		
+		if (value[e_value.TEXTURE_NORMAL_OBJ] = other.id)
+			value[e_value.TEXTURE_NORMAL_OBJ] = null
+		
 		if (value[e_value.SOUND_OBJ] = other.id)
 			value[e_value.SOUND_OBJ] = null
 		
@@ -223,7 +261,19 @@ function res_event_destroy()
 		if (value[e_value.TEXTURE_OBJ] = other.id)
 			value[e_value.TEXTURE_OBJ] = null
 		
+		if (value[e_value.TEXTURE_MATERIAL_OBJ] = other.id)
+			value[e_value.TEXTURE_MATERIAL_OBJ] = null
+		
+		if (value[e_value.TEXTURE_NORMAL_OBJ] = other.id)
+			value[e_value.TEXTURE_NORMAL_OBJ] = null
+		
 		if (value_inherit[e_value.TEXTURE_OBJ] = other.id)
+			update_matrix = true
+		
+		if (value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = other.id)
+			update_matrix = true
+		
+		if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = other.id)
 			update_matrix = true
 		
 		if (value[e_value.SOUND_OBJ] = other.id)
@@ -267,6 +317,20 @@ function res_event_destroy()
 			background_ground_tex = mc_res
 			background_ground_tex.count++
 			background_ground_update_texture()
+		}
+		
+		if (background_ground_material_tex = other.id)
+		{
+			background_ground_material_tex = mc_res
+			background_ground_material_tex.count++
+			background_ground_update_texture()
+		}
+		
+		if (background_ground_normal_tex = other.id)
+		{
+			background_ground_normal_tex = mc_res
+			background_ground_normal_tex.count++
+			background_ground_update_normal_texture()
 		}
 	}
 	

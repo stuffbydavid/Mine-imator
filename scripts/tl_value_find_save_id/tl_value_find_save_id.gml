@@ -12,9 +12,9 @@ function tl_value_find_save_id(vid, oldval, newval)
 			obj.count--
 	}
 	
-	if (vid = e_value.TEXTURE_OBJ && newval = "none")
+	if (tl_value_is_texture(vid) && newval = "none")
 		newval = 0
-	else if (vid = e_value.ATTRACTOR || vid = e_value.TEXTURE_OBJ || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
+	else if (vid = e_value.ATTRACTOR || tl_value_is_texture(vid) || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
 		newval = save_id_find(newval)
 	
 	if (vid = e_value.SOUND_OBJ && newval != null)

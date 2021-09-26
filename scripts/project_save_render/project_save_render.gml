@@ -52,6 +52,7 @@ function project_save_render()
 		json_save_var("block_glow_threshold", project_render_block_glow_threshold)
 		json_save_var_bool("block_glow", project_render_block_glow)
 		json_save_var("block_subsurface", project_render_block_subsurface)
+		json_save_var_bool("random_blocks", project_render_random_blocks)
 		
 		json_save_var_bool("texture_filtering", project_render_texture_filtering)
 		json_save_var_bool("transparent_block_texture_filtering", project_render_transparent_block_texture_filtering)

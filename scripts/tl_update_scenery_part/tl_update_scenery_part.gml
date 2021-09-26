@@ -22,6 +22,8 @@ function tl_update_scenery_part()
 	else if (type = e_tl_type.BLOCK)
 	{
 		block_tex = mc_res
+		block_material_tex = mc_res
+		block_normal_tex = mc_res
 		block_repeat_enable = false
 		block_repeat = vec3(1)
 		block_vbuffer = null

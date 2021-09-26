@@ -358,7 +358,11 @@ function tl_update_values()
 	
 	// Texture
 	if (value_type[e_value_type.MATERIAL_TEXTURE])
+	{
 		tl_update_values_ease(e_value.TEXTURE_OBJ)
+		tl_update_values_ease(e_value.TEXTURE_MATERIAL_OBJ)
+		tl_update_values_ease(e_value.TEXTURE_NORMAL_OBJ)
+	}
 	
 	// Sound
 	if (value_type[e_value_type.SOUND])
@@ -385,6 +389,8 @@ function tl_update_values()
 		tl_update_values_ease(e_value.CUSTOM_ITEM_SLOT)
 		tl_update_values_ease(e_value.ITEM_SLOT)
 		tl_update_values_ease(e_value.TEXTURE_OBJ)
+		tl_update_values_ease(e_value.TEXTURE_MATERIAL_OBJ)
+		tl_update_values_ease(e_value.TEXTURE_NORMAL_OBJ)
 	}
 	
 	// Visible

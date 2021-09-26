@@ -28,7 +28,7 @@ function tab_frame_editor_buttons()
 	draw_button_icon(name + "reset", bx, by, 24, 24, false, icons.RESET, action_group_reset, false, "contextmenugroupreset")
 	bx -= 28
 	
-	draw_button_icon(name + "paste", bx, by, 24, 24, false, icons.PASTE, action_group_paste, false, "contextmenugrouppaste")
+	draw_button_icon(name + "paste", bx, by, 24, 24, false, icons.PASTE, action_group_paste, context_group_copy_list[|context_menu_group] = null, "contextmenugrouppaste")
 	bx -= 28
 	
 	draw_button_icon(name + "copy", bx, by, 24, 24, false, icons.COPY, action_group_copy, false, "contextmenugroupcopy")

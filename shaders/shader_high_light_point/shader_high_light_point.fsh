@@ -15,17 +15,16 @@ uniform float uLightFar;
 uniform float uLightFadeSize;
 uniform vec3 uShadowPosition;
 
-uniform sampler2D uDepthBufferXp;
-uniform sampler2D uDepthBufferXn;
-uniform sampler2D uDepthBufferYp;
-uniform sampler2D uDepthBufferYn;
-uniform sampler2D uDepthBufferZp;
-uniform sampler2D uDepthBufferZn;
+uniform sampler2D uDepthBuffer;
+
+uniform sampler2D uMaterialTexture;
+uniform vec2 uMaterialTexScale;
+uniform sampler2D uNormalTexture;
+uniform vec2 uNormalTexScale;
 
 uniform float uSSS;
 uniform vec3 uSSSRadius;
 uniform vec4 uSSSColor;
-uniform float uMetallic;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -33,19 +32,46 @@ varying vec2 vTexCoord;
 varying float vBrightness;
 varying float vBlockSSS;
 
+#extension GL_OES_standard_derivatives : enable
+vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
+{
+	if (uIsWater == 1)
+		return normal;
+	
+	// Get edge derivatives
+	vec3 posDx = dFdx(worldPos);
+	vec3 posDy = dFdy(worldPos);
+	vec2 texDx = dFdx(uv);
+	vec2 texDy = dFdy(uv);
+	
+	// Calculate tangent/bitangent
+	vec3 posPx = cross(normal, posDx);
+	vec3 posPy = cross(posDy, normal);
+	vec3 T = posPy * texDx.x + posPx * texDy.x;
+	vec3 B = posPy * texDx.y + posPx * texDy.y;
+	
+	// Create a Scale-invariant frame
+	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
+	
+	// Build TBN matrix to transform mapped normal with mesh
+	mat3 TBN = mat3(T * invmax, B * invmax, normal);
+	
+	// Get normal value from normal map
+	vec2 normtex = uv;
+	if (uNormalTexScale.x < 1.0 || uNormalTexScale.y < 1.0)
+		normtex = mod(normtex * uNormalTexScale, uNormalTexScale); // GM sprite bug workaround
+	
+	vec3 normalCoord = texture2D(uNormalTexture, normtex).rgb * 2.0 - 1.0;
+	
+	if (normalCoord.z < 0.0)
+		return normal;
+	
+	return normalize(TBN * normalCoord);
+}
+
 float unpackDepth(vec4 c)
 {
 	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
-
-vec4 texture2Dmap(int map, vec2 tex)
-{
-	if (map == 0) return texture2D(uDepthBufferXp, tex);
-	else if (map == 1) return texture2D(uDepthBufferXn, tex);
-	else if (map == 2) return texture2D(uDepthBufferYp, tex);
-	else if (map == 3) return texture2D(uDepthBufferYn, tex);
-	else if (map == 4) return texture2D(uDepthBufferZp, tex);
-	else return texture2D(uDepthBufferZn, tex);
 }
 
 vec2 getShadowMapCoord(vec3 look)
@@ -66,6 +92,9 @@ vec2 getShadowMapCoord(vec3 look)
 	coord.x = (dot(toPoint, v) / (tFOV * tFOV) + 1.0) * 0.5;
 	coord.y = (1.0 - dot(toPoint, u) / (tFOV * tFOV)) * 0.5;
 	
+	coord.x /= 3.0;
+	coord.y *= 0.5;
+	
 	return coord;
 }
 
@@ -78,21 +107,27 @@ void main()
 		light = vec3(1.0);
 	else
 	{
+		// Get material data
+		vec2 matTex = vTexCoord;
+		if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
+			matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
+		
+		vec3 mat = texture2D(uMaterialTexture, matTex).rgb;
+		float brightness = (vBrightness * mat.b);
+		
 		float shadow = 1.0;
 		float att = 0.0;
 		vec3 subsurf = vec3(0.0);
 		
 		// Diffuse factor
-		float dif = max(0.0, dot(normalize(vNormal), normalize(uLightPosition - vPosition))); 
+		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
+		float dif = max(0.0, dot(normalize(normal), normalize(uLightPosition - vPosition))); 
 		
 		// Attenuation factor
 		att = 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0); 
 		dif *= att;
 		
-		// Material
-		dif *= 1.0 - uMetallic;
-		
-		if ((dif > 0.0 && vBrightness < 1.0) || sssEnabled > 0)
+		if ((dif > 0.0 && brightness < 1.0) || sssEnabled > 0)
 		{
 			int buffer;
 			vec2 fragCoord;
@@ -107,20 +142,30 @@ void main()
 			// Get shadow map and texture coordinate
 		
 			// Z+
+			// ooo
+			// oxo
 			if (lookDir.z > SQRT05 && lookDir.w > SQRT05)
 			{ 
 				buffer = 4;
 				fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, 1.0));
+				fragCoord.x += 1.0/3.0;
+				fragCoord.y += 0.5;
 			}
-		
+			
 			// Z-
+			// ooo
+			// oox
 			else if (lookDir.z < -SQRT05 && lookDir.w < -SQRT05)
 			{
 				buffer = 5;
 				fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, -1.0));
+				fragCoord.x += 2.0/3.0;
+				fragCoord.y += 0.5;
 			}
 		
 			// X+
+			// xoo
+			// ooo
 			else if (lookDir.x > SQRT05)
 			{ 
 				buffer = 0;
@@ -128,24 +173,33 @@ void main()
 			}
 		
 			// X-
+			// oxo
+			// ooo
 			else if (lookDir.x < -SQRT05)
 			{
 				buffer = 1;
 				fragCoord = getShadowMapCoord(vec3(-1.0, 0.0, 0.0));
+				fragCoord.x += 1.0/3.0;
 			}
 		
 			// Y+
+			// oox
+			// ooo
 			else if (lookDir.y > SQRT05)
 			{ 
 				buffer = 2;
 				fragCoord = getShadowMapCoord(vec3(0.0, 1.0, 0.0));
+				fragCoord.x += 2.0/3.0;
 			}
 		
 			// Y-
+			// ooo
+			// xoo
 			else
 			{ 
 				buffer = 3;
 				fragCoord = getShadowMapCoord(vec3(0.0, -1.0, 0.0));
+				fragCoord.y += 0.5;
 			}
 			
 			// Calculate bias
@@ -153,7 +207,7 @@ void main()
 			
 			// Shadow
 			float fragDepth = distance(vPosition, uShadowPosition);
-			float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2Dmap(buffer, fragCoord));
+			float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackDepth(texture2D(uDepthBuffer, fragCoord));
 			shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 			
 			// Get subsurface translucency
@@ -165,7 +219,7 @@ void main()
 		}
 		
 		// Translucency
-		float transDif = max(0.0, dot(normalize(-vNormal), normalize(uLightPosition - vPosition)));
+		float transDif = max(0.0, dot(normalize(-normal), normalize(uLightPosition - vPosition)));
 		transDif = clamp(transDif, 0.0, 1.0);
 		subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
 		
@@ -181,7 +235,7 @@ void main()
 		light += subsurf;
 		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
 		
-		light = mix(light, vec3(1.0), vBrightness);
+		light = mix(light, vec3(1.0), brightness);
 	}
 	
 	// Set final color

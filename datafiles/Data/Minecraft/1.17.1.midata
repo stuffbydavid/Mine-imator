@@ -1540,6 +1540,7 @@
 			},
 			"default_state": "type=grass",
 			"subsurface": 1,
+			"random_offset_xz": true,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -1662,12 +1663,14 @@
 			"name": "brown_mushroom",
 			"file": "brown_mushroom.json",
 			"subsurface": 1,
+
 			"id": "minecraft:brown_mushroom"
 		},
 		{
 			"name": "red_mushroom",
 			"file": "red_mushroom.json",
 			"subsurface": 1,
+			"random_offset_xz": true,
 			"id": "minecraft:red_mushroom"
 		},
 		{
@@ -4344,6 +4347,7 @@
 			},
 			"waterlogged": true,
 			"subsurface": 1,
+			"random_offset_xz": true,
 			"wind": {
 				"axis": "all",
 				"ymin": 0

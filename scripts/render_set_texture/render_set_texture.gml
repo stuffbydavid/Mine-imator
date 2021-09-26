@@ -1,11 +1,12 @@
-/// render_set_texture(texture)
+/// render_set_texture(texture, [type])
 /// @arg texture
+/// @arg [type]
 /// @desc Sets the texture of the currently selected shader.
 
-function render_set_texture(tex)
+function render_set_texture(tex, type = "")
 {
 	var sampler, scalex, scaley;
-	sampler = render_shader_obj.sampler_map[?"uTexture"]
+	sampler = render_shader_obj.sampler_map[?"u" + type + "Texture"]
 	scalex = 1
 	scaley = 1
 	
@@ -54,7 +55,7 @@ function render_set_texture(tex)
 			texture_set_stage(sampler, 0)
 	}
 	
-	render_set_uniform_vec2("uTexScale", scalex, scaley)
+	render_set_uniform_vec2("u" + type + "TexScale", scalex, scaley)
 	gpu_set_texrepeat_ext(sampler, true)
 	
 	render_texture_prev = tex

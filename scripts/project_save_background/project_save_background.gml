@@ -39,6 +39,8 @@ function project_save_background()
 		json_save_var_bool("ground_show", background_ground_show)
 		json_save_var("ground_name", background_ground_name)
 		json_save_var_save_id("ground_tex", background_ground_tex)
+		json_save_var_save_id("ground_material_tex", background_ground_material_tex)
+		json_save_var_save_id("ground_normal_tex", background_ground_normal_tex)
 		
 		if(background_biome.selected_variant > 0 && background_biome.biome_variants != null)
 			json_save_var("biome", background_biome.biome_variants[|background_biome.selected_variant].name)

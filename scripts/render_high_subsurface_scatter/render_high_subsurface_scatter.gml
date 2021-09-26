@@ -40,7 +40,7 @@ function render_high_subsurface_scatter(export)
 	surface_set_target_ext(1, sssrangesurf)
 	{
 		draw_clear_alpha(c_black, 1)
-		render_world_start(5000)
+		render_world_start()
 		render_world(e_render_mode.SUBSURFACE)
 		render_world_done()
 	}

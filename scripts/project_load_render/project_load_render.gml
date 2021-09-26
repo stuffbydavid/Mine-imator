@@ -54,6 +54,7 @@ function project_load_render(map)
 	project_render_block_glow_threshold = value_get_real(map[?"block_glow_threshold"], project_render_block_glow_threshold)
 	project_render_block_glow = value_get_real(map[?"block_glow"], project_render_block_glow)
 	project_render_block_subsurface = value_get_real(map[?"block_subsurface"], project_render_block_subsurface)
+	project_render_random_blocks = value_get_real(map[?"random_blocks"], project_render_random_blocks)
 	
 	project_render_texture_filtering = value_get_real(map[?"texture_filtering"], project_render_texture_filtering)
 	project_render_transparent_block_texture_filtering = value_get_real(map[?"transparent_block_texture_filtering"], project_render_transparent_block_texture_filtering)

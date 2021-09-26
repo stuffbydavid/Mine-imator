@@ -9,7 +9,7 @@ function block_get_render_model(modelobj, brightness)
 	
 	with (modelobj)
 	{
-		if (model_amount > 1)
+		if (model_amount > 1 && app.project_render_random_blocks)
 		{
 			// Pick a random model from the list
 			var rand = irandom(total_weight - 1) + 1;
@@ -25,7 +25,7 @@ function block_get_render_model(modelobj, brightness)
 				}
 			}
 		}
-		else if (model_amount > 0)
+		else if (model_amount > 0 || app.project_render_random_blocks)
 		{
 			model[0].brightness = brightness
 			

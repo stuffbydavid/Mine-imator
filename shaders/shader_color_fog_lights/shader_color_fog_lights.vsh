@@ -7,17 +7,14 @@ attribute vec2 in_TextureCoord;
 attribute vec4 in_Wave;
 
 uniform vec4 uBlendColor;
-uniform int uIsGround;
+
 uniform int uIsSky;
 
 uniform int uLightAmount;
 uniform vec3 uSunDirection;
 uniform vec4 uLightData[128];
-uniform vec4 uAmbientColor;
 uniform float uBrightness;
 uniform float uBlockBrightness;
-uniform float uMetallic;
-uniform float uRoughness;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -25,6 +22,7 @@ varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
+varying float vBrightness;
 
 // Wind
 uniform float uTime;
@@ -69,8 +67,11 @@ void main()
 	
 	vDepth = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	
-	if (uIsGround > 0 || uIsSky > 0)
-		vDiffuse = vec3(1.0);
+	if (uIsSky > 0)
+	{
+		vDiffuse = vec3(-1.0);
+		vBrightness = 0.0;
+	}
 	else
 	{
 		vDiffuse = vec3(0.0);
@@ -80,19 +81,17 @@ void main()
 			vec4 data2 = uLightData[i * 2 + 1];
 			vec3 lightPosition = data1.xyz;
 			float lightRange = data1.w, dis, att;
-		
+			
 			dis = distance(vPosition, lightPosition);
 			att = (i > 0) ? max(0.0, 1.0 - dis / lightRange) : 1.0; // Attenuation factor
-		
+			
 			vec3 toLight = (i > 0) ? normalize(lightPosition - vPosition) : uSunDirection;
 			float dif = max(0.0, dot(vNormal, toLight)) * att; // Diffuse factor
 			vDiffuse += data2.rgb * dif;
 		}
-	
-		vDiffuse = clamp(vDiffuse, 0.0, 1.0);
-		vDiffuse = mix(vDiffuse, vec3(1.0), in_Wave.z * uBlockBrightness + uBrightness);
 		
-		vDiffuse += uAmbientColor.rgb;
+		vDiffuse = clamp(vDiffuse, vec3(0.0), vec3(1.0));
+		vBrightness = (in_Wave.z * uBlockBrightness + uBrightness);
 	}
 	
 	vColor = in_Colour * uBlendColor;

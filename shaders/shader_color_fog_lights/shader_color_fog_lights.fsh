@@ -1,6 +1,9 @@
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 
+uniform sampler2D uMaterialTexture;
+uniform vec2 uMaterialTexScale;
+
 uniform int uColorsExt;
 uniform vec4 uRGBAdd;
 uniform vec4 uRGBSub;
@@ -18,6 +21,7 @@ uniform float uFogHeight;
 uniform float uMetallic;
 uniform float uRoughness;
 uniform vec4 uFallbackColor;
+uniform vec4 uAmbientColor;
 
 uniform vec3 uCameraPosition;
 
@@ -27,6 +31,7 @@ varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
+varying float vBrightness;
 
 vec4 rgbtohsb(vec4 c)
 {
@@ -63,9 +68,9 @@ float getFog()
 }
 
 // Fresnel Schlick approximation
-float fresnelSchlick(float cosTheta, float F0)
+float fresnelSchlick(float cosTheta, float F0, float F90)
 {
-	return F0 + (1.0 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
+	return F0 + (F90 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
 }
 
 void main()
@@ -75,38 +80,86 @@ void main()
 		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	
-	// Material
-	vec3 dif = (vDiffuse * (1.0 - uMetallic));
-	float F0 = 0.04;
-	F0 = mix(F0, 0.0, uMetallic);
+	vec2 matTex = vTexCoord;
+	if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
+		matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
+	vec4 matColor = texture2D(uMaterialTexture, matTex);
 	
+	float metallic, roughness, brightness;
+	metallic = (uMetallic * matColor.g); // Metallic
+	roughness = 1.0 - ((1.0 - uRoughness) * matColor.r); // Roughness
+	brightness = (vBrightness * matColor.b); // Brightness
+	
+	metallic = clamp(metallic, 0.0, 1.0);
+	roughness = clamp(roughness, 0.0, 1.0);
+	brightness = clamp(brightness, 0.0, 1.0);
+	
+	// Diffuse
+	vec3 dif;
+	
+	// Assume no shading
+	if (vDiffuse.r < 0.0)
+		dif = vec3(1.0);
+	else
+		dif = mix(vDiffuse, vec3(1.0), brightness) + uAmbientColor.rgb;
+	
+	// Fresnel
+	float F0, F90;
+	F0 = mix(0.04, 1.0, metallic);
+	F90 = mix(0.48, 1.0, metallic);
+	
+	// Material
+	vec3 N = normalize(vNormal);
 	vec3 V = normalize(vPosition - uCameraPosition);
-	vec3 L = -normalize(reflect(V, normalize(vNormal)));
+	vec3 L = -normalize(reflect(V, N));
 	vec3 H = V + L;
-	float fresnel = fresnelSchlick(max(dot(H, V), 0.0), F0);
-	fresnel *= 1.0 - pow(uRoughness, 8.0);
+	float F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
+	F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);
+	
+	F = clamp(F, 0.0, 1.0);
+	
+	dif *= (1.0 - F);
+	
+	vec4 col;
+	vec3 spec;
 	
 	if (baseColor.a == 0.0)
 		discard;
 	
 	if (uColorsExt > 0)
 	{
-		gl_FragColor = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
-		gl_FragColor = hsbtorgb(clamp(rgbtohsb(gl_FragColor) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
-		gl_FragColor = mix(gl_FragColor, uMixColor, uMixColor.a); // Mix
+		col = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
+		col = hsbtorgb(clamp(rgbtohsb(col) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
+		col = mix(col, uMixColor, uMixColor.a); // Mix
 		
-		gl_FragColor *= vec4(dif, 1.0); // Multiply diffuse
-		gl_FragColor = mix(gl_FragColor, uFallbackColor, fresnel);
+		// Get specular color
+		spec = (mix(vec3(1.0), col.rgb, metallic) * uFallbackColor.rgb * F);
 		
-		gl_FragColor = mix(gl_FragColor, uFogColor, getFog()); // Mix fog
-		gl_FragColor.a = mix(baseColor.a, 1.0, fresnel); // Correct alpha
+		col.rgb *= (1.0 - metallic);
+		col.rgb *= dif; // Multiply diffuse
+		
+		col.rgb  = clamp(col.rgb, vec3(0.0), vec3(1.0));
+		col.rgb += spec;
+		
+		col   = mix(col, uFogColor, getFog()); // Mix fog
+		col.a = mix(baseColor.a, 1.0, F); // Correct alpha
 	}
 	else
 	{
-		gl_FragColor = baseColor * vec4(dif, 1.0); // Multiply diffuse
-		gl_FragColor = mix(gl_FragColor, uFallbackColor, fresnel);
+		col = baseColor;
 		
-		gl_FragColor = mix(gl_FragColor, uFogColor, getFog()); // Mix fog
-		gl_FragColor.a = mix(baseColor.a, 1.0, fresnel); // Correct alpha
+		// Get specular color
+		spec = (mix(vec3(1.0), col.rgb, metallic) * uFallbackColor.rgb * F);
+		
+		col.rgb *= (1.0 - metallic);
+		col.rgb *= dif; // Multiply diffuse
+		
+		col.rgb  = clamp(col.rgb, vec3(0.0), vec3(1.0));
+		col.rgb += spec;
+		
+		col   = mix(col, uFogColor, getFog()); // Mix fog
+		col.a = mix(baseColor.a, 1.0, F); // Correct alpha
 	}
+	
+	gl_FragColor = col;
 }

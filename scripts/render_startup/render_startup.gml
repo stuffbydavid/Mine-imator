@@ -111,15 +111,15 @@ function render_startup()
 	
 	// Shadows
 	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_sun_color_buffer,
-	render_surface_spot_buffer, render_surface_point_buffer;
+	render_surface_spot_buffer, render_surface_point_buffer, render_surface_point_atlas_buffer;
 	
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
 	render_surface_sun_buffer = null
 	render_surface_sun_color_buffer = null
 	render_surface_spot_buffer = null
-	for (var d = 0; d < 6; d++)
-		render_surface_point_buffer[d] = null
+	render_surface_point_buffer = null
+	render_surface_point_atlas_buffer = null
 	
 	// SSAO
 	globalvar render_ssao_kernel, render_ssao_noise;
