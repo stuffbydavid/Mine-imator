@@ -70,12 +70,9 @@ function tl_update_value_types()
 		value_type[e_value_type.CAMERA] = true
 	
 	// Texture
-	if (type != e_tl_type.ITEM &&
-		type != e_tl_type.PARTICLE_SPAWNER &&
-		type != e_tl_type.CAMERA &&
+	if (type != e_tl_type.CAMERA &&
 		type != e_tl_type.POINT_LIGHT &&
 		type != e_tl_type.SPOT_LIGHT &&
-		type != e_tl_type.TEXT &&
 		type != e_tl_type.FOLDER)
 		value_type[e_value_type.MATERIAL_TEXTURE] = true
 	

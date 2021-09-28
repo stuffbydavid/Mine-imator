@@ -231,12 +231,6 @@ function render_high_shadows(export)
 						}
 					}
 					
-					if (keyboard_check_released(ord("L")))
-					{
-						var a = file_dialog_save_image("");
-						surface_save_lib(render_surface_point_atlas_buffer, a)
-					}
-					
 					// Shadows
 					with (app)
 					{
@@ -460,7 +454,7 @@ function render_high_shadows(export)
 		surface_free(render_surface_sun_buffer)
 		surface_free(render_surface_sun_color_buffer)
 		
-		for (var d = 0; d < 6; d++)
-			surface_free(render_surface_point_buffer[d])
+		surface_free(render_surface_point_buffer)
+		surface_free(render_surface_point_atlas_buffer)
 	}
 }

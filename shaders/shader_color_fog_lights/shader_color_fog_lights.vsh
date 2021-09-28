@@ -9,6 +9,7 @@ attribute vec4 in_Wave;
 uniform vec4 uBlendColor;
 
 uniform int uIsSky;
+uniform int uIsGround;
 
 uniform int uLightAmount;
 uniform vec3 uSunDirection;
@@ -75,7 +76,8 @@ void main()
 	else
 	{
 		vDiffuse = vec3(0.0);
-		for (int i = 0; i < uLightAmount; i++)
+		int lights = (uIsGround > 0 ? 1 : uLightAmount);
+		for (int i = 0; i < lights; i++)
 		{
 			vec4 data1 = uLightData[i * 2];
 			vec4 data2 = uLightData[i * 2 + 1];

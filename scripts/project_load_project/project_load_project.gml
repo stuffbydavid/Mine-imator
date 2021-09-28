@@ -57,6 +57,10 @@ function project_load_project(map)
 		
 		cam_work_angle_look_xy = cam_work_angle_xy
 		cam_work_angle_look_z = -cam_work_angle_z
+		
+		// Fix if value was saved outside of range in previous versions
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		
 		camera_work_set_from()
 	}
 }

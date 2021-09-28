@@ -227,10 +227,7 @@ void main()
 		subsurf *= (dif > 0.0 ? 0.0 : 1.0);
 		
 		// Calculate light
-		if (uIsWater == 1)
-			light = uLightColor.rgb * uLightStrength * dif;
-		else
-			light = uLightColor.rgb * uLightStrength * dif * shadow;
+		light = uLightColor.rgb * uLightStrength * dif * shadow;
 		
 		light += subsurf;
 		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
