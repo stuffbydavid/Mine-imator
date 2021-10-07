@@ -229,6 +229,8 @@ function project_load_template(map)
 			if (ds_map_valid(shapemap))
 			{
 				shape_tex = value_get_save_id(shapemap[?"tex"], shape_tex)
+				shape_material_tex = value_get_save_id(shapemap[?"material_tex"], shape_material_tex)
+				shape_normal_tex = value_get_save_id(shapemap[?"normal_tex"], shape_normal_tex)
 				shape_tex_mapped = value_get_real(shapemap[?"tex_mapped"], shape_tex_mapped)
 				shape_tex_hoffset = value_get_real(shapemap[?"tex_hoffset"], shape_tex_hoffset)
 				shape_tex_voffset = value_get_real(shapemap[?"tex_voffset"], shape_tex_voffset)

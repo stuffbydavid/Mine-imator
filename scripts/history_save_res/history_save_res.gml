@@ -90,6 +90,18 @@ function history_save_res(res)
 			save.usage_shape_tex_amount++
 		}
 		
+		if (shape_material_tex = res)
+		{
+			save.usage_shape_material_tex_save_id[save.usage_shape_material_tex_amount] = save_id
+			save.usage_shape_material_tex_amount++
+		}
+		
+		if (shape_normal_tex = res)
+		{
+			save.usage_shape_normal_tex_save_id[save.usage_shape_normal_tex_amount] = save_id
+			save.usage_shape_normal_tex_amount++
+		}
+		
 		if (text_font = res)
 		{
 			save.usage_text_font_save_id[save.usage_text_font_amount] = save_id

@@ -10,6 +10,8 @@ uniform int uIsWater;
 
 uniform sampler2D uMaterialTexture;
 uniform vec2 uMaterialTexScale;
+uniform int uMaterialUseGlossiness;
+
 uniform sampler2D uNormalTexture;
 uniform vec2 uNormalTexScale;
 

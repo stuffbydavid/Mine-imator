@@ -183,6 +183,12 @@ function res_event_destroy()
 		if (shape_tex = other.id)
 			shape_tex = null
 		
+		if (shape_material_tex = other.id)
+			shape_material_tex = null
+		
+		if (shape_normal_tex = other.id)
+			shape_normal_tex = null
+		
 		if (text_font = other.id)
 		{
 			text_font = mc_res
@@ -215,6 +221,12 @@ function res_event_destroy()
 		
 		if (shape_tex = other.id)
 			shape_tex = null
+		
+		if (shape_material_tex = other.id)
+			shape_material_tex = null
+		
+		if (shape_normal_tex = other.id)
+			shape_normal_tex = null
 		
 		if (text_font = other.id)
 			text_font = mc_res

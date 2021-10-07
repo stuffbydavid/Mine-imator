@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.09.26"
+        "lastchange": "2021.10.07"
     },
     "particle/": {
         "default": "Default spawner",
@@ -475,6 +475,8 @@
         "textfacecamera": "Face camera",
         "shapetype": "Shape",
         "shapetex": "Texture",
+        "shapematerialtex": "Material map",
+        "shapenormaltex": "Normal map",
         "shapetexmap": "Mapped texture",
         "shapefacecamera": "Face camera",
         "modeltex": "Texture",
@@ -2019,6 +2021,8 @@
         "textfacecamera": "Face camera",
         "shape/": {
             "tex": "Texture",
+            "materialtex": "Material map",
+            "normaltex": "Normal map",
             "texmapped": "Mapped texture",
             "texsavemap": "Export map",
             "texoffset": "Offset",
@@ -2503,6 +2507,8 @@
         "scenerystructurepalettenumber": "Palette %1",
         "scenerystructureintegrity": "Integrity",
         "scenerystructureintegrityinvert": "Invert integrity filter",
+        "usesglossiness": "Uses glossy material",
+        "usesglossinesstip": "If this resource is used as a material, the roughness values will be flipped.",
         "filename": "Filename"
     },
     "loadscenery/": {
@@ -2702,6 +2708,8 @@
         "blockmaterialtex": "Material map",
         "blocknormaltex": "Normal map",
         "shapetex": "Texture",
+        "shapematerialtex": "Material map",
+        "shapenormaltex": "Normal map",
         "modeltex": "Texture",
         "particles": "PARTICLES",
         "particles/": {

@@ -27,11 +27,23 @@ function history_restore_temp(save)
 		if (block_tex != null)
 			block_tex.count++
 		
+		if (block_material_tex != null)
+			block_material_tex.count++
+		
+		if (block_normal_tex != null)
+			block_normal_tex.count++
+		
 		if (scenery != null)
 			scenery.count++
 		
 		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 			shape_tex.count++
+		
+		if (shape_material_tex != null)
+			shape_material_tex.count++
+		
+		if (shape_normal_tex != null)
+			shape_normal_tex.count++
 		
 		if (text_font != null)
 			text_font.count++

@@ -121,6 +121,15 @@ function tab_properties_resources()
 		tab_next()
 	}
 	
+	// Material texture settings
+	if ((res_edit.type = e_res_type.BLOCK_SHEET || res_edit.type = e_res_type.DOWNLOADED_SKIN || res_edit.type = e_res_type.ITEM_SHEET || res_edit.type = e_res_type.PACK
+		 || res_edit.type = e_res_type.PARTICLE_SHEET || res_edit.type = e_res_type.SKIN || res_edit.type = e_res_type.TEXTURE) && res_edit != mc_res)
+	{
+		tab_control_switch()
+		draw_switch("resourcesusesglossiness", dx, dy, res_edit.material_uses_glossiness, action_res_uses_glossiness, "resourcesusesglossinesstip")
+		tab_next()
+	}
+	
 	if (res_edit.filename != "") // Filename
 	{
 		var wid = text_max_width("resourcesfilenameopen") + 20;

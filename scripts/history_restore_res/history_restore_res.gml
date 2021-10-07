@@ -83,9 +83,21 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_scenery_save_id[s]))
 				scenery = res
 		
+		#region Shape textures
+		
 		for (var s = 0; s < save.usage_shape_tex_amount; s++)
 			with (save_id_find(save.usage_shape_tex_save_id[s]))
 				shape_tex = res
+		
+		for (var s = 0; s < save.usage_shape_material_tex_amount; s++)
+			with (save_id_find(save.usage_shape_material_tex_save_id[s]))
+				shape_material_tex = res
+		
+		for (var s = 0; s < save.usage_shape_normal_tex_amount; s++)
+			with (save_id_find(save.usage_shape_normal_tex_save_id[s]))
+				shape_normal_tex = res
+		
+		#endregion
 		
 		for (var s = 0; s < save.usage_text_font_amount; s++)
 		{

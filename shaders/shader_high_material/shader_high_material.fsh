@@ -3,6 +3,7 @@ uniform vec2 uTexScale;
 
 uniform sampler2D uMaterialTexture;
 uniform vec2 uMaterialTexScale;
+uniform int uMaterialUseGlossiness;
 
 uniform sampler2D uNormalTexture;
 uniform vec2 uNormalTexScale;
@@ -91,6 +92,10 @@ void main()
 	
 	vec4 baseColor = vColor * texture2D(uTexture, tex);
 	vec4 matColor = texture2D(uMaterialTexture, matTex);
+	
+	// Flip roughness
+	if (uMaterialUseGlossiness == 0)
+		matColor.r = 1.0 - matColor.r;
 	
 	// Transform values
 	float metallic, roughness;

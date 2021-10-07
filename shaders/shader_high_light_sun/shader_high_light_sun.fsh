@@ -30,6 +30,8 @@ varying float vBlockSSS;
 
 uniform sampler2D uMaterialTexture;
 uniform vec2 uMaterialTexScale;
+uniform int uMaterialUseGlossiness;
+
 uniform sampler2D uNormalTexture;
 uniform vec2 uNormalTexScale;
 
@@ -96,6 +98,10 @@ void main()
 		
 		vec3 mat = texture2D(uMaterialTexture, matTex).rgb;
 		float brightness = (vBrightness * mat.b);
+		
+		// Flip roughness
+		if (uMaterialUseGlossiness == 0)
+			mat.r = 1.0 - mat.r;
 		
 		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
 		

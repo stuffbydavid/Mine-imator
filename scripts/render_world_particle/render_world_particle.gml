@@ -149,7 +149,7 @@ function render_world_particle()
 				var tex;
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, tex)
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_material, spr_default_normal])
 				break
 			}
 		}

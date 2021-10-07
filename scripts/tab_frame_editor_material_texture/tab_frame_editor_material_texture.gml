@@ -54,13 +54,13 @@ function tab_frame_editor_material_texture()
 		{
 			name = "frameeditorshapematerialtex"
 			with (tl_edit.temp)
-				texobj = temp_get_shape_texobj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
+				texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 			
-			if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
+			if (texobj != null) // Don't preview cameras
 				tex = texobj.texture
 			
-			//if (texobj = null)
-			nomattex = true
+			if (texobj = null)
+				nomattex = true
 			
 			break
 		}
@@ -76,13 +76,9 @@ function tab_frame_editor_material_texture()
 	if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
 		text = text_get("listdefault", text)
 	
-	// TODO: Add support for other timelines
-	if (tl_edit.type = e_tl_type.BLOCK || tl_edit.type = e_tl_type.SCENERY)
-	{
-		tab_control_menu(32)
-		draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
-		tab_next()
-	}
+	tab_control_menu(32)
+	draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
+	tab_next()
 	
 	// Sliders for manual edit
 	if (nomattex)

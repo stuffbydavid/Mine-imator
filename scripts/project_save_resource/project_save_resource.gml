@@ -24,6 +24,8 @@ function project_save_resource()
 			json_save_var_bool("scenery_integrity_invert", scenery_integrity_invert)
 		}
 		
+		json_save_var_bool("uses_glossiness", material_uses_glossiness)
+		
 		if (load_folder != save_folder)
 			res_save()
 	

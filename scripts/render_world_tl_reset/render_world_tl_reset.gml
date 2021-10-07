@@ -69,6 +69,8 @@ function render_world_tl_reset()
                                           shader_uniform_sss_blue)
 	render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0) 
 	
+	render_set_uniform_int("uMaterialUsesGlossiness", 0)
+	
 	// Glow
 	shader_uniform_glow = false
     shader_uniform_glow_texture = false

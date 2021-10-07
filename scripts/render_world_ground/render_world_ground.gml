@@ -26,6 +26,7 @@ function render_world_ground()
 		render_set_uniform("uMetallic", 1)
 		render_set_uniform("uRoughness", 0)
 		render_set_uniform("uBrightness", 1)
+		render_set_uniform_int("uMaterialUseGlossiness", background_ground_material_tex.material_uses_glossiness)
 	}
 	
 	// Texture

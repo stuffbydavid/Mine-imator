@@ -92,6 +92,8 @@ function project_save_template()
 		{
 			json_save_object_start("shape")
 				json_save_var_save_id("tex", shape_tex)
+				json_save_var_save_id("material_tex", shape_material_tex)
+				json_save_var_save_id("normal_tex", shape_normal_tex)
 				json_save_var_bool("tex_mapped", shape_tex_mapped)
 				json_save_var("tex_hoffset", shape_tex_hoffset)
 				json_save_var("tex_voffset", shape_tex_voffset)

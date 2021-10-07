@@ -60,6 +60,8 @@ function temp_event_create()
 	
 	shape_vbuffer = null
 	shape_tex = null
+	shape_material_tex = null
+	shape_normal_tex = null
 	shape_tex_mapped = false
 	shape_tex_hoffset = 0
 	shape_tex_voffset = 0

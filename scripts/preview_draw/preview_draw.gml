@@ -429,7 +429,7 @@ function preview_draw(preview, xx, yy, width, height)
 								var tex;
 								with (select)
 									tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-								render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, tex)
+								render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [tex, spr_default_material, spr_default_normal])
 								break
 							}
 						}

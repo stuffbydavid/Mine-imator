@@ -5,10 +5,6 @@ function tab_frame_editor_normal_texture()
 	if (!tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
 		return 0
 	
-	// TODO: Add support for other timelines
-	if (tl_edit.type != e_tl_type.BLOCK && tl_edit.type != e_tl_type.SCENERY)
-		return 0
-	
 	var texobj, name, tex;
 	tex = null
 	
@@ -51,9 +47,9 @@ function tab_frame_editor_normal_texture()
 		{
 			name = "frameeditorshapenormaltex"
 			with (tl_edit.temp)
-				texobj = temp_get_shape_texobj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
+				texobj = temp_get_shape_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 			
-			if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
+			if (texobj != null) // Don't preview cameras
 				tex = texobj.texture
 			break
 		}

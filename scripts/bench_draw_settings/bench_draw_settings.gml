@@ -336,7 +336,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_tl_type.SHAPE: // Shapes
 			{
 				var capwid, text;
-				capwid = text_caption_width("benchshapetype", "benchshapetex")
+				capwid = text_caption_width("benchshapetype", "benchshapetex", "benchshapematerialtex", "benchshapenormaltex")
 				
 				// Shape
 				text = text_get("type" + tl_type_name_list[|e_tl_type.CUBE + bench_settings.shape_type])
@@ -354,6 +354,28 @@ function bench_draw_settings(bx, by, bw, bh)
 						tex = bench_settings.shape_tex.texture
 				}
 				draw_button_menu("benchshapetex", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex, text, action_bench_shape_tex, false, tex, null, "", null, null, capwid)
+				dy += 40
+				
+				// Material texture
+				text = text_get("listnone")
+				tex = null
+				if (bench_settings.shape_material_tex)
+				{
+					text = bench_settings.shape_material_tex.display_name
+					tex = bench_settings.shape_material_tex.texture
+				}
+				draw_button_menu("benchshapematerialtex", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_material_tex, text, action_bench_shape_material_tex, false, tex, null, "", null, null, capwid)
+				dy += 40
+				
+				// Normal texture
+				text = text_get("listnone")
+				tex = null
+				if (bench_settings.shape_normal_tex)
+				{
+					text = bench_settings.shape_normal_tex.display_name
+					tex = bench_settings.shape_normal_tex.texture
+				}
+				draw_button_menu("benchshapenormaltex", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_normal_tex, text, action_bench_shape_normal_tex, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				// Is mapped

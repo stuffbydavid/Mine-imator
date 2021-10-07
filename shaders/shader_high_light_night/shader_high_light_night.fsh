@@ -4,6 +4,7 @@ uniform vec4 uBlendColor;
 
 uniform sampler2D uMaterialTexture;
 uniform vec2 uMaterialTexScale;
+
 varying vec2 vTexCoord;
 varying float vBrightness;
 

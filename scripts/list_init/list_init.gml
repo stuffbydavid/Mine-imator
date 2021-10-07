@@ -261,7 +261,11 @@ function list_init(name)
 		
 		// Shape texture
 		case "benchshapetex":
+		case "benchshapematerialtex":
+		case "benchshapenormaltex":
 		case "libraryshapetex":
+		case "libraryshapematerialtex":
+		case "libraryshapenormaltex":
 		{
 			// None
 			menu_add_item(null, text_get("listnone"))
@@ -278,9 +282,12 @@ function list_init(name)
 			}
 			
 			// Add existing cameras
-			with (obj_timeline)
-				if (type = e_tl_type.CAMERA)
-					menu_add_item(id, display_name)
+			if (name = "benchshapetex" || name = "libraryshapetex")
+			{
+				with (obj_timeline)
+					if (type = e_tl_type.CAMERA)
+						menu_add_item(id, display_name)
+			}
 			
 			break
 		}
@@ -765,13 +772,24 @@ function list_init(name)
 		
 		// Timeline frame shape texture
 		case "frameeditorshapetex":
+		case "frameeditorshapematerialtex":
+		case "frameeditorshapenormaltex":
 		{
-			if (tl_edit.temp.shape_tex != null)
+			var texobj;
+			
+			if (name = "frameeditorshapetex")
+				texobj = tl_edit.temp.shape_tex
+			else if (name = "frameeditorshapematerialtex")
+				texobj = tl_edit.temp.shape_material_tex
+			else
+				texobj = tl_edit.temp.shape_normal_tex
+			
+			if (texobj != null)
 			{
-				if (tl_edit.temp.shape_tex.object_index = obj_timeline)
-					menu_add_item(null, text_get("listdefault", tl_edit.temp.shape_tex.display_name))
+				if (texobj.object_index = obj_timeline)
+					menu_add_item(null, text_get("listdefault", texobj.display_name))
 				else
-					menu_add_item(null, text_get("listdefault", tl_edit.temp.shape_tex.display_name), tl_edit.temp.shape_tex.texture)
+					menu_add_item(null, text_get("listdefault", texobj.display_name), texobj.texture)
 				menu_add_item(0, text_get("listnone"))
 			}
 			else
@@ -780,13 +798,16 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != tl_edit.temp.shape_tex && res.texture)
+				if (res != texobj && res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}
 			
-			with (obj_timeline)
-				if (id != tl_edit.temp.shape_tex && type = e_tl_type.CAMERA)
-					menu_add_item(id, display_name)
+			if (name = "frameeditorshapetex")
+			{
+				with (obj_timeline)
+					if (id != texobj && type = e_tl_type.CAMERA)
+						menu_add_item(id, display_name)
+			}
 			
 			break
 		}

@@ -156,6 +156,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 	}
 	
 	with (shader_map[?shader_depth])
@@ -246,6 +247,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 	}
 	
 	with (shader_map[?shader_high_light_point])
@@ -270,6 +272,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")
 	}
@@ -286,6 +289,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")
 	}
@@ -314,6 +318,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")
 	}
@@ -343,6 +348,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")
 	}
@@ -392,6 +398,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")
 	}
@@ -555,6 +562,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")
@@ -627,6 +635,7 @@ function shader_startup()
 		
 		new_shader_sampler("uMaterialTexture")
 		new_shader_uniform("uMaterialTexScale")
+		new_shader_uniform("uMaterialUseGlossiness")
 		
 		new_shader_sampler("uNormalTexture")
 		new_shader_uniform("uNormalTexScale")

@@ -42,6 +42,8 @@ function project_load_resource(argument0)
 			scenery_integrity_invert = value_get_real(map[?"scenery_integrity_invert"], scenery_integrity_invert)
 		}
 		
+		material_uses_glossiness = value_get_real(map[?"uses_glossiness"], material_uses_glossiness)
+		
 		sortlist_add(app.res_list, id)
 	}
 }

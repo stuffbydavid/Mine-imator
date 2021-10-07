@@ -40,6 +40,8 @@ function render_world_block()
 	var mattex, mattexprev, mattexani;
 	var normaltex, normaltexprev, normaltexani;
 	
+	render_set_uniform_int("uMaterialUseGlossiness", res[1].material_uses_glossiness)
+	
 	tex = res[0].block_sheet_texture
 	mattex = res[1].block_sheet_material_texture
 	normaltex = res[2].block_sheet_normal_texture

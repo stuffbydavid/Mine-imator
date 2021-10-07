@@ -314,6 +314,38 @@ function tab_properties_library()
 			draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex, text, action_lib_shape_tex, false, sprite)
 			tab_next()
 			
+			// Material texture
+			if (temp_edit.shape_material_tex != null)
+			{
+				text = temp_edit.shape_material_tex.display_name
+				sprite = temp_edit.shape_material_tex.texture
+			}
+			else
+			{
+				text = text_get("listnone")
+				sprite = null
+			}
+			
+			tab_control_menu(32)
+			draw_button_menu("libraryshapematerialtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_material_tex, text, action_lib_shape_material_tex, false, sprite)
+			tab_next()
+			
+			// Normal texture
+			if (temp_edit.shape_normal_tex != null)
+			{
+				text = temp_edit.shape_normal_tex.display_name
+				sprite = temp_edit.shape_normal_tex.texture
+			}
+			else
+			{
+				text = text_get("listnone")
+				sprite = null
+			}
+			
+			tab_control_menu(32)
+			draw_button_menu("libraryshapenormaltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_normal_tex, text, action_lib_shape_normal_tex, false, sprite)
+			tab_next()
+			
 			// Mapped
 			if (temp_edit.type = e_temp_type.CUBE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 			{

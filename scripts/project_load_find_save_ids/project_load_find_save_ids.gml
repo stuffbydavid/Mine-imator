@@ -80,6 +80,8 @@ function project_load_find_save_ids()
 		block_normal_tex = save_id_find(save_id_map[?block_normal_tex])
 		scenery = save_id_find(save_id_map[?scenery])
 		shape_tex = save_id_find(save_id_map[?shape_tex])
+		shape_material_tex = save_id_find(save_id_map[?shape_material_tex])
+		shape_normal_tex = save_id_find(save_id_map[?shape_normal_tex])
 		text_font = save_id_find(save_id_map[?text_font])
 		
 		// Fix broken references
@@ -109,6 +111,12 @@ function project_load_find_save_ids()
 			
 			if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 				shape_tex.count++
+			
+			if (shape_material_tex != null)
+				shape_material_tex.count++
+			
+			if (shape_normal_tex != null)
+				shape_normal_tex.count++
 			
 			if (text_font != null)
 				text_font.count++

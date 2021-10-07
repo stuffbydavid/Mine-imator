@@ -3,6 +3,7 @@ uniform vec2 uTexScale;
 
 uniform sampler2D uMaterialTexture;
 uniform vec2 uMaterialTexScale;
+uniform int uMaterialUseGlossiness;
 
 uniform int uColorsExt;
 uniform vec4 uRGBAdd;
@@ -84,6 +85,10 @@ void main()
 	if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
 		matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
 	vec4 matColor = texture2D(uMaterialTexture, matTex);
+	
+	// Flip roughness
+	if (uMaterialUseGlossiness == 0)
+		matColor.r = 1.0 - matColor.r;
 	
 	float metallic, roughness, brightness;
 	metallic = (uMetallic * matColor.g); // Metallic

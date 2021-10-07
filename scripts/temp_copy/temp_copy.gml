@@ -41,6 +41,8 @@ function temp_copy(to)
 	to.block_repeat = array_copy_1d(block_repeat)
 	
 	to.shape_tex = shape_tex
+	to.shape_material_tex = shape_material_tex
+	to.shape_normal_tex = shape_normal_tex
 	to.shape_tex_mapped = shape_tex_mapped
 	to.shape_tex_hoffset = shape_tex_hoffset
 	to.shape_tex_voffset = shape_tex_voffset

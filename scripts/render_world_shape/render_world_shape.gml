@@ -1,8 +1,8 @@
-/// render_world_shape(type, vbuffer, facecamera, texture)
+/// render_world_shape(type, vbuffer, facecamera, textures)
 /// @arg type
 /// @arg vbuffer
 /// @arg facecamrea
-/// @arg texture
+/// @arg textures
 
 function render_world_shape(type, vbuf, facecamera, tex)
 {
@@ -15,6 +15,31 @@ function render_world_shape(type, vbuf, facecamera, tex)
 		matrix_world_multiply_pre(matrix_build(0, 0, 0, rotx, 0, rotz, 1, 1, 1))
 	}
 	
-	render_set_texture(tex)
+	render_set_texture(tex[0])
+	
+	if (tex[1] != spr_default_material)
+	{
+		if (shader_uniform_metallic != 1)
+		{
+			shader_uniform_metallic = 1
+			render_set_uniform("uMetallic", shader_uniform_metallic)
+		}
+		
+		if (shader_uniform_roughness != 0)
+		{
+			shader_uniform_roughness = 0
+			render_set_uniform("uRoughness", shader_uniform_roughness)
+		}
+		
+		if (shader_uniform_brightness != 1)
+		{
+			shader_uniform_brightness = 1
+			render_set_uniform("uBrightness", shader_uniform_brightness)
+		}
+		
+		render_set_texture(tex[1], "Material")
+	}
+	
+	render_set_texture(tex[2], "Normal")
 	vbuffer_render(vbuf)
 }

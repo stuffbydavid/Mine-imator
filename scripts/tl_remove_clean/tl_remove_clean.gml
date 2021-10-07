@@ -34,12 +34,28 @@ function tl_remove_clean()
 			temp.count--
 		
 		with (obj_template)
+		{
 			if (shape_tex = other.id)
 				shape_tex = null
+			
+			if (shape_material_tex = other.id)
+				shape_material_tex = null
+			
+			if (shape_normal_tex = other.id)
+				shape_normal_tex = null
+		}
 		
 		with (obj_bench_settings) 
-			if (shape_tex = other.id) 
-				shape_tex = null 
+		{
+			if (shape_tex = other.id)
+				shape_tex = null
+			
+			if (shape_material_tex = other.id)
+				shape_material_tex = null
+			
+			if (shape_normal_tex = other.id)
+				shape_normal_tex = null
+		}
 		
 		with (obj_timeline)
 		{
