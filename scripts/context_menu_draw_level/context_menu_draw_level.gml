@@ -3,15 +3,27 @@
 
 function context_menu_draw_level(argument0)
 {
-	var levelindex, level, aniease;
+	var levelindex, level, alphaease, aniease;
 	levelindex = argument0
 	level = context_menu_level[|levelindex]
 	
 	// Animation
-	level.ani += 0.1 * delta
-	if (level.ani >= 1)
-		level.ani = 1
+	if (context_menu_ani = "" || context_menu_ani = "open")
+	{
+		level.ani += 0.07 * delta
+		if (level.ani >= 1)
+			level.ani = 1
+	}
+	else
+	{
+		level.ani -= 0.125 * delta
+		if (level.ani <= 0)
+			level.ani = 0
+	}
+	
 	aniease = ease("easeoutexpo", level.ani)
+	alphaease = aniease
+	aniease = 1
 	
 	dw = level.level_width
 	dh = level.level_height * aniease
@@ -24,6 +36,11 @@ function context_menu_draw_level(argument0)
 	content_height = dh
 	content_mouseon = app_mouse_box(dx, dy, dw, dh) && (levelindex >= context_menu_mouseon_level)
 	
+	context_menu_min_x = min(dx, context_menu_min_x)
+	context_menu_min_y = min(dy, context_menu_min_y)
+	context_menu_max_x = max(dx + dw, context_menu_max_x)
+	context_menu_max_y = max(dy + dh, context_menu_max_y)
+	
 	if (content_mouseon)
 		context_menu_mouseon = true
 	
@@ -33,6 +50,8 @@ function context_menu_draw_level(argument0)
 	// Reset mouseon level to base
 	if (!content_mouseon && (levelindex >= context_menu_mouseon_level))
 		context_menu_mouseon_reset = true
+	
+	draw_set_alpha(alphaease)
 	
 	draw_dropshadow(dx, dy, dw, dh, c_black, 1)
 	draw_box(dx, dy, dw, dh, false, c_level_top, 1)
@@ -67,9 +86,14 @@ function context_menu_draw_level(argument0)
 	else
 	{
 		if (script_execute(level.level_script, dx, dy, dw, dh))
+		{
+			draw_set_alpha(1)
 			return 0
+		}
 	}
 	
 	if (level.ani < 1)
 		scissor_done()
+	
+	draw_set_alpha(1)
 }

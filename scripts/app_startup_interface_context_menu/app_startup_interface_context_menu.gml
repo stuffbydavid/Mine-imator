@@ -55,6 +55,13 @@ function app_startup_interface_context_menu()
 	
 	context_menu_busy_prev = ""
 	
+	context_menu_min_x = no_limit
+	context_menu_min_y = no_limit
+	context_menu_max_x = -no_limit
+	context_menu_max_y = -no_limit
+	
+	context_menu_ani = ""
+	
 	// Textbox
 	context_menu_tbx_action = false
 	context_menu_tbx_cut = false

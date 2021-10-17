@@ -10,10 +10,26 @@ function temp_update_model()
 		model_texture_name_map = ds_map_create()
 	ds_map_clear(model_texture_name_map)
 	
+	if (model_material_texture_name_map = null)
+		model_material_texture_name_map = ds_map_create()
+	ds_map_clear(model_material_texture_name_map)
+	
+	if (model_normal_texture_name_map = null)
+		model_normal_texture_name_map = ds_map_create()
+	ds_map_clear(model_normal_texture_name_map)
+	
 	// Each key in the map points to a shape texture
 	if (model_shape_texture_name_map = null)
 		model_shape_texture_name_map = ds_map_create()
 	ds_map_clear(model_shape_texture_name_map)
+	
+	if (model_shape_material_texture_name_map = null)
+		model_shape_material_texture_name_map = ds_map_create()
+	ds_map_clear(model_shape_material_texture_name_map)
+	
+	if (model_shape_normal_texture_name_map = null)
+		model_shape_normal_texture_name_map = ds_map_create()
+	ds_map_clear(model_shape_normal_texture_name_map)
 	
 	// Parts to hide
 	if (model_hide_list = null)
@@ -38,10 +54,17 @@ function temp_update_model()
 			return 0
 		
 		// Set file and texture
-		var tempstatevars, temptexnamemap, tempshapetexnamemap, tempcolornamemap, temphidelist, tempshapehidelist, curfile;
+		var tempstatevars, temptexnamemap, tempmattexnamemap, tempnortexnamemap, tempshapetexnamemap, tempshapemattexnamemap, tempshapenortexnamemap, tempcolornamemap, temphidelist, tempshapehidelist, curfile;
 		tempstatevars = model_state
+		
 		temptexnamemap = model_texture_name_map
+		tempmattexnamemap = model_material_texture_name_map
+		tempnortexnamemap = model_normal_texture_name_map
+		
 		tempshapetexnamemap = model_shape_texture_name_map
+		tempshapemattexnamemap = model_shape_material_texture_name_map
+		tempshapenortexnamemap = model_shape_normal_texture_name_map
+		
 		tempcolornamemap = model_color_name_map
 		temphidelist = model_hide_list
 		tempshapehidelist = model_shape_hide_list
@@ -76,8 +99,20 @@ function temp_update_model()
 								if (value_texture_name_map[v] != null)
 									ds_map_merge(temptexnamemap, value_texture_name_map[v], true)
 								
+								if (value_material_texture_name_map[v] != null)
+									ds_map_merge(tempmattexnamemap, value_material_texture_name_map[v], true)
+								
+								if (value_normal_texture_name_map[v] != null)
+									ds_map_merge(tempnortexnamemap, value_normal_texture_name_map[v], true)
+								
 								if (value_shape_texture_name_map[v] != null)
 									ds_map_merge(tempshapetexnamemap, value_shape_texture_name_map[v], true)
+								
+								if (value_shape_material_texture_name_map[v] != null)
+									ds_map_merge(tempshapemattexnamemap, value_shape_material_texture_name_map[v], true)
+								
+								if (value_shape_normal_texture_name_map[v] != null)
+									ds_map_merge(tempshapenortexnamemap, value_shape_normal_texture_name_map[v], true)
 								
 								if (value_hide_list[v] != null)
 									ds_list_merge(temphidelist, value_hide_list[v])
@@ -106,6 +141,12 @@ function temp_update_model()
 	// Get default texture from file if not defined
 	if (model_file != null && is_undefined(model_texture_name_map[?""]))
 		model_texture_name_map[?""] = model_file.texture_name
+	
+	if (model_file != null && is_undefined(model_material_texture_name_map[?""]))
+		model_material_texture_name_map[?""] = model_file.texture_material_name
+	
+	if (model_file != null && is_undefined(model_normal_texture_name_map[?""]))
+		model_normal_texture_name_map[?""] = model_file.texture_normal_name
 	
 	model_shape_update_color()
 }

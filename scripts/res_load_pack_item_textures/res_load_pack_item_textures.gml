@@ -1,11 +1,19 @@
-/// res_load_pack_item_textures()
+/// res_load_pack_item_textures(type, suffix)
+/// @arg type
+/// @arg suffix
 /// @desc Creates a texture sheet for the items.
 
-function res_load_pack_item_textures()
+function res_load_pack_item_textures(type, suffix)
 {
 	// Free old
-	if (item_sheet_texture != null)
+	if (type = "diffuse" && item_sheet_texture != null)
 		texture_free(item_sheet_texture)
+	
+	if (type = "material" && item_sheet_material_texture != null)
+		texture_free(item_sheet_material_texture)
+	
+	if (type = "normal" && item_sheet_normal_texture != null)
+		texture_free(item_sheet_normal_texture)
 	
 	// Create new
 	var itemsize, texlist, surf, fileslist;
@@ -15,7 +23,7 @@ function res_load_pack_item_textures()
 	debug_timer_start()
 	
 	// Used to figure out what new files have been added
-	if (dev_mode_debug_unused)
+	if (dev_mode_debug_unused && type = "diffuse")
 	{
 		var filesarr = file_find(load_assets_dir + mc_textures_directory + "item\\", ".png");
 		fileslist = ds_list_create()
@@ -26,7 +34,7 @@ function res_load_pack_item_textures()
 	}
 	
 	// Load textures
-	log("Item textures", "load")
+	log("Item textures", type, "load")
 	texlist = ds_list_create() // name -> texture
 	for (var t = 0; t < ds_list_size(mc_assets.item_texture_list); t++)
 	{
@@ -38,11 +46,11 @@ function res_load_pack_item_textures()
 		
 		var name, fname;
 		name = mc_assets.item_texture_list[|t]
-		fname = load_assets_dir + mc_textures_directory + name + ".png";
+		fname = load_assets_dir + mc_textures_directory + name + suffix + ".png";
 		
 		// Look if legacy name exists
 		if (!file_exists_lib(fname) && !is_undefined(legacy_item_texture_name_map[?name]))
-			fname = load_assets_dir + mc_textures_directory + legacy_item_texture_name_map[?name] + ".png"
+			fname = load_assets_dir + mc_textures_directory + legacy_item_texture_name_map[?name] + suffix + ".png"
 		
 		if (file_exists_lib(fname))
 		{
@@ -55,7 +63,7 @@ function res_load_pack_item_textures()
 		}
 		else
 		{
-			log("Item texture not found", mc_assets.item_texture_list[|t])
+			log("Item texture not found", mc_assets.item_texture_list[|t] + suffix)
 			ds_list_add(texlist, null)
 		}
 	}
@@ -100,10 +108,19 @@ function res_load_pack_item_textures()
 				scale = itemsize / wid
 				draw_texture_part(tex, dx, dy, 0, 0, wid, hei, scale, scale)
 			}
-			else if (id != mc_res)
-				draw_texture_part(mc_res.item_sheet_texture, dx, dy,
-								  (t mod item_sheet_width) * item_size, (t div item_sheet_width) * item_size,
-								  item_size, item_size, itemsize / item_size, itemsize / item_size)
+			else
+			{
+				if (type = "diffuse" && id != mc_res)
+					draw_texture_part(mc_res.item_sheet_texture, dx, dy,
+									  (t mod item_sheet_width) * item_size, (t div item_sheet_width) * item_size,
+									  item_size, item_size, itemsize / item_size, itemsize / item_size)
+				
+				if (type = "material")
+					draw_box(dx, dy, itemsize, itemsize, false, c_black, 1)
+				
+				if (type = "normal")
+					draw_box(dx, dy, itemsize, itemsize, false, c_normal, 1)
+			}
 		}
 		
 		gpu_set_blendmode(bm_normal)
@@ -111,7 +128,12 @@ function res_load_pack_item_textures()
 	surface_reset_target()
 	draw_texture_done()
 	
-	item_sheet_texture = texture_surface(surf)
+	if (type = "diffuse")
+		item_sheet_texture = texture_surface(surf)
+	else if (type = "material")
+		item_sheet_material_texture = texture_surface(surf)
+	else
+		item_sheet_normal_texture = texture_surface(surf)
 	
 	// Clean up
 	for (var t = 0; t < ds_list_size(texlist); t++)
@@ -121,6 +143,6 @@ function res_load_pack_item_textures()
 	surface_free(surf)
 	ds_list_destroy(texlist)
 	
-	log("Item textures", "done")
-	debug_timer_stop("Item textures")
+	log("Item textures", type, "done")
+	debug_timer_stop("Item textures: " + type)
 }

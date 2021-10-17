@@ -57,7 +57,64 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		
 		// Set shape texture
 		if (tlobject)
+		{
+			if (s > array_length(model_part_shape_tex) - 1)
+				continue
+			
 			render_set_texture(model_part_shape_tex[s])
+			
+			render_set_uniform_int("uMaterialUseGlossiness", model_part_shape_material_res[s].material_uses_glossiness)
+			
+			if (model_part_shape_material_tex[s] = null)
+			{
+				render_set_texture(spr_default_material, "Material")
+				
+				if (value_inherit[e_value.BRIGHTNESS] != shader_uniform_brightness)
+				{
+					shader_uniform_brightness = value_inherit[e_value.BRIGHTNESS]
+					render_set_uniform("uBrightness", shader_uniform_brightness)
+				}
+	
+				if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+				{
+					shader_uniform_metallic = value_inherit[e_value.METALLIC]
+					render_set_uniform("uMetallic", shader_uniform_metallic)
+				}
+	
+				if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+				{
+					shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+					render_set_uniform("uRoughness", shader_uniform_roughness)
+				}
+			}
+			else
+			{
+				render_set_texture(model_part_shape_material_tex[s], "Material")
+				
+				if (shader_uniform_metallic != 1)
+				{
+					shader_uniform_metallic = 1
+					render_set_uniform("uMetallic", shader_uniform_metallic)
+				}
+		
+				if (shader_uniform_roughness != 0)
+				{
+					shader_uniform_roughness = 0
+					render_set_uniform("uRoughness", shader_uniform_roughness)
+				}
+		
+				if (shader_uniform_brightness != 1)
+				{
+					shader_uniform_brightness = 1
+					render_set_uniform("uBrightness", shader_uniform_brightness)
+				}
+			}
+			
+			if (model_part_shape_normal_tex[s] = null)
+				render_set_texture(spr_default_normal, "Normal")
+			else
+				render_set_texture(model_part_shape_normal_tex[s], "Normal")
+		}
 		else
 		{
 			// Get texture (shape texture overrides part texture)

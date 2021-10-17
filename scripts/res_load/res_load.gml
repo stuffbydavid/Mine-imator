@@ -187,6 +187,30 @@ function res_load()
 				model_texture_map = null
 			}
 			
+			if (model_material_texture_map != null)
+			{
+				var key = ds_map_find_first(model_material_texture_map);
+				while (!is_undefined(key))
+				{
+					texture_free(model_material_texture_map[?key])
+					key = ds_map_find_next(model_material_texture_map, key)
+				}
+				ds_map_destroy(model_material_texture_map)
+				model_material_texture_map = null
+			}
+			
+			if (model_normal_texture_map != null)
+			{
+				var key = ds_map_find_first(model_normal_texture_map);
+				while (!is_undefined(key))
+				{
+					texture_free(model_normal_texture_map[?key])
+					key = ds_map_find_next(model_normal_texture_map, key)
+				}
+				ds_map_destroy(model_normal_texture_map)
+				model_normal_texture_map = null
+			}
+			
 			// Load model from .mimodel or block .json
 			if (filename_ext(fn) = ".mimodel")
 			{
@@ -204,6 +228,22 @@ function res_load()
 				
 				if (model_file != null)
 					model_texture_name_map[?""] = model_file.texture_name
+				
+				if (model_material_texture_name_map != null)
+					ds_map_clear(model_material_texture_name_map)
+				else
+					model_material_texture_name_map = ds_map_create()
+				
+				if (model_file != null)
+					model_material_texture_name_map[?""] = model_file.texture_material_name
+				
+				if (model_normal_texture_name_map != null)
+					ds_map_clear(model_normal_texture_name_map)
+				else
+					model_normal_texture_name_map = ds_map_create()
+				
+				if (model_file != null)
+					model_normal_texture_name_map[?""] = model_file.texture_normal_name
 				
 				// Create color name map
 				if (model_color_name_map != null)

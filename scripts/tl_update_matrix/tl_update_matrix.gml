@@ -295,18 +295,20 @@ function tl_update_matrix()
 		{
 			if (type = e_tl_type.CHARACTER ||
 				type = e_tl_type.SPECIAL_BLOCK ||
-				(type = e_tl_type.MODEL && temp.model.model_format = e_model_format.MIMODEL))
+				(type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.MIMODEL))
 				{
 					ds_list_add(app.project_model_list, id)
 					
 					bounding_box.reset()
-				
+					
 					if (model_timeline_list = null)
 						model_timeline_list = ds_list_create()
 					else
 						ds_list_clear(model_timeline_list)
-				
-					model_update_bounding_box(id, id, bounding_box)
+					
+					if (temp.model != null)
+						model_update_bounding_box(id, id, bounding_box)
+					
 					bounding_box_matrix.copy(bounding_box)
 				}
 		}

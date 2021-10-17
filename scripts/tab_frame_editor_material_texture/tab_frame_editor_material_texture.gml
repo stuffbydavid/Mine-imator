@@ -19,7 +19,7 @@ function tab_frame_editor_material_texture()
 		case e_tl_type.MODEL:
 		case e_tl_type.BODYPART:
 		{
-			name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "materialtex"
+			name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
 			
 			var modelfile = tl_edit.temp.model_file;
 			if (tl_edit.type = e_temp_type.BODYPART)
@@ -27,11 +27,12 @@ function tab_frame_editor_material_texture()
 			
 			with (tl_edit.temp)
 			{
-				texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
-				tex = temp_get_model_tex_preview(texobj, modelfile)
+				texobj = temp_get_model_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
+				tex = temp_get_model_tex_material_preview(texobj, modelfile)
 			}
 			
-			nomattex = true
+			if (texobj = mc_res || texobj = null)
+				nomattex = true
 			
 			break
 		}
@@ -39,7 +40,7 @@ function tab_frame_editor_material_texture()
 		case e_tl_type.BLOCK:
 		case e_tl_type.SCENERY:
 		{
-			name = "frameeditorblockmaterialtex"
+			name = "frameeditorblocktexmaterial"
 			with (tl_edit.temp)
 				texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 			tex = texobj.block_preview_texture
@@ -50,9 +51,32 @@ function tab_frame_editor_material_texture()
 			break
 		}
 		
+		case e_tl_type.ITEM:
+		{
+			name = "frameeditoritemtexmaterial"
+			
+			var texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ];
+			
+			if (texobj = null)
+				texobj = tl_edit.temp.item_material_tex
+			
+			if (!res_is_ready(texobj))
+				texobj = mc_res
+			
+			tex = texobj.block_preview_texture
+			
+			if (tex = null)
+				tex = res.texture
+			
+			if (texobj = mc_res)
+				nomattex = true
+			
+			break
+		}
+		
 		default: // Shapes
 		{
-			name = "frameeditorshapematerialtex"
+			name = "frameeditorshapetexmaterial"
 			with (tl_edit.temp)
 				texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 			

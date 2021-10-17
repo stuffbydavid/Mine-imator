@@ -1,5 +1,6 @@
 /// texture_create(filename)
-/// @arg filenam
+/// @arg filename
+
 function texture_create(fn)
 {
 	if (!file_exists_lib(fn))

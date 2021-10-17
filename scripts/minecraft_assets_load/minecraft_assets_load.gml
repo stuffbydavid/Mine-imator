@@ -142,7 +142,11 @@ function minecraft_assets_load()
 				{
 					res_load_pack_model_textures()
 					res_load_pack_block_textures()
-					res_load_pack_item_textures()
+					
+					res_load_pack_item_textures("diffuse", "")
+					item_sheet_material_texture = sprite_duplicate(spr_default_material)
+					item_sheet_normal_texture = sprite_duplicate(spr_default_normal)
+					
 					res_load_pack_particle_textures()
 					res_load_pack_misc()
 					res_update_colors(biome_list[|2])

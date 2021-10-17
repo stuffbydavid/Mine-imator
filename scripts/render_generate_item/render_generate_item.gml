@@ -19,13 +19,17 @@ function render_generate_item()
 		res = argument[1]
 		is3d = argument[2]
 		
-		if (item_slot = slot && item_res = res && item_3d = is3d && item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
+		if (item_slot = slot && item_res = res[0] && item_material_res = res[1] && item_normal_res = res[2] && item_3d = is3d && item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
 			return 0
 		
 		item_slot = slot
-		item_res = res
+		item_res = res[0]
+		item_material_res = res[1]
+		item_normal_res = res[2]
 		item_3d = is3d
 		item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT]
+		
+		res = res[0]
 	}
 	
 	if (!res_is_ready(res))

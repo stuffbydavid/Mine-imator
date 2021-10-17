@@ -14,17 +14,44 @@ function res_load_pack_model_textures()
 		ds_map_destroy(model_texture_map)
 	}
 	
+	if (model_material_texture_map != null)
+	{
+		var key = ds_map_find_first(model_material_texture_map);
+		while (!is_undefined(key))
+		{
+			texture_free(model_material_texture_map[?key])
+			key = ds_map_find_next(model_material_texture_map, key)
+		}
+		ds_map_destroy(model_material_texture_map)
+	}
+	
+	if (model_normal_texture_map != null)
+	{
+		var key = ds_map_find_first(model_normal_texture_map);
+		while (!is_undefined(key))
+		{
+			texture_free(model_normal_texture_map[?key])
+			key = ds_map_find_next(model_normal_texture_map, key)
+		}
+		ds_map_destroy(model_normal_texture_map)
+	}
+	
 	// Create new
 	debug_timer_start()
 	
 	log("Model textures", "load")
 	model_texture_map = ds_map_create()
+	model_material_texture_map = ds_map_create()
+	model_normal_texture_map = ds_map_create()
 	for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	{
-		var name, fname, tex;
+		var name, fname, matfname, norfname, tex, mattex, nortex;
 		name = mc_assets.model_texture_list[|t]
 		fname = load_assets_dir + mc_textures_directory + name + ".png"
+		matfname = load_assets_dir + mc_textures_directory + name + "_s.png"
+		norfname = load_assets_dir + mc_textures_directory + name + "_n.png"
 		
+		// Diffuse
 		if (file_exists_lib(fname))
 		{
 			if (name = "entity/steve")
@@ -41,6 +68,32 @@ function res_load_pack_model_textures()
 		}
 		
 		model_texture_map[?name] = tex
+		
+		// Material
+		if (file_exists_lib(matfname))
+		{
+			if (matfname = "entity/steve_s")
+				tex = res_load_player_skin(matfname)
+			else
+				tex = texture_create_square(matfname)
+		}
+		else
+			tex = texture_duplicate(spr_default_material)
+		
+		model_material_texture_map[?name] = tex
+		
+		// Normal
+		if (file_exists_lib(norfname))
+		{
+			if (norfname = "entity/steve_n")
+				tex = res_load_player_skin(norfname)
+			else
+				tex = texture_create_square(norfname)
+		}
+		else 
+			tex = texture_duplicate(spr_default_normal)
+		
+		model_normal_texture_map[?name] = tex
 	}
 	
 	log("Model textures", "done")

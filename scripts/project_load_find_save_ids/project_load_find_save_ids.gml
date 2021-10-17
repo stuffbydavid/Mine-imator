@@ -74,7 +74,11 @@ function project_load_find_save_ids()
 		
 		model = save_id_find(save_id_map[?model])
 		model_tex = save_id_find(save_id_map[?model_tex])
+		model_material_tex = save_id_find(save_id_map[?model_material_tex])
+		model_normal_tex = save_id_find(save_id_map[?model_normal_tex])
 		item_tex = save_id_find(save_id_map[?item_tex])
+		item_material_tex = save_id_find(save_id_map[?item_material_tex])
+		item_normal_tex = save_id_find(save_id_map[?item_normal_tex])
 		block_tex = save_id_find(save_id_map[?block_tex])
 		block_material_tex = save_id_find(save_id_map[?block_material_tex])
 		block_normal_tex = save_id_find(save_id_map[?block_normal_tex])
@@ -87,6 +91,12 @@ function project_load_find_save_ids()
 		// Fix broken references
 		if (type = e_temp_type.ITEM && (!instance_exists(item_tex) || item_tex.object_index != obj_resource))
 			item_tex = mc_res
+		
+		if (type = e_temp_type.ITEM && (!instance_exists(item_material_tex) || item_material_tex.object_index != obj_resource))
+			item_material_tex = mc_res
+		
+		if (type = e_temp_type.ITEM && (!instance_exists(item_normal_tex) || item_normal_tex.object_index != obj_resource))
+			item_normal_tex = mc_res
 		
 		if (type = e_temp_type.SCENERY && instance_exists(scenery) && scenery.object_index != obj_resource)
 			scenery = null

@@ -18,7 +18,7 @@ function tab_frame_editor_normal_texture()
 		case e_tl_type.MODEL:
 		case e_tl_type.BODYPART:
 		{
-			name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "normaltex"
+			name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texnormal"
 			
 			var modelfile = tl_edit.temp.model_file;
 			if (tl_edit.type = e_temp_type.BODYPART)
@@ -26,8 +26,8 @@ function tab_frame_editor_normal_texture()
 			
 			with (tl_edit.temp)
 			{
-				texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
-				tex = temp_get_model_tex_preview(texobj, modelfile)
+				texobj = temp_get_model_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
+				tex = temp_get_model_tex_normal_preview(texobj, modelfile)
 			}
 			
 			break
@@ -36,16 +36,36 @@ function tab_frame_editor_normal_texture()
 		case e_tl_type.BLOCK:
 		case e_tl_type.SCENERY:
 		{
-			name = "frameeditorblocknormaltex"
+			name = "frameeditorblocktexnormal"
 			with (tl_edit.temp)
 				texobj = temp_get_block_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 			tex = texobj.block_preview_texture
 			break
 		}
 		
+		case e_tl_type.ITEM:
+		{
+			name = "frameeditoritemtexnormal"
+			
+			var texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ];
+			
+			if (texobj = null)
+				texobj = tl_edit.temp.item_normal_tex
+			
+			if (!res_is_ready(texobj))
+				texobj = mc_res
+			
+			tex = texobj.block_preview_texture
+			
+			if (tex = null)
+				tex = res.texture
+			
+			break
+		}
+		
 		default: // Shapes
 		{
-			name = "frameeditorshapenormaltex"
+			name = "frameeditorshapetexnormal"
 			with (tl_edit.temp)
 				texobj = temp_get_shape_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 			

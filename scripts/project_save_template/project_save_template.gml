@@ -11,6 +11,9 @@ function project_save_template()
 		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
 		{
 			json_save_var_save_id("model_tex", model_tex)
+			json_save_var_save_id("model_material_tex", model_material_tex)
+			json_save_var_save_id("model_normal_tex", model_normal_tex)
+			
 			json_save_object_start("model")
 				json_save_var("name", model_name)
 				json_save_var_state_vars("state", model_state)
@@ -64,9 +67,11 @@ function project_save_template()
 			json_save_object_start("block")
 				json_save_var("name", block_name)
 				json_save_var_state_vars("state", block_state)
+				
 				json_save_var_save_id("tex", block_tex)
 				json_save_var_save_id("material_tex", block_material_tex)
 				json_save_var_save_id("normal_tex", block_normal_tex)
+				
 				json_save_var_bool("repeat_enable", block_repeat_enable)
 				json_save_var_point3D("repeat", block_repeat)
 			json_save_object_done()
@@ -86,6 +91,8 @@ function project_save_template()
 		{
 			json_save_var_save_id("model", model)
 			json_save_var_save_id("model_tex", model_tex)
+			json_save_var_save_id("model_material_tex", model_material_tex)
+			json_save_var_save_id("model_normal_tex", model_normal_tex)
 		}
 		
 		if (type_is_shape(type))

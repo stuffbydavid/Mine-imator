@@ -23,6 +23,17 @@ function project_load_template(map)
 			else
 				model_tex = value_get_save_id(map[?"model_tex"], model_tex)
 			
+			if (load_format < e_project.FORMAT_200_AL17)
+			{
+				model_material_tex = "default"
+				model_normal_tex = "default"
+			}
+			else
+			{
+				model_material_tex = value_get_save_id(map[?"model_material_tex"], model_material_tex)
+				model_normal_tex = value_get_save_id(map[?"model_normal_tex"], model_normal_tex)
+			}
+			
 			var modelmap = map[?"model"];
 			if (ds_map_valid(modelmap))
 			{
@@ -123,6 +134,8 @@ function project_load_template(map)
 			if (ds_map_valid(itemmap))
 			{
 				item_tex = value_get_save_id(itemmap[?"tex"], item_tex)
+				item_material_tex = value_get_save_id(itemmap[?"material_tex"], item_material_tex)
+				item_normal_tex = value_get_save_id(itemmap[?"normal_tex"], item_normal_tex)
 				
 				var itemname = itemmap[?"name"];
 				if (is_string(itemname))
@@ -221,6 +234,17 @@ function project_load_template(map)
 		{
 			model = value_get_save_id(map[?"model"], model)
 			model_tex = value_get_save_id(map[?"model_tex"], model_tex)	
+			
+			if (load_format < e_project.FORMAT_200_AL17)
+			{
+				model_material_tex = "default"
+				model_normal_tex = "default"
+			}
+			else
+			{
+				model_material_tex = value_get_save_id(map[?"model_material_tex"], model_material_tex)
+				model_normal_tex = value_get_save_id(map[?"model_normal_tex"], model_normal_tex)
+			}
 		}
 		
 		if (type_is_shape(type))

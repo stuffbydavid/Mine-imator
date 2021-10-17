@@ -45,6 +45,16 @@ function menu_settings_draw()
 	
 	content_y = round(content_y)
 	
+	// Set menu bounding box
+	if (settings_menu_ani_type != "")
+	{
+		settings_menu_min_x = content_x
+		settings_menu_min_y = content_y
+		settings_menu_max_x = content_x + content_width
+		settings_menu_max_y = content_y + content_height
+	}
+	
+	// Prepare window state
 	if (window_busy = "settingsmenu" && settings_menu_ani_type = "" && settings_menu_ani = 1)
 		window_busy = ""
 	
@@ -151,6 +161,21 @@ function menu_settings_draw()
 	}
 	
 	settings_menu_steps++
+	
+	// Out of range, close menu
+	if (window_busy = "" && settings_menu_ani_type = "" && ((mouse_x < settings_menu_min_x - 32) || (mouse_y < settings_menu_min_y - 32) || (mouse_x > settings_menu_max_x + 32) || (mouse_y > settings_menu_max_y + 32)))
+	{
+		settings_menu_ani = 1
+		settings_menu_ani_type = "hide"
+		window_busy = "settingsmenu"
+		context_menu_close()
+		
+		with (obj_menu)
+		{
+			menu_ani = 0
+			menu_ani_type = "hide"
+		}
+	}
 	
 	if (window_busy = "" && settings_menu_ani_type != "hide")
 		window_busy = "settingsmenu"

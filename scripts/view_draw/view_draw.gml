@@ -684,8 +684,16 @@ function view_draw(view)
 		else
 			infotext = ""
 		
-		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .5, font_caption)
+		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
 		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
+		
+		if (project_render_pass != e_render_pass.COMBINED)
+		{
+			infotext = text_get("viewrenderpass", text_get("viewmodepass" + render_pass_list[|project_render_pass]))
+			
+			draw_label(infotext, content_x + 17, content_y + content_height - 31, fa_left, fa_bottom, c_black, .75, font_caption)
+			draw_label(infotext, content_x + 16, content_y + content_height - 32, fa_left, fa_bottom, c_white, 1, font_caption)
+		}
 	}
 	
 	// Background overlay when moving second view

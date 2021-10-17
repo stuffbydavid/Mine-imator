@@ -386,7 +386,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							
 							case e_temp_type.ITEM:
-								render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, select.item_tex)
+								render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, [select.item_tex, null, null])
 								break
 							
 							case e_temp_type.BLOCK:
@@ -552,8 +552,16 @@ function preview_draw(preview, xx, yy, width, height)
 									break
 								
 								case "modeltextures":
-									tex = select.model_texture_map[?pack_model_texture]
+								{
+									if (pack_image_material = "diffuse")
+										tex = select.model_texture_map[?pack_model_texture]
+									else if (pack_image_material = "material")
+										tex = select.model_material_texture_map[?pack_model_texture]
+									else if (pack_image_material = "normal")
+										tex = select.model_normal_texture_map[?pack_model_texture]
+									
 									break
+								}
 								
 								case "blocksheet":
 								{
@@ -572,8 +580,16 @@ function preview_draw(preview, xx, yy, width, height)
 									break
 								
 								case "itemsheet":
-									tex = select.item_sheet_texture
+								{
+									if (pack_image_material = "diffuse")
+										tex = select.item_sheet_texture
+									else if (pack_image_material = "material")
+										tex = select.item_sheet_material_texture
+									else if (pack_image_material = "normal")
+										tex = select.item_sheet_normal_texture
+									
 									break
+								}
 								
 								case "particlesheet":
 									tex = select.particles_texture[pack_particles]

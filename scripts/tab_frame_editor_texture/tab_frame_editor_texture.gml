@@ -43,6 +43,26 @@ function tab_frame_editor_texture()
 			break
 		}
 		
+		case e_tl_type.ITEM:
+		{
+			name = "frameeditoritemtex"
+			
+			var texobj = tl_edit.value[e_value.TEXTURE_OBJ];
+			
+			if (texobj = null)
+				texobj = tl_edit.temp.item_tex
+			
+			if (!res_is_ready(texobj))
+				texobj = mc_res
+			
+			tex = texobj.block_preview_texture
+			
+			if (tex = null)
+				tex = res.texture
+			
+			break
+		}
+		
 		default: // Shapes
 		{
 			name = "frameeditorshapetex"

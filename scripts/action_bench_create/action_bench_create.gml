@@ -68,6 +68,8 @@ function action_bench_create()
 						if (model_tex != null)
 							model_tex.count--
 						model_tex = null
+						model_material_tex = null
+						model_normal_tex = null
 						model_file = null
 						model_part = null
 						model_state = array()
@@ -77,6 +79,10 @@ function action_bench_create()
 					{
 						item_tex.count--
 						item_tex = null
+						item_material_tex.count--
+						item_material_tex = null
+						item_normal_tex.count--
+						item_normal_tex = null
 					}
 					
 					if (type != e_temp_type.BLOCK && type != e_temp_type.SCENERY)

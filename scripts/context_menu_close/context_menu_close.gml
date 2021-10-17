@@ -25,4 +25,9 @@ function context_menu_close()
 	mouse_left_pressed = false
 	mouse_left_double_pressed = false
 	mouse_click_count = 0
+	
+	context_menu_min_x = 0
+	context_menu_min_y = 0
+	context_menu_max_x = 0
+	context_menu_max_y = 0
 }

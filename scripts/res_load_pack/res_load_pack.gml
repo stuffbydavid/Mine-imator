@@ -79,7 +79,10 @@ function res_load_pack()
 			// Legacy pack support
 			file_rename_lib(load_assets_dir + mc_textures_directory + "items", load_assets_dir + mc_textures_directory + "item")
 			
-			res_load_pack_item_textures()
+			res_load_pack_item_textures("diffuse", "")
+			res_load_pack_item_textures("material", "_s")
+			res_load_pack_item_textures("normal", "_n")
+			
 			res_load_pack_particle_textures()
 			res_load_pack_misc()
 			res_update_colors()

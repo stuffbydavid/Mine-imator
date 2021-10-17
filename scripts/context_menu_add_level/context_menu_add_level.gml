@@ -77,4 +77,6 @@ function context_menu_add_level()
 	
 	ds_list_add(context_menu_level, level)
 	context_menu_level_amount++
+	
+	return level
 }

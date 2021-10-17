@@ -71,6 +71,23 @@ function model_file_load()
 		if (res != null)
 			model_file_load_texture(texture_name, res)
 		
+		// Only read material textures if user-made .mimodel
+		if (res != null)
+		{
+			texture_material_name = value_get_string(map[?"texture_material"], "")
+			if (texture_material_name != "")
+				model_file_load_material_texture(texture_material_name, res)
+		
+			texture_normal_name = value_get_string(map[?"texture_normal"], "")
+			if (texture_normal_name != "")
+				model_file_load_normal_texture(texture_normal_name, res)
+		}
+		else
+		{
+			texture_material_name = texture_name
+			texture_normal_name = texture_name
+		}
+		
 		// Texture size
 		texture_size = value_get_point2D(map[?"texture_size"])
 		var size = max(texture_size[X], texture_size[Y]);

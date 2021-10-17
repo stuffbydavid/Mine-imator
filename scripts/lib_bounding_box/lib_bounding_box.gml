@@ -203,7 +203,7 @@ function bbox_update_visible()
 	{
 		with (app.project_model_list[|i])
 		{
-			if (type = e_tl_type.MODEL && temp.model.model_format = e_model_format.BLOCK)
+			if (type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.BLOCK)
 				continue
 			
 			if (model_timeline_list = null)
@@ -244,7 +244,7 @@ function bbox_update_visible()
 	with (obj_timeline)
 	{
 		if (!bounding_box_update || 
-			(type = e_tl_type.MODEL && temp.model.model_format = e_model_format.MIMODEL) ||
+			(type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.MIMODEL) ||
 			type = e_tl_type.CHARACTER ||
 			type = e_tl_type.SPECIAL_BLOCK ||
 			type = e_tl_type.FOLDER ||

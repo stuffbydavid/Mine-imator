@@ -8,9 +8,11 @@ function render_update_item()
 		if (type != e_tl_type.ITEM)
 			continue
 		
-		var slot, res;
+		var slot, res, matres, norres;
 		slot = value[e_value.ITEM_SLOT]
 		res = value[e_value.TEXTURE_OBJ]
+		matres = value[e_value.TEXTURE_MATERIAL_OBJ]
+		norres = value[e_value.TEXTURE_NORMAL_OBJ]
 		
 		if (!value[e_value.CUSTOM_ITEM_SLOT] && res = null)
 		{
@@ -27,6 +29,12 @@ function render_update_item()
 		if (res = null)
 			res = temp.item_tex
 		
-		render_generate_item(slot, res, temp.item_3d)
+		if (matres = null)
+			matres = temp.item_material_tex
+		
+		if (norres = null)
+			norres = temp.item_normal_tex
+		
+		render_generate_item(slot, [res, matres, norres], temp.item_3d)
 	}
 }

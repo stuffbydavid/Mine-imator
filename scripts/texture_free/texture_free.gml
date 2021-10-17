@@ -3,5 +3,6 @@
 
 function texture_free(tex)
 {
-	return sprite_delete(tex)
+	if (sprite_exists(tex))
+		return sprite_delete(tex)
 }

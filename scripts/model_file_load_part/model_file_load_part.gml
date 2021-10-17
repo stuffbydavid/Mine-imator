@@ -72,7 +72,23 @@ function model_file_load_part(map, root, res, model)
 			}
 			
 			if (res != null)
+			{
 				model_file_load_texture(texture_name, res)
+				
+				texture_material_name = value_get_string(map[?"texture_material"], "")
+				texture_normal_name = value_get_string(map[?"texture_normal"], "")
+				
+				if (texture_material_name != "")
+					model_file_load_material_texture(texture_material_name, res)
+				
+				if (texture_normal_name != "")
+					model_file_load_normal_texture(texture_normal_name, res)
+			}
+			else
+			{
+				texture_material_name = texture_name
+				texture_normal_name = texture_name
+			}
 			
 			texture_size = value_get_point2D(map[?"texture_size"])
 			var size = max(texture_size[X], texture_size[Y]);
@@ -82,6 +98,8 @@ function model_file_load_part(map, root, res, model)
 		{
 			// Inherit
 			texture_name = ""
+			texture_material_name = ""
+			texture_normal_name = ""
 			texture_inherit = other.texture_inherit
 			texture_size = texture_inherit.texture_size
 		}

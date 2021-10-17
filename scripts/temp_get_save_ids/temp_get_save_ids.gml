@@ -4,6 +4,8 @@ function temp_get_save_ids()
 {
 	model = save_id_get(model)
 	model_tex = save_id_get(model_tex)
+	model_material_tex = save_id_get(model_material_tex)
+	model_normal_tex = save_id_get(model_normal_tex)
 	item_tex = save_id_get(item_tex)
 	
 	block_tex = save_id_get(block_tex)

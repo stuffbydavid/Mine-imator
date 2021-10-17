@@ -5,12 +5,24 @@ function context_menu_draw()
 	if (context_menu_level_amount = 0)
 		return 0
 	
+	if (context_menu_level[|0].ani = 0 && context_menu_ani = "hide")
+	{
+		context_menu_ani = ""
+		context_menu_close()
+		return 0
+	}
+	
 	if (context_menu_name != "")
 		window_busy = ""
 	
 	context_menu_mouseon = false
 	context_menu_mouseon_item = null
 	axis_edit = context_menu_copy_axis_edit
+	
+	context_menu_min_x = no_limit
+	context_menu_min_y = no_limit
+	context_menu_max_x = -no_limit
+	context_menu_max_y = -no_limit
 	
 	// Reset which mouseon level status
 	if (context_menu_mouseon_reset)
@@ -65,7 +77,11 @@ function context_menu_draw()
 	// Close menu
 	if (((mouse_left_pressed || mouse_right_pressed) && !context_menu_mouseon) || 
 		(mouse_left_released && (!context_menu_mouseon || (context_menu_mouseon_item != null && !context_menu_mouseon_item.disabled && context_menu_mouseon_item.context_menu_name = ""))))
-		context_menu_close()
+		context_menu_ani = "hide"
+	
+	// Out of range, close menu
+	if ((mouse_x < context_menu_min_x - 32) || (mouse_y < context_menu_min_y - 32) || (mouse_x > context_menu_max_x + 32) || (mouse_y > context_menu_max_y + 32))
+		context_menu_ani = "hide"
 	
 	if (window_busy = "" && context_menu_name != "")
 		window_busy = "contextmenu"

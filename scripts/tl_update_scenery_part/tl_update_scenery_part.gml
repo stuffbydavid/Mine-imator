@@ -8,9 +8,17 @@ function tl_update_scenery_part()
 	if (type = e_tl_type.SPECIAL_BLOCK)
 	{
 		model_tex = mc_res
+		model_material_tex = mc_res
+		model_normal_tex = mc_res
 		model_file = null
 		model_texture_name_map = null
+		model_material_texture_name_map = null
+		model_normal_texture_name_map = null
+		model_material_texture_name_map = null
+		model_normal_texture_name_map = null
 		model_shape_texture_name_map = null
+		model_shape_material_texture_name_map = null
+		model_shape_normal_texture_name_map = null
 		model_hide_list = null
 		model_shape_hide_list = null
 		model_color_name_map = null

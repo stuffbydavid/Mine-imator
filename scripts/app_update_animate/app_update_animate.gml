@@ -25,8 +25,8 @@ function app_update_animate()
 		{
 			if (render_visible)
 			{
-				render_update_tl_resource()
-				tex_obj_prev = tex_obj
+				if (render_update_tl_resource())
+					tex_obj_prev = tex_obj
 			}
 		}
 		

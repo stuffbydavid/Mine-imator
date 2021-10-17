@@ -19,6 +19,28 @@ function res_event_destroy()
 		ds_map_destroy(model_texture_map)
 	}
 	
+	if (model_material_texture_map != null)
+	{
+		var key = ds_map_find_first(model_material_texture_map);
+		while (!is_undefined(key))
+		{
+			texture_free(model_material_texture_map[?key])
+			key = ds_map_find_next(model_material_texture_map, key)
+		}
+		ds_map_destroy(model_material_texture_map)
+	}
+	
+	if (model_normal_texture_map != null)
+	{
+		var key = ds_map_find_first(model_normal_texture_map);
+		while (!is_undefined(key))
+		{
+			texture_free(model_normal_texture_map[?key])
+			key = ds_map_find_next(model_normal_texture_map, key)
+		}
+		ds_map_destroy(model_normal_texture_map)
+	}
+	
 	// Free shape vbuffers
 	if (model_shape_vbuffer_map != null)
 	{
@@ -72,6 +94,12 @@ function res_event_destroy()
 	// Free items
 	if (item_sheet_texture != null)
 		texture_free(item_sheet_texture)
+	
+	if (item_sheet_material_texture != null)
+		texture_free(item_sheet_material_texture)
+	
+	if (item_sheet_normal_texture != null)
+		texture_free(item_sheet_normal_texture)
 	
 	// Free misc
 	if (colormap_grass_texture != null)
@@ -152,11 +180,35 @@ function res_event_destroy()
 			model_tex.count++
 		}
 		
+		if (model_material_tex = other.id)
+		{
+			model_material_tex = mc_res
+			model_material_tex.count++
+		}
+		
+		if (model_normal_tex = other.id)
+		{
+			model_normal_tex = mc_res
+			model_normal_tex.count++
+		}
+		
 		if (item_tex = other.id)
 		{
 			item_tex = mc_res
 			item_tex.count++
 			render_generate_item()
+		}
+		
+		if (item_material_tex = other.id)
+		{
+			item_material_tex = mc_res
+			item_material_tex.count++
+		}
+		
+		if (item_normal_tex = other.id)
+		{
+			item_normal_tex = mc_res
+			item_normal_tex.count++
 		}
 		
 		if (block_tex = other.id)
@@ -203,6 +255,12 @@ function res_event_destroy()
 		
 		if (model_tex = other.id)
 			model_tex = mc_res
+			
+		if (model_material_tex = other.id)
+			model_material_tex = mc_res
+			
+		if (model_normal_tex = other.id)
+			model_normal_tex = mc_res
 		
 		if (item_tex = other.id)
 		{

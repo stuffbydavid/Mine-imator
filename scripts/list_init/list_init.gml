@@ -27,11 +27,23 @@ function list_init(name)
 	{
 		// Skin
 		case "benchskin":
+		case "benchskinmaterial":
+		case "benchskinnormal":
 		case "benchspblocktex":
+		case "benchspblocktexmaterial":
+		case "benchspblocktexnormal":
 		case "benchbodypartskin":
+		case "benchbodypartskinmaterial":
+		case "benchbodypartskinnormal":
 		case "libraryskin":
+		case "libraryskinmaterial":
+		case "libraryskinnormal":
 		case "libraryspblocktex":
+		case "libraryspblocktexmaterial":
+		case "libraryspblocktexnormal":
 		case "librarybodypartskin":
+		case "librarybodypartskinmaterial":
+		case "librarybodypartskinnormal":
 		{
 			var temp;
 			if (string_contains(menu_current.menu_name, "bench"))
@@ -43,13 +55,21 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Download from user
-			if (temp.model_file != null && temp.model_file.player_skin)
+			if (temp.model_file != null && temp.model_file.player_skin && (name = "benchskin" || name = "libraryskin"))
 				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
 			
 			// Default
 			var tex;
 			with (mc_res)
-				tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+			{
+				if (string_contains(name, "material"))
+					tex = res_get_model_material_texture(model_part_get_material_texture_name(temp.model_file, temp.model_material_texture_name_map))
+				else if (string_contains(name, "normal"))
+					tex = res_get_model_normal_texture(model_part_get_normal_texture_name(temp.model_file, temp.model_normal_texture_name_map))
+				else
+					tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+			}
+			
 			menu_add_item(mc_res, mc_res.display_name, tex)
 			
 			// Add existing resources
@@ -60,7 +80,14 @@ function list_init(name)
 					continue
 				
 				with (res)
-					tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+				{
+					if (string_contains(name, "material"))
+						tex = res_get_model_material_texture(model_part_get_material_texture_name(temp.model_file, temp.model_material_texture_name_map))
+					else if (string_contains(name, "normal"))
+						tex = res_get_model_normal_texture(model_part_get_normal_texture_name(temp.model_file, temp.model_normal_texture_name_map))
+					else
+						tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
+				}
 				
 				if (tex != null)
 					menu_add_item(res, res.display_name, tex)
@@ -130,6 +157,130 @@ function list_init(name)
 			break
 		}
 		
+		// Model texture (Material)
+		case "benchmodeltexmaterial":
+		case "librarymodeltexmaterial":
+		{
+			var temp;
+			if (string_contains(menu_current.menu_name, "bench"))
+				temp = bench_settings
+			else
+				temp = temp_edit
+			
+			// Import from file
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
+			
+			// Download from user
+			if (temp.model_file != null && temp.model_file.player_skin)
+				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
+			
+			// Default
+			var texobj = temp.model;
+			if (texobj != null)
+			{
+				if (texobj.model_format = e_model_format.BLOCK)
+				{
+					if (texobj.model_material_texture_map = null && texobj.block_sheet_material_texture = null) // Model has no texture, use Minecraft
+						texobj = mc_res
+				}
+			}
+			
+			if (texobj != null)
+			{
+				if (texobj.model_material_texture_map = null && texobj.model_texture = null)
+					menu_add_item(null, text_get("listdefault", text_get("listnone")))
+				else
+				{
+					var tex;
+					with (temp)
+						tex = temp_get_model_tex_material_preview(texobj, model_file)
+					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+				}
+			}
+			else
+				menu_add_item(null, text_get("listdefault", text_get("listnone")))
+			
+			// Add existing resources
+			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+			{
+				var res = res_list.display_list[|i];
+				if (res = temp.model || res = texobj)
+					continue
+				
+				var tex;
+				with (temp)
+					tex = temp_get_model_tex_material_preview(res, model_file)
+				
+				if (tex != null)
+					menu_add_item(res, res.display_name, tex)
+			}
+			
+			break
+		}
+		
+		// Model texture (Normal)
+		case "benchmodeltexnormal":
+		case "librarymodeltexnormal":
+		{
+			var temp;
+			if (string_contains(menu_current.menu_name, "bench"))
+				temp = bench_settings
+			else
+				temp = temp_edit
+			
+			// Import from file
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
+			
+			// Download from user
+			if (temp.model_file != null && temp.model_file.player_skin)
+				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
+			
+			// Default
+			var texobj = temp.model
+			if (texobj != null)
+			{
+				if (texobj.model_format = e_model_format.BLOCK)
+				{
+					if (texobj.model_normal_texture_map = null && texobj.block_sheet_normal_texture = null) // Model has no texture, use Minecraft
+						texobj = mc_res
+				}
+			}
+			
+			if (texobj != null)
+			{
+				if (texobj.model_normal_texture_map = null && texobj.model_texture = null)
+				{
+					menu_add_item(null, text_get("listdefault", text_get("listnone")))
+				}
+				else
+				{
+					var tex;
+					with (temp)
+						tex = temp_get_model_tex_normal_preview(texobj, model_file)
+					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+				}
+			}
+			else
+				menu_add_item(null, text_get("listdefault", text_get("listnone")))
+			
+			// Add existing resources
+			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+			{
+				var res = res_list.display_list[|i];
+				if (res = temp.model || res = texobj)
+					continue
+				
+				var tex;
+				with (temp)
+					tex = temp_get_model_tex_normal_preview(res, model_file)
+				
+				if (tex != null)
+					menu_add_item(res, res.display_name, tex)
+			}
+			
+			break
+		}
+		
 		// Terrain
 		case "benchscenery":
 		case "libraryscenery":
@@ -156,11 +307,11 @@ function list_init(name)
 		
 		// Block texture
 		case "benchblocktex":
-		case "benchblockmaterialtex":
-		case "benchblocknormaltex":
+		case "benchblocktexmaterial":
+		case "benchblocktexnormal":
 		case "libraryblocktex":
-		case "libraryblockmaterialtex":
-		case "libraryblocknormaltex":
+		case "libraryblocktexmaterial":
+		case "libraryblocktexnormal":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -181,7 +332,11 @@ function list_init(name)
 		
 		// Item texture
 		case "benchitemtex":
+		case "benchitemtexmaterial":
+		case "benchitemtexnormal":
 		case "libraryitemtex":
+		case "libraryitemtexmaterial":
+		case "libraryitemtexnormal":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -261,11 +416,11 @@ function list_init(name)
 		
 		// Shape texture
 		case "benchshapetex":
-		case "benchshapematerialtex":
-		case "benchshapenormaltex":
+		case "benchshapetexmaterial":
+		case "benchshapetexnormal":
 		case "libraryshapetex":
-		case "libraryshapematerialtex":
-		case "libraryshapenormaltex":
+		case "libraryshapetexmaterial":
+		case "libraryshapetexnormal":
 		{
 			// None
 			menu_add_item(null, text_get("listnone"))
@@ -523,8 +678,8 @@ function list_init(name)
 		
 		// Background ground texture
 		case "backgroundgroundtex":
-		case "backgroundgroundmaterialtex":
-		case "backgroundgroundnormaltex":
+		case "backgroundgroundtexmaterial":
+		case "backgroundgroundtexnormal":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -537,12 +692,12 @@ function list_init(name)
 			{
 				var res = res_list.display_list[|i];
 				
-				if (name = "backgroundgroundmaterialtex") // Material
+				if (name = "backgroundgroundtexmaterial") // Material
 				{
 					if (res != mc_res && res.block_sheet_material_texture != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
-				else if (name = "backgroundgroundnormaltex") // Normal
+				else if (name = "backgroundgroundtexnormal") // Normal
 				{
 					if (res != mc_res && res.block_sheet_normal_texture != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
@@ -694,17 +849,147 @@ function list_init(name)
 			break
 		}
 		
+		// Timeline frame skin (Material map)
+		case "frameeditorchartexmaterial":
+		case "frameeditorspblocktexmaterial":
+		case "frameeditorbodyparttexmaterial":
+		case "frameeditormodeltexmaterial":
+		{
+			var temp = tl_edit.temp;
+			
+			// Default
+			var texobj = temp.model_material_tex;
+			
+			// Animatable special block in scenery
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			{
+				if (tl_edit.part_root.type = e_tl_type.SCENERY)
+				{
+					with (tl_edit.part_root.temp)
+					{
+						if (block_material_tex.type = e_res_type.PACK)
+							texobj = block_material_tex
+						else
+							texobj = model_material_tex
+					}
+				}
+			}
+			
+			if (texobj = null)
+				texobj = temp.model
+			
+			if (texobj != null)
+			{
+				if (texobj.model_material_texture_map = null && texobj.model_texture = null)
+					menu_add_item(null, text_get("listdefault", text_get("listnone")))
+				else
+				{
+					var modelfile = temp.model_file;
+					if (tl_edit.type = e_temp_type.BODYPART)
+						modelfile = tl_edit.model_part
+				
+					var tex;
+					with (temp)
+						tex = temp_get_model_tex_material_preview(texobj, modelfile)
+					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+				}
+			}
+			else
+				menu_add_item(null, text_get("listdefault", text_get("listnone")), null)
+			
+			// Add existing resources
+			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+			{
+				var res = res_list.display_list[|i];
+				if ((temp.object_index != obj_timeline && res = temp.model) || res = texobj)
+					continue
+				
+				var tex;
+				with (temp)
+					tex = temp_get_model_tex_material_preview(res, model_file)
+				if (tex != null)
+					menu_add_item(res, res.display_name, tex)
+			}
+			
+			break
+		}
+		
+		// Timeline frame skin (Normal map)
+		case "frameeditorchartexnormal":
+		case "frameeditorspblocktexnormal":
+		case "frameeditorbodyparttexnormal":
+		case "frameeditormodeltexnormal":
+		{
+			var temp = tl_edit.temp;
+			
+			// Default
+			var texobj = temp.model_normal_tex;
+			
+			// Animatable special block in scenery
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			{
+				if (tl_edit.part_root.type = e_tl_type.SCENERY)
+				{
+					with (tl_edit.part_root.temp)
+					{
+						if (block_normal_tex.type = e_res_type.PACK)
+							texobj = block_normal_tex
+						else
+							texobj = model_normal_tex
+					}
+				}
+			}
+			
+			if (texobj = null)
+				texobj = temp.model
+			
+			if (texobj != null)
+			{
+				if (texobj.model_normal_texture_map = null && texobj.model_texture = null)
+					menu_add_item(null, text_get("listdefault", text_get("listnone")))
+				else
+				{
+					var modelfile = temp.model_file;
+					if (tl_edit.type = e_temp_type.BODYPART)
+						modelfile = tl_edit.model_part
+				
+					var tex;
+					with (temp)
+						tex = temp_get_model_tex_normal_preview(texobj, modelfile)
+					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+				}
+			}
+			else
+				menu_add_item(null, text_get("listdefault", text_get("listnone")), null)
+			
+			// Add existing resources
+			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+			{
+				var res = res_list.display_list[|i];
+				if ((temp.object_index != obj_timeline && res = temp.model) || res = texobj)
+					continue
+				
+				var tex;
+				with (temp)
+					tex = temp_get_model_tex_normal_preview(res, model_file)
+				if (tex != null)
+					menu_add_item(res, res.display_name, tex)
+			}
+			
+			break
+		}
+		
 		// Timeline frame block texture
 		case "frameeditorblocktex":
-		case "frameeditorblockmaterialtex":
-		case "frameeditorblocknormaltex":
+		case "frameeditorblocktexmaterial":
+		case "frameeditorblocktexnormal":
 		{	
 			var texobj = null;
 			
 			// Default
-			if (name = "frameeditorblockmaterialtex")
+			if (name = "frameeditorblocktexmaterial")
 				texobj = tl_edit.temp.block_material_tex
-			else if (name = "frameeditorblocknormaltex")
+			else if (name = "frameeditorblocktexnormal")
 				texobj = tl_edit.temp.block_normal_tex
 			else if (name = "frameeditorblocktex")
 				texobj = tl_edit.temp.block_tex
@@ -718,12 +1003,12 @@ function list_init(name)
 					
 					with (temp)
 					{
-						if (name = "frameeditorblockmaterialtex")
+						if (name = "frameeditorblocktexmaterial")
 						{
 							if (block_material_tex.type = e_res_type.PACK || block_material_tex.type = e_res_type.BLOCK_SHEET)
 								texobj = block_material_tex
 						}
-						else if (name = "frameeditorblocknormaltex")
+						else if (name = "frameeditorblocktexnormal")
 						{
 							if (block_normal_tex.type = e_res_type.PACK || block_normal_tex.type = e_res_type.BLOCK_SHEET)
 								texobj = block_normal_tex
@@ -751,11 +1036,24 @@ function list_init(name)
 		}
 		
 		// Timeline frame item texture
-		case "frameeditoritemitemtex":
+		case "frameeditoritemtex":
+		case "frameeditoritemtexmaterial":
+		case "frameeditoritemtexnormal":
 		{
 			// Default
-			var texobj = tl_edit.temp.item_tex;
-			menu_add_item(null, text_get("listdefault", texobj.display_name))
+			var texobj;
+			
+			if (name = "frameeditoritemtexmaterial")
+				texobj = tl_edit.temp.item_material_tex
+			else if (name = "frameeditoritemtexnormal")
+				texobj = tl_edit.temp.item_normal_tex
+			else
+				texobj = tl_edit.temp.item_tex
+			
+			if (texobj.type = e_res_type.TEXTURE)
+				menu_add_item(texobj,text_get("listdefault", texobj.display_name), texobj.texture)
+			else if (texobj.item_sheet_texture != null)
+				menu_add_item(texobj, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -772,14 +1070,14 @@ function list_init(name)
 		
 		// Timeline frame shape texture
 		case "frameeditorshapetex":
-		case "frameeditorshapematerialtex":
-		case "frameeditorshapenormaltex":
+		case "frameeditorshapetexmaterial":
+		case "frameeditorshapetexnormal":
 		{
 			var texobj;
 			
 			if (name = "frameeditorshapetex")
 				texobj = tl_edit.temp.shape_tex
-			else if (name = "frameeditorshapematerialtex")
+			else if (name = "frameeditorshapetexmaterial")
 				texobj = tl_edit.temp.shape_material_tex
 			else
 				texobj = tl_edit.temp.shape_normal_tex

@@ -8,8 +8,14 @@
 
 function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 {
-	if (!res_is_ready(res))
-		res = mc_res
+	if (!res_is_ready(res[0]))
+		res[0] = mc_res
+	
+	if (!res_is_ready(res[1]))
+		res[1] = mc_res
+	
+	if (!res_is_ready(res[2]))
+		res[2] = mc_res
 	
 	if (facecamera)
 	{
@@ -45,10 +51,53 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 		matrix_world_multiply_post(matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
 	}
 	
-	if (res.item_sheet_texture != null)
-		render_set_texture(res.item_sheet_texture)
+	if (res[0].item_sheet_texture != null)
+		render_set_texture(res[0].item_sheet_texture)
 	else
-		render_set_texture(res.texture)
+		render_set_texture(res[0].texture)
+	
+	if (res[1] != null && res[1] != mc_res)
+	{
+		if (shader_uniform_metallic != 1)
+		{
+			shader_uniform_metallic = 1
+			render_set_uniform("uMetallic", shader_uniform_metallic)
+		}
+		
+		if (shader_uniform_roughness != 0)
+		{
+			shader_uniform_roughness = 0
+			render_set_uniform("uRoughness", shader_uniform_roughness)
+		}
+		
+		if (shader_uniform_brightness != 1)
+		{
+			shader_uniform_brightness = 1
+			render_set_uniform("uBrightness", shader_uniform_brightness)
+		}
+		
+		render_set_uniform_int("uMaterialUseGlossiness", res[1].material_uses_glossiness)
+		
+		if (res[1].item_sheet_material_texture != null)
+			render_set_texture(res[1].item_sheet_material_texture, "Material")
+		else
+			render_set_texture(res[1].texture, "Material")
+	}
+	else
+	{
+		render_set_uniform_int("uMaterialUseGlossiness", 0)
+		render_set_texture(spr_default_material, "Material")
+	}
+	
+	if (res[2] != null && res[2] != mc_res)
+	{
+		if (res[2].item_sheet_normal_texture != null)
+			render_set_texture(res[2].item_sheet_normal_texture, "Normal")
+		else
+			render_set_texture(res[2].texture, "Normal")
+	}
+	else
+		render_set_texture(spr_default_normal, "Normal")
 	
 	vbuffer_render(vbuffer)
 }

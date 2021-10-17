@@ -115,7 +115,7 @@ function render_world_particle()
 			
 			case e_temp_type.ITEM:
 			{
-				render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, temp.item_tex)
+				render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [temp.item_tex, null, null])
 				break
 			}
 			

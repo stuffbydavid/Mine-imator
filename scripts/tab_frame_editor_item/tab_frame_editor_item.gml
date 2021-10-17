@@ -32,14 +32,4 @@ function tab_frame_editor_item()
 		
 		tab_collapse_end()
 	}
-	
-	// Image
-	var tex = res.block_preview_texture;
-	
-	if (tex = null)
-		tex = res.texture
-	
-	tab_control_menu()
-	draw_button_menu("frameeditoritemitemtex", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXTURE_OBJ], res.display_name, action_tl_frame_texture_obj, false, tex)
-	tab_next()
 }

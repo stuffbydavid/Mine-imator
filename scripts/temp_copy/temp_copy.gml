@@ -13,6 +13,8 @@ function temp_copy(to)
 	
 	to.model = model
 	to.model_tex = model_tex
+	to.model_material_tex = model_material_tex
+	to.model_normal_tex = model_normal_tex
 	to.model_name = model_name
 	to.model_state = array_copy_1d(model_state)
 	to.model_part_name = model_part_name
@@ -23,6 +25,8 @@ function temp_copy(to)
 	to.banner_skin = sprite_duplicate(banner_skin)
 	
 	to.item_tex = item_tex
+	to.item_material_tex = item_material_tex
+	to.item_normal_tex = item_normal_tex
 	to.item_slot = item_slot
 	to.item_3d = item_3d
 	to.item_face_camera = item_face_camera

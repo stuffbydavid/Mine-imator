@@ -6,8 +6,20 @@ function temp_event_destroy()
 	if (model_texture_name_map != null)	
 		ds_map_destroy(model_texture_name_map)
 	
+	if (model_material_texture_name_map != null)	
+		ds_map_destroy(model_material_texture_name_map)
+	
+	if (model_normal_texture_name_map != null)	
+		ds_map_destroy(model_normal_texture_name_map)
+	
 	if (model_shape_texture_name_map != null)	
 		ds_map_destroy(model_shape_texture_name_map)
+	
+	if (model_shape_material_texture_name_map != null)	
+		ds_map_destroy(model_shape_material_texture_name_map)
+	
+	if (model_shape_normal_texture_name_map != null)	
+		ds_map_destroy(model_shape_normal_texture_name_map)
 	
 	if (model_hide_list != null)
 		ds_list_destroy(model_hide_list)
@@ -37,6 +49,12 @@ function temp_event_destroy()
 		
 		if (item_tex != null)
 			item_tex.count--
+		
+		if (item_material_tex != null)
+			item_material_tex.count--
+		
+		if (item_normal_tex != null)
+			item_normal_tex.count--
 		
 		if (block_tex != null)
 			block_tex.count--

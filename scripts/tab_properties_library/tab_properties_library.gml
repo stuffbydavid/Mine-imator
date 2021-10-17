@@ -80,6 +80,24 @@ function tab_properties_library()
 			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
 			tab_next()
 			
+			// Skin (Material map)
+			tex = null
+			with (temp_edit.model_material_tex)
+				tex = res_get_model_material_texture(model_part_get_material_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			
+			tab_control_menu(32)
+			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexmaterial" : "libraryskinmaterial"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_material_tex, temp_edit.model_material_tex.display_name, action_lib_model_material_tex, false, tex, null)
+			tab_next()
+			
+			// Skin (Normal map)
+			tex = null
+			with (temp_edit.model_normal_tex)
+				tex = res_get_model_normal_texture(model_part_get_normal_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			
+			tab_control_menu(32)
+			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexnormal" : "libraryskinnormal"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_normal_tex, temp_edit.model_normal_tex.display_name, action_lib_model_normal_tex, false, tex, null)
+			tab_next()
+			
 			break
 		}
 		
@@ -103,12 +121,12 @@ function tab_properties_library()
 			
 			// Material texture
 			tab_control_menu(32)
-			draw_button_menu("libraryblockmaterialtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_material_tex, temp_edit.block_material_tex.display_name, action_lib_block_material_tex, false, temp_edit.block_material_tex.block_preview_texture, null)
+			draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_material_tex, temp_edit.block_material_tex.display_name, action_lib_block_material_tex, false, temp_edit.block_material_tex.block_preview_texture, null)
 			tab_next()
 			
 			// Normal texture
 			tab_control_menu(32)
-			draw_button_menu("libraryblocknormaltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_normal_tex, temp_edit.block_normal_tex.display_name, action_lib_block_normal_tex, false, temp_edit.block_normal_tex.block_preview_texture, null)
+			draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_normal_tex, temp_edit.block_normal_tex.display_name, action_lib_block_normal_tex, false, temp_edit.block_normal_tex.block_preview_texture, null)
 			tab_next()
 			
 			break
@@ -153,6 +171,32 @@ function tab_properties_library()
 			
 			tab_control_menu(32)
 			draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
+			tab_next()
+			
+			// Image (Material map)
+			res = temp_edit.item_material_tex
+			if (!res_is_ready(res))
+				res = mc_res
+			
+			tex = res.block_preview_texture
+			if (tex = null)
+				tex = res.texture
+			
+			tab_control_menu(32)
+			draw_button_menu("libraryitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_material_tex, temp_edit.item_material_tex.display_name, action_lib_item_material_tex, false, tex)
+			tab_next()
+			
+			// Image (Normal map)
+			res = temp_edit.item_normal_tex
+			if (!res_is_ready(res))
+				res = mc_res
+			
+			tex = res.block_preview_texture
+			if (tex = null)
+				tex = res.texture
+			
+			tab_control_menu(32)
+			draw_button_menu("libraryitemtexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_normal_tex, temp_edit.item_normal_tex.display_name, action_lib_item_normal_tex, false, tex)
 			tab_next()
 			
 			var sx;
@@ -203,12 +247,12 @@ function tab_properties_library()
 			
 			// Material texture
 			tab_control_menu(32)
-			draw_button_menu("libraryblockmaterialtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_material_tex, temp_edit.block_material_tex.display_name, action_lib_block_material_tex, false, temp_edit.block_material_tex.block_preview_texture, null)
+			draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_material_tex, temp_edit.block_material_tex.display_name, action_lib_block_material_tex, false, temp_edit.block_material_tex.block_preview_texture, null)
 			tab_next()
 			
 			// Normal texture
 			tab_control_menu(32)
-			draw_button_menu("libraryblocknormaltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_normal_tex, temp_edit.block_normal_tex.display_name, action_lib_block_normal_tex, false, temp_edit.block_normal_tex.block_preview_texture, null)
+			draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_normal_tex, temp_edit.block_normal_tex.display_name, action_lib_block_normal_tex, false, temp_edit.block_normal_tex.block_preview_texture, null)
 			tab_next()
 			
 			break
@@ -250,6 +294,24 @@ function tab_properties_library()
 			
 			tab_control_menu(32)
 			draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
+			tab_next()
+			
+			// Skin (Material map)
+			tex = null
+			with (temp_edit.model_material_tex)
+				tex = res_get_model_material_texture(model_part_get_material_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			
+			tab_control_menu(32)
+			draw_button_menu("librarybodypartskinmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_material_tex, temp_edit.model_material_tex.display_name, action_lib_model_material_tex, false, tex, null)
+			tab_next()
+			
+			// Skin (Normal map)
+			tex = null
+			with (temp_edit.model_normal_tex)
+				tex = res_get_model_normal_texture(model_part_get_normal_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			
+			tab_control_menu(32)
+			draw_button_menu("librarybodypartskinnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_normal_tex, temp_edit.model_normal_tex.display_name, action_lib_model_normal_tex, false, tex, null)
 			tab_next()
 			
 			break
@@ -327,7 +389,7 @@ function tab_properties_library()
 			}
 			
 			tab_control_menu(32)
-			draw_button_menu("libraryshapematerialtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_material_tex, text, action_lib_shape_material_tex, false, sprite)
+			draw_button_menu("libraryshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_material_tex, text, action_lib_shape_material_tex, false, sprite)
 			tab_next()
 			
 			// Normal texture
@@ -343,7 +405,7 @@ function tab_properties_library()
 			}
 			
 			tab_control_menu(32)
-			draw_button_menu("libraryshapenormaltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_normal_tex, text, action_lib_shape_normal_tex, false, sprite)
+			draw_button_menu("libraryshapetexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_normal_tex, text, action_lib_shape_normal_tex, false, sprite)
 			tab_next()
 			
 			// Mapped
@@ -457,6 +519,46 @@ function tab_properties_library()
 			
 			tab_control_menu(32)
 			draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, text, action_lib_model_tex, false, tex)
+			tab_next()
+			
+			// Texture (Material map)
+			with (temp_edit)
+			{
+				texobj = temp_get_model_tex_material_obj(null)
+				tex = temp_get_model_tex_material_preview(texobj, model_file)
+			}
+			
+			if (texobj != null)
+				text = texobj.display_name
+			else
+				text = text_get("listnone")
+			
+			// Default
+			if (temp_edit.model_material_tex = null)
+				text = text_get("listdefault", text)
+			
+			tab_control_menu(32)
+			draw_button_menu("librarymodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_material_tex, text, action_lib_model_material_tex, false, tex)
+			tab_next()
+			
+			// Texture (Normal map)
+			with (temp_edit)
+			{
+				texobj = temp_get_model_tex_normal_obj(null)
+				tex = temp_get_model_tex_normal_preview(texobj, model_file)
+			}
+			
+			if (texobj != null)
+				text = texobj.display_name
+			else
+				text = text_get("listnone")
+			
+			// Default
+			if (temp_edit.model_normal_tex = null)
+				text = text_get("listdefault", text)
+			
+			tab_control_menu(32)
+			draw_button_menu("librarymodeltexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_normal_tex, text, action_lib_model_normal_tex, false, tex)
 			tab_next()
 			break	
 		}

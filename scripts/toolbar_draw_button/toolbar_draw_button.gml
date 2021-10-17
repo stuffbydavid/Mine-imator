@@ -20,6 +20,13 @@ function toolbar_draw_button(name, xx, yy, wid)
 	
 	if (trigger)
 	{
+		var prevani;
+		
+		if (toolbar_menu_active = true && ds_list_size(context_menu_level) > 0)
+			prevani = context_menu_level[|0].ani
+		else
+			prevani = 0
+		
 		context_menu_close()
 		app_mouse_clear()
 		
@@ -42,14 +49,15 @@ function toolbar_draw_button(name, xx, yy, wid)
 			context_menu_value_default = argument[8]
 		}
 		
-		context_menu_add_level(name, xx - 1, yy + toolbar_size - 1)
+		var menu = context_menu_add_level(name, xx - 1, yy + toolbar_size - 1);
+		menu.ani = prevani
 		
 		if (font != draw_get_font())
 			draw_set_font(font)
 	}
 	
 	if (context_menu_name = name)
-		current_microani.value = true
+		current_microani.hover.value = true
 	
 	if (context_menu_name != "")
 		window_busy = "contextmenu"

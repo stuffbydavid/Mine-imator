@@ -15,7 +15,11 @@ function history_save_res(res)
 		save_id = res.save_id
 		usage_model_amount = 0
 		usage_model_tex_amount = 0
+		usage_model_material_tex_amount = 0
+		usage_model_normal_tex_amount = 0
 		usage_item_tex_amount = 0
+		usage_item_material_tex_amount = 0
+		usage_item_normal_tex_amount = 0
 		usage_block_tex_amount = 0
 		usage_block_material_tex_amount = 0
 		usage_block_normal_tex_amount = 0
@@ -54,10 +58,34 @@ function history_save_res(res)
 			save.usage_model_tex_amount++
 		}
 		
+		if (model_material_tex = res)
+		{
+			save.usage_model_material_tex_save_id[save.usage_model_material_tex_amount] = save_id
+			save.usage_model_material_tex_amount++
+		}
+		
+		if (model_normal_tex = res)
+		{
+			save.usage_model_normal_tex_save_id[save.usage_model_normal_tex_amount] = save_id
+			save.usage_model_normal_tex_amount++
+		}
+		
 		if (item_tex = res)
 		{
 			save.usage_item_tex_save_id[save.usage_item_tex_amount] = save_id
 			save.usage_item_tex_amount++
+		}
+		
+		if (item_material_tex = res)
+		{
+			save.usage_item_material_tex_save_id[save.usage_item_material_tex_amount] = save_id
+			save.usage_item_material_tex_amount++
+		}
+		
+		if (item_normal_tex = res)
+		{
+			save.usage_item_normal_tex_save_id[save.usage_item_normal_tex_amount] = save_id
+			save.usage_item_normal_tex_amount++
 		}
 		
 		if (block_tex = res)

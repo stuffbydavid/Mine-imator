@@ -1,7 +1,7 @@
 /// popup_loading_draw()
 
 function popup_loading_draw()
-{
+{	
 	if (popup.load_object && popup.load_script)
 		with (popup.load_object)
 			script_execute(app.popup.load_script)

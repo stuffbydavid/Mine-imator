@@ -19,6 +19,12 @@ function temp_duplicate()
 		if (item_tex != null)
 			item_tex.count++
 		
+		if (item_material_tex != null)
+			item_material_tex.count++
+		
+		if (item_normal_tex != null)
+			item_normal_tex.count++
+		
 		if (block_tex != null)
 			block_tex.count++
 		
