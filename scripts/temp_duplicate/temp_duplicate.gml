@@ -19,11 +19,11 @@ function temp_duplicate()
 		if (item_tex != null)
 			item_tex.count++
 		
-		if (item_material_tex != null)
-			item_material_tex.count++
+		if (item_tex_material != null)
+			item_tex_material.count++
 		
-		if (item_normal_tex != null)
-			item_normal_tex.count++
+		if (item_tex_normal != null)
+			item_tex_normal.count++
 		
 		if (block_tex != null)
 			block_tex.count++
@@ -34,11 +34,11 @@ function temp_duplicate()
 		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 			shape_tex.count++
 		
-		if (shape_material_tex != null)
-			shape_material_tex.count++
+		if (shape_tex_material != null)
+			shape_tex_material.count++
 		
-		if (shape_normal_tex != null)
-			shape_normal_tex.count++
+		if (shape_tex_normal != null)
+			shape_tex_normal.count++
 		
 		if (text_font != null)
 			text_font.count++

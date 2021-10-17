@@ -63,9 +63,9 @@ function list_init(name)
 			with (mc_res)
 			{
 				if (string_contains(name, "material"))
-					tex = res_get_model_material_texture(model_part_get_material_texture_name(temp.model_file, temp.model_material_texture_name_map))
+					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 				else if (string_contains(name, "normal"))
-					tex = res_get_model_normal_texture(model_part_get_normal_texture_name(temp.model_file, temp.model_normal_texture_name_map))
+					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_tex_normal_name_map))
 				else
 					tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 			}
@@ -82,9 +82,9 @@ function list_init(name)
 				with (res)
 				{
 					if (string_contains(name, "material"))
-						tex = res_get_model_material_texture(model_part_get_material_texture_name(temp.model_file, temp.model_material_texture_name_map))
+						tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 					else if (string_contains(name, "normal"))
-						tex = res_get_model_normal_texture(model_part_get_normal_texture_name(temp.model_file, temp.model_normal_texture_name_map))
+						tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_tex_normal_name_map))
 					else
 						tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 				}
@@ -180,14 +180,14 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_material_texture_map = null && texobj.block_sheet_material_texture = null) // Model has no texture, use Minecraft
+					if (texobj.model_texture_material_map = null && texobj.block_sheet_texture_material = null) // Model has no texture, use Minecraft
 						texobj = mc_res
 				}
 			}
 			
 			if (texobj != null)
 			{
-				if (texobj.model_material_texture_map = null && texobj.model_texture = null)
+				if (texobj.model_texture_material_map = null && texobj.model_texture = null)
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				else
 				{
@@ -241,14 +241,14 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_normal_texture_map = null && texobj.block_sheet_normal_texture = null) // Model has no texture, use Minecraft
+					if (texobj.model_tex_normal_map = null && texobj.block_sheet_tex_normal = null) // Model has no texture, use Minecraft
 						texobj = mc_res
 				}
 			}
 			
 			if (texobj != null)
 			{
-				if (texobj.model_normal_texture_map = null && texobj.model_texture = null)
+				if (texobj.model_tex_normal_map = null && texobj.model_texture = null)
 				{
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				}
@@ -694,12 +694,12 @@ function list_init(name)
 				
 				if (name = "backgroundgroundtexmaterial") // Material
 				{
-					if (res != mc_res && res.block_sheet_material_texture != null)
+					if (res != mc_res && res.block_sheet_texture_material != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 				else if (name = "backgroundgroundtexnormal") // Normal
 				{
-					if (res != mc_res && res.block_sheet_normal_texture != null)
+					if (res != mc_res && res.block_sheet_tex_normal != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 				else // Diffuse
@@ -858,7 +858,7 @@ function list_init(name)
 			var temp = tl_edit.temp;
 			
 			// Default
-			var texobj = temp.model_material_tex;
+			var texobj = temp.model_tex_material;
 			
 			// Animatable special block in scenery
 			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
@@ -867,10 +867,10 @@ function list_init(name)
 				{
 					with (tl_edit.part_root.temp)
 					{
-						if (block_material_tex.type = e_res_type.PACK)
-							texobj = block_material_tex
+						if (block_tex_material.type = e_res_type.PACK)
+							texobj = block_tex_material
 						else
-							texobj = model_material_tex
+							texobj = model_tex_material
 					}
 				}
 			}
@@ -880,7 +880,7 @@ function list_init(name)
 			
 			if (texobj != null)
 			{
-				if (texobj.model_material_texture_map = null && texobj.model_texture = null)
+				if (texobj.model_texture_material_map = null && texobj.model_texture = null)
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				else
 				{
@@ -923,7 +923,7 @@ function list_init(name)
 			var temp = tl_edit.temp;
 			
 			// Default
-			var texobj = temp.model_normal_tex;
+			var texobj = temp.model_tex_normal;
 			
 			// Animatable special block in scenery
 			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
@@ -932,10 +932,10 @@ function list_init(name)
 				{
 					with (tl_edit.part_root.temp)
 					{
-						if (block_normal_tex.type = e_res_type.PACK)
-							texobj = block_normal_tex
+						if (block_tex_normal.type = e_res_type.PACK)
+							texobj = block_tex_normal
 						else
-							texobj = model_normal_tex
+							texobj = model_tex_normal
 					}
 				}
 			}
@@ -945,7 +945,7 @@ function list_init(name)
 			
 			if (texobj != null)
 			{
-				if (texobj.model_normal_texture_map = null && texobj.model_texture = null)
+				if (texobj.model_tex_normal_map = null && texobj.model_texture = null)
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				else
 				{
@@ -988,9 +988,9 @@ function list_init(name)
 			
 			// Default
 			if (name = "frameeditorblocktexmaterial")
-				texobj = tl_edit.temp.block_material_tex
+				texobj = tl_edit.temp.block_tex_material
 			else if (name = "frameeditorblocktexnormal")
-				texobj = tl_edit.temp.block_normal_tex
+				texobj = tl_edit.temp.block_tex_normal
 			else if (name = "frameeditorblocktex")
 				texobj = tl_edit.temp.block_tex
 			
@@ -1005,13 +1005,13 @@ function list_init(name)
 					{
 						if (name = "frameeditorblocktexmaterial")
 						{
-							if (block_material_tex.type = e_res_type.PACK || block_material_tex.type = e_res_type.BLOCK_SHEET)
-								texobj = block_material_tex
+							if (block_tex_material.type = e_res_type.PACK || block_tex_material.type = e_res_type.BLOCK_SHEET)
+								texobj = block_tex_material
 						}
 						else if (name = "frameeditorblocktexnormal")
 						{
-							if (block_normal_tex.type = e_res_type.PACK || block_normal_tex.type = e_res_type.BLOCK_SHEET)
-								texobj = block_normal_tex
+							if (block_tex_normal.type = e_res_type.PACK || block_tex_normal.type = e_res_type.BLOCK_SHEET)
+								texobj = block_tex_normal
 						}
 						else if (name = "frameeditorblocktex")
 						{
@@ -1044,9 +1044,9 @@ function list_init(name)
 			var texobj;
 			
 			if (name = "frameeditoritemtexmaterial")
-				texobj = tl_edit.temp.item_material_tex
+				texobj = tl_edit.temp.item_tex_material
 			else if (name = "frameeditoritemtexnormal")
-				texobj = tl_edit.temp.item_normal_tex
+				texobj = tl_edit.temp.item_tex_normal
 			else
 				texobj = tl_edit.temp.item_tex
 			
@@ -1078,9 +1078,9 @@ function list_init(name)
 			if (name = "frameeditorshapetex")
 				texobj = tl_edit.temp.shape_tex
 			else if (name = "frameeditorshapetexmaterial")
-				texobj = tl_edit.temp.shape_material_tex
+				texobj = tl_edit.temp.shape_tex_material
 			else
-				texobj = tl_edit.temp.shape_normal_tex
+				texobj = tl_edit.temp.shape_tex_normal
 			
 			if (texobj != null)
 			{

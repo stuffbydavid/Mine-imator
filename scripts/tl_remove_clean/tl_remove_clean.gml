@@ -38,11 +38,11 @@ function tl_remove_clean()
 			if (shape_tex = other.id)
 				shape_tex = null
 			
-			if (shape_material_tex = other.id)
-				shape_material_tex = null
+			if (shape_tex_material = other.id)
+				shape_tex_material = null
 			
-			if (shape_normal_tex = other.id)
-				shape_normal_tex = null
+			if (shape_tex_normal = other.id)
+				shape_tex_normal = null
 		}
 		
 		with (obj_bench_settings) 
@@ -50,11 +50,11 @@ function tl_remove_clean()
 			if (shape_tex = other.id)
 				shape_tex = null
 			
-			if (shape_material_tex = other.id)
-				shape_material_tex = null
+			if (shape_tex_material = other.id)
+				shape_tex_material = null
 			
-			if (shape_normal_tex = other.id)
-				shape_normal_tex = null
+			if (shape_tex_normal = other.id)
+				shape_tex_normal = null
 		}
 		
 		with (obj_timeline)
@@ -122,11 +122,11 @@ function tl_remove_clean()
 				if (model_texture_name_map != null)	
 					ds_map_destroy(model_texture_name_map)
 				
-				if (model_material_texture_name_map != null)	
-					ds_map_destroy(model_material_texture_name_map)
+				if (model_texture_material_name_map != null)	
+					ds_map_destroy(model_texture_material_name_map)
 				
-				if (model_normal_texture_name_map != null)	
-					ds_map_destroy(model_normal_texture_name_map)
+				if (model_tex_normal_name_map != null)	
+					ds_map_destroy(model_tex_normal_name_map)
 				
 				if (model_hide_list != null)
 					ds_list_destroy(model_hide_list)

@@ -20,8 +20,8 @@ function bench_click(type)
 			}
 			
 			model_tex = mc_res
-			model_material_tex = mc_res
-			model_normal_tex = mc_res
+			model_tex_material = mc_res
+			model_tex_normal = mc_res
 			
 			temp_update_model()
 			temp_update_model_shape()
@@ -37,8 +37,8 @@ function bench_click(type)
 			}
 			
 			model_tex = mc_res
-			model_material_tex = mc_res
-			model_normal_tex = mc_res
+			model_tex_material = mc_res
+			model_tex_normal = mc_res
 			
 			temp_update_model()
 			temp_update_model_shape()
@@ -48,8 +48,8 @@ function bench_click(type)
 		if (id.type = e_tl_type.BODYPART)
 		{
 			model_tex = mc_res
-			model_material_tex = mc_res
-			model_normal_tex = mc_res
+			model_tex_material = mc_res
+			model_tex_normal = mc_res
 			
 			temp_update_model()
 			temp_update_model_part()
@@ -72,8 +72,8 @@ function bench_click(type)
 		if (id.type = e_tl_type.MODEL)
 		{
 			model_tex = null
-			model_material_tex = null
-			model_normal_tex = null
+			model_tex_material = null
+			model_tex_normal = null
 			
 			temp_update_model()
 			temp_update_model_shape()

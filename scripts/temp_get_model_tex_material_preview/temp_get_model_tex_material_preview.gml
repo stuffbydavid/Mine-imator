@@ -11,5 +11,5 @@ function temp_get_model_tex_material_preview(texobj, part)
 		return texobj.block_preview_texture
 	
 	with (texobj)
-		return res_get_model_material_texture(model_part_get_material_texture_name(part, other.model_material_texture_name_map))
+		return res_get_model_texture_material(model_part_get_texture_material_name(part, other.model_texture_material_name_map))
 }

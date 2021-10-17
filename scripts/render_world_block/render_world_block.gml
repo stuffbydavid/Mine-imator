@@ -37,28 +37,28 @@ function render_world_block()
 		res[2] = mc_res
 	
 	var tex, texprev, texani;
-	var mattex, mattexprev, mattexani;
-	var normaltex, normaltexprev, normaltexani;
+	var texmat, texmatprev, texanimat;
+	var texnormal, texnormalprev, texaninormal;
 	
 	render_set_uniform_int("uMaterialUseGlossiness", res[1].material_uses_glossiness)
 	
 	tex = res[0].block_sheet_texture
-	mattex = res[1].block_sheet_material_texture
-	normaltex = res[2].block_sheet_normal_texture
+	texmat = res[1].block_sheet_texture_material
+	texnormal = res[2].block_sheet_tex_normal
 	
 	texprev = tex
-	mattexprev = mattex
-	normaltexprev = normaltex
+	texmatprev = texmat
+	texnormalprev = texnormal
 	
 	if (res[0].block_sheet_ani_texture != null)
 		texani = res[0].block_sheet_ani_texture[block_texture_get_frame()]
 	else
 		texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
 	
-	if (res[1].block_sheet_ani_material_texture != null)
-		mattexani = res[1].block_sheet_ani_material_texture[block_texture_get_frame()]
+	if (res[1].block_sheet_ani_texture_material != null)
+		texanimat = res[1].block_sheet_ani_texture_material[block_texture_get_frame()]
 	else
-		mattexani = mc_res.block_sheet_ani_material_texture[block_texture_get_frame()]
+		texanimat = mc_res.block_sheet_ani_texture_material[block_texture_get_frame()]
 	
 	// Set material values
 	if (res[1] != mc_res)
@@ -82,15 +82,15 @@ function render_world_block()
 		}
 	}
 	
-	if (res[2].block_sheet_ani_normal_texture != null)
-		normaltexani = res[2].block_sheet_ani_normal_texture[block_texture_get_frame()]
+	if (res[2].block_sheet_ani_tex_normal != null)
+		texaninormal = res[2].block_sheet_ani_tex_normal[block_texture_get_frame()]
 	else
-		normaltexani = mc_res.block_sheet_ani_normal_texture[block_texture_get_frame()]
+		texaninormal = mc_res.block_sheet_ani_tex_normal[block_texture_get_frame()]
 	
 	var blend = shader_blend_color;
 	render_set_texture(tex)
-	render_set_texture(mattex, "Material")
-	render_set_texture(normaltex, "Normal")
+	render_set_texture(texmat, "Material")
+	render_set_texture(texnormal, "Normal")
 	
 	// Rotate by 90 degrees for legacy support
 	if (rotate && (!dev_mode || dev_mode_rotate_blocks))
@@ -127,16 +127,16 @@ function render_world_block()
 			texprev = texani
 		}
 		
-		if (mattexani != mattexprev)
+		if (texanimat != texmatprev)
 		{
-			render_set_texture(mattexani, "Material")
-			mattexprev = mattexani
+			render_set_texture(texanimat, "Material")
+			texmatprev = texanimat
 		}
 		
-		if (normaltexani != normaltexprev)
+		if (texaninormal != texnormalprev)
 		{
-			render_set_texture(normaltexani, "Normal")
-			normaltexprev = normaltexani
+			render_set_texture(texaninormal, "Normal")
+			texnormalprev = texaninormal
 		}
 		
 		render_chunks_vbuffer(chunks, e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED)	
@@ -148,16 +148,16 @@ function render_world_block()
 		texprev = tex
 	}
 	
-	if (mattex != mattexprev)
+	if (texmat != texmatprev)
 	{
-		render_set_texture(mattex, "Material")
-		mattexprev = mattex
+		render_set_texture(texmat, "Material")
+		texmatprev = texmat
 	}
 	
-	if (normaltex != normaltexprev)
+	if (texnormal != texnormalprev)
 	{
-		render_set_texture(normaltex, "Normal")
-		normaltexprev = normaltex
+		render_set_texture(texnormal, "Normal")
+		texnormalprev = texnormal
 	}
 	
 	#endregion
@@ -178,11 +178,11 @@ function render_world_block()
 		render_set_texture(tex)
 		texprev = tex
 		
-		render_set_texture(mattex, "Material")
-		mattexprev = mattex
+		render_set_texture(texmat, "Material")
+		texmatprev = texmat
 		
-		render_set_texture(normaltex, "Normal")
-		normaltexprev = normaltex
+		render_set_texture(texnormal, "Normal")
+		texnormalprev = texnormal
 	}
 	
 	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.NORMAL]))
@@ -257,16 +257,16 @@ function render_world_block()
 			texprev = texani
 		}
 		
-		if (mattexani != mattexprev)
+		if (texanimat != texmatprev)
 		{
-			render_set_texture(mattexani, "Material")
-			mattexprev = mattexani
+			render_set_texture(texanimat, "Material")
+			texmatprev = texanimat
 		}
 		
-		if (normaltexani != normaltexprev)
+		if (texaninormal != texnormalprev)
 		{
-			render_set_texture(normaltexani, "Normal")
-			normaltexprev = normaltexani
+			render_set_texture(texaninormal, "Normal")
+			texnormalprev = texaninormal
 		}
 		
 		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED)
@@ -278,16 +278,16 @@ function render_world_block()
 		texprev = tex
 	}
 	
-	if (mattex != mattexprev)
+	if (texmat != texmatprev)
 	{
-		render_set_texture(mattex, "Material")
-		mattexprev = mattex
+		render_set_texture(texmat, "Material")
+		texmatprev = texmat
 	}
 	
-	if (normaltex != normaltexprev)
+	if (texnormal != texnormalprev)
 	{
-		render_set_texture(normaltex, "Normal")
-		normaltexprev = normaltex
+		render_set_texture(texnormal, "Normal")
+		texnormalprev = texnormal
 	}
 	
 	#endregion
@@ -303,8 +303,8 @@ function render_world_block()
 	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.ANIMATED]))
 	{
 		render_set_texture(texani)
-		render_set_texture(mattexani, "Material")
-		render_set_texture(normaltexani, "Normal")
+		render_set_texture(texanimat, "Material")
+		render_set_texture(texaninormal, "Normal")
 		render_chunks_vbuffer(chunks, e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED)
 	}
 	
@@ -317,8 +317,8 @@ function render_world_block()
 			render_set_texture(texani)
 			
 			/*
-			render_set_texture(mattexani, "Material")
-			render_set_texture(normaltexani, "Normal")
+			render_set_texture(texanimat, "Material")
+			render_set_texture(texaninormal, "Normal")
 			*/
 			
 			render_set_texture(spr_default_material, "Material")

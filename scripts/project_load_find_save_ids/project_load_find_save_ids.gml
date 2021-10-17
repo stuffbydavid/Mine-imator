@@ -41,11 +41,11 @@ function project_load_find_save_ids()
 		background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
 		background_ground_tex.count++
 		
-		background_ground_material_tex = save_id_find(save_id_map[?background_ground_material_tex])
-		background_ground_material_tex.count++
+		background_ground_tex_material = save_id_find(save_id_map[?background_ground_tex_material])
+		background_ground_tex_material.count++
 		
-		background_ground_normal_tex = save_id_find(save_id_map[?background_ground_normal_tex])
-		background_ground_normal_tex.count++
+		background_ground_tex_normal = save_id_find(save_id_map[?background_ground_tex_normal])
+		background_ground_tex_normal.count++
 		
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
 		{
@@ -74,29 +74,29 @@ function project_load_find_save_ids()
 		
 		model = save_id_find(save_id_map[?model])
 		model_tex = save_id_find(save_id_map[?model_tex])
-		model_material_tex = save_id_find(save_id_map[?model_material_tex])
-		model_normal_tex = save_id_find(save_id_map[?model_normal_tex])
+		model_tex_material = save_id_find(save_id_map[?model_tex_material])
+		model_tex_normal = save_id_find(save_id_map[?model_tex_normal])
 		item_tex = save_id_find(save_id_map[?item_tex])
-		item_material_tex = save_id_find(save_id_map[?item_material_tex])
-		item_normal_tex = save_id_find(save_id_map[?item_normal_tex])
+		item_tex_material = save_id_find(save_id_map[?item_tex_material])
+		item_tex_normal = save_id_find(save_id_map[?item_tex_normal])
 		block_tex = save_id_find(save_id_map[?block_tex])
-		block_material_tex = save_id_find(save_id_map[?block_material_tex])
-		block_normal_tex = save_id_find(save_id_map[?block_normal_tex])
+		block_tex_material = save_id_find(save_id_map[?block_tex_material])
+		block_tex_normal = save_id_find(save_id_map[?block_tex_normal])
 		scenery = save_id_find(save_id_map[?scenery])
 		shape_tex = save_id_find(save_id_map[?shape_tex])
-		shape_material_tex = save_id_find(save_id_map[?shape_material_tex])
-		shape_normal_tex = save_id_find(save_id_map[?shape_normal_tex])
+		shape_tex_material = save_id_find(save_id_map[?shape_tex_material])
+		shape_tex_normal = save_id_find(save_id_map[?shape_tex_normal])
 		text_font = save_id_find(save_id_map[?text_font])
 		
 		// Fix broken references
 		if (type = e_temp_type.ITEM && (!instance_exists(item_tex) || item_tex.object_index != obj_resource))
 			item_tex = mc_res
 		
-		if (type = e_temp_type.ITEM && (!instance_exists(item_material_tex) || item_material_tex.object_index != obj_resource))
-			item_material_tex = mc_res
+		if (type = e_temp_type.ITEM && (!instance_exists(item_tex_material) || item_tex_material.object_index != obj_resource))
+			item_tex_material = mc_res
 		
-		if (type = e_temp_type.ITEM && (!instance_exists(item_normal_tex) || item_normal_tex.object_index != obj_resource))
-			item_normal_tex = mc_res
+		if (type = e_temp_type.ITEM && (!instance_exists(item_tex_normal) || item_tex_normal.object_index != obj_resource))
+			item_tex_normal = mc_res
 		
 		if (type = e_temp_type.SCENERY && instance_exists(scenery) && scenery.object_index != obj_resource)
 			scenery = null
@@ -122,11 +122,11 @@ function project_load_find_save_ids()
 			if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 				shape_tex.count++
 			
-			if (shape_material_tex != null)
-				shape_material_tex.count++
+			if (shape_tex_material != null)
+				shape_tex_material.count++
 			
-			if (shape_normal_tex != null)
-				shape_normal_tex.count++
+			if (shape_tex_normal != null)
+				shape_tex_normal.count++
 			
 			if (text_font != null)
 				text_font.count++

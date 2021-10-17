@@ -25,13 +25,13 @@ function project_load_template(map)
 			
 			if (load_format < e_project.FORMAT_200_AL17)
 			{
-				model_material_tex = "default"
-				model_normal_tex = "default"
+				model_tex_material = "default"
+				model_tex_normal = "default"
 			}
 			else
 			{
-				model_material_tex = value_get_save_id(map[?"model_material_tex"], model_material_tex)
-				model_normal_tex = value_get_save_id(map[?"model_normal_tex"], model_normal_tex)
+				model_tex_material = value_get_save_id(map[?"model_tex_material"], model_tex_material)
+				model_tex_normal = value_get_save_id(map[?"model_tex_normal"], model_tex_normal)
 			}
 			
 			var modelmap = map[?"model"];
@@ -134,8 +134,8 @@ function project_load_template(map)
 			if (ds_map_valid(itemmap))
 			{
 				item_tex = value_get_save_id(itemmap[?"tex"], item_tex)
-				item_material_tex = value_get_save_id(itemmap[?"material_tex"], item_material_tex)
-				item_normal_tex = value_get_save_id(itemmap[?"normal_tex"], item_normal_tex)
+				item_tex_material = value_get_save_id(itemmap[?"tex_material"], item_tex_material)
+				item_tex_normal = value_get_save_id(itemmap[?"tex_normal"], item_tex_normal)
 				
 				var itemname = itemmap[?"name"];
 				if (is_string(itemname))
@@ -194,13 +194,13 @@ function project_load_template(map)
 				
 				if (load_format >= e_project.FORMAT_200_AL17)
 				{
-					block_material_tex = value_get_save_id(blockmap[?"material_tex"], block_material_tex)
-					block_normal_tex = value_get_save_id(blockmap[?"normal_tex"], block_normal_tex)
+					block_tex_material = value_get_save_id(blockmap[?"tex_material"], block_tex_material)
+					block_tex_normal = value_get_save_id(blockmap[?"tex_normal"], block_tex_normal)
 				}
 				else
 				{
-					block_material_tex = "default"
-					block_normal_tex = "default"
+					block_tex_material = "default"
+					block_tex_normal = "default"
 				}
 				
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
@@ -217,13 +217,13 @@ function project_load_template(map)
 				
 				if (load_format >= e_project.FORMAT_200_AL17)
 				{
-					block_material_tex = value_get_save_id(blockmap[?"material_tex"], block_material_tex)
-					block_normal_tex = value_get_save_id(blockmap[?"normal_tex"], block_normal_tex)
+					block_tex_material = value_get_save_id(blockmap[?"tex_material"], block_tex_material)
+					block_tex_normal = value_get_save_id(blockmap[?"tex_normal"], block_tex_normal)
 				}
 				else
 				{
-					block_material_tex = "default"
-					block_normal_tex = "default"
+					block_tex_material = "default"
+					block_tex_normal = "default"
 				}
 				
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
@@ -237,13 +237,13 @@ function project_load_template(map)
 			
 			if (load_format < e_project.FORMAT_200_AL17)
 			{
-				model_material_tex = "default"
-				model_normal_tex = "default"
+				model_tex_material = "default"
+				model_tex_normal = "default"
 			}
 			else
 			{
-				model_material_tex = value_get_save_id(map[?"model_material_tex"], model_material_tex)
-				model_normal_tex = value_get_save_id(map[?"model_normal_tex"], model_normal_tex)
+				model_tex_material = value_get_save_id(map[?"model_tex_material"], model_tex_material)
+				model_tex_normal = value_get_save_id(map[?"model_tex_normal"], model_tex_normal)
 			}
 		}
 		
@@ -253,8 +253,8 @@ function project_load_template(map)
 			if (ds_map_valid(shapemap))
 			{
 				shape_tex = value_get_save_id(shapemap[?"tex"], shape_tex)
-				shape_material_tex = value_get_save_id(shapemap[?"material_tex"], shape_material_tex)
-				shape_normal_tex = value_get_save_id(shapemap[?"normal_tex"], shape_normal_tex)
+				shape_tex_material = value_get_save_id(shapemap[?"tex_material"], shape_tex_material)
+				shape_tex_normal = value_get_save_id(shapemap[?"tex_normal"], shape_tex_normal)
 				shape_tex_mapped = value_get_real(shapemap[?"tex_mapped"], shape_tex_mapped)
 				shape_tex_hoffset = value_get_real(shapemap[?"tex_hoffset"], shape_tex_hoffset)
 				shape_tex_voffset = value_get_real(shapemap[?"tex_voffset"], shape_tex_voffset)

@@ -241,12 +241,12 @@ function tab_properties_background()
 		
 		// Ground texture (material)
 		tab_control_menu(32)
-		draw_button_menu("backgroundgroundtexmaterial", e_menu.LIST, dx, dy, dw, 32, background_ground_material_tex, background_ground_material_tex.display_name, action_background_ground_material_tex, false, background_ground_material_tex.block_preview_texture)
+		draw_button_menu("backgroundgroundtexmaterial", e_menu.LIST, dx, dy, dw, 32, background_ground_tex_material, background_ground_tex_material.display_name, action_background_ground_tex_material, false, background_ground_tex_material.block_preview_texture)
 		tab_next()
 		
 		// Ground texture (normal)
 		tab_control_menu(32)
-		draw_button_menu("backgroundgroundtexnormal", e_menu.LIST, dx, dy, dw, 32, background_ground_normal_tex, background_ground_normal_tex.display_name, action_background_ground_normal_tex, false, background_ground_normal_tex.block_preview_texture)
+		draw_button_menu("backgroundgroundtexnormal", e_menu.LIST, dx, dy, dw, 32, background_ground_tex_normal, background_ground_tex_normal.display_name, action_background_ground_tex_normal, false, background_ground_tex_normal.block_preview_texture)
 		tab_next()
 		
 		tab_collapse_end()

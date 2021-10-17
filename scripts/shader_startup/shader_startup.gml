@@ -154,8 +154,8 @@ function shader_startup()
 		new_shader_uniform("uRoughness")
 		new_shader_uniform("uFallbackColor")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
 	}
 	
@@ -245,8 +245,8 @@ function shader_startup()
 		new_shader_uniform("uBrightness")
 		new_shader_uniform("uBlockBrightness")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
 	}
 	
@@ -270,11 +270,11 @@ function shader_startup()
 		new_shader_uniform("uSSSColor")
 		new_shader_uniform("uShadowPosition")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_high_light_point_shadowless])
@@ -287,11 +287,11 @@ function shader_startup()
 		new_shader_uniform("uBlockSSS")
 		new_shader_uniform("uIsWater")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_high_light_spot])
@@ -316,11 +316,11 @@ function shader_startup()
 		new_shader_uniform("uSSSRadius")
 		new_shader_uniform("uSSSColor")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_high_light_sun])
@@ -346,11 +346,11 @@ function shader_startup()
 		new_shader_uniform("uSSSColor")
 		new_shader_uniform("uMetallic")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_high_light_color])
@@ -396,11 +396,11 @@ function shader_startup()
 		new_shader_uniform("uNear")
 		new_shader_uniform("uFar")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_color_glow])
@@ -560,12 +560,12 @@ function shader_startup()
 		new_shader_uniform("uBrightness")
 		new_shader_uniform("uIsWater")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
 		
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_high_indirect])
@@ -633,12 +633,12 @@ function shader_startup()
 		new_shader_uniform("uRoughness")
 		new_shader_uniform("uIsWater")
 		
-		new_shader_sampler("uMaterialTexture")
-		new_shader_uniform("uMaterialTexScale")
+		new_shader_sampler("uTextureMaterial")
+		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
 		
-		new_shader_sampler("uNormalTexture")
-		new_shader_uniform("uNormalTexScale")
+		new_shader_sampler("uTextureNormal")
+		new_shader_uniform("uTexScaleNormal")
 	}
 	
 	with (shader_map[?shader_high_subsurface])

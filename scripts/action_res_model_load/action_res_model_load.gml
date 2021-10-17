@@ -33,8 +33,8 @@ function action_res_model_load(fn)
 			loaded = true
 			type = e_temp_type.MODEL
 			model_tex = null
-			model_material_tex = null
-			model_normal_tex = null
+			model_tex_material = null
+			model_tex_normal = null
 			model = res
 			model.count++
 			temp_update()

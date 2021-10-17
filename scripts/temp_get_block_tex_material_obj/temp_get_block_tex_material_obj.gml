@@ -5,7 +5,7 @@
 
 function temp_get_block_tex_material_obj(val)
 {
-	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_material_texture = null)
+	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_texture_material = null)
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
 		if (object_index = obj_timeline && type = e_tl_type.BLOCK)
@@ -14,13 +14,13 @@ function temp_get_block_tex_material_obj(val)
 			{
 				with (part_of)
 				{
-					if (temp.block_material_tex.type = e_res_type.PACK || temp.block_material_tex.type = e_res_type.BLOCK_SHEET)
-						return temp.block_material_tex
+					if (temp.block_tex_material.type = e_res_type.PACK || temp.block_tex_material.type = e_res_type.BLOCK_SHEET)
+						return temp.block_tex_material
 				}
 			}
 		}
 		else
-			return block_material_tex
+			return block_tex_material
 	}
 	
 	return val;

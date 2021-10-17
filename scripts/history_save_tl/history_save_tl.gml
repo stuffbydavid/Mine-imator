@@ -43,8 +43,8 @@ function history_save_tl(tl)
 		
 		// Save references in timelines
 		usage_tl_texture_amount = 0
-		usage_tl_material_texture_amount = 0
-		usage_tl_normal_texture_amount = 0
+		usage_tl_texture_material_amount = 0
+		usage_tl_tex_normal_amount = 0
 		usage_tl_attractor_amount = 0
 		with (obj_timeline)
 		{
@@ -56,14 +56,14 @@ function history_save_tl(tl)
 			
 			if (value[e_value.TEXTURE_MATERIAL_OBJ] = tl)
 			{
-				save.usage_tl_texture_save_id[save.usage_tl_material_texture_amount] = save_id
-				save.usage_tl_material_texture_amount++
+				save.usage_tl_texture_save_id[save.usage_tl_texture_material_amount] = save_id
+				save.usage_tl_texture_material_amount++
 			}
 			
 			if (value[e_value.TEXTURE_NORMAL_OBJ] = tl)
 			{
-				save.usage_tl_normal_save_id[save.usage_tl_normal_texture_amount] = save_id
-				save.usage_tl_normal_texture_amount++
+				save.usage_tl_normal_save_id[save.usage_tl_tex_normal_amount] = save_id
+				save.usage_tl_tex_normal_amount++
 			}
 			
 			if (value[e_value.ATTRACTOR] = tl)

@@ -15,7 +15,7 @@ function render_world_ground()
 	render_set_uniform_color("uGlowColor", c_black, 1)
 	render_set_uniform_int("uGlowTexture", 0)
 	
-	if (background_ground_material_tex = mc_res)
+	if (background_ground_tex_material = mc_res)
 	{
 		render_set_uniform("uMetallic", 0)
 		render_set_uniform("uRoughness", 1)
@@ -26,7 +26,7 @@ function render_world_ground()
 		render_set_uniform("uMetallic", 1)
 		render_set_uniform("uRoughness", 0)
 		render_set_uniform("uBrightness", 1)
-		render_set_uniform_int("uMaterialUseGlossiness", background_ground_material_tex.material_uses_glossiness)
+		render_set_uniform_int("uMaterialUseGlossiness", background_ground_tex_material.material_uses_glossiness)
 	}
 	
 	// Texture
@@ -38,14 +38,14 @@ function render_world_ground()
 		render_set_texture(background_ground_texture)
 	
 	if (background_ground_material_ani)
-		render_set_texture(background_ground_ani_material_texture[block_texture_get_frame()], "Material")
+		render_set_texture(background_ground_ani_texture_material[block_texture_get_frame()], "Material")
 	else
-		render_set_texture(background_ground_material_texture, "Material")
+		render_set_texture(background_ground_texture_material, "Material")
 	
 	if (background_ground_normal_ani)
-		render_set_texture(background_ground_ani_normal_texture[block_texture_get_frame()], "Normal")
+		render_set_texture(background_ground_ani_texture_normal[block_texture_get_frame()], "Normal")
 	else
-		render_set_texture(background_ground_normal_texture, "Normal")
+		render_set_texture(background_ground_texture_normal, "Normal")
 	
 	// Submit ground mesh at an offset from the camera
 	var xo, yo;

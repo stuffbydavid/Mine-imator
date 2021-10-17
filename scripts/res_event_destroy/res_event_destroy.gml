@@ -19,26 +19,26 @@ function res_event_destroy()
 		ds_map_destroy(model_texture_map)
 	}
 	
-	if (model_material_texture_map != null)
+	if (model_texture_material_map != null)
 	{
-		var key = ds_map_find_first(model_material_texture_map);
+		var key = ds_map_find_first(model_texture_material_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_material_texture_map[?key])
-			key = ds_map_find_next(model_material_texture_map, key)
+			texture_free(model_texture_material_map[?key])
+			key = ds_map_find_next(model_texture_material_map, key)
 		}
-		ds_map_destroy(model_material_texture_map)
+		ds_map_destroy(model_texture_material_map)
 	}
 	
-	if (model_normal_texture_map != null)
+	if (model_tex_normal_map != null)
 	{
-		var key = ds_map_find_first(model_normal_texture_map);
+		var key = ds_map_find_first(model_tex_normal_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_normal_texture_map[?key])
-			key = ds_map_find_next(model_normal_texture_map, key)
+			texture_free(model_tex_normal_map[?key])
+			key = ds_map_find_next(model_tex_normal_map, key)
 		}
-		ds_map_destroy(model_normal_texture_map)
+		ds_map_destroy(model_tex_normal_map)
 	}
 	
 	// Free shape vbuffers
@@ -61,23 +61,23 @@ function res_event_destroy()
 	if (block_sheet_texture != null)
 		texture_free(block_sheet_texture)
 	
-	if (block_sheet_material_texture != null)
-		texture_free(block_sheet_material_texture)
+	if (block_sheet_texture_material != null)
+		texture_free(block_sheet_texture_material)
 	
-	if (block_sheet_normal_texture != null)
-		texture_free(block_sheet_normal_texture)
+	if (block_sheet_tex_normal != null)
+		texture_free(block_sheet_tex_normal)
 	
 	if (block_sheet_ani_texture != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
 			texture_free(block_sheet_ani_texture[f])
 	
-	if (block_sheet_ani_material_texture != null)
+	if (block_sheet_ani_texture_material != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_material_texture[f])
+			texture_free(block_sheet_ani_texture_material[f])
 	
-	if (block_sheet_ani_normal_texture != null)
+	if (block_sheet_ani_tex_normal != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_normal_texture[f])
+			texture_free(block_sheet_ani_tex_normal[f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)
@@ -95,11 +95,11 @@ function res_event_destroy()
 	if (item_sheet_texture != null)
 		texture_free(item_sheet_texture)
 	
-	if (item_sheet_material_texture != null)
-		texture_free(item_sheet_material_texture)
+	if (item_sheet_texture_material != null)
+		texture_free(item_sheet_texture_material)
 	
-	if (item_sheet_normal_texture != null)
-		texture_free(item_sheet_normal_texture)
+	if (item_sheet_tex_normal != null)
+		texture_free(item_sheet_tex_normal)
 	
 	// Free misc
 	if (colormap_grass_texture != null)
@@ -180,16 +180,16 @@ function res_event_destroy()
 			model_tex.count++
 		}
 		
-		if (model_material_tex = other.id)
+		if (model_tex_material = other.id)
 		{
-			model_material_tex = mc_res
-			model_material_tex.count++
+			model_tex_material = mc_res
+			model_tex_material.count++
 		}
 		
-		if (model_normal_tex = other.id)
+		if (model_tex_normal = other.id)
 		{
-			model_normal_tex = mc_res
-			model_normal_tex.count++
+			model_tex_normal = mc_res
+			model_tex_normal.count++
 		}
 		
 		if (item_tex = other.id)
@@ -199,16 +199,16 @@ function res_event_destroy()
 			render_generate_item()
 		}
 		
-		if (item_material_tex = other.id)
+		if (item_tex_material = other.id)
 		{
-			item_material_tex = mc_res
-			item_material_tex.count++
+			item_tex_material = mc_res
+			item_tex_material.count++
 		}
 		
-		if (item_normal_tex = other.id)
+		if (item_tex_normal = other.id)
 		{
-			item_normal_tex = mc_res
-			item_normal_tex.count++
+			item_tex_normal = mc_res
+			item_tex_normal.count++
 		}
 		
 		if (block_tex = other.id)
@@ -217,16 +217,16 @@ function res_event_destroy()
 			block_tex.count++
 		}
 		
-		if (block_material_tex = other.id)
+		if (block_tex_material = other.id)
 		{
-			block_material_tex = mc_res
-			block_material_tex.count++
+			block_tex_material = mc_res
+			block_tex_material.count++
 		}
 		
-		if (block_normal_tex = other.id)
+		if (block_tex_normal = other.id)
 		{
-			block_normal_tex = mc_res
-			block_normal_tex.count++
+			block_tex_normal = mc_res
+			block_tex_normal.count++
 		}
 		
 		if (scenery = other.id) 
@@ -235,11 +235,11 @@ function res_event_destroy()
 		if (shape_tex = other.id)
 			shape_tex = null
 		
-		if (shape_material_tex = other.id)
-			shape_material_tex = null
+		if (shape_tex_material = other.id)
+			shape_tex_material = null
 		
-		if (shape_normal_tex = other.id)
-			shape_normal_tex = null
+		if (shape_tex_normal = other.id)
+			shape_tex_normal = null
 		
 		if (text_font = other.id)
 		{
@@ -256,11 +256,11 @@ function res_event_destroy()
 		if (model_tex = other.id)
 			model_tex = mc_res
 			
-		if (model_material_tex = other.id)
-			model_material_tex = mc_res
+		if (model_tex_material = other.id)
+			model_tex_material = mc_res
 			
-		if (model_normal_tex = other.id)
-			model_normal_tex = mc_res
+		if (model_tex_normal = other.id)
+			model_tex_normal = mc_res
 		
 		if (item_tex = other.id)
 		{
@@ -271,20 +271,20 @@ function res_event_destroy()
 		if (block_tex = other.id)
 			block_tex = mc_res
 		
-		if (block_material_tex = other.id)
-			block_material_tex = mc_res
+		if (block_tex_material = other.id)
+			block_tex_material = mc_res
 		
-		if (block_normal_tex = other.id)
-			block_normal_tex = mc_res
+		if (block_tex_normal = other.id)
+			block_tex_normal = mc_res
 		
 		if (shape_tex = other.id)
 			shape_tex = null
 		
-		if (shape_material_tex = other.id)
-			shape_material_tex = null
+		if (shape_tex_material = other.id)
+			shape_tex_material = null
 		
-		if (shape_normal_tex = other.id)
-			shape_normal_tex = null
+		if (shape_tex_normal = other.id)
+			shape_tex_normal = null
 		
 		if (text_font = other.id)
 			text_font = mc_res
@@ -389,18 +389,18 @@ function res_event_destroy()
 			background_ground_update_texture()
 		}
 		
-		if (background_ground_material_tex = other.id)
+		if (background_ground_tex_material = other.id)
 		{
-			background_ground_material_tex = mc_res
-			background_ground_material_tex.count++
+			background_ground_tex_material = mc_res
+			background_ground_tex_material.count++
 			background_ground_update_texture()
 		}
 		
-		if (background_ground_normal_tex = other.id)
+		if (background_ground_tex_normal = other.id)
 		{
-			background_ground_normal_tex = mc_res
-			background_ground_normal_tex.count++
-			background_ground_update_normal_texture()
+			background_ground_tex_normal = mc_res
+			background_ground_tex_normal.count++
+			background_ground_update_texture_normal()
 		}
 	}
 	

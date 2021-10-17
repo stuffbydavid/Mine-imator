@@ -79,10 +79,10 @@ function model_file_load_part(map, root, res, model)
 				texture_normal_name = value_get_string(map[?"texture_normal"], "")
 				
 				if (texture_material_name != "")
-					model_file_load_material_texture(texture_material_name, res)
+					model_file_load_texture_material(texture_material_name, res)
 				
 				if (texture_normal_name != "")
-					model_file_load_normal_texture(texture_normal_name, res)
+					model_file_load_tex_normal(texture_normal_name, res)
 			}
 			else
 			{

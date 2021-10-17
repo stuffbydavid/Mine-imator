@@ -9,7 +9,7 @@ function temp_get_shape_tex_normal_obj(val)
 		return null
 	
 	if (val = null) // Default
-		return shape_normal_tex
+		return shape_tex_normal
 	
 	if (val.texture != null)
 		return val

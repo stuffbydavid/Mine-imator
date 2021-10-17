@@ -22,18 +22,18 @@ function res_event_create()
 	model_texture = null
 	
 	model_texture_map = null
-	model_material_texture_map = null
-	model_normal_texture_map = null
+	model_texture_material_map = null
+	model_tex_normal_map = null
 	
 	model_block_map = null
 	
 	model_texture_name_map = null
-	model_material_texture_name_map = null
-	model_normal_texture_name_map = null
+	model_texture_material_name_map = null
+	model_tex_normal_name_map = null
 	
 	model_shape_texture_name_map = null
-	model_shape_material_texture_name_map = null
-	model_shape_normal_texture_name_map = null
+	model_shape_texture_material_name_map = null
+	model_shape_tex_normal_name_map = null
 	
 	model_color_name_map = null
 	model_color_map = null
@@ -44,12 +44,12 @@ function res_event_create()
 	pack_format = e_minecraft_pack.LATEST
 	
 	block_sheet_texture = null
-	block_sheet_material_texture = null
-	block_sheet_normal_texture = null
+	block_sheet_texture_material = null
+	block_sheet_tex_normal = null
 	
 	block_sheet_ani_texture = null
-	block_sheet_ani_material_texture = null
-	block_sheet_ani_normal_texture = null
+	block_sheet_ani_texture_material = null
+	block_sheet_ani_tex_normal = null
 	
 	block_sheet_depth_list = null
 	block_sheet_ani_depth_list = null
@@ -74,8 +74,8 @@ function res_event_create()
 	clouds_texture = null
 	
 	item_sheet_texture = null
-	item_sheet_material_texture = null
-	item_sheet_normal_texture = null
+	item_sheet_texture_material = null
+	item_sheet_tex_normal = null
 	item_sheet_size = vec2(item_sheet_width, item_sheet_height)
 	
 	particles_texture[0] = null

@@ -65,7 +65,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			
 			render_set_uniform_int("uMaterialUseGlossiness", model_part_shape_material_res[s].material_uses_glossiness)
 			
-			if (model_part_shape_material_tex[s] = null)
+			if (model_part_shape_tex_material[s] = null)
 			{
 				render_set_texture(spr_default_material, "Material")
 				
@@ -89,7 +89,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			}
 			else
 			{
-				render_set_texture(model_part_shape_material_tex[s], "Material")
+				render_set_texture(model_part_shape_tex_material[s], "Material")
 				
 				if (shader_uniform_metallic != 1)
 				{
@@ -110,10 +110,10 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				}
 			}
 			
-			if (model_part_shape_normal_tex[s] = null)
+			if (model_part_shape_tex_normal[s] = null)
 				render_set_texture(spr_default_normal, "Normal")
 			else
-				render_set_texture(model_part_shape_normal_tex[s], "Normal")
+				render_set_texture(model_part_shape_tex_normal[s], "Normal")
 		}
 		else
 		{

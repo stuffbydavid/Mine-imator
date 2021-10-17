@@ -27,9 +27,9 @@ function res_save()
 			}
 		}
 		
-		if (model_material_texture_map != null)
+		if (model_texture_material_map != null)
 		{
-			key = ds_map_find_first(model_material_texture_map)
+			key = ds_map_find_first(model_texture_material_map)
 			while (!is_undefined(key))
 			{
 				var fn = key;
@@ -37,15 +37,15 @@ function res_save()
 					fn = name + "\\" + key + ".png"
 			
 				directory_create_lib(save_folder + "\\" + filename_dir(fn))
-				texture_export(model_material_texture_map[?key], save_folder + "\\" + fn)
+				texture_export(model_texture_material_map[?key], save_folder + "\\" + fn)
 			
-				key = ds_map_find_next(model_material_texture_map, key)
+				key = ds_map_find_next(model_texture_material_map, key)
 			}
 		}
 		
-		if (model_normal_texture_map != null)
+		if (model_tex_normal_map != null)
 		{
-			key = ds_map_find_first(model_normal_texture_map)
+			key = ds_map_find_first(model_tex_normal_map)
 			while (!is_undefined(key))
 			{
 				var fn = key;
@@ -53,9 +53,9 @@ function res_save()
 					fn = name + "\\" + key + ".png"
 			
 				directory_create_lib(save_folder + "\\" + filename_dir(fn))
-				texture_export(model_normal_texture_map[?key], save_folder + "\\" + fn)
+				texture_export(model_tex_normal_map[?key], save_folder + "\\" + fn)
 			
-				key = ds_map_find_next(model_normal_texture_map, key)
+				key = ds_map_find_next(model_tex_normal_map, key)
 			}
 		}
 	}

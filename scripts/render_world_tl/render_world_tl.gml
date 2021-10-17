@@ -302,13 +302,13 @@ function render_world_tl()
 			
 			default: // Shapes
 			{
-				var tex, matres, mattex, normtex;
+				var tex, matres, texmat, normtex;
 				with (temp)
 				{
 					tex = temp_get_shape_tex(temp_get_shape_texobj(other.value_inherit[e_value.TEXTURE_OBJ]))
 					
 					matres = temp_get_shape_tex_material_obj(other.value_inherit[e_value.TEXTURE_MATERIAL_OBJ])
-					mattex = temp_get_shape_tex(matres, spr_default_material)
+					texmat = temp_get_shape_tex(matres, spr_default_material)
 					
 					if (matres != null)
 						render_set_uniform_int("uMaterialUseGlossiness", matres.material_uses_glossiness)
@@ -318,7 +318,7 @@ function render_world_tl()
 					normtex = temp_get_shape_tex(temp_get_shape_tex_normal_obj(other.value_inherit[e_value.TEXTURE_NORMAL_OBJ]), spr_default_normal)
 				}
 				
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, mattex, normtex])
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, texmat, normtex])
 				break
 			}
 		}

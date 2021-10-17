@@ -35,8 +35,8 @@ function action_lib_scenery_load(fn)
 			scenery.count++
 			
 			block_tex = mc_res
-			block_material_tex = mc_res
-			block_normal_tex = mc_res
+			block_tex_material = mc_res
+			block_tex_normal = mc_res
 			mc_res.count += 3
 			
 			temp_update_display_name()

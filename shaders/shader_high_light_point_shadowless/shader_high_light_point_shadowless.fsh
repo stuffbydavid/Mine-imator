@@ -8,12 +8,12 @@ uniform vec4 uLightData[128];
 uniform float uBrightness;
 uniform int uIsWater;
 
-uniform sampler2D uMaterialTexture;
-uniform vec2 uMaterialTexScale;
+uniform sampler2D uTextureMaterial;
+uniform vec2 uTexScaleMaterial;
 uniform int uMaterialUseGlossiness;
 
-uniform sampler2D uNormalTexture;
-uniform vec2 uNormalTexScale;
+uniform sampler2D uTextureNormal;
+uniform vec2 uTexScaleNormal;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -48,10 +48,10 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	
 	// Get normal value from normal map
 	vec2 normtex = uv;
-	if (uNormalTexScale.x < 1.0 || uNormalTexScale.y < 1.0)
-		normtex = mod(normtex * uNormalTexScale, uNormalTexScale); // GM sprite bug workaround
+	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
+		normtex = mod(normtex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
-	vec3 normalCoord = texture2D(uNormalTexture, normtex).rgb * 2.0 - 1.0;
+	vec3 normalCoord = texture2D(uTextureNormal, normtex).rgb * 2.0 - 1.0;
 	
 	if (normalCoord.z < 0.0)
 		return normal;
@@ -73,11 +73,11 @@ void main()
 	else
 	{
 		// Get material data
-		vec2 matTex = vTexCoord;
-		if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
-			matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
+		vec2 texMat = vTexCoord;
+		if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
+			texMat = mod(texMat * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 		
-		vec3 mat = texture2D(uMaterialTexture, matTex).rgb;
+		vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 		float brightness = (vBrightness * mat.b);
 		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
 		

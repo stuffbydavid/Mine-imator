@@ -64,11 +64,11 @@ function model_load(map, dir)
 						value_name[v] = curvalue[?"value"]
 						value_file[v] = null
 						value_texture_name_map[v] = null
-						value_material_texture_name_map[v] = null
-						value_normal_texture_name_map[v] = null
+						value_texture_material_name_map[v] = null
+						value_tex_normal_name_map[v] = null
 						value_shape_texture_name_map[v] = null
-						value_shape_material_texture_name_map[v] = null
-						value_shape_normal_texture_name_map[v] = null
+						value_shape_texture_material_name_map[v] = null
+						value_shape_tex_normal_name_map[v] = null
 						value_hide_list[v] = null
 						value_shape_hide_list[v] = null
 						value_color_name_map[v] = null
@@ -90,12 +90,12 @@ function model_load(map, dir)
 							// Material map
 							texnamemap = ds_map_create()
 							texnamemap[?""] = curvalue[?"texture"]
-							value_material_texture_name_map[v] = texnamemap
+							value_texture_material_name_map[v] = texnamemap
 							
 							// Normal map
 							texnamemap = ds_map_create()
 							texnamemap[?""] = curvalue[?"texture"]
-							value_normal_texture_name_map[v] = texnamemap
+							value_tex_normal_name_map[v] = texnamemap
 						}
 						else if (ds_map_valid(curvalue[?"texture"]))
 						{
@@ -103,12 +103,12 @@ function model_load(map, dir)
 							ds_map_merge(value_texture_name_map[v], curvalue[?"texture"], true)
 							
 							// Material map
-							value_material_texture_name_map[v] = ds_map_create()
-							ds_map_merge(value_material_texture_name_map[v], curvalue[?"texture"], true)
+							value_texture_material_name_map[v] = ds_map_create()
+							ds_map_merge(value_texture_material_name_map[v], curvalue[?"texture"], true)
 							
 							// Normal map
-							value_normal_texture_name_map[v] = ds_map_create()
-							ds_map_merge(value_normal_texture_name_map[v], curvalue[?"texture"], true)
+							value_tex_normal_name_map[v] = ds_map_create()
+							ds_map_merge(value_tex_normal_name_map[v], curvalue[?"texture"], true)
 						}
 						
 						// Shape texture
@@ -119,14 +119,14 @@ function model_load(map, dir)
 							value_shape_texture_name_map[v] = shapetexnamemap
 							
 							// Material map
-							value_shape_material_texture_name_map = ds_map_create()
+							value_shape_texture_material_name_map = ds_map_create()
 							shapetexnamemap[?""] = curvalue[?"shape_texture"]
-							value_shape_material_texture_name_map[v] = shapetexnamemap
+							value_shape_texture_material_name_map[v] = shapetexnamemap
 							
 							// Normal map
-							value_shape_normal_texture_name_map = ds_map_create()
+							value_shape_tex_normal_name_map = ds_map_create()
 							shapetexnamemap[?""] = curvalue[?"shape_texture"]
-							value_shape_normal_texture_name_map[v] = shapetexnamemap
+							value_shape_tex_normal_name_map[v] = shapetexnamemap
 						}
 						else if (ds_map_valid(curvalue[?"shape_texture"]))
 						{
@@ -134,12 +134,12 @@ function model_load(map, dir)
 							ds_map_merge(value_shape_texture_name_map[v], curvalue[?"shape_texture"], true)
 							
 							// Material map
-							value_shape_material_texture_name_map[v] = ds_map_create()
-							ds_map_merge(value_shape_material_texture_name_map[v], curvalue[?"shape_texture"], true)
+							value_shape_texture_material_name_map[v] = ds_map_create()
+							ds_map_merge(value_shape_texture_material_name_map[v], curvalue[?"shape_texture"], true)
 							
 							// Normal map
-							value_shape_normal_texture_name_map[v] = ds_map_create()
-							ds_map_merge(value_shape_normal_texture_name_map[v], curvalue[?"shape_texture"], true)
+							value_shape_tex_normal_name_map[v] = ds_map_create()
+							ds_map_merge(value_shape_tex_normal_name_map[v], curvalue[?"shape_texture"], true)
 						}
 						
 						// Hide parts

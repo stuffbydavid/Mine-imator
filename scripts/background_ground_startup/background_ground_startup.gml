@@ -12,14 +12,14 @@ function background_ground_startup()
 	rep = size / 16
 	
 	background_ground_texture = null
-	background_ground_material_texture = null
-	background_ground_normal_texture = null
+	background_ground_texture_material = null
+	background_ground_texture_normal = null
 	background_ground_ani = false
 	background_ground_material_ani = false
 	background_ground_normal_ani = false
 	background_ground_ani_texture[0] = null
-	background_ground_ani_material_texture[0] = null
-	background_ground_ani_normal_texture[0] = null
+	background_ground_ani_texture_material[0] = null
+	background_ground_ani_tex_normal[0] = null
 	
 	background_ground_vbuffer = vbuffer_start()
 	

@@ -6,7 +6,7 @@
 function render_set_texture(tex, type = "")
 {
 	var sampler, scalex, scaley;
-	sampler = render_shader_obj.sampler_map[?"u" + type + "Texture"]
+	sampler = render_shader_obj.sampler_map[?"uTexture" + type]
 	scalex = 1
 	scaley = 1
 	
@@ -55,7 +55,7 @@ function render_set_texture(tex, type = "")
 			texture_set_stage(sampler, 0)
 	}
 	
-	render_set_uniform_vec2("u" + type + "TexScale", scalex, scaley)
+	render_set_uniform_vec2("uTexScale" + type, scalex, scaley)
 	gpu_set_texrepeat_ext(sampler, true)
 	
 	render_texture_prev = tex

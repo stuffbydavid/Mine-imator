@@ -60,15 +60,15 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.BODYPART:
 			{
-				var labeltext, list, texcap, mattexcap, nortexcap, capwid, part;
+				var labeltext, list, texcap, texmatcap, texnormcap, capwid, part;
 				if (bench_settings.type = e_temp_type.CHARACTER)
 				{
 					labeltext = text_get("benchmodel")
 					list = bench_settings.char_list
 					texcap = "benchskin"
-					mattexcap = "benchskinmaterial"
-					nortexcap = "benchskinnormal"
-					capwid = text_caption_width(texcap, mattexcap, nortexcap)
+					texmatcap = "benchskinmaterial"
+					texnormcap = "benchskinnormal"
+					capwid = text_caption_width(texcap, texmatcap, texnormcap)
 					part = bench_settings.model_file
 				}
 				else if (bench_settings.type = e_temp_type.SPECIAL_BLOCK)
@@ -76,9 +76,9 @@ function bench_draw_settings(bx, by, bw, bh)
 					labeltext = text_get("benchblock")
 					list = bench_settings.special_block_list
 					texcap = "benchspblocktex"
-					mattexcap = "benchspblocktexmaterial"
-					nortexcap = "benchspblocktexnormal"
-					capwid = text_caption_width(texcap, mattexcap, nortexcap)
+					texmatcap = "benchspblocktexmaterial"
+					texnormcap = "benchspblocktexnormal"
+					capwid = text_caption_width(texcap, texmatcap, texnormcap)
 					part = bench_settings.model_file
 				}
 				else if (bench_settings.type = e_temp_type.BODYPART)
@@ -86,9 +86,9 @@ function bench_draw_settings(bx, by, bw, bh)
 					labeltext = text_get("benchmodel")
 					list = bench_settings.bodypart_model_list
 					texcap = "benchbodypartskin"
-					mattexcap = "benchbodypartskinmaterial"
-					nortexcap = "benchbodypartskinnormal"
-					capwid = text_caption_width("benchbodypart", texcap, mattexcap, nortexcap)
+					texmatcap = "benchbodypartskinmaterial"
+					texnormcap = "benchbodypartskinnormal"
+					capwid = text_caption_width("benchbodypart", texcap, texmatcap, texnormcap)
 					part = bench_settings.model_part
 				}
 				
@@ -136,19 +136,19 @@ function bench_draw_settings(bx, by, bw, bh)
 				dy += 40
 				
 				// Skin (Material map)
-				text = bench_settings.model_material_tex.display_name
-				with (bench_settings.model_material_tex)
-					tex = res_get_model_material_texture(model_part_get_material_texture_name(part, app.bench_settings.model_material_texture_name_map))
+				text = bench_settings.model_tex_material.display_name
+				with (bench_settings.model_tex_material)
+					tex = res_get_model_texture_material(model_part_get_texture_material_name(part, app.bench_settings.model_texture_material_name_map))
 				
-				draw_button_menu(mattexcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_material_tex, text, action_bench_model_material_tex, false, tex, null, "", null, null, capwid)
+				draw_button_menu(texmatcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_material, text, action_bench_model_tex_material, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				// Skin (Normal map)
-				text = bench_settings.model_normal_tex.display_name
-				with (bench_settings.model_normal_tex)
-					tex = res_get_model_normal_texture(model_part_get_normal_texture_name(part, app.bench_settings.model_normal_texture_name_map))
+				text = bench_settings.model_tex_normal.display_name
+				with (bench_settings.model_tex_normal)
+					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_tex_normal_name_map))
 				
-				draw_button_menu(nortexcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_normal_tex, text, action_bench_model_normal_tex, false, tex, null, "", null, null, capwid)
+				draw_button_menu(texnormcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				// Banner editor
@@ -188,11 +188,11 @@ function bench_draw_settings(bx, by, bw, bh)
 				dy += 40
 				
 				// Material texture
-				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_material_tex, bench_settings.block_material_tex.display_name, action_bench_block_material_tex, false, bench_settings.block_material_tex.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
 				// Normal texture
-				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_normal_tex, bench_settings.block_normal_tex.display_name, action_bench_block_normal_tex, false, bench_settings.block_normal_tex.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				break
 			}
@@ -240,7 +240,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				if (tex = null)
 					tex = res.texture
 				
-				draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_material_tex, bench_settings.item_material_tex.display_name, action_bench_item_material_tex, false, bench_settings.item_material_tex.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex_material, bench_settings.item_tex_material.display_name, action_bench_item_tex_material, false, bench_settings.item_tex_material.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
 				// Image (Normal map)
@@ -248,7 +248,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				if (tex = null)
 					tex = res.texture
 				
-				draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_normal_tex, bench_settings.item_normal_tex.display_name, action_bench_item_normal_tex, false, bench_settings.item_normal_tex.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex_normal, bench_settings.item_tex_normal.display_name, action_bench_item_tex_normal, false, bench_settings.item_tex_normal.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
 				// Settings
@@ -319,11 +319,11 @@ function bench_draw_settings(bx, by, bw, bh)
 				dy += 40
 				
 				// Material texture
-				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_material_tex, bench_settings.block_material_tex.display_name, action_bench_block_material_tex, false, bench_settings.block_material_tex.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
 				// Normal texture
-				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_normal_tex, bench_settings.block_normal_tex.display_name, action_bench_block_normal_tex, false, bench_settings.block_normal_tex.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
 				window_scroll_focus = string(bench_settings.block_list.scroll)
@@ -398,23 +398,23 @@ function bench_draw_settings(bx, by, bw, bh)
 				// Material texture
 				text = text_get("listnone")
 				tex = null
-				if (bench_settings.shape_material_tex)
+				if (bench_settings.shape_tex_material)
 				{
-					text = bench_settings.shape_material_tex.display_name
-					tex = bench_settings.shape_material_tex.texture
+					text = bench_settings.shape_tex_material.display_name
+					tex = bench_settings.shape_tex_material.texture
 				}
-				draw_button_menu("benchshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_material_tex, text, action_bench_shape_material_tex, false, tex, null, "", null, null, capwid)
+				draw_button_menu("benchshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex_material, text, action_bench_shape_tex_material, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				// Normal texture
 				text = text_get("listnone")
 				tex = null
-				if (bench_settings.shape_normal_tex)
+				if (bench_settings.shape_tex_normal)
 				{
-					text = bench_settings.shape_normal_tex.display_name
-					tex = bench_settings.shape_normal_tex.texture
+					text = bench_settings.shape_tex_normal.display_name
+					tex = bench_settings.shape_tex_normal.texture
 				}
-				draw_button_menu("benchshapetexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_normal_tex, text, action_bench_shape_normal_tex, false, tex, null, "", null, null, capwid)
+				draw_button_menu("benchshapetexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex_normal, text, action_bench_shape_tex_normal, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				// Is mapped
@@ -486,10 +486,10 @@ function bench_draw_settings(bx, by, bw, bh)
 					text = text_get("listnone")
 				
 				// Default
-				if (bench_settings.model_material_tex = null)
+				if (bench_settings.model_tex_material = null)
 					text = text_get("listdefault", text)
 				
-				draw_button_menu("benchmodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_material_tex, text, action_bench_model_material_tex, null, tex, null, "", null, null, capwid)
+				draw_button_menu("benchmodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_material, text, action_bench_model_tex_material, null, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				// Texture (Normal map)
@@ -505,10 +505,10 @@ function bench_draw_settings(bx, by, bw, bh)
 					text = text_get("listnone")
 				
 				// Default
-				if (bench_settings.model_normal_tex = null)
+				if (bench_settings.model_tex_normal = null)
 					text = text_get("listdefault", text)
 				
-				draw_button_menu("benchmodeltexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_normal_tex, text, action_bench_model_normal_tex, null, tex, null, "", null, null, capwid)
+				draw_button_menu("benchmodeltexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, null, tex, null, "", null, null, capwid)
 				dy += 40
 				
 				

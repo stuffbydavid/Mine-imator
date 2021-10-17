@@ -30,10 +30,10 @@ function render_update_item()
 			res = temp.item_tex
 		
 		if (matres = null)
-			matres = temp.item_material_tex
+			matres = temp.item_tex_material
 		
 		if (norres = null)
-			norres = temp.item_normal_tex
+			norres = temp.item_tex_normal
 		
 		render_generate_item(slot, [res, matres, norres], temp.item_3d)
 	}

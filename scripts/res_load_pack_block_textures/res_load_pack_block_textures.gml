@@ -7,23 +7,23 @@ function res_load_pack_block_textures()
 	if (block_sheet_texture != null)
 		texture_free(block_sheet_texture)
 	
-	if (block_sheet_material_texture != null)
-		texture_free(block_sheet_material_texture)
+	if (block_sheet_texture_material != null)
+		texture_free(block_sheet_texture_material)
 	
-	if (block_sheet_normal_texture != null)
-		texture_free(block_sheet_normal_texture)
+	if (block_sheet_tex_normal != null)
+		texture_free(block_sheet_tex_normal)
 	
 	if (block_sheet_ani_texture != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
 			texture_free(block_sheet_ani_texture[f])
 	
-	if (block_sheet_ani_material_texture != null)
+	if (block_sheet_ani_texture_material != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_material_texture[f])
+			texture_free(block_sheet_ani_texture_material[f])
 	
-	if (block_sheet_ani_normal_texture != null)
+	if (block_sheet_ani_tex_normal != null)
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_normal_texture[f])
+			texture_free(block_sheet_ani_tex_normal[f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)
@@ -41,15 +41,15 @@ function res_load_pack_block_textures()
 	}
 	else
 	{
-		block_sheet_material_texture = texture_duplicate(spr_default_material)
+		block_sheet_texture_material = texture_duplicate(spr_default_material)
 		
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-			block_sheet_ani_material_texture[f] = texture_duplicate(spr_default_material)
+			block_sheet_ani_texture_material[f] = texture_duplicate(spr_default_material)
 		
-		block_sheet_normal_texture = texture_duplicate(spr_default_normal)
+		block_sheet_tex_normal = texture_duplicate(spr_default_normal)
 		
 		for (var f = 0; f < block_sheet_ani_frames; f++)
-			block_sheet_ani_normal_texture[f] = texture_duplicate(spr_default_normal)
+			block_sheet_ani_tex_normal[f] = texture_duplicate(spr_default_normal)
 	}
 	
 	log("Block textures all", "done")

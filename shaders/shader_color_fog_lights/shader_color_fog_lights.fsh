@@ -1,8 +1,8 @@
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 
-uniform sampler2D uMaterialTexture;
-uniform vec2 uMaterialTexScale;
+uniform sampler2D uTextureMaterial;
+uniform vec2 uTexScaleMaterial;
 uniform int uMaterialUseGlossiness;
 
 uniform int uColorsExt;
@@ -81,10 +81,10 @@ void main()
 		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	
-	vec2 matTex = vTexCoord;
-	if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
-		matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
-	vec4 matColor = texture2D(uMaterialTexture, matTex);
+	vec2 texMat = vTexCoord;
+	if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
+		texMat = mod(texMat * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
+	vec4 matColor = texture2D(uTextureMaterial, texMat);
 	
 	// Flip roughness
 	if (uMaterialUseGlossiness == 0)

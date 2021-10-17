@@ -556,9 +556,9 @@ function preview_draw(preview, xx, yy, width, height)
 									if (pack_image_material = "diffuse")
 										tex = select.model_texture_map[?pack_model_texture]
 									else if (pack_image_material = "material")
-										tex = select.model_material_texture_map[?pack_model_texture]
+										tex = select.model_texture_material_map[?pack_model_texture]
 									else if (pack_image_material = "normal")
-										tex = select.model_normal_texture_map[?pack_model_texture]
+										tex = select.model_tex_normal_map[?pack_model_texture]
 									
 									break
 								}
@@ -568,9 +568,9 @@ function preview_draw(preview, xx, yy, width, height)
 									if (pack_image_material = "diffuse")
 										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame(true)] : select.block_sheet_texture)
 									else if (pack_image_material = "material")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_material_texture[block_texture_get_frame(true)] : select.block_sheet_material_texture)
+										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture_material[block_texture_get_frame(true)] : select.block_sheet_texture_material)
 									else if (pack_image_material = "normal")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_normal_texture[block_texture_get_frame(true)] : select.block_sheet_normal_texture)
+										tex = (pack_block_sheet_ani ? select.block_sheet_ani_tex_normal[block_texture_get_frame(true)] : select.block_sheet_tex_normal)
 									
 									break
 								}
@@ -584,9 +584,9 @@ function preview_draw(preview, xx, yy, width, height)
 									if (pack_image_material = "diffuse")
 										tex = select.item_sheet_texture
 									else if (pack_image_material = "material")
-										tex = select.item_sheet_material_texture
+										tex = select.item_sheet_texture_material
 									else if (pack_image_material = "normal")
-										tex = select.item_sheet_normal_texture
+										tex = select.item_sheet_tex_normal
 									
 									break
 								}

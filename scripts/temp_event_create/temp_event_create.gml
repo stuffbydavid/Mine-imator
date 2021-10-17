@@ -17,16 +17,16 @@ function temp_event_create()
 	model = null
 	model_name = default_model
 	model_tex = null
-	model_material_tex = null
-	model_normal_tex = null
+	model_tex_material = null
+	model_tex_normal = null
 	
 	model_texture_name_map = null
-	model_material_texture_name_map = null
-	model_normal_texture_name_map = null
+	model_texture_material_name_map = null
+	model_tex_normal_name_map = null
 	
 	model_shape_texture_name_map = null
-	model_shape_material_texture_name_map = null
-	model_shape_normal_texture_name_map = null
+	model_shape_texture_material_name_map = null
+	model_shape_tex_normal_name_map = null
 	
 	model_color_name_map = null
 	model_color_map = null
@@ -47,8 +47,8 @@ function temp_event_create()
 	banner_skin = null
 	
 	item_tex = null
-	item_material_tex = null
-	item_normal_tex = null
+	item_tex_material = null
+	item_tex_normal = null
 	item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
 	item_vbuffer = null
 	item_3d = true
@@ -61,8 +61,8 @@ function temp_event_create()
 	block_state = array()
 	
 	block_tex = null
-	block_material_tex = null
-	block_normal_tex = null
+	block_tex_material = null
+	block_tex_normal = null
 	
 	block_vbuffer = null
 	scenery_chunk_array = null
@@ -73,8 +73,8 @@ function temp_event_create()
 	
 	shape_vbuffer = null
 	shape_tex = null
-	shape_material_tex = null
-	shape_normal_tex = null
+	shape_tex_material = null
+	shape_tex_normal = null
 	shape_tex_mapped = false
 	shape_tex_hoffset = 0
 	shape_tex_voffset = 0

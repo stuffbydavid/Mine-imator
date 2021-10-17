@@ -1,6 +1,6 @@
 uniform float2 uTexScale;
-uniform float2 uNormalTexScale;
-uniform float2 uMaterialTexScale;
+uniform float2 uTexScaleNormal;
+uniform float2 uTexScaleMaterial;
 uniform float4 uBlendColor;
 uniform float uBrightness;
 uniform int uIsWater;
@@ -30,11 +30,11 @@ struct FSOutput
 Texture2D uTextureT : register(t1);
 SamplerState uTexture : register(s1);
 
-Texture2D uNormalTextureT : register(t2);
-SamplerState uNormalTexture : register(s2);
+Texture2D uTextureNormalT : register(t2);
+SamplerState uTextureNormal : register(s2);
 
-Texture2D uMaterialTextureT : register(t3);
-SamplerState uMaterialTexture : register(s3);
+Texture2D uTextureMaterialT : register(t3);
+SamplerState uTextureMaterial : register(s3);
 
 float4 packDepth(float f)
 {
@@ -72,7 +72,7 @@ float3 getMappedNormal(float3 normal, float3 worldPos, float2 uv, float wind, fl
 	float3x3 TBN = float3x3(T * float3(invmax, invmax, invmax), B * float3(invmax, invmax, invmax), normal);
 	
 	// Get normal value from normal map
-	float2 normtex = fmod(uv * uNormalTexScale, uNormalTexScale);
+	float2 normtex = fmod(uv * uTexScaleNormal, uTexScaleNormal);
 	
 	if (uIsWater > 0)
 	{
@@ -80,7 +80,7 @@ float3 getMappedNormal(float3 normal, float3 worldPos, float2 uv, float wind, fl
 		normtex = (worldPos.xy + angle) / 128.0;
 	}
 	
-	float3 normalCoord = uNormalTextureT.Sample(uNormalTexture, normtex).rgb * 2.0 - 1.0;
+	float3 normalCoord = uTextureNormalT.Sample(uTextureNormal, normtex).rgb * 2.0 - 1.0;
 	
 	if (uIsWater > 0)
 		normalCoord = lerp(normalCoord, float3(0.0, 0.0, 1.0), .9);
@@ -129,8 +129,8 @@ FSOutput main(FSInput IN) : SV_TARGET
 	OUT.Color2.a = 1.0;
 	
 	// Brightness
-	float2 matTex = fmod(IN.TexCoord * uMaterialTexScale, uMaterialTexScale);
-	float matColor = uMaterialTextureT.Sample(uMaterialTexture, tex).b;
+	float2 texMat = fmod(IN.TexCoord * uTexScaleMaterial, uTexScaleMaterial);
+	float matColor = uTextureMaterialT.Sample(uTextureMaterial, tex).b;
 	
 	float br = max(0.0, uBlendColor.a * (uBrightness + IN.Custom.z)) * matColor;
 	OUT.Color3 = float4(br, br, br, 1.0);

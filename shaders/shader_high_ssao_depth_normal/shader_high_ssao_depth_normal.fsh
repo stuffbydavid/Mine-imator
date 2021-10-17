@@ -1,6 +1,6 @@
 uniform float2 uTexScale;
-uniform float2 uMaterialTexScale;
-uniform float2 uNormalTexScale;
+uniform float2 uTexScaleMaterial;
+uniform float2 uTexScaleNormal;
 uniform float4 uBlendColor;
 uniform float uBrightness;
 uniform int uSSAOEnable;
@@ -27,11 +27,11 @@ struct FSOutput
 Texture2D uTextureT : register(t1);
 SamplerState uTexture : register(s1);
 
-Texture2D uMaterialTextureT : register(t2);
-SamplerState uMaterialTexture : register(s2);
+Texture2D uTextureMaterialT : register(t2);
+SamplerState uTextureMaterial : register(s2);
 
-Texture2D uNormalTextureT : register(t3);
-SamplerState uNormalTexture : register(s3);
+Texture2D uTextureNormalT : register(t3);
+SamplerState uTextureNormal : register(s3);
 
 float4 packDepth(float f)
 {
@@ -64,8 +64,8 @@ float3 getMappedNormal(float3 normal, float3 pos, float2 uv)
 	float3x3 TBN = float3x3(T * invmax, B * invmax, normal);
 	
 	// Get normal value from normal map
-	float2 normtex = fmod(uv * uNormalTexScale, uNormalTexScale);
-	float3 normalCoord = uNormalTextureT.Sample(uNormalTexture, normtex).rgb * 2.0 - 1.0;
+	float2 normtex = fmod(uv * uTexScaleNormal, uTexScaleNormal);
+	float3 normalCoord = uTextureNormalT.Sample(uTextureNormal, normtex).rgb * 2.0 - 1.0;
 	
 	if (normalCoord.z <= 0.0)
 		return normal;
@@ -95,8 +95,8 @@ FSOutput main(FSInput IN) : SV_TARGET
 	float br;
 	if (uSSAOEnable > 0)
 	{
-		float2 matTex = fmod(IN.TexCoord * uMaterialTexScale, uMaterialTexScale);
-		float4 mat = uMaterialTextureT.Sample(uMaterialTexture, matTex);
+		float2 texMat = fmod(IN.TexCoord * uTexScaleMaterial, uTexScaleMaterial);
+		float4 mat = uTextureMaterialT.Sample(uTextureMaterial, texMat);
 		
 		br = max(0.0, uBlendColor.a - ((uBrightness + IN.Custom.z) * mat.b));
 	}

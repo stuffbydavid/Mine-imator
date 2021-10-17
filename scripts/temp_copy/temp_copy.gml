@@ -13,8 +13,8 @@ function temp_copy(to)
 	
 	to.model = model
 	to.model_tex = model_tex
-	to.model_material_tex = model_material_tex
-	to.model_normal_tex = model_normal_tex
+	to.model_tex_material = model_tex_material
+	to.model_tex_normal = model_tex_normal
 	to.model_name = model_name
 	to.model_state = array_copy_1d(model_state)
 	to.model_part_name = model_part_name
@@ -25,8 +25,8 @@ function temp_copy(to)
 	to.banner_skin = sprite_duplicate(banner_skin)
 	
 	to.item_tex = item_tex
-	to.item_material_tex = item_material_tex
-	to.item_normal_tex = item_normal_tex
+	to.item_tex_material = item_tex_material
+	to.item_tex_normal = item_tex_normal
 	to.item_slot = item_slot
 	to.item_3d = item_3d
 	to.item_face_camera = item_face_camera
@@ -36,8 +36,8 @@ function temp_copy(to)
 	to.block_name = block_name
 	to.block_state = array_copy_1d(block_state)
 	to.block_tex = block_tex
-	to.block_material_tex = block_material_tex
-	to.block_normal_tex = block_normal_tex
+	to.block_tex_material = block_tex_material
+	to.block_tex_normal = block_tex_normal
 	
 	to.scenery = scenery
 	
@@ -45,8 +45,8 @@ function temp_copy(to)
 	to.block_repeat = array_copy_1d(block_repeat)
 	
 	to.shape_tex = shape_tex
-	to.shape_material_tex = shape_material_tex
-	to.shape_normal_tex = shape_normal_tex
+	to.shape_tex_material = shape_tex_material
+	to.shape_tex_normal = shape_tex_normal
 	to.shape_tex_mapped = shape_tex_mapped
 	to.shape_tex_hoffset = shape_tex_hoffset
 	to.shape_tex_voffset = shape_tex_voffset

@@ -1,12 +1,12 @@
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 
-uniform sampler2D uMaterialTexture;
-uniform vec2 uMaterialTexScale;
+uniform sampler2D uTextureMaterial;
+uniform vec2 uTexScaleMaterial;
 uniform int uMaterialUseGlossiness;
 
-uniform sampler2D uNormalTexture;
-uniform vec2 uNormalTexScale;
+uniform sampler2D uTextureNormal;
+uniform vec2 uTexScaleNormal;
 
 uniform vec3 uCameraPosition;
 uniform float uMetallic;
@@ -42,10 +42,10 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	}
 	
 	// Fix UV coordinate
-	if (uNormalTexScale.x < 1.0 || uNormalTexScale.y < 1.0)
-		texCoord = mod(texCoord * uNormalTexScale, uNormalTexScale); // GM sprite bug workaround
+	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
+		texCoord = mod(texCoord * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
-	texColor = texture2D(uNormalTexture, texCoord).rgb * 2.0 - 1.0;
+	texColor = texture2D(uTextureNormal, texCoord).rgb * 2.0 - 1.0;
 	
 	// Reduce water normal map strength
 	if (uIsWater > 0)
@@ -82,16 +82,16 @@ void main()
 	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
 		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	
-	vec2 matTex = vTexCoord;
-	if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
-		matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
+	vec2 texMat = vTexCoord;
+	if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
+		texMat = mod(texMat * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 	
 	vec2 normalTex = vTexCoord;
-	if (uNormalTexScale.x < 1.0 || uNormalTexScale.y < 1.0)
-		normalTex = mod(normalTex * uNormalTexScale, uNormalTexScale); // GM sprite bug workaround
+	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
+		normalTex = mod(normalTex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
 	vec4 baseColor = vColor * texture2D(uTexture, tex);
-	vec4 matColor = texture2D(uMaterialTexture, matTex);
+	vec4 matColor = texture2D(uTextureMaterial, texMat);
 	
 	// Flip roughness
 	if (uMaterialUseGlossiness == 0)

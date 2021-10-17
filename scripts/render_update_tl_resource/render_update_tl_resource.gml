@@ -29,18 +29,18 @@ function render_update_tl_resource()
 				return 0
 			
 			model_part_tex_name = model_part_get_texture_name(model_part, temp.model_texture_name_map)
-			model_part_material_tex_name = model_part_get_material_texture_name(model_part, temp.model_material_texture_name_map)
-			model_part_normal_tex_name = model_part_get_normal_texture_name(model_part, temp.model_normal_texture_name_map)
+			model_part_tex_material_name = model_part_get_texture_material_name(model_part, temp.model_texture_material_name_map)
+			model_part_tex_normal_name = model_part_get_tex_normal_name(model_part, temp.model_tex_normal_name_map)
 			
 			// Look up shape textures
 			model_part_shape_tex = []
-			model_part_shape_material_tex = []
-			model_part_shape_normal_tex = []
+			model_part_shape_tex_material = []
+			model_part_shape_tex_normal = []
 			model_part_shape_material_res = []
-			var shapetexnamemap, shapemattexnamemap, shapenortexnamemap;
+			var shapetexnamemap, shapetexmatnamemap, shapetexnormnamemap;
 			shapetexnamemap = temp.model_shape_texture_name_map
-			shapemattexnamemap = temp.model_shape_material_texture_name_map
-			shapenortexnamemap = temp.model_shape_normal_texture_name_map
+			shapetexmatnamemap = temp.model_shape_texture_material_name_map
+			shapetexnormnamemap = temp.model_shape_tex_normal_name_map
 			
 			for (var i = 0; i < ds_list_size(model_part.shape_list); i++)
 			{
@@ -51,13 +51,13 @@ function render_update_tl_resource()
 				if (shape.texture_name != "")
 					shapetexname = shape.texture_name
 				
-				var shapemattexname = model_part_material_tex_name;
+				var shapetexmatname = model_part_tex_material_name;
 				if (shape.texture_material_name != "")
-					shapemattexname = shape.texture_material_name
+					shapetexmatname = shape.texture_material_name
 				
-				var shapenortexname = model_part_normal_tex_name;
+				var shapetexnormname = model_part_tex_normal_name;
 				if (shape.texture_normal_name != "")
-					shapenortexname = shape.texture_normal_name
+					shapetexnormname = shape.texture_normal_name
 				
 				// Change texture if name is in shape texture map
 				if (shapetexnamemap != null)
@@ -67,18 +67,18 @@ function render_update_tl_resource()
 						shapetexname = maptexname
 				}
 				
-				if (shapemattexnamemap != null)
+				if (shapetexmatnamemap != null)
 				{
-					var mapmattexname = shapemattexnamemap[?shape.description];
-					if (!is_undefined(mapmattexname))
-						shapemattexname = mapmattexname
+					var maptexmatname = shapetexmatnamemap[?shape.description];
+					if (!is_undefined(maptexmatname))
+						shapetexmatname = maptexmatname
 				}
 				
-				if (shapenortexnamemap != null)
+				if (shapetexnormnamemap != null)
 				{
-					var mapnortexname = shapenortexnamemap[?shape.description];
-					if (!is_undefined(mapnortexname))
-						shapenortexname = mapnortexname
+					var maptexnormname = shapetexnormnamemap[?shape.description];
+					if (!is_undefined(maptexnormname))
+						shapetexnormname = maptexnormname
 				}
 				
 				// Diffuse
@@ -93,14 +93,14 @@ function render_update_tl_resource()
 					with (materialres)
 					{
 						if (id = mc_res)
-							other.model_part_shape_material_tex[i] = null
+							other.model_part_shape_tex_material[i] = null
 						else
-							other.model_part_shape_material_tex[i] = res_get_model_material_texture(shapemattexname)
+							other.model_part_shape_tex_material[i] = res_get_model_texture_material(shapetexmatname)
 					}
 				}
 				else // No material texture
 				{
-					model_part_shape_material_tex[i] = null
+					model_part_shape_tex_material[i] = null
 					model_part_shape_material_res[i] = temp.model
 				}
 				
@@ -108,10 +108,10 @@ function render_update_tl_resource()
 				if (normalres != null) 
 				{
 					with (normalres)
-						other.model_part_shape_normal_tex[i] = res_get_model_normal_texture(shapenortexname)
+						other.model_part_shape_tex_normal[i] = res_get_model_tex_normal(shapetexnormname)
 				}
 				else // No normal texture
-					model_part_shape_normal_tex[i] = null
+					model_part_shape_tex_normal[i] = null
 			}
 			
 			break

@@ -6,20 +6,20 @@ function temp_event_destroy()
 	if (model_texture_name_map != null)	
 		ds_map_destroy(model_texture_name_map)
 	
-	if (model_material_texture_name_map != null)	
-		ds_map_destroy(model_material_texture_name_map)
+	if (model_texture_material_name_map != null)	
+		ds_map_destroy(model_texture_material_name_map)
 	
-	if (model_normal_texture_name_map != null)	
-		ds_map_destroy(model_normal_texture_name_map)
+	if (model_tex_normal_name_map != null)	
+		ds_map_destroy(model_tex_normal_name_map)
 	
 	if (model_shape_texture_name_map != null)	
 		ds_map_destroy(model_shape_texture_name_map)
 	
-	if (model_shape_material_texture_name_map != null)	
-		ds_map_destroy(model_shape_material_texture_name_map)
+	if (model_shape_texture_material_name_map != null)	
+		ds_map_destroy(model_shape_texture_material_name_map)
 	
-	if (model_shape_normal_texture_name_map != null)	
-		ds_map_destroy(model_shape_normal_texture_name_map)
+	if (model_shape_tex_normal_name_map != null)	
+		ds_map_destroy(model_shape_tex_normal_name_map)
 	
 	if (model_hide_list != null)
 		ds_list_destroy(model_hide_list)
@@ -50,20 +50,20 @@ function temp_event_destroy()
 		if (item_tex != null)
 			item_tex.count--
 		
-		if (item_material_tex != null)
-			item_material_tex.count--
+		if (item_tex_material != null)
+			item_tex_material.count--
 		
-		if (item_normal_tex != null)
-			item_normal_tex.count--
+		if (item_tex_normal != null)
+			item_tex_normal.count--
 		
 		if (block_tex != null)
 			block_tex.count--
 		
-		if (block_material_tex != null)
-			block_material_tex.count--
+		if (block_tex_material != null)
+			block_tex_material.count--
 		
-		if (block_normal_tex != null)
-			block_normal_tex.count--
+		if (block_tex_normal != null)
+			block_tex_normal.count--
 		
 		if (scenery > 0)
 			scenery.count--
@@ -71,11 +71,11 @@ function temp_event_destroy()
 		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 			shape_tex.count--
 		
-		if (shape_material_tex != null)
-			shape_material_tex.count--
+		if (shape_tex_material != null)
+			shape_tex_material.count--
 		
-		if (shape_normal_tex != null)
-			shape_normal_tex.count--
+		if (shape_tex_normal != null)
+			shape_tex_normal.count--
 		
 		if (text_font != null)
 			text_font.count--

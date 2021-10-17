@@ -15,22 +15,22 @@ function history_save_res(res)
 		save_id = res.save_id
 		usage_model_amount = 0
 		usage_model_tex_amount = 0
-		usage_model_material_tex_amount = 0
-		usage_model_normal_tex_amount = 0
+		usage_model_tex_material_amount = 0
+		usage_model_tex_normal_amount = 0
 		usage_item_tex_amount = 0
-		usage_item_material_tex_amount = 0
-		usage_item_normal_tex_amount = 0
+		usage_item_tex_material_amount = 0
+		usage_item_tex_normal_amount = 0
 		usage_block_tex_amount = 0
-		usage_block_material_tex_amount = 0
-		usage_block_normal_tex_amount = 0
+		usage_block_tex_material_amount = 0
+		usage_block_tex_normal_amount = 0
 		usage_scenery_amount = 0
 		usage_shape_tex_amount = 0
 		usage_text_font_amount = 0
 		usage_sprite_tex_amount = 0
 		usage_sprite_template_tex_amount = 0
 		usage_kf_texture_amount = 0
-		usage_kf_material_texture_amount = 0
-		usage_kf_normal_texture_amount = 0
+		usage_kf_texture_material_amount = 0
+		usage_kf_tex_normal_amount = 0
 		usage_tl_texture_amount = 0
 		usage_kf_sound_amount = 0
 		usage_tl_sound_amount = 0
@@ -58,16 +58,16 @@ function history_save_res(res)
 			save.usage_model_tex_amount++
 		}
 		
-		if (model_material_tex = res)
+		if (model_tex_material = res)
 		{
-			save.usage_model_material_tex_save_id[save.usage_model_material_tex_amount] = save_id
-			save.usage_model_material_tex_amount++
+			save.usage_model_tex_material_save_id[save.usage_model_tex_material_amount] = save_id
+			save.usage_model_tex_material_amount++
 		}
 		
-		if (model_normal_tex = res)
+		if (model_tex_normal = res)
 		{
-			save.usage_model_normal_tex_save_id[save.usage_model_normal_tex_amount] = save_id
-			save.usage_model_normal_tex_amount++
+			save.usage_model_tex_normal_save_id[save.usage_model_tex_normal_amount] = save_id
+			save.usage_model_tex_normal_amount++
 		}
 		
 		if (item_tex = res)
@@ -76,16 +76,16 @@ function history_save_res(res)
 			save.usage_item_tex_amount++
 		}
 		
-		if (item_material_tex = res)
+		if (item_tex_material = res)
 		{
-			save.usage_item_material_tex_save_id[save.usage_item_material_tex_amount] = save_id
-			save.usage_item_material_tex_amount++
+			save.usage_item_tex_material_save_id[save.usage_item_tex_material_amount] = save_id
+			save.usage_item_tex_material_amount++
 		}
 		
-		if (item_normal_tex = res)
+		if (item_tex_normal = res)
 		{
-			save.usage_item_normal_tex_save_id[save.usage_item_normal_tex_amount] = save_id
-			save.usage_item_normal_tex_amount++
+			save.usage_item_tex_normal_save_id[save.usage_item_tex_normal_amount] = save_id
+			save.usage_item_tex_normal_amount++
 		}
 		
 		if (block_tex = res)
@@ -94,16 +94,16 @@ function history_save_res(res)
 			save.usage_block_tex_amount++
 		}
 		
-		if (block_material_tex = res)
+		if (block_tex_material = res)
 		{
-			save.usage_block_material_tex_save_id[save.usage_block_material_tex_amount] = save_id
-			save.usage_block_material_tex_amount++
+			save.usage_block_tex_material_save_id[save.usage_block_tex_material_amount] = save_id
+			save.usage_block_tex_material_amount++
 		}
 		
-		if (block_normal_tex = res)
+		if (block_tex_normal = res)
 		{
-			save.usage_block_normal_tex_save_id[save.usage_block_normal_tex_amount] = save_id
-			save.usage_block_normal_tex_amount++
+			save.usage_block_tex_normal_save_id[save.usage_block_tex_normal_amount] = save_id
+			save.usage_block_tex_normal_amount++
 		}
 		
 		if (scenery = res)
@@ -118,16 +118,16 @@ function history_save_res(res)
 			save.usage_shape_tex_amount++
 		}
 		
-		if (shape_material_tex = res)
+		if (shape_tex_material = res)
 		{
-			save.usage_shape_material_tex_save_id[save.usage_shape_material_tex_amount] = save_id
-			save.usage_shape_material_tex_amount++
+			save.usage_shape_tex_material_save_id[save.usage_shape_tex_material_amount] = save_id
+			save.usage_shape_tex_material_amount++
 		}
 		
-		if (shape_normal_tex = res)
+		if (shape_tex_normal = res)
 		{
-			save.usage_shape_normal_tex_save_id[save.usage_shape_normal_tex_amount] = save_id
-			save.usage_shape_normal_tex_amount++
+			save.usage_shape_tex_normal_save_id[save.usage_shape_tex_normal_amount] = save_id
+			save.usage_shape_tex_normal_amount++
 		}
 		
 		if (text_font = res)
@@ -214,11 +214,11 @@ function history_save_res(res)
 		if (background_ground_tex = res)
 			save.usage_background_ground_tex = true
 		
-		if (background_ground_material_tex = res)
-			save.usage_background_ground_material_tex = true
+		if (background_ground_tex_material = res)
+			save.usage_background_ground_tex_material = true
 		
-		if (background_ground_normal_tex = res)
-			save.usage_background_ground_normal_tex = true
+		if (background_ground_tex_normal = res)
+			save.usage_background_ground_tex_normal = true
 	}
 	
 	return save

@@ -9,7 +9,7 @@ function temp_get_shape_tex_material_obj(val)
 		return null
 	
 	if (val = null) // Default
-		return shape_material_tex
+		return shape_tex_material
 	
 	if (val.texture != null)
 		return val

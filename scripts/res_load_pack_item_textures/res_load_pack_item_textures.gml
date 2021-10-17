@@ -9,11 +9,11 @@ function res_load_pack_item_textures(type, suffix)
 	if (type = "diffuse" && item_sheet_texture != null)
 		texture_free(item_sheet_texture)
 	
-	if (type = "material" && item_sheet_material_texture != null)
-		texture_free(item_sheet_material_texture)
+	if (type = "material" && item_sheet_texture_material != null)
+		texture_free(item_sheet_texture_material)
 	
-	if (type = "normal" && item_sheet_normal_texture != null)
-		texture_free(item_sheet_normal_texture)
+	if (type = "normal" && item_sheet_tex_normal != null)
+		texture_free(item_sheet_tex_normal)
 	
 	// Create new
 	var itemsize, texlist, surf, fileslist;
@@ -131,9 +131,9 @@ function res_load_pack_item_textures(type, suffix)
 	if (type = "diffuse")
 		item_sheet_texture = texture_surface(surf)
 	else if (type = "material")
-		item_sheet_material_texture = texture_surface(surf)
+		item_sheet_texture_material = texture_surface(surf)
 	else
-		item_sheet_normal_texture = texture_surface(surf)
+		item_sheet_tex_normal = texture_surface(surf)
 	
 	// Clean up
 	for (var t = 0; t < ds_list_size(texlist); t++)

@@ -78,8 +78,8 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 		
 		render_set_uniform_int("uMaterialUseGlossiness", res[1].material_uses_glossiness)
 		
-		if (res[1].item_sheet_material_texture != null)
-			render_set_texture(res[1].item_sheet_material_texture, "Material")
+		if (res[1].item_sheet_texture_material != null)
+			render_set_texture(res[1].item_sheet_texture_material, "Material")
 		else
 			render_set_texture(res[1].texture, "Material")
 	}
@@ -91,8 +91,8 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 	
 	if (res[2] != null && res[2] != mc_res)
 	{
-		if (res[2].item_sheet_normal_texture != null)
-			render_set_texture(res[2].item_sheet_normal_texture, "Normal")
+		if (res[2].item_sheet_tex_normal != null)
+			render_set_texture(res[2].item_sheet_tex_normal, "Normal")
 		else
 			render_set_texture(res[2].texture, "Normal")
 	}

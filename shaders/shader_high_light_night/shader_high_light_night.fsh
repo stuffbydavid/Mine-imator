@@ -2,8 +2,8 @@ uniform sampler2D uTexture;
 uniform vec2 uTexScale;
 uniform vec4 uBlendColor;
 
-uniform sampler2D uMaterialTexture;
-uniform vec2 uMaterialTexScale;
+uniform sampler2D uTextureMaterial;
+uniform vec2 uTexScaleMaterial;
 
 varying vec2 vTexCoord;
 varying float vBrightness;
@@ -16,11 +16,11 @@ void main()
 	vec4 baseColor = uBlendColor * texture2D(uTexture, tex);
 	
 	// Get material data
-	vec2 matTex = vTexCoord;
-	if (uMaterialTexScale.x < 1.0 || uMaterialTexScale.y < 1.0)
-		matTex = mod(matTex * uMaterialTexScale, uMaterialTexScale); // GM sprite bug workaround
+	vec2 texMat = vTexCoord;
+	if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
+		texMat = mod(texMat * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 		
-	vec3 mat = texture2D(uMaterialTexture, matTex).rgb;
+	vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 	
 	gl_FragColor = vec4(vec3(vBrightness * mat.b), baseColor.a);
 	

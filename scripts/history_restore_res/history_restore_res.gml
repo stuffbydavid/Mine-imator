@@ -40,21 +40,21 @@ function history_restore_res(save)
 			}
 		}
 		
-		for (var s = 0; s < save.usage_model_material_tex_amount; s++)
+		for (var s = 0; s < save.usage_model_tex_material_amount; s++)
 		{
-			with (save_id_find(save.usage_model_material_tex_save_id[s]))
+			with (save_id_find(save.usage_model_tex_material_save_id[s]))
 			{
-				model_material_tex.count--
-				model_material_tex = res
+				model_tex_material.count--
+				model_tex_material = res
 			}
 		}
 		
-		for (var s = 0; s < save.usage_model_normal_tex_amount; s++)
+		for (var s = 0; s < save.usage_model_tex_normal_amount; s++)
 		{
-			with (save_id_find(save.usage_model_normal_tex_save_id[s]))
+			with (save_id_find(save.usage_model_tex_normal_save_id[s]))
 			{
-				model_normal_tex.count--
-				model_normal_tex = res
+				model_tex_normal.count--
+				model_tex_normal = res
 			}
 		}
 		
@@ -72,22 +72,22 @@ function history_restore_res(save)
 			}
 		}
 		
-		for (var s = 0; s < save.usage_item_material_tex_amount; s++)
+		for (var s = 0; s < save.usage_item_tex_material_amount; s++)
 		{
-			with (save_id_find(save.usage_item_material_tex_save_id[s]))
+			with (save_id_find(save.usage_item_tex_material_save_id[s]))
 			{
-				item_material_tex.count--
-				item_material_tex = res
+				item_tex_material.count--
+				item_tex_material = res
 				render_generate_item()
 			}
 		}
 		
-		for (var s = 0; s < save.usage_item_normal_tex_amount; s++)
+		for (var s = 0; s < save.usage_item_tex_normal_amount; s++)
 		{
-			with (save_id_find(save.usage_item_normal_tex_save_id[s]))
+			with (save_id_find(save.usage_item_tex_normal_save_id[s]))
 			{
-				item_normal_tex.count--
-				item_normal_tex = res
+				item_tex_normal.count--
+				item_tex_normal = res
 				render_generate_item()
 			}
 		}
@@ -105,21 +105,21 @@ function history_restore_res(save)
 			}
 		}
 		
-		for (var s = 0; s < save.usage_block_material_tex_amount; s++)
+		for (var s = 0; s < save.usage_block_tex_material_amount; s++)
 		{
-			with (save_id_find(save.usage_block_material_tex_save_id[s]))
+			with (save_id_find(save.usage_block_tex_material_save_id[s]))
 			{
-				block_material_tex.count--
-				block_material_tex = res
+				block_tex_material.count--
+				block_tex_material = res
 			}
 		}
 		
-		for (var s = 0; s < save.usage_block_normal_tex_amount; s++)
+		for (var s = 0; s < save.usage_block_tex_normal_amount; s++)
 		{
-			with (save_id_find(save.usage_block_normal_tex_save_id[s]))
+			with (save_id_find(save.usage_block_tex_normal_save_id[s]))
 			{
-				block_normal_tex.count--
-				block_normal_tex = res
+				block_tex_normal.count--
+				block_tex_normal = res
 			}
 		}
 		
@@ -135,13 +135,13 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_shape_tex_save_id[s]))
 				shape_tex = res
 		
-		for (var s = 0; s < save.usage_shape_material_tex_amount; s++)
-			with (save_id_find(save.usage_shape_material_tex_save_id[s]))
-				shape_material_tex = res
+		for (var s = 0; s < save.usage_shape_tex_material_amount; s++)
+			with (save_id_find(save.usage_shape_tex_material_save_id[s]))
+				shape_tex_material = res
 		
-		for (var s = 0; s < save.usage_shape_normal_tex_amount; s++)
-			with (save_id_find(save.usage_shape_normal_tex_save_id[s]))
-				shape_normal_tex = res
+		for (var s = 0; s < save.usage_shape_tex_normal_amount; s++)
+			with (save_id_find(save.usage_shape_tex_normal_save_id[s]))
+				shape_tex_normal = res
 		
 		#endregion
 		
@@ -168,13 +168,13 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = res
 		
-		for (var s = 0; s < save.usage_kf_material_texture_amount; s++)
-			with (save_id_find(save.usage_kf_material_texture_tl_save_id[s]))
-				keyframe_list[|save.usage_kf_material_texture_index[s]].value[e_value.TEXTURE_MATERIAL_OBJ] = res
+		for (var s = 0; s < save.usage_kf_texture_material_amount; s++)
+			with (save_id_find(save.usage_kf_texture_material_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_texture_material_index[s]].value[e_value.TEXTURE_MATERIAL_OBJ] = res
 		
-		for (var s = 0; s < save.usage_kf_normal_texture_amount; s++)
-			with (save_id_find(save.usage_kf_normal_texture_tl_save_id[s]))
-				keyframe_list[|save.usage_kf_normal_texture_index[s]].value[e_value.TEXTURE_NORMAL_OBJ] = res
+		for (var s = 0; s < save.usage_kf_tex_normal_amount; s++)
+			with (save_id_find(save.usage_kf_tex_normal_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_tex_normal_index[s]].value[e_value.TEXTURE_NORMAL_OBJ] = res
 		
 		for (var s = 0; s < save.usage_kf_sound_amount; s++)
 			with (save_id_find(save.usage_kf_sound_tl_save_id[s]))
@@ -194,18 +194,18 @@ function history_restore_res(save)
 			}
 		}
 		
-		for (var s = 0; s < save.usage_tl_material_texture_amount; s++)
+		for (var s = 0; s < save.usage_tl_texture_material_amount; s++)
 		{
-			with (save_id_find(save.usage_tl_material_texture_save_id[s]))
+			with (save_id_find(save.usage_tl_texture_material_save_id[s]))
 			{
 				value[e_value.TEXTURE_MATERIAL_OBJ] = res
 				update_matrix = true
 			}
 		}
 		
-		for (var s = 0; s < save.usage_tl_normal_texture_amount; s++)
+		for (var s = 0; s < save.usage_tl_tex_normal_amount; s++)
 		{
-			with (save_id_find(save.usage_tl_normal_texture_save_id[s]))
+			with (save_id_find(save.usage_tl_tex_normal_save_id[s]))
 			{
 				value[e_value.TEXTURE_NORMAL_OBJ] = res
 				update_matrix = true
@@ -262,34 +262,34 @@ function history_restore_res(save)
 			}
 		}
 		
-		if (save.usage_background_ground_material_tex)
+		if (save.usage_background_ground_tex_material)
 		{
 			with (app)
 			{
-				background_ground_material_tex.count--
-				background_ground_material_tex = res
-				background_ground_update_material_texture()
+				background_ground_tex_material.count--
+				background_ground_tex_material = res
+				background_ground_update_texture_material()
 			}
 		}
 		
-		if (save.usage_background_ground_normal_tex)
+		if (save.usage_background_ground_tex_normal)
 		{
 			with (app)
 			{
-				background_ground_normal_tex.count--
-				background_ground_normal_tex = res
-				background_ground_update_normal_texture()
+				background_ground_tex_normal.count--
+				background_ground_tex_normal = res
+				background_ground_update_texture_normal()
 			}
 		}
 		
 		count += save.usage_model_amount
 		count += save.usage_model_tex_amount
-		count += save.usage_model_material_tex_amount
-		count += save.usage_model_normal_tex_amount
+		count += save.usage_model_tex_material_amount
+		count += save.usage_model_tex_normal_amount
 		count += save.usage_item_tex_amount
 		count += save.usage_block_tex_amount
-		count += save.usage_block_material_tex_amount
-		count += save.usage_block_normal_tex_amount
+		count += save.usage_block_tex_material_amount
+		count += save.usage_block_tex_normal_amount
 		count += save.usage_scenery_amount
 		count += save.usage_shape_tex_amount
 		count += save.usage_text_font_amount

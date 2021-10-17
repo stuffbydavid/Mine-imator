@@ -68,8 +68,8 @@ function action_bench_create()
 						if (model_tex != null)
 							model_tex.count--
 						model_tex = null
-						model_material_tex = null
-						model_normal_tex = null
+						model_tex_material = null
+						model_tex_normal = null
 						model_file = null
 						model_part = null
 						model_state = array()
@@ -79,18 +79,18 @@ function action_bench_create()
 					{
 						item_tex.count--
 						item_tex = null
-						item_material_tex.count--
-						item_material_tex = null
-						item_normal_tex.count--
-						item_normal_tex = null
+						item_tex_material.count--
+						item_tex_material = null
+						item_tex_normal.count--
+						item_tex_normal = null
 					}
 					
 					if (type != e_temp_type.BLOCK && type != e_temp_type.SCENERY)
 					{
 						block_tex.count--
 						block_tex = null
-						block_material_tex = null
-						block_normal_tex = null
+						block_tex_material = null
+						block_tex_normal = null
 						block_state = array()
 					}
 					
@@ -109,16 +109,16 @@ function action_bench_create()
 							shape_tex = null
 						}
 						
-						if (shape_material_tex != null)
+						if (shape_tex_material != null)
 						{
-							shape_material_tex.count--
-							shape_material_tex = null
+							shape_tex_material.count--
+							shape_tex_material = null
 						}
 						
-						if (shape_normal_tex != null)
+						if (shape_tex_normal != null)
 						{
-							shape_normal_tex.count--
-							shape_normal_tex = null
+							shape_tex_normal.count--
+							shape_tex_normal = null
 						}
 					}
 					
@@ -153,11 +153,11 @@ function action_bench_create()
 				if (block_tex != null)
 					block_tex.count++
 				
-				if (block_material_tex != null)
-					block_material_tex.count++
+				if (block_tex_material != null)
+					block_tex_material.count++
 				
-				if (block_normal_tex != null)
-					block_normal_tex.count++
+				if (block_tex_normal != null)
+					block_tex_normal.count++
 				
 				if (scenery > 0)
 					scenery.count++
@@ -165,11 +165,11 @@ function action_bench_create()
 				if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
 					shape_tex.count++
 				
-				if (shape_material_tex != null)
-					shape_material_tex.count++
+				if (shape_tex_material != null)
+					shape_tex_material.count++
 				
-				if (shape_normal_tex != null)
-					shape_normal_tex.count++
+				if (shape_tex_normal != null)
+					shape_tex_normal.count++
 				
 				if (text_font != null)
 					text_font.count++

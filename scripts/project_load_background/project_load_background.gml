@@ -93,11 +93,11 @@ function project_load_background(map)
 	background_ground_tex.count--
 	background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
 	
-	background_ground_material_tex.count--
-	background_ground_material_tex = value_get_save_id(map[?"ground_material_tex"], background_ground_material_tex)
+	background_ground_tex_material.count--
+	background_ground_tex_material = value_get_save_id(map[?"ground_tex_material"], background_ground_tex_material)
 	
-	background_ground_normal_tex.count--
-	background_ground_normal_tex = value_get_save_id(map[?"ground_normal_tex"], background_ground_normal_tex)
+	background_ground_tex_normal.count--
+	background_ground_tex_normal = value_get_save_id(map[?"ground_tex_normal"], background_ground_tex_normal)
 	
 	background_biome = find_biome(value_get_string(map[?"biome"], background_biome.name))
 	

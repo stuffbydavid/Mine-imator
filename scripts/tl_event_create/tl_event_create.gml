@@ -148,8 +148,8 @@ function tl_event_create()
 	tex_obj_prev = -5
 	
 	model_tex = null
-	model_material_tex = null
-	model_normal_tex = null
+	model_tex_material = null
+	model_tex_normal = null
 	
 	// Bounding box info
 	bounding_box = new bbox()

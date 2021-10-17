@@ -172,9 +172,9 @@ function res_load_pack_block_sheet(type, suffix)
 	if (type = "diffuse")
 		block_sheet_texture = texture_surface(surf)
 	else if (type = "material")
-		block_sheet_material_texture = texture_surface(surf)
+		block_sheet_texture_material = texture_surface(surf)
 	else if (type = "normal")
-		block_sheet_normal_texture = texture_surface(surf)
+		block_sheet_tex_normal = texture_surface(surf)
 	
 	// Create surfaces for animated blocks
 	log("Block textures", type, "animated block surfaces")
@@ -450,9 +450,9 @@ function res_load_pack_block_sheet(type, suffix)
 		if (type = "diffuse")
 			block_sheet_ani_texture[f] = texture_surface(anisurf[f])
 		else if (type = "material")
-			block_sheet_ani_material_texture[f] = texture_surface(anisurf[f])
+			block_sheet_ani_texture_material[f] = texture_surface(anisurf[f])
 		else if (type = "normal")
-			block_sheet_ani_normal_texture[f] = texture_surface(anisurf[f])
+			block_sheet_ani_tex_normal[f] = texture_surface(anisurf[f])
 		
 		surface_free(anisurf[f])
 	}

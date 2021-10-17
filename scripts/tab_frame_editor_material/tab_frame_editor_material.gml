@@ -24,10 +24,10 @@ function tab_frame_editor_material()
 		tab_collapse_start()
 		
 		// Material texture
-		tab_frame_editor_material_texture()
+		tab_frame_editor_texture_material()
 	
 		// Normal texture
-		tab_frame_editor_normal_texture()
+		tab_frame_editor_tex_normal()
 		
 		tab_collapse_end()
 	}

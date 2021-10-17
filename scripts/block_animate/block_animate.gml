@@ -84,10 +84,10 @@ function block_animate(root)
 			value_default[e_value.TEXTURE_OBJ] = other.texture
 			value_default[e_value.TEXTURE_OBJ].count++
 			
-			value_default[e_value.TEXTURE_MATERIAL_OBJ] = other.material_texture
+			value_default[e_value.TEXTURE_MATERIAL_OBJ] = other.texture_material
 			value_default[e_value.TEXTURE_MATERIAL_OBJ].count++
 			
-			value_default[e_value.TEXTURE_NORMAL_OBJ] = other.normal_texture
+			value_default[e_value.TEXTURE_NORMAL_OBJ] = other.tex_normal
 			value_default[e_value.TEXTURE_NORMAL_OBJ].count++
 		}
 		

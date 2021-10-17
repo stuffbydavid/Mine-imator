@@ -65,8 +65,8 @@ function res_load()
 			else
 				block_sheet_texture = texture_create(fn)
 			
-			block_sheet_material_texture = texture_duplicate(block_sheet_texture)
-			block_sheet_normal_texture = texture_duplicate(block_sheet_texture)
+			block_sheet_texture_material = texture_duplicate(block_sheet_texture)
+			block_sheet_tex_normal = texture_duplicate(block_sheet_texture)
 			
 			colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
 			colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
@@ -187,28 +187,28 @@ function res_load()
 				model_texture_map = null
 			}
 			
-			if (model_material_texture_map != null)
+			if (model_texture_material_map != null)
 			{
-				var key = ds_map_find_first(model_material_texture_map);
+				var key = ds_map_find_first(model_texture_material_map);
 				while (!is_undefined(key))
 				{
-					texture_free(model_material_texture_map[?key])
-					key = ds_map_find_next(model_material_texture_map, key)
+					texture_free(model_texture_material_map[?key])
+					key = ds_map_find_next(model_texture_material_map, key)
 				}
-				ds_map_destroy(model_material_texture_map)
-				model_material_texture_map = null
+				ds_map_destroy(model_texture_material_map)
+				model_texture_material_map = null
 			}
 			
-			if (model_normal_texture_map != null)
+			if (model_tex_normal_map != null)
 			{
-				var key = ds_map_find_first(model_normal_texture_map);
+				var key = ds_map_find_first(model_tex_normal_map);
 				while (!is_undefined(key))
 				{
-					texture_free(model_normal_texture_map[?key])
-					key = ds_map_find_next(model_normal_texture_map, key)
+					texture_free(model_tex_normal_map[?key])
+					key = ds_map_find_next(model_tex_normal_map, key)
 				}
-				ds_map_destroy(model_normal_texture_map)
-				model_normal_texture_map = null
+				ds_map_destroy(model_tex_normal_map)
+				model_tex_normal_map = null
 			}
 			
 			// Load model from .mimodel or block .json
@@ -229,21 +229,21 @@ function res_load()
 				if (model_file != null)
 					model_texture_name_map[?""] = model_file.texture_name
 				
-				if (model_material_texture_name_map != null)
-					ds_map_clear(model_material_texture_name_map)
+				if (model_texture_material_name_map != null)
+					ds_map_clear(model_texture_material_name_map)
 				else
-					model_material_texture_name_map = ds_map_create()
+					model_texture_material_name_map = ds_map_create()
 				
 				if (model_file != null)
-					model_material_texture_name_map[?""] = model_file.texture_material_name
+					model_texture_material_name_map[?""] = model_file.texture_material_name
 				
-				if (model_normal_texture_name_map != null)
-					ds_map_clear(model_normal_texture_name_map)
+				if (model_tex_normal_name_map != null)
+					ds_map_clear(model_tex_normal_name_map)
 				else
-					model_normal_texture_name_map = ds_map_create()
+					model_tex_normal_name_map = ds_map_create()
 				
 				if (model_file != null)
-					model_normal_texture_name_map[?""] = model_file.texture_normal_name
+					model_tex_normal_name_map[?""] = model_file.texture_normal_name
 				
 				// Create color name map
 				if (model_color_name_map != null)
