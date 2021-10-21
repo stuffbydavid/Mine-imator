@@ -15,7 +15,7 @@ function texture_create_crop(tex, xx, yy, wid, hei)
 	surf = surface_create(wid, hei)
 	surface_set_target(surf)
 	{
-		draw_clear_alpha(c_white, 0)
+		draw_clear_alpha(c_black, 0)
 		draw_texture(tex, xx, yy)
 	}
 	surface_reset_target()

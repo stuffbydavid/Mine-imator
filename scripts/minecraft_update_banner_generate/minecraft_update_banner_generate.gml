@@ -24,6 +24,9 @@ function minecraft_update_banner_generate()
 	if (res.type = e_res_type.SKIN)
 		return sprite_duplicate(res.model_texture);
 	
+	draw_set_color(c_white)
+	draw_set_alpha(1)
+	
 	// Get the max size to generate banner skin
 	skinratio = max(skinratio, ceil(sprite_get_width(res.model_texture_map[?"entity/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner_base"])))
 	for (var i = 0; i < ds_list_size(minecraft_banner_pattern_list); i++)
@@ -47,7 +50,6 @@ function minecraft_update_banner_generate()
 	surface_set_target(bannersurf)
 	{
 		draw_clear_alpha(c_black, 0)
-		
 		draw_image(res.model_texture_map[?"entity/banner_base"], 0, 0, 0)
 		
 		draw_image(maskarray[0], 0, 0, 0, 1, 1, color, 1)
@@ -59,17 +61,18 @@ function minecraft_update_banner_generate()
 		}
 		
 		// Alpha fix
-		gpu_set_blendmode_ext(bm_src_color, bm_one) 
+		gpu_set_blendmode_ext(bm_src_color, bm_one)
 		draw_image(maskarray[0], 0, 0, 0, 1, 1, c_black, 1)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	
+	bannerskin = texture_surface(bannersurf)
+	
 	// Destroy pattern masks
 	for (var i = 0; i < array_length(maskarray); i++)
 		texture_free(maskarray[i])
 	
-	bannerskin = texture_surface(bannersurf);
 	surface_free(bannersurf)
 	
 	return bannerskin

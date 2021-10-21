@@ -24,7 +24,7 @@ function popup_bannereditor_draw()
 	{
 		ds_list_add(popup.pattern_list_edit, minecraft_banner_pattern_list[|1])
 		ds_list_add(popup.pattern_color_list_edit, c_minecraft_black)
-		popup_bannereditor.update = true
+		popup.update = true
 	}
 	
 	listy += (36 + 8)
@@ -153,7 +153,7 @@ function popup_bannereditor_draw()
 		ds_list_delete(popup.pattern_color_list_edit, popup.layer_remove)
 		
 		popup.layer_remove = null
-		popup_bannereditor.update = true
+		popup.update = true
 	}
 	
 	if (popup.update)

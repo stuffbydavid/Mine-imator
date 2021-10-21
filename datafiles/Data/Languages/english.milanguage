@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.10.15"
+        "lastchange": "2021.10.21"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2041,8 +2041,8 @@
         "textfacecamera": "Face camera",
         "shape/": {
             "tex": "Texture",
-            "materialtex": "Material map",
-            "normaltex": "Normal map",
+            "texmaterial": "Material map",
+            "texnormal": "Normal map",
             "texmapped": "Mapped texture",
             "texsavemap": "Export map",
             "texoffset": "Offset",
@@ -2279,7 +2279,9 @@
         "pixels": " px",
         "fps": " fps",
         "min": "Min",
-        "max": "Max"
+        "max": "Max",
+        "from": "From",
+        "to": "To"
     },
     "colorpicker/": {
         "r": "R",
