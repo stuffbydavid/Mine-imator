@@ -5,15 +5,24 @@ function particle_spawner_update()
 {
 	if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 	{
-		// Iterate through missed steps
-		for (var s = spawn_laststep; s < current_step; s++)
+		var temp;
+		if (is_timeline)
 		{
-			var temp;
-			if (is_timeline)
-				temp = id.temp
-			else
-				temp = select
+			temp = id.temp
+			spawn_currentstep = floor(app.background_time)
 			
+			if (floor(app.timeline_marker_previous) > floor(app.timeline_marker))
+				particle_spawner_clear()
+		}
+		else
+		{
+			temp = select
+			spawn_currentstep = current_step
+		}
+		
+		// Iterate through missed steps
+		for (var s = spawn_laststep; s < spawn_currentstep; s++)
+		{
 			if (temp.pc_spawn_constant)
 			{
 				var spawn;
@@ -378,5 +387,5 @@ function particle_spawner_update()
 		}
 	}
 	
-	spawn_laststep = current_step
+	spawn_laststep = spawn_currentstep
 }

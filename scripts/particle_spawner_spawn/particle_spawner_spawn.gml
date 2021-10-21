@@ -8,7 +8,7 @@ function particle_spawner_spawn(type)
 	pt = new_obj(obj_particle)
 	pt.creator = id
 	pt.type = type
-	pt.spawntime = current_step
+	pt.spawntime = spawn_currentstep
 	pt.frame = 0
 	pt.time = 0
 	pt.freezetime = 0
@@ -26,7 +26,7 @@ function particle_spawner_spawn(type)
 	else
 	{
 		randomize()
-		base_seed = random(current_step)
+		base_seed = random(spawn_currentstep)
 	}
 	
 	random_set_seed(base_seed)

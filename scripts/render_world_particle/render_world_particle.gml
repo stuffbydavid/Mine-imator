@@ -187,7 +187,12 @@ function render_world_particle()
 				return 0
 			}
 			else
+			{
 				render_set_texture(tex)
+				render_set_texture(spr_default_material, "Material")
+				render_set_texture(spr_default_normal, "Normal")
+				render_set_uniform("uMaterialUseGlossiness", 0)
+			}
 		}
 		
 		var xyang, zang, m;

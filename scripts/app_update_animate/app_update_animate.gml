@@ -12,6 +12,14 @@ function app_update_animate()
 	background_light_data[0] = 0
 	background_sun_direction = vec3(0)
 	
+	// Update background time
+	background_time_prev = background_time
+	background_time = (timeline_marker / project_tempo) * 60
+	
+	// Update samples
+	if (background_time_prev != background_time)
+		render_samples = -1
+	
 	with (obj_timeline)
 	{
 		// Update values
@@ -189,14 +197,6 @@ function app_update_animate()
 		app_update_cameras(exportmovie_high_quality, true)
 	else
 		app_update_cameras(view_render, false)
-	
-	// Update background time
-	background_time_prev = background_time
-	background_time = (timeline_marker / project_tempo) * 60
-	
-	// Update shadows
-	if (background_time_prev != background_time)
-		render_samples = -1
 	
 	// Update current marker
 	timeline_marker_current = null

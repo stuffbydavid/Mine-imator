@@ -6,6 +6,7 @@ function particle_spawner_init()
 	spawn_queue_amount[minute_steps] = 0
 	spawn_queue[minute_steps, 0] = 0
 	spawn_queue_start = null
+	spawn_currentstep = current_step
 	spawn_laststep = current_step
 	spawn_active = true
 	fire = false
