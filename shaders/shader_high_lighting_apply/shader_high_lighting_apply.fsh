@@ -3,6 +3,7 @@ uniform sampler2D uSSAO;
 
 uniform int uShadowsEnabled;
 uniform sampler2D uShadows;
+uniform sampler2D uSpecular;
 
 uniform sampler2D uIndirect;
 uniform int uIndirectEnabled;
@@ -61,6 +62,9 @@ void main()
 		baseColor.rgb = clamp(baseColor.rgb, 0.0, 1.0);
 		baseColor.rgb += spec;
 	}
+	
+	if (uShadowsEnabled > 0)
+		baseColor.rgb += texture2D(uSpecular, vTexCoord).rgb;
 	
 	gl_FragColor = baseColor;
 }

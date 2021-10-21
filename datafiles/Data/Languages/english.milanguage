@@ -616,6 +616,7 @@
                 "normal": "Normal",
                 "material": "Material",
                 "diffuse": "Diffuse",
+                "specular": "Specular",
                 "ao": "Ambient occlusion",
                 "shadows": "Shadows",
                 "indirect": "Indirect",
@@ -2757,6 +2758,7 @@
         "light/": {
             "color": "Color",
             "strength": "Strength",
+            "specularstrength": "Specular strength",
             "size": "Size",
             "range": "Range",
             "fadesize": "Fade size",

@@ -504,6 +504,8 @@ function app_startup_interface_tabs()
 			tbx_range = new_textbox_decimals()
 			tbx_strength = new_textbox_integer()
 			tbx_strength.suffix = "%"
+			tbx_specular_strength = new_textbox_integer()
+			tbx_specular_strength.suffix = "%"
 			tbx_fade_size = new_textbox_integer()
 			tbx_fade_size.suffix = "%"
 			tbx_spot_radius = new_textbox_decimals()

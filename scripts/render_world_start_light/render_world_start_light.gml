@@ -1,7 +1,10 @@
-/// render_world_start_light(from, to, sampleoffset, near, far, fov, color, strength, [fadesize, [spotsharpness]])
+/// render_world_start_light(from, to, sampleoffset, timeline] //near, far, fov, color, strength, [fadesize, [spotsharpness]])
 /// @arg from
 /// @arg to
 /// @arg sampleoffset
+/// @arg timeline
+/// @desc Render the scene from the light's point of view.
+
 /// @arg near
 /// @arg far
 /// @arg fov
@@ -9,25 +12,30 @@
 /// @arg strength
 /// @arg [fadesize
 /// @arg [spotsharpness]]
-/// @desc Render the scene from the light's point of view.
 
-function render_world_start_light()
+
+function render_world_start_light(from, to, offset, tl)
 {
-	render_light_from = argument[0]
-	render_light_to = argument[1]
-	render_light_offset = argument[2]
-	render_light_near = argument[3]
-	render_light_far = argument[4]
-	render_light_fov = argument[5]
-	render_light_color = argument[6]
-	render_light_strength = argument[7]
+	render_light_from = from
+	render_light_to = to
+	render_light_offset = offset
+	render_light_near = 1
+	render_light_far = tl.value[e_value.LIGHT_RANGE]
+	render_light_color = tl.value[e_value.LIGHT_COLOR]
+	render_light_strength = tl.value[e_value.LIGHT_STRENGTH]
+	render_light_specular_strength = tl.value[e_value.LIGHT_SPECULAR_STRENGTH]
+	render_light_size = tl.value[e_value.LIGHT_SIZE]
+	render_light_fade_size = tl.value[e_value.LIGHT_FADE_SIZE]
 	
-	render_light_color = render_light_color
-	
-	if (argument_count > 8)
-		render_light_fade_size = argument[8]
-	if (argument_count > 9)
-		render_light_spot_sharpness = argument[9]
+	if (tl.type = e_tl_type.POINT_LIGHT)
+	{
+		render_light_fov = 90
+	}
+	else if (tl.type = e_tl_type.SPOT_LIGHT)
+	{
+		render_light_fov = tl.value[e_value.LIGHT_SPOT_RADIUS]
+		render_light_spot_sharpness = tl.value[e_value.LIGHT_SPOT_SHARPNESS]
+	}
 	
 	gpu_set_ztestenable(true)
 	gpu_set_zwriteenable(true)

@@ -192,6 +192,7 @@ function tl_update_values()
 	{
 		tl_update_values_ease(e_value.LIGHT_COLOR)
 		tl_update_values_ease(e_value.LIGHT_STRENGTH)
+		tl_update_values_ease(e_value.LIGHT_SPECULAR_STRENGTH)
 		tl_update_values_ease(e_value.LIGHT_SIZE)
 		tl_update_values_ease(e_value.LIGHT_RANGE)
 		tl_update_values_ease(e_value.LIGHT_RANGE)

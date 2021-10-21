@@ -24,6 +24,9 @@ function render_high()
 	
 		if (project_render_pass = e_render_pass.SHADOWS)
 			render_pass_surf = surface_duplicate(render_surface_shadows)
+		
+		if (project_render_pass = e_render_pass.SPECULAR)
+			render_pass_surf = surface_duplicate(render_surface_specular)
 	}
 	
 	// Indirect lighting

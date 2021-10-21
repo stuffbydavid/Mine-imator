@@ -14,6 +14,7 @@ function render_world_start_sun(from, to, offset)
 	render_light_fov = 45
 	render_light_color = background_sunlight_color_final
 	render_light_strength = 1 + background_sunlight_strength
+	render_light_specular_strength = 1
 	
 	gpu_set_ztestenable(true)
 	gpu_set_zwriteenable(true)

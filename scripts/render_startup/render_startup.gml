@@ -12,7 +12,7 @@ function render_startup()
 	globalvar render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
 			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_light_offset, render_shadow_from,
-			  render_spot_matrix;
+			  render_spot_matrix, render_light_specular_strength, render_light_size;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
@@ -54,6 +54,8 @@ function render_startup()
 	render_height = 1
 	render_ratio = 1
 	render_camera = null
+	
+	render_light_specular_strength = 0
 	
 	render_effects = false
 	render_effects_done = false
@@ -156,11 +158,15 @@ function render_startup()
 	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec,
 		      render_surface_shadows_expo, render_surface_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post,
 			  render_post_index, render_surface_ssr, render_surface_ssr_expo, render_surface_ssr_dec, render_surface_sss, render_surface_sss_expo,
-			  render_surface_sss_dec, render_surface_sample_temp1, render_surface_sample_temp2;
+			  render_surface_sss_dec, render_surface_sample_temp1, render_surface_sample_temp2, render_surface_specular, render_surface_specular_expo,
+			  render_surface_specular_dec;
 	render_surface_ssao = null
 	render_surface_shadows = null
 	render_surface_shadows_expo = null
 	render_surface_shadows_dec = null
+	render_surface_specular = null
+	render_surface_specular_expo = null
+	render_surface_specular_dec = null
 	render_surface_fog = null
 	render_surface_lens = null
 	render_surface_indirect = null
@@ -200,6 +206,7 @@ function render_startup()
 	
 	// Render modes
 	globalvar render_mode, render_mode_shader_map, render_shader_obj;
+	render_mode = null
 	render_mode_shader_map = ds_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
 	render_mode_shader_map[?e_render_mode.SELECT] = shader_blend
@@ -216,9 +223,13 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT_DEPTH] = shader_depth
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_DEPTH] = shader_depth_point
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN] = shader_high_light_sun
+	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_SPEC] = shader_high_light_sun
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT] = shader_high_light_spot
+	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT_SPEC] = shader_high_light_spot
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT] = shader_high_light_point
+	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SPEC] = shader_high_light_point
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS] = shader_high_light_point_shadowless
+	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS_SPEC] = shader_high_light_point_shadowless
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_NIGHT] = shader_high_light_night
 	render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
 	render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow

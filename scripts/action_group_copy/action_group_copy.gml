@@ -39,9 +39,9 @@ function action_group_copy()
 		
 		case e_context_group.LIGHT:
 		{
-			context_group_copy_list[|group] = array(tl_edit.value[e_value.LIGHT_COLOR], tl_edit.value[e_value.LIGHT_STRENGTH], tl_edit.value[e_value.LIGHT_SIZE], 
-													tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_FADE_SIZE], tl_edit.value[e_value.LIGHT_SPOT_RADIUS],
-													tl_edit.value[e_value.LIGHT_SPOT_SHARPNESS])
+			context_group_copy_list[|group] = array(tl_edit.value[e_value.LIGHT_COLOR], tl_edit.value[e_value.LIGHT_STRENGTH], tl_edit.value[e_value.LIGHT_SPECULAR_STRENGTH],
+													tl_edit.value[e_value.LIGHT_SIZE], tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_FADE_SIZE],
+													tl_edit.value[e_value.LIGHT_SPOT_RADIUS], tl_edit.value[e_value.LIGHT_SPOT_SHARPNESS])
 			return;
 		}
 		

@@ -146,11 +146,11 @@ function render_high_reflections(export, surf)
 		surface_set_target_ext(0, render_surface_ssr_expo)
 		surface_set_target_ext(1, render_surface_ssr_dec)
 		{
-			render_shader_obj = shader_map[?shader_high_shadows_add]
+			render_shader_obj = shader_map[?shader_high_samples_add]
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_shadows_add_set(exptemp, dectemp)
+				shader_high_samples_add_set(exptemp, dectemp)
 			}
 			draw_surface_exists(tempsurf, 0, 0)
 			with (render_shader_obj)

@@ -3,7 +3,7 @@
 
 function render_high_shadows(export)
 {
-	var resultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
+	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
 	sampleoffset = point3D(0, 0, 0)
 	sunout = (background_sunlight_color_final != c_black)
 	samplestart = 0
@@ -58,6 +58,13 @@ function render_high_shadows(export)
 	}
 	surface_reset_target()
 	
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height)
+	surface_set_target(render_surface_specular)
+	{
+		draw_clear_alpha(c_black, 1)
+	}
+	surface_reset_target()
+	
 	// Sample lights
 	for (var s = samplestart; s < sampleend; s++)
 	{
@@ -65,6 +72,12 @@ function render_high_shadows(export)
 		if (export)
 		{
 			surface_set_target(render_surface_shadows)
+			{
+				draw_clear_alpha(c_black, 1)
+			}
+			surface_reset_target()
+			
+			surface_set_target(render_surface_specular)
 			{
 				draw_clear_alpha(c_black, 1)
 			}
@@ -133,6 +146,9 @@ function render_high_shadows(export)
 		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 		resultsurftemp = render_surface[2]
 		
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		specresultsurftemp = render_surface[3]
+		
 		surface_set_target(resultsurftemp)
 		{
 			draw_clear(c_black)
@@ -142,11 +158,32 @@ function render_high_shadows(export)
 		}
 		surface_reset_target()
 		
+		surface_set_target(specresultsurftemp)
+		{
+			draw_clear(c_black)
+			
+			if (sunout)
+			{
+				render_world_start()
+				render_world(e_render_mode.HIGH_LIGHT_SUN_SPEC)
+				render_world_done()
+			}	
+		}
+		surface_reset_target()
+		
 		// Add to shadows
 		surface_set_target(render_surface_shadows)
 		{
 			gpu_set_blendmode(bm_add)
 			draw_surface_exists(resultsurftemp, 0, 0)
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+		
+		surface_set_target(render_surface_specular)
+		{
+			gpu_set_blendmode(bm_add)
+			draw_surface_exists(specresultsurftemp, 0, 0)
 			gpu_set_blendmode(bm_normal)
 		}
 		surface_reset_target()
@@ -207,7 +244,7 @@ function render_high_shadows(export)
 							gpu_set_blendmode_ext(bm_one, bm_zero)
 							
 							draw_clear(c_white)
-							render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, 1, value[e_value.LIGHT_RANGE], 90, value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE])
+							render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
 							render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 							
 							render_world_done()
@@ -248,6 +285,21 @@ function render_high_shadows(export)
 							render_world_done()
 						}
 						surface_reset_target()
+						
+						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+						specresultsurftemp = render_surface[3]
+						surface_set_target(specresultsurftemp)
+						{
+							draw_clear(c_black)
+							
+							if (render_light_specular_strength > 0)
+							{
+								render_world_start()
+								render_world(e_render_mode.HIGH_LIGHT_POINT_SPEC)
+								render_world_done()
+							}
+						}
+						surface_reset_target()
 					}
 				}
 				
@@ -266,7 +318,7 @@ function render_high_shadows(export)
 						
 						draw_clear(c_white)
 						
-						render_world_start_light(world_pos, lookat, sampleoffset, 1, value[e_value.LIGHT_RANGE], value[e_value.LIGHT_SPOT_RADIUS], value[e_value.LIGHT_COLOR], value[e_value.LIGHT_STRENGTH], value[e_value.LIGHT_FADE_SIZE], value[e_value.LIGHT_SPOT_SHARPNESS])
+						render_world_start_light(world_pos, lookat, sampleoffset, id)
 						
 						// Only render depth for shadows if the light source isn't shadowless
 						if (shadows)
@@ -295,6 +347,20 @@ function render_high_shadows(export)
 							render_world_done()
 						}
 						surface_reset_target()
+						
+						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+						specresultsurftemp = render_surface[3]
+						surface_set_target(specresultsurftemp)
+						{
+							draw_clear(c_black)
+							if (render_light_specular_strength > 0)
+							{
+								render_world_start()
+								render_world(e_render_mode.HIGH_LIGHT_SPOT_SPEC)
+								render_world_done()
+							}
+						}
+						surface_reset_target()
 					}
 				}
 				else
@@ -310,69 +376,23 @@ function render_high_shadows(export)
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
-			}
-		}
-		
-		#endregion
-		
-		#region Shadowless point lights
-	
-		if (ds_list_size(render_shadowless_point_list) > 0)
-		{
-			var resultsurftemp, lights, batches;
-			lights = ds_list_size(render_shadowless_point_list)
-			batches = 0
-		
-			while (lights > 0)
-			{
-				for (var l = 0; l < 63; l++)
-				{
-					if (lights = 0)
-						continue
 				
-					var light = render_shadowless_point_list[| l + (batches * 63)];
-				
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 0] = light.world_pos[X]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 1] = light.world_pos[Y]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 2] = light.world_pos[Z]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 3] = light.value[e_value.LIGHT_RANGE]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 4] = (color_get_red(light.value[e_value.LIGHT_COLOR]) / 255) * light.value[e_value.LIGHT_STRENGTH]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 5] = (color_get_green(light.value[e_value.LIGHT_COLOR]) / 255) * light.value[e_value.LIGHT_STRENGTH]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 6] = (color_get_blue(light.value[e_value.LIGHT_COLOR]) / 255) * light.value[e_value.LIGHT_STRENGTH]
-					render_shadowless_point_data[render_shadowless_point_amount * 8 + 7] = light.value[e_value.LIGHT_FADE_SIZE]
-					render_shadowless_point_amount++
-					lights--
-				}
-			
-				// Render lights
-				render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-				resultsurftemp = render_surface[2]
-				surface_set_target(resultsurftemp)
-				{
-					draw_clear(c_white)
-					render_world_start()
-					render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS)
-					render_world_done()
-				}
-				surface_reset_target()
-			
-				// Add to final shadow surface
-				surface_set_target(render_surface_shadows)
+				// Add to specular
+				surface_set_target(render_surface_specular)
 				{
 					gpu_set_blendmode(bm_add)
-					draw_surface_exists(resultsurftemp, 0, 0)
+					draw_surface_exists(specresultsurftemp, 0, 0)
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
-			
-				batches++
-				render_shadowless_point_amount = 0
 			}
-		
-			ds_list_clear(render_shadowless_point_list)
 		}
-	
+		
 		#endregion
+		
+		// Shadowless lights (viewport)
+		if (!export)
+			render_high_shadows_shadowless()
 		
 		// Subsurface scattering (viewport)
 		if (!export)
@@ -382,10 +402,14 @@ function render_high_shadows(export)
 		var exptemp, dectemp;
 		render_surface_shadows_expo = surface_require(render_surface_shadows_expo, render_width, render_height)
 		render_surface_shadows_dec = surface_require(render_surface_shadows_dec, render_width, render_height)
+		render_surface_specular_expo = surface_require(render_surface_specular_expo, render_width, render_height)
+		render_surface_specular_dec = surface_require(render_surface_specular_dec, render_width, render_height)
 		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, render_width, render_height)
 		render_surface_sample_temp2 = surface_require(render_surface_sample_temp2, render_width, render_height)
 		exptemp = render_surface_sample_temp1
 		dectemp = render_surface_sample_temp2
+		
+		#region Shadows
 		
 		// Draw temporary exponent surface
 		surface_set_target(exptemp)
@@ -412,20 +436,63 @@ function render_high_shadows(export)
 		surface_set_target_ext(0, render_surface_shadows_expo)
 		surface_set_target_ext(1, render_surface_shadows_dec)
 		{
-			render_shader_obj = shader_map[?shader_high_shadows_add]
+			render_shader_obj = shader_map[?shader_high_samples_add]
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_shadows_add_set(exptemp, dectemp)
+				shader_high_samples_add_set(exptemp, dectemp)
 			}
 			draw_surface_exists(render_surface_shadows, 0, 0)
 			with (render_shader_obj)
 				shader_clear()
 		}
 		surface_reset_target()
+		
+		#endregion
+		
+		#region Specular
+		
+		// Draw temporary exponent surface
+		surface_set_target(exptemp)
+		{
+			draw_clear_alpha(c_black, 1)
+			draw_surface_exists(render_surface_specular_expo, 0, 0)
+			
+			if (s = 0 || render_samples_clear)
+				draw_clear_alpha(c_black, 1)
+		}
+		surface_reset_target()
+		
+		surface_set_target(dectemp)
+		{
+			draw_clear_alpha(c_black, 1)
+			draw_surface_exists(render_surface_specular_dec, 0, 0)
+			
+			if (s = 0 || render_samples_clear)
+				draw_clear_alpha(c_black, 1)
+		}
+		surface_reset_target()
+		
+		// Add light shadow to buffer
+		surface_set_target_ext(0, render_surface_specular_expo)
+		surface_set_target_ext(1, render_surface_specular_dec)
+		{
+			render_shader_obj = shader_map[?shader_high_samples_add]
+			with (render_shader_obj)
+			{
+				shader_set(shader)
+				shader_high_samples_add_set(exptemp, dectemp)
+			}
+			draw_surface_exists(render_surface_specular, 0, 0)
+			with (render_shader_obj)
+				shader_clear()
+		}
+		surface_reset_target()
+		
+		#endregion
 	}
 	
-	// Unpack samples
+	// Unpack shadow samples
 	surface_set_target(render_surface_shadows)
 	{
 		draw_clear_alpha(c_black, 1)
@@ -442,6 +509,27 @@ function render_high_shadows(export)
 	}
 	surface_reset_target()
 	
+	// Unpack specular samples
+	surface_set_target(render_surface_specular)
+	{
+		draw_clear_alpha(c_black, 1)
+		
+		render_shader_obj = shader_map[?shader_high_samples_unpack]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_high_samples_unpack_set(render_surface_specular_expo, render_surface_specular_dec, render_samples)
+		}
+		draw_blank(0, 0, render_width, render_height)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+	
+	// Shadowless lights (export)
+	if (export)
+		render_high_shadows_shadowless()
+	
 	// Subsurface scatter (export)
 	if (export)
 		render_high_subsurface_scatter(export)
@@ -451,10 +539,95 @@ function render_high_shadows(export)
 	{
 		surface_free(render_surface_shadows_expo)
 		surface_free(render_surface_shadows_dec)
+		surface_free(render_surface_specular_expo)
+		surface_free(render_surface_specular_dec)
 		surface_free(render_surface_sun_buffer)
 		surface_free(render_surface_sun_color_buffer)
 		
 		surface_free(render_surface_point_buffer)
 		surface_free(render_surface_point_atlas_buffer)
+	}
+}
+
+function render_high_shadows_shadowless()
+{
+	if (ds_list_size(render_shadowless_point_list) > 0)
+	{
+		var resultsurftemp, lights, batches, specresultsurftemp, resultsurftemp;
+		lights = ds_list_size(render_shadowless_point_list)
+		batches = 0
+			
+		while (lights > 0)
+		{
+			for (var l = 0; l < 31; l++)
+			{
+				if (lights = 0)
+					continue
+					
+				var light = render_shadowless_point_list[| l + (batches * 31)];
+					
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 0] = light.world_pos[X]
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 1] = light.world_pos[Y]
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 2] = light.world_pos[Z]
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 3] = light.value[e_value.LIGHT_RANGE]
+					
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 4] = (color_get_red(light.value[e_value.LIGHT_COLOR]) / 255)
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 5] = (color_get_green(light.value[e_value.LIGHT_COLOR]) / 255)
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 6] = (color_get_blue(light.value[e_value.LIGHT_COLOR]) / 255)
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 7] = light.value[e_value.LIGHT_FADE_SIZE]
+					
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 8] = light.value[e_value.LIGHT_STRENGTH]
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 9] = light.value[e_value.LIGHT_SPECULAR_STRENGTH]
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 10] = 1
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 11] = 1
+				render_shadowless_point_amount++
+				lights--
+			}
+				
+			// Render lights
+			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+			resultsurftemp = render_surface[2]
+			surface_set_target(resultsurftemp)
+			{
+				draw_clear(c_white)
+				render_world_start()
+				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS)
+				render_world_done()
+			}
+			surface_reset_target()
+				
+			render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+			specresultsurftemp = render_surface[3]
+			surface_set_target(specresultsurftemp)
+			{
+				draw_clear(c_black)
+				render_world_start()
+				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS_SPEC)
+				render_world_done()
+			}
+			surface_reset_target()
+				
+			// Add to final shadow surface
+			surface_set_target(render_surface_shadows)
+			{
+				gpu_set_blendmode(bm_add)
+				draw_surface_exists(resultsurftemp, 0, 0)
+				gpu_set_blendmode(bm_normal)
+			}
+			surface_reset_target()
+				
+			surface_set_target(render_surface_specular)
+			{
+				gpu_set_blendmode(bm_add)
+				draw_surface_exists(specresultsurftemp, 0, 0)
+				gpu_set_blendmode(bm_normal)
+			}
+			surface_reset_target()
+				
+			batches++
+			render_shadowless_point_amount = 0
+		}
+			
+		ds_list_clear(render_shadowless_point_list)
 	}
 }

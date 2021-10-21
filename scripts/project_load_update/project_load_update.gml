@@ -21,6 +21,8 @@ function project_load_update()
 	{
 		background_sky_update_clouds()
 		background_ground_update_texture()
+		background_ground_update_texture_material()
+		background_ground_update_texture_normal()
 	}
 	
 	// Update scenery parts

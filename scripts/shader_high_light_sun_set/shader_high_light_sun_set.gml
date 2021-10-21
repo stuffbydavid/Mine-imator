@@ -19,6 +19,7 @@ function shader_high_light_sun_set()
 	render_set_uniform("uSunFar", render_sun_far)
 	render_set_uniform_color("uLightColor", render_light_color, 1)
 	render_set_uniform("uLightStrength", render_light_strength)
+	render_set_uniform("uSpecularStrength", render_light_specular_strength)
 	
 	render_set_uniform_vec3("uLightDirection", render_sun_direction[X], render_sun_direction[Y], render_sun_direction[Z])
 	

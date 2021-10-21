@@ -112,7 +112,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Banner editor
-	popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 550, 506, true, false, false, false)
+	popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 550, null, true, false, false, false)
 	with (popup_bannereditor)
 	{
 		preview = new_obj(obj_preview)

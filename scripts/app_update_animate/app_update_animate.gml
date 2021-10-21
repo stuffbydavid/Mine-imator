@@ -168,6 +168,7 @@ function app_update_animate()
 		
 		background_ground_update_texture()
 		background_ground_update_texture_material()
+		background_ground_update_texture_normal()
 	}
 	
 	// Colors

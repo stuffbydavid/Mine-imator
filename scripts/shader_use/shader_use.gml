@@ -13,6 +13,11 @@ function shader_use()
 	render_set_uniform("uMetallic", 0)
 	render_set_uniform("uRoughness", 1)
 	
+	if (render_mode = e_render_mode.HIGH_LIGHT_SUN_SPEC || render_mode = e_render_mode.HIGH_LIGHT_POINT_SPEC || render_mode = e_render_mode.HIGH_LIGHT_SPOT_SPEC || render_mode = e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS_SPEC)
+		render_set_uniform_int("uSpecular", 1)
+	else
+		render_set_uniform_int("uSpecular", 0)
+	
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	{

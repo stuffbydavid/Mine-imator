@@ -20,7 +20,7 @@ function render_start()
 	
 	// General rendering effects
 	render_ssao = project_render_ssao && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.DEPTH_U24 || project_render_pass = e_render_pass.NORMAL || project_render_pass = e_render_pass.AO || project_render_pass = e_render_pass.REFLECTIONS)
-	render_shadows = project_render_shadows && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
+	render_shadows = project_render_shadows && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.SPECULAR || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
 	render_indirect = project_render_indirect && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.REFLECTIONS)
 	render_reflections = project_render_reflections && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.REFLECTIONS)
 	

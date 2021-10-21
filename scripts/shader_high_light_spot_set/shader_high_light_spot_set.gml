@@ -13,6 +13,8 @@ function shader_high_light_spot_set()
 	render_set_uniform_vec3("uLightPosition", render_light_from[X], render_light_from[Y], render_light_from[Z])
 	render_set_uniform_color("uLightColor", render_light_color, 1)
 	render_set_uniform("uLightStrength", render_light_strength)
+	render_set_uniform("uSpecularStrength", render_light_specular_strength)
+	render_set_uniform("uLightSize", render_light_size)
 	
 	render_set_uniform("uLightNear", render_light_near)
 	render_set_uniform("uLightFar", render_light_far)

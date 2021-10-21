@@ -10,11 +10,11 @@ struct FSOutput
 	float4 Color1 : SV_Target1;
 };
 
-Texture2D uShadowExpT : register(t1);
-SamplerState uShadowExp : register(s1);
+Texture2D uSamplesExpT : register(t1);
+SamplerState uSamplesExp : register(s1);
 
-Texture2D uShadowDecT : register(t2);
-SamplerState uShadowDec : register(s2);
+Texture2D uSamplesDecT : register(t2);
+SamplerState uSamplesDec : register(s2);
 
 float2 packShadow(float f)
 {
@@ -30,8 +30,8 @@ FSOutput main(FSInput IN) : SV_TARGET
 {
 	FSOutput OUT;
 	
-	float3 shadowExp = uShadowExpT.Sample(uShadowExp, IN.TexCoord).rgb;
-	float3 shadowDec = uShadowDecT.Sample(uShadowDec, IN.TexCoord).rgb;
+	float3 shadowExp = uSamplesExpT.Sample(uSamplesExp, IN.TexCoord).rgb;
+	float3 shadowDec = uSamplesDecT.Sample(uSamplesDec, IN.TexCoord).rgb;
 	
 	//float3 shadow = uShadowT.Sample(uShadow, IN.TexCoord).rgb;
 	float3 shadow = gm_BaseTextureObject.Sample(gm_BaseTexture, IN.TexCoord).rgb;

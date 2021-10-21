@@ -8,13 +8,20 @@ function popup_newproject_draw()
 	if (popup.folder = "" || directory_exists_lib(setting_project_folder + popup.folder))
 		issue = true
 	
+	if (issue)
+		show_debug_message(issue)
+	
 	tab_control_textfield(true)
 	if (draw_textfield("newprojectname", dx, dy, dw, 24, popup.tbx_name, null, popup.folder, "top") || issue)
 	{
 		popup.folder = filename_get_valid(popup.tbx_name.text)
 		
+		show_debug_message(popup.folder)
+		
 		if (popup.folder = "")
 			popup.folder = text_get("newprojectnamedefault")
+		
+		show_debug_message(filename_get_unique(setting_project_folder + popup.folder))
 		
 		popup.folder = filename_name(filename_get_unique(setting_project_folder + popup.folder))
 	}

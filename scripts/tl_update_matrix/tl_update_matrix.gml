@@ -306,7 +306,7 @@ function tl_update_matrix()
 					else
 						ds_list_clear(model_timeline_list)
 					
-					if (temp.model != null)
+					if (type = e_tl_type.SPECIAL_BLOCK || temp.model != null)
 						model_update_bounding_box(id, id, bounding_box)
 					
 					bounding_box_matrix.copy(bounding_box)

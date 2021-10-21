@@ -14,6 +14,10 @@ function render_free()
 	surface_free(render_surface_shadows_expo)
 	surface_free(render_surface_shadows_dec)
 	
+	surface_free(render_surface_specular)
+	surface_free(render_surface_specular_expo)
+	surface_free(render_surface_specular_dec)
+	
 	surface_free(render_surface_sun_volume_expo)
 	surface_free(render_surface_sun_volume_dec)
 	

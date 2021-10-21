@@ -27,6 +27,7 @@ function render_world_sky_clouds()
 	render_set_uniform_int("uGlowTexture", 0)
 	render_set_uniform("uMetallic", 0)
 	render_set_uniform("uRoughness", 1)
+	render_set_uniform("uSpecularStrength", 0)
 	
 	// Texture
 	if (res.type = e_res_type.PACK)
@@ -59,6 +60,7 @@ function render_world_sky_clouds()
 	// Reset
 	render_set_uniform_int("uIsSky", 0)
 	render_set_uniform_int("uSSAOEnable", 1)
+	render_set_uniform("uSpecularStrength", render_light_specular_strength)
 	if (!background_fog_sky)
 		render_set_uniform("uFogShow", (render_fog && app.background_fog_show))
 }
