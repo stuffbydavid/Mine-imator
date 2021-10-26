@@ -154,8 +154,9 @@ function res_load_scenery()
 									palettestateids[index] = block_get_state_id(block, vars)
 									
 									// Check waterlogged status
-									if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true")
-										palettewaterlogged[index] = true
+									if (state_vars_get_value(vars, "waterlogged") != "false")
+										if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true")
+											palettewaterlogged[index] = true
 								}
 							}
 							
@@ -460,8 +461,9 @@ function res_load_scenery()
 						palettestateids[i] = block_get_state_id(block, vars)
 						
 						// Check waterlogged status
-						if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true")
-							palettewaterlogged[i] = true
+						if (state_vars_get_value(vars, "waterlogged") != "false")
+							if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true")
+								palettewaterlogged[i] = true
 					}
 				}
 				

@@ -195,6 +195,7 @@ function render_startup()
 	render_shadows_buffer = null
 	render_samples = 0
 	render_samples_done = false
+	render_matrix = []
 	render_shadows_matrix = null
 	
 	// Render pass surf

@@ -8,11 +8,11 @@ function minecraft_assets_create_block_previews()
 	with (obj_block_load_state_file)
 	{
 		// Continue if previously set or has no model objects
-		if (!is_undefined(statecolormap[?name]) || is_undefined(state_id_map[?0]))
+		if (!is_undefined(statecolormap[?name]) || is_undefined(state_id_map[?state_default_variant_id]))
 			continue
 		
 		// Choose first model object from multi-part
-		var modelobj = state_id_map[?0];
+		var modelobj = state_id_map[?state_default_variant_id];
 		if (is_array(modelobj))
 			modelobj = modelobj[0]
 		

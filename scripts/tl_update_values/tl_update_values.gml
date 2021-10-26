@@ -405,7 +405,7 @@ function tl_update_values()
 		{
 			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && oldkf != keyframe_current)
 			{
-				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, true);
+				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, false);
 				audio_sound_set_track_position(keyframe_current.sound_play_index, value[e_value.SOUND_START] mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
 				audio_sound_gain(keyframe_current.sound_play_index, value[e_value.SOUND_VOLUME], 0)
 			}

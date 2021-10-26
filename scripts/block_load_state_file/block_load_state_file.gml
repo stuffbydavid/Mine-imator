@@ -39,10 +39,13 @@ function block_load_state_file(fname, block, state)
 		
 		state_id_map = ds_map_create()
 		
+		state_default_variant_id = 0
+		
 		// Load variants
 		if (ds_map_valid(variantsmap))
 		{
 			var variant = ds_map_find_first(variantsmap);
+			var first = true;
 			while (!is_undefined(variant))
 			{
 				with (new_obj(obj_block_load_variant))
@@ -58,9 +61,17 @@ function block_load_state_file(fname, block, state)
 						}
 						state_vars_add(vars, state)
 						other.state_id_map[?block_get_state_id(block, vars)] = id
+						
+						if (first)
+							other.state_default_variant_id = block_get_state_id(block, vars)
 					}
 					else
 						other.state_id_map[?0] = id
+					
+					if (first)
+						state_default_variant_id = 0
+					
+					first = false
 					
 					// Load model(s)
 					model_amount = 0

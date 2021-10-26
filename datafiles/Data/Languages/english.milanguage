@@ -449,7 +449,8 @@
         "font": "Font",
         "sound": "Sound",
         "shape": "Shape",
-        "lightsource": "Light source"
+        "lightsource": "Light source",
+        "fromworld": "Imported scenery"
     },
     "workbenchcaption": "Workbench",
     "bench/": {
@@ -1250,6 +1251,7 @@
         "fileopened": "Could not write to file. Check that it's not used by another process.",
         "noblocks": "No blocks have been selected. Check the selected region and your filter settings (by clicking the Filters button).",
         "loadingregion": "Loading region...",
+        "dimension": "Dimension",
         "overworld": "Overworld",
         "nether": "Nether",
         "end": "End",

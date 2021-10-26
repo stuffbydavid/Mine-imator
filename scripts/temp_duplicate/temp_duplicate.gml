@@ -28,6 +28,12 @@ function temp_duplicate()
 		if (block_tex != null)
 			block_tex.count++
 		
+		if (block_tex_material != null)
+			block_tex_material.count++
+		
+		if (block_tex_normal != null)
+			block_tex_normal.count++
+		
 		if (scenery != null)
 			scenery.count++
 		

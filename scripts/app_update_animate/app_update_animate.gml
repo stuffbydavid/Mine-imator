@@ -17,7 +17,7 @@ function app_update_animate()
 	background_time = (timeline_marker / project_tempo) * 60
 	
 	// Update samples
-	if (background_time_prev != background_time)
+	if (background_time_prev != background_time || app.history_resource_update)
 		render_samples = -1
 	
 	with (obj_timeline)

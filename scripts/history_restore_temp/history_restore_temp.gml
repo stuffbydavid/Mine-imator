@@ -21,8 +21,20 @@ function history_restore_temp(save)
 		if (model_tex != null)
 			model_tex.count++
 		
+		if (model_tex_material != null)
+			model_tex_material.count++
+		
+		if (model_tex_normal != null)
+			model_tex_normal.count++
+		
 		if (item_tex != null)
 			item_tex.count++
+		
+		if (item_tex_material != null)
+			item_tex_material.count++
+		
+		if (item_tex_normal != null)
+			item_tex_normal.count++
 		
 		if (block_tex != null)
 			block_tex.count++
