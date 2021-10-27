@@ -32,8 +32,16 @@ function draw_button_text()
 	
 	microani_set(text, script, mouseon, mouseon && mouse_left, false)
 	
-	draw_label(text, xx, yy, fa_left, fa_bottom, c_accent, a_accent)
-	draw_line_ext(xx, yy, xx + wid, yy, c_accent, a_accent * microani_arr[e_microani.HOVER])
+	var color, alpha;
+	color = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
+	alpha = lerp(a_accent, a_accent_hover, microani_arr[e_microani.HOVER])
+	color = merge_color(color, c_accent_pressed, microani_arr[e_microani.PRESS])
+	alpha = lerp(alpha, a_accent_pressed, microani_arr[e_microani.PRESS])
+	
+	draw_label(text, xx, yy, fa_left, fa_bottom, color, alpha)
+	
+	var grow = 3 - (3 * (microani_arr[e_microani.HOVER] * (1 - microani_arr[e_microani.PRESS])));
+	draw_line_ext(xx + grow, yy, xx + wid - (grow * 2), yy, color, alpha * microani_arr[e_microani.HOVER])
 	
 	if (mouseon)
 	{

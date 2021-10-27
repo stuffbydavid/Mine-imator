@@ -8,11 +8,14 @@ function menu_event_create()
 	menu_script = null
 	menu_value = null
 	menu_ani = 0
+	menu_ani_ease = 0
 	menu_ani_type = ""
 	menu_flip = false
 	menu_x = 0
+	menu_x_start = 0
 	menu_y = 0
 	menu_w = 0
+	menu_w_start = 0
 	menu_button_h = 0
 	menu_amount = 0
 	menu_show_amount = 0
@@ -30,6 +33,7 @@ function menu_event_create()
 	menu_steps = 0
 	menu_floating = false
 	menu_list = null
+	menu_padding = 4
 	
 	app.menu_count++
 	ds_list_add(app.menu_list, id)

@@ -67,6 +67,13 @@ function action_bench_create()
 					{
 						if (model_tex != null)
 							model_tex.count--
+						
+						if (model_tex_material != null)
+							model_tex_material.count--
+						
+						if (model_tex_normal != null)
+							model_tex_normal.count--
+						
 						model_tex = null
 						model_tex_material = null
 						model_tex_normal = null
@@ -78,10 +85,15 @@ function action_bench_create()
 					if (type != e_temp_type.ITEM)
 					{
 						item_tex.count--
+						
+						if (item_tex_material != null)
+							item_tex_material.count--
+						
+						if (item_tex_normal != null)
+							item_tex_normal.count--
+						
 						item_tex = null
-						item_tex_material.count--
 						item_tex_material = null
-						item_tex_normal.count--
 						item_tex_normal = null
 					}
 					
@@ -89,7 +101,9 @@ function action_bench_create()
 					{
 						block_tex.count--
 						block_tex = null
+						block_tex_material.count--
 						block_tex_material = null
+						block_tex_normal.count--
 						block_tex_normal = null
 						block_state = array()
 					}

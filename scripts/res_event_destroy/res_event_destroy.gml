@@ -268,6 +268,18 @@ function res_event_destroy()
 			render_generate_item()
 		}
 		
+		if (item_tex_material = other.id)
+		{
+			item_tex_material = mc_res
+			render_generate_item()
+		}
+		
+		if (item_tex_normal = other.id)
+		{
+			item_tex_normal = mc_res
+			render_generate_item()
+		}
+		
 		if (block_tex = other.id)
 			block_tex = mc_res
 		

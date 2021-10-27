@@ -41,13 +41,13 @@ function tab_timeline()
 	listx = content_x
 	listy = content_y + (headerh + barh)
 	listw = min(timeline.list_width, content_width)
-	listh = (content_height - (headerh + barh) - ((12 * (timeline.hor_scroll.needed || timeline.hor_scroll_tl.needed))))
+	listh = (content_height - (headerh + barh) - ((12 * timeline.hor_scroll_tl.needed)))
 	
 	// Timeline
 	tlx = content_x + listw
 	tly = content_y + (headerh + barh)
 	tlw = content_width - (12 * timeline.ver_scroll.needed) - listw
-	tlh = listh
+	tlh = (content_height - (headerh + barh) - ((12 * timeline.hor_scroll.needed)))
 	
 	// Marker bar
 	markerbarx = tlx
@@ -896,7 +896,7 @@ function tab_timeline()
 			
 			for (var i = 0; i < array_length(tl.level_display); i++)
 			{
-				if (tl.level_display[i] && (((connectx + 24 + 8) - xright) < minw))
+				if (tl.level_display[i] && (((connectx + 24) - xright) < max(0, minw)))
 				{
 					if (i = (tl.indent_level - 1))
 					{
@@ -1637,8 +1637,8 @@ function tab_timeline()
 		if (timeline.ver_scroll.needed)
 			draw_box(content_x + content_width - 12, tly, 12, tlh, false, c_level_middle, 1)
 		
-		timeline.ver_scroll.snap_value = itemh / 4
-		scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 12, tly, tlh, ds_list_size(tree_visible_list) * itemh)
+		timeline.ver_scroll.snap_value = itemh
+		scrollbar_draw(timeline.ver_scroll, e_scroll.VERTICAL, content_x + content_width - 12, tly, tlh, (ds_list_size(tree_visible_list) + 1) * itemh)
 	}
 	
 	// Horizontal scrollbar

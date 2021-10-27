@@ -25,6 +25,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 	}
 	else
 		sb.needed = true
+	
 	sb.atend = (sb.needed && sb.value >= maxsize - size)
 	
 	if (!sb.needed || size < 5)
@@ -55,6 +56,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 	xx = lerp(xfar, xnear, sb.mousenear.value_ani_ease)
 	yy = lerp(yfar, ynear, sb.mousenear.value_ani_ease)
 	size -= (margin * 2)
+	maxsize -= (margin * 2)
 	
 	barsize = clamp(16, floor((size / maxsize) * size), size)
 	barpos = min(size - barsize, floor(sb.value * (size / maxsize)))
@@ -127,7 +129,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 				window_busy = ""
 				window_focus = ""
 				sb.value = snap(sb.value, sb.snap_value)
-				sb.value_goal = sb.value
+				sb.value_goal = snap(sb.value_goal, sb.snap_value)
 				app_mouse_clear()
 			}
 			else

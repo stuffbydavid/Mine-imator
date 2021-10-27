@@ -140,8 +140,8 @@ function draw_button_menu()
 	
 	if (menuactive)
 	{
-		xx = menuid.menu_x
-		wid = menuid.menu_w
+		xx = lerp(xx, menuid.menu_x, menuid.menu_ani_ease)
+		wid = lerp(wid, menuid.menu_w, menuid.menu_ani_ease)
 	}
 	
 	// Button
@@ -205,6 +205,14 @@ function draw_button_menu()
 		menu_y = yy
 	}
 	
+	// Quick, re-open!
+	if (mouseon && mouse_left_released && menuhide)
+	{
+		window_busy = "menu"
+		menuid.menu_ani_type = "show"
+		app_mouse_clear()
+	}
+	
 	// Check click
 	if (mouseon && mouse_left_released && !menuhide)
 	{
@@ -234,8 +242,10 @@ function draw_button_menu()
 		m.menu_ani_type = "show"
 		m.menu_flip = flip
 		m.menu_x = xx
+		m.menu_x_start = xx
 		m.menu_y = yy
 		m.menu_w = wid
+		m.menu_w_start = wid
 		m.menu_button_h = hei
 		m.menu_item_w = wid
 		m.menu_item_h = m.menu_button_h

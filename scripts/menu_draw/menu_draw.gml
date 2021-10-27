@@ -3,7 +3,7 @@
 
 function menu_draw()
 {
-	var m, menu_remove, menu_active, listh, menuh, contentmenu, yy, aniease, updatewidth;
+	var m, menu_remove, menu_active, listh, menuh, contentmenu, yy, aniease, updatewidth, menu_x_draw, menu_wid_draw;
 	menu_remove = null
 	menu_current = null
 	
@@ -42,31 +42,36 @@ function menu_draw()
 			draw_set_alpha(0)
 		
 		// Get draw height/Y
-		aniease = ease(((m.menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), m.menu_ani)
-		listh = aniease * (contentmenu ? m.menu_height : min(m.menu_amount, m.menu_show_amount) * m.menu_item_h)
-		menuh = listh + (12 * m.menu_scroll_horizontal.needed)
+		m.menu_ani_ease = ease(((m.menu_ani_type = "show") ? "easeoutexpo" : "easeinexpo"), m.menu_ani)
+		aniease = m.menu_ani_ease
+		listh = (contentmenu ? m.menu_height : min(m.menu_amount, m.menu_show_amount) * m.menu_item_h) + (m.menu_padding * 2)
+		menuh = (aniease * listh) + (12 * m.menu_scroll_horizontal.needed)
 		
 		yy = (m.menu_flip ? (m.menu_y - menuh) : (m.menu_y + m.menu_button_h)) 
 		
+		// Set content for menu background
+		content_x = m.menu_x
+		content_y = yy
+		content_width = m.menu_w
+		content_height = menuh
+		
+		menu_x_draw = lerp(m.menu_x_start, content_x, aniease)
+		menu_wid_draw = lerp(m.menu_w_start, content_width, aniease)
+		
 		// Draw
-		draw_box(m.menu_x, yy, m.menu_w, menuh, false, c_level_top, 1)
+		draw_box(menu_x_draw, yy, menu_wid_draw, menuh, false, c_level_top, 1)
 		
 		if (menuh > 2)
-			draw_outline(m.menu_x, yy, m.menu_w, menuh, 1, c_border, a_border, true)
+			draw_outline(menu_x_draw, yy, menu_wid_draw, menuh, 1, c_border, a_border, true)
 		
 		// Hide outline touching button
-		draw_box(m.menu_x + 1, yy + (m.menu_flip), m.menu_w - 2, menuh - 1, false, c_level_top, 1)
+		draw_box(menu_x_draw + 1, yy + (m.menu_flip), menu_wid_draw - 2, menuh - 1, false, c_level_top, 1)
 		
 		// Drop shadow
 		var shadowy, shadowh;
 		shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
 		shadowh = menuh + m.menu_button_h
-		draw_dropshadow(m.menu_x, shadowy, m.menu_w, shadowh, c_black, aniease)
-		
-		content_x = m.menu_x
-		content_y = yy
-		content_width = m.menu_w
-		content_height = menuh
+		draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
 		
 		// Update size of 'settings menu' if open
 		if (settings_menu_name != "")
@@ -82,7 +87,7 @@ function menu_draw()
 		
 		// Scrollbars
 		content_mouseon = app_mouse_box(m.menu_x, yy, m.menu_w, menuh)
-		if (m.menu_ani_type = "" && !contentmenu)
+		if (!contentmenu)
 		{
 			if (m.menu_scroll_vertical.needed && content_mouseon)
 				window_scroll_focus = string(m.menu_scroll_vertical)
@@ -90,7 +95,8 @@ function menu_draw()
 			if (m.menu_scroll_horizontal.needed && content_mouseon && keyboard_check(vk_shift))
 				window_scroll_focus = string(m.menu_scroll_horizontal)
 			
-			scrollbar_draw(m.menu_scroll_vertical, e_scroll.VERTICAL, m.menu_x + m.menu_w - 12, yy, listh, (m.menu_amount * m.menu_item_h))
+			if (m.menu_amount * m.menu_item_h > listh)
+				scrollbar_draw(m.menu_scroll_vertical, e_scroll.VERTICAL, m.menu_x + m.menu_w - 12, yy, aniease * listh, (m.menu_amount * m.menu_item_h) + (m.menu_padding * 2))
 			
 			scrollbar_draw(m.menu_scroll_horizontal, e_scroll.HORIZONTAL, m.menu_x, yy + menuh - 12, m.menu_w - (12 * m.menu_scroll_vertical.needed), m.menu_list.width)
 		}
@@ -101,6 +107,9 @@ function menu_draw()
 		}
 		
 		content_width = m.menu_w - (12 * m.menu_scroll_vertical.needed)
+		content_height = menuh - (12 * m.menu_scroll_horizontal.needed)
+		menu_wid_draw = lerp(m.menu_w_start, content_width, aniease)
+		
 		content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
 		
 		var mouseitem = null;
@@ -111,13 +120,15 @@ function menu_draw()
 			case e_menu.LIST_SEAMLESS:
 			case e_menu.TIMELINE:
 			{
-				scissor_start(0, content_y, window_width, content_height)
+				scissor_start(content_x, yy, content_width, content_height)
 				
 				if (!m.menu_flip)
 					yy += (-content_height + (content_height * aniease))
 				
 				if (m.menu_scroll_vertical.needed)
 					yy -= m.menu_scroll_vertical.value
+				
+				yy += m.menu_padding
 				
 				for (var j = 0; j < m.menu_amount; j++)
 				{
@@ -127,7 +138,7 @@ function menu_draw()
 					itemy = yy
 					itemh = m.menu_item_h
 					
-					list_item_draw(item, m.menu_x, itemy, content_width, m.menu_item_h, false, m.menu_margin, -m.menu_scroll_horizontal.value)
+					list_item_draw(item, menu_x_draw, itemy, menu_wid_draw, m.menu_item_h, false, m.menu_margin, -m.menu_scroll_horizontal.value)
 					
 					// Toggle item and update list width
 					if ((m.menu_value = item.value) && !item.toggled)
@@ -150,11 +161,11 @@ function menu_draw()
 					if (updatewidth)
 					{
 						list_update_width(m.menu_list)
-						m.menu_list.width += 12
+						//m.menu_list.width += 16
 					}
 					
 					var w = m.menu_w;
-					m.menu_w = max(m.menu_list.width, m.menu_w)
+					m.menu_w = max(m.menu_list.width + 16, m.menu_w)
 					
 					if (m.menu_x + m.menu_w > (m.content_x + m.content_width))
 						m.menu_x = (m.menu_x + w) - m.menu_w
@@ -218,9 +229,7 @@ function menu_draw()
 			list_destroy(m.menu_list)
 			
 			m.menu_list = menu_timeline_init(m)
-			
 			m.menu_amount = ds_list_size(m.menu_list.item)
-				
 			m.menu_tl_extend = null
 		}
 		
@@ -229,24 +238,36 @@ function menu_draw()
 		{
 			var close = false;
 			
-			if (mouseitem)
-			{
-				m.menu_ani = 2
-				m.menu_value = mouseitem.value
-				
-				list_item_script = (mouseitem.script = null ? m.menu_script : mouseitem.script)
-				list_item_script_value = m.menu_value
-				
-				app_mouse_clear()
-			}
-			
 			if (contentmenu)
 			{
 				if (!content_mouseon && window_focus = "")
 					close = true
 			}
 			else
-				close = true
+			{
+				if (mouseitem)
+				{
+					m.menu_ani = 2
+					m.menu_value = mouseitem.value
+					
+					list_item_script = (mouseitem.script = null ? m.menu_script : mouseitem.script)
+					list_item_script_value = m.menu_value
+					
+					for (var j = 0; j < m.menu_amount; j++)
+					{
+						var item = m.menu_list.item[|j];
+						
+						if (item != mouseitem)
+							item.toggled = false
+					}
+					
+					app_mouse_clear()
+					close = true
+				}
+				
+				if (!content_mouseon)
+					close = true
+			}
 			
 			if (close)
 			{

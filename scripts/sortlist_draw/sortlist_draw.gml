@@ -163,21 +163,28 @@ function sortlist_draw()
 	
 	for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
 	{
-		var value, dw, selected;
-		
 		if (dy + itemh > yy + h)
 			break
 		
+		var value, dw, selected, mouseon;
 		value = slist.display_list[|i]
 		dw = w - 12 * slist.scroll.needed
 		selected = (select = value)
+		mouseon = (app_mouse_box(xx, dy, dw, itemh) && content_mouseon)
 		
-		if (selected)
+		if (selected || mouseon && mouse_left)
+		{
 			draw_box(xx, dy, dw, itemh, false, c_accent_overlay, a_accent_overlay)
+			
+			if (mouseon && mouse_left)
+				draw_box_hover(xx, dy, dw, itemh, 1)
+		}
+		else if (mouseon)
+			draw_box(xx, dy, dw, itemh, false, c_overlay, a_overlay)
 		
 		for (var c = 0; c < slist.columns; c++)
 		{
-			var dx, text, wid, islast, ;
+			var dx, text, wid, islast;
 			dx = xx + floor(slist.column_x[c] * w) + 8
 			wid = slist.column_w[c] - 8
 			if (c = slist.columns - 1 && slist.scroll.needed)
@@ -195,10 +202,10 @@ function sortlist_draw()
 			draw_label(text, dx + ((wid - 8) * islast), dy + itemh / 2, islast ? fa_right : fa_left, fa_middle, selected ? c_accent : c_text_main, selected ? 1 : a_text_main)
 		}
 		
-		if (app_mouse_box(xx, dy, dw, itemh) && content_mouseon)
+		if (mouseon)
 		{
 			mouse_cursor = cr_handpoint
-			if (mouse_left_pressed)
+			if (mouse_left_released)
 			{
 				if (slist.can_deselect && selected)
 					script_execute(slist.script, null)

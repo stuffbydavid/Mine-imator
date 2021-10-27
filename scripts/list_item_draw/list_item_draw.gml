@@ -13,7 +13,7 @@
 function list_item_draw()
 {
 	var item, xx, yy, width, height, toggled, margin, xoffset, components, animation, name;
-	var leftp, rightp, middley, mousehover, hover, scissor;
+	var leftp, rightp, middley, mousehover, hover;
 	item = argument[0]
 	xx = argument[1]
 	yy = argument[2]
@@ -86,7 +86,16 @@ function list_item_draw()
 		backalpha = lerp(backalpha, a_accent_overlay, focus)
 		
 		draw_box(xx, yy, width, height, false, backcolor, backalpha)
+		
+		var scissor_state = shader_scissor_active;
+		
+		if (scissor_state)
+			scissor_done()
+		
 		draw_box_hover(xx, yy, width, height, microani_arr[e_microani.PRESS])
+		
+		if (scissor_state)
+			scissor_start(shader_scissor_x, shader_scissor_y, shader_scissor_width, shader_scissor_height)
 	}
 	else
 	{
@@ -105,14 +114,6 @@ function list_item_draw()
 	hover = mousehover
 	
 	leftp += (item.indent + xoffset)
-	
-	if (leftp < 0)
-	{
-		scissor = true
-		scissor_start(xx, yy, width, height)
-	}
-	else
-		scissor = false
 	
 	// Image/icon size
 	var imgsize, iconsize;
@@ -227,9 +228,6 @@ function list_item_draw()
 	
 	var textwidth = width - (leftp + rightp) - 8;
 	draw_label(string_limit(name, textwidth), xx + leftp, middley, fa_left, fa_middle, textcolor, textalpha)
-	
-	if (scissor)
-		scissor_done()
 	
 	item.hover = hover
 	if (hover && item.interact)

@@ -12,6 +12,9 @@ function list_update_width(list)
 	togglewid = 0
 	list.toggled = false
 	
+	// Left side
+	draw_set_font(font_value)
+	
 	for (var i = 0; i < ds_list_size(list.item); i++)
 	{
 		item = list.item[|i]
@@ -33,11 +36,13 @@ function list_update_width(list)
 			width += 24 + 4
 		
 		// Text
-		draw_set_font(font_value)
 		width += string_width(item.name) + 8
 		
 		maxwidthleft = max(width, maxwidthleft)
 	}
+	
+	// Right side
+	draw_set_font(font_caption)
 	
 	for (var i = 0; i < ds_list_size(list.item); i++)
 	{
@@ -64,10 +69,7 @@ function list_update_width(list)
 		
 		// Caption
 		if (item.caption != "")
-		{
-			draw_set_font(font_caption)
 			width += string_width(item.caption) + 8
-		}
 		
 		maxwidthright = max(width, maxwidthright)
 	}

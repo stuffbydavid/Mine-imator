@@ -4,6 +4,14 @@ function shader_startup()
 {
 	globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap, shader_check_uniform;
 	globalvar shader_blend_color, shader_blend_alpha;
+	globalvar shader_scissor_x, shader_scissor_y, shader_scissor_width, shader_scissor_height, shader_scissor_active;
+	
+	// Scissor
+	shader_scissor_x = 0
+	shader_scissor_y = 0
+	shader_scissor_width = 0
+	shader_scissor_height = 0
+	shader_scissor_active = false
 	
 	// Texture drawing
 	globalvar shader_mask;
