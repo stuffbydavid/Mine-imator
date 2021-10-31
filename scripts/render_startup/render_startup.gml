@@ -19,7 +19,8 @@ function render_startup()
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality;
 	
-	globalvar render_shadows_buffer, render_matrix, render_samples, render_samples_done, render_target_size;
+	globalvar render_shadows_buffer, render_matrix, render_samples, render_samples_done, render_target_size, render_high_preview,
+			  render_high_preview_width, render_high_preview_height;
 	
 	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
 	
@@ -149,7 +150,6 @@ function render_startup()
 	render_subsurface_size = (16 * 2) + 1
 	render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
 	
-	
 	// Volumetric fog
 	globalvar render_volumetric_fog_offset;
 	render_volumetric_fog_offset = 0
@@ -191,11 +191,14 @@ function render_startup()
 	
 	render_post_index = 0
 	
-	// Shadow surf
+	// Render samples
 	render_shadows_buffer = null
 	render_samples = 0
 	render_samples_done = false
 	render_matrix = []
+	render_high_preview = false
+	render_high_preview_width = false
+	render_high_preview_height = false
 	render_shadows_matrix = null
 	
 	// Render pass surf

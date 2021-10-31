@@ -14,6 +14,7 @@ function render_world_ground()
 	render_set_uniform_color("uBlendColor", blend, 1)
 	render_set_uniform_color("uGlowColor", c_black, 1)
 	render_set_uniform_int("uGlowTexture", 0)
+	render_set_uniform_int("uFogShow", render_fog && app.background_fog_show)
 	
 	if (background_ground_tex_material = mc_res)
 	{

@@ -9,6 +9,8 @@ function render_high()
 	render_surface_time = 0
 	render_update_samples()
 	
+	render_high_preview_start()
+	
 	render_world_start()
 	bbox_update_visible()
 	render_world_done()
@@ -59,8 +61,11 @@ function render_high()
 	
 	render_samples_clear = false
 	
+	// Copy chosen pass over render result
 	if (project_render_pass != e_render_pass.COMBINED && surface_exists(render_pass_surf))
 		surface_copy(render_target, 0, 0, render_pass_surf)
+	
+	render_high_preview_done()
 	
 	render_time = current_time - starttime - render_surface_time
 }

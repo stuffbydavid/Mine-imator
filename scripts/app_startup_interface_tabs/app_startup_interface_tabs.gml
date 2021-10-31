@@ -51,6 +51,7 @@ function app_startup_interface_tabs()
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"
 			tbx_indirect_range = new_textbox_decimals()
+			tbx_indirect_emission_range = new_textbox_decimals()
 			tbx_reflections_precision = new_textbox_integer()
 			tbx_reflections_precision.suffix = "%"
 			tbx_reflections_thickness = new_textbox_decimals()

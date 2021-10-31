@@ -27,6 +27,7 @@ function project_load_render(map)
 	project_render_indirect_quality = value_get_real(map[?"render_indirect_quality"], project_render_indirect_quality)
 	project_render_indirect_strength = value_get_real(map[?"render_indirect_strength"], project_render_indirect_strength)
 	project_render_indirect_range = value_get_real(map[?"render_indirect_range"], project_render_indirect_range)
+	project_render_indirect_emission_range = value_get_real(map[?"render_indirect_emission_range"], project_render_indirect_emission_range)
 	
 	project_render_reflections = value_get_real(map[?"render_reflections"], project_render_reflections)
 	project_render_reflections_precision = value_get_real(map[?"render_reflections_precision"], project_render_reflections_precision)

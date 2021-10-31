@@ -23,8 +23,9 @@ function project_reset_render()
 	project_render_indirect = true
 	project_render_indirect_quality = 0
 	project_render_indirect_blur_passes = 2
-	project_render_indirect_strength = 1.5
-	project_render_indirect_range = 256
+	project_render_indirect_strength = 1
+	project_render_indirect_range = 2048
+	project_render_indirect_emission_range = 256
 	
 	project_render_reflections = true
 	project_render_reflections_precision = .3

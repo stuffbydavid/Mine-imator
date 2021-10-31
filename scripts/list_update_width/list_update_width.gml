@@ -63,7 +63,7 @@ function list_update_width(list)
 		// Tick
 		if (item.toggled)
 		{
-			togglewid = 24 + 4
+			width += 24 + 4
 			list.toggled = true
 		}
 		

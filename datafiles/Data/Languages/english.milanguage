@@ -1961,7 +1961,8 @@
             },
             "blurpasses": "Blur passes",
             "strength": "Strength",
-            "range": "Emission range"
+            "range": "Range",
+            "emissionrange": "Emission range"
         },
         "reflections": "Reflections",
         "reflections/": {

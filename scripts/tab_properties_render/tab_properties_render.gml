@@ -148,11 +148,15 @@ function tab_properties_render()
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("renderindirectstrength", dx, dy, dragger_width, round(project_render_indirect_strength * 100), .5, 0, no_limit * 100, 150, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
+		draw_dragger("renderindirectstrength", dx, dy, dragger_width, round(project_render_indirect_strength * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("renderindirectrange", dx, dy, dragger_width, project_render_indirect_range, project_render_indirect_range / 200, 1, no_limit, 256, 1, tab.render.tbx_indirect_range, action_project_render_indirect_range) 
+		draw_dragger("renderindirectrange", dx, dy, dragger_width, project_render_indirect_range, project_render_indirect_range / 200, 1, no_limit, 2048, 1, tab.render.tbx_indirect_range, action_project_render_indirect_range) 
+		tab_next()
+		
+		tab_control_dragger()
+		draw_dragger("renderindirectemissionrange", dx, dy, dragger_width, project_render_indirect_emission_range, project_render_indirect_emission_range / 200, 1, no_limit, 256, 1, tab.render.tbx_indirect_emission_range, action_project_render_indirect_emission_range) 
 		tab_next()
 		
 		tab_collapse_end()

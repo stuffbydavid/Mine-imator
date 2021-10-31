@@ -164,15 +164,20 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 			else
 			{
 				// Check if sampled surface is within reasible range
-				if (abs(distance(screenPos, startPos)) > uEmissionRange)
-					falloff = 0.0;
-				
 				float dis = clamp(abs(distance(screenPos, startPos)), 0.0, uEmissionRange);
-				falloff = 1.0 - clamp((dis / uEmissionRange), 0.0, 1.0);
+				
+				if (abs(distance(screenPos, startPos)) >= uEmissionRange)
+					falloff = 0.0;
+				else
+					falloff = 1.0 - clamp(dis / uEmissionRange, 0.0, 1.0);
 			}
 			
-			vec3 light = texture2D(uDiffuseBuffer, screenCoord).rgb * (texture2D(uLightingBuffer, screenCoord).rgb + texture2D(uIndirectBuffer, screenCoord).rgb);
-			giColor += light * falloff * dif;
+			if (falloff * dif > 0.0)
+			{
+				vec3 light = texture2D(uDiffuseBuffer, screenCoord).rgb * (texture2D(uLightingBuffer, screenCoord).rgb + (texture2D(uIndirectBuffer, screenCoord).rgb * 1.25));
+				giColor += light * falloff * dif;
+			}
+			
 			return;
 		}
 		

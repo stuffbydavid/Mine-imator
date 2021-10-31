@@ -94,6 +94,8 @@ function view_update(view, cam)
 		// Rotate camera
 		if (window_busy = "viewrotatecamera")
 		{
+			render_samples = -1
+			
 			mouse_cursor = cr_none
 			
 			if (!cam || cam.value[e_value.CAM_ROTATE])
@@ -108,6 +110,8 @@ function view_update(view, cam)
 		// Move camera
 		if (window_busy = "viewmovecamera")
 		{
+			render_samples = -1
+			
 			if (cam = null)
 				shortcut_bar_state = "cameramove"
 			else
