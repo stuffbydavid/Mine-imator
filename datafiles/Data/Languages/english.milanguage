@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.10.21"
+        "lastchange": "2021.11.01"
     },
     "particle/": {
         "default": "Default spawner",
@@ -1968,7 +1968,6 @@
         "reflections/": {
             "precision": "Precision",
             "thickness": "Thickness",
-            "halfres": "Half res",
             "fadeamount": "Edge fade amount"
         },
         "glow": "Glow",

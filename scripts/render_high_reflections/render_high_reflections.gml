@@ -13,7 +13,7 @@ function render_high_reflections(export, surf)
 		if (render_samples_done)
 		{
 			// Apply
-			render_high_reflections_apply(surf)
+			render_high_reflections_apply(surf, null)
 			return 0
 		}
 		
@@ -27,21 +27,18 @@ function render_high_reflections(export, surf)
 		render_samples = project_render_samples
 	}
 	
-	var ssrwidth, ssrheight, depthsurf, normalsurf, normalsurf2, materialsurf, tempsurf;
-	ssrwidth = project_render_reflections_halfres ? ceil(render_width/2) : render_width
-	ssrheight = project_render_reflections_halfres ? ceil(render_height/2) : render_height
-	
-	// Render depth & normal data
-	render_surface[1] = surface_require(render_surface[1], ssrwidth, ssrheight)
+	// Render scene data
+	var samplesurf, depthsurf, normalsurf, normalsurf2, materialsurf;
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
+	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
+	render_surface_ssr = surface_require(render_surface_ssr, render_width, render_height)
+	samplesurf = render_surface[0]
 	depthsurf = render_surface[1]
-	
-	render_surface[2] = surface_require(render_surface[2], ssrwidth, ssrheight)
 	normalsurf = render_surface[2]
-	
-	render_surface[4] = surface_require(render_surface[4], ssrwidth, ssrheight)
 	normalsurf2 = render_surface[4]
-	
-	render_surface[5] = surface_require(render_surface[5], ssrwidth, ssrheight)
 	materialsurf = render_surface[5]
 	
 	// Material data
@@ -77,23 +74,8 @@ function render_high_reflections(export, surf)
 		for (var i = 0; i < 16; i++)
 			render_indirect_offset[i] = random_range(0, 1)
 		
-		// Clear reflections
-		if (s = 0 || render_samples_clear)
-		{
-			render_surface_ssr = surface_require(render_surface_ssr, ssrwidth, ssrheight)
-			surface_set_target(render_surface_ssr)
-			{
-				draw_clear_alpha(app.background_sky_color_final, 1)
-			}
-			surface_reset_target()
-		}
-		
-		// Temporary reflections
-		render_surface[0] = surface_require(render_surface[0], ssrwidth, ssrheight)
-		tempsurf = render_surface[0]
-		
 		// Ray trace
-		surface_set_target(tempsurf)
+		surface_set_target(samplesurf)
 		{
 			gpu_set_texrepeat(false)
 		    draw_clear_alpha(c_black, 1)
@@ -102,10 +84,10 @@ function render_high_reflections(export, surf)
 		    with (render_shader_obj)
 		    {
 		        shader_set(shader)
-		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf, ssrwidth, ssrheight)
+		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf, render_width, render_height)
 		    }
 			
-		    draw_blank(0, 0, ssrwidth, ssrheight)
+		    draw_blank(0, 0, render_width, render_height)
 			
 		    with (render_shader_obj)
 		        shader_clear()
@@ -114,10 +96,10 @@ function render_high_reflections(export, surf)
 		surface_reset_target()
 		
 		var exptemp, dectemp;
-		render_surface_ssr_expo = surface_require(render_surface_ssr_expo, ssrwidth, ssrheight)
-		render_surface_ssr_dec = surface_require(render_surface_ssr_dec, ssrwidth, ssrheight)
-		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, ssrwidth, ssrheight)
-		render_surface_sample_temp2 = surface_require(render_surface_sample_temp2, ssrwidth, ssrheight)
+		render_surface_ssr_expo = surface_require(render_surface_ssr_expo, render_width, render_height)
+		render_surface_ssr_dec = surface_require(render_surface_ssr_dec, render_width, render_height)
+		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, render_width, render_height)
+		render_surface_sample_temp2 = surface_require(render_surface_sample_temp2, render_width, render_height)
 		exptemp = render_surface_sample_temp1
 		dectemp = render_surface_sample_temp2
 		
@@ -152,7 +134,7 @@ function render_high_reflections(export, surf)
 				shader_set(shader)
 				shader_high_samples_add_set(exptemp, dectemp)
 			}
-			draw_surface_exists(tempsurf, 0, 0)
+			draw_surface_exists(samplesurf, 0, 0)
 			with (render_shader_obj)
 				shader_clear()
 		}
@@ -169,7 +151,7 @@ function render_high_reflections(export, surf)
 				shader_set(shader)
 				shader_high_samples_unpack_set(render_surface_ssr_expo, render_surface_ssr_dec, render_samples)
 			}
-			draw_blank(0, 0, ssrwidth, ssrheight)
+			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)
 				shader_clear()
 		
@@ -188,28 +170,40 @@ function render_high_reflections(export, surf)
 	}
 	
 	// Apply reflections
-	render_high_reflections_apply(surf)
+	render_high_reflections_apply(surf, materialsurf)
 }
 
 /// render_high_reflections_apply(surf)
 /// @arg surf
-function render_high_reflections_apply(surf)
+function render_high_reflections_apply(surf, matsurf)
 {
-	// Material data
+	var materialsurf, diffusesurf, applysurf;
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	var materialsurf = render_surface[2];
-	surface_set_target(materialsurf)
-	{
-		draw_clear_alpha(c_white, 0)
-		render_world_start()
-		render_world(e_render_mode.MATERIAL)
-		render_world_done()
-	}
-	surface_reset_target()
+	materialsurf = render_surface[0]
+	diffusesurf = render_surface[1]
+	applysurf = render_surface[2]
 	
-	// Render diffuse color
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
-	var diffusesurf = render_surface[4];
+	// Material data
+	if (!surface_exists(matsurf))
+	{	
+		surface_set_target(materialsurf)
+		{
+			draw_clear_alpha(c_white, 0)
+			render_world_start()
+			render_world(e_render_mode.MATERIAL)
+			render_world_done()
+		}
+		surface_reset_target()
+	}
+	else
+		materialsurf = matsurf
+	
+	if (project_render_pass = e_render_pass.MATERIAL)
+		render_pass_surf = surface_duplicate(materialsurf)
+	
+	// Diffuse color (Reflection tint)
 	surface_set_target(diffusesurf)
 	{
 		// Background
@@ -225,9 +219,6 @@ function render_high_reflections_apply(surf)
 	surface_reset_target()
 	
 	// Apply reflections
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	var applysurf = render_surface[1];
-	
 	surface_set_target(applysurf)
 	{
 		draw_clear_alpha(c_black, 0)

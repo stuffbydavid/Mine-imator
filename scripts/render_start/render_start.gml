@@ -17,6 +17,7 @@ function render_start()
 		surface_free(render_pass_surf)
 	
 	render_pass_surf = null
+	render_world_count = 0
 	
 	// General rendering effects
 	render_ssao = project_render_ssao && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.DEPTH_U24 || project_render_pass = e_render_pass.NORMAL || project_render_pass = e_render_pass.AO || project_render_pass = e_render_pass.REFLECTIONS)

@@ -32,7 +32,6 @@ function project_save_render()
 		json_save_var("render_reflections_precision", project_render_reflections_precision)
 		json_save_var("render_reflections_thickness", project_render_reflections_thickness)
 		json_save_var("render_reflections_fade_amount", project_render_reflections_fade_amount)
-		json_save_var_bool("render_reflections_halfres", project_render_reflections_halfres)
 		
 		json_save_var_bool("render_glow", project_render_glow)
 		json_save_var("render_glow_radius", project_render_glow_radius)

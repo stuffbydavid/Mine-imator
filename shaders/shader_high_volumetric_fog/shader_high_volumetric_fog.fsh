@@ -205,15 +205,32 @@ float getDensity(vec3 pos, vec3 wind)
 	return clamp((fogDensity - 0.5) * uFogNoiseContrast + 0.5, 0.0, 1.0) * uDensity;
 }
 
+vec3 clampPointToFace(vec3 facePos, vec3 faceNormal, vec3 rayPos, vec3 rayDir)
+{
+	float dist = dot(facePos - rayPos, faceNormal) / dot(faceNormal, rayDir);
+	return rayPos + (rayDir * dist);
+}
+
 void main()
 {
 	// Get start/end points of ray
 	float depth = unpackDepth(texture2D(uDepthBuffer, vTexCoord));
-	vec3 wp = posFromBuffer(vTexCoord, depth);
     vec3 startPos = uCameraPosition;
+	vec3 endPos = posFromBuffer(vTexCoord, depth);
+	vec3 rayVector = endPos - startPos;
+	
+	// Clamp start/end to fog bounding box
+	
+	// Look from top
+	if (startPos.z > uFogHeight)
+		startPos = clampPointToFace(vec3(0.0, 0.0, uFogHeight), vec3(0.0, 0.0, 1.0), endPos, normalize(rayVector));
+	
+	// Looking out from within
+	if (endPos.z > uFogHeight)
+		endPos = clampPointToFace(vec3(0.0, 0.0, uFogHeight), vec3(0.0, 0.0, -1.0), endPos, normalize(rayVector));
 	
 	// Get ray direction
-    vec3 rayVector = wp - startPos;
+	rayVector = endPos - startPos;
     float rayLength = length(rayVector);
     vec3 rayDirection = rayVector / rayLength;
 	
@@ -242,31 +259,32 @@ void main()
 	float offset = uOffset[int(mod(vTexCoord.x * uScreenSize.x, 4.0))][int(mod(vTexCoord.y * uScreenSize.y, 4.0))];
 	rayPos += stepSize * offset;
 	
-	float sampleDensity;
-	float extinction;
+	float sampleDensity, light;
 	
 	// Sample steps along ray
     for (int i = 0; i < STEPS; i++)
     {	
-		sampleDensity = stepLength * getDensity(rayPos, fogOffset);
+		sampleDensity = clamp(stepLength * getDensity(rayPos, fogOffset), 0.0, 1.0);
 		
-		if (uFogAmbience == 1)
+		if (sampleDensity > 0.001)
 		{
-			extinction = sampleDensity;
-			fogTransmittance *= clamp(1.0 - (extinction / stepLength), 0.0, 1.0);
+			light = getLight(rayPos) * sampleDensity;
 			
-			fogLight += getLight(rayPos) * sampleDensity * fogTransmittance * scatter;
+			if (uFogAmbience == 1)
+			{
+				fogTransmittance *= (1.0 - sampleDensity);
+				fogLight += clamp(light * sampleDensity * fogTransmittance * scatter, 0.0, 1.0);
+			}
+			else
+				fogTransmittance *= (1.0 - light);
+			
 		}
-		else
-			sampleDensity *= getLight(rayPos);
-		
-		fogOpacity += sampleDensity;
 		
 		rayPos += stepSize;
 	}
 	
-	fogOpacity = clamp(fogOpacity, 0.0, 1.0);
-	fogLight = clamp(fogLight, 0.0, 4.0) * 0.25;
+	fogOpacity = 1.0 - fogTransmittance;
+	fogLight = clamp(fogLight, 0.0, 1.0);
 	
 	// Alpha channel isn't reliable, use RGB for data
 	gl_FragColor = vec4(fogOpacity, fogLight, 0.0, 1.0);

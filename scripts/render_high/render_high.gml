@@ -49,7 +49,7 @@ function render_high()
 		render_high_reflections(render_active = "image" || render_active = "movie", finalsurf)
 		
 		if (project_render_pass = e_render_pass.REFLECTIONS)
-			render_pass_surf = surface_duplicate(render_surface_ssr, project_render_reflections_halfres ? 2 : 1)
+			render_pass_surf = surface_duplicate(render_surface_ssr)
 	}
 	
 	// Fog

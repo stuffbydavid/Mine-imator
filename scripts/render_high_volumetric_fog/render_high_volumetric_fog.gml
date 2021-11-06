@@ -13,16 +13,16 @@ function render_high_volumetric_fog(prevsurf, export)
 	
 	if (!render_samples_done || export)
 	{
-		if (export)
-		{
-			samplestart = 1
-			sampleend = project_render_samples + 1
-			render_samples = project_render_samples
-		}
-		else
+		if (!export)
 		{
 			samplestart = render_samples
 			sampleend = render_samples + 1
+		}
+		else
+		{
+			samplestart = 0
+			sampleend = project_render_samples
+			render_samples = project_render_samples
 		}
 		
 		// Render whole world for depth, but only store a limited range
@@ -43,16 +43,16 @@ function render_high_volumetric_fog(prevsurf, export)
 		
 		for (var s = samplestart; s < sampleend; s++)
 		{
-			if (render_samples_done)
+			if (render_samples_done && !export)
 				continue
-			
-			random_set_seed(s)
 			
 			// Render sun depth buffer
 			if (export)
 			{
 				if (s > 1)
 				{
+					random_set_seed(s)
+					
 					var xyang, zang, dis;
 					xyang = random(360)
 					zang = random_range(-180, 180)
@@ -66,22 +66,18 @@ function render_high_volumetric_fog(prevsurf, export)
 				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_buffer)
 				{
-					draw_clear(c_white)
 					gpu_set_blendmode_ext(bm_one, bm_zero)
 					
+					draw_clear(c_white)
 					render_world_start_sun(
 						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
 						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
 					render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 					render_world_done()
-					
+				
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
-				
-				render_world_start()
-				bbox_update_visible()
-				render_world_done()
 			}
 			
 			// Render and apply volumetric fog
@@ -100,7 +96,6 @@ function render_high_volumetric_fog(prevsurf, export)
 				render_shader_obj = shader_map[?shader_high_volumetric_fog]
 				with (render_shader_obj)
 				{
-					shader_set(shader)
 					shader_use()
 					shader_high_volumetric_fog_set(depthsurf, render_surface_sun_buffer)
 				}
@@ -121,7 +116,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(render_surface_sun_volume_expo, 0, 0)
 				
-				if ((export && s = 1) || render_samples_clear)
+				if (s = 0 || render_samples_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
@@ -131,7 +126,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				draw_clear_alpha(c_black, 1)
 				draw_surface_exists(render_surface_sun_volume_dec, 0, 0)
 				
-				if ((export && s = 1) || render_samples_clear)
+				if (s = 0 || render_samples_clear)
 					draw_clear_alpha(c_black, 1)
 			}
 			surface_reset_target()
@@ -178,6 +173,10 @@ function render_high_volumetric_fog(prevsurf, export)
 		surface_free(render_surface_sun_volume_expo)
 		surface_free(render_surface_sun_volume_dec)
 		surface_free(render_surface_sun_buffer)
+		
+		render_world_start()
+		bbox_update_visible()
+		render_world_done()
 	}
 	
 	return resultsurf

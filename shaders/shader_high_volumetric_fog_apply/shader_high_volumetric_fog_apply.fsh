@@ -22,10 +22,9 @@ void main()
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
 	
 	float opacity = (unpackSamples(samplesExp.r, samplesDec.r) * uSamplesStrength) / (255.0 * 255.0);
-	float color = (unpackSamples(samplesExp.g, samplesDec.g) * uSamplesStrength) / (255.0 * 255.0);
-	color *= 4.0;
+	float light = (unpackSamples(samplesExp.g, samplesDec.g) * uSamplesStrength) / (255.0 * 255.0);
 	
-	vec3 fogLight = (uAmbientColor.rgb + (uSunColor.rgb * color));
+	vec3 fogLight = clamp(uAmbientColor.rgb + (uSunColor.rgb * light), vec3(0.0), vec3(1.0));
 	vec3 fogColor = uColor.rgb * fogLight;
 	
 	if (uFogAmbience == 1)

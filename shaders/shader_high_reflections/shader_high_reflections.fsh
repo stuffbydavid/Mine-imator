@@ -96,7 +96,7 @@ vec3 rayTrace(vec2 originUV)
 	
 	vec3 jitt = vec3(0.0);
 	
-	// Not physically accurate, but looks nice and.. fast maybe?
+	// Not physically accurate, but looks nice.
 	float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
 	vec3 randVec = unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)));
 	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
@@ -105,28 +105,10 @@ vec3 rayTrace(vec2 originUV)
 	
 	vec3 reflectVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal)));
 	vec3 rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
-	float rayVis = 1.0;//max(0.0, dot(reflectVector, rayVector));
+	float rayVis = 1.0;
 	
 	if (dot(rayVector, normal) <= 0.01)
 		rayVis = 0.0;
-	
-	//rayVector = mix(rayVector, kernelBasis * uKernel[0], roughness);
-	
-	/*
-	float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
-	normal += mix(vec3(0.0), unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize))), roughness);
-	vec3 rayVector = vec3(0.0);
-	
-	// Randomize vector until valid
-	for (int i = 0; i < 16; i++)
-	{
-		jitt = (uKernel[i] * roughness);
-		rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + jitt)));
-		
-		if (dot(rayVector, normal) < 0.0)
-			break;
-	}
-	*/
 	
 	// Pixel coord on texture
 	vec2 pixelCoord = uScreenSize / originUV;
@@ -239,8 +221,6 @@ vec3 rayTrace(vec2 originUV)
 	// Visible, must've hit something.
 	if (vis > 0.0)
 	{
-		//vis *= (1.0 - clamp(depth / rayThickness, 0.0, 1.0));
-		
 		vis *= rayVis;
 		
 		// Bruh
@@ -251,11 +231,6 @@ vec3 rayTrace(vec2 originUV)
 		if (dot(rayVector, hitNormal) > 0.01)
 			vis = 0.0;
 		
-		// Fade based on ray vector Z
-		//vis *= clamp((rayVector.z - -0.034) / (-0.033 - -0.034), 0.0, 1.0);
-		
-		//vis *= rayVector.z;
-		
 		// Fade by edge
 		vec2 fadeUV = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - rayUV.xy)) * uFadeAmount;
 		vis *= clamp(1.0 - (fadeUV.x + fadeUV.y), 0.0, 1.0);
@@ -265,12 +240,8 @@ vec3 rayTrace(vec2 originUV)
 		
 		// Mix in fallback via fresnel if ray hit a reflective surface ¯\_(ツ)_/¯
 		vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).r);
-		//vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).b);
 		traceCol = mix(traceCol, surfCol, vis);
 	}
-	
-	// Fade based on Fresnel/roughness
-	//traceCol *= mat.b;
 	
 	return traceCol;
 }
@@ -282,12 +253,12 @@ void main()
 	result = vec4(0.0, 0.0, 0.0, 1.0);
 	
 	// Perform alpha test to ignore background
-	if (texture2D(uDepthBuffer, vTexCoord).a < 1.0)
+	if (texture2D(uDepthBuffer, vTexCoord).a == 0.0)
 	{
-		if (mat.a < 1.0)
+		if (mat.a == 0.0)
 			result = vec4(0.0);
 		else
-			result = uFallbackColor;
+			result = (mat.b > 0.0 ? uFallbackColor : vec4(0.0, 0.0, 0.0, 1.0));
 	}
 	else
 	{

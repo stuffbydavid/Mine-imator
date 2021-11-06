@@ -183,10 +183,6 @@ function tab_properties_render()
 		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 1, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
 		tab_next()
 		
-		tab_control_switch()
-		draw_switch("renderreflectionshalfres", dx, dy, project_render_reflections_halfres, action_project_render_reflections_halfres)
-		tab_next()
-		
 		tab_collapse_end()
 	}
 	

@@ -33,7 +33,6 @@ function project_load_render(map)
 	project_render_reflections_precision = value_get_real(map[?"render_reflections_precision"], project_render_reflections_precision)
 	project_render_reflections_thickness = value_get_real(map[?"render_reflections_thickness"], project_render_reflections_thickness)
 	project_render_reflections_fade_amount = value_get_real(map[?"render_reflections_fade_amount"], project_render_reflections_fade_amount)
-	project_render_reflections_halfres = value_get_real(map[?"render_reflections_halfres"], project_render_reflections_halfres)
 	
 	project_render_glow = value_get_real(map[?"render_glow"], project_render_glow)
 	project_render_glow_radius = value_get_real(map[?"render_glow_radius"], project_render_glow_radius)

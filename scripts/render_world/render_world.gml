@@ -60,4 +60,5 @@ function render_world(mode)
 		gpu_set_tex_filter(false)
 	
 	shader_check_uniform = false
+	render_world_count++
 }
