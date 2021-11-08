@@ -671,11 +671,6 @@ function app_startup_interface_tabs()
 		
 		// Interface
 		interface = tab_add_category("settingsinterface", tab_settings_interface, false)
-		with (interface)
-		{
-			tbx_tip_delay = new_textbox_decimals()
-			tbx_view_real_time_render_time = new_textbox_integer()
-		}
 		
 		// Controls
 		controls = tab_add_category("settingscontrols", tab_settings_controls, false)

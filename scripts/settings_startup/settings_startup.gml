@@ -29,9 +29,6 @@ function settings_startup()
 	setting_watermark_scale = 1
 	setting_watermark_alpha = 1
 	
-	setting_view_real_time_render = true
-	setting_view_real_time_render_time = 1000
-	
 	setting_theme = theme_light
 	setting_accent = 3
 	setting_accent_custom = hex_to_color("03A9F4")
@@ -98,7 +95,6 @@ function settings_startup()
 	setting_slow_modifier = 0.25
 	
 	setting_scenery_remove_edges = false
-	setting_remove_waterlogged_water = false
 	
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30

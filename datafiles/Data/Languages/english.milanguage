@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.11.01"
+        "lastchange": "2021.11.08"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2956,7 +2956,6 @@
             "alpha": "Opacity"
         },
         "sceneryremoveedges": "Remove edges of large scenery",
-		"removewaterloggedwater": "Remove waterlogged water",
         "interface": "INTERFACE",
         "theme": "Theme",
         "theme/": {
@@ -2965,9 +2964,6 @@
             "darker": "Darker"
         },
         "accentcolor": "Accent color",
-        "viewrealtimerender": "Real time rendering",
-        "viewrealtimerendertime": "Max render time",
-        "viewrealtimerendertimemilliseconds": "ms",
         "language": "Language",
         "timelineautoscroll": "Auto-scroll when playing animation",
         "timelineselectjump": "Jump to selected object in timeline list",

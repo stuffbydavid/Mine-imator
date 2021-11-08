@@ -124,9 +124,4 @@ function tab_settings_program()
 	tab_control_switch()
 	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges)
 	tab_next()
-	
-	// Remove waterlogged water
-	tab_control_switch()
-	draw_switch("settingsremovewaterloggedwater", dx, dy, setting_remove_waterlogged_water, action_setting_remove_waterlogged_water)
-	tab_next()
 }

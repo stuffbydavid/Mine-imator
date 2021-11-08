@@ -51,20 +51,6 @@ function tab_settings_interface()
 	draw_button_icon("settingslanguageadd", dx + 24 + 4, dy, 24, 24, false, icons.PLUS, language_add, false, "tooltiplanguageadd")
 	tab_next()
 	
-	// Realtime render
-	tab_control_switch()
-	draw_switch("settingsviewrealtimerender", dx, dy, setting_view_real_time_render, action_setting_view_real_time_render)
-	tab_next()
-	
-	if (setting_view_real_time_render)
-	{
-		tab.interface.tbx_view_real_time_render_time.suffix = " " + text_get("settingsviewrealtimerendertimemilliseconds")
-		
-		tab_control_dragger()
-		draw_dragger("settingsviewrealtimerendertime", dx, dy, dragger_width, setting_view_real_time_render_time, 1, 0, no_limit, 100, 1, tab.interface.tbx_view_real_time_render_time, action_setting_view_real_time_render_time)
-		tab_next()
-	}
-	
 	// Timeline
 	tab_control_switch()
 	draw_switch("settingstimelineautoscroll", dx, dy, setting_timeline_autoscroll, action_setting_timeline_autoscroll)

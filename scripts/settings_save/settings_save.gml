@@ -66,14 +66,10 @@ function settings_save()
 		json_save_var("watermark_scale", setting_watermark_scale)
 		json_save_var("watermark_alpha", setting_watermark_alpha)
 		json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)
-		json_save_var_bool("remove_waterlogged_water", setting_remove_waterlogged_water)
 		
 	json_save_object_done()
 	
 	json_save_object_start("interface")
-		
-		json_save_var_bool("view_real_time_render", setting_view_real_time_render)
-		json_save_var("view_real_time_render_time", setting_view_real_time_render_time)
 		
 		json_save_var("language_filename", json_string_encode(setting_language_filename))
 		

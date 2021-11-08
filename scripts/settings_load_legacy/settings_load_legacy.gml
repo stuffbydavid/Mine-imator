@@ -46,8 +46,8 @@ function settings_load_legacy(fn)
 	}
 	if (load_format >= e_settings.FORMAT_103)
 	{
-		setting_view_real_time_render = buffer_read_byte()
-		setting_view_real_time_render_time = buffer_read_int()
+		/*setting_view_real_time_render = */buffer_read_byte()
+		/*setting_view_real_time_render_time = */buffer_read_int()
 	}
 	
 	/*setting_font_filename = */buffer_read_string_int()

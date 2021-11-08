@@ -89,16 +89,12 @@ function settings_load()
 			setting_watermark_alpha = value_get_real(programmap[?"watermark_alpha"], setting_watermark_alpha)
 			
 			setting_scenery_remove_edges = value_get_real(programmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
-			setting_remove_waterlogged_water = value_get_real(programmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
 		}
 		
 		// Interface
 		var interfacemap = map[?"interface"];
 		if (ds_map_valid(interfacemap))
 		{
-			setting_view_real_time_render = value_get_real(interfacemap[?"view_real_time_render"], setting_view_real_time_render)
-			setting_view_real_time_render_time = value_get_real(interfacemap[?"view_real_time_render_time"], setting_view_real_time_render_time)
-			
 			setting_language_filename = value_get_string(interfacemap[?"language_filename"], setting_language_filename)
 			if (!file_exists_lib(setting_language_filename))
 				setting_language_filename = language_file

@@ -18,16 +18,7 @@ function view_update_surface(view, cam)
 	render_start(view.surface, cam, content_width, content_height)
 	
 	if (view.quality = e_view_mode.RENDER)
-	{
 		render_high()
-	
-		if (render_time > setting_view_real_time_render_time || !setting_view_real_time_render)
-		{
-			view_render_real_time = false
-			view.surface = render_done()
-			return 0
-		}
-	}
 	else
 		render_low()
 	
