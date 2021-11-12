@@ -29,7 +29,6 @@ function project_save_template()
 			if (model_name = "banner")
 			{
 				json_save_var("banner_base_color", minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_base_color)])
-				debug(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_base_color)], banner_base_color)
 				
 				json_save_array_start("banner_pattern_list")
 				

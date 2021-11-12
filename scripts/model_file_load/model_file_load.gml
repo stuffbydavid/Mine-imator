@@ -68,6 +68,8 @@ function model_file_load()
 		// Texture
 		texture_name = map[?"texture"]
 		texture_inherit = id
+		texture_material_inherit = id
+		texture_normal_inherit = id
 		if (res != null)
 			model_file_load_texture(texture_name, res)
 		
@@ -77,7 +79,7 @@ function model_file_load()
 			texture_material_name = value_get_string(map[?"texture_material"], "")
 			if (texture_material_name != "")
 				model_file_load_texture_material(texture_material_name, res)
-		
+			
 			texture_normal_name = value_get_string(map[?"texture_normal"], "")
 			if (texture_normal_name != "")
 				model_file_load_tex_normal(texture_normal_name, res)

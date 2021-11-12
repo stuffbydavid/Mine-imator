@@ -23,5 +23,5 @@ function model_part_get_tex_normal_name(part, map)
 		return part.texture_normal_name
 	
 	// Get texture of inherited part
-	return model_part_get_tex_normal_name(part.texture_inherit, map)
+	return model_part_get_tex_normal_name(part.texture_normal_inherit, map)
 }

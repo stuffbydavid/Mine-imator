@@ -63,6 +63,8 @@ function model_file_load_part(map, root, res, model)
 		{
 			texture_name = map[?"texture"]
 			texture_inherit = id
+			texture_material_inherit = id
+			texture_normal_inherit = id
 			
 			// Texture size
 			if (!ds_list_valid(map[?"texture_size"]))
@@ -80,9 +82,13 @@ function model_file_load_part(map, root, res, model)
 				
 				if (texture_material_name != "")
 					model_file_load_texture_material(texture_material_name, res)
+				else
+					texture_material_inherit = other.texture_material_inherit
 				
 				if (texture_normal_name != "")
 					model_file_load_tex_normal(texture_normal_name, res)
+				else
+					texture_normal_inherit = other.texture_normal_inherit
 			}
 			else
 			{
@@ -101,6 +107,8 @@ function model_file_load_part(map, root, res, model)
 			texture_material_name = ""
 			texture_normal_name = ""
 			texture_inherit = other.texture_inherit
+			texture_material_inherit = other.texture_material_inherit
+			texture_normal_inherit = other.texture_normal_inherit
 			texture_size = texture_inherit.texture_size
 		}
 		

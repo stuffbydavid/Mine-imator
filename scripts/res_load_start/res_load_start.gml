@@ -42,9 +42,4 @@ function res_load_start()
 			break
 		}
 	}
-	
-	debug(load_stage)
-	debug(app.popup_loading.text)
-	debug(app.popup_loading.caption)
-	debug(script_get_name(app.popup_loading.load_script))
 }

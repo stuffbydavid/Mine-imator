@@ -1,5 +1,5 @@
 {
-	"version": "1.17",
+	"version": "1.18_pre1",
 	"patch": 0,
 	"format": 6,
 	"characters": [
@@ -780,8 +780,10 @@
 			"file": "cape.mimodel",
 			"states": {
 				"variant": [
+					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
 					{ "value": "mojang", "texture": "entity/mineimator/cape_mojang" },
 					{ "value": "mojang_old", "texture": "entity/mineimator/cape_mojang_old" },
+					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" },
 					{ "value": "minecon_2011", "texture": "entity/mineimator/cape_minecon2011" },
 					{ "value": "minecon_2012", "texture": "entity/mineimator/cape_minecon2012" },
 					{ "value": "minecon_2013", "texture": "entity/mineimator/cape_minecon2013" },
@@ -800,11 +802,10 @@
 					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
 					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
 					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
-					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
-					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" }
+					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" }
 				]
 			},
-			"default_state": "variant=mojang"
+			"default_state": "variant=mojang_new"
 		},
 		{
 			"name": "elytra",
@@ -812,8 +813,10 @@
 			"states": {
 				"variant": [
 					{ "value": "normal", "texture": "entity/elytra" },
+					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
 					{ "value": "mojang", "texture": "entity/mineimator/cape_mojang" },
 					{ "value": "mojang_old", "texture": "entity/mineimator/cape_mojang_old" },
+					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" },
 					{ "value": "minecon_2011", "texture": "entity/mineimator/cape_minecon2011" },
 					{ "value": "minecon_2012", "texture": "entity/mineimator/cape_minecon2012" },
 					{ "value": "minecon_2013", "texture": "entity/mineimator/cape_minecon2013" },
@@ -832,8 +835,7 @@
 					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
 					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
 					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
-					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
-					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" }
+					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" }
 				]
 			},
 			"default_state": "variant=normal"
@@ -1540,7 +1542,6 @@
 			},
 			"default_state": "type=grass",
 			"subsurface": 1,
-			"random_offset_xz": true,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -1663,14 +1664,12 @@
 			"name": "brown_mushroom",
 			"file": "brown_mushroom.json",
 			"subsurface": 1,
-
 			"id": "minecraft:brown_mushroom"
 		},
 		{
 			"name": "red_mushroom",
 			"file": "red_mushroom.json",
 			"subsurface": 1,
-			"random_offset_xz": true,
 			"id": "minecraft:red_mushroom"
 		},
 		{
@@ -1868,7 +1867,7 @@
 				"west": [ "false", "true" ],
 				"up": [ "false", "true" ]
 			},
-			"default_state": "variant=normal",
+			"default_state": "variant=normal,north=false,south=false,east=false,west=false,up=true",
 			"brightness": 1,
 			"id": {
 				"minecraft:fire": "variant=normal",
@@ -2396,26 +2395,26 @@
 			"timeline": {
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
+					"face=ceiling": [ 8, 16, 8 ],
 					"face=wall,facing=north": [ 8, 8, 16 ],
 					"face=wall,facing=south": [ 8, 8, 0 ],
 					"face=wall,facing=east": [ 0, 8, 8 ],
 					"face=wall,facing=west": [ 16, 8, 8 ],
-					"face=floor": [ 8, 0, 8 ],
-					"face=ceiling": [ 8, 16, 8 ]
+					"face=floor": [ 8, 0, 8 ]
 				},
 				"rotation": {
-					"face=wall,facing=north": [ 0, -90, 90 ],
-					"face=wall,facing=south": [ 0, 90, 90 ],
-					"face=wall,facing=east": [ 0, 0, -90 ],
-					"face=wall,facing=west": [ 0, 0, 90 ],
-					"face=floor,facing=north": [ 0, -90, 0 ],
-					"face=floor,facing=south": [ 0, 90, 0 ],
-					"face=floor,facing=east": [ 0, 180, 0 ],
-					"face=floor,facing=west": [ 0, 0, 0 ],
-					"face=ceiling,facing=north": [ 180, 90, 0 ],
-					"face=ceiling,facing=south": [ 180, -90, 0 ],
-					"face=ceiling,facing=east": [ 180, 0, 0 ],
-					"face=ceiling,facing=west": [ 180, 180, 0 ]
+					"face=ceiling,facing=north": [ 180, 180, 0 ],
+					"face=ceiling,facing=south": [ 180, 0, 0 ],
+					"face=ceiling,facing=east": [ 180, 90, 0 ],
+					"face=ceiling,facing=west": [ 180, -90, 0 ],
+					"face=wall,facing=north": [ 90, 180, 0 ],
+					"face=wall,facing=south": [ 90, 0, 0 ],
+					"face=wall,facing=east": [ 90, 90, 0 ],
+					"face=wall,facing=west": [ 90, -90, 0 ],
+					"face=floor,facing=north": [ 0, 180, 0 ],
+					"face=floor,facing=south": [ 0, 0, 0 ],
+					"face=floor,facing=east": [ 0, 90, 0 ],
+					"face=floor,facing=west": [ 0, -90, 0 ]
 				}
 			},
 			"id": {
@@ -2776,6 +2775,7 @@
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
+			"default_state": "north=true,south=true,east=true,west=true,up=true,down=true",
 			"id": "minecraft:brown_mushroom_block"
 		},
 		{
@@ -2789,6 +2789,7 @@
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
+			"default_state": "north=true,south=true,east=true,west=true,up=true,down=true",
 			"id": "minecraft:red_mushroom_block"
 		},
 		{
@@ -2802,6 +2803,7 @@
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
+			"default_state": "north=true,south=true,east=true,west=true,up=true,down=true",
 			"id": "minecraft:mushroom_stem"
 		},
 		{
@@ -2814,6 +2816,7 @@
 				"east": [ "false", "true" ],
 				"west": [ "false", "true" ]
 			},
+			"default_state": "north=false,south=false,east=false,west=false",
 			"require_models": true,
 			"id": "minecraft:iron_bars"
 		},
@@ -2827,6 +2830,7 @@
 				"east": [ "false", "true" ],
 				"west": [ "false", "true" ]
 			},
+			"default_state": "north=false,south=false,east=false,west=false",
 			"require_models": true,
 			"id": "minecraft:glass_pane"
 		},
@@ -2988,6 +2992,7 @@
 				"position": [ 8, 20, 8 ],
 				"rotation": [ 15, 0, 0 ]
 			},
+			"brightness": 0.5,
 			"id": "minecraft:enchanting_table"
 		},
 		{
@@ -3134,7 +3139,7 @@
 				"west": [ "false", "true" ],
 				"attached": [ "false", "true" ]
 			},
-			"default_state": "attached=false",
+			"default_state": "attached=false,north=false,south=false,east=false,west=false",
 			"id": "minecraft:tripwire"
 		},
 		{
@@ -3191,7 +3196,7 @@
 				"west": [ "none", "low", "tall" ],
 				"up": [ "false", "true" ]
 			},
-			"default_state": "variant=cobblestone",
+			"default_state": "variant=cobblestone,north=none,south=none,east=none,west=none,up=true",
 			"id": {
 				"minecraft:cobblestone_wall": "variant=cobblestone",
 				"minecraft:mossy_cobblestone_wall": "variant=mossy_cobblestone",
@@ -3666,7 +3671,7 @@
 				"east": [ "false", "true" ],
 				"west": [ "false", "true" ]
 			},
-			"default_state": "color=white",
+			"default_state": "color=white,north=false,south=false,east=false,west=false",
 			"id": {
 				"minecraft:white_stained_glass_pane": "color=white",
 				"minecraft:orange_stained_glass_pane": "color=orange",
@@ -3978,6 +3983,7 @@
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
+			"default_state": "north=false,south=false,east=false,west=false,up=false,down=false",
 			"id": "minecraft:chorus_plant"
 		},
 		{
@@ -4347,7 +4353,6 @@
 			},
 			"waterlogged": true,
 			"subsurface": 1,
-			"random_offset_xz": true,
 			"wind": {
 				"axis": "all",
 				"ymin": 0
@@ -4735,6 +4740,7 @@
 				"axis": "all",
 				"ymin": 0
 			},
+			"subsurface": 1,
 			"default_state": "age=0",
 			"id": "minecraft:sweet_berry_bush"
 		},
@@ -5221,6 +5227,7 @@
 					{ "value": "flowering_azalea", "file": "flowering_azalea.json" }
 				]
 			},
+			"subsurface": 1,
 			"default_state": "variant=azalea",
 			"id": {
 				"minecraft:azalea": "variant=azalea",
@@ -5664,12 +5671,10 @@
 		"entity/zombie_villager/type/snow",
 		"entity/zombie_villager/type/swamp",
 		"entity/zombie_villager/type/taiga",
+		"item/spyglass_model",
 		"block/brown_mushroom",
 		"block/carved_pumpkin",
 		"block/cobblestone",
-		"block/enchanting_table_top",
-		"block/enchanting_table_bottom",
-		"block/enchanting_table_side",
 		"block/lever",
 		"block/oak_planks",
 		"block/piston_top_sticky",
@@ -5677,34 +5682,34 @@
 		"block/piston_side",
 		"block/piston_bottom",
 		"block/piston_inner",
-		"block/pumpkin_top",
 		"block/pumpkin_side",
+		"block/pumpkin_top",
 		"block/red_mushroom",
 		"block/tripwire_hook",
-		"item/spyglass_model",
 		"entity/mineimator/camera_tripod",
+		"entity/mineimator/cape_birthday",
 		"entity/mineimator/cape_cheapsh0t",
 		"entity/mineimator/cape_cobalt",
 		"entity/mineimator/cape_dannybstyle",
 		"entity/mineimator/cape_julianclark",
 		"entity/mineimator/cape_mapmaker",
+		"entity/mineimator/cape_migrator",
 		"entity/mineimator/cape_millionthsale",
 		"entity/mineimator/cape_minecon2011",
 		"entity/mineimator/cape_minecon2012",
 		"entity/mineimator/cape_minecon2013",
 		"entity/mineimator/cape_minecon2015",
 		"entity/mineimator/cape_minecon2016",
-		"entity/mineimator/cape_mojang",
-		"entity/mineimator/cape_mojang_old",
 		"entity/mineimator/cape_moderator",
+		"entity/mineimator/cape_mojang",
+		"entity/mineimator/cape_mojang_new",
+		"entity/mineimator/cape_mojang_old",
 		"entity/mineimator/cape_mrmessiah",
 		"entity/mineimator/cape_prismarine",
 		"entity/mineimator/cape_scrollschamp",
 		"entity/mineimator/cape_translator",
 		"entity/mineimator/cape_translator_chinese",
-		"entity/mineimator/cape_turtle",
-		"entity/mineimator/cape_birthday",
-		"entity/mineimator/cape_migrator"
+		"entity/mineimator/cape_turtle"
 	],
 	"block_textures": [
 		"block/stone",
@@ -6518,11 +6523,11 @@
 		"block/jungle_leaves opaque": "jungle_leaves",
 		"block/acacia_leaves opaque": "acacia_leaves",
 		"block/dark_oak_leaves opaque": "dark_oak_leaves",
-		"block/attached_pumpkin_stem": "#8EFB2D",
-		"block/pumpkin_stem": "#8EFB2D",
-		"block/attached_melon_stem": "#8EFB2D",
-		"block/melon_stem": "#8EFB2D",
-		"block/lily_pad": "#66B333",
+		"block/attached_pumpkin_stem": "#80DF10",
+		"block/pumpkin_stem": "#80DF10",
+		"block/attached_melon_stem": "#80DF10",
+		"block/melon_stem": "#80DF10",
+		"block/lily_pad": "#208030",
 		"block/vine": "foliage",
 		"block/grass": "grass",
 		"block/fern": "grass",
@@ -6530,9 +6535,9 @@
 		"block/tall_grass_top": "grass",
 		"block/large_fern_bottom": "grass",
 		"block/large_fern_top": "grass",
+		"block/sugar_cane": "grass",
 		"block/water_still": "water",
-		"block/water_flow": "water",
-		"block/sugar_cane": "foliage"
+		"block/water_flow": "water"
 	},
 	"item_textures": [
 		"item/leather_helmet",
@@ -6777,6 +6782,7 @@
 		"item/lead",
 		"item/name_tag",
 		"item/iron_nugget",
+		"item/music_disc_13",
 		"item/music_disc_cat",
 		"item/music_disc_blocks",
 		"item/music_disc_chirp",
@@ -6788,7 +6794,7 @@
 		"item/music_disc_ward",
 		"item/music_disc_11",
 		"item/music_disc_wait",
-		"item/music_disc_13",
+		"item/music_disc_otherside",
 		"item/music_disc_pigstep",
 		"item/structure_void",
 		"item/shulker_shell",
@@ -7282,7 +7288,7 @@
 	"biomes": [
 		{
 			"name": "ocean",
-			"foliage": [ 129, 192 ],
+			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
 			"variant": [
 				{ 
@@ -7290,10 +7296,6 @@
 				},
 				{
 					"name": "deep_ocean"
-				},
-				{
-					"name": "frozen_ocean",
-					"water": "#3938C9"
 				},
 				{
 					"name": "warm_ocean",
@@ -7304,20 +7306,21 @@
 					"water": "#45ADF2"
 				},
 				{
-					"name": "cold_ocean",
-					"water": "#3D57D6"
-				},
-				{
-					"name": "deep_warm_ocean",
-					"water": "#43D5EE"
-				},
-				{
 					"name": "deep_lukewarm_ocean",
 					"water": "#45ADF2"
 				},
 				{
+					"name": "cold_ocean",
+					"water": "#3D57D6"
+				},
+				{
 					"name": "deep_cold_ocean",
 					"water": "#3D57D6"
+				},
+				{
+					"name": "frozen_ocean",
+					"foliage": [ 255, 255 ],
+					"water": "#3938C9"
 				},
 				{
 					"name": "deep_frozen_ocean",
@@ -7337,33 +7340,22 @@
 					"name": "sunflower_plains"
 				},
 				{
-					"name": "snowy_tundra",
-					"foliage": [ 242, 244 ]
+					"name": "snowy_plains",
+					"foliage": [ 255, 255 ]
 				},
 				{
 					"name": "ice_spikes",
-					"foliage": [ 242, 244 ]
+					"foliage": [ 255, 255 ]
 				}
 			]
 		},
 		{
 			"name": "desert",
 			"foliage": [ 0, 255 ],
-			"water": "#3F76E4",
-			"variant": [
-				{
-					"name": "normal"
-				},
-				{
-					"name": "desert_hills"
-				},
-				{
-					"name": "desert_lakes"
-				}
-			]
+			"water": "#3F76E4"
 		},
 		{
-			"name": "mountains",
+			"name": "windswept_hills",
 			"foliage": [ 203, 239 ],
 			"water": "#3F76E4",
 			"variant": [
@@ -7371,32 +7363,20 @@
 					"name": "normal"
 				},
 				{
-					"name": "mountain_edge"
+					"name": "windswept_forest"
 				},
 				{
-					"name": "wooded_mountains"
-				},
-				{
-					"name": "gravelly_mountains"
-				},
-				{
-					"name": "modified_gravelly_mountains"
-				},
-				{
-					"name": "snowy_mountains"
+					"name": "windswept_gravelly_hills"
 				}
 			]
 		},
 		{
 			"name": "forest",
-			"foliage": [ 75, 110 ],
+			"foliage": [ 76, 112 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
 					"name": "normal"
-				},
-				{
-					"name": "wooded_hills"
 				},
 				{
 					"name": "flower_forest"
@@ -7405,60 +7385,34 @@
 		},
 		{
 			"name": "taiga",
-			"foliage": [ 242, 244 ],
+			"foliage": [ 191, 203 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
 					"name": "normal"
 				},
 				{
-					"name": "taiga_hills"
-				},
-				{
 					"name": "snowy_taiga",
+					"foliage": [ 255, 255 ],
 					"water": "#3D57D6"
 				},
 				{
-					"name": "snowy_taiga_hills",
-					"water": "#3D57D6"
+					"name": "old_growth_pine_taiga",
+					"foliage": [ 178, 193 ]
 				},
 				{
-					"name": "giant_tree_taiga"
-				},
-				{
-					"name": "giant_tree_taiga_hills"
-				},
-				{
-					"name": "taiga_mountains"
-				},
-				{
-					"name": "snowy_taiga_mountains",
-					"water": "#3D57D6"
-				},
-				{
-					"name": "giant_spruce_taiga"
-				},
-				{
-					"name": "giant_spruce_taiga_hills"
+					"name": "old_growth_spruce_taiga"
 				}
 			]
 		},
 		{
 			"name": "swamp",
 			"foliage": "#6A7039",
-			"water": "#617B64",
-			"variant": [
-				{
-					"name": "normal"
-				},
-				{
-					"name": "swamp_hills"
-				}
-			]
+			"water": "#617B64"
 		},
 		{
 			"name": "river",
-			"foliage": [ 128, 187 ],
+			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
@@ -7466,6 +7420,7 @@
 				},
 				{
 					"name": "frozen_river",
+					"foliage": [ 255, 255 ],
 					"water": "#3938C9"
 				}
 			]
@@ -7494,7 +7449,7 @@
 		},
 		{
 			"name": "the_end",
-			"foliage": [ 127, 189 ],
+			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
@@ -7517,92 +7472,62 @@
 		{
 			"name": "mushroom_fields",
 			"foliage": [ 25, 25 ],
-			"water": "#3F76E4",
-			"variant": [
-				{
-					"name": "normal"
-				},
-				{
-					"name": "mushroom_field_shore"
-				}
-			]
+			"water": "#3F76E4"
 		},
 		{
 			"name": "beach",
-			"foliage": [ 60, 191 ],
+			"foliage": [ 50, 173 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
 					"name": "normal"
 				},
 				{
-					"name": "stone_shore"
+					"name": "stony_shore",
+					"foliage": [ 203, 239 ]
 				},
 				{
 					"name": "snowy_beach",
+					"foliage": [ 242, 251 ],
 					"water": "#3D57D6"
 				}
 			]
 		},
 		{
 			"name": "jungle",
-			"foliage": [ 0, 25 ],
+			"foliage": [ 12, 36 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
 					"name": "normal"
 				},
 				{
-					"name": "jungle_hills"
-				},
-				{
-					"name": "jungle_edge"
-				},
-				{
-					"name": "modified_jungle"
-				},
-				{
-					"name": "modified_jungle_edge"
+					"name": "sparse_jungle",
+					"foliage": [ 12, 61 ]
 				},
 				{
 					"name": "bamboo_jungle"
-				},
-				{
-					"name": "bamboo_jungle_hills"
 				}
 			]
 		},
 		{
 			"name": "birch_forest",
-			"foliage": [ 99, 162 ],
+			"foliage": [ 101, 163 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
 					"name": "normal"
 				},
 				{
-					"name": "birch_forest_hills"
-				},
-				{
-					"name": "tall_birch_forest"
-				},
-				{
-					"name": "tall_birch_hills"
+					"name": "old_growth_birch_forest"
 				}
 			]
 		},
 		{
 			"name": "dark_forest",
-			"foliage": "#507831",
-			"water": "#3F76E4",
-			"variant": [
-				{
-					"name": "normal"
-				},
-				{
-					"name": "dark_forest_hills"
-				}
-			]
+			"grass": "#507A32",
+			"foliage": [ 76, 112 ],
+			"water": "#3F76E4"
 		},
 		{
 			"name": "savanna",
@@ -7616,10 +7541,7 @@
 					"name": "savanna_plateau"
 				},
 				{
-					"name": "shattered_savanna"
-				},
-				{
-					"name": "shattered_savanna_plateau"
+					"name": "windswept_savanna"
 				}
 			]
 		},
@@ -7633,35 +7555,58 @@
 					"name": "normal"
 				},
 				{
-					"name": "wooded_badlands_plateau"
-				},
-				{
-					"name": "badlands_plateau"
+					"name": "wooded_badlands"
 				},
 				{
 					"name": "eroded_badlands"
+				}
+			]
+		},
+		{
+			"name": "caves",
+			"water": "#3F76E4",
+			"variant": [
+				{
+					"name": "dripstone_caves",
+					"foliage": [ 50, 173 ]
 				},
 				{
-					"name": "modified_wooded_badlands_plateau"
+					"name": "lush_caves",
+					"foliage": [ 127, 191 ]
+				}
+			]
+		},
+		{
+			"name": "mountains",
+			"foliage": [ 255, 255 ],
+			"water": "#3F76E4‌",
+			"variant": [
+				{
+					"name": "meadow",
+					"foliage": [ 127, 152 ],
+					"water": "#0E4ECF‌"
 				},
 				{
-					"name": "modified_badlands_plateau"
+					"name": "grove"
+				},
+				{
+					"name": "snowy_slopes"
+				},
+				{
+					"name": "jagged_peaks"
+				},
+				{
+					"name": "frozen_peaks"
+				},
+				{
+					"name": "stony_peaks",
+					"foliage": [ 0, 178 ]
 				}
 			]
 		},
 		{
 			"name": "the_void",
-			"foliage": [ 127, 189 ],
-			"water": "#3F76E4"
-		},
-		{
-			"name": "dripstone_caves",
-			"foliage": [ 50, 173 ],
-			"water": "#3F76E4"
-		},
-		{
-			"name": "lush_caves",
-			"foliage": [ 50, 173 ],
+			"foliage": [ 127, 191 ],
 			"water": "#3F76E4"
 		}
 	],

@@ -1,11 +1,13 @@
-/// eval(str, def)
+/// eval(str, default)
 /// @arg str
-/// @arg def
+/// @arg default
 function eval(str, def)
 {
-	var i, values, ops, result;
+	var i, values, ops, functions, result, lastoperator;
 	values = ds_stack_create()
 	ops = ds_stack_create()
+	functions = ds_stack_create()
+	lastoperator = ""
 	
 	for (i = 1; i < string_length(str) + 1; i++)
 	{
@@ -14,7 +16,14 @@ function eval(str, def)
 		if (char = " ") // Whitespace
 			continue
 		else if (char = "(") // Open brace
-			ds_stack_push(ops, char)
+		{
+			if (lastoperator == "--")
+				ds_stack_push(ops, "-(")
+			else
+				ds_stack_push(ops, "(")
+			
+			lastoperator = ""
+		}
 		else if (eval_is_digit(char)) // Digit
 		{
 			var val, dec, deccheck, decamount;
@@ -47,12 +56,17 @@ function eval(str, def)
 			
 			if (decamount > 0)
 				dec /= power(10, decamount)
-		
-			ds_stack_push(values, val + dec)
+			
+			if (lastoperator = "--")
+				ds_stack_push(values, -(val + dec))
+			else
+				ds_stack_push(values, val + dec)
+			
+			lastoperator = ""
 		}
 		else if (char = ")") // Closing brace
 		{
-			while (!ds_stack_empty(ops) && ds_stack_top(ops) != "(")
+			while (!ds_stack_empty(ops) && !(ds_stack_top(ops) = "(" || ds_stack_top(ops) = "-("))
 			{
 				var val2, val1, op;
 				val2 = ds_stack_top(values)
@@ -69,10 +83,29 @@ function eval(str, def)
 			
 			// Pop opening brace
 			if (!ds_stack_empty(ops))
+			{
+				// Flip result sign
+				if (ds_stack_top(ops) = "-(")
+				{
+					var val = -ds_stack_top(values);
+					ds_stack_pop(values)
+					ds_stack_push(values, val)
+				}
+				
 				ds_stack_pop(ops)
+			}
+			
+			lastoperator = ""
 		}
 		else // Operator
 		{
+			// Last character was an operator, account for an upcoming negative number?
+			if (lastoperator != "" && char = "-")
+			{
+				lastoperator = "--"
+				continue;
+			}
+			
 			// Solve previous operations if needed before adding current operator
 			while (!ds_stack_empty(ops) && eval_precedence(ds_stack_top(ops)) >= eval_precedence(char))
 			{
@@ -91,6 +124,7 @@ function eval(str, def)
 			
 			// Add current operator
 			ds_stack_push(ops, char)
+			lastoperator = char
 		}
 	}
 	
@@ -113,9 +147,10 @@ function eval(str, def)
 	result = ds_stack_top(values)
 	ds_stack_destroy(values)
 	ds_stack_destroy(ops)
+	ds_stack_destroy(functions)
 	
 	if (result = undefined)
-		return string_get_real(str, def)
+		return def
 	else
 		return result
 }
@@ -127,6 +162,10 @@ function eval(str, def)
 /// @desc Manually solves operation between two numbers
 function eval_solve(a, b, op)
 {
+	// Process negative number
+	if (a = undefined && b != undefined && op = "-")
+		a = 0
+	
 	if (a = undefined || b = undefined || op = undefined)
 		return undefined
 	
@@ -137,6 +176,7 @@ function eval_solve(a, b, op)
 		case "*": return a * b;
 		case "/": return a / b;
 		case "^": return power(a, b);
+		case "%": return (a mod b);
 	}
 }
 
@@ -147,11 +187,9 @@ function eval_is_digit(char)
 {
 	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 	
-	for (var i = 0; i < 11; i++)
-	{
+	for (var i = 0; i < array_length(digits); i++)
 		if (char = digits[i])
 			return true
-	}
 	
 	return false
 }
@@ -167,7 +205,8 @@ function eval_precedence(op)
 		case "+": return 1;
 		
 		case "/": 
-		case "*": return 2;
+		case "*":
+		case "%": return 2;
 		
 		case "^": return 3;
 	}

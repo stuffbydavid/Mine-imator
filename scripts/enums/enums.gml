@@ -36,7 +36,8 @@ function enums()
 		FORMAT_200_AL9	  = 33,
 		FORMAT_200_AL10	  = 34,
 		FORMAT_200_AL14   = 35,
-		FORMAT_200_AL17   = 36
+		FORMAT_200_AL17   = 36,
+		FORMAT_200_AL18   = 37
 	}
 	
 	enum e_settings

@@ -13,10 +13,10 @@ function render_update_tl_resource()
 		case e_tl_type.BODYPART:
 		{
 			if (model_part = null)
-				break
+				return 0
 			
 			if (model_part.shape_list = null)
-				break
+				return 0
 			
 			with (temp)
 			{
@@ -135,4 +135,6 @@ function render_update_tl_resource()
 	render_res_diffuse = diffuseres
 	render_res_material = materialres
 	render_res_normal = normalres
+	
+	return 1
 }

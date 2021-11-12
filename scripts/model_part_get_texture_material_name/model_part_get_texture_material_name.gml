@@ -23,5 +23,5 @@ function model_part_get_texture_material_name(part, map)
 		return part.texture_material_name
 	
 	// Get texture of inherited part
-	return model_part_get_texture_material_name(part.texture_inherit, map)
+	return model_part_get_texture_material_name(part.texture_material_inherit, map)
 }

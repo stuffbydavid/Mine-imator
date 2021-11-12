@@ -23,15 +23,15 @@ function project_load_template(map)
 			else
 				model_tex = value_get_save_id(map[?"model_tex"], model_tex)
 			
-			if (load_format < e_project.FORMAT_200_AL17)
-			{
-				model_tex_material = "default"
-				model_tex_normal = "default"
-			}
-			else
+			if (load_format > e_project.FORMAT_200_AL18)
 			{
 				model_tex_material = value_get_save_id(map[?"model_tex_material"], model_tex_material)
 				model_tex_normal = value_get_save_id(map[?"model_tex_normal"], model_tex_normal)
+			}
+			else
+			{
+				model_tex_material = "default"
+				model_tex_normal = "default"
 			}
 			
 			var modelmap = map[?"model"];
@@ -235,15 +235,15 @@ function project_load_template(map)
 			model = value_get_save_id(map[?"model"], model)
 			model_tex = value_get_save_id(map[?"model_tex"], model_tex)	
 			
-			if (load_format < e_project.FORMAT_200_AL17)
-			{
-				model_tex_material = "default"
-				model_tex_normal = "default"
-			}
-			else
+			if (load_format > e_project.FORMAT_200_AL18)
 			{
 				model_tex_material = value_get_save_id(map[?"model_tex_material"], model_tex_material)
 				model_tex_normal = value_get_save_id(map[?"model_tex_normal"], model_tex_normal)
+			}
+			else
+			{
+				model_tex_material = "default"
+				model_tex_normal = "default"
 			}
 		}
 		
