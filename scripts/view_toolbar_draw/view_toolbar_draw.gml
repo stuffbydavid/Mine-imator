@@ -27,6 +27,13 @@ function view_toolbar_draw(view, xx, yy)
 	if (view.toolbar_mouseon)
 		content_mouseon = true
 	
+	if ((bench_show_ani_type = "show" || bench_show_ani = 1) || (app_mouse_box(xx - 64, yy - 64, width + 128, height + 128) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon)))
+		view.toolbar_alpha_goal = 1
+	else
+		view.toolbar_alpha_goal = .5
+	
+	draw_set_alpha(view.toolbar_alpha)
+	
 	draw_dropshadow(xx, yy, width, height, c_black, 1)
 	draw_box(xx, yy, width, height, false, c_level_top, 1)
 	draw_outline(xx, yy, width, height, 1, c_border, a_border, true)
@@ -94,4 +101,6 @@ function view_toolbar_draw(view, xx, yy)
 	
 	view.toolbar_height = yy - starty
 	microani_prefix = ""
+	
+	draw_set_alpha(1)
 }

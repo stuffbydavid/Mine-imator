@@ -59,7 +59,8 @@ function draw_button_icon()
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Background
-	var onbackcolor, onbackalpha, oniconcolor, oniconalpha, offbackcolor, offbackalpha, officoncolor, officonalpha;
+	var onbackcolor, onbackalpha, oniconcolor, oniconalpha, offbackcolor, offbackalpha, officoncolor, officonalpha, dropdown;
+	dropdown = (icon = icons.CHEVRON_DOWN_TINY)
 	
 	offbackcolor = c_overlay
 	offbackcolor = merge_color(offbackcolor, c_accent_overlay, microani_arr[e_microani.PRESS])
@@ -75,9 +76,9 @@ function draw_button_icon()
 	onbackalpha = lerp(offbackalpha, onbackalpha, microani_arr[e_microani.ACTIVE] * !animated)
 	onbackalpha = lerp(onbackalpha, 0, microani_arr[e_microani.DISABLED])
 	
-	officoncolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	officoncolor = merge_color(dropdown ? c_text_tertiary : c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
 	officoncolor = merge_color(officoncolor, c_accent, microani_arr[e_microani.PRESS])
-	officonalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	officonalpha = lerp(dropdown ? a_text_tertiary : a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 	officonalpha = lerp(officonalpha, 1, microani_arr[e_microani.PRESS])
 	
 	oniconcolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])

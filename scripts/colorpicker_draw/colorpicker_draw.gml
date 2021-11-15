@@ -78,9 +78,9 @@ function colorpicker_draw()
 	if (colorpicker.mode = "rgb")
 	{
 		// RGB
-		textfield_group_add("colorpickerr", color_get_red(colorpicker.color), color_get_red(colorpicker.def), colorpicker_reset_red, X, colorpicker.tbx_red)
-		textfield_group_add("colorpickerg", color_get_green(colorpicker.color), color_get_green(colorpicker.def), colorpicker_reset_green, X, colorpicker.tbx_green)
-		textfield_group_add("colorpickerb", color_get_blue(colorpicker.color), color_get_blue(colorpicker.def), colorpicker_reset_blue, X, colorpicker.tbx_blue)
+		textfield_group_add("colorpickerr", color_get_red(colorpicker.color), color_get_red(colorpicker.def), colorpicker_red, X, colorpicker.tbx_red)
+		textfield_group_add("colorpickerg", color_get_green(colorpicker.color), color_get_green(colorpicker.def), colorpicker_green, X, colorpicker.tbx_green)
+		textfield_group_add("colorpickerb", color_get_blue(colorpicker.color), color_get_blue(colorpicker.def), colorpicker_blue, X, colorpicker.tbx_blue)
 		if (draw_textfield_group("colorpickerrgb", dx, dy, 176, 1, 0, 255, 1, false, false, true, true, false))
 		{
 			colorpicker.red = min(255, string_get_real(colorpicker.tbx_red.text, 0))
@@ -92,9 +92,9 @@ function colorpicker_draw()
 	else if (colorpicker.mode = "hsl")
 	{
 		// HSL
-		textfield_group_add("colorpickerh", floor(color_get_hue(colorpicker.color)), floor(color_get_hue(colorpicker.def)), colorpicker_reset_hue, X, colorpicker.tbx_hue)
-		textfield_group_add("colorpickers", floor(color_get_saturation(colorpicker.color)), floor(color_get_saturation(colorpicker.def)), colorpicker_reset_saturation, X, colorpicker.tbx_saturation)
-		textfield_group_add("colorpickerl", floor(color_get_value(colorpicker.color)), floor(color_get_value(colorpicker.def)), colorpicker_reset_brightness, X, colorpicker.tbx_brightness)
+		textfield_group_add("colorpickerh", floor(color_get_hue(colorpicker.color)), floor(color_get_hue(colorpicker.def)), colorpicker_hue, X, colorpicker.tbx_hue)
+		textfield_group_add("colorpickers", floor(color_get_saturation(colorpicker.color)), floor(color_get_saturation(colorpicker.def)), colorpicker_saturation, X, colorpicker.tbx_saturation)
+		textfield_group_add("colorpickerl", floor(color_get_value(colorpicker.color)), floor(color_get_value(colorpicker.def)), colorpicker_brightness, X, colorpicker.tbx_brightness)
 		var update = draw_textfield_group("colorpickerhsl", dx, dy, 176, 1, 0, 255, 1, false, false, false, true, false);
 		if (update = colorpicker.tbx_hue)
 		{
@@ -114,14 +114,14 @@ function colorpicker_draw()
 	}
 	else if (colorpicker.mode = "hex")
 	{
-		if (draw_inputbox("colorpickerhex", dx, dy, 176, 24, "000000", colorpicker.tbx_hexadecimal, null))
-			colorpicker_update(colorpicker.tbx_hexadecimal, hex_to_color(colorpicker.tbx_hexadecimal.text), false)
+		if (draw_inputbox("colorpickerhex", dx, dy, 176, 24, color_to_hex(colorpicker.def), colorpicker.tbx_hexadecimal, null))
+			colorpicker_update(colorpicker.tbx_hexadecimal, colorpicker.tbx_hexadecimal.text = "" ? colorpicker.def : hex_to_color(colorpicker.tbx_hexadecimal.text), true)
 	
 		if (colorpicker.tbx_hexadecimal.text = "" && window_focus = "")
 			colorpicker.tbx_hexadecimal.text = "000000"
 	}
 	
-	dy += 24 + 8
+	dy += 24 + 4
 	
 	settings_menu_w = 192
 }

@@ -13,8 +13,9 @@ function tab_timeline()
 	var framestep, framehighlight, f;
 	var markerx, markery;
 	var regionx1, regionx2;
+	var show_hor_scroll;
 	
-	markerbarshow = (ds_list_size(timeline_marker_list) > 0) && timeline_show_markers
+	markerbarshow = (ds_list_size(timeline_marker_list) > 0) && setting_timeline_show_markers
 	
 	// Background
 	draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
@@ -44,14 +45,16 @@ function tab_timeline()
 	listh = (content_height - (headerh + barh) - ((12 * timeline.hor_scroll_tl.needed)))
 	
 	// Timeline
+	show_hor_scroll = (timeline.hor_scroll.needed && !(timeline_playing && setting_timeline_autoscroll))
+	
 	tlx = content_x + listw
 	tly = content_y + (headerh + barh)
 	tlw = content_width - (12 * timeline.ver_scroll.needed) - listw
-	tlh = (content_height - (headerh + barh) - ((12 * timeline.hor_scroll.needed)))
+	tlh = (content_height - (headerh + barh) - ((12 * show_hor_scroll)))
 	
 	// Marker bar
 	markerbarx = tlx
-	markerbary = (content_y + content_height) - ((12 * timeline.hor_scroll.needed) + 24)
+	markerbary = (content_y + content_height) - ((12 * show_hor_scroll) + 24)
 	markerbarw = tlw
 	markerbarh = 24
 	
@@ -189,7 +192,7 @@ function tab_timeline()
 	
 	// Next keyframe
 	draw_button_icon("timelinenextkeyframe", buttonsx, buttonsy, 24, 24, false, icons.KEYFRAME_NEXT, action_tl_keyframe_next, timeline_playing, "tooltiptlnextkeyframe")
-	buttonsx += 24 + 6
+	buttonsx += 16 + 6
 	
 	timeline_settings_w = (buttonsx - buttonsxstart)
 	
@@ -197,18 +200,20 @@ function tab_timeline()
 	buttonsx = max(buttonsx, buttonsxstart)
 	buttonsxstart = buttonsx
 	
-	// Timeline settings
-	if (draw_button_icon("timelinesettings", buttonsx, buttonsy, 24, 24, false, icons.STOPWATCH, null, false, "tooltiptlsettings"))
+	// Interval settings
+	draw_button_icon("timelineintervals", buttonsx, buttonsy, 24, 24, timeline_intervals_show, icons.STOPWATCH, action_tl_intervals_show, false, timeline_intervals_show ? "timelineintervalshide" : "timelineintervalsshow")
+	buttonsx += 24
+	
+	if (draw_button_icon("timelineintervalsettings", buttonsx, buttonsy, 16, 24, settings_menu_name = "timelineintervalsettings", icons.CHEVRON_DOWN_TINY, null, false))
 	{
-		menu_settings_set(buttonsx, buttonsy, "timelinesettings", 24)
-		settings_menu_script = tl_settings_draw
-		settings_menu_above = true
+		menu_settings_set(buttonsx, buttonsy, "timelineintervalsettings", 24)
+		settings_menu_script = tl_interval_settings_draw
 	}
 	
-	if (settings_menu_name = "timelinesettings" && settings_menu_ani_type != "hide")
+	if (settings_menu_name = "timelineintervalsettings" && settings_menu_ani_type != "hide")
 		current_microani.value = true
 	
-	buttonsx += 24 + 6
+	buttonsx += 16 + 6
 	
 	// Loop
 	var tooltip;
@@ -1538,7 +1543,7 @@ function tab_timeline()
 		mouse_cursor = cr_handpoint
 		timeline_marker = max((timeline.hor_scroll.value + mouse_x - barx) / timeline_zoom, 0)
 		
-		if (timeline_frame_snap)
+		if (setting_timeline_frame_snap)
 			timeline_marker = round(timeline_marker)
 		
 		if (!mouse_left)
@@ -1647,7 +1652,7 @@ function tab_timeline()
 		if (timeline.hor_scroll.needed)
 			draw_box(tlx, content_y + content_height - 12, content_width - listw, 12, false, c_level_middle, 1)
 		
-		scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 12, tlw, floor(max(timeline_length, timeline_marker) * timeline_zoom + tlw))
+		scrollbar_draw(timeline.hor_scroll, e_scroll.HORIZONTAL, tlx, content_y + content_height - 12, tlw, floor(max(timeline_length, timeline_marker, timeline_marker_length) * timeline_zoom + tlw))
 	}
 	
 	if (content_mouseon)

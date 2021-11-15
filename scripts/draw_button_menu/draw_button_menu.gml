@@ -186,7 +186,7 @@ function draw_button_menu()
 	chevroncolor = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
 	chevroncolor = merge_color(chevroncolor, c_accent, microani_arr[e_microani.ACTIVE])
 	chevroncolor = merge_color(chevroncolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
-	chevronalpha = lerp(a_text_secondary, a_text_secondary, microani_arr[e_microani.HOVER])
+	chevronalpha = lerp(a_text_tertiary, a_text_secondary, microani_arr[e_microani.HOVER])
 	chevronalpha = lerp(chevronalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	chevronalpha = lerp(chevronalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	

@@ -60,6 +60,10 @@ function tab_settings_interface()
 	draw_switch("settingstimelineselectjump", dx, dy, setting_timeline_select_jump, action_setting_timeline_select_jump)
 	tab_next()
 	
+	tab_control_switch()
+	draw_switch("settingstimelineframesnap", dx, dy, setting_timeline_frame_snap, action_setting_timeline_frame_snap)
+	tab_next()
+	
 	// Z is up
 	tab_control_switch()
 	draw_switch("settingszisup", dx, dy, setting_z_is_up, action_setting_z_is_up)

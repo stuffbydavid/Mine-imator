@@ -105,6 +105,11 @@ function tab_settings_program()
 	
 	#endregion
 	
+	// Debug features
+	tab_control_switch()
+	draw_switch("settingsdebugfeatures", dx, dy, setting_debug_features, action_setting_debug_features, "", false, true)
+	tab_next()
+	
 	// Spawn objects
 	tab_control_switch()
 	draw_switch("settingsspawnobjects", dx, dy, setting_spawn_objects, action_setting_spawn_objects)

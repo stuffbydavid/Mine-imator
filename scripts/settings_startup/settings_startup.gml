@@ -18,6 +18,7 @@ function settings_startup()
 	setting_backup = true
 	setting_backup_time = 10
 	setting_backup_amount = 3
+	setting_debug_features = false
 	setting_spawn_objects = true
 	setting_spawn_cameras = true
 	setting_unlimited_values = false
@@ -37,8 +38,10 @@ function settings_startup()
 	
 	setting_timeline_autoscroll = true
 	setting_timeline_compact = false
+	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
 	setting_timeline_hide_ghosts = false
+	setting_timeline_frame_snap = false
 	setting_z_is_up = false
 	setting_smooth_camera = false
 	setting_search_variants = true

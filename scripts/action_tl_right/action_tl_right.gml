@@ -4,7 +4,7 @@ function action_tl_right()
 {
 	timeline_marker_move += project_tempo / room_speed
 	
-	if (timeline_frame_snap)
+	if (setting_timeline_frame_snap)
 		timeline_marker = round(timeline_marker_move)
 	else
 		timeline_marker = timeline_marker_move

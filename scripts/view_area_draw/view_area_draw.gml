@@ -21,7 +21,7 @@ function view_area_draw()
 		else
 			view_second.width = view_resize_width - (mouse_x - mouse_click_x)
 		
-		view_second.width = clamp(view_second.width, 300, view_area_width)
+		view_second.width = clamp(view_second.width, 364, view_area_width)
 		if (!mouse_left)
 			window_busy = ""
 	}

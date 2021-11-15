@@ -26,4 +26,6 @@ function marker_list_sort()
 	// Copy IDs back into marker list
 	ds_list_copy(timeline_marker_list, newlist)
 	ds_list_destroy(newlist)
+	
+	tl_update_marker_length()
 }

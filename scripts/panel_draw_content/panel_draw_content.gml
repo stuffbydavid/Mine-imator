@@ -17,12 +17,11 @@ function panel_draw_content()
 	if (content_direction = e_scroll.VERTICAL)
 	{
 		if (tab.scroll.needed)
-			tab.scrollbar_margin_goal = 1
-		else
-			tab.scrollbar_margin_goal = 0
+		{
+			dividew -= 12
+			dw -= 12
+		}
 		
-		dividew -= floor(tab.scrollbar_margin * 12)
-		dw -= (tab.scrollbar_margin * 12)
 		dy -= tab.scroll.value
 	}
 	else

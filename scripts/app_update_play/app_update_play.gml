@@ -6,7 +6,7 @@ function app_update_play()
 	{
 		timeline_marker = timeline_playing_start_marker + ((current_time - timeline_playing_start_time) / 1000) * project_tempo
 		
-		if (timeline_frame_snap)
+		if (setting_timeline_frame_snap)
 			timeline_marker = floor(timeline_marker)
 		
 		if (timeline_repeat || timeline_seamless_repeat)

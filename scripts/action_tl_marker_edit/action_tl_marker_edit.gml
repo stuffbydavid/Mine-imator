@@ -66,6 +66,4 @@ function action_tl_marker_edit(name, color)
 			}
 		}
 	}
-
-
 }

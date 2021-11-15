@@ -177,7 +177,7 @@ function view_draw(view)
 	{
 		// Close/hide second view
 		tip_set_keybind(e_keybind.SECONDARY_VIEW)
-		if (draw_button_icon("viewsecond", dx, dy, dw, dh, view_second.show, icons.VIEWPORT_SECONDARY, null, false, view_second.show ? "viewseconddisable" : "viewsecondenable"))
+		if (draw_button_icon("viewsecond", dx, dy, dw, dh, view_second.show, icons.VIEWPORT_SECONDARY, null, false, view_second.show ? "viewviewseconddisable" : "viewviewsecondenable"))
 			view_second.show = !view_second.show
 	}
 	
@@ -221,39 +221,58 @@ function view_draw(view)
 	// "Flat" quality
 	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.QUALITY_DRAFT, null, false, "viewmodeflat"))
 		view.quality = e_view_mode.FLAT
-	
-	dx -= (padding + 1)
-	draw_divide_vertical(dx, dy, dh)
 	dx -= dw + padding
-	
-	// Effects
-	if (cam != null)
-	{
-		if (draw_button_icon("vieweffects", dx, dy, dw, dh, view.effects, icons.WAND, null, false, view.effects ? "vieweffectsdisable" : "vieweffectsenable"))
-			view.effects = !view.effects
-		dx -= dw + padding
-	}
 	
 	// Particles
 	if (draw_button_icon("viewparticles", dx, dy, dw, dh, view.particles, icons.FIREWORKS, null, false, view.particles ? "viewparticlesdisable" : "viewparticlesenable"))
 		view.particles = !view.particles
-	dx -= 16 + padding
 	
-	// Overlay settings
-	if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), icons.CHEVRON_DOWN_TINY))
+	// Effects
+	if (cam != null)
 	{
-		menu_settings_set(dx, dy, (string(view) + "viewoverlaysettings"), 24)
-		settings_menu_view = view
-		settings_menu_script = menu_overlay_settings
+		dx -= dw + padding
+		
+		if (draw_button_icon("vieweffects", dx, dy, dw, dh, view.effects, icons.WAND, null, false, view.effects ? "vieweffectsdisable" : "vieweffectsenable"))
+			view.effects = !view.effects
 	}
 	
-	if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu_ani_type != "hide")
+	// Divide
+	dx -= (padding + 1)
+	draw_divide_vertical(dx, dy, dh)
+	dx -= 16 + padding
+	
+	// Grid
+	if (draw_button_icon("viewgridsettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewgridsettings"), icons.CHEVRON_DOWN_TINY))
+	{
+		menu_settings_set(dx, dy, (string(view) + "viewgridsettings"), 24)
+		settings_menu_view = view
+		settings_menu_script = menu_grid_settings
+	}
+	
+	if (settings_menu_name = (string(view) + "viewgridsettings") && settings_menu_ani_type != "hide")
 		current_microani.value = true
 	dx -= dw
 	
+	if (draw_button_icon("viewgrid", dx, dy, dw, dh, view.grid, icons.GRID, null, false, view.grid ? "viewgriddisable" : "viewgridenable"))
+		view.grid = !view.grid
+	
+	// Aspect ratio
+	dx -= dw + padding
+	if (draw_button_icon("viewaspectratio", dx, dy, dw, dh, view.aspect_ratio, icons.LETTERBOX, null, false, view.aspect_ratio ? "viewaspectratiodisable" : "viewaspectratioenable"))
+		view.aspect_ratio = !view.aspect_ratio
+	
+	if (setting_debug_features)
+	{
+		// Bounding boxes
+		dx -= dw + padding
+		if (draw_button_icon("viewboxes", dx, dy, dw, dh, view.boxes, icons.BOUNDARY_CUBE, null, false, view.boxes ? "viewboundingboxesdisable" : "viewboundingboxesenable"))
+			view.boxes = !view.boxes
+	}
+	
 	// Overlays
-	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.overlays, icons.OVERLAYS, null, false, view.overlays ? "viewoverlaysdisable" : "viewoverlaysenable"))
-		view.overlays = !view.overlays
+	dx -= dw + padding
+	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
+		view.gizmos = !view.gizmos
 	
 	// Snap settings
 	if (view = view_main)
@@ -348,7 +367,7 @@ function view_draw(view)
 		draw_box(content_x, content_y, content_width, content_height, false, c_black, 1)
 		
 		// Match aspect ratio
-		if (view.aspect_ratio && view.overlays)
+		if (view.aspect_ratio)
 		{
 			var wid, hei, scale;
 			
@@ -394,7 +413,7 @@ function view_draw(view)
 		
 		draw_surface_size(view.surface, content_x, content_y, content_width, content_height)
 		
-		if (view.grid && view.overlays)
+		if (view.grid)
 		{
 			var cellwid, cellhei;
 			cellwid = content_width / project_grid_rows

@@ -73,15 +73,6 @@ function menu_draw()
 		shadowh = menuh + m.menu_button_h
 		draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
 		
-		// Update size of 'settings menu' if open
-		if (settings_menu_name != "")
-		{
-			settings_menu_min_x = min(settings_menu_min_x, content_x)
-			settings_menu_min_y = min(settings_menu_min_y, content_y)
-			settings_menu_max_x = max(settings_menu_max_x, content_x + content_width)
-			settings_menu_max_y = max(settings_menu_max_y, content_y + content_height)
-		}
-		
 		if (window_busy = "menu" && m.menu_ani_type != "hide" && menu_active)
 			window_busy = ""
 		

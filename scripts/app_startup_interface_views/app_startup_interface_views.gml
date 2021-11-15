@@ -30,7 +30,6 @@ function app_startup_interface_views()
 	view_main.grid = setting_view_main_grid
 	view_main.gizmos = setting_view_main_gizmos
 	view_main.boxes = setting_view_main_boxes
-	view_main.fog = setting_view_main_fog
 	view_main.effects = setting_view_main_effects
 	view_main.particles = setting_view_main_particles
 	view_main.location = setting_view_main_location
@@ -45,7 +44,6 @@ function app_startup_interface_views()
 	view_second.grid = setting_view_second_grid
 	view_second.gizmos = setting_view_second_gizmos
 	view_second.boxes = setting_view_second_boxes
-	view_second.fog = setting_view_second_fog
 	view_second.effects = setting_view_second_effects
 	view_second.particles = setting_view_second_particles
 	view_second.location = setting_view_second_location

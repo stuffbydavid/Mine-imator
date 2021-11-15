@@ -564,6 +564,7 @@ function enums()
 		LOGOUT,
 		LOUNGE,
 		MAGNET,
+		MARKER,
 		MARKER_ADD,
 		MAXIMIZE,
 		MEDAL,

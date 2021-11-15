@@ -1,8 +1,6 @@
-/// action_setting_timeline_compact(compact)
-/// @arg jump
+/// action_setting_timeline_compact()
 
-function action_setting_timeline_compact(compact)
+function action_setting_timeline_compact()
 {
-	setting_timeline_compact = compact
-	settings_save()
+	setting_timeline_compact = !setting_timeline_compact
 }

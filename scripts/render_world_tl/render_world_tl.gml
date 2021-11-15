@@ -138,9 +138,9 @@ function render_world_tl()
 		render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
 	}
 	
-	if ((render_fog && app.background_fog_show && fog) != shader_uniform_fog)
+	if ((app.background_fog_show && fog) != shader_uniform_fog)
 	{
-		shader_uniform_fog = (render_fog && app.background_fog_show && fog)
+		shader_uniform_fog = (app.background_fog_show && fog)
 		render_set_uniform_int("uFogShow", shader_uniform_fog)
 	}
 	

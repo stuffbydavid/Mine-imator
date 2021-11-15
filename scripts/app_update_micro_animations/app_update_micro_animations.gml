@@ -28,16 +28,15 @@ function app_update_micro_animations()
 		}
 	}
 	
-	// Scrollbar margin offset
-	with (obj_tab)
+	with (obj_view)
 	{
-		if (scrollbar_margin = scrollbar_margin_goal)
-			continue
-		
 		if (app.setting_reduced_motion)
-			scrollbar_margin = scrollbar_margin_goal
+			toolbar_alpha = toolbar_alpha_goal
 		else
-			scrollbar_margin += (scrollbar_margin_goal - scrollbar_margin) / max(1, 5 / delta)
+			toolbar_alpha += (toolbar_alpha_goal - toolbar_alpha) / max(1, 5 / delta)
+		
+		if (toolbar_alpha > .97 && toolbar_alpha_goal = 1)
+			toolbar_alpha = 1
 	}
 	
 	// Component animations

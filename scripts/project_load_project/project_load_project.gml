@@ -30,7 +30,6 @@ function project_load_project(map)
 		else
 			timeline_intervals_show = value_get_real(tlmap[?"intervals_show"], timeline_intervals_show)
 		
-		timeline_frame_snap = value_get_real(tlmap[?"frame_snap"], timeline_frame_snap)
 		timeline_interval_size = value_get_real(tlmap[?"interval_size"], timeline_interval_size)
 		timeline_interval_offset = value_get_real(tlmap[?"interval_offset"], timeline_interval_offset)
 		
@@ -41,7 +40,6 @@ function project_load_project(map)
 		timeline_zoom_goal = timeline_zoom
 		timeline_region_start = value_get_real(tlmap[?"region_start"], timeline_region_start)
 		timeline_region_end = value_get_real(tlmap[?"region_end"], timeline_region_end)
-		timeline_show_markers = value_get_real(tlmap[?"show_markers"], timeline_show_markers)
 		timeline_hide_color_tag = value_get_array(tlmap[?"hide_color_tag"], timeline_hide_color_tag)
 	}
 	

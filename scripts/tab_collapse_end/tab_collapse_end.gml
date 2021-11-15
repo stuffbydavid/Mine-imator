@@ -15,7 +15,7 @@ function tab_collapse_end()
 	
 	if (divider)
 	{
-		draw_divide(content_x, dy, content_width - (floor(tab.scrollbar_margin * 12) + 1))
+		draw_divide(content_x, dy, content_width - (floor(tab.scroll.needed * 12) + 1))
 		dy += 8
 	}
 }

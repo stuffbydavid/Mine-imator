@@ -7,7 +7,7 @@ function tab_template_editor_particles()
 	sn = (setting_z_is_up ? Y : Z) // South/north axis
 	ud = (setting_z_is_up ? Z : Y) // Up/down axis
 	suffix = ""
-	dividew = content_width - floor(tab.scrollbar_margin * 12)
+	dividew = content_width - floor(tab.scroll.needed * 12)
 	
 	// Settings
 	setx = dx + dw - 24

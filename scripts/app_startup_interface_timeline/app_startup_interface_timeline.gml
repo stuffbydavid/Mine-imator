@@ -28,6 +28,7 @@ function app_startup_interface_timeline()
 	timeline_camera = null
 	timeline_insert_pos = 0
 	timeline_show_frames = false
+	timeline_marker_length = 0
 	
 	timeline_move_obj = null
 	timeline_move_highlight_tl = null
@@ -67,7 +68,6 @@ function app_startup_interface_timeline()
 	timeline_settings_w = 0
 	timeline_settings_right_w = 0
 	
-	timeline_show_markers = true
 	timeline_marker_list = ds_list_create()
 	timeline_marker_current = null
 	timeline_marker_edit = null

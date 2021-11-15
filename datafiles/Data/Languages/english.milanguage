@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.11.11"
+        "lastchange": "2021.11.13"
     },
     "particle/": {
         "default": "Default spawner",
@@ -407,7 +407,9 @@
         "view/": {
             "reset": "Reset work camera",
             "secondaryview": "Show secondary view",
-            "shortcutsbar": "Show shortcuts bar"
+            "shortcutsbar": "Show shortcuts bar",
+            "compacttimeline": "Compact timeline view",
+            "showmarkers": "Show markers"
         },
         "help": "Help",
         "help/": {
@@ -609,7 +611,6 @@
             "flat": "Flat mode",
             "shaded": "Shaded mode",
             "render": "Render mode",
-            "fog": "Minecraft fog",
             "pass": "Render pass",
             "pass/": {
                 "combined": "Combined",
@@ -629,15 +630,9 @@
             "active": "Active camera (%1)",
             "selected": "Selected camera (%1)"
         },
-        "overlay/": {
-            "grid": "Grid",
-            "grid/": {
-                "rows": "Rows",
-                "columns": "Columns"
-            },
-            "gizmos": "Gizmos",
-            "boundingboxes": "Bounding boxes",
-            "aspectratio":"Aspect ratio"
+        "grid/": {
+            "rows": "Rows",
+            "columns": "Columns"
         },
         "snap/": {
             "move": "Move",
@@ -648,23 +643,26 @@
             "disable": "Disable snapping"
         },
         "close": "Close view",
-        "secondenable": "Enable secondary viewport",
-        "seconddisable": "Disable secondary viewport",
-        "particlesenable": "Show particles",
-        "particlesdisable": "Hide particles",
+        "viewsecondenable": "Enable secondary viewport",
+        "viewseconddisable": "Disable secondary viewport",
+        "particlesenable": "Enable particles",
+        "particlesdisable": "Disable particles",
+        "effectsenable": "Enable camera effects",
+        "effectsdisable": "Disable camera effects",
+        "gridenable": "Enable grid overlay",
+        "griddisable": "Disable grid overlay",
+        "aspectratioenable": "Enable aspect ratio",
+        "aspectratiodisable": "Disable aspect ratio",
         "overlaysenable": "Enable overlays",
         "overlaysdisable": "Disable overlays",
-        "effectsenable": "Enable post-processing",
-        "effectsdisable": "Disable post-processing",
+        "boundingboxesenable": "Enable bounding boxes",
+        "boundingboxesdisable": "Disable bounding boxes",
         "renderpass": "Render pass: %1",
         "renderfps": "%1 FPS (%2/%3 samples)",
         "rendertime": "Rendered in %1 seconds",
         "workcamera": "Work camera",
         "activecamera": "Active camera (%1)",
-        "selectedcamera": "Selected camera (%1)",
-        "grid": "Grid",
-        "aspectratio": "Aspect ratio",
-        "gizmos": "Gizmos"
+        "selectedcamera": "Selected camera (%1)"
     },
     "tab/": {
         "projectproperties": "Project properties",
@@ -2565,15 +2563,16 @@
         "partof": "%1 of %2",
         "unusedbodypart": "Unused body part",
         "frame": "Frame %1",
-        "intervalshow": "Show intervals",
-        "intervalsize": "Interval size",
-        "intervaloffset": "Interval offset",
-        "compact": "Compact view",
+        "intervals/":
+        {
+            "show": "Show intervals",
+            "hide": "Hide intervals",
+            "size": "Interval size",
+            "offset": "Interval offset"
+        },
         "filtertags": "Filter out tags",
         "hideghosts": "Hide ghost timelines",
         "hideghoststip": "When enabled, all timelines with the \"Ghost\" toggle will be hidden from the timeline list.",
-        "markers": "Show markers",
-        "framesnap": "Snap playback marker",
         "marker/": {
             "new": "New marker",
             "label": "Label",
@@ -2919,6 +2918,7 @@
         "backuptime": "Time between backups",
         "backuptimeminutes": " min",
         "backupamount": "Max backups",
+        "debugfeatures": "Debug features",
         "spawnobjects": "Create objects near work camera",
         "spawncameras": "Copy work camera into new cameras",
         "unlimitedvalues": "Allow unlimited values",
@@ -2949,6 +2949,7 @@
         "language": "Language",
         "timelineautoscroll": "Auto-scroll when playing animation",
         "timelineselectjump": "Jump to selected object in timeline list",
+        "timelineframesnap": "Snap playback marker",
         "zisup": "Z is up",
         "smoothcamera": "Smooth work camera",
         "searchvariants": "Search variants in block search",

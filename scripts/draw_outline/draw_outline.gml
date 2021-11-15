@@ -32,6 +32,16 @@ function draw_outline()
 	if (argument_count > 7)
 		inline = argument[7]
 	
+	if (size = 1)
+	{
+		if (inline)
+			draw_box(xx, yy, ww, hh, true, color, alpha)
+		else
+			draw_box(xx - 1, yy - 1, ww + 2, hh + 2, true, color, alpha)
+		
+		return 0
+	}
+	
 	if (inline)
 	{
 		xx += size

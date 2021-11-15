@@ -4,7 +4,7 @@ function render_startup()
 {
 	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_time, render_surface_time,
 			  render_target, render_surface, render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights,
-			  render_fog, render_particles, render_hidden, render_background, render_watermark, 
+			  render_particles, render_hidden, render_background, render_watermark, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix, light_view_proj_matrix,
 			  spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
 			  render_active, render_frustum, render_repeat, render_world_count;
@@ -85,7 +85,6 @@ function render_startup()
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	render_list = ds_list_create()
-	render_fog = true
 	render_lights = true
 	render_particles = true
 	render_hidden = false

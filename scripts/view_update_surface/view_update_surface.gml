@@ -11,7 +11,6 @@ function view_update_surface(view, cam)
 	
 	// Render
 	render_lights = (view.quality != e_view_mode.FLAT)
-	render_fog = view.fog
 	render_particles = view.particles
 	render_effects = view.effects
 	render_quality = view.quality
@@ -22,7 +21,7 @@ function view_update_surface(view, cam)
 	else
 		render_low()
 	
-	if (view.overlays && (view.gizmos || view.boxes))
+	if (view.gizmos || (view.boxes && app.setting_debug_features))
 	{
 		// Selection
 		if (tl_edit_amount > 0)
@@ -53,7 +52,7 @@ function view_update_surface(view, cam)
 						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
 						
-						if (view.boxes && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
+						if ((view.boxes && app.setting_debug_features) && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
 						{
 							if (tl.scenery_repeat_bounding_box != null)
 							{

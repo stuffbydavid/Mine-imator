@@ -62,5 +62,5 @@ function render_world_sky_clouds()
 	render_set_uniform_int("uSSAOEnable", 1)
 	render_set_uniform("uSpecularStrength", render_light_specular_strength)
 	if (!background_fog_sky)
-		render_set_uniform("uFogShow", (render_fog && app.background_fog_show))
+		render_set_uniform("uFogShow", app.background_fog_show)
 }
