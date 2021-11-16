@@ -1,14 +1,15 @@
-/// particle_get_animation_percent(starttime, startframe, endframe, speed, onend)
+/// particle_get_animation_percent(step, starttime, startframe, endframe, speed, onend)
+/// @arg step
 /// @arg starttime
 /// @arg startframe
 /// @arg endframe
 /// @arg speed
 /// @arg onend
 
-function particle_get_animation_percent(time, startframe, endframe, anispeed, onend)
+function particle_get_animation_percent(step, time, startframe, endframe, anispeed, onend)
 {
 	var perc;
-	time = (spawn_currentstep - time) / 60
+	time = (step - time) / 60
 	
 	if (startframe = endframe) // No animation
 		return startframe

@@ -135,6 +135,12 @@ function minecraft_assets_load()
 					return false
 				}
 				
+				if (is_undefined(load_assets_map[?"particles"]))
+				{
+					log("No particle list found")
+					return false
+				}
+				
 				ds_list_copy(particle_texture_list, particletextureslist)
 				
 				// Create sheets and texture depth
@@ -147,7 +153,9 @@ function minecraft_assets_load()
 					item_sheet_texture_material = sprite_duplicate(spr_default_material)
 					item_sheet_tex_normal = sprite_duplicate(spr_default_normal)
 					
+					minecraft_assets_load_particles(load_assets_map[?"particles"])
 					res_load_pack_particle_textures()
+					
 					res_load_pack_misc()
 					res_update_colors(biome_list[|2])
 				}
@@ -160,16 +168,6 @@ function minecraft_assets_load()
 			// Misc. assets
 			case "misc":
 			{	
-				// Particle Templates
-				if (is_undefined(load_assets_map[?"particles"]))
-				{
-					log("No particle list found")
-					return false
-				}
-				
-				with (mc_res)
-					minecraft_assets_load_particles(load_assets_map[?"particles"]);
-				
 				// Banner info
 				if (is_undefined(load_assets_map[?"banner_patterns"]))
 				{

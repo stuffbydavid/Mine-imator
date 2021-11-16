@@ -59,7 +59,7 @@ function particle_spawner_update()
 					for (var t = 0; t < spawn_queue_amount[slot]; t++)
 						particle_spawner_spawn(spawn_queue[slot, t])
 				}
-			} 
+			}
 			else 
 			{
 				if (fire) 
@@ -114,7 +114,7 @@ function particle_spawner_update()
 					// Calculate animation frame
 					if (pt.type.temp = particle_sheet)
 					{
-						var ani = particle_get_animation_percent((pt.spawntime + pt.freezetime), pt.type.sprite_frame_start, pt.type.sprite_frame_end, pt.anispeed, pt.type.sprite_animation_onend);
+						var ani = particle_get_animation_percent(spawn_currentstep, (pt.spawntime + pt.freezetime), pt.type.sprite_frame_start, pt.type.sprite_frame_end, pt.anispeed, pt.type.sprite_animation_onend);
 						if (ani = 1 && temp.pc_destroy_at_animation_finish && pt.type.sprite_animation_onend = 0) // Animation end
 						{
 							with (pt) instance_destroy()
@@ -133,7 +133,7 @@ function particle_spawner_update()
 							startf = (pt.type.sprite_template_reverse ? (template.frames - 1) : 0)
 							endf = (pt.type.sprite_template_reverse ? 0 : (template.frames - 1))
 							
-							var ani = particle_get_animation_percent((pt.spawntime + pt.freezetime), startf, endf, pt.anispeed, pt.type.sprite_animation_onend);
+							var ani = particle_get_animation_percent(spawn_currentstep, (pt.spawntime + pt.freezetime), startf, endf, pt.anispeed, pt.type.sprite_animation_onend);
 							if (ani = 1 && temp.pc_destroy_at_animation_finish && pt.type.sprite_animation_onend = 0) // Animation end
 							{
 								with (pt) instance_destroy()

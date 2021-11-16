@@ -109,7 +109,7 @@ function render_world_particle()
 			case e_temp_type.SCENERY:
 			{
 				if (scenery != null)
-					render_world_scenery(scenery, temp.block_tex, temp.block_repeat_enable, temp.block_repeat)
+					render_world_scenery(scenery, [temp.block_tex, temp.block_tex_material, temp.block_tex_normal], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
@@ -171,13 +171,7 @@ function render_world_particle()
 			if (!res_is_ready(res))
 				res = mc_res
 			
-			var texname = template.texture_list[|frame];
-			
-			var tex;
-			if (ds_map_exists(res.particle_texture_map, texname))
-				tex = res.particle_texture_map[?texname];
-			else
-				tex = mc_res.particle_texture_map[?texname];
+			var tex = res.particle_texture_atlas_map[?template.name];
 			
 			if (tex = undefined)
 			{

@@ -17,7 +17,7 @@ function tab_template_editor_particles_preview()
 	
 	draw_box(xx, yy, size, size, false, c_level_bottom, 1)
 	
-	var res, tex, swid, fwid, fhei, ani, frame, framesx, scale;
+	var res, tex, swid, fwid, fhei, ani, frame, framesx, scale, uvs;
 	
 	if (ptype_edit.temp = particle_sheet)
 	{
@@ -28,7 +28,7 @@ function tab_template_editor_particles_preview()
 		swid = texture_width(tex)
 		fwid = min(swid, ptype_edit.sprite_frame_width)
 		fhei = ptype_edit.sprite_frame_height
-		ani = particle_get_animation_percent(particle_editor_preview_start, ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
+		ani = particle_get_animation_percent(current_step, particle_editor_preview_start, ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
 		frame = round(ptype_edit.sprite_frame_start + (ptype_edit.sprite_frame_end - ptype_edit.sprite_frame_start) * ani)
 		framesx = swid div fwid
 		
@@ -46,7 +46,7 @@ function tab_template_editor_particles_preview()
 		startf = (ptype_edit.sprite_template_reverse ? (template.frames - 1) : 0)
 		endf = (ptype_edit.sprite_template_reverse ? 0 : (template.frames - 1))
 		
-		ani = particle_get_animation_percent(particle_editor_preview_start, startf, endf, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
+		ani = particle_get_animation_percent(current_step, particle_editor_preview_start, startf, endf, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
 		ani *= !ptype_edit.sprite_template_still_frame
 		
 		frame = round(startf + (endf - startf) * ani)
@@ -55,14 +55,13 @@ function tab_template_editor_particles_preview()
 		if (!res_is_ready(res))
 			res = mc_res
 		
-		var texname = template.texture_list[|frame];
+		tex = res.particle_texture_atlas_map[?template.name];
+		uvs = res.particle_texture_pixeluvs_map[?template.texture_list[|frame]];
 		
-		tex = res.particle_texture_map[?texname]
-		
-		scale = min(size / texture_width(tex), size / texture_height(tex))
+		scale = min(size / uvs[2], size / uvs[3])
 		
 		draw_texture_start()
-		draw_texture_part(tex, xx, yy, 0, 0, texture_width(tex), texture_height(tex), scale, scale)
+		draw_texture_part(tex, xx, yy, uvs[0], 0, uvs[2], uvs[3], scale, scale)
 		draw_texture_done()
 	}
 	

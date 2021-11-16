@@ -81,7 +81,9 @@ function res_event_create()
 	particles_texture[0] = null
 	particles_texture[1] = null
 	
-	particle_texture_map = null
+	particle_texture_atlas_map = null
+	particle_texture_uvs_map = null
+	particle_texture_pixeluvs_map = null
 	
 	block_vbuffer = null
 	scenery_chunk_array = null

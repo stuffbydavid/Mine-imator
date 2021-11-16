@@ -55,13 +55,15 @@ function ptype_update_sprite_vbuffers()
 		size = template.size
 		
 		sprite_vbuffer_amount = template.frames
+		
 		for (var m = 0; m < sprite_vbuffer_amount; m++)
 		{	
-			var tx1, ty1, tx2, ty2;
-			tx1 = 0
-			ty1 = 0
-			tx2 = 1
-			ty2 = 1
+			var uvs, tx1, ty1, tx2, ty2;
+			uvs = sprite_template_tex.particle_texture_uvs_map[?template.texture_list[|m]]
+			tx1 = uvs[0]
+			ty1 = uvs[1]
+			tx2 = uvs[2] + uvs[0]
+			ty2 = uvs[3] + uvs[1]
 			
 			sprite_vbuffer[m] = vbuffer_start()
 			vertex_add(-size / 2, 0, size / 2, 0, 0, 1, tx1, ty1)

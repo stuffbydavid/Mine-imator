@@ -3,6 +3,7 @@
 function res_load_pack_particle_textures()
 {
 	var particlesize, explosionsize, particlelist, explosionlist, surf;
+	var tempwidth, tempheight; 
 	particlesize = null
 	explosionsize = null
 	particlelist = ds_list_create()
@@ -10,16 +11,26 @@ function res_load_pack_particle_textures()
 	surf = null
 	
 	// Free old
-	if (particle_texture_map != null)
+	if (particle_texture_atlas_map != null)
 	{
-		var key = ds_map_find_first(particle_texture_map);
+		var key = ds_map_find_first(particle_texture_atlas_map);
 		while (!is_undefined(key))
 		{
-			texture_free(particle_texture_map[?key])
-			key = ds_map_find_next(particle_texture_map, key)
+			texture_free(particle_texture_atlas_map[?key])
+			key = ds_map_find_next(particle_texture_atlas_map, key)
 		}
-		ds_map_destroy(particle_texture_map)
+		ds_map_destroy(particle_texture_atlas_map)
 	}
+	
+	if (particle_texture_uvs_map != null)
+		ds_map_clear(particle_texture_uvs_map)
+	else
+		particle_texture_uvs_map = ds_map_create()
+	
+	if (particle_texture_pixeluvs_map != null)
+		ds_map_clear(particle_texture_pixeluvs_map)
+	else
+		particle_texture_pixeluvs_map = ds_map_create()
 	
 	if (particles_texture[0] != null)
 	{
@@ -37,6 +48,8 @@ function res_load_pack_particle_textures()
 	debug_timer_start()
 	
 	log("Particle textures", "load")
+	
+	// Load particle textures
 	particle_texture_map = ds_map_create()
 	for (var t = 0; t < ds_list_size(mc_assets.particle_texture_list); t++)
 	{
@@ -71,6 +84,49 @@ function res_load_pack_particle_textures()
 		}
 		
 		particle_texture_map[?name] = tex
+	}
+	
+	// Convert frames into template sheets
+	particle_texture_atlas_map = ds_map_create()
+	for (var i = 0; i < ds_list_size(particle_template_list); i++)
+	{
+		var ptemp, drawx, psprite;
+		ptemp = particle_template_list[|i]
+		drawx = 0
+		psprite = 0
+		
+		tempwidth = 0
+		tempheight = 0
+		
+		for (var j = 0; j < ds_list_size(ptemp.texture_list); j++)
+		{
+			psprite = particle_texture_map[?ptemp.texture_list[|j]]
+			tempwidth += sprite_get_width(psprite)
+			tempheight = max(tempheight, sprite_get_height(psprite))
+		}
+		
+		var tempsurf = surface_create(tempwidth, tempheight);
+		
+		surface_set_target(tempsurf)
+		{
+			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+			draw_clear_alpha(c_black, 0)
+			
+			for (var j = 0; j < ds_list_size(ptemp.texture_list); j++)
+			{
+				psprite = particle_texture_map[?ptemp.texture_list[|j]]
+				particle_texture_uvs_map[?ptemp.texture_list[|j]] = [(drawx / tempwidth), 0, (sprite_get_width(psprite) / tempwidth), (sprite_get_height(psprite) / tempheight)]
+				particle_texture_pixeluvs_map[?ptemp.texture_list[|j]] = [drawx, 0, sprite_get_width(psprite), sprite_get_height(psprite)]
+				
+				draw_sprite(psprite, 0, drawx, 0)
+				drawx += sprite_get_width(psprite)
+			}
+		}
+		surface_reset_target()
+		
+		particle_texture_atlas_map[?ptemp.name] = texture_surface(tempsurf)
+		
+		surface_free(tempsurf)
 	}
 	
 	log("Particle textures", "legacy sheets")
@@ -160,6 +216,18 @@ function res_load_pack_particle_textures()
 	{
 		particles_texture[1] = texture_surface(surf)
 		surface_free(surf)
+	}
+	
+	// Free textures
+	if (particle_texture_map != null)
+	{
+		var key = ds_map_find_first(particle_texture_map);
+		while (!is_undefined(key))
+		{
+			texture_free(particle_texture_map[?key])
+			key = ds_map_find_next(particle_texture_map, key)
+		}
+		ds_map_destroy(particle_texture_map)
 	}
 	
 	log("Particle textures", "done")
