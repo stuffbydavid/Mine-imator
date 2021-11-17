@@ -27,7 +27,7 @@ function popup_draw()
 	else if (popup_ani_type = "hide")
 	{
 		popup_ani = max(0, popup_ani - 0.075 * delta)
-	
+		
 		if (popup_switch_to)
 		{
 			popup_ani = 0
@@ -163,7 +163,7 @@ function popup_draw()
 		dy += 4
 	}
 	
-	if (popup.custom || popup.height != null)
+	if (popup.height != null)
 	{
 		popup.custom_height_goal = popup.height
 		popup.custom_height = popup.custom_height_goal

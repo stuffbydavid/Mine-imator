@@ -595,7 +595,8 @@
         "cancel": "Cancel"
     },
     "loading/": {
-        "stagedone": "%1% complete (%2)"
+        "resources": "Importing resources...",
+        "percent": "(%1% Done)"
     },
     "view/": {
         "workbenchtip": "Open workbench",
@@ -2518,8 +2519,7 @@
         "filename": "Filename"
     },
     "loadscenery/": {
-        "caption": "Importing %1",
-        "captionpieceof": "Importing a piece of %1",
+        "captionpieceof": "Piece of %1",
         "open": "Opening file...",
         "blocks": "Reading blocks...",
         "download": "Downloading skins... (%1 / %2, %3 failed)",
@@ -2528,11 +2528,9 @@
         "addtimelines": "%1 blocks were found in the terrain that can be animated.\n\nDo you want to add these as individual timelines? (This could decrease performance)"
     },
     "loadaudio/": {
-        "caption": "Importing %1",
-        "read": "Reading file..."
+        "read": "Reading audio..."
     },
     "loadpack/": {
-        "caption": "Importing %1",
         "unzip": "Extracting resources...",
         "modeltextures": "Loading model textures...",
         "blocktextures": "Loading block textures...",

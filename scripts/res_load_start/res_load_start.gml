@@ -23,7 +23,7 @@ function res_load_start()
 			with (app)
 			{
 				popup_loading.text = text_get("loadaudioread")
-				popup_loading.caption = text_get("loadaudiocaption", other.filename)
+				popup_loading.caption = other.filename
 				popup_loading.load_script = res_load_audio
 			}
 			break
@@ -36,7 +36,7 @@ function res_load_start()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackunzip")
-				popup_loading.caption = text_get("loadpackcaption", other.filename)
+				popup_loading.caption = other.filename
 				popup_loading.load_script = res_load_pack
 			}
 			break

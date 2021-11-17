@@ -647,7 +647,7 @@ function res_load_scenery()
 			if (mc_builder.file_map != "")
 				app.popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
 			else
-				app.popup_loading.caption = text_get("loadscenerycaption", filename)
+				app.popup_loading.caption = filename
 			
 			mc_builder.block_skull_texture_count = ds_map_size(mc_builder.block_skull_texture_map)
 			mc_builder.block_skull_finish_count = 0

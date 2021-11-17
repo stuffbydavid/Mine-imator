@@ -18,6 +18,9 @@ function draw_dropshadow(xx, yy, width, height, color, alpha)
 	width -= (11 * 2)
 	height -= (11 * 2)
 	
+	if (width < 0 || height < 0)
+		return 0
+	
 	// Top
 	draw_sprite_part_ext(spr_dropshadow, 0, 0, 0, slicesize, slicesize, drawx, drawy, 1, 1, color, alpha)
 	drawx += slicesize

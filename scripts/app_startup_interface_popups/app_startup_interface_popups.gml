@@ -22,7 +22,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Loading
-	popup_loading = new_popup("loading", popup_loading_draw, 400, 56, true, true)
+	popup_loading = new_popup("loading", popup_loading_draw, 400, null, true, true)
 	with (popup_loading)
 	{
 		load_object = null
