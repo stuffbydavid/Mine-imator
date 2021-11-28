@@ -130,7 +130,7 @@ function model_file_load_shape(map, res)
 		hide_back = value_get_real(map[?"hide_back"], false)
 		
 		// Hide backface (old name, for legacy support)
-		if (is_real(map[?"hide_backface"]))
+		if (is_bool(map[?"hide_backface"]))
 			hide_back = map[?"hide_backface"]
 		
 		// Face camera (optional, overrides rotation when rendering)

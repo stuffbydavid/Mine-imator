@@ -26,7 +26,7 @@ function block_load_variant_model(map, type)
 	
 	// UV lock
 	var uvlock = false;
-	if (is_real(map[?"uvlock"]))
+	if (is_bool(map[?"uvlock"]))
 		uvlock = map[?"uvlock"]
 	else if (is_string(map[?"uvlock"]))
 		uvlock = (map[?"uvlock"] = "true")

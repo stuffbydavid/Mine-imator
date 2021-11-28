@@ -54,12 +54,12 @@ function block_load_timeline(map, typemap)
 	}
 	
 	// Render block model with timeline model?
-	if (is_real(map[?"model_double"]))
+	if (is_bool(map[?"model_double"]))
 		model_double = map[?"model_double"]
 	
 	// Text
 	tl_has_text = false
-	if (is_real(map[?"has_text"]))
+	if (is_bool(map[?"has_text"]))
 		tl_has_text = map[?"has_text"]
 	
 	if (tl_has_text)
@@ -67,7 +67,7 @@ function block_load_timeline(map, typemap)
 	
 	// Is a banner
 	tl_is_banner = false
-	if (is_real(map[?"is_banner"]))
+	if (is_bool(map[?"is_banner"]))
 		tl_is_banner = map[?"is_banner"]
 	
 	// Rotation point

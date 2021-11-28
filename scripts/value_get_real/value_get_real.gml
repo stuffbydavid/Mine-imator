@@ -11,7 +11,7 @@ function value_get_real()
 	if (argument_count > 1)
 		def = argument[1]
 	
-	if (is_real(val))
+	if (is_real(val) || is_bool(val))
 		return val
 	else if (is_string(val) && val = "null")
 		return null

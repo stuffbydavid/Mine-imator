@@ -158,13 +158,13 @@ function block_load(map, typemap)
 		}
 		
 		// Is always waterlogged
-		if (is_real(map[?"waterlogged"]))
+		if (is_bool(map[?"waterlogged"]))
 			waterlogged = map[?"waterlogged"]
 		else
 			waterlogged = false
 		
 		// Requires render models
-		if (is_real(map[?"require_models"]))
+		if (is_bool(map[?"require_models"]))
 			require_models = map[?"require_models"]
 		else
 			require_models = false
