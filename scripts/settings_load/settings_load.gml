@@ -190,7 +190,7 @@ function settings_load()
 			
 			for (var i = 0; i < e_keybind.amount; i++)
 			{
-				obj = keybinds_map[?i]
+				obj = keybinds[i]
 				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
 			}
 			
@@ -198,6 +198,8 @@ function settings_load()
 			setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)
 			setting_fast_modifier = value_get_real(controlsmap[?"fast_modifier"], setting_fast_modifier)
 			setting_slow_modifier = value_get_real(controlsmap[?"slow_modifier"], setting_slow_modifier)
+			
+			keybinds_update_match()
 		}
 		
 		// Export

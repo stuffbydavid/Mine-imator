@@ -22,7 +22,7 @@ function action_tl_frame_set_camera()
 			if (valueslist[|i] = null)
 				tl_value_set(vid, null, false)
 			
-			if (valueslist[|i] = true)
+			if (valueslist[|i])
 				tl_value_set(vid, tl_value_default(vid), false)
 		}
 		else

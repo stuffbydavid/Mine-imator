@@ -689,7 +689,7 @@ function res_load_scenery()
 			{
 				var nexttex = false;
 				
-				if (block_skull_download_wait = false)
+				if (!block_skull_download_wait)
 				{
 					block_skull_texture_name = ds_map_find_first(block_skull_texture_map)
 					

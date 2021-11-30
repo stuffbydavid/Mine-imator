@@ -2,9 +2,10 @@
 
 function app_startup_keybinds()
 {
-	globalvar keybinds_map, keybind_edit;
-	keybinds_map = ds_map_create()
+	globalvar keybinds, keybind_edit, keybind_active;
+	keybinds = array_create(e_keybind.amount)
 	keybind_edit = null
+	keybind_active = null
 	
 	enum e_keybind_key
 	{
@@ -102,12 +103,12 @@ function app_startup_keybinds()
 	// Timeline
 	keybind_register("play", e_keybind.PLAY, keybind_new(vk_space))
 	keybind_register("playbeginning", e_keybind.PLAY_BEGINNING, keybind_new(vk_enter))
-	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left))
-	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right))
+	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left), true)
+	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right), true)
 	
 	// Viewport
 	keybind_register("rendermode", e_keybind.RENDER_MODE, keybind_new(vk_f5))
-	keybind_register("particlesspawn", e_keybind.PARTICLES_SPAWN, keybind_new("S"))
+	keybind_register("particlesspawn", e_keybind.PARTICLES_SPAWN, keybind_new("X"))
 	keybind_register("particlesclear", e_keybind.PARTICLES_CLEAR, keybind_new("C"))
 	keybind_register("secondaryview", e_keybind.SECONDARY_VIEW, keybind_new(vk_f6))
 	
@@ -121,17 +122,19 @@ function app_startup_keybinds()
 	keybind_register("snap", e_keybind.SNAP, keybind_new("F"))
 	
 	// Navigation
-	keybind_register("camforward", e_keybind.CAM_FORWARD, keybind_new("W"))
-	keybind_register("camleft", e_keybind.CAM_LEFT, keybind_new("A"))
-	keybind_register("camback", e_keybind.CAM_BACK, keybind_new("S"))
-	keybind_register("camright", e_keybind.CAM_RIGHT, keybind_new("D"))
-	keybind_register("camascend", e_keybind.CAM_ASCEND, keybind_new("E"))
-	keybind_register("camdescend", e_keybind.CAM_DESCEND, keybind_new("Q"))
-	keybind_register("camrollforward", e_keybind.CAM_ROLL_FORWARD, keybind_new("Z"))
-	keybind_register("camrollback", e_keybind.CAM_ROLL_BACK, keybind_new("C"))
-	keybind_register("camrollreset", e_keybind.CAM_ROLL_RESET, keybind_new("X"))
-	keybind_register("camreset", e_keybind.CAM_RESET, keybind_new("R"))
-	keybind_register("camfast", e_keybind.CAM_FAST, keybind_new(vk_space))
-	keybind_register("camslow", e_keybind.CAM_SLOW, keybind_new(null, false, true))
-	keybind_register("camviewinstance", e_keybind.CAM_VIEW_INSTANCE, keybind_new("V"))
+	keybind_register("camforward", e_keybind.CAM_FORWARD, keybind_new("W"), true, false)
+	keybind_register("camleft", e_keybind.CAM_LEFT, keybind_new("A"), true, false)
+	keybind_register("camback", e_keybind.CAM_BACK, keybind_new("S"), true, false)
+	keybind_register("camright", e_keybind.CAM_RIGHT, keybind_new("D"), true, false)
+	keybind_register("camascend", e_keybind.CAM_ASCEND, keybind_new("E"), true, false)
+	keybind_register("camdescend", e_keybind.CAM_DESCEND, keybind_new("Q"), true, false)
+	keybind_register("camrollforward", e_keybind.CAM_ROLL_FORWARD, keybind_new("Z"), true, false)
+	keybind_register("camrollback", e_keybind.CAM_ROLL_BACK, keybind_new("C"), true, false)
+	keybind_register("camrollreset", e_keybind.CAM_ROLL_RESET, keybind_new("X"), true, false)
+	keybind_register("camreset", e_keybind.CAM_RESET, keybind_new("R"), true, false)
+	keybind_register("camfast", e_keybind.CAM_FAST, keybind_new(vk_space), true, false)
+	keybind_register("camslow", e_keybind.CAM_SLOW, keybind_new(null, false, true), true, false)
+	keybind_register("camviewinstance", e_keybind.CAM_VIEW_INSTANCE, keybind_new("V"), false, false)
+	
+	keybinds_update_match()
 }

@@ -9,10 +9,10 @@ function keybinds_update_match()
 		
 		with (obj_keybind)
 		{
-			if (id = other)
+			if (id = other.id)
 				continue
 			
-			if (array_equals(keybind, other.keybind))
+			if (array_equals(keybind, other.keybind) && (windowcheck = other.windowcheck))
 			{
 				other.match_error = true
 				break

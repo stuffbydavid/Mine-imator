@@ -3,7 +3,7 @@
 
 function action_setting_unlimited_values(unlimited_values)
 {
-	if (unlimited_values = true)
+	if (unlimited_values)
 	{
 		if (!question(text_get("questionunlimitedvalues")))
 			return 0

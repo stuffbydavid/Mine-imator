@@ -73,7 +73,7 @@ function list_init_context_menu(name)
 		// Timeline object list
 		case "timelinelist":
 		{
-			list_item_add(text_get("contextmenutladdfolder"), null, text_control_name(keybinds_map[?e_keybind.CREATE_FOLDER].keybind), null, icons.FOLDER, null, action_tl_folder, true)
+			list_item_add(text_get("contextmenutladdfolder"), null, text_control_name(keybinds[e_keybind.CREATE_FOLDER].keybind), null, icons.FOLDER, null, action_tl_folder, true)
 			list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
 			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 			
@@ -87,10 +87,10 @@ function list_init_context_menu(name)
 			list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.MINIMIZE, null, action_tl_collapse_children)
 			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 			
-			list_item_add(text_get("contextmenutlduplicate"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
+			list_item_add(text_get("contextmenutlduplicate"), null, text_control_name(keybinds[e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
 			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 			
-			list_item_add(text_get("contextmenutldelete"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
+			list_item_add(text_get("contextmenutldelete"), null, text_control_name(keybinds[e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
 			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 			
 			list_item_add(text_get("contextmenutlexport"), null, "", null, icons.ASSET_EXPORT, null, object_save)
@@ -108,7 +108,7 @@ function list_init_context_menu(name)
 					list_item_last.disabled = !timeline_settings
 			}
 			
-			list_item_add(text_get("contextmenutlselectall"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
+			list_item_add(text_get("contextmenutlselectall"), null, text_control_name(keybinds[e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
 			list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_all)	
 			list_item_add(text_get("contextmenutlcollapseall"), null, "", null, icons.MINIMIZE, null, action_tl_collapse_all)
 			
@@ -126,16 +126,16 @@ function list_init_context_menu(name)
 			list_item_last.context_menu_height = 438
 			
 			// Keyframes
-			list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAME, null, action_tl_keyframes_cut, true)
+			list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAME, null, action_tl_keyframes_cut, true)
 			list_item_last.disabled = !timeline_settings_keyframes
 			
-			list_item_add(text_get("contextmenutlkeyframescopy"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_COPY].keybind), null, icons.COPY_KEYFRAME, null, tl_keyframes_copy)
+			list_item_add(text_get("contextmenutlkeyframescopy"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_COPY].keybind), null, icons.COPY_KEYFRAME, null, tl_keyframes_copy)
 			list_item_last.disabled = !timeline_settings_keyframes
 			
-			list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_PASTE].keybind), null, icons.PASTE_KEYFRAME, null, action_tl_keyframes_paste)
+			list_item_add(text_get("contextmenutlkeyframespaste"), timeline_insert_pos, text_control_name(keybinds[e_keybind.KEYFRAMES_PASTE].keybind), null, icons.PASTE_KEYFRAME, null, action_tl_keyframes_paste)
 			list_item_last.disabled = (copy_kf_amount = 0)
 			
-			list_item_add(text_get("contextmenutlkeyframesdelete"), null, text_control_name(keybinds_map[?e_keybind.KEYFRAMES_DELETE].keybind), null, icons.DELETE_KEYFRAME, null, action_tl_keyframes_remove)
+			list_item_add(text_get("contextmenutlkeyframesdelete"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_DELETE].keybind), null, icons.DELETE_KEYFRAME, null, action_tl_keyframes_remove)
 			list_item_last.disabled = !timeline_settings_keyframes
 			
 			list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.SAVE_KEYFRAME, null, keyframes_save)
@@ -195,15 +195,15 @@ function list_init_context_menu(name)
 		// File menu
 		case "toolbarfile":
 		{
-			list_item_add(text_get("toolbarfilenew"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
-			list_item_add(text_get("toolbarfileopen"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
+			list_item_add(text_get("toolbarfilenew"), undefined, text_control_name(keybinds[e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
+			list_item_add(text_get("toolbarfileopen"), undefined, text_control_name(keybinds[e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
 			list_item_add(text_get("toolbarfilerecent"), undefined, "", null, icons.RECENTS, icons.CHEVRON_RIGHT_TINY, null)
 			list_item_last.context_menu_name = "toolbarfilerecent"
 			
-			list_item_add(text_get("toolbarfilesave"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
-			list_item_add(text_get("toolbarfilesaveas"), undefined, text_control_name(keybinds_map[?e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
+			list_item_add(text_get("toolbarfilesave"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
+			list_item_add(text_get("toolbarfilesaveas"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
 			
-			list_item_add(text_get("toolbarfileimport"), undefined, text_control_name(keybinds_map[?e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
+			list_item_add(text_get("toolbarfileimport"), undefined, text_control_name(keybinds[e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
 			
 			break
 		}
@@ -224,25 +224,25 @@ function list_init_context_menu(name)
 		// Edit menu
 		case "toolbaredit":
 		{
-			list_item_add(text_get("toolbareditundo"), null, text_control_name(keybinds_map[?e_keybind.UNDO].keybind), null, icons.UNDO, null, action_toolbar_undo)
+			list_item_add(text_get("toolbareditundo"), null, text_control_name(keybinds[e_keybind.UNDO].keybind), null, icons.UNDO, null, action_toolbar_undo)
 			list_item_last.disabled = (history_pos = history_amount)
 			
-			list_item_add(text_get("toolbareditredo"), null, text_control_name(keybinds_map[?e_keybind.REDO].keybind), null, icons.REDO, null, action_toolbar_redo)
+			list_item_add(text_get("toolbareditredo"), null, text_control_name(keybinds[e_keybind.REDO].keybind), null, icons.REDO, null, action_toolbar_redo)
 			list_item_last.disabled = (history_pos = 0)
 			
-			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
+			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds[e_keybind.INSTANCE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
 			list_item_last.disabled = (ds_list_size(tree_list) = 0)
 			
-			list_item_add(text_get("toolbareditduplicate"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
+			list_item_add(text_get("toolbareditduplicate"), null, text_control_name(keybinds[e_keybind.INSTANCE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
 			list_item_last.disabled = (tl_edit = null)
 			
-			list_item_add(text_get("toolbareditdelete"), null, text_control_name(keybinds_map[?e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
+			list_item_add(text_get("toolbareditdelete"), null, text_control_name(keybinds[e_keybind.INSTANCE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
 			list_item_last.disabled = (tl_edit = null)
 			
-			list_item_add(text_get("toolbaredithide"), true, text_control_name(keybinds_map[?e_keybind.INSTANCE_HIDE].keybind), null, icons.HIDDEN, null, action_tl_hide_select, true)
+			list_item_add(text_get("toolbaredithide"), true, text_control_name(keybinds[e_keybind.INSTANCE_HIDE].keybind), null, icons.HIDDEN, null, action_tl_hide_select, true)
 			list_item_last.disabled = (tl_edit = null)
 			
-			list_item_add(text_get("toolbareditshowhidden"), false, text_control_name(keybinds_map[?e_keybind.INSTANCE_SHOW_HIDDEN].keybind), null, icons.VISIBLE, null, action_tl_hide_select)
+			list_item_add(text_get("toolbareditshowhidden"), false, text_control_name(keybinds[e_keybind.INSTANCE_SHOW_HIDDEN].keybind), null, icons.VISIBLE, null, action_tl_hide_select)
 			list_item_last.disabled = (tl_edit = null)
 			
 			list_item_add(text_get("toolbareditpreferences"), settings, "", null, icons.SETTINGS, null, settings.show ? tab_close : tab_show, true)
@@ -265,7 +265,7 @@ function list_init_context_menu(name)
 		{
 			list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
 			
-			list_item_add(text_get("toolbarviewsecondaryview"), null, text_control_name(keybinds_map[?e_keybind.SECONDARY_VIEW].keybind), null, icons.VIEWPORT_SECONDARY, null, action_setting_secondary_view)
+			list_item_add(text_get("toolbarviewsecondaryview"), null, text_control_name(keybinds[e_keybind.SECONDARY_VIEW].keybind), null, icons.VIEWPORT_SECONDARY, null, action_setting_secondary_view)
 			list_item_last.toggled = view_second.show
 			
 			list_item_add(text_get("toolbarviewcompacttimeline"), null, "", null, icons.COMPACT, null, action_setting_timeline_compact, true)

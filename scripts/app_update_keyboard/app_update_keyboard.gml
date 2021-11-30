@@ -20,55 +20,55 @@ function app_update_keyboard()
 	
 	if (window_busy = "" && !textbox_isediting)
 	{
-		if (keybinds_map[?e_keybind.PROJECT_NEW].pressed)
+		if (keybinds[e_keybind.PROJECT_NEW].pressed)
 			action_toolbar_new()
 		
-		if (keybinds_map[?e_keybind.IMPORT_ASSET].pressed)
+		if (keybinds[e_keybind.IMPORT_ASSET].pressed)
 			action_toolbar_import_asset()
 		
-		if (keybinds_map[?e_keybind.PROJECT_OPEN].pressed)
+		if (keybinds[e_keybind.PROJECT_OPEN].pressed)
 			action_toolbar_open()
 		
-		if (keybinds_map[?e_keybind.PROJECT_SAVE].pressed)
+		if (keybinds[e_keybind.PROJECT_SAVE].pressed)
 			action_toolbar_save()
 		
-		if (keybinds_map[?e_keybind.PROJECT_SAVE_AS].pressed)
+		if (keybinds[e_keybind.PROJECT_SAVE_AS].pressed)
 			action_toolbar_save_as()
 		
-		if (keybinds_map[?e_keybind.UNDO].pressed)
+		if (keybinds[e_keybind.UNDO].pressed)
 			action_toolbar_undo()
 		
-		if (keybinds_map[?e_keybind.REDO].pressed)
+		if (keybinds[e_keybind.REDO].pressed)
 			action_toolbar_redo()
 		
-		if (keybinds_map[?e_keybind.PLAY].pressed)
+		if (keybinds[e_keybind.PLAY].pressed)
 			script_execute(timeline_playing ? action_tl_play_stop : action_tl_play)
 		
-		if (keybinds_map[?e_keybind.PLAY_BEGINNING].pressed)
+		if (keybinds[e_keybind.PLAY_BEGINNING].pressed)
 			action_tl_play_beginning()
 		
 		if (!timeline_playing)
 		{
-			if (keybinds_map[?e_keybind.MARKER_RIGHT].pressed)
+			if (keybinds[e_keybind.MARKER_RIGHT].pressed)
 				timeline_marker_move = timeline_marker
 			
-			if (keybinds_map[?e_keybind.MARKER_RIGHT].active)
+			if (keybinds[e_keybind.MARKER_RIGHT].active)
 				action_tl_right()
 			
-			if (keybinds_map[?e_keybind.MARKER_LEFT].pressed)
+			if (keybinds[e_keybind.MARKER_LEFT].pressed)
 				timeline_marker_move = timeline_marker
 			
-			if (keybinds_map[?e_keybind.MARKER_LEFT].active)
+			if (keybinds[e_keybind.MARKER_LEFT].active)
 				action_tl_left()
 		}
 		
-		if (keybinds_map[?e_keybind.RENDER_MODE].pressed)
+		if (keybinds[e_keybind.RENDER_MODE].pressed)
 			view_toggle_render()
 		
-		if (keybinds_map[?e_keybind.CREATE_FOLDER].pressed)
+		if (keybinds[e_keybind.CREATE_FOLDER].pressed)
 			action_tl_folder()
 		
-		if (keybinds_map[?e_keybind.INSTANCE_SELECT].pressed) 
+		if (keybinds[e_keybind.INSTANCE_SELECT].pressed) 
 		{
 			if (tl_edit)
 				action_tl_deselect_all()
@@ -76,61 +76,61 @@ function app_update_keyboard()
 				action_tl_select_all()
 		}
 		
-		if (keybinds_map[?e_keybind.INSTANCE_HIDE].pressed) 
+		if (keybinds[e_keybind.INSTANCE_HIDE].pressed) 
 			action_tl_hide_select(true)
 		
-		if (keybinds_map[?e_keybind.INSTANCE_SHOW_HIDDEN].pressed) 
+		if (keybinds[e_keybind.INSTANCE_SHOW_HIDDEN].pressed) 
 			action_tl_hide_select(false)
 		
-		if (keybinds_map[?e_keybind.SECONDARY_VIEW].pressed) 
+		if (keybinds[e_keybind.SECONDARY_VIEW].pressed) 
 			action_setting_secondary_view()
 		
-		if (keybinds_map[?e_keybind.INSTANCE_DUPLICATE].pressed && tl_edit != null)
+		if (keybinds[e_keybind.INSTANCE_DUPLICATE].pressed && tl_edit != null)
 			action_tl_duplicate()
 		
-		if (keybinds_map[?e_keybind.INSTANCE_DELETE].pressed && tl_edit != null)
+		if (keybinds[e_keybind.INSTANCE_DELETE].pressed && tl_edit != null)
 			action_tl_remove()
 		
-		if (keybinds_map[?e_keybind.KEYFRAMES_CREATE].pressed)
+		if (keybinds[e_keybind.KEYFRAMES_CREATE].pressed)
 			action_tl_keyframes_create()
 		
-		if (keybinds_map[?e_keybind.KEYFRAMES_COPY].pressed)
+		if (keybinds[e_keybind.KEYFRAMES_COPY].pressed)
 			tl_keyframes_copy()
 		
-		if (keybinds_map[?e_keybind.KEYFRAMES_CUT].pressed)
+		if (keybinds[e_keybind.KEYFRAMES_CUT].pressed)
 			action_tl_keyframes_cut()
 		
-		if (keybinds_map[?e_keybind.KEYFRAMES_PASTE].pressed)
+		if (keybinds[e_keybind.KEYFRAMES_PASTE].pressed)
 			action_tl_keyframes_paste(timeline_mouse_pos)
 		
-		if (keybinds_map[?e_keybind.KEYFRAMES_DELETE].pressed)
+		if (keybinds[e_keybind.KEYFRAMES_DELETE].pressed)
 			action_tl_keyframes_remove()
 		
-		if (keybinds_map[?e_keybind.PARTICLES_SPAWN].pressed)
+		if (keybinds[e_keybind.PARTICLES_SPAWN].pressed)
 			action_lib_pc_spawn()
 		
-		if (keybinds_map[?e_keybind.PARTICLES_CLEAR].pressed)
+		if (keybinds[e_keybind.PARTICLES_CLEAR].pressed)
 			action_lib_pc_clear()
 		
-		if (keybinds_map[?e_keybind.TOOL_SELECT].pressed)
+		if (keybinds[e_keybind.TOOL_SELECT].pressed)
 			setting_tool = e_view_tool.SELECT
 		
-		if (keybinds_map[?e_keybind.TOOL_MOVE].pressed)
+		if (keybinds[e_keybind.TOOL_MOVE].pressed)
 			setting_tool = e_view_tool.MOVE
 		
-		if (keybinds_map[?e_keybind.TOOL_ROTATE].pressed)
+		if (keybinds[e_keybind.TOOL_ROTATE].pressed)
 			setting_tool = e_view_tool.ROTATE
 		
-		if (keybinds_map[?e_keybind.TOOL_SCALE].pressed)
+		if (keybinds[e_keybind.TOOL_SCALE].pressed)
 			setting_tool = e_view_tool.SCALE
 		
-		if (keybinds_map[?e_keybind.TOOL_BEND].pressed)
+		if (keybinds[e_keybind.TOOL_BEND].pressed)
 			setting_tool = e_view_tool.BEND
 		
-		if (keybinds_map[?e_keybind.TOOL_TRANSFORM].pressed)
+		if (keybinds[e_keybind.TOOL_TRANSFORM].pressed)
 			setting_tool = e_view_tool.TRANSFORM
 		
-		if (keybinds_map[?e_keybind.SNAP].pressed)
+		if (keybinds[e_keybind.SNAP].pressed)
 			setting_snap = !setting_snap
 	}
 	else if (textbox_isediting && keyboard_check_pressed(vk_tab) && textbox_lastfocus.next_tbx)

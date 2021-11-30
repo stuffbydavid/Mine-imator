@@ -5,14 +5,6 @@ function interface_update()
 {
 	var theme = setting_theme;
 	
-	// Accent color(s)
-	if (setting_accent = 9)
-		c_accent = setting_accent_custom
-	else
-		c_accent = theme.accent_list[setting_accent]
-	
-	interface_update_accent()
-	
 	c_text_main = theme.text_main
 	c_text_secondary = theme.text_secondary
 	c_text_tertiary = theme.text_tertiary
@@ -37,6 +29,14 @@ function interface_update()
 	c_axiscyan = theme.cyan
 	c_axisyellow = theme.yellow
 	c_axismagenta = theme.magenta
+	
+	// Accent color(s)
+	if (setting_accent = 9)
+		c_accent = setting_accent_custom
+	else
+		c_accent = theme.accent_list[setting_accent]
+	
+	interface_update_accent()
 	
 	update_interface_wait = false
 }

@@ -5,31 +5,42 @@
 
 function draw_keybind(keybindID, xx, yy)
 {
-	var keyobj, name, mouseon;
-	keyobj = keybinds_map[?keybindID]
+	var keyobj, name, mouseon, w;
+	keyobj = keybinds[keybindID]
 	name = "settingskey" + keyobj.name
+	w = dw
 	
 	tab_control(28)
 	
-	if (xx + dw < content_x || xx > content_x + content_width || yy + tab_control_h < content_y || yy > content_y + content_height)
+	if (xx + w < content_x || xx > content_x + content_width || yy + tab_control_h < content_y || yy > content_y + content_height)
 	{
 		tab_next(false)
 		return 0
 	}
 	
-	mouseon = app_mouse_box(xx, yy, dw, tab_control_h) && content_mouseon
+	mouseon = app_mouse_box(xx, yy, w, tab_control_h) && content_mouseon
 	
-	context_menu_area(xx, yy, dw, tab_control_h, "keybind", keybindID, null, null, null)
+	context_menu_area(xx, yy, w, tab_control_h, "keybind", keybindID, null, null, null)
 	
 	microani_set(name, null, mouseon || window_busy = name, false, false)
 	microani_update(mouseon || window_busy = name, false, false)
 	
-	draw_label(text_get(name) + ":", dx, dy + (tab_control_h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
-	draw_label(text_control_name(window_busy = name ? keybind_edit : keyobj.keybind), dx + dw - (32 * microani_arr[e_microani.HOVER]), dy + (tab_control_h/2), fa_right, fa_middle, c_text_main, a_text_main, font_value)
+	var textcolor, textalpha;
+	
+	// Label
+	textcolor = (keyobj.match_error ? c_error : c_text_secondary)
+	textalpha = (keyobj.match_error ? 1 : a_text_secondary)
+	draw_label(text_get(name) + ":", dx, dy + (tab_control_h/2), fa_left, fa_middle, textcolor, textalpha, font_label)
+	
+	// Shortcut
+	textcolor = (keyobj.match_error ? c_error : c_text_main)
+	textalpha = (keyobj.match_error ? 1 : a_text_main)
+	draw_label(text_control_name(window_busy = name ? keybind_edit : keyobj.keybind), dx + w - (32 * microani_arr[e_microani.HOVER]), dy + (tab_control_h/2), fa_right, fa_middle, textcolor, textalpha, font_value)
+	
 	
 	draw_set_alpha(microani_arr[e_microani.HOVER])
 	
-	if (draw_button_icon(name + "edit", dx + dw - 24, dy + 2, 24, 24, window_busy = name, icons.PENCIL, null, false, "tooltipeditkeybind"))
+	if (draw_button_icon(name + "edit", dx + w - 24, dy + 2, 24, 24, window_busy = name, icons.PENCIL, null, false, "tooltipeditkeybind"))
 	{
 		window_busy = name
 		keybind_edit = keybind_new(null)

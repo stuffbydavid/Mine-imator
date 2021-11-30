@@ -4,7 +4,7 @@
 
 function keybind_set(keybindID, keybind)
 {
-	var obj = keybinds_map[?keybindID];
+	var obj = keybinds[keybindID];
 	obj.keybind = keybind
 	
 	keybinds_update_match()

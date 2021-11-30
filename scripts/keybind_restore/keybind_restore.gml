@@ -12,7 +12,7 @@ function keybind_restore()
 	else
 		group = false
 	
-	obj = keybinds_map[?keybindID]
+	obj = keybinds[keybindID]
 	obj.keybind = obj.keybind_default
 	
 	if (!group)

@@ -146,7 +146,7 @@ function settings_save()
 		
 		for (var i = 0; i < e_keybind.amount; i++)
 		{
-			obj = keybinds_map[?i]
+			obj = keybinds[i]
 			json_save_var(obj.name, obj.keybind)
 		}
 		

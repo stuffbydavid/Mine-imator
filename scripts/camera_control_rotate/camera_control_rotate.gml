@@ -32,7 +32,7 @@ function camera_control_rotate(cam, lockx, locky)
 			camera_work_set_from()
 		}
 		
-		if (keybinds_map[?e_keybind.CAM_RESET].pressed)
+		if (keybinds[e_keybind.CAM_RESET].pressed)
 			camera_work_reset()
 	}
 	else

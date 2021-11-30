@@ -129,7 +129,7 @@ function bbox() constructor {
 		
 		changed = true
 		
-		if (update = undefined && update = true)
+		if (update = undefined && update)
 			self.updatePoints()
 	}
 	

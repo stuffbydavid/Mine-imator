@@ -26,19 +26,19 @@ function camera_control_move(cam, lockx, locky)
 		
 		// Move
 		move = 4 * setting_move_speed * delta
-		spd = (keybinds_map[?e_keybind.CAM_FORWARD].active - keybinds_map[?e_keybind.CAM_BACK].active) * move
+		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
-		if (keybinds_map[?e_keybind.CAM_FAST].active)
+		if (keybinds[e_keybind.CAM_FAST].active)
 			spdm = setting_fast_modifier
-		if (keybinds_map[?e_keybind.CAM_SLOW].active)
+		if (keybinds[e_keybind.CAM_SLOW].active)
 			spdm = setting_slow_modifier
 		
-		if (keybinds_map[?e_keybind.CAM_RIGHT].active)
+		if (keybinds[e_keybind.CAM_RIGHT].active)
 		{
 			xd = -sin(degtorad(cam_work_angle_look_xy)) * move
 			yd = -cos(degtorad(cam_work_angle_look_xy)) * move
 		}
-		else if (keybinds_map[?e_keybind.CAM_LEFT].active)
+		else if (keybinds[e_keybind.CAM_LEFT].active)
 		{
 			xd = sin(degtorad(cam_work_angle_look_xy)) * move
 			yd = cos(degtorad(cam_work_angle_look_xy)) * move
@@ -51,8 +51,8 @@ function camera_control_move(cam, lockx, locky)
 		
 		xd += -lengthdir_x(spd, cam_work_angle_look_xy)
 		yd += -lengthdir_y(spd, cam_work_angle_look_xy)
-		zd = (keybinds_map[?e_keybind.CAM_ASCEND].active - keybinds_map[?e_keybind.CAM_DESCEND].active) * move
-		zd += (dsin(cam_work_angle_look_z)) * (keybinds_map[?e_keybind.CAM_FORWARD].active - keybinds_map[?e_keybind.CAM_BACK].active) * move
+		zd = (keybinds[e_keybind.CAM_ASCEND].active - keybinds[e_keybind.CAM_DESCEND].active) * move
+		zd += (dsin(cam_work_angle_look_z)) * (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		
 		cam_work_from[X] += xd * spdm
 		cam_work_from[Y] += yd * spdm
@@ -66,7 +66,7 @@ function camera_control_move(cam, lockx, locky)
 		}
 		
 		// Reset
-		if (keybinds_map[?e_keybind.CAM_RESET].pressed)
+		if (keybinds[e_keybind.CAM_RESET].pressed)
 			camera_work_reset()
 		
 		camera_work_set_angle()
@@ -77,19 +77,19 @@ function camera_control_move(cam, lockx, locky)
 		
 		// Move
 		move = 4 * setting_move_speed * delta
-		spd = (keybinds_map[?e_keybind.CAM_FORWARD].active - keybinds_map[?e_keybind.CAM_BACK].active) * move
+		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
-		if (keybinds_map[?e_keybind.CAM_FAST].active)
+		if (keybinds[e_keybind.CAM_FAST].active)
 			spdm = setting_fast_modifier
-		if (keybinds_map[?e_keybind.CAM_SLOW].active) 
+		if (keybinds[e_keybind.CAM_SLOW].active) 
 			spdm = setting_slow_modifier
 		
-		if (keybinds_map[?e_keybind.CAM_RIGHT].active)
+		if (keybinds[e_keybind.CAM_RIGHT].active)
 		{
 			xd = -sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 			yd = -cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 		}
-		else if (keybinds_map[?e_keybind.CAM_LEFT].active)
+		else if (keybinds[e_keybind.CAM_LEFT].active)
 		{
 			xd = sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 			yd = cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
@@ -102,11 +102,11 @@ function camera_control_move(cam, lockx, locky)
 		
 		xd += -lengthdir_x(spd, cam.value[e_value.ROT_Z] + 90)
 		yd += -lengthdir_y(spd, cam.value[e_value.ROT_Z] + 90)
-		zd = (keybinds_map[?e_keybind.CAM_ASCEND].active - keybinds_map[?e_keybind.CAM_DESCEND].active) * move
-		zd += (-dsin(cam.value[e_value.ROT_X])) * (keybinds_map[?e_keybind.CAM_FORWARD].active - keybinds_map[?e_keybind.CAM_BACK].active) * move
+		zd = (keybinds[e_keybind.CAM_ASCEND].active - keybinds[e_keybind.CAM_DESCEND].active) * move
+		zd += (-dsin(cam.value[e_value.ROT_X])) * (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		
 		// Roll
-		roll = (keybinds_map[?e_keybind.CAM_ROLL_FORWARD].active - keybinds_map[?e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * delta
+		roll = (keybinds[e_keybind.CAM_ROLL_FORWARD].active - keybinds[e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * delta
 		
 		// Set
 		tl_value_set_start(camera_control_move, true)
@@ -117,7 +117,7 @@ function camera_control_move(cam, lockx, locky)
 		tl_value_set(e_value.ROT_Y, roll, true)
 		tl_value_set(e_value.ROT_Z, mx, true)
 		
-		if (keybinds_map[?e_keybind.CAM_ROLL_RESET].active)
+		if (keybinds[e_keybind.CAM_ROLL_RESET].active)
 			tl_value_set(e_value.ROT_Y, 0, false)
 		
 		tl_value_set_done()

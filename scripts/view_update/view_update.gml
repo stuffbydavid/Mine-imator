@@ -29,7 +29,7 @@ function view_update(view, cam)
 	}
 	
 	// Jump to object
-	if ((window_busy = "" && content_mouseon) && tl_edit != null && tl_edit != cam && !cam && keybinds_map[?e_keybind.CAM_VIEW_INSTANCE].pressed)
+	if ((window_busy = "" && content_mouseon) && tl_edit != null && tl_edit != cam && !cam && keybinds[e_keybind.CAM_VIEW_INSTANCE].pressed)
 	{
 		cam_work_focus = tl_edit.world_pos
 		cam_work_focus_last = point3D_copy(cam_work_focus)

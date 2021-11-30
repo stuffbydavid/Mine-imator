@@ -6,7 +6,7 @@ function tab_set_collumns()
 {
 	tab_collumns = argument[0]
 	
-	if (tab_collumns = false)
+	if (!tab_collumns)
 	{
 		dw = tab_collumns_width
 		

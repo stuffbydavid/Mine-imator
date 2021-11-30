@@ -96,7 +96,7 @@ function block_set_wall()
 			}
 		}
 		
-		if (tall = false)
+		if (!tall)
 			break
 		else
 			i++
