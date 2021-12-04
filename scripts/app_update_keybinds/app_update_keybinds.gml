@@ -2,9 +2,6 @@
 
 function app_update_keybinds()
 {
-	if (keybind_active != null)
-		show_debug_message(keybind_active.name)
-	
 	if (!(keyboard_check(vk_anykey) || keyboard_check_released(vk_anykey)))
 	{
 		if (keybind_active != null)

@@ -4,7 +4,7 @@ function lib_startup()
 {
 	log("External library init")
 	
-	var osinfo, is64bit, pathfile, pathmovie, pathwindow, pathmath;
+	var osinfo, is64bit, libpath, pathfile, pathmovie, pathwindow, pathmath;
 	osinfo = os_get_info()
 	is64bit = false
 	
@@ -14,10 +14,11 @@ function lib_startup()
 		ds_map_destroy(osinfo)
 	}
 	
-	pathfile = "Data\\Libraries\\" + (is64bit ? "x64": "x32") + "\\file.dll"
-	pathmovie = "Data\\Libraries\\" + (is64bit ? "x64": "x32") + "\\movie.dll"
-	pathwindow = "Data\\Libraries\\" + (is64bit ? "x64": "x32") + "\\window.dll"
-	pathmath = "Data\\Libraries\\" + (is64bit ? "x64": "x32") + "\\math.dll"
+	libpath = "Data\\Libraries\\" + (is64bit ? "x64": "x32") + "\\"
+	pathfile = libpath + "file.dll"
+	pathmovie = libpath + "movie.dll"
+	pathwindow = libpath + "window.dll"
+	pathmath = libpath + "math.dll"
 	
 	if (!file_exists(pathfile))
 		return missing_file(pathfile)

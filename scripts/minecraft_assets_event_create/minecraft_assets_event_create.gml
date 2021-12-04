@@ -20,4 +20,5 @@ function minecraft_assets_event_create()
 	block_texture_color_map = ds_map_create()
 	item_texture_list = ds_list_create()
 	particle_texture_list = ds_list_create()
+	block_texture_preview_map = ds_map_create()
 }

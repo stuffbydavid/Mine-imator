@@ -433,7 +433,7 @@ function block_load_render_model()
 									// Not transparent
 									if (alpha > 0)
 									{
-										var col = buffer_read_color(px, py, sheetwidth);
+										var col = buffer_read_color(px, py, sheetwidth)
 										
 										if (face_texture_color[nd] > -1)
 											col = color_multiply(col, face_texture_color[nd])

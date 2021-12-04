@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.11.13"
+        "lastchange": "2021.12.04"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2909,6 +2909,7 @@
     "settings/": {
         "program": "PROGRAM",
         "minecraftversion": "Minecraft version",
+        "64bitimport": "Use x64 world importer",
         "fps": "Frames per second",
         "fps30": "30",
         "fps60": "60",

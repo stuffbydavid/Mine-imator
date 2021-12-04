@@ -1,5 +1,5 @@
 {
-	"version": "1.18_pre1",
+	"version": "1.18",
 	"patch": 0,
 	"format": 6,
 	"characters": [
@@ -1535,9 +1535,9 @@
 			"name": "grass",
 			"states": {
 				"type": [
-					{ "value": "dead_bush", "file": "dead_bush.json" },
 					{ "value": "grass", "file": "grass.json", "random_offset": true },
-					{ "value": "fern", "file": "fern.json", "random_offset": true }
+					{ "value": "fern", "file": "fern.json", "random_offset": true },
+					{ "value": "dead_bush", "file": "dead_bush.json" }
 				]
 			},
 			"default_state": "type=grass",
@@ -5081,6 +5081,7 @@
 		{
 			"name": "powder_snow",
 			"file": "powder_snow.json",
+			"type": "snow",
 			"id": "minecraft:powder_snow"
 		},
 		{
@@ -6538,6 +6539,19 @@
 		"block/sugar_cane": "grass",
 		"block/water_still": "water",
 		"block/water_flow": "water"
+	},
+	"block_textures_preview": {
+		"grass_block.json": {
+			"colorXZ": null
+		},
+		"grass.json": {
+			"colorXY": null,
+			"colorXZ": null
+		},
+		"tall_grass.json": {
+			"colorXY": null,
+			"colorXZ": null
+		}
 	},
 	"item_textures": [
 		"item/leather_helmet",

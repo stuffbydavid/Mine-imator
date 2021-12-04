@@ -9,6 +9,11 @@ function tab_settings_program()
 	draw_button_menu("settingsminecraftversion", e_menu.LIST, dx, dy, dw, 24, setting_minecraft_assets_version, setting_minecraft_assets_version, action_setting_minecraft_assets_version, false, null, null, "", c_white, c_white, capwid)
 	tab_next()
 	
+	// Use x64 world importer
+	tab_control_switch()
+	draw_switch("settings64bitimport", dx, dy, setting_64bit_import, action_setting_64bit_import)
+	tab_next()
+	
 	// FPS
 	tab_control_togglebutton()
 	togglebutton_add("settingsfps30", null, 30, room_speed = 30, action_setting_fps)

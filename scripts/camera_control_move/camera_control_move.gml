@@ -33,20 +33,19 @@ function camera_control_move(cam, lockx, locky)
 		if (keybinds[e_keybind.CAM_SLOW].active)
 			spdm = setting_slow_modifier
 		
+		xd = 0
+		yd = 0
+		
 		if (keybinds[e_keybind.CAM_RIGHT].active)
 		{
-			xd = -sin(degtorad(cam_work_angle_look_xy)) * move
-			yd = -cos(degtorad(cam_work_angle_look_xy)) * move
+			xd += -sin(degtorad(cam_work_angle_look_xy)) * move
+			yd += -cos(degtorad(cam_work_angle_look_xy)) * move
 		}
-		else if (keybinds[e_keybind.CAM_LEFT].active)
+		
+		if (keybinds[e_keybind.CAM_LEFT].active)
 		{
-			xd = sin(degtorad(cam_work_angle_look_xy)) * move
-			yd = cos(degtorad(cam_work_angle_look_xy)) * move
-		}
-		else
-		{
-			xd = 0
-			yd = 0
+			xd += sin(degtorad(cam_work_angle_look_xy)) * move
+			yd += cos(degtorad(cam_work_angle_look_xy)) * move
 		}
 		
 		xd += -lengthdir_x(spd, cam_work_angle_look_xy)
@@ -84,20 +83,19 @@ function camera_control_move(cam, lockx, locky)
 		if (keybinds[e_keybind.CAM_SLOW].active) 
 			spdm = setting_slow_modifier
 		
+		xd = 0
+		yd = 0
+		
 		if (keybinds[e_keybind.CAM_RIGHT].active)
 		{
-			xd = -sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
-			yd = -cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
+			xd += -sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
+			yd += -cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 		}
-		else if (keybinds[e_keybind.CAM_LEFT].active)
+		
+		if (keybinds[e_keybind.CAM_LEFT].active)
 		{
-			xd = sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
-			yd = cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
-		}
-		else
-		{
-			xd = 0
-			yd = 0
+			xd += sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
+			yd += cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 		}
 		
 		xd += -lengthdir_x(spd, cam.value[e_value.ROT_Z] + 90)

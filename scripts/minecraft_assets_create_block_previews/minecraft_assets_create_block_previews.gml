@@ -22,7 +22,44 @@ function minecraft_assets_create_block_previews()
 		
 		// Pick the preview color from the first found render model of the default state
 		with (modelobj.model[0])
+		{
 			statecolormap[?other.name] = array(preview_color_zp, preview_alpha_zp, preview_color_yp, preview_alpha_yp) // Top-down color, cross-section color
+			
+			// Override previews
+			if (ds_map_valid(mc_assets.block_texture_preview_map[?other.name]))
+			{
+				var blockmap = mc_assets.block_texture_preview_map[?other.name];
+				
+				if (blockmap[?"colorXZ"] != undefined)
+				{
+					if (is_string(blockmap[?"colorXZ"]))
+					{
+						preview_color_yp = hex_to_color(blockmap[?"colorXZ"])
+						
+						if (blockmap[?"alphaXZ"] != undefined)
+							preview_alpha_yp = blockmap[?"alphaXZ"]
+					}
+					else
+						preview_color_yp = null
+				}
+				
+				if (blockmap[?"colorXY"] != undefined)
+				{
+					if (is_string(blockmap[?"colorXY"]))
+					{
+						preview_color_zp = hex_to_color(blockmap[?"colorXY"])
+						
+						if (blockmap[?"alphaXZ"] != undefined)
+							preview_alpha_zp = blockmap[?"alphaXY"]
+					}
+					else
+						preview_color_zp = null
+				}
+				
+				// Update array
+				statecolormap[?other.name] = array(preview_color_zp, preview_alpha_zp, preview_color_yp, preview_alpha_yp)
+			}
+		}
 	}
 	
 	// Wave and lava

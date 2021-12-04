@@ -16,7 +16,7 @@ function macros()
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
 	#macro mineimator_version_date		"2021.11.11"
 	#macro gm_runtime					GM_runtime_version
-	#macro minecraft_version			"1.18_pre1"
+	#macro minecraft_version			"1.18"
 	
 	// File formats
 	#macro project_format				e_project.FORMAT_200_AL18
@@ -37,7 +37,8 @@ function macros()
 	// Files
 	#macro language_file				languages_directory + "english.milanguage"
 	#macro language_index_file			data_directory + "langindex.midata"
-	#macro import_file					data_directory + "import.exe"
+	#macro import32_file				data_directory + "import_x32.exe"
+	#macro import64_file				data_directory + "import_x64.exe"
 	#macro settings_file				data_directory + "settings.midata"
 	#macro languages_file				data_directory + "languages.midata"
 	#macro recent_file					data_directory + "recent.midata"

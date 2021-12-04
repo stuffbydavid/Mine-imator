@@ -117,6 +117,11 @@ function minecraft_assets_load()
 					key = ds_map_find_next(block_texture_color_map, key)
 				}
 				
+				// Block texture preview settings
+				var blocktexturepreview = load_assets_map[?"block_textures_preview"];
+				if (!is_undefined(blocktexturepreview))
+					ds_map_copy(block_texture_preview_map, blocktexturepreview)
+				
 				// Item textures
 				var itemtextureslist = load_assets_map[?"item_textures"];
 				if (is_undefined(itemtextureslist))

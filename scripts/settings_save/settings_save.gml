@@ -52,6 +52,7 @@ function settings_save()
 	
 	json_save_object_start("program")
 		
+		json_save_var_bool("64bit_import", setting_64bit_import)
 		json_save_var("fps", room_speed)
 		json_save_var("project_folder", json_string_encode(setting_project_folder))
 		json_save_var_bool("backup", setting_backup)

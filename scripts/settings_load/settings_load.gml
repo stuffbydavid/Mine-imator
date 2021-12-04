@@ -62,6 +62,8 @@ function settings_load()
 		var programmap = map[?"program"];
 		if (ds_map_valid(programmap))
 		{
+			setting_64bit_import = value_get_real(programmap[?"64bit_import"], setting_64bit_import)
+			
 			room_speed = value_get_real(programmap[?"fps"], room_speed)
 			
 			if (!dev_mode)
