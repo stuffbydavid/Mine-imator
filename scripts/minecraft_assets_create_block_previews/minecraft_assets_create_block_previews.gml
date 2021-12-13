@@ -22,44 +22,7 @@ function minecraft_assets_create_block_previews()
 		
 		// Pick the preview color from the first found render model of the default state
 		with (modelobj.model[0])
-		{
-			statecolormap[?other.name] = array(preview_color_zp, preview_alpha_zp, preview_color_yp, preview_alpha_yp) // Top-down color, cross-section color
-			
-			// Override previews
-			if (ds_map_valid(mc_assets.block_texture_preview_map[?other.name]))
-			{
-				var blockmap = mc_assets.block_texture_preview_map[?other.name];
-				
-				if (blockmap[?"colorXZ"] != undefined)
-				{
-					if (is_string(blockmap[?"colorXZ"]))
-					{
-						preview_color_yp = hex_to_color(blockmap[?"colorXZ"])
-						
-						if (blockmap[?"alphaXZ"] != undefined)
-							preview_alpha_yp = blockmap[?"alphaXZ"]
-					}
-					else
-						preview_color_yp = null
-				}
-				
-				if (blockmap[?"colorXY"] != undefined)
-				{
-					if (is_string(blockmap[?"colorXY"]))
-					{
-						preview_color_zp = hex_to_color(blockmap[?"colorXY"])
-						
-						if (blockmap[?"alphaXZ"] != undefined)
-							preview_alpha_zp = blockmap[?"alphaXY"]
-					}
-					else
-						preview_color_zp = null
-				}
-				
-				// Update array
-				statecolormap[?other.name] = array(preview_color_zp, preview_alpha_zp, preview_color_yp, preview_alpha_yp)
-			}
-		}
+			statecolormap[?other.name] = array(preview_color_zp, preview_alpha_zp, preview_color_yp, preview_alpha_yp, preview_tint) // Top-down color, cross-section color
 	}
 	
 	// Wave and lava
@@ -71,7 +34,6 @@ function minecraft_assets_create_block_previews()
 	px = slot mod block_sheet_ani_width
 	py = slot div block_sheet_ani_width
 	waterpcolor = buffer_read_color(px, py, block_sheet_ani_width)
-	waterpcolor = color_multiply(waterpcolor, mc_res.color_water)
 	waterpalpha = power(buffer_read_alpha(px, py, block_sheet_ani_width), 2)
 	
 	slot = mc_assets.block_liquid_slot_map[?"lava"]
@@ -80,8 +42,8 @@ function minecraft_assets_create_block_previews()
 	lavapcolor = buffer_read_color(px, py, block_sheet_ani_width)
 	lavapalpha = buffer_read_alpha(px, py, block_sheet_ani_width)
 	
-	statecolormap[?"water"] = array(waterpcolor, waterpalpha, waterpcolor, waterpalpha)
-	statecolormap[?"lava"] = array(lavapcolor, lavapalpha, lavapcolor, lavapalpha)
+	statecolormap[?"water"] = array(waterpcolor, waterpalpha, waterpcolor, waterpalpha, "water")
+	statecolormap[?"lava"] = array(lavapcolor, lavapalpha, lavapcolor, lavapalpha, "")
 	
 	// Save to file
 	log("Saving block previews", block_preview_file)
@@ -111,10 +73,60 @@ function minecraft_assets_create_block_previews()
 					json_save_var("Z_alpha", colors[3])
 			}
 			
+			if (colors[4] != "")
+				json_save_var("tint", colors[4])
+			
 			json_save_object_done()
 		}
 		key = ds_map_find_next(statecolormap, key)
 	}
+	
+	// Save biomes
+	var grasssurf, foliagesurf;
+	grasssurf = surface_create(sprite_get_width(mc_res.colormap_grass_texture), sprite_get_height(mc_res.colormap_grass_texture))
+	foliagesurf = surface_create(sprite_get_width(mc_res.colormap_foliage_texture), sprite_get_height(mc_res.colormap_foliage_texture))
+	
+	surface_set_target(grasssurf)
+	{
+		draw_sprite(mc_res.colormap_grass_texture, 0, 0, 0)
+	}
+	surface_reset_target()
+	
+	surface_set_target(foliagesurf)
+	{
+		draw_sprite(mc_res.colormap_foliage_texture, 0, 0, 0)
+	}
+	surface_reset_target()
+	
+	json_save_object_start("biomes")
+	
+	with(obj_biome)
+	{
+		if (name = "normal" || name = "custom")
+			continue
+		
+		json_save_object_start(name)
+		
+			if (hardcoded)
+			{
+				json_save_var_color("grass", color_grass)
+				json_save_var_color("foliage", color_foliage)
+			}
+			else
+			{
+				json_save_var_color("grass", surface_getpixel(grasssurf, txy[0], txy[1]))
+				json_save_var_color("foliage", surface_getpixel(foliagesurf, txy[0], txy[1]))
+			}
+			
+			json_save_var_color("water", color_water)
+		
+		json_save_object_done()
+	}
+	
+	json_save_object_done()
+	
+	surface_free(grasssurf)
+	surface_free(foliagesurf)
 	
 	json_save_object_done()
 	json_save_done()

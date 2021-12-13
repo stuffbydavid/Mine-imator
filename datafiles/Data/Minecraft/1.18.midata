@@ -6542,15 +6542,63 @@
 	},
 	"block_textures_preview": {
 		"grass_block.json": {
-			"colorXZ": null
+			"colorZ": null
 		},
 		"grass.json": {
-			"colorXY": null,
-			"colorXZ": null
+			"colorY": null,
+			"colorZ": null
 		},
 		"tall_grass.json": {
-			"colorXY": null,
-			"colorXZ": null
+			"colorY": null,
+			"colorZ": null
+		},
+		"fern.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"large_fern.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"vine.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"oak_leaves.json": {
+			"colorY": "#989998",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
+		"spruce_leaves.json": {
+			"colorY": "#8A8A8A",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
+		"birch_leaves.json": {
+			"colorY": "#888787",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
+		"jungle_leaves.json": {
+			"colorY": "#B7B9B7",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
+		"dark_oak_leaves.json": {
+			"colorY": "#9E9E9E",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
+		"acacia_leaves.json": {
+			"colorY": "#B7B9B7",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
 		}
 	},
 	"item_textures": [

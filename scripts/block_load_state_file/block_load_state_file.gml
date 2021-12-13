@@ -36,10 +36,47 @@ function block_load_state_file(fname, block, state)
 	with (new_obj(obj_block_load_state_file))
 	{
 		name = filename_name(fname)
-		
 		state_id_map = ds_map_create()
-		
 		state_default_variant_id = 0
+		
+		model_preview_color_yp = -1
+		model_preview_alpha_yp = -1
+		model_preview_color_zp = -1
+		model_preview_alpha_zp = -1
+		
+		// Read colors from assets for block JSON (used to modify undesired block colors/alpha)
+		if (ds_map_valid(mc_assets.block_texture_preview_map[?name]))
+		{
+			var blockmap = mc_assets.block_texture_preview_map[?name];
+			
+			if (blockmap[?"colorZ"] != undefined)
+			{
+				if (is_string(blockmap[?"colorZ"]))
+					model_preview_color_yp = hex_to_color(blockmap[?"colorZ"])
+				else
+				{
+					model_preview_color_yp = null
+					model_preview_alpha_yp = null
+				}
+			}
+			
+			if (model_preview_alpha_yp != null && blockmap[?"alphaZ"] != undefined)
+				model_preview_alpha_yp = blockmap[?"alphaZ"]
+			
+			if (blockmap[?"colorY"] != undefined)
+			{
+				if (is_string(blockmap[?"colorY"]))
+					model_preview_color_zp = hex_to_color(blockmap[?"colorY"])
+				else
+				{
+					model_preview_color_zp = null
+					model_preview_alpha_zp = null
+				}
+			}
+			
+			if (model_preview_alpha_zp != null && blockmap[?"alphaY"] != undefined)
+				model_preview_alpha_zp = blockmap[?"alphaY"]
+		}
 		
 		var first_state = true;
 		

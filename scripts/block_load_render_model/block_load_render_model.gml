@@ -10,6 +10,7 @@
 function block_load_render_model()
 {
 	var model, rot, uvlock, wei, res, opaque, rotmat;
+	var modelstate, colY, alphaY, colZ, alphaZ
 	model = argument[0]
 	rot = argument[1]
 	uvlock = argument[2]
@@ -20,6 +21,18 @@ function block_load_render_model()
 		res = argument[5]
 	else
 		res = null
+	
+	// Get 
+	if (res = null)
+	{
+		modelstate = model_state_obj.id
+		colY = modelstate.model_preview_color_yp
+		alphaY = modelstate.model_preview_alpha_yp
+		colZ = modelstate.model_preview_color_zp
+		alphaZ = modelstate.model_preview_alpha_zp
+	}
+	else
+		modelstate = colY = alphaY = colZ = alphaZ = null;
 	
 	// Create matrix for rotation
 	if (rot[X] > 0 || rot[Z] > 0)
@@ -75,6 +88,7 @@ function block_load_render_model()
 		preview_alpha_zp = 0
 		preview_color_yp = null
 		preview_alpha_yp = 0
+		preview_tint = ""
 		
 		// Add elements
 		element_amount = 0
@@ -417,44 +431,55 @@ function block_load_render_model()
 							// Get preview color for world importer
 							if (res = null)
 							{
-								if ((nd = e_dir.UP && other.preview_color_zp = null) ||
-									(nd = e_dir.SOUTH && other.preview_color_yp = null))
+								if ((nd = e_dir.UP && other.preview_color_zp = null && alphaZ != 0) ||
+									(nd = e_dir.SOUTH && other.preview_color_yp = null && alphaY != 0))
 								{
 									if (face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED || face_block_vbuffer[nd] = e_block_vbuffer.WATER)
 										buffer_current = load_assets_block_preview_ani_buffer
 									else
 										buffer_current = load_assets_block_preview_buffer
 									
-									var px, py, alpha;
+									var px, py, alpha, col;
 									px = slot mod sheetwidth
 									py = slot div sheetwidth
-									alpha = buffer_read_alpha(px, py, sheetwidth)
+									
+									if ((nd = e_dir.UP && alphaZ = -1) || (nd = e_dir.SOUTH && alphaY = -1))
+										alpha = buffer_read_alpha(px, py, sheetwidth)
+									else
+										alpha = (nd = e_dir.UP ? alphaZ : alphaY)
 									
 									// Not transparent
 									if (alpha > 0)
 									{
-										var col = buffer_read_color(px, py, sheetwidth)
+										if ((nd = e_dir.UP && colZ = -1) || (nd = e_dir.SOUTH && colY = -1))
+											col = buffer_read_color(px, py, sheetwidth)
+										else
+											col = (nd = e_dir.UP ? colZ : colY)
 										
 										if (face_texture_color[nd] > -1)
 											col = color_multiply(col, face_texture_color[nd])
 										else
 										{
-											var rescol = null;
+											var rescol, colstr;
+											rescol = null
+											colstr = ""
 											switch (face_block_vbuffer[nd])
 											{
-												case e_block_vbuffer.GRASS:				rescol = mc_res.color_grass;			break;
-												case e_block_vbuffer.FOLIAGE:			rescol = mc_res.color_foliage;			break;
-												case e_block_vbuffer.WATER:				rescol = mc_res.color_water;			break;
-												case e_block_vbuffer.LEAVES_OAK:		rescol = mc_res.color_leaves_oak;		break;
+												case e_block_vbuffer.GRASS:				colstr = "grass";						break;
+												case e_block_vbuffer.FOLIAGE:			colstr = "foliage";						break;
+												case e_block_vbuffer.WATER:				colstr = "water";						break;
+												case e_block_vbuffer.LEAVES_OAK:		colstr = "foliage";						break;
 												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_leaves_spruce;	break;
 												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_leaves_birch;		break;
-												case e_block_vbuffer.LEAVES_JUNGLE:		rescol = mc_res.color_leaves_jungle;	break;
-												case e_block_vbuffer.LEAVES_ACACIA:		rescol = mc_res.color_leaves_acacia;	break;
-												case e_block_vbuffer.LEAVES_DARK_OAK:	rescol = mc_res.color_leaves_dark_oak;	break;
+												case e_block_vbuffer.LEAVES_JUNGLE:		colstr = "foliage";						break;
+												case e_block_vbuffer.LEAVES_ACACIA:		colstr = "foliage";						break;
+												case e_block_vbuffer.LEAVES_DARK_OAK:	colstr = "foliage";						break;
 											}
 											
 											if (rescol != null)
-												col = color_multiply(rescol, face_texture_color[nd])
+												col = color_multiply(rescol, col)
+											
+											other.preview_tint = colstr;
 										}
 										
 										if (nd = e_dir.UP)

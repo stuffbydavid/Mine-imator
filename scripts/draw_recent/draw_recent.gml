@@ -59,17 +59,22 @@ function draw_recent()
 			
 			microani_update(mouseon, mouseon && mouse_left, false)
 			
-			// Load model
+			// Load project
 			if (mouseon)
 			{
 				mouse_cursor = cr_handpoint
 				
 				if (mouse_left_released)
 				{
-					window_state = ""
-					project_load(item.filename)
+					if (file_exists_lib(item.filename))
+					{
+						project_load(item.filename)
+						window_state = ""
 					
-					return 0
+						return 0
+					}
+					else
+						error("erroropenprojectexists")
 				}
 			}
 			
@@ -162,17 +167,22 @@ function draw_recent()
 			
 			microani_update(mouseon, mouseon && mouse_left, false)
 			
-			// Load model
+			// Load project
 			if (mouseon)
 			{
 				mouse_cursor = cr_handpoint
 				
 				if (mouse_left_released)
 				{
-					project_load(item.filename)
-					window_state = ""
+					if (file_exists_lib(item.filename))
+					{
+						project_load(item.filename)
+						window_state = ""
 					
-					return 0
+						return 0
+					}
+					else
+						error("erroropenprojectexists")
 				}
 			}
 			
@@ -263,18 +273,22 @@ function draw_recent()
 				
 				draw_label(recent_time_string(item.last_opened), cardx + 15, cardy + 228, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_value)
 				
-				// Load model
+				// Load project
 				if (mouseon)
 				{
 					mouse_cursor = cr_handpoint
 				
 					if (mouse_left_released)
 					{
-						project_load(item.filename)
-						window_state = ""
-						
-						scissor_done()
-						return 0
+						if (file_exists_lib(item.filename))
+						{
+							project_load(item.filename)
+							window_state = ""
+					
+							return 0
+						}
+						else
+							error("erroropenprojectexists")
 					}
 				}
 			}

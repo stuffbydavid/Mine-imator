@@ -37,6 +37,8 @@ function block_load_variant_model(map, type)
 		weight = map[?"weight"]
 	total_weight += weight
 	
+	model_state_obj = other
+	
 	// Create model for rendering
 	model[model_amount] = block_load_render_model(blockmodel, rot, uvlock, false, weight)
 	

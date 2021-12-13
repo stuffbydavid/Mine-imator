@@ -12,9 +12,9 @@ function macros()
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"
-	#macro mineimator_version_extra		"Alpha 19.1"
+	#macro mineimator_version_extra		"Alpha 19.3"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-	#macro mineimator_version_date		"2021.11.11"
+	#macro mineimator_version_date		"2021.12.13"
 	#macro gm_runtime					GM_runtime_version
 	#macro minecraft_version			"1.18"
 	
