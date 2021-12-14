@@ -8,6 +8,8 @@ setting_minecraft_assets_new_format = 0
 setting_minecraft_assets_new_changes = ""
 setting_minecraft_assets_new_image = ""
 
+setting_64bit_import = false
+
 setting_project_folder = projects_directory
 
 recent_list = ds_list_create()
@@ -157,7 +159,6 @@ setting_bend_style = "realistic"
 setting_schematic_remove_edges = false
 setting_liquid_animation = true
 setting_noisy_grass_water = false
-setting_remove_waterlogged_water = false
 setting_texture_filtering = true
 setting_transparent_block_texture_filtering = false
 setting_texture_filtering_level = 1

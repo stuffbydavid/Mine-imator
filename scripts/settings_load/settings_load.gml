@@ -85,6 +85,8 @@ if (filename_ext(fn) = ".midata")
 	var programmap = map[?"program"];
 	if (ds_map_valid(programmap))
 	{
+		setting_64bit_import = value_get_real(programmap[?"64bit_import"], setting_64bit_import)
+		
 		room_speed = value_get_real(programmap[?"fps"], room_speed)
 		
 		if (!dev_mode)
@@ -254,7 +256,6 @@ if (filename_ext(fn) = ".midata")
 		setting_schematic_remove_edges = value_get_real(graphicsmap[?"schematic_remove_edges"], setting_schematic_remove_edges)
 		setting_liquid_animation = value_get_real(graphicsmap[?"liquid_animation"], setting_liquid_animation)
 		setting_noisy_grass_water = value_get_real(graphicsmap[?"noisy_grass_water"], setting_noisy_grass_water)
-		setting_remove_waterlogged_water = value_get_real(graphicsmap[?"remove_waterlogged_water"], setting_remove_waterlogged_water)
 		setting_texture_filtering = value_get_real(graphicsmap[?"texture_filtering"], setting_texture_filtering)
 		setting_transparent_block_texture_filtering = value_get_real(graphicsmap[?"transparent_block_texture_filtering"], setting_transparent_block_texture_filtering)
 		setting_texture_filtering_level = value_get_real(graphicsmap[?"texture_filtering_level"], setting_texture_filtering_level)

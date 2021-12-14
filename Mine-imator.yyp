@@ -3039,6 +3039,14 @@
             }
         },
         {
+            "Key": "2f2c8f25-3abf-4103-bfe0-8a98ea92ea03",
+            "Value": {
+                "id": "c476463b-69ca-42e2-97e1-75481b003a15",
+                "resourcePath": "scripts\\action_setting_64bit_import\\action_setting_64bit_import.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "2fbcba6d-00ca-4bc5-9826-dea965572346",
             "Value": {
                 "id": "accc1e5f-acd0-42ba-b819-6d8067ff1736",
@@ -3843,14 +3851,6 @@
             "Value": {
                 "id": "579940ce-01ce-4927-be1b-0edaa058ab95",
                 "resourcePath": "scripts\\action_setting_render_watermark_alpha\\action_setting_render_watermark_alpha.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "3d4bbabb-b6e0-44f0-8a63-836faa659aaf",
-            "Value": {
-                "id": "7cb2a9fd-95e4-4034-9eaa-72240a9c6c82",
-                "resourcePath": "scripts\\action_setting_remove_waterlogged_water\\action_setting_remove_waterlogged_water.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -12375,6 +12375,14 @@
             }
         },
         {
+            "Key": "bece452b-4673-410c-88b6-e056d3dce0be",
+            "Value": {
+                "id": "6625868a-8d6e-42e6-b630-c2a9d891f391",
+                "resourcePath": "datafiles_yy\\Data\\import_x64.exe.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "bee2f4ad-a2a1-4be9-a540-5e1c17cff2d7",
             "Value": {
                 "id": "459e9453-d78c-493b-aa75-aaf85ede5f62",
@@ -14410,7 +14418,7 @@
             "Key": "dc7a55dd-e79e-4ad5-ae66-2f6ae65e39f2",
             "Value": {
                 "id": "f7a4d88a-4113-48c9-98da-0ccbcef0646e",
-                "resourcePath": "datafiles_yy\\Data\\import.exe.yy",
+                "resourcePath": "datafiles_yy\\Data\\import_x32.exe.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -17090,7 +17098,6 @@
         "f8e3381e-0a7e-4b02-abad-d522cc16451b",
         "2831e949-d1da-46e8-bdc2-3b4a81a7e1d1",
         "7d0821a5-4521-487c-b91c-bd107cfd7362",
-        "3d4bbabb-b6e0-44f0-8a63-836faa659aaf",
         "c4b5552d-6e25-4285-aa0d-2f8ae31044f4",
         "73bbd71a-4c93-4fc8-812f-8ac63e4f791f",
         "8b26a449-7094-464a-82fb-0d69c9b4994e",
@@ -17140,6 +17147,7 @@
         "673550a2-a94a-4f1e-b5bc-83312a605421",
         "737e38e9-5d06-4bea-894c-2e319d1af07f",
         "67cfdb41-8c96-4bfa-a32e-84716900063d",
+        "2f2c8f25-3abf-4103-bfe0-8a98ea92ea03",
         "43de08fe-e075-446e-9678-c490096e71f4",
         "eb03721d-bac6-4edf-b10a-8cb3eaa5e488",
         "269d7077-44ef-4393-90b3-c01b908ba6eb",

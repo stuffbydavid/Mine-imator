@@ -20,7 +20,7 @@ for (var i = 0; i < ds_list_size(camera_values_list); i++)
 		if (valueslist[|i] = null)
 			tl_value_set(vid, null, false)
 			
-		if (valueslist[|i] = true)
+		if (valueslist[|i])
 			tl_value_set(vid, tl_value_default(vid), false)
 	}
 	else

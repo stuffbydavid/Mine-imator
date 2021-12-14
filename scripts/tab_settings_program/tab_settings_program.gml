@@ -46,3 +46,8 @@ tab_next()
 tab_control_checkbox()
 draw_checkbox("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
 tab_next()
+
+// x64 world importer
+tab_control_checkbox()
+draw_checkbox("settings64bitimport", dx, dy, setting_64bit_import, action_setting_64bit_import)
+tab_next()

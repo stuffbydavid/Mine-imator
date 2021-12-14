@@ -1,7 +1,7 @@
 /// action_setting_unlimited_values(unlimited_values)
 /// @arg unlimited_values
 
-if (argument0 = true)
+if (argument0)
 {
 	if (!question(text_get("questionunlimitedvalues")))
 		return 0

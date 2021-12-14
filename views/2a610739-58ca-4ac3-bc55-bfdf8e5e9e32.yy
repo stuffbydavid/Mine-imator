@@ -12,7 +12,8 @@
         "9dac8e22-afa1-4ef2-a67f-3729175d9e62",
         "673550a2-a94a-4f1e-b5bc-83312a605421",
         "737e38e9-5d06-4bea-894c-2e319d1af07f",
-        "67cfdb41-8c96-4bfa-a32e-84716900063d"
+        "67cfdb41-8c96-4bfa-a32e-84716900063d",
+        "2f2c8f25-3abf-4103-bfe0-8a98ea92ea03"
     ],
     "filterType": "GMScript",
     "folderName": "Program",

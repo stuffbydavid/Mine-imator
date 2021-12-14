@@ -32,7 +32,8 @@
 
 // Files
 #macro language_file				languages_directory + "english.milanguage"
-#macro import_file					data_directory + "import.exe"
+#macro import32_file				data_directory + "import_x32.exe"
+#macro import64_file				data_directory + "import_x64.exe"
 #macro settings_file				data_directory + "settings.midata"
 #macro legacy_file					data_directory + "legacy.midata"
 #macro block_preview_file			data_directory + "blockpreview.midata"

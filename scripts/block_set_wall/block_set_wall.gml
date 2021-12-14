@@ -94,7 +94,7 @@ repeat (2)
 		}
 	}
 	
-	if (tall = false)
+	if (!tall)
 		break
 	else
 		i++
