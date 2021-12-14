@@ -111,6 +111,14 @@
             }
         },
         {
+            "Key": "018bb845-221a-4d66-87a8-43e953762ea9",
+            "Value": {
+                "id": "aa249248-e627-4164-a902-2e8b95c4eee8",
+                "resourcePath": "datafiles_yy\\Data\\legacy.midata.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "01ce200c-fd2e-45f2-b4bd-229ca908dbc1",
             "Value": {
                 "id": "e5b7601e-aa72-4e7d-a355-843ca6ba23fa",
@@ -1748,14 +1756,6 @@
                 "id": "593842a0-ab33-40c1-b097-82dd36065468",
                 "resourcePath": "scripts\\action_background_fog_color_custom\\action_background_fog_color_custom.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "19d521bd-bc80-4136-996f-10197e0239cd",
-            "Value": {
-                "id": "54db2e98-7776-47d4-a5e7-f263daac5f6f",
-                "resourcePath": "datafiles_yy\\Data\\import.exe.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -4567,6 +4567,14 @@
             }
         },
         {
+            "Key": "495599fa-5707-42dc-9c59-14645b66ffb0",
+            "Value": {
+                "id": "8e57d728-11f9-4dff-a141-c3272d29a52b",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.18.midata.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "49616e86-762e-4f8d-9f28-3e3505e9d016",
             "Value": {
                 "id": "68744f68-e923-477d-8d6f-49f8dd0a726a",
@@ -5959,14 +5967,6 @@
             }
         },
         {
-            "Key": "5e665baf-9063-4d96-9e4f-372584449363",
-            "Value": {
-                "id": "09ced6e7-b7c5-44d4-9e1d-a18f0f726ed2",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.17.zip.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "5ea2cc88-fcb9-4b9a-a066-d0c6a53de9f4",
             "Value": {
                 "id": "53a9d968-d0ed-4250-a426-c0b49f850d19",
@@ -6220,6 +6220,14 @@
                 "id": "94705de8-0db3-44c8-b75d-6ad572e91f2f",
                 "resourcePath": "scripts\\action_tl_texture_blur\\action_tl_texture_blur.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "62086cdd-c2a6-43cd-a687-d61b75e2e8d2",
+            "Value": {
+                "id": "b3aea2b3-acc2-49be-aa22-00376b070938",
+                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milanguage.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -9479,14 +9487,6 @@
             }
         },
         {
-            "Key": "938c5fc6-c2d0-4068-9091-d3744e4ea611",
-            "Value": {
-                "id": "85f9bf31-95a4-46b4-be62-866833720af2",
-                "resourcePath": "datafiles_yy\\Data\\legacy.midata.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "93990dd9-226c-4221-b1d8-af3cb018a232",
             "Value": {
                 "id": "951a9855-cfcc-485e-b421-f4e1d7fe11a4",
@@ -12655,14 +12655,6 @@
             }
         },
         {
-            "Key": "c26893b2-bb9d-47f7-a16d-5948105b6e70",
-            "Value": {
-                "id": "3de5272a-c8bb-4e46-8f90-c8dbbd23efb0",
-                "resourcePath": "datafiles_yy\\Data\\Languages\\english.milanguage.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "c27f7d47-9eef-4429-a532-2ce1ac26f6b3",
             "Value": {
                 "id": "7a8fa731-92ed-47f1-b37f-62b4aade4869",
@@ -13367,14 +13359,6 @@
             }
         },
         {
-            "Key": "cca3438b-bebd-47b1-89ff-43de4dd4a0a3",
-            "Value": {
-                "id": "406eb8b8-5d56-4738-9bfe-2eb087125e06",
-                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.17.midata.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "ccb9392d-ebd2-4b7f-afc1-c108603bcfce",
             "Value": {
                 "id": "9c974e17-9d85-4196-bce6-ea3d5ef3fada",
@@ -14023,6 +14007,14 @@
             }
         },
         {
+            "Key": "d65a733c-8ee0-4097-9bfe-c019274b84dc",
+            "Value": {
+                "id": "c0538550-2538-452c-be4b-41643149bef3",
+                "resourcePath": "datafiles_yy\\Data\\Minecraft\\1.18.zip.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "d668d2b0-673e-4219-bfd6-7e5accf0b8ec",
             "Value": {
                 "id": "24002da6-90d1-450d-b040-05e7255d95a9",
@@ -14412,6 +14404,14 @@
                 "id": "55c75731-b262-4ea3-91a7-449ada8f94b8",
                 "resourcePath": "views\\dc406124-4361-47e4-987d-aa218253cfe6.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "dc7a55dd-e79e-4ad5-ae66-2f6ae65e39f2",
+            "Value": {
+                "id": "f7a4d88a-4113-48c9-98da-0ccbcef0646e",
+                "resourcePath": "datafiles_yy\\Data\\import.exe.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {

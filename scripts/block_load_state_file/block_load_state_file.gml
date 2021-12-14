@@ -39,13 +39,55 @@ if (!ds_map_valid(variantsmap) && !ds_list_valid(multipartlist))
 with (new(obj_block_load_state_file))
 {
 	name = filename_name(fname)
-	
 	state_id_map = ds_map_create()
+	state_default_variant_id = 0 
+	
+	model_preview_color_yp = -1
+	model_preview_alpha_yp = -1
+	model_preview_color_zp = -1
+	model_preview_alpha_zp = -1
+
+	// Read colors from assets for block JSON (used to modify undesired block colors/alpha)
+	if (ds_map_valid(mc_assets.block_texture_preview_map[?name]))
+	{
+	    var blockmap = mc_assets.block_texture_preview_map[?name];
+    
+	    if (blockmap[?"colorZ"] != undefined)
+	    {
+	        if (is_string(blockmap[?"colorZ"]))
+	            model_preview_color_yp = hex_to_color(blockmap[?"colorZ"])
+	        else
+	        {
+	            model_preview_color_yp = null
+	            model_preview_alpha_yp = null
+	        }
+	    }
+		
+	    if (model_preview_alpha_yp != null && blockmap[?"alphaZ"] != undefined)
+	        model_preview_alpha_yp = blockmap[?"alphaZ"]
+		
+	    if (blockmap[?"colorY"] != undefined)
+	    {
+	        if (is_string(blockmap[?"colorY"]))
+	            model_preview_color_zp = hex_to_color(blockmap[?"colorY"])
+	        else
+	        {
+	            model_preview_color_zp = null
+	            model_preview_alpha_zp = null
+	        }
+	    }
+		
+	    if (model_preview_alpha_zp != null && blockmap[?"alphaY"] != undefined)
+	        model_preview_alpha_zp = blockmap[?"alphaY"]
+	}
+	
+	var first_state = true; 
 	
 	// Load variants
 	if (ds_map_valid(variantsmap))
 	{
 		var variant = ds_map_find_first(variantsmap);
+		
 		while (!is_undefined(variant))
 		{
 			with (new(obj_block_load_variant))
@@ -61,9 +103,14 @@ with (new(obj_block_load_state_file))
 					}
 					state_vars_add(vars, state)
 					other.state_id_map[?block_get_state_id(block, vars)] = id
+					
+					if (first_state) 
+						other.state_default_variant_id = block_get_state_id(block, vars) 
 				}
 				else
 					other.state_id_map[?0] = id
+				
+				first_state = false 
 				
 				// Load model(s)
 				model_amount = 0
@@ -156,15 +203,33 @@ with (new(obj_block_load_state_file))
 						
 						// Apply to matching state IDs
 						for (var i = 0; i < block.state_id_amount; i++)
+						{
 							if (state_vars_match_state_id(condvars, block, i))
+							{
 								other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+								
+								if (first_state)
+								{
+									other.state_default_variant_id = i
+									first_state = false
+								}
+							}
+						}
 					}
 				}
 				else
 				{
-					// Always applies
+					// Always applies 
 					for (var i = 0; i < block.state_id_amount; i++)
+					{
 						other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+						
+						if (first_state)
+						{
+							other.state_default_variant_id = i
+							first_state = false
+						}
+					}
 				}
 				
 				// Load model(s)

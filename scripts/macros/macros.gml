@@ -13,7 +13,7 @@
 #macro mineimator_version_extra		"Release Candidate 1"
 #macro mineimator_version_date		"2021.06.10"
 #macro gm_runtime					GM_runtime_version
-#macro minecraft_version			"1.17"
+#macro minecraft_version			"1.18"
 
 // File formats
 #macro project_format				e_project.FORMAT_125

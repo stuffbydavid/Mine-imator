@@ -5,11 +5,8 @@ var findname;
 findname = argument0;
 
 // Convert old biome names to new
-if (load_format < e_project.FORMAT_120_PRE_1)
-{
-	if (ds_map_exists(legacy_biomes_map, findname))
-		findname = legacy_biomes_map[? findname]
-}
+while (ds_map_exists(legacy_biomes_map, findname))
+	findname = legacy_biomes_map[? findname]
 
 instance_activate_object(obj_biome)
 with (obj_biome)

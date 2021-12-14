@@ -152,9 +152,10 @@ switch (load_stage)
 								paletteblocks[index] = block
 								palettestateids[index] = block_get_state_id(block, vars)
 								
-								// Check waterlogged status
-								if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true")
-									palettewaterlogged[index] = true
+								// Check waterlogged status 
+								if (state_vars_get_value(vars, "waterlogged") != "false") 
+									if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true") 
+										palettewaterlogged[index] = true 
 							}
 						}
 					
