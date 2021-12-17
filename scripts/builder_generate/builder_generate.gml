@@ -175,7 +175,7 @@ block_pos_z = build_pos_z * block_size
 block_color = null
 
 // Random X & Y offset
-if ((block_current.random_offset || block_current.random_offset_xy) && build_size_x * build_size_y * build_size_z > 1)
+if ((block_current.random_offset && (build_size_x * build_size_y * build_size_z > 1)) || (block_current.random_offset_xy && (build_size_x * build_size_y > 1)))
 {
 	if (block_current.random_offset)
 		random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
