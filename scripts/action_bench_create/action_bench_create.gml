@@ -38,6 +38,11 @@ else
 		with (bench_settings)
 		{
 			var temp = temp_duplicate();
+			
+			// Don't copy into template
+			if (temp.type != e_temp_type.CUBE && temp.type != e_temp_type.CYLINDER && temp.type != e_temp_type.CONE)
+				shape_tex_mapped = false
+			
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = temp.save_id

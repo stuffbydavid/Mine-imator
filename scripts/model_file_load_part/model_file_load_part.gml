@@ -343,7 +343,7 @@ with (new(obj_model_part))
 		
 		// Inherit parent bend
 		bend_inherit_angle[Z] = 0
-		if (bend_inherit)
+		if (bend_inherit && other.object_index = obj_model_part)
 			bend_inherit_angle = point3D_add(bend_default_angle, other.bend_inherit_angle)
 		else
 			bend_inherit_angle = bend_default_angle

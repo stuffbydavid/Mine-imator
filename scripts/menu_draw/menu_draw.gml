@@ -87,7 +87,14 @@ switch (menu_type)
 			// Highlight box
 			highlight = (menu_value = item.value || (mouseitem = item && (mouse_left || mouse_left_released)))
 			if (highlight)
-				draw_box(menu_x, dy, menu_w - 30 * menu_scroll.needed, menu_item_h, false, setting_color_highlight, 1)
+			{
+				if (m = round(menu_scroll.value / menu_item_h) && menu_flip)
+					draw_box_rounded(menu_x, dy, menu_w - 30 * menu_scroll.needed, menu_item_h, setting_color_highlight, 1, true, true, false, false)
+				else if (dy + (menu_item_h * 2) > yy + h)
+					draw_box_rounded(menu_x, dy, menu_w - 30 * menu_scroll.needed, menu_item_h, setting_color_highlight, 1, false, false, true, true)
+				else
+					draw_box(menu_x, dy, menu_w - 30 * menu_scroll.needed, menu_item_h, false, setting_color_highlight, 1)
+			}
 			
 			// Sprite
 			if (item.icon)  //Icons

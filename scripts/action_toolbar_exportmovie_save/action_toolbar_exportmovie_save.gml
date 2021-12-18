@@ -107,6 +107,11 @@ if (exportmovie_format != "png")
 	}
 	
 	exportmovie_buffer = buffer_create(project_video_width * project_video_height * 4, buffer_fixed, 4)
+	
+	// GameMaker 2.2.5 bug 
+	repeat (buffer_get_size(exportmovie_buffer)) 
+		buffer_write(exportmovie_buffer, buffer_u8, 0)
+	
 	render_background = true
 }
 else
