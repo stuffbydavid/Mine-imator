@@ -1,7 +1,7 @@
 {
 	"version": "1.18",
 	"patch": 0,
-	"format": 6,
+	"format": 7,
 	"characters": [
 		{
 			"name": "human",
@@ -5162,6 +5162,7 @@
 		{
 			"name": "pointed_dripstone",
 			"file": "pointed_dripstone.json",
+			"type": "dripstone",
 			"states": {
 				"thickness": [ "tip", "tip_merge", "frustum", "middle", "base" ],
 				"vertical_direction": [ "up", "down" ]
@@ -5193,7 +5194,7 @@
 		},
 		{
 			"name": "cave_vines",
-			"type": "weeping_vines",
+			"type": "cave_vines",
 			"require_models": true,
 			"states": {
 				"type": [
@@ -5247,6 +5248,7 @@
 		},
 		{
 			"name": "big_dripleaf",
+			"type": "big_dripleaf",
 			"states": {
 				"type": [
 					{ "value": "big_dripleaf", "file": "big_dripleaf.json" },

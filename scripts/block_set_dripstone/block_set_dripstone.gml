@@ -24,7 +24,7 @@ if (sizeoffset = 0)
 	thickness = thicknessprev
 else if (sizeoffset = 1)
 	thickness = "frustum"
-else if (size >= (build_size_z - 1) && sizeoffset != 2)
+else if (size >= (build_size_z - 1))
 	thickness = "base"
 else
 	thickness = "middle"
