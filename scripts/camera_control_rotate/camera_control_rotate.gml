@@ -14,10 +14,10 @@ display_mouse_set(lockx, locky)
 
 if (!cam)
 {
-	if (fps > 30 && setting_smooth_camera)
+	if (fps > 20 && setting_smooth_camera)
 	{
-		cam_work_angle_off_xy += mx / (2 / delta)
-		cam_work_angle_off_z += my / (2 / delta)
+		cam_work_angle_off_xy += mx / (3 / delta)
+		cam_work_angle_off_z += my / (3 / delta)
 	}
 	else
 	{
