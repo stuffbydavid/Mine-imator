@@ -566,6 +566,7 @@ function shader_startup()
 		new_shader_sampler("uSunDepthBuffer")
 		new_shader_uniform("uScreenSize")
 		new_shader_uniform("uSunDirection")
+		new_shader_uniform("uSunVisible")
 	}
 	
 	with (shader_map[?shader_high_volumetric_fog_apply])

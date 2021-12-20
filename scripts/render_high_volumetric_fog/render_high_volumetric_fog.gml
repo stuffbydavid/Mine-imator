@@ -79,6 +79,14 @@ function render_high_volumetric_fog(prevsurf, export)
 				}
 				surface_reset_target()
 			}
+			else if (app.background_sunlight_color_final = c_black)
+			{
+				// Sun info needs to be updated for volumetrics
+				render_world_start_sun(
+						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
+						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
+				render_world_done()
+			}
 			
 			// Render and apply volumetric fog
 			var exptemp, dectemp, resultsurftemp;

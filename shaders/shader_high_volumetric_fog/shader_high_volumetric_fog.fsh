@@ -37,6 +37,8 @@ uniform mat4 uViewMatrixInv;
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uSunDepthBuffer;
 
+uniform int uSunVisible;
+
 /*
 	3D simplex noise
 	
@@ -268,7 +270,10 @@ void main()
 		
 		if (sampleDensity > 0.001)
 		{
-			light = getLight(rayPos) * sampleDensity;
+			if (uSunVisible == 1)
+				light = getLight(rayPos) * sampleDensity;
+			else
+				light = sampleDensity;
 			
 			if (uFogAmbience == 1)
 			{
