@@ -142,8 +142,8 @@ function view_update(view, cam)
 		// Smoothen angles
 		if ((cam_work_angle_off_xy != 0 || cam_work_angle_off_z != 0) && fps > 20 && setting_smooth_camera) // Doesn't like low FPS
 		{
-			cam_work_angle_off_xy -= cam_work_angle_off_xy / (5 / delta)
-			cam_work_angle_off_z -= cam_work_angle_off_z / (5 / delta)
+			cam_work_angle_off_xy -= cam_work_angle_off_xy / (3 / delta)
+			cam_work_angle_off_z -= cam_work_angle_off_z / (3 / delta)
 			
 			cam_work_angle_xy += cam_work_angle_off_xy
 			cam_work_angle_z += cam_work_angle_off_z

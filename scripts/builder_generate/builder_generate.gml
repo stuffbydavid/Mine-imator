@@ -183,7 +183,7 @@ function builder_generate()
 	builder_chunk = chunk_array[builder_chunk_x][builder_chunk_y][builder_chunk_z]
 	
 	// Random X & Y offset
-	if ((block_current.random_offset || block_current.random_offset_xy) && build_size_x * build_size_y * build_size_z > 1)
+	if ((block_current.random_offset && (build_size_x * build_size_y * build_size_z > 1)) || (block_current.random_offset_xy && (build_size_x * build_size_y > 1)))
 	{
 		if (block_current.random_offset)
 			random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)

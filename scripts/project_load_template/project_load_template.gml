@@ -266,6 +266,10 @@ function project_load_template(map)
 				shape_invert = value_get_real(shapemap[?"invert"], shape_invert)
 				shape_detail = value_get_real(shapemap[?"detail"], shape_detail)
 				shape_face_camera = value_get_real(shapemap[?"face_camera"], shape_face_camera)
+				
+				// Bugfix for types that don't support tex mapping
+				if (type != e_temp_type.CUBE && type != e_temp_type.CYLINDER && type != e_temp_type.CONE)
+					shape_tex_mapped = false
 			}
 		}
 		else if (type = e_temp_type.TEXT)

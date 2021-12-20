@@ -21,7 +21,7 @@ function macros()
 	// File formats
 	#macro project_format				e_project.FORMAT_200_AL18
 	#macro settings_format				e_settings.FORMAT_200
-	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_128
+	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_129
 	
 	// Directories
 	#macro file_directory				game_save_id
