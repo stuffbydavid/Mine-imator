@@ -174,10 +174,13 @@ block_pos_y = build_pos_y * block_size
 block_pos_z = build_pos_z * block_size
 block_color = null
 
+// Get model 
+var model = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z);
+
 // Random X & Y offset
-if ((block_current.random_offset && (build_size_x * build_size_y * build_size_z > 1)) || (block_current.random_offset_xy && (build_size_x * build_size_y > 1)))
+if ((model.random_offset && (build_size_x * build_size_y * build_size_z > 1)) || (model.random_offset_xy && (build_size_x * build_size_y > 1)))
 {
-	if (block_current.random_offset)
+	if (model.random_offset)
 		random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
 	else
 		random_set_seed(build_pos_x + build_size_x * build_pos_y)
@@ -197,16 +200,14 @@ else
 	if (block_current.wind_zmin != null)
 		vertex_wave_zmin = block_pos_z + block_current.wind_zmin
 	vertex_light_bleeding = block_current.light_bleeding
-		
+	
 	// Requires other render models for states
 	if (block_current.require_models)
 		builder_set_model(true)
-
-	// Get model	
-	var model = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z);
+	
+	// Generate render model
 	if (model != null)
 	{
-		// Generate render model
 		if (is_array(model))
 		{
 			var modellen = array_length_1d(model);

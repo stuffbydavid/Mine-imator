@@ -1,11 +1,15 @@
-/// block_get_render_model(modelobject, brightness)
+/// block_get_render_model(modelobject, brightness, offset, offsetxy)
 /// @arg modelobject
 /// @arg brightness
+/// @arg offset
+/// @arg offsetxy
 /// @desc Returns a random or single model.
 
-var modelobj, brightness;
+var modelobj, brightness, offset, offsetxy;
 modelobj = argument0
 brightness = argument1
+offset = argument2
+offsetxy = argument3
 
 instance_activate_object(modelobj)
 
@@ -21,6 +25,8 @@ with (modelobj)
 			if (rand <= 0)
 			{
 				model[m].brightness = brightness
+				model[m].random_offset = offset
+				model[m].random_offset_xy = offsetxy
 				
 				instance_deactivate_object(modelobj)
 				return model[m]
@@ -30,6 +36,8 @@ with (modelobj)
 	else if (model_amount > 0)
 	{
 		model[0].brightness = brightness
+		model[0].random_offset = offset
+		model[0].random_offset_xy = offsetxy
 		
 		instance_deactivate_object(modelobj)
 		return model[0]
