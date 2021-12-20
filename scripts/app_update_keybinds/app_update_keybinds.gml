@@ -2,12 +2,20 @@
 
 function app_update_keybinds()
 {
-	if (!(keyboard_check(vk_anykey) || keyboard_check_released(vk_anykey)))
+	if (window_busy != keybind_window_last)
 	{
-		if (keybind_active != null)
-			keybind_active = null
+		keybind_active = null
+		keybind_window_last = window_busy 
+	}
+	else
+	{
+		if (!(keyboard_check(vk_anykey) || keyboard_check_released(vk_anykey)))
+		{
+			if (keybind_active != null)
+				keybind_active = null
 		
-		return 0
+			return 0
+		}
 	}
 	
 	var obj, check;

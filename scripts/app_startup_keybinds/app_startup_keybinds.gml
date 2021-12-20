@@ -2,10 +2,11 @@
 
 function app_startup_keybinds()
 {
-	globalvar keybinds, keybind_edit, keybind_active;
+	globalvar keybinds, keybind_edit, keybind_active, keybind_window_last;
 	keybinds = array_create(e_keybind.amount)
 	keybind_edit = null
 	keybind_active = null
+	keybind_window_last = ""
 	
 	enum e_keybind_key
 	{
