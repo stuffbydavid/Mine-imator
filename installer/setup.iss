@@ -10,7 +10,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{EF61A1AA-5F85-4E94-ACC6-D5650A312AE6}}
 AppName=Mine-imator
-AppVersion=1.2.9.1
+AppVersion=1.2.9.2
 ApPVerName=Mine-imator 1.2.9
 AppPublisher=David Norgren
 AppPublisherURL=https://www.stuffbydavid.com

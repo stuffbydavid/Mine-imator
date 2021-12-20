@@ -70,6 +70,10 @@ with (new(obj_block_render_model))
 	// Reset brightness
 	brightness = 0
 	
+	// Reset random offset
+	random_offset = 0
+	random_offset_xy = 0
+	
 	// Reset offset
 	offset_x = 0
 	offset_y = 0

@@ -10,7 +10,7 @@
 
 // Versions
 #macro mineimator_version			"1.2.9"
-#macro mineimator_version_extra		"Patch 1, 2021.12.20"
+#macro mineimator_version_extra		"Patch 2, 2021.12.20"
 #macro mineimator_version_date		"2021.12.18"
 #macro gm_runtime					GM_runtime_version
 #macro minecraft_version			"1.18"

@@ -174,21 +174,34 @@ block_pos_y = build_pos_y * block_size
 block_pos_z = build_pos_z * block_size
 block_color = null
 
-// Get model 
+// Requires other render models for states
+if (block_current.require_models)
+	builder_set_model(true)
+
+// Get model
 var model = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z);
 
-// Random X & Y offset
-if ((model.random_offset && (build_size_x * build_size_y * build_size_z > 1)) || (model.random_offset_xy && (build_size_x * build_size_y > 1)))
+if (model != null)
 {
-	if (model.random_offset)
-		random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
-	else
-		random_set_seed(build_pos_x + build_size_x * build_pos_y)
+	var blockmodel;
 	
-	block_pos_x += irandom_range(-4, 4)
-	block_pos_y += irandom_range(-4, 4)
+	if (is_array(model))
+		blockmodel = model[0]
+	else
+		blockmodel = model
+	
+	// Random X & Y offset
+	if ((blockmodel.random_offset && (build_size_x * build_size_y * build_size_z > 1)) || (blockmodel.random_offset_xy && (build_size_x * build_size_y > 1)))
+	{
+		if (blockmodel.random_offset)
+			random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
+		else
+			random_set_seed(build_pos_x + build_size_x * build_pos_y)
+	
+		block_pos_x += irandom_range(-4, 4)
+		block_pos_y += irandom_range(-4, 4)
+	}
 }
-
 // Run a block-specific script for generating a mesh if available
 if (block_current.generate_script > -1)
 	script_execute(block_current.generate_script)
@@ -200,10 +213,6 @@ else
 	if (block_current.wind_zmin != null)
 		vertex_wave_zmin = block_pos_z + block_current.wind_zmin
 	vertex_light_bleeding = block_current.light_bleeding
-	
-	// Requires other render models for states
-	if (block_current.require_models)
-		builder_set_model(true)
 	
 	// Generate render model
 	if (model != null)
