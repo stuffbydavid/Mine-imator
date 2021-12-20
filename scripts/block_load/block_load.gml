@@ -44,6 +44,18 @@ function block_load(map, typemap)
 		else
 			brightness = 0
 		
+		// Random offset (Overridden by states)
+		if (is_bool(map[?"random_offset"]))
+			random_offset = map[?"random_offset"]
+		else
+			random_offset = false
+		
+		// Random offset(X & Y) (Overridden by states)
+		if (is_bool(map[?"random_offset_xz"]))
+			random_offset_xy = map[?"random_offset_xz"]
+		else
+			random_offset_xy = false
+		
 		// Read states and their possible values
 		states_map = null
 		state_id_amount = 1
@@ -80,6 +92,8 @@ function block_load(map, typemap)
 						value_filename[v] = ""
 						value_file[v] = null
 						value_brightness[v] = null
+						value_random_offset[v] = null
+						value_random_offset_xy[v] = null
 						
 						if (ds_map_valid(curvalue))
 						{
@@ -93,6 +107,14 @@ function block_load(map, typemap)
 							// Brightness
 							if (is_real(curvalue[?"brightness"]))
 								value_brightness[v] = curvalue[?"brightness"]
+							
+							// Random offset
+							if (is_bool(curvalue[?"random_offset"]))
+								value_random_offset[v] = curvalue[?"random_offset"]
+							
+							// Random offset (XY)
+							if (is_bool(curvalue[?"random_offset_xz"]))
+								value_random_offset_xy[v] = curvalue[?"random_offset_xz"]
 						}
 						
 						value_map[?value_name[v]] = v
@@ -126,18 +148,6 @@ function block_load(map, typemap)
 			subsurface = map[?"subsurface"]
 		else
 			subsurface = 0
-		
-		// Random offset
-		if (is_real(map[?"random_offset"]))
-			random_offset = map[?"random_offset"]
-		else
-			random_offset = false
-		
-		// Random offset(X & Y)
-		if (is_real(map[?"random_offset_xz"]))
-			random_offset_xy = map[?"random_offset_xz"]
-		else
-			random_offset_xy = false
 		
 		// Wind
 		var windmap = map[?"wind"];
@@ -196,14 +206,18 @@ function block_load(map, typemap)
 		// Pre-calculate the block variant to pick for each (numerical) state ID
 		state_id_model_obj = null
 		state_id_brightness = null
+		state_id_random_offset = null
+		state_id_random_offset_xy = null
 		state_id_subsurface = null
 		
 		for (var sid = 0; sid < state_id_amount; sid++)
 		{
 			// Get active file and properties
-			var curfile, curbrightness;
+			var curfile, curbrightness, curoffset, curoffsetxy;
 			curfile = file
 			curbrightness = brightness
+			curoffset = random_offset
+			curoffsetxy = random_offset_xy
 			
 			// Check states
 			if (states_map != null)
@@ -226,6 +240,12 @@ function block_load(map, typemap)
 						
 						if (value_brightness[valid] != null)
 							curbrightness = value_brightness[valid]
+						
+						if (value_random_offset[valid] != null)
+							curoffset = value_random_offset[valid]
+						
+						if (value_random_offset_xy[valid] != null)
+							curoffsetxy = value_random_offset_xy[valid]
 					}
 					
 					curstate = ds_map_find_next(states_map, curstate)
@@ -243,6 +263,8 @@ function block_load(map, typemap)
 				
 				other.state_id_model_obj[sid] = variant
 				other.state_id_brightness[sid] = curbrightness
+				other.state_id_random_offset[sid] = curoffset
+				other.state_id_random_offset_xy[sid] = curoffsetxy
 			}
 		}
 		

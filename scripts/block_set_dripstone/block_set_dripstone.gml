@@ -12,7 +12,7 @@ function block_set_dripstone()
 		return 0
 	
 	dir = block_get_state_id_value(block_current, block_state_id_current, "vertical_direction")
-	size = test(dir = "up", (build_size_z - 1) - build_pos_z, build_pos_z)
+	size = (dir = "up" ? (build_size_z - 1) - build_pos_z : build_pos_z)
 	sizeoffset = size
 	
 	if (thicknessprev = "frustum")
