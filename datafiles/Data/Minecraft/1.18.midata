@@ -4032,6 +4032,11 @@
 		{
 			"name": "dirt_path",
 			"file": "dirt_path.json",
+			"id": "minecraft:grass_path"
+		},
+		{
+			"name": "dirt_path",
+			"file": "dirt_path.json",
 			"id": "minecraft:dirt_path"
 		},
 		{
