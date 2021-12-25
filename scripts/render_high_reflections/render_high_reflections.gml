@@ -68,11 +68,7 @@ function render_high_reflections(export, surf)
 		random_set_seed(s)
 		
 		render_sample_noise_texture = render_get_noise_texture(s)
-		
 		render_indirect_kernel = render_generate_sample_kernel(16)
-		
-		for (var i = 0; i < 16; i++)
-			render_indirect_offset[i] = random_range(0, 1)
 		
 		// Ray trace
 		surface_set_target(samplesurf)
@@ -84,7 +80,7 @@ function render_high_reflections(export, surf)
 		    with (render_shader_obj)
 		    {
 		        shader_set(shader)
-		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf, render_width, render_height)
+		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf)
 		    }
 			
 		    draw_blank(0, 0, render_width, render_height)

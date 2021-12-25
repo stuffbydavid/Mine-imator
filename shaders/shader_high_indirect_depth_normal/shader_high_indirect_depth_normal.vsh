@@ -107,7 +107,8 @@ VSOutput main(VSInput IN)
 	OUT.TexCoord = IN.TexCoord;
 	
 	// Depth
-	OUT.Depth = (OUT.Position.z - uNear) / (uFar - uNear);
+	float4 depthPos = mul(gm_Matrices[MATRIX_VIEW], float4(pos, 1.0));
+	OUT.Depth = ((depthPos.z - uNear) / (uFar - uNear));
 	
 	// Normal
 	OUT.WorldInv     = inverse(gm_Matrices[MATRIX_WORLD]);

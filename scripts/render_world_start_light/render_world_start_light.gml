@@ -1,18 +1,9 @@
-/// render_world_start_light(from, to, sampleoffset, timeline] //near, far, fov, color, strength, [fadesize, [spotsharpness]])
+/// render_world_start_light(from, to, sampleoffset, timeline]
 /// @arg from
 /// @arg to
 /// @arg sampleoffset
 /// @arg timeline
 /// @desc Render the scene from the light's point of view.
-
-/// @arg near
-/// @arg far
-/// @arg fov
-/// @arg color
-/// @arg strength
-/// @arg [fadesize
-/// @arg [spotsharpness]]
-
 
 function render_world_start_light(from, to, offset, tl)
 {
@@ -41,7 +32,7 @@ function render_world_start_light(from, to, offset, tl)
 	gpu_set_zwriteenable(true)
 	
 	// Get origin matrix for spotlight
-	if (argument_count > 9)
+	if (tl.type = e_tl_type.SPOT_LIGHT)
 	{
 		render_set_projection(render_light_from, render_light_to, vec3(0, 0, 1), render_light_fov, 1, 1, render_light_far)
 		spot_proj_matrix = matrix_get(matrix_projection)

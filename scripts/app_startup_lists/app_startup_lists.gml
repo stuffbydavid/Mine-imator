@@ -63,6 +63,8 @@ function app_startup_lists()
 		"LIGHT_SPOT_RADIUS",
 		"LIGHT_SPOT_SHARPNESS",
 		"CAM_FOV",
+		"CAM_NEAR",
+		"CAM_FAR",
 		"CAM_BLADE_AMOUNT",
 		"CAM_BLADE_ANGLE",
 		"CAM_ROTATE",

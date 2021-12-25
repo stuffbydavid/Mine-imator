@@ -24,7 +24,6 @@ uniform vec2 uScreenSize;
 
 uniform float uEmissionRange;
 uniform vec3 uKernel[MAXRAYS];
-uniform float uOffset[MAXRAYS];
 uniform float uStepSize;
 uniform int uStepAmount;
 uniform int uRays;
@@ -110,13 +109,9 @@ void rayTrace(int sample, vec3 direction, vec3 rayPos, float bias, inout vec3 gi
 	direction *= uStepSize;
 	rayPos += direction;
 	
-	float stride = 1.0 + uOffset[sample];
-	
 	// Trace ray steps
 	for (int i = 0; i < MAXSTEPS; i++)
 	{
-		direction *= vec3(stride);
-		
 		// Move ray position in direction
 		rayPos += direction;
 		

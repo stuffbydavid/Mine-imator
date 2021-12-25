@@ -142,9 +142,8 @@ function render_startup()
 	render_grain_noise = null
 	
 	// Indirect lighting
-	globalvar render_indirect_kernel, render_indirect_offset;
+	globalvar render_indirect_kernel;
 	render_indirect_kernel = render_generate_sample_kernel(16)
-	render_indirect_offset = null
 	
 	// Subsurface
 	globalvar render_subsurface_size, render_subsurface_kernel;

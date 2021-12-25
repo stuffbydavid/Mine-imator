@@ -210,6 +210,8 @@ function tl_update_values()
 	if (value_type[e_value_type.CAMERA])
 	{
 		tl_update_values_ease(e_value.CAM_FOV)
+		tl_update_values_ease(e_value.CAM_NEAR)
+		tl_update_values_ease(e_value.CAM_FAR)
 		
 		tl_update_values_ease(e_value.CAM_BLADE_AMOUNT)
 		tl_update_values_ease(e_value.CAM_BLADE_ANGLE)

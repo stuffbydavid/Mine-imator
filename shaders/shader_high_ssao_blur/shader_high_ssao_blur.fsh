@@ -46,7 +46,7 @@ void main()
 		vec2 sampleOffset = float(i + 1) * texelCheck;
 		
 		// Positive direction
-		vec2 sampleCoords = vTexCoord + sampleOffset;
+		vec2 sampleCoords = clamp(vTexCoord + sampleOffset, vec2(0.0), vec2(1.0));
 		float sampleDepth  = unpackDepth(texture2D(uDepthBuffer, sampleCoords));
 		vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, sampleCoords)); 
 		float weight = max(0.0, dot(centerNormal, sampleNormal) - abs(sampleDepth - centerDepth) * DEPTH_SENSITIVITY) * weights[i + 1];
@@ -54,7 +54,7 @@ void main()
 		totalWeight += weight;
 		
 		// Negative direction
-		sampleCoords = vTexCoord - sampleOffset;
+		sampleCoords = clamp(vTexCoord - sampleOffset, vec2(0.0), vec2(1.0));;
 		sampleDepth  = unpackDepth(texture2D(uDepthBuffer, sampleCoords ));
 		sampleNormal = unpackNormal(texture2D(uNormalBuffer, sampleCoords));
 		weight = max(0.0, max(0.0, dot(centerNormal, sampleNormal) * 0.8 + 0.2) - abs(sampleDepth - centerDepth) * DEPTH_SENSITIVITY) * weights[i + 1];

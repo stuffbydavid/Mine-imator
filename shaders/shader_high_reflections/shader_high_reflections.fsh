@@ -11,8 +11,6 @@ uniform sampler2D uNoiseBuffer;
 // Camera data
 uniform mat4 uProjMatrix;
 uniform mat4 uProjMatrixInv;
-uniform mat4 uViewMatrix;
-uniform mat4 uViewMatrixInv;
 uniform float uNear;
 uniform float uFar;
 uniform vec2 uScreenSize;
@@ -20,7 +18,6 @@ uniform vec2 uScreenSize;
 uniform float uPrecision;
 uniform float uThickness;
 uniform vec3 uKernel[16];
-uniform float uOffset[16];
 uniform vec4 uFallbackColor;
 uniform float uFadeAmount;
 uniform float uNoiseSize;
@@ -50,10 +47,10 @@ float transformDepth(float depth)
 }
 
 // Reconstruct a position from a screen space coordinate and (linear) depth
-vec4 posFromBuffer(vec2 coord, float depth)
+vec3 posFromBuffer(vec2 coord, float depth)
 {
 	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
-	return vec4(pos.xyz / pos.w, pos.w);
+	return pos.xyz / pos.w;
 }
 
 float unpackFloat2(float expo, float dec)
@@ -70,14 +67,20 @@ vec3 getNormal(vec2 coords)
 	return (vec3(unpackFloat2(nExp.r, nDec.r), unpackFloat2(nExp.g, nDec.g), unpackFloat2(nExp.b, nDec.b)) / (255.0 * 255.0)) * 2.0 - 1.0;
 }
 
-vec2 viewPosToPixel(vec4 viewPos)
+vec2 viewPosToPixel(vec3 viewPos)
 {
-	viewPos     *= uProjMatrix;
-	viewPos.xyz /= viewPos.w;
-	viewPos.xy   = viewPos.xy * 0.5 + 0.5;
-	viewPos.xy  *= uScreenSize;
+	vec4 coord = (uProjMatrix * vec4(viewPos.xyz, 1.0));
+	coord.xy = (coord.xy / coord.w) * 0.5 + 0.5;
+	coord.xy = vec2(1.0) - coord.xy;
+	coord.xy  *= uScreenSize;
 	
-	return viewPos.xy;
+	//coord.y = 1.0 - coord.y;
+	//coord = posFromBuffer(coord, getDepth(coord));
+	
+	//coord.xy   = coord.xy * 0.5 + 0.5;
+	
+	
+	return coord.xy;
 }
 
 // Ray tracer, returns color
@@ -90,8 +93,7 @@ vec3 rayTrace(vec2 originUV)
 	
 	// Sample buffers
 	float originDepth = getDepth(originUV);
-	vec4 viewPos = posFromBuffer(originUV, originDepth);
-	vec3 worldPos = vec3(vec4(viewPos.xyz, 1.0) * uViewMatrixInv);
+	vec3 viewPos = posFromBuffer(originUV, originDepth);
 	vec3 normal = getNormal(originUV);
 	
 	vec3 jitt = vec3(0.0);
@@ -103,8 +105,8 @@ vec3 rayTrace(vec2 originUV)
 	vec3 bitangent = cross(normal, tangent);
 	mat3 kernelBasis = mat3(tangent, bitangent, normal);
 	
-	vec3 reflectVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal)));
-	vec3 rayVector = normalize(reflect(normalize(viewPos.xyz), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
+	vec3 reflectVector = normalize(reflect(normalize(viewPos), normalize(normal)));
+	vec3 rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
 	float rayVis = 1.0;
 	
 	if (dot(rayVector, normal) <= 0.01)
@@ -115,15 +117,15 @@ vec3 rayTrace(vec2 originUV)
 	
 	// Ray data
 	float raySize       = 5000.0;
-	vec3 rayStartPos    = viewPos.xyz;
+	vec3 rayStartPos    = viewPos;
 	vec3 rayEndPos      = rayStartPos + (rayVector * raySize);
 	
 	// Clip to near camera plane
 	if (rayEndPos.z < uNear)
 		rayEndPos       = rayStartPos + (rayVector * (rayStartPos.z - uNear));
 	
-	vec2 rayStartPixel  = viewPosToPixel(vec4(rayStartPos, 1.0));
-	vec2 rayEndPixel    = viewPosToPixel(vec4(rayEndPos, 1.0));
+	vec2 rayStartPixel  = viewPosToPixel(rayStartPos);
+	vec2 rayEndPixel    = viewPosToPixel(rayEndPos);
 	vec2 rayPixel       = rayStartPixel;
 	vec2 rayUV          = rayPixel / uScreenSize;
 	
@@ -132,7 +134,7 @@ vec3 rayTrace(vec2 originUV)
 	bool useDeltaX      = (abs(pixelDelta.x) >= abs(pixelDelta.y));
 	float stepDelta     = (useDeltaX ? abs(pixelDelta.x) : abs(pixelDelta.y)) * clamp(uPrecision, 0.0, 1.0);
 	vec2 pixelStepDelta = pixelDelta / max(stepDelta, 0.001);
-	vec4 samplePos      = viewPos;
+	vec3 samplePos      = viewPos;
 	
 	int refineSteps = 5;
 	float progress = 0.0;

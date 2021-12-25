@@ -29,11 +29,10 @@ function shader_high_indirect_set(depthsurface, normalsurface, normalsurface2, d
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
 	
 	render_set_uniform("uKernel", render_indirect_kernel)
-	render_set_uniform("uOffset", render_indirect_offset)
 	
 	render_set_uniform("uEmissionRange", min(app.project_render_indirect_range, app.project_render_indirect_emission_range))
 	
-	var stepamount = 32 * power(1 + app.project_render_indirect_quality, 2);
+	var stepamount = 24 * power(3 + app.project_render_indirect_quality, 2);
 	
 	render_set_uniform("uStepSize", (app.project_render_indirect_range/stepamount))
 	render_set_uniform_int("uStepAmount", stepamount)

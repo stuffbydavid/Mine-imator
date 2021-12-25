@@ -48,6 +48,13 @@ function tab_frame_editor_camera()
 	draw_meter("frameeditorcamerafov", dx, dy, dw, tl_edit.value[e_value.CAM_FOV], 50, 1, 170, 45, 1, tab.camera.tbx_fov, action_tl_frame_cam_fov)
 	tab_next()
 	
+	// Clip
+	tab_control_textfield_group(true)
+	textfield_group_add("frameeditorcameraclipnear", round(tl_edit.value[e_value.CAM_NEAR]), clip_near, action_tl_frame_cam_near, X, tab.camera.tbx_near)
+	textfield_group_add("frameeditorcameraclipfar", round(tl_edit.value[e_value.CAM_FAR]), clip_far, action_tl_frame_cam_far, X, tab.camera.tbx_far)
+	draw_textfield_group("frameeditorcameraclip", dx, dy, dw, 1, clip_near, clip_far, 1, true)
+	tab_next()
+	
 	// Blade amount
 	tab_control_meter()
 	draw_meter("frameeditorcamerabladeamount", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_AMOUNT], 50, 0, 16, 0, 1, tab.camera.tbx_blade_amount, action_tl_frame_cam_blade_amount)

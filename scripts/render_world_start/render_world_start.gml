@@ -3,6 +3,8 @@
 
 function render_world_start()
 {
+	var near, far;
+	
 	if (!render_camera) // Use work camera
 	{
 		var xx, yy, zz, cx, cy;
@@ -21,6 +23,9 @@ function render_world_start()
 		cam_up[Z] = cx * (xx * xx + yy * yy)
 		
 		cam_fov = 45
+		
+		near = clip_near
+		far = clip_far
 	}
 	else
 	{
@@ -50,13 +55,16 @@ function render_world_start()
 		cam_up[Y] = mat[9]
 		cam_up[Z] = mat[10]
 		cam_fov = max(1, render_camera.value[e_value.CAM_FOV])
+		
+		near = render_camera.value[e_value.CAM_NEAR]
+		far = render_camera.value[e_value.CAM_FAR]
 	}
 	
-	cam_near = 1
+	cam_near = near
 	if (argument_count > 0)
-		cam_far = argument[0]
+		cam_far = min(far, cam_near + argument[0])
 	else
-		cam_far = world_size
+		cam_far = far
 	
 	background_sky_update()
 	

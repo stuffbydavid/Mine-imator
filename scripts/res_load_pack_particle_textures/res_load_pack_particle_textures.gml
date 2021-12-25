@@ -218,8 +218,8 @@ function res_load_pack_particle_textures()
 		surface_free(surf)
 	}
 	
-	// Free textures
-	if (particle_texture_map != null)
+	// Free textures (Keep Minecraft textures for filling in resource packs)
+	if (particle_texture_map != null && (id != mc_res))
 	{
 		var key = ds_map_find_first(particle_texture_map);
 		while (!is_undefined(key))

@@ -4,7 +4,7 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						false
+	#macro dev_mode						true
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
@@ -174,6 +174,8 @@ function macros()
 	#macro item_size					16
 	#macro world_size					30000
 	#macro chunk_size					64
+	#macro clip_near					1
+	#macro clip_far						world_size
 	
 	// Vectors and matrices
 	#macro X							0

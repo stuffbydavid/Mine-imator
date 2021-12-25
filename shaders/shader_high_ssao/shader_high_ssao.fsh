@@ -88,11 +88,15 @@ void main()
 		// Get sample brightness
 		float sampleBrightness = texture2D(uBrightnessBuffer, sampleCoord).r;
 		
+		// Sample normal
+		vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, sampleCoord));
+		
 		// Add occlusion if checks succeed
 		float bias = originDepth * 50.0;
 		float depthCheck = (sampleDepth <= (samplePos.z - bias)) ? 1.0 : 0.0;
 		float rangeCheck = smoothstep(0.0, 1.0, sampleRadius / abs(origin.z - sampleDepth));
-		occlusion += depthCheck * rangeCheck * sampleBrightness;//depthCheck * rangeCheck * uPower * ampleBrightness;
+		float angleCheck = clamp((1.0 - dot(sampleNormal, normal)) * 2.0, 0.0, 1.0);
+		occlusion += depthCheck * rangeCheck * sampleBrightness * angleCheck;
 	}
 	
 	// Raise to power

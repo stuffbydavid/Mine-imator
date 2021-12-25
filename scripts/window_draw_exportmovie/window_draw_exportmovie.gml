@@ -65,7 +65,7 @@ function window_draw_exportmovie()
 		loadw = floor(sw * scale)
 	}
 	
-	draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, text_get("exportmovieframe", string(exportmovie_frame), string(totalframes)))
+	draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, text_get("exportmovieframe", string(exportmovie_frame), string(totalframes)), "")
 	window_set_caption(loadtext + " - Mine-imator")
 	
 	// Title

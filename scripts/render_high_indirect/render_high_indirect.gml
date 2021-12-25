@@ -46,18 +46,6 @@ function render_high_indirect(export)
 	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
 	brightnesssurf = render_surface[5]
 	
-	surface_set_target_ext(0, depthsurf)
-	surface_set_target_ext(1, normalsurf)
-	surface_set_target_ext(2, normalsurf2)
-	surface_set_target_ext(3, brightnesssurf)
-	{
-		draw_clear_alpha(c_white, 0)
-		render_world_start(5000)
-		render_world(e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL)
-		render_world_done()
-	}
-	surface_reset_target()
-	
 	// Render diffuse color
 	surface_set_target(diffusesurf)
 	{
@@ -73,6 +61,18 @@ function render_high_indirect(export)
 	}
 	surface_reset_target()
 	
+	surface_set_target_ext(0, depthsurf)
+	surface_set_target_ext(1, normalsurf)
+	surface_set_target_ext(2, normalsurf2)
+	surface_set_target_ext(3, brightnesssurf)
+	{
+		draw_clear_alpha(c_white, 0)
+		render_world_start(5000)
+		render_world(e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL)
+		render_world_done()
+	}
+	surface_reset_target()
+	
 	for (var s = samplestart; s < sampleend; s++)
 	{
 		// Noise texture
@@ -80,9 +80,6 @@ function render_high_indirect(export)
 		
 		render_sample_noise_texture = render_get_noise_texture(s)
 		render_indirect_kernel = render_generate_sample_kernel(16)
-		
-		for (var i = 0; i < 16; i++)
-			render_indirect_offset[i] = random_range(0, 1)
 		
 		if (s = 0 || render_samples_clear)
 		{

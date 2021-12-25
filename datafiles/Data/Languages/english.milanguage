@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.12.04"
+        "lastchange": "2021.12.20"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2751,6 +2751,11 @@
         "camera": "CAMERA",
         "camera/": {
             "fov": "Field of view",
+            "clip": "Clip",
+            "clip/": {
+                "near": "Near",
+                "far": "Far"
+            },
 			"bladeamount": "Blades",
             "bladeangle": "Blade angle",
             "videosize": "Camera size",
