@@ -98,6 +98,22 @@ function tab_timeline_editor_hierarchy()
 			tab_next()
 		}
 		
+		// Surface
+		if (tl_edit.value_type[e_value_type.MATERIAL])
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritsurface", dx, dy, tl_edit.inherit_surface, action_tl_inherit_surface)
+			tab_next()
+		}
+		
+		// Subsurface
+		if (tl_edit.value_type[e_value_type.MATERIAL])
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritsubsurface", dx, dy, tl_edit.inherit_subsurface, action_tl_inherit_subsurface)
+			tab_next()
+		}
+		
 		// Glow color
 		if (!tl_edit.value_type[e_value_type.CAMERA])
 		{

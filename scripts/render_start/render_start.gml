@@ -99,6 +99,7 @@ function render_start()
 	
 	render_update_text()
 	render_update_item()
+	render_update_camera()
 	
 	camera_apply(cam_render)
 }

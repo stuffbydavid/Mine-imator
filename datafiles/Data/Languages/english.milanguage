@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.12.20"
+        "lastchange": "2021.12.29"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2619,6 +2619,8 @@
             "visibility": "Visibility",
             "bend": "Bend",
             "texture": "Texture",
+            "surface": "Surface",
+            "subsurface": "Subsurface",
             "glowcolor": "Glow color",
             "select": "Select"
         },

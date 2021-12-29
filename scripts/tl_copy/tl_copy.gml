@@ -36,6 +36,8 @@ function tl_copy(to)
 	to.inherit_visibility = inherit_visibility
 	to.inherit_bend = inherit_bend
 	to.inherit_texture = inherit_texture
+	to.inherit_surface = inherit_surface
+	to.inherit_subsurface = inherit_subsurface
 	to.inherit_glow_color = inherit_glow_color
 	to.inherit_select = inherit_select
 	to.scale_resize = scale_resize

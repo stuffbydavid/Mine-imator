@@ -80,6 +80,8 @@ function tl_event_create()
 	inherit_visibility = true
 	inherit_bend = false
 	inherit_texture = false
+	inherit_surface = false
+	inherit_subsurface = false
 	inherit_glow_color = true
 	inherit_select = false
 	scale_resize = true

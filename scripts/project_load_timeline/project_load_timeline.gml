@@ -160,6 +160,8 @@ function project_load_timeline(map)
 			inherit_visibility = value_get_real(inheritmap[?"visibility"], inherit_visibility)
 			inherit_bend = value_get_real(inheritmap[?"bend"], inherit_bend)
 			inherit_texture = value_get_real(inheritmap[?"texture"], inherit_texture)
+			inherit_surface = value_get_real(inheritmap[?"surface"], inherit_surface)
+			inherit_subsurface = value_get_real(inheritmap[?"subsurface"], inherit_subsurface)
 			inherit_glow_color = value_get_real(inheritmap[?"glow_color"], inherit_glow_color)
 			inherit_select = value_get_real(inheritmap[?"select"], inherit_select)
 		}

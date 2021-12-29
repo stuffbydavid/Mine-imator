@@ -4,7 +4,7 @@
 function tl_update_matrix()
 {
 	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, lasttex;
-	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex;
+	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
 	tlamount = ds_list_size(app.project_timeline_list)
 	
 	if (object_index = obj_timeline)
@@ -168,6 +168,8 @@ function tl_update_matrix()
 			inhvis = true
 			inhbend = true
 			inhtex = true
+			inhsurf = true
+			inhsubsurf = true
 			tl = id
 			
 			while (true)
@@ -193,6 +195,12 @@ function tl_update_matrix()
 				
 				if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] > 0)
 					inhtex = false
+				
+				if (!tl.inherit_surface || tl.value[e_value.TEXTURE_MATERIAL_OBJ] > 0)
+					inhsurf = false
+				
+				if (!tl.inherit_subsurface)
+					inhsubsurf = false
 				
 				if (inhalpha)
 					value_inherit[e_value.ALPHA] *= par.value[e_value.ALPHA]
@@ -222,8 +230,18 @@ function tl_update_matrix()
 					
 					value_inherit[e_value.MIX_PERCENT] = clamp(value_inherit[e_value.MIX_PERCENT] + par.value[e_value.MIX_PERCENT], 0, 1)
 					value_inherit[e_value.BRIGHTNESS] = clamp(value_inherit[e_value.BRIGHTNESS] + par.value[e_value.BRIGHTNESS], 0, 1)
+				}
+				
+				if (inhsurf)
+				{
+					value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = par.value[e_value.TEXTURE_MATERIAL_OBJ]
+					value_inherit[e_value.TEXTURE_NORMAL_OBJ] = par.value[e_value.TEXTURE_NORMAL_OBJ]
 					value_inherit[e_value.METALLIC] = clamp(value_inherit[e_value.METALLIC] + par.value[e_value.METALLIC], 0, 1)
 					value_inherit[e_value.ROUGHNESS] = clamp(value_inherit[e_value.ROUGHNESS] * par.value[e_value.ROUGHNESS], 0, 1)
+				}
+				
+				if (inhsubsurf)
+				{
 					value_inherit[e_value.SUBSURFACE] = value_inherit[e_value.SUBSURFACE] + par.value[e_value.SUBSURFACE]
 					value_inherit[e_value.SUBSURFACE_RADIUS_RED] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_RED] * par.value[e_value.SUBSURFACE_RADIUS_RED], 0, 1)
 					value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = clamp(value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] * par.value[e_value.SUBSURFACE_RADIUS_GREEN], 0, 1)
@@ -247,11 +265,7 @@ function tl_update_matrix()
 				}
 				
 				if (inhtex)
-				{
 					value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]
-					value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = par.value[e_value.TEXTURE_MATERIAL_OBJ]
-					value_inherit[e_value.TEXTURE_NORMAL_OBJ] = par.value[e_value.TEXTURE_NORMAL_OBJ]
-				}
 				
 				tl = par
 			}
