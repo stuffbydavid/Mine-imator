@@ -165,7 +165,7 @@ void main()
 		vec3 shadow = vec3(1.0);
 		vec3 subsurf = vec3(0.0);
 		
-		if ((dif > 0.0 && brightness < 1.0) || sssEnabled > 0)
+		if ((dif > 0.0 && brightness < 1.0) || sssEnabled == 1)
 		{
 			float fragDepth = vScreenCoord.z * .5 + .5;
 			vec2 fragCoord = vec2(vScreenCoord.x, -vScreenCoord.y) * .5 + .5;
@@ -185,13 +185,19 @@ void main()
 				float sampleDepth = unpackDepth(texture2D(uDepthBuffer, fragCoord));
 				shadow *= ((fragDepth - bias) > sampleDepth) ? vec3(0.0) : vec3(1.0);
 				
-				if (uSpecular == 0)
+				if (sssEnabled == 1 && uSpecular == 0)
 				{
 					// Get subsurface translucency
 					vec3 dis = vec3((uSSSRadius * (max(uSSS, vBlockSSS) + 11.0)) / abs(uSunFar - uSunNear));
 					float lightdis = (fragDepth + (bias * 10.0)) - sampleDepth;
-				
-					subsurf = vec3(vec3(1.0) - clamp(vec3(lightdis) / dis, vec3(0.0), vec3(1.0)));
+					
+					if (dif == 0.0 && ((fragDepth + (bias * 10.0)) > sampleDepth || vBlockSSS > 0.0))
+					{
+						if (vBlockSSS > 0.0 && (fragDepth - (bias * 0.01)) <= sampleDepth)
+							lightdis = 0.0;
+						
+						subsurf = vec3(vec3(1.0) - clamp(vec3(lightdis) / dis, vec3(0.0), vec3(1.0)));
+					}
 				}
 			}
 		}
@@ -202,9 +208,6 @@ void main()
 			float transDif = max(0.0, dot(normalize(-normal), uLightDirection));
 			transDif = clamp(transDif, 0.0, 1.0);
 			subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
-		
-			// Disable translucency on diffuse
-			subsurf *= (dif > 0.0 ? 0.0 : 1.0);
 			
 			// Calculate light
 			light = uLightColor.rgb * uLightStrength * dif * shadow;

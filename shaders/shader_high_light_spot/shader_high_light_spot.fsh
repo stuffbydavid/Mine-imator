@@ -173,7 +173,7 @@ void main()
 			att = 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
 			dif *= att;
 			
-			if ((dif > 0.0 && brightness < 1.0) || sssEnabled > 0)
+			if ((dif > 0.0 && brightness < 1.0) || sssEnabled == 1)
 			{
 				// Spotlight circle
 				float fragDepth = min(vScreenCoord.z, uLightFar);
@@ -203,14 +203,20 @@ void main()
 					float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, fragCoord)) * (uLightFar - uLightNear);
 					shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 					
-					if (uSpecular == 0)
+					if (sssEnabled == 1 && uSpecular == 0)
 					{
 						// Get subsurface translucency
 						vec3 dis = vec3(uSSSRadius * max(uSSS, vBlockSSS));
 						float lightdis = (fragDepth + bias) - sampleDepth;
-					
-						subsurf = vec3(vec3(1.0) - clamp(vec3(lightdis) / dis, vec3(0.0), vec3(1.0)));
-						subsurf *= att;
+						
+						if (dif == 0.0 && ((fragDepth + bias) > sampleDepth || vBlockSSS > 0.0))
+						{
+							if (vBlockSSS > 0.0 && (fragDepth - (bias * 0.01)) <= sampleDepth)
+								lightdis = 0.0;
+							
+							subsurf = vec3(vec3(1.0) - clamp(vec3(lightdis) / dis, vec3(0.0), vec3(1.0)));
+							subsurf *= att;
+						}
 					}
 				}
 			}
@@ -222,10 +228,7 @@ void main()
 			float transDif = max(0.0, dot(normalize(-normal), normalize(uLightPosition - vPosition)));
 			transDif = clamp(transDif, 0.0, 1.0);
 			subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
-		
-			// Disable translucency on diffuse
-			subsurf *= (dif > 0.0 ? 0.0 : 1.0);
-		
+			
 			// Calculate light
 			light = uLightColor.rgb * uLightStrength * dif * shadow;
 		
