@@ -19,7 +19,7 @@ function render_startup()
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality;
 	
-	globalvar render_shadows_buffer, render_matrix, render_samples, render_samples_done, render_target_size, render_high_preview,
+	globalvar render_matrix, render_samples, render_samples_done, render_target_size, render_high_preview,
 			  render_high_preview_width, render_high_preview_height;
 	
 	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
@@ -119,7 +119,6 @@ function render_startup()
 	
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
-	render_surface_sun_buffer = null
 	render_surface_sun_color_buffer = null
 	render_surface_spot_buffer = null
 	render_surface_point_buffer = null
@@ -192,14 +191,12 @@ function render_startup()
 	render_post_index = 0
 	
 	// Render samples
-	render_shadows_buffer = null
 	render_samples = 0
 	render_samples_done = false
 	render_matrix = []
 	render_high_preview = false
 	render_high_preview_width = false
 	render_high_preview_height = false
-	render_shadows_matrix = null
 	
 	// Render pass surf
 	render_pass_surf = null
@@ -207,6 +204,18 @@ function render_startup()
 	render_blend_prev = null
 	render_alpha_prev = null
 	render_texture_prev = null
+	
+	// Cascades for sun
+	globalvar render_cascades_count, render_cascade_ends, render_cascades, render_cascade_debug;
+	render_cascades_count = 3
+	render_cascade_ends = [0.0, 0.05, 0.2, 1.0]
+	render_cascades[0] = new frustum()
+	render_cascades[1] = new frustum()
+	render_cascades[2] = new frustum()
+	render_cascade_debug = 1
+	
+	for (var i = 0; i < render_cascades_count; i++)
+		render_surface_sun_buffer[i] = null
 	
 	// Render modes
 	globalvar render_mode, render_mode_shader_map, render_shader_obj;

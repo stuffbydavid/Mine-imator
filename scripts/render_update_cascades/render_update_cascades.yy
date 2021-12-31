@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Render/Update.yy",
   },
   "resourceVersion": "1.0",
-  "name": "render_update_tl_resource",
+  "name": "render_update_cascades",
   "tags": [],
   "resourceType": "GMScript",
 }

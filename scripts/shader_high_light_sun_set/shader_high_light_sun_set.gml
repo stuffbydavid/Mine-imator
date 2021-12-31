@@ -8,6 +8,7 @@ function shader_high_light_sun_set()
 	render_set_uniform_int("uIsSky", 0)
 	render_set_uniform_int("uIsWater", 0)
 	
+	render_set_uniform("uLightMatBiasMVP", array_add(array_add(render_cascades[0].matBias, render_cascades[1].matBias), render_cascades[2].matBias))
 	render_set_uniform("uLightMatrix", render_sun_matrix)
 	if (app.background_sunlight_follow)
 		render_set_uniform_vec3("uSunAt", cam_from[X], cam_from[Y], 0)
@@ -25,9 +26,17 @@ function shader_high_light_sun_set()
 	
 	render_set_uniform_int("uColoredShadows", app.project_render_shadows_sun_colored)
 	
-	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_sun_buffer))
-	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], true)
+	texture_set_stage(sampler_map[?"uDepthBuffer0"], surface_get_texture(render_surface_sun_buffer[0]))
+	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer0"], true)
 	
-	texture_set_stage(sampler_map[?"uColorBuffer"], surface_get_texture(render_surface_sun_color_buffer))
-	gpu_set_texfilter_ext(sampler_map[?"uColorBuffer"], true)
+	texture_set_stage(sampler_map[?"uDepthBuffer1"], surface_get_texture(render_surface_sun_buffer[1]))
+	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer1"], true)
+	
+	texture_set_stage(sampler_map[?"uDepthBuffer2"], surface_get_texture(render_surface_sun_buffer[2]))
+	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer2"], true)
+	
+	render_set_uniform("uCascadeEndClipSpace", [render_cascades[0].clipEndDepth, render_cascades[1].clipEndDepth, render_cascades[2].clipEndDepth])
+	
+	//texture_set_stage(sampler_map[?"uColorBuffer"], surface_get_texture(render_surface_sun_color_buffer))
+	//gpu_set_texfilter_ext(sampler_map[?"uColorBuffer"], true)
 }

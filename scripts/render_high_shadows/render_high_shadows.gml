@@ -102,25 +102,35 @@ function render_high_shadows(export)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
 			}
 			
+			var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
+			angle = vec3_normalize(vec3_mul(angle, -1))
+			render_sun_direction = app.background_sun_direction
+			
 			// Update camera (position) if not previously initialized
 			render_world_start()
+			render_update_cascades(angle)
 			
 			// Depth
-			render_surface_sun_buffer = surface_require(render_surface_sun_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
-			surface_set_target(render_surface_sun_buffer)
+			for (var i = 0; i < render_cascades_count; i++)
 			{
-				gpu_set_blendmode_ext(bm_one, bm_zero)
+				render_cascade_debug = i
 				
-				draw_clear(c_white)
-				render_world_start_sun(
-					point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
-					point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
-				render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
-				render_world_done()
+				render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+				surface_set_target(render_surface_sun_buffer[i])
+				{
+					gpu_set_blendmode_ext(bm_one, bm_zero)
 				
-				gpu_set_blendmode(bm_normal)
+					draw_clear(c_white)
+					render_world_start_sun(
+						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
+						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
+					render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
+					render_world_done()
+				
+					gpu_set_blendmode(bm_normal)
+				}
+				surface_reset_target()
 			}
-			surface_reset_target()
 			
 			// Color
 			if (app.project_render_shadows_sun_colored)
@@ -541,7 +551,10 @@ function render_high_shadows(export)
 		surface_free(render_surface_shadows_dec)
 		surface_free(render_surface_specular_expo)
 		surface_free(render_surface_specular_dec)
-		surface_free(render_surface_sun_buffer)
+		
+		for (var i = 0; i < render_cascades_count; i++)
+			surface_free(render_surface_sun_buffer[i])
+		
 		surface_free(render_surface_sun_color_buffer)
 		
 		surface_free(render_surface_point_buffer)

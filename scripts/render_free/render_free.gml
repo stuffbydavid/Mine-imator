@@ -38,7 +38,9 @@ function render_free()
 	surface_free(render_surface_sample_temp1)
 	surface_free(render_surface_sample_temp2)
 	
-	surface_free(render_surface_sun_buffer)
+	for (var i = 0; i < render_cascades_count; i++)
+		surface_free(render_surface_sun_buffer[i])
+	
 	surface_free(render_surface_sun_color_buffer)
 	surface_free(render_surface_spot_buffer)
 	surface_free(render_surface_point_buffer)

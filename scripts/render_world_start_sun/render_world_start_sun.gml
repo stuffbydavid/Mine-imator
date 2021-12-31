@@ -9,8 +9,8 @@ function render_world_start_sun(from, to, offset)
 	render_light_from = from
 	render_light_to = to
 	render_light_offset = offset
-	render_sun_near = 0.1
-	render_sun_far = world_size/2
+	render_sun_near = render_cascades[render_cascade_debug].near //0.1
+	render_sun_far = render_cascades[render_cascade_debug].far //world_size/2
 	render_light_fov = 45
 	render_light_color = background_sunlight_color_final
 	render_light_strength = 1 + background_sunlight_strength
@@ -23,11 +23,11 @@ function render_world_start_sun(from, to, offset)
 	shadowfrom = point3D_add(render_light_from, render_light_offset)
 	shadowto = render_light_to
 	
-	var mV = matrix_build_lookat(shadowfrom[X], shadowfrom[Y], shadowfrom[Z], 
+	var mV = render_cascades[render_cascade_debug].matView;/*matrix_build_lookat(shadowfrom[X], shadowfrom[Y], shadowfrom[Z], 
 								 shadowto[X], shadowto[Y], shadowto[Z],
-								 0, 0, 1);
+								 0, 0, 1);*/
 	
-	var mP = matrix_build_projection_ortho(background_sunlight_range/2, -background_sunlight_range/2, render_sun_near, render_sun_far);
+	var mP = render_cascades[render_cascade_debug].matProj;//matrix_build_projection_ortho(background_sunlight_range/2, -background_sunlight_range/2, render_sun_near, render_sun_far);
 	
 	camera_set_view_mat(cam_render, mV)
 	camera_set_proj_mat(cam_render, mP)
@@ -44,5 +44,5 @@ function render_world_start_sun(from, to, offset)
 	bbox_update_visible()
 	
 	render_sun_matrix = light_view_proj_matrix
-	render_sun_direction = background_sun_direction
+	//render_sun_direction = background_sun_direction
 }

@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Render/Update.yy",
+    "name": "Vector",
+    "path": "folders/Scripts/Utility/Math/Vector.yy",
   },
   "resourceVersion": "1.0",
-  "name": "render_update_tl_resource",
+  "name": "vec4_floor",
   "tags": [],
   "resourceType": "GMScript",
 }

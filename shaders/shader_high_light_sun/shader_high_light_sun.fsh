@@ -1,4 +1,5 @@
 #define PI 3.14159265
+#define NUM_CASCADES 3
 
 uniform sampler2D uTexture;
 uniform vec2 uTexScale;
@@ -6,14 +7,16 @@ uniform vec4 uBlendColor;
 uniform int uIsSky;
 uniform int uIsWater;
 
-uniform vec3 uLightPosition;
 uniform vec3 uLightDirection;
 uniform vec4 uLightColor;
 uniform float uLightStrength;
 uniform float uSunNear;
 uniform float uSunFar;
 
-uniform sampler2D uDepthBuffer;
+uniform sampler2D uDepthBuffer0;
+uniform sampler2D uDepthBuffer1;
+uniform sampler2D uDepthBuffer2;
+uniform float uCascadeEndClipSpace[NUM_CASCADES];
 
 uniform int uColoredShadows;
 uniform sampler2D uColorBuffer;
@@ -32,9 +35,10 @@ varying vec3 vPosition;
 varying float vDepth;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
-varying vec4 vScreenCoord;
+varying vec4 vScreenCoord[NUM_CASCADES];
 varying float vBrightness;
 varying float vBlockSSS;
+varying float vClipSpaceDepth;
 
 uniform sampler2D uTextureMaterial;
 uniform vec2 uTexScaleMaterial;
@@ -88,6 +92,16 @@ float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 float unpackDepth(vec4 c)
 {
 	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
+}
+
+vec4 cascadeDepthBuffer(int index, vec2 coord)
+{
+	if (index == 0)
+		return texture2D(uDepthBuffer0, coord);
+	else if (index == 1)
+		return texture2D(uDepthBuffer1, coord);
+	else
+		return texture2D(uDepthBuffer2, coord);
 }
 
 #extension GL_OES_standard_derivatives : enable
@@ -167,14 +181,23 @@ void main()
 		
 		if ((dif > 0.0 && brightness < 1.0) || sssEnabled == 1)
 		{
-			float fragDepth = vScreenCoord.z * .5 + .5;
-			vec2 fragCoord = vec2(vScreenCoord.x, -vScreenCoord.y) * .5 + .5;
-		
+			// Find the cascade to use
+		    int i;
+		    for (i = 0; i < NUM_CASCADES; i++)
+		        if (vClipSpaceDepth < uCascadeEndClipSpace[i])
+		            break;
+			
+			float fragDepth = vScreenCoord[i].z;
+			vec2 fragCoord = vec2(vScreenCoord[i].x, vScreenCoord[i].y);
+			
 			// Texture position must be valid
-			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0)
+			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0 && i < NUM_CASCADES)
 			{	
+				// Convert 0->1 to Near->Far
+				fragDepth = uSunNear + fragDepth * (uSunFar - uSunNear);
+				
 				// Calculate bias
-				float bias = 1.0 / abs(uSunFar - uSunNear);
+				float bias = 1.0;
 				
 				// Colored shadows
 				if (uColoredShadows > 0)
@@ -182,16 +205,16 @@ void main()
 						shadow = texture2D(uColorBuffer, fragCoord).rgb;
 				
 				// Find shadow
-				float sampleDepth = unpackDepth(texture2D(uDepthBuffer, fragCoord));
+				float sampleDepth = uSunNear + unpackDepth(cascadeDepthBuffer(i, fragCoord)) * (uSunFar - uSunNear);
 				shadow *= ((fragDepth - bias) > sampleDepth) ? vec3(0.0) : vec3(1.0);
 				
 				if (sssEnabled == 1 && uSpecular == 0)
 				{
 					// Get subsurface translucency
-					vec3 dis = vec3((uSSSRadius * (max(uSSS, vBlockSSS) + 11.0)) / abs(uSunFar - uSunNear));
-					float lightdis = (fragDepth + (bias * 10.0)) - sampleDepth;
+					vec3 dis = vec3(uSSSRadius * max(uSSS, vBlockSSS));
+					float lightdis = (fragDepth + bias) - sampleDepth;
 					
-					if (dif == 0.0 && ((fragDepth + (bias * 10.0)) > sampleDepth || vBlockSSS > 0.0))
+					if (dif == 0.0 && ((fragDepth + bias) > sampleDepth || vBlockSSS > 0.0))
 					{
 						if (vBlockSSS > 0.0 && (fragDepth - (bias * 0.01)) <= sampleDepth)
 							lightdis = 0.0;
