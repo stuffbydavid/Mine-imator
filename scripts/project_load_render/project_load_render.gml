@@ -17,7 +17,6 @@ function project_load_render(map)
 	project_render_shadows_sun_buffer_size = value_get_real(map[?"render_shadows_sun_buffer_size"], project_render_shadows_sun_buffer_size)
 	project_render_shadows_spot_buffer_size = value_get_real(map[?"render_shadows_spot_buffer_size"], project_render_shadows_spot_buffer_size)
 	project_render_shadows_point_buffer_size = value_get_real(map[?"render_shadows_point_buffer_size"], project_render_shadows_point_buffer_size)
-	project_render_shadows_sun_colored = value_get_real(map[?"render_shadows_sun_colored"], project_render_shadows_sun_colored)
 	
 	project_render_subsurface_samples = value_get_real(map[?"render_subsurface_samples"], project_render_subsurface_samples)
 	project_render_subsurface_jitter = value_get_real(map[?"render_subsurface_jitter"], project_render_subsurface_jitter)

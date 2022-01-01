@@ -1,3 +1,4 @@
+#define NUM_CASCADES 3
 #define PI 3.14159265
 #define STEPS 16
 
@@ -5,8 +6,8 @@ varying vec2 vTexCoord;
 
 uniform float uNear;
 uniform float uFar;
-uniform float uSunNear;
-uniform float uSunFar;
+uniform float uSunNear[NUM_CASCADES];
+uniform float uSunFar[NUM_CASCADES];
 
 uniform mat4 uOffset;
 
@@ -30,12 +31,18 @@ uniform vec3 uCameraPosition;
 uniform vec3 uSunDirection;
 uniform vec2 uScreenSize;
 
-uniform mat4 uSunMatrix;
+uniform mat4 uViewMatrix;
+uniform mat4 uProjMatrix;
 uniform mat4 uProjMatrixInv;
 uniform mat4 uViewMatrixInv;
 
 uniform sampler2D uDepthBuffer;
-uniform sampler2D uSunDepthBuffer;
+uniform sampler2D uDepthBuffer0;
+uniform sampler2D uDepthBuffer1;
+uniform sampler2D uDepthBuffer2;
+
+uniform mat4 uLightMatBiasMVP[NUM_CASCADES];
+uniform float uCascadeEndClipSpace[NUM_CASCADES];
 
 uniform int uSunVisible;
 
@@ -160,18 +167,40 @@ float unpackDepth(vec4 c)
 	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
 }
 
+vec4 cascadeDepthBuffer(int index, vec2 coord)
+{
+	if (index == 0)
+		return texture2D(uDepthBuffer0, coord);
+	else if (index == 1)
+		return texture2D(uDepthBuffer1, coord);
+	else
+		return texture2D(uDepthBuffer2, coord);
+}
+
 // Determine if point is in sun light
 float getLight(vec3 pos)
 {
-	vec4 screenCoord = uSunMatrix * vec4(pos, 1.0);
-		
-    float fragDepth = screenCoord.z * .5 + .5;
-    vec2 fragCoord = vec2(screenCoord.x, -screenCoord.y) * .5 + .5;
+	// Convert world position to clip space
+	float clipZ = (uProjMatrix * (uViewMatrix * vec4(pos, 1.0))).z;
+	
+	// Get cascade
+	int i = 0;
+	for (i = 0; i < NUM_CASCADES; i++)
+		if (clipZ < uCascadeEndClipSpace[i])
+			break;
+	
+	vec4 screenCoord = uLightMatBiasMVP[i] * vec4(pos, 1.0);
+	
+	float fragDepth = screenCoord.z;
+	vec2 fragCoord = screenCoord.xy;
 	
     if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0)
 	{	
-        float sampleDepth = unpackDepth(texture2D(uSunDepthBuffer, fragCoord));
-		float bias = 1.0 / abs(uSunFar - uSunNear);
+		// Convert 0->1 to Near->Far
+		fragDepth = uSunNear[i] + fragDepth * (uSunFar[i] - uSunNear[i]);
+		
+        float sampleDepth = uSunNear[i] + unpackDepth(cascadeDepthBuffer(i, fragCoord)) * (uSunFar[i] - uSunNear[i]);
+		float bias = 1.0;
 		
         if ((fragDepth - bias) < sampleDepth)
             return 1.0;

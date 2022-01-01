@@ -4,18 +4,14 @@ function background_sky_update_sun()
 {
 	var range = world_size/8;
 	
-	background_light_data[0] = lengthdir_x(range, background_sky_rotation - 90) * lengthdir_x(1, background_sky_time + 90) + cam_from[X] * background_sunlight_follow
-	background_light_data[1] = lengthdir_y(range, background_sky_rotation - 90) * lengthdir_x(1, background_sky_time + 90) + cam_from[Y] * background_sunlight_follow
+	background_light_data[0] = lengthdir_x(range, background_sky_rotation - 90) * lengthdir_x(1, background_sky_time + 90)
+	background_light_data[1] = lengthdir_y(range, background_sky_rotation - 90) * lengthdir_x(1, background_sky_time + 90)
 	background_light_data[2] = lengthdir_z(range, background_sky_time + 90)
 	
 	if (background_sky_time = 0)
 		background_light_data[0] += 0.1
 	
-	var sunfrom, sunto;
-	sunfrom = vec3(background_light_data[0], background_light_data[1], background_light_data[2])
-	sunto = point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0)
-	
-	background_sun_direction = vec3_normalize(point3D_sub(sunfrom, sunto))
+	background_sun_direction = vec3_normalize([background_light_data[0], background_light_data[1], background_light_data[2]])
 	
 	background_light_data[3] = range / 2
 	background_light_data[4] = color_get_red(background_sunlight_color_final) / 255

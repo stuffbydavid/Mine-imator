@@ -15,7 +15,6 @@ function project_reset_render()
 	project_render_shadows_sun_buffer_size = 2048
 	project_render_shadows_spot_buffer_size = 512
 	project_render_shadows_point_buffer_size = 256
-	project_render_shadows_sun_colored = false
 	
 	project_render_subsurface_samples = 7
 	project_render_subsurface_jitter = .3

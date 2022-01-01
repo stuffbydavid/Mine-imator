@@ -4,7 +4,7 @@
 function render_world_start(zfar)
 {
 	if (zfar != undefined)
-		cam_far = min(cam_far_prev, cam_near + argument[0])
+		cam_far = min(cam_far_prev, cam_near + zfar)
 	else
 		cam_far = cam_far_prev
 	

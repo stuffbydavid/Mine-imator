@@ -109,11 +109,6 @@ function tab_properties_background()
 	draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 	tab_next()
 	
-	// Sunlight range
-	tab_control_dragger()
-	draw_dragger("backgroundsunlightrange", dx, dy, dragger_width, background_sunlight_range, background_sunlight_range / 100, 400, world_size, 2000, 10, tab.background.tbx_sunlight_range, action_background_sunlight_range)
-	tab_next()
-	
 	// Sunlight angle
 	tab_control_dragger()
 	draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle)
@@ -123,29 +118,6 @@ function tab_properties_background()
 	tab_control_meter()
 	draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 	tab_next()
-	
-	// Follow camera
-	tab_control_switch()
-	draw_switch("backgroundsunlightfollow", dx, dy, background_sunlight_follow, action_background_sunlight_follow)
-	tab_next()
-	
-	// Twilight
-	tab_control_switch()
-	draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
-	tab_next()
-	
-	// Desaturate night
-	tab_control_switch()
-	draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
-	tab_next()
-	
-	// Desaturate amount
-	if (background_desaturate_night)
-	{
-		tab_control_meter()
-		draw_meter("backgrounddesaturatenightamount", dx, dy, dw, round(background_desaturate_night_amount * 100), 64, 0, 100, 0, 1, tab.background.tbx_desaturate_night_amount, action_background_desaturate_night_amount)
-		tab_next()
-	}
 	
 	// Clouds
 	tab_control_switch()
@@ -362,6 +334,24 @@ function tab_properties_background()
 	tab_next()
 	
 	tab_set_collumns(false)
+	
+	// Twilight
+	tab_control_switch()
+	draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
+	tab_next()
+	
+	// Desaturate night
+	tab_control_switch()
+	draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
+	tab_next()
+	
+	// Desaturate amount
+	if (background_desaturate_night)
+	{
+		tab_control_meter()
+		draw_meter("backgrounddesaturatenightamount", dx, dy, dw, round(background_desaturate_night_amount * 100), 64, 0, 100, 0, 1, tab.background.tbx_desaturate_night_amount, action_background_desaturate_night_amount)
+		tab_next()
+	}
 	
 	// Show fog
 	tab_control_switch()

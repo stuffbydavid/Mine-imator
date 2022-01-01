@@ -111,8 +111,6 @@ function app_update_animate()
 		background_sky_moon_phase				= bgobject.value[e_value.BG_SKY_MOON_PHASE]
 		background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 		background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
-		background_sunlight_range				= bgobject.value[e_value.BG_SUNLIGHT_RANGE]
-		background_sunlight_follow				= bgobject.value[e_value.BG_SUNLIGHT_FOLLOW]
 		background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
 		background_sunlight_angle				= bgobject.value[e_value.BG_SUNLIGHT_ANGLE]
 		background_twilight						= bgobject.value[e_value.BG_TWILIGHT]

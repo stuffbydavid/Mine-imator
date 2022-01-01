@@ -7,14 +7,15 @@ function render_update_cascades(dir)
 	var mV = matrix_build_lookat(cam_from[X], cam_from[Y], cam_from[Z], 
 								   cam_to[X],   cam_to[Y],   cam_to[Z],
 								   cam_up[X],   cam_up[Y],   cam_up[Z]);
-	var mP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far);
+	var mP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev);
 	
 	cam_frustum.build(matrix_multiply(mV, mP))
 	cam_frustum.build_vbuffer()
 	
-	var startz, endz, sunmatV;
+	var startz, endz, disz, sunmatV;
 	startz = cam_near
-	endz = min(cam_far, 5000)
+	endz = min(cam_far_prev, 7500)
+	disz = endz - startz
 	sunmatV = matrix_build_lookat(dir[X], dir[Y], dir[Z],
 								 0, 0, 0,
 								 0, 0, 1);
@@ -24,8 +25,8 @@ function render_update_cascades(dir)
 		// Calculate frustum splits of the camera
 		var cascade, zn, zf, submP;
 		cascade = render_cascades[i]
-		zn = cam_near + (render_cascade_ends[i] * endz)
-		zf = cam_near + (render_cascade_ends[i + 1] * endz)
+		zn = cam_near + (render_cascade_ends[i] * disz)
+		zf = cam_near + (render_cascade_ends[i + 1] * disz)
 		submP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, zn, zf);
 		cascade.build(matrix_multiply(mV, submP))
 		
@@ -53,21 +54,20 @@ function render_update_cascades(dir)
 		var diagonalXY = point3D_distance(point3D(0, 0, 0), point3D_sub(cascade.corners[1], cascade.corners[3]));
 		var borderOffset = vec4_div(vec4_sub(vec4(diagonalXY), vec4_sub(orthoMax, orthoMin)), 2);
 		borderOffset[Z] = borderOffset[W] = 0;
-		orthoMax = vec4_add(orthoMax, borderOffset);
-		orthoMin = vec4_sub(orthoMin, borderOffset);
+		orthoMax = vec4_add(orthoMax, borderOffset)
+		orthoMin = vec4_sub(orthoMin, borderOffset)
 			
 		// Snap to 1px increments to avoid shadow jittering
 		var worldUnitsPerTexel = vec4(diagonalXY / project_render_shadows_sun_buffer_size);
-		orthoMin = vec4_div(orthoMin, worldUnitsPerTexel);
-		orthoMin = vec4_floor(orthoMin);
-		orthoMin = vec4_mul(orthoMin, worldUnitsPerTexel);
-		orthoMax = vec4_div(orthoMax, worldUnitsPerTexel);
-		orthoMax = vec4_floor(orthoMax);
-		orthoMax = vec4_mul(orthoMax, worldUnitsPerTexel);
-        
+		orthoMin = vec4_div(orthoMin, worldUnitsPerTexel)
+		orthoMin = vec4_floor(orthoMin)
+		orthoMin = vec4_mul(orthoMin, worldUnitsPerTexel)
+		orthoMax = vec4_div(orthoMax, worldUnitsPerTexel)
+		orthoMax = vec4_floor(orthoMax)
+		orthoMax = vec4_mul(orthoMax, worldUnitsPerTexel)
 		
 		// Extent Z
-		orthoMin[Z] = -10000
+		orthoMin[Z] = -30000
 		orthoMax[Z] += 100
 		
 		var lightMatVinv = matrix_inverse(sunmatV);
@@ -86,7 +86,7 @@ function render_update_cascades(dir)
 			cascade.corners[j] = vec3_mul_matrix(lightPoints[j], lightMatVinv)
 		
 		// Build debug vbuffer (Ortho box)
-		//cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
+		cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
 		
 		// Set projection for cascade
 		cascade.near = orthoMin[Z]

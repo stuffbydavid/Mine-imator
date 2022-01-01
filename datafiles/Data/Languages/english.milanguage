@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2021.12.29"
+        "lastchange": "2022.01.01"
     },
     "particle/": {
         "default": "Default spawner",
@@ -1940,8 +1940,7 @@
             "buffersize1024": "Medium",
             "buffersize2048": "Big",
             "buffersize4096": "Very big",
-            "buffersize8192": "Gigantic",
-            "suncolored": "Colored sun shadows"
+            "buffersize8192": "Gigantic"
         },
         "subsurfacescattering": "Subsurface scattering",
         "subsurfacescatter/":
@@ -2339,8 +2338,6 @@
             "time": "Time",
             "rotation": "Rotation"
         },
-        "sunlightrange": "Sunlight range",
-        "sunlightfollow": "Follow camera",
         "sunlightstrength": "Sunlight strength",
         "sunlightangle": "Sunlight angle",
         "twilight": "Twilight",

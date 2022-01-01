@@ -10,16 +10,14 @@ uniform int uIsWater;
 uniform vec3 uLightDirection;
 uniform vec4 uLightColor;
 uniform float uLightStrength;
-uniform float uSunNear;
-uniform float uSunFar;
+uniform float uSunNear[NUM_CASCADES];
+uniform float uSunFar[NUM_CASCADES];
 
 uniform sampler2D uDepthBuffer0;
 uniform sampler2D uDepthBuffer1;
 uniform sampler2D uDepthBuffer2;
 uniform float uCascadeEndClipSpace[NUM_CASCADES];
-
-uniform int uColoredShadows;
-uniform sampler2D uColorBuffer;
+uniform int uCascadeDebug;
 
 uniform float uSSS;
 uniform vec3 uSSSRadius;
@@ -31,6 +29,13 @@ uniform vec3 uCameraPosition;
 uniform float uRoughness;
 uniform float uMetallic;
 
+uniform sampler2D uTextureMaterial;
+uniform vec2 uTexScaleMaterial;
+uniform int uMaterialUseGlossiness;
+
+uniform sampler2D uTextureNormal;
+uniform vec2 uTexScaleNormal;
+
 varying vec3 vPosition;
 varying float vDepth;
 varying vec3 vNormal;
@@ -39,13 +44,6 @@ varying vec4 vScreenCoord[NUM_CASCADES];
 varying float vBrightness;
 varying float vBlockSSS;
 varying float vClipSpaceDepth;
-
-uniform sampler2D uTextureMaterial;
-uniform vec2 uTexScaleMaterial;
-uniform int uMaterialUseGlossiness;
-
-uniform sampler2D uTextureNormal;
-uniform vec2 uTexScaleNormal;
 
 // Fresnel Schlick approximation
 float fresnelSchlick(float cosTheta, float F0, float F90)
@@ -187,25 +185,32 @@ void main()
 		        if (vClipSpaceDepth < uCascadeEndClipSpace[i])
 		            break;
 			
+			if (uCascadeDebug == 1)
+			{
+				if (i == 0)
+					shadow *= vec3(1.0, 0.8, 0.8);
+				else if (i == 1)
+					shadow *= vec3(0.8, 1.0, 0.8);
+				else if (i == 2)
+					shadow *= vec3(0.8, 0.8, 1.0);
+				else
+					shadow *= vec3(0.0, 0.0, 0.0);
+			}
+			
 			float fragDepth = vScreenCoord[i].z;
-			vec2 fragCoord = vec2(vScreenCoord[i].x, vScreenCoord[i].y);
+			vec2 fragCoord = vScreenCoord[i].xy;
 			
 			// Texture position must be valid
 			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0 && i < NUM_CASCADES)
 			{	
 				// Convert 0->1 to Near->Far
-				fragDepth = uSunNear + fragDepth * (uSunFar - uSunNear);
+				fragDepth = uSunNear[i] + fragDepth * (uSunFar[i] - uSunNear[i]);
 				
 				// Calculate bias
 				float bias = 1.0;
 				
-				// Colored shadows
-				if (uColoredShadows > 0)
-					if (baseColor.a * uBlendColor.a == 1.0)
-						shadow = texture2D(uColorBuffer, fragCoord).rgb;
-				
 				// Find shadow
-				float sampleDepth = uSunNear + unpackDepth(cascadeDepthBuffer(i, fragCoord)) * (uSunFar - uSunNear);
+				float sampleDepth = uSunNear[i] + unpackDepth(cascadeDepthBuffer(i, fragCoord)) * (uSunFar[i] - uSunNear[i]);
 				shadow *= ((fragDepth - bias) > sampleDepth) ? vec3(0.0) : vec3(1.0);
 				
 				if (sssEnabled == 1 && uSpecular == 0)

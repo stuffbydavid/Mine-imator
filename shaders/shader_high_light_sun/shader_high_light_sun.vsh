@@ -11,11 +11,9 @@ attribute vec4 in_Wave;
 
 uniform float uBrightness;
 uniform float uBlockBrightness;
-uniform vec3 uSunAt;
 
 uniform float uBlockSSS;
 
-uniform mat4 uLightMatrix;
 uniform mat4 uLightMatBiasMVP[NUM_CASCADES];
 
 varying vec3 vPosition;

@@ -10,8 +10,6 @@ function project_load_values_update()
 		{
 			value[e_value.BG_IMAGE_SHOW] = app.background_image_show
 			
-			value[e_value.BG_SUNLIGHT_RANGE] = app.background_sunlight_range
-			value[e_value.BG_SUNLIGHT_FOLLOW] = app.background_sunlight_follow
 			value[e_value.BG_SUNLIGHT_STRENGTH] = app.background_sunlight_strength
 			
 			value[e_value.BG_SKY_CLOUDS_SHOW] = app.background_sky_clouds_show

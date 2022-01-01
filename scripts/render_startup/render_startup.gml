@@ -114,12 +114,11 @@ function render_startup()
 	render_sample_noise_texture_array = []
 	
 	// Shadows
-	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_sun_color_buffer,
-	render_surface_spot_buffer, render_surface_point_buffer, render_surface_point_atlas_buffer;
+	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_spot_buffer, 
+	render_surface_point_buffer, render_surface_point_atlas_buffer;
 	
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
-	render_surface_sun_color_buffer = null
 	render_surface_spot_buffer = null
 	render_surface_point_buffer = null
 	render_surface_point_atlas_buffer = null
@@ -208,7 +207,7 @@ function render_startup()
 	// Cascades for sun
 	globalvar render_cascades_count, render_cascade_ends, render_cascades, render_cascade_debug;
 	render_cascades_count = 3
-	render_cascade_ends = [0.0, 0.05, 0.2, 1.0]
+	render_cascade_ends = [0.0, 0.035, 0.15, 1.0]
 	render_cascades[0] = new frustum()
 	render_cascades[1] = new frustum()
 	render_cascades[2] = new frustum()
@@ -247,7 +246,6 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
 	render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
-	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_COLOR] = shader_high_light_color
 	render_mode_shader_map[?e_render_mode.HIGH_INDIRECT_DEPTH_NORMAL] = shader_high_indirect_depth_normal
 	render_mode_shader_map[?e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL] = shader_high_indirect_depth_normal
 	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material

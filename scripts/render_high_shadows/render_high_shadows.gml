@@ -104,46 +104,24 @@ function render_high_shadows(export)
 			
 			var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
 			angle = vec3_normalize(vec3_mul(angle, -1))
-			render_sun_direction = app.background_sun_direction
-			
-			// Update camera (position) if not previously initialized
-			render_world_start()
-			render_update_cascades(angle)
 			
 			// Depth
+			cam_far = cam_far_prev
+			render_update_cascades(angle)
+			
 			for (var i = 0; i < render_cascades_count; i++)
 			{
-				render_cascade_debug = i
-				
 				render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
 				surface_set_target(render_surface_sun_buffer[i])
 				{
 					gpu_set_blendmode_ext(bm_one, bm_zero)
 				
 					draw_clear(c_white)
-					render_world_start_sun(
-						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
-						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
+					render_world_start_sun(i)
 					render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 					render_world_done()
 				
 					gpu_set_blendmode(bm_normal)
-				}
-				surface_reset_target()
-			}
-			
-			// Color
-			if (app.project_render_shadows_sun_colored)
-			{
-				render_surface_sun_color_buffer = surface_require(render_surface_sun_color_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
-				surface_set_target(render_surface_sun_color_buffer)
-				{
-					draw_clear(c_white)
-					render_world_start_sun(
-						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
-						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
-					render_world(e_render_mode.HIGH_LIGHT_SUN_COLOR)
-					render_world_done()
 				}
 				surface_reset_target()
 			}
@@ -554,8 +532,6 @@ function render_high_shadows(export)
 		
 		for (var i = 0; i < render_cascades_count; i++)
 			surface_free(render_surface_sun_buffer[i])
-		
-		surface_free(render_surface_sun_color_buffer)
 		
 		surface_free(render_surface_point_buffer)
 		surface_free(render_surface_point_atlas_buffer)

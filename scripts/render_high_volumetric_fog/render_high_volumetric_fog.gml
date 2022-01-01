@@ -46,6 +46,8 @@ function render_high_volumetric_fog(prevsurf, export)
 			if (render_samples_done && !export)
 				continue
 			
+			render_sun_direction = background_sun_direction
+			
 			// Render sun depth buffer
 			if (export)
 			{
@@ -62,29 +64,34 @@ function render_high_volumetric_fog(prevsurf, export)
 					sampleoffset[Z] = lengthdir_z(dis, zang)
 				}
 				
-				// Depth
-				render_surface_sun_buffer = surface_require(render_surface_sun_buffer, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
-				surface_set_target(render_surface_sun_buffer)
-				{
-					gpu_set_blendmode_ext(bm_one, bm_zero)
-					
-					draw_clear(c_white)
-					render_world_start_sun(
-						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
-						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
-					render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
-					render_world_done()
+				var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
+				angle = vec3_normalize(vec3_mul(angle, -1))
 				
-					gpu_set_blendmode(bm_normal)
+				// Depth
+				cam_far = cam_far_prev
+				render_update_cascades(angle)
+				
+				for (var i = 0; i < render_cascades_count; i++)
+				{
+					render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+					surface_set_target(render_surface_sun_buffer[i])
+					{
+						gpu_set_blendmode_ext(bm_one, bm_zero)
+					
+						draw_clear(c_white)
+						render_world_start_sun(i)
+						render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
+						render_world_done()
+				
+						gpu_set_blendmode(bm_normal)
+					}
+					surface_reset_target()
 				}
-				surface_reset_target()
 			}
 			else if (app.background_sunlight_color_final = c_black)
 			{
 				// Sun info needs to be updated for volumetrics
-				render_world_start_sun(
-						point3D(background_light_data[0], background_light_data[1], background_light_data[2]), 
-						point3D(cam_from[X] * background_sunlight_follow, cam_from[Y] * background_sunlight_follow, 0), sampleoffset)
+				render_world_start_sun(0)
 				render_world_done()
 			}
 			
@@ -105,7 +112,7 @@ function render_high_volumetric_fog(prevsurf, export)
 				with (render_shader_obj)
 				{
 					shader_use()
-					shader_high_volumetric_fog_set(depthsurf, render_surface_sun_buffer)
+					shader_high_volumetric_fog_set(depthsurf)
 				}
 				draw_blank(0, 0, render_width, render_height)
 				with (render_shader_obj)

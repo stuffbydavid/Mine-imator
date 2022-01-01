@@ -95,8 +95,6 @@ function tl_value_default(valueid)
 		case e_value.BG_SKY_MOON_PHASE: return app.background_sky_moon_phase
 		case e_value.BG_SKY_TIME: return app.background_sky_time
 		case e_value.BG_SKY_ROTATION: return app.background_sky_rotation
-		case e_value.BG_SUNLIGHT_RANGE: return app.background_sunlight_range
-		case e_value.BG_SUNLIGHT_FOLLOW: return app.background_sunlight_follow
 		case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
 		case e_value.BG_SUNLIGHT_ANGLE: return app.background_sunlight_angle
 		case e_value.BG_TWILIGHT: return app.background_twilight

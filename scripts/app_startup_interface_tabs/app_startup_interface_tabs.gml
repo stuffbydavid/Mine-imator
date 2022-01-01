@@ -140,7 +140,6 @@ function app_startup_interface_tabs()
 			tbx_wind_directional_speed = new_textbox_decimals()
 			tbx_wind_directional_speed.suffix = "%"
 			tbx_wind_directional_strength = new_textbox_decimals()
-			tbx_sunlight_range = new_textbox_integer()
 			tbx_texture_animation_speed = new_textbox_ndecimals()
 		}
 		

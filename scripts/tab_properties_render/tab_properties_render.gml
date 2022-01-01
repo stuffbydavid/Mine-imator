@@ -103,10 +103,6 @@ function tab_properties_render()
 		draw_button_menu("rendershadowspointbuffersize", e_menu.LIST, dx, dy, dw, 24, project_render_shadows_point_buffer_size, text_get("rendershadowsbuffersize" + string(project_render_shadows_point_buffer_size)) + " (" + string(project_render_shadows_point_buffer_size) + "x" + string(project_render_shadows_point_buffer_size) + ")", action_project_render_shadows_point_buffer_size)
 		tab_next()
 		
-		tab_control_switch()
-		draw_switch("rendershadowssuncolored", dx, dy, project_render_shadows_sun_colored, action_project_render_shadows_sun_colored, "", false, true) 
-		tab_next()
-		
 		tab_collapse_end()
 	}
 	

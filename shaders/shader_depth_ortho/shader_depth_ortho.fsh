@@ -3,8 +3,6 @@ uniform vec2 uTexScale;
 
 uniform vec4 uBlendColor;
 
-uniform int uColoredShadows;
-
 varying vec2 vTexCoord;
 varying float vDepth;
 
@@ -21,7 +19,7 @@ void main()
 	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
 		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	
-	if (texture2D(uTexture, tex).a * uBlendColor.a < (uColoredShadows > 0 ? 1.0 : 0.1))
+	if ((texture2D(uTexture, tex).a * uBlendColor.a) < 0.1)
 		discard;
 }
 

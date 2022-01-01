@@ -61,10 +61,10 @@ function project_load_legacy_background()
 	background_opaque_leaves = buffer_read_byte()
 	background_texture_animation_speed = buffer_read_double()
 	
-	background_sunlight_range = buffer_read_int()
+	/*background_sunlight_range =*/ buffer_read_int()
 	
 	if (load_format >= e_project.FORMAT_105)
-		background_sunlight_follow = buffer_read_byte()
+		/*background_sunlight_follow =*/ buffer_read_byte()
 	
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
 	{

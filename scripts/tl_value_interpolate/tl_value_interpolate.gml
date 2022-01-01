@@ -67,7 +67,6 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.CAM_SIZE_KEEP_ASPECT_RATIO:
 		case e_value.BG_IMAGE_SHOW:
 		case e_value.BG_SKY_MOON_PHASE:
-		case e_value.BG_SUNLIGHT_FOLLOW:
 		case e_value.BG_TWILIGHT:
 		case e_value.BG_DESATURATE_NIGHT:
 		case e_value.BG_SKY_CLOUDS_SHOW:

@@ -17,8 +17,6 @@ function project_save_background()
 		
 		json_save_var("sky_time", background_sky_time)
 		json_save_var("sky_rotation", background_sky_rotation)
-		json_save_var("sunlight_range", background_sunlight_range)
-		json_save_var_bool("sunlight_follow", background_sunlight_follow)
 		json_save_var("sunlight_strength", background_sunlight_strength)
 		json_save_var("sunlight_angle", background_sunlight_angle)
 		

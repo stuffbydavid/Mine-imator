@@ -16,7 +16,6 @@ function project_save_render()
 		json_save_var("render_shadows_sun_buffer_size", project_render_shadows_sun_buffer_size)
 		json_save_var("render_shadows_spot_buffer_size", project_render_shadows_spot_buffer_size)
 		json_save_var("render_shadows_point_buffer_size", project_render_shadows_point_buffer_size)
-		json_save_var_bool("render_shadows_sun_colored", project_render_shadows_sun_colored)
 		
 		json_save_var("render_subsurface_samples", project_render_subsurface_samples)
 		json_save_var("render_subsurface_jitter", project_render_subsurface_jitter)

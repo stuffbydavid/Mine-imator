@@ -1,15 +1,15 @@
-/// shader_high_volumetric_fog_set(depth, sundepth)
+/// shader_high_volumetric_fog_set(depth)
 /// @arg depth
-/// @arg sundepth
 
-function shader_high_volumetric_fog_set(depth, sundepth)
+function shader_high_volumetric_fog_set(depthsurf)
 {
-	if (depth = undefined)
+	if (depthsurf = undefined)
 		return 0
 	
-	render_set_uniform("uSunNear", render_sun_near)
-	render_set_uniform("uSunFar", render_sun_far)
-	render_set_uniform("uSunMatrix", render_sun_matrix)
+	render_set_uniform("uSunNear", [render_cascades[0].near, render_cascades[1].near, render_cascades[2].near])
+	render_set_uniform("uSunFar", [render_cascades[0].far, render_cascades[1].far, render_cascades[2].far])
+	render_set_uniform("uViewMatrix", view_matrix)
+	render_set_uniform("uProjMatrix", proj_matrix)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 	render_set_uniform("uViewMatrixInv", matrix_inverse(view_matrix))
 	render_set_uniform_vec3("uSunDirection", render_sun_direction[X], render_sun_direction[Y], render_sun_direction[Z])
@@ -18,8 +18,17 @@ function shader_high_volumetric_fog_set(depth, sundepth)
 	{
 		render_set_uniform_int("uSunVisible", 1)
 		
-		texture_set_stage(sampler_map[?"uSunDepthBuffer"], surface_get_texture(sundepth))
-		gpu_set_texfilter_ext(sampler_map[?"uSunDepthBuffer"], true)
+		texture_set_stage(sampler_map[?"uDepthBuffer0"], surface_get_texture(render_surface_sun_buffer[0]))
+		gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer0"], true)
+		
+		texture_set_stage(sampler_map[?"uDepthBuffer1"], surface_get_texture(render_surface_sun_buffer[1]))
+		gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer1"], true)
+		
+		texture_set_stage(sampler_map[?"uDepthBuffer2"], surface_get_texture(render_surface_sun_buffer[2]))
+		gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer2"], true)
+		
+		render_set_uniform("uLightMatBiasMVP", array_add(array_add(array_copy_1d(render_cascades[0].matBias), render_cascades[1].matBias), render_cascades[2].matBias))
+		render_set_uniform("uCascadeEndClipSpace", [render_cascades[0].clipEndDepth, render_cascades[1].clipEndDepth, render_cascades[2].clipEndDepth])
 	}
 	else
 		render_set_uniform_int("uSunVisible", 0)
@@ -41,7 +50,7 @@ function shader_high_volumetric_fog_set(depth, sundepth)
 	render_set_uniform("uFogNoiseContrast", app.background_volumetric_fog_noise_contrast + 1)
 	render_set_uniform("uFogWind", app.background_volumetric_fog_wind)
 	
-	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(depth))
+	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(depthsurf))
 	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], false)
 	
 	render_set_uniform_vec3("uCameraPosition", cam_from[X], cam_from[Y], cam_from[Z])
