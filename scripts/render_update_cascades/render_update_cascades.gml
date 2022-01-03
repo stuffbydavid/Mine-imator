@@ -48,6 +48,10 @@ function render_update_cascades(dir)
 			orthoMax = vec4_max(orthoMax, corner)
 		}
 		
+		// Extend Z
+		orthoMin[Z] = -30000
+		orthoMax[Z] += 100
+		
 		// Fix shadow jittering
 		
 		// Pad the box to always contain the entire frustum
@@ -66,7 +70,7 @@ function render_update_cascades(dir)
 		orthoMax = vec4_floor(orthoMax)
 		orthoMax = vec4_mul(orthoMax, worldUnitsPerTexel)
 		
-		// Extent Z
+		// Correct Z
 		orthoMin[Z] = -30000
 		orthoMax[Z] += 100
 		

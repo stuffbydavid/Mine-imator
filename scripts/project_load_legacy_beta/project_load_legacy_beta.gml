@@ -607,6 +607,9 @@ function project_load_legacy_beta(loadbackground)
 		else
 			background_ground_tex = "default"
 		
+		background_ground_tex_material = "default"
+		background_ground_tex_normal = "default"
+		
 		var oldslot, legacyname, newslot;
 		oldslot = load.bg_ground_y * 16 + load.bg_ground_x
 		if (load_format = e_project.FORMAT_07_DEMO)

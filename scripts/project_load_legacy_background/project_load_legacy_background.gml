@@ -36,6 +36,9 @@ function project_load_legacy_background()
 	}
 	background_ground_tex.count--
 	background_ground_tex = project_load_legacy_save_id()
+	background_ground_tex_material = "default"
+	background_ground_tex_normal = "default"
+	
 	background_biome = biome_list[|buffer_read_byte()]
 	
 	background_sky_color = buffer_read_int()

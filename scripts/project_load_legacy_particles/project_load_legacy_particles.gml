@@ -60,9 +60,11 @@ function project_load_legacy_particles()
 			
 			name = buffer_read_string_int()
 			temp = project_load_legacy_save_id()
+			if (temp = null)
+				temp = particle_sheet
 			text = buffer_read_string_int()
 			if (load_format >= e_project.FORMAT_100_DEMO_3)
-					spawn_rate = buffer_read_double()
+				spawn_rate = buffer_read_double()
 			sprite_tex = project_load_legacy_save_id()
 			sprite_tex_image = buffer_read_byte()
 			sprite_frame_width = buffer_read_int()

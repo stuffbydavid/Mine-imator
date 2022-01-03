@@ -101,7 +101,7 @@ function render_update_tl_resource()
 				else // No material texture
 				{
 					model_part_shape_tex_material[i] = null
-					model_part_shape_material_res[i] = temp.model
+					model_part_shape_material_res[i] = (temp.model = null ? mc_res : temp.model)
 				}
 				
 				// Normal

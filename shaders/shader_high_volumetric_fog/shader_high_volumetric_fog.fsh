@@ -194,7 +194,7 @@ float getLight(vec3 pos)
 	float fragDepth = screenCoord.z;
 	vec2 fragCoord = screenCoord.xy;
 	
-    if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0)
+    if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0 && i < NUM_CASCADES)
 	{	
 		// Convert 0->1 to Near->Far
 		fragDepth = uSunNear[i] + fragDepth * (uSunFar[i] - uSunNear[i]);

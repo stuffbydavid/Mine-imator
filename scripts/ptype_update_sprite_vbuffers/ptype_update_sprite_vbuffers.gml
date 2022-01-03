@@ -44,7 +44,7 @@ function ptype_update_sprite_vbuffers()
 			vbuffer_done()
 		}
 	}
-	else
+	else if (temp = particle_template)
 	{
 		res = sprite_template_tex
 		if (!res_is_ready(res))
