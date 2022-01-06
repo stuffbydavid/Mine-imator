@@ -2,6 +2,9 @@
 
 function bench_draw()
 {
+	if (bench_show_ani_type = "" && bench_show_ani = 0)
+		return 0
+	
 	var func, ani;
 	var sdx, sdy, ymax;
 	

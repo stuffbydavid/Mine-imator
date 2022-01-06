@@ -14,4 +14,5 @@ function background_sky_startup()
 	background_sky_sun_vbuffer = null
 	background_sky_moon_vbuffer = null
 	background_sky_clouds_vbuffer = null
+	background_sky_clouds_vbuffer_pos = []
 }

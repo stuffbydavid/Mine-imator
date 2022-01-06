@@ -25,13 +25,19 @@ function vertex_add()
 		vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
 		
 		// Seperated for performance
-		vbuffer_xmin = (xx < vbuffer_xmin ? xx : vbuffer_xmin)
-		vbuffer_ymin = (yy < vbuffer_ymin ? yy : vbuffer_ymin)
-		vbuffer_zmin = (zz < vbuffer_zmin ? zz : vbuffer_zmin)
+		if (xx < vbuffer_xmin)
+			vbuffer_xmin = xx
+		if (yy < vbuffer_ymin)
+			vbuffer_ymin = yy
+		if (zz < vbuffer_zmin)
+			vbuffer_zmin = zz
 		
-		vbuffer_xmax = (xx > vbuffer_xmax ? xx : vbuffer_xmax)
-		vbuffer_ymax = (yy > vbuffer_ymax ? yy : vbuffer_ymax)
-		vbuffer_zmax = (zz > vbuffer_zmax ? zz : vbuffer_zmax)
+		if (xx > vbuffer_xmax)
+			vbuffer_xmax = xx
+		if (yy > vbuffer_ymax)
+			vbuffer_ymax = yy
+		if (zz > vbuffer_zmax)
+			vbuffer_zmax = zz
 	}
 	else
 	{
@@ -45,20 +51,26 @@ function vertex_add()
 		vertex_texcoord(vbuffer_current, argument[6], argument[7])
 		
 		// Seperated for performance
-		vbuffer_xmin = (xx < vbuffer_xmin ? xx : vbuffer_xmin)
-		vbuffer_ymin = (yy < vbuffer_ymin ? yy : vbuffer_ymin)
-		vbuffer_zmin = (zz < vbuffer_zmin ? zz : vbuffer_zmin)
+		if (xx < vbuffer_xmin)
+			vbuffer_xmin = xx
+		if (yy < vbuffer_ymin)
+			vbuffer_ymin = yy
+		if (zz < vbuffer_zmin)
+			vbuffer_zmin = zz
 		
-		vbuffer_xmax = (xx > vbuffer_xmax ? xx : vbuffer_xmax)
-		vbuffer_ymax = (yy > vbuffer_ymax ? yy : vbuffer_ymax)
-		vbuffer_zmax = (zz > vbuffer_zmax ? zz : vbuffer_zmax)
+		if (xx > vbuffer_xmax)
+			vbuffer_xmax = xx
+		if (yy > vbuffer_ymax)
+			vbuffer_ymax = yy
+		if (zz > vbuffer_zmax)
+			vbuffer_zmax = zz
 	}
 	
 	var wavexy, wavez;
 	wavexy = 0
 	wavez = 0
 	
-	// Wave
+	// Wind/custom values
 	if (vertex_wave != e_vertex_wave.NONE)
 	{
 		// Vertex Z must be within zmin and zmax (if set)
@@ -73,8 +85,9 @@ function vertex_add()
 			else if (vertex_wave = e_vertex_wave.Z_ONLY)
 				wavez = 1
 		}
+		
+		vertex_float4(vbuffer_current, wavexy, wavez, vertex_brightness, vertex_subsurface)
 	}
-	
-	// Custom
-	vertex_float4(vbuffer_current, wavexy, wavez, vertex_brightness, vertex_subsurface)
+	else
+		vertex_float4(vbuffer_current, 0, 0, vertex_brightness, vertex_subsurface)
 }

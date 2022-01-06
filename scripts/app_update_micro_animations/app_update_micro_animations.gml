@@ -2,10 +2,8 @@
 
 function app_update_micro_animations()
 {
-	var constantspeed, inease, outease;
+	var constantspeed;
 	constantspeed = 0.095
-	inease = "easeoutcirc"
-	outease = "easeoutcirc"
 	
 	// Scrollbars
 	with (obj_scrollbar)
@@ -46,7 +44,10 @@ function app_update_micro_animations()
 		
 		// Delete after 3 seconds
 		if (ani.steps_hidden > 60 * 3)
+		{
 			ds_list_add(microani_delete_list, ani)
+			continue
+		}
 		
 		ani.steps_alive++
 		ani.steps_hidden++

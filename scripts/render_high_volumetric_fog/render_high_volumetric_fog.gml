@@ -187,7 +187,9 @@ function render_high_volumetric_fog(prevsurf, export)
 	{
 		surface_free(render_surface_sun_volume_expo)
 		surface_free(render_surface_sun_volume_dec)
-		surface_free(render_surface_sun_buffer)
+		
+		for (var i = 0; i < render_cascades_count; i++)
+			surface_free(render_surface_sun_buffer[i])
 		
 		render_world_start()
 		bbox_update_visible()

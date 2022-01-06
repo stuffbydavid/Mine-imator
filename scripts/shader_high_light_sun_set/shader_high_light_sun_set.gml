@@ -28,5 +28,5 @@ function shader_high_light_sun_set()
 	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer2"], true)
 	
 	render_set_uniform("uCascadeEndClipSpace", [render_cascades[0].clipEndDepth, render_cascades[1].clipEndDepth, render_cascades[2].clipEndDepth])
-	render_set_uniform_int("uCascadeDebug", 0)
+	render_set_uniform_int("uCascadeDebug", render_debug_cascades)
 }

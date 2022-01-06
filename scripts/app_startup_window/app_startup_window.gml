@@ -28,11 +28,6 @@ function app_startup_window()
 	window_busy = ""
 	window_focus = ""
 	
-	window_glow_top = 0
-	window_glow_right = 0
-	window_glow_bottom = 0
-	window_glow_left = 0
-	
 	mouse_cursor = cr_default
 	mouse_current_x = 0
 	mouse_current_y = 0

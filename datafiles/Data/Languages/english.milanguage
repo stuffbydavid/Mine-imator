@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.01.01"
+        "lastchange": "2022.01.06"
     },
     "particle/": {
         "default": "Default spawner",
@@ -656,14 +656,15 @@
         "aspectratiodisable": "Disable aspect ratio",
         "overlaysenable": "Enable overlays",
         "overlaysdisable": "Disable overlays",
-        "boundingboxesenable": "Enable bounding boxes",
-        "boundingboxesdisable": "Disable bounding boxes",
         "renderpass": "Render pass: %1",
         "renderfps": "%1 FPS (%2/%3 samples)",
         "rendertime": "Rendered in %1 seconds",
         "workcamera": "Work camera",
         "activecamera": "Active camera (%1)",
-        "selectedcamera": "Selected camera (%1)"
+        "selectedcamera": "Selected camera (%1)",
+        "debug": "Debug settings",
+        "boxes": "Bounding boxes",
+        "cascades": "Sun cascades",
     },
     "tab/": {
         "projectproperties": "Project properties",

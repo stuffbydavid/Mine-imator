@@ -640,7 +640,7 @@ function tab_timeline()
 			markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)
 		}
 		
-		while (markerx > barw)
+		while (markerx > barw && barw > 0)
 		{
 			timeline.hor_scroll.value += barw
 			markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value)

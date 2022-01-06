@@ -23,6 +23,7 @@ function tl_update_model_shape_bend(add)
 		{
 			if (instance_exists(key) && key.vbuffer_default != model_shape_vbuffer_map[?key]) // Don't clear default buffers
 				vbuffer_destroy(model_shape_vbuffer_map[?key])
+			
 			key = ds_map_find_next(model_shape_vbuffer_map, key)
 		}
 		ds_map_clear(model_shape_vbuffer_map)

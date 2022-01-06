@@ -27,6 +27,7 @@ function app_startup_interface_views()
 	view_main = new_obj(obj_view)
 	view_main.overlays = setting_view_main_overlays
 	view_main.aspect_ratio = setting_view_main_aspect_ratio
+	view_main.cascades = setting_view_main_cascades
 	view_main.grid = setting_view_main_grid
 	view_main.gizmos = setting_view_main_gizmos
 	view_main.boxes = setting_view_main_boxes
@@ -41,6 +42,7 @@ function app_startup_interface_views()
 	view_second.show = setting_view_second_show
 	view_second.overlays = setting_view_second_overlays
 	view_second.aspect_ratio = setting_view_second_aspect_ratio
+	view_second.cascades = setting_view_second_cascades
 	view_second.grid = setting_view_second_grid
 	view_second.gizmos = setting_view_second_gizmos
 	view_second.boxes = setting_view_second_boxes

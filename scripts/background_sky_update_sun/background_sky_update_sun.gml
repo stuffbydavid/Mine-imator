@@ -8,7 +8,7 @@ function background_sky_update_sun()
 	background_light_data[1] = lengthdir_y(range, background_sky_rotation - 90) * lengthdir_x(1, background_sky_time + 90)
 	background_light_data[2] = lengthdir_z(range, background_sky_time + 90)
 	
-	if (background_sky_time = 0)
+	if (mod_fix(background_sky_time, 360) = 0)
 		background_light_data[0] += 0.1
 	
 	background_sun_direction = vec3_normalize([background_light_data[0], background_light_data[1], background_light_data[2]])

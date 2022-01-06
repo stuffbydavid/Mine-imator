@@ -17,7 +17,7 @@ function render_startup()
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
-			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality;
+			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_debug_cascades;
 	
 	globalvar render_matrix, render_samples, render_samples_done, render_target_size, render_high_preview,
 			  render_high_preview_width, render_high_preview_height;

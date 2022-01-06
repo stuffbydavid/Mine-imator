@@ -28,7 +28,6 @@ function window_draw()
 	else
 	{
 		panel_area_draw()
-		window_draw_glow()
 		toolbar_draw()
 		shortcut_bar_draw()
 		bench_draw()

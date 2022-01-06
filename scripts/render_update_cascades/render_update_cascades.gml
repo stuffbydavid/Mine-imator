@@ -54,10 +54,11 @@ function render_update_cascades(dir)
 		
 		// Fix shadow jittering
 		
-		// Pad the box to always contain the entire frustum
-		var diagonalXY = point3D_distance(point3D(0, 0, 0), point3D_sub(cascade.corners[1], cascade.corners[3]));
+		// Pad the box to always contain the entire frustums
+		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7]));
 		var borderOffset = vec4_div(vec4_sub(vec4(diagonalXY), vec4_sub(orthoMax, orthoMin)), 2);
-		borderOffset[Z] = borderOffset[W] = 0;
+		borderOffset[Z] = 0
+		borderOffset[W] = 0
 		orthoMax = vec4_add(orthoMax, borderOffset)
 		orthoMin = vec4_sub(orthoMin, borderOffset)
 			
@@ -69,10 +70,6 @@ function render_update_cascades(dir)
 		orthoMax = vec4_div(orthoMax, worldUnitsPerTexel)
 		orthoMax = vec4_floor(orthoMax)
 		orthoMax = vec4_mul(orthoMax, worldUnitsPerTexel)
-		
-		// Correct Z
-		orthoMin[Z] = -30000
-		orthoMax[Z] += 100
 		
 		var lightMatVinv = matrix_inverse(sunmatV);
         var lightPoints = [
@@ -90,7 +87,7 @@ function render_update_cascades(dir)
 			cascade.corners[j] = vec3_mul_matrix(lightPoints[j], lightMatVinv)
 		
 		// Build debug vbuffer (Ortho box)
-		cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
+		//cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
 		
 		// Set projection for cascade
 		cascade.near = orthoMin[Z]

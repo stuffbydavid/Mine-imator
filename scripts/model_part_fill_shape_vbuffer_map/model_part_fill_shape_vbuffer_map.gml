@@ -22,7 +22,6 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
-		instance_activate_object(part.shape_list[|s])
 		with (part.shape_list[|s])
 		{
 			boxdefault = true
@@ -61,7 +60,5 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 			bounding_box.merge(shapebox)
 			delete shapebox
 		}
-		
-		instance_deactivate_object(part.shape_list[|s])
 	}
 }

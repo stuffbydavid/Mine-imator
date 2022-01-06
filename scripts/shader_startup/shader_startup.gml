@@ -374,6 +374,7 @@ function shader_startup()
 		new_shader_uniform("uTexScaleNormal")
 		new_shader_uniform("uLightMatBiasMVP")
 		new_shader_uniform("uCascadeEndClipSpace")
+		new_shader_uniform("uCascadeDebug")
 	}
 	
 	with (shader_map[?shader_high_ssao])
@@ -552,7 +553,6 @@ function shader_startup()
 		new_shader_uniform("uSunVisible")
 		new_shader_uniform("uLightMatBiasMVP")
 		new_shader_uniform("uCascadeEndClipSpace")
-		new_shader_uniform("uCascadeDebug")
 	}
 	
 	with (shader_map[?shader_high_volumetric_fog_apply])

@@ -45,6 +45,10 @@ function tl_update_bounding_box()
 	if (temp = null)
 		return 0
 	
+	// Not visible
+	if (!value_inherit[e_value.VISIBLE] || hide)
+		return 0
+	
 	// Calculate block/scenery repeat
 	if (type = e_tl_type.BLOCK || type = e_tl_type.SCENERY)
 	{

@@ -32,7 +32,13 @@ function block_load_render_model()
 		alphaZ = modelstate.model_preview_alpha_zp
 	}
 	else
-		modelstate = colY = alphaY = colZ = alphaZ = null;
+	{
+		modelstate = null
+		colY = null
+		alphaY = null
+		colZ = null
+		alphaZ = null
+	}
 	
 	// Create matrix for rotation
 	if (rot[X] > 0 || rot[Z] > 0)

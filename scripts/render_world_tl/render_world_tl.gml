@@ -19,7 +19,7 @@ function render_world_tl()
 		return 0
 	
 	// Invisible?
-	if (!tl_get_visible())
+	if (!render_visible)
 		return 0
 	
 	// Only render glow effect?

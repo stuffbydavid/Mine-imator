@@ -188,11 +188,11 @@ void main()
 			if (uCascadeDebug == 1)
 			{
 				if (i == 0)
-					shadow *= vec3(1.0, 0.8, 0.8);
+					shadow *= vec3(1.0, 0.5, 0.5);
 				else if (i == 1)
-					shadow *= vec3(0.8, 1.0, 0.8);
+					shadow *= vec3(0.5, 1.0, 0.5);
 				else if (i == 2)
-					shadow *= vec3(0.8, 0.8, 1.0);
+					shadow *= vec3(0.5, 0.5, 1.0);
 				else
 					shadow *= vec3(0.0, 0.0, 0.0);
 			}

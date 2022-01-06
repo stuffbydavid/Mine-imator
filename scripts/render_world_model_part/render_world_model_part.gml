@@ -61,7 +61,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			if (s > array_length(model_part_shape_tex) - 1)
 				continue
 			
-			render_set_texture(model_part_shape_tex[s])
+			if (model_part_shape_tex[s] != render_texture_prev)
+				render_set_texture(model_part_shape_tex[s])
 			
 			render_set_uniform_int("uMaterialUseGlossiness", model_part_shape_material_res[s].material_uses_glossiness)
 			
