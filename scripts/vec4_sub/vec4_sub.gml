@@ -4,6 +4,8 @@
 
 function vec4_sub(vec, s)
 {
+	gml_pragma("forceinline")
+	
 	if (is_array(s))
 		return [vec[@ X] - s[@ X], vec[@ Y] - s[@ Y], vec[@ Z] - s[@ Z], vec[@ W] - s[@ W]]
 	else

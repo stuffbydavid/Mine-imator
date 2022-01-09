@@ -4,6 +4,8 @@
 
 function vec2_div(vec, d)
 {
+	gml_pragma("forceinline")
+	
 	if (is_array(d))
 		return [vec[@ X] / d[@ X], vec[@ Y] / d[@ Y]]
 	else

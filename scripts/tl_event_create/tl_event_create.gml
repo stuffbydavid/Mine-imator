@@ -45,12 +45,15 @@ function tl_event_create()
 	selected = false
 	
 	keyframe_list = ds_list_create()
+	keyframe_prev = null
 	keyframe_current = null
 	keyframe_next = null
 	keyframe_select = null
 	keyframe_select_amount = 0
 	keyframe_animate = false
-	keyframe_use_next = false
+	keyframe_index = 0
+	keyframe_current_values = null
+	keyframe_next_values = null
 	
 	world_pos = point3D(0, 0, 0)
 	world_pos_rotate = point3D(0, 0, 0)

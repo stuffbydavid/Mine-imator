@@ -4,5 +4,7 @@
 
 function point2D_equal(pnt1, pnt2)
 {
+	gml_pragma("forceinline")
+	
 	return (pnt1[@ X] == pnt2[@ X] && pnt1[@ Y] == pnt2[@ Y])
 }

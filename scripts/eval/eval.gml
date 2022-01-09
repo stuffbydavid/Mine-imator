@@ -1,6 +1,7 @@
 /// eval(str, default)
 /// @arg str
 /// @arg default
+
 function eval(str, def)
 {
 	var i, values, ops, functions, result, lastoperator;

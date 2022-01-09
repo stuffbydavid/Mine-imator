@@ -4,6 +4,8 @@
 
 function vec2(xx, yy)
 {
+	gml_pragma("forceinline")
+	
 	if (yy = undefined)
 		return [xx, xx]
 	else

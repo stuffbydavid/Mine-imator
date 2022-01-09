@@ -664,7 +664,7 @@
         "selectedcamera": "Selected camera (%1)",
         "debug": "Debug settings",
         "boxes": "Bounding boxes",
-        "cascades": "Sun cascades",
+        "cascades": "Sun cascades"
     },
     "tab/": {
         "projectproperties": "Project properties",

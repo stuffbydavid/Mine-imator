@@ -4,5 +4,7 @@
 
 function lengthdir_z(length, dir)
 {
+	gml_pragma("forceinline")
+	
 	return -lengthdir_y(length, dir)
 }

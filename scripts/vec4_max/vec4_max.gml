@@ -4,5 +4,7 @@
 
 function vec4_max(v1, v2)
 {
+	gml_pragma("forceinline")
+	
 	return [max(v1[X], v2[X]), max(v1[Y], v2[Y]), max(v1[Z], v2[Z]), max(v1[W], v2[W])]
 }

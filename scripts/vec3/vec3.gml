@@ -5,6 +5,8 @@
 
 function vec3(xx, yy, zz)
 {
+	gml_pragma("forceinline")
+	
 	if (yy = undefined)
 		return [xx, xx, xx]
 	else

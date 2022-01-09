@@ -4,6 +4,8 @@
 
 function vec4_mul(vec, m)
 {
+	gml_pragma("forceinline")
+	
 	if (is_array(m))
 		return [vec[@ X] * m[@ X], vec[@ Y] * m[@ Y], vec[@ Z] * m[@ Z], vec[@ W] * m[@ W]]
 	else

@@ -3,6 +3,8 @@
 
 function vec3_normalize(vec)
 {
+	gml_pragma("forceinline")
+	
 	var len = point_distance_3d(0, 0, 0, vec[@ X], vec[@ Y], vec[@ Z]);// vec3_length(vec);
 	
 	if (len = 0)

@@ -4,6 +4,8 @@
 
 function point3D_mul_matrix(pnt, mat)
 {
+	gml_pragma("forceinline")
+	
 	return matrix_transform_vertex(mat, pnt[@ X], pnt[@ Y], pnt[@ Z])
 	
 	/*

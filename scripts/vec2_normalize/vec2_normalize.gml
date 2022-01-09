@@ -3,5 +3,7 @@
 
 function vec2_normalize(vec)
 {
+	gml_pragma("forceinline")
+	
 	return vec2_div(vec, vec2_length(vec))
 }

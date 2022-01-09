@@ -515,6 +515,7 @@
     {"id":{"name":"project_save_render","path":"scripts/project_save_render/project_save_render.yy",},"order":34,},
     {"id":{"name":"action_tl_frame_rgb_add","path":"scripts/action_tl_frame_rgb_add/action_tl_frame_rgb_add.yy",},"order":1,},
     {"id":{"name":"action_tl_frame_alpha","path":"scripts/action_tl_frame_alpha/action_tl_frame_alpha.yy",},"order":2,},
+    {"id":{"name":"tl_update_values_progress","path":"scripts/tl_update_values_progress/tl_update_values_progress.yy",},"order":44,},
     {"id":{"name":"action_lib_model_tex_normal","path":"scripts/action_lib_model_tex_normal/action_lib_model_tex_normal.yy",},"order":17,},
     {"id":{"name":"action_tl_frame_mix_color","path":"scripts/action_tl_frame_mix_color/action_tl_frame_mix_color.yy",},"order":3,},
     {"id":{"name":"action_tl_frame_glow_color","path":"scripts/action_tl_frame_glow_color/action_tl_frame_glow_color.yy",},"order":4,},
@@ -2433,6 +2434,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.18.zip","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data","resourceVersion":"1.0","name":"import_x64.exe","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data","resourceVersion":"1.0","name":"import_x32.exe","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Libraries/x64","resourceVersion":"1.0","name":"file.dll","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.7.603",

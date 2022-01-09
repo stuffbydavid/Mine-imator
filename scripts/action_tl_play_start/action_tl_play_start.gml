@@ -41,5 +41,7 @@ function action_tl_play_start()
 				}
 			}
 		}
+		
+		keyframe_index = 0
 	}
 }

@@ -4,7 +4,7 @@
 function array_copy_1d(arr)
 {
 	if (!is_array(arr))
-		return array()
+		return []
 	
 	var newarr = [];
 	array_copy(newarr, 0, arr, 0, array_length(arr))

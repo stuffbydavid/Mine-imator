@@ -3,121 +3,53 @@
 
 function tl_update_values()
 {
-	var oldkf = keyframe_current;
+	keyframe_prev = keyframe_current
 	keyframe_current = null
 	keyframe_next = null
+	keyframe_current_values = null
+	keyframe_next_values = null
+	
+	if (keyframe_prev = null || (keyframe_index > (ds_list_size(keyframe_list) - 1)))
+		keyframe_index = 0
 	
 	// Find keyframes
-	var kflistsize = ds_list_size(keyframe_list);
-	
-	for (var k = 0; k < kflistsize; k++)
+	for (; keyframe_index < ds_list_size(keyframe_list); keyframe_index++)
 	{
-		keyframe_next = keyframe_list[|k]
+		keyframe_next = keyframe_list[|keyframe_index]
 		if (keyframe_next.position > app.timeline_marker)
 			break
+		
 		keyframe_current = keyframe_next
 	}
+	keyframe_index--
 	
-	// Seamless region looping
-	var seamlessloop, loopstart, loopend;
-	seamlessloop = (app.timeline_repeat && app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker < loopend)
+	tl_update_values_progress()
 	
-	if (app.timeline_region_start != null)
+	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
+	
+	// Marker is behind first keyframe, copy values
+	if (app.timeline_playing && !keyframe_current && keyframe_next && (keyframe_current = keyframe_prev))
 	{
-		loopstart = app.timeline_region_start
-		loopend = app.timeline_region_end
-	}
-	else
-	{
-		loopstart = 0
-		loopend = app.timeline_length
+		value = array_copy_1d(keyframe_next.value)
+		return 0
 	}
 	
-	if (!seamlessloop)
-	{
-		// Get progress
-		var p = 0;
-		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-			p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position);
-	}
-	else
-	{
-		// Change keyframes so the animation is seamless
-		var lastkf, loopnext, loopprev;
-		lastkf = ds_list_size(keyframe_list) - 1
-		loopnext = false
-		loopprev = false
-		
-		if (keyframe_next = keyframe_current || keyframe_next.position > loopend) // Continue into the first keyframe
-		{
-			// Get first keyframe in timeline region
-			for (var k = 0; k < kflistsize; k++)
-			{
-				var kf = keyframe_list[|k];
-				
-				if (kf.position < loopstart || kf.position > loopend)
-					continue
-				else
-				{
-					if (kf.position < keyframe_next.position)
-						keyframe_next = kf
-				}
-			}
-			
-			loopnext = true
-		}
-		else if (keyframe_current = null || keyframe_current.position < loopstart) // Continue from last keyframe
-		{
-			// Get last keyframe in timeline region
-			for (var k = 0; k < kflistsize; k++)
-			{
-				var kf = keyframe_list[|k];
-				
-				if (kf.position < loopstart || kf.position > loopend)
-					continue
-				else
-				{
-					if (keyframe_current = null || kf.position > keyframe_current.position)
-						keyframe_current = kf
-				}
-			}
-			
-			loopprev = true
-		}
-		
-		// Get progress
-		var p, regionsize;
-		p = 0
-		var regionsize = loopend - loopstart;
-		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-		{
-			if (loopnext)
-				p = (app.timeline_marker - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
-			else if (loopprev)
-				p = ((app.timeline_marker + regionsize) - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
-			else
-				p = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
-		}
-		else
-			keyframe_current = keyframe_next
-	}
-	
-	keyframe_animate = (keyframe_current != null && keyframe_next != null && keyframe_current != keyframe_next)
-	keyframe_use_next = (keyframe_next != null)
-	
-	// Marker is past all keyframes, no need to update
-	if (app.timeline_playing && (oldkf = keyframe_current) && (keyframe_current = keyframe_list[|ds_list_size(keyframe_list) - 1]))
+	// Marker is past all keyframes, no need to update 
+	if (app.timeline_playing && (keyframe_prev = keyframe_current) && (keyframe_current = keyframe_list[|ds_list_size(keyframe_list) - 1])) 
 		return 0
 	
+	// Save 'value' arrays from keyframes to speed up easing
+	if (keyframe_current != null)
+		keyframe_current_values = keyframe_current.value
+	
+	if (keyframe_next != null)
+		keyframe_next_values = keyframe_next.value
+	
 	// Transition
-	keyframe_transition = "instant"
 	keyframe_progress_ease = 0
-	
 	tl_update_values_ease(e_value.TRANSITION)
-	var trans = value[e_value.TRANSITION];
 	
-	keyframe_transition = trans
-	keyframe_progress = p
+	keyframe_transition = value[e_value.TRANSITION]
 	keyframe_progress_ease = ease(keyframe_transition, keyframe_progress)
 	
 	// Position
@@ -403,7 +335,7 @@ function tl_update_values()
 		// Play new sound
 		if (keyframe_current)
 		{
-			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && oldkf != keyframe_current)
+			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && keyframe_prev != keyframe_current)
 			{
 				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, false);
 				audio_sound_set_track_position(keyframe_current.sound_play_index, value[e_value.SOUND_START] mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
@@ -429,7 +361,7 @@ function tl_update_values()
 	}
 	
 	// Update particle spawners
-	if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && oldkf != keyframe_current)
+	if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && keyframe_prev != keyframe_current)
 	{
 		// Fire particles
 		if (!temp.pc_spawn_constant && value[e_value.SPAWN] && !value[e_value.FREEZE])

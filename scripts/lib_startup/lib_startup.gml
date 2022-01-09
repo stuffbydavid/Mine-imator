@@ -14,7 +14,7 @@ function lib_startup()
 		ds_map_destroy(osinfo)
 	}
 	
-	libpath = "Data\\Libraries\\" + (is64bit ? "x64": "x32") + "\\"
+	libpath = "Data\\Libraries\\" + (is64bit ? "64": "x32") + "\\"
 	pathfile = libpath + "file.dll"
 	pathmovie = libpath + "movie.dll"
 	pathwindow = libpath + "window.dll"

@@ -4,5 +4,7 @@
 
 function point3D_add(pnt, vec)
 {
+	gml_pragma("forceinline")
+	
 	return [pnt[@ X] + vec[@ X], pnt[@ Y] + vec[@ Y], pnt[@ Z] + vec[@ Z]]
 }
