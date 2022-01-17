@@ -53,6 +53,11 @@ function tl_keyframe_add()
 	
 	keyframe_next = keyframe_current
 	keyframe_current = kf
+	keyframe_index = 0
+	
+	// Force bend cache to be cleared
+	if (model_part != null)
+		model_clear_bend_cache = true
 	
 	return kf
 }

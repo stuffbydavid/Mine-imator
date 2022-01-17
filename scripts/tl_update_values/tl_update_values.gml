@@ -9,7 +9,7 @@ function tl_update_values()
 	keyframe_current_values = null
 	keyframe_next_values = null
 	
-	if (keyframe_prev = null || (keyframe_index > (ds_list_size(keyframe_list) - 1)))
+	if (app.timeline_marker_previous >= app.timeline_marker || keyframe_prev = null || (keyframe_index > (ds_list_size(keyframe_list) - 1)))
 		keyframe_index = 0
 	
 	// Find keyframes
@@ -23,7 +23,8 @@ function tl_update_values()
 	}
 	keyframe_index--
 	
-	tl_update_values_progress()
+	keyframe_progress = tl_update_values_progress(app.timeline_marker)
+	keyframe_bend_progress = tl_update_values_progress(snap(app.timeline_marker, .25)) // Snap marker for bend angles to reduce cache
 	
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	
@@ -51,6 +52,7 @@ function tl_update_values()
 	
 	keyframe_transition = value[e_value.TRANSITION]
 	keyframe_progress_ease = ease(keyframe_transition, keyframe_progress)
+	keyframe_bend_progress_ease = ease(keyframe_transition, keyframe_bend_progress)
 	
 	// Position
 	if (value_type[e_value_type.TRANSFORM_POS])
@@ -79,9 +81,9 @@ function tl_update_values()
 	// Bend
 	if (value_type[e_value_type.TRANSFORM_BEND])
 	{
-		tl_update_values_ease(e_value.BEND_ANGLE_X)
-		tl_update_values_ease(e_value.BEND_ANGLE_Y)
-		tl_update_values_ease(e_value.BEND_ANGLE_Z)
+		tl_update_values_ease(e_value.BEND_ANGLE_X, keyframe_bend_progress_ease)
+		tl_update_values_ease(e_value.BEND_ANGLE_Y, keyframe_bend_progress_ease)
+		tl_update_values_ease(e_value.BEND_ANGLE_Z, keyframe_bend_progress_ease)
 	}
 	
 	// Color

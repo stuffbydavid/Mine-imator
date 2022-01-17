@@ -539,7 +539,7 @@ function tab_timeline()
 					
 					// Block out area
 					if (curdx < nextdx && nextdx >= 0)
-						draw_box(curdx, dy, nextdx - curdx, itemh, false, c_level_bottom, .5)
+						draw_box(curdx, dy, nextdx - curdx, itemh - 1, false, c_black, .25)
 				}
 				
 				if (dx > (tlx + tlw + 32))
@@ -705,7 +705,7 @@ function tab_timeline()
 					draw_image(spr_marker_stripe, 0, markeditx, tly + (j * 32), 1, 1, c_text_tertiary, a_text_tertiary)
 				
 				// Color
-				draw_image(spr_marker_stripe, 0, markx, tly + (j * 32), 1, 1, color, 1)	
+				draw_image(spr_marker_stripe, 0, markx, tly + (j * 32), 1, 1, color, a_text_tertiary)	
 			}
 			
 			draw_box(markx, marky, markw, markh, false, color, 1)
@@ -1544,7 +1544,7 @@ function tab_timeline()
 		timeline_marker = max((timeline.hor_scroll.value + mouse_x - barx) / timeline_zoom, 0)
 		
 		if (setting_timeline_frame_snap)
-			timeline_marker = round(timeline_marker)
+			timeline_marker = floor(timeline_marker)
 		
 		if (!mouse_left)
 		{

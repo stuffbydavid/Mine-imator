@@ -6,4 +6,8 @@ function keyframe_event_destroy()
 	
 	if (value[e_value.SOUND_OBJ] != null)
 		value[e_value.SOUND_OBJ].count--
+	
+	// Force bend cache to be cleared
+	if (timeline.model_part != null)
+		timeline.model_clear_bend_cache = true
 }

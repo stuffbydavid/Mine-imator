@@ -1,7 +1,7 @@
-/// file_dialog_save_render(filename)
+/// file_dialog_save_particles(filename)
 /// @arg filename
 
-function file_dialog_save_render(fn)
+function file_dialog_save_particles(fn)
 {
-	return file_dialog_save(text_get("filedialogsaverender") + " (*.mirender)|*.mirender", filename_get_valid(fn), "", text_get("filedialogsaverendercaption"))
+	return file_dialog_save(text_get("filedialogsaveparticles") + " (*.miparticles)|*.miparticles", filename_get_valid(fn), particles_directory, text_get("filedialogsaveparticlescaption"))
 }

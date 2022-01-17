@@ -44,7 +44,14 @@ function action_tl_keyframes_paste(position)
 	}
 	
 	with (obj_timeline)
+	{
 		tl_update_values()
+		
+		// Force bend cache to be cleared
+		if (model_part != null)
+			model_clear_bend_cache = true
+	}
+	
 	tl_update_matrix()
 	tl_update_length()
 	

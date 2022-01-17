@@ -16,14 +16,33 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 	if (part.shape_list = null)
 		return 0
 	
+	var key;
+	bend[X] = snap(bend[X], 0.05)
+	bend[Y] = snap(bend[Y], 0.05)
+	bend[Z] = snap(bend[Z], 0.05)
+	
+	key = string(bend[X]) + "," + string(bend[Y]) + "," + string(bend[Z])
+	
 	// Bounding box info
 	var boxdefault = true;
 	bounding_box.reset()
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
+		var usedcache = false;
+		
 		with (part.shape_list[|s])
 		{
+			if (ds_map_exists(vbuffer_cache, key) && isbent)
+			{
+				var bendcache = vbuffer_cache[?key];
+				vbufmap[? id] = bendcache[0]
+				other.bounding_box.merge(bendcache[1])
+				usedcache = true
+				
+				break
+			}
+			
 			boxdefault = true
 			
 			vbufmap[? id] = vbuffer_default
@@ -54,11 +73,16 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 			bounding_box.merge(part.shape_list[|s].bounding_box_default)
 		else
 		{
-			var shapebox = new bbox();
-			shapebox.copy_vbuffer()
-			shapebox.mul_matrix(part.shape_list[|s].matrix)
-			bounding_box.merge(shapebox)
-			delete shapebox
+			if (!usedcache)
+			{
+				var shapebox = new bbox();
+				shapebox.copy_vbuffer()
+				shapebox.mul_matrix(part.shape_list[|s].matrix)
+				bounding_box.merge(shapebox)
+			
+				if (isbent)
+					part.shape_list[|s].vbuffer_cache[? key] = [vbuffer_current, new bbox()]
+			}
 		}
 	}
 }

@@ -279,12 +279,16 @@ function tl_update_matrix()
 			
 			if ((value_inherit[e_value.ALPHA] * 1000) != 0)
 			{
+				var clear = ((!app.timeline_playing && (app.timeline_marker_previous = app.timeline_marker)) || model_clear_bend_cache);
+				
 				// Update 3D planes if texture changed
 				if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && model_part != null && model_part.has_3d_plane)
-					tl_update_model_shape()
+					tl_update_model_shape(clear)
 				else
 				// Update bend if angle changed
-					tl_update_model_shape_bend(true)
+					tl_update_model_shape_bend(clear)
+				
+				model_clear_bend_cache = false
 				
 				tl_update_bounding_box()
 			}

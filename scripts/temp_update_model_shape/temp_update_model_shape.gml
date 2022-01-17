@@ -13,8 +13,8 @@ function temp_update_model_shape()
 		var key = ds_map_find_first(model_shape_vbuffer_map);
 		while (!is_undefined(key))
 		{
-			if (instance_exists(key) && key.vbuffer_default != model_shape_vbuffer_map[?key]) // Don't clear default buffers
-				vbuffer_destroy(model_shape_vbuffer_map[?key])
+			if (instance_exists(key))
+				model_shape_clear_cache(key)
 			key = ds_map_find_next(model_shape_vbuffer_map, key)
 		}
 		ds_map_clear(model_shape_vbuffer_map)

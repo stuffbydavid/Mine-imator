@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "File",
-    "path": "folders/Scripts/App/Dialogues/File.yy",
+    "name": "Models",
+    "path": "folders/Scripts/Minecraft/Models.yy",
   },
   "resourceVersion": "1.0",
-  "name": "file_dialog_save_particles",
+  "name": "model_shape_clear_cache",
   "tags": [],
   "resourceType": "GMScript",
 }

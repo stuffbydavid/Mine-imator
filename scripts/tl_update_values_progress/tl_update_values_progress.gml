@@ -1,17 +1,17 @@
-/// tl_update_values_progress()
+/// tl_update_values_progress(markerpos)
 /// @desc Updates the values.
 
-function tl_update_values_progress()
+function tl_update_values_progress(markerpos)
 {
-	keyframe_progress = 0
+	var progress = 0;
 	
 	// Get regular progress
 	if (!(app.timeline_repeat && app.timeline_seamless_repeat))
 	{
 		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-			keyframe_progress = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
+			progress = (markerpos - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
 		
-		return 0
+		return progress
 	}
 	
 	// Calculate seamless looping by changing the 'next' keyframe
@@ -27,7 +27,7 @@ function tl_update_values_progress()
 		loopend = app.timeline_length
 	}
 	
-	seamlessloop = (app.timeline_repeat && app.timeline_seamless_repeat && app.timeline_marker >= loopstart && app.timeline_marker < loopend)
+	seamlessloop = (app.timeline_repeat && app.timeline_seamless_repeat && markerpos >= loopstart && markerpos < loopend)
 	
 	// Change keyframes so the animation is seamless
 	var kflistsize, lastkf, loopnext, loopprev;
@@ -78,12 +78,14 @@ function tl_update_values_progress()
 	if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	{
 		if (loopnext)
-			keyframe_progress = (app.timeline_marker - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
+			progress = (markerpos - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
 		else if (loopprev)
-			keyframe_progress = ((app.timeline_marker + regionsize) - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
+			progress = ((markerpos + regionsize) - keyframe_current.position) / ((keyframe_next.position + regionsize) - keyframe_current.position)
 		else
-			keyframe_progress = (app.timeline_marker - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
+			progress = (markerpos - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
 	}
 	else
 		keyframe_current = keyframe_next
+	
+	return progress
 }
