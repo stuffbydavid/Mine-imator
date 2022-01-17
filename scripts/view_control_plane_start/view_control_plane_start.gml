@@ -17,9 +17,9 @@ function view_control_plane_start(pos, normal)
 	px = -(((mouse_x - content_x + view_control_plane_offset[X]) / content_width) * 2 - 1)
 	py = ((mouse_y - content_y + view_control_plane_offset[Y]) / content_height) * 2 - 1
 	
-	rayclip = vec4(px, py, -1, 1);
+	rayclip = point4D(px, py, -1, 1);
 	rayeye = point4D_mul_matrix(rayclip, matrix_inverse(proj_matrix));
-	rayeye = vec4(rayeye[X], rayeye[Y], -1, 0)
+	rayeye = point4D(rayeye[X], rayeye[Y], -1, 0)
 	
 	raywor = point4D_mul_matrix(rayeye, matrix_inverse(view_matrix));
 	view_control_ray_dir = vec3_normalize(vec3(raywor[X], raywor[Y], raywor[Z]))
