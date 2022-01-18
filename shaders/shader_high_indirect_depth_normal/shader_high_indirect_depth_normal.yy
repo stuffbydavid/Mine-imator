@@ -1,5 +1,5 @@
 {
-  "type": 3,
+  "type": 1,
   "parent": {
     "name": "Indirect",
     "path": "folders/Shaders/High quality/Indirect.yy",

@@ -1,5 +1,5 @@
 {
-  "type": 3,
+  "type": 1,
   "parent": {
     "name": "Subsurface scattering",
     "path": "folders/Shaders/High quality/Subsurface scattering.yy",

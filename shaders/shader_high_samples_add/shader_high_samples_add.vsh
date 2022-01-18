@@ -1,23 +1,15 @@
-struct VSInput
+/// shader_high_samples_add
+
+attribute vec3 in_Position;
+attribute vec2 in_TextureCoord;
+
+varying vec2 vTexCoord;
+varying vec3 vPosition;
+
+void main()
 {
-    float3 Position : POSITION;
-    float2 TexCoord : TEXCOORD0;
-};
-
-
-struct VSOutput
-{
-    float4 Position : SV_POSITION;
-    float2 TexCoord : TEXCOORD0;
-};
-
-
-VSOutput main(VSInput IN)
-{
-	VSOutput OUT;
-
-	OUT.TexCoord = IN.TexCoord; 
-	OUT.Position = mul(gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION], float4(IN.Position, 1.0));
-
-	return OUT;
+	vTexCoord = in_TextureCoord;
+	vPosition = in_Position;
+	
+	gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position, 1.0);
 }

@@ -1,51 +1,40 @@
-uniform float2 uTexScale;
-uniform float4 uBlendColor;
+uniform sampler2D uTexture;
+uniform vec2 uTexScale;
+
+uniform vec4 uBlendColor;
 uniform float uSSS;
-uniform float3 uSSSRadius;
-uniform float4 uSSSColor;
-uniform float uBlockSSS;
+uniform vec3 uSSSRadius;
+uniform vec4 uSSSColor;
 
-struct FSInput
-{
-	float4 Position : SV_POSITION;
-	float2 TexCoord : TEXCOORD0;
-	float3 Normal : NORMAL;
-	float4 Custom : TEXCOORD1;
-};
+varying vec3 vPosition;
+varying vec3 vNormal;
+varying vec4 vColor;
+varying vec2 vTexCoord;
+varying float vBlockSSS;
 
-struct FSOutput
-{
-	float4 Color0 : SV_Target0;
-	float4 Color1 : SV_Target1;
-	float4 Color2 : SV_Target2;
-};
-
-Texture2D uTextureT : register(t1);
-SamplerState uTexture : register(s1);
-
-float3 packSSS(float f)
+vec3 packSSS(float f)
 {
 	f = clamp(f / 256.0, 0.0, 1.0);
-	return float3(floor(f * 255.0) / 255.0, frac(f * 255.0), frac(f * 255.0 * 255.0));
+	return vec3(floor(f * 255.0) / 255.0, fract(f * 255.0), fract(f * 255.0 * 255.0));
 }
 
-FSOutput main(FSInput IN) : SV_TARGET
+void main()
 {
-	FSOutput OUT;
+	vec2 tex = vTexCoord;
+	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
+		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	
-	// Alpha test
-	float2 tex = fmod(IN.TexCoord * uTexScale, uTexScale);
-	float4 baseColor = uTextureT.Sample(uTexture, tex);
-	clip((baseColor.a < 1.0) ? -1 : 1);
+	vec4 baseColor = vColor * texture2D(uTexture, tex);
+	
+	if (floor(baseColor.a * 255.0) < 254.0)
+		discard;
 	
 	// Subsurface depth
-	OUT.Color0 = float4(packSSS(max(IN.Custom.w * uBlockSSS, uSSS)), 1.0);
+	gl_FragData[0] = vec4(packSSS(max(vBlockSSS, uSSS)), 1.0);
 	
 	// Channel radius
-	OUT.Color1 = float4(uSSSRadius, 1.0);
+	gl_FragData[1] = vec4(uSSSRadius, 1.0);
 	
 	// Subsurface color
-	OUT.Color2 = uSSSColor;
-	
-	return OUT;
+	gl_FragData[2] = uSSSColor;
 }

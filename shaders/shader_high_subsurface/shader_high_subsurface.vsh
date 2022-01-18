@@ -1,19 +1,20 @@
-struct VSInput
-{
-	float4 Position : POSITION;
-	float3 Normal : NORMAL;
-	float2 TexCoord : TEXCOORD0;
-	float3 Color : COLOR;
-	float4 Custom : TEXCOORD1;
-};
+/// shader_high_subsurface
 
-struct VSOutput
-{
-	float4 Position : SV_POSITION;
-	float2 TexCoord : TEXCOORD0;
-	float3 Normal : NORMAL;
-	float4 Custom : TEXCOORD1;
-};
+attribute vec3 in_Position;
+attribute vec3 in_Normal;
+attribute vec4 in_Colour;
+attribute vec2 in_TextureCoord;
+attribute vec4 in_Wave;
+
+varying vec3 vPosition;
+varying vec3 vNormal;
+varying vec4 vColor;
+varying vec2 vTexCoord;
+varying float vTime;
+varying float vBlockSSS;
+
+uniform vec4 uBlendColor;
+uniform float uBlockSSS;
 
 // Wind
 uniform float uTime;
@@ -32,38 +33,33 @@ float getNoise(float v)
 	return cos(v * PI) * cos(v * 3.0 * PI) * cos(v * 5.0 * PI) * cos(v * 7.0 * PI) + sin(v * 5.0 * PI) * 0.1;
 }
 
-float4 getWind(float4 pos, float4 custom)
+vec3 getWind()
 {
-	return float4(
-		sin((uTime + pos.x * 10.0 + pos.y + pos.z) * (uWindSpeed / 5.0)) * max(custom.x * uWindTerrain, uWindEnable) * uWindStrength,
-		sin((uTime + pos.x + pos.y * 10.0 + pos.z) * (uWindSpeed / 7.5)) * max(custom.x * uWindTerrain, uWindEnable) * uWindStrength,
-		sin((uTime + pos.x + pos.y + pos.z * 10.0) * (uWindSpeed / 10.0)) * max(custom.y * uWindTerrain, uWindEnable) * uWindStrength,
-		0
+	return vec3(
+		sin((uTime + in_Position.x * 10.0 + in_Position.y + in_Position.z) * (uWindSpeed / 5.0)) * max(in_Wave.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((uTime + in_Position.x + in_Position.y * 10.0 + in_Position.z) * (uWindSpeed / 7.5)) * max(in_Wave.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((uTime + in_Position.x + in_Position.y + in_Position.z * 10.0) * (uWindSpeed / 10.0)) * max(in_Wave.y * uWindTerrain, uWindEnable) * uWindStrength
 	);
 }
 
-float3 getWindAngle(float3 pos, float4 custom)
+vec3 getWindAngle(vec3 pos)
 {
-	float2 angle = float2(cos(uWindDirection), sin(uWindDirection));
+	vec2 angle = vec2(cos(uWindDirection), sin(uWindDirection));
 	float strength = dot(pos.xy/16.0, angle) / dot(angle, angle);
 	float diroff = getNoise((((uTime * uWindDirectionalSpeed) - (strength / 3.0) - (pos.z/64.0)) * .075));
-	return float3(angle * diroff, 0.0) * (1.0 - step(max(custom.x * uWindTerrain, uWindEnable), 0.0)) * uWindDirectionalStrength;
+	return vec3(angle * diroff, 0.0) * (1.0 - step(max(in_Wave.x * uWindTerrain, uWindEnable), 0.0)) * uWindDirectionalStrength;
 }
 
-VSOutput main(VSInput IN)
+void main()
 {
-	VSOutput OUT;
+	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
+	vPosition += getWindAngle(in_Position);
 	
-	// Diffuse
-	float3 pos = mul(gm_Matrices[MATRIX_WORLD], float4(IN.Position + getWind(IN.Position, IN.Custom))).xyz;
-	pos += getWindAngle(IN.Position, IN.Custom);
+	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
+	vColor = in_Colour * uBlendColor;
+	vTexCoord = in_TextureCoord;
+	vTime = uTime;
+	vBlockSSS = uBlockSSS * min(1.0, (in_Wave.w * (uBlockSSS > 0.0 ? 1.0 : 0.0)));
 	
-	OUT.Position = mul(gm_Matrices[MATRIX_PROJECTION], mul(gm_Matrices[MATRIX_VIEW], float4(pos, 1.0)));
-	OUT.TexCoord = IN.TexCoord;
-	
-	// Custom
-	OUT.Custom = IN.Custom;
-	
-	return OUT;
+	gl_Position = gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 }
-

@@ -1,109 +1,101 @@
-uniform float2 uTexScale;
-uniform float2 uTexScaleMaterial;
-uniform float2 uTexScaleNormal;
-uniform float4 uBlendColor;
+uniform vec4 uBlendColor;
 uniform float uBrightness;
 uniform int uSSAOEnable;
 
-struct FSInput
+uniform sampler2D uTexture;
+uniform vec2 uTexScale;
+uniform sampler2D uTextureMaterial;
+uniform vec2 uTexScaleMaterial;
+uniform sampler2D uTextureNormal;
+uniform vec2 uTexScaleNormal;
+
+varying vec4 vPosition;
+varying vec2 vTexCoord;
+varying float vDepth;
+varying vec3 vNormal;
+varying vec4 vColor;
+varying vec4 vCustom;
+varying vec3 vWorldPosition;
+varying mat3 vWorldInv;
+varying mat3 vWorldViewInv;
+
+vec4 packDepth(float f)
 {
-	float4 Position : SV_POSITION;
-	float2 TexCoord : TEXCOORD0;
-	float Depth : DEPTH;
-	float3 Normal : NORMAL;
-	float3 Custom : TEXCOORD1;
-	float3 WorldPosition : TEXCOORD2;
-	float3x3 WorldInv : TEXCOORD3;
-	float3x3 WorldViewInv : TEXCOORD6;
-};
-
-struct FSOutput
-{
-	float4 Color0 : SV_Target0;
-	float4 Color1 : SV_Target1;
-	float4 Color2 : SV_Target2;
-};
-
-Texture2D uTextureT : register(t1);
-SamplerState uTexture : register(s1);
-
-Texture2D uTextureMaterialT : register(t2);
-SamplerState uTextureMaterial : register(s2);
-
-Texture2D uTextureNormalT : register(t3);
-SamplerState uTextureNormal : register(s3);
-
-float4 packDepth(float f)
-{
-	 return float4(floor(f * 255.0) / 255.0, frac(f * 255.0), frac(f * 255.0 * 255.0), 1.0);
+	 return vec4(floor(f * 255.0) / 255.0, fract(f * 255.0), fract(f * 255.0 * 255.0), 1.0);
 }
 
-float4 packNormal(float3 n)
+vec4 packNormal(vec3 n)
 {
-	return float4((n + float3(1.0, 1.0, 1.0)) * 0.5, 1.0);
+	return vec4((n + vec3(1.0, 1.0, 1.0)) * 0.5, 1.0);
 }
 
-float3 getMappedNormal(float3 normal, float3 pos, float2 uv)
+#extension GL_OES_standard_derivatives : enable
+vec3 getMappedNormal(vec3 normal, vec3 worldPos, vec2 uv)
 {
 	// Get edge derivatives
-	float3 posDx = ddx(pos);
-	float3 posDy = ddy(pos);
-	float2 texDx = ddx(uv);
-	float2 texDy = ddy(uv);
+	vec3 posDx = dFdx(worldPos);
+	vec3 posDy = dFdy(worldPos);
+	vec2 texDx = dFdx(uv);
+	vec2 texDy = dFdy(uv);
 	
 	// Calculate tangent/bitangent
-	float3 posPx = cross(normal, posDx);
-	float3 posPy = cross(posDy, normal);
-	float3 T = posPy * texDx.x + posPx * texDy.x;
-	float3 B = posPy * texDx.y + posPx * texDy.y;
+	vec3 posPx = cross(normal, posDx);
+	vec3 posPy = cross(posDy, normal);
+	vec3 T = posPy * texDx.x + posPx * texDy.x;
+	vec3 B = posPy * texDx.y + posPx * texDy.y;
 	
 	// Create a Scale-invariant frame
 	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
 	
 	// Build TBN matrix to transform mapped normal with mesh
-	float3x3 TBN = float3x3(T * invmax, B * invmax, normal);
+	mat3 TBN = mat3(T * invmax, B * invmax, normal);
 	
 	// Get normal value from normal map
-	float2 normtex = fmod(uv * uTexScaleNormal, uTexScaleNormal);
-	float3 normalCoord = uTextureNormalT.Sample(uTextureNormal, normtex).rgb * 2.0 - 1.0;
+	vec2 normtex = uv;
+	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
+		normtex = mod(normtex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
-	if (normalCoord.z <= 0.0)
+	vec3 normalCoord = texture2D(uTextureNormal, normtex).rgb * 2.0 - 1.0;
+	
+	if (normalCoord.z < 0.0)
 		return normal;
 	
-	return normalize(mul(normalCoord, TBN));
+	return normalize(TBN * normalCoord);
 }
 
-FSOutput main(FSInput IN) : SV_TARGET
+void main()
 {
-	FSOutput OUT;
+	vec2 tex = vTexCoord;
+	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
+		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
 	
-	// Alpha test
-	float2 tex = fmod(IN.TexCoord * uTexScale, uTexScale);
-	float4 baseColor = uTextureT.Sample(uTexture, tex);
-	clip((baseColor.a < 1.0) ? -1 : 1);
+	vec4 baseColor = uBlendColor * vColor * texture2D(uTexture, tex);
+	
+	if (floor(baseColor.a * 255.0) < 254.0)
+		discard;
 	
 	// Depth
-	OUT.Color0 = packDepth(IN.Depth);
+	gl_FragData[0] = packDepth(vDepth);
 	
 	// Normal
-	float3 N = getMappedNormal(normalize(IN.Normal), IN.WorldPosition, IN.TexCoord);
-	N = normalize(mul(N, IN.WorldInv));
-	N = normalize(mul(IN.WorldViewInv, N));
-	OUT.Color1 = packNormal(normalize(N));
+	vec3 N = getMappedNormal(normalize(vNormal), vWorldPosition, vTexCoord);
+	N = normalize(N * vWorldInv);
+	N = normalize(vWorldViewInv * N);
+	gl_FragData[1] = packNormal(N);
 	
 	// Brightness of SSAO
 	float br;
 	if (uSSAOEnable > 0)
 	{
-		float2 texMat = fmod(IN.TexCoord * uTexScaleMaterial, uTexScaleMaterial);
-		float4 mat = uTextureMaterialT.Sample(uTextureMaterial, texMat);
+		vec2 texMat = vTexCoord;
+		if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
+			texMat = mod(tex * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 		
-		br = max(0.0, uBlendColor.a - ((uBrightness + IN.Custom.z) * mat.b));
+		float mat = texture2D(uTextureMaterial, texMat).b;
+		br = max(0.0, baseColor.a - ((uBrightness + vCustom.z) * mat));
 	}
 	else
 		br = 0.0;
 	
-	OUT.Color2 = float4(br, br, br, 1.0);
-	
-	return OUT;
+	gl_FragData[2] = vec4(br, br, br, 1.0);
 }

@@ -1,8 +1,8 @@
 {
-  "type": 3,
+  "type": 1,
   "parent": {
-    "name": "Light",
-    "path": "folders/Shaders/High quality/Light.yy",
+    "name": "Sampling",
+    "path": "folders/Shaders/High quality/Sampling.yy",
   },
   "resourceVersion": "1.0",
   "name": "shader_high_samples_add",
