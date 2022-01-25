@@ -121,24 +121,27 @@ function view_control_scale_plane(view, control, axes, color, mat, normal, corne
 	
 	// Draw outline
 	view_shape_line_draw(corner12D, corner22D)
-	view_shape_line_draw(corner22D, corner32D)
-	view_shape_line_draw(corner32D, corner42D)
-	view_shape_line_draw(corner42D, corner12D)
+	view_shape_line_draw(corner22D, corner42D)
+	view_shape_line_draw(corner12D, corner42D)
+	//view_shape_line_draw(corner32D, corner42D)
+	//view_shape_line_draw(corner42D, corner12D)
 	
 	// Draw square
 	draw_set_alpha(.35)
 	
 	render_set_culling(false)
 	draw_primitive_begin(pr_trianglelist)
-	view_shape_triangle_draw(corner12D, corner22D, corner32D)
-	view_shape_triangle_draw(corner32D, corner42D, corner12D)
+	
+	view_shape_triangle_draw(corner12D, corner22D, corner42D)
+	
+	//view_shape_triangle_draw(corner12D, corner22D, corner32D)
+	//view_shape_triangle_draw(corner32D, corner42D, corner12D)
 	draw_primitive_end()
 	render_set_culling(true)
 	
 	draw_set_color(c_white)
 	draw_set_alpha(1)
 	
-	if ((point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12D[X], corner12D[Y], corner22D[X], corner22D[Y], corner32D[X], corner32D[Y]) || 
-		point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12D[X], corner12D[Y], corner42D[X], corner42D[Y], corner32D[X], corner32D[Y])) && content_mouseon)
+	if (point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12D[X], corner12D[Y], corner22D[X], corner22D[Y], corner42D[X], corner42D[Y]) && content_mouseon)
 		view.control_mouseon = control
 }
