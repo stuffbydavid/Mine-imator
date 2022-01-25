@@ -87,7 +87,7 @@ void main()
 	
 	vec4 baseColor = uBlendColor * vColor * texture2D(uTexture, tex);
 	
-	if (floor(baseColor.a * 255.0) < 254.0)
+	if (baseColor.a == 0.0)
 		discard;
 	
 	// Depth
