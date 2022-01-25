@@ -4,6 +4,7 @@ attribute vec3 in_Position;
 attribute vec2 in_TextureCoord;
 
 varying vec2 vTexCoord;
+
 void main()
 {
 	vTexCoord = in_TextureCoord;

@@ -1188,17 +1188,6 @@ function list_init(name)
 			break
 		}
 		
-		// Indirect lighting quality
-		case "renderindirectquality":
-		{
-			menu_add_item(0, text_get("renderindirectquality0"))
-			menu_add_item(1, text_get("renderindirectquality1"))
-			menu_add_item(2, text_get("renderindirectquality2"))
-			menu_add_item(3, text_get("renderindirectquality3"))
-			
-			break
-		}
-		
 		// Watermark position
 		case "settingswatermarkpositionx":
 		{

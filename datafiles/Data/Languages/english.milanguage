@@ -623,6 +623,7 @@
                 "ao": "Ambient occlusion",
                 "shadows": "Shadows",
                 "indirect": "Indirect",
+                "indirectshadows": "Indirect & shadows",
                 "reflections": "Reflections"
             }
         },
@@ -1951,17 +1952,9 @@
         },
         "indirect": "Indirect lighting",
         "indirect/": {
-            "quality": "Ray trace quality",
-            "quality/": {
-                "0": "Low",
-                "1": "Medium",
-                "2": "High",
-                "3": "Best"
-            },
+            "precision": "Precision",
             "blurpasses": "Blur passes",
-            "strength": "Strength",
-            "range": "Range",
-            "emissionrange": "Emission range"
+            "strength": "Strength"
         },
         "reflections": "Reflections",
         "reflections/": {

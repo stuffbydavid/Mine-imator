@@ -974,6 +974,7 @@ function enums()
 		AO,
 		SHADOWS,
 		INDIRECT,
+		INDIRECT_SHADOWS,
 		REFLECTIONS,
 		DEPTH_U24,
 		NORMAL,

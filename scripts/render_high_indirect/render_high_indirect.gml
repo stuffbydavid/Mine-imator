@@ -22,29 +22,24 @@ function render_high_indirect(export)
 		render_samples = project_render_samples
 	}
 	
-	var shadowsurf, tempsurf, depthsurf, normalsurf, normalsurf2, diffusesurf, brightnesssurf;
+	var shadowsurf, tempsurf, tempsurf2, depthsurf, normalsurf, normalsurf2, diffusesurf;
 	shadowsurf = render_surface_shadows
 	
 	render_surface_indirect = surface_require(render_surface_indirect, render_width, render_height)
 	
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	tempsurf = render_surface[0]
-	
-	// Render depth & normal data
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	depthsurf = render_surface[1]
-	
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	normalsurf = render_surface[2]
-	
 	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-	normalsurf2 = render_surface[3]
-	
 	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
-	diffusesurf = render_surface[4]
-	
 	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
-	brightnesssurf = render_surface[5]
+	
+	tempsurf = render_surface[0]
+	tempsurf2 = render_surface[1]
+	depthsurf = render_surface[2]
+	normalsurf = render_surface[3]
+	normalsurf2 = render_surface[4]
+	diffusesurf = render_surface[5]
 	
 	// Render diffuse color
 	surface_set_target(diffusesurf)
@@ -61,10 +56,11 @@ function render_high_indirect(export)
 	}
 	surface_reset_target()
 	
+	// Render depth & normal data
 	surface_set_target_ext(0, depthsurf)
 	surface_set_target_ext(1, normalsurf)
 	surface_set_target_ext(2, normalsurf2)
-	surface_set_target_ext(3, brightnesssurf)
+	surface_set_target_ext(3, render_surface_indirect)
 	{
 		draw_clear_alpha(c_white, 0)
 		render_world_start(5000)
@@ -90,17 +86,39 @@ function render_high_indirect(export)
 			surface_reset_target()
 		}
 		
-		// Ray trace indirect
-		surface_set_target(tempsurf)
+		// Raytrace indirect
+		surface_set_target_ext(0, tempsurf)
+		surface_set_target_ext(1, tempsurf2)
 		{
 			gpu_set_texrepeat(false)
 		    draw_clear_alpha(c_black, 0)
 			
-		    render_shader_obj = shader_map[?shader_high_indirect]
+		    render_shader_obj = shader_map[?shader_high_raytrace_uv]
 		    with (render_shader_obj)
 		    {
 		        shader_set(shader)
-		        shader_high_indirect_set(depthsurf, normalsurf, normalsurf2, diffusesurf, shadowsurf, brightnesssurf)
+		        shader_high_raytrace_uv_set(depthsurf, normalsurf, normalsurf2)
+		    }
+			
+		    draw_blank(0, 0, render_width, render_height)
+			
+		    with (render_shader_obj)
+		        shader_clear()
+			gpu_set_texrepeat(true)
+		}
+		surface_reset_target()
+		
+		// Resolve RT data to color
+		surface_set_target(render_surface_indirect)
+		{
+			gpu_set_texrepeat(false)
+		    draw_clear_alpha(c_black, 0)
+			
+		    render_shader_obj = shader_map[?shader_high_raytrace_indirect]
+		    with (render_shader_obj)
+		    {
+		        shader_set(shader)
+		        shader_high_raytrace_indirect_set(tempsurf, tempsurf2, shadowsurf, diffusesurf, normalsurf, normalsurf2, depthsurf)
 		    }
 			
 		    draw_blank(0, 0, render_width, render_height)
@@ -150,7 +168,7 @@ function render_high_indirect(export)
 				shader_set(shader)
 				shader_high_samples_add_set(exptemp, dectemp)
 			}
-			draw_surface_exists(tempsurf, 0, 0)
+			draw_surface_exists(render_surface_indirect, 0, 0)
 			with (render_shader_obj)
 				shader_clear()
 		}
@@ -181,8 +199,8 @@ function render_high_indirect(export)
 	repeat (project_render_indirect_blur_passes)
 	{
 		var indirectsurftemp;
-		render_surface[4] = surface_require(render_surface[4], render_width, render_height)
-		indirectsurftemp = render_surface[4]
+		render_surface[5] = surface_require(render_surface[5], render_width, render_height)
+		indirectsurftemp = render_surface[5]
 		
 		render_shader_obj = shader_map[?shader_high_ssao_blur]
 		with (render_shader_obj)

@@ -1,4 +1,5 @@
-/// shader_high_indirect
+/// shader_high_raytrace_reflections
+/// Resolves UV hit data for reflections
 
 attribute vec3 in_Position;
 attribute vec4 in_Colour;

@@ -1,4 +1,5 @@
-/// shader_high_reflections
+/// shader_high_raytrace_uv
+/// Traces a 2D ray based on diffuse or specular data, saves UV coordinate to texture.
 
 attribute vec3 in_Position;
 attribute vec4 in_Colour;

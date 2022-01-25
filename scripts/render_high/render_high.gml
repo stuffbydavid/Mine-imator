@@ -24,7 +24,7 @@ function render_high()
 	{
 		render_high_shadows(render_active = "image" || render_active = "movie")
 	
-		if (project_render_pass = e_render_pass.SHADOWS)
+		if (project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.INDIRECT_SHADOWS)
 			render_pass_surf = surface_duplicate(render_surface_shadows)
 		
 		if (project_render_pass = e_render_pass.SPECULAR)
@@ -36,8 +36,28 @@ function render_high()
 	{
 		render_high_indirect(render_active = "image" || render_active = "movie")
 		
-		if (project_render_pass = e_render_pass.INDIRECT)
-			render_pass_surf = surface_duplicate(render_surface_indirect)
+		if (project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.INDIRECT_SHADOWS)
+		{
+			// Add direct lighting
+			if (project_render_pass = e_render_pass.INDIRECT_SHADOWS)
+			{
+				surface_set_target(render_pass_surf)
+				{
+					render_shader_obj = shader_map[?shader_add]
+					with (render_shader_obj)
+					{
+						shader_set(shader)
+						shader_add_set(render_surface_indirect, app.project_render_indirect_strength, c_white)
+					}
+					draw_surface_exists(render_surface_shadows, 0, 0)
+					with (render_shader_obj)
+						shader_clear()
+				}
+				surface_reset_target()
+			}
+			else
+				render_pass_surf = surface_duplicate(render_surface_indirect)
+		}
 	}
 	
 	// Composite current effects onto the scene

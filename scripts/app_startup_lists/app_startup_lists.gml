@@ -522,6 +522,7 @@ function app_startup_lists()
 		"ao",
 		"shadows",
 		"indirect",
+		"indirectshadows",
 		"reflections",
 		"depth",
 		"normal",

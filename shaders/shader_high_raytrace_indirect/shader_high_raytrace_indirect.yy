@@ -5,7 +5,7 @@
     "path": "folders/Shaders/High quality/Raytracing.yy",
   },
   "resourceVersion": "1.0",
-  "name": "shader_high_reflections_apply",
+  "name": "shader_high_raytrace_indirect",
   "tags": [],
   "resourceType": "GMShader",
 }

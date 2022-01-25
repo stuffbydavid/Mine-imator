@@ -1,7 +1,6 @@
 varying vec2 vTexCoord;
 
 // Buffers
-uniform sampler2D uDiffuseBuffer;
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uNormalBufferExp;
@@ -18,9 +17,8 @@ uniform vec2 uScreenSize;
 uniform float uPrecision;
 uniform float uThickness;
 uniform vec3 uKernel[16];
-uniform vec4 uFallbackColor;
-uniform float uFadeAmount;
 uniform float uNoiseSize;
+uniform int uSpecularRay; // Determines if raytrace is diffuse/specular
 
 // Get normal Value
 vec3 unpackNormal(vec4 c)
@@ -46,6 +44,11 @@ float transformDepth(float depth)
 	return (uFar - (uNear * uFar) / (depth * (uFar - uNear) + uNear)) / (uFar - uNear);
 }
 
+float linearizeDepth(float depth)
+{
+	return uNear * uFar / (uFar + depth * (uNear - uFar));
+}
+
 // Reconstruct a position from a screen space coordinate and (linear) depth
 vec3 posFromBuffer(vec2 coord, float depth)
 {
@@ -58,6 +61,11 @@ float unpackFloat2(float expo, float dec)
 	return (expo * 255.0 * 255.0) + (dec * 255.0);
 }
 
+vec2 packFloat2(float f)
+{
+	return vec2(floor(f / 255.0) / 255.0, fract(f / 255.0));
+}
+
 // Get normal Value
 vec3 getNormal(vec2 coords)
 {
@@ -67,24 +75,18 @@ vec3 getNormal(vec2 coords)
 	return (vec3(unpackFloat2(nExp.r, nDec.r), unpackFloat2(nExp.g, nDec.g), unpackFloat2(nExp.b, nDec.b)) / (255.0 * 255.0)) * 2.0 - 1.0;
 }
 
-vec2 viewPosToPixel(vec3 viewPos)
+vec2 viewPosToPixel(vec4 viewPos)
 {
-	vec4 coord = (uProjMatrix * vec4(viewPos.xyz, 1.0));
-	coord.xy = (coord.xy / coord.w) * 0.5 + 0.5;
-	coord.xy = vec2(1.0) - coord.xy;
-	coord.xy  *= uScreenSize;
-	
-	//coord.y = 1.0 - coord.y;
-	//coord = posFromBuffer(coord, getDepth(coord));
-	
-	//coord.xy   = coord.xy * 0.5 + 0.5;
-	
+	vec4 coord	= (uProjMatrix * viewPos);
+	coord.xy	= (coord.xy / coord.w) * 0.5 + 0.5;
+	coord.y		= 1.0 - coord.y;
+	coord.xy	*= uScreenSize;
 	
 	return coord.xy;
 }
 
-// Ray tracer, returns color
-vec3 rayTrace(vec2 originUV)
+// Ray tracer, returns hit coordinate
+vec2 rayTrace(vec2 originUV)
 {
 	vec3 traceCol = vec3(0.0);
 	
@@ -92,42 +94,53 @@ vec3 rayTrace(vec2 originUV)
 	vec3 mat = texture2D(uMaterialBuffer, originUV).rgb;
 	
 	// Sample buffers
-	float originDepth = getDepth(originUV);
-	vec3 viewPos = posFromBuffer(originUV, originDepth);
-	vec3 normal = getNormal(originUV);
+	float originDepth	= getDepth(originUV);
+	vec3 viewPos		= posFromBuffer(originUV, originDepth);
+	vec3 normal			= normalize(getNormal(originUV));
 	
-	vec3 jitt = vec3(0.0);
+	// Calculate ray direction from surface normal
+	vec3 rayVector;
 	
-	// Not physically accurate, but looks nice.
-	float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
-	vec3 randVec = unpackNormal(texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)));
-	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
-	vec3 bitangent = cross(normal, tangent);
-	mat3 kernelBasis = mat3(tangent, bitangent, normal);
+	vec2 noiseScale = uScreenSize / uNoiseSize;
+	vec3 randVec	= unpackNormal(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
 	
-	vec3 reflectVector = normalize(reflect(normalize(viewPos), normalize(normal)));
-	vec3 rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
-	float rayVis = 1.0;
+	// Construct kernel basis matrix
+	vec3 tangent		= normalize(randVec - normal * dot(randVec, normal));
+	vec3 bitangent		= cross(normal, tangent);
+	mat3 kernelBasis	= mat3(tangent, bitangent, normal);
 	
-	if (dot(rayVector, normal) <= 0.01)
-		rayVis = 0.0;
+	if (uSpecularRay == 1) // Reflection ray
+	{
+		// Not physically accurate, but looks nice.
+		float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
+		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
+	}
+	else // Indirect ray
+	{
+		rayVector = normalize(kernelBasis * uKernel[0]);
+		
+		if (dot(rayVector, normal) <= 0.0)
+			rayVector = normalize(-rayVector);
+	}
 	
 	// Pixel coord on texture
-	vec2 pixelCoord = uScreenSize / originUV;
+	vec2 pixelCoord     = uScreenSize / originUV;
 	
 	// Ray data
-	float raySize       = 5000.0;
-	vec3 rayStartPos    = viewPos;
-	vec3 rayEndPos      = rayStartPos + (rayVector * raySize);
+	float raySize       = 8000.0;
+	vec4 rayStartPos    = vec4(viewPos, 1.0);
+	vec4 rayEndPos      = vec4(rayStartPos.xyz + (rayVector * raySize), 1.0);
 	
 	// Clip to near camera plane
 	if (rayEndPos.z < uNear)
-		rayEndPos       = rayStartPos + (rayVector * (rayStartPos.z - uNear));
+		rayEndPos.xyz	= rayStartPos.xyz + (rayVector * (rayStartPos.z - uNear));
 	
 	vec2 rayStartPixel  = viewPosToPixel(rayStartPos);
 	vec2 rayEndPixel    = viewPosToPixel(rayEndPos);
 	vec2 rayPixel       = rayStartPixel;
 	vec2 rayUV          = rayPixel / uScreenSize;
+	float rayDistance	= 0.0;
+	bool rayHit			= false;
 	
 	// Trace data
 	vec2 pixelDelta     = rayEndPixel - rayStartPixel;
@@ -136,25 +149,26 @@ vec3 rayTrace(vec2 originUV)
 	vec2 pixelStepDelta = pixelDelta / max(stepDelta, 0.001);
 	vec3 samplePos      = viewPos;
 	
-	int refineSteps = 5;
-	float progress = 0.0;
-	float progressPrev = 0.0;
-	float vis = 0.0;
+	float progress, progressPrev;
+	progress		= 0.0;
+	progressPrev	= 0.0;
 	
-	float viewDist = originDepth;
-	float depth    = uThickness;
+	float viewDist     = originDepth;
+	float depth        = uThickness;
+	float depthPrev;
+	
 	float rayThickness = uThickness;
-	int traceSteps = int(stepDelta);
+	int traceSteps     = int(stepDelta);
 	
-	int i = 0;
-	bool viewClip = false;
 	float rayZ = (rayStartPos.z * rayEndPos.z);
 	
-	for (i = 0; i < traceSteps; i++)
+	for (int i = 0; i < traceSteps; i++)
 	{
+		progressPrev = progress;
+		depthPrev	 = depth;
+		
 		rayPixel += pixelStepDelta;
 		rayUV     = rayPixel / uScreenSize;
-		rayUV.x   = 1.0 - rayUV.x;
 		
 		samplePos = posFromBuffer(rayUV, getDepth(rayUV));
 		
@@ -165,30 +179,34 @@ vec3 rayTrace(vec2 originUV)
 		progress  = clamp(progress, 0.0, 1.0);
 		
 		viewDist  = rayZ / mix(rayEndPos.z, rayStartPos.z, progress);
-		depth     = samplePos.z - viewDist;
-		
-		rayThickness = (uThickness * max(1.0, viewDist/25.0));
+		depth     = viewDist - samplePos.z;
 		
 		if (rayUV.x <= 0.0 || rayUV.y <= 0.0 || rayUV.x >= 1.0 || rayUV.y >= 1.0)
-		{
-			vis = 0.0;
-			viewClip = true;
 			break;
-		}
 		
 		// Check for collision
-		if (depth < 0.0 && depth > -rayThickness)
+		if (depth > 0.0 && dot(normal, getNormal(rayUV)) < .99)
 		{
-			vis = 1.0;
+			rayDistance = length(mix(rayStartPos, rayEndPos, progress) - rayStartPos);
+			rayThickness = (uThickness * rayDistance);
+			
+			// Is the ray in the object?
+			if (depth < rayThickness)
+				rayHit = true;
+			
 			break;
 		}
-		
-		progressPrev = progress;
 	}
 	
+	// Discard if ray hit a backface (Works sometimes?)
+	if (depthPrev > uThickness)
+		rayHit = false;
+	
+	if (!rayHit || texture2D(uDepthBuffer, rayUV).a < 1.0)
+		return vec2(1.0);
+	
 	// Refine ray UV
-	if (vis < 1.0)
-		refineSteps = 0;
+	const int refineSteps = 10;
 	
 	progress = progressPrev + ((progress - progressPrev) * 0.5);
 	
@@ -196,18 +214,17 @@ vec3 rayTrace(vec2 originUV)
 	{
 		rayPixel  = mix(rayStartPixel, rayEndPixel, progress);
 		rayUV     = rayPixel / uScreenSize;
-		rayUV.x   = 1.0 - rayUV.x;
 		
 		samplePos = posFromBuffer(rayUV, getDepth(rayUV));
 		
 		viewDist  = rayZ / mix(rayEndPos.z, rayStartPos.z, progress);
-		depth     = samplePos.z - viewDist;
+		depth     = viewDist - samplePos.z;
 		
-		rayThickness = (uThickness * max(1.0, viewDist/25.0));
+		rayDistance = length(mix(rayStartPos, rayEndPos, progress) - rayStartPos);
+		rayThickness = (uThickness * rayDistance);
 		
-		if (depth < 0.0 && depth > -rayThickness)
+		if (depth > 0.0 && depth < rayThickness)
 		{
-			vis = 1.0;
 			progress = progressPrev + ((progress - progressPrev) * 0.5);
 		}
 		else
@@ -218,55 +235,33 @@ vec3 rayTrace(vec2 originUV)
 		}
 	}
 	
-	traceCol = uFallbackColor.rgb;
-	
-	// Visible, must've hit something.
-	if (vis > 0.0)
-	{
-		vis *= rayVis;
-		
-		// Bruh
-		vis *= (1.0 - clamp(length(samplePos - viewPos) / raySize, 0.0, 1.0));
-		
-		// Fade based on angle relation to ray
-		vec3 hitNormal = getNormal(rayUV);
-		if (dot(rayVector, hitNormal) > 0.01)
-			vis = 0.0;
-		
-		// Fade by edge
-		vec2 fadeUV = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - rayUV.xy)) * uFadeAmount;
-		vis *= clamp(1.0 - (fadeUV.x + fadeUV.y), 0.0, 1.0);
-		
-		// Clamp
-		vis = clamp(vis, 0.0, 1.0);
-		
-		// Mix in fallback via fresnel if ray hit a reflective surface ¯\_(ツ)_/¯
-		vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).r);
-		traceCol = mix(traceCol, surfCol, vis);
-	}
-	
-	return traceCol;
+	return rayUV;
 }
 
 void main()
 {
-	vec4 mat, result;
-	mat = texture2D(uMaterialBuffer, vTexCoord);
-	result = vec4(0.0, 0.0, 0.0, 1.0);
+	// Full ray coord defaults to no hit in resolve
+	vec2 rayHit = vec2(1.0);
 	
-	// Perform alpha test to ignore background
-	if (texture2D(uDepthBuffer, vTexCoord).a == 0.0)
+	// Depth test
+	if (texture2D(uDepthBuffer, vTexCoord).a > 0.0)
 	{
-		if (mat.a == 0.0)
-			result = vec4(0.0);
-		else
-			result = (mat.b > 0.0 ? uFallbackColor : vec4(0.0, 0.0, 0.0, 1.0));
-	}
-	else
-	{
-		if (mat.b > 0.0)
-			result = vec4(rayTrace(vTexCoord), 1.0);
+		if (uSpecularRay == 1) // Reflection ray
+		{
+			vec4 mat = texture2D(uMaterialBuffer, vTexCoord);
+		
+			if (mat.b > 0.0)
+				rayHit = rayTrace(vTexCoord);
+		}
+		else // Indirect ray
+			rayHit = rayTrace(vTexCoord);
 	}
 	
-	gl_FragColor = result;
+	vec4 rayPacked = vec4(packFloat2(rayHit.x * (255.0 * 255.0)), packFloat2(rayHit.y * (255.0 * 255.0)));
+	
+	if (rayHit.x == 1.0)
+		rayPacked = vec4(1.0);
+	
+	gl_FragData[0] = vec4(rayPacked.rg, 0.0, 1.0);
+	gl_FragData[1] = vec4(rayPacked.ba, 0.0, 1.0);
 }

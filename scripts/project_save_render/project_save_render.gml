@@ -21,11 +21,9 @@ function project_save_render()
 		json_save_var("render_subsurface_jitter", project_render_subsurface_jitter)
 		
 		json_save_var_bool("render_indirect", project_render_indirect)
+		json_save_var("render_indirect_precision", project_render_indirect_precision)
 		json_save_var("render_indirect_blur_passes", project_render_indirect_blur_passes)
-		json_save_var("render_indirect_quality", project_render_indirect_quality)
 		json_save_var("render_indirect_strength", project_render_indirect_strength)
-		json_save_var("render_indirect_range", project_render_indirect_range)
-		json_save_var("render_indirect_emission_range", project_render_indirect_emission_range)
 		
 		json_save_var_bool("render_reflections", project_render_reflections)
 		json_save_var("render_reflections_precision", project_render_reflections_precision)

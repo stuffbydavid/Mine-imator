@@ -47,11 +47,11 @@ function app_startup_interface_tabs()
 			tbx_subsurface_samples = new_textbox_integer()
 			tbx_subsurface_jitter = new_textbox_integer()
 			tbx_subsurface_jitter.suffix = "%"
+			tbx_indirect_precision = new_textbox_integer()
+			tbx_indirect_precision.suffix = "%"
 			tbx_indirect_blur_passes = new_textbox_integer()
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"
-			tbx_indirect_range = new_textbox_decimals()
-			tbx_indirect_emission_range = new_textbox_decimals()
 			tbx_reflections_precision = new_textbox_integer()
 			tbx_reflections_precision.suffix = "%"
 			tbx_reflections_thickness = new_textbox_decimals()

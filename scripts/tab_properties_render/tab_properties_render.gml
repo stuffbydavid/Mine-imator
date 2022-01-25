@@ -135,8 +135,8 @@ function tab_properties_render()
 	{
 		tab_collapse_start()
 		
-		tab_control_menu()
-		draw_button_menu("renderindirectquality", e_menu.LIST, dx, dy, dw, 24, project_render_indirect_quality, text_get("renderindirectquality" + string(project_render_indirect_quality)), action_project_render_indirect_quality)
+		tab_control_meter()
+		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_indirect_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision)
 		tab_next()
 		
 		tab_control_meter()
@@ -145,14 +145,6 @@ function tab_properties_render()
 		
 		tab_control_dragger()
 		draw_dragger("renderindirectstrength", dx, dy, dragger_width, round(project_render_indirect_strength * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
-		tab_next()
-		
-		tab_control_dragger()
-		draw_dragger("renderindirectrange", dx, dy, dragger_width, project_render_indirect_range, project_render_indirect_range / 200, 1, no_limit, 2048, 1, tab.render.tbx_indirect_range, action_project_render_indirect_range) 
-		tab_next()
-		
-		tab_control_dragger()
-		draw_dragger("renderindirectemissionrange", dx, dy, dragger_width, project_render_indirect_emission_range, project_render_indirect_emission_range / 200, 1, no_limit, 256, 1, tab.render.tbx_indirect_emission_range, action_project_render_indirect_emission_range) 
 		tab_next()
 		
 		tab_collapse_end()
@@ -176,7 +168,7 @@ function tab_properties_render()
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .001, no_limit, 1, 1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
+		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .1, no_limit, 1, .1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
 		tab_next()
 		
 		tab_collapse_end()

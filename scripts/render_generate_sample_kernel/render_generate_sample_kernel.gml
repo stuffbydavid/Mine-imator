@@ -25,6 +25,15 @@ function render_generate_sample_kernel(samples)
 		yy *= scale
 		zz *= scale
 		
+		if (abs(xx) < 0.01)
+			xx = 0.01
+		
+		if (abs(yy) < 0.01)
+			yy = 0.01
+		
+		if (abs(zz) < 0.01)
+			zz = 0.01
+		
 		// Store in array
 		arr[i * 3] = xx
 		arr[i * 3 + 1] = yy

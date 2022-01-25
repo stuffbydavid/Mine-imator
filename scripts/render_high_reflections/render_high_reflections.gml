@@ -28,14 +28,14 @@ function render_high_reflections(export, surf)
 	}
 	
 	// Render scene data
-	var samplesurf, depthsurf, normalsurf, normalsurf2, materialsurf;
+	var rtsurf, depthsurf, normalsurf, normalsurf2, materialsurf, samplesurf;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
 	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
 	render_surface_ssr = surface_require(render_surface_ssr, render_width, render_height)
-	samplesurf = render_surface[0]
+	rtsurf = render_surface[0]
 	depthsurf = render_surface[1]
 	normalsurf = render_surface[2]
 	normalsurf2 = render_surface[4]
@@ -57,7 +57,7 @@ function render_high_reflections(export, surf)
 	surface_set_target_ext(2, normalsurf2)
 	{
 		draw_clear_alpha(c_white, 0)
-		render_world_start(2000)
+		render_world_start(5000)
 		render_world(e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL)
 		render_world_done()
 	}
@@ -70,17 +70,40 @@ function render_high_reflections(export, surf)
 		render_sample_noise_texture = render_get_noise_texture(s)
 		render_indirect_kernel = render_generate_sample_kernel(16)
 		
-		// Ray trace
-		surface_set_target(samplesurf)
+		// Raytrace reflections
+		surface_set_target_ext(0, rtsurf)
+		surface_set_target_ext(1, render_surface_ssr) // Not enough render surfaces for what we need, temporarily use the result surface
 		{
 			gpu_set_texrepeat(false)
-		    draw_clear_alpha(c_black, 1)
+		    draw_clear_alpha(c_black, 0)
 			
-		    render_shader_obj = shader_map[?shader_high_reflections]
+		    render_shader_obj = shader_map[?shader_high_raytrace_uv]
 		    with (render_shader_obj)
 		    {
 		        shader_set(shader)
-		        shader_high_reflections_set(depthsurf, normalsurf, normalsurf2, surf, materialsurf)
+		        shader_high_raytrace_uv_set(depthsurf, normalsurf, normalsurf2, materialsurf)
+		    }
+			
+		    draw_blank(0, 0, render_width, render_height)
+			
+		    with (render_shader_obj)
+		        shader_clear()
+			gpu_set_texrepeat(true)
+		}
+		surface_reset_target()
+		
+		// Resolve RT data to colorrender_pass_list
+		samplesurf = depthsurf
+		surface_set_target(samplesurf)
+		{
+			gpu_set_texrepeat(false)
+		    draw_clear_alpha(c_black, 0)
+			
+		    render_shader_obj = shader_map[?shader_high_raytrace_reflections]
+		    with (render_shader_obj)
+		    {
+		        shader_set(shader)
+		        shader_high_raytrace_reflections_set(rtsurf, render_surface_ssr, surf, normalsurf, normalsurf2, null, materialsurf)
 		    }
 			
 		    draw_blank(0, 0, render_width, render_height)
