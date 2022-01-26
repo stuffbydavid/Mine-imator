@@ -145,7 +145,7 @@ function model_file_load_part(map, root, res, model)
 		scale = vec3_mul(scale, other.scale)
 		
 		// Keyframe tab states
-		//show_position = value_get_real(map[?"show_position"], false)
+		show_position = value_get_real(map[?"show_position"], false)
 		
 		// Locked timeline
 		if (other.object_index = obj_model_part && other.locked)

@@ -124,6 +124,9 @@ function app_update_keyboard()
 		{
 			setting_tool_move = !setting_tool_move
 			setting_tool_scale = false
+			
+			if (tl_edit)
+				tl_edit.show_tool_position = setting_tool_move
 		}
 		
 		if (keybinds[e_keybind.TOOL_ROTATE].pressed)
@@ -156,6 +159,9 @@ function app_update_keyboard()
 			setting_tool_rotate = true
 			setting_tool_bend = true
 			setting_tool_scale = false
+			
+			if (tl_edit)
+				tl_edit.show_tool_position = setting_tool_move
 		}
 		
 		if (keybinds[e_keybind.SNAP].pressed)

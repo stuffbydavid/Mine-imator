@@ -43,6 +43,8 @@ function tl_event_create()
 		value_type_show[t] = true
 	}
 	
+	show_tool_position = true
+	
 	selected = false
 	
 	keyframe_list = ds_list_create()

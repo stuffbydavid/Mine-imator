@@ -25,6 +25,8 @@ function tl_new_part(part)
 		
 		part_parent_save_id = ""
 		
+		show_tool_position = part.show_position
+		
 		depth = part.depth
 		
 		tl_set_parent(other.id)

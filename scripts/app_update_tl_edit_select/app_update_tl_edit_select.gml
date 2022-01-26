@@ -35,6 +35,10 @@ function app_update_tl_edit_select()
 	timeline_settings_keyframes = false
 	timeline_settings_keyframes_export = false
 	
+	// Enable move tool
+	if (!setting_tool_scale)
+		setting_tool_move = true
+	
 	var checkwalk, checkexport, checkexportobj;
 	checkwalk = true
 	checkexport = true
@@ -85,6 +89,10 @@ function app_update_tl_edit_select()
 				}
 			}
 		}
+		
+		// Change tools
+		if (!show_tool_position)
+			app.setting_tool_move = tl_edit.show_tool_position
 		
 		// Set enabled
 		if (value_type[e_value_type.TRANSFORM])
