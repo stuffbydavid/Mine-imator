@@ -53,15 +53,8 @@ function render_update_cascades(dir)
 		orthoMax[Z] += 100
 		
 		// Fix shadow jittering
+		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[3]));
 		
-		// Pad the box to always contain the entire frustums
-		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7]));
-		var borderOffset = vec4_div(vec4_sub(vec4(diagonalXY), vec4_sub(orthoMax, orthoMin)), 2);
-		borderOffset[Z] = 0
-		borderOffset[W] = 0
-		orthoMax = vec4_add(orthoMax, borderOffset)
-		orthoMin = vec4_sub(orthoMin, borderOffset)
-			
 		// Snap to 1px increments to avoid shadow jittering
 		var worldUnitsPerTexel = vec4(diagonalXY / project_render_shadows_sun_buffer_size);
 		orthoMin = vec4_div(orthoMin, worldUnitsPerTexel)

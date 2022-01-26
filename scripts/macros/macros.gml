@@ -9,6 +9,7 @@ function macros()
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
 	#macro dev_mode_rotate_blocks		dev_mode && true
+	#macro dev_mode_project				""
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"

@@ -32,7 +32,12 @@ function app_startup_interface()
 	if (dev_mode)
 	{
 		popup_newproject_clear()
-		project_create()
+		
+		if (dev_mode_project != "")
+			project_load(dev_mode_project)
+		else
+			project_create()
+		
 		window_state = ""
 	}
 	else

@@ -41,12 +41,8 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, b
 				other.bounding_box.merge(bendcache[1])
 				usedcache = true
 				
-				show_debug_message("Using cache")
-				
 				break
 			}
-			else if (isbent)
-				show_debug_message("Not using cache")
 			
 			boxdefault = true
 			

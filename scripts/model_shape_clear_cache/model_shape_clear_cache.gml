@@ -18,11 +18,9 @@ function model_shape_clear_cache(cachelist, destroy = false)
 			if (is_array(cache))
 			{
 				vbuffer_destroy(cache[0])
-			
+				
 				if (is_struct(cache[1]))
 					delete cache[1]
-				
-				show_debug_message("ye")
 			}
 			
 			bendkey = ds_map_find_next(map, bendkey)
