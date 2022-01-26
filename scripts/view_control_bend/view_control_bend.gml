@@ -4,7 +4,7 @@
 function view_control_bend(view)
 {
 	var len, part, color;
-	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * 0.7
+	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * 0.5
 	part = tl_edit.model_part
 	
 	for (var i = X; i <= Z; i++)

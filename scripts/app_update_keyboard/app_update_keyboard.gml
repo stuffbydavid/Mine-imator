@@ -113,22 +113,50 @@ function app_update_keyboard()
 			action_lib_pc_clear()
 		
 		if (keybinds[e_keybind.TOOL_SELECT].pressed)
-			setting_tool = e_view_tool.SELECT
+		{
+			setting_tool_move = false
+			setting_tool_rotate = false
+			setting_tool_bend = false
+			setting_tool_scale = false
+		}
 		
 		if (keybinds[e_keybind.TOOL_MOVE].pressed)
-			setting_tool = e_view_tool.MOVE
+		{
+			setting_tool_move = !setting_tool_move
+			setting_tool_scale = false
+		}
 		
 		if (keybinds[e_keybind.TOOL_ROTATE].pressed)
-			setting_tool = e_view_tool.ROTATE
+		{
+			setting_tool_rotate = !setting_tool_rotate
+			setting_tool_scale = false
+		}
 		
 		if (keybinds[e_keybind.TOOL_SCALE].pressed)
-			setting_tool = e_view_tool.SCALE
+		{
+			setting_tool_scale = !setting_tool_scale
+			
+			if (setting_tool_scale)
+			{
+				setting_tool_move = false
+				setting_tool_rotate = false
+				setting_tool_bend = false
+			}
+		}
 		
 		if (keybinds[e_keybind.TOOL_BEND].pressed)
-			setting_tool = e_view_tool.BEND
+		{
+			setting_tool_bend = !setting_tool_bend
+			setting_tool_scale = false
+		}
 		
 		if (keybinds[e_keybind.TOOL_TRANSFORM].pressed)
-			setting_tool = e_view_tool.TRANSFORM
+		{
+			setting_tool_move = true
+			setting_tool_rotate = true
+			setting_tool_bend = true
+			setting_tool_scale = false
+		}
 		
 		if (keybinds[e_keybind.SNAP].pressed)
 			setting_snap = !setting_snap

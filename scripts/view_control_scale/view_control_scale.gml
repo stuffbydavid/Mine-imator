@@ -8,7 +8,7 @@ function view_control_scale(view)
 	// Arrow length
 	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
 	
-	arrowstart = (setting_tool = e_view_tool.TRANSFORM ? len/4 : 0)
+	arrowstart = ((setting_tool_move || setting_tool_rotate) ? len/4 : 0)
 	arrowend = len * .45
 	
 	// Create matrix
@@ -29,8 +29,7 @@ function view_control_scale(view)
 		mat = view_control_matrix
 	
 	// All axes
-	if (setting_tool != e_view_tool.TRANSFORM)
-		view_control_scale_all(view, mat, len * .6)
+	view_control_scale_all(view, mat, len * .65)
 	
 	// Draw each axis
 	view_control_scale_axis(view, e_view_control.SCA_X, e_value.SCA_X, c_control_red, arrowstart, arrowend, mat, X, vec3(0, -90, 0))
@@ -38,7 +37,7 @@ function view_control_scale(view)
 	view_control_scale_axis(view, e_view_control.SCA_Z, e_value.SCA_Z, (setting_z_is_up ? c_control_blue : c_control_green), arrowstart, arrowend, mat, Z, vec3(0))
 	
 	// Draw each plane
-	if (setting_tool != e_view_tool.TRANSFORM)
+	if (!setting_tool_move)
 	{
 		var ps, pe;
 		ps = (len / 7)

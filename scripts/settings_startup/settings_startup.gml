@@ -125,7 +125,11 @@ function settings_startup()
 	setting_snap_size_position = 1
 	setting_snap_size_rotation = 15
 	setting_snap_size_scale = 1
-	setting_tool = e_view_tool.SELECT
+	
+	setting_tool_move = true
+	setting_tool_rotate = true
+	setting_tool_scale = false
+	setting_tool_bend = true
 	
 	// New UI settings
 	setting_reduced_motion = false

@@ -61,40 +61,49 @@ function view_toolbar_draw(view, xx, yy)
 	draw_divide(xx, yy, 24)
 	yy += 1 + padding
 	
-	// Select tool
-	tip_set_keybind(e_keybind.TOOL_SELECT)
-	if (draw_button_icon("viewtoolselect", xx, yy, 24, 24, setting_tool = e_view_tool.SELECT, icons.SELECT, null, false, "viewtoolselecttip"))
-		setting_tool = e_view_tool.SELECT
-	yy += 24 + padding
-	
 	// Position tool
 	tip_set_keybind(e_keybind.TOOL_MOVE)
-	if (draw_button_icon("viewtoolmove", xx, yy, 24, 24, setting_tool = e_view_tool.MOVE, icons.MOVE, null, false, "viewtoolmovetip"))
-		setting_tool = e_view_tool.MOVE
+	if (draw_button_icon("viewtoolmove", xx, yy, 24, 24, setting_tool_move, icons.MOVE, null, false, "viewtoolmovetip"))
+	{
+		setting_tool_move = !setting_tool_move
+		setting_tool_scale = false
+	}
 	yy += 24 + padding
 	
 	// Rotation tool
 	tip_set_keybind(e_keybind.TOOL_ROTATE)
-	if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool = e_view_tool.ROTATE, icons.ROTATE, null, false, "viewtoolrotatetip"))
-		setting_tool = e_view_tool.ROTATE
-	yy += 24 + padding
-	
-	// Scale tool
-	tip_set_keybind(e_keybind.TOOL_SCALE)
-	if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool = e_view_tool.SCALE, icons.SCALE, null, false, "viewtoolscaletip"))
-		setting_tool = e_view_tool.SCALE
+	if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool_rotate, icons.ROTATE, null, false, "viewtoolrotatetip"))
+	{
+		setting_tool_rotate = !setting_tool_rotate
+		setting_tool_scale = false
+	}
 	yy += 24 + padding
 	
 	// Bend tool
 	tip_set_keybind(e_keybind.TOOL_BEND)
-	if (draw_button_icon("viewtoolbend", xx, yy, 24, 24, setting_tool = e_view_tool.BEND, icons.BEND, null, false, "viewtoolbendtip"))
-		setting_tool = e_view_tool.BEND
+	if (draw_button_icon("viewtoolbend", xx, yy, 24, 24, setting_tool_bend, icons.BEND, null, false, "viewtoolbendtip"))
+	{
+		setting_tool_bend = !setting_tool_bend
+		setting_tool_scale = false
+	}
 	yy += 24 + padding
 	
-	// Transform tool
-	tip_set_keybind(e_keybind.TOOL_TRANSFORM)
-	if (draw_button_icon("viewtooltransform", xx, yy, 24, 24, setting_tool = e_view_tool.TRANSFORM, icons.MULTITRANSFORM, null, false, "viewtooltransformtip"))
-		setting_tool = e_view_tool.TRANSFORM
+	draw_divide(xx, yy, 24)
+	yy += 1 + padding
+	
+	// Scale tool
+	tip_set_keybind(e_keybind.TOOL_SCALE)
+	if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
+	{
+		setting_tool_scale = !setting_tool_scale
+		
+		if (setting_tool_scale)
+		{
+			setting_tool_move = false
+			setting_tool_rotate = false
+			setting_tool_bend = false
+		}
+	}
 	yy += 24 + padding
 	
 	tip_force_right = false

@@ -113,19 +113,19 @@ function view_update_surface(view, cam)
 					{
 						view_control_ratio = 1//max(1, (100 / content_height) * 1.25)
 						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && (setting_tool = e_view_tool.SCALE || setting_tool = e_view_tool.TRANSFORM))
+						if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && setting_tool_scale)
 							view_control_scale(view)
 						
 						if (tl_edit.value_type[e_value_type.CAMERA] && tl_edit.value[e_value.CAM_ROTATE])
 							view_control_camera(view)
 						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_POS] && (setting_tool = e_view_tool.MOVE || setting_tool = e_view_tool.TRANSFORM))
+						if (tl_edit.value_type[e_value_type.TRANSFORM_POS] && setting_tool_move)
 							view_control_move(view)
 						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && (setting_tool = e_view_tool.ROTATE || setting_tool = e_view_tool.TRANSFORM))
+						if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && setting_tool_rotate)
 							view_control_rotate(view)
 						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_tool = e_view_tool.BEND)
+						if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_tool_bend)
 							view_control_bend(view)
 						
 						view.control_mouseon_last = view.control_mouseon

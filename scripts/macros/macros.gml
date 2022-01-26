@@ -4,7 +4,7 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						true
+	#macro dev_mode						false
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
@@ -13,9 +13,9 @@ function macros()
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"
-	#macro mineimator_version_extra		"Alpha 20.2"
+	#macro mineimator_version_extra		"Alpha 20.4"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-	#macro mineimator_version_date		"2022.01.06"
+	#macro mineimator_version_date		"2022.01.26"
 	#macro gm_runtime					GM_runtime_version
 	#macro minecraft_version			"1.18"
 	
@@ -149,7 +149,7 @@ function macros()
 	#macro glow_alpha					0.5
 	#macro shadow_size					5
 	#macro shadow_alpha					0.1
-	#macro view_3d_control_size			0.175
+	#macro view_3d_control_size			0.2125
 	#macro view_3d_control_width		20
 	#macro view_3d_box_size				12
 	#macro button_padding				24

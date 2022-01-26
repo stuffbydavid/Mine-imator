@@ -35,7 +35,6 @@ function app_startup_interface_views()
 	view_main.particles = setting_view_main_particles
 	view_main.location = setting_view_main_location
 	view_main.quality = e_view_mode.SHADED
-	view_main.tool = e_view_tool.TRANSFORM
 	view_main.camera = -4
 	
 	view_second = new_obj(obj_view)
@@ -52,7 +51,6 @@ function app_startup_interface_views()
 	view_second.width = setting_view_second_width
 	view_second.height = setting_view_second_height
 	view_second.quality = e_view_mode.SHADED
-	view_second.tool = e_view_tool.SELECT
 	view_second.camera = -5
 	
 	view_glow_ani = 0

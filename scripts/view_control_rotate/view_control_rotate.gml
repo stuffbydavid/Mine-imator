@@ -4,7 +4,7 @@
 function view_control_rotate(view)
 {
 	var len, xrot, yrot, zrot;
-	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * (setting_tool = e_view_tool.TRANSFORM ? 0.6 : 0.7)
+	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * 0.6
 	
 	// Create matrices
 	with (tl_edit)

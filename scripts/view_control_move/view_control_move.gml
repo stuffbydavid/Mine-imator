@@ -1,5 +1,6 @@
 /// view_control_move(view)
 /// @arg view
+
 function view_control_move(view)
 {
 	var len, arrowstart, arrowend, mat;
@@ -7,8 +8,8 @@ function view_control_move(view)
 	// Arrow length
 	len = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
 	
-	arrowstart = (setting_tool = e_view_tool.TRANSFORM ? len - len/4 : len/7)
-	arrowend = len * (setting_tool = e_view_tool.TRANSFORM ? 1 : .75)
+	arrowstart = (setting_tool_scale ? len - len/4 : len/7)
+	arrowend = len
 	
 	// Create matrix
 	with (tl_edit)

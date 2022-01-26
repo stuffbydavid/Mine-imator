@@ -8,7 +8,7 @@
 
 function view_control_rotate_axis(view, control, vid, color, mat, len)
 {
-	var detail, pos3D, pos2D, facevec, camvec;
+	var detail, pos3D, pos2D, facevec, camvec, anglevis;
 	detail = 64
 	
 	if (view_control_length != null)
@@ -22,8 +22,9 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 	
 	facevec = vec3_normalize(vec3_mul_matrix(vec3(0, 0, 1), mat))
 	camvec = vec3_normalize(point3D_sub(cam_from, pos3D))
+	anglevis = abs(vec3_dot(facevec, camvec))
 	
-	var alpha = percent(abs(vec3_dot(facevec, camvec)), .1, .2);
+	var alpha = percent(anglevis, .05, .1);
 	
 	if ((window_busy = "rendercontrol" && view_control_edit = control) || view.control_mouseon_last = control)
 		alpha = 1
@@ -101,8 +102,11 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 	}
 	
 	// Draw circle
+	var j = 0;
 	for (var i = 0; i <= 1; i += 1/detail)
 	{
+		j++
+		
 		// Convert end position to screen
 		end3D = point3D_mul_matrix(point3D(cos(pi * 2 * i) * len, sin(pi * 2 * i) * len, 0), mat)
 		end2D = view_shape_project(end3D)
@@ -116,7 +120,10 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 		// Hide line in circle if behind world position
 		if (view_control_edit != control)
 		{	
-			if (control_test_point(start3D, (vid - e_value.ROT_X) > Z ? tl_edit.world_pos_rotate : tl_edit.world_pos, .75))
+			// Adjust full-wheel bias depending on distance
+			var dis = lerp(0.001, .75, percent(point3D_distance(pos3D, cam_from), 0, 100));
+			
+			if (control_test_point(start3D, (vid - e_value.BEND_ANGLE_X) > Z ? tl_edit.world_pos_rotate : tl_edit.world_pos, dis * anglevis))
 			{
 				start3D = end3D
 				start2D = end2D
