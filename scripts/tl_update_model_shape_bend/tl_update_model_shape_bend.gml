@@ -18,14 +18,7 @@ function tl_update_model_shape_bend(clearcache = true)
 	// Clear old vbuffers
 	if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0 && clearcache)
 	{
-		var key = ds_map_find_first(model_shape_vbuffer_map);
-		while (!is_undefined(key))
-		{
-			if (instance_exists(key))
-				model_shape_clear_cache(key)
-			
-			key = ds_map_find_next(model_shape_vbuffer_map, key)
-		}
+		model_shape_clear_cache(model_shape_cache_list)
 		ds_map_clear(model_shape_vbuffer_map)
 	}
 	
@@ -33,8 +26,12 @@ function tl_update_model_shape_bend(clearcache = true)
 	if (model_shape_vbuffer_map = null)
 		model_shape_vbuffer_map = ds_map_create()
 	
+	// Create list for shape cache
+	if (model_shape_cache_list = null)
+		model_shape_cache_list = ds_list_create()
+	
 	bend_rot_last = bend
 	bend_model_part_last = model_part
 	
-	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)
+	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_cache_list, model_shape_alpha_map, bend_rot_last)
 }

@@ -32,6 +32,7 @@ function temp_event_create()
 	model_color_map = null
 	model_shape_vbuffer_map = null
 	model_shape_alpha_map = null
+	model_shape_cache_list = null
 	model_hide_list = null
 	model_shape_hide_list = null
 	model_file = null

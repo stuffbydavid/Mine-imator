@@ -1,11 +1,11 @@
-/// model_part_fill_shape_vbuffer_map(part, vbuffermap, alphamap, bend)
+/// model_part_fill_shape_vbuffer_map(part, vbuffermap, cachelist, alphamap, bend)
 /// @arg part
 /// @arg vbuffermap
 /// @arg alphamap
 /// @arg bend
 /// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by a rotation vector.
 
-function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
+function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, bend)
 {
 	var isbent = !vec3_equals(bend, vec3(0));
 	
@@ -33,15 +33,20 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 		
 		with (part.shape_list[|s])
 		{
-			if (ds_map_exists(vbuffer_cache, key) && isbent)
+			if (ds_map_valid(cachelist[|s]) && ds_map_exists(cachelist[|s], key) && isbent)
 			{
-				var bendcache = vbuffer_cache[?key];
+				var map = cachelist[|s];
+				var bendcache = map[?key];
 				vbufmap[? id] = bendcache[0]
 				other.bounding_box.merge(bendcache[1])
 				usedcache = true
 				
+				show_debug_message("Using cache")
+				
 				break
 			}
+			else if (isbent)
+				show_debug_message("Not using cache")
 			
 			boxdefault = true
 			
@@ -81,7 +86,12 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 				bounding_box.merge(shapebox)
 			
 				if (isbent)
-					part.shape_list[|s].vbuffer_cache[? key] = [vbuffer_current, new bbox()]
+				{
+					if (!ds_map_valid(cachelist[|s]))
+						cachelist[|s] = ds_map_create()
+					
+					cachelist[|s][? key] = [vbuffer_current, new bbox()]
+				}
 			}
 		}
 	}

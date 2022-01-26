@@ -27,15 +27,9 @@ function temp_event_destroy()
 	if (model_shape_hide_list != null)
 		ds_list_destroy(model_shape_hide_list)
 	
-	if (model_shape_vbuffer_map != null)
+	if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	{
-		var key = ds_map_find_first(model_shape_vbuffer_map);
-		while (!is_undefined(key))
-		{
-			if (instance_exists(key))
-				model_shape_clear_cache(key)
-			key = ds_map_find_next(model_shape_vbuffer_map, key)
-		}
+		model_shape_clear_cache(model_shape_cache_list, true)
 		ds_map_destroy(model_shape_vbuffer_map)
 	}
 	

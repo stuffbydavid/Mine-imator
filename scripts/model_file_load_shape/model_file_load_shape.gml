@@ -243,8 +243,6 @@ function model_file_load_shape(map, res)
 			return null
 		}
 		
-		vbuffer_cache = ds_map_create()
-		
 		bounding_box_default.copy_vbuffer()
 		bounding_box_default.mul_matrix(matrix)
 		

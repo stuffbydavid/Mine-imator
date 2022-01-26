@@ -10,13 +10,7 @@ function tl_update_model_shape(clear = true)
 	// Clear old vbuffers
 	if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0 && clear)
 	{
-		var key = ds_map_find_first(model_shape_vbuffer_map);
-		while (!is_undefined(key))
-		{
-			if (instance_exists(key))
-				model_shape_clear_cache(key)
-			key = ds_map_find_next(model_shape_vbuffer_map, key)
-		}
+		model_shape_clear_cache(model_shape_cache_list)
 		ds_map_clear(model_shape_vbuffer_map)
 	}
 	
@@ -39,6 +33,10 @@ function tl_update_model_shape(clear = true)
 	if (model_shape_vbuffer_map = null)
 		model_shape_vbuffer_map = ds_map_create()
 	
+	// Create list for shape cache
+	if (model_shape_cache_list = null)
+		model_shape_cache_list = ds_list_create()
+	
 	// Get resource
 	var res = null;
 	if (temp.object_index = obj_template)
@@ -46,5 +44,5 @@ function tl_update_model_shape(clear = true)
 			res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 	
 	model_part_fill_shape_alpha_map(model_part, model_shape_alpha_map, res, temp.model_texture_name_map, temp.model_shape_texture_name_map)
-	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)
+	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_cache_list, model_shape_alpha_map, bend_rot_last)
 }
