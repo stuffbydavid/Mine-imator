@@ -96,7 +96,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Upgrade
-	popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 360, null, true, false, true)
+	popup_upgrade = new_popup("upgrade", popup_upgrade_draw, 420, null, true, false, true)
 	with (popup_upgrade)
 	{
 		tbx_key = new_textbox(true, 8, "")
@@ -104,7 +104,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Modelbench ad
-	popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 384, null, true)
+	popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 420, null, true)
 	with (popup_modelbench)
 	{
 		hidden = app.setting_modelbench_popup_hidden

@@ -10,7 +10,7 @@ function popup_modelbench_draw()
 	
 	// Info
 	draw_label(string_limit_ext(text_get("modelbenchinfo"), dw + 24, dh), dx + dw / 2, dy, fa_center, fa_top, c_text_main, a_text_main, font_value)
-	dy += 34 + 16
+	dy += 34 + 30
 	
 	draw_set_font(font_button)
 	var buttonx = string_width(text_get("modelbenchdownload")) + button_padding;

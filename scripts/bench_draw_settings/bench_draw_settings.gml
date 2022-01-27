@@ -135,21 +135,24 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex, text, action_bench_model_tex, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
-				// Skin (Material map)
-				text = bench_settings.model_tex_material.display_name
-				with (bench_settings.model_tex_material)
-					tex = res_get_model_texture_material(model_part_get_texture_material_name(part, app.bench_settings.model_texture_material_name_map))
+				if (!trial_version)
+				{
+					// Skin (Material map)
+					text = bench_settings.model_tex_material.display_name
+					with (bench_settings.model_tex_material)
+						tex = res_get_model_texture_material(model_part_get_texture_material_name(part, app.bench_settings.model_texture_material_name_map))
 				
-				draw_button_menu(texmatcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_material, text, action_bench_model_tex_material, false, tex, null, "", null, null, capwid)
-				dy += 40
+					draw_button_menu(texmatcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_material, text, action_bench_model_tex_material, false, tex, null, "", null, null, capwid)
+					dy += 40
 				
-				// Skin (Normal map)
-				text = bench_settings.model_tex_normal.display_name
-				with (bench_settings.model_tex_normal)
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_tex_normal_name_map))
+					// Skin (Normal map)
+					text = bench_settings.model_tex_normal.display_name
+					with (bench_settings.model_tex_normal)
+						tex = res_get_model_tex_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_tex_normal_name_map))
 				
-				draw_button_menu(texnormcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
-				dy += 40
+					draw_button_menu(texnormcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
+					dy += 40
+				}
 				
 				// Banner editor
 				if (bench_settings.model_name = "banner")
@@ -187,13 +190,16 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
-				// Material texture
-				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
-				dy += 40
-				
-				// Normal texture
-				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
-				dy += 40
+				if (!trial_version)
+				{
+					// Material texture
+					draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
+					dy += 40
+					
+					// Normal texture
+					draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
+					dy += 40
+				}
 				break
 			}
 			
@@ -235,22 +241,25 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchitemtex", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex, bench_settings.item_tex.display_name, action_bench_item_tex, false, bench_settings.item_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
-				// Image (Material map)
-				var tex = res.block_preview_texture;
-				if (tex = null)
-					tex = res.texture
-				
-				draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex_material, bench_settings.item_tex_material.display_name, action_bench_item_tex_material, false, bench_settings.item_tex_material.block_preview_texture, null, "", null, null, capwid)
-				dy += 40
-				
-				// Image (Normal map)
-				var tex = res.block_preview_texture;
-				if (tex = null)
-					tex = res.texture
-				
-				draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex_normal, bench_settings.item_tex_normal.display_name, action_bench_item_tex_normal, false, bench_settings.item_tex_normal.block_preview_texture, null, "", null, null, capwid)
-				dy += 40
-				
+				if (!trial_version)
+				{
+					// Image (Material map)
+					var tex = res.block_preview_texture;
+					if (tex = null)
+						tex = res.texture
+					
+					draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex_material, bench_settings.item_tex_material.display_name, action_bench_item_tex_material, false, bench_settings.item_tex_material.block_preview_texture, null, "", null, null, capwid)
+					dy += 40
+					
+					// Image (Normal map)
+					var tex = res.block_preview_texture;
+					if (tex = null)
+						tex = res.texture
+					
+					draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex_normal, bench_settings.item_tex_normal.display_name, action_bench_item_tex_normal, false, bench_settings.item_tex_normal.block_preview_texture, null, "", null, null, capwid)
+					dy += 40
+				}
+			
 				// Settings
 				var sx;
 				sx = dx_start
@@ -318,14 +327,17 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
-				// Material texture
-				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
-				dy += 40
-				
-				// Normal texture
-				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
-				dy += 40
-				
+				if (!trial_version)
+				{
+					// Material texture
+					draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
+					dy += 40
+					
+					// Normal texture
+					draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
+					dy += 40
+				}
+			
 				window_scroll_focus = string(bench_settings.block_list.scroll)
 				break
 			}
@@ -395,28 +407,31 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchshapetex", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex, text, action_bench_shape_tex, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
-				// Material texture
-				text = text_get("listnone")
-				tex = null
-				if (bench_settings.shape_tex_material)
+				if (!trial_version)
 				{
-					text = bench_settings.shape_tex_material.display_name
-					tex = bench_settings.shape_tex_material.texture
+					// Material texture
+					text = text_get("listnone")
+					tex = null
+					if (bench_settings.shape_tex_material)
+					{
+						text = bench_settings.shape_tex_material.display_name
+						tex = bench_settings.shape_tex_material.texture
+					}
+					draw_button_menu("benchshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex_material, text, action_bench_shape_tex_material, false, tex, null, "", null, null, capwid)
+					dy += 40
+					
+					// Normal texture
+					text = text_get("listnone")
+					tex = null
+					if (bench_settings.shape_tex_normal)
+					{
+						text = bench_settings.shape_tex_normal.display_name
+						tex = bench_settings.shape_tex_normal.texture
+					}
+					draw_button_menu("benchshapetexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex_normal, text, action_bench_shape_tex_normal, false, tex, null, "", null, null, capwid)
+					dy += 40
 				}
-				draw_button_menu("benchshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex_material, text, action_bench_shape_tex_material, false, tex, null, "", null, null, capwid)
-				dy += 40
-				
-				// Normal texture
-				text = text_get("listnone")
-				tex = null
-				if (bench_settings.shape_tex_normal)
-				{
-					text = bench_settings.shape_tex_normal.display_name
-					tex = bench_settings.shape_tex_normal.texture
-				}
-				draw_button_menu("benchshapetexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex_normal, text, action_bench_shape_tex_normal, false, tex, null, "", null, null, capwid)
-				dy += 40
-				
+			
 				// Is mapped
 				if (bench_settings.shape_type = e_shape_type.CUBE || 
 					bench_settings.shape_type = e_shape_type.CYLINDER || 
@@ -473,44 +488,46 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchmodeltex", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex, text, action_bench_model_tex, null, tex, null, "", null, null, capwid)
 				dy += 40
 				
-				// Texture (Material map)
-				with (bench_settings)
+				if (!trial_version)
 				{
-					texobj = temp_get_model_tex_material_obj(null)
-					tex = temp_get_model_tex_material_preview(texobj, model_file)
+					// Texture (Material map)
+					with (bench_settings)
+					{
+						texobj = temp_get_model_tex_material_obj(null)
+						tex = temp_get_model_tex_material_preview(texobj, model_file)
+					}
+					
+					if (texobj != null)
+						text = texobj.display_name
+					else
+						text = text_get("listnone")
+					
+					// Default
+					if (bench_settings.model_tex_material = null)
+						text = text_get("listdefault", text)
+					
+					draw_button_menu("benchmodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_material, text, action_bench_model_tex_material, null, tex, null, "", null, null, capwid)
+					dy += 40
+					
+					// Texture (Normal map)
+					with (bench_settings)
+					{
+						texobj = temp_get_model_tex_normal_obj(null)
+						tex = temp_get_model_tex_normal_preview(texobj, model_file)
+					}
+					
+					if (texobj != null)
+						text = texobj.display_name
+					else
+						text = text_get("listnone")
+					
+					// Default
+					if (bench_settings.model_tex_normal = null)
+						text = text_get("listdefault", text)
+					
+					draw_button_menu("benchmodeltexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, null, tex, null, "", null, null, capwid)
+					dy += 40
 				}
-				
-				if (texobj != null)
-					text = texobj.display_name
-				else
-					text = text_get("listnone")
-				
-				// Default
-				if (bench_settings.model_tex_material = null)
-					text = text_get("listdefault", text)
-				
-				draw_button_menu("benchmodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_material, text, action_bench_model_tex_material, null, tex, null, "", null, null, capwid)
-				dy += 40
-				
-				// Texture (Normal map)
-				with (bench_settings)
-				{
-					texobj = temp_get_model_tex_normal_obj(null)
-					tex = temp_get_model_tex_normal_preview(texobj, model_file)
-				}
-				
-				if (texobj != null)
-					text = texobj.display_name
-				else
-					text = text_get("listnone")
-				
-				// Default
-				if (bench_settings.model_tex_normal = null)
-					text = text_get("listdefault", text)
-				
-				draw_button_menu("benchmodeltexnormal", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, null, tex, null, "", null, null, capwid)
-				dy += 40
-				
 				
 				break
 			}

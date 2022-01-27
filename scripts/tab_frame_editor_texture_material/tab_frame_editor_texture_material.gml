@@ -100,9 +100,12 @@ function tab_frame_editor_texture_material()
 	if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
 		text = text_get("listdefault", text)
 	
-	tab_control_menu(32)
-	draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
-	tab_next()
+	if (!trial_version)
+	{
+		tab_control_menu(32)
+		draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
+		tab_next()
+	}
 	
 	// Sliders for manual edit
 	if (sliders)

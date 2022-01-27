@@ -25,9 +25,10 @@ function tab_frame_editor_material()
 		
 		// Material texture
 		tab_frame_editor_texture_material()
-	
+		
 		// Normal texture
-		tab_frame_editor_tex_normal()
+		if (!trial_version)
+			tab_frame_editor_tex_normal()
 		
 		tab_collapse_end()
 	}

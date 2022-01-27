@@ -80,23 +80,26 @@ function tab_properties_library()
 			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
 			tab_next()
 			
-			// Skin (Material map)
-			tex = null
-			with (temp_edit.model_tex_material)
-				tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			if (!trial_version)
+			{
+				// Skin (Material map)
+				tex = null
+				with (temp_edit.model_tex_material)
+					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
-			tab_control_menu(32)
-			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexmaterial" : "libraryskinmaterial"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
-			tab_next()
+				tab_control_menu(32)
+				draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexmaterial" : "libraryskinmaterial"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				tab_next()
 			
-			// Skin (Normal map)
-			tex = null
-			with (temp_edit.model_tex_normal)
-				tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+				// Skin (Normal map)
+				tex = null
+				with (temp_edit.model_tex_normal)
+					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
-			tab_control_menu(32)
-			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexnormal" : "libraryskinnormal"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
-			tab_next()
+				tab_control_menu(32)
+				draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexnormal" : "libraryskinnormal"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				tab_next()
+			}
 			
 			break
 		}
@@ -119,15 +122,18 @@ function tab_properties_library()
 			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture, null)
 			tab_next()
 			
-			// Material texture
-			tab_control_menu(32)
-			draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_material, temp_edit.block_tex_material.display_name, action_lib_block_tex_material, false, temp_edit.block_tex_material.block_preview_texture, null)
-			tab_next()
+			if (!trial_version)
+			{
+				// Material texture
+				tab_control_menu(32)
+				draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_material, temp_edit.block_tex_material.display_name, action_lib_block_tex_material, false, temp_edit.block_tex_material.block_preview_texture, null)
+				tab_next()
 			
-			// Normal texture
-			tab_control_menu(32)
-			draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_normal, temp_edit.block_tex_normal.display_name, action_lib_block_tex_normal, false, temp_edit.block_tex_normal.block_preview_texture, null)
-			tab_next()
+				// Normal texture
+				tab_control_menu(32)
+				draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_normal, temp_edit.block_tex_normal.display_name, action_lib_block_tex_normal, false, temp_edit.block_tex_normal.block_preview_texture, null)
+				tab_next()
+			}
 			
 			break
 		}
@@ -173,31 +179,34 @@ function tab_properties_library()
 			draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
 			tab_next()
 			
-			// Image (Material map)
-			res = temp_edit.item_tex_material
-			if (!res_is_ready(res))
-				res = mc_res
-			
-			tex = res.block_preview_texture
-			if (tex = null)
-				tex = res.texture
-			
-			tab_control_menu(32)
-			draw_button_menu("libraryitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex_material, temp_edit.item_tex_material.display_name, action_lib_item_tex_material, false, tex)
-			tab_next()
-			
-			// Image (Normal map)
-			res = temp_edit.item_tex_normal
-			if (!res_is_ready(res))
-				res = mc_res
-			
-			tex = res.block_preview_texture
-			if (tex = null)
-				tex = res.texture
-			
-			tab_control_menu(32)
-			draw_button_menu("libraryitemtexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex_normal, temp_edit.item_tex_normal.display_name, action_lib_item_tex_normal, false, tex)
-			tab_next()
+			if (!trial_version)
+			{
+				// Image (Material map)
+				res = temp_edit.item_tex_material
+				if (!res_is_ready(res))
+					res = mc_res
+				
+				tex = res.block_preview_texture
+				if (tex = null)
+					tex = res.texture
+				
+				tab_control_menu(32)
+				draw_button_menu("libraryitemtexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex_material, temp_edit.item_tex_material.display_name, action_lib_item_tex_material, false, tex)
+				tab_next()
+				
+				// Image (Normal map)
+				res = temp_edit.item_tex_normal
+				if (!res_is_ready(res))
+					res = mc_res
+				
+				tex = res.block_preview_texture
+				if (tex = null)
+					tex = res.texture
+				
+				tab_control_menu(32)
+				draw_button_menu("libraryitemtexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex_normal, temp_edit.item_tex_normal.display_name, action_lib_item_tex_normal, false, tex)
+				tab_next()
+			}
 			
 			var sx;
 			sx = dx_start
@@ -245,15 +254,18 @@ function tab_properties_library()
 			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture)
 			tab_next()
 			
-			// Material texture
-			tab_control_menu(32)
-			draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_material, temp_edit.block_tex_material.display_name, action_lib_block_tex_material, false, temp_edit.block_tex_material.block_preview_texture, null)
-			tab_next()
-			
-			// Normal texture
-			tab_control_menu(32)
-			draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_normal, temp_edit.block_tex_normal.display_name, action_lib_block_tex_normal, false, temp_edit.block_tex_normal.block_preview_texture, null)
-			tab_next()
+			if (!trial_version)
+			{
+				// Material texture
+				tab_control_menu(32)
+				draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_material, temp_edit.block_tex_material.display_name, action_lib_block_tex_material, false, temp_edit.block_tex_material.block_preview_texture, null)
+				tab_next()
+				
+				// Normal texture
+				tab_control_menu(32)
+				draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex_normal, temp_edit.block_tex_normal.display_name, action_lib_block_tex_normal, false, temp_edit.block_tex_normal.block_preview_texture, null)
+				tab_next()
+			}
 			
 			break
 		}
@@ -296,23 +308,26 @@ function tab_properties_library()
 			draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
 			tab_next()
 			
-			// Skin (Material map)
-			tex = null
-			with (temp_edit.model_tex_material)
-				tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			if (!trial_version)
+			{
+				// Skin (Material map)
+				tex = null
+				with (temp_edit.model_tex_material)
+					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
-			tab_control_menu(32)
-			draw_button_menu("librarybodypartskinmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
-			tab_next()
+				tab_control_menu(32)
+				draw_button_menu("librarybodypartskinmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				tab_next()
 			
-			// Skin (Normal map)
-			tex = null
-			with (temp_edit.model_tex_normal)
-				tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+				// Skin (Normal map)
+				tex = null
+				with (temp_edit.model_tex_normal)
+					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
-			tab_control_menu(32)
-			draw_button_menu("librarybodypartskinnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
-			tab_next()
+				tab_control_menu(32)
+				draw_button_menu("librarybodypartskinnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				tab_next()
+			}
 			
 			break
 		}
@@ -376,37 +391,40 @@ function tab_properties_library()
 			draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex, text, action_lib_shape_tex, false, sprite)
 			tab_next()
 			
-			// Material texture
-			if (temp_edit.shape_tex_material != null)
+			if (!trial_version)
 			{
-				text = temp_edit.shape_tex_material.display_name
-				sprite = temp_edit.shape_tex_material.texture
-			}
-			else
-			{
-				text = text_get("listnone")
-				sprite = null
-			}
+				// Material texture
+				if (temp_edit.shape_tex_material != null)
+				{
+					text = temp_edit.shape_tex_material.display_name
+					sprite = temp_edit.shape_tex_material.texture
+				}
+				else
+				{
+					text = text_get("listnone")
+					sprite = null
+				}
 			
-			tab_control_menu(32)
-			draw_button_menu("libraryshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex_material, text, action_lib_shape_tex_material, false, sprite)
-			tab_next()
+				tab_control_menu(32)
+				draw_button_menu("libraryshapetexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex_material, text, action_lib_shape_tex_material, false, sprite)
+				tab_next()
 			
-			// Normal texture
-			if (temp_edit.shape_tex_normal != null)
-			{
-				text = temp_edit.shape_tex_normal.display_name
-				sprite = temp_edit.shape_tex_normal.texture
-			}
-			else
-			{
-				text = text_get("listnone")
-				sprite = null
-			}
+				// Normal texture
+				if (temp_edit.shape_tex_normal != null)
+				{
+					text = temp_edit.shape_tex_normal.display_name
+					sprite = temp_edit.shape_tex_normal.texture
+				}
+				else
+				{
+					text = text_get("listnone")
+					sprite = null
+				}
 			
-			tab_control_menu(32)
-			draw_button_menu("libraryshapetexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex_normal, text, action_lib_shape_tex_normal, false, sprite)
-			tab_next()
+				tab_control_menu(32)
+				draw_button_menu("libraryshapetexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex_normal, text, action_lib_shape_tex_normal, false, sprite)
+				tab_next()
+			}
 			
 			// Mapped
 			if (temp_edit.type = e_temp_type.CUBE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
@@ -521,45 +539,49 @@ function tab_properties_library()
 			draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, text, action_lib_model_tex, false, tex)
 			tab_next()
 			
-			// Texture (Material map)
-			with (temp_edit)
+			if (!trial_version)
 			{
-				texobj = temp_get_model_tex_material_obj(null)
-				tex = temp_get_model_tex_material_preview(texobj, model_file)
+				// Texture (Material map)
+				with (temp_edit)
+				{
+					texobj = temp_get_model_tex_material_obj(null)
+					tex = temp_get_model_tex_material_preview(texobj, model_file)
+				}
+			
+				if (texobj != null)
+					text = texobj.display_name
+				else
+					text = text_get("listnone")
+			
+				// Default
+				if (temp_edit.model_tex_material = null)
+					text = text_get("listdefault", text)
+			
+				tab_control_menu(32)
+				draw_button_menu("librarymodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_material, text, action_lib_model_tex_material, false, tex)
+				tab_next()
+			
+				// Texture (Normal map)
+				with (temp_edit)
+				{
+					texobj = temp_get_model_tex_normal_obj(null)
+					tex = temp_get_model_tex_normal_preview(texobj, model_file)
+				}
+			
+				if (texobj != null)
+					text = texobj.display_name
+				else
+					text = text_get("listnone")
+			
+				// Default
+				if (temp_edit.model_tex_normal = null)
+					text = text_get("listdefault", text)
+			
+				tab_control_menu(32)
+				draw_button_menu("librarymodeltexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_normal, text, action_lib_model_tex_normal, false, tex)
+				tab_next()
 			}
 			
-			if (texobj != null)
-				text = texobj.display_name
-			else
-				text = text_get("listnone")
-			
-			// Default
-			if (temp_edit.model_tex_material = null)
-				text = text_get("listdefault", text)
-			
-			tab_control_menu(32)
-			draw_button_menu("librarymodeltexmaterial", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_material, text, action_lib_model_tex_material, false, tex)
-			tab_next()
-			
-			// Texture (Normal map)
-			with (temp_edit)
-			{
-				texobj = temp_get_model_tex_normal_obj(null)
-				tex = temp_get_model_tex_normal_preview(texobj, model_file)
-			}
-			
-			if (texobj != null)
-				text = texobj.display_name
-			else
-				text = text_get("listnone")
-			
-			// Default
-			if (temp_edit.model_tex_normal = null)
-				text = text_get("listdefault", text)
-			
-			tab_control_menu(32)
-			draw_button_menu("librarymodeltexnormal", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex_normal, text, action_lib_model_tex_normal, false, tex)
-			tab_next()
 			break	
 		}
 	}

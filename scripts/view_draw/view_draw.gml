@@ -529,7 +529,7 @@ function view_draw(view)
 		}
 		
 		// Set animation state is bench is open
-		if (window_busy = "bench")
+		if (window_busy = "bench" || bench_show_ani = 1)
 		{
 			bench_hover_ani_goal = .5
 			bench_click_ani_goal = .9

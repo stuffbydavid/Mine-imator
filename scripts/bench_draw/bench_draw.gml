@@ -54,6 +54,7 @@ function bench_draw()
 	{
 		bench_show_ani_type = "hide"
 		window_focus = ""
+		
 		app_mouse_clear()
 	}
 	

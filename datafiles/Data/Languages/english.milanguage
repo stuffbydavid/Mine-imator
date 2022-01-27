@@ -573,7 +573,7 @@
     },
     "upgrade/": {
         "caption": "Upgrade",
-        "info": "You are currently using a trial version of Mine-imator. You have access to all the program’s features, but your exports will be watermarked. To customize or remove the watermark, get an upgrade key from the link below, and enter it here.",
+        "info": "You are currently using the trial version of Mine-imator. To unlock material maps and watermark customizing, get an upgrade key from the link below, and enter it here. (Free, donation optional.)",
         "continue": "Upgrade"
     },
     "modelbench/": {

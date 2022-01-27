@@ -2,15 +2,15 @@
 
 function popup_upgrade_draw()
 {
-	draw_sprite(spr_watermark_example, 0, dx, dy)
-	dy += 184
+	draw_sprite(spr_watermark_example, 0, floor(dx + dw/2 - (sprite_get_width(spr_watermark_example)/2)), dy)
+	dy += sprite_get_height(spr_watermark_example)
 	
 	dy += 18
 	
 	// Info
 	draw_set_font(font_value)
-	var text = string_limit_ext(text_get("upgradeinfo"), dw + 8, no_limit);
-	draw_label(text, dx, dy, fa_left, fa_top, c_text_main, a_text_main, font_value)
+	var text = string_limit_ext(text_get("upgradeinfo"), (dw - 40) + 8, no_limit);
+	draw_label(text, floor(dx + dw/2), dy, fa_middle, fa_top, c_text_main, a_text_main, font_value)
 	
 	dy += string_height(text) + 30
 	
