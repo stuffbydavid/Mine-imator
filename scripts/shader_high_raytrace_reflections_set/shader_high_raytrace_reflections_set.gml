@@ -21,7 +21,7 @@ function shader_high_raytrace_reflections_set(raysurf, raysurf2, diffusesurf, no
 	render_set_uniform("uFar", cam_far)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 	
-	if (app.project_render_pass = e_render_pass.REFLECTIONS)
+	if (render_pass = e_render_pass.REFLECTIONS)
 		render_set_uniform_color("uFallbackColor", c_black, 1)
 	else
 		render_set_uniform_color("uFallbackColor", render_background ? app.background_sky_color_final : c_black, 1)

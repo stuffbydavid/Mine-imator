@@ -24,10 +24,10 @@ function render_high()
 	{
 		render_high_shadows(render_active = "image" || render_active = "movie")
 	
-		if (project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.INDIRECT_SHADOWS)
+		if (render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.INDIRECT_SHADOWS)
 			render_pass_surf = surface_duplicate(render_surface_shadows)
 		
-		if (project_render_pass = e_render_pass.SPECULAR)
+		if (render_pass = e_render_pass.SPECULAR)
 			render_pass_surf = surface_duplicate(render_surface_specular)
 	}
 	
@@ -36,10 +36,10 @@ function render_high()
 	{
 		render_high_indirect(render_active = "image" || render_active = "movie")
 		
-		if (project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.INDIRECT_SHADOWS)
+		if (render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS)
 		{
 			// Add direct lighting
-			if (project_render_pass = e_render_pass.INDIRECT_SHADOWS)
+			if (render_pass = e_render_pass.INDIRECT_SHADOWS)
 			{
 				surface_set_target(render_pass_surf)
 				{
@@ -68,7 +68,7 @@ function render_high()
 	{
 		render_high_reflections(render_active = "image" || render_active = "movie", finalsurf)
 		
-		if (project_render_pass = e_render_pass.REFLECTIONS)
+		if (render_pass = e_render_pass.REFLECTIONS)
 			render_pass_surf = surface_duplicate(render_surface_ssr)
 	}
 	
@@ -82,8 +82,15 @@ function render_high()
 	render_samples_clear = false
 	
 	// Copy chosen pass over render result
-	if (project_render_pass != e_render_pass.COMBINED && surface_exists(render_pass_surf))
-		surface_copy(render_target, 0, 0, render_pass_surf)
+	if (render_pass)
+	{
+		surface_set_target(render_target)
+		{
+			draw_clear_alpha(c_black, 1)
+			draw_surface_exists(render_pass_surf, 0, 0)
+		}
+		surface_reset_target()
+	}
 	
 	render_high_preview_done()
 	

@@ -183,20 +183,26 @@ function view_draw(view)
 	
 	dx -= (padding + 1)
 	draw_divide_vertical(dx, dy, dh)
-	dx -= 16 + padding
 	
 	// Quality settings
-	if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), icons.CHEVRON_DOWN_TINY))
+	if (setting_debug_features)
 	{
-		menu_settings_set(dx, dy, (string(view) + "viewqualitysettings"), 24)
-		settings_menu_view = view
-		settings_menu_script = menu_quality_settings
+		dx -= 16 + padding
+		
+		if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), icons.CHEVRON_DOWN_TINY))
+		{
+			menu_settings_set(dx, dy, (string(view) + "viewqualitysettings"), 24)
+			settings_menu_view = view
+			settings_menu_script = menu_quality_settings
+		}
+	
+		if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
+			current_microani.value = true
+	
+		dx -= dw
 	}
-	
-	if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
-		current_microani.value = true
-	
-	dx -= dw
+	else
+		dx -= dw + padding
 	
 	// "Render" quality
 	tip_set_keybind(e_keybind.RENDER_MODE)
@@ -801,7 +807,7 @@ function view_draw(view)
 		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
 		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
 		
-		if (project_render_pass != e_render_pass.COMBINED)
+		if (project_render_pass != e_render_pass.COMBINED && setting_debug_features)
 		{
 			infotext = text_get("viewrenderpass", text_get("viewmodepass" + render_pass_list[|project_render_pass]))
 			

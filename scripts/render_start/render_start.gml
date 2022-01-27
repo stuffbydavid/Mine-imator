@@ -6,8 +6,6 @@
 
 function render_start()
 {
-	var finalrender = (project_render_pass = e_render_pass.COMBINED);
-	
 	render_target = argument[0]
 	render_camera = argument[1]
 	render_width = project_video_width
@@ -19,11 +17,13 @@ function render_start()
 	render_pass_surf = null
 	render_world_count = 0
 	
+	render_pass = (setting_debug_features ? project_render_pass : e_render_pass.COMBINED)
+	
 	// General rendering effects
-	render_ssao = project_render_ssao && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.DEPTH_U24 || project_render_pass = e_render_pass.NORMAL || project_render_pass = e_render_pass.AO || project_render_pass = e_render_pass.REFLECTIONS)
-	render_shadows = project_render_shadows && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.SHADOWS || project_render_pass = e_render_pass.SPECULAR || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.INDIRECT_SHADOWS || project_render_pass = e_render_pass.REFLECTIONS)
-	render_indirect = project_render_indirect && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.INDIRECT || project_render_pass = e_render_pass.INDIRECT_SHADOWS || project_render_pass = e_render_pass.REFLECTIONS)
-	render_reflections = project_render_reflections && (project_render_pass = e_render_pass.COMBINED || project_render_pass = e_render_pass.REFLECTIONS)
+	render_ssao = project_render_ssao && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.DEPTH_U24 || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)
+	render_shadows = project_render_shadows && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
+	render_indirect = project_render_indirect && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
+	render_reflections = project_render_reflections && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.REFLECTIONS)
 	
 	render_volumetric_fog = project_render_shadows && background_volumetric_fog && (render_quality = e_view_mode.RENDER)
 	render_glow = project_render_glow && (render_quality = e_view_mode.RENDER)
@@ -39,18 +39,18 @@ function render_start()
 			render_height = render_camera.value[e_value.CAM_HEIGHT]
 		}
 		
-		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM]) && finalrender
-		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null) && finalrender
-		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF]) && finalrender
-		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION]) && finalrender
-		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN]) && finalrender
-		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE]) && finalrender
-		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA]) && finalrender
-		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT]) && finalrender
+		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM]) && !render_pass
+		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null) && !render_pass
+		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF]) && !render_pass
+		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION]) && !render_pass
+		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN]) && !render_pass
+		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE]) && !render_pass
+		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA]) && !render_pass
+		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT]) && !render_pass
 		
-		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW])) && finalrender
-		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM] && finalrender
-		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && finalrender
+		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW])) && !render_pass
+		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM] && !render_pass
+		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && !render_pass
 		
 		render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
 								render_camera.value[e_value.BRIGHTNESS] > 0 || 

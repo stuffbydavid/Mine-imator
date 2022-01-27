@@ -57,7 +57,7 @@ function render_high_scene(ssaosurf, shadowssurf)
 	}
 	surface_reset_target()
 	
-	if (project_render_pass = e_render_pass.DIFFUSE)
+	if (render_pass = e_render_pass.DIFFUSE)
 		render_pass_surf = surface_duplicate(scenesurf)
 	
 	// Render lighting mask for background
@@ -96,7 +96,7 @@ function render_high_scene(ssaosurf, shadowssurf)
 	}
 	surface_reset_target()
 	
-	if (project_render_pass = e_render_pass.MATERIAL)
+	if (render_pass = e_render_pass.MATERIAL)
 		render_pass_surf = surface_duplicate(materialsurf)
 	
 	// Composite

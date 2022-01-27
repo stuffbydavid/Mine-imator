@@ -38,17 +38,10 @@ function tab_properties_render()
 		type = e_toast.WARNING
 	}
 	
-	if (project_render_samples >= 129 && project_render_samples <= 192)
+	if (project_render_samples >= 129)
 	{
 		text = "rendersamples4"
 		icon = icons.WARNING_TRIANGLE
-		type = e_toast.NEGATIVE
-	}
-	
-	if (project_render_samples >= 193 && project_render_samples <= 256)
-	{
-		text = "rendersamples5"
-		icon = icons.FIRE
 		type = e_toast.NEGATIVE
 	}
 	

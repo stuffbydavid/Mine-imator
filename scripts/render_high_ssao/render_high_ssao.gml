@@ -83,13 +83,13 @@ function render_high_ssao()
 	}
 	gpu_set_texrepeat(true)
 	
-	if (project_render_pass = e_render_pass.AO)
+	if (render_pass = e_render_pass.AO)
 		render_pass_surf = surface_duplicate(render_surface_ssao)
 	
-	if (project_render_pass = e_render_pass.DEPTH_U24)
+	if (render_pass = e_render_pass.DEPTH_U24)
 		render_pass_surf = surface_duplicate(depthsurf)
 	
-	if (project_render_pass = e_render_pass.NORMAL)
+	if (render_pass = e_render_pass.NORMAL)
 		render_pass_surf = surface_duplicate(normalsurf)
 	
 	return render_surface_ssao

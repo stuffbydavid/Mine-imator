@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.01.06"
+        "lastchange": "2022.01.26"
     },
     "particle/": {
         "default": "Default spawner",
@@ -1921,8 +1921,7 @@
             "1": "Recommended for a balance between quality and render times.",
             "2": "Improved quality, render times may be longer.",
             "3": "Extended render times, only use if your graphics card can handle it.",
-            "4": "Render times will take a long time, only use if your graphics card can handle it.",
-            "5": "Prepare for unforeseen consequences."
+            "4": "Render times will take a long time, only use if your graphics card can handle it."
         },
         "dofquality": "Depth of field quality",
         "ssao": "Ambient occlusion",

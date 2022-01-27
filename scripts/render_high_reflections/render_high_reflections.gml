@@ -219,7 +219,7 @@ function render_high_reflections_apply(surf, matsurf)
 	else
 		materialsurf = matsurf
 	
-	if (project_render_pass = e_render_pass.MATERIAL)
+	if (render_pass = e_render_pass.MATERIAL)
 		render_pass_surf = surface_duplicate(materialsurf)
 	
 	// Diffuse color (Reflection tint)
