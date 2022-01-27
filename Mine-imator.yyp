@@ -1755,6 +1755,7 @@
     {"id":{"name":"buffer_read_color","path":"scripts/buffer_read_color/buffer_read_color.yy",},"order":29,},
     {"id":{"name":"buffer_write_byte","path":"scripts/buffer_write_byte/buffer_write_byte.yy",},"order":1,},
     {"id":{"name":"res_get_model_texture_normal","path":"scripts/res_get_model_texture_normal/res_get_model_texture_normal.yy",},"order":18,},
+    {"id":{"name":"spr_bench","path":"sprites/spr_bench/spr_bench.yy",},"order":19,},
     {"id":{"name":"buffer_write_double","path":"scripts/buffer_write_double/buffer_write_double.yy",},"order":3,},
     {"id":{"name":"buffer_write_double_be","path":"scripts/buffer_write_double_be/buffer_write_double_be.yy",},"order":5,},
     {"id":{"name":"buffer_write_float_be","path":"scripts/buffer_write_float_be/buffer_write_float_be.yy",},"order":7,},

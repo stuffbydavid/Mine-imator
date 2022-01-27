@@ -2545,8 +2545,7 @@
         "ok": "Ok"
     },
     "timeline/": {
-        "empty1": "Nothing here yet! Click the workbench ",
-        "empty2": " to get started.",
+        "empty": "Nothing here yet! Click the workbench to get started.",
         "none": "None",
         "instanceof": "Instance of %1",
         "partof": "%1 of %2",

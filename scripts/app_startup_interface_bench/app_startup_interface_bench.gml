@@ -4,7 +4,11 @@ function app_startup_interface_bench()
 {
 	bench_open = false
 	bench_hover_ani = 0
+	bench_hover_ani_goal = 0
 	bench_click_ani = 0
+	bench_click_ani_goal = 0
+	bench_rotate_ani = 0
+	bench_button_hover = false
 	bench_show_ani_type = ""
 	bench_show_ani = 0
 	bench_settings_ani = 0

@@ -234,26 +234,14 @@ function tab_timeline()
 	// Empty
 	if (project_file != "" && !instance_exists(obj_timeline) && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
 	{
-		var textx, texty, textwid, textwid1, textwid2;
+		var textwid, textwid;
 		
 		draw_set_font(font_body_big)
-		textwid1 = string_width(text_get("timelineempty1"))
-		textwid2 = string_width(text_get("timelineempty2"))
-		textwid = (textwid1 + textwid2 + 24)
 		
-		textx = floor((tlx + floor(tlw / 2)) - textwid/2)
-		texty = floor(tly + floor((content_height - (headerh + barh)) / 2))
+		textwid = string_width(text_get("timelineempty"))
 		
-		if (tlw > textwid)
-		{
-			draw_label(text_get("timelineempty1"), textx, texty, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-			textx += textwid1
-			
-			draw_image(spr_icons, icons.WORKBENCH, textx + 12, texty + 2, 1, 1, c_text_secondary, a_text_secondary)
-			textx += 24
-			
-			draw_label(text_get("timelineempty2"), textx, texty, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		}
+		if (tlw > (textwid + 32))
+			draw_label(text_get("timelineempty"), floor(tlx + tlw/2 - textwid/2), floor(tly + tlh/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	}
 	
 	// Keyframe backgrounds

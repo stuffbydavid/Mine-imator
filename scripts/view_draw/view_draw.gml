@@ -450,7 +450,93 @@ function view_draw(view)
 	
 	// Toolbar
 	if (view = view_main)
-		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8)
+	{
+		// Workbench
+		var benchx, benchy, benchscale, benchrot;
+		benchx = boxx + 8
+		benchy = boxy + captionh + 8
+		benchscale = bench_click_ani
+		benchrot = sin(bench_rotate_ani * pi * 5) * (1 - abs(bench_rotate_ani * 2 - 1)) * 10
+		
+		bench_settings.posx = benchx + 64 + 8
+		bench_settings.posy = benchy
+		
+		if (benchrot <> 0 || benchscale < 1)
+			gpu_set_tex_filter(true)
+		
+		draw_image(spr_bench, 0, benchx + 32, benchy + 32, benchscale, benchscale, null, bench_hover_ani, benchrot)
+		
+		if (benchrot <> 0 || benchscale < 1)
+			gpu_set_tex_filter(false)
+		
+		if (bench_open)
+		{
+			bench_show_ani_type = "show"
+			window_busy = "bench"
+			bench_settings_ani = 1
+			bench_open = false
+		}
+		
+		// Set animation
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 64, 64) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		{
+			mouse_cursor = cr_handpoint
+			bench_button_hover = true
+			
+			bench_hover_ani_goal = 1
+			
+			if (bench_rotate_ani = 0)
+				bench_rotate_ani = 1
+			
+			if (mouse_left)
+			{
+				bench_click_ani_goal = .9
+				bench_rotate_ani = 0
+				bench_hover_ani_goal = .5
+			}
+			else
+				bench_click_ani_goal = 1
+			
+			tip_force_right = true
+			tip_set(text_get("viewworkbenchtip"), benchx, benchy, 64, 64, false)
+			tip_force_right = false
+			
+			if (mouse_left_pressed)
+				bench_open = true
+		}
+		else
+		{
+			// Match alpha with toolbar if mouse is nearby
+			if (view.toolbar_mouseon)
+				bench_hover_ani_goal = view.toolbar_alpha_goal
+			else
+				bench_hover_ani_goal = .5
+			
+			// Set bench to full alpha if no objects are present
+			if (instance_number(obj_timeline) = 0 && instance_number(obj_template) = 0)
+				bench_hover_ani_goal = 1
+			
+			bench_rotate_ani = 0
+			bench_click_ani_goal = 1
+			
+			bench_button_hover = false
+		}
+		
+		// Set animation state is bench is open
+		if (window_busy = "bench")
+		{
+			bench_hover_ani_goal = .5
+			bench_click_ani_goal = .9
+		}
+		
+		// Update workbench animation
+		bench_hover_ani += (bench_hover_ani_goal - bench_hover_ani) / max(1, 4 / delta)
+		bench_click_ani += (bench_click_ani_goal - bench_click_ani) / max(1, 2 / delta)
+		bench_rotate_ani = max(0, bench_rotate_ani - 0.01 * delta)
+		
+		// Draw toolbar
+		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8 + 64 + 8)
+	}
 	
 	// Moving / Resizing
 	if (view = view_second) 

@@ -31,7 +31,7 @@ function app_update_micro_animations()
 		if (app.setting_reduced_motion)
 			toolbar_alpha = toolbar_alpha_goal
 		else
-			toolbar_alpha += (toolbar_alpha_goal - toolbar_alpha) / max(1, 5 / delta)
+			toolbar_alpha += (toolbar_alpha_goal - toolbar_alpha) / max(1, 4 / delta)
 		
 		if (toolbar_alpha > .97 && toolbar_alpha_goal = 1)
 			toolbar_alpha = 1

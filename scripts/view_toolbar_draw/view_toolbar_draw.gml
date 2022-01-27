@@ -13,13 +13,13 @@ function view_toolbar_draw(view, xx, yy)
 	
 	if (yy + height > content_y + content_height)
 	{
-		view.toolbar_mouseon = false
+		view.toolbar_mouseon = bench_button_hover
 		return 0
 	}
 	
 	microani_prefix = string(view)
 	
-	if (app_mouse_box(xx, yy, width, height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+	if ((app_mouse_box(xx, yy, width, height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon)) || bench_button_hover)
 		view.toolbar_mouseon = true
 	else
 		view.toolbar_mouseon = false
@@ -27,9 +27,12 @@ function view_toolbar_draw(view, xx, yy)
 	if (view.toolbar_mouseon)
 		content_mouseon = true
 	
-	if ((bench_show_ani_type = "show" || bench_show_ani = 1) || (app_mouse_box(xx - 64, yy - 64, width + 128, height + 128) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon)))
+	if (app_mouse_box(xx - 64, yy - 64, width + 128, height + 128) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		view.toolbar_alpha_goal = 1
 	else
+		view.toolbar_alpha_goal = .5
+	
+	if (window_busy = "bench")
 		view.toolbar_alpha_goal = .5
 	
 	draw_set_alpha(view.toolbar_alpha)
@@ -42,24 +45,6 @@ function view_toolbar_draw(view, xx, yy)
 	yy += 4
 	
 	tip_force_right = true
-	
-	// Workbench
-	bench_settings.posy = yy - 4
-	bench_settings.posx = xx + 28
-	
-	if (draw_button_icon("viewworkbench", xx, yy, 24, 24, (bench_show_ani_type = "show" || bench_show_ani = 1), icons.WORKBENCH, null, false, "viewworkbenchtip") || bench_open)
-	{
-		bench_hover_ani = 0
-		bench_click_ani = 1
-		bench_show_ani_type = "show"
-		window_busy = "bench"
-		bench_open = false
-		bench_settings_ani = 1
-	}
-	yy += 24 + padding
-	
-	draw_divide(xx, yy, 24)
-	yy += 1 + padding
 	
 	// Position tool
 	tip_set_keybind(e_keybind.TOOL_MOVE)

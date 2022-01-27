@@ -38,7 +38,7 @@ function bench_draw()
 		window_busy = ""
 	
 	ani = ease(func, bench_show_ani)
-	content_x = bench_settings.posx + (8 * ani)
+	content_x = bench_settings.posx + (8 - (8 * ani))
 	content_y = bench_settings.posy
 	content_width = 481
 	content_height = bench_settings.height
