@@ -19,6 +19,13 @@ function action_project_render_settings(file)
 	}
 	else
 	{
+		// Need "Full" version to load custom settings
+		if (file != "default" && trial_version)
+		{
+			popup_show(popup_upgrade)
+			return 0
+		}
+		
 		var hobj = history_set(action_project_render_settings);
 		hobj.oldval = project_render_settings
 		hobj.newval = file

@@ -211,7 +211,7 @@ function tab_properties_background()
 		draw_button_menu("backgroundgroundtex", e_menu.LIST, dx, dy, dw, 32, background_ground_tex, background_ground_tex.display_name, action_background_ground_tex, false, background_ground_tex.block_preview_texture)
 		tab_next()
 		
-		if (!trial_version)
+		if (project_render_material_maps)
 		{
 			// Ground texture (material)
 			tab_control_menu(32)

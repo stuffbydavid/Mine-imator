@@ -80,7 +80,7 @@ function tab_properties_library()
 			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin"), e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Skin (Material map)
 				tex = null
@@ -122,7 +122,7 @@ function tab_properties_library()
 			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture, null)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Material texture
 				tab_control_menu(32)
@@ -179,7 +179,7 @@ function tab_properties_library()
 			draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, 32, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Image (Material map)
 				res = temp_edit.item_tex_material
@@ -254,7 +254,7 @@ function tab_properties_library()
 			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, 32, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Material texture
 				tab_control_menu(32)
@@ -308,7 +308,7 @@ function tab_properties_library()
 			draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Skin (Material map)
 				tex = null
@@ -391,7 +391,7 @@ function tab_properties_library()
 			draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, 32, temp_edit.shape_tex, text, action_lib_shape_tex, false, sprite)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Material texture
 				if (temp_edit.shape_tex_material != null)
@@ -539,7 +539,7 @@ function tab_properties_library()
 			draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, 32, temp_edit.model_tex, text, action_lib_model_tex, false, tex)
 			tab_next()
 			
-			if (!trial_version)
+			if (project_render_material_maps)
 			{
 				// Texture (Material map)
 				with (temp_edit)

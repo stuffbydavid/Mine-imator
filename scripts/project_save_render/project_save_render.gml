@@ -55,5 +55,7 @@ function project_save_render()
 		json_save_var_bool("transparent_block_texture_filtering", project_render_transparent_block_texture_filtering)
 		json_save_var("texture_filtering_level", project_render_texture_filtering_level)
 		
+		json_save_var_bool("material_maps", project_render_material_maps)
+		
 	json_save_object_done()
 }

@@ -129,7 +129,7 @@ function tab_properties_render()
 		tab_collapse_start()
 		
 		tab_control_meter()
-		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_indirect_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision)
+		draw_meter("renderindirectprecision", dx, dy, dw, round(project_render_indirect_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision)
 		tab_next()
 		
 		tab_control_meter()
@@ -318,6 +318,11 @@ function tab_properties_render()
 		
 		tab_collapse_end()
 	}
+	
+	// Material maps
+	tab_control_switch()
+	draw_switch("rendermaterialmaps", dx, dy, project_render_material_maps, action_project_render_material_maps, "rendermaterialmapshelp")
+	tab_next()
 	
 	tab_control(24)
 	

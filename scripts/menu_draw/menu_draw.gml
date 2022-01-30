@@ -279,7 +279,11 @@ function menu_draw()
 	}
 	
 	if (menu_remove != null)
+	{
 		instance_destroy(menu_remove)
-	
+		
+		if (ds_list_size(menu_list) = 0)
+			menu_popup = null
+	}
 	menu_current = null
 }

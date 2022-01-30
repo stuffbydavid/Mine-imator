@@ -43,6 +43,8 @@ function project_reset_render()
 	project_render_transparent_block_texture_filtering = false
 	project_render_texture_filtering_level = 1
 	
+	project_render_material_maps = false
+	
 	project_bend_style = "realistic"
 	project_render_liquid_animation = true
 	project_render_noisy_grass_water = false

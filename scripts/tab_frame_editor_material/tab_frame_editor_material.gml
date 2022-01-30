@@ -27,7 +27,7 @@ function tab_frame_editor_material()
 		tab_frame_editor_texture_material()
 		
 		// Normal texture
-		if (!trial_version)
+		if (project_render_material_maps)
 			tab_frame_editor_tex_normal()
 		
 		tab_collapse_end()

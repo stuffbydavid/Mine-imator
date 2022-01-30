@@ -1996,7 +1996,9 @@
         "blockemission": "Glowing block emission",
         "blockglow": "Glow bright blocks and models",
         "blockglowthreshold": "Glow color threshold",
-        "blocksubsurfaceradius": "Block subsurface radius"
+        "blocksubsurfaceradius": "Block subsurface radius",
+        "materialmaps": "Object material maps",
+        "materialmapshelp": "Enable material and normal map texture settings for objects."
     },
     "library": "LIBRARY",
     "library/": {

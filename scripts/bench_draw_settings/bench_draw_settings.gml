@@ -135,7 +135,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex, text, action_bench_model_tex, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
-				if (!trial_version)
+				if (project_render_material_maps)
 				{
 					// Skin (Material map)
 					text = bench_settings.model_tex_material.display_name
@@ -190,7 +190,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
-				if (!trial_version)
+				if (project_render_material_maps)
 				{
 					// Material texture
 					draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
@@ -241,7 +241,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchitemtex", e_menu.LIST, dx, dy, dw, 32, bench_settings.item_tex, bench_settings.item_tex.display_name, action_bench_item_tex, false, bench_settings.item_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
-				if (!trial_version)
+				if (project_render_material_maps)
 				{
 					// Image (Material map)
 					var tex = res.block_preview_texture;
@@ -327,7 +327,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
 				dy += 40
 				
-				if (!trial_version)
+				if (project_render_material_maps)
 				{
 					// Material texture
 					draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, 32, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
@@ -407,7 +407,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchshapetex", e_menu.LIST, dx, dy, dw, 32, bench_settings.shape_tex, text, action_bench_shape_tex, false, tex, null, "", null, null, capwid)
 				dy += 40
 				
-				if (!trial_version)
+				if (project_render_material_maps)
 				{
 					// Material texture
 					text = text_get("listnone")
@@ -488,7 +488,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchmodeltex", e_menu.LIST, dx, dy, dw, 32, bench_settings.model_tex, text, action_bench_model_tex, null, tex, null, "", null, null, capwid)
 				dy += 40
 				
-				if (!trial_version)
+				if (project_render_material_maps)
 				{
 					// Texture (Material map)
 					with (bench_settings)

@@ -281,6 +281,8 @@ function draw_button_menu()
 			m.menu_show_amount = floor(((window_height - (m.menu_y + m.menu_button_h)) * 0.9) / m.menu_item_h)
 		
 		current_microani = animation
+		
+		menu_popup = popup
 		return true
 	}
 	

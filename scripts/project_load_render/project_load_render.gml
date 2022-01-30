@@ -56,4 +56,6 @@ function project_load_render(map)
 	project_render_texture_filtering = value_get_real(map[?"texture_filtering"], project_render_texture_filtering)
 	project_render_transparent_block_texture_filtering = value_get_real(map[?"transparent_block_texture_filtering"], project_render_transparent_block_texture_filtering)
 	project_render_texture_filtering_level = value_get_real(map[?"texture_filtering_level"], project_render_texture_filtering_level)
+	
+	project_render_material_maps = value_get_real(map[?"material_maps"], project_render_material_maps)
 }
