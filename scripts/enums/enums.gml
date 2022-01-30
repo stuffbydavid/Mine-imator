@@ -37,7 +37,8 @@ function enums()
 		FORMAT_200_AL10	  = 34,
 		FORMAT_200_AL14   = 35,
 		FORMAT_200_AL17   = 36,
-		FORMAT_200_AL18   = 37
+		FORMAT_200_AL18   = 37,
+		FORMAT_200_AL21   = 38
 	}
 	
 	enum e_settings
@@ -658,6 +659,9 @@ function enums()
 		SELECT_ALL_KEYFRAME,
 		SEND,
 		SETTINGS,
+		SETTINGS_EXPORT,
+		SETTINGS_IMPORT,
+		SETTINGS_SET_DEFAULT,
 		SHAPES,
 		SHARE,
 		SHIELD,

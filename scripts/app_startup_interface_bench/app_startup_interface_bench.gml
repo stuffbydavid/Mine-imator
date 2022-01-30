@@ -72,7 +72,7 @@ function app_startup_interface_bench()
 		text_font = mc_res
 		particle_preset = ""
 		type = e_temp_type.CHARACTER
-		shape_type = e_shape_type.SURFACE
+		shape_type = e_shape_type.CUBE
 		light_type = e_tl_type.POINT_LIGHT
 		
 		// Preview window

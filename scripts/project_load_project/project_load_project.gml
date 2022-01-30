@@ -13,11 +13,29 @@ function project_load_project(map)
 	project_video_height = value_get_real(map[?"video_height"], project_video_height)
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = value_get_real(map[?"video_keep_aspect_ratio"], project_video_keep_aspect_ratio)
+	
+	if (load_format >= e_project.FORMAT_200_AL14 && load_format < e_project.FORMAT_200_AL21) // Custom
+		project_render_settings = ""
+	else
+		value_get_string(map[?"render_settings"], project_render_settings)
+	
 	project_tempo = value_get_real(map[?"tempo"], project_tempo)
 	project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
 	project_grid_columns = value_get_real(map[?"grid_columns"], project_grid_columns)
 	view_main.camera = value_get_save_id(map[?"view_main_camera"], -4)
 	view_second.camera = value_get_save_id(map[?"view_second_camera"], -5)
+	
+	// If render settings file doesn't exists, set to custom
+	if (!file_exists_lib(render_directory + project_render_settings + ".mirender"))
+		project_render_settings = ""
+	
+	if (project_render_settings != "")
+	{
+		properties.render.enabled = false
+		properties.render.show = false
+	}	
+	else
+		properties.render.enabled = true
 	
 	var tlmap = map[?"timeline"];
 	if (ds_map_valid(tlmap))

@@ -1,8 +1,10 @@
-/// action_project_render_export()
+/// action_project_render_export([fn])
+/// @arg [fn]
 
-function action_project_render_export()
+function action_project_render_export(fn = "")
 {
-	var fn = file_dialog_save_render("");
+	if (fn = "")
+		fn = file_dialog_save_render("")
 	
 	if (fn = "")
 		return 0

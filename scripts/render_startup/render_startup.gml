@@ -250,4 +250,20 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL] = shader_high_raytrace_depth_normal
 	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
 	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
+	
+	// Init settings
+	project_reset_render()
+	
+	// Check for default render settings file
+	if (!file_exists_lib(render_default_file))
+	{
+		if (!directory_exists_lib(render_directory))
+			directory_create_lib(render_directory)
+		
+		project_save_start(render_default_file, false)
+		project_save_render()
+		project_save_done()
+	
+		log("Saved default render settings", render_default_file)
+	}
 }

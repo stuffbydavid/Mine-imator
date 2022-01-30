@@ -1258,6 +1258,26 @@ function list_init(name)
 			break
 		}
 		
+		// Render settings
+		case "projectrendersettings":
+		{
+			menu_add_item("", text_get("projectrendersettingscustom"))
+			menu_add_item("default", text_get("projectrendersettingsdefault"), null)
+			
+			var file = file_find_first(render_directory + "*.mirender", 0);
+			
+			while (file != "")
+			{
+				// Add all files but default
+				if (file != "default.mirender")
+					menu_add_item(filename_change_ext(file, ""), filename_change_ext(file, ""), null)
+				
+				file = file_find_next()
+			}
+			
+			break
+		}
+		
 		// Blend mode
 		case "timelineeditorblendmode":
 		{

@@ -322,13 +322,22 @@ function tab_properties_render()
 	tab_control(24)
 	
 	// Import render settings
-	draw_button_icon("renderimport", dx, dy, 24, 24, false, icons.ASSET_IMPORT, action_project_render_import, false, "tooltipimportrender")
+	if (draw_button_icon("renderimport", dx, dy, 24, 24, false, icons.SETTINGS_IMPORT, null, false, "tooltipsettingsimport"))
+		action_project_render_import()
 	
 	// Export render settings
-	draw_button_icon("renderexport", dx + (28), dy, 24, 24, false, icons.ASSET_EXPORT, action_project_render_export, false, "tooltipexportrender")
+	if (draw_button_icon("renderexport", dx + 28, dy, 24, 24, false, icons.SETTINGS_EXPORT, null, false, "tooltipsettingsexport"))
+		action_project_render_export()
+	
+	// Set current render settings as default
+	if (draw_button_icon("rendersetdefault", dx + (28 * 2), dy, 24, 24, false, icons.SETTINGS_SET_DEFAULT, null, false, "tooltipsettingssetdefault"))
+	{
+		if (question(text_get("questionsetasdefault")))
+			action_project_render_export(render_default_file)
+	}
 	
 	// Reset render settings
-	draw_button_icon("renderreset", dx + (28 * 2), dy, 24, 24, false, icons.RESET, action_project_render_reset, false, "tooltipresetrender")
+	draw_button_icon("renderreset", dx + (28 * 3), dy, 24, 24, false, icons.RESET, action_project_render_reset, false, "tooltipsettingsreset")
 	
 	tab_next()
 }

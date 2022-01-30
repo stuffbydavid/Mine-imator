@@ -111,9 +111,12 @@
         "experimental": "This setting is experimental and is not fully supported.",
         "showframes": "Show frames",
         "showtime": "Show time",
-        "exportrender": "Export render settings",
-        "importrender": "Import render settings",
-        "resetrender": "Reset render settings"
+        "settings/": {
+            "import": "Import settings",
+            "export": "Export settings",
+            "setdefault": "Set as default settings",
+            "reset": "Reset settings"
+        }
     },
     "contextmenu/": {
         "textbox/": {
@@ -308,6 +311,7 @@
         "assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
         "unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
         "restorekeybinds": "Are you sure you want to restore all controls?",
+        "setasdefault": "Are you sure you want to set these settings as the default? This cannot be undone.",
         "resetrender": "Are you sure you want to reset all render settings?"
     },
     "filedialog/": {
@@ -1911,6 +1915,11 @@
         "videosizecustomwidth": "Width",
         "videosizecustomheight": "Height",
         "videosizecustomkeepaspectratio": "Keep aspect ratio",
+        "rendersettings": "Render settings",
+        "rendersettings/": {
+            "default": "Default",
+            "custom": "Custom"
+        },
         "tempo": "Tempo"
     },
     "render": "RENDER",

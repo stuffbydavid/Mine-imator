@@ -67,6 +67,18 @@ function tab_properties_project()
 		tab_next()
 	}
 	
+	// Render setings
+	if (project_render_settings = "")
+		text = text_get("projectrendersettingscustom")
+	else if (project_render_settings = "default")
+		text = text_get("projectrendersettingsdefault")
+	else
+		text = filename_name(project_render_settings)
+	
+	tab_control_menu()
+	draw_button_menu("projectrendersettings", e_menu.LIST, dx, dy, dw, 24, project_render_settings, text, action_project_render_settings, null, null)
+	tab_next()
+	
 	// Tempo
 	tab_control_meter()
 	draw_meter("projecttempo", dx, dy, dw, project_tempo, 50, 1, 100, 24, 1, tab.project.tbx_tempo, action_project_tempo)

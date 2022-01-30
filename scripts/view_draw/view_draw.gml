@@ -459,18 +459,18 @@ function view_draw(view)
 	{
 		// Workbench
 		var benchx, benchy, benchscale, benchrot;
-		benchx = boxx + 8
+		benchx = boxx + 3
 		benchy = boxy + captionh + 8
 		benchscale = bench_click_ani
 		benchrot = sin(bench_rotate_ani * pi * 5) * (1 - abs(bench_rotate_ani * 2 - 1)) * 10
 		
-		bench_settings.posx = benchx + 64 + 8
+		bench_settings.posx = benchx + 86 + 8
 		bench_settings.posy = benchy
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(true)
 		
-		draw_image(spr_bench, 0, benchx + 32, benchy + 32, benchscale, benchscale, null, bench_hover_ani, benchrot)
+		draw_image(spr_bench, 0, benchx + 43, benchy + 43, benchscale, benchscale, null, bench_hover_ani, benchrot)
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(false)
@@ -484,7 +484,7 @@ function view_draw(view)
 		}
 		
 		// Set animation
-		if (view_main.mouseon && app_mouse_box(benchx, benchy, 64, 64) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		{
 			mouse_cursor = cr_handpoint
 			bench_button_hover = true
@@ -504,7 +504,7 @@ function view_draw(view)
 				bench_click_ani_goal = 1
 			
 			tip_force_right = true
-			tip_set(text_get("viewworkbenchtip"), benchx, benchy, 64, 64, false)
+			tip_set(text_get("viewworkbenchtip"), benchx, benchy, 86, 86, false)
 			tip_force_right = false
 			
 			if (mouse_left_pressed)
@@ -513,7 +513,7 @@ function view_draw(view)
 		else
 		{
 			// Match alpha with toolbar if mouse is nearby
-			if (view.toolbar_mouseon)
+			if (view.toolbar_alpha_goal = 1)
 				bench_hover_ani_goal = view.toolbar_alpha_goal
 			else
 				bench_hover_ani_goal = .5
@@ -541,7 +541,7 @@ function view_draw(view)
 		bench_rotate_ani = max(0, bench_rotate_ani - 0.01 * delta)
 		
 		// Draw toolbar
-		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8 + 64 + 8)
+		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8 + 86 + 12)
 	}
 	
 	// Moving / Resizing

@@ -1,0 +1,54 @@
+/// history_copy_render_settings(obj)
+
+function history_copy_render_settings(obj)
+{
+	project_render_samples = obj.project_render_samples
+	project_render_dof_quality = obj.project_render_dof_quality
+	
+	project_render_ssao = obj.project_render_ssao
+	project_render_ssao_radius = obj.project_render_ssao_radius
+	project_render_ssao_power = obj.project_render_ssao_power
+	project_render_ssao_blur_passes = obj.project_render_ssao_blur_passes
+	project_render_ssao_color = obj.project_render_ssao_color
+	
+	project_render_shadows = obj.project_render_shadows
+	project_render_shadows_sun_buffer_size = obj.project_render_shadows_sun_buffer_size
+	project_render_shadows_spot_buffer_size = obj.project_render_shadows_spot_buffer_size
+	project_render_shadows_point_buffer_size = obj.project_render_shadows_point_buffer_size
+	
+	project_render_subsurface_samples = obj.project_render_subsurface_samples
+	project_render_subsurface_jitter = obj.project_render_subsurface_jitter
+	
+	project_render_indirect = obj.project_render_indirect
+	project_render_indirect_precision = obj.project_render_indirect_precision
+	project_render_indirect_blur_passes = obj.project_render_indirect_blur_passes
+	project_render_indirect_strength = obj.project_render_indirect_strength
+	
+	project_render_reflections = obj.project_render_reflections
+	project_render_reflections_precision = obj.project_render_reflections_precision
+	project_render_reflections_thickness = obj.project_render_reflections_thickness
+	project_render_reflections_fade_amount = obj.project_render_reflections_fade_amount
+	
+	project_render_glow = obj.project_render_glow
+	project_render_glow_radius = obj.project_render_glow_radius
+	project_render_glow_intensity = obj.project_render_glow_intensity
+	project_render_glow_falloff = obj.project_render_glow_falloff
+	project_render_glow_falloff_radius = obj.project_render_glow_falloff_radius
+	project_render_glow_falloff_intensity = obj.project_render_glow_falloff_intensity
+	
+	project_render_aa = obj.project_render_aa
+	project_render_aa_power = obj.project_render_aa_power
+	
+	project_render_texture_filtering = obj.project_render_texture_filtering
+	project_render_transparent_block_texture_filtering = obj.project_render_transparent_block_texture_filtering
+	project_render_texture_filtering_level = obj.project_render_texture_filtering_level
+	
+	project_bend_style = obj.project_bend_style
+	project_render_liquid_animation = obj.project_render_liquid_animation
+	project_render_noisy_grass_water = obj.project_render_noisy_grass_water
+	project_render_block_brightness = obj.project_render_block_brightness
+	project_render_block_glow = obj.project_render_block_glow
+	project_render_block_glow_threshold = obj.project_render_block_glow_threshold
+	project_render_block_subsurface = obj.project_render_block_subsurface
+	project_render_random_blocks = obj.project_render_random_blocks
+}

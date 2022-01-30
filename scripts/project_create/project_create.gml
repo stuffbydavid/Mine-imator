@@ -23,6 +23,15 @@ function project_create()
 	project_folder = dirname
 	project_file = project_folder + "\\" + filename_get_valid(project_name) + ".miproject"
 	
+	// Set 'Render' tab visibility
+	if (project_render_settings != "")
+	{
+		properties.render.enabled = false
+		properties.render.show = false
+	}
+	else
+		properties.render.enabled = true
+	
 	popup_close()
 	
 	project_save()

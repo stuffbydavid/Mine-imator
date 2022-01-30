@@ -28,6 +28,7 @@ function project_reset()
 	project_video_height = 720
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = true
+	project_render_settings = "default"
 	project_tempo = 24
 	project_grid_rows = 3
 	project_grid_columns = 3
