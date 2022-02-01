@@ -32,6 +32,10 @@ function toast_draw(toast)
 	draw_outline(dx, dy, dw, dh, 1, color, 1, true)
 	draw_dropshadow(dx, dy, dw, dh, c_black, 1)
 	
+	// Pause countdown
+	if (toast_mouseon)
+		toast.time_created += delta_time / 1000
+	
 	// Dismiss bar
 	if (toast.dismiss_time != no_limit)
 		draw_box(dx, dy + dh - 3, dw * (1 - ((current_time - toast.time_created) / (toast.dismiss_time * 1000))), 2, false, color, 1)

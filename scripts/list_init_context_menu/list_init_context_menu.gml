@@ -124,6 +124,7 @@ function list_init_context_menu(name)
 			list_item_last.context_menu_script = menu_transitions
 			list_item_last.context_menu_width = 244
 			list_item_last.context_menu_height = 438
+			list_item_last.context_menu_name = "timelinelkeyframetransitions"
 			
 			// Keyframes
 			list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAME, null, action_tl_keyframes_cut, true)
@@ -140,6 +141,9 @@ function list_init_context_menu(name)
 			
 			list_item_add(text_get("contextmenutlkeyframesexport"), null, "", null, icons.SAVE_KEYFRAME, null, keyframes_save)
 			list_item_last.disabled = !timeline_settings_keyframes_export
+			
+			list_item_add(text_get("contextmenutlkeyframesselect"), null, "", null, icons.SELECT_ALL_KEYFRAME, icons.CHEVRON_RIGHT_TINY, null)
+			list_item_last.context_menu_name = "timelinelkeyframesselect"
 			
 			// Walk/run cycles
 			list_item_add(text_get("contextmenutlkeyframeswalk"), timeline_settings_walk_fn, "", null, icons.WALK_CYCLE, null, action_tl_load_loop, true)
@@ -166,6 +170,19 @@ function list_init_context_menu(name)
 			else
 				list_item_last.disabled = true
 			
+			break
+		}
+		
+		// Keyframe select
+		case "timelinelkeyframesselect":
+		{
+			list_item_add(text_get("contextmenutlkeyframesselectbefore"), null, "", null, null, null, action_tl_select_keyframes_before_marker)
+			list_item_add(text_get("contextmenutlkeyframesselectafter"), null, "", null, null, null, action_tl_select_keyframes_after_marker)
+			list_item_add(text_get("contextmenutlkeyframesselectfirst"), null, "", null, null, null, action_tl_select_keyframes_first)
+			list_item_add(text_get("contextmenutlkeyframesselectlast"), null, "", null, null, null, action_tl_select_keyframes_last)
+			
+			list_item_add(text_get("contextmenutlkeyframesselectregion"), null, "", null, null, null, action_tl_select_keyframes_region)
+			list_item_last.disabled = (timeline_region_start = null)
 			break
 		}
 		

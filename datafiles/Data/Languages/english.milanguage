@@ -154,6 +154,14 @@
                 "paste": "Paste keyframes",
                 "delete": "Delete keyframes",
                 "export": "Export keyframes",
+                "select": "Select keyframes...",
+                "select/": {
+                    "before": "Before marker",
+                    "after": "After marker",
+                    "first": "First in timelines",
+                    "last": "Last in timelines",
+                    "region": "In selected region"
+                },
                 "walk": "Create walk cycle",
                 "run": "Create run cycle",
                 "transition": "Transition..."
