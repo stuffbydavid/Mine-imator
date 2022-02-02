@@ -6,7 +6,7 @@ function tl_update_values_progress(markerpos)
 	var progress = 0;
 	
 	// Get regular progress
-	if (!(app.timeline_repeat && app.timeline_seamless_repeat))
+	if (!app.timeline_seamless_repeat)
 	{
 		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 			progress = (markerpos - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
@@ -27,7 +27,7 @@ function tl_update_values_progress(markerpos)
 		loopend = app.timeline_length
 	}
 	
-	seamlessloop = (app.timeline_repeat && app.timeline_seamless_repeat && markerpos >= loopstart && markerpos < loopend)
+	seamlessloop = (app.timeline_seamless_repeat && markerpos >= loopstart && markerpos < loopend)
 	
 	// Change keyframes so the animation is seamless
 	var kflistsize, lastkf, loopnext, loopprev;
@@ -35,23 +35,23 @@ function tl_update_values_progress(markerpos)
 	lastkf = kflistsize - 1
 	loopnext = false
 	loopprev = false
-		
+	
 	if (keyframe_next = keyframe_current || keyframe_next.position > loopend) // Continue into the first keyframe
 	{
 		// Get first keyframe in timeline region
 		for (var k = 0; k < kflistsize; k++)
 		{
 			var kf = keyframe_list[|k];
-				
+			
 			if (kf.position < loopstart || kf.position > loopend)
 				continue
 			else
 			{
 				if (kf.position < keyframe_next.position)
-					keyframe_next = kf
+					keyframe_next = kf 
 			}
 		}
-			
+		
 		loopnext = true
 	}
 	else if (keyframe_current = null || keyframe_current.position < loopstart) // Continue from last keyframe

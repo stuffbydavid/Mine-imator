@@ -9,7 +9,7 @@ function tl_update_values()
 	keyframe_current_values = null
 	keyframe_next_values = null
 	
-	if (app.timeline_marker_previous >= app.timeline_marker || keyframe_prev = null || (keyframe_index > (ds_list_size(keyframe_list) - 1)))
+	if (app.timeline_seamless_repeat || (app.timeline_marker_previous >= app.timeline_marker || keyframe_prev = null || (keyframe_index > (ds_list_size(keyframe_list) - 1))))
 		keyframe_index = 0
 	
 	// Find keyframes
@@ -21,7 +21,7 @@ function tl_update_values()
 		
 		keyframe_current = keyframe_next
 	}
-	keyframe_index--
+	keyframe_index = max(0, keyframe_index - 1)
 	
 	keyframe_progress = tl_update_values_progress(app.timeline_marker)
 	keyframe_bend_progress = tl_update_values_progress(snap(app.timeline_marker, .25)) // Snap marker for bend angles to reduce cache
@@ -29,14 +29,14 @@ function tl_update_values()
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	
 	// Marker is behind first keyframe, copy values
-	if (app.timeline_playing && !keyframe_current && keyframe_next && (keyframe_current = keyframe_prev))
+	if (!app.timeline_seamless_repeat && app.timeline_playing && !keyframe_current && keyframe_next && (keyframe_current = keyframe_prev))
 	{
 		value = array_copy_1d(keyframe_next.value)
 		return 0
 	}
 	
 	// Marker is past all keyframes, no need to update 
-	if (app.timeline_playing && (keyframe_prev = keyframe_current) && (keyframe_current = keyframe_list[|ds_list_size(keyframe_list) - 1])) 
+	if (!app.timeline_seamless_repeat && app.timeline_playing && (keyframe_prev = keyframe_current) && (keyframe_current = keyframe_list[|ds_list_size(keyframe_list) - 1])) 
 		return 0
 	
 	// Save 'value' arrays from keyframes to speed up easing

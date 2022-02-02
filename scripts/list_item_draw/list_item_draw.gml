@@ -222,7 +222,7 @@ function list_item_draw()
 	//	leftp += 4
 	
 	// Text
-	leftp += 8 + (4 * (height > 24))
+	leftp += 8 + (4 * (height > 24 && (item.thumbnail || (item.icon_left != null))))
 	
 	draw_set_font(font_value)
 	

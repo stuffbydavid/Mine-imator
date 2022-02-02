@@ -318,7 +318,7 @@
         "stoprender": "Really stop rendering?",
         "assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
         "unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
-        "restorekeybinds": "Are you sure you want to restore all controls?",
+        "restorecontrols": "Are you sure you want to restore all controls?",
         "setasdefault": "Are you sure you want to set these settings as the default? This cannot be undone.",
         "resetrender": "Are you sure you want to reset all render settings?"
     },
