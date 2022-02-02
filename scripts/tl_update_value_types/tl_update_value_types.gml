@@ -23,10 +23,10 @@ function tl_update_value_types()
 	
 	// Info
 	value_type[e_value_type.HIERARCHY] = true
-	value_type[e_value_type.GRAPHICS] = true
+	value_type[e_value_type.APPEARANCE] = true
 	
 	if (type = e_tl_type.CAMERA)
-		value_type[e_value_type.GRAPHICS] = false
+		value_type[e_value_type.APPEARANCE] = false
 	
 	// Transform
 	value_type[e_value_type.TRANSFORM] = true

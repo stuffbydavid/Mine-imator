@@ -105,7 +105,7 @@ function tab_settings_program()
 	else
 	{
 		if (trial_version)
-			draw_tooltip_label("settingswatermarkupgraderequired", icons.KEY_ALT, e_toast.INFO)
+			draw_tooltip_label("settingswatermarkupgraderequired", icons.KEY, e_toast.INFO)
 	}
 	
 	#endregion

@@ -7,7 +7,7 @@
 
 function draw_subheader(cat, xx, yy, w, h)
 {
-	var mouseon, cap;
+	var mouseon, cap, iconframe;
 	
 	draw_set_font(font_subheading)
 	cap = string_limit(text_get(cat.name), dw - (h + 4))
@@ -29,8 +29,15 @@ function draw_subheader(cat, xx, yy, w, h)
 	
 	frame = floor((sprite_get_number(spr_chevron_ani) - 1) * microani_arr[e_microani.ACTIVE])
 	
-	draw_image(spr_chevron_ani, frame, xx + 8, yy + h/2, 1, 1, color, alpha)
-	draw_label(cap, xx + 20, yy + (h/2) - 1, fa_left, fa_middle, color, alpha)
+	if (is_array(cat.icon))
+		iconframe = (setting_theme.dark ? cat.icon[1] : cat.icon[0])
+	else
+		iconframe = cat.icon
+	
+	draw_image(spr_icons, iconframe, xx + 12, yy + h/2, 1, 1, color, alpha)
+	
+	draw_image(spr_chevron_ani, frame, xx + w - 11, yy + h/2, 1, 1, color, alpha)
+	draw_label(cap, xx + 26, yy + (h/2) - 1, fa_left, fa_middle, color, alpha)
 	
 	microani_update(mouseon, mouseon && mouse_left, cat.show)
 	

@@ -85,7 +85,7 @@ function panel_draw_content()
 			repeat (cats)
 			{
 				tab_control(28)
-				draw_subheader(cat[c], content_x + 4, dy, dividew - 4, 28)
+				draw_subheader(cat[c], content_x + 4, dy, dividew - 8, 28)
 				tab_next(false)
 				
 				// Draw contents

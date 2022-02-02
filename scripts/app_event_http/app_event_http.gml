@@ -119,12 +119,12 @@ function app_event_http()
 						switch (icon)
 						{
 							case "website":		icon = icons.WORLD;				break
-							case "forums":		icon = icons.SPEECH_BUBBLE;		break
+							case "forums":		icon = icons.COMMENT;			break
 							case "save":		icon = icons.SAVE;				break
 							case "download":	icon = icons.DOWNLOAD;			break
 							case "cake":		icon = icons.BIRTHDAY;			break
-							case "upgrade":		icon = icons.KEY_ALT;			break
-							case "render":		icon =  (setting_theme.dark ? icons.QUALITY_RENDERED__DARK : icons.QUALITY_RENDERED);	break
+							case "upgrade":		icon = icons.KEY;				break
+							case "render":		icon = (setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL);	break
 							default:			icon = null;					break
 						}
 						

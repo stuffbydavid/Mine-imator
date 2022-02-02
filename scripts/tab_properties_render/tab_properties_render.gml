@@ -335,7 +335,7 @@ function tab_properties_render()
 		action_project_render_export()
 	
 	// Set current render settings as default
-	if (draw_button_icon("rendersetdefault", dx + (28 * 2), dy, 24, 24, false, icons.SETTINGS_SET_DEFAULT, null, false, "tooltipsettingssetdefault"))
+	if (draw_button_icon("rendersetdefault", dx + (28 * 2), dy, 24, 24, false, icons.SETTINGS_SETDEFAULT, null, false, "tooltipsettingssetdefault"))
 	{
 		if (question(text_get("questionsetasdefault")))
 			action_project_render_export(render_default_file)

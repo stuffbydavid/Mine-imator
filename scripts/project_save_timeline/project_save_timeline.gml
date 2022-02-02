@@ -134,7 +134,7 @@ function project_save_timeline()
 			json_save_var_point3D("rot_point", rot_point)
 		}
 		
-		if (value_type[e_value_type.GRAPHICS])
+		if (value_type[e_value_type.APPEARANCE])
 		{
 			json_save_var_bool("backfaces", backfaces)
 			json_save_var_bool("texture_blur", texture_blur)

@@ -39,13 +39,13 @@ function project_load_legacy_value_types()
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
 	{
 		value_type[e_value_type.HIERARCHY] = buffer_read_byte()
-		value_type[e_value_type.GRAPHICS] = buffer_read_byte()
+		value_type[e_value_type.APPEARANCE] = buffer_read_byte()
 	}
 	
 	if (load_format < e_project.FORMAT_100_DEBUG) // Bug in demos
 	{
 		value_type[e_value_type.HIERARCHY] = true
-		value_type[e_value_type.GRAPHICS] = true
+		value_type[e_value_type.APPEARANCE] = true
 	}
 	
 	if (load_format >= e_project.FORMAT_100_DEBUG)

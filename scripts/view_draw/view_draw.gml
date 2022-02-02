@@ -206,7 +206,7 @@ function view_draw(view)
 	
 	// "Render" quality
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mode.RENDER, setting_theme.dark ? icons.QUALITY_RENDERED__DARK : icons.QUALITY_RENDERED, null, false, "viewmoderender"))
+	if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mode.RENDER, setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL, null, false, "viewmoderender"))
 	{
 		view.quality = e_view_mode.RENDER
 		
@@ -220,12 +220,12 @@ function view_draw(view)
 	
 	// "Shaded" quality
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewmodeshaded", dx, dy, dw, dh, view.quality = e_view_mode.SHADED, setting_theme.dark ? icons.SPHERE__DARK : icons.SPHERE, null, false, "viewmodeshaded"))
+	if (draw_button_icon("viewmodeshaded", dx, dy, dw, dh, view.quality = e_view_mode.SHADED, setting_theme.dark ? icons.SPHERE_SHADING__DARK : icons.SPHERE_SHADING, null, false, "viewmodeshaded"))
 		view.quality = e_view_mode.SHADED
 	dx -= dw + padding
 	
 	// "Flat" quality
-	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.QUALITY_DRAFT, null, false, "viewmodeflat"))
+	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.SPHERE_FLAT, null, false, "viewmodeflat"))
 		view.quality = e_view_mode.FLAT
 	dx -= dw + padding
 	

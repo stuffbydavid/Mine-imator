@@ -1142,7 +1142,7 @@
     {"id":{"name":"tab_template_editor_particles_preview_restart","path":"scripts/tab_template_editor_particles_preview_restart/tab_template_editor_particles_preview_restart.yy",},"order":9,},
     {"id":{"name":"tab_template_editor_particles_value","path":"scripts/tab_template_editor_particles_value/tab_template_editor_particles_value.yy",},"order":11,},
     {"id":{"name":"tab_template_editor_update_ptype_list","path":"scripts/tab_template_editor_update_ptype_list/tab_template_editor_update_ptype_list.yy",},"order":13,},
-    {"id":{"name":"tab_timeline_editor_graphics","path":"scripts/tab_timeline_editor_graphics/tab_timeline_editor_graphics.yy",},"order":1,},
+    {"id":{"name":"tab_timeline_editor_appearance","path":"scripts/tab_timeline_editor_appearance/tab_timeline_editor_appearance.yy",},"order":1,},
     {"id":{"name":"tab_timeline_editor_hierarchy","path":"scripts/tab_timeline_editor_hierarchy/tab_timeline_editor_hierarchy.yy",},"order":3,},
     {"id":{"name":"tab_timeline_editor_info","path":"scripts/tab_timeline_editor_info/tab_timeline_editor_info.yy",},"order":5,},
     {"id":{"name":"tab_timeline_editor_audio","path":"scripts/tab_timeline_editor_audio/tab_timeline_editor_audio.yy",},"order":7,},

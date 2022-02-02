@@ -21,7 +21,7 @@ function app_update_tl_edit_select()
 	
 	with (timeline_editor)
 	{
-		graphics.enabled = false
+		appearance.enabled = false
 		audio.enabled = false
 	}
 	
@@ -125,8 +125,8 @@ function app_update_tl_edit_select()
 		if (value_type[e_value_type.KEYFRAME])
 			app.frame_editor.keyframe.enabled = true
 		
-		if (value_type[e_value_type.GRAPHICS])
-			app.timeline_editor.graphics.enabled = true
+		if (value_type[e_value_type.APPEARANCE])
+			app.timeline_editor.appearance.enabled = true
 		
 		if (value_type[e_value_type.AUDIO])
 			app.timeline_editor.audio.enabled = true

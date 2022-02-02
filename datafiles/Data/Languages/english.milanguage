@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.01.26"
+        "lastchange": "2022.02.01"
     },
     "particle/": {
         "default": "Default spawner",
@@ -1902,7 +1902,7 @@
             }
         }
     },
-    "project": "PROJECT",
+    "project": "PROJECT SETTINGS",
     "project/": {
         "name": "Name",
         "author": "Author",
@@ -1930,7 +1930,7 @@
         },
         "tempo": "Tempo"
     },
-    "render": "RENDER",
+    "render": "RENDER SETTINGS",
     "render/": {
         "samples": "Samples",
         "samples/": {
@@ -2306,7 +2306,7 @@
         "rgb": "RGB",
         "hsl": "HSL"
     },
-    "background": "BACKGROUND",
+    "background": "ENVIRONMENT",
     "background/": {
         "sky": "Sky",
         "skyminecraft": "Minecraft",
@@ -2597,7 +2597,7 @@
         }
     },
     "timelineeditor/": {
-        "info": "INFO",
+        "info": "OBJECT INFO",
         "name": "Name",
         "text": "Text",
         "textsample": "Sample text",
@@ -2635,7 +2635,7 @@
         "scalemode": "Scale mode",
         "scalemoderesize": "Resize",
         "scalemodestretch": "Stretch",
-        "graphics": "GRAPHICS",
+        "appearance": "APPEARANCE",
         "textureblur": "Blur texture",
         "texturefiltering": "Texture filtering",
         "shadows": "Cast shadows",
@@ -2892,7 +2892,7 @@
             "customitemslot": "Custom item slot",
             "itemslot": "Item slot"
         },
-        "keyframe": "KEYFRAME",
+        "keyframe": "KEYFRAME SETTINGS",
         "transition": "Transition",
         "visible": "Visible"
     },

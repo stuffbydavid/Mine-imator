@@ -20,7 +20,7 @@ function app_startup_interface_tabs()
 	with (properties)
 	{
 		// Project
-		project = tab_add_category("project", tab_properties_project, false)
+		project = tab_add_category("project", icons.CLAPPERBOARD_SMALL, tab_properties_project, false)
 		with (project)
 		{
 			tbx_name = new_textbox(true, 0, "")
@@ -35,7 +35,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Render
-		render = tab_add_category("render", tab_properties_render, false)
+		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
 		with (render)
 		{
 			tbx_dof_quality = new_textbox_integer()
@@ -76,7 +76,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Library
-		library = tab_add_category("library", tab_properties_library, false)
+		library = tab_add_category("library", icons.LIBRARY_SMALL, tab_properties_library, false)
 		with (library)
 		{
 			preview = new_obj(obj_preview)
@@ -99,7 +99,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Background
-		background = tab_add_category("background", tab_properties_background, false)
+		background = tab_add_category("background", icons.WORLD_SMALL, tab_properties_background, false)
 		with (background)
 		{
 			tbx_background_rotation = new_textbox_decimals()
@@ -144,7 +144,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Resources
-		resources = tab_add_category("resources", tab_properties_resources, false)
+		resources = tab_add_category("resources", icons.FILE_SMALL, tab_properties_resources, false)
 		with (resources)
 		{
 			preview = new_obj(obj_preview)
@@ -405,7 +405,7 @@ function app_startup_interface_tabs()
 	with (timeline_editor)
 	{
 		// Information
-		info = tab_add_category("timelineeditorinfo", tab_timeline_editor_info, true)
+		info = tab_add_category("timelineeditorinfo", icons.LIST_BULLETED_SMALL, tab_timeline_editor_info, true)
 		with (info)
 		{
 			tbx_name = new_textbox(true, 0, "")
@@ -416,15 +416,15 @@ function app_startup_interface_tabs()
 		}
 		
 		// Hierarchy
-		hierarchy = tab_add_category("timelineeditorhierarchy", tab_timeline_editor_hierarchy, true)
+		hierarchy = tab_add_category("timelineeditorhierarchy", icons.HIERARCHY_SMALL, tab_timeline_editor_hierarchy, true)
 		
 		// Graphics
-		graphics = tab_add_category("timelineeditorgraphics", tab_timeline_editor_graphics, false)
-		with (graphics)
+		appearance = tab_add_category("timelineeditorappearance", [icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL__DARK], tab_timeline_editor_appearance, false)
+		with (appearance)
 			tbx_depth = new_textbox_ninteger()
 		
 		// Audio
-		audio = tab_add_category("timelineeditoraudio", tab_timeline_editor_audio, true)
+		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
 	}
 	
 	// Frame editor
@@ -432,7 +432,7 @@ function app_startup_interface_tabs()
 	with (frame_editor)
 	{
 		// Transform
-		transform = tab_add_category("frameeditortransform", tab_frame_editor_transform, false)
+		transform = tab_add_category("frameeditortransform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
 		with (transform)
 		{
 			// Position
@@ -465,7 +465,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Material
-		material = tab_add_category("frameeditormaterial", tab_frame_editor_material, false)
+		material = tab_add_category("frameeditormaterial", [icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL__DARK], tab_frame_editor_material, false)
 		with (material)
 		{
 			tbx_alpha = new_textbox_integer()
@@ -488,7 +488,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Particles
-		particles = tab_add_category("frameeditorparticles", tab_frame_editor_particles, false)
+		particles = tab_add_category("frameeditorparticles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
 		with (particles)
 		{
 			tbx_seed = new_textbox_ninteger()
@@ -496,7 +496,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Light
-		light = tab_add_category("frameeditorlight", tab_frame_editor_light, false)
+		light = tab_add_category("frameeditorlight", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
 		with (light)
 		{
 			has_spotlight = false
@@ -514,7 +514,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Camera
-		camera = tab_add_category("frameeditorcamera", tab_frame_editor_camera, false)
+		camera = tab_add_category("frameeditorcamera", icons.CAMERA_SMALL, tab_frame_editor_camera, false)
 		with (camera)
 		{
 			video_template = null
@@ -627,7 +627,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Sound
-		sound = tab_add_category("frameeditorsound", tab_frame_editor_sound, true)
+		sound = tab_add_category("frameeditorsound", icons.VOLUME_SMALL, tab_frame_editor_sound, true)
 		with (sound)
 		{
 			tbx_volume = new_textbox_integer()
@@ -637,12 +637,12 @@ function app_startup_interface_tabs()
 		}
 		
 		// Text
-		text = tab_add_category("frameeditortext", tab_frame_editor_text, false)
+		text = tab_add_category("frameeditortext", icons.TEXT_SMALL, tab_frame_editor_text, false)
 		with (text)
 			tbx_text = new_textbox(false, 0, "")
 		
 		// Item
-		item = tab_add_category("frameeditoritem", tab_frame_editor_item, false)
+		item = tab_add_category("frameeditoritem", icons.ITEM_SMALL, tab_frame_editor_item, false)
 		with (item)
 		{
 			item_scroll = new_obj(obj_scrollbar)
@@ -650,7 +650,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Keyframe
-		keyframe = tab_add_category("frameeditorkeyframe", tab_frame_editor_keyframe, false)
+		keyframe = tab_add_category("frameeditorkeyframe", icons.KEYFRAME_SMALL, tab_frame_editor_keyframe, false)
 	}
 	
 	// Settings
@@ -658,7 +658,7 @@ function app_startup_interface_tabs()
 	with (settings)
 	{
 		// Program
-		program = tab_add_category("settingsprogram", tab_settings_program, false)
+		program = tab_add_category("settingsprogram", icons.SETTINGS_SMALL, tab_settings_program, false)
 		with (program)
 		{
 			tbx_backup_time = new_textbox_integer()
@@ -671,10 +671,10 @@ function app_startup_interface_tabs()
 		}
 		
 		// Interface
-		interface = tab_add_category("settingsinterface", tab_settings_interface, false)
+		interface = tab_add_category("settingsinterface", icons.BRUSH_SMALL, tab_settings_interface, false)
 		
 		// Controls
-		controls = tab_add_category("settingscontrols", tab_settings_controls, false)
+		controls = tab_add_category("settingscontrols", icons.KEYBOARD_SMALL, tab_settings_controls, false)
 		with (controls)
 		{
 			tbx_move_speed = new_textbox_decimals()
