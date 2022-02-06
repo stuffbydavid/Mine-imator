@@ -2,110 +2,110 @@
 
 function tab_frame_editor_texture_material()
 {
-	if (!tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
-		return 0
-	
 	var texobj, name, tex, sliders;
 	tex = null
 	sliders = false
 	
-	if (tl_edit.temp = null)
-		return 0
-		
-	switch (tl_edit.type)
-	{
-		case e_tl_type.CHARACTER:
-		case e_tl_type.SPECIAL_BLOCK:
-		case e_tl_type.MODEL:
-		case e_tl_type.BODYPART:
+	// Get material texture
+	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && tl_edit.temp != null)
+	{	
+		switch (tl_edit.type)
 		{
-			name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
-			
-			var modelfile = tl_edit.temp.model_file;
-			if (tl_edit.type = e_temp_type.BODYPART)
-				modelfile = tl_edit.model_part
-			
-			with (tl_edit.temp)
+			case e_tl_type.CHARACTER:
+			case e_tl_type.SPECIAL_BLOCK:
+			case e_tl_type.MODEL:
+			case e_tl_type.BODYPART:
 			{
-				texobj = temp_get_model_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
-				tex = temp_get_model_tex_material_preview(texobj, modelfile)
+				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
+			
+				var modelfile = tl_edit.temp.model_file;
+				if (tl_edit.type = e_temp_type.BODYPART)
+					modelfile = tl_edit.model_part
+			
+				with (tl_edit.temp)
+				{
+					texobj = temp_get_model_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
+					tex = temp_get_model_tex_material_preview(texobj, modelfile)
+				}
+			
+				if (texobj = mc_res || texobj = null)
+					sliders = true
+			
+				break
 			}
-			
-			if (texobj = mc_res || texobj = null)
-				sliders = true
-			
-			break
-		}
 		
-		case e_tl_type.BLOCK:
-		case e_tl_type.SCENERY:
-		{
-			name = "frameeditorblocktexmaterial"
-			with (tl_edit.temp)
-				texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
-			tex = texobj.block_preview_texture
+			case e_tl_type.BLOCK:
+			case e_tl_type.SCENERY:
+			{
+				name = "frameeditorblocktexmaterial"
+				with (tl_edit.temp)
+					texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
+				tex = texobj.block_preview_texture
 			
-			if (texobj = mc_res)
-				sliders = true
+				if (texobj = mc_res)
+					sliders = true
 			
-			break
-		}
+				break
+			}
 		
-		case e_tl_type.ITEM:
-		{
-			name = "frameeditoritemtexmaterial"
+			case e_tl_type.ITEM:
+			{
+				name = "frameeditoritemtexmaterial"
 			
-			var texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ];
+				var texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ];
 			
-			if (texobj = null)
-				texobj = tl_edit.temp.item_tex_material
+				if (texobj = null)
+					texobj = tl_edit.temp.item_tex_material
 			
-			if (!res_is_ready(texobj))
-				texobj = mc_res
+				if (!res_is_ready(texobj))
+					texobj = mc_res
 			
-			tex = texobj.block_preview_texture
+				tex = texobj.block_preview_texture
 			
-			if (tex = null)
-				tex = res.texture
+				if (tex = null)
+					tex = res.texture
 			
-			if (texobj = mc_res)
-				sliders = true
+				if (texobj = mc_res)
+					sliders = true
 			
-			break
-		}
+				break
+			}
 		
-		default: // Shapes
+			default: // Shapes
+			{
+				name = "frameeditorshapetexmaterial"
+				with (tl_edit.temp)
+					texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
+			
+				if (texobj != null) // Don't preview cameras
+					tex = texobj.texture
+			
+				if (texobj = null)
+					sliders = true
+			
+				break
+			}
+		}
+	
+		// Text to display
+		var text;
+		if (texobj != null)
+			text = texobj.display_name
+		else
+			text = text_get("listnone")
+	
+		if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
+			text = text_get("listdefault", text)
+	
+		if (project_render_material_maps)
 		{
-			name = "frameeditorshapetexmaterial"
-			with (tl_edit.temp)
-				texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
-			
-			if (texobj != null) // Don't preview cameras
-				tex = texobj.texture
-			
-			if (texobj = null)
-				sliders = true
-			
-			break
+			tab_control_menu(32)
+			draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
+			tab_next()
 		}
 	}
-	
-	// Text to display
-	var text;
-	if (texobj != null)
-		text = texobj.display_name
 	else
-		text = text_get("listnone")
-	
-	if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
-		text = text_get("listdefault", text)
-	
-	if (project_render_material_maps)
-	{
-		tab_control_menu(32)
-		draw_button_menu(name, e_menu.LIST, dx, dy, dw, 32, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
-		tab_next()
-	}
+		sliders = true
 	
 	// Sliders for manual edit
 	if (sliders)

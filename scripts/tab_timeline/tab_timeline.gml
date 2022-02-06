@@ -433,8 +433,8 @@ function tab_timeline()
 					if (dx < (tlx - 32))
 						continue
 					
-					draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-					draw_image(spr_keyframe, 1, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
+					draw_image(spr_icons, icons.KEYFRAME_FILLED_SMALL, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+					draw_image(spr_icons, icons.KEYFRAME_FILLED_SMALL, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
 				}
 			}
 		}
@@ -541,8 +541,8 @@ function tab_timeline()
 				// Sprite
 				var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
 				
-				draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-				draw_image(spr_keyframe, image, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
+				draw_image(spr_icons, image ? icons.KEYFRAME : icons.KEYFRAME_FILLED, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+				draw_image(spr_icons, image ? icons.KEYFRAME : icons.KEYFRAME_FILLED, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
 			}
 			
 			if (mouse && mouseintl && !tl.lock)

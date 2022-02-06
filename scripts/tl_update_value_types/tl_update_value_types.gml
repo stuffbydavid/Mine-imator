@@ -69,12 +69,29 @@ function tl_update_value_types()
 	if (type = e_tl_type.CAMERA)
 		value_type[e_value_type.CAMERA] = true
 	
-	// Texture
+	// Material (texture)
 	if (type != e_tl_type.CAMERA &&
 		type != e_tl_type.POINT_LIGHT &&
 		type != e_tl_type.SPOT_LIGHT &&
 		type != e_tl_type.FOLDER)
 		value_type[e_value_type.MATERIAL_TEXTURE] = true
+	
+	// Material (Color)
+	if (type != e_tl_type.POINT_LIGHT &&
+		type != e_tl_type.SPOT_LIGHT)
+		value_type[e_value_type.MATERIAL_COLOR] = true
+	
+	// Material (Surface)
+	if (type != e_tl_type.CAMERA &&
+		type != e_tl_type.POINT_LIGHT &&
+		type != e_tl_type.SPOT_LIGHT)
+		value_type[e_value_type.MATERIAL_SURFACE] = true
+	
+	// Material (Subsurface)
+	if (type != e_tl_type.CAMERA &&
+		type != e_tl_type.POINT_LIGHT &&
+		type != e_tl_type.SPOT_LIGHT)
+		value_type[e_value_type.MATERIAL_SUBSURFACE] = true
 	
 	// Text
 	if (type = e_tl_type.TEXT)
@@ -93,5 +110,6 @@ function tl_update_value_types()
 		value_type[e_value_type.ROT_POINT] = false
 	
 	// Enable material tab
-	value_type[e_value_type.MATERIAL] = (value_type[e_value_type.MATERIAL_COLOR] || value_type[e_value_type.MATERIAL_TEXTURE])
+	value_type[e_value_type.MATERIAL] = (value_type[e_value_type.MATERIAL_TEXTURE] || value_type[e_value_type.MATERIAL_COLOR] ||
+										value_type[e_value_type.MATERIAL_SURFACE] || value_type[e_value_type.MATERIAL_SUBSURFACE])
 }

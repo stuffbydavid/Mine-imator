@@ -12,7 +12,6 @@
     {"id":{"name":"spr_checkbox","path":"sprites/spr_checkbox/spr_checkbox.yy",},"order":5,},
     {"id":{"name":"spr_checkbox_tick","path":"sprites/spr_checkbox_tick/spr_checkbox_tick.yy",},"order":7,},
     {"id":{"name":"spr_icons","path":"sprites/spr_icons/spr_icons.yy",},"order":9,},
-    {"id":{"name":"spr_keyframe","path":"sprites/spr_keyframe/spr_keyframe.yy",},"order":11,},
     {"id":{"name":"spr_logo","path":"sprites/spr_logo/spr_logo.yy",},"order":13,},
     {"id":{"name":"spr_rounded_2","path":"sprites/spr_rounded_2/spr_rounded_2.yy",},"order":15,},
     {"id":{"name":"spr_unknown_pack","path":"sprites/spr_unknown_pack/spr_unknown_pack.yy",},"order":17,},
