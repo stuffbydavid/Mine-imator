@@ -3,7 +3,10 @@
 
 var str = "";
 var str_length = buffer_read_short_be()
-// Read UTF-8 text
+if(str_length==0){
+	return str
+}
+// Read UTF-8 text  
 // Avoid buffer_Read (str_buffer, buffer_text) reading the terminator causes subsequent read errors.
 // Select to obtain the text range byte and then buffer_read.
 var str_buffer = buffer_create(str_length, buffer_fixed, 1);
