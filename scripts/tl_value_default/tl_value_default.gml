@@ -160,6 +160,10 @@ function tl_value_default(valueid)
 		case e_value.TEXT_HALIGN:
 		case e_value.TEXT_VALIGN: return "center"
 		case e_value.TRANSITION: return "linear"
+		case e_value.EASE_IN_Y:
+		case e_value.EASE_OUT_X: return 0
+		case e_value.EASE_IN_X:
+		case e_value.EASE_OUT_Y: return 1
 	}
 	
 	return 0

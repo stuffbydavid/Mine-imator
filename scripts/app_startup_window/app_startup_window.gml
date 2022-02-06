@@ -46,6 +46,9 @@ function app_startup_window()
 	wheel_drag_value = 0
 	wheel_drag_moon = false
 	
+	handle_drag_offset_x = 0
+	handle_drag_offset_y = 0
+	
 	dragger_multiplier = 1
 	dragger_snap = false
 	

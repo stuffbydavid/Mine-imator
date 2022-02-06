@@ -16,5 +16,6 @@ function action_group_paste()
 		case e_context_group.LIGHT: action_tl_frame_set_light(copy[0], copy[1], copy[2], copy[3], copy[4], copy[5], copy[6], copy[7]); return 0;
 		case e_context_group.COLOR: action_tl_frame_set_colors(copy[0], copy[1], copy[2], copy[3], copy[4], copy[5], copy[6], copy[7], copy[8], copy[9], copy[10]); return 0;
 		case e_context_group.CAMERA: action_tl_frame_set_camera(copy); return 0;
+		case e_context_group.EASE: action_tl_frame_ease_set_all(copy, false); return 0;
 	}
 }

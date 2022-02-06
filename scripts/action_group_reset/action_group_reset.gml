@@ -14,7 +14,7 @@ function action_group_reset()
 				def = point3D(0, 0, 0)
 			
 			action_tl_rotpoint_all(def)
-			return 0;
+			return;
 		}
 		
 		case e_context_group.POSITION:
@@ -25,7 +25,7 @@ function action_group_reset()
 				def = point3D(tl_edit.value_default[e_value.POS_X], tl_edit.value_default[e_value.POS_Y], tl_edit.value_default[e_value.POS_Z])
 			
 			action_tl_frame_pos_xyz(def)
-			return 0;
+			return;
 		}
 		
 		case e_context_group.ROTATION:
@@ -33,37 +33,43 @@ function action_group_reset()
 			def = point3D(tl_edit.value_default[e_value.ROT_X], tl_edit.value_default[e_value.ROT_Y], tl_edit.value_default[e_value.ROT_Z])
 			
 			action_tl_frame_rot_xyz(def)
-			return 0;
+			return;
 		}
 		
 		case e_context_group.SCALE:
 		{
 			action_tl_frame_scale_xyz(vec3(1))
-			return 0;
+			return;
 		}
 		
 		case e_context_group.BEND:
 		{
 			action_tl_frame_bend_angle_xyz(tl_edit.model_part.bend_default_angle)
-			return 0;
+			return;
 		}
 		
 		case e_context_group.LIGHT:
 		{
 			action_tl_frame_set_light(c_white, 1, 1, 2, 250, 0.5, 50, 0.5)
-			return 0;
+			return;
 		}
 		
 		case e_context_group.COLOR:
 		{
 			action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, c_black, 0, 0)
-			return 0;
+			return;
 		}
 		
 		case e_context_group.CAMERA:
 		{
 			action_tl_frame_set_camera(camera_use_default_list, true)
-			return 0;
+			return;
+		}
+		
+		case e_context_group.EASE:
+		{
+			action_tl_frame_ease_set_all([1, 0, 0, 1], false)
+			return;
 		}
 	}
 }

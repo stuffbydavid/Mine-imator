@@ -308,6 +308,10 @@ function enums()
 		ITEM_NAME,
 		VISIBLE,
 		TRANSITION,
+		EASE_IN_X,
+		EASE_IN_Y,
+		EASE_OUT_X,
+		EASE_OUT_Y,
 		amount
 	} // Update app_startup_lists() when adding values
 	

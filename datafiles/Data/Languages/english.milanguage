@@ -116,7 +116,8 @@
             "export": "Export settings",
             "setdefault": "Set as default settings",
             "reset": "Reset settings"
-        }
+        },
+        "linkeaseinout": "Link ease in/out"
     },
     "contextmenu/": {
         "textbox/": {
@@ -2894,6 +2895,12 @@
         },
         "keyframe": "KEYFRAME SETTINGS",
         "transition": "Transition",
+        "easein": "Ease in",
+        "easeinx": "X",
+        "easeiny": "Y",
+        "easeout": "Ease out",
+        "easeoutx": "X",
+        "easeouty": "Y",
         "visible": "Visible"
     },
     "transition/": {
@@ -2905,6 +2912,7 @@
         },
         "linear": "Linear",
         "instant": "Instant",
+        "bezier": "Bezier",
         "ease/": {
             "in": "%1 (Ease in)",
             "out": "%1 (Ease out)",

@@ -53,6 +53,7 @@ function tl_event_create()
 	keyframe_next = null
 	keyframe_select = null
 	keyframe_select_amount = 0
+	keyframe_progress = 0
 	keyframe_animate = false
 	keyframe_index = 0
 	keyframe_current_values = null

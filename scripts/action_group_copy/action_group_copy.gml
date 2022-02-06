@@ -68,5 +68,11 @@ function action_group_copy()
 			
 			return;
 		}
+		
+		case e_context_group.EASE:
+		{
+			context_group_copy_list[|group] = [tl_edit.value[e_value.EASE_IN_X], tl_edit.value[e_value.EASE_IN_Y], tl_edit.value[e_value.EASE_OUT_X], tl_edit.value[e_value.EASE_OUT_Y]]
+			return;
+		}
 	}
 }

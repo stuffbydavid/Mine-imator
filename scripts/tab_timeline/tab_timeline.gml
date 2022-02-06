@@ -1531,8 +1531,8 @@ function tab_timeline()
 		mouse_cursor = cr_handpoint
 		timeline_marker = max((timeline.hor_scroll.value + mouse_x - barx) / timeline_zoom, 0)
 		
-		if (setting_timeline_frame_snap)
-			timeline_marker = floor(timeline_marker)
+		if (setting_timeline_frame_snap || keyboard_check(vk_control))
+			timeline_marker = round(timeline_marker)
 		
 		if (!mouse_left)
 		{

@@ -89,7 +89,11 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.TEXT_VALIGN:
 		case e_value.TEXT_AA:
 		case e_value.CUSTOM_ITEM_SLOT:
-		case e_value.TRANSITION: return val1 // No interpolation
+		case e_value.TRANSITION:
+		case e_value.EASE_IN_X:
+		case e_value.EASE_IN_Y:
+		case e_value.EASE_OUT_X:
+		case e_value.EASE_OUT_Y: return val1 // No interpolation
 	}
 	
 	return val1 + p * (val2 - val1)

@@ -651,6 +651,22 @@ function app_startup_interface_tabs()
 		
 		// Keyframe
 		keyframe = tab_add_category("frameeditorkeyframe", icons.KEYFRAME_SMALL, tab_frame_editor_keyframe, false)
+		with (keyframe)
+		{
+			tbx_ease_in_x = new_textbox_integer()
+			tbx_ease_in_x.suffix = "%"
+			
+			tbx_ease_in_y = new_textbox_ninteger()
+			tbx_ease_in_y.suffix = "%"
+			
+			tbx_ease_out_x = new_textbox_integer()
+			tbx_ease_out_x.suffix = "%"
+			
+			tbx_ease_out_y = new_textbox_ninteger()
+			tbx_ease_out_y.suffix = "%"
+			
+			ease_link = false
+		}
 	}
 	
 	// Settings

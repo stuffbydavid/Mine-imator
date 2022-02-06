@@ -13,6 +13,7 @@ function action_project_render_reset()
 			
 			var hobj = history_set(action_project_render_reset);
 			hobj.save_obj_old = new_obj(obj_history_save)
+			hobj.save_obj_old.hobj = hobj
 			
 			with (hobj.save_obj_old)
 				history_copy_render_settings(app)

@@ -26,6 +26,7 @@ function app_startup_interface_context_menu()
 		LIGHT,
 		COLOR,
 		CAMERA,
+		EASE,
 		amount
 	}
 	

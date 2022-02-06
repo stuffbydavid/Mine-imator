@@ -208,7 +208,11 @@ function app_startup_lists()
 		"ITEM_SLOT",
 		"ITEM_NAME",
 		"VISIBLE",
-		"TRANSITION"
+		"TRANSITION",
+		"EASE_IN_X",
+		"EASE_IN_Y",
+		"EASE_OUT_X",
+		"EASE_OUT_Y"
 	)
 	
 	// Camera values
@@ -266,10 +270,10 @@ function app_startup_lists()
 		"particles",
 		"text",
 		"cube",
-		"surface",
 		"cone",
 		"cylinder",
 		"sphere",
+		"surface",
 		"model",
 		"camera",
 		"spotlight",
@@ -305,6 +309,7 @@ function app_startup_lists()
 	ds_list_add(transition_list,
 		"linear",
 		"instant",
+		"bezier",
 		"easeinquad",
 		"easeoutquad",
 		"easeinoutquad",
