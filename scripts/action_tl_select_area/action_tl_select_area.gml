@@ -16,8 +16,9 @@ function action_tl_select_area(stl, etl)
 	}
 	else
 	{
-		var hobj;
+		var hobj, ctrl;
 		hobj = history_set(action_tl_select_area)
+		ctrl = keyboard_check(vk_control)
 		
 		with (hobj)
 			history_save_tl_select()
@@ -26,8 +27,13 @@ function action_tl_select_area(stl, etl)
 		{
 			with (tree_visible_list[|t])
 			{
-				tl_update_recursive_select()
-				tl_select()
+				if (!ctrl)
+				{
+					tl_update_recursive_select()
+					tl_select()
+				}
+				else
+					tl_deselect()
 			}
 		}
 		

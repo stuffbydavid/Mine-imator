@@ -16,7 +16,7 @@ function tl_keyframe_deselect(kf)
 		{
 			keyframe_select = null
 			with (obj_keyframe)
-				if (selected && position = other.id)
+				if (selected && timeline = other.id)
 					other.keyframe_select = id
 		}
 		

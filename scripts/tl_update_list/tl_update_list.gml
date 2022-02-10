@@ -1,17 +1,20 @@
-/// tl_update_list([root, level])
+/// tl_update_list([root, level, collapsed])
 /// @arg [root
-/// @arg level]
+/// @arg level
+/// @arg collapsed]
 
 function tl_update_list()
 {
-	var root, tllevel;
+	var root, tllevel, collapsed;
 	root = true
 	tllevel = -1
+	collapsed = false
 	
 	if (argument_count > 0)
 	{
 		root = argument[0]
 		tllevel = argument[1]
+		collapsed = argument[2]
 	}
 	
 	if (root)
@@ -19,6 +22,7 @@ function tl_update_list()
 		app.tree_update_parent_filter = app
 		app.tree_update_extend = true
 		app.tree_update_color = null
+		app.tree_close_parent = null
 		ds_list_clear(tree_visible_list)
 		ds_list_clear(tree_list_filter)
 		ds_list_clear(project_timeline_list)
@@ -30,6 +34,8 @@ function tl_update_list()
 		// Clear
 		level = tllevel
 		level_display = []
+		tree_contents = array_create(e_tl_type.AMOUNT - 1)
+		
 		ds_list_clear(tree_list_filter)
 		
 		// Set parent in "filtered" timeline
@@ -48,8 +54,14 @@ function tl_update_list()
 				app.tree_update_extend = tree_extend
 			}
 			
+			if (!tree_extend && app.tree_close_parent = null)
+				app.tree_close_parent = id
+			
 			// Add to parent's "filtered" tree
 			ds_list_add(parent_filter.tree_list_filter, id)
+			
+			if (id != app.tree_close_parent && app.tree_close_parent != null)
+				app.tree_close_parent.tree_contents[type]++
 			
 			// Update "filtered" parent ID
 			app.tree_update_parent_filter = id
@@ -71,8 +83,11 @@ function tl_update_list()
 		app.tree_update_color = color
 		
 		with (tree_list[|t])
-			tl_update_list(false, other.level + 1)
+			tl_update_list(false, other.level + 1, app.tree_close_parent != null)
 	}
+	
+	if (!collapsed)
+		app.tree_close_parent = null
 	
 	// Connect hierarchy and indent of visible timelines
 	if (argument_count = 0 && app.timeline_search = "")

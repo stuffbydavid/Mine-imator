@@ -40,8 +40,32 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybinds[e_keybind.CAM_RESET].keybind, null, "reset")
 		}
 		
-		if (shortcut_bar_state = "timeline")
+		if (string_contains(shortcut_bar_state, "timeline"))
 		{
+			if (shortcut_bar_state = "timelinekeyframes")
+			{
+				shortcut_bar_add(null, e_mouse.CLICK_LEFT, "tlkeyframeselect")
+				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "tlkeyframeselectadd")
+				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tlkeyframeselectgroup")
+				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tlkeyframeselectgroupadd")
+				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tlkeyframedeselectgroup")
+			}
+			
+			if (shortcut_bar_state = "timelinenames")
+			{
+				shortcut_bar_add(null, e_mouse.CLICK_LEFT, "tltimelineselect")
+				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "tltimelineselectadd")
+				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tltimelineselectgroup")
+				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tltimelineselectgroupadd")
+				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tltimelinedeselectgroup")
+			}
+			
+			if (shortcut_bar_state = "timelinebar")
+			{
+				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tlsettime")
+				shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "tlsetregion")
+			}
+			
 			shortcut_bar_add(null, e_mouse.SCROLL, "scrollvertical")
 			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.SCROLL, "scrollhorizontal")
 			shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.SCROLL, "zoom")

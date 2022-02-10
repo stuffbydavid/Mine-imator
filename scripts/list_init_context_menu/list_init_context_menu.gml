@@ -285,14 +285,31 @@ function list_init_context_menu(name)
 			list_item_add(text_get("toolbarviewsecondaryview"), null, text_control_name(keybinds[e_keybind.SECONDARY_VIEW].keybind), null, icons.VIEWPORT_SECONDARY, null, action_setting_secondary_view)
 			list_item_last.toggled = view_second.show
 			
-			list_item_add(text_get("toolbarviewcompacttimeline"), null, "", null, icons.COMPACT, null, action_setting_timeline_compact, true)
+			list_item_add(text_get("toolbarviewtimelinecompact"), null, "", null, icons.COMPACT, null, action_setting_timeline_compact, true)
 			list_item_last.toggled = setting_timeline_compact
+			list_item_last.divider = true
 			
-			list_item_add(text_get("toolbarviewshowmarkers"), null, "", null, icons.MARKER, null, action_setting_timeline_show_markers)
+			list_item_add(text_get("toolbarviewtimelineshowmarkers"), null, "", null, icons.MARKER, null, action_setting_timeline_show_markers)
 			list_item_last.toggled = setting_timeline_show_markers
+			
+			list_item_add(text_get("toolbarviewtimelineplayback"), null, "", null, icons.CLOCK, icons.CHEVRON_RIGHT_TINY, null)
+			list_item_last.context_menu_name = "toolbarviewtimelineplayback"
 			
 			list_item_add(text_get("toolbarviewshortcutsbar"), null, "", null, icons.KEYBOARD, null, action_setting_shortcuts_bar, true)
 			list_item_last.toggled = setting_show_shortcuts_bar
+			break
+		}
+		
+		// View/Timeline menu
+		case "toolbarviewtimelineplayback":
+		{
+			list_item_add(text_get("toolbarviewtimelineplaybacktimeseconds"), null, "", null, null, null, action_setting_timeline_display_time)
+			list_item_last.toggled = !timeline_show_frames
+			list_item_last.divider = true
+			
+			list_item_add(text_get("toolbarviewtimelineplaybacktimeframes"), null, "", null, null, null, action_setting_timeline_display_frames)
+			list_item_last.toggled = timeline_show_frames
+			
 			break
 		}
 		

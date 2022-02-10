@@ -12,6 +12,7 @@ function interface_update()
 	c_overlay = theme.overlay
 	c_button_text = theme.button_text
 	a_button_text = theme.button_text_alpha
+	a_dark_overlay = theme.dark_overlay_alpha
 	
 	c_level_top = theme.level_top
 	c_level_middle = theme.level_middle

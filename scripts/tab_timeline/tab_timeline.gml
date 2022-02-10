@@ -5,7 +5,7 @@ function tab_timeline()
 	var itemh, itemhalf, indent;
 	var tlx, tly, tlw, tlh, tlmaxw, tlstartpos, tlhierarchy;
 	var listx, listy, listw, listh;
-	var mouseinmarkers, mouseintl, mouseinnames, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
+	var mouseinmarkers, mouseintl, mouseinnames, mouseinbar, mousetl, mousetlname, mousekf, mousekfstart, mousekfend;
 	var mousemovetl, mousemoveindex, movehltl, movehlpos;
 	var headerx, headery, headerw, headerh;
 	var markerbarshow, markerbarx, markerbary, markerbarw, markerbarh, markerh;
@@ -23,7 +23,7 @@ function tab_timeline()
 	// Init
 	itemh = setting_timeline_compact ? 20 : 24
 	itemhalf = itemh / 2
-	indent = 20 // 32
+	indent = 20
 	tlhierarchy = (timeline_search = "")
 	
 	// Header
@@ -88,6 +88,7 @@ function tab_timeline()
 	mouseinmarkers = (app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	mouseinbar = (app_mouse_box(barx, bary, barw, barh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	mousetl = floor((mouse_y - tly + (round(timeline.ver_scroll.value / itemh) * itemh)) / itemh)
 	mousetlname = null
 	mousekf = null
@@ -131,16 +132,6 @@ function tab_timeline()
 	}
 	
 	timex += 8
-	
-	// Click to switch time display
-	if (app_mouse_box(headerx, headery, timex, headerh))
-	{
-		mouse_cursor = cr_handpoint
-		tip_set(text_get(timeline_show_frames ? "tooltipshowtime" : "tooltipshowframes"), headerx, headery, timex, headerh)
-		
-		if (mouse_left_released)
-			timeline_show_frames = !timeline_show_frames
-	}
 	
 	var buttonsxstart, buttonsx, buttonsy;
 	buttonsxstart = (timeline_settings_w = null ? 0 : floor((headerx + headerw/2) - timeline_settings_w/2))
@@ -277,31 +268,32 @@ function tab_timeline()
 		regionx2 = floor(timeline_region_end * timeline_zoom - timeline.hor_scroll.value)
 		
 		var x1, x2;
+		x1 = clamp(regionx1, 0, barw)
+		x2 = clamp(regionx2, 0, barw)
+			
+		// Highlight bar area
+		draw_box(barx + x1, bary, x2 - x1, barh, false, c_accent_overlay, a_accent_overlay)
+			
+		// Darken left
+		draw_box(barx, bary, x1, markerh + barh, false, c_black, a_dark_overlay)
+			
+		// Darken right
+		draw_box(barx + x2, bary, (barx + barw) - (barx + x2), markerh + barh, false, c_black, a_dark_overlay)
+			
 		x1 = regionx1
 		x2 = regionx2
-		if (x1 < barw && x2 > 0)
+			
+		// Start/end markers
+		if (x1 >= -32 && x1 <= (barw + 32))
 		{
-			x1 = clamp(x1, 0, barw)
-			x2 = clamp(x2, 0, barw)
+			draw_image(spr_marker_region, 0, barx + x1, bary, 1, 1, c_accent, 1)
+			draw_box(barx + x1, bary, 1, markerh + barh, false, c_accent, 1)
+		}
 			
-			// Area overlay
-			draw_box(barx + x1, bary, x2 - x1, markerh + barh, false, c_accent_overlay, a_accent_overlay)
-			
-			x1 = regionx1
-			x2 = regionx2
-			
-			// Start/end markers
-			if (x1 >= -32 && x1 <= (barw + 32))
-			{
-				draw_image(spr_marker_region, 0, barx + x1, bary, 1, 1, c_accent, 1)
-				draw_box(barx + x1, bary, 1, markerh + barh, false, c_accent, 1)
-			}
-			
-			if (x2 >= -32 && x2 <= (barw + 32))
-			{
-				draw_image(spr_marker_region, 1, barx + x2 + 10, bary, 1, 1, c_accent, 1)
-				draw_box(barx + x2, bary, 1, markerh + barh, false, c_accent, 1)
-			}
+		if (x2 >= -32 && x2 <= (barw + 32))
+		{
+			draw_image(spr_marker_region, 1, barx + x2 + 10, bary, 1, 1, c_accent, 1)
+			draw_box(barx + x2, bary, 1, markerh + barh, false, c_accent, 1)
 		}
 	}
 	
@@ -561,7 +553,7 @@ function tab_timeline()
 		x1 = clamp(mouse_click_x + (timeline_select_starth - timeline.hor_scroll.value), tlx, tlx + tlw)
 		y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), tly, tly + tlh)
 		x2 = clamp(mouse_x, tlx, tlx + tlw)
-		y2 = clamp(mouse_y, tly, tly + tlh) - y1
+		y2 = clamp(mouse_y, tly, tly + tlh)
 		
 		if (x2 < x1)
 		{
@@ -571,10 +563,15 @@ function tab_timeline()
 		}
 		x2 -= x1
 		
-		render_set_culling(false)
-		draw_box(x1, y1, x2, y2, false, c_accent_overlay, a_accent_overlay)
-		draw_outline(x1, y1, x2, y2, 2, c_accent, 1, true)
-		render_set_culling(true)
+		if (y2 < y1)
+		{
+			var swap = y1;
+			y1 = y2
+			y2 = swap
+		}
+		y2 -= y1
+		
+		draw_box_selection(x1, y1, x2, y2)
 		
 		if (!mouse_left)
 		{
@@ -1066,26 +1063,32 @@ function tab_timeline()
 			timeline_rename = tl
 		}
 		
-		// Folder icons
-		if (!setting_timeline_compact && tl.type = e_tl_type.FOLDER && !tl.tree_extend && ds_list_size(tl.tree_list_filter) > 0)
+		// Timeline contents
+		if (!setting_timeline_compact && !tl.tree_extend && ds_list_size(tl.tree_list_filter) > 0)
 		{
 			xx += string_width(name) + 16
 			minw -= string_width(name) + 16
 			
-			for (var i = 0; i < ds_list_size(tl.tree_list_filter); i++)
+			draw_set_font(font_caption)
+			
+			// Check contents array and display the icon/amount
+			for (var i = 0; i < e_tl_type.AMOUNT - 1; i++)
 			{
-				if ((xx + (24 + 16) - xright) < minw)
-				{
-					if (((xx + ((24 * 2) + 16) - xright) < (minw - 24)) || (i = ds_list_size(tl.tree_list_filter) - 1))
-						draw_image(spr_icons, timeline_icon_list[|tl.tree_list_filter[|i].type], xx + 10, itemy + (itemh/2), 1, 1, c_border, a_border)
-					else
-						draw_label(string(ds_list_size(tl.tree_list_filter) - i) + "+", xx + 10, itemy + (itemh/2), fa_center, fa_middle, c_border, a_border, font_label)
-				}
-				else
+				if (tl.tree_contents[i] = 0)
+					continue
+				
+				var iconwid = 24 + ((string_width(string(tl.tree_contents[i])) + 4) * (tl.tree_contents[i] > 1));
+				
+				if ((xx + (iconwid + 16) - xright) > minw)
 					break
 				
-				xx += 24
-				minw -= 24
+				draw_image(spr_icons, timeline_icon_list[|i], xx + 12, itemy + (itemh/2), 1, 1, c_border, a_border)
+				
+				if (tl.tree_contents[i] > 1)
+					draw_label(string(tl.tree_contents[i]), xx + 27, itemy + (itemh/2) + 10, fa_center, fa_bottom, c_text_tertiary, a_text_tertiary)
+				
+				xx += iconwid
+				minw -= iconwid
 			}
 		}
 		
@@ -1313,8 +1316,9 @@ function tab_timeline()
 		x1 = clamp(mouse_click_x, content_x, tlx)
 		y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), listy, listy + tlh)
 		x2 = clamp(mouse_x, content_x, tlx)
-		y2 = clamp(mouse_y, listy, listy + tlh) - y1
+		y2 = clamp(mouse_y, listy, listy + tlh)
 		
+		// Swap x
 		if (x2 < x1)
 		{
 			var swap = x1;
@@ -1323,10 +1327,16 @@ function tab_timeline()
 		}
 		x2 -= x1
 		
-		render_set_culling(false)
-		draw_box(x1, y1, x2, y2, false, c_accent_overlay, a_accent_overlay)
-		draw_outline(x1, y1, x2, y2, 2, c_accent, 1, true)
-		render_set_culling(true)
+		// Swap y
+		if (y2 < y1)
+		{
+			var swap = y1;
+			y1 = y2
+			y2 = swap
+		}
+		y2 -= y1
+		
+		draw_box_selection(x1, y1, x2, y2)
 		
 		if (!mouse_left)
 		{
@@ -1362,11 +1372,11 @@ function tab_timeline()
 		mouse_cursor = cr_handpoint
 		if (mouse_move > 5) // Select
 		{
-			if (mousetlname && mousetlname.selected && mousetlname.part_of = null && !keyboard_check(vk_shift) && tlhierarchy)
+			if (mousetlname && mousetlname.selected && mousetlname.part_of = null && !keyboard_check(vk_shift) && !keyboard_check(vk_control) && tlhierarchy)
 				action_tl_move_start()
 			else
 			{
-				if (!keyboard_check(vk_shift))
+				if (!keyboard_check(vk_shift) && !keyboard_check(vk_control))
 					action_tl_deselect_all()
 				window_busy = "timelineselect"
 			}
@@ -1378,7 +1388,7 @@ function tab_timeline()
 			{
 				if (timeline_select.selected)
 				{
-					if (keyboard_check(vk_shift))
+					if (keyboard_check(vk_control))
 						action_tl_deselect(timeline_select)
 					else
 						app_update_tl_edit()
@@ -1399,7 +1409,7 @@ function tab_timeline()
 		mouse_cursor = cr_handpoint
 		if (mouse_move > 5) // Select
 		{
-			if (!keyboard_check(vk_shift))
+			if (!keyboard_check(vk_shift) && !keyboard_check(vk_control))
 				action_tl_deselect_all()
 			
 			window_busy = "timelineselectkeyframes"
@@ -1622,7 +1632,7 @@ function tab_timeline()
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 	}
 	
-	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon //(app_mouse_box(content_x, content_y, content_width - 5 * (tab.panel = panel_map[?"left"] || tab.panel = panel_map[?"left_secondary"]), content_height - 5 * (tab.panel = panel_map[?"top"])) && !popup_mouseon)
+	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Vertical scrollbar
 	if (tlw > 16)
@@ -1646,6 +1656,15 @@ function tab_timeline()
 	if (content_mouseon)
 	{
 		shortcut_bar_state = "timeline"
+		
+		if (mouseintl)
+			shortcut_bar_state = "timelinekeyframes"
+		
+		if (mouseinnames)
+			shortcut_bar_state = "timelinenames"
+		
+		if (mouseinbar)
+			shortcut_bar_state = "timelinebar"
 		
 		window_scroll_focus = string(timeline.ver_scroll)
 		

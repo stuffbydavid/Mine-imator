@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.02.01"
+        "lastchange": "2022.02.10"
     },
     "particle/": {
         "default": "Default spawner",
@@ -109,8 +109,6 @@
         "viewlist": "List view",
         "viewgrid": "Grid view",
         "experimental": "This setting is experimental and is not fully supported.",
-        "showframes": "Show frames",
-        "showtime": "Show time",
         "settings/": {
             "import": "Import settings",
             "export": "Export settings",
@@ -210,7 +208,25 @@
         "reset": "Reset",
         "scrollhorizontal": "Scroll horizontally",
         "scrollvertical": "Scroll vertically",
-        "viewinstance": "View instance"
+        "viewinstance": "View instance",
+        "tl/": {
+            "settime": "Set playback time",
+            "setregion": "Select playback region",
+            "keyframe/": {
+                "select": "Select keyframe",
+                "selectadd": "Select keyframe (Add)",
+                "selectgroup": "Group select keyframes",
+                "selectgroupadd": "Group select keyframes (Add)",
+                "deselectgroup": "Group deselect keyframes"
+            },
+            "timeline/": {
+                "select": "Select timeline",
+                "selectadd": "Select timeline (Add)",
+                "selectgroup": "Group select timelines",
+                "selectgroupadd": "Group select timelines (Add)",
+                "deselectgroup": "Group deselect timelines"
+            }
+        }
     },
     "startup/": {
         "trial": "TRIAL",
@@ -421,8 +437,15 @@
             "reset": "Reset work camera",
             "secondaryview": "Show secondary view",
             "shortcutsbar": "Show shortcuts bar",
-            "compacttimeline": "Compact timeline view",
-            "showmarkers": "Show markers"
+            "timeline/": {
+                "compact": "Compact timeline view",
+                "showmarkers": "Show timeline markers",
+                "playback": "Playback time",
+                "playback/": {
+                    "timeseconds": "Show time in seconds",
+                    "timeframes": "Show time in frames"
+                }
+            }
         },
         "help": "Help",
         "help/": {

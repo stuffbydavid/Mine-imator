@@ -8,7 +8,7 @@ function app_startup_themes()
 	// Colors used in interface
 	globalvar c_accent, a_accent, c_accent_hover, a_accent_hover, c_accent_pressed, a_accent_pressed, c_hover, a_hover, c_accent_overlay, a_accent_overlay;
 	globalvar c_text_main, a_text_main, c_text_secondary, a_text_secondary, c_text_tertiary, a_text_tertiary;
-	globalvar c_border, a_border, c_overlay, a_overlay;
+	globalvar c_border, a_border, c_overlay, a_overlay, a_dark_overlay;
 	globalvar c_level_top, c_level_middle, c_level_bottom, c_button_text, a_button_text;
 	globalvar c_viewport_top, c_viewport_bottom, c_error, c_warning, c_success, c_axisred, c_axisgreen, c_axisblue, c_axiscyan, c_axisyellow, c_axismagenta, c_bend;
 	globalvar c_control_red, c_control_green, c_control_blue, c_control_cyan, c_control_yellow, c_control_magenta, c_control_magenta, c_control_white;
@@ -62,6 +62,7 @@ function app_startup_themes()
 	theme_edit.overlay = theme_edit.text_main
 	theme_edit.button_text = hex_to_color("FFFFFF")
 	theme_edit.button_text_alpha = .91
+	theme_edit.dark_overlay_alpha = .15
 	
 	// Other colors
 	theme_edit.red_error = hex_to_color("FF1D0F")
@@ -113,6 +114,7 @@ function app_startup_themes()
 	theme_edit.overlay = theme_edit.text_main
 	theme_edit.button_text = hex_to_color("000000")
 	theme_edit.button_text_alpha = .91
+	theme_edit.dark_overlay_alpha = .25
 	
 	// Other colors
 	theme_edit.red_error = hex_to_color("FF7A72")
@@ -164,6 +166,7 @@ function app_startup_themes()
 	theme_edit.overlay = theme_edit.text_main
 	theme_edit.button_text = hex_to_color("000000")
 	theme_edit.button_text_alpha = .91
+	theme_edit.dark_overlay_alpha = .65
 	
 	// Other colors
 	theme_edit.red_error = hex_to_color("FF7A72")

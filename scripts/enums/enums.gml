@@ -361,7 +361,8 @@ function enums()
 		AUDIO,
 		
 		LIGHT_SOURCE,
-		SHAPE
+		SHAPE,
+		AMOUNT
 	} // Update app_startup_lists() when adding types
 	
 	// Resource types

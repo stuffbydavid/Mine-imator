@@ -18,8 +18,9 @@ function action_tl_keyframes_select_area(stl, etl, spos, epos)
 	}
 	else
 	{
-		var hobj;
+		var hobj, ctrl;
 		hobj = history_set(action_tl_keyframes_select_area)
+		ctrl = keyboard_check(vk_control)
 		
 		with (hobj)
 			history_save_tl_select()
@@ -37,13 +38,16 @@ function action_tl_keyframes_select_area(stl, etl, spos, epos)
 				kf = tl.keyframe_list[|k]
 				len = tl_keyframe_length(kf)
 				
-				if (kf.selected || kf.position + len < spos)
+				if ((!ctrl && kf.selected) || kf.position + len < spos)
 					continue
 				
 				if (kf.position > epos)
 					break
 				
-				tl_keyframe_select(kf)
+				if (ctrl)
+					tl_keyframe_deselect(kf)
+				else
+					tl_keyframe_select(kf)
 			}
 		}
 		
