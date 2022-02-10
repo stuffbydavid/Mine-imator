@@ -7,7 +7,8 @@ function app_startup_interface_context_menu()
 		NUMBER,
 		STRING,
 		BOOLEAN,
-		COLOR
+		COLOR,
+		TIME
 	}
 	
 	/*

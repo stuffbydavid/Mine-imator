@@ -32,6 +32,8 @@ function list_init_context_menu(name)
 					caption = color_to_hex(context_menu_copy)
 				else if (context_menu_copy_type = e_context_type.STRING)
 					caption = context_menu_copy
+				else if (context_menu_copy_type = e_context_type.TIME)
+					caption = rotation_get_time(context_menu_copy)
 				
 				list_item_add(text_get("contextmenuvaluepaste"), null, caption, null, icons.PASTE, null, action_value_paste, false)
 				list_item_last.disabled = (context_menu_value_type = e_context_type.NONE || (context_menu_copy_type != context_menu_value_type))

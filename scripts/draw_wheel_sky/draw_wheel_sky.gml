@@ -10,28 +10,56 @@
 
 function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 {
-	var rad, sunx, suny, moonx, moony, sunmouseon, moonmouseon;
+	var rad, sunx, suny, moonx, moony, mouseon, sunmouseon, moonmouseon;
 	
 	rad = 49
 	if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < content_y || yy - rad > content_y + content_height)
 		return 0
 	
-	draw_image(spr_circle_96, 0, xx, yy, 1, 1, c_text_tertiary, a_text_tertiary)
-	draw_label(text_get(name), xx, yy - 4, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_label)
+	mouseon = app_mouse_box(xx - rad, yy - rad, rad*2, rad*2) && content_mouseon
+	context_menu_area(xx - (rad + 10), yy - (rad + 10), (rad + 10) * 2, (rad + 10) * 2, "contextmenuvalue", value, time ? e_context_type.TIME : e_context_type.NUMBER, script, def)
+	
+	// Use "Pressing" & "Disabled" states for animations with sun/moon
+	microani_set(name, script, mouseon, (window_busy = name && !wheel_drag_moon), (window_focus = string(tbx)), (window_busy = name && wheel_drag_moon))
+	
+	var active, color, alpha;
+	active = min(1, microani_arr[e_microani.PRESS] + microani_arr[e_microani.ACTIVE] + microani_arr[e_microani.DISABLED])
+	
+	// Outline
+	color = merge_color(c_text_tertiary, c_text_secondary, min(1, microani_arr[e_microani.HOVER] + active))
+	alpha = lerp(a_text_tertiary, a_text_secondary, min(1, microani_arr[e_microani.HOVER] + active))
+	draw_image(spr_circle_96, 0, xx, yy, 1, 1, color, alpha)
+	
+	// Label
+	color = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+	color = merge_color(color, c_accent, active)
+	alpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+	alpha = lerp(alpha, 1, active)
+	draw_label(text_get(name), xx, yy - 4, fa_center, fa_bottom, color, alpha, font_label)
 	
 	// Sun
+	color = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.PRESS])
+	color = merge_color(color, c_accent, microani_arr[e_microani.PRESS])
+	alpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.PRESS])
+	alpha = lerp(alpha, 1, microani_arr[e_microani.PRESS])
 	sunx = floor(xx + lengthdir_x(rad, value + 90))
 	suny = floor(yy + lengthdir_y(rad, value + 90))
 	sunmouseon = (app_mouse_box(sunx - 10, suny - 10, 20, 20) && content_mouseon)
 	draw_circle_ext(sunx, suny, 14, false, 16, c_level_middle, 1)
-	draw_image(spr_icons, icons.SUN, sunx, suny, 1, 1, c_text_secondary, a_text_secondary)
+	draw_image(spr_icons, icons.SUN, sunx, suny, 1, 1, color, alpha)
 	
 	// Moon
+	color = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.DISABLED])
+	color = merge_color(color, c_accent, microani_arr[e_microani.DISABLED])
+	alpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.DISABLED])
+	alpha = lerp(alpha, 1, microani_arr[e_microani.DISABLED])
 	moonx = floor(xx + lengthdir_x(rad, value - 90))
 	moony = floor(yy + lengthdir_y(rad, value - 90))
 	moonmouseon = (app_mouse_box(moonx - 10, moony - 10, 20, 20) && content_mouseon)
 	draw_circle_ext(moonx, moony, 14, false, 16, c_level_middle, 1)
-	draw_image(spr_icons, icons.MOON, moonx, moony, 1, 1, c_text_secondary, a_text_secondary)
+	draw_image(spr_icons, icons.MOON, moonx, moony, 1, 1, color, alpha)
+	
+	microani_update(mouseon || sunmouseon || moonmouseon, (window_busy = name && !wheel_drag_moon), (window_focus = string(tbx)), (window_busy = name && wheel_drag_moon))
 	
 	// Click
 	if (sunmouseon || moonmouseon)
@@ -50,9 +78,6 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 				script_execute(script, add, true)
 			}
 		}
-		
-		if (mouse_right_pressed)
-			script_execute(script, def, false)
 	}
 	
 	// Dragging
