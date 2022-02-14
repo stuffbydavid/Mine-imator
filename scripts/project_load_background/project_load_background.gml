@@ -97,7 +97,7 @@ function project_load_background(map)
 	background_ground_tex_normal.count--
 	background_ground_tex_normal = value_get_save_id(map[?"ground_tex_normal"], background_ground_tex_normal)
 	
-	background_biome = find_biome(value_get_string(map[?"biome"], background_biome.name))
+	background_biome = value_get_string(map[?"biome"], background_biome)
 	
 	background_sky_color = value_get_color(map[?"sky_color"], background_sky_color)
 	background_sky_clouds_color = value_get_color(map[?"sky_clouds_color"], background_sky_clouds_color)

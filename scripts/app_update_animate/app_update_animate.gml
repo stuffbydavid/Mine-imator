@@ -122,6 +122,7 @@ function app_update_animate()
 		background_sky_clouds_offset			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET]
 		background_ground_show					= bgobject.value[e_value.BG_GROUND_SHOW]
 		background_ground_slot					= bgobject.value[e_value.BG_GROUND_SLOT]
+		background_biome						= bgobject.value[e_value.BG_BIOME]
 		background_sky_color					= bgobject.value[e_value.BG_SKY_COLOR]
 		background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
 		background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
@@ -164,12 +165,13 @@ function app_update_animate()
 		background_wind_directional_strength	= bgobject.value[e_value.BG_WIND_DIRECTIONAL_STRENGTH]
 		background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
 		
-		if (background_biome = biome_list[| 0])
+		if (background_biome = "custom" || background_biome_prev != background_biome)
 		{
 			with (obj_resource)
 				res_update_colors()
 			
 			properties.library.preview.update = true
+			background_biome_prev = background_biome
 		}
 		
 		background_ground_update_texture()

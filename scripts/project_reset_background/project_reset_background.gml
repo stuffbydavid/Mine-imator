@@ -54,7 +54,8 @@ function project_reset_background()
 	background_ground_update_texture_material()
 	background_ground_update_texture_normal()
 	
-	background_biome = biome_list[|2]
+	background_biome = biome_list[|2].name
+	background_biome_prev = background_biome
 	background_grass_color = c_plains_biome_grass
 	background_foliage_color = c_plains_biome_foliage
 	background_water_color = c_plains_biome_water
@@ -64,14 +65,6 @@ function project_reset_background()
 	background_leaves_jungle_color = c_plains_biome_foliage
 	background_leaves_acacia_color = c_plains_biome_foliage
 	background_leaves_dark_oak_color = c_plains_biome_foliage
-	
-	instance_activate_object(obj_biome)
-	with (obj_biome)
-	{
-		if (biome_base = null)
-			selected_variant = 0
-	}
-	instance_deactivate_object(obj_biome)
 	
 	with (mc_res)
 		res_update_colors()

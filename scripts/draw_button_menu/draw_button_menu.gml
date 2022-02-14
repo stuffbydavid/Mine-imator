@@ -268,6 +268,8 @@ function draw_button_menu()
 			m.menu_list = list_init(name)
 		else if (type = e_menu.TIMELINE)
 			m.menu_list = menu_timeline_init(m)
+		else if (type = e_menu.BIOME)
+			m.menu_list = menu_biome_init(m)
 		
 		m.menu_amount = m.menu_list = null ? 0 : ds_list_size(m.menu_list.item)
 		

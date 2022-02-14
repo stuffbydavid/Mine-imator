@@ -60,4 +60,8 @@ function project_load_values_update()
 		value[e_value.BG_LEAVES_ACACIA_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 		value[e_value.BG_LEAVES_DARK_OAK_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 	}
+	
+	if (load_format < e_project.FORMAT_200_AL22)
+		if (timeline.type = e_tl_type.BACKGROUND)
+			value[e_value.BG_BIOME] = app.background_biome
 }

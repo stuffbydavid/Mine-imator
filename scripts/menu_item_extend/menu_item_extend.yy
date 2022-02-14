@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Biome",
-    "path": "folders/Scripts/App/Actions/Background/Biome.yy",
+    "name": "Menu",
+    "path": "folders/Scripts/App/Interface/Components/Menu.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_background_biome_variant",
+  "name": "menu_item_extend",
   "tags": [],
   "resourceType": "GMScript",
 }

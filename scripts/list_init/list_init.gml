@@ -712,24 +712,6 @@ function list_init(name)
 			break
 		}
 		
-		// Background biome
-		case "backgroundbiome":
-		{
-			for (var b = 0; b < ds_list_size(biome_list); b++)
-				menu_add_item(biome_list[|b], minecraft_asset_get_name("biome", biome_list[|b].name))
-			
-			break
-		}
-		
-		// Background biome
-		case "backgroundbiomevariant":
-		{
-			for (var v = 0; v < ds_list_size(background_biome.biome_variants); v++)
-				menu_add_item(v, minecraft_asset_get_name("biome", background_biome.biome_variants[|v].name))
-			
-			break
-		}
-		
 		// Resource pack preview image
 		case "resourcespackimage":
 		{

@@ -20,7 +20,7 @@ function macros()
 	#macro minecraft_version			"1.18"
 	
 	// File formats
-	#macro project_format				e_project.FORMAT_200_AL21
+	#macro project_format				e_project.FORMAT_200_AL22
 	#macro settings_format				e_settings.FORMAT_200
 	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_129
 	

@@ -1,30 +1,22 @@
 /// find_biome(name)
 /// @arg name
 
-function find_biome(findname)
+function find_biome(biomename)
 {
-	// Convert old biome names to new
-	//if (load_format < e_project.FORMAT_120_PRE_1)
-	//{
-		while (ds_map_exists(legacy_biomes_map, findname))
-			findname = legacy_biomes_map[? findname]
-	//}
+	var biome = null;
 	
-	instance_activate_object(obj_biome)
+	// Convert old biome names to new
+	for (var i = 0; i < 5 && ds_map_exists(legacy_biomes_map, biomename); i++)
+		biomename = legacy_biomes_map[? biomename]
+	
 	with (obj_biome)
 	{
-		if (name = findname)
+		if (name = biomename)
 		{
-			if(biome_base != null)
-			{
-				biome_base.selected_variant = ds_list_find_index(biome_base.biome_variants, id)
-				return biome_base
-			}
-			else
-				return id
+			biome = id
+			break
 		}
 	}
-	instance_deactivate_object(obj_biome)
 	
-	return null
+	return biome
 }

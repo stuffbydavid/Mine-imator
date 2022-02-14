@@ -48,7 +48,7 @@ function minecraft_assets_load()
 				with (mc_res)
 					minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 				
-				app.background_biome = biome_list[|2]
+				app.background_biome = biome_list[|2].name
 				app.background_foliage_color = c_plains_biome_foliage
 				app.background_grass_color = c_plains_biome_grass
 				app.background_water_color = c_plains_biome_water
@@ -162,7 +162,7 @@ function minecraft_assets_load()
 					res_load_pack_particle_textures()
 					
 					res_load_pack_misc()
-					res_update_colors(biome_list[|2])
+					res_update_colors(biome_list[|2].name)
 				}
 				
 				load_assets_stage = "misc"

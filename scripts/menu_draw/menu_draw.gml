@@ -110,6 +110,7 @@ function menu_draw()
 			case e_menu.LIST: // Normal list with images and caption
 			case e_menu.LIST_SEAMLESS:
 			case e_menu.TIMELINE:
+			case e_menu.BIOME:
 			{
 				scissor_start(content_x, yy, content_width, content_height)
 				
@@ -129,14 +130,14 @@ function menu_draw()
 					itemy = yy
 					itemh = m.menu_item_h
 					
-					list_item_draw(item, menu_x_draw, itemy, menu_wid_draw, m.menu_item_h, false, m.menu_margin, -m.menu_scroll_horizontal.value)
-					
 					// Toggle item and update list width
 					if ((m.menu_value = item.value) && !item.toggled)
 					{
 						item.toggled = true
 						updatewidth = true
 					}
+					
+					list_item_draw(item, menu_x_draw, itemy, menu_wid_draw, m.menu_item_h, false, m.menu_margin, -m.menu_scroll_horizontal.value)
 					
 					if (item.hover)
 						mouseitem = item
@@ -212,16 +213,29 @@ function menu_draw()
 		}
 		
 		// Extend timeline dropdown 
-		if (m.menu_type = e_menu.TIMELINE && m.menu_tl_extend)
+		if (m.menu_type = e_menu.TIMELINE && m.menu_item_extend)
 		{
 			app_mouse_clear()
-			action_tl_extend(m.menu_tl_extend)
+			action_tl_extend(m.menu_item_extend)
 			
 			list_destroy(m.menu_list)
 			
 			m.menu_list = menu_timeline_init(m)
 			m.menu_amount = ds_list_size(m.menu_list.item)
-			m.menu_tl_extend = null
+			m.menu_item_extend = null
+		}
+		
+		// Extend biome dropdown
+		if (m.menu_type = e_menu.BIOME && m.menu_item_extend)
+		{
+			app_mouse_clear()
+			m.menu_item_extend.variants_extend = !m.menu_item_extend.variants_extend
+			
+			list_destroy(m.menu_list)
+			
+			m.menu_list = menu_biome_init(m)
+			m.menu_amount = ds_list_size(m.menu_list.item)
+			m.menu_item_extend = null
 		}
 		
 		// Check click

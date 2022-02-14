@@ -38,7 +38,8 @@ function enums()
 		FORMAT_200_AL14   = 35,
 		FORMAT_200_AL17   = 36,
 		FORMAT_200_AL18   = 37,
-		FORMAT_200_AL21   = 38
+		FORMAT_200_AL21   = 38,
+		FORMAT_200_AL22   = 39
 	}
 	
 	enum e_settings
@@ -252,6 +253,7 @@ function enums()
 		BG_SKY_CLOUDS_OFFSET,
 		BG_GROUND_SHOW,
 		BG_GROUND_SLOT,
+		BG_BIOME,
 		BG_SKY_COLOR,
 		BG_SKY_CLOUDS_COLOR,
 		BG_SUNLIGHT_COLOR,
@@ -828,6 +830,7 @@ function enums()
 		LIST,
 		LIST_SEAMLESS,
 		TIMELINE,
+		BIOME,
 		TRANSITION_LIST,
 		CONTENT
 	}

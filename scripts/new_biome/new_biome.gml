@@ -14,6 +14,7 @@ function new_biome(name, tx, ty, hardcoded, grass, foliage, water, base)
 	{
 		// Name
 		id.name = argument0
+		group = false
 		display_name = minecraft_asset_get_name("biome", name)
 		
 		// Coordinates

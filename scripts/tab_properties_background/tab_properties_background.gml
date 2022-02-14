@@ -229,19 +229,11 @@ function tab_properties_background()
 	
 	// Biome
 	tab_control_menu()
-	draw_button_menu("backgroundbiome", e_menu.LIST, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome.name), action_background_biome)
+	draw_button_menu("backgroundbiome", e_menu.BIOME, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome), action_background_biome)
 	tab_next()
 	
-	if (background_biome.name != "custom" && ds_list_valid(background_biome.biome_variants))
-	{
-		// Biome variant
-		tab_control_menu()
-		draw_button_menu("backgroundbiomevariant", e_menu.LIST, dx, dy, dw, 24, background_biome.selected_variant, minecraft_asset_get_name("biome", background_biome.biome_variants[|background_biome.selected_variant].name), action_background_biome_variant)
-		tab_next()
-	}
-	
 	// Biome colors
-	if (background_biome.name = "custom")
+	if (background_biome = "custom")
 	{
 		dy += 20 
 		draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 

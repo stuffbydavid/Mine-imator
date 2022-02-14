@@ -7355,9 +7355,6 @@
 			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
 			"variant": [
-				{ 
-					"name": "normal"
-				},
 				{
 					"name": "deep_ocean"
 				},
@@ -7398,9 +7395,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "sunflower_plains"
 				},
 				{
@@ -7424,9 +7418,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "windswept_forest"
 				},
 				{
@@ -7440,9 +7431,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "flower_forest"
 				}
 			]
@@ -7452,9 +7440,6 @@
 			"foliage": [ 191, 203 ],
 			"water": "#3F76E4",
 			"variant": [
-				{
-					"name": "normal"
-				},
 				{
 					"name": "snowy_taiga",
 					"foliage": [ 255, 255 ],
@@ -7480,9 +7465,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "frozen_river",
 					"foliage": [ 255, 255 ],
 					"water": "#3938C9"
@@ -7491,6 +7473,7 @@
 		},
 		{
 			"name": "nether",
+			"group": true,
 			"foliage": [ 0, 255 ],
 			"water": "#3F76E4",
 			"variant": [
@@ -7513,12 +7496,10 @@
 		},
 		{
 			"name": "the_end",
+			"group": true,
 			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
 			"variant": [
-				{
-					"name": "normal"
-				},
 				{
 					"name": "small_end_islands"
 				},
@@ -7544,9 +7525,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "stony_shore",
 					"foliage": [ 203, 239 ]
 				},
@@ -7563,9 +7541,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "sparse_jungle",
 					"foliage": [ 12, 61 ]
 				},
@@ -7579,9 +7554,6 @@
 			"foliage": [ 101, 163 ],
 			"water": "#3F76E4",
 			"variant": [
-				{
-					"name": "normal"
-				},
 				{
 					"name": "old_growth_birch_forest"
 				}
@@ -7599,9 +7571,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "savanna_plateau"
 				},
 				{
@@ -7616,9 +7585,6 @@
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "normal"
-				},
-				{
 					"name": "wooded_badlands"
 				},
 				{
@@ -7628,6 +7594,7 @@
 		},
 		{
 			"name": "caves",
+			"group": true,
 			"water": "#3F76E4",
 			"variant": [
 				{
@@ -7642,13 +7609,14 @@
 		},
 		{
 			"name": "mountains",
+			"group": true,
 			"foliage": [ 255, 255 ],
-			"water": "#3F76E4‌",
+			"water": "#3F76E4",
 			"variant": [
 				{
 					"name": "meadow",
 					"foliage": [ 127, 152 ],
-					"water": "#0E4ECF‌"
+					"water": "#0E4ECF"
 				},
 				{
 					"name": "grove"

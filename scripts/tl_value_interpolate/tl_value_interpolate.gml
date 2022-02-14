@@ -72,6 +72,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.BG_SKY_CLOUDS_SHOW:
 		case e_value.BG_GROUND_SHOW:
 		case e_value.BG_GROUND_SLOT:
+		case e_value.BG_BIOME:
 		case e_value.BG_VOLUMETRIC_FOG:
 		case e_value.BG_FOG_SHOW:
 		case e_value.BG_WIND:

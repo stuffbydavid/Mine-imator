@@ -39,7 +39,7 @@ function project_load_legacy_background()
 	background_ground_tex_material = "default"
 	background_ground_tex_normal = "default"
 	
-	background_biome = biome_list[|buffer_read_byte()]
+	background_biome = biome_list[|buffer_read_byte()].name
 	
 	background_sky_color = buffer_read_int()
 	background_sky_clouds_color = buffer_read_int()
@@ -93,7 +93,7 @@ function project_load_legacy_background()
 		custombiome = buffer_read_byte()
 		
 		if (custombiome)
-			background_biome = biome_list[| 0]
+			background_biome = biome_list[| 0].name
 		
 		background_foliage_color = buffer_read_int()
 		background_grass_color = background_foliage_color

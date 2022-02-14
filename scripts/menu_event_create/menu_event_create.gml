@@ -24,7 +24,7 @@ function menu_event_create()
 	menu_item_h = 0
 	menu_include_tl_edit = true
 	menu_count = 0
-	menu_tl_extend = null
+	menu_item_extend = null
 	menu_scroll_vertical = new_obj(obj_scrollbar)
 	menu_scroll_horizontal = new_obj(obj_scrollbar)
 	menu_height = 0

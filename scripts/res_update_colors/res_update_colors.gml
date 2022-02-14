@@ -9,9 +9,9 @@ function res_update_colors()
 	
 	var biome, foliagecolor;
 	if (argument_count > 0)
-		biome = argument[0]
+		biome = find_biome(argument[0])
 	else
-		biome = app.background_biome
+		biome = find_biome(app.background_biome)
 	
 	if (biome.name = "custom")
 	{
@@ -28,20 +28,23 @@ function res_update_colors()
 	}
 	else
 	{
+		if (biome.hardcoded)
+		{
+			color_grass = biome.color_grass
+			foliagecolor = biome.color_foliage
+		}
+		else
+		{
+			color_grass = texture_getpixel(colormap_grass_texture, biome.txy[0], biome.txy[1])
+			foliagecolor = texture_getpixel(colormap_foliage_texture, biome.txy[0], biome.txy[1])
+		}
+			
+		color_water = biome.color_water
+		
+		/*
 		if (biome.biome_variants = null)
 		{
-			if (biome.hardcoded)
-			{
-				color_grass = biome.color_grass
-				foliagecolor = biome.color_foliage
-			}
-			else
-			{
-				color_grass = texture_getpixel(colormap_grass_texture, biome.txy[0], biome.txy[1])
-				foliagecolor = texture_getpixel(colormap_foliage_texture, biome.txy[0], biome.txy[1])
-			}
 			
-			color_water = biome.color_water
 		}
 		else
 		{
@@ -60,6 +63,7 @@ function res_update_colors()
 			
 			color_water = variant.color_water
 		}
+		*/
 		
 		color_leaves_oak = foliagecolor
 		color_leaves_jungle = foliagecolor

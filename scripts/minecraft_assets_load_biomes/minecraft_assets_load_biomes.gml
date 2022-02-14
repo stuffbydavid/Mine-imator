@@ -14,11 +14,11 @@ function minecraft_assets_load_biomes(list, map)
 		{
 			biomeid = id
 			
-			// Selected biome
-			selected_variant = 0
-			
 			// Name
 			name = biome[?"name"]
+			
+			// Is this a biome group?
+			group = value_get_real(biome[?"group"], false)
 			
 			// Foliage
 			txy = vec2(0)
@@ -45,6 +45,7 @@ function minecraft_assets_load_biomes(list, map)
 			
 			biome_base = null
 			biome_variants = null
+			variants_extend = false
 			
 			// Read possible variants
 			if (ds_list_valid(biome[?"variant"]))
@@ -58,6 +59,7 @@ function minecraft_assets_load_biomes(list, map)
 					{
 						// Name
 						name = variant[?"name"]
+						group = false
 						
 						// Foliage
 						txy = array_copy_1d(other.txy)

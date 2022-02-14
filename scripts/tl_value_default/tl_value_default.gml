@@ -106,6 +106,7 @@ function tl_value_default(valueid)
 		case e_value.BG_SKY_CLOUDS_OFFSET: return app.background_sky_clouds_offset
 		case e_value.BG_GROUND_SHOW: return app.background_ground_show
 		case e_value.BG_GROUND_SLOT: return app.background_ground_slot
+		case e_value.BG_BIOME: return app.background_biome
 		case e_value.BG_SKY_COLOR: return app.background_sky_color
 		case e_value.BG_SKY_CLOUDS_COLOR: return app.background_sky_clouds_color
 		case e_value.BG_SUNLIGHT_COLOR: return app.background_sunlight_color
