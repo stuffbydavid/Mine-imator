@@ -2346,6 +2346,8 @@
             "savemap": "Export map",
 			"rotation": "Rotation"
         },
+        "timeeffects": "Time effects",
+        "skybackground": "Sky background",
         "sky/": {
             "suntex": "Sun texture",
             "moontex": "Moon texture",

@@ -91,18 +91,13 @@ function panel_draw_content()
 				// Draw contents
 				if (cat[c].show && cat[c].script)
 				{
-					//draw_box(content_x, dy - 8, dividew, content_height, false, c_level_bottom, 1)
-					
-					//dy += floor(8 * microani_arr[e_microani.ACTIVE])
-					//dy -= 8
+					dy += 8
 					script_execute(cat[c].script)
-					
-					//draw_box(content_x, dy, dividew, content_height, false, c_level_middle, 1)
+					dy += 8
 				}
 				
 				if (c < catamount - 1 && cat[c].show && cat[c].script)
 				{
-					//dy += 8
 					draw_divide(content_x, dy, dividew - 1)
 					dy += 8
 				}

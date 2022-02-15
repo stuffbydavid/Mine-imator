@@ -7496,7 +7496,6 @@
 		},
 		{
 			"name": "the_end",
-			"group": true,
 			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
 			"variant": [

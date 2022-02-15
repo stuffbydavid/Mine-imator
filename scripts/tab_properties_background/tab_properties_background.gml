@@ -4,105 +4,6 @@ function tab_properties_background()
 {
 	var capwid;
 	
-	// Toggle image
-	tab_control_togglebutton()
-	togglebutton_add("backgroundskyminecraft", null, 0, background_image_show = 0, action_background_image_show)
-	togglebutton_add("backgroundskycustom", null, 1, background_image_show = 1, action_background_image_show)
-	draw_togglebutton("backgroundsky", dx, dy)
-	tab_next()
-	
-	if (background_image_show)
-	{
-		var text, tex;
-		
-		capwid = text_caption_width("backgroundimage", "backgroundimagetype")
-		
-		// Background image
-		text = text_get("listnone")
-		tex = null
-		if (background_image != null)
-		{
-			text = background_image.display_name
-			tex = background_image.texture
-		}
-		
-		tab_control_menu(32)
-		draw_button_menu("backgroundimage", e_menu.LIST, dx, dy, dw, 32, background_image, text, action_background_image, false, tex)
-		tab_next()
-		
-		if (background_image != null)
-		{
-			// Image type
-			tab_control_menu()
-			draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 24, background_image_type, text_get("backgroundimagetype" + background_image_type), action_background_image_type)
-			tab_next()
-			
-			// Background stretch
-			if (background_image_type = "image")
-			{
-				tab_control_switch()
-				draw_switch("backgroundimagestretch", dx, dy, background_image_stretch, action_background_image_stretch)
-				tab_next()
-			}
-			
-			// Rotation
-			if (background_image_type != "image")
-			{
-				tab_control_dragger()
-				draw_dragger("backgroundimagerotation", dx, dy, dragger_width, background_image_rotation, .1, -no_limit, no_limit, 0, 1, tab.background.tbx_background_rotation, action_background_image_rotation)
-				tab_next()
-			}
-			
-			// Background box mapped
-			if (background_image_type = "box") 
-			{
-				tab_control_switch()
-				draw_switch("backgroundimageboxmapped", dx, dy, background_image_box_mapped, action_background_image_box_mapped)
-				tab_next()
-				
-				if (background_image_box_mapped)
-				{
-					tab_control_button_label()
-					
-					if (draw_button_label("backgroundimagesavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
-						action_background_image_save_map()
-					
-					tab_next()
-				}
-			}
-		}
-	}
-	else
-	{
-		var tex;
-		capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
-		
-		// Sun
-		tex = ((background_sky_sun_tex.type = e_res_type.PACK) ? background_sky_sun_tex.sun_texture : background_sky_sun_tex.texture)
-		
-		tab_control_menu(32)
-		draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, 32, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, false, tex)
-		tab_next()
-		
-		// Moon
-		if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
-			tex = background_sky_moon_tex.moon_texture[background_sky_moon_phase]
-		else
-			tex = background_sky_moon_tex.texture
-		
-		tab_control_menu(32)
-		draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, 32, background_sky_moon_tex, background_sky_moon_tex.display_name, action_background_sky_moon_tex, false, tex)
-		tab_next()
-		
-		// Moon phase
-		if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
-		{
-			tab_control_menu(32)
-			draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, 32, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, background_sky_moon_tex.moon_texture[background_sky_moon_phase])
-			tab_next()
-		}
-	}
-	
 	// Time/rotation
 	tab_control(120)
 	draw_wheel_sky("backgroundskytime", dx + floor(dw * 0.25), dy + 60, background_sky_time, -45, action_background_sky_time, tab.background.tbx_sky_time, true)
@@ -118,6 +19,139 @@ function tab_properties_background()
 	tab_control_meter()
 	draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 	tab_next()
+	
+	// Time-based effects
+	tab_control_switch()
+	draw_button_collapse("time_effects", collapse_map[?"time_effects"], null, true, "backgroundtimeeffects")
+	tab_next()
+	
+	if (collapse_map[?"time_effects"])
+	{
+		tab_collapse_start()
+		
+		// Twilight
+		tab_control_switch()
+		draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
+		tab_next()
+		
+		// Desaturate night
+		tab_control_switch()
+		draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
+	// Sky properties
+	tab_control_switch()
+	draw_button_collapse("sky", collapse_map[?"sky"], null, true, "backgroundskybackground")
+	tab_next()
+	
+	if (collapse_map[?"sky"])
+	{
+		tab_collapse_start()
+		
+		// Toggle image
+		tab_control_togglebutton()
+		togglebutton_add("backgroundskyminecraft", null, 0, background_image_show = 0, action_background_image_show)
+		togglebutton_add("backgroundskycustom", null, 1, background_image_show = 1, action_background_image_show)
+		draw_togglebutton("backgroundsky", dx, dy)
+		tab_next()
+		
+		if (background_image_show)
+		{
+			var text, tex;
+			
+			capwid = text_caption_width("backgroundimage", "backgroundimagetype")
+			
+			// Background image
+			text = text_get("listnone")
+			tex = null
+			if (background_image != null)
+			{
+				text = background_image.display_name
+				tex = background_image.texture
+			}
+			
+			tab_control_menu(32)
+			draw_button_menu("backgroundimage", e_menu.LIST, dx, dy, dw, 32, background_image, text, action_background_image, false, tex)
+			tab_next()
+			
+			if (background_image != null)
+			{
+				// Image type
+				tab_control_menu()
+				draw_button_menu("backgroundimagetype", e_menu.LIST, dx, dy, dw, 24, background_image_type, text_get("backgroundimagetype" + background_image_type), action_background_image_type)
+				tab_next()
+				
+				// Background stretch
+				if (background_image_type = "image")
+				{
+					tab_control_switch()
+					draw_switch("backgroundimagestretch", dx, dy, background_image_stretch, action_background_image_stretch)
+					tab_next()
+				}
+				
+				// Rotation
+				if (background_image_type != "image")
+				{
+					tab_control_dragger()
+					draw_dragger("backgroundimagerotation", dx, dy, dragger_width, background_image_rotation, .1, -no_limit, no_limit, 0, 1, tab.background.tbx_background_rotation, action_background_image_rotation)
+					tab_next()
+				}
+				
+				// Background box mapped
+				if (background_image_type = "box") 
+				{
+					tab_control_switch()
+					draw_switch("backgroundimageboxmapped", dx, dy, background_image_box_mapped, action_background_image_box_mapped)
+					tab_next()
+					
+					if (background_image_box_mapped)
+					{
+						tab_control_button_label()
+						
+						if (draw_button_label("backgroundimagesavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
+							action_background_image_save_map()
+						
+						tab_next()
+					}
+				}
+			}
+		}
+		else
+		{
+			var tex;
+			capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
+			
+			// Sun
+			tex = ((background_sky_sun_tex.type = e_res_type.PACK) ? background_sky_sun_tex.sun_texture : background_sky_sun_tex.texture)
+			
+			tab_control_menu(32)
+			draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, 32, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, false, tex)
+			tab_next()
+			
+			// Moon
+			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
+				tex = background_sky_moon_tex.moon_texture[background_sky_moon_phase]
+			else
+				tex = background_sky_moon_tex.texture
+			
+			tab_control_menu(32)
+			draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, 32, background_sky_moon_tex, background_sky_moon_tex.display_name, action_background_sky_moon_tex, false, tex)
+			tab_next()
+			
+			// Moon phase
+			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
+			{
+				tab_control_menu(32)
+				draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, 32, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, background_sky_moon_tex.moon_texture[background_sky_moon_phase])
+				tab_next()
+			}
+		}
+		
+		tab_collapse_end()
+	}
 	
 	// Clouds
 	tab_control_switch()
@@ -329,16 +363,6 @@ function tab_properties_background()
 	tab_next()
 	
 	tab_set_collumns(false)
-	
-	// Twilight
-	tab_control_switch()
-	draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
-	tab_next()
-	
-	// Desaturate night
-	tab_control_switch()
-	draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
-	tab_next()
 	
 	// Desaturate amount
 	if (background_desaturate_night)

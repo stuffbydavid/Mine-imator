@@ -2,6 +2,8 @@
 
 function tab_frame_editor_transform()
 {
+	dy -= 8
+	
 	var taby;
 	
 	// Position
