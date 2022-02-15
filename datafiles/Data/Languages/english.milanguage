@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.02.10"
+        "lastchange": "2022.02.15"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2742,6 +2742,7 @@
             },
             "color": "Color"
         },
+        "windinfluence": "Wind influence",
         "chartex": "Skin",
         "chartexmaterial": "Material map",
         "chartexnormal": "Normal map",

@@ -178,6 +178,13 @@ function render_world_tl()
         }
 	}
 	
+	if (value_inherit[e_value.WIND_INFLUENCE] != shader_uniform_wind_strength)
+	{
+		shader_uniform_wind_strength = app.background_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE]
+		render_set_uniform("uWindStrength", shader_uniform_wind_strength)
+		render_set_uniform("uWindDirectionalStrength", shader_uniform_wind_strength * app.background_wind_directional_strength) 
+	}
+	
 	var prevblend = null;
 	
 	// Object blend mode

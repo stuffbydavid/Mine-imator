@@ -154,6 +154,7 @@ function tl_update_matrix()
 			value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = value[e_value.SUBSURFACE_RADIUS_GREEN] // Multiplied
 			value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] = value[e_value.SUBSURFACE_RADIUS_BLUE] // Multiplied
 			value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
+			value_inherit[e_value.WIND_INFLUENCE] = value[e_value.WIND_INFLUENCE] // Multiplied
 			value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE] // Multiplied
 			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] // Added
 			value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] // Added
@@ -266,6 +267,8 @@ function tl_update_matrix()
 				
 				if (inhtex)
 					value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]
+				
+				value_inherit[e_value.WIND_INFLUENCE] *= par.value[e_value.WIND_INFLUENCE]
 				
 				tl = par
 			}

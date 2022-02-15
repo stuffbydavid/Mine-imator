@@ -30,7 +30,7 @@ function render_startup()
 			  shader_uniform_brightness, shader_uniform_metallic, shader_uniform_roughness, shader_uniform_wind,
 			  shader_uniform_wind_terrain, shader_uniform_fog, shader_uniform_ssao, shader_uniform_sss, shader_uniform_sss_red,
 			  shader_uniform_sss_green, shader_uniform_sss_blue, shader_uniform_sss_color, shader_uniform_glow, shader_uniform_glow_texture,
-			  shader_uniform_glow_color;
+			  shader_uniform_glow_color, shader_uniform_wind_strength;
 	
 	globalvar render_pass_surf;
 	

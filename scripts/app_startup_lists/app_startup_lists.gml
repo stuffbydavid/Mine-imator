@@ -47,6 +47,7 @@ function app_startup_lists()
 		"SUBSURFACE_RADIUS_GREEN",
 		"SUBSURFACE_RADIUS_BLUE",
 		"SUBSURFACE_COLOR",
+		"WIND_INFLUENCE",
 		"SPAWN",
 		"FREEZE",
 		"CLEAR",

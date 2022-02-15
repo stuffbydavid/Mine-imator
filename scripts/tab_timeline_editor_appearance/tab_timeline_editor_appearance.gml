@@ -35,7 +35,7 @@ function tab_timeline_editor_appearance()
 		tab_next()
 		
 		// Wind
-		if (tl_edit.type = e_temp_type.SCENERY || tl_edit.type = e_temp_type.BLOCK || tl_edit.type = e_temp_type.PARTICLE_SPAWNER || tl_edit.type = e_temp_type.TEXT || type_is_shape(tl_edit.type))
+		if (type_has_wind(tl_edit.type))
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorwind", dx, dy, tl_edit.wind, action_tl_wind)

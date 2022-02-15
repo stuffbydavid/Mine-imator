@@ -485,6 +485,8 @@ function app_startup_interface_tabs()
 			tbx_subsurface_radius[Y].suffix = "%"
 			tbx_subsurface_radius[Z] = new_textbox_integer()
 			tbx_subsurface_radius[Z].suffix = "%"
+			tbx_wind_influence = new_textbox_integer()
+			tbx_wind_influence.suffix = "%"
 		}
 		
 		// Particles

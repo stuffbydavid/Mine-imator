@@ -71,6 +71,9 @@ function render_world_tl_reset()
 	
 	render_set_uniform_int("uMaterialUsesGlossiness", 0)
 	
+	// Wind
+	shader_uniform_wind_strength = app.background_wind_strength * app.setting_wind_enable
+	
 	// Glow
 	shader_uniform_glow = false
     shader_uniform_glow_texture = false

@@ -120,6 +120,7 @@ function tl_update_values()
 		tl_update_values_ease(e_value.SUBSURFACE_RADIUS_GREEN)
 		tl_update_values_ease(e_value.SUBSURFACE_RADIUS_BLUE)
 		tl_update_values_ease(e_value.SUBSURFACE_COLOR)
+		tl_update_values_ease(e_value.WIND_INFLUENCE)
 	}
 	
 	// Particles

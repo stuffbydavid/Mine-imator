@@ -14,6 +14,7 @@ function tl_value_default(valueid)
 		case e_value.SUBSURFACE_RADIUS_RED:
 		case e_value.SUBSURFACE_RADIUS_GREEN:
 		case e_value.SUBSURFACE_RADIUS_BLUE: return 1
+		case e_value.WIND_INFLUENCE: return 1
 		case e_value.GLOW_COLOR:
 		case e_value.RGB_MUL:
 		case e_value.HSB_MUL: 
