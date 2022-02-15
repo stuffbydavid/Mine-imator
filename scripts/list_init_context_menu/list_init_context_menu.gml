@@ -216,8 +216,11 @@ function list_init_context_menu(name)
 		{
 			list_item_add(text_get("toolbarfilenew"), undefined, text_control_name(keybinds[e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
 			list_item_add(text_get("toolbarfileopen"), undefined, text_control_name(keybinds[e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
-			list_item_add(text_get("toolbarfilerecent"), undefined, "", null, icons.RECENTS, icons.CHEVRON_RIGHT_TINY, null)
+			list_item_add(text_get("toolbarfilerecent"), undefined, "", null, icons.FOLDER_RECENTS, icons.CHEVRON_RIGHT_TINY, null)
 			list_item_last.context_menu_name = "toolbarfilerecent"
+			
+			list_item_add(text_get("toolbarfilelastbackup"), undefined, "", null, icons.RECENTS, null, action_toolbar_open_last_backup)
+			list_item_last.disabled = !file_exists(project_folder + "\\" + filename_name(project_folder) + ".backup1")
 			
 			list_item_add(text_get("toolbarfilesave"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
 			list_item_add(text_get("toolbarfilesaveas"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)

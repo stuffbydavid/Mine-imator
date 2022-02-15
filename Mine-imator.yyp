@@ -1876,6 +1876,7 @@
     {"id":{"name":"vec3_reflect","path":"scripts/vec3_reflect/vec3_reflect.yy",},"order":35,},
     {"id":{"name":"action_lib_shape_tex_material","path":"scripts/action_lib_shape_tex_material/action_lib_shape_tex_material.yy",},"order":26,},
     {"id":{"name":"vec3_sub","path":"scripts/vec3_sub/vec3_sub.yy",},"order":37,},
+    {"id":{"name":"action_toolbar_open_last_backup","path":"scripts/action_toolbar_open_last_backup/action_toolbar_open_last_backup.yy",},"order":32,},
     {"id":{"name":"vec4","path":"scripts/vec4/vec4.yy",},"order":39,},
     {"id":{"name":"vec4_homogenize","path":"scripts/vec4_homogenize/vec4_homogenize.yy",},"order":41,},
     {"id":{"name":"vec4_mul_matrix","path":"scripts/vec4_mul_matrix/vec4_mul_matrix.yy",},"order":43,},

@@ -11,6 +11,7 @@ function app_startup_interface_popups()
 	{
 		folder = ""
 		tbx_name = new_textbox(true, 0, "")
+		tbx_description = new_textbox(false, 0, "")
 	}
 	
 	// Save as
@@ -19,6 +20,7 @@ function app_startup_interface_popups()
 	{
 		folder = ""
 		tbx_name = new_textbox(true, 0, "")
+		tbx_description = new_textbox(false, 0, "")
 	}
 	
 	// Loading

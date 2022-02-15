@@ -8,6 +8,7 @@ function popup_saveas_draw()
 	if (popup.folder = "" || directory_exists_lib(setting_project_folder + popup.folder))
 		issue = true
 	
+	// Project name
 	tab_control_textfield(true)
 	if (draw_textfield("newprojectname", dx, dy, dw, 24, popup.tbx_name, null, text_get("saveascopy", project_name), "top") || issue)
 	{
@@ -17,6 +18,14 @@ function popup_saveas_draw()
 			popup.folder = text_get("saveascopy", project_name)
 		
 		popup.folder = filename_name(filename_get_unique(setting_project_folder + popup.folder))
+	}
+	tab_next()
+	
+	// Project description
+	tab_control_textfield(true, 76)
+	if (draw_textfield("newprojectdescription", dx, dy, dw, 76, popup.tbx_description, null, "", "top"))
+	{
+		popup.description = popup.tbx_description.text
 	}
 	tab_next()
 	

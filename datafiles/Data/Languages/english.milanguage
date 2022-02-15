@@ -402,6 +402,7 @@
     "newproject/": {
         "caption": "New project",
         "name": "Project name",
+        "description": "Project description",
         "location": "Project location",
         "namedefault": "New project",
         "create": "Create project"
@@ -412,6 +413,7 @@
             "new": "New project...",
             "open": "Open project",
             "recent": "Open recent...",
+            "lastbackup": "Recover last backup",
             "save": "Save project",
             "saveas": "Save project as...",
             "import": "Import asset..."
