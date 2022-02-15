@@ -35,6 +35,34 @@ function popup_about_draw()
 	dy += 128 + 48
 	dx = content_x + 64
 	
+	// Button links
+	var buttonx, buttony;
+	buttonx = content_x + 12
+	buttony = content_y + content_height - (12 + 28);
+	
+	if (draw_button_icon("aboutsite", buttonx, buttony, 24, 24, false, icons.WORLD, null, false, "aboutsite"))
+		open_url(link_website)
+	
+	if (draw_button_icon("aboutforums", buttonx + (30), buttony, 24, 24, false, icons.COMMENTS, null, false, "aboutforums"))
+		open_url(link_forums)
+	
+	if (draw_button_icon("abouttwitter", buttonx + (30 * 2), buttony, 24, 24, false, icons.TWITTER, null, false, "abouttwitter"))
+		open_url(link_twitter)
+	
+	if (draw_button_icon("aboutdiscord", buttonx + (30 * 3), buttony, 24, 24, false, icons.DISCORD, null, false, "aboutdiscord"))
+		open_url(link_discord)
+	
+	if (trial_version)
+	{
+		if (draw_button_label("aboutupgrade", content_x + content_width - 13, content_y + content_height - (12 + 32), null, icons.KEY, e_button.PRIMARY, null, fa_right))
+			popup_switch(popup_upgrade)
+	}
+	else
+	{
+		if (draw_button_label("aboutdonate", content_x + content_width - 13, content_y + content_height - (12 + 32), null, icons.DONATE, e_button.PRIMARY, null, fa_right))
+			open_url(link_donate)
+	}
+	
 	// Created by
 	dy += 12
 	draw_label(text_get("aboutcreatedby"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)

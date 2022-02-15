@@ -13,9 +13,9 @@ function macros()
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"
-	#macro mineimator_version_extra		"Alpha 21"
+	#macro mineimator_version_extra		"Alpha 22"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-	#macro mineimator_version_date		"2022.02.01"
+	#macro mineimator_version_date		"2022.02.15"
 	#macro gm_runtime					GM_runtime_version
 	#macro minecraft_version			"1.18"
 	
@@ -90,6 +90,9 @@ function macros()
 	#macro link_minecraft				"https://www.minecraft.net"
 	#macro link_david					"https://www.stuffbydavid.com"
 	#macro link_modelbench				"https://www.mineimator.com/modelbench"
+	#macro link_twitter					"https://www.mineimator.com/tweets"
+	#macro link_discord					"https://www.mineimator.com/discord"
+	#macro link_donate					"https://www.mineimator.com/donate"
 	#macro show_modelbench_popup		true
 	#macro http_ok						200
 	#macro http_bad_request				400
