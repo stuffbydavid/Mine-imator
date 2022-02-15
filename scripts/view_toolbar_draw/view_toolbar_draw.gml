@@ -46,12 +46,32 @@ function view_toolbar_draw(view, xx, yy)
 	
 	tip_force_right = true
 	
+	// Select tool
+	if (setting_separate_tool_modes)
+	{
+		tip_set_keybind(e_keybind.TOOL_SELECT)
+		if (draw_button_icon("viewtoolselect", xx, yy, 24, 24, setting_tool_select, icons.SELECT, null, false, "viewtoolselecttip"))
+		{
+			action_tools_disable_all()
+			setting_tool_select = true
+		}
+		yy += 24 + padding
+	}
+	
 	// Position tool
 	tip_set_keybind(e_keybind.TOOL_MOVE)
 	if (draw_button_icon("viewtoolmove", xx, yy, 24, 24, setting_tool_move, icons.MOVE, null, false, "viewtoolmovetip"))
 	{
-		setting_tool_move = !setting_tool_move
-		setting_tool_scale = false
+		if (setting_separate_tool_modes)
+		{
+			action_tools_disable_all()
+			setting_tool_move = true
+		}
+		else
+		{
+			setting_tool_move = !setting_tool_move
+			setting_tool_scale = false
+		}
 	}
 	yy += 24 + padding
 	
@@ -59,37 +79,103 @@ function view_toolbar_draw(view, xx, yy)
 	tip_set_keybind(e_keybind.TOOL_ROTATE)
 	if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool_rotate, icons.ROTATE, null, false, "viewtoolrotatetip"))
 	{
-		setting_tool_rotate = !setting_tool_rotate
-		setting_tool_scale = false
+		if (setting_separate_tool_modes)
+		{
+			action_tools_disable_all()
+			setting_tool_rotate = true
+		}
+		else
+		{
+			setting_tool_rotate = !setting_tool_rotate
+			setting_tool_scale = false
+		}
 	}
 	yy += 24 + padding
+	
+	// Scale tool (separate tool modes)
+	if (setting_separate_tool_modes)
+	{
+		tip_set_keybind(e_keybind.TOOL_SCALE)
+		if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
+		{
+			if (setting_separate_tool_modes)
+			{
+				action_tools_disable_all()
+				setting_tool_scale = true
+			}
+			else
+			{
+				setting_tool_scale = !setting_tool_scale
+		
+				if (setting_tool_scale)
+				{
+					setting_tool_move = false
+					setting_tool_rotate = false
+					setting_tool_bend = false
+				}
+			}
+		}
+		yy += 24 + padding
+	}
 	
 	// Bend tool
 	tip_set_keybind(e_keybind.TOOL_BEND)
 	if (draw_button_icon("viewtoolbend", xx, yy, 24, 24, setting_tool_bend, icons.BEND, null, false, "viewtoolbendtip"))
 	{
-		setting_tool_bend = !setting_tool_bend
-		setting_tool_scale = false
-	}
-	yy += 24 + padding
-	
-	draw_divide(xx, yy, 24)
-	yy += 1 + padding
-	
-	// Scale tool
-	tip_set_keybind(e_keybind.TOOL_SCALE)
-	if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
-	{
-		setting_tool_scale = !setting_tool_scale
-		
-		if (setting_tool_scale)
+		if (setting_separate_tool_modes)
 		{
-			setting_tool_move = false
-			setting_tool_rotate = false
-			setting_tool_bend = false
+			action_tools_disable_all()
+			setting_tool_bend = true
+		}
+		else
+		{
+			setting_tool_bend = !setting_tool_bend
+			setting_tool_scale = false
 		}
 	}
 	yy += 24 + padding
+	
+	// Transform tool
+	if (setting_separate_tool_modes)
+	{
+		tip_set_keybind(e_keybind.TOOL_TRANSFORM)
+		if (draw_button_icon("viewtooltransform", xx, yy, 24, 24, setting_tool_transform, icons.MULTITRANSFORM, null, false, "viewtooltransformtip"))
+		{
+			action_tools_disable_all()
+			setting_tool_transform = true
+		}
+		yy += 24 + padding
+	}
+	
+	// Scale tool (toggleable tools)
+	if (!setting_separate_tool_modes)
+	{
+		draw_divide(xx, yy, 24)
+		yy += 1 + padding
+	
+		// Scale tool
+		tip_set_keybind(e_keybind.TOOL_SCALE)
+		if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
+		{
+			if (setting_separate_tool_modes)
+			{
+				action_tools_disable_all()
+				setting_tool_scale = true
+			}
+			else
+			{
+				setting_tool_scale = !setting_tool_scale
+		
+				if (setting_tool_scale)
+				{
+					setting_tool_move = false
+					setting_tool_rotate = false
+					setting_tool_bend = false
+				}
+			}
+		}
+		yy += 24 + padding
+	}
 	
 	tip_force_right = false
 	

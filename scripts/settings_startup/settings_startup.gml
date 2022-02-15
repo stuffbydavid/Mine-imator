@@ -47,6 +47,7 @@ function settings_startup()
 	setting_z_is_up = false
 	setting_smooth_camera = false
 	setting_search_variants = true
+	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true
 	
 	setting_toolbar_location = "top"
@@ -126,10 +127,12 @@ function settings_startup()
 	setting_snap_size_rotation = 15
 	setting_snap_size_scale = 1
 	
+	setting_tool_select = false
 	setting_tool_move = true
 	setting_tool_rotate = true
 	setting_tool_scale = false
 	setting_tool_bend = true
+	setting_tool_transform = false
 	
 	// New UI settings
 	setting_reduced_motion = false

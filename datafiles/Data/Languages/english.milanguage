@@ -3001,6 +3001,7 @@
         "zisup": "Z is up",
         "smoothcamera": "Smooth work camera",
         "searchvariants": "Search variants in block search",
+        "separatetoolmodes": "Separate tool modes",
         "controls": "CONTROLS",
         "controls/": {
             "keybinds": "Keybinds",

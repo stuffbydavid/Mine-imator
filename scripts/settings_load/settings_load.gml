@@ -130,6 +130,7 @@ function settings_load()
 			setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
 			setting_smooth_camera = value_get_real(interfacemap[?"smooth_camera"], setting_smooth_camera)
 			setting_search_variants = value_get_real(interfacemap[?"search_variants"], setting_search_variants)
+			setting_separate_tool_modes = value_get_real(interfacemap[?"separate_tool_modes"], setting_separate_tool_modes)
 			setting_show_shortcuts_bar = value_get_real(interfacemap[?"show_shortcuts_bar"], setting_show_shortcuts_bar)
 			
 			setting_toolbar_location = value_get_string(interfacemap[?"toolbar_location"], setting_toolbar_location)

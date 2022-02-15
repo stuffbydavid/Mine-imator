@@ -33,7 +33,7 @@ function toast_draw(toast)
 	draw_dropshadow(dx, dy, dw, dh, c_black, 1)
 	
 	// Pause countdown
-	if (toast_mouseon)
+	if (content_mouseon)
 		toast.time_created += delta_time / 1000
 	
 	// Dismiss bar

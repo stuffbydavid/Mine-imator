@@ -24,7 +24,7 @@ function vertex_add()
 		vertex_color(vbuffer_current, vertex_rgb, vertex_alpha)
 		vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
 		
-		// Seperated for performance
+		// separated for performance
 		if (xx < vbuffer_xmin)
 			vbuffer_xmin = xx
 		if (yy < vbuffer_ymin)
@@ -50,7 +50,7 @@ function vertex_add()
 		vertex_color(vbuffer_current, vertex_rgb, vertex_alpha)
 		vertex_texcoord(vbuffer_current, argument[6], argument[7])
 		
-		// Seperated for performance
+		// separated for performance
 		if (xx < vbuffer_xmin)
 			vbuffer_xmin = xx
 		if (yy < vbuffer_ymin)

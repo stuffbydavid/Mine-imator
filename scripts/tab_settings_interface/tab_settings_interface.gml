@@ -78,4 +78,9 @@ function tab_settings_interface()
 	tab_control_switch()
 	draw_switch("settingssearchvariants", dx, dy, setting_search_variants, action_setting_search_variants)
 	tab_next()
+	
+	// separate tool modes
+	tab_control_switch()
+	draw_switch("settingsseparatetoolmodes", dx, dy, setting_separate_tool_modes, action_setting_separate_tool_modes)
+	tab_next()
 }

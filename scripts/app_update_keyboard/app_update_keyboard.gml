@@ -114,54 +114,92 @@ function app_update_keyboard()
 		
 		if (keybinds[e_keybind.TOOL_SELECT].pressed)
 		{
-			setting_tool_move = false
-			setting_tool_rotate = false
-			setting_tool_bend = false
-			setting_tool_scale = false
+			action_tools_disable_all()
+			setting_tool_select = setting_separate_tool_modes
 		}
 		
 		if (keybinds[e_keybind.TOOL_MOVE].pressed)
 		{
-			setting_tool_move = !setting_tool_move
-			setting_tool_scale = false
+			if (setting_separate_tool_modes)
+			{
+				action_tools_disable_all()
+				setting_tool_move = true
+			}
+			else
+			{
+				setting_tool_move = !setting_tool_move
+				setting_tool_scale = false
 			
-			if (tl_edit)
-				tl_edit.show_tool_position = setting_tool_move
+				if (tl_edit)
+					tl_edit.show_tool_position = setting_tool_move
+			}
 		}
 		
 		if (keybinds[e_keybind.TOOL_ROTATE].pressed)
 		{
-			setting_tool_rotate = !setting_tool_rotate
-			setting_tool_scale = false
+			if (setting_separate_tool_modes)
+			{
+				action_tools_disable_all()
+				setting_tool_rotate = true
+			}
+			else
+			{
+				setting_tool_rotate = !setting_tool_rotate
+				setting_tool_scale = false
+			}
 		}
 		
 		if (keybinds[e_keybind.TOOL_SCALE].pressed)
 		{
-			setting_tool_scale = !setting_tool_scale
-			
-			if (setting_tool_scale)
+			if (setting_separate_tool_modes)
 			{
-				setting_tool_move = false
-				setting_tool_rotate = false
-				setting_tool_bend = false
+				action_tools_disable_all()
+				setting_tool_scale = true
+			}
+			else
+			{
+				setting_tool_scale = !setting_tool_scale
+		
+				if (setting_tool_scale)
+				{
+					setting_tool_move = false
+					setting_tool_rotate = false
+					setting_tool_bend = false
+				}
 			}
 		}
 		
 		if (keybinds[e_keybind.TOOL_BEND].pressed)
 		{
-			setting_tool_bend = !setting_tool_bend
-			setting_tool_scale = false
+			if (setting_separate_tool_modes)
+			{
+				action_tools_disable_all()
+				setting_tool_bend = true
+			}
+			else
+			{
+				setting_tool_bend = !setting_tool_bend
+				setting_tool_scale = false
+			}
 		}
 		
 		if (keybinds[e_keybind.TOOL_TRANSFORM].pressed)
 		{
-			setting_tool_move = true
-			setting_tool_rotate = true
-			setting_tool_bend = true
-			setting_tool_scale = false
-			
-			if (tl_edit)
-				tl_edit.show_tool_position = setting_tool_move
+			if (setting_separate_tool_modes)
+			{
+				action_tools_disable_all()
+				setting_tool_transform = true
+			}
+			else
+			{
+				setting_tool_move = true
+				setting_tool_rotate = true
+				setting_tool_bend = true
+				setting_tool_scale = false
+				
+				if (tl_edit)
+					tl_edit.show_tool_position = setting_tool_move
+			}
 		}
 		
 		if (keybinds[e_keybind.SNAP].pressed)
