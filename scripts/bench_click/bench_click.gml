@@ -3,11 +3,17 @@
 
 function bench_click(type)
 {
+	// Double clicked, create asset
+	if (bench_settings.type = type)
+	{
+		action_bench_create()
+		bench_show_ani_type = "hide"
+		
+		return 0
+	}
+	
 	with (bench_settings)
 	{
-		if (id.type = type)
-			return 0
-		
 		id.type = type
 		
 		// Switch to character

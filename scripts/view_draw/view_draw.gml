@@ -197,7 +197,7 @@ function view_draw(view)
 		}
 	
 		if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
-			current_microani.value = true
+			current_microani.active.value = true
 	
 		dx -= dw
 	}
@@ -256,7 +256,7 @@ function view_draw(view)
 	}
 	
 	if (settings_menu_name = (string(view) + "viewgridsettings") && settings_menu_ani_type != "hide")
-		current_microani.value = true
+		current_microani.active.value = true
 	dx -= dw
 	
 	if (draw_button_icon("viewgrid", dx, dy, dw, dh, view.grid, icons.GRID, null, false, view.grid ? "viewgriddisable" : "viewgridenable"))
@@ -287,7 +287,7 @@ function view_draw(view)
 		}
 		
 		if (settings_menu_name = (string(view) + "viewsnapsettings") && settings_menu_ani_type != "hide")
-			current_microani.value = true
+			current_microani.active.value = true
 		dx -= dw
 		
 		tip_set_keybind(e_keybind.SNAP)
@@ -309,7 +309,7 @@ function view_draw(view)
 		}
 		
 		if (settings_menu_name = (string(view) + "viewdebugsettings") && settings_menu_ani_type != "hide")
-			current_microani.value = true
+			current_microani.active.value = true
 	}
 	
 	// Camera name
@@ -458,11 +458,12 @@ function view_draw(view)
 	if (view = view_main)
 	{
 		// Workbench
-		var benchx, benchy, benchscale, benchrot;
+		var benchx, benchy, benchscale, benchrot, benchempty;
 		benchx = boxx + 3
 		benchy = boxy + captionh + 8
 		benchscale = bench_click_ani
 		benchrot = sin(bench_rotate_ani * pi * 5) * (1 - abs(bench_rotate_ani * 2 - 1)) * 10
+		benchempty = (instance_number(obj_timeline) = 0 && instance_number(obj_template) = 0)
 		
 		bench_settings.posx = benchx + 86 + 8
 		bench_settings.posy = benchy
@@ -482,6 +483,9 @@ function view_draw(view)
 			bench_settings_ani = 1
 			bench_open = false
 		}
+		
+		if (bench_rotate_ani = 0 && benchempty && bench_show_ani = 0 && bench_show_ani_type = "")
+			bench_rotate_ani = 1
 		
 		// Set animation
 		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
@@ -519,10 +523,11 @@ function view_draw(view)
 				bench_hover_ani_goal = .5
 			
 			// Set bench to full alpha if no objects are present
-			if (instance_number(obj_timeline) = 0 && instance_number(obj_template) = 0)
+			if (benchempty)
 				bench_hover_ani_goal = 1
+			else
+				bench_rotate_ani = 0
 			
-			bench_rotate_ani = 0
 			bench_click_ani_goal = 1
 			
 			bench_button_hover = false

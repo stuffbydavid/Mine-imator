@@ -450,7 +450,7 @@ function app_startup_interface_tabs()
 			tbx_rot_z.suffix = "°"
 			
 			// Scale
-			scale_all = false
+			scale_all = true
 			tbx_sca_x = new_textbox_decimals()
 			tbx_sca_y = new_textbox_decimals()
 			tbx_sca_z = new_textbox_decimals()

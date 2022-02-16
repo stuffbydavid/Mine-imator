@@ -77,7 +77,7 @@ function context_menu_draw_level(argument0)
 			list_item_draw(item, dx, dy + 24 * i, dw, 24, false)
 			
 			if (item.context_menu_active)
-				current_microani.value = true
+				current_microani.active.value = true
 			
 			if (app_mouse_box(dx, dy + 24 * i, dw, 24))
 				context_menu_mouseon_item = item

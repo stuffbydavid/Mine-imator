@@ -202,7 +202,7 @@ function tab_timeline()
 	}
 	
 	if (settings_menu_name = "timelineintervalsettings" && settings_menu_ani_type != "hide")
-		current_microani.value = true
+		current_microani.active.value = true
 	
 	buttonsx += 16 + 6
 	
@@ -787,7 +787,7 @@ function tab_timeline()
 	}
 	
 	if (settings_menu_name = "timelinefilter" && settings_menu_ani_type != "hide")
-		current_microani.value = true
+		current_microani.active.value = true
 	
 	// Draw search bar
 	timeline.tbx_search.text = timeline_search

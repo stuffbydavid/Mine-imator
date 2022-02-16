@@ -31,21 +31,24 @@ function view_control_scale(view)
 	// All axes
 	view_control_scale_all(view, mat, len * .65)
 	
-	// Draw each axis
-	view_control_scale_axis(view, e_view_control.SCA_X, e_value.SCA_X, c_control_red, arrowstart, arrowend, mat, X, vec3(0, -90, 0))
-	view_control_scale_axis(view, e_view_control.SCA_Y, e_value.SCA_Y, (setting_z_is_up ? c_control_green : c_control_blue), arrowstart, arrowend, mat, Y, vec3(90, 0, 0))
-	view_control_scale_axis(view, e_view_control.SCA_Z, e_value.SCA_Z, (setting_z_is_up ? c_control_blue : c_control_green), arrowstart, arrowend, mat, Z, vec3(0))
-	
-	// Draw each plane
-	if (!setting_tool_move && !setting_tool_transform)
+	if (!frame_editor.transform.scale_all)
 	{
-		var ps, pe;
-		ps = (len / 7)
-		pe = ps + (len / 6)
+		// Draw each axis
+		view_control_scale_axis(view, e_view_control.SCA_X, e_value.SCA_X, c_control_red, arrowstart, arrowend, mat, X, vec3(0, -90, 0))
+		view_control_scale_axis(view, e_view_control.SCA_Y, e_value.SCA_Y, (setting_z_is_up ? c_control_green : c_control_blue), arrowstart, arrowend, mat, Y, vec3(90, 0, 0))
+		view_control_scale_axis(view, e_view_control.SCA_Z, e_value.SCA_Z, (setting_z_is_up ? c_control_blue : c_control_green), arrowstart, arrowend, mat, Z, vec3(0))
 	
-		view_control_scale_plane(view, e_view_control.SCA_XY, point3D(1, 1, 0), (setting_z_is_up ? c_control_blue : c_control_green), mat, vec3(0, 0, 1), point3D(ps, ps, 0), point3D(pe, ps, 0), point3D(pe, pe, 0), point3D(ps, pe, 0)) // XY
-		view_control_scale_plane(view, e_view_control.SCA_XZ, point3D(1, 0, 1), (setting_z_is_up ? c_control_green : c_control_blue), mat, vec3(0, 1, 0), point3D(ps, 0, ps), point3D(pe, 0, ps), point3D(pe, 0, pe), point3D(ps, 0, pe)) // XZ
-		view_control_scale_plane(view, e_view_control.SCA_YZ, point3D(0, 1, 1), c_control_red, mat, vec3(1, 0, 0), point3D(0, ps, ps), point3D(0, pe, ps), point3D(0, pe, pe), point3D(0, ps, pe)) // YZ
+		// Draw each plane
+		if (!setting_tool_move && !setting_tool_transform)
+		{
+			var ps, pe;
+			ps = (len / 7)
+			pe = ps + (len / 7.5)
+	
+			view_control_scale_plane(view, e_view_control.SCA_XY, point3D(1, 1, 0), (setting_z_is_up ? c_control_blue : c_control_green), mat, vec3(0, 0, 1), point3D(ps, ps, 0), point3D(pe, ps, 0), point3D(pe, pe, 0), point3D(ps, pe, 0)) // XY
+			view_control_scale_plane(view, e_view_control.SCA_XZ, point3D(1, 0, 1), (setting_z_is_up ? c_control_green : c_control_blue), mat, vec3(0, 1, 0), point3D(ps, 0, ps), point3D(pe, 0, ps), point3D(pe, 0, pe), point3D(ps, 0, pe)) // XZ
+			view_control_scale_plane(view, e_view_control.SCA_YZ, point3D(0, 1, 1), c_control_red, mat, vec3(1, 0, 0), point3D(0, ps, ps), point3D(0, pe, ps), point3D(0, pe, pe), point3D(0, ps, pe)) // YZ
+	}
 	}
 	
 	// Dragging plane

@@ -77,6 +77,6 @@ function popup_bannereditor_draw_layer(xx, yy, width, height, index, base)
 		}
 		
 		if (settings_menu_name = editname && settings_menu_ani_type != "hide")
-			current_microani.value = true	
+			current_microani.active.value = true	
 	}
 }

@@ -68,7 +68,7 @@ function tab_properties_library()
 				tab_next()
 				
 				if (popup = popup_bannereditor)
-					current_microani.value = true
+					current_microani.active.value = true
 			}
 			
 			// Skin
@@ -343,7 +343,7 @@ function tab_properties_library()
 			}
 			
 			if (template_editor.show)
-				current_microani.value = true
+				current_microani.active.value = true
 			
 			tab_next()
 			

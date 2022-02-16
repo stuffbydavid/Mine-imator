@@ -185,7 +185,7 @@ function draw_textfield_group()
 		draw_box_hover(fieldx, boxy, boxwid, boxhei, microani_arr[e_microani.PRESS])
 		
 		active = (active || window_focus = string(textfield_textbox[i]))
-		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]), false, active)
+		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]) || (window_busy = textfield_name[i] + "drag") || (window_busy = textfield_name[i] + "press"), false, active)
 		
 		// Textbox
 		draw_set_font(font_digits)
@@ -203,7 +203,7 @@ function draw_textfield_group()
 		}
 		
 		// Drag
-		if (app_mouse_box(fieldx + 8, boxy, dragw, boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]) && drag)
+		if (app_mouse_box(fieldx, boxy, boxwid, boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]) && drag)
 		{
 			mouse_cursor = cr_size_we
 	
@@ -218,6 +218,7 @@ function draw_textfield_group()
 			
 			if (!mouse_left)
 			{
+				window_focus = string(textfield_textbox[i])
 				window_busy = ""
 				app_mouse_clear()
 			}

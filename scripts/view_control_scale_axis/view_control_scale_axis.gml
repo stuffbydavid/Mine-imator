@@ -92,7 +92,7 @@ function view_control_scale_axis(view, control, vid, color, start, length, mat, 
 	view_shape_cube_draw(mat, vec3_mul(axisarr, length), size)
 	
 	// Check mouse
-	if (content_mouseon && (point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < view_3d_control_width / 2))
+	if (content_mouseon && (point_line_distance(start2D[X], start2D[Y], end2D[X], end2D[Y], mouse_x - content_x, mouse_y - content_y) < view_3d_control_width))
 		view.control_mouseon = control
 	
 	draw_set_color(c_white)

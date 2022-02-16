@@ -30,7 +30,7 @@ function view_control_move(view)
 	// Draw each plane
 	var ps, pe;
 	ps = (len / 7)
-	pe = ps + (len / 6)
+	pe = ps + (len / 7.5)
 	
 	view_control_move_pan(view, len / 10)
 	view_control_move_plane(view, e_view_control.POS_XY, point3D(1, 1, 0), (setting_z_is_up ? c_control_blue : c_control_green), mat, vec3(0, 0, 1), point3D(ps, ps, 0), point3D(pe, ps, 0), point3D(pe, pe, 0), point3D(ps, pe, 0)) // XY

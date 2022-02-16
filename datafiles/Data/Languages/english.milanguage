@@ -539,7 +539,7 @@
         "modeltexnormal": "Normal map",
         "openeditor": "Open banner editor",
         "lighttype": "Light type",
-        "create": "Create asset",
+        "create": "Create",
         "pointlighttip": "Point lights shine in all directions, like a lightbulb.",
         "spotlighttip": "Spot lights emit a cone of light, like a flashlight."
     },
@@ -2713,7 +2713,7 @@
         },
         "scale": "Scale",
         "scale/": {
-            "xyz": "XYZ",
+            "xyz": "Combined XYZ",
             "x": "X",
             "y": "Y",
             "z": "Z"

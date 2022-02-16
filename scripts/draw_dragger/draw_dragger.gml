@@ -125,7 +125,7 @@ function draw_dragger()
 	}
 	
 	if (window_busy = name + "drag")
-		current_microani.value = true
+		current_microani.active.value = true
 	
 	// Set cursor
 	if (dragmouseon)

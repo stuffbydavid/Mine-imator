@@ -165,7 +165,7 @@ function bench_draw_settings(bx, by, bw, bh)
 					tab_next()
 					
 					if (popup = popup_bannereditor)
-						current_microani.value = true
+						current_microani.active.value = true
 				}
 				
 				window_scroll_focus = string(list.scroll)
