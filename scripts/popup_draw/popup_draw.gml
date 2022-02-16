@@ -28,9 +28,8 @@ function popup_draw()
 	{
 		popup_ani = max(0, popup_ani - 0.075 * delta)
 		
-		if (popup_switch_to)
+		if (popup_switch_to && popup_ani = 0)
 		{
-			popup_ani = 0
 			popup = popup_switch_to
 			popup_switch_to = null
 			popup_ani_type = "show"
@@ -48,14 +47,25 @@ function popup_draw()
 	if (!popup || (popup_ani_type = "hide" && popup_switch_to = null))
 	{
 		popup_block_ani = max(0, popup_block_ani - 0.075 * delta)
+		popup_block_ani_ease = "easeincirc"
+		
 		popup_mouseon = false
 		
 		if (!popup)
 			return 0
 	}
+	else if (popup.block || (popup_switch_to != null && popup_switch_to.block && popup_ani_type = "hide"))
+	{
+		popup_block_ani = min(1, popup_block_ani + 0.05 * delta)
+		popup_block_ani_ease = "easeoutcirc"
+	}
 	else
-		popup_block_ani = min(1, popup_block_ani + 0.075 * delta)
+	{
+		popup_block_ani = max(0, popup_block_ani - 0.05 * delta)
+		popup_block_ani_ease = "easeincirc"
+	}
 	
+	//show_debug_message(popup_ani)
 	draw_set_alpha(ease("easeoutcirc", popup_ani))
 	
 	if (window_busy = "popupmove")

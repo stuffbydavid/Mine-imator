@@ -111,6 +111,7 @@ function app_startup_window()
 	popup = null
 	popup_ani = 0
 	popup_block_ani = 0
+	popup_block_ani_ease = "easeoutcirc"
 	popup_ani_type = ""
 	popup_switch_to = null
 	popup_switch_from = null
