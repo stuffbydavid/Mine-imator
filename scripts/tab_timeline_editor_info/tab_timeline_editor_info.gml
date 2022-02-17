@@ -22,8 +22,8 @@ function tab_timeline_editor_info()
 	draw_label_value(dx, dy, dw, 28, text_get("timelineeditortype"), string_remove_newline(tl_edit.type_name))
 	tab_next()
 	
-	// Rotation point
-	if (tl_edit.value_type[e_value_type.ROT_POINT])
+	// Rotation point (Advanced mode only)
+	if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)
 	{
 		tab_control_switch()
 		draw_switch("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)

@@ -9,27 +9,31 @@ function tab_frame_editor_particles()
 	draw_switch("frameeditorparticlesspawn", dx, dy, tl_edit.value[e_value.SPAWN], action_tl_frame_spawn)
 	tab_next()
 	
-	// Freeze
-	tab_control_checkbox()
-	draw_switch("frameeditorparticlesfreeze", dx, dy, tl_edit.value[e_value.FREEZE], action_tl_frame_freeze)
-	tab_next()
-	
-	// Clear
-	tab_control_checkbox()
-	draw_switch("frameeditorparticlesclear", dx, dy, tl_edit.value[e_value.CLEAR], action_tl_frame_clear)
-	tab_next()
-	
-	// Custom seed
-	tab_control_checkbox()
-	draw_switch("frameeditorparticlescustomseed", dx, dy, tl_edit.value[e_value.CUSTOM_SEED], action_tl_frame_custom_seed)
-	tab_next()
-	
-	if (tl_edit.value[e_value.CUSTOM_SEED])
+	// Advanced mode only
+	if (setting_advanced_mode)
 	{
-		// Seed
-		tab_control_dragger()
-		draw_dragger("frameeditorparticlesseed", dx, dy, dragger_width, tl_edit.value[e_value.SEED], 0.1, 0, 32000, 0, 1, tab.particles.tbx_seed, action_tl_frame_seed)
+		// Freeze
+		tab_control_checkbox()
+		draw_switch("frameeditorparticlesfreeze", dx, dy, tl_edit.value[e_value.FREEZE], action_tl_frame_freeze)
 		tab_next()
+		
+		// Clear
+		tab_control_checkbox()
+		draw_switch("frameeditorparticlesclear", dx, dy, tl_edit.value[e_value.CLEAR], action_tl_frame_clear)
+		tab_next()
+		
+		// Custom seed
+		tab_control_checkbox()
+		draw_switch("frameeditorparticlescustomseed", dx, dy, tl_edit.value[e_value.CUSTOM_SEED], action_tl_frame_custom_seed)
+		tab_next()
+		
+		if (tl_edit.value[e_value.CUSTOM_SEED])
+		{
+			// Seed
+			tab_control_dragger()
+			draw_dragger("frameeditorparticlesseed", dx, dy, dragger_width, tl_edit.value[e_value.SEED], 0.1, 0, 32000, 0, 1, tab.particles.tbx_seed, action_tl_frame_seed)
+			tab_next()
+		}
 	}
 	
 	// Attractor

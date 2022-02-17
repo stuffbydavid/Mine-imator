@@ -4,6 +4,8 @@ function settings_startup()
 {
 	trial_startup()
 	
+	setting_advanced_mode = false
+	
 	setting_minecraft_assets_version = minecraft_version
 	setting_minecraft_assets_new_version = ""
 	setting_minecraft_assets_new_format = 0

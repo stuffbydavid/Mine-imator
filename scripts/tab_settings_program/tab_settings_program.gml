@@ -4,6 +4,15 @@ function tab_settings_program()
 {
 	var capwid = text_caption_width("settingsminecraftversion");
 	
+	// Program mode
+	tab_control_togglebutton()
+	togglebutton_add("settingsmodesimple", null, false, !setting_advanced_mode, action_setting_program_mode)
+	togglebutton_add("settingsmodeadvanced", null, true, setting_advanced_mode, action_setting_program_mode)
+	draw_togglebutton("settingsmode", dx, dy, true, true)
+	tab_next()
+	
+	draw_tooltip_label(setting_advanced_mode ? "settingsmodeadvancedhelp" : "settingsmodesimplehelp", icons.INFO, e_toast.INFO)
+	
 	// Minecraft assets version
 	tab_control(24)
 	draw_button_menu("settingsminecraftversion", e_menu.LIST, dx, dy, dw, 24, setting_minecraft_assets_version, setting_minecraft_assets_version, action_setting_minecraft_assets_version, false, null, null, "", c_white, c_white, capwid)
@@ -110,10 +119,13 @@ function tab_settings_program()
 	
 	#endregion
 	
-	// Debug features
-	tab_control_switch()
-	draw_switch("settingsdebugfeatures", dx, dy, setting_debug_features, action_setting_debug_features, "", false, true)
-	tab_next()
+	// Debug features (Advanced mode only)
+	if (setting_advanced_mode)
+	{
+		tab_control_switch()
+		draw_switch("settingsdebugfeatures", dx, dy, setting_debug_features, action_setting_debug_features, "", false, true)
+		tab_next()
+	}
 	
 	// Spawn objects
 	tab_control_switch()
@@ -125,10 +137,13 @@ function tab_settings_program()
 	draw_switch("settingsspawncameras", dx, dy, setting_spawn_cameras, action_setting_spawn_cameras)
 	tab_next()
 	
-	// Unlimited values
-	tab_control_switch()
-	draw_switch("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
-	tab_next()
+	// Unlimited values (Advanced mode only)
+	if (setting_advanced_mode)
+	{
+		tab_control_switch()
+		draw_switch("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
+		tab_next()
+	}
 	
 	// Remove edges on large scenery
 	tab_control_switch()

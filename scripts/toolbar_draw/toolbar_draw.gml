@@ -40,4 +40,11 @@ function toolbar_draw()
 	capwid = string_width(text_get("toolbarhelp")) + 16
 	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
 	dx += capwid + padding
+	
+	// "Simple mode" button label
+	if (!setting_advanced_mode)
+	{
+		if (draw_button_label("toolbarsimplemode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
+			popup_show(popup_upgrade)
+	}
 }

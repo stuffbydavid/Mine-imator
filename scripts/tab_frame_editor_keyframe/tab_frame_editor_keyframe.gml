@@ -33,8 +33,8 @@ function tab_frame_editor_keyframe()
 	draw_button_menu("frameeditortransition", e_menu.TRANSITION_LIST, dx, dy, dw, 32, tl_edit.value[e_value.TRANSITION], text, menu_transitions, false, transition_texture_small_map[?tl_edit.value[e_value.TRANSITION]])
 	tab_next()
 	
-	// Bezier curve
-	if (tl_edit.value[e_value.TRANSITION] = "bezier")
+	// Bezier curve (Advanced mode only)
+	if (tl_edit.value[e_value.TRANSITION] = "bezier" && setting_advanced_mode)
 	{
 		tab_control(208)
 		

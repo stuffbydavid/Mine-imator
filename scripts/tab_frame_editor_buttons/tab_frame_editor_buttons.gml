@@ -14,7 +14,7 @@ function tab_frame_editor_buttons()
 	
 	draw_set_alpha(alpha)
 	
-	if (context_menu_group_temp = e_context_group.SCALE)
+	if (context_menu_group_temp = e_context_group.SCALE && setting_advanced_mode)
 	{
 		if (frame_editor.transform.scale_all)
 			draw_set_alpha(1)

@@ -11,8 +11,8 @@ function list_init_context_menu(name)
 		case "contextmenuvalue":
 		case "contextmenucategory":
 		{		
-			// Combine scale
-			if (context_menu_group = e_context_group.SCALE)
+			// Combine scale (Advanced mode only)
+			if (context_menu_group = e_context_group.SCALE && setting_advanced_mode)
 			{
 				var text = (frame_editor.transform.scale_all ? "contextmenuscaleseparate" : "contextmenuscalecombine");
 				list_item_add(text_get(text), null, "", null, icons.SCALE, null, action_group_combine_scale, true)

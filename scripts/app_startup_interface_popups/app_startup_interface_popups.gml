@@ -2,6 +2,9 @@
 
 function app_startup_interface_popups()
 {
+	// Welcome
+	popup_welcome = new_popup("welcome", popup_welcome_draw, 420, 159, true, false, false, false)
+	
 	// About
 	popup_about = new_popup("about", popup_about_draw, 542, 480, false, true, false, true)
 	

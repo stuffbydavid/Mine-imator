@@ -8,7 +8,7 @@ function popup_draw()
 	if (popup_ani = 1)
 	{
 		var off = (popup.custom_height_goal - popup.custom_height) / max(1, 4 / delta);
-	
+		
 		if (off != 0)
 		{
 			popup.custom_height += off

@@ -36,7 +36,7 @@ function new_popup()
 	else
 		popup.close_button = !popup.custom
 	
-	popup.custom_height = 0
+	popup.custom_height = -4
 	popup.custom_height_goal = 0
 	
 	return popup

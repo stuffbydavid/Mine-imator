@@ -133,9 +133,9 @@ function tab_properties_resources()
 		tab_next()
 	}
 	
-	// Material texture settings
+	// Material texture settings (Advanced mode only)
 	if ((res_edit.type = e_res_type.BLOCK_SHEET || res_edit.type = e_res_type.DOWNLOADED_SKIN || res_edit.type = e_res_type.ITEM_SHEET || res_edit.type = e_res_type.PACK
-		 || res_edit.type = e_res_type.PARTICLE_SHEET || res_edit.type = e_res_type.SKIN || res_edit.type = e_res_type.TEXTURE || res_edit.type = e_res_type.MODEL) && res_edit != mc_res)
+		 || res_edit.type = e_res_type.PARTICLE_SHEET || res_edit.type = e_res_type.SKIN || res_edit.type = e_res_type.TEXTURE || res_edit.type = e_res_type.MODEL) && res_edit != mc_res && setting_advanced_mode && project_render_material_maps)
 	{
 		tab_control_switch()
 		draw_switch("resourcesusesglossiness", dx, dy, res_edit.material_uses_glossiness, action_res_uses_glossiness, "resourcesusesglossinesstip")

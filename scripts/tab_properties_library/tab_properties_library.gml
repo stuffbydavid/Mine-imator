@@ -334,28 +334,35 @@ function tab_properties_library()
 		
 		case e_temp_type.PARTICLE_SPAWNER:
 		{
-			tab_control_button_label()
-			
-			if (draw_button_label("libraryparticleeditoropen", dx, dy, dw, null, e_button.SECONDARY))
+			// Advanced mode only
+			if (setting_advanced_mode)
 			{
-				tab_template_editor_update_ptype_list()
-				tab_toggle(template_editor)
+				tab_control_button_label()
+			
+				if (draw_button_label("libraryparticleeditoropen", dx, dy, dw, null, e_button.SECONDARY))
+				{
+					tab_template_editor_update_ptype_list()
+					tab_toggle(template_editor)
+				}
+			
+				if (template_editor.show)
+					current_microani.active.value = true
+			
+				tab_next()
 			}
-			
-			if (template_editor.show)
-				current_microani.active.value = true
-			
-			tab_next()
 			
 			break
 		}
 		
 		case e_temp_type.TEXT:
 		{
-			// Font
-			tab_control_menu()
-			draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 24, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font)
-			tab_next()
+			// Font (Advanced mode only)
+			if (setting_advanced_mode)
+			{
+				tab_control_menu()
+				draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 24, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font)
+				tab_next()
+			}
 			
 			// 3D / Face camera
 			tab_control_checkbox()
@@ -429,18 +436,22 @@ function tab_properties_library()
 			// Mapped
 			if (temp_edit.type = e_temp_type.CUBE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
 			{
-				tab_control_checkbox()
-				draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
-				tab_next()
-				
-				if (temp_edit.shape_tex_mapped)
+				// Advanced mode only
+				if (setting_advanced_mode)
 				{
-					tab_control_button_label()
-					
-					if (draw_button_label("libraryshapetexsavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
-						action_lib_shape_save_map()
-					
+					tab_control_checkbox()
+					draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
 					tab_next()
+					
+					if (temp_edit.shape_tex_mapped)
+					{
+						tab_control_button_label()
+						
+						if (draw_button_label("libraryshapetexsavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
+							action_lib_shape_save_map()
+						
+						tab_next()
+					}
 				}
 			}
 			

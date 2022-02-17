@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.02.15"
+        "lastchange": "2022.02.17"
     },
     "particle/": {
         "default": "Default spawner",
@@ -238,6 +238,11 @@
         "loadingassets": "Loading assets, please wait...",
         "sortby": "Sort by"
     },
+    "welcome/": {
+        "caption": "Welcome to Mine-imator!",
+        "description": "You're in \"Simple mode\" and certain features will be hidden to help you get started learning Mine-imator. Advanced features can be unlocked by upgrading Mine-imator at a later time.",
+        "continue": "Continue"
+    },
     "about/": {
 		"version": "Version %1",
         "releasedate": ", released %1",
@@ -462,7 +467,8 @@
             "report": "Report a bug...",
             "forums": "Visit the forums...",
             "upgrade": "Upgrade"
-        }
+        },
+        "simplemode": "Simple mode enabled"
     },
     "type/": {
         "char": "Character",
@@ -617,7 +623,7 @@
     },
     "upgrade/": {
         "caption": "Upgrade",
-        "info": "You are currently using the trial version of Mine-imator. To unlock material maps and watermark customizing, get an upgrade key from the link below, and enter it here. (Free, donation optional.)",
+        "info": "You are currently using the trial version of Mine-imator. To unlock advanced features and watermark customizing, get an upgrade key from the link below, and enter it here.",
         "continue": "Upgrade"
     },
     "modelbench/": {
@@ -2423,9 +2429,9 @@
             "color": "Fog color",
             "objectcolorcustom": "Custom object color",
             "objectcolor": "Object fog color",
-            "distance": "Fog distance",
-            "size": "Fog size",
-            "height": "Fog height"
+            "distance": "Distance",
+            "size": "Fade size",
+            "height": "Height"
         },
         "volumetricfog": "Volumetric fog",
         "volumetricfog/": {
@@ -2965,6 +2971,13 @@
     },
     "settings/": {
         "program": "PROGRAM",
+        "mode": "Program mode",
+        "mode/": {
+            "simple": "Simple",
+            "simplehelp": "Limited set of features, reccomended for new users.",
+            "advanced": "Advanced",
+            "advancedhelp": "Access to all available features, reccomended for advanced users."
+        },
         "minecraftversion": "Minecraft version",
         "64bitimport": "Use x64 world importer",
         "fps": "Frames per second",

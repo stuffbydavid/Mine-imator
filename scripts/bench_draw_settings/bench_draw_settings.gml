@@ -358,9 +358,12 @@ function bench_draw_settings(bx, by, bw, bh)
 				var capwid;
 				capwid = text_caption_width("benchtextfont")
 				
-				// Font
-				draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, 32, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
-				dy += 40
+				// Font (Advanced mode only)
+				if (setting_advanced_mode)
+				{
+					draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, 32, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
+					dy += 40
+				}
 				
 				// 3D / Face camera
 				var sx;
@@ -437,9 +440,13 @@ function bench_draw_settings(bx, by, bw, bh)
 					bench_settings.shape_type = e_shape_type.CYLINDER || 
 					bench_settings.shape_type = e_shape_type.CONE)
 				{
-					tab_control_checkbox()
-					draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map)
-					tab_next()
+					// Advanced mode only
+					if (setting_advanced_mode)
+					{
+						tab_control_checkbox()
+						draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map)
+						tab_next()
+					}
 				}
 				else if (bench_settings.shape_type = e_shape_type.SURFACE)
 				{

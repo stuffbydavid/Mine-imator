@@ -857,8 +857,8 @@ function tab_timeline()
 		}
 		itemmaxw += buttonsize + buttonpad
 		
-		// Ghost toggle
-		if (!setting_timeline_hide_ghosts)
+		// Ghost toggle (Advanced mode only)
+		if (!setting_timeline_hide_ghosts && setting_advanced_mode)
 		{
 			xx -= (buttonsize + 4) * (itemhover || tl.ghost)
 			

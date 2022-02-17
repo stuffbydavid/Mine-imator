@@ -29,7 +29,11 @@ function action_project_render_import(fn = "")
 			hobj = history_set(action_project_render_import)
 		
 		hobj.save_obj_old = new_obj(obj_history_save)
+		hobj.save_obj_old.hobj = hobj
+		
 		hobj.save_obj_new = new_obj(obj_history_save)
+		hobj.save_obj_new.hobj = hobj
+		
 		hobj.fn = fn
 		
 		// Save old settings

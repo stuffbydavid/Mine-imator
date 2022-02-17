@@ -14,6 +14,10 @@ function tab_frame_editor_material()
 	if (tl_edit.value_type[e_value_type.MATERIAL_COLOR])
 		tab_frame_editor_color()
 	
+	// Only show more settings in 'Advanced mode'
+	if (!setting_advanced_mode)
+		return 0
+	
 	// Surface properties
 	if (tl_edit.value_type[e_value_type.MATERIAL_SURFACE])
 	{

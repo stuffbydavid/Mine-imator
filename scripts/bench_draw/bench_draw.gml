@@ -72,14 +72,25 @@ function bench_draw()
 	dy += 8
 	
 	// Left, asset types
-	var types, divides, lefth;
+	var types, divides, lefth, skipasset;
 	types = 13
 	divides = 3
 	lefth = (types * 32) + (divides * 9)
 	for (var i = 0; i < ds_list_size(bench_type_list.item); i++)
 	{
-		list_item_draw(bench_type_list.item[|i], dx, dy, 192, 32, (bench_settings.type = bench_type_list.item[|i].value), 0, 5)
-		dy += 32
+		skipasset = false
+		
+		if (!setting_advanced_mode)
+		{
+			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground")
+				skipasset = true
+		}
+		
+		if (!skipasset)
+		{
+			list_item_draw(bench_type_list.item[|i], dx, dy, 192, 32, (bench_settings.type = bench_type_list.item[|i].value), 0, 5)
+			dy += 32
+		}
 		
 		if (i = 2 || i = 6 || i = 8)
 		{

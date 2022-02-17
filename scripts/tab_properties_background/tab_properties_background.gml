@@ -20,26 +20,29 @@ function tab_properties_background()
 	draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 	tab_next()
 	
-	// Time-based effects
-	tab_control_switch()
-	draw_button_collapse("time_effects", collapse_map[?"time_effects"], null, true, "backgroundtimeeffects")
-	tab_next()
-	
-	if (collapse_map[?"time_effects"])
+	// Time-based effects (Advanced mode only)
+	if (setting_advanced_mode)
 	{
-		tab_collapse_start()
-		
-		// Twilight
 		tab_control_switch()
-		draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
+		draw_button_collapse("time_effects", collapse_map[?"time_effects"], null, true, "backgroundtimeeffects")
 		tab_next()
+	
+		if (collapse_map[?"time_effects"])
+		{
+			tab_collapse_start()
 		
-		// Desaturate night
-		tab_control_switch()
-		draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
-		tab_next()
+			// Twilight
+			tab_control_switch()
+			draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
+			tab_next()
 		
-		tab_collapse_end()
+			// Desaturate night
+			tab_control_switch()
+			draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
+			tab_next()
+		
+			tab_collapse_end()
+		}
 	}
 	
 	// Sky properties
@@ -170,36 +173,40 @@ function tab_properties_background()
 		draw_togglebutton("backgroundskycloudsmode", dx, dy, true, true)
 		tab_next()
 		
-		// Cloud texture
-		var tex = ((background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture);
-		tab_control_menu(32)
-		draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, 32, background_sky_clouds_tex, background_sky_clouds_tex.display_name, action_background_sky_clouds_tex, false, tex)
-		tab_next()
-		
-		// Cloud speed
-		tab_control_dragger()
-		draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 1 / 10, -no_limit, no_limit, 100, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
-		tab_next()
-		
-		// Cloud offset
-		tab_control_dragger()
-		draw_dragger("backgroundskycloudsoffset", dx, dy, dragger_width, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset)
-		tab_next()
-		
-		// Cloud height
-		tab_control_dragger()
-		draw_dragger("backgroundskycloudsheight", dx, dy, dragger_width, background_sky_clouds_height, 10, -no_limit, no_limit, 1024, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height)
-		tab_next()
-		
-		// Cloud size
-		tab_control_dragger()
-		draw_dragger("backgroundskycloudssize", dx, dy, dragger_width, background_sky_clouds_size, 5, 16, no_limit, 1536, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size)
-		tab_next()
-		
-		// Cloud thickness
-		tab_control_dragger()
-		draw_dragger("backgroundskycloudsthickness", dx, dy, dragger_width, background_sky_clouds_thickness, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_thickness, action_background_sky_clouds_thickness)
-		tab_next()
+		// Advanced mode only
+		if (setting_advanced_mode)
+		{
+			// Cloud texture
+			var tex = ((background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture);
+			tab_control_menu(32)
+			draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, 32, background_sky_clouds_tex, background_sky_clouds_tex.display_name, action_background_sky_clouds_tex, false, tex)
+			tab_next()
+			
+			// Cloud speed
+			tab_control_dragger()
+			draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 1 / 10, -no_limit, no_limit, 100, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
+			tab_next()
+			
+			// Cloud offset
+			tab_control_dragger()
+			draw_dragger("backgroundskycloudsoffset", dx, dy, dragger_width, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset)
+			tab_next()
+			
+			// Cloud height
+			tab_control_dragger()
+			draw_dragger("backgroundskycloudsheight", dx, dy, dragger_width, background_sky_clouds_height, 10, -no_limit, no_limit, 1024, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height)
+			tab_next()
+			
+			// Cloud size
+			tab_control_dragger()
+			draw_dragger("backgroundskycloudssize", dx, dy, dragger_width, background_sky_clouds_size, 5, 16, no_limit, 1536, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size)
+			tab_next()
+			
+			// Cloud thickness
+			tab_control_dragger()
+			draw_dragger("backgroundskycloudsthickness", dx, dy, dragger_width, background_sky_clouds_thickness, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_thickness, action_background_sky_clouds_thickness)
+			tab_next()
+		}
 		
 		tab_collapse_end()
 	}
@@ -429,70 +436,73 @@ function tab_properties_background()
 		tab_collapse_end()
 	}
 	
-	// Volumetric fog
-	tab_control_switch()
-	draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], action_background_volumetric_fog, background_volumetric_fog, "backgroundvolumetricfog")
-	tab_next()
-	
-	if (background_volumetric_fog && collapse_map[?"volumetricfog"])
+	// Volumetric fog (Advanced mode only)
+	if (setting_advanced_mode)
 	{
-		tab_collapse_start()
-		
 		tab_control_switch()
-		draw_button_collapse("fog_ambience", collapse_map[?"fog_ambience"], action_background_volumetric_fog_ambience, background_volumetric_fog_ambience, "backgroundvolumetricfogambience")
+		draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], action_background_volumetric_fog, background_volumetric_fog, "backgroundvolumetricfog")
 		tab_next()
 		
-		if (background_volumetric_fog_ambience && collapse_map[?"fog_ambience"])
+		if (background_volumetric_fog && collapse_map[?"volumetricfog"])
 		{
 			tab_collapse_start()
+			
+			tab_control_switch()
+			draw_button_collapse("fog_ambience", collapse_map[?"fog_ambience"], action_background_volumetric_fog_ambience, background_volumetric_fog_ambience, "backgroundvolumetricfogambience")
+			tab_next()
+			
+			if (background_volumetric_fog_ambience && collapse_map[?"fog_ambience"])
+			{
+				tab_collapse_start()
+				
+				tab_control_meter()
+				draw_meter("backgroundvolumetricfogscatter", dx, dy, dw, background_volumetric_fog_scatter, 64, -1, 1, 0, 0.001, tab.background.tbx_volumetric_fog_scatter, action_background_volumetric_fog_scatter)
+				tab_next()
+				
+				tab_collapse_end()
+			}
+			
+			tab_control_switch()
+			draw_button_collapse("fog_noise", collapse_map[?"fog_noise"], action_background_volumetric_fog_noise, background_volumetric_fog_noise, "backgroundvolumetricfognoise")
+			tab_next()
+			
+			if (background_volumetric_fog_noise && collapse_map[?"fog_noise"])
+			{
+				tab_collapse_start()
+				
+				tab_control_dragger()
+				draw_dragger("backgroundvolumetricfognoisescale", dx, dy, dragger_width, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale)
+				tab_next()
+				
+				tab_control_dragger()
+				draw_dragger("backgroundvolumetricfognoisecontrast", dx, dy, dragger_width, round(background_volumetric_fog_noise_contrast * 100), .25, 0, no_limit * 100, 0, 1, tab.background.tbx_volumetric_fog_noise_contrast, action_background_volumetric_fog_noise_contrast)
+				tab_next()
+				
+				tab_control_dragger()
+				draw_dragger("backgroundvolumetricfogwind", dx, dy, dragger_width, round(background_volumetric_fog_wind * 100), .25, 0, no_limit * 100, 100, 1, tab.background.tbx_volumetric_fog_wind, action_background_volumetric_fog_wind)
+				tab_next()
+				
+				tab_collapse_end()
+			}
 			
 			tab_control_meter()
-			draw_meter("backgroundvolumetricfogscatter", dx, dy, dw, background_volumetric_fog_scatter, 64, -1, 1, 0, 0.001, tab.background.tbx_volumetric_fog_scatter, action_background_volumetric_fog_scatter)
+			draw_meter("backgroundvolumetricfogdensity", dx, dy, dw, round(background_volumetric_fog_density * 100), 64, 0, 100, 20, 1, tab.background.tbx_volumetric_fog_density, action_background_volumetric_fog_density)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("backgroundvolumetricfogheight", dx, dy, dragger_width, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("backgroundvolumetricfogheightfade", dx, dy, dragger_width, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade)
+			tab_next()
+			
+			tab_control_color()
+			draw_button_color("backgroundvolumetricfogcolor", dx, dy, dw, background_volumetric_fog_color, c_white, false, action_background_volumetric_fog_color)
 			tab_next()
 			
 			tab_collapse_end()
 		}
-		
-		tab_control_switch()
-		draw_button_collapse("fog_noise", collapse_map[?"fog_noise"], action_background_volumetric_fog_noise, background_volumetric_fog_noise, "backgroundvolumetricfognoise")
-		tab_next()
-		
-		if (background_volumetric_fog_noise && collapse_map[?"fog_noise"])
-		{
-			tab_collapse_start()
-			
-			tab_control_dragger()
-			draw_dragger("backgroundvolumetricfognoisescale", dx, dy, dragger_width, background_volumetric_fog_noise_scale, .25, 1, 500, 16, .01, tab.background.tbx_volumetric_fog_noise_scale, action_background_volumetric_fog_noise_scale)
-			tab_next()
-			
-			tab_control_dragger()
-			draw_dragger("backgroundvolumetricfognoisecontrast", dx, dy, dragger_width, round(background_volumetric_fog_noise_contrast * 100), .25, 0, no_limit * 100, 0, 1, tab.background.tbx_volumetric_fog_noise_contrast, action_background_volumetric_fog_noise_contrast)
-			tab_next()
-			
-			tab_control_dragger()
-			draw_dragger("backgroundvolumetricfogwind", dx, dy, dragger_width, round(background_volumetric_fog_wind * 100), .25, 0, no_limit * 100, 100, 1, tab.background.tbx_volumetric_fog_wind, action_background_volumetric_fog_wind)
-			tab_next()
-			
-			tab_collapse_end()
-		}
-		
-		tab_control_meter()
-		draw_meter("backgroundvolumetricfogdensity", dx, dy, dw, round(background_volumetric_fog_density * 100), 64, 0, 100, 20, 1, tab.background.tbx_volumetric_fog_density, action_background_volumetric_fog_density)
-		tab_next()
-		
-		tab_control_dragger()
-		draw_dragger("backgroundvolumetricfogheight", dx, dy, dragger_width, background_volumetric_fog_height, .5, -no_limit, no_limit, 200, 1, tab.background.tbx_volumetric_fog_height, action_background_volumetric_fog_height)
-		tab_next()
-		
-		tab_control_dragger()
-		draw_dragger("backgroundvolumetricfogheightfade", dx, dy, dragger_width, background_volumetric_fog_height_fade, (background_volumetric_fog_height_fade + 0.1) / 100, 0, no_limit, 100, 1, tab.background.tbx_volumetric_fog_height_fade, action_background_volumetric_fog_height_fade)
-		tab_next()
-		
-		tab_control_color()
-		draw_button_color("backgroundvolumetricfogcolor", dx, dy, dw, background_volumetric_fog_color, c_white, false, action_background_volumetric_fog_color)
-		tab_next()
-		
-		tab_collapse_end()
 	}
 	
 	// Wind
@@ -514,20 +524,24 @@ function tab_properties_background()
 		draw_dragger("backgroundwindstrength", dx, dy, dragger_width, background_wind_strength, .1, 0, no_limit, 0.5, 0.05, tab.background.tbx_wind_strength, action_background_wind_strength)
 		tab_next()
 		
-		// Wind angle
-		tab_control_dragger()
-		draw_dragger("backgroundwinddirection", dx, dy, dragger_width, background_wind_direction, .1, -no_limit, no_limit, 45, 1, tab.background.tbx_wind_direction, action_background_wind_direction)
-		tab_next()
-		
-		// Wind direction speed
-		tab_control_dragger()
-		draw_dragger("backgroundwinddirectionalspeed", dx, dy, dragger_width, round(background_wind_directional_speed * 100), .1, 0, no_limit, 20, 1, tab.background.tbx_wind_directional_speed, action_background_wind_directional_speed)
-		tab_next()
-		
-		// Wind direction strength
-		tab_control_dragger()
-		draw_dragger("backgroundwinddirectionalstrength", dx, dy, dragger_width, background_wind_directional_strength, .01, 0, no_limit, 1.5, 0.05, tab.background.tbx_wind_directional_strength, action_background_wind_directional_strength)
-		tab_next()
+		// Advanced mode only
+		if (setting_advanced_mode)
+		{
+			// Wind angle
+			tab_control_dragger()
+			draw_dragger("backgroundwinddirection", dx, dy, dragger_width, background_wind_direction, .1, -no_limit, no_limit, 45, 1, tab.background.tbx_wind_direction, action_background_wind_direction)
+			tab_next()
+			
+			// Wind direction speed
+			tab_control_dragger()
+			draw_dragger("backgroundwinddirectionalspeed", dx, dy, dragger_width, round(background_wind_directional_speed * 100), .1, 0, no_limit, 20, 1, tab.background.tbx_wind_directional_speed, action_background_wind_directional_speed)
+			tab_next()
+			
+			// Wind direction strength
+			tab_control_dragger()
+			draw_dragger("backgroundwinddirectionalstrength", dx, dy, dragger_width, background_wind_directional_strength, .01, 0, no_limit, 1.5, 0.05, tab.background.tbx_wind_directional_strength, action_background_wind_directional_strength)
+			tab_next()
+		}
 		
 		tab_collapse_end()
 	}
@@ -537,8 +551,11 @@ function tab_properties_background()
 	draw_switch("backgroundopaqueleaves", dx, dy, background_opaque_leaves, action_background_opaque_leaves)
 	tab_next()
 	
-	// Animation speed
-	tab_control_dragger()
-	draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
-	tab_next()
+	// Animation speed (Advanced mode only)
+	if (setting_advanced_mode)
+	{
+		tab_control_dragger()
+		draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
+		tab_next()
+	}
 }

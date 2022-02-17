@@ -56,9 +56,12 @@ function tab_timeline_editor_hierarchy()
 		}
 		
 		// Rotation point
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorinheritrotpoint", dx, dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
-		tab_next()
+		if (setting_advanced_mode)
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritrotpoint", dx, dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
+			tab_next()
+		}
 		
 		// Scale
 		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA])
@@ -85,7 +88,7 @@ function tab_timeline_editor_hierarchy()
 		draw_checkbox("timelineeditorinheritvisibility", dx, dy, tl_edit.inherit_visibility, action_tl_inherit_visibility)
 		tab_next()
 		
-		// Bend
+		// Bend (Advanced mode only)
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorinheritbend", dx, dy, tl_edit.inherit_bend, action_tl_inherit_bend)
 		tab_next()
@@ -98,39 +101,42 @@ function tab_timeline_editor_hierarchy()
 			tab_next()
 		}
 		
-		// Surface
-		if (tl_edit.value_type[e_value_type.MATERIAL])
+		// Surface (Advanced mode only)
+		if (tl_edit.value_type[e_value_type.MATERIAL] && setting_advanced_mode)
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorinheritsurface", dx, dy, tl_edit.inherit_surface, action_tl_inherit_surface)
 			tab_next()
 		}
 		
-		// Subsurface
-		if (tl_edit.value_type[e_value_type.MATERIAL])
+		// Subsurface (Advanced mode only)
+		if (tl_edit.value_type[e_value_type.MATERIAL] && setting_advanced_mode)
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorinheritsubsurface", dx, dy, tl_edit.inherit_subsurface, action_tl_inherit_subsurface)
 			tab_next()
 		}
 		
-		// Glow color
-		if (!tl_edit.value_type[e_value_type.CAMERA])
+		// Glow color (Advanced mode only)
+		if (!tl_edit.value_type[e_value_type.CAMERA] && setting_advanced_mode)
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorinheritglowcolor", dx, dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)
 			tab_next()
 		}
 		
-		// Select
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorinheritselect", dx, dy, tl_edit.inherit_select, action_tl_inherit_select)
-		tab_next()	
+		// Select (Advanced mode only)
+		if (setting_advanced_mode)
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritselect", dx, dy, tl_edit.inherit_select, action_tl_inherit_select)
+			tab_next()	
+		}
 		
 		tab_set_collumns(false)
 		
 		// Scale mode
-		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale)
+		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale && setting_advanced_mode)
 		{
 			tab_control_togglebutton()
 			togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)

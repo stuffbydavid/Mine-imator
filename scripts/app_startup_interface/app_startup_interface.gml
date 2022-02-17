@@ -41,5 +41,11 @@ function app_startup_interface()
 		window_state = ""
 	}
 	else
+	{
 		project_reset()
+		
+		// First start
+		if (!file_exists_lib(settings_file))
+			popup_show(popup_welcome)
+	}
 }
