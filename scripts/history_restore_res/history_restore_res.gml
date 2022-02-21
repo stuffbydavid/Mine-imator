@@ -168,14 +168,6 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = res
 		
-		for (var s = 0; s < save.usage_kf_texture_material_amount; s++)
-			with (save_id_find(save.usage_kf_texture_material_tl_save_id[s]))
-				keyframe_list[|save.usage_kf_texture_material_index[s]].value[e_value.TEXTURE_MATERIAL_OBJ] = res
-		
-		for (var s = 0; s < save.usage_kf_tex_normal_amount; s++)
-			with (save_id_find(save.usage_kf_tex_normal_tl_save_id[s]))
-				keyframe_list[|save.usage_kf_tex_normal_index[s]].value[e_value.TEXTURE_NORMAL_OBJ] = res
-		
 		for (var s = 0; s < save.usage_kf_sound_amount; s++)
 			with (save_id_find(save.usage_kf_sound_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_sound_index[s]].value[e_value.SOUND_OBJ] = res
@@ -190,24 +182,6 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_tl_texture_save_id[s]))
 			{
 				value[e_value.TEXTURE_OBJ] = res
-				update_matrix = true
-			}
-		}
-		
-		for (var s = 0; s < save.usage_tl_texture_material_amount; s++)
-		{
-			with (save_id_find(save.usage_tl_texture_material_save_id[s]))
-			{
-				value[e_value.TEXTURE_MATERIAL_OBJ] = res
-				update_matrix = true
-			}
-		}
-		
-		for (var s = 0; s < save.usage_tl_tex_normal_amount; s++)
-		{
-			with (save_id_find(save.usage_tl_tex_normal_save_id[s]))
-			{
-				value[e_value.TEXTURE_NORMAL_OBJ] = res
 				update_matrix = true
 			}
 		}

@@ -24,6 +24,8 @@ function action_project_render_settings(file)
 		{
 			popup_show(popup_upgrade)
 			popup_upgrade.page = 2
+			popup_upgrade.custom_rendering = file
+			
 			return 0
 		}
 		

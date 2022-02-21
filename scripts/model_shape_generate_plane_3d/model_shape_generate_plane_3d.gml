@@ -248,15 +248,15 @@ function model_shape_generate_plane_3d(bend, alpha)
 				// South face
 				if (!hide_front)
 				{
-					vbuffer_add_triangle(p2, np2, np3, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(np3, p3, p2, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle(p2, np2, np3, t2, t1, t4, null, null, null, c_white, 1, invert)
+					vbuffer_add_triangle(np3, p3, p2, t4, t3, t2, null, null, null, c_white, 1, invert)
 				}
 				
 				// North face
 				if (!hide_back)
 				{
-					vbuffer_add_triangle(np1, p1, p4, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p4, np4, np1, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle(np1, p1, p4, t2, t1, t4, null, null, null, c_white, 1, invert)
+					vbuffer_add_triangle(p4, np4, np1, t4, t3, t2, null, null, null, c_white, 1, invert)
 				}
 				
 				// Above face
@@ -301,15 +301,15 @@ function model_shape_generate_plane_3d(bend, alpha)
 				// South face
 				if (!hide_front)
 				{
-					vbuffer_add_triangle(np4, np3, p3, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p3, p4, np4, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle(np4, np3, p3, t2, t1, t4, null, null, null, c_white, 1, invert)
+					vbuffer_add_triangle(p3, p4, np4, t4, t3, t2, null, null, null, c_white, 1, invert)
 				}
 				
 				// North face
 				if (!hide_back)
 				{
-					vbuffer_add_triangle(np2, np1, p1, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p1, p2, np2, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle(np2, np1, p1, t2, t1, t4, null, null, null, c_white, 1, invert)
+					vbuffer_add_triangle(p1, p2, np2, t4, t3, t2, null, null, null, c_white, 1, invert)
 				}
 				
 				// Above face

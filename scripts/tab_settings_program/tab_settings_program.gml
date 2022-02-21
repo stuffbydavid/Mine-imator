@@ -42,11 +42,11 @@ function tab_settings_program()
 		tab.program.tbx_backup_time.suffix = text_get("settingsbackuptimeminutes")
 		
 		tab_control_dragger()
-		draw_dragger("settingsbackuptime", dx, dy, dragger_width, setting_backup_time, 0.1, 1, 120, 10, 1, tab.program.tbx_backup_time, action_setting_backup_time)
+		draw_dragger("settingsbackuptime", dx, dy, dragger_width, setting_backup_time, 0.1, 1, 120, 3, 1, tab.program.tbx_backup_time, action_setting_backup_time)
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("settingsbackupamount", dx, dy, dragger_width, setting_backup_amount, 0.1, 1, 20, 3, 1, tab.program.tbx_backup_amount, action_setting_backup_amount)
+		draw_dragger("settingsbackupamount", dx, dy, dragger_width, setting_backup_amount, 0.1, 1, 20, 5, 1, tab.program.tbx_backup_amount, action_setting_backup_amount)
 		tab_next()
 		
 		tab_collapse_end()

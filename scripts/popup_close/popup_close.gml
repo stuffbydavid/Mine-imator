@@ -6,7 +6,10 @@ function popup_close()
 		popup_modelbench.not_now = true
 	
 	if (popup = popup_upgrade)
+	{
 		popup_upgrade.open_advanced = false
+		popup_upgrade.custom_rendering =  "default"
+	}
 	
 	window_busy = ""
 	window_focus = ""

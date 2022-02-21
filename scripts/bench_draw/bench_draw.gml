@@ -40,7 +40,7 @@ function bench_draw()
 	ani = ease(func, bench_show_ani)
 	content_x = bench_settings.posx + (8 - (8 * ani))
 	content_y = bench_settings.posy
-	content_width = 481
+	content_width = 534
 	content_height = bench_settings.height
 	content_mouseon = !popup_mouseon
 	

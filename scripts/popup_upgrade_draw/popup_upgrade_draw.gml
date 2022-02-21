@@ -82,6 +82,9 @@ function popup_upgrade_draw()
 				popup_switch(popup_switch_from)
 			else
 			{
+				if (popup.custom_rendering != "default")
+					action_project_render_settings(popup.custom_rendering)
+				
 				// Open "Advanced mode" popup
 				if (popup.open_advanced)
 				{

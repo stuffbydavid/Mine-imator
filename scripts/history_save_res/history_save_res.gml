@@ -25,12 +25,12 @@ function history_save_res(res)
 		usage_block_tex_normal_amount = 0
 		usage_scenery_amount = 0
 		usage_shape_tex_amount = 0
+		usage_shape_tex_material_amount = 0
+		usage_shape_tex_normal_amount = 0
 		usage_text_font_amount = 0
 		usage_sprite_tex_amount = 0
 		usage_sprite_template_tex_amount = 0
 		usage_kf_texture_amount = 0
-		usage_kf_texture_material_amount = 0
-		usage_kf_tex_normal_amount = 0
 		usage_tl_texture_amount = 0
 		usage_kf_sound_amount = 0
 		usage_tl_sound_amount = 0
@@ -41,6 +41,8 @@ function history_save_res(res)
 		usage_background_sky_moon_tex = false
 		usage_background_sky_clouds_tex = false
 		usage_background_ground_tex = false
+		usage_background_ground_tex_material = false
+		usage_background_ground_tex_normal = false
 	}
 	
 	// Save references

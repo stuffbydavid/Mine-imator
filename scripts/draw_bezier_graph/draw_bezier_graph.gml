@@ -1,13 +1,12 @@
-/// draw_bezier_graph(x, y, width, height, points, script, sync)
+/// draw_bezier_graph(x, y, width, height, points, sync)
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg points
-/// @arg script
 /// @arg sync
 
-function draw_bezier_graph(xx, yy, wid, hei, points, script, sync)
+function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 {
 	var vertical, boxx, boxy, boxw, boxh, update;
 	vertical = (hei > wid)
@@ -145,6 +144,11 @@ function draw_bezier_graph(xx, yy, wid, hei, points, script, sync)
 		points[2] /= 100
 		points[3] /= 100
 		
-		script_execute(script, points, false)
+		if (sync)
+			action_tl_frame_ease_all(points, false)
+		else if (window_busy = "beziereasein")
+			action_tl_frame_ease_in(points, false)
+		else
+			action_tl_frame_ease_out([points[2], points[3]], false)
 	}
 }

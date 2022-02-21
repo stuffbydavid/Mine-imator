@@ -41,6 +41,9 @@ function toolbar_draw()
 	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
 	dx += capwid + padding
 	
+	dx += 8
+	draw_label(text_get("toolbarbackup"), dx, dy + 22, fa_left, fa_bottom, c_text_secondary, a_text_secondary * clamp(backup_text_ani, 0, 1), font_value)
+	
 	// "Simple mode" button label
 	if (!setting_advanced_mode)
 	{

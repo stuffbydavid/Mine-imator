@@ -50,10 +50,11 @@ function draw_texture_picker()
 	
 	// Outline
 	draw_outline(xx, yy, wid, hei, 1, c_border, a_border)
+	draw_box(xx, yy, wid, hei, 1, c_level_bottom, .5)
 	
 	tx = xx
 	ty = yy
-	off = 2
+	off = 3
 	
 	// Get number of  active slots in the sheets
 	if (anitex = null)
@@ -64,8 +65,8 @@ function draw_texture_picker()
 	// Sizes
 	slotwid = clamp(floor(texture_width(tex) / slotsx), 16, 64)
 	slothei = clamp(floor(texture_height(tex) / slotsy), 16, 64)
-	itemwid = slotwid + off * 2
-	itemhei = slothei + off * 2
+	itemwid = slotwid + off
+	itemhei = slothei + off
 	itemsx = floor((wid - 14 * scroll.needed) / itemwid)
 	itemsy = ceil(items / itemsx)
 	
@@ -73,7 +74,8 @@ function draw_texture_picker()
 	{
 		var col, curtex, curslot, curslotsx, curslotsy;
 		
-		draw_box(tx + off, ty + off, slotwid, slothei, false, c_level_bottom, 1)
+		if (select = i)
+			draw_box(tx, ty, slotwid + off*2, slothei + off*2, false, c_accent_hover, a_accent_hover)
 		
 		// Texture color
 		col = c_white
@@ -99,8 +101,8 @@ function draw_texture_picker()
 		}
 		
 		// Highlight if selected
-		if (select = i)
-			draw_outline(tx + off, ty + off, slotwid, slothei, 2, c_accent, 1)
+		//if (select = i)
+		//	draw_outline(tx + off, ty + off, slotwid, slothei, 2, c_accent, 1)
 		
 		// Item
 		draw_texture_slot(curtex, curslot, tx + off, ty + off, slotwid, slothei, curslotsx, curslotsy, col)

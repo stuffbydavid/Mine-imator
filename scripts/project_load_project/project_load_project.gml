@@ -17,7 +17,7 @@ function project_load_project(map)
 	if (load_format >= e_project.FORMAT_200_AL14 && load_format < e_project.FORMAT_200_AL21) // Custom
 		project_render_settings = ""
 	else
-		value_get_string(map[?"render_settings"], project_render_settings)
+		project_render_settings = value_get_string(map[?"render_settings"], project_render_settings)
 	
 	project_tempo = value_get_real(map[?"tempo"], project_tempo)
 	project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
@@ -26,7 +26,7 @@ function project_load_project(map)
 	view_second.camera = value_get_save_id(map[?"view_second_camera"], -5)
 	
 	// If render settings file doesn't exists, set to custom
-	if (!file_exists_lib(render_directory + project_render_settings + ".mirender"))
+	if (project_render_settings != "" && !file_exists_lib(render_directory + project_render_settings + ".mirender"))
 		project_render_settings = ""
 	
 	if (project_render_settings != "")

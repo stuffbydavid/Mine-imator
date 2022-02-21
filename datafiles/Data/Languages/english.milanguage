@@ -468,6 +468,7 @@
             "forums": "Visit the forums...",
             "upgrade": "Upgrade"
         },
+        "backup": "Backing up...",
         "simplemode": "Simple mode enabled"
     },
     "type/": {

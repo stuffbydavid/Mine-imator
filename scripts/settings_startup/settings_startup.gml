@@ -18,10 +18,11 @@ function settings_startup()
 	
 	closed_toast_list = ds_list_create()
 	
+	backup_text_ani = 0
 	backup_next = 0
 	setting_backup = true
-	setting_backup_time = 10
-	setting_backup_amount = 3
+	setting_backup_time = 3
+	setting_backup_amount = 5
 	setting_debug_features = false
 	setting_spawn_objects = true
 	setting_spawn_cameras = true

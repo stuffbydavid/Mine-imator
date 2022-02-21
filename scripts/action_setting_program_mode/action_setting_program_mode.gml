@@ -7,6 +7,8 @@ function action_setting_program_mode(advanced)
 	{
 		popup_show(popup_upgrade)
 		popup_upgrade.page = 1
+		popup_upgrade.open_advanced = true
+		
 		return 0
 	}
 	

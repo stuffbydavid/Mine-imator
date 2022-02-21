@@ -49,13 +49,13 @@ function app_startup_themes()
 		array_add(accent_list, hex_to_color("982BCB"))
 		array_add(accent_list, hex_to_color("E93983"))
 		
-		level_top = c_white
-		level_middle = hex_to_color("FAFAFA")
-		level_bottom = hex_to_color("F2F2F2")
+		level_top = hex_to_color("F7FAFC")
+		level_middle = hex_to_color("ECEFF1")
+		level_bottom = hex_to_color("D7DFE2")
 		viewport_top = hex_to_color("F0FFFF")
 		viewport_bottom = hex_to_color("B5E8F2")
 		
-		text_main = hex_to_color("000000")
+		text_main = hex_to_color("0D1214")
 		text_secondary = text_main
 		text_tertiary = text_main
 		border = text_main

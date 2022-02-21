@@ -111,6 +111,7 @@ function app_startup_interface_popups()
 		page_ani_type = "right"
 		
 		open_advanced = false
+		custom_rendering = "default"
 	}
 	
 	// "Advanced mode" popup

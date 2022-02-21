@@ -27,8 +27,6 @@ function draw_bezier_curve(p1, p2, p3, p4, w, color, alpha)
 			continue
 		
 		draw_image(spr_handle, 0, prevp[X], prevp[Y], .75, point_distance(prevp[X], prevp[Y], p[X], p[Y]), color, alpha, point_direction(prevp[X], prevp[Y], p[X], p[Y]) - 90)
-		
-		//draw_line_width_color(prevp[X], prevp[Y], p[X], p[Y], w, color, color)
 	}
 	
 	draw_set_color(prevcolor)

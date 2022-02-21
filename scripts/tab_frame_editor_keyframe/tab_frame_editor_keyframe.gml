@@ -67,7 +67,7 @@ function tab_frame_editor_keyframe()
 		draw_button_icon("frameeditoreasereset", dx + (28 * 3), yy, 24, 24, false, icons.RESET, action_group_reset, false, "contextmenugroupreset")
 		
 		// Draw curve editor
-		draw_bezier_graph(dx + dw/2, dy, dw/2, tab_control_h, [tl_edit.value[e_value.EASE_IN_X], tl_edit.value[e_value.EASE_IN_Y], tl_edit.value[e_value.EASE_OUT_X], tl_edit.value[e_value.EASE_OUT_Y]], action_tl_frame_ease_all, tab.keyframe.ease_link)
+		draw_bezier_graph(dx + dw/2, dy, dw/2, tab_control_h, [tl_edit.value[e_value.EASE_IN_X], tl_edit.value[e_value.EASE_IN_Y], tl_edit.value[e_value.EASE_OUT_X], tl_edit.value[e_value.EASE_OUT_Y]], tab.keyframe.ease_link)
 		
 		context_menu_group_temp = null
 		
