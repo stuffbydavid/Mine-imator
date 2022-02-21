@@ -9,6 +9,9 @@ function model_shape_clear_cache(cachelist, destroy = false)
 	{
 		var map = cachelist[|i];
 		
+		if (!ds_map_valid(map))
+			continue
+		
 		// Clear bend cache, bendkey contains "X,Y,Z" string paired with an array; [vbuffer, bbox]
 		var bendkey = ds_map_find_first(map);
 		while (!is_undefined(bendkey))
@@ -34,4 +37,6 @@ function model_shape_clear_cache(cachelist, destroy = false)
 	
 	if (destroy)
 		ds_list_destroy(cachelist)
+	else
+		ds_list_clear(cachelist)
 }

@@ -157,7 +157,7 @@ function model_file_load_part(map, root, res, model)
 		lock_bend = true
 		if (other.object_index = obj_model_part && other.bend_part != null)
 		{
-			if (is_bool(map[?"lock_bend"]))
+			if (is_bool(map[?"lock_bend"]) || is_real(map[?"lock_bend"]))
 				lock_bend = map[?"lock_bend"]
 			
 			if (lock_bend)
@@ -315,7 +315,7 @@ function model_file_load_part(map, root, res, model)
 			}
 			
 			// Invert
-			if (is_real(bendmap[?"invert"]) && array_length(axis) = 1) // Single
+			if ((is_real(bendmap[?"invert"]) || is_bool(bendmap[?"invert"])) && array_length(axis) = 1) // Single
 			{
 				bend_invert = vec3(bendmap[?"invert"])
 			}

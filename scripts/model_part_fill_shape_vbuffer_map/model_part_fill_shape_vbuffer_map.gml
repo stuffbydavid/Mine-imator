@@ -1,14 +1,13 @@
 /// model_part_fill_shape_vbuffer_map(part, vbuffermap, cachelist, alphamap, bend)
 /// @arg part
 /// @arg vbuffermap
+/// @arg cachelist
 /// @arg alphamap
 /// @arg bend
 /// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by a rotation vector.
 
 function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, bend)
 {
-	var isbent = !vec3_equals(bend, vec3(0));
-	
 	// Clamp
 	for (var i = X; i <= Z; i++)
 		bend[X + i] = clamp(bend[X + i], part.bend_direction_min[i], part.bend_direction_max[i])
@@ -16,79 +15,81 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, b
 	if (part.shape_list = null)
 		return 0
 	
-	var key;
-	bend[X] = snap(bend[X], 0.05)
-	bend[Y] = snap(bend[Y], 0.05)
-	bend[Z] = snap(bend[Z], 0.05)
+	// Reduce precision for cache storing
+	bend[X] = snap(bend[X], 0.01)
+	bend[Y] = snap(bend[Y], 0.01)
+	bend[Z] = snap(bend[Z], 0.01)
 	
-	key = string(bend[X]) + "," + string(bend[Y]) + "," + string(bend[Z])
+	// Key we'll use for saving/reading cache "X,Y,Z"
+	var key = string(bend[X]) + "," + string(bend[Y]) + "," + string(bend[Z]);
 	
-	// Bounding box info
-	var boxdefault = true;
+	// Reset part bounding box
 	bounding_box.reset()
+	
+	// Fill list to prevent gaps
+	if (ds_list_size(cachelist) < ds_list_size(part.shape_list))
+	{
+		for (var s = 0; s < ds_list_size(part.shape_list); s++)
+			cachelist[|s] = null
+	}
+	
+	var shape, bendkeymap, vbuffer, shapebbox;
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
-		var usedcache = false;
+		shape = part.shape_list[|s]
+		bendkeymap = cachelist[|s]
+		vbuffer = null
+		shapebbox = null
 		
-		with (part.shape_list[|s])
+		// Use pre-existing cache (if it exists)
+		if (bendkeymap != null && ds_map_exists(bendkeymap, key))
 		{
-			if (ds_map_valid(cachelist[|s]) && ds_map_exists(cachelist[|s], key) && isbent)
+			vbuffer = bendkeymap[?key][0]
+			shapebbox = bendkeymap[?key][1]
+		}
+		else // Generate mesh
+		{
+			with (shape)
 			{
-				var map = cachelist[|s];
-				var bendcache = map[?key];
-				vbufmap[? id] = bendcache[0]
-				other.bounding_box.merge(bendcache[1])
-				usedcache = true
-				
-				break
-			}
-			
-			boxdefault = true
-			
-			vbufmap[? id] = vbuffer_default
-			if (type = "block" && isbent && bend_shape)
-			{
-				vbufmap[? id] = model_shape_generate_block(bend)
-				boxdefault = false
-			}
-			else if (type = "plane")
-			{
-				if (is3d)
+				// Generate new mesh if needed
+				if (type = "block" && bend_shape)
+					vbuffer = model_shape_generate_block(bend)
+				else if (type = "plane")
 				{
-					if (ds_map_valid(alphamap))
+					if (is3d)
 					{
-						vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[?id])
-						boxdefault = false
+						if (ds_map_valid(alphamap))
+							vbuffer = model_shape_generate_plane_3d(bend, alphamap[? id])
 					}
+					else if (bend_shape)
+						vbuffer = model_shape_generate_plane(bend)
 				}
-				else if (isbent && bend_shape)
-				{
-					vbufmap[? id] = model_shape_generate_plane(bend)
-					boxdefault = false
-				}
+			}
+			
+			// Generate bounding box and save cache
+			if (vbuffer != null)
+			{
+				if (bendkeymap = null)
+					bendkeymap = ds_map_create()
+				
+				shapebbox = new bbox()
+				shapebbox.copy_vbuffer()
+				shapebbox.mul_matrix(shape.matrix)
+				
+				bendkeymap[? key] = [vbuffer, shapebbox]
 			}
 		}
 		
-		if (boxdefault)
-			bounding_box.merge(part.shape_list[|s].bounding_box_default)
-		else
+		// Set default if no new mesh is generated
+		if (vbuffer = null)
 		{
-			if (!usedcache)
-			{
-				var shapebox = new bbox();
-				shapebox.copy_vbuffer()
-				shapebox.mul_matrix(part.shape_list[|s].matrix)
-				bounding_box.merge(shapebox)
-			
-				if (isbent)
-				{
-					if (!ds_map_valid(cachelist[|s]))
-						cachelist[|s] = ds_map_create()
-					
-					cachelist[|s][? key] = [vbuffer_current, new bbox()]
-				}
-			}
+			vbuffer = shape.vbuffer_default
+			shapebbox = shape.bounding_box_default
 		}
+		
+		// Set vbuffer and bounding box
+		vbufmap[? shape] = vbuffer
+		bounding_box.merge(shapebbox)
 	}
 }

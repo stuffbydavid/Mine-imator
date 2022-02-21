@@ -3,7 +3,7 @@
 function trial_startup()
 {
 	globalvar trial_version;
-	trial_version = true
+	trial_version = (dev_mode_full ? false : true)
 	
 	if (file_exists_lib(key_file))
 	{

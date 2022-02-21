@@ -9,7 +9,7 @@
 
 function draw_bezier_curve(p1, p2, p3, p4, w, color, alpha)
 {
-	var prevcolor, prevalpha, t1, t2, t3, t4, t5, p, prevp;
+	var prevcolor, prevalpha, p, prevp;
 	prevcolor = draw_get_color()
 	prevalpha = draw_get_alpha()
 	

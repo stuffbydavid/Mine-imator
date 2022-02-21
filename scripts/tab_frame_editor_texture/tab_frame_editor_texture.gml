@@ -58,7 +58,7 @@ function tab_frame_editor_texture()
 			tex = texobj.block_preview_texture
 			
 			if (tex = null)
-				tex = res.texture
+				tex = texobj.texture
 			
 			break
 		}

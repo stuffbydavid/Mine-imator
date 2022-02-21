@@ -3,7 +3,7 @@
 /// @arg y
 /// @arg z
 
-function vec3(xx, yy, zz)
+function vec3(xx, yy = undefined, zz = undefined)
 {
 	gml_pragma("forceinline")
 	

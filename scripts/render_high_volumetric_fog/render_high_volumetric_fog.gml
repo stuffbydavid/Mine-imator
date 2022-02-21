@@ -91,6 +91,7 @@ function render_high_volumetric_fog(prevsurf, export)
 			else if (app.background_sunlight_color_final = c_black)
 			{
 				// Sun info needs to be updated for volumetrics
+				render_update_cascades(app.background_sun_direction)
 				render_world_start_sun(0)
 				render_world_done()
 			}

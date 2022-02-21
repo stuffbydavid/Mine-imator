@@ -1,7 +1,7 @@
 /// action_background_sky_moon_phase(phase)
 /// @arg phase
 
-function action_background_sky_moon_phase(argument0)
+function action_background_sky_moon_phase(phase)
 {
 	if (!history_undo && !history_redo)
 	{

@@ -144,7 +144,7 @@ function tl_remove_clean()
 		if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 		{
 			model_shape_clear_cache(model_shape_cache_list, true)
-		ds_map_destroy(model_shape_vbuffer_map)
+			ds_map_destroy(model_shape_vbuffer_map)
 		}
 		
 		if (model_shape_alpha_map != null)
