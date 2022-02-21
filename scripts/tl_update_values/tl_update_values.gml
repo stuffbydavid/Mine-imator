@@ -23,8 +23,9 @@ function tl_update_values()
 	}
 	keyframe_index = max(0, keyframe_index - 1)
 	
+	//keyframe_bend_progress = tl_update_values_progress(snap(app.timeline_marker, .25)) // Snap marker for bend angles to reduce cache
 	keyframe_progress = tl_update_values_progress(app.timeline_marker)
-	keyframe_bend_progress = tl_update_values_progress(snap(app.timeline_marker, .25)) // Snap marker for bend angles to reduce cache
+	keyframe_bend_progress = keyframe_progress
 	
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	

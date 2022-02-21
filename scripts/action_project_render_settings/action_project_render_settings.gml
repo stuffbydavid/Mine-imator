@@ -23,6 +23,7 @@ function action_project_render_settings(file)
 		if (file != "default" && trial_version)
 		{
 			popup_show(popup_upgrade)
+			popup_upgrade.page = 2
 			return 0
 		}
 		

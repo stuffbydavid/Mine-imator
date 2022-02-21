@@ -3,15 +3,22 @@
 
 function tl_update_values_progress(markerpos)
 {
+	var kflength, kfprogress;
 	var progress = 0;
 	
 	// Get regular progress
 	if (!app.timeline_seamless_repeat)
 	{
 		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-			progress = (markerpos - keyframe_current.position) / (keyframe_next.position - keyframe_current.position)
+		{
+			kflength = (markerpos - keyframe_current.position)
+			kfprogress = (keyframe_next.position - keyframe_current.position)
+			
+			keyframe_progress = kflength / kfprogress
+			keyframe_progress_bend = kflength / kfprogress
+		}
 		
-		return progress
+		return 0
 	}
 	
 	// Calculate seamless looping by changing the 'next' keyframe

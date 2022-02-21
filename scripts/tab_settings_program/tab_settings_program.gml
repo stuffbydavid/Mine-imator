@@ -61,6 +61,7 @@ function tab_settings_program()
 		{
 			collapse_map[?"watermark"] = false
 			popup_show(popup_upgrade)
+			popup_upgrade.page = 0
 		}
 	}
 	tab_next()

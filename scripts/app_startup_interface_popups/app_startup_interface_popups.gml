@@ -106,7 +106,15 @@ function app_startup_interface_popups()
 	{
 		tbx_key = new_textbox(true, 8, "")
 		warntext = ""
+		page = 0
+		page_ani = 1
+		page_ani_type = "right"
+		
+		open_advanced = false
 	}
+	
+	// "Advanced mode" popup
+	popup_advanced = new_popup("advanced", popup_advanced_draw, 420, null, true)
 	
 	// Modelbench ad
 	popup_modelbench = new_popup("modelbench", popup_modelbench_draw, 420, null, true)

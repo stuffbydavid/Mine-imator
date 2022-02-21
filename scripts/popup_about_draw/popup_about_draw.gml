@@ -55,7 +55,10 @@ function popup_about_draw()
 	if (trial_version)
 	{
 		if (draw_button_label("aboutupgrade", content_x + content_width - 13, content_y + content_height - (12 + 32), null, icons.KEY, e_button.PRIMARY, null, fa_right))
+		{
 			popup_switch(popup_upgrade)
+			popup_upgrade.page = 0
+		}
 	}
 	else
 	{

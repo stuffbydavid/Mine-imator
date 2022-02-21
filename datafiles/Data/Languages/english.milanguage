@@ -623,8 +623,17 @@
     },
     "upgrade/": {
         "caption": "Upgrade",
-        "info": "You are currently using the trial version of Mine-imator. To unlock advanced features and watermark customizing, get an upgrade key from the link below, and enter it here.",
+        "info": "You are currently using the trial version of Mine-imator. To unlock more features and watermark customizing, get an upgrade key from the link below, and enter it here.",
+        "page0": "Watermark can be disabled or customized.",
+        "page1": "Unlock \"Advanced mode\" and get access to all available features.",
+        "page2": "Customize your own render settings in projects.",
         "continue": "Upgrade"
+    },
+    "advanced/": {
+        "caption": "Advanced mode",
+        "info": "You're currently in \"Simple mode\". Enabling \"Advanced mode\" unlocks more features, however it's not recommended for new users still learning the basics.",
+        "enable": "Enable",
+        "notnow": "Not now"
     },
     "modelbench/": {
         "caption": "Try out Modelbench!",

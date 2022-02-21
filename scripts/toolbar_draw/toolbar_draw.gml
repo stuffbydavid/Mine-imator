@@ -45,6 +45,15 @@ function toolbar_draw()
 	if (!setting_advanced_mode)
 	{
 		if (draw_button_label("toolbarsimplemode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
-			popup_show(popup_upgrade)
+		{
+			if (trial_version)
+			{
+				popup_show(popup_upgrade)
+				popup_upgrade.page = 1
+				popup_upgrade.open_advanced = true
+			}
+			else
+				popup_show(popup_advanced)
+		}
 	}
 }
