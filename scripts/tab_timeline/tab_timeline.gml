@@ -1085,7 +1085,7 @@ function tab_timeline()
 				draw_image(spr_icons, timeline_icon_list[|i], xx + 12, itemy + (itemh/2), 1, 1, c_border, a_border)
 				
 				if (tl.tree_contents[i] > 1)
-					draw_label(string(tl.tree_contents[i]), xx + 27, itemy + (itemh/2) + 10, fa_center, fa_bottom, c_text_tertiary, a_text_tertiary)
+					draw_label(string(tl.tree_contents[i]), xx + 23, itemy + (itemh/2) + 10, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary)
 				
 				xx += iconwid
 				minw -= iconwid

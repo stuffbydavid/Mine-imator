@@ -550,9 +550,22 @@ function bench_draw_settings(bx, by, bw, bh)
 	tab_next()
 	dy += 4
 	
-	if (draw_button_label("benchcreate", dx, sy + dh - 56, dw, icons.ASSET_ADD))
+	var edit = (bench_settings.type = e_temp_type.PARTICLE_SPAWNER && setting_advanced_mode);
+	var wid = (edit ? dw/2 - 8 : dw);
+	
+	if (draw_button_label("benchcreate", edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, icons.ASSET_ADD))
 	{
 		action_bench_create()
 		bench_show_ani_type = "hide"
+	}
+	
+	// Create & edit
+	if (edit)
+	{
+		if (draw_button_label("benchcreateedit", dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY))
+		{
+			action_bench_create(true)
+			bench_show_ani_type = "hide"
+		}
 	}
 }

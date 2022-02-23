@@ -33,9 +33,9 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 	
 	// Animate size
 	if (dir = e_scroll.HORIZONTAL)
-		sb.mousenear.value = (app_mouse_box(xx, yy - nearsize, size, areasize + nearsize) && content_mouseon) || window_focus = string(sb)
+		sb.mousenear.value = (app_mouse_box(xx, yy - nearsize, size, areasize + nearsize) && content_mouseon) || (window_focus = string(sb) && window_busy = "scrollbar")
 	else
-		sb.mousenear.value = (app_mouse_box(xx - nearsize, yy, areasize + nearsize, size) && content_mouseon) || window_focus = string(sb)
+		sb.mousenear.value = (app_mouse_box(xx - nearsize, yy, areasize + nearsize, size) && content_mouseon) || (window_focus = string(sb) && window_busy = "scrollbar")
 	
 	var xfar, yfar, xnear, ynear;
 	xfar = xx + margin
@@ -127,7 +127,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 			if (!mouse_left)
 			{
 				window_busy = ""
-				window_focus = ""
+				//window_focus = ""
 				sb.value = snap(sb.value, sb.snap_value)
 				sb.value_goal = snap(sb.value_goal, sb.snap_value)
 				app_mouse_clear()

@@ -20,7 +20,22 @@ function temp_update_model_part()
 		}
 	}
 	
-	// Set to first part if name can't be found
+	// Look for default model body part to select if no name is found
+	if (model_part = null)
+	{
+		for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
+		{
+			var part = model_file.file_part_list[|p];
+			if (part.name = default_model_part)
+			{
+				model_part = part
+				model_part_name = default_model_part
+				break
+			}
+		}
+	}
+	
+	// Can't find default part either, set to first part
 	if (model_part = null && ds_list_size(model_file.file_part_list) > 0)
 	{
 		model_part = model_file.file_part_list[|0]

@@ -547,6 +547,7 @@
         "openeditor": "Open banner editor",
         "lighttype": "Light type",
         "create": "Create",
+        "createedit": "Create & edit",
         "pointlighttip": "Point lights shine in all directions, like a lightbulb.",
         "spotlighttip": "Spot lights emit a cone of light, like a flashlight."
     },

@@ -1,6 +1,7 @@
-/// action_bench_create()
+/// action_bench_create([edit])
+/// @arg [edit]
 
-function action_bench_create()
+function action_bench_create(edit = false)
 {
 	if (history_undo)
 	{
@@ -24,12 +25,21 @@ function action_bench_create()
 		hobj = null
 		
 		if (history_redo)
+		{
 			history_restore_bench(history_data.bench_save_obj)
+			
+			if (history_data.open_editor)
+				tab_show(template_editor)
+		}
 		else
 		{
 			hobj = history_set(action_bench_create)
 			hobj.bench_save_obj = history_save_bench()
 			hobj.spawn_amount = 0
+			hobj.open_editor = edit
+			
+			if (edit)
+				tab_show(template_editor)
 		}
 		
 		if (type_is_timeline(bench_settings.type)) // Timeline

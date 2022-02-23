@@ -156,7 +156,16 @@ function sortlist_draw()
 	draw_divide(xx + 1, dy - 3, w - 2)
 	
 	// Outline
-	draw_outline(xx, yy, w, h, 1, c_border, a_border, true)
+	if (window_focus = string(slist.scroll))
+	{
+		draw_outline(xx, yy, w, h, 1, c_accent, 1, true)
+		window_scroll_focus = string(slist.scroll)
+		
+		if (!app_mouse_box(xx, yy, w, h) && content_mouseon && mouse_left)
+			window_focus = ""
+	}
+	else
+		draw_outline(xx, yy, w, h, 1, c_border, a_border, true)
 	
 	// List
 	draw_set_font(font_value)
@@ -212,6 +221,9 @@ function sortlist_draw()
 				else
 					script_execute(slist.script, value)
 				app_mouse_clear()
+				
+				if (slist.scroll.needed)
+					window_focus = string(slist.scroll)
 			}
 		}
 		
