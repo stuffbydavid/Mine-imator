@@ -5,7 +5,7 @@ function menu_snap_settings()
 	draw_set_font(font_label)
 	var draggerwid, switchwid;
 	draggerwid = text_max_width("viewsnapmove", "viewsnaprotate", "viewsnapscale") + 16 + dragger_width
-	switchwid = text_max_width("viewsnapabsolute") + 16 + 24
+	switchwid = text_max_width("viewsnapabsolute") + 28 + 16 + 24
 	
 	tab_control_dragger()
 	draw_dragger("viewsnapmove", dx, dy, dragger_width, setting_snap_size_position, 0.01, snap_min, no_limit, 1, snap_min, tbx_snap_position, action_setting_snap_size_position)
@@ -23,7 +23,7 @@ function menu_snap_settings()
 	dy += 8
 	
 	tab_control_switch()
-	draw_switch("viewsnapabsolute", dx, dy, setting_snap_absolute, action_setting_snap_absolute)
+	draw_switch("viewsnapabsolute", dx, dy, setting_snap_absolute, action_setting_snap_absolute, "viewsnapabsolutetip")
 	tab_next()
 	
 	settings_menu_w = (max(draggerwid, switchwid) + 24)

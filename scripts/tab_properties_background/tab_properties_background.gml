@@ -12,7 +12,7 @@ function tab_properties_background()
 	
 	// Sunlight angle
 	tab_control_dragger()
-	draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle)
+	draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
 	tab_next()
 	
 	// Sunlight strength
@@ -38,9 +38,17 @@ function tab_properties_background()
 		
 			// Desaturate night
 			tab_control_switch()
-			draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night)
+			draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night, "backgrounddesaturatenighttip")
 			tab_next()
-		
+			
+			// Desaturate amount
+			if (background_desaturate_night)
+			{
+				tab_control_meter()
+				draw_meter("backgrounddesaturatenightamount", dx, dy, dw, round(background_desaturate_night_amount * 100), 64, 0, 100, 0, 1, tab.background.tbx_desaturate_night_amount, action_background_desaturate_night_amount)
+				tab_next()
+			}
+			
 			tab_collapse_end()
 		}
 	}
@@ -371,14 +379,6 @@ function tab_properties_background()
 	
 	tab_set_collumns(false)
 	
-	// Desaturate amount
-	if (background_desaturate_night)
-	{
-		tab_control_meter()
-		draw_meter("backgrounddesaturatenightamount", dx, dy, dw, round(background_desaturate_night_amount * 100), 64, 0, 100, 0, 1, tab.background.tbx_desaturate_night_amount, action_background_desaturate_night_amount)
-		tab_next()
-	}
-	
 	// Show fog
 	tab_control_switch()
 	draw_button_collapse("fog", collapse_map[?"fog"], action_background_fog_show, background_fog_show, "backgroundfog")
@@ -440,7 +440,7 @@ function tab_properties_background()
 	if (setting_advanced_mode)
 	{
 		tab_control_switch()
-		draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], action_background_volumetric_fog, background_volumetric_fog, "backgroundvolumetricfog")
+		draw_button_collapse("volumetricfog", collapse_map[?"volumetricfog"], action_background_volumetric_fog, background_volumetric_fog, "backgroundvolumetricfog", "backgroundvolumetricfogtip")
 		tab_next()
 		
 		if (background_volumetric_fog && collapse_map[?"volumetricfog"])
@@ -448,7 +448,7 @@ function tab_properties_background()
 			tab_collapse_start()
 			
 			tab_control_switch()
-			draw_button_collapse("fog_ambience", collapse_map[?"fog_ambience"], action_background_volumetric_fog_ambience, background_volumetric_fog_ambience, "backgroundvolumetricfogambience")
+			draw_button_collapse("fog_ambience", collapse_map[?"fog_ambience"], action_background_volumetric_fog_ambience, background_volumetric_fog_ambience, "backgroundvolumetricfogambience", "backgroundvolumetricfogambiencetip")
 			tab_next()
 			
 			if (background_volumetric_fog_ambience && collapse_map[?"fog_ambience"])

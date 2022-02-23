@@ -81,6 +81,6 @@ function tab_properties_project()
 	
 	// Tempo
 	tab_control_meter()
-	draw_meter("projecttempo", dx, dy, dw, project_tempo, 50, 1, 100, 24, 1, tab.project.tbx_tempo, action_project_tempo)
+	draw_meter("projecttempo", dx, dy, dw, project_tempo, 50, 1, 100, 24, 1, tab.project.tbx_tempo, action_project_tempo, "projecttempotip")
 	tab_next()
 }

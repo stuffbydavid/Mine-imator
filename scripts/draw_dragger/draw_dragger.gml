@@ -1,4 +1,4 @@
-/// draw_dragger(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [captionwidth, [showcaption, [disabled]]])
+/// draw_dragger(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [captionwidth, [showcaption, [disabled, [tip]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -13,11 +13,12 @@
 /// @arg script
 /// @arg [captionwidth
 /// @arg [showcaption
-/// @arg [disabled]]]
+/// @arg [disabled
+/// @arg [tip]]]]
 
 function draw_dragger()
 {
-	var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth, showcaption, disabled;
+	var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth, showcaption, disabled, tip;
 	var caption, hei, fieldx, dragmouseon;
 	name = argument[0]
 	xx = argument[1]
@@ -49,6 +50,11 @@ function draw_dragger()
 		disabled = argument[14]
 	else
 		disabled = false
+	
+	if (argument_count > 15)
+		tip = argument[15]
+	else
+		tip = ""
 	
 	hei = 24
 	
@@ -142,7 +148,10 @@ function draw_dragger()
 	labelalpha = lerp(labelalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
 	if (showcaption)
+	{
 		draw_label(caption, xx, yy + hei/2, fa_left, fa_middle, labelcolor, labelalpha, font_label)
+		draw_help_circle(tip, xx + string_width(caption) + 4, yy + (hei/2) - 10, disabled)
+	}
 	
 	// Idle
 	if (window_busy != name + "drag" && window_busy != name + "press" && window_focus != string(tbx))

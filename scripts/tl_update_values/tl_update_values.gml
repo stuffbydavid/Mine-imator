@@ -23,10 +23,7 @@ function tl_update_values()
 	}
 	keyframe_index = max(0, keyframe_index - 1)
 	
-	//keyframe_bend_progress = tl_update_values_progress(snap(app.timeline_marker, .25)) // Snap marker for bend angles to reduce cache
 	keyframe_progress = tl_update_values_progress(app.timeline_marker)
-	keyframe_bend_progress = keyframe_progress
-	
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	
 	// Marker is behind first keyframe, copy values
@@ -58,15 +55,9 @@ function tl_update_values()
 	keyframe_transition = value[e_value.TRANSITION]
 	
 	if (keyframe_transition = "bezier")
-	{
 		keyframe_progress_ease = ease_bezier_curve([0, 0], [value[e_value.EASE_IN_X], value[e_value.EASE_IN_Y]], [value[e_value.EASE_OUT_X], value[e_value.EASE_OUT_Y]], [1, 1], keyframe_progress)
-		keyframe_bend_progress_ease = ease_bezier_curve([0, 0], [value[e_value.EASE_IN_X], value[e_value.EASE_IN_Y]], [value[e_value.EASE_OUT_X], value[e_value.EASE_OUT_Y]], [1, 1], keyframe_bend_progress)
-	}
 	else
-	{
 		keyframe_progress_ease = ease(keyframe_transition, keyframe_progress)
-		keyframe_bend_progress_ease = ease(keyframe_transition, keyframe_bend_progress)
-	}
 	
 	// Position
 	if (value_type[e_value_type.TRANSFORM_POS])
@@ -95,9 +86,9 @@ function tl_update_values()
 	// Bend
 	if (value_type[e_value_type.TRANSFORM_BEND])
 	{
-		tl_update_values_ease(e_value.BEND_ANGLE_X, keyframe_bend_progress_ease)
-		tl_update_values_ease(e_value.BEND_ANGLE_Y, keyframe_bend_progress_ease)
-		tl_update_values_ease(e_value.BEND_ANGLE_Z, keyframe_bend_progress_ease)
+		tl_update_values_ease(e_value.BEND_ANGLE_X)
+		tl_update_values_ease(e_value.BEND_ANGLE_Y)
+		tl_update_values_ease(e_value.BEND_ANGLE_Z)
 	}
 	
 	// Color

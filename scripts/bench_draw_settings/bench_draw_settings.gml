@@ -44,6 +44,12 @@ function bench_draw_settings(bx, by, bw, bh)
 			else
 				draw_tooltip_label("benchspotlighttip", icons.LIGHT_SPOT, e_toast.INFO)
 		}
+		
+		if (bench_settings.type = e_tl_type.CAMERA)
+			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
+		
+		if (bench_settings.type = e_tl_type.BACKGROUND)
+			draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
 	}
 	else
 	{
@@ -444,7 +450,7 @@ function bench_draw_settings(bx, by, bw, bh)
 					if (setting_advanced_mode)
 					{
 						tab_control_checkbox()
-						draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map)
+						draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map, "benchshapetexmaptip")
 						tab_next()
 					}
 				}

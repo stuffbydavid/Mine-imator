@@ -1,4 +1,4 @@
-/// draw_meter(name, x, y, width, value, valuewidth, min, max, default, snap, textbox, script)
+/// draw_meter(name, x, y, width, value, valuewidth, min, max, default, snap, textbox, script, [tip])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -11,8 +11,9 @@
 /// @arg snap
 /// @arg textbox
 /// @arg script
+/// @arg [tip]
 
-function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, snapval, tbx, script)
+function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, snapval, tbx, script, tip = "")
 {
 	var hei, thumbhei, linex, linewid, trackx, trackwid, dragval, dragx, dragy, mouseon, slidermouseon, locked, inputfocus;
 	
@@ -55,7 +56,12 @@ function draw_meter(name, xx, yy, wid, value, valuewid, minval, maxval, def, sna
 	labelalpha = lerp(labelalpha, a_accent, max(inputfocus, microani_arr[e_microani.ACTIVE]))
 	
 	draw_set_font(font_label)
-	draw_label(string_limit(text_get(name), dw - 80), xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha)
+	
+	var labelshort = string_limit(text_get(name), dw - 80);
+	draw_label(labelshort, xx, yy + 12, fa_left, fa_middle, labelcolor, labelalpha)
+	
+	if (string_width(labelshort) < dw)
+		draw_help_circle(tip, xx + string_width(labelshort) + 4, yy + 2, false)
 	
 	// Slider
 	yy += 24

@@ -49,7 +49,7 @@ function tab_properties_render()
 	
 	// SSAO
 	tab_control_switch()
-	draw_button_collapse("ssao", collapse_map[?"ssao"], action_project_render_ssao, project_render_ssao, "renderssao")
+	draw_button_collapse("ssao", collapse_map[?"ssao"], action_project_render_ssao, project_render_ssao, "renderssao", "renderssaotip")
 	tab_next()
 	
 	if (project_render_ssao && collapse_map[?"ssao"])
@@ -101,7 +101,7 @@ function tab_properties_render()
 	
 	// Subsurface scattering
 	tab_control_switch()
-	draw_button_collapse("subsurface", collapse_map[?"subsurface"], null, true, "rendersubsurfacescattering")
+	draw_button_collapse("subsurface", collapse_map[?"subsurface"], null, true, "rendersubsurfacescattering", "rendersubsurfacescatteringtip")
 	tab_next()
 	
 	if (collapse_map[?"subsurface"])
@@ -121,7 +121,7 @@ function tab_properties_render()
 	
 	// Indirect lighting
 	tab_control_switch()
-	draw_button_collapse("indirect", collapse_map[?"indirect"], action_project_render_indirect, project_render_indirect, "renderindirect")
+	draw_button_collapse("indirect", collapse_map[?"indirect"], action_project_render_indirect, project_render_indirect, "renderindirect", "renderindirecttip")
 	tab_next()
 	
 	if (project_render_indirect && collapse_map[?"indirect"])
@@ -129,7 +129,7 @@ function tab_properties_render()
 		tab_collapse_start()
 		
 		tab_control_meter()
-		draw_meter("renderindirectprecision", dx, dy, dw, round(project_render_indirect_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision)
+		draw_meter("renderindirectprecision", dx, dy, dw, round(project_render_indirect_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision, "renderindirectprecisiontip")
 		tab_next()
 		
 		tab_control_meter()
@@ -153,15 +153,15 @@ function tab_properties_render()
 		tab_collapse_start()
 		
 		tab_control_meter()
-		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_reflections_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision)
+		draw_meter("renderreflectionsprecision", dx, dy, dw, round(project_render_reflections_precision * 100), 50, 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision, "renderreflectionsprecisiontip") 
 		tab_next()
 		
 		tab_control_meter()
-		draw_meter("renderreflectionsfadeamount", dx, dy, dw, round(project_render_reflections_fade_amount * 100), 50, 0, 100, 50, 1, tab.render.tbx_reflections_fade_amount, action_project_render_reflections_fade_amount)
+		draw_meter("renderreflectionsfadeamount", dx, dy, dw, round(project_render_reflections_fade_amount * 100), 50, 0, 100, 50, 1, tab.render.tbx_reflections_fade_amount, action_project_render_reflections_fade_amount, "renderreflectionsfadeamounttip") 
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .1, no_limit, 1, .1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness) 
+		draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .1, no_limit, 1, .1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness, null, true, false, "renderreflectionsthicknesstip") 
 		tab_next()
 		
 		tab_collapse_end()
@@ -209,7 +209,7 @@ function tab_properties_render()
 	
 	// AA
 	tab_control_switch()
-	draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, project_render_aa, "renderaa")
+	draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, project_render_aa, "renderaa", "renderaatip")
 	tab_next()
 	
 	if (project_render_aa && collapse_map[?"aa"])
@@ -225,7 +225,7 @@ function tab_properties_render()
 	
 	// Texture filtering
 	tab_control_switch()
-	draw_button_collapse("texfilter", collapse_map[?"texfilter"], action_project_render_texture_filtering, project_render_texture_filtering, "rendertexturefiltering")
+	draw_button_collapse("texfilter", collapse_map[?"texfilter"], action_project_render_texture_filtering, project_render_texture_filtering, "rendertexturefiltering", "rendertexturefilteringtip")
 	tab_next()
 	
 	if (project_render_texture_filtering && collapse_map[?"texfilter"])
@@ -321,7 +321,7 @@ function tab_properties_render()
 	
 	// Material maps
 	tab_control_switch()
-	draw_switch("rendermaterialmaps", dx, dy, project_render_material_maps, action_project_render_material_maps, "rendermaterialmapshelp")
+	draw_switch("rendermaterialmaps", dx, dy, project_render_material_maps, action_project_render_material_maps, "rendermaterialmapstip")
 	tab_next()
 	
 	tab_control(24)

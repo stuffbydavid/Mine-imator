@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Interface",
-    "path": "folders/Scripts/App/Actions/Settings/Interface.yy",
+    "name": "Components",
+    "path": "folders/Scripts/App/Interface/Components.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_setting_smooth_camera",
+  "name": "draw_help_circle",
   "tags": [],
   "resourceType": "GMScript",
 }

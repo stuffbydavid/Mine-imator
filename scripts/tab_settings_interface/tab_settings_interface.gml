@@ -61,7 +61,7 @@ function tab_settings_interface()
 	tab_next()
 	
 	tab_control_switch()
-	draw_switch("settingstimelineframesnap", dx, dy, setting_timeline_frame_snap, action_setting_timeline_frame_snap)
+	draw_switch("settingstimelineframesnap", dx, dy, setting_timeline_frame_snap, action_setting_timeline_frame_snap, "settingstimelineframesnaptip")
 	tab_next()
 	
 	// Z is up
@@ -69,18 +69,13 @@ function tab_settings_interface()
 	draw_switch("settingszisup", dx, dy, setting_z_is_up, action_setting_z_is_up)
 	tab_next()
 	
-	// Camera
-	tab_control_switch()
-	draw_switch("settingssmoothcamera", dx, dy, setting_smooth_camera, action_setting_smooth_camera)
-	tab_next()
-	
 	// Variant search
 	tab_control_switch()
 	draw_switch("settingssearchvariants", dx, dy, setting_search_variants, action_setting_search_variants)
 	tab_next()
 	
-	// separate tool modes
+	// Separate tool modes
 	tab_control_switch()
-	draw_switch("settingsseparatetoolmodes", dx, dy, setting_separate_tool_modes, action_setting_separate_tool_modes)
+	draw_switch("settingsseparatetoolmodes", dx, dy, setting_separate_tool_modes, action_setting_separate_tool_modes, "settingsseparatetoolmodestip")
 	tab_next()
 }

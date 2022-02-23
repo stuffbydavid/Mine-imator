@@ -1,16 +1,15 @@
-/// draw_switch(name, x, y, active, script, [tip, [disabled, [experimental]]])
+/// draw_switch(name, x, y, active, script, [tip, [disabled]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
 /// @arg [tip
-/// @arg [disabled
-/// @arg [experimental]]
+/// @arg [disabled]]
 
 function draw_switch()
 {
-	var name, xx, yy, active, script, tip, disabled, ex;
+	var name, xx, yy, active, script, tip, disabled;
 	var text, switchx, switchy, w, h, mouseon, pressed, thumbgoal;
 	name = argument[0]
 	xx = argument[1]
@@ -19,7 +18,6 @@ function draw_switch()
 	script = argument[4]
 	tip = ""
 	disabled = false
-	ex = false
 	text = text_get(name)
 	
 	if (argument_count > 5)
@@ -27,9 +25,6 @@ function draw_switch()
 	
 	if (argument_count > 6)
 		disabled = argument[6]
-	
-	if (argument_count > 7)
-		ex = argument[7]
 	
 	w = dw
 	h = 24
@@ -100,21 +95,7 @@ function draw_switch()
 	
 	microani_update(mouseon, mouseclick, active, disabled, 0, thumbgoal)
 	
-	if (tip != "" || ex)
-	{
-		mouseon = app_mouse_box(xx + string_width(text) + 4, yy + (h/2) - 10, 20, 20) && content_mouseon && !disabled
-		
-		microani_set(tip, null, mouseon, false, false)
-		color = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
-		alpha = lerp(a_text_tertiary, a_text_secondary, microani_arr[e_microani.HOVER]) * lerp(1, .5, microani_arr[e_microani.DISABLED])
-		
-		draw_image(spr_icons, ex ? icons.BEAKER : icons.HELP_CIRCLE, xx + string_width(text) + 16, yy + (h/2), 1, 1, color, alpha)
-		
-		if (!disabled)
-			tip_set(ex ? text_get("tooltipexperimental") : text_get(tip), xx + string_width(text) + 4, yy + (h/2) - 10, 20, 20)
-		
-		microani_update(mouseon, false, false, disabled, 0)
-	}
+	draw_help_circle(tip, xx + string_width(text) + 4, yy + (h/2) - 10, disabled)
 	
 	// Press
 	if (pressed && mouse_left_released)

@@ -100,7 +100,9 @@
             "unlock": "Unlock",
             "ghost": "Set ghost timeline",
             "unghost": "Unset ghost timeline",
-            "filter": "Filter timelines"
+            "filter": "Filter timelines",
+            "walk": "Create walk cycle",
+            "run": "Create run cycle"
         },
         "customaccentcolor": "Custom accent color",
         "editkeybind": "Edit keybind",
@@ -540,6 +542,7 @@
         "shapetexmaterial": "Material map",
         "shapetexnormal": "Normal map",
         "shapetexmap": "Mapped texture",
+        "shapetexmaptip": "Whether the faces of the shape should use parts of a texture image.",
         "shapefacecamera": "Face camera",
         "modeltex": "Texture",
         "modeltexmaterial": "Material map",
@@ -549,7 +552,9 @@
         "create": "Create",
         "createedit": "Create & edit",
         "pointlighttip": "Point lights shine in all directions, like a lightbulb.",
-        "spotlighttip": "Spot lights emit a cone of light, like a flashlight."
+        "spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
+        "cameratip": "A virtual camera the animation is seen through, with optional effects.",
+        "backgroundtip": "A timeline that can change the background during the animation."
     },
     "downloadskin/": {
         "caption": "Download skin",
@@ -702,6 +707,7 @@
             "rotate": "Rotate",
             "scale": "Scale",
             "absolute": "Absolute snapping",
+            "absolutetip": "Snap values to a grid, instead of relative to the current value.",
             "enable": "Enable snapping",
             "disable": "Disable snapping"
         },
@@ -1977,7 +1983,8 @@
             "default": "Default",
             "custom": "Custom"
         },
-        "tempo": "Tempo"
+        "tempo": "Tempo",
+        "tempotip": "The amount of frames that make a second in the animation."
     },
     "render": "RENDER SETTINGS",
     "render/": {
@@ -1991,6 +1998,7 @@
         },
         "dofquality": "Depth of field quality",
         "ssao": "Ambient occlusion",
+        "ssaotip": "An effect that darkens areas that are less exposed to light.",
         "ssao/": {
             "radius": "Radius",
             "power": "Strength",
@@ -2010,22 +2018,28 @@
             "buffersize8192": "Gigantic"
         },
         "subsurfacescattering": "Subsurface scattering",
+        "subsurfacescatteringtip": "Simulates light passing through an object, such as leaves.",
         "subsurfacescatter/":
         {
             "quality": "Blur quality",
             "jitter": "Jitter amount"
         },
         "indirect": "Indirect lighting",
+        "indirecttip": "Simulates light bouncing off objects. This allows emissive materials to light the scene.",
         "indirect/": {
             "precision": "Precision",
+            "precisiontip": "The accuracy of raytracing for light bounces, higher precision is slower.",
             "blurpasses": "Blur passes",
             "strength": "Strength"
         },
         "reflections": "Reflections",
         "reflections/": {
             "precision": "Precision",
+            "precisiontip": "The accuracy of raytracing reflections, higher precision is slower.",
             "thickness": "Thickness",
-            "fadeamount": "Edge fade amount"
+            "thicknesstip": "Object thickness threshold to detect raytracing collision.",
+            "fadeamount": "Edge fade amount",
+            "fadeamounttip": "Fades edges of the reflections on the edge of the render to reduce artifacts."
         },
         "glow": "Glow",
         "glow/": {
@@ -2036,11 +2050,13 @@
             "falloffintensity": "Intensity"
         },
         "texturefiltering": "Texture filtering",
+        "texturefilteringtip": "Smoothen textures on objects from a distance.",
         "texturefiltering/": {
             "level": "Texture filtering level",
             "transparentblocks": "Transparent block texture filtering"
         },
         "aa": "Anti-aliasing",
+        "aatip": "Smoothen the edges of objects in the final render.",
         "aapower": "Strength",
         "cameraeffects": "Camera effects",
         "modelsscenery": "Models and scenery",
@@ -2055,7 +2071,7 @@
         "blockglowthreshold": "Glow color threshold",
         "blocksubsurfaceradius": "Block subsurface radius",
         "materialmaps": "Object material maps",
-        "materialmapshelp": "Enable material and normal map texture settings for objects."
+        "materialmapstip": "Enable material and normal map texture settings for objects."
     },
     "library": "LIBRARY",
     "library/": {
@@ -2105,6 +2121,7 @@
             "texmaterial": "Material map",
             "texnormal": "Normal map",
             "texmapped": "Mapped texture",
+            "texmappedtip": "Whether the faces of the shape should use parts of a texture image.",
             "texsavemap": "Export map",
             "texoffset": "Offset",
             "texhoffset": "H",
@@ -2403,9 +2420,11 @@
         },
         "sunlightstrength": "Sunlight strength",
         "sunlightangle": "Sunlight angle",
+        "sunlightangletip": "The angluar diameter of the sun, changes the size of sun shadows.",
         "twilight": "Twilight",
         "twilighttip": "Toggle color changes in the background during sunrise/sunset.",
         "desaturatenight": "Desaturate night",
+        "desaturatenighttip": "Desaturate areas of the scene at night that aren't brightened by a light source.",
         "desaturatenightamount": "Amount",
         "groundshow": "Ground",
         "ground": "Ground",
@@ -2445,8 +2464,10 @@
             "height": "Height"
         },
         "volumetricfog": "Volumetric fog",
+        "volumetricfogtip": "Show realistic patches of fog in the scene.",
         "volumetricfog/": {
             "ambience": "Fog ambience",
+            "ambiencetip": "Make the volumetric fog be affected by sunlight and ambient light.",
             "noise": "3D noise",
             "scatter": "Scatter",
             "density": "Density",
@@ -2985,9 +3006,9 @@
         "mode": "Program mode",
         "mode/": {
             "simple": "Simple",
-            "simplehelp": "Limited set of features, reccomended for new users.",
+            "simpletip": "Limited set of features, reccomended for new users.",
             "advanced": "Advanced",
-            "advancedhelp": "Access to all available features, reccomended for advanced users."
+            "advancedtip": "Access to all available features, reccomended for advanced users."
         },
         "minecraftversion": "Minecraft version",
         "64bitimport": "Use x64 world importer",
@@ -3030,10 +3051,11 @@
         "timelineautoscroll": "Auto-scroll when playing animation",
         "timelineselectjump": "Jump to selected object in timeline list",
         "timelineframesnap": "Snap playback marker",
+        "timelineframesnaptip": "Snap the animation to frames when playing.",
         "zisup": "Z is up",
-        "smoothcamera": "Smooth work camera",
         "searchvariants": "Search variants in block search",
         "separatetoolmodes": "Separate tool modes",
+        "separatetoolmodestip": "Switch between separate viewport tools, instead of toggling tools together.",
         "controls": "CONTROLS",
         "controls/": {
             "keybinds": "Keybinds",

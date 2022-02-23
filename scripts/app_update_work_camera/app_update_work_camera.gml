@@ -24,7 +24,7 @@ function app_update_work_camera()
 			cam_work_focus_tl = null
 	}
 	
-	cam_work_zoom += (cam_work_zoom_goal - cam_work_zoom) / max(1, 4 / delta)
+	cam_work_zoom += (cam_work_zoom_goal - cam_work_zoom) / max(1, 3 / delta)
 	cam_work_zoom = clamp(cam_work_zoom, 1, world_size)
 	
 	if (cam_work_focus_last[X] != cam_work_focus[X] || 

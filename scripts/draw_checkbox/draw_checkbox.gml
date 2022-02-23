@@ -1,11 +1,12 @@
-/// draw_checkbox(name, xx, yy, active, script)
+/// draw_checkbox(name, xx, yy, active, script, [tip])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
+/// @arg tip
 
-function draw_checkbox(name, xx, yy, active, script)
+function draw_checkbox(name, xx, yy, active, script, tip = "")
 {
 	var text, w, h, mouseon, pressed;
 	text = text_get(name)
@@ -65,9 +66,13 @@ function draw_checkbox(name, xx, yy, active, script)
 	draw_box_hover(checkboxx, checkboxy, 16, 16, microani_arr[e_microani.PRESS])
 	
 	// Label
-	draw_label(string_limit(text, dw - 24), xx + 24, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	var shortlabel = string_limit(text, dw - 24);
+	draw_label(shortlabel, xx + 24, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	
 	microani_update(mouseon, mouseclick, active)
+	
+	if (string_width(shortlabel) < dw - 28)
+		draw_help_circle(tip, xx + 24 + string_width(shortlabel) + 4, yy + (h/2) - 10, false)
 	
 	// Press
 	if (pressed && mouse_left_released)

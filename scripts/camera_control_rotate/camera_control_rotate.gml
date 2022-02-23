@@ -12,25 +12,14 @@ function camera_control_rotate(cam, lockx, locky)
 	
 	if (!cam)
 	{
-		if (fps > 20 && setting_smooth_camera)
-		{
-			cam_work_angle_off_xy += mx / (3 / delta)
-			cam_work_angle_off_z += my / (3 / delta)
-		}
-		else
-		{
-			cam_work_angle_off_xy = 0
-			cam_work_angle_off_z = 0
+		cam_work_angle_xy += mx
+		cam_work_angle_z += my
+		cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
 		
-			cam_work_angle_xy += mx
-			cam_work_angle_z += my
-			cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
-	
-			cam_work_angle_look_xy += mx
-			cam_work_angle_look_z -= my
-			cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
-			camera_work_set_from()
-		}
+		cam_work_angle_look_xy += mx
+		cam_work_angle_look_z -= my
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		camera_work_set_from()
 		
 		if (keybinds[e_keybind.CAM_RESET].pressed)
 			camera_work_reset()

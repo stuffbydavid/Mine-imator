@@ -14,11 +14,8 @@ function tl_update_values_progress(markerpos)
 			kflength = (markerpos - keyframe_current.position)
 			kfprogress = (keyframe_next.position - keyframe_current.position)
 			
-			keyframe_progress = kflength / kfprogress
-			keyframe_progress_bend = kflength / kfprogress
+			return kflength / kfprogress
 		}
-		
-		return 0
 	}
 	
 	// Calculate seamless looping by changing the 'next' keyframe

@@ -48,7 +48,6 @@ function settings_startup()
 	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
-	setting_smooth_camera = false
 	setting_search_variants = true
 	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true

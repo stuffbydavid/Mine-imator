@@ -11,7 +11,7 @@ function tab_settings_program()
 	draw_togglebutton("settingsmode", dx, dy, true, true)
 	tab_next()
 	
-	draw_tooltip_label(setting_advanced_mode ? "settingsmodeadvancedhelp" : "settingsmodesimplehelp", icons.INFO, e_toast.INFO)
+	draw_tooltip_label(setting_advanced_mode ? "settingsmodeadvancedtip" : "settingsmodesimpletip", icons.INFO, e_toast.INFO)
 	
 	// Minecraft assets version
 	tab_control(24)

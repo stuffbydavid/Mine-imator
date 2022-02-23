@@ -191,6 +191,24 @@ function tab_timeline()
 	buttonsx = max(buttonsx, buttonsxstart)
 	buttonsxstart = buttonsx
 	
+	// Run/ Walk cycles for simple mode
+	if (!setting_advanced_mode)
+	{
+		if (draw_button_icon("timelinewalkcycle", buttonsx, buttonsy, 24, 24, false, icons.WALK_CYCLE, null, !file_exists_lib(timeline_settings_walk_fn), "tooltiptlwalk"))
+			action_tl_load_loop(timeline_settings_walk_fn)
+		
+		buttonsx += 24 + 6
+		
+		if (draw_button_icon("timelineruncycle", buttonsx, buttonsy, 24, 24, false, icons.RUN_CYCLE, null, !file_exists_lib(timeline_settings_run_fn), "tooltiptlrun"))
+			action_tl_load_loop(timeline_settings_run_fn)
+		
+		buttonsx += 24 + 4
+		
+		draw_divide_vertical(buttonsx, buttonsy, 24)
+		
+		buttonsx += 4
+	}
+	
 	// Interval settings
 	draw_button_icon("timelineintervals", buttonsx, buttonsy, 24, 24, timeline_intervals_show, icons.STOPWATCH, action_tl_intervals_show, false, timeline_intervals_show ? "timelineintervalshide" : "timelineintervalsshow")
 	buttonsx += 24

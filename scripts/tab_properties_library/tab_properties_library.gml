@@ -440,7 +440,7 @@ function tab_properties_library()
 				if (setting_advanced_mode)
 				{
 					tab_control_checkbox()
-					draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped)
+					draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
 					tab_next()
 					
 					if (temp_edit.shape_tex_mapped)

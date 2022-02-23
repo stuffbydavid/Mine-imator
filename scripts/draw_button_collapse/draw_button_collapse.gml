@@ -1,11 +1,12 @@
-/// draw_button_collapse(name, open, script, active, caption)
+/// draw_button_collapse(name, open, script, active, caption, tip)
 /// @arg name
 /// @arg open
 /// @arg script
 /// @arg active
 /// @arg caption
+/// @arg tip
 
-function draw_button_collapse(name, open, script, active, caption)
+function draw_button_collapse(name, open, script, active, caption, tip = "")
 {
 	// Mouse states
 	draw_set_font(font_label)
@@ -41,9 +42,12 @@ function draw_button_collapse(name, open, script, active, caption)
 	
 	// Switch/label
 	if (script)
-		draw_switch(caption, dx, dy, active, script)
+		draw_switch(caption, dx, dy, active, script, tip)
 	else
+	{
 		draw_label(text_get(caption), dx, dy + tab_control_h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+		draw_help_circle(tip, dx + string_width(text_get(caption)) + 4, dy + 2, false)
+	}
 	
 	// Interact with collapse map?
 	if (mouseclick && ds_map_exists(collapse_map, name))
