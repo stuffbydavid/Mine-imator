@@ -50,7 +50,6 @@ function draw_texture_picker()
 	
 	// Outline
 	draw_outline(xx, yy, wid, hei, 1, c_border, a_border)
-	draw_box(xx, yy, wid, hei, 1, c_level_bottom, .5)
 	
 	tx = xx
 	ty = yy

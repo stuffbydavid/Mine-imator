@@ -30,10 +30,10 @@ function view_toolbar_draw(view, xx, yy)
 	if (app_mouse_box(xx - 64, yy - 64, width + 128, height + 128) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		view.toolbar_alpha_goal = 1
 	else
-		view.toolbar_alpha_goal = .5
+		view.toolbar_alpha_goal = .8
 	
 	if (window_busy = "bench")
-		view.toolbar_alpha_goal = .5
+		view.toolbar_alpha_goal = .8
 	
 	draw_set_alpha(view.toolbar_alpha)
 	

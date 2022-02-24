@@ -79,9 +79,12 @@ function list_init_context_menu(name)
 			list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
 			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 			
-			list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
-			list_item_last.context_menu_name = "color"
-			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			if (setting_advanced_mode)
+			{
+				list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
+				list_item_last.context_menu_name = "color"
+				list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			}
 			
 			list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_children)
 			list_item_last.disabled = (context_menu_value = null && tl_edit = null)

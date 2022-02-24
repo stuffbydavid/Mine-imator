@@ -554,7 +554,8 @@
         "pointlighttip": "Point lights shine in all directions, like a lightbulb.",
         "spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
         "cameratip": "A virtual camera the animation is seen through, with optional effects.",
-        "backgroundtip": "A timeline that can change the background during the animation."
+        "backgroundtip": "A timeline that can change the background during the animation.",
+        "audiotip": "An audio track that can play sound files such as .mp3 and .wav in the animation."
     },
     "downloadskin/": {
         "caption": "Download skin",
@@ -2308,6 +2309,7 @@
                 "speed/": {
                     "extend": "Separate XYZ settings",
                     "xyz": "Initial XYZ",
+                    "x": "Initial X",
                     "y": "Initial Y",
                     "z": "Initial Z",
                     "xyzadd": "Add XYZ",
@@ -2420,7 +2422,7 @@
         },
         "sunlightstrength": "Sunlight strength",
         "sunlightangle": "Sunlight angle",
-        "sunlightangletip": "The angluar diameter of the sun, changes the size of sun shadows.",
+        "sunlightangletip": "The angular diameter of the sun, changes the size of sun shadows.",
         "twilight": "Twilight",
         "twilighttip": "Toggle color changes in the background during sunrise/sunset.",
         "desaturatenight": "Desaturate night",

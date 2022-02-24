@@ -41,15 +41,10 @@ function tl_filter_draw()
 	}
 	tab_next()
 	
-	// Hide ghosts (Advanced mode only)
-	if (setting_advanced_mode)
-	{
-		tab_control_switch()
-		draw_switch("timelinehideghosts", dx, dy, setting_timeline_hide_ghosts, action_setting_timeline_hide_ghosts, "timelinehideghoststip")
-		tab_next()
-	}
-	else
-		dy += 8
+	// Hide ghosts
+	tab_control_switch()
+	draw_switch("timelinehideghosts", dx, dy, setting_timeline_hide_ghosts, action_setting_timeline_hide_ghosts, "timelinehideghoststip")
+	tab_next()
 	
 	settings_menu_w = max(switchwid, colorwid) + 24
 }

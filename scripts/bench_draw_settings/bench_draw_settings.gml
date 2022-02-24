@@ -50,6 +50,9 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		if (bench_settings.type = e_tl_type.BACKGROUND)
 			draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
+		
+		if (bench_settings.type = e_tl_type.AUDIO)
+			draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
 	}
 	else
 	{

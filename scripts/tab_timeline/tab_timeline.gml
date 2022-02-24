@@ -784,7 +784,7 @@ function tab_timeline()
 		}
 	}
 	
-	content_mouseon = true
+	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Timeline list
 	var tl, buttonsize, buttonpad;
@@ -796,20 +796,26 @@ function tab_timeline()
 	draw_divide_vertical(content_x + listw, tly - barh, content_height - headerh)
 	draw_divide(content_x, bary + 1, listw)
 	
-	// Filter
-	if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
+	// Filter (advanced mode only)
+	if (setting_advanced_mode)
 	{
-		menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
-		settings_menu_script = tl_filter_draw
-		settings_menu_above = true
+		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
+		{
+			menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
+			settings_menu_script = tl_filter_draw
+			settings_menu_above = true
+		}
+	
+		if (settings_menu_name = "timelinefilter" && settings_menu_ani_type != "hide")
+			current_microani.active.value = true
 	}
 	
-	if (settings_menu_name = "timelinefilter" && settings_menu_ani_type != "hide")
-		current_microani.active.value = true
-	
 	// Draw search bar
+	var searchx, searchwid;
+	searchx = (setting_advanced_mode ? listx + (24 + 16) : listx + 8) 
+	searchwid = (setting_advanced_mode ? listw - (24 + 24) : listw - 16) 
 	timeline.tbx_search.text = timeline_search
-	draw_textfield("timelinesearch", listx + (24 + 16), bary + 4, listw - (24 + 24), 24, timeline.tbx_search, action_tl_search, text_get("listsearch"), "none")
+	draw_textfield("timelinesearch", searchx, bary + 4, searchwid, 24, timeline.tbx_search, action_tl_search, text_get("listsearch"), "none")
 	
 	// Context menu
 	if (mouseinnames)

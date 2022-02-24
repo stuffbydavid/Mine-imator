@@ -6,9 +6,6 @@ function view_update_surface(view, cam)
 {
 	render_view_current = view
 	
-	with (obj_timeline)
-		render_visible = tl_get_visible()
-	
 	// Render
 	render_lights = (view.quality != e_view_mode.FLAT)
 	render_particles = view.particles

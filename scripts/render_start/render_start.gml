@@ -92,6 +92,10 @@ function render_start()
 	// Effects must be in the order they're done in rendering
 	render_refresh_effects()
 	
+	// Update timeline visiblity
+	with (obj_timeline)
+		render_visible = tl_get_visible()
+	
 	render_prev_color = draw_get_color()
 	render_prev_alpha = draw_get_alpha()
 	draw_set_color(c_white)
