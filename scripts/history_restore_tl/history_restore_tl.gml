@@ -77,7 +77,16 @@ function history_restore_tl(save)
 				update_matrix = true
 			}
 		}
-			
+		
+		for (var s = 0; s < save.usage_tl_path_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_path_save_id[s]))
+			{
+				value[e_value.PATH_OBJ] = tl
+				update_matrix = true
+			}
+		}
+		
 		for (var s = 0; s < save.usage_tl_attractor_amount; s++)
 		{
 			with (save_id_find(save.usage_tl_attractor_save_id[s]))
@@ -90,6 +99,10 @@ function history_restore_tl(save)
 		for (var s = 0; s < save.usage_kf_texture_amount; s++)
 			with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = tl
+		
+		for (var s = 0; s < save.usage_kf_path_amount; s++)
+			with (save_id_find(save.usage_kf_path_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_path_index[s]].value[e_value.PATH_OBJ] = tl
 		
 		for (var s = 0; s < save.usage_kf_attractor_amount; s++)
 			with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))

@@ -21,6 +21,18 @@ function tl_update_value_types()
 		return 0
 	}
 	
+	if (type = e_tl_type.PATH)
+		value_type[e_value_type.PATH] = true
+	
+	if (type = e_tl_type.PATH_POINT)
+	{
+		value_type[e_value_type.TRANSFORM] = true
+		value_type[e_value_type.TRANSFORM_POS] = true
+		value_type[e_value_type.TRANSFORM_PATH_POINT] = true
+		value_type[e_value_type.HIERARCHY] = true
+		return 0
+	}
+	
 	// Info
 	value_type[e_value_type.HIERARCHY] = true
 	value_type[e_value_type.APPEARANCE] = true

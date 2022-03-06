@@ -106,6 +106,13 @@ function project_load_update()
 			array_add(banner_update, id)
 	}
 	
+	// Update paths
+	with (obj_timeline)
+	{
+		if (type = e_tl_type.PATH)
+			tl_update_path()
+	}
+	
 	with (obj_particle_type)
 		if (loaded)
 			ptype_update_sprite_vbuffers()

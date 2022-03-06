@@ -197,5 +197,17 @@ function project_load_timeline(map)
 		*/
 		
 		blend_mode = value_get_string(map[?"blend_mode"], blend_mode)
+		
+		var pathmap = map[?"path"];
+		if (ds_map_valid(pathmap))
+		{
+			path_closed = value_get_real(pathmap[?"closed"], path_closed)
+			path_detail = value_get_real(pathmap[?"detail"], path_detail)
+			path_shape_generate = value_get_real(pathmap[?"shape_generate"], path_shape_generate)
+			path_shape_radius = value_get_real(pathmap[?"shape_radius"], path_shape_radius)
+			path_shape_tube = value_get_real(pathmap[?"shape_tube"], path_shape_tube)
+			path_shape_detail = value_get_real(pathmap[?"shape_detail"], path_shape_detail)
+			path_shape_tex_length = value_get_real(pathmap[?"shape_tex_length"], path_shape_tex_length)
+		}
 	}
 }

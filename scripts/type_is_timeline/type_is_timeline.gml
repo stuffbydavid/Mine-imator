@@ -9,5 +9,7 @@ function type_is_timeline(type)
 			type = e_tl_type.BACKGROUND || 
 			type = e_tl_type.FOLDER || 
 			type = e_tl_type.AUDIO || 
-			type = e_tl_type.LIGHT_SOURCE)
+			type = e_tl_type.LIGHT_SOURCE ||
+			type = e_tl_type.PATH ||
+			type = e_tl_type.PATH_POINT)
 }

@@ -212,6 +212,7 @@ function project_load_find_save_ids()
 		if (!loaded)
 			continue
 		
+		value[e_value.PATH_OBJ] = save_id_find(save_id_map[?value[e_value.PATH_OBJ]])
 		value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
 		
 		if (value[e_value.TEXTURE_OBJ] = "none")

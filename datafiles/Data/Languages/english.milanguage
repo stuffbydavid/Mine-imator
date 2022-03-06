@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.02.17"
+        "lastchange": "2022.03.05"
     },
     "particle/": {
         "default": "Default spawner",
@@ -188,7 +188,8 @@
         },
         "scaleseparate": "Separate scale",
         "scalecombine": "Combine scale",
-        "restorekeybind": "Restore keybind"
+        "restorekeybind": "Restore keybind",
+        "pathsetlength": "Set path length"
     },
     "shortcut/": {
         "select": "Select instance",
@@ -505,7 +506,9 @@
         "sound": "Sound",
         "shape": "Shape",
         "lightsource": "Light source",
-        "fromworld": "Imported scenery"
+        "fromworld": "Imported scenery",
+        "path": "Path",
+        "pathpoint": "Path point"
     },
     "workbenchcaption": "Workbench",
     "bench/": {
@@ -555,7 +558,9 @@
         "spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
         "cameratip": "A virtual camera the animation is seen through, with optional effects.",
         "backgroundtip": "A timeline that can change the background during the animation.",
-        "audiotip": "An audio track that can play sound files such as .mp3 and .wav in the animation."
+        "audiotip": "An audio track that can play sound files such as .mp3 and .wav in the animation.",
+        "pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points.",
+        "pathpointtip": "A point that can be used to build paths when parented to path timelines."
     },
     "downloadskin/": {
         "caption": "Download skin",
@@ -2735,7 +2740,21 @@
 			"screen": "Screen"
 		},
         "audio": "AUDIO",
-        "audioadd": "Add sound"
+        "audioadd": "Add sound",
+        "path": "PATH",
+        "path/": {
+            "closed": "Connect path ends",
+            "detail": "Detail",
+            "detailtip": "Higher values will result in a smoother path, but are more performance intense.",
+            "shape": "Generate shape",
+            "shape/": {
+                "radius": "Radius",
+                "tube": "Tube shape",
+                "detail": "Shape detail",
+                "texlength": "Texture length",
+                "texlengthtip": "The length the path texture should stretch for before repeating."
+            }
+        }
     },
     "frameeditor/": {
         "transform": "TRANSFORM",
@@ -2762,6 +2781,17 @@
             "x": "Bend X",
             "y": "Bend Y",
             "z": "Bend Z"
+        },
+        "followpath": "Follow path",
+        "path": "Path timeline",
+        "path/": {
+            "offset": "Offset",
+            "drift": "Drift",
+            "drifttip": "Tilts the object when turning along the path."
+        },
+        "pathpoint/": {
+            "angle": "Angle",
+            "scale": "Scale"
         },
         "material": "MATERIAL",
         "opacity": "Opacity",

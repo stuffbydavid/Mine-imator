@@ -3,6 +3,10 @@
 
 function tl_keyframe_save(kf)
 {
+	if (kf.value[e_value.PATH_OBJ] != null)
+		with (kf.value[e_value.PATH_OBJ])
+			tl_save()
+	
 	if (kf.value[e_value.ATTRACTOR] != null)
 		with (kf.value[e_value.ATTRACTOR])
 			tl_save()

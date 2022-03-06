@@ -23,6 +23,7 @@ function app_update_tl_edit_select()
 	{
 		appearance.enabled = false
 		audio.enabled = false
+		path.enabled = false
 	}
 	
 	select_kf_amount = 0
@@ -130,6 +131,9 @@ function app_update_tl_edit_select()
 		
 		if (value_type[e_value_type.AUDIO])
 			app.timeline_editor.audio.enabled = true
+		
+		if (value_type[e_value_type.PATH])
+			app.timeline_editor.path.enabled = true
 		
 		// Set shown
 		app.frame_editor.transform.show = true

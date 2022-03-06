@@ -39,6 +39,68 @@ function tl_update_matrix()
 			else
 				matrix_parent = MAT_IDENTITY
 			
+			// Orient to path object
+			var path = value[e_value.PATH_OBJ];
+			if (path != null && array_length(path.path_table) > 0)
+			{
+				var t1, t2, t3, t4, angle, points;
+				var pos, nextpos, futurepos, pastpos, mat;
+				points = array_length(path.path_table) - 1
+				angle = 0
+				
+				// Get current position
+				if (!path.path_closed)
+					t1 = (value[e_value.PATH_OFFSET] / path.path_length) * points
+				else
+					t1 = frac(mod_fix(value[e_value.PATH_OFFSET], path.path_length) / path.path_length) * points
+				
+				pos = spline_get_point(t1, path.path_table, path.path_closed)
+				
+				// Get a position down the path for smoothing
+				if (!path.path_closed)
+					t2 = ((value[e_value.PATH_OFFSET] + 5) / path.path_length) * points
+				else
+					t2 = frac(mod_fix(value[e_value.PATH_OFFSET] + 5, path.path_length) / path.path_length) * points
+				
+				nextpos = spline_get_point(t2, path.path_table, path.path_closed)
+				
+				// Drift
+				if (value[e_value.PATH_DRIFT] != 0)
+				{
+					// Future point
+					if (!path.path_closed)
+						t3 = ((value[e_value.PATH_OFFSET] + 20) / path.path_length) * points
+					else
+						t3 = frac(mod_fix(value[e_value.PATH_OFFSET] + 20, path.path_length) / path.path_length) * points
+					
+					futurepos = spline_get_point(t3, path.path_table, path.path_closed)
+					
+					// Past point
+					if (!path.path_closed)
+						t4 = ((value[e_value.PATH_OFFSET] - 20) / path.path_length) * points
+					else
+						t4 = frac(mod_fix(value[e_value.PATH_OFFSET] - 20, path.path_length) / path.path_length) * points
+					
+					pastpos = spline_get_point(t4, path.path_table, path.path_closed)
+					
+					// Get angle difference and calculate tilt amount
+					var dir1, dir2, dif;
+					dir1 = vec3_normalize(point3D_sub(pos, pastpos))
+					dir2 = vec3_normalize(point3D_sub(futurepos, pos))
+					dif = vec3_cross(dir2, dir1)
+					angle = (dif[Z] * -value[e_value.PATH_DRIFT])
+				}
+				
+				// Make rotation matrix and add path position
+				mat = matrix_create_rotate_to(pos, nextpos, angle + pos[W])
+				mat = matrix_multiply(mat, matrix_create(pos, vec3(0), vec3(1)))
+				
+				matrix_parent = matrix_multiply(matrix_parent, mat)
+				
+				if (is_array(path.matrix))
+					matrix_parent = matrix_multiply(matrix_parent, path.matrix)
+			}
+			
 			// Add body part position and rotation
 			if (type = e_tl_type.BODYPART && model_part != null)
 			{
@@ -296,9 +358,23 @@ function tl_update_matrix()
 				tl_update_bounding_box()
 			}
 			
-			// Update children
+			// Update objects following this path
+			if (type = e_tl_type.PATH)
+			{
+				with (obj_timeline)
+				{
+					if (value[e_value.PATH_OBJ] = other.id)
+						update_matrix = true
+				}
+			}
+			
+			// Update path
+			if (type = e_tl_type.PATH_POINT && parent != app && parent.type = e_tl_type.PATH)
+				parent.path_update = true
+			
 			if (update_matrix)
 			{
+				// Update children
 				for (var t = 0; t < ds_list_size(tree_list); t++)
 					tree_list[|t].update_matrix = true
 			}
@@ -317,24 +393,23 @@ function tl_update_matrix()
 			if (type = e_tl_type.CHARACTER ||
 				type = e_tl_type.SPECIAL_BLOCK ||
 				(type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.MIMODEL))
-				{
-					ds_list_add(app.project_model_list, id)
-					
-					bounding_box.reset()
-					
-					if (model_timeline_list = null)
-						model_timeline_list = ds_list_create()
-					else
-						ds_list_clear(model_timeline_list)
-					
-					if (type = e_tl_type.SPECIAL_BLOCK || temp.model != null)
-						model_update_bounding_box(id, id, bounding_box)
-					
-					bounding_box_matrix.copy(bounding_box)
-				}
+			{
+				ds_list_add(app.project_model_list, id)
+				
+				bounding_box.reset()
+				
+				if (model_timeline_list = null)
+					model_timeline_list = ds_list_create()
+				else
+					ds_list_clear(model_timeline_list)
+				
+				if (type = e_tl_type.SPECIAL_BLOCK || temp.model != null)
+					model_update_bounding_box(id, id, bounding_box)
+				
+				bounding_box_matrix.copy(bounding_box)
+			}
 		}
 	}
-	
 	
 	update_matrix = false
 }

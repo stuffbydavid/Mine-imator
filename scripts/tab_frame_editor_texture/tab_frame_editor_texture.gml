@@ -7,73 +7,89 @@ function tab_frame_editor_texture()
 	
 	var texobj, name, tex;
 	tex = null
+	name = ""
 	
-	if (tl_edit.temp = null)
-		return 0
-		
-	switch (tl_edit.type)
+	if (tl_edit.temp != null)
 	{
-		case e_tl_type.CHARACTER:
-		case e_tl_type.SPECIAL_BLOCK:
-		case e_tl_type.MODEL:
-		case e_tl_type.BODYPART:
+		switch (tl_edit.type)
 		{
-			name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
-			
-			var modelfile = tl_edit.temp.model_file;
-			if (tl_edit.type = e_temp_type.BODYPART)
-				modelfile = tl_edit.model_part
-			
-			with (tl_edit.temp)
+			case e_tl_type.CHARACTER:
+			case e_tl_type.SPECIAL_BLOCK:
+			case e_tl_type.MODEL:
+			case e_tl_type.BODYPART:
 			{
-				texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
-				tex = temp_get_model_tex_preview(texobj, modelfile)
+				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
+				
+				var modelfile = tl_edit.temp.model_file;
+				if (tl_edit.type = e_temp_type.BODYPART)
+					modelfile = tl_edit.model_part
+				
+				with (tl_edit.temp)
+				{
+					texobj = temp_get_model_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
+					tex = temp_get_model_tex_preview(texobj, modelfile)
+				}
+				
+				break
 			}
 			
-			break
-		}
-		
-		case e_tl_type.BLOCK:
-		case e_tl_type.SCENERY:
-		{
-			name = "frameeditorblocktex"
-			with (tl_edit.temp)
-				texobj = temp_get_block_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
-			tex = texobj.block_preview_texture
-			break
-		}
-		
-		case e_tl_type.ITEM:
-		{
-			name = "frameeditoritemtex"
+			case e_tl_type.BLOCK:
+			case e_tl_type.SCENERY:
+			{
+				name = "frameeditorblocktex"
+				with (tl_edit.temp)
+					texobj = temp_get_block_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
+				tex = texobj.block_preview_texture
+				break
+			}
 			
-			var texobj = tl_edit.value[e_value.TEXTURE_OBJ];
+			case e_tl_type.ITEM:
+			{
+				name = "frameeditoritemtex"
+				
+				var texobj = tl_edit.value[e_value.TEXTURE_OBJ];
+				
+				if (texobj = null)
+					texobj = tl_edit.temp.item_tex
+				
+				if (!res_is_ready(texobj))
+					texobj = mc_res
+				
+				tex = texobj.block_preview_texture
+				
+				if (tex = null)
+					tex = texobj.texture
+				
+				break
+			}
 			
-			if (texobj = null)
-				texobj = tl_edit.temp.item_tex
-			
-			if (!res_is_ready(texobj))
-				texobj = mc_res
-			
-			tex = texobj.block_preview_texture
-			
-			if (tex = null)
-				tex = texobj.texture
-			
-			break
-		}
-		
-		default: // Shapes
-		{
-			name = "frameeditorshapetex"
-			with (tl_edit.temp)
-				texobj = temp_get_shape_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
-			
-			if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
-				tex = texobj.texture
-			break
+			default: // Shapes
+			{
+				name = "frameeditorshapetex"
+				with (tl_edit.temp)
+					texobj = temp_get_shape_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
+				
+				if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
+					tex = texobj.texture
+				break
+			}
 		}
 	}
+	
+	// Paths don't use templates
+	if (tl_edit.type = e_tl_type.PATH)
+	{
+		name = "frameeditorshapetex"
+		texobj = tl_edit.value[e_value.TEXTURE_OBJ]
+		
+		if (texobj = null)
+			tex = spr_shape
+		else
+			tex = texobj.texture
+	}
+	
+	if (name = "")
+		return 0
 	
 	// Text to display
 	var text;

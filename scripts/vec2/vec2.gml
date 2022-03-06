@@ -2,7 +2,7 @@
 /// @arg x
 /// @arg y
 
-function vec2(xx, yy)
+function vec2(xx, yy = undefined)
 {
 	gml_pragma("forceinline")
 	

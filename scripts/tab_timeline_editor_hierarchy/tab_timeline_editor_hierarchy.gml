@@ -56,7 +56,7 @@ function tab_timeline_editor_hierarchy()
 		}
 		
 		// Rotation point
-		if (setting_advanced_mode)
+		if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorinheritrotpoint", dx, dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
@@ -89,9 +89,12 @@ function tab_timeline_editor_hierarchy()
 		tab_next()
 		
 		// Bend (Advanced mode only)
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorinheritbend", dx, dy, tl_edit.inherit_bend, action_tl_inherit_bend)
-		tab_next()
+		if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_advanced_mode)
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritbend", dx, dy, tl_edit.inherit_bend, action_tl_inherit_bend)
+			tab_next()
+		}
 		
 		// Texture
 		if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
@@ -118,7 +121,7 @@ function tab_timeline_editor_hierarchy()
 		}
 		
 		// Glow color (Advanced mode only)
-		if (!tl_edit.value_type[e_value_type.CAMERA] && setting_advanced_mode)
+		if (tl_edit.value_type[e_value_type.MATERIAL] && !tl_edit.value_type[e_value_type.CAMERA] && setting_advanced_mode)
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorinheritglowcolor", dx, dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)

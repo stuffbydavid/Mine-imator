@@ -756,6 +756,20 @@ function list_init(name)
 			break
 		}
 		
+		// Path objects
+		case "frameeditorpath":
+		{
+			menu_add_item(null, text_get("listnone"))
+			
+			with (obj_timeline)
+			{
+				if (type = e_tl_type.PATH)
+					menu_add_item(id, display_name)
+			}
+			
+			break
+		}
+		
 		// Timeline frame skin
 		case "frameeditorchartex":
 		case "frameeditorspblocktex":
@@ -1057,7 +1071,9 @@ function list_init(name)
 		{
 			var texobj;
 			
-			if (name = "frameeditorshapetex")
+			if (tl_edit.temp = null)
+				texobj = null
+			else if (name = "frameeditorshapetex")
 				texobj = tl_edit.temp.shape_tex
 			else if (name = "frameeditorshapetexmaterial")
 				texobj = tl_edit.temp.shape_tex_material
@@ -1082,7 +1098,7 @@ function list_init(name)
 					menu_add_item(res, res.display_name, res.texture)
 			}
 			
-			if (name = "frameeditorshapetex")
+			if (name = "frameeditorshapetex" && tl_edit.type != e_tl_type.PATH)
 			{
 				with (obj_timeline)
 					if (id != texobj && type = e_tl_type.CAMERA)

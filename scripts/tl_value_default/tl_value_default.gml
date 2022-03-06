@@ -149,6 +149,7 @@ function tl_value_default(valueid)
 		case e_value.BG_WIND_DIRECTIONAL_SPEED: return app.background_wind_directional_speed
 		case e_value.BG_WIND_DIRECTIONAL_STRENGTH: return app.background_wind_directional_strength
 		case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed
+		case e_value.PATH_OBJ:
 		case e_value.ATTRACTOR:
 		case e_value.TEXTURE_OBJ:
 		case e_value.TEXTURE_MATERIAL_OBJ:
@@ -159,6 +160,7 @@ function tl_value_default(valueid)
 		case e_value.VISIBLE: return true
 		case e_value.TEXT: 
 		case e_value.ITEM_NAME: return ""
+		case e_value.PATH_POINT_SCALE: return 1
 		case e_value.TEXT_HALIGN:
 		case e_value.TEXT_VALIGN: return "center"
 		case e_value.TRANSITION: return "linear"

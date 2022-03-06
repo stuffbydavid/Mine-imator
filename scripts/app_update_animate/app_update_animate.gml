@@ -20,6 +20,13 @@ function app_update_animate()
 	if ((background_time_prev != background_time || app.history_resource_update) || app.timeline_playing)
 		render_samples = -1
 	
+	// Update paths
+	with (obj_timeline)
+	{
+		if (type = e_tl_type.PATH && path_update)
+			tl_update_path()
+	}
+	
 	with (obj_timeline)
 	{
 		// Update values

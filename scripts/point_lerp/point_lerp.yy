@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/Utility/Math.yy",
+    "name": "Point",
+    "path": "folders/Scripts/Utility/Math/Point.yy",
   },
   "resourceVersion": "1.0",
-  "name": "bezier_curve",
+  "name": "point_lerp",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -65,6 +65,13 @@ function tl_update_values()
 		tl_update_values_ease(e_value.POS_X)
 		tl_update_values_ease(e_value.POS_Y)
 		tl_update_values_ease(e_value.POS_Z)
+		
+		if (type != e_tl_type.PATH && type != e_tl_type.PATH_POINT)
+		{
+			tl_update_values_ease(e_value.PATH_OBJ)
+			tl_update_values_ease(e_value.PATH_OFFSET)
+			tl_update_values_ease(e_value.PATH_DRIFT)
+		}
 	}
 	
 	// Rotation
@@ -89,6 +96,13 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BEND_ANGLE_X)
 		tl_update_values_ease(e_value.BEND_ANGLE_Y)
 		tl_update_values_ease(e_value.BEND_ANGLE_Z)
+	}
+	
+	// Path point
+	if (value_type[e_value_type.TRANSFORM_PATH_POINT])
+	{
+		tl_update_values_ease(e_value.PATH_POINT_ANGLE)
+		tl_update_values_ease(e_value.PATH_POINT_SCALE)
 	}
 	
 	// Color

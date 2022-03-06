@@ -12,7 +12,9 @@ function render_world_tl()
 		type = e_tl_type.SPECIAL_BLOCK ||
 		type = e_tl_type.FOLDER ||
 		type = e_tl_type.BACKGROUND ||
-		type = e_tl_type.AUDIO)
+		type = e_tl_type.AUDIO ||
+		(type = e_tl_type.PATH && path_vbuffer = null) ||
+		type = e_tl_type.PATH_POINT)
 		return 0
 	
 	if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))
@@ -297,6 +299,43 @@ function render_world_tl()
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 					render_world_block_map(temp.model.model_block_map, res)
 				}
+				break
+			}
+			
+			case e_tl_type.PATH:
+			{
+				if (path_vbuffer != null)
+				{
+					var tex, texmat, texnorm;
+					
+					if (value_inherit[e_value.TEXTURE_OBJ] = null)
+						tex = spr_shape
+					else
+						tex = value_inherit[e_value.TEXTURE_OBJ].texture
+					
+					if (value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = null)
+					{
+						texmat = spr_default_material
+						render_set_uniform_int("uMaterialUseGlossiness", 0)
+					}
+					else
+					{
+						texmat = value_inherit[e_value.TEXTURE_MATERIAL_OBJ].texture
+						render_set_uniform_int("uMaterialUseGlossiness", value_inherit[e_value.TEXTURE_MATERIAL_OBJ].material_uses_glossiness)
+					}
+					
+					if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = null)
+						texnorm = spr_default_normal
+					else
+						texnorm = value_inherit[e_value.TEXTURE_NORMAL_OBJ].texture
+					
+					render_set_texture(tex)
+					render_set_texture(texmat, "Material")
+					render_set_texture(texnorm, "Normal")
+					
+					vbuffer_render(path_vbuffer)
+				}
+				
 				break
 			}
 			

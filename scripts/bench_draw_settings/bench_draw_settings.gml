@@ -53,6 +53,12 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		if (bench_settings.type = e_tl_type.AUDIO)
 			draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
+		
+		if (bench_settings.type = e_tl_type.PATH)
+			draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
+		
+		if (bench_settings.type = e_tl_type.PATH_POINT)
+			draw_tooltip_label("benchpathpointtip", icons.INFO, e_toast.INFO)
 	}
 	else
 	{

@@ -38,6 +38,7 @@ function app_startup_interface_context_menu()
 	context_menu_copy_axis_edit = X
 	context_menu_value_type = e_context_type.NONE
 	context_menu_value = null
+	context_menu_value_name = ""
 	
 	context_menu_copy_type = e_context_type.NONE
 	context_menu_copy = null

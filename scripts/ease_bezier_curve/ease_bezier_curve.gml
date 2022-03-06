@@ -14,7 +14,7 @@ function ease_bezier_curve(p1, p2, p3, p4, t)
 	lower = 0
 	upper = 1
 	perc = (upper + lower) / 2
-	curve = bezier_curve(p1, p2, p3, p4, perc)
+	curve = bezier_curve_cubic(p1, p2, p3, p4, perc)
 	xx = curve[X]
 	
 	for (var i = 0; i < 10 && (abs(t - xx) >= 0.001); i++)
@@ -25,12 +25,12 @@ function ease_bezier_curve(p1, p2, p3, p4, t)
 			upper = perc
 		
 		perc = (upper + lower) / 2
-		curve = bezier_curve(p1, p2, p3, p4, perc)
+		curve = bezier_curve_cubic(p1, p2, p3, p4, perc)
 		xxprev = xx
 		xx = curve[X]
 	}
 	
-	curve = bezier_curve(p1, p2, p3, p4, perc)
+	curve = bezier_curve_cubic(p1, p2, p3, p4, perc)
 	
 	return curve[Y]
 }

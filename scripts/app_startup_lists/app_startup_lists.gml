@@ -209,6 +209,11 @@ function app_startup_lists()
 		"CUSTOM_ITEM_SLOT",
 		"ITEM_SLOT",
 		"ITEM_NAME",
+		"PATH_OBJ",
+		"PATH_OFFSET",
+		"PATH_DRIFT",
+		"PATH_POINT_ANGLE",
+		"PATH_POINT_SCALE",
 		"VISIBLE",
 		"TRANSITION",
 		"EASE_IN_X",
@@ -283,6 +288,8 @@ function app_startup_lists()
 		"folder",
 		"background",
 		"audio",
+		"path",
+		"pathpoint",
 		"shape",
 		"lightsource"
 	)
@@ -494,7 +501,9 @@ function app_startup_lists()
 		icons.LIGHT_POINT,
 		icons.FOLDER,
 		icons.CLOUD,
-		icons.NOTE
+		icons.NOTE,
+		icons.PATH,
+		icons.PATH_POINT
 	)
 	
 	timeline_icon_list_dark = ds_list_create()
@@ -518,7 +527,9 @@ function app_startup_lists()
 		icons.LIGHT_POINT,
 		icons.FOLDER,
 		icons.CLOUD,
-		icons.NOTE
+		icons.NOTE,
+		icons.PATH,
+		icons.PATH_POINT
 	)
 	
 	render_pass_list = ds_list_create()

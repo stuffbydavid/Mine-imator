@@ -425,6 +425,17 @@ function app_startup_interface_tabs()
 		
 		// Audio
 		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
+		
+		// Path
+		path = tab_add_category("timelineeditorpath", icons.PATH_SMALL, tab_timeline_editor_path, true)
+		with (path)
+		{
+			tbx_detail = new_textbox_decimals()
+			
+			tbx_radius = new_textbox_decimals()
+			tbx_tex_length = new_textbox_decimals()
+			tbx_shape_detail = new_textbox_decimals()
+		}
 	}
 	
 	// Frame editor
@@ -462,6 +473,15 @@ function app_startup_interface_tabs()
 			tbx_bend[1].suffix = "°"
 			tbx_bend[2] = new_textbox_ndecimals()
 			tbx_bend[2].suffix = "°"
+			
+			// Path
+			tbx_path_offset = new_textbox_ndecimals()
+			tbx_path_drift = new_textbox_ndecimals()
+			tbx_path_drift.suffix = "°"
+			
+			tbx_path_point_angle = new_textbox_ndecimals()
+			tbx_path_point_angle.suffix = "°"
+			tbx_path_point_scale = new_textbox_decimals()
 		}
 		
 		// Material

@@ -5,6 +5,19 @@ function list_init_context_menu(name)
 {
 	list_init_start()
 	
+	// Specific actions for values
+	if (context_menu_value_name != "")
+	{
+		switch (context_menu_value_name)
+		{
+			case "pathoffset":
+			{
+				list_item_add(text_get("contextmenupathsetlength"), null, "", null, null, null, action_tl_frame_path_offset_set_length)
+				break;
+			}
+		}
+	}
+	
 	switch (name)
 	{
 		// Component values

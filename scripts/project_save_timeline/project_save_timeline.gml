@@ -158,5 +158,18 @@ function project_save_timeline()
 			json_save_var("blend_mode", blend_mode)
 		}
 		
+		if (value_type[e_value_type.PATH])
+		{
+			json_save_object_start("path")
+				json_save_var_bool("closed", path_closed)
+				json_save_var("detail", path_detail)
+				json_save_var_bool("shape_generate", path_shape_generate)
+				json_save_var("shape_radius", path_shape_radius)
+				json_save_var_bool("shape_tube", path_shape_tube)
+				json_save_var("shape_detail", path_shape_detail)
+				json_save_var("shape_tex_length", path_shape_tex_length)
+			json_save_object_done()
+		}
+		
 	json_save_object_done()
 }

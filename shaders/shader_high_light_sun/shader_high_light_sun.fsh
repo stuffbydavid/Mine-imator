@@ -117,8 +117,10 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	// Calculate tangent/bitangent
 	vec3 posPx = cross(normal, posDx);
 	vec3 posPy = cross(posDy, normal);
-	vec3 T = posPy * texDx.x + posPx * texDy.x;
-	vec3 B = posPy * texDx.y + posPx * texDy.y;
+	vec3 T = normalize(posPy * texDx.x + posPx * texDy.x);
+	T = normalize(T - dot(T, normal) * normal);
+	vec3 B = cross(normal, T);
+	//vec3 B = normalize(posPy * texDx.y + posPx * texDy.y);
 	
 	// Create a Scale-invariant frame
 	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
@@ -168,7 +170,7 @@ void main()
 		float metallic = (mat.g * uMetallic);
 		float brightness = (vBrightness * mat.b);
 		
-		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
+		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, fract(vTexCoord));
 		
 		// Diffuse factor
 		float dif = max(0.0, dot(normalize(normal), uLightDirection));	

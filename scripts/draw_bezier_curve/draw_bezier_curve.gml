@@ -21,7 +21,7 @@ function draw_bezier_curve(p1, p2, p3, p4, w, color, alpha)
 	for (var i = 0; i < 64; i++)
 	{
 		prevp = p
-		p = bezier_curve(p1, p2, p3, p4, i / 64)
+		p = bezier_curve_cubic(p1, p2, p3, p4, i / 64)
 		
 		if (i = 0)
 			continue

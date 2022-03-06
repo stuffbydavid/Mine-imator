@@ -174,4 +174,23 @@ function tl_event_create()
 	render_visible = true
 	model_timeline_list = null
 	scenery_update_chunks = false
+	
+	// Path
+	path_update = false
+	path_points_list = ds_list_create()
+	path_closed = false
+	path_detail = 6
+	
+	path_table = []
+	path_length = 1
+	
+	path_shape_generate = false
+	path_shape_radius = 8
+	path_shape_tube = false
+	path_shape_detail = 6
+	path_shape_tex_length = 16
+	
+	path_vbuffer = null
+	
+	tl_update_path()
 }

@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Point",
-    "path": "folders/Scripts/Utility/Math/Point.yy",
+    "name": "Path",
+    "path": "folders/Scripts/Project/Timeline/Path.yy",
   },
   "resourceVersion": "1.0",
-  "name": "point2D_lerp",
+  "name": "tl_update_path",
   "tags": [],
   "resourceType": "GMScript",
 }

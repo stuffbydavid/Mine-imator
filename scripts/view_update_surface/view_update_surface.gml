@@ -49,6 +49,8 @@ function view_update_surface(view, cam)
 							view_shape_camera(tl)
 						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
+						else if (tl.type = e_tl_type.PATH)
+							view_shape_path(tl)
 						
 						if ((view.boxes && app.setting_debug_features) && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
 						{

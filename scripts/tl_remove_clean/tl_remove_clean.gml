@@ -33,6 +33,9 @@ function tl_remove_clean()
 		if (part_of = null && temp != null)
 			temp.count--
 		
+		if (type = e_tl_type.PATH_POINT)
+			parent.path_update = true
+		
 		with (obj_template)
 		{
 			if (shape_tex = other.id)
@@ -68,8 +71,14 @@ function tl_remove_clean()
 			if (value[e_value.TEXTURE_NORMAL_OBJ] = other.id)
 				value[e_value.TEXTURE_NORMAL_OBJ] = null
 			
+			if (value[e_value.PATH_OBJ] = other.id)
+				value[e_value.PATH_OBJ] = null
+			
 			if (value[e_value.ATTRACTOR] = other.id)
 				value[e_value.ATTRACTOR] = null
+			
+			if (value_inherit[e_value.PATH_OBJ] = other.id)
+				update_matrix = true
 			
 			if (value_inherit[e_value.ATTRACTOR] = other.id)
 				update_matrix = true
@@ -86,6 +95,9 @@ function tl_remove_clean()
 		
 		with (obj_keyframe)
 		{
+			if (value[e_value.PATH_OBJ] = other.id)
+				value[e_value.PATH_OBJ] = null
+			
 			if (value[e_value.ATTRACTOR] = other.id)
 				value[e_value.ATTRACTOR] = null
 			

@@ -37,6 +37,9 @@ function app_startup_interface_bench()
 	list_item_add("typeaudio", e_tl_type.AUDIO, "", null, icons.NOTE, null, bench_click)
 	list_item_add("typebackground", e_tl_type.BACKGROUND, "", null, icons.CLOUD, null, bench_click)
 	
+	list_item_add("typepath", e_tl_type.PATH, "", null, icons.PATH, null, bench_click)
+	list_item_add("typepathpoint", e_tl_type.PATH_POINT, "", null, icons.PATH_POINT, null, bench_click)
+	
 	list_edit = null
 	
 	// Workbench settings

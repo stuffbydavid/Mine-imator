@@ -92,6 +92,7 @@ function enums()
 		TRANSFORM_ROT,
 		TRANSFORM_SCA,
 		TRANSFORM_BEND,
+		TRANSFORM_PATH_POINT,
 		
 		MATERIAL,
 		MATERIAL_TEXTURE,
@@ -112,6 +113,7 @@ function enums()
 		APPEARANCE,
 		AUDIO,
 		ITEM,
+		PATH,
 		amount
 	}
 	
@@ -311,6 +313,11 @@ function enums()
 		CUSTOM_ITEM_SLOT,
 		ITEM_SLOT,
 		ITEM_NAME,
+		PATH_OBJ,
+		PATH_OFFSET,
+		PATH_DRIFT,
+		PATH_POINT_ANGLE,
+		PATH_POINT_SCALE,
 		VISIBLE,
 		TRANSITION,
 		EASE_IN_X,
@@ -362,6 +369,8 @@ function enums()
 		FOLDER,
 		BACKGROUND,
 		AUDIO,
+		PATH,
+		PATH_POINT,
 		
 		LIGHT_SOURCE,
 		SHAPE,
@@ -642,6 +651,9 @@ function enums()
 		PASTE_FORMAT,
 		PASTE_KEYFRAME,
 		PASTE_SMALL,
+		PATH,
+		PATH_POINT,
+		PATH_SMALL,
 		PAUSE,
 		PENCIL,
 		PERSON,
