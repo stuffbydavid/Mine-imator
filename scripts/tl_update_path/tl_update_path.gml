@@ -90,7 +90,7 @@ function tl_update_path()
 	}
 	
 	if (path_shape_generate)
-		path_vbuffer = vbuffer_create_spline(path_table, path_shape_radius, path_shape_detail, path_closed, !path_shape_tube, path_shape_tex_length)
+		path_vbuffer = vbuffer_create_path(id)
 	
 	with (app)
 		tl_update_matrix()

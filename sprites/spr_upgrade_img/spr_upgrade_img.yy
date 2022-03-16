@@ -67,7 +67,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"spr_upgrade_img","path":"sprites/spr_upgrade_img/spr_upgrade_img.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "spr_upgrade_img",
     "tags": [],
     "resourceType": "GMSequence",

@@ -1,13 +1,17 @@
-/// vbuffer_create_spline(points, radius, detail, closed, rail, texlength)
-/// @arg points
-/// @arg radius
-/// @arg detail
-/// @arg closed
-/// @arg rail
-/// @arg texlength
+/// vbuffer_create_path(path)
+/// @arg path
 
-function vbuffer_create_spline(points, radius, detail, closed, rail, texlength)
+function vbuffer_create_path(path)
 {
+	var points, radius, detail, closed, rail, texlength, invert;
+	points = path.path_table
+	radius = path.path_shape_radius
+	detail = path.path_shape_detail
+	closed = path.path_closed
+	rail = !path.path_shape_tube
+	texlength = path.path_shape_tex_length
+	invert = path.path_shape_invert
+	
 	vbuffer_start()
 	
 	var pointdir, smoothdir, p0;
@@ -35,7 +39,8 @@ function vbuffer_create_spline(points, radius, detail, closed, rail, texlength)
 	}
 	
 	var p1, p2, p3, p4;
-	var n1, n2, n3, n4;
+	var n1, n2, n3, n4, nflatp, nflat;
+	var nn1, nn2, nn3, nn4;
 	var t1, t2, t3, t4;
 	var jp, j;
 	var length, plength;
@@ -110,8 +115,58 @@ function vbuffer_create_spline(points, radius, detail, closed, rail, texlength)
 			t3[X] /= 3
 			t4[X] /= 3
 			
-			vbuffer_add_triangle(p4, p1, p2, t4, t1, t2, n4, n1, n2)
-			vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, n4, n3, n1)
+			nn1 = n1
+			nn2 = n2
+			nn3 = n3
+			nn4 = n4
+			
+			// Invert normals
+			if (invert)
+			{
+				nn1 = vec3_mul(nn1, -1)
+				nn2 = vec3_mul(nn2, -1)
+				nn3 = vec3_mul(nn3, -1)
+				nn4 = vec3_mul(nn4, -1)
+			}
+			
+			// Smooth segments, flat radius
+			if (path.path_shape_smooth_segments && !path.path_shape_smooth_ring)
+			{
+				nflatp = vec3_normalize(vec3_add(nn1, nn2))
+				nflat = vec3_normalize(vec3_add(nn3, nn4))
+				nn1 = nflatp
+				nn2 = nflatp
+				nn3 = nflat
+				nn4 = nflat
+			}
+			else if (!path.path_shape_smooth_segments && path.path_shape_smooth_ring) // Flat segments, smooth radius
+			{
+				nflatp = vec3_normalize(vec3_add(nn1, nn3))
+				nflat = vec3_normalize(vec3_add(nn2, nn4))
+				nn1 = nflatp
+				nn2 = nflat
+				nn3 = nflatp
+				nn4 = nflat
+			}
+			else if (!path_shape_smooth_segments && !path_shape_smooth_ring) // Flat
+			{
+				nflat = vec3_normalize(vec3_add(vec3_add(vec3_add(nn1, nn2), nn3), nn4))
+				nn1 = nflat
+				nn2 = nflat
+				nn3 = nflat
+				nn4 = nflat
+			}
+				
+			if (invert)
+			{
+				vbuffer_add_triangle(p2, p1, p4, t4, t1, t2, nn2, nn1, nn4)
+				vbuffer_add_triangle(p1, p3, p4, t4, t3, t1, nn1, nn3, nn4)
+			}
+			else
+			{
+				vbuffer_add_triangle(p4, p1, p2, t4, t1, t2, nn4, nn1, nn2)
+				vbuffer_add_triangle(p4, p3, p1, t4, t3, t1, nn4, nn3, nn1)
+			}
 			
 			if (rail)
 				break
@@ -127,9 +182,11 @@ function vbuffer_create_spline(points, radius, detail, closed, rail, texlength)
 				t2[X] = (t2[X] / 3) + (1/3)
 				t3[X] = (t3[X] / 3) + (1/3)
 				
+				// Beginning
 				if (i = 0)
 					vbuffer_add_triangle(p1, points[i], p2, t1, t3, t2)
 				
+				// End
 				if (i = (array_length(points) - 2))
 				{
 					t1[X] += (1/3)

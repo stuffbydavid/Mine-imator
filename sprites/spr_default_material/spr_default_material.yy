@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"spr_default_material","path":"sprites/spr_default_material/spr_default_material.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "spr_default_material",
     "tags": [],
     "resourceType": "GMSequence",

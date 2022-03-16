@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"spr_bench","path":"sprites/spr_bench/spr_bench.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "spr_bench",
     "tags": [],
     "resourceType": "GMSequence",

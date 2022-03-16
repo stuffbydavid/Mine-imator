@@ -64,8 +64,9 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	// Calculate tangent/bitangent
 	vec3 posPx = cross(normal, posDx);
 	vec3 posPy = cross(posDy, normal);
-	vec3 T = posPy * texDx.x + posPx * texDy.x;
-	vec3 B = posPy * texDx.y + posPx * texDy.y;
+	vec3 T = normalize(posPy * texDx.x + posPx * texDy.x);
+	T = normalize(T - dot(T, normal) * normal);
+	vec3 B = cross(normal, T);
 	
 	// Create a Scale-invariant frame
 	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  

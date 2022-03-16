@@ -42,7 +42,7 @@ function spline_get_point(t, points, closed, amount = 0)
 			curvet = percent(t, p0, p2)
 		
 		// Before/after open path
-		if (t <= 0 || t >= amount - 1)
+		if (!closed && (t <= 0 || t >= amount - 1))
 		{
 			var point;
 			

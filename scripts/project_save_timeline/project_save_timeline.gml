@@ -165,9 +165,12 @@ function project_save_timeline()
 				json_save_var("detail", path_detail)
 				json_save_var_bool("shape_generate", path_shape_generate)
 				json_save_var("shape_radius", path_shape_radius)
+				json_save_var("shape_tex_length", path_shape_tex_length)
+				json_save_var_bool("shape_invert", path_shape_invert)
 				json_save_var_bool("shape_tube", path_shape_tube)
 				json_save_var("shape_detail", path_shape_detail)
-				json_save_var("shape_tex_length", path_shape_tex_length)
+				json_save_var_bool("shape_smooth_segments", path_shape_smooth_segments)
+				json_save_var_bool("shape_smooth_ring", path_shape_smooth_ring)
 			json_save_object_done()
 		}
 		

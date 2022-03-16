@@ -2749,10 +2749,15 @@
             "shape": "Generate shape",
             "shape/": {
                 "radius": "Radius",
+                "texlength": "Texture length",
+                "texlengthtip": "The length the path texture should stretch for before repeating.",
+                "invert": "Invert",
                 "tube": "Tube shape",
                 "detail": "Shape detail",
-                "texlength": "Texture length",
-                "texlengthtip": "The length the path texture should stretch for before repeating."
+                "smoothsegments": "Smooth segments",
+                "smoothsegmentstip": "Enable smooth lighting along the direction of the path.",
+                "smoothring": "Smooth ring",
+                "smoothringtip": "Enable smooth lighting on the ring shape around the path."
             }
         }
     },
@@ -2990,7 +2995,7 @@
             "halign": "Horizontal",
             "valign": "Vertical",
             "aa": "Font anti-aliasing",
-            "aatip": "Smooths sharp edges on fonts. (Not reccomended for 3D text.)"
+            "aatip": "Smooths sharp edges on fonts. (Not recommended for 3D text.)"
         },
         "item": "ITEM",
         "item/": {
@@ -3038,9 +3043,9 @@
         "mode": "Program mode",
         "mode/": {
             "simple": "Simple",
-            "simpletip": "Limited set of features, reccomended for new users.",
+            "simpletip": "Limited set of features, recommended for new users.",
             "advanced": "Advanced",
-            "advancedtip": "Access to all available features, reccomended for advanced users."
+            "advancedtip": "Access to all available features, recommended for advanced users."
         },
         "minecraftversion": "Minecraft version",
         "64bitimport": "Use x64 world importer",

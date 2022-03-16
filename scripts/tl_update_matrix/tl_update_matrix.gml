@@ -43,57 +43,41 @@ function tl_update_matrix()
 			var path = value[e_value.PATH_OBJ];
 			if (path != null && array_length(path.path_table) > 0)
 			{
-				var t1, t2, t3, t4, angle, points;
-				var pos, nextpos, futurepos, pastpos, mat;
-				points = array_length(path.path_table) - 1
+				var offset, angle, curpos, nextpos, futurepos, pastpos, mat;
+				offset = value[e_value.PATH_OFFSET]
 				angle = 0
 				
 				// Get current position
-				if (!path.path_closed)
-					t1 = (value[e_value.PATH_OFFSET] / path.path_length) * points
-				else
-					t1 = frac(mod_fix(value[e_value.PATH_OFFSET], path.path_length) / path.path_length) * points
-				
-				pos = spline_get_point(t1, path.path_table, path.path_closed)
-				
-				// Get a position down the path for smoothing
-				if (!path.path_closed)
-					t2 = ((value[e_value.PATH_OFFSET] + 5) / path.path_length) * points
-				else
-					t2 = frac(mod_fix(value[e_value.PATH_OFFSET] + 5, path.path_length) / path.path_length) * points
-				
-				nextpos = spline_get_point(t2, path.path_table, path.path_closed)
+				curpos = tl_path_offset_get_position(path, offset)
+				nextpos = tl_path_offset_get_position(path, offset + 5)
 				
 				// Drift
 				if (value[e_value.PATH_DRIFT] != 0)
 				{
-					// Future point
-					if (!path.path_closed)
-						t3 = ((value[e_value.PATH_OFFSET] + 20) / path.path_length) * points
-					else
-						t3 = frac(mod_fix(value[e_value.PATH_OFFSET] + 20, path.path_length) / path.path_length) * points
-					
-					futurepos = spline_get_point(t3, path.path_table, path.path_closed)
-					
-					// Past point
-					if (!path.path_closed)
-						t4 = ((value[e_value.PATH_OFFSET] - 20) / path.path_length) * points
-					else
-						t4 = frac(mod_fix(value[e_value.PATH_OFFSET] - 20, path.path_length) / path.path_length) * points
-					
-					pastpos = spline_get_point(t4, path.path_table, path.path_closed)
+					futurepos = tl_path_offset_get_position(path, offset + 20)
+					pastpos = tl_path_offset_get_position(path, offset - 20)
 					
 					// Get angle difference and calculate tilt amount
 					var dir1, dir2, dif;
-					dir1 = vec3_normalize(point3D_sub(pos, pastpos))
-					dir2 = vec3_normalize(point3D_sub(futurepos, pos))
+					dir1 = vec3_normalize(point3D_sub(curpos, pastpos))
+					dir2 = vec3_normalize(point3D_sub(futurepos, curpos))
 					dif = vec3_cross(dir2, dir1)
 					angle = (dif[Z] * -value[e_value.PATH_DRIFT])
 				}
 				
 				// Make rotation matrix and add path position
-				mat = matrix_create_rotate_to(pos, nextpos, angle + pos[W])
-				mat = matrix_multiply(mat, matrix_create(pos, vec3(0), vec3(1)))
+				mat = matrix_create_rotate_to(curpos, nextpos, angle + curpos[W])
+				
+				// If path is closed, check if object is before/after ends
+				if (!path.path_closed)
+				{
+					if (value[e_value.PATH_OFFSET] <= 0)
+						curpos = tl_path_offset_get_position(path, 0)
+					else if (value[e_value.PATH_OFFSET] >= path.path_length)
+						curpos = tl_path_offset_get_position(path, path.path_length)
+				}
+				
+				mat = matrix_multiply(mat, matrix_create(curpos, vec3(0), vec3(1)))
 				
 				matrix_parent = matrix_multiply(matrix_parent, mat)
 				

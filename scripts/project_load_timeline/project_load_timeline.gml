@@ -205,9 +205,12 @@ function project_load_timeline(map)
 			path_detail = value_get_real(pathmap[?"detail"], path_detail)
 			path_shape_generate = value_get_real(pathmap[?"shape_generate"], path_shape_generate)
 			path_shape_radius = value_get_real(pathmap[?"shape_radius"], path_shape_radius)
+			path_shape_tex_length = value_get_real(pathmap[?"shape_tex_length"], path_shape_tex_length)
+			path_shape_invert = value_get_real(pathmap[?"shape_invert"], path_shape_invert)
 			path_shape_tube = value_get_real(pathmap[?"shape_tube"], path_shape_tube)
 			path_shape_detail = value_get_real(pathmap[?"shape_detail"], path_shape_detail)
-			path_shape_tex_length = value_get_real(pathmap[?"shape_tex_length"], path_shape_tex_length)
+			path_shape_smooth_segments = value_get_real(pathmap[?"shape_smooth_segments"], path_shape_smooth_segments)
+			path_shape_smooth_ring = value_get_real(pathmap[?"shape_smooth_ring"], path_shape_smooth_ring)
 		}
 	}
 }

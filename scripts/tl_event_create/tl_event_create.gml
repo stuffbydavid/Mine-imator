@@ -186,9 +186,12 @@ function tl_event_create()
 	
 	path_shape_generate = false
 	path_shape_radius = 8
+	path_shape_tex_length = 16
+	path_shape_invert = false
 	path_shape_tube = false
 	path_shape_detail = 6
-	path_shape_tex_length = 16
+	path_shape_smooth_segments = true
+	path_shape_smooth_ring = false
 	
 	path_vbuffer = null
 	

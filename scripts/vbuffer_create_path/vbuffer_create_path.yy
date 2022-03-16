@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Utility/Vertex/Vertex buffer.yy",
   },
   "resourceVersion": "1.0",
-  "name": "vbuffer_create_spline",
+  "name": "vbuffer_create_path",
   "tags": [],
   "resourceType": "GMScript",
 }

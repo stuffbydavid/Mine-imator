@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"spr_selection_outline","path":"sprites/spr_selection_outline/spr_selection_outline.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "spr_selection_outline",
     "tags": [],
     "resourceType": "GMSequence",
