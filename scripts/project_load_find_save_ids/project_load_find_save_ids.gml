@@ -153,6 +153,10 @@ function project_load_find_save_ids()
 		// Legacy "use a sheet" option conversion
 		if (load_format < e_project.FORMAT_110_PRE_1 && type = e_temp_type.ITEM && item_tex != mc_res && !legacy_item_sheet)
 			item_tex.type = e_res_type.TEXTURE
+		
+		// Find paths for particle regions
+		if (type = e_temp_type.PARTICLE_SPAWNER)
+			pc_spawn_region_path = save_id_find(pc_spawn_region_path)
 	}
 	
 	// Set timeline references

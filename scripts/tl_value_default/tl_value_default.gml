@@ -25,6 +25,8 @@ function tl_value_default(valueid)
 		case e_value.CUSTOM_SEED: return false
 		case e_value.SEED: return ceil(random(32000))
 		case e_value.FORCE: return 1
+		case e_value.FORCE_DIRECTIONAL: return 0
+		case e_value.FORCE_VORTEX: return 0
 		case e_value.LIGHT_COLOR: return c_white
 		case e_value.LIGHT_STRENGTH:
 		case e_value.LIGHT_SPECULAR_STRENGTH: return 1

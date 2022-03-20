@@ -49,13 +49,13 @@ function view_shape_path(tl)
 		draw_set_color(c_white)
 	}
 	
-	prevcoord = point3D_mul_matrix(tl.path_table[0], tl.matrix)
+	prevcoord = tl.path_table_matrix[0]
 	prevcoord2d = view_shape_project(prevcoord)
 	prevcoord2derror = point3D_project_error
 	
-	for (var i = 1; i < array_length(tl.path_table); i++)
+	for (var i = 1; i < array_length(tl.path_table_matrix); i++)
 	{
-		nextcoord = point3D_mul_matrix(tl.path_table[i], tl.matrix)
+		nextcoord = tl.path_table_matrix[i]
 		nextcoord2d = view_shape_project(nextcoord)
 		nextcoord2derror = point3D_project_error
 		

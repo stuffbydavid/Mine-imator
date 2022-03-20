@@ -219,6 +219,7 @@ function app_startup_interface_tabs()
 		tbx_spawn_amount = new_textbox_integer()
 		
 		tbx_spawn_region_sphere_radius = new_textbox_decimals()
+		tbx_spawn_region_path_radius = new_textbox_decimals()
 		tbx_spawn_region_cube_size = new_textbox_decimals()
 		tbx_spawn_region_box_xsize = new_textbox_decimals()
 		tbx_spawn_region_box_ysize = new_textbox_decimals()
@@ -515,6 +516,8 @@ function app_startup_interface_tabs()
 		{
 			tbx_seed = new_textbox_ninteger()
 			tbx_force = new_textbox_ndecimals()
+			tbx_force_directional = new_textbox_ndecimals()
+			tbx_force_vortex = new_textbox_ndecimals()
 		}
 		
 		// Light

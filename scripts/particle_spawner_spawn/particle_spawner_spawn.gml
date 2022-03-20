@@ -75,6 +75,28 @@ function particle_spawner_spawn(type)
 				pt.pos[Z] += random_range(-temp.pc_spawn_region_box_size[Z] / 2, temp.pc_spawn_region_box_size[Z] / 2)
 				break
 			}
+			
+			case "path":
+			{
+				if (temp.pc_spawn_region_path != null)
+				{
+					var t0, t1, p0, p1, angle;
+					t0 = random_range(0, array_length(temp.pc_spawn_region_path.path_table_matrix))
+					t1 = t0 + 1
+					
+					p0 = spline_get_point(t0, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed)
+					p1 = spline_get_point(t1, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed)
+					
+					angle = vec3_tangent(vec3_normalize(vec3_sub(p0, p1)), random(360))
+					
+					p0 = point3D_add(p0, point3D_mul(angle, temp.pc_spawn_region_path_radius))
+					
+					pt.pos[X] = p0[X]
+					pt.pos[Y] = p0[Y]
+					pt.pos[Z] = p0[Z]
+				}
+				break
+			}
 		}
 	}
 	
@@ -156,6 +178,10 @@ function particle_spawner_spawn(type)
 		pt.color_mix_start = -1
 		pt.color_mix_time = 0
 	}
+	
+	pt.path_direction = [0, 0, 0]
+	pt.path_point_direction = [0, 0, 0]
+	pt.path_vortex_direction = [0, 0, 0]
 	
 	ds_list_add(particle_list, pt)
 }

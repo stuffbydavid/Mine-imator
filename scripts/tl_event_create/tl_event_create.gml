@@ -182,6 +182,7 @@ function tl_event_create()
 	path_detail = 6
 	
 	path_table = []
+	path_table_matrix = []
 	path_length = 1
 	
 	path_shape_generate = false
@@ -194,6 +195,7 @@ function tl_event_create()
 	path_shape_smooth_ring = false
 	
 	path_vbuffer = null
+	path_select_vbuffer = null
 	
 	tl_update_path()
 }

@@ -13,9 +13,11 @@ function project_load_particles(map)
 	
 	pc_spawn_region_use = value_get_real(map[?"spawn_region_use"], pc_spawn_region_use)
 	pc_spawn_region_type = value_get_string(map[?"spawn_region_type"], pc_spawn_region_type)
+	pc_spawn_region_path = value_get_save_id(map[?"spawn_region_path"], pc_spawn_region_path)
 	pc_spawn_region_sphere_radius = value_get_real(map[?"spawn_region_sphere_radius"], pc_spawn_region_sphere_radius)
 	pc_spawn_region_cube_size = value_get_real(map[?"spawn_region_cube_size"], pc_spawn_region_cube_size)
 	pc_spawn_region_box_size = value_get_point3D(map[?"spawn_region_box_size"], pc_spawn_region_box_size)
+	pc_spawn_region_path_radius = value_get_real(map[?"spawn_region_path_radius"], pc_spawn_region_path_radius)
 	
 	pc_bounding_box_type = value_get_string(map[?"bounding_box_type"], pc_bounding_box_type)
 	pc_bounding_box_ground_z = value_get_real(map[?"bounding_box_ground_z"], pc_bounding_box_ground_z)

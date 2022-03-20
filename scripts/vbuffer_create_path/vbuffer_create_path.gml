@@ -1,7 +1,8 @@
-/// vbuffer_create_path(path)
+/// vbuffer_create_path(path, [small])
 /// @arg path
+/// @arg [small]
 
-function vbuffer_create_path(path)
+function vbuffer_create_path(path, small = false)
 {
 	var points, radius, detail, closed, rail, texlength, invert;
 	points = path.path_table
@@ -11,6 +12,15 @@ function vbuffer_create_path(path)
 	rail = !path.path_shape_tube
 	texlength = path.path_shape_tex_length
 	invert = path.path_shape_invert
+	
+	// Create mesh for clicking path(for selection) where a shape isn't set to be used in timeline
+	if (small)
+	{
+		radius = 1
+		detail = 4
+		rail = false
+		invert = false
+	}
 	
 	vbuffer_start()
 	

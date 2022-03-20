@@ -14,8 +14,15 @@ function tl_update_path()
 		path_vbuffer = null
 	}
 	
+	if (path_select_vbuffer != null)
+	{
+		vbuffer_destroy(path_select_vbuffer)
+		path_select_vbuffer = null
+	}
+	
 	ds_list_clear(path_points_list)
 	path_table = []
+	path_table_matrix = []
 	
 	// Get points from childen points
 	for (var i = 0; i < ds_list_size(tree_list); i++)
@@ -71,6 +78,7 @@ function tl_update_path()
 	if (path_length = 0)
 	{
 		path_table[0] = [0, 0, 0, 0, 0]
+		path_table_matrix[0] = [0, 0, 0, 0, 0]
 		return 0
 	}
 	
@@ -87,11 +95,24 @@ function tl_update_path()
 		}
 		
 		path_table[i] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed)
+		path_table_matrix[i] = path_table[i]
 	}
 	
 	if (path_shape_generate)
 		path_vbuffer = vbuffer_create_path(id)
+	else
+		path_select_vbuffer = vbuffer_create_path(id, true)
 	
 	with (app)
 		tl_update_matrix()
+	
+	if (matrix != 0)
+	{
+		path_table_matrix = []
+		for (var j = 0; j < array_length(path_table); j++)
+		{
+			var pos = point3D_mul_matrix(path_table[j], matrix);
+			path_table_matrix[j] = [pos[X], pos[Y], pos[Z], path_table[j][3], path_table[j][4]]
+		}
+	}
 }

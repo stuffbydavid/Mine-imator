@@ -177,10 +177,62 @@ function particle_spawner_update()
 						// Attractor
 						if (is_timeline && value[e_value.ATTRACTOR] != null)
 						{
-							if (pt.type.orbit)
-								pt.spd[a] += clamp(value[e_value.ATTRACTOR].world_pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
-							else
-								pt.spd[a] += clamp(value[e_value.ATTRACTOR].world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+							var att = value[e_value.ATTRACTOR];
+							if (att.type != e_tl_type.PATH)
+							{
+								if (pt.type.orbit)
+									pt.spd[a] += clamp(att.world_pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+								else
+									pt.spd[a] += clamp(att.world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+							}
+						}
+					}
+					
+					if (is_timeline && value[e_value.ATTRACTOR] != null && value[e_value.ATTRACTOR].type = e_tl_type.PATH)
+					{
+						// Get nearest point in path table
+						var att, pointpos, pointposnext, pointdis, curdis, curpos, pointi, points, v, d, p;
+						att = value[e_value.ATTRACTOR]
+						pointpos = [0, 0, 0]
+						pointdis = no_limit
+						pointi = 0
+						points = array_length(att.path_table_matrix)
+						
+						for (var j = 0; j < points; j += 3)
+						{
+							curpos = att.path_table_matrix[j]
+							curdis = point3D_distance(pt.pos, curpos) // possibly hundreds of distance checks in each particle.. yikes
+							
+							// New nearest point?
+							if (curdis < pointdis)
+							{
+								pointi = j
+								pointdis = curdis
+								pointpos = curpos
+							}
+						}
+						
+						// Get next point (using spline function to account for closed/open paths)
+						pointposnext = spline_get_point(pointi + 1, att.path_table_matrix, att.path_closed)
+						
+						// Direction to next point
+						pt.path_direction = vec3_normalize(vec3_sub(pointposnext, pointpos))
+						
+						// Get nearest position between two points given the current particle position
+						v = vec3_sub(pt.pos, pointpos)
+						d = vec3_dot(v, pt.path_direction)
+						p = vec3_add(pointpos, vec3_mul(pt.path_direction, d))
+						pt.path_point_direction = vec3_normalize(vec3_sub(p, pt.pos))
+						
+						// Direction around path direction
+						pt.path_vortex_direction = vec3_cross(pt.path_direction, pt.path_point_direction)
+						
+						// Add forces
+						for (var a = X; a <= Z; a++)
+						{
+							pt.pos[a] += clamp(p[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+							pt.pos[a] += (pt.path_direction[a] * value[e_value.FORCE_DIRECTIONAL])
+							pt.pos[a] += (pt.path_vortex_direction[a] * value[e_value.FORCE_VORTEX])
 						}
 					}
 					
@@ -301,6 +353,53 @@ function particle_spawner_update()
 										boxstart[a] = world_pos[a] - temp.pc_spawn_region_box_size[a] / 2
 										boxend[a] = world_pos[a] + temp.pc_spawn_region_box_size[a] / 2
 									}
+								}
+								else if (temp.pc_spawn_region_type = "path" && temp.pc_spawn_region_path != null)
+								{
+									// Get nearest point in path table
+									var path, pointpos, pointposnext, pointdis, curdis, curpos, pointi, points, v, d, p;
+									path = temp.pc_spawn_region_path
+									pointpos = [0, 0, 0]
+									pointdis = no_limit
+									pointi = 0
+									points = array_length(path.path_table_matrix)
+									
+									for (var j = 0; j < points; j += 3)
+									{
+										curpos = path.path_table_matrix[j]
+										curdis = point3D_distance(pt.pos, curpos) // possibly hundreds of distance checks in each particle.. yikes
+										
+										// New nearest point?
+										if (curdis < pointdis)
+										{
+											pointi = j
+											pointdis = curdis
+											pointpos = curpos
+										}
+									}
+									
+									// Get next point (using spline function to account for closed/open paths)
+									pointposnext = spline_get_point(pointi + 1, path.path_table_matrix, path.path_closed)
+									
+									// Direction to next point
+									var dir = vec3_normalize(vec3_sub(pointposnext, pointpos));
+									
+									// Get nearest position between two points given the current particle position
+									v = vec3_sub(pt.pos, pointpos)
+									d = vec3_dot(v, pt.path_direction)
+									p = vec3_add(pointpos, vec3_mul(pt.path_direction, d))
+									
+									var dis = point3D_distance(pt.pos, p);
+									
+									if (dis > temp.pc_spawn_region_path_radius)
+									{
+										dir = vec3_normalize(vec3_sub(pt.pos, p));
+										pt.pos = vec3_add(p, vec3_mul(dir, temp.pc_spawn_region_path_radius))
+										
+										// Reflect angle
+										pt.angle = vec3_reflect(pt.angle, vec3_normalize(vec3_sub(pt.pos, p)))
+										pt.angle_speed *= pt.type.bounce_factor
+									}	
 								}
 							}
 							

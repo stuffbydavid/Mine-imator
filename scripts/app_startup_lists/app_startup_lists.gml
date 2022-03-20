@@ -55,6 +55,8 @@ function app_startup_lists()
 		"SEED",
 		"ATTRACTOR",
 		"FORCE",
+		"FORCE_DIRECTIONAL",
+		"FORCE_VORTEX",
 		"LIGHT_COLOR",
 		"LIGHT_STRENGTH",
 		"LIGHT_SPECULAR_STRENGTH",

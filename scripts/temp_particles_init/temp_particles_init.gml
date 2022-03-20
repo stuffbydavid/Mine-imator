@@ -8,9 +8,11 @@ function temp_particles_init()
 	
 	pc_spawn_region_use = 0
 	pc_spawn_region_type = "sphere"
+	pc_spawn_region_path = null
 	pc_spawn_region_sphere_radius = 100
 	pc_spawn_region_cube_size = 200
 	pc_spawn_region_box_size = vec3(200, 200, 200)
+	pc_spawn_region_path_radius = 8
 	
 	pc_bounding_box_type = "none"
 	pc_bounding_box_ground_z = 0

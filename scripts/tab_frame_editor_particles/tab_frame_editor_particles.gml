@@ -52,5 +52,16 @@ function tab_frame_editor_particles()
 		tab_control_dragger()
 		draw_dragger("frameeditorparticlesforce", dx, dy, dragger_width, tl_edit.value[e_value.FORCE], 1 / 50, -no_limit, no_limit, 1, 0, tab.particles.tbx_force, action_tl_frame_force)
 		tab_next()
+		
+		if (tl_edit.value[e_value.ATTRACTOR].type = e_tl_type.PATH)
+		{
+			tab_control_dragger()
+			draw_dragger("frameeditorparticlesforcedirectional", dx, dy, dragger_width, tl_edit.value[e_value.FORCE_DIRECTIONAL], 1 / 50, -no_limit, no_limit, 1, 0, tab.particles.tbx_force_directional, action_tl_frame_force_directional)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("frameeditorparticlesforcevortex", dx, dy, dragger_width, tl_edit.value[e_value.FORCE_VORTEX], 1 / 50, -no_limit, no_limit, 1, 0, tab.particles.tbx_force_vortex, action_tl_frame_force_vortex)
+			tab_next()
+		}
 	}
 }

@@ -139,6 +139,8 @@ function tl_update_values()
 		tl_update_values_ease(e_value.SEED)
 		tl_update_values_ease(e_value.ATTRACTOR)
 		tl_update_values_ease(e_value.FORCE)
+		tl_update_values_ease(e_value.FORCE_DIRECTIONAL)
+		tl_update_values_ease(e_value.FORCE_VORTEX)
 	}
 	
 	// Light

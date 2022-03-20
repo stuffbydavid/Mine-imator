@@ -474,7 +474,22 @@ function list_init(name)
 			menu_add_item("sphere", text_get("particleeditorspawnregiontypesphere"), null, icons.BOUNDARY_CIRCLE)
 			menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), null, icons.BOUNDARY_CUBE)
 			menu_add_item("box", text_get("particleeditorspawnregiontypebox"), null, icons.BOUNDARY_BOX)
+			menu_add_item("path", text_get("particleeditorspawnregiontypepath"), null, icons.PATH)
 			
+			break
+		}
+		
+		// Path timeline for spawn region
+		case "particleeditorspawnregionpath":
+		{
+			menu_add_item(null, text_get("listnone"))
+			
+			with (obj_timeline)
+			{
+				if (type = e_tl_type.PATH)
+					menu_add_item(id, display_name)
+			}
+		
 			break
 		}
 		

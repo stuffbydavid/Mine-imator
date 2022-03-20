@@ -46,6 +46,9 @@ function tl_remove_clean()
 			
 			if (shape_tex_normal = other.id)
 				shape_tex_normal = null
+			
+			if (type = e_temp_type.PARTICLE_SPAWNER && pc_spawn_region_path = other.id)
+				pc_spawn_region_path = null
 		}
 		
 		with (obj_bench_settings) 

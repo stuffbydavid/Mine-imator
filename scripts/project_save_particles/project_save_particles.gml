@@ -9,9 +9,14 @@ function project_save_particles()
 		
 		json_save_var_bool("spawn_region_use", pc_spawn_region_use)
 		json_save_var("spawn_region_type", pc_spawn_region_type)
+		
+		if (pc_spawn_region_path != null)
+			json_save_var_save_id("spawn_region_path", pc_spawn_region_path)
+		
 		json_save_var("spawn_region_sphere_radius", pc_spawn_region_sphere_radius)
 		json_save_var("spawn_region_cube_size", pc_spawn_region_cube_size)
 		json_save_var_point3D("spawn_region_box_size", pc_spawn_region_box_size)
+		json_save_var("spawn_region_path_radius", pc_spawn_region_path_radius)
 		
 		json_save_var("bounding_box_type", pc_bounding_box_type)
 		json_save_var("bounding_box_ground_z", pc_bounding_box_ground_z)

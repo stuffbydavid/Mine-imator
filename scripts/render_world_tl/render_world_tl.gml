@@ -13,7 +13,6 @@ function render_world_tl()
 		type = e_tl_type.FOLDER ||
 		type = e_tl_type.BACKGROUND ||
 		type = e_tl_type.AUDIO ||
-		(type = e_tl_type.PATH && path_vbuffer = null) ||
 		type = e_tl_type.PATH_POINT)
 		return 0
 	
@@ -334,6 +333,15 @@ function render_world_tl()
 					render_set_texture(texnorm, "Normal")
 					
 					vbuffer_render(path_vbuffer)
+				}
+				else if (render_mode = e_render_mode.CLICK)
+				{
+					render_set_texture(spr_shape)
+					render_set_texture(spr_default_material, "Material")
+					render_set_texture(spr_default_normal, "Normal")
+					render_set_uniform_int("uMaterialUseGlossiness", 0)
+					
+					vbuffer_render(path_select_vbuffer)
 				}
 				
 				break

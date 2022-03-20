@@ -79,12 +79,13 @@ function tab_template_editor_particles()
 	
 	if (temp_edit.pc_spawn_region_use)
 	{
-		var icon;
+		var icon, name;
 		switch (temp_edit.pc_spawn_region_type)
 		{
 			case "sphere":	icon = icons.BOUNDARY_CIRCLE	break
 			case "cube":	icon = icons.BOUNDARY_CUBE		break
 			case "box":		icon = icons.BOUNDARY_BOX		break
+			case "path":	icon = icons.PATH				break
 		}
 		
 		tab_control_menu()
@@ -94,19 +95,25 @@ function tab_template_editor_particles()
 		switch (temp_edit.pc_spawn_region_type)
 		{
 			case "sphere":
+			{
 				tab_control_dragger()
 				draw_dragger("particleeditorspawnregionsphereradius", dx, dy, 64, temp_edit.pc_spawn_region_sphere_radius, temp_edit.pc_spawn_region_sphere_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_sphere_radius, action_lib_pc_spawn_region_sphere_radius)
 				tab_next()
+				
 				break
+			}
 			
 			case "cube":
+			{
 				tab_control_dragger()
 				draw_dragger("particleeditorspawnregioncubesize", dx, dy, 64, temp_edit.pc_spawn_region_cube_size, temp_edit.pc_spawn_region_cube_size / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_cube_size, action_lib_pc_spawn_region_cube_size)
 				tab_next()
+				
 				break
+			}
 			
 			case "box":
-				
+			{	
 				axis_edit = X
 				textfield_group_add("particleeditorspawnregionboxxsize", temp_edit.pc_spawn_region_box_size[axis_edit], 200, action_lib_pc_spawn_region_box_size, axis_edit, tab.tbx_spawn_region_box_xsize, null, temp_edit.pc_spawn_region_box_size[axis_edit] / 100)
 				axis_edit = sn
@@ -119,6 +126,27 @@ function tab_template_editor_particles()
 				tab_next()
 				
 				break
+			}
+			
+			case "path":
+			{
+				var name;
+				
+				if (temp_edit.pc_spawn_region_path)
+					name = temp_edit.pc_spawn_region_path.display_name
+				else
+					name = text_get("listnone")
+				
+				tab_control_menu()
+				draw_button_menu("particleeditorspawnregionpath", e_menu.LIST, dx, dy, dw, 24, temp_edit.pc_spawn_region_path, name, action_lib_pc_spawn_region_path)
+				tab_next()
+				
+				tab_control_dragger()
+				draw_dragger("particleeditorspawnregionpathradius", dx, dy, 64, temp_edit.pc_spawn_region_path_radius, temp_edit.pc_spawn_region_path_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_path_radius, action_lib_pc_spawn_region_path_radius)
+				tab_next()
+				
+				break
+			}
 		}
 		
 		draw_divide(dx, dy, dw)

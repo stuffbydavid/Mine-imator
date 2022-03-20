@@ -69,6 +69,10 @@ function history_restore_tl(save)
 			with (save_id_find(save.usage_temp_shape_tex_save_id[s]))
 				shape_tex = tl
 		
+		for (var s = 0; s < save.usage_temp_path_amount; s++)
+			with (save_id_find(save.usage_temp_path_save_id[s]))
+				pc_spawn_region_path = tl
+		
 		for (var s = 0; s < save.usage_tl_texture_amount; s++)
 		{
 			with (save_id_find(save.usage_tl_texture_save_id[s]))

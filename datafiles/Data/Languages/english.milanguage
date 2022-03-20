@@ -2167,7 +2167,10 @@
                 "typesphere": "Sphere",
                 "typecube": "Cube",
                 "typebox": "Box",
+                "typepath": "Path",
+                "path": "Path",
                 "sphereradius": "Radius",
+                "pathradius": "Radius",
                 "cubesize": "Size",
                 "boxsize": "Box size",
                 "boxxsize": "X",
@@ -2855,7 +2858,9 @@
             "customseed": "Custom seed",
             "seed": "Seed",
             "attractor": "Attractor",
-            "force": "Force"
+            "force": "Force",
+            "forcedirectional": "Directional force",
+            "forcevortex": "Vortex force"
         },
         "light": "LIGHT",
         "light/": {

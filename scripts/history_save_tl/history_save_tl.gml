@@ -33,12 +33,20 @@ function history_save_tl(tl)
 		
 		// Save references in templates
 		usage_temp_shape_tex_amount = 0
+		usage_temp_path_amount = 0
 		with (obj_template)
 		{
-			if (shape_tex != tl)
-				continue
-			save.usage_temp_shape_tex_save_id[save.usage_temp_shape_tex_amount] = save_id
-			save.usage_temp_shape_tex_amount++
+			if (shape_tex = tl)
+			{
+				save.usage_temp_shape_tex_save_id[save.usage_temp_shape_tex_amount] = save_id
+				save.usage_temp_shape_tex_amount++
+			}
+			
+			if (type = e_temp_type.PARTICLE_SPAWNER && pc_spawn_region_path = tl)
+			{
+				save.usage_temp_path_save_id[save.usage_temp_path_amount] = save_id
+				save.usage_temp_path_amount++
+			}
 		}
 		
 		// Save references in timelines
