@@ -30,7 +30,7 @@ function tl_update_path()
 		var tl = tree_list[|i];
 		
 		if (tl.type = e_tl_type.PATH_POINT)
-			ds_list_add(path_points_list, [tl.value[e_value.POS_X], tl.value[e_value.POS_Y], tl.value[e_value.POS_Z], tl.value[e_value.PATH_POINT_ANGLE], tl.value[e_value.PATH_POINT_SCALE]])
+			ds_list_add(path_points_list, [tl.value[e_value.POS_X], tl.value[e_value.POS_Y], tl.value[e_value.POS_Z], tl.value[e_value.PATH_POINT_ANGLE], tl.value[e_value.PATH_POINT_SCALE], 0, 0, 0, 0, 0, 0])
 	}
 	
 	// Update timelines
@@ -62,12 +62,12 @@ function tl_update_path()
 	
 	for (var i = 0; i < array_length(splinepoints); i++)
 	{
-		sampleprev = spline_get_point(i, splinepoints, path_closed)
+		sampleprev = spline_get_point(i, splinepoints, path_closed, 0)
 		points_distance[i] = 0
 		
 		for (var j = 0; j <= 1; j += 0.05)
 		{
-			sample = spline_get_point(i + j, splinepoints, path_closed)
+			sample = spline_get_point(i + j, splinepoints, path_closed, 0)
 			points_distance[i] += point3D_distance(sampleprev, sample)
 			sampleprev = sample
 		}
@@ -77,8 +77,8 @@ function tl_update_path()
 	
 	if (path_length = 0)
 	{
-		path_table[0] = [0, 0, 0, 0, 0]
-		path_table_matrix[0] = [0, 0, 0, 0, 0]
+		path_table[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+		path_table_matrix[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		return 0
 	}
 	
@@ -94,9 +94,12 @@ function tl_update_path()
 			j++
 		}
 		
-		path_table[i] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed)
+		path_table[i] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed, 0)
 		path_table_matrix[i] = path_table[i]
 	}
+	
+	// Generate tangent/normal values in points
+	spline_make_frames(path_table, path_closed)
 	
 	if (path_shape_generate)
 		path_vbuffer = vbuffer_create_path(id)
@@ -112,7 +115,10 @@ function tl_update_path()
 		for (var j = 0; j < array_length(path_table); j++)
 		{
 			var pos = point3D_mul_matrix(path_table[j], matrix);
-			path_table_matrix[j] = [pos[X], pos[Y], pos[Z], path_table[j][3], path_table[j][4]]
+			path_table_matrix[j] = array_copy_1d(path_table[j])
+			path_table_matrix[j][X] = pos[X]
+			path_table_matrix[j][Y] = pos[Y]
+			path_table_matrix[j][Z] = pos[Z]
 		}
 	}
 }

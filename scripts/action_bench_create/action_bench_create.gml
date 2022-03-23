@@ -62,7 +62,10 @@ function action_bench_create(edit = false)
 				
 				// Don't copy into template 
 				if (temp.type != e_temp_type.CUBE && temp.type != e_temp_type.CYLINDER && temp.type != e_temp_type.CONE) 
-					shape_tex_mapped = false
+					temp.shape_tex_mapped = false
+				
+				if (temp.type = e_temp_type.PARTICLE_SPAWNER)
+					temp.pc_spawn_region_path = null
 				
 				with (hobj)
 				{

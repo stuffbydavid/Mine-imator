@@ -26,7 +26,7 @@ function particle_spawner_spawn(type)
 	else
 	{
 		randomize()
-		base_seed = random(spawn_currentstep)
+		base_seed = random(spawn_currentstep + ds_list_size(particle_list))
 	}
 	
 	random_set_seed(base_seed)
@@ -80,20 +80,26 @@ function particle_spawner_spawn(type)
 			{
 				if (temp.pc_spawn_region_path != null)
 				{
-					var t0, t1, p0, p1, angle;
-					t0 = random_range(0, array_length(temp.pc_spawn_region_path.path_table_matrix))
-					t1 = t0 + 1
+					var t, p, tangent, normal, angle;
 					
-					p0 = spline_get_point(t0, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed)
-					p1 = spline_get_point(t1, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed)
+					if (temp.pc_spawn_constant)
+						t = random_range(0, array_length(temp.pc_spawn_region_path.path_table_matrix))
+					else
+						t = mod_fix(ds_list_size(particle_list) / temp.pc_spawn_amount, 1) * array_length(temp.pc_spawn_region_path.path_table_matrix)
 					
-					angle = vec3_tangent(vec3_normalize(vec3_sub(p0, p1)), random(360))
+					p = spline_get_point(t, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed)
 					
-					p0 = point3D_add(p0, point3D_mul(angle, temp.pc_spawn_region_path_radius))
+					// Get tangent/normal from point
+					tangent = [p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z]]
+					normal = [p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z]]
 					
-					pt.pos[X] = p0[X]
-					pt.pos[Y] = p0[Y]
-					pt.pos[Z] = p0[Z]
+					// Rotate around normal and add
+					angle = vec3_rotate_axis_angle(normal, tangent, degtorad(random(360)))
+					p = point3D_add(p, point3D_mul(angle, temp.pc_spawn_region_path_radius))
+					
+					pt.pos[X] = p[X]
+					pt.pos[Y] = p[Y]
+					pt.pos[Z] = p[Z]
 				}
 				break
 			}
@@ -179,9 +185,6 @@ function particle_spawner_spawn(type)
 		pt.color_mix_time = 0
 	}
 	
-	pt.path_direction = [0, 0, 0]
-	pt.path_point_direction = [0, 0, 0]
-	pt.path_vortex_direction = [0, 0, 0]
 	
 	ds_list_add(particle_list, pt)
 }

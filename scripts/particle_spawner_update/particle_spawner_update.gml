@@ -212,27 +212,26 @@ function particle_spawner_update()
 							}
 						}
 						
-						// Get next point (using spline function to account for closed/open paths)
-						pointposnext = spline_get_point(pointi + 1, att.path_table_matrix, att.path_closed)
+						var t, n, b;
 						
 						// Direction to next point
-						pt.path_direction = vec3_normalize(vec3_sub(pointposnext, pointpos))
+						t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]]
 						
 						// Get nearest position between two points given the current particle position
 						v = vec3_sub(pt.pos, pointpos)
-						d = vec3_dot(v, pt.path_direction)
-						p = vec3_add(pointpos, vec3_mul(pt.path_direction, d))
-						pt.path_point_direction = vec3_normalize(vec3_sub(p, pt.pos))
+						d = vec3_dot(v, t)
+						p = vec3_add(pointpos, vec3_mul(t, d))
+						n = vec3_normalize(vec3_sub(p, pt.pos))
 						
 						// Direction around path direction
-						pt.path_vortex_direction = vec3_cross(pt.path_direction, pt.path_point_direction)
+						b = vec3_cross(t, n)
 						
 						// Add forces
 						for (var a = X; a <= Z; a++)
 						{
 							pt.pos[a] += clamp(p[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
-							pt.pos[a] += (pt.path_direction[a] * value[e_value.FORCE_DIRECTIONAL])
-							pt.pos[a] += (pt.path_vortex_direction[a] * value[e_value.FORCE_VORTEX])
+							pt.pos[a] += (t[a] * value[e_value.FORCE_DIRECTIONAL])
+							pt.pos[a] += (b[a] * value[e_value.FORCE_VORTEX])
 						}
 					}
 					
@@ -357,7 +356,7 @@ function particle_spawner_update()
 								else if (temp.pc_spawn_region_type = "path" && temp.pc_spawn_region_path != null)
 								{
 									// Get nearest point in path table
-									var path, pointpos, pointposnext, pointdis, curdis, curpos, pointi, points, v, d, p;
+									var path, pointpos, pointposnext, pointdis, curdis, curpos, pointi, points, v, d, p, t, dis, dir;
 									path = temp.pc_spawn_region_path
 									pointpos = [0, 0, 0]
 									pointdis = no_limit
@@ -378,22 +377,19 @@ function particle_spawner_update()
 										}
 									}
 									
-									// Get next point (using spline function to account for closed/open paths)
-									pointposnext = spline_get_point(pointi + 1, path.path_table_matrix, path.path_closed)
-									
 									// Direction to next point
-									var dir = vec3_normalize(vec3_sub(pointposnext, pointpos));
+									var t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]];
 									
 									// Get nearest position between two points given the current particle position
 									v = vec3_sub(pt.pos, pointpos)
-									d = vec3_dot(v, pt.path_direction)
-									p = vec3_add(pointpos, vec3_mul(pt.path_direction, d))
+									d = vec3_dot(v, t)
+									p = vec3_add(pointpos, vec3_mul(t, d))
 									
-									var dis = point3D_distance(pt.pos, p);
+									dis = point3D_distance(pt.pos, p)
 									
 									if (dis > temp.pc_spawn_region_path_radius)
 									{
-										dir = vec3_normalize(vec3_sub(pt.pos, p));
+										dir = vec3_normalize(vec3_sub(pt.pos, p))
 										pt.pos = vec3_add(p, vec3_mul(dir, temp.pc_spawn_region_path_radius))
 										
 										// Reflect angle

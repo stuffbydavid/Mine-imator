@@ -4,12 +4,12 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						false
+	#macro dev_mode						true
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
 	#macro dev_mode_rotate_blocks		dev_mode && true
-	#macro dev_mode_project				""
+	#macro dev_mode_project				"C:\\Users\\Bailey\\AppData\\Local\\GameMakerStudio2\\GMS2TEMP\\Mine-imator_1F76C68E_VM\\Projects\\New project\\New project.miproject"
 	#macro dev_mode_full				dev_mode && true
 	#macro dev_mode_advanced			dev_mode && true
 	
@@ -192,5 +192,13 @@ function macros()
 	#macro MAT_X						12
 	#macro MAT_Y						13
 	#macro MAT_Z						14
+	#macro PATH_SCALE					4
+	#macro PATH_TANGENT_X				5
+	#macro PATH_TANGENT_Y				6
+	#macro PATH_TANGENT_Z				7
+	#macro PATH_NORMAL_X				8
+	#macro PATH_NORMAL_Y				9
+	#macro PATH_NORMAL_Z				10
+	
 	#macro MAT_IDENTITY					matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
 }

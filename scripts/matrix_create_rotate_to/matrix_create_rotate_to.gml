@@ -1,18 +1,14 @@
-/// matrix_create_rotate_to(from, to, [angle])
-/// @arg from
-/// @arg to
-/// @arg [angle]
-/// @desc Returns a rotation matrix based on the relation between two points, with angle for optional orienting
+/// matrix_create_rotate_to(tangent, normal)
+/// @arg tangent
+/// @arg normal
+/// @desc Returns a TBN coordinate frame for rotation
 
-function matrix_create_rotate_to(from, to, angle = 0)
+function matrix_create_rotate_to(tangent, normal)
 {
-	var normal, tangent, bitangent;
-	normal = vec3_normalize(point3D_sub(to, from))
-	tangent = vec3_tangent(normal, angle)
-	bitangent = vec3_cross(normal, tangent)
+	var binormal = vec3_normalize(vec3_cross(tangent, normal));
 	
-	return [ bitangent[X], bitangent[Y], bitangent[Z], 0,
-			    normal[X],    normal[Y],    normal[Z], 0,
-			   tangent[X],   tangent[Y],   tangent[Z], 0,
-			            0,            0,            0, 1 ]
+	return [ binormal[X], binormal[Y], binormal[Z], 0,
+			  tangent[X],  tangent[Y],  tangent[Z], 0,
+			   normal[X],   normal[Y],   normal[Z], 0,
+			           0,           0,           0, 1 ]
 }

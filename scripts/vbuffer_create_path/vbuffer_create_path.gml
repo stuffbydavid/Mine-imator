@@ -24,28 +24,14 @@ function vbuffer_create_path(path, small = false)
 	
 	vbuffer_start()
 	
-	var pointdir, smoothdir, p0;
-	pointdir = []
-	smoothdir = []
-	
-	// Pre-calculate vectors between points
-	for (var i = 0; i < array_length(points) - 1; i++)
-		pointdir[i] = vec3_normalize(point3D_sub(points[i + 1], points[i]))
+	// Compile coordinate frames
+	var frames, p;
 	
 	for (var i = 0; i < array_length(points); i++)
 	{
-		if (closed)
-		{
-			p0 = mod_fix(i - 1, array_length(points) - 1)
-			p1 = mod_fix(i,     array_length(points) - 1)
-		}
-		else
-		{
-			p0 = clamp(i - 1, 0, array_length(points) - 2)
-			p1 = clamp(i,     0, array_length(points) - 2)
-		}
-		
-		smoothdir[i] = vec3_normalize(vec3_add(pointdir[p0], pointdir[p1]))
+		p = points[i]
+		frames[i] = matrix_create_rotate_to([p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z]],
+											[p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z]])
 	}
 	
 	var p1, p2, p3, p4;
@@ -53,11 +39,12 @@ function vbuffer_create_path(path, small = false)
 	var nn1, nn2, nn3, nn4;
 	var t1, t2, t3, t4;
 	var jp, j;
+	var ringp;
 	var length, plength;
 	length = 0
 	plength = 0
 	
-	for (var i = 0; i < array_length(smoothdir) - 1; i++)
+	for (var i = 0; i < array_length(frames) - 1; i++)
 	{
 		if (!rail)
 		{
@@ -65,17 +52,19 @@ function vbuffer_create_path(path, small = false)
 			j = 1/detail
 		}
 		else
-			jp = .75 // Left side of rail
+			jp = .5 // Left side of rail
+		
+		ringp = [cos(jp * pi * 2), 0, -sin(jp * pi * 2)]
 		
 		plength = length
 		length += point3D_distance(points[i], points[i + 1])
 		
 		// p1 - current point's segment
-		n1 = vec3_tangent(smoothdir[i], (jp * 360) + points[i][W])
+		n1 = vec3_normalize(vec3_mul_matrix(ringp, frames[i]))
 		p1 = point3D_add(vec3_mul(n1, radius * points[i][4]), points[i])
 		
 		// p3 - next point's segment
-		n3 = vec3_tangent(smoothdir[i + 1], (jp * 360) + points[i + 1][W])
+		n3 = vec3_normalize(vec3_mul_matrix(ringp, frames[i + 1]))
 		p3 = point3D_add(vec3_mul(n3, radius * points[i + 1][4]), points[i + 1])
 		
 		// Offset before loop
@@ -90,14 +79,16 @@ function vbuffer_create_path(path, small = false)
 				j += 1 / detail
 			}
 			else
-				j = 0.25 // Right side of rail
+				j = 0 // Right side of rail
+			
+			ringp = [cos(j * pi * 2), 0, -sin(j * pi * 2)]
 			
 			// Next segment
-			n2 = vec3_tangent(smoothdir[i], (j * 360) + points[i][W])
+			n2 = vec3_normalize(vec3_mul_matrix(ringp, frames[i]))
 			p2 = point3D_add(vec3_mul(n2, radius * points[i][4]), points[i])
 			
 			// Next segment
-			n4 = vec3_tangent(smoothdir[i + 1], (j * 360) + points[i + 1][W])
+			n4 = vec3_normalize(vec3_mul_matrix(ringp, frames[i + 1]))
 			p4 = point3D_add(vec3_mul(n4, radius * points[i + 1][4]), points[i + 1])
 			
 			if (rail)
@@ -107,9 +98,9 @@ function vbuffer_create_path(path, small = false)
 				t3 = vec2(0, length / texlength)
 				t4 = vec2(1, length / texlength)
 				
-				n1 = vec3_tangent(smoothdir[i], points[i][W])
+				n1 = [frames[i][8], frames[i][9], frames[i][10]]
 				n2 = n1
-				n3 = vec3_tangent(smoothdir[i + 1], points[i + 1][W])
+				n3 = [frames[i + 1][8], frames[i + 1][9], frames[i + 1][10]]
 				n4 = n3
 			}
 			else

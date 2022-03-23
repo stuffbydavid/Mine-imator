@@ -1,9 +1,9 @@
-/// vec3_tangent(vector, angle)
+/// vec3_normal(vector, angle)
 /// @arg vector
 /// @arg angle
-/// @desc Returns a tangent vector based on given vector and angle.
+/// @desc Returns a normal vector based on given vector and angle.
 
-function vec3_tangent(vec, angle)
+function vec3_normal(vec, angle)
 {
 	var xx, yy, zz, cx, cy, t;
 	xx = vec[X]

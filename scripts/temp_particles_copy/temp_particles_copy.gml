@@ -8,9 +8,11 @@ function temp_particles_copy(to)
 	
 	to.pc_spawn_region_use = pc_spawn_region_use
 	to.pc_spawn_region_type = pc_spawn_region_type
+	to.pc_spawn_region_path = pc_spawn_region_path
 	to.pc_spawn_region_sphere_radius = pc_spawn_region_sphere_radius
 	to.pc_spawn_region_cube_size = pc_spawn_region_cube_size
 	to.pc_spawn_region_box_size = pc_spawn_region_box_size
+	to.pc_spawn_region_path_radius = pc_spawn_region_path_radius
 	
 	to.pc_bounding_box_type = pc_bounding_box_type
 	to.pc_bounding_box_ground_z = pc_bounding_box_ground_z

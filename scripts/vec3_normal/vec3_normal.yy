@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Utility/Math/Vector.yy",
   },
   "resourceVersion": "1.0",
-  "name": "vec3_tangent",
+  "name": "vec3_normal",
   "tags": [],
   "resourceType": "GMScript",
 }
