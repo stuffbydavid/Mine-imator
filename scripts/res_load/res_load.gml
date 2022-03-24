@@ -259,7 +259,6 @@ function res_load()
 				model_format = e_model_format.BLOCK
 				model_file = null
 				block_vbuffer = null
-				scenery_chunk_array = null
 				
 				// Load model file
 				var blockmodel = block_load_model_file(fn, id);

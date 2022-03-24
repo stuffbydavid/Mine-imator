@@ -35,7 +35,6 @@ function tl_update_scenery_part()
 		block_repeat_enable = false
 		block_repeat = vec3(1)
 		block_vbuffer = null
-		scenery_chunk_array = null
 		temp_update_block()
 	}
 	else if (type = e_tl_type.TEXT)

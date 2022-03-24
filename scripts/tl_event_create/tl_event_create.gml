@@ -169,11 +169,9 @@ function tl_event_create()
 	bounding_box_children_list = 0
 	
 	scenery_repeat_bounding_box = null
-	visible_chunks_array = null
 	bounding_box_update = true
 	render_visible = true
 	model_timeline_list = null
-	scenery_update_chunks = false
 	
 	// Path
 	path_update = false

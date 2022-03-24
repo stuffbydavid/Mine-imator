@@ -70,14 +70,5 @@ function action_lib_scenery(res)
 	
 	app_update_tl_edit()
 	
-	with (obj_timeline)
-	{
-		if (temp != null && temp.id = temp_edit)
-		{
-			scenery_update_chunks = true
-			tl_update_bounding_box()
-		}
-	}
-	
 	lib_preview.update = true
 }

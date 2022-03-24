@@ -180,7 +180,6 @@ function macros()
 	#macro block_size					16
 	#macro item_size					16
 	#macro world_size					30000
-	#macro chunk_size					64
 	#macro clip_near					1
 	#macro clip_far						world_size
 	

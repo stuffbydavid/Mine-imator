@@ -1,5 +1,5 @@
-/// render_world_block(chunks, resource, [rotate, size, [temp]])
-/// @arg chunks
+/// render_world_block(vbuffer, resource, [rotate, size, [temp]])
+/// @arg vbuffer
 /// @arg resource
 /// @arg [rotate
 /// @arg size[
@@ -7,8 +7,8 @@
 
 function render_world_block()
 {
-	var chunks, res, rotate, size, temp, deptharr;
-	chunks = argument[0]
+	var vbuffer, res, rotate, size, temp;
+	vbuffer = argument[0]
 	res = argument[1]
 	
 	if (argument_count > 2)
@@ -23,6 +23,9 @@ function render_world_block()
 		temp = argument[4]
 	else
 		temp = null
+	
+	if (vbuffer = null)
+		return 0
 	
 	if (!is_array(res))
 		res = [res, mc_res, mc_res]
@@ -53,12 +56,12 @@ function render_world_block()
 	if (res[0].block_sheet_ani_texture != null)
 		texani = res[0].block_sheet_ani_texture[block_texture_get_frame()]
 	else
-		texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
+		texani = mc_res[0].block_sheet_ani_texture[block_texture_get_frame()]
 	
 	if (res[1].block_sheet_ani_texture_material != null)
 		texanimat = res[1].block_sheet_ani_texture_material[block_texture_get_frame()]
 	else
-		texanimat = mc_res.block_sheet_ani_texture_material[block_texture_get_frame()]
+		texanimat = mc_res[0].block_sheet_ani_texture_material[block_texture_get_frame()]
 	
 	// Set material values
 	if (res[1] != mc_res)
@@ -85,7 +88,7 @@ function render_world_block()
 	if (res[2].block_sheet_ani_tex_normal != null)
 		texaninormal = res[2].block_sheet_ani_tex_normal[block_texture_get_frame()]
 	else
-		texaninormal = mc_res.block_sheet_ani_tex_normal[block_texture_get_frame()]
+		texaninormal = mc_res[0].block_sheet_ani_tex_normal[block_texture_get_frame()]
 	
 	var blend = shader_blend_color;
 	render_set_texture(tex)
@@ -96,30 +99,18 @@ function render_world_block()
 	if (rotate && (!dev_mode || dev_mode_rotate_blocks))
 		matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 	
-	if (chunks = null)
-		return 0
-	
-	var vbufferarray = (object_index = obj_timeline ? (visible_chunks_array = null ? null : visible_chunks_array[render_repeat[X]][render_repeat[Y]][render_repeat[Z]]) : null);
-	
-	if (object_index = obj_timeline && vbufferarray = null)
-		return 0
-	
 	#region Depth 0
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL]))
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL])
 	
-	if (object_index = obj_timeline)
-		deptharr = vbufferarray[e_block_depth.DEPTH0]
-	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.NORMAL]))
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH0, e_block_vbuffer.NORMAL)
-	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.GRASS]))
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_grass), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH0, e_block_vbuffer.GRASS)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	}
 	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.ANIMATED]))
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
 	{
 		if (texani != texprev)
 		{
@@ -139,8 +130,10 @@ function render_world_block()
 			texnormalprev = texaninormal
 		}
 		
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED)	
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])	
 	}
+	
+	render_set_texture(tex)
 	
 	if (tex != texprev)
 	{
@@ -163,11 +156,7 @@ function render_world_block()
 	#endregion
 	
 	#region Depth 1
-	
 	var filterprev;
-	
-	if (object_index = obj_timeline)
-		deptharr = vbufferarray[e_block_depth.DEPTH1]
 	
 	// Disable texture filtering on transparent blocks
 	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)
@@ -185,63 +174,63 @@ function render_world_block()
 		texnormalprev = texnormal
 	}
 	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.NORMAL]))
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.NORMAL)
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL]))
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL])
 	
-	// Grass
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.GRASS]))
+	// Grass 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_grass), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.GRASS)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS])
 	}
 	
-	// Foliage
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.FOLIAGE]))
+	// Foliage 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.FOLIAGE]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_foliage), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.FOLIAGE)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.FOLIAGE])
 	}
 	
-	// Oak leaves
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.LEAVES_OAK]))
+	// Oak leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_OAK]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_oak), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_OAK)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_OAK])
 	}
 	
-	// Spruce leaves
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.LEAVES_SPRUCE]))
+	// Spruce leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_SPRUCE]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_spruce), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_SPRUCE)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_SPRUCE])
 	}
 	
-	// Birch leaves
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.LEAVES_BIRCH]))
+	// Birch leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_BIRCH]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_birch), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_BIRCH)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_BIRCH])
 	}
 	
-	// Jungle leaves
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.LEAVES_JUNGLE]))
+	// Jungle leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_JUNGLE]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_jungle), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_JUNGLE)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_JUNGLE])
 	}
 	
-	// Acacia leaves
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.LEAVES_ACACIA]))
+	// Acacia leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_ACACIA]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_acacia), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_ACACIA)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_ACACIA])
 	}
 	
-	// Dark oak leaves
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.LEAVES_DARK_OAK]))
+	// Dark oak leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_DARK_OAK]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_dark_oak), shader_blend_alpha)
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_DARK_OAK)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_DARK_OAK])
 	}
 	
 	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
@@ -249,7 +238,7 @@ function render_world_block()
 	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)
 		gpu_set_tex_mip_bias(filterprev)
 	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.ANIMATED]))
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
 	{
 		if (texani != texprev)
 		{
@@ -269,7 +258,7 @@ function render_world_block()
 			texnormalprev = texaninormal
 		}
 		
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])	
 	}
 	
 	if (tex != texprev)
@@ -290,28 +279,26 @@ function render_world_block()
 		texnormalprev = texnormal
 	}
 	
+	render_set_texture(tex)
+	
 	#endregion
 	
 	#region Depth 2
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL]))
+		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL])
 	
-	if (object_index = obj_timeline)
-		deptharr = vbufferarray[e_block_depth.DEPTH2]
-	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.NORMAL]))
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH2, e_block_vbuffer.NORMAL)
-	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.ANIMATED]))
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
 	{
 		render_set_texture(texani)
 		render_set_texture(texanimat, "Material")
 		render_set_texture(texaninormal, "Normal")
-		render_chunks_vbuffer(chunks, e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
 	}
 	
-	if (vbufferarray = null || array_length(deptharr[e_block_vbuffer.WATER]))
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))
 	{
-		if (render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH &&
-			render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH &&
+		if (render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH && 
+			render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH && 
 			render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 		{
 			render_set_texture(texani)
@@ -345,9 +332,7 @@ function render_world_block()
 				render_set_uniform("uBrightness", shader_uniform_brightness)
 			}
 			
-			render_chunks_vbuffer(chunks, e_block_depth.DEPTH2, e_block_vbuffer.WATER)
-			render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
-			render_set_uniform_int("uIsWater", 0)
+			vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
 		}
 	}
 	

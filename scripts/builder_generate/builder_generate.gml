@@ -176,12 +176,6 @@ function builder_generate()
 	block_pos_z = build_pos_z * block_size
 	block_color = null
 	
-	// Chunk position
-	builder_chunk_x = floor(build_pos_x / chunk_size)
-	builder_chunk_y = floor(build_pos_y / chunk_size)
-	builder_chunk_z = floor(build_pos_z / chunk_size)
-	builder_chunk = chunk_array[builder_chunk_x][builder_chunk_y][builder_chunk_z]
-	
 	// Requires other render models for states 
 	if (block_current.require_models) 
 		builder_set_model(true) 

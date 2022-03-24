@@ -66,7 +66,6 @@ function temp_event_create()
 	block_tex_normal = null
 	
 	block_vbuffer = null
-	scenery_chunk_array = null
 	block_repeat_enable = false
 	block_repeat = vec3(1)
 	

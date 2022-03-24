@@ -1862,7 +1862,6 @@
     {"id":{"name":"json_string_encode","path":"scripts/json_string_encode/json_string_encode.yy",},"order":7,},
     {"id":{"name":"directory_name","path":"scripts/directory_name/directory_name.yy",},"order":5,},
     {"id":{"name":"file_find","path":"scripts/file_find/file_find.yy",},"order":9,},
-    {"id":{"name":"lib_chunk","path":"scripts/lib_chunk/lib_chunk.yy",},"order":6,},
     {"id":{"name":"file_find_single","path":"scripts/file_find_single/file_find_single.yy",},"order":11,},
     {"id":{"name":"file_text_contents","path":"scripts/file_text_contents/file_text_contents.yy",},"order":13,},
     {"id":{"name":"filename_new_ext","path":"scripts/filename_new_ext/filename_new_ext.yy",},"order":15,},

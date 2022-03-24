@@ -141,11 +141,5 @@ function temp_set_scenery(res, animate, hobj)
 			temp_update_display_name()
 			temp_update_rot_point()
 		}
-		
-		with (obj_timeline)
-		{
-			if (temp = other.id)
-				scenery_update_chunks = true
-		}
 	}
 }

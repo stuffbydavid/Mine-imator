@@ -129,7 +129,7 @@ function bbox() constructor {
 		
 		changed = true
 		
-		if (update = undefined && update)
+		if (update = undefined || update)
 			self.updatePoints()
 	}
 	
@@ -195,9 +195,6 @@ function bbox() constructor {
 
 function bbox_update_visible()
 {
-	var chunks, chunkarray, rep, chunksize;
-	chunks = 0
-	
 	// Update models
 	for (var i = 0; i < ds_list_size(app.project_model_list); i++)
 	{
@@ -256,7 +253,7 @@ function bbox_update_visible()
 		// Objects in scenery don't use template objects
 		if (part_root = null && temp != null && temp.object_index = obj_template)
 		{
-			if (type = e_tl_type.SCENERY && temp.scenery = null && !scenery_update_chunks)
+			if (type = e_tl_type.SCENERY && temp.scenery = null)
 				continue
 			else
 			{
@@ -267,76 +264,11 @@ function bbox_update_visible()
 		
 		bounding_box_matrix.updateFrustumState()
 		
-		if ((bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN) && !scenery_update_chunks)
+		if ((bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE || bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN))
 			continue
 		
-		if ((bounding_box_matrix.frustum_state_prev = bounding_box_matrix.frustum_state) && !scenery_update_chunks)
+		if ((bounding_box_matrix.frustum_state_prev = bounding_box_matrix.frustum_state))
 			continue
-		
-		scenery_update_chunks = false
-		
-		// Make a list of all visible chunks vbuffers to render
-		if (((type = e_tl_type.SCENERY || type = e_tl_type.BLOCK) && scenery_repeat_bounding_box != null))
-		{
-			rep = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
-			chunkarray = (type = e_tl_type.SCENERY ? temp.scenery.scenery_chunk_array : temp.scenery_chunk_array)
-			visible_chunks_array = null
-			chunks = 0
-			chunksize = [array_length(scenery_repeat_bounding_box[0][0][0]),
-						 array_length(scenery_repeat_bounding_box[0][0][0][0]),
-						 array_length(scenery_repeat_bounding_box[0][0][0][0][0])]
-			
-			// Loop through repeat
-			for (var rx = 0; rx < rep[X]; rx++)
-			{
-				for (var ry = 0; ry < rep[Y]; ry++)
-				{
-					for (var rz = 0; rz < rep[Z]; rz++)
-					{
-						// Initialize vbuffer arrays
-						for (var d = 0; d < e_block_depth.amount; d++)
-							for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
-								visible_chunks_array[rx][ry][rz][d][vb] = []
-						
-						// Loop through chunks
-						for (var cx = 0; cx < chunksize[X]; cx++)
-						{
-							for (var cy = 0; cy < chunksize[Y]; cy++)
-							{
-								for (var cz = 0; cz < chunksize[Z]; cz++)
-								{
-									var c = chunkarray[cx][cy][cz];
-									
-									var addchunk = (bounding_box_matrix.frustum_state != e_frustum_state.HIDDEN);
-									
-									if (!addchunk)
-									{
-										scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].updateFrustumState()
-										addchunk = (scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].frustum_state != e_frustum_state.HIDDEN)
-									}
-									
-									// Chunk is visible somehow, now check vbuffers
-									if (!c.empty && addchunk)
-									{
-										for (var d = 0; d < e_block_depth.amount; d++)
-										{
-											for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
-											{
-												if (!c.vbuffer_empty[d][vb])
-												{
-													chunks = array_length(visible_chunks_array[rx][ry][rz][d][vb])
-													visible_chunks_array[rx][ry][rz][d][vb][chunks] = c
-												}
-											}
-										}
-									}
-								}	
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 }
 

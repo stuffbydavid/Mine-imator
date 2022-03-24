@@ -54,25 +54,6 @@ function view_update_surface(view, cam)
 						
 						if ((view.boxes && app.setting_debug_features) && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
 						{
-							if (tl.scenery_repeat_bounding_box != null)
-							{
-								var chunks = [array_length(tl.scenery_repeat_bounding_box),
-											  array_length(tl.scenery_repeat_bounding_box[0]),
-											  array_length(tl.scenery_repeat_bounding_box[0][0]),
-											  array_length(tl.scenery_repeat_bounding_box[0][0][0]),
-											  array_length(tl.scenery_repeat_bounding_box[0][0][0][0]),
-											  array_length(tl.scenery_repeat_bounding_box[0][0][0][0][0])];
-								
-								for (var rx = 0; rx < chunks[0]; rx++)
-									for (var ry = 0; ry < chunks[1]; ry++)
-										for (var rz = 0; rz < chunks[2]; rz++)
-											for (var cx = 0; cx < chunks[3]; cx++)
-												for (var cy = 0; cy < chunks[4]; cy++)
-													for (var cz = 0; cz < chunks[5]; cz++)
-														if (tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].changed)
-															view_shape_box(tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].start_pos, tl.scenery_repeat_bounding_box[rx][ry][rz][cx][cy][cz].end_pos)
-							}
-							
 							if (tl.bounding_box_matrix.changed)
 							{
 								draw_set_color(c_red)

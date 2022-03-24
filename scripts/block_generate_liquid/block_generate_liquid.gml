@@ -479,9 +479,7 @@ function block_generate_liquid()
 	corner2z += z1
 	corner3z += z1
 	
-	vbuffer_current = builder_chunk.vbuffer[dep, vbuf]
-	builder_chunk.bounding_box.set_vbuffer()
-	
+	vbuffer_current = vbuffer[dep, vbuf]
 	vertex_brightness = block_current.brightness
 	
 	// X+
@@ -546,6 +544,4 @@ function block_generate_liquid()
 	
 	vertex_rgb = c_white
 	vertex_alpha = 1
-	
-	mc_builder.builder_chunk.bounding_box.copy_vbuffer()
 }

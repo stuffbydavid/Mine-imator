@@ -43,19 +43,13 @@ function temp_update_block()
 	{
 		// Updating scenery part
 		if (object_index = obj_timeline && temp = id)
-		{
 			tl_update_bounding_box()
-			scenery_update_chunks = true
-		}
 		else
 		{
 			with (obj_timeline)
 			{
 				if (temp != null && (temp.id = other.id))
-				{
 					tl_update_bounding_box()
-					scenery_update_chunks = true
-				}
 			}
 		}
 	}

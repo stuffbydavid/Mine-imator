@@ -82,8 +82,7 @@ function res_event_destroy()
 	if (block_preview_texture != null)
 		texture_free(block_preview_texture)
 	
-	if (scenery_chunk_array != null)
-		block_vbuffer_destroy()
+	block_vbuffer_destroy()
 	
 	// Free items
 	if (item_sheet_texture != null)
