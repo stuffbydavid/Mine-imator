@@ -22,6 +22,17 @@ function particles_save()
 	with (temp_edit)
 		project_save_particles()
 	
+	// Save path points
+	if (temp_edit.pc_spawn_region_type = "path" && temp_edit.pc_spawn_region_path != null)
+	{
+		var tl = temp_edit.pc_spawn_region_path;
+		for (var i = 0; i < ds_list_size(tl.tree_list); i++)
+		{
+			if (tl.tree_list[|i].type = e_tl_type.PATH_POINT)
+				tl.tree_list[|i].save = true
+		}
+	}
+	
 	project_save_objects()
 	project_save_done()
 	

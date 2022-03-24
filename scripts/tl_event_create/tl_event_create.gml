@@ -176,6 +176,7 @@ function tl_event_create()
 	// Path
 	path_update = false
 	path_points_list = ds_list_create()
+	path_smooth = true
 	path_closed = false
 	path_detail = 6
 	

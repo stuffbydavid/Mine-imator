@@ -161,6 +161,7 @@ function project_save_timeline()
 		if (value_type[e_value_type.PATH])
 		{
 			json_save_object_start("path")
+				json_save_var_bool("smooth", path_smooth)
 				json_save_var_bool("closed", path_closed)
 				json_save_var("detail", path_detail)
 				json_save_var_bool("shape_generate", path_shape_generate)

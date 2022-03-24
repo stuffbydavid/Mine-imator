@@ -62,16 +62,17 @@ function tl_update_path()
 	
 	for (var i = 0; i < array_length(splinepoints); i++)
 	{
-		sampleprev = spline_get_point(i, splinepoints, path_closed, 0)
+		sampleprev = spline_get_point(i, splinepoints, path_closed, path_smooth, 0)
 		points_distance[i] = 0
 		
 		for (var j = 0; j <= 1; j += 0.05)
 		{
-			sample = spline_get_point(i + j, splinepoints, path_closed, 0)
+			sample = spline_get_point(i + j, splinepoints, path_closed, path_smooth, 0)
 			points_distance[i] += point3D_distance(sampleprev, sample)
 			sampleprev = sample
 		}
 		
+		points_distance[i] = max(0.001, points_distance[i])
 		path_length += points_distance[i]
 	}
 	
@@ -83,6 +84,7 @@ function tl_update_path()
 	}
 	
 	// Move along path length and record points
+	var t = 0;
 	for (var i = 0; i < detail; i++)
 	{
 		var length = (i/(detail - 1)) * path_length;
@@ -94,12 +96,16 @@ function tl_update_path()
 			j++
 		}
 		
-		path_table[i] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed, 0)
-		path_table_matrix[i] = path_table[i]
+		if (points_distance[j] = 0)
+			continue
+		
+		path_table[t] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed, path_smooth, 0)
+		path_table_matrix[t] = path_table[t]
+		t++
 	}
 	
 	// Generate tangent/normal values in points
-	spline_make_frames(path_table, path_closed)
+	spline_make_frames(path_table, path_closed, path_smooth)
 	
 	if (path_shape_generate)
 		path_vbuffer = vbuffer_create_path(id)

@@ -201,6 +201,7 @@ function project_load_timeline(map)
 		var pathmap = map[?"path"];
 		if (ds_map_valid(pathmap))
 		{
+			path_smooth = value_get_real(pathmap[?"smooth"], path_smooth)
 			path_closed = value_get_real(pathmap[?"closed"], path_closed)
 			path_detail = value_get_real(pathmap[?"detail"], path_detail)
 			path_shape_generate = value_get_real(pathmap[?"shape_generate"], path_shape_generate)

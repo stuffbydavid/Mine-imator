@@ -87,7 +87,7 @@ function particle_spawner_spawn(type)
 					else
 						t = mod_fix(ds_list_size(particle_list) / temp.pc_spawn_amount, 1) * array_length(temp.pc_spawn_region_path.path_table_matrix)
 					
-					p = spline_get_point(t, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed)
+					p = spline_get_point(t, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed, temp.pc_spawn_region_path.path_smooth)
 					
 					// Get tangent/normal from point
 					tangent = [p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z]]

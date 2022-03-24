@@ -6,6 +6,10 @@ function tab_timeline_editor_path()
 	draw_switch("timelineeditorpathclosed", dx, dy, tl_edit.path_closed, action_tl_path_closed)
 	tab_next()
 	
+	tab_control_switch()
+	draw_switch("timelineeditorpathsmooth", dx, dy, tl_edit.path_smooth, action_tl_path_smooth)
+	tab_next()
+	
 	tab_control_dragger()
 	draw_dragger("timelineeditorpathdetail", dx, dy, dragger_width, tl_edit.path_detail, 1 / 4, 1, no_limit, 6, 1, tab.path.tbx_detail, action_tl_path_detail, null, true, false, "timelineeditorpathdetailtip")
 	tab_next()
@@ -31,6 +35,10 @@ function tab_timeline_editor_path()
 		tab_next()
 		
 		tab_control_switch()
+		draw_switch("timelineeditorpathshapesmoothsegments", dx, dy, tl_edit.path_shape_smooth_segments, action_tl_path_shape_smooth_segments, "timelineeditorpathshapesmoothsegmentstip")
+		tab_next()
+		
+		tab_control_switch()
 		draw_button_collapse("path_shape_tube", collapse_map[?"path_shape_tube"], action_tl_path_shape_tube, tl_edit.path_shape_tube, "timelineeditorpathshapetube")
 		tab_next()
 		
@@ -40,10 +48,6 @@ function tab_timeline_editor_path()
 			
 			tab_control_dragger()
 			draw_dragger("timelineeditorpathshapedetail", dx, dy, dragger_width, tl_edit.path_shape_detail, 1 / 4, 3, no_limit, 6, 1, tab.path.tbx_shape_detail, action_tl_path_shape_detail)
-			tab_next()
-			
-			tab_control_switch()
-			draw_switch("timelineeditorpathshapesmoothsegments", dx, dy, tl_edit.path_shape_smooth_segments, action_tl_path_shape_smooth_segments, "timelineeditorpathshapesmoothsegmentstip")
 			tab_next()
 			
 			tab_control_switch()

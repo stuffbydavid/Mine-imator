@@ -70,7 +70,7 @@ function tl_update_matrix()
 				n = vec3_normalize([curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z]])
 				t = vec3_normalize([curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z]])
 				
-				mat = matrix_create_rotate_to(t, n)//curpos, nextpos, angle + curpos[W])
+				mat = matrix_create_rotate_to(t, n)
 				
 				// If path is closed, check if object is before/after ends
 				if (!path.path_closed)

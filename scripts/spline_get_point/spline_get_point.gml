@@ -1,11 +1,12 @@
-/// spline_get_point(progress, points, closed, [amount, [smoothen]])
+/// spline_get_point(progress, points, closed, smooth, [amount])
 /// @arg progress
 /// @arg points
 /// @arg closed
+/// @arg smooth
 /// @arg [amount]
 /// @desc Calculates a 3D point on a 3D B-Spline curve given a list of points
 
-function spline_get_point(t, points, closed, amount = 0)
+function spline_get_point(t, points, closed, smooth, amount = 0)
 {
 	var p0, p1, p2, seg, curvet;
 	
@@ -59,6 +60,13 @@ function spline_get_point(t, points, closed, amount = 0)
 		return point
 	}
 	
-	return bezier_curve_quad(points[p0], points[p1], points[p2], curvet)
-
+	if (smooth)
+		return bezier_curve_quad(points[p0], points[p1], points[p2], curvet)
+	else
+	{
+		if (curvet < 0.5)
+			return point_lerp(points[p0], points[p1], curvet * 2)
+		else
+			return point_lerp(points[p1], points[p2], (curvet - 0.5) * 2)
+	}	
 }

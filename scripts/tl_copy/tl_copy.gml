@@ -61,6 +61,7 @@ function tl_copy(to)
 	to.blend_mode = blend_mode
 	
 	to.path_update = true
+	to.path_smooth = path_smooth
 	to.path_closed = path_closed
 	to.path_detail = path_detail
 	to.path_shape_generate = path_shape_generate

@@ -1,15 +1,20 @@
-/// spline_make_frames(points, closed)
+/// spline_make_frames(points, closed, smooth)
 /// @arg points
 /// @arg closed
+/// @arg smooth
 /// @desc Constructs rotation frames based on tangents, detects changes in torsion and aligns normals
 
-function spline_make_frames(points, closed)
+function spline_make_frames(points, closed, smooth)
 {
 	var p, pn, t, tn, n, nn, rn;
-	p = spline_get_point(0, points, closed)
-	pn = spline_get_point(1, points, closed)
+	p = spline_get_point(0, points, closed, smooth)
+	pn = spline_get_point(1, points, closed, smooth)
 	t = vec3_direction(p, pn)
-	n = vec3_normal(t, 0)
+	
+	if (t[Z] = 1 || t[Z] = -1)
+		n = [t[Z], 0, 0]
+	else
+		n = vec3_normal(t, 0)
 	
 	// Set first normal
 	points[@ 0][@ PATH_TANGENT_X] = t[X]
@@ -26,7 +31,7 @@ function spline_make_frames(points, closed)
 	// Procedurally calculate and correct normals
 	for (var i = 1; i < array_length(points); i++)
 	{
-		pn = spline_get_point(i + 1, points, closed)
+		pn = spline_get_point(i + 1, points, closed, smooth)
 		tn = vec3_direction(p, pn)
 		
 		// Find angle difference and rotate
@@ -35,7 +40,7 @@ function spline_make_frames(points, closed)
 		nn = vec3_normalize(vec3_mul_matrix(n, matrix_create_axis_angle(axis, angle)))
 		
 		// Rotate normal on point angle
-		rn = vec3_rotate_axis_angle(nn, tn, degtorad(pn[W]))//vec3_normalize(vec3_mul_matrix(nn, matrix_create_axis_angle(tn, pn[W] / 360)))
+		rn = vec3_rotate_axis_angle(nn, tn, degtorad(pn[W]))
 		
 		points[@ i][@ PATH_TANGENT_X] = tn[X]
 		points[@ i][@ PATH_TANGENT_Y] = tn[Y]

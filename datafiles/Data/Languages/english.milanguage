@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.03.05"
+        "lastchange": "2022.03.23"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2746,9 +2746,10 @@
         "audioadd": "Add sound",
         "path": "PATH",
         "path/": {
-            "closed": "Connect path ends",
+            "closed": "Connect ends",
+            "smooth": "Smooth path",
             "detail": "Detail",
-            "detailtip": "Higher values will result in a smoother path, but are more performance intense.",
+            "detailtip": "Higher values will result in better path accuracy, but are more performance intense.",
             "shape": "Generate shape",
             "shape/": {
                 "radius": "Radius",
