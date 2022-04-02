@@ -1,7 +1,8 @@
-/// tl_update_matrix()
+/// tl_update_matrix([updateik])
+/// @arg [updateik]
 /// @desc Updates matrixes and positions.
 
-function tl_update_matrix()
+function tl_update_matrix(updateik = true)
 {
 	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, lasttex;
 	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
@@ -98,11 +99,20 @@ function tl_update_matrix()
 					matrix_parent = matrix_multiply(matrix_create(point3D(0, 0, 0), model_part.rotation, vec3(1)), matrix_parent)
 			}
 			
+			// Get current matrix for IK
+			matrix_parent_pre_ik = array_copy_1d(matrix_parent)
+			
 			// Create main matrix
 			pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
 			rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 			sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
-			matrix = matrix_multiply(matrix_create(pos, rot, sca), matrix_parent)
+			
+			matrix_local = matrix_create(pos, rot, sca)
+			matrix = matrix_multiply(matrix_local, matrix_parent)
+			
+			// Update matrix with IK orientation
+			if (array_length(part_joints_matrix) > 0 && ik_target != null)
+				matrix = matrix_multiply(part_joints_matrix[0], matrix)
 			
 			// No scale or "resize" mode
 			if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
@@ -133,10 +143,14 @@ function tl_update_matrix()
 			}
 			
 			// Remove old rotation and re-add own
-			if (!inherit_rotation)
+			if (!inherit_rotation || (array_length(part_joints_matrix) > 0 && ik_target != null))
 			{
 				matrix_remove_rotation(matrix)
-				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix) 
+				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
+				
+				// Add IK orientation
+				if (array_length(part_joints_matrix) > 0 && ik_target != null)
+					matrix = matrix_multiply(part_joints_matrix[0], matrix)
 			}
 			
 			// Replace position
@@ -330,6 +344,10 @@ function tl_update_matrix()
 						  value_inherit[e_value.MIX_PERCENT] > 0 ||
 						  part_mixing_shapes)
 			
+			// Add bend angle from IK
+			if (array_length(part_joints_pos) > 0 && ik_target != null)
+				value_inherit[e_value.BEND_ANGLE_X] += part_joint_bend_angle
+			
 			if ((value_inherit[e_value.ALPHA] * 1000) != 0)
 			{
 				var clear = ((!app.timeline_playing && (app.timeline_marker_previous = app.timeline_marker)) || model_clear_bend_cache);
@@ -400,4 +418,7 @@ function tl_update_matrix()
 	}
 	
 	update_matrix = false
+	
+	if (updateik)
+		tl_update_ik()
 }

@@ -53,6 +53,8 @@ function history_save_tl(tl)
 		usage_tl_texture_amount = 0
 		usage_tl_path_amount = 0
 		usage_tl_attractor_amount = 0
+		usage_tl_ik_target_amount = 0
+		usage_tl_ik_pole_target_amount = 0
 		with (obj_timeline)
 		{
 			if (value[e_value.TEXTURE_OBJ] = tl)
@@ -71,6 +73,18 @@ function history_save_tl(tl)
 			{
 				save.usage_tl_attractor_save_id[save.usage_tl_attractor_amount] = save_id
 				save.usage_tl_attractor_amount++
+			}
+			
+			if (ik_target = tl)
+			{
+				save.usage_tl_ik_target_save_id[save.usage_tl_ik_target_amount] = save_id
+				save.usage_tl_ik_target_amount++
+			}
+			
+			if (ik_pole_target = tl)
+			{
+				save.usage_tl_ik_pole_target_save_id[save.usage_tl_ik_pole_target_amount] = save_id
+				save.usage_tl_ik_pole_target_amount++
 			}
 		}
 		

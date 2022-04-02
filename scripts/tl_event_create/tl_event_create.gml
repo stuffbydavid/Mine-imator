@@ -196,5 +196,16 @@ function tl_event_create()
 	path_vbuffer = null
 	path_select_vbuffer = null
 	
+	// Inverse kinematics
+	ik_enable = false
+	ik_target = null
+	ik_pole_target = null
+	
+	part_matrix_update_ik = false
+	part_joints_pos = []
+	part_joints_matrix = []
+	part_joints_bone_matrix = []
+	part_joint_bend_angle = 0
+	
 	tl_update_path()
 }

@@ -5,7 +5,7 @@
         "locale": "en-US",
         "translator": "David & Nimi",
         "forversion": "2.0.0",
-        "lastchange": "2022.03.23"
+        "lastchange": "2022.04.02"
     },
     "particle/": {
         "default": "Default spawner",
@@ -2689,6 +2689,13 @@
             "x": "X",
             "y": "Y",
             "z": "Z"
+        },
+        "ik/": {
+            "enable": "Inverse kinematics",
+            "enabletip": "When enabled, the body part will rotate and bend towards a defined target.",
+            "target": "Target",
+            "poletarget": "Pole target",
+            "info": "This limb will reach towards the \"Target\" timeline, and bend towards the \"Pole target\"."
         },
         "hierarchy": "HIERARCHY",
         "parent": "Parent",

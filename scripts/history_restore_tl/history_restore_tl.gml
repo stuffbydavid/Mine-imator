@@ -100,6 +100,24 @@ function history_restore_tl(save)
 			}
 		}
 		
+		for (var s = 0; s < save.usage_tl_ik_target_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_ik_target_save_id[s]))
+			{
+				ik_target = tl
+				update_matrix = true
+			}
+		}
+		
+		for (var s = 0; s < save.usage_tl_ik_pole_target_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_ik_pole_target_save_id[s]))
+			{
+				ik_pole_target = tl
+				update_matrix = true
+			}
+		}
+		
 		for (var s = 0; s < save.usage_kf_texture_amount; s++)
 			with (save_id_find(save.usage_kf_texture_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_texture_index[s]].value[e_value.TEXTURE_OBJ] = tl

@@ -10,12 +10,17 @@ function vec3_normal(vec, angle)
 	yy = vec[Y]
 	zz = vec[Z]
 	
-	cx = lengthdir_x(1, angle) / sqrt(xx * xx + yy * yy + zz * zz)
-	cy = lengthdir_y(1, angle)
+	if (abs(zz) != 1)
+	{
+		cx = lengthdir_x(1, angle) / sqrt(xx * xx + yy * yy + zz * zz)
+		cy = lengthdir_y(1, angle)
 	
-	t[Z] = cx * (xx * xx + yy * yy)
-	t[Y] = cy * xx - cx * yy * zz
-	t[X] = -cx * xx * zz - cy * yy
+		t[Z] = cx * (xx * xx + yy * yy)
+		t[Y] = cy * xx - cx * yy * zz
+		t[X] = -cx * xx * zz - cy * yy
 	
-	return vec3_normalize(t)
+		return vec3_normalize(t)
+	}
+	else
+		return [lengthdir_x(1, angle), lengthdir_y(1, angle), 0]
 }

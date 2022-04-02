@@ -213,5 +213,9 @@ function project_load_timeline(map)
 			path_shape_smooth_segments = value_get_real(pathmap[?"shape_smooth_segments"], path_shape_smooth_segments)
 			path_shape_smooth_ring = value_get_real(pathmap[?"shape_smooth_ring"], path_shape_smooth_ring)
 		}
+		
+		ik_enable = value_get_real(map[?"ik_enable"])
+		ik_target = value_get_save_id(map[?"ik_target"], ik_target)
+		ik_pole_target = value_get_save_id(map[?"ik_pole_target"], ik_pole_target)
 	}
 }

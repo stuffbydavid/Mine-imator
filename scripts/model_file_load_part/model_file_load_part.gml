@@ -198,6 +198,9 @@ function model_file_load_part(map, root, res, model)
 			}
 			bend_offset = bendmap[?"offset"]
 			
+			// End offset
+			bend_end_offset = value_get_real(bendmap[?"end_offset"], 0)
+			
 			// Size
 			bend_size = value_get_real(bendmap[?"size"], null)
 			
@@ -379,6 +382,7 @@ function model_file_load_part(map, root, res, model)
 			bend_inherit_angle[Z] = 0
 			bend_inherit = false
 			bend_offset = 0
+			bend_end_offset = 0
 			bend_size = null
 			bend_invert = false
 			bend_pos_offset = vec3(0)

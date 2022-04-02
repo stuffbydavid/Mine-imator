@@ -83,7 +83,7 @@ function bench_draw()
 		if (!setting_advanced_mode)
 		{
 			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground" || bench_type_list.item[|i].name = "typepath" ||
-				bench_type_list.item[|i].name = "typepathpoint")
+				bench_type_list.item[|i].name = "typepathpoint" || bench_type_list.item[|i].name = "typejoint")
 				skipasset = true
 		}
 		

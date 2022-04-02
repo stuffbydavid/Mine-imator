@@ -94,6 +94,12 @@ function tl_remove_clean()
 			
 			if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = other.id) 
 				update_matrix = true
+			
+			if (ik_target = other.id)
+				ik_target = null
+			
+			if (ik_pole_target = other.id)
+				ik_pole_target = null
 		}
 		
 		with (obj_keyframe)

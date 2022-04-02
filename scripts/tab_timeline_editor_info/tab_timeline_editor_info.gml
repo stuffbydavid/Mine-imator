@@ -57,4 +57,43 @@ function tab_timeline_editor_info()
 			context_menu_group_temp = null
 		}
 	}
+	
+	// Inverse kinematics
+	if (tl_edit.type = e_tl_type.BODYPART && tl_edit.value_type[e_value_type.TRANSFORM_BEND] && tl_edit.model_part != null && tl_edit.model_part.bend_end_offset > 0)
+	{
+		tab_control_switch()
+		draw_button_collapse("ik", collapse_map[?"ik"], action_tl_ik_enable, tl_edit.ik_enable, "timelineeditorikenable", "timelineeditorikenabletip")
+		tab_next()
+		
+		if (collapse_map[?"ik"] && tl_edit.ik_enable)
+		{
+			tab_collapse_start()
+			
+			var text;
+			
+			// Target object
+			if (tl_edit.ik_target != null)
+				text = tl_edit.ik_target.display_name
+			else
+				text = text_get("listnone")
+			
+			tab_control_menu()
+			draw_button_menu("timelineeditoriktarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.ik_target, text, action_tl_ik_target)
+			tab_next()
+			
+			// Pole target object
+			if (tl_edit.ik_pole_target != null)
+				text = tl_edit.ik_pole_target.display_name
+			else
+				text = text_get("listnone")
+			
+			tab_control_menu()
+			draw_button_menu("timelineeditorikpoletarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.ik_pole_target, text, action_tl_ik_pole_target)
+			tab_next()
+			
+			draw_tooltip_label("timelineeditorikinfo", icons.POSING, e_toast.INFO)
+			
+			tab_collapse_end()
+		}
+	}
 }

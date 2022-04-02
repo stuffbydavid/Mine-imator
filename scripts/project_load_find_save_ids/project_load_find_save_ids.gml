@@ -208,6 +208,10 @@ function project_load_find_save_ids()
 			parent.tree_array[array_length(parent.tree_array)] = id
 		else
 			parent.tree_array[parent_tree_index] = id
+		
+		// IK targets
+		ik_target = save_id_find(save_id_map[?ik_target])
+		ik_pole_target = save_id_find(save_id_map[?ik_pole_target])
 	}
 	
 	// Set keyframe references

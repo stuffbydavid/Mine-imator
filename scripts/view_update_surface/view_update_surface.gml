@@ -52,6 +52,13 @@ function view_update_surface(view, cam)
 						else if (tl.type = e_tl_type.PATH)
 							view_shape_path(tl)
 						
+						if (tl.type = e_tl_type.BODYPART && array_length(tl.part_joints_pos) > 0)
+						{
+							// Draw bones
+							for (var i = 0; i < 2; i++)
+								view_shape_bone(tl.part_joints_pos[i], point3D_distance(tl.part_joints_pos[i], tl.part_joints_pos[i + 1]), tl.part_joints_bone_matrix[i])
+						}
+						
 						if ((view.boxes && app.setting_debug_features) && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
 						{
 							if (tl.bounding_box_matrix.changed)
