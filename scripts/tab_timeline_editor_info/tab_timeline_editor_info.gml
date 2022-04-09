@@ -62,10 +62,10 @@ function tab_timeline_editor_info()
 	if (tl_edit.type = e_tl_type.BODYPART && tl_edit.value_type[e_value_type.TRANSFORM_BEND] && tl_edit.model_part != null && tl_edit.model_part.bend_end_offset > 0)
 	{
 		tab_control_switch()
-		draw_button_collapse("ik", collapse_map[?"ik"], action_tl_ik_enable, tl_edit.ik_enable, "timelineeditorikenable", "timelineeditorikenabletip")
+		draw_button_collapse("ik", collapse_map[?"ik"], null, true, "timelineeditorik", "timelineeditoriktip")
 		tab_next()
 		
-		if (collapse_map[?"ik"] && tl_edit.ik_enable)
+		if (collapse_map[?"ik"])
 		{
 			tab_collapse_start()
 			
@@ -88,7 +88,12 @@ function tab_timeline_editor_info()
 				text = text_get("listnone")
 			
 			tab_control_menu()
-			draw_button_menu("timelineeditorikpoletarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.ik_pole_target, text, action_tl_ik_pole_target)
+			draw_button_menu("timelineeditorikpoletarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.ik_pole_target, text, action_tl_ik_pole_target, tl_edit.ik_target = null)
+			tab_next()
+			
+			// Angle offset
+			tab_control_dragger()
+			draw_dragger("timelineeditorikangleoffset", dx, dy, dragger_width, tl_edit.ik_angle_offset, 0.1, -no_limit, no_limit, 0, snap_min, tab.info.tbx_ik_angle_offset, action_tl_ik_angle_offset, null, true, tl_edit.ik_target = null || tl_edit.ik_pole_target = null)
 			tab_next()
 			
 			draw_tooltip_label("timelineeditorikinfo", icons.POSING, e_toast.INFO)

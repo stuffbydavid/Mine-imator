@@ -414,6 +414,8 @@ function app_startup_interface_tabs()
 			tbx_rot_point_x = new_textbox_ndecimals()
 			tbx_rot_point_y = new_textbox_ndecimals()
 			tbx_rot_point_z = new_textbox_ndecimals()
+			tbx_ik_angle_offset = new_textbox_ndecimals()
+			tbx_ik_angle_offset.suffix = "°"
 		}
 		
 		// Hierarchy

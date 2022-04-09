@@ -2690,11 +2690,12 @@
             "y": "Y",
             "z": "Z"
         },
+        "ik": "Inverse kinematics",
         "ik/": {
-            "enable": "Inverse kinematics",
-            "enabletip": "When enabled, the body part will rotate and bend towards a defined target.",
+            "tip": "When enabled, the body part will rotate and bend towards a defined target.",
             "target": "Target",
             "poletarget": "Pole target",
+            "angleoffset": "Angle offset",
             "info": "This limb will reach towards the \"Target\" timeline, and bend towards the \"Pole target\"."
         },
         "hierarchy": "HIERARCHY",

@@ -101,6 +101,10 @@ function list_item_draw()
 	{
 		textcolor = c_text_main
 		textalpha = a_text_main
+		
+		if (item.disabled)
+			textalpha = a_text_tertiary
+		
 		iconcolor = c_text_tertiary
 		iconalpha = a_text_tertiary
 		backcolor = c_black

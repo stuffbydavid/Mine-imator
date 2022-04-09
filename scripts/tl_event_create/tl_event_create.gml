@@ -119,8 +119,12 @@ function tl_event_create()
 	cam_surf_tmp = null
 	cam_goalzoom = null
 	
-	matrix = 0
+	matrix = MAT_IDENTITY
 	matrix_render = MAT_IDENTITY
+	matrix_parent = MAT_IDENTITY
+	matrix_parent_pre_ik = MAT_IDENTITY
+	matrix_local = MAT_IDENTITY
+	
 	update_matrix = true
 	bend_rot_last = vec3(0)
 	bend_model_part_last = null
@@ -197,9 +201,13 @@ function tl_event_create()
 	path_select_vbuffer = null
 	
 	// Inverse kinematics
-	ik_enable = false
 	ik_target = null
+	ik_target_pos = [0, 0, 0]
 	ik_pole_target = null
+	ik_pole_target_pos = [0, 0, 0]
+	ik_world_pos_prev = [0, 0, 0]
+	ik_angle_offset = 0
+	ik_angle_offset_prev = 0
 	
 	part_matrix_update_ik = false
 	part_joints_pos = []

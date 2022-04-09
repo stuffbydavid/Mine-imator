@@ -384,7 +384,7 @@ function model_file_load_part(map, root, res, model)
 			bend_offset = 0
 			bend_end_offset = 0
 			bend_size = null
-			bend_invert = false
+			bend_invert[Z] = false
 			bend_pos_offset = vec3(0)
 			bend_direction_min = vec3(-180)
 			bend_direction_max = vec3(180)

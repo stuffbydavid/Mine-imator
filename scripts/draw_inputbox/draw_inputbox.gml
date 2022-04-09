@@ -127,7 +127,7 @@ function draw_inputbox()
 	
 	if (disabled)
 	{
-		draw_label(string_limit(tbx.text, w - padding * 2), placeholderx, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
+		draw_label(string_limit(tbx.text + tbx.suffix, w - padding * 2), placeholderx, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
 		update = false
 	}
 	

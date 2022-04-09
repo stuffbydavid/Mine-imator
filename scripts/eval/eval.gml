@@ -4,10 +4,9 @@
 
 function eval(str, def)
 {
-	var i, values, ops, functions, result, lastoperator;
+	var i, values, ops, result, lastoperator;
 	values = ds_stack_create()
 	ops = ds_stack_create()
-	functions = ds_stack_create()
 	lastoperator = ""
 	
 	for (i = 1; i < string_length(str) + 1; i++)
@@ -148,7 +147,6 @@ function eval(str, def)
 	result = ds_stack_top(values)
 	ds_stack_destroy(values)
 	ds_stack_destroy(ops)
-	ds_stack_destroy(functions)
 	
 	if (result = undefined)
 		return def

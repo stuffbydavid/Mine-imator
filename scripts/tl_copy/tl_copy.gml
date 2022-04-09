@@ -73,7 +73,6 @@ function tl_copy(to)
 	to.path_shape_smooth_segments = path_shape_smooth_segments
 	to.path_shape_smooth_ring = path_shape_smooth_ring
 	
-	to.ik_enable = ik_enable
 	to.ik_target = ik_target
 	to.ik_pole_target = ik_pole_target
 	
