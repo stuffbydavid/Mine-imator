@@ -54,7 +54,7 @@ function history_save_tl(tl)
 		usage_tl_path_amount = 0
 		usage_tl_attractor_amount = 0
 		usage_tl_ik_target_amount = 0
-		usage_tl_ik_pole_target_amount = 0
+		usage_tl_ik_target_angle_amount = 0
 		with (obj_timeline)
 		{
 			if (value[e_value.TEXTURE_OBJ] = tl)
@@ -75,22 +75,24 @@ function history_save_tl(tl)
 				save.usage_tl_attractor_amount++
 			}
 			
-			if (ik_target = tl)
+			if (value[e_value.IK_TARGET] = tl)
 			{
 				save.usage_tl_ik_target_save_id[save.usage_tl_ik_target_amount] = save_id
 				save.usage_tl_ik_target_amount++
 			}
 			
-			if (ik_pole_target = tl)
+			if (value[e_value.IK_TARGET_ANGLE] = tl)
 			{
-				save.usage_tl_ik_pole_target_save_id[save.usage_tl_ik_pole_target_amount] = save_id
-				save.usage_tl_ik_pole_target_amount++
+				save.usage_tl_ik_target_angle_save_id[save.usage_tl_ik_target_angle_amount] = save_id
+				save.usage_tl_ik_target_angle_amount++
 			}
 		}
 		
 		// Save references in keyframes
 		usage_kf_texture_amount = 0
 		usage_kf_path_amount = 0
+		usage_kf_ik_target_amount = 0
+		usage_kf_ik_target_angle_amount = 0
 		usage_kf_attractor_amount = 0
 		with (obj_keyframe)
 		{
@@ -106,6 +108,20 @@ function history_save_tl(tl)
 				save.usage_kf_path_tl_save_id[save.usage_kf_path_amount] = save_id_get(timeline)
 				save.usage_kf_path_index[save.usage_kf_path_amount] = ds_list_find_index(timeline.keyframe_list, id)
 				save.usage_kf_path_amount++
+			}
+			
+			if (value[e_value.IK_TARGET] = tl)
+			{
+				save.usage_kf_ik_target_tl_save_id[save.usage_kf_ik_target_amount] = save_id_get(timeline)
+				save.usage_kf_ik_target_index[save.usage_kf_ik_target_amount] = ds_list_find_index(timeline.keyframe_list, id)
+				save.usage_kf_ik_target_amount++
+			}
+			
+			if (value[e_value.IK_TARGET_ANGLE] = tl)
+			{
+				save.usage_kf_ik_target_angle_tl_save_id[save.usage_kf_ik_target_angle_amount] = save_id_get(timeline)
+				save.usage_kf_ik_target_angle_index[save.usage_kf_ik_target_angle_amount] = ds_list_find_index(timeline.keyframe_list, id)
+				save.usage_kf_ik_target_angle_amount++
 			}
 			
 			if (value[e_value.ATTRACTOR] = tl)

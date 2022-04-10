@@ -152,6 +152,8 @@ function tl_value_default(valueid)
 		case e_value.BG_WIND_DIRECTIONAL_STRENGTH: return app.background_wind_directional_strength
 		case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed
 		case e_value.PATH_OBJ:
+		case e_value.IK_TARGET:
+		case e_value.IK_TARGET_ANGLE:
 		case e_value.ATTRACTOR:
 		case e_value.TEXTURE_OBJ:
 		case e_value.TEXTURE_MATERIAL_OBJ:

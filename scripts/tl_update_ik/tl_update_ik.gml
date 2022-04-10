@@ -64,27 +64,27 @@ function do_ik(tl)
 	poleupdate = false
 	posupdate = false
 	
-	if (tl.ik_target != null && tl.ik_target_pos != null)
-		targetupdate = !array_equals(tl.ik_target_pos, tl.ik_target.world_pos)
+	if (tl.value[e_value.IK_TARGET] != null && tl.ik_target_pos != null)
+		targetupdate = !array_equals(tl.ik_target_pos, tl.value[e_value.IK_TARGET].world_pos)
 	
-	if (tl.ik_pole_target != null)
+	if (tl.value[e_value.IK_TARGET_ANGLE] != null)
 		if (tl.ik_pole_target_pos != null)
-			poleupdate = !array_equals(tl.ik_pole_target_pos, tl.ik_pole_target.world_pos)
+			poleupdate = !array_equals(tl.ik_pole_target_pos, tl.value[e_value.IK_TARGET_ANGLE].world_pos)
 	
 	if (tl.ik_world_pos_prev != null)
 		posupdate = !array_equals(tl.ik_world_pos_prev, tl.world_pos)
 	
-	if (!targetupdate && !poleupdate && !posupdate && (tl.ik_angle_offset = tl.ik_angle_offset_prev))
+	if (!targetupdate && !poleupdate && !posupdate && (tl.value[e_value.IK_ANGLE_OFFSET] = tl.ik_angle_offset_prev))
 		return 0
 	
-	tl.ik_angle_offset_prev = tl.ik_angle_offset
+	tl.ik_angle_offset_prev = tl.value[e_value.IK_ANGLE_OFFSET]
 	
 	// Offset pole target to ensure correct angle math
-	haspole = (tl.ik_pole_target != null)
+	haspole = (tl.value[e_value.IK_TARGET_ANGLE] != null)
 	
 	if (haspole)
 	{
-		polepos = tl.ik_pole_target.world_pos
+		polepos = tl.value[e_value.IK_TARGET_ANGLE].world_pos
 		tl.ik_pole_target_pos = polepos
 		
 		if (polepos[X] = tl.world_pos[X])
@@ -127,9 +127,9 @@ function do_ik(tl)
 	}
 	
 	// Only calculate IK if target is set
-	if (tl.ik_target != null)
+	if (tl.value[e_value.IK_TARGET] != null)
 	{
-		endpos = tl.ik_target.world_pos
+		endpos = tl.value[e_value.IK_TARGET].world_pos
 		tl.ik_target_pos = endpos
 		
 		// Calculate lengths of bones between joints
@@ -207,7 +207,7 @@ function do_ik(tl)
 		p1proj = point3D_project_plane(p1, p0, ac)
 		angle = point3D_angle_signed(point3D_sub(p1proj, p0), point3D_sub(poleproj, p0), ac)
 		
-		p1 = point3D_add(p0, vec3_rotate_axis_angle(point3D_sub(p1, p0), ac, degtorad(angle + tl.ik_angle_offset)))
+		p1 = point3D_add(p0, vec3_rotate_axis_angle(point3D_sub(p1, p0), ac, degtorad(angle + tl.value[e_value.IK_ANGLE_OFFSET])))
 		
 		// Update directions
 		ab = vec3_direction(p0, p1)
@@ -234,7 +234,7 @@ function do_ik(tl)
 		
 		// Apply angle offset to no-bend
 		if (haspole && nobend)
-			n = vec3_rotate_axis_angle(n, ac, degtorad(tl.ik_angle_offset))
+			n = vec3_rotate_axis_angle(n, ac, degtorad(tl.value[e_value.IK_ANGLE_OFFSET]))
 		
 		// Flip direction based on invert
 		if (tl.model_part.bend_invert[X])

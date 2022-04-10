@@ -175,11 +175,5 @@ function project_save_timeline()
 			json_save_object_done()
 		}
 		
-		if (value_type[e_value_type.TRANSFORM_BEND])
-		{
-			json_save_var_save_id("ik_target", ik_target)
-			json_save_var_save_id("ik_pole_target", ik_pole_target)
-		}
-		
 	json_save_object_done()
 }

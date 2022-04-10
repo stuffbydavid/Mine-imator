@@ -2690,14 +2690,6 @@
             "y": "Y",
             "z": "Z"
         },
-        "ik": "Inverse kinematics",
-        "ik/": {
-            "tip": "When enabled, the body part will rotate and bend towards a defined target.",
-            "target": "Target",
-            "poletarget": "Pole target",
-            "angleoffset": "Angle offset",
-            "info": "This limb will reach towards the \"Target\" timeline, and bend towards the \"Pole target\"."
-        },
         "hierarchy": "HIERARCHY",
         "parent": "Parent",
         "lockbendright": "Right half",
@@ -2799,6 +2791,11 @@
             "y": "Bend Y",
             "z": "Bend Z"
         },
+        "pathpoint/": {
+            "angle": "Angle",
+            "scale": "Scale"
+        },
+        "constraints": "CONSTRAINTS",
         "followpath": "Follow path",
         "path": "Path timeline",
         "path/": {
@@ -2806,9 +2803,13 @@
             "drift": "Drift",
             "drifttip": "Tilts the object when turning along the path."
         },
-        "pathpoint/": {
-            "angle": "Angle",
-            "scale": "Scale"
+        "ik": "Inverse kinematics",
+        "ik/": {
+            "tip": "Allows the limb to rotate and bend towards a position.",
+            "target": "Target",
+            "angletarget": "Angle target",
+            "angleoffset": "Angle offset",
+            "info": "This limb will reach towards the \"Target\" timeline, and rotate towards the \"Angle target\"."
         },
         "material": "MATERIAL",
         "opacity": "Opacity",

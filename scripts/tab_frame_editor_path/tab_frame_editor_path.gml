@@ -12,6 +12,8 @@ function tab_frame_editor_path()
 	
 	if (collapse_map[?"follow_path"])
 	{
+		var text;
+		
 		tab_collapse_start()
 		
 		if (tl_edit.value[e_value.PATH_OBJ] != null)
@@ -29,13 +31,13 @@ function tab_frame_editor_path()
 			context_menu_value_name = "pathoffset"
 			
 			tab_control_dragger()
-			draw_dragger("frameeditorpathoffset", dx, dy, dragger_width, tl_edit.value[e_value.PATH_OFFSET], .1, -no_limit, no_limit, 0, 0.01, tab.transform.tbx_path_offset, action_tl_frame_path_offset)
+			draw_dragger("frameeditorpathoffset", dx, dy, dragger_width, tl_edit.value[e_value.PATH_OFFSET], .1, -no_limit, no_limit, 0, 0.01, tab.constraints.tbx_path_offset, action_tl_frame_path_offset)
 			tab_next()
 			
 			context_menu_value_name = ""
 			
 			tab_control_dragger()
-			draw_dragger("frameeditorpathdrift", dx, dy, dragger_width, tl_edit.value[e_value.PATH_DRIFT], .1, -no_limit, no_limit, 0, 0.1, tab.transform.tbx_path_drift, action_tl_frame_path_drift, null, true, false, "frameeditorpathdrifttip")
+			draw_dragger("frameeditorpathdrift", dx, dy, dragger_width, tl_edit.value[e_value.PATH_DRIFT], .1, -no_limit, no_limit, 0, 0.1, tab.constraints.tbx_path_drift, action_tl_frame_path_drift, null, true, false, "frameeditorpathdrifttip")
 			tab_next()	
 		}
 		

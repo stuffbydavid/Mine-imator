@@ -104,16 +104,16 @@ function history_restore_tl(save)
 		{
 			with (save_id_find(save.usage_tl_ik_target_save_id[s]))
 			{
-				ik_target = tl
+				value[e_value.IK_TARGET] = tl
 				update_matrix = true
 			}
 		}
 		
-		for (var s = 0; s < save.usage_tl_ik_pole_target_amount; s++)
+		for (var s = 0; s < save.usage_tl_ik_target_angle_amount; s++)
 		{
-			with (save_id_find(save.usage_tl_ik_pole_target_save_id[s]))
+			with (save_id_find(save.usage_tl_ik_target_angle_save_id[s]))
 			{
-				ik_pole_target = tl
+				value[e_value.IK_TARGET_ANGLE] = tl
 				update_matrix = true
 			}
 		}
@@ -129,6 +129,14 @@ function history_restore_tl(save)
 		for (var s = 0; s < save.usage_kf_attractor_amount; s++)
 			with (save_id_find(save.usage_kf_attractor_tl_save_id[s]))
 				keyframe_list[|save.usage_kf_attractor_index[s]].value[e_value.ATTRACTOR] = tl
+		
+		for (var s = 0; s < save.usage_kf_ik_target_amount; s++)
+			with (save_id_find(save.usage_kf_ik_target_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_ik_target_index[s]].value[e_value.IK_TARGET] = tl
+		
+		for (var s = 0; s < save.usage_kf_ik_target_angle_amount; s++)
+			with (save_id_find(save.usage_kf_ik_target_angle_tl_save_id[s]))
+				keyframe_list[|save.usage_kf_ik_target_angle_index[s]].value[e_value.IK_TARGET_ANGLE] = tl
 	}
 	
 	return tl

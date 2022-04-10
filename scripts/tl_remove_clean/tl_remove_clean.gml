@@ -94,18 +94,18 @@ function tl_remove_clean()
 			
 			if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = other.id) 
 				update_matrix = true
-			
-			if (ik_target = other.id)
-				ik_target = null
-			
-			if (ik_pole_target = other.id)
-				ik_pole_target = null
 		}
 		
 		with (obj_keyframe)
 		{
 			if (value[e_value.PATH_OBJ] = other.id)
 				value[e_value.PATH_OBJ] = null
+			
+			if (value[e_value.IK_TARGET] = other.id)
+				value[e_value.IK_TARGET] = null
+			
+			if (value[e_value.IK_TARGET_ANGLE] = other.id)
+				value[e_value.IK_TARGET_ANGLE] = null
 			
 			if (value[e_value.ATTRACTOR] = other.id)
 				value[e_value.ATTRACTOR] = null

@@ -414,8 +414,6 @@ function app_startup_interface_tabs()
 			tbx_rot_point_x = new_textbox_ndecimals()
 			tbx_rot_point_y = new_textbox_ndecimals()
 			tbx_rot_point_z = new_textbox_ndecimals()
-			tbx_ik_angle_offset = new_textbox_ndecimals()
-			tbx_ik_angle_offset.suffix = "°"
 		}
 		
 		// Hierarchy
@@ -455,7 +453,6 @@ function app_startup_interface_tabs()
 			tbx_pos_z = new_textbox_ndecimals()
 			
 			// Rotation
-			loops = false
 			tbx_rot_x = new_textbox_ndecimals()
 			tbx_rot_x.suffix = "°"
 			tbx_rot_y = new_textbox_ndecimals()
@@ -477,14 +474,23 @@ function app_startup_interface_tabs()
 			tbx_bend[2] = new_textbox_ndecimals()
 			tbx_bend[2].suffix = "°"
 			
+			tbx_path_point_angle = new_textbox_ndecimals()
+			tbx_path_point_angle.suffix = "°"
+			tbx_path_point_scale = new_textbox_decimals()
+		}
+		
+		// Constraints
+		constraints = tab_add_category("frameeditorconstraints", icons.JOINT_SMALL, tab_frame_editor_constraints, false)
+		with (constraints)
+		{
 			// Path
 			tbx_path_offset = new_textbox_ndecimals()
 			tbx_path_drift = new_textbox_ndecimals()
 			tbx_path_drift.suffix = "°"
 			
-			tbx_path_point_angle = new_textbox_ndecimals()
-			tbx_path_point_angle.suffix = "°"
-			tbx_path_point_scale = new_textbox_decimals()
+			// IK
+			tbx_ik_angle_offset = new_textbox_ndecimals()
+			tbx_ik_angle_offset.suffix = "°"
 		}
 		
 		// Material

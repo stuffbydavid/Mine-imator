@@ -48,6 +48,8 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.CUSTOM_SEED:
 		case e_value.SEED:
 		case e_value.PATH_OBJ:
+		case e_value.IK_TARGET:
+		case e_value.IK_TARGET_ANGLE:
 		case e_value.ATTRACTOR:
 		case e_value.CAM_ROTATE:
 		case e_value.CAM_SHAKE:

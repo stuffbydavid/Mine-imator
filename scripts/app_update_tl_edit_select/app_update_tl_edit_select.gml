@@ -5,7 +5,9 @@ function app_update_tl_edit_select()
 	with (frame_editor)
 	{
 		transform.show = false
+		constraints.show = false
 		transform.enabled = false
+		constraints.enabled = false
 		material.enabled = false
 		particles.enabled = false
 		light.enabled = false
@@ -98,6 +100,9 @@ function app_update_tl_edit_select()
 		// Set enabled
 		if (value_type[e_value_type.TRANSFORM])
 			app.frame_editor.transform.enabled = true
+		
+		if (value_type[e_value_type.TRANSFORM_POS])
+			app.frame_editor.constraints.enabled = true
 		
 		if (value_type[e_value_type.MATERIAL])
 			app.frame_editor.material.enabled = true

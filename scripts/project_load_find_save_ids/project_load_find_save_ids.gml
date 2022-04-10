@@ -208,10 +208,6 @@ function project_load_find_save_ids()
 			parent.tree_array[array_length(parent.tree_array)] = id
 		else
 			parent.tree_array[parent_tree_index] = id
-		
-		// IK targets
-		ik_target = save_id_find(save_id_map[?ik_target])
-		ik_pole_target = save_id_find(save_id_map[?ik_pole_target])
 	}
 	
 	// Set keyframe references
@@ -222,6 +218,10 @@ function project_load_find_save_ids()
 		
 		value[e_value.PATH_OBJ] = save_id_find(save_id_map[?value[e_value.PATH_OBJ]])
 		value[e_value.ATTRACTOR] = save_id_find(save_id_map[?value[e_value.ATTRACTOR]])
+		
+		// IK targets
+		value[e_value.IK_TARGET] = save_id_find(save_id_map[?value[e_value.IK_TARGET]])
+		value[e_value.IK_TARGET_ANGLE] = save_id_find(save_id_map[?value[e_value.IK_TARGET_ANGLE]])
 		
 		if (value[e_value.TEXTURE_OBJ] = "none")
 			value[e_value.TEXTURE_OBJ] = 0
