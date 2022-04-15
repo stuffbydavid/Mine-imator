@@ -201,8 +201,10 @@ function tl_event_create()
 	path_select_vbuffer = null
 	
 	// Inverse kinematics
+	ik_target_prev = null
 	ik_target_pos = [0, 0, 0]
-	ik_pole_target_pos = [0, 0, 0]
+	ik_target_angle_prev = null
+	ik_target_angle_pos = [0, 0, 0]
 	ik_world_pos_prev = [0, 0, 0]
 	ik_angle_offset_prev = 0
 	

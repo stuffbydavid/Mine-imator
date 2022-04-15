@@ -2805,11 +2805,10 @@
         },
         "ik": "Inverse kinematics",
         "ik/": {
-            "tip": "Allows the limb to rotate and bend towards a position.",
+            "tip": "Allows the limb to rotate and bend towards another timeline or position.",
             "target": "Target",
             "angletarget": "Angle target",
-            "angleoffset": "Angle offset",
-            "info": "This limb will reach towards the \"Target\" timeline, and rotate towards the \"Angle target\"."
+            "angleoffset": "Angle offset"
         },
         "material": "MATERIAL",
         "opacity": "Opacity",

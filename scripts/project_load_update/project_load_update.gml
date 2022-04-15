@@ -16,6 +16,8 @@ function project_load_update()
 	else if (popup != null)
 		popup_close()
 	
+	tl_update_list()
+	
 	// Update sky
 	if (background_loaded)
 	{
@@ -118,7 +120,6 @@ function project_load_update()
 			ptype_update_sprite_vbuffers()
 	
 	tl_update_length()
-	tl_update_list()
 	
 	app.update_matrix = true
 	tl_update_matrix()

@@ -67,9 +67,15 @@ function do_ik(tl)
 	if (tl.value[e_value.IK_TARGET] != null && tl.ik_target_pos != null)
 		targetupdate = !array_equals(tl.ik_target_pos, tl.value[e_value.IK_TARGET].world_pos)
 	
+	targetupdate = (targetupdate || (tl.ik_target_prev != tl.value[e_value.IK_TARGET]))
+	tl.ik_target_prev = tl.value[e_value.IK_TARGET]
+	
 	if (tl.value[e_value.IK_TARGET_ANGLE] != null)
-		if (tl.ik_pole_target_pos != null)
-			poleupdate = !array_equals(tl.ik_pole_target_pos, tl.value[e_value.IK_TARGET_ANGLE].world_pos)
+		if (tl.ik_target_angle_pos != null)
+			poleupdate = !array_equals(tl.ik_target_angle_pos, tl.value[e_value.IK_TARGET_ANGLE].world_pos)
+	
+	poleupdate = (poleupdate || (tl.ik_target_angle_prev != tl.value[e_value.IK_TARGET_ANGLE]))
+	tl.ik_target_angle_prev = tl.value[e_value.IK_TARGET_ANGLE]
 	
 	if (tl.ik_world_pos_prev != null)
 		posupdate = !array_equals(tl.ik_world_pos_prev, tl.world_pos)
@@ -85,7 +91,7 @@ function do_ik(tl)
 	if (haspole)
 	{
 		polepos = tl.value[e_value.IK_TARGET_ANGLE].world_pos
-		tl.ik_pole_target_pos = polepos
+		tl.ik_target_angle_pos = polepos
 		
 		if (polepos[X] = tl.world_pos[X])
 			polepos[X] += 0.0001

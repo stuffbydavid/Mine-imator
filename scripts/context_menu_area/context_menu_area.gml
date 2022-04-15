@@ -21,6 +21,18 @@ function context_menu_area()
 	
 	if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
 	{
+		// Quick shortcut for value reset
+		if (keyboard_check(vk_shift) && argument_count > 5)
+		{
+			if (argument[6] = e_context_type.TIME || argument[6] = e_context_type.NUMBER)
+				script_execute(argument[7], argument[8], false)
+			
+			if (argument[6] = e_context_type.COLOR)
+				script_execute(argument[7], argument[8])
+			
+			return 0
+		}
+		
 		context_menu_close()
 		app_mouse_clear()
 		

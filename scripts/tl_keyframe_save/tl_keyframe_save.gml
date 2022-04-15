@@ -11,6 +11,14 @@ function tl_keyframe_save(kf)
 		with (kf.value[e_value.ATTRACTOR])
 			tl_save()
 	
+	if (kf.value[e_value.IK_TARGET] != null)
+		with (kf.value[e_value.IK_TARGET])
+			tl_save()
+	
+	if (kf.value[e_value.IK_TARGET_ANGLE] != null)
+		with (kf.value[e_value.IK_TARGET_ANGLE])
+			tl_save()
+	
 	if (kf.value[e_value.TEXTURE_OBJ] > 0)
 	{
 		kf.value[e_value.TEXTURE_OBJ].save = true

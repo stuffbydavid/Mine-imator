@@ -372,6 +372,8 @@ function model_file_load_part(map, root, res, model)
 				bend_inherit_angle = point3D_add(bend_default_angle, other.bend_inherit_angle)
 			else
 				bend_inherit_angle = bend_default_angle
+			
+			ik_supported = (bend_end_offset != 0 && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z])
 		}
 		else
 		{
@@ -388,6 +390,7 @@ function model_file_load_part(map, root, res, model)
 			bend_pos_offset = vec3(0)
 			bend_direction_min = vec3(-180)
 			bend_direction_max = vec3(180)
+			ik_supported = false
 		}
 		
 		matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))

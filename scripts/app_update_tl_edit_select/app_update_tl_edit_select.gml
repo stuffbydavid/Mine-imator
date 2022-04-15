@@ -5,7 +5,6 @@ function app_update_tl_edit_select()
 	with (frame_editor)
 	{
 		transform.show = false
-		constraints.show = false
 		transform.enabled = false
 		constraints.enabled = false
 		material.enabled = false

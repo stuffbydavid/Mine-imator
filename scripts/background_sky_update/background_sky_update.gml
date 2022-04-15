@@ -8,7 +8,7 @@ function background_sky_update()
 		if (!background_image_show)
 		{
 			background_fog_color_final = merge_color(background_fog_color_final, merge_color(background_fog_color_final, 0, 0.95), background_night_alpha)
-			background_fog_color_final = merge_color(background_fog_color_final, c_white, (1 - background_night_alpha) * 0.4)
+			background_fog_color_final = merge_color(background_fog_color_final, c_white, (1 - background_night_alpha) * 0.58)
 			background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_blue, c_black, 0.3), background_night_alpha * 0.05)
 			
 			if (background_twilight)

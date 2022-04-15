@@ -96,6 +96,10 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BEND_ANGLE_X)
 		tl_update_values_ease(e_value.BEND_ANGLE_Y)
 		tl_update_values_ease(e_value.BEND_ANGLE_Z)
+		
+		tl_update_values_ease(e_value.IK_TARGET)
+		tl_update_values_ease(e_value.IK_TARGET_ANGLE)
+		tl_update_values_ease(e_value.IK_ANGLE_OFFSET)
 	}
 	
 	// Path point

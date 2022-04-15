@@ -17,6 +17,7 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 		return 0
 	
 	mouseon = app_mouse_box(xx - rad, yy - rad, rad*2, rad*2) && content_mouseon
+	
 	context_menu_area(xx - (rad + 10), yy - (rad + 10), (rad + 10) * 2, (rad + 10) * 2, "contextmenuvalue", value, time ? e_context_type.TIME : e_context_type.NUMBER, script, def)
 	
 	// Use "Pressing" & "Disabled" states for animations with sun/moon
