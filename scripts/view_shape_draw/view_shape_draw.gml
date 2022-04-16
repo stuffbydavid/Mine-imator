@@ -5,7 +5,7 @@
 
 function view_shape_draw()
 {
-	var points, points2D, pointserror;
+	var points;
 	points = argument[0]
 	
 	if (argument_count > 1)
@@ -17,46 +17,16 @@ function view_shape_draw()
 			points[p] = point3D_mul_matrix(points[p], mat)
 	}
 	
-	// Convert to screen space
-	for (var p = 0; p < 8; p++)
-	{
-		points2D[p] = view_shape_project(points[p])
-		pointserror[p] = point3D_project_error
-	}
-	
-	if (!pointserror[0] && !pointserror[1])
-		view_shape_line_draw(points2D[0], points2D[1])
-	
-	if (!pointserror[0] && !pointserror[2])
-		view_shape_line_draw(points2D[0], points2D[2])
-	
-	if (!pointserror[0] && !pointserror[4])
-		view_shape_line_draw(points2D[0], points2D[4])
-	
-	if (!pointserror[1] && !pointserror[3])
-		view_shape_line_draw(points2D[1], points2D[3])
-	
-	if (!pointserror[1] && !pointserror[5])
-		view_shape_line_draw(points2D[1], points2D[5])
-	
-	if (!pointserror[2] && !pointserror[3])
-		view_shape_line_draw(points2D[2], points2D[3])
-	
-	if (!pointserror[2] && !pointserror[6])
-		view_shape_line_draw(points2D[2], points2D[6])
-	
-	if (!pointserror[3] && !pointserror[7])
-		view_shape_line_draw(points2D[3], points2D[7])
-	
-	if (!pointserror[4] && !pointserror[5])
-		view_shape_line_draw(points2D[4], points2D[5])
-	
-	if (!pointserror[4] && !pointserror[6])
-		view_shape_line_draw(points2D[4], points2D[6])
-	
-	if (!pointserror[5] && !pointserror[7])
-		view_shape_line_draw(points2D[5], points2D[7])
-	
-	if (!pointserror[6] && !pointserror[7])
-		view_shape_line_draw(points2D[6], points2D[7])
+	view_shape_line(points[0], points[1])
+	view_shape_line(points[0], points[2])
+	view_shape_line(points[0], points[4])
+	view_shape_line(points[1], points[3])
+	view_shape_line(points[1], points[5])
+	view_shape_line(points[2], points[3])
+	view_shape_line(points[2], points[6])
+	view_shape_line(points[3], points[7])
+	view_shape_line(points[4], points[5])
+	view_shape_line(points[4], points[6])
+	view_shape_line(points[5], points[7])
+	view_shape_line(points[6], points[7])
 }

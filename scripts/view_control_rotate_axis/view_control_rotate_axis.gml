@@ -38,7 +38,11 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 	if (window_busy = "rendercontrol")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
+		{
+			draw_set_color(c_white)
+			draw_set_alpha(1)
 			return 0
+		}
 		
 		// Invert input?
 		view_control_flip = (vec3_dot(facevec, camvec) < 0)
@@ -98,6 +102,8 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 	if (point3D_project_error)
 	{
 		draw_set_color(c_white)
+		draw_set_alpha(1)
+		
 		return 0
 	}
 	
@@ -114,6 +120,9 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 		{
 			start3D = end3D
 			start2D = end2D
+			
+			draw_set_color(c_white)
+			draw_set_alpha(1)
 			return 0
 		}
 		

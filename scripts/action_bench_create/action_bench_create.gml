@@ -29,7 +29,10 @@ function action_bench_create(edit = false)
 			history_restore_bench(history_data.bench_save_obj)
 			
 			if (history_data.open_editor)
+			{
+				tab_template_editor_update_ptype_list()
 				tab_show(template_editor)
+			}
 		}
 		else
 		{
@@ -262,6 +265,9 @@ function action_bench_create(edit = false)
 			log("Created", tl_type_name_list[|bench_settings.type])
 		}
 	}
+	
+	if (!history_redo && edit)
+		tab_template_editor_update_ptype_list()
 	
 	tl_update_list()
 	tl_update_matrix()

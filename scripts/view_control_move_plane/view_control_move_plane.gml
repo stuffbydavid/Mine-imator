@@ -71,7 +71,11 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 	if (window_busy = "rendercontrol")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
+		{
+			draw_set_color(c_white)
+			draw_set_alpha(1)
 			return 0
+		}
 		
 		view_control_plane_update()
 		

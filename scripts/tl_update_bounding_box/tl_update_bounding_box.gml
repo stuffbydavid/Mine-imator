@@ -41,8 +41,8 @@ function tl_update_bounding_box()
 	if (type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.BLOCK)
 		bounding_box.copy(temp.model.bounding_box)
 	
-	// Scenery objects(?)
-	if (temp = null)
+	// No template (Scenery objects/paths?)
+	if (temp = null && type != e_tl_type.PATH)
 		return 0
 	
 	// Not visible

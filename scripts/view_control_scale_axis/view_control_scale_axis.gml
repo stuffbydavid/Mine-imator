@@ -51,7 +51,11 @@ function view_control_scale_axis(view, control, vid, color, start, length, mat, 
 	if (window_busy = "rendercontrol")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
+		{
+			draw_set_color(c_white)
+			draw_set_alpha(1)
 			return 0
+		}
 		
 		// Update dragging
 		view_control_vec = point2D_sub(end2D, center2D)

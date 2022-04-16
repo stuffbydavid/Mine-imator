@@ -56,12 +56,12 @@ function render_world_block()
 	if (res[0].block_sheet_ani_texture != null)
 		texani = res[0].block_sheet_ani_texture[block_texture_get_frame()]
 	else
-		texani = mc_res[0].block_sheet_ani_texture[block_texture_get_frame()]
+		texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
 	
 	if (res[1].block_sheet_ani_texture_material != null)
 		texanimat = res[1].block_sheet_ani_texture_material[block_texture_get_frame()]
 	else
-		texanimat = mc_res[0].block_sheet_ani_texture_material[block_texture_get_frame()]
+		texanimat = mc_res.block_sheet_ani_texture_material[block_texture_get_frame()]
 	
 	// Set material values
 	if (res[1] != mc_res)
@@ -88,7 +88,7 @@ function render_world_block()
 	if (res[2].block_sheet_ani_tex_normal != null)
 		texaninormal = res[2].block_sheet_ani_tex_normal[block_texture_get_frame()]
 	else
-		texaninormal = mc_res[0].block_sheet_ani_tex_normal[block_texture_get_frame()]
+		texaninormal = mc_res.block_sheet_ani_tex_normal[block_texture_get_frame()]
 	
 	var blend = shader_blend_color;
 	render_set_texture(tex)

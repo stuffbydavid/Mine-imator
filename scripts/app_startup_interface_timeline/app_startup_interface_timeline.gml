@@ -77,4 +77,7 @@ function app_startup_interface_timeline()
 	timeline_rename = null
 	
 	timeline_hide_color_tag = array_create(9, false)
+	
+	timeline_select_box_min = [no_limit, no_limit, no_limit]
+	timeline_select_box_max = [-no_limit, -no_limit, -no_limit]
 }

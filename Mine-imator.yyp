@@ -623,6 +623,7 @@
     {"id":{"name":"action_tl_color_tag","path":"scripts/action_tl_color_tag/action_tl_color_tag.yy",},"order":35,},
     {"id":{"name":"action_tl_color_tag_remove","path":"scripts/action_tl_color_tag_remove/action_tl_color_tag_remove.yy",},"order":37,},
     {"id":{"name":"action_tl_intervals_show","path":"scripts/action_tl_intervals_show/action_tl_intervals_show.yy",},"order":1,},
+    {"id":{"name":"vec3_project_ray","path":"scripts/vec3_project_ray/vec3_project_ray.yy",},"order":31,},
     {"id":{"name":"action_tl_interval_size","path":"scripts/action_tl_interval_size/action_tl_interval_size.yy",},"order":3,},
     {"id":{"name":"action_tl_interval_offset","path":"scripts/action_tl_interval_offset/action_tl_interval_offset.yy",},"order":5,},
     {"id":{"name":"action_tl_marker_new","path":"scripts/action_tl_marker_new/action_tl_marker_new.yy",},"order":1,},

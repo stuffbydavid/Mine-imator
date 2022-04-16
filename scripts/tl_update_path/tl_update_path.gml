@@ -46,6 +46,9 @@ function tl_update_path()
 		with (app)
 			tl_update_matrix()
 		
+		bounding_box.reset()
+		tl_update_bounding_box()
+		
 		return 0
 	}
 	
@@ -111,6 +114,9 @@ function tl_update_path()
 		path_vbuffer = vbuffer_create_path(id)
 	else
 		path_select_vbuffer = vbuffer_create_path(id, true)
+	
+	bounding_box.copy_vbuffer()
+	tl_update_bounding_box()
 	
 	with (app)
 		tl_update_matrix()

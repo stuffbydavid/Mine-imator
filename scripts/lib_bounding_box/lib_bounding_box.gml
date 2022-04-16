@@ -8,34 +8,17 @@ function bbox() constructor {
 	changed = false
 	start_pos = [no_limit, no_limit, no_limit]
 	end_pos = [-no_limit, -no_limit, -no_limit]
+	points = array_create(8, vec3(0)) // Non axis-aligned points
 	size = no_limit*2
 	center = [0, 0, 0]
 	
 	static updatePoints = function()
 	{
-		/*
-		boxp[0] = point3D(start_pos[X], start_pos[Y], start_pos[Z])
-		boxp[1] = point3D(start_pos[X], end_pos[Y],   start_pos[Z])
-		boxp[2] = point3D(end_pos[X],   end_pos[Y],   start_pos[Z])
-		boxp[3] = point3D(end_pos[X],   start_pos[Y], start_pos[Z])
-		
-		boxp[4] = point3D(start_pos[X], start_pos[Y], end_pos[Z])
-		boxp[5] = point3D(start_pos[X], end_pos[Y],   end_pos[Z])
-		boxp[6] = point3D(end_pos[X],   end_pos[Y],   end_pos[Z])
-		boxp[7] = point3D(end_pos[X],   start_pos[Y], end_pos[Z])
-		*/
-		
 		// Convert points to cube
 		center[X] = start_pos[X] + ((end_pos[X] - start_pos[X]) * .5)
 		center[Y] = start_pos[Y] + ((end_pos[Y] - start_pos[Y]) * .5)
 		center[Z] = start_pos[Z] + ((end_pos[Z] - start_pos[Z]) * .5)
 		size = point_distance_3d(start_pos[X], start_pos[Y], start_pos[Z], center[X], center[Y], center[Z])
-		
-		//center = point3D_add(start_pos, point3D_mul(point3D_sub(end_pos, start_pos), .5))
-		//size = point3D_distance(start_pos, center)
-		
-		//start_pos = point3D_sub(center, vec3(size * .5))
-		//end_pos = point3D_add(center, vec3(size * .5))
 	}
 	
 	static reset = function()
@@ -43,6 +26,7 @@ function bbox() constructor {
 		changed = false
 		start_pos = point3D(no_limit, no_limit, no_limit)
 		end_pos = point3D(-no_limit, -no_limit, -no_limit)
+		points = array_create(8, vec3(0))
 		
 		self.updatePoints()
 	}
@@ -50,8 +34,8 @@ function bbox() constructor {
 	static mul_matrix = function(mat)
 	{
 		var p, np, i, corner, xx, yy, zz;
-		p = array_create(8, array_create(3))
-		np = array_create(8, array_create(3))
+		p = array_create(8, [0, 0, 0])
+		np = array_create(8, [0, 0, 0])
 		p[0] = [start_pos[X], start_pos[Y], start_pos[Z]]
 		p[1] = [start_pos[X], end_pos[Y],   start_pos[Z]]
 		p[2] = [end_pos[X],   end_pos[Y],   start_pos[Z]]
@@ -80,10 +64,20 @@ function bbox() constructor {
 		start_pos = point3D(no_limit, no_limit, no_limit)
 		end_pos = point3D(-no_limit, -no_limit, -no_limit)
 		
+		points[0] = np[0]
+		points[1] = np[4]
+		points[2] = np[1]
+		points[3] = np[5]
+		points[4] = np[3]
+		points[5] = np[7]
+		points[6] = np[2]
+		points[7] = np[6]
+		
 		i = 0
 		repeat (8)
 		{
-			corner = np[i]
+			corner = points[i]
+			
 			start_pos[X] = start_pos[X] < corner[X] ? start_pos[X] : corner[X]
 			start_pos[Y] = start_pos[Y] < corner[Y] ? start_pos[Y] : corner[Y]
 			start_pos[Z] = start_pos[Z] < corner[Z] ? start_pos[Z] : corner[Z]
@@ -107,16 +101,18 @@ function bbox() constructor {
 		start_pos[Y] = (start_pos[Y] < box.start_pos[Y] ? start_pos[Y] : box.start_pos[Y])//min(start_pos[Y], box.start_pos[Y], box.end_pos[Y])
 		start_pos[Z] = (start_pos[Z] < box.start_pos[Z] ? start_pos[Z] : box.start_pos[Z])//min(start_pos[Z], box.start_pos[Z], box.end_pos[Z])
 		
-		
 		end_pos[X] = (end_pos[X] > box.end_pos[X] ? end_pos[X] : box.end_pos[X])
 		end_pos[Y] = (end_pos[Y] > box.end_pos[Y] ? end_pos[Y] : box.end_pos[Y])
 		end_pos[Z] = (end_pos[Z] > box.end_pos[Z] ? end_pos[Z] : box.end_pos[Z])
 		
-		/*
-		end_pos[X] = max(end_pos[X], box.start_pos[X], box.end_pos[X])
-		end_pos[Y] = max(end_pos[Y], box.start_pos[Y], box.end_pos[Y])
-		end_pos[Z] = max(end_pos[Z], box.start_pos[Z], box.end_pos[Z])
-		*/
+		points[0] = [start_pos[X], start_pos[Y], start_pos[Z]]
+		points[1] = [start_pos[X], start_pos[Y],   end_pos[Z]]
+		points[2] = [start_pos[X],   end_pos[Y],   start_pos[Z]]
+		points[3] = [start_pos[X],   end_pos[Y],   end_pos[Z]]
+		points[4] = [end_pos[X], start_pos[Y], start_pos[Z]]
+		points[5] = [end_pos[X], start_pos[Y],   end_pos[Z]]
+		points[6] = [end_pos[X],   end_pos[Y],   start_pos[Z]]
+		points[7] = [end_pos[X],   end_pos[Y], end_pos[Z]]
 		
 		changed = true
 		self.updatePoints()
@@ -148,8 +144,9 @@ function bbox() constructor {
 	{
 		start_pos = array_copy_1d(box.start_pos)
 		end_pos = array_copy_1d(box.end_pos)
-		
+		points = array_copy_1d(box.points)
 		changed = box.changed
+		
 		self.updatePoints()
 	}
 	
