@@ -1025,6 +1025,7 @@
     {"id":{"name":"view_control_move","path":"scripts/view_control_move/view_control_move.yy",},"order":5,},
     {"id":{"name":"view_control_move_axis","path":"scripts/view_control_move_axis/view_control_move_axis.yy",},"order":7,},
     {"id":{"name":"view_control_rotate","path":"scripts/view_control_rotate/view_control_rotate.yy",},"order":9,},
+    {"id":{"name":"action_setting_gizmos_face_camera","path":"scripts/action_setting_gizmos_face_camera/action_setting_gizmos_face_camera.yy",},"order":25,},
     {"id":{"name":"view_control_rotate_axis","path":"scripts/view_control_rotate_axis/view_control_rotate_axis.yy",},"order":11,},
     {"id":{"name":"view_control_move_plane","path":"scripts/view_control_move_plane/view_control_move_plane.yy",},"order":13,},
     {"id":{"name":"view_control_plane_start","path":"scripts/view_control_plane_start/view_control_plane_start.yy",},"order":15,},
@@ -2140,7 +2141,7 @@
     {"name":"Main","path":"options/main/options_main.yy",},
     {"name":"operagx","path":"options/operagx/options_operagx.yy",},
   ],
-  "isDnDProject": false,
+  "defaultScriptType": 1,
   "isEcma": false,
   "configs": {
     "name": "Default",
@@ -2461,8 +2462,8 @@
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
   ],
   "TextureGroups": [
-    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
-    {"isScaled":false,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":9223372036854775807,"resourceVersion":"1.3","name":"Cropped","resourceType":"GMTextureGroup",},
+    {"isScaled":true,"compressFormat":"bz2","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
+    {"isScaled":false,"compressFormat":"bz2","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":9223372036854775807,"resourceVersion":"1.3","name":"Cropped","resourceType":"GMTextureGroup",},
   ],
   "IncludedFiles": [
     {"CopyToMask":-1,"filePath":"datafiles/Data/Fonts","resourceVersion":"1.0","name":"noto_regular.ttf","resourceType":"GMIncludedFile",},
@@ -2502,7 +2503,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.18.zip","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.2.0.614",
+    "IDEVersion": "2022.3.0.625",
   },
   "resourceVersion": "1.5",
   "name": "Mine-imator",

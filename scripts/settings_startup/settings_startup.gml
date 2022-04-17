@@ -51,6 +51,7 @@ function settings_startup()
 	setting_search_variants = true
 	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true
+	setting_gizmos_face_camera = true
 	
 	setting_toolbar_location = "top"
 	setting_toolbar_size = 28

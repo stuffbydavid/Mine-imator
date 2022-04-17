@@ -150,6 +150,7 @@ function view_control_move(view)
 			view_control_edit = null
 			view_control_value = 0
 			view_control_flip = false
+			view_control_move_distance = 0
 		}
 	}
 }
@@ -175,7 +176,7 @@ function control_pos(s, e, axis, mat, retstart)
 		endpos3d[axis] = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
 		endpos3d = point3D_mul_matrix(endpos3d, mat)
 		
-		if (control_test_point(endpos3d, tl_edit.world_pos, 0))
+		if (control_test_point(endpos3d, tl_edit.world_pos, 0) && setting_gizmos_face_camera)
 		{
 			startpos = vec3_mul(startpos, -1)
 			endpos = vec3_mul(endpos, -1)

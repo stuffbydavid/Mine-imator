@@ -3107,6 +3107,7 @@
         "searchvariants": "Search variants in block search",
         "separatetoolmodes": "Separate tool modes",
         "separatetoolmodestip": "Switch between separate viewport tools, instead of toggling tools together.",
+        "gizmosfacecamera": "Gizmos always face camera",
         "controls": "CONTROLS",
         "controls/": {
             "keybinds": "Keybinds",

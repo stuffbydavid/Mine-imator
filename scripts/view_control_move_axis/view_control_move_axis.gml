@@ -110,7 +110,7 @@ function view_control_move_axis()
 	rotation = point3D_angle(start3D, end3D)
 	
 	// Arrow
-	var size = (point3D_distance(cam_from, control = e_view_control.ROT_DISTANCE ? tl_edit.world_pos_rotate : center3D) * view_3d_control_size) * .04 * view_control_ratio;
+	var size = (point3D_distance(cam_from, control = e_view_control.ROT_DISTANCE ? tl_edit.world_pos_rotate : center3D) * view_3d_control_size) * .05 * view_control_ratio;
 	view_shape_cone_draw(MAT_IDENTITY, end3D, rotation, size)
 	
 	// Check mouse

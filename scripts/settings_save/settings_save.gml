@@ -92,6 +92,7 @@ function settings_save()
 		json_save_var_bool("search_variants", setting_search_variants)
 		json_save_var_bool("separate_tool_modes", setting_separate_tool_modes)
 		json_save_var_bool("show_shortcuts_bar", setting_show_shortcuts_bar)
+		json_save_var_bool("gizmos_face_camera", setting_gizmos_face_camera)
 		
 		json_save_var("toolbar_location", toolbar_location)
 		json_save_var("toolbar_size", toolbar_size)

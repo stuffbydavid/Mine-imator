@@ -78,4 +78,9 @@ function tab_settings_interface()
 	tab_control_switch()
 	draw_switch("settingsseparatetoolmodes", dx, dy, setting_separate_tool_modes, action_setting_separate_tool_modes, "settingsseparatetoolmodestip")
 	tab_next()
+	
+	// Gizmos face camera
+	tab_control_switch()
+	draw_switch("settingsgizmosfacecamera", dx, dy, setting_gizmos_face_camera, action_setting_gizmos_face_camera)
+	tab_next()
 }
