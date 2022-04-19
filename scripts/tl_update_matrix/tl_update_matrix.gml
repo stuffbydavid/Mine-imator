@@ -4,7 +4,7 @@
 
 function tl_update_matrix(updateik = true)
 {
-	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, lasttex;
+	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, removerot, hasik, lasttex;
 	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
 	tlamount = ds_list_size(app.project_timeline_list)
 	
@@ -110,9 +110,20 @@ function tl_update_matrix(updateik = true)
 			matrix_local = matrix_create(pos, rot, sca)
 			matrix = matrix_multiply(matrix_local, matrix_parent)
 			
-			// Update matrix with IK orientation
-			if (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
-				matrix = matrix_multiply(part_joints_matrix[0], matrix)
+			hasik = (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
+			removerot = (!inherit_rotation || hasik)
+			
+			// Remove old rotation and re-add own
+			if (removerot)
+			{
+				matrix_remove_rotation(matrix)
+				
+				// Add IK orientation
+				if (hasik)
+					matrix = matrix_multiply(part_joints_matrix[0], matrix)
+				
+				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
+			}
 			
 			// No scale or "resize" mode
 			if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
@@ -130,8 +141,20 @@ function tl_update_matrix(updateik = true)
 				}
 				
 				// Remove scale
+				var parmat;
+				
 				matrix_remove_scale(matrix_parent)
-				matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), matrix_parent);
+				parmat = array_copy_1d(matrix_parent)
+				
+				// Remove rotation
+				if (removerot)
+					matrix_remove_rotation(parmat)
+				
+				matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), parmat);
+				
+				if (hasik)
+					matrixnoscale = matrix_multiply(part_joints_matrix[0], matrixnoscale)
+				
 				for (var p = 0; p < 11; p++)
 					matrix[p] = matrixnoscale[p]
 				
@@ -140,17 +163,6 @@ function tl_update_matrix(updateik = true)
 					matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), sca), matrix)
 				else
 					matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
-			}
-			
-			// Remove old rotation and re-add own
-			if (!inherit_rotation || (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null))
-			{
-				matrix_remove_rotation(matrix)
-				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
-				
-				// Add IK orientation
-				if (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
-					matrix = matrix_multiply(part_joints_matrix[0], matrix)
 			}
 			
 			// Replace position
@@ -345,7 +357,7 @@ function tl_update_matrix(updateik = true)
 						  part_mixing_shapes)
 			
 			// Add bend angle from IK
-			if (array_length(part_joints_pos) > 0 && value[e_value.IK_TARGET] != null)
+			if (hasik)
 				value_inherit[e_value.BEND_ANGLE_X] += part_joint_bend_angle
 			
 			if ((value_inherit[e_value.ALPHA] * 1000) != 0)

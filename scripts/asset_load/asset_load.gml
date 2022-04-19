@@ -32,7 +32,7 @@ function asset_load()
 	if (fn = "" || !file_exists_lib(fn))
 		return false
 	
-	var ext = filename_ext(fn);
+	var ext = string_lower(filename_ext(fn));
 	if (ext = ".zip")
 	{
 		// Unzip and look for valid files
