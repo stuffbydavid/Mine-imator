@@ -4,7 +4,7 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						false
+	#macro dev_mode						true
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
@@ -106,7 +106,7 @@ function macros()
 	#macro block_sheet_ani_height		2
 	#macro block_sheet_ani_frames		64
 	#macro item_sheet_width				32
-	#macro item_sheet_height			16
+	#macro item_sheet_height			32
 	
 	// Colors
 	#macro c_controls					make_color_rgb(40, 40, 40)

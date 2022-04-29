@@ -100,7 +100,7 @@ function temp_event_destroy()
 	
 	with (obj_particle_type)
 		if (temp = other.id)
-			temp = null
+			instance_destroy()//temp = null
 	
 	temp_edit = sortlist_remove(app.lib_list, id)
 }

@@ -1,10 +1,12 @@
-/// history_restore_tl(save)
+/// history_restore_tl(save, [tl])
 /// @arg save
+/// @arg [tl]
 /// @desc Restores a saved timeline from memory.
 
-function history_restore_tl(save)
+function history_restore_tl(save, tl = null)
 {
-	var tl = new_obj(obj_timeline);
+	if (tl = null)
+		tl = new_obj(obj_timeline)
 	
 	with (save)
 		tl_copy(tl)

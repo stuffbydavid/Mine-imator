@@ -17,4 +17,7 @@ function history_restore_parts()
 	
 	// Restore selection
 	history_restore_tl_select()
+	
+	// Restore part usage in timelines
+	history_restore_part_usage_tl(history_data)
 }

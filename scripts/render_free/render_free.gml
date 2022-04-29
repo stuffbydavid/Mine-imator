@@ -8,6 +8,7 @@ function render_free()
 	surface_free(render_surface[3])
 	surface_free(render_surface[4])
 	surface_free(render_surface[5])
+	surface_free(render_surface[6])
 	
 	surface_free(render_surface_lens)
 	

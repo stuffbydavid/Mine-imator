@@ -13,6 +13,9 @@ function tl_update_matrix(updateik = true)
 	else
 		start = 0
 	
+	if (start = -1)
+		return 0
+	
 	for (var i = start; i < tlamount; i++)
 	{
 		curtl = app.project_timeline_list[|i]

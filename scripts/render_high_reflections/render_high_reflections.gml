@@ -34,12 +34,14 @@ function render_high_reflections(export, surf)
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
 	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
+	render_surface[6] = surface_require(render_surface[6], render_width, render_height)
 	render_surface_ssr = surface_require(render_surface_ssr, render_width, render_height)
 	rtsurf = render_surface[0]
 	depthsurf = render_surface[1]
 	normalsurf = render_surface[2]
 	normalsurf2 = render_surface[4]
 	materialsurf = render_surface[5]
+	samplesurf = render_surface[6]
 	
 	// Material data
 	surface_set_target(materialsurf)
@@ -92,8 +94,7 @@ function render_high_reflections(export, surf)
 		}
 		surface_reset_target()
 		
-		// Resolve RT data to colorrender_pass_list
-		samplesurf = depthsurf
+		// Resolve RT data to color
 		surface_set_target(samplesurf)
 		{
 			gpu_set_texrepeat(false)

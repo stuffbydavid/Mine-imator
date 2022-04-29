@@ -28,5 +28,6 @@ function action_toolbar_undo()
 	
 	history_pos++
 	
+	history_resource_update = true
 	render_samples = -1
 }

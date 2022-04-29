@@ -104,6 +104,7 @@ function render_startup()
 	render_surface[3] = null
 	render_surface[4] = null
 	render_surface[5] = null
+	render_surface[6] = null
 	
 	render_world_count = 0
 	

@@ -269,6 +269,15 @@ function action_bench_create(edit = false)
 	if (!history_redo && edit)
 		tab_template_editor_update_ptype_list()
 	
+	if (bench_settings.type = e_temp_type.PARTICLE_SPAWNER)
+	{
+		bench_update_particles_list()
+		
+		particle_spawner_clear()
+		preview_reset_view()
+		update = true
+	}
+	
 	tl_update_list()
 	tl_update_matrix()
 	lib_preview.update = true

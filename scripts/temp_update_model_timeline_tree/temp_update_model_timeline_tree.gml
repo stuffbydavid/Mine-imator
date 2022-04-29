@@ -16,7 +16,7 @@ function temp_update_model_timeline_tree()
 			continue
 		
 		// Save indices of children
-		if (hobj != null)
+		if (hobj != null && !app.history_undo)
 		{
 			for (var p = 0; p < ds_list_size(part_list); p++)
 			{
@@ -40,6 +40,17 @@ function temp_update_model_timeline_tree()
 					}
 				}
 			}
+		}
+		
+		if (hobj != null && !app.history_undo)
+		{
+			hobj.usage_tl_attractor_amount = 0
+			hobj.usage_tl_ik_target_amount = 0
+			hobj.usage_tl_ik_target_angle_amount = 0
+			
+			hobj.usage_kf_ik_target_amount = 0
+			hobj.usage_kf_ik_target_angle_amount = 0
+			hobj.usage_kf_attractor_amount = 0
 		}
 		
 		// Remove empty timelines and set others to root
@@ -80,9 +91,17 @@ function temp_update_model_timeline_tree()
 							}
 						}
 						
-						p--
-						instance_destroy()
-						continue
+						// Save references
+						if (!app.history_redo)
+							if (history_save_part_usage_tl(id, hobj))
+								unused = false
+						
+						if (unused)
+						{
+							p--
+							instance_destroy()
+							continue
+						}
 					}
 				}
 				

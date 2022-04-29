@@ -11,6 +11,7 @@ function action_lib_model_name(name)
 	{
 		name = history_data.old_name
 		state = history_data.old_state
+		hobj = history_data
 	}
 	else
 	{
@@ -81,6 +82,9 @@ function action_lib_model_name(name)
 			
 			// Restore selection
 			history_restore_tl_select()
+			
+			// Restore part usage in timelines
+			history_restore_part_usage_tl(history_data)
 		}
 	}
 	else if (history_redo)
