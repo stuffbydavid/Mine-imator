@@ -956,6 +956,7 @@
     {"id":{"name":"scrollbar_event_create","path":"scripts/scrollbar_event_create/scrollbar_event_create.yy",},"order":1,},
     {"id":{"name":"scrollbar_draw","path":"scripts/scrollbar_draw/scrollbar_draw.yy",},"order":3,},
     {"id":{"name":"sortlist_add","path":"scripts/sortlist_add/sortlist_add.yy",},"order":1,},
+    {"id":{"name":"matrix_create_lookat","path":"scripts/matrix_create_lookat/matrix_create_lookat.yy",},"order":22,},
     {"id":{"name":"sortlist_clear","path":"scripts/sortlist_clear/sortlist_clear.yy",},"order":3,},
     {"id":{"name":"shader_high_raytrace_indirect_set","path":"scripts/shader_high_raytrace_indirect_set/shader_high_raytrace_indirect_set.yy",},"order":50,},
     {"id":{"name":"sortlist_column_add","path":"scripts/sortlist_column_add/sortlist_column_add.yy",},"order":5,},

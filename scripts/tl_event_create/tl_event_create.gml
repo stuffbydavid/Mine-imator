@@ -205,7 +205,7 @@ function tl_event_create()
 	ik_target_pos = [0, 0, 0]
 	ik_target_angle_prev = null
 	ik_target_angle_pos = [0, 0, 0]
-	ik_world_pos_prev = [0, 0, 0]
+	ik_matrix_prev = MAT_IDENTITY
 	ik_angle_offset_prev = 0
 	
 	part_matrix_update_ik = false

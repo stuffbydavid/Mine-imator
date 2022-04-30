@@ -59,10 +59,10 @@ function do_ik(tl)
 	endpos = [0, 0, 0]
 	
 	// Do we need to update?
-	var targetupdate, poleupdate, posupdate;
+	var targetupdate, poleupdate, matupdate;
 	targetupdate = false
 	poleupdate = false
-	posupdate = false
+	matupdate = false
 	
 	if (tl.value[e_value.IK_TARGET] != null && tl.ik_target_pos != null)
 		targetupdate = !array_equals(tl.ik_target_pos, tl.value[e_value.IK_TARGET].world_pos)
@@ -77,13 +77,14 @@ function do_ik(tl)
 	poleupdate = (poleupdate || (tl.ik_target_angle_prev != tl.value[e_value.IK_TARGET_ANGLE]))
 	tl.ik_target_angle_prev = tl.value[e_value.IK_TARGET_ANGLE]
 	
-	if (tl.ik_world_pos_prev != null)
-		posupdate = !array_equals(tl.ik_world_pos_prev, tl.world_pos)
+	if (tl.ik_matrix_prev != null)
+		matupdate = !array_equals(tl.ik_matrix_prev, tl.matrix)
 	
-	if (!targetupdate && !poleupdate && !posupdate && (tl.value[e_value.IK_ANGLE_OFFSET] = tl.ik_angle_offset_prev))
+	if (!targetupdate && !poleupdate && !matupdate && (tl.value[e_value.IK_ANGLE_OFFSET] = tl.ik_angle_offset_prev))
 		return 0
 	
 	tl.ik_angle_offset_prev = tl.value[e_value.IK_ANGLE_OFFSET]
+	tl.ik_matrix_prev = tl.matrix
 	
 	// Offset pole target to ensure correct angle math
 	haspole = (tl.value[e_value.IK_TARGET_ANGLE] != null)
@@ -100,6 +101,17 @@ function do_ik(tl)
 			polepos[Y] += 0.0001
 		
 		if (polepos[Z] = tl.world_pos[Z])
+			polepos[Z] += 0.0001
+		
+		endpos = tl.value[e_value.IK_TARGET].world_pos
+		
+		if (polepos[X] = endpos[X])
+			polepos[X] += 0.0001
+		
+		if (polepos[Y] = endpos[Y])
+			polepos[Y] += 0.0001
+		
+		if (polepos[Z] = endpos[Z])
 			polepos[Z] += 0.0001
 	}
 	

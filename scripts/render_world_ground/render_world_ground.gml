@@ -8,6 +8,7 @@ function render_world_ground()
 	
 	// Blend
 	var blend = block_texture_get_blend(background_ground_name, background_ground_tex);
+	var iswater = (background_ground_name = "block/water_flow" || background_ground_name = "block/water_still");
 	
 	// Shading
 	render_set_uniform_int("uIsGround", 1)
@@ -15,11 +16,12 @@ function render_world_ground()
 	render_set_uniform_color("uGlowColor", c_black, 1)
 	render_set_uniform_int("uGlowTexture", 0)
 	render_set_uniform_int("uFogShow", app.background_fog_show)
+	render_set_uniform_int("uIsWater", iswater)
 	
 	if (background_ground_tex_material = mc_res)
 	{
 		render_set_uniform("uMetallic", 0)
-		render_set_uniform("uRoughness", 1)
+		render_set_uniform("uRoughness", iswater ? .2 : 1)
 		render_set_uniform("uBrightness", 0)
 	}
 	else
@@ -56,5 +58,12 @@ function render_world_ground()
 	
 	// Reset
 	render_set_uniform_int("uIsGround", 0)
+	
+	if (iswater)
+	{
+		render_set_uniform("uRoughness", 1)
+		render_set_uniform_int("uIsWater", 0)
+	}
+	
 	shader_texture_filter_mipmap = false
 }

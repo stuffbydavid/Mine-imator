@@ -4,9 +4,7 @@
 function render_update_cascades(dir)
 {
 	// Get frustum for shadow cascades
-	var mV = matrix_build_lookat(cam_from[X], cam_from[Y], cam_from[Z], 
-								   cam_to[X],   cam_to[Y],   cam_to[Z],
-								   cam_up[X],   cam_up[Y],   cam_up[Z]);
+	var mV = matrix_create_lookat(cam_from, cam_to, cam_up);
 	var mP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev);
 	
 	cam_frustum.build(matrix_multiply(mV, mP))
@@ -16,9 +14,7 @@ function render_update_cascades(dir)
 	startz = cam_near
 	endz = min(cam_far_prev, 7500)
 	disz = endz - startz
-	sunmatV = matrix_build_lookat(dir[X], dir[Y], dir[Z],
-								 0, 0, 0,
-								 0, 0, 1);
+	sunmatV = matrix_create_lookat(vec3(dir[X], dir[Y], dir[Z]), vec3(0), vec3(0, 0, 1));
 	
 	for (var i = 0; i < render_cascades_count; i++)
 	{
@@ -53,16 +49,19 @@ function render_update_cascades(dir)
 		orthoMax[Z] += 100
 		
 		// Fix shadow jittering
-		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[3]));
+		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7]));
+		var borderOffset = vec4_div(vec4_sub(vec4(diagonalXY), vec4_sub(orthoMax, orthoMin)), 2);
+		borderOffset[Z] = 0
+		borderOffset[W] = 0
+		orthoMax = vec4_add(orthoMax, borderOffset)
+		orthoMin = vec4_sub(orthoMin, borderOffset)
 		
 		// Snap to 1px increments to avoid shadow jittering
-		var worldUnitsPerTexel = vec4(diagonalXY / project_render_shadows_sun_buffer_size);
-		orthoMin = vec4_div(orthoMin, worldUnitsPerTexel)
-		orthoMin = vec4_floor(orthoMin)
-		orthoMin = vec4_mul(orthoMin, worldUnitsPerTexel)
-		orthoMax = vec4_div(orthoMax, worldUnitsPerTexel)
-		orthoMax = vec4_floor(orthoMax)
-		orthoMax = vec4_mul(orthoMax, worldUnitsPerTexel)
+		var worldUnitsPerTexel = (diagonalXY / project_render_shadows_sun_buffer_size);
+		orthoMin[X] = round(orthoMin[X] / worldUnitsPerTexel) * worldUnitsPerTexel
+		orthoMax[X] = round(orthoMax[X] / worldUnitsPerTexel) * worldUnitsPerTexel
+		orthoMax[Y] = round(orthoMax[Y] / worldUnitsPerTexel) * worldUnitsPerTexel
+		orthoMin[Y] = round(orthoMin[Y] / worldUnitsPerTexel) * worldUnitsPerTexel
 		
 		var lightMatVinv = matrix_inverse(sunmatV);
         var lightPoints = [

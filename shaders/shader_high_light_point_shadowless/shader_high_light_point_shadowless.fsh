@@ -24,7 +24,6 @@ varying vec3 vNormal;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying float vBrightness;
-varying float vSSS;
 
 // Fresnel Schlick approximation
 float fresnelSchlick(float cosTheta, float F0, float F90)
@@ -151,7 +150,6 @@ void main()
 			
 			// Diffuse factor
 			float dif = max(0.0, dot(normalize(normal), normalize(lightPosition - vPosition)));
-			dif += vSSS;
 			
 			// Attenuation factor
 			float att = 1.0 - clamp((distance(vPosition, lightPosition) - lightRange * (1.0 - lightFadeSize)) / (lightRange * lightFadeSize), 0.0, 1.0);
