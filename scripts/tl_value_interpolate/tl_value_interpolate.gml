@@ -35,6 +35,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.BG_LEAVES_JUNGLE_COLOR:
 		case e_value.BG_LEAVES_ACACIA_COLOR:
 		case e_value.BG_LEAVES_DARK_OAK_COLOR:
+		case e_value.BG_LEAVES_MANGROVE_COLOR:
 		case e_value.BG_VOLUMETRIC_FOG_COLOR:
 		case e_value.BG_FOG_COLOR:
 		case e_value.BG_FOG_OBJECT_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix

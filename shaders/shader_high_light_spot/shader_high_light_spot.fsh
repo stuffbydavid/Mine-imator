@@ -248,8 +248,8 @@ void main()
 			float G   = geometrySmith(N, V, L, roughness);
 			
 			float F0, F90, F;
-			F0 = mix(0.04, 1.0, metallic);
-			F90 = mix(0.48, 1.0, metallic);
+			F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
+			F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
 			
 			F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
 			F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);

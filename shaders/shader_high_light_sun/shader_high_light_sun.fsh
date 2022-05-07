@@ -186,6 +186,17 @@ void main()
 		        if (vClipSpaceDepth < uCascadeEndClipSpace[i])
 		            break;
 			
+			float fragDepth = vScreenCoord[i].z;
+			vec2 fragCoord = vScreenCoord[i].xy;
+			
+			// Just in case something went wrong in clipping
+			if (fragCoord.x < 0.0 || fragCoord.y < 0.0 || fragDepth < 0.0 || fragCoord.x > 1.0 || fragCoord.y > 1.0 || fragDepth > 1.0)
+			{
+				i += 1;
+				fragDepth = vScreenCoord[i].z;
+				fragCoord = vScreenCoord[i].xy;
+			}
+			
 			if (uCascadeDebug == 1)
 			{
 				if (i == 0)
@@ -198,11 +209,8 @@ void main()
 					shadow *= vec3(0.0, 0.0, 0.0);
 			}
 			
-			float fragDepth = vScreenCoord[i].z;
-			vec2 fragCoord = vScreenCoord[i].xy;
-			
 			// Texture position must be valid
-			if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragDepth > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0 && fragDepth < 1.0 && i < NUM_CASCADES)
+			if (fragCoord.x >= 0.0 && fragCoord.y >= 0.0 && fragDepth >= 0.0 && fragCoord.x <= 1.0 && fragCoord.y <= 1.0 && fragDepth <= 1.0 && i < NUM_CASCADES)
 			{	
 				// Convert 0->1 to Near->Far
 				fragDepth = uSunNear[i] + fragDepth * (uSunFar[i] - uSunNear[i]);
@@ -257,8 +265,8 @@ void main()
 			float G   = geometrySmith(N, V, L, roughness);
 			
 			float F0, F90, F;
-			F0 = mix(0.04, 1.0, metallic);
-			F90 = mix(0.48, 1.0, metallic);
+			F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
+			F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
 			
 			F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
 			F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);

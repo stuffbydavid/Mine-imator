@@ -52,6 +52,7 @@ function project_load_values_update()
 		app.background_leaves_jungle_color = app.background_foliage_color
 		app.background_leaves_acacia_color = app.background_foliage_color
 		app.background_leaves_dark_oak_color = app.background_foliage_color
+		app.background_leaves_mangrove_color = app.background_foliage_color
 		
 		value[e_value.BG_LEAVES_OAK_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 		value[e_value.BG_LEAVES_SPRUCE_COLOR] = app.background_leaves_spruce_color
@@ -59,6 +60,7 @@ function project_load_values_update()
 		value[e_value.BG_LEAVES_JUNGLE_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 		value[e_value.BG_LEAVES_ACACIA_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 		value[e_value.BG_LEAVES_DARK_OAK_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
+		value[e_value.BG_LEAVES_MANGROVE_COLOR] = value[e_value.BG_FOLIAGE_COLOR]
 	}
 	
 	if (load_format < e_project.FORMAT_200_AL22)

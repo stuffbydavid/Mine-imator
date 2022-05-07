@@ -113,6 +113,7 @@ function project_load_background(map)
 	background_leaves_jungle_color = value_get_color(map[?"leaves_jungle_color"], background_leaves_jungle_color)
 	background_leaves_acacia_color = value_get_color(map[?"leaves_acacia_color"], background_leaves_acacia_color)
 	background_leaves_dark_oak_color = value_get_color(map[?"leaves_dark_oak_color"], background_leaves_dark_oak_color)
+	background_leaves_mangrove_color = value_get_color(map[?"leaves_mangrove_color"], background_leaves_mangrove_color)
 	
 	background_volumetric_fog = value_get_real(map[?"volumetric_fog"], background_volumetric_fog)
 	background_volumetric_fog_ambience = value_get_real(map[?"volumetric_fog_ambience"], background_volumetric_fog_ambience)

@@ -23,6 +23,7 @@ function render_world_ground()
 		render_set_uniform("uMetallic", 0)
 		render_set_uniform("uRoughness", iswater ? .2 : 1)
 		render_set_uniform("uBrightness", 0)
+		render_set_uniform_int("uMaterialUseGlossiness", 0)
 	}
 	else
 	{

@@ -321,7 +321,10 @@ function frustum() constructor {
 		];
 		
 		for (var i = 0; i < 8; i++)
+		{
 			corners[i] = vec4_homogenize(vec4_mul_matrix(corners_v4[i], matrix_inverse(mat)))
+			corners[i][W] = 1
+		}
 	}
 	
 	static add_triangle = function(corner1, corner2, corner3) {

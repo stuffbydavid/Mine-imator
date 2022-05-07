@@ -430,6 +430,7 @@ function block_load_render_model()
 											case "jungle_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_JUNGLE;		break;
 											case "acacia_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_ACACIA;		break;
 											case "dark_oak_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_DARK_OAK;	break;
+											case "mangrove_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_MANGROVE;	break;
 										}	
 									}
 								}
@@ -484,6 +485,7 @@ function block_load_render_model()
 												case e_block_vbuffer.LEAVES_JUNGLE:		colstr = "foliage";						break;
 												case e_block_vbuffer.LEAVES_ACACIA:		colstr = "foliage";						break;
 												case e_block_vbuffer.LEAVES_DARK_OAK:	colstr = "foliage";						break;
+												case e_block_vbuffer.LEAVES_MANGROVE:	colstr = "foliage";						break;
 											}
 											
 											if (rescol != null)

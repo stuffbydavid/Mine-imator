@@ -351,7 +351,9 @@ function res_load_pack_block_sheet(type, suffix)
 		samplepos[3] = point2D(blocksize - 1, blocksize / 2)
 		samplepos[4] = point2D(blocksize / 2, blocksize - 1)
 		samplepos[5] = point2D(blocksize / 4, blocksize / 4)
-		sampleposamount = 6
+		samplepos[6] = point2D(0, 0)
+		samplepos[7] = point2D(blocksize- 1, blocksize - 1)
+		sampleposamount = 8
 	
 		// Find block depths (static)
 		log("Block textures", "find static block depths")

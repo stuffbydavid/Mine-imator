@@ -233,6 +233,13 @@ function render_world_block()
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_DARK_OAK])
 	}
 	
+	// Mangrove leaves 
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_MANGROVE]))
+	{
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_mangrove), shader_blend_alpha)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_MANGROVE])
+	}
+	
 	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	
 	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)

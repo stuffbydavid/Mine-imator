@@ -26,6 +26,7 @@ function block_texture_get_blend(texname, res)
 			case "jungle": return res.color_leaves_jungle;
 			case "acacia": return res.color_leaves_acacia;
 			case "dark_oak": return res.color_leaves_dark_oak;
+			case "mangrove": return res.color_leaves_mangrove;
 		}
 	}
 	

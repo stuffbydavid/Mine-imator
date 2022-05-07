@@ -57,6 +57,7 @@ function project_save_background()
 		json_save_var_color("leaves_jungle_color", background_leaves_jungle_color)
 		json_save_var_color("leaves_acacia_color", background_leaves_acacia_color)
 		json_save_var_color("leaves_dark_oak_color", background_leaves_dark_oak_color)
+		json_save_var_color("leaves_mangrove_color", background_leaves_mangrove_color)
 		
 		json_save_var_bool("volumetric_fog", background_volumetric_fog)
 		json_save_var_bool("volumetric_fog_ambience", background_volumetric_fog_ambience)

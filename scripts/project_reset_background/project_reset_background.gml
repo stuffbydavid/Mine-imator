@@ -65,6 +65,7 @@ function project_reset_background()
 	background_leaves_jungle_color = c_plains_biome_foliage
 	background_leaves_acacia_color = c_plains_biome_foliage
 	background_leaves_dark_oak_color = c_plains_biome_foliage
+	background_leaves_mangrove_color = c_plains_biome_foliage
 	
 	with (mc_res)
 		res_update_colors()

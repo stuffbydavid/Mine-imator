@@ -66,6 +66,7 @@ function res_event_create()
 	color_leaves_jungle = null
 	color_leaves_acacia = null
 	color_leaves_dark_oak = null
+	color_leaves_mangrove = null
 	color_foliage = null
 	color_water = null
 	

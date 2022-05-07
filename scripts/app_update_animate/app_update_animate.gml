@@ -144,6 +144,7 @@ function app_update_animate()
 		background_leaves_jungle_color			= bgobject.value[e_value.BG_LEAVES_JUNGLE_COLOR]
 		background_leaves_acacia_color			= bgobject.value[e_value.BG_LEAVES_ACACIA_COLOR]
 		background_leaves_dark_oak_color		= bgobject.value[e_value.BG_LEAVES_DARK_OAK_COLOR]
+		background_leaves_mangrove_color		= bgobject.value[e_value.BG_LEAVES_MANGROVE_COLOR]
 		background_volumetric_fog				= bgobject.value[e_value.BG_VOLUMETRIC_FOG]
 		background_volumetric_fog_ambience		= bgobject.value[e_value.BG_VOLUMETRIC_FOG_AMBIENCE]
 		background_volumetric_fog_noise			= bgobject.value[e_value.BG_VOLUMETRIC_FOG_NOISE]

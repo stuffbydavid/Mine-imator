@@ -124,6 +124,7 @@ function tl_value_default(valueid)
 		case e_value.BG_LEAVES_JUNGLE_COLOR: return app.background_leaves_jungle_color
 		case e_value.BG_LEAVES_ACACIA_COLOR: return app.background_leaves_acacia_color
 		case e_value.BG_LEAVES_DARK_OAK_COLOR: return app.background_leaves_dark_oak_color
+		case e_value.BG_LEAVES_MANGROVE_COLOR: return app.background_leaves_mangrove_color
 		case e_value.BG_VOLUMETRIC_FOG: return app.background_volumetric_fog
 		case e_value.BG_VOLUMETRIC_FOG_AMBIENCE: return app.background_volumetric_fog_ambience
 		case e_value.BG_VOLUMETRIC_FOG_NOISE: return app.background_volumetric_fog_noise

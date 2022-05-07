@@ -25,6 +25,7 @@ function res_update_colors()
 		color_leaves_jungle = app.background_leaves_jungle_color
 		color_leaves_acacia = app.background_leaves_acacia_color
 		color_leaves_dark_oak = app.background_leaves_dark_oak_color
+		color_leaves_mangrove = app.background_leaves_mangrove_color
 	}
 	else
 	{
@@ -69,6 +70,7 @@ function res_update_colors()
 		color_leaves_jungle = foliagecolor
 		color_leaves_acacia = foliagecolor
 		color_leaves_dark_oak = foliagecolor
+		color_leaves_mangrove = foliagecolor
 		color_foliage = foliagecolor
 		
 		color_leaves_spruce = hex_to_color("62A857")

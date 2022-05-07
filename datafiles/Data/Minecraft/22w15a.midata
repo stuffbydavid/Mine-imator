@@ -1,5 +1,5 @@
 {
-	"version": "1.18",
+	"version": "22w15a",
 	"patch": 2,
 	"format": 7,
 	"characters": [
@@ -103,21 +103,21 @@
 				],
 				"wool_color": [
 					{ "value": "white", "shape_color": { "wool": "white" } },
-					{ "value": "orange", "shape_color": { "wool": "orange"} },
-					{ "value": "magenta", "shape_color": { "wool": "magenta"} },
-					{ "value": "light_blue", "shape_color": { "wool": "light_blue"} },
-					{ "value": "yellow", "shape_color": { "wool": "yellow"} },
-					{ "value": "lime", "shape_color": { "wool": "lime"} },
-					{ "value": "pink", "shape_color": { "wool": "pink"} },
-					{ "value": "gray", "shape_color": { "wool": "gray"} },
-					{ "value": "light_gray", "shape_color": { "wool": "light_gray"} },
-					{ "value": "cyan", "shape_color": { "wool": "cyan"} },
-					{ "value": "purple", "shape_color": { "wool": "purple"} },
-					{ "value": "blue", "shape_color": { "wool": "blue"} },
-					{ "value": "brown", "shape_color": { "wool": "brown"} },
-					{ "value": "green", "shape_color": { "wool": "green"} },
-					{ "value": "red", "shape_color": { "wool": "red"} },
-					{ "value": "black", "shape_color": { "wool": "black"} }
+					{ "value": "orange", "shape_color": { "wool": "orange" } },
+					{ "value": "magenta", "shape_color": { "wool": "magenta" } },
+					{ "value": "light_blue", "shape_color": { "wool": "light_blue" } },
+					{ "value": "yellow", "shape_color": { "wool": "yellow" } },
+					{ "value": "lime", "shape_color": { "wool": "lime" } },
+					{ "value": "pink", "shape_color": { "wool": "pink" } },
+					{ "value": "gray", "shape_color": { "wool": "gray" } },
+					{ "value": "light_gray", "shape_color": { "wool": "light_gray" } },
+					{ "value": "cyan", "shape_color": { "wool": "cyan" } },
+					{ "value": "purple", "shape_color": { "wool": "purple" } },
+					{ "value": "blue", "shape_color": { "wool": "blue" } },
+					{ "value": "brown", "shape_color": { "wool": "brown" } },
+					{ "value": "green", "shape_color": { "wool": "green" } },
+					{ "value": "red", "shape_color": { "wool": "red" } },
+					{ "value": "black", "shape_color": { "wool": "black" } }
 				]
 			},
 			"default_state": "sheared=false,wool_color=white"
@@ -170,21 +170,21 @@
 				"collar": [
 					{ "value": "none", "shape_hide": [ "collar" ] },
 					{ "value": "white", "shape_color": { "collar": "white" } },
-					{ "value": "orange", "shape_color": { "collar": "orange"} },
-					{ "value": "magenta", "shape_color": { "collar": "magenta"} },
-					{ "value": "light_blue", "shape_color": { "collar": "light_blue"} },
-					{ "value": "yellow", "shape_color": { "collar": "yellow"} },
-					{ "value": "lime", "shape_color": { "collar": "lime"} },
-					{ "value": "pink", "shape_color": { "collar": "pink"} },
-					{ "value": "gray", "shape_color": { "collar": "gray"} },
-					{ "value": "light_gray", "shape_color": { "collar": "light_gray"} },
-					{ "value": "cyan", "shape_color": { "collar": "cyan"} },
-					{ "value": "purple", "shape_color": { "collar": "purple"} },
-					{ "value": "blue", "shape_color": { "collar": "blue"} },
-					{ "value": "brown", "shape_color": { "collar": "brown"} },
-					{ "value": "green", "shape_color": { "collar": "green"} },
-					{ "value": "red", "shape_color": { "collar": "red"} },
-					{ "value": "black", "shape_color": { "collar": "black"} }
+					{ "value": "orange", "shape_color": { "collar": "orange" } },
+					{ "value": "magenta", "shape_color": { "collar": "magenta" } },
+					{ "value": "light_blue", "shape_color": { "collar": "light_blue" } },
+					{ "value": "yellow", "shape_color": { "collar": "yellow" } },
+					{ "value": "lime", "shape_color": { "collar": "lime" } },
+					{ "value": "pink", "shape_color": { "collar": "pink" } },
+					{ "value": "gray", "shape_color": { "collar": "gray" } },
+					{ "value": "light_gray", "shape_color": { "collar": "light_gray" } },
+					{ "value": "cyan", "shape_color": { "collar": "cyan" } },
+					{ "value": "purple", "shape_color": { "collar": "purple" } },
+					{ "value": "blue", "shape_color": { "collar": "blue" } },
+					{ "value": "brown", "shape_color": { "collar": "brown" } },
+					{ "value": "green", "shape_color": { "collar": "green" } },
+					{ "value": "red", "shape_color": { "collar": "red" } },
+					{ "value": "black", "shape_color": { "collar": "black" } }
 				]
 			},
 			"default_state": "variant=ocelot,collar=red"
@@ -213,7 +213,7 @@
 					{ "value": "yellow_blue", "texture": "entity/parrot/parrot_yellow_blue" }
 				]
 			},
-			"default_state": "variant=green"
+			"default_state": "variant=red_blue"
 		},
 		{
 			"name": "polar_bear",
@@ -252,7 +252,7 @@
 					{ "value": "true" }
 				]
 			},
-			"default_state": "variant=black,markings=none,saddle=false,chests=false"
+			"default_state": "variant=white,markings=none,saddle=false,chests=false"
 		},
 		{
 			"name": "llama",
@@ -332,7 +332,7 @@
 					{ "value": "master", "shape_texture": { "profession_level": "entity/villager/profession_level/diamond" } }
 				]
 			},
-			"default_state": "profession=nitwit,biome=plains,profession_level=none"
+			"default_state": "profession=none,biome=plains,profession_level=none"
 		},
 		{
 			"name": "illager",
@@ -353,12 +353,12 @@
 			"name": "vex",
 			"file": "vex.mimodel",
 			"states": {
-				"charging": [
-					{ "value": "false", "texture": "entity/illager/vex" },
-					{ "value": "true", "texture": "entity/illager/vex_charging" }
+				"variant": [
+					{ "value": "normal", "texture": "entity/illager/vex" },
+					{ "value": "charging", "texture": "entity/illager/vex_charging" }
 				]
 			},
-			"default_state": "charging=false"
+			"default_state": "variant=normal"
 		},
 		{
 			"name": "zombie_villager",
@@ -400,7 +400,7 @@
 					{ "value": "master", "shape_texture": { "profession_level": "entity/zombie_villager/profession_level/diamond" } }
 				]
 			},
-			"default_state": "profession=nitwit,biome=plains,profession_level=none"
+			"default_state": "profession=none,biome=plains,profession_level=none"
 		},
 		{
 			"name": "witch",
@@ -464,7 +464,7 @@
 			"file": "shulker.mimodel",
 			"states": {
 				"color": [
-					{ "value": "none", "texture": "entity/shulker/shulker" },
+					{ "value": "normal", "texture": "entity/shulker/shulker" },
 					{ "value": "white", "texture": "entity/shulker/shulker_white" },
 					{ "value": "orange", "texture": "entity/shulker/shulker_orange" },
 					{ "value": "magenta", "texture": "entity/shulker/shulker_magenta" },
@@ -483,22 +483,7 @@
 					{ "value": "black", "texture": "entity/shulker/shulker_black" }
 				]
 			},
-			"default_state": "color=none"
-		},
-		{
-			"name": "wither",
-			"file": "wither.mimodel",
-			"states": {
-				"invulnerable": [
-					{ "value": "false", "texture": "entity/wither/wither" },
-					{ "value": "true", "texture": "entity/wither/wither_invulnerable" }
-				]
-			},
-			"default_state": "invulnerable=false"
-		},
-		{
-			"name": "ender_dragon",
-			"file": "ender_dragon.mimodel"
+			"default_state": "color=normal"
 		},
 		{
 			"name": "phantom",
@@ -530,9 +515,9 @@
 			"name": "pufferfish",
 			"states": {
 				"size": [
-					{ "value": "small", "file": "pufferfish_small.mimodel"},
-					{ "value": "medium", "file": "pufferfish_medium.mimodel"},
-					{ "value": "large", "file": "pufferfish_large.mimodel"}
+					{ "value": "small", "file": "pufferfish_small.mimodel" },
+					{ "value": "medium", "file": "pufferfish_medium.mimodel" },
+					{ "value": "large", "file": "pufferfish_large.mimodel" }
 				]
 			},
 			"default_state": "size=small"
@@ -556,39 +541,39 @@
 				],
 				"base_color": [
 					{ "value": "white", "shape_color": { "base": "white" } },
-					{ "value": "orange", "shape_color": { "base": "orange"} },
-					{ "value": "magenta", "shape_color": { "base": "magenta"} },
-					{ "value": "light_blue", "shape_color": { "base": "light_blue"} },
-					{ "value": "yellow", "shape_color": { "base": "yellow"} },
-					{ "value": "lime", "shape_color": { "base": "lime"} },
-					{ "value": "pink", "shape_color": { "base": "pink"} },
-					{ "value": "gray", "shape_color": { "base": "gray"} },
-					{ "value": "light_gray", "shape_color": { "base": "light_gray"} },
-					{ "value": "cyan", "shape_color": { "base": "cyan"} },
-					{ "value": "purple", "shape_color": { "base": "purple"} },
-					{ "value": "blue", "shape_color": { "base": "blue"} },
-					{ "value": "brown", "shape_color": { "base": "brown"} },
-					{ "value": "green", "shape_color": { "base": "green"} },
-					{ "value": "red", "shape_color": { "base": "red"} },
-					{ "value": "black", "shape_color": { "base": "black"} }
+					{ "value": "orange", "shape_color": { "base": "orange" } },
+					{ "value": "magenta", "shape_color": { "base": "magenta" } },
+					{ "value": "light_blue", "shape_color": { "base": "light_blue" } },
+					{ "value": "yellow", "shape_color": { "base": "yellow" } },
+					{ "value": "lime", "shape_color": { "base": "lime" } },
+					{ "value": "pink", "shape_color": { "base": "pink" } },
+					{ "value": "gray", "shape_color": { "base": "gray" } },
+					{ "value": "light_gray", "shape_color": { "base": "light_gray" } },
+					{ "value": "cyan", "shape_color": { "base": "cyan" } },
+					{ "value": "purple", "shape_color": { "base": "purple" } },
+					{ "value": "blue", "shape_color": { "base": "blue" } },
+					{ "value": "brown", "shape_color": { "base": "brown" } },
+					{ "value": "green", "shape_color": { "base": "green" } },
+					{ "value": "red", "shape_color": { "base": "red" } },
+					{ "value": "black", "shape_color": { "base": "black" } }
 				],
 				"pattern_color": [
 					{ "value": "white", "shape_color": { "pattern": "white" } },
-					{ "value": "orange", "shape_color": { "pattern": "orange"} },
-					{ "value": "magenta", "shape_color": { "pattern": "magenta"} },
-					{ "value": "light_blue", "shape_color": { "pattern": "light_blue"} },
-					{ "value": "yellow", "shape_color": { "pattern": "yellow"} },
-					{ "value": "lime", "shape_color": { "pattern": "lime"} },
-					{ "value": "pink", "shape_color": { "pattern": "pink"} },
-					{ "value": "gray", "shape_color": { "pattern": "gray"} },
-					{ "value": "light_gray", "shape_color": { "pattern": "light_gray"} },
-					{ "value": "cyan", "shape_color": { "pattern": "cyan"} },
-					{ "value": "purple", "shape_color": { "pattern": "purple"} },
-					{ "value": "blue", "shape_color": { "pattern": "blue"} },
-					{ "value": "brown", "shape_color": { "pattern": "brown"} },
-					{ "value": "green", "shape_color": { "pattern": "green"} },
-					{ "value": "red", "shape_color": { "pattern": "red"} },
-					{ "value": "black", "shape_color": { "pattern": "black"} }
+					{ "value": "orange", "shape_color": { "pattern": "orange" } },
+					{ "value": "magenta", "shape_color": { "pattern": "magenta" } },
+					{ "value": "light_blue", "shape_color": { "pattern": "light_blue" } },
+					{ "value": "yellow", "shape_color": { "pattern": "yellow" } },
+					{ "value": "lime", "shape_color": { "pattern": "lime" } },
+					{ "value": "pink", "shape_color": { "pattern": "pink" } },
+					{ "value": "gray", "shape_color": { "pattern": "gray" } },
+					{ "value": "light_gray", "shape_color": { "pattern": "light_gray" } },
+					{ "value": "cyan", "shape_color": { "pattern": "cyan" } },
+					{ "value": "purple", "shape_color": { "pattern": "purple" } },
+					{ "value": "blue", "shape_color": { "pattern": "blue" } },
+					{ "value": "brown", "shape_color": { "pattern": "brown" } },
+					{ "value": "green", "shape_color": { "pattern": "green" } },
+					{ "value": "red", "shape_color": { "pattern": "red" } },
+					{ "value": "black", "shape_color": { "pattern": "black" } }
 				]
 			},
 			"default_state": "variant=model_a_pattern_1,base_color=orange,pattern_color=white"
@@ -598,10 +583,10 @@
 			"file": "fox.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "fox", "texture": "entity/fox/fox"},
-					{ "value": "fox_sleeping", "texture": "entity/fox/fox_sleep"},
-					{ "value": "snow_fox", "texture": "entity/fox/snow_fox"},
-					{ "value": "snow_fox_sleeping", "texture": "entity/fox/snow_fox_sleep"}
+					{ "value": "fox", "texture": "entity/fox/fox" },
+					{ "value": "fox_sleeping", "texture": "entity/fox/fox_sleep" },
+					{ "value": "snow_fox", "texture": "entity/fox/snow_fox" },
+					{ "value": "snow_fox_sleeping", "texture": "entity/fox/snow_fox_sleep" }
 				]
 			},
 			"default_state": "variant=fox"
@@ -611,16 +596,16 @@
 			"file": "panda.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "none", "texture": "entity/panda/panda"},
-					{ "value": "aggressive", "texture": "entity/panda/aggressive_panda"},
-					{ "value": "brown", "texture": "entity/panda/brown_panda"},
-					{ "value": "lazy", "texture": "entity/panda/lazy_panda"},
-					{ "value": "playful", "texture": "entity/panda/playful_panda"},
-					{ "value": "weak", "texture": "entity/panda/weak_panda"},
-					{ "value": "worried", "texture": "entity/panda/worried_panda"}
+					{ "value": "normal", "texture": "entity/panda/panda" },
+					{ "value": "aggressive", "texture": "entity/panda/aggressive_panda" },
+					{ "value": "brown", "texture": "entity/panda/brown_panda" },
+					{ "value": "lazy", "texture": "entity/panda/lazy_panda" },
+					{ "value": "playful", "texture": "entity/panda/playful_panda" },
+					{ "value": "weak", "texture": "entity/panda/weak_panda" },
+					{ "value": "worried", "texture": "entity/panda/worried_panda" }
 				]
 			},
-			"default_state": "variant=none"
+			"default_state": "variant=normal"
 		},
 		{
 			"name": "ravager",
@@ -639,10 +624,10 @@
 			"file": "bee.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "normal", "texture": "entity/bee/bee"},
-					{ "value": "normal_nectar", "texture": "entity/bee/bee_nectar"},
-					{ "value": "angry", "texture": "entity/bee/bee_angry"},
-					{ "value": "angry_nectar", "texture": "entity/bee/bee_angry_nectar"}
+					{ "value": "normal", "texture": "entity/bee/bee" },
+					{ "value": "normal_nectar", "texture": "entity/bee/bee_nectar" },
+					{ "value": "angry", "texture": "entity/bee/bee_angry" },
+					{ "value": "angry_nectar", "texture": "entity/bee/bee_angry_nectar" }
 				]
 			},
 			"default_state": "variant=normal"
@@ -652,19 +637,19 @@
 			"version": 1,
 			"states": {
 				"variant": [
-					{ "value": "normal", "file": "piglin.mimodel" },
-					{ "value": "brute", "file": "piglin.mimodel", "texture": "entity/piglin/piglin_brute" },
-					{ "value": "zombified", "file": "zombified_piglin.mimodel" }
+					{ "value": "piglin", "file": "piglin.mimodel" },
+					{ "value": "piglin_brute", "file": "piglin.mimodel", "texture": "entity/piglin/piglin_brute" },
+					{ "value": "zombified_piglin", "file": "zombified_piglin.mimodel" }
 				]
 			},
-			"default_state": "variant=normal"
+			"default_state": "variant=piglin"
 		},
 		{
 			"name": "hoglin",
 			"states": {
 				"variant": [
-					{ "value": "hoglin", "file": "hoglin.mimodel"},
-					{ "value": "zoglin", "file": "zoglin.mimodel"}
+					{ "value": "hoglin", "file": "hoglin.mimodel" },
+					{ "value": "zoglin", "file": "zoglin.mimodel" }
 				]
 			},
 			"default_state": "variant=hoglin"
@@ -673,27 +658,27 @@
 			"name": "strider",
 			"file": "strider.mimodel",
 			"states": {
-				"cold": [
-					{ "value": "false" },
-					{ "value": "true", "texture": "entity/strider/strider_cold" }
+				"variant": [
+					{ "value": "normal" },
+					{ "value": "cold", "texture": "entity/strider/strider_cold" }
 				],
 				"saddle": [
 					{ "value": "false", "shape_hide": [ "saddle" ] },
 					{ "value": "true" }
 				]
 			},
-			"default_state": "cold=false,saddle=false"
+			"default_state": "variant=normal,saddle=false"
 		},
 		{
 			"name": "axolotl",
 			"file": "axolotl.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "lucy", "texture": "entity/axolotl/axolotl_lucy"},
-					{ "value": "wild", "texture": "entity/axolotl/axolotl_wild"},
-					{ "value": "gold", "texture": "entity/axolotl/axolotl_gold"},
-					{ "value": "cyan", "texture": "entity/axolotl/axolotl_cyan"},
-					{ "value": "blue", "texture": "entity/axolotl/axolotl_blue"}
+					{ "value": "lucy", "texture": "entity/axolotl/axolotl_lucy" },
+					{ "value": "wild", "texture": "entity/axolotl/axolotl_wild" },
+					{ "value": "gold", "texture": "entity/axolotl/axolotl_gold" },
+					{ "value": "cyan", "texture": "entity/axolotl/axolotl_cyan" },
+					{ "value": "blue", "texture": "entity/axolotl/axolotl_blue" }
 				]
 			},
 			"default_state": "variant=lucy"
@@ -701,6 +686,45 @@
 		{
 			"name": "goat",
 			"file": "goat.mimodel"
+		},
+		{
+			"name": "frog",
+			"file": "frog.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "temperate", "texture": "entity/frog/temperate_frog" },
+					{ "value": "cold", "texture": "entity/frog/cold_frog" },
+					{ "value": "warm", "texture": "entity/frog/warm_frog" }
+				]
+			},
+			"default_state": "variant=temperate"
+		},
+		{
+			"name": "tadpole",
+			"file": "tadpole.mimodel"
+		},
+		{
+			"name": "allay",
+			"file": "allay.mimodel"
+		},
+		{
+			"name": "warden",
+			"file": "warden.mimodel"
+		},
+		{
+			"name": "wither",
+			"file": "wither.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "normal" },
+					{ "value": "invulnerable", "texture": "entity/wither/wither_invulnerable" }
+				]
+			},
+			"default_state": "variant=normal"
+		},
+		{
+			"name": "ender_dragon",
+			"file": "ender_dragon.mimodel"
 		}
 	],
 	"special_blocks": [
@@ -712,9 +736,9 @@
 					{ "value": "normal_double", "file": "chest_double.mimodel" },
 					{ "value": "ender", "file": "chest.mimodel", "texture": "entity/chest/ender" },
 					{ "value": "trapped", "file": "chest.mimodel", "texture": "entity/chest/trapped" },
-					{ "value": "trapped_double", "file": "chest_double.mimodel", "shape_texture": { "left": "entity/chest/trapped_left", "right": "entity/chest/trapped_right"} },
+					{ "value": "trapped_double", "file": "chest_double.mimodel", "shape_texture": { "left": "entity/chest/trapped_left", "right": "entity/chest/trapped_right" } },
 					{ "value": "christmas", "file": "chest.mimodel", "texture": "entity/chest/christmas" },
-					{ "value": "christmas_double", "file": "chest_double.mimodel", "shape_texture": { "left": "entity/chest/christmas_left", "right": "entity/chest/christmas_right"} }
+					{ "value": "christmas_double", "file": "chest_double.mimodel", "shape_texture": { "left": "entity/chest/christmas_left", "right": "entity/chest/christmas_right" } }
 				]
 			},
 			"default_state": "variant=normal"
@@ -748,12 +772,31 @@
 					{ "value": "birch", "texture": "entity/signs/birch" },
 					{ "value": "jungle", "texture": "entity/signs/jungle" },
 					{ "value": "acacia", "texture": "entity/signs/acacia" },
-					{ "value": "darkoak", "texture": "entity/signs/dark_oak" },
+					{ "value": "dark_oak", "texture": "entity/signs/dark_oak" },
+					{ "value": "mangrove", "texture": "entity/signs/mangrove" },
 					{ "value": "crimson", "texture": "entity/signs/crimson" },
 					{ "value": "warped", "texture": "entity/signs/warped" }
 				]
 			},
 			"default_state": "variant=standing,wood=oak"
+		},
+		{
+			"name": "fence_gate",
+			"file": "fence_gate.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "oak", "texture": "block/oak_planks" },
+					{ "value": "spruce", "texture": "block/spruce_planks" },
+					{ "value": "birch", "texture": "block/birch_planks" },
+					{ "value": "jungle", "texture": "block/jungle_planks" },
+					{ "value": "acacia", "texture": "block/acacia_planks" },
+					{ "value": "dark_oak", "texture": "block/dark_oak_planks" },
+					{ "value": "mangrove", "texture": "block/mangrove_planks" },
+					{ "value": "crimson", "texture": "block/crimson_planks" },
+					{ "value": "warped", "texture": "block/warped_planks" }
+				]
+			},
+			"default_state": "variant=oak"
 		},
 		{
 			"name": "arrow",
@@ -845,15 +888,20 @@
 			"file": "boat.mimodel",
 			"states": {
 				"wood": [
-					{ "value": "oak", "texture": "entity/boat/oak" },
-					{ "value": "spruce", "texture": "entity/boat/spruce" },
-					{ "value": "birch", "texture": "entity/boat/birch" },
-					{ "value": "jungle", "texture": "entity/boat/jungle" },
-					{ "value": "acacia", "texture": "entity/boat/acacia" },
-					{ "value": "darkoak", "texture": "entity/boat/dark_oak" }
+					{ "value": "oak", "shape_texture": { "boat": "entity/boat/oak", "boat_chest": "entity/chest_boat/oak", "chest": "entity/chest_boat/oak" } },
+					{ "value": "spruce", "shape_texture": { "boat": "entity/boat/spruce", "boat_chest": "entity/chest_boat/spruce", "chest": "entity/chest_boat/spruce" } },
+					{ "value": "birch", "shape_texture": { "boat": "entity/boat/birch", "boat_chest": "entity/chest_boat/birch", "chest": "entity/chest_boat/birch" } },
+					{ "value": "jungle", "shape_texture": { "boat": "entity/boat/jungle", "boat_chest": "entity/chest_boat/jungle", "chest": "entity/chest_boat/jungle" } },
+					{ "value": "acacia", "shape_texture": { "boat": "entity/boat/acacia", "boat_chest": "entity/chest_boat/acacia", "chest": "entity/chest_boat/acacia" } },
+					{ "value": "dark_oak", "shape_texture": { "boat": "entity/boat/dark_oak", "boat_chest": "entity/chest_boat/dark_oak", "chest": "entity/chest_boat/dark_oak" } },
+					{ "value": "mangrove", "shape_texture": { "boat": "entity/boat/mangrove", "boat_chest": "entity/chest_boat/mangrove", "chest": "entity/chest_boat/mangrove" } }
+				],
+				"chest": [
+					{ "value": "false", "shape_hide": [ "boat_chest", "chest" ], "hide": [ "chest", "top", "lock" ] },
+					{ "value": "true", "shape_hide": [ "boat" ] }
 				]
 			},
-			"default_state": "wood=oak"
+			"default_state": "wood=oak,chest=false"
 		},
 		{
 			"name": "minecart",
@@ -877,7 +925,7 @@
 			"states": {
 				"variant": [
 					{ "value": "standing" },
-					{ "value": "wall", "file": "wall_banner.mimodel"}
+					{ "value": "wall", "file": "wall_banner.mimodel" }
 				]
 			},
 			"default_state": "variant=standing"
@@ -923,7 +971,7 @@
 			"file": "shulker_box.mimodel",
 			"states": {
 				"color": [
-					{ "value": "none", "texture": "entity/shulker/shulker" },
+					{ "value": "normal", "texture": "entity/shulker/shulker" },
 					{ "value": "white", "texture": "entity/shulker/shulker_white" },
 					{ "value": "orange", "texture": "entity/shulker/shulker_orange" },
 					{ "value": "magenta", "texture": "entity/shulker/shulker_magenta" },
@@ -942,7 +990,7 @@
 					{ "value": "black", "texture": "entity/shulker/shulker_black" }
 				]
 			},
-			"default_state": "color=none"
+			"default_state": "color=normal"
 		},
 		{
 			"name": "shulker_spark",
@@ -1074,6 +1122,7 @@
 					{ "value": "jungle", "file": "jungle_planks.json" },
 					{ "value": "acacia", "file": "acacia_planks.json" },
 					{ "value": "dark_oak", "file": "dark_oak_planks.json" },
+					{ "value": "mangrove", "file": "mangrove_planks.json" },
 					{ "value": "crimson", "file": "crimson_planks.json" },
 					{ "value": "warped", "file": "warped_planks.json" }
 				]	
@@ -1086,6 +1135,7 @@
 				"minecraft:jungle_planks": "variant=jungle",
 				"minecraft:acacia_planks": "variant=acacia",
 				"minecraft:dark_oak_planks": "variant=dark_oak",
+				"minecraft:mangrove_planks": "variant=mangrove",
 				"minecraft:crimson_planks": "variant=crimson",
 				"minecraft:warped_planks": "variant=warped"
 			}
@@ -1227,6 +1277,7 @@
 					{ "value": "jungle", "file": "jungle_wood.json" },
 					{ "value": "acacia", "file": "acacia_wood.json" },
 					{ "value": "dark_oak", "file": "dark_oak_wood.json" },
+					{ "value": "mangrove", "file": "mangrove_wood.json" },
 					{ "value": "crimson_hyphae", "file": "crimson_hyphae.json" },
 					{ "value": "warped_hyphae", "file": "warped_hyphae.json" }
 				],
@@ -1240,6 +1291,7 @@
 				"minecraft:jungle_wood": "variant=jungle",
 				"minecraft:acacia_wood": "variant=acacia",
 				"minecraft:dark_oak_wood": "variant=dark_oak",
+				"minecraft:mangrove_wood": "variant=mangrove",
 				"minecraft:crimson_hyphae": "variant=crimson_hyphae",
 				"minecraft:warped_hyphae": "variant=warped_hyphae"
 			}
@@ -1254,6 +1306,7 @@
 					{ "value": "jungle", "file": "stripped_jungle_wood.json" },
 					{ "value": "acacia", "file": "stripped_acacia_wood.json" },
 					{ "value": "dark_oak", "file": "stripped_dark_oak_wood.json" },
+					{ "value": "mangrove", "file": "stripped_mangrove_wood.json" },
 					{ "value": "crimson_hyphae", "file": "stripped_crimson_hyphae.json" },
 					{ "value": "warped_hyphae", "file": "stripped_warped_hyphae.json" }
 				],
@@ -1267,6 +1320,7 @@
 				"minecraft:stripped_jungle_wood": "variant=jungle",
 				"minecraft:stripped_acacia_wood": "variant=acacia",
 				"minecraft:stripped_dark_oak_wood": "variant=dark_oak",
+				"minecraft:stripped_mangrove_wood": "variant=mangrove",
 				"minecraft:stripped_crimson_hyphae": "variant=crimson_hyphae",
 				"minecraft:stripped_warped_hyphae": "variant=warped_hyphae"
 			}
@@ -1281,6 +1335,7 @@
 					{ "value": "jungle", "file": "jungle_log.json" },
 					{ "value": "acacia", "file": "acacia_log.json" },
 					{ "value": "dark_oak", "file": "dark_oak_log.json" },
+					{ "value": "mangrove", "file": "mangrove_log.json" },
 					{ "value": "crimson_stem", "file": "crimson_stem.json" },
 					{ "value": "warped_stem", "file": "warped_stem.json" }
 				],
@@ -1294,6 +1349,7 @@
 				"minecraft:jungle_log": "variant=jungle",
 				"minecraft:acacia_log": "variant=acacia",
 				"minecraft:dark_oak_log": "variant=dark_oak",
+				"minecraft:mangrove_log": "variant=mangrove",
 				"minecraft:crimson_stem": "variant=crimson_stem",
 				"minecraft:warped_stem": "variant=warped_stem"
 			}
@@ -1308,6 +1364,7 @@
 					{ "value": "jungle", "file": "stripped_jungle_log.json" },
 					{ "value": "acacia", "file": "stripped_acacia_log.json" },
 					{ "value": "dark_oak", "file": "stripped_dark_oak_log.json" },
+					{ "value": "mangrove", "file": "stripped_mangrove_log.json" },
 					{ "value": "crimson_stem", "file": "stripped_crimson_stem.json" },
 					{ "value": "warped_stem", "file": "stripped_warped_stem.json" }
 				],
@@ -1321,6 +1378,7 @@
 				"minecraft:stripped_jungle_log": "variant=jungle",
 				"minecraft:stripped_acacia_log": "variant=acacia",
 				"minecraft:stripped_dark_oak_log": "variant=dark_oak",
+				"minecraft:stripped_mangrove_log": "variant=mangrove",
 				"minecraft:stripped_crimson_stem": "variant=crimson_stem",
 				"minecraft:stripped_warped_stem": "variant=warped_stem"
 			}
@@ -1336,6 +1394,7 @@
 					{ "value": "jungle", "file": "jungle_leaves.json" },
 					{ "value": "acacia", "file": "acacia_leaves.json" },
 					{ "value": "dark_oak", "file": "dark_oak_leaves.json" },
+					{ "value": "mangrove", "file": "mangrove_leaves.json" },
 					{ "value": "azalea", "file": "azalea_leaves.json" },
 					{ "value": "flowering_azalea", "file": "flowering_azalea_leaves.json" }
 				]
@@ -1352,6 +1411,7 @@
 				"minecraft:jungle_leaves": "variant=jungle",
 				"minecraft:acacia_leaves": "variant=acacia",
 				"minecraft:dark_oak_leaves": "variant=dark_oak",
+				"minecraft:mangrove_leaves": "variant=mangrove",
 				"minecraft:azalea_leaves": "variant=azalea",
 				"minecraft:flowering_azalea_leaves": "variant=flowering_azalea"
 			}
@@ -1686,14 +1746,15 @@
 			"name": "slab",
 			"states": {
 				"variant": [
-					{ "value": "oak", "file": "oak_slab.json"},
-					{ "value": "spruce", "file": "spruce_slab.json"},
-					{ "value": "birch", "file": "birch_slab.json"},
-					{ "value": "jungle", "file": "jungle_slab.json"},
-					{ "value": "acacia", "file": "acacia_slab.json"},
-					{ "value": "dark_oak", "file": "dark_oak_slab.json"},
-					{ "value": "crimson", "file": "crimson_slab.json"},
-					{ "value": "warped", "file": "warped_slab.json"},
+					{ "value": "oak", "file": "oak_slab.json" },
+					{ "value": "spruce", "file": "spruce_slab.json" },
+					{ "value": "birch", "file": "birch_slab.json" },
+					{ "value": "jungle", "file": "jungle_slab.json" },
+					{ "value": "acacia", "file": "acacia_slab.json" },
+					{ "value": "dark_oak", "file": "dark_oak_slab.json" },
+					{ "value": "mangrove", "file": "mangrove_slab.json" },
+					{ "value": "crimson", "file": "crimson_slab.json" },
+					{ "value": "warped", "file": "warped_slab.json" },
 					{ "value": "stone", "file": "stone_slab.json" },
 					{ "value": "smooth_stone", "file": "smooth_stone_slab.json" },
 					{ "value": "sandstone", "file": "sandstone_slab.json" },
@@ -1702,42 +1763,43 @@
 					{ "value": "cobblestone", "file": "cobblestone_slab.json" },
 					{ "value": "brick", "file": "brick_slab.json" },
 					{ "value": "stone_brick",  "file": "stone_brick_slab.json" },
+					{ "value": "mud_bricks",  "file": "mud_brick_slab.json" },
 					{ "value": "nether_brick", "file": "nether_brick_slab.json" },
-					{ "value": "quartz", "file": "quartz_slab.json"},
-					{ "value": "red_sandstone", "file": "red_sandstone_slab.json"},
-					{ "value": "cut_red_sandstone", "file": "cut_red_sandstone_slab.json"},
-					{ "value": "purpur", "file": "purpur_slab.json"},
+					{ "value": "quartz", "file": "quartz_slab.json" },
+					{ "value": "red_sandstone", "file": "red_sandstone_slab.json" },
+					{ "value": "cut_red_sandstone", "file": "cut_red_sandstone_slab.json" },
+					{ "value": "purpur", "file": "purpur_slab.json" },
 					{ "value": "prismarine", "file": "prismarine_slab.json" },
 					{ "value": "prismarine_brick", "file": "prismarine_brick_slab.json" },
 					{ "value": "dark_prismarine", "file": "dark_prismarine_slab.json" },
 					{ "value": "polished_granite", "file": "polished_granite_slab.json" },
-					{ "value": "smooth_red_sandstone", "file": "smooth_red_sandstone_slab.json"},
-					{ "value": "mossy_stone_brick", "file": "mossy_stone_brick_slab.json"},
-					{ "value": "polished_diorite", "file": "polished_diorite_slab.json"},
-					{ "value": "mossy_cobblestone", "file": "mossy_cobblestone_slab.json"},
-					{ "value": "end_stone_brick", "file": "end_stone_brick_slab.json"},
-					{ "value": "smooth_sandstone", "file": "smooth_sandstone_slab.json"},
-					{ "value": "smooth_quartz", "file": "smooth_quartz_slab.json"},
-					{ "value": "granite", "file": "granite_slab.json"},
-					{ "value": "andesite", "file": "andesite_slab.json"},
-					{ "value": "red_nether_brick", "file": "red_nether_brick_slab.json"},
-					{ "value": "polished_andesite", "file": "polished_andesite_slab.json"},
-					{ "value": "diorite", "file": "diorite_slab.json"},
-					{ "value": "blackstone", "file": "blackstone_slab.json"},
-					{ "value": "polished_blackstone", "file": "polished_blackstone_slab.json"},
-					{ "value": "polished_blackstone_brick", "file": "polished_blackstone_brick_slab.json"},
-					{ "value": "cut_copper", "file": "cut_copper_slab.json"},
-					{ "value": "exposed_cut_copper", "file": "exposed_cut_copper_slab.json"},
-					{ "value": "weathered_cut_copper", "file": "weathered_cut_copper_slab.json"},
-					{ "value": "oxidized_cut_copper", "file": "oxidized_cut_copper_slab.json"},
-					{ "value": "waxed_cut_copper", "file": "waxed_cut_copper_slab.json"},
-					{ "value": "waxed_exposed_cut_copper", "file": "waxed_exposed_cut_copper_slab.json"},
-					{ "value": "waxed_weathered_cut_copper", "file": "waxed_weathered_cut_copper_slab.json"},
-					{ "value": "waxed_oxidized_cut_copper", "file": "waxed_oxidized_cut_copper_slab.json"},
-					{ "value": "cobbled_deepslate", "file": "cobbled_deepslate_slab.json"},
-					{ "value": "polished_deepslate", "file": "polished_deepslate_slab.json"},
-					{ "value": "deepslate_bricks", "file": "deepslate_brick_slab.json"},
-					{ "value": "deepslate_tiles", "file": "deepslate_tile_slab.json"}
+					{ "value": "smooth_red_sandstone", "file": "smooth_red_sandstone_slab.json" },
+					{ "value": "mossy_stone_brick", "file": "mossy_stone_brick_slab.json" },
+					{ "value": "polished_diorite", "file": "polished_diorite_slab.json" },
+					{ "value": "mossy_cobblestone", "file": "mossy_cobblestone_slab.json" },
+					{ "value": "end_stone_brick", "file": "end_stone_brick_slab.json" },
+					{ "value": "smooth_sandstone", "file": "smooth_sandstone_slab.json" },
+					{ "value": "smooth_quartz", "file": "smooth_quartz_slab.json" },
+					{ "value": "granite", "file": "granite_slab.json" },
+					{ "value": "andesite", "file": "andesite_slab.json" },
+					{ "value": "red_nether_brick", "file": "red_nether_brick_slab.json" },
+					{ "value": "polished_andesite", "file": "polished_andesite_slab.json" },
+					{ "value": "diorite", "file": "diorite_slab.json" },
+					{ "value": "blackstone", "file": "blackstone_slab.json" },
+					{ "value": "polished_blackstone", "file": "polished_blackstone_slab.json" },
+					{ "value": "polished_blackstone_brick", "file": "polished_blackstone_brick_slab.json" },
+					{ "value": "cut_copper", "file": "cut_copper_slab.json" },
+					{ "value": "exposed_cut_copper", "file": "exposed_cut_copper_slab.json" },
+					{ "value": "weathered_cut_copper", "file": "weathered_cut_copper_slab.json" },
+					{ "value": "oxidized_cut_copper", "file": "oxidized_cut_copper_slab.json" },
+					{ "value": "waxed_cut_copper", "file": "waxed_cut_copper_slab.json" },
+					{ "value": "waxed_exposed_cut_copper", "file": "waxed_exposed_cut_copper_slab.json" },
+					{ "value": "waxed_weathered_cut_copper", "file": "waxed_weathered_cut_copper_slab.json" },
+					{ "value": "waxed_oxidized_cut_copper", "file": "waxed_oxidized_cut_copper_slab.json" },
+					{ "value": "cobbled_deepslate", "file": "cobbled_deepslate_slab.json" },
+					{ "value": "polished_deepslate", "file": "polished_deepslate_slab.json" },
+					{ "value": "deepslate_bricks", "file": "deepslate_brick_slab.json" },
+					{ "value": "deepslate_tiles", "file": "deepslate_tile_slab.json" }
 				],
 				"type": [ "top", "bottom", "double" ]
 			},
@@ -1749,6 +1811,7 @@
 				"minecraft:jungle_slab": "variant=jungle",
 				"minecraft:acacia_slab": "variant=acacia",
 				"minecraft:dark_oak_slab": "variant=dark_oak",
+				"minecraft:mangrove_slab": "variant=mangrove",
 				"minecraft:crimson_slab": "variant=crimson",
 				"minecraft:warped_slab": "variant=warped",
 				"minecraft:stone_slab": "variant=stone",
@@ -1759,6 +1822,7 @@
 				"minecraft:cobblestone_slab": "variant=cobblestone",
 				"minecraft:brick_slab": "variant=brick",
 				"minecraft:stone_brick_slab": "variant=stone_brick",
+				"minecraft:mud_brick_slab": "variant=mud_bricks",
 				"minecraft:nether_brick_slab": "variant=nether_brick",
 				"minecraft:quartz_slab": "variant=quartz",
 				"minecraft:red_sandstone_slab": "variant=red_sandstone",
@@ -1890,6 +1954,7 @@
 					{ "value": "jungle", "file": "jungle_stairs.json" },
 					{ "value": "acacia", "file": "acacia_stairs.json" },
 					{ "value": "dark_oak", "file": "dark_oak_stairs.json" },
+					{ "value": "mangrove", "file": "mangrove_stairs.json" },
 					{ "value": "crimson", "file": "crimson_stairs.json" },
 					{ "value": "warped", "file": "warped_stairs.json" },
 					{ "value": "stone", "file": "stone_stairs.json" },
@@ -1897,6 +1962,7 @@
 					{ "value": "cobblestone", "file": "cobblestone_stairs.json" },
 					{ "value": "brick", "file": "brick_stairs.json" },
 					{ "value": "stone_brick", "file": "stone_brick_stairs.json" },
+					{ "value": "mud_bricks", "file": "mud_brick_stairs.json" },
 					{ "value": "nether_brick", "file": "nether_brick_stairs.json" },
 					{ "value": "quartz", "file": "quartz_stairs.json" },
 					{ "value": "red_sandstone", "file": "red_sandstone_stairs.json" },
@@ -1945,6 +2011,7 @@
 				"minecraft:jungle_stairs": "variant=jungle",
 				"minecraft:acacia_stairs": "variant=acacia",
 				"minecraft:dark_oak_stairs": "variant=dark_oak",
+				"minecraft:mangrove_stairs": "variant=mangrove",
 				"minecraft:crimson_stairs": "variant=crimson",
 				"minecraft:warped_stairs": "variant=warped",
 				"minecraft:stone_stairs": "variant=stone",
@@ -1952,6 +2019,7 @@
 				"minecraft:cobblestone_stairs": "variant=cobblestone",
 				"minecraft:brick_stairs": "variant=brick",
 				"minecraft:stone_brick_stairs": "variant=stone_brick",
+				"minecraft:mud_brick_stairs": "variant=mud_bricks",
 				"minecraft:nether_brick_stairs": "variant=nether_brick",
 				"minecraft:quartz_stairs": "variant=quartz",
 				"minecraft:red_sandstone_stairs": "variant=red_sandstone",
@@ -2092,7 +2160,7 @@
 		{
 			"name": "sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "crimson", "warped" ],
+				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "crimson", "warped" ],
 				"rotation": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
 			},
 			"default_state": "rotation=0,wood=oak",
@@ -2104,7 +2172,8 @@
 					"wood=birch": "wood=birch,variant=standing",
 					"wood=jungle": "wood=jungle,variant=standing",
 					"wood=acacia": "wood=acacia,variant=standing",
-					"wood=dark_oak": "wood=darkoak,variant=standing",
+					"wood=dark_oak": "wood=dark_oak,variant=standing",
+					"wood=mangrove": "wood=mangrove,variant=standing",
 					"wood=crimson": "wood=crimson,variant=standing",
 					"wood=warped": "wood=warped,variant=standing"
 				},
@@ -2137,6 +2206,7 @@
 				"minecraft:jungle_sign": "wood=jungle",
 				"minecraft:acacia_sign": "wood=acacia",
 				"minecraft:dark_oak_sign": "wood=dark_oak",
+				"minecraft:mangrove_sign": "wood=mangrove",
 				"minecraft:crimson_sign": "wood=crimson",
 				"minecraft:warped_sign": "wood=warped"
 			}
@@ -2152,6 +2222,7 @@
 					{ "value": "jungle", "file": "jungle_door.json" },
 					{ "value": "acacia", "file": "acacia_door.json" },
 					{ "value": "dark_oak", "file": "dark_oak_door.json" },
+					{ "value": "mangrove", "file": "mangrove_door.json" },
 					{ "value": "iron", "file": "iron_door.json" },
 					{ "value": "crimson", "file": "crimson_door.json" },
 					{ "value": "warped", "file": "warped_door.json" }
@@ -2186,6 +2257,7 @@
 				"minecraft:jungle_door": "variant=jungle",
 				"minecraft:acacia_door": "variant=acacia",
 				"minecraft:dark_oak_door": "variant=dark_oak",
+				"minecraft:mangrove_door": "variant=mangrove",
 				"minecraft:iron_door": "variant=iron",
 				"minecraft:crimson_door": "variant=crimson",
 				"minecraft:warped_door": "variant=warped"
@@ -2212,7 +2284,7 @@
 		{
 			"name": "wall_sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "crimson", "warped" ],
+				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "crimson", "warped" ],
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"timeline": {
@@ -2223,7 +2295,8 @@
 					"wood=birch": "wood=birch,variant=wall",
 					"wood=jungle": "wood=jungle,variant=wall",
 					"wood=acacia": "wood=acacia,variant=wall",
-					"wood=dark_oak": "wood=darkoak,variant=wall",
+					"wood=dark_oak": "wood=dark_oak,variant=wall",
+					"wood=mangrove": "wood=mangrove,variant=wall",
 					"wood=crimson": "wood=crimson,variant=wall",
 					"wood=warped": "wood=warped,variant=wall"
 				},
@@ -2250,6 +2323,7 @@
 				"minecraft:jungle_wall_sign": "wood=jungle",
 				"minecraft:acacia_wall_sign": "wood=acacia",
 				"minecraft:dark_oak_wall_sign": "wood=dark_oak",
+				"minecraft:mangrove_wall_sign": "wood=mangrove",
 				"minecraft:crimson_wall_sign": "wood=crimson",
 				"minecraft:warped_wall_sign": "wood=warped"
 			}
@@ -2304,6 +2378,7 @@
 					{ "value": "jungle", "file": "jungle_pressure_plate.json" },
 					{ "value": "acacia", "file": "acacia_pressure_plate.json" },
 					{ "value": "dark_oak", "file": "dark_oak_pressure_plate.json" },
+					{ "value": "mangrove", "file": "mangrove_pressure_plate.json" },
 					{ "value": "crimson", "file": "crimson_pressure_plate.json" },
 					{ "value": "warped", "file": "warped_pressure_plate.json" },
 					{ "value": "polished_blackstone", "file": "polished_blackstone_pressure_plate.json" }
@@ -2323,6 +2398,7 @@
 				"minecraft:jungle_pressure_plate": "variant=jungle",
 				"minecraft:acacia_pressure_plate": "variant=acacia",
 				"minecraft:dark_oak_pressure_plate": "variant=dark_oak",
+				"minecraft:mangrove_pressure_plate": "variant=mangrove",
 				"minecraft:crimson_pressure_plate": "variant=crimson",
 				"minecraft:warped_pressure_plate": "variant=warped",
 				"minecraft:polished_blackstone_pressure_plate": "variant=polished_blackstone"
@@ -2383,6 +2459,7 @@
 					{ "value": "jungle", "file": "jungle_button.json" },
 					{ "value": "acacia", "file": "acacia_button.json" },
 					{ "value": "dark_oak", "file": "dark_oak_button.json" },
+					{ "value": "mangrove", "file": "mangrove_button.json" },
 					{ "value": "crimson", "file": "crimson_button.json" },
 					{ "value": "warped", "file": "warped_button.json" },
 					{ "value": "polished_blackstone", "file": "polished_blackstone_button.json" }
@@ -2425,6 +2502,7 @@
 				"minecraft:jungle_button": "variant=jungle",
 				"minecraft:acacia_button": "variant=acacia",
 				"minecraft:dark_oak_button": "variant=dark_oak",
+				"minecraft:mangrove_button": "variant=mangrove",
 				"minecraft:crimson_button": "variant=crimson",
 				"minecraft:warped_button": "variant=warped",
 				"minecraft:polished_blackstone_button": "variant=polished_blackstone"
@@ -2483,6 +2561,7 @@
 					{ "value": "jungle", "file": "jungle_fence.json" },
 					{ "value": "acacia", "file": "acacia_fence.json" },
 					{ "value": "dark_oak", "file": "dark_oak_fence.json" },
+					{ "value": "mangrove", "file": "mangrove_fence.json" },
 					{ "value": "nether_brick", "file": "nether_brick_fence.json" },
 					{ "value": "crimson", "file": "crimson_fence.json" },
 					{ "value": "warped", "file": "warped_fence.json" }
@@ -2501,6 +2580,7 @@
 				"minecraft:jungle_fence": "variant=jungle",
 				"minecraft:acacia_fence": "variant=acacia",
 				"minecraft:dark_oak_fence": "variant=dark_oak",
+				"minecraft:mangrove_fence": "variant=mangrove",
 				"minecraft:nether_brick_fence": "variant=nether_brick",
 				"minecraft:crimson_fence": "variant=crimson",
 				"minecraft:warped_fence": "variant=warped"
@@ -2524,7 +2604,7 @@
 		{
 			"name": "glowstone",
 			"file": "glowstone.json",
-			"brightness": 1,
+			"brightness": 0.75,
 			"id": "minecraft:glowstone"
 		},
 		{
@@ -2672,6 +2752,7 @@
 					{ "value": "jungle", "file": "jungle_trapdoor.json" },
 					{ "value": "acacia", "file": "acacia_trapdoor.json" },
 					{ "value": "dark_oak", "file": "dark_oak_trapdoor.json" },
+					{ "value": "mangrove", "file": "mangrove_trapdoor.json" },
 					{ "value": "iron", "file": "iron_trapdoor.json" },
 					{ "value": "crimson", "file": "crimson_trapdoor.json" },
 					{ "value": "warped", "file": "warped_trapdoor.json" }
@@ -2716,6 +2797,7 @@
 				"minecraft:jungle_trapdoor": "variant=jungle",
 				"minecraft:acacia_trapdoor": "variant=acacia",
 				"minecraft:dark_oak_trapdoor": "variant=dark_oak",
+				"minecraft:mangrove_trapdoor": "variant=mangrove",
 				"minecraft:iron_trapdoor": "variant=iron",
 				"minecraft:crimson_trapdoor": "variant=crimson",
 				"minecraft:warped_trapdoor": "variant=warped"
@@ -2916,6 +2998,7 @@
 					{ "value": "jungle", "file": "jungle_fence_gate.json" },
 					{ "value": "acacia", "file": "acacia_fence_gate.json" },
 					{ "value": "dark_oak", "file": "dark_oak_fence_gate.json" },
+					{ "value": "mangrove", "file": "mangrove_fence_gate.json" },
 					{ "value": "crimson", "file": "crimson_fence_gate.json" },
 					{ "value": "warped", "file": "warped_fence_gate.json" }
 				],
@@ -2923,7 +3006,31 @@
 				"open": [ "false", "true" ],
 				"in_wall": [ "false", "true" ]
 			},
-			"default_state": "variant=oak,facing=west,open=false",
+			"default_state": "variant=oak,facing=west,open=false,in_wall=false",
+			"timeline": {
+				"model": "fence_gate",
+				"model_state": {
+					"variant=oak": "variant=oak",
+					"variant=spruce": "variant=spruce",
+					"variant=birch": "variant=birch",
+					"variant=jungle": "variant=jungle",
+					"variant=acacia": "variant=acacia",
+					"variant=dark_oak": "variant=dark_oak",
+					"variant=mangrove": "variant=mangrove",
+					"variant=crimson": "variant=crimson",
+					"variant=warped": "variant=warped"
+				},
+				"position": {
+					"in_wall=false": [ 8, 0, 8 ],
+					"in_wall=true": [ 8, -3, 8 ]
+				},
+				"rotation": {
+					"facing=north": [ 0, 180, 0 ],
+					"facing=south": [ 0, 0, 0 ],
+					"facing=east": [ 0, 90, 0 ],
+					"facing=west": [ 0, -90, 0 ]
+				}
+			},
 			"id": {
 				"minecraft:oak_fence_gate": "variant=oak",
 				"minecraft:spruce_fence_gate": "variant=spruce",
@@ -2931,6 +3038,7 @@
 				"minecraft:jungle_fence_gate": "variant=jungle",
 				"minecraft:acacia_fence_gate": "variant=acacia",
 				"minecraft:dark_oak_fence_gate": "variant=dark_oak",
+				"minecraft:mangrove_fence_gate": "variant=mangrove",
 				"minecraft:crimson_fence_gate": "variant=crimson",
 				"minecraft:warped_fence_gate": "variant=warped"
 			}
@@ -3176,6 +3284,7 @@
 					{ "value": "mossy_stone_brick", "file": "mossy_stone_brick_wall.json" },
 					{ "value": "granite", "file": "granite_wall.json" },
 					{ "value": "stone_brick", "file": "stone_brick_wall.json" },
+					{ "value": "mud_bricks",  "file": "mud_brick_wall.json" },
 					{ "value": "nether_brick", "file": "nether_brick_wall.json" },
 					{ "value": "andesite", "file": "andesite_wall.json" },
 					{ "value": "red_nether_brick", "file": "red_nether_brick_wall.json" },
@@ -3206,6 +3315,7 @@
 				"minecraft:mossy_stone_brick_wall": "variant=mossy_stone_brick",
 				"minecraft:granite_wall": "variant=granite",
 				"minecraft:stone_brick_wall": "variant=stone_brick",
+				"minecraft:mud_brick_wall": "variant=mud_bricks",
 				"minecraft:nether_brick_wall": "variant=nether_brick",
 				"minecraft:andesite_wall": "variant=andesite",
 				"minecraft:red_nether_brick_wall": "variant=red_nether_brick",
@@ -3234,6 +3344,7 @@
 					{ "value": "jungle_sapling", "file": "potted_jungle_sapling.json" },
 					{ "value": "acacia_sapling", "file": "potted_acacia_sapling.json" },
 					{ "value": "dark_oak_sapling", "file": "potted_dark_oak_sapling.json" },
+					{ "value": "mangrove_propagule", "file": "potted_mangrove_propagule.json" },
 					{ "value": "red_mushroom", "file": "potted_red_mushroom.json" },
 					{ "value": "brown_mushroom", "file": "potted_brown_mushroom.json" },
 					{ "value": "cactus", "file": "potted_cactus.json" },
@@ -3270,6 +3381,7 @@
 				"minecraft:potted_jungle_sapling": "contents=jungle_sapling",
 				"minecraft:potted_acacia_sapling": "contents=acacia_sapling",
 				"minecraft:potted_dark_oak_sapling": "contents=dark_oak_sapling",
+				"minecraft:potted_mangrove_propagule": "contents=mangrove_propagule",
 				"minecraft:potted_red_mushroom": "contents=red_mushroom",
 				"minecraft:potted_brown_mushroom": "contents=brown_mushroom",
 				"minecraft:potted_cactus": "contents=cactus",
@@ -3844,7 +3956,7 @@
 		{
 			"name": "sea_lantern",
 			"file": "sea_lantern.json",
-			"brightness": 1,
+			"brightness": 0.75,
 			"id": "minecraft:sea_lantern"
 		},
 		{
@@ -4066,7 +4178,7 @@
 		{
 			"name": "magma_block",
 			"file": "magma_block.json",
-			"brightness": 0.75,
+			"brightness": 0.5,
 			"id": "minecraft:magma_block"
 		},
 		{
@@ -4314,7 +4426,7 @@
 				"waterlogged": [ "false", "true" ]
 			},
 			"default_state": "pickles=1,waterlogged=false",
-			"brightness": 0.75,
+			"brightness": 0.5,
 			"id": "minecraft:sea_pickle"
 		},
 		{
@@ -4700,8 +4812,8 @@
 				],
 				"hanging": [ "false", "true" ]
 			},
-			"brightness": 0.75,
 			"default_state": "variant=normal,hanging=false",
+			"brightness": 0.75,
 			"id": {
 				"minecraft:lantern": "variant=normal",
 				"minecraft:soul_lantern": "variant=soul_lantern"
@@ -4720,11 +4832,11 @@
 					{ "value": "true", "brightness": 0.75 }
 				]
 			},
+			"default_state": "variant=normal,facing=west,lit=true",
 			"wind": {
 				"axis": "all",
 				"ymin": 8
 			},
-			"default_state": "variant=normal,facing=west,lit=true",
 			"id": {
 				"minecraft:campfire": "variant=normal",
 				"minecraft:soul_campfire": "variant=soul_campfire"
@@ -4736,12 +4848,12 @@
 			"states": {
 				"age": [ "0", "1", "2", "3" ]
 			},
+			"default_state": "age=0",
 			"wind": {
 				"axis": "all",
 				"ymin": 0
 			},
 			"subsurface": 1,
-			"default_state": "age=0",
 			"id": "minecraft:sweet_berry_bush"
 		},
 		{
@@ -4890,7 +5002,7 @@
 		{
 			"name": "shroomlight",
 			"file": "shroomlight.json",
-			"brightness": 1,
+			"brightness": 0.75,
 			"id": "minecraft:shroomlight"
 		},
 		{
@@ -5054,8 +5166,8 @@
 				],
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
-			"brightness": 0.5,
 			"default_state": "variant=cluster,facing=up",
+			"brightness": 0.5,
 			"id": {
 				"minecraft:small_amethyst_bud": "variant=small",
 				"minecraft:medium_amethyst_bud": "variant=medium",
@@ -5092,6 +5204,45 @@
 			},
 			"default_state": "sculk_sensor_phase=inactive",
 			"id": "minecraft:sculk_sensor"
+		},
+		{
+			"name": "sculk",
+			"file": "sculk.json",
+			"id": "minecraft:sculk"
+		},
+		{
+			"name": "sculk_vein",
+			"file": "sculk_vein.json",
+			"states": {
+				"north": [ "false", "true" ],
+				"south": [ "false", "true" ],
+				"east": [ "false", "true" ],
+				"west": [ "false", "true" ],
+				"up": [ "false", "true" ],
+				"down": [ "false", "true" ]
+			},
+			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
+			"subsurface": 1,
+			"id": "minecraft:sculk_vein"
+		},
+		{
+			"name": "sculk_catalyst",
+			"file": "sculk_catalyst.json",
+			"states": {
+				"bloom": [ "false", "true" ]
+			},
+			"default_state": "bloom=false",
+			"brightness": 0.25,
+			"id": "minecraft:sculk_catalyst"
+		},
+		{
+			"name": "sculk_shrieker",
+			"file": "sculk_shrieker.json",
+			"states": {
+				"can_summon": [ "false", "true" ]
+			},
+			"default_state": "can_summon=true",
+			"id": "minecraft:sculk_shrieker"
 		},
 		{
 			"name": "copper_ore",
@@ -5187,9 +5338,9 @@
 				"up": [ "false", "true" ],
 				"down": [ "false", "true" ]
 			},
+			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
 			"brightness": 0.25,
 			"subsurface": 1,
-			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
 			"id": "minecraft:glow_lichen"
 		},
 		{
@@ -5229,8 +5380,8 @@
 					{ "value": "flowering_azalea", "file": "flowering_azalea.json" }
 				]
 			},
-			"subsurface": 1,
 			"default_state": "variant=azalea",
+			"subsurface": 1,
 			"id": {
 				"minecraft:azalea": "variant=azalea",
 				"minecraft:flowering_azalea": "variant=flowering_azalea"
@@ -5327,10 +5478,79 @@
 			"name": "raw_gold_block",
 			"file": "raw_gold_block.json",
 			"id": "minecraft:raw_gold_block"
+		},
+		{
+			"name": "mangrove_propagule",
+			"file": "mangrove_propagule.json",
+			"states": {
+				"hanging": [ "false", "true" ],
+				"age": [ "0", "1", "2", "3", "4" ]
+			},
+			"default_state": "hanging=false,age=0",
+			"random_offset_xz": true,
+			"id": "minecraft:mangrove_propagule"
+		},
+		{
+			"name": "mangrove_roots",
+			"file": "mangrove_roots.json",
+			"id": "minecraft:mangrove_roots"
+		},
+		{
+			"name": "muddy_mangrove_roots",
+			"file": "muddy_mangrove_roots.json",
+			"states": {
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "axis=y",
+			"id": "minecraft:muddy_mangrove_roots"
+		},
+		{
+			"name": "mud",
+			"file": "mud.json",
+			"id": "minecraft:mud"
+		},
+		{
+			"name": "packed_mud",
+			"file": "packed_mud.json",
+			"id": "minecraft:packed_mud"
+		},
+		{
+			"name": "mud_bricks",
+			"file": "mud_bricks.json",
+			"id": "minecraft:mud_bricks"
+		},
+		{
+			"name": "froglight",
+			"states": {
+				"variant": [
+					{ "value": "ochre", "file": "ochre_froglight.json" },
+					{ "value": "pearlescent", "file": "pearlescent_froglight.json" },
+					{ "value": "verdant", "file": "verdant_froglight.json" }
+				],
+				"axis": [ "x", "y", "z" ]
+			},
+			"default_state": "variant=ochre,axis=y",
+			"brightness": 0.75,
+			"id": {
+				"minecraft:ochre_froglight": "variant=ochre",
+				"minecraft:pearlescent_froglight": "variant=pearlescent",
+				"minecraft:verdant_froglight": "variant=verdant"
+			}
+		},
+		{
+			"name": "frogspawn",
+			"file": "frogspawn.json",
+			"id": "minecraft:frogspawn"
+		},
+		{
+			"name": "reinforced_deepslate",
+			"file": "reinforced_deepslate.json",
+			"id": "minecraft:reinforced_deepslate"
 		}
 	],
 	"model_textures": [
 		"entity/alex",
+		"entity/allay/allay",
 		"entity/armorstand/wood",
 		"entity/axolotl/axolotl_lucy",
 		"entity/axolotl/axolotl_wild",
@@ -5408,6 +5628,7 @@
 		"entity/boat/birch",
 		"entity/boat/dark_oak",
 		"entity/boat/jungle",
+		"entity/boat/mangrove",
 		"entity/boat/oak",
 		"entity/boat/spruce",
 		"entity/cat/all_black",
@@ -5433,6 +5654,13 @@
 		"entity/chest/trapped",
 		"entity/chest/trapped_left",
 		"entity/chest/trapped_right",
+		"entity/chest_boat/acacia",
+		"entity/chest_boat/birch",
+		"entity/chest_boat/dark_oak",
+		"entity/chest_boat/jungle",
+		"entity/chest_boat/mangrove",
+		"entity/chest_boat/oak",
+		"entity/chest_boat/spruce",
 		"entity/chicken",
 		"entity/conduit/base",
 		"entity/conduit/cage",
@@ -5472,6 +5700,9 @@
 		"entity/fox/fox_sleep",
 		"entity/fox/snow_fox",
 		"entity/fox/snow_fox_sleep",
+		"entity/frog/cold_frog",
+		"entity/frog/temperate_frog",
+		"entity/frog/warm_frog",
 		"entity/ghast/ghast",
 		"entity/ghast/ghast_shooting",
 		"entity/goat/goat",
@@ -5586,6 +5817,7 @@
 		"entity/signs/crimson",
 		"entity/signs/dark_oak",
 		"entity/signs/jungle",
+		"entity/signs/mangrove",
 		"entity/signs/oak",
 		"entity/signs/spruce",
 		"entity/signs/warped",
@@ -5606,6 +5838,7 @@
 		"entity/strider/strider",
 		"entity/strider/strider_cold",
 		"entity/strider/strider_saddle",
+		"entity/tadpole/tadpole",
 		"entity/trident",
 		"entity/turtle/big_sea_turtle",
 		"entity/villager/villager",
@@ -5636,6 +5869,11 @@
 		"entity/villager/type/swamp",
 		"entity/villager/type/taiga",
 		"entity/wandering_trader",
+		"entity/warden/warden",
+		"entity/warden/warden_bioluminescent_layer",
+		"entity/warden/warden_heart",
+		"entity/warden/warden_pulsating_spots_1",
+		"entity/warden/warden_pulsating_spots_2",
 		"entity/witch",
 		"entity/wither/wither",
 		"entity/wither/wither_invulnerable",
@@ -5675,11 +5913,34 @@
 		"entity/zombie_villager/type/swamp",
 		"entity/zombie_villager/type/taiga",
 		"item/spyglass_model",
+		"models/armor/chainmail_layer_1",
+		"models/armor/chainmail_layer_2",
+		"models/armor/diamond_layer_1",
+		"models/armor/diamond_layer_2",
+		"models/armor/gold_layer_1",
+		"models/armor/gold_layer_2",
+		"models/armor/iron_layer_1",
+		"models/armor/iron_layer_2",
+		"models/armor/leather_layer_1",
+		"models/armor/leather_layer_1_overlay",
+		"models/armor/leather_layer_2",
+		"models/armor/leather_layer_2_overlay",
+		"models/armor/netherite_layer_1",
+		"models/armor/netherite_layer_2",
+		"models/armor/turtle_layer_1",
 		"block/brown_mushroom",
 		"block/carved_pumpkin",
 		"block/cobblestone",
 		"block/lever",
 		"block/oak_planks",
+		"block/spruce_planks",
+		"block/birch_planks",
+		"block/jungle_planks",
+		"block/acacia_planks",
+		"block/dark_oak_planks",
+		"block/mangrove_planks",
+		"block/crimson_planks",
+		"block/warped_planks",
 		"block/piston_top_sticky",
 		"block/piston_top",
 		"block/piston_side",
@@ -6464,7 +6725,42 @@
 		"block/smooth_basalt",
 		"block/raw_iron_block",
 		"block/raw_copper_block",
-		"block/raw_gold_block"
+		"block/raw_gold_block",
+		"block/sculk_catalyst_bottom",
+		"block/sculk_catalyst_side",
+		"block/sculk_catalyst_top",
+		"block/sculk_shrieker_bottom",
+		"block/sculk_shrieker_side",
+		"block/sculk_shrieker_top",
+		"block/mangrove_planks",
+		"block/mangrove_log",
+		"block/mangrove_log_top",
+		"block/stripped_mangrove_log",
+		"block/stripped_mangrove_log_top",
+		"block/mangrove_leaves",
+		"block/mangrove_leaves opaque",
+		"block/mangrove_propagule",
+		"block/mangrove_propagule_hanging",
+		"block/mangrove_roots_side",
+		"block/mangrove_roots_top",
+		"block/muddy_mangrove_roots_side",
+		"block/muddy_mangrove_roots_top",
+		"block/mangrove_door_bottom",
+		"block/mangrove_door_top",
+		"block/mangrove_trapdoor",
+		"block/mud",
+		"block/packed_mud",
+		"block/mud_bricks",
+		"block/ochre_froglight_side",
+		"block/ochre_froglight_top",
+		"block/pearlescent_froglight_side",
+		"block/pearlescent_froglight_top",
+		"block/verdant_froglight_side",
+		"block/verdant_froglight_top",
+		"block/frogspawn",
+		"block/reinforced_deepslate_bottom",
+		"block/reinforced_deepslate_side",
+		"block/reinforced_deepslate_top"
 	],
 	"block_textures_animated": [
 		"block/water_still",
@@ -6509,7 +6805,13 @@
 		"block/soul_campfire_fire",
 		"block/soul_campfire_log_lit",
 		"block/sculk_sensor_tendril_active",
-		"block/sculk_sensor_tendril_inactive"
+		"block/sculk_sensor_tendril_inactive",
+		"block/sculk",
+		"block/sculk_catalyst_side_bloom",
+		"block/sculk_catalyst_top_bloom",
+		"block/sculk_shrieker_inner_top",
+		"block/sculk_shrieker_can_summon_inner_top",
+		"block/sculk_vein"
 	],
 	"block_textures_color": {
 		"block/grass_block_top": "grass",
@@ -6520,12 +6822,14 @@
 		"block/jungle_leaves": "jungle_leaves",
 		"block/acacia_leaves": "acacia_leaves",
 		"block/dark_oak_leaves": "dark_oak_leaves",
+		"block/mangrove_leaves": "mangrove_leaves",
 		"block/oak_leaves opaque": "oak_leaves",
 		"block/spruce_leaves opaque": "spruce_leaves",
 		"block/birch_leaves opaque": "birch_leaves",
 		"block/jungle_leaves opaque": "jungle_leaves",
 		"block/acacia_leaves opaque": "acacia_leaves",
 		"block/dark_oak_leaves opaque": "dark_oak_leaves",
+		"block/mangrove_leaves opaque": "mangrove_leaves",
 		"block/attached_pumpkin_stem": "#80DF10",
 		"block/pumpkin_stem": "#80DF10",
 		"block/attached_melon_stem": "#80DF10",
@@ -6590,14 +6894,20 @@
 			"alphaY": 1,
 			"alphaZ": null
 		},
+		"acacia_leaves.json": {
+			"colorY": "#B7B9B7",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
 		"dark_oak_leaves.json": {
 			"colorY": "#9E9E9E",
 			"colorZ": null,
 			"alphaY": 1,
 			"alphaZ": null
 		},
-		"acacia_leaves.json": {
-			"colorY": "#B7B9B7",
+		"mangrove_leaves.json": {
+			"colorY": "#9E9E9E",
 			"colorZ": null,
 			"alphaY": 1,
 			"alphaZ": null
@@ -6958,6 +7268,19 @@
 		"item/raw_iron",
 		"item/raw_copper",
 		"item/raw_gold",
+		"item/mangrove_boat",
+		"item/mangrove_door",
+		"item/mangrove_sign",
+		"item/mangrove_propagule",
+		"item/tadpole_bucket",
+		"item/oak_chest_boat",
+		"item/spruce_chest_boat",
+		"item/birch_chest_boat",
+		"item/jungle_chest_boat",
+		"item/acacia_chest_boat",
+		"item/dark_oak_chest_boat",
+		"item/mangrove_chest_boat",
+		"item/echo_shard",
 		"item/light",
 		"item/light_00",
 		"item/light_01",
@@ -6975,7 +7298,6 @@
 		"item/light_13",
 		"item/light_14",
 		"item/light_15",
-		"",
 		"item/clock_00",
 		"item/clock_01",
 		"item/clock_02",
@@ -7071,7 +7393,39 @@
 		"item/compass_28",
 		"item/compass_29",
 		"item/compass_30",
-		"item/compass_31"
+		"item/compass_31",
+		"item/recovery_compass_00",
+		"item/recovery_compass_01",
+		"item/recovery_compass_02",
+		"item/recovery_compass_03",
+		"item/recovery_compass_04",
+		"item/recovery_compass_05",
+		"item/recovery_compass_06",
+		"item/recovery_compass_07",
+		"item/recovery_compass_08",
+		"item/recovery_compass_09",
+		"item/recovery_compass_10",
+		"item/recovery_compass_11",
+		"item/recovery_compass_12",
+		"item/recovery_compass_13",
+		"item/recovery_compass_14",
+		"item/recovery_compass_15",
+		"item/recovery_compass_16",
+		"item/recovery_compass_17",
+		"item/recovery_compass_18",
+		"item/recovery_compass_19",
+		"item/recovery_compass_20",
+		"item/recovery_compass_21",
+		"item/recovery_compass_22",
+		"item/recovery_compass_23",
+		"item/recovery_compass_24",
+		"item/recovery_compass_25",
+		"item/recovery_compass_26",
+		"item/recovery_compass_27",
+		"item/recovery_compass_28",
+		"item/recovery_compass_29",
+		"item/recovery_compass_30",
+		"item/recovery_compass_31"
 	],
 	"particle_textures": [
 		"particle/angry",
@@ -7147,6 +7501,28 @@
 		"particle/lava",
 		"particle/nautilus",
 		"particle/note",
+		"particle/sculk_charge_0",
+		"particle/sculk_charge_1",
+		"particle/sculk_charge_2",
+		"particle/sculk_charge_3",
+		"particle/sculk_charge_4",
+		"particle/sculk_charge_5",
+		"particle/sculk_charge_6",
+		"particle/sculk_charge_pop_0",
+		"particle/sculk_charge_pop_1",
+		"particle/sculk_charge_pop_2",
+		"particle/sculk_charge_pop_3",
+		"particle/sculk_soul_0",
+		"particle/sculk_soul_1",
+		"particle/sculk_soul_2",
+		"particle/sculk_soul_3",
+		"particle/sculk_soul_4",
+		"particle/sculk_soul_5",
+		"particle/sculk_soul_6",
+		"particle/sculk_soul_7",
+		"particle/sculk_soul_8",
+		"particle/sculk_soul_9",
+		"particle/sculk_soul_10",
 		"particle/sga_a",
 		"particle/sga_b",
 		"particle/sga_c",
@@ -7173,6 +7549,22 @@
 		"particle/sga_x",
 		"particle/sga_y",
 		"particle/sga_z",
+		"particle/sonic_boom_0",
+		"particle/sonic_boom_1",
+		"particle/sonic_boom_2",
+		"particle/sonic_boom_3",
+		"particle/sonic_boom_4",
+		"particle/sonic_boom_5",
+		"particle/sonic_boom_6",
+		"particle/sonic_boom_7",
+		"particle/sonic_boom_8",
+		"particle/sonic_boom_9",
+		"particle/sonic_boom_10",
+		"particle/sonic_boom_11",
+		"particle/sonic_boom_12",
+		"particle/sonic_boom_13",
+		"particle/sonic_boom_14",
+		"particle/sonic_boom_15",
 		"particle/spark_0",
 		"particle/spark_1",
 		"particle/spark_2",
@@ -7248,10 +7640,31 @@
 			"frames": 8
 		},
 		{
+			"name": "sculk_charge",
+			"texture": "particle/sculk_charge",
+			"frames": 7
+		},
+		{
+			"name": "sculk_charge_pop",
+			"texture": "particle/sculk_charge_pop",
+			"frames": 4
+		},
+		{
+			"name": "sculk_soul",
+			"texture": "particle/sculk_soul",
+			"frames": 11
+		},
+		{
 			"name": "sga",
 			"texture": "particle/sga",
 			"frames": 26,
 			"letter_suffix": true
+		},
+		{
+			"name": "sonic_boom",
+			"texture": "particle/sonic_boom",
+			"frames": 16,
+			"size": 32
 		},
 		{
 			"name": "soul",
@@ -7457,7 +7870,14 @@
 		{
 			"name": "swamp",
 			"foliage": "#6A7039",
-			"water": "#617B64"
+			"water": "#617B64",
+			"variant": [
+				{
+					"name": "mangrove_swamp",
+					"foliage": "#8DB127",
+					"water": "#3A7A6A"
+				}
+			]
 		},
 		{
 			"name": "river",
@@ -7481,7 +7901,7 @@
 					"name": "nether_wastes"
 				},
 				{
-					"name": "soulsand_valley"
+					"name": "soul_sand_valley"
 				},
 				{
 					"name": "crimson_forest"
@@ -7594,15 +8014,18 @@
 		{
 			"name": "caves",
 			"group": true,
+			"foliage": [ 50, 173 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "dripstone_caves",
-					"foliage": [ 50, 173 ]
+					"name": "dripstone_caves"
 				},
 				{
 					"name": "lush_caves",
 					"foliage": [ 127, 191 ]
+				},
+				{
+					"name": "deep_dark"
 				}
 			]
 		},

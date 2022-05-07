@@ -105,8 +105,8 @@ void main()
 	
 	// Fresnel
 	float F0, F90;
-	F0 = mix(0.04, 1.0, metallic);
-	F90 = mix(0.48, 1.0, metallic);
+	F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
+	F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
 	
 	vec3 N = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
 	vec3 V = normalize(vPosition - uCameraPosition);

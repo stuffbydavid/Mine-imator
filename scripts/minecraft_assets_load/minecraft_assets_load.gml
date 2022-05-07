@@ -59,6 +59,7 @@ function minecraft_assets_load()
 				app.background_leaves_jungle_color = c_plains_biome_foliage
 				app.background_leaves_acacia_color = c_plains_biome_foliage
 				app.background_leaves_dark_oak_color = c_plains_biome_foliage
+				app.background_leaves_mangrove_color = c_plains_biome_foliage
 				
 				load_assets_stage = "textures"
 				load_assets_progress = 0.4

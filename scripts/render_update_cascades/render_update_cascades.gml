@@ -37,9 +37,7 @@ function render_update_cascades(dir)
 		// Frustum is built in world-space, convert to light space
 		for (var j = 0; j < 8; j++)
 		{
-			var WScorner = cascade.corners[j];
-			var corner = vec4_mul_matrix(vec4(WScorner[X], WScorner[Y], WScorner[Z], 1), sunmatV);
-			
+			var corner = vec4_mul_matrix(cascade.corners[j], sunmatV);
 			orthoMin = vec4_min(orthoMin, corner)
 			orthoMax = vec4_max(orthoMax, corner)
 		}
@@ -49,19 +47,24 @@ function render_update_cascades(dir)
 		orthoMax[Z] += 100
 		
 		// Fix shadow jittering
-		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7]));
-		var borderOffset = vec4_div(vec4_sub(vec4(diagonalXY), vec4_sub(orthoMax, orthoMin)), 2);
+		var diagonalXY = abs(vec3_length(vec3_sub(cascade.corners[1], cascade.corners[4])));
+		diagonalXY = max(diagonalXY, abs(vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7]))))
+		
+		var borderOffset = vec4_mul(vec4_sub(vec4(diagonalXY), vec4_sub(orthoMax, orthoMin)), .5);
 		borderOffset[Z] = 0
 		borderOffset[W] = 0
 		orthoMax = vec4_add(orthoMax, borderOffset)
 		orthoMin = vec4_sub(orthoMin, borderOffset)
-		
+
 		// Snap to 1px increments to avoid shadow jittering
 		var worldUnitsPerTexel = (diagonalXY / project_render_shadows_sun_buffer_size);
-		orthoMin[X] = round(orthoMin[X] / worldUnitsPerTexel) * worldUnitsPerTexel
-		orthoMax[X] = round(orthoMax[X] / worldUnitsPerTexel) * worldUnitsPerTexel
-		orthoMax[Y] = round(orthoMax[Y] / worldUnitsPerTexel) * worldUnitsPerTexel
-		orthoMin[Y] = round(orthoMin[Y] / worldUnitsPerTexel) * worldUnitsPerTexel
+		orthoMin = vec4_div(orthoMin, worldUnitsPerTexel)
+		orthoMin = vec4_floor(orthoMin)
+		orthoMin = vec4_mul(orthoMin, worldUnitsPerTexel)
+		
+		orthoMax = vec4_div(orthoMax, worldUnitsPerTexel)
+		orthoMax = vec4_floor(orthoMax)
+		orthoMax = vec4_mul(orthoMax, worldUnitsPerTexel)
 		
 		var lightMatVinv = matrix_inverse(sunmatV);
         var lightPoints = [

@@ -343,6 +343,11 @@ function tab_properties_background()
 		draw_button_color("backgroundleavesdarkoakcolor", dx, dy, dw, background_leaves_dark_oak_color, c_plains_biome_foliage, false, action_background_leaves_dark_oak_color)
 		tab_next()
 		
+		// Mangrove
+		tab_control_color()
+		draw_button_color("backgroundleavesmangrovecolor", dx, dy, dw, background_leaves_mangrove_color, c_plains_biome_foliage, false, action_background_leaves_mangrove_color)
+		tab_next()
+		
 		tab_set_collumns(false)
 	}
 	
