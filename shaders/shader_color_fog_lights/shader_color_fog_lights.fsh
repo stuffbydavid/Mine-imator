@@ -108,18 +108,17 @@ void main()
 	else
 		dif = mix(vDiffuse, vec3(1.0), brightness) + uAmbientColor.rgb;
 	
-	// Fresnel
-	float F0, F90;
-	F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
-	F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
-	
 	// Material
 	vec3 N = normalize(vNormal);
 	vec3 V = normalize(vPosition - uCameraPosition);
 	vec3 L = -normalize(reflect(V, N));
 	vec3 H = V + L;
-	float F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
-	F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);
+	
+	// Fresnel
+	float F0, F90, F;
+	F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
+	F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
+	F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
 	
 	F = clamp(F, 0.0, 1.0);
 	

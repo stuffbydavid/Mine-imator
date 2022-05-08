@@ -379,11 +379,9 @@ void main()
 			float G   = geometrySmith(N, V, L, roughness);
 			
 			float F0, F90, F;
-			F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
-			F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
-			
+			F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
+			F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
 			F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
-			F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);
 			
 			float numerator    = NDF * G * F;
 			float denominator  = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;

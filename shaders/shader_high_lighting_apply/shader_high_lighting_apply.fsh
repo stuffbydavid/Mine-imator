@@ -1,3 +1,5 @@
+#define PI 3.14159265359
+
 uniform int uSSAOEnabled;
 uniform sampler2D uSSAO;
 

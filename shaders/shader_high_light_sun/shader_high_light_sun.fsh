@@ -48,43 +48,30 @@ varying float vClipSpaceDepth;
 // Fresnel Schlick approximation
 float fresnelSchlick(float cosTheta, float F0, float F90)
 {
-	return F0 + (F90 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
+	return F0 + (F90 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
 // GGX specular (https://learnopengl.com/PBR/Lighting)
 float distributionGGX(vec3 N, vec3 H, float roughness)
 {
-    float a      = roughness * roughness;
-    float a2     = a * a;
+    float a2      = roughness * roughness * roughness * roughness;
     float NdotH  = max(dot(N, H), 0.0);
-    float NdotH2 = NdotH * NdotH;
-	
-    float num   = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-	
-    return num / denom;
+    float denom = (NdotH * NdotH * (a2 - 1.0) + 1.0);
+    return a2 / (PI * denom * denom);
 }
 
 float geometrySchlickGGX(float NdotV, float roughness)
 {
     float r = (roughness + 1.0);
     float k = (r * r) / 8.0;
-
-    float num   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
 	
-    return num / denom;
+	return NdotV / (NdotV * (1.0 - k) + k);
 }
 
 float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 {
-    float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
-    float ggx2  = geometrySchlickGGX(NdotV, roughness);
-    float ggx1  = geometrySchlickGGX(NdotL, roughness);
-	
-    return ggx1 * ggx2;
+    return	geometrySchlickGGX(max(dot(N, V), 0.0), roughness) *
+			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
 }
 
 float unpackDepth(vec4 c)
@@ -148,7 +135,7 @@ void main()
 	vec2 tex = vTexCoord;
 	if (uTexScale.x < 1.0 || uTexScale.y < 1.0)
 		tex = mod(tex * uTexScale, uTexScale); // GM sprite bug workaround
-	vec4 baseColor = texture2D(uTexture, tex);
+	vec4 baseColor = texture2D(uTexture, tex) * uBlendColor.a;
 	
 	if (uIsSky > 0)
 	{
@@ -249,10 +236,10 @@ void main()
 			// Calculate light
 			light = uLightColor.rgb * uLightStrength * dif * shadow;
 			light += subsurf;
-		
+			
 			// Apply SSS color to all lighting
 			light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
-		
+			
 			light = mix(light, vec3(1.0), brightness);
 		}
 		else
@@ -265,22 +252,20 @@ void main()
 			float G   = geometrySmith(N, V, L, roughness);
 			
 			float F0, F90, F;
-			F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
-			F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
-			
+			F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
+			F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
 			F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
-			F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);
 			
 			float numerator    = NDF * G * F;
 			float denominator  = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
 			float specular     = numerator / denominator;
 			
-			light = uLightColor.rgb * specular * mix(vec3(1.0), baseColor.rgb * uBlendColor.rgb, metallic) * shadow * uSpecularStrength;
+			light = uLightColor.rgb * specular * mix(vec3(1.0), baseColor.rgb, metallic) * shadow * uSpecularStrength * dif;
 		}
 	}
 	
 	// Set final color
-	gl_FragColor = vec4(light, uBlendColor.a * baseColor.a);
+	gl_FragColor = vec4(light, baseColor.a);
 	
 	if (gl_FragColor.a == 0.0)
 		discard;

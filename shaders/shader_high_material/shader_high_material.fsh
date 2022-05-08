@@ -105,15 +105,14 @@ void main()
 	
 	// Fresnel
 	float F0, F90;
-	F0 = mix(mix(0.24, .04, roughness), 1.0, metallic);
-	F90 = mix(mix(0.7, .48, roughness), 1.0, metallic);
+	F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
+	F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
 	
 	vec3 N = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
 	vec3 V = normalize(vPosition - uCameraPosition);
 	vec3 L = -normalize(reflect(V, N));
 	vec3 H = V + L;
 	float F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
-	F = mix(F * (1.0 - pow(roughness, 8.0)), F, metallic);
 	
 	if (baseColor.a > 0.0)
 		gl_FragColor = vec4(metallic, roughness, F, 1.0);

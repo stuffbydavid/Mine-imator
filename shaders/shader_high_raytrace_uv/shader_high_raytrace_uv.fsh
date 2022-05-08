@@ -111,9 +111,7 @@ vec2 rayTrace(vec2 originUV)
 	
 	if (uSpecularRay == 1) // Reflection ray
 	{
-		// Not physically accurate, but looks nice.
-		float roughness = mix(0.0, 1.0, pow(mat.g, 2.5));
-		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * uKernel[0] * roughness))));
+		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * uKernel[0] * mat.g))));
 	}
 	else // Indirect ray
 	{
@@ -250,7 +248,7 @@ void main()
 		{
 			vec4 mat = texture2D(uMaterialBuffer, vTexCoord);
 		
-			if (mat.b > 0.0)
+			if (mat.g < .75 && mat.b > 0.0)
 				rayHit = rayTrace(vTexCoord);
 		}
 		else // Indirect ray

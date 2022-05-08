@@ -86,6 +86,9 @@ void main()
 		// Clamp
 		vis = clamp(vis, 0.0, 1.0);
 		
+		// Only render reflections is roughness is low enough
+		vis *= clamp((texture2D(uMaterialBuffer, vTexCoord).g - .75) / (.4 - .75), 0.0, 1.0);
+		
 		// Mix in fallback via fresnel if ray hit a reflective surface ¯\_(ツ)_/¯
 		vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).r);
 		refColor = mix(refColor, surfCol, vis);
