@@ -16,7 +16,6 @@ uniform vec2 uScreenSize;
 uniform int uSamples;
 uniform vec2 uDirection;
 uniform vec2 uKernel[MAX_SAMPLES];
-uniform float uJitterThreshold;
 uniform float uNoiseSize;
 
 varying vec2 vTexCoord;
@@ -41,6 +40,11 @@ float lightStrength(vec3 light)
 	return (light.r + light.g + light.b);
 }
 
+vec3 unpackNormalBlueNoise(vec4 c)
+{
+	return normalize(vec3(cos(c.r * 360.0), sin(c.r * 360.0), c.g));
+}
+
 void main()
 {
 	float originDepth = unpackDepth(texture2D(uDepthBuffer, vTexCoord));
@@ -57,16 +61,16 @@ void main()
 	vec3 color = getLight(vTexCoord) * uKernel[0].x;
 	
 	vec3 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rgb;
-	vec2 randDir = vec2(cos(noise.r), sin(noise.r));
-	rad *= noise.g;
+	vec2 randDir = vec2(cos(noise.r * 360.0), sin(noise.r * 360.0));
+	rad *= noise.g * randDir;
 	
 	// Guassian blur
 	for (int i = 1; i < MAX_SAMPLES; i++)
 	{
-		if (i >= uSamples || rad == 0.0)
+		if (i >= uSamples || (rad.x + rad.y == 0.0))
 			break;
 		
-		vec2 offset = (abs(uKernel[i].y) < uJitterThreshold ? randDir : uDirection) * uKernel[i].y * rad;
+		vec2 offset = uKernel[i].y * rad;
 		
 		vec2 sampleCoord  = vTexCoord + offset;
 		vec3 sampleLight  = getLight(sampleCoord);

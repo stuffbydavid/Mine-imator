@@ -137,25 +137,13 @@ function render_high_shadows(export)
 		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 		specresultsurftemp = render_surface[3]
 		
-		surface_set_target(resultsurftemp)
+		surface_set_target_ext(0, resultsurftemp)
+		surface_set_target_ext(1, specresultsurftemp)
 		{
 			draw_clear(c_black)
 			render_world_start()
 			render_world(sunout ? e_render_mode.HIGH_LIGHT_SUN : e_render_mode.HIGH_LIGHT_NIGHT)
 			render_world_done()
-		}
-		surface_reset_target()
-		
-		surface_set_target(specresultsurftemp)
-		{
-			draw_clear(c_black)
-			
-			if (sunout)
-			{
-				render_world_start()
-				render_world(e_render_mode.HIGH_LIGHT_SUN_SPEC)
-				render_world_done()
-			}	
 		}
 		surface_reset_target()
 		
@@ -265,29 +253,20 @@ function render_high_shadows(export)
 						
 						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 						resultsurftemp = render_surface[2]
-						surface_set_target(resultsurftemp)
+						
+						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+						specresultsurftemp = render_surface[3]
+						
+						surface_set_target_ext(0, resultsurftemp)
+						surface_set_target_ext(1, specresultsurftemp)
 						{
-							draw_clear(c_white)
+							draw_clear(c_black)
 							render_world_start()
 							render_world(e_render_mode.HIGH_LIGHT_POINT)
 							render_world_done()
 						}
 						surface_reset_target()
-						
-						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-						specresultsurftemp = render_surface[3]
-						surface_set_target(specresultsurftemp)
-						{
-							draw_clear(c_black)
-							
-							if (render_light_specular_strength > 0)
-							{
-								render_world_start()
-								render_world(e_render_mode.HIGH_LIGHT_POINT_SPEC)
-								render_world_done()
-							}
-						}
-						surface_reset_target()
+
 					}
 				}
 				
@@ -327,26 +306,17 @@ function render_high_shadows(export)
 						
 						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 						resultsurftemp = render_surface[2]
-						surface_set_target(resultsurftemp)
-						{
-							draw_clear(c_white)
-							render_world_start()
-							render_world(e_render_mode.HIGH_LIGHT_SPOT)
-							render_world_done()
-						}
-						surface_reset_target()
 						
 						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 						specresultsurftemp = render_surface[3]
-						surface_set_target(specresultsurftemp)
+						
+						surface_set_target_ext(0, resultsurftemp)
+						surface_set_target_ext(1, specresultsurftemp)
 						{
 							draw_clear(c_black)
-							if (render_light_specular_strength > 0)
-							{
-								render_world_start()
-								render_world(e_render_mode.HIGH_LIGHT_SPOT_SPEC)
-								render_world_done()
-							}
+							render_world_start()
+							render_world(e_render_mode.HIGH_LIGHT_SPOT)
+							render_world_done()
 						}
 						surface_reset_target()
 					}
@@ -576,22 +546,16 @@ function render_high_shadows_shadowless()
 			// Render lights
 			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 			resultsurftemp = render_surface[2]
-			surface_set_target(resultsurftemp)
-			{
-				draw_clear(c_white)
-				render_world_start()
-				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS)
-				render_world_done()
-			}
-			surface_reset_target()
-				
+			
 			render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 			specresultsurftemp = render_surface[3]
-			surface_set_target(specresultsurftemp)
+			
+			surface_set_target_ext(0, resultsurftemp)
+			surface_set_target_ext(1, specresultsurftemp)
 			{
 				draw_clear(c_black)
 				render_world_start()
-				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS_SPEC)
+				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS)
 				render_world_done()
 			}
 			surface_reset_target()

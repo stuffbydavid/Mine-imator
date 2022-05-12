@@ -40,7 +40,7 @@ function render_world_block()
 		res[2] = mc_res
 	
 	var tex, texprev, texani;
-	var texmat, texmatprev, texanimat;
+	var texmat, texmatprev, texanimat, texanimatsheet;
 	var texnormal, texnormalprev, texaninormal;
 	
 	render_set_uniform_int("uMaterialUseGlossiness", res[1].material_uses_glossiness)
@@ -58,7 +58,9 @@ function render_world_block()
 	else
 		texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
 	
-	if (res[1].block_sheet_ani_texture_material != null)
+	texanimatsheet = (res[1].block_sheet_ani_texture_material = null)
+	
+	if (!texanimatsheet)
 		texanimat = res[1].block_sheet_ani_texture_material[block_texture_get_frame()]
 	else
 		texanimat = mc_res.block_sheet_ani_texture_material[block_texture_get_frame()]
@@ -130,7 +132,21 @@ function render_world_block()
 			texnormalprev = texaninormal
 		}
 		
+		if (texanimatsheet)
+		{
+			render_set_uniform("uMetallic", 0)
+			render_set_uniform("uRoughness", 1)
+			render_set_uniform("uBrightness", 0)
+		}
+		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])	
+		
+		if (res[1] != mc_res && texanimatsheet)
+		{
+			render_set_uniform("uMetallic", 1)
+			render_set_uniform("uRoughness", 0)
+			render_set_uniform("uBrightness", 1)
+		}
 	}
 	
 	render_set_texture(tex)
@@ -265,7 +281,21 @@ function render_world_block()
 			texnormalprev = texaninormal
 		}
 		
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])	
+		if (texanimatsheet)
+		{
+			render_set_uniform("uMetallic", 0)
+			render_set_uniform("uRoughness", 1)
+			render_set_uniform("uBrightness", 0)
+		}
+		
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
+		
+		if (res[1] != mc_res && texanimatsheet)
+		{
+			render_set_uniform("uMetallic", 1)
+			render_set_uniform("uRoughness", 0)
+			render_set_uniform("uBrightness", 1)
+		}
 	}
 	
 	if (tex != texprev)
@@ -299,7 +329,22 @@ function render_world_block()
 		render_set_texture(texani)
 		render_set_texture(texanimat, "Material")
 		render_set_texture(texaninormal, "Normal")
+		
+		if (texanimatsheet)
+		{
+			render_set_uniform("uMetallic", 0)
+			render_set_uniform("uRoughness", 1)
+			render_set_uniform("uBrightness", 0)
+		}
+		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
+		
+		if (res[1] != mc_res && texanimatsheet)
+		{
+			render_set_uniform("uMetallic", 1)
+			render_set_uniform("uRoughness", 0)
+			render_set_uniform("uBrightness", 1)
+		}
 	}
 	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))

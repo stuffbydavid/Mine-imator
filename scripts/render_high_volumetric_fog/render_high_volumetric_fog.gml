@@ -9,8 +9,6 @@ function render_high_volumetric_fog(prevsurf, export)
 	samplestart = 0
 	sampleend = 0
 	
-	render_volumetric_fog_offset = 1
-	
 	if (!render_samples_done || export)
 	{
 		if (!export)
@@ -77,12 +75,12 @@ function render_high_volumetric_fog(prevsurf, export)
 					surface_set_target(render_surface_sun_buffer[i])
 					{
 						gpu_set_blendmode_ext(bm_one, bm_zero)
-					
+						
 						draw_clear(c_white)
 						render_world_start_sun(i)
 						render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 						render_world_done()
-				
+						
 						gpu_set_blendmode(bm_normal)
 					}
 					surface_reset_target()
@@ -103,8 +101,7 @@ function render_high_volumetric_fog(prevsurf, export)
 			render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 			resultsurftemp = render_surface[1]
 			
-			for (var i = 0; i < 16; i++)
-				render_volumetric_fog_offset[i] = random_range(0, 1)
+			render_sample_noise_texture = render_get_noise_texture(s)
 			
 			surface_set_target(resultsurftemp)
 			{

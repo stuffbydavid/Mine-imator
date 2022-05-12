@@ -1,11 +1,10 @@
-/// shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, diffusesurf, directsurf, direction)
+/// shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, diffusesurf, directsurf)
 /// @arg ssssurf
 /// @arg rangesurf
 /// @arg depthsurf
 /// @arg directsurf
-/// @arg direction
 
-function shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, directsurf, dir)
+function shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, directsurf)
 {
 	texture_set_stage(sampler_map[?"uSSSBuffer"], surface_get_texture(ssssurf))
 	gpu_set_texfilter_ext(sampler_map[?"uSSSBuffer"], false)
@@ -31,6 +30,4 @@ function shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, direc
 	
 	render_set_uniform_int("uSamples", render_subsurface_size)
 	render_set_uniform("uKernel", render_subsurface_kernel)
-	render_set_uniform_vec2("uDirection", dir[X], dir[Y])
-	render_set_uniform("uJitterThreshold", app.project_render_subsurface_jitter)
 }

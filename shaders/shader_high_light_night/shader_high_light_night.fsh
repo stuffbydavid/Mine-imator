@@ -22,8 +22,9 @@ void main()
 		
 	vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 	
-	gl_FragColor = vec4(vec3(vBrightness * mat.b), baseColor.a);
+	gl_FragData[0] = vec4(vec3(vBrightness * mat.b), baseColor.a);
+	gl_FragData[1] = vec4(vec3(0.0), baseColor.a);
 	
-	if (gl_FragColor.a == 0.0)
+	if (baseColor.a == 0.0)
 		discard;
 }

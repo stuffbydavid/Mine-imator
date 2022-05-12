@@ -16,7 +16,6 @@ uniform vec2 uScreenSize;
 
 uniform float uPrecision;
 uniform float uThickness;
-uniform vec3 uKernel[16];
 uniform float uNoiseSize;
 uniform int uSpecularRay; // Determines if raytrace is diffuse/specular
 
@@ -85,6 +84,11 @@ vec2 viewPosToPixel(vec4 viewPos)
 	return coord.xy;
 }
 
+vec3 unpackNormalBlueNoise(vec4 c)
+{
+	return normalize(vec3(cos(c.r * 360.0), sin(c.r * 360.0), c.g));
+}
+
 // Ray tracer, returns hit coordinate
 vec2 rayTrace(vec2 originUV)
 {
@@ -102,20 +106,24 @@ vec2 rayTrace(vec2 originUV)
 	vec3 rayVector;
 	
 	vec2 noiseScale = uScreenSize / uNoiseSize;
-	vec3 randVec	= unpackNormal(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
+	vec3 randVec	= unpackNormalBlueNoise(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
 	
 	// Construct kernel basis matrix
 	vec3 tangent		= normalize(randVec - normal * dot(randVec, normal));
 	vec3 bitangent		= cross(normal, tangent);
 	mat3 kernelBasis	= mat3(tangent, bitangent, normal);
 	
+	vec3 kernel			= texture2D(uNoiseBuffer, vTexCoord * noiseScale).rgb;//normalize(texture2D(uNoiseBuffer, vTexCoord * noiseScale).rgb);
+	kernel.rg			= (kernel.rg * 2.0) - 1.0;
+	kernel				= normalize(kernel) * 0.1;
+	
 	if (uSpecularRay == 1) // Reflection ray
 	{
-		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * uKernel[0] * mat.g))));
+		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * kernel * mat.g))));
 	}
 	else // Indirect ray
 	{
-		rayVector = normalize(kernelBasis * uKernel[0]);
+		rayVector = normalize(kernelBasis * kernel);
 		
 		if (dot(rayVector, normal) <= 0.0)
 			rayVector = normalize(-rayVector);

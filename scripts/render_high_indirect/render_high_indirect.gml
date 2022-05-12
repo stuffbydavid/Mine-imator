@@ -75,7 +75,6 @@ function render_high_indirect(export)
 		random_set_seed(s)
 		
 		render_sample_noise_texture = render_get_noise_texture(s)
-		render_indirect_kernel = render_generate_sample_kernel(16)
 		
 		if (s = 0 || render_samples_clear)
 		{

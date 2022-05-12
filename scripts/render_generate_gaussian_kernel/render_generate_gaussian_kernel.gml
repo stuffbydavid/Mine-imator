@@ -1,5 +1,6 @@
 /// render_generate_gaussian_kernel(samples)
-/// Generates guassian kernel using Pascal's triangle (use odd numbers)
+/// @desc Generates guassian kernel using Pascal's triangle (use odd numbers)
+/// Every two values in the kernel is a pair, a guassian weight and a unit offset.
 
 function render_generate_gaussian_kernel(samples)
 {

@@ -22,7 +22,6 @@ uniform float uSSS;
 uniform vec3 uSSSRadius;
 uniform vec4 uSSSColor;
 
-uniform int uSpecular;
 uniform vec3 uCameraPosition;
 uniform float uRoughness;
 uniform float uMetallic;
@@ -51,37 +50,24 @@ float fresnelSchlick(float cosTheta, float F0, float F90)
 // GGX specular (https://learnopengl.com/PBR/Lighting)
 float distributionGGX(vec3 N, vec3 H, float roughness)
 {
-    float a      = roughness * roughness;
-    float a2     = a * a;
+    float a2      = roughness * roughness * roughness * roughness;
     float NdotH  = max(dot(N, H), 0.0);
-    float NdotH2 = NdotH * NdotH;
-	
-    float num   = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-	
-    return num / denom;
+    float denom = (NdotH * NdotH * (a2 - 1.0) + 1.0);
+    return a2 / (PI * denom * denom);
 }
 
 float geometrySchlickGGX(float NdotV, float roughness)
 {
     float r = (roughness + 1.0);
     float k = (r * r) / 8.0;
-
-    float num   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
 	
-    return num / denom;
+	return NdotV / (NdotV * (1.0 - k) + k);
 }
 
 float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 {
-    float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
-    float ggx2  = geometrySchlickGGX(NdotV, roughness);
-    float ggx1  = geometrySchlickGGX(NdotL, roughness);
-	
-    return ggx1 * ggx2;
+    return	geometrySchlickGGX(max(dot(N, V), 0.0), roughness) *
+			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
 }
 
 #extension GL_OES_standard_derivatives : enable
@@ -129,7 +115,7 @@ float unpackDepth(vec4 c)
 
 void main() 
 {
-	vec3 light;
+	vec3 light, spec;
 	int sssEnabled = (vBlockSSS + uSSS > 0.0 ? 1 : 0);
 	
 	vec2 tex = vTexCoord;
@@ -139,10 +125,8 @@ void main()
 	
 	if (uIsSky > 0)
 	{
-		if (uSpecular == 0)
-			light = vec3(0.0);
-		else
-			light = vec3(uSpecularStrength);
+		light = vec3(0.0);
+		spec = vec3(uSpecularStrength);
 	}
 	else
 	{
@@ -204,7 +188,7 @@ void main()
 					float sampleDepth = uLightNear + unpackDepth(texture2D(uDepthBuffer, fragCoord)) * (uLightFar - uLightNear);
 					shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 					
-					if (sssEnabled == 1 && uSpecular == 0)
+					if (sssEnabled == 1)
 					{
 						// Get subsurface translucency
 						vec3 dis = vec3(uSSSRadius * max(uSSS, vBlockSSS));
@@ -223,45 +207,42 @@ void main()
 			}
 		}
 		
-		if (uSpecular == 0)
-		{
-			// Translucency
-			float transDif = max(0.0, dot(normalize(-normal), normalize(uLightPosition - vPosition)));
-			transDif = clamp(transDif, 0.0, 1.0);
-			subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
-			
-			// Calculate light
-			light = uLightColor.rgb * uLightStrength * dif * shadow;
+		// Diffuse light
+		light = uLightColor.rgb * uLightStrength * dif * shadow;
 		
-			light += subsurf * difMask;
-			light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
+		// Subsurface translucency
+		float transDif = max(0.0, dot(normalize(-normal), normalize(uLightPosition - vPosition)));
+		transDif = clamp(transDif, 0.0, 1.0);
+		subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
+		light += subsurf * difMask;
+		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
 		
-			light = mix(light, vec3(1.0), brightness);
-		}
-		else
-		{
-			vec3 N   = normal;
-			vec3 L   = normalize(uLightPosition - vPosition);
-			vec3 V   = normalize(uCameraPosition - vPosition);
-			vec3 H   = normalize(V + L);
-			float NDF = distributionGGX(N, H, roughness);       
-			float G   = geometrySmith(N, V, L, roughness);
-			
-			float F0, F90, F;
-			F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
-			F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
-			F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
-			
-			float numerator    = NDF * G * F;
-			float denominator  = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-			float specular     = numerator / denominator;
-			
-			light = uLightColor.rgb * specular * mix(vec3(1.0), baseColor.rgb * uBlendColor.rgb, metallic) * shadow * att * difMask * uSpecularStrength;
-		}
+		// Emissive
+		light = mix(light, vec3(1.0), brightness);
+		
+		// Calculate specular
+		vec3 N   = normal;
+		vec3 L   = normalize(uLightPosition - vPosition);
+		vec3 V   = normalize(uCameraPosition - vPosition);
+		vec3 H   = normalize(V + L);
+		float NDF = distributionGGX(N, H, roughness);       
+		float G   = geometrySmith(N, V, L, roughness);
+		
+		float F0, F90, F;
+		F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
+		F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
+		F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
+		
+		float numerator    = NDF * G * F;
+		float denominator  = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
+		float specular     = numerator / denominator;
+		
+		spec = uLightColor.rgb * shadow * difMask * uSpecularStrength * dif * (specular * mix(vec3(1.0), baseColor.rgb * uBlendColor.rgb, metallic));
 	}
 	
-	gl_FragColor = vec4(light, uBlendColor.a * baseColor.a);
+	gl_FragData[0] = vec4(light, uBlendColor.a * baseColor.a);
+	gl_FragData[1] = vec4(spec, uBlendColor.a * baseColor.a);
 	
-	if (gl_FragColor.a == 0.0)
+	if (uBlendColor.a * baseColor.a == 0.0)
 		discard;
 }

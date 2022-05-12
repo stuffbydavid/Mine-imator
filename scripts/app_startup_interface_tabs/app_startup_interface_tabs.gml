@@ -45,8 +45,6 @@ function app_startup_interface_tabs()
 			tbx_ssao_blur_passes = new_textbox_integer()
 			tbx_samples = new_textbox_integer()
 			tbx_subsurface_samples = new_textbox_integer()
-			tbx_subsurface_jitter = new_textbox_integer()
-			tbx_subsurface_jitter.suffix = "%"
 			tbx_indirect_precision = new_textbox_integer()
 			tbx_indirect_precision.suffix = "%"
 			tbx_indirect_blur_passes = new_textbox_integer()

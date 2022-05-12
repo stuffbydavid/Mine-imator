@@ -111,7 +111,7 @@ function render_startup()
 	// Noise sampling
 	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array;
 	render_sample_noise_texture = null
-	render_sample_noise_size = 86
+	render_sample_noise_size = 128
 	render_sample_noise_texture_array = []
 	
 	// Shadows
@@ -140,18 +140,10 @@ function render_startup()
 	globalvar render_grain_noise;
 	render_grain_noise = null
 	
-	// Indirect lighting
-	globalvar render_indirect_kernel;
-	render_indirect_kernel = render_generate_sample_kernel(16)
-	
 	// Subsurface
 	globalvar render_subsurface_size, render_subsurface_kernel;
 	render_subsurface_size = (16 * 2) + 1
 	render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
-	
-	// Volumetric fog
-	globalvar render_volumetric_fog_offset;
-	render_volumetric_fog_offset = 0
 	
 	// Effect surfaces
 	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec,

@@ -10,6 +10,8 @@ uniform float uSunNear[NUM_CASCADES];
 uniform float uSunFar[NUM_CASCADES];
 
 uniform mat4 uOffset;
+uniform sampler2D uNoiseBuffer;
+uniform float uNoiseSize;
 
 uniform int uFogAmbience;
 uniform float uScattering;
@@ -287,7 +289,9 @@ void main()
 	
 	// Ray march (Offset starting position with dither)
 	vec3 rayPos = startPos;
-	float offset = uOffset[int(mod(vTexCoord.x * uScreenSize.x, 4.0))][int(mod(vTexCoord.y * uScreenSize.y, 4.0))];
+	
+	vec2 noiseScale = uScreenSize / uNoiseSize;
+	float offset = texture2D(uNoiseBuffer, vTexCoord * noiseScale).r;
 	rayPos += stepSize * offset;
 	
 	float sampleDensity, light;

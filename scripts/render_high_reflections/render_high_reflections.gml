@@ -70,7 +70,6 @@ function render_high_reflections(export, surf)
 		random_set_seed(s)
 		
 		render_sample_noise_texture = render_get_noise_texture(s)
-		render_indirect_kernel = render_generate_sample_kernel(16)
 		
 		// Raytrace reflections
 		surface_set_target_ext(0, rtsurf)

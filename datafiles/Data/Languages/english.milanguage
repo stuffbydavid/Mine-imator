@@ -2059,8 +2059,7 @@
 		"subsurfacescatteringtip": "Simulates light passing through an object, such as leaves.",
 		"subsurfacescatter/":
 		{
-			"quality": "Blur quality",
-			"jitter": "Jitter amount"
+			"quality": "Blur quality"
 		},
 		"indirect": "Indirect lighting",
 		"indirecttip": "Simulates light bouncing off objects. This allows emissive materials to light the scene.",

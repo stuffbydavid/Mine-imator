@@ -17,7 +17,6 @@ function history_copy_render_settings(obj)
 	project_render_shadows_point_buffer_size = obj.project_render_shadows_point_buffer_size
 	
 	project_render_subsurface_samples = obj.project_render_subsurface_samples
-	project_render_subsurface_jitter = obj.project_render_subsurface_jitter
 	
 	project_render_indirect = obj.project_render_indirect
 	project_render_indirect_precision = obj.project_render_indirect_precision

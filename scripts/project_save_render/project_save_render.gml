@@ -18,7 +18,6 @@ function project_save_render()
 		json_save_var("render_shadows_point_buffer_size", project_render_shadows_point_buffer_size)
 		
 		json_save_var("render_subsurface_samples", project_render_subsurface_samples)
-		json_save_var("render_subsurface_jitter", project_render_subsurface_jitter)
 		
 		json_save_var_bool("render_indirect", project_render_indirect)
 		json_save_var("render_indirect_precision", project_render_indirect_precision)

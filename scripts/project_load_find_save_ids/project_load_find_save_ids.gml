@@ -204,6 +204,9 @@ function project_load_find_save_ids()
 		if (parent = null)
 			parent = app
 		
+		if (array_length(parent.tree_array) = undefined)
+			parent.tree_array = array()
+		
 		if (parent_tree_index < 0)
 			parent.tree_array[array_length(parent.tree_array)] = id
 		else

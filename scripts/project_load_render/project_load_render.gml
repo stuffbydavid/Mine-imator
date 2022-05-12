@@ -19,7 +19,6 @@ function project_load_render(map)
 	project_render_shadows_point_buffer_size = value_get_real(map[?"render_shadows_point_buffer_size"], project_render_shadows_point_buffer_size)
 	
 	project_render_subsurface_samples = value_get_real(map[?"render_subsurface_samples"], project_render_subsurface_samples)
-	project_render_subsurface_jitter = value_get_real(map[?"render_subsurface_jitter"], project_render_subsurface_jitter)
 	
 	project_render_indirect = value_get_real(map[?"render_indirect"], project_render_indirect)
 	project_render_indirect_blur_passes = value_get_real(map[?"render_indirect_blur_passes"], project_render_indirect_blur_passes)

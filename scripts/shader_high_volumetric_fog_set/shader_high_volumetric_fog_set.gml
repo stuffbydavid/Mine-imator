@@ -36,8 +36,6 @@ function shader_high_volumetric_fog_set(depthsurf)
 	render_set_uniform("uNear", proj_depth_near)
 	render_set_uniform("uFar", proj_depth_far)
 	
-	render_set_uniform("uOffset", render_volumetric_fog_offset)
-	
 	render_set_uniform_int("uFogAmbience", app.background_volumetric_fog_ambience)
 	render_set_uniform_int("uFogNoise", app.background_volumetric_fog_noise)
 	
@@ -55,4 +53,8 @@ function shader_high_volumetric_fog_set(depthsurf)
 	
 	render_set_uniform_vec3("uCameraPosition", cam_from[X], cam_from[Y], cam_from[Z])
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
+	
+	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
+	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
+	render_set_uniform("uNoiseSize", render_sample_noise_size)
 }

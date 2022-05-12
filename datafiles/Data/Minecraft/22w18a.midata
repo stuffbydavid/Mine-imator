@@ -1,6 +1,6 @@
 {
-	"version": "22w15a",
-	"patch": 2,
+	"version": "22w18a",
+	"patch": 0,
 	"format": 7,
 	"characters": [
 		{
@@ -96,10 +96,11 @@
 		},
 		{
 			"name": "sheep",
+			"file": "sheep.mimodel",
 			"states": {
 				"sheared": [
-					{ "value": "false", "file": "sheep.mimodel" },
-					{ "value": "true", "file": "sheep_sheared.mimodel" }
+					{ "value": "false" },
+					{ "value": "true", "shape_hide": [ "wool" ] }
 				],
 				"wool_color": [
 					{ "value": "white", "shape_color": { "wool": "white" } },
@@ -154,7 +155,7 @@
 			"file": "cat.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "ocelot", "texture": "entity/cat/ocelot", "shape_hide": [ "collar" ] },
+					{ "value": "ocelot", "texture": "entity/cat/ocelot" },
 					{ "value": "all_black", "texture": "entity/cat/all_black" },
 					{ "value": "black", "texture": "entity/cat/black" },
 					{ "value": "british_shorthair", "texture": "entity/cat/british_shorthair" },
@@ -195,11 +196,30 @@
 			"states": {
 				"variant": [
 					{ "value": "normal", "texture": "entity/wolf/wolf" },
-					{ "value": "tame", "file": "wolf_tame.mimodel" },
+					{ "value": "tame", "texture": "entity/wolf/wolf_tame" },
 					{ "value": "angry", "texture": "entity/wolf/wolf_angry" }
+				],
+				"collar": [
+					{ "value": "none", "shape_hide": [ "collar" ] },
+					{ "value": "white", "shape_color": { "collar": "white" } },
+					{ "value": "orange", "shape_color": { "collar": "orange" } },
+					{ "value": "magenta", "shape_color": { "collar": "magenta" } },
+					{ "value": "light_blue", "shape_color": { "collar": "light_blue" } },
+					{ "value": "yellow", "shape_color": { "collar": "yellow" } },
+					{ "value": "lime", "shape_color": { "collar": "lime" } },
+					{ "value": "pink", "shape_color": { "collar": "pink" } },
+					{ "value": "gray", "shape_color": { "collar": "gray" } },
+					{ "value": "light_gray", "shape_color": { "collar": "light_gray" } },
+					{ "value": "cyan", "shape_color": { "collar": "cyan" } },
+					{ "value": "purple", "shape_color": { "collar": "purple" } },
+					{ "value": "blue", "shape_color": { "collar": "blue" } },
+					{ "value": "brown", "shape_color": { "collar": "brown" } },
+					{ "value": "green", "shape_color": { "collar": "green" } },
+					{ "value": "red", "shape_color": { "collar": "red" } },
+					{ "value": "black", "shape_color": { "collar": "black" } }
 				]
 			},
-			"default_state": "variant=normal"
+			"default_state": "variant=normal,collar=red"
 		},
 		{
 			"name": "parrot",
@@ -300,24 +320,24 @@
 				"profession": [
 					{ "value": "none", "shape_hide": [ "profession" ] },
 					{ "value": "armorer", "shape_texture": { "profession": "entity/villager/profession/armorer" } },
-					{ "value": "butcher", "shape_texture": { "profession": "entity/villager/profession/butcher" } },
+					{ "value": "butcher", "shape_texture": { "profession": "entity/villager/profession/butcher" }, "shape_hide": [ "biome_hat_full" ] },
 					{ "value": "cartographer", "shape_texture": { "profession": "entity/villager/profession/cartographer" } },
 					{ "value": "cleric", "shape_texture": { "profession": "entity/villager/profession/cleric" } },
-					{ "value": "farmer", "shape_texture": { "profession": "entity/villager/profession/farmer" }, "shape_hide": [ "biome_hat" ] },
-					{ "value": "fisherman", "shape_texture": { "profession": "entity/villager/profession/fisherman" }, "shape_hide": [ "biome_hat" ] },
-					{ "value": "fletcher", "shape_texture": { "profession": "entity/villager/profession/fletcher" }, "shape_hide": [ "biome_hat" ] },
+					{ "value": "farmer", "shape_texture": { "profession": "entity/villager/profession/farmer" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
+					{ "value": "fisherman", "shape_texture": { "profession": "entity/villager/profession/fisherman" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
+					{ "value": "fletcher", "shape_texture": { "profession": "entity/villager/profession/fletcher" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
 					{ "value": "leatherworker", "shape_texture": { "profession": "entity/villager/profession/leatherworker" } },
-					{ "value": "librarian", "shape_texture": { "profession": "entity/villager/profession/librarian" }, "shape_hide": [ "biome_hat" ] },
+					{ "value": "librarian", "shape_texture": { "profession": "entity/villager/profession/librarian" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
 					{ "value": "mason", "shape_texture": { "profession": "entity/villager/profession/mason" } },
 					{ "value": "nitwit", "shape_texture": { "profession": "entity/villager/profession/nitwit" } },
-					{ "value": "shepherd", "shape_texture": { "profession": "entity/villager/profession/shepherd" }, "shape_hide": [ "biome_hat" ] },
+					{ "value": "shepherd", "shape_texture": { "profession": "entity/villager/profession/shepherd" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
 					{ "value": "toolsmith", "shape_texture": { "profession": "entity/villager/profession/toolsmith" } },
 					{ "value": "weaponsmith", "shape_texture": { "profession": "entity/villager/profession/weaponsmith" } }
 				],
 				"biome": [
 					{ "value": "plains", "shape_texture": { "biome": "entity/villager/type/plains", "biome_hat": "entity/villager/type/plains" } },
-					{ "value": "desert", "shape_texture": { "biome": "entity/villager/type/desert", "biome_hat": "entity/villager/type/desert" } },
-					{ "value": "snow", "shape_texture": { "biome": "entity/villager/type/snow", "biome_hat": "entity/villager/type/snow" } },
+					{ "value": "desert", "shape_texture": { "biome": "entity/villager/type/desert", "biome_hat_full": "entity/villager/type/desert" } },
+					{ "value": "snow", "shape_texture": { "biome": "entity/villager/type/snow", "biome_hat_full": "entity/villager/type/snow" } },
 					{ "value": "taiga", "shape_texture": { "biome": "entity/villager/type/taiga", "biome_hat": "entity/villager/type/taiga" } },
 					{ "value": "savanna", "shape_texture": { "biome": "entity/villager/type/savanna", "biome_hat": "entity/villager/type/savanna" } },
 					{ "value": "jungle", "shape_texture": { "biome": "entity/villager/type/jungle", "biome_hat": "entity/villager/type/jungle" } },
@@ -336,11 +356,10 @@
 		},
 		{
 			"name": "illager",
-			"file": "illager.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "evoker", "texture": "entity/illager/evoker" },
-					{ "value": "vindicator", "texture": "entity/illager/vindicator" }
+					{ "value": "evoker", "file": "evoker.mimodel", },
+					{ "value": "vindicator", "file": "vindicator.mimodel", }
 				]
 			},
 			"default_state": "variant=evoker"
@@ -368,24 +387,24 @@
 				"profession": [
 					{ "value": "none", "shape_hide": [ "profession" ] },
 					{ "value": "armorer", "shape_texture": { "profession": "entity/zombie_villager/profession/armorer" } },
-					{ "value": "butcher", "shape_texture": { "profession": "entity/zombie_villager/profession/butcher" } },
+					{ "value": "butcher", "shape_texture": { "profession": "entity/zombie_villager/profession/butcher" }, "shape_hide": [ "biome_hat_full" ] },
 					{ "value": "cartographer", "shape_texture": { "profession": "entity/zombie_villager/profession/cartographer" } },
 					{ "value": "cleric", "shape_texture": { "profession": "entity/zombie_villager/profession/cleric" } },
-					{ "value": "farmer", "shape_texture": { "profession": "entity/zombie_villager/profession/farmer" }, "shape_hide": [ "biome_hat" ]  },
-					{ "value": "fisherman", "shape_texture": { "profession": "entity/zombie_villager/profession/fisherman" }, "shape_hide": [ "biome_hat" ] },
-					{ "value": "fletcher", "shape_texture": { "profession": "entity/zombie_villager/profession/fletcher" }, "shape_hide": [ "biome_hat" ] },
+					{ "value": "farmer", "shape_texture": { "profession": "entity/zombie_villager/profession/farmer" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
+					{ "value": "fisherman", "shape_texture": { "profession": "entity/zombie_villager/profession/fisherman" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
+					{ "value": "fletcher", "shape_texture": { "profession": "entity/zombie_villager/profession/fletcher" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
 					{ "value": "leatherworker", "shape_texture": { "profession": "entity/zombie_villager/profession/leatherworker" } },
-					{ "value": "librarian", "shape_texture": { "profession": "entity/zombie_villager/profession/librarian" }, "shape_hide": [ "biome_hat" ]  },
+					{ "value": "librarian", "shape_texture": { "profession": "entity/zombie_villager/profession/librarian" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
 					{ "value": "mason", "shape_texture": { "profession": "entity/zombie_villager/profession/mason" } },
 					{ "value": "nitwit", "shape_texture": { "profession": "entity/zombie_villager/profession/nitwit" } },
-					{ "value": "shepherd", "shape_texture": { "profession": "entity/zombie_villager/profession/shepherd" }, "shape_hide": [ "biome_hat" ] },
+					{ "value": "shepherd", "shape_texture": { "profession": "entity/zombie_villager/profession/shepherd" }, "shape_hide": [ "biome_hat", "biome_hat_full" ] },
 					{ "value": "toolsmith", "shape_texture": { "profession": "entity/zombie_villager/profession/toolsmith" } },
 					{ "value": "weaponsmith", "shape_texture": { "profession": "entity/zombie_villager/profession/weaponsmith" } }
 				],
 				"biome": [
 					{ "value": "plains", "shape_texture": { "biome": "entity/zombie_villager/type/plains", "biome_hat": "entity/zombie_villager/type/plains" } },
-					{ "value": "desert", "shape_texture": { "biome": "entity/zombie_villager/type/desert", "biome_hat": "entity/zombie_villager/type/desert" } },
-					{ "value": "snow", "shape_texture": { "biome": "entity/zombie_villager/type/snow", "biome_hat": "entity/zombie_villager/type/snow" } },
+					{ "value": "desert", "shape_texture": { "biome": "entity/zombie_villager/type/desert", "biome_hat_full": "entity/zombie_villager/type/desert" } },
+					{ "value": "snow", "shape_texture": { "biome": "entity/zombie_villager/type/snow", "biome_hat_full": "entity/zombie_villager/type/snow" } },
 					{ "value": "taiga", "shape_texture": { "biome": "entity/zombie_villager/type/taiga", "biome_hat": "entity/zombie_villager/type/taiga" } },
 					{ "value": "savanna", "shape_texture": { "biome": "entity/zombie_villager/type/savanna", "biome_hat": "entity/zombie_villager/type/savanna" } },
 					{ "value": "jungle", "shape_texture": { "biome": "entity/zombie_villager/type/jungle", "biome_hat": "entity/zombie_villager/type/jungle" } },
@@ -421,13 +440,14 @@
 		},
 		{
 			"name": "snow_golem",
+			"file": "snow_golem.mimodel",
 			"states": {
-				"variant": [
-					{ "value": "snow_golem", "file": "snow_golem.mimodel" },
-					{ "value": "snowman", "file": "snowman.mimodel" }
+				"pumpkin": [
+					{ "value": "false", "shape_hide": [ "pumpkin" ] },
+					{ "value": "true" }
 				]
 			},
-			"default_state": "variant=snow_golem"
+			"default_state": "pumpkin=true"
 		},
 		{
 			"name": "silverfish",
@@ -526,18 +546,18 @@
 			"name": "tropical_fish",
 			"states": {
 				"variant": [
-					{ "value": "model_a_pattern_1", "file": "tropical_fish_a_pattern_1.mimodel" },
-					{ "value": "model_a_pattern_2", "file": "tropical_fish_a_pattern_2.mimodel" },
-					{ "value": "model_a_pattern_3", "file": "tropical_fish_a_pattern_3.mimodel" },
-					{ "value": "model_a_pattern_4", "file": "tropical_fish_a_pattern_4.mimodel" },
-					{ "value": "model_a_pattern_5", "file": "tropical_fish_a_pattern_5.mimodel" },
-					{ "value": "model_a_pattern_6", "file": "tropical_fish_a_pattern_6.mimodel" },
-					{ "value": "model_b_pattern_1", "file": "tropical_fish_b_pattern_1.mimodel" },
-					{ "value": "model_b_pattern_2", "file": "tropical_fish_b_pattern_2.mimodel" },
-					{ "value": "model_b_pattern_3", "file": "tropical_fish_b_pattern_3.mimodel" },
-					{ "value": "model_b_pattern_4", "file": "tropical_fish_b_pattern_4.mimodel" },
-					{ "value": "model_b_pattern_5", "file": "tropical_fish_b_pattern_5.mimodel" },
-					{ "value": "model_b_pattern_6", "file": "tropical_fish_b_pattern_6.mimodel" }
+					{ "value": "model_a_pattern_1", "file": "tropical_fish_a.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_a_pattern_1" } },
+					{ "value": "model_a_pattern_2", "file": "tropical_fish_a.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_a_pattern_2" } },
+					{ "value": "model_a_pattern_3", "file": "tropical_fish_a.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_a_pattern_3" } },
+					{ "value": "model_a_pattern_4", "file": "tropical_fish_a.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_a_pattern_4" } },
+					{ "value": "model_a_pattern_5", "file": "tropical_fish_a.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_a_pattern_5" } },
+					{ "value": "model_a_pattern_6", "file": "tropical_fish_a.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_a_pattern_6" } },
+					{ "value": "model_b_pattern_1", "file": "tropical_fish_b.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_b_pattern_1" } },
+					{ "value": "model_b_pattern_2", "file": "tropical_fish_b.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_b_pattern_2" } },
+					{ "value": "model_b_pattern_3", "file": "tropical_fish_b.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_b_pattern_3" } },
+					{ "value": "model_b_pattern_4", "file": "tropical_fish_b.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_b_pattern_4" } },
+					{ "value": "model_b_pattern_5", "file": "tropical_fish_b.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_b_pattern_5" } },
+					{ "value": "model_b_pattern_6", "file": "tropical_fish_b.mimodel", "shape_texture": { "pattern": "entity/fish/tropical_b_pattern_6" } }
 				],
 				"base_color": [
 					{ "value": "white", "shape_color": { "base": "white" } },
@@ -638,7 +658,7 @@
 			"states": {
 				"variant": [
 					{ "value": "piglin", "file": "piglin.mimodel" },
-					{ "value": "piglin_brute", "file": "piglin.mimodel", "texture": "entity/piglin/piglin_brute" },
+					{ "value": "piglin_brute", "file": "piglin_brute.mimodel" },
 					{ "value": "zombified_piglin", "file": "zombified_piglin.mimodel" }
 				]
 			},
@@ -5493,6 +5513,7 @@
 		{
 			"name": "mangrove_roots",
 			"file": "mangrove_roots.json",
+			"subsurface": 1,
 			"id": "minecraft:mangrove_roots"
 		},
 		{
@@ -7281,6 +7302,10 @@
 		"item/dark_oak_chest_boat",
 		"item/mangrove_chest_boat",
 		"item/echo_shard",
+		"item/recovery_compass_00",
+		"item/music_disc_5",
+		"item/disc_fragment_5",
+		"item/goat_horn",
 		"item/light",
 		"item/light_00",
 		"item/light_01",

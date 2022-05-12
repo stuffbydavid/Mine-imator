@@ -14,6 +14,7 @@ uniform mat4 uProjMatrix;
 uniform mat4 uProjMatrixInv;
 
 uniform vec2 uScreenSize;
+uniform float uNoiseSize;
 
 uniform vec3 uKernel[SAMPLES];
 uniform float uRadius;
@@ -45,6 +46,12 @@ vec3 posFromBuffer(vec2 coord, float depth)
 	return pos.xyz / pos.w;
 }
 
+vec3 unpackNormalBlueNoise(vec4 c)
+{
+	return normalize(vec3(c.r, c.g, c.b * 0.5));
+	//return normalize(vec3(cos(c.r * 360.0), sin(c.r * 360.0), c.g));
+}
+
 void main()
 {
 	// Perform alpha test to ignore background
@@ -62,8 +69,8 @@ void main()
 	vec3 normal = unpackNormal(texture2D(uNormalBuffer, vTexCoord));
 	
 	// Random vector from noise
-	vec2 noiseScale = (uScreenSize / 4.0);
-	vec3 randVec = unpackNormal(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
+	vec2 noiseScale = uScreenSize / uNoiseSize;
+	vec3 randVec	= unpackNormalBlueNoise(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
 
 	// Construct kernel basis matrix
 	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));

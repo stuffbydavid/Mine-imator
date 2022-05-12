@@ -17,7 +17,6 @@ function project_reset_render()
 	project_render_shadows_point_buffer_size = 256
 	
 	project_render_subsurface_samples = 7
-	project_render_subsurface_jitter = .3
 	
 	project_render_indirect = true
 	project_render_indirect_precision = .3

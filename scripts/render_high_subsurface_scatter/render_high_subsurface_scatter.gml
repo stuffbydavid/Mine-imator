@@ -72,28 +72,8 @@ function render_high_subsurface_scatter(export)
 		random_set_seed(s)
 		
 		render_sample_noise_texture = render_get_noise_texture(s)
-	
-		// Calculate subsurface scatter
-		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, render_width, render_height)
-	
-		// Vertical blur
-		surface_set_target(render_surface_sample_temp1)
-		{
-			draw_clear(c_black)
 		
-			render_shader_obj = shader_map[?shader_high_subsurface_scatter]
-			with (render_shader_obj)
-			{
-				shader_set(shader)
-				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, depthsurf, render_surface_shadows, vec2(0, 1))
-			}
-			draw_blank(0, 0, render_width, render_height)
-			with (render_shader_obj)
-				shader_clear()
-		}
-		surface_reset_target()
-	
-		// Horizontal blur
+		// Perform scatter blur with blue noise
 		surface_set_target(sssblursurf)
 		{
 			draw_clear(c_black)
@@ -102,7 +82,7 @@ function render_high_subsurface_scatter(export)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, depthsurf, render_surface_sample_temp1, vec2(1, 0))
+				shader_high_subsurface_scatter_set(ssssurf, sssrangesurf, depthsurf, render_surface_shadows)
 			}
 			draw_blank(0, 0, render_width, render_height)
 			with (render_shader_obj)
