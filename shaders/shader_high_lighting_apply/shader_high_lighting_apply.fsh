@@ -18,18 +18,24 @@ uniform vec4 uFallbackColor;
 
 uniform vec4 uAmbientColor;
 
+uniform int uGammaCorrect;
+
 varying vec2 vTexCoord;
 
 void main()
 {
+	float gamma = (uGammaCorrect > 0 ? 2.2 : 1.0);
+	
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
+	baseColor.rgb = pow(baseColor.rgb, vec3(gamma));
+	
 	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord);
 	
 	float metallic, fresnel;
 	metallic = matColor.r;
 	fresnel = matColor.b;
 	
-	vec3 spec = mix(vec3(1.0), baseColor.rgb, metallic) * uFallbackColor.rgb * fresnel;
+	vec3 spec = mix(vec3(1.0), baseColor.rgb, metallic) * pow(uFallbackColor.rgb, vec3(gamma)) * fresnel;
 	
 	// Sum up lighting
 	vec3 diffuse = vec3(1.0);
@@ -43,7 +49,7 @@ void main()
 		if (uIndirectEnabled > 0)
 			indirect = texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
 		
-		diffuse = uAmbientColor.rgb + direct + indirect;
+		diffuse = pow(uAmbientColor.rgb, vec3(gamma)) + direct + indirect;
 	}
 	
 	// Reduce diffuse based on Metallic
@@ -67,6 +73,8 @@ void main()
 	
 	if (uShadowsEnabled > 0)
 		baseColor.rgb += texture2D(uSpecular, vTexCoord).rgb;
+	
+	baseColor.rgb = pow(baseColor.rgb, vec3(1.0/gamma));
 	
 	gl_FragColor = baseColor;
 }

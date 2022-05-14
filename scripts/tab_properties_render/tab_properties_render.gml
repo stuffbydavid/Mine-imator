@@ -129,7 +129,7 @@ function tab_properties_render()
 		tab_next()
 		
 		tab_control_meter()
-		draw_meter("renderindirectblurpasses", dx, dy, dw, project_render_indirect_blur_passes, 50, 0, 8, 2, 1, tab.render.tbx_indirect_blur_passes, action_project_render_indirect_blur_passes)
+		draw_meter("renderindirectblurradius", dx, dy, dw, round(project_render_indirect_blur_radius * 100), 50, 0, 500, 100, 1, tab.render.tbx_indirect_blur_radius, action_project_render_indirect_blur_radius)
 		tab_next()
 		
 		tab_control_dragger()
@@ -314,6 +314,11 @@ function tab_properties_render()
 		
 		tab_collapse_end()
 	}
+	
+	// Gamma correction
+	tab_control_switch()
+	draw_switch("rendergammacorrect", dx, dy, project_render_gamma_correct, action_project_render_gamma_correct)
+	tab_next()
 	
 	// Material maps
 	tab_control_switch()

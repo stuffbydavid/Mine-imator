@@ -128,6 +128,39 @@ function render_high_indirect(export)
 		}
 		surface_reset_target()
 		
+		// Blur result
+		if (app.project_render_indirect_blur_radius > 0)
+		{
+			var indirectsurftemp;
+			render_surface[5] = surface_require(render_surface[5], render_width, render_height)
+			indirectsurftemp = render_surface[5]
+			
+			surface_set_target(indirectsurftemp)
+			{
+				draw_clear_alpha(c_black, 0)
+				draw_surface_exists(render_surface_indirect, 0, 0)
+			}
+			surface_reset_target()
+			
+			render_shader_obj = shader_map[?shader_high_indirect_blur]
+			with (render_shader_obj)
+				shader_set(shader)
+			
+			surface_set_target(render_surface_indirect)
+			{
+				draw_clear_alpha(c_black, 0)
+				with (render_shader_obj)
+					shader_high_indirect_blur_set(depthsurf, normalsurf2)
+				draw_surface_exists(indirectsurftemp, 0, 0)
+			}
+			surface_reset_target()
+			
+			with (render_shader_obj)
+				shader_clear()
+			
+			gpu_set_texrepeat(true)
+		}
+		
 		var exptemp, dectemp;
 		render_surface_indirect_expo = surface_require(render_surface_indirect_expo, render_width, render_height)
 		render_surface_indirect_dec = surface_require(render_surface_indirect_dec, render_width, render_height)
@@ -192,43 +225,6 @@ function render_high_indirect(export)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
-	
-	#region Blur result (Using SSAO method)
-	
-	repeat (project_render_indirect_blur_passes)
-	{
-		var indirectsurftemp;
-		render_surface[5] = surface_require(render_surface[5], render_width, render_height)
-		indirectsurftemp = render_surface[5]
-		
-		render_shader_obj = shader_map[?shader_high_ssao_blur]
-		with (render_shader_obj)
-			shader_set(shader)
-		
-		// Horizontal
-		surface_set_target(indirectsurftemp)
-		{
-			with (render_shader_obj)
-				shader_high_ssao_blur_set(depthsurf, normalsurf2, 1, 0)
-			draw_surface_exists(render_surface_indirect, 0, 0)
-		}
-		surface_reset_target()
-		
-		// Vertical
-		surface_set_target(render_surface_indirect)
-		{
-			with (render_shader_obj)
-				shader_high_ssao_blur_set(depthsurf, normalsurf2, 0, 1)
-			draw_surface_exists(indirectsurftemp, 0, 0)
-		}
-		surface_reset_target()
-		
-		with (render_shader_obj)
-			shader_clear()
-	}
-	gpu_set_texrepeat(true)
-	
-	#endregion
 	
 	if (export)
 	{

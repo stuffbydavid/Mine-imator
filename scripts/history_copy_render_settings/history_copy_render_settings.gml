@@ -20,7 +20,7 @@ function history_copy_render_settings(obj)
 	
 	project_render_indirect = obj.project_render_indirect
 	project_render_indirect_precision = obj.project_render_indirect_precision
-	project_render_indirect_blur_passes = obj.project_render_indirect_blur_passes
+	project_render_indirect_blur_radius = obj.project_render_indirect_blur_radius
 	project_render_indirect_strength = obj.project_render_indirect_strength
 	
 	project_render_reflections = obj.project_render_reflections

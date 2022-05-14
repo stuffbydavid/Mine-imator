@@ -26,12 +26,6 @@ function render_high_ssao()
 	}
 	surface_reset_target()
 	
-	/*
-	// Noise texture
-	if (!surface_exists(render_ssao_noise))
-		render_ssao_noise = render_generate_noise(4, 4, null, true)
-	*/
-	
 	render_sample_noise_texture = render_get_noise_texture(1)
 	
 	// Calculate SSAO

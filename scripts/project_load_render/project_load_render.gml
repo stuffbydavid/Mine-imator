@@ -21,7 +21,7 @@ function project_load_render(map)
 	project_render_subsurface_samples = value_get_real(map[?"render_subsurface_samples"], project_render_subsurface_samples)
 	
 	project_render_indirect = value_get_real(map[?"render_indirect"], project_render_indirect)
-	project_render_indirect_blur_passes = value_get_real(map[?"render_indirect_blur_passes"], project_render_indirect_blur_passes)
+	project_render_indirect_blur_radius = value_get_real(map[?"render_indirect_blur_radius"], project_render_indirect_blur_radius)
 	project_render_indirect_precision = value_get_real(map[?"render_indirect_precision"], project_render_indirect_precision)
 	project_render_indirect_strength = value_get_real(map[?"render_indirect_strength"], project_render_indirect_strength)
 	
@@ -56,5 +56,6 @@ function project_load_render(map)
 	project_render_transparent_block_texture_filtering = value_get_real(map[?"transparent_block_texture_filtering"], project_render_transparent_block_texture_filtering)
 	project_render_texture_filtering_level = value_get_real(map[?"texture_filtering_level"], project_render_texture_filtering_level)
 	
+	project_render_gamma_correct = value_get_real(map[?"gamma_correct"], project_render_gamma_correct)
 	project_render_material_maps = value_get_real(map[?"material_maps"], project_render_material_maps)
 }

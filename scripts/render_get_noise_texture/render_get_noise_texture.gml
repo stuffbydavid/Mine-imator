@@ -8,9 +8,9 @@ function render_get_noise_texture(index)
 		var surf, xoff, yoff;
 		surf = surface_create(render_sample_noise_size, render_sample_noise_size)
 		
-		randomize()
+		random_set_seed(index)
 		xoff = irandom_range(0, render_sample_noise_size)
-		randomize()
+		random_set_seed(index + 1000)
 		yoff = irandom_range(0, render_sample_noise_size)
 		
 		surface_set_target(surf)

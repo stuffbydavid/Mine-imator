@@ -82,6 +82,7 @@ function shader_startup()
 		new_shader("shader_high_raytrace_uv")
 		new_shader("shader_high_raytrace_indirect")
 		new_shader("shader_high_raytrace_reflections")
+		new_shader("shader_high_indirect_blur")
 		new_shader("shader_scissor")
 		
 		shader_texture_surface = false
@@ -506,6 +507,7 @@ function shader_startup()
 		new_shader_uniform("uIndirectStrength")
 		new_shader_uniform("uReflectionsEnabled")
 		new_shader_uniform("uFallbackColor")
+		new_shader_uniform("uGammaCorrect")
 	}
 	
 	with (shader_map[?shader_high_samples_add])
@@ -674,6 +676,17 @@ function shader_startup()
 		new_shader_uniform("uProjMatrixInv")
 		new_shader_uniform("uFallbackColor")
 		new_shader_uniform("uFadeAmount")
+	}
+	
+	with (shader_map[?shader_high_indirect_blur])
+	{
+		new_shader_sampler("uDepthBuffer")
+		new_shader_sampler("uNormalBuffer")
+		new_shader_sampler("uNoiseBuffer")
+		new_shader_uniform("uScreenSize")
+		new_shader_uniform("uNoiseSize")
+		new_shader_uniform("uSamples")
+		new_shader_uniform("uBlurSize")
 	}
 	
 	with (shader_map[?shader_scissor])

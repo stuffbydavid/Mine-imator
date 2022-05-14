@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.05.01"
+		"lastchange": "2022.05.14"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2066,7 +2066,7 @@
 		"indirect/": {
 			"precision": "Precision",
 			"precisiontip": "The accuracy of raytracing for light bounces, higher precision is slower.",
-			"blurpasses": "Blur passes",
+			"blurradius": "Denoise radius",
 			"strength": "Strength"
 		},
 		"reflections": "Reflections",
@@ -2107,6 +2107,7 @@
 		"blockglow": "Glow bright blocks and models",
 		"blockglowthreshold": "Glow color threshold",
 		"blocksubsurfaceradius": "Block subsurface radius",
+		"gammacorrect": "Gamma correction",
 		"materialmaps": "Object material maps",
 		"materialmapstip": "Enable material and normal map texture settings for objects."
 	},

@@ -32,4 +32,5 @@ function shader_high_lighting_apply_set(ssao, shadows, mask, material)
 	
 	render_set_uniform("uReflectionsEnabled", render_reflections)
 	render_set_uniform_color("uFallbackColor", app.background_sky_color_final, 1)
+	render_set_uniform_int("uGammaCorrect", app.project_render_gamma_correct)
 }

@@ -20,7 +20,7 @@ function project_reset_render()
 	
 	project_render_indirect = true
 	project_render_indirect_precision = .3
-	project_render_indirect_blur_passes = 2
+	project_render_indirect_blur_radius = 1
 	project_render_indirect_strength = 1
 	
 	project_render_reflections = true
@@ -42,6 +42,7 @@ function project_reset_render()
 	project_render_transparent_block_texture_filtering = false
 	project_render_texture_filtering_level = 1
 	
+	project_render_gamma_correct = true
 	project_render_material_maps = false
 	
 	project_bend_style = "realistic"

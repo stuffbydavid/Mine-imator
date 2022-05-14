@@ -47,7 +47,8 @@ function app_startup_interface_tabs()
 			tbx_subsurface_samples = new_textbox_integer()
 			tbx_indirect_precision = new_textbox_integer()
 			tbx_indirect_precision.suffix = "%"
-			tbx_indirect_blur_passes = new_textbox_integer()
+			tbx_indirect_blur_radius = new_textbox_decimals()
+			tbx_indirect_blur_radius.suffix = "%"
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"
 			tbx_reflections_precision = new_textbox_integer()

@@ -49,7 +49,6 @@ vec3 posFromBuffer(vec2 coord, float depth)
 vec3 unpackNormalBlueNoise(vec4 c)
 {
 	return normalize(vec3(c.r, c.g, c.b * 0.5));
-	//return normalize(vec3(cos(c.r * 360.0), sin(c.r * 360.0), c.g));
 }
 
 void main()

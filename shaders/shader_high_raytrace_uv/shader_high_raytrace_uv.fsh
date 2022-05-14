@@ -1,3 +1,5 @@
+#define PI 3.14159265
+
 varying vec2 vTexCoord;
 
 // Buffers
@@ -86,7 +88,7 @@ vec2 viewPosToPixel(vec4 viewPos)
 
 vec3 unpackNormalBlueNoise(vec4 c)
 {
-	return normalize(vec3(cos(c.r * 360.0), sin(c.r * 360.0), c.g));
+	return normalize(vec3(cos(c.r * 2.0 * PI), sin(c.r * 2.0 * PI), c.g));
 }
 
 // Ray tracer, returns hit coordinate

@@ -1,4 +1,5 @@
 #define MAX_SAMPLES 65
+#define PI 3.14159265
 
 uniform sampler2D uSSSBuffer;
 uniform sampler2D uSSSRangeBuffer;
@@ -42,7 +43,7 @@ float lightStrength(vec3 light)
 
 vec3 unpackNormalBlueNoise(vec4 c)
 {
-	return normalize(vec3(cos(c.r * 360.0), sin(c.r * 360.0), c.g));
+	return normalize(vec3(cos(c.r * 2.0 * PI), sin(c.r * 2.0 * PI), c.g));
 }
 
 void main()
@@ -61,7 +62,7 @@ void main()
 	vec3 color = getLight(vTexCoord) * uKernel[0].x;
 	
 	vec3 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rgb;
-	vec2 randDir = vec2(cos(noise.r * 360.0), sin(noise.r * 360.0));
+	vec2 randDir = vec2(cos(noise.r * 2.0 * PI), sin(noise.r * 2.0 * PI));
 	rad *= noise.g * randDir;
 	
 	// Guassian blur
