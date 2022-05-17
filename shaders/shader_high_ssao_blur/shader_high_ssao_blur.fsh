@@ -1,5 +1,5 @@
 #define DEPTH_SENSITIVITY 20.0
-#define SAMPLES 4
+#define SAMPLES 6
 
 varying vec2 vTexCoord;
 
@@ -30,11 +30,13 @@ void main()
 	
 	// Setup blur weights
 	float weights[SAMPLES + 1];
-	weights[0] = 70.0;
-	weights[1] = 56.0;
-	weights[2] = 28.0;
-	weights[3] = 8.0;
-	weights[4] = 1.0;
+	weights[0] = 924.0;
+	weights[1] = 792.0;
+	weights[2] = 495.0;
+	weights[3] = 220.0;
+	weights[4] = 66.0;
+	weights[5] = 12.0;
+	weights[6] = 1.0;
 	
 	vec4 ssao = texture2D(gm_BaseTexture, vTexCoord) * weights[0];
 	float totalWeight = weights[0];

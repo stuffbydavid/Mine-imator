@@ -126,7 +126,7 @@ function render_startup()
 	
 	// SSAO
 	globalvar render_ssao_kernel;
-	render_ssao_kernel = render_generate_sample_kernel(16)
+	render_ssao_kernel = render_generate_sample_kernel(32)
 	
 	// DOF
 	globalvar render_dof_blades, render_dof_rotation, render_dof_ratio, render_dof_quality, render_dof_samples, render_dof_weight_samples, render_dof_sample_amount;
