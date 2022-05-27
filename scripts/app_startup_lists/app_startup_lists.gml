@@ -296,7 +296,6 @@ function app_startup_lists()
 		"audio",
 		"path",
 		"pathpoint",
-		"joint",
 		"shape",
 		"lightsource"
 	)

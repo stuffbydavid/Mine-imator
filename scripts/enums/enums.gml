@@ -377,7 +377,6 @@ function enums()
 		AUDIO,
 		PATH,
 		PATH_POINT,
-		JOINT,
 		
 		LIGHT_SOURCE,
 		SHAPE,

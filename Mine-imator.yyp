@@ -1593,6 +1593,7 @@
     {"id":{"name":"project_load_values_update","path":"scripts/project_load_values_update/project_load_values_update.yy",},"order":33,},
     {"id":{"name":"project_load_values_update_name","path":"scripts/project_load_values_update_name/project_load_values_update_name.yy",},"order":35,},
     {"id":{"name":"project_load_values","path":"scripts/project_load_values/project_load_values.yy",},"order":37,},
+    {"id":{"name":"action_tl_path_point_add","path":"scripts/action_tl_path_point_add/action_tl_path_point_add.yy",},"order":15,},
     {"id":{"name":"unzip_asset","path":"scripts/unzip_asset/unzip_asset.yy",},"order":39,},
     {"id":{"name":"unzip_model","path":"scripts/unzip_model/unzip_model.yy",},"order":41,},
     {"id":{"name":"particle_event_destroy","path":"scripts/particle_event_destroy/particle_event_destroy.yy",},"order":1,},

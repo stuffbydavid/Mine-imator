@@ -30,15 +30,13 @@ function app_startup_interface_bench()
 	
 	list_item_add("typeshape", e_tl_type.SHAPE, "", null, icons.SHAPES, null, bench_click)
 	list_item_add("typetext", e_tl_type.TEXT, "", null, icons.TEXT, null, bench_click)
+	list_item_add("typepath", e_tl_type.PATH, "", null, icons.PATH, null, bench_click)
 	
 	list_item_add("typecamera", e_tl_type.CAMERA, "", null, icons.CAMERA, null, bench_click)
 	list_item_add("typeparticles", e_tl_type.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
 	list_item_add("typelightsource", e_tl_type.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
 	list_item_add("typeaudio", e_tl_type.AUDIO, "", null, icons.NOTE, null, bench_click)
 	list_item_add("typebackground", e_tl_type.BACKGROUND, "", null, icons.CLOUD, null, bench_click)
-	
-	list_item_add("typepath", e_tl_type.PATH, "", null, icons.PATH, null, bench_click)
-	list_item_add("typepathpoint", e_tl_type.PATH_POINT, "", null, icons.PATH_POINT, null, bench_click)
 	
 	list_edit = null
 	

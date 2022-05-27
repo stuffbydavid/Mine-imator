@@ -13,7 +13,7 @@ function action_bench_create(edit = false)
 				{
 					if (object_index = obj_timeline)
 						tl_remove_clean()
-				
+					
 					instance_destroy()
 				}
 			}

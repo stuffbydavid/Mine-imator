@@ -2,6 +2,10 @@
 
 function tab_timeline_editor_path()
 {
+	tab_control_button_label()
+	draw_button_label("timelineeditorpathpointadd", floor(dx + dw/2), dy, null, icons.PATH_POINT, e_button.PRIMARY, action_tl_path_point_add, fa_middle)
+	tab_next()
+	
 	tab_control_switch()
 	draw_switch("timelineeditorpathclosed", dx, dy, tl_edit.path_closed, action_tl_path_closed)
 	tab_next()

@@ -559,8 +559,7 @@
 		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
 		"backgroundtip": "A timeline that can change the background during the animation.",
 		"audiotip": "An audio track that can play sound files such as .mp3 and .wav in the animation.",
-		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points.",
-		"pathpointtip": "A point that can be used to build paths when parented to path timelines."
+		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
 	"downloadskin/": {
 		"caption": "Download skin",
@@ -2784,6 +2783,7 @@
 		"audioadd": "Add sound",
 		"path": "PATH",
 		"path/": {
+			"pointadd": "Add point",
 			"closed": "Connect ends",
 			"smooth": "Smooth path",
 			"detail": "Detail",

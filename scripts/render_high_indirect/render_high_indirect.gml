@@ -132,8 +132,8 @@ function render_high_indirect(export)
 		if (app.project_render_indirect_blur_radius > 0)
 		{
 			var indirectsurftemp;
-			render_surface[5] = surface_require(render_surface[5], render_width, render_height)
-			indirectsurftemp = render_surface[5]
+			render_surface[6] = surface_require(render_surface[6], render_width, render_height)
+			indirectsurftemp = render_surface[6]
 			
 			surface_set_target(indirectsurftemp)
 			{

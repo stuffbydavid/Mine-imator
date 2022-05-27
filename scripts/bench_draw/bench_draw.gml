@@ -82,8 +82,7 @@ function bench_draw()
 		
 		if (!setting_advanced_mode)
 		{
-			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground" || bench_type_list.item[|i].name = "typepath" ||
-				bench_type_list.item[|i].name = "typepathpoint" || bench_type_list.item[|i].name = "typejoint")
+			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground")
 				skipasset = true
 		}
 		
@@ -93,7 +92,7 @@ function bench_draw()
 			dy += 32
 		}
 		
-		if (i = 2 || i = 6 || i = 8 || (i = 13 && !skipasset))
+		if (i = 2 || i = 6 || i = 9)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9
