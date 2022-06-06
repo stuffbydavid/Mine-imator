@@ -19,8 +19,7 @@ function render_startup()
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_debug_cascades, render_pass;
 	
-	globalvar render_matrix, render_samples, render_samples_done, render_target_size, render_high_preview,
-			  render_high_preview_width, render_high_preview_height;
+	globalvar render_matrix, render_samples, render_samples_done, render_target_size;
 	
 	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
 	
@@ -185,9 +184,6 @@ function render_startup()
 	render_samples = 0
 	render_samples_done = false
 	render_matrix = []
-	render_high_preview = false
-	render_high_preview_width = false
-	render_high_preview_height = false
 	
 	// Render pass surf
 	render_pass_surf = null

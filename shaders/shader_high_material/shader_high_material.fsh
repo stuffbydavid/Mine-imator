@@ -34,22 +34,11 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	vec2 texCoord = uv;
 	vec3 texColor = vec3(0.0);
 	
-	// Displace water normal map
-	if (uIsWater > 0)
-	{
-		vec2 angle = vec2(cos(vWindDirection), sin(vWindDirection)) * .125 * vTime;
-		texCoord = (worldPos.xy + angle) / 128.0;
-	}
-	
 	// Fix UV coordinate
 	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
 		texCoord = mod(texCoord * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
 	texColor = texture2D(uTextureNormal, texCoord).rgb * 2.0 - 1.0;
-	
-	// Reduce water normal map strength
-	if (uIsWater > 0)
-		texColor = mix(texColor, vec3(0.0, 0.0, 1.0), 0.9);
 	
 	// No normal present in map, skip
 	if (texColor.z < 0.0)

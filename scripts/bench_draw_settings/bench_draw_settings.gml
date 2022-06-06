@@ -33,6 +33,10 @@ function bench_draw_settings(bx, by, bw, bh)
 		// Light type
 		if (bench_settings.type = e_tl_type.LIGHT_SOURCE)
 		{
+			// Preview
+			draw_sprite(spr_light_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
+			dy += 144 + 8
+			
 			tab_control_togglebutton()
 			togglebutton_add("typepointlight", null, e_tl_type.POINT_LIGHT, bench_settings.light_type = e_tl_type.POINT_LIGHT, action_bench_light_type)
 			togglebutton_add("typespotlight", null, e_tl_type.SPOT_LIGHT, bench_settings.light_type = e_tl_type.SPOT_LIGHT, action_bench_light_type)

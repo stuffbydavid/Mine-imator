@@ -91,9 +91,6 @@ vec4 cascadeDepthBuffer(int index, vec2 coord)
 #extension GL_OES_standard_derivatives : enable
 vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 {
-	if (uIsWater == 1)
-		return normal;
-	
 	// Get edge derivatives
 	vec3 posDx = dFdx(worldPos);
 	vec3 posDy = dFdy(worldPos);

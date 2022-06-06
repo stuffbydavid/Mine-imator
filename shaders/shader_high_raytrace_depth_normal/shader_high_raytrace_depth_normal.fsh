@@ -63,16 +63,7 @@ vec3 getMappedNormal(vec3 normal, vec3 worldPos, vec2 uv)
 	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
 		normtex = mod(normtex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
-	if (uIsWater > 0)
-	{
-		vec2 angle = vec2(cos(vWindDirection), sin(vWindDirection)) * .125 * vTime;
-		normtex = (worldPos.xy + angle) / 128.0;
-	}
-	
 	vec3 normalCoord = texture2D(uTextureNormal, normtex).rgb * 2.0 - 1.0;
-	
-	if (uIsWater > 0)
-		normalCoord = mix(normalCoord, vec3(0.0, 0.0, 1.0), .9);
 	
 	if (normalCoord.z < 0.0)
 		return normal;
