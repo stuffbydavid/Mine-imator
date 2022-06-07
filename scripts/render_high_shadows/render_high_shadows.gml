@@ -125,10 +125,6 @@ function render_high_shadows(export)
 				}
 				surface_reset_target()
 			}
-			
-			render_world_start()
-			bbox_update_visible()
-			render_world_done()
 		}
 		
 		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
@@ -247,10 +243,6 @@ function render_high_shadows(export)
 					// Shadows
 					with (app)
 					{
-						render_world_start()
-						bbox_update_visible()
-						render_world_done()
-						
 						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 						resultsurftemp = render_surface[2]
 						
@@ -300,10 +292,6 @@ function render_high_shadows(export)
 					// Shadows
 					with (app)
 					{
-						render_world_start()
-						bbox_update_visible()
-						render_world_done()
-						
 						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
 						resultsurftemp = render_surface[2]
 						

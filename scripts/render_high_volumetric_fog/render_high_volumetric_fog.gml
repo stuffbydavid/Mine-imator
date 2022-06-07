@@ -188,10 +188,6 @@ function render_high_volumetric_fog(prevsurf, export)
 		
 		for (var i = 0; i < render_cascades_count; i++)
 			surface_free(render_surface_sun_buffer[i])
-		
-		render_world_start()
-		bbox_update_visible()
-		render_world_done()
 	}
 	
 	return resultsurf

@@ -3,12 +3,7 @@
 function menu_debug_settings()
 {
 	draw_set_font(font_label)
-	var switchwid = text_max_width("viewboxes", "viewcascades") + 16 + 24
-	
-	tab_control_dragger()
-	if (draw_switch("viewboxes", dx, dy, settings_menu_view.boxes, null))
-		settings_menu_view.boxes = !settings_menu_view.boxes
-	tab_next()
+	var switchwid = text_max_width("viewcascades") + 16 + 24
 	
 	tab_control_dragger()
 	if (draw_switch("viewcascades", dx, dy, settings_menu_view.cascades, null))

@@ -1,7 +1,7 @@
 /// model_shape_clear_cache(cachelist, [destroy])
 /// @arg cachelist
 /// @arg [destroy]
-/// @desc Deletes bounding box/vbuffer cacha data and clears map
+/// @desc Deletes vbuffer cacha data and clears map
 
 function model_shape_clear_cache(cachelist, destroy = false)
 {
@@ -12,7 +12,7 @@ function model_shape_clear_cache(cachelist, destroy = false)
 		if (!ds_map_valid(map))
 			continue
 		
-		// Clear bend cache, bendkey contains "X,Y,Z" string paired with an array; [vbuffer, bbox]
+		// Clear bend cache, bendkey contains "X,Y,Z" string paired with a vbuffer
 		var bendkey = ds_map_find_first(map);
 		while (!is_undefined(bendkey))
 		{

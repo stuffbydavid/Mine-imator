@@ -90,7 +90,4 @@ function temp_event_create()
 	text_font = null
 	text_3d = false
 	text_face_camera = false
-	
-	// Bounding box info
-	bounding_box = new bbox()
 }

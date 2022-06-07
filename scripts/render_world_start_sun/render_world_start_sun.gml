@@ -22,11 +22,6 @@ function render_world_start_sun(cascade)
 	light_view_matrix = matrix_get(matrix_view)
 	light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)
 	
-	// Frustum culling is wack in ortho, disable it for now
-	render_frustum.build(light_view_proj_matrix)
-	render_frustum.active = true
-	bbox_update_visible()
-	
 	render_sun_matrix = light_view_proj_matrix
 	render_sun_direction = background_sun_direction
 }

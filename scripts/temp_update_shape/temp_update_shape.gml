@@ -51,12 +51,4 @@ function temp_update_shape()
 			shape_vbuffer = vbuffer_create_sphere(rad, tex1, tex2, shape_detail, shape_invert)
 			break
 	}
-	
-	bounding_box.copy_vbuffer()
-	
-	with (obj_timeline)
-	{
-		if (temp != null && temp.id = other.id)
-			tl_update_bounding_box()
-	}
 }

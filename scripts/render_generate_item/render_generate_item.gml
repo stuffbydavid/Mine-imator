@@ -40,8 +40,6 @@ function render_generate_item()
 		vbuffer_destroy(item_vbuffer)
 	item_vbuffer = vbuffer_start()
 	
-	bounding_box.reset()
-	
 	// Calculate texture position and size
 	var texsize, texpos, slotpos, slotsize, slottexsize, slottex;
 	
@@ -138,6 +136,4 @@ function render_generate_item()
 	}
 	
 	vbuffer_done()
-	
-	bounding_box.copy_vbuffer()
 }

@@ -16,11 +16,7 @@ function render_update_text()
 		if (font = null)
 			font = temp.text_font
 		
-		if (render_generate_text(text, font, temp.text_3d, value[e_value.TEXT_HALIGN], value[e_value.TEXT_VALIGN], value[e_value.TEXT_AA]))
-		{
-			bounding_box.copy_vbuffer()
-			tl_update_bounding_box()
-		}
+		render_generate_text(text, font, temp.text_3d, value[e_value.TEXT_HALIGN], value[e_value.TEXT_VALIGN], value[e_value.TEXT_AA])
 	}
 	
 	with (obj_particle_type)

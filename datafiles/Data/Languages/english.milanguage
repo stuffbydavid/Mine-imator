@@ -736,7 +736,6 @@
 		"activecamera": "Active camera (%1)",
 		"selectedcamera": "Selected camera (%1)",
 		"debug": "Debug settings",
-		"boxes": "Bounding boxes",
 		"cascades": "Sun cascades"
 	},
 	"tab/": {

@@ -23,9 +23,6 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, b
 	// Key we'll use for saving/reading cache "X,Y,Z"
 	var key = string(bend[X]) + "," + string(bend[Y]) + "," + string(bend[Z]);
 	
-	// Reset part bounding box
-	bounding_box.reset()
-	
 	// Fill list to prevent gaps
 	if (ds_list_size(cachelist) < ds_list_size(part.shape_list))
 	{
@@ -33,21 +30,17 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, b
 			cachelist[|s] = null
 	}
 	
-	var shape, bendkeymap, vbuffer, shapebbox;
+	var shape, bendkeymap, vbuffer;
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
 		shape = part.shape_list[|s]
 		bendkeymap = cachelist[|s]
 		vbuffer = null
-		shapebbox = null
 		
 		// Use pre-existing cache (if it exists)
 		if (bendkeymap != null && ds_map_exists(bendkeymap, key))
-		{
-			vbuffer = bendkeymap[?key][0]
-			shapebbox = bendkeymap[?key][1]
-		}
+			vbuffer = bendkeymap[?key]
 		else // Generate mesh
 		{
 			with (shape)
@@ -67,29 +60,21 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, cachelist, alphamap, b
 				}
 			}
 			
-			// Generate bounding box and save cache
+			// Save cache
 			if (vbuffer != null)
 			{
 				if (bendkeymap = null)
 					bendkeymap = ds_map_create()
 				
-				shapebbox = new bbox()
-				shapebbox.copy_vbuffer()
-				shapebbox.mul_matrix(shape.matrix)
-				
-				bendkeymap[? key] = [vbuffer, shapebbox]
+				bendkeymap[? key] = vbuffer
 			}
 		}
 		
 		// Set default if no new mesh is generated
 		if (vbuffer = null)
-		{
 			vbuffer = shape.vbuffer_default
-			shapebbox = shape.bounding_box_default
-		}
 		
-		// Set vbuffer and bounding box
+		// Set vbuffer
 		vbufmap[? shape] = vbuffer
-		bounding_box.merge(shapebbox)
 	}
 }

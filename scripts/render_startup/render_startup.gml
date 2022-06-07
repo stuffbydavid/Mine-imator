@@ -7,7 +7,7 @@ function render_startup()
 			  render_particles, render_hidden, render_background, render_watermark, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix, light_view_proj_matrix,
 			  spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
-			  render_active, render_frustum, render_repeat, render_world_count;
+			  render_active, render_repeat, render_world_count;
 	
 	globalvar render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
@@ -93,7 +93,6 @@ function render_startup()
 	render_time = 0
 	render_surface_time = 0
 	render_active = null
-	render_frustum = new frustum()
 	render_repeat = vec3(0)
 	
 	render_target = null

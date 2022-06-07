@@ -23,21 +23,6 @@ function vertex_add()
 		vertex_normal(vbuffer_current, normal[@ X], normal[@ Y], normal[@ Z])
 		vertex_color(vbuffer_current, vertex_rgb, vertex_alpha)
 		vertex_texcoord(vbuffer_current, texcoord[@ X], texcoord[@ Y])
-		
-		// separated for performance
-		if (xx < vbuffer_xmin)
-			vbuffer_xmin = xx
-		if (yy < vbuffer_ymin)
-			vbuffer_ymin = yy
-		if (zz < vbuffer_zmin)
-			vbuffer_zmin = zz
-		
-		if (xx > vbuffer_xmax)
-			vbuffer_xmax = xx
-		if (yy > vbuffer_ymax)
-			vbuffer_ymax = yy
-		if (zz > vbuffer_zmax)
-			vbuffer_zmax = zz
 	}
 	else
 	{
@@ -49,21 +34,6 @@ function vertex_add()
 		vertex_normal(vbuffer_current, argument[3], argument[4], argument[5])
 		vertex_color(vbuffer_current, vertex_rgb, vertex_alpha)
 		vertex_texcoord(vbuffer_current, argument[6], argument[7])
-		
-		// separated for performance
-		if (xx < vbuffer_xmin)
-			vbuffer_xmin = xx
-		if (yy < vbuffer_ymin)
-			vbuffer_ymin = yy
-		if (zz < vbuffer_zmin)
-			vbuffer_zmin = zz
-		
-		if (xx > vbuffer_xmax)
-			vbuffer_xmax = xx
-		if (yy > vbuffer_ymax)
-			vbuffer_ymax = yy
-		if (zz > vbuffer_zmax)
-			vbuffer_zmax = zz
 	}
 	
 	var wavexy, wavez;

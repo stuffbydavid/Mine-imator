@@ -3,10 +3,6 @@
 
 function render_world_tl()
 {
-	// Frustum culled
-	if (render_frustum.active && (bounding_box_matrix.frustum_state = e_frustum_state.HIDDEN))
-		return 0
-	
 	// No 3D representation?
 	if (type = e_tl_type.CHARACTER ||
 		type = e_tl_type.SPECIAL_BLOCK ||

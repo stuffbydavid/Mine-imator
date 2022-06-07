@@ -3,7 +3,6 @@
 function vertex_format_startup()
 {
 	globalvar vbuffer_current, vertex_format, vertex_wave, vertex_wave_zmin, vertex_wave_zmax, vertex_brightness, vertex_subsurface;
-	globalvar vbuffer_xmin, vbuffer_xmax, vbuffer_ymin, vbuffer_ymax, vbuffer_zmin, vbuffer_zmax;
 	globalvar vertex_rgb, vertex_alpha;
 	
 	log("Create vertex format")
@@ -23,11 +22,4 @@ function vertex_format_startup()
 	vertex_wave_zmax = null
 	vertex_brightness = 0
 	vertex_subsurface = 0
-	
-	vbuffer_xmin = 0
-	vbuffer_xmax = 0
-	vbuffer_ymin = 0
-	vbuffer_ymax = 0
-	vbuffer_zmin = 0
-	vbuffer_zmax = 0
 }

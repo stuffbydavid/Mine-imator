@@ -19,7 +19,7 @@ function view_update_surface(view, cam)
 	else
 		render_low()
 	
-	if (view.gizmos || (view.boxes && app.setting_debug_features))
+	if (view.gizmos)
 	{
 		// Selection
 		if (tl_edit_amount > 0)
@@ -58,88 +58,8 @@ function view_update_surface(view, cam)
 							for (var i = 0; i < 2; i++)
 								view_shape_bone(tl.part_joints_pos[i], point3D_distance(tl.part_joints_pos[i], tl.part_joints_pos[i + 1]), tl.part_joints_bone_matrix[i])
 						}
-						
-						if ((view.boxes && app.setting_debug_features) && tl.bounding_box_children.frustum_state != e_frustum_state.HIDDEN)
-						{
-							if (tl.bounding_box_matrix.changed)
-							{
-								draw_set_color(c_red)
-								draw_set_alpha(.75)
-								
-								if (tl.bounding_box_matrix.frustum_state = e_frustum_state.VISIBLE)
-									draw_set_color(c_lime)
-								else if (tl.bounding_box_matrix.frustum_state = e_frustum_state.PARTIAL)
-									draw_set_color(c_yellow)
-								
-								if (tl.model_timeline_list != null)
-								{
-									draw_set_color(c_aqua)
-									draw_set_alpha(1)
-								}
-								
-								view_shape_box(tl.bounding_box_matrix.start_pos, tl.bounding_box_matrix.end_pos)
-							}
-							
-							draw_set_alpha(1)
-						}
 					}
 				}
-				
-				// Selection bounding box
-				if (tl_edit != null && tl_edit_amount > 1)
-				{
-					var boxmin, boxmax;
-					
-					// Update selection bounding box
-					timeline_select_box_min = [no_limit, no_limit, no_limit]
-					timeline_select_box_max = [-no_limit, -no_limit, -no_limit]
-					
-					with (obj_timeline)
-					{
-						if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
-							continue
-						
-						if (selected || parent_is_selected)
-						{
-							if (bounding_box_matrix.changed)
-							{
-								app.timeline_select_box_min[X] = min(app.timeline_select_box_min[X], bounding_box_matrix.start_pos[X])
-								app.timeline_select_box_min[Y] = min(app.timeline_select_box_min[Y], bounding_box_matrix.start_pos[Y])
-								app.timeline_select_box_min[Z] = min(app.timeline_select_box_min[Z], bounding_box_matrix.start_pos[Z])
-								
-								app.timeline_select_box_max[X] = max(app.timeline_select_box_max[X], bounding_box_matrix.end_pos[X])
-								app.timeline_select_box_max[Y] = max(app.timeline_select_box_max[Y], bounding_box_matrix.end_pos[Y])
-								app.timeline_select_box_max[Z] = max(app.timeline_select_box_max[Z], bounding_box_matrix.end_pos[Z])
-							}
-							else
-							{
-								app.timeline_select_box_min[X] = min(app.timeline_select_box_min[X], world_pos[X])
-								app.timeline_select_box_min[Y] = min(app.timeline_select_box_min[Y], world_pos[Y])
-								app.timeline_select_box_min[Z] = min(app.timeline_select_box_min[Z], world_pos[Z])
-								
-								app.timeline_select_box_max[X] = max(app.timeline_select_box_max[X], world_pos[X])
-								app.timeline_select_box_max[Y] = max(app.timeline_select_box_max[Y], world_pos[Y])
-								app.timeline_select_box_max[Z] = max(app.timeline_select_box_max[Z], world_pos[Z])
-							}
-						}
-					}
-					
-					boxmin = timeline_select_box_min
-					boxmax = timeline_select_box_max
-					
-					if (abs(boxmin[X]) != no_limit && !array_equals(boxmin, boxmax))
-					{	
-						boxmin = point3D_add(boxmin, vec3(-.5))
-						boxmax = point3D_add(boxmax, vec3(.5))
-					
-						draw_set_color(c_white)
-						draw_set_alpha(.5)
-						view_shape_box(boxmin, boxmax)
-						draw_set_alpha(1)
-					}
-				}
-				
-				draw_set_color(c_white)
 				
 				// Controls
 				if (tl_edit != null && tl_edit != cam && view.gizmos)

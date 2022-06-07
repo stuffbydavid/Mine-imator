@@ -166,16 +166,7 @@ function tl_event_create()
 	model_tex_material = null
 	model_tex_normal = null
 	
-	// Bounding box info
-	bounding_box = new bbox()
-	bounding_box_matrix = new bbox()
-	bounding_box_children = new bbox()
-	bounding_box_children_list = 0
-	
-	scenery_repeat_bounding_box = null
-	bounding_box_update = true
 	render_visible = true
-	model_timeline_list = null
 	
 	// Path
 	path_update = false

@@ -10,6 +10,4 @@ function block_vbuffer_done()
 			vertex_freeze(block_vbuffer[d, vb])
 		}
 	}
-	
-	bounding_box.copy_vbuffer()
 }

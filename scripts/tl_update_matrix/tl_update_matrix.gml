@@ -375,8 +375,6 @@ function tl_update_matrix(updateik = true)
 					tl_update_model_shape_bend(clear)
 				
 				model_clear_bend_cache = false
-				
-				tl_update_bounding_box()
 			}
 			
 			// Update objects following this path
@@ -401,34 +399,6 @@ function tl_update_matrix(updateik = true)
 			}
 			
 			update_matrix = false
-		}
-	}
-	
-	// Update model bounding boxes
-	with (app)
-	{
-		ds_list_clear(project_model_list)
-		
-		with (obj_timeline)
-		{
-			if (type = e_tl_type.CHARACTER ||
-				type = e_tl_type.SPECIAL_BLOCK ||
-				(type = e_tl_type.MODEL && temp.model != null && temp.model.model_format = e_model_format.MIMODEL))
-			{
-				ds_list_add(app.project_model_list, id)
-				
-				bounding_box.reset()
-				
-				if (model_timeline_list = null)
-					model_timeline_list = ds_list_create()
-				else
-					ds_list_clear(model_timeline_list)
-				
-				if (type = e_tl_type.SPECIAL_BLOCK || temp.model != null)
-					model_update_bounding_box(id, id, bounding_box)
-				
-				bounding_box_matrix.copy(bounding_box)
-			}
 		}
 	}
 	
