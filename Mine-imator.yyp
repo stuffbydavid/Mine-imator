@@ -33,7 +33,6 @@
     {"id":{"name":"spr_control_dial","path":"sprites/spr_control_dial/spr_control_dial.yy",},"order":49,},
     {"id":{"name":"spr_dial_dash","path":"sprites/spr_dial_dash/spr_dial_dash.yy",},"order":51,},
     {"id":{"name":"spr_chevron_ani","path":"sprites/spr_chevron_ani/spr_chevron_ani.yy",},"order":53,},
-    {"id":{"name":"spr_load_assets","path":"sprites/spr_load_assets/spr_load_assets.yy",},"order":55,},
     {"id":{"name":"spr_16","path":"sprites/spr_16/spr_16.yy",},"order":1,},
     {"id":{"name":"spr_fog","path":"sprites/spr_fog/spr_fog.yy",},"order":3,},
     {"id":{"name":"spr_font","path":"sprites/spr_font/spr_font.yy",},"order":5,},
@@ -1809,6 +1808,7 @@
     {"id":{"name":"draw_divide","path":"scripts/draw_divide/draw_divide.yy",},"order":13,},
     {"id":{"name":"draw_divide_vertical","path":"scripts/draw_divide_vertical/draw_divide_vertical.yy",},"order":15,},
     {"id":{"name":"draw_gradient","path":"scripts/draw_gradient/draw_gradient.yy",},"order":17,},
+    {"id":{"name":"spr_load_assets","path":"sprites/spr_load_assets/spr_load_assets.yy",},"order":4,},
     {"id":{"name":"draw_image","path":"scripts/draw_image/draw_image.yy",},"order":19,},
     {"id":{"name":"draw_image_box_cover","path":"scripts/draw_image_box_cover/draw_image_box_cover.yy",},"order":21,},
     {"id":{"name":"draw_line_ext","path":"scripts/draw_line_ext/draw_line_ext.yy",},"order":23,},
@@ -2508,6 +2508,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/Data/Languages","resourceVersion":"1.0","name":"english.milanguage","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"22w18a.midata","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"22w18a.zip","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Splashes","resourceVersion":"1.0","name":"placeholder.png","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.3.0.625",

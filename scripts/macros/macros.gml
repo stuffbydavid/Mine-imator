@@ -4,7 +4,7 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						true
+	#macro dev_mode						false
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
@@ -37,6 +37,7 @@ function macros()
 	#macro languages_directory			data_directory + "Languages\\"
 	#macro minecraft_directory			data_directory + "Minecraft\\"
 	#macro render_directory				data_directory + "Render\\"
+	#macro splash_directory				data_directory + "Splashes\\"
 	
 	// Files
 	#macro language_file				languages_directory + "english.milanguage"

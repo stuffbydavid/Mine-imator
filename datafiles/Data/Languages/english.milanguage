@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.05.14"
+		"lastchange": "2022.06.07"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -238,7 +238,7 @@
 		"newproject": "New project",
 		"browse": "Browse...",
 		"recentprojects": "Recent projects",
-		"loadingassets": "Loading assets, please wait...",
+		"loadingassets": "Preparing assets... %1%",
 		"sortby": "Sort by"
 	},
 	"welcome/": {
