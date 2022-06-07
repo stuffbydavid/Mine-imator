@@ -14,12 +14,16 @@ function tab_frame_editor_position()
 	mul = max(1, point3D_distance(tl_edit.world_pos, cam_work_from)) / 100
 	
 	// Parts default to their spawn position, other objects to (0, 0, 0)
-	if (tl_edit.part_of = null)
+	if (tl_edit.part_of = null || tl_edit.type = e_tl_type.CAMERA)
 		def = point3D(0, 0, 0)
 	else
 		def = point3D(tl_edit.value_default[e_value.POS_X], tl_edit.value_default[e_value.POS_Y], tl_edit.value_default[e_value.POS_Z])
 	
 	snapval = (dragger_snap ? setting_snap_size_position : snap_min)
+	
+	// Ignore default values for camera
+	var def
+	
 	
 	axis_edit = X
 	textfield_group_add("frameeditorpositionx", tl_edit.value[e_value.POS_X], def[X], action_tl_frame_pos, axis_edit, tab.transform.tbx_pos_x, null, mul / tl_edit.value_inherit[e_value.SCA_X])

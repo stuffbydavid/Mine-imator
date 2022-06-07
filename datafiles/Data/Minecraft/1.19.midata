@@ -1,5 +1,5 @@
 {
-	"version": "22w18a",
+	"version": "1.19",
 	"patch": 0,
 	"format": 7,
 	"characters": [
@@ -88,7 +88,7 @@
 			"file": "pig.mimodel",
 			"states": {
 				"saddle": [
-					{ "value": "false", "hide": [ "saddle" ] },
+					{ "value": "false", "hide": [ "saddle" ], "shape_hide": "saddle" },
 					{ "value": "true" }
 				]
 			},
@@ -286,24 +286,24 @@
 					{ "value": "white", "texture": "entity/llama/white" }
 				],
 				"decor": [
-					{ "value": "none", "hide": [ "body_decoration", "neck_decoration" ] },
-					{ "value": "white", "texture": { "body_decoration": "entity/llama/decor/white", "neck_decoration": "entity/llama/decor/white" } },
-					{ "value": "orange", "texture": { "body_decoration": "entity/llama/decor/orange", "neck_decoration": "entity/llama/decor/orange" } },
-					{ "value": "magenta", "texture": { "body_decoration": "entity/llama/decor/magenta", "neck_decoration": "entity/llama/decor/magenta" } },
-					{ "value": "light_blue", "texture": { "body_decoration": "entity/llama/decor/light_blue", "neck_decoration": "entity/llama/decor/light_blue" } },
-					{ "value": "yellow", "texture": { "body_decoration": "entity/llama/decor/yellow", "neck_decoration": "entity/llama/decor/yellow" } },
-					{ "value": "lime", "texture": { "body_decoration": "entity/llama/decor/lime", "neck_decoration": "entity/llama/decor/lime" } },
-					{ "value": "pink", "texture": { "body_decoration": "entity/llama/decor/pink", "neck_decoration": "entity/llama/decor/pink" } },
-					{ "value": "gray", "texture": { "body_decoration": "entity/llama/decor/gray", "neck_decoration": "entity/llama/decor/gray" } },
-					{ "value": "light_gray", "texture": { "body_decoration": "entity/llama/decor/light_gray", "neck_decoration": "entity/llama/decor/light_gray" } },
-					{ "value": "cyan", "texture": { "body_decoration": "entity/llama/decor/cyan", "neck_decoration": "entity/llama/decor/cyan" } },
-					{ "value": "purple", "texture": { "body_decoration": "entity/llama/decor/purple", "neck_decoration": "entity/llama/decor/purple" } },
-					{ "value": "blue", "texture": { "body_decoration": "entity/llama/decor/blue", "neck_decoration": "entity/llama/decor/blue" } },
-					{ "value": "brown", "texture": { "body_decoration": "entity/llama/decor/brown", "neck_decoration": "entity/llama/decor/brown" } },
-					{ "value": "green", "texture": { "body_decoration": "entity/llama/decor/green", "neck_decoration": "entity/llama/decor/green" } },
-					{ "value": "red", "texture": { "body_decoration": "entity/llama/decor/red", "neck_decoration": "entity/llama/decor/red" } },
-					{ "value": "black", "texture": { "body_decoration": "entity/llama/decor/black", "neck_decoration": "entity/llama/decor/black" } },
-					{ "value": "trader_llama", "texture": { "body_decoration": "entity/llama/decor/trader_llama", "neck_decoration": "entity/llama/decor/trader_llama" } }
+					{ "value": "none", "shape_hide": [ "decor" ] },
+					{ "value": "white", "shape_texture": { "decor": "entity/llama/decor/white" } },
+					{ "value": "orange", "shape_texture": { "decor": "entity/llama/decor/orange" } },
+					{ "value": "magenta", "shape_texture": { "decor": "entity/llama/decor/magenta" } },
+					{ "value": "light_blue", "shape_texture": { "decor": "entity/llama/decor/light_blue" } },
+					{ "value": "yellow", "shape_texture": { "decor": "entity/llama/decor/yellow" } },
+					{ "value": "lime", "shape_texture": { "decor": "entity/llama/decor/lime" } },
+					{ "value": "pink", "shape_texture": { "decor": "entity/llama/decor/pink" } },
+					{ "value": "gray", "shape_texture": { "decor": "entity/llama/decor/gray" } },
+					{ "value": "light_gray", "shape_texture": { "decor": "entity/llama/decor/light_gray" } },
+					{ "value": "cyan", "shape_texture": { "decor": "entity/llama/decor/cyan" } },
+					{ "value": "purple", "shape_texture": { "decor": "entity/llama/decor/purple" } },
+					{ "value": "blue", "shape_texture": { "decor": "entity/llama/decor/blue" } },
+					{ "value": "brown", "shape_texture": { "decor": "entity/llama/decor/brown" } },
+					{ "value": "green", "shape_texture": { "decor": "entity/llama/decor/green" } },
+					{ "value": "red", "shape_texture": { "decor": "entity/llama/decor/red" } },
+					{ "value": "black", "shape_texture": { "decor": "entity/llama/decor/black" } },
+					{ "value": "trader_llama", "shape_texture": { "decor": "entity/llama/decor/trader_llama" } }
 				],
 				"chests": [
 					{ "value": "false", "hide": [ "chests", "right_chest", "left_chest" ] },
@@ -358,8 +358,8 @@
 			"name": "illager",
 			"states": {
 				"variant": [
-					{ "value": "evoker", "file": "evoker.mimodel", },
-					{ "value": "vindicator", "file": "vindicator.mimodel", }
+					{ "value": "evoker", "file": "evoker.mimodel" },
+					{ "value": "vindicator", "file": "vindicator.mimodel" }
 				]
 			},
 			"default_state": "variant=evoker"
@@ -5934,21 +5934,6 @@
 		"entity/zombie_villager/type/swamp",
 		"entity/zombie_villager/type/taiga",
 		"item/spyglass_model",
-		"models/armor/chainmail_layer_1",
-		"models/armor/chainmail_layer_2",
-		"models/armor/diamond_layer_1",
-		"models/armor/diamond_layer_2",
-		"models/armor/gold_layer_1",
-		"models/armor/gold_layer_2",
-		"models/armor/iron_layer_1",
-		"models/armor/iron_layer_2",
-		"models/armor/leather_layer_1",
-		"models/armor/leather_layer_1_overlay",
-		"models/armor/leather_layer_2",
-		"models/armor/leather_layer_2_overlay",
-		"models/armor/netherite_layer_1",
-		"models/armor/netherite_layer_2",
-		"models/armor/turtle_layer_1",
 		"block/brown_mushroom",
 		"block/carved_pumpkin",
 		"block/cobblestone",
@@ -6871,25 +6856,65 @@
 		"grass_block.json": {
 			"colorZ": null
 		},
-		"grass.json": {
-			"colorY": null,
-			"colorZ": null
+		"oak_sapling.json": {
+			"colorZ": "#78553A",
+			"alphaZ": 1
 		},
-		"tall_grass.json": {
-			"colorY": null,
-			"colorZ": null
+		"spruce_sapling.json": {
+			"colorZ": "#253A25",
+			"alphaZ": 1
 		},
-		"fern.json": {
-			"colorY": null,
-			"colorZ": null
+		"birch_sapling.json": {
+			"colorZ": "#7CA250",
+			"alphaZ": 1
 		},
-		"large_fern.json": {
-			"colorY": null,
-			"colorZ": null
+		"jungle_sapling.json": {
+			"colorZ": "#316D19",
+			"alphaZ": 1
 		},
-		"vine.json": {
-			"colorY": null,
-			"colorZ": null
+		"acacia_sapling.json": {
+			"colorZ": "#766614",
+			"alphaZ": 1
+		},
+		"dark_oak_sapling.json": {
+			"colorZ": "#265216",
+			"alphaZ": 1
+		},
+		"gold_ore.json": {
+			"colorY": "#B79048",
+			"colorZ": "#B79048",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_gold_ore.json": {
+			"colorY": "#B79048",
+			"colorZ": "#B79048",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"iron_ore.json": {
+			"colorY": "#99897D",
+			"colorZ": "#99897D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_iron_ore.json": {
+			"colorY": "#99897D",
+			"colorZ": "#99897D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"coal_ore.json": {
+			"colorY": "#5C5C5C",
+			"colorZ": "#5C5C5C",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_coal_ore.json": {
+			"colorY": "#5C5C5C",
+			"colorZ": "#5C5C5C",
+			"alphaY": 1,
+			"alphaZ": 1
 		},
 		"oak_leaves.json": {
 			"colorY": "#989998",
@@ -6932,6 +6957,644 @@
 			"colorZ": null,
 			"alphaY": 1,
 			"alphaZ": null
+		},
+		"mangrove_roots.json": {
+			"colorY": "#463823",
+			"colorZ": null,
+			"alphaY": 1,
+			"alphaZ": null
+		},
+		"lapis_ore.json": {
+			"colorY": "#4D6CA0",
+			"colorZ": "#4D6CA0",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_lapis_ore.json": {
+			"colorY": "#4D6CA0",
+			"colorZ": "#4D6CA0",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"cobweb.json": {
+			"colorZ": "#F1F4F4",
+			"alphaZ": 1
+		},
+		"grass.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"fern.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"dead_bush.json": {
+			"colorZ": "#A26F2F",
+			"alphaZ": 1
+		},
+		"dandelion.json": {
+			"colorZ": "#FBD33F",
+			"alphaZ": 1
+		},
+		"poppy.json": {
+			"colorZ": "#C32A21",
+			"alphaZ": 1
+		},
+		"blue_orchid.json": {
+			"colorZ": "#27A9F4",
+			"alphaZ": 1
+		},
+		"allium.json": {
+			"colorZ": "#B878ED",
+			"alphaZ": 1
+		},
+		"azure_bluet.json": {
+			"colorZ": "#D6E8E8",
+			"alphaZ": 1
+		},
+		"red_tulip.json": {
+			"colorZ": "#FF4540",
+			"alphaZ": 1
+		},
+		"orange_tulip.json": {
+			"colorZ": "#F19D25",
+			"alphaZ": 1
+		},
+		"white_tulip.json": {
+			"colorZ": "#D6E8E8",
+			"alphaZ": 1
+		},
+		"pink_tulip.json": {
+			"colorZ": "#EBC5FD",
+			"alphaZ": 1
+		},
+		"oxeye_daisy.json": {
+			"colorZ": "#F8F4CE",
+			"alphaZ": 1
+		},
+		"cornflower.json": {
+			"colorZ": "#6281E8",
+			"alphaZ": 1
+		},
+		"wither_rose.json": {
+			"colorZ": "#2A1F19",
+			"alphaZ": 1
+		},
+		"lily_of_the_valley.json": {
+			"colorZ": "#E7E7E7",
+			"alphaZ": 1
+		},
+		"brown_mushroom.json": {
+			"colorZ": "#CC9978",
+			"alphaZ": 1
+		},
+		"red_mushroom.json": {
+			"colorZ": "#FE2A2A",
+			"alphaZ": 1
+		},
+		"tnt.json": {
+			"colorY": "#912D11",
+			"colorZ": "#DB2F1A"
+		},
+		"diamond_ore.json": {
+			"colorY": "#50AAAD",
+			"colorZ": "#50AAAD",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_diamond_ore.json": {
+			"colorY": "#50AAAD",
+			"colorZ": "#50AAAD",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"acacia_door.json": {
+			"colorZ": "#BA683B",
+			"alphaZ": 1
+		},
+		"redstone_ore.json": {
+			"colorY": "#A74545",
+			"colorZ": "#A74545",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_redstone_ore.json": {
+			"colorY": "#A74545",
+			"colorZ": "#A74545",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"cake.json": {
+			"colorY": "#FDF4D8",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"candle_cake.json": {
+			"colorY": "#FCEDCA",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"white_candle_cake.json": {
+			"colorY": "#F5F0DB",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"orange_candle_cake.json": {
+			"colorY": "#FDD7A7",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"magenta_candle_cake.json": {
+			"colorY": "#ECC5CE",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"light_blue_candle_cake.json": {
+			"colorY": "#C7DFD7",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"yellow_candle_cake.json": {
+			"colorY": "#FDE9B4",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"lime_candle_cake.json": {
+			"colorY": "#DCE8A7",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"pink_candle_cake.json": {
+			"colorY": "#FBD9CC",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"light_gray_candle_cake.json": {
+			"colorY": "#E2DCC4",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"gray_candle_cake.json": {
+			"colorY": "#D6D3BE",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"cyan_candle_cake.json": {
+			"colorY": "#C2DEC9",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"purple_candle_cake.json": {
+			"colorY": "#DEC1CE",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"blue_candle_cake.json": {
+			"colorY": "#CECDD1",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"brown_candle_cake.json": {
+			"colorY": "#E1CDAF",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"green_candle_cake.json": {
+			"colorY": "#D5D7A7",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"red_candle_cake.json": {
+			"colorY": "#EAC3AC",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"black_candle_cake.json": {
+			"colorY": "#CBC4B6",
+			"colorZ": "#BB581D",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"cactus.json": {
+			"colorZ": "#649832",
+			"alphaZ": 1
+		},
+		"birch_trapdoor.json": {
+			"colorZ": "#F2EEDE",
+			"alphaZ": 1
+		},
+		"acacia_trapdoor.json": {
+			"colorZ": "#BA683B",
+			"alphaZ": 1
+		},
+		"mangrove_trapdoor.json": {
+			"colorZ": "#8B4D3A",
+			"alphaZ": 1
+		},
+		"crimson_trapdoor.json": {
+			"colorZ": "#7E3A56",
+			"alphaZ": 1
+		},
+		"warped_trapdoor.json": {
+			"colorZ": "#398382",
+			"alphaZ": 1
+		},
+		"vine.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"cauldron.json": {
+			"colorY": "#3F3E42",
+			"colorZ": "#595858"
+		},
+		"water_cauldron.json": {
+			"colorY": "#3862B5",
+			"colorZ": "#595858"
+		},
+		"lava_cauldron.json": {
+			"colorY": "#CE4609",
+			"colorZ": "#595858"
+		},
+		"powder_snow_cauldron.json": {
+			"colorY": "#F7FDFD",
+			"colorZ": "#595858"
+		},
+		"enchanting_table.json": {
+			"colorY": "#86142C",
+			"colorZ": "#171226"
+		},
+		"end_portal_frame.json": {
+			"colorY": "#427367",
+			"colorZ": "#DFE2A4"
+		},
+		"emerald_ore.json": {
+			"colorY": "#4DA463",
+			"colorZ": "#4DA463",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_emerald_ore.json": {
+			"colorY": "#4DA463",
+			"colorZ": "#4DA463",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"flower_pot.json": {
+			"colorY": "#78553A",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_poppy.json": {
+			"colorY": "#C32A21",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_dandelion.json": {
+			"colorY": "#FBD33F",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_oak_sapling.json": {
+			"colorY": "#78553A",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_spruce_sapling.json": {
+			"colorY": "#253A25",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_birch_sapling.json": {
+			"colorY": "#7CA250",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_jungle_sapling.json": {
+			"colorY": "#316D19",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_acacia_sapling.json": {
+			"colorY": "#766614",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_dark_oak_sapling.json": {
+			"colorY": "#265216",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_red_mushroom.json": {
+			"colorY": "#FE2A2A",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_brown_mushroom.json": {
+			"colorY": "#CC9978",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_cactus.json": {
+			"colorY": "#649832",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_dead_bush.json": {
+			"colorY": "#A26F2F",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_fern.json": {
+			"colorY": "#3B5517",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_blue_orchid.json": {
+			"colorY": "#27A9F4",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_allium.json": {
+			"colorY": "#B878ED",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_azure_bluet.json": {
+			"colorY": "#D6E8E8",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_red_tulip.json": {
+			"colorY": "#FF4540",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_orange_tulip.json": {
+			"colorY": "#F19D25",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_white_tulip.json": {
+			"colorY": "#D6E8E8",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_pink_tulip.json": {
+			"colorY": "#EBC5FD",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_oxeye_daisy.json": {
+			"colorY": "#F8F4CE",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_cornflower.json": {
+			"colorY": "#6281E8",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_lily_of_the_valley.json": {
+			"colorY": "#E7E7E7",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_wither_rose.json": {
+			"colorY": "#2A1F19",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_bamboo.json": {
+			"colorY": "#538209",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_warped_fungus.json": {
+			"colorY": "#119B85",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_warped_roots.json": {
+			"colorY": "#167E86",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_crimson_fungus.json": {
+			"colorY": "#941818",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"potted_crimson_roots.json": {
+			"colorY": "#920636",
+			"colorZ": "#834939",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"sunflower.json": {
+			"colorZ": "#FED639",
+			"alphaZ": 1
+		},
+		"lilac.json": {
+			"colorZ": "#D380D3",
+			"alphaZ": 1
+		},
+		"rose_bush.json": {
+			"colorZ": "#ED302C",
+			"alphaZ": 1
+		},
+		"peony.json": {
+			"colorZ": "#DE93F1",
+			"alphaZ": 1
+		},
+		"tall_grass.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"large_fern.json": {
+			"colorY": null,
+			"colorZ": null
+		},
+		"bamboo.json": {
+			"colorZ": "#538209",
+			"alphaZ": 1
+		},
+		"grindstone.json": {
+			"colorY": "#8F8F8F",
+			"colorZ": "#686868",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"crimson_fungus.json": {
+			"colorZ": "#941818",
+			"alphaZ": 1
+		},
+		"crimson_roots.json": {
+			"colorZ": "#920636",
+			"alphaZ": 1
+		},
+		"warped_fungus.json": {
+			"colorZ": "#119B85",
+			"alphaZ": 1
+		},
+		"warped_roots.json": {
+			"colorZ": "#167E86",
+			"alphaZ": 1
+		},
+		"copper_ore.json": {
+			"colorY": "#A27564",
+			"colorZ": "#A27564",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"deepslate_copper_ore.json": {
+			"colorY": "#A27564",
+			"colorZ": "#A27564",
+			"alphaY": 1,
+			"alphaZ": 1
+		},
+		"candle.json": {
+			"colorZ": "#FADAA3",
+			"alphaZ": 1
+		},
+		"white_candle.json": {
+			"colorZ": "#E0E5E5",
+			"alphaZ": 1
+		},
+		"orange_candle.json": {
+			"colorZ": "#FF8118",
+			"alphaZ": 1
+		},
+		"magenta_candle.json": {
+			"colorZ": "#BD3CB4",
+			"alphaZ": 1
+		},
+		"light_blue_candle.json": {
+			"colorZ": "#29A1D5",
+			"alphaZ": 1
+		},
+		"yellow_candle.json": {
+			"colorZ": "#FFCC4B",
+			"alphaZ": 1
+		},
+		"lime_candle.json": {
+			"colorZ": "#7BC618",
+			"alphaZ": 1
+		},
+		"pink_candle.json": {
+			"colorZ": "#F689AC",
+			"alphaZ": 1
+		},
+		"light_gray_candle.json": {
+			"colorZ": "#93958C",
+			"alphaZ": 1
+		},
+		"gray_candle.json": {
+			"colorZ": "#627173",
+			"alphaZ": 1
+		},
+		"cyan_candle.json": {
+			"colorZ": "#129E9D",
+			"alphaZ": 1
+		},
+		"purple_candle.json": {
+			"colorZ": "#832CB4",
+			"alphaZ": 1
+		},
+		"blue_candle.json": {
+			"colorZ": "#455ABE",
+			"alphaZ": 1
+		},
+		"brown_candle.json": {
+			"colorZ": "#8F5B35",
+			"alphaZ": 1
+		},
+		"green_candle.json": {
+			"colorZ": "#608116",
+			"alphaZ": 1
+		},
+		"red_candle.json": {
+			"colorZ": "#B53129",
+			"alphaZ": 1
+		},
+		"black_candle.json": {
+			"colorZ": "#383751",
+			"alphaZ": 1
+		},
+		"cave_vines_plant.json": {
+			"colorZ": "#70922D",
+			"alphaZ": 1
+		},
+		"cave_vines.json": {
+			"colorZ": "#70922D",
+			"alphaZ": 1
+		},
+		"big_dripleaf.json": {
+			"colorZ": "#84A83C",
+			"alphaZ": 1
+		},
+		"big_dripleaf_stem.json": {
+			"colorZ": "#84A83C",
+			"alphaZ": 1
+		},
+		"small_dripleaf.json": {
+			"colorZ": "#70922D",
+			"alphaZ": 1
+		},
+		"hanging_roots.json": {
+			"colorZ": "#AD7D65",
+			"alphaZ": 1
+		},
+		"deepslate.json": {
+			"colorY": "#515151",
+			"colorZ": "#515151",
+			"alphaY": 1,
+			"alphaZ": 1
 		}
 	},
 	"item_textures": [

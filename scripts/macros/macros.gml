@@ -19,7 +19,7 @@ function macros()
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
 	#macro mineimator_version_date		"2022.05.01"
 	#macro gm_runtime					GM_runtime_version
-	#macro minecraft_version			"22w18a"
+	#macro minecraft_version			"1.19"
 	
 	// File formats
 	#macro project_format				e_project.FORMAT_200_AL22

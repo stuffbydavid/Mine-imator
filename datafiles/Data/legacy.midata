@@ -4216,6 +4216,18 @@
 		},
 		"zombie_villager": {
 			"variant": "profession"
+		},
+		"snow_golem": {
+			"variant": "pumpkin"
+		},
+		"vex": {
+			"charging": "variant"
+		},
+		"wither": {
+			"invulnerable": "variant"
+		},
+		"strider": {
+			"cold": "variant"
 		}
 	},
 	"legacy_model_state_values":
@@ -4239,9 +4251,50 @@
 				"normal": "creamy"
 			}
 		},
+		"snow_golem": {
+			"pumpkin": {
+				"snow_golem": "true",
+				"snowman": "false"
+			}
+		},
+		"vex": {
+			"variant": {
+				"false": "normal",
+				"true": "charging"
+			}
+		},
+		"wither": {
+			"variant": {
+				"false": "normal",
+				"true": "invulnerable"
+			}
+		},
+		"strider": {
+			"variant": {
+				"false": "normal",
+				"true": "cold"
+			}
+		},
+		"shulker": {
+			"variant": {
+				"none": "normal"
+			}
+		},
+		"panda": {
+			"variant": {
+				"none": "normal"
+			}
+		},
 		"piglin": {
 			"variant": {
-				"normal": "zombified"
+				"normal": "piglin",
+				"brute": "piglin_brute",
+				"zombified": "zombified_piglin"
+			}
+		},
+		"shulker_box": {
+			"variant": {
+				"none": "normal"
 			}
 		}
 	},
@@ -4452,14 +4505,14 @@
 		"35": "savanna",
 		"36": "savanna_plateau",
 		"163": "windswept_savanna",
-        "1": "plains",
-        "129": "sunflower_plains",
-        "2": "desert",
-        "12": "snowy_plains",
-        "140": "ice_spikes",
-        "3": "windswept_hills",
-        "34": "windswept_forest",
-        "131": "windswept_gravelly_hills",
+		"1": "plains",
+		"129": "sunflower_plains",
+		"2": "desert",
+		"12": "snowy_plains",
+		"140": "ice_spikes",
+		"3": "windswept_hills",
+		"34": "windswept_forest",
+		"131": "windswept_gravelly_hills",
 		"37": "badlands",
 		"38": "wooded_badlands",
 		"165": "eroded_badlands",
@@ -4490,7 +4543,7 @@
 		"47": "deep_lukewarm_ocean",
 		"17": "desert",
 		"130": "desert",
-        "33": "old_growth_spruce_taiga",
+		"33": "old_growth_spruce_taiga",
 		"161": "old_growth_spruce_taiga",
 		"22": "jungle",
 		"167": "eroded_badlands",
@@ -4508,7 +4561,7 @@
 		"133": "taiga",
 		"156": "old_growth_birch_forest",
 		"18": "forest",
-        "51": "sparse_jungle",
-        "162": "windswept_gravelly_hills"
+		"51": "sparse_jungle",
+		"162": "windswept_gravelly_hills"
 	}
 }
