@@ -39,20 +39,6 @@ function tl_value_spawn()
 			value[v] = tl_value_default(v)
 	}
 	
-	// Spawn at work camera position
-	else if (parent = app && part_of = null && type != e_tl_type.FOLDER && value_type[e_value_type.TRANSFORM_POS])
-	{
-		if (!app.setting_spawn_objects)
-			return 0
-		
-		value[e_value.POS_X] = app.cam_work_focus[X]
-		value[e_value.POS_Y] = app.cam_work_focus[Y]
-		value[e_value.POS_Z] = max(0, app.cam_work_focus[Z] - 16)
-		
-		if (type = e_temp_type.TEXT)
-			value[e_value.POS_Z] += 16
-	}
-	
 	// Disable SSAO on particles by default
 	if (type = e_tl_type.PARTICLE_SPAWNER)
 		ssao = false

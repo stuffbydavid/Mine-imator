@@ -63,8 +63,8 @@ function settings_load()
 		if (ds_map_valid(programmap))
 		{
 			setting_advanced_mode = value_get_real(programmap[?"advanced_mode"], setting_advanced_mode)
-			setting_64bit_import = value_get_real(programmap[?"64bit_import"], setting_64bit_import)
 			
+			// No interface setting, but custom fps can be loaded from file
 			room_speed = value_get_real(programmap[?"fps"], room_speed)
 			
 			if (!dev_mode)
@@ -75,24 +75,8 @@ function settings_load()
 			setting_backup = value_get_real(programmap[?"backup"], setting_backup)
 			setting_backup_time = value_get_real(programmap[?"backup_time"], setting_backup_time)
 			setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)
-			setting_debug_features = value_get_real(programmap[?"debug_features"], setting_debug_features)
-			setting_spawn_objects = value_get_real(programmap[?"spawn_objects"], setting_spawn_objects)
 			setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
 			setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
-			
-			setting_watermark_filename = value_get_string(programmap[?"watermark_filename"], setting_watermark_filename)
-			
-			if (!file_exists_lib(setting_watermark_filename))
-				setting_watermark_filename = ""
-			else if (setting_watermark_filename != "")
-				action_setting_watermark_open(setting_watermark_filename)
-			
-			setting_watermark_anchor_x = value_get_string(programmap[?"watermark_anchor_x"], setting_watermark_anchor_x)
-			setting_watermark_anchor_y = value_get_string(programmap[?"watermark_anchor_y"], setting_watermark_anchor_y)
-			setting_watermark_scale = value_get_real(programmap[?"watermark_scale"], setting_watermark_scale)
-			setting_watermark_alpha = value_get_real(programmap[?"watermark_alpha"], setting_watermark_alpha)
-			
-			setting_scenery_remove_edges = value_get_real(programmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
 		}
 		
 		// Interface
@@ -165,8 +149,6 @@ function settings_load()
 			setting_view_main_aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], setting_view_main_aspect_ratio)
 			setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
 			setting_view_main_gizmos = value_get_real(interfacemap[?"view_main_gizmos"], setting_view_main_gizmos)
-			setting_view_main_boxes = value_get_real(interfacemap[?"view_main_boxes"], setting_view_main_boxes)
-			setting_view_main_cascades = value_get_real(interfacemap[?"view_main_cascades"], setting_view_main_cascades)
 			setting_view_main_fog = value_get_real(interfacemap[?"view_main_fog"], setting_view_main_fog)
 			setting_view_main_effects = value_get_real(interfacemap[?"view_main_effects"], setting_view_main_effects)
 			setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
@@ -177,8 +159,6 @@ function settings_load()
 			setting_view_second_aspect_ratio = value_get_real(interfacemap[?"view_second_aspect_ratio"], setting_view_second_aspect_ratio)
 			setting_view_second_grid = value_get_real(interfacemap[?"view_second_grid"], setting_view_second_grid)
 			setting_view_second_gizmos = value_get_real(interfacemap[?"view_second_gizmos"], setting_view_second_gizmos)
-			setting_view_second_boxes = value_get_real(interfacemap[?"view_second_boxes"], setting_view_second_boxes)
-			setting_view_second_cascades = value_get_real(interfacemap[?"view_second_cascades"], setting_view_second_cascades)
 			setting_view_second_fog = value_get_real(interfacemap[?"view_second_fog"], setting_view_second_fog)
 			setting_view_second_effects = value_get_real(interfacemap[?"view_second_effects"], setting_view_second_effects)
 			setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)

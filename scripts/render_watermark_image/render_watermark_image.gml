@@ -14,13 +14,21 @@ function render_watermark_image()
 		draw_height = argument[1]
 	}
 	
-	scale = ((draw_width * 0.33) / 1000) * setting_watermark_scale
+	scale = ((draw_width * 0.33) / 1000)
 	watermark_x = 0
 	watermark_y = 0
-	watermark_width = sprite_get_width(setting_watermark_image)
-	watermark_height = sprite_get_height(setting_watermark_image)
+	watermark_width = sprite_get_width(spr_watermark)
+	watermark_height = sprite_get_height(spr_watermark)
 	
 	gpu_set_texfilter(true)
+	
+	watermark_x = draw_width - (watermark_width/2 * scale)
+	watermark_y = draw_height - (watermark_height/2 * scale)
+	
+	/*
+	var anchorx, anchory;
+	anchorx = "right"
+	anchory = "bottom"
 	
 	switch (setting_watermark_anchor_x)
 	{
@@ -47,13 +55,14 @@ function render_watermark_image()
 			watermark_y = draw_height - (watermark_height/2 * scale)
 			break;
 	}
+	*/
 	
 	gpu_set_texfilter(true)
 	
-	draw_image(setting_watermark_image, 0, round(watermark_x), round(watermark_y), scale, scale, c_white, setting_watermark_alpha)
+	draw_image(spr_watermark, 0, round(watermark_x), round(watermark_y), scale, scale, c_white, 1)
 	
 	gpu_set_blendmode_ext_sepalpha(bm_src_color, bm_one, bm_one, bm_one)
-	draw_image(setting_watermark_image, 0, round(watermark_x), round(watermark_y), scale, scale, c_black, 1)
+	draw_image(spr_watermark, 0, round(watermark_x), round(watermark_y), scale, scale, c_black, 1)
 	gpu_set_blendmode(bm_normal)
 	
 	gpu_set_texfilter(false)

@@ -9,7 +9,6 @@ function app_startup_collapse()
 	collapse_map = ds_map_create()
 	
 	collapse_register("backup")
-	collapse_register("watermark")
 	
 	collapse_register("file")
 	collapse_register("edit")

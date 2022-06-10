@@ -185,24 +185,19 @@ function view_draw(view)
 	draw_divide_vertical(dx, dy, dh)
 	
 	// Quality settings
-	if (setting_debug_features)
+	dx -= 16 + padding
+	
+	if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), icons.CHEVRON_DOWN_TINY))
 	{
-		dx -= 16 + padding
-		
-		if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), icons.CHEVRON_DOWN_TINY))
-		{
-			menu_settings_set(dx, dy, (string(view) + "viewqualitysettings"), 24)
-			settings_menu_view = view
-			settings_menu_script = menu_quality_settings
-		}
-	
-		if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
-			current_microani.active.value = true
-	
-		dx -= dw
+		menu_settings_set(dx, dy, (string(view) + "viewqualitysettings"), 24)
+		settings_menu_view = view
+		settings_menu_script = menu_quality_settings
 	}
-	else
-		dx -= dw + padding
+	
+	if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
+		current_microani.active.value = true
+	
+	dx -= dw
 	
 	// "Render" quality
 	tip_set_keybind(e_keybind.RENDER_MODE)
@@ -293,23 +288,6 @@ function view_draw(view)
 		tip_set_keybind(e_keybind.SNAP)
 		if (draw_button_icon("viewsnap", dx, dy, dw, dh, setting_snap, icons.MAGNET, null, false, setting_snap ? "viewsnapdisable" : "viewsnapenable"))
 			setting_snap = !setting_snap
-	}
-	
-	if (setting_debug_features)
-	{
-		dx -= (padding + 1)
-		draw_divide_vertical(dx, dy, dh)
-		dx -= dw + padding
-		
-		if (draw_button_icon("viewdebugsettings", dx, dy, 24, 24, settings_menu_name = (string(view) + "viewdebugsettings"), icons.BUG, null, false, "viewdebug"))
-		{
-			menu_settings_set(dx, dy, (string(view) + "viewdebugsettings"), 24)
-			settings_menu_view = view
-			settings_menu_script = menu_debug_settings
-		}
-		
-		if (settings_menu_name = (string(view) + "viewdebugsettings") && settings_menu_ani_type != "hide")
-			current_microani.active.value = true
 	}
 	
 	// Camera name
@@ -812,7 +790,7 @@ function view_draw(view)
 		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
 		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
 		
-		if (project_render_pass != e_render_pass.COMBINED && setting_debug_features)
+		if (project_render_pass != e_render_pass.COMBINED)
 		{
 			infotext = text_get("viewrenderpass", text_get("viewmodepass" + render_pass_list[|project_render_pass]))
 			

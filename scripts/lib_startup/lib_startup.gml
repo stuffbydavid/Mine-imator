@@ -4,17 +4,8 @@ function lib_startup()
 {
 	log("External library init")
 	
-	var osinfo, is64bit, libpath, pathfile, pathmovie, pathwindow, pathmath;
-	osinfo = os_get_info()
-	is64bit = false
-	
-	if (osinfo > -1)
-	{
-		is64bit = osinfo[?"is64bit"]
-		ds_map_destroy(osinfo)
-	}
-	
-	libpath = "Data\\Libraries\\" + (is64bit ? "64": "x32") + "\\"
+	var libpath, pathfile, pathmovie, pathwindow, pathmath;
+	libpath = "Data\\Libraries\\"
 	pathfile = libpath + "file.dll"
 	pathmovie = libpath + "movie.dll"
 	pathwindow = libpath + "window.dll"

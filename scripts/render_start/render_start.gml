@@ -17,7 +17,7 @@ function render_start()
 	render_pass_surf = null
 	render_world_count = 0
 	
-	render_pass = (setting_debug_features ? project_render_pass : e_render_pass.COMBINED)
+	render_pass = project_render_pass
 	
 	// General rendering effects
 	render_ssao = project_render_ssao && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.DEPTH_U24 || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)

@@ -32,7 +32,7 @@ function settings_load_legacy(fn)
 	
 	if (load_format >= e_settings.FORMAT_100_DEMO_5)
 	{
-		setting_spawn_objects = buffer_read_byte()
+		/*setting_spawn_objects = */buffer_read_byte()
 		setting_spawn_cameras = buffer_read_byte()
 	}
 	

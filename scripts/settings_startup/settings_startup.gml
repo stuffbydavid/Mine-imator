@@ -12,8 +12,6 @@ function settings_startup()
 	setting_minecraft_assets_new_changes = ""
 	setting_minecraft_assets_new_image = ""
 	
-	setting_64bit_import = false
-	
 	setting_project_folder = projects_directory
 	
 	closed_toast_list = ds_list_create()
@@ -23,17 +21,8 @@ function settings_startup()
 	setting_backup = true
 	setting_backup_time = 3
 	setting_backup_amount = 5
-	setting_debug_features = false
-	setting_spawn_objects = true
 	setting_spawn_cameras = true
 	setting_unlimited_values = false
-	
-	setting_watermark_image = spr_watermark
-	setting_watermark_filename = ""
-	setting_watermark_anchor_x = "right"
-	setting_watermark_anchor_y = "bottom"
-	setting_watermark_scale = 1
-	setting_watermark_alpha = 1
 	
 	setting_theme = theme_light
 	setting_accent = 3
@@ -78,7 +67,6 @@ function settings_startup()
 	setting_view_main_grid = false
 	setting_view_main_gizmos = true
 	setting_view_main_boxes = false
-	setting_view_main_cascades = false
 	setting_view_main_fog = true
 	setting_view_main_effects = true
 	setting_view_main_particles = true
@@ -90,7 +78,6 @@ function settings_startup()
 	setting_view_second_grid = false
 	setting_view_second_gizmos = false
 	setting_view_second_boxes = false
-	setting_view_second_cascades = false
 	setting_view_second_fog = true
 	setting_view_second_effects = true
 	setting_view_second_particles = true

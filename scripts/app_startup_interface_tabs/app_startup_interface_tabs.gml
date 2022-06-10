@@ -711,11 +711,6 @@ function app_startup_interface_tabs()
 		{
 			tbx_backup_time = new_textbox_integer()
 			tbx_backup_amount = new_textbox_integer()
-			
-			tbx_watermark_scale = new_textbox_integer()
-			tbx_watermark_scale.suffix = "%"
-			tbx_watermark_alpha = new_textbox_integer()
-			tbx_watermark_alpha.suffix = "%"
 		}
 		
 		// Interface

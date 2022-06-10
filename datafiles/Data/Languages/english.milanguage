@@ -635,8 +635,8 @@
 	},
 	"upgrade/": {
 		"caption": "Upgrade",
-		"info": "You are currently using the trial version of Mine-imator. To unlock more features and watermark customizing, get an upgrade key from the link below, and enter it here.",
-		"page0": "Watermark can be disabled or customized.",
+		"info": "You are currently using the trial version of Mine-imator. To unlock more advanced features, get an upgrade key from the link below, and enter it here.",
+		"page0": "Watermark can be disabled.",
 		"page1": "Unlock \"Advanced mode\" and get access to all available features.",
 		"page2": "Customize your own render settings in projects.",
 		"continue": "Upgrade"
@@ -734,9 +734,7 @@
 		"rendertime": "Rendered in %1 seconds",
 		"workcamera": "Work camera",
 		"activecamera": "Active camera (%1)",
-		"selectedcamera": "Selected camera (%1)",
-		"debug": "Debug settings",
-		"cascades": "Sun cascades"
+		"selectedcamera": "Selected camera (%1)"
 	},
 	"tab/": {
 		"projectproperties": "Project properties",
@@ -3099,33 +3097,12 @@
 			"advancedtip": "Access to all available features, recommended for advanced users."
 		},
 		"minecraftversion": "Minecraft version",
-		"64bitimport": "Use x64 world importer",
-		"fps": "Frames per second",
-		"fps30": "30",
-		"fps60": "60",
 		"backup": "Automatic backups",
 		"backuptime": "Time between backups",
 		"backuptimeminutes": " min",
 		"backupamount": "Max backups",
-		"debugfeatures": "Debug features",
-		"spawnobjects": "Create objects near work camera",
 		"spawncameras": "Copy work camera into new cameras",
 		"unlimitedvalues": "Allow unlimited values",
-		"watermark": "Watermark",
-		"watermark/": {
-			"upgraderequired": "Upgrade Mine-imator to use a custom watermark.",
-			"image": "Image",
-			"default": "Default",
-			"positionx": "X position",
-			"positiony": "Y position",
-			"left": "Left",
-			"center": "Center",
-			"right": "Right",
-			"top": "Top",
-			"bottom": "Bottom",
-			"scale": "Scale",
-			"alpha": "Opacity"
-		},
 		"sceneryremoveedges": "Remove edges of large scenery",
 		"interface": "INTERFACE",
 		"theme": "Theme",
