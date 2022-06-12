@@ -1,7 +1,6 @@
-/// render_high_shadows(export)
-/// @arg export
+/// render_high_shadows()
 
-function render_high_shadows(export)
+function render_high_shadows()
 {
 	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
 	sampleoffset = point3D(0, 0, 0)
@@ -9,22 +8,6 @@ function render_high_shadows(export)
 	samplestart = 0
 	sampleend = 0
 	lightlist = array()
-	
-	// Set samples to setting
-	if (!export)
-	{	
-		if (render_samples_done)
-			return 0
-		
-		samplestart = render_samples - 1
-		sampleend = render_samples
-	}
-	else
-	{
-		samplestart = 0
-		sampleend = project_render_samples
-		render_samples = project_render_samples
-	}
 	
 	// Get visible lights
 	with (obj_timeline)
@@ -65,223 +48,153 @@ function render_high_shadows(export)
 	}
 	surface_reset_target()
 	
-	// Sample lights
-	for (var s = samplestart; s < sampleend; s++)
+	// Clear shadows
+	surface_set_target(render_surface_shadows)
 	{
-		// Clear shadows
-		if (export)
+		draw_clear_alpha(c_black, 1)
+	}
+	surface_reset_target()
+	
+	surface_set_target(render_surface_specular)
+	{
+		draw_clear_alpha(c_black, 1)
+	}
+	surface_reset_target()
+	
+	#region Sun
+	
+	if (sunout)
+	{
+		// Scatter position
+		if (render_sample_current > 1)
 		{
-			surface_set_target(render_surface_shadows)
-			{
-				draw_clear_alpha(c_black, 1)
-			}
-			surface_reset_target()
+			random_set_seed(render_sample_current)
 			
-			surface_set_target(render_surface_specular)
+			var xyang, zang, dis;
+			xyang = random(360)
+			zang = random_range(-180, 180)
+			dis = ((background_sunlight_angle * (world_size / 2)) / 57.2958) / 2
+			sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
+			sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
+			sampleoffset[Z] = lengthdir_z(dis, zang)
+		}
+		
+		var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
+		angle = vec3_normalize(vec3_mul(angle, -1))
+		
+		// Depth
+		cam_far = cam_far_prev
+		render_update_cascades(angle)
+		
+		for (var i = 0; i < render_cascades_count; i++)
+		{
+			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+			surface_set_target(render_surface_sun_buffer[i])
 			{
-				draw_clear_alpha(c_black, 1)
+				gpu_set_blendmode_ext(bm_one, bm_zero)
+				
+				draw_clear(c_white)
+				render_world_start_sun(i)
+				render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
+				render_world_done()
+				
+				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
 		}
-		
-		#region Sun
-		
-		if (sunout)
+	}
+	
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	resultsurftemp = render_surface[2]
+	
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	specresultsurftemp = render_surface[3]
+	
+	surface_set_target_ext(0, resultsurftemp)
+	surface_set_target_ext(1, specresultsurftemp)
+	{
+		draw_clear(c_black)
+		render_world_start()
+		render_world(sunout ? e_render_mode.HIGH_LIGHT_SUN : e_render_mode.HIGH_LIGHT_NIGHT)
+		render_world_done()
+	}
+	surface_reset_target()
+	
+	// Add to shadows
+	surface_set_target(render_surface_shadows)
+	{
+		gpu_set_blendmode(bm_add)
+		draw_surface_exists(resultsurftemp, 0, 0)
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
+	
+	surface_set_target(render_surface_specular)
+	{
+		gpu_set_blendmode(bm_add)
+		draw_surface_exists(specresultsurftemp, 0, 0)
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
+	
+	#endregion
+	
+	#region User-placed lights
+	
+	for (var i = 0; i < array_length(lightlist); i++)
+	{
+		with (lightlist[i])
 		{
-			// Scatter position
-			if (s > 1)
+			var resultsurftemp;
+			
+			if (!value_inherit[e_value.VISIBLE] || hide || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
+				continue
+			
+			if (render_sample_current > 1)
 			{
-				random_set_seed(s)
-				
+				random_set_seed(render_sample_current)
+					
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
-				dis = ((background_sunlight_angle * (world_size / 2)) / 57.2958) / 2
+				dis = value[e_value.LIGHT_SIZE]/2
 				sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
 			}
 			
-			var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
-			angle = vec3_normalize(vec3_mul(angle, -1))
+			#region Point light
 			
-			// Depth
-			cam_far = cam_far_prev
-			render_update_cascades(angle)
-			
-			for (var i = 0; i < render_cascades_count; i++)
+			if (type = e_tl_type.POINT_LIGHT)
 			{
-				render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
-				surface_set_target(render_surface_sun_buffer[i])
+				// If shadowless, add to shadowless point light list and continue
+				if (!shadows)
 				{
-					gpu_set_blendmode_ext(bm_one, bm_zero)
-				
-					draw_clear(c_white)
-					render_world_start_sun(i)
-					render_world(e_render_mode.HIGH_LIGHT_SUN_DEPTH)
-					render_world_done()
-				
-					gpu_set_blendmode(bm_normal)
-				}
-				surface_reset_target()
-			}
-		}
-		
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		resultsurftemp = render_surface[2]
-		
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		specresultsurftemp = render_surface[3]
-		
-		surface_set_target_ext(0, resultsurftemp)
-		surface_set_target_ext(1, specresultsurftemp)
-		{
-			draw_clear(c_black)
-			render_world_start()
-			render_world(sunout ? e_render_mode.HIGH_LIGHT_SUN : e_render_mode.HIGH_LIGHT_NIGHT)
-			render_world_done()
-		}
-		surface_reset_target()
-		
-		// Add to shadows
-		surface_set_target(render_surface_shadows)
-		{
-			gpu_set_blendmode(bm_add)
-			draw_surface_exists(resultsurftemp, 0, 0)
-			gpu_set_blendmode(bm_normal)
-		}
-		surface_reset_target()
-		
-		surface_set_target(render_surface_specular)
-		{
-			gpu_set_blendmode(bm_add)
-			draw_surface_exists(specresultsurftemp, 0, 0)
-			gpu_set_blendmode(bm_normal)
-		}
-		surface_reset_target()
-		
-		#endregion
-		
-		#region User-placed lights
-		
-		for (var i = 0; i < array_length(lightlist); i++)
-		{
-			with (lightlist[i])
-			{
-				var resultsurftemp;
-				
-				if (!value_inherit[e_value.VISIBLE] || hide || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
+					ds_list_add(render_shadowless_point_list, id)
 					continue
-				
-				if (s > 1)
-				{
-					random_set_seed(s)
-					
-					var xyang, zang, dis;
-					xyang = random(360)
-					zang = random_range(-180, 180)
-					dis = value[e_value.LIGHT_SIZE]/2
-					sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
-					sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
-					sampleoffset[Z] = lengthdir_z(dis, zang)
 				}
 				
-				#region Point light
+				var atlasx, atlasy, atlassize;
+				atlasx = 0
+				atlasy = 0
+				atlassize = app.project_render_shadows_point_buffer_size
+				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2)
+				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize)
 				
-				if (type = e_tl_type.POINT_LIGHT)
+				// Depth
+				for (var d = e_dir.EAST; d < e_dir.amount; d++)
 				{
-					// If shadowless, add to shadowless point light list and continue
-					if (!shadows)
-					{
-						ds_list_add(render_shadowless_point_list, id)
-						continue
-					}
+					var look = dir_get_vec3(d);
+					if (d = e_dir.DOWN || d = e_dir.UP)
+						look[Y] -= 0.0001
 					
-					var atlasx, atlasy, atlassize;
-					atlasx = 0
-					atlasy = 0
-					atlassize = app.project_render_shadows_point_buffer_size
-					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2)
-					render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize)
-					
-					// Depth
-					for (var d = e_dir.EAST; d < e_dir.amount; d++)
-					{
-						var look = dir_get_vec3(d);
-						if (d = e_dir.DOWN || d = e_dir.UP)
-							look[Y] -= 0.0001
-						
-						surface_set_target(render_surface_point_buffer)
-						{
-							gpu_set_blendmode_ext(bm_one, bm_zero)
-							
-							draw_clear(c_white)
-							render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
-							render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
-							
-							render_world_done()
-							
-							gpu_set_blendmode(bm_normal)
-						}
-						surface_reset_target()
-						
-						surface_set_target(render_surface_point_atlas_buffer)
-						{
-							draw_surface(render_surface_point_buffer, atlasx, atlasy)
-						}
-						surface_reset_target()
-						
-						atlasx += atlassize
-						
-						if (atlasx = (atlassize * 3))
-						{
-							atlasx = 0
-							atlasy += atlassize
-						}
-					}
-					
-					// Shadows
-					with (app)
-					{
-						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-						resultsurftemp = render_surface[2]
-						
-						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-						specresultsurftemp = render_surface[3]
-						
-						surface_set_target_ext(0, resultsurftemp)
-						surface_set_target_ext(1, specresultsurftemp)
-						{
-							draw_clear(c_black)
-							render_world_start()
-							render_world(e_render_mode.HIGH_LIGHT_POINT)
-							render_world_done()
-						}
-						surface_reset_target()
-
-					}
-				}
-				
-				#endregion
-				#region Spot light
-				
-				else if (type = e_tl_type.SPOT_LIGHT)
-				{
-					var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
-					
-					// Depth
-					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
-					surface_set_target(render_surface_spot_buffer)
+					surface_set_target(render_surface_point_buffer)
 					{
 						gpu_set_blendmode_ext(bm_one, bm_zero)
 						
 						draw_clear(c_white)
-						
-						render_world_start_light(world_pos, lookat, sampleoffset, id)
-						
-						// Only render depth for shadows if the light source isn't shadowless
-						if (shadows)
-							render_world(e_render_mode.HIGH_LIGHT_SPOT_DEPTH)
+						render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
+						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 						
 						render_world_done()
 						
@@ -289,211 +202,121 @@ function render_high_shadows(export)
 					}
 					surface_reset_target()
 					
-					// Shadows
-					with (app)
+					surface_set_target(render_surface_point_atlas_buffer)
 					{
-						render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-						resultsurftemp = render_surface[2]
-						
-						render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-						specresultsurftemp = render_surface[3]
-						
-						surface_set_target_ext(0, resultsurftemp)
-						surface_set_target_ext(1, specresultsurftemp)
-						{
-							draw_clear(c_black)
-							render_world_start()
-							render_world(e_render_mode.HIGH_LIGHT_SPOT)
-							render_world_done()
-						}
-						surface_reset_target()
+						draw_surface(render_surface_point_buffer, atlasx, atlasy)
+					}
+					surface_reset_target()
+					
+					atlasx += atlassize
+					
+					if (atlasx = (atlassize * 3))
+					{
+						atlasx = 0
+						atlasy += atlassize
 					}
 				}
-				else
-					continue
 				
-				#endregion
-				
-				// Add to shadows
-				surface_set_target(render_surface_shadows)
+				// Shadows
+				with (app)
 				{
-					gpu_set_blendmode(bm_add)
-					draw_surface_exists(resultsurftemp, 0, 0)
+					render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+					resultsurftemp = render_surface[2]
+					
+					render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+					specresultsurftemp = render_surface[3]
+					
+					surface_set_target_ext(0, resultsurftemp)
+					surface_set_target_ext(1, specresultsurftemp)
+					{
+						draw_clear(c_black)
+						render_world_start()
+						render_world(e_render_mode.HIGH_LIGHT_POINT)
+						render_world_done()
+					}
+					surface_reset_target()
+				}
+			}
+			
+			#endregion
+			#region Spot light
+			
+			else if (type = e_tl_type.SPOT_LIGHT)
+			{
+				var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
+				
+				// Depth
+				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
+				surface_set_target(render_surface_spot_buffer)
+				{
+					gpu_set_blendmode_ext(bm_one, bm_zero)
+					
+					draw_clear(c_white)
+					
+					render_world_start_light(world_pos, lookat, sampleoffset, id)
+					
+					// Only render depth for shadows if the light source isn't shadowless
+					if (shadows)
+						render_world(e_render_mode.HIGH_LIGHT_SPOT_DEPTH)
+					
+					render_world_done()
+					
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
 				
-				// Add to specular
-				surface_set_target(render_surface_specular)
+				// Shadows
+				with (app)
 				{
-					gpu_set_blendmode(bm_add)
-					draw_surface_exists(specresultsurftemp, 0, 0)
-					gpu_set_blendmode(bm_normal)
+					render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+					resultsurftemp = render_surface[2]
+					
+					render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+					specresultsurftemp = render_surface[3]
+					
+					surface_set_target_ext(0, resultsurftemp)
+					surface_set_target_ext(1, specresultsurftemp)
+					{
+						draw_clear(c_black)
+						render_world_start()
+						render_world(e_render_mode.HIGH_LIGHT_SPOT)
+						render_world_done()
+					}
+					surface_reset_target()
 				}
-				surface_reset_target()
 			}
-		}
-		
-		#endregion
-		
-		// Shadowless lights (viewport)
-		if (!export)
-			render_high_shadows_shadowless()
-		
-		// Subsurface scattering (viewport)
-		if (!export)
-			render_high_subsurface_scatter(export)
-		
-		// Add surface to samples
-		var exptemp, dectemp;
-		render_surface_shadows_expo = surface_require(render_surface_shadows_expo, render_width, render_height)
-		render_surface_shadows_dec = surface_require(render_surface_shadows_dec, render_width, render_height)
-		render_surface_specular_expo = surface_require(render_surface_specular_expo, render_width, render_height)
-		render_surface_specular_dec = surface_require(render_surface_specular_dec, render_width, render_height)
-		render_surface_sample_temp1 = surface_require(render_surface_sample_temp1, render_width, render_height)
-		render_surface_sample_temp2 = surface_require(render_surface_sample_temp2, render_width, render_height)
-		exptemp = render_surface_sample_temp1
-		dectemp = render_surface_sample_temp2
-		
-		#region Shadows
-		
-		// Draw temporary exponent surface
-		surface_set_target(exptemp)
-		{
-			draw_clear_alpha(c_black, 1)
-			draw_surface_exists(render_surface_shadows_expo, 0, 0)
+			else
+				continue
 			
-			if (s = 0 || render_samples_clear)
-				draw_clear_alpha(c_black, 1)
-		}
-		surface_reset_target()
-		
-		surface_set_target(dectemp)
-		{
-			draw_clear_alpha(c_black, 1)
-			draw_surface_exists(render_surface_shadows_dec, 0, 0)
+			#endregion
 			
-			if (s = 0 || render_samples_clear)
-				draw_clear_alpha(c_black, 1)
-		}
-		surface_reset_target()
-		
-		// Add light shadow to buffer
-		surface_set_target_ext(0, render_surface_shadows_expo)
-		surface_set_target_ext(1, render_surface_shadows_dec)
-		{
-			render_shader_obj = shader_map[?shader_high_samples_add]
-			with (render_shader_obj)
+			// Add to shadows
+			surface_set_target(render_surface_shadows)
 			{
-				shader_set(shader)
-				shader_high_samples_add_set(exptemp, dectemp)
+				gpu_set_blendmode(bm_add)
+				draw_surface_exists(resultsurftemp, 0, 0)
+				gpu_set_blendmode(bm_normal)
 			}
-			draw_surface_exists(render_surface_shadows, 0, 0)
-			with (render_shader_obj)
-				shader_clear()
-		}
-		surface_reset_target()
-		
-		#endregion
-		
-		#region Specular
-		
-		// Draw temporary exponent surface
-		surface_set_target(exptemp)
-		{
-			draw_clear_alpha(c_black, 1)
-			draw_surface_exists(render_surface_specular_expo, 0, 0)
+			surface_reset_target()
 			
-			if (s = 0 || render_samples_clear)
-				draw_clear_alpha(c_black, 1)
-		}
-		surface_reset_target()
-		
-		surface_set_target(dectemp)
-		{
-			draw_clear_alpha(c_black, 1)
-			draw_surface_exists(render_surface_specular_dec, 0, 0)
-			
-			if (s = 0 || render_samples_clear)
-				draw_clear_alpha(c_black, 1)
-		}
-		surface_reset_target()
-		
-		// Add light shadow to buffer
-		surface_set_target_ext(0, render_surface_specular_expo)
-		surface_set_target_ext(1, render_surface_specular_dec)
-		{
-			render_shader_obj = shader_map[?shader_high_samples_add]
-			with (render_shader_obj)
+			// Add to specular
+			surface_set_target(render_surface_specular)
 			{
-				shader_set(shader)
-				shader_high_samples_add_set(exptemp, dectemp)
+				gpu_set_blendmode(bm_add)
+				draw_surface_exists(specresultsurftemp, 0, 0)
+				gpu_set_blendmode(bm_normal)
 			}
-			draw_surface_exists(render_surface_specular, 0, 0)
-			with (render_shader_obj)
-				shader_clear()
+			surface_reset_target()
 		}
-		surface_reset_target()
-		
-		#endregion
 	}
 	
-	// Unpack shadow samples
-	surface_set_target(render_surface_shadows)
-	{
-		draw_clear_alpha(c_black, 1)
-		
-		render_shader_obj = shader_map[?shader_high_samples_unpack]
-		with (render_shader_obj)
-		{
-			shader_set(shader)
-			shader_high_samples_unpack_set(render_surface_shadows_expo, render_surface_shadows_dec, render_samples)
-		}
-		draw_blank(0, 0, render_width, render_height)
-		with (render_shader_obj)
-			shader_clear()
-	}
-	surface_reset_target()
+	#endregion
 	
-	// Unpack specular samples
-	surface_set_target(render_surface_specular)
-	{
-		draw_clear_alpha(c_black, 1)
-		
-		render_shader_obj = shader_map[?shader_high_samples_unpack]
-		with (render_shader_obj)
-		{
-			shader_set(shader)
-			shader_high_samples_unpack_set(render_surface_specular_expo, render_surface_specular_dec, render_samples)
-		}
-		draw_blank(0, 0, render_width, render_height)
-		with (render_shader_obj)
-			shader_clear()
-	}
-	surface_reset_target()
+	// Render shadowless point lights
+	render_high_shadows_shadowless()
 	
-	// Shadowless lights (export)
-	if (export)
-		render_high_shadows_shadowless()
-	
-	// Subsurface scatter (export)
-	if (export)
-		render_high_subsurface_scatter(export)
-	
-	// Free surfaces
-	if (export)
-	{
-		surface_free(render_surface_shadows_expo)
-		surface_free(render_surface_shadows_dec)
-		surface_free(render_surface_specular_expo)
-		surface_free(render_surface_specular_dec)
-		
-		for (var i = 0; i < render_cascades_count; i++)
-			surface_free(render_surface_sun_buffer[i])
-		
-		surface_free(render_surface_point_buffer)
-		surface_free(render_surface_point_atlas_buffer)
-	}
+	// Apply subsurface scattering
+	render_high_subsurface_scatter()
 }
 
 function render_high_shadows_shadowless()

@@ -48,6 +48,10 @@ uniform float uCascadeEndClipSpace[NUM_CASCADES];
 
 uniform int uSunVisible;
 
+uniform vec4 uColor;
+uniform vec4 uSunColor;
+uniform vec4 uAmbientColor;
+
 /*
 	3D simplex noise
 	
@@ -324,6 +328,16 @@ void main()
 	fogOpacity = 1.0 - fogTransmittance;
 	fogLight = clamp(fogLight, 0.0, 1.0);
 	
+	// Apply fog to scene
+	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
+	vec3 fogLightColor = clamp(uAmbientColor.rgb + (uSunColor.rgb * fogLight), vec3(0.0), vec3(1.0));
+	vec3 fogColor = uColor.rgb * fogLightColor;
+	
+	if (uFogAmbience == 1)
+		baseColor.rgb = mix(baseColor.rgb, fogColor, fogOpacity);
+	else
+		baseColor.rgb = mix(baseColor.rgb, uColor.rgb, fogOpacity);
+	
 	// Alpha channel isn't reliable, use RGB for data
-	gl_FragColor = vec4(fogOpacity, fogLight, 0.0, 1.0);
+	gl_FragColor = baseColor;
 }

@@ -1,22 +1,24 @@
-/// render_refresh_effects()
+/// render_refresh_effects(sceneeffects, posteffects)
+/// @arg sceneeffects
+/// @arg posteffects
 
-function render_refresh_effects()
+function render_refresh_effects(sceneeffects = true, posteffects = true)
 {
 	ds_list_clear(render_effects_list)
 	ds_list_add(render_effects_list,
-		render_volumetric_fog,
-		render_camera_dof,
-		render_camera_bloom,
-		render_glow,
-		render_glow_falloff,
-		render_aa,
-		render_camera_ca,
-		render_camera_distort,
-		render_camera_lens_dirt,
-		render_camera_color_correction,
-		render_camera_grain,
-		render_camera_vignette,
-		render_overlay
+		render_volumetric_fog && sceneeffects,
+		render_camera_dof && sceneeffects,
+		render_camera_bloom && sceneeffects,
+		render_glow && sceneeffects,
+		render_glow_falloff && sceneeffects,
+		render_aa && posteffects,
+		render_camera_ca && posteffects,
+		render_camera_distort && posteffects,
+		render_camera_lens_dirt && posteffects,
+		render_camera_color_correction && posteffects,
+		render_camera_grain && posteffects,
+		render_camera_vignette && posteffects,
+		render_overlay && posteffects
 	)
 	
 	render_effects_progress = -1

@@ -234,7 +234,10 @@ function view_draw(view)
 		dx -= dw + padding
 		
 		if (draw_button_icon("vieweffects", dx, dy, dw, dh, view.effects, icons.WAND, null, false, view.effects ? "vieweffectsdisable" : "vieweffectsenable"))
+		{
 			view.effects = !view.effects
+			render_samples = -1
+		}
 	}
 	
 	// Divide

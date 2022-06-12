@@ -346,7 +346,7 @@
 		"replace": "A resource with this filename has already been added into the project. Do you want to replace it with the selected file?",
 		"buffersizewarning": "WARNING: This setting may or may not crash the program when rendering. Only proceed if you think your graphics card and RAM can handle it.\nContinue?",
 		"qualitywarning": "WARNING: This setting may or may not slow down Mine-imator to an unusable state. Only proceed if you think your graphics card can handle it.\nContinue?",
-		"stoprender": "Really stop rendering?",
+		"stoprender": "Are you sure you want to stop rendering?",
 		"assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
 		"unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
 		"restorecontrols": "Are you sure you want to restore all controls?",

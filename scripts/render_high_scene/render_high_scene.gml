@@ -17,16 +17,8 @@ function render_high_scene(ssaosurf, shadowssurf)
 	materialsurf = render_surface[5]
 	
 	// Render directly to target?
-	if (render_effects_done)
-	{
-		render_target = surface_require(render_target, render_width, render_height)
-		resultsurf = render_target
-	}
-	else
-	{
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		resultsurf = render_surface[3]
-	}
+	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	resultsurf = render_surface[3]
 	
 	surface_set_target(scenesurf)
 	{

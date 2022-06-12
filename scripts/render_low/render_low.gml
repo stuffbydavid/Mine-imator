@@ -3,7 +3,7 @@
 
 function render_low()
 {
-	var surf;
+	var surf, finalsurf;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surf = render_surface[0]
 	
@@ -38,5 +38,13 @@ function render_low()
 	if (render_effects_done)
 		return 0
 	
-	render_post(surf)
+	finalsurf = render_post(surf)
+	
+	render_target = surface_require(render_target, render_width, render_height)
+	surface_set_target(render_target)
+	{
+		draw_clear_alpha(c_black, 0)
+		draw_surface_exists(finalsurf, 0, 0)
+	}
+	surface_reset_target()
 }

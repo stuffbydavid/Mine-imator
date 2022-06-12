@@ -1,10 +1,11 @@
 /// render_high_overlay(basesurf)
 /// @arg basesurf
 
-function render_high_overlay(basesurf)
+function render_high_overlay(prevsurf)
 {
-	render_target = surface_require(render_target, render_width, render_height)
-	surface_set_target(render_target)
+	var resultsurf = render_high_get_apply_surf();
+	
+	surface_set_target(resultsurf)
 	{
 		draw_clear_alpha(c_black, 0)
 		
@@ -13,15 +14,17 @@ function render_high_overlay(basesurf)
 			render_shader_obj = shader_map[?shader_color_camera]
 			with (render_shader_obj)
 				shader_use()
-			draw_surface_exists(basesurf, 0, 0)
+			draw_surface_exists(prevsurf, 0, 0)
 			with (render_shader_obj)
 				shader_clear()
 		}
 		else
-			draw_surface_exists(basesurf, 0, 0)
+			draw_surface_exists(prevsurf, 0, 0)
 		
 		if (render_watermark)
 			render_watermark_image()
 	}
 	surface_reset_target()
+	
+	return resultsurf
 }

@@ -10,35 +10,21 @@ function render_free()
 	surface_free(render_surface[5])
 	surface_free(render_surface[6])
 	
-	surface_free(render_surface_lens)
-	
-	surface_free(render_surface_shadows_expo)
-	surface_free(render_surface_shadows_dec)
-	
-	surface_free(render_surface_specular)
-	surface_free(render_surface_specular_expo)
-	surface_free(render_surface_specular_dec)
-	
-	surface_free(render_surface_sun_volume_expo)
-	surface_free(render_surface_sun_volume_dec)
-	
+	// Scene effects
 	surface_free(render_surface_ssao)
 	surface_free(render_surface_shadows)
+	surface_free(render_surface_specular)
 	surface_free(render_surface_indirect)
-	surface_free(render_surface_indirect_expo)
-	surface_free(render_surface_indirect_dec)
-	
 	surface_free(render_surface_ssr)
-	surface_free(render_surface_ssr_expo)
-	surface_free(render_surface_ssr_dec)
 	
-	surface_free(render_surface_sss)
-	surface_free(render_surface_sss_expo)
-	surface_free(render_surface_sss_dec)
+	// Lens dirt
+	surface_free(render_surface_lens)
 	
-	surface_free(render_surface_sample_temp1)
-	surface_free(render_surface_sample_temp2)
+	// Sample accumulation
+	surface_free(render_surface_sample_expo)
+	surface_free(render_surface_sample_dec)
 	
+	// Light depth buffers
 	for (var i = 0; i < render_cascades_count; i++)
 		surface_free(render_surface_sun_buffer[i])
 	

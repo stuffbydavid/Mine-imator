@@ -554,6 +554,10 @@ function shader_startup()
 		new_shader_uniform("uCascadeEndClipSpace")
 		new_shader_sampler("uNoiseBuffer")
 		new_shader_uniform("uNoiseSize")
+		new_shader_uniform("uColor")
+		new_shader_uniform("uSunColor")
+		new_shader_uniform("uAmbientColor")
+		new_shader_uniform("uFogAmbience")
 	}
 	
 	with (shader_map[?shader_high_volumetric_fog_apply])

@@ -19,7 +19,7 @@ function render_startup()
 			  render_camera_vignette, render_aa, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_volumetric_fog, render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_debug_cascades, render_pass;
 	
-	globalvar render_matrix, render_samples, render_samples_done, render_target_size;
+	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
 	
 	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
 	
@@ -143,35 +143,20 @@ function render_startup()
 	render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
 	
 	// Effect surfaces
-	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_indirect_expo, render_surface_indirect_dec,
-		      render_surface_shadows_expo, render_surface_shadows_dec, render_surface_fog, render_surface_lens, render_surface_post,
-			  render_post_index, render_surface_ssr, render_surface_ssr_expo, render_surface_ssr_dec, render_surface_sss, render_surface_sss_expo,
-			  render_surface_sss_dec, render_surface_sample_temp1, render_surface_sample_temp2, render_surface_specular, render_surface_specular_expo,
-			  render_surface_specular_dec;
+	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_fog, render_surface_lens, render_surface_post,
+			  render_post_index, render_surface_ssr, render_surface_sample_expo,
+			  render_surface_sample_dec, render_surface_specular;
 	render_surface_ssao = null
 	render_surface_shadows = null
-	render_surface_shadows_expo = null
-	render_surface_shadows_dec = null
-	render_surface_specular = null
-	render_surface_specular_expo = null
-	render_surface_specular_dec = null
 	render_surface_fog = null
 	render_surface_lens = null
 	render_surface_indirect = null
-	render_surface_indirect_expo = null
-	render_surface_indirect_dec = null
 	render_surface_ssr = null
-	render_surface_ssr_expo = null
-	render_surface_ssr_dec = null
-	render_surface_sss = null
-	render_surface_sss_dec = null
-	render_surface_sss_expo = null
-	render_surface_sample_temp1 = null
-	render_surface_sample_temp2 = null
+	render_surface_sample_expo = null
+	render_surface_sample_dec = null
+	render_surface_specular = null
 	
-	globalvar render_surface_sun_volume_expo, render_surface_sun_volume_dec, render_samples_clear;
-	render_surface_sun_volume_expo = null
-	render_surface_sun_volume_dec = null
+	globalvar render_samples_clear;
 	render_samples_clear = false
 	
 	render_surface_post[0] = null

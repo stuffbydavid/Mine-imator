@@ -13,10 +13,7 @@ function render_update_samples()
 	if (render_active != "image" && render_active != "movie")
 	{
 		var refresh = (render_samples = -1 || (!array_equals(render_matrix, view_proj_matrix)) || (render_target_size[X] != render_width) || (render_target_size[Y] != render_height) ||
-		(!surface_exists(render_surface_shadows) && render_shadows) ||
-		(!surface_exists(render_surface_indirect) && render_indirect) ||
-		(!surface_exists(render_surface_ssr) && render_reflections) ||
-		(!surface_exists(render_surface_sun_volume_dec) && render_volumetric_fog));
+		!surface_exists(render_surface_sample_dec));
 		
 		if (refresh)
 		{

@@ -57,4 +57,10 @@ function shader_high_volumetric_fog_set(depthsurf)
 	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	render_set_uniform("uNoiseSize", render_sample_noise_size)
+	
+	render_set_uniform_int("uFogAmbience", app.background_volumetric_fog_ambience)
+	
+	render_set_uniform_color("uColor", app.background_volumetric_fog_color, 1)
+	render_set_uniform_color("uSunColor", app.background_sunlight_color_final, 1)
+	render_set_uniform_color("uAmbientColor", app.background_ambient_color_final, 1)
 }
