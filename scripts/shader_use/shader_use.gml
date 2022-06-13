@@ -13,6 +13,8 @@ function shader_use()
 	render_set_uniform("uMetallic", 0)
 	render_set_uniform("uRoughness", 1)
 	
+	render_set_uniform("uTAAMatrix", taa_matrix)
+	
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	{

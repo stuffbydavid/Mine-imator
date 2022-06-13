@@ -44,7 +44,6 @@ function shader_startup()
 		new_shader("shader_draw_texture")
 		new_shader("shader_replace")
 		new_shader("shader_replace_alpha")
-		new_shader("shader_high_aa")
 		new_shader("shader_high_dof")
 		new_shader("shader_high_dof_coc")
 		new_shader("shader_high_dof_coc_blur")
@@ -189,12 +188,6 @@ function shader_startup()
 	
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform("uReplaceColor")
-	
-	with (shader_map[?shader_high_aa])
-	{
-		new_shader_uniform("uScreenSize")
-		new_shader_uniform("uPower")
-	}
 	
 	with (shader_map[?shader_high_dof])
 	{

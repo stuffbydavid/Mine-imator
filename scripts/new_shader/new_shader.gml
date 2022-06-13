@@ -35,6 +35,9 @@ function new_shader(name)
 		
 		new_shader_uniform("uCameraPosition")
 		
+		// TAA jitter matrix
+		new_shader_uniform("uTAAMatrix")
+		
 		shader_map[?shader] = id
 		return id
 	}

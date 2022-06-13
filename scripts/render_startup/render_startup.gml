@@ -106,6 +106,11 @@ function render_startup()
 	
 	render_world_count = 0
 	
+	// "Temporal" anti-aliasing
+	globalvar taa_matrix, taa_jitter_matrix;
+	taa_matrix = MAT_IDENTITY
+	taa_jitter_matrix = MAT_IDENTITY
+	
 	// Noise sampling
 	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array;
 	render_sample_noise_texture = null

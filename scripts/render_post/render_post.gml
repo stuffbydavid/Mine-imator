@@ -33,11 +33,6 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true)
 		finalsurf = render_high_bloom(finalsurf)
 	render_update_effects()
 	
-	// Anti-Aliasing(FXAA)
-	if (render_aa && posteffects)
-		finalsurf = render_high_aa(finalsurf)
-	render_update_effects()
-	
 	// Chromatic aberration
 	if (render_camera_ca && posteffects)
 		finalsurf = render_high_ca(finalsurf)

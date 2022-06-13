@@ -28,7 +28,6 @@ function render_start()
 	render_volumetric_fog = project_render_shadows && background_volumetric_fog && (render_quality = e_view_mode.RENDER)
 	render_glow = project_render_glow && (render_quality = e_view_mode.RENDER)
 	render_glow_falloff = project_render_glow && project_render_glow_falloff && (render_quality = e_view_mode.RENDER)
-	render_aa = project_render_aa && (render_quality = e_view_mode.RENDER)
 	
 	// Use camera settings
 	if (render_camera != null)

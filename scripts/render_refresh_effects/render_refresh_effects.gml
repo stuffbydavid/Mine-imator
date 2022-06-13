@@ -11,7 +11,6 @@ function render_refresh_effects(sceneeffects = true, posteffects = true)
 		render_camera_bloom && sceneeffects,
 		render_glow && sceneeffects,
 		render_glow_falloff && sceneeffects,
-		render_aa && posteffects,
 		render_camera_ca && posteffects,
 		render_camera_distort && posteffects,
 		render_camera_lens_dirt && posteffects,

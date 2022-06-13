@@ -84,6 +84,7 @@ function render_high_shadows()
 		
 		// Depth
 		cam_far = cam_far_prev
+		taa_matrix = MAT_IDENTITY
 		render_update_cascades(angle)
 		
 		for (var i = 0; i < render_cascades_count; i++)
@@ -105,10 +106,11 @@ function render_high_shadows()
 	}
 	
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	resultsurftemp = render_surface[2]
-	
 	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+	resultsurftemp = render_surface[2]
 	specresultsurftemp = render_surface[3]
+	
+	taa_matrix = taa_jitter_matrix
 	
 	surface_set_target_ext(0, resultsurftemp)
 	surface_set_target_ext(1, specresultsurftemp)
@@ -181,6 +183,8 @@ function render_high_shadows()
 				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2)
 				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize)
 				
+				taa_matrix = MAT_IDENTITY
+				
 				// Depth
 				for (var d = e_dir.EAST; d < e_dir.amount; d++)
 				{
@@ -217,13 +221,14 @@ function render_high_shadows()
 					}
 				}
 				
+				taa_matrix = taa_jitter_matrix
+				
 				// Shadows
 				with (app)
 				{
 					render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-					resultsurftemp = render_surface[2]
-					
 					render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+					resultsurftemp = render_surface[2]
 					specresultsurftemp = render_surface[3]
 					
 					surface_set_target_ext(0, resultsurftemp)
@@ -245,6 +250,8 @@ function render_high_shadows()
 			{
 				var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 				
+				taa_matrix = MAT_IDENTITY
+				
 				// Depth
 				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
 				surface_set_target(render_surface_spot_buffer)
@@ -265,13 +272,14 @@ function render_high_shadows()
 				}
 				surface_reset_target()
 				
+				taa_matrix = taa_jitter_matrix
+				
 				// Shadows
 				with (app)
 				{
 					render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-					resultsurftemp = render_surface[2]
-					
 					render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+					resultsurftemp = render_surface[2]
 					specresultsurftemp = render_surface[3]
 					
 					surface_set_target_ext(0, resultsurftemp)
@@ -353,12 +361,11 @@ function render_high_shadows_shadowless()
 				render_shadowless_point_amount++
 				lights--
 			}
-				
+			
 			// Render lights
 			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-			resultsurftemp = render_surface[2]
-			
 			render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+			resultsurftemp = render_surface[2]
 			specresultsurftemp = render_surface[3]
 			
 			surface_set_target_ext(0, resultsurftemp)

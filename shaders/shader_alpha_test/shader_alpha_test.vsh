@@ -19,6 +19,9 @@ uniform float uWindDirection;
 uniform float uWindDirectionalSpeed;
 uniform float uWindDirectionalStrength;
 
+// TAA
+uniform mat4 uTAAMatrix;
+
 // GPU Gems 3: Chapter 6
 #define PI 3.14159265
 float getNoise(float v)
@@ -50,6 +53,6 @@ void main()
 	vec3 pos = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
 	pos += getWindAngle(in_Position);
 	
-	gl_Position = gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(pos, 1.0));
+	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(pos, 1.0));
 }
 

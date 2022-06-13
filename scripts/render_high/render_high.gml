@@ -34,9 +34,10 @@ function render_high()
 	// Render
 	for (var s = samplestart; s < sampleend; s++)
 	{
-		var finalsurf;
-		
 		render_sample_current = s
+		
+		// Update TAA jitter
+		render_high_update_taa()
 		
 		// SSAO
 		if (render_ssao)
@@ -84,6 +85,7 @@ function render_high()
 		}
 		
 		// Composite current effects onto the scene
+		var finalsurf;
 		finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
 		
 		// Reflections
@@ -210,6 +212,9 @@ function render_high()
 		}
 		surface_reset_target()
 	}
+	
+	// Reset TAA matrix
+	taa_matrix = MAT_IDENTITY
 	
 	render_samples_clear = false
 	
