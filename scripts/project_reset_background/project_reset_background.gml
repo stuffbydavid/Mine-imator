@@ -20,8 +20,6 @@ function project_reset_background()
 	background_sunlight_strength = 0
 	background_sunlight_angle = .526
 	background_twilight = true
-	background_desaturate_night = false
-	background_desaturate_night_amount = 0
 	
 	background_sky_clouds_show = true
 	background_sky_clouds_update = false

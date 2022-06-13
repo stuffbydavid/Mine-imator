@@ -65,7 +65,6 @@ function shader_startup()
 		new_shader("shader_color_correction")
 		new_shader("shader_vignette")
 		new_shader("shader_noise")
-		new_shader("shader_high_light_desaturate")
 		new_shader("shader_ca")
 		new_shader("shader_distort")
 		new_shader("shader_high_lighting_apply")
@@ -234,12 +233,6 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_light_apply])
 		new_shader_uniform("uAmbientColor")
-	
-	with (shader_map[?shader_high_light_desaturate])
-	{
-		new_shader_sampler("uShadowBuffer")
-		new_shader_uniform("uAmount")
-	}
 	
 	with (shader_map[?shader_high_light_night])
 	{

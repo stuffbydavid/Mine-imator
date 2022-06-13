@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.06.07"
+		"lastchange": "2022.06.12"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2429,7 +2429,6 @@
 			"savemap": "Export map",
 			"rotation": "Rotation"
 		},
-		"timeeffects": "Time effects",
 		"skybackground": "Sky background",
 		"sky/": {
 			"suntex": "Sun texture",
@@ -2464,9 +2463,6 @@
 		"sunlightangletip": "The angular diameter of the sun, changes the size of sun shadows.",
 		"twilight": "Twilight",
 		"twilighttip": "Toggle color changes in the background during sunrise/sunset.",
-		"desaturatenight": "Desaturate night",
-		"desaturatenighttip": "Desaturate areas of the scene at night that aren't brightened by a light source.",
-		"desaturatenightamount": "Amount",
 		"groundshow": "Ground",
 		"ground": "Ground",
 		"groundtex": "Texture",

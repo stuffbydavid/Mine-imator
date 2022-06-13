@@ -121,8 +121,6 @@ function app_update_animate()
 		background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
 		background_sunlight_angle				= bgobject.value[e_value.BG_SUNLIGHT_ANGLE]
 		background_twilight						= bgobject.value[e_value.BG_TWILIGHT]
-		background_desaturate_night				= bgobject.value[e_value.BG_DESATURATE_NIGHT]
-		background_desaturate_night_amount		= bgobject.value[e_value.BG_DESATURATE_NIGHT_AMOUNT]
 		background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
 		background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
 		background_sky_clouds_height			= bgobject.value[e_value.BG_SKY_CLOUDS_HEIGHT]

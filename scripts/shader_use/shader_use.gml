@@ -37,12 +37,8 @@ function shader_use()
 		
 		render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
 		render_set_uniform("uFogDistance", app.background_fog_distance)
-			
-		if (app.background_twilight)
-			render_set_uniform("uFogSize", app.background_fog_size + (app.background_fog_size * 3 * max(app.background_sunrise_alpha, app.background_sunset_alpha)))
-		else
-			render_set_uniform("uFogSize", app.background_fog_size)
-			
+		
+		render_set_uniform("uFogSize", app.background_fog_size)	
 		render_set_uniform("uFogHeight", app.background_fog_height)
 	}
 	

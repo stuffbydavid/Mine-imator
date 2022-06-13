@@ -30,9 +30,6 @@ function project_load_background(map)
 	
 	background_twilight = value_get_real(map[?"twilight"], background_twilight)
 	
-	background_desaturate_night = value_get_real(map[?"desaturate_night"], background_desaturate_night)
-	background_desaturate_night_amount = value_get_real(map[?"desaturate_night_amount"], background_desaturate_night_amount)
-	
 	background_sky_clouds_show = value_get_real(map[?"sky_clouds_show"], background_sky_clouds_show)
 	background_sky_clouds_mode = value_get_real(map[?"sky_clouds_mode"], background_sky_clouds_mode)
 	

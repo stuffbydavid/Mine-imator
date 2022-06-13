@@ -45,44 +45,11 @@ function render_high()
 		
 		// Shadows
 		if (render_shadows)
-		{
 			render_high_shadows()
-			
-			if (render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.INDIRECT_SHADOWS) 
-				render_pass_surf = surface_duplicate(render_surface_shadows)
-			
-			if (render_pass = e_render_pass.SPECULAR)
-				render_pass_surf = surface_duplicate(render_surface_specular)
-		}
 		
 		// Indirect lighting
 		if (render_indirect)
-		{
 			render_high_indirect()
-			
-			if (render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS) 
-			{
-				// Add direct lighting
-				if (render_pass = e_render_pass.INDIRECT_SHADOWS)
-				{
-					surface_set_target(render_pass_surf)
-					{
-						render_shader_obj = shader_map[?shader_add]
-						with (render_shader_obj)
-						{
-							shader_set(shader)
-							shader_add_set(render_surface_indirect, app.project_render_indirect_strength, c_white)
-						}
-						draw_surface_exists(render_surface_shadows, 0, 0)
-						with (render_shader_obj)
-							shader_clear()
-					}
-					surface_reset_target()
-				}
-				else
-					render_pass_surf = surface_duplicate(render_surface_indirect)
-			}
-		}
 		
 		// Composite current effects onto the scene
 		var finalsurf;
@@ -90,20 +57,13 @@ function render_high()
 		
 		// Reflections
 		if (render_reflections)
-		{
 			render_high_reflections(finalsurf)
-			
-			if (render_pass = e_render_pass.REFLECTIONS)
-				render_pass_surf = surface_duplicate(render_surface_ssr)
-		}
 		
-		// Fog
+		// Minecraft fog
 		if (background_fog_show)
-			render_surface_fog = render_high_fog()
+			render_high_fog(finalsurf)
 		
 		// Apply post scene effects (Volumetric fog, DoF, etc.)
-		render_high_scene_post(finalsurf, render_surface_shadows, render_surface_fog)
-		
 		render_refresh_effects(true, false)
 		finalsurf = render_post(finalsurf, true, false)
 		

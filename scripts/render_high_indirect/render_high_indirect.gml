@@ -139,4 +139,28 @@ function render_high_indirect()
 		
 		gpu_set_texrepeat(true)
 	}
+	
+	// Render pass
+	if (render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS) 
+	{
+		// Add direct lighting
+		if (render_pass = e_render_pass.INDIRECT_SHADOWS)
+		{
+			surface_set_target(render_pass_surf)
+			{
+				render_shader_obj = shader_map[?shader_add]
+				with (render_shader_obj)
+				{
+					shader_set(shader)
+					shader_add_set(render_surface_indirect, app.project_render_indirect_strength, c_white)
+				}
+				draw_surface_exists(render_surface_shadows, 0, 0)
+				with (render_shader_obj)
+					shader_clear()
+			}
+			surface_reset_target()
+		}
+		else
+			render_pass_surf = surface_duplicate(render_surface_indirect)
+	}
 }

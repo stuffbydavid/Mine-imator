@@ -109,8 +109,6 @@ function app_startup_interface_tabs()
 			tbx_sunlight_strength = new_textbox_integer()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
-			tbx_desaturate_night_amount = new_textbox_decimals()
-			tbx_desaturate_night_amount.suffix = "%"
 			tbx_sky_clouds_fade_distance = new_textbox_integer()
 			tbx_sky_clouds_height = new_textbox_ndecimals()
 			tbx_sky_clouds_size = new_textbox_decimals()

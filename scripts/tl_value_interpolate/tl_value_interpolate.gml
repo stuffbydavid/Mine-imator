@@ -72,7 +72,6 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.BG_IMAGE_SHOW:
 		case e_value.BG_SKY_MOON_PHASE:
 		case e_value.BG_TWILIGHT:
-		case e_value.BG_DESATURATE_NIGHT:
 		case e_value.BG_SKY_CLOUDS_SHOW:
 		case e_value.BG_GROUND_SHOW:
 		case e_value.BG_GROUND_SLOT:

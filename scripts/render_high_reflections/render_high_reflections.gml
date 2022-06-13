@@ -157,4 +157,7 @@ function render_high_reflections_apply(surf, matsurf)
 		}
 		surface_reset_target()
 	}
+	
+	if (render_pass = e_render_pass.REFLECTIONS)
+		render_pass_surf = surface_duplicate(render_surface_ssr)
 }

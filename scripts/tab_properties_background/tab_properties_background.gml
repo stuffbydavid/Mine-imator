@@ -20,39 +20,6 @@ function tab_properties_background()
 	draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 	tab_next()
 	
-	// Time-based effects (Advanced mode only)
-	if (setting_advanced_mode)
-	{
-		tab_control_switch()
-		draw_button_collapse("time_effects", collapse_map[?"time_effects"], null, true, "backgroundtimeeffects")
-		tab_next()
-	
-		if (collapse_map[?"time_effects"])
-		{
-			tab_collapse_start()
-		
-			// Twilight
-			tab_control_switch()
-			draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
-			tab_next()
-		
-			// Desaturate night
-			tab_control_switch()
-			draw_switch("backgrounddesaturatenight", dx, dy, background_desaturate_night, action_background_desaturate_night, "backgrounddesaturatenighttip")
-			tab_next()
-			
-			// Desaturate amount
-			if (background_desaturate_night)
-			{
-				tab_control_meter()
-				draw_meter("backgrounddesaturatenightamount", dx, dy, dw, round(background_desaturate_night_amount * 100), 64, 0, 100, 0, 1, tab.background.tbx_desaturate_night_amount, action_background_desaturate_night_amount)
-				tab_next()
-			}
-			
-			tab_collapse_end()
-		}
-	}
-	
 	// Sky properties
 	tab_control_switch()
 	draw_button_collapse("sky", collapse_map[?"sky"], null, true, "backgroundskybackground")
@@ -383,6 +350,14 @@ function tab_properties_background()
 	tab_next()
 	
 	tab_set_collumns(false)
+	
+	// Twilight
+	if (setting_advanced_mode)
+	{
+		tab_control_switch()
+		draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
+		tab_next()
+	}
 	
 	// Show fog
 	tab_control_switch()
