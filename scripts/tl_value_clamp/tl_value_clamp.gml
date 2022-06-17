@@ -37,7 +37,6 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_VIGNETTE_RADIUS:
 		case e_value.CAM_VIGNETTE_SOFTNESS:
 		case e_value.CAM_VIGNETTE_STRENGTH: return clamp(val, 0, 1)
-		case e_value.BG_VOLUMETRIC_FOG_SCATTER: return clamp(val, -1, 1)
 		case e_value.RGB_ADD:
 		case e_value.RGB_SUB:
 		case e_value.RGB_MUL:
@@ -66,7 +65,6 @@ function tl_value_clamp(vid, val)
 		case e_value.BG_LEAVES_ACACIA_COLOR:
 		case e_value.BG_LEAVES_DARK_OAK_COLOR:
 		case e_value.BG_LEAVES_MANGROVE_COLOR:
-		case e_value.BG_VOLUMETRIC_FOG_COLOR:
 		case e_value.BG_FOG_COLOR:
 		case e_value.BG_FOG_OBJECT_COLOR: return clamp(val, c_black, c_white)
 		case e_value.BEND_ANGLE_X:

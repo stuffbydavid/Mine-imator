@@ -63,7 +63,7 @@ function render_high()
 		if (background_fog_show)
 			render_high_fog(finalsurf)
 		
-		// Apply post scene effects (Volumetric fog, DoF, etc.)
+		// Apply post scene effects (Glow, DoF, etc.)
 		render_refresh_effects(true, false)
 		finalsurf = render_post(finalsurf, true, false)
 		

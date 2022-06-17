@@ -10,9 +10,6 @@ function tl_value_is_bool(vid)
 			vid = e_value.BG_IMAGE_SHOW ||
 			vid = e_value.BG_SKY_CLOUDS_SHOW ||
 			vid = e_value.BG_GROUND_SHOW ||
-			vid = e_value.BG_VOLUMETRIC_FOG ||
-			vid = e_value.BG_VOLUMETRIC_FOG_AMBIENCE ||
-			vid = e_value.BG_VOLUMETRIC_FOG_NOISE ||
 			vid = e_value.BG_FOG_SHOW ||
 			vid = e_value.BG_WIND ||
 			vid = e_value.CAM_ROTATE ||

@@ -123,17 +123,6 @@ function tl_value_default(valueid)
 		case e_value.BG_LEAVES_ACACIA_COLOR: return app.background_leaves_acacia_color
 		case e_value.BG_LEAVES_DARK_OAK_COLOR: return app.background_leaves_dark_oak_color
 		case e_value.BG_LEAVES_MANGROVE_COLOR: return app.background_leaves_mangrove_color
-		case e_value.BG_VOLUMETRIC_FOG: return app.background_volumetric_fog
-		case e_value.BG_VOLUMETRIC_FOG_AMBIENCE: return app.background_volumetric_fog_ambience
-		case e_value.BG_VOLUMETRIC_FOG_NOISE: return app.background_volumetric_fog_noise
-		case e_value.BG_VOLUMETRIC_FOG_SCATTER: return app.background_volumetric_fog_scatter
-		case e_value.BG_VOLUMETRIC_FOG_DENSITY: return app.background_volumetric_fog_density
-		case e_value.BG_VOLUMETRIC_FOG_HEIGHT: return app.background_volumetric_fog_height
-		case e_value.BG_VOLUMETRIC_FOG_HEIGHT_FADE: return app.background_volumetric_fog_height_fade
-		case e_value.BG_VOLUMETRIC_FOG_NOISE_SCALE: return app.background_volumetric_fog_noise_scale
-		case e_value.BG_VOLUMETRIC_FOG_NOISE_CONTRAST: return app.background_volumetric_fog_noise_contrast
-		case e_value.BG_VOLUMETRIC_FOG_WIND: return app.background_volumetric_fog_wind
-		case e_value.BG_VOLUMETRIC_FOG_COLOR: return app.background_volumetric_fog_color
 		case e_value.BG_FOG_SHOW: return app.background_fog_show
 		case e_value.BG_FOG_SKY: return app.background_fog_sky
 		case e_value.BG_FOG_CUSTOM_COLOR: return app.background_fog_color_custom

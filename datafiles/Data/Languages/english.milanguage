@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.06.12"
+		"lastchange": "2022.06.17"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2490,7 +2490,7 @@
 			"darkoakcolor": "Dark Oak",
 			"mangrovecolor": "Mangrove"
 		},
-		"fog": "Minecraft fog",
+		"fog": "Fog",
 		"fog/": {
 			"sky": "Sky fog",
 			"colorcustom": "Custom fog color",
@@ -2500,21 +2500,6 @@
 			"distance": "Distance",
 			"size": "Fade size",
 			"height": "Height"
-		},
-		"volumetricfog": "Volumetric fog",
-		"volumetricfogtip": "Show realistic patches of fog in the scene.",
-		"volumetricfog/": {
-			"ambience": "Fog ambience",
-			"ambiencetip": "Make the volumetric fog be affected by sunlight and ambient light.",
-			"noise": "3D noise",
-			"scatter": "Scatter",
-			"density": "Density",
-			"color": "Blend color",
-			"height": "Height",
-			"heightfade": "Height fade",
-			"noisecontrast": "Noise contrast",
-			"noisescale": "Noise scale",
-			"wind": "Wind influence"
 		},
 		"wind": "Wind",
 		"wind/": {

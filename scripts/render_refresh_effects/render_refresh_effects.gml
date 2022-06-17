@@ -6,7 +6,6 @@ function render_refresh_effects(sceneeffects = true, posteffects = true)
 {
 	ds_list_clear(render_effects_list)
 	ds_list_add(render_effects_list,
-		render_volumetric_fog && sceneeffects,
 		render_camera_dof && sceneeffects,
 		render_camera_bloom && sceneeffects,
 		render_glow && sceneeffects,

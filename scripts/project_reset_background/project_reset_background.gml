@@ -74,18 +74,6 @@ function project_reset_background()
 	background_ambient_color = c_ambient
 	background_night_color = c_night
 	
-	background_volumetric_fog = false
-	background_volumetric_fog_ambience = false
-	background_volumetric_fog_noise = false
-	background_volumetric_fog_scatter = 0
-	background_volumetric_fog_density = 0.2
-	background_volumetric_fog_color = c_white
-	background_volumetric_fog_height = 200
-	background_volumetric_fog_height_fade = 100
-	background_volumetric_fog_noise_scale = 16
-	background_volumetric_fog_noise_contrast = 0
-	background_volumetric_fog_wind = 1
-	
 	background_fog_show = true
 	background_fog_sky = true
 	background_fog_color_custom = 0

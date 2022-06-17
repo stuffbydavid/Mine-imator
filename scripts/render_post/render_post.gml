@@ -8,11 +8,6 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true)
 	// Start post processing
 	finalsurf = render_high_post_start(finalsurf)
 	
-	// Sun volumetrics
-	if (render_volumetric_fog && sceneeffects)
-		finalsurf = render_high_volumetric_fog(finalsurf)
-	render_update_effects()
-	
 	// DOF
 	if (render_camera_dof && sceneeffects)
 		finalsurf = render_high_dof(finalsurf)
