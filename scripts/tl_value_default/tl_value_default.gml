@@ -39,13 +39,12 @@ function tl_value_default(valueid)
 		case e_value.CAM_BLADE_AMOUNT: return 0
 		case e_value.CAM_BLADE_ANGLE: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
-		case e_value.CAM_SHAKE_STRENGTH: return .25
-		case e_value.CAM_SHAKE_VERTICAL_OFFSET:
-		case e_value.CAM_SHAKE_HORIZONTAL_OFFSET: return 0
-		case e_value.CAM_SHAKE_VERTICAL_SPEED:
-		case e_value.CAM_SHAKE_HORIZONTAL_SPEED: return 1
-		case e_value.CAM_SHAKE_VERTICAL_STRENGTH:
-		case e_value.CAM_SHAKE_HORIZONTAL_STRENGTH: return 1
+		case e_value.CAM_SHAKE_STRENGTH_X:
+		case e_value.CAM_SHAKE_STRENGTH_Y:
+		case e_value.CAM_SHAKE_STRENGTH_Z:
+		case e_value.CAM_SHAKE_SPEED_X:
+		case e_value.CAM_SHAKE_SPEED_Y:
+		case e_value.CAM_SHAKE_SPEED_Z: return 1
 		case e_value.CAM_DOF_RANGE: return 200
 		case e_value.CAM_DOF_FADE_SIZE: return 100
 		case e_value.CAM_DOF_BLUR_SIZE: return .01

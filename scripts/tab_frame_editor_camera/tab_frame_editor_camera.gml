@@ -126,33 +126,28 @@ function tab_frame_editor_camera()
 		{
 			tab_collapse_start()
 			
-			// Shake strength
-			tab_control_dragger()
-			draw_dragger("frameeditorcameracamerashakemasterstrength", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH] * 100), .1, 0, 800, 25, 1, tab.camera.tbx_shake_strength, action_tl_frame_cam_shake_strength)
-			tab_next()
-			
-			// Offset
-			textfield_group_add("frameeditorcameracamerashakeoffsetv", tl_edit.value[e_value.CAM_SHAKE_VERTICAL_OFFSET], 0, action_tl_frame_cam_shake_voffset, X, tab.camera.tbx_shake_voffset, null, 1, -no_limit, no_limit)
-			textfield_group_add("frameeditorcameracamerashakeoffseth", tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET], 0, action_tl_frame_cam_shake_hoffset, X, tab.camera.tbx_shake_hoffset, null, 1, -no_limit, no_limit)
+			// Strength
+			axis_edit = X
+			textfield_group_add("frameeditorcameracamerashakestrengthx", round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH_X] * 100), 100, action_tl_frame_cam_shake_strength, axis_edit, tab.camera.tbx_shake_strength_x, null, 1, 0, no_limit)
+			axis_edit = (setting_z_is_up ? Y : Z)
+			textfield_group_add("frameeditorcameracamerashakestrengthy", round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_shake_strength, axis_edit, tab.camera.tbx_shake_strength_y, null, 1, 0, no_limit)
+			axis_edit = (setting_z_is_up ? Z : Y)
+			textfield_group_add("frameeditorcameracamerashakestrengthz", round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_shake_strength, axis_edit, tab.camera.tbx_shake_strength_z, null, 1, 0, no_limit)
 			
 			tab_control_textfield_group()
-			draw_textfield_group("frameeditorcameracamerashakeoffset", dx, dy, dw, null, null, null, .01, true)
+			draw_textfield_group("frameeditorcameracamerashakestrength", dx, dy, dw, null, null, null, .01, true, false, true)
 			tab_next()
 			
 			// Speed
-			textfield_group_add("frameeditorcameracamerashakespeedv", round(tl_edit.value[e_value.CAM_SHAKE_VERTICAL_SPEED] * 100), 100, action_tl_frame_cam_shake_vspeed, X, tab.camera.tbx_shake_vspeed, null, 1, 0, no_limit)
-			textfield_group_add("frameeditorcameracamerashakespeedh", round(tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] * 100), 100, action_tl_frame_cam_shake_hspeed, X, tab.camera.tbx_shake_hspeed, null, 1, 0, no_limit)
+			axis_edit = X
+			textfield_group_add("frameeditorcameracamerashakespeedx", round(tl_edit.value[e_value.CAM_SHAKE_SPEED_X] * 100), 100, action_tl_frame_cam_shake_speed, axis_edit, tab.camera.tbx_shake_speed_x, null, 1, 0, no_limit)
+			axis_edit = (setting_z_is_up ? Y : Z)
+			textfield_group_add("frameeditorcameracamerashakespeedy", round(tl_edit.value[e_value.CAM_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_shake_speed, axis_edit, tab.camera.tbx_shake_speed_y, null, 1, 0, no_limit)
+			axis_edit = (setting_z_is_up ? Z : Y)
+			textfield_group_add("frameeditorcameracamerashakespeedz", round(tl_edit.value[e_value.CAM_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_shake_speed, axis_edit, tab.camera.tbx_shake_speed_z, null, 1, 0, no_limit)
 			
 			tab_control_textfield_group()
-			draw_textfield_group("frameeditorcameracamerashakespeed", dx, dy, dw, null, null, null, .01, true)
-			tab_next()
-			
-			// Strength
-			textfield_group_add("frameeditorcameracamerashakestrengthv", round(tl_edit.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH] * 100), 100, action_tl_frame_cam_shake_vstrength, X, tab.camera.tbx_shake_vstrength, null, 1, 0, no_limit)
-			textfield_group_add("frameeditorcameracamerashakestrengthh", round(tl_edit.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH] * 100), 100, action_tl_frame_cam_shake_hstrength, X, tab.camera.tbx_shake_hstrength, null, 1, 0, no_limit)
-			
-			tab_control_textfield_group()
-			draw_textfield_group("frameeditorcameracamerashakestrength", dx, dy, dw, null, null, null, .01, true)
+			draw_textfield_group("frameeditorcameracamerashakespeed", dx, dy, dw, null, null, null, .01, true, false, true)
 			tab_next()
 			
 			tab_collapse_end()

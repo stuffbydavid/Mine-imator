@@ -540,8 +540,6 @@ function app_startup_interface_tabs()
 			look_at_rotate = true
 			tbx_fov = new_textbox_integer()
 			tbx_fov.suffix = "°"
-			tbx_near = new_textbox_integer()
-			tbx_far = new_textbox_integer()
 			tbx_blade_amount = new_textbox_integer()
 			tbx_blade_angle = new_textbox_integer()
 			tbx_blade_angle.suffix = "°"
@@ -552,18 +550,18 @@ function app_startup_interface_tabs()
 			tbx_rotate_angle_z = new_textbox_ndecimals()
 			tbx_rotate_angle_z.suffix = "°"
 			
-			tbx_shake_strength = new_textbox_decimals()
-			tbx_shake_strength.suffix = "%"
-			tbx_shake_voffset = new_textbox_ndecimals()
-			tbx_shake_vspeed = new_textbox_decimals()
-			tbx_shake_vspeed.suffix = "%"
-			tbx_shake_vstrength = new_textbox_decimals()
-			tbx_shake_vstrength.suffix = "%"
-			tbx_shake_hoffset = new_textbox_ndecimals()
-			tbx_shake_hspeed = new_textbox_decimals()
-			tbx_shake_hspeed.suffix = "%"
-			tbx_shake_hstrength = new_textbox_decimals()
-			tbx_shake_hstrength.suffix = "%"
+			tbx_shake_strength_x = new_textbox_decimals()
+			tbx_shake_strength_x.suffix = "%"
+			tbx_shake_strength_y = new_textbox_decimals()
+			tbx_shake_strength_y.suffix = "%"
+			tbx_shake_strength_z = new_textbox_decimals()
+			tbx_shake_strength_z.suffix = "%"
+			tbx_shake_speed_x = new_textbox_decimals()
+			tbx_shake_speed_x.suffix = "%"
+			tbx_shake_speed_y = new_textbox_decimals()
+			tbx_shake_speed_y.suffix = "%"
+			tbx_shake_speed_z = new_textbox_decimals()
+			tbx_shake_speed_z.suffix = "%"
 			
 			tbx_dof_depth = new_textbox_decimals()
 			tbx_dof_range = new_textbox_decimals()

@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.06.17"
+		"lastchange": "2022.06.18"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2899,7 +2899,7 @@
 		"camera": "CAMERA",
 		"camera/": {
 			"fov": "Field of view",
-			"aperture": "Aperture",
+			"aperture": "Aperture settings",
 			"aperturetip": "Control aperture settings of the camera to change how certain effects behave.",
 			"bladeamount": "Blades",
 			"bladeangle": "Blade angle",
@@ -2919,16 +2919,18 @@
 			},
 			"camerashake": "Camera shake",
 			"camerashake/": {
-				"masterstrength": "Master strength",
-				"offset": "Offset",
 				"strength": "Strength",
+				"strength/": {
+					"x": "X",
+					"y": "Y",
+					"z": "Z"
+				},
 				"speed": "Speed",
-				"offsetv": "V",
-				"speedv": "V",
-				"strengthv": "V",
-				"offseth": "H",
-				"speedh": "H",
-				"strengthh": "H"
+				"speed/": {
+					"x": "X",
+					"y": "Y",
+					"z": "Z"
+				}
 			},
 			"dof": "Depth of field",
 			"dof/": {

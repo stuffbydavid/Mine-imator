@@ -28,16 +28,17 @@ function render_update_camera()
 		
 		// Camera shake
 		if (render_camera.value[e_value.CAM_SHAKE])
-		{
+		{			
 			var shakerot = vec3(
-				simplex_lib(((app.timeline_marker/app.project_tempo) * 10 + render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_SPEED] * 0.025), 3.0) * render_camera.value[e_value.CAM_SHAKE_HORIZONTAL_STRENGTH],
-				0,
-				simplex_lib(((app.timeline_marker/app.project_tempo) * 10 + render_camera.value[e_value.CAM_SHAKE_VERTICAL_OFFSET]) * (render_camera.value[e_value.CAM_SHAKE_VERTICAL_SPEED] * 0.025), 0.0) * render_camera.value[e_value.CAM_SHAKE_VERTICAL_STRENGTH],
+				simplex_lib((app.timeline_marker/app.project_tempo) * render_camera.value[e_value.CAM_SHAKE_SPEED_X]) * render_camera.value[e_value.CAM_SHAKE_STRENGTH_X],
+				simplex_lib((app.timeline_marker/app.project_tempo) * render_camera.value[e_value.CAM_SHAKE_SPEED_Y], 1000) * render_camera.value[e_value.CAM_SHAKE_STRENGTH_Y],
+				simplex_lib((app.timeline_marker/app.project_tempo) * render_camera.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * render_camera.value[e_value.CAM_SHAKE_STRENGTH_Z],
 			);
 			
-			shakerot = vec3_mul(shakerot, render_camera.value[e_value.CAM_SHAKE_STRENGTH])
+			// Create rotation matrix
+			var shakemat = matrix_create(vec3(0), shakerot, vec3(1));
 			
-			var shakemat = matrix_create(shakerot, vec3(0), vec3(1));
+			//var shakemat = matrix_create(shakerot, vec3(0), vec3(1));
 			mat = matrix_multiply(shakemat, mat)
 			pos = point3D(mat[MAT_X], mat[MAT_Y], mat[MAT_Z])
 		}

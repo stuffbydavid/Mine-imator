@@ -75,10 +75,12 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 		case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)
 		case e_value.SUBSURFACE:
-		case e_value.CAM_SHAKE_VERTICAL_SPEED:
-		case e_value.CAM_SHAKE_HORIZONTAL_SPEED:
-		case e_value.CAM_SHAKE_VERTICAL_STRENGTH:
-		case e_value.CAM_SHAKE_HORIZONTAL_STRENGTH: 
+		case e_value.CAM_SHAKE_STRENGTH_X:
+		case e_value.CAM_SHAKE_STRENGTH_Y:
+		case e_value.CAM_SHAKE_STRENGTH_Z:
+		case e_value.CAM_SHAKE_SPEED_X:
+		case e_value.CAM_SHAKE_SPEED_Y:
+		case e_value.CAM_SHAKE_SPEED_Z:
 		case e_value.CAM_CA_RED_OFFSET:
 		case e_value.CAM_CA_GREEN_OFFSET:
 		case e_value.CAM_CA_BLUE_OFFSET: return clamp(val, 0, no_limit)

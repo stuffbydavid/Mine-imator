@@ -6,7 +6,7 @@
     "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Camera shake.yy",
   },
   "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_shake_vspeed",
+  "name": "action_tl_frame_cam_shake_speed",
   "tags": [],
   "resourceType": "GMScript",
 }
