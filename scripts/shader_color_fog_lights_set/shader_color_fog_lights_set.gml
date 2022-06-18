@@ -16,4 +16,5 @@ function shader_color_fog_lights_set()
 	render_set_uniform("uBrightness", 0)
 	
 	render_set_uniform_color("uFallbackColor", render_background ? app.background_sky_color_final : c_black, 1)
+	render_set_uniform_int("uGammaCorrect", app.project_render_gamma_correct)
 }

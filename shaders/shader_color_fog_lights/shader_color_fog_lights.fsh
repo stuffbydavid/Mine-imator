@@ -26,6 +26,8 @@ uniform vec4 uAmbientColor;
 
 uniform vec3 uCameraPosition;
 
+uniform int uGammaCorrect;
+
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying float vDepth;
@@ -86,6 +88,9 @@ void main()
 		texMat = mod(texMat * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 	vec4 matColor = texture2D(uTextureMaterial, texMat);
 	
+	// Get gamma
+	float gamma = (uGammaCorrect > 0 ? 2.2 : 1.0);
+	
 	// Flip roughness
 	if (uMaterialUseGlossiness == 0)
 		matColor.r = 1.0 - matColor.r;
@@ -119,7 +124,6 @@ void main()
 	F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
 	F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
 	F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
-	
 	F = clamp(F, 0.0, 1.0);
 	
 	dif *= (1.0 - F);
@@ -135,15 +139,17 @@ void main()
 		col = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
 		col = hsbtorgb(clamp(rgbtohsb(col) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
 		col = mix(col, uMixColor, uMixColor.a); // Mix
+		col.rgb = pow(col.rgb, vec3(gamma));
 		
 		// Get specular color
-		spec = (mix(vec3(1.0), col.rgb, metallic) * uFallbackColor.rgb * F);
+		spec = (mix(vec3(1.0), col.rgb, metallic) * pow(uFallbackColor.rgb, vec3(gamma)) * F);
 		
 		col.rgb *= (1.0 - metallic);
 		col.rgb *= dif; // Multiply diffuse
 		
 		col.rgb  = clamp(col.rgb, vec3(0.0), vec3(1.0));
 		col.rgb += spec;
+		col.rgb = pow(col.rgb, vec3(1.0/gamma));
 		
 		col   = mix(col, uFogColor, getFog()); // Mix fog
 		col.a = mix(baseColor.a, 1.0, F); // Correct alpha
@@ -151,15 +157,17 @@ void main()
 	else
 	{
 		col = baseColor;
+		col.rgb = pow(col.rgb, vec3(gamma));
 		
 		// Get specular color
-		spec = (mix(vec3(1.0), col.rgb, metallic) * uFallbackColor.rgb * F);
+		spec = (mix(vec3(1.0), col.rgb, metallic) * pow(uFallbackColor.rgb, vec3(gamma)) * F);
 		
 		col.rgb *= (1.0 - metallic);
 		col.rgb *= dif; // Multiply diffuse
 		
 		col.rgb  = clamp(col.rgb, vec3(0.0), vec3(1.0));
 		col.rgb += spec;
+		col.rgb = pow(col.rgb, vec3(1.0/gamma));
 		
 		col   = mix(col, uFogColor, getFog()); // Mix fog
 		col.a = mix(baseColor.a, 1.0, F); // Correct alpha

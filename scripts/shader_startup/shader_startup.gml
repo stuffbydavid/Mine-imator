@@ -158,10 +158,10 @@ function shader_startup()
 		new_shader_uniform("uMetallic")
 		new_shader_uniform("uRoughness")
 		new_shader_uniform("uFallbackColor")
-		
 		new_shader_sampler("uTextureMaterial")
 		new_shader_uniform("uTexScaleMaterial")
 		new_shader_uniform("uMaterialUseGlossiness")
+		new_shader_uniform("uGammaCorrect")
 	}
 	
 	with (shader_map[?shader_depth])

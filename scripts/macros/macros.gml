@@ -12,6 +12,7 @@ function macros()
 	#macro dev_mode_project				""
 	#macro dev_mode_full				dev_mode && true
 	#macro dev_mode_advanced			dev_mode && true
+	#macro dev_mode_show_bones			dev_mode && false
 	
 	// Versions
 	#macro mineimator_version			"2.0.0"
