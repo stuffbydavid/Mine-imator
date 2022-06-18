@@ -17,7 +17,7 @@ function project_reset_background()
 	
 	background_sky_time = -45
 	background_sky_rotation = 0
-	background_sunlight_strength = 0
+	background_sunlight_strength = 1
 	background_sunlight_angle = .526
 	background_twilight = true
 	
@@ -76,10 +76,8 @@ function project_reset_background()
 	
 	background_fog_show = true
 	background_fog_sky = true
-	background_fog_color_custom = 0
+	background_fog_color_custom = false
 	background_fog_color = c_sky
-	background_fog_object_color_custom = 0
-	background_fog_object_color = c_sky
 	background_fog_distance = 10000
 	background_fog_size = 2000
 	background_fog_height = 1250
@@ -87,12 +85,10 @@ function project_reset_background()
 	background_wind = true
 	background_wind_speed = 0.1
 	background_wind_strength = 0.5
-	
 	background_wind_direction = 45
 	background_wind_directional_speed = 0.2
 	background_wind_directional_strength = 1.5
 	
-	background_opaque_leaves = false
 	background_texture_animation_speed = 0.25
 	
 	background_sunlight_color_final = c_black

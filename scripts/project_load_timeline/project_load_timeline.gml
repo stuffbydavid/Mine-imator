@@ -189,7 +189,6 @@ function project_load_timeline(map)
 		
 		hq_hiding = value_get_real(map[?"hq_hiding"], hq_hiding)
 		lq_hiding = value_get_real(map[?"lq_hiding"], lq_hiding)
-		foliage_tint = value_get_real(map[?"foliage_tint"], foliage_tint)
 		
 		/*
 		if (project_format < e_project.FORMAT_200_AL14)

@@ -180,7 +180,7 @@ function project_load_legacy_timeline()
 			
 			hq_hiding = buffer_read_byte() // hide_quality_high
 			lq_hiding = buffer_read_byte() // hide_quality_low
-			foliage_tint = buffer_read_byte() // biome
+			/*foliage_tint =*/ buffer_read_byte() // biome
 		}
 	}
 }

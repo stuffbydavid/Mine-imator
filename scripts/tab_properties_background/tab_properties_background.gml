@@ -10,15 +10,27 @@ function tab_properties_background()
 	draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 	tab_next()
 	
-	// Sunlight angle
-	tab_control_dragger()
-	draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
+	// Sunlight
+	tab_control_switch()
+	draw_button_collapse("sunlight", collapse_map[?"sunlight"], null, true, "backgroundsunlight")
 	tab_next()
 	
-	// Sunlight strength
-	tab_control_meter()
-	draw_meter("backgroundsunlightstrength", dx, dy, dw, round(background_sunlight_strength * 100), 64, 0, 100, 0, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
-	tab_next()
+	if (collapse_map[?"sunlight"])
+	{
+		tab_collapse_start()
+		
+		// Sunlight angle
+		tab_control_dragger()
+		draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .5, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
+		tab_next()
+		
+		// Sunlight strength
+		tab_control_dragger()
+		draw_dragger("backgroundsunlightstrength", dx, dy, dragger_width, round(background_sunlight_strength * 100), 0.1, 0, 200, 100, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
+		tab_next()
+		
+		tab_collapse_end()
+	}
 	
 	// Sky properties
 	tab_control_switch()
@@ -386,18 +398,6 @@ function tab_properties_background()
 			tab_next()
 		}
 		
-		// Object fog color
-		tab_control_switch()
-		draw_switch("backgroundfogobjectcolorcustom", dx, dy, background_fog_object_color_custom, action_background_fog_object_color_custom)
-		tab_next()
-		
-		if (background_fog_object_color_custom)
-		{
-			tab_control_color()
-			draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky, false, action_background_fog_object_color)
-			tab_next()
-		}
-		
 		// Fog distance
 		tab_control_dragger()
 		draw_dragger("backgroundfogdistance", dx, dy, dragger_width, background_fog_distance, background_fog_distance / 100, 10, world_size, 10000, 10, tab.background.tbx_fog_distance, action_background_fog_distance)
@@ -456,11 +456,6 @@ function tab_properties_background()
 		
 		tab_collapse_end()
 	}
-	
-	// Fast graphics
-	tab_control_switch()
-	draw_switch("backgroundopaqueleaves", dx, dy, background_opaque_leaves, action_background_opaque_leaves)
-	tab_next()
 	
 	// Animation speed (Advanced mode only)
 	if (setting_advanced_mode)

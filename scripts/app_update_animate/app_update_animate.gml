@@ -147,8 +147,6 @@ function app_update_animate()
 		background_fog_sky						= bgobject.value[e_value.BG_FOG_SKY]
 		background_fog_color_custom				= bgobject.value[e_value.BG_FOG_CUSTOM_COLOR]
 		background_fog_color					= bgobject.value[e_value.BG_FOG_COLOR]
-		background_fog_object_color_custom		= bgobject.value[e_value.BG_FOG_CUSTOM_OBJECT_COLOR]
-		background_fog_object_color				= bgobject.value[e_value.BG_FOG_OBJECT_COLOR]
 		background_fog_distance					= bgobject.value[e_value.BG_FOG_DISTANCE]
 		background_fog_size						= bgobject.value[e_value.BG_FOG_SIZE]
 		background_fog_height					= bgobject.value[e_value.BG_FOG_HEIGHT]
@@ -183,7 +181,6 @@ function app_update_animate()
 	background_sunlight_color_final = merge_color(twilight_color, c_black, background_night_alpha)
 	background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 	background_fog_color_final = background_fog_color
-	background_fog_object_color_final = (background_fog_object_color_custom ? background_fog_object_color : background_fog_color_final)
 	
 	background_sky_color_final = merge_color(background_sky_color, hex_to_color("020204"), background_sky_night_alpha())
 	

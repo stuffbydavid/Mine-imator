@@ -109,7 +109,6 @@ function tl_event_create()
 	wind_terrain = true
 	hq_hiding = false
 	lq_hiding = false
-	foliage_tint = false
 	blend_mode = "normal"
 	
 	particle_list = null

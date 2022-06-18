@@ -43,11 +43,9 @@ function history_copy_render_settings(obj)
 	project_render_texture_filtering_level = obj.project_render_texture_filtering_level
 	
 	project_bend_style = obj.project_bend_style
+	project_render_opaque_leaves = obj.project_render_opaque_leaves
 	project_render_liquid_animation = obj.project_render_liquid_animation
-	project_render_noisy_grass_water = obj.project_render_noisy_grass_water
 	project_render_block_brightness = obj.project_render_block_brightness
-	project_render_block_glow = obj.project_render_block_glow
-	project_render_block_glow_threshold = obj.project_render_block_glow_threshold
 	project_render_block_subsurface = obj.project_render_block_subsurface
 	project_render_random_blocks = obj.project_render_random_blocks
 }

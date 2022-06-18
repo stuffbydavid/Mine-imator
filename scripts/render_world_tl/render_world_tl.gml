@@ -71,10 +71,6 @@ function render_world_tl()
 	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
 	
 	shader_blend_color = value_inherit[e_value.RGB_MUL]
-	
-	if (foliage_tint)
-		shader_blend_color = color_multiply(shader_blend_color, app.background_foliage_color)
-	
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	

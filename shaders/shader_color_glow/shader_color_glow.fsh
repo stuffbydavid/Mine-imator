@@ -12,7 +12,6 @@ uniform vec4 uMixColor;
 uniform int uGlow;
 uniform int uGlowTexture;
 uniform vec4 uGlowColor;
-uniform int uBlockGlow;
 
 uniform int uFogShow;
 uniform float uFogDistance;
@@ -20,7 +19,6 @@ uniform float uFogSize;
 uniform float uFogHeight;
 
 uniform vec3 uCameraPosition;
-uniform float uGlowThreshold;
 
 varying vec3 vPosition;
 varying float vDepth;
@@ -70,36 +68,22 @@ void main()
 	
 	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	
-	// Glow isn't enabled on object, but bright blocks should still glow
-	if (uGlow < 1 && uBlockGlow > 0)
+	// Glow using base texture and color settings
+	if (uGlowTexture > 0)
 	{
-		if (((baseColor.r + baseColor.g + baseColor.b) / 3.0) > uGlowThreshold)
-			baseColor.rgb *= vec3(vBrightness);
-		else
-			baseColor.rgb *= vec3(0.0);
+		if (uColorsExt > 0)
+		{
+			float baseAlpha = baseColor.a;
+			baseColor = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
+			baseColor = hsbtorgb(clamp(rgbtohsb(baseColor) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
+			baseColor = mix(baseColor, uMixColor, uMixColor.a); // Mix
+			baseColor.a = baseAlpha; // Correct alpha
+		}
+		
+		baseColor.rgb *= uGlowColor.rgb;
 	}
 	else
-	{
-		// Glow using base texture and color settings
-		if (uGlowTexture > 0)
-		{
-			
-			if (uColorsExt > 0)
-			{
-				float baseAlpha = baseColor.a;
-				baseColor = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
-				baseColor = hsbtorgb(clamp(rgbtohsb(baseColor) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
-				baseColor = mix(baseColor, uMixColor, uMixColor.a); // Mix
-				baseColor.a = baseAlpha; // Correct alpha
-			}
-			
-			baseColor.rgb *= uGlowColor.rgb;
-		}
-		else
-		{
-			baseColor.rgb = uGlowColor.rgb;
-		}
-	}
+		baseColor.rgb = uGlowColor.rgb;
 	
 	baseColor.rgb *= vec3(1.0 - getFog());
 	

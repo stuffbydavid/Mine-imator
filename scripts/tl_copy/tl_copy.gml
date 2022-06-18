@@ -57,7 +57,6 @@ function tl_copy(to)
 	to.wind_terrain = wind_terrain
 	to.hq_hiding = hq_hiding
 	to.lq_hiding = lq_hiding
-	to.foliage_tint = foliage_tint
 	to.blend_mode = blend_mode
 	
 	to.path_update = true

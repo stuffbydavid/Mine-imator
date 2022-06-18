@@ -24,7 +24,6 @@ function project_load_values_update()
 			value[e_value.BG_FOG_SHOW] = app.background_fog_show
 			value[e_value.BG_FOG_SKY] = app.background_fog_sky
 			value[e_value.BG_FOG_CUSTOM_COLOR] = app.background_fog_color_custom
-			value[e_value.BG_FOG_CUSTOM_OBJECT_COLOR] = app.background_fog_object_color_custom
 			
 			value[e_value.BG_WIND] = app.background_wind
 		}

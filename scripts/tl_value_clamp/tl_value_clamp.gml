@@ -65,14 +65,11 @@ function tl_value_clamp(vid, val)
 		case e_value.BG_LEAVES_ACACIA_COLOR:
 		case e_value.BG_LEAVES_DARK_OAK_COLOR:
 		case e_value.BG_LEAVES_MANGROVE_COLOR:
-		case e_value.BG_FOG_COLOR:
-		case e_value.BG_FOG_OBJECT_COLOR: return clamp(val, c_black, c_white)
+		case e_value.BG_FOG_COLOR: return clamp(val, c_black, c_white)
 		case e_value.BEND_ANGLE_X:
 		case e_value.BEND_ANGLE_Y:
 		case e_value.BEND_ANGLE_Z: return clamp(val, -180, 180)
 		case e_value.CAM_FOV: return clamp(val, 1, 170)
-		case e_value.CAM_NEAR: 
-		case e_value.CAM_FAR: return clamp(val, clip_near, world_size)
 		case e_value.CAM_BLADE_AMOUNT: return clamp(val, 0, 32)
 		case e_value.CAM_BLADE_ANGLE: return clamp(val, 0, 360)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)

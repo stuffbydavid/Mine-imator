@@ -2,8 +2,6 @@
 
 function render_update_camera()
 {
-	var near, far;
-	
 	if (!render_camera) // Use work camera
 	{
 		var xx, yy, zz, cx, cy;
@@ -22,9 +20,6 @@ function render_update_camera()
 		cam_up[Z] = cx * (xx * xx + yy * yy)
 		
 		cam_fov = 45
-		
-		cam_near = clip_near
-		cam_far = clip_far
 	}
 	else
 	{
@@ -54,10 +49,10 @@ function render_update_camera()
 		cam_up[Y] = mat[9]
 		cam_up[Z] = mat[10]
 		cam_fov = max(1, render_camera.value[e_value.CAM_FOV])
-		
-		cam_near = render_camera.value[e_value.CAM_NEAR]
-		cam_far = render_camera.value[e_value.CAM_FAR]
 	}
+	
+	cam_near = clip_near
+	cam_far = clip_far
 	
 	// Render modes can vary in zfar, keep original zfar
 	cam_far_prev = cam_far

@@ -279,33 +279,20 @@ function tab_properties_render()
 		draw_switch("renderrandomblocks", dx, dy, project_render_random_blocks, action_project_render_random_blocks)
 		tab_next()
 		
+		// Opaque leaves
+		tab_control_switch()
+		draw_switch("renderopaqueleaves", dx, dy, project_render_opaque_leaves, action_project_render_liquid_animation)
+		tab_next()
+		
 		// Liquid waves
 		tab_control_switch()
 		draw_switch("renderliquidanimation", dx, dy, project_render_liquid_animation, action_project_render_liquid_animation)
 		tab_next()
 		
-		// Noisy grass/water
-		tab_control_switch()
-		draw_switch("rendernoisygrasswater", dx, dy, project_render_noisy_grass_water, action_project_render_noisy_grass_water)
-		tab_next()
-		
 		// Block emission
 		tab_control_meter()
-		draw_meter("renderblockemission", dx, dy, dw, round(project_render_block_brightness * 100), 48, 0, 100, 75, 1, tab.render.tbx_block_brightness, action_project_render_block_brightness)
+		draw_meter("renderblockemission", dx, dy, dw, round(project_render_block_brightness * 100), 48, 0, 100, 100, 1, tab.render.tbx_block_brightness, action_project_render_block_brightness)
 		tab_next()
-		
-		// Apply glow to bright blocks
-		tab_control_switch()
-		draw_switch("renderblockglow", dx, dy, project_render_block_glow, action_project_render_block_glow)
-		tab_next()
-		
-		// Glow threshold
-		if (project_render_block_glow)
-		{
-			tab_control_meter()
-			draw_meter("renderblockglowthreshold", dx, dy, dw, round(project_render_block_glow_threshold * 100), 48, 0, 100, 75, 1, tab.render.tbx_block_glow_threshold, action_project_render_block_glow_threshold)
-			tab_next()
-		}
 		
 		// Block subsurface (Used for simple SSS in scenery)
 		tab_control_dragger()

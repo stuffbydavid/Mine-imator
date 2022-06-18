@@ -85,11 +85,6 @@ function tab_timeline_editor_appearance()
 		draw_checkbox("timelineeditorlqhiding", dx, dy, tl_edit.lq_hiding, action_tl_lq_hiding)
 		tab_next()
 		
-		// Foliage tint
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorfoliagetint", dx, dy, tl_edit.foliage_tint, action_tl_foliage_tint)
-		tab_next()
-		
 		tab_set_collumns(false)
 	}
 	else

@@ -36,8 +36,6 @@ function tl_value_default(valueid)
 		case e_value.LIGHT_SPOT_RADIUS: return 50
 		case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
 		case e_value.CAM_FOV: return 45
-		case e_value.CAM_NEAR: return clip_near
-		case e_value.CAM_FAR: return clip_far
 		case e_value.CAM_BLADE_AMOUNT: return 0
 		case e_value.CAM_BLADE_ANGLE: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
@@ -127,8 +125,6 @@ function tl_value_default(valueid)
 		case e_value.BG_FOG_SKY: return app.background_fog_sky
 		case e_value.BG_FOG_CUSTOM_COLOR: return app.background_fog_color_custom
 		case e_value.BG_FOG_COLOR: return app.background_fog_color
-		case e_value.BG_FOG_CUSTOM_OBJECT_COLOR: return app.background_fog_object_color_custom
-		case e_value.BG_FOG_OBJECT_COLOR: return app.background_fog_object_color
 		case e_value.BG_FOG_DISTANCE: return app.background_fog_distance
 		case e_value.BG_FOG_SIZE: return app.background_fog_size
 		case e_value.BG_FOG_HEIGHT: return app.background_fog_height

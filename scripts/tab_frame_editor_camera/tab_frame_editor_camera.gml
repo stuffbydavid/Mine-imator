@@ -54,22 +54,27 @@ function tab_frame_editor_camera()
 	// Advanced mode only
 	if (setting_advanced_mode)
 	{
-		// Clip
-		tab_control_textfield_group(true)
-		textfield_group_add("frameeditorcameraclipnear", round(tl_edit.value[e_value.CAM_NEAR]), clip_near, action_tl_frame_cam_near, X, tab.camera.tbx_near)
-		textfield_group_add("frameeditorcameraclipfar", round(tl_edit.value[e_value.CAM_FAR]), clip_far, action_tl_frame_cam_far, X, tab.camera.tbx_far)
-		draw_textfield_group("frameeditorcameraclip", dx, dy, dw, 1, clip_near, clip_far, 1, true)
+		// Aperture
+		tab_control_switch()
+		draw_button_collapse("aperture", collapse_map[?"aperture"], null, true, "frameeditorcameraaperture", "frameeditorcameraaperturetip")
 		tab_next()
-	
-		// Blade amount
-		tab_control_meter()
-		draw_meter("frameeditorcamerabladeamount", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_AMOUNT], 50, 0, 16, 0, 1, tab.camera.tbx_blade_amount, action_tl_frame_cam_blade_amount)
-		tab_next()
-	
-		// Blade angle
-		tab_control_meter()
-		draw_meter("frameeditorcamerabladeangle", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_ANGLE], 50, 0, 360, 0, 1, tab.camera.tbx_blade_angle, action_tl_frame_cam_blade_angle)
-		tab_next()
+		
+		if (collapse_map[?"aperture"])
+		{
+			tab_collapse_start()
+			
+			// Blade amount
+			tab_control_meter()
+			draw_meter("frameeditorcamerabladeamount", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_AMOUNT], 50, 0, 16, 0, 1, tab.camera.tbx_blade_amount, action_tl_frame_cam_blade_amount)
+			tab_next()
+			
+			// Blade angle
+			tab_control_meter()
+			draw_meter("frameeditorcamerabladeangle", dx, dy, dw, tl_edit.value[e_value.CAM_BLADE_ANGLE], 50, 0, 360, 0, 1, tab.camera.tbx_blade_angle, action_tl_frame_cam_blade_angle)
+			tab_next()
+			
+			tab_collapse_end()
+		}
 	}
 	
 	// Rotate point

@@ -8,7 +8,7 @@ function render_world_start_sun(cascade)
 	render_sun_far = render_cascades[cascade].far
 	render_light_fov = 45
 	render_light_color = background_sunlight_color_final
-	render_light_strength = 1 + background_sunlight_strength
+	render_light_strength = background_sunlight_strength
 	render_light_specular_strength = 1
 	
 	gpu_set_ztestenable(true)

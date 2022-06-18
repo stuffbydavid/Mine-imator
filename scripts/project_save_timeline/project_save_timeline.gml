@@ -154,7 +154,6 @@ function project_save_timeline()
 			
 			json_save_var_bool("hq_hiding", hq_hiding)
 			json_save_var_bool("lq_hiding", lq_hiding)
-			json_save_var_bool("foliage_tint", foliage_tint)
 			json_save_var("blend_mode", blend_mode)
 		}
 		

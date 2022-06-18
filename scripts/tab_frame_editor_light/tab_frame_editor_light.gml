@@ -17,14 +17,6 @@ function tab_frame_editor_light()
 	tab_next()
 	
 	tab_control_meter()
-	draw_meter("frameeditorlightstrength", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_STRENGTH] * 100), 56, 0, 100, 100, 1, tab.light.tbx_strength, action_tl_frame_light_strength)
-	tab_next()
-	
-	tab_control_meter()
-	draw_meter("frameeditorlightspecularstrength", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_SPECULAR_STRENGTH] * 100), 56, 0, 100, 100, 1, tab.light.tbx_specular_strength, action_tl_frame_light_specular_strength)
-	tab_next()
-	
-	tab_control_meter()
 	draw_meter("frameeditorlightfadesize", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_FADE_SIZE] * 100), 56, 0, 100, 50, 1, tab.light.tbx_fade_size, action_tl_frame_light_fade_size)
 	tab_next()
 	
@@ -38,6 +30,14 @@ function tab_frame_editor_light()
 		draw_meter("frameeditorlightspotsharpness", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_SPOT_SHARPNESS] * 100), 56, 0, 100, 50, 1, tab.light.tbx_spot_sharpness, action_tl_frame_light_spot_sharpness)
 		tab_next()
 	}
+	
+	tab_control_dragger()
+	draw_dragger("frameeditorlightstrength", dx, dy, dragger_width, floor(tl_edit.value[e_value.LIGHT_STRENGTH] * 100), 0.1, 0, 100, 100, 1, tab.light.tbx_strength, action_tl_frame_light_strength)
+	tab_next()
+	
+	tab_control_dragger()
+	draw_dragger("frameeditorlightspecularstrength", dx, dy, dragger_width, floor(tl_edit.value[e_value.LIGHT_SPECULAR_STRENGTH] * 100), 0.1, 0, 100, 100, 1, tab.light.tbx_specular_strength, action_tl_frame_light_specular_strength)
+	tab_next()
 	
 	context_menu_group_temp = null
 }

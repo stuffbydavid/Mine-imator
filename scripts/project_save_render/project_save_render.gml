@@ -42,11 +42,9 @@ function project_save_render()
 		json_save_var("render_dof_quality", project_render_dof_quality)
 		
 		json_save_var("bend_style", project_bend_style)
+		json_save_var_bool("opaque_leaves", project_render_opaque_leaves)
 		json_save_var_bool("liquid_animation", project_render_liquid_animation)
-		json_save_var_bool("noisy_grass_water", project_render_noisy_grass_water)
 		json_save_var("block_brightness", project_render_block_brightness)
-		json_save_var("block_glow_threshold", project_render_block_glow_threshold)
-		json_save_var_bool("block_glow", project_render_block_glow)
 		json_save_var("block_subsurface", project_render_block_subsurface)
 		json_save_var_bool("random_blocks", project_render_random_blocks)
 		

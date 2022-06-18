@@ -25,10 +25,6 @@ function background_sky_update()
 				background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_sunset_start, c_sunset_end, background_sunrise_alpha), background_sunrise_alpha * p)
 			}
 		}
-		
-		if (!background_fog_object_color_custom)
-			background_fog_object_color_final = background_fog_color_final
-		
 	}
 	
 	// Clouds

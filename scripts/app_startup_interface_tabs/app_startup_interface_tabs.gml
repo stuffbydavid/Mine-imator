@@ -68,8 +68,6 @@ function app_startup_interface_tabs()
 			tbx_aa_power.suffix = "%"
 			tbx_block_brightness = new_textbox_decimals()
 			tbx_block_brightness.suffix = "%"
-			tbx_block_glow_threshold = new_textbox_decimals()
-			tbx_block_glow_threshold.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
 			tbx_texture_filtering_level = new_textbox_integer()
 		}
@@ -109,6 +107,7 @@ function app_startup_interface_tabs()
 			tbx_sunlight_strength = new_textbox_integer()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
+			tbx_sunlight_angle.suffix = "°"
 			tbx_sky_clouds_fade_distance = new_textbox_integer()
 			tbx_sky_clouds_height = new_textbox_ndecimals()
 			tbx_sky_clouds_size = new_textbox_decimals()

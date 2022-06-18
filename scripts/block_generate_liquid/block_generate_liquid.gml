@@ -169,13 +169,6 @@ function block_generate_liquid()
 	vertex_rgb = c_white
 	vertex_alpha = 1
 	
-	// Apply noise
-	if (app.project_render_noisy_grass_water && block_current.name = "water")
-	{
-		var noise = (1.0 - abs(simplex_lib(mc_builder.build_pos_x / 32, mc_builder.build_pos_y / 32)) * 0.15) * 255;
-		vertex_rgb = make_color_rgb(noise, noise, noise)
-	}
-	
 	// Falling
 	if (level div 8 || matchzp)
 	{

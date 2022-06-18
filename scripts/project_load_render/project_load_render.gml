@@ -43,12 +43,10 @@ function project_load_render(map)
 	project_render_dof_quality = value_get_real(map[?"render_dof_quality"], project_render_dof_quality)
 	
 	project_bend_style = value_get_string(map[?"bend_style"], project_bend_style)
+	project_render_opaque_leaves = value_get_real(map[?"opaque_leaves"], project_render_opaque_leaves)
 	project_render_liquid_animation = value_get_real(map[?"liquid_animation"], project_render_liquid_animation)
-	project_render_noisy_grass_water = value_get_real(map[?"noisy_grass_water"], project_render_noisy_grass_water)
 	
 	project_render_block_brightness = value_get_real(map[?"block_brightness"], project_render_block_brightness)
-	project_render_block_glow_threshold = value_get_real(map[?"block_glow_threshold"], project_render_block_glow_threshold)
-	project_render_block_glow = value_get_real(map[?"block_glow"], project_render_block_glow)
 	project_render_block_subsurface = value_get_real(map[?"block_subsurface"], project_render_block_subsurface)
 	project_render_random_blocks = value_get_real(map[?"random_blocks"], project_render_random_blocks)
 	

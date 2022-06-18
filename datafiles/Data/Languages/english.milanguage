@@ -2097,8 +2097,8 @@
 		"bendstylerealistic": "Realistic",
 		"bendstyleblocky": "Blocky",
 		"randomblocks": "Random block models",
+		"opaqueleaves": "Opaque leaves",
 		"liquidanimation": "Liquid waves",
-		"noisygrasswater": "Noise effect on grass/water",
 		"blockemission": "Glowing block emission",
 		"blockglow": "Glow bright blocks and models",
 		"blockglowthreshold": "Glow color threshold",
@@ -2458,8 +2458,9 @@
 			"time": "Time",
 			"rotation": "Rotation"
 		},
-		"sunlightstrength": "Sunlight strength",
-		"sunlightangle": "Sunlight angle",
+		"sunlight": "Sunlight",
+		"sunlightstrength": "Strength",
+		"sunlightangle": "Angle",
 		"sunlightangletip": "The angular diameter of the sun, changes the size of sun shadows.",
 		"twilight": "Twilight",
 		"twilighttip": "Toggle color changes in the background during sunrise/sunset.",
@@ -2495,8 +2496,6 @@
 			"sky": "Sky fog",
 			"colorcustom": "Custom fog color",
 			"color": "Fog color",
-			"objectcolorcustom": "Custom object color",
-			"objectcolor": "Object fog color",
 			"distance": "Distance",
 			"size": "Fade size",
 			"height": "Height"
@@ -2509,7 +2508,6 @@
 			"directionalspeed": "Directional speed",
 			"directionalstrength": "Directional strength"
 		},
-		"opaqueleaves": "Opaque leaves",
 		"textureanimationspeed": "Texture animation speed"
 	},
 	"biome/": {
@@ -2901,11 +2899,8 @@
 		"camera": "CAMERA",
 		"camera/": {
 			"fov": "Field of view",
-			"clip": "Clip",
-			"clip/": {
-				"near": "Near",
-				"far": "Far"
-			},
+			"aperture": "Aperture",
+			"aperturetip": "Control aperture settings of the camera to change how certain effects behave.",
 			"bladeamount": "Blades",
 			"bladeangle": "Blade angle",
 			"videosize": "Camera size",

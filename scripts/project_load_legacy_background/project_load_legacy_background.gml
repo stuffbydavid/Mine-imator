@@ -61,7 +61,7 @@ function project_load_legacy_background()
 	background_wind_speed = buffer_read_double()
 	background_wind_strength = buffer_read_double()
 	
-	background_opaque_leaves = buffer_read_byte()
+	/*background_opaque_leaves =*/ buffer_read_byte()
 	background_texture_animation_speed = buffer_read_double()
 	
 	/*background_sunlight_range =*/ buffer_read_int()
