@@ -4,7 +4,7 @@ varying vec2 vTexCoord;
 
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
-uniform sampler2D uBrightnessBuffer;
+uniform sampler2D uEmissiveBuffer;
 uniform sampler2D uNoiseBuffer;
 
 uniform float uNear;
@@ -91,8 +91,8 @@ void main()
 		// Get sample depth
 		float sampleDepth = posFromBuffer(sampleCoord, unpackDepth(texture2D(uDepthBuffer, sampleCoord))).z;
 		
-		// Get sample brightness
-		float sampleBrightness = texture2D(uBrightnessBuffer, sampleCoord).r;
+		// Get sample emissive
+		float sampleEmissive = texture2D(uEmissiveBuffer, sampleCoord).r;
 		
 		// Sample normal
 		vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, sampleCoord));
@@ -102,14 +102,14 @@ void main()
 		float depthCheck = (sampleDepth <= (samplePos.z - bias)) ? 1.0 : 0.0;
 		float rangeCheck = smoothstep(0.0, 1.0, sampleRadius / abs(origin.z - sampleDepth));
 		float angleCheck = clamp((1.0 - dot(sampleNormal, normal)) * 2.0, 0.0, 1.0);
-		occlusion += depthCheck * rangeCheck * sampleBrightness * angleCheck;
+		occlusion += depthCheck * rangeCheck * sampleEmissive * angleCheck;
 	}
 	
 	// Raise to power
 	occlusion = 1.0 - pow(max(0.0, 1.0 - occlusion / float(SAMPLES)), uPower);
 	
-	// Apply brightness
-	occlusion *= texture2D(uBrightnessBuffer, vTexCoord).r;
+	// Apply emissive
+	occlusion *= texture2D(uEmissiveBuffer, vTexCoord).r;
 	occlusion = clamp(occlusion, 0.0, 1.0);
 	
 	// Mix

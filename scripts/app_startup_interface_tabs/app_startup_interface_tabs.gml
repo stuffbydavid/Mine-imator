@@ -66,8 +66,8 @@ function app_startup_interface_tabs()
 			tbx_glow_falloff_intensity.suffix = "%"
 			tbx_aa_power = new_textbox_integer()
 			tbx_aa_power.suffix = "%"
-			tbx_block_brightness = new_textbox_decimals()
-			tbx_block_brightness.suffix = "%"
+			tbx_block_emissive = new_textbox_decimals()
+			tbx_block_emissive.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
 			tbx_texture_filtering_level = new_textbox_integer()
 		}
@@ -487,8 +487,8 @@ function app_startup_interface_tabs()
 			tbx_alpha.suffix = "%"
 			tbx_mix_percent = new_textbox_integer()
 			tbx_mix_percent.suffix = "%"
-			tbx_brightness = new_textbox_integer()
-			tbx_brightness.suffix = "%"
+			tbx_emissive = new_textbox_integer()
+			tbx_emissive.suffix = "%"
 			tbx_metallic = new_textbox_integer()
 			tbx_metallic.suffix = "%"
 			tbx_roughness = new_textbox_integer()

@@ -9,7 +9,7 @@ function render_startup()
 			  spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
 			  render_active, render_repeat, render_world_count;
 	
-	globalvar render_light_amount, render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
+	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
 			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_light_offset, render_shadow_from,
 			  render_spot_matrix, render_light_specular_strength, render_light_size;
@@ -26,7 +26,7 @@ function render_startup()
 	// Update shader_reset_uniforms()
 	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
 			  shader_uniform_hsb_sub, shader_uniform_hsb_mul, shader_uniform_mix_color, shader_uniform_mix_percent,
-			  shader_uniform_brightness, shader_uniform_metallic, shader_uniform_roughness, shader_uniform_wind,
+			  shader_uniform_emissive, shader_uniform_metallic, shader_uniform_roughness, shader_uniform_wind,
 			  shader_uniform_wind_terrain, shader_uniform_fog, shader_uniform_ssao, shader_uniform_sss, shader_uniform_sss_red,
 			  shader_uniform_sss_green, shader_uniform_sss_blue, shader_uniform_sss_color, shader_uniform_glow, shader_uniform_glow_texture,
 			  shader_uniform_glow_color, shader_uniform_wind_strength;
@@ -218,7 +218,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SPEC] = shader_high_light_point
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS] = shader_high_light_point_shadowless
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS_SPEC] = shader_high_light_point_shadowless
-	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_NIGHT] = shader_high_light_night
+	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_BASE] = shader_high_light_base
 	render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
 	render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha

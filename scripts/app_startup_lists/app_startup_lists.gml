@@ -39,7 +39,7 @@ function app_startup_lists()
 		"MIX_COLOR",
 		"GLOW_COLOR",
 		"MIX_PERCENT",
-		"BRIGHTNESS",
+		"EMISSIVE",
 		"METALLIC",
 		"ROUGHNESS",
 		"SUBSURFACE",

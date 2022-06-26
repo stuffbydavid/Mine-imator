@@ -94,7 +94,7 @@ void main()
 		color += uKernel[i].x * mix(originLight, sampleLight, lightMix);
 	}
 	
-	if (rad == 0.0 || (lightStrength(color) < lightStrength(originLight)))
+	if (rad == 0.0)
 		gl_FragColor = vec4(originLight, 1.0);
 	else
 		gl_FragColor = vec4(color, 1.0);

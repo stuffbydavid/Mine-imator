@@ -473,7 +473,7 @@ function block_generate_liquid()
 	corner3z += z1
 	
 	vbuffer_current = vbuffer[dep, vbuf]
-	vertex_brightness = block_current.brightness
+	vertex_emissive = block_current.emissive
 	
 	// X+
 	if (!matchxp && !solidxp)

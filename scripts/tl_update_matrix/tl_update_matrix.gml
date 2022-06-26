@@ -225,7 +225,7 @@ function tl_update_matrix(updateik = true)
 			value_inherit[e_value.MIX_COLOR] = value[e_value.MIX_COLOR] // Added
 			value_inherit[e_value.GLOW_COLOR] = value[e_value.GLOW_COLOR] // Multiplied
 			value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
-			value_inherit[e_value.BRIGHTNESS] = value[e_value.BRIGHTNESS] // Added
+			value_inherit[e_value.EMISSIVE] = value[e_value.EMISSIVE] // Added
 			value_inherit[e_value.METALLIC] = value[e_value.METALLIC] // Added
 			value_inherit[e_value.ROUGHNESS] = value[e_value.ROUGHNESS] // Added
 			value_inherit[e_value.SUBSURFACE] = value[e_value.SUBSURFACE] // Added
@@ -317,7 +317,7 @@ function tl_update_matrix(updateik = true)
 					value_inherit[e_value.TEXTURE_NORMAL_OBJ] = par.value[e_value.TEXTURE_NORMAL_OBJ]
 					value_inherit[e_value.METALLIC] = clamp(value_inherit[e_value.METALLIC] + par.value[e_value.METALLIC], 0, 1)
 					value_inherit[e_value.ROUGHNESS] = clamp(value_inherit[e_value.ROUGHNESS] * par.value[e_value.ROUGHNESS], 0, 1)
-					value_inherit[e_value.BRIGHTNESS] = clamp(value_inherit[e_value.BRIGHTNESS] + par.value[e_value.BRIGHTNESS], 0, 1)
+					value_inherit[e_value.EMISSIVE] = (value_inherit[e_value.EMISSIVE] + par.value[e_value.EMISSIVE])
 				}
 				
 				if (inhsubsurf)

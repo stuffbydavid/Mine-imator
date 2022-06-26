@@ -41,10 +41,10 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 							render_set_uniform("uMetallic", shader_uniform_metallic)
 						}
 						
-						if (value_inherit[e_value.BRIGHTNESS] != shader_uniform_brightness)
+						if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 						{
-							shader_uniform_brightness = value_inherit[e_value.BRIGHTNESS]
-							render_set_uniform("uBrightness", shader_uniform_brightness)
+							shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+							render_set_uniform("uEmissive", shader_uniform_emissive)
 						}
 					}
 				}

@@ -30,36 +30,22 @@ function render_high_shadows()
 		lightlist = array_add(lightlist, id)
 	}
 	
-	// Get number of lights (to divide brightness by)
-	render_light_amount = array_length(lightlist) + ds_list_size(render_shadowless_point_list)
-	
-	// Initial shadow surface from sun
+	// Render initial emissive value from objects
 	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height)
-	surface_set_target(render_surface_shadows)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
-	
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height)
-	surface_set_target(render_surface_specular)
+	taa_matrix = taa_jitter_matrix
+	
+	surface_set_target_ext(0, render_surface_shadows)
+	surface_set_target_ext(1, render_surface_specular)
 	{
 		draw_clear_alpha(c_black, 1)
+		render_world_start()
+		render_world(e_render_mode.HIGH_LIGHT_BASE)
+		render_world_done()
 	}
 	surface_reset_target()
 	
-	// Clear shadows
-	surface_set_target(render_surface_shadows)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
-	
-	surface_set_target(render_surface_specular)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
+	taa_matrix = MAT_IDENTITY
 	
 	#region Sun
 	
@@ -103,41 +89,41 @@ function render_high_shadows()
 			}
 			surface_reset_target()
 		}
+		
+		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
+		resultsurftemp = render_surface[2]
+		specresultsurftemp = render_surface[3]
+		
+		taa_matrix = taa_jitter_matrix
+		
+		surface_set_target_ext(0, resultsurftemp)
+		surface_set_target_ext(1, specresultsurftemp)
+		{
+			draw_clear(c_black)
+			render_world_start()
+			render_world(e_render_mode.HIGH_LIGHT_SUN)
+			render_world_done()
+		}
+		surface_reset_target()
+		
+		// Add to shadows
+		surface_set_target(render_surface_shadows)
+		{
+			gpu_set_blendmode(bm_add)
+			draw_surface_exists(resultsurftemp, 0, 0)
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+		
+		surface_set_target(render_surface_specular)
+		{
+			gpu_set_blendmode(bm_add)
+			draw_surface_exists(specresultsurftemp, 0, 0)
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
 	}
-	
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-	resultsurftemp = render_surface[2]
-	specresultsurftemp = render_surface[3]
-	
-	taa_matrix = taa_jitter_matrix
-	
-	surface_set_target_ext(0, resultsurftemp)
-	surface_set_target_ext(1, specresultsurftemp)
-	{
-		draw_clear(c_black)
-		render_world_start()
-		render_world(sunout ? e_render_mode.HIGH_LIGHT_SUN : e_render_mode.HIGH_LIGHT_NIGHT)
-		render_world_done()
-	}
-	surface_reset_target()
-	
-	// Add to shadows
-	surface_set_target(render_surface_shadows)
-	{
-		gpu_set_blendmode(bm_add)
-		draw_surface_exists(resultsurftemp, 0, 0)
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
-	
-	surface_set_target(render_surface_specular)
-	{
-		gpu_set_blendmode(bm_add)
-		draw_surface_exists(specresultsurftemp, 0, 0)
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
 	
 	#endregion
 	

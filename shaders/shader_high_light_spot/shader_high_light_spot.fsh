@@ -31,7 +31,6 @@ varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
-varying float vBrightness;
 varying float vBlockSSS;
 
 uniform sampler2D uTextureMaterial;
@@ -135,7 +134,6 @@ void main()
 		vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 		float roughness = max(0.02, 1.0 - ((1.0 - uRoughness) * (uMaterialUseGlossiness == 0 ? 1.0 - mat.r : mat.r)));
 		float metallic = (mat.g * uMetallic);
-		float brightness = (vBrightness * mat.b);
 		
 		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
 		
@@ -155,7 +153,7 @@ void main()
 			att = 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
 			dif *= att;
 			
-			if ((dif > 0.0 && brightness < 1.0) || sssEnabled == 1)
+			if (dif > 0.0 || sssEnabled == 1)
 			{
 				// Spotlight circle
 				float fragDepth = min(vScreenCoord.z, uLightFar);
@@ -213,9 +211,6 @@ void main()
 		subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
 		light += subsurf * difMask;
 		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
-		
-		// Emissive
-		light = mix(light, vec3(1.0), brightness);
 		
 		// Calculate specular
 		vec3 N   = normal;

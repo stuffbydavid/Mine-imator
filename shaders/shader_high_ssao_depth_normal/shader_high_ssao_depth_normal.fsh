@@ -1,5 +1,5 @@
 uniform vec4 uBlendColor;
-uniform float uBrightness;
+uniform float uEmissive;
 uniform int uSSAOEnable;
 
 uniform sampler2D uTexture;
@@ -84,7 +84,7 @@ void main()
 	N = normalize(vWorldViewInv * N);
 	gl_FragData[1] = packNormal(N);
 	
-	// Brightness of SSAO
+	// Visibility of SSAO
 	float br;
 	if (uSSAOEnable > 0)
 	{
@@ -93,7 +93,7 @@ void main()
 			texMat = mod(tex * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 		
 		float mat = texture2D(uTextureMaterial, texMat).b;
-		br = max(0.0, baseColor.a - ((uBrightness + vCustom.z) * mat));
+		br = max(0.0, baseColor.a - ((uEmissive + vCustom.z) * mat));
 	}
 	else
 		br = 0.0;

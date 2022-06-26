@@ -216,7 +216,7 @@ function model_shape_generate_block(bend)
 	// Create triangles
 	vbuffer_start()
 	
-	vertex_brightness = color_brightness
+	vertex_emissive = color_emissive
 	vertex_wave = wind_wave
 	vertex_wave_zmin = wind_wave_zmin
 	vertex_wave_zmax = wind_wave_zmax
@@ -512,7 +512,7 @@ function model_shape_generate_block(bend)
 		n1 = nn1; n2 = nn2; n3 = nn3; n4 = nn4;
 	}
 	
-	vertex_brightness = 0
+	vertex_emissive = 0
 	vertex_wave = e_vertex_wave.NONE
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null

@@ -210,8 +210,8 @@ function builder_generate()
 		script_execute(block_current.generate_script)
 	else
 	{
-		// Set wind and brightness
-		vertex_brightness = null
+		// Set wind and emissive
+		vertex_emissive = null
 		vertex_wave = block_current.wind_axis
 		if (block_current.wind_zmin != null)
 			vertex_wave_zmin = block_pos_z + block_current.wind_zmin
@@ -231,11 +231,11 @@ function builder_generate()
 		}
 	}
 	
-	// Reset wind, brightness, and subsurface
+	// Reset wind, emissive, and subsurface
 	vertex_wave = e_vertex_wave.NONE
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null
-	vertex_brightness = 0
+	vertex_emissive = 0
 	vertex_subsurface = 0
 	
 	// Waterlogged
@@ -252,7 +252,7 @@ function builder_generate()
 		vertex_wave = e_vertex_wave.NONE
 		vertex_wave_zmin = null
 		vertex_wave_zmax = null
-		vertex_brightness = 0
+		vertex_emissive = 0
 		vertex_subsurface = 0
 	}
 }

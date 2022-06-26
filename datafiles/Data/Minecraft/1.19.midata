@@ -1216,7 +1216,7 @@
 				"level": [ "0", "1" , "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
 			},
 			"default_state": "level=0",
-			"brightness": 1,
+			"emissive": 1,
 			"wind": {
 				"axis": "y",
 				"ymin": 0
@@ -1915,7 +1915,7 @@
 				]
 			},
 			"default_state": "variant=normal",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": {
 				"minecraft:torch": "variant=normal",
 				"minecraft:soul_torch": "variant=soul_torch"
@@ -1931,7 +1931,7 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=east,variant=normal",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": {
 				"minecraft:wall_torch": "variant=normal",
 				"minecraft:soul_wall_torch": "variant=soul_torch"
@@ -1952,7 +1952,7 @@
 				"up": [ "false", "true" ]
 			},
 			"default_state": "variant=normal,north=false,south=false,east=false,west=false,up=true",
-			"brightness": 1,
+			"emissive": 1,
 			"id": {
 				"minecraft:fire": "variant=normal",
 				"minecraft:soul_fire": "variant=soul_fire"
@@ -2433,7 +2433,7 @@
 				],
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				]
 			},
 			"default_state": "variant=redstone_ore,lit=false",
@@ -2448,7 +2448,7 @@
 			"states": {
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				]
 			},
 			"default_state": "lit=false",
@@ -2460,7 +2460,7 @@
 			"states": {
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				],
 				"facing": [ "north", "east", "south", "west" ]
 			},
@@ -2624,7 +2624,7 @@
 		{
 			"name": "glowstone",
 			"file": "glowstone.json",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": "minecraft:glowstone"
 		},
 		{
@@ -2634,7 +2634,7 @@
 				"axis": [ "x", "z" ]
 			},
 			"default_state": "axis=z",
-			"brightness": 0.5,
+			"emissive": 0.5,
 			"id": "minecraft:nether_portal"
 		},
 		{
@@ -2642,7 +2642,7 @@
 			"states": {
 				"lit": [ 
 					{ "value": "false", "file": "carved_pumpkin.json" },
-					{ "value": "true", "brightness": 0.75, "file": "jack_o_lantern.json" }
+					{ "value": "true", "emissive": 0.75, "file": "jack_o_lantern.json" }
 				],
 				"facing": [ "north", "south", "east", "west" ]
 			},
@@ -2678,7 +2678,7 @@
 				],
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.5 }
+					{ "value": "true", "emissive": 0.5 }
 				]
 			},
 			"default_state": "bites=0,candle=none,lit=false",
@@ -2710,7 +2710,7 @@
 			"states": {
 				"powered": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				],
 				"facing": [ "north", "south", "east", "west" ],
 				"delay": [ "1", "2", "3", "4" ],
@@ -3120,7 +3120,7 @@
 				"position": [ 8, 20, 8 ],
 				"rotation": [ 15, 0, 0 ]
 			},
-			"brightness": 0.5,
+			"emissive": 0.5,
 			"id": "minecraft:enchanting_table"
 		},
 		{
@@ -3140,7 +3140,7 @@
 				"contents": [
 					{ "value": "empty", "file": "cauldron.json" },
 					{ "value": "water", "file": "water_cauldron.json" },
-					{ "value": "lava", "file": "lava_cauldron.json", "brightness": 0.75 },
+					{ "value": "lava", "file": "lava_cauldron.json", "emissive": 0.75 },
 					{ "value": "powder_snow", "file": "powder_snow_cauldron.json" }
 				],
 				"level": [ "1", "2", "3" ]
@@ -3179,7 +3179,7 @@
 			"states": {
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				]
 			},
 			"default_state": "lit=false",
@@ -3654,11 +3654,11 @@
 				"facing": [ "north", "south", "east", "west" ],
 				"mode": [ 
 					{ "value": "compare" },
-					{ "value": "subtract", "brightness": 0.5 }
+					{ "value": "subtract", "emissive": 0.5 }
 				],
 				"powered": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				]
 			},
 			"default_state": "facing=west,mode=compare,powered=false",
@@ -3976,7 +3976,7 @@
 		{
 			"name": "sea_lantern",
 			"file": "sea_lantern.json",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": "minecraft:sea_lantern"
 		},
 		{
@@ -4100,7 +4100,7 @@
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
 			"default_state": "facing=up",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": "minecraft:end_rod"
 		},
 		{
@@ -4198,7 +4198,7 @@
 		{
 			"name": "magma_block",
 			"file": "magma_block.json",
-			"brightness": 0.5,
+			"emissive": 0.5,
 			"id": "minecraft:magma_block"
 		},
 		{
@@ -4446,7 +4446,7 @@
 				"waterlogged": [ "false", "true" ]
 			},
 			"default_state": "pickles=1,waterlogged=false",
-			"brightness": 0.5,
+			"emissive": 0.5,
 			"id": "minecraft:sea_pickle"
 		},
 		{
@@ -4833,7 +4833,7 @@
 				"hanging": [ "false", "true" ]
 			},
 			"default_state": "variant=normal,hanging=false",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": {
 				"minecraft:lantern": "variant=normal",
 				"minecraft:soul_lantern": "variant=soul_lantern"
@@ -4849,7 +4849,7 @@
 				"facing": [ "north", "south", "east", "west" ],
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.75 }
+					{ "value": "true", "emissive": 0.75 }
 				]
 			},
 			"default_state": "variant=normal,facing=west,lit=true",
@@ -5022,7 +5022,7 @@
 		{
 			"name": "shroomlight",
 			"file": "shroomlight.json",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": "minecraft:shroomlight"
 		},
 		{
@@ -5137,7 +5137,7 @@
 				],
 				"lit": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.5 }
+					{ "value": "true", "emissive": 0.5 }
 				]
 			},
 			"default_state": "candles=1,color=normal,lit=false",
@@ -5187,7 +5187,7 @@
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
 			"default_state": "variant=cluster,facing=up",
-			"brightness": 0.5,
+			"emissive": 0.5,
 			"id": {
 				"minecraft:small_amethyst_bud": "variant=small",
 				"minecraft:medium_amethyst_bud": "variant=medium",
@@ -5252,7 +5252,7 @@
 				"bloom": [ "false", "true" ]
 			},
 			"default_state": "bloom=false",
-			"brightness": 0.25,
+			"emissive": 0.25,
 			"id": "minecraft:sculk_catalyst"
 		},
 		{
@@ -5359,7 +5359,7 @@
 				"down": [ "false", "true" ]
 			},
 			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
-			"brightness": 0.25,
+			"emissive": 0.25,
 			"subsurface": 1,
 			"id": "minecraft:glow_lichen"
 		},
@@ -5374,7 +5374,7 @@
 				],
 				"berries": [ 
 					{ "value": "false" },
-					{ "value": "true", "brightness": 0.5 }
+					{ "value": "true", "emissive": 0.5 }
 				]
 			},
 			"default_state": "type=cave_vines,berries=false",
@@ -5551,7 +5551,7 @@
 				"axis": [ "x", "y", "z" ]
 			},
 			"default_state": "variant=ochre,axis=y",
-			"brightness": 0.75,
+			"emissive": 0.75,
 			"id": {
 				"minecraft:ochre_froglight": "variant=ochre",
 				"minecraft:pearlescent_froglight": "variant=pearlescent",

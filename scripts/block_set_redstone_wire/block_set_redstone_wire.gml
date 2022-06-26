@@ -12,7 +12,7 @@ function block_set_redstone_wire()
 		red = 0.6 * powreal + 0.4
 	
 	block_color = make_color_rgb(red * 255, 0, 0)
-	vertex_brightness = powreal
+	vertex_emissive = powreal
 	
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0

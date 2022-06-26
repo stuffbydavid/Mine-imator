@@ -46,9 +46,9 @@ function shader_use()
 	if (!is_undefined(uniform_map[?"uCameraPosition"]) && uniform_map[?"uCameraPosition"] > -1)
 		render_set_uniform_vec3("uCameraPosition", cam_from[X], cam_from[Y], cam_from[Z])
 	
-	// Block brightness
-	if (!is_undefined(uniform_map[?"uBlockBrightness"]) && uniform_map[?"uBlockBrightness"] > -1)
-		render_set_uniform("uBlockBrightness", app.project_render_block_brightness)
+	// Block emissive
+	if (!is_undefined(uniform_map[?"uBlockEmissive"]) && uniform_map[?"uBlockEmissive"] > -1)
+		render_set_uniform("uBlockEmissive", app.project_render_block_emissive)
 	
 	// Block subsurface scattering
 	if (!is_undefined(uniform_map[?"uBlockSSS"]) && uniform_map[?"uBlockSSS"] > -1)

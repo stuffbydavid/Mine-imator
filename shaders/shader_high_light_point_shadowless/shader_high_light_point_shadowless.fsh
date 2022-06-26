@@ -10,7 +10,6 @@ uniform vec2 uTexScaleNormal;
 uniform int uIsSky;
 uniform int uLightAmount;
 uniform vec4 uLightData[96];
-uniform float uBrightness;
 uniform int uIsWater;
 uniform int uMaterialUseGlossiness;
 uniform vec3 uCameraPosition;
@@ -22,7 +21,6 @@ varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vBrightness;
 
 // Fresnel Schlick approximation
 float fresnelSchlick(float cosTheta, float F0, float F90)
@@ -113,7 +111,6 @@ void main()
 		vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 		float roughness = max(0.02, 1.0 - ((1.0 - uRoughness) * (uMaterialUseGlossiness == 0 ? 1.0 - mat.r : mat.r)));
 		float metallic = (mat.g * uMetallic);
-		float brightness = (vBrightness * mat.b);
 		
 		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
 		
@@ -142,7 +139,6 @@ void main()
 			
 			// Diffuse light
 			light = data2.rgb * data3.r * dif;
-			light = mix(light, vec3(1.0), brightness);
 			
 			lightResult.rgb += light;
 			

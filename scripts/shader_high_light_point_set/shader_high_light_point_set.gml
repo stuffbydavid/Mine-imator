@@ -5,7 +5,6 @@ function shader_high_light_point_set()
 	render_set_uniform_int("uIsSky", 0)
 	render_set_uniform_int("uIsWater", 0)
 	
-	render_set_uniform_int("uLightAmount", render_light_amount)
 	render_set_uniform_vec3("uLightPosition", render_light_from[X], render_light_from[Y], render_light_from[Z])
 	render_set_uniform_color("uLightColor", render_light_color, 1)
 	render_set_uniform("uLightStrength", render_light_strength)

@@ -106,22 +106,18 @@ vec2 rayTrace(vec2 originUV)
 	
 	// Calculate ray direction from surface normal
 	vec3 rayVector;
-	
 	vec2 noiseScale = uScreenSize / uNoiseSize;
-	vec3 randVec	= unpackNormalBlueNoise(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
 	
 	// Construct kernel basis matrix
-	vec3 tangent		= normalize(randVec - normal * dot(randVec, normal));
+	vec3 tangent		= normalize(vec3(0.0, 0.0, 1.0) - normal * dot(vec3(0.0, 0.0, 1.0), normal));
 	vec3 bitangent		= cross(normal, tangent);
 	mat3 kernelBasis	= mat3(tangent, bitangent, normal);
 	
-	vec3 kernel			= texture2D(uNoiseBuffer, vTexCoord * noiseScale).rgb;//normalize(texture2D(uNoiseBuffer, vTexCoord * noiseScale).rgb);
-	kernel.rg			= (kernel.rg * 2.0) - 1.0;
-	kernel				= normalize(kernel) * 0.1;
+	vec3 kernel = unpackNormalBlueNoise(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
 	
 	if (uSpecularRay == 1) // Reflection ray
 	{
-		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * kernel * mat.g))));
+		rayVector = normalize(reflect(normalize(viewPos), normalize(normal + (kernelBasis * kernel * (mat.g * mat.g * mat.g)))));
 	}
 	else // Indirect ray
 	{

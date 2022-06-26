@@ -51,7 +51,7 @@ function render_start()
 		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && !render_pass
 		
 		render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
-								render_camera.value[e_value.BRIGHTNESS] > 0 || 
+								render_camera.value[e_value.EMISSIVE] > 0 || 
 								render_camera.value[e_value.MIX_COLOR] > 0 ||
 								render_camera.value[e_value.RGB_ADD] != c_black ||
 								render_camera.value[e_value.RGB_SUB] != c_black ||

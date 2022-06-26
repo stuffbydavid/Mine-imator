@@ -2,7 +2,7 @@
 
 function render_high_ssao()
 {
-	var depthsurf, normalsurf, brightnesssurf;
+	var depthsurf, normalsurf, emissivesurf;
 	
 	// Get depth and normal information
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
@@ -10,10 +10,10 @@ function render_high_ssao()
 	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
 	depthsurf = render_surface[1]
 	normalsurf = render_surface[2]
-	brightnesssurf = render_surface[3]
+	emissivesurf = render_surface[3]
 	surface_set_target_ext(0, depthsurf)
 	surface_set_target_ext(1, normalsurf)
-	surface_set_target_ext(2, brightnesssurf)
+	surface_set_target_ext(2, emissivesurf)
 	{
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		
@@ -38,7 +38,7 @@ function render_high_ssao()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_ssao_set(depthsurf, normalsurf, brightnesssurf)
+			shader_high_ssao_set(depthsurf, normalsurf, emissivesurf)
 		}
 		draw_blank(0, 0, render_width, render_height) // Blank quad
 		with (render_shader_obj)

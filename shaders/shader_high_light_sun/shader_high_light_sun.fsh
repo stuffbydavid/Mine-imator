@@ -40,7 +40,6 @@ varying float vDepth;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord[NUM_CASCADES];
-varying float vBrightness;
 varying float vBlockSSS;
 varying float vClipSpaceDepth;
 
@@ -148,7 +147,6 @@ void main()
 		vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 		float roughness = max(0.02, 1.0 - ((1.0 - uRoughness) * (uMaterialUseGlossiness == 0 ? 1.0 - mat.r : mat.r)));
 		float metallic = (mat.g * uMetallic);
-		float brightness = (vBrightness * mat.b);
 		
 		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, fract(vTexCoord));
 		
@@ -159,7 +157,7 @@ void main()
 		vec3 shadow = vec3(1.0);
 		vec3 subsurf = vec3(0.0);
 		
-		if ((dif > 0.0 && brightness < 1.0) || sssEnabled == 1)
+		if (dif > 0.0 || sssEnabled == 1)
 		{
 			// Find the cascade to use
 		    int i;
@@ -229,9 +227,6 @@ void main()
 		subsurf *= (uLightColor.rgb * uLightStrength * uSSSColor.rgb * transDif);
 		light += subsurf;
 		light *= mix(vec3(1.0), uSSSColor.rgb, clamp(uSSS/16.0, 0.0, 1.0));
-		
-		// Emissive
-		light = mix(light, vec3(1.0), brightness);
 		
 		// Calculate specular
 		vec3 N   = normal;

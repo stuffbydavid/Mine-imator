@@ -38,11 +38,11 @@ function block_load(map, typemap)
 		else
 			filename = ""
 		
-		// Brightness (overridden by states)
-		if (is_real(map[?"brightness"]))
-			brightness = map[?"brightness"]
+		// Emissive (overridden by states)
+		if (is_real(map[?"emissive"]))
+			emissive = map[?"emissive"]
 		else
-			brightness = 0
+			emissive = 0
 		
 		// Random offset (Overridden by states)
 		if (is_bool(map[?"random_offset"]))
@@ -91,7 +91,7 @@ function block_load(map, typemap)
 						value_name[v] = curvalue
 						value_filename[v] = ""
 						value_file[v] = null
-						value_brightness[v] = null
+						value_emissive[v] = null
 						value_random_offset[v] = null
 						value_random_offset_xy[v] = null
 						
@@ -104,9 +104,9 @@ function block_load(map, typemap)
 							if (is_string(curvalue[?"file"]))
 								value_filename[v] = curvalue[?"file"]
 							
-							// Brightness
-							if (is_real(curvalue[?"brightness"]))
-								value_brightness[v] = curvalue[?"brightness"]
+							// Emissive
+							if (is_real(curvalue[?"emissive"]))
+								value_emissive[v] = curvalue[?"emissive"]
 							
 							// Random offset
 							if (is_bool(curvalue[?"random_offset"]))
@@ -205,7 +205,7 @@ function block_load(map, typemap)
 		
 		// Pre-calculate the block variant to pick for each (numerical) state ID
 		state_id_model_obj = null
-		state_id_brightness = null
+		state_id_emissive = null
 		state_id_random_offset = null
 		state_id_random_offset_xy = null
 		state_id_subsurface = null
@@ -213,9 +213,9 @@ function block_load(map, typemap)
 		for (var sid = 0; sid < state_id_amount; sid++)
 		{
 			// Get active file and properties
-			var curfile, curbrightness, curoffset, curoffsetxy;
+			var curfile, curemissive, curoffset, curoffsetxy;
 			curfile = file
-			curbrightness = brightness
+			curemissive = emissive
 			curoffset = random_offset
 			curoffsetxy = random_offset_xy
 			
@@ -238,8 +238,8 @@ function block_load(map, typemap)
 							curfile = value_file[valid]
 						}
 						
-						if (value_brightness[valid] != null)
-							curbrightness = value_brightness[valid]
+						if (value_emissive[valid] != null)
+							curemissive = value_emissive[valid]
 						
 						if (value_random_offset[valid] != null)
 							curoffset = value_random_offset[valid]
@@ -262,7 +262,7 @@ function block_load(map, typemap)
 					variant = state_id_map[?0] // Only "normal" is available
 				
 				other.state_id_model_obj[sid] = variant
-				other.state_id_brightness[sid] = curbrightness
+				other.state_id_emissive[sid] = curemissive
 				other.state_id_random_offset[sid] = curoffset
 				other.state_id_random_offset_xy[sid] = curoffsetxy
 			}

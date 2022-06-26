@@ -26,6 +26,10 @@ function project_load_background(map)
 	background_sky_time = value_get_real(map[?"sky_time"], background_sky_time)
 	background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
 	background_sunlight_strength = value_get_real(map[?"sunlight_strength"], background_sunlight_strength)
+	
+	if (load_format < e_project.FORMAT_200_AL26)
+		background_sunlight_strength += 1
+	
 	background_sunlight_angle = value_get_real(map[?"sunlight_angle"], background_sunlight_angle)
 	
 	background_twilight = value_get_real(map[?"twilight"], background_twilight)

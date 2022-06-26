@@ -13,9 +13,9 @@ function block_render_model_generate(model)
 		offy = offset_y + mc_builder.block_pos_y
 		offz = offset_z + mc_builder.block_pos_z
 		
-		// Set brightness
-		if (vertex_brightness = null)
-			vertex_brightness = brightness
+		// Set emissive
+		if (vertex_emissive = null)
+			vertex_emissive = emissive
 		
 		// Generate elements
 		for (var e = 0; e < element_amount; e++)

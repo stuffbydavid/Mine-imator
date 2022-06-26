@@ -34,7 +34,7 @@ varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
-varying float vBrightness;
+varying float vEmissive;
 
 vec4 rgbtohsb(vec4 c)
 {
@@ -95,14 +95,13 @@ void main()
 	if (uMaterialUseGlossiness == 0)
 		matColor.r = 1.0 - matColor.r;
 	
-	float metallic, roughness, brightness;
+	float metallic, roughness, emissive;
 	metallic = (uMetallic * matColor.g); // Metallic
 	roughness = 1.0 - ((1.0 - uRoughness) * matColor.r); // Roughness
-	brightness = (vBrightness * matColor.b); // Brightness
+	emissive = (vEmissive * matColor.b); // Emissive
 	
 	metallic = clamp(metallic, 0.0, 1.0);
 	roughness = clamp(roughness, 0.0, 1.0);
-	brightness = clamp(brightness, 0.0, 1.0);
 	
 	// Diffuse
 	vec3 dif;
@@ -111,7 +110,7 @@ void main()
 	if (vDiffuse.r < 0.0)
 		dif = vec3(1.0);
 	else
-		dif = mix(vDiffuse, vec3(1.0), brightness) + uAmbientColor.rgb;
+		dif = vDiffuse + pow(uAmbientColor.rgb, vec3(gamma));
 	
 	// Material
 	vec3 N = normalize(vNormal);
@@ -127,6 +126,9 @@ void main()
 	F = clamp(F, 0.0, 1.0);
 	
 	dif *= (1.0 - F);
+	
+	// Emissive
+	dif += emissive;
 	
 	vec4 col;
 	vec3 spec;
@@ -147,7 +149,6 @@ void main()
 		col.rgb *= (1.0 - metallic);
 		col.rgb *= dif; // Multiply diffuse
 		
-		col.rgb  = clamp(col.rgb, vec3(0.0), vec3(1.0));
 		col.rgb += spec;
 		col.rgb = pow(col.rgb, vec3(1.0/gamma));
 		
@@ -165,7 +166,6 @@ void main()
 		col.rgb *= (1.0 - metallic);
 		col.rgb *= dif; // Multiply diffuse
 		
-		col.rgb  = clamp(col.rgb, vec3(0.0), vec3(1.0));
 		col.rgb += spec;
 		col.rgb = pow(col.rgb, vec3(1.0/gamma));
 		

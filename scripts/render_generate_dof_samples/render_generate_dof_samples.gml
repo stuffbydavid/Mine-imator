@@ -19,7 +19,7 @@ function render_generate_dof_samples(blades, rotation, ratio)
 	render_dof_weight_samples = 0
 	render_dof_sample_amount = 0
 	
-	render_dof_blades = blades
+	render_dof_blades = blades+
 	render_dof_rotation = rotation
 	render_dof_ratio = ratio
 	render_dof_quality = samples

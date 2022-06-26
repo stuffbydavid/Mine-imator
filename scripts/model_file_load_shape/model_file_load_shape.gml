@@ -100,7 +100,13 @@ function model_file_load_shape(map, res)
 		color_inherit = value_get_real(map[?"color_inherit"], true)
 		color_blend = value_get_color(map[?"color_blend"], c_white)
 		color_alpha = value_get_real(map[?"color_alpha"], 1)
-		color_brightness = value_get_real(map[?"color_brightness"], 0)
+		
+		// Legacy 'brightness' support
+		if (is_real("color_emissive"))
+			color_emissive = value_get_real(map[?"color_emissive"], 0)
+		else
+			color_emissive = value_get_real(map[?"color_brightness"], 0)
+		
 		color_mix = value_get_color(map[?"color_mix"], c_black)
 		color_mix_percent = value_get_real(map[?"color_mix_percent"], 0)
 		
@@ -108,7 +114,7 @@ function model_file_load_shape(map, res)
 		{
 			color_blend = color_multiply(color_blend, other.color_blend)
 			color_alpha *= other.color_alpha
-			color_brightness = clamp(color_brightness + other.color_brightness, 0, 1)
+			color_emissive = clamp(color_emissive + other.color_emissive, 0, 1)
 			color_mix = color_add(color_mix, other.color_mix)
 			color_mix_percent = clamp(color_mix_percent + other.color_mix_percent, 0, 1)
 		}

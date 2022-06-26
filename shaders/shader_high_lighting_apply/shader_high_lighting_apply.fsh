@@ -29,34 +29,28 @@ void main()
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
 	baseColor.rgb = pow(baseColor.rgb, vec3(gamma));
 	
-	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord);
-	
-	float metallic, fresnel;
-	metallic = matColor.r;
-	fresnel = matColor.b;
-	
-	vec3 spec = mix(vec3(1.0), baseColor.rgb, metallic) * pow(uFallbackColor.rgb, vec3(gamma)) * fresnel;
+	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord); // R = metallic, B = fresnel
+	vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.r) * pow(uFallbackColor.rgb, vec3(gamma)) * matColor.b;
 	
 	// Sum up lighting
 	vec3 diffuse = vec3(1.0);
 	
 	if (uShadowsEnabled > 0)
 	{
-		vec3 direct = texture2D(uShadows, vTexCoord).rgb;
-		vec3 indirect = vec3(0.0);
+		diffuse = texture2D(uShadows, vTexCoord).rgb;
 		
 		// Calculate indirect
 		if (uIndirectEnabled > 0)
-			indirect = texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
+			diffuse += texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
 		
-		diffuse = pow(uAmbientColor.rgb, vec3(gamma)) + direct + indirect;
+		diffuse += pow(uAmbientColor.rgb, vec3(gamma));// + direct + indirect;
 	}
 	
 	// Reduce diffuse based on Metallic
-	baseColor.rgb *= (1.0 - metallic);
+	baseColor.rgb *= (1.0 - matColor.r);
 	
 	// "Energy conservation", remove diffuse based on fresnel
-	diffuse *= (1.0 - fresnel);
+	diffuse *= (1.0 - matColor.b);
 	
 	baseColor.rgb *= mix(vec3(1.0), diffuse, texture2D(uMask, vTexCoord).rgb);
 	

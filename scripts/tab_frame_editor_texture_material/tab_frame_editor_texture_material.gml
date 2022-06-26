@@ -138,10 +138,10 @@ function tab_frame_editor_texture_material()
 		tab_control_meter()
 		draw_meter("frameeditormetallic", dx, dy, dw, round(tl_edit.value[e_value.METALLIC] * 100), 60, 0, 100, 0, 1, tab.material.tbx_metallic, action_tl_frame_metallic)
 		tab_next()
-	
-		// Emission
-		tab_control_meter()
-		draw_meter("frameeditoremission", dx, dy, dw, round(tl_edit.value[e_value.BRIGHTNESS] * 100), 60, 0, 100, 0, 1, tab.material.tbx_brightness, action_tl_frame_brightness)
+		
+		// Emissive
+		tab_control_dragger()
+		draw_dragger("frameeditoremissive", dx, dy, dragger_width, round(tl_edit.value[e_value.EMISSIVE] * 100), .1, 0, no_limit, 0, 1, tab.material.tbx_emissive, action_tl_frame_emissive)
 		tab_next()
 	}
 }

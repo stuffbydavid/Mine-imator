@@ -3,7 +3,7 @@
 function shader_color_camera_set()
 {
 	// Color
-	render_set_uniform("uBrightness", render_camera.value[e_value.BRIGHTNESS])
+	render_set_uniform("uEmissive", render_camera.value[e_value.EMISSIVE])
 	render_set_uniform_color("uBlendColor", render_camera.value[e_value.RGB_MUL], render_camera.value[e_value.ALPHA])
 	render_set_uniform_color("uRGBAdd", render_camera.value[e_value.RGB_ADD], 1)
 	render_set_uniform_color("uRGBSub", render_camera.value[e_value.RGB_SUB], 1)

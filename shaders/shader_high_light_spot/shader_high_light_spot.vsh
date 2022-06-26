@@ -9,8 +9,6 @@ attribute vec4 in_Wave;
 uniform int uLightAmount;
 uniform mat4 uLightMatrix;
 uniform mat4 uShadowMatrix;
-uniform float uBrightness;
-uniform float uBlockBrightness;
 
 uniform float uBlockSSS;
 
@@ -19,7 +17,6 @@ varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
-varying float vBrightness;
 varying float vBlockSSS;
 
 // Wind
@@ -68,7 +65,6 @@ void main()
 	vTexCoord = in_TextureCoord;
 	vScreenCoord = uLightMatrix * vec4(vPosition, 1.0);
 	vShadowCoord = uShadowMatrix * vec4(vPosition, 1.0);
-	vBrightness =  in_Wave.z * uBlockBrightness + uBrightness / float(uLightAmount);
 	vBlockSSS = uBlockSSS * min(1.0, (in_Wave.w * (uBlockSSS > 0.0 ? 1.0 : 0.0)));
 	
 	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));

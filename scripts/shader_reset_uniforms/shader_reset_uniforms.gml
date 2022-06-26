@@ -11,7 +11,7 @@ function shader_reset_uniforms()
     shader_uniform_hsb_mul = null
     shader_uniform_mix_color = null
     shader_uniform_mix_percent = null
-	shader_uniform_brightness = null
+	shader_uniform_emissive = null
 	shader_uniform_metallic = null
 	shader_uniform_roughness = null
 	shader_uniform_wind = null

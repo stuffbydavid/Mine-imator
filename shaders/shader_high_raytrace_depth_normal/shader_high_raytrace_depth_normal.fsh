@@ -1,5 +1,5 @@
 uniform vec4 uBlendColor;
-uniform float uBrightness;
+uniform float uEmissive;
 uniform int uIsWater;
 
 uniform sampler2D uTexture;
@@ -110,13 +110,13 @@ void main()
 	gl_FragData[1].a = 1.0;
 	gl_FragData[2].a = 1.0;
 	
-	// Brightness
+	// Emissive
 	vec2 texMat = vTexCoord;
 	if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
 		texMat = mod(tex * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 	
 	float mat = texture2D(uTextureMaterial, texMat).b;
-	float br = max(0.0, baseColor.a * ((uBrightness + vCustom.z) * mat));
+	float br = max(0.0, baseColor.a * ((uEmissive + vCustom.z) * mat));
 	
 	gl_FragData[3] = vec4(br, br, br, 1.0);
 }

@@ -164,7 +164,7 @@ function model_shape_generate_plane_3d(bend, alpha)
 	// Create triangles
 	vbuffer_start()
 	
-	vertex_brightness = color_brightness
+	vertex_emissive = color_emissive
 	vertex_wave = wind_wave
 	vertex_wave_zmin = wind_wave_zmin
 	vertex_wave_zmax = wind_wave_zmax
@@ -329,7 +329,7 @@ function model_shape_generate_plane_3d(bend, alpha)
 		}
 	}
 	
-	vertex_brightness = 0
+	vertex_emissive = 0
 	vertex_wave = e_vertex_wave.NONE
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null

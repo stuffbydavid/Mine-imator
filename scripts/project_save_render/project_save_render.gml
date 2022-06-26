@@ -44,7 +44,7 @@ function project_save_render()
 		json_save_var("bend_style", project_bend_style)
 		json_save_var_bool("opaque_leaves", project_render_opaque_leaves)
 		json_save_var_bool("liquid_animation", project_render_liquid_animation)
-		json_save_var("block_brightness", project_render_block_brightness)
+		json_save_var("block_emissive", project_render_block_emissive)
 		json_save_var("block_subsurface", project_render_block_subsurface)
 		json_save_var_bool("random_blocks", project_render_random_blocks)
 		

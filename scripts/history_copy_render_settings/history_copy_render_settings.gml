@@ -45,7 +45,7 @@ function history_copy_render_settings(obj)
 	project_bend_style = obj.project_bend_style
 	project_render_opaque_leaves = obj.project_render_opaque_leaves
 	project_render_liquid_animation = obj.project_render_liquid_animation
-	project_render_block_brightness = obj.project_render_block_brightness
+	project_render_block_emissive = obj.project_render_block_emissive
 	project_render_block_subsurface = obj.project_render_block_subsurface
 	project_render_random_blocks = obj.project_render_random_blocks
 }

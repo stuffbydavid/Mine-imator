@@ -69,8 +69,8 @@ function block_load_render_model()
 			model = model.parent
 		}
 		
-		// Reset brightness
-		brightness = 0
+		// Reset emissive
+		emissive = 0
 		
 		// Reset random offset
 		random_offset = 0

@@ -65,4 +65,7 @@ function project_load_values_update()
 	if (load_format < e_project.FORMAT_200_AL22)
 		if (timeline.type = e_tl_type.BACKGROUND)
 			value[e_value.BG_BIOME] = app.background_biome
+	
+	if (load_format < e_project.FORMAT_200_AL26)
+		value[e_value.BG_SUNLIGHT_STRENGTH] += 1
 }

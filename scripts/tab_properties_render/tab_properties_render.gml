@@ -281,7 +281,7 @@ function tab_properties_render()
 		
 		// Opaque leaves
 		tab_control_switch()
-		draw_switch("renderopaqueleaves", dx, dy, project_render_opaque_leaves, action_project_render_liquid_animation)
+		draw_switch("renderopaqueleaves", dx, dy, project_render_opaque_leaves, action_project_render_opaque_leaves)
 		tab_next()
 		
 		// Liquid waves
@@ -289,9 +289,9 @@ function tab_properties_render()
 		draw_switch("renderliquidanimation", dx, dy, project_render_liquid_animation, action_project_render_liquid_animation)
 		tab_next()
 		
-		// Block emission
+		// Block emissive
 		tab_control_meter()
-		draw_meter("renderblockemission", dx, dy, dw, round(project_render_block_brightness * 100), 48, 0, 100, 100, 1, tab.render.tbx_block_brightness, action_project_render_block_brightness)
+		draw_meter("renderblockemissive", dx, dy, dw, round(project_render_block_emissive * 100), 48, 0, 100, 100, 1, tab.render.tbx_block_emissive, action_project_render_block_emissive)
 		tab_next()
 		
 		// Block subsurface (Used for simple SSS in scenery)

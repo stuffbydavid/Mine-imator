@@ -22,14 +22,14 @@ function render_world_ground()
 	{
 		render_set_uniform("uMetallic", 0)
 		render_set_uniform("uRoughness", iswater ? .2 : 1)
-		render_set_uniform("uBrightness", 0)
+		render_set_uniform("uEmissive", 0)
 		render_set_uniform_int("uMaterialUseGlossiness", 0)
 	}
 	else
 	{
 		render_set_uniform("uMetallic", 1)
 		render_set_uniform("uRoughness", 0)
-		render_set_uniform("uBrightness", 1)
+		render_set_uniform("uEmissive", 1)
 		render_set_uniform_int("uMaterialUseGlossiness", background_ground_tex_material.material_uses_glossiness)
 	}
 	

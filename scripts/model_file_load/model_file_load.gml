@@ -100,7 +100,7 @@ function model_file_load()
 		color_inherit = false
 		color_blend = c_white
 		color_alpha = 1
-		color_brightness = 0
+		color_emissive = 0
 		color_mix = c_black
 		color_mix_percent = 0
 		

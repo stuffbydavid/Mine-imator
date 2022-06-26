@@ -22,11 +22,8 @@ function tl_value_clamp(vid, val)
 		case e_value.SCA_X:
 		case e_value.SCA_Y:
 		case e_value.SCA_Z: return max(val, 0.0001)
-		case e_value.BG_SUNLIGHT_STRENGTH:
-		case e_value.LIGHT_STRENGTH:
 		case e_value.ALPHA:
 		case e_value.MIX_PERCENT:
-		case e_value.BRIGHTNESS:
 		case e_value.METALLIC:
 		case e_value.ROUGHNESS:
 		case e_value.SUBSURFACE_RADIUS_RED:
@@ -74,6 +71,9 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_BLADE_ANGLE: return clamp(val, 0, 360)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 		case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)
+		case e_value.BG_SUNLIGHT_STRENGTH:
+		case e_value.LIGHT_STRENGTH:
+		case e_value.EMISSIVE:
 		case e_value.SUBSURFACE:
 		case e_value.CAM_SHAKE_STRENGTH_X:
 		case e_value.CAM_SHAKE_STRENGTH_Y:

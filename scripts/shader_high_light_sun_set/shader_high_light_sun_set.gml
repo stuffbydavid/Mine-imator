@@ -2,7 +2,7 @@
 
 function shader_high_light_sun_set()
 {
-	render_set_uniform("uBrightness", 0)
+	render_set_uniform("uEmissive", 0)
 	
 	render_set_uniform_int("uIsGround", 0)
 	render_set_uniform_int("uIsSky", 0)

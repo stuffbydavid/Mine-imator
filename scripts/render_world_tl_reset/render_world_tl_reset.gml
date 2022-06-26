@@ -31,9 +31,9 @@ function render_world_tl_reset()
 	render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
 	render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
 	
-	// Brightness
-	shader_uniform_brightness = 0
-	render_set_uniform("uBrightness", shader_uniform_brightness)
+	// Emissive
+	shader_uniform_emissive = 0
+	render_set_uniform("uEmissive", shader_uniform_emissive)
 	
 	// Metallic
 	shader_uniform_metallic = 0

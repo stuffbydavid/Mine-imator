@@ -11,10 +11,10 @@ varying vec3 vPosition;
 varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vBrightness;
+varying float vEmissive;
 
 uniform vec4 uBlendColor;
-uniform float uBlockBrightness;
+uniform float uBlockEmissive;
 
 // Wind
 uniform float uTime;
@@ -61,7 +61,7 @@ void main()
 	vDepth = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord;
-	vBrightness = clamp(in_Wave.z * uBlockBrightness, 0.0, 1.0);
+	vEmissive = clamp(in_Wave.z * uBlockEmissive, 0.0, 1.0);
 	
 	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 }

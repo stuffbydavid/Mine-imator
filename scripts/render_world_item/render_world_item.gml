@@ -70,10 +70,10 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 			render_set_uniform("uRoughness", shader_uniform_roughness)
 		}
 		
-		if (shader_uniform_brightness != 1)
+		if (shader_uniform_emissive != 1)
 		{
-			shader_uniform_brightness = 1
-			render_set_uniform("uBrightness", shader_uniform_brightness)
+			shader_uniform_emissive = 1
+			render_set_uniform("uEmissive", shader_uniform_emissive)
 		}
 		
 		render_set_uniform_int("uMaterialUseGlossiness", res[1].material_uses_glossiness)

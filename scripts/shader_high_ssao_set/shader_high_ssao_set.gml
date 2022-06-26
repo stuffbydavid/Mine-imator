@@ -1,18 +1,18 @@
-/// shader_high_ssao_set(depthsurface, normalsurface, brightnesssurf)
+/// shader_high_ssao_set(depthsurface, normalsurface, emissivesurf)
 /// @arg depthsurface
 /// @arg normalsurface
-/// @arg brightnesssurf
+/// @arg emissivesurf
 /// @arg colorsurf
 
-function shader_high_ssao_set(depthsurface, normalsurface, brightnesssurf)
+function shader_high_ssao_set(depthsurface, normalsurface, emissivesurf)
 {
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(depthsurface))
 	texture_set_stage(sampler_map[?"uNormalBuffer"], surface_get_texture(normalsurface))
-	texture_set_stage(sampler_map[?"uBrightnessBuffer"], surface_get_texture(brightnesssurf))
+	texture_set_stage(sampler_map[?"uEmissiveBuffer"], surface_get_texture(emissivesurf))
 	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
 	gpu_set_texrepeat_ext(sampler_map[?"uDepthBuffer"], false)
 	gpu_set_texrepeat_ext(sampler_map[?"uNormalBuffer"], false)
-	gpu_set_texrepeat_ext(sampler_map[?"uBrightnessBuffer"], false)
+	gpu_set_texrepeat_ext(sampler_map[?"uEmissiveBuffer"], false)
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	
 	render_set_uniform("uNear", cam_near)

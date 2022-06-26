@@ -50,8 +50,8 @@ function builder_set_model()
 			var modelobj = block_current.state_id_model_obj[block_state_id_current];
 			if (modelobj != null && !is_undefined(modelobj))
 			{
-				var brightness, offset, offsetxy;
-				brightness = block_current.state_id_brightness[block_state_id_current]
+				var emissive, offset, offsetxy;
+				emissive = block_current.state_id_emissive[block_state_id_current]
 				offset = block_current.state_id_random_offset[block_state_id_current]
 				offsetxy = block_current.state_id_random_offset_xy[block_state_id_current]
 				
@@ -60,11 +60,11 @@ function builder_set_model()
 				{
 					model = array()
 					for (var i = 0; i < array_length(modelobj); i++)
-						array_add(model, block_get_render_model(modelobj[i], brightness, offset, offsetxy))
+						array_add(model, block_get_render_model(modelobj[i], emissive, offset, offsetxy))
 				}
 				// Single model
 				else 
-					model = block_get_render_model(modelobj, brightness, offset, offsetxy)
+					model = block_get_render_model(modelobj, emissive, offset, offsetxy)
 			}
 		}
 		

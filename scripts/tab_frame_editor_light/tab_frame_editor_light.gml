@@ -32,7 +32,7 @@ function tab_frame_editor_light()
 	}
 	
 	tab_control_dragger()
-	draw_dragger("frameeditorlightstrength", dx, dy, dragger_width, floor(tl_edit.value[e_value.LIGHT_STRENGTH] * 100), 0.1, 0, 100, 100, 1, tab.light.tbx_strength, action_tl_frame_light_strength)
+	draw_dragger("frameeditorlightstrength", dx, dy, dragger_width, floor(tl_edit.value[e_value.LIGHT_STRENGTH] * 100), 0.1, 0, no_limit, 100, 1, tab.light.tbx_strength, action_tl_frame_light_strength)
 	tab_next()
 	
 	tab_control_dragger()

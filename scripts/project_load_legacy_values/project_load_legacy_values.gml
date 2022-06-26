@@ -40,7 +40,7 @@ function project_load_legacy_values(tl)
 		value[e_value.HSB_MUL] = buffer_read_int()
 		value[e_value.MIX_COLOR] = buffer_read_int()
 		value[e_value.MIX_PERCENT] = buffer_read_double()
-		value[e_value.BRIGHTNESS] = buffer_read_double()
+		value[e_value.EMISSIVE] = buffer_read_double()
 	}
 	
 	if (tl.value_type[e_value_type.PARTICLES])

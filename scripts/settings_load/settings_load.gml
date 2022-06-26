@@ -5,7 +5,7 @@
 ///			100 = added undo/redo shortcuts, project folder, ssao, shadows, dof, aa, grid size, even more shortcuts, panels, tabs, views, z is up, fps
 ///			103 = compact timeline, jump to select, real time render
 ///			106 = wave animation, exportmovie/image settings
-///			106_2 = block brightness
+///			106_2 = block emissive
 ///			106_3 = remove camera buffer size
 ///			110 = remade in JSON, texture filtering level
 

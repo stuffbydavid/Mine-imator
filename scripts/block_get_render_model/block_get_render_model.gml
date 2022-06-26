@@ -1,11 +1,11 @@
-/// block_get_render_model(modelobject, brightness, offset, offsetxy)
+/// block_get_render_model(modelobject, emissive, offset, offsetxy)
 /// @arg modelobject
-/// @arg brightness
+/// @arg emissive
 /// @arg offset
 /// @arg offsetxy
 /// @desc Returns a random or single model.
 
-function block_get_render_model(modelobj, brightness, offset, offsetxy)
+function block_get_render_model(modelobj, emissive, offset, offsetxy)
 {
 	instance_activate_object(modelobj)
 	
@@ -20,7 +20,7 @@ function block_get_render_model(modelobj, brightness, offset, offsetxy)
 				rand -= model[m].weight
 				if (rand <= 0)
 				{
-					model[m].brightness = brightness
+					model[m].emissive = emissive
 					model[m].random_offset = offset
 					model[m].random_offset_xy = offsetxy
 					
@@ -31,7 +31,7 @@ function block_get_render_model(modelobj, brightness, offset, offsetxy)
 		}
 		else if (model_amount > 0 || app.project_render_random_blocks)
 		{
-			model[0].brightness = brightness
+			model[0].emissive = emissive
 			model[0].random_offset = offset
 			model[0].random_offset_xy = offsetxy
 			

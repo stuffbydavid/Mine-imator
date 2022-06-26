@@ -48,7 +48,7 @@ function project_reset_render()
 	project_bend_style = "blocky"
 	project_render_opaque_leaves = false
 	project_render_liquid_animation = true
-	project_render_block_brightness = 1
+	project_render_block_emissive = 1
 	project_render_block_subsurface = 2
 	project_render_random_blocks = true
 	

@@ -205,7 +205,7 @@ function settings_load_legacy(fn)
 		project_render_texture_filtering = buffer_read_byte()
 		/*setting_transparent_texture_filtering = */buffer_read_byte()
 		if (load_format >= e_settings.FORMAT_106_2)
-			project_render_block_brightness = buffer_read_double()
+			project_render_block_emissive = buffer_read_double()
 		if (load_format < e_settings.FORMAT_106_3)
 			/*setting_camera_buffer_size=*/buffer_read_int()
 		

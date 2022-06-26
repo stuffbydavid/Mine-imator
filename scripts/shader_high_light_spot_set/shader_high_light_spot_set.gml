@@ -2,12 +2,11 @@
 
 function shader_high_light_spot_set()
 {
-	render_set_uniform("uBrightness", 0)
+	render_set_uniform("uEmissive", 0)
 	
 	render_set_uniform_int("uIsSky", 0)
 	render_set_uniform_int("uIsWater", 0)
 	
-	render_set_uniform_int("uLightAmount", render_light_amount)
 	render_set_uniform("uLightMatrix", render_spot_matrix)
 	render_set_uniform("uShadowMatrix", render_shadow_matrix)
 	render_set_uniform_vec3("uLightPosition", render_light_from[X], render_light_from[Y], render_light_from[Z])

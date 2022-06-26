@@ -101,10 +101,10 @@ function render_world_tl()
 		render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
 	}
 	
-	if (value_inherit[e_value.BRIGHTNESS] != shader_uniform_brightness)
+	if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 	{
-		shader_uniform_brightness = value_inherit[e_value.BRIGHTNESS]
-		render_set_uniform("uBrightness", shader_uniform_brightness)
+		shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+		render_set_uniform("uEmissive", shader_uniform_emissive)
 	}
 	
 	if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)

@@ -31,10 +31,10 @@ function render_world_shape(type, vbuf, facecamera, tex)
 			render_set_uniform("uRoughness", shader_uniform_roughness)
 		}
 		
-		if (shader_uniform_brightness != 1)
+		if (shader_uniform_emissive != 1)
 		{
-			shader_uniform_brightness = 1
-			render_set_uniform("uBrightness", shader_uniform_brightness)
+			shader_uniform_emissive = 1
+			render_set_uniform("uEmissive", shader_uniform_emissive)
 		}
 		
 		render_set_texture(tex[1], "Material")

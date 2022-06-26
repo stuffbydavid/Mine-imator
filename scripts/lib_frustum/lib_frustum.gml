@@ -69,7 +69,7 @@ function frustum() constructor {
 			vbuffer_destroy(vbuffer)
 		
 		// Generate mesh
-		vertex_brightness = 1
+		vertex_emissive = 1
 		vertex_alpha = 0.5
 		
 		vbuffer = vbuffer_start()
@@ -90,7 +90,7 @@ function frustum() constructor {
 		
 		vbuffer_done()
 		
-		vertex_brightness = 0
+		vertex_emissive = 0
 		vertex_alpha = 1
 		vertex_rgb = c_white
 	}

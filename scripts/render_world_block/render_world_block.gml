@@ -80,10 +80,10 @@ function render_world_block()
 			render_set_uniform("uRoughness", shader_uniform_roughness)
 		}
 		
-		if (shader_uniform_brightness != 1)
+		if (shader_uniform_emissive != 1)
 		{
-			shader_uniform_brightness = 1
-			render_set_uniform("uBrightness", shader_uniform_brightness)
+			shader_uniform_emissive = 1
+			render_set_uniform("uEmissive", shader_uniform_emissive)
 		}
 	}
 	
@@ -136,7 +136,7 @@ function render_world_block()
 		{
 			render_set_uniform("uMetallic", 0)
 			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uBrightness", 0)
+			render_set_uniform("uEmissive", 0)
 		}
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])	
@@ -145,7 +145,7 @@ function render_world_block()
 		{
 			render_set_uniform("uMetallic", 1)
 			render_set_uniform("uRoughness", 0)
-			render_set_uniform("uBrightness", 1)
+			render_set_uniform("uEmissive", 1)
 		}
 	}
 	
@@ -285,7 +285,7 @@ function render_world_block()
 		{
 			render_set_uniform("uMetallic", 0)
 			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uBrightness", 0)
+			render_set_uniform("uEmissive", 0)
 		}
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
@@ -294,7 +294,7 @@ function render_world_block()
 		{
 			render_set_uniform("uMetallic", 1)
 			render_set_uniform("uRoughness", 0)
-			render_set_uniform("uBrightness", 1)
+			render_set_uniform("uEmissive", 1)
 		}
 	}
 	
@@ -334,7 +334,7 @@ function render_world_block()
 		{
 			render_set_uniform("uMetallic", 0)
 			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uBrightness", 0)
+			render_set_uniform("uEmissive", 0)
 		}
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
@@ -343,7 +343,7 @@ function render_world_block()
 		{
 			render_set_uniform("uMetallic", 1)
 			render_set_uniform("uRoughness", 0)
-			render_set_uniform("uBrightness", 1)
+			render_set_uniform("uEmissive", 1)
 		}
 	}
 	
@@ -378,10 +378,10 @@ function render_world_block()
 				render_set_uniform("uMetallic", shader_uniform_metallic)
 			}
 			
-			if (shader_uniform_brightness != 0.0)
+			if (shader_uniform_emissive != 0.0)
 			{
-				shader_uniform_brightness = 0.0
-				render_set_uniform("uBrightness", shader_uniform_brightness)
+				shader_uniform_emissive = 0.0
+				render_set_uniform("uEmissive", shader_uniform_emissive)
 			}
 			
 			vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])

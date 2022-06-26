@@ -24,7 +24,7 @@ varying vec3 vPosition;
 varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vBrightness;
+varying float vEmissive;
 
 vec4 rgbtohsb(vec4 c)
 {
