@@ -153,6 +153,8 @@ vec2 rayTrace(vec2 originUV)
 	vec2 pixelStepDelta = pixelDelta / max(stepDelta, 0.001);
 	vec3 samplePos      = viewPos;
 	
+	vec2 uvStepDelta    = pixelStepDelta / uScreenSize;
+	
 	float progress, progressPrev;
 	progress		= 0.0;
 	progressPrev	= 0.0;
@@ -168,11 +170,16 @@ vec2 rayTrace(vec2 originUV)
 	
 	for (int i = 0; i < traceSteps; i++)
 	{
+		// Get previous progress
 		progressPrev = progress;
 		depthPrev	 = depth;
 		
+		// Move forward
 		rayPixel += pixelStepDelta;
-		rayUV     = rayPixel / uScreenSize;
+		rayUV    += uvStepDelta;
+		
+		if (rayUV.x <= 0.0 || rayUV.y <= 0.0 || rayUV.x >= 1.0 || rayUV.y >= 1.0)
+			break;
 		
 		samplePos = posFromBuffer(rayUV, getDepth(rayUV));
 		
@@ -185,20 +192,20 @@ vec2 rayTrace(vec2 originUV)
 		viewDist  = rayZ / mix(rayEndPos.z, rayStartPos.z, progress);
 		depth     = viewDist - samplePos.z;
 		
-		if (rayUV.x <= 0.0 || rayUV.y <= 0.0 || rayUV.x >= 1.0 || rayUV.y >= 1.0)
-			break;
-		
 		// Check for collision
-		if (depth > 0.0 && dot(normal, getNormal(rayUV)) < .99)
+		if (depth > 0.0)
 		{
-			rayDistance = length(mix(rayStartPos, rayEndPos, progress) - rayStartPos);
-			rayThickness = (uThickness * rayDistance);
+			if (dot(normal, getNormal(rayUV)) < .99)
+			{
+				rayDistance = length(mix(rayStartPos, rayEndPos, progress) - rayStartPos);
+				rayThickness = (uThickness * rayDistance);
 			
-			// Is the ray in the object?
-			if (depth < rayThickness)
-				rayHit = true;
+				// Is the ray in the object?
+				if (depth < rayThickness)
+					rayHit = true;
 			
-			break;
+				break;
+			}
 		}
 	}
 	

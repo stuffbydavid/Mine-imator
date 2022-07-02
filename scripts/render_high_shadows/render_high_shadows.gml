@@ -45,8 +45,6 @@ function render_high_shadows()
 	}
 	surface_reset_target()
 	
-	taa_matrix = MAT_IDENTITY
-	
 	#region Sun
 	
 	if (sunout)

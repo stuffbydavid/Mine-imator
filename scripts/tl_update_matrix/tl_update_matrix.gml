@@ -47,27 +47,12 @@ function tl_update_matrix(updateik = true)
 			var path = value[e_value.PATH_OBJ];
 			if (path != null && array_length(path.path_table) > 0)
 			{
-				var offset, angle, curpos, nextpos, futurepos, pastpos, mat;
+				var offset, angle, curpos, mat, n, t;
 				offset = value[e_value.PATH_OFFSET]
 				angle = 0
 				
 				// Get current position
 				curpos = tl_path_offset_get_position(path, offset)
-				nextpos = tl_path_offset_get_position(path, offset + 5)
-				
-				// Drift
-				if (value[e_value.PATH_DRIFT] != 0)
-				{
-					futurepos = tl_path_offset_get_position(path, offset + 20)
-					pastpos = tl_path_offset_get_position(path, offset - 20)
-					
-					// Get angle difference and calculate tilt amount
-					var dir1, dir2, dif;
-					dir1 = vec3_normalize(point3D_sub(curpos, pastpos))
-					dir2 = vec3_normalize(point3D_sub(futurepos, curpos))
-					dif = vec3_cross(dir2, dir1)
-					angle = (dif[Z] * -value[e_value.PATH_DRIFT])
-				}
 				
 				// Make rotation matrix and add path position
 				var n, t;

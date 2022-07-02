@@ -35,10 +35,6 @@ function tab_frame_editor_path()
 			tab_next()
 			
 			context_menu_value_name = ""
-			
-			tab_control_dragger()
-			draw_dragger("frameeditorpathdrift", dx, dy, dragger_width, tl_edit.value[e_value.PATH_DRIFT], .1, -no_limit, no_limit, 0, 0.1, tab.constraints.tbx_path_drift, action_tl_frame_path_drift, null, true, false, "frameeditorpathdrifttip")
-			tab_next()	
 		}
 		
 		tab_collapse_end()

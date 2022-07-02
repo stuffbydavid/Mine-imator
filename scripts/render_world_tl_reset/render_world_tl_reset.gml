@@ -79,7 +79,6 @@ function render_world_tl_reset()
     shader_uniform_glow_texture = false
     shader_uniform_glow_color = c_white
 	
-	render_texture_prev = null
 	render_blend_prev = null
 	render_alpha_prev = null
 }

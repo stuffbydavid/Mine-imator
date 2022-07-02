@@ -196,7 +196,6 @@ function app_startup_lists()
 		"ITEM_NAME",
 		"PATH_OBJ",
 		"PATH_OFFSET",
-		"PATH_DRIFT",
 		"PATH_POINT_ANGLE",
 		"PATH_POINT_SCALE",
 		"IK_TARGET",

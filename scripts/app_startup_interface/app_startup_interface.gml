@@ -46,6 +46,6 @@ function app_startup_interface()
 		
 		// First start
 		if (!file_exists_lib(settings_file))
-			popup_show(popup_welcome)
+			popup_show(mineimator_version_indev ? popup_unstable : popup_welcome)
 	}
 }

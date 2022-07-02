@@ -22,9 +22,6 @@ function render_set_texture(tex, type = "")
 	if (gpu_get_tex_mip_enable() != mipactive)
 		gpu_set_tex_mip_enable(mipactive)
 	
-	if (tex = render_texture_prev)
-		return 0
-	
 	// Surface
 	if (shader_texture_surface)
 	{
@@ -57,6 +54,4 @@ function render_set_texture(tex, type = "")
 	
 	render_set_uniform_vec2("uTexScale" + type, scalex, scaley)
 	gpu_set_texrepeat_ext(sampler, true)
-	
-	render_texture_prev = tex
 }

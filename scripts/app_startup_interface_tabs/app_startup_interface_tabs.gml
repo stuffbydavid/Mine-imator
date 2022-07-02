@@ -471,8 +471,6 @@ function app_startup_interface_tabs()
 		{
 			// Path
 			tbx_path_offset = new_textbox_ndecimals()
-			tbx_path_drift = new_textbox_ndecimals()
-			tbx_path_drift.suffix = "°"
 			
 			// IK
 			tbx_ik_angle_offset = new_textbox_ndecimals()

@@ -21,7 +21,7 @@ function render_startup()
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
 	
-	globalvar render_blend_prev, render_alpha_prev, render_texture_prev;
+	globalvar render_blend_prev, render_alpha_prev;
 	
 	// Update shader_reset_uniforms()
 	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
@@ -178,7 +178,6 @@ function render_startup()
 	
 	render_blend_prev = null
 	render_alpha_prev = null
-	render_texture_prev = null
 	
 	// Cascades for sun
 	globalvar render_cascades_count, render_cascade_ends, render_cascades, render_cascade_debug;

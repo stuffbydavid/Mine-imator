@@ -154,4 +154,11 @@ function app_startup_interface_popups()
 		layer_move_x = 0
 		layer_move_y = 0
 	}
+	
+	// Unstable release popup
+	popup_unstable = new_popup("unstablerelease", popup_unstable_release_draw, 540, 360, true, true)
+	with (popup_unstable)
+	{
+		info_read = false
+	}
 }

@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.06.18"
+		"lastchange": "2022.07.02"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -668,6 +668,12 @@
 	"loading/": {
 		"resources": "Importing resources...",
 		"percent": "(%1% Done)"
+	},
+	"unstable/": {
+		"title": "Experimental version (%1)",
+		"info": "This version of Mine-imator is still in development and may contain dangerous bugs. It's not recommended for use in big projects, and projects should be backed up before using this version. This release also overhauls many features, so old creations may not load as expected anymore.",
+		"inforead": "I accept the risks in this release",
+		"continue": "Continue"
 	},
 	"view/": {
 		"workbenchtip": "Open workbench",
@@ -2813,9 +2819,7 @@
 		"followpath": "Follow path",
 		"path": "Path timeline",
 		"path/": {
-			"offset": "Offset",
-			"drift": "Drift",
-			"drifttip": "Tilts the object when turning along the path."
+			"offset": "Offset"
 		},
 		"ik": "Inverse kinematics",
 		"ik/": {

@@ -70,7 +70,6 @@ function tl_update_values()
 		{
 			tl_update_values_ease(e_value.PATH_OBJ)
 			tl_update_values_ease(e_value.PATH_OFFSET)
-			tl_update_values_ease(e_value.PATH_DRIFT)
 		}
 	}
 	
