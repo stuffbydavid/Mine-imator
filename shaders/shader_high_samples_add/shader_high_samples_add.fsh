@@ -1,5 +1,7 @@
 uniform sampler2D uSamplesExp;
 uniform sampler2D uSamplesDec;
+uniform sampler2D uSamplesAlpha;
+uniform sampler2D uSample;
 
 varying vec2 vTexCoord;
 
@@ -15,13 +17,14 @@ float unpackSample(float expo, float dec)
 
 void main()
 {
-	vec3 sampleExp = texture2D(uSamplesExp, vTexCoord).rgb;
-	vec3 sampleDec = texture2D(uSamplesDec, vTexCoord).rgb;
+	vec4 sampleExp = texture2D(uSamplesExp, vTexCoord);
+	vec4 sampleDec = texture2D(uSamplesDec, vTexCoord);
+	vec4 sampleAlpha = texture2D(uSamplesAlpha, vTexCoord);
 	
-	vec3 sample = texture2D(gm_BaseTexture, vTexCoord).rgb;
+	vec4 sample = texture2D(uSample, vTexCoord);
+	vec2 channel = vec2(0.0);
 	
 	// Red
-	vec2 channel = vec2(0.0);
 	channel = packSample(unpackSample(sampleExp.r, sampleDec.r) + sample.r * 255.0);
 	
 	gl_FragData[0].r = channel.x;
@@ -41,4 +44,8 @@ void main()
 	
 	gl_FragData[0].a = 1.0;
 	gl_FragData[1].a = 1.0;
+	
+	// Alpha
+	channel = packSample(unpackSample(sampleAlpha.r, sampleAlpha.g) + sample.a * 255.0);
+	gl_FragData[2] = vec4(channel.x, channel.y, 0.0, 1.0);
 }

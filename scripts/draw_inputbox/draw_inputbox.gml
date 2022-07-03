@@ -17,7 +17,7 @@ function draw_inputbox()
 {
 	var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha, focused;
 	var update;
-
+	
 	inputname = argument[0]
 	xx = argument[1]
 	yy = argument[2]

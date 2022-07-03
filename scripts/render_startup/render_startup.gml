@@ -148,8 +148,7 @@ function render_startup()
 	
 	// Effect surfaces
 	globalvar render_surface_ssao, render_surface_shadows, render_surface_indirect, render_surface_fog, render_surface_lens, render_surface_post,
-			  render_post_index, render_surface_ssr, render_surface_sample_expo,
-			  render_surface_sample_dec, render_surface_specular;
+			  render_post_index, render_surface_ssr, render_surface_sample_expo, render_surface_sample_dec, render_surface_sample_alpha, render_surface_specular;
 	render_surface_ssao = null
 	render_surface_shadows = null
 	render_surface_fog = null
@@ -158,6 +157,7 @@ function render_startup()
 	render_surface_ssr = null
 	render_surface_sample_expo = null
 	render_surface_sample_dec = null
+	render_surface_sample_alpha = null
 	render_surface_specular = null
 	
 	globalvar render_samples_clear;

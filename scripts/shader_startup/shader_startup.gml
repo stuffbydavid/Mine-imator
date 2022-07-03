@@ -493,13 +493,15 @@ function shader_startup()
 	{
 		new_shader_sampler("uSamplesExp")
 		new_shader_sampler("uSamplesDec")
-		new_shader_sampler("uShadow")
+		new_shader_sampler("uSamplesAlpha")
+		new_shader_sampler("uSample")
 	}
 	
 	with (shader_map[?shader_high_samples_unpack])
 	{
 		new_shader_sampler("uSamplesExp")
 		new_shader_sampler("uSamplesDec")
+		new_shader_sampler("uSamplesAlpha")
 		new_shader_uniform("uSamplesStrength")
 	}
 	

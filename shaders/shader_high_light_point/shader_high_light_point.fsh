@@ -72,6 +72,16 @@ float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 #extension GL_OES_standard_derivatives : enable
 vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 {
+	// Get normal value from normal map
+	vec2 normtex = uv;
+	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
+		normtex = mod(normtex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
+	
+	vec3 normalCoord = texture2D(uTextureNormal, normtex).rgb * 2.0 - 1.0;
+	
+	if (normalCoord.z <= 0.0)
+		return normal;
+	
 	// Get edge derivatives
 	vec3 posDx = dFdx(worldPos);
 	vec3 posDy = dFdy(worldPos);
@@ -90,16 +100,6 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	
 	// Build TBN matrix to transform mapped normal with mesh
 	mat3 TBN = mat3(T * invmax, B * invmax, normal);
-	
-	// Get normal value from normal map
-	vec2 normtex = uv;
-	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
-		normtex = mod(normtex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
-	
-	vec3 normalCoord = texture2D(uTextureNormal, normtex).rgb * 2.0 - 1.0;
-	
-	if (normalCoord.z < 0.0)
-		return normal;
 	
 	return normalize(TBN * normalCoord);
 }

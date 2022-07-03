@@ -5,8 +5,8 @@
 function halton(i, xx)
 {
 	var f, r;
-	f = 1.0
-	r = 0.0
+	f = 1
+	r = 0
 	
 	while (i > 0)
 	{

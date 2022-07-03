@@ -105,15 +105,16 @@ function draw_dragger()
 	
 	// Is dragging
 	if (window_busy = name + "drag")
-	{ 
+	{
 		mouse_cursor = cr_none
 		dragger_drag_value += (mouse_x - mouse_click_x) * mul * dragger_multiplier
 		window_mouse_set(mouse_click_x, mouse_click_y)
 		
 		var d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - value;
+		
 		if (d <> 0)
 		{
-			script_execute(script, d, true)
+			script_execute(script, value + d, false)
 			tbx.text = string_decimals(value + d)
 		}
 		

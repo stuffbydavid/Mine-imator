@@ -41,7 +41,7 @@ vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
 	texColor = texture2D(uTextureNormal, texCoord).rgb * 2.0 - 1.0;
 	
 	// No normal present in map, skip
-	if (texColor.z < 0.0)
+	if (texColor.z <= 0.0)
 		return normal;
 	
 	// Get edge derivatives

@@ -603,8 +603,11 @@ function textbox_draw()
 		}
 		
 		// Handle selecting
-		if (!mouse_left)
+		if (!mouse_left && ((window_busy = string(tbx) + "tbxrelease") || (window_busy = string(tbx) + "click")))
 			window_busy = ""
+		
+		if (!mouse_left && (window_busy = string(tbx)))
+			window_busy = string(tbx) + "tbxrelease"
 		
 		if (window_busy = string(tbx)) // Move up/down if dragging outside of box
 		{
@@ -1265,7 +1268,7 @@ function textbox_draw()
 		textbox_lastfocus = -1
 	
 	// Set cursor
-	if (mouseover && (window_busy = "" || window_busy = string(tbx) || window_busy = string(tbx) + "click"))
+	if (mouseover)
 	{
 		textbox_mouseover = tbx
 		mouse_cursor = cr_beam
