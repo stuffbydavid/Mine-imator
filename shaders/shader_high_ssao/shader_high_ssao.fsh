@@ -92,7 +92,7 @@ void main()
 		float sampleDepth = posFromBuffer(sampleCoord, unpackDepth(texture2D(uDepthBuffer, sampleCoord))).z;
 		
 		// Get sample emissive
-		float sampleEmissive = texture2D(uEmissiveBuffer, sampleCoord).r;
+		float sampleEmissive = (1.0 - texture2D(uEmissiveBuffer, sampleCoord).r);
 		
 		// Sample normal
 		vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, sampleCoord));
@@ -109,7 +109,7 @@ void main()
 	occlusion = 1.0 - pow(max(0.0, 1.0 - occlusion / float(SAMPLES)), uPower);
 	
 	// Apply emissive
-	occlusion *= texture2D(uEmissiveBuffer, vTexCoord).r;
+	occlusion *= (1.0 - texture2D(uEmissiveBuffer, vTexCoord).r);
 	occlusion = clamp(occlusion, 0.0, 1.0);
 	
 	// Mix

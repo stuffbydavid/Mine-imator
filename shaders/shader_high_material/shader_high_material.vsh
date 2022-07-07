@@ -9,6 +9,7 @@ attribute vec4 in_Wave;
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec4 vColor;
+varying vec4 vCustom;
 varying vec2 vTexCoord;
 varying float vTime;
 varying float vWindDirection;
@@ -62,6 +63,7 @@ void main()
 	vTexCoord = in_TextureCoord;
 	vTime = uTime;
 	vWindDirection = uWindDirection;
+	vCustom = in_Wave;
 	
 	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 }

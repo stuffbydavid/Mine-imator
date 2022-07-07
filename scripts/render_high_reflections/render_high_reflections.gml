@@ -5,50 +5,16 @@
 function render_high_reflections(surf)
 {
 	// Render scene data
-	var rtsurf, depthsurf, normalsurf, normalsurf2, materialsurf, samplesurf;
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	var rtsurf, rtsurf2;
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height)
-	render_surface[5] = surface_require(render_surface[5], render_width, render_height)
-	render_surface[6] = surface_require(render_surface[6], render_width, render_height)
 	render_surface_ssr = surface_require(render_surface_ssr, render_width, render_height)
-	rtsurf = render_surface[0]
-	depthsurf = render_surface[1]
-	normalsurf = render_surface[2]
-	normalsurf2 = render_surface[4]
-	materialsurf = render_surface[5]
-	samplesurf = render_surface[6]
-	
-	// Material data
-	surface_set_target(materialsurf)
-	{
-		draw_clear_alpha(c_white, 0)
-		render_world_start()
-		render_world(e_render_mode.MATERIAL)
-		render_world_done()
-	}
-	surface_reset_target()
-	
-	// Depth and normal data
-	surface_set_target_ext(0, depthsurf)
-	surface_set_target_ext(1, normalsurf)
-	surface_set_target_ext(2, normalsurf2)
-	{
-		draw_clear_alpha(c_white, 0)
-		render_world_start(5000)
-		render_world(e_render_mode.HIGH_REFLECTIONS_DEPTH_NORMAL)
-		render_world_done()
-	}
-	surface_reset_target()
-	
-	random_set_seed(render_sample_current)
-	
-	render_sample_noise_texture = render_get_noise_texture(render_sample_current)
+	rtsurf = render_surface[1]
+	rtsurf2 = render_surface[2]
 	
 	// Raytrace reflections
 	surface_set_target_ext(0, rtsurf)
-	surface_set_target_ext(1, render_surface_ssr) // Not enough render surfaces for what we need, temporarily use the result surface
+	surface_set_target_ext(1, rtsurf2) // Surface we have to use much later, no harm in borrowing it now to keep targets low
 	{
 		gpu_set_texrepeat(false)
 		draw_clear_alpha(c_black, 0)
@@ -57,7 +23,7 @@ function render_high_reflections(surf)
 		with (render_shader_obj)
 		{
 		    shader_set(shader)
-		    shader_high_raytrace_uv_set(depthsurf, normalsurf, normalsurf2, materialsurf)
+		    shader_high_raytrace_uv_set(render_surface_depth, render_surface_normal, render_surface_normal_ext, render_surface_material)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)
@@ -69,7 +35,7 @@ function render_high_reflections(surf)
 	surface_reset_target()
 	
 	// Resolve RT data to color
-	surface_set_target(samplesurf)
+	surface_set_target(render_surface_ssr)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear_alpha(c_black, 0)
@@ -78,7 +44,7 @@ function render_high_reflections(surf)
 		with (render_shader_obj)
 		{
 		    shader_set(shader)
-		    shader_high_raytrace_reflections_set(rtsurf, render_surface_ssr, surf, normalsurf, normalsurf2, null, materialsurf)
+		    shader_high_raytrace_reflections_set(rtsurf, rtsurf2, surf, render_surface_normal, render_surface_normal_ext, null, render_surface_material)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)
@@ -89,48 +55,28 @@ function render_high_reflections(surf)
 	}
 	surface_reset_target()
 	
-	surface_set_target(render_surface_ssr)
-	{
-		draw_clear_alpha(c_black, 0)
-		draw_surface(samplesurf, 0, 0)
-	}
-	surface_reset_target()
-	
 	// Apply reflections
-	render_high_reflections_apply(surf, materialsurf)
+	render_high_reflections_apply(surf)
 }
 
 /// render_high_reflections_apply(surf)
 /// @arg surf
-function render_high_reflections_apply(surf, matsurf)
+function render_high_reflections_apply(surf)
 {
-	var materialsurf, diffusesurf, applysurf;
+	var prevsurf;
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	materialsurf = matsurf
-	diffusesurf = render_surface[1]
-	applysurf = render_surface[2]
+	prevsurf = render_surface[1]
 	
-	if (render_pass = e_render_pass.MATERIAL)
-		render_pass_surf = surface_duplicate(materialsurf)
-	
-	// Diffuse color (Reflection tint)
-	surface_set_target(diffusesurf)
+	// Make copy of current render
+	surface_set_target(prevsurf)
 	{
-		// Background
 		draw_clear_alpha(c_black, 0)
-		render_world_background()
-		
-		// World
-		render_world_start()
-		render_world_sky()
-		render_world(e_render_mode.COLOR)
-		render_world_done()
+		draw_surface_exists(surf, 0, 0)
 	}
 	surface_reset_target()
 	
 	// Apply reflections
-	surface_set_target(applysurf)
+	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
 		
@@ -138,26 +84,12 @@ function render_high_reflections_apply(surf, matsurf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_reflections_apply_set(render_surface_ssr, materialsurf, diffusesurf)
+			shader_high_reflections_apply_set(render_surface_ssr, render_surface_material, render_surface_diffuse)
 		}
 		
-		draw_surface_exists(surf, 0, 0)
+		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
 			shader_clear()
 	}
 	surface_reset_target()
-	
-	// Apply result to result surface
-	if (surface_exists(surf))
-	{
-		surface_set_target(surf)
-		{
-			draw_clear_alpha(c_black, 0)
-			draw_surface_exists(applysurf, 0, 0)
-		}
-		surface_reset_target()
-	}
-	
-	if (render_pass = e_render_pass.REFLECTIONS)
-		render_pass_surf = surface_duplicate(render_surface_ssr)
 }

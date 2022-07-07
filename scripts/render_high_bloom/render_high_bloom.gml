@@ -126,13 +126,10 @@ function render_high_bloom(prevsurf)
 		}
 		surface_reset_target()
 		
-		// Add to lens
+		// Apply to lens dirt
 		if (render_camera_lens_dirt_bloom)
 		{
-			render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-			lensprev = render_surface[3]
-			
-			surface_set_target(lensprev)
+			surface_set_target(bloomsurftemp)
 			{
 				draw_clear_alpha(c_black, 0)
 				draw_surface(render_surface_lens, 0, 0)
@@ -147,7 +144,7 @@ function render_high_bloom(prevsurf)
 					shader_set(shader)
 					shader_add_set(bloomsurf, render_camera.value[e_value.CAM_BLOOM_INTENSITY], render_camera.value[e_value.CAM_BLOOM_BLEND])
 				}
-				draw_surface_exists(lensprev, 0, 0)
+				draw_surface_exists(bloomsurftemp, 0, 0)
 				with (render_shader_obj)
 					shader_clear()
 			}

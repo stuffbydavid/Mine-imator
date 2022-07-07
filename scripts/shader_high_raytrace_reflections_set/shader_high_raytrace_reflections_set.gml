@@ -17,8 +17,8 @@ function shader_high_raytrace_reflections_set(raysurf, raysurf2, diffusesurf, no
 	//texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(depthsurf))
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(materialsurf))
 	
-	render_set_uniform("uNear", cam_near)
-	render_set_uniform("uFar", cam_far)
+	render_set_uniform("uNear", depth_near)
+	render_set_uniform("uFar", depth_far)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 	
 	if (render_pass = e_render_pass.REFLECTIONS)

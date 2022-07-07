@@ -17,7 +17,7 @@ function shader_high_raytrace_indirect_set(raysurf, raysurf2, lightingsurf, diff
 	texture_set_stage(sampler_map[?"uNormalBufferExp"], surface_get_texture(normal2surf))
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(depthsurf))
 	
-	render_set_uniform("uNear", cam_near)
-	render_set_uniform("uFar", cam_far)
+	render_set_uniform("uNear", depth_near)
+	render_set_uniform("uFar", depth_far)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 }

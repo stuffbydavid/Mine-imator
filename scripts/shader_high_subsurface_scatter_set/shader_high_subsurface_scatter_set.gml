@@ -25,8 +25,8 @@ function shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, direc
 	render_set_uniform("uProjMatrix", proj_matrix)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
-	render_set_uniform("uNear", cam_near)
-	render_set_uniform("uFar", cam_far)
+	render_set_uniform("uNear", depth_near)
+	render_set_uniform("uFar", depth_far)
 	
 	render_set_uniform_int("uSamples", render_subsurface_size)
 	render_set_uniform("uKernel", render_subsurface_kernel)

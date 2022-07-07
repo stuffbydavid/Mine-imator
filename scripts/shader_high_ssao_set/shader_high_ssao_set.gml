@@ -2,7 +2,6 @@
 /// @arg depthsurface
 /// @arg normalsurface
 /// @arg emissivesurf
-/// @arg colorsurf
 
 function shader_high_ssao_set(depthsurface, normalsurface, emissivesurf)
 {
@@ -15,8 +14,8 @@ function shader_high_ssao_set(depthsurface, normalsurface, emissivesurf)
 	gpu_set_texrepeat_ext(sampler_map[?"uEmissiveBuffer"], false)
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	
-	render_set_uniform("uNear", cam_near)
-	render_set_uniform("uFar", cam_far)
+	render_set_uniform("uNear", depth_near)
+	render_set_uniform("uFar", depth_far)
 	render_set_uniform("uProjMatrix", proj_matrix)
 	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)

@@ -11,12 +11,14 @@ uniform vec2 uTexScaleNormal;
 uniform vec3 uCameraPosition;
 uniform float uMetallic;
 uniform float uRoughness;
+uniform float uEmissive;
 uniform int uIsWater;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec4 vColor;
 varying vec2 vTexCoord;
+varying vec4 vCustom;
 
 varying float vTime;
 varying float vWindDirection;
@@ -81,30 +83,37 @@ void main()
 		normalTex = mod(normalTex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
 	
 	vec4 baseColor = vColor * texture2D(uTexture, tex);
-	vec4 matColor = texture2D(uTextureMaterial, texMat);
-	
-	// Flip roughness
-	if (uMaterialUseGlossiness == 0)
-		matColor.r = 1.0 - matColor.r;
-	
-	// Transform values
-	float metallic, roughness;
-	metallic = (uMetallic * matColor.g); // Metallic
-	roughness = 1.0 - ((1.0 - uRoughness) * matColor.r); // Roughness
-	
-	// Fresnel
-	float F0, F90;
-	F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
-	F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
-	
-	vec3 N = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
-	vec3 V = normalize(vPosition - uCameraPosition);
-	vec3 L = -normalize(reflect(V, N));
-	vec3 H = V + L;
-	float F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
 	
 	if (baseColor.a > 0.0)
-		gl_FragColor = vec4(metallic, roughness, F, 1.0);
+	{
+		vec4 matColor = texture2D(uTextureMaterial, texMat);
+		
+		// Flip roughness
+		if (uMaterialUseGlossiness == 0)
+			matColor.r = 1.0 - matColor.r;
+		
+		// Transform values
+		float metallic, roughness;
+		metallic = (uMetallic * matColor.g); // Metallic
+		roughness = 1.0 - ((1.0 - uRoughness) * matColor.r); // Roughness
+		
+		// Fresnel
+		float F0, F90;
+		F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
+		F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
+		
+		vec3 N = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
+		vec3 V = normalize(vPosition - uCameraPosition);
+		vec3 L = -normalize(reflect(V, N));
+		vec3 H = V + L;
+		float F = fresnelSchlick(max(dot(H, V), 0.0), F0, F90);
+		
+		gl_FragData[0] = vec4(metallic, roughness, F, 1.0);
+		
+		// Emissive
+		float em = max(0.0, baseColor.a * ((uEmissive + vCustom.z) * matColor.b));
+		gl_FragData[1] = vec4(em, em, em, baseColor.a <= 0.9801 ? 0.0 : 1.0);
+	}
 	else
 		discard;
 }

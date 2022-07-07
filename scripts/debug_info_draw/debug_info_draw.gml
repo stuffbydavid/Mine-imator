@@ -16,6 +16,7 @@ function debug_info_draw()
 	str += "file_directory: " + file_directory + " \n"
 	str += "current_step: " + string(current_step) + " \n"
 	str += "instance_count: " + string(instance_count) + " \n"
+	str += "render_world() calls: " + string(render_world_count) + " \n"
 	
 	content_x = 0
 	content_y = 0

@@ -21,12 +21,6 @@ uniform float uThickness;
 uniform float uNoiseSize;
 uniform int uSpecularRay; // Determines if raytrace is diffuse/specular
 
-// Get normal Value
-vec3 unpackNormal(vec4 c)
-{
-	return c.rgb * 2.0 - 1.0;
-}
-
 // Unpacks depth value from packed color
 float unpackDepth(vec4 c)
 {

@@ -3,13 +3,11 @@
 
 function render_high()
 {
-	var starttime;
+	var starttime, samplestart, sampleend;
 	
 	starttime = current_time
 	render_surface_time = 0
 	render_update_samples()
-	
-	var samplestart, sampleend;
 	
 	if (render_active != "image" && render_active != "movie")
 	{	
@@ -35,9 +33,13 @@ function render_high()
 	for (var s = samplestart; s < sampleend; s++)
 	{
 		render_sample_current = s
+		random_set_seed(render_sample_current)
 		
 		// Update TAA jitter
 		render_high_update_taa()
+		
+		// Create render passes
+		render_high_passes()
 		
 		// SSAO
 		if (render_ssao)
@@ -51,9 +53,9 @@ function render_high()
 		if (render_indirect)
 			render_high_indirect()
 		
-		// Composite current effects onto the scene
+		// Composite current effects, avoid render surf 0 going forward
 		var finalsurf;
-		finalsurf = render_high_scene(render_surface_ssao, render_surface_shadows)
+		finalsurf = render_high_scene()
 		
 		// Reflections
 		if (render_reflections)
@@ -84,82 +86,17 @@ function render_high()
 		}
 		surface_reset_target()
 		
-		// Apply post effects
-		
-		
-		#region Accumulate render sample
-		var expsurf, decsurf, alphasurf;
-		render_surface_sample_expo = surface_require(render_surface_sample_expo, render_width, render_height)
-		render_surface_sample_dec = surface_require(render_surface_sample_dec, render_width, render_height)
-		render_surface_sample_alpha = surface_require(render_surface_sample_alpha, render_width, render_height)
-		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-		render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		expsurf = render_surface[0]
-		decsurf = render_surface[1]
-		alphasurf = render_surface[2]
-		
-		// Draw temporary surfaces
-		surface_set_target_ext(0, expsurf)
-		surface_set_target_ext(1, decsurf)
-		surface_set_target_ext(2, alphasurf)
-		{
-			draw_clear_alpha(c_black, 0)
-		}
-		surface_reset_target()
-		
-		if (render_sample_current != 0 && !render_samples_clear)
-		{
-			surface_copy(expsurf, 0, 0, render_surface_sample_expo)
-			surface_copy(decsurf, 0, 0, render_surface_sample_dec)
-			surface_copy(alphasurf, 0, 0, render_surface_sample_alpha)
-		}
-		
-		// Add sample to buffer
-		surface_set_target_ext(0, render_surface_sample_expo)
-		surface_set_target_ext(1, render_surface_sample_dec)
-		surface_set_target_ext(2, render_surface_sample_alpha)
-		{
-			draw_clear_alpha(c_black, 0)
-			
-			render_shader_obj = shader_map[?shader_high_samples_add]
-			with (render_shader_obj)
-			{
-				shader_set(shader)
-				shader_high_samples_add_set(expsurf, decsurf, alphasurf, render_target)
-			}
-			draw_blank(0, 0, render_width, render_height)
-			with (render_shader_obj)
-				shader_clear()
-		}
-		surface_reset_target()
-		
-		#endregion
+		render_high_samples_add()
 	}
 	
-	// Unpack render from sample data
-	surface_set_target(render_target)
-	{
-		draw_clear_alpha(c_black, 0)
-		
-		render_shader_obj = shader_map[?shader_high_samples_unpack]
-		with (render_shader_obj)
-		{
-			shader_set(shader)
-			shader_high_samples_unpack_set(render_surface_sample_expo, render_surface_sample_dec, render_surface_sample_alpha, render_samples)
-		}
-		draw_blank(0, 0, render_width, render_height)
-		with (render_shader_obj)
-			shader_clear()
-	}
-	surface_reset_target()
+	render_high_samples_unpack()
 	
 	// Apply post effects (Bloom, color correction, etc.)
 	if (!render_pass)
 	{
 		var prevsurf;
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		prevsurf = render_surface[3]
+		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+		prevsurf = render_surface[0]
 		
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		

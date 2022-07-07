@@ -20,4 +20,8 @@ function action_background_sunlight_strength(val, add)
 		val *= 100
 	
 	background_sunlight_strength = background_sunlight_strength * add + val / 100
+	
+	// Temporary bugfix for floating point issue
+	if (background_sunlight_strength = 0)
+		background_sunlight_strength = 0
 }

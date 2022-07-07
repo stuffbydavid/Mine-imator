@@ -114,7 +114,7 @@ function draw_dragger()
 		
 		if (d <> 0)
 		{
-			script_execute(script, value + d, false)
+			script_execute(script, d, true)
 			tbx.text = string_decimals(value + d)
 		}
 		

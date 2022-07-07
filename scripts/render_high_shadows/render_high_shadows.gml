@@ -30,20 +30,22 @@ function render_high_shadows()
 		lightlist = array_add(lightlist, id)
 	}
 	
-	// Render initial emissive value from objects
+	// Initialize targets
 	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height)
-	taa_matrix = taa_jitter_matrix
+	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	resultsurftemp = render_surface[0]
+	specresultsurftemp = render_surface[1]
 	
 	surface_set_target_ext(0, render_surface_shadows)
 	surface_set_target_ext(1, render_surface_specular)
 	{
 		draw_clear_alpha(c_black, 1)
-		render_world_start()
-		render_world(e_render_mode.HIGH_LIGHT_BASE)
-		render_world_done()
 	}
 	surface_reset_target()
+	
+	taa_matrix = taa_jitter_matrix
 	
 	#region Sun
 	
@@ -52,8 +54,6 @@ function render_high_shadows()
 		// Scatter position
 		if (render_sample_current > 1)
 		{
-			random_set_seed(render_sample_current)
-			
 			var xyang, zang, dis;
 			xyang = random(360)
 			zang = random_range(-180, 180)
@@ -87,11 +87,6 @@ function render_high_shadows()
 			}
 			surface_reset_target()
 		}
-		
-		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		resultsurftemp = render_surface[2]
-		specresultsurftemp = render_surface[3]
 		
 		taa_matrix = taa_jitter_matrix
 		
@@ -138,8 +133,6 @@ function render_high_shadows()
 			
 			if (render_sample_current > 1)
 			{
-				random_set_seed(render_sample_current)
-					
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
@@ -210,11 +203,6 @@ function render_high_shadows()
 				// Shadows
 				with (app)
 				{
-					render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-					render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-					resultsurftemp = render_surface[2]
-					specresultsurftemp = render_surface[3]
-					
 					surface_set_target_ext(0, resultsurftemp)
 					surface_set_target_ext(1, specresultsurftemp)
 					{
@@ -261,11 +249,6 @@ function render_high_shadows()
 				// Shadows
 				with (app)
 				{
-					render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-					render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-					resultsurftemp = render_surface[2]
-					specresultsurftemp = render_surface[3]
-					
 					surface_set_target_ext(0, resultsurftemp)
 					surface_set_target_ext(1, specresultsurftemp)
 					{
@@ -309,13 +292,22 @@ function render_high_shadows()
 	
 	// Apply subsurface scattering
 	render_high_subsurface_scatter()
+	
+	// Add emissive
+	surface_set_target(render_surface_shadows)
+	{
+		gpu_set_blendmode(bm_add)
+		draw_surface_exists(render_surface_emissive, 0, 0)
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
 }
 
 function render_high_shadows_shadowless()
 {
 	if (ds_list_size(render_shadowless_point_list) > 0)
 	{
-		var resultsurftemp, lights, batches, specresultsurftemp, resultsurftemp;
+		var resultsurftemp, lights, batches, specresultsurftemp;
 		lights = ds_list_size(render_shadowless_point_list)
 		batches = 0
 			
@@ -347,10 +339,8 @@ function render_high_shadows_shadowless()
 			}
 			
 			// Render lights
-			render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-			render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-			resultsurftemp = render_surface[2]
-			specresultsurftemp = render_surface[3]
+			resultsurftemp = render_surface[0]
+			specresultsurftemp = render_surface[1]
 			
 			surface_set_target_ext(0, resultsurftemp)
 			surface_set_target_ext(1, specresultsurftemp)
@@ -361,7 +351,7 @@ function render_high_shadows_shadowless()
 				render_world_done()
 			}
 			surface_reset_target()
-				
+			
 			// Add to final shadow surface
 			surface_set_target(render_surface_shadows)
 			{

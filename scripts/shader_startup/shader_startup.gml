@@ -50,14 +50,12 @@ function shader_startup()
 		new_shader("shader_high_fog")
 		new_shader("shader_high_fog_apply")
 		new_shader("shader_high_light_apply")
-		new_shader("shader_high_light_base")
 		new_shader("shader_high_light_point")
 		new_shader("shader_high_light_point_shadowless")
 		new_shader("shader_high_light_spot")
 		new_shader("shader_high_light_sun")
 		new_shader("shader_high_ssao")
 		new_shader("shader_high_ssao_blur")
-		new_shader("shader_high_ssao_depth_normal")
 		new_shader("shader_color_glow")
 		new_shader("shader_high_bloom_threshold")
 		new_shader("shader_add")
@@ -70,7 +68,7 @@ function shader_startup()
 		new_shader("shader_high_lighting_apply")
 		new_shader("shader_high_samples_add")
 		new_shader("shader_high_samples_unpack")
-		new_shader("shader_high_raytrace_depth_normal")
+		new_shader("shader_high_depth_normal")
 		new_shader("shader_high_reflections_apply")
 		new_shader("shader_high_material")
 		new_shader("shader_high_subsurface")
@@ -232,16 +230,6 @@ function shader_startup()
 	with (shader_map[?shader_high_light_apply])
 		new_shader_uniform("uAmbientColor")
 	
-	with (shader_map[?shader_high_light_base])
-	{
-		new_shader_uniform("uEmissive")
-		new_shader_uniform("uBlockEmissive")
-		
-		new_shader_sampler("uTextureMaterial")
-		new_shader_uniform("uTexScaleMaterial")
-		new_shader_uniform("uMaterialUseGlossiness")
-	}
-	
 	with (shader_map[?shader_high_light_point])
 	{
 		new_shader_uniform("uEmissive")
@@ -382,20 +370,6 @@ function shader_startup()
 		new_shader_uniform("uPixelCheck")
 	}
 	
-	with (shader_map[?shader_high_ssao_depth_normal])
-	{
-		new_shader_uniform("uSSAOEnable")
-		new_shader_uniform("uEmissive")
-		new_shader_uniform("uNear")
-		new_shader_uniform("uFar")
-		
-		new_shader_sampler("uTextureMaterial")
-		new_shader_uniform("uTexScaleMaterial")
-		new_shader_uniform("uMaterialUseGlossiness")
-		new_shader_sampler("uTextureNormal")
-		new_shader_uniform("uTexScaleNormal")
-	}
-	
 	with (shader_map[?shader_color_glow])
 	{
 		new_shader_uniform("uColorsExt")
@@ -433,7 +407,7 @@ function shader_startup()
 	with (shader_map[?shader_color_correction])
 	{
 		new_shader_uniform("uContrast")
-		new_shader_uniform("uEmissive")
+		new_shader_uniform("uBrightness")
 		new_shader_uniform("uSaturation")
 		new_shader_uniform("uVibrance")
 		new_shader_uniform("uColorBurn")
@@ -503,18 +477,14 @@ function shader_startup()
 		new_shader_sampler("uSamplesDec")
 		new_shader_sampler("uSamplesAlpha")
 		new_shader_uniform("uSamplesStrength")
+		new_shader_uniform("uRenderBackground")
 	}
 	
-	with (shader_map[?shader_high_raytrace_depth_normal])
+	with (shader_map[?shader_high_depth_normal])
 	{
 		new_shader_uniform("uNear")
 		new_shader_uniform("uFar")
-		new_shader_uniform("uEmissive")
 		new_shader_uniform("uIsWater")
-		
-		new_shader_sampler("uTextureMaterial")
-		new_shader_uniform("uTexScaleMaterial")
-		new_shader_uniform("uMaterialUseGlossiness")
 		
 		new_shader_sampler("uTextureNormal")
 		new_shader_uniform("uTexScaleNormal")
@@ -531,6 +501,7 @@ function shader_startup()
 	{
 		new_shader_uniform("uMetallic")
 		new_shader_uniform("uRoughness")
+		new_shader_uniform("uEmissive")
 		new_shader_uniform("uIsWater")
 		
 		new_shader_sampler("uTextureMaterial")

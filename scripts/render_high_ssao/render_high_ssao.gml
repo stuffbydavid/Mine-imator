@@ -2,32 +2,6 @@
 
 function render_high_ssao()
 {
-	var depthsurf, normalsurf, emissivesurf;
-	
-	// Get depth and normal information
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-	depthsurf = render_surface[1]
-	normalsurf = render_surface[2]
-	emissivesurf = render_surface[3]
-	surface_set_target_ext(0, depthsurf)
-	surface_set_target_ext(1, normalsurf)
-	surface_set_target_ext(2, emissivesurf)
-	{
-		gpu_set_blendmode_ext(bm_one, bm_zero)
-		
-		draw_clear_alpha(c_black, 0)
-		render_world_start(5000)
-		render_world(e_render_mode.HIGH_SSAO_DEPTH_NORMAL)
-		render_world_done()
-		
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
-	
-	render_sample_noise_texture = render_get_noise_texture(1)
-	
 	// Calculate SSAO
 	render_surface_ssao = surface_require(render_surface_ssao, render_width, render_height)
 	surface_set_target(render_surface_ssao)
@@ -38,7 +12,7 @@ function render_high_ssao()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_ssao_set(depthsurf, normalsurf, emissivesurf)
+			shader_high_ssao_set(render_surface_depth, render_surface_normal_ext, render_surface_emissive)
 		}
 		draw_blank(0, 0, render_width, render_height) // Blank quad
 		with (render_shader_obj)
@@ -51,8 +25,8 @@ function render_high_ssao()
 	repeat (project_render_ssao_blur_passes)
 	{
 		var ssaosurftemp;
-		render_surface[3] = surface_require(render_surface[3], render_width, render_height)
-		ssaosurftemp = render_surface[3]
+		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+		ssaosurftemp = render_surface[0]
 		
 		render_shader_obj = shader_map[?shader_high_ssao_blur]
 		with (render_shader_obj)
@@ -62,7 +36,7 @@ function render_high_ssao()
 		surface_set_target(ssaosurftemp)
 		{
 			with (render_shader_obj)
-				shader_high_ssao_blur_set(depthsurf, normalsurf, 1, 0)
+				shader_high_ssao_blur_set(render_surface_depth, render_surface_normal_ext, 1, 0)
 			draw_surface_exists(render_surface_ssao, 0, 0)
 		}
 		surface_reset_target()
@@ -71,7 +45,7 @@ function render_high_ssao()
 		surface_set_target(render_surface_ssao)
 		{
 			with (render_shader_obj)
-				shader_high_ssao_blur_set(depthsurf, normalsurf, 0, 1)
+				shader_high_ssao_blur_set(render_surface_depth, render_surface_normal_ext, 0, 1)
 			draw_surface_exists(ssaosurftemp, 0, 0)
 		}
 		surface_reset_target()
@@ -83,12 +57,6 @@ function render_high_ssao()
 	
 	if (render_pass = e_render_pass.AO)
 		render_pass_surf = surface_duplicate(render_surface_ssao)
-	
-	if (render_pass = e_render_pass.DEPTH_U24)
-		render_pass_surf = surface_duplicate(depthsurf)
-	
-	if (render_pass = e_render_pass.NORMAL)
-		render_pass_surf = surface_duplicate(normalsurf)
 	
 	return render_surface_ssao
 }

@@ -3,10 +3,13 @@
 
 function render_high_fog(basesurf)
 {
-	var fogsurf;
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	fogsurf = render_surface[0]
+	var fogsurf, prevsurf;
+	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	fogsurf = render_surface[1]
+	prevsurf = render_surface[2]
 	
+	// Get fog strength
 	surface_set_target(fogsurf)
 	{
 		draw_clear(c_black)
@@ -17,21 +20,18 @@ function render_high_fog(basesurf)
 	surface_reset_target()
 	
 	// Copy into separate surface
-	render_surface[4] = surface_require(render_surface[4], render_width, render_height);
-	var scenesurf = render_surface[4];
-	
-	surface_set_target(scenesurf)
+	surface_set_target(prevsurf)
 	{
 		draw_clear_alpha(c_black, 0)
 		draw_surface_exists(basesurf, 0, 0)
 	}
 	surface_reset_target()
 	
-	// Scene post processing
+	// Apply fog
 	surface_set_target(basesurf)
 	{
 		draw_clear_alpha(c_black, 0)
-		draw_surface_exists(scenesurf, 0, 0)
+		draw_surface_exists(prevsurf, 0, 0)
 		
 		// Draw fog
 		if (background_fog_show)

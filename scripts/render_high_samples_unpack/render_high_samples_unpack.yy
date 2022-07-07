@@ -3,10 +3,10 @@
   "isCompatibility": false,
   "parent": {
     "name": "High quality",
-    "path": "folders/Scripts/Render/Shaders/Set/High quality.yy",
+    "path": "folders/Scripts/Render/High quality.yy",
   },
   "resourceVersion": "1.0",
-  "name": "shader_high_light_base_set",
+  "name": "render_high_samples_unpack",
   "tags": [],
   "resourceType": "GMScript",
 }
