@@ -52,6 +52,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.ATTRACTOR:
 		case e_value.CAM_ROTATE:
 		case e_value.CAM_SHAKE:
+		case e_value.CAM_SHAKE_MODE:
 		case e_value.CAM_DOF:
 		case e_value.CAM_DOF_FRINGE:
 		case e_value.CAM_BLOOM:

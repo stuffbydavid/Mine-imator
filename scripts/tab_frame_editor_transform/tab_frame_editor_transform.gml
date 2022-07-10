@@ -28,7 +28,11 @@ function tab_frame_editor_transform()
 	microani_update(app_mouse_box(dx, taby, dw, dy - taby) && content_mouseon, false, false)
 	
 	// Bend
+	taby = dy
+	microani_set("tabbend", null, false, false, false)
 	tab_frame_editor_bend()
+	microani_set("tabbend", null, false, false, false)
+	microani_update(app_mouse_box(dx, taby, dw, dy - taby) && content_mouseon, false, false)
 	
 	// Path point settings
 	tab_frame_editor_path_point()

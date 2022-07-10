@@ -188,6 +188,8 @@
 		},
 		"scaleseparate": "Separate scale",
 		"scalecombine": "Combine scale",
+		"bendsliders": "Display as sliders",
+		"bendwheels": "Display as wheels",
 		"restorekeybind": "Restore keybind",
 		"pathsetlength": "Set path length"
 	},
@@ -2806,10 +2808,11 @@
 			"y": "Y",
 			"z": "Z"
 		},
+		"bend": "Bend",
 		"bend/": {
-			"x": "Bend X",
-			"y": "Bend Y",
-			"z": "Bend Z"
+			"x": "X",
+			"y": "Y",
+			"z": "Z"
 		},
 		"pathpoint/": {
 			"angle": "Angle",
@@ -2923,6 +2926,9 @@
 			},
 			"camerashake": "Camera shake",
 			"camerashake/": {
+				"mode": "Mode",
+				"positional": "Positional",
+				"rotational": "Rotational",
 				"strength": "Strength",
 				"strength/": {
 					"x": "X",

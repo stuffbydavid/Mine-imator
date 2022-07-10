@@ -155,12 +155,24 @@ function draw_textfield_group()
 		
 		if (axiscolor)
 		{
-			if (i = 0)
-				labelcolor = c_axisred
-			else if (i = 1)
-				labelcolor = c_axisgreen
-			else
-				labelcolor = c_axisblue
+			if (axiscolor = 1)
+			{
+				if (axis_edit = X)
+					labelcolor = c_axisred
+				else if (axis_edit = Y)
+					labelcolor = (setting_z_is_up ? c_axisgreen : c_axisblue)
+				else
+					labelcolor = (setting_z_is_up ? c_axisblue : c_axisgreen)
+			}
+			else if (axiscolor = 2)
+			{
+				if (axis_edit = X)
+					labelcolor = c_axiscyan
+				else if (axis_edit = Y)
+					labelcolor = (setting_z_is_up ? c_axisyellow : c_axismagenta)
+				else
+					labelcolor = (setting_z_is_up ? c_axismagenta : c_axisyellow)
+			}
 			
 			labelalpha = 1
 		}

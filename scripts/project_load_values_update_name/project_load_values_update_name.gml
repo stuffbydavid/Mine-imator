@@ -13,6 +13,18 @@ function project_load_values_update_name(name)
 	{
 		if (name = "BRIGHTNESS")
 			return "EMISSIVE"
+		
+		if (name = "CAM_SHAKE_HORIZONTAL_SPEED")
+			return "CAM_SHAKE_SPEED_X"
+		
+		if (name = "CAM_SHAKE_VERTICAL_SPEED")
+			return "CAM_SHAKE_SPEED_Y"
+		
+		if (name = "CAM_SHAKE_HORIZONTAL_STRENGTH")
+			return "CAM_SHAKE_STRENGTH_X"
+		
+		if (name = "CAM_SHAKE_VERTICAL_STRENGTH")
+			return "CAM_SHAKE_STRENGTH_Y"
 	}
 	
 	return name;

@@ -10,7 +10,7 @@ function window_draw_load_assets()
 	}
 	
 	// Background
-	draw_clear(c_level_middle)
+	draw_clear(c_level_top)
 	
 	if (load_assets_stage = "done")
 	{
@@ -29,13 +29,15 @@ function window_draw_load_assets()
 	}
 	
 	var xoff, yoff;
-	xoff = (window_width/2) - (740/2)
-	yoff = (window_height/2) - (450/2)
+	xoff = floor((window_width/2) - (740/2))
+	yoff = floor((window_height/2) - (450/2))
 	
 	content_x = 28
 	content_y = 28
 	content_width = window_width - 56
 	content_height = window_height - 56
+	
+	draw_box(xoff, yoff, 740, 450, false, c_level_middle, 1)
 	
 	// Pattern
 	var pattern = (setting_theme = theme_light ? 0 : 1);
@@ -60,6 +62,7 @@ function window_draw_load_assets()
 	draw_box(xoff, yoff + 450 - 8, 740 * load_assets_progress, 8, false, c_accent, 1)
 	
 	draw_outline(xoff, yoff, 740, 450, 1, c_border, a_border, true)
+	draw_dropshadow(xoff, yoff, 740, 450, c_black, 1)
 	
 	current_step++
 }

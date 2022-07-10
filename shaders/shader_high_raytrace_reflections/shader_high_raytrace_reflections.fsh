@@ -16,6 +16,8 @@ uniform mat4 uProjMatrixInv;
 uniform float uFadeAmount;
 uniform vec4 uFallbackColor;
 
+uniform int uGammaCorrect;
+
 float unpackFloat2(float expo, float dec)
 {
 	return (expo * 255.0 * 255.0) + (dec * 255.0);
@@ -57,7 +59,8 @@ vec3 posFromBuffer(vec2 coord, float depth)
 
 void main()
 {
-	vec3 refColor = uFallbackColor.rgb;
+	float gamma = (uGammaCorrect > 0 ? 2.2 : 1.0);
+	vec3 refColor = pow(uFallbackColor.rgb, vec3(gamma));
 	
 	// Get ray coord
 	vec4 rtCoord = vec4(texture2D(uRaytraceBuffer, vTexCoord).rg, texture2D(uRaytrace2Buffer, vTexCoord).rg);
@@ -90,7 +93,7 @@ void main()
 		vis *= clamp((texture2D(uMaterialBuffer, vTexCoord).g - .75) / (.4 - .75), 0.0, 1.0);
 		
 		// Mix in fallback via fresnel if ray hit a reflective surface ¯\_(ツ)_/¯
-		vec3 surfCol = mix(texture2D(uDiffuseBuffer, rayUV).rgb, uFallbackColor.rgb, texture2D(uMaterialBuffer, rayUV).r);
+		vec3 surfCol = mix(pow(texture2D(uDiffuseBuffer, rayUV).rgb, vec3(gamma)), refColor, texture2D(uMaterialBuffer, rayUV).r);
 		refColor = mix(refColor, surfCol, vis);
 	}
 	

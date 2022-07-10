@@ -179,6 +179,7 @@ function tl_update_values()
 		tl_update_values_ease(e_value.CAM_ROTATE_ANGLE_Z)
 		
 		tl_update_values_ease(e_value.CAM_SHAKE)
+		tl_update_values_ease(e_value.CAM_SHAKE_MODE)
 		tl_update_values_ease(e_value.CAM_SHAKE_STRENGTH_X)
 		tl_update_values_ease(e_value.CAM_SHAKE_STRENGTH_Y)
 		tl_update_values_ease(e_value.CAM_SHAKE_STRENGTH_Z)

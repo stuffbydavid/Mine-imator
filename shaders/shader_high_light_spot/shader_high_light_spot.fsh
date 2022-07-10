@@ -70,38 +70,29 @@ float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 }
 
 #extension GL_OES_standard_derivatives : enable
-vec3 getMappedNormal(vec3 normal, vec3 viewPos, vec3 worldPos, vec2 uv)
+vec3 getMappedNormal(vec3 N, vec3 pos, vec2 uv)
 {
-	// Get normal value from normal map
-	vec2 normtex = uv;
-	if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
-		normtex = mod(normtex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
-	
-	vec3 normalCoord = texture2D(uTextureNormal, normtex).rgb * 2.0 - 1.0;
-	
-	if (normalCoord.z < 0.0)
-		return normal;
-	
 	// Get edge derivatives
-	vec3 posDx = dFdx(worldPos);
-	vec3 posDy = dFdy(worldPos);
-	vec2 texDx = dFdx(uv);
-	vec2 texDy = dFdy(uv);
+	vec3 posDx = dFdx(pos);
+	vec3 posDy = dFdy(pos);
+	vec2 uvDx = dFdx(uv);
+	vec2 uvDy = dFdy(uv);
 	
 	// Calculate tangent/bitangent
-	vec3 posPx = cross(normal, posDx);
-	vec3 posPy = cross(posDy, normal);
-	vec3 T = normalize(posPy * texDx.x + posPx * texDy.x);
-	T = normalize(T - dot(T, normal) * normal);
-	vec3 B = cross(normal, T);
+	vec3 posPx = cross(N, posDx);
+	vec3 posPy = cross(posDy, N);
+	vec3 T = normalize(posPy * uvDx.x + posPx * uvDy.x);
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
 	
 	// Create a Scale-invariant frame
 	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
 	
 	// Build TBN matrix to transform mapped normal with mesh
-	mat3 TBN = mat3(T * invmax, B * invmax, normal);
+	mat3 TBN = mat3(T * invmax, B * invmax, N);
 	
-	return normalize(TBN * normalCoord);
+	vec3 texColor = normalize(texture2D(uTextureNormal, uv).rgb * 2.0 - 1.0);
+	return normalize(TBN * texColor);
 }
 
 float unpackDepth(vec4 c)
@@ -131,11 +122,15 @@ void main()
 		if (uTexScaleMaterial.x < 1.0 || uTexScaleMaterial.y < 1.0)
 			texMat = mod(texMat * uTexScaleMaterial, uTexScaleMaterial); // GM sprite bug workaround
 		
+		vec2 normalTex = vTexCoord;
+		if (uTexScaleNormal.x < 1.0 || uTexScaleNormal.y < 1.0)
+			normalTex = mod(normalTex * uTexScaleNormal, uTexScaleNormal); // GM sprite bug workaround
+		
 		vec3 mat = texture2D(uTextureMaterial, texMat).rgb;
 		float roughness = max(0.02, 1.0 - ((1.0 - uRoughness) * (uMaterialUseGlossiness == 0 ? 1.0 - mat.r : mat.r)));
 		float metallic = (mat.g * uMetallic);
 		
-		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, vPosition, vTexCoord);
+		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, normalTex);
 		
 		float dif = 0.0;
 		float difMask = 0.0;

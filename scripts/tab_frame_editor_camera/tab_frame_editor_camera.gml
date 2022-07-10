@@ -126,6 +126,13 @@ function tab_frame_editor_camera()
 		{
 			tab_collapse_start()
 			
+			// Mode
+			tab_control_togglebutton()
+			togglebutton_add("frameeditorcameracamerashakerotational", null, 0, tl_edit.value[e_value.CAM_SHAKE_MODE] = 0, action_tl_frame_cam_shake_mode)
+			togglebutton_add("frameeditorcameracamerashakepositional", null, 1, tl_edit.value[e_value.CAM_SHAKE_MODE] = 1, action_tl_frame_cam_shake_mode)
+			draw_togglebutton("frameeditorcameracamerashakemode", dx, dy)
+			tab_next()
+			
 			// Strength
 			axis_edit = X
 			textfield_group_add("frameeditorcameracamerashakestrengthx", round(tl_edit.value[e_value.CAM_SHAKE_STRENGTH_X] * 100), 100, action_tl_frame_cam_shake_strength, axis_edit, tab.camera.tbx_shake_strength_x, null, 1, 0, no_limit)

@@ -19,7 +19,18 @@ function tab_frame_editor_buttons()
 		if (frame_editor.transform.scale_all)
 			draw_set_alpha(1)
 		
-		draw_button_icon(name + "link", bx, by, 24, 24, frame_editor.transform.scale_all, icons.LINK, action_group_combine_scale, false, "contextmenuscalecombine")
+		draw_button_icon(name + "link", bx, by, 24, 24, frame_editor.transform.scale_all, icons.LINK, action_group_combine_scale, false, frame_editor.transform.scale_all ? "contextmenuscaleseparate" : "contextmenuscalecombine")
+		bx -= 28
+		
+		draw_set_alpha(alpha)
+	}
+	
+	if (context_menu_group_temp = e_context_group.BEND && setting_advanced_mode)
+	{
+		if (frame_editor.transform.bend_sliders)
+			draw_set_alpha(1)
+		
+		draw_button_icon(name + "sliders", bx, by, 24, 24, frame_editor.transform.bend_sliders, icons.SLIDERS, action_group_bend_sliders, false, frame_editor.transform.bend_sliders ? "contextmenubendwheels" : "contextmenubendsliders")
 		bx -= 28
 		
 		draw_set_alpha(alpha)

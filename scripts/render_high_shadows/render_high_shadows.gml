@@ -301,6 +301,12 @@ function render_high_shadows()
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
+	
+	if (render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.INDIRECT_SHADOWS) 
+		render_pass_surf = surface_duplicate(render_surface_shadows)
+	
+	if (render_pass = e_render_pass.SPECULAR)
+		render_pass_surf = surface_duplicate(render_surface_specular)
 }
 
 function render_high_shadows_shadowless()
@@ -375,10 +381,4 @@ function render_high_shadows_shadowless()
 			
 		ds_list_clear(render_shadowless_point_list)
 	}
-	
-	if (render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.INDIRECT_SHADOWS) 
-		render_pass_surf = surface_duplicate(render_surface_shadows)
-	
-	if (render_pass = e_render_pass.SPECULAR)
-		render_pass_surf = surface_duplicate(render_surface_specular)
 }

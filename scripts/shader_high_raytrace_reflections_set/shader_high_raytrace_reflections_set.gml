@@ -27,4 +27,5 @@ function shader_high_raytrace_reflections_set(raysurf, raysurf2, diffusesurf, no
 		render_set_uniform_color("uFallbackColor", render_background ? app.background_sky_color_final : c_black, 1)
 	
 	render_set_uniform("uFadeAmount", app.project_render_reflections_fade_amount)
+	render_set_uniform_int("uGammaCorrect", app.project_render_gamma_correct)
 }

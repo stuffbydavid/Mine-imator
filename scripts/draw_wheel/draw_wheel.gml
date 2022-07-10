@@ -88,7 +88,7 @@ function draw_wheel()
 	}
 	
 	// Wheel click
-	if (app_mouse_box(xx - rad - 10, yy - rad - 10, rad * 2 + 20, rad * 2 + 20) && content_mouseon)
+	if (app_mouse_box(xx - rad, yy - rad, rad * 2, rad * 2) && content_mouseon)
 	{
 		mouse_cursor = cr_handpoint
 		

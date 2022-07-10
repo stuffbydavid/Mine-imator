@@ -73,7 +73,7 @@ function app_startup_themes()
 		blue = hex_to_color("1370FB")
 		pink = hex_to_color("FF5FFF")
 		cyan = hex_to_color("51C2FF")
-		yellow = hex_to_color("FFD969")
+		yellow = hex_to_color("F4CC5D")
 		magenta = hex_to_color("FF37E8")
 		
 		toast_color[e_toast.INFO] = hex_to_color("158AF5")

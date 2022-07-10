@@ -73,6 +73,7 @@ function app_startup_lists()
 		"CAM_ROTATE_ANGLE_XY",
 		"CAM_ROTATE_ANGLE_Z",
 		"CAM_SHAKE",
+		"CAM_SHAKE_MODE",
 		"CAM_SHAKE_STRENGTH_X",
 		"CAM_SHAKE_STRENGTH_Y",
 		"CAM_SHAKE_STRENGTH_Z",

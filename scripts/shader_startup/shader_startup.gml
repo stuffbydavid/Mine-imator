@@ -495,6 +495,7 @@ function shader_startup()
 		new_shader_sampler("uReflectionsBuffer")
 		new_shader_sampler("uMaterialBuffer")
 		new_shader_sampler("uDiffuseBuffer")
+		new_shader_uniform("uGammaCorrect")
 	}
 	
 	with (shader_map[?shader_high_material])
@@ -585,6 +586,7 @@ function shader_startup()
 		new_shader_uniform("uProjMatrixInv")
 		new_shader_uniform("uFallbackColor")
 		new_shader_uniform("uFadeAmount")
+		new_shader_uniform("uGammaCorrect")
 	}
 	
 	with (shader_map[?shader_high_indirect_blur])

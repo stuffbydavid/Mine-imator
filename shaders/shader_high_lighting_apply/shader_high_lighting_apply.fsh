@@ -27,6 +27,8 @@ void main()
 	float gamma = (uGammaCorrect > 0 ? 2.2 : 1.0);
 	
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
+	
+	// Apply gamma to base
 	baseColor.rgb = pow(baseColor.rgb, vec3(gamma));
 	
 	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord); // R = metallic, B = fresnel
@@ -60,10 +62,7 @@ void main()
 	
 	// If reflections are disabled, add fallback color for fresnel
 	if (uReflectionsEnabled == 0)
-	{
-		baseColor.rgb = clamp(baseColor.rgb, 0.0, 1.0);
 		baseColor.rgb += spec;
-	}
 	
 	if (uShadowsEnabled > 0)
 		baseColor.rgb += texture2D(uSpecular, vTexCoord).rgb;

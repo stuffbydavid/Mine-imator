@@ -18,12 +18,12 @@ function project_reset_render()
 	
 	project_render_subsurface_samples = 7
 	
-	project_render_indirect = false//true
+	project_render_indirect = true
 	project_render_indirect_precision = .3
 	project_render_indirect_blur_radius = 1
 	project_render_indirect_strength = 1
 	
-	project_render_reflections = false//true
+	project_render_reflections = true
 	project_render_reflections_precision = .3
 	project_render_reflections_thickness = 1
 	project_render_reflections_fade_amount = 1

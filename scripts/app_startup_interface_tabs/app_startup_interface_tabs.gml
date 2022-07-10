@@ -453,6 +453,7 @@ function app_startup_interface_tabs()
 			tbx_sca_z = new_textbox_decimals()
 			
 			// Bend
+			bend_sliders = false
 			tbx_bend[0] = new_textbox_ndecimals()
 			tbx_bend[0].suffix = "°"
 			tbx_bend[1] = new_textbox_ndecimals()

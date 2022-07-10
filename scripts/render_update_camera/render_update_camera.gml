@@ -29,16 +29,20 @@ function render_update_camera()
 		// Camera shake
 		if (render_camera.value[e_value.CAM_SHAKE])
 		{			
-			var shakerot = vec3(
+			var shake = vec3(
 				simplex_lib((app.timeline_marker/app.project_tempo) * render_camera.value[e_value.CAM_SHAKE_SPEED_X]) * render_camera.value[e_value.CAM_SHAKE_STRENGTH_X],
 				simplex_lib((app.timeline_marker/app.project_tempo) * render_camera.value[e_value.CAM_SHAKE_SPEED_Y], 1000) * render_camera.value[e_value.CAM_SHAKE_STRENGTH_Y],
 				simplex_lib((app.timeline_marker/app.project_tempo) * render_camera.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * render_camera.value[e_value.CAM_SHAKE_STRENGTH_Z],
 			);
 			
-			// Create rotation matrix
-			var shakemat = matrix_create(vec3(0), shakerot, vec3(1));
+			// Create matrix
+			var shakemat;
 			
-			//var shakemat = matrix_create(shakerot, vec3(0), vec3(1));
+			if (render_camera.value[e_value.CAM_SHAKE_MODE])
+				shakemat = matrix_create(shake, vec3(0), vec3(1))
+			else
+				shakemat = matrix_create(vec3(0), shake, vec3(1))
+			
 			mat = matrix_multiply(shakemat, mat)
 			pos = point3D(mat[MAT_X], mat[MAT_Y], mat[MAT_Z])
 		}

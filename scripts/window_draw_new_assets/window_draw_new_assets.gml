@@ -16,11 +16,20 @@ function window_draw_new_assets()
 	dw = content_width
 	dh = content_height
 	
+	draw_outline(dx, dy, dw, dh, 1, c_border, a_border, true)
+	draw_dropshadow(dx, dy, dw, dh, c_black, 1)
+	
 	// Cover image
 	if (new_assets_image_texture != null)
 	{
 		scissor_start(dx, dy, dw, 200)
-		draw_sprite(new_assets_image_texture, 0, dx + dw/2 - (sprite_get_width(new_assets_image_texture)/2), dy)
+		
+		var scale = (dw / sprite_get_width(new_assets_image_texture));
+		
+		gpu_set_tex_filter(true)
+		draw_sprite_ext(new_assets_image_texture, 0, dx, dy, scale, scale, 0, c_white, 1)
+		gpu_set_tex_filter(false)
+		
 		scissor_done()
 	}
 	
@@ -111,7 +120,7 @@ function window_draw_new_assets()
 					text = "• " + string_delete(text, 1, 2)
 				
 				draw_label(text, dx, dy, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
-				dy += 13
+				dy += 17
 			}
 		}
 		
