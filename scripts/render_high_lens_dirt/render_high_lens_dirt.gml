@@ -25,7 +25,7 @@ function render_high_lens_dirt(prevsurf)
 		surface_set_target(lenssurftemp)
 		{
 			with (render_shader_obj)
-				shader_blur_set(render_width, render_height, radius, 1, 0)
+				shader_blur_set(render_blur_kernel, radius, 1, 0)
 			draw_surface_exists(render_surface_lens, 0, 0)
 		}
 		surface_reset_target()
@@ -34,7 +34,7 @@ function render_high_lens_dirt(prevsurf)
 		surface_set_target(render_surface_lens)
 		{
 			with (render_shader_obj)
-				shader_blur_set(render_width, render_height, radius, 0, 1)
+				shader_blur_set(render_blur_kernel, radius, 0, 1)
 			draw_surface_exists(lenssurftemp, 0, 0)
 		}
 		surface_reset_target()

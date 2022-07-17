@@ -34,29 +34,26 @@ vec2 packFloat2(float f)
 }
 
 #extension GL_OES_standard_derivatives : enable
-vec3 getMappedNormal(vec3 N, vec3 pos, vec2 uv)
+vec3 getMappedNormal(vec3 N, vec3 view, vec2 uv)
 {
 	// Get edge derivatives
-	vec3 posDx = dFdx(pos);
-	vec3 posDy = dFdy(pos);
+	vec3 posDx = dFdx(view);
+	vec3 posDy = dFdy(view);
 	vec2 uvDx = dFdx(uv);
 	vec2 uvDy = dFdy(uv);
 	
 	// Calculate tangent/bitangent
 	vec3 posPx = cross(N, posDx);
 	vec3 posPy = cross(posDy, N);
-	vec3 T = normalize(posPy * uvDx.x + posPx * uvDy.x);
-	T = normalize(T - dot(T, N) * N);
-	vec3 B = cross(N, T);
+	vec3 T = posPy * uvDx.x + posPx * uvDy.x;
+	vec3 B = posPy * uvDx.y + posPx * uvDy.y;
 	
 	// Create a Scale-invariant frame
-	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
-	
-	// Build TBN matrix to transform mapped normal with mesh
+	float invmax = inversesqrt(max(dot(T, T), dot(B, B)));
 	mat3 TBN = mat3(T * invmax, B * invmax, N);
 	
 	vec3 texColor = normalize(texture2D(uTextureNormal, uv).rgb * 2.0 - 1.0);
-	return normalize(TBN * texColor);
+	return TBN * texColor;
 }
 
 void main()
@@ -78,7 +75,7 @@ void main()
 	gl_FragData[0] = packDepth(vDepth);
 	
 	// Calculate normal
-	vec3 N = getMappedNormal(normalize(vNormal), vWorldPosition, normalTex);
+	vec3 N = getMappedNormal(normalize(vNormal), vWorldPosition, vTexCoord);
 	N = normalize(N * vWorldInv);
 	N = normalize(vWorldViewInv * N);
 	N = packNormal(N).xyz;

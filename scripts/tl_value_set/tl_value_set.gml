@@ -67,7 +67,7 @@ function tl_value_set()
 				value[e_value.SOUND_OBJ].count--
 			
 			var nval;
-			if (tl_value_is_string(vid))
+			if (tl_value_is_string(vid) || tl_value_is_texture(vid))
 				nval = val
 			else if (mul)
 				nval = value[vid] * val;
@@ -97,7 +97,7 @@ function tl_value_set()
 					value[vid] = history_data.kf_set_old_value[k, history_data.par_set_n]
 				
 				var nval;
-				if (tl_value_is_string(vid))
+				if (tl_value_is_string(vid) || tl_value_is_texture(vid))
 					nval = val
 				else if (mul)
 					nval = value[vid] * val;

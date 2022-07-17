@@ -59,7 +59,7 @@ function render_high_glow()
 		surface_set_target(glowsurftemp)
 		{
 			with (render_shader_obj)
-				shader_blur_set(render_width, render_height, radius, 1, 0)
+				shader_blur_set(render_blur_kernel, radius, 1, 0)
 			
 			if (i = 0)
 				draw_surface_exists(glowcolorsurf, 0, 0)
@@ -72,7 +72,7 @@ function render_high_glow()
 		surface_set_target(glowsurf)
 		{
 			with (render_shader_obj)
-				shader_blur_set(render_width, render_height, radius, 0, 1)
+				shader_blur_set(render_blur_kernel, radius, 0, 1)
 			draw_surface_exists(glowsurftemp, 0, 0)
 		}
 		surface_reset_target()

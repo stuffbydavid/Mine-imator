@@ -90,7 +90,7 @@ void main()
 	F0 = mix(mix(0.04, 0.0, roughness), 1.0, metallic);
 	F90 = mix(mix(0.7, 0.0, roughness), 1.0, metallic);
 	
-	vec3 N = getMappedNormal(normalize(vNormal), vPosition, normalTex);
+	vec3 N = getMappedNormal(vNormal, vPosition, normalTex);
 	vec3 V = normalize(vPosition - uCameraPosition);
 	vec3 L = -normalize(reflect(V, N));
 	vec3 H = V + L;

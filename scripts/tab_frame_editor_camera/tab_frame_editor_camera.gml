@@ -261,16 +261,16 @@ function tab_frame_editor_camera()
 	{
 		tab_collapse_start()
 		
-		tab_control_meter()
-		draw_meter("frameeditorcamerabloomthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_THRESHOLD] * 100), 50, 0, 100, 85, 1, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold)
+		tab_control_dragger()
+		draw_dragger("frameeditorcamerabloomthreshold", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_THRESHOLD] * 100), .1, 0, no_limit, 85, 1, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold)
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("frameeditorcamerabloomradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_RADIUS] * 100), 50, 0, 300, 100, 1, tab.camera.tbx_bloom_radius, action_tl_frame_cam_bloom_radius)
+		tab_control_dragger()
+		draw_dragger("frameeditorcamerabloomradius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_RADIUS] * 100), .1, 0, no_limit, 100, 1, tab.camera.tbx_bloom_radius, action_tl_frame_cam_bloom_radius)
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("frameeditorcamerabloomintensity", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_INTENSITY] * 100), 50, 0, 300, 40, 1, tab.camera.tbx_bloom_intensity, action_tl_frame_cam_bloom_intensity)
+		tab_control_dragger()
+		draw_dragger("frameeditorcamerabloomintensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_INTENSITY] * 100), .1, 0, no_limit, 40, 1, tab.camera.tbx_bloom_intensity, action_tl_frame_cam_bloom_intensity)
 		tab_next()
 		
 		// Advanced mode only
@@ -281,7 +281,7 @@ function tab_frame_editor_camera()
 			tab_next()
 			
 			tab_control_color()
-			draw_button_color("frameeditorcamerabloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend)
+			draw_button_color("frameeditorcamerabloomblend", dx, dy, floor(dw/2), tl_edit.value[e_value.CAM_BLOOM_BLEND], c_white, false, action_tl_frame_cam_bloom_blend)
 			tab_next()
 		}
 		

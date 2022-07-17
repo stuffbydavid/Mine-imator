@@ -130,7 +130,7 @@ void main()
 		float roughness = max(0.02, 1.0 - ((1.0 - uRoughness) * (uMaterialUseGlossiness == 0 ? 1.0 - mat.r : mat.r)));
 		float metallic = (mat.g * uMetallic);
 		
-		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, normalTex);
+		vec3 normal = getMappedNormal(vNormal, vPosition, normalTex);
 		
 		float dif = 0.0;
 		float difMask = 0.0;

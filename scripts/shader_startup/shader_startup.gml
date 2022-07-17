@@ -402,6 +402,8 @@ function shader_startup()
 		new_shader_uniform("uScreenSize")
 		new_shader_uniform("uRadius")
 		new_shader_uniform("uDirection")
+		new_shader_uniform("uKernel")
+		new_shader_uniform("uSamples")
 	}
 	
 	with (shader_map[?shader_color_correction])

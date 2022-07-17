@@ -248,8 +248,11 @@ void main()
 	// Full ray coord defaults to no hit in resolve
 	vec2 rayHit = vec2(1.0);
 	
+	vec2 pixel = floor(vTexCoord * uScreenSize);
+	float res = mod((pixel.x + pixel.y), 2.0);
+	
 	// Depth test
-	if (texture2D(uDepthBuffer, vTexCoord).a > 0.0)
+	if ((texture2D(uDepthBuffer, vTexCoord).a * res) > 0.0)
 	{
 		if (uSpecularRay == 1) // Reflection ray
 		{

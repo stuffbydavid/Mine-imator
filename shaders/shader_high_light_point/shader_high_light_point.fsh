@@ -209,7 +209,7 @@ void main()
 		vec3 subsurf = vec3(0.0);
 		
 		// Diffuse factor
-		vec3 normal = getMappedNormal(normalize(vNormal), vPosition, normalTex);
+		vec3 normal = getMappedNormal(vNormal, vPosition, normalTex);
 		float dif = max(0.0, dot(normalize(normal), normalize(uLightPosition - vPosition))); 
 		
 		// Attenuation factor
