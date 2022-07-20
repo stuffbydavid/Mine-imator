@@ -8,6 +8,7 @@ function vbuffer_done()
 		vbuffer_current = argument[0]
 	
 	vertex_end(vbuffer)
+	vbuffer = vbuffer_generate_tangents(vbuffer)
 	vertex_freeze(vbuffer)
 	
 	return vbuffer

@@ -284,6 +284,7 @@ function res_load()
 				while (!is_undefined(key))
 				{
 					vertex_end(model_block_map[?key])
+					model_block_map[?key] = vbuffer_generate_tangents(model_block_map[?key])
 					vertex_freeze(model_block_map[?key])
 					key = ds_map_find_next(model_block_map, key)
 				}

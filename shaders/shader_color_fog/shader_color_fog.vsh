@@ -6,6 +6,7 @@ attribute vec3 in_Normal;
 attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
 attribute vec4 in_Wave;
+attribute vec3 in_Tangent;
 
 varying vec3 vPosition;
 varying float vDepth;

@@ -3,17 +3,18 @@ attribute vec3 in_Normal;
 attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
 attribute vec4 in_Wave;
+attribute vec3 in_Tangent;
 
 uniform float uFar;
 uniform float uNear;
 
-varying vec4 vPosition;
+varying vec3 vPosition;
 varying vec2 vTexCoord;
 varying float vDepth;
 varying vec3 vNormal;
+varying vec3 vTangent;
 varying vec4 vColor;
 varying vec4 vCustom;
-varying vec3 vWorldPosition;
 varying mat3 vWorldInv;
 varying mat3 vWorldViewInv;
 varying float vTime;
@@ -107,22 +108,21 @@ void main()
 {
 	vTexCoord = in_TextureCoord;
 	
-	vec3 pos = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
-	pos += getWindAngle(in_Position);
+	vPosition = (gm_Matrices[MATRIX_WORLD] * vec4(in_Position + getWind(), 1.0)).xyz;
+	vPosition += getWindAngle(in_Position);
 	
-	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(pos, 1.0));
-	
-	// World position
-	vWorldPosition = pos;
+	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 	
 	// Depth
-	vec4 depthPos = (gm_Matrices[MATRIX_VIEW] * vec4(pos, 1.0));
+	vec4 depthPos = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 	vDepth = ((depthPos.z - uNear) / (uFar - uNear));
 	
-	// Normal
-	vWorldInv     = inverse(gm_Matrices[MATRIX_WORLD]);
+	// Create vectors for TBN matrix
 	vWorldViewInv = inverse(gm_Matrices[MATRIX_WORLD_VIEW]);
-	vNormal       = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
+	
+	vNormal       = normalize((vWorldViewInv * in_Normal));
+	vTangent	  = normalize((vWorldViewInv * in_Tangent));
+	vTangent	  = normalize(vTangent - dot(vTangent, vNormal) * vNormal);
 	
 	// Color
 	vColor = in_Colour;

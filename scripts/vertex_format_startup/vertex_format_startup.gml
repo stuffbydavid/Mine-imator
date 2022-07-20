@@ -11,7 +11,8 @@ function vertex_format_startup()
 	vertex_format_add_normal()
 	vertex_format_add_colour()
 	vertex_format_add_texcoord()
-	vertex_format_add_custom(vertex_type_float4, vertex_usage_texcoord)
+	vertex_format_add_custom(vertex_type_float4, vertex_usage_texcoord) // Wind(XY), Emissive(Z), Subsurface(W)
+	vertex_format_add_custom(vertex_type_float3, vertex_usage_texcoord) // Tangent
 	vertex_format = vertex_format_end()
 	
 	vertex_rgb = c_white

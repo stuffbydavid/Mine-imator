@@ -368,6 +368,7 @@
     {"id":{"name":"action_setting_scenery_remove_edges","path":"scripts/action_setting_scenery_remove_edges/action_setting_scenery_remove_edges.yy",},"order":9,},
     {"id":{"name":"action_project_render_block_subsurface","path":"scripts/action_project_render_block_subsurface/action_project_render_block_subsurface.yy",},"order":4,},
     {"id":{"name":"action_project_render_liquid_animation","path":"scripts/action_project_render_liquid_animation/action_project_render_liquid_animation.yy",},"order":5,},
+    {"id":{"name":"vbuffer_generate_tangents","path":"scripts/vbuffer_generate_tangents/vbuffer_generate_tangents.yy",},"order":27,},
     {"id":{"name":"action_project_render_texture_filtering","path":"scripts/action_project_render_texture_filtering/action_project_render_texture_filtering.yy",},"order":0,},
     {"id":{"name":"action_project_render_transparent_block_texture_filtering","path":"scripts/action_project_render_transparent_block_texture_filtering/action_project_render_transparent_block_texture_filtering.yy",},"order":2,},
     {"id":{"name":"action_project_render_texture_filtering_level","path":"scripts/action_project_render_texture_filtering_level/action_project_render_texture_filtering_level.yy",},"order":1,},

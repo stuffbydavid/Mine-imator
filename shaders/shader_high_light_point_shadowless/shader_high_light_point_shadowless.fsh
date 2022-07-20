@@ -19,6 +19,7 @@ uniform float uSpecularStrength;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
+varying vec3 vTangent;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 
@@ -51,29 +52,14 @@ float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
 }
 
-#extension GL_OES_standard_derivatives : enable
-vec3 getMappedNormal(vec3 N, vec3 pos, vec2 uv)
+vec3 getMappedNormal(vec2 uv)
 {
-	// Get edge derivatives
-	vec3 posDx = dFdx(pos);
-	vec3 posDy = dFdy(pos);
-	vec2 uvDx = dFdx(uv);
-	vec2 uvDy = dFdy(uv);
-	
-	// Calculate tangent/bitangent
-	vec3 posPx = cross(N, posDx);
-	vec3 posPy = cross(posDy, N);
-	vec3 T = normalize(posPy * uvDx.x + posPx * uvDy.x);
-	T = normalize(T - dot(T, N) * N);
-	vec3 B = cross(N, T);
-	
-	// Create a Scale-invariant frame
-	float invmax = pow(max(dot(T, T), dot(B, B)), -0.5);  
-	
-	// Build TBN matrix to transform mapped normal with mesh
-	mat3 TBN = mat3(T * invmax, B * invmax, N);
-	
 	vec3 texColor = normalize(texture2D(uTextureNormal, uv).rgb * 2.0 - 1.0);
+	
+	if ((texColor.r + texColor.g + texColor.b) < 0.001)
+		return vNormal;
+	
+	mat3 TBN = mat3(vTangent, cross(vTangent, vNormal), vNormal);
 	return normalize(TBN * texColor);
 }
 
@@ -107,7 +93,7 @@ void main()
 		float roughness = max(0.02, 1.0 - ((1.0 - uRoughness) * (uMaterialUseGlossiness == 0 ? 1.0 - mat.r : mat.r)));
 		float metallic = (mat.g * uMetallic);
 		
-		vec3 normal = getMappedNormal(vNormal, vPosition, normalTex);
+		vec3 normal = getMappedNormal(normalTex);
 		
 		for (int i = 0; i < uLightAmount; i++)
 		{

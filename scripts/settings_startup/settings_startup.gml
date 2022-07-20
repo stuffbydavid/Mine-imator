@@ -108,7 +108,7 @@ function settings_startup()
 	setting_export_image_high_quality = true
 	setting_export_image_watermark = trial_version
 	
-	project_render_pass = e_render_pass.NORMAL
+	project_render_pass = e_render_pass.COMBINED
 	
 	// Viewport
 	setting_snap = false
