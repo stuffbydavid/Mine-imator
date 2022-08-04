@@ -1,6 +1,6 @@
 uniform sampler2D uReflectionsBuffer;
 uniform sampler2D uMaterialBuffer;
-uniform sampler2D uDiffuseBuffer;
+uniform sampler2D uSceneBuffer;
 
 uniform int uGammaCorrect;
 
@@ -18,7 +18,7 @@ void main()
 	if (mat.a > 0.0 && mat.b > 0.0)
 	{
 		reflection = texture2D(uReflectionsBuffer, vTexCoord).rgb;
-		reflection.rgb *= mix(vec3(1.0), texture2D(uDiffuseBuffer, vTexCoord).rgb, mat.r) * mat.b; // Tint with diffuse depending on metallic value (R)
+		reflection.rgb *= mix(vec3(1.0), texture2D(uSceneBuffer, vTexCoord).rgb, mat.r) * mat.b; // Tint with diffuse depending on metallic value (R)
 	}
 	
 	base.rgb += reflection;

@@ -496,7 +496,7 @@ function shader_startup()
 	{
 		new_shader_sampler("uReflectionsBuffer")
 		new_shader_sampler("uMaterialBuffer")
-		new_shader_sampler("uDiffuseBuffer")
+		new_shader_sampler("uSceneBuffer")
 		new_shader_uniform("uGammaCorrect")
 	}
 	
@@ -557,7 +557,9 @@ function shader_startup()
 		new_shader_uniform("uThickness")
 		new_shader_uniform("uFallbackColor")
 		new_shader_uniform("uFadeAmount")
-		new_shader_uniform("uSpecularRay")
+		new_shader_uniform("uRayType")
+		new_shader_uniform("uRayDirection")
+		new_shader_uniform("uRayDistance")
 	}
 	
 	with (shader_map[?shader_high_raytrace_indirect])
@@ -578,9 +580,7 @@ function shader_startup()
 	{
 		new_shader_sampler("uRaytraceBuffer")
 		new_shader_sampler("uRaytrace2Buffer")
-		new_shader_sampler("uNormalBuffer")
-		new_shader_sampler("uNormalBufferExp")
-		new_shader_sampler("uDepthBuffer")
+		new_shader_sampler("uSceneBuffer")
 		new_shader_sampler("uDiffuseBuffer")
 		new_shader_sampler("uMaterialBuffer")
 		new_shader_uniform("uNear")

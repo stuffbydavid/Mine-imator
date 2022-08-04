@@ -1047,4 +1047,13 @@ function enums()
 		MATERIAL,
 		amount
 	}
+	
+	// Raytracing type
+	enum e_raytrace
+	{
+		REFLECTIONS,
+		INDIRECT,
+		SHADOWS_DIRECTIONAL,
+		SHADOWS_POINT
+	}
 }

@@ -17,13 +17,13 @@ function render_high_reflections(surf)
 	surface_set_target_ext(1, rtsurf2) // Surface we have to use much later, no harm in borrowing it now to keep targets low
 	{
 		gpu_set_texrepeat(false)
-		draw_clear_alpha(c_black, 0)
+		draw_clear_alpha(c_white, 1)
 		
 		render_shader_obj = shader_map[?shader_high_raytrace_uv]
 		with (render_shader_obj)
 		{
 		    shader_set(shader)
-		    shader_high_raytrace_uv_set(render_surface_depth, render_surface_normal, render_surface_normal_ext, render_surface_material)
+		    shader_high_raytrace_uv_set(e_raytrace.REFLECTIONS, render_surface_depth, render_surface_normal, render_surface_normal_ext, render_surface_material)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)
@@ -38,13 +38,13 @@ function render_high_reflections(surf)
 	surface_set_target(render_surface_ssr)
 	{
 		gpu_set_texrepeat(false)
-		draw_clear_alpha(c_black, 0)
+		draw_clear_alpha(c_black, 1)
 		
 		render_shader_obj = shader_map[?shader_high_raytrace_reflections]
 		with (render_shader_obj)
 		{
 		    shader_set(shader)
-		    shader_high_raytrace_reflections_set(rtsurf, rtsurf2, surf, render_surface_normal, render_surface_normal_ext, null, render_surface_material)
+		    shader_high_raytrace_reflections_set(rtsurf, rtsurf2, surf, render_surface_diffuse, render_surface_material)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)

@@ -15,13 +15,13 @@ function render_high_indirect()
 	surface_set_target_ext(1, tempsurf2)
 	{
 		gpu_set_texrepeat(false)
-		draw_clear_alpha(c_black, 0)
+		draw_clear_alpha(c_white, 1)
 		
 		render_shader_obj = shader_map[?shader_high_raytrace_uv]
 		with (render_shader_obj)
 		{
 		    shader_set(shader)
-		    shader_high_raytrace_uv_set(render_surface_depth, render_surface_normal, render_surface_normal_ext)
+		    shader_high_raytrace_uv_set(e_raytrace.INDIRECT, render_surface_depth, render_surface_normal, render_surface_normal_ext)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)
@@ -36,7 +36,7 @@ function render_high_indirect()
 	surface_set_target(render_surface_indirect)
 	{
 		gpu_set_texrepeat(false)
-		draw_clear_alpha(c_black, 0)
+		draw_clear_alpha(c_black, 1)
 		
 		render_shader_obj = shader_map[?shader_high_raytrace_indirect]
 		with (render_shader_obj)

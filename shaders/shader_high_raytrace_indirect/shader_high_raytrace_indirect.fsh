@@ -58,6 +58,11 @@ void main()
 	
 	// Get ray coord
 	vec4 rtCoord = vec4(texture2D(uRaytraceBuffer, vTexCoord).rg, texture2D(uRaytrace2Buffer, vTexCoord).rg);
+	
+	// Full X/Y UV, no hit
+	if (rtCoord.r == 1.0)
+		discard;
+	
 	vec2 rayUV = vec2(unpackFloat2(rtCoord.r, rtCoord.g), unpackFloat2(rtCoord.b, rtCoord.a)) / (255.0 * 255.0);
 	
 	// Get origin/hit normal
@@ -71,10 +76,6 @@ void main()
 	float dif = max(0.0, dot(-hitNormal, rayDir));
 	
 	giColor = (texture2D(uLightingBuffer, rayUV).rgb * dif) * texture2D(uDiffuseBuffer, rayUV).rgb;
-	
-	// Full X/Y UV, no hit
-	if (rtCoord.r == 1.0)
-		giColor = vec3(0.0);
 	
 	gl_FragColor = vec4(giColor, 1.0);
 }

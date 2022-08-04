@@ -1,4 +1,4 @@
-/// shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, diffusesurf, directsurf)
+/// shader_high_subsurface_scatter_set(ssssurf, rangesurf, depthsurf, directsurf)
 /// @arg ssssurf
 /// @arg rangesurf
 /// @arg depthsurf

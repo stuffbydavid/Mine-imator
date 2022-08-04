@@ -39,13 +39,11 @@ void main()
 	
 	if (uShadowsEnabled > 0)
 	{
-		diffuse = texture2D(uShadows, vTexCoord).rgb;
+		diffuse = texture2D(uShadows, vTexCoord).rgb + pow(uAmbientColor.rgb, vec3(gamma));
 		
 		// Calculate indirect
 		if (uIndirectEnabled > 0)
 			diffuse += texture2D(uIndirect, vTexCoord).rgb * uIndirectStrength;
-		
-		diffuse += pow(uAmbientColor.rgb, vec3(gamma));// + direct + indirect;
 	}
 	
 	// Reduce diffuse based on Metallic
