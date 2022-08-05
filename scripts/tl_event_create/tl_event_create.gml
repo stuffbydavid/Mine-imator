@@ -130,12 +130,11 @@ function tl_event_create()
 	model_clear_bend_cache = false
 	
 	// Only used if the timeline is a banner special block in scenery
-	is_banner = false
-	banner_base_color = null
-	banner_pattern_list = null
-	banner_color_list = null
-	
-	banner_skin = null
+	pattern_type = ""
+	pattern_base_color = null
+	pattern_pattern_list = null
+	pattern_color_list = null
+	pattern_skin = null
 	
 	text_vbuffer = null
 	text_texture = null

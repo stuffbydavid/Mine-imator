@@ -32,13 +32,13 @@ function action_lib_block_tex_normal(res)
 		block_tex_normal = res
 		block_tex_normal.count++
 		
-		// Update banner skins
+		// Update patterns
 		with (obj_timeline)
 		{
 			if (type = e_tl_type.SPECIAL_BLOCK && part_root != null)
 			{
 				if (part_root.temp = temp_edit)
-					array_add(banner_update, id)
+					array_add(pattern_update, id)
 			}
 		}
 	}

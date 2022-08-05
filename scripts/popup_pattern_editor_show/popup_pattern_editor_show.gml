@@ -1,39 +1,39 @@
-/// popup_bannereditor_show(bannerobj)
-/// @arg bannerobj
+/// popup_pattern_editor_show(obj)
+/// @arg obj
 
-function popup_bannereditor_show(bannerobj)
+function popup_pattern_editor_show(obj)
 {
-	with (popup_bannereditor)
+	with (popup_pattern_editor)
 	{
 		preview.zoom = .6
 		preview.goalzoom = .6
 		preview.xyangle = 235
 		preview.zangle = 0
 		
-		banner_edit = bannerobj
+		pattern_edit = obj
 		
-		with (banner_edit)
-			other.banner_edit_preview = instance_copy(false)
+		with (pattern_edit)
+			other.pattern_edit_preview = instance_copy(false)
 		
-		preview.select = banner_edit_preview
-		preview.last_select = banner_edit_preview
+		preview.select = pattern_edit_preview
+		preview.last_select = pattern_edit_preview
 		
 		ds_list_clear(pattern_list_edit)
 		ds_list_clear(pattern_color_list_edit)
 		
-		for (var i = 0; i < array_length(bannerobj.banner_pattern_list); i++)
-			ds_list_add(pattern_list_edit, bannerobj.banner_pattern_list[i])
+		for (var i = 0; i < array_length(obj.pattern_pattern_list); i++)
+			ds_list_add(pattern_list_edit, obj.pattern_pattern_list[i])
 		
-		for (var i = 0; i < array_length(bannerobj.banner_color_list); i++)
-			ds_list_add(pattern_color_list_edit, bannerobj.banner_color_list[i])
+		for (var i = 0; i < array_length(obj.pattern_color_list); i++)
+			ds_list_add(pattern_color_list_edit, obj.pattern_color_list[i])
 		
 		var res;
-		if (banner_edit.model_tex.type = e_res_type.SKIN)
+		if (pattern_edit.model_tex.type = e_res_type.SKIN)
 			res = mc_res
 		else
-			res = banner_edit.model_tex
+			res = pattern_edit.model_tex
 		
-		banner_edit_preview.model_tex = res
+		pattern_edit_preview.model_tex = res
 		
 		// Generate pattern sprites
 		if (pattern_resource != res || array_length(pattern_sprites) = 0)
@@ -48,9 +48,9 @@ function popup_bannereditor_show(bannerobj)
 			res_ratio = ceil(sprite_get_width(res.model_texture_map[?"entity/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner_base"]))
 			
 			shader_mask = (res.pack_format < e_minecraft_pack.FORMAT_115)
-			for (var i = 0; i < ds_list_size(minecraft_banner_pattern_list); i++)
+			for (var i = 0; i < ds_list_size(minecraft_pattern_list); i++)
 			{
-				var bannername = minecraft_banner_pattern_list[|i];
+				var bannername = minecraft_pattern_list[|i];
 				array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner/" + bannername], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio))
 			}
 			shader_mask = false
@@ -64,5 +64,5 @@ function popup_bannereditor_show(bannerobj)
 		update = true
 	}
 	
-	popup_show(popup_bannereditor)
+	popup_show(popup_pattern_editor)
 }

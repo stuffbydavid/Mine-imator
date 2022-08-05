@@ -54,7 +54,7 @@ function temp_update_model()
 			return 0
 		
 		// Set file and texture
-		var tempstatevars, temptexnamemap, temptexmatnamemap, temptexnormnamemap, tempshapetexnamemap, tempshapetexmatnamemap, tempshapetexnormnamemap, tempcolornamemap, temphidelist, tempshapehidelist, curfile;
+		var tempstatevars, temptexnamemap, temptexmatnamemap, temptexnormnamemap, tempshapetexnamemap, tempshapetexmatnamemap, tempshapetexnormnamemap, tempcolornamemap, temphidelist, tempshapehidelist, curpatterntype, curfile;
 		tempstatevars = model_state
 		
 		temptexnamemap = model_texture_name_map
@@ -72,6 +72,7 @@ function temp_update_model()
 		with (mc_assets.model_name_map[?model_name])
 		{
 			curfile = file
+			curpatterntype = pattern_type
 			
 			if (texture_name_map != null)
 				ds_map_merge(temptexnamemap, texture_name_map)
@@ -95,6 +96,9 @@ function temp_update_model()
 								// Match found, get the properties and stop checking further values in this state
 								if (value_file[v] != null)
 									curfile = value_file[v]
+								
+								if (value_pattern_type[v] != "")
+									curpatterntype = value_pattern_type[v]
 								
 								if (value_texture_name_map[v] != null)
 									ds_map_merge(temptexnamemap, value_texture_name_map[v], true)
@@ -134,9 +138,13 @@ function temp_update_model()
 		}
 		
 		model_file = curfile
+		pattern_type = curpatterntype
 	}
 	else if (model != null)
+	{
 		model_file = model.model_file
+		pattern_type = model.pattern_type
+	}
 	
 	// Get default texture from file if not defined
 	if (model_file != null && is_undefined(model_texture_name_map[?""]))
@@ -147,6 +155,9 @@ function temp_update_model()
 	
 	if (model_file != null && is_undefined(model_tex_normal_name_map[?""]))
 		model_tex_normal_name_map[?""] = model_file.texture_normal_name
+	
+	if (pattern_type != "")
+		array_add(pattern_update, id)
 	
 	model_shape_update_color()
 }

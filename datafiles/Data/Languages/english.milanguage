@@ -552,7 +552,7 @@
 		"modeltex": "Texture",
 		"modeltexmaterial": "Material map",
 		"modeltexnormal": "Normal map",
-		"openeditor": "Open banner editor",
+		"openeditor": "Open pattern editor",
 		"lighttype": "Light type",
 		"create": "Create",
 		"createedit": "Create & edit",
@@ -656,8 +656,8 @@
 		"notnow": "Not now",
 		"dontshow": "Don't show again"
 	},
-	"bannereditor/": {
-		"caption": "Banner editor",
+	"patterneditor/": {
+		"caption": "Pattern editor",
 		"addlayer": "Add layer",
 		"layer": "Layer %1",
 		"base": "Base",
@@ -1713,6 +1713,7 @@
 			"character": "Character",
 			"bloom": "Bloom",
 			"can_summon": "Can summon",
+			"has_pattern": "Has pattern",
 			"value/": {
 				"true": "Yes",
 				"false": "No",

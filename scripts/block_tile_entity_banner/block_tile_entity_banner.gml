@@ -32,15 +32,15 @@ function block_tile_entity_banner(map)
 				continue
 			
 			var pattern, color, patternindex;
-			pattern = value_get_string(patternmap[?"Pattern"], minecraft_banner_pattern_short_list[|1])
+			pattern = value_get_string(patternmap[?"Pattern"], minecraft_pattern_short_list[|1])
 			color = value_get_real(patternmap[?"Color"], 0)
-			patternindex = ds_list_find_index(minecraft_banner_pattern_short_list, pattern)
+			patternindex = ds_list_find_index(minecraft_pattern_short_list, pattern)
 			
 			// Flip color index if legacy
 			if (legacy)
 				color = (ds_list_size(minecraft_color_list) - 1) - color
 			
-			array_add(patternlist, minecraft_banner_pattern_list[|patternindex])
+			array_add(patternlist, minecraft_pattern_list[|patternindex])
 			array_add(patterncolorlist, minecraft_color_list[|color])
 		}
 	}

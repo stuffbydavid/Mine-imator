@@ -173,17 +173,17 @@ function bench_draw_settings(bx, by, bw, bh)
 					dy += 40
 				}
 				
-				// Banner editor
-				if (bench_settings.model_name = "banner")
+				// Pattern editor
+				if (bench_settings.pattern_type != "")
 				{
 					tab_control_button_label()
 					
 					if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
-						popup_bannereditor_show(bench_settings)
+						popup_pattern_editor_show(bench_settings)
 					
 					tab_next()
 					
-					if (popup = popup_bannereditor)
+					if (popup = popup_pattern_editor)
 						current_microani.active.value = true
 				}
 				

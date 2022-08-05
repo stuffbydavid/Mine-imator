@@ -57,17 +57,17 @@ function tab_properties_library()
 			
 			tab_next()
 			
-			// Banner editor
-			if (temp_edit.model_name = "banner")
+			// Pattern editor
+			if (temp_edit.pattern_type != "")
 			{
 				tab_control_button_label()
 				
 				if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
-					popup_bannereditor_show(temp_edit)
+					popup_pattern_editor_show(temp_edit)
 				
 				tab_next()
 				
-				if (popup = popup_bannereditor)
+				if (popup = popup_pattern_editor)
 					current_microani.active.value = true
 			}
 			
@@ -288,13 +288,13 @@ function tab_properties_library()
 			
 			tab_next()
 			
-			// Banner editor
-			if (temp_edit.model_name = "banner")
+			// Pattern editor
+			if (temp_edit.pattern_type != "")
 			{
 				tab_control_button_label()
 				
 				if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
-					popup_bannereditor_show(temp_edit)
+					popup_pattern_editor_show(temp_edit)
 				
 				tab_next()
 			}

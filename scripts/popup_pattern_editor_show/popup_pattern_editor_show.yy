@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Banner editor",
-    "path": "folders/Scripts/App/Interface/Popups/Banner editor.yy",
+    "name": "Pattern editor",
+    "path": "folders/Scripts/App/Interface/Popups/Pattern editor.yy",
   },
   "resourceVersion": "1.0",
-  "name": "popup_bannereditor_draw",
+  "name": "popup_pattern_editor_show",
   "tags": [],
   "resourceType": "GMScript",
 }

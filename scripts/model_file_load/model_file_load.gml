@@ -62,9 +62,6 @@ function model_file_load()
 		// Description (optional)
 		description = value_get_string(map[?"description"], "")
 		
-		// Is a banner
-		is_banner = (name = "banner" || name = "wall_banner")
-		
 		// Texture
 		texture_name = map[?"texture"]
 		texture_inherit = id

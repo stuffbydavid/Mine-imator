@@ -19,10 +19,10 @@ function temp_copy(to)
 	to.model_state = array_copy_1d(model_state)
 	to.model_part_name = model_part_name
 	
-	to.banner_base_color = banner_base_color
-	to.banner_pattern_list = array_copy_1d(banner_pattern_list)
-	to.banner_color_list = array_copy_1d(banner_color_list)
-	to.banner_skin = sprite_duplicate(banner_skin)
+	to.pattern_base_color = pattern_base_color
+	to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
+	to.pattern_color_list = array_copy_1d(pattern_color_list)
+	to.pattern_skin = sprite_duplicate(pattern_skin)
 	
 	to.item_tex = item_tex
 	to.item_tex_material = item_tex_material

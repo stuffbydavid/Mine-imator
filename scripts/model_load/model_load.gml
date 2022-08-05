@@ -41,6 +41,9 @@ function model_load(map, dir)
 		// Version
 		version = value_get_real(map[?"version"], 0)
 		
+		// Pattern type
+		pattern_type = value_get_string(map[?"pattern_type"], "")
+		
 		// Read states and their possible values
 		states_map = null
 		if (ds_map_valid(map[?"states"]))
@@ -72,6 +75,7 @@ function model_load(map, dir)
 						value_hide_list[v] = null
 						value_shape_hide_list[v] = null
 						value_color_name_map[v] = null
+						value_pattern_type[v] = other.pattern_type
 						
 						if (dev_mode_debug_names && !text_exists("modelstatevalue" + value_name[v]))
 							log("model/state/value/" + value_name[v] + dev_mode_name_translation_message)
@@ -162,7 +166,10 @@ function model_load(map, dir)
 							value_color_name_map[v] = ds_map_create()
 							ds_map_merge(value_color_name_map[v], curvalue[?"shape_color"], true)
 						}
-					
+						
+						// Pattern design
+						if (!is_undefined(curvalue[?"pattern_type"]))
+							value_pattern_type[v] = curvalue[?"pattern_type"]
 					}
 					
 					other.states_map[?curstate] = id

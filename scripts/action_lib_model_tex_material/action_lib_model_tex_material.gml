@@ -50,8 +50,8 @@ function action_lib_model_tex_material(res)
 		if (model_tex_material != null)
 			model_tex_material.count++
 		
-		if (model_name = "banner")
-			array_add(banner_update, temp_edit)
+		if (pattern_type != "")
+			array_add(pattern_update, temp_edit)
 	}
 	
 	lib_preview.update = true

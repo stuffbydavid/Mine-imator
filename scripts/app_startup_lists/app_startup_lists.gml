@@ -7,7 +7,7 @@ function app_startup_lists()
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
-	globalvar minecraft_color_name_list, minecraft_color_list, minecraft_banner_pattern_list, minecraft_banner_pattern_short_list;
+	globalvar minecraft_color_name_list, minecraft_color_list, minecraft_pattern_list, minecraft_pattern_short_list;
 	globalvar biome_list, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
@@ -425,8 +425,8 @@ function app_startup_lists()
 		c_minecraft_black
 	)
 	
-	minecraft_banner_pattern_list = ds_list_create()
-	minecraft_banner_pattern_short_list = ds_list_create()
+	minecraft_pattern_list = ds_list_create()
+	minecraft_pattern_short_list = ds_list_create()
 	
 	blend_mode_list = ds_list_create()
 	ds_list_add(blend_mode_list,

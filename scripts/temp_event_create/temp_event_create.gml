@@ -42,10 +42,10 @@ function temp_event_create()
 	
 	load_update_tree = false
 	
-	banner_base_color = c_minecraft_white
-	banner_pattern_list = array()
-	banner_color_list = array()
-	banner_skin = null
+	pattern_base_color = c_minecraft_white
+	pattern_pattern_list = array()
+	pattern_color_list = array()
+	pattern_skin = null
 	
 	item_tex = null
 	item_tex_material = null

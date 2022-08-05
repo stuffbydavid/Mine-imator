@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Minecraft/Update.yy",
+    "name": "Pattern editor",
+    "path": "folders/Scripts/App/Interface/Popups/Pattern editor.yy",
   },
   "resourceVersion": "1.0",
-  "name": "minecraft_update_banner_generate",
+  "name": "popup_pattern_editor_draw",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -2,5 +2,5 @@
 
 function app_update_minecraft_resources()
 {
-	minecraft_update_banner()
+	minecraft_update_patterns()
 }

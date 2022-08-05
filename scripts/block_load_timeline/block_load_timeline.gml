@@ -65,10 +65,10 @@ function block_load_timeline(map, typemap)
 	if (tl_has_text)
 		tl_text_position = value_get_point3D(map[?"text_position"], point3D(0, 0, 0))
 	
-	// Is a banner
-	tl_is_banner = false
-	if (is_bool(map[?"is_banner"]))
-		tl_is_banner = map[?"is_banner"]
+	// Supports patterns
+	tl_pattern_type = ""
+	if (is_string(map[?"pattern_type"]))
+		tl_pattern_type = map[?"pattern_type"]
 	
 	// Rotation point
 	tl_rot_point = point3D(0, 0, 0)

@@ -40,14 +40,14 @@ function history_restore_tl(save, tl = null)
 		
 		ds_list_insert(parent.tree_list, parent_tree_index, id)
 		
-		// Restore banner data
-		if (save.is_banner)
+		// Restore pattern data
+		if (save.pattern_type != "")
 		{
-			is_banner = true
-			banner_base_color = save.banner_base_color
-			banner_pattern_list = array_copy_1d(save.banner_pattern_list)
-			banner_color_list = array_copy_1d(save.banner_color_list)
-			array_add(banner_update, id)
+			pattern_type = save.pattern_type
+			pattern_base_color = save.pattern_base_color
+			pattern_pattern_list = array_copy_1d(save.pattern_pattern_list)
+			pattern_color_list = array_copy_1d(save.pattern_color_list)
+			array_add(pattern_update, id)
 		}
 		
 		// Update

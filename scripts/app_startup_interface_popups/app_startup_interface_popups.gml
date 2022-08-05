@@ -125,9 +125,9 @@ function app_startup_interface_popups()
 		not_now = false
 	}
 	
-	// Banner editor
-	popup_bannereditor = new_popup("bannereditor", popup_bannereditor_draw, 550, null, true, false, false, false)
-	with (popup_bannereditor)
+	// Pattern editor
+	popup_pattern_editor = new_popup("patterneditor", popup_pattern_editor_draw, 550, null, true, false, false, false)
+	with (popup_pattern_editor)
 	{
 		preview = new_obj(obj_preview)
 		preview.fov = 25
@@ -138,8 +138,8 @@ function app_startup_interface_popups()
 		layer_remove = null
 		layer_edit = null
 		
-		banner_edit = null
-		banner_edit_preview = null
+		pattern_edit = null
+		pattern_edit_preview = null
 		
 		pattern_list_edit = ds_list_create()
 		pattern_color_list_edit = ds_list_create()

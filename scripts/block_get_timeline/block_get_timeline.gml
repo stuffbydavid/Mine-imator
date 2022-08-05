@@ -49,8 +49,8 @@ function block_get_timeline(block, stateid)
 		}
 		
 		// Get banner patterns
-		is_banner = block.tl_is_banner
-		if (is_banner)
+		pattern_type = block.pattern_type
+		if (pattern_type != "")
 		{
 			with (mc_builder)
 			{

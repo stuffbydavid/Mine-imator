@@ -174,20 +174,20 @@ function minecraft_assets_load()
 			// Misc. assets
 			case "misc":
 			{	
-				// Banner info
-				if (is_undefined(load_assets_map[?"banner_patterns"]))
+				// Pattern designs
+				if (is_undefined(load_assets_map[?"patterns"]))
 				{
-					log("No banner patterns list found")
+					log("No pattern designs list found")
 					return false
 				}
 				
-				var patternlist = load_assets_map[?"banner_patterns"];
+				var patternlist = load_assets_map[?"patterns"];
 				
 				for (var i = 0; i < ds_list_size(patternlist); i++)
 				{
 					var pattern = patternlist[|i];
-					ds_list_add(minecraft_banner_pattern_list, pattern[|0])
-					ds_list_add(minecraft_banner_pattern_short_list, pattern[|1])
+					ds_list_add(minecraft_pattern_list, pattern[|0])
+					ds_list_add(minecraft_pattern_short_list, pattern[|1])
 				}
 				
 				load_assets_stage = "models"

@@ -66,13 +66,13 @@ function tl_duplicate()
 			}
 		}
 		
-		if (other.is_banner && other.banner_base_color != null)
+		if (other.pattern_type != "" && other.pattern_base_color != null)
 		{
-			is_banner = true
-			banner_base_color = other.banner_base_color
-			banner_pattern_list = array_copy_1d(other.banner_pattern_list)
-			banner_color_list = array_copy_1d(other.banner_color_list)
-			array_add(banner_update, id)
+			pattern_type = other.pattern_type
+			pattern_base_color = other.pattern_base_color
+			pattern_pattern_list = array_copy_1d(other.pattern_pattern_list)
+			pattern_color_list = array_copy_1d(other.pattern_color_list)
+			array_add(pattern_update, id)
 		}
 		
 		// Update

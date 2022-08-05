@@ -68,7 +68,7 @@ function action_bench_model_tex(res)
 		with (preview)
 			update = true
 		
-		if (model_name = "banner")
-			array_add(banner_update, id)
+		if (pattern_type != "")
+			array_add(pattern_update, id)
 	}
 }

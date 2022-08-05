@@ -132,15 +132,15 @@ function history_save_tl(tl)
 			}
 		}
 		
-		// Banner data
-		is_banner = false
+		// Pattern data
+		pattern_type = ""
 		
-		if (tl.is_banner && tl.banner_base_color != null)
+		if (tl.pattern_type != "" && tl.pattern_base_color != null)
 		{
-			is_banner = true
-			banner_base_color = tl.banner_base_color
-			banner_pattern_list = array_copy_1d(tl.banner_pattern_list)
-			banner_color_list = array_copy_1d(tl.banner_color_list)
+			pattern_type = tl.pattern_type
+			pattern_base_color = tl.pattern_base_color
+			pattern_pattern_list = array_copy_1d(tl.pattern_pattern_list)
+			pattern_color_list = array_copy_1d(tl.pattern_color_list)
 		}
 		
 		// Save tree recursively

@@ -43,29 +43,29 @@ function project_save_timeline()
 			if (part_root != null)
 				json_save_var_save_id("part_root", part_root)
 			
-			// Banner values
-			if (is_banner && banner_base_color != null)
+			// Pattern values
+			if (pattern_type != "" && pattern_base_color != null)
 			{
-				json_save_var_bool("is_banner", is_banner)
+				json_save_var("pattern_type", pattern_type)
 				
-				json_save_var("banner_base_color", minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_base_color)])
+				json_save_var("pattern_base_color", minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, pattern_base_color)])
 				
-				if (array_length(banner_pattern_list) > 0)
+				if (array_length(pattern_pattern_list) > 0)
 				{
-					json_save_array_start("banner_pattern_list")
+					json_save_array_start("pattern_pattern_list")
 					
-						for (var p = 0; p < array_length(banner_pattern_list); p++)
-							json_save_array_value(banner_pattern_list[p])
+						for (var p = 0; p < array_length(pattern_pattern_list); p++)
+							json_save_array_value(pattern_pattern_list[p])
 					
 					json_save_array_done()
 				}
 				
-				if (array_length(banner_color_list) > 0)
+				if (array_length(pattern_color_list) > 0)
 				{
-					json_save_array_start("banner_color_list")
+					json_save_array_start("pattern_color_list")
 					
-						for (var c = 0; c < array_length(banner_color_list); c++)
-							json_save_array_value(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, banner_color_list[c])])
+						for (var c = 0; c < array_length(pattern_color_list); c++)
+							json_save_array_value(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, pattern_color_list[c])])
 					
 					json_save_array_done()
 				}

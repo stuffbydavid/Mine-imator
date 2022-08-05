@@ -42,30 +42,49 @@ function project_load_timeline(map)
 				
 				part_root = value_get_save_id(map[?"part_root"], part_root)
 				
-				// Banner values
-				is_banner = value_get_real(map[?"is_banner"], is_banner)
+				// Pattern values
+				pattern_type = value_get_string(map[?"pattern_type"], pattern_type)
 				
-				if (is_banner)
+				// Legacy "is_banner" value
+				if (load_format < e_project.FORMAT_200_AL26)
 				{
-					var base_color, pattern_list, color_list; 
-					base_color = value_get_string(map[?"banner_base_color"], "white")
-					pattern_list = map[?"banner_pattern_list"]
-					color_list = map[?"banner_color_list"]
+					var isbanner = value_get_real(map[?"is_banner"], false);
 					
-					banner_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
+					if (isbanner)
+						pattern_type = "banner"
+				}
+				
+				if (pattern_type != "")
+				{
+					var base_color, pattern_list, color_list;
+					
+					if (load_format < e_project.FORMAT_200_AL26)
+					{
+						base_color = value_get_string(map[?"banner_base_color"], "white")
+						pattern_list = map[?"banner_pattern_list"]
+						color_list = map[?"banner_color_list"]
+					}
+					else
+					{
+						base_color = value_get_string(map[?"pattern_base_color"], "white")
+						pattern_list = map[?"pattern_pattern_list"]
+						color_list = map[?"pattern_color_list"]
+					}
+					
+					pattern_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
 					
 					if (ds_list_valid(pattern_list))
 					{
-						banner_pattern_list = array()
+						pattern_pattern_list = array()
 						for (var p = 0; p < ds_list_size(pattern_list); p++)
-							array_add(banner_pattern_list, pattern_list[|p])
+							array_add(pattern_pattern_list, pattern_list[|p])
 					}
 					
 					if (ds_list_valid(color_list))
 					{
-						banner_color_list = array()
+						pattern_color_list = array()
 						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(banner_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
+							array_add(pattern_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
 					}
 				}
 			}

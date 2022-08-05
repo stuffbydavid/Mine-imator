@@ -63,6 +63,9 @@ function action_lib_model_name(name)
 		temp_update_model_shape()
 		temp_update_display_name()
 		model_shape_update_color()
+		
+		if (pattern_type != "")
+			array_add(pattern_update, id)
 	}
 	
 	if (history_undo)

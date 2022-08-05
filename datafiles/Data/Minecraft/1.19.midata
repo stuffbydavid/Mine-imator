@@ -832,7 +832,14 @@
 		},
 		{
 			"name": "shield",
-			"file": "shield.mimodel"
+			"file": "shield.mimodel",
+			"states": {
+				"has_pattern": [
+					{ "value": "false", "pattern_type": "" },
+					{ "value": "true", "pattern_type": "shield" }
+				]
+			},
+			"default_state": "has_pattern=false"
 		},
 		{
 			"name": "spyglass",
@@ -942,6 +949,7 @@
 		{
 			"name": "banner",
 			"file": "standing_banner.mimodel",
+			"pattern_type": "banner",
 			"states": {
 				"variant": [
 					{ "value": "standing" },
@@ -3861,7 +3869,6 @@
 			"timeline": {
 				"model": "banner",
 				"model_state": "variant=standing",
-				"is_banner": true,
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"rotation=0": [ 0, 0, 0 ],
@@ -3929,7 +3936,6 @@
 			"timeline": {
 				"model": "banner",
 				"model_state": "variant=wall",
-				"is_banner": true,
 				"position": [ 8, -8, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],
@@ -5815,6 +5821,48 @@
 		"entity/sheep/sheep",
 		"entity/sheep/sheep_fur",
 		"entity/shield_base_nopattern",
+		"entity/shield_base",
+		"entity/shield/base",
+		"entity/shield/border",
+		"entity/shield/bricks",
+		"entity/shield/circle",
+		"entity/shield/creeper",
+		"entity/shield/cross",
+		"entity/shield/curly_border",
+		"entity/shield/diagonal_left",
+		"entity/shield/diagonal_right",
+		"entity/shield/diagonal_up_left",
+		"entity/shield/diagonal_up_right",
+		"entity/shield/flower",
+		"entity/shield/globe",
+		"entity/shield/gradient",
+		"entity/shield/gradient_up",
+		"entity/shield/half_horizontal",
+		"entity/shield/half_horizontal_bottom",
+		"entity/shield/half_vertical",
+		"entity/shield/half_vertical_right",
+		"entity/shield/mojang",
+		"entity/shield/piglin",
+		"entity/shield/rhombus",
+		"entity/shield/skull",
+		"entity/shield/small_stripes",
+		"entity/shield/square_bottom_left",
+		"entity/shield/square_bottom_right",
+		"entity/shield/square_top_left",
+		"entity/shield/square_top_right",
+		"entity/shield/straight_cross",
+		"entity/shield/stripe_bottom",
+		"entity/shield/stripe_center",
+		"entity/shield/stripe_downleft",
+		"entity/shield/stripe_downright",
+		"entity/shield/stripe_left",
+		"entity/shield/stripe_middle",
+		"entity/shield/stripe_right",
+		"entity/shield/stripe_top",
+		"entity/shield/triangle_bottom",
+		"entity/shield/triangle_top",
+		"entity/shield/triangles_bottom",
+		"entity/shield/triangles_top",
 		"entity/shulker/shulker",
 		"entity/shulker/shulker_black",
 		"entity/shulker/shulker_blue",
@@ -8752,7 +8800,7 @@
 			"water": "#3F76E4"
 		}
 	],
-	"banner_patterns": [
+	"patterns": [
 		["base", ""],
 		["border", "bo"],
 		["bricks", "bri"],

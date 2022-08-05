@@ -55,9 +55,6 @@ function model_file_load_part(map, root, res, model)
 		// Description (optional)
 		description = value_get_string(map[?"description"], "")
 		
-		// Is apart of a banner model
-		is_banner = other.is_banner
-		
 		// Texture (optional)
 		if (is_string(map[?"texture"]))
 		{

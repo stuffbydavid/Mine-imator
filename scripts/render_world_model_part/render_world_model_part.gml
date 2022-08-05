@@ -19,7 +19,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	if (!tlobject)
 		mat = matrix_get(matrix_world)
 	
-	var texobj, blendcolor, alpha;
+	var shape, texobj, blendcolor, alpha;
 	texobj = null
 	blendcolor = null
 	alpha = null
@@ -28,8 +28,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	
 	for (var s = 0; s < ds_list_size(part.shape_list); s++)
 	{
-		var shape;
-		shape = part.shape_list[|s];
+		shape = part.shape_list[|s]
 		
 		// Hidden?
 		if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
@@ -137,41 +136,45 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			}
 		}
 		
-		// Banner rendering
-		if (part.is_banner)
+		#region Pattern rendering
+		
+		// Preview
+		if (object_index = obj_preview && select.pattern_type != "")
 		{
-			// Preview/timeline
-			if (object_index = obj_preview)
+			if (sprite_exists(select.pattern_skin))
+				render_set_texture(select.pattern_skin)
+		}
+		
+		if (tlobject != null)
+		{
+			// Use skin if provided to timeline, else use skin in template
+			if (sprite_exists(tlobject.pattern_skin))
 			{
-				if (sprite_exists(select.banner_skin))
-					render_set_texture(select.banner_skin)
-			}
-			else
-			{
-				// Only use banner skin if timeline is using its template's resource
+				// Only use pattern if timeline is using its template's resource
 				var tempres = null;
 				
 				with (tlobject.temp)
 					tempres = temp_get_model_texobj(null)
 				
 				if (res = tempres)
-					if (sprite_exists(tlobject.temp.banner_skin))
-						render_set_texture(tlobject.temp.banner_skin)
+					if (sprite_exists(tlobject.pattern_skin))
+						render_set_texture(tlobject.pattern_skin)
 			}
-			
-			if (tlobject != null)
+			else if (tlobject.temp.pattern_type != "")
 			{
-				// Only use banner skin if timeline is using its template's resource
+				// Only use pattern if timeline is using its template's resource
 				var tempres = null;
 				
 				with (tlobject.temp)
 					tempres = temp_get_model_texobj(null)
 				
 				if (res = tempres)
-					if (sprite_exists(tlobject.banner_skin))
-						render_set_texture(tlobject.banner_skin)
+					if (sprite_exists(tlobject.temp.pattern_skin))
+						render_set_texture(tlobject.temp.pattern_skin)
 			}
 		}
+		
+		#endregion
 		
 		// Blend color
 		blendcolor = shape.color_blend

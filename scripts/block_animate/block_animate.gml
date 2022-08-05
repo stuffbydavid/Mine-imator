@@ -132,25 +132,28 @@ function block_animate(root)
 			}
 		}
 		
-		// Pass in banner data
-		if (other.is_banner)
+		// Pass in pattern data
+		if (other.pattern_type != "")
 		{
-			banner_base_color = other.banner_color
-			banner_pattern_list = array_copy_1d(other.banner_patterns)
-			banner_color_list = array_copy_1d(other.banner_pattern_colors)
+			pattern_base_color = other.banner_color
+			pattern_pattern_list = array_copy_1d(other.banner_patterns)
+			pattern_color_list = array_copy_1d(other.banner_pattern_colors)
 			
-			is_banner = true
+			pattern_type = other.pattern_type
 			
-			var stand = tree_list[|0];
-			stand.banner_skin = banner_skin
-			stand.is_banner = true
-			
-			var banner = stand.tree_list[|0];
-			banner.banner_skin = banner_skin
-			banner.is_banner = true
+			if (pattern_type = "banner")
+			{
+				var stand = tree_list[|0];
+				stand.pattern_skin = pattern_skin
+				stand.pattern_type = "banner"
+				
+				var banner = stand.tree_list[|0];
+				banner.pattern_skin = pattern_skin
+				banner.pattern_type = "banner"
+			}
 			
 			// Update
-			array_add(banner_update, id)
+			array_add(pattern_update, id)
 		}
 	}
 }

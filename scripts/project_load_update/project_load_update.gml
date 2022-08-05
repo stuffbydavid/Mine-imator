@@ -48,8 +48,8 @@ function project_load_update()
 				temp_update_model_timeline_tree()
 		}
 		
-		if (model_name = "banner")
-			array_add(banner_update, id)
+		if (pattern_type != "")
+			array_add(pattern_update, id)
 	}
 	
 	with (obj_timeline)
@@ -104,8 +104,8 @@ function project_load_update()
 				scenery_animate = true
 		}
 		
-		if (is_banner)
-			array_add(banner_update, id)
+		if (pattern_type != "")
+			array_add(pattern_update, id)
 	}
 	
 	// Update paths

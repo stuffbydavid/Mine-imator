@@ -1,10 +1,10 @@
-/// popup_bannereditor_draw()
+/// popup_pattern_editor_draw()
 
-function popup_bannereditor_draw()
+function popup_pattern_editor_draw()
 {
 	dx_start = dx
 	
-	// Banner preview
+	// Model preview
 	popup.preview.update = true
 	setting_wind_enable = false
 	preview_draw(popup.preview, dx, dy, 200, 332)
@@ -16,13 +16,13 @@ function popup_bannereditor_draw()
 	dx += 8
 	
 	var listy, listw;
-	listy = dy 
+	listy = dy
 	listw = dw - (dx - dx_start)
 	
 	// Add layer
-	if (draw_button_label("bannereditoraddlayer", dx, dy, listw, icons.PLUS, e_button.SECONDARY))
+	if (draw_button_label("patterneditoraddlayer", dx, dy, listw, icons.PLUS, e_button.SECONDARY))
 	{
-		ds_list_add(popup.pattern_list_edit, minecraft_banner_pattern_list[|1])
+		ds_list_add(popup.pattern_list_edit, minecraft_pattern_list[|1])
 		ds_list_add(popup.pattern_color_list_edit, c_minecraft_black)
 		popup.update = true
 	}
@@ -65,7 +65,7 @@ function popup_bannereditor_draw()
 		{
 			if (popup.layer_move = null)
 			{
-				popup_bannereditor_draw_layer(dx, listy, listw, 48, i, false)
+				popup_pattern_editor_draw_layer(dx, listy, listw, 48, i, false)
 			}
 			else
 			{
@@ -78,14 +78,14 @@ function popup_bannereditor_draw()
 						
 						listy += 48
 						
-						popup_bannereditor_draw_layer(dx, listy, listw, 48, i, false)
+						popup_pattern_editor_draw_layer(dx, listy, listw, 48, i, false)
 						listy += 48
 						
 						continue
 					}
 				}
 				else
-					popup_bannereditor_draw_layer(dx, listy, listw, 48, i, false)
+					popup_pattern_editor_draw_layer(dx, listy, listw, 48, i, false)
 			}
 		}
 		
@@ -101,47 +101,47 @@ function popup_bannereditor_draw()
 	}
 	
 	if ((listy < listystart + listh) && (listy + 48 > listystart))
-		popup_bannereditor_draw_layer(dx, listy, listw, 48, -1, true)
+		popup_pattern_editor_draw_layer(dx, listy, listw, 48, -1, true)
 	
 	scissor_done()
 	
 	dy += 325 + 8
 	
 	draw_set_font(font_button)
-	var buttonx = string_width(text_get("bannereditordone")) + button_padding;
+	var buttonx = string_width(text_get("patterneditordone")) + button_padding;
 	
 	// Done
 	tab_control_button_label()
-	if (draw_button_label("bannereditordone", dx_start + dw - buttonx, dy))
+	if (draw_button_label("patterneditordone", dx_start + dw - buttonx, dy))
 	{
-		if (popup.banner_edit.object_index = obj_bench_settings)
+		if (popup.pattern_edit.object_index = obj_bench_settings)
 		{
-			popup.banner_edit.banner_pattern_list = ds_list_create_array(popup.pattern_list_edit)
-			popup.banner_edit.banner_color_list = ds_list_create_array(popup.pattern_color_list_edit)
-			popup.banner_edit.banner_base_color = popup.banner_edit_preview.banner_base_color
+			popup.pattern_edit.pattern_pattern_list = ds_list_create_array(popup.pattern_list_edit)
+			popup.pattern_edit.pattern_color_list = ds_list_create_array(popup.pattern_color_list_edit)
+			popup.pattern_edit.pattern_base_color = popup.pattern_edit_preview.pattern_base_color
 			
-			array_add(banner_update, popup.banner_edit)
+			array_add(pattern_update, popup.pattern_edit)
 			
 			bench_settings.preview.update = true
 		}
-		else if (popup.banner_edit = temp_edit)
-			action_lib_model_banner(popup.banner_edit_preview.banner_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
+		else if (popup.pattern_edit = temp_edit)
+			action_lib_model_pattern(popup.pattern_edit_preview.pattern_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
 		
-		instance_destroy(popup.banner_edit_preview, false)
-		popup.banner_edit_preview = null
+		instance_destroy(popup.pattern_edit_preview, false)
+		popup.pattern_edit_preview = null
 		
 		popup_close()
 	}
 	
-	buttonx += 12 + (string_width(text_get("bannereditorcancel")) + button_padding)
+	buttonx += 12 + (string_width(text_get("patterneditorcancel")) + button_padding)
 	
 	// Cancel
-	if (draw_button_label("bannereditorcancel", dx_start + dw - buttonx, dy, null, null, e_button.SECONDARY))
+	if (draw_button_label("patterneditorcancel", dx_start + dw - buttonx, dy, null, null, e_button.SECONDARY))
 	{
-		array_add(banner_update, popup.banner_edit)
+		array_add(pattern_update, popup.pattern_edit)
 		
-		instance_destroy(popup.banner_edit_preview, false)
-		popup.banner_edit_preview = null
+		instance_destroy(popup.pattern_edit_preview, false)
+		popup.pattern_edit_preview = null
 		
 		popup_close()
 	}
@@ -158,10 +158,10 @@ function popup_bannereditor_draw()
 	
 	if (popup.update)
 	{
-		if (popup.banner_edit_preview.banner_skin)
-			sprite_delete(popup.banner_edit_preview.banner_skin)
+		if (popup.pattern_edit_preview.pattern_skin)
+			sprite_delete(popup.pattern_edit_preview.pattern_skin)
 		
-		popup.banner_edit_preview.banner_skin = minecraft_update_banner_generate(popup.banner_edit_preview.banner_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
+		popup.pattern_edit_preview.pattern_skin = minecraft_update_pattern_generate(popup.pattern_edit_preview.model_name, popup.pattern_edit_preview.pattern_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
 		
 		popup.update = false
 	}
@@ -178,7 +178,7 @@ function popup_bannereditor_draw()
 		
 		draw_dropshadow(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, c_black, 1)
 		draw_box(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, false, c_level_middle, 1)
-		popup_bannereditor_draw_layer(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, popup.layer_move, false)
+		popup_pattern_editor_draw_layer(mouse_x + popup.layer_move_x, mouse_y + popup.layer_move_y, listw, 48, popup.layer_move, false)
 		
 		// Insert layer
 		if (mouse_left_released)
