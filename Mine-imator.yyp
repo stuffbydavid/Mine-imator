@@ -2456,6 +2456,8 @@
     {"CopyToMask":-1,"filePath":"datafiles/Data","resourceVersion":"1.0","name":"legacy.midata","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.19.zip","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","resourceVersion":"1.0","name":"1.19.midata","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Splashes","resourceVersion":"1.0","name":"splashes.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Data/Splashes","resourceVersion":"1.0","name":"piglin_quartz_splash.png","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.6.0.23",

@@ -58,6 +58,10 @@ function window_draw_load_assets()
 	if (load_assets_splash = null || sprite_get_width(load_assets_splash) = 550)
 		draw_gradient(xoff + 190, yoff, shadow_size, 450, c_black, shadow_alpha, 0, 0, shadow_alpha)
 	
+	// Splash credits
+	if (load_assets_credits != "")
+		draw_label(load_assets_credits, xoff + 95, yoff + 289 + 31, fa_middle, fa_top, c_text_tertiary, a_text_tertiary, font_credits)
+	
 	draw_box(xoff, yoff + 450 - 8, 740, 8, false, c_level_top, .8)
 	draw_box(xoff, yoff + 450 - 8, 740 * load_assets_progress, 8, false, c_accent, 1)
 	

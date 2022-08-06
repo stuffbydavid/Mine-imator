@@ -1148,6 +1148,7 @@
 			"character": "Character",
 			"targeting": "Targeting",
 			"type": "Type",
+			"has_pattern": "Has pattern",
 			"value/": {
 				"steve": "Steve",
 				"alex": "Alex",
@@ -1713,7 +1714,6 @@
 			"character": "Character",
 			"bloom": "Bloom",
 			"can_summon": "Can summon",
-			"has_pattern": "Has pattern",
 			"value/": {
 				"true": "Yes",
 				"false": "No",

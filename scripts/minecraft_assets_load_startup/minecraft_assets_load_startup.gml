@@ -5,7 +5,7 @@
 function minecraft_assets_load_startup()
 {
 	globalvar mc_assets, mc_builder, mc_res;
-	globalvar load_assets_stage, load_assets_progress, load_assets_block_index, load_assets_block_name, load_assets_splash;
+	globalvar load_assets_stage, load_assets_progress, load_assets_block_index, load_assets_block_name, load_assets_splash, load_assets_credits;
 	globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 	globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
 	globalvar pattern_update;
@@ -49,10 +49,22 @@ function minecraft_assets_load_startup()
 	
 	// Load splash from folder
 	load_assets_splash = null
-	var files = file_find(splash_directory, ".png");
+	load_assets_credits = ""
 	
-	if (array_length(files) > 0)
-		load_assets_splash = sprite_add(files[irandom(array_length(files) - 1)], 0, 0, 0, 0, 0)
+	if (!file_exists_lib(splash_directory + "splashes.json"))
+	{
+		var map, splashlist, splash, splashfile;
+		map = json_load(splash_directory + "splashes.json")
+		splashlist = map[?"splashes"]
+		splash = splashlist[|irandom(ds_list_size(splashlist) - 1)]
+		splashfile = splash_directory + splash[?"file"]
+		
+		if (file_exists_lib(splashfile))
+		{
+			load_assets_splash = sprite_add(splashfile, 0, 0, 0, 0, 0)
+			load_assets_credits = splash[?"credits"]
+		}
+	}
 	
 	return true
 }
