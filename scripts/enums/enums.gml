@@ -841,6 +841,7 @@ function enums()
 		SECONDARY,
 		TERTIARY,
 		TOOLBAR,
+		BIG,
 		
 		NO_TEXT,
 		TEXT,

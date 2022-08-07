@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David & Nimi",
 		"forversion": "2.0.0",
-		"lastchange": "2022.07.02"
+		"lastchange": "2022.08.07"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -432,7 +432,8 @@
 			"lastbackup": "Recover last backup",
 			"save": "Save project",
 			"saveas": "Save project as...",
-			"import": "Import asset..."
+			"import": "Import asset...",
+			"worldimport": "Import from world..."
 		},
 		"edit": "Edit",
 		"edit/": {
@@ -474,7 +475,8 @@
 			"upgrade": "Upgrade"
 		},
 		"backup": "Backing up...",
-		"simplemode": "Simple mode enabled"
+		"simplemode": "Simple mode enabled",
+		"cancel": "Cancel"
 	},
 	"type/": {
 		"char": "Character",
@@ -799,7 +801,8 @@
 		"resname": "Name",
 		"restype": "Type",
 		"rescount": "Use count",
-		"particlepresetname": "Name"
+		"particlepresetname": "Name",
+		"blockfilter": "Name"
 	},
 	"list/": {
 		"search": "Search...",
@@ -1334,42 +1337,41 @@
 			}
 		}
 	},
-	"importfromworld/": {
-		"title": "Import scenery from world",
-		"info": "Browse for a Minecraft world or select one from the dropdown list, then left click to create a box around the wished area. Right/Middle click: Move view, Mouse wheel: Zoom.",
-		"topdownview": "Top down view",
-		"crosssectionview": "Cross section view",
-		"noworld": "No world loaded",
-		"world": "World",
-		"browse": "Browse...",
-		"browsecaption": "Open Minecraft world",
-		"browseworlds": "Minecraft worlds",
-		"worldunsupported": "This world was created in an unsupported Minecraft version and could not be loaded.",
-		"worldopened": "This world is used by another process, possibly Minecraft. Close it and try again.",
-		"fileopened": "Could not write to file. Check that it's not used by another process.",
-		"noblocks": "No blocks have been selected. Check the selected region and your filter settings (by clicking the Filters button).",
-		"loadingregion": "Loading region...",
-		"dimension": "Dimension",
-		"overworld": "Overworld",
-		"nether": "Nether",
-		"end": "End",
-		"done": "Done",
-		"filters": "Filters",
-		"filters/": {
-			"title": "Block filter",
-			"alert": "Some blocks are being filtered!",
-			"activate": "Activate filters",
-			"blockstoremove": "Choose blocks to remove from the selection",
-			"blockstokeep": "Choose blocks to keep in the selection",
-			"add": "Add",
-			"remove": "Remove",
-			"removefiltered": "Remove filtered",
-			"keepfiltered": "Keep filtered",
-			"ok": "OK"
-		},
-		"size": "(%1x%2x%3 (%4 blocks))",
-		"cancel": "Cancel"
-	},
+	"worldimport/": {
+        "cancel": "Cancel",
+        "noworld": "No world selected",
+        "world": "World",
+        "error": "There was an issue loading the world. It may be corrupted or created in an unsupported version of Minecraft.",
+        "dimension": "Dimension",
+        "overworld": "Overworld",
+        "nether": "Nether",
+        "end": "The End",
+        "browsetip": "Browse for world",
+        "browseworlds": "Minecraft worlds",
+        "browsecaption": "Open Minecraft world",
+        "settingstip": "Change world settings",
+        "reloadtip": "Reload world",
+        "gotoplayertip": "Jump to player or starting position",
+        "selection": "Selection",
+        "selectionsmall": "Small",
+        "selectionmedium": "Medium",
+        "selectionlarge": "Large",
+        "blocks": "%1 x %2 x %3 blocks",
+        "filters": "Filters are active",
+        "confirm": "Import selection"
+    },
+	"worldsettings/": {
+        "caption": "World settings",
+        "filterenabled": "Enable block filter",
+        "filtermode": "Filter mode",
+        "filterremove": "Remove",
+        "filterkeep": "Keep",
+        "filterblocks": "All blocks",
+        "filterfiltered": "Filtered blocks",
+        "unloadregions": "Unload regions far away",
+        "unloadregionstip": "Automatically unload regions to save on memory usage.",
+		"filterhelp": "Use the arrows to add or remove selected blocks from the filter list."
+    },
 	"block/": {
 		"stone": "Stone",
 		"grass_block": "Grass Block",

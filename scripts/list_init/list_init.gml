@@ -1358,6 +1358,20 @@ function list_init(name)
 			
 			break
 		}
+		
+		// Select Minecraft world
+		case "worldimportworld":
+		{
+			world_import_world_menu_init()
+			break
+		}
+		
+		// Select Minecraft dimension
+		case "worldimportdimension":
+		{
+			world_import_dimension_menu_init()
+			break
+		}
 	}
 	
 	return list_init_end()

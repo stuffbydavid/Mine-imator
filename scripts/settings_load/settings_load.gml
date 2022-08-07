@@ -225,6 +225,16 @@ function settings_load()
 				key = ds_map_find_next(collapse_map, key)
 			}
 		}
+		
+		// World import
+		var worldimportmap = map[?"world_import"]
+		if (ds_map_valid(worldimportmap))
+		{
+			setting_world_import_filter_enabled = value_get_real(worldimportmap[?"filter_enabled"], setting_world_import_filter_enabled)
+			setting_world_import_filter_mode = value_get_real(worldimportmap[?"filter_mode"], setting_world_import_filter_mode)
+			ds_list_merge(setting_world_import_filter_list, worldimportmap[?"filter_list"])
+			setting_world_import_unload_regions = value_get_real(worldimportmap[?"unload_regions"], setting_world_import_unload_regions)
+		}
 	}
 	
 	// Legacy

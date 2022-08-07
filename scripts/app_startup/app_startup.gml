@@ -14,9 +14,6 @@ function app_startup()
 	if (!file_lib_startup())
 		return false
 	
-	if (!file_exists_lib(import_file))
-		return missing_file(import_file)
-	
 	if (!file_exists_lib(legacy_file))
 		return missing_file(legacy_file)
 	

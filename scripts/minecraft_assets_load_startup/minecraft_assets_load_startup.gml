@@ -51,7 +51,7 @@ function minecraft_assets_load_startup()
 	load_assets_splash = null
 	load_assets_credits = ""
 	
-	if (!file_exists_lib(splash_directory + "splashes.json"))
+	if (file_exists_lib(splash_directory + "splashes.json"))
 	{
 		var map, splashlist, splash, splashfile;
 		map = json_load(splash_directory + "splashes.json")

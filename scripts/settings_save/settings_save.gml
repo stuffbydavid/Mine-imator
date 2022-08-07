@@ -181,6 +181,17 @@ function settings_save()
 		
 	json_save_object_done()
 	
+	json_save_object_start("world_import")
+		json_save_var_bool("filter_enabled", setting_world_import_filter_enabled)
+		json_save_var("filter_mode", setting_world_import_filter_mode)
+		json_save_array_start("filter_list")
+			for (var i = 0; i < ds_list_size(setting_world_import_filter_list); i++)
+				json_save_array_value(setting_world_import_filter_list[|i])
+		json_save_array_done()
+		json_save_var_bool("unload_regions", setting_world_import_unload_regions)
+		
+	json_save_object_done()
+	
 	json_save_object_done()
 	json_save_done()
 	

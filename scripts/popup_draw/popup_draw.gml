@@ -38,6 +38,8 @@ function popup_draw()
 		else if (popup_ani = 0)
 		{
 			window_busy = ""
+			if (popup != null && popup.closescript)
+				script_execute(popup.closescript)
 			popup = null
 			popup_ani_type = ""
 			popup_switch_from = null

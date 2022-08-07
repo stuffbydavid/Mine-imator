@@ -21,17 +21,34 @@ function toolbar_draw()
 	
 	draw_set_font(font_value)
 	
+	if (window_state = "world_import")
+	{
+		capwid = string_width(text_get("toolbarcancel")) + 16
+		if (toolbar_draw_button("toolbarcancel", dx, dy, capwid, false))
+		{
+			world_import_cancel()
+			app_mouse_clear()
+		}
+		
+		dx += capwid + 4
+		draw_divide_vertical(dx, content_y, content_height)
+		dx += 4
+	}
+	
 	capwid = string_width(text_get("toolbarfile")) + 16
 	toolbar_draw_button("toolbarfile", dx, dy, capwid)
 	dx += capwid + padding
 	
-	capwid = string_width(text_get("toolbaredit")) + 16
-	toolbar_draw_button("toolbaredit", dx, dy, capwid)
-	dx += capwid + padding
-	
-	capwid = string_width(text_get("toolbarrender")) + 16
-	toolbar_draw_button("toolbarrender", dx, dy, capwid)
-	dx += capwid + padding
+	if (window_state = "")
+	{
+		capwid = string_width(text_get("toolbaredit")) + 16
+		toolbar_draw_button("toolbaredit", dx, dy, capwid)
+		dx += capwid + padding
+		
+		capwid = string_width(text_get("toolbarrender")) + 16
+		toolbar_draw_button("toolbarrender", dx, dy, capwid)
+		dx += capwid + padding
+	}
 	
 	capwid = string_width(text_get("toolbarview")) + 16
 	toolbar_draw_button("toolbarview", dx, dy, capwid)

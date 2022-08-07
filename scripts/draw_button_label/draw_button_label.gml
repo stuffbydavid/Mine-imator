@@ -47,6 +47,12 @@ function draw_button_label()
 	h = (type != e_button.TOOLBAR ? 32 : toolbar_size)
 	font = (type != e_button.TOOLBAR ? font_button : font_value)
 	
+	if (type = e_button.BIG)
+	{
+		h = 64
+		font = font_heading_big
+	}
+	
 	// Calculate width/position
 	draw_set_font(font)
 	capwid = string_width(cap)
@@ -77,7 +83,7 @@ function draw_button_label()
 	var focus, backcolor, backalpha, linecolor, linealpha, contentcolor, contentalpha, contentx;
 	focus = max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS])
 	
-	if (type = e_button.PRIMARY)
+	if (type = e_button.PRIMARY || type = e_button.BIG)
 	{
 		backcolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
 		backcolor = merge_color(backcolor, c_accent_pressed, focus)
@@ -96,8 +102,10 @@ function draw_button_label()
 		
 		contentcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
 		contentcolor = merge_color(contentcolor, c_accent, focus)
+		contentcolor = merge_color(contentcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
 		contentalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 		contentalpha = lerp(contentalpha, 1, focus)
+		contentalpha = lerp(contentalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 		
 		linecolor = merge_color(c_border, c_accent, focus)
 		linealpha = lerp(a_border, a_accent, focus)
@@ -107,7 +115,7 @@ function draw_button_label()
 	draw_box(xx, yy, w, h, false, backcolor, backalpha)
 	
 	// Bevel
-	if (type = e_button.PRIMARY)
+	if (type = e_button.PRIMARY || type = e_button.BIG)
 		draw_box_bevel(xx, yy, w, h, 1)
 	
 	// Background

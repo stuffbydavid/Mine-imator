@@ -1,24 +1,29 @@
-/// toolbar_draw_button(name, x, y, width)
+/// toolbar_draw_button(name, x, y, width, [menu])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg width
+/// @arg [menu]
 
-function toolbar_draw_button(name, xx, yy, wid)
+function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 {
-	var trigger, font;
+	var trigger, font, click;
 	trigger = false
+	click = false
 	
 	if (window_busy = "contextmenu")
 		window_busy = ""
 	
 	if (draw_button_label(name, xx, yy, wid, null, e_button.TOOLBAR, null))
+	{
+		click = true
 		trigger = true
+	}
 	
 	if (context_menu_name != "" && context_menu_name != name && app_mouse_box(xx, yy, wid, 28) && toolbar_menu_active)
 		trigger = true
 	
-	if (trigger)
+	if (trigger && hasmenu)
 	{
 		var prevani;
 		
@@ -61,4 +66,6 @@ function toolbar_draw_button(name, xx, yy, wid)
 	
 	if (context_menu_name != "")
 		window_busy = "contextmenu"
+	
+	return click
 }

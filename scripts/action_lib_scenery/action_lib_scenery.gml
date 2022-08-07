@@ -14,18 +14,11 @@ function action_lib_scenery(res)
 	else
 	{
 		var fn = "";
+		res = argument0
 		if (res = e_option.IMPORT_WORLD)
 		{
-			fn = project_folder + "\\world.schematic"
-			file_delete_lib(fn)
-			execute(import_file, fn, true)
-			
-			if (!file_exists_lib(fn))
-				return 0
-				
-			res = new_res(fn, e_res_type.FROM_WORLD)
-			with (res)
-				res_load()
+			world_import_begin(false, temp_edit)
+			return 0
 		}
 		else if (res = e_option.BROWSE)
 		{

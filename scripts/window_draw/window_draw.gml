@@ -25,14 +25,28 @@ function window_draw()
 		window_draw_startup()
 		window_draw_cover()
 	}
+	else if (window_state = "world_import")
+	{
+		window_draw_world_import()
+		
+		toolbar_draw()
+		shortcut_bar_draw()
+		
+		if (menu_popup = null && popup)
+			menu_draw()
+		
+		window_draw_cover()
+	}
 	else
 	{
 		panel_area_draw()
 		toolbar_draw()
 		shortcut_bar_draw()
 		bench_draw()
+		
 		if (menu_popup = null && popup)
 			menu_draw()
+		
 		window_draw_cover()
 		window_draw_timeline_move()
 	}

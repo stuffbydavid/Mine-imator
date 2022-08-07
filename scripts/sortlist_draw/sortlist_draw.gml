@@ -161,7 +161,7 @@ function sortlist_draw()
 		draw_outline(xx, yy, w, h, 1, c_accent, 1, true)
 		window_scroll_focus = string(slist.scroll)
 		
-		if (!app_mouse_box(xx, yy, w, h) && content_mouseon && mouse_left)
+		if (!app_mouse_box(xx, yy, w, h) && content_mouseon && mouse_left && window_busy != "scrollbar")
 			window_focus = ""
 	}
 	else

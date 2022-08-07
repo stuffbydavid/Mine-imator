@@ -110,6 +110,12 @@ function settings_startup()
 	
 	project_render_pass = e_render_pass.COMBINED
 	
+	// World import
+	setting_world_import_filter_enabled = false
+	setting_world_import_filter_mode = 0
+	setting_world_import_filter_list = ds_list_create()
+	setting_world_import_unload_regions = true
+	
 	// Viewport
 	setting_snap = false
 	setting_snap_absolute = true

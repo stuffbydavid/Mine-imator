@@ -26,6 +26,8 @@ function sortlist_column_get(slist, value, col)
 		
 		case "blockname":
 			return minecraft_asset_get_name("block", mc_assets.block_name_map[?value].name)
+		case "blockfilter":
+			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
 		
 		case "particleeditortypename":
 			if (dev_mode)

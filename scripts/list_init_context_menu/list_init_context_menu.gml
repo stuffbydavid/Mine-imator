@@ -241,7 +241,11 @@ function list_init_context_menu(name)
 			list_item_add(text_get("toolbarfilesave"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
 			list_item_add(text_get("toolbarfilesaveas"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
 			
-			list_item_add(text_get("toolbarfileimport"), undefined, text_control_name(keybinds[e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
+			if (window_state = "")
+			{
+				list_item_add(text_get("toolbarfileimport"), undefined, text_control_name(keybinds[e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
+				list_item_add(text_get("toolbarfileworldimport"), undefined, "", null, icons.SCENERY, null, world_import_begin, false)
+			}
 			
 			break
 		}
@@ -301,20 +305,23 @@ function list_init_context_menu(name)
 		// View menu
 		case "toolbarview":
 		{
-			list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
-			
-			list_item_add(text_get("toolbarviewsecondaryview"), null, text_control_name(keybinds[e_keybind.SECONDARY_VIEW].keybind), null, icons.VIEWPORT_SECONDARY, null, action_setting_secondary_view)
-			list_item_last.toggled = view_second.show
-			
-			list_item_add(text_get("toolbarviewtimelinecompact"), null, "", null, icons.COMPACT, null, action_setting_timeline_compact, true)
-			list_item_last.toggled = setting_timeline_compact
-			list_item_last.divider = true
-			
-			list_item_add(text_get("toolbarviewtimelineshowmarkers"), null, "", null, icons.MARKER, null, action_setting_timeline_show_markers)
-			list_item_last.toggled = setting_timeline_show_markers
-			
-			list_item_add(text_get("toolbarviewtimelineplayback"), null, "", null, icons.CLOCK, icons.CHEVRON_RIGHT_TINY, null)
-			list_item_last.context_menu_name = "toolbarviewtimelineplayback"
+			if (window_state = "")
+			{
+				list_item_add(text_get("toolbarviewreset"), null, "", null, icons.CAMERA, null, camera_work_reset)
+				
+				list_item_add(text_get("toolbarviewsecondaryview"), null, text_control_name(keybinds[e_keybind.SECONDARY_VIEW].keybind), null, icons.VIEWPORT_SECONDARY, null, action_setting_secondary_view)
+				list_item_last.toggled = view_second.show
+				
+				list_item_add(text_get("toolbarviewtimelinecompact"), null, "", null, icons.COMPACT, null, action_setting_timeline_compact, true)
+				list_item_last.toggled = setting_timeline_compact
+				list_item_last.divider = true
+				
+				list_item_add(text_get("toolbarviewtimelineshowmarkers"), null, "", null, icons.MARKER, null, action_setting_timeline_show_markers)
+				list_item_last.toggled = setting_timeline_show_markers
+				
+				list_item_add(text_get("toolbarviewtimelineplayback"), null, "", null, icons.CLOCK, icons.CHEVRON_RIGHT_TINY, null)
+				list_item_last.context_menu_name = "toolbarviewtimelineplayback"
+			}
 			
 			list_item_add(text_get("toolbarviewshortcutsbar"), null, "", null, icons.KEYBOARD, null, action_setting_shortcuts_bar, true)
 			list_item_last.toggled = setting_show_shortcuts_bar
