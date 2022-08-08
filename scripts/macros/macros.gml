@@ -56,6 +56,7 @@ function macros()
 	#macro download_image_file			file_directory + "download.png"
 	#macro unzip_directory				file_directory + "unzip\\"
 	#macro render_default_file			render_directory + "default.mirender"
+	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;"
 	
 	// Minecraft structure
 	#macro mc_file_directory			file_directory + "Minecraft_unzip\\"
@@ -79,17 +80,17 @@ function macros()
 	#macro mc_clouds_image_file			mc_textures_directory + "environment\\clouds.png"
 	
 	// Links
-	#macro link_article_drivers			"https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
 	#macro link_website					"https://www.mineimator.com"
 	#macro link_tutorials				"https://www.mineimator.com/tutorials"
 	#macro link_download				"https://www.mineimator.com/download"
 	#macro link_upgrade					"https://www.mineimator.com/upgrade"
 	#macro link_assets					"https://www.mineimator.com/assets/"
 	#macro link_assets_versions			link_assets + "versions.midata"
-	#macro link_news					"https://www.mineimator.com/news.php?version=" + mineimator_version
+	#macro link_news					"https://www.mineimator.com/news.php?version=" + mineimator_version + "&platform=" + string(platform_get()) + "&os=" + os_get()
 	#macro link_skins					"https://www.mineimator.com/skin?username="
 	#macro link_forums					"https://www.mineimatorforums.com"
-	#macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-mine-imator-issues-and-bugs/"
+	#macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-issues-and-bugs/&do=add"
+	#macro link_forums_upload			"https://www.mineimatorforums.com/index.php?/topic/10-guide-how-to-post-a-mine-imator-project/"
 	#macro link_minecraft				"https://www.minecraft.net"
 	#macro link_david					"https://www.stuffbydavid.com"
 	#macro link_modelbench				"https://www.mineimator.com/modelbench"

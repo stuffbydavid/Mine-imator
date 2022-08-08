@@ -3,6 +3,14 @@
 
 function enums()
 {
+	// Platforms
+	enum e_platform
+	{
+		WINDOWS = 0,
+		MAC_OS = 1,
+		LINUX = 2
+	}
+	
 	// Formats
 	enum e_project
 	{
@@ -571,6 +579,7 @@ function enums()
 		IMAGE,
 		IMAGE_EXPORT,
 		INFO,
+		INTERNAL,
 		ITALICS,
 		ITEM,
 		ITEM_SMALL,
@@ -1054,7 +1063,14 @@ function enums()
 	{
 		REFLECTIONS,
 		INDIRECT,
-		SHADOWS_DIRECTIONAL,
-		SHADOWS_POINT
+		SHADOWS_DIRECTIONAL
+	}
+	
+	// Window
+	enum e_window
+	{
+		MAIN,
+		VIEW_SECOND,
+		TIMELINE
 	}
 }

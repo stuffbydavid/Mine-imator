@@ -34,6 +34,7 @@ function app_startup_interface_views()
 	view_main.location = setting_view_main_location
 	view_main.quality = e_view_mode.SHADED
 	view_main.camera = -4
+	view_main.title = ""
 	
 	view_second = new_obj(obj_view)
 	view_second.show = setting_view_second_show
@@ -44,10 +45,12 @@ function app_startup_interface_views()
 	view_second.effects = setting_view_second_effects
 	view_second.particles = setting_view_second_particles
 	view_second.location = setting_view_second_location
+	view_second.location_last = view_second.location
 	view_second.width = setting_view_second_width
 	view_second.height = setting_view_second_height
 	view_second.quality = e_view_mode.SHADED
 	view_second.camera = -5
+	view_second.title = ""
 	
 	view_glow_ani = 0
 	view_glow_location_prev = ""

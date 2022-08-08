@@ -21,6 +21,7 @@ function app_startup_interface_panels()
 	panel_map[?"right"] = new_obj(obj_panel)
 	panel_map[?"right"].size = setting_panel_right_top_size
 	panel_map[?"right"].location = "right"
+	panel_window_obj = new_obj(obj_panel)
 	
 	panel_area_x = 0
 	panel_area_y = 0

@@ -369,7 +369,7 @@ function app_startup_interface_tabs()
 	ptype_list = template_editor.type_list
 	
 	// Timeline
-	timeline = new_tab(setting_timeline_location, true)
+	timeline = new_tab(setting_timeline_location, true, null, e_window.TIMELINE)
 	timeline.script = tab_timeline
 	timeline.movable = false
 	with (timeline)

@@ -32,14 +32,30 @@ function project_load_resource(argument0)
 		if (type = e_res_type.ITEM_SHEET)
 			item_sheet_size = value_get_point2D(map[?"item_sheet_size"], item_sheet_size)
 		
-		if (type = e_res_type.SCENERY)
+		if (type = e_res_type.SCENERY || type = e_res_type.FROM_WORLD)
 		{
 			scenery_tl_add = value_get_real(map[?"scenery_tl_add"], true)
 			scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
-			
+		}
+		
+		if (type = e_res_type.SCENERY)
+		{
 			scenery_palette = value_get_real(map[?"scenery_palette"], scenery_palette)
 			scenery_integrity = value_get_real(map[?"scenery_integrity"], scenery_integrity)
 			scenery_integrity_invert = value_get_real(map[?"scenery_integrity_invert"], scenery_integrity_invert)
+		}
+		
+		if (type = e_res_type.FROM_WORLD)
+		{
+			world_regions_dir = value_get_string(map[?"world_regions_dir"])
+			world_box_start = value_get_point3D(map[?"world_box_start"])
+			world_box_end = value_get_point3D(map[?"world_box_end"])
+			world_filter_mode = value_get_real(map[?"world_filter_mode"])
+			world_filter_array = array()
+			var filterlist = map[?"world_filter_array"]
+			if (ds_list_valid(filterlist))
+				for (var i = 0; i < ds_list_size(filterlist); i++)
+					array_add(world_filter_array, filterlist[|i])
 		}
 		
 		material_uses_glossiness = value_get_real(map[?"uses_glossiness"], material_uses_glossiness)

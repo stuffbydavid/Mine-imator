@@ -2,7 +2,7 @@
 
 function app_startup_interface()
 {
-	window_maximize()
+	window_main_restore(setting_main_window_rect, setting_main_window_maximized)
 	
 	app_startup_shortcut_bar()
 	app_startup_interface_bench()

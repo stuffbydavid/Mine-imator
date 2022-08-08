@@ -7,7 +7,7 @@ function panel_draw(panel)
 	var tabtitle, tabx, tabw, tabmaxw, tabsw, tabswprev, tabsh, tablistmouseon, tabmouseon;
 	var dx, dy;
 	
-	if (panel.size_real < 1 && !panel.glow)
+	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
 		return 0
 	
 	// Calculate box
@@ -74,6 +74,13 @@ function panel_draw(panel)
 		
 		if (panel.glow)
 			draw_box(boxx + boxw - panel.size_glow, boxy, panel.size_glow, boxh, false, c_accent, glow_alpha)
+	}
+	else if (panel = panel_window_obj)
+	{
+		boxx = 0
+		boxy = 0
+		boxw = window_width
+		boxh = window_height
 	}
 	
 	if (boxw < 1 || boxh < 1)
@@ -257,6 +264,7 @@ function panel_draw(panel)
 				if (app_mouse_box(dx, dy, dw, dh))
 				{
 					tab.glow = min(1, tab.glow + 0.1 * delta)
+					tab.panel_last = panel
 					tab_move_mouseon_panel = panel
 					tab_move_mouseon_position = t
 				}

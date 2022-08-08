@@ -4,6 +4,7 @@ function view_event_create()
 {
 	show = true
 	location = "full"
+	location_last = "full"
 	surface = null
 	surface_select = null
 	surface_camera = null

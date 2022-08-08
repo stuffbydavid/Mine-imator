@@ -143,6 +143,9 @@ function settings_load()
 			setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
 			setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)
 			
+			if (ds_map_valid(interfacemap[?"timeline_window"]))
+				window_state_restore(e_window.TIMELINE, interfacemap[?"timeline_window"])
+			
 			setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)
 			
 			setting_view_main_overlays = value_get_real(interfacemap[?"view_main_overlays"], setting_view_main_overlays)
@@ -165,6 +168,9 @@ function settings_load()
 			setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 			setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 			setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
+			
+			if (ds_map_valid(interfacemap[?"view_second_window"]))
+				window_state_restore(e_window.VIEW_SECOND, interfacemap[?"view_second_window"])
 			
 			setting_snap = value_get_real(interfacemap[?"snap"], setting_snap)
 			setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
@@ -224,6 +230,14 @@ function settings_load()
 				collapse_map[?key] = value_get_string(collapsemap[?key], collapse_map[?key])
 				key = ds_map_find_next(collapse_map, key)
 			}
+		}
+		
+		if (ds_map_valid(map[?"main_window"]))
+		{
+			var mainwindowmap = map[?"main_window"];
+			var rectlist = mainwindowmap[?"rect"]
+			setting_main_window_rect = array(rectlist[|0], rectlist[|1], rectlist[|2], rectlist[|3])
+			setting_main_window_maximized = mainwindowmap[?"maximized"]
 		}
 		
 		// World import

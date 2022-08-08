@@ -13,6 +13,7 @@ function panel_tab_list_add(panel, pos, tab)
 	panel.tab_list[pos] = tab
 	panel.tab_list_amount++
 	tab.panel = panel
+	tab.panel_last = panel
 	
 	// Select
 	panel.tab_selected = pos

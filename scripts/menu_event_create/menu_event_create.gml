@@ -4,6 +4,7 @@ function menu_event_create()
 {
 	menu_name = ""
 	menu_type = ""
+	menu_window = e_window.MAIN
 	menu_temp_edit = null
 	menu_script = null
 	menu_value = null

@@ -187,6 +187,15 @@ function panel_area_draw()
 		// Let it go
 		if (!mouse_left)
 		{
+			// Create new window or reset to last panel
+			if (tab_move_mouseon_panel = null)
+			{
+				if (tab_move.window != e_window.MAIN)
+					window_create(tab_move.window, mouse_x + tab_move_box_x, mouse_y + tab_move_box_y, tab_move_box_width, tab_move_box_height)
+				else
+					tab_move_mouseon_panel = tab_move.panel_last
+			}
+			
 			panel_tab_list_add(tab_move_mouseon_panel, tab_move_mouseon_position, tab_move)
 			window_busy = ""
 			tab_move_mouseon_panel_prev = null

@@ -235,6 +235,7 @@ function draw_button_menu()
 		
 		m.menu_name = nameid
 		m.menu_type = type
+		m.menu_window = window_get_current()
 		m.menu_temp_edit = temp_edit
 		m.menu_script = script
 		m.menu_value = value

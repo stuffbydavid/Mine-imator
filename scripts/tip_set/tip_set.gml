@@ -30,6 +30,8 @@ function tip_set()
 	
 	if (showtip)
 	{
+		tip_window = window_get_current()
+		
 		if (tip_box_x != xx || tip_box_y != yy || tip_text != text)
 		{
 			tip_text = text

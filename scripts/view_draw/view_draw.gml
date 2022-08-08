@@ -9,99 +9,120 @@ function view_draw(view)
 	var padding, dx, dy;
 	var location, split, mouseonresizesplit, mouseonresizehor, mouseonresizever;
 	
-	if (!view.show)
-		return 0
-	
-	// Calculate box
-	boxx = view_area_x
-	boxy = view_area_y
-	boxw = view_area_width
-	boxh = view_area_height
 	mouseonresizesplit = false
 	mouseonresizehor = false
 	mouseonresizever = false
-	location = view.location
-	split = view_split
 	
-	if (view = view_second)
-		split = 1-split
-	else if (!view_second.show)
-		location = "full"
+	if (!view.show)
+		return 0
 	
 	if (view = view_main && view_second.show && view_main.quality = e_view_mode.RENDER && view_second.quality = e_view_mode.RENDER)
 		view_main.quality = e_view_mode.SHADED
 	
-	switch (location)
-	{	
-		case "top":
-			boxh -= view_area_height * split
-			mouseonresizesplit = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
-			break
-		
-		case "right":
-			boxx += view_area_width * split
-			boxw -= view_area_width * split
-			mouseonresizesplit = app_mouse_box(boxx, boxy, 8, boxh)
-			break
-		
-		case "bottom":
-			boxy += view_area_height * split
-			boxh -= view_area_height * split
-			mouseonresizesplit = app_mouse_box(boxx, boxy, boxw, 8)
-			break
-		
-		case "left":
-			boxw -= view_area_width * split
-			mouseonresizesplit = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
-			break
-		
-		case "right_top":
-			boxw = min(view_area_width, view.width)
-			boxh = min(view_area_height, view.height)
-			boxx += view_area_width - boxw
-			mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
-			break
-		
-		case "right_bottom":
-			boxw = min(view_area_width, view.width)
-			boxh = min(view_area_height, view.height)
-			boxx += view_area_width - boxw
-			boxy += view_area_height - boxh
-			mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
-			break
-		
-		case "left_bottom":
-			boxw = min(view_area_width, view.width)
-			boxh = min(view_area_height, view.height)
-			boxy += view_area_height - boxh
-			mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
-			break
-		
-		case "left_top":
-			boxw = min(view_area_width, view.width)
-			boxh = min(view_area_height, view.height)
-			mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
-			mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
-			break
-	}
-	
-	if (popup_mouseon)
+	// Calculate box
+	if (window_get_current() = e_window.VIEW_SECOND)
 	{
+		boxx = 0
+		boxy = 0
+		boxw = window_width
+		boxh = window_height
+		location = "full"
+		mouseon = true
+	}
+	else
+	{
+		if (view == view_second && window_exists(e_window.VIEW_SECOND))
+			return 0;
+		
+		boxx = view_area_x
+		boxy = view_area_y
+		boxw = view_area_width
+		boxh = view_area_height
+		mouseonresizesplit = false
 		mouseonresizehor = false
 		mouseonresizever = false
-		mouseonresizesplit = false
+		location = view.location
+		split = view_split
+	
+		if (view = view_second)
+			split = 1-split
+		else if (!view_second.show || window_exists(e_window.VIEW_SECOND))
+			location = "full"
+	
+		view.location_last = location
+		
+		switch (location)
+		{	
+			case "top":
+				boxh -= view_area_height * split
+				mouseonresizesplit = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
+				break
+			
+			case "right":
+				boxx += view_area_width * split
+				boxw -= view_area_width * split
+				mouseonresizesplit = app_mouse_box(boxx, boxy, 8, boxh)
+				break
+			
+			case "bottom":
+				boxy += view_area_height * split
+				boxh -= view_area_height * split
+				mouseonresizesplit = app_mouse_box(boxx, boxy, boxw, 8)
+				break
+			
+			case "left":
+				boxw -= view_area_width * split
+				mouseonresizesplit = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
+				break
+			
+			case "right_top":
+				boxw = min(view_area_width, view.width)
+				boxh = min(view_area_height, view.height)
+				boxx += view_area_width - boxw
+				mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
+				mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
+				break
+			
+			case "right_bottom":
+				boxw = min(view_area_width, view.width)
+				boxh = min(view_area_height, view.height)
+				boxx += view_area_width - boxw
+				boxy += view_area_height - boxh
+				mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
+				mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
+				break
+			
+			case "left_bottom":
+				boxw = min(view_area_width, view.width)
+				boxh = min(view_area_height, view.height)
+				boxy += view_area_height - boxh
+				mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
+				mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
+				break
+			
+			case "left_top":
+				boxw = min(view_area_width, view.width)
+				boxh = min(view_area_height, view.height)
+				mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
+				mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
+				break
+		}
+		
+		if (popup_mouseon)
+		{
+			mouseonresizehor = false
+			mouseonresizever = false
+			mouseonresizesplit = false
+		}
+		
+		boxx = floor(boxx)
+		boxy = floor(boxy)
+		boxw = ceil(boxw)
+		boxh = ceil(boxh)
+		
+		if (boxw < 1 || boxh < 1)
+			return 0
 	}
-	
-	boxx = floor(boxx)
-	boxy = floor(boxy)
-	boxw = ceil(boxw)
-	boxh = ceil(boxh)
-	
-	if (boxw < 1 || boxh < 1)
-		return 0
 	
 	content_x = boxx
 	content_y = boxy
@@ -152,7 +173,7 @@ function view_draw(view)
 	
 	microani_prefix = string(view)
 	
-	if (view = view_main && view_second.show && window_busy != "viewmove")
+	if (view = view_main && view_second.show && !window_exists(e_window.VIEW_SECOND) && window_busy != "viewmove")
 	{
 		if (view_second.location = "left_top")
 			captionx += view_second.width
@@ -166,11 +187,29 @@ function view_draw(view)
 	
 	if (view = view_second)
 	{
-		// Close view
-		if (draw_button_icon("viewclose", dx, dy, dw, dh, false, icons.CLOSE, null, false, "viewclose"))
+		if (window_get_current() != e_window.VIEW_SECOND)
 		{
-			view.show = false
-			view_render = false
+			// Close view
+			if (draw_button_icon("viewclose", dx, dy, dw, dh, false, icons.CLOSE, null, false, "viewclose"))
+			{
+				view.show = false
+				view_render = false
+			}
+			dx -= dw + padding
+			
+			// Pop out
+			if (draw_button_icon("viewpopout", dx, dy, dw, dh, false, icons.EXTERNAL))
+				window_create(e_window.VIEW_SECOND, boxx, boxy, boxw, boxh)
+		}
+		else
+		{
+			// Pop back
+			if (draw_button_icon("viewpopout", dx, dy, dw, dh, false, icons.INTERNAL))
+			{
+				window_close(e_window.VIEW_SECOND)
+				view.location = view.location_last
+				view.show = true
+			}
 		}
 	}
 	else
@@ -320,6 +359,7 @@ function view_draw(view)
 		settings_menu_view = view
 	
 	current_microani.fade.value = 1//(app_mouse_box(captionx, dy, 128, 24) || (window_busy = "menu"))
+	view_second.title = camname
 	
 	/*
 	if (draw_button_icon("viewcamera", captionx, dy, 16, 24, settings_menu_name = listname, icons.CHEVRON_DOWN_TINY))
@@ -637,6 +677,8 @@ function view_draw(view)
 			{
 				if (mouselocation != "")
 					view.location = mouselocation
+				else // Create window
+					window_create(e_window.VIEW_SECOND, boxx, boxy, boxw, boxh)
 				
 				// Set main view
 				switch (view.location)

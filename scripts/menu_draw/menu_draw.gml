@@ -15,6 +15,9 @@ function menu_draw()
 		contentmenu = (m.menu_type = e_menu.TRANSITION_LIST || m.menu_type = e_menu.CONTENT)
 		updatewidth = false
 		
+		if (m.menu_window != window_get_current())
+			continue
+		
 		// Animation
 		if (m.menu_ani_type = "hide") //Hide
 		{

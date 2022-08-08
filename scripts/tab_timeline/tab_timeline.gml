@@ -235,7 +235,26 @@ function tab_timeline()
 		tooltip = "tooltiptldisableloop"
 	
 	draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
-	buttonsx += 24 + 2
+	
+	buttonsx += 24 + 4
+	draw_divide_vertical(buttonsx, buttonsy, 24)
+	buttonsx += 4
+	
+	// Pop out/back button
+	if (window_get_current() = e_window.MAIN)
+	{
+		if (draw_button_icon("tabpopout", buttonsx, buttonsy, 24, 24, false, icons.EXTERNAL, null))
+		{
+			panel_tab_list_remove(tab.panel, tab)
+			window_create(tab.window, content_x, content_y, content_width, content_height)
+		}
+	}
+	else
+	{
+		if (draw_button_icon("tabpopback", buttonsx, buttonsy, 24, 24, false, icons.INTERNAL, null))
+			window_close(tab.window)
+	}
+	buttonsx += 24
 	
 	timeline_settings_right_w = (buttonsx - buttonsxstart)
 	content_mouseon = app_mouse_box(barx, bary, barw, barh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon

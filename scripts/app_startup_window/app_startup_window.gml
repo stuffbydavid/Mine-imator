@@ -2,6 +2,10 @@
 
 function app_startup_window()
 {
+	globalvar window_list, window_debug_current;
+	window_list = ds_list_create()
+	window_debug_current = e_window.MAIN
+	
 	globalvar current_step, minute_steps, delta;
 	current_step = 0
 	minute_steps = 60 * 60
@@ -84,6 +88,7 @@ function app_startup_window()
 	
 	// Tips
 	tip_show = false
+	tip_window = e_window.MAIN
 	tip_alpha = 0
 	tip_text = ""
 	tip_text_wrap = ""

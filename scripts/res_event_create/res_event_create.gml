@@ -92,6 +92,11 @@ function res_event_create()
 	scenery_tl_add = null
 	scenery_tl_list = null
 	scenery_size = vec3(0)
+	world_regions_dir = ""
+	world_box_start = null
+	world_box_end = null
+	world_filter_mode = 0
+	world_filter_array = array()
 	scenery_download_skins = true
 	scenery_structure = false
 	scenery_integrity = 1

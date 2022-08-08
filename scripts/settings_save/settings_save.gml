@@ -104,6 +104,13 @@ function settings_save()
 		json_save_var("frame_editor_location", frame_editor.panel.location)
 		json_save_var("settings_location", settings.panel.location)
 		
+		if (window_exists(e_window.TIMELINE))
+		{
+			json_save_object_start("timeline_window")
+			window_state_save(e_window.TIMELINE)
+			json_save_object_done()
+		}
+		
 		json_save_var("view_split", view_split)
 		
 		json_save_var_bool("view_main_overlays", view_main.overlays)
@@ -124,6 +131,13 @@ function settings_save()
 		json_save_var("view_second_location", view_second.location)
 		json_save_var("view_second_width", view_second.width)
 		json_save_var("view_second_height", view_second.height)
+		
+		if (window_exists(e_window.VIEW_SECOND))
+		{
+			json_save_object_start("view_second_window")
+			window_state_save(e_window.VIEW_SECOND)
+			json_save_object_done()
+		}
 		
 		json_save_var_bool("snap", setting_snap)
 		json_save_var_bool("snap_absolute", setting_snap_absolute)
@@ -179,6 +193,10 @@ function settings_save()
 			key = ds_map_find_next(collapse_map, key)
 		}
 		
+	json_save_object_done()
+	
+	json_save_object_start("main_window")
+		window_state_save(e_window.MAIN)
 	json_save_object_done()
 	
 	json_save_object_start("world_import")
