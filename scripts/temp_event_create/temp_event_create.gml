@@ -42,6 +42,7 @@ function temp_event_create()
 	
 	load_update_tree = false
 	
+	pattern_type = ""
 	pattern_base_color = c_minecraft_white
 	pattern_pattern_list = array()
 	pattern_color_list = array()
