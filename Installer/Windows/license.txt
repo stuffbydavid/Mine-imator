@@ -1,0 +1,21 @@
+Read through this brief license before continuing.
+
+This software, while using graphics from the game Minecraft by Mojang AB, is a property of David Andrei at www.stuffbydavid.com.
+
+You MAY:
+- Use this software to freely produce any form of content you desire.
+- Publish your creations freely on the internet or elsewhere.
+- Monetize your creations through various means with no prior approval required.
+
+You MAY NOT:
+- Distribute this software without the approval of its creator.
+- Claim the software as your own.
+- Somehow use it for illegal purposes.
+
+Note: The source code of Mine-imator is available on GitHub under the MIT license:
+https://github.com/stuffbydavid/Mine-imator
+
+For support and to share your creations, see the Mine-imator forums:
+https://www.mineimatorforums.com
+
+Happy animating!

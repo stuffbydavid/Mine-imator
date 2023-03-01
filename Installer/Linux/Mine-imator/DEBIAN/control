@@ -1,0 +1,6 @@
+Package: Mine-imator
+Version: 2.0
+Architecture: amd64
+Maintainer: David Andrei <hello@stuffbydavid.com>
+Description: Minecraft 3D animation software
+Depends: libxcb-xinerama0, libdouble-conversion-dev, libpcre2-16-0, libvdpau-dev, libva-dev, libsndio-dev, libbsd-dev

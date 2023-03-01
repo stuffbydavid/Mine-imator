@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=2.0
+Name=Mine-imator
+Comment=Minecraft 3D animation software
+Exec=/usr/local/bin/Mine-imator/Mine-imator
+Icon=/usr/share/pixmaps/mine-imator.png
+Terminal=false
+Categories=Application;
+StartupWMClass=mine-imator

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "CppGen": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\Dropbox\\Projects\\MiCpp\\GmProject D:\\Dropbox\\Projects\\MiCpp\\CppProject\\Generated D:\\Dropbox\\Projects\\MiCpp\\CppProject\\Asset\\Sprites D:\\Dropbox\\Projects\\MiCpp\\CppProject\\Asset\\Shaders D:\\Dropbox\\Projects\\MiCpp\\CppGen\\gml.json",
+      "commandLineArgsNimi": "C:\\Dev\\MI2_CppGen\\GmProject C:\\Dev\\MI2_CppGen\\CppProject\\Generated C:\\Dev\\MI2_CppGen\\CppProject\\Asset\\Sprites C:\\Dev\\MI2_CppGen\\CppProject\\Asset\\Shaders C:\\Dev\\MI2_CppGen\\CppGen\\gml.json"
+    }
+  }
+}

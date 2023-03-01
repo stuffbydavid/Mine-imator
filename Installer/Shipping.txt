@@ -1,0 +1,21 @@
+Windows (Installer/zip)
+1. Close all WinRar windows and disable Dropbox
+2. Run UpdateApp.ps1 "<versionName>"
+3. Upload installer .exes and .zips for 64/32-bit
+
+Mac (dmg)
+Applications > Utilities > Keychain Access
+1. Run ./UpdateApp.sh
+2. Upload .dmg
+
+Linux (Debian package/tar archive)
+1. Run ./UpdateApp.sh <versionShortName>
+2. Upload .deb and .tar.gz
+
+Install deb:
+sudo dpkg -i Mine-imator_2.0_amd64.deb
+OR sudo apt install ./Mine-imator_2.0_amd64.deb
+
+Uninstall deb:
+sudo dpkg -r Mine-imator
+OR sudo apt remove mine-imator
