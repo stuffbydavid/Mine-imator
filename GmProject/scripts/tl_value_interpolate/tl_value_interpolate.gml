@@ -40,7 +40,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.CAM_BLADE_AMOUNT:
 		case e_value.CAM_WIDTH:
 		case e_value.CAM_HEIGHT:
-		case e_value.ITEM_SLOT: return round(val1 + p * (val2 - val1)) // No decimals
+		case e_value.ITEM_SLOT: return floor(val1 + p * (val2 - val1)) // No decimals
 		case e_value.SPAWN:
 		case e_value.FREEZE:
 		case e_value.CLEAR:

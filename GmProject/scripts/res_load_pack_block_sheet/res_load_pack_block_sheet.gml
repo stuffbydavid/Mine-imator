@@ -281,8 +281,8 @@ function res_load_pack_block_sheet(type, suffix)
 					nextimage = floor(image) + 1
 					if (framelist != null)
 					{
-						image = framelist[|floor(image) mod ds_list_size(framelist)] + frac(image)
 						nextimage = framelist[|(floor(image) + 1) mod ds_list_size(framelist)]
+						image = framelist[|floor(image) mod ds_list_size(framelist)] + frac(image)
 					}
 					image = image mod images
 					nextimage = nextimage mod images

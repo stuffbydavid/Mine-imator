@@ -19,7 +19,7 @@ function macros()
 	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
 	
 	// Versions
-	#macro mineimator_version			"2.0.0"
+	#macro mineimator_version			"2.0.0 MBMod"
 	#macro mineimator_version_extra		""
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
 	#macro mineimator_version_date		"2023.03.01"

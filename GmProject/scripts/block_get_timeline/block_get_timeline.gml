@@ -44,6 +44,7 @@ function block_get_timeline(block, stateid)
 			}
 			
 			text_position = block.tl_text_position
+			text_scale = block.tl_text_scale
 		}
 		
 		// Get banner patterns
