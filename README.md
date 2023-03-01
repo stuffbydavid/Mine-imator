@@ -12,3 +12,19 @@ Mine-imator is a 3D movie maker based on the sandbox game Minecraft, with over 8
 Website and download: https://www.mineimator.com
 
 The software is written using GameMaker Language and converted to a separate C++ environment using a custom built GML parser (CppGen). The final executable is built for Windows, Mac OS and Linux using the Qt framework, DirectX/OpenGL rendering and various other libraries.
+
+<hr/>
+
+MBMod Changelog since Mine-imator 2.0.0:
+
+Changes:
+  Individual blocks for Chorus Plant and Fire can now be fully customized in the workbench.
+  Individual blocks and vertically repeating stacks for Iron Bars, Glass Panes, Fences, Walls, and Tripwire can now be fully customized in the workbench.
+  Minecraft font now supports nearly every unicode character supported by Minecraft as of 1.19.3.
+  Custom item slot interpolation is now floored instead of rounded.
+  Added support for new 'text_scale' field for text on imported signs.
+  
+Bugfixes:
+  Fixed minutes counter in timeline timer not resetting when an hour has passed.
+  Fixed incorrect frame order with interpolated textures.
+  Fixed crash with empty tag lists in schematics (dev_mode).
