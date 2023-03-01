@@ -2211,6 +2211,7 @@
 				},
 				"has_text": true,
 				"text_position": [ 0.08125, 13.585, 0.6875 ],
+				"text_scale": 0.1667,
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"rotation=0": [ 0, 0, 0 ],
@@ -2336,7 +2337,7 @@
 				},
 				"has_text": true,
 				"text_position": [ 0.08125, 8.25, 1.375 ],
-				"text_scale": [ 0.1667, 0.1667, 0.1667 ],
+				"text_scale": 0.1667,
 				"position": {
 					"facing=north": [ 8, 0, 16 ],
 					"facing=south": [ 8, 0, 0 ],
