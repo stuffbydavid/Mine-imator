@@ -24,6 +24,7 @@ Changes:
   <li>Minecraft font now supports nearly every unicode character supported by Minecraft as of 1.19.3.</li>
   <li>Custom item slot interpolation is now floored instead of rounded.</li>
   <li>Added support for new 'text_scale' field for text on imported signs.</li>
+  <li>Custom object fog color can now be animated with Environment timelines.</li>
 </ul>
   
 Bugfixes:
