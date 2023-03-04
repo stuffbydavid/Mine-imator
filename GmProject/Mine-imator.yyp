@@ -2508,8 +2508,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"extreme.mirender","CopyToMask":-1,"filePath":"datafiles/Data/Render",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"performance.mirender","CopyToMask":-1,"filePath":"datafiles/Data/Render",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"balanced.mirender","CopyToMask":-1,"filePath":"datafiles/Data/Render",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.19.3.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.19.3.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"dangerous_temple.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"apple.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"deep_discovery.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
@@ -2534,6 +2532,8 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"duality_of_noob.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"disco.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"peaceful_creeper.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.19.4-pre3.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.19.4-pre3.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
   ],
   "MetaData": {
     "IDEVersion": "2022.0.0.19",
