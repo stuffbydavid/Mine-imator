@@ -270,7 +270,6 @@
 		<file>Sprites/spr_bench_example_frame_5.png</file>
 		<file>Sprites/spr_bench_frame_0.png</file>
 		<file>Sprites/spr_blue_noise_frame_0.png</file>
-		<file>Sprites/spr_bugs_frame_0.png</file>
 		<file>Sprites/spr_checkbox_frame_0.png</file>
 		<file>Sprites/spr_checkbox_frame_1.png</file>
 		<file>Sprites/spr_checkbox_frame_2.png</file>
@@ -1098,791 +1097,85 @@
 		<file>Sprites/spr_font_frame_1704.png</file>
 		<file>Sprites/spr_font_frame_1705.png</file>
 		<file>Sprites/spr_font_frame_1706.png</file>
-		<file>Sprites/spr_font_frame_1707.png</file>
-		<file>Sprites/spr_font_frame_1708.png</file>
-		<file>Sprites/spr_font_frame_1709.png</file>
 		<file>Sprites/spr_font_frame_171.png</file>
-		<file>Sprites/spr_font_frame_1710.png</file>
-		<file>Sprites/spr_font_frame_1711.png</file>
-		<file>Sprites/spr_font_frame_1712.png</file>
-		<file>Sprites/spr_font_frame_1713.png</file>
-		<file>Sprites/spr_font_frame_1714.png</file>
-		<file>Sprites/spr_font_frame_1715.png</file>
-		<file>Sprites/spr_font_frame_1716.png</file>
-		<file>Sprites/spr_font_frame_1717.png</file>
-		<file>Sprites/spr_font_frame_1718.png</file>
-		<file>Sprites/spr_font_frame_1719.png</file>
 		<file>Sprites/spr_font_frame_172.png</file>
-		<file>Sprites/spr_font_frame_1720.png</file>
-		<file>Sprites/spr_font_frame_1721.png</file>
-		<file>Sprites/spr_font_frame_1722.png</file>
-		<file>Sprites/spr_font_frame_1723.png</file>
-		<file>Sprites/spr_font_frame_1724.png</file>
-		<file>Sprites/spr_font_frame_1725.png</file>
-		<file>Sprites/spr_font_frame_1726.png</file>
-		<file>Sprites/spr_font_frame_1727.png</file>
-		<file>Sprites/spr_font_frame_1728.png</file>
-		<file>Sprites/spr_font_frame_1729.png</file>
 		<file>Sprites/spr_font_frame_173.png</file>
-		<file>Sprites/spr_font_frame_1730.png</file>
-		<file>Sprites/spr_font_frame_1731.png</file>
-		<file>Sprites/spr_font_frame_1732.png</file>
-		<file>Sprites/spr_font_frame_1733.png</file>
-		<file>Sprites/spr_font_frame_1734.png</file>
-		<file>Sprites/spr_font_frame_1735.png</file>
-		<file>Sprites/spr_font_frame_1736.png</file>
-		<file>Sprites/spr_font_frame_1737.png</file>
-		<file>Sprites/spr_font_frame_1738.png</file>
-		<file>Sprites/spr_font_frame_1739.png</file>
 		<file>Sprites/spr_font_frame_174.png</file>
-		<file>Sprites/spr_font_frame_1740.png</file>
-		<file>Sprites/spr_font_frame_1741.png</file>
-		<file>Sprites/spr_font_frame_1742.png</file>
-		<file>Sprites/spr_font_frame_1743.png</file>
-		<file>Sprites/spr_font_frame_1744.png</file>
-		<file>Sprites/spr_font_frame_1745.png</file>
-		<file>Sprites/spr_font_frame_1746.png</file>
-		<file>Sprites/spr_font_frame_1747.png</file>
-		<file>Sprites/spr_font_frame_1748.png</file>
-		<file>Sprites/spr_font_frame_1749.png</file>
 		<file>Sprites/spr_font_frame_175.png</file>
-		<file>Sprites/spr_font_frame_1750.png</file>
-		<file>Sprites/spr_font_frame_1751.png</file>
-		<file>Sprites/spr_font_frame_1752.png</file>
-		<file>Sprites/spr_font_frame_1753.png</file>
-		<file>Sprites/spr_font_frame_1754.png</file>
-		<file>Sprites/spr_font_frame_1755.png</file>
-		<file>Sprites/spr_font_frame_1756.png</file>
-		<file>Sprites/spr_font_frame_1757.png</file>
-		<file>Sprites/spr_font_frame_1758.png</file>
-		<file>Sprites/spr_font_frame_1759.png</file>
 		<file>Sprites/spr_font_frame_176.png</file>
-		<file>Sprites/spr_font_frame_1760.png</file>
-		<file>Sprites/spr_font_frame_1761.png</file>
-		<file>Sprites/spr_font_frame_1762.png</file>
-		<file>Sprites/spr_font_frame_1763.png</file>
-		<file>Sprites/spr_font_frame_1764.png</file>
-		<file>Sprites/spr_font_frame_1765.png</file>
-		<file>Sprites/spr_font_frame_1766.png</file>
-		<file>Sprites/spr_font_frame_1767.png</file>
-		<file>Sprites/spr_font_frame_1768.png</file>
-		<file>Sprites/spr_font_frame_1769.png</file>
 		<file>Sprites/spr_font_frame_177.png</file>
-		<file>Sprites/spr_font_frame_1770.png</file>
-		<file>Sprites/spr_font_frame_1771.png</file>
-		<file>Sprites/spr_font_frame_1772.png</file>
-		<file>Sprites/spr_font_frame_1773.png</file>
-		<file>Sprites/spr_font_frame_1774.png</file>
-		<file>Sprites/spr_font_frame_1775.png</file>
-		<file>Sprites/spr_font_frame_1776.png</file>
-		<file>Sprites/spr_font_frame_1777.png</file>
-		<file>Sprites/spr_font_frame_1778.png</file>
-		<file>Sprites/spr_font_frame_1779.png</file>
 		<file>Sprites/spr_font_frame_178.png</file>
-		<file>Sprites/spr_font_frame_1780.png</file>
-		<file>Sprites/spr_font_frame_1781.png</file>
-		<file>Sprites/spr_font_frame_1782.png</file>
-		<file>Sprites/spr_font_frame_1783.png</file>
-		<file>Sprites/spr_font_frame_1784.png</file>
-		<file>Sprites/spr_font_frame_1785.png</file>
-		<file>Sprites/spr_font_frame_1786.png</file>
-		<file>Sprites/spr_font_frame_1787.png</file>
-		<file>Sprites/spr_font_frame_1788.png</file>
-		<file>Sprites/spr_font_frame_1789.png</file>
 		<file>Sprites/spr_font_frame_179.png</file>
-		<file>Sprites/spr_font_frame_1790.png</file>
-		<file>Sprites/spr_font_frame_1791.png</file>
-		<file>Sprites/spr_font_frame_1792.png</file>
-		<file>Sprites/spr_font_frame_1793.png</file>
-		<file>Sprites/spr_font_frame_1794.png</file>
-		<file>Sprites/spr_font_frame_1795.png</file>
-		<file>Sprites/spr_font_frame_1796.png</file>
-		<file>Sprites/spr_font_frame_1797.png</file>
-		<file>Sprites/spr_font_frame_1798.png</file>
-		<file>Sprites/spr_font_frame_1799.png</file>
 		<file>Sprites/spr_font_frame_18.png</file>
 		<file>Sprites/spr_font_frame_180.png</file>
-		<file>Sprites/spr_font_frame_1800.png</file>
-		<file>Sprites/spr_font_frame_1801.png</file>
-		<file>Sprites/spr_font_frame_1802.png</file>
-		<file>Sprites/spr_font_frame_1803.png</file>
-		<file>Sprites/spr_font_frame_1804.png</file>
-		<file>Sprites/spr_font_frame_1805.png</file>
-		<file>Sprites/spr_font_frame_1806.png</file>
-		<file>Sprites/spr_font_frame_1807.png</file>
-		<file>Sprites/spr_font_frame_1808.png</file>
-		<file>Sprites/spr_font_frame_1809.png</file>
 		<file>Sprites/spr_font_frame_181.png</file>
-		<file>Sprites/spr_font_frame_1810.png</file>
-		<file>Sprites/spr_font_frame_1811.png</file>
-		<file>Sprites/spr_font_frame_1812.png</file>
-		<file>Sprites/spr_font_frame_1813.png</file>
-		<file>Sprites/spr_font_frame_1814.png</file>
-		<file>Sprites/spr_font_frame_1815.png</file>
-		<file>Sprites/spr_font_frame_1816.png</file>
-		<file>Sprites/spr_font_frame_1817.png</file>
-		<file>Sprites/spr_font_frame_1818.png</file>
-		<file>Sprites/spr_font_frame_1819.png</file>
 		<file>Sprites/spr_font_frame_182.png</file>
-		<file>Sprites/spr_font_frame_1820.png</file>
-		<file>Sprites/spr_font_frame_1821.png</file>
-		<file>Sprites/spr_font_frame_1822.png</file>
-		<file>Sprites/spr_font_frame_1823.png</file>
-		<file>Sprites/spr_font_frame_1824.png</file>
-		<file>Sprites/spr_font_frame_1825.png</file>
-		<file>Sprites/spr_font_frame_1826.png</file>
-		<file>Sprites/spr_font_frame_1827.png</file>
-		<file>Sprites/spr_font_frame_1828.png</file>
-		<file>Sprites/spr_font_frame_1829.png</file>
 		<file>Sprites/spr_font_frame_183.png</file>
-		<file>Sprites/spr_font_frame_1830.png</file>
-		<file>Sprites/spr_font_frame_1831.png</file>
-		<file>Sprites/spr_font_frame_1832.png</file>
-		<file>Sprites/spr_font_frame_1833.png</file>
-		<file>Sprites/spr_font_frame_1834.png</file>
-		<file>Sprites/spr_font_frame_1835.png</file>
-		<file>Sprites/spr_font_frame_1836.png</file>
-		<file>Sprites/spr_font_frame_1837.png</file>
-		<file>Sprites/spr_font_frame_1838.png</file>
-		<file>Sprites/spr_font_frame_1839.png</file>
 		<file>Sprites/spr_font_frame_184.png</file>
-		<file>Sprites/spr_font_frame_1840.png</file>
-		<file>Sprites/spr_font_frame_1841.png</file>
-		<file>Sprites/spr_font_frame_1842.png</file>
-		<file>Sprites/spr_font_frame_1843.png</file>
-		<file>Sprites/spr_font_frame_1844.png</file>
-		<file>Sprites/spr_font_frame_1845.png</file>
-		<file>Sprites/spr_font_frame_1846.png</file>
-		<file>Sprites/spr_font_frame_1847.png</file>
-		<file>Sprites/spr_font_frame_1848.png</file>
-		<file>Sprites/spr_font_frame_1849.png</file>
 		<file>Sprites/spr_font_frame_185.png</file>
-		<file>Sprites/spr_font_frame_1850.png</file>
-		<file>Sprites/spr_font_frame_1851.png</file>
-		<file>Sprites/spr_font_frame_1852.png</file>
-		<file>Sprites/spr_font_frame_1853.png</file>
-		<file>Sprites/spr_font_frame_1854.png</file>
-		<file>Sprites/spr_font_frame_1855.png</file>
-		<file>Sprites/spr_font_frame_1856.png</file>
-		<file>Sprites/spr_font_frame_1857.png</file>
-		<file>Sprites/spr_font_frame_1858.png</file>
-		<file>Sprites/spr_font_frame_1859.png</file>
 		<file>Sprites/spr_font_frame_186.png</file>
-		<file>Sprites/spr_font_frame_1860.png</file>
-		<file>Sprites/spr_font_frame_1861.png</file>
-		<file>Sprites/spr_font_frame_1862.png</file>
-		<file>Sprites/spr_font_frame_1863.png</file>
-		<file>Sprites/spr_font_frame_1864.png</file>
-		<file>Sprites/spr_font_frame_1865.png</file>
-		<file>Sprites/spr_font_frame_1866.png</file>
-		<file>Sprites/spr_font_frame_1867.png</file>
-		<file>Sprites/spr_font_frame_1868.png</file>
-		<file>Sprites/spr_font_frame_1869.png</file>
 		<file>Sprites/spr_font_frame_187.png</file>
-		<file>Sprites/spr_font_frame_1870.png</file>
-		<file>Sprites/spr_font_frame_1871.png</file>
-		<file>Sprites/spr_font_frame_1872.png</file>
-		<file>Sprites/spr_font_frame_1873.png</file>
-		<file>Sprites/spr_font_frame_1874.png</file>
-		<file>Sprites/spr_font_frame_1875.png</file>
-		<file>Sprites/spr_font_frame_1876.png</file>
-		<file>Sprites/spr_font_frame_1877.png</file>
-		<file>Sprites/spr_font_frame_1878.png</file>
-		<file>Sprites/spr_font_frame_1879.png</file>
 		<file>Sprites/spr_font_frame_188.png</file>
-		<file>Sprites/spr_font_frame_1880.png</file>
-		<file>Sprites/spr_font_frame_1881.png</file>
-		<file>Sprites/spr_font_frame_1882.png</file>
-		<file>Sprites/spr_font_frame_1883.png</file>
-		<file>Sprites/spr_font_frame_1884.png</file>
-		<file>Sprites/spr_font_frame_1885.png</file>
-		<file>Sprites/spr_font_frame_1886.png</file>
-		<file>Sprites/spr_font_frame_1887.png</file>
-		<file>Sprites/spr_font_frame_1888.png</file>
-		<file>Sprites/spr_font_frame_1889.png</file>
 		<file>Sprites/spr_font_frame_189.png</file>
-		<file>Sprites/spr_font_frame_1890.png</file>
-		<file>Sprites/spr_font_frame_1891.png</file>
-		<file>Sprites/spr_font_frame_1892.png</file>
-		<file>Sprites/spr_font_frame_1893.png</file>
-		<file>Sprites/spr_font_frame_1894.png</file>
-		<file>Sprites/spr_font_frame_1895.png</file>
-		<file>Sprites/spr_font_frame_1896.png</file>
-		<file>Sprites/spr_font_frame_1897.png</file>
-		<file>Sprites/spr_font_frame_1898.png</file>
-		<file>Sprites/spr_font_frame_1899.png</file>
 		<file>Sprites/spr_font_frame_19.png</file>
 		<file>Sprites/spr_font_frame_190.png</file>
-		<file>Sprites/spr_font_frame_1900.png</file>
-		<file>Sprites/spr_font_frame_1901.png</file>
-		<file>Sprites/spr_font_frame_1902.png</file>
-		<file>Sprites/spr_font_frame_1903.png</file>
-		<file>Sprites/spr_font_frame_1904.png</file>
-		<file>Sprites/spr_font_frame_1905.png</file>
-		<file>Sprites/spr_font_frame_1906.png</file>
-		<file>Sprites/spr_font_frame_1907.png</file>
-		<file>Sprites/spr_font_frame_1908.png</file>
-		<file>Sprites/spr_font_frame_1909.png</file>
 		<file>Sprites/spr_font_frame_191.png</file>
-		<file>Sprites/spr_font_frame_1910.png</file>
-		<file>Sprites/spr_font_frame_1911.png</file>
-		<file>Sprites/spr_font_frame_1912.png</file>
-		<file>Sprites/spr_font_frame_1913.png</file>
-		<file>Sprites/spr_font_frame_1914.png</file>
-		<file>Sprites/spr_font_frame_1915.png</file>
-		<file>Sprites/spr_font_frame_1916.png</file>
-		<file>Sprites/spr_font_frame_1917.png</file>
-		<file>Sprites/spr_font_frame_1918.png</file>
-		<file>Sprites/spr_font_frame_1919.png</file>
 		<file>Sprites/spr_font_frame_192.png</file>
-		<file>Sprites/spr_font_frame_1920.png</file>
-		<file>Sprites/spr_font_frame_1921.png</file>
-		<file>Sprites/spr_font_frame_1922.png</file>
-		<file>Sprites/spr_font_frame_1923.png</file>
-		<file>Sprites/spr_font_frame_1924.png</file>
-		<file>Sprites/spr_font_frame_1925.png</file>
-		<file>Sprites/spr_font_frame_1926.png</file>
-		<file>Sprites/spr_font_frame_1927.png</file>
-		<file>Sprites/spr_font_frame_1928.png</file>
-		<file>Sprites/spr_font_frame_1929.png</file>
 		<file>Sprites/spr_font_frame_193.png</file>
-		<file>Sprites/spr_font_frame_1930.png</file>
-		<file>Sprites/spr_font_frame_1931.png</file>
-		<file>Sprites/spr_font_frame_1932.png</file>
-		<file>Sprites/spr_font_frame_1933.png</file>
-		<file>Sprites/spr_font_frame_1934.png</file>
-		<file>Sprites/spr_font_frame_1935.png</file>
-		<file>Sprites/spr_font_frame_1936.png</file>
-		<file>Sprites/spr_font_frame_1937.png</file>
-		<file>Sprites/spr_font_frame_1938.png</file>
-		<file>Sprites/spr_font_frame_1939.png</file>
 		<file>Sprites/spr_font_frame_194.png</file>
-		<file>Sprites/spr_font_frame_1940.png</file>
-		<file>Sprites/spr_font_frame_1941.png</file>
-		<file>Sprites/spr_font_frame_1942.png</file>
-		<file>Sprites/spr_font_frame_1943.png</file>
-		<file>Sprites/spr_font_frame_1944.png</file>
-		<file>Sprites/spr_font_frame_1945.png</file>
-		<file>Sprites/spr_font_frame_1946.png</file>
-		<file>Sprites/spr_font_frame_1947.png</file>
-		<file>Sprites/spr_font_frame_1948.png</file>
-		<file>Sprites/spr_font_frame_1949.png</file>
 		<file>Sprites/spr_font_frame_195.png</file>
-		<file>Sprites/spr_font_frame_1950.png</file>
-		<file>Sprites/spr_font_frame_1951.png</file>
-		<file>Sprites/spr_font_frame_1952.png</file>
-		<file>Sprites/spr_font_frame_1953.png</file>
-		<file>Sprites/spr_font_frame_1954.png</file>
-		<file>Sprites/spr_font_frame_1955.png</file>
-		<file>Sprites/spr_font_frame_1956.png</file>
-		<file>Sprites/spr_font_frame_1957.png</file>
-		<file>Sprites/spr_font_frame_1958.png</file>
-		<file>Sprites/spr_font_frame_1959.png</file>
 		<file>Sprites/spr_font_frame_196.png</file>
-		<file>Sprites/spr_font_frame_1960.png</file>
-		<file>Sprites/spr_font_frame_1961.png</file>
-		<file>Sprites/spr_font_frame_1962.png</file>
-		<file>Sprites/spr_font_frame_1963.png</file>
-		<file>Sprites/spr_font_frame_1964.png</file>
-		<file>Sprites/spr_font_frame_1965.png</file>
-		<file>Sprites/spr_font_frame_1966.png</file>
-		<file>Sprites/spr_font_frame_1967.png</file>
-		<file>Sprites/spr_font_frame_1968.png</file>
-		<file>Sprites/spr_font_frame_1969.png</file>
 		<file>Sprites/spr_font_frame_197.png</file>
-		<file>Sprites/spr_font_frame_1970.png</file>
-		<file>Sprites/spr_font_frame_1971.png</file>
-		<file>Sprites/spr_font_frame_1972.png</file>
-		<file>Sprites/spr_font_frame_1973.png</file>
-		<file>Sprites/spr_font_frame_1974.png</file>
-		<file>Sprites/spr_font_frame_1975.png</file>
-		<file>Sprites/spr_font_frame_1976.png</file>
-		<file>Sprites/spr_font_frame_1977.png</file>
-		<file>Sprites/spr_font_frame_1978.png</file>
-		<file>Sprites/spr_font_frame_1979.png</file>
 		<file>Sprites/spr_font_frame_198.png</file>
-		<file>Sprites/spr_font_frame_1980.png</file>
-		<file>Sprites/spr_font_frame_1981.png</file>
-		<file>Sprites/spr_font_frame_1982.png</file>
-		<file>Sprites/spr_font_frame_1983.png</file>
-		<file>Sprites/spr_font_frame_1984.png</file>
-		<file>Sprites/spr_font_frame_1985.png</file>
-		<file>Sprites/spr_font_frame_1986.png</file>
-		<file>Sprites/spr_font_frame_1987.png</file>
-		<file>Sprites/spr_font_frame_1988.png</file>
-		<file>Sprites/spr_font_frame_1989.png</file>
 		<file>Sprites/spr_font_frame_199.png</file>
-		<file>Sprites/spr_font_frame_1990.png</file>
-		<file>Sprites/spr_font_frame_1991.png</file>
-		<file>Sprites/spr_font_frame_1992.png</file>
-		<file>Sprites/spr_font_frame_1993.png</file>
-		<file>Sprites/spr_font_frame_1994.png</file>
-		<file>Sprites/spr_font_frame_1995.png</file>
-		<file>Sprites/spr_font_frame_1996.png</file>
-		<file>Sprites/spr_font_frame_1997.png</file>
-		<file>Sprites/spr_font_frame_1998.png</file>
-		<file>Sprites/spr_font_frame_1999.png</file>
 		<file>Sprites/spr_font_frame_2.png</file>
 		<file>Sprites/spr_font_frame_20.png</file>
 		<file>Sprites/spr_font_frame_200.png</file>
-		<file>Sprites/spr_font_frame_2000.png</file>
-		<file>Sprites/spr_font_frame_2001.png</file>
-		<file>Sprites/spr_font_frame_2002.png</file>
-		<file>Sprites/spr_font_frame_2003.png</file>
-		<file>Sprites/spr_font_frame_2004.png</file>
-		<file>Sprites/spr_font_frame_2005.png</file>
-		<file>Sprites/spr_font_frame_2006.png</file>
-		<file>Sprites/spr_font_frame_2007.png</file>
-		<file>Sprites/spr_font_frame_2008.png</file>
-		<file>Sprites/spr_font_frame_2009.png</file>
 		<file>Sprites/spr_font_frame_201.png</file>
-		<file>Sprites/spr_font_frame_2010.png</file>
-		<file>Sprites/spr_font_frame_2011.png</file>
-		<file>Sprites/spr_font_frame_2012.png</file>
-		<file>Sprites/spr_font_frame_2013.png</file>
-		<file>Sprites/spr_font_frame_2014.png</file>
-		<file>Sprites/spr_font_frame_2015.png</file>
-		<file>Sprites/spr_font_frame_2016.png</file>
-		<file>Sprites/spr_font_frame_2017.png</file>
-		<file>Sprites/spr_font_frame_2018.png</file>
-		<file>Sprites/spr_font_frame_2019.png</file>
 		<file>Sprites/spr_font_frame_202.png</file>
-		<file>Sprites/spr_font_frame_2020.png</file>
-		<file>Sprites/spr_font_frame_2021.png</file>
-		<file>Sprites/spr_font_frame_2022.png</file>
-		<file>Sprites/spr_font_frame_2023.png</file>
-		<file>Sprites/spr_font_frame_2024.png</file>
-		<file>Sprites/spr_font_frame_2025.png</file>
-		<file>Sprites/spr_font_frame_2026.png</file>
-		<file>Sprites/spr_font_frame_2027.png</file>
-		<file>Sprites/spr_font_frame_2028.png</file>
-		<file>Sprites/spr_font_frame_2029.png</file>
 		<file>Sprites/spr_font_frame_203.png</file>
-		<file>Sprites/spr_font_frame_2030.png</file>
-		<file>Sprites/spr_font_frame_2031.png</file>
-		<file>Sprites/spr_font_frame_2032.png</file>
-		<file>Sprites/spr_font_frame_2033.png</file>
-		<file>Sprites/spr_font_frame_2034.png</file>
-		<file>Sprites/spr_font_frame_2035.png</file>
-		<file>Sprites/spr_font_frame_2036.png</file>
-		<file>Sprites/spr_font_frame_2037.png</file>
-		<file>Sprites/spr_font_frame_2038.png</file>
-		<file>Sprites/spr_font_frame_2039.png</file>
 		<file>Sprites/spr_font_frame_204.png</file>
-		<file>Sprites/spr_font_frame_2040.png</file>
-		<file>Sprites/spr_font_frame_2041.png</file>
-		<file>Sprites/spr_font_frame_2042.png</file>
-		<file>Sprites/spr_font_frame_2043.png</file>
-		<file>Sprites/spr_font_frame_2044.png</file>
-		<file>Sprites/spr_font_frame_2045.png</file>
-		<file>Sprites/spr_font_frame_2046.png</file>
-		<file>Sprites/spr_font_frame_2047.png</file>
-		<file>Sprites/spr_font_frame_2048.png</file>
-		<file>Sprites/spr_font_frame_2049.png</file>
 		<file>Sprites/spr_font_frame_205.png</file>
-		<file>Sprites/spr_font_frame_2050.png</file>
-		<file>Sprites/spr_font_frame_2051.png</file>
-		<file>Sprites/spr_font_frame_2052.png</file>
-		<file>Sprites/spr_font_frame_2053.png</file>
-		<file>Sprites/spr_font_frame_2054.png</file>
-		<file>Sprites/spr_font_frame_2055.png</file>
-		<file>Sprites/spr_font_frame_2056.png</file>
-		<file>Sprites/spr_font_frame_2057.png</file>
-		<file>Sprites/spr_font_frame_2058.png</file>
-		<file>Sprites/spr_font_frame_2059.png</file>
 		<file>Sprites/spr_font_frame_206.png</file>
-		<file>Sprites/spr_font_frame_2060.png</file>
-		<file>Sprites/spr_font_frame_2061.png</file>
-		<file>Sprites/spr_font_frame_2062.png</file>
-		<file>Sprites/spr_font_frame_2063.png</file>
-		<file>Sprites/spr_font_frame_2064.png</file>
-		<file>Sprites/spr_font_frame_2065.png</file>
-		<file>Sprites/spr_font_frame_2066.png</file>
-		<file>Sprites/spr_font_frame_2067.png</file>
-		<file>Sprites/spr_font_frame_2068.png</file>
-		<file>Sprites/spr_font_frame_2069.png</file>
 		<file>Sprites/spr_font_frame_207.png</file>
-		<file>Sprites/spr_font_frame_2070.png</file>
-		<file>Sprites/spr_font_frame_2071.png</file>
-		<file>Sprites/spr_font_frame_2072.png</file>
-		<file>Sprites/spr_font_frame_2073.png</file>
-		<file>Sprites/spr_font_frame_2074.png</file>
-		<file>Sprites/spr_font_frame_2075.png</file>
-		<file>Sprites/spr_font_frame_2076.png</file>
-		<file>Sprites/spr_font_frame_2077.png</file>
-		<file>Sprites/spr_font_frame_2078.png</file>
-		<file>Sprites/spr_font_frame_2079.png</file>
 		<file>Sprites/spr_font_frame_208.png</file>
-		<file>Sprites/spr_font_frame_2080.png</file>
-		<file>Sprites/spr_font_frame_2081.png</file>
-		<file>Sprites/spr_font_frame_2082.png</file>
-		<file>Sprites/spr_font_frame_2083.png</file>
-		<file>Sprites/spr_font_frame_2084.png</file>
-		<file>Sprites/spr_font_frame_2085.png</file>
-		<file>Sprites/spr_font_frame_2086.png</file>
-		<file>Sprites/spr_font_frame_2087.png</file>
-		<file>Sprites/spr_font_frame_2088.png</file>
-		<file>Sprites/spr_font_frame_2089.png</file>
 		<file>Sprites/spr_font_frame_209.png</file>
-		<file>Sprites/spr_font_frame_2090.png</file>
-		<file>Sprites/spr_font_frame_2091.png</file>
-		<file>Sprites/spr_font_frame_2092.png</file>
-		<file>Sprites/spr_font_frame_2093.png</file>
-		<file>Sprites/spr_font_frame_2094.png</file>
-		<file>Sprites/spr_font_frame_2095.png</file>
-		<file>Sprites/spr_font_frame_2096.png</file>
-		<file>Sprites/spr_font_frame_2097.png</file>
-		<file>Sprites/spr_font_frame_2098.png</file>
-		<file>Sprites/spr_font_frame_2099.png</file>
 		<file>Sprites/spr_font_frame_21.png</file>
 		<file>Sprites/spr_font_frame_210.png</file>
-		<file>Sprites/spr_font_frame_2100.png</file>
-		<file>Sprites/spr_font_frame_2101.png</file>
-		<file>Sprites/spr_font_frame_2102.png</file>
-		<file>Sprites/spr_font_frame_2103.png</file>
-		<file>Sprites/spr_font_frame_2104.png</file>
-		<file>Sprites/spr_font_frame_2105.png</file>
-		<file>Sprites/spr_font_frame_2106.png</file>
-		<file>Sprites/spr_font_frame_2107.png</file>
-		<file>Sprites/spr_font_frame_2108.png</file>
-		<file>Sprites/spr_font_frame_2109.png</file>
 		<file>Sprites/spr_font_frame_211.png</file>
-		<file>Sprites/spr_font_frame_2110.png</file>
-		<file>Sprites/spr_font_frame_2111.png</file>
-		<file>Sprites/spr_font_frame_2112.png</file>
-		<file>Sprites/spr_font_frame_2113.png</file>
-		<file>Sprites/spr_font_frame_2114.png</file>
-		<file>Sprites/spr_font_frame_2115.png</file>
-		<file>Sprites/spr_font_frame_2116.png</file>
-		<file>Sprites/spr_font_frame_2117.png</file>
-		<file>Sprites/spr_font_frame_2118.png</file>
-		<file>Sprites/spr_font_frame_2119.png</file>
 		<file>Sprites/spr_font_frame_212.png</file>
-		<file>Sprites/spr_font_frame_2120.png</file>
-		<file>Sprites/spr_font_frame_2121.png</file>
-		<file>Sprites/spr_font_frame_2122.png</file>
-		<file>Sprites/spr_font_frame_2123.png</file>
-		<file>Sprites/spr_font_frame_2124.png</file>
-		<file>Sprites/spr_font_frame_2125.png</file>
-		<file>Sprites/spr_font_frame_2126.png</file>
-		<file>Sprites/spr_font_frame_2127.png</file>
-		<file>Sprites/spr_font_frame_2128.png</file>
-		<file>Sprites/spr_font_frame_2129.png</file>
 		<file>Sprites/spr_font_frame_213.png</file>
-		<file>Sprites/spr_font_frame_2130.png</file>
-		<file>Sprites/spr_font_frame_2131.png</file>
-		<file>Sprites/spr_font_frame_2132.png</file>
-		<file>Sprites/spr_font_frame_2133.png</file>
-		<file>Sprites/spr_font_frame_2134.png</file>
-		<file>Sprites/spr_font_frame_2135.png</file>
-		<file>Sprites/spr_font_frame_2136.png</file>
-		<file>Sprites/spr_font_frame_2137.png</file>
-		<file>Sprites/spr_font_frame_2138.png</file>
-		<file>Sprites/spr_font_frame_2139.png</file>
 		<file>Sprites/spr_font_frame_214.png</file>
-		<file>Sprites/spr_font_frame_2140.png</file>
-		<file>Sprites/spr_font_frame_2141.png</file>
-		<file>Sprites/spr_font_frame_2142.png</file>
-		<file>Sprites/spr_font_frame_2143.png</file>
-		<file>Sprites/spr_font_frame_2144.png</file>
-		<file>Sprites/spr_font_frame_2145.png</file>
-		<file>Sprites/spr_font_frame_2146.png</file>
-		<file>Sprites/spr_font_frame_2147.png</file>
-		<file>Sprites/spr_font_frame_2148.png</file>
-		<file>Sprites/spr_font_frame_2149.png</file>
 		<file>Sprites/spr_font_frame_215.png</file>
-		<file>Sprites/spr_font_frame_2150.png</file>
-		<file>Sprites/spr_font_frame_2151.png</file>
-		<file>Sprites/spr_font_frame_2152.png</file>
-		<file>Sprites/spr_font_frame_2153.png</file>
-		<file>Sprites/spr_font_frame_2154.png</file>
-		<file>Sprites/spr_font_frame_2155.png</file>
-		<file>Sprites/spr_font_frame_2156.png</file>
-		<file>Sprites/spr_font_frame_2157.png</file>
-		<file>Sprites/spr_font_frame_2158.png</file>
-		<file>Sprites/spr_font_frame_2159.png</file>
 		<file>Sprites/spr_font_frame_216.png</file>
-		<file>Sprites/spr_font_frame_2160.png</file>
-		<file>Sprites/spr_font_frame_2161.png</file>
-		<file>Sprites/spr_font_frame_2162.png</file>
-		<file>Sprites/spr_font_frame_2163.png</file>
-		<file>Sprites/spr_font_frame_2164.png</file>
-		<file>Sprites/spr_font_frame_2165.png</file>
-		<file>Sprites/spr_font_frame_2166.png</file>
-		<file>Sprites/spr_font_frame_2167.png</file>
-		<file>Sprites/spr_font_frame_2168.png</file>
-		<file>Sprites/spr_font_frame_2169.png</file>
 		<file>Sprites/spr_font_frame_217.png</file>
-		<file>Sprites/spr_font_frame_2170.png</file>
-		<file>Sprites/spr_font_frame_2171.png</file>
-		<file>Sprites/spr_font_frame_2172.png</file>
-		<file>Sprites/spr_font_frame_2173.png</file>
-		<file>Sprites/spr_font_frame_2174.png</file>
-		<file>Sprites/spr_font_frame_2175.png</file>
-		<file>Sprites/spr_font_frame_2176.png</file>
-		<file>Sprites/spr_font_frame_2177.png</file>
-		<file>Sprites/spr_font_frame_2178.png</file>
-		<file>Sprites/spr_font_frame_2179.png</file>
 		<file>Sprites/spr_font_frame_218.png</file>
-		<file>Sprites/spr_font_frame_2180.png</file>
-		<file>Sprites/spr_font_frame_2181.png</file>
-		<file>Sprites/spr_font_frame_2182.png</file>
-		<file>Sprites/spr_font_frame_2183.png</file>
-		<file>Sprites/spr_font_frame_2184.png</file>
-		<file>Sprites/spr_font_frame_2185.png</file>
-		<file>Sprites/spr_font_frame_2186.png</file>
-		<file>Sprites/spr_font_frame_2187.png</file>
-		<file>Sprites/spr_font_frame_2188.png</file>
-		<file>Sprites/spr_font_frame_2189.png</file>
 		<file>Sprites/spr_font_frame_219.png</file>
-		<file>Sprites/spr_font_frame_2190.png</file>
-		<file>Sprites/spr_font_frame_2191.png</file>
-		<file>Sprites/spr_font_frame_2192.png</file>
-		<file>Sprites/spr_font_frame_2193.png</file>
-		<file>Sprites/spr_font_frame_2194.png</file>
-		<file>Sprites/spr_font_frame_2195.png</file>
-		<file>Sprites/spr_font_frame_2196.png</file>
-		<file>Sprites/spr_font_frame_2197.png</file>
-		<file>Sprites/spr_font_frame_2198.png</file>
-		<file>Sprites/spr_font_frame_2199.png</file>
 		<file>Sprites/spr_font_frame_22.png</file>
 		<file>Sprites/spr_font_frame_220.png</file>
-		<file>Sprites/spr_font_frame_2200.png</file>
-		<file>Sprites/spr_font_frame_2201.png</file>
-		<file>Sprites/spr_font_frame_2202.png</file>
-		<file>Sprites/spr_font_frame_2203.png</file>
-		<file>Sprites/spr_font_frame_2204.png</file>
-		<file>Sprites/spr_font_frame_2205.png</file>
-		<file>Sprites/spr_font_frame_2206.png</file>
-		<file>Sprites/spr_font_frame_2207.png</file>
-		<file>Sprites/spr_font_frame_2208.png</file>
-		<file>Sprites/spr_font_frame_2209.png</file>
 		<file>Sprites/spr_font_frame_221.png</file>
-		<file>Sprites/spr_font_frame_2210.png</file>
-		<file>Sprites/spr_font_frame_2211.png</file>
-		<file>Sprites/spr_font_frame_2212.png</file>
-		<file>Sprites/spr_font_frame_2213.png</file>
-		<file>Sprites/spr_font_frame_2214.png</file>
-		<file>Sprites/spr_font_frame_2215.png</file>
-		<file>Sprites/spr_font_frame_2216.png</file>
-		<file>Sprites/spr_font_frame_2217.png</file>
-		<file>Sprites/spr_font_frame_2218.png</file>
-		<file>Sprites/spr_font_frame_2219.png</file>
 		<file>Sprites/spr_font_frame_222.png</file>
-		<file>Sprites/spr_font_frame_2220.png</file>
-		<file>Sprites/spr_font_frame_2221.png</file>
-		<file>Sprites/spr_font_frame_2222.png</file>
-		<file>Sprites/spr_font_frame_2223.png</file>
-		<file>Sprites/spr_font_frame_2224.png</file>
-		<file>Sprites/spr_font_frame_2225.png</file>
-		<file>Sprites/spr_font_frame_2226.png</file>
-		<file>Sprites/spr_font_frame_2227.png</file>
-		<file>Sprites/spr_font_frame_2228.png</file>
-		<file>Sprites/spr_font_frame_2229.png</file>
 		<file>Sprites/spr_font_frame_223.png</file>
-		<file>Sprites/spr_font_frame_2230.png</file>
-		<file>Sprites/spr_font_frame_2231.png</file>
-		<file>Sprites/spr_font_frame_2232.png</file>
-		<file>Sprites/spr_font_frame_2233.png</file>
-		<file>Sprites/spr_font_frame_2234.png</file>
-		<file>Sprites/spr_font_frame_2235.png</file>
-		<file>Sprites/spr_font_frame_2236.png</file>
-		<file>Sprites/spr_font_frame_2237.png</file>
-		<file>Sprites/spr_font_frame_2238.png</file>
-		<file>Sprites/spr_font_frame_2239.png</file>
 		<file>Sprites/spr_font_frame_224.png</file>
-		<file>Sprites/spr_font_frame_2240.png</file>
-		<file>Sprites/spr_font_frame_2241.png</file>
-		<file>Sprites/spr_font_frame_2242.png</file>
-		<file>Sprites/spr_font_frame_2243.png</file>
-		<file>Sprites/spr_font_frame_2244.png</file>
-		<file>Sprites/spr_font_frame_2245.png</file>
-		<file>Sprites/spr_font_frame_2246.png</file>
-		<file>Sprites/spr_font_frame_2247.png</file>
-		<file>Sprites/spr_font_frame_2248.png</file>
-		<file>Sprites/spr_font_frame_2249.png</file>
 		<file>Sprites/spr_font_frame_225.png</file>
-		<file>Sprites/spr_font_frame_2250.png</file>
-		<file>Sprites/spr_font_frame_2251.png</file>
-		<file>Sprites/spr_font_frame_2252.png</file>
-		<file>Sprites/spr_font_frame_2253.png</file>
-		<file>Sprites/spr_font_frame_2254.png</file>
-		<file>Sprites/spr_font_frame_2255.png</file>
-		<file>Sprites/spr_font_frame_2256.png</file>
-		<file>Sprites/spr_font_frame_2257.png</file>
-		<file>Sprites/spr_font_frame_2258.png</file>
-		<file>Sprites/spr_font_frame_2259.png</file>
 		<file>Sprites/spr_font_frame_226.png</file>
-		<file>Sprites/spr_font_frame_2260.png</file>
-		<file>Sprites/spr_font_frame_2261.png</file>
-		<file>Sprites/spr_font_frame_2262.png</file>
-		<file>Sprites/spr_font_frame_2263.png</file>
-		<file>Sprites/spr_font_frame_2264.png</file>
-		<file>Sprites/spr_font_frame_2265.png</file>
-		<file>Sprites/spr_font_frame_2266.png</file>
-		<file>Sprites/spr_font_frame_2267.png</file>
-		<file>Sprites/spr_font_frame_2268.png</file>
-		<file>Sprites/spr_font_frame_2269.png</file>
 		<file>Sprites/spr_font_frame_227.png</file>
-		<file>Sprites/spr_font_frame_2270.png</file>
-		<file>Sprites/spr_font_frame_2271.png</file>
-		<file>Sprites/spr_font_frame_2272.png</file>
-		<file>Sprites/spr_font_frame_2273.png</file>
-		<file>Sprites/spr_font_frame_2274.png</file>
-		<file>Sprites/spr_font_frame_2275.png</file>
-		<file>Sprites/spr_font_frame_2276.png</file>
-		<file>Sprites/spr_font_frame_2277.png</file>
-		<file>Sprites/spr_font_frame_2278.png</file>
-		<file>Sprites/spr_font_frame_2279.png</file>
 		<file>Sprites/spr_font_frame_228.png</file>
-		<file>Sprites/spr_font_frame_2280.png</file>
-		<file>Sprites/spr_font_frame_2281.png</file>
-		<file>Sprites/spr_font_frame_2282.png</file>
-		<file>Sprites/spr_font_frame_2283.png</file>
-		<file>Sprites/spr_font_frame_2284.png</file>
-		<file>Sprites/spr_font_frame_2285.png</file>
-		<file>Sprites/spr_font_frame_2286.png</file>
-		<file>Sprites/spr_font_frame_2287.png</file>
-		<file>Sprites/spr_font_frame_2288.png</file>
-		<file>Sprites/spr_font_frame_2289.png</file>
 		<file>Sprites/spr_font_frame_229.png</file>
-		<file>Sprites/spr_font_frame_2290.png</file>
-		<file>Sprites/spr_font_frame_2291.png</file>
-		<file>Sprites/spr_font_frame_2292.png</file>
-		<file>Sprites/spr_font_frame_2293.png</file>
-		<file>Sprites/spr_font_frame_2294.png</file>
-		<file>Sprites/spr_font_frame_2295.png</file>
-		<file>Sprites/spr_font_frame_2296.png</file>
-		<file>Sprites/spr_font_frame_2297.png</file>
-		<file>Sprites/spr_font_frame_2298.png</file>
-		<file>Sprites/spr_font_frame_2299.png</file>
 		<file>Sprites/spr_font_frame_23.png</file>
 		<file>Sprites/spr_font_frame_230.png</file>
-		<file>Sprites/spr_font_frame_2300.png</file>
-		<file>Sprites/spr_font_frame_2301.png</file>
-		<file>Sprites/spr_font_frame_2302.png</file>
-		<file>Sprites/spr_font_frame_2303.png</file>
-		<file>Sprites/spr_font_frame_2304.png</file>
-		<file>Sprites/spr_font_frame_2305.png</file>
-		<file>Sprites/spr_font_frame_2306.png</file>
-		<file>Sprites/spr_font_frame_2307.png</file>
-		<file>Sprites/spr_font_frame_2308.png</file>
-		<file>Sprites/spr_font_frame_2309.png</file>
 		<file>Sprites/spr_font_frame_231.png</file>
-		<file>Sprites/spr_font_frame_2310.png</file>
-		<file>Sprites/spr_font_frame_2311.png</file>
-		<file>Sprites/spr_font_frame_2312.png</file>
-		<file>Sprites/spr_font_frame_2313.png</file>
-		<file>Sprites/spr_font_frame_2314.png</file>
-		<file>Sprites/spr_font_frame_2315.png</file>
-		<file>Sprites/spr_font_frame_2316.png</file>
-		<file>Sprites/spr_font_frame_2317.png</file>
-		<file>Sprites/spr_font_frame_2318.png</file>
-		<file>Sprites/spr_font_frame_2319.png</file>
 		<file>Sprites/spr_font_frame_232.png</file>
-		<file>Sprites/spr_font_frame_2320.png</file>
-		<file>Sprites/spr_font_frame_2321.png</file>
-		<file>Sprites/spr_font_frame_2322.png</file>
-		<file>Sprites/spr_font_frame_2323.png</file>
-		<file>Sprites/spr_font_frame_2324.png</file>
-		<file>Sprites/spr_font_frame_2325.png</file>
-		<file>Sprites/spr_font_frame_2326.png</file>
-		<file>Sprites/spr_font_frame_2327.png</file>
-		<file>Sprites/spr_font_frame_2328.png</file>
-		<file>Sprites/spr_font_frame_2329.png</file>
 		<file>Sprites/spr_font_frame_233.png</file>
-		<file>Sprites/spr_font_frame_2330.png</file>
-		<file>Sprites/spr_font_frame_2331.png</file>
-		<file>Sprites/spr_font_frame_2332.png</file>
-		<file>Sprites/spr_font_frame_2333.png</file>
-		<file>Sprites/spr_font_frame_2334.png</file>
-		<file>Sprites/spr_font_frame_2335.png</file>
-		<file>Sprites/spr_font_frame_2336.png</file>
-		<file>Sprites/spr_font_frame_2337.png</file>
-		<file>Sprites/spr_font_frame_2338.png</file>
-		<file>Sprites/spr_font_frame_2339.png</file>
 		<file>Sprites/spr_font_frame_234.png</file>
-		<file>Sprites/spr_font_frame_2340.png</file>
-		<file>Sprites/spr_font_frame_2341.png</file>
-		<file>Sprites/spr_font_frame_2342.png</file>
-		<file>Sprites/spr_font_frame_2343.png</file>
-		<file>Sprites/spr_font_frame_2344.png</file>
-		<file>Sprites/spr_font_frame_2345.png</file>
-		<file>Sprites/spr_font_frame_2346.png</file>
-		<file>Sprites/spr_font_frame_2347.png</file>
-		<file>Sprites/spr_font_frame_2348.png</file>
-		<file>Sprites/spr_font_frame_2349.png</file>
 		<file>Sprites/spr_font_frame_235.png</file>
-		<file>Sprites/spr_font_frame_2350.png</file>
-		<file>Sprites/spr_font_frame_2351.png</file>
-		<file>Sprites/spr_font_frame_2352.png</file>
-		<file>Sprites/spr_font_frame_2353.png</file>
-		<file>Sprites/spr_font_frame_2354.png</file>
-		<file>Sprites/spr_font_frame_2355.png</file>
-		<file>Sprites/spr_font_frame_2356.png</file>
-		<file>Sprites/spr_font_frame_2357.png</file>
-		<file>Sprites/spr_font_frame_2358.png</file>
-		<file>Sprites/spr_font_frame_2359.png</file>
 		<file>Sprites/spr_font_frame_236.png</file>
-		<file>Sprites/spr_font_frame_2360.png</file>
-		<file>Sprites/spr_font_frame_2361.png</file>
-		<file>Sprites/spr_font_frame_2362.png</file>
-		<file>Sprites/spr_font_frame_2363.png</file>
-		<file>Sprites/spr_font_frame_2364.png</file>
-		<file>Sprites/spr_font_frame_2365.png</file>
-		<file>Sprites/spr_font_frame_2366.png</file>
-		<file>Sprites/spr_font_frame_2367.png</file>
-		<file>Sprites/spr_font_frame_2368.png</file>
-		<file>Sprites/spr_font_frame_2369.png</file>
 		<file>Sprites/spr_font_frame_237.png</file>
-		<file>Sprites/spr_font_frame_2370.png</file>
-		<file>Sprites/spr_font_frame_2371.png</file>
-		<file>Sprites/spr_font_frame_2372.png</file>
-		<file>Sprites/spr_font_frame_2373.png</file>
-		<file>Sprites/spr_font_frame_2374.png</file>
-		<file>Sprites/spr_font_frame_2375.png</file>
-		<file>Sprites/spr_font_frame_2376.png</file>
-		<file>Sprites/spr_font_frame_2377.png</file>
-		<file>Sprites/spr_font_frame_2378.png</file>
-		<file>Sprites/spr_font_frame_2379.png</file>
 		<file>Sprites/spr_font_frame_238.png</file>
-		<file>Sprites/spr_font_frame_2380.png</file>
-		<file>Sprites/spr_font_frame_2381.png</file>
-		<file>Sprites/spr_font_frame_2382.png</file>
-		<file>Sprites/spr_font_frame_2383.png</file>
-		<file>Sprites/spr_font_frame_2384.png</file>
-		<file>Sprites/spr_font_frame_2385.png</file>
-		<file>Sprites/spr_font_frame_2386.png</file>
-		<file>Sprites/spr_font_frame_2387.png</file>
-		<file>Sprites/spr_font_frame_2388.png</file>
-		<file>Sprites/spr_font_frame_2389.png</file>
 		<file>Sprites/spr_font_frame_239.png</file>
-		<file>Sprites/spr_font_frame_2390.png</file>
-		<file>Sprites/spr_font_frame_2391.png</file>
-		<file>Sprites/spr_font_frame_2392.png</file>
-		<file>Sprites/spr_font_frame_2393.png</file>
-		<file>Sprites/spr_font_frame_2394.png</file>
-		<file>Sprites/spr_font_frame_2395.png</file>
-		<file>Sprites/spr_font_frame_2396.png</file>
-		<file>Sprites/spr_font_frame_2397.png</file>
-		<file>Sprites/spr_font_frame_2398.png</file>
-		<file>Sprites/spr_font_frame_2399.png</file>
 		<file>Sprites/spr_font_frame_24.png</file>
 		<file>Sprites/spr_font_frame_240.png</file>
-		<file>Sprites/spr_font_frame_2400.png</file>
-		<file>Sprites/spr_font_frame_2401.png</file>
-		<file>Sprites/spr_font_frame_2402.png</file>
-		<file>Sprites/spr_font_frame_2403.png</file>
-		<file>Sprites/spr_font_frame_2404.png</file>
-		<file>Sprites/spr_font_frame_2405.png</file>
-		<file>Sprites/spr_font_frame_2406.png</file>
-		<file>Sprites/spr_font_frame_2407.png</file>
-		<file>Sprites/spr_font_frame_2408.png</file>
-		<file>Sprites/spr_font_frame_2409.png</file>
 		<file>Sprites/spr_font_frame_241.png</file>
-		<file>Sprites/spr_font_frame_2410.png</file>
-		<file>Sprites/spr_font_frame_2411.png</file>
-		<file>Sprites/spr_font_frame_2412.png</file>
 		<file>Sprites/spr_font_frame_242.png</file>
 		<file>Sprites/spr_font_frame_243.png</file>
 		<file>Sprites/spr_font_frame_244.png</file>
@@ -3109,8 +2402,6 @@
 		<file>Sprites/spr_icons_frame_98.png</file>
 		<file>Sprites/spr_icons_frame_99.png</file>
 		<file>Sprites/spr_jonathan_splash_frame_0.png</file>
-		<file>Sprites/spr_light_example_frame_0.png</file>
-		<file>Sprites/spr_light_example_frame_1.png</file>
 		<file>Sprites/spr_load_assets_frame_0.png</file>
 		<file>Sprites/spr_logo_frame_0.png</file>
 		<file>Sprites/spr_map_cone_frame_0.png</file>
