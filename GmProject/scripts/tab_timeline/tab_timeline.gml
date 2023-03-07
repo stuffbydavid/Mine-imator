@@ -482,10 +482,11 @@ function tab_timeline()
 		
 		for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
 		{
-			var kf, mouse, sound;
+			var kf, mouse, sound, pitch;
 			kf = tl.keyframe_list[|k]
 			dx = tlx + floor(kf.position * timeline_zoom - timeline.hor_scroll.value)
 			sound = kf.value[e_value.SOUND_OBJ]
+			pitch = kf.value[e_value.SOUND_PITCH]
 			
 			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
 			{
@@ -494,7 +495,7 @@ function tab_timeline()
 				if (dx > tlx + tlw)
 					break
 				
-				soundlen = max(0, sound.sound_samples / sample_rate - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END])
+				soundlen = max(0, pitch == 0 ? 0 : ((sound.sound_samples / sample_rate / pitch) - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END]))
 				
 				boxx = max(tlx, dx)
 				boxw = min(tlw, soundlen * project_tempo * timeline_zoom - max(0, tlx - dx))
@@ -521,7 +522,7 @@ function tab_timeline()
 				for (var xx = 0; xx < boxw; xx++)
 				{
 					var ind, maxv, minv, miny, maxy;
-					ind = ((startsample + floor((xx / boxw) * samplesshow)) mod sound.sound_samples) div prec
+					ind = (((startsample * pitch) + floor((xx / boxw) * samplesshow) * pitch) mod sound.sound_samples) div prec
 					maxv = sound.sound_max_sample[ind]
 					minv = sound.sound_min_sample[ind]
 					if (xx > 0 && xx mod 500 = 0) // GM bug

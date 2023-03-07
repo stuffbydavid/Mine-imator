@@ -86,6 +86,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.TEXTURE_NORMAL_OBJ:
 		case e_value.SOUND_OBJ:
 		case e_value.SOUND_VOLUME:
+		case e_value.SOUND_PITCH:
 		case e_value.SOUND_START:
 		case e_value.SOUND_END:
 		case e_value.TEXT:

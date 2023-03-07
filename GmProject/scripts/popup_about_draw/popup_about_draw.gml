@@ -91,6 +91,12 @@ function popup_about_draw()
 	dx += 130 + 24
 	dy = content_y + 176
 	
+	// Mod Development
+	dy += 12
+	draw_label(text_get("aboutmoddevelopment"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+	dy += 26
+	draw_label("mbanders", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
+	
 	// Beta testing
 	var list = [
 		"9redwoods",
@@ -101,7 +107,6 @@ function popup_about_draw()
 		"Jnick",
 		"Jossamations",
 		"KeepOnChucking",
-		"mbanders",
 		"Rollo",
 		"SKIBBZ",
 		"SoundsDotZip",
@@ -110,7 +115,7 @@ function popup_about_draw()
 		"__Mine__"
 	]
 	
-	dy += 12
+	dy += 34
 	draw_label(text_get("aboutbetatesting"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 26
 	
@@ -119,10 +124,10 @@ function popup_about_draw()
 		draw_label(list[i], dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 		dy += 19
 		
-		if (i = 8)
+		if (i = 6)
 		{
 			dx += 130 + 24
-			dy = content_y + 176 + 12 + 26
+			dy = content_y + 176 + 12 + 26 + 26 + 34
 		}
 	}
 }

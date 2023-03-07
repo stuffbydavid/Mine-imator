@@ -79,6 +79,12 @@ namespace CppProject
 		return 0;
 	}
 
+	void audio_sound_pitch(IntType index, RealType pitch)
+	{
+		if (SoundInstance* instance = FindSoundInstance(index))
+			alSourcef(instance->alSource, AL_PITCH, pitch);
+	}
+
 	void audio_sound_set_track_position(IntType index, RealType time)
 	{
 		if (SoundInstance* instance = FindSoundInstance(index))

@@ -657,6 +657,8 @@ function app_startup_interface_tabs()
 		{
 			tbx_volume = new_textbox_integer()
 			tbx_volume.suffix = "%"
+			tbx_pitch = new_textbox_integer()
+			tbx_pitch.suffix = "%"
 			tbx_start = new_textbox_decimals()
 			tbx_end = new_textbox_ndecimals()
 		}

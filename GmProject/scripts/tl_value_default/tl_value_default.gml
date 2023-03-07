@@ -151,6 +151,7 @@ function tl_value_default(valueid)
 		case e_value.TEXT_FONT: return null
 		case e_value.IK_BLEND: return 1
 		case e_value.SOUND_VOLUME: return 1
+		case e_value.SOUND_PITCH: return 1
 		case e_value.VISIBLE: return true
 		case e_value.TEXT: 
 		case e_value.ITEM_NAME: return ""

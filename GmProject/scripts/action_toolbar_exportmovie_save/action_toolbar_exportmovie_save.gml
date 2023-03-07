@@ -92,13 +92,14 @@ function action_toolbar_exportmovie_save()
 				{
 					with (keyframe_list[|k])
 					{
-						if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 && tl_keyframe_length(id) > 0 &&
+						if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 && value[e_value.SOUND_PITCH] > 0 && tl_keyframe_length(id) > 0 &&
 							position < app.exportmovie_marker_end &&
 							position + tl_keyframe_length(id) >= app.exportmovie_marker_start)
 						{
 							var ret = movie_audio_sound_add(value[e_value.SOUND_OBJ].sound_file_id, 
 															max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
 															value[e_value.SOUND_VOLUME], 
+															value[e_value.SOUND_PITCH], 
 															value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
 															value[e_value.SOUND_END])
 							if (ret < 0)

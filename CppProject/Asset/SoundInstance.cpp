@@ -11,7 +11,7 @@ namespace CppProject
 		this->sound = sound;
 
 		alGenSources(1, &alSource);
-		alSourcef(alSource, AL_PITCH, 1);
+		alSourcef(alSource, AL_PITCH, 1.0f);
 		alSourcef(alSource, AL_GAIN, 1.0f);
 		alSource3f(alSource, AL_POSITION, 0, 0, 0);
 		alSource3f(alSource, AL_VELOCITY, 0, 0, 0);

@@ -272,11 +272,12 @@
 		"createdby": "CREATED BY",
 		"development": "DEVELOPMENT",
 		"uibranding": "UI & BRANDING",
+		"moddevelopment": "MOD DEVELOPMENT",
 		"betatesting": "BETA TESTING",
 		"site": "Visit Mine-imator's website",
-		"forums": "Visit the Mine-imator forums.",
-		"twitter": "Visit Mine-imator's twitter.",
-		"discord": "Join Mine-imator's Discord server.",
+		"forums": "Visit the Mine-imator forums",
+		"twitter": "Visit Mine-imator's Twitter",
+		"discord": "Join Mine-imator's Discord server",
 		"upgrade": "Upgrade",
 		"donate": "Donate"
 	},
@@ -3133,6 +3134,7 @@
 		"sound/": {
 			"file": "File",
 			"volume": "Volume",
+			"pitch": "Pitch",
 			"start": "Start time",
 			"end": "End time",
 			"seconds": "seconds"
