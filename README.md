@@ -15,11 +15,11 @@ The software is written using GameMaker Language and converted to a separate C++
 
 <hr/>
 
-MBMod Changelog since Mine-imator 2.0.0:
+Continuation Build Changelog since Mine-imator 2.0.0:
 
 Additions:
 <ul>
-  <li>[WIP] Added pitch setting for sounds in audio timelines.</li>
+  <li>Added pitch setting for sounds in audio timelines <i>(not tested outside of windows-x64)</i>.</li>
   <li>Added support for more unicode characters in Minecraft font.</li>
   <li>Splash screen now shows which Minecraft assets version is being loaded.</li>
   <li>Signs in imported worlds now have a 'text_scale' field (defined in .midata file).</li>
