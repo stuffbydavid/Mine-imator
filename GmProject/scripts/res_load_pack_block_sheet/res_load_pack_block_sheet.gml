@@ -266,7 +266,7 @@ function res_load_pack_block_sheet(type, suffix)
 		
 		for (var f = 0; f < block_sheet_ani_frames; f++)
 		{
-			var aniprogress = (f / (block_sheet_ani_frames / aniloops)) mod 1;
+			var aniprogress = roundto(frac(f / (block_sheet_ani_frames / aniloops)), 1 / block_sheet_ani_frames);
 			
 			surface_set_target(anisurf[f])
 			{

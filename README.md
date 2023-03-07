@@ -27,6 +27,7 @@ Additions:
 
 Changes:
 <ul>
+  <li>Updated Minecraft assets to 1.19.4-pre3 (includes experimental features).</li>
   <li>Individual blocks for Chorus Plant and Fire can now be fully customized in the workbench.</li>
   <li>Individual blocks and vertically repeating stacks for Iron Bars, Glass Panes, Fences, Walls, and Tripwire can now be fully customized in the workbench.</li>
   <li>Custom item slot interpolation is now floored instead of rounded.</li>
@@ -36,7 +37,8 @@ Changes:
 Bugfixes:
 <ul>
   <li>Fixed custom object fog color not being animatable with environment timelines.</li>
-  <li>Fixed sounds with positive end time not repeating in animation playback.</li>
+  <li>Fixed sounds with extended end time not repeating in animation playback.</li>
+  <li>Fixed "Randomize blocks" setting for blocks not being saved.</li>
   <li>Fixed minutes counter in timeline timer not resetting when an hour has passed.</li>
   <li>Fixed incorrect frame order with interpolated textures.</li>
 </ul>

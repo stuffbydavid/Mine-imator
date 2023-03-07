@@ -22,7 +22,7 @@ function macros()
 	#macro mineimator_version			"2.0.0"
 	#macro mineimator_version_extra		"Continuation Build 1.0.0"
 	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-	#macro mineimator_version_date		"2023.03.06"
+	#macro mineimator_version_date		"2023.03.07"
 	#macro gm_runtime					GM_runtime_version
 	#macro minecraft_version			"1.19.4-pre3"
 	
@@ -107,7 +107,7 @@ function macros()
 	#macro block_sheet_height			32
 	#macro block_sheet_ani_width		32
 	#macro block_sheet_ani_height		2
-	#macro block_sheet_ani_frames		64
+	#macro block_sheet_ani_frames		80
 	#macro item_sheet_width				32
 	#macro item_sheet_height			32
 	
