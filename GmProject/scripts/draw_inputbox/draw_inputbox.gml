@@ -138,7 +138,7 @@ function draw_inputbox()
 	if (tbx.text = "" && placeholder != "")
 	{
 		var suffixwid = string_width(tbx.suffix);
-	    draw_label(string_limit(placeholder, (w - suffixwid) - padding * 2), placeholderx - suffixwid, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
+		draw_label(string_limit(placeholder, (w - suffixwid) - padding * 2), placeholderx - suffixwid, texty, texthalign, textvalign, c_text_tertiary, a_text_tertiary)
 	}
 	
 	if (!disabled)
@@ -169,7 +169,7 @@ function draw_inputbox()
 	}
 	
 	if (update && (script != null))
-	    script_execute(script, tbx.text)
+		script_execute(script, tbx.text)
 	
 	// Input boxes don't use a holding animation, but need a warning animation
 	microani_update(mouseon || window_focus = string(tbx), (mouseon && mouse_left) && window_focus != string(tbx), window_focus = string(tbx), disabled)

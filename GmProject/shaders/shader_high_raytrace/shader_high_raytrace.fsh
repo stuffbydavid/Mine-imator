@@ -101,37 +101,37 @@ vec3 unpackNormalBlueNoise(vec4 c)
 // GGX importance sampling (https://learnopengl.com/PBR/IBL/Specular-IBL)
 float VanDerCorput(int n, int base)
 {
-    float invBase = 1.0 / float(base);
-    float denom   = 1.0;
-    float result  = 0.0;
+	float invBase = 1.0 / float(base);
+	float denom   = 1.0;
+	float result  = 0.0;
 	
-    for(int i = 0; i < 16; i++)
-    {
-        if(n > 0)
-        {
-            denom   = mod(float(n), 2.0);
-            result += denom * invBase;
-            invBase = invBase / 2.0;
-            n       = int(float(n) / 2.0);
-        }
-    }
+	for(int i = 0; i < 16; i++)
+	{
+		if(n > 0)
+		{
+			denom = mod(float(n), 2.0);
+			result += denom * invBase;
+			invBase = invBase / 2.0;
+			n = int(float(n) / 2.0);
+		}
+	}
 	
-    return result;
+	return result;
 }
 
 vec2 Hammersley(int i, int N)
 {
-    return vec2(float(i)/float(N), VanDerCorput(i, 2));
+	return vec2(float(i)/float(N), VanDerCorput(i, 2));
 }
 
 vec3 sampleGGX(vec2 Xi, float roughness)
 {
-    float a = roughness * roughness;
-    float phi = 2.0 * PI * Xi.x;
-    float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
-    float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+	float a = roughness * roughness;
+	float phi = 2.0 * PI * Xi.x;
+	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
+	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
 	
-    return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
+	return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
 }
 
 float percent(float xx, float start, float end)

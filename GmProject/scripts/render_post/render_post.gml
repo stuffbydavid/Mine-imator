@@ -14,18 +14,23 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true)
 	render_update_effects()
 	
 	// Glow
-	if (render_glow && sceneeffects)
+	if (render_glow && (sceneeffects || posteffects))
 		finalsurf = render_high_glow(finalsurf)
 	render_update_effects()
 	
 	// Glow (Falloff)
-	if (render_glow_falloff && sceneeffects)
+	if (render_glow_falloff && (sceneeffects || posteffects))
 		finalsurf = render_high_glow(finalsurf, true)
 	render_update_effects()
 	
 	// Bloom
 	if (render_camera_bloom && posteffects)
 		finalsurf = render_high_bloom(finalsurf)
+	render_update_effects()
+	
+	// Lens dirt overlay
+	if (render_camera_lens_dirt)
+		finalsurf = render_high_lens_dirt(finalsurf)
 	render_update_effects()
 	
 	// Chromatic aberration
@@ -36,11 +41,6 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true)
 	// Distort
 	if (render_camera_distort && posteffects)
 		finalsurf = render_high_distort(finalsurf)
-	render_update_effects()
-	
-	// Lens dirt overlay
-	if (render_camera_lens_dirt && posteffects)
-		finalsurf = render_high_lens_dirt(finalsurf)
 	render_update_effects()
 	
 	// Color correction

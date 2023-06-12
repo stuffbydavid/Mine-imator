@@ -14,7 +14,6 @@
 function draw_button_icon()
 {
 	var name, xx, yy, wid, hei, value, icon, script, disabled, tip, sprite;
-	var mouseon, animated;
 	
 	name = argument[0]
 	xx = argument[1]
@@ -46,6 +45,8 @@ function draw_button_icon()
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 		return 0
+	
+	var mouseon, animated;
 	
 	mouseon = (content_mouseon && !disabled && app_mouse_box(xx, yy, wid, hei))
 	animated = (sprite != spr_icons && sprite != null && icon = null && sprite_get_number(sprite) > 1)

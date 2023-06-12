@@ -30,7 +30,7 @@ function export_update()
 		if (render_samples = -1)
 		{
 			// Update marker
-			timeline_marker = exportmovie_marker_start + (exportmovie_frame / popup_exportmovie.frame_rate) * project_tempo
+			timeline_marker = exportmovie_marker_start + (exportmovie_frame / popup_exportmovie.framespersecond) * project_tempo
 			if (timeline_marker > exportmovie_marker_end)
 			{
 				export_done_movie()
@@ -89,7 +89,7 @@ function export_update()
 		if (exportmovie_format = "png")
 		{
 			// Save image
-			var totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.frame_rate);
+			var totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.framespersecond);
 			var totallen = string_length(string(totalframes));
 			var numstr = string(exportmovie_frame + 1);
 			numstr = string_repeat("0", (totallen - string_length(numstr))) + numstr
@@ -116,7 +116,7 @@ function export_update()
 	
 		// Advance
 		exportmovie_frame++
-		current_step += round(60 / popup_exportmovie.frame_rate)
+		current_step += round(60 / popup_exportmovie.framespersecond)
 	}
 	
 	// Save image

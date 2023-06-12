@@ -9,46 +9,18 @@
 /// @arg max
 /// @arg defaults
 /// @arg snap
-/// @arg textboxes 
+/// @arg textboxes
 /// @arg scripts
 /// @arg [captionwidth
 /// @arg [showcaption
 /// @arg [suffix]]]
 
-function tab_template_editor_particles_value()
+function tab_template_editor_particles_value(name, val, israndom, randommin, randommax, mul, minval, maxval, def, snapval, tbx, scripts, capwid = null, showcaption = true, suffix = "")
 {
-	var name, val, israndom, randommin, randommax, mul, minval, maxval, def, snapval, tbx, scripts, capwid, showcaption, suffix, wid;
-	var caption;
-	name = argument[0]
-	val = argument[1]
-	israndom = argument[2]
-	randommin = argument[3]
-	randommax = argument[4]
-	mul = argument[5]
-	minval = argument[6]
-	maxval = argument[7]
-	def = argument[8]
-	snapval = argument[9]
-	tbx = argument[10]
-	scripts = argument[11]
-	
-	if (argument_count > 12)
-		capwid = argument[12]
-	else
-		capwid = null
+	var wid, caption;
 	
 	draw_set_font(font_label)
 	caption = text_get(name)
-	
-	if (argument_count > 13)
-		showcaption = argument[13]
-	else
-		showcaption = true
-	
-	if (argument_count > 14)
-		suffix = argument[14]
-	else
-		suffix = ""
 	
 	wid = 64
 	

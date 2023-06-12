@@ -9,39 +9,9 @@
 /// @arg [divider
 /// @arg [interact]]]]
 
-function list_item_add()
+function list_item_add(name, value, caption = "", thumbnail = null, lefticon = null, righticon = null, script = null, divider = false, interact = true)
 {
-	var item, name, value, caption, thumbnail, lefticon, righticon, script, divider, interact;
-	name = argument[0]
-	value = argument[1]
-	
-	if (argument_count > 2)
-		caption = argument[2]
-	else
-		caption = ""
-	
-	thumbnail = null
-	lefticon = null
-	righticon = null
-	script = null
-	divider = false
-	interact = true
-	
-	if (argument_count > 3)
-	{
-		thumbnail = argument[3]
-		lefticon = argument[4]
-		righticon = argument[5]
-		script = argument[6]
-	}
-	
-	if (argument_count > 7)
-		divider = argument[7]
-	
-	if (argument_count > 8)
-		interact = argument[8]
-	
-	item = new_obj(obj_list_item)
+	var item = new_obj(obj_list_item)
 	item.name = name
 	item.value = value
 	item.caption = caption

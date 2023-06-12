@@ -10,7 +10,7 @@ function block_set_chest()
 	switch (type)
 	{
 		case "single":	break
-		case "right":	double = "true";  break
+		case "right":	double = "true"; break
 		case "left":	return null
 		case "legacy":
 		{

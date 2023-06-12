@@ -79,10 +79,12 @@ function block_animate(root)
 		// Add text
 		if (other.has_text)
 		{
-			var text, textpos, textcolor;
+			var text, textpos, textscale, textcolor, textemissive;
 			text = other.text
 			textpos = other.text_position
+			textscale = other.text_scale
 			textcolor = other.text_color
+			textemissive = other.text_emissive
 			
 			if (part_list = null)
 				part_list = ds_list_create()
@@ -104,10 +106,11 @@ function block_animate(root)
 				value_default[e_value.POS_X] = textpos[X]
 				value_default[e_value.POS_Y] = textpos[Y]
 				value_default[e_value.POS_Z] = textpos[Z]
-				value_default[e_value.SCA_X] = 0.165
-				value_default[e_value.SCA_Y] = 0.165
-				value_default[e_value.SCA_Z] = 0.165
+				value_default[e_value.SCA_X] = textscale
+				value_default[e_value.SCA_Y] = textscale
+				value_default[e_value.SCA_Z] = textscale
 				value_default[e_value.RGB_MUL] = textcolor
+				value_default[e_value.EMISSIVE] = textemissive
 				
 				tl_update()
 				tl_update_values()

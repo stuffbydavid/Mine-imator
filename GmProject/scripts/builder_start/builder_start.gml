@@ -11,6 +11,7 @@ function builder_start()
 	
 	ds_map_clear(block_text_map)
 	ds_map_clear(block_text_color_map)
+	ds_map_clear(block_text_glowing_map)
 	ds_map_clear(block_banner_color_map)
 	ds_map_clear(block_banner_patterns_map)
 	ds_map_clear(block_banner_pattern_colors_map)

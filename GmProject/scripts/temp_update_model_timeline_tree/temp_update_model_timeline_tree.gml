@@ -2,14 +2,8 @@
 /// @arg [historyobject]
 /// @desc Update timelines of the changed model.
 
-function temp_update_model_timeline_tree()
+function temp_update_model_timeline_tree(hobj = null)
 {
-	var hobj;
-	if (argument_count > 0)
-		hobj = argument[0]
-	else
-		hobj = null
-	
 	with (obj_timeline)
 	{
 		if (temp != other.id || part_list = null)

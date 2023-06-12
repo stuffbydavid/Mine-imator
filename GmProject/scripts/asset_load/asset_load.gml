@@ -1,7 +1,7 @@
 /// asset_load([filename])
 /// @arg [filename]
 /// @desc Adds a file to the project.
-///		  A file browser appears if no filename is given.
+/// A file browser appears if no filename is given.
 
 function asset_load()
 {

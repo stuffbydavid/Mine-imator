@@ -7,20 +7,9 @@
 /// @arg end
 /// @arg [fade]
 
-function view_control_move_axis()
+function view_control_move_axis(view, control, vid, color, start3D, end3D, fade = true)
 {
-	var view, control, vid, color, start3D, end3D, fade;
-	var center3D, center2D, start2D, end2D;
-	view = argument[0]
-	control = argument[1]
-	vid = argument[2]
-	color = argument[3]
-	start3D = argument[4]
-	end3D = argument[5]
-	fade = true
-	 
-	if (argument_count > 6)
-		fade = argument[6]
+	var center3D, center2D;
 	
 	center3D = tl_edit.world_pos
 	
@@ -29,9 +18,13 @@ function view_control_move_axis()
 	if (point3D_project_error)
 		return 0
 	
+	var start2D;
+	
 	start2D = view_shape_project(start3D)
 	if (point3D_project_error)
 		return 0
+	
+	var end2D;
 	
 	end2D = view_shape_project(end3D)
 	if (point3D_project_error)

@@ -64,6 +64,7 @@ function block_load_timeline(map, typemap)
 	
 	if (tl_has_text)
 		tl_text_position = value_get_point3D(map[?"text_position"], point3D(0, 0, 0))
+		tl_text_scale = map[?"text_scale"]
 	
 	// Supports patterns
 	tl_pattern_type = ""

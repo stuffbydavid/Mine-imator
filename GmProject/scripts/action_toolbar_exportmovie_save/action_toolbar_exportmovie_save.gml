@@ -18,7 +18,7 @@ function action_toolbar_exportmovie_save()
 	export_filename = fn
 	exportmovie_marker_previous = timeline_marker
 	exportmovie_format = popup_exportmovie.format
-	exportmovie_frame_rate = popup_exportmovie.frame_rate
+	exportmovie_framespersecond = popup_exportmovie.framespersecond
 	exportmovie_high_quality = popup_exportmovie.high_quality
 	exportmovie_current_sound = null
 	
@@ -42,12 +42,12 @@ function action_toolbar_exportmovie_save()
 		log("Export movie", fn)
 		log("Format", exportmovie_format)
 		log("Bitrate", popup_exportmovie.bit_rate)
-		log("Framerate", exportmovie_frame_rate)
+		log("Framerate", exportmovie_framespersecond)
 		log("Audio", yesno(popup_exportmovie.include_audio))
 		log("High Quality", yesno(exportmovie_high_quality))
 		log("Size", project_video_width, project_video_height)
 		
-		movie_set(project_video_width, project_video_height, popup_exportmovie.bit_rate, exportmovie_frame_rate, popup_exportmovie.include_audio)
+		movie_set(project_video_width, project_video_height, popup_exportmovie.bit_rate, exportmovie_framespersecond, popup_exportmovie.include_audio)
 		var err = movie_start(fn, fmt);
 		if (err < 0)
 		{
@@ -92,13 +92,14 @@ function action_toolbar_exportmovie_save()
 				{
 					with (keyframe_list[|k])
 					{
-						if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 && tl_keyframe_length(id) > 0 &&
+						if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 && value[e_value.SOUND_PITCH] > 0 && tl_keyframe_length(id) > 0 &&
 							position < app.exportmovie_marker_end &&
 							position + tl_keyframe_length(id) >= app.exportmovie_marker_start)
 						{
 							var ret = movie_audio_sound_add(value[e_value.SOUND_OBJ].sound_file_id, 
 															max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
 															value[e_value.SOUND_VOLUME], 
+															value[e_value.SOUND_PITCH], 
 															value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
 															value[e_value.SOUND_END])
 							if (ret < 0)

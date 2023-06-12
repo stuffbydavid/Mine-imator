@@ -28,7 +28,7 @@ function render_start()
 	render_glow = project_render_glow && (render_quality = e_view_mode.RENDER)
 	render_glow_falloff = project_render_glow && project_render_glow_falloff && (render_quality = e_view_mode.RENDER)
 	
-	render_depth_normals = (render_ssao || render_indirect || render_reflections || project_render_subsurface_samples > 0)
+	render_depth_normals = (render_ssao || render_indirect || render_reflections || project_render_subsurface_samples >= 0)
 	
 	// Use camera settings
 	if (render_camera != null)

@@ -6,86 +6,86 @@ function enums()
 	// Platforms
 	enum e_platform
 	{
-		WINDOWS = 0,
-		MAC_OS = 1,
-		LINUX = 2
+		WINDOWS	= 0,
+		MAC_OS	= 1,
+		LINUX	= 2
 	}
 	
 	// Formats
 	enum e_project
 	{
-		FORMAT_01		  =	1,
-		FORMAT_02		  =	2,
-		FORMAT_05		  =	3,
-		FORMAT_06		  =	4,
-		FORMAT_07_DEMO	  =	5,
-		FORMAT_100_DEMO_2 = 6,
-		FORMAT_100_DEMO_3 = 7,
-		FORMAT_100_DEMO_4 = 8,
-		FORMAT_100_DEBUG  = 9,
-		FORMAT_100		  = 10,
-		FORMAT_105		  = 11,
-		FORMAT_105_2	  = 12,
-		FORMAT_106		  = 13,
-		FORMAT_106_2	  = 14,
-		FORMAT_CB_100	  = 20,
-		FORMAT_CB_102_PRE = 21,
-		FORMAT_CB_102	  = 22,
-		FORMAT_CB_103	  = 23,
-		FORMAT_110_PRE_1  = 24,
-		FORMAT_110_PRE_3  = 25,
-		FORMAT_110		  = 26,
-		FORMAT_113		  = 27,
-		FORMAT_120_PRE_1  = 28,
-		FORMAT_120_PRE_3  = 29,
-		FORMAT_122		  = 30,
-		FORMAT_123_PRE_2  = 31,
-		FORMAT_125		  = 32,
-		FORMAT_200_PRE_1  = 33,
-		FORMAT_200_PRE_5  = 34
+		FORMAT_01			= 1,
+		FORMAT_02			= 2,
+		FORMAT_05			= 3,
+		FORMAT_06			= 4,
+		FORMAT_07_DEMO		= 5,
+		FORMAT_100_DEMO_2	= 6,
+		FORMAT_100_DEMO_3	= 7,
+		FORMAT_100_DEMO_4	= 8,
+		FORMAT_100_DEBUG	= 9,
+		FORMAT_100			= 10,
+		FORMAT_105			= 11,
+		FORMAT_105_2		= 12,
+		FORMAT_106			= 13,
+		FORMAT_106_2		= 14,
+		FORMAT_CB_100		= 20,
+		FORMAT_CB_102_PRE	= 21,
+		FORMAT_CB_102		= 22,
+		FORMAT_CB_103		= 23,
+		FORMAT_110_PRE_1	= 24,
+		FORMAT_110_PRE_3	= 25,
+		FORMAT_110			= 26,
+		FORMAT_113			= 27,
+		FORMAT_120_PRE_1	= 28,
+		FORMAT_120_PRE_3	= 29,
+		FORMAT_122			= 30,
+		FORMAT_123_PRE_2	= 31,
+		FORMAT_125			= 32,
+		FORMAT_200_PRE_1	= 33,
+		FORMAT_200_PRE_5	= 34
 	}
 	
 	enum e_settings
 	{
-		FORMAT_100_DEMO_4 =	0,
-		FORMAT_100_DEMO_5 = 1,
-		FORMAT_100		  = 2,
-		FORMAT_103		  = 3,
-		FORMAT_106		  = 4,
-		FORMAT_106_2	  = 5,
-		FORMAT_106_3	  = 6,
-		FORMAT_CB_100	  = 20,
-		FORMAT_CB_102	  = 22,
-		FORMAT_CE_110	  = 23,
-		FORMAT_110_PRE_1  = 24,
-		FORMAT_110		  = 25,
-		FORMAT_113		  = 26,
-		FORMAT_114		  = 27,
-		FORMAT_120		  = 28,
-		FORMAT_200		  = 29
+		FORMAT_100_DEMO_4	= 0,
+		FORMAT_100_DEMO_5	= 1,
+		FORMAT_100			= 2,
+		FORMAT_103			= 3,
+		FORMAT_106			= 4,
+		FORMAT_106_2		= 5,
+		FORMAT_106_3		= 6,
+		FORMAT_CB_100		= 20,
+		FORMAT_CB_102		= 22,
+		FORMAT_CE_110		= 23,
+		FORMAT_110_PRE_1	= 24,
+		FORMAT_110			= 25,
+		FORMAT_113			= 26,
+		FORMAT_114			= 27,
+		FORMAT_120			= 28,
+		FORMAT_200			= 29
 	}
 	
 	enum e_minecraft_assets
 	{
-		FORMAT_110_PRE_1  = 1,
-		FORMAT_110_PRE_2  = 2,
-		FORMAT_113		  = 3,
-		FORMAT_120		  = 4,
-		FORMAT_123		  = 5,
-		FORMAT_128		  = 6, 
-		FORMAT_129		  = 7,
-		FORMAT_200		  = 8
+		FORMAT_110_PRE_1	= 1,
+		FORMAT_110_PRE_2	= 2,
+		FORMAT_113			= 3,
+		FORMAT_120			= 4,
+		FORMAT_123			= 5,
+		FORMAT_128			= 6,
+		FORMAT_129			= 7,
+		FORMAT_200			= 8
 	}
 	
 	enum e_minecraft_pack
 	{
-		FORMAT_161		  = 1,
-		FORMAT_19		  = 2,
-		FORMAT_111		  = 3,
-		FORMAT_113		  = 4,
-		FORMAT_115		  = 5,
+		FORMAT_161			= 1,
+		FORMAT_19			= 2,
+		FORMAT_111			= 3,
+		FORMAT_113			= 4,
+		FORMAT_115			= 5,
 		
-		LATEST			  = 5
+		LATEST				= 5
 	}
 	
 	// Value types
@@ -300,6 +300,7 @@ function enums()
 		TEXTURE_NORMAL_OBJ,
 		SOUND_OBJ,
 		SOUND_VOLUME,
+		SOUND_PITCH,
 		SOUND_START,
 		SOUND_END,
 		TEXT,
@@ -374,7 +375,7 @@ function enums()
 		
 		LIGHT_SOURCE,
 		SHAPE,
-		AMOUNT
+		amount
 	} // Update app_startup_lists() when adding types
 	
 	// Resource types

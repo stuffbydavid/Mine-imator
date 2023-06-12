@@ -92,7 +92,7 @@ function block_load_state_file(fname, block, state)
 					// Find state ID of variant if not "" or "normal" (pre-1.13)
 					if (variant != "" && variant != "normal")
 					{
-						var vars  = string_get_state_vars(variant);
+						var vars = string_get_state_vars(variant);
 						if (vars = null) // Ignore "all"
 						{
 							instance_destroy()
@@ -145,14 +145,19 @@ function block_load_state_file(fname, block, state)
 					
 					if (ds_map_valid(whenmap) && ds_map_size(whenmap) > 0)
 					{
-						// OR, one of multiple sets of conditions must match
 						var orlist = whenmap[?"OR"];
-						if (ds_list_valid(orlist))
+						var andlist = whenmap[?"AND"];
+						
+						// OR, one of multiple sets of conditions must match
+						// AND, all of multiple sets of conditions must match
+						if (ds_list_valid(orlist) || ds_list_valid(andlist))
 						{
-							for (var oc = 0; oc < ds_list_size(orlist); oc++)
+							var list = ds_list_valid(orlist) ? orlist : andlist;
+							
+							for (var oc = 0; oc < ds_list_size(list); oc++)
 							{
 								var curcondmap, condvars, cond;
-								curcondmap = orlist[|oc]
+								curcondmap = list[|oc]
 								condvars = array()
 								cond = ds_map_find_first(curcondmap)
 								
@@ -176,7 +181,6 @@ function block_load_state_file(fname, block, state)
 										other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
 							}
 						}
-						
 						// Single condition
 						else
 						{

@@ -1,6 +1,6 @@
 /// minecraft_assets_load_startup_version()
 /// @desc Starts loading the minecraft assets specified in the settings
-///		  Returns whether successful.
+/// Returns whether successful.
 
 function minecraft_assets_load_startup_version()
 {

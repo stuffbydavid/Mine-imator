@@ -8,29 +8,21 @@
 /// @arg alpha
 /// @arg [inline]]
 
-function draw_outline()
+function draw_outline(xx, yy, ww, hh, size, incolor, inalpha, inline = false)
 {
-	var xx, yy, ww, hh, size, color, alpha, inline;
-	xx = argument[0]
-	yy = argument[1]
-	ww = argument[2]
-	hh = argument[3]
-	size = argument[4]
+	var color, alpha;
+	
 	color = draw_get_color()
 	alpha = draw_get_alpha()
-	inline = false
 	
-	if (argument_count > 5)
+	if (!is_undefined(incolor))
 	{
-		color = argument[5]
-		alpha *= argument[6]
+		color = incolor
+		alpha *= inalpha
 		
 		if (alpha = 0)
 			return 0
 	}
-	
-	if (argument_count > 7)
-		inline = argument[7]
 	
 	if (inline)
 	{

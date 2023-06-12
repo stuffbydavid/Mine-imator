@@ -21,6 +21,7 @@ function nbt_debug_tag_list(name, list, listtype)
 		case e_nbt.TAG_COMPOUND:	listtypestr = "TAG_Compound"	break
 		case e_nbt.TAG_INT_ARRAY:	listtypestr = "TAG_Int_Array"	break
 		case e_nbt.TAG_LONG_ARRAY:	listtypestr = "TAG_Long_Array"	break
+		default:					listtypestr = "TAG_Empty"		break
 	}
 	
 	debug("[TAG_List of " + listtypestr + "] " + name)

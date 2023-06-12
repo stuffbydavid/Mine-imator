@@ -9,7 +9,7 @@
 
 function draw_button_text()
 {
-	var text, xx, yy, script, value, tip,font,  wid, hei, mouseon;
+	var text, xx, yy, script, value, tip, font, wid, hei, mouseon;
 	text = argument[0]
 	xx = argument[1]
 	yy = argument[2]

@@ -1,11 +1,12 @@
 /// builder_generate()
 /// @desc Generate triangles from the block render models.
+
 function builder_generate()
 {
 	block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
 	if (block_current = null)
 		return 0
-		
+	
 	if (mc_builder.build_multithreaded != null)
 	{
 		if (block_current.multithreaded != mc_builder.build_multithreaded)
@@ -21,9 +22,9 @@ function builder_generate()
 	build_edge_yn = (build_pos_y = 0)
 	build_edge_zp = (build_pos_z = build_size_z - 1)
 	build_edge_zn = (build_pos_z = 0)
-
+	
 	// Check edges for culling
-
+	
 	// X+
 	block_face_full_xp = false
 	block_face_min_depth_xp = null
@@ -46,7 +47,7 @@ function builder_generate()
 			block_face_min_depth_xp = othermodel.face_min_depth_xn
 		}
 	}
-
+	
 	// X-
 	block_face_full_xn = false
 	block_face_min_depth_xn = null
@@ -69,7 +70,7 @@ function builder_generate()
 			block_face_min_depth_xn = othermodel.face_min_depth_xp
 		}
 	}
-
+	
 	// Y+
 	block_face_full_yp = false
 	block_face_min_depth_yp = null
@@ -92,7 +93,7 @@ function builder_generate()
 			block_face_min_depth_yp = othermodel.face_min_depth_yn
 		}
 	}
-
+	
 	// Y-
 	block_face_full_yn = false
 	block_face_min_depth_yn = null
@@ -115,7 +116,7 @@ function builder_generate()
 			block_face_min_depth_yn = othermodel.face_min_depth_yp
 		}
 	}
-
+	
 	// Z+
 	block_face_full_zp = false
 	block_face_min_depth_zp = null
@@ -130,7 +131,7 @@ function builder_generate()
 			block_face_min_depth_zp = othermodel.face_min_depth_zn
 		}
 	}
-
+	
 	// Z-
 	block_face_full_zn = false
 	block_face_min_depth_zn = null
@@ -153,7 +154,7 @@ function builder_generate()
 			block_face_min_depth_zn = othermodel.face_min_depth_zp
 		}
 	}
-
+	
 	// Completely surrounded by solids, skip
 	if (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp &&
 		block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn &&
@@ -162,10 +163,10 @@ function builder_generate()
 		block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp &&
 		block_face_min_depth_zn = e_block_depth.DEPTH0 && block_face_full_zn)
 		return 0
-
+	
 	// Current state ID
 	block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z);
-
+	
 	// Block position
 	block_pos_x = build_pos_x * block_size
 	block_pos_y = build_pos_y * block_size
@@ -189,36 +190,39 @@ function builder_generate()
 			else if (modelindex < 0)
 				model = builder_get_render_model_multipart(build_pos_x, build_pos_y, build_pos_z, -modelindex);
 		}
-	
+		
 		// Get single model
 		var singlemodel = null;
 		if (is_array(model))
 			singlemodel = block_rendermodels[model[0]]
 		else if (model > 0)
 			singlemodel = block_rendermodels[model]
-
+		
 		if (singlemodel != null)
 		{
 			// Random X & Y offset
 			if ((singlemodel.random_offset && (build_size_total > 1)) || (singlemodel.random_offset_xy && (build_size_xy > 1)))
 			{
 				if (singlemodel.random_offset)
+				{
 					random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
+					block_pos_z += irandom_range(-3, 0)
+				}
 				else
 					random_set_seed(build_pos_x + build_size_x * build_pos_y)
-	
+				
 				block_pos_x += irandom_range(-4, 4)
 				block_pos_y += irandom_range(-4, 4)
 			}
 		}
-	
+		
 		// Set wind and brightness
 		block_vertex_emissive = null
 		block_vertex_wave = block_current.wind_axis
 		if (block_current.wind_zmin != null)
 			block_vertex_wave_zmin = block_pos_z + block_current.wind_zmin
 		block_vertex_subsurface = block_current.subsurface
-	
+		
 		// Generate render modelindex(s)
 		if (is_array(model))
 		{
@@ -228,14 +232,14 @@ function builder_generate()
 		else if (model > 0)
 			block_render_model_generate(block_rendermodels[model]);
 	}
-
+	
 	// Reset wind, brightness, and light bleeding
 	block_vertex_wave = e_vertex_wave.NONE
 	block_vertex_wave_zmin = null
 	block_vertex_wave_zmax = null
 	block_vertex_emissive = 0
 	block_vertex_subsurface = 0
-
+	
 	// Waterlogged
 	if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z))
 	{
@@ -243,10 +247,10 @@ function builder_generate()
 		block_pos_x = build_pos_x * block_size
 		block_pos_y = build_pos_y * block_size
 		block_pos_z = build_pos_z * block_size
-	
+		
 		block_current = mc_assets.block_name_map[?"water"]
 		block_generate_liquid(true)
-	
+		
 		block_vertex_wave = e_vertex_wave.NONE
 		block_vertex_wave_zmin = null
 		block_vertex_wave_zmax = null

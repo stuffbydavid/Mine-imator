@@ -72,6 +72,10 @@ function nbt_debug_tag_compound(name, map)
 						debug("Length", map[?key + "_NBT_length"])
 					debug_indent--
 					break
+				
+				default:
+					debug("[TAG_Empty] " + key, map[?key])
+					break
 			}
 		}
 		key = ds_map_find_next(map, key)

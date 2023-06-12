@@ -6,22 +6,12 @@
 /// @arg height
 /// @arg [checkmouse]
 
-function tip_set()
+function tip_set(text, xx, yy, w, h, checkmouse = true)
 {
-	var text, xx, yy, w, h, checkmouse;
-	var showtip;
-	text = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	w = argument[3]
-	h = argument[4]
-	checkmouse = true
-	
-	if (argument_count > 5)
-		checkmouse = argument[5]
-	
 	if (text = "")
 		return 0
+	
+	var showtip;
 	
 	if (checkmouse)
 		showtip = app_mouse_box(xx, yy, w, h) && content_mouseon

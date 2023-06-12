@@ -10,5 +10,5 @@ function matrix_create_rotate_to(tangent, normal)
 	return [ binormal[X], binormal[Y], binormal[Z], 0,
 			  tangent[X],  tangent[Y],  tangent[Z], 0,
 			   normal[X],   normal[Y],   normal[Z], 0,
-			           0,           0,           0, 1 ]
+					   0,           0,           0, 1 ]
 }

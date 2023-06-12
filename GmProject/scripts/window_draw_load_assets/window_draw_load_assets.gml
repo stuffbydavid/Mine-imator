@@ -45,9 +45,10 @@ function window_draw_load_assets()
 	
 	draw_sprite(spr_load_assets, 0, xoff + 95, yoff + 207)
 	
-	draw_label("Mine-imator v" + string(mineimator_version), xoff + 95, yoff + 289, fa_middle, fa_bottom, c_text_secondary, a_text_secondary, font_heading)
-	draw_label(string(string_upper(mineimator_version_extra)), xoff + 95, yoff + 289 + 14, fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	draw_label(text_get("startuploadingassets", floor(load_assets_progress * 100)), xoff + 95, yoff + 437, fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
+	draw_label("Mine-imator " + string(mineimator_version), xoff + 95, yoff + 289, fa_middle, fa_bottom, c_text_secondary, a_text_secondary, font_heading)
+	draw_label(string(string_upper(mineimator_version_sub)), xoff + 95, yoff + 289 + 12, fa_middle, fa_bottom, c_text_secondary, a_text_secondary, font_subheading)
+	draw_label(string(string_upper(mineimator_version_extra)), xoff + 95, yoff + 289 + 26, fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+	draw_label(text_get("startuploadingassets", app.setting_minecraft_assets_version, floor(load_assets_progress * 100)), xoff + 95, yoff + 437, fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
 	
 	// Splash
 	if (load_assets_splash != null)
@@ -60,7 +61,7 @@ function window_draw_load_assets()
 	
 	// Splash credits
 	if (load_assets_credits != "")
-		draw_label(load_assets_credits, xoff + 95, yoff + 289 + 31, fa_middle, fa_top, c_text_tertiary, a_text_tertiary, font_credits)
+		draw_label(text_get("startupsplashauthor", load_assets_credits), xoff + 95, yoff + 289 + 31, fa_middle, fa_top, c_text_tertiary, a_text_tertiary, font_caption)
 	
 	draw_box(xoff, yoff + 450 - 8, 740, 8, false, c_level_top, .8)
 	draw_box(xoff, yoff + 450 - 8, 740 * load_assets_progress, 8, false, c_accent, 1)

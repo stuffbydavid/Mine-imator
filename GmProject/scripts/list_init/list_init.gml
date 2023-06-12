@@ -1270,6 +1270,7 @@ function list_init(name)
 			menu_add_item(24, "24")
 			menu_add_item(30, "30")
 			menu_add_item(60, "60")
+			menu_add_item(0, text_get("exportmovieframeratecustom"))
 			
 			break
 		}

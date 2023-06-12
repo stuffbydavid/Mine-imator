@@ -43,7 +43,7 @@ function json_load_object(root)
 			case e_json_type.ARRAY:
 				ds_map_add_list(map, name, json_value)
 				break
-		   
+			
 			default:
 				map[?name] = json_value
 		}

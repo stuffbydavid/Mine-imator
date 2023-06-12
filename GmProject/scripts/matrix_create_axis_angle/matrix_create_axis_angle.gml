@@ -6,12 +6,12 @@
 function matrix_create_axis_angle(axis, angle)
 {
 	var sq, angle1, xy, yz, zx, s, angles, mat;
-	sq		  = vec3_mul(axis, axis)
-	angle1	  = 1 - angle
-	xy		  = axis[X] * axis[Y] * angle1
-	yz		  = axis[Y] * axis[Z] * angle1
-	zx		  = axis[X] * axis[Z] * angle1
-	s		  = sqrt(max(0, 1 - power(angle, 2)))
+	sq		= vec3_mul(axis, axis)
+	angle1	= 1 - angle
+	xy		= axis[X] * axis[Y] * angle1
+	yz		= axis[Y] * axis[Z] * angle1
+	zx		= axis[X] * axis[Z] * angle1
+	s		= sqrt(max(0, 1 - power(angle, 2)))
 	angles[X] = axis[X] * s
 	angles[Y] = axis[Y] * s
 	angles[Z] = axis[Z] * s

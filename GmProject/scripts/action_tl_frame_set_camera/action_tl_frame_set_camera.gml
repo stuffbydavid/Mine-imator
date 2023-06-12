@@ -2,15 +2,8 @@
 /// @arg valueslist
 /// @arg [reset]
 
-function action_tl_frame_set_camera()
+function action_tl_frame_set_camera(valueslist, reset = false)
 {
-	var valueslist, reset;
-	valueslist = argument[0]
-	reset = false
-	
-	if (argument_count > 1)
-		reset = argument[1]
-	
 	tl_value_set_start(action_tl_frame_set_camera, false)
 	
 	for (var i = 0; i < ds_list_size(camera_values_list); i++)

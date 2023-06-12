@@ -17,11 +17,16 @@ function tab_frame_editor_sound()
 	draw_meter("frameeditorsoundvolume", dx, dy, dw, round(tl_edit.value[e_value.SOUND_VOLUME] * 100), 0, 100, 100, 1, tab.sound.tbx_volume, action_tl_frame_sound_volume)
 	tab_next()
 	
-	tab_control_dragger()
-	draw_dragger("frameeditorsoundstart", dx, dy, dragger_width, tl_edit.value[e_value.SOUND_START], max(0.01, 0.005 * abs(tl_edit.value[e_value.SOUND_START])), 0, no_limit, 0, 0, tab.sound.tbx_start, action_tl_frame_sound_start)
+	tab_control_meter()
+	draw_meter("frameeditorsoundpitch", dx, dy, dw, round(tl_edit.value[e_value.SOUND_PITCH] * 100), 50, 200, 100, 1, tab.sound.tbx_pitch, action_tl_frame_sound_pitch)
 	tab_next()
 	
-	tab_control_dragger()
-	draw_dragger("frameeditorsoundend", dx, dy, dragger_width, tl_edit.value[e_value.SOUND_END], max(0.01, 0.005 * abs(tl_edit.value[e_value.SOUND_END])), -no_limit, no_limit, 0, 0, tab.sound.tbx_end, action_tl_frame_sound_end)
+	// Sound start/end
+	textfield_group_add("frameeditorsoundstart", tl_edit.value[e_value.SOUND_START], tl_edit.value_default[e_value.SOUND_START], action_tl_frame_sound_start, axis_edit, tab.sound.tbx_start, null, max(0.01, 0.005 * abs(tl_edit.value[e_value.SOUND_START])), 0, no_limit)
+		
+	textfield_group_add("frameeditorsoundend", tl_edit.value[e_value.SOUND_END], tl_edit.value_default[e_value.SOUND_END], action_tl_frame_sound_end, axis_edit, tab.sound.tbx_end, null, max(0.01, 0.005 * abs(tl_edit.value[e_value.SOUND_END])), -no_limit, no_limit)
+		
+	tab_control_textfield(true)
+	draw_textfield_group("frameeditorsoundtime", dx, dy, dw, max(0.01, 0.005 * abs(tl_edit.value[e_value.SOUND_END])), -no_limit, no_limit, 0, true)
 	tab_next()
 }

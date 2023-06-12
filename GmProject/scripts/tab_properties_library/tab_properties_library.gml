@@ -455,7 +455,7 @@ function tab_properties_library()
 				}
 			}
 			
-			if (temp_edit.shape_tex)
+			if (temp_edit.shape_tex || temp_edit.shape_tex_material || temp_edit.shape_tex_normal)
 			{
 				if (!temp_edit.shape_tex_mapped)
 				{
@@ -468,8 +468,8 @@ function tab_properties_library()
 					tab_next()
 					
 					// Repeat
-					textfield_group_add("libraryshapetexhrepeat", temp_edit.shape_tex_hrepeat, 0, action_lib_shape_tex_hrepeat, axis_edit, tab.library.tbx_shape_tex_hrepeat)
-					textfield_group_add("libraryshapetexvrepeat", temp_edit.shape_tex_vrepeat, 0, action_lib_shape_tex_vrepeat, axis_edit, tab.library.tbx_shape_tex_vrepeat)
+					textfield_group_add("libraryshapetexhrepeat", temp_edit.shape_tex_hrepeat, 1, action_lib_shape_tex_hrepeat, axis_edit, tab.library.tbx_shape_tex_hrepeat)
+					textfield_group_add("libraryshapetexvrepeat", temp_edit.shape_tex_vrepeat, 1, action_lib_shape_tex_vrepeat, axis_edit, tab.library.tbx_shape_tex_vrepeat)
 					
 					tab_control_textfield_group()
 					draw_textfield_group("libraryshapetexrepeat", dx, dy, dw, 1 / 100, 0, no_limit, 0, true, false, 3)

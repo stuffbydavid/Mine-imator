@@ -2,18 +2,12 @@
 /// @arg value
 /// @arg [length]
 
-function dec_to_hex()
+function dec_to_hex(dec, len = 0)
 {
-	var dec, len, hex, h, byte, hi, lo;
-	dec = argument[0]
-	
-	if (argument_count > 0)
-		len = argument[1]
-	else
-		len = 0
-	
 	if (!dec)
 		return "0"
+	
+	var h, hex, byte, hi, lo;
 	
 	h = "0123456789ABCDEF"
 	hex = ""

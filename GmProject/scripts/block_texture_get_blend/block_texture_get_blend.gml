@@ -23,10 +23,10 @@ function block_texture_get_blend(texname, res)
 			case "oak_leaves": return res.color_leaves_oak;
 			case "spruce_leaves": return res.color_leaves_spruce;
 			case "birch_leaves": return res.color_leaves_birch;
-			case "jungle": return res.color_leaves_jungle;
-			case "acacia": return res.color_leaves_acacia;
-			case "dark_oak": return res.color_leaves_dark_oak;
-			case "mangrove": return res.color_leaves_mangrove;
+			case "jungle_leaves": return res.color_leaves_jungle;
+			case "acacia_leaves": return res.color_leaves_acacia;
+			case "dark_oak_leaves": return res.color_leaves_dark_oak;
+			case "mangrove_leaves": return res.color_leaves_mangrove;
 		}
 	}
 	

@@ -58,9 +58,21 @@ function popup_exportmovie_draw()
 	}
 	
 	// Frame rate
+	if (popup.frame_rate = 0)
+		text = text_get("exportmovieframeratecustom")
+	else
+		text = string(popup.frame_rate)
+	
 	tab_control_menu()
-	draw_button_menu("exportmovieframerate", e_menu.LIST, dx, dy, dw, 24, popup.frame_rate, string(popup.frame_rate), action_toolbar_exportmovie_frame_rate)
+	draw_button_menu("exportmovieframerate", e_menu.LIST, dx, dy, dw, 24, popup.frame_rate, text, action_toolbar_exportmovie_frame_rate)
 	tab_next()
+	
+	if (popup.frame_rate = 0)
+	{
+		tab_control_dragger()
+		draw_dragger("exportmovieframespersecond", dx, dy, dragger_width, popup.framespersecond, 1, 1, 120, 30, 1, popup.tbx_framespersecond, action_toolbar_exportmovie_framespersecond)
+		tab_next()
+	}
 	
 	if (popup.format = "png")
 	{

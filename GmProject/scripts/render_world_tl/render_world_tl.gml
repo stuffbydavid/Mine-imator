@@ -84,22 +84,22 @@ function render_world_tl()
 		render_set_uniform_color("uReplaceColor", ssao ? c_white : c_black, 1)
 	
 	if (colors_ext != shader_uniform_color_ext ||
-        value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
+		value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
 		value_inherit[e_value.HSB_ADD] != shader_uniform_hsb_add ||
-        value_inherit[e_value.RGB_SUB] != shader_uniform_rgb_sub ||
-        value_inherit[e_value.HSB_SUB] != shader_uniform_hsb_sub ||
-        value_inherit[e_value.HSB_MUL] != shader_uniform_hsb_mul ||
-        value_inherit[e_value.MIX_COLOR] != shader_uniform_mix_color ||
-        value_inherit[e_value.MIX_PERCENT] != shader_uniform_mix_percent)
+		value_inherit[e_value.RGB_SUB] != shader_uniform_rgb_sub ||
+		value_inherit[e_value.HSB_SUB] != shader_uniform_hsb_sub ||
+		value_inherit[e_value.HSB_MUL] != shader_uniform_hsb_mul ||
+		value_inherit[e_value.MIX_COLOR] != shader_uniform_mix_color ||
+		value_inherit[e_value.MIX_PERCENT] != shader_uniform_mix_percent)
 	{
 		shader_uniform_color_ext = colors_ext
 		shader_uniform_rgb_add = value_inherit[e_value.RGB_ADD]
 		shader_uniform_hsb_add = value_inherit[e_value.HSB_ADD]
-        shader_uniform_rgb_sub = value_inherit[e_value.RGB_SUB]
-        shader_uniform_hsb_sub = value_inherit[e_value.HSB_SUB]
-        shader_uniform_hsb_mul = value_inherit[e_value.HSB_MUL]
-        shader_uniform_mix_color = value_inherit[e_value.MIX_COLOR]
-        shader_uniform_mix_percent = value_inherit[e_value.MIX_PERCENT]
+		shader_uniform_rgb_sub = value_inherit[e_value.RGB_SUB]
+		shader_uniform_hsb_sub = value_inherit[e_value.HSB_SUB]
+		shader_uniform_hsb_mul = value_inherit[e_value.HSB_MUL]
+		shader_uniform_mix_color = value_inherit[e_value.MIX_COLOR]
+		shader_uniform_mix_percent = value_inherit[e_value.MIX_PERCENT]
 		
 		render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
 		render_set_uniform_color("uRGBAdd", shader_uniform_rgb_add, 1)
@@ -153,12 +153,12 @@ function render_world_tl()
 	}
 	
 	if (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
-        value_inherit[e_value.SUBSURFACE_RADIUS_RED] != shader_uniform_sss_red ||
-        value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] != shader_uniform_sss_green ||
-        value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] != shader_uniform_sss_blue ||
-        value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
+		value_inherit[e_value.SUBSURFACE_RADIUS_RED] != shader_uniform_sss_red ||
+		value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] != shader_uniform_sss_green ||
+		value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] != shader_uniform_sss_blue ||
+		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
 	{
-        shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
+		shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
 		shader_uniform_sss_red = value_inherit[e_value.SUBSURFACE_RADIUS_RED]
 		shader_uniform_sss_green = value_inherit[e_value.SUBSURFACE_RADIUS_GREEN]
 		shader_uniform_sss_blue = value_inherit[e_value.SUBSURFACE_RADIUS_BLUE]
@@ -195,31 +195,31 @@ function render_world_tl()
 	
 	// Glow
 	if (glow != shader_uniform_glow ||
-        glow_texture != shader_uniform_glow_texture ||
-        value_inherit[e_value.GLOW_COLOR] != shader_uniform_glow_color)
+		glow_texture != shader_uniform_glow_texture ||
+		value_inherit[e_value.GLOW_COLOR] != shader_uniform_glow_color)
 	{
-        shader_uniform_glow = glow
-        shader_uniform_glow_texture = glow_texture
-        shader_uniform_glow_color = value_inherit[e_value.GLOW_COLOR]
-        
-        if (shader_uniform_glow)
-        {
-            render_set_uniform_int("uGlow", 1)
-            render_set_uniform_int("uGlowTexture", glow_texture)
-            render_set_uniform_color("uGlowColor", shader_uniform_glow_color, 1)
-            
-            if (only_render_glow)
-            {
-                prevblend = gpu_get_blendmode()
-                gpu_set_blendmode(bm_add)
-            }
-        }
-        else
-        {
-            render_set_uniform_int("uGlow", 0)
-            render_set_uniform_int("uGlowTexture", 0)
-            render_set_uniform_color("uGlowColor", c_black, 0)
-        }
+		shader_uniform_glow = glow
+		shader_uniform_glow_texture = glow_texture
+		shader_uniform_glow_color = value_inherit[e_value.GLOW_COLOR]
+		
+		if (shader_uniform_glow)
+		{
+			render_set_uniform_int("uGlow", 1)
+			render_set_uniform_int("uGlowTexture", glow_texture)
+			render_set_uniform_color("uGlowColor", shader_uniform_glow_color, 1)
+			
+			if (only_render_glow)
+			{
+				prevblend = gpu_get_blendmode()
+				gpu_set_blendmode(bm_add)
+			}
+		}
+		else
+		{
+			render_set_uniform_int("uGlow", 0)
+			render_set_uniform_int("uGlowTexture", 0)
+			render_set_uniform_color("uGlowColor", c_black, 0)
+		}
 	}
 	
 	// Render

@@ -49,29 +49,29 @@ varying vec4 vColor;
 // Fresnel Schlick approximation
 float fresnelSchlickRoughness(float cosTheta, float F0, float roughness)
 {
-    return F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+	return F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
 // GGX specular (https://learnopengl.com/PBR/Lighting)
 float distributionGGX(vec3 N, vec3 H, float roughness)
 {
-    float a2      = roughness * roughness * roughness * roughness;
-    float NdotH  = max(dot(N, H), 0.0);
-    float denom = (NdotH * NdotH * (a2 - 1.0) + 1.0);
-    return a2 / (PI * denom * denom);
+	float a2 = roughness * roughness * roughness * roughness;
+	float NdotH = max(dot(N, H), 0.0);
+	float denom = (NdotH * NdotH * (a2 - 1.0) + 1.0);
+	return a2 / (PI * denom * denom);
 }
 
 float geometrySchlickGGX(float NdotV, float roughness)
 {
-    float r = (roughness + 1.0);
-    float k = (r * r) / 8.0;
+	float r = (roughness + 1.0);
+	float k = (r * r) / 8.0;
 	
 	return NdotV / (NdotV * (1.0 - k) + k);
 }
 
 float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 {
-    return	geometrySchlickGGX(max(dot(N, V), 0.0), roughness) *
+	return geometrySchlickGGX(max(dot(N, V), 0.0), roughness) *
 			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
 }
 
@@ -166,8 +166,8 @@ vec4 getFilteredDepth(vec2 uv, vec2 uvMin)
 
 float hash(vec2 c)
 {
-    return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
-    (0.1 + abs(sin(13.0 * c.y + c.x))));
+	return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
+	(0.1 + abs(sin(13.0 * c.y + c.x))));
 }
 
 void getMaterial(out float roughness, out float metallic, out float emissive, out float F0, out float sss)
@@ -370,18 +370,18 @@ void main()
 		// Calculate specular
 		if (uLightSpecular * dif * shadow > 0.0)
 		{
-			vec3 N   = normal;
-			vec3 V   = normalize(uCameraPosition - vPosition);
-			vec3 L   = normalize(uLightPosition - vPosition);
-			vec3 H   = normalize(V + L);
-			float NDF = distributionGGX(N, H, roughness);       
-			float G   = geometrySmith(N, V, L, roughness);
+			vec3 N = normal;
+			vec3 V = normalize(uCameraPosition - vPosition);
+			vec3 L = normalize(uLightPosition - vPosition);
+			vec3 H = normalize(V + L);
+			float NDF = distributionGGX(N, H, roughness);
+			float G = geometrySmith(N, V, L, roughness);
 		
 			float F = fresnelSchlickRoughness(max(dot(H, V), 0.0), F0, roughness);
 		
-			float numerator    = NDF * G * F;
-			float denominator  = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-			float specular     = numerator / denominator;
+			float numerator = NDF * G * F;
+			float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
+			float specular = numerator / denominator;
 		
 			spec = uLightColor.rgb * shadow * uLightSpecular * dif * (specular * mix(vec3(1.0), baseColor.rgb, metallic));
 		}

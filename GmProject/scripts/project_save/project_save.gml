@@ -3,11 +3,7 @@
 
 function project_save()
 {
-	var fn;
-	if (argument_count > 0)
-		fn = argument[0]
-	else
-		fn = project_file
+	var fn = (argument_count > 0 ? argument[0] : project_file)
 	
 	log("Saving project", fn)
 	

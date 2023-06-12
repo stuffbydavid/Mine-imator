@@ -97,7 +97,7 @@ function render_startup()
 	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal, render_surface_emissive, 
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens, 
 			  render_surface_sample_expo, render_surface_sample_dec, render_surface_sample_alpha, depth_near, depth_far, render_post_index;
-			  
+			
 	render_target = null
 	render_surface[0] = null
 	render_surface[1] = null

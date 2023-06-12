@@ -37,13 +37,16 @@ function block_get_timeline(block, stateid)
 		{
 			text = mc_builder.block_text_map[?pos]
 			text_color = mc_builder.block_text_color_map[?pos]
+			text_emissive = mc_builder.block_text_glowing_map[?pos]
 			if (is_undefined(text))
 			{
 				text = ""
 				text_color = c_black
+				text_emissive = 0
 			}
 			
 			text_position = block.tl_text_position
+			text_scale = block.tl_text_scale
 		}
 		
 		// Get banner patterns
@@ -65,7 +68,7 @@ function block_get_timeline(block, stateid)
 		if (mc_builder.block_skull_map[?pos] != undefined)
 		{
 			var userid = mc_builder.block_skull_map[?pos];
-			texture =  mc_builder.block_skull_res_map[?userid]
+			texture = mc_builder.block_skull_res_map[?userid]
 		}
 		else
 			texture = null

@@ -1,8 +1,8 @@
 /// project_load([filename])
 /// @arg [filename]
 /// @desc Opens a .miproject, .mproj, .mani project or zipped archive.
-///		  A file browser appears if no filename is given.
-///		  Formats:
+/// A file browser appears if no filename is given.
+///		Formats:
 ///			0.1
 ///			0.2
 ///			0.5
@@ -21,11 +21,7 @@
 
 function project_load()
 {
-	var fn;
-	if (argument_count > 0)
-		fn = argument[0]
-	else
-		fn = file_dialog_open_project()
+	var fn = (argument_count > 0 ? argument[0] : file_dialog_open_project())
 	
 	if (fn = "")
 		return 0

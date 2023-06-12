@@ -2,20 +2,15 @@
 /// @arg string
 /// @arg [invalid]
 /// @desc An acceptable real number takes the following form:
-///		  [whitespaces] [sign] [digits] [. [digits]] [{e |E} [sign] [digits]] [whitespaces]
-///		  At least one digit or a decimal point must be present in prior to the exponent part
+/// [whitespaces] [sign] [digits] [. [digits]] [{e |E} [sign] [digits]] [whitespaces]
+/// At least one digit or a decimal point must be present in prior to the exponent part
 
-function string_get_real()
+function string_get_real(str, inv = undefined)
 {
-	var str, inv, len, state;
-	str = argument[0]
-	if (argument_count > 1)
-		inv = argument[1]
-	else
-		inv = undefined
-	
 	if (is_undefined(str))
 		return inv
+	
+	var len, state;
 	
 	// Trim white spaces at the end (to make it easier to check the final state)
 	len = string_length(str)

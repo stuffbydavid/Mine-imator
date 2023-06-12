@@ -47,7 +47,7 @@ function particle_spawner_update(spawner)
 							repeat (floor(spawn_rate * temp.pc_spawn_amount))
 							{
 								var i = irandom(minute_steps - 1);
-								spawner.spawn_queue[i, spawner.spawn_queue_amount[i]] = id
+								spawner.spawn_queue[i, spawner.spawn_queue_amount[i]] = real(id)
 								spawner.spawn_queue_amount[i]++
 							}
 						}
@@ -150,7 +150,7 @@ function particle_spawner_update(spawner)
 							continue
 						
 						// Don't bother updating if particles are disabled (and not exporting)
-						if (!app.view_main.particles && (!app.view_second.particles || !app.view_second.show) && app.window_state != "export_movie"  && app.window_state != "export_image")
+						if (!app.view_main.particles && (!app.view_second.particles || !app.view_second.show) && app.window_state != "export_movie" && app.window_state != "export_image")
 							continue
 					}
 					
@@ -181,9 +181,9 @@ function particle_spawner_update(spawner)
 							if (att.type != e_tl_type.PATH)
 							{
 								if (pt.type.orbit)
-									pt.spd[a] += clamp(att.world_pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+									pt.spd[a] += (clamp(att.world_pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60)
 								else
-									pt.spd[a] += clamp(att.world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+									pt.spd[a] += (clamp(att.world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60)
 							}
 						}
 					}
@@ -229,7 +229,7 @@ function particle_spawner_update(spawner)
 						// Add forces
 						for (var a = X; a <= Z; a++)
 						{
-							pt.pos[a] += clamp(p[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60
+							pt.pos[a] += (clamp(p[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60)
 							pt.pos[a] += (t[a] * value[e_value.FORCE_DIRECTIONAL])
 							pt.pos[a] += (b[a] * value[e_value.FORCE_VORTEX])
 						}

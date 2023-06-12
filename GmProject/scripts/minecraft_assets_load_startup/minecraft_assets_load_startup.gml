@@ -1,6 +1,6 @@
 /// minecraft_assets_load_startup()
 /// @desc Starts to load the Minecraft assets. Character/block/item data is
-///		  stored in mc_assets, while the textures are put in the mc_res resource.
+/// stored in mc_assets, while the textures are put in the mc_res resource.
 
 function minecraft_assets_load_startup()
 {

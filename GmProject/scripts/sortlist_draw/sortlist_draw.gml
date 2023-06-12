@@ -9,27 +9,8 @@
 /// @arg [name]]
 /// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 
-function sortlist_draw()
+function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 {
-	var slist, xx, yy, w, h, select, filter, name;
-	var colmouseon, searchx, searchw, itemh, colsh, dy;
-	slist = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	w = argument[3]
-	h = argument[4]
-	select = argument[5]
-	
-	if (argument_count > 6)
-		filter = argument[6]
-	else
-		filter = true
-	
-	if (argument_count > 7)
-		name = argument[7]
-	else
-		name = ""
-	
 	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
@@ -37,6 +18,8 @@ function sortlist_draw()
 		
 		return 0
 	}
+	
+	var colmouseon, searchx, searchw, itemh, colsh, dy;
 	
 	searchx = xx
 	searchw = w

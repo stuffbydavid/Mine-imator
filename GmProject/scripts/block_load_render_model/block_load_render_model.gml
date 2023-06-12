@@ -7,20 +7,9 @@
 /// @arg [resource]
 /// @desc Creates a render-ready model from the loaded files.
 
-function block_load_render_model()
+function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 {
-	var model, rot, uvlock, wei, res, opaque, rotmat;
-	var modelstate, colY, alphaY, colZ, alphaZ
-	model = argument[0]
-	rot = argument[1]
-	uvlock = argument[2]
-	opaque = argument[3]
-	wei = argument[4]
-	
-	if (argument_count > 5)
-		res = argument[5]
-	else
-		res = null
+	var rotmat, modelstate, colY, alphaY, colZ, alphaZ
 	
 	// Get 
 	if (res = null)
@@ -444,7 +433,7 @@ function block_load_render_model()
 								}
 							}
 							
-							texpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) *  block_size)
+							texpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) * block_size)
 							texsize = vec2(sheetwidth * block_size, sheetheight * block_size)
 							
 							// Get preview color for world importer

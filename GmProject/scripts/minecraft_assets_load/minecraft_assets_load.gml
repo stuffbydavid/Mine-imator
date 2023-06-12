@@ -318,7 +318,7 @@ function minecraft_assets_load()
 						var newid, newidnomc, block, statevars;
 						newid = curmap[?"id"]
 						if (!is_undefined(newid))
-							newidnomc =  string_replace(curmap[?"id"], "minecraft:", "")
+							newidnomc = string_replace(curmap[?"id"], "minecraft:", "")
 						else
 							newidnomc = ""
 						block = null

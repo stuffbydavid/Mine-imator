@@ -4,20 +4,8 @@
 /// @arg [surface
 /// @arg [normal]]
 
-function render_generate_noise()
+function render_generate_noise(w, h, surf = null, normal = false)
 {
-	var w, h, surf, normal;
-	w = argument[0]
-	h = argument[1]
-	surf = null
-	normal = false
-	
-	if (argument_count > 2)
-		surf = argument[2]
-	
-	if (argument_count > 3)
-		normal = argument[3]
-	
 	if (!surface_exists(surf))
 		surf = surface_create(w, h)
 	

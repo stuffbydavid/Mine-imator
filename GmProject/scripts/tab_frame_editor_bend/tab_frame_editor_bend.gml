@@ -25,7 +25,7 @@ function tab_frame_editor_bend()
 	axisname = array("x", "y", "z")
 	
 	if (axislen = 3)
-		wheelx = [floor(dx + dw/6),  floor(dx + dw/2), floor(dx + dw - dw/6)]
+		wheelx = [floor(dx + dw/6), floor(dx + dw/2), floor(dx + dw - dw/6)]
 	else if (axislen = 2)
 		wheelx = [dx + floor(dw * 0.25), dx + floor(dw * 0.75), 0]
 	else

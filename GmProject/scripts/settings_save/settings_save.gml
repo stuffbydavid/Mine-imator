@@ -182,6 +182,7 @@ function settings_save()
 		
 		json_save_var("exportmovie_format", popup_exportmovie.format)
 		json_save_var("exportmovie_frame_rate", popup_exportmovie.frame_rate)
+		json_save_var("exportmovie_framespersecond", popup_exportmovie.framespersecond)
 		json_save_var("exportmovie_bit_rate", popup_exportmovie.bit_rate)
 		json_save_var_bool("exportmovie_include_audio", popup_exportmovie.include_audio)
 		json_save_var_bool("exportmovie_remove_background", popup_exportmovie.remove_background)

@@ -88,7 +88,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 				else
 					sb.value_goal += ((mouse_y < yy + barpos) ? -size : size) / 4
 				
-	            sb.value_goal = snap(sb.value_goal, sb.snap_value)
+				sb.value_goal = snap(sb.value_goal, sb.snap_value)
 				sb.value = snap(sb.value, sb.snap_value)
 			}
 			

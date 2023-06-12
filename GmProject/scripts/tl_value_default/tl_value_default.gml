@@ -7,25 +7,25 @@ function tl_value_default(valueid)
 	{
 		case e_value.SCA_X:
 		case e_value.SCA_Y:
-		case e_value.SCA_Z: return 1
-		case e_value.ALPHA: return 1
+		case e_value.SCA_Z:
+		case e_value.ALPHA:
 		case e_value.ROUGHNESS: return 1
 		case e_value.SUBSURFACE: return 0
 		case e_value.SUBSURFACE_RADIUS_RED:
 		case e_value.SUBSURFACE_RADIUS_GREEN:
-		case e_value.SUBSURFACE_RADIUS_BLUE: return 1
+		case e_value.SUBSURFACE_RADIUS_BLUE:
 		case e_value.WIND_INFLUENCE: return 1
 		case e_value.GLOW_COLOR:
 		case e_value.RGB_MUL:
 		case e_value.HSB_MUL: 
 		case e_value.SUBSURFACE_COLOR: return c_white
 		case e_value.SPAWN: return true
-		case e_value.FREEZE: return false
-		case e_value.CLEAR: return false
+		case e_value.FREEZE:
+		case e_value.CLEAR:
 		case e_value.CUSTOM_SEED: return false
 		case e_value.SEED: return ceil(random(32000))
 		case e_value.FORCE: return 1
-		case e_value.FORCE_DIRECTIONAL: return 0
+		case e_value.FORCE_DIRECTIONAL:
 		case e_value.FORCE_VORTEX: return 0
 		case e_value.LIGHT_COLOR: return c_white
 		case e_value.LIGHT_STRENGTH:
@@ -38,7 +38,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_FOV: return 45
 		case e_value.CAM_EXPOSURE: return 1
 		case e_value.CAM_GAMMA: return 2.2
-		case e_value.CAM_BLADE_AMOUNT: return 0
+		case e_value.CAM_BLADE_AMOUNT:
 		case e_value.CAM_BLADE_ANGLE: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
 		case e_value.CAM_SHAKE_MODE:
@@ -51,9 +51,9 @@ function tl_value_default(valueid)
 		case e_value.CAM_DOF_RANGE: return 200
 		case e_value.CAM_DOF_FADE_SIZE: return 100
 		case e_value.CAM_DOF_BLUR_SIZE: return .01
-		case e_value.CAM_DOF_BLUR_RATIO: return 0
-		case e_value.CAM_DOF_BIAS: return 0
-		case e_value.CAM_DOF_THRESHOLD: return 0
+		case e_value.CAM_DOF_BLUR_RATIO:
+		case e_value.CAM_DOF_BIAS:
+		case e_value.CAM_DOF_THRESHOLD:
 		case e_value.CAM_DOF_GAIN: return 0
 		case e_value.CAM_DOF_FRINGE_RED:
 		case e_value.CAM_DOF_FRINGE_GREEN:
@@ -66,20 +66,20 @@ function tl_value_default(valueid)
 		case e_value.CAM_BLOOM_RADIUS: return 1
 		case e_value.CAM_BLOOM_RATIO: return 0
 		case e_value.CAM_BLOOM_BLEND: return c_white
-		case e_value.CAM_LENS_DIRT_BLOOM: return true
+		case e_value.CAM_LENS_DIRT_BLOOM:
 		case e_value.CAM_LENS_DIRT_GLOW: return true
 		case e_value.CAM_LENS_DIRT_RADIUS: return .5
 		case e_value.CAM_LENS_DIRT_INTENSITY: return .8
 		case e_value.CAM_LENS_DIRT_POWER: return 1.5
 		case e_value.CAM_COLOR_CORRECTION: return false
-		case e_value.CAM_CONTRAST: return 0
+		case e_value.CAM_CONTRAST:
 		case e_value.CAM_BRIGHTNESS: return 0
 		case e_value.CAM_SATURATION: return 1
 		case e_value.CAM_VIBRANCE: return 0
 		case e_value.CAM_COLOR_BURN: return c_white
-		case e_value.CAM_GRAIN_STRENGTH: return .10
+		case e_value.CAM_GRAIN_STRENGTH:
 		case e_value.CAM_GRAIN_SATURATION: return .10
-		case e_value.CAM_GRAIN_SIZE: return 1
+		case e_value.CAM_GRAIN_SIZE:
 		case e_value.CAM_VIGNETTE_RADIUS: return 1
 		case e_value.CAM_VIGNETTE_SOFTNESS: return 0.5
 		case e_value.CAM_VIGNETTE_STRENGTH: return 1
@@ -92,7 +92,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_DISTORT_AMOUNT: return .05
 		case e_value.CAM_WIDTH: return 1280
 		case e_value.CAM_HEIGHT: return 720
-		case e_value.CAM_SIZE_USE_PROJECT: return true
+		case e_value.CAM_SIZE_USE_PROJECT:
 		case e_value.CAM_SIZE_KEEP_ASPECT_RATIO: return true
 		case e_value.BG_IMAGE_SHOW: return app.background_image_show
 		case e_value.BG_IMAGE_ROTATION: return app.background_image_rotation
@@ -149,8 +149,9 @@ function tl_value_default(valueid)
 		case e_value.TEXTURE_NORMAL_OBJ:
 		case e_value.SOUND_OBJ:
 		case e_value.TEXT_FONT: return null
-		case e_value.IK_BLEND: return 1
-		case e_value.SOUND_VOLUME: return 1
+		case e_value.IK_BLEND:
+		case e_value.SOUND_VOLUME:
+		case e_value.SOUND_PITCH: return 1
 		case e_value.VISIBLE: return true
 		case e_value.TEXT: 
 		case e_value.ITEM_NAME: return ""

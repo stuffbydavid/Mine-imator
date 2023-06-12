@@ -3,21 +3,15 @@
 /// @arg width
 /// @arg [ellipsis]
 
-function string_limit()
+function string_limit(str, wid, ellipsis = "...")
 {
-	var str, wid, ellipsis, nstr, pos;
-	str = argument[0]
-	wid = argument[1]
-	ellipsis = "..."
-	
-	if (argument_count > 2)
-		ellipsis = argument[2]
-	
 	if (string_width(ellipsis) > wid)
 		return ""
 	
 	if (string_width(str) <= wid) 
 		return str
+	
+	var nstr, pos;
 	
 	nstr = ""
 	pos = 1

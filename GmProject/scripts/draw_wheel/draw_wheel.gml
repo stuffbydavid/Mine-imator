@@ -13,35 +13,15 @@
 /// @arg [radius
 /// @arg sprite]
 
-function draw_wheel()
+function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tbx, script, rad = 24, sprite = undefined)
 {
-	var name, xx, yy, color, value, modval, minval, maxval, def, snapval, tbx, script, rad, sprite;
-	var capwid, text, labelx, labely, labelw, labeltextw;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	color = argument[3]
-	value = argument[4]
-	minval = argument[5]
-	maxval = argument[6]
-	def = argument[7]
-	snapval = argument[8]
-	tbx = argument[9]
-	script = argument[10]
-	
-	if (argument_count > 11)
-	{
-		rad = argument[11]
-		sprite = argument[12]
-	}
-	else
-	{
-		rad = 24
-		sprite = spr_control_dial
-	}
-	
 	if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < content_y || yy - rad > content_y + content_height)
 		return 0
+	
+	if (is_undefined(sprite))
+		sprite = spr_control_dial
+	
+	var modval, capwid, text, labelx, labely, labelw, labeltextw;
 	
 	context_menu_area(xx - rad, yy - rad, rad * 2, rad * 2, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
 	

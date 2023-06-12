@@ -3,16 +3,8 @@
 /// @arg [resource]
 /// @desc Loads the parts and shapes from the selected filename.
 
-function model_file_load()
+function model_file_load(fname, res = null)
 {
-	var fname, res;
-	fname = argument[0];
-	
-	if (argument_count > 1)
-		res = argument[1]
-	else
-		res = null
-	
 	if (!file_exists_lib(fname))
 	{
 		log("Could not find model file", fname)

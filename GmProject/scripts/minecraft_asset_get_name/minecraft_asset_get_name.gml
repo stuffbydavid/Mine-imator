@@ -2,7 +2,7 @@
 /// @arg type
 /// @arg name
 /// @desc Gets a name from the translation file. If it doesn't exist,
-///		  return a formatted version of its key.
+/// return a formatted version of its key.
 
 function minecraft_asset_get_name(type, name)
 {

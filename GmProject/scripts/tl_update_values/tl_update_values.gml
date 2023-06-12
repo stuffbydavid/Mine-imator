@@ -283,6 +283,8 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_FOG_SKY)
 		tl_update_values_ease(e_value.BG_FOG_CUSTOM_COLOR)
 		tl_update_values_ease(e_value.BG_FOG_COLOR)
+		tl_update_values_ease(e_value.BG_FOG_CUSTOM_OBJECT_COLOR)
+		tl_update_values_ease(e_value.BG_FOG_OBJECT_COLOR)
 		tl_update_values_ease(e_value.BG_FOG_DISTANCE)
 		tl_update_values_ease(e_value.BG_FOG_SIZE)
 		tl_update_values_ease(e_value.BG_FOG_HEIGHT)
@@ -308,6 +310,7 @@ function tl_update_values()
 	{
 		tl_update_values_ease(e_value.SOUND_OBJ)
 		tl_update_values_ease(e_value.SOUND_VOLUME)
+		tl_update_values_ease(e_value.SOUND_PITCH)
 		tl_update_values_ease(e_value.SOUND_START)
 		tl_update_values_ease(e_value.SOUND_END)
 	}
@@ -343,8 +346,9 @@ function tl_update_values()
 		{
 			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && keyframe_prev != keyframe_current)
 			{
-				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, false);
-				audio_sound_set_track_position(keyframe_current.sound_play_index, value[e_value.SOUND_START] mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
+				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, (value[e_value.SOUND_END] > 0 ? true : false));
+				audio_sound_pitch(keyframe_current.sound_play_index, value[e_value.SOUND_PITCH])
+				audio_sound_set_track_position(keyframe_current.sound_play_index, (value[e_value.SOUND_START] mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate)) * value[e_value.SOUND_PITCH])
 				audio_sound_gain(keyframe_current.sound_play_index, value[e_value.SOUND_VOLUME], 0)
 			}
 			

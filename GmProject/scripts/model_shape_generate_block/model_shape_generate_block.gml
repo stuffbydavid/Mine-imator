@@ -102,7 +102,7 @@ function model_shape_generate_block(bend)
 	
 	// Start position and bounds
 	var sharpbend, bendsize, detail, bendstart, bendend, bendsegsize, invangle;
-	sharpbend = (app.project_bend_style = "blocky") && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z])) && bend_size = null
+	sharpbend = app.project_bend_style = "blocky" && bend_size = null && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && !bend_axis[Y] && bend_axis[Z]))
 	bendsize = (bend_size = null ? (app.project_bend_style = "realistic" ? 4 : 1) : bend_size)
 	detail = (sharpbend ? 2 : real(max(bendsize, 2)))
 	

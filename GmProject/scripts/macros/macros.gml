@@ -4,27 +4,28 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						false
+	#macro dev_mode						true
 	#macro dev_mode_skip_blocks			dev_mode && false
-	#macro dev_mode_debug_schematics	dev_mode && false
-	#macro dev_mode_debug_names			dev_mode && false
-	#macro dev_mode_debug_saveid		dev_mode && false
-	#macro dev_mode_debug_unused		dev_mode && false
+	#macro dev_mode_debug_schematics	dev_mode && true
+	#macro dev_mode_debug_names			dev_mode && true
+	#macro dev_mode_debug_saveid		dev_mode && true
+	#macro dev_mode_debug_unused		dev_mode && true
 	#macro dev_mode_project				file_directory + "//dev_project//dev_project.miproject"
 	#macro dev_mode_full				dev_mode && false
 	#macro dev_mode_advanced			dev_mode && true
-	#macro dev_mode_show_bones			dev_mode && false
+	#macro dev_mode_show_bones			dev_mode && true
 	#macro dev_mode_skip_tangents		dev_mode && true
-	#macro dev_mode_check_assets		dev_mode && false
+	#macro dev_mode_check_assets		dev_mode && true
 	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
 	
 	// Versions
-	#macro mineimator_version			"2.0.0"
+	#macro mineimator_version			"2.0.1"
+	#macro mineimator_version_sub		""
 	#macro mineimator_version_extra		""
-	#macro mineimator_version_full		mineimator_version + " " + mineimator_version_extra
-	#macro mineimator_version_date		"2023.03.01"
+	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
+	#macro mineimator_version_date		"2023.06.11"
+	#macro minecraft_version			"1.20"
 	#macro gm_runtime					GM_runtime_version
-	#macro minecraft_version			"1.19.3"
 	
 	// File formats
 	#macro project_format				e_project.FORMAT_200_PRE_5
@@ -34,10 +35,10 @@ function macros()
 	// Directories
 	#macro file_directory				game_save_id
 	#macro data_directory				working_directory + "Data/"
-	#macro fonts_directory				data_directory + "Fonts/"
 	#macro projects_directory			working_directory + "Projects/"
 	#macro schematics_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
+	#macro fonts_directory				data_directory + "Fonts/"
 	#macro languages_directory			data_directory + "Languages/"
 	#macro minecraft_directory			data_directory + "Minecraft/"
 	#macro render_directory				data_directory + "Render/"
@@ -62,7 +63,6 @@ function macros()
 	// Minecraft structure
 	#macro mc_file_directory			file_directory + "Minecraft_unzip/"
 	#macro mc_assets_directory			"assets/minecraft/"
-	#macro mi_assets_directory			"assets/mineimator/"
 	#macro mc_models_directory			mc_assets_directory + "models/"
 	#macro mc_blockstates_directory		mc_assets_directory + "blockstates/"
 	#macro mc_textures_directory		mc_assets_directory + "textures/"
@@ -98,6 +98,7 @@ function macros()
 	#macro link_twitter					"https://www.mineimator.com/tweets"
 	#macro link_discord					"https://www.mineimator.com/discord"
 	#macro link_donate					"https://www.mineimator.com/donate"
+	#macro link_article_drivers			"https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
 	#macro show_modelbench_popup		true
 	#macro http_ok						200
 	#macro http_bad_request				400
@@ -107,7 +108,7 @@ function macros()
 	#macro block_sheet_height			32
 	#macro block_sheet_ani_width		32
 	#macro block_sheet_ani_height		2
-	#macro block_sheet_ani_frames		64
+	#macro block_sheet_ani_frames		80
 	#macro item_sheet_width				32
 	#macro item_sheet_height			32
 	

@@ -21,6 +21,14 @@ function popup_newproject_draw()
 	}
 	tab_next()
 	
+	// Project author
+	tab_control_textfield(true)
+	if (draw_textfield("newprojectauthor", dx, dy, dw, 24, popup.tbx_author, null, "", "top"))
+	{
+		popup.author = popup.tbx_author.text
+	}
+	tab_next()
+	
 	// Project description
 	tab_control_textfield(true, 76)
 	if (draw_textfield("newprojectdescription", dx, dy, dw, 76, popup.tbx_description, null, "", "top"))

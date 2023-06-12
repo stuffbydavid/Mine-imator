@@ -254,7 +254,7 @@ function model_file_load_shape(map, res)
 		// Update bounds
 		var boundsmat = matrix_create(position, rotation, vec3(1))
 		var startpos = point3D_mul_matrix(from, boundsmat);
-		var endpos   = point3D_mul_matrix(to, boundsmat);
+		var endpos = point3D_mul_matrix(to, boundsmat);
 		bounds_start[X] = min(startpos[X], endpos[X])
 		bounds_start[Y] = min(startpos[Y], endpos[Y])
 		bounds_start[Z] = min(startpos[Z], endpos[Z])

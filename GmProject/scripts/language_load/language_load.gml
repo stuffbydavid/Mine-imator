@@ -3,16 +3,8 @@
 /// @arg map
 /// @arg [reload]
 
-function language_load()
+function language_load(fn, map, reload = false)
 {
-	var fn, map, reload;
-	fn = argument[0]
-	map = argument[1]
-	if (argument_count > 2)
-		reload = argument[2]
-	else
-		reload = false
-	
 	log("Loading language file", fn)
 	
 	ds_map_clear(map)

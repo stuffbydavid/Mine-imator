@@ -18,75 +18,81 @@ function tab_frame_editor_texture_material()
 			case e_tl_type.BODYPART:
 			{
 				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
-			
+				
 				var modelfile = tl_edit.temp.model_file;
 				if (tl_edit.type = e_temp_type.BODYPART)
 					modelfile = tl_edit.model_part
-			
+				
 				with (tl_edit.temp)
 				{
 					texobj = temp_get_model_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 					tex = temp_get_model_tex_material_preview(texobj, modelfile)
 				}
-			
+				
 				if (texobj = mc_res || texobj = null)
 					sliders = true
-			
+				
 				break
 			}
-		
+			
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
 			{
 				name = "frameeditorblocktexmaterial"
 				with (tl_edit.temp)
 					texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
-					
+				
 				if (!res_is_ready(texobj))
 					texobj = mc_res
 				tex = texobj.block_preview_texture
-			
+				
 				if (texobj = mc_res)
 					sliders = true
-			
+				
 				break
 			}
-		
+			
 			case e_tl_type.ITEM:
 			{
 				name = "frameeditoritemtexmaterial"
-			
+				
 				texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ];
-			
+				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_material
-			
+				
 				if (!res_is_ready(texobj))
 					texobj = mc_res
-			
+				
 				tex = texobj.block_preview_texture
-			
+				
 				if (tex = null)
 					tex = res.texture
-			
+				
 				if (texobj = mc_res)
 					sliders = true
-			
+				
 				break
 			}
-		
+			
+			case e_tl_type.TEXT:
+			{
+				sliders = true // Text doesn't use textures, always use surface sliders
+				break
+			}
+			
 			default: // Shapes
 			{
 				name = "frameeditorshapetexmaterial"
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
-			
+				
 				if (texobj != null) // Don't preview cameras
 					tex = texobj.texture
-			
+				
 				if (texobj = null)
 					sliders = true
-			
+				
 				break
 			}
 		}

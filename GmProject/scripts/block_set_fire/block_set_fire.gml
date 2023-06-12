@@ -3,7 +3,7 @@
 
 function block_set_fire()
 {
-	if (builder_scenery && !builder_scenery_legacy)
+	if (!builder_scenery_legacy)
 		return 0
 	
 	var east, west, south, north, up, variant;

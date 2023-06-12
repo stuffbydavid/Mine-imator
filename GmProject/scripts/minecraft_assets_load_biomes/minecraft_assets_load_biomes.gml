@@ -41,7 +41,8 @@ function minecraft_assets_load_biomes(list, map)
 				color_grass = hex_to_color(biome[?"grass"])
 			
 			// Water
-			color_water = hex_to_color(biome[?"water"])
+			if (is_string(biome[?"water"]))
+				color_water = hex_to_color(biome[?"water"])
 			
 			biome_base = null
 			biome_variants = null

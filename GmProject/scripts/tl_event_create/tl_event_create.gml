@@ -74,7 +74,7 @@ function tl_event_create()
 	tree_list = ds_list_create()
 	tree_list_filter = ds_list_create()
 	tree_extend = false
-	tree_contents = array_create(e_tl_type.AMOUNT - 1)
+	tree_contents = array_create(e_tl_type.amount - 1)
 	list_mouseon = false
 	
 	inherit_position = true

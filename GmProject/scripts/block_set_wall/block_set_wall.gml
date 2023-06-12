@@ -4,6 +4,8 @@ function block_set_wall()
 {
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0
+	if (!builder_scenery && build_size_x = 1 && build_size_y = 1)
+		return 0
 	
 	var east, west, south, north, variant, states, tall, i;
 	east = 0

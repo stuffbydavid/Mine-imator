@@ -221,6 +221,7 @@ function settings_load()
 		{
 			setting_export_movie_format = value_get_string(map[?"exportmovie_format"], setting_export_movie_format)
 			setting_export_movie_frame_rate = value_get_real(map[?"exportmovie_frame_rate"], setting_export_movie_frame_rate)
+			setting_export_movie_framespersecond = value_get_real(map[?"exportmovie_framespersecond"], setting_export_movie_framespersecond)
 			setting_export_movie_bit_rate = value_get_real(map[?"exportmovie_bit_rate"], setting_export_movie_bit_rate)
 			setting_export_movie_include_audio = value_get_real(map[?"exportmovie_include_audio"], setting_export_movie_include_audio)
 			setting_export_movie_remove_background = value_get_real(map[?"exportmovie_remove_background"], setting_export_movie_remove_background)

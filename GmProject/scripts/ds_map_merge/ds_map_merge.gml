@@ -3,17 +3,8 @@
 /// @arg source
 /// @arg [overwrite]
 
-function ds_map_merge()
+function ds_map_merge(map, source, overwrite = true)
 {
-	var map, source, overwrite;
-	map = argument[0]
-	source = argument[1]
-	
-	if (argument_count > 2)
-		overwrite = argument[2]
-	else
-		overwrite = true
-	
 	var key = ds_map_find_first(source);
 	while (!is_undefined(key))
 	{

@@ -42,13 +42,13 @@ function frustum() constructor {
 		near = (ortho ? -1 : 0)
 		corners_v4 = [
 			[-1,  1,    1, 1], // Far
-            [ 1,  1,    1, 1],
-            [ 1, -1,    1, 1],
-            [-1, -1,    1, 1],
-            [-1,  1, near, 1], // Near
-            [ 1,  1, near, 1],
-            [ 1, -1, near, 1],
-            [-1, -1, near, 1]
+			[ 1,  1,    1, 1],
+			[ 1, -1,    1, 1],
+			[-1, -1,    1, 1],
+			[-1,  1, near, 1], // Near
+			[ 1,  1, near, 1],
+			[ 1, -1, near, 1],
+			[-1, -1, near, 1]
 		];
 		
 		for (var i = 0; i < 8; i++)

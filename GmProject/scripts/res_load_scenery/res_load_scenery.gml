@@ -248,7 +248,7 @@ function res_load_scenery()
 				popup_loading.progress = 4 / 10 + (6 / 10) * (mc_builder.build_pos / mc_builder.build_size_total)
 					
 			// All done
-		    if (mc_builder.build_pos = mc_builder.build_size_total)
+			if (mc_builder.build_pos = mc_builder.build_size_total)
 			{
 				// Non multi-threaded blocks
 				with (mc_builder)

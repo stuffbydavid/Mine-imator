@@ -21,7 +21,7 @@ function action_tl_keyframes_sound_resize_done()
 					value[e_value.SOUND_START] = other.kf_resize_old_start[k]
 					
 					// Push down other indices of same timeline
-					for (var a = 0; a < other.kf_resize_amount; a++)  
+					for (var a = 0; a < other.kf_resize_amount; a++)
 						if (save_id_find(other.kf_resize_tl_save_id[a]) = timeline && other.kf_resize_new_index[a] > ds_list_find_index(timeline.keyframe_list, id))
 							other.kf_resize_new_index[a]--
 					
@@ -47,7 +47,7 @@ function action_tl_keyframes_sound_resize_done()
 					value[e_value.SOUND_START] = other.kf_resize_new_start[k]
 					
 					// Push down other indices of same timeline
-					for (var a = 0; a < other.kf_resize_amount; a++)  
+					for (var a = 0; a < other.kf_resize_amount; a++)
 						if (save_id_find(other.kf_resize_tl_save_id[a]) = timeline && other.kf_resize_old_index[a] > ds_list_find_index(timeline.keyframe_list, id))
 							other.kf_resize_old_index[a]--
 					

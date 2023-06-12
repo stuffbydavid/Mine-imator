@@ -63,6 +63,11 @@ function tab_frame_editor_texture()
 				break
 			}
 			
+			case e_tl_type.TEXT:
+			{
+				break // Text doesn't use textures
+			}
+			
 			default: // Shapes
 			{
 				name = "frameeditorshapetex"

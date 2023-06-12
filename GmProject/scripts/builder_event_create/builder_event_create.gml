@@ -45,6 +45,7 @@ function builder_event_create()
 	block_render_model = null
 	block_text_map = ds_map_create()
 	block_text_color_map = ds_map_create()
+	block_text_glowing_map = ds_map_create()
 	
 	block_banner_color_map = ds_map_create()
 	block_banner_patterns_map = ds_map_create()

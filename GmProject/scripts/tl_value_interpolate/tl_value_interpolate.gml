@@ -36,11 +36,12 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.BG_LEAVES_ACACIA_COLOR:
 		case e_value.BG_LEAVES_DARK_OAK_COLOR:
 		case e_value.BG_LEAVES_MANGROVE_COLOR:
-		case e_value.BG_FOG_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
+		case e_value.BG_FOG_COLOR:
+		case e_value.BG_FOG_OBJECT_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
 		case e_value.CAM_BLADE_AMOUNT:
 		case e_value.CAM_WIDTH:
 		case e_value.CAM_HEIGHT:
-		case e_value.ITEM_SLOT: return round(val1 + p * (val2 - val1)) // No decimals
+		case e_value.ITEM_SLOT: return floor(val1 + p * (val2 - val1)) // No decimals
 		case e_value.SPAWN:
 		case e_value.FREEZE:
 		case e_value.CLEAR:
@@ -85,6 +86,7 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.TEXTURE_NORMAL_OBJ:
 		case e_value.SOUND_OBJ:
 		case e_value.SOUND_VOLUME:
+		case e_value.SOUND_PITCH:
 		case e_value.SOUND_START:
 		case e_value.SOUND_END:
 		case e_value.TEXT:

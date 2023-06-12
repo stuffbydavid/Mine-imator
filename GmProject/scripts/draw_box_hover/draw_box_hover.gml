@@ -6,16 +6,12 @@
 /// @arg alpha
 /// @desc Drawing separate full boxes for each side because drawing primitive outlines isn't consistent on all computers
 
-function draw_box_hover()
+function draw_box_hover(xx, yy, width, height, inalpha)
 {
-	var xx, yy, width, height, size, color, alpha;
-	xx = argument[0]
-	yy = argument[1]
-	width = argument[2]
-	height = argument[3]
+	var size, color, alpha;
 	size = 2
 	color = c_hover
-	alpha = a_hover * argument[4]
+	alpha = a_hover * inalpha
 	
 	if (alpha = 0)
 		return 0
@@ -27,7 +23,6 @@ function draw_box_hover()
 	draw_outline(xx - 1, yy - 1, width + 2, height + 2, 1, color, alpha * t)
 	
 	/*
-	
 	// Top
 	draw_box(xx - size, yy - size, width + (size * 2), size, false, color, alpha)
 	

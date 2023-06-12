@@ -192,6 +192,7 @@ function app_startup_lists()
 		"TEXTURE_NORMAL_OBJ",
 		"SOUND_OBJ",
 		"SOUND_VOLUME",
+		"SOUND_PITCH",
 		"SOUND_START",
 		"SOUND_END",
 		"TEXT",

@@ -24,8 +24,9 @@ function action_tl_play_start()
 					if (position > app.timeline_marker)
 						break
 					
-					sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, false)
-					audio_sound_set_track_position(sound_play_index, (value[e_value.SOUND_START] + (app.timeline_marker - position) / app.project_tempo) mod (value[e_value.SOUND_OBJ].sound_samples / sample_rate))
+					sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, (value[e_value.SOUND_END] > 0 ? true : false))
+					audio_sound_pitch(sound_play_index, value[e_value.SOUND_PITCH])
+					audio_sound_set_track_position(sound_play_index, ((value[e_value.SOUND_START] + (app.timeline_marker - position) / app.project_tempo) mod ((value[e_value.SOUND_OBJ].sound_samples / value[e_value.SOUND_PITCH]) / sample_rate) * value[e_value.SOUND_PITCH]))
 					audio_sound_gain(sound_play_index, value[e_value.SOUND_VOLUME], 0)
 				}
 			}
