@@ -149,15 +149,12 @@ function block_load_state_file(fname, block, state)
 						var andlist = whenmap[?"AND"];
 						
 						// OR, one of multiple sets of conditions must match
-						// AND, all of multiple sets of conditions must match
-						if (ds_list_valid(orlist) || ds_list_valid(andlist))
+						if (ds_list_valid(orlist))
 						{
-							var list = ds_list_valid(orlist) ? orlist : andlist;
-							
-							for (var oc = 0; oc < ds_list_size(list); oc++)
+							for (var oc = 0; oc < ds_list_size(orlist); oc++)
 							{
 								var curcondmap, condvars, cond;
-								curcondmap = list[|oc]
+								curcondmap = orlist[|oc]
 								condvars = array()
 								cond = ds_map_find_first(curcondmap)
 								
@@ -179,6 +176,52 @@ function block_load_state_file(fname, block, state)
 								for (var i = 0; i < block.state_id_amount; i++)
 									if (state_vars_match_state_id(condvars, block, i))
 										other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+							}
+						}
+						else if (ds_list_valid(andlist)) // AND, all of multiple sets of conditions must match
+						{
+							var condarr = [];
+							
+							for (var oc = 0; oc < ds_list_size(andlist); oc++)
+							{
+								var curcondmap, condvars, cond;
+								curcondmap = andlist[|oc]
+								condvars = array()
+								cond = ds_map_find_first(curcondmap)
+								
+								while (!is_undefined(cond))
+								{
+									var val = curcondmap[?cond];
+									if (ds_map_find_value(jsontypemap[?curcondmap], cond) = e_json_type.BOOL) // Booleans must be string
+										val = (val ? "true" : "false")
+									
+									if (string_contains(val, "|")) // OR
+										state_vars_set_value(condvars, cond, string_split(val, "|"))
+									else
+										state_vars_set_value(condvars, cond, val)
+									
+									cond = ds_map_find_next(curcondmap, cond)
+								}
+								
+								condarr = array_add(condarr, condvars, false)
+							}
+							
+							// Apply to matching state IDs
+							for (var i = 0; i < block.state_id_amount; i++)
+							{
+								var match = true;
+								
+								for (var j = 0; j < array_length(condarr); j++)
+								{
+									if (!match)
+										continue
+									
+									if (!state_vars_match_state_id(condarr[j], block, i))
+										match = false
+								}
+								
+								if (match)
+									other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
 							}
 						}
 						// Single condition

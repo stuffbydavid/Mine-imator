@@ -235,6 +235,7 @@
         "audio_resume_sound": { "return": "void", "args": [ "int" ] },
         "audio_sound_gain": { "return": "void", "args": [ "int", "real", "real" ] },
         "audio_sound_get_track_position": { "return": "real", "args": [ "int" ] },
+        "audio_sound_pitch": { "return": "void", "args": [ "int", "real" ] },
         "audio_sound_set_track_position": { "return": "void", "args": [ "int", "real" ] },
         "audio_stop_all": { "return": "void", "args": [] },
         "audio_stop_sound": { "return": "void", "args": [ "int" ] },
