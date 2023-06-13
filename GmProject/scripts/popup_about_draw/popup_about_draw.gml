@@ -70,13 +70,13 @@ function popup_about_draw()
 	dy += 12
 	draw_label(text_get("aboutcreatedby"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 26
-	draw_button_text("David Andrei", dx, dy, popup_open_url, "https://www.stuffbydavid.com", "https://www.stuffbydavid.com", font_label)
+	draw_button_text("David Andrei", dx, dy, popup_open_url, link_david, link_david, font_label)
 	
 	// Development
 	dy += 34
 	draw_label(text_get("aboutdevelopment"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 26
-	draw_button_text("David", dx, dy, popup_open_url, "https://www.stuffbydavid.com", "https://www.stuffbydavid.com", font_label)
+	draw_button_text("David", dx, dy, popup_open_url, link_david, link_david, font_label)
 	dy += 19
 	draw_label("Nimi", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 	dy += 19
