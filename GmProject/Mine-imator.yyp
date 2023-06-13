@@ -1969,6 +1969,7 @@
     {"id":{"name":"string_get_real","path":"scripts/string_get_real/string_get_real.yy",},"order":7,},
     {"id":{"name":"string_line_array","path":"scripts/string_line_array/string_line_array.yy",},"order":9,},
     {"id":{"name":"string_limit","path":"scripts/string_limit/string_limit.yy",},"order":11,},
+    {"id":{"name":"block_tile_entity_decorated_pot","path":"scripts/block_tile_entity_decorated_pot/block_tile_entity_decorated_pot.yy",},"order":9,},
     {"id":{"name":"tab_frame_editor_constraints","path":"scripts/tab_frame_editor_constraints/tab_frame_editor_constraints.yy",},"order":36,},
     {"id":{"name":"string_limit_ext","path":"scripts/string_limit_ext/string_limit_ext.yy",},"order":13,},
     {"id":{"name":"vec4_add","path":"scripts/vec4_add/vec4_add.yy",},"order":25,},

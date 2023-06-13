@@ -66,9 +66,8 @@ function block_load(map, typemap)
 		{
 			states_map = ds_map_create()
 			
-			var curstate, num;
+			var curstate;
 			curstate = ds_map_find_first(map[?"states"]);
-			num = 0
 			while (!is_undefined(curstate))
 			{
 				if (dev_mode_debug_names && !text_exists("blockstate" + curstate))
@@ -84,7 +83,6 @@ function block_load(map, typemap)
 					value_map = ds_map_create()
 					
 					// Used for the state ID
-					id.num = num++
 					value_id = other.state_id_amount
 					other.state_id_amount *= value_amount
 					
