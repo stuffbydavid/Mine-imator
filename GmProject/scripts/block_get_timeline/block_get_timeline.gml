@@ -29,6 +29,10 @@ function block_get_timeline(block, stateid)
 					break
 				}
 			}
+			
+			// Unique case with decorated pot
+			if (mc_builder.block_decorated_pot_sherds_map[?pos] != undefined)
+				model_state = array_copy_1d(mc_builder.block_decorated_pot_sherds_map[?pos])
 		}
 		
 		// Get text from state

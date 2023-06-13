@@ -189,6 +189,15 @@ function minecraft_assets_load()
 					ds_list_add(minecraft_pattern_short_list, pattern[|1])
 				}
 				
+				// Sherds
+				if (is_undefined(load_assets_map[?"sherds"]))
+				{
+					log("No sherd keys found")
+					return false
+				}
+				else
+					ds_map_copy(minecraft_sherd_map, load_assets_map[?"sherds"])
+				
 				load_assets_stage = "models"
 				load_assets_progress = 0.5
 				break;

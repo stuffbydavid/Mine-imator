@@ -22,6 +22,7 @@ function builder_start()
 	ds_map_clear(block_skull_map)
 	ds_map_clear(block_skull_res_map)
 	ds_map_clear(block_skull_texture_map)
+	ds_map_clear(block_decorated_pot_sherds_map)
 	
 	builder_create_buffers()
 }

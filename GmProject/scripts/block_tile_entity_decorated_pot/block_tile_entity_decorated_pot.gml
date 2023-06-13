@@ -7,19 +7,21 @@ function block_tile_entity_decorated_pot(map)
 	
 	for (var i = 0; i < ds_list_size(sherdsarr); i++)
 	{
-		sherdsarr[|i] = string_replace(sherdsarr[|i], "minecraft:", "")
+		var sherd = sherdsarr[|i];
 		
-		if (sherdsarr[|i] = "brick")
-			sherdsarr[|i] = "none"
+		if (minecraft_sherd_map[?sherd] != undefined)
+			sherdsarr[|i] = minecraft_sherd_map[?sherd]
 		else
-			sherdsarr[|i] = string_replace(sherdsarr[|i], "_pottery_sherd", "")
+			sherdsarr[|i] = "none"
 	}
 	
-	var state;
-	state = block_set_state_id_value(block_current, block_state_id_current, "sherd_front", sherdsarr[|0]);
-	state = block_set_state_id_value(block_current, state, "sherd_left", sherdsarr[|1]);
-	state = block_set_state_id_value(block_current, state, "sherd_right", sherdsarr[|2]);
-	state = block_set_state_id_value(block_current, state, "sherd_back", sherdsarr[|3]);
+	var state = [];
+	array_add(state, ["sherd_front", sherdsarr[|0]]);
+	array_add(state, ["sherd_left", sherdsarr[|1]]);
+	array_add(state, ["sherd_right", sherdsarr[|2]]);
+	array_add(state, ["sherd_back", sherdsarr[|3]]);
 	
-	builder_set_state_id(build_pos_x, build_pos_y, build_pos_z, state)
+	array_add(state, block_get_state_id_state_vars(block_current, block_state_id_current))
+	
+	mc_builder.block_decorated_pot_sherds_map[?build_pos] = state
 }

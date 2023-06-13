@@ -69,6 +69,8 @@ function builder_event_create()
 	block_skull_finish_count = 0
 	block_skull_fail_count = 0
 	
+	block_decorated_pot_sherds_map = ds_map_create()
+	
 	block_multithreaded_skip = false
 	block_tl_add = false
 	block_tl_list = null
