@@ -7,7 +7,7 @@ function app_startup_lists()
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
-	globalvar minecraft_color_name_list, minecraft_color_list, minecraft_pattern_list, minecraft_pattern_short_list;
+	globalvar minecraft_color_name_list, minecraft_color_list, minecraft_glowing_sign_list, minecraft_pattern_list, minecraft_pattern_short_list;
 	globalvar biome_list, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
@@ -432,6 +432,26 @@ function app_startup_lists()
 		c_minecraft_green,
 		c_minecraft_red,
 		c_minecraft_black
+	)
+	
+	minecraft_glowing_sign_list = ds_list_create()
+	ds_list_add(minecraft_glowing_sign_list,
+		[hex_to_color("FCFCFC"), hex_to_color("656565")], // white
+		[hex_to_color("FC671F"), hex_to_color("65280C")], // orange
+		[hex_to_color("FC00FC"), hex_to_color("650065")], // magenta
+		[hex_to_color("98BECB"), hex_to_color("3C4B51")], // light blue
+		[hex_to_color("FCFC00"), hex_to_color("656500")], // yellow
+		[hex_to_color("8DFC00"), hex_to_color("4B6500")], // lime
+		[hex_to_color("FC68B2"), hex_to_color("652947")], // pink
+		[hex_to_color("7E7E7E"), hex_to_color("323232")], // gray
+		[hex_to_color("D0D0D0"), hex_to_color("535353")], // light gray
+		[hex_to_color("00D6D6"), hex_to_color("006565")], // cyan
+		[hex_to_color("9E20ED"), hex_to_color("3F0C5F")], // purple
+		[hex_to_color("0000FC"), hex_to_color("000065")], // blue
+		[hex_to_color("894413"), hex_to_color("361B07")], // brown
+		[hex_to_color("00FC00"), hex_to_color("006500")], // green
+		[hex_to_color("FC0000"), hex_to_color("650000")], // red
+		[hex_to_color("000000"), hex_to_color("EDE8CA")]  // black
 	)
 	
 	minecraft_pattern_list = ds_list_create()

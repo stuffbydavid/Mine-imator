@@ -43,9 +43,14 @@ function builder_event_create()
 	block_state_id = null
 	block_state_id_current = 0
 	block_render_model = null
-	block_text_map = ds_map_create()
-	block_text_color_map = ds_map_create()
-	block_text_glowing_map = ds_map_create()
+	block_text_front_map = ds_map_create()
+	block_text_front_color_map = ds_map_create()
+	block_text_front_glow_color_map = ds_map_create()
+	block_text_front_glowing_map = ds_map_create()
+	block_text_back_map = ds_map_create()
+	block_text_back_color_map = ds_map_create()
+	block_text_back_glow_color_map = ds_map_create()
+	block_text_back_glowing_map = ds_map_create()
 	
 	block_banner_color_map = ds_map_create()
 	block_banner_patterns_map = ds_map_create()

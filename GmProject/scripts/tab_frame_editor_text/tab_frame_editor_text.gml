@@ -21,6 +21,22 @@ function tab_frame_editor_text()
 	draw_switch("frameeditortextaa", dx, dy, tl_edit.value[e_value.TEXT_AA], action_tl_frame_text_aa, "frameeditortextaatip")
 	tab_next()
 	
+	// Text outline
+	tab_control_switch()
+	draw_button_collapse("textoutline", collapse_map[?"textoutline"], action_tl_frame_text_outline, tl_edit.value[e_value.TEXT_OUTLINE], "frameeditortextoutline")
+	tab_next()
+	
+	if (tl_edit.value[e_value.TEXT_OUTLINE] && collapse_map[?"textoutline"])
+	{
+		tab_collapse_start()
+		
+		tab_control_color()
+		draw_button_color("frameeditortextoutlinecolor", dx, dy, floor(dw/2), tl_edit.value[e_value.TEXT_OUTLINE_COLOR], tl_edit.value_default[e_value.TEXT_OUTLINE_COLOR], false, action_tl_frame_text_outline_color)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
 	// Alignment
 	dy += 20
 	draw_label(text_get("frameeditortextalignment") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 

@@ -62,4 +62,6 @@ function app_startup_collapse()
 	collapse_register("material_color")
 	collapse_register("material_surface")
 	collapse_register("material_subsurface")
+	
+	collapse_register("textoutline")
 }

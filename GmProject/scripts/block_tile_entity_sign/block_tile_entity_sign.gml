@@ -1,48 +1,68 @@
 /// block_tile_entity_sign(map)
 /// @arg map
 
+function block_tile_entity_sign_text(map)
+{
+	var messagemap = value_get_array(map[?"messages"], "")
+	var text = "";
+	
+	for (var i = 0; i < 4; i++)
+	{
+		var line = "";
+		var textmap = json_decode(messagemap[i]);
+			
+		if (ds_map_valid(textmap))
+		{
+			if (is_string(textmap[?"text"]))
+				line = textmap[?"text"]
+				
+			ds_map_destroy(textmap)
+		}
+			
+		if (line = "")
+			line = " "
+			
+		if (i > 0)
+			text += "\n"
+		text += line
+	}
+	
+	return text;
+}
+
 function block_tile_entity_sign(map)
 {
 	var frontmap = map[?"front_text"];
-	//var backmap = map[?"back_text"]; // gotta figure out how to make it work for both front and back of sign (might need changes outside of this function?), + discuss .midata file changes -mb
+	var backmap = map[?"back_text"];
 	
-	var text, colorname, color, glowing;
-	text = ""
+	var text, colorind, color, glowcolor, glowing;
 	
+	// 1.20+
 	if (ds_map_valid(frontmap))
 	{
-		colorname = value_get_string(frontmap[?"color"], "black")
-		color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, colorname)]
+		// Front
+		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(frontmap[?"color"], "black"))
 		glowing = value_get_real(frontmap[?"has_glowing_text"], 0)
+		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? minecraft_glowing_sign_list[|colorind][0] : minecraft_color_list[|colorind])
+		mc_builder.block_text_front_glow_color_map[?build_pos] = minecraft_glowing_sign_list[|colorind][1]
+		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
+		mc_builder.block_text_front_map[?build_pos] = block_tile_entity_sign_text(frontmap)
 		
-		var messagemap = value_get_array(frontmap[?"messages"], "")
-		
-		for (var i = 0; i < 4; i++)
-		{
-			var line = "";
-			var textmap = json_decode(messagemap[i]);
-			
-			if (ds_map_valid(textmap))
-			{
-				if (is_string(textmap[?"text"]))
-					line = textmap[?"text"]
-				
-				ds_map_destroy(textmap)
-			}
-			
-			if (line = "")
-				line = " "
-			
-			if (i > 0)
-				text += "\n"
-			text += line
-		}
+		// Back
+		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(backmap[?"color"], "black"))
+		glowing = value_get_real(backmap[?"has_glowing_text"], 0)
+		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? minecraft_glowing_sign_list[|colorind][0] : minecraft_color_list[|colorind])
+		mc_builder.block_text_back_glow_color_map[?build_pos] = minecraft_glowing_sign_list[|colorind][1]
+		mc_builder.block_text_back_glowing_map[?build_pos] = glowing
+		mc_builder.block_text_back_map[?build_pos] = block_tile_entity_sign_text(backmap)
 	}
 	else // Use legacy format if detected
 	{
-		colorname = value_get_string(map[?"Color"], "black")
-		color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, colorname)]
+		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(map[?"Color"], "black"))
 		glowing = value_get_real(map[?"GlowingText"], 0)
+		color = (glowing ? minecraft_glowing_sign_list[|colorind][0] : minecraft_color_list[|colorind])
+		glowcolor = minecraft_glowing_sign_list[|colorind][1]
+		text = ""
 		
 		for (var i = 0; i < 4; i++)
 		{
@@ -73,9 +93,10 @@ function block_tile_entity_sign(map)
 				text += "\n"
 			text += line
 		}
+		
+		mc_builder.block_text_front_map[?build_pos] = text
+		mc_builder.block_text_front_color_map[?build_pos] = color
+		mc_builder.block_text_front_glow_color_map[?build_pos] = glowcolor
+		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
 	}
-	
-	mc_builder.block_text_map[?build_pos] = text
-	mc_builder.block_text_color_map[?build_pos] = color
-	mc_builder.block_text_glowing_map[?build_pos] = glowing
 }

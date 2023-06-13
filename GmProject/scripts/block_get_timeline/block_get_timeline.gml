@@ -35,18 +35,37 @@ function block_get_timeline(block, stateid)
 		has_text = block.tl_has_text
 		if (has_text)
 		{
-			text = mc_builder.block_text_map[?pos]
-			text_color = mc_builder.block_text_color_map[?pos]
-			text_emissive = mc_builder.block_text_glowing_map[?pos]
-			if (is_undefined(text))
+			text_front = mc_builder.block_text_front_map[?pos]
+			text_front_color = mc_builder.block_text_front_color_map[?pos]
+			text_front_glow_color = mc_builder.block_text_front_glow_color_map[?pos]
+			text_front_emissive = mc_builder.block_text_front_glowing_map[?pos]
+			text_back = mc_builder.block_text_back_map[?pos]
+			text_back_color = mc_builder.block_text_back_color_map[?pos]
+			text_back_glow_color = mc_builder.block_text_back_glow_color_map[?pos]
+			text_back_emissive = mc_builder.block_text_back_glowing_map[?pos]
+			
+			if (is_undefined(text_front))
 			{
-				text = ""
-				text_color = c_black
-				text_emissive = 0
+				text_front = ""
+				text_front_color = c_black
+				text_front_glow_color = c_black
+				text_front_emissive = 0
 			}
 			
-			text_position = block.tl_text_position
-			text_scale = block.tl_text_scale
+			if (is_undefined(text_back))
+			{
+				text_back = ""
+				text_back_color = c_black
+				text_back_glow_color = c_black
+				text_back_emissive = 0
+			}
+			
+			text_front_position = block.tl_text_front_position
+			text_front_rotation = block.tl_text_front_rotation
+			text_front_scale = block.tl_text_front_scale
+			text_back_position = block.tl_text_back_position
+			text_back_rotation = block.tl_text_back_rotation
+			text_back_scale = block.tl_text_back_scale
 		}
 		
 		// Get banner patterns

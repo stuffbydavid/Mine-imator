@@ -134,8 +134,8 @@ function tl_event_create()
 	pattern_color_list = null
 	pattern_skin = null
 	
-	text_vbuffer = null
-	text_texture = null
+	text_vbuffer = [null, null]
+	text_texture = [null, null]
 	text_string = ""
 	text_res = null
 	text_3d = false

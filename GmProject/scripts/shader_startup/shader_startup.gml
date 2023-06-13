@@ -35,6 +35,7 @@ function shader_startup()
 		new_shader("shader_alpha_test")
 		new_shader("shader_blend")
 		new_shader("shader_border")
+		new_shader("shader_outline")
 		new_shader("shader_color_camera")
 		new_shader("shader_color_fog")
 		new_shader("shader_color_fog_lights")
@@ -108,6 +109,11 @@ function shader_startup()
 	{
 		new_shader_uniform("uTexSize")
 		new_shader_uniform("uColor")
+	}
+	
+	with (shader_map[?shader_outline])
+	{
+		new_shader_uniform("uTexSize")
 	}
 	
 	with (shader_map[?shader_color_camera])

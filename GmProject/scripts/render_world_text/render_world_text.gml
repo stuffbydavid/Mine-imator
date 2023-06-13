@@ -1,10 +1,10 @@
-/// render_world_text(vbuffer, texture, facecamera, resource)
+/// render_world_text(vbuffer, texture, facecamera, resource, outline)
 /// @arg vbuffer
 /// @arg texture
 /// @arg facecamera
 /// @arg resource
 
-function render_world_text(vbuffer, tex, facecamera, res)
+function render_world_text(vbuffer, tex, facecamera, res, outline)
 {
 	if (facecamera)
 	{
@@ -21,7 +21,14 @@ function render_world_text(vbuffer, tex, facecamera, res)
 		matrix_world_multiply_pre(matrix_build(0, 0, 0, 0, 0, 0, sca, 1, sca))
 	}
 	
-	render_set_texture(tex)
+	render_set_texture(tex[0])
+	vbuffer_render(vbuffer[0])
 	
-	vbuffer_render(vbuffer)
+	if (outline != null)
+	{
+		render_set_uniform_color("uBlendColor", outline, shader_blend_alpha)
+		render_set_texture(tex[1])
+		vbuffer_render(vbuffer[1])
+		render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+	}
 }

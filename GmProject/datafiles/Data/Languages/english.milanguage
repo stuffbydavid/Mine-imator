@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.11"
+		"lastchange": "2023.06.13"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -3178,7 +3178,9 @@
 			"halign": "Horizontal",
 			"valign": "Vertical",
 			"aa": "Font anti-aliasing",
-			"aatip": "Smooths sharp edges on fonts. (Not recommended for 3D text.)"
+			"aatip": "Smooths sharp edges on fonts. (Not recommended for 3D text.)",
+			"outline": "Outline",
+			"outlinecolor": "Outline color"
 		},
 		"item": "ITEM",
 		"item/": {

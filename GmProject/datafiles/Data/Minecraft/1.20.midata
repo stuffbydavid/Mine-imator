@@ -2408,9 +2408,18 @@
 					"wood=crimson": "wood=crimson,variant=standing",
 					"wood=warped": "wood=warped,variant=standing"
 				},
-				"has_text": true,
-				"text_position": [ 0.08125, 13.585, 0.6875 ],
-				"text_scale": 0.1667,
+				"text": {
+					"front": {
+						"position": [ 0.08125, 13.585, 0.6875 ],
+						"rotation": [ 0, 0, 0 ],
+						"scale": 0.1667
+					},
+					"back": {
+						"position": [ 0.08125, 13.585, -0.6875 ],
+						"rotation": [ 0, 180, 0 ],
+						"scale": 0.1667
+					}
+				},
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"rotation=0": [ 0, 0, 0 ],
@@ -2542,9 +2551,18 @@
 					"wood=crimson": "wood=crimson,variant=wall",
 					"wood=warped": "wood=warped,variant=wall"
 				},
-				"has_text": true,
-				"text_position": [ 0.08125, 8.25, 1.375 ],
-				"text_scale": 0.1667,
+				"text": {
+					"front": {
+						"position": [ 0.08125, 8.25, 1.375 ],
+						"rotation": [ 0, 0, 0 ],
+						"scale": 0.1667
+					},
+					"back": {
+						"position": [ 0.08125, 8.25, -0.041 ],
+						"rotation": [ 0, 180, 0 ],
+						"scale": 0.1667
+					}
+				},
 				"position": {
 					"facing=north": [ 8, 0, 16 ],
 					"facing=south": [ 8, 0, 0 ],
@@ -2607,9 +2625,18 @@
 					"wood=crimson,attached=true": "wood=crimson,variant=attached",
 					"wood=warped,attached=true": "wood=warped,variant=attached"
 				},
-				"has_text": true,
-				"text_position": [ 0.2295, -11, 1.0625 ],
-				"text_scale": 0.2295,
+				"text": {
+					"front": {
+						"position": [ 0.2295, -11, 1.0625 ],
+						"rotation": [ 0, 0, 0 ],
+						"scale": 0.2295
+					},
+					"back": {
+						"position": [ 0.2295, -11, -1.0625 ],
+						"rotation": [ 0, 180, 0 ],
+						"scale": 0.2295
+					}
+				},
 				"position": [ 8, 16, 8 ],
 				"rotation": {
 					"rotation=0": [ 0, 0, 0 ],
@@ -2666,9 +2693,18 @@
 					"wood=crimson": "wood=crimson,variant=wall",
 					"wood=warped": "wood=warped,variant=wall"
 				},
-				"has_text": true,
-				"text_position": [ 0.2295, -11, 1.0625 ],
-				"text_scale": 0.2295,
+				"text": {
+					"front": {
+						"position": [ 0.2295, -11, 1.0625 ],
+						"rotation": [ 0, 0, 0 ],
+						"scale": 0.2295
+					},
+					"back": {
+						"position": [ 0.2295, -11, -1.0625 ],
+						"rotation": [ 0, 180, 0 ],
+						"scale": 0.2295
+					}
+				},
 				"position": [ 8, 16, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],

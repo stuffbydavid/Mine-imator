@@ -362,6 +362,7 @@ function builder_read_schematic_nbt(structuremap)
 					build_pos_x = pos[|X]
 					build_pos_y = pos[|Z]
 					build_pos_z = pos[|Y]
+					build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x;
 					block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
 					block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
 					script_execute(script, blocknbt)
@@ -472,7 +473,7 @@ function builder_read_schematic_tile_entities()
 					ey = entity[?"z"]
 					ez = entity[?"y"]
 				}
-						
+				
 				if (is_string(eid))
 				{
 					var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));

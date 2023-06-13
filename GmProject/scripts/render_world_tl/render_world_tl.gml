@@ -269,7 +269,7 @@ function render_world_tl()
 				var font = value[e_value.TEXT_FONT];
 				if (font = null)
 					font = temp.text_font
-				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res)
+				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res, value[e_value.TEXT_OUTLINE] ? value[e_value.TEXT_OUTLINE_COLOR] : null)
 				break
 			}
 			

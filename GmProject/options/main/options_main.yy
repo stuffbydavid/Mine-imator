@@ -9,7 +9,7 @@
   "option_draw_colour": 4294967295,
   "option_window_colour": 255,
   "option_steam_app_id": "0",
-  "option_sci_usesci": true,
+  "option_sci_usesci": false,
   "option_author": "David Andrei",
   "option_collision_compatibility": true,
   "option_copy_on_write_enabled": true,

@@ -140,7 +140,7 @@ function render_world_particle()
 			
 			case e_temp_type.TEXT:
 			{
-				render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font)
+				render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font, null)
 				break
 			}
 			
