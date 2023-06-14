@@ -35,7 +35,7 @@ function block_tile_entity_sign(map)
 	var frontmap = map[?"front_text"];
 	var backmap = map[?"back_text"];
 	
-	var text, colorind, color, glowcolor, glowing;
+	var text, colorind, color, glowind, glowcolor, glowing;
 	
 	// 1.20+
 	if (ds_map_valid(frontmap))
@@ -43,16 +43,18 @@ function block_tile_entity_sign(map)
 		// Front
 		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(frontmap[?"color"], "black"))
 		glowing = value_get_real(frontmap[?"has_glowing_text"], 0)
-		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? minecraft_glowing_sign_list[|colorind][0] : minecraft_color_list[|colorind])
-		mc_builder.block_text_front_glow_color_map[?build_pos] = minecraft_glowing_sign_list[|colorind][1]
+		glowind = minecraft_glowing_sign_list[|colorind]
+		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? glowind[0] : minecraft_color_list[|colorind])
+		mc_builder.block_text_front_glow_color_map[?build_pos] = glowind[1]
 		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
 		mc_builder.block_text_front_map[?build_pos] = block_tile_entity_sign_text(frontmap)
 		
 		// Back
 		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(backmap[?"color"], "black"))
 		glowing = value_get_real(backmap[?"has_glowing_text"], 0)
-		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? minecraft_glowing_sign_list[|colorind][0] : minecraft_color_list[|colorind])
-		mc_builder.block_text_back_glow_color_map[?build_pos] = minecraft_glowing_sign_list[|colorind][1]
+		glowind = minecraft_glowing_sign_list[|colorind]
+		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? glowind[0] : minecraft_color_list[|colorind])
+		mc_builder.block_text_back_glow_color_map[?build_pos] = glowind[1]
 		mc_builder.block_text_back_glowing_map[?build_pos] = glowing
 		mc_builder.block_text_back_map[?build_pos] = block_tile_entity_sign_text(backmap)
 	}
@@ -60,8 +62,9 @@ function block_tile_entity_sign(map)
 	{
 		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(map[?"Color"], "black"))
 		glowing = value_get_real(map[?"GlowingText"], 0)
-		color = (glowing ? minecraft_glowing_sign_list[|colorind][0] : minecraft_color_list[|colorind])
-		glowcolor = minecraft_glowing_sign_list[|colorind][1]
+		glowind = minecraft_glowing_sign_list[|colorind]
+		color = (glowing ? glowind[0] : minecraft_color_list[|colorind])
+		glowcolor = glowind[1]
 		text = ""
 		
 		for (var i = 0; i < 4; i++)
