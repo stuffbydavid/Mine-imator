@@ -127,6 +127,7 @@ function project_save_timeline()
 				json_save_var_bool("rot_point", inherit_rot_point)
 				json_save_var_bool("glow_color", inherit_glow_color)
 				json_save_var_bool("select", inherit_select)
+				json_save_var_bool("pose", inherit_pose)
 			json_save_object_done()
 			
 			json_save_var_bool("scale_resize", scale_resize)

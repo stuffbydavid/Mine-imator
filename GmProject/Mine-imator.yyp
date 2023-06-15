@@ -144,6 +144,7 @@
     {"id":{"name":"action_lib_item_3d","path":"scripts/action_lib_item_3d/action_lib_item_3d.yy",},"order":1,},
     {"id":{"name":"tl_jump","path":"scripts/tl_jump/tl_jump.yy",},"order":6,},
     {"id":{"name":"action_lib_item_bounce","path":"scripts/action_lib_item_bounce/action_lib_item_bounce.yy",},"order":3,},
+    {"id":{"name":"action_tl_inherit_pose","path":"scripts/action_tl_inherit_pose/action_tl_inherit_pose.yy",},"order":32,},
     {"id":{"name":"render_high_update_taa","path":"scripts/render_high_update_taa/render_high_update_taa.yy",},"order":7,},
     {"id":{"name":"action_lib_item_face_camera","path":"scripts/action_lib_item_face_camera/action_lib_item_face_camera.yy",},"order":5,},
     {"id":{"name":"action_lib_item_spin","path":"scripts/action_lib_item_spin/action_lib_item_spin.yy",},"order":7,},
@@ -2542,6 +2543,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.0.1.31",
+    "IDEVersion": "2022.0.0.19",
   },
 }

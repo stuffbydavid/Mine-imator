@@ -886,6 +886,50 @@
 			"default_state": "variant=normal"
 		},
 		{
+			"name": "armor",
+			"file": "armor.mimodel",
+			"states": {
+				"helmet": [
+					{ "value": "none", "shape_hide": [ "helmet", "helmet_overlay" ] },
+					{ "value": "leather", "shape_texture": { "helmet": "models/armor/leather_layer_1" } },
+					{ "value": "chainmail", "shape_texture": { "helmet": "models/armor/chainmail_layer_1" }, "shape_hide": [ "helmet_overlay" ] },
+					{ "value": "iron", "shape_texture": { "helmet": "models/armor/iron_layer_1" }, "shape_hide": [ "helmet_overlay" ] },
+					{ "value": "gold", "shape_texture": { "helmet": "models/armor/gold_layer_1" }, "shape_hide": [ "helmet_overlay" ] },
+					{ "value": "diamond", "shape_texture": { "helmet": "models/armor/diamond_layer_1" }, "shape_hide": [ "helmet_overlay" ] },
+					{ "value": "netherite", "shape_texture": { "helmet": "models/armor/netherite_layer_1" }, "shape_hide": [ "helmet_overlay" ] },
+					{ "value": "turtle", "shape_texture": { "helmet": "models/armor/turtle_layer_1" }, "shape_hide": [ "helmet_overlay" ] }
+				],
+				"chestplate": [
+					{ "value": "none", "shape_hide": [ "chestplate", "chestplate_overlay" ] },
+					{ "value": "leather", "shape_texture": { "chestplate": "models/armor/leather_layer_1" } },
+					{ "value": "chainmail", "shape_texture": { "chestplate": "models/armor/chainmail_layer_1" }, "shape_hide": [ "chestplate_overlay" ] },
+					{ "value": "iron", "shape_texture": { "chestplate": "models/armor/iron_layer_1" }, "shape_hide": [ "chestplate_overlay" ] },
+					{ "value": "gold", "shape_texture": { "chestplate": "models/armor/gold_layer_1" }, "shape_hide": [ "chestplate_overlay" ] },
+					{ "value": "diamond", "shape_texture": { "chestplate": "models/armor/diamond_layer_1" }, "shape_hide": [ "chestplate_overlay" ] },
+					{ "value": "netherite", "shape_texture": { "chestplate": "models/armor/netherite_layer_1" }, "shape_hide": [ "chestplate_overlay" ] }
+				],
+				"leggings": [
+					{ "value": "none", "shape_hide": [ "leggings", "leggings_overlay" ] },
+					{ "value": "leather", "shape_texture": { "leggings": "models/armor/leather_layer_2" } },
+					{ "value": "chainmail", "shape_texture": { "leggings": "models/armor/chainmail_layer_2" }, "shape_hide": [ "leggings_overlay" ] },
+					{ "value": "iron", "shape_texture": { "leggings": "models/armor/iron_layer_2" }, "shape_hide": [ "leggings_overlay" ] },
+					{ "value": "gold", "shape_texture": { "leggings": "models/armor/gold_layer_2" }, "shape_hide": [ "leggings_overlay" ] },
+					{ "value": "diamond", "shape_texture": { "leggings": "models/armor/diamond_layer_2" }, "shape_hide": [ "leggings_overlay" ] },
+					{ "value": "netherite", "shape_texture": { "leggings": "models/armor/netherite_layer_2" }, "shape_hide": [ "leggings_overlay" ] }
+				],
+				"boots": [
+					{ "value": "none", "shape_hide": [ "boots", "boots_overlay" ] },
+					{ "value": "leather", "shape_texture": { "boots": "models/armor/leather_layer_1" } },
+					{ "value": "chainmail", "shape_texture": { "boots": "models/armor/chainmail_layer_1" }, "shape_hide": [ "boots_overlay" ] },
+					{ "value": "iron", "shape_texture": { "boots": "models/armor/iron_layer_1" }, "shape_hide": [ "boots_overlay" ] },
+					{ "value": "gold", "shape_texture": { "boots": "models/armor/gold_layer_1" }, "shape_hide": [ "boots_overlay" ] },
+					{ "value": "diamond", "shape_texture": { "boots": "models/armor/diamond_layer_1" }, "shape_hide": [ "boots_overlay" ] },
+					{ "value": "netherite", "shape_texture": { "boots": "models/armor/netherite_layer_1" }, "shape_hide": [ "boots_overlay" ] }
+				]
+			},
+			"default_state": "helmet=iron,chestplate=iron,leggings=iron,boots=iron"
+		},
+		{
 			"name": "shield",
 			"file": "shield.mimodel",
 			"states": {
@@ -6505,6 +6549,21 @@
 		"entity/zombie_villager/type/swamp",
 		"entity/zombie_villager/type/taiga",
 		"item/spyglass_model",
+		"models/armor/leather_layer_1",
+		"models/armor/leather_layer_1_overlay",
+		"models/armor/leather_layer_2",
+		"models/armor/leather_layer_2_overlay",
+		"models/armor/chainmail_layer_1",
+		"models/armor/chainmail_layer_2",
+		"models/armor/gold_layer_1",
+		"models/armor/gold_layer_2",
+		"models/armor/iron_layer_1",
+		"models/armor/iron_layer_2",
+		"models/armor/diamond_layer_1",
+		"models/armor/diamond_layer_2",
+		"models/armor/netherite_layer_1",
+		"models/armor/netherite_layer_2",
+		"models/armor/turtle_layer_1",
 		"block/brown_mushroom",
 		"block/carved_pumpkin",
 		"block/cobblestone",

@@ -40,6 +40,7 @@ function tl_copy(to)
 	to.inherit_subsurface = inherit_subsurface
 	to.inherit_glow_color = inherit_glow_color
 	to.inherit_select = inherit_select
+	to.inherit_pose = inherit_pose
 	to.scale_resize = scale_resize
 	to.rot_point_custom = rot_point_custom
 	to.rot_point = point3D_copy(rot_point)

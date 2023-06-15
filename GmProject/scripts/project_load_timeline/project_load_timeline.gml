@@ -183,6 +183,7 @@ function project_load_timeline(map)
 			inherit_subsurface = value_get_real(inheritmap[?"subsurface"], inherit_subsurface)
 			inherit_glow_color = value_get_real(inheritmap[?"glow_color"], inherit_glow_color)
 			inherit_select = value_get_real(inheritmap[?"select"], inherit_select)
+			inherit_pose = value_get_real(inheritmap[?"pose"], inherit_pose)
 		}
 		
 		scale_resize = value_get_real(map[?"scale_resize"], scale_resize)

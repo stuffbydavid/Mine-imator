@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.13"
+		"lastchange": "2023.06.15"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -956,6 +956,7 @@
 		"wall_banner": "Wall Banner",
 		"piglin_head": "Piglin Head",
 		"dragon_head": "Dragon Head",
+		"armor": "Armor",
 		"part/": {
 			"body": "Body",
 			"right_arm": "Right arm",
@@ -1195,6 +1196,10 @@
 			"sherd_left": "Left sherd",
 			"sherd_back": "Back sherd",
 			"sherd_right": "Right sherd",
+			"helmet": "Helmet",
+			"chestplate": "Chestplate",
+			"leggings": "Leggings",
+			"boots": "Boots",
 			"value/": {
 				"wide": "Wide",
 				"slim": "Slim",
@@ -1409,7 +1414,12 @@
 				"sheaf": "Sheaf",
 				"shelter": "Shelter",
 				"skull": "Skull",
-				"snort": "Snort"
+				"snort": "Snort",
+				"leather": "Leather",
+				"chainmail": "Chainmail",
+				"iron": "Iron",
+				"diamond": "Diamond",
+				"netherite": "Netherite"
 			}
 		}
 	},
@@ -2865,7 +2875,9 @@
 			"surface": "Surface",
 			"subsurface": "Subsurface",
 			"glowcolor": "Glow color",
-			"select": "Select"
+			"select": "Select",
+			"pose": "Pose",
+			"posehelp": "Inherit the parent character or special block's pose."
 		},
 		"scalemode": "Scale mode",
 		"scalemoderesize": "Resize",

@@ -90,6 +90,7 @@ function tl_event_create()
 	inherit_subsurface = true
 	inherit_glow_color = true
 	inherit_select = false
+	inherit_pose = false
 	scale_resize = true
 	rot_point_custom = false
 	rot_point = point3D(0, 0, 0)
