@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.15"
+		"lastchange": "2023.06.16"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2574,6 +2574,8 @@
 		"skybackground": "Sky background",
 		"sky/": {
 			"suntex": "Sun texture",
+			"sunangle": "Sun angle",
+			"sunscale": "Sun size",
 			"moontex": "Moon texture",
 			"moonphase": "Moon phase",
 			"moonphase1": "Full moon",
@@ -2584,6 +2586,8 @@
 			"moonphase6": "Waxing crescent",
 			"moonphase7": "First quarter",
 			"moonphase8": "Waxing gibbous",
+			"moonangle": "Moon angle",
+			"moonscale": "Moon size",
 			"cloudsshow": "Clouds",
 			"clouds/": {
 				"mode": "Appearance",

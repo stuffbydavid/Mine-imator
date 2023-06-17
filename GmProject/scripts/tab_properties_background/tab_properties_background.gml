@@ -134,6 +134,16 @@ function tab_properties_background()
 			draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, false, tex)
 			tab_next()
 			
+			// Sun angle
+			tab_control_dragger()
+			draw_dragger("backgroundskysunangle", dx, dy, dragger_width, background_sky_sun_angle, 0.1, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_sun_angle, action_background_sky_sun_angle)
+			tab_next()
+			
+			// Sun scale
+			tab_control_dragger()
+			draw_dragger("backgroundskysunscale", dx, dy, dragger_width, background_sky_sun_scale, background_sky_sun_scale / 100, 0, 100, 1, snap_min, tab.background.tbx_sky_sun_scale, action_background_sky_sun_scale)
+			tab_next()
+			
 			// Moon
 			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
 				tex = background_sky_moon_tex.moon_texture[background_sky_moon_phase]
@@ -151,6 +161,16 @@ function tab_properties_background()
 				draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, background_sky_moon_tex.moon_texture[background_sky_moon_phase])
 				tab_next()
 			}
+			
+			// Moon angle
+			tab_control_dragger()
+			draw_dragger("backgroundskymoonangle", dx, dy, dragger_width, background_sky_moon_angle, 0.1, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_moon_angle, action_background_sky_moon_angle)
+			tab_next()
+			
+			// Moon scale
+			tab_control_dragger()
+			draw_dragger("backgroundskymoonscale", dx, dy, dragger_width, background_sky_moon_scale, background_sky_moon_scale / 100, 0, 100, 1, snap_min, tab.background.tbx_sky_moon_scale, action_background_sky_moon_scale)
+			tab_next()
 		}
 		
 		tab_collapse_end()

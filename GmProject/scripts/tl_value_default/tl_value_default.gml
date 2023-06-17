@@ -97,6 +97,10 @@ function tl_value_default(valueid)
 		case e_value.CAM_SIZE_KEEP_ASPECT_RATIO: return true
 		case e_value.BG_IMAGE_SHOW: return app.background_image_show
 		case e_value.BG_IMAGE_ROTATION: return app.background_image_rotation
+		case e_value.BG_SKY_SUN_ANGLE: return app.background_sky_sun_angle
+		case e_value.BG_SKY_MOON_ANGLE: return app.background_sky_moon_angle
+		case e_value.BG_SKY_SUN_SCALE: return app.background_sky_sun_scale
+		case e_value.BG_SKY_MOON_SCALE: return app.background_sky_moon_scale
 		case e_value.BG_SKY_MOON_PHASE: return app.background_sky_moon_phase
 		case e_value.BG_SKY_TIME: return app.background_sky_time
 		case e_value.BG_SKY_ROTATION: return app.background_sky_rotation

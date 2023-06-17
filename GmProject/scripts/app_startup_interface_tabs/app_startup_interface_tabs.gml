@@ -107,11 +107,16 @@ function app_startup_interface_tabs()
 			tbx_sky_time = new_textbox(true, 10, "-:0123456789")
 			tbx_sky_rotation = new_textbox_ndecimals()
 			tbx_sky_rotation.suffix = "°"
+			tbx_sky_sun_angle = new_textbox_integer()
+			tbx_sky_sun_angle.suffix = "°"
+			tbx_sky_sun_scale = new_textbox_decimals()
+			tbx_sky_moon_angle = new_textbox_integer()
+			tbx_sky_moon_angle.suffix = "°"
+			tbx_sky_moon_scale = new_textbox_decimals()
 			tbx_sunlight_strength = new_textbox_integer()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
 			tbx_sunlight_angle.suffix = "°"
-			tbx_sky_clouds_fade_distance = new_textbox_integer()
 			tbx_sky_clouds_height = new_textbox_ndecimals()
 			tbx_sky_clouds_size = new_textbox_decimals()
 			tbx_sky_clouds_thickness = new_textbox_decimals()
