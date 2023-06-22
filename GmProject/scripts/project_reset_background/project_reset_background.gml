@@ -11,9 +11,13 @@ function project_reset_background()
 	
 	background_sky_sun_tex = mc_res
 	background_sky_sun_tex.count++
+	background_sky_sun_angle = 0
+	background_sky_sun_scale = 1
 	background_sky_moon_tex = mc_res
 	background_sky_moon_tex.count++
 	background_sky_moon_phase = 0
+	background_sky_moon_angle = 0
+	background_sky_moon_scale = 1
 	
 	background_sky_time = -45
 	background_sky_rotation = 0

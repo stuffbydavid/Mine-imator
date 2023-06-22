@@ -99,7 +99,7 @@ function render_world_sky()
 			render_set_texture(background_sky_sun_tex.texture)
 			
 		var sca = (dis / 15000) * 1850;
-		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, dis * 0.7, 90, 0, 0, sca, sca, sca), skymat))
+		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, min(dis * 0.7, (dis * 0.7) / background_sky_sun_scale), 90, 0, 0 + background_sky_sun_angle, sca * background_sky_sun_scale, sca * background_sky_sun_scale, sca), skymat))
 		
 		// Moon
 		vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, -1)), -0.15, 0)
@@ -113,7 +113,7 @@ function render_world_sky()
 		else
 			render_set_texture(background_sky_moon_tex.texture)
 			
-		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, -dis * 0.7, -90, 0, 0, sca, sca, sca), skymat))
+		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, max(-dis * 0.7, (-dis * 0.7) / background_sky_moon_scale), -90, 0, 0 - background_sky_moon_angle, sca * background_sky_moon_scale, sca * background_sky_moon_scale, sca), skymat))
 		
 		gpu_set_blendmode(bm_normal)
 	}

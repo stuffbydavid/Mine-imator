@@ -19,9 +19,13 @@ function project_load_background(map)
 	
 	background_sky_sun_tex.count--
 	background_sky_sun_tex = value_get_save_id(map[?"sky_sun_tex"], background_sky_sun_tex)
+	background_sky_sun_angle = value_get_real(map[?"sky_sun_angle"], background_sky_sun_angle)
+	background_sky_sun_scale = value_get_real(map[?"sky_sun_scale"], background_sky_sun_scale)
 	background_sky_moon_tex.count--
 	background_sky_moon_tex = value_get_save_id(map[?"sky_moon_tex"], background_sky_moon_tex)
 	background_sky_moon_phase = value_get_real(map[?"sky_moon_phase"], background_sky_moon_phase)
+	background_sky_moon_angle = value_get_real(map[?"sky_moon_angle"], background_sky_moon_angle)
+	background_sky_moon_scale = value_get_real(map[?"sky_moon_scale"], background_sky_moon_scale)
 	
 	background_sky_time = value_get_real(map[?"sky_time"], background_sky_time)
 	background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
