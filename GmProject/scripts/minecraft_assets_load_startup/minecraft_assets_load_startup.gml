@@ -8,7 +8,7 @@ function minecraft_assets_load_startup()
 	globalvar load_assets_stage, load_assets_progress, load_assets_block_index, load_assets_splash, load_assets_credits;
 	globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 	globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
-	globalvar pattern_update;
+	globalvar pattern_update, armor_update;
 	
 	mc_assets = new_obj(obj_minecraft_assets)
 	mc_builder = new_obj(obj_builder)
@@ -24,6 +24,7 @@ function minecraft_assets_load_startup()
 	alarm[0] = 1
 	
 	pattern_update = array()
+	armor_update = array()
 	
 	// Create default resource
 	with (mc_res)

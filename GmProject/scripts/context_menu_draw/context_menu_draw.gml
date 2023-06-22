@@ -9,6 +9,8 @@ function context_menu_draw()
 	{
 		context_menu_ani = ""
 		context_menu_close()
+		
+		window_busy = context_menu_busy_prev
 		return 0
 	}
 	

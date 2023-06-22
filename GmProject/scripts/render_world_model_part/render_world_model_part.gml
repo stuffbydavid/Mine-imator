@@ -176,6 +176,65 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		
 		#endregion
 		
+		#region Armor rendering
+		
+		// Preview
+		if (object_index = obj_preview && select.model_name = "armor")
+		{
+			if (shape.description = "helmet")
+			{
+				if (sprite_exists(select.armor_skin_array[0]))
+					render_set_texture(select.armor_skin_array[0])
+			}
+			
+			if (shape.description = "chestplate")
+			{
+				if (sprite_exists(select.armor_skin_array[1]))
+					render_set_texture(select.armor_skin_array[1])
+			}
+			
+			if (shape.description = "leggings")
+			{
+				if (sprite_exists(select.armor_skin_array[2]))
+					render_set_texture(select.armor_skin_array[2])
+			}
+			
+			if (shape.description = "boots")
+			{
+				if (sprite_exists(select.armor_skin_array[3]))
+					render_set_texture(select.armor_skin_array[3])
+			}
+		}
+		
+		if (tlobject != null && tlobject.temp.model_name = "armor")
+		{
+			if (shape.description = "helmet")
+			{
+				if (sprite_exists(tlobject.temp.armor_skin_array[0]))
+					render_set_texture(tlobject.temp.armor_skin_array[0])
+			}
+			
+			if (shape.description = "chestplate")
+			{
+				if (sprite_exists(tlobject.temp.armor_skin_array[1]))
+					render_set_texture(tlobject.temp.armor_skin_array[1])
+			}
+			
+			if (shape.description = "leggings")
+			{
+				if (sprite_exists(tlobject.temp.armor_skin_array[2]))
+					render_set_texture(tlobject.temp.armor_skin_array[2])
+			}
+			
+			if (shape.description = "boots")
+			{
+				if (sprite_exists(tlobject.temp.armor_skin_array[3]))
+					render_set_texture(tlobject.temp.armor_skin_array[3])
+			}
+		}
+		
+		#endregion
+		
 		// Blend color
 		blendcolor = shape.color_blend
 		alpha = shape.color_alpha

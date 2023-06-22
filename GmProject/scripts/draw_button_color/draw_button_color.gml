@@ -10,11 +10,17 @@
 
 function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 {
-	var textx, textw, buttonx, buttonw, h, mouseon, mouseclick, active;
+	var textx, textw, buttonx, buttonw, mini, h, mouseon, mouseclick, active, click;
 	textx = xx
-	h = ui_small_height
+	mini = (w < 32)
+	h = (mini ? 24 : ui_small_height)
 	
-	if (!app.panel_compact && tab_collumns_count > 1)
+	if (mini)
+	{
+		buttonx = xx
+		buttonw = w
+	}
+	else if (!app.panel_compact && tab_collumns_count > 1)
 	{
 		buttonx = xx
 		buttonw = w
@@ -36,7 +42,7 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
-	context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
+	click = context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
 	microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
 	
 	// Draw button
@@ -64,29 +70,35 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 	// Hover
 	draw_box_hover(buttonx, yy, buttonw, h, microani_arr[e_microani.PRESS])
 	
-	// Label
-	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
-	labelcolor = merge_color(labelcolor, c_accent, microani_arr[e_microani.ACTIVE])
-	labelcolor = merge_color(labelcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
+	if (!mini)
+	{
+		// Label
+		labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
+		labelcolor = merge_color(labelcolor, c_accent, microani_arr[e_microani.ACTIVE])
+		labelcolor = merge_color(labelcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
 	
-	labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
-	labelalpha = lerp(labelalpha, a_accent, microani_arr[e_microani.ACTIVE])
-	labelalpha = lerp(labelalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
+		labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
+		labelalpha = lerp(labelalpha, a_accent, microani_arr[e_microani.ACTIVE])
+		labelalpha = lerp(labelalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
 	
-	draw_set_font(font_label)
+		draw_set_font(font_label)
 	
-	if (!app.panel_compact && tab_collumns_count > 1)
-		draw_label(string_limit(text_get(name), textw - 8), xx, yy - (label_height + 8), fa_left, fa_top, labelcolor, labelalpha)
-	else
-		draw_label(string_limit(text_get(name), textw - 8), xx, yy + h/2, fa_left, fa_center, labelcolor, labelalpha)
+		if (!app.panel_compact && tab_collumns_count > 1)
+			draw_label(string_limit(text_get(name), textw - 8), xx, yy - (label_height + 8), fa_left, fa_top, labelcolor, labelalpha)
+		else
+			draw_label(string_limit(text_get(name), textw - 8), xx, yy + h/2, fa_left, fa_center, labelcolor, labelalpha)
+	}
 	
 	microani_update(mouseon, mouseclick, active || (mouseon && mouse_left), false)
 	
 	if (mouseon && mouse_left_released)
 	{
+		click = true
 		colorpicker_show(name, color, def, script, xx, yy, w, h)
 		
 		if (hsvmode)
 			colorpicker.mode = "hsv"
 	}
+	
+	return click
 }

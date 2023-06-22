@@ -88,6 +88,8 @@ function draw_button_menu()
 	
 	if (menu_bench)
 		nameid = "bench" + name
+	else if (popup != null)
+		nameid = popup.name + name
 	else
 		nameid = name
 	
@@ -237,6 +239,8 @@ function draw_button_menu()
 		if (m = null)
 			m = new_obj(obj_menu)
 		
+		m.menu_busy_prev = window_busy
+		
 		window_busy = "menu"
 		window_focus = ""//string(menu_scroll_vertical)
 		app_mouse_clear()
@@ -272,6 +276,9 @@ function draw_button_menu()
 		// Init
 		menu_model_state = menu_model_state_current
 		menu_block_state = menu_block_state_current
+		
+		menu_armor_piece = popup_armor_editor.piece_current
+		menu_armor_piece_data = popup_armor_editor.piece_data_id
 		
 		if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS)
 			m.menu_list = list_init(name)

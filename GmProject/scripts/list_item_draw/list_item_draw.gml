@@ -131,7 +131,9 @@ function list_item_draw()
 		if (item.thumbnail_backdrop)
 			draw_box(xx + leftp, middley - imgsize/2, imgsize, imgsize, false, c_level_bottom, 1)
 		
-		gpu_set_texfilter(true)
+		if (texture_height(item.thumbnail) > imgsize)
+			gpu_set_texfilter(true)
+		
 		draw_image(item.thumbnail, 0, xx + leftp, middley - imgsize/2, imgsize / texture_width(item.thumbnail), imgsize / texture_height(item.thumbnail), item.thumbnail_blend, item.thumbnail_alpha)
 		gpu_set_texfilter(false)
 		

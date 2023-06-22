@@ -7,7 +7,7 @@ function macros()
 	#macro dev_mode						true
 	#macro dev_mode_skip_blocks			dev_mode && false
 	#macro dev_mode_debug_schematics	dev_mode && true
-	#macro dev_mode_debug_names			dev_mode && true
+	#macro dev_mode_debug_names			dev_mode && false
 	#macro dev_mode_debug_saveid		dev_mode && true
 	#macro dev_mode_debug_unused		dev_mode && true
 	#macro dev_mode_project				file_directory + "//dev_project//dev_project.miproject"

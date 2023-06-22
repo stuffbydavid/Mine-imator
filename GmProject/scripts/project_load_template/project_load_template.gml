@@ -152,6 +152,29 @@ function project_load_template(map)
 							array_add(pattern_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
 					}
 				}
+				
+				if (model_name = "armor")
+				{
+					if (map[?"armor"] != undefined)
+					{
+						var armor = map[?"armor"];
+						armor_array[1] = value_get_color(armor[?"helmet_dye"], armor_array[1])
+						armor_array[2] = value_get_string(armor[?"helmet_trim_pattern"], armor_array[2])
+						armor_array[3] = value_get_string(armor[?"helmet_trim_material"], armor_array[3])
+
+						armor_array[5] = value_get_color(armor[?"chestplate_dye"], armor_array[5])
+						armor_array[6] = value_get_string(armor[?"chestplate_trim_pattern"], armor_array[6])
+						armor_array[7] = value_get_string(armor[?"chestplate_trim_material"], armor_array[7])
+
+						armor_array[9] = value_get_color(armor[?"leggings_dye"], armor_array[9])
+						armor_array[10] = value_get_string(armor[?"leggings_trim_pattern"], armor_array[10])
+						armor_array[11] = value_get_string(armor[?"leggings_trim_material"], armor_array[11])
+
+						armor_array[13] = value_get_color(armor[?"boots_dye"], armor_array[13])
+						armor_array[14] = value_get_string(armor[?"boots_trim_pattern"], armor_array[14])
+						armor_array[15] = value_get_string(armor[?"boots_trim_material"], armor_array[15])
+					}
+				}
 			}
 		}
 		else if (type = e_temp_type.ITEM)

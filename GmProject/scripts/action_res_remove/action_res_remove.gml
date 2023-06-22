@@ -45,8 +45,10 @@ function action_res_remove()
 			temp_update()
 		
 		// Update pattern
-		if (type = e_temp_type.SPECIAL_BLOCK && model_file.pattern_type != "")
+		if (type = e_temp_type.SPECIAL_BLOCK && pattern_type != "")
 			array_add(pattern_update, id)
+		
+		temp_update_armor(id)
 	}
 	
 	// Restore old timelines

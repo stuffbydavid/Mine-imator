@@ -285,7 +285,7 @@ function menu_draw()
 			{
 				m.menu_ani = 1
 				m.menu_ani_type = "hide"
-				window_busy = (ds_list_size(menu_list) > 1 ? "menu" : "")
+				window_busy = (ds_list_size(menu_list) > 1 ? "menu" : m.menu_busy_prev)
 			}
 		}
 		

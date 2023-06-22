@@ -47,6 +47,13 @@ function temp_event_create()
 	pattern_color_list = array()
 	pattern_skin = null
 	
+	armor_array = []
+	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
+	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
+	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
+	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
+	armor_skin_array = [null, null, null, null]
+	
 	item_tex = null
 	item_tex_material = null
 	item_tex_normal = null

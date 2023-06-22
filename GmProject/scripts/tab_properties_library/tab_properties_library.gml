@@ -62,12 +62,26 @@ function tab_properties_library()
 			{
 				tab_control_button_label()
 				
-				if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
+				if (draw_button_label("benchpatterneditor", dx, dy, dw, null, e_button.SECONDARY))
 					popup_pattern_editor_show(temp_edit)
 				
 				tab_next()
 				
 				if (popup = popup_pattern_editor)
+					current_microani.active.value = true
+			}
+			
+			// Armor editor
+			if (temp_edit.model_name = "armor")
+			{
+				tab_control_button_label()
+				
+				if (draw_button_label("bencharmoreditor", dx, dy, dw, null, e_button.SECONDARY))
+					popup_armor_editor_show(temp_edit)
+				
+				tab_next()
+				
+				if (popup = popup_armor_editor)
 					current_microani.active.value = true
 			}
 			
@@ -293,10 +307,27 @@ function tab_properties_library()
 			{
 				tab_control_button_label()
 				
-				if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
+				if (draw_button_label("benchpatterneditor", dx, dy, dw, null, e_button.SECONDARY))
 					popup_pattern_editor_show(temp_edit)
 				
 				tab_next()
+				
+				if (popup = popup_armor_editor)
+					current_microani.active.value = true
+			}
+			
+			// Armor editor
+			if (temp_edit.model_name = "armor")
+			{
+				tab_control_button_label()
+				
+				if (draw_button_label("bencharmoreditor", dx, dy, dw, null, e_button.SECONDARY))
+					popup_armor_editor_show(temp_edit)
+				
+				tab_next()
+				
+				if (popup = popup_armor_editor)
+					current_microani.active.value = true
 			}
 			
 			// Skin

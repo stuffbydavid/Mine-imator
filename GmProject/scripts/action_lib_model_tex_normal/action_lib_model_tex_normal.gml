@@ -52,6 +52,8 @@ function action_lib_model_tex_normal(res)
 		
 		if (pattern_type != "")
 			array_add(pattern_update, temp_edit)
+		
+		temp_update_armor(temp_edit)
 	}
 	
 	lib_preview.update = true

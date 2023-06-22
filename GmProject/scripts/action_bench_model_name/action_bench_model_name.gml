@@ -21,6 +21,8 @@ function action_bench_model_name(name)
 		if (pattern_type != "")
 			array_add(pattern_update, id)
 		
+		temp_update_armor(id)
+		
 		with (preview)
 		{
 			preview_reset_view()

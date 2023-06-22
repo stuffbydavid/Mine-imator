@@ -47,6 +47,6 @@ function minecraft_update_patterns()
 			}
 		}
 		
-		pattern_update = array()
+		pattern_update = []
 	}
 }

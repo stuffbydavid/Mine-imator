@@ -160,4 +160,5 @@ function temp_update_model()
 		array_add(pattern_update, id)
 	
 	model_shape_update_color()
+	temp_update_armor(id)
 }

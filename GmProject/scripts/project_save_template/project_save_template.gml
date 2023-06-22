@@ -48,6 +48,30 @@ function project_save_template()
 					
 				json_save_array_done()
 			}
+			
+			if (model_name = "armor")
+			{
+				json_save_object_start("armor")
+				
+					json_save_var_color("helmet_dye", armor_array[1])
+					json_save_var("helmet_trim_pattern", armor_array[2])
+					json_save_var("helmet_trim_material", armor_array[3])
+
+					json_save_var_color("chestplate_dye", armor_array[5])
+					json_save_var("chestplate_trim_pattern", armor_array[6])
+					json_save_var("chestplate_trim_material", armor_array[7])
+
+					json_save_var_color("leggings_dye", armor_array[9])
+					json_save_var("leggings_trim_pattern", armor_array[10])
+					json_save_var("leggings_trim_material", armor_array[11])
+
+					json_save_var_color("boots_dye", armor_array[13])
+					json_save_var("boots_trim_pattern", armor_array[14])
+					json_save_var("boots_trim_material", armor_array[15])
+				
+				json_save_object_done()
+
+			}
 		}
 		else if (type = e_temp_type.ITEM)
 		{

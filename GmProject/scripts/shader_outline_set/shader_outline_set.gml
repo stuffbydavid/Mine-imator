@@ -1,4 +1,6 @@
 /// shader_outline_set(width, height)
+/// @arg width
+/// @arg height
 
 function shader_outline_set(width, height)
 {

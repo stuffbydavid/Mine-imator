@@ -1,7 +1,5 @@
 function res_load_skulls()
 {
-	show_debug_message("Download skulls...")
-	
 	// Finished
 	if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !mc_builder.block_tl_add)
 	{

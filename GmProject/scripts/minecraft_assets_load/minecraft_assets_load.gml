@@ -198,6 +198,20 @@ function minecraft_assets_load()
 				else
 					ds_map_copy(minecraft_sherd_map, load_assets_map[?"sherds"])
 				
+				// Armor trims
+				if (is_undefined(load_assets_map[?"armor"]))
+				{
+					log("No armor data found")
+					return false
+				}
+				else
+				{
+					var armormap = load_assets_map[?"armor"];
+					
+					ds_list_copy(minecraft_armor_trim_pattern_list, armormap[?"pattern"])
+					ds_list_copy(minecraft_armor_trim_material_list, armormap[?"material"])
+				}
+				
 				load_assets_stage = "models"
 				load_assets_progress = 0.5
 				break;
