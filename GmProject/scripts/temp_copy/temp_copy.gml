@@ -30,7 +30,7 @@ function temp_copy(to)
 	for (var i = 0; i < 4; i++)
 	{
 		if (sprite_exists(armor_skin_array[i]))
-			to.armor_skin_array[i] = armor_skin_array[i]
+			to.armor_skin_array[i] = texture_duplicate(armor_skin_array[i])
 		else
 			to.armor_skin_array[i] = null
 	}

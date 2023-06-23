@@ -120,6 +120,8 @@ function shader_startup()
 	with (shader_map[?shader_palette])
 	{
 		new_shader_sampler("uPalette")
+		new_shader_sampler("uPaletteKey")
+		new_shader_uniform("uPaletteSize")
 	}
 	
 	with (shader_map[?shader_color_camera])

@@ -48,17 +48,7 @@ function minecraft_update_armor_generate(data, res = null)
 		if (trimpat != "none" && trimmat != "none")
 		{
 			var palette = res.model_texture_map[?"trims/color_palettes/" + trimmat + (trimmat = basemat ? "_darker" : "")];
-			var palettesurf;
-				
-			palettesurf = surface_create(sprite_get_width(palette), sprite_get_height(palette));
-				
-			surface_set_target(palettesurf)
-			{
-				draw_clear_alpha(c_black, 0)
-				draw_sprite(palette, 0, 0, 0)
-			}
-			surface_reset_target()
-				
+			
 			surface_set_target(armorsurf)
 			{
 				gpu_set_texrepeat(false)
@@ -66,7 +56,7 @@ function minecraft_update_armor_generate(data, res = null)
 				with (render_shader_obj)
 				{
 					shader_set(shader)
-					shader_palette_set(palettesurf)
+					shader_palette_set(palette, res.model_texture_map[?"trims/color_palettes/trim_palette"])
 				}
 				
 				if (i = 2)
@@ -80,8 +70,6 @@ function minecraft_update_armor_generate(data, res = null)
 				gpu_set_texrepeat(true)
 			}
 			surface_reset_target()
-			
-			surface_free(palettesurf)
 		}
 		
 		skins[i] = texture_surface(armorsurf);

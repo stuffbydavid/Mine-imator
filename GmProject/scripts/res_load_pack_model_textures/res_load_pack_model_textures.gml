@@ -45,7 +45,7 @@ function res_load_pack_model_textures()
 	model_tex_normal_map = ds_map_create()
 	for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	{
-		var name, fname, matfname, norfname, tex, texmat, texnorm;
+		var name, fname, matfname, norfname, tex;
 		name = mc_assets.model_texture_list[|t]
 		fname = load_assets_dir + mc_textures_directory + name + ".png"
 		matfname = load_assets_dir + mc_textures_directory + name + "_s.png"
