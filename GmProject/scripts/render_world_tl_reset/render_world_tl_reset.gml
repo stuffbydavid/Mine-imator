@@ -8,6 +8,9 @@ function render_world_tl_reset()
 	shader_texture_filter_linear = false
 	shader_texture_filter_mipmap = false
 	
+	shader_texture_width = 0
+	shader_texture_height = 0
+	
 	shader_blend_color = c_white
 	shader_blend_alpha = 1
 	
@@ -74,6 +77,9 @@ function render_world_tl_reset()
 	shader_uniform_glow = false
 	shader_uniform_glow_texture = false
 	shader_uniform_glow_color = c_white
+	
+	// Glint
+	render_set_uniform_int("uGlintEnabled", 0)
 	
 	render_blend_prev = null
 	render_alpha_prev = null

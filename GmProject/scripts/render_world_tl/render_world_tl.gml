@@ -222,6 +222,19 @@ function render_world_tl()
 		}
 	}
 	
+	// Glint mode
+	if (glint_tex.texture)
+		tex = glint_tex.texture
+	else
+		tex = (glint_mode = e_glint.ITEM ? glint_tex.glint_item_texture : glint_tex.glint_entity_texture)
+	
+	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
+		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
+	
+	render_set_uniform_int("uGlintEnabled", glint_mode = e_glint.NONE ? 0 : 1)
+	
+	render_set_uniform_vec2("uGlintSize", sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
+	
 	// Render
 	if (type != e_tl_type.PARTICLE_SPAWNER)
 	{

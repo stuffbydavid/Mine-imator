@@ -7,7 +7,7 @@ uniform float uPaletteSize;
 void main()
 {
 	vec4 col = texture2D(gm_BaseTexture, vTexCoord);
-	int checks = min(64, int(uPaletteSize));
+	int checks = int(min(64.0, uPaletteSize));
 	for (int i = 0; i <= checks; i++)
 	{
 		float u = clamp(1.0 - ((float(i) / uPaletteSize)), 0.01, 0.99);

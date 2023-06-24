@@ -194,6 +194,9 @@ function project_load_find_save_ids()
 		if (value_default[e_value.TEXTURE_NORMAL_OBJ] != null)
 			value_default[e_value.TEXTURE_NORMAL_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_NORMAL_OBJ]])
 		
+		// Glint
+		glint_tex = save_id_find(save_id_map[?glint_tex])
+		
 		// Set part list
 		if (part_list != null)
 			for (var i = 0; i < ds_list_size(part_list); i++)

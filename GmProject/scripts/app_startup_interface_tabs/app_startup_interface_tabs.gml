@@ -69,6 +69,10 @@ function app_startup_interface_tabs()
 			tbx_aa_power.suffix = "%"
 			tbx_block_emissive = new_textbox_decimals()
 			tbx_block_emissive.suffix = "%"
+			tbx_glint_speed = new_textbox_decimals()
+			tbx_glint_speed.suffix = "%"
+			tbx_glint_strength = new_textbox_decimals()
+			tbx_glint_strength.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
 			tbx_texture_filtering_level = new_textbox_integer()
 			tbx_exposure = new_textbox_decimals()
@@ -416,7 +420,11 @@ function app_startup_interface_tabs()
 		// Graphics
 		appearance = tab_add_category("timelineeditorappearance", [icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL__DARK], tab_timeline_editor_appearance, false)
 		with (appearance)
+		{
+			tbx_glint_scale = new_textbox_integer()
+			tbx_glint_scale.suffix = "%"
 			tbx_depth = new_textbox_ninteger()
+		}
 		
 		// Audio
 		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)

@@ -229,6 +229,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.HIGH_DEPTH_NORMAL] = shader_high_depth_normal
 	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
 	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
+	render_mode_shader_map[?e_render_mode.GLINT] = shader_high_glint
 	
 	// Init settings
 	project_reset_render()

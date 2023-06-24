@@ -836,7 +836,8 @@ function enums()
 		HIGH_DEPTH_NORMAL,
 		AO_MASK,
 		MATERIAL,
-		SUBSURFACE
+		SUBSURFACE,
+		GLINT
 	}
 	
 	// Viewport render mode
@@ -1087,6 +1088,14 @@ function enums()
 		FORMAT_NONE,
 		FORMAT_SEUS,
 		FORMAT_LABPBR
+	}
+	
+	// Glint mode
+	enum e_glint
+	{
+		NONE,
+		ITEM,
+		ENTITY
 	}
 	
 	// Alpha mode

@@ -3,6 +3,7 @@
 function shader_startup()
 {
 	globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap, shader_check_uniform;
+	globalvar shader_texture_width, shader_texture_height;
 	globalvar shader_blend_color, shader_blend_alpha;
 	globalvar shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height, shader_clip_active;
 	
@@ -77,10 +78,14 @@ function shader_startup()
 		new_shader("shader_high_indirect_blur")
 		new_shader("shader_tonemap")
 		new_shader("shader_clip")
+		new_shader("shader_high_glint")
 		
 		shader_texture_surface = false
 		shader_texture_filter_linear = false
 		shader_texture_filter_mipmap = false
+		
+		shader_texture_width = 0
+		shader_texture_height = 0
 		
 		with (obj_shader)
 		{
@@ -149,6 +154,12 @@ function shader_startup()
 	with (shader_map[?shader_color_fog_lights])
 	{
 		shader_material_uniforms()
+		
+		new_shader_sampler("uGlintTexture")
+		new_shader_uniform("uGlintOffset")
+		new_shader_uniform("uGlintSize")
+		new_shader_uniform("uGlintEnabled")
+		new_shader_uniform("uGlintStrength")
 		
 		new_shader_uniform("uIsGround")
 		new_shader_uniform("uIsSky")
@@ -535,6 +546,16 @@ function shader_startup()
 	{
 		new_shader_uniform("uBox")
 		new_shader_uniform("uScreenSize")
+	}
+	
+	with (shader_map[?shader_high_glint])
+	{
+		new_shader_uniform("uGamma")
+		new_shader_sampler("uGlintTexture")
+		new_shader_uniform("uGlintOffset")
+		new_shader_uniform("uGlintSize")
+		new_shader_uniform("uGlintEnabled")
+		new_shader_uniform("uGlintStrength")
 	}
 	
 	return true

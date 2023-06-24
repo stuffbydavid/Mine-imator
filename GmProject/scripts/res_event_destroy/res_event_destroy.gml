@@ -127,6 +127,12 @@ function res_event_destroy()
 	if (clouds_texture != null)
 		texture_free(clouds_texture)
 	
+	if (glint_entity_texture != null)
+		texture_free(glint_entity_texture)
+	
+	if (glint_item_texture != null)
+		texture_free(glint_item_texture)
+	
 	// Free texture
 	if (texture != null)
 		texture_free(texture)
@@ -369,6 +375,12 @@ function res_event_destroy()
 		
 		if (value_inherit[e_value.TEXT_FONT] = other.id)
 			update_matrix = true
+		
+		if (glint_tex = other.id)
+		{
+			glint_tex = mc_res
+			glint_tex.count++
+		}
 	}
 	
 	with (app)

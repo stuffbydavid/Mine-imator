@@ -50,6 +50,9 @@ function project_save_render()
 		json_save_var("block_emissive", project_render_block_emissive)
 		json_save_var("block_subsurface", project_render_block_subsurface)
 		
+		json_save_var("glint_speed", project_render_glint_speed)
+		json_save_var("glint_strength", project_render_glint_strength)
+		
 		json_save_var_bool("texture_filtering", project_render_texture_filtering)
 		json_save_var_bool("transparent_block_texture_filtering", project_render_transparent_block_texture_filtering)
 		json_save_var("texture_filtering_level", project_render_texture_filtering_level)

@@ -1,5 +1,12 @@
 uniform sampler2D uTexture; // static
 uniform sampler2D uTextureMaterial; // static
+uniform vec2 uTextureSize;
+
+uniform sampler2D uGlintTexture; // static
+uniform vec2 uGlintOffset;
+uniform vec2 uGlintSize;
+uniform int uGlintEnabled;
+uniform float uGlintStrength;
 
 uniform float uSampleIndex;
 uniform int uAlphaHash;
@@ -215,6 +222,9 @@ void main()
 	col.rgb *= dif; // Multiply diffuse
 	
 	col.rgb += spec;
+	
+	if (uGlintEnabled > 0 && col.a > 0.0)
+		col.rgb += pow(texture2D(uGlintTexture, (tex * ((uTextureSize / uGlintSize))) + uGlintOffset).rgb * col.a * uGlintStrength, vec3(uGamma));
 	
 	if (vDiffuse.r >= 0.0)
 	{

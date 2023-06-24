@@ -111,6 +111,11 @@ function tl_event_create()
 	blend_mode = "normal"
 	alpha_mode = e_alpha_mode.DEFAULT
 	
+	glint_mode = e_glint.NONE
+	glint_scale = 1
+	glint_tex = mc_res
+	glint_tex.count++
+	
 	particle_list = null
 	
 	cam_surf_required = false

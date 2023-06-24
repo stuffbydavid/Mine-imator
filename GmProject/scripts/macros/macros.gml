@@ -79,6 +79,8 @@ function macros()
 	#macro mc_sun_image_file			mc_textures_directory + "environment/sun.png"
 	#macro mc_moon_phases_image_file	mc_textures_directory + "environment/moon_phases.png"
 	#macro mc_clouds_image_file			mc_textures_directory + "environment/clouds.png"
+	#macro mc_glint_entity_file			mc_textures_directory + "misc/enchanted_glint_entity.png"
+	#macro mc_glint_item_file			mc_textures_directory + "misc/enchanted_glint_item.png"
 	
 	// Links
 	#macro link_website					"https://www.mineimator.com"

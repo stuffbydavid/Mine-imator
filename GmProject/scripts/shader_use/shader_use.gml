@@ -64,6 +64,21 @@ function shader_use()
 	if (!is_undefined(uniform_map[?"uSSSHighlightStrength"]) && uniform_map[?"uSSSHighlightStrength"] > -1)
 		render_set_uniform("uSSSHighlightStrength", app.project_render_subsurface_highlight_strength)
 	
+	// Glint
+	if (!is_undefined(uniform_map[?"uGlintEnabled"]) && uniform_map[?"uGlintEnabled"] > -1)
+	{
+		var tex = mc_res.glint_entity_texture;
+		texture_set_stage(sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
+		gpu_set_texrepeat_ext(sampler_map[?"uGlintTexture"], true)
+		gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
+		
+		render_set_uniform_vec2("uGlintSize", sprite_get_width(tex)*2, sprite_get_height(tex)*2)
+		render_set_uniform_vec2("uGlintOffset", app.background_time * (0.000625) * app.project_render_glint_speed, app.background_time * (0.00125) * app.project_render_glint_speed)
+		render_set_uniform_int("uGlintEnabled", 1)
+		render_set_uniform("uGlintStrength", app.project_render_glint_strength)
+		render_set_uniform("uGamma", render_gamma)
+	}
+	
 	// Texture drawing
 	render_set_uniform("uMask", bool_to_float(shader_mask))
 	

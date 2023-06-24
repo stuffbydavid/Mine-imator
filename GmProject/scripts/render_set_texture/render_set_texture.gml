@@ -13,6 +13,12 @@ function render_set_texture(tex, type = "")
 	if (is_undefined(sampler) || sampler < 0)
 		return 0
 	
+	if (type = "")
+	{
+		shader_texture_width = 0
+		shader_texture_height = 0
+	}
+	
 	// Set filter
 	var mipactive = (shader_texture_filter_mipmap && type = "") ? mip_on : mip_off;
 	
@@ -26,7 +32,15 @@ function render_set_texture(tex, type = "")
 	if (shader_texture_surface)
 	{
 		if (surface_exists(tex))
+		{
 			texture_set_stage(sampler, surface_get_texture(tex))
+			
+			if (type = "")
+			{
+				shader_texture_width = surface_get_width(tex)
+				shader_texture_height = surface_get_height(tex)
+			}
+		}
 		else
 			texture_set_stage(sampler, 0)
 	}
@@ -35,10 +49,21 @@ function render_set_texture(tex, type = "")
 	else
 	{
 		if (sprite_exists(tex))
+		{
 			texture_set_stage(sampler, sprite_get_texture(tex, 0))
+			
+			if (type = "")
+			{
+				shader_texture_width = sprite_get_width(tex)
+				shader_texture_height = sprite_get_height(tex)
+			}
+		}
 		else
 			texture_set_stage(sampler, 0)
 	}
+	
+	if (type = "")
+		render_set_uniform_vec2("uTextureSize", shader_texture_width, shader_texture_height)
 	
 	gpu_set_texrepeat_ext(sampler, true)
 }

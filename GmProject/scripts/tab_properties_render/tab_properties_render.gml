@@ -299,6 +299,26 @@ function tab_properties_render()
 		tab_collapse_end()
 	}
 	
+	// Glint settings
+	tab_control_switch()
+	draw_button_collapse("glint", collapse_map[?"glint"], null, true, "renderglint")
+	tab_next()
+	
+	if (collapse_map[?"glint"])
+	{
+		tab_collapse_start()
+		
+		tab_control_dragger()
+		draw_dragger("renderglintspeed", dx, dy, dragger_width, round(project_render_glint_speed * 100), 1, 0, no_limit, 100, 1, tab.render.tbx_glint_speed, action_project_render_glint_speed)
+		tab_next()
+	
+		tab_control_dragger()
+		draw_dragger("renderglintstrength", dx, dy, dragger_width, round(project_render_glint_strength * 100), 1, 0, no_limit, 100, 1, tab.render.tbx_glint_strength, action_project_render_glint_strength)
+		tab_next()
+		
+		tab_collapse_end()
+	}
+	
 	// Default emissive
 	tab_control_dragger()
 	draw_dragger("renderdefaultemissive", dx, dy, dragger_width, round(project_render_block_emissive * 100), 1, 0, no_limit, 100, 1, tab.render.tbx_block_emissive, action_project_render_block_emissive, null, true, false, "renderdefaultemissivetip")

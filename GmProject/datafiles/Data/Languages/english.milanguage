@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.16"
+		"lastchange": "2023.06.23"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2276,6 +2276,9 @@
 		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
 		"defaultsubsurfaceradius": "Default subsurface",
 		"defaultsubsurfaceradiustip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
+		"glint": "Enchantment glint",
+		"glintspeed": "Speed",
+		"glintstrength": "Strength",
 		"alphamode": "Default alpha mode",
 		"alphamode/": {
 			"blend": "Blended",
@@ -2960,6 +2963,15 @@
 			"screen": "Screen"
 		},
 		"alphamode": "Alpha mode",
+		"glint": "Enchantment glint",
+		"glinttex": "Texture",
+		"glintmode": "Mode",
+		"glintmode/": {
+			"none": "None",
+			"item": "Item",
+			"entity": "Entity"
+		},
+		"glintscale": "Scale",
 		"audio": "AUDIO",
 		"audioadd": "Add sound",
 		"path": "PATH",

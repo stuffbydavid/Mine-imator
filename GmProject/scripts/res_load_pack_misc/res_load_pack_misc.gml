@@ -26,6 +26,12 @@ function res_load_pack_misc()
 	if (clouds_texture != null)
 		texture_free(clouds_texture)
 	
+	if (glint_entity_texture != null)
+		texture_free(glint_entity_texture)
+	
+	if (glint_item_texture != null)
+		texture_free(glint_item_texture)
+	
 	// Pack image
 	if (!file_exists_lib(load_assets_dir + mc_pack_image_file) && id != mc_res)
 		block_preview_texture = texture_sprite(spr_unknown_pack)
@@ -63,4 +69,15 @@ function res_load_pack_misc()
 		clouds_texture = texture_duplicate(mc_res.clouds_texture)
 	else
 		clouds_texture = texture_create(load_assets_dir + mc_clouds_image_file)
+	
+	// Enchantment glint
+	if (!file_exists_lib(load_assets_dir + mc_glint_entity_file) && id != mc_res)
+		glint_entity_texture = texture_duplicate(mc_res.glint_entity_texture)
+	else
+		glint_entity_texture = texture_create(load_assets_dir + mc_glint_entity_file)
+	
+	if (!file_exists_lib(load_assets_dir + mc_glint_item_file) && id != mc_res)
+		glint_item_texture = texture_duplicate(mc_res.glint_item_texture)
+	else
+		glint_item_texture = texture_create(load_assets_dir + mc_glint_item_file)
 }

@@ -53,6 +53,8 @@
 		<file>Shaders/Compiled/shader_high_fog.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_high_fog_apply.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_high_fog_apply.vsh.d3d</file>
+		<file>Shaders/Compiled/shader_high_glint.fsh.d3d</file>
+		<file>Shaders/Compiled/shader_high_glint.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_high_indirect_blur.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_high_indirect_blur.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_high_light_point.fsh.d3d</file>
@@ -157,6 +159,8 @@
 		<file>Shaders/shader_high_fog.vsh</file>
 		<file>Shaders/shader_high_fog_apply.fsh</file>
 		<file>Shaders/shader_high_fog_apply.vsh</file>
+		<file>Shaders/shader_high_glint.fsh</file>
+		<file>Shaders/shader_high_glint.vsh</file>
 		<file>Shaders/shader_high_indirect_blur.fsh</file>
 		<file>Shaders/shader_high_indirect_blur.vsh</file>
 		<file>Shaders/shader_high_light_apply.fsh</file>
