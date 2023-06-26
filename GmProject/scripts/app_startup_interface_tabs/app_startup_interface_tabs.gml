@@ -35,7 +35,6 @@ function app_startup_interface_tabs()
 		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
 		with (render)
 		{
-			tbx_dof_quality = new_textbox_integer()
 			tbx_ssao_radius = new_textbox_decimals()
 			tbx_ssao_power = new_textbox_integer()
 			tbx_ssao_power.suffix = "%"
@@ -114,9 +113,11 @@ function app_startup_interface_tabs()
 			tbx_sky_sun_angle = new_textbox_integer()
 			tbx_sky_sun_angle.suffix = "°"
 			tbx_sky_sun_scale = new_textbox_decimals()
+			tbx_sky_sun_scale.suffix = "%"
 			tbx_sky_moon_angle = new_textbox_integer()
 			tbx_sky_moon_angle.suffix = "°"
 			tbx_sky_moon_scale = new_textbox_decimals()
+			tbx_sky_moon_scale.suffix = "%"
 			tbx_sunlight_strength = new_textbox_integer()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()

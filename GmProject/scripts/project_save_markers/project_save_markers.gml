@@ -24,7 +24,7 @@ function project_save_markers()
 			
 			json_save_var("id", m.save_id)
 			json_save_var("position", m.pos)
-			json_save_var("name", m.name)
+			json_save_var("name", json_string_encode(m.name))
 			json_save_var("color", m.color)
 			
 			json_save_object_done()

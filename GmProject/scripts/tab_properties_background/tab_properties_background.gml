@@ -141,7 +141,7 @@ function tab_properties_background()
 			
 			// Sun scale
 			tab_control_dragger()
-			draw_dragger("backgroundskysunscale", dx, dy, dragger_width, background_sky_sun_scale, background_sky_sun_scale / 100, 0, 100, 1, snap_min, tab.background.tbx_sky_sun_scale, action_background_sky_sun_scale)
+			draw_dragger("backgroundskysunscale", dx, dy, dragger_width, round(background_sky_sun_scale * 100), 0.1, 0, 10000, 100, 1, tab.background.tbx_sky_sun_scale, action_background_sky_sun_scale)
 			tab_next()
 			
 			// Moon
@@ -169,7 +169,7 @@ function tab_properties_background()
 			
 			// Moon scale
 			tab_control_dragger()
-			draw_dragger("backgroundskymoonscale", dx, dy, dragger_width, background_sky_moon_scale, background_sky_moon_scale / 100, 0, 100, 1, snap_min, tab.background.tbx_sky_moon_scale, action_background_sky_moon_scale)
+			draw_dragger("backgroundskymoonscale", dx, dy, dragger_width, round(background_sky_moon_scale * 100), 0.1, 0, 10000, 100, 1, tab.background.tbx_sky_moon_scale, action_background_sky_moon_scale)
 			tab_next()
 		}
 		
@@ -204,7 +204,7 @@ function tab_properties_background()
 			
 			// Cloud speed
 			tab_control_dragger()
-			draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 1 / 10, -no_limit, no_limit, 100, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
+			draw_dragger("backgroundskycloudsspeed", dx, dy, dragger_width, round(background_sky_clouds_speed * 100), 0.1, -no_limit, no_limit, 100, 0, tab.background.tbx_sky_clouds_speed, action_background_sky_clouds_speed)
 			tab_next()
 			
 			// Cloud offset
