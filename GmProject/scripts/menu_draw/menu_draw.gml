@@ -72,9 +72,18 @@ function menu_draw()
 		
 		// Drop shadow
 		var shadowy, shadowh;
-		shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
-		shadowh = menuh + m.menu_button_h
-		draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+		if (m.menu_w > m.menu_w_start)
+		{
+			shadowy = yy
+			shadowh = menuh
+			draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+		}
+		else
+		{
+			shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
+			shadowh = menuh + m.menu_button_h
+			draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+		}
 		
 		if (window_busy = "menu" && m.menu_ani_type != "hide" && menu_active)
 			window_busy = ""
@@ -156,16 +165,11 @@ function menu_draw()
 				if (m.menu_type = e_menu.LIST || m.menu_type = e_menu.LIST_SEAMLESS)
 				{
 					if (updatewidth)
-					{
 						list_update_width(m.menu_list)
-						//m.menu_list.width += 16
-					}
 					
 					var w = m.menu_w;
 					m.menu_w = max(m.menu_list.width + 16, m.menu_w)
-					
-					if ((m.menu_x + m.menu_w > (m.content_x + m.content_width)) && m.menu_x > window_width/2)
-						m.menu_x = (m.menu_x + w) - m.menu_w
+					m.menu_x = (m.menu_x + w) - m.menu_w
 				}
 				
 				break
@@ -174,7 +178,7 @@ function menu_draw()
 			case e_menu.CONTENT: // Script with content
 			case e_menu.TRANSITION_LIST:
 			{
-				clip_begin(0, content_y, window_width, content_height)
+				clip_begin(menu_x_draw, content_y, window_width, content_height)
 				
 				if (m.menu_type = e_menu.CONTENT)
 				{
@@ -197,11 +201,30 @@ function menu_draw()
 				
 				clip_end()
 				
+				// Content-resize hack if menu is outside the window
+				var j = 0;
+				while ((((m.menu_y - m.menu_height_goal) < 0 && m.menu_flip) || (content_y + m.menu_height_goal) > window_height && !m.menu_flip) && j < 10)
+				{
+					m.menu_w += 32
+					m.menu_x -= 32
+					
+					content_x = 0
+					content_width = 0
+					
+					clip_begin(0, 0, 0, 0)
+					script_execute(m.menu_script, m.menu_x, yy, m.menu_w, m.menu_height)
+					clip_end()
+					
+					m.menu_height_goal = (dy - dy_start) + (24 - 8)
+					j++
+				}
+				
 				if (m.menu_steps = 0)
 				{
 					m.menu_height = m.menu_height_goal
 					
-					if (content_y + m.menu_height > window_height)
+					// Flip!
+					if ((m.menu_y - m.menu_height) > (window_height - (content_y + m.menu_height)))
 						m.menu_flip = true
 				}
 				else
