@@ -23,7 +23,7 @@ function tl_update_matrix(usepaths = false, updateik = true)
 		curtl = app.project_timeline_list[|i]
 		
 		// Update children
-		if (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.SPECIAL_BLOCK)
+		if (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL)
 		{
 			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
 			{

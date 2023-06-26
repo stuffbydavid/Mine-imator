@@ -88,7 +88,7 @@ function draw_button_menu()
 	
 	if (menu_bench)
 		nameid = "bench" + name
-	else if (popup != null)
+	else if (content_tab = null && popup != null)
 		nameid = popup.name + name
 	else
 		nameid = name

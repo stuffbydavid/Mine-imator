@@ -137,8 +137,8 @@ function tab_timeline_editor_hierarchy()
 		}
 		
 		// Inherit pos
-		if ((tl_edit.type = e_tl_type.CHARACTER || tl_edit.type = e_tl_type.SPECIAL_BLOCK) &&
-			(par.type = e_tl_type.CHARACTER || par.type = e_tl_type.SPECIAL_BLOCK))
+		if ((tl_edit.type = e_tl_type.CHARACTER || tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL) &&
+			(par.type = e_tl_type.CHARACTER || par.type = e_tl_type.SPECIAL_BLOCK  || par.type = e_tl_type.MODEL))
 		{
 			tab_control_checkbox()
 			draw_checkbox("timelineeditorinheritpose", dx, dy, tl_edit.inherit_pose, action_tl_inherit_pose, "timelineeditorinheritposehelp")
