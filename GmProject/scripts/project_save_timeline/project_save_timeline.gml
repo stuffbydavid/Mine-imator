@@ -151,6 +151,8 @@ function project_save_timeline()
 			json_save_var_bool("only_render_glow", only_render_glow)
 			json_save_var("glint_mode", glint_mode)
 			json_save_var("glint_scale", glint_scale)
+			json_save_var("glint_speed", glint_speed)
+			json_save_var("glint_strength", glint_strength)
 			json_save_var_save_id("glint_tex", glint_tex)
 			json_save_var_bool("fog", fog)
 			

@@ -424,6 +424,10 @@ function app_startup_interface_tabs()
 		{
 			tbx_glint_scale = new_textbox_integer()
 			tbx_glint_scale.suffix = "%"
+			tbx_glint_speed = new_textbox_integer()
+			tbx_glint_speed.suffix = "%"
+			tbx_glint_strength = new_textbox_integer()
+			tbx_glint_strength.suffix = "%"
 			tbx_depth = new_textbox_ninteger()
 		}
 		

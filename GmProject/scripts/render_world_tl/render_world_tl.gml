@@ -223,6 +223,7 @@ function render_world_tl()
 	}
 	
 	// Glint mode
+	var tex, spd;
 	if (glint_tex.texture)
 		tex = glint_tex.texture
 	else
@@ -231,8 +232,10 @@ function render_world_tl()
 	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 	
+	spd = app.background_time * glint_speed * app.project_render_glint_speed
 	render_set_uniform_int("uGlintEnabled", glint_mode = e_glint.NONE ? 0 : 1)
-	
+	render_set_uniform_vec2("uGlintOffset", spd * (0.000625), spd * (0.00125))
+	render_set_uniform("uGlintStrength", app.project_render_glint_strength * glint_strength)
 	render_set_uniform_vec2("uGlintSize", sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
 	
 	// Render

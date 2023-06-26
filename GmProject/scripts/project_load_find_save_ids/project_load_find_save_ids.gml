@@ -196,6 +196,7 @@ function project_load_find_save_ids()
 		
 		// Glint
 		glint_tex = save_id_find(save_id_map[?glint_tex])
+		glint_tex.count++
 		
 		// Set part list
 		if (part_list != null)

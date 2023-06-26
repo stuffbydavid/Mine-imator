@@ -201,7 +201,12 @@ function project_load_timeline(map)
 		only_render_glow = value_get_real(map[?"only_render_glow"], only_render_glow)
 		glint_mode = value_get_real(map[?"glint_mode"], glint_mode)
 		glint_scale = value_get_real(map[?"glint_scale"], glint_scale)
+		glint_speed = value_get_real(map[?"glint_speed"], glint_speed)
+		glint_strength = value_get_real(map[?"glint_strength"], glint_strength)
+		
+		glint_tex.count--
 		glint_tex = value_get_save_id(map[?"glint_tex"], mc_res.save_id)
+		
 		fog = value_get_real(map[?"fog"], fog)
 		
 		if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))

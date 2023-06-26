@@ -55,6 +55,8 @@ function tl_copy(to)
 	to.only_render_glow = only_render_glow
 	to.glint_mode = glint_mode
 	to.glint_scale = glint_scale
+	to.glint_speed = glint_speed
+	to.glint_strength = glint_strength
 	to.glint_tex = glint_tex
 	to.fog = fog
 	to.wind = wind

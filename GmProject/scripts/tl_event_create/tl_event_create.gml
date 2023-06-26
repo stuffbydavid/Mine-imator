@@ -113,6 +113,8 @@ function tl_event_create()
 	
 	glint_mode = e_glint.NONE
 	glint_scale = 1
+	glint_speed = 1
+	glint_strength = 1
 	glint_tex = mc_res
 	glint_tex.count++
 	

@@ -35,9 +35,17 @@ function tab_timeline_editor_appearance()
 			togglebutton_add("timelineeditorglintmodeentity", null, e_glint.ENTITY, tl_edit.glint_mode = e_glint.ENTITY, action_tl_glint_mode)
 			draw_togglebutton("timelineeditorglintmode", dx, dy)
 			tab_next()
-		
+			
 			tab_control_dragger()
 			draw_dragger("timelineeditorglintscale", dx, dy, dragger_width, round(tl_edit.glint_scale * 100), tl_edit.glint_scale, 1, no_limit, 100, 1, tab.appearance.tbx_glint_scale, action_tl_glint_scale)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("timelineeditorglintspeed", dx, dy, dragger_width, round(tl_edit.glint_speed * 100), tl_edit.glint_speed, 1, no_limit, 100, 1, tab.appearance.tbx_glint_speed, action_tl_glint_speed)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("timelineeditorglintstrength", dx, dy, dragger_width, round(tl_edit.glint_strength * 100), tl_edit.glint_strength, 1, no_limit, 100, 1, tab.appearance.tbx_glint_strength, action_tl_glint_strength)
 			tab_next()
 			
 			tab_collapse_end()

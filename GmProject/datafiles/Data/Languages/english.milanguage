@@ -2964,14 +2964,18 @@
 		},
 		"alphamode": "Alpha mode",
 		"glint": "Enchantment glint",
-		"glinttex": "Texture",
-		"glintmode": "Mode",
-		"glintmode/": {
-			"none": "None",
-			"item": "Item",
-			"entity": "Entity"
+		"glint/": {
+			"tex": "Texture",
+			"mode": "Mode",
+			"mode/": {
+				"none": "None",
+				"item": "Item",
+				"entity": "Entity"
+			},
+			"scale": "Scale",
+			"speed": "Speed",
+			"strength": "Strength"
 		},
-		"glintscale": "Scale",
 		"audio": "AUDIO",
 		"audioadd": "Add sound",
 		"path": "PATH",
