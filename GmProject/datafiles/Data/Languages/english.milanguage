@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.23"
+		"lastchange": "2023.06.26"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -3355,7 +3355,6 @@
 		"viewport": "Viewport",
 		"zisup": "Z is up",
 		"workbench": "Workbench",
-		"searchvariants": "Include variants in block search",
 		"separatetoolmodes": "Separate tool modes",
 		"separatetoolmodestip": "Switch between separate viewport tools, instead of toggling tools together.",
 		"gizmosfacecamera": "View controls always face camera",

@@ -60,8 +60,19 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	
 	if (draw_textfield("listsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
 	{
+		slist.scroll.value = 0
+		slist.scroll.value_goal = 0
+		
 		slist.search = (slist.search_tbx.text != "")
 		sortlist_update(slist)
+		
+		if (string_length(slist.search_tbx.text) > 1)
+		{
+			if (slist = bench_settings.block_list)
+				action_bench_block_name(bench_settings.block_name)
+			else if (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.bodypart_model_list)
+				action_bench_model_name(bench_settings.model_name)
+		}
 	}
 	
 	h -= 32

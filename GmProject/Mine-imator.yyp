@@ -387,7 +387,6 @@
     {"id":{"name":"action_project_render_transparent_block_texture_filtering","path":"scripts/action_project_render_transparent_block_texture_filtering/action_project_render_transparent_block_texture_filtering.yy",},"order":2,},
     {"id":{"name":"action_project_render_texture_filtering_level","path":"scripts/action_project_render_texture_filtering_level/action_project_render_texture_filtering_level.yy",},"order":1,},
     {"id":{"name":"action_setting_language_load","path":"scripts/action_setting_language_load/action_setting_language_load.yy",},"order":1,},
-    {"id":{"name":"action_setting_search_variants","path":"scripts/action_setting_search_variants/action_setting_search_variants.yy",},"order":7,},
     {"id":{"name":"action_setting_z_is_up","path":"scripts/action_setting_z_is_up/action_setting_z_is_up.yy",},"order":13,},
     {"id":{"name":"action_setting_theme","path":"scripts/action_setting_theme/action_setting_theme.yy",},"order":15,},
     {"id":{"name":"action_setting_accent_custom","path":"scripts/action_setting_accent_custom/action_setting_accent_custom.yy",},"order":17,},
