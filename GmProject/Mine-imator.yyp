@@ -1971,6 +1971,7 @@
     {"id":{"name":"vec4_mul_matrix","path":"scripts/vec4_mul_matrix/vec4_mul_matrix.yy",},"order":20,},
     {"id":{"name":"angle_difference_fix","path":"scripts/angle_difference_fix/angle_difference_fix.yy",},"order":7,},
     {"id":{"name":"ease","path":"scripts/ease/ease.yy",},"order":9,},
+    {"id":{"name":"new_minecraft_map","path":"scripts/new_minecraft_map/new_minecraft_map.yy",},"order":18,},
     {"id":{"name":"shader_palette","path":"shaders/shader_palette/shader_palette.yy",},"order":27,},
     {"id":{"name":"spr_blue_noise","path":"sprites/spr_blue_noise/spr_blue_noise.yy",},"order":20,},
     {"id":{"name":"dec_to_hex","path":"scripts/dec_to_hex/dec_to_hex.yy",},"order":11,},

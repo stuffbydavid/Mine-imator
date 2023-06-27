@@ -108,6 +108,7 @@ function asset_load()
 		case ".png":
 		case ".jpg":
 		case ".jpeg":
+		case ".dat":
 			log("Opening image", fn)
 			popup_importimage.filename = fn
 			popup_show(popup_importimage)

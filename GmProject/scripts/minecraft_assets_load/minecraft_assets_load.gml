@@ -212,6 +212,31 @@ function minecraft_assets_load()
 					ds_list_copy(minecraft_armor_trim_material_list, armormap[?"material"])
 				}
 				
+				// Map colors
+				if (is_undefined(load_assets_map[?"map_colors"]))
+				{
+					log("No map colors found")
+					return false
+				}
+				
+				var colors = load_assets_map[?"map_colors"];
+				
+				var size, col, s1, s2, s3;
+				size = ds_list_size(colors)
+				s1 = make_color_rgb(180, 180, 180)
+				s2 = make_color_rgb(220, 220, 220)
+				s3 = make_color_rgb(135, 135, 135)
+				minecraft_map_color_array = array_create(size * 4)
+				
+				for (var i = 0; i < ds_list_size(colors); i++)
+				{
+					col = hex_to_color(colors[|i])
+					minecraft_map_color_array[i * 4 + 0] = color_multiply(col, s1)
+					minecraft_map_color_array[i * 4 + 1] = color_multiply(col, s2)
+					minecraft_map_color_array[i * 4 + 2] = col
+					minecraft_map_color_array[i * 4 + 3] = color_multiply(col, s3)
+				}
+				
 				load_assets_stage = "models"
 				load_assets_progress = 0.5
 				break;

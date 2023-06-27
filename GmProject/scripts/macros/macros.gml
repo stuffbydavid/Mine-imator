@@ -58,7 +58,7 @@ function macros()
 	#macro unzip_directory				file_directory + "unzip/"
 	#macro render_default				"performance"
 	#macro render_default_file			render_directory + render_default + ".mirender"
-	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;"
+	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
 	#macro mc_file_directory			file_directory + "Minecraft_unzip/"

@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.26"
+		"lastchange": "2023.06.27"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -355,6 +355,8 @@
 		"loadaudiocaption": "Import audio error",
 		"exportmovie": "An error occurred when exporting the movie. Check your render settings and make sure the target file isn't opened in another program. See the log for details.",
 		"exportmoviecaption": "Movie export error",
+		"loadmap": "An error occurred when importing the Minecraft map.",
+		"loadmapcaption": "Import Minecraft map error",
 		"upgrade": "Invalid key!",
 		"upgradecaption": "Upgrade error",
 		"downloadskinuser": "The user \"%1\" does not exist.",
@@ -380,7 +382,7 @@
 	"filedialog/": {
 		"open/": {
 			"image": "Images",
-			"imagecaption": "Open image",
+			"imagecaption": "Open image or Minecraft map",
 			"imageorpack": "Images or Minecraft resource packs",
 			"imageorpackcaption": "Open image or resource pack",
 			"pack": "Minecraft resource packs",

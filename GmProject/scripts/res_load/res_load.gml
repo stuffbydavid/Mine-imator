@@ -115,7 +115,22 @@ function res_load(reload = false)
 			if (texture)
 				texture_free(texture)
 			
-			texture = texture_create(fn)
+			texture = null
+			
+			if (filename_ext(fn) = ".dat")
+			{
+				var map = new_minecraft_map(fn);
+				
+				if (!map)
+				{
+					error("errorloadmap")
+					break
+				}
+				else
+					texture = new_minecraft_map(fn)
+			}
+			else
+				texture = texture_create(fn)
 			
 			break
 		}
