@@ -2539,7 +2539,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"file.dll","CopyToMask":-1,"filePath":"datafiles/Data/Libraries",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"movie.dll","CopyToMask":-1,"filePath":"datafiles/Data/Libraries",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"window.dll","CopyToMask":-1,"filePath":"datafiles/Data/Libraries",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"english.milanguage","CopyToMask":-1,"filePath":"datafiles/Data/Languages",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"legacy.midata","CopyToMask":-1,"filePath":"datafiles/Data",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"extreme.mirender","CopyToMask":-1,"filePath":"datafiles/Data/Render",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"performance.mirender","CopyToMask":-1,"filePath":"datafiles/Data/Render",},
@@ -2570,6 +2569,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"peaceful_creeper.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"english.milanguage","CopyToMask":-1,"filePath":"datafiles/Data/Languages",},
   ],
   "MetaData": {
     "IDEVersion": "2022.0.0.19",
