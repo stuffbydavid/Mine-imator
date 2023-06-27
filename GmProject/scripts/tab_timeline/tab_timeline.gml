@@ -1248,7 +1248,24 @@ function tab_timeline()
 	
 	// Context menu
 	if (window_busy = "" && mouseintl)
-		context_menu_area(content_x, content_y, content_width, content_height, "timeline", null, null, null, null)
+	{
+		if (keyboard_check(vk_shift) && timeline_settings_keyframes)
+		{
+			if (app_mouse_box(content_x, content_y, content_width, content_height) && mouse_right_released)
+			{
+				menu_settings_set(mouse_x, mouse_y, "timelinelkeyframetransitions", 0)
+				settings_menu_script = menu_settings_transitions
+				settings_menu_w = 244
+				settings_menu_h = 438
+				settings_menu_quick = true
+				
+				if (settings_menu_y + settings_menu_h + 32 > window_height)
+					settings_menu_y = (window_height - (settings_menu_h + 32))
+			}
+		}
+		else
+			context_menu_area(content_x, content_y, content_width, content_height, "timeline", null, null, null, null)
+	}
 	
 	// Sound resize
 	if (mousekfstart)

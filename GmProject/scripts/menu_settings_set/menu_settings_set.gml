@@ -16,6 +16,7 @@ function menu_settings_set(xx, yy, name, buttonheight)
 	settings_menu_ani = 0
 	settings_menu_ani_type = "show"
 	settings_menu_steps = 0
+	settings_menu_quick = false
 	
 	settings_menu_sortlist = ""
 	

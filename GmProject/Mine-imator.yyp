@@ -1836,6 +1836,7 @@
     {"id":{"name":"spr_load_assets","path":"sprites/spr_load_assets/spr_load_assets.yy",},"order":4,},
     {"id":{"name":"obj_builder_thread","path":"objects/obj_builder_thread/obj_builder_thread.yy",},"order":38,},
     {"id":{"name":"draw_image","path":"scripts/draw_image/draw_image.yy",},"order":19,},
+    {"id":{"name":"menu_settings_transitions","path":"scripts/menu_settings_transitions/menu_settings_transitions.yy",},"order":29,},
     {"id":{"name":"draw_image_box_cover","path":"scripts/draw_image_box_cover/draw_image_box_cover.yy",},"order":21,},
     {"id":{"name":"draw_line_ext","path":"scripts/draw_line_ext/draw_line_ext.yy",},"order":23,},
     {"id":{"name":"draw_missing","path":"scripts/draw_missing/draw_missing.yy",},"order":25,},

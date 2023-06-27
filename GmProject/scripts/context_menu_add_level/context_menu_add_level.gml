@@ -4,7 +4,7 @@
 /// @arg y
 /// @arg [item]
 
-function context_menu_add_level(name, xx, yy ,item = null)
+function context_menu_add_level(name, xx, yy, item = null)
 {
 	var script, level;
 	if (item != null)

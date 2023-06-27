@@ -29,6 +29,7 @@ function app_startup_interface_settings_menus()
 	settings_menu_scroll = new_obj(obj_scrollbar)
 	
 	settings_menu_steps = 0
+	settings_menu_quick = false
 	
 	colorpicker_startup()
 	

@@ -31,7 +31,7 @@ function context_menu_area()
 		}
 		
 		// Quick shortcut for value reset
-		if (keyboard_check(vk_shift) && argument_count > 5)
+		if (keyboard_check(vk_shift) && argument_count > 5 && context_menu_value_script != null)
 		{
 			list_item_script = action_value_reset
 			return true
