@@ -2573,6 +2573,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"english.milanguage","CopyToMask":-1,"filePath":"datafiles/Data/Languages",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.0.0.19",
+    "IDEVersion": "2022.0.1.31",
   },
 }
