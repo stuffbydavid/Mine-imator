@@ -3374,7 +3374,6 @@
 		"tools": "Tools",
 		"viewport": "Viewport",
 		"zisup": "Z is up",
-		"workbench": "Workbench",
 		"separatetoolmodes": "Separate tool modes",
 		"separatetoolmodestip": "Switch between separate viewport tools, instead of toggling tools together.",
 		"gizmosfacecamera": "View controls always face camera",

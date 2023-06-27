@@ -85,10 +85,6 @@ function tab_settings_interface()
 	tab_next()
 	
 	dy += label_height + 6
-	draw_label(text_get("settingsworkbench"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-	dy += 8
-	
-	dy += label_height + 6
 	draw_label(text_get("settingstimeline"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8
 	

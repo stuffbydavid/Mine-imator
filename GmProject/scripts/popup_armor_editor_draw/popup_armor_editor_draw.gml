@@ -74,7 +74,6 @@ function popup_armor_editor_draw_piece(piece, pieceid, capwid)
 
 function popup_armor_editor_draw()
 {
-	// Preview TODO
 	popup.preview.select = popup.armor_edit
 	popup.preview.last_select = popup.armor_edit
 	popup.preview.update = true

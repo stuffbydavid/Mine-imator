@@ -21,16 +21,20 @@ function context_menu_area()
 	
 	if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
 	{
+		if (argument_count > 5)
+		{
+			context_menu_value = argument[5]
+			context_menu_value_type = argument[6]
+			
+			context_menu_value_script = argument[7]
+			context_menu_value_default = argument[8]
+		}
+		
 		// Quick shortcut for value reset
 		if (keyboard_check(vk_shift) && argument_count > 5)
 		{
-			if (argument[6] = e_context_type.TIME || argument[6] = e_context_type.NUMBER)
-				script_execute(argument[7], argument[8], false)
-			
-			if (argument[6] = e_context_type.COLOR)
-				script_execute(argument[7], argument[8])
-			
-			return 0
+			list_item_script = action_value_reset
+			return true
 		}
 		
 		context_menu_close()
@@ -44,16 +48,6 @@ function context_menu_area()
 		
 		// Get current font
 		font = draw_get_font()
-		
-		if (argument_count > 5)
-		{
-			context_menu_value = argument[5]
-			context_menu_value_type = argument[6]
-			
-			context_menu_value_script = argument[7]
-			context_menu_value_default = argument[8]
-		}
-		
 		context_menu_add_level(name, mouse_x + 1, mouse_y)
 		
 		if (font != draw_get_font())
