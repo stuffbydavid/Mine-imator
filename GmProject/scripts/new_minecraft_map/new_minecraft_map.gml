@@ -1,6 +1,6 @@
 /// new_minecraft_map(fn)
 /// @arg fn
-/// @desc Reads Minecraft map .dat and returns a texture.
+/// @desc Reads Minecraft map .dat and returns a texture. https://minecraft.fandom.com/wiki/Map_item_format
 
 function new_minecraft_map(fn)
 {
@@ -54,7 +54,7 @@ function new_minecraft_map(fn)
 		
 		for (var xx = 0; xx < 128; xx++)
 		{
-			for (var yy = 0; yy < (128 * 128); yy++)
+			for (var yy = 0; yy < 128; yy++)
 			{
 				col = buffer_peek(buffer_current, colors + (xx + yy * 128), buffer_u8)
 				
