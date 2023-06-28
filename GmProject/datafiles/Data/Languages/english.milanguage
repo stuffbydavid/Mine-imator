@@ -1523,7 +1523,10 @@
 				"painting_earth": "Earth",
 				"painting_wind": "Wind",
 				"painting_water": "Water",
-				"painting_fire": "Fire"
+				"painting_fire": "Fire",
+				"item_frame": "Item Frame",
+				"glow_item_frame": "Glow Item Frame",
+				"map": "Map"
 			}
 		}
 	},
