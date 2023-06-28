@@ -58,7 +58,7 @@ function new_minecraft_map(fn)
 			{
 				col = buffer_peek(buffer_current, colors + (xx + yy * 128), buffer_u8)
 				
-				if (col > 0)
+				if (col > 3)
 					draw_point_color(xx, yy, minecraft_map_color_array[col])
 			}
 		}

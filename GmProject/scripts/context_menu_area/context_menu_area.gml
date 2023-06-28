@@ -33,7 +33,18 @@ function context_menu_area()
 		// Quick shortcut for value reset
 		if (keyboard_check(vk_shift) && argument_count > 5 && context_menu_value_script != null)
 		{
-			list_item_script = action_value_reset
+			if (popup = popup_armor_editor)
+			{
+				list_item_script = action_value_reset
+				return true
+			}
+			
+			if (argument[6] = e_context_type.TIME || argument[6] = e_context_type.NUMBER)
+				script_execute(argument[7], argument[8], false)
+			
+			if (argument[6] = e_context_type.COLOR)
+				script_execute(argument[7], argument[8])
+			
 			return true
 		}
 		
