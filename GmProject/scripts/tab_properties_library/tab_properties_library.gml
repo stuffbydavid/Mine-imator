@@ -115,6 +115,14 @@ function tab_properties_library()
 				tab_next()
 			}
 			
+			// Model blend color
+			if (temp_edit.model_use_blend_color)
+			{
+				tab_control_color()
+				draw_button_color("librarymodelcolor", dx, dy, dw, temp_edit.model_blend_color, temp_edit.model_blend_color_default, false, action_lib_model_blend_color)
+				tab_next()
+			}
+			
 			break
 		}
 		
@@ -307,7 +315,7 @@ function tab_properties_library()
 			{
 				tab_control_button_label()
 				
-				if (draw_button_label("benchpatterneditor", dx, dy, dw, null, e_button.SECONDARY))
+				if (draw_button_label("librarypatterneditor", dx, dy, dw, null, e_button.SECONDARY))
 					popup_pattern_editor_show(temp_edit)
 				
 				tab_next()
@@ -321,7 +329,7 @@ function tab_properties_library()
 			{
 				tab_control_button_label()
 				
-				if (draw_button_label("bencharmoreditor", dx, dy, dw, null, e_button.SECONDARY))
+				if (draw_button_label("libraryarmoreditor", dx, dy, dw, null, e_button.SECONDARY))
 					popup_armor_editor_show(temp_edit)
 				
 				tab_next()
@@ -357,6 +365,14 @@ function tab_properties_library()
 			
 				tab_control_menu(ui_large_height)
 				draw_button_menu("librarybodypartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				tab_next()
+			}
+			
+			// Model blend color
+			if (temp_edit.model_use_blend_color)
+			{
+				tab_control_color()
+				draw_button_color("librarymodelcolor", dx, dy, dw, temp_edit.model_blend_color, temp_edit.model_blend_color_default, false, action_lib_model_blend_color)
 				tab_next()
 			}
 			

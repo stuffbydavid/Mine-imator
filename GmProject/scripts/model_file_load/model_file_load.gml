@@ -99,6 +99,9 @@ function model_file_load(fname, res = null)
 		// Scale (optional)
 		scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
 		
+		// Model color (string)
+		model_color = value_get_string(map[?"model_color"], "none")
+		
 		// Bounds in default position
 		bounds_parts_start = point3D(no_limit, no_limit, no_limit)
 		bounds_parts_end = point3D(-no_limit, -no_limit, -no_limit)

@@ -151,6 +151,8 @@ function macros()
 	#macro c_minecraft_red				hex_to_color("B02E26")
 	#macro c_minecraft_black			hex_to_color("1D1D21")
 	
+	#macro c_minecraft_leather			hex_to_color("#A06540")
+	
 	// Audio
 	#macro sample_rate					44100
 	#macro sample_size					4

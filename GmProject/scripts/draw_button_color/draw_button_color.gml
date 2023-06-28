@@ -80,9 +80,9 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 		labelalpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.HOVER])
 		labelalpha = lerp(labelalpha, a_accent, microani_arr[e_microani.ACTIVE])
 		labelalpha = lerp(labelalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
-	
+		
 		draw_set_font(font_label)
-	
+		
 		if (!app.panel_compact && tab_collumns_count > 1)
 			draw_label(string_limit(text_get(name), textw - 8), xx, yy - (label_height + 8), fa_left, fa_top, labelcolor, labelalpha)
 		else
@@ -94,7 +94,7 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 	if (mouseon && mouse_left_released)
 	{
 		click = true
-		colorpicker_show(name, color, def, script, xx, yy, w, h)
+		colorpicker_show(name, color, def, script, buttonx, yy, w, h)
 		
 		if (hsvmode)
 			colorpicker.mode = "hsv"

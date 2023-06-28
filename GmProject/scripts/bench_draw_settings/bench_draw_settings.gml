@@ -225,6 +225,18 @@ function bench_draw_settings(bx, by, bw, bh)
 					dy += (ui_large_height + 8)
 				}
 				
+				// Model blend color
+				if (bench_settings.model_use_blend_color)
+				{
+					panel_compact = true
+					
+					tab_control_color()
+					draw_button_color("benchmodelcolor", dx, dy, dw, bench_settings.model_blend_color, bench_settings.model_blend_color_default, false, action_bench_model_blend_color)
+					tab_next()
+					
+					panel_compact = false
+				}
+				
 				// Pattern editor
 				if (bench_settings.pattern_type != "")
 				{

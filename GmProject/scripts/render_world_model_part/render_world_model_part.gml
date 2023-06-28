@@ -245,6 +245,16 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				blendcolor = color
 		}
 		
+		// Model blend color
+		if (shape.use_model_color)
+		{
+			if (object_index = obj_preview && select.model_use_blend_color)
+				blendcolor = color_multiply(blendcolor, select.model_blend_color)
+			
+			if (tlobject != null && tlobject.temp.model_use_blend_color)
+				blendcolor = color_multiply(blendcolor, tlobject.temp.model_blend_color)
+		}
+		
 		// Blend shape color/alpha
 		if (blendcolor != c_white || alpha != 1)
 		{

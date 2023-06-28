@@ -20,6 +20,10 @@ function temp_copy(to)
 	to.model_state = array_copy_1d(model_state)
 	to.model_part_name = model_part_name
 	
+	to.model_use_blend_color = model_use_blend_color
+	to.model_blend_color = model_blend_color
+	to.model_blend_color_default = model_blend_color_default
+	
 	to.pattern_base_color = pattern_base_color
 	to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
 	to.pattern_color_list = array_copy_1d(pattern_color_list)

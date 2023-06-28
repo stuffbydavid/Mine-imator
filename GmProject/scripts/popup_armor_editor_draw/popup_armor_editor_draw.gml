@@ -23,7 +23,7 @@ function popup_armor_editor_draw_piece_type(piece, pieceid, capwid)
 		{
 			w -= (28 + 8)
 			
-			if (draw_button_color("armoreditordye" + piece, dx + dw - 24, dy, 24, popup.armor_edit.armor_array[pieceid + 1], hex_to_color("#A06540"), false, action_armor_editor))
+			if (draw_button_color("armoreditordye" + piece, dx + dw - 24, dy, 24, popup.armor_edit.armor_array[pieceid + 1], c_minecraft_leather, false, action_armor_editor))
 			{
 				menu_armor_piece = pieceid
 				menu_armor_piece_data = 1

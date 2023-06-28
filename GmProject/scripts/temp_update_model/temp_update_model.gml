@@ -1,7 +1,8 @@
-/// temp_update_model()
+/// temp_update_model([copy])
+/// @arg [copy]
 /// @desc Gets the correct file and textures from the name and state or resource.
 
-function temp_update_model()
+function temp_update_model(copy = false)
 {
 	model_file = null
 	
@@ -158,6 +159,9 @@ function temp_update_model()
 	
 	if (pattern_type != "")
 		array_add(pattern_update, id)
+	
+	if (!copy)
+		temp_update_model_color()
 	
 	model_shape_update_color()
 	temp_update_armor(id)

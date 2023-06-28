@@ -42,6 +42,9 @@ function model_file_load_shape(map, res)
 		// Description (optional)
 		description = value_get_string(map[?"description"], "")
 		
+		// Use model blend color
+		use_model_color = value_get_real(map[?"use_model_color"], false)
+		
 		// Texture (optional)
 		if (is_string(map[?"texture"]))
 		{

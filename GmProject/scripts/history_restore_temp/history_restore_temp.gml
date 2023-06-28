@@ -60,7 +60,7 @@ function history_restore_temp(save)
 		if (text_font != null)
 			text_font.count++
 		
-		temp_update()
+		temp_update(true)
 		
 		// Restore particle types
 		if (type = e_temp_type.PARTICLE_SPAWNER)

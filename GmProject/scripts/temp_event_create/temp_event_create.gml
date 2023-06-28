@@ -39,6 +39,10 @@ function temp_event_create()
 	model_part_name = ""
 	model_part = null
 	
+	model_use_blend_color = false
+	model_blend_color = c_white
+	model_blend_color_default = model_blend_color
+	
 	load_update_tree = false
 	
 	pattern_type = ""
@@ -48,10 +52,10 @@ function temp_event_create()
 	pattern_skin = null
 	
 	armor_array = []
-	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
-	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
-	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
-	array_add(armor_array, ["none", hex_to_color("#A06540"), "none", "none"])
+	array_add(armor_array, ["none", c_minecraft_leather, "none", "none"])
+	array_add(armor_array, ["none", c_minecraft_leather, "none", "none"])
+	array_add(armor_array, ["none", c_minecraft_leather, "none", "none"])
+	array_add(armor_array, ["none", c_minecraft_leather, "none", "none"])
 	armor_skin_array = [null, null, null, null]
 	
 	item_tex = null
