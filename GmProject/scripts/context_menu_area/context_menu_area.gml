@@ -12,14 +12,14 @@
 
 function context_menu_area()
 {
-	var xx, yy, wid, hei, name, font;
+	var xx, yy, wid, hei, name, font, c;
 	xx = argument[0]
 	yy = argument[1]
 	wid = argument[2]
 	hei = argument[3]
 	name = argument[4]
 	
-	if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
+	if (app_mouse_box(xx, yy, wid, hei) && mouse_right_pressed)
 	{
 		if (argument_count > 5)
 		{
@@ -59,7 +59,8 @@ function context_menu_area()
 		
 		// Get current font
 		font = draw_get_font()
-		context_menu_add_level(name, mouse_x + 1, mouse_y)
+		c = context_menu_add_level(name, mouse_x + 1, mouse_y)
+		c.ani = 0.99
 		
 		if (font != draw_get_font())
 			draw_set_font(font)

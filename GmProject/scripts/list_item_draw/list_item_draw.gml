@@ -243,5 +243,7 @@ function list_item_draw()
 		list_item_script = item.script
 		list_item_script_value = item.value
 		list_item_value = context_menu_value
+		
+		return true
 	}
 }

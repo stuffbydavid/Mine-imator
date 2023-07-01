@@ -239,6 +239,36 @@ function minecraft_assets_load()
 				
 				load_assets_stage = "models"
 				load_assets_progress = 0.5
+				
+				// Swatches
+				var swatches = load_assets_map[?"swatches"];
+				
+				if (is_undefined(swatches))
+				{
+					log("No swatches found")
+					return false
+				}
+				
+				for (var i = 0; i < ds_list_size(swatches); i++)
+				{
+					var swatch = swatches[|i];
+					var s = new_obj(obj_swatch);
+					array_add(minecraft_swatch_array, s)
+					s.name = swatch[?"name"]
+					s.colors = []
+					s.color_names = []
+					
+					var colors = swatch[?"colors"];
+					
+					for (var j = 0; j < ds_list_size(colors); j++)
+					{
+						var c = colors[|j];
+						array_add(s.color_names, c[?"name"])
+						array_add(s.colors, hex_to_color(c[?"value"]))
+						ds_map_add(minecraft_swatch_color_map, c[?"name"], hex_to_color(c[?"value"]))
+					}
+				}
+				
 				break;
 			}
 			

@@ -47,9 +47,13 @@ function app_startup_interface_context_menu()
 	context_menu_value_default = 0
 	
 	context_menu_name = ""
+	context_menu_name_last = ""
 	
 	context_menu_level_amount = 0
 	context_menu_level = ds_list_create()
+	
+	context_menu_find_script = null
+	context_menu_find_script_name = ""
 	
 	context_menu_mouseon = false
 	context_menu_mouseon_level = 0
@@ -65,6 +69,8 @@ function app_startup_interface_context_menu()
 	
 	context_menu_ani = ""
 	context_menu_window = e_window.MAIN
+	
+	context_menu_current = -1
 	
 	// Textbox
 	context_menu_tbx_action = false

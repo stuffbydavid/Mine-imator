@@ -9143,6 +9143,132 @@
 			"water": "#3F76E4"
 		}
 	],
+	"swatches": [
+		{
+			"name": "dye",
+			"colors": [
+				{ "name": "black", "value": "#1D1D21" },
+				{ "name": "red", "value": "#B02E26" },
+				{ "name": "green", "value": "#5E7C16" },
+				{ "name": "brown", "value": "#835432" },
+				{ "name": "blue", "value": "#3C44AA" },
+				{ "name": "purple", "value": "#8932B8" },
+				{ "name": "cyan", "value": "#169C9C" },
+				{ "name": "light_gray", "value": "#9D9D97" },
+				{ "name": "gray", "value": "#474F52" },
+				{ "name": "pink", "value": "#F38BAA" },
+				{ "name": "lime", "value": "#80C71F" },
+				{ "name": "yellow", "value": "#FED83D" },
+				{ "name": "light_blue", "value": "#3AB3DA" },
+				{ "name": "magenta", "value": "#C74EBD" },
+				{ "name": "orange", "value": "#F9801D" },
+				{ "name": "white", "value": "#F9FFFE" }
+			]
+		},
+		{
+			"name": "potion",
+			"colors": [
+				{ "name": "water", "value": "#395FCA" },
+				{ "name": "uncraftable", "value": "#FC00FC" },
+				{ "name": "night_vision", "value": "#2020A4" },
+				{ "name": "invisibility", "value": "#818595" },
+				{ "name": "jump_boost", "value": "#23FC4D" },
+				{ "name": "fire_resistance", "value": "#E89D3B" },
+				{ "name": "swiftness", "value": "#7EB2CA" },
+				{ "name": "slowness", "value": "#5C6E83" },
+				{ "name": "turtle_master", "value": "#775D64" },
+				{ "name": "water_breathing", "value": "#2F549C" },
+				{ "name": "instant_health", "value": "#FC2524" },
+				{ "name": "instant_damage", "value": "#440A09" },
+				{ "name": "poison", "value": "#4F9632" },
+				{ "name": "regeneration", "value": "#D15EAE" },
+				{ "name": "strength", "value": "#962524" },
+				{ "name": "weakness", "value": "#494E49" },
+				{ "name": "luck", "value": "#349C00" },
+				{ "name": "slow_falling", "value": "#FCF4D5" }
+			]
+		},
+		{
+			"name": "text",
+			"colors": [
+				{ "name": "black", "value": "#000000" },
+				{ "name": "dark_blue", "value": "#0000AA" },
+				{ "name": "dark_green", "value": "#00AA00" },
+				{ "name": "dark_aqua", "value": "#00AAAA" },
+				{ "name": "dark_red", "value": "#AA0000" },
+				{ "name": "dark_purple", "value": "#AA00AA" },
+				{ "name": "gold", "value": "#FFAA00" },
+				{ "name": "gray", "value": "#AAAAAA" },
+				{ "name": "dark_gray", "value": "#555555" },
+				{ "name": "blue", "value": "#5555FF" },
+				{ "name": "green", "value": "#55FF55" },
+				{ "name": "aqua", "value": "#55FFFF" },
+				{ "name": "red", "value": "#FF5555" },
+				{ "name": "light_purple", "value": "#FF55FF" },
+				{ "name": "yellow", "value": "#FFFF55" },
+				{ "name": "white", "value": "#FFFFFF" },
+				{ "name": "bg_black", "value": "#000000" },
+				{ "name": "bg_dark_blue", "value": "#00002A" },
+				{ "name": "bg_dark_green", "value": "#002A00" },
+				{ "name": "bg_dark_aqua", "value": "#002A2A" },
+				{ "name": "bg_dark_red", "value": "#2A0000" },
+				{ "name": "bg_dark_purple", "value": "#2A002A" },
+				{ "name": "bg_gold", "value": "#2A2A00" },
+				{ "name": "bg_gray", "value": "#2A2A2A" },
+				{ "name": "bg_dark_gray", "value": "#151515" },
+				{ "name": "bg_blue", "value": "#15153F" },
+				{ "name": "bg_green", "value": "#153F15" },
+				{ "name": "bg_aqua", "value": "#153F3F" },
+				{ "name": "bg_red", "value": "#3F1515" },
+				{ "name": "bg_light_purple", "value": "#3F153F" },
+				{ "name": "bg_yellow", "value": "#3F3F15" },
+				{ "name": "bg_white", "value": "#3F3F3F" }
+			]
+		},		
+		{
+			"name": "text_glow",
+			"colors": [
+				{ "name": "black", "value": "#000000" },
+				{ "name": "red", "value": "#FC0000" },
+				{ "name": "green", "value": "#00FC00" },
+				{ "name": "brown", "value": "#894413" },
+				{ "name": "blue", "value": "#0000FC" },
+				{ "name": "purple", "value": "#9E20ED" },
+				{ "name": "cyan", "value": "#00D6D6" },
+				{ "name": "light_gray", "value": "#D0D0D0" },
+				{ "name": "gray", "value": "#7E7E7E" },
+				{ "name": "pink", "value": "#FC68B2" },
+				{ "name": "lime", "value": "#8DFC00" },
+				{ "name": "yellow", "value": "#FCFC00" },
+				{ "name": "light_blue", "value": "#98BECB" },
+				{ "name": "magenta", "value": "#FC00FC" },
+				{ "name": "orange", "value": "#FC671F" },
+				{ "name": "white", "value": "#FCFCFC" },
+				{ "name": "outline_black", "value": "#EDE8CA" },
+				{ "name": "outline_red", "value": "#650000" },
+				{ "name": "outline_green", "value": "#006500" },
+				{ "name": "outline_brown", "value": "#361B07" },
+				{ "name": "outline_blue", "value": "#000065" },
+				{ "name": "outline_purple", "value": "#3F0C5F" },
+				{ "name": "outline_cyan", "value": "#006565" },
+				{ "name": "outline_light_gray", "value": "#535353" },
+				{ "name": "outline_gray", "value": "#323232" },
+				{ "name": "outline_pink", "value": "#652947" },
+				{ "name": "outline_lime", "value": "#4B6500" },
+				{ "name": "outline_yellow", "value": "#656500" },
+				{ "name": "outline_light_blue", "value": "#3C4B51" },
+				{ "name": "outline_magenta", "value": "#650065" },
+				{ "name": "outline_orange", "value": "#65280C" },
+				{ "name": "outline_white", "value": "#656565" }
+			]
+		},
+		{
+			"name": "misc",
+			"colors": [
+				{ "name": "leather", "value": "#A06540" }
+			]
+		}
+	],
 	"map_colors": [
 		"#000000",
 		"#7FB238",

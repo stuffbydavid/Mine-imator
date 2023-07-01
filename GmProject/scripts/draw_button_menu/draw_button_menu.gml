@@ -150,8 +150,16 @@ function draw_button_menu()
 	
 	if (menuactive)
 	{
-		xx = lerp(xx, max(dx, menuid.menu_x), menuid.menu_ani_ease)
-		wid = lerp(wid, min(dw, menuid.menu_w), menuid.menu_ani_ease)
+		if (type != e_menu.LIST_SEAMLESS)
+		{
+			xx = lerp(xx, max(dx, menuid.menu_x), menuid.menu_ani_ease)
+			wid = lerp(wid, min(dw, menuid.menu_w), menuid.menu_ani_ease)
+		}
+		else
+		{
+			xx = lerp(xx, menuid.menu_x, menuid.menu_ani_ease)
+			wid = lerp(wid, menuid.menu_w, menuid.menu_ani_ease)
+		}
 	}
 	
 	// Button

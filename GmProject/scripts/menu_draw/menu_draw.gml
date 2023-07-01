@@ -169,7 +169,9 @@ function menu_draw()
 					
 					var w = m.menu_w;
 					m.menu_w = max(m.menu_list.width + 16, m.menu_w)
-					m.menu_x = (m.menu_x + w) - m.menu_w
+					
+					if ((m.menu_x + w) - m.menu_w > 0)
+						m.menu_x = (m.menu_x + w) - m.menu_w
 				}
 				
 				break

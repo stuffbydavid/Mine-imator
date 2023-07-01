@@ -6,6 +6,7 @@ function context_menu_draw_level(argument0)
 	var levelindex, level, alphaease, aniease;
 	levelindex = argument0
 	level = context_menu_level[|levelindex]
+	context_menu_current = level
 	
 	// Animation
 	if (context_menu_ani = "" || context_menu_ani = "open")
@@ -78,7 +79,11 @@ function context_menu_draw_level(argument0)
 			if (item.divider)
 				dy += 8
 			
-			list_item_draw(item, dx, dy + 24 * i, dw, 24, false)
+			if (list_item_draw(item, dx, dy + 24 * i, dw, 24, false))
+			{
+				item.context_menu_active = true
+				item.hovertime = 99999
+			}
 			
 			if (item.context_menu_active)
 				current_microani.active.value = true
@@ -93,6 +98,12 @@ function context_menu_draw_level(argument0)
 		{
 			draw_set_alpha(1)
 			return 0
+		}
+		
+		if (!level.flip && level.level_y + level.level_height > window_height)
+		{
+			level.level_y = window_height - level.level_height
+			level.flip = true
 		}
 	}
 	

@@ -70,27 +70,16 @@ function list_init_context_menu(name)
 			if (context_menu_value_type = e_context_type.COLOR)
 			{
 				list_item_add(text_get("contextmenusetcolor"), null, "", null, icons.PALETTE, icons.CHEVRON_RIGHT_TINY, null, true)
-				list_item_last.context_menu_name = "setcolor"
+				list_item_last.context_menu_script = menu_swatches_draw
+				list_item_last.context_menu_name = "contextmenuswatchset"
+				list_item_last.context_menu_width = 204
+				list_item_last.context_menu_height = 0
 				
 				list_item_add(text_get("contextmenumixcolor"), null, "", null, icons.PLUS, icons.CHEVRON_RIGHT_TINY)
-				list_item_last.context_menu_name = "mixcolor"
-			}
-			
-			break
-		}
-		
-		case "setcolor":
-		case "mixcolor":
-		{
-			for (var i = 0; i < ds_list_size(minecraft_color_list); i++)
-			{
-				list_item_add(text_get("contextmenucolor" + minecraft_color_name_list[|i]), minecraft_color_list[|i], "", spr_16)
-				list_item_last.thumbnail_blend = minecraft_color_list[|i]
-				
-				if (name = "setcolor")
-					list_item_last.script = action_value_set_color
-				else
-					list_item_last.script = action_value_mix_color
+				list_item_last.context_menu_script = menu_swatches_draw
+				list_item_last.context_menu_name = "contextmenuswatchmix"
+				list_item_last.context_menu_width = 204
+				list_item_last.context_menu_height = 0
 			}
 			
 			break
