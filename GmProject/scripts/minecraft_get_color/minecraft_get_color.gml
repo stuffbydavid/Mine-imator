@@ -4,31 +4,30 @@
 
 function minecraft_get_color(name)
 {
-	switch (name)
+	// Search swatches
+	var keys = string_split(name, ":");
+	
+	if (array_length(keys) > 1)
 	{
-		case "leather": return c_minecraft_leather;
-		case "white": return c_minecraft_white;
-		case "orange": return c_minecraft_orange;
-		case "magenta": return c_minecraft_magenta;
-		case "light_blue": return c_minecraft_light_blue;
-		case "yellow": return c_minecraft_yellow;
-		case "lime": return c_minecraft_lime;
-		case "pink": return c_minecraft_pink;
-		case "gray": return c_minecraft_gray;
-		case "light_gray": return c_minecraft_light_gray;
-		case "cyan": return c_minecraft_cyan;
-		case "purple": return c_minecraft_purple;
-		case "blue": return c_minecraft_blue;
-		case "brown": return c_minecraft_brown;
-		case "green": return c_minecraft_green;
-		case "red": return c_minecraft_red;
-		case "black": return c_minecraft_black;
-		default:
+		for (var s = 0; s < array_length(minecraft_swatch_array); s++)
 		{
-			if (string_contains(name, "#"))
-				return hex_to_color(name)
-			else
-				return c_white
+			var swatch = minecraft_swatch_array[s];
+			
+			if (swatch.name != keys[0])
+				continue;
+			
+			for (var c = 0; c < array_length(swatch.colors); c++)
+			{
+				if (keys[1] != swatch.color_names[c])
+					continue;
+				else
+					return swatch.colors[c];
+			}
 		}
 	}
+	
+	if (string_contains(name, "#"))
+		return hex_to_color(name)
+	else
+		return c_white
 }
