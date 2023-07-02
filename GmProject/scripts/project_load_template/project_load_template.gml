@@ -34,6 +34,7 @@ function project_load_template(map)
 				model_tex_normal = "default"
 			}
 			
+			model_use_blend_color = value_get_real(map[?"model_use_blend_color"], model_use_blend_color)
 			model_blend_color = value_get_color(map[?"model_blend_color"], model_blend_color)
 			
 			var modelmap = map[?"model"];

@@ -31,6 +31,7 @@ function menu_swatches_draw()
 				
 				context_menu_close()
 				app_mouse_clear()
+				window_busy = context_menu_busy_prev
 				
 				return true
 			}
