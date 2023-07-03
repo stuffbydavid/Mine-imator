@@ -257,6 +257,7 @@ function minecraft_assets_load()
 					s.name = swatch[?"name"]
 					s.colors = []
 					s.color_names = []
+					s.map = ds_map_create()
 					
 					var colors = swatch[?"colors"];
 					
@@ -265,8 +266,20 @@ function minecraft_assets_load()
 						var c = colors[|j];
 						array_add(s.color_names, c[?"name"])
 						array_add(s.colors, hex_to_color(c[?"value"]))
-						ds_map_add(minecraft_swatch_color_map, c[?"name"], hex_to_color(c[?"value"]))
+						ds_map_add(s.map, c[?"name"], hex_to_color(c[?"value"]))
+						ds_map_add(minecraft_swatch_color_map, swatch[?"name"] + ":" + c[?"name"], hex_to_color(c[?"value"]))
 					}
+					
+					s.size = array_length(s.colors)
+				}
+				
+				// Dyes?
+				minecraft_swatch_dyes = minecraft_get_swatch("dye")
+				
+				if (minecraft_swatch_dyes = null)
+				{
+					log("No dyes found")
+					return false
 				}
 				
 				break;

@@ -31,9 +31,9 @@ function project_save_template()
 			// Pattern values
 			if (pattern_type != "")
 			{
-				var colorindex = ds_list_find_index(minecraft_color_list, pattern_base_color);
-				if (colorindex > -1)
-					json_save_var("pattern_base_color", minecraft_color_name_list[|colorindex])
+				var color = ds_map_find_key(minecraft_swatch_dyes.map, pattern_base_color);
+				if (color != undefined)
+					json_save_var("pattern_base_color", color)
 				else
 					json_save_var("pattern_base_color", "white")
 				
@@ -47,7 +47,7 @@ function project_save_template()
 				json_save_array_start("pattern_color_list")
 				
 					for (var c = 0; c < array_length(pattern_color_list); c++)
-						json_save_array_value(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, pattern_color_list[c])])
+						json_save_array_value(ds_map_find_key(minecraft_swatch_dyes.map, pattern_color_list[c]))
 					
 				json_save_array_done()
 			}

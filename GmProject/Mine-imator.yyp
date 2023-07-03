@@ -1953,6 +1953,7 @@
     {"id":{"name":"point3D_sub","path":"scripts/point3D_sub/point3D_sub.yy",},"order":13,},
     {"id":{"name":"point4D","path":"scripts/point4D/point4D.yy",},"order":14,},
     {"id":{"name":"point4D_homogenize","path":"scripts/point4D_homogenize/point4D_homogenize.yy",},"order":15,},
+    {"id":{"name":"minecraft_get_swatch","path":"scripts/minecraft_get_swatch/minecraft_get_swatch.yy",},"order":21,},
     {"id":{"name":"point4D_mul_matrix","path":"scripts/point4D_mul_matrix/point4D_mul_matrix.yy",},"order":16,},
     {"id":{"name":"point3D_angle","path":"scripts/point3D_angle/point3D_angle.yy",},"order":17,},
     {"id":{"name":"vec2","path":"scripts/vec2/vec2.yy",},"order":0,},

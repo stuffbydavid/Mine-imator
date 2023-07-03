@@ -123,7 +123,7 @@ function project_load_template(map)
 				var valname = (load_format < e_project.FORMAT_200_PRE_5 ? "banner_base_color" : "pattern_base_color");
 				if (!is_undefined(map[?valname]))
 				{
-					var base_color, pattern_list, color_list; 
+					var base_color, pattern_list, color_list;
 					
 					if (load_format < e_project.FORMAT_200_PRE_5)
 					{
@@ -138,7 +138,7 @@ function project_load_template(map)
 						color_list = map[?"pattern_color_list"]
 					}
 					
-					pattern_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
+					pattern_base_color = minecraft_swatch_dyes.map[?base_color]
 					
 					if (ds_list_valid(pattern_list))
 					{
@@ -149,7 +149,7 @@ function project_load_template(map)
 					if (ds_list_valid(color_list))
 					{
 						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(pattern_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
+							array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
 					}
 				}
 				

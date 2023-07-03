@@ -10,11 +10,14 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 {
 	var editname, mouseon, dragging, actionx, layerpattern, layercolor;
 	
+	if (popup_pattern_editor.pattern_edit_preview = null)
+		return 0
+	
 	editname = "patterneditoreditlayer" + string(index)
 	mouseon = (app_mouse_box(xx, yy, width, height) || (popup_pattern_editor.layer_edit = index && settings_menu_name = editname))
 	dragging = (popup_pattern_editor.layer_move = index)
 	layerpattern = (base ? 1 : ds_list_find_index(minecraft_pattern_list, popup_pattern_editor.pattern_list_edit[|index]))
-	layercolor = (base ? c_minecraft_black : popup_pattern_editor.pattern_color_list_edit[|index])
+	layercolor = (base ? minecraft_get_color("dye:black") : popup_pattern_editor.pattern_color_list_edit[|index])
 	
 	// Draw pattern
 	if (popup_pattern_editor.pattern_edit_preview != null)
@@ -28,7 +31,19 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 	gpu_set_blendmode(bm_normal)
 	
 	// Layer name
-	var name = (base ? text_get("patterneditorbase") : text_get("patterneditorlayer", index + 1));
+	var colorname, name;
+	
+	if (base)
+	{
+		colorname = ds_map_find_key(minecraft_swatch_dyes.map, popup_pattern_editor.pattern_edit_preview.pattern_base_color)
+		name = text_get("patterneditorbase", text_get("swatchdye" + colorname))
+	}
+	else
+	{
+		colorname = ds_map_find_key(minecraft_swatch_dyes.map, popup_pattern_editor.pattern_color_list_edit[|index])
+		name = text_get("patterneditorlayer", text_get("swatchdye" + colorname), text_get("patterneditorpatterns" + popup_pattern_editor.pattern_list_edit[|index]))
+	}
+	
 	draw_label(name, xx + 32, yy + height/2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	
 	actionx = xx + width - 4

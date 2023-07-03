@@ -1429,8 +1429,6 @@ function list_init(name)
 		case "armoreditormaterialleggings":
 		case "armoreditormaterialboots":
 		{
-			menu_add_item("none", text_get("armoreditormaterial" + "none"))
-			
 			for (var i = 0; i < ds_list_size(minecraft_armor_trim_material_list); i++)
 				menu_add_item(minecraft_armor_trim_material_list[|i], text_get("armoreditormaterial" + minecraft_armor_trim_material_list[|i]))
 			

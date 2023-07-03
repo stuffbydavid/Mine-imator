@@ -35,36 +35,33 @@ function block_tile_entity_sign(map)
 	var frontmap = map[?"front_text"];
 	var backmap = map[?"back_text"];
 	
-	var text, colorind, color, glowind, glowcolor, glowing;
+	var text, colorname, color, glowcolor, glowing;
 	
 	// 1.20+
 	if (ds_map_valid(frontmap))
 	{
 		// Front
-		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(frontmap[?"color"], "black"))
+		colorname = value_get_string(frontmap[?"color"], "black")
 		glowing = value_get_real(frontmap[?"has_glowing_text"], 0)
-		glowind = minecraft_glowing_sign_list[|colorind]
-		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? glowind[0] : minecraft_color_list[|colorind])
-		mc_builder.block_text_front_glow_color_map[?build_pos] = glowind[1]
+		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+		mc_builder.block_text_front_glow_color_map[?build_pos] = minecraft_get_color("text_glow:outline_" + colorname)
 		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
 		mc_builder.block_text_front_map[?build_pos] = block_tile_entity_sign_text(frontmap)
 		
 		// Back
-		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(backmap[?"color"], "black"))
+		colorname = value_get_string(backmap[?"color"], "black")
 		glowing = value_get_real(backmap[?"has_glowing_text"], 0)
-		glowind = minecraft_glowing_sign_list[|colorind]
-		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? glowind[0] : minecraft_color_list[|colorind])
-		mc_builder.block_text_back_glow_color_map[?build_pos] = glowind[1]
+		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+		mc_builder.block_text_back_glow_color_map[?build_pos] = minecraft_get_color("text_glow:outline_" + colorname)
 		mc_builder.block_text_back_glowing_map[?build_pos] = glowing
 		mc_builder.block_text_back_map[?build_pos] = block_tile_entity_sign_text(backmap)
 	}
 	else // Use legacy format if detected
 	{
-		colorind = ds_list_find_index(minecraft_color_name_list, value_get_string(map[?"Color"], "black"))
+		colorname = value_get_string(map[?"Color"], "black")
 		glowing = value_get_real(map[?"GlowingText"], 0)
-		glowind = minecraft_glowing_sign_list[|colorind]
-		color = (glowing ? glowind[0] : minecraft_color_list[|colorind])
-		glowcolor = glowind[1]
+		color = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+		glowcolor = minecraft_get_color("text_glow:outline_" + colorname)
 		text = ""
 		
 		for (var i = 0; i < 4; i++)

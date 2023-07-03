@@ -2,6 +2,9 @@
 
 function temp_update_model_color()
 {
+	if (object_index = obj_timeline)
+		return 0
+	
 	var useblendprev = model_use_blend_color;
 	
 	if (model_file != null && model_file.model_color != "none")

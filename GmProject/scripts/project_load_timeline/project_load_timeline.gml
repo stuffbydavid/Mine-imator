@@ -71,7 +71,7 @@ function project_load_timeline(map)
 						color_list = map[?"pattern_color_list"]
 					}
 					
-					pattern_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
+					pattern_base_color = minecraft_swatch_dyes.map[?base_color]
 					
 					if (ds_list_valid(pattern_list))
 					{
@@ -84,7 +84,7 @@ function project_load_timeline(map)
 					{
 						pattern_color_list = array()
 						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(pattern_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
+							array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
 					}
 				}
 			}
