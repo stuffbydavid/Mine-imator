@@ -2,7 +2,7 @@
 
 function app_startup_lists()
 {
-	globalvar value_name_list, transition_list;
+	globalvar value_name_list, transition_list, transition_list_order;
 	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
@@ -355,6 +355,26 @@ function app_startup_lists()
 		"easeoutbounce",
 		"easeinoutbounce"
 	)
+	
+	// Organized list
+	transition_list_order = ds_list_create()
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (!string_contains(transition_list[|i], "ease"))
+			ds_list_add(transition_list_order, transition_list[|i])
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (string_contains(transition_list[|i], "easein") &&
+			!string_contains(transition_list[|i], "easeinout"))
+				ds_list_add(transition_list_order, transition_list[|i])
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (string_contains(transition_list[|i], "easeout"))
+			ds_list_add(transition_list_order, transition_list[|i])
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (string_contains(transition_list[|i], "easeinout"))
+			ds_list_add(transition_list_order, transition_list[|i])
 	
 	log("Make transitions")
 	transition_texture_map = new_transition_texture_map(36, 36, 6, true)

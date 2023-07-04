@@ -216,6 +216,81 @@ function draw_button_menu()
 	
 	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
 	
+	// Ctrl + Scroll
+	if (mouseon && keyboard_check(vk_control) && mouse_wheel != 0)
+	{
+		menu_model_state = menu_model_state_current
+		menu_block_state = menu_block_state_current
+		
+		menu_armor_piece = popup_armor_editor.piece_current
+		menu_armor_piece_data = popup_armor_editor.piece_data_id
+		
+		var m = new_obj(obj_menu);
+		m.menu_ani = 0
+		m.menu_value = value
+		m.menu_name = nameid
+		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+		menu_current = m
+		menu_scroll = true
+		
+		var list;
+		
+		if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS || type = e_menu.TRANSITION_LIST)
+			list = list_init(name)
+		else if (type = e_menu.TIMELINE)
+			list = menu_timeline_init(m)
+		else if (type = e_menu.BIOME)
+			list = menu_biome_init(m)
+		
+		if (type = e_menu.TRANSITION_LIST)
+			script = action_tl_frame_transition
+		
+		menu_scroll = false
+		
+		// Find index of chosen value
+		var index = 0;
+		var item = null;
+		
+		for (var i = 0; i < ds_list_size(list.item); i++)
+		{
+			var it = list.item[|i];
+			
+			if (it.script != null)
+				continue
+			
+			if (it.value = value)
+			{
+				index = i;
+				break
+			}
+		}
+		
+		index += mouse_wheel
+		index = mod_fix(index, ds_list_size(list.item))
+		item = list.item[|index]
+		
+		while (	item.script != null ||
+				item.value = e_option.BROWSE ||
+				item.value = e_option.IMPORT_WORLD ||
+				item.value = e_option.DOWNLOAD_SKIN ||
+				item.value = e_option.DOWNLOAD_SKIN_DONE ||
+				item.value = e_option.IMPORT_ITEM_SHEET_DONE)
+		{
+			index = mod_fix(index + mouse_wheel, ds_list_size(list.item))
+			item = list.item[|index]
+		}
+		
+		list_item_script = script
+		list_item_script_value = item.value
+		
+		list_destroy(list)
+		instance_destroy(m)
+		
+		current_microani.holding.init(1)
+		
+		return true
+	}
+	
 	// Update menu position
 	if (menuactive)
 	{

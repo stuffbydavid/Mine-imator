@@ -3125,7 +3125,7 @@
 		"lockbendback": "Back half",
 		"lockbendlower": "Lower half",
 		"lockbendupper": "Upper half",
-		"inherit": "Inherit...",
+		"inherit": "Inherit",
 		"inherit/": {
 			"position": "Position",
 			"rotation": "Rotation",

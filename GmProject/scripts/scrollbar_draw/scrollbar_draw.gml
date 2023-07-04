@@ -107,7 +107,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		sb.press = 0
 	
 	// Mouse wheel
-	if (window_busy = "" && content_mouseon)
+	if (window_busy = "" && content_mouseon && !keyboard_check(vk_control))
 	{	
 		if (window_scroll_focus_prev = string(sb))
 		{

@@ -14,14 +14,14 @@ function menu_add_timeline(tl, level, menu)
 	else
 	{
 		list_item_add(string_remove_newline(tl.display_name), tl)
-	
-		if (ds_list_size(tl.tree_list))
+		
+		if (ds_list_size(tl.tree_list) && !menu_scroll)
 			list_item_add_action(list_item_last, string(tl) + "extend", menu_item_set_extend, tl.tree_extend, tl, null, "left", tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand", spr_chevron_ani)
 	}
 	
 	list_item_last.indent = max(0, level * 32)
 	
-	if (tl != null && !tl.tree_extend)
+	if (tl != null && !tl.tree_extend && !menu_scroll)
 		return 0
 	
 	if (tl = null)

@@ -10,14 +10,14 @@ function list_init(name)
 	if (menu_model_current != null)
 	{
 		for (var i = 0; i < menu_model_state.value_amount; i++)
-			list_item_add(minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]), menu_model_state.value_name[i])
+			menu_add_item(menu_model_state.value_name[i], minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]))
 	}
 	
 	// Block state
 	if (menu_block_current != null)
 	{
 		for (var i = 0; i < menu_block_state.value_amount; i++)
-			list_item_add(minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]), menu_block_state.value_name[i])
+			menu_add_item(menu_block_state.value_name[i], minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]))
 	}
 	
 	if (menu_model_current != null || menu_block_current != null)
@@ -1438,7 +1438,7 @@ function list_init(name)
 		// Background sky sun texture
 		case "timelineeditorglinttex":
 		{
-			var itemglint = tl_edit.glint_mode = e_glint.ITEM;
+			var itemglint = (tl_edit.glint_mode = e_glint.ITEM);
 			
 			// Default
 			menu_add_item(mc_res, mc_res.display_name, itemglint ? mc_res.glint_item_texture : mc_res.glint_entity_texture)
@@ -1455,6 +1455,15 @@ function list_init(name)
 				else if (res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}
+			
+			break
+		}
+		
+		// Transitions
+		case "frameeditortransition":
+		{
+			for (var i = 0; i < ds_list_size(transition_list_order); i++)
+				menu_add_item(transition_list_order[|i], text_get("menu" + transition_list_order[|i]))
 			
 			break
 		}

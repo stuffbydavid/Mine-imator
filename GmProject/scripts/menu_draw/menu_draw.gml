@@ -299,7 +299,9 @@ function menu_draw()
 					}
 					
 					app_mouse_clear()
-					close = true
+					
+					if (!keyboard_check(vk_shift))
+						close = true
 				}
 				
 				if (!content_mouseon)

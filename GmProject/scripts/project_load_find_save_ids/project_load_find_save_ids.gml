@@ -302,9 +302,9 @@ function project_load_find_save_ids()
 				tl_update_hide()
 	
 	// Viewport cameras
-	if (view_main.camera != -4 && view_main.camera != -5)
+	if (view_main.camera != -4 && view_main.camera != -5 && !instance_exists(view_main.camera))
 		view_main.camera = save_id_find(view_main.camera)
 	
-	if (view_second.camera != -4 && view_second.camera != -5)
+	if (view_second.camera != -4 && view_second.camera != -5 && !instance_exists(view_second.camera))
 		view_second.camera = save_id_find(view_second.camera)
 }
