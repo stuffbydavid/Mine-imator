@@ -39,6 +39,22 @@ function list_init_end()
 		}
 	}
 	
+	// Search filter
+	if (menu_search != "")
+	{
+		for (var i = 0; i < ds_list_size(list.item); i++)
+		{
+			name = string_lower(list.item[|i].name)
+			
+			if (!string_contains(name, string_lower(menu_search)))
+			{
+				instance_destroy(list.item[|i])
+				ds_list_delete(list.item, i)
+				i--
+			}
+		}
+	}
+	
 	list_update_width(list)
 	
 	if (ds_list_size(list.item) > 0 && list.item[|0].divider)

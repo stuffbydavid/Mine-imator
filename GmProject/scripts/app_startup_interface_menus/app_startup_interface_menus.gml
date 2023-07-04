@@ -6,9 +6,12 @@ function app_startup_interface_menus()
 	menu_count = 0
 	menu_current = 0
 	menu_popup = null
-	menu_scroll = false
+	menu_expose = false
 	menu_filter = ""
 	menu_filter_normal = ""
+	menu_search_tbx = new_textbox(true, 0, "")
+	menu_search_busy = ""
+	menu_search = ""
 	
 	menu_model_current = null
 	menu_model_state = null

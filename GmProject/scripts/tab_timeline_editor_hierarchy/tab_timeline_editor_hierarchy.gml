@@ -36,9 +36,9 @@ function tab_timeline_editor_hierarchy()
 	
 	if (par != app)
 	{
-		tab_control(20)
+		dy += 20
 		draw_label(text_get("timelineeditorinherit") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-		tab_next()
+		dy += 8
 		
 		tab_set_collumns(true, floor(content_width/150))
 		
