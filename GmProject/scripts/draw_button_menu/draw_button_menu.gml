@@ -312,6 +312,8 @@ function draw_button_menu()
 		var index = 0;
 		var item = null;
 		
+		list_value_filter(list)
+		
 		for (var i = 0; i < ds_list_size(list.item); i++)
 		{
 			var it = list.item[|i];
@@ -330,25 +332,14 @@ function draw_button_menu()
 		index = mod_fix(index, ds_list_size(list.item))
 		item = list.item[|index]
 		
-		while (	item.script != null ||
-				item.value = e_option.BROWSE ||
-				item.value = e_option.IMPORT_WORLD ||
-				item.value = e_option.DOWNLOAD_SKIN ||
-				item.value = e_option.DOWNLOAD_SKIN_DONE ||
-				item.value = e_option.IMPORT_ITEM_SHEET_DONE)
-		{
-			index = mod_fix(index + mouse_wheel, ds_list_size(list.item))
-			item = list.item[|index]
-		}
-		
 		list_item_script = script
 		list_item_script_value = item.value
 		
-		list_destroy(list)
-		instance_destroy(m)
-		
 		current_microani.holding.init(1)
 		current_microani.goal_ease = ((mouse_wheel) + 1) * .5
+		
+		list_destroy(list)
+		instance_destroy(m)
 		
 		return true
 	}

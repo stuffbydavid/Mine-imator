@@ -2071,6 +2071,7 @@
     {"id":{"name":"vertex_add","path":"scripts/vertex_add/vertex_add.yy",},"order":5,},
     {"id":{"name":"vertex_format_startup","path":"scripts/vertex_format_startup/vertex_format_startup.yy",},"order":7,},
     {"id":{"name":"bool_to_float","path":"scripts/bool_to_float/bool_to_float.yy",},"order":29,},
+    {"id":{"name":"list_value_filter","path":"scripts/list_value_filter/list_value_filter.yy",},"order":8,},
     {"id":{"name":"surface_duplicate","path":"scripts/surface_duplicate/surface_duplicate.yy",},"order":10,},
     {"id":{"name":"new_obj","path":"scripts/new_obj/new_obj.yy",},"order":33,},
     {"id":{"name":"yesno","path":"scripts/yesno/yesno.yy",},"order":35,},
