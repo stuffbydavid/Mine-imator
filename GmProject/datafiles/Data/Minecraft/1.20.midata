@@ -938,9 +938,17 @@
 					{ "value": "iron", "texture": "entity/horse/armor/horse_armor_iron" },
 					{ "value": "gold", "texture": "entity/horse/armor/horse_armor_gold" },
 					{ "value": "diamond", "texture": "entity/horse/armor/horse_armor_diamond" }
+				],
+				"saddle": [
+					{ "value": "false", "hide": [ "saddle", "right_stirrup", "left_stirrup", "halter", "right_rein", "left_rein" ] },
+					{ "value": "true" }
+				],
+				"chests": [
+					{ "value": "false", "hide": [ "chests", "right_chest", "left_chest" ] },
+					{ "value": "true" }
 				]
 			},
-			"default_state": "variant=iron"
+			"default_state": "variant=iron,saddle=true,chests=true"
 		},
 		{
 			"name": "shield",

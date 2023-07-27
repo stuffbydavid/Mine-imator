@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.06.27"
+		"lastchange": "2023.07.26"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -234,6 +234,7 @@
 				"selectadd": "Select keyframe (Add)",
 				"selectgroup": "Group select keyframes",
 				"selectgroupadd": "Group select keyframes (Add)",
+				"deselect": "Deselect keyframes",
 				"deselectgroup": "Group deselect keyframes"
 			},
 			"timeline/": {
@@ -241,6 +242,7 @@
 				"selectadd": "Select timeline (Add)",
 				"selectgroup": "Group select timelines",
 				"selectgroupadd": "Group select timelines (Add)",
+				"deselect": "Deselect timelines",
 				"deselectgroup": "Group deselect timelines"
 			}
 		},

@@ -1301,7 +1301,7 @@ function tab_timeline()
 			{
 				if (mousekf.selected)
 				{
-					if (keyboard_check(vk_shift)) // Deselect
+					if (keyboard_check(vk_control)) // Deselect
 					{
 						action_tl_keyframe_deselect(mousekf.timeline, mousekf)
 						app_mouse_clear()

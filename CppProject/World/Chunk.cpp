@@ -87,13 +87,14 @@ namespace CppProject
 			// Parse existing sections
 			if (format >= JAVA_1_2)
 			{
-				StringType status = chunkRoot->String("Status").Replaced("minecraft:", "");
 				// Must be fully loaded
-				if (chunkRoot->HasKey("Status") &&
-					status != "full" &&
-					status != "fullchunk" &&
-					status != "postprocessed")
-					return;
+				if (chunkRoot->HasKey("Status")) {
+					StringType status = chunkRoot->String("Status").Replaced("minecraft:", "");
+					if (status != "full" &&
+						status != "fullchunk" &&
+						status != "postprocessed")
+						return;
+				}
 
 				StringType sectionsName = (format >= JAVA_1_18 ? "sections" : "Sections");
 				if (!chunkRoot->HasKey(sectionsName))
