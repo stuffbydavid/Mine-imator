@@ -48,6 +48,7 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "tlkeyframeselectadd")
 				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tlkeyframeselectgroup")
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tlkeyframeselectgroupadd")
+				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.CLICK_LEFT, "tlkeyframedeselect")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tlkeyframedeselectgroup")
 			}
 			
@@ -57,6 +58,7 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "tltimelineselectadd")
 				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tltimelineselectgroup")
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tltimelineselectgroupadd")
+				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.CLICK_LEFT, "tltimelinedeselect")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tltimelinedeselectgroup")
 			}
 			
