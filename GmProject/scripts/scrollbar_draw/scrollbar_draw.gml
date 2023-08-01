@@ -149,6 +149,10 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 	}
 	
 	sb.value = round(clamp(sb.value, 0, maxsize - size))
+	
+	if (!sb.zoomable || (sb = timeline.hor_scroll && timeline_zoom = timeline_zoom_goal))
+		sb.value_goal = round(clamp(sb.value_goal, 0, maxsize - size))
+	
 	sb.value_goal = max(sb.value_goal, 0)
 	
 	if (window_focus = string(sb) && window_busy = "scrollbar")

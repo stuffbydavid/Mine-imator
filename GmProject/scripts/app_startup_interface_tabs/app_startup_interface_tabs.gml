@@ -396,6 +396,7 @@ function app_startup_interface_tabs()
 		list_width = 320
 		
 		hor_scroll = new_obj(obj_scrollbar)
+		hor_scroll.zoomable = true
 		hor_scroll_tl = new_obj(obj_scrollbar)
 		ver_scroll = new_obj(obj_scrollbar)
 	}

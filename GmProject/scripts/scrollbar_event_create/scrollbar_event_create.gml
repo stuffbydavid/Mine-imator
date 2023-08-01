@@ -11,6 +11,7 @@ function scrollbar_event_create()
 	atend = false
 	value_ease = true
 	mouseon = false
+	zoomable = false
 	
 	mousenear = new value_animation()
 }
