@@ -148,8 +148,11 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		}
 	}
 	
-	sb.value = floor(clamp(sb.value, 0, maxsize - size))
-	sb.value_goal = floor(clamp(sb.value_goal, 0, maxsize - size))
+	sb.value = round(clamp(sb.value, 0, maxsize - size))
+	sb.value_goal = max(sb.value_goal, 0)
+	
+	if (window_focus = string(sb) && window_busy = "scrollbar")
+		sb.value_goal = sb.value
 	
 	barpos = min(size - barsize, floor(sb.value * (size / maxsize)))
 	pressed = (window_busy = "scrollbar" && window_focus = string(sb))
