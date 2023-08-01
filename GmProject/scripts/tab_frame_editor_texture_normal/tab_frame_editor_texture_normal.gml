@@ -61,7 +61,7 @@ function tab_frame_editor_tex_normal()
 				tex = texobj.block_preview_texture
 				
 				if (tex = null)
-					tex = res.texture
+					tex = texobj.texture
 				
 				break
 			}
