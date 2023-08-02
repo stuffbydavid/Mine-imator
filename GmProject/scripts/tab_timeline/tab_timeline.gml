@@ -1641,11 +1641,12 @@ function tab_timeline()
 		if (timeline_zoom_goal > 1)
 			timeline_zoom_goal = round(timeline_zoom_goal)
 		
-		// Convert current and new mouse position to frames, then get difference and add it
-		timeline.hor_scroll.value_goal = round(
-			timeline.hor_scroll.value +
-			((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal
-		) 
+		timeline.hor_scroll.value_goal = min(
+			// Prevent zooming into timeline past end of animation or playback marker, whichever is furthest
+			max((timeline_length * timeline_zoom_goal), (timeline_marker * timeline_zoom_goal)),
+			// Convert current and new mouse position to frames, then get difference and add it
+			round(timeline.hor_scroll.value + ((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal)
+		)
 	}
 	
 	// Move view

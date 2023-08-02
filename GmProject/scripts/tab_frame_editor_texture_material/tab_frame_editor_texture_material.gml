@@ -67,7 +67,7 @@ function tab_frame_editor_texture_material()
 				tex = texobj.block_preview_texture
 				
 				if (tex = null)
-					tex = res.texture
+					tex = texobj.texture
 				
 				if (texobj = mc_res)
 					sliders = true
