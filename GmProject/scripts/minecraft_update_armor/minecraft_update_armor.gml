@@ -3,9 +3,9 @@
 function minecraft_update_armor()
 {
 	// Update pattern designs for templates
-	if (armor_update != null && window_busy != "popup" + popup_loading.name)
+	if (array_length(armor_update) > 0 && window_busy != "popup" + popup_loading.name)
 	{
-		var obj = armor_update;
+		var obj = null;
 		
 		for (var i = 0; i < array_length(armor_update); i++)
 		{
