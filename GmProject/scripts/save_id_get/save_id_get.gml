@@ -7,7 +7,7 @@ function save_id_get(obj)
 	if (obj = "")
 		return ""
 	
-	if (obj = particle_sheet || obj = particle_template)
+	if (obj = mc_res.save_id || (is_real(obj) && obj < 0)) // Default asset or technical ID?
 		return obj
 	
 	if (instance_exists(obj))
