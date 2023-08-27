@@ -34,7 +34,7 @@ namespace CppProject
 		Shader(QString name, VertexFormat format, BoolType useBatching = false);
 
 		// Loads the vertex & fragment shader from filesystem or memory.
-		void Load(BoolType useCache = false);
+		void Load(BoolType useCache = true);
 		void LoadCode(QString vsCode, QString fsCode, BoolType useCache);
 		void LoadCodeCommon(QString& code);
 
