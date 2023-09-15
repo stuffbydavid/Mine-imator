@@ -106,6 +106,7 @@ function popup_about_draw()
 		"Rollo",
 		"SKIBBZ",
 		"SoundsDotZip",
+		"Swooplezz",
 		"UpgradedMoon",
 		"Vash",
 		"__Mine__"
