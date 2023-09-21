@@ -4316,6 +4316,11 @@
 			"id": "minecraft:slime_block"
 		},
 		{
+			"name": "barrier",
+			"file": "barrier.json",
+			"id": "minecraft:barrier"
+		},
+		{
 			"name": "light",
 			"file": "light.json",
 			"id": "minecraft:light"
