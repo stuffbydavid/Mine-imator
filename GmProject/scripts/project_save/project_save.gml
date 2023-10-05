@@ -30,4 +30,6 @@ function project_save()
 		project_changed = false
 		recent_add_wait = true
 	}
+	if (app.window_state = "startup")
+		project_reset()
 }
