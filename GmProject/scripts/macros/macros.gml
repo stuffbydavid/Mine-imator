@@ -23,7 +23,7 @@ function macros()
 	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
 	#macro mineimator_version_extra		"Alpha 2"	// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
-	#macro mineimator_version_date		"2023.10.04"
+	#macro mineimator_version_date		"2023.10.06"
 	#macro minecraft_version			"1.20.2"
 	#macro gm_runtime					GM_runtime_version
 	
@@ -84,7 +84,7 @@ function macros()
 	
 	// Links
 	#macro link_website					"https://www.mineimator.com"
-	#macro link_tutorials				"https://www.mineimator.com/tutorials"
+	#macro link_tutorials				"https://www.mineimator.com/tutorials2"
 	#macro link_download				"https://www.mineimator.com/download"
 	#macro link_upgrade					"https://www.mineimator.com/upgrade"
 	#macro link_assets					"https://www.mineimator.com/assets/"
