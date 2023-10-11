@@ -179,7 +179,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		#region Armor rendering
 		
 		// Preview
-		if (object_index = obj_preview && select.model_name = "armor")
+		if (object_index = obj_preview && select.object_index != obj_resource && select.model_name = "armor")
 		{
 			if (shape.description = "helmet")
 			{

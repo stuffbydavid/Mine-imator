@@ -27,12 +27,14 @@ function render_high_scene()
 	}
 	surface_reset_target()
 	
-	// Add to specular (make it if needed)
-	if (!surface_exists(render_surface_specular))
-		render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
-	
+	// Add to specular
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
 	surface_set_target(render_surface_specular)
 	{
+		// Clear if shadows aren't enabled
+		if (!render_shadows)
+			draw_clear_alpha(c_black, 0)
+		
 		gpu_set_blendmode(bm_add)
 		draw_surface(masksurf, 0, 0)
 		gpu_set_blendmode(bm_normal)

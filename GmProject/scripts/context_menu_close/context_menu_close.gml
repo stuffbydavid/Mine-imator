@@ -42,7 +42,6 @@ function context_menu_close()
 	
 	toolbar_menu_active = false
 	context_menu_name = ""
-	context_menu_value = null
 	
 	context_menu_mouseon = false
 	

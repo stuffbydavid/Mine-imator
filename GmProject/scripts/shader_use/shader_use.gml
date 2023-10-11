@@ -18,6 +18,8 @@ function shader_use()
 	render_set_uniform("uSampleIndex", render_sample_current)
 	render_set_uniform_int("uAlphaHash", render_alpha_hash)
 	
+	render_set_uniform_int("uUseNormalMap", dev_mode_skip_tangents ? 0 : 1)
+	
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	{

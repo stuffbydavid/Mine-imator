@@ -29,6 +29,8 @@ function context_menu_area()
 			context_menu_value_script = argument[7]
 			context_menu_value_default = argument[8]
 		}
+		else
+			context_menu_value = null
 		
 		// Quick shortcut for value reset
 		if (keyboard_check(vk_shift) && argument_count > 5 && context_menu_value_script != null)

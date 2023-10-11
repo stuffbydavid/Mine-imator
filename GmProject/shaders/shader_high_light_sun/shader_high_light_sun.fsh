@@ -93,12 +93,16 @@ vec4 cascadeDepthBuffer(int index, vec2 coord)
 		return texture2D(uDepthBuffer2, coord);
 }
 
+uniform int uUseNormalMap; // static
 vec3 getMappedNormal(vec2 uv)
 {
+	if (uUseNormalMap < 1)
+		return vec3(vTBN[2][0], vTBN[2][1], vTBN[2][2]);
+	
 	vec4 n = texture2D(uTextureNormal, uv).rgba;
 	n.rgba = (n.a < 0.01 ? vec4(.5, .5, 0.0, 1.0) : n.rgba); // No normal?
 	n.xy = n.xy * 2.0 - 1.0; // Decode
-	n.z = sqrt(max(0.001, 1.0 - dot(n.xy, n.xy))); // Get Z
+	n.z = sqrt(max(0.0, 1.0 - dot(n.xy, n.xy))); // Get Z
 	n.y *= -1.0; // Convert Y- to Y+
 	return normalize(vTBN * n.xyz);
 }

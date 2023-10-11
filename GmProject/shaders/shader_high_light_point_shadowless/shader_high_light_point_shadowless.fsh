@@ -55,8 +55,12 @@ float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
 }
 
+uniform int uUseNormalMap; // static
 vec3 getMappedNormal(vec2 uv)
 {
+	if (uUseNormalMap < 1)
+		return vec3(vTBN[2][0], vTBN[2][1], vTBN[2][2]);
+	
 	vec4 n = texture2D(uTextureNormal, uv).rgba;
 	n.rgba = (n.a < 0.01 ? vec4(.5, .5, 0.0, 1.0) : n.rgba); // No normal?
 	n.xy = n.xy * 2.0 - 1.0; // Decode

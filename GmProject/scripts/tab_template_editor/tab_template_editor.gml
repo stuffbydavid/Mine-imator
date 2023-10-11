@@ -164,7 +164,7 @@ function tab_template_editor()
 			statesh = (32 * menus) + ((ui_small_height + 8) * ceil(checkboxes/2))
 			
 			sortlist_draw(tab.block_list, dx, dy, dw, dh - statesh, temp_edit.block_name, false)
-			menu_filter = tab.block_list.text
+			menu_filter = tab.block_list.search_tbx.text
 			menu_filter_normal = sortlist_column_get(tab.block_list, temp_edit.block_name, 0)
 			
 			// States
