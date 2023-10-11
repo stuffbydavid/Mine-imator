@@ -2577,11 +2577,12 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"duality_of_noob.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"disco.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"peaceful_creeper.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"english.milanguage","CopyToMask":-1,"filePath":"datafiles/Data/Languages",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"trails_and_tales.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.2.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.2.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.0.0.19",
+    "IDEVersion": "2022.0.1.31",
   },
 }

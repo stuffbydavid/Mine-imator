@@ -12,7 +12,6 @@ function action_setting_home_screen()
 	}
 	
 	log("Returning to home screen")
-	project_reset()
 	
 	window_state = "startup"
 	window_busy = ""

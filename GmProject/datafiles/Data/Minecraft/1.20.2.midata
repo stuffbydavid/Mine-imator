@@ -1,5 +1,5 @@
 {
-	"version": "1.20",
+	"version": "1.20.2",
 	"patch": 0,
 	"format": 8,
 	"characters": [
@@ -858,17 +858,17 @@
 			"file": "fence_gate.mimodel",
 			"states": {
 				"variant": [
-					{ "value": "oak", "texture": "block/oak_planks", "shape_hide": [ "custom" ] },
-					{ "value": "spruce", "texture": "block/spruce_planks", "shape_hide": [ "custom" ] },
-					{ "value": "birch", "texture": "block/birch_planks", "shape_hide": [ "custom" ] },
-					{ "value": "jungle", "texture": "block/jungle_planks", "shape_hide": [ "custom" ] },
-					{ "value": "acacia", "texture": "block/acacia_planks", "shape_hide": [ "custom" ] },
-					{ "value": "dark_oak", "texture": "block/dark_oak_planks", "shape_hide": [ "custom" ] },
-					{ "value": "mangrove", "texture": "block/mangrove_planks", "shape_hide": [ "custom" ] },
-					{ "value": "cherry", "texture": "block/cherry_planks", "shape_hide": [ "custom" ] },
-					{ "value": "bamboo", "texture": "block/bamboo_fence_gate", "shape_hide": [ "normal" ] },
-					{ "value": "crimson", "texture": "block/crimson_planks", "shape_hide": [ "custom" ] },
-					{ "value": "warped", "texture": "block/warped_planks", "shape_hide": [ "custom" ] }
+					{ "value": "oak", "texture": "block/oak_planks" },
+					{ "value": "spruce", "texture": "block/spruce_planks" },
+					{ "value": "birch", "texture": "block/birch_planks" },
+					{ "value": "jungle", "texture": "block/jungle_planks" },
+					{ "value": "acacia", "texture": "block/acacia_planks" },
+					{ "value": "dark_oak", "texture": "block/dark_oak_planks" },
+					{ "value": "mangrove", "texture": "block/mangrove_planks" },
+					{ "value": "cherry", "texture": "block/cherry_planks" },
+					{ "value": "bamboo", "file": "fence_gate_custom.mimodel", "texture": "block/bamboo_fence_gate" },
+					{ "value": "crimson", "texture": "block/crimson_planks" },
+					{ "value": "warped", "texture": "block/warped_planks" }
 				]
 			},
 			"default_state": "variant=oak"
@@ -4314,6 +4314,11 @@
 			"name": "slime_block",
 			"file": "slime_block.json",
 			"id": "minecraft:slime_block"
+		},
+		{
+			"name": "barrier",
+			"file": "barrier.json",
+			"id": "minecraft:barrier"
 		},
 		{
 			"name": "light",

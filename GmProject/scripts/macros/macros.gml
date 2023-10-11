@@ -4,8 +4,8 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && true
+	#macro dev_mode						false
+	#macro dev_mode_skip_blocks			dev_mode && false
 	#macro dev_mode_debug_schematics	dev_mode && true
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_saveid		dev_mode && true
@@ -19,12 +19,12 @@ function macros()
 	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
 	
 	// Versions
-	#macro mineimator_version			"2.0.1"
-	#macro mineimator_version_sub		""
-	#macro mineimator_version_extra		""
+	#macro mineimator_version			"2.0.1"		// Base Mine-imator version
+	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
+	#macro mineimator_version_extra		"Alpha 2"	// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
-	#macro mineimator_version_date		"2023.08.02"
-	#macro minecraft_version			"1.20"
+	#macro mineimator_version_date		"2023.10.06"
+	#macro minecraft_version			"1.20.2"
 	#macro gm_runtime					GM_runtime_version
 	
 	// File formats
@@ -84,7 +84,7 @@ function macros()
 	
 	// Links
 	#macro link_website					"https://www.mineimator.com"
-	#macro link_tutorials				"https://www.mineimator.com/tutorials"
+	#macro link_tutorials				"https://www.mineimator.com/tutorials2"
 	#macro link_download				"https://www.mineimator.com/download"
 	#macro link_upgrade					"https://www.mineimator.com/upgrade"
 	#macro link_assets					"https://www.mineimator.com/assets/"
