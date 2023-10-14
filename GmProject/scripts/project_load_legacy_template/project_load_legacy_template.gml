@@ -33,6 +33,9 @@ function project_load_legacy_template()
 					model_state = string_get_state_vars(modelmap[?"state"])
 				else
 					model_state = array()
+				
+				model_version = 0
+				project_load_template_update_model()
 			}
 			else
 				log("Could not convert model ", legacy_model_name)
