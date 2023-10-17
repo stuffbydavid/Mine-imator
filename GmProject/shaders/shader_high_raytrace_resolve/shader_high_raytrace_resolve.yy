@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Raytracing",
-    "path": "folders/Scripts/Shaders/High quality/Raytracing.yy",
+    "path": "folders/Shaders/High quality/Raytracing.yy",
   },
 }

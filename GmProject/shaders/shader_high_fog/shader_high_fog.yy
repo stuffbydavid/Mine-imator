@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Fog",
-    "path": "folders/Scripts/Shaders/High quality/Fog.yy",
+    "path": "folders/Shaders/High quality/Fog.yy",
   },
 }

@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Blur",
-    "path": "folders/Scripts/Shaders/Effects/Blur.yy",
+    "path": "folders/Shaders/Effects/Blur.yy",
   },
 }

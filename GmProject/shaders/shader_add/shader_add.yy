@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Add",
-    "path": "folders/Scripts/Shaders/Effects/Add.yy",
+    "path": "folders/Shaders/Effects/Add.yy",
   },
 }

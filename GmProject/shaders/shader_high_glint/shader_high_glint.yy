@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "High quality",
-    "path": "folders/Scripts/Shaders/High quality.yy",
+    "path": "folders/Shaders/High quality.yy",
   },
 }

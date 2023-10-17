@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Chromatic abberation",
-    "path": "folders/Scripts/Shaders/Effects/Chromatic abberation.yy",
+    "path": "folders/Shaders/Effects/Chromatic abberation.yy",
   },
 }

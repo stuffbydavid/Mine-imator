@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Indirect",
-    "path": "folders/Scripts/Shaders/High quality/Indirect.yy",
+    "path": "folders/Shaders/High quality/Indirect.yy",
   },
 }
