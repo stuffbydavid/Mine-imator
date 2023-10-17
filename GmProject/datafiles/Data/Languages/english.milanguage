@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.07.26"
+		"lastchange": "2023.10.17"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -1969,6 +1969,7 @@
 		"sculk_shrieker": "Sculk Shrieker",
 		"copper_ore": "Copper Ore",
 		"copper_block": "Block of Copper",
+		"cut_copper": "Cut Copper",
 		"lightning_rod": "Lightning Rod",
 		"pointed_dripstone": "Pointed Dripstone",
 		"dripstone_block": "Dripstone Block",

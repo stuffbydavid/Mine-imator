@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Color correction",
-    "path": "folders/Shaders/Effects/Color correction.yy",
+    "path": "folders/Scripts/Shaders/Effects/Color correction.yy",
   },
 }

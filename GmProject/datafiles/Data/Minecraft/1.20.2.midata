@@ -5820,18 +5820,10 @@
 					{ "value": "exposed_copper", "file": "exposed_copper.json" },
 					{ "value": "weathered_copper", "file": "weathered_copper.json" },
 					{ "value": "oxidized_copper", "file": "oxidized_copper.json" },
-					{ "value": "cut_copper", "file": "cut_copper.json" },
-					{ "value": "exposed_cut_copper", "file": "exposed_cut_copper.json" },
-					{ "value": "weathered_cut_copper", "file": "weathered_cut_copper.json" },
-					{ "value": "oxidized_cut_copper", "file": "oxidized_cut_copper.json" },
 					{ "value": "waxed_copper_block", "file": "waxed_copper_block.json" },
 					{ "value": "waxed_exposed_copper", "file": "waxed_exposed_copper.json" },
 					{ "value": "waxed_weathered_copper", "file": "waxed_weathered_copper.json" },
-					{ "value": "waxed_oxidized_copper", "file": "waxed_oxidized_copper.json" },
-					{ "value": "waxed_cut_copper", "file": "waxed_cut_copper.json" },
-					{ "value": "waxed_exposed_cut_copper", "file": "waxed_exposed_cut_copper.json" },
-					{ "value": "waxed_weathered_cut_copper", "file": "waxed_weathered_cut_copper.json" },
-					{ "value": "waxed_oxidized_cut_copper", "file": "waxed_oxidized_cut_copper.json" }
+					{ "value": "waxed_oxidized_copper", "file": "waxed_oxidized_copper.json" }
 				]
 			},
 			"default_state": "variant=copper_block",
@@ -5840,14 +5832,32 @@
 				"minecraft:exposed_copper": "variant=exposed_copper",
 				"minecraft:weathered_copper": "variant=weathered_copper",
 				"minecraft:oxidized_copper": "variant=oxidized_copper",
+				"minecraft:waxed_copper_block": "variant=waxed_copper_block",
+				"minecraft:waxed_exposed_copper": "variant=waxed_exposed_copper",
+				"minecraft:waxed_weathered_copper": "variant=waxed_weathered_copper",
+				"minecraft:waxed_oxidized_copper": "variant=waxed_oxidized_copper"
+			}
+		},
+		{
+			"name": "cut_copper",
+			"states": {
+				"variant": [
+					{ "value": "cut_copper", "file": "cut_copper.json" },
+					{ "value": "exposed_cut_copper", "file": "exposed_cut_copper.json" },
+					{ "value": "weathered_cut_copper", "file": "weathered_cut_copper.json" },
+					{ "value": "oxidized_cut_copper", "file": "oxidized_cut_copper.json" },
+					{ "value": "waxed_cut_copper", "file": "waxed_cut_copper.json" },
+					{ "value": "waxed_exposed_cut_copper", "file": "waxed_exposed_cut_copper.json" },
+					{ "value": "waxed_weathered_cut_copper", "file": "waxed_weathered_cut_copper.json" },
+					{ "value": "waxed_oxidized_cut_copper", "file": "waxed_oxidized_cut_copper.json" }
+				]
+			},
+			"default_state": "variant=cut_copper",
+			"id": {
 				"minecraft:cut_copper": "variant=cut_copper",
 				"minecraft:exposed_cut_copper": "variant=exposed_cut_copper",
 				"minecraft:weathered_cut_copper": "variant=weathered_cut_copper",
 				"minecraft:oxidized_cut_copper": "variant=oxidized_cut_copper",
-				"minecraft:waxed_copper_block": "variant=waxed_copper_block",
-				"minecraft:waxed_exposed_copper": "variant=waxed_exposed_copper",
-				"minecraft:waxed_weathered_copper": "variant=waxed_weathered_copper",
-				"minecraft:waxed_oxidized_copper": "variant=waxed_oxidized_copper",
 				"minecraft:waxed_cut_copper": "variant=waxed_cut_copper",
 				"minecraft:waxed_exposed_cut_copper": "variant=waxed_exposed_cut_copper",
 				"minecraft:waxed_weathered_cut_copper": "variant=waxed_weathered_cut_copper",

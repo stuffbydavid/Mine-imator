@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Vignette",
-    "path": "folders/Shaders/Effects/Vignette.yy",
+    "path": "folders/Scripts/Shaders/Effects/Vignette.yy",
   },
 }

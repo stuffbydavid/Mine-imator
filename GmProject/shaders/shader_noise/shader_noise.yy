@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Noise",
-    "path": "folders/Shaders/Effects/Noise.yy",
+    "path": "folders/Scripts/Shaders/Effects/Noise.yy",
   },
 }

@@ -59,7 +59,7 @@ function action_group_reset()
 		
 		case e_context_group.COLOR:
 		{
-			action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_black, c_black, 0)
+			action_tl_frame_set_colors(1, c_black, c_black, c_white, c_black, c_black, c_white, c_white, c_black, 0)
 			return;
 		}
 		

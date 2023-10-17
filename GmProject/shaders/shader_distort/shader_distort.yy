@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Distort",
-    "path": "folders/Shaders/Effects/Distort.yy",
+    "path": "folders/Scripts/Shaders/Effects/Distort.yy",
   },
 }

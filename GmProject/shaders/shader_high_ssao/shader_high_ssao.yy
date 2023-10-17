@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Ambient occlusion",
-    "path": "folders/Shaders/High quality/Ambient occlusion.yy",
+    "path": "folders/Scripts/Shaders/High quality/Ambient occlusion.yy",
   },
 }
