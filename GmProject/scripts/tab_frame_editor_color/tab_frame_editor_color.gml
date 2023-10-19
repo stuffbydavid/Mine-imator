@@ -27,7 +27,7 @@ function tab_frame_editor_color()
 		
 		// Mul (/ Blend color)
 		tab_control_color()
-		draw_button_color("frameeditorblendcolor", dx, dy, setting_advanced_mode ? dw : dw/2, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
+		draw_button_color("frameeditorblendcolor", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
 		tab_next()
 		
 		if (setting_advanced_mode)
@@ -63,10 +63,9 @@ function tab_frame_editor_color()
 				draw_button_color("frameeditorglowcolor", dx, dy, dw, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
 				tab_next()
 			}
-		}
-		
-		if (setting_advanced_mode)
+			
 			tab_set_collumns(false)
+		}
 		
 		// Mix
 		tab_control_color()

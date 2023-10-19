@@ -1,6 +1,6 @@
 /// new_minecraft_map(fn)
 /// @arg fn
-/// @desc Reads Minecraft map .dat and returns a texture. https://minecraft.fandom.com/wiki/Map_item_format
+/// @desc Reads Minecraft map .dat and returns a texture. https://minecraft.wiki/w/Map_item_format
 
 function new_minecraft_map(fn)
 {
