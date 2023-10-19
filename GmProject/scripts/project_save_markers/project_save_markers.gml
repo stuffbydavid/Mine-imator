@@ -5,8 +5,6 @@ function project_save_markers()
 	if (ds_list_size(timeline_marker_list) = 0)
 		return 0
 	
-	// Hacky fix for bizzare marker saving bug
-	var saved = [];
 	var m;
 	
 	json_save_array_start("markers")
@@ -14,11 +12,6 @@ function project_save_markers()
 		for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
 		{
 			m = timeline_marker_list[|i]
-			
-			if (array_contains(saved, m.save_id))
-				continue
-			else
-				array_add(saved, m.save_id)
 			
 			json_save_object_start()
 			

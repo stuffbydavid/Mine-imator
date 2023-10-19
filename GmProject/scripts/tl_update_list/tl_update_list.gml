@@ -44,6 +44,8 @@ function tl_update_list()
 		if (color_tag != null)
 			app.tree_update_color = color_tag
 		
+		color_tag_inherit = app.tree_update_color
+		
 		// Only add visible timelines
 		if (tl_update_list_filter(id))
 		{

@@ -15,6 +15,7 @@ function app_update_animate()
 	project_path_tl_array = []
 	project_use_path_tl_array = []
 	project_ik_part_array = [] // If null, will generate in tl_update_matrix
+	project_inherit_pose_array = []
 	
 	// Update background time
 	background_time_prev = background_time

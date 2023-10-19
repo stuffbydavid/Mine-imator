@@ -14,6 +14,7 @@ function tl_event_create()
 	temp = null
 	text = text_get("timelineeditortextsample")
 	color_tag = null
+	color_tag_inherit = null
 	lock = false
 	hide = false
 	ghost = false

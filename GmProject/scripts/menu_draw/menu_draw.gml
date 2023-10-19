@@ -92,6 +92,13 @@ function menu_draw()
 		content_mouseon = app_mouse_box(m.menu_x, yy, m.menu_w, menuh)
 		if (!contentmenu)
 		{
+			// Hacky way to clear scrollbar and revert focus to searchbar when released
+			if (window_focus = string(m.menu_scroll_vertical) && !mouse_left)
+				menu_search_busy = ""
+			
+			if (window_focus = string(m.menu_scroll_horizontal) && !mouse_left)
+				menu_search_busy = ""
+			
 			if (m.menu_scroll_vertical.needed && content_mouseon)
 				window_scroll_focus = string(m.menu_scroll_vertical)
 			

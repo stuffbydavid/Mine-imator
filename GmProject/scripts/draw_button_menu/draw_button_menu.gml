@@ -178,7 +178,7 @@ function draw_button_menu()
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Mouse
-	mouseon = app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon
+	mouseon = (app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon) || (menuactive && app_mouse_box(xx, yy, wid, hei, "menu"))
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint
@@ -278,7 +278,7 @@ function draw_button_menu()
 	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
 	
 	// Ctrl + Scroll
-	if (mouseon && keyboard_check(vk_control) && mouse_wheel != 0)
+	if (!menuactive && mouseon && keyboard_check(vk_control) && mouse_wheel != 0)
 	{
 		menu_model_state = menu_model_state_current
 		menu_block_state = menu_block_state_current
@@ -362,7 +362,7 @@ function draw_button_menu()
 	}
 	
 	// Check click
-	if (mouseon && mouse_left_released && !menuhide)
+	if (!menuactive && mouseon && mouse_left_released && !menuhide)
 	{
 		var m = null;
 		for (var i = 0; i < ds_list_size(menu_list); i++)
