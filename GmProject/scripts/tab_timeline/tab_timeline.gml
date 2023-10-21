@@ -850,7 +850,7 @@ function tab_timeline()
 	
 	var itemmaxw;
 	tlmaxw = 0
-
+	
 	for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	{
 		if (dy > listy + listh)
@@ -869,9 +869,8 @@ function tab_timeline()
 		if (itemhover)
 			mouse_cursor = cr_handpoint
 			
-		if(itemhover && (window_busy = "" || window_busy = "place")){
-			place_view_mouse = "timeline";
-		}
+		if (itemhover && (window_busy = "" || window_busy = "place"))
+			place_view_mouse = "timeline"
 		
 		// Parent hovering item to selected timeline
 		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
@@ -901,7 +900,7 @@ function tab_timeline()
 		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
-		else if (tl.selected || itemhover || tl = context_menu_value || ((window_busy = "timelineclick") && timeline_select = tl)|| ((window_busy = "timelineclick" && window_busy = "place") && timeline_select = tl))
+		else if (tl.selected || itemhover || tl = context_menu_value || ((window_busy = "timelineclick") && timeline_select = tl) || ((window_busy = "timelineclick" && window_busy = "place") && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 		
 		xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))
@@ -1106,7 +1105,6 @@ function tab_timeline()
 			// Draw name
 			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
-
 				if (tl.color_tag = null)
 					namecolor = c_accent
 				else
@@ -1504,10 +1502,8 @@ function tab_timeline()
 					else
 						app_update_tl_edit()
 				}
-				else{
+				else
 					action_tl_select(timeline_select)
-
-				}
 			}
 			else
 				action_tl_deselect_all()
@@ -1675,11 +1671,12 @@ function tab_timeline()
 		if (timeline_zoom_goal > 1)
 			timeline_zoom_goal = round(timeline_zoom_goal)
 		
-		// Convert current and new mouse position to frames, then get difference and add it
-		timeline.hor_scroll.value_goal = round(
-			timeline.hor_scroll.value +
-			((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal
-		) 
+		timeline.hor_scroll.value_goal = min(
+			// Prevent zooming into timeline past end of animation or playback marker, whichever is furthest
+			max((timeline_length * timeline_zoom_goal), (timeline_marker * timeline_zoom_goal)),
+			// Convert current and new mouse position to frames, then get difference and add it
+			round(timeline.hor_scroll.value + ((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal)
+		)
 	}
 	
 	// Move view
