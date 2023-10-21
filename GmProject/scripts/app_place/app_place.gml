@@ -86,13 +86,35 @@ function app_update_place()
 	}
 		
 	// Stop placing (no view clicked)
-	if (place_view_mouse = null && mouse_left_pressed)
-		app_stop_place()
+	if (place_view_mouse = null && mouse_left_released)
+	{
+		with (history[0])
+		{
+			value_default[e_value.POS_X] = 0
+			value_default[e_value.POS_Y] = 0
+			value_default[e_value.POS_Z] = 0
+		}
 		
+		with (place_tl)
+		{
+			value_default[e_value.POS_X] = 0
+			value_default[e_value.POS_Y] = 0
+			value_default[e_value.POS_Z] = 0
+			value[e_value.POS_X] = 0
+			value[e_value.POS_Y] = 0
+			value[e_value.POS_Z] = 0
+			update_matrix = true
+		}
+		
+		tl_update_matrix()
+			
+		app_stop_place()
+	}
+	
 	if (keyboard_check_pressed(vk_escape))
 	{
 	}
-		
+	
 	place_view_mouse = null
 }
 

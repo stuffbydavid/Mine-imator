@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.10.17"
+		"lastchange": "2023.10.21"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2000,6 +2000,7 @@
 		"suspicious_gravel": "Suspicious Gravel",
 		"sniffer_egg": "Sniffer Egg",
 		"decorated_pot": "Decorated Pot",
+		"crafter": "Crafter",
 		"state/": {
 			"variant": "Variant",
 			"snowy": "Snowy",
@@ -2077,6 +2078,8 @@
 			"hanging": "Hanging",
 			"tilt": "Tilt",
 			"dusted": "Dusted",
+			"triggered": "Triggered",
+			"crafting": "Crafting",
 			"value/": {
 				"stone": "Stone",
 				"smooth_stone": "Smooth Stone",
