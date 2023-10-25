@@ -2583,8 +2583,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.2.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"splashes.json","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.20.2.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"23w43a.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"23w43a.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft",},
   ],
   "MetaData": {
     "IDEVersion": "2022.0.1.31",
