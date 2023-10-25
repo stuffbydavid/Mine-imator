@@ -895,6 +895,7 @@ function tab_timeline()
 				
 			tl_update_list()
 			tl_update_matrix()
+			render_samples = -1
 			app_stop_place()
 		}
 		
