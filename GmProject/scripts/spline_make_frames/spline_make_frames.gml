@@ -16,9 +16,7 @@ function spline_make_frames(points, closed, smooth)
 	else
 		n = vec3_normal(t, 0)
 	
-	n = vec3_rotate_axis_angle(n, t, p[W])
-	
-	// Set begin tangent/normal
+	// Set first normal
 	for (j = X; j <= Z; j++)
 	{
 		points[@ 0][@ PATH_TANGENT_X + j] = t[j]
@@ -53,24 +51,29 @@ function spline_make_frames(points, closed, smooth)
 		t = tn
 	}
 	
-	// Connect ends
+	// Merge last/first point frame in closed spline
 	if (closed)
 	{
-		var p1, p2, p;
-		p1 = points[1]
-		p2 = points[array_length(points) - 2]
+		var i, p, pn, t, n;
+		i = array_length(points) - 2
+		p = points[@ i - 1]
+		pn = points[@ 0]
 		
-		t = vec3_normalize([p1[PATH_TANGENT_X] + p2[PATH_TANGENT_X], p1[PATH_TANGENT_Y] + p2[PATH_TANGENT_Y], p1[PATH_TANGENT_Z] + p2[PATH_TANGENT_Z]])
-		n = vec3_normalize([p1[PATH_NORMAL_X] + p2[PATH_NORMAL_X], p1[PATH_NORMAL_Y] + p2[PATH_NORMAL_Y], p1[PATH_NORMAL_Z] + p2[PATH_NORMAL_Z]])
+		t = vec3_normalize([p[PATH_TANGENT_X] + pn[PATH_TANGENT_X], p[PATH_TANGENT_Y] + pn[PATH_TANGENT_Y], p[PATH_TANGENT_Z] + pn[PATH_TANGENT_Z]])
+		n = vec3_normalize([p[PATH_NORMAL_X] + pn[PATH_NORMAL_X], p[PATH_NORMAL_Y] + pn[PATH_NORMAL_Y], p[PATH_NORMAL_Z] + pn[PATH_NORMAL_Z]])
 		
 		for (j = X; j <= Z; j++)
 		{
-			points[@ 0][@ PATH_TANGENT_X + j] = t[j]
-			points[@ 0][@ PATH_NORMAL_X + j] = n[j]
-			
-			points[@ array_length(points) - 1][@ PATH_TANGENT_X + j] = t[j]
-			points[@ array_length(points) - 1][@ PATH_NORMAL_X + j] = n[j]
+			points[@ i][@ PATH_TANGENT_X + j] = t[j]
+			points[@ i][@ PATH_NORMAL_X + j] = n[j]
+		}
+		
+		i = array_length(points) - 1
+		
+		for (j = X; j <= Z; j++)
+		{
+			points[@ i][@ PATH_TANGENT_X + j] = pn[@ PATH_TANGENT_X + j]
+			points[@ i][@ PATH_NORMAL_X + j] = pn[@ PATH_NORMAL_X + j]
 		}
 	}
-	
 }

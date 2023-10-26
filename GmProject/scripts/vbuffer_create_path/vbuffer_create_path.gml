@@ -46,8 +46,6 @@ function vbuffer_create_path(path, small = false)
 	
 	for (var i = 0; i < array_length(frames) - 1; i++)
 	{
-		vertex_rgb = make_color_hsv((i / array_length(frames)) * 128, 255, 255)
-		
 		if (!rail)
 		{
 			jp = 0
@@ -215,8 +213,6 @@ function vbuffer_create_path(path, small = false)
 		}
 		
 	}
-	
-	vertex_rgb = c_white
 	
 	return vbuffer_done()
 }
