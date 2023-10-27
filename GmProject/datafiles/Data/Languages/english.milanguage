@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.0.1",
-		"lastchange": "2023.10.25"
+		"lastchange": "2023.10.27"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -1598,6 +1598,7 @@
 				"mojang_old": "Mojang (Classic)",
 				"migrator": "Migrator",
 				"vanilla": "Vanilla",
+				"cherryblossom": "Cherry Blossom",
 				"minecon_2011": "MineCon 2011",
 				"minecon_2012": "MineCon 2012",
 				"minecon_2013": "MineCon 2013",
