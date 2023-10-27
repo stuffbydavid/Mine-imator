@@ -30,9 +30,15 @@ function model_shape_generate_plane(bend)
 	var texsize, texuv;
 	texsize = point3D_sub(to_noscale, from_noscale)
 	
+	if (floor_box_uvs)
+	{
+		for (var i = X; i <= Z; i++)
+			texsize[i] = (frac(texsize[i]) ? floor(texsize[i] + 0.000001) : floor(texsize[i]))
+	}
+	
 	// Convert to 0-1
 	texsize = vec3(texsize[X] / texture_size[X], texsize[Y] / texture_size[Y], texsize[Z] / texture_size[Y])
-	texuv = vec2_div(uv, texture_size)
+	texuv = vec2_div(floor_box_uvs ? [floor(uv[X]), floor(uv[Y])] : uv, texture_size)
 	
 	// Plane texture mapping
 	var tex1, tex2, tex3, tex4;

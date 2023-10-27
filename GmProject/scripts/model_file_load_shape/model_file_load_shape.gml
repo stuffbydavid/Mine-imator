@@ -155,6 +155,9 @@ function model_file_load_shape(map, res)
 		else
 			move_required = false
 		
+		// Floor UVs (Not available for 3D planes, floors UV coords for Bedrock UV support)
+		floor_box_uvs = other.floor_box_uvs
+		
 		// From/To
 		from_noscale = value_get_point3D(map[?"from"])
 		to_noscale = value_get_point3D(map[?"to"])

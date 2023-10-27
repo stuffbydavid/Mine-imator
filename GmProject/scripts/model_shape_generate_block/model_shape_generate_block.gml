@@ -29,12 +29,21 @@ function model_shape_generate_block(bend)
 	// Define texture coordinates to use
 	var texsize, texsizefix, texuv;
 	texsize = point3D_sub(to_noscale, from_noscale)
+	texsizefix = point3D_copy(texsize)
+	
+	if (floor_box_uvs)
+	{
+		for (var i = X; i <= Z; i++)
+			texsize[i] = (frac(texsize[i]) ? floor(texsize[i] + 0.000001) : floor(texsize[i]))
+	}
+	
 	texsizefix = point3D_sub(texsize, vec3(1 / 256)) // Artifact fix with CPU rendering
 	
 	// Convert to 0-1
 	texsize = vec3(texsize[X] / texture_size[X], texsize[Y] / texture_size[Y], texsize[Z] / texture_size[Y])
 	texsizefix = vec3(texsizefix[X] / texture_size[X], texsizefix[Y] / texture_size[Y], texsizefix[Z] / texture_size[Y])
-	texuv = vec2_div(uv, texture_size)
+	
+	texuv = vec2_div(floor_box_uvs ? [floor(uv[X]), floor(uv[Y])] : uv, texture_size)
 	
 	// Block face texture mapping
 	var texeast1, texeast2, texeast3, texeast4;

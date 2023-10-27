@@ -109,6 +109,9 @@ function model_file_load(fname, res = null)
 		// Whether this file contains 3D planes that need to be regenerated on texture switches
 		has_3d_plane = false
 		
+		// Floor UVs (Not available for 3D planes, floors UV coords for Bedrock UV support)
+		floor_box_uvs = value_get_real(map[?"floor_box_uvs"], false)
+		
 		// Read all the parts of the root
 		var partlist = map[?"parts"]
 		render_part_list = ds_list_create()

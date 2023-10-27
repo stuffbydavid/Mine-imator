@@ -147,6 +147,9 @@ function model_file_load_part(map, root, res, model)
 		scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
 		scale = vec3_mul(scale, other.scale)
 		
+		// Floor UVs (Not available for 3D planes, floors UV coords for Bedrock UV support)
+		floor_box_uvs = other.floor_box_uvs
+		
 		// Keyframe tab states
 		show_position = value_get_real(map[?"show_position"], false)
 		
