@@ -3,14 +3,14 @@
     "CppGen": {
       "commandName": "Project",
 
+      // david
+      "commandLineArgs": "G:\\Dev\\Projects\\Mine-imator\\GmProject G:\\Dev\\Projects\\Mine-imator\\CppProject\\Generated G:\\Dev\\Projects\\Mine-imator\\CppProject\\Asset\\Sprites G:\\Dev\\Projects\\Mine-imator\\CppProject\\Asset\\Shaders G:\\Dev\\Projects\\Mine-imator\\CppGen\\gml.json"
+
       // Nimi
       //"commandLineArgs": "C:\\Dev\\Mine-imator\\GmProject C:\\Dev\\Mine-imator\\CppProject\\Generated C:\\Dev\\Mine-imator\\CppProject\\Asset\\Sprites C:\\Dev\\Mine-imator\\CppProject\\Asset\\Shaders C:\\Dev\\Mine-imator\\CppGen\\gml.json",
 
       // mbanders
       //"commandLineArgs": "D:\\Documents\\GameMakerStudio2\\Mine-imator\\GmProject D:\\Documents\\GameMakerStudio2\\Mine-imator\\CppProject\\Generated D:\\Documents\\GameMakerStudio2\\Mine-imator\\CppProject\\Asset\\Sprites D:\\Documents\\GameMakerStudio2\\Mine-imator\\CppProject\\Asset\\Shaders D:\\Documents\\GameMakerStudio2\\Mine-imator\\CppGen\\gml.json",
-
-      // david
-      "commandLineArgs": "G:\\Dev\\Projects\\Mine-imator\\GmProject G:\\Dev\\Projects\\Mine-imator\\CppProject\\Generated G:\\Dev\\Projects\\Mine-imator\\CppProject\\Asset\\Sprites G:\\Dev\\Projects\\Mine-imator\\CppProject\\Asset\\Shaders G:\\Dev\\Projects\\Mine-imator\\CppGen\\gml.json"
     }
   }
 }
