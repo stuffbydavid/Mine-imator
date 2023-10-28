@@ -99,6 +99,10 @@
         {
             "file": "lush_cave.png",
             "credits": "Nimi & 9redwoods"
+        },
+        {
+            "file": "oasis.png",
+            "credits": "Swooplezz"
         }
     ]
 }
