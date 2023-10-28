@@ -320,7 +320,8 @@
 		"restartprogram": "Restart Mine-imator to apply setting changes.",
 		"download": "Download",
 		"view": "View",
-		"rendersaved": "Render settings saved successfully!"
+		"rendersaved": "Render settings saved successfully!",
+		"close": "Close"
 	},
 	"error/": {
 		"loadassets": "The Minecraft assets could not be loaded. Try re-installing Mine-imator. See the log for details.",

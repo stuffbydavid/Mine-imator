@@ -6,7 +6,7 @@
 function minecraft_update_armor_generate(data, res = null)
 {
 	var skins = [null, null, null, null];
-	if (res = null || !res_is_ready(res))
+	if (res = null || !res_is_ready(res) || (res.type != e_res_type.PACK && res.type != e_res_type.PACK_UNZIPPED))
 		res = mc_res
 	
 	for (var i = 0; i < 4; i++)

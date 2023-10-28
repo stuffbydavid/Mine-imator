@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "app_event_http",
+  "name": "toast_set_close",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "App",
-    "path": "folders/Scripts/App.yy",
+    "name": "Toasts",
+    "path": "folders/Scripts/App/Interface/Toasts.yy",
   },
 }
