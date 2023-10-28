@@ -39,13 +39,24 @@ function temp_event_create()
 	model_part_name = ""
 	model_part = null
 	
+	model_use_blend_color = false
+	model_blend_color = c_white
+	model_blend_color_default = model_blend_color
+	
 	load_update_tree = false
 	
 	pattern_type = ""
-	pattern_base_color = c_minecraft_white
+	pattern_base_color = minecraft_get_color("dye:white")
 	pattern_pattern_list = array()
 	pattern_color_list = array()
 	pattern_skin = null
+	
+	armor_array = []
+	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
+	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
+	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
+	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
+	armor_skin_array = [null, null, null, null]
 	
 	item_tex = null
 	item_tex_material = null

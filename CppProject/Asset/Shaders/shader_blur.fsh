@@ -35,9 +35,9 @@ void main()
 	vec4 blurResult = vec4(0.0);
 	
 	vec2 blurAmount = (uRadius / uScreenSize) * uDirection;
-    
+	
 	// Guassian filter
-    for (int i = 0; i < MAX_SAMPLES; i++)
+	for (int i = 0; i < MAX_SAMPLES; i++)
 	{
 		if (i >= uSamples)
 			break;

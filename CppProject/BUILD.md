@@ -5,7 +5,7 @@
 * OpenSSL Windows installer: https://slproweb.com/download/Win64OpenSSL-3_0_5.msi (64 bit), https://slproweb.com/download/Win32OpenSSL-3_0_5.msi (32 bit)
 * FFmpeg 5.0 sources: http://www.ffmpeg.org/releases/ffmpeg-5.0.tar.xz
 * x264 sources: https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.bz2
-* Zlib 1.2.11 sources: https://zlib.net/zlib-1.2.12.tar.gz
+* Zlib 1.2.13 sources: https://zlib.net/zlib-1.2.13.tar.gz
 * Libzip 1.9.2 sources: https://libzip.org/download/libzip-1.9.2.tar.gz
 * FreeType 2.9.1 sources: https://download.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz (only header is used, library comes with Qt)
 * OpenAL Soft 1.22.0 sources: https://openal-soft.org/openal-releases/openal-soft-1.22.0.tar.bz2
@@ -26,8 +26,8 @@ For new developers Qt must be built, the other libraries are pre-built for each 
 6. Get OpenSSL for 64-bit
     * Install into C:\Dev\OpenSSL
     * When asked, select to copy DLLs to "bin"
-2. Get Jom, extract into C:\Dev\Jom and add folder to PATH
-7. Get Qt, create folder C:/Dev/Qt/5.15.9
+7. Get Jom, extract into C:\Dev\Jom and add folder to PATH
+8. Get Qt, create folder C:/Dev/Qt/5.15.9
     1. Open x64 Native Tools Command Prompt for VS 2022 as Administrator
     2. `cd %DEV_DIR%/Qt/5.15.9`
     3. `git clone git://code.qt.io/qt/qt5.git`
@@ -36,17 +36,17 @@ For new developers Qt must be built, the other libraries are pre-built for each 
     6. `perl init-repository`
     7. `configure.bat -platform win32-msvc -prefix "%DEV_DIR%/Qt/5.15.9/build" -opensource -confirm-license -release -static -static-runtime -qt-libjpeg -opengl desktop -openssl-linked -I"%DEV_DIR%/OpenSSL/include" -L"%DEV_DIR%/OpenSSL/lib/VC/static" OPENSSL_LIBS="-lWs2_32 -lGdi32 -lAdvapi32 -lCrypt32 -lUser32" OPENSSL_LIBS_DEBUG="-llibssl64MDd -llibcrypto64MDd" OPENSSL_LIBS_RELEASE="-llibssl64MT -llibcrypto64MT" -no-icu -nomake tests -nomake examples -nomake tools -skip qt3d -skip qtmultimedia -skip activeqt -skip qtandroidextras -skip qtconnectivity -skip datavis3d -skip qtdoc -skip gamepad -skip qtgraphicaleffects -skip qtcharts -skip qtlocation -skip qtlottie -skip qtnetworkauth -skip qtpurchasing -skip qtquick3d -skip qtquickcontrols -skip qtquickcontrols2 -skip qtquicktimeline -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtvirtualkeyboard -skip qtwayland -skip qtwebengine -skip qtwebglplugin -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtxmlpatterns`
     8. `jom` then `jom install`
-7. Get Libzip sources, extract into C:\Dev\Libzip\libzip-1.9.2
-8. Get FreeType sources, put in C:\Dev\FreeType\freetype-2.9.1
-9. Get FFmpeg sources, put in C:\Dev\FFmpeg\ffmpeg-5.0
-10. Get OpenAL sources, put in C:\Dev\OpenAL\openal-soft-1.22.0
-11. Generate VS project
+9. Get Libzip sources, extract into C:\Dev\Libzip\libzip-1.9.2
+10. Get FreeType sources, put in C:\Dev\FreeType\freetype-2.9.1
+11. Get FFmpeg sources, put in C:\Dev\FFmpeg\ffmpeg-5.0
+12. Get OpenAL sources, put in C:\Dev\OpenAL\openal-soft-1.22.0
+13. Generate VS project
     1. Open CMake GUI, select "Where is the source code" to the CppProject folder
     2. Select "Where to build the binaries" to a chosen output folder
     3. Configure for Visual Studio 17 2022
     4. Generate and Open Project
     5. Copy datafiles contents into the build folder
-12. Build in Debug or Release mode
+14. Build in Debug or Release mode
 
 **Build setup (Windows 32-bit):**
 
@@ -155,7 +155,7 @@ https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 1. Configure VS 17 2022 project into /build or /build-Win32
     * Libzip:
         * Disable all BUILD_ parameters
-        * Add `SET(ZLIB_LIBRARY "C:/Dev/zlib/zlib-1.2.11")` to CMakeLists.txt
+        * Add `SET(ZLIB_LIBRARY "C:/Dev/zlib/zlib-1.2.13")` to CMakeLists.txt
     * OpenAL:
         * Disable ALSOFT_UTILS, ALSOFT_EXAMPLES
         * Set CMAKE_BUILD_TYPE to Release

@@ -3,6 +3,9 @@
 
 function block_set_vine()
 {
+	if (!builder_scenery_legacy)
+		return 0
+	
 	var up = "false";
 	
 	if (!build_edge_zp)

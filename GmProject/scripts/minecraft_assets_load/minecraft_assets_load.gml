@@ -189,8 +189,99 @@ function minecraft_assets_load()
 					ds_list_add(minecraft_pattern_short_list, pattern[|1])
 				}
 				
+				// Sherds
+				if (is_undefined(load_assets_map[?"sherds"]))
+				{
+					log("No sherd keys found")
+					return false
+				}
+				else
+					ds_map_copy(minecraft_sherd_map, load_assets_map[?"sherds"])
+				
+				// Armor trims
+				if (is_undefined(load_assets_map[?"armor"]))
+				{
+					log("No armor data found")
+					return false
+				}
+				else
+				{
+					var armormap = load_assets_map[?"armor"];
+					
+					ds_list_copy(minecraft_armor_trim_pattern_list, armormap[?"pattern"])
+					ds_list_copy(minecraft_armor_trim_material_list, armormap[?"material"])
+				}
+				
+				// Map colors
+				if (is_undefined(load_assets_map[?"map_colors"]))
+				{
+					log("No map colors found")
+					return false
+				}
+				
+				var colors = load_assets_map[?"map_colors"];
+				
+				var size, col, s1, s2, s3;
+				size = ds_list_size(colors)
+				s1 = make_color_rgb(180, 180, 180)
+				s2 = make_color_rgb(220, 220, 220)
+				s3 = make_color_rgb(135, 135, 135)
+				minecraft_map_color_array = array_create(size * 4)
+				
+				for (var i = 0; i < ds_list_size(colors); i++)
+				{
+					col = hex_to_color(colors[|i])
+					minecraft_map_color_array[i * 4 + 0] = color_multiply(col, s1)
+					minecraft_map_color_array[i * 4 + 1] = color_multiply(col, s2)
+					minecraft_map_color_array[i * 4 + 2] = col
+					minecraft_map_color_array[i * 4 + 3] = color_multiply(col, s3)
+				}
+				
 				load_assets_stage = "models"
 				load_assets_progress = 0.5
+				
+				// Swatches
+				var swatches = load_assets_map[?"swatches"];
+				
+				if (is_undefined(swatches))
+				{
+					log("No swatches found")
+					return false
+				}
+				
+				for (var i = 0; i < ds_list_size(swatches); i++)
+				{
+					var swatch = swatches[|i];
+					var s = new_obj(obj_swatch);
+					array_add(minecraft_swatch_array, s)
+					s.name = swatch[?"name"]
+					s.colors = []
+					s.color_names = []
+					s.map = ds_map_create()
+					
+					var colors = swatch[?"colors"];
+					
+					for (var j = 0; j < ds_list_size(colors); j++)
+					{
+						var c = colors[|j];
+						array_add(s.color_names, c[?"name"])
+						array_add(s.colors, hex_to_color(c[?"value"]))
+						ds_map_add(s.map, c[?"name"], hex_to_color(c[?"value"]))
+						ds_map_add(minecraft_swatch_color_map, swatch[?"name"] + ":" + c[?"name"], hex_to_color(c[?"value"]))
+					}
+					
+					s.size = array_length(s.colors)
+				}
+				
+				// Dyes?
+				minecraft_swatch_dyes = minecraft_get_swatch("dye")
+				
+				if (minecraft_swatch_dyes = null)
+				{
+					log("No dyes found")
+					return false
+				}
+				
 				break;
 			}
 			
@@ -318,7 +409,7 @@ function minecraft_assets_load()
 						var newid, newidnomc, block, statevars;
 						newid = curmap[?"id"]
 						if (!is_undefined(newid))
-							newidnomc =  string_replace(curmap[?"id"], "minecraft:", "")
+							newidnomc = string_replace(curmap[?"id"], "minecraft:", "")
 						else
 							newidnomc = ""
 						block = null

@@ -449,7 +449,7 @@ function tab_template_editor_particles()
 		tab_collapse_start()
 		
 		capwid = (ptype_edit.angle_extend ? text_caption_width("particleeditortypeanglex", "particleeditortypeangley", "particleeditortypeanglez", 
-															  "particleeditortypeanglespeed", "particleeditortypeanglespeedadd", "particleeditortypeanglespeedmul") :
+															   "particleeditortypeanglespeed", "particleeditortypeanglespeedadd", "particleeditortypeanglespeedmul") :
 										 text_caption_width("particleeditortypeanglexyz", "particleeditortypeanglespeed", "particleeditortypeanglespeedadd",
 															"particleeditortypeanglespeedmul"))
 		

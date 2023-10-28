@@ -2,99 +2,107 @@
     "splashes": [
         {
             "file": "you_cant_hide.png",
-            "credits": "Art by __Mine__"
+            "credits": "__Mine__"
         },
         {
             "file": "peaceful_creeper.png",
-            "credits": "Art by __Mine__"
+            "credits": "__Mine__"
         },
         {
             "file": "deep_discovery.png",
-            "credits": "Art by __Mine__"
+            "credits": "__Mine__"
         },
         {
             "file": "the_peaceful_dream.png",
-            "credits": "Art by Cade [CaZaKoJa]"
+            "credits": "Cade [CaZaKoJa]"
         },
         {
             "file": "apple.png",
-            "credits": "Art by David"
+            "credits": "David"
         },
         {
             "file": "enderman.png",
-            "credits": "Art by David"
+            "credits": "David"
         },
         {
             "file": "hween.png",
-            "credits": "Art by David & mbanders"
+            "credits": "David & mbanders"
         },
         {
             "file": "disco.png",
-            "credits": "Art by David & mbanders"
+            "credits": "David & mbanders"
         },
         {
             "file": "untitled_splash.png",
-            "credits": "Art by Hozq"
+            "credits": "Hozq"
         },
         {
             "file": "untitled_splash_2.png",
-            "credits": "Art by Jnick"
+            "credits": "Jnick"
         },
         {
             "file": "dangerous_temple.png",
-            "credits": "Art by Joss"
+            "credits": "Jossamations"
         },
         {
             "file": "dolphins_grace.png",
-            "credits": "Art by Joss"
+            "credits": "Jossamations"
         },
         {
             "file": "duality_of_noob.png",
-            "credits": "Art by Joss"
+            "credits": "Jossamations"
         },
         {
             "file": "pillage_and_destroy.png",
-            "credits": "Art by Joss"
+            "credits": "Jossamations"
         },
         {
             "file": "stealthy_ocelot.png",
-            "credits": "Art by Joss"
+            "credits": "Jossamations"
         },
         {
             "file": "forest.png",
-            "credits": "Art by KeepOnChucking"
+            "credits": "KeepOnChucking"
         },
         {
             "file": "rain.png",
-            "credits": "Art by KeepOnChucking"
+            "credits": "KeepOnChucking"
         },
         {
             "file": "sunset.png",
-            "credits": "Art by mbanders"
+            "credits": "mbanders"
         },
         {
             "file": "meet_the_pyro.png",
-            "credits": "Art by mbanders"
+            "credits": "mbanders"
         },
         {
             "file": "cave.png",
-            "credits": "Art by Nimi"
+            "credits": "Nimi"
         },
         {
             "file": "desert.png",
-            "credits": "Art by Nimi"
+            "credits": "Nimi"
         },
         {
             "file": "mushrooms.png",
-            "credits": "Art by Nimi"
+            "credits": "Nimi"
         },
         {
             "file": "portal.png",
-            "credits": "Art by Nimi"
+            "credits": "Nimi"
+        },
+        {
+            "file": "trails_and_tales.png",
+            "credits": "Nimi"
         },
         {
             "file": "lush_cave.png",
-            "credits": "Art by Nimi & 9redwoods"
+            "credits": "Nimi & 9redwoods"
+        },
+        {
+            "file": "oasis.png",
+            "credits": "Swooplezz"
         }
     ]
 }

@@ -35,7 +35,6 @@ function app_startup_interface_tabs()
 		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
 		with (render)
 		{
-			tbx_dof_quality = new_textbox_integer()
 			tbx_ssao_radius = new_textbox_decimals()
 			tbx_ssao_power = new_textbox_integer()
 			tbx_ssao_power.suffix = "%"
@@ -69,6 +68,10 @@ function app_startup_interface_tabs()
 			tbx_aa_power.suffix = "%"
 			tbx_block_emissive = new_textbox_decimals()
 			tbx_block_emissive.suffix = "%"
+			tbx_glint_speed = new_textbox_decimals()
+			tbx_glint_speed.suffix = "%"
+			tbx_glint_strength = new_textbox_decimals()
+			tbx_glint_strength.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
 			tbx_texture_filtering_level = new_textbox_integer()
 			tbx_exposure = new_textbox_decimals()
@@ -107,11 +110,18 @@ function app_startup_interface_tabs()
 			tbx_sky_time = new_textbox(true, 10, "-:0123456789")
 			tbx_sky_rotation = new_textbox_ndecimals()
 			tbx_sky_rotation.suffix = "°"
+			tbx_sky_sun_angle = new_textbox_integer()
+			tbx_sky_sun_angle.suffix = "°"
+			tbx_sky_sun_scale = new_textbox_decimals()
+			tbx_sky_sun_scale.suffix = "%"
+			tbx_sky_moon_angle = new_textbox_integer()
+			tbx_sky_moon_angle.suffix = "°"
+			tbx_sky_moon_scale = new_textbox_decimals()
+			tbx_sky_moon_scale.suffix = "%"
 			tbx_sunlight_strength = new_textbox_integer()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
 			tbx_sunlight_angle.suffix = "°"
-			tbx_sky_clouds_fade_distance = new_textbox_integer()
 			tbx_sky_clouds_height = new_textbox_ndecimals()
 			tbx_sky_clouds_size = new_textbox_decimals()
 			tbx_sky_clouds_thickness = new_textbox_decimals()
@@ -386,6 +396,7 @@ function app_startup_interface_tabs()
 		list_width = 320
 		
 		hor_scroll = new_obj(obj_scrollbar)
+		hor_scroll.zoomable = true
 		hor_scroll_tl = new_obj(obj_scrollbar)
 		ver_scroll = new_obj(obj_scrollbar)
 	}
@@ -411,7 +422,15 @@ function app_startup_interface_tabs()
 		// Graphics
 		appearance = tab_add_category("timelineeditorappearance", [icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL__DARK], tab_timeline_editor_appearance, false)
 		with (appearance)
+		{
+			tbx_glint_scale = new_textbox_integer()
+			tbx_glint_scale.suffix = "%"
+			tbx_glint_speed = new_textbox_integer()
+			tbx_glint_speed.suffix = "%"
+			tbx_glint_strength = new_textbox_integer()
+			tbx_glint_strength.suffix = "%"
 			tbx_depth = new_textbox_ninteger()
+		}
 		
 		// Audio
 		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
@@ -657,6 +676,8 @@ function app_startup_interface_tabs()
 		{
 			tbx_volume = new_textbox_integer()
 			tbx_volume.suffix = "%"
+			tbx_pitch = new_textbox_integer()
+			tbx_pitch.suffix = "%"
 			tbx_start = new_textbox_decimals()
 			tbx_end = new_textbox_ndecimals()
 		}

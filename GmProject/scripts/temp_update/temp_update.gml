@@ -1,13 +1,14 @@
-/// temp_update()
+/// temp_update([copy])
+/// @arg copy
 
-function temp_update()
+function temp_update(copy = false)
 {
 	if (type = e_temp_type.CHARACTER ||
 		type = e_temp_type.SPECIAL_BLOCK ||
 		type = e_temp_type.BODYPART ||
 		type = e_temp_type.MODEL)
 	{
-		temp_update_model()
+		temp_update_model(copy)
 		if (type = e_temp_type.BODYPART)
 			temp_update_model_part()
 		temp_update_model_shape()

@@ -1,5 +1,12 @@
 uniform sampler2D uTexture; // static
 uniform sampler2D uTextureMaterial; // static
+uniform vec2 uTextureSize;
+
+uniform sampler2D uGlintTexture; // static
+uniform vec2 uGlintOffset;
+uniform vec2 uGlintSize;
+uniform int uGlintEnabled;
+uniform float uGlintStrength;
 
 uniform float uSampleIndex;
 uniform int uAlphaHash;
@@ -79,13 +86,13 @@ float getFog()
 // Fresnel Schlick approximation
 float fresnelSchlickRoughness(float cosTheta, float F0, float roughness)
 {
-    return clamp(F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0), 0.0, 1.0);
+	return clamp(F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0), 0.0, 1.0);
 }
 
 float hash(vec2 c)
 {
-    return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
-    (0.1 + abs(sin(13.0 * c.y + c.x))));
+	return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
+	(0.1 + abs(sin(13.0 * c.y + c.x))));
 }
 
 void getMaterial(out float roughness, out float metallic, out float emissive, out float F0, out float sss)
@@ -130,30 +137,30 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 /// ACES (implementation by Stephen Hill, @self_shadow)
 vec3 RRTAndODTFit(vec3 v)
 {
-    vec3 a = v * (v + 0.0245786) - 0.000090537;
-    vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081;
-    return a / b;
+	vec3 a = v * (v + 0.0245786) - 0.000090537;
+	vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081;
+	return a / b;
 }
 
 vec3 mapACES(vec3 color)
 {
 	// sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
 	color = vec3(
-	    color.r * 0.59719 + color.g * 0.35458 + color.b * 0.04823,
-	    color.r * 0.07600 + color.g * 0.90834 + color.b * 0.01566,
-	    color.r * 0.02840 + color.g * 0.13383 + color.b * 0.83777
+		color.r * 0.59719 + color.g * 0.35458 + color.b * 0.04823,
+		color.r * 0.07600 + color.g * 0.90834 + color.b * 0.01566,
+		color.r * 0.02840 + color.g * 0.13383 + color.b * 0.83777
 	);
 	
-    color = RRTAndODTFit(color);
+	color = RRTAndODTFit(color);
 	
 	// ODT_SAT => XYZ => D60_2_D65 => sRGB
-    color = vec3(
-	    color.r *  1.60475 + color.g * -0.53108 + color.b * -0.07367,
-	    color.r * -0.10208 + color.g *  1.10813 + color.b * -0.00605,
-	    color.r * -0.00327 + color.g * -0.07276 + color.b *  1.07602
+	color = vec3(
+		color.r *  1.60475 + color.g * -0.53108 + color.b * -0.07367,
+		color.r * -0.10208 + color.g *  1.10813 + color.b * -0.00605,
+		color.r * -0.00327 + color.g * -0.07276 + color.b *  1.07602
 	);
 	
-    return color;
+	return color;
 }
 
 void main()
@@ -167,8 +174,8 @@ void main()
 	
 	// Fresnel
 	vec3 N = vNormal;
-	vec3 V  = normalize(uCameraPosition - vPosition);
-	vec3 H  = normalize(V + -reflect(V, N));
+	vec3 V = normalize(uCameraPosition - vPosition);
+	vec3 H = normalize(V + -reflect(V, N));
 	float F = fresnelSchlickRoughness(max(dot(H, V), 0.0), F0, roughness);
 	
 	// Diffuse
@@ -216,6 +223,9 @@ void main()
 	
 	col.rgb += spec;
 	
+	if (uGlintEnabled > 0 && col.a > 0.0)
+		col.rgb += pow(texture2D(uGlintTexture, (tex * ((uTextureSize / uGlintSize))) + uGlintOffset).rgb * col.a * uGlintStrength, vec3(uGamma));
+	
 	if (vDiffuse.r >= 0.0)
 	{
 		col.rgb *= uExposure;
@@ -229,7 +239,7 @@ void main()
 		col.rgb = pow(col.rgb, vec3(1.0/uGamma));
 	}
 	
-	col   = mix(col, uFogColor, getFog()); // Mix fog
+	col = mix(col, uFogColor, getFog()); // Mix fog
 	col.a = mix(baseColor.a, 1.0, F); // Correct alpha
 	
 	if (uAlphaHash > 0)

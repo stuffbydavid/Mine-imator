@@ -9,4 +9,7 @@ function shader_clear()
 	shader_texture_surface = false
 	shader_texture_filter_linear = false
 	shader_texture_filter_mipmap = false
+	
+	shader_texture_width = 0
+	shader_texture_height = 0
 }

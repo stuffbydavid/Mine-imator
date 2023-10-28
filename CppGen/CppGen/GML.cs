@@ -221,7 +221,13 @@ namespace CppGen
 						string cppSep = "/// CppSeparate";
 						string cppOnly = "/// CppOnly";
 
-						if (gml.Substring(pos, cppSep.Length) == cppSep)
+						if (pos + cppSep.Length > gml.Length)
+						{
+							pos++;
+                            continue;
+						}
+
+                        if (gml.Substring(pos, cppSep.Length) == cppSep)
 						{
 							isCppSeparate = true;
 							pos += cppSep.Length + 1;

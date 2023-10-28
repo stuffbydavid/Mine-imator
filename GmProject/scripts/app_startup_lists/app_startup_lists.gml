@@ -2,12 +2,14 @@
 
 function app_startup_lists()
 {
-	globalvar value_name_list, transition_list;
+	globalvar value_name_list, transition_list, transition_list_order;
 	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
-	globalvar minecraft_color_name_list, minecraft_color_list, minecraft_pattern_list, minecraft_pattern_short_list;
+	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
+	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
+	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
 	globalvar biome_list, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
@@ -148,6 +150,10 @@ function app_startup_lists()
 		"BG_SKY_ROTATION",
 		"BG_SUNLIGHT_STRENGTH",
 		"BG_SUNLIGHT_ANGLE",
+		"BG_SKY_SUN_ANGLE",
+		"BG_SKY_SUN_SCALE",
+		"BG_SKY_MOON_ANGLE",
+		"BG_SKY_MOON_SCALE",
 		"BG_TWILIGHT",
 		"BG_SKY_CLOUDS_SHOW",
 		"BG_SKY_CLOUDS_SPEED",
@@ -192,6 +198,7 @@ function app_startup_lists()
 		"TEXTURE_NORMAL_OBJ",
 		"SOUND_OBJ",
 		"SOUND_VOLUME",
+		"SOUND_PITCH",
 		"SOUND_START",
 		"SOUND_END",
 		"TEXT",
@@ -199,6 +206,8 @@ function app_startup_lists()
 		"TEXT_HALIGN",
 		"TEXT_VALIGN",
 		"TEXT_AA",
+		"TEXT_OUTLINE",
+		"TEXT_OUTLINE_COLOR",
 		"CUSTOM_ITEM_SLOT",
 		"ITEM_SLOT",
 		"ITEM_NAME",
@@ -347,6 +356,26 @@ function app_startup_lists()
 		"easeinoutbounce"
 	)
 	
+	// Organized list
+	transition_list_order = ds_list_create()
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (!string_contains(transition_list[|i], "ease"))
+			ds_list_add(transition_list_order, transition_list[|i])
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (string_contains(transition_list[|i], "easein") &&
+			!string_contains(transition_list[|i], "easeinout"))
+				ds_list_add(transition_list_order, transition_list[|i])
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (string_contains(transition_list[|i], "easeout"))
+			ds_list_add(transition_list_order, transition_list[|i])
+	
+	for (var i = 0; i < ds_list_size(transition_list); i++)
+		if (string_contains(transition_list[|i], "easeinout"))
+			ds_list_add(transition_list_order, transition_list[|i])
+	
 	log("Make transitions")
 	transition_texture_map = new_transition_texture_map(36, 36, 6, true)
 	transition_texture_small_map = new_transition_texture_map(24, 24, 3, false)
@@ -392,49 +421,15 @@ function app_startup_lists()
 	particle_template_list = ds_list_create()
 	particle_template_map = ds_map_create()
 	
-	// Minecraft colors
-	minecraft_color_name_list = ds_list_create()
-	ds_list_add(minecraft_color_name_list,
-		"white",
-		"orange",
-		"magenta",
-		"light_blue",
-		"yellow",
-		"lime",
-		"pink",
-		"gray",
-		"light_gray",
-		"cyan",
-		"purple",
-		"blue",
-		"brown",
-		"green",
-		"red",
-		"black"
-	)
-	
-	minecraft_color_list = ds_list_create()
-	ds_list_add(minecraft_color_list,
-		c_minecraft_white,
-		c_minecraft_orange,
-		c_minecraft_magenta,
-		c_minecraft_light_blue,
-		c_minecraft_yellow,
-		c_minecraft_lime,
-		c_minecraft_pink,
-		c_minecraft_gray,
-		c_minecraft_light_gray,
-		c_minecraft_cyan,
-		c_minecraft_purple,
-		c_minecraft_blue,
-		c_minecraft_brown,
-		c_minecraft_green,
-		c_minecraft_red,
-		c_minecraft_black
-	)
-	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()
+	minecraft_sherd_map = ds_map_create()
+	
+	minecraft_armor_trim_pattern_list = ds_list_create()
+	minecraft_armor_trim_material_list = ds_list_create()
+	minecraft_map_color_array = []
+	minecraft_swatch_array = []
+	minecraft_swatch_color_map = ds_map_create()
 	
 	blend_mode_list = ds_list_create()
 	ds_list_add(blend_mode_list,

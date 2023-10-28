@@ -5,17 +5,6 @@ function app_update_micro_animations()
 	var constantspeed;
 	constantspeed = 0.1
 	
-	// Scrollbars
-	with (obj_scrollbar)
-	{
-		if (!value_ease)
-			value = value_goal
-		else
-			value += floor((value_goal - value) / max(1, 4 / delta))
-		
-		mousenear.update(constantspeed)
-	}
-	
 	// Timeline zoom
 	if (window_state = "")
 	{
@@ -23,7 +12,22 @@ function app_update_micro_animations()
 		{
 			timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 4 / delta)
 			timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+			timeline.hor_scroll.value_goal = max(0, timeline.hor_scroll.value_goal)
 		}
+		
+		if (abs(timeline_zoom_goal - timeline_zoom) < 0.0001)
+			timeline_zoom = timeline_zoom_goal
+	}
+	
+	// Scrollbars
+	with (obj_scrollbar)
+	{
+		if (!value_ease)
+			value = value_goal
+		else
+			value += (value_goal - value) / max(1, 4 / delta)
+		
+		mousenear.update(constantspeed)
 	}
 	
 	with (obj_view)

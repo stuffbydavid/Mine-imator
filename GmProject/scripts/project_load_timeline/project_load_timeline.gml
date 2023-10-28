@@ -71,7 +71,7 @@ function project_load_timeline(map)
 						color_list = map[?"pattern_color_list"]
 					}
 					
-					pattern_base_color = minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, base_color)]
+					pattern_base_color = minecraft_swatch_dyes.map[?base_color]
 					
 					if (ds_list_valid(pattern_list))
 					{
@@ -84,7 +84,7 @@ function project_load_timeline(map)
 					{
 						pattern_color_list = array()
 						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(pattern_color_list, minecraft_color_list[|ds_list_find_index(minecraft_color_name_list, color_list[|c])])
+							array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
 					}
 				}
 			}
@@ -183,6 +183,7 @@ function project_load_timeline(map)
 			inherit_subsurface = value_get_real(inheritmap[?"subsurface"], inherit_subsurface)
 			inherit_glow_color = value_get_real(inheritmap[?"glow_color"], inherit_glow_color)
 			inherit_select = value_get_real(inheritmap[?"select"], inherit_select)
+			inherit_pose = value_get_real(inheritmap[?"pose"], inherit_pose)
 		}
 		
 		scale_resize = value_get_real(map[?"scale_resize"], scale_resize)
@@ -198,6 +199,14 @@ function project_load_timeline(map)
 		glow = value_get_real(map[?"glow"], glow)
 		glow_texture = value_get_real(map[?"glow_texture"], glow_texture)
 		only_render_glow = value_get_real(map[?"only_render_glow"], only_render_glow)
+		glint_mode = value_get_real(map[?"glint_mode"], glint_mode)
+		glint_scale = value_get_real(map[?"glint_scale"], glint_scale)
+		glint_speed = value_get_real(map[?"glint_speed"], glint_speed)
+		glint_strength = value_get_real(map[?"glint_strength"], glint_strength)
+		
+		glint_tex.count--
+		glint_tex = value_get_save_id(map[?"glint_tex"], mc_res.save_id)
+		
 		fog = value_get_real(map[?"fog"], fog)
 		
 		if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))

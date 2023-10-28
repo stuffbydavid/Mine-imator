@@ -79,13 +79,63 @@ function block_animate(root)
 		// Add text
 		if (other.has_text)
 		{
-			var text, textpos, textcolor;
-			text = other.text
-			textpos = other.text_position
-			textcolor = other.text_color
+			var text, textpos, textrot, textscale, textcolor, textglowcolor, textemissive;
 			
 			if (part_list = null)
 				part_list = ds_list_create()
+			
+			// Front
+			text = other.text_front
+			textpos = other.text_front_position
+			textrot = other.text_front_rotation
+			textscale = other.text_front_scale
+			textcolor = other.text_front_color
+			textglowcolor = other.text_front_glow_color
+			textemissive = other.text_front_emissive
+			with (new_obj(obj_timeline))
+			{
+				type = e_tl_type.TEXT
+				temp = id
+				
+				// Set parent to other timeline
+				inherit_rot_point = true
+				part_of = other.id
+				ds_list_add(other.part_list, id)
+				tl_set_parent(other.id)
+				
+				id.text = text
+				tl_update_scenery_part()
+				
+				value_default[e_value.POS_X] = textpos[X]
+				value_default[e_value.POS_Y] = textpos[Y]
+				value_default[e_value.POS_Z] = textpos[Z]
+				value_default[e_value.ROT_X] = textrot[X]
+				value_default[e_value.ROT_Y] = textrot[Y]
+				value_default[e_value.ROT_Z] = textrot[Z]
+				value_default[e_value.SCA_X] = textscale
+				value_default[e_value.SCA_Y] = textscale
+				value_default[e_value.SCA_Z] = textscale
+				value_default[e_value.RGB_MUL] = textcolor
+				value_default[e_value.EMISSIVE] = textemissive
+				
+				if (textemissive > 0)
+				{
+					value_default[e_value.TEXT_OUTLINE] = true
+					value_default[e_value.TEXT_OUTLINE_COLOR] = textglowcolor
+				}
+				
+				tl_update()
+				tl_update_values()
+			}
+			
+			// Back
+			text = other.text_back
+			textpos = other.text_back_position
+			textrot = other.text_back_rotation
+			textscale = other.text_back_scale
+			textcolor = other.text_back_color
+			textglowcolor = other.text_back_glow_color
+			textemissive = other.text_back_emissive
 			
 			with (new_obj(obj_timeline))
 			{
@@ -104,10 +154,20 @@ function block_animate(root)
 				value_default[e_value.POS_X] = textpos[X]
 				value_default[e_value.POS_Y] = textpos[Y]
 				value_default[e_value.POS_Z] = textpos[Z]
-				value_default[e_value.SCA_X] = 0.165
-				value_default[e_value.SCA_Y] = 0.165
-				value_default[e_value.SCA_Z] = 0.165
+				value_default[e_value.ROT_X] = textrot[X]
+				value_default[e_value.ROT_Y] = textrot[Y]
+				value_default[e_value.ROT_Z] = textrot[Z]
+				value_default[e_value.SCA_X] = textscale
+				value_default[e_value.SCA_Y] = textscale
+				value_default[e_value.SCA_Z] = textscale
 				value_default[e_value.RGB_MUL] = textcolor
+				value_default[e_value.EMISSIVE] = textemissive
+				
+				if (textemissive > 0)
+				{
+					value_default[e_value.TEXT_OUTLINE] = true
+					value_default[e_value.TEXT_OUTLINE_COLOR] = textglowcolor
+				}
 				
 				tl_update()
 				tl_update_values()

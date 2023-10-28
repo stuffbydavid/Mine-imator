@@ -147,6 +147,9 @@ function model_file_load_part(map, root, res, model)
 		scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
 		scale = vec3_mul(scale, other.scale)
 		
+		// Floor UVs (Not available for 3D planes, floors UV coords for Bedrock UV support)
+		floor_box_uvs = other.floor_box_uvs
+		
 		// Keyframe tab states
 		show_position = value_get_real(map[?"show_position"], false)
 		
@@ -184,6 +187,9 @@ function model_file_load_part(map, root, res, model)
 				}
 			}
 		}
+		
+		// Show backfaces
+		backfaces = value_get_real(map[?"backfaces"], false)
 		
 		// Bend (optional)
 		if (!is_undefined(map[?"bend"]))
@@ -376,7 +382,7 @@ function model_file_load_part(map, root, res, model)
 			else
 				bend_inherit_angle = bend_default_angle
 			
-			ik_supported = (bend_end_offset != 0 && bend_axis[X] && !bend_axis[Y] && !bend_axis[Z])
+			ik_supported = tl_supports_ik(false)
 		}
 		else
 		{
@@ -451,7 +457,7 @@ function model_file_load_part(map, root, res, model)
 		// Update bounds of parent
 		var boundsstartdef, boundsenddef;
 		boundsstartdef = point3D_mul_matrix(bounds_parts_start, default_matrix);
-		boundsenddef   = point3D_mul_matrix(bounds_parts_end, default_matrix);
+		boundsenddef = point3D_mul_matrix(bounds_parts_end, default_matrix);
 		other.bounds_parts_start[X] = min(other.bounds_parts_start[X], boundsstartdef[X])
 		other.bounds_parts_start[Y] = min(other.bounds_parts_start[Y], boundsstartdef[Y])
 		other.bounds_parts_start[Z] = min(other.bounds_parts_start[Z], boundsstartdef[Z])

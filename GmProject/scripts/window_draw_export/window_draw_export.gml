@@ -14,7 +14,7 @@ function window_draw_export()
 	if (window_state = "export_movie")
 	{
 		usesamples = popup_exportmovie.high_quality
-		totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.frame_rate)
+		totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.framespersecond)
 		if (usesamples)
 			totalsamples = totalframes * project_render_samples
 		else
@@ -68,7 +68,7 @@ function window_draw_export()
 		timeleftstr += text_get(((timeleftmins = 1) ? "exporttimeleftminute" : "exporttimeleftminutes"), string(timeleftmins)) + " " + text_get("exporttimeleftand") + " "
 	timeleftstr += text_get(((timeleftsecs = 1) ? "exporttimeleftsecond" : "exporttimeleftseconds"), string(timeleftsecs))
 	
-	draw_label(text_get("exporttimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_label_big)
+	draw_label(text_get("exporttimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_heading_big)
 	
 	// Bar
 	var loadtext, loadw, sw, sh;

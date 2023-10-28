@@ -51,6 +51,9 @@ function project_load_render(map)
 	project_render_block_emissive = value_get_real(map[?"block_emissive"], project_render_block_emissive)
 	project_render_block_subsurface = value_get_real(map[?"block_subsurface"], project_render_block_subsurface)
 	
+	project_render_glint_speed = value_get_real(map[?"glint_speed"], project_render_glint_speed)
+	project_render_glint_strength = value_get_real(map[?"glint_strength"], project_render_glint_strength)
+	
 	project_render_texture_filtering = value_get_real(map[?"texture_filtering"], project_render_texture_filtering)
 	project_render_transparent_block_texture_filtering = value_get_real(map[?"transparent_block_texture_filtering"], project_render_transparent_block_texture_filtering)
 	project_render_texture_filtering_level = value_get_real(map[?"texture_filtering_level"], project_render_texture_filtering_level)

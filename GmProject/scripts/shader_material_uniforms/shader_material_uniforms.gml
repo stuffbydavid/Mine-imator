@@ -26,4 +26,5 @@ function shader_material_uniforms()
 	
 	// Other
 	new_shader_uniform("uIsWater")
+	new_shader_uniform("uUseNormalMap")
 }

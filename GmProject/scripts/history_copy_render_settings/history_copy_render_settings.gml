@@ -50,4 +50,7 @@ function history_copy_render_settings(obj)
 	
 	project_render_block_emissive = obj.project_render_block_emissive
 	project_render_block_subsurface = obj.project_render_block_subsurface
+	
+	project_render_glint_speed = obj.project_render_glint_speed
+	project_render_glint_strength = obj.project_render_glint_strength
 }

@@ -51,7 +51,7 @@ namespace CppProject
 	{
 		Sound* sound;
 		IntType frame, start, end;
-		RealType volume;
+		RealType volume, pitch;
 	};
 	QVector<MovieSound*> movieSounds;
 
@@ -368,7 +368,7 @@ namespace CppProject
 		return -1;
 	}
 
-	RealType lib_movie_audio_sound_add(RealType id, RealType time, RealType volume, RealType start, RealType end)
+	RealType lib_movie_audio_sound_add(RealType id, RealType time, RealType volume, RealType pitch, RealType start, RealType end)
 	{
 		if (!audioEnabled)
 			return 0.0;
@@ -379,7 +379,8 @@ namespace CppProject
 				av_rescale_q(time * 1000, { 1, 1000 }, audioTimeBase),
 				av_rescale_q(start * 1000, { 1, 1000 }, audioTimeBase),
 				av_rescale_q(end * 1000, { 1, 1000 }, audioTimeBase),
-				volume
+				volume,
+				pitch
 			})
 		);
 		return 0.0;
@@ -475,7 +476,7 @@ namespace CppProject
 				QVector<MovieSound*> frameSounds;
 				for (MovieSound* sound : movieSounds)
 					if (audioFrameNum >= sound->frame &&
-						audioFrameNum < sound->frame + sound->sound->samples / audioCodecContext->frame_size - sound->start + sound->end)
+						audioFrameNum < sound->frame + sound->sound->samples / audioCodecContext->frame_size / sound->pitch - sound->start + sound->end)
 						frameSounds.append(sound);
 
 				// Write to frame (mix sounds)
@@ -489,7 +490,7 @@ namespace CppProject
 						for (MovieSound* sound : frameSounds)
 						{
 							const int16_t* srcData = (int16_t*)sound->sound->buffer.data().constData();
-							IntType srcSample = ((audioFrameNum - sound->frame + sound->start) * audioCodecContext->frame_size) % sound->sound->samples + s;
+							IntType srcSample = ((((audioFrameNum - sound->frame + sound->start) * audioCodecContext->frame_size) % (uint64_t)(sound->sound->samples / sound->pitch)) + s) * sound->pitch;
 
 							// Add and clamp audio if in buffer range
 							if (srcSample < sound->sound->samples)

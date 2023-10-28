@@ -46,8 +46,8 @@ function popup_upgrade_draw()
 	dy += string_height(text) + 30
 	
 	// Upgrade link
-	draw_set_font(font_value_bold)
-	draw_button_text(link_upgrade, floor(dx + dw/2 - string_width(link_upgrade)/2), dy, popup_open_url, link_upgrade, link_upgrade, font_value_bold)
+	draw_set_font(font_label)
+	draw_button_text(link_upgrade, floor(dx + dw/2 - string_width(link_upgrade)/2), dy, popup_open_url, link_upgrade, link_upgrade, font_label)
 	
 	dy += 18
 	

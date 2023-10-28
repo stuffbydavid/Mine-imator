@@ -5,25 +5,8 @@
 /// @arg size[
 /// @arg temp]]
 
-function render_world_block()
+function render_world_block(vbuffer, res, rotate = false, size = undefined, temp = null)
 {
-	var vbuffer, res, rotate, size, temp;
-	vbuffer = argument[0]
-	res = argument[1]
-	
-	if (argument_count > 2)
-	{
-		rotate = argument[2]
-		size = argument[3]
-	}
-	else
-		rotate = false
-	
-	if (argument_count > 4)
-		temp = argument[4]
-	else
-		temp = null
-	
 	if (vbuffer = null)
 		return 0
 	

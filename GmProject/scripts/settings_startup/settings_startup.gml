@@ -47,7 +47,6 @@ function settings_startup()
 	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
-	setting_search_variants = true
 	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true
 	setting_gizmos_face_camera = true
@@ -57,7 +56,6 @@ function settings_startup()
 	setting_interface_scale_auto = true
 	setting_interface_scale = interface_scale_default_get()
 	setting_interface_compact = false
-	setting_reduced_motion = false
 	
 	setting_panel_left_bottom_size = 300
 	setting_panel_right_bottom_size = 300
@@ -107,6 +105,7 @@ function settings_startup()
 	
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30
+	setting_export_movie_framespersecond = 30
 	setting_export_movie_bit_rate = 2500000
 	setting_export_movie_include_audio = true
 	setting_export_movie_remove_background = false

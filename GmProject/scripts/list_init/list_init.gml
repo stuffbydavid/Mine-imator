@@ -10,14 +10,14 @@ function list_init(name)
 	if (menu_model_current != null)
 	{
 		for (var i = 0; i < menu_model_state.value_amount; i++)
-			list_item_add(minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]), menu_model_state.value_name[i])
+			menu_add_item(menu_model_state.value_name[i], minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]))
 	}
 	
 	// Block state
 	if (menu_block_current != null)
 	{
 		for (var i = 0; i < menu_block_state.value_amount; i++)
-			list_item_add(minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]), menu_block_state.value_name[i])
+			menu_add_item(menu_block_state.value_name[i], minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]))
 	}
 	
 	if (menu_model_current != null || menu_block_current != null)
@@ -1270,6 +1270,7 @@ function list_init(name)
 			menu_add_item(24, "24")
 			menu_add_item(30, "30")
 			menu_add_item(60, "60")
+			menu_add_item(0, text_get("exportmovieframeratecustom"))
 			
 			break
 		}
@@ -1406,6 +1407,65 @@ function list_init(name)
 			menu_add_item(e_tonemapper.NONE, text_get("rendertonemappernone"))
 			menu_add_item(e_tonemapper.REINHARD, text_get("rendertonemapperreinhard"))
 			menu_add_item(e_tonemapper.ACES, text_get("rendertonemapperaces"))
+			
+			break
+		}
+		
+		case "armoreditorpatternhelmet":
+		case "armoreditorpatternchestplate":
+		case "armoreditorpatternleggings":
+		case "armoreditorpatternboots":
+		{
+			menu_add_item("none", text_get("armoreditorpattern" + "none"))
+			
+			for (var i = 0; i < ds_list_size(minecraft_armor_trim_pattern_list); i++)
+				menu_add_item(minecraft_armor_trim_pattern_list[|i], text_get("armoreditorpattern" + minecraft_armor_trim_pattern_list[|i]))
+			
+			break
+		}
+		
+		case "armoreditormaterialhelmet":
+		case "armoreditormaterialchestplate":
+		case "armoreditormaterialleggings":
+		case "armoreditormaterialboots":
+		{
+			for (var i = 0; i < ds_list_size(minecraft_armor_trim_material_list); i++)
+				menu_add_item(minecraft_armor_trim_material_list[|i], text_get("armoreditormaterial" + minecraft_armor_trim_material_list[|i]))
+			
+			break
+		}
+		
+		// Background sky sun texture
+		case "timelineeditorglinttex":
+		{
+			var itemglint = (tl_edit.glint_mode = e_glint.ITEM);
+			
+			// Default
+			menu_add_item(mc_res, mc_res.display_name, itemglint ? mc_res.glint_item_texture : mc_res.glint_entity_texture)
+			
+			// Add existing resources
+			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+			{
+				var res = res_list.display_list[|i];
+				if (res = mc_res)
+					continue
+				
+				if (res.glint_entity_texture || res.glint_item_texture)
+					menu_add_item(res, res.display_name, itemglint ? res.glint_item_texture : res.glint_entity_texture)
+				else if (res.texture)
+					menu_add_item(res, res.display_name, res.texture)
+			}
+			
+			break
+		}
+		
+		// Transitions
+		case "frameeditortransition":
+		{
+			for (var i = 0; i < ds_list_size(transition_list_order); i++)
+				menu_add_item(transition_list_order[|i], text_get("menu" + transition_list_order[|i]))
+			
+			break
 		}
 	}
 	

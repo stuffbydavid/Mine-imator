@@ -40,6 +40,7 @@ function tl_copy(to)
 	to.inherit_subsurface = inherit_subsurface
 	to.inherit_glow_color = inherit_glow_color
 	to.inherit_select = inherit_select
+	to.inherit_pose = inherit_pose
 	to.scale_resize = scale_resize
 	to.rot_point_custom = rot_point_custom
 	to.rot_point = point3D_copy(rot_point)
@@ -52,6 +53,11 @@ function tl_copy(to)
 	to.glow = glow
 	to.glow_texture = glow_texture
 	to.only_render_glow = only_render_glow
+	to.glint_mode = glint_mode
+	to.glint_scale = glint_scale
+	to.glint_speed = glint_speed
+	to.glint_strength = glint_strength
+	to.glint_tex = glint_tex
 	to.fog = fog
 	to.wind = wind
 	to.wind_terrain = wind_terrain

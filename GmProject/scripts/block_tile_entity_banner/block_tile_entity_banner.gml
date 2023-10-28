@@ -38,26 +38,30 @@ function block_tile_entity_banner(map)
 			
 			// Flip color index if legacy
 			if (legacy)
-				color = (ds_list_size(minecraft_color_list) - 1) - color
+				color = (minecraft_swatch_dyes.size - 1) - color
 			
 			array_add(patternlist, minecraft_pattern_list[|patternindex])
-			array_add(patterncolorlist, minecraft_color_list[|color])
+			array_add(patterncolorlist, minecraft_swatch_dyes.colors[color])
 		}
 	}
 	
 	// Override banner color if legacy
 	var colorindex = 0;
-
+	var color = c_white;
+	
 	if (legacy)
-		colorindex = (ds_list_size(minecraft_color_list) - 1) - base
+	{
+		colorindex = (minecraft_swatch_dyes.size - 1) - base
+		color = minecraft_swatch_dyes.colors[colorindex]
+	}
 	else
 	{
-		var color = block_get_state_id_value(block_current, block_state_id_current, "color");
-		if (!is_undefined(color))
-			colorindex = ds_list_find_index(minecraft_color_name_list, color)
+		var col = block_get_state_id_value(block_current, block_state_id_current, "color");
+		if (!is_undefined(col))
+			color = minecraft_swatch_dyes.map[?col]
 	}
 	
-	mc_builder.block_banner_color_map[?build_pos] = minecraft_color_list[|colorindex]
+	mc_builder.block_banner_color_map[?build_pos] = color
 	mc_builder.block_banner_patterns_map[?build_pos] = patternlist
 	mc_builder.block_banner_pattern_colors_map[?build_pos] = patterncolorlist
 }

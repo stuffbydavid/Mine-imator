@@ -13,38 +13,9 @@
 /// @arg [drag
 /// @arg [update_values]]]]
 
-function draw_textfield_group()
+function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, textfield_update = true)
 {
-	var name, xx, yy, wid, mul, minval, maxval, snapval, showcaption, stack, colortype, drag, textfield_update;
-	var fieldx, fieldy, fieldwid, fieldupdate, hei, dragw, vertical, mouseon;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	wid = argument[3]
-	mul = argument[4]
-	minval = argument[5]
-	maxval = argument[6]
-	snapval = argument[7]
-	showcaption = false
-	stack = true
-	colortype = 0
-	drag = true
-	textfield_update = true
-	
-	if (argument_count > 8)
-		showcaption = argument[8]
-	
-	if (argument_count > 9)
-		stack = argument[9]
-	
-	if (argument_count > 10)
-		colortype = argument[10]
-	
-	if (argument_count > 11)
-		drag = argument[11]
-	
-	if (argument_count > 12)
-		textfield_update = argument[12]
+	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei;
 	
 	vertical = (app.panel_compact) && stack
 	fieldx = xx
@@ -58,6 +29,8 @@ function draw_textfield_group()
 		textfield_group_reset()
 		return 0
 	}
+	
+	var dragw, mouseon;
 	
 	mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
 	

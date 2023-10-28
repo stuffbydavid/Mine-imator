@@ -33,7 +33,7 @@ function render_world_sky_clouds()
 	render_set_texture(spr_default_normal, "Normal")
 	
 	// Disable fog
-	if (!background_fog_sky)
+	if (!background_fog_show || !background_fog_sky)
 		render_set_uniform("uFogShow", 0)
 	
 	for (var i = 0; i < array_length(background_sky_clouds_vbuffer_pos); i++)
@@ -42,6 +42,6 @@ function render_world_sky_clouds()
 	// Reset
 	render_set_uniform_int("uIsSky", 0)
 	render_set_uniform("uLightSpecular", render_light_specular_strength)
-	if (!background_fog_sky)
+	if (!background_fog_show || !background_fog_sky)
 		render_set_uniform("uFogShow", app.background_fog_show)
 }

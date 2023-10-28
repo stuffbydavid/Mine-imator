@@ -10,6 +10,8 @@ function tl_duplicate()
 	{
 		root_copy = null
 		copy = null
+		glint_tex = other.glint_tex
+		glint_tex.count++
 		
 		tl_update_scenery_part()
 		

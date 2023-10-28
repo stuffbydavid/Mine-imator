@@ -1,7 +1,7 @@
 /// asset_load([filename])
 /// @arg [filename]
 /// @desc Adds a file to the project.
-///		  A file browser appears if no filename is given.
+/// A file browser appears if no filename is given.
 
 function asset_load()
 {
@@ -108,6 +108,7 @@ function asset_load()
 		case ".png":
 		case ".jpg":
 		case ".jpeg":
+		case ".dat":
 			log("Opening image", fn)
 			popup_importimage.filename = fn
 			popup_show(popup_importimage)

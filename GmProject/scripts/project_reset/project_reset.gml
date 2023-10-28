@@ -40,6 +40,7 @@ function project_reset()
 	project_path_tl_array = []
 	project_use_path_tl_array = []
 	project_ik_part_array = []
+	project_inherit_pose_array = []
 	
 	ds_list_clear(project_model_list)
 	

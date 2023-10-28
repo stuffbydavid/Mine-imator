@@ -14,6 +14,7 @@ function app_startup_interface_popups()
 	{
 		folder = ""
 		tbx_name = new_textbox(true, 0, "")
+		tbx_author = new_textbox(true, 0, "")
 		tbx_description = new_textbox(false, 0, "")
 	}
 	
@@ -23,6 +24,7 @@ function app_startup_interface_popups()
 	{
 		folder = ""
 		tbx_name = new_textbox(true, 0, "")
+		tbx_author = new_textbox(true, 0, "")
 		tbx_description = new_textbox(false, 0, "")
 	}
 	
@@ -76,6 +78,7 @@ function app_startup_interface_popups()
 	{
 		format = app.setting_export_movie_format
 		frame_rate = app.setting_export_movie_frame_rate
+		framespersecond = app.setting_export_movie_framespersecond
 		bit_rate = app.setting_export_movie_bit_rate
 		video_quality = find_videoquality(bit_rate)
 		include_audio = app.setting_export_movie_include_audio
@@ -85,6 +88,7 @@ function app_startup_interface_popups()
 		watermark = app.setting_export_movie_watermark
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
+		tbx_framespersecond = new_textbox_integer()
 		tbx_bit_rate = new_textbox_integer()
 	}
 	
@@ -153,5 +157,21 @@ function app_startup_interface_popups()
 		layer_move = null
 		layer_move_x = 0
 		layer_move_y = 0
+	}
+	
+	// Armor editor
+	popup_armor_editor = new_popup("armoreditor", popup_armor_editor_draw, 550, null, true, false, false, true)
+	with (popup_armor_editor)
+	{
+		preview = new_obj(obj_preview)
+		preview.fov = 25
+		preview.xy_lock = true
+		preview.zoom = 0.5
+		preview.goalzoom = 0.5
+		
+		piece_current = 0
+		piece_data_id = 0
+		
+		armor_edit = null
 	}
 }

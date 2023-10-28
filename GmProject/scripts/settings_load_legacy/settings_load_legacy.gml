@@ -119,7 +119,7 @@ function settings_load_legacy(fn)
 	/*
 	setting_key_open = keyopen
 	setting_key_open_control = keyopencontrol
-	setting_key_save =  keysave
+	setting_key_save = keysave
 	setting_key_save_control = keysavecontrol
 	
 	setting_key_new = keynew

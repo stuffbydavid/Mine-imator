@@ -6,21 +6,9 @@
 /// @arg [showcaption]]
 /// @desc Displays togglebutton options
 
-function draw_togglebutton()
+function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 {
-	var name, xx, yy, labels, showcaption;
 	var h, w, buttonx, buttonh, buttoncount, buttonsize, mouseon, script, scriptvalue, axis;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	labels = true
-	showcaption = true
-	
-	if (argument_count > 3)
-		labels = argument[3]
-	
-	if (argument_count > 4)
-		showcaption = argument[4]
 	
 	h = ui_large_height + (label_height + 8)
 	w = dw

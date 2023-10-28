@@ -5,21 +5,16 @@
 /// @arg italic
 /// @arg [aa]
 
-function font_add_lib()
+function font_add_lib(fname, size, bold, italic, aa = true)
 {
-	var tmpfile, aa;
-	tmpfile = file_directory + "tmp.ttf"
-	aa = true
+	var tmpfile = file_directory + "tmp.ttf"
 	
-	if (argument_count > 4)
-		aa = argument[4]
-	
-	file_copy_lib(argument[0], tmpfile)
+	file_copy_lib(fname, tmpfile)
 	
 	if (file_exists_lib(tmpfile))
 	{
 		font_add_enable_aa(aa)
-		var fnt = font_add(tmpfile, argument[1], argument[2], argument[3], 32, 1024);
+		var fnt = font_add(tmpfile, size, bold, italic, 32, 1024);
 		font_add_enable_aa(true)
 		
 		if (font_exists(fnt))

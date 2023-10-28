@@ -16,7 +16,7 @@ function recent_add()
 			
 			obj = id
 			ds_list_delete_value(app.recent_list, id)
-	        if (thumbnail != null)
+			if (thumbnail != null)
 				texture_free(thumbnail)
 		}
 		

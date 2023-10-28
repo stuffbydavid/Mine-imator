@@ -15,6 +15,7 @@ function app_update_animate()
 	project_path_tl_array = []
 	project_use_path_tl_array = []
 	project_ik_part_array = [] // If null, will generate in tl_update_matrix
+	project_inherit_pose_array = []
 	
 	// Update background time
 	background_time_prev = background_time
@@ -151,7 +152,11 @@ function app_update_animate()
 	{
 		background_image_show					= bgobject.value[e_value.BG_IMAGE_SHOW]
 		background_image_rotation				= bgobject.value[e_value.BG_IMAGE_ROTATION]
+		background_sky_sun_angle				= bgobject.value[e_value.BG_SKY_SUN_ANGLE]
+		background_sky_sun_scale				= bgobject.value[e_value.BG_SKY_SUN_SCALE]
 		background_sky_moon_phase				= bgobject.value[e_value.BG_SKY_MOON_PHASE]
+		background_sky_moon_angle				= bgobject.value[e_value.BG_SKY_MOON_ANGLE]
+		background_sky_moon_scale				= bgobject.value[e_value.BG_SKY_MOON_SCALE]
 		background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 		background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
 		background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]

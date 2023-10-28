@@ -1,13 +1,15 @@
-/// tl_update_matrix([paths, updateik])
+/// tl_update_matrix([paths, updateik, updatepose])
 /// @arg [paths
-/// @arg updateik]
+/// @arg updateik
+/// @arg updatepose]
 /// @desc Updates matrixes and positions.
 
-function tl_update_matrix(usepaths = false, updateik = true)
+function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
-	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend;
+	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend, posebend;
 	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
 	tlamount = ds_list_size(app.project_timeline_list)
+	posebend = [0, 0, 0]
 	
 	if (object_index = obj_timeline)
 		start = ds_list_find_index(app.project_timeline_list, id)
@@ -21,17 +23,30 @@ function tl_update_matrix(usepaths = false, updateik = true)
 	{
 		curtl = app.project_timeline_list[|i]
 		
+		// Update children
+		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
+			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
+				if (curtl.tree_list[|t].inherit_pose)
+					array_add(app.project_inherit_pose_array, curtl.tree_list[|t])
+		
 		if (!curtl.update_matrix)
 			continue
 		
+		// Delay timeline update if we inherit pose
+		if (updateik && !updatepose && (array_length(app.project_inherit_pose_array) > 0) && array_contains(app.project_inherit_pose_array, curtl))
+		{
+			curtl.update_matrix = false
+			continue
+		}
+		
+		if (usepaths && (curtl.type = e_tl_type.PATH || curtl.type = e_tl_type.PATH_POINT))
+		{
+			curtl.update_matrix = false
+			continue
+		}
+		
 		with (curtl)
 		{
-			if (usepaths && (type = e_tl_type.PATH || type = e_tl_type.PATH_POINT))
-			{
-				update_matrix = false
-				continue
-			}
-			
 			// Get parent matrix
 			if (parent != app)
 			{
@@ -120,6 +135,30 @@ function tl_update_matrix(usepaths = false, updateik = true)
 			// Add IK orientation
 			if (hasik)
 				matrix = matrix_multiply(part_joints_matrix[0], matrix)
+			
+			// Check body part model timeline is "Inherit pose" is enabled, look at parent of root model and search for matching body parts to inherit from
+			posebend = [0, 0, 0]
+			
+			if (updatepose && part_of != null && part_of.inherit_pose && part_of.parent != app)
+			{
+				var posetl = null;
+				with (part_of.parent)
+					posetl = tl_part_find(other.model_part_name);
+				
+				if (posetl != null)
+				{
+					// Local orientation
+					matrix = matrix_multiply(posetl.matrix_local, matrix)
+					
+					// Bend
+					for (var j = X; j <= Z; j++)
+						posebend[j] = posetl.value_inherit[e_value.BEND_ANGLE_X + j]
+					
+					// IK
+					if (array_length(posetl.part_joints_matrix) > 0 && posetl.value[e_value.IK_TARGET] != null)
+						matrix = matrix_multiply(posetl.part_joints_matrix[0], matrix)
+				}
+			}
 			
 			// No scale or "resize" mode
 			if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
@@ -245,6 +284,9 @@ function tl_update_matrix(usepaths = false, updateik = true)
 			inhsurf = true
 			inhsubsurf = true
 			tl = id
+			
+			for (var j = X; j <= Z; j++)
+				value_inherit[e_value.BEND_ANGLE_X + j] += posebend[j]
 			
 			while (true)
 			{
@@ -387,13 +429,12 @@ function tl_update_matrix(usepaths = false, updateik = true)
 				for (var t = 0; t < ds_list_size(tree_list); t++)
 					tree_list[|t].update_matrix = true
 			}
-	
+			
 			// Update render resource
 			if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && tl_get_visible())
 				render_update_tl_resource()
 			
 			update_matrix = false
-			
 		}
 	}
 	
@@ -410,5 +451,17 @@ function tl_update_matrix(usepaths = false, updateik = true)
 		}
 		
 		tl_update_ik(app.project_ik_part_array)
+	}
+	
+	// Update models with "inherit pose"
+	if (updateik && !updatepose && array_length(app.project_inherit_pose_array) > 0)
+	{
+		for (var i = 0; i < array_length(app.project_inherit_pose_array); i++)
+			app.project_inherit_pose_array[i].update_matrix = true
+		
+		with (app)
+			tl_update_matrix(false, false, true)
+		
+		app.project_inherit_pose_array = []
 	}
 }

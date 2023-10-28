@@ -131,10 +131,10 @@ void main()
 	// Create vectors for TBN matrix
 	vWorldViewInv = inverse2(gm_Matrices[MATRIX_WORLD_VIEW]);
 	
-	vNormal       = normalize((vWorldViewInv * in_Normal));
-	vTangent	  = normalize((vWorldViewInv * in_Tangent));
-	vTangent	  = normalize(vTangent - dot(vTangent, vNormal) * vNormal);
-	vTBN		  = mat3(vTangent, cross(vTangent, vNormal), vNormal);
+	vNormal = normalize((vWorldViewInv * in_Normal));
+	vTangent = normalize((vWorldViewInv * in_Tangent));
+	vTangent = normalize(vTangent - dot(vTangent, vNormal) * vNormal);
+	vTBN = mat3(vTangent, cross(vTangent, vNormal), vNormal);
 	
 	// Color
 	vColor = uBlendColor * in_Colour;

@@ -134,6 +134,8 @@ function bench_draw_settings(bx, by, bw, bh)
 				tab_control_sortlist(6)
 				sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.model_name, false, labeltext)
 				tab_next()
+				menu_filter = list.search_tbx.text
+				menu_filter_normal = sortlist_column_get(list, bench_settings.model_name, 0)
 				
 				// States
 				var model, statelen;
@@ -188,7 +190,10 @@ function bench_draw_settings(bx, by, bw, bh)
 					draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", bench_settings.model_state[i + 1]), action_bench_model_state, false, null, null, "", null, null, capwid)
 					dy += 32
 				}
+				
 				menu_model_current = null
+				menu_filter = ""
+				menu_filter_normal = ""
 				
 				// Bodypart
 				if (bench_settings.type = e_temp_type.BODYPART && bench_settings.model_file != null)
@@ -225,17 +230,43 @@ function bench_draw_settings(bx, by, bw, bh)
 					dy += (ui_large_height + 8)
 				}
 				
+				// Model blend color
+				if (bench_settings.model_use_blend_color)
+				{
+					panel_compact = true
+					
+					tab_control_color()
+					draw_button_color("benchmodelcolor", dx, dy, dw, bench_settings.model_blend_color, bench_settings.model_blend_color_default, false, action_bench_model_blend_color)
+					tab_next()
+					
+					panel_compact = false
+				}
+				
 				// Pattern editor
 				if (bench_settings.pattern_type != "")
 				{
 					tab_control_button_label()
 					
-					if (draw_button_label("benchopeneditor", dx, dy, dw, null, e_button.SECONDARY))
+					if (draw_button_label("benchpatterneditor", dx, dy, dw, null, e_button.SECONDARY))
 						popup_pattern_editor_show(bench_settings)
 					
 					tab_next()
 					
 					if (popup = popup_pattern_editor)
+						current_microani.active.value = true
+				}
+				
+				// Armor editor
+				if (bench_settings.model_name = "armor")
+				{
+					tab_control_button_label()
+					
+					if (draw_button_label("bencharmoreditor", dx, dy, dw, null, e_button.SECONDARY))
+						popup_armor_editor_show(bench_settings)
+					
+					tab_next()
+					
+					if (popup = popup_armor_editor)
 						current_microani.active.value = true
 				}
 				
@@ -371,6 +402,8 @@ function bench_draw_settings(bx, by, bw, bh)
 				tab_control_sortlist(6)
 				sortlist_draw(bench_settings.block_list, dx, dy, dw, tab_control_h, bench_settings.block_name, false, text_get("benchblock"))
 				tab_next()
+				menu_filter = bench_settings.block_list.search_tbx.text
+				menu_filter_normal = sortlist_column_get(bench_settings.block_list, bench_settings.block_name, 0)
 				
 				// States
 				var block, statelen;
@@ -426,6 +459,8 @@ function bench_draw_settings(bx, by, bw, bh)
 				}
 				
 				menu_block_current = null
+				menu_filter = ""
+				menu_filter_normal = ""
 				
 				// Texture
 				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)

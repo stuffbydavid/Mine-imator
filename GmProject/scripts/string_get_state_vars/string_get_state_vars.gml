@@ -1,7 +1,7 @@
 /// string_get_state_vars(string)
 /// @arg string
 /// @desc Parses a string of comma-separated variables and their values, eg. "foo=true,bar=10".
-///		  Returns null if invalid.
+/// Returns null if invalid.
 
 function string_get_state_vars(argument0)
 {

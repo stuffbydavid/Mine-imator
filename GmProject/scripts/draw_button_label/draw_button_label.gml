@@ -9,38 +9,10 @@
 /// @arg [anchor
 /// @arg [disabled]]]]]]
 
-function draw_button_label()
+function draw_button_label(name, xx, yy, w = null, icon = null, type = e_button.PRIMARY, script = null, anchor = e_anchor.LEFT, disabled = false)
 {
-	var name, xx, yy, w, h, icon, type, script, anchor, disabled;
-	var font, cap, capwid, customw, mouseon, mouseclick;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	w = null
+	var h, font, cap, capwid, customw;
 	h = 32
-	icon = null
-	type = e_button.PRIMARY
-	script = null
-	anchor = e_anchor.LEFT
-	disabled = false
-	
-	if (argument_count > 3)
-		w = argument[3]
-	
-	if (argument_count > 4)
-		icon = argument[4]
-	
-	if (argument_count > 5)
-		type = argument[5]
-	
-	if (argument_count > 6)
-		script = argument[6]
-	
-	if (argument_count > 7)
-		anchor = argument[7]
-	
-	if (argument_count > 8)
-		disabled = argument[8]
 	
 	cap = text_get(name)
 	
@@ -72,6 +44,8 @@ function draw_button_label()
 	
 	if (yy > content_y + content_height || yy + h < content_y || xx > content_x + content_width || xx + w < content_x)
 		return 0
+	
+	var mouseon, mouseclick;
 	
 	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && !disabled
 	mouseclick = mouseon && mouse_left

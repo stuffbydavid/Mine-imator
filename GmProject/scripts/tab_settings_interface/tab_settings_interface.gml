@@ -84,17 +84,6 @@ function tab_settings_interface()
 	draw_switch("settingsreducedmotion", dx, dy, setting_reduced_motion, action_setting_reduced_motion)
 	tab_next()
 	
-	//setting_interface_compact = false
-	
-	dy += label_height + 6
-	draw_label(text_get("settingsworkbench"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-	dy += 8
-	
-	// Variant search
-	tab_control_switch()
-	draw_switch("settingssearchvariants", dx, dy, setting_search_variants, action_setting_search_variants)
-	tab_next()
-	
 	dy += label_height + 6
 	draw_label(text_get("settingstimeline"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8

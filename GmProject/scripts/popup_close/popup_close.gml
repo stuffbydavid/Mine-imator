@@ -8,7 +8,7 @@ function popup_close()
 	if (popup = popup_upgrade)
 	{
 		popup_upgrade.open_advanced = false
-		popup_upgrade.custom_rendering =  "default"
+		popup_upgrade.custom_rendering = "default"
 	}
 	
 	window_busy = ""

@@ -2,16 +2,8 @@
 /// @arg filename
 /// @arg [resource]
 
-function block_load_model_file()
+function block_load_model_file(fname, res = null)
 {
-	var fname, res;
-	fname = argument[0]
-	
-	if (argument_count > 1)
-		res = argument[1]
-	else
-		res = null
-	
 	if (res = null && !is_undefined(load_assets_model_file_map[?filename_name(fname)])) // Previously loaded
 		return load_assets_model_file_map[?filename_name(fname)]
 	

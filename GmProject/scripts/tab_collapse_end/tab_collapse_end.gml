@@ -1,10 +1,8 @@
 /// tab_collapse_end([divider])
 /// @arg [divider]
 
-function tab_collapse_end()
+function tab_collapse_end(divider = true)
 {
-	var divider = (argument_count > 0 ? argument[0] : true);
-	
 	collapse_ani = 1
 	collapse_groups--
 	

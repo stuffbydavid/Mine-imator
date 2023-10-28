@@ -66,6 +66,8 @@ function action_lib_model_name(name)
 		
 		if (pattern_type != "")
 			array_add(pattern_update, id)
+		
+		temp_update_armor(id)
 	}
 	
 	if (history_undo)

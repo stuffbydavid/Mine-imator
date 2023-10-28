@@ -28,10 +28,10 @@ function draw_checkbox(name, xx, yy, active, script, tip = "")
 	
 	if (mouseon)
 	{
-	    if (mouse_left || mouse_left_released)
-	        pressed = true
+		if (mouse_left || mouse_left_released)
+			pressed = true
 		
-	    mouse_cursor = cr_handpoint
+		mouse_cursor = cr_handpoint
 	}
 	
 	// Set micro animation before drawing

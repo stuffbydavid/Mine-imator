@@ -55,6 +55,8 @@ function tab_template_editor()
 			
 			statesh += (32 * menus) + ((ui_small_height + 8) * ceil(checkboxes/2))
 			sortlist_draw(list, dx, dy, dw, dh - statesh, temp_edit.model_name, false)
+			menu_filter = list.search_tbx.text
+			menu_filter_normal = sortlist_column_get(list, temp_edit.model_name, 0)
 			
 			// Update states in case model was updated
 			statelen = array_length(temp_edit.model_state)
@@ -130,6 +132,8 @@ function tab_template_editor()
 				dyy += 32
 			}
 			menu_model_current = null
+			menu_filter = ""
+			menu_filter_normal = ""
 			
 			// Bodypart
 			if (temp_edit.type = e_temp_type.BODYPART)
@@ -160,6 +164,8 @@ function tab_template_editor()
 			statesh = (32 * menus) + ((ui_small_height + 8) * ceil(checkboxes/2))
 			
 			sortlist_draw(tab.block_list, dx, dy, dw, dh - statesh, temp_edit.block_name, false)
+			menu_filter = tab.block_list.search_tbx.text
+			menu_filter_normal = sortlist_column_get(tab.block_list, temp_edit.block_name, 0)
 			
 			// States
 			var block;
@@ -232,6 +238,8 @@ function tab_template_editor()
 				dyy += 32
 			}
 			menu_block_current = null
+			menu_filter = ""
+			menu_filter_normal = ""
 			
 			if (content_mouseon)
 				window_scroll_focus = string(tab.block_list.scroll)

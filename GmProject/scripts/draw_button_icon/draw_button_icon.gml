@@ -14,7 +14,6 @@
 function draw_button_icon()
 {
 	var name, xx, yy, wid, hei, value, icon, script, disabled, tip, sprite;
-	var mouseon, animated;
 	
 	name = argument[0]
 	xx = argument[1]
@@ -47,8 +46,11 @@ function draw_button_icon()
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 		return 0
 	
+	var mouseon, animated, image;
+	
 	mouseon = (content_mouseon && !disabled && app_mouse_box(xx, yy, wid, hei))
 	animated = (sprite != spr_icons && sprite != null && icon = null && sprite_get_number(sprite) > 1)
+	image = ((wid != hei) && sprite != spr_icons && sprite != null && icon = null)
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint
@@ -94,8 +96,9 @@ function draw_button_icon()
 	
 	draw_box(xx, yy, wid, hei, false, onbackcolor, onbackalpha)
 	
-	// Animated icon(if 'icon' is a sprite)
-	if (animated)
+	if (image)
+		draw_image(sprite, 0, xx, yy, 1, 1, oniconcolor, oniconalpha)
+	else if (animated) // Animated icon(if 'icon' is a sprite)
 	{
 		var frame = floor((sprite_get_number(sprite) - 1) * microani_arr[e_microani.ACTIVE]);
 		draw_image(sprite, frame, xx + wid/2, yy + hei/2, 1, 1, oniconcolor, oniconalpha)

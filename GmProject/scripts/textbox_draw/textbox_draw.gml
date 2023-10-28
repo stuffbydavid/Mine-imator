@@ -8,25 +8,10 @@
 /// @arg [right]]
 /// @desc Draws a box with editable text at the given position and with the given dimensions.
 
-function textbox_draw()
+function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 {
-	var tbx, xx, yy, w, h, contextmenu, right;
 	var changetext, deletetext, inserttext, lineheight, mouseover;
 	var a, b, c, l, p, k, ww, hh, str, textx;
-	
-	tbx = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	w = argument[3]
-	h = argument[4]
-	contextmenu = true
-	right = false
-	
-	if (argument_count > 5)
-		contextmenu = argument[5]
-	
-	if (argument_count > 6)
-		right = argument[6]
 	
 	// Colors
 	var prevalpha, textnormal, textnormala, textsuffix, textsuffixa, highlight, texthighlight, texthighlighta;
@@ -145,7 +130,7 @@ function textbox_draw()
 		// Controls
 		if (!tbx.single_line)
 		{
-			tbx.start += mouse_wheel_down() - mouse_wheel_up()  // Mouse wheel to scroll
+			tbx.start += mouse_wheel_down() - mouse_wheel_up() // Mouse wheel to scroll
 			if (key_press[vk_enter] && !tbx.read_only) // Enter for linebreak
 				inserttext = "\n"
 		}
@@ -264,7 +249,7 @@ function textbox_draw()
 				
 				for (textbox_select_mousepos = 0;
 					 textbox_select_mousepos <= string_length(tbx.line[textbox_select_mouseline]);
-					 textbox_select_mousepos++)  // Find correct position
+					 textbox_select_mousepos++) // Find correct position
 				{
 					nextx += string_width(string_char_at(tbx.line[textbox_select_mouseline], textbox_select_mousepos))
 					if (nextx > currentx)
@@ -420,7 +405,7 @@ function textbox_draw()
 				if (textbox_select_startline = textbox_select_endline) // Same line, just do string_delete
 					tbx.line[textbox_select_startline] = string_delete(tbx.line[textbox_select_startline], textbox_select_startpos + 1, textbox_select_endpos - textbox_select_startpos)
 				else
-				{  
+				{
 					// Delete all lines between the two points
 					var linestodelete = textbox_select_endline - textbox_select_startline;
 					tbx.line[textbox_select_startline] = string_copy(tbx.line[textbox_select_startline], 1, textbox_select_startpos) + string_delete(tbx.line[textbox_select_endline], 1, textbox_select_endpos)
@@ -519,7 +504,7 @@ function textbox_draw()
 			if (tbx.single_line)
 				inserttext = string_replace_all(inserttext, "\n", " ")
 			
-			realmousepos = textbox_select_mousepos  // Get real position in total string
+			realmousepos = textbox_select_mousepos // Get real position in total string
 			for (l = 0; l < textbox_select_mouseline; l++)
 				realmousepos += string_length(tbx.line[l]) + (!tbx.line_wrap[l + 1] && !tbx.line_single[l])
 			tbx.text = string_copy(tbx.text, 1, realmousepos) + inserttext + string_delete(tbx.text, 1, realmousepos)
@@ -551,12 +536,12 @@ function textbox_draw()
 				{
 					if (l = 0)
 					{
-						tbx.line[textbox_select_mouseline + l] = string_copy(a, 1, textbox_select_mousepos) + str[l]  // First
+						tbx.line[textbox_select_mouseline + l] = string_copy(a, 1, textbox_select_mousepos) + str[l] // First
 						tbx.line_single[textbox_select_mouseline + l] = false
 					}
 					else if (l = b)
 					{
-						tbx.line[textbox_select_mouseline + l] = str[l] + string_delete(a, 1, textbox_select_mousepos)  // Last
+						tbx.line[textbox_select_mouseline + l] = str[l] + string_delete(a, 1, textbox_select_mousepos) // Last
 						tbx.line_wrap[textbox_select_mouseline + l] = false
 					}
 					else
@@ -788,7 +773,7 @@ function textbox_draw()
 						break
 					
 					// Move markers if affected
-					a = string_length(tbx.line[l - 1])  
+					a = string_length(tbx.line[l - 1])
 					
 					if (textbox_select_mouseline = l && textbox_select_mousepos <= p)
 					{
@@ -841,7 +826,7 @@ function textbox_draw()
 						
 						// Move markers if affected
 						if (textbox_select_mouseline = a + 1)
-							textbox_select_mouseline--  
+							textbox_select_mouseline--
 						if (textbox_select_clickline = a + 1)
 							textbox_select_clickline--
 						if (textbox_select_endline = a + 1)
@@ -1085,7 +1070,7 @@ function textbox_draw()
 									mouse_clear(mb_left)
 								}
 								else // Remove selection if clicking after word select
-								{  
+								{
 									textbox_click = current_time
 									textbox_select_startline = textbox_select_mouseline
 									textbox_select_startpos = textbox_select_mousepos

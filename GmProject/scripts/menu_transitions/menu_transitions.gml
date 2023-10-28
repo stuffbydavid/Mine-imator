@@ -109,8 +109,17 @@ function menu_transitions(xx, yy, wid, hei)
 	dx = dx_start
 	dy += 46
 	
-	// Context menu
-	if (context_menu_name != "" && transition != null)
+	if (settings_menu_name != "" && transition != null) // Settings menu
+	{
+		action_tl_frame_transition(transition)
+		settings_menu_ani_type = "hide"
+		settings_menu_ani = (settings_menu_quick ? 0.01 : 1)
+		window_busy = ""
+		
+		return true
+	}
+	
+	if (context_menu_name != "" && transition != null) // Context menu
 	{
 		action_tl_frame_transition(transition)
 		context_menu_close()

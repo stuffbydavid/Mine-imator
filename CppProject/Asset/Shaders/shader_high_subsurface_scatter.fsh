@@ -67,8 +67,8 @@ void main()
 			if (i >= uSamples || (abs(rad.x + rad.y) < 0.001))
 				break;
 			
-			vec2 sampleCoord  = vTexCoord + (uKernel[i].y * rad);
-			vec4 sampleRange  = texture2D(uSSSRangeBuffer, sampleCoord);
+			vec2 sampleCoord = vTexCoord + (uKernel[i].y * rad);
+			vec4 sampleRange = texture2D(uSSSRangeBuffer, sampleCoord);
 			
 			if (((sampleRange.r + sampleRange.g + sampleRange.b) < 0.001) ||
 				((sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0)) ||

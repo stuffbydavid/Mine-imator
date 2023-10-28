@@ -70,5 +70,7 @@ function action_bench_model_tex(res)
 		
 		if (pattern_type != "")
 			array_add(pattern_update, id)
+		
+		temp_update_armor(id)
 	}
 }

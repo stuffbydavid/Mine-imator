@@ -14,6 +14,7 @@ function tl_event_create()
 	temp = null
 	text = text_get("timelineeditortextsample")
 	color_tag = null
+	color_tag_inherit = null
 	lock = false
 	hide = false
 	ghost = false
@@ -74,7 +75,7 @@ function tl_event_create()
 	tree_list = ds_list_create()
 	tree_list_filter = ds_list_create()
 	tree_extend = false
-	tree_contents = array_create(e_tl_type.AMOUNT - 1)
+	tree_contents = array_create(e_tl_type.amount - 1)
 	list_mouseon = false
 	
 	inherit_position = true
@@ -90,6 +91,7 @@ function tl_event_create()
 	inherit_subsurface = true
 	inherit_glow_color = true
 	inherit_select = false
+	inherit_pose = false
 	scale_resize = true
 	rot_point_custom = false
 	rot_point = point3D(0, 0, 0)
@@ -109,6 +111,13 @@ function tl_event_create()
 	lq_hiding = false
 	blend_mode = "normal"
 	alpha_mode = e_alpha_mode.DEFAULT
+	
+	glint_mode = e_glint.NONE
+	glint_scale = 1
+	glint_speed = 1
+	glint_strength = 1
+	glint_tex = mc_res
+	glint_tex.count++
 	
 	particle_list = null
 	
@@ -134,8 +143,8 @@ function tl_event_create()
 	pattern_color_list = null
 	pattern_skin = null
 	
-	text_vbuffer = null
-	text_texture = null
+	text_vbuffer = [null, null]
+	text_texture = [null, null]
 	text_string = ""
 	text_res = null
 	text_3d = false

@@ -8,6 +8,9 @@ function menu_settings_draw()
 	// Animation
 	if (settings_menu_ani_type = "hide") //Hide
 	{
+		if (settings_menu_quick)
+			settings_menu_ani = min(0.01, settings_menu_ani)
+		
 		settings_menu_ani -= test_reduced_motion(1, (0.08 * delta))
 		if (settings_menu_ani <= 0)
 		{
@@ -22,6 +25,9 @@ function menu_settings_draw()
 	}
 	else if (settings_menu_ani_type = "show") //Show
 	{
+		if (settings_menu_quick)
+			settings_menu_ani = max(0.99, settings_menu_ani)
+		
 		settings_menu_ani += test_reduced_motion(1, (0.08 * delta))
 		if (settings_menu_ani >= 1)
 		{
@@ -143,6 +149,7 @@ function menu_settings_draw()
 				settings_menu_ani_type = "hide"
 				window_busy = "settingsmenu"
 				window_focus = ""
+				
 				context_menu_close()
 			}
 		}
@@ -154,6 +161,7 @@ function menu_settings_draw()
 				settings_menu_ani_type = "hide"
 				window_busy = "settingsmenu"
 				window_focus = ""
+				
 				context_menu_close()
 			}
 		}

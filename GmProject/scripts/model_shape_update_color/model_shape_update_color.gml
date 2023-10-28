@@ -17,27 +17,7 @@ function model_shape_update_color()
 	var key = ds_map_find_first(model_color_name_map)
 	while (!is_undefined(key))
 	{
-		var color;
-		switch (ds_map_find_value(model_color_name_map, key))
-		{
-			case "white": color = c_minecraft_white; break;
-			case "orange": color = c_minecraft_orange; break;
-			case "magenta": color = c_minecraft_magenta; break;
-			case "light_blue": color = c_minecraft_light_blue; break;
-			case "yellow": color = c_minecraft_yellow; break;
-			case "lime": color = c_minecraft_lime; break;
-			case "pink": color = c_minecraft_pink; break;
-			case "gray": color = c_minecraft_gray; break;
-			case "light_gray": color = c_minecraft_light_gray; break;
-			case "cyan": color = c_minecraft_cyan; break;
-			case "purple": color = c_minecraft_purple; break;
-			case "blue": color = c_minecraft_blue; break;
-			case "brown": color = c_minecraft_brown; break;
-			case "green": color = c_minecraft_green; break;
-			case "red": color = c_minecraft_red; break;
-			case "black": color = c_minecraft_black; break;
-			default: color = c_white;
-		}
+		var color = minecraft_get_color(ds_map_find_value(model_color_name_map, key));
 		
 		ds_map_add(model_color_map, key, color)
 		key = ds_map_find_next(model_color_name_map, key)

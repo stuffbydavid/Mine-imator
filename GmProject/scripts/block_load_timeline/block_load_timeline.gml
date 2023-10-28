@@ -59,11 +59,35 @@ function block_load_timeline(map, typemap)
 	
 	// Text
 	tl_has_text = false
-	if (is_bool(map[?"has_text"]))
-		tl_has_text = map[?"has_text"]
+	tl_text_front_position = []
+	tl_text_front_rotation = []
+	tl_text_front_scale = 1
+	tl_text_back_position = []
+	tl_text_back_rotation = []
+	tl_text_back_scale = 1
 	
-	if (tl_has_text)
-		tl_text_position = value_get_point3D(map[?"text_position"], point3D(0, 0, 0))
+	if (ds_map_valid(map[?"text"]))
+	{
+		var textmap = map[?"text"]
+		
+		if (ds_map_valid(textmap[?"front"]))
+		{
+			var front = textmap[?"front"];
+			tl_text_front_position = value_get_point3D(front[?"position"], point3D(0, 0, 0))
+			tl_text_front_rotation = value_get_point3D(front[?"rotation"], point3D(0, 0, 0))
+			tl_text_front_scale = value_get_real(front[?"scale"], 1)
+		}
+		
+		if (ds_map_valid(textmap[?"back"]))
+		{
+			var back = textmap[?"back"];
+			tl_text_back_position = value_get_point3D(back[?"position"], point3D(0, 0, 0))
+			tl_text_back_rotation = value_get_point3D(back[?"rotation"], point3D(0, 0, 0))
+			tl_text_back_scale = value_get_real(back[?"scale"], 1)
+		}
+		
+		tl_has_text = true
+	}
 	
 	// Supports patterns
 	tl_pattern_type = ""

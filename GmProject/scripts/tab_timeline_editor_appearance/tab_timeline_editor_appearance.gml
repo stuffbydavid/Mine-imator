@@ -4,6 +4,54 @@ function tab_timeline_editor_appearance()
 {
 	if (tl_edit.type != e_tl_type.POINT_LIGHT && tl_edit.type != e_tl_type.SPOT_LIGHT)
 	{
+		tab_control_switch()
+		draw_button_collapse("tl_glint", collapse_map[?"tl_glint"], null, true, "timelineeditorglint")
+		tab_next()
+	
+		if (collapse_map[?"tl_glint"])
+		{
+			tab_collapse_start()
+			
+			// Enchantment glint
+			var tex;
+		
+			if (tl_edit.glint_tex.type = e_res_type.PACK)
+			{
+				if (tl_edit.glint_mode = e_glint.ENTITY)
+					tex = tl_edit.glint_tex.glint_entity_texture
+				else
+					tex = tl_edit.glint_tex.glint_item_texture
+			}
+			else
+				tex = tl_edit.glint_tex.texture
+		
+			tab_control_menu(ui_large_height)
+			draw_button_menu("timelineeditorglinttex", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.glint_tex, tl_edit.glint_tex.display_name, action_tl_glint_tex, false, tex)
+			tab_next()
+		
+			tab_control_togglebutton()
+			togglebutton_add("timelineeditorglintmodenone", null, e_glint.NONE, tl_edit.glint_mode = e_glint.NONE, action_tl_glint_mode)
+			togglebutton_add("timelineeditorglintmodeitem", null, e_glint.ITEM, tl_edit.glint_mode = e_glint.ITEM, action_tl_glint_mode)
+			togglebutton_add("timelineeditorglintmodeentity", null, e_glint.ENTITY, tl_edit.glint_mode = e_glint.ENTITY, action_tl_glint_mode)
+			draw_togglebutton("timelineeditorglintmode", dx, dy)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("timelineeditorglintscale", dx, dy, dragger_width, round(tl_edit.glint_scale * 100), tl_edit.glint_scale, 1, no_limit, 100, 1, tab.appearance.tbx_glint_scale, action_tl_glint_scale)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("timelineeditorglintspeed", dx, dy, dragger_width, round(tl_edit.glint_speed * 100), tl_edit.glint_speed, 1, no_limit, 100, 1, tab.appearance.tbx_glint_speed, action_tl_glint_speed)
+			tab_next()
+			
+			tab_control_dragger()
+			draw_dragger("timelineeditorglintstrength", dx, dy, dragger_width, round(tl_edit.glint_strength * 100), tl_edit.glint_strength, 1, no_limit, 100, 1, tab.appearance.tbx_glint_strength, action_tl_glint_strength)
+			tab_next()
+			
+			tab_collapse_end()
+		}
+		dy += 8
+		
 		// Blend mode
 		tab_control_menu()
 		draw_button_menu("timelineeditorblendmode", e_menu.LIST, dx, dy, dw, 24, tl_edit.blend_mode, text_get("timelineeditorblendmode" + tl_edit.blend_mode), action_tl_blend_mode)

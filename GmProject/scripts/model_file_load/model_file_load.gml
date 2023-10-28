@@ -3,16 +3,8 @@
 /// @arg [resource]
 /// @desc Loads the parts and shapes from the selected filename.
 
-function model_file_load()
+function model_file_load(fname, res = null)
 {
-	var fname, res;
-	fname = argument[0];
-	
-	if (argument_count > 1)
-		res = argument[1]
-	else
-		res = null
-	
 	if (!file_exists_lib(fname))
 	{
 		log("Could not find model file", fname)
@@ -107,12 +99,18 @@ function model_file_load()
 		// Scale (optional)
 		scale = value_get_point3D(map[?"scale"], vec3(1, 1, 1))
 		
+		// Model color (string)
+		model_color = value_get_string(map[?"model_color"], "none")
+		
 		// Bounds in default position
 		bounds_parts_start = point3D(no_limit, no_limit, no_limit)
 		bounds_parts_end = point3D(-no_limit, -no_limit, -no_limit)
 		
 		// Whether this file contains 3D planes that need to be regenerated on texture switches
 		has_3d_plane = false
+		
+		// Floor UVs (Not available for 3D planes, floors UV coords for Bedrock UV support)
+		floor_box_uvs = value_get_real(map[?"floor_box_uvs"], false)
 		
 		// Read all the parts of the root
 		var partlist = map[?"parts"]

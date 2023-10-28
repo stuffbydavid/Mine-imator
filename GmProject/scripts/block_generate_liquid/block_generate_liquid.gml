@@ -2,12 +2,8 @@
 /// @arg waterlogged
 /// @desc Creates a liquid mesh from the surrounding block data.
 
-function block_generate_liquid()
+function block_generate_liquid(waterlogged = false)
 {
-	var waterlogged = false;
-	if (argument_count > 0)
-		waterlogged = argument[0]
-	
 	var matchxp, matchxn, matchyp, matchyn, matchzp, matchzn;
 	var solidxp, solidxn, solidyp, solidyn, solidzp, solidzn;
 	matchxp = (!build_edge_xp && builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z) = block_current)

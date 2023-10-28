@@ -3,14 +3,9 @@
 /// @arg [keyframe]
 /// @desc Adds a new keyframe (or existing, if submitted) to the timeline.
 
-function tl_keyframe_add()
+function tl_keyframe_add(pos, kf = null)
 {
-	var pos, kf, i;
-	pos = argument[0]
-	if (argument_count > 1)
-		kf = argument[1]
-	else
-		kf = null
+	var i;
 	
 	// Find index
 	for (i = 0; i < ds_list_size(keyframe_list); i++)

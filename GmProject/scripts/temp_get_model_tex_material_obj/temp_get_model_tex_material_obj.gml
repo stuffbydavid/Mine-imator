@@ -1,11 +1,11 @@
 /// temp_get_model_tex_material_obj(value)
 /// @arg value
 /// @desc Returns the resource whose texture to use when rendering instances of the template.
-///		  A value (id) is supplied from a keyframe, if none is available then it is null.
+/// A value (id) is supplied from a keyframe, if none is available then it is null.
 
 function temp_get_model_tex_material_obj(texobj)
 {
-	if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA ||  // Check if empty or a camera
+	if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA || // Check if empty or a camera
 		(texobj.model_texture = null && texobj.model_texture_material_map = null)) // Not a valid model texture, use the library setting
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)

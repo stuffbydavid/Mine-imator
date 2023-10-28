@@ -1,10 +1,8 @@
 /// tab_next([padding])
 /// @arg [padding]
 
-function tab_next()
+function tab_next(padding = true)
 {
-	var padding = (argument_count > 0 ? argument[0] : true);
-	
 	if (tab_collapse)
 	{
 		dx -= 16

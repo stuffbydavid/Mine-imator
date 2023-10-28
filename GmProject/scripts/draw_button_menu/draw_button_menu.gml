@@ -19,7 +19,7 @@
 function draw_button_menu()
 {
 	var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha, capwid;
-	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid;
+	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch;
 	name = argument[0]
 	type = argument[1]
 	xx = argument[2] 
@@ -88,6 +88,8 @@ function draw_button_menu()
 	
 	if (menu_bench)
 		nameid = "bench" + name
+	else if (content_tab = null && popup != null)
+		nameid = popup.name + name
 	else
 		nameid = name
 	
@@ -106,9 +108,11 @@ function draw_button_menu()
 		}
 	}
 	
+	showsearch = (type != e_menu.TRANSITION_LIST && menuactive && !menuhide)
+	
 	flip = (yy + hei + hei * 8 > window_height)
 	
-	microani_set(nameid, null, false, false, false)
+	microani_set(nameid, null, false, false, false, false, 1.5, false, 0.5)
 	
 	var textcolor, textalpha, bordercolor, borderalpha, chevroncolor, chevronalpha, fadealpha, animation;
 	textcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
@@ -148,8 +152,16 @@ function draw_button_menu()
 	
 	if (menuactive)
 	{
-		xx = lerp(xx, menuid.menu_x, menuid.menu_ani_ease)
-		wid = lerp(wid, menuid.menu_w, menuid.menu_ani_ease)
+		if (type != e_menu.LIST_SEAMLESS)
+		{
+			xx = lerp(xx, max(dx, menuid.menu_x), menuid.menu_ani_ease)
+			wid = lerp(wid, min(dw, menuid.menu_w), menuid.menu_ani_ease)
+		}
+		else
+		{
+			xx = lerp(xx, menuid.menu_x, menuid.menu_ani_ease)
+			wid = lerp(wid, menuid.menu_w, menuid.menu_ani_ease)
+		}
 	}
 	
 	// Button
@@ -166,14 +178,17 @@ function draw_button_menu()
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Mouse
-	mouseon = app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon
+	mouseon = (app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon) || (menuactive && app_mouse_box(xx, yy, wid, hei, "menu"))
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
+	if (showsearch && menu_search_tbx.text != "")
+		text = "";
+	
 	// Item
 	var item = list_item_add(text, null, caption, tex, icon, -1, null, false, false);
-	item.disabled = disabled
+	item.disabled = disabled || showsearch
 	
 	if (type = e_menu.TRANSITION_LIST)
 	{
@@ -187,8 +202,64 @@ function draw_button_menu()
 		item.thumbnail_alpha = texalpha
 	}
 	
-	list_item_draw(item, xx, yy, wid, hei, false, null, null, false)
+	if (current_microani.goal_ease != 0.5)
+		clip_begin(xx, yy, wid, hei)
+	
+	list_item_draw(item, xx, yy + ((current_microani.goal_ease * 2) - 1) * 12, wid, hei, false, null, null, false)
 	instance_destroy(item)
+	
+	if (current_microani.goal_ease != 0.5)
+		clip_end()
+	
+	// Search tbx
+	if (showsearch)
+	{
+		var busyprev = window_busy;
+		var mouseonprev = content_mouseon;
+		
+		if (window_busy = "menu")
+		{
+			window_busy = menu_search_busy
+			content_mouseon = true
+		}
+		
+		if (mouseon && mouse_left_released && (window_focus != string(menu_search_tbx)))
+		{
+			window_focus = string(menu_search_tbx)
+			app_mouse_clear()
+		}
+		
+		var m = menuid;
+		
+		if (textbox_draw(menu_search_tbx, xx + 8 + (28 * bool_to_float(tex != null)), yy + (hei/2) - 8, wid - 32, hei, true))
+		{
+			menu_current = m
+			menu_expose = (menu_search_tbx.text != "")
+			menu_search = menu_search_tbx.text
+			
+			list_destroy(m.menu_list)
+			
+			if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS)
+				m.menu_list = list_init(name)
+			else if (type = e_menu.TIMELINE)
+				m.menu_list = menu_timeline_init(m)
+			else if (type = e_menu.BIOME)
+				m.menu_list = menu_biome_init(m)
+			
+			m.menu_amount = m.menu_list = null ? 0 : ds_list_size(m.menu_list.item)
+			
+			if (m.menu_list != null)
+				m.menu_list.show_ticks = false
+			
+			menu_search = ""
+			menu_expose = false
+		}
+		
+		menu_search_busy = window_busy
+		
+		window_busy = busyprev
+		content_mouseon = mouseonprev
+	}
 	
 	// Chevron
 	chevroncolor = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
@@ -206,6 +277,73 @@ function draw_button_menu()
 	
 	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
 	
+	// Ctrl + Scroll
+	if (!menuactive && mouseon && keyboard_check(vk_control) && mouse_wheel != 0)
+	{
+		menu_model_state = menu_model_state_current
+		menu_block_state = menu_block_state_current
+		
+		menu_armor_piece = popup_armor_editor.piece_current
+		menu_armor_piece_data = popup_armor_editor.piece_data_id
+		
+		var m = new_obj(obj_menu);
+		m.menu_ani = 0
+		m.menu_value = value
+		m.menu_name = nameid
+		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+		menu_current = m
+		menu_expose = true
+		
+		var list;
+		
+		if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS || type = e_menu.TRANSITION_LIST)
+			list = list_init(name)
+		else if (type = e_menu.TIMELINE)
+			list = menu_timeline_init(m)
+		else if (type = e_menu.BIOME)
+			list = menu_biome_init(m)
+		
+		if (type = e_menu.TRANSITION_LIST)
+			script = action_tl_frame_transition
+		
+		menu_expose = false
+		
+		// Find index of chosen value
+		var index = 0;
+		var item = null;
+		
+		list_value_filter(list)
+		
+		for (var i = 0; i < ds_list_size(list.item); i++)
+		{
+			var it = list.item[|i];
+			
+			if (it.script != null)
+				continue
+			
+			if (it.value = value)
+			{
+				index = i;
+				break
+			}
+		}
+		
+		index += mouse_wheel
+		index = mod_fix(index, ds_list_size(list.item))
+		item = list.item[|index]
+		
+		list_item_script = script
+		list_item_script_value = item.value
+		
+		current_microani.holding.init(1)
+		current_microani.goal_ease = ((mouse_wheel) + 1) * .5
+		
+		list_destroy(list)
+		instance_destroy(m)
+		
+		return true
+	}
+	
 	// Update menu position
 	if (menuactive)
 	{
@@ -217,12 +355,14 @@ function draw_button_menu()
 	if (mouseon && mouse_left_released && menuhide)
 	{
 		window_busy = "menu"
+		window_focus = string(menu_search_tbx)
+		
 		menuid.menu_ani_type = "show"
 		app_mouse_clear()
 	}
 	
 	// Check click
-	if (mouseon && mouse_left_released && !menuhide)
+	if (!menuactive && mouseon && mouse_left_released && !menuhide)
 	{
 		var m = null;
 		for (var i = 0; i < ds_list_size(menu_list); i++)
@@ -236,6 +376,8 @@ function draw_button_menu()
 		
 		if (m = null)
 			m = new_obj(obj_menu)
+		
+		m.menu_busy_prev = window_busy
 		
 		window_busy = "menu"
 		window_focus = ""//string(menu_scroll_vertical)
@@ -268,10 +410,17 @@ function draw_button_menu()
 		m.content_width = content_width
 		
 		menu_current = m
+		menu_expose = false
 		
 		// Init
 		menu_model_state = menu_model_state_current
 		menu_block_state = menu_block_state_current
+		
+		menu_armor_piece = popup_armor_editor.piece_current
+		menu_armor_piece_data = popup_armor_editor.piece_data_id
+		
+		if (type != e_menu.TRANSITION_LIST)
+			window_focus = string(menu_search_tbx)
 		
 		if (type = e_menu.LIST || type = e_menu.LIST_SEAMLESS)
 			m.menu_list = list_init(name)

@@ -2,14 +2,8 @@
 /// @arg filename
 /// @arg [directory]
 
-function unzip()
+function unzip(fn, dir = unzip_directory)
 {
-	var fn, dir;
-	fn = argument[0]
-	dir = unzip_directory
-	if (argument_count > 1)
-		dir = argument[1]
-	
 	var ret = directory_delete_lib(dir);
 	directory_create_lib(dir)
 	

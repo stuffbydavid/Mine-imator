@@ -12,25 +12,42 @@
 
 function context_menu_area()
 {
-	var xx, yy, wid, hei, name, font;
+	var xx, yy, wid, hei, name, font, c;
 	xx = argument[0]
 	yy = argument[1]
 	wid = argument[2]
 	hei = argument[3]
 	name = argument[4]
 	
-	if (app_mouse_box(xx, yy, wid, hei) && mouse_right_released)
+	if (app_mouse_box(xx, yy, wid, hei) && mouse_right_pressed)
 	{
-		// Quick shortcut for value reset
-		if (keyboard_check(vk_shift) && argument_count > 5)
+		if (argument_count > 5)
 		{
+			context_menu_value = argument[5]
+			context_menu_value_type = argument[6]
+			
+			context_menu_value_script = argument[7]
+			context_menu_value_default = argument[8]
+		}
+		else
+			context_menu_value = null
+		
+		// Quick shortcut for value reset
+		if (keyboard_check(vk_shift) && argument_count > 5 && context_menu_value_script != null)
+		{
+			if (popup = popup_armor_editor)
+			{
+				list_item_script = action_value_reset
+				return true
+			}
+			
 			if (argument[6] = e_context_type.TIME || argument[6] = e_context_type.NUMBER)
 				script_execute(argument[7], argument[8], false)
 			
 			if (argument[6] = e_context_type.COLOR)
 				script_execute(argument[7], argument[8])
 			
-			return 0
+			return true
 		}
 		
 		context_menu_close()
@@ -44,17 +61,8 @@ function context_menu_area()
 		
 		// Get current font
 		font = draw_get_font()
-		
-		if (argument_count > 5)
-		{
-			context_menu_value = argument[5]
-			context_menu_value_type = argument[6]
-			
-			context_menu_value_script = argument[7]
-			context_menu_value_default = argument[8]
-		}
-		
-		context_menu_add_level(name, mouse_x + 1, mouse_y)
+		c = context_menu_add_level(name, mouse_x + 1, mouse_y)
+		c.ani = 0.99
 		
 		if (font != draw_get_font())
 			draw_set_font(font)

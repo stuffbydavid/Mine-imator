@@ -7,32 +7,28 @@
 /// @arg [color
 /// @arg alpha]
 
-function draw_box()
+function draw_box(xx, yy, width, height, outline, incolor, inalpha)
 {
-	var xx, yy, ww, hh, outline, color, alpha;
-	xx = argument[0]
-	yy = argument[1]
-	ww = argument[2]
-	hh = argument[3]
-	outline = argument[4]
+	var color, alpha;
+	
 	color = draw_get_color()
 	alpha = draw_get_alpha()
 	
-	if (argument_count > 5)
+	if (!is_undefined(incolor))
 	{
-		color = argument[5]
-		alpha *= argument[6]
+		color = incolor
+		alpha *= inalpha
 	}
 	
-	if (alpha = 0 || ww <= 0 || hh <= 0)
+	if (alpha = 0 || width <= 0 || height <= 0)
 		return 0
 	
 	draw_primitive_begin(outline ? pr_linestrip : pr_trianglefan)
 	
 	draw_vertex_color(xx, yy, color, alpha)
-	draw_vertex_color(xx + ww, yy, color, alpha)
-	draw_vertex_color(xx + ww, yy + hh, color, alpha)
-	draw_vertex_color(xx, yy + hh, color, alpha)
+	draw_vertex_color(xx + width, yy, color, alpha)
+	draw_vertex_color(xx + width, yy + height, color, alpha)
+	draw_vertex_color(xx, yy + height, color, alpha)
 	draw_vertex_color(xx, yy, color, alpha)
 	
 	draw_primitive_end()

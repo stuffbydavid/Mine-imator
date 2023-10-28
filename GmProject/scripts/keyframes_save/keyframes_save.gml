@@ -12,7 +12,7 @@ function keyframes_save()
 		if (!selected)
 			continue
 		
-		if (tllast != null && timeline != tllast)  
+		if (tllast != null && timeline != tllast)
 			ismodel = true
 		tllast = timeline
 	}

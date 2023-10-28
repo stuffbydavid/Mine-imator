@@ -66,6 +66,22 @@ function list_init_context_menu(name)
 					list_item_add(text_get("contextmenugroupcopyglobalposition"), null, "", null, icons.COPY_ALL, null, action_group_copy_global, true)
 			}
 			
+			// Color options
+			if (context_menu_value_type = e_context_type.COLOR)
+			{
+				list_item_add(text_get("contextmenusetcolor"), null, "", null, icons.PALETTE, icons.CHEVRON_RIGHT_TINY, null, true)
+				list_item_last.context_menu_script = menu_swatches_draw
+				list_item_last.context_menu_name = "contextmenuswatchset"
+				list_item_last.context_menu_width = 204
+				list_item_last.context_menu_height = 0
+				
+				list_item_add(text_get("contextmenumixcolor"), null, "", null, icons.PLUS, icons.CHEVRON_RIGHT_TINY)
+				list_item_last.context_menu_script = menu_swatches_draw
+				list_item_last.context_menu_name = "contextmenuswatchmix"
+				list_item_last.context_menu_width = 204
+				list_item_last.context_menu_height = 0
+			}
+			
 			break
 		}
 		
@@ -95,7 +111,7 @@ function list_init_context_menu(name)
 			if (setting_advanced_mode)
 			{
 				list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
-				list_item_last.context_menu_name = "color"
+				list_item_last.context_menu_name = "colortag"
 				list_item_last.disabled = (context_menu_value = null && tl_edit = null)
 			}
 			
@@ -214,7 +230,7 @@ function list_init_context_menu(name)
 		}
 		
 		// Accent color picker
-		case "color":
+		case "colortag":
 		{
 			list_item_add(text_get("contextmenucolornone"), null, "", null, icons.CLOSE, null, action_tl_color_tag_remove, true)
 			

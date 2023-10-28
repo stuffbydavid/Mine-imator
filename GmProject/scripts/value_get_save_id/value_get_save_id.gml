@@ -6,10 +6,9 @@ function value_get_save_id()
 {
 	var val, def;
 	val = argument[0]
+	def = ""
 	if (argument_count > 1)
 		def = save_id_get(argument[1])
-	else
-		def = ""
 	
 	if (is_string(val))
 	{

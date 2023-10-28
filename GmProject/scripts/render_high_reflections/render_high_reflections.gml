@@ -14,14 +14,14 @@ function render_high_reflections(surf)
 		render_shader_obj = shader_map[?shader_high_raytrace]
 		with (render_shader_obj)
 		{
-		    shader_set(shader)
-		    shader_high_raytrace_set(e_raytrace.REFLECTIONS, surf)
+			shader_set(shader)
+			shader_high_raytrace_set(e_raytrace.REFLECTIONS, surf)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)
 		
 		with (render_shader_obj)
-		    shader_clear()
+			shader_clear()
 		gpu_set_texrepeat(true)
 	}
 	surface_reset_target()

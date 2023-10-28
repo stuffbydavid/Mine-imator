@@ -9,10 +9,10 @@
 
 function model_shape_get_bend_scale(bendstart, bendend, weight, start, bendpos, bend)
 {
-	var bendscale;
-	
 	if (bendpos > bendstart && bendpos < bendend)
 	{
+		var bendscale;
+		
 		if (weight <= 0.5)
 			bendscale = vec3(weight * 2)
 		else
@@ -23,6 +23,8 @@ function model_shape_get_bend_scale(bendstart, bendend, weight, start, bendpos, 
 			bendaxis = X
 		else if (vec3_equals(bend_axis, vec3(false, true, false)))
 			bendaxis = Y
+		else if (vec3_equals(bend_axis, vec3(false, false, true)))
+			bendaxis = Z
 		
 		bendang = abs(bend[bendaxis])
 		

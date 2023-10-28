@@ -36,9 +36,9 @@ function tab_timeline_editor_hierarchy()
 	
 	if (par != app)
 	{
-		tab_control(20)
-		draw_label(text_get("timelineeditorinherit"), dx, dy + 10, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		tab_next()
+		dy += 20
+		draw_label(text_get("timelineeditorinherit") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
+		dy += 8
 		
 		tab_set_collumns(true, floor(content_width/150))
 		
@@ -136,6 +136,15 @@ function tab_timeline_editor_hierarchy()
 			tab_next()	
 		}
 		
+		// Inherit pos
+		if ((tl_edit.type = e_tl_type.CHARACTER || tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL) &&
+			(par.type = e_tl_type.CHARACTER || par.type = e_tl_type.SPECIAL_BLOCK  || par.type = e_tl_type.MODEL))
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritpose", dx, dy, tl_edit.inherit_pose, action_tl_inherit_pose, "timelineeditorinheritposehelp")
+			tab_next()
+		}
+			
 		tab_set_collumns(false)
 		
 		// Scale mode

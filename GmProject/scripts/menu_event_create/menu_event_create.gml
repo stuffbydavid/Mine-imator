@@ -35,6 +35,9 @@ function menu_event_create()
 	menu_floating = false
 	menu_list = null
 	menu_padding = 4
+	menu_busy_prev = ""
+	menu_nav_use = false
+	menu_nav_index = 0
 	
 	app.menu_count++
 	ds_list_add(app.menu_list, id)

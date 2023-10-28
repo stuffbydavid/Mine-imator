@@ -5,7 +5,7 @@
 /// @arg texturenamemap
 /// @arg shapetexnamemap
 /// @desc Fills the given maps with alpha values for the 3D planes,
-///		  with the given resource selected as a texture.
+/// with the given resource selected as a texture.
 
 function model_part_fill_shape_alpha_map(part, alphamap, res, texnamemap, shapetexnamemap)
 {

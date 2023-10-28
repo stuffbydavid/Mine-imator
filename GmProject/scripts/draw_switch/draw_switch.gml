@@ -7,24 +7,11 @@
 /// @arg [tip
 /// @arg [disabled]]
 
-function draw_switch()
+function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
 {
-	var name, xx, yy, active, script, tip, disabled;
 	var text, switchx, switchy, w, h, pressed, thumbgoal;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	active = argument[3]
-	script = argument[4]
-	tip = ""
-	disabled = false
+	
 	text = text_get(name)
-	
-	if (argument_count > 5)
-		tip = argument[5]
-	
-	if (argument_count > 6)
-		disabled = argument[6]
 	
 	w = dw
 	h = ui_small_height
@@ -43,10 +30,10 @@ function draw_switch()
 	
 	if (mouseon)
 	{
-	    if (mouse_left || mouse_left_released)
-	        pressed = true
+		if (mouse_left || mouse_left_released)
+			pressed = true
 		
-	    mouse_cursor = cr_handpoint
+		mouse_cursor = cr_handpoint
 	}
 	
 	if (pressed)

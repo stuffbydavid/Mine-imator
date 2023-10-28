@@ -17,6 +17,7 @@ function project_save_as()
 	log("Saving project as new", dirname)
 	
 	project_name = popup_saveas.tbx_name.text
+	project_author = popup_saveas.tbx_author.text
 	project_description = popup_saveas.tbx_description.text
 	
 	load_folder = project_folder

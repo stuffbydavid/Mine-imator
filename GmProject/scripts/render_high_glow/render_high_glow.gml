@@ -2,14 +2,9 @@
 /// @arg basesurf
 /// @arg [falloff]
 
-function render_high_glow()
+function render_high_glow(prevsurf, glowfalloff = false)
 {
-	var prevsurf, glowfalloff, glowcolorsurf, glowsurf, resultsurf;
-	prevsurf = argument[0]
-	glowfalloff = false
-	
-	if (argument_count > 1)
-		glowfalloff = argument[1]
+	var glowcolorsurf, glowsurf, resultsurf;
 	
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)

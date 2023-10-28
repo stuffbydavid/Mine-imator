@@ -88,7 +88,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 				else
 					sb.value_goal += ((mouse_y < yy + barpos) ? -size : size) / 4
 				
-	            sb.value_goal = snap(sb.value_goal, sb.snap_value)
+				sb.value_goal = snap(sb.value_goal, sb.snap_value)
 				sb.value = snap(sb.value, sb.snap_value)
 			}
 			
@@ -107,7 +107,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		sb.press = 0
 	
 	// Mouse wheel
-	if (window_busy = "" && content_mouseon)
+	if (window_busy = "" && content_mouseon && !keyboard_check(vk_control))
 	{	
 		if (window_scroll_focus_prev = string(sb))
 		{
@@ -148,8 +148,15 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		}
 	}
 	
-	sb.value = floor(clamp(sb.value, 0, maxsize - size))
-	sb.value_goal = floor(clamp(sb.value_goal, 0, maxsize - size))
+	sb.value = round(clamp(sb.value, 0, maxsize - size))
+	
+	if (!sb.zoomable || (sb = timeline.hor_scroll && timeline_zoom = timeline_zoom_goal))
+		sb.value_goal = round(clamp(sb.value_goal, 0, maxsize - size))
+	
+	sb.value_goal = max(sb.value_goal, 0)
+	
+	if (window_focus = string(sb) && window_busy = "scrollbar")
+		sb.value_goal = sb.value
 	
 	barpos = min(size - barsize, floor(sb.value * (size / maxsize)))
 	pressed = (window_busy = "scrollbar" && window_focus = string(sb))

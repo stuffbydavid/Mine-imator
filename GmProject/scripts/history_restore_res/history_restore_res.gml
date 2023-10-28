@@ -204,6 +204,15 @@ function history_restore_res(save)
 			}
 		}
 		
+		for (var s = 0; s < save.usage_tl_glint_tex_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_glint_tex_save_id[s]))
+			{
+				glint_tex.count--
+				glint_tex = res
+			}
+		}
+		
 		// Restore background usage
 		if (save.usage_background_image)
 			app.background_image = res

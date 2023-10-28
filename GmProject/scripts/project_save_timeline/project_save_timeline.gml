@@ -48,9 +48,9 @@ function project_save_timeline()
 			{
 				json_save_var("pattern_type", pattern_type)
 				
-				var colorindex = ds_list_find_index(minecraft_color_list, pattern_base_color);
-				if (colorindex > -1)
-					json_save_var("pattern_base_color", minecraft_color_name_list[|colorindex])
+				var color = ds_map_find_key(minecraft_swatch_dyes.map, pattern_base_color);
+				if (color != undefined)
+					json_save_var("pattern_base_color", color)
 				else
 					json_save_var("pattern_base_color", "white")
 				
@@ -69,7 +69,7 @@ function project_save_timeline()
 					json_save_array_start("pattern_color_list")
 					
 						for (var c = 0; c < array_length(pattern_color_list); c++)
-							json_save_array_value(minecraft_color_name_list[|ds_list_find_index(minecraft_color_list, pattern_color_list[c])])
+							json_save_array_value(ds_map_find_key(minecraft_swatch_dyes.map, pattern_color_list[c]))
 					
 					json_save_array_done()
 				}
@@ -127,6 +127,7 @@ function project_save_timeline()
 				json_save_var_bool("rot_point", inherit_rot_point)
 				json_save_var_bool("glow_color", inherit_glow_color)
 				json_save_var_bool("select", inherit_select)
+				json_save_var_bool("pose", inherit_pose)
 			json_save_object_done()
 			
 			json_save_var_bool("scale_resize", scale_resize)
@@ -148,6 +149,11 @@ function project_save_timeline()
 			json_save_var_bool("glow", glow)
 			json_save_var_bool("glow_texture", glow_texture)
 			json_save_var_bool("only_render_glow", only_render_glow)
+			json_save_var("glint_mode", glint_mode)
+			json_save_var("glint_scale", glint_scale)
+			json_save_var("glint_speed", glint_speed)
+			json_save_var("glint_strength", glint_strength)
+			json_save_var_save_id("glint_tex", glint_tex)
 			json_save_var_bool("fog", fog)
 			
 			if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))

@@ -19,9 +19,13 @@ function project_load_background(map)
 	
 	background_sky_sun_tex.count--
 	background_sky_sun_tex = value_get_save_id(map[?"sky_sun_tex"], background_sky_sun_tex)
+	background_sky_sun_angle = value_get_real(map[?"sky_sun_angle"], background_sky_sun_angle)
+	background_sky_sun_scale = value_get_real(map[?"sky_sun_scale"], background_sky_sun_scale)
 	background_sky_moon_tex.count--
 	background_sky_moon_tex = value_get_save_id(map[?"sky_moon_tex"], background_sky_moon_tex)
 	background_sky_moon_phase = value_get_real(map[?"sky_moon_phase"], background_sky_moon_phase)
+	background_sky_moon_angle = value_get_real(map[?"sky_moon_angle"], background_sky_moon_angle)
+	background_sky_moon_scale = value_get_real(map[?"sky_moon_scale"], background_sky_moon_scale)
 	
 	background_sky_time = value_get_real(map[?"sky_time"], background_sky_time)
 	background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
@@ -125,7 +129,7 @@ function project_load_background(map)
 	background_fog_sky = value_get_real(map[?"fog_sky"], background_fog_sky)
 	background_fog_color_custom = value_get_real(map[?"fog_color_custom"], background_fog_color_custom)
 	background_fog_color = value_get_color(map[?"fog_color"], background_fog_color)
-	background_fog_custom_object_color = value_get_real(map[?"fog_custom_object_color"], background_fog_custom_object_color)
+	background_fog_custom_object_color = value_get_real(map[?"fog_object_color_custom"], background_fog_custom_object_color)
 	background_fog_object_color = value_get_color(map[?"fog_object_color"], background_fog_object_color)
 	background_fog_distance = value_get_real(map[?"fog_distance"], background_fog_distance)
 	background_fog_size = value_get_real(map[?"fog_size"], background_fog_size)

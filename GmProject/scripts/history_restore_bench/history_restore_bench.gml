@@ -9,7 +9,7 @@ function history_restore_bench(save)
 	with (bench_settings)
 	{
 		temp_find_save_ids()
-		temp_update()
+		temp_update(true)
 		
 		// Restore templates
 		temp_creator = app.bench_settings

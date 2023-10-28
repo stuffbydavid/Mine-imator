@@ -22,8 +22,9 @@ function popup_pattern_editor_draw()
 	// Add layer
 	if (draw_button_label("patterneditoraddlayer", dx, dy, listw, icons.PLUS, e_button.SECONDARY))
 	{
-		ds_list_add(popup.pattern_list_edit, minecraft_pattern_list[|1])
-		ds_list_add(popup.pattern_color_list_edit, c_minecraft_black)
+		var pt = 1 + irandom(ds_list_size(minecraft_pattern_list) - 2);
+		ds_list_add(popup.pattern_list_edit, minecraft_pattern_list[|pt])
+		ds_list_add(popup.pattern_color_list_edit, minecraft_swatch_dyes.colors[irandom(array_length(minecraft_swatch_dyes.colors) - 1)])
 		popup.update = true
 	}
 	

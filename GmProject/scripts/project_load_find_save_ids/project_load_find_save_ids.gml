@@ -194,6 +194,10 @@ function project_load_find_save_ids()
 		if (value_default[e_value.TEXTURE_NORMAL_OBJ] != null)
 			value_default[e_value.TEXTURE_NORMAL_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_NORMAL_OBJ]])
 		
+		// Glint
+		glint_tex = save_id_find(save_id_map[?glint_tex])
+		glint_tex.count++
+		
 		// Set part list
 		if (part_list != null)
 			for (var i = 0; i < ds_list_size(part_list); i++)
@@ -298,9 +302,9 @@ function project_load_find_save_ids()
 				tl_update_hide()
 	
 	// Viewport cameras
-	if (view_main.camera != -4 && view_main.camera != -5)
+	if (view_main.camera != -4 && view_main.camera != -5 && !instance_exists(view_main.camera))
 		view_main.camera = save_id_find(view_main.camera)
 	
-	if (view_second.camera != -4 && view_second.camera != -5)
+	if (view_second.camera != -4 && view_second.camera != -5 && !instance_exists(view_second.camera))
 		view_second.camera = save_id_find(view_second.camera)
 }

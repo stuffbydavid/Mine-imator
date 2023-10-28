@@ -8,6 +8,9 @@ function render_world_tl_reset()
 	shader_texture_filter_linear = false
 	shader_texture_filter_mipmap = false
 	
+	shader_texture_width = 0
+	shader_texture_height = 0
+	
 	shader_blend_color = c_white
 	shader_blend_alpha = 1
 	
@@ -17,11 +20,11 @@ function render_world_tl_reset()
 	shader_uniform_color_ext = 0
 	shader_uniform_rgb_add = c_black
 	shader_uniform_hsb_add = c_black
-    shader_uniform_rgb_sub = c_black
-    shader_uniform_hsb_sub = c_black
-    shader_uniform_hsb_mul = c_white
-    shader_uniform_mix_color = c_black
-    shader_uniform_mix_percent = 0
+	shader_uniform_rgb_sub = c_black
+	shader_uniform_hsb_sub = c_black
+	shader_uniform_hsb_mul = c_white
+	shader_uniform_mix_color = c_black
+	shader_uniform_mix_percent = 0
 	
 	render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
 	render_set_uniform_color("uRGBAdd", shader_uniform_rgb_add, 1)
@@ -62,9 +65,9 @@ function render_world_tl_reset()
 	shader_uniform_sss_blue = 1
 	shader_uniform_sss_color = c_white
 	render_set_uniform("uSSS", shader_uniform_sss)
-    render_set_uniform_vec3("uSSSRadius", shader_uniform_sss_red,
-                                          shader_uniform_sss_green,
-                                          shader_uniform_sss_blue)
+	render_set_uniform_vec3("uSSSRadius", shader_uniform_sss_red,
+										  shader_uniform_sss_green,
+										  shader_uniform_sss_blue)
 	render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0) 
 	
 	// Wind
@@ -72,8 +75,11 @@ function render_world_tl_reset()
 	
 	// Glow
 	shader_uniform_glow = false
-    shader_uniform_glow_texture = false
-    shader_uniform_glow_color = c_white
+	shader_uniform_glow_texture = false
+	shader_uniform_glow_color = c_white
+	
+	// Glint
+	render_set_uniform_int("uGlintEnabled", 0)
 	
 	render_blend_prev = null
 	render_alpha_prev = null

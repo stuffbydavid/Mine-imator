@@ -10,11 +10,11 @@ function block_set_chest()
 	switch (type)
 	{
 		case "single":	break
-		case "right":	double = "true";  break
+		case "right":	double = "true"; break
 		case "left":	return null
 		case "legacy":
 		{
-			if (block_current.name ="ender_chest")
+			if (block_current.name = "ender_chest")
 				break
 				
 			// Determine type from adjacent chest

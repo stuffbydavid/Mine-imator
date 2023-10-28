@@ -16,42 +16,9 @@
 /// @arg [disabled
 /// @arg [tip]]]]
 
-function draw_dragger()
+function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth = null, showcaption = true, disabled = false, tip = "")
 {
-	var name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth, showcaption, disabled, tip;
 	var caption, hei, fieldx, dragmouseon;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	wid = argument[3]
-	value = argument[4]
-	mul = argument[5]
-	minval = argument[6]
-	maxval = argument[7]
-	def = argument[8]
-	snapval = argument[9]
-	tbx = argument[10]
-	script = argument[11]
-	
-	if (argument_count > 12)
-		capwidth = argument[12]
-	else
-		capwidth = null
-	
-	if (argument_count > 13)
-		showcaption = argument[13]
-	else
-		showcaption = true
-	
-	if (argument_count > 14)
-		disabled = argument[14]
-	else
-		disabled = false
-	
-	if (argument_count > 15)
-		tip = argument[15]
-	else
-		tip = ""
 	
 	hei = ui_small_height
 	

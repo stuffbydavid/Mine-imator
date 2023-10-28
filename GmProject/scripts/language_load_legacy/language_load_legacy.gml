@@ -24,7 +24,7 @@ function language_load_legacy(fn, map)
 			map[?key] = val
 		}
 		
-	    file_text_readln(f);
+		file_text_readln(f);
 	}
 	
 	file_text_close(f)

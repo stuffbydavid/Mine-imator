@@ -21,7 +21,7 @@ function menu_draw()
 		// Animation
 		if (m.menu_ani_type = "hide") //Hide
 		{
-			m.menu_ani -= test_reduced_motion(1, (0.06 * delta))
+			m.menu_ani -= test_reduced_motion(1, (0.1 * delta))
 			if (m.menu_ani <= 0)
 			{
 				m.menu_ani = 0
@@ -32,7 +32,7 @@ function menu_draw()
 		}
 		else if (m.menu_ani_type = "show") //Show
 		{
-			m.menu_ani += test_reduced_motion(1, (0.06 * delta))
+			m.menu_ani += test_reduced_motion(1, (0.1 * delta))
 			if (m.menu_ani >= 1)
 			{
 				m.menu_ani = 1
@@ -72,9 +72,18 @@ function menu_draw()
 		
 		// Drop shadow
 		var shadowy, shadowh;
-		shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
-		shadowh = menuh + m.menu_button_h
-		draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+		if (m.menu_w > m.menu_w_start)
+		{
+			shadowy = yy
+			shadowh = menuh
+			draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+		}
+		else
+		{
+			shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
+			shadowh = menuh + m.menu_button_h
+			draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+		}
 		
 		if (window_busy = "menu" && m.menu_ani_type != "hide" && menu_active)
 			window_busy = ""
@@ -83,6 +92,13 @@ function menu_draw()
 		content_mouseon = app_mouse_box(m.menu_x, yy, m.menu_w, menuh)
 		if (!contentmenu)
 		{
+			// Hacky way to clear scrollbar and revert focus to searchbar when released
+			if (window_focus = string(m.menu_scroll_vertical) && !mouse_left)
+				menu_search_busy = ""
+			
+			if (window_focus = string(m.menu_scroll_horizontal) && !mouse_left)
+				menu_search_busy = ""
+			
 			if (m.menu_scroll_vertical.needed && content_mouseon)
 				window_scroll_focus = string(m.menu_scroll_vertical)
 			
@@ -107,8 +123,11 @@ function menu_draw()
 		menu_wid_draw = lerp(m.menu_w_start, content_width, aniease)
 		
 		content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
+		var menumouseon = app_mouse_box(m.menu_x, m.menu_y, m.menu_w, m.menu_button_h) && (m.menu_type != e_menu.CONTENT && m.menu_type != e_menu.TRANSITION_LIST);
 		
 		var mouseitem = null;
+		var toggledindex = -1;
+		
 		draw_set_font(font_value)
 		switch (m.menu_type)
 		{
@@ -136,16 +155,32 @@ function menu_draw()
 					itemh = m.menu_item_h
 					
 					// Toggle item and update list width
-					if ((m.menu_value = item.value) && !item.toggled)
+					if ((m.menu_value = item.value) && !item.toggled && !m.menu_nav_use)
 					{
 						item.toggled = true
 						updatewidth = true
 					}
 					
-					list_item_draw(item, menu_x_draw, itemy, menu_wid_draw, m.menu_item_h, false, m.menu_margin, -m.menu_scroll_horizontal.value)
+					if (m.menu_nav_use)
+						item.toggled = (j = m.menu_nav_index)
+					else if (j = m.menu_nav_index)
+					{
+						m.menu_nav_index = -1
+						item.toggled = false
+					}
+					
+					if (m.menu_value = item.value)
+						toggledindex = j
+					
+					list_item_draw(item, menu_x_draw, itemy, menu_wid_draw, itemh, false, m.menu_margin, -m.menu_scroll_horizontal.value)
 					
 					if (item.hover)
+					{
 						mouseitem = item
+						
+						if (m.menu_nav_use && mouse_still = 0)
+							m.menu_nav_use = false
+					}
 					
 					yy += m.menu_item_h
 				}
@@ -156,15 +191,12 @@ function menu_draw()
 				if (m.menu_type = e_menu.LIST || m.menu_type = e_menu.LIST_SEAMLESS)
 				{
 					if (updatewidth)
-					{
 						list_update_width(m.menu_list)
-						//m.menu_list.width += 16
-					}
 					
 					var w = m.menu_w;
 					m.menu_w = max(m.menu_list.width + 16, m.menu_w)
 					
-					if ((m.menu_x + m.menu_w > (m.content_x + m.content_width)) && m.menu_x > window_width/2)
+					if ((m.menu_x + w) - m.menu_w > 0)
 						m.menu_x = (m.menu_x + w) - m.menu_w
 				}
 				
@@ -174,7 +206,7 @@ function menu_draw()
 			case e_menu.CONTENT: // Script with content
 			case e_menu.TRANSITION_LIST:
 			{
-				clip_begin(0, content_y, window_width, content_height)
+				clip_begin(menu_x_draw, content_y, window_width, content_height)
 				
 				if (m.menu_type = e_menu.CONTENT)
 				{
@@ -197,11 +229,30 @@ function menu_draw()
 				
 				clip_end()
 				
+				// Content-resize hack if menu is outside the window
+				var j = 0;
+				while ((((m.menu_y - m.menu_height_goal) < 0 && m.menu_flip) || (content_y + m.menu_height_goal) > window_height && !m.menu_flip) && j < 10)
+				{
+					m.menu_w += 32
+					m.menu_x -= 32
+					
+					content_x = 0
+					content_width = 0
+					
+					clip_begin(0, 0, 0, 0)
+					script_execute(m.menu_script, m.menu_x, yy, m.menu_w, m.menu_height)
+					clip_end()
+					
+					m.menu_height_goal = (dy - dy_start) + (24 - 8)
+					j++
+				}
+				
 				if (m.menu_steps = 0)
 				{
 					m.menu_height = m.menu_height_goal
 					
-					if (content_y + m.menu_height > window_height)
+					// Flip!
+					if ((m.menu_y - m.menu_height) > (window_height - (content_y + m.menu_height)))
 						m.menu_flip = true
 				}
 				else
@@ -215,6 +266,31 @@ function menu_draw()
 				
 				break
 			}
+		}
+		
+		// Check keyboard navigation
+		var nav_close = false;
+		if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_down))
+		{
+			if (!m.menu_nav_use)
+			{
+				m.menu_nav_use = true
+				m.menu_nav_index = toggledindex
+			}
+			
+			m.menu_nav_index += keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up)
+			m.menu_nav_index = mod_fix(m.menu_nav_index, m.menu_amount)
+		}
+		
+		if (keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_escape))
+		{
+			if (m.menu_nav_use)
+			{
+				nav_close = true
+				mouseitem = m.menu_list.item[|m.menu_nav_index]
+			}
+			else
+				m.menu_ani_type = "hide"
 		}
 		
 		// Extend timeline dropdown 
@@ -246,13 +322,13 @@ function menu_draw()
 		}
 		
 		// Check click
-		if (!(m.menu_scroll_vertical.needed && m.menu_scroll_vertical.mouseon) && !(m.menu_scroll_horizontal.needed && m.menu_scroll_horizontal.mouseon) && mouse_left_released && menu_active && m.menu_ani_type != "hide")
+		if ((!(m.menu_scroll_vertical.needed && m.menu_scroll_vertical.mouseon) && !(m.menu_scroll_horizontal.needed && m.menu_scroll_horizontal.mouseon) && mouse_left_released && menu_active && m.menu_ani_type != "hide" && menu_search_busy = "") || nav_close)
 		{
 			var close = false;
 			
 			if (contentmenu)
 			{
-				if (!content_mouseon && window_focus = "")
+				if (!content_mouseon && !menumouseon && window_focus = "")
 					close = true
 			}
 			else
@@ -274,10 +350,12 @@ function menu_draw()
 					}
 					
 					app_mouse_clear()
-					close = true
+					
+					if (!keyboard_check(vk_shift))
+						close = true
 				}
 				
-				if (!content_mouseon)
+				if (!content_mouseon && !menumouseon && !nav_close)
 					close = true
 			}
 			
@@ -285,7 +363,7 @@ function menu_draw()
 			{
 				m.menu_ani = 1
 				m.menu_ani_type = "hide"
-				window_busy = (ds_list_size(menu_list) > 1 ? "menu" : "")
+				window_busy = (ds_list_size(menu_list) > 1 ? "menu" : m.menu_busy_prev)
 			}
 		}
 		
@@ -302,6 +380,8 @@ function menu_draw()
 	if (menu_remove != null)
 	{
 		instance_destroy(menu_remove)
+		menu_search_tbx.text = ""
+		menu_search_busy = ""
 		
 		if (ds_list_size(menu_list) = 0)
 			menu_popup = null

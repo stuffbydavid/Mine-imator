@@ -55,7 +55,7 @@ function temp_duplicate()
 		if (text_font != null)
 			text_font.count++
 		
-		temp_update()
+		temp_update(true)
 		
 		if (type = e_temp_type.PARTICLE_SPAWNER)
 		{

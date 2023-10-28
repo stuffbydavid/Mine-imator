@@ -10,7 +10,7 @@ function shader_high_lighting_apply_set(shadows, mask, material)
 	if ((render_shadows || render_ssao) && surface_exists(shadows))
 		texture_set_stage(sampler_map[?"uShadows"], surface_get_texture(shadows))
 	
-	if (render_shadows && surface_exists(render_surface_specular))
+	if (surface_exists(render_surface_specular))
 	{
 		render_set_uniform_int("uSpecularEnabled", true)
 		texture_set_stage(sampler_map[?"uSpecular"], surface_get_texture(render_surface_specular))

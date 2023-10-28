@@ -70,7 +70,6 @@ function tl_value_clamp(vid, val)
 		case e_value.BEND_ANGLE_Z: return clamp(val, -180, 180)
 		case e_value.CAM_FOV: return clamp(val, 1, 170)
 		case e_value.CAM_BLADE_AMOUNT: return clamp(val, 0, 32)
-		case e_value.CAM_BLADE_ANGLE: return clamp(val, 0, 360)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 		case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)
 		case e_value.CAM_EXPOSURE:
@@ -91,13 +90,14 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_WIDTH:
 		case e_value.CAM_HEIGHT: return max(1, val)
 		case e_value.BG_SKY_MOON_PHASE: return clamp(val, 0, 7)
-		case e_value.BG_FOG_DISTANCE: return clamp(val, 10, app.project_render_distance)
+		case e_value.BG_FOG_DISTANCE:
 		case e_value.BG_FOG_SIZE: return clamp(val, 10, app.project_render_distance)
 		case e_value.BG_FOG_HEIGHT: return clamp(val, 10, 2000)
 		case e_value.BG_WIND_SPEED: return clamp(val, 0, 1)
 		case e_value.BG_WIND_STRENGTH: return clamp(val, 0, 8)
 		case e_value.BG_TEXTURE_ANI_SPEED: return max(val, 0)
 		case e_value.SOUND_VOLUME: return clamp(val, 0, 1)
+		case e_value.SOUND_PITCH: return clamp(val, 0.5, 2)
 		case e_value.SOUND_START: return max(val, 0)
 		case e_value.TEXT:
 		case e_value.TEXT_HALIGN:

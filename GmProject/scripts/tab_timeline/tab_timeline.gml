@@ -86,10 +86,10 @@ function tab_timeline()
 		timeline_insert_pos = timeline_marker
 	
 	// Mouse
-	mouseinmarkers = (app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mouseintl = (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mouseinbar = (app_mouse_box(barx, bary, barw, barh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	mouseinmarkers = (app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	mouseintl = (app_mouse_box(tlx, tly, tlw, tlh, "place") && !mouseinmarkers && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	mouseinbar = (app_mouse_box(barx, bary, barw, barh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	mousetl = floor((mouse_y - tly + (round(timeline.ver_scroll.value / itemh) * itemh)) / itemh)
 	mousetlname = null
 	mousekf = null
@@ -110,7 +110,7 @@ function tab_timeline()
 	// Timeline header
 	var timex, timelabel;
 	timex = headerx + 8
-	content_mouseon = app_mouse_box(headerx, headery, headerw, headerh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+	content_mouseon = app_mouse_box(headerx, headery, headerw, headerh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Current time
 	draw_set_font(font_heading)
@@ -258,7 +258,7 @@ function tab_timeline()
 	buttonsx += 24
 	
 	timeline_settings_right_w = (buttonsx - buttonsxstart)
-	content_mouseon = app_mouse_box(barx, bary, barw, barh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+	content_mouseon = app_mouse_box(barx, bary, barw, barh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Empty
 	if (project_file != "" && !instance_exists(obj_timeline) && content_height > 100 && (ds_list_size(timeline_marker_list) = 0))
@@ -482,10 +482,11 @@ function tab_timeline()
 		
 		for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
 		{
-			var kf, mouse, sound;
+			var kf, mouse, sound, pitch;
 			kf = tl.keyframe_list[|k]
 			dx = tlx + floor(kf.position * timeline_zoom - timeline.hor_scroll.value)
 			sound = kf.value[e_value.SOUND_OBJ]
+			pitch = kf.value[e_value.SOUND_PITCH]
 			
 			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
 			{
@@ -494,7 +495,7 @@ function tab_timeline()
 				if (dx > tlx + tlw)
 					break
 				
-				soundlen = max(0, sound.sound_samples / sample_rate - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END])
+				soundlen = max(0, pitch == 0 ? 0 : ((sound.sound_samples / sample_rate / pitch) - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END]))
 				
 				boxx = max(tlx, dx)
 				boxw = min(tlw, soundlen * project_tempo * timeline_zoom - max(0, tlx - dx))
@@ -521,7 +522,7 @@ function tab_timeline()
 				for (var xx = 0; xx < boxw; xx++)
 				{
 					var ind, maxv, minv, miny, maxy;
-					ind = ((startsample + floor((xx / boxw) * samplesshow)) mod sound.sound_samples) div prec
+					ind = (((startsample * pitch) + floor((xx / boxw) * samplesshow) * pitch) mod sound.sound_samples) div prec
 					maxv = sound.sound_max_sample[ind]
 					minv = sound.sound_min_sample[ind]
 					if (xx > 0 && xx mod 500 = 0) // GM bug
@@ -538,13 +539,13 @@ function tab_timeline()
 				}
 				draw_primitive_end()
 				
-				mouse = app_mouse_box(boxx - timeline_zoom / 2, dy, boxw + timeline_zoom * 2, itemh)
+				mouse = app_mouse_box(boxx - timeline_zoom / 2, dy, boxw + timeline_zoom * 2, itemh, "place")
 				
 				if (kf.selected && boxw > 20)
 				{
-					if (app_mouse_box(boxx, dy, 5, itemh) && mouseintl && !tl.lock)
+					if (app_mouse_box(boxx, dy, 5, itemh, "place") && mouseintl && !tl.lock)
 						mousekfstart = kf
-					else if (app_mouse_box(boxx + boxw - 5, dy, 5, itemh) && mouseintl && !tl.lock)
+					else if (app_mouse_box(boxx + boxw - 5, dy, 5, itemh, "place") && mouseintl && !tl.lock)
 						mousekfend = kf
 				}
 			}
@@ -687,9 +688,9 @@ function tab_timeline()
 	if (markerbarh != 0)
 	{
 		var barmouseon, markx, markeditx, marky, markw, markh, marker, color, name, markermouseon, markermouseonx;
-		barmouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh)
+		barmouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh, "place")
 		markermouseon = null
-		content_mouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+		content_mouseon = app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 		
 		draw_set_font(font_label)
 		draw_set_halign(fa_left)
@@ -738,7 +739,7 @@ function tab_timeline()
 			draw_box(markx, marky, markw, markh, false, color, 1)
 			draw_text(markx + 4, marky + 16, name)
 			
-			if (barmouseon && app_mouse_box(markx, marky, markw, markh))
+			if (barmouseon && app_mouse_box(markx, marky, markw, markh, "place"))
 			{
 				mouse_cursor = cr_size_we
 				markermouseon = marker
@@ -808,7 +809,7 @@ function tab_timeline()
 		}
 	}
 	
-	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Timeline list
 	var tl, buttonsize, buttonpad;
@@ -849,6 +850,7 @@ function tab_timeline()
 	
 	var itemmaxw;
 	tlmaxw = 0
+	
 	for (var t = timeline_list_first; t < ds_list_size(tree_visible_list); t++)
 	{
 		if (dy > listy + listh)
@@ -866,10 +868,40 @@ function tab_timeline()
 		// Hovering
 		if (itemhover)
 			mouse_cursor = cr_handpoint
+			
+		if (itemhover && (window_busy = "" || window_busy = "place"))
+			place_view_mouse = "timeline"
+		
+		// Parent hovering item to selected timeline
+		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
+		{
+			with (history[0])
+			{
+				parent = tl
+				value_default[e_value.POS_X] = 0
+				value_default[e_value.POS_Y] = 0
+				value_default[e_value.POS_Z] = 0
+			}
+			
+			place_tl.value_default[e_value.POS_X] = 0
+			place_tl.value_default[e_value.POS_Y] = 0
+			place_tl.value_default[e_value.POS_Z] = 0
+			place_tl.value[e_value.POS_X] = 0
+			place_tl.value[e_value.POS_Y] = 0
+			place_tl.value[e_value.POS_Z] = 0
+			
+			with(place_tl)
+				tl_set_parent(tl)
+				
+			tl_update_list()
+			tl_update_matrix()
+			render_samples = -1
+			app_stop_place()
+		}
 		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
-		else if (tl.selected || itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
+		else if (tl.selected || itemhover || tl = context_menu_value || ((window_busy = "timelineclick") && timeline_select = tl) || ((window_busy = "timelineclick" && window_busy = "place") && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 		
 		xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))
@@ -890,7 +922,7 @@ function tab_timeline()
 					action_tl_hide(tl)
 			}
 			
-			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 		}
 		xx -= (buttonsize + 4) * (itemhover || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost))
 		itemmaxw += buttonsize + buttonpad
@@ -901,7 +933,7 @@ function tab_timeline()
 			if (draw_button_icon("timelinelock" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.lock, tl.lock ? icons.LOCK_SMALL : icons.UNLOCK_SMALL, null, false, (tl.lock ? "tooltiptlunlock" : "tooltiptllock")))
 				action_tl_lock(tl)
 			
-			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 		}
 		itemmaxw += buttonsize + buttonpad
 		
@@ -915,7 +947,7 @@ function tab_timeline()
 				if (draw_button_icon("timelineghosttl" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.ghost, icons.GHOST_SMALL, null, false, (tl.ghost ? "tooltiptlunghost" : "tooltiptlghost")))
 					action_tl_ghost(tl)
 				
-				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 			}
 		}
 		itemmaxw += buttonsize + buttonpad
@@ -928,7 +960,7 @@ function tab_timeline()
 			if (draw_button_icon("timelineselectkeyframes" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, false, icons.KEYFRAME_SMALL, null, false, "contextmenutlselectkeyframes"))
 				action_tl_select_keyframes(tl)
 			
-			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 		}
 		
 		itemmaxw += buttonsize + buttonpad
@@ -978,7 +1010,7 @@ function tab_timeline()
 				if (draw_button_icon("timelineexpand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand"), spr_chevron_ani))
 					action_tl_extend(tl)
 				
-				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize)
+				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 				
 				// Only offset x if button is present
 				if (setting_timeline_compact)
@@ -1108,14 +1140,14 @@ function tab_timeline()
 			window_busy = ""
 			
 			// Detect if mouse is on icon or name
-			if (app_mouse_box(xx - 28, itemy, string_width(name) + 28, itemh))
+			if (app_mouse_box(xx - 28, itemy, string_width(name) + 28, itemh, "place"))
 				mousetlname = tl
 			
 			window_busy = "timelineclick"
 		}
 		
 		// Rename
-		if (mouse_left_double_pressed && app_mouse_box(xx, itemy, string_width(name), itemh))
+		if (mouse_left_double_pressed && app_mouse_box(xx, itemy, string_width(name), itemh, "place"))
 		{
 			window_busy = string(timeline.tbx_rename)
 			window_focus = window_busy
@@ -1133,7 +1165,7 @@ function tab_timeline()
 			draw_set_font(font_caption)
 			
 			// Check contents array and display the icon/amount
-			for (var i = 0; i < e_tl_type.AMOUNT - 1; i++)
+			for (var i = 0; i < e_tl_type.amount - 1; i++)
 			{
 				if (tl.tree_contents[i] = 0)
 					continue
@@ -1215,7 +1247,7 @@ function tab_timeline()
 	scrollbar_draw(timeline.hor_scroll_tl, e_scroll.HORIZONTAL, listx, listy + listh, listw, tlmaxw)
 	
 	// Resize list
-	if (app_mouse_box(tlx - 5, tly - barh, 5, content_height - headerh))
+	if (app_mouse_box(tlx - 5, tly - barh, 5, content_height - headerh, "place"))
 	{
 		mouse_cursor = cr_size_we
 		if (mouse_left_pressed)
@@ -1247,7 +1279,24 @@ function tab_timeline()
 	
 	// Context menu
 	if (window_busy = "" && mouseintl)
-		context_menu_area(content_x, content_y, content_width, content_height, "timeline", null, null, null, null)
+	{
+		if (keyboard_check(vk_shift) && timeline_settings_keyframes)
+		{
+			if (app_mouse_box(content_x, content_y, content_width, content_height) && mouse_right_released)
+			{
+				menu_settings_set(mouse_x, mouse_y, "timelinelkeyframetransitions", 0)
+				settings_menu_script = menu_settings_transitions
+				settings_menu_w = 244
+				settings_menu_h = 438
+				settings_menu_quick = true
+				
+				if (settings_menu_y + settings_menu_h + 32 > window_height)
+					settings_menu_y = (window_height - (settings_menu_h + 32))
+			}
+		}
+		else
+			context_menu_area(content_x, content_y, content_width, content_height, "timeline", null, null, null, null)
+	}
 	
 	// Sound resize
 	if (mousekfstart)
@@ -1283,7 +1332,7 @@ function tab_timeline()
 			{
 				if (mousekf.selected)
 				{
-					if (keyboard_check(vk_shift)) // Deselect
+					if (keyboard_check(vk_control)) // Deselect
 					{
 						action_tl_keyframe_deselect(mousekf.timeline, mousekf)
 						app_mouse_clear()
@@ -1494,14 +1543,14 @@ function tab_timeline()
 	}
 	
 	// Bar
-	if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, barh - 5 * (tab.panel = panel_map[?"bottom"])) && !popup_mouseon && !context_menu_mouseon && !toast_mouseon)
+	if (app_mouse_box(barx, bary + 5 * (tab.panel = panel_map[?"bottom"]), barw, barh - 5 * (tab.panel = panel_map[?"bottom"]), "place") && !popup_mouseon && !context_menu_mouseon && !toast_mouseon)
 	{
 		mouse_cursor = cr_handpoint
 		
 		// Change region
 		if (timeline_region_start != null)
 		{
-			if (app_mouse_box(barx + regionx1 - 8, bary, 8, barh))
+			if (app_mouse_box(barx + regionx1 - 8, bary, 8, barh, "place"))
 			{
 				mouse_cursor = cr_size_we
 				if (mouse_left_pressed)
@@ -1511,7 +1560,7 @@ function tab_timeline()
 					timeline_region_pos = timeline_region_end
 				}
 			}
-			else if (app_mouse_box(barx + regionx2, bary, 8, barh))
+			else if (app_mouse_box(barx + regionx2, bary, 8, barh, "place"))
 			{
 				mouse_cursor = cr_size_we
 				if (mouse_left_pressed)
@@ -1623,11 +1672,12 @@ function tab_timeline()
 		if (timeline_zoom_goal > 1)
 			timeline_zoom_goal = round(timeline_zoom_goal)
 		
-		// Convert current and new mouse position to frames, then get difference and add it
-		timeline.hor_scroll.value_goal = round(
-			timeline.hor_scroll.value +
-			((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal
-		) 
+		timeline.hor_scroll.value_goal = min(
+			// Prevent zooming into timeline past end of animation or playback marker, whichever is furthest
+			max((timeline_length * timeline_zoom_goal), (timeline_marker * timeline_zoom_goal)),
+			// Convert current and new mouse position to frames, then get difference and add it
+			round(timeline.hor_scroll.value + ((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal)
+		)
 	}
 	
 	// Move view
@@ -1649,7 +1699,7 @@ function tab_timeline()
 	}
 	
 	// Move view when selecting
-	if (window_busy = "timelinemove" || window_busy = "timelineselect")
+	if (window_busy = "timelinemove" || window_busy = "timelineselect" || window_busy = "place")
 	{
 		if (mouse_y < tly)
 			timeline.ver_scroll.value -= 8
@@ -1693,7 +1743,7 @@ function tab_timeline()
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 	}
 	
-	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Vertical scrollbar
 	if (tlw > 16)

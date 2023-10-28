@@ -9,6 +9,8 @@ function context_menu_draw()
 	{
 		context_menu_ani = ""
 		context_menu_close()
+		
+		window_busy = context_menu_busy_prev
 		return 0
 	}
 	
@@ -42,15 +44,16 @@ function context_menu_draw()
 			continue
 		
 		if (id = other.context_menu_mouseon_item)
-			hovertime += test_reduced_motion(15, (60 / room_speed))
+			hovertime += test_reduced_motion(6, (60 / room_speed))
 		else
-			hovertime -= test_reduced_motion(15, (60 / room_speed))
+			hovertime -= test_reduced_motion(6, (60 / room_speed))
 		
-		hovertime = clamp(hovertime, 0, 15)
+		hovertime = clamp(hovertime, 0, 6)
 		
-		if (!context_menu_active && hovertime = 15)
+		if (!context_menu_active && hovertime = 6)
 		{
 			context_menu_active = true
+			
 			with (app)
 				context_menu_add_level(other.context_menu_name, other.draw_x, other.draw_y, other)
 		}
@@ -80,8 +83,11 @@ function context_menu_draw()
 		context_menu_ani = "hide"
 	
 	// Out of range, close menu
-	if ((mouse_x < context_menu_min_x - 64) || (mouse_y < context_menu_min_y - 64) || (mouse_x > context_menu_max_x + 64) || (mouse_y > context_menu_max_y + 64))
+	if (context_menu_level_amount > 0 && ((mouse_x < context_menu_min_x - 64) || (mouse_y < context_menu_min_y - 64) || (mouse_x > context_menu_max_x + 64) || (mouse_y > context_menu_max_y + 64)))
+	{
 		context_menu_ani = "hide"
+		context_menu_level[|0].ani = 0
+	}
 	
 	if (window_busy = "" && context_menu_name != "")
 		window_busy = "contextmenu"

@@ -27,8 +27,8 @@ function preview_event_create()
 	preview_reset_view()
 	particle_spawner_init()
 	
-	text_vbuffer = null
-	text_texture = null
+	text_vbuffer = [null, null]
+	text_texture = [null, null]
 	text_string = ""
 	text_res = null
 	text_3d = false

@@ -9,24 +9,12 @@
 /// @arg [tip
 /// @arg sprite]
 
-function list_item_add_action()
+function list_item_add_action(item, name, script, active, value, icon, side, tip = undefined, sprite = null)
 {
-	var item, name, script, active, value, icon, side, tip, sprite, list;
-	item = argument[0]
-	name = argument[1]
-	script = argument[2]
-	active = argument[3]
-	value = argument[4]
-	icon = argument[5]
-	side = argument[6]
-	sprite = null
-	tip = name
+	if (is_undefined(tip))
+		tip = name
 	
-	if (argument_count > 7)
-	{
-		tip = argument[7]
-		sprite = argument[8]
-	}
+	var list;
 	
 	with (item)
 	{

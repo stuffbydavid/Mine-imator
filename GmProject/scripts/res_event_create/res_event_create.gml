@@ -74,6 +74,8 @@ function res_event_create()
 	moonphases_texture = null
 	moon_texture[0] = null
 	clouds_texture = null
+	glint_entity_texture = null
+	glint_item_texture = null
 	
 	item_sheet_texture = null
 	item_sheet_texture_material = null

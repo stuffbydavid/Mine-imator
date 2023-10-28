@@ -2,18 +2,16 @@
 /// @arg [width
 /// @arg height]
 
-function render_watermark_image()
+function render_watermark_image(draw_width = undefined, draw_height = undefined)
 {
-	var draw_width, draw_height, watermark_x, watermark_y, watermark_width, watermark_height;
-	draw_width = render_width
-	draw_height = render_height
+	var watermark_x, watermark_y, watermark_width, watermark_height;
 	watermark_x = 0
 	watermark_y = 0
 	
-	if (argument_count > 0)
+	if (is_undefined(draw_width))
 	{
-		draw_width = argument[0]
-		draw_height = argument[1]
+		draw_width = render_width
+		draw_height = render_height
 	}
 	
 	var sprite, scale, opacity, halign, valign, padding, padx, pady;

@@ -44,7 +44,10 @@ function sortlist_update(slist)
 	
 	// Remove non-matched items from list
 	var check = string_lower(slist.search_tbx.text);
-	if (slist.search && check != "" && (slist != bench_settings.block_list && slist != template_editor.block_list))
+	var modellist = (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.bodypart_model_list ||
+					slist = template_editor.char_list || slist = template_editor.special_block_list || slist = template_editor.bodypart_model_list);
+	var blocklist = (slist = bench_settings.block_list || slist = template_editor.block_list);
+	if (slist.search && check != "" && !blocklist && !modellist)
 	{
 		for (var p = 0; p < ds_list_size(slist.display_list); p++)
 		{
@@ -67,51 +70,33 @@ function sortlist_update(slist)
 			}
 		}
 	}
-	else if (slist.search && check != "" && (slist = bench_settings.block_list || slist = template_editor.block_list)) // If variant types contain name, include base block(Block list)
+	else if (slist.search && check != "" && blocklist) // Check block variants
 	{
 		for (var p = 0; p < ds_list_size(slist.display_list); p++)
 		{
-			var baseblock, match;
-			baseblock = slist.display_list[|p]
+			var name, match;
+			name = slist.display_list[|p]
 			match = false
 			
 			// Variant search
-			if (setting_search_variants)
-			{
-				var blockobj = mc_assets.block_name_map[?baseblock];
-				var variantmatch = false;
-				
-				var statearr = array_copy_1d(blockobj.default_state);
-				var statelen = array_length(statearr);
+			var block = mc_assets.block_name_map[?name];
 		
-				// Search for matching variants
-				for (var i = 0; i < statelen; i += 2)
-				{
-					var state = statearr[i];
-					var statename = text_get("blockstate" + state);
-					
-					var statecurrent = blockobj.states_map[?state];
-					
-					for (var s = 0; s < statecurrent.value_amount; s++)
-					{
-						if (string_count(check, string_lower(minecraft_asset_get_name("blockstatevalue", statecurrent.value_name[s]))) > 0)
-						{
-							variantmatch = true
-							break
-						}
-					}
-					
-					if (string_count(check, string_lower(statename)) > 0)
-						variantmatch = true
-					
-					if (variantmatch)
-						break
-				}
+			// Search for matching variants
+			for (var i = 0; i < array_length(block.default_state) && !match; i += 2)
+			{
+				var state = block.default_state[i];
+				var statecurrent = block.states_map[?state];
 				
-				match = variantmatch
+				for (var s = 0; s < statecurrent.value_amount && !match; s++)
+					if (string_count(check, string_lower(minecraft_asset_get_name("blockstatevalue", statecurrent.value_name[s]))) > 0)
+						match = true
+				
+				if (string_count(check, string_lower(text_get("blockstate" + state))) > 0)
+					match = true
 			}
 			
-			if (!match && string_count(check, string_lower(minecraft_asset_get_name("block", baseblock))) > 0)
+			
+			if (!match && string_count(check, string_lower(minecraft_asset_get_name("block", name))) > 0)
 				match = true
 			
 			if (!match)
@@ -120,6 +105,65 @@ function sortlist_update(slist)
 				p--
 			}
 		}
+	}
+	else if (slist.search && check != "" && modellist) // Check model variants
+	{
+		for (var p = 0; p < ds_list_size(slist.display_list); p++)
+		{
+			var name, match;
+			name = slist.display_list[|p]
+			match = false
+			
+			// Variant search
+			var model = mc_assets.model_name_map[?name];
+			
+			// Search for matching variants
+			for (var i = 0; i < array_length(model.default_state) && !match; i += 2)
+			{
+				var state = model.default_state[i];
+				var statecurrent = model.states_map[?state];
+				
+				for (var s = 0; s < statecurrent.value_amount && !match; s++)
+					if (string_count(check, string_lower(minecraft_asset_get_name("modelstatevalue", statecurrent.value_name[s]))) > 0)
+						match = true
+				
+				if (string_count(check, string_lower(text_get("modelstate" + state))) > 0)
+					match = true
+			}
+			
+			if (!match && string_count(check, string_lower(minecraft_asset_get_name("model", name))) > 0)
+				match = true
+			
+			if (!match)
+			{
+				ds_list_delete(slist.display_list, p)
+				p--
+			}
+		}
+	}
+	
+	// Put name matches first in block/model search
+	if (slist.column_sort = null && slist.search && check != "" && (blocklist || modellist))
+	{
+		var namelist, variantlist;
+		namelist = []
+		variantlist = []
+		
+		for (var i = 0; i < ds_list_size(slist.display_list); i++)
+		{
+			if (string_contains(string_lower(string(sortlist_column_get(slist, slist.display_list[|i], 0))), check))
+				array_add(namelist, slist.display_list[|i])
+			else
+				array_add(variantlist, slist.display_list[|i])
+		}
+		
+		ds_list_clear(slist.display_list)
+		
+		for (var i = 0; i < array_length(namelist); i++)
+			ds_list_add(slist.display_list, namelist[i])
+		
+		for (var i = 0; i < array_length(variantlist); i++)
+			ds_list_add(slist.display_list, variantlist[i])
 	}
 	
 	// Filter results

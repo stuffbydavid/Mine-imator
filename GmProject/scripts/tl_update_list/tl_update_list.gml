@@ -34,7 +34,7 @@ function tl_update_list()
 		// Clear
 		level = tllevel
 		level_display = []
-		tree_contents = array_create(e_tl_type.AMOUNT - 1)
+		tree_contents = array_create(e_tl_type.amount - 1)
 		
 		ds_list_clear(tree_list_filter)
 		
@@ -43,6 +43,8 @@ function tl_update_list()
 		
 		if (color_tag != null)
 			app.tree_update_color = color_tag
+		
+		color_tag_inherit = app.tree_update_color
 		
 		// Only add visible timelines
 		if (tl_update_list_filter(id))

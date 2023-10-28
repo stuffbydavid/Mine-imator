@@ -12,8 +12,12 @@ function project_save_background()
 		json_save_var("image_rotation", background_image_rotation)
 		
 		json_save_var_save_id("sky_sun_tex", background_sky_sun_tex)
+		json_save_var("sky_sun_angle", background_sky_sun_angle)
+		json_save_var("sky_sun_scale", background_sky_sun_scale)
 		json_save_var_save_id("sky_moon_tex", background_sky_moon_tex)
 		json_save_var("sky_moon_phase", background_sky_moon_phase)
+		json_save_var("sky_moon_angle", background_sky_moon_angle)
+		json_save_var("sky_moon_scale", background_sky_moon_scale)
 		
 		json_save_var("sky_time", background_sky_time)
 		json_save_var("sky_rotation", background_sky_rotation)

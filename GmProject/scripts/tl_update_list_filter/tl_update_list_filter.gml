@@ -13,7 +13,7 @@ function tl_update_list_filter(tl)
 		return false
 	
 	// Filtered color
-	if (app.tree_update_color != null && app.timeline_hide_color_tag[app.tree_update_color])
+	if (tl.color_tag_inherit != null && app.timeline_hide_color_tag[tl.color_tag_inherit])
 		return false
 	
 	return true

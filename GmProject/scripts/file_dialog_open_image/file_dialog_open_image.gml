@@ -3,5 +3,5 @@
 
 function file_dialog_open_image()
 {
-	return file_dialog_open(text_get("filedialogopenimage") + " (*.png; *.jpg)|*.png;*.jpg;*.jpeg;", "", "", text_get("filedialogopenimagecaption"))
+	return file_dialog_open(text_get("filedialogopenimage") + " (*.png; *.jpg; *.dat)|*.png;*.jpg;*.jpeg;*.dat;", "", "", text_get("filedialogopenimagecaption"))
 }

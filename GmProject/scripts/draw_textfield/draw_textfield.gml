@@ -10,32 +10,12 @@
 /// @arg [labelpos
 /// @arg [error]]]
 
-function draw_textfield()
+function draw_textfield(name, xx, yy, w, h, textbox, script, placeholder = "", labelpos = "top", err = false)
 {
-	var name, xx, yy, w, h, textbox, script, placeholder, labelpos, err, fieldy;
-	var update, capwidth;
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	w = argument[3]
-	h = argument[4]
-	textbox = argument[5]
-	script = argument[6]
-	placeholder = ""
-	labelpos = "top"
-	err = false
+	var capwidth, fieldy;
 	
 	capwidth = 0
 	fieldy = yy
-	
-	if (argument_count > 7)
-		placeholder = argument[7]
-	
-	if (argument_count > 8)
-		labelpos = argument[8]
-	
-	if (argument_count > 9)
-		err = argument[9]
 	
 	draw_set_font(font_label)
 	
@@ -54,7 +34,7 @@ function draw_textfield()
 		return 0
 	}
 	
-	update = draw_inputbox(name, xx + capwidth, fieldy, w - capwidth, h, placeholder, textbox, script, false, err)
+	var update = draw_inputbox(name, xx + capwidth, fieldy, w - capwidth, h, placeholder, textbox, script, false, err)
 	
 	// Use microanimation from inputbox to determine color
 	draw_set_font(font_label)

@@ -72,9 +72,10 @@ function action_lib_model_tex(res)
 			model_tex.count++
 		
 		if (pattern_type != "")
-			array_add(pattern_update, temp_edit)
+			array_add(pattern_update, id)
 		
 		temp_update_model_shape()
+		temp_update_armor(id)
 	}
 	
 	lib_preview.update = true
