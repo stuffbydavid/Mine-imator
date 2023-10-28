@@ -74,7 +74,8 @@ function enums()
 		FORMAT_123			= 5,
 		FORMAT_128			= 6,
 		FORMAT_129			= 7,
-		FORMAT_200			= 8
+		FORMAT_200			= 8,
+		FORMAT_201			= 9
 	}
 	
 	enum e_minecraft_pack

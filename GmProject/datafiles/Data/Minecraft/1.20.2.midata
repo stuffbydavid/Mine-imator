@@ -1,7 +1,7 @@
 {
 	"version": "1.20.2",
 	"patch": 0,
-	"format": 8,
+	"format": 9,
 	"characters": [
 		{
 			"name": "human",
