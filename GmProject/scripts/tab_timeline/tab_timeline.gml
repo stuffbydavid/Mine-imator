@@ -1698,13 +1698,15 @@ function tab_timeline()
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 	}
 	
+	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+	
 	// Move view when selecting
-	if (window_busy = "timelinemove" || window_busy = "timelineselect" || window_busy = "place")
+	if (window_busy = "timelinemove" || window_busy = "timelineselect" || (window_busy = "place" && mouseinnames))
 	{
-		if (mouse_y < tly)
+		if (mouse_y < tly + 6)
 			timeline.ver_scroll.value -= 8
 		
-		if (mouse_y > tly + tlh)
+		if (mouse_y > tly + tlh - 6)
 			timeline.ver_scroll.value += 8
 		
 		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
@@ -1729,10 +1731,10 @@ function tab_timeline()
 		
 		if (window_busy != "timelinemovemarker")
 		{
-			if (mouse_y < tly)
+			if (mouse_y < tly + 6)
 				timeline.ver_scroll.value -= 8
 			
-			if (mouse_y > tly + tlh)
+			if (mouse_y > tly + tlh - 6)
 				timeline.ver_scroll.value += 8
 		}
 		
@@ -1742,8 +1744,6 @@ function tab_timeline()
 		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 	}
-	
-	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
 	// Vertical scrollbar
 	if (tlw > 16)

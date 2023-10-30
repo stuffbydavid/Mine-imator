@@ -111,10 +111,6 @@ function app_update_place()
 		app_stop_place()
 	}
 	
-	if (keyboard_check_pressed(vk_escape))
-	{
-	}
-	
 	place_view_mouse = null
 }
 
