@@ -2587,6 +2587,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"oasis.png","CopyToMask":-1,"filePath":"datafiles/Data/Splashes",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.0.1.31",
+    "IDEVersion": "2022.0.2.51",
   },
 }
