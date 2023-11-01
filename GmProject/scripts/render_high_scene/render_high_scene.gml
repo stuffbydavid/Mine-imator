@@ -28,20 +28,15 @@ function render_high_scene()
 	surface_reset_target()
 	
 	// Add to specular
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
 	surface_set_target(render_surface_specular)
 	{
-		// Clear if shadows aren't enabled
-		if (!render_shadows)
-			draw_clear_alpha(c_black, 0)
-		
 		gpu_set_blendmode(bm_add)
 		draw_surface(masksurf, 0, 0)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	
-	if (surface_exists(render_surface_specular) && render_pass = e_render_pass.SPECULAR)
+	if (render_pass = e_render_pass.SPECULAR)
 		render_pass_surf = surface_duplicate(masksurf)
 	
 	// Render lighting mask for background

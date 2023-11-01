@@ -6,12 +6,20 @@ function render_high_passes()
 	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
 	render_surface_emissive = surface_require(render_surface_emissive, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
 	
 	if (render_depth_normals)
 	{
 		render_surface_depth = surface_require(render_surface_depth, render_width, render_height)
 		render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, true)
 	}
+	
+	// Clear specular
+	surface_set_target(render_surface_specular)
+	{
+		draw_clear_alpha(c_black, 1)
+	}
+	surface_reset_target()
 	
 	// Diffuse data
 	surface_set_target(render_surface_diffuse)
