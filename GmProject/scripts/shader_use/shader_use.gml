@@ -72,7 +72,8 @@ function shader_use()
 		var tex = mc_res.glint_entity_texture;
 		texture_set_stage(sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 		gpu_set_texrepeat_ext(sampler_map[?"uGlintTexture"], true)
-		gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
+		if (platform_get() == e_platform.WINDOWS) // OpenGL bug workaround
+			gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
 		
 		render_set_uniform_vec2("uGlintSize", sprite_get_width(tex)*2, sprite_get_height(tex)*2)
 		render_set_uniform_vec2("uGlintOffset", app.background_time * (0.000625) * app.project_render_glint_speed, app.background_time * (0.00125) * app.project_render_glint_speed)

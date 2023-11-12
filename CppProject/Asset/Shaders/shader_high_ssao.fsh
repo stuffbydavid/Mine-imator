@@ -56,7 +56,9 @@ vec3 unpackNormalBlueNoise(vec4 c)
 
 float getSSAOstrength(vec2 uv)
 {
-	return 1.0 - clamp((unpackValue(texture2D(uEmissiveBuffer, uv)) * 255.0) + (1.0 - texture2D(uMaskBuffer, uv).r), 0.0, 1.0);
+	float emissive = unpackValue(texture2D(uEmissiveBuffer, uv)) * 255.0;
+	float mask = texture2D(uMaskBuffer, uv).r;
+	return (1.0 - clamp(emissive, 0.0, 1.0)) * mask;
 }
 
 void main()
@@ -114,7 +116,7 @@ void main()
 	}
 	
 	// Raise to power
-	occlusion = 1.0 - pow(max(0.0, 1.0 - occlusion / float(SAMPLES)), uPower);
+	occlusion = clamp(1.0 - pow(max(0.0, 1.0 - occlusion / float(SAMPLES)), uPower), 0.0, 1.0);
 	
 	// Apply strength
 	occlusion *= getSSAOstrength(vTexCoord);
