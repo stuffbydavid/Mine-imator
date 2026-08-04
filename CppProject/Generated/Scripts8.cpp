@@ -92,11 +92,12 @@ namespace CppProject
 				hobj = history_set(self, ID_action_res_import_world);
 			
 			IntType num = IntType(1);
+			VarType worldname = filename_get_valid(name);
 			withAll (obj_resource, self->id)
-				if (self->type == e_res_type_FROM_WORLD && self->world_regions_dir == regionsdir)
+				if (string_pos(worldname, self->filename) == IntType(1))
 					num++;
 			
-			VarType fn = filename_get_valid(name) + (num > IntType(1) ? (/*" "*/ STR(21) + string(num)) : /*""*/ STR(0));
+			VarType fn = worldname + (num > IntType(1) ? (/*" "*/ STR(21) + string(num)) : /*""*/ STR(0));
 			res = new_res(self, fn, e_res_type_FROM_WORLD);
 			withOne (obj_resource, res, self->id)
 			{

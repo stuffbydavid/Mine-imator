@@ -1,5 +1,3 @@
-Read through this brief license before continuing.
-
 This software, while using graphics from the game Minecraft by Mojang AB, is a property of David Andrei at www.stuffbydavid.com.
 
 You MAY:

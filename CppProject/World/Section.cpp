@@ -679,6 +679,10 @@ namespace CppProject
 
 	BuilderState& Section::GetBuilderState(const WorldVec& pos)
 	{
+		static BuilderState emptyState = { 0, 0, false };
+		if (!builder.palette.Size())
+			return emptyState;
+
 		if (builder.palette.Size() == 1)
 			return builder.palette[0];
 

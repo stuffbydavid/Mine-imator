@@ -168,6 +168,7 @@ namespace CppProject
 	struct SaveInfo
 	{
 		QString name;
+		IntType version;
 		BoolType hasPlayer;
 		VecType spawnPos, playerPos, playerRot;
 		QString playerDim;

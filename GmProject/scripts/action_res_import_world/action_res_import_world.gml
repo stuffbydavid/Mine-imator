@@ -27,11 +27,12 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode,
 		
 		// Find other resources from same world for final name
 		var num = 1;
+		var worldname = filename_get_valid(name);
 		with (obj_resource)
-			if (type = e_res_type.FROM_WORLD && world_regions_dir = regionsdir)
+			if (string_pos(worldname, filename) == 1)
 				num++
 		
-		var fn = filename_get_valid(name) + (num > 1 ? (" " + string(num)) : "");
+		var fn = worldname + (num > 1 ? (" " + string(num)) : "");
 		res = new_res(fn, e_res_type.FROM_WORLD);
 		with (res)
 		{

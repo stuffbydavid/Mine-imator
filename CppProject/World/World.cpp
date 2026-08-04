@@ -284,7 +284,8 @@ namespace CppProject
 				{ TAG_INT, { "version", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
 				{ TAG_STRING, { "LevelName", "Dimension" }},
 				{ TAG_LIST, { "Pos", "Rotation" }},
-				{ TAG_COMPOUND, { "Data", "Player" }}
+				{ TAG_COMPOUND, { "Data", "Player", "spawn" } },
+				{ TAG_INT_ARRAY, { "pos" }}
 			}));
 			NbtCompound saveData(stream);
 			if (!saveData.HasKey("Data"))
@@ -308,20 +309,29 @@ namespace CppProject
 				}
 				info.name = newName;
 			}
-			
-			info.spawnPos = { (RealType)data->Int("SpawnX"), (RealType)data->Int("SpawnY"), (RealType)data->Int("SpawnZ") };
+
+			info.version = data->Int("version");
+
+			if (data->HasKey("spawn"))
+			{
+				NbtCompound* spawn = data->Compound("spawn");
+				Heap<int32_t>& spawnPos = spawn->IntArray("pos");
+				info.spawnPos = { (RealType)spawnPos[0], (RealType)spawnPos[1], (RealType)spawnPos[2] };
+			}
+			else if ((data->GetType("SpawnX") == TAG_INT))
+				info.spawnPos = { (RealType)data->Int("SpawnX"), (RealType)data->Int("SpawnY"), (RealType)data->Int("SpawnZ") };
+			else
+				info.spawnPos = { 0, 80, 0 };
+
 			info.playerDim = "overworld";
 
-			// Parse single player
-			if (info.hasPlayer = data->HasKey("Player"))
-			{
-				NbtCompound* player = data->Compound("Player");
+			auto loadPlayerData = [&info](NbtCompound* player) {
 				QVector<NbtDouble*> playerPos = player->List<NbtType::TAG_DOUBLE, NbtDouble>("Pos");
 				QVector<NbtFloat*> playerRot = player->List<NbtType::TAG_FLOAT, NbtFloat>("Rotation");
 				info.playerPos = { (RealType)playerPos[0]->value, (RealType)playerPos[1]->value, (RealType)playerPos[2]->value };
 				info.playerRot = { -(RealType)playerRot[1]->value, mod_fix(180 - (RealType)playerRot[0]->value, 360), 0.0 };
 
-				if (data->Int("version") >= 19133) // Offset by head position in new worlds
+				if (info.version >= 19133) // Offset by head position in new worlds
 					info.playerPos.y += 24.0 / 16.0;
 
 				if (player->GetType("Dimension") == TAG_STRING) // String dimension
@@ -330,10 +340,45 @@ namespace CppProject
 				else // Integer dimension
 					switch (player->Int("Dimension"))
 					{
-						case 0: info.playerDim = "overworld"; break;
-						case 1: info.playerDim = "the_end"; break;
-						case -1: info.playerDim = "nether"; break;
+					case 0: info.playerDim = "overworld"; break;
+					case 1: info.playerDim = "end"; break;
+					case -1: info.playerDim = "nether"; break;
 					}
+
+				info.hasPlayer = true;
+			};
+
+			// Load player
+			if (data->HasKey("Player"))
+				loadPlayerData(data->Compound("Player"));
+
+			else
+			{
+				// Get player from newest <UUID>.dat file
+				QDir playerDir(dir + "/playerdata");
+				if (!playerDir.exists())
+					playerDir = QDir(dir + "/players/data");
+
+				QFileInfoList playerFiles = playerDir.entryInfoList(
+					{ "*.dat" },
+					QDir::Files | QDir::NoSymLinks | QDir::Readable,
+					QDir::Time | QDir::Reversed // Newest first
+				);
+
+				if (!playerFiles.isEmpty())
+				{
+					QByteArray playerBytesRaw;
+					Gzip::Decompress(playerFiles.first().absoluteFilePath(), playerBytesRaw);
+
+					NbtStream playerStream(playerBytesRaw, QHash<NbtType, QVector<StringType>>({
+						{ TAG_INT, { "Dimension" }},
+						{ TAG_STRING, { "Dimension" }},
+						{ TAG_LIST, { "Pos", "Rotation" }},
+					}));
+					NbtCompound playerData(playerStream);
+					loadPlayerData(&playerData);
+				}
+
 			}
 		}
 		catch (const QString& str)
@@ -343,15 +388,30 @@ namespace CppProject
 		}
 
 		// Find dimensions
+		StringType overworldPath, netherPath, endPath;
+		QDir dimensionsDir(dir + "/dimensions/minecraft");
+		if (dimensionsDir.exists())
+		{
+			overworldPath = dir + "/dimensions/minecraft/overworld/region";
+			netherPath = dir + "/dimensions/minecraft/the_nether/region";
+			endPath = dir + "/dimensions/minecraft/the_end/region";
+		}
+		else // Pre-26.1
+		{
+			overworldPath = dir + "/region";
+			netherPath = dir + "/DIM-1/region";
+			endPath = dir + "/DIM1/region";
+		}
+
 		StringType filter = "*.mca";
-		QDir overworldDir(dir + "/region", filter, QDir::Name | QDir::IgnoreCase, QDir::Files | QDir::NoDotAndDotDot);
-		if (overworldDir.isEmpty()) // Pre-anvil
+		QDir overworldDir(overworldPath, filter, QDir::Name | QDir::IgnoreCase, QDir::Files | QDir::NoDotAndDotDot);
+		if (overworldDir.isEmpty()) // Pre-Anvil
 		{
 			filter = "*.mcr";
 			overworldDir.setNameFilters({ filter });
 		}
-		QDir netherDir(dir + "/DIM-1/region", filter);
-		QDir endDir(dir + "/DIM1/region", filter);
+		QDir netherDir(netherPath, filter);
+		QDir endDir(endPath, filter);
 
 		info.dimDir["overworld"] = overworldDir;
 		if (netherDir.exists() && !netherDir.isEmpty())

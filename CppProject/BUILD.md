@@ -2,12 +2,12 @@
 * CMake GUI: https://cmake.org/download/
 * Python: https://www.python.org/downloads/
 * Strawberry Perl: https://strawberryperl.com/
-* OpenSSL Windows installer: https://slproweb.com/download/Win64OpenSSL-3_0_5.msi (64 bit), https://slproweb.com/download/Win32OpenSSL-3_0_5.msi (32 bit)
+* OpenSSL 3.0.21 Windows installer: https://slproweb.com/download/Win64OpenSSL-3_0_21.msi (64 bit), https://slproweb.com/download/Win32OpenSSL-3_0_21.msi (32 bit)
 * FFmpeg 5.0 sources: http://www.ffmpeg.org/releases/ffmpeg-5.0.tar.xz
 * x264 sources: https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.bz2
 * Zlib 1.2.13 sources: https://zlib.net/zlib-1.2.13.tar.gz
 * Libzip 1.9.2 sources: https://libzip.org/download/libzip-1.9.2.tar.gz
-* FreeType 2.9.1 sources: https://download.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz (only header is used, library comes with Qt)
+* FreeType 2.9.1 sources: https://sourceforge.net/projects/freetype/files/freetype2/2.9.1/freetype-2.9.1.tar.gz/download (only header is used, library comes with Qt)
 * OpenAL Soft 1.22.0 sources: https://openal-soft.org/openal-releases/openal-soft-1.22.0.tar.bz2
 * Jom: https://download.qt.io/official_releases/jom/jom_1_1_3.zip
 * NASM: https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/
@@ -34,11 +34,12 @@ For new developers Qt must be built, the other libraries are pre-built for each 
     4. `cd qt5`
     5. `git checkout 5.15`
     6. `perl init-repository`
-    7. `configure.bat -platform win32-msvc -prefix "%DEV_DIR%/Qt/5.15.9/build" -opensource -confirm-license -release -static -static-runtime -qt-libjpeg -opengl desktop -openssl-linked -I"%DEV_DIR%/OpenSSL/include" -L"%DEV_DIR%/OpenSSL/lib/VC/static" OPENSSL_LIBS="-lWs2_32 -lGdi32 -lAdvapi32 -lCrypt32 -lUser32" OPENSSL_LIBS_DEBUG="-llibssl64MDd -llibcrypto64MDd" OPENSSL_LIBS_RELEASE="-llibssl64MT -llibcrypto64MT" -no-icu -nomake tests -nomake examples -nomake tools -skip qt3d -skip qtmultimedia -skip activeqt -skip qtandroidextras -skip qtconnectivity -skip datavis3d -skip qtdoc -skip gamepad -skip qtgraphicaleffects -skip qtcharts -skip qtlocation -skip qtlottie -skip qtnetworkauth -skip qtpurchasing -skip qtquick3d -skip qtquickcontrols -skip qtquickcontrols2 -skip qtquicktimeline -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtvirtualkeyboard -skip qtwayland -skip qtwebengine -skip qtwebglplugin -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtxmlpatterns`
+    7. `configure.bat -platform win32-msvc -prefix "%DEV_DIR%/Qt/5.15.9/build" -opensource -confirm-license -release -static -static-runtime -qt-libjpeg -opengl desktop -openssl-linked -I"%DEV_DIR%/OpenSSL/include" OPENSSL_LIBS="-lWs2_32 -lGdi32 -lAdvapi32 -lCrypt32 -lUser32" OPENSSL_LIBS_DEBUG="%DEV_DIR%/OpenSSL/lib/VC/x64/MDd/libssl_static.lib %DEV_DIR%/OpenSSL/lib/VC/x64/MDd/libcrypto_static.lib" OPENSSL_LIBS_RELEASE="%DEV_DIR%/OpenSSL/lib/VC/x64/MT/libssl_static.lib %DEV_DIR%/OpenSSL/lib/VC/x64/MT/libcrypto_static.lib" -no-icu -nomake tests -nomake examples -nomake tools -skip qt3d -skip qtmultimedia -skip activeqt -skip qtandroidextras -skip qtconnectivity -skip datavis3d -skip qtdoc -skip gamepad -skip qtgraphicaleffects -skip qtcharts -skip qtlocation -skip qtlottie -skip qtnetworkauth -skip qtpurchasing -skip qtquick3d -skip qtquickcontrols -skip qtquickcontrols2 -skip qtquicktimeline -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtvirtualkeyboard -skip qtwayland -skip qtwebengine -skip qtwebglplugin -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtxmlpatterns`
     8. `jom` then `jom install`
 9. Get Libzip sources, extract into C:\Dev\Libzip\libzip-1.9.2
 10. Get FreeType sources, put in C:\Dev\FreeType\freetype-2.9.1
 11. Get FFmpeg sources, put in C:\Dev\FFmpeg\ffmpeg-5.0
+    1. Copy avconfig.h from CppProject\External to C:\Dev\FFmpeg\ffmpeg-5.0\avutil
 12. Get OpenAL sources, put in C:\Dev\OpenAL\openal-soft-1.22.0
 13. Generate VS project
     1. Open CMake GUI, select "Where is the source code" to the CppProject folder
@@ -58,7 +59,8 @@ Follow 64-bit instructions with additional steps:
     1. Open x86 Native Tools Command Prompt for VS 2022 as Administrator
     2. `cd %DEV_DIR%/Qt/5.15.9-Win32`
     3. Same as step 8.3-8.6 for 64-bit
-    4. `configure.bat -platform win32-msvc -prefix "%DEV_DIR%/Qt/5.15.9-Win32/build" -opensource -confirm-license -release -static -static-runtime -qt-libjpeg -opengl desktop -openssl-linked -I"%DEV_DIR%/OpenSSL-Win32/include" -L"%DEV_DIR%/OpenSSL-Win32/lib/VC/static" OPENSSL_LIBS="-lWs2_32 -lGdi32 -lAdvapi32 -lCrypt32 -lUser32" OPENSSL_LIBS_DEBUG="-llibssl32MDd -llibcrypto32MDd" OPENSSL_LIBS_RELEASE="-llibssl32MT -llibcrypto32MT" -no-icu -nomake tests -nomake examples -nomake tools -skip qt3d -skip qtmultimedia -skip activeqt -skip qtandroidextras -skip qtconnectivity -skip datavis3d -skip qtdoc -skip gamepad -skip qtgraphicaleffects -skip qtcharts -skip qtlocation -skip qtlottie -skip qtnetworkauth -skip qtpurchasing -skip qtquick3d -skip qtquickcontrols -skip qtquickcontrols2 -skip qtquicktimeline -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtvirtualkeyboard -skip qtwayland -skip qtwebengine -skip qtwebglplugin -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtxmlpatterns`
+    4. `configure.bat -platform win32-msvc -prefix "%DEV_DIR%/Qt/5.15.9-Win32/build" -opensource -confirm-license -release -static -static-runtime -qt-libjpeg -opengl desktop -openssl-linked -I"%DEV_DIR%/OpenSSL-Win32/include" OPENSSL_LIBS="-lWs2_32 -lGdi32 -lAdvapi32 -lCrypt32 -lUser32" OPENSSL_LIBS_DEBUG="%DEV_DIR%/OpenSSL-Win32/lib/VC/x86/MDd/libssl_static.lib %DEV_DIR%/OpenSSL-Win32/lib/VC/x86/MDd/libcrypto_static.lib" OPENSSL_LIBS_RELEASE="%DEV_DIR%/OpenSSL-Win32/lib/VC/x86/MT/libssl_static.lib %DEV_DIR%/OpenSSL-Win32/lib/VC/x86/MT/libcrypto_static.lib" -no-icu -nomake tests -nomake examples -nomake tools -skip qt3d -skip qtmultimedia -skip activeqt -skip qtandroidextras -skip qtconnectivity -skip datavis3d -skip qtdoc -skip gamepad -skip qtgraphicaleffects -skip qtcharts -skip qtlocation -skip qtlottie -skip qtnetworkauth -skip qtpurchasing -skip qtquick3d -skip qtquickcontrols -skip qtquickcontrols2 -skip qtquicktimeline -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtvirtualkeyboard -skip qtwayland -skip qtwebengine -skip qtwebglplugin -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtxmlpatterns`
+    5. `jom` then `jom install`
 3. Generate VS project
     * Same as 64-bit, except set WINDOWS_32BIT to 1 in CMakeLists.txt and delete cache before configuring, then restart VS 2022
 
