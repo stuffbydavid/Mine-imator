@@ -481,7 +481,8 @@ namespace CppProject
 			JAVA_1_2, // Anvil format, sections with byte arrays
 			JAVA_1_13 = 1451, // The flattening, palettes in sections
 			JAVA_1_16 = 2529, // Long array index bits snapped to 64
-			JAVA_1_18 = 2838 // Lowercase keys in sections
+			JAVA_1_18 = 2838, // Lowercase keys in sections
+			JAVA_26_3 = 5009 // Palette string lists, empty names, lowercase properties
 		};
 
 		// Face direction
