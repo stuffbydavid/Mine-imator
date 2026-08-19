@@ -29,10 +29,10 @@ namespace CppProject
 			NbtStream stream(data, {
 				{ TAG_BYTE, { "Y" } },
 				{ TAG_BYTE_ARRAY, { "SkyLight", "BlockLight", "Blocks", "Data", "Biomes", "Add" }},
-				{ TAG_COMPOUND, { "Level", "Properties", "block_states", "block_entities", "TileEntities", "biomes" }},
+				{ TAG_COMPOUND, { "Level", "properties", "Properties", "block_states", "block_entities", "TileEntities", "biomes" }},
 				{ TAG_LIST, { "sections", "Sections", "palette", "Palette" }},
 				{ TAG_LONG_ARRAY, { "data", "BlockStates"}},
-				{ TAG_STRING, { "Name", "Status" }},
+				{ TAG_STRING, { "Name", "id", "Status", "" }},
 				{ TAG_INT, { "DataVersion", "xPos", "zPos" }},
 			});
 			NbtCompound chunkCompound(stream);
@@ -42,7 +42,9 @@ namespace CppProject
 			if (chunkCompound.HasKey("DataVersion"))
 			{
 				IntType dataVersion = chunkCompound.Int("DataVersion");
-				if (dataVersion >= JAVA_1_18)
+				if (dataVersion >= JAVA_26_3)
+					format = JAVA_26_3; 
+				else if (dataVersion >= JAVA_1_18)
 					format = JAVA_1_18;
 				else if (dataVersion >= JAVA_1_16)
 					format = JAVA_1_16;

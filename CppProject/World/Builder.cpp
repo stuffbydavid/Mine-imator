@@ -593,7 +593,7 @@ namespace CppProject
 		QThread* thread;
 		QString outName = filename.QStr();
 		QString tempName = (QString)gmlGlobal::game_save_id + QFileInfo(filename).fileName();
-		thread = QThread::create([outName, tempName, data, &thread]
+		thread = QThread::create([outName, tempName, data]
 		{
 			Timer tmr;
 			QFile outFile(outName);
