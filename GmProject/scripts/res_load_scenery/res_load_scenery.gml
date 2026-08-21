@@ -38,7 +38,7 @@ function res_load_scenery()
 		
 				// Schematic/Structure file
 				var ext = filename_ext(fname);
-				if (ext = ".schematic" || ext = ".nbt")
+				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt")
 				{
 					log("Loading " + ext, fname)
 					debug_timer_start()
@@ -67,11 +67,20 @@ function res_load_scenery()
 						nbt_debug_tag_compound("root", rootmap)
 					
 					// Parse blocks
-					if (ext == ".schematic")
+					if (ext == ".schematic" || ext == ".schem")
 					{
+						// Version 3 nests the schematic inside the unnamed root compound
+						var schematicmap = rootmap[?"Schematic"];
+						if (!ds_map_valid(schematicmap))
+						{
+							var unnamedmap = rootmap[?""];
+							if (ds_map_valid(unnamedmap))
+								schematicmap = unnamedmap[?"Schematic"]
+						}
+						
 						with (mc_builder)
 						{
-							openerr = !builder_read_schematic(rootmap[?"Schematic"])
+							openerr = !builder_read_schematic(schematicmap)
 							if (openerr)
 								break;
 						

@@ -7,8 +7,11 @@ function builder_read_schematic(map)
 		return false
 	}
 	
-	// Get format
-	builder_scenery_legacy = is_undefined(map[?"Palette"])
+	// Get format, version 3 keeps the palette inside a Blocks compound while a legacy
+	// schematic stores a Blocks byte array, so compare the tag type instead of the value
+	builder_scenery_legacy = is_undefined(map[?"Palette"]) && (map[?"Blocks_NBT_type"] != e_nbt.TAG_COMPOUND)
+	
+	var blocksmap = map;
 	
 	// Get size
 	build_size_x = map[?"Width"]
@@ -43,14 +46,25 @@ function builder_read_schematic(map)
 		}
 		
 		log("Version", map[?"Version"])
-		if (version > 1)
+		if (version > 3)
 		{
 			log("Schematic error", "Unsupported format, version too high")
 			return false
 		}
 		
+		// Version 3 moved the palette, block data and block entities into a Blocks compound
+		if (version >= 3)
+		{
+			blocksmap = map[?"Blocks"]
+			if (!ds_map_valid(blocksmap))
+			{
+				log("Schematic error", "Blocks compound not found")
+				return false
+			}
+		}
+		
 		// Get palette
-		var palettemap = map[?"Palette"]
+		var palettemap = blocksmap[?"Palette"]
 		if (!ds_map_valid(palettemap))
 		{
 			log("Schematic error", "Palette not found")
@@ -124,15 +138,16 @@ function builder_read_schematic(map)
 			key = ds_map_find_next(palettemap, key)
 		}
 		
-		// Get block array
-		sch_blockdata_array = map[?"BlockData"]
+		// Get block array, version 3 renamed BlockData to Blocks.Data
+		var blockdatakey = (version >= 3 ? "Data" : "BlockData");
+		sch_blockdata_array = blocksmap[?blockdatakey]
 		if (is_undefined(sch_blockdata_array))
 		{
-			log("Schematic error", "BlockData array not found")
+			log("Schematic error", "Block data array not found")
 			return false
 		}
 		
-		sch_blockdata_ints = (map[?"BlockData_NBT_type"] = e_nbt.TAG_INT_ARRAY)
+		sch_blockdata_ints = (blocksmap[?blockdatakey + "_NBT_type"] = e_nbt.TAG_INT_ARRAY)
 		debug("blockdataints", sch_blockdata_ints)
 		
 		// BlockData is an array of varints (Sponge Schematic specification). An index below 128
@@ -145,7 +160,7 @@ function builder_read_schematic(map)
 			blockamount = build_size_x * build_size_y * build_size_z
 			basepos = buffer_get_size(buffer_current)
 			readpos = sch_blockdata_array
-			endpos = sch_blockdata_array + map[?"BlockData_NBT_length"]
+			endpos = sch_blockdata_array + blocksmap[?blockdatakey + "_NBT_length"]
 			writepos = basepos
 			
 			// Missing entries are left at zero, so a truncated array still loads
@@ -217,7 +232,12 @@ function builder_read_schematic(map)
 	if (is_undefined(file_map))
 		file_map = ""
 		
+	// Version 2 renamed TileEntities to BlockEntities, version 3 moved it into Blocks
 	sch_tileentity_list = map[?"TileEntities"];
+	if (!ds_list_valid(sch_tileentity_list))
+		sch_tileentity_list = map[?"BlockEntities"]
+	if (!ds_list_valid(sch_tileentity_list))
+		sch_tileentity_list = blocksmap[?"BlockEntities"]
 	
 	return true
 }
