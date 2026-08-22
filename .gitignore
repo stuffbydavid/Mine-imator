@@ -1,4 +1,4 @@
 build*/
-install*/
-CppGen/Logs/
-CppGen/*/Logs/
+/install*/
+/CppGen/Logs/
+/CppGen/*/Logs/

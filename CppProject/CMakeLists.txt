@@ -1,186 +1,385 @@
-cmake_minimum_required(VERSION 3.14.0)
+cmake_minimum_required(VERSION 3.18)
 
-# Build a 32-bit Windows executable
-set(WINDOWS_32BIT 0)
-
-# Build with release optimizations (Mac/Linux)
-set(MAC_LINUX_RELEASE 1)
-
-# Project setup
-set(CMAKE_CXX_STANDARD 17)
-set(QT_VERSION "5.15.9")
-if (WIN32)
-	set(CMAKE_CONFIGURATION_TYPES "Debug" "RelWithDebInfo" "Release")
-	if (WINDOWS_32BIT)
-		set(PLATFORM "Win32")
-		set(WIN_EXT_FOLDER "Win32")
-		set(QT_VERSION "${QT_VERSION}-Win32")
-	else()
-		set(PLATFORM "x64")
-		set(WIN_EXT_FOLDER "Win64")
-	endif()
-	set(CMAKE_GENERATOR_PLATFORM ${PLATFORM})
-elseif (NOT APPLE)
-	set(CMAKE_C_COMPILER "/usr/bin/clang-12")
-	set(CMAKE_CXX_COMPILER "/usr/bin/clang++-12")
+# Toolchain-affecting settings established before project()
+if(CMAKE_HOST_WIN32)
+	set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release" CACHE STRING "Supported build configurations" FORCE)
+	cmake_policy(SET CMP0091 NEW)
 endif()
 
-project(Mine-imator)
-add_definitions("-DBUILD_FOLDER=QString(\"${CMAKE_BINARY_DIR}\")")
-add_definitions("-DPROJECT_NAME=\"${PROJECT_NAME}\"")
-
-# Platform specific configurations
-if (WIN32)
-
-	message("Windows platform (${PLATFORM})")
-	add_definitions("-DOS_WINDOWS" /MP /bigobj /openmp)
-	add_definitions("-DDEBUG_MODE=$<$<CONFIG:Debug>:1>$<$<CONFIG:RelWithDebInfo>:1>$<$<CONFIG:Release>:0>")
-	add_definitions("-DRELEASE_MODE=!DEBUG_MODE")
-
-	set(DEV_DIR $ENV{DEV_DIR})
-	set(EXT_DIR "${CMAKE_SOURCE_DIR}/External/${WIN_EXT_FOLDER}")
-	set(LIBS "${EXT_DIR}/zip.lib" "${EXT_DIR}/zlibstatic.lib" "${EXT_DIR}/OpenAL32.lib" "${EXT_DIR}/libx264.lib") # Zip, OpenAL, x264 (precompiled)
-	set(LIBS ${LIBS} "Mf" "Mfplat" "mfuuid" "strmiids") # FFmpeg dependencies
-	set(LIBS ${LIBS} "d3d11.lib" "$<$<CONFIG:Debug>:d3dcompiler.lib>$<$<CONFIG:RelWithDebInfo>:d3dcompiler.lib>") # Direct3D 11
-	set(APPICON_RC "${CMAKE_SOURCE_DIR}/Asset/Icons/appicon.rc")
-	set(CMAKE_MFC_FLAG 1)
-	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-	
-	set(CMAKE_CXX_FLAGS_DEBUG "/ZI /Ob0 /Od /RTC1 /MT")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/ZI /O2 /Ob1 /DNDEBUG /MT")
-	set(CMAKE_CXX_FLAGS_RELEASE "/O2 /Ot /Ox /DNDEBUG /MT")
-	set(CMAKE_CXX_FLAGS_DEBUG_WIN32 ${CMAKE_CXX_FLAGS_DEBUG})
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_WIN32 ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
-	set(CMAKE_CXX_FLAGS_RELEASE_WIN32 ${CMAKE_CXX_FLAGS_RELEASE})
-
-else()
-
-	set(DEV_DIR "~/Dev")
-	add_definitions("-DOS_UNIX")
-	add_compile_options("-Wall")
-	add_compile_options("-Wno-overloaded-virtual")
-	add_compile_options("-Wno-parentheses")
-	add_compile_options("-Wno-sometimes-uninitialized")
-	add_compile_options("-Wno-reorder-ctor")
-	add_compile_options("-Wno-switch")
-	add_compile_options("-Wno-unknown-pragmas")
-
-	if (MAC_LINUX_RELEASE)
-		add_compile_options("-O3")
-		add_compile_options("-DNDEBUG")
-		add_definitions("-DDEBUG_MODE=0")
-		add_definitions("-DRELEASE_MODE=1")
-	else()
-		add_compile_options("-O0")
-		add_compile_options("-g")
-		add_definitions("-DDEBUG_MODE=1")
-		add_definitions("-DRELEASE_MODE=0")
+if(CMAKE_HOST_APPLE)
+	if(NOT DEFINED CMAKE_OSX_ARCHITECTURES OR CMAKE_OSX_ARCHITECTURES STREQUAL "")
+		execute_process(COMMAND uname -m
+			OUTPUT_VARIABLE CMAKE_OSX_ARCHITECTURES
+			OUTPUT_STRIP_TRAILING_WHITESPACE)
 	endif()
+	if(NOT CMAKE_OSX_ARCHITECTURES MATCHES "^(x86_64|arm64)$")
+		message(FATAL_ERROR
+			"CMAKE_OSX_ARCHITECTURES must contain one architecture: x86_64 or arm64")
+	endif()
+	set(CMAKE_OSX_ARCHITECTURES "${CMAKE_OSX_ARCHITECTURES}"
+		CACHE STRING "macOS target architecture" FORCE)
+	if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET OR CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "")
+		if(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
+			set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
+		else()
+			set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
+		endif()
+	endif()
+	if(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64"
+		AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS "11.0")
+		message(FATAL_ERROR "arm64 requires CMAKE_OSX_DEPLOYMENT_TARGET 11.0 or newer")
+	endif()
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "${CMAKE_OSX_DEPLOYMENT_TARGET}"
+		CACHE STRING "Minimum supported macOS version" FORCE)
+endif()
+
+if(CMAKE_HOST_UNIX AND NOT CMAKE_HOST_APPLE)
+	set(CMAKE_C_COMPILER "/usr/bin/clang" CACHE FILEPATH "Linux C compiler" FORCE)
+	set(CMAKE_CXX_COMPILER "/usr/bin/clang++" CACHE FILEPATH "Linux C++ compiler" FORCE)
+endif()
+
+project(Mine-imator LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CLANG21_WARNING_SUPPRESSIONS)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+get_filename_component(REPO_DIR
+	"${CMAKE_CURRENT_SOURCE_DIR}/.."
+	ABSOLUTE
+)
+
+# Third-party source and Qt installation roots
+if(NOT DEFINED DEV_DIR)
+	if(DEFINED ENV{DEV_DIR})
+		set(DEV_DIR "$ENV{DEV_DIR}" CACHE PATH "Third-party development directory")
+	else()
+		message(FATAL_ERROR "DEV_DIR is not set. Define the environment variable or pass -DDEV_DIR=<path>.")
+	endif()
+endif()
+file(TO_CMAKE_PATH "${DEV_DIR}" DEV_DIR)
+message(STATUS "DEV_DIR = ${DEV_DIR}")
+
+set(QT_BASE_DIR "${DEV_DIR}/Qt/5.15.19")
+set(QT_INSTALL_DIR "${QT_BASE_DIR}/install")
+set(QT_SOURCE_DIR "${QT_BASE_DIR}/qt5")
+set(LIBZIP_SOURCE_DIR "${DEV_DIR}/Libzip/libzip-1.11.4")
+set(FFMPEG_SOURCE_DIR "${DEV_DIR}/FFmpeg/ffmpeg-5.1.10")
+set(OPENAL_SOURCE_DIR "${DEV_DIR}/OpenAL/openal-soft-1.24.3")
+set(CPPGEN_DIR "${REPO_DIR}/CppGen")
+set(INSTALL_DIR "${REPO_DIR}/install")
+
+if(WIN32 AND CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")
+	set(WINDOWS_ARCH "Win32")
+	set(EXTERNAL_PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/External/Win32")
+	set(QT_INSTALL_DIR "${QT_BASE_DIR}-Win32/install")
+	set(QT_SOURCE_DIR "${QT_BASE_DIR}-Win32/qt5")
+	set(CPPGEN_EXE "${CPPGEN_DIR}/Win32/CppGen.exe")
+	set(INSTALL_DIR "${REPO_DIR}/install-Win32")
+elseif(WIN32)
+	set(WINDOWS_ARCH "x64")
+	set(EXTERNAL_PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/External/Win64")
+	set(CPPGEN_EXE "${CPPGEN_DIR}/Win64/CppGen.exe")
+elseif(APPLE)
+	set(EXTERNAL_PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/External/Mac")
+	set(CPPGEN_EXE "${CPPGEN_DIR}/Mac/CppGen")
+	execute_process(COMMAND brew --prefix libomp
+		RESULT_VARIABLE LIBOMP_RESULT
+		OUTPUT_VARIABLE LIBOMP_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+	if(NOT LIBOMP_RESULT EQUAL 0 OR NOT EXISTS "${LIBOMP_PREFIX}/include/omp.h")
+		message(FATAL_ERROR "Homebrew libomp was not found")
+	endif()
+	if(CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
+		set(OPENMP_RUNTIME_LIBRARY "${EXTERNAL_PLATFORM_DIR}/libomp.dylib")
+		set(OPENMP_LINKED_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib")
+	else()
+		set(OPENMP_RUNTIME_LIBRARY "${LIBOMP_PREFIX}/lib/libomp.dylib")
+		set(OPENMP_LINKED_LIBRARY "${OPENMP_RUNTIME_LIBRARY}")
+	endif()
+	if(NOT EXISTS "${OPENMP_RUNTIME_LIBRARY}")
+		message(FATAL_ERROR "OpenMP runtime was not found at ${OPENMP_RUNTIME_LIBRARY}")
+	endif()
+	set(OpenMP_libomp_LIBRARY "${OPENMP_RUNTIME_LIBRARY}" CACHE FILEPATH "" FORCE)
+	set(OpenMP_CXX_INCLUDE_DIR "${LIBOMP_PREFIX}/include" CACHE PATH "" FORCE)
+else()
+	set(EXTERNAL_PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/External/Linux")
+	set(CPPGEN_EXE "${CPPGEN_DIR}/Linux/CppGen")
+	if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 21)
+		list(APPEND CLANG21_WARNING_SUPPRESSIONS -Wno-nontrivial-memcall)
+	endif()
+endif()
+
+message(STATUS "CppGen location = ${CPPGEN_EXE}")
+message(STATUS "External libraries = ${EXTERNAL_PLATFORM_DIR}")
+message(STATUS "Qt installation = ${QT_INSTALL_DIR}")
+
+find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
+	PATHS "${QT_INSTALL_DIR}"
+	NO_DEFAULT_PATH)
+find_package(OpenMP REQUIRED COMPONENTS CXX)
+set(CMAKE_AUTOMOC OFF)
+set(CMAKE_AUTORCC OFF)
+set(CMAKE_AUTOUIC OFF)
+
+# Generate the resource collection in the build tree so configuring never edits
+# Asset/index.qrc in the source tree. CONFIGURE_DEPENDS picks up added assets.
+set(ASSET_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Asset")
+file(GLOB_RECURSE ASSET_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
+	"${ASSET_SOURCE_DIR}/*.png"
+	"${ASSET_SOURCE_DIR}/*.vsh"
+	"${ASSET_SOURCE_DIR}/*.fsh"
+	"${ASSET_SOURCE_DIR}/*.d3d"
+)
+list(SORT ASSET_FILES)
+
+set(QT_INDEX_FILE "${CMAKE_CURRENT_BINARY_DIR}/index.qrc")
+set(INDEX_XML "<!-- Auto-generated by CMake; do not edit. -->\n<RCC>\n\t<qresource prefix=\"/\">")
+foreach(ASSET_FILE IN LISTS ASSET_FILES)
+	file(RELATIVE_PATH ASSET_ALIAS "${ASSET_SOURCE_DIR}" "${ASSET_FILE}")
+	file(TO_CMAKE_PATH "${ASSET_FILE}" ASSET_FILE_CMAKE)
+	string(APPEND INDEX_XML "\n\t\t<file alias=\"${ASSET_ALIAS}\">${ASSET_FILE_CMAKE}</file>")
+endforeach()
+string(APPEND INDEX_XML "\n\t</qresource>\n</RCC>\n")
+file(WRITE "${QT_INDEX_FILE}" "${INDEX_XML}")
+
+set_source_files_properties(${ASSET_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+source_group(TREE "${ASSET_SOURCE_DIR}" PREFIX "Assets" FILES ${ASSET_FILES})
+
+# CONFIGURE_DEPENDS retains automatic source discovery while making additions
+# visible to CMake without a manual reconfigure.
+file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
+	"${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/*.hpp"
+)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "${PROJECT_NAME}" FILES ${PROJECT_SOURCES})
+
+qt5_add_resources(RESOURCE_SOURCES "${QT_INDEX_FILE}")
+qt5_wrap_cpp(MOC_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/World/World.hpp")
+
+if(WIN32)
+	set(APP_ICON_RESOURCE "${CMAKE_CURRENT_SOURCE_DIR}/Asset/Icons/appicon.rc")
+endif()
+
+add_executable(${PROJECT_NAME}
+	${PROJECT_SOURCES}
+	${ASSET_FILES}
+	${RESOURCE_SOURCES}
+	${MOC_SOURCES}
+	${APP_ICON_RESOURCE}
+)
+
+target_precompile_headers(${PROJECT_NAME} PRIVATE "Common.hpp")
+target_include_directories(${PROJECT_NAME} PRIVATE
+	"${CMAKE_CURRENT_SOURCE_DIR}"
+	"${QT_INSTALL_DIR}/include/QtZlib"
+	"${CMAKE_CURRENT_SOURCE_DIR}/External/Sources"
+	"${LIBZIP_SOURCE_DIR}/lib"
+	"${OPENAL_SOURCE_DIR}/include"
+	"${QT_SOURCE_DIR}/qtbase/src/3rdparty/freetype/include"
+)
+
+if(APPLE)
+	# Fix FFmpeg include issue with VERSION
+	target_compile_options(${PROJECT_NAME} PRIVATE
+		"SHELL:-idirafter \"${FFMPEG_SOURCE_DIR}\""
+	)
+else()
+	target_include_directories(${PROJECT_NAME} PRIVATE
+		"${FFMPEG_SOURCE_DIR}"
+	)
+endif()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+	"BUILD_FOLDER=QString(\"${CMAKE_BINARY_DIR}\"\)"
+	"PROJECT_NAME=\"${PROJECT_NAME}\""
+	"ASSETS_DIR=\"${ASSET_SOURCE_DIR}\""
+)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	OpenMP::OpenMP_CXX
+)
+
+if(WIN32)
+	message(STATUS "Windows platform (${WINDOWS_ARCH})")
+
+	# Qt and the bundled static libraries are built against the static MSVC CRT
+	set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
+	target_compile_options(${PROJECT_NAME} PRIVATE /MP /bigobj)
+	target_compile_definitions(${PROJECT_NAME} PRIVATE OS_WINDOWS)
+	target_compile_definitions(${PROJECT_NAME} PRIVATE
+		"DEBUG_MODE=$<IF:$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>,1,0>"
+		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
+	)
+
+	target_link_libraries(${PROJECT_NAME} PRIVATE
+		"${EXTERNAL_PLATFORM_DIR}/zip.lib"
+		"${EXTERNAL_PLATFORM_DIR}/OpenAL32.lib"
+		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
+		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
+		"${EXTERNAL_PLATFORM_DIR}/libswresample.a"
+		"${EXTERNAL_PLATFORM_DIR}/libswscale.a"
+		"${EXTERNAL_PLATFORM_DIR}/libavutil.a"
+		"${EXTERNAL_PLATFORM_DIR}/libx264.lib"
+		Mf
+		Mfplat
+		mfuuid
+		strmiids
+		Avrt
+		d3d11
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:d3dcompiler>"
+	)
+	target_link_options(${PROJECT_NAME} PRIVATE
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"
+	)
+
+	set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<CONFIG:Release>")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+	set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+else()
+	target_compile_options(${PROJECT_NAME} PRIVATE
+		-Wall
+		-Wno-overloaded-virtual
+		-Wno-parentheses
+		-Wno-reorder-ctor
+		-Wno-sometimes-uninitialized
+		-Wno-switch
+		-Wno-unknown-pragmas
+		${CLANG21_WARNING_SUPPRESSIONS}
+	)
+	target_compile_definitions(${PROJECT_NAME} PRIVATE
+		OS_UNIX
+		"DEBUG_MODE=$<IF:$<CONFIG:Release>,0,1>"
+		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
+		"$<$<CONFIG:Release>:NDEBUG>"
+	)
+
+	# Static-library order matters to GNU-family linkers: dependants precede the
+	# archives that satisfy them
+	target_link_libraries(${PROJECT_NAME} PRIVATE
+		"${EXTERNAL_PLATFORM_DIR}/libzip.a"
+		"${EXTERNAL_PLATFORM_DIR}/libopenal.a"
+		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
+		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
+		"${EXTERNAL_PLATFORM_DIR}/libswresample.a"
+		"${EXTERNAL_PLATFORM_DIR}/libswscale.a"
+		"${EXTERNAL_PLATFORM_DIR}/libavutil.a"
+		"${EXTERNAL_PLATFORM_DIR}/libx264.a"
+	)
 
 	if(APPLE)
+		message(STATUS "macOS platform")
+		target_compile_definitions(${PROJECT_NAME} PRIVATE OS_MAC GL_SILENCE_DEPRECATION)
+		set_target_properties(${PROJECT_NAME} PROPERTIES
+			CXX_VISIBILITY_PRESET hidden
+			VISIBILITY_INLINES_HIDDEN YES
+			BUILD_RPATH "@loader_path/Data/Libraries"
+			INSTALL_RPATH "@loader_path/Data/Libraries"
+			XCODE_GENERATE_SCHEME TRUE
+		)
 
-		message("Mac platform")
-		add_definitions("-DOS_MAC")
-		set(EXT_DIR "${CMAKE_SOURCE_DIR}/External/Mac")
-	
-		# FFmpeg dependencies
-		set(LIBS ${LIBS} "iconv")
-		set(LIBS ${LIBS} "-framework AudioToolBox")
-		set(LIBS ${LIBS} "-framework VideoToolBox")
-		set(LIBS ${LIBS} "-framework CoreMedia")
-		set(LIBS ${LIBS} "-framework CoreAudio")
-		set(LIBS ${LIBS} "-framework VideoDecodeAcceleration")
-		set(LIBS ${LIBS} "${EXT_DIR}/libx264.a")
-	
+		find_library(ICONV_LIBRARY iconv REQUIRED)
+		find_library(AUDIO_TOOLBOX_FRAMEWORK AudioToolbox REQUIRED)
+		find_library(CORE_AUDIO_FRAMEWORK CoreAudio REQUIRED)
+		target_link_libraries(${PROJECT_NAME} PRIVATE
+			${ICONV_LIBRARY}
+			${AUDIO_TOOLBOX_FRAMEWORK}
+			${CORE_AUDIO_FRAMEWORK}
+		)
+
+		message(STATUS "OpenMP runtime = ${OPENMP_RUNTIME_LIBRARY}")
 	else()
-
-		message("Linux platform")
-		set(EXT_DIR "${CMAKE_SOURCE_DIR}/External/Linux")
-		set(LIBS ${LIBS} "-lvdpau -lva -lva-drm -lva-x11 -lsndio -lx264 -lgnutls -lnettle")
-		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath='$ORIGIN'/Data") # Find .so in Data folder
-
+		message(STATUS "Linux platform")
+		set_target_properties(${PROJECT_NAME} PROPERTIES
+			BUILD_RPATH "$ORIGIN/Data/Libraries"
+			INSTALL_RPATH "$ORIGIN/Data/Libraries"
+		)
 	endif()
-
-	set(LIBS ${LIBS} "${EXT_DIR}/libz.a" "${EXT_DIR}/libzip.a" "${EXT_DIR}/libopenal.a") # Zip, OpenAL (precompiled)
-	set(LIBS ${LIBS} "bz2" "lzma") # Zip dependencies
-	
-	# Add OpenMP
-	find_package(OpenMP REQUIRED)
-	set(LIBS ${LIBS} OpenMP::OpenMP_CXX)
-
 endif()
 
-message("DEV_DIR = ${DEV_DIR}")
-message("EXT_DIR = ${EXT_DIR}")
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	Qt5::Widgets
+	Qt5::Gui
+	Qt5::Network
+)
 
-# Add Qt
-set(Qt_DIR "${DEV_DIR}/Qt/${QT_VERSION}/build")
-message("Qt_DIR = ${Qt_DIR}")
-set(CMAKE_PREFIX_PATH ${Qt_DIR})
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC OFF)
-find_package(Qt5 COMPONENTS Widgets Gui Network REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
-add_definitions(${Qt5Widgets_DEFINITIONS})
-set(LIBS ${LIBS} Qt5::Widgets Qt5::Network)
+# Copy datafiles from GmProjects into build folder for developer configurations
+set(DATAFILES_SOURCE_DIR "${REPO_DIR}/GmProject/datafiles")
+if(WIN32)
+	set(DATAFILES_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
+else()
+	set(DATAFILES_OUTPUT_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+endif()
 
-# Find sprite and shader assets and create a project
-file(GLOB_RECURSE ASSETS RELATIVE "${CMAKE_SOURCE_DIR}" "*.png" "*.vsh" "*.fsh" "*.d3d")
-source_group(TREE "${CMAKE_SOURCE_DIR}/Asset" FILES ${ASSETS})
-add_custom_target(Assets SOURCES ${ASSETS})
+add_custom_command(
+	TARGET ${PROJECT_NAME} POST_BUILD
+	COMMAND "${CMAKE_COMMAND}" -E
+		"$<IF:$<CONFIG:Release>,echo,copy_directory>"
+		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_SOURCE_DIR}>"
+		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_OUTPUT_DIR}>"
+	VERBATIM
+)
 
-# Generate index.qrc file to embed assets into executable
-set(INDEX_XML "<!-- Note: Auto-generated, do not modify! -->\n<RCC>\n\t<qresource prefix=\"/\">")
-foreach(CURRENT_ASSET ${ASSETS})
-	string(REGEX REPLACE "Asset/" "" CURRENT_ASSET "${CURRENT_ASSET}")
-	set(INDEX_XML "${INDEX_XML}\n\t\t<file>${CURRENT_ASSET}</file>")
-endforeach()
-set(INDEX_XML "${INDEX_XML}\n\t</qresource>\n</RCC>")
+# Installation layout
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+	set(CMAKE_INSTALL_PREFIX "${INSTALL_DIR}/Mine-imator"
+		CACHE PATH "Mine-imator installation directory" FORCE)
+endif()
+install(TARGETS ${PROJECT_NAME}
+	RUNTIME DESTINATION "."
+	BUNDLE DESTINATION "."
+)
+install(DIRECTORY
+	"${DATAFILES_SOURCE_DIR}/Data"
+	"${DATAFILES_SOURCE_DIR}/Particles"
+	"${DATAFILES_SOURCE_DIR}/Schematics"
+	DESTINATION "."
+	PATTERN "Libraries" EXCLUDE
+)
+install(DIRECTORY DESTINATION "Skins")
 
-set(QT_INDEX_FILE "${CMAKE_SOURCE_DIR}/Asset/index.qrc")
-file(REMOVE ${QT_INDEX_FILE})
-file(WRITE ${QT_INDEX_FILE} "${INDEX_XML}")
-add_definitions(-DASSETS_DIR="${CMAKE_SOURCE_DIR}/Asset")
-
-# Add external libraries
-set(INCLUDE_DIRS ${CMAKE_SOURCE_DIR})
-set(INCLUDE_DIRS ${INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
-set(INCLUDE_DIRS ${INCLUDE_DIRS} "${CMAKE_SOURCE_DIR}/External")
-set(INCLUDE_DIRS ${INCLUDE_DIRS} "${DEV_DIR}/Libzip/libzip-1.9.2/lib")
-set(INCLUDE_DIRS ${INCLUDE_DIRS} "${DEV_DIR}/FreeType/freetype-2.9.1/include")
-set(INCLUDE_DIRS ${INCLUDE_DIRS} "${DEV_DIR}/FFmpeg/ffmpeg-5.0")
-set(INCLUDE_DIRS ${INCLUDE_DIRS} "${DEV_DIR}/OpenAL/openal-soft-1.22.0/include")
-
-# Add FFmpeg (precompiled)
-set(LIBS ${LIBS} "${EXT_DIR}/libavformat.a")
-set(LIBS ${LIBS} "${EXT_DIR}/libavcodec.a")
-set(LIBS ${LIBS} "${EXT_DIR}/libswresample.a")
-set(LIBS ${LIBS} "${EXT_DIR}/libswscale.a")
-set(LIBS ${LIBS} "${EXT_DIR}/libavutil.a")
-
-# Add C++ sources
-file(GLOB_RECURSE SRCS RELATIVE "${CMAKE_SOURCE_DIR}" "*.cpp" "*.hpp")
-source_group(TREE "${CMAKE_SOURCE_DIR}" PREFIX ${PROJECT_NAME} FILES ${SRCS})
-qt5_add_resources(SRCS ${QT_INDEX_FILE})
-
-# Create executable
-add_executable(${PROJECT_NAME} ${SRCS} ${APPICON_RC})
-target_precompile_headers(${PROJECT_NAME} PUBLIC "Common.hpp")
-target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${LIBS})
-
-# Project file settings
-set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<$<CONFIG:Debug>:0>$<$<CONFIG:Release>:1>")
-set_directory_properties(PROPERTIES VS_STARTUP_PROJECT Mine-imator)
-if (WIN32 AND WINDOWS_32BIT)
-	set_target_properties(${PROJECT_NAME} PROPERTIES
-		LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/Release-Win32"
-		RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/Release-Win32"
+if(WIN32)
+	install(FILES "${EXTERNAL_PLATFORM_DIR}/vcomp140.dll" DESTINATION ".")
+	install(DIRECTORY DESTINATION "Projects")
+elseif(APPLE)
+	install(FILES "${OPENMP_RUNTIME_LIBRARY}" DESTINATION "Data/Libraries" RENAME "libomp.dylib")
+	set(OPENMP_INSTALLED_EXECUTABLE "\${CMAKE_INSTALL_PREFIX}/Mine-imator")
+	install(CODE
+		"execute_process(
+			COMMAND \"${CMAKE_INSTALL_NAME_TOOL}\"
+				-change
+				\"${OPENMP_LINKED_LIBRARY}\"
+				\"@executable_path/Data/Libraries/libomp.dylib\"
+				\"${OPENMP_INSTALLED_EXECUTABLE}\"
+				RESULT_VARIABLE OPENMP_PATCH_RESULT
+		)
+		if(NOT OPENMP_PATCH_RESULT EQUAL 0)
+			message(FATAL_ERROR \"Could not patch the installed OpenMP library path\")
+		endif()"
 	)
-elseif (APPLE)
-	set_target_properties(${PROJECT_NAME} PROPERTIES
-		LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}"
-		RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}"
+else()
+	install(DIRECTORY "${EXTERNAL_PLATFORM_DIR}/" DESTINATION "Data/Libraries"
+		FILES_MATCHING PATTERN "*.so*"
+	)
+endif()
+
+# Create CppGen shortcut in IDE
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+	add_custom_target(CppGen)
+
+	set_target_properties(CppGen PROPERTIES
+		XCODE_GENERATE_SCHEME TRUE
+		XCODE_SCHEME_EXECUTABLE "${CPPGEN_EXE}"
+		XCODE_SCHEME_ARGUMENTS
+			"${REPO_DIR};${CPPGEN_DIR}/gml.json"
+		XCODE_SCHEME_WORKING_DIRECTORY "${CPPGEN_DIR}"
+	)
+else()
+	add_custom_target(CppGen
+		COMMAND "${CPPGEN_EXE}" "${REPO_DIR}" "${CPPGEN_DIR}/gml.json"
+		WORKING_DIRECTORY "${CPPGEN_DIR}"
+		COMMENT "Running CppGen"
+		VERBATIM
+		USES_TERMINAL
 	)
 endif()

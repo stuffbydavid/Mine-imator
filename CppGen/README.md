@@ -7,12 +7,18 @@ Usage:
 CppGen.exe [Repository root] [gml.json file]
 ```
 
-Build and run:
-
+Build and run (Windows):
+```
+cd CppGen
+cmake -S . -B build -A x64
+cmake --build build --parallel --config Release
+cd build && ./CppGen.exe
+```
+Build and run (Linux/Mac):
 ```
 cd CppGen
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
-build/CppGen.exe
+cd build && ./CppGen
 ```
 The repository root directory defaults to `../../`, while the `gml.json` file path defaults to `../gml.json`.
