@@ -40,7 +40,7 @@ namespace CppProject
 	Random::ThreadData Random::threadData[OPENMP_MAX_THREADS];
 	IntType Printer::indent = 0;
 
-	AppHandler::AppHandler(int argc, char* argv[])
+	AppHandler::AppHandler(int& argc, char* argv[])
 	{
 		try
 		{

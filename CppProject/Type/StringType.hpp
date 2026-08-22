@@ -137,5 +137,5 @@ namespace CppProject
 	};
 
 	// StringType id used for hash table
-	static uint qHash(const StringType& key) { return key.GetId(); }
+	inline uint qHash(const StringType& key, uint seed = 0) { return ::qHash(key.GetId(), seed); }
 }

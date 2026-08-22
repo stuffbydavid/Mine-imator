@@ -35,7 +35,6 @@ function macros()
 	// Directories
 	#macro file_directory				game_save_id
 	#macro data_directory				working_directory + "Data/"
-	#macro projects_directory			working_directory + "Projects/"
 	#macro schematics_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
 	#macro fonts_directory				data_directory + "Fonts/"

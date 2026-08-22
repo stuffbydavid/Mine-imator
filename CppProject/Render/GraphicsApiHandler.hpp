@@ -179,6 +179,7 @@ namespace CppProject
 		QString glVersion = "";
 		QHash<IntType, IntType> glBlendMap;
 		IntType glMrtCount = 0;
+		static bool glEnableLogger;
 	#endif
 
 		static GraphicsApiHandler* handler;

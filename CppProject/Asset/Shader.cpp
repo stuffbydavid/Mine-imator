@@ -88,6 +88,10 @@ namespace CppProject
 		QString gl43shader = "#version 430\nlayout(std430, binding = 2) buffer _ssbo { struct { int a; } _obj[1024]; };\nvoid main() {}";
 		QString gl40shader = "#version 400\nuniform sampler2D _sampler;\nout vec2 _lod;\nvoid main() { _lod = textureQueryLod(_sampler, vec2(0.0, 0.0)); }";
 
+		QtMessageHandler oldHandler = qInstallMessageHandler(
+			[](QtMsgType type, const QMessageLogContext& ctx, const QString& msg){}
+		);
+		GraphicsApiHandler::glEnableLogger = false;
 		QOpenGLShader sh(QOpenGLShader::Vertex);
 		if (sh.compileSourceCode(gl40shader))
 		{
@@ -103,11 +107,9 @@ namespace CppProject
 				glslVersion = "430";
 			}
 		}
+		GraphicsApiHandler::glEnableLogger = true;
+		qInstallMessageHandler(oldHandler);
 
-		// Clear errors on Mac/Linux
-	#if !OS_WINDOWS
-		QProcess::execute("clear");
-	#endif
 		DEBUG("GLSL version " + glslVersion);
 	#endif
 	}

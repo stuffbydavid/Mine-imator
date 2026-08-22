@@ -375,7 +375,6 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 			if (keyboard_check(vk_control))
 				line = tbx.lines - 1
 			
-			line = line
 			textbox_select_startpos = string_length(tbx.line[textbox_select_endline])
 			textbox_select_endline = line
 			textbox_select_endpos = textbox_select_startpos

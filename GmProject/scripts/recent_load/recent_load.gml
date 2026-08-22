@@ -6,16 +6,17 @@ function recent_load()
 		return 0
 	
 	var recentmap = json_load(recent_file);
+	if (!ds_map_valid(recentmap))
+		return 0
 	
-	if (recentmap = undefined)
+	var recentlist = recentmap[?"list"];
+	if (!ds_list_valid(recentlist))
 		return 0
 	
 	with (obj_recent)
 		instance_destroy()
 	
 	ds_list_clear(recent_list)
-	
-	var recentlist = recentmap[?"list"];
 	
 	for (var i = 0; i < ds_list_size(recentlist); i++)
 	{

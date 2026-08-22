@@ -105,14 +105,12 @@ namespace CppProject
 		SubmitBatch();
 
 		// Free unused batches
-		IntType batchesFreed = 0;
 		for (IntType b = 0; b < activeBatches.size(); b++)
 		{
 			Batch* batch = activeBatches[b];
 			if (!batch->isInCurrentFrame)
 			{
 				delete batch;
-				batchesFreed++;
 				activeBatches.removeAt(b--);
 			}
 			else

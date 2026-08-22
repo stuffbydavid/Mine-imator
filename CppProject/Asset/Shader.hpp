@@ -135,7 +135,7 @@ namespace CppProject
 		static ID3D11InputLayout* d3dInputLayout[4];
 	#else
 		QOpenGLShaderProgram* program = nullptr;
-		GLuint glSsboId, glSsboBlockIndex;
+		GLuint glSsboId = 0, glSsboBlockIndex = GL_INVALID_INDEX;
 	#endif
 
 		// Whether batching is supported for objects (requires Direct3D 11/OpenGL 4.3+)

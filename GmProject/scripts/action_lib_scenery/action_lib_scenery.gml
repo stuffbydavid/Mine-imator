@@ -14,7 +14,6 @@ function action_lib_scenery(res)
 	else
 	{
 		var fn = "";
-		res = argument0
 		if (res = e_option.IMPORT_WORLD)
 		{
 			world_import_begin(false, temp_edit)

@@ -29,7 +29,7 @@ namespace CppProject
 	// Application handler
 	struct AppHandler : QObject
 	{
-		AppHandler(int argc, char* argv[]);
+		AppHandler(int& argc, char* argv[]);
 		~AppHandler();
 
 		// Run QApplication instance.

@@ -183,6 +183,26 @@ namespace CppProject
 		return list;
 	}
 
+	QString GetFilenameFilterDefaultSuffix(StringType str)
+	{
+		if (str.IsEmpty())
+			return "";
+
+		QStringList strSplit = str.Split('|');
+		if (strSplit.size() < 2)
+			return "";
+
+		QString filter = strSplit.at(1);
+		filter.replace(";", " ");
+		QStringList patterns = filter.split(QChar(' '), Qt::SkipEmptyParts);
+		for (const QString& pattern : patterns)
+		{
+			if (pattern.startsWith("*.") && pattern.size() > 2)
+				return pattern.mid(2);
+		}
+		return "";
+	}
+
 	StringType get_open_filename_ext(StringType filter, StringType file, StringType dir, StringType caption)
 	{
 		QFileDialog fd;
@@ -215,6 +235,9 @@ namespace CppProject
 		fd.setAcceptMode(QFileDialog::AcceptSave);
 		fd.setFileMode(QFileDialog::AnyFile);
 		fd.setNameFilters(GetFilenameFilterList(filter));
+		QString defaultSuffix = GetFilenameFilterDefaultSuffix(filter);
+		if (!defaultSuffix.isEmpty())
+			fd.setDefaultSuffix(defaultSuffix);
 		if (file != "")
 		{
 			if (!file.Contains("/") && !dir.IsEmpty())
@@ -229,7 +252,12 @@ namespace CppProject
 
 		QStringList files = fd.selectedFiles();
 		if (files.size() > 0)
-			return files[0];
+		{
+			QString filename = files[0];
+			if (!defaultSuffix.isEmpty() && QFileInfo(filename).suffix().isEmpty())
+				filename += "." + defaultSuffix;
+			return filename;
+		}
 		return "";
 	}
 

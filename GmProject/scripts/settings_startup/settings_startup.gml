@@ -12,7 +12,7 @@ function settings_startup()
 	setting_minecraft_assets_new_changes = ""
 	setting_minecraft_assets_new_image = ""
 	
-	setting_project_folder = projects_directory
+	setting_project_folder = projects_directory_get()
 	directory_create_lib(setting_project_folder)
 	
 	closed_toast_list = ds_list_create()
