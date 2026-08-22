@@ -2,3 +2,4 @@ build*/
 /install*/
 /CppGen/Logs/
 /CppGen/*/Logs/
+/CppProject/Generated/

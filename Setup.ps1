@@ -41,15 +41,19 @@ if ($architectureKey -eq "x64") {
     $cmakeArchitecture = "x64"
     $architectureSuffix = ""
     $outputFolderName = "Win64"
+    $cppGenFolderName = "Win64"
 } else {
     $cmakeArchitecture = "Win32"
     $architectureSuffix = "-Win32"
     $outputFolderName = "Win32"
+    $cppGenFolderName = "Win32"
 }
 
 $buildVsDirectory = Join-Path $PSScriptRoot "build-vs${architectureSuffix}"
 $buildReleaseDirectory = Join-Path $PSScriptRoot "build-release${architectureSuffix}"
 $cppProjectDirectory = Join-Path $PSScriptRoot "CppProject"
+$cppGenDirectory = Join-Path $PSScriptRoot "CppGen"
+$generatedDirectory = Join-Path $cppProjectDirectory "Generated"
 $externalDirectory = Join-Path $cppProjectDirectory "External"
 $sourceArchiveDirectory = Join-Path $externalDirectory "Sources"
 $outputDirectory = Join-Path $externalDirectory $outputFolderName
@@ -250,6 +254,30 @@ function Copy-BuiltFile {
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
     Copy-Item -LiteralPath $Source -Destination $outputDirectory -Force
     Write-Host "Copied $(Split-Path -Leaf $Source) to $outputDirectory"
+}
+
+function Ensure-GeneratedSources {
+    if (Test-Path -LiteralPath $generatedDirectory -PathType Container) {
+        return
+    }
+
+    $cppGenExecutable = Join-Path $cppGenDirectory "$cppGenFolderName\CppGen.exe"
+    Require-File -Path $cppGenExecutable -Description "CppGen executable"
+    Write-Host "Generated C++ sources were not found; running CppGen."
+    Push-Location $cppGenDirectory
+    try {
+        & $cppGenExecutable $PSScriptRoot (Join-Path $cppGenDirectory "gml.json")
+        if ($LASTEXITCODE -ne 0) {
+            throw "CppGen failed with exit code $LASTEXITCODE."
+        }
+    }
+    finally {
+        Pop-Location
+    }
+
+    if (-not (Test-Path -LiteralPath $generatedDirectory -PathType Container)) {
+        throw "CppGen did not create the generated source directory: $generatedDirectory"
+    }
 }
 
 function Ensure-Jom {
@@ -640,6 +668,8 @@ function Build-Qt {
 
     Write-Host "Qt $qtRef for $Architecture was installed to $qtInstallDirectory"
 }
+
+Ensure-GeneratedSources
 
 switch ($actionKey) {
     "qt" {

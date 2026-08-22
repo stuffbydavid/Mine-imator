@@ -22,3 +22,5 @@ cmake --build build --parallel
 cd build && ./CppGen
 ```
 The repository root directory defaults to `../../`, while the `gml.json` file path defaults to `../gml.json`.
+
+This program runs automatically by the Setup script to populate `CppProject/Generated/` and can be directly accessed via shortcuts in Visual Studio, XCode and as a task in Visual Studio Code (see `BUILD.md`).

@@ -46,6 +46,7 @@ case "$(uname -s)" in
     Darwin)
         platform=macos
         output_directory="$external_directory/Mac"
+        cppgen_folder_name=Mac
         macos_arch="${requested_architecture:-$(uname -m)}"
         case "$macos_arch" in
             x86_64) macos_deployment_target=10.15 ;;
@@ -63,6 +64,7 @@ case "$(uname -s)" in
         fi
         platform=linux
         output_directory="$external_directory/Linux"
+        cppgen_folder_name=Linux
         ;;
     *)
         echo "Unsupported operating system: $(uname -s)" >&2
@@ -83,6 +85,8 @@ qt_directory="$dev_directory/Qt/$qt_version"
 qt_source_directory="$qt_directory/qt5"
 qt_build_directory="$qt_directory/build"
 qt_install_directory="$qt_directory/install"
+cppgen_directory="$script_root/CppGen"
+generated_directory="$cpp_project_directory/Generated"
 ffmpeg_directory="$dev_directory/FFmpeg/ffmpeg-$ffmpeg_version"
 x264_directory="$dev_directory/x264/x264-master"
 libzip_directory="$dev_directory/Libzip/libzip-$libzip_version"
@@ -98,6 +102,33 @@ require_command() {
 require_file() {
     if [ ! -f "$1" ]; then
         echo "$2 was not found at $1." >&2
+        exit 1
+    fi
+}
+
+ensure_generated_sources() {
+    if [ -d "$generated_directory" ]; then
+        return
+    fi
+
+    cppgen_executable="$cppgen_directory/$cppgen_folder_name/CppGen"
+    require_file "$cppgen_executable" "CppGen executable"
+    if [ ! -x "$cppgen_executable" ]; then
+        echo "CppGen executable is not executable: $cppgen_executable" >&2
+        exit 1
+    fi
+
+    echo "Generated C++ sources were not found; running CppGen."
+    if ! (
+        cd "$cppgen_directory"
+        "$cppgen_executable" "$script_root" "$cppgen_directory/gml.json"
+    ); then
+        echo "CppGen failed." >&2
+        exit 1
+    fi
+
+    if [ ! -d "$generated_directory" ]; then
+        echo "CppGen did not create the generated source directory: $generated_directory" >&2
         exit 1
     fi
 }
@@ -445,6 +476,8 @@ build_qt() {
     )
     echo "Qt $qt_ref for $platform was installed to $qt_install_directory"
 }
+
+ensure_generated_sources
 
 case "$action_key" in
     qt)
