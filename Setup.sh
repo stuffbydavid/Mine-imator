@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
-# Usage: ./Setup.sh [Qt|FFmpeg|Libzip|OpenAL|Xcode|Release] [x86_64|arm64]
+# Usage: ./Setup.sh [Qt|FFmpeg|Libzip|OpenAL|Xcode|CppGen|Release] [x86_64|arm64]
 #   Qt|FFmpeg|Libzip|OpenAL:
 #       Unzips or downloads external libraries into DEV_DIR, then builds them
 #   Xcode:
-#       Generates and opens an Xcode project file
+#       For Mac OS, generates and opens an Xcode project file
+#   CppGen:
+#       Generates C++ sources from the GameMaker project and copies modified sprites/shaders
 #   Release:
 #       Creates a release build and install folder for publishing
 #   x86_64|arm64:
@@ -19,16 +21,16 @@ if [ -z "${DEV_DIR:-}" ]; then
 fi
 
 if [ "$#" -gt 2 ]; then
-    echo "Usage: $0 [Qt|FFmpeg|Libzip|OpenAL|Xcode|Release] [x86_64|arm64]" >&2
+    echo "Usage: $0 [Qt|FFmpeg|Libzip|OpenAL|Xcode|CppGen|Release] [x86_64|arm64]" >&2
     exit 1
 fi
 
 action="${1:-Qt}" # Qt is the default action
 action_key=$(printf '%s' "$action" | tr '[:upper:]' '[:lower:]')
 case "$action_key" in
-    qt|ffmpeg|libzip|openal|xcode|release) ;;
+    qt|ffmpeg|libzip|openal|xcode|cppgen|release) ;;
     *)
-        echo "Unknown action '$action'. Use Qt, FFmpeg, Libzip, OpenAL, Xcode or Release." >&2
+        echo "Unknown action '$action'. Use Qt, FFmpeg, Libzip, OpenAL, Xcode, CppGen or Release." >&2
         exit 1
         ;;
 esac
@@ -36,11 +38,13 @@ esac
 requested_architecture="${2:-}"
 
 script_root=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
-build_xcode_directory="$script_root/build-xcode"
-build_release_directory="$script_root/build-release"
 cpp_project_directory="$script_root/CppProject"
+cppgen_directory="$script_root/CppGen"
+generated_directory="$cpp_project_directory/Generated"
 external_directory="$cpp_project_directory/External"
 source_archive_directory="$external_directory/Sources"
+build_xcode_directory="$script_root/build-xcode"
+build_release_directory="$script_root/build-release"
 
 case "$(uname -s)" in
     Darwin)
@@ -85,8 +89,6 @@ qt_directory="$dev_directory/Qt/$qt_version"
 qt_source_directory="$qt_directory/qt5"
 qt_build_directory="$qt_directory/build"
 qt_install_directory="$qt_directory/install"
-cppgen_directory="$script_root/CppGen"
-generated_directory="$cpp_project_directory/Generated"
 ffmpeg_directory="$dev_directory/FFmpeg/ffmpeg-$ffmpeg_version"
 x264_directory="$dev_directory/x264/x264-master"
 libzip_directory="$dev_directory/Libzip/libzip-$libzip_version"
@@ -106,11 +108,7 @@ require_file() {
     fi
 }
 
-ensure_generated_sources() {
-    if [ -d "$generated_directory" ]; then
-        return
-    fi
-
+invoke_cppgen() {
     cppgen_executable="$cppgen_directory/$cppgen_folder_name/CppGen"
     require_file "$cppgen_executable" "CppGen executable"
     if [ ! -x "$cppgen_executable" ]; then
@@ -118,7 +116,7 @@ ensure_generated_sources() {
         exit 1
     fi
 
-    echo "Generated C++ sources were not found; running CppGen."
+    echo "Running CppGen."
     if ! (
         cd "$cppgen_directory"
         "$cppgen_executable" "$script_root" "$cppgen_directory/gml.json"
@@ -131,6 +129,14 @@ ensure_generated_sources() {
         echo "CppGen did not create the generated source directory: $generated_directory" >&2
         exit 1
     fi
+}
+
+ensure_generated_sources() {
+    if [ -d "$generated_directory" ]; then
+        return
+    fi
+
+    invoke_cppgen
 }
 
 ensure_source_archive() {
@@ -477,10 +483,9 @@ build_qt() {
     echo "Qt $qt_ref for $platform was installed to $qt_install_directory"
 }
 
-ensure_generated_sources
-
 case "$action_key" in
     qt)
+        ensure_generated_sources
         ensure_source_archive FFmpeg OpenAL Libzip
         build_qt
         ;;
@@ -497,12 +502,21 @@ case "$action_key" in
         build_openal
         ;;
     xcode)
+        if [ "$platform" = "linux" ]; then
+            echo "The Xcode action is supported only on Mac OS." >&2
+            exit 1
+        fi
+        ensure_generated_sources
         cmake \
             -S "$cpp_project_directory" -B "$build_xcode_directory" -G "Xcode" \
             -DCMAKE_OSX_ARCHITECTURES=$macos_arch
         open "$build_xcode_directory/Mine-imator.xcodeproj"
         ;;
+    cppgen)
+        invoke_cppgen
+        ;;
     release)
+        ensure_generated_sources
         if [ "$platform" = "macos" ]; then
             cmake \
                 -S "$cpp_project_directory" -B "$build_release_directory" \

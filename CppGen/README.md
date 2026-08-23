@@ -1,6 +1,6 @@
 # CppGen
 
-Converts the GameMaker scripts and objects of Mine-imator found in `GmProject` to C++ code into `CppProject/Generated/`. The missing GML functions, as defined in `gml.json`, are then mapped to C++ replacements found in `CppProject/Gml/`. Note that this software is not general-purpose and won't work outside the Mine-imator project.
+Converts the GameMaker scripts and objects of Mine-imator found in `GmProject` to C++ code into `CppProject/Generated/`. The missing GML functions, as defined in `gml.json`, are then mapped to C++ replacements found in `CppProject/Gml/`. Modified sprites and shaders are also copied to `CppProject/Asset/` and optionally synced if changes were later made to them outside of GameMaker. Note that this software is not general-purpose and won't work outside the Mine-imator project.
 
 Usage:
 ```
@@ -14,7 +14,7 @@ cmake -S . -B build -A x64
 cmake --build build --parallel --config Release
 cd build && ./CppGen.exe
 ```
-Build and run (Linux/Mac):
+Build and run (Mac/Linux):
 ```
 cd CppGen
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release

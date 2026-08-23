@@ -12,73 +12,77 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
 
 ## Building Mine-imator (Windows 64-bit)
-1. Set the environment variable `DEV_DIR` to `C:\Dev`
-    1. Open command prompt as Administrator
-    2. Run `setx DEV_DIR "C:\Dev" /M`
+1. Set up environment and `DEV_DIR` variable
+    1. Open command prompt (via Start menu, right click and run as Administrator)
+    2. Run `powershell -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"` to enable PowerShell scripts.
+    3. Run `setx DEV_DIR "C:\Dev" /M`
+    4. Run `mkdir C:\Dev`
 2. Get Visual Studio from https://visualstudio.microsoft.com/ (2022 or 2026)
-    * Install Desktop development with C++
-3. Get Python from https://www.python.org/downloads/
-    * When asked, add to PATH
-4. Get Strawberry Perl from https://strawberryperl.com/
-5. Open Developer PowerShell for VS (via Start menu)
-6. Get Mine-imator sources
+    1. Under "Workloads", select "Desktop development with C++"
+    2. Under "Individual Components", search for "Git for Windows" and select it
+    3. Click "Install"
+3. Get Strawberry Perl from https://strawberryperl.com/
+4. Open Windows PowerShell (via Start menu)
+5. Get Mine-imator sources
     1. Run `cd $env:DEV_DIR`
     2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
     3. Run `cd Mine-imator`
-7. Set up external libraries and build Qt
+6. Set up external libraries and build Qt
     * Run `.\Setup.ps1`
-8. Generate Visual Studio project for debugging **(recommended)**
+7. Generate Visual Studio project for debugging **(recommended)**
     1. Run `.\Setup.ps1 VisualStudio`
     2. The generated Mine-imator solution will open in Visual Studio
     3. To debug Qt types, install Qt Visual Studio Tools from Extensions > Manage Extensions **(recommended)**
         * Add `C:\Dev\Qt\5.15.19\install\bin\qmake.exe` to Tools > Options > Qt > Versions
     4. Run in Debug or RelWithDebInfo mode
-9. After GML changes
+8. After GML changes
     1. Right-click and build the `CppGen` target in Visual Studio
-    2. Alternatively, run `CppGen.exe` in the `CppGen\Win64\` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\`
+    2. Alternatively, run `.\Setup.ps1 CppGen` or `CppGen.exe` in the `CppGen\Win64\` folder
+    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\` and modified sprites/shaders are copied into `CppProject/Asset/`
     4. **Note**: These resulting `.cpp` files should not be manually edited!
-10. Generate Release build in `install/`
+9. Generate Release build in `install\`
     * Run `.\Setup.ps1 Release`
 
 ## Building Mine-imator (Mac OS Intel)
-1. Open terminal (Command+Space and type terminal)
-2. Run `xcode-select --install`
-3. Run `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-4. Run `brew install cmake libomp`
-5. Run `export DEV_DIR=$HOME/Dev` (optionally add as an environment variable)
-6. Get Mine-imator sources
+1. Open terminal (⌘+Space and type terminal)
+2. Set up environment and `DEV_DIR` variable
+    1. Run `xcode-select --install`
+    2. Run `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+    3. Run `brew install cmake libomp`
+    4. Run `export DEV_DIR=$HOME/Dev` (optionally add as an environment variable)
+    5. Run `mkdir -p "$DEV_DIR"`
+3. Get Mine-imator sources
     1. Run `cd $DEV_DIR`
     2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
     3. Run `cd Mine-imator`
-7. Set up external libraries and build Qt
+4. Set up external libraries and build Qt
     * Run `./Setup.sh`
-8. Generate Xcode project for debugging **(recommended)**
+5. Generate Xcode project for debugging **(recommended)**
     1. Install Xcode from the App Store into `/Applications`
     2. Run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
     3. Run `sudo xcodebuild -license accept`
     4. Run `sudo xcodebuild -runFirstLaunch`
     5. Run `./Setup.sh Xcode`
     6. The generated Mine-imator project file will open in Xcode
-    7. Build project (Command+B) or run (Command+R)
-9. After GML changes
+    7. Build project (⌘+B) or run (⌘+R)
+6. After GML changes
     1. In Xcode, select the `CppGen` Scheme next to "My Mac"
-    2. Run (Command+R)
-    3. Alternatively, run `./CppGen` in the `CppGen/Mac/` folder
-    4. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/`
+    2. Run (⌘+R)
+    3. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Mac/` folder
+    4. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/` and modified sprites/shaders are copied into `CppProject/Asset/`
     5. **Note**: These resulting `.cpp` files should not be manually edited!
-10. Generate release build in `install/`
+7. Generate release build in `install/`
     * Run `./Setup.sh Release`
 
 ## Building Mine-imator (Mac OS ARM)
 **Note**: Mine-imator has not been officially built or tested on the ARM architecture.
-1. Follow steps 1-7 for Mac OS Intel setup
+1. Follow steps 1-4 for Mac OS Intel setup
 2. Run `brew install nasm yasm pkg-config`
 3. Build libraries for Mac OS ARM
     1. Run `./Setup.sh FFmpeg`
     2. Run `./Setup.sh Libzip`
     3. Run `./Setup.sh OpenAL`
-4. Follow steps 8-10 for Mac OS Intel setup
+4. Follow steps 5-7 for Mac OS Intel setup
 
 ## Building Mine-imator (Linux)
 1. Open terminal
@@ -87,34 +91,36 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
     * **Debian**: [Enable Source Code Repositories](https://wiki.debian.org/SourcesList), then run `sudo apt build-dep -y qtbase5-dev && sudo apt install -y git cmake perl clang libomp-dev`
     * **Fedora**: Run `sudo dnf install -y dnf-plugins-core && sudo dnf builddep -y qt5-qtbase && sudo dnf install -y git cmake perl clang libomp-devel`
     * **Arch**: Run `sudo pacman -Syu --needed base-devel git cmake perl clang openmp`
-4. Run `export DEV_DIR=$HOME/Dev` (optionally add as an environment variable)
-5. Get Mine-imator sources
+3. Set up `DEV_DIR` variable
+    1. Run `export DEV_DIR=$HOME/Dev` (optionally add as an environment variable)
+    2. Run `mkdir -p "$DEV_DIR"`
+4. Get Mine-imator sources
     1. Run `cd $DEV_DIR`
     2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
     3. Run `cd Mine-imator`
-6. Set up external libraries and build Qt
+5. Set up external libraries and build Qt
     * Run `./Setup.sh`
-7. Use Visual Studio Code project for debugging **(recommended)**
+6. Use Visual Studio Code project for debugging **(recommended)**
     1. Get Visual Studio Code from https://code.visualstudio.com/
     2. Run `code CppProject` to open the Mine-imator C++ project
-    4. Install the **C/C++** and **CMake Tools** extensions
-    5. Run command `CMake: Select a Kit` (Ctrl+Shift+P) and choose `Clang <version>`
-    6. Run command `CMake: Set Launch/Debug Target` and choose `Mine-imator`
-    7. Debug with Shift+F5 or command `CMake: Debug`
-8. After GML changes
+    3. Install the **C/C++** and **CMake Tools** extensions
+    4. Run command `CMake: Select a Kit` (Ctrl+Shift+P) and choose `Clang <version>`
+    5. Run command `CMake: Set Launch/Debug Target` and choose `Mine-imator`
+    6. Debug with Shift+F5 or command `CMake: Debug`
+7. After GML changes
     1. Run command `CMake: Run Task` and choose `Run CppGen`.
-    2. Alternatively, run `./CppGen` in the `CppGen/Linux/` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/`
+    2. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Linux/` folder
+    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/` and modified sprites/shaders are copied into `CppProject/Asset/`
     4. **Note**: These resulting `.cpp` files should not be manually edited!
-9. Generate Release build in `install/`
+8. Generate Release build in `install/`
     * Run `./Setup.sh Release`
 
 ## Building libraries (Windows 64-bit) (optional)
 1. Get MSYS2 from https://www.msys2.org/
     1. Install into `C:\Dev\msys64`
-    2. Open MSYS2 prompt
-    3. Run `pacman -S --noconfirm make nasm diffutils pkgconf`
-2. Open Developer PowerShell for VS
+    2. Open MSYS2 MSYS prompt (via Start menu)
+    3. Run `pacman -S --noconfirm make nasm pkgconf`
+2. Open Windows PowerShell
 3. Run `cd $env:DEV_DIR\Mine-imator`
 4. Build libraries for Windows 64-bit
     1. Run `.\Setup.ps1 OpenSSL`
@@ -151,15 +157,15 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
 7. Libraries are copied into `CppProject/External/Linux`
 
 ## Building Mine-imator (on Windows 64-bit for 32-bit)
-1. Follow steps 1-6 for Windows 64-bit setup
+1. Follow steps 1-5 for Windows 64-bit setup
 2. Set up external libraries and build Qt for Windows 32-bit
     * Run `.\Setup.ps1 Qt x86`
-3. Generate Release build in `install-Win32/`
+3. Generate Release build in `install-Win32\`
     * Run `.\Setup.ps1 Release x86`
 
 ## Building Mine-imator (on Mac OS ARM for Intel)
 **Note**: Mine-imator has not been officially built or tested on the ARM architecture.
-1. Follow steps 1-6 for Mac OS Intel setup
+1. Follow steps 1-3 for Mac OS Intel setup
 2. Run `sudo softwareupdate --install-rosetta --agree-to-license`
 3. Run `brew install nasm yasm pkg-config`
 4. Build libraries for Mac OS Intel

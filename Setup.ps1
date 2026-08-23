@@ -1,8 +1,10 @@
-# Usage: ./Setup.ps1 [Qt|OpenSSL|FFmpeg|Libzip|OpenAL|VisualStudio|Release] [x64|x86]
+# Usage: ./Setup.ps1 [Qt|OpenSSL|FFmpeg|Libzip|OpenAL|VisualStudio|CppGen|Release] [x64|x86]
 #   Qt|OpenSSL|FFmpeg|Libzip|OpenAL:
 #       Unzips or downloads external libraries into DEV_DIR, then builds them
 #   VisualStudio:
 #       Generates and opens a Visual Studio 2022/2026 solution
+#   CppGen:
+#       Generates C++ sources from the GameMaker project and copies modified sprites/shaders
 #   Release:
 #       Creates a release build and install folder for publishing
 #   x64|x86:
@@ -27,9 +29,9 @@ if (-not $env:DEV_DIR) {
 }
 
 $actionKey = $Action.ToLowerInvariant()
-$validActions = @("qt", "openssl", "ffmpeg", "libzip", "openal", "visualstudio", "release")
+$validActions = @("qt", "openssl", "ffmpeg", "libzip", "openal", "visualstudio", "cppgen", "release")
 if ($actionKey -notin $validActions) {
-    throw "Unknown action '$Action'. Use Qt, OpenSSL, FFmpeg, Libzip, OpenAL, VisualStudio or Release."
+    throw "Unknown action '$Action'. Use Qt, OpenSSL, FFmpeg, Libzip, OpenAL, VisualStudio, CppGen or Release."
 }
 
 $architectureKey = $Architecture.ToLowerInvariant()
@@ -49,14 +51,14 @@ if ($architectureKey -eq "x64") {
     $cppGenFolderName = "Win32"
 }
 
-$buildVsDirectory = Join-Path $PSScriptRoot "build-vs${architectureSuffix}"
-$buildReleaseDirectory = Join-Path $PSScriptRoot "build-release${architectureSuffix}"
 $cppProjectDirectory = Join-Path $PSScriptRoot "CppProject"
 $cppGenDirectory = Join-Path $PSScriptRoot "CppGen"
 $generatedDirectory = Join-Path $cppProjectDirectory "Generated"
 $externalDirectory = Join-Path $cppProjectDirectory "External"
 $sourceArchiveDirectory = Join-Path $externalDirectory "Sources"
 $outputDirectory = Join-Path $externalDirectory $outputFolderName
+$buildVsDirectory = Join-Path $PSScriptRoot "build-vs${architectureSuffix}"
+$buildReleaseDirectory = Join-Path $PSScriptRoot "build-release${architectureSuffix}"
 
 $qtVersion = "5.15.19"
 $qtRef = "v${qtVersion}-lts-lgpl"
@@ -256,14 +258,10 @@ function Copy-BuiltFile {
     Write-Host "Copied $(Split-Path -Leaf $Source) to $outputDirectory"
 }
 
-function Ensure-GeneratedSources {
-    if (Test-Path -LiteralPath $generatedDirectory -PathType Container) {
-        return
-    }
-
+function Invoke-CppGen {
     $cppGenExecutable = Join-Path $cppGenDirectory "$cppGenFolderName\CppGen.exe"
     Require-File -Path $cppGenExecutable -Description "CppGen executable"
-    Write-Host "Generated C++ sources were not found; running CppGen."
+    Write-Host "Running CppGen."
     Push-Location $cppGenDirectory
     try {
         & $cppGenExecutable $PSScriptRoot (Join-Path $cppGenDirectory "gml.json")
@@ -278,6 +276,14 @@ function Ensure-GeneratedSources {
     if (-not (Test-Path -LiteralPath $generatedDirectory -PathType Container)) {
         throw "CppGen did not create the generated source directory: $generatedDirectory"
     }
+}
+
+function Ensure-GeneratedSources {
+    if (Test-Path -LiteralPath $generatedDirectory -PathType Container) {
+        return
+    }
+
+    Invoke-CppGen
 }
 
 function Ensure-Jom {
@@ -456,6 +462,7 @@ function Build-OpenAL {
         -S $openAlDirectory -B $buildDirectory `
         -G $cmakeGenerator -A $cmakeArchitecture `
         -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded `
+        -DCMAKE_CXX_FLAGS=/D_USE_STD_VECTOR_ALGORITHMS=0 `
         -DLIBTYPE=STATIC -DALSOFT_EXAMPLES=OFF -DALSOFT_UTILS=OFF -DALSOFT_EAX=OFF `
         -DALSOFT_EMBED_HRTF_DATA=OFF
     if ($LASTEXITCODE -ne 0) {
@@ -554,7 +561,7 @@ function Build-Qt {
 
     foreach ($commandName in @("cl.exe", "git.exe", "perl.exe", "nmake.exe")) {
         if (-not (Get-Command $commandName -ErrorAction SilentlyContinue)) {
-            throw "$commandName was not found. Ensure Git and Strawberry Perl are installed and on PATH."
+            throw "$commandName was not found. Ensure Git and Strawberry Perl are installed and on PATH, then restart the terminal and run again."
         }
     }
 
@@ -669,10 +676,9 @@ function Build-Qt {
     Write-Host "Qt $qtRef for $Architecture was installed to $qtInstallDirectory"
 }
 
-Ensure-GeneratedSources
-
 switch ($actionKey) {
     "qt" {
+        Ensure-GeneratedSources
         Ensure-SourceArchive "OpenSSL" "FFmpeg" "OpenAL" "Libzip"
         Build-Qt
     }
@@ -693,6 +699,7 @@ switch ($actionKey) {
         Build-OpenAL
     }
     "visualstudio" {
+        Ensure-GeneratedSources
         & $cmake `
             -S $cppProjectDirectory -B $buildVsDirectory `
             -G $cmakeGenerator -A $cmakeArchitecture
@@ -710,7 +717,11 @@ switch ($actionKey) {
         $devenv = Join-Path (Get-VisualStudioDirectory) "Common7\IDE\devenv.exe"
         Start-Process -FilePath $devenv -ArgumentList "`"$($solution.FullName)`""
     }
+    "cppgen" {
+        Invoke-CppGen
+    }
     "release" {
+        Ensure-GeneratedSources
         & $cmake `
             -S $cppProjectDirectory -B $buildReleaseDirectory `
             -G $cmakeGenerator -A $cmakeArchitecture
