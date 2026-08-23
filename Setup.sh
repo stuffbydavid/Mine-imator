@@ -49,8 +49,8 @@ build_release_directory="$script_root/build-release"
 case "$(uname -s)" in
     Darwin)
         platform=macos
-        output_directory="$external_directory/Mac"
-        cppgen_folder_name=Mac
+        external_lib_directory="$external_directory/Mac"
+        cppgen_executable="$cppgen_directory/Mac/CppGen"
         macos_arch="${requested_architecture:-$(uname -m)}"
         case "$macos_arch" in
             x86_64) macos_deployment_target=10.15 ;;
@@ -67,8 +67,8 @@ case "$(uname -s)" in
             exit 1
         fi
         platform=linux
-        output_directory="$external_directory/Linux"
-        cppgen_folder_name=Linux
+        external_lib_directory="$external_directory/Linux"
+        cppgen_executable="$cppgen_directory/Linux/CppGen"
         ;;
     *)
         echo "Unsupported operating system: $(uname -s)" >&2
@@ -109,17 +109,16 @@ require_file() {
 }
 
 invoke_cppgen() {
-    cppgen_executable="$cppgen_directory/$cppgen_folder_name/CppGen"
     require_file "$cppgen_executable" "CppGen executable"
     if [ ! -x "$cppgen_executable" ]; then
         echo "CppGen executable is not executable: $cppgen_executable" >&2
         exit 1
     fi
 
-    echo "Running CppGen."
+    echo "Running CppGen"
     if ! (
         cd "$cppgen_directory"
-        "$cppgen_executable" "$script_root" "$cppgen_directory/gml.json"
+        "$cppgen_executable" "$script_root" "$cppgen_directory/gml.json" "$@"
     ); then
         echo "CppGen failed." >&2
         exit 1
@@ -136,7 +135,7 @@ ensure_generated_sources() {
         return
     fi
 
-    invoke_cppgen
+    invoke_cppgen --skip-asset-sync
 }
 
 ensure_source_archive() {
@@ -254,11 +253,11 @@ remove_cmake_cache() {
 
 copy_built_file() {
     source_file=$1
-    output_directory=$2
+    external_lib_directory=$2
     require_file "$source_file" "Built library"
-    mkdir -p "$output_directory"
-    cp -f "$source_file" "$output_directory/"
-    echo "Copied $(basename "$source_file") to $output_directory"
+    mkdir -p "$external_lib_directory"
+    cp -f "$source_file" "$external_lib_directory/"
+    echo "Copied $(basename "$source_file") to $external_lib_directory"
 }
 
 build_ffmpeg() {
@@ -356,9 +355,9 @@ build_ffmpeg() {
         make -j1 install
     )
 
-    copy_built_file "$x264_install_directory/lib/libx264.a" "$output_directory"
+    copy_built_file "$x264_install_directory/lib/libx264.a" "$external_lib_directory"
     for library in libavcodec.a libavformat.a libavutil.a libswresample.a libswscale.a; do
-        copy_built_file "$ffmpeg_install_directory/lib/$library" "$output_directory"
+        copy_built_file "$ffmpeg_install_directory/lib/$library" "$external_lib_directory"
     done
 }
 
@@ -389,7 +388,7 @@ build_libzip() {
     fi
     cmake "$@"
     cmake --build "$build_directory" --parallel "$jobs"
-    copy_built_file "$build_directory/lib/libzip.a" "$output_directory"
+    copy_built_file "$build_directory/lib/libzip.a" "$external_lib_directory"
 }
 
 build_openal() {
@@ -413,7 +412,7 @@ build_openal() {
     fi
     cmake "$@"
     cmake --build "$build_directory" --parallel "$jobs"
-    copy_built_file "$build_directory/libopenal.a" "$output_directory"
+    copy_built_file "$build_directory/libopenal.a" "$external_lib_directory"
 }
 
 build_qt() {
@@ -426,29 +425,27 @@ build_qt() {
         linux) qt_platform=linux-clang ;;
     esac
 
-    mkdir -p "$qt_directory"
-    if [ ! -d "$qt_source_directory" ]; then
-        echo "Cloning Qt $qt_ref for $platform into $qt_source_directory"
-        git clone --branch "$qt_ref" --depth 1 https://code.qt.io/qt/qt5.git "$qt_source_directory"
-    else
-        require_file "$qt_source_directory/.git/HEAD" "Existing Qt Git checkout"
-        current_qt_commit=$(git -C "$qt_source_directory" rev-parse HEAD)
-        requested_qt_commit=$(git -C "$qt_source_directory" rev-parse "${qt_ref}^{commit}") || {
-            echo "The existing Qt checkout does not contain $qt_ref." >&2
-            exit 1
-        }
-        if [ "$current_qt_commit" != "$requested_qt_commit" ]; then
-            echo "Existing Qt source is at $current_qt_commit, not $qt_ref " \
-                "($requested_qt_commit). Move it aside or select the matching " \
-                "qt_ref; it will not be deleted automatically." >&2
-            exit 1
+    if [ -d "$qt_directory" ]; then
+        printf 'A Qt directory already exists at %s. Erase it and continue? [Y]es/[N]o ' "$qt_directory"
+        if ! read -r answer; then
+            exit 0
         fi
-        echo "Reusing existing Qt source directory $qt_source_directory"
+        case "$answer" in
+            [Yy]|[Yy][Ee][Ss])
+                remove_build_directory "$qt_directory"
+                ;;
+            *)
+                exit 0
+                ;;
+        esac
     fi
 
-    if [ ! -f "$qt_source_directory/qtbase/configure" ]; then
-        (cd "$qt_source_directory" && perl init-repository --module-subset=qtbase)
-    fi
+    mkdir -p "$qt_directory"
+
+    echo "Cloning Qt $qt_ref for $platform into $qt_source_directory"
+    git clone --branch "$qt_ref" --depth 1 https://code.qt.io/qt/qt5.git "$qt_source_directory"
+
+    (cd "$qt_source_directory" && perl init-repository --module-subset=qtbase)
     
     remove_build_directory "$qt_build_directory"
     remove_build_directory "$qt_install_directory"

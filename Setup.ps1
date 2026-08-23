@@ -39,24 +39,24 @@ if ($architectureKey -notin @("x64", "x86")) {
     throw "Unknown architecture '$Architecture'. Use x64 or x86."
 }
 
-if ($architectureKey -eq "x64") {
-    $cmakeArchitecture = "x64"
-    $architectureSuffix = ""
-    $outputFolderName = "Win64"
-    $cppGenFolderName = "Win64"
-} else {
-    $cmakeArchitecture = "Win32"
-    $architectureSuffix = "-Win32"
-    $outputFolderName = "Win32"
-    $cppGenFolderName = "Win32"
-}
-
 $cppProjectDirectory = Join-Path $PSScriptRoot "CppProject"
 $cppGenDirectory = Join-Path $PSScriptRoot "CppGen"
 $generatedDirectory = Join-Path $cppProjectDirectory "Generated"
 $externalDirectory = Join-Path $cppProjectDirectory "External"
 $sourceArchiveDirectory = Join-Path $externalDirectory "Sources"
-$outputDirectory = Join-Path $externalDirectory $outputFolderName
+
+if ($architectureKey -eq "x64") {
+    $cmakeArchitecture = "x64"
+    $architectureSuffix = ""
+    $externalLibDirectory = Join-Path $externalDirectory "Win64"
+    $cppGenExecutable = Join-Path $cppGenDirectory "Win64\CppGen.exe"
+} else {
+    $cmakeArchitecture = "Win32"
+    $architectureSuffix = "-Win32"
+    $externalLibDirectory = Join-Path $externalDirectory "Win32"
+    $cppGenExecutable = Join-Path $cppGenDirectory "Win32\CppGen.exe"
+}
+
 $buildVsDirectory = Join-Path $PSScriptRoot "build-vs${architectureSuffix}"
 $buildReleaseDirectory = Join-Path $PSScriptRoot "build-release${architectureSuffix}"
 
@@ -253,18 +253,23 @@ function Copy-BuiltFile {
     )
 
     Require-File -Path $Source -Description "Built library"
-    New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
-    Copy-Item -LiteralPath $Source -Destination $outputDirectory -Force
-    Write-Host "Copied $(Split-Path -Leaf $Source) to $outputDirectory"
+    New-Item -ItemType Directory -Path $externalLibDirectory -Force | Out-Null
+    Copy-Item -LiteralPath $Source -Destination $externalLibDirectory -Force
+    Write-Host "Copied $(Split-Path -Leaf $Source) to $externalLibDirectory"
 }
 
 function Invoke-CppGen {
-    $cppGenExecutable = Join-Path $cppGenDirectory "$cppGenFolderName\CppGen.exe"
+    param([switch] $SkipAssetSync)
+
     Require-File -Path $cppGenExecutable -Description "CppGen executable"
-    Write-Host "Running CppGen."
+    Write-Host "Running CppGen"
+    $cppGenArguments = @($PSScriptRoot, (Join-Path $cppGenDirectory "gml.json"))
+    if ($SkipAssetSync) {
+        $cppGenArguments += "--skip-asset-sync"
+    }
     Push-Location $cppGenDirectory
     try {
-        & $cppGenExecutable $PSScriptRoot (Join-Path $cppGenDirectory "gml.json")
+        & $cppGenExecutable @cppGenArguments
         if ($LASTEXITCODE -ne 0) {
             throw "CppGen failed with exit code $LASTEXITCODE."
         }
@@ -283,7 +288,7 @@ function Ensure-GeneratedSources {
         return
     }
 
-    Invoke-CppGen
+    Invoke-CppGen -SkipAssetSync
 }
 
 function Ensure-Jom {
@@ -569,6 +574,14 @@ function Build-Qt {
         throw "The active MSVC compiler does not target $architectureKey."
     }
 
+    if (Test-Path -LiteralPath $qtDirectory -PathType Container) {
+        $answer = Read-Host "A Qt directory already exists at $qtDirectory. Erase it and continue? [Y]es/[N]o"
+        if ($answer -notmatch '^(?i:y|yes)$') {
+            return
+        }
+        Remove-BuildDirectory -Path $qtDirectory
+    }
+
     # Generate OpenSSL's platform-specific public headers without rebuilding its libraries.
     Invoke-OpenSSLTarget -BuildTarget "build_generated"
 
@@ -584,52 +597,26 @@ function Build-Qt {
         -Path (Join-Path $openSslSourceIncludeDirectory "openssl\e_os2.h") `
         -Description "OpenSSL source headers"
     Require-File `
-        -Path (Join-Path $outputDirectory "libssl.lib") `
+        -Path (Join-Path $externalLibDirectory "libssl.lib") `
         -Description "OpenSSL static library"
     Require-File `
-        -Path (Join-Path $outputDirectory "libcrypto.lib") `
+        -Path (Join-Path $externalLibDirectory "libcrypto.lib") `
         -Description "OpenSSL crypto static library"
 
-    $qtParentDirectory = Split-Path -Parent $qtDirectory
-    New-Item -ItemType Directory -Path $qtParentDirectory -Force | Out-Null
-
-    # The destination is derived from DEV_DIR and a fixed folder name.
-    if (-not $qtDirectory.StartsWith(
-        $qtParentDirectory + [System.IO.Path]::DirectorySeparatorChar,
-        [System.StringComparison]::OrdinalIgnoreCase
-    )) {
-        throw "Unexpected Qt directory: $qtDirectory"
-    }
+    # Clone Qt sources
     New-Item -ItemType Directory -Path $qtDirectory -Force | Out-Null
+    Write-Host "Cloning Qt $qtRef for $Architecture into $qtSourceDirectory"
+    & git.exe clone --branch $qtRef --depth 1 https://code.qt.io/qt/qt5.git $qtSourceDirectory
+    if ($LASTEXITCODE -ne 0) { throw "Qt clone failed with exit code $LASTEXITCODE." }
 
-    if (-not (Test-Path -LiteralPath $qtSourceDirectory -PathType Container)) {
-        Write-Host "Cloning Qt $qtRef for $Architecture into $qtSourceDirectory"
-        & git.exe clone --branch $qtRef --depth 1 https://code.qt.io/qt/qt5.git $qtSourceDirectory
-        if ($LASTEXITCODE -ne 0) { throw "Qt clone failed with exit code $LASTEXITCODE." }
-    } else {
-        Require-File -Path (Join-Path $qtSourceDirectory ".git\HEAD") -Description "Existing Qt Git checkout"
-        $currentQtCommit = (& git.exe -C $qtSourceDirectory rev-parse HEAD).Trim()
-        if ($LASTEXITCODE -ne 0) { throw "Could not identify the existing Qt checkout." }
-        $requestedQtCommit = (& git.exe -C $qtSourceDirectory rev-parse "$qtRef^{commit}").Trim()
-        if ($LASTEXITCODE -ne 0) { throw "The existing Qt checkout does not contain $qtRef." }
-        if ($currentQtCommit -ne $requestedQtCommit) {
-            throw "Existing Qt source is at $currentQtCommit, not $qtRef ($requestedQtCommit). " +
-                "Move it aside or select the matching qtRef; it will not be deleted automatically."
-        }
-        Write-Host "Reusing existing Qt source directory $qtSourceDirectory"
+    Push-Location $qtSourceDirectory
+    try {
+        # Project uses Qt Widgets, Gui, Network, and OpenGL classes, all supplied by QtBase
+        & perl.exe init-repository --module-subset=qtbase
+        if ($LASTEXITCODE -ne 0) { throw "QtBase initialization failed with exit code $LASTEXITCODE." }
     }
-
-    $qtBaseConfigure = Join-Path $qtSourceDirectory "qtbase\configure"
-    if (-not (Test-Path -LiteralPath $qtBaseConfigure -PathType Leaf)) {
-        Push-Location $qtSourceDirectory
-        try {
-            # Project uses Qt Widgets, Gui, Network, and OpenGL classes, all supplied by QtBase
-            & perl.exe init-repository --module-subset=qtbase
-            if ($LASTEXITCODE -ne 0) { throw "QtBase initialization failed with exit code $LASTEXITCODE." }
-        }
-        finally {
-            Pop-Location
-        }
+    finally {
+        Pop-Location
     }
 
     Remove-BuildDirectory -Path $qtBuildDirectory
@@ -639,8 +626,8 @@ function Build-Qt {
     Push-Location $qtBuildDirectory
     try {
         $openSslLibraries =
-            "$outputDirectory\libssl.lib " +
-            "$outputDirectory\libcrypto.lib"
+            "$externalLibDirectory\libssl.lib " +
+            "$externalLibDirectory\libcrypto.lib"
         $configureArguments = @(
             "-platform", "win32-msvc",
             "-prefix", $qtInstallDirectory,

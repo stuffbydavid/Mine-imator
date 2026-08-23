@@ -54,9 +54,6 @@ class ObjectArena
 	static constexpr std::size_t blockSize_ = 1024 * 1024;
 	std::vector<Block> blocks_;
 	Destructor* lastDestructor_{};
-#ifndef NDEBUG
-	std::unordered_map<std::string, std::size_t> allocationCounts_;
-#endif
 
 	void* allocate(std::size_t size, std::size_t alignment)
 	{
@@ -130,18 +127,8 @@ public:
 			T(std::forward<Args>(args)...);
 		destructor->object = object;
 		lastDestructor_ = destructor;
-#ifndef NDEBUG
-		++allocationCounts_[typeid(T).name()];
-#endif
 		return object;
 	}
-
-#ifndef NDEBUG
-	const std::unordered_map<std::string, std::size_t>& allocationCounts() const
-	{
-		return allocationCounts_;
-	}
-#endif
 };
 
 inline ObjectArena& objectArena()

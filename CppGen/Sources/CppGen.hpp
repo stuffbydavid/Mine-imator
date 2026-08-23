@@ -1061,8 +1061,8 @@ public:
 	int originX = 0;
 	int originY = 0;
 
-	// Copies sprite frames to the CppProject.
-	Sprite(String dir, String outputFolder);
+	// Reads sprite metadata and optionally copies frames to the CppProject.
+	Sprite(String dir, String outputFolder, bool syncAssets);
 };
 
 class Shader
@@ -1082,8 +1082,8 @@ public:
 	inline static int totalCopied = 0;
 	inline static List<FileModification*> modifications = List<FileModification*>();
 
-	// Copies GLSL ES shaders to the CppProject.
-	Shader(String dir, String outputFolder);
+	// Reads shader metadata and optionally synchronizes GLSL ES shaders.
+	Shader(String dir, String outputFolder, bool syncAssets);
 };
 
 class GML

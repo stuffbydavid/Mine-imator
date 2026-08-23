@@ -4,51 +4,52 @@ namespace CppGen
 {
 void Program::main(List<String> args)
 {
-	String repoDir = args.size() > 0
+	String repoRootDir = args.size() > 0
 		? args[0]
 		: fsString(fs::current_path().parent_path().parent_path());
 
-	String jsonFile = args.size() > 1
+	String gmlSpecFile = args.size() > 1
 		? args[1]
 		: fsString(fs::current_path().parent_path())+ "/gml.json";
 
-	String gmDir = repoDir + "/GmProject";
+	bool skipAssetSync = (args.size() > 2 && args[2] == "--skip-asset-sync");
 
+	String gmDir = repoRootDir + "/GmProject";
 	if (DirectoryInfo(gmDir).getFiles("*.yyp").size() == 0)
 	{
 		Console::writeLine("FATAL ERROR: No GameMaker project found in {0}", gmDir);
 		Environment::exit(1);
 	}
 
-	if (!File::exists(jsonFile))
+	if (!File::exists(gmlSpecFile))
 	{
-		Console::writeLine("FATAL ERROR: Could not find gml.json");
+		Console::writeLine("FATAL ERROR: Could not find GML spec at {0}", gmlSpecFile);
 		Environment::exit(1);
 	}
 
-	String outputCodeDir = repoDir + "/CppProject/Generated";
-	String outputSpritesDir = repoDir + "/CppProject/Asset/Sprites";
-	String outputShadersDir = repoDir + "/CppProject/Asset/Shaders";
+	String outputCodeDir = repoRootDir + "/CppProject/Generated";
+	String outputSpritesDir = repoRootDir + "/CppProject/Asset/Sprites";
+	String outputShadersDir = repoRootDir + "/CppProject/Asset/Shaders";
 
 	Console::writeLine("Mine-imator GML -> C++ conversion begin");
 	Console::writeLine("Input project: " + gmDir);
-	Console::writeLine("Output folder: " + outputCodeDir);
+	Console::writeLine("Scripts output folder: " + outputCodeDir);
+	if (!skipAssetSync)
+	{
+		Console::writeLine("Sprites output folder: " + outputSpritesDir);
+		Console::writeLine("Shaders output folder: " + outputShadersDir);
+	}
 
-	GML::parseGMLSpec(jsonFile);
+	GML::parseGMLSpec(gmlSpecFile);
 	Program::strings.add("");
 
 	// Parse sprites
 	List<String> spriteDirs = Directory::getDirectories(gmDir + "/sprites");
 	for (String dir : spriteDirs)
 	{
-		Sprite* spr = makeObject<Sprite>(dir, outputSpritesDir);
+		Sprite* spr = makeObject<Sprite>(dir, outputSpritesDir, !skipAssetSync);
 		Program::sprites.add(spr->name, spr);
 	}
-
-	if (Sprite::totalCopied > 0)
-		Console::writeLine(Sprite::totalCopied + String(" sprite frames were copied"));
-	else
-		Console::writeLine("No sprites were updated");
 
 	// Parse shaders
 	if (Directory::exists(gmDir + "/shaders"))
@@ -56,13 +57,13 @@ void Program::main(List<String> args)
 		List<String> shaderDirs = Directory::getDirectories(gmDir + "/shaders");
 		for (String dir : shaderDirs)
 		{
-			Shader* shader = makeObject<Shader>(dir, outputShadersDir);
+			Shader* shader = makeObject<Shader>(dir, outputShadersDir, !skipAssetSync);
 			if (shader->isValid)
 				Program::shaders.add(shader->name, shader);
 		}
 	}
 
-	if (Shader::modifications.size() > 0)
+	if (!skipAssetSync && Shader::modifications.size() > 0)
 	{
 		Console::writeLine("The following shaders were modified in the C++ project:");
 		for (Shader::FileModification* mod : Shader::modifications)
@@ -78,10 +79,18 @@ void Program::main(List<String> args)
 		}
 	}
 
-	if (Shader::totalCopied > 0)
-		Console::writeLine(Shader::totalCopied + String(" shaders were copied"));
-	else
-		Console::writeLine("No shaders were updated");
+	if (!skipAssetSync)
+	{
+		if (Sprite::totalCopied > 0)
+			Console::writeLine(Sprite::totalCopied + String(" sprite frames were copied"));
+		else
+			Console::writeLine("No sprites were updated");
+
+		if (Shader::totalCopied > 0)
+			Console::writeLine(Shader::totalCopied + String(" shaders were copied"));
+		else
+			Console::writeLine("No shaders were updated");
+	}
 
 	Stopwatch timer = Stopwatch();
 	timer.start();
@@ -761,22 +770,6 @@ void Program::printDebugFiles()
 	for (String obj : objsStrings)
 		objsText += obj + "\n";
 
-#ifndef NDEBUG
-	// Allocation instrumentation is deliberately debug-only. RTTI name lookup
-	// and map updates are too expensive to execute in production solver passes.
-	List<String> allocationStrings;
-	std::size_t totalAllocations = 0;
-	for (const auto& [className, count] : objectArena().allocationCounts())
-	{
-		allocationStrings.add(String(className) + ": " + toStringValue(count));
-		totalAllocations += count;
-	}
-	allocationStrings.sort();
-	String allocationsText = "Total: " + toStringValue(totalAllocations) + "\n";
-	for (const String& allocation : allocationStrings)
-		allocationsText += allocation + "\n";
-#endif
-
 	String logDir = Directory::getCurrentDirectory() + "/Logs";
 	Directory::createDirectory(logDir);
 	Console::writeLine("Writing logs to {0}", logDir);
@@ -784,9 +777,6 @@ void Program::printDebugFiles()
 	File::writeAllText(logDir + "/unknownVars.log", unknownVarsText);
 	File::writeAllText(logDir + "/funcs.log", funcsText);
 	File::writeAllText(logDir + "/objs.log", objsText);
-#ifndef NDEBUG
-	File::writeAllText(logDir + "/allocations.log", allocationsText);
-#endif
 }
 
 }
