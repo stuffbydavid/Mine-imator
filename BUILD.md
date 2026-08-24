@@ -9,8 +9,6 @@ For Mac OS/Linux:
 
 To change the third-party source code location, set the `DEV_DIR` environment variable. To avoid command-length issues with Qt, it's recommended to be a short path.
 
-Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
-
 ## Building Mine-imator (Windows 64-bit)
 1. Set up environment and `DEV_DIR` variable
     1. Open command prompt (via Start menu, right click and run as Administrator)
@@ -38,7 +36,7 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
 8. After GML changes
     1. Right-click and build the `CppGen` target in Visual Studio
     2. Alternatively, run `.\Setup.ps1 CppGen` or `CppGen.exe` in the `CppGen\Win64\` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\` and modified sprites/shaders are copied into `CppProject/Asset/`
+    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\` and modified sprites/shaders are copied into `CppProject\Asset\`
     4. **Note**: These resulting `.cpp` files should not be manually edited!
 9. Generate Release build in `install\`
     * Run `.\Setup.ps1 Release`
@@ -49,8 +47,8 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
     1. Run `xcode-select --install`
     2. Run `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
     3. Run `brew install cmake libomp`
-    4. Run `export DEV_DIR=$HOME/Dev` (optionally add as an environment variable)
-    5. Run `mkdir -p "$DEV_DIR"`
+    4. Run `export DEV_DIR=$HOME/Dev`, optionally add as a permanent environment variable: [See guide](https://phoenixnap.com/kb/set-environment-variable-mac) **(recommended)**
+    5. Run `mkdir -p $DEV_DIR`
 3. Get Mine-imator sources
     1. Run `cd $DEV_DIR`
     2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
@@ -87,13 +85,13 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
 ## Building Mine-imator (Linux)
 1. Open terminal
 2. Install build dependencies
-    * **Ubuntu**: Run `sudo apt update && sudo apt-get install -y software-properties-common && sudo add-apt-repository --enable-source --enable-source && sudo apt build-dep -y qtbase5-dev && sudo apt install -y git cmake perl clang libomp-dev`
-    * **Debian**: [Enable Source Code Repositories](https://wiki.debian.org/SourcesList), then run `sudo apt build-dep -y qtbase5-dev && sudo apt install -y git cmake perl clang libomp-dev`
+    * **Ubuntu**: Run `sudo apt update && sudo apt-get install -y software-properties-common && sudo add-apt-repository -y --enable-source --enable-source && sudo apt build-dep -y qtbase5-dev && sudo apt install -y git cmake perl clang libomp-dev`
+    * **Debian/Linux Mint**: [Enable Source Code Repositories](https://wiki.debian.org/SourcesList), then run `sudo apt build-dep -y qtbase5-dev && sudo apt install -y git cmake perl clang libomp-dev`
     * **Fedora**: Run `sudo dnf install -y dnf-plugins-core && sudo dnf builddep -y qt5-qtbase && sudo dnf install -y git cmake perl clang libomp-devel`
-    * **Arch**: Run `sudo pacman -Syu --needed base-devel git cmake perl clang openmp`
+    * **Arch Linux/CachyOS**: Run `sudo pacman -Syu --needed --noconfirm base-devel git cmake perl clang openmp`
 3. Set up `DEV_DIR` variable
-    1. Run `export DEV_DIR=$HOME/Dev` (optionally add as an environment variable)
-    2. Run `mkdir -p "$DEV_DIR"`
+    1. Run `export DEV_DIR=$HOME/Dev`, optionally add as a permanent environment variable: [See guide](https://contabo.com/blog/how-to-set-and-list-linux-environment-variables/) **(recommended)**
+    2. Run `mkdir -p $DEV_DIR`
 4. Get Mine-imator sources
     1. Run `cd $DEV_DIR`
     2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
@@ -103,10 +101,11 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
 6. Use Visual Studio Code project for debugging **(recommended)**
     1. Get Visual Studio Code from https://code.visualstudio.com/
     2. Run `code CppProject` to open the Mine-imator C++ project
-    3. Install the **C/C++** and **CMake Tools** extensions
-    4. Run command `CMake: Select a Kit` (Ctrl+Shift+P) and choose `Clang <version>`
-    5. Run command `CMake: Set Launch/Debug Target` and choose `Mine-imator`
-    6. Debug with Shift+F5 or command `CMake: Debug`
+    3. Turn off Restricted Mode if needed (Click "Manage" at the top, then "Trust")
+    4. Install the **C/C++** and **CMake Tools** extensions from Microsoft (Ctrl+Shift+X)
+    5. Run command `CMake: Select a Kit` (Ctrl+Shift+P) and choose `Clang <version>`
+    6. Run command `CMake: Set Launch/Debug Target` and choose `Mine-imator`
+    7. Debug with Shift+F5 or command `CMake: Debug`
 7. After GML changes
     1. Run command `CMake: Run Task` and choose `Run CppGen`.
     2. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Linux/` folder
@@ -147,9 +146,9 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
 ## Building libraries (Linux) (optional)
 1. Open terminal
 2. Install build dependencies
-    * **Ubuntu/Debian**: Run `sudo apt install -y nasm yasm pkg-config`
+    * **Ubuntu/Debian/Linux Mint**: Run `sudo apt install -y nasm yasm pkg-config`
     * **Fedora**: Run `sudo dnf install -y nasm yasm pkgconf-pkg-config`
-    * **Arch**: Run `sudo pacman -S --needed nasm yasm pkgconf`
+    * **Arch Linux/CachyOS**: Run `sudo pacman -S --needed --noconfirm nasm yasm pkgconf`
 3. Run `cd $DEV_DIR/Mine-imator`
 4. Run `./Setup.sh FFmpeg`
 5. Run `./Setup.sh Libzip` (requires Qt)
@@ -175,3 +174,13 @@ Guide tested on Windows 11 25H2 64-bit, Mac OS Sonoma 14 and Ubuntu 26.04.
     4. Run `./Setup.sh OpenAL x86_64`
 5. Generate Release build in `install/`
     * Run `./Setup.sh Release x86_64`
+
+## Guide coverage
+This guide has been tested on the following systems. If you run into troubles or errors, please [open a Github issue](https://github.com/stuffbydavid/Mine-imator/issues) with details.
+* Windows 11 25H2 64-bit
+* Mac OS Sonoma 14
+* Ubuntu 20.04.6
+* Ubuntu 26.04
+* Fedora Workstation 44
+* Linux Mint LMDE 7
+* CachyOS
