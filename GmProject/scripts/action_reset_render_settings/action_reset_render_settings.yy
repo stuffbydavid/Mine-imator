@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_reset_render_settings",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Render",
-    "path": "folders/Scripts/App/Actions/Project/Render.yy",
+  "$GMScript":"v1",
+  "%Name":"action_reset_render_settings",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_reset_render_settings",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/App/Actions/Project/Render.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

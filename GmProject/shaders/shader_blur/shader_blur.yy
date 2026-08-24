@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_blur",
-  "type": 1,
-  "parent": {
-    "name": "Blur",
-    "path": "folders/Shaders/Effects/Blur.yy",
+  "$GMShader":"",
+  "%Name":"shader_blur",
+  "name":"shader_blur",
+  "parent":{
+    "name":"Blur",
+    "path":"folders/Shaders/Effects/Blur.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

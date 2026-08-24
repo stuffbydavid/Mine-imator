@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "text_max_width",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Text",
-    "path": "folders/Scripts/App/Interface/Text.yy",
+  "$GMScript":"v1",
+  "%Name":"text_max_width",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"text_max_width",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/App/Interface/Text.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

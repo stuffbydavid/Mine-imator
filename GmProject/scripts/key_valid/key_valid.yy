@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "key_valid",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Trial",
-    "path": "folders/Scripts/App/Trial.yy",
+  "$GMScript":"v1",
+  "%Name":"key_valid",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"key_valid",
+  "parent":{
+    "name":"Trial",
+    "path":"folders/Scripts/App/Trial.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

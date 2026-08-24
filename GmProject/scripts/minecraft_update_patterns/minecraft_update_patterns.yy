@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "minecraft_update_patterns",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Minecraft/Update.yy",
+  "$GMScript":"v1",
+  "%Name":"minecraft_update_patterns",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_update_patterns",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Minecraft/Update.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

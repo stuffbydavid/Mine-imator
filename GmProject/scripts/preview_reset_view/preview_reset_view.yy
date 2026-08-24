@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "preview_reset_view",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Preview",
-    "path": "folders/Scripts/App/Interface/Components/Preview.yy",
+  "$GMScript":"v1",
+  "%Name":"preview_reset_view",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"preview_reset_view",
+  "parent":{
+    "name":"Preview",
+    "path":"folders/Scripts/App/Interface/Components/Preview.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

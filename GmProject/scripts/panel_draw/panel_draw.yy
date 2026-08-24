@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "panel_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Panel",
-    "path": "folders/Scripts/App/Interface/Components/Panel.yy",
+  "$GMScript":"v1",
+  "%Name":"panel_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"panel_draw",
+  "parent":{
+    "name":"Panel",
+    "path":"folders/Scripts/App/Interface/Components/Panel.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

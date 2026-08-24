@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "export_done_image",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Export",
-    "path": "folders/Scripts/App/Export.yy",
+  "$GMScript":"v1",
+  "%Name":"export_done_image",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"export_done_image",
+  "parent":{
+    "name":"Export",
+    "path":"folders/Scripts/App/Export.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

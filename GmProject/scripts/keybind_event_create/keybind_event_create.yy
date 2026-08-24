@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "keybind_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Keybinds",
-    "path": "folders/Scripts/App/Keybinds.yy",
+  "$GMScript":"v1",
+  "%Name":"keybind_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"keybind_event_create",
+  "parent":{
+    "name":"Keybinds",
+    "path":"folders/Scripts/App/Keybinds.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_image_type",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Image",
-    "path": "folders/Scripts/App/Actions/Background/Image.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_image_type",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_image_type",
+  "parent":{
+    "name":"Image",
+    "path":"folders/Scripts/App/Actions/Background/Image.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "model_part_fill_shape_vbuffer_map",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Models",
-    "path": "folders/Scripts/Minecraft/Models.yy",
+  "$GMScript":"v1",
+  "%Name":"model_part_fill_shape_vbuffer_map",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_part_fill_shape_vbuffer_map",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

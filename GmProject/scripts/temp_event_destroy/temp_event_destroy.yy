@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "temp_event_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Templates",
-    "path": "folders/Scripts/Project/Templates.yy",
+  "$GMScript":"v1",
+  "%Name":"temp_event_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"temp_event_destroy",
+  "parent":{
+    "name":"Templates",
+    "path":"folders/Scripts/Project/Templates.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

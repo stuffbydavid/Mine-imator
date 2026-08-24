@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_wind",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Wind",
-    "path": "folders/Scripts/App/Actions/Background/Wind.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_wind",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_wind",
+  "parent":{
+    "name":"Wind",
+    "path":"folders/Scripts/App/Actions/Background/Wind.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

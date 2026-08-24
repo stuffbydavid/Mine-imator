@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_value_set",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Values",
-    "path": "folders/Scripts/Project/Timeline/Values.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_value_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_value_set",
+  "parent":{
+    "name":"Values",
+    "path":"folders/Scripts/Project/Timeline/Values.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_noise",
-  "type": 1,
-  "parent": {
-    "name": "Noise",
-    "path": "folders/Shaders/Effects/Noise.yy",
+  "$GMShader":"",
+  "%Name":"shader_noise",
+  "name":"shader_noise",
+  "parent":{
+    "name":"Noise",
+    "path":"folders/Shaders/Effects/Noise.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

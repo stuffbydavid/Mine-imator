@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_fog_color",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Fog",
-    "path": "folders/Scripts/App/Actions/Background/Fog.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_fog_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_fog_color",
+  "parent":{
+    "name":"Fog",
+    "path":"folders/Scripts/App/Actions/Background/Fog.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

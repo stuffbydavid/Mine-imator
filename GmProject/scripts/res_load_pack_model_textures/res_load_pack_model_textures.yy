@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "res_load_pack_model_textures",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Load",
-    "path": "folders/Scripts/Project/Resources/Load.yy",
+  "$GMScript":"v1",
+  "%Name":"res_load_pack_model_textures",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_load_pack_model_textures",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Resources/Load.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

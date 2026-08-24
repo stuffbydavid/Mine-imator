@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_item_slot",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Item",
-    "path": "folders/Scripts/App/Actions/Library/Item.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_item_slot",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_item_slot",
+  "parent":{
+    "name":"Item",
+    "path":"folders/Scripts/App/Actions/Library/Item.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

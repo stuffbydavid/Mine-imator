@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "buffer_write_short",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Write",
-    "path": "folders/Scripts/Utility/File/Buffer/Write.yy",
+  "$GMScript":"v1",
+  "%Name":"buffer_write_short",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"buffer_write_short",
+  "parent":{
+    "name":"Write",
+    "path":"folders/Scripts/Utility/File/Buffer/Write.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

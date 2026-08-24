@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_timeline",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/App/Interface/Tabs/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_timeline",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_timeline",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Interface/Tabs/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

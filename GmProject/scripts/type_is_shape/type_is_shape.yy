@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "type_is_shape",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Templates",
-    "path": "folders/Scripts/Project/Templates.yy",
+  "$GMScript":"v1",
+  "%Name":"type_is_shape",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"type_is_shape",
+  "parent":{
+    "name":"Templates",
+    "path":"folders/Scripts/Project/Templates.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

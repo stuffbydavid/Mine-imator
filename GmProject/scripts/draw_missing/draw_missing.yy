@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_missing",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Draw",
-    "path": "folders/Scripts/Utility/Draw.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_missing",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_missing",
+  "parent":{
+    "name":"Draw",
+    "path":"folders/Scripts/Utility/Draw.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

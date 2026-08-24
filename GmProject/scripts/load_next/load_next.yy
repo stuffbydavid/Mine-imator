@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "load_next",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Loading",
-    "path": "folders/Scripts/App/Loading.yy",
+  "$GMScript":"v1",
+  "%Name":"load_next",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"load_next",
+  "parent":{
+    "name":"Loading",
+    "path":"folders/Scripts/App/Loading.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

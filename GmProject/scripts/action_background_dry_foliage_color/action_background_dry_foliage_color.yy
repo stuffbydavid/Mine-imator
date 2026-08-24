@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_dry_foliage_color",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Biome",
-    "path": "folders/Scripts/App/Actions/Background/Biome.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_dry_foliage_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_dry_foliage_color",
+  "parent":{
+    "name":"Biome",
+    "path":"folders/Scripts/App/Actions/Background/Biome.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

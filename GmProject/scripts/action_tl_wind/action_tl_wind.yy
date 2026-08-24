@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_wind",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Graphics",
-    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_wind",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_wind",
+  "parent":{
+    "name":"Graphics",
+    "path":"folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

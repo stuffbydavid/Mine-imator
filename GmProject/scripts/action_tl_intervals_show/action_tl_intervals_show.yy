@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_intervals_show",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Header",
-    "path": "folders/Scripts/App/Actions/Timeline/Header.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_intervals_show",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_intervals_show",
+  "parent":{
+    "name":"Header",
+    "path":"folders/Scripts/App/Actions/Timeline/Header.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "particle_get_animation_percent",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Particle",
-    "path": "folders/Scripts/Project/Particle.yy",
+  "$GMScript":"v1",
+  "%Name":"particle_get_animation_percent",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"particle_get_animation_percent",
+  "parent":{
+    "name":"Particle",
+    "path":"folders/Scripts/Project/Particle.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
