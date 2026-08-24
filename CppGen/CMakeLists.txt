@@ -16,7 +16,7 @@ endif()
 
 project(CppGen LANGUAGES CXX)
 
-file(GLOB CPPGEN_SOURCES CONFIGURE_DEPENDS "Sources/*.cpp")
+file(GLOB CPPGEN_SOURCES CONFIGURE_DEPENDS "Sources/*.cpp" "Sources/*.hpp")
 add_executable(${PROJECT_NAME} ${CPPGEN_SOURCES})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
@@ -33,6 +33,10 @@ include(CheckIPOSupported)
 check_ipo_supported(RESULT CPPGEN_IPO_SUPPORTED OUTPUT CPPGEN_IPO_ERROR)
 if(CPPGEN_IPO_SUPPORTED)
     set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
+endif()
+
+if(WIN32)
+    set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 endif()
 
 if(MSVC)

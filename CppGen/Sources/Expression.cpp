@@ -119,7 +119,7 @@ void UnaryOperation::resolve(ResolveScope* scope)
 
 	if (this->op == Token::Type::Sub) // -
 	{
-		this->expr->applyType(scope, DataType(DataType::Type::IntOrReal));
+		this->expr->applyType(scope, DataType::scalar(DataType::Type::IntOrReal));
 		this->resolvedType = this->expr->resolvedType;
 	}
 	else // !
@@ -162,13 +162,13 @@ void BinaryOperation::resolve(ResolveScope* scope)
 	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr ||
 		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) //  &, |, <<, >>, both expressions must be integer
 	{
-		this->left->applyType(scope, DataType(DataType::Type::Integer));
-		this->right->applyType(scope, DataType(DataType::Type::Integer));
+		this->left->applyType(scope, DataType::scalar(DataType::Type::Integer));
+		this->right->applyType(scope, DataType::scalar(DataType::Type::Integer));
 	}
 	else if (this->op == Token::Type::Div) // /, both expressions must be real
 	{
-		this->left->applyType(scope, DataType(DataType::Type::Real));
-		this->right->applyType(scope, DataType(DataType::Type::Real));
+		this->left->applyType(scope, DataType::scalar(DataType::Type::Real));
+		this->right->applyType(scope, DataType::scalar(DataType::Type::Real));
 	}
 
 	if (this->op == Token::Type::Or || this->op == Token::Type::And || this->op == Token::Type::Equal || this->op == Token::Type::NotEqual) // ||, &&, ==, != returns bool
@@ -259,7 +259,7 @@ void TernaryCondition::resolve(ResolveScope* scope)
 	this->expr2->resolve(scope);
 	this->expr3->resolve(scope);
 
-	this->expr1->applyType(scope, DataType(DataType::Type::IntOrReal));
+	this->expr1->applyType(scope, DataType::scalar(DataType::Type::IntOrReal));
 
 	// Both types should be the same
 	this->expr3->applyType(scope, *this->expr2->resolvedType);

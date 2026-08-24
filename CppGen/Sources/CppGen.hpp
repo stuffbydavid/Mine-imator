@@ -159,22 +159,22 @@ public:
 	{
 	public:
 		Type rawType{};
-		String refId = ""; // Object name
-		std::unique_ptr<DataType> containerStorage{};
-		DataType* containerType = nullptr;
+		InternedString refId{}; // Object name
+		std::shared_ptr<DataType> containerStorage{};
 		Function* func{};
 		int line{};
 
-		Assignment(const Assignment& other);
-		Assignment(Assignment&& other) noexcept;
-		Assignment& operator=(const Assignment& other);
-		Assignment& operator=(Assignment&& other) noexcept;
-		virtual ~Assignment();
+		Assignment() = default;
+		Assignment(const Assignment& other) = default;
+		Assignment(Assignment&& other) noexcept = default;
+		Assignment& operator=(const Assignment& other) = default;
+		Assignment& operator=(Assignment&& other) noexcept = default;
+		~Assignment() = default;
 		Assignment(const Assignment& other, Function* func, int line);
-		Assignment(Type type, String refId, DataType* containerType, Function* func = nullptr, int line = 0);
+		Assignment(Type type, String refId, const DataType* containerType, Function* func = nullptr, int line = 0);
 
 		// Returns the assignment in string form with <> for containers/references.
-		virtual String toString();
+		String toString();
 	};
 
 	List<Assignment> assignments = List<Assignment>();
@@ -187,12 +187,11 @@ public:
 	inline static bool ignoreAllVarType = false;
 
 	// Copy a DataType
-	DataType(const DataType& other);
-	DataType(DataType* other) : DataType(*other) {}
+	DataType(const DataType& other) = default;
 	DataType(DataType&&) noexcept = default;
-	DataType& operator=(const DataType& other);
+	DataType& operator=(const DataType& other) = default;
 	DataType& operator=(DataType&&) noexcept = default;
-	virtual ~DataType() = default;
+	~DataType() = default;
 
 	// Create a generic type
 	DataType(Type rawType = Type::Unknown);
@@ -201,7 +200,7 @@ public:
 	DataType(Type rawType, String refId);
 
 	// Create a container type
-	DataType(Type rawType, DataType* containerType);
+	DataType(Type rawType, const DataType* containerType);
 
 	// Create a DataType from a text string
 	DataType(String name);
@@ -228,7 +227,7 @@ public:
 	String getAssignmentsString(String tabs = "");
 
 	// Returns the type in string form with <> for containers/references or "Variant" for multiple types.
-	virtual String toString();
+	String toString();
 
 	// Returns whether the type has not been assigned any raw type.
 	bool isUnknown();
@@ -241,6 +240,13 @@ public:
 
 	// Returns whether the given raw type is a map.
 	static bool isRawTypeMap(Type type);
+
+	// Returns the enum name used in diagnostics and generated log files.
+	static String typeName(Type rawType);
+
+	// Returns a shared immutable scalar type without constructing temporary
+	// assignment storage in hot resolver paths.
+	static const DataType& scalar(Type rawType);
 
 	// Returns whether the type has been assigned a real number.
 	bool isReal();
@@ -266,10 +272,9 @@ public:
 	// Reinitializes solver-owned storage without changing its stable address.
 	void reset(Type rawType = Type::Unknown);
 	void reset(Type rawType, const String& refId);
-	void reset(Type rawType, DataType* containerType);
-	void reset(Type rawType, DataType containerType);
+	void reset(Type rawType, const DataType* containerType) { reset(rawType, *containerType); }
+	void reset(Type rawType, const DataType& containerType);
 	void reset(const DataType& other);
-	void reset(DataType* other) { reset(*other); }
 };
 
 // A statement or expression in the code.
@@ -576,7 +581,7 @@ public:
 
 	String name{};
 	List<ArrayAccessor*> arrayAccessors{};
-	List<Expression*> callParameters{};
+	NullableList<Expression*> callParameters{};
 	Accessor* nextInChain = nullptr;
 	Accessor* previousInChain = nullptr;
 	Token::Type addSubOp = Token::Type::Unknown;
@@ -589,7 +594,7 @@ public:
 	ResolveScope lastToCppScope{};
 	bool lastToCppScopeSet = false;
 
-	Accessor(String name, List<ArrayAccessor*> arrayAccessors, List<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line);
+	Accessor(String name, List<ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line);
 
 	// Marks the accessor as an assignment.
 	void markAsAssign(Expression* expr);
@@ -659,7 +664,7 @@ public:
 	DeclarationList(List<Declaration*> declarations, bool isArgs, int line);
 
 	// Resolve declaration types, returns if they have changed since last time from the given input.
-	bool resolve(ResolveScope* scope, const String& declScope, const List<DataType*>& inputPars = nullptr);
+	bool resolve(ResolveScope* scope, const String& declScope, const NullableList<DataType*>& inputPars = nullptr);
 	void writeCpp(ResolveScope* scope, WriteFormat format, String enumPrefix = "");
 };
 
@@ -969,7 +974,7 @@ public:
 	String toDebugString(String tabs = "");
 
 	// Resolves the variables in the function, recursively calling other functions as they appear.
-	void resolve(ResolveScope* scope, const List<DataType*>& inputPars = nullptr, Function* func = nullptr, int line = 0);
+	void resolve(ResolveScope* scope, const NullableList<DataType*>& inputPars = nullptr, Function* func = nullptr, int line = 0);
 
 	// Sets the return type of the function, if it changes then all functions dependent on this one are marked unresolved.
 	void assignReturnType(const DataType& type, Function* func, int line);
@@ -997,7 +1002,7 @@ public:
 	Expression* parseExprMulDiv();
 	Expression* parseExprModInvNegate();
 	Expression* parseExprValue();
-	List<Expression*> parseParameterList();
+	NullableList<Expression*> parseParameterList();
 };
 
 // Stores an external function whenever external_define is called.

@@ -73,7 +73,7 @@ DeclarationList::DeclarationList(List<Declaration*> declarations, bool isArgs, i
 	type = Type::DeclarationList;
 }
 
-bool DeclarationList::resolve(ResolveScope* scope, const String& declScope, const List<DataType*>& inputPars)
+bool DeclarationList::resolve(ResolveScope* scope, const String& declScope, const NullableList<DataType*>& inputPars)
 {
 	location = *scope->location;
 
@@ -395,11 +395,11 @@ void AssignStatement::resolve(ResolveScope* scope)
 		case Token::Type::DivLong:
 		{
 			this->target->resolve(scope);
-			this->target->applyType(scope, DataType(DataType::Type::Real));
+			this->target->applyType(scope, DataType::scalar(DataType::Type::Real));
 			if (this->expr != nullptr)
 			{
 				this->expr->resolve(scope);
-				this->expr->applyType(scope, DataType(DataType::Type::Real));
+				this->expr->applyType(scope, DataType::scalar(DataType::Type::Real));
 			}
 			break;
 		}
@@ -545,7 +545,7 @@ void ForStatement::resolve(ResolveScope* scope)
 	if (this->loopCondition != nullptr) // Loop
 	{
 		this->loopCondition->resolve(forScope);
-		this->loopCondition->applyType(forScope, DataType(DataType::Type::Bool));
+		this->loopCondition->applyType(forScope, DataType::scalar(DataType::Type::Bool));
 	}
 
 	if (this->incStatement != nullptr) // Increment
@@ -592,7 +592,7 @@ void RepeatStatement::resolve(ResolveScope* scope)
 	ResolveScope repeatScope = scope->nextStatement();
 
 	this->expr->resolve(repeatScope);
-	this->expr->applyType(repeatScope, DataType(DataType::Type::Integer));
+	this->expr->applyType(repeatScope, DataType::scalar(DataType::Type::Integer));
 	this->statement->resolve(repeatScope);
 }
 
@@ -705,7 +705,7 @@ void SwitchStatement::resolve(ResolveScope* scope)
 	{
 		switchCase->expr->resolve(switchScope);
 		this->caseResolvedType->reset(*switchCase->expr->resolvedType); // Derive expression type from cases
-		switchCase->expr->applyType(switchScope, DataType(DataType::Type::Integer));
+		switchCase->expr->applyType(switchScope, DataType::scalar(DataType::Type::Integer));
 		switchCase->statements->resolve(switchScope);
 	}
 

@@ -5,12 +5,12 @@ namespace CppGen
 void Program::main(List<String> args)
 {
 	String repoRootDir = args.size() > 0
-		? args[0]
+		? args[0].toPath()
 		: fsString(fs::current_path().parent_path().parent_path());
 
 	String gmlSpecFile = args.size() > 1
-		? args[1]
-		: fsString(fs::current_path().parent_path())+ "/gml.json";
+		? args[1].toPath()
+		: fsString(fs::current_path().parent_path()) + "/gml.json";
 
 	bool skipAssetSync = (args.size() > 2 && args[2] == "--skip-asset-sync");
 

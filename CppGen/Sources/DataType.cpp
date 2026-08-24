@@ -2,31 +2,54 @@
 
 namespace CppGen
 {
-DataType::DataType(const DataType& other)
+DataType::CppType cppTypeFor(DataType::Type rawType)
 {
-	for (const Assignment& ass : other.assignments)
-		this->assignments.add(Assignment(ass, ass.func, ass.line));
-	updateCppType();
+	switch (rawType)
+	{
+		case DataType::Type::Void: return DataType::CppType::Void;
+		case DataType::Type::Real:
+		case DataType::Type::IntOrReal: return DataType::CppType::RealType;
+		case DataType::Type::Null:
+		case DataType::Type::Integer:
+		case DataType::Type::Reference:
+		case DataType::Type::List:
+		case DataType::Type::AnyMap:
+		case DataType::Type::IntMap:
+		case DataType::Type::StringMap:
+		case DataType::Type::Map:
+		case DataType::Type::Grid:
+		case DataType::Type::Stack:
+		case DataType::Type::Priority: return DataType::CppType::IntType;
+		case DataType::Type::Bool: return DataType::CppType::BoolType;
+		case DataType::Type::String: return DataType::CppType::StringType;
+		case DataType::Type::Vector: return DataType::CppType::VecType;
+		case DataType::Type::Matrix: return DataType::CppType::MatrixType;
+		case DataType::Type::Array: return DataType::CppType::ArrType;
+		case DataType::Type::Unknown:
+		case DataType::Type::Variant: return DataType::CppType::VarType;
+	}
+
+	return DataType::CppType::VarType;
 }
 
 DataType::DataType(Type rawType)
 {
 	if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, "", nullptr));
+		this->assignments.emplace_back(rawType, "", nullptr);
 	updateCppType();
 }
 
 DataType::DataType(Type rawType, String refId)
 {
 	if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, refId, nullptr));
+		this->assignments.emplace_back(rawType, refId, nullptr);
 	updateCppType();
 }
 
-DataType::DataType(Type rawType, DataType* containerType)
+DataType::DataType(Type rawType, const DataType* containerType)
 {
 	if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, "", containerType));
+		this->assignments.emplace_back(rawType, "", containerType);
 	updateCppType();
 }
 
@@ -79,7 +102,7 @@ DataType::DataType(String name)
 				Console::writeLine("FATAL ERROR: Missing ID for reference.");
 				Environment::exit(1);
 			}
-			this->assignments.add(Assignment(Type::Reference, split[1], nullptr));
+			this->assignments.emplace_back(Type::Reference, split[1], nullptr);
 			updateCppType();
 			return;
 		}
@@ -153,10 +176,10 @@ DataType::DataType(String name)
 		else
 			containerType.reset(Type::Unknown);
 
-		this->assignments.add(Assignment(rawType, "", &containerType));
+		this->assignments.emplace_back(rawType, "", &containerType);
 	}
 	else if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, "", nullptr));
+		this->assignments.emplace_back(rawType, "", nullptr);
 
 	updateCppType();
 }
@@ -165,33 +188,9 @@ void DataType::updateCppType()
 {
 	// Update C++ type
 	bool isSet = false;
-	for (Assignment& ass : this->assignments)
+	for (const Assignment& ass : this->assignments)
 	{
-		CppType assType = CppType::VarType;
-		switch (ass.rawType)
-		{
-			case Type::Unknown: break;
-			case Type::Variant: assType = CppType::VarType; break;
-			case Type::Null: assType = CppType::IntType; break;
-			case Type::Void: assType = CppType::Void; break;
-			case Type::Bool: assType = CppType::BoolType; break;
-			case Type::Integer: assType = CppType::IntType; break;
-			case Type::Real:
-			case Type::IntOrReal: assType = CppType::RealType; break;
-			case Type::String: assType = CppType::StringType; break;
-			case Type::Reference: assType = CppType::IntType; break; // TODO pointers?
-			case Type::Array: assType = CppType::ArrType; break;
-			case Type::Vector: assType = CppType::VecType; break;
-			case Type::Matrix: assType = CppType::MatrixType; break;
-			case Type::List:
-			case Type::AnyMap:
-			case Type::IntMap:
-			case Type::StringMap:
-			case Type::Map:
-			case Type::Grid:
-			case Type::Stack:
-			case Type::Priority: assType = CppType::IntType; break;
-		}
+		const CppType assType = cppTypeFor(ass.rawType);
 
 		if (!isSet)
 		{
@@ -335,6 +334,49 @@ bool DataType::isRawTypeMap(Type type)
 			type == Type::StringMap);
 }
 
+String DataType::typeName(Type rawType)
+{
+	switch (rawType)
+	{
+		case Type::Unknown: return "Unknown";
+		case Type::Variant: return "Variant";
+		case Type::Null: return "Null";
+		case Type::Void: return "Void";
+		case Type::Bool: return "Bool";
+		case Type::IntOrReal: return "IntOrReal";
+		case Type::Integer: return "Integer";
+		case Type::Real: return "Real";
+		case Type::String: return "String";
+		case Type::Reference: return "Reference";
+		case Type::Array: return "Array";
+		case Type::Vector: return "Vector";
+		case Type::Matrix: return "Matrix";
+		case Type::List: return "List";
+		case Type::AnyMap: return "AnyMap";
+		case Type::IntMap: return "IntMap";
+		case Type::StringMap: return "StringMap";
+		case Type::Map: return "Map";
+		case Type::Grid: return "Grid";
+		case Type::Stack: return "Stack";
+		case Type::Priority: return "Priority";
+	}
+
+	return "Unknown";
+}
+
+const DataType& DataType::scalar(Type rawType)
+{
+	static const std::array<DataType, static_cast<std::size_t>(Type::Priority) + 1> types = []
+	{
+		std::array<DataType, static_cast<std::size_t>(Type::Priority) + 1> result;
+		for (std::size_t i = 0; i < result.size(); ++i)
+			result[i].reset(static_cast<Type>(i));
+		return result;
+	}();
+
+	return types[static_cast<std::size_t>(rawType)];
+}
+
 bool DataType::isReal()
 {
 	if (this->assignments.size() == 0)
@@ -463,12 +505,24 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 
 			// Assign container
 			if ((ass.rawType == Type::Array || ass.rawType >= Type::List) &&
-				inputAss.containerType != nullptr && containerLevel < maxContainerLevel &&
-				ass.containerType->assign(*inputAss.containerType, func, line, containerLevel + 1))
+				inputAss.containerStorage != nullptr && containerLevel < maxContainerLevel)
 			{
-				changed = true;
-				ass.func = func;
-				ass.line = line;
+				// Assignment copies share their container until one is mutated.
+				// This preserves value semantics without deep-copying every resolver
+				// temporary and reset.
+				if (ass.containerStorage == nullptr || ass.containerStorage.use_count() != 1)
+				{
+					ass.containerStorage = ass.containerStorage != nullptr
+						? std::make_shared<DataType>(*ass.containerStorage)
+						: std::make_shared<DataType>();
+				}
+
+				if (ass.containerStorage->assign(*inputAss.containerStorage, func, line, containerLevel + 1))
+				{
+					changed = true;
+					ass.func = func;
+					ass.line = line;
+				}
 			}
 
 			if (!addNew)
@@ -478,7 +532,7 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 		// Other assignment is unique, add a copy to this type
 		if (addNew)
 		{
-			this->assignments.add(Assignment(inputAss, func, line));
+			this->assignments.emplace_back(inputAss, func, line);
 			changed = true;
 		}
 	}
@@ -489,43 +543,76 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 	return changed;
 }
 
-DataType& DataType::operator=(const DataType& other)
-{
-	if (this != &other)
-		reset(other);
-	return *this;
-}
-
 void DataType::reset(Type rawType)
 {
-	this->assignments.clear();
-	this->cppType = CppType::VarType;
-	if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, "", nullptr));
-	updateCppType();
+	this->cppType = cppTypeFor(rawType);
+	if (rawType == Type::Unknown)
+	{
+		this->assignments.clear();
+	}
+	else if (this->assignments.empty())
+	{
+		this->assignments.emplace_back(rawType, "", nullptr);
+	}
+	else
+	{
+		this->assignments.resize(1);
+		Assignment& assignment = this->assignments.front();
+		assignment.rawType = rawType;
+		assignment.refId.clear();
+		assignment.containerStorage.reset();
+		assignment.func = nullptr;
+		assignment.line = 0;
+	}
 }
 
 void DataType::reset(Type rawType, const String& refId)
 {
-	this->assignments.clear();
-	this->cppType = CppType::VarType;
-	if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, refId, nullptr));
-	updateCppType();
+	this->cppType = cppTypeFor(rawType);
+	if (rawType == Type::Unknown)
+	{
+		this->assignments.clear();
+	}
+	else if (this->assignments.empty())
+	{
+		this->assignments.emplace_back(rawType, refId, nullptr);
+	}
+	else
+	{
+		this->assignments.resize(1);
+		Assignment& assignment = this->assignments.front();
+		assignment.rawType = rawType;
+		assignment.refId = refId;
+		assignment.containerStorage.reset();
+		assignment.func = nullptr;
+		assignment.line = 0;
+	}
 }
 
-void DataType::reset(Type rawType, DataType* containerType)
+void DataType::reset(Type rawType, const DataType& containerType)
 {
-	this->assignments.clear();
-	this->cppType = CppType::VarType;
-	if (rawType != Type::Unknown)
-		this->assignments.add(Assignment(rawType, "", containerType));
-	updateCppType();
-}
-
-void DataType::reset(Type rawType, DataType containerType)
-{
-	reset(rawType, &containerType);
+	this->cppType = cppTypeFor(rawType);
+	if (rawType == Type::Unknown)
+	{
+		this->assignments.clear();
+	}
+	else if (this->assignments.empty())
+	{
+		this->assignments.emplace_back(rawType, "", &containerType);
+	}
+	else
+	{
+		this->assignments.resize(1);
+		Assignment& assignment = this->assignments.front();
+		assignment.rawType = rawType;
+		assignment.refId.clear();
+		if (assignment.containerStorage != nullptr && assignment.containerStorage.use_count() == 1)
+			assignment.containerStorage->reset(containerType);
+		else
+			assignment.containerStorage = std::make_shared<DataType>(containerType);
+		assignment.func = nullptr;
+		assignment.line = 0;
+	}
 }
 
 void DataType::reset(const DataType& other)
@@ -533,92 +620,38 @@ void DataType::reset(const DataType& other)
 	if (this == &other)
 		return;
 
-	this->assignments.clear();
-	this->cppType = CppType::VarType;
-	this->assignments.reserve(other.assignments.size());
-	for (const Assignment& assignment : other.assignments)
-		this->assignments.add(Assignment(assignment, assignment.func, assignment.line));
-	updateCppType();
+	this->assignments.resize(other.assignments.size());
+	for (int i = 0; i < static_cast<int>(other.assignments.size()); i++)
+		this->assignments[i] = other.assignments[i];
+	this->cppType = other.cppType;
 }
-
-DataType::Assignment::Assignment(const DataType::Assignment& other)
-	: Assignment(other, other.func, other.line)
-{}
-
-DataType::Assignment::Assignment(DataType::Assignment&& other) noexcept
-{
-	*this = std::move(other);
-}
-
-DataType::Assignment& DataType::Assignment::operator=(const DataType::Assignment& other)
-{
-	if (this == &other)
-		return *this;
-
-	this->rawType = other.rawType;
-	this->refId = other.refId;
-	this->containerStorage = other.containerType != nullptr
-		? std::make_unique<DataType>(*other.containerType)
-		: nullptr;
-	this->containerType = this->containerStorage.get();
-	this->func = other.func;
-	this->line = other.line;
-	return *this;
-}
-
-DataType::Assignment& DataType::Assignment::operator=(DataType::Assignment&& other) noexcept
-{
-	if (this == &other)
-		return *this;
-
-	this->rawType = other.rawType;
-	this->refId = std::move(other.refId);
-	this->containerStorage = std::move(other.containerStorage);
-	this->containerType = this->containerStorage != nullptr
-		? this->containerStorage.get()
-		: other.containerType;
-	this->func = other.func;
-	this->line = other.line;
-	other.containerType = nullptr;
-	return *this;
-}
-
-DataType::Assignment::~Assignment() = default;
 
 DataType::Assignment::Assignment(const DataType::Assignment& other, Function* func, int line)
+	: rawType(other.rawType),
+	refId(other.refId),
+	containerStorage(other.containerStorage),
+	func(func),
+	line(line)
 {
-	this->rawType = other.rawType;
-	this->refId = other.refId;
-	if (other.containerType != nullptr)
-	{
-		this->containerStorage = std::make_unique<DataType>(*other.containerType);
-		this->containerType = this->containerStorage.get();
-	}
-	this->func = func;
-	this->line = line;
 }
 
-DataType::Assignment::Assignment(Type type, String refId, DataType* containerType, Function* func, int line)
+DataType::Assignment::Assignment(Type type, String refId, const DataType* containerType, Function* func, int line)
+	: rawType(type),
+	refId(refId),
+	containerStorage(containerType ? std::make_shared<DataType>(*containerType) : nullptr),
+	func(func),
+	line(line)
 {
-	this->rawType = type;
-	this->refId = refId;
-	if (containerType != nullptr)
-	{
-		this->containerStorage = std::make_unique<DataType>(*containerType);
-		this->containerType = this->containerStorage.get();
-	}
-	this->func = func;
-	this->line = line;
 }
 
 String DataType::Assignment::toString()
 {
 	if (this->rawType >= Type::Array) // Container
-		return toStringValue(this->rawType) + "<" + this->containerType->toString() + ">";
+		return DataType::typeName(this->rawType) + "<" + this->containerStorage->toString() + ">";
 	else if (this->rawType == Type::Reference) // Reference
-		return toStringValue(this->rawType) + "<" + this->refId + ">";
+		return DataType::typeName(this->rawType) + "<" + this->refId + ">";
 	else
-		return toStringValue(this->rawType);
+		return DataType::typeName(this->rawType);
 }
 
 }

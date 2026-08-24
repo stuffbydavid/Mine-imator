@@ -1,7 +1,9 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <chrono>
+#include <charconv>
 #include <cmath>
 #include <cctype>
 #include <cstddef>
@@ -13,6 +15,7 @@
 #include <initializer_list>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <memory>
 #include <new>
 #include <optional>
@@ -20,6 +23,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <typeinfo>
 #include <utility>
@@ -31,10 +35,10 @@ namespace CppGen
 {
 namespace fs = std::filesystem;
 
-// Whole-run bump allocator for translated C# reference objects. It preserves
-// stable pointer identity and polymorphism while avoiding one general-purpose
-// heap operation per object. Destructors run in reverse construction order;
-// the backing blocks are then released together.
+// Whole-run bump allocator for reference objects. It preserves stable pointer
+// identity and polymorphism while avoiding one general-purpose heap operation
+// per object. Destructors run in reverse construction order;the backing blocks
+// are then released together.
 class ObjectArena
 {
 	struct Block
@@ -145,41 +149,27 @@ T* makeObject(Args&&... args)
 
 class String;
 
+// String to file path conversion
 inline fs::path fsPath(const std::string& value)
 {
 	return fs::u8path(value);
 }
 
-// Return UTF-8 paths with portable forward separators on every platform.
+// File path to string conversion
 inline String fsString(const fs::path& value);
 
 bool cultureStringLess(const String& left, const String& right);
 
-// std::vector with the handful of List<T> operations used by CppGen. A null
-// flag is retained because translated optional lists compare against nullptr.
+// std::vector with the handful of List<T> operations used by CppGen.
 template<class T>
 class List : public std::vector<T>
 {
-	bool null_{};
-
 public:
 	using std::vector<T>::vector;
 
-	List(const std::vector<T>& other) : std::vector<T>(other) {}
-	List(std::nullptr_t) : null_(true) {}
 	int size() const noexcept
 	{
 		return static_cast<int>(std::vector<T>::size());
-	}
-
-	bool operator==(std::nullptr_t) const
-	{
-		return null_;
-	}
-
-	bool operator!=(std::nullptr_t) const
-	{
-		return !null_;
 	}
 
 	void add(const T& value)
@@ -212,11 +202,6 @@ public:
 		this->erase(this->begin() + static_cast<std::ptrdiff_t>(index));
 	}
 
-	void clear()
-	{
-		std::vector<T>::clear();
-	}
-
 	template<class Predicate>
 	void removeAll(Predicate predicate)
 	{
@@ -235,6 +220,30 @@ public:
 			std::sort(this->begin(), this->end(), cultureStringLess);
 		else
 			std::sort(this->begin(), this->end());
+	}
+};
+
+template<class T>
+class NullableList : public List<T>
+{
+	bool null_{};
+
+public:
+	using List<T>::List;
+
+	NullableList() = default;
+	NullableList(std::nullptr_t) : null_(true) {}
+	NullableList(const List<T>& other) : List<T>(other) {}
+	NullableList(List<T>&& other) noexcept : List<T>(std::move(other)) {}
+
+	bool operator==(std::nullptr_t) const noexcept
+	{
+		return null_;
+	}
+
+	bool operator!=(std::nullptr_t) const noexcept
+	{
+		return !null_;
 	}
 };
 
@@ -326,6 +335,11 @@ public:
 		return *this;
 	}
 
+	String toPath() const
+	{
+		return fsString(fsPath(static_cast<const std::string&>(*this)));
+	}
+
 	List<String> split(char delimiter) const;
 	List<String> split(const String& delimiter) const;
 };
@@ -362,10 +376,19 @@ inline bool cultureStringLess(const String& left, const String& right)
 inline List<String> String::split(char delimiter) const
 {
 	List<String> result;
-	std::stringstream stream(*this);
-	std::string item;
-	while (std::getline(stream, item, delimiter))
-		result.add(item);
+	std::size_t begin = 0;
+	while (begin < std::string::size())
+	{
+		const std::size_t end = find(delimiter, begin);
+		if (end == npos)
+		{
+			result.emplace_back(data() + begin, std::string::size() - begin);
+			break;
+		}
+
+		result.emplace_back(data() + begin, end - begin);
+		begin = end + 1;
+	}
 
 	return result;
 }
@@ -382,11 +405,11 @@ inline List<String> String::split(const String& delimiter) const
 		auto end = find(delimiter, begin);
 		if (end == npos)
 		{
-			result.add(substr(begin));
+			result.emplace_back(data() + begin, std::string::size() - begin);
 			break;
 		}
 
-		result.add(substr(begin, end - begin));
+		result.emplace_back(data() + begin, end - begin);
 		begin = end + delimiter.size();
 	}
 	return result;
@@ -436,7 +459,13 @@ String toStringValue(const T& value)
 	}
 	else if constexpr (std::is_enum_v<T>)
 	{
-		return std::to_string(static_cast<std::underlying_type_t<T>>(value));
+		return toStringValue(static_cast<std::underlying_type_t<T>>(value));
+	}
+	else if constexpr (std::is_integral_v<ValueType>)
+	{
+		char buffer[std::numeric_limits<ValueType>::digits10 + 3];
+		const auto result = std::to_chars(std::begin(buffer), std::end(buffer), value);
+		return String(buffer, result.ptr);
 	}
 	else if constexpr (HasToString<T>::value)
 	{
@@ -469,27 +498,57 @@ inline String operator+(String&& left, const String& right)
 template<class T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, String>, int> = 0>
 String operator+(const String& left, const T& right)
 {
-	const String converted = toStringValue(right);
-	String result;
-	result.reserve(left.size() + converted.size());
-	result.append(left);
-	result.append(converted);
-	return result;
+	if constexpr (std::is_convertible_v<const T&, std::string_view>)
+	{
+		const std::string_view converted(right);
+		String result;
+		result.reserve(left.size() + converted.size());
+		result.append(left);
+		result.append(converted.data(), converted.size());
+		return result;
+	}
+	else
+	{
+		const String converted = toStringValue(right);
+		String result;
+		result.reserve(left.size() + converted.size());
+		result.append(left);
+		result.append(converted);
+		return result;
+	}
 }
 
 template<class T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, String>, int> = 0>
 String operator+(String&& left, const T& right)
 {
-	const String converted = toStringValue(right);
-	left.reserve(left.size() + converted.size());
-	left.append(converted);
+	if constexpr (std::is_convertible_v<const T&, std::string_view>)
+	{
+		const std::string_view converted(right);
+		left.reserve(left.size() + converted.size());
+		left.append(converted.data(), converted.size());
+	}
+	else
+	{
+		const String converted = toStringValue(right);
+		left.reserve(left.size() + converted.size());
+		left.append(converted);
+	}
 	return std::move(left);
 }
 
 template<class T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, String>, int> = 0>
 String operator+(const T& left, const String& right)
 {
-	String result = toStringValue(left);
+	String result;
+	if constexpr (std::is_convertible_v<const T&, std::string_view>)
+	{
+		const std::string_view converted(left);
+		result.assign(converted.data(), converted.size());
+	}
+	else
+	{
+		result = toStringValue(left);
+	}
 	result.reserve(result.size() + right.size());
 	result.append(right);
 	return result;
@@ -501,8 +560,17 @@ class InternedString
 {
 	const String* value_{};
 
+	static const String& empty()
+	{
+		static const String value;
+		return value;
+	}
+
 	static const String& intern(const String& value)
 	{
+		if (value.empty())
+			return empty();
+
 		static std::unordered_map<std::string, std::unique_ptr<String>> values;
 		auto found = values.find(value);
 		if (found != values.end())
@@ -515,7 +583,7 @@ class InternedString
 	}
 
 public:
-	InternedString() : value_(&intern("")) {}
+	InternedString() : value_(&empty()) {}
 	InternedString(const String& value) : value_(&intern(value)) {}
 	InternedString(const char* value) : value_(&intern(value)) {}
 
@@ -531,6 +599,11 @@ public:
 		return *this;
 	}
 
+	void clear() noexcept
+	{
+		value_ = &empty();
+	}
+
 	const String& get() const { return *value_; }
 	operator const String&() const { return *value_; }
 	String toString() const { return *value_; }
@@ -543,8 +616,7 @@ public:
 	bool operator!=(const char* other) const { return !(*this == other); }
 };
 
-// Dictionary that preserves C# insertion order and average O(1) lookup. The
-// public key/value lists mirror Dictionary.Keys/Values.
+// Dictionary that preserves previous insertion order and average O(1) lookup.
 template<class V>
 class OrderedMap
 {
@@ -558,6 +630,9 @@ public:
 
 	OrderedMap(std::initializer_list<std::pair<String, V>> values)
 	{
+		indices_.reserve(values.size());
+		keys.reserve(values.size());
+		this->values.reserve(values.size());
 		for (const auto& value : values)
 			add(value.first, value.second);
 	}
@@ -569,21 +644,23 @@ public:
 
 	void add(const String& key, const V& value)
 	{
-		if (containsKey(key))
+		const std::size_t index = values.size();
+		const bool inserted = indices_.emplace(key, index).second;
+		if (!inserted)
 			throw std::runtime_error("Duplicate dictionary key: " + std::string(key));
 
-		indices_[key] = values.size();
-		keys.add(key);
-		values.add(value);
+		keys.emplace_back(key);
+		values.emplace_back(value);
 	}
 
 	V& operator[](const String& key)
 	{
-		auto found = indices_.find(key);
-		if (found == indices_.end())
+		const std::size_t index = values.size();
+		auto [found, inserted] = indices_.try_emplace(key, index);
+		if (inserted)
 		{
-			add(key, V{});
-			found = indices_.find(key);
+			keys.emplace_back(key);
+			values.emplace_back();
 		}
 		return values[found->second];
 	}

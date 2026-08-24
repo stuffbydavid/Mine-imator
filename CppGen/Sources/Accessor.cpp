@@ -2,7 +2,7 @@
 
 namespace CppGen
 {
-Accessor::Accessor(String name, List<Accessor::ArrayAccessor*> arrayAccessors, List<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line) : Expression(line)
+Accessor::Accessor(String name, List<Accessor::ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line) : Expression(line)
 {
 	this->name = name;
 	this->arrayAccessors = arrayAccessors;
@@ -51,7 +51,7 @@ void Accessor::resolve(ResolveScope* scope)
 			expr->resolve(scope->outsideChain()); // use outside scope for instance methods
 			inputTypeStorage.add(DataType(*expr->resolvedType));
 		}
-		List<DataType*> inputTypes;
+		NullableList<DataType*> inputTypes;
 		inputTypes.reserve(inputTypeStorage.size());
 		for (DataType& inputType : inputTypeStorage)
 			inputTypes.add(&inputType);
@@ -96,7 +96,7 @@ void Accessor::resolve(ResolveScope* scope)
 					if (i++ > 0)
 						arrType->assign(*inputType, this->func, this->line);
 				if (arrType->cppType == DataType::CppType::ArrType) // User gave array of values to add, fetch container type
-					arrType = arrType->getFirstAssignment(DataType::Type::Array)->containerType;
+					arrType = arrType->getFirstAssignment(DataType::Type::Array)->containerStorage.get();
 				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Array, arrType)); // Apply to 1st parameter
 				if (this->callParameters[0]->type == Type::Accessor)
 					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
@@ -171,7 +171,7 @@ void Accessor::resolve(ResolveScope* scope)
 			{
 				DataType::Assignment* mapAss = inputTypes[0]->getFirstAssignment(DataType::Type::AnyMap);
 				if (mapAss != nullptr)
-					this->resolvedType->assign(*mapAss->containerType, this->func, this->line);
+					this->resolvedType->assign(*mapAss->containerStorage, this->func, this->line);
 			}
 			else if (this->name == "ds_map_add") // ds_map_add(map<typeof arg>, key, arg)
 			{
@@ -198,7 +198,7 @@ void Accessor::resolve(ResolveScope* scope)
 			{
 				DataType::Assignment* mapAss = inputTypes[0]->getFirstAssignment(DataType::Type::Grid);
 				if (mapAss != nullptr)
-					this->resolvedType->assign(*mapAss->containerType, this->func, this->line);
+					this->resolvedType->assign(*mapAss->containerStorage, this->func, this->line);
 			}
 			else if (this->name == "ds_list_copy" || this->name == "ds_map_copy") // ds_x_copy(ds1, typeof ds1)
 				this->callParameters[0]->applyType(scope, *inputTypes[1]);
@@ -206,7 +206,7 @@ void Accessor::resolve(ResolveScope* scope)
 			else if (this->name == "shader_set_uniform_f" || this->name == "shader_set_uniform_i") // shader_set_uniform_f(real, real0, real1...)
 			{
 				for (Expression* expr : this->callParameters)
-					expr->applyType(scope, DataType(DataType::Type::Real));
+					expr->applyType(scope, DataType::scalar(DataType::Type::Real));
 			}
 			// We know the types of all GML* function arguments, apply them to the call parameter expressions
 			else if (!funcSign->varArgs)
@@ -347,7 +347,7 @@ void Accessor::resolve(ResolveScope* scope)
 			{
 				acc->expr->resolve(scope->outsideChain());
 				if (accessorType != DataType::Type::AnyMap) // Array accessors should be integers
-					acc->expr->applyType(scope->outsideChain(), DataType(DataType::Type::Integer));
+					acc->expr->applyType(scope->outsideChain(), DataType::scalar(DataType::Type::Integer));
 			}
 
 			if (var != nullptr && this->arrayAccessors[0]->isReference && this->assignExpr != nullptr)
@@ -367,7 +367,7 @@ void Accessor::resolve(ResolveScope* scope)
 					if (accessorType == ass.rawType ||
 						(accessorType == DataType::Type::AnyMap && DataType::isRawTypeMap(ass.rawType)) ||
 						(accessorType == DataType::Type::Array && DataType::isRawTypeArray(ass.rawType)))
-						this->resolvedType->assign(*ass.containerType, this->func, this->line);
+						this->resolvedType->assign(*ass.containerStorage, this->func, this->line);
 				}
 
 				if (this->resolvedType->isUnknown()) // ds[unknown] -> variant
@@ -422,7 +422,7 @@ bool Accessor::applyType(ResolveScope* scope, const DataType& inputType)
 	std::optional<DataType> containerType;
 	if (this->arrayAccessors.size() > 0) // Convert to container type
 	{
-		containerType.emplace(this->arrayAccessors[0]->type, const_cast<DataType*>(&inputType));
+		containerType.emplace(this->arrayAccessors[0]->type, &inputType);
 		appliedType = &*containerType;
 	}
 
@@ -909,7 +909,7 @@ String Accessor::getNextInChainScope(ResolveScope* scope)
 						if (varRefId != "") // Multiple containers found containing references, exit with "any"
 							return "any";
 
-						varRefId = ass->containerType->getUniqueReferenceId();
+						varRefId = ass->containerStorage->getUniqueReferenceId();
 					}
 				}
 			}

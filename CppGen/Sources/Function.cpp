@@ -258,7 +258,7 @@ String Function::toDebugString(String tabs)
 	return str;
 }
 
-void Function::resolve(ResolveScope* scope, const List<DataType*>& inputPars, Function* func, int line)
+void Function::resolve(ResolveScope* scope, const NullableList<DataType*>& inputPars, Function* func, int line)
 {
 	std::optional<ResolveScope> structScope;
 	if (this->structObject != nullptr) // Switch scope to StructObject
@@ -752,7 +752,7 @@ Accessor* Function::parseAccessor()
 	Token* token = nextToken(Token::Type::ID);
 	List<Accessor::ArrayAccessor*> arrayAccessors = List<Accessor::ArrayAccessor*>();
 	Accessor* member = nullptr;
-	List<Expression*> parameterList = nullptr;
+	NullableList<Expression*> parameterList = nullptr;
 	Token::Type addSubOp = Token::Type::Unknown;
 
 	if ((token->value == "argument" || token->value == "argument_count") && this->cppSeparateHeader == "") // Set VarArgs
@@ -960,9 +960,9 @@ Expression* Function::parseExprValue()
 	return nullptr;
 }
 
-List<Expression*> Function::parseParameterList()
+NullableList<Expression*> Function::parseParameterList()
 {
-	List<Expression*> pars = List<Expression*>();
+	NullableList<Expression*> pars;
 	nextToken(Token::Type::LeftPar);
 	while (true)
 	{
