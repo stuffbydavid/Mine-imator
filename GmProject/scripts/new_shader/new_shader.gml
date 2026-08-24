@@ -14,6 +14,7 @@ function new_shader(name)
 		// Set common uniforms
 		new_shader_sampler("uTexture")
 		new_shader_uniform("uTextureSize")
+		new_shader_uniform("uTextureOffset")
 		new_shader_uniform("uBlendColor")
 		
 		// Wind

@@ -14,6 +14,7 @@ function preview_event_create()
 	pack_block_sheet_ani = false
 	pack_colormap = 0
 	pack_particles = 0
+	pack_moon_phase = 0
 	
 	last_select = null
 	texture = null

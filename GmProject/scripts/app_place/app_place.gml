@@ -107,7 +107,7 @@ function app_update_place()
 		}
 		
 		tl_update_matrix()
-			
+		render_samples = -1
 		app_stop_place()
 	}
 	

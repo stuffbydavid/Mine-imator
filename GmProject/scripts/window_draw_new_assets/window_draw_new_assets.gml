@@ -1,4 +1,4 @@
-/// window_draw_load_assets()
+/// window_draw_new_assets()
 
 function window_draw_new_assets()
 {

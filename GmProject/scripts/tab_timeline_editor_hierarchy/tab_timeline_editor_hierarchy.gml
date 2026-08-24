@@ -9,9 +9,8 @@ function tab_timeline_editor_hierarchy()
 	
 	if (tl_edit.part_of = null)
 	{
-		var text;
-		
 		// Parent
+		var text;
 		if (par = app)
 			text = text_get("timelinenone")
 		else

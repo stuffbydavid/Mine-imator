@@ -227,7 +227,7 @@ function render_world_tl()
 	if (glint_tex.texture)
 		tex = glint_tex.texture
 	else
-		tex = (glint_mode = e_glint.ITEM ? glint_tex.glint_item_texture : glint_tex.glint_entity_texture)
+		tex = (glint_mode = e_glint.ITEM ? glint_tex.glint_item_texture : glint_tex.glint_armor_texture)
 	
 	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
@@ -249,6 +249,8 @@ function render_world_tl()
 			render_set_texture(spr_default_material, "Material")
 			render_set_texture(spr_default_normal, "Normal")
 		}
+		
+		render_set_uniform_vec2("uTextureOffset", 0, 0)
 		
 		switch (type)
 		{

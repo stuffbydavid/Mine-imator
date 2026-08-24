@@ -70,7 +70,7 @@ function view_update_surface(view, cam)
 					tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
 					tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= content_width || tl_edit.world_pos_2d[Y] >= content_height)
 					
-					if (vis)
+					if (vis || view_control_edit)
 					{
 						view_control_ratio = 1//max(1, (100 / content_height) * 1.25)
 						

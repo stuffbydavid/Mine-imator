@@ -276,6 +276,7 @@ function enums()
 		BG_NIGHT_COLOR,
 		BG_GRASS_COLOR,
 		BG_FOLIAGE_COLOR,
+		BG_DRY_FOLIAGE_COLOR,
 		BG_WATER_COLOR,
 		BG_LEAVES_OAK_COLOR,
 		BG_LEAVES_SPRUCE_COLOR,
@@ -425,9 +426,9 @@ function enums()
 	enum icons
 	{
 		ALIGN_BOTTOM,
+		ALIGN_CENTER,
 		ALIGN_LEFT,
 		ALIGN_MIDDLE,
-		ALIGN_CENTER,
 		ALIGN_RIGHT,
 		ALIGN_TOP,
 		ANNOUNCEMENT,
@@ -448,6 +449,7 @@ function enums()
 		BELL_SLASH,
 		BEND,
 		BEND_SHARP,
+		BEND_SMALL,
 		BETA,
 		BIRTHDAY,
 		BLOCK,
@@ -571,8 +573,10 @@ function enums()
 		FORWARD,
 		FRAME_NEXT,
 		FRAME_PREVIOUS,
+		GAME,
 		GHOST,
 		GHOST_SMALL,
+		GOOSE,
 		GRID,
 		GROUP,
 		HEART,
@@ -589,6 +593,7 @@ function enums()
 		IGNORE,
 		IMAGE,
 		IMAGE_EXPORT,
+		IMAGE_EXPORT_SMALL,
 		INFO,
 		INTERNAL,
 		ITALICS,
@@ -640,6 +645,7 @@ function enums()
 		MIRROR_VERTICALLY,
 		MOBILE,
 		MODEL,
+		MODEL_SMALL,
 		MOON,
 		MOVE,
 		MOVIE,
@@ -652,6 +658,7 @@ function enums()
 		NOTE_SMALL,
 		OVERLAYS,
 		PALETTE,
+		PAN,
 		PART,
 		PART_ADD,
 		PART_IMPORT,
@@ -695,8 +702,8 @@ function enums()
 		POSING,
 		POST_RECENTS,
 		PROGRAM_SETTINGS,
-		QUALITY,
 		PUPPETRY,
+		QUALITY,
 		QUOTE,
 		RANDOMIZE,
 		RECENTS,
@@ -742,7 +749,6 @@ function enums()
 		SORT_UP,
 		SPHERE,
 		SPHERE__DARK,
-		SPHERE_FLAT,
 		SPHERE_MATERIAL,
 		SPHERE_MATERIAL__DARK,
 		SPHERE_MATERIAL_SMALL,
@@ -771,8 +777,8 @@ function enums()
 		TEXT_SMALL,
 		TEXTURE,
 		TEXTURE_EXPORT,
+		TEXTURE_SMALL,
 		TICK,
-		TOPIC,
 		TRANSFORM,
 		TRANSFORM_SMALL,
 		TRANSFORMATION_GIMBAL,
@@ -804,10 +810,13 @@ function enums()
 		WAVE,
 		WEB,
 		WIND,
+		WIND_SMALL,
 		WORKBENCH,
 		WORLD,
 		WORLD_SMALL,
-		YOUTUBE
+		YOUTUBE,
+		ZOOM_IN,
+		ZOOM_OUT
 	}
 	
 	// Render modes
@@ -956,6 +965,7 @@ function enums()
 		ANIMATED,
 		GRASS,
 		FOLIAGE,
+		DRY_FOLIAGE,
 		LEAVES_OAK,
 		LEAVES_SPRUCE,
 		LEAVES_BIRCH,
@@ -1096,7 +1106,7 @@ function enums()
 	{
 		NONE,
 		ITEM,
-		ENTITY
+		ARMOR
 	}
 	
 	// Alpha mode

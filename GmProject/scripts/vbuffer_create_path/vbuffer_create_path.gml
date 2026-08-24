@@ -160,8 +160,8 @@ function vbuffer_create_path(path, small = false)
 				
 			if (invert)
 			{
-				vbuffer_add_triangle(p2, p1, p4, t4, t1, t2, nn2, nn1, nn4)
-				vbuffer_add_triangle(p1, p3, p4, t4, t3, t1, nn1, nn3, nn4)
+				vbuffer_add_triangle(p2, p1, p4, t2, t1, t4, nn2, nn1, nn4)
+				vbuffer_add_triangle(p1, p3, p4, t1, t3, t4, nn1, nn3, nn4)
 			}
 			else
 			{
@@ -187,7 +187,7 @@ function vbuffer_create_path(path, small = false)
 				if (i = 0)
 				{
 					if (invert)
-						vbuffer_add_triangle(p2, points[i], p1, t1, t3, t2)
+						vbuffer_add_triangle(p2, points[i], p1, t2, t3, t1)
 					else
 						vbuffer_add_triangle(p1, points[i], p2, t1, t3, t2)
 				}
@@ -200,7 +200,7 @@ function vbuffer_create_path(path, small = false)
 					t3[X] += (1/3)
 					
 					if (invert)
-						vbuffer_add_triangle(p3, points[i + 1], p4, t2, t3, t1)
+						vbuffer_add_triangle(p3, points[i + 1], p4, t1, t3, t2)
 					else
 						vbuffer_add_triangle(p4, points[i + 1], p3, t2, t3, t1)
 				}

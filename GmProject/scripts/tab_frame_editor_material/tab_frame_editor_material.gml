@@ -34,7 +34,7 @@ function tab_frame_editor_material()
 		
 			// Normal texture
 			if (project_render_material_maps)
-				tab_frame_editor_tex_normal()
+				tab_frame_editor_texture_normal()
 		
 			tab_collapse_end()
 		}
@@ -61,7 +61,7 @@ function tab_frame_editor_material()
 			textfield_group_add("frameeditorsubsurfaceradiusgreen", round(tl_edit.value[e_value.SUBSURFACE_RADIUS_GREEN] * 100), 100, action_tl_frame_subsurface_green, X, tab.material.tbx_subsurface_radius[Y])
 			textfield_group_add("frameeditorsubsurfaceradiusblue", round(tl_edit.value[e_value.SUBSURFACE_RADIUS_BLUE] * 100), 100, action_tl_frame_subsurface_blue, X, tab.material.tbx_subsurface_radius[Z])
 			
-			tab_control_textfield_group(false)
+			tab_control_textfield_group()
 			draw_textfield_group("frameeditorsubsurfaceradiusrgb", dx, dy, dw, 1, 0, 100, .1, false, true, 3)
 			tab_next()
 	

@@ -24,17 +24,40 @@ function list_init_end()
 		// Remove items
 		if (filter)
 		{
+			var filtersort, varmatchlist, nomatchlist;
+			filtersort = true
+			varmatchlist = []
+			nomatchlist = []
+			
 			for (var i = 0; i < ds_list_size(list.item); i++)
 			{
 				name = string_lower(list.item[|i].name)
 				name = string_replace_all(name, "normal", string_lower(menu_filter_normal))
 				
-				if (!string_contains(name, string_lower(menu_filter)))
+				if (filtersort)
+				{
+					if (string_contains(name, string_lower(menu_filter)))
+						array_add(varmatchlist, list.item[|i])
+					else
+						array_add(nomatchlist, list.item[|i])
+				}
+				else if (!string_contains(name, string_lower(menu_filter)))
 				{
 					instance_destroy(list.item[|i])
 					ds_list_delete(list.item, i)
 					i--
 				}
+			}
+			
+			if (filtersort)
+			{
+				ds_list_clear(list.item)
+				
+				for (var i = 0; i < array_length(varmatchlist); i++)
+					ds_list_add(list.item, varmatchlist[i])
+				
+				for (var i = 0; i < array_length(nomatchlist); i++)
+					ds_list_add(list.item, nomatchlist[i])
 			}
 		}
 	}

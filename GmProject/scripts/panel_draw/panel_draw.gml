@@ -9,12 +9,12 @@ function test_reduced_motion(a, b)
 /// @arg panel
 function panel_draw(panel)
 {
+	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
+		return 0
+	
 	var boxx, boxy, boxw, boxh, resizemouseon, padding;
 	var tabtitle, tabx, tabw, tabmaxw, tabsw, tabswprev, tabsh, tablistmouseon, tabmouseon;
 	var dx, dy;
-	
-	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
-		return 0
 	
 	// Calculate box
 	if (panel = panel_map[?"bottom"])

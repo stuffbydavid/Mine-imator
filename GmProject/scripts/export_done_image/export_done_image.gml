@@ -14,4 +14,5 @@ function export_done_image()
 	
 	toast_new(e_toast.POSITIVE, text_get("alertexportimage"))
 	toast_add_action("alertexportimageview", popup_open_url, export_filename)
+	toast_last.dismiss_time = 10
 }

@@ -87,7 +87,7 @@ namespace CppProject
 	// Compressed block vertex
 	struct WorldVertex
 	{
-		WorldVertex(const WorldVec& regionPos, uint16_t blockData);
+		WorldVertex(const WorldVec& regionPos, uint32_t blockData);
 
 		// Setup shader attributes
 		static void SetAttributes();
@@ -500,7 +500,7 @@ namespace CppProject
 		// Stores the faces added to a block in the section.
 		struct FaceData
 		{
-			uint16_t blockData[FaceDirectionAmount];
+			uint32_t blockData[FaceDirectionAmount];
 		};
 
 		// Stores the vertices in a chunk.

@@ -161,17 +161,20 @@ function background_sky_update_clouds()
 	vertex_add(cloudsize, 0, 0, 0, 0, -1, 1, 0)
 	vertex_add(0, 0, 0, 0, 0, -1, 0, 0)
 	
-	vertex_rgb = coltop
-	vertex_alpha = topalpha
-	vertex_add(0, 0, hei, 0, 0, 1, 0, 0)
-	vertex_add(cloudsize, 0, hei, 0, 0, 1, 1, 0)
-	vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
-	vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
-	vertex_add(0, cloudsize, hei, 0, 0, 1, 0, 1)
-	vertex_add(0, 0, hei, 0, 0, 1, 0, 0)
+	if (topalpha > 0)
+	{
+		vertex_rgb = coltop
+		vertex_alpha = topalpha
+		vertex_add(0, 0, hei, 0, 0, 1, 0, 0)
+		vertex_add(cloudsize, 0, hei, 0, 0, 1, 1, 0)
+		vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
+		vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
+		vertex_add(0, cloudsize, hei, 0, 0, 1, 0, 1)
+		vertex_add(0, 0, hei, 0, 0, 1, 0, 0)
 	
-	vertex_rgb = c_white
-	vertex_alpha = 1
+		vertex_rgb = c_white
+		vertex_alpha = 1
+	}
 	
 	vbuffer_done()
 }

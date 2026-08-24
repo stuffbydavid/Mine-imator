@@ -21,7 +21,8 @@ function tl_update_type_name()
 		}
 		else if (type = e_tl_type.BLOCK)
 		{
-			type_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+			if (!is_undefined(mc_assets.block_name_map[?block_name]))
+				type_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 		}
 		
 		type_name = text_get("timelinepartof", type_name, string_remove_newline(part_of.display_name))

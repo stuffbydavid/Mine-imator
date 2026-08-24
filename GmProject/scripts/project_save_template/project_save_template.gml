@@ -23,7 +23,7 @@ function project_save_template()
 				
 				if (type = e_temp_type.BODYPART)
 					json_save_var("part_name", model_part_name)
-				else
+				else if (!is_undefined(mc_assets.model_name_map[?model_name]))
 					json_save_var("model_version", mc_assets.model_name_map[?model_name].version)
 				
 			json_save_object_done()

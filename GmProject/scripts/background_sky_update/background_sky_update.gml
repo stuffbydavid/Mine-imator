@@ -4,7 +4,7 @@ function background_sky_update()
 {
 	if (!background_fog_color_custom) // Fog color
 	{
-		background_fog_color_final = background_sky_color
+		background_fog_color_final = background_sky_color_final
 		if (!background_image_show)
 		{
 			background_fog_color_final = merge_color(background_fog_color_final, merge_color(background_fog_color_final, 0, 0.95), background_night_alpha)
@@ -39,8 +39,8 @@ function background_sky_update()
 	else
 		alphay = 1
 	
-	background_clouds_alpha = (background_sky_clouds_mode = "faded" ? 1 - min(background_night_alpha, 0.95) : .8 - min(background_night_alpha, 0.75)) * alphay
-	background_sky_clouds_final = merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha)
+	background_clouds_alpha = background_sky_clouds_mode = "faded" ? (1 - min(background_night_alpha, 0.95)) * alphay : 0.8 //(.8 - min(background_night_alpha, 0.75) * alphay)
+	background_sky_clouds_final = merge_color(background_sky_clouds_color, c_night_clouds, background_night_alpha)
 	background_sky_clouds_vbuffer_pos = []
 	
 	var size, offset, xo, yo, num, xx, i;

@@ -284,7 +284,7 @@ namespace CppProject
 				{ TAG_INT, { "version", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
 				{ TAG_STRING, { "LevelName", "Dimension" }},
 				{ TAG_LIST, { "Pos", "Rotation" }},
-				{ TAG_COMPOUND, { "Data", "Player", "spawn" } },
+				{ TAG_COMPOUND, { "Data", "Player", "spawn" }},
 				{ TAG_INT_ARRAY, { "pos" }}
 			}));
 			NbtCompound saveData(stream);
@@ -335,14 +335,14 @@ namespace CppProject
 					info.playerPos.y += 24.0 / 16.0;
 
 				if (player->GetType("Dimension") == TAG_STRING) // String dimension
-					info.playerDim = player->String("Dimension").Replaced("minecraft:", "").Replaced("the_", "");
+					info.playerDim = player->String("Dimension").Replaced("minecraft:", "");
 
 				else // Integer dimension
 					switch (player->Int("Dimension"))
 					{
-					case 0: info.playerDim = "overworld"; break;
-					case 1: info.playerDim = "end"; break;
-					case -1: info.playerDim = "nether"; break;
+						case 0: info.playerDim = "overworld"; break;
+						case -1: info.playerDim = "the_nether"; break;
+						case 1: info.playerDim = "the_end"; break;
 					}
 
 				info.hasPlayer = true;
@@ -378,7 +378,6 @@ namespace CppProject
 					NbtCompound playerData(playerStream);
 					loadPlayerData(&playerData);
 				}
-
 			}
 		}
 		catch (const QString& str)
@@ -415,9 +414,9 @@ namespace CppProject
 
 		info.dimDir["overworld"] = overworldDir;
 		if (netherDir.exists() && !netherDir.isEmpty())
-			info.dimDir["nether"] = netherDir;
+			info.dimDir["the_nether"] = netherDir;
 		if (endDir.exists() && !endDir.isEmpty())
-			info.dimDir["end"] = endDir;
+			info.dimDir["the_end"] = endDir;
 
 		World::saves[dir] = info;
 		return true;

@@ -121,6 +121,7 @@ function tl_value_default(valueid)
 		case e_value.BG_NIGHT_COLOR: return app.background_night_color
 		case e_value.BG_GRASS_COLOR: return app.background_grass_color
 		case e_value.BG_FOLIAGE_COLOR: return app.background_foliage_color
+		case e_value.BG_DRY_FOLIAGE_COLOR: return app.background_dry_foliage_color
 		case e_value.BG_WATER_COLOR: return app.background_water_color
 		case e_value.BG_LEAVES_OAK_COLOR: return app.background_leaves_oak_color
 		case e_value.BG_LEAVES_SPRUCE_COLOR: return app.background_leaves_spruce_color

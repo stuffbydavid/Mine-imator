@@ -16,7 +16,7 @@ function action_tl_select(tl)
 	else
 	{
 		var shift, par, hobj;
-		hobj = noone
+		hobj = null
 		
 		if (history_redo)
 		{

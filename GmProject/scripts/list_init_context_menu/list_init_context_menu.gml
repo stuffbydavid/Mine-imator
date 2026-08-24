@@ -106,41 +106,29 @@ function list_init_context_menu(name)
 		{
 			list_item_add(text_get("contextmenutladdfolder"), null, text_control_name(keybinds[e_keybind.CREATE_FOLDER].keybind), null, icons.FOLDER, null, action_tl_folder, true)
 			list_item_add(text_get("contextmenutlselectkeyframes"), context_menu_value, "", null, icons.KEYFRAME, null, action_tl_select_keyframes)
-			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			list_item_last.disabled = context_menu_value = null
 			
 			if (setting_advanced_mode)
 			{
 				list_item_add(text_get("contextmenutlcolortag"), null, "", null, icons.TAG, icons.CHEVRON_RIGHT_TINY, null)
 				list_item_last.context_menu_name = "colortag"
-				list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+				list_item_last.disabled = context_menu_value = null
 			}
 			
 			list_item_add(text_get("contextmenutlexpandchildren"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_children)
-			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			list_item_last.disabled = context_menu_value = null
 			
 			list_item_add(text_get("contextmenutlcollapsechildren"), null, "", null, icons.MINIMIZE, null, action_tl_collapse_children)
-			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			list_item_last.disabled = context_menu_value = null
 			
 			list_item_add(text_get("contextmenutlduplicate"), null, text_control_name(keybinds[e_keybind.TIMELINE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
-			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			list_item_last.disabled = (context_menu_value = null || context_menu_value.part_of != null)
 			
 			list_item_add(text_get("contextmenutldelete"), null, text_control_name(keybinds[e_keybind.TIMELINE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
-			list_item_last.disabled = (context_menu_value = null && tl_edit = null)
+			list_item_last.disabled = (context_menu_value = null || context_menu_value.part_of != null)
 			
 			list_item_add(text_get("contextmenutlexport"), null, "", null, icons.ASSET_EXPORT, null, object_save)
-			
-			if (context_menu_value = null)
-				list_item_last.disabled = true
-			else
-			{
-				if (!context_menu_value.selected)
-				{
-					if (context_menu_value.part_of != null)
-						list_item_last.disabled = true
-				}
-				else
-					list_item_last.disabled = !timeline_settings
-			}
+			list_item_last.disabled = (context_menu_value = null || (!context_menu_value.selected && context_menu_value.part_of != null)) ? true : !timeline_settings
 			
 			list_item_add(text_get("contextmenutlselectall"), null, text_control_name(keybinds[e_keybind.TIMELINE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
 			list_item_add(text_get("contextmenutlexpandall"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_all)	

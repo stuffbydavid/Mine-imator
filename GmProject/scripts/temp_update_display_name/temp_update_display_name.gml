@@ -21,7 +21,8 @@ function temp_update_display_name()
 				break
 			
 			case e_temp_type.BLOCK:
-				display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+				if (!is_undefined(mc_assets.block_name_map[?block_name]))
+					display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 				break
 			
 			case e_temp_type.BODYPART:

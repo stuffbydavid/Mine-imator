@@ -15,6 +15,8 @@ function block_tile_entity_sign_text(map)
 		{
 			if (is_string(textmap[?"text"]))
 				line = textmap[?"text"]
+			else if (is_string(textmap[?"default"]))
+				line = textmap[?"default"]
 				
 			ds_map_destroy(textmap)
 		}

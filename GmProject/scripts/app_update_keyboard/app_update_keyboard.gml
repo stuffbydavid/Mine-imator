@@ -115,7 +115,7 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.PARTICLES_CLEAR].pressed)
 			action_lib_pc_clear()
 		
-		// Only available for seperated tool modes
+		// Only available for separate tool modes
 		if (keybinds[e_keybind.TOOL_SELECT].pressed)
 		{
 			action_tools_disable_all()

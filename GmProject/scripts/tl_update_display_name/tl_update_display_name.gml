@@ -23,7 +23,8 @@ function tl_update_display_name()
 			}
 			else if (type = e_tl_type.BLOCK)
 			{
-				display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+				if (!is_undefined(mc_assets.block_name_map[?block_name]))
+					display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 			}
 		}
 		else if (temp != null)

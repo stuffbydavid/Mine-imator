@@ -191,31 +191,40 @@ function particle_spawner_update(spawner)
 					if (is_timeline && value[e_value.ATTRACTOR] != null && value[e_value.ATTRACTOR].type = e_tl_type.PATH)
 					{
 						// Get nearest point in path table
-						var att, pointpos, pointposnext, pointdis, curdis, curpos, pointi, points, v, d, p;
+						var att, pointdata, pointpos, pointdis, curdis, curdata, curpos, points;
 						att = value[e_value.ATTRACTOR]
+						curdata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						pointdata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						curpos = [0, 0, 0]
 						pointpos = [0, 0, 0]
 						pointdis = no_limit
-						pointi = 0
 						points = array_length(att.path_table_matrix)
 						
 						for (var j = 0; j < points; j += 3)
 						{
-							curpos = att.path_table_matrix[j]
-							curdis = point3D_distance(pt.pos, curpos) // possibly hundreds of distance checks in each particle.. yikes
+							curdata = att.path_table_matrix[j]
+							curpos = [curdata[X], curdata[Y], curdata[Z]]
+							curdis = point3D_distance(pt.pos, curpos)
 							
 							// New nearest point?
 							if (curdis < pointdis)
 							{
-								pointi = j
 								pointdis = curdis
+								pointdata = curdata
 								pointpos = curpos
 							}
 						}
 						
-						var t, n, b;
+						var v, d, p, t, n, b;
+						v = [0, 0, 0]
+						d = [0, 0, 0]
+						p = [0, 0, 0]
+						t = [0, 0, 0]
+						n = [0, 0, 0]
+						b = [0, 0, 0]
 						
 						// Direction to next point
-						t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]]
+						t = [pointdata[PATH_TANGENT_X], pointdata[PATH_TANGENT_Y], pointdata[PATH_TANGENT_Z]]
 						
 						// Get nearest position between two points given the current particle position
 						v = vec3_sub(pt.pos, pointpos)
@@ -356,7 +365,7 @@ function particle_spawner_update(spawner)
 								else if (temp.pc_spawn_region_type = "path" && temp.pc_spawn_region_path != null)
 								{
 									// Get nearest point in path table
-									var path, pointpos, pointposnext, pointdis, curdis, curpos, pointi, points, v, d, p, t, dis, dir;
+									var path, pointpos, pointdis, pointi, points, curdis, curpos;
 									path = temp.pc_spawn_region_path
 									pointpos = [0, 0, 0]
 									pointdis = no_limit
@@ -376,6 +385,8 @@ function particle_spawner_update(spawner)
 											pointpos = curpos
 										}
 									}
+									
+									var t, v, d, p, dis, dir;
 									
 									// Direction to next point
 									t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]];

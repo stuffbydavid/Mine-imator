@@ -1,8 +1,9 @@
 /// CppSeparate StringType json_string_encode(StringType)
 /// json_string_encode(string)
 /// @arg string
-function json_string_encode(str) {
 
+function json_string_encode(str)
+{
 	var nstr = ""
 
 	for (var i = 0; i < string_length(str); i++)
@@ -26,6 +27,4 @@ function json_string_encode(str) {
 	}
 
 	return nstr
-
-
 }

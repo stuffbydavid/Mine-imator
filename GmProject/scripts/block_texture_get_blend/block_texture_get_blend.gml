@@ -18,6 +18,7 @@ function block_texture_get_blend(texname, res)
 		{
 			case "grass": return res.color_grass;
 			case "foliage": return res.color_foliage;
+			case "dry_foliage": return res.color_dry_foliage;
 			case "water": return res.color_water;
 			
 			case "oak_leaves": return res.color_leaves_oak;

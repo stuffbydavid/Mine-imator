@@ -4,5 +4,5 @@
 
 function block_texture_get_frame(realtime = false)
 {
-	return floor((realtime ? current_step : app.background_time) * app.background_texture_animation_speed) mod block_sheet_ani_frames
+	return floor((realtime ? current_step : app.background_time) * app.background_texture_animation_speed) mod minecraft_block_animated_sheet_size[2]
 }

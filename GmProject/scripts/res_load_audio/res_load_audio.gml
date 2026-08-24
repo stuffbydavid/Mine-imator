@@ -63,7 +63,7 @@ function res_load_audio()
 			load_audio_sample = 0
 			
 			with (app)
-				popup_loading.progress = 1 / 5
+				popup_loading.progress = 0.2
 			break
 		}
 		
@@ -92,7 +92,7 @@ function res_load_audio()
 			}
 			
 			with (app)
-				popup_loading.progress = (1 / 5) + (4 / 5) * (other.load_audio_sample / other.sound_samples)
+				popup_loading.progress = 0.2 + 0.8 * (other.load_audio_sample / other.sound_samples)
 			
 			break
 		}

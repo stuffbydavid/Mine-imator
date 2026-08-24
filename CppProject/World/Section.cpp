@@ -58,7 +58,7 @@ namespace CppProject
 			preview.regionPos = { chunk->regionPos.x, chunk->regionPos.y + chunkIndex * SECTION_SIZE, chunk->regionPos.z };
 
 			// Hide naturally occuring bedrock
-			preview.hideBedrock = (y <= 0 || (region->dimName == "nether" && y == 7));
+			preview.hideBedrock = (y <= 0 || (region->dimName == "the_nether" && y == 7));
 
 			// Enable section in GetPreviewState
 			IntType regionIndex = (chunkIndex << 10) + (chunk->z << 5) + chunk->x;
@@ -294,6 +294,7 @@ namespace CppProject
 		{
 			auto parsePaletteEntry = [&](StringType id, NbtCompound* entry = nullptr)
 			{
+				id = id.Replaced("minecraft:", "");
 				if (id == "air") { // Air blocks
 					blockStylePalette.Append({ 0, false });
 					return;
@@ -407,7 +408,7 @@ namespace CppProject
 			QVector<NbtString*> paletteStrings = biomesRoot->List<TAG_STRING, NbtString>("palette");
 			biomePalette.Alloc(paletteStrings.size());
 			for (NbtString* entry : paletteStrings)
-				biomePalette.Append(Preview::mcBiomeIdIndexMap.value(entry->value));
+				biomePalette.Append(Preview::mcBiomeIdIndexMap.value(entry->value.Replaced("minecraft:", "")));
 
 			if (biomesRoot->HasKey("data")) // Has array
 			{
@@ -456,6 +457,7 @@ namespace CppProject
 		{
 			auto parsePaletteEntry = [&](StringType id, NbtCompound* entry = nullptr)
 			{
+				id = id.Replaced("minecraft:", "");
 				if (id != "air") // Non air
 				{
 					if (obj_block* block = Builder::filteredMcBlockIdObjMap.value(id, nullptr))
@@ -487,6 +489,8 @@ namespace CppProject
 								}
 							}
 						}
+						else
+							state.waterlogged = block->waterlogged; // If block has "waterlogged: true"
 
 						if (vars.Size()) // Array to id
 							state.stateId = block_get_state_id(block->id, vars);

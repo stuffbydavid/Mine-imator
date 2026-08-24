@@ -6,19 +6,8 @@
 /// @arg alpha
 /// @arg [light]
 
-function draw_box_bevel()
+function draw_box_bevel(xx, yy, width, height, alpha, light = false)
 {
-	var xx, yy, width, height, alpha, light;
-	xx = argument[0]
-	yy = argument[1]
-	width = argument[2]
-	height = argument[3]
-	alpha = argument[4]
-	light = false
-	
-	if (argument_count > 5)
-		light = argument[5]
-	
 	if (light)
 	{
 		draw_box(xx, yy, 3, height, false, c_white, .6 * alpha) // Left

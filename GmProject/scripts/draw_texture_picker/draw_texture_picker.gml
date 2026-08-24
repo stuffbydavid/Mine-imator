@@ -47,9 +47,6 @@ function draw_texture_picker(select, tex, xx, yy, wid, hei, slots, slotsx, slots
 	{
 		var col, curtex, curslot, curslotsx, curslotsy;
 		
-		if (select = i)
-			draw_box(tx, ty, slotwid + off*2, slothei + off*2, false, c_accent_hover, a_accent_hover)
-		
 		// Texture color
 		col = c_white
 		
@@ -74,8 +71,11 @@ function draw_texture_picker(select, tex, xx, yy, wid, hei, slots, slotsx, slots
 		}
 		
 		// Highlight if selected
-		//if (select = i)
-		//	draw_outline(tx + off, ty + off, slotwid, slothei, 2, c_accent, 1)
+		if (select mod (slotsx * slotsy) = i)
+		{
+			draw_box(tx - off, ty - off, slotwid + off*4, slothei + off*4, false, c_accent_hover, a_accent_hover)
+			//draw_outline(tx + off, ty + off, slotwid, slothei, off*2, c_accent, 1)
+		}
 		
 		// Item
 		draw_texture_slot(curtex, curslot, tx + off, ty + off, slotwid, slothei, curslotsx, curslotsy, col)

@@ -51,14 +51,14 @@ function tab_properties_project()
 	draw_button_menu("projectvideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
 	tab_next()
 	
-	// Custom
+	// Custom size
 	if (project_video_template = 0)
 	{
 		textfield_group_add("projectvideosizecustomwidth", project_video_width, 1280, action_project_video_width, X, tab.project.tbx_video_size_custom_width, null, 1, 1, surface_get_max_size())
 		textfield_group_add("projectvideosizecustomheight", project_video_height, 720, action_project_video_height, X, tab.project.tbx_video_size_custom_height, null, 1, 1, surface_get_max_size())
 		
-		tab_control_textfield_group(false)
-		draw_textfield_group("projectvideosizecustom", dx, dy, dw, 1, 1, no_limit, 1, false)
+		tab_control_textfield_group()
+		draw_textfield_group("projectvideosizecustom", dx, dy, dw, 1, 1, no_limit, 1)
 		tab_next()
 		
 		tab_control_switch()

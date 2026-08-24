@@ -2,13 +2,13 @@
 
 function window_draw_export()
 {
-	var totalframes, totalsamples, usesamples, perc;
-	var framex, framey, framew, frameh;
-	var timeleftsecs, timeleftmins, timelefthours, timeleftstr;
-	
 	// Update rendering
 	if (!export_update())
 		return 0
+	
+	var totalframes, totalsamples, usesamples, perc;
+	var framex, framey, framew, frameh;
+	var timeleftsecs, timeleftmins, timelefthours, timeleftstr;
 	
 	// Set dimensions
 	if (window_state = "export_movie")

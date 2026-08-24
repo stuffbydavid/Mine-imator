@@ -58,8 +58,12 @@ function res_event_create()
 	
 	colormap_grass_texture = null
 	colormap_foliage_texture = null
+	colormap_dry_foliage_texture = null
 	
 	color_grass = null
+	color_foliage = null
+	color_dry_foliage = null
+	color_water = null
 	color_leaves_oak = null
 	color_leaves_spruce = null
 	color_leaves_birch = null
@@ -67,20 +71,19 @@ function res_event_create()
 	color_leaves_acacia = null
 	color_leaves_dark_oak = null
 	color_leaves_mangrove = null
-	color_foliage = null
-	color_water = null
 	
 	sun_texture = null
-	moonphases_texture = null
-	moon_texture[0] = null
+	moon_textures = [null, null, null, null, null, null, null, null]
+	//moonphases_texture = null
+	//moon_texture[0] = null
 	clouds_texture = null
-	glint_entity_texture = null
+	glint_armor_texture = null
 	glint_item_texture = null
 	
 	item_sheet_texture = null
 	item_sheet_texture_material = null
 	item_sheet_tex_normal = null
-	item_sheet_size = vec2(item_sheet_width, item_sheet_height)
+	item_sheet_size = vec2(32, 32)
 	
 	particles_texture[0] = null
 	particles_texture[1] = null

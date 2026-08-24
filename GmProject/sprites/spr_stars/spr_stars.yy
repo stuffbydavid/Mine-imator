@@ -33,7 +33,7 @@
   "sequence": {
     "resourceType": "GMSequence",
     "resourceVersion": "1.4",
-    "name": "",
+    "name": "spr_stars",
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 1.0,
