@@ -154,4 +154,9 @@ namespace CppProject
 	{
 		return std::sqrt(rl);
 	}
+	
+	RealType tan(RealType rl)
+	{
+		return std::tan(rl);
+	}
 }

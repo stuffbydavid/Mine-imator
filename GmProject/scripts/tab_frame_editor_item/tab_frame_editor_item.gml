@@ -26,8 +26,8 @@ function tab_frame_editor_item()
 		tab_next()
 		
 		var slots = ((res.type = e_res_type.PACK) ? ds_list_size(mc_assets.item_texture_list) : (res.item_sheet_size[X] * res.item_sheet_size[Y]));
-		tab_control(200)
-		draw_texture_picker(tl_edit.value[e_value.ITEM_SLOT], res.item_sheet_texture, dx, dy, dw, 200, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item.item_scroll, action_tl_frame_item_slot)
+		tab_control(216)
+		draw_texture_picker(tl_edit.value[e_value.ITEM_SLOT], res.item_sheet_texture, dx, dy, dw, 216, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item.item_scroll, action_tl_frame_item_slot)
 		tab_next()
 		
 		tab_collapse_end()

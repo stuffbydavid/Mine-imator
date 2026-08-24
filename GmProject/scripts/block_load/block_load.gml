@@ -142,7 +142,7 @@ function block_load(map, typemap)
 		else
 			default_state = array()
 		
-		default_state_id = block_get_state_id(id, default_state)
+		//default_state_id = block_get_state_id(id, default_state)
 		
 		// Subsurface
 		if (is_real(map[?"subsurface"]))
@@ -220,7 +220,7 @@ function block_load(map, typemap)
 		state_id_emissive = null
 		state_id_random_offset = null
 		state_id_random_offset_xy = null
-		state_id_subsurface = null
+		//state_id_subsurface = null
 		
 		for (var sid = 0; sid < state_id_amount; sid++)
 		{

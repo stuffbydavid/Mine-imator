@@ -52,7 +52,7 @@ namespace CppProject
 		}
 
 		// Add space in front to match at least tot characters
-		while (text.length() < tot + (text.contains(".") ? 1 : 0))
+		while (text.length() < tot + (dec == 0 ? 0 : dec + 1))
 			text = " " + text;
 		return text;
 	}
@@ -75,6 +75,14 @@ namespace CppProject
 	{
 		index--;
 		return str.Inserted(index, substr);
+	}
+
+	IntType string_last_pos(StringType substr, StringType str)
+	{
+		if (substr.IsEmpty())
+			return 0;
+
+		return str.LastIndexOf(substr) + 1LL;
 	}
 
 	IntType string_length(StringType str)

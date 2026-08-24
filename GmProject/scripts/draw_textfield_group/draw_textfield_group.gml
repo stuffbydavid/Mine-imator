@@ -17,12 +17,12 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 {
 	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei;
 	
-	vertical = (app.panel_compact) && stack
+	vertical = (app.panel_compact || window_compact) && stack
 	fieldx = xx
 	fieldy = yy
 	fieldwid = vertical ? wid : (wid/textfield_amount)
 	fieldupdate = undefined
-	hei = (vertical ? (ui_small_height * textfield_amount) : ui_small_height) + ((label_height + 8) * showcaption)
+	hei = (vertical ? real(ui_small_height * textfield_amount) : ui_small_height) + ((label_height + 8) * showcaption)
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{

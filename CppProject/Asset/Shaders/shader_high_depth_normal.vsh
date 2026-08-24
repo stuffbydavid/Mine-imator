@@ -20,6 +20,9 @@ varying vec4 vColor;
 varying vec4 vCustom;
 varying mat3 vWorldViewInv;
 
+// Texture
+uniform vec2 uTextureOffset;
+
 // Wind
 uniform float uTime; // static
 uniform float uWindEnable;
@@ -111,7 +114,7 @@ mat3 inverse2(mat4 Original)
 
 void main()
 {
-	vTexCoord = in_TextureCoord;
+	vTexCoord = in_TextureCoord + uTextureOffset;
 	
 	// Wind
 	if (max((in_Wave.x + in_Wave.y) * uWindTerrain, uWindEnable) * uWindStrength > 0.0)

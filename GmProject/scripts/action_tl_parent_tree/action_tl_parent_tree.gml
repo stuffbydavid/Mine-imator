@@ -32,6 +32,8 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 				
 				tl_set_parent(newparent, newindex)
 				moved = true
+				
+				// Parented objects with no keyframes get position reset
 				if (ds_list_size(keyframe_list) = 0)
 				{
 					if (parent = app)

@@ -56,6 +56,7 @@ function tl_value_clamp(vid, val)
 		case e_value.BG_NIGHT_COLOR:
 		case e_value.BG_GRASS_COLOR:
 		case e_value.BG_FOLIAGE_COLOR:
+		case e_value.BG_DRY_FOLIAGE_COLOR:
 		case e_value.BG_WATER_COLOR:
 		case e_value.BG_LEAVES_OAK_COLOR:
 		case e_value.BG_LEAVES_SPRUCE_COLOR:

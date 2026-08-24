@@ -126,8 +126,8 @@ function block_generate_liquid(waterlogged = false)
 	else
 		vbuf = e_block_vbuffer.ANIMATED
 	
-	sheetwidth = block_sheet_ani_width
-	sheetheight = block_sheet_ani_height
+	sheetwidth = minecraft_block_animated_sheet_size[0]
+	sheetheight = minecraft_block_animated_sheet_size[1]
 	slotstillposx = (slot mod sheetwidth) * block_size
 	slotstillposy = (slot div sheetwidth) * block_size
 	slotstillsizex = 1 / (sheetwidth * block_size)

@@ -70,6 +70,7 @@ function res_load(reload = false)
 			
 			colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
 			colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
+			colormap_dry_foliage_texture = texture_duplicate(mc_res.colormap_dry_foliage_texture)
 			
 			res_update_colors()
 			res_update_block_preview()

@@ -23,6 +23,7 @@ function tl_new_part(part)
 		part_mixing_shapes = part.part_mixing_shapes
 		colors_ext = part_mixing_shapes
 		backfaces = part.backfaces
+		shadows = part.shadows
 		
 		part_parent_save_id = ""
 		

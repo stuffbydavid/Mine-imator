@@ -160,9 +160,9 @@ namespace CppProject
 		shader_set(shaderChecker->id);
 		GFX->shader->SubmitVec2(GFX->shader->GetUniformIndex("uSize"), rect.width(), rect.height());
 		IntType dim = 0;
-		if (dimension == "nether")
+		if (dimension == "the_nether")
 			dim = 1;
-		else if (dimension == "end")
+		else if (dimension == "the_end")
 			dim = -1;
 		GFX->shader->SubmitInt(GFX->shader->GetUniformIndex("uDim"), dim);
 		PR->Begin(pr_trianglestrip);

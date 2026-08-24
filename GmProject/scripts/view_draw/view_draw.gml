@@ -3,6 +3,9 @@
 
 function view_draw(view)
 {
+	if (!view.show)
+		return 0
+	
 	var cam, camname;
 	var captionx, captiony, captionw, captionh;
 	var boxx, boxy, boxw, boxh;
@@ -12,9 +15,6 @@ function view_draw(view)
 	mouseonresizesplit = false
 	mouseonresizehor = false
 	mouseonresizever = false
-	
-	if (!view.show)
-		return 0
 	
 	if (view = view_main && view_second.show && view_main.quality = e_view_mode.RENDER && view_second.quality = e_view_mode.RENDER)
 		view_main.quality = e_view_mode.SHADED
@@ -220,7 +220,7 @@ function view_draw(view)
 			action_setting_secondary_view()
 	}
 	
-	dx -= (padding + 1)
+	dx -= padding
 	draw_divide_vertical(dx, dy, dh)
 	
 	// Quality settings
@@ -259,7 +259,7 @@ function view_draw(view)
 	dx -= dw + padding
 	
 	// "Flat" quality
-	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.SPHERE_FLAT, null, false, "viewmodeflat"))
+	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.CIRCLE_OUTLINE, null, false, "viewmodeflat"))
 		view.quality = e_view_mode.FLAT
 	dx -= dw + padding
 	
@@ -280,7 +280,7 @@ function view_draw(view)
 	}
 	
 	// Divide
-	dx -= (padding + 1)
+	dx -= padding
 	draw_divide_vertical(dx, dy, dh)
 	dx -= 16 + padding
 	
@@ -312,7 +312,7 @@ function view_draw(view)
 	// Snap settings
 	if (view = view_main)
 	{
-		dx -= (padding + 1)
+		dx -= padding
 		draw_divide_vertical(dx, dy, dh)
 		dx -= 16 + padding
 		
@@ -453,16 +453,16 @@ function view_draw(view)
 		if (view.grid)
 		{
 			var cellwid, cellhei;
-			cellwid = content_width / project_grid_rows
-			cellhei = content_height / project_grid_columns
+			cellwid = content_width / project_grid_columns
+			cellhei = content_height / project_grid_rows
 			
-			for (var i = 1; i < project_grid_rows; i++)
+			for (var i = 1; i < project_grid_columns; i++)
 			{
 				draw_line_ext(content_x + cellwid * i - 1, content_y, content_x + cellwid * i - 1, content_y + content_height, c_white, 1)
 				draw_line_ext(content_x + cellwid * i + 1, content_y, content_x + cellwid * i + 1, content_y + content_height, c_white, 1)
 			}
 			
-			for (var i = 1; i < project_grid_columns; i++)
+			for (var i = 1; i < project_grid_rows; i++)
 			{
 				draw_line_ext(content_x, content_y + cellhei * i - 1, content_x + content_width, content_y + cellhei * i - 1, c_white, 1)
 				draw_line_ext(content_x, content_y + cellhei * i + 1, content_x + content_width, content_y + cellhei * i + 1, c_white, 1)

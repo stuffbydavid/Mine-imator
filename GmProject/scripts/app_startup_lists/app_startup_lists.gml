@@ -7,6 +7,7 @@ function app_startup_lists()
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
+	globalvar minecraft_block_sheet_size, minecraft_block_animated_sheet_size, minecraft_item_sheet_size;
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
 	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
@@ -169,6 +170,7 @@ function app_startup_lists()
 		"BG_NIGHT_COLOR",
 		"BG_GRASS_COLOR",
 		"BG_FOLIAGE_COLOR",
+		"BG_DRY_FOLIAGE_COLOR",
 		"BG_WATER_COLOR",
 		"BG_LEAVES_OAK_COLOR",
 		"BG_LEAVES_SPRUCE_COLOR",
@@ -415,11 +417,15 @@ function app_startup_lists()
 	
 	// Biomes
 	biome_list = ds_list_create()
-	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))
+	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_dry_foliage, c_plains_biome_water, null))
 	
 	// Particles
 	particle_template_list = ds_list_create()
 	particle_template_map = ds_map_create()
+	
+	minecraft_block_sheet_size = []
+	minecraft_block_animated_sheet_size = []
+	minecraft_item_sheet_size = []
 	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()

@@ -87,11 +87,11 @@ function render_generate_text()
 			text_aa_prev = aa
 	}
 	
-	if (text_texture[0] != null && text_string = str && text_res = res && text_3d = is3d && alignmatch && aamatch)
-		return 0
-	
 	if (string_char_at(str, string_length(str)) = "\n")
 		str += " "
+	
+	if (text_texture[0] != null && text_string = str && text_res = res && text_3d = is3d && alignmatch && aamatch)
+		return 0
 	
 	text_string = str
 	text_res = res
@@ -101,19 +101,19 @@ function render_generate_text()
 	
 	// Calculate dimensions
 	var wid, hei, xx, zz;
-	wid = string_width(str) + 3
-	hei = string_height_ext(str, string_height(" ") - 2, -1) + 1
+	wid = string_width(str) + 1
+	hei = string_height_ext(str, string_height(" ") - 2, -1) + 4
 	
 	switch (valign)
 	{
-		case "top": zz = -hei; break;
-		case "center": zz = -hei / 2 - 1; break;
+		case "top": zz = -hei + 3; break;
+		case "center": zz = -hei / 2 + 0.5; break;
 		case "bottom": zz = 0; break;
 	}
 	
 	switch (halign)
 	{
-		case "left": xx = 0; break;
+		case "left": xx = -1; break;
 		case "center": xx = -wid / 2 - 1; break;
 		case "right": xx = -wid; break;
 	}
@@ -130,12 +130,12 @@ function render_generate_text()
 		
 		switch (halign)
 		{
-			case "left": textxx = 0; draw_set_halign(fa_left); break;
+			case "left": textxx = 1; draw_set_halign(fa_left); break;
 			case "center": textxx = ceil(wid / 2); draw_set_halign(fa_center); break;
 			case "right": textxx = wid; draw_set_halign(fa_right); break;
 		}
 		
-		draw_text_ext(textxx, -1, str, string_height(" ") - 2, -1)
+		draw_text_ext(textxx, 2, str, string_height(" ") - 2, -1)
 		
 		draw_set_halign(fa_left)
 		draw_set_color(color)

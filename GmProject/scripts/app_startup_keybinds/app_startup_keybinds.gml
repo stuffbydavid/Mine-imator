@@ -46,9 +46,9 @@ function app_startup_keybinds()
 		
 		// Viewport
 		RENDER_MODE,
+		SECONDARY_VIEW,
 		PARTICLES_SPAWN,
 		PARTICLES_CLEAR,
-		SECONDARY_VIEW,
 		
 		// Tools
 		TOOL_SELECT,
@@ -102,14 +102,14 @@ function app_startup_keybinds()
 	// Timeline
 	keybind_register("play", e_keybind.PLAY, keybind_new(vk_space))
 	keybind_register("playbeginning", e_keybind.PLAY_BEGINNING, keybind_new(vk_enter))
-	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left), true)
-	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right), true)
+	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left))
+	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right))
 	
 	// Viewport
 	keybind_register("rendermode", e_keybind.RENDER_MODE, keybind_new(vk_f5))
+	keybind_register("secondaryview", e_keybind.SECONDARY_VIEW, keybind_new(vk_f6))
 	keybind_register("particlesspawn", e_keybind.PARTICLES_SPAWN, keybind_new("X"))
 	keybind_register("particlesclear", e_keybind.PARTICLES_CLEAR, keybind_new("C"))
-	keybind_register("secondaryview", e_keybind.SECONDARY_VIEW, keybind_new(vk_f6))
 	
 	// Tools
 	keybind_register("toolselect", e_keybind.TOOL_SELECT, keybind_new("W"))
@@ -133,7 +133,7 @@ function app_startup_keybinds()
 	keybind_register("camreset", e_keybind.CAM_RESET, keybind_new("R"), true)
 	keybind_register("camfast", e_keybind.CAM_FAST, keybind_new(vk_space), true)
 	keybind_register("camslow", e_keybind.CAM_SLOW, keybind_new(null, false, true), true)
-	keybind_register("camviewtimeline", e_keybind.CAM_VIEW_TIMELINE, keybind_new("V"), false)
+	keybind_register("camviewtimeline", e_keybind.CAM_VIEW_TIMELINE, keybind_new("V"))
 	
 	keybinds_update_match()
 }

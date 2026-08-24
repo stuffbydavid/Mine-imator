@@ -284,7 +284,7 @@ function preview_draw(preview, xx, yy, width, height)
 						lengthdir_y(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
 						lengthdir_z(prevcam_zoom, zangle)
 					)
-					render_ratio = width/height
+					render_ratio = width / height
 					
 					gpu_set_ztestenable(true)
 					camera_apply(cam_render)
@@ -576,8 +576,21 @@ function preview_draw(preview, xx, yy, width, height)
 								}
 								
 								case "colormap":
-									tex = (pack_colormap ? select.colormap_foliage_texture : select.colormap_grass_texture)
+								{
+									switch (pack_colormap)
+									{
+										case 0:
+											tex = select.colormap_grass_texture
+											break
+										case 1:
+											tex = select.colormap_foliage_texture
+											break
+										case 2:
+											tex = select.colormap_dry_foliage_texture
+											break
+									}
 									break
+								}
 								
 								case "itemsheet":
 								{
@@ -600,7 +613,8 @@ function preview_draw(preview, xx, yy, width, height)
 									break
 								
 								case "moontexture":
-									tex = select.moonphases_texture
+									//tex = select.moonphases_texture
+									tex = select.moon_textures[pack_moon_phase]
 									break
 								
 								case "cloudtexture":

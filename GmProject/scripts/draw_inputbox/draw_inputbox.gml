@@ -16,7 +16,6 @@
 function draw_inputbox()
 {
 	var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha, focused;
-	var update;
 	
 	inputname = argument[0]
 	xx = argument[1]
@@ -56,6 +55,8 @@ function draw_inputbox()
 	
 	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 		return 0
+	
+	var update;
 	
 	var mouseon;
 	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "" || window_busy = string(tbx) + "click") && !disabled

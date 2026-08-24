@@ -18,7 +18,9 @@ function texture_create_square(fn)
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
+		gpu_set_blendmode_ext(bm_one, bm_src_alpha)
 		draw_texture(tex, 0, 0)
+		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	

@@ -13,7 +13,7 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 		res = mc_res
 	
 	var patternbase, patterndir;
-	patternbase = (type = "banner" ? "entity/banner_base" : "entity/shield_base")
+	patternbase = (type = "banner" ? "entity/banner/banner_base" : "entity/shield/shield_base")
 	patterndir = (type = "banner" ? "entity/banner/" : "entity/shield/")
 	
 	skinratio = 1

@@ -86,6 +86,9 @@ function model_file_load_shape(map, res)
 			texture_size = value_get_point2D(map[?"texture_size"])
 			var size = max(texture_size[X], texture_size[Y]);
 			texture_size = vec2(size, size) // Make square
+			
+			texture_scroll_speed = value_get_real(map[?"texture_scroll_speed"], 0)
+			texture_scroll_direction = value_get_real(map[?"texture_scroll_direction"], 0)
 		}
 		else
 		{
@@ -97,6 +100,8 @@ function model_file_load_shape(map, res)
 			texture_material_inherit = other.texture_material_inherit
 			texture_normal_inherit = other.texture_normal_inherit
 			texture_size = texture_inherit.texture_size
+			texture_scroll_speed = texture_inherit.texture_scroll_speed
+			texture_scroll_direction = texture_inherit.texture_scroll_direction
 		}
 		
 		// Color (optional)

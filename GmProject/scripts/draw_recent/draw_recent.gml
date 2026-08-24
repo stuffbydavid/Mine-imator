@@ -46,7 +46,7 @@ function draw_recent()
 			// Name
 			draw_label(string_limit(filename_name(item.name), (iconx - xx) - 12), xx + 12, recenty + 22, fa_left, fa_middle, c_text_main, a_text_main)
 			
-			// Seperator
+			// Separator
 			draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 			// Animation
@@ -154,7 +154,7 @@ function draw_recent()
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
 			
-			// Seperator
+			// Separator
 			draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 			// Animation

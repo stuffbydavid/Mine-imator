@@ -13,7 +13,7 @@ function export_update()
 		if (question(text_get("questionstoprender")))
 		{
 			if (window_state = "export_movie")
-				export_done_movie(true)
+				export_done_movie()
 			else if (window_state = "export_image")
 			{
 				surface_save_lib(export_surface, export_filename)
@@ -42,7 +42,7 @@ function export_update()
 		}
 	}
 	
-	if (window_state = "export_image")
+	if (window_state = "export_image" && render_samples = -1)
 		app_update_cameras(popup_exportimage.high_quality, false)
 	
 	// Render
@@ -124,6 +124,7 @@ function export_update()
 	{
 		surface_save_lib(export_surface, export_filename)
 		export_done_image()
+		return 0
 	}
 	
 	return 1

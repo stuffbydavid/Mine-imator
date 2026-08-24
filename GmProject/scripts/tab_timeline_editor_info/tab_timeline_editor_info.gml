@@ -50,7 +50,7 @@ function tab_timeline_editor_info()
 			
 			context_menu_group_temp = e_context_group.ROT_POINT
 			
-			tab_control_textfield_group(false)
+			tab_control_textfield_group()
 			draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false, true, 1)
 			tab_next()
 			

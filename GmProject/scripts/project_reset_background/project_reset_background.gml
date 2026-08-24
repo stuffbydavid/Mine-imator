@@ -55,10 +55,15 @@ function project_reset_background()
 	background_ground_update_texture_material()
 	background_ground_update_texture_normal()
 	
-	background_biome = biome_list[|2].name
+	if (find_biome(default_biome))
+		background_biome = default_biome
+	else
+		background_biome = biome_list[|1].name
+	
 	background_biome_prev = background_biome
 	background_grass_color = c_plains_biome_grass
 	background_foliage_color = c_plains_biome_foliage
+	background_dry_foliage_color = c_plains_biome_dry_foliage
 	background_water_color = c_plains_biome_water
 	background_leaves_oak_color = c_plains_biome_foliage
 	background_leaves_spruce_color = c_plains_biome_foliage_2

@@ -7,6 +7,9 @@ function action_lib_block_state(val)
 
 	if (!history_undo && !history_redo)
 	{
+		if (is_undefined(menu_block_state) || menu_block_state = null)
+			return null
+		
 		state = menu_block_state.name
 		
 		with (history_set_var(action_lib_block_state, state_vars_get_value(temp_edit.block_state, state), val, false))

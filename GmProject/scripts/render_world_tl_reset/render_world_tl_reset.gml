@@ -34,6 +34,7 @@ function render_world_tl_reset()
 	render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
 	render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
 	
+	render_set_uniform_vec2("uTextureOffset", 0, 0)
 	render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
 	
 	// Emissive

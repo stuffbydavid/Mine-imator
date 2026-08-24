@@ -20,6 +20,9 @@ function action_lib_model_state(val)
 		}
 		else
 		{
+			if (is_undefined(menu_model_state) || menu_model_state = null)
+				return null
+			
 			state = menu_model_state.name
 			hobj = history_set_var(action_lib_model_state, state_vars_get_value(temp_edit.model_state, state), val, false)
 			with (hobj)

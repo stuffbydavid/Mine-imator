@@ -1,4 +1,4 @@
-/// draw_label(string, x, y, [halign, valign, [color, alpha, [font, [seperation, width]]]])
+/// draw_label(string, x, y, [halign, valign, [color, alpha, [font, [separation, width]]]])
 /// @arg string
 /// @arg x
 /// @arg y
@@ -7,12 +7,12 @@
 /// @arg [color
 /// @arg alpha
 /// @arg [font
-/// @arg [seperation
+/// @arg [separation
 /// @arg [width]]]]
 
 function draw_label()
 {
-	var str, xx, yy, halign, valign, color, alpha, font, seperation, width;
+	var str, xx, yy, halign, valign, color, alpha, font, separation, width;
 	var oldcolor, oldalpha;
 	var strwid, strhei, strx, stry;
 	
@@ -21,7 +21,7 @@ function draw_label()
 	yy = argument[2]
 	strx = xx
 	stry = yy
-	seperation = -1
+	separation = -1
 	width = -1
 	
 	if (argument_count <= 7)
@@ -115,20 +115,20 @@ function draw_label()
 					return 0
 				}
 				
-				// Seperation/width
+				// Separation/width
 				if (argument_count > 8)
 				{
-					seperation = argument[8]
+					separation = argument[8]
 					width = argument[9]
 				}
 			}
 		}
 	}
 	
-	if (seperation = -1 && width = -1)
+	if (separation = -1 && width = -1)
 		draw_text(xx, yy, str)
 	else
-		draw_text_ext(xx, yy, str, seperation, width)
+		draw_text_ext(xx, yy, str, separation, width)
 	
 	// Reset
 	if (argument_count > 3)

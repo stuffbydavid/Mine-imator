@@ -4,9 +4,7 @@
 
 function view_click(view, cam)
 {
-	var surf;
-	
-	surf = surface_create(content_width, content_height)
+	var surf = surface_create(content_width, content_height);
 	
 	render_camera = cam
 	render_ratio = content_width / content_height
