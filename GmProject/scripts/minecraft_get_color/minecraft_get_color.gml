@@ -5,7 +5,7 @@
 function minecraft_get_color(name)
 {
 	// Search swatches
-	var keys = string_split(name, ":");
+	var keys = string_split_escaped(name, ":");
 	
 	if (array_length(keys) > 1)
 	{

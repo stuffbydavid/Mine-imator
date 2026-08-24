@@ -184,7 +184,7 @@ function block_load_state_file(fname, block, state)
 										val = (val ? "true" : "false")
 									
 									if (string_contains(val, "|")) // OR
-										state_vars_set_value(condvars, cond, string_split(val, "|"))
+										state_vars_set_value(condvars, cond, string_split_escaped(val, "|"))
 									else
 										state_vars_set_value(condvars, cond, val)
 									
@@ -215,7 +215,7 @@ function block_load_state_file(fname, block, state)
 										val = (val ? "true" : "false")
 									
 									if (string_contains(val, "|")) // OR
-										state_vars_set_value(condvars, cond, string_split(val, "|"))
+										state_vars_set_value(condvars, cond, string_split_escaped(val, "|"))
 									else
 										state_vars_set_value(condvars, cond, val)
 									
@@ -257,7 +257,7 @@ function block_load_state_file(fname, block, state)
 									val = (val ? "true" : "false")
 								
 								if (string_contains(val, "|")) // OR
-									state_vars_set_value(condvars, cond, string_split(val, "|"))
+									state_vars_set_value(condvars, cond, string_split_escaped(val, "|"))
 								else
 									state_vars_set_value(condvars, cond, val)
 								

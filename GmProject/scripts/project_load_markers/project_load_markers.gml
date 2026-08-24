@@ -6,11 +6,11 @@ function project_load_markers(list)
 	if (!ds_list_valid(list))
 		return 0
 	
-	var markermap;
-	
 	for (var i = 0; i < ds_list_size(list); i++)
 	{
-		markermap = list[|i]
+		var markermap = list[|i];
+		if (!ds_map_valid(markermap))
+			continue
 		
 		with (new_obj(obj_marker))
 		{

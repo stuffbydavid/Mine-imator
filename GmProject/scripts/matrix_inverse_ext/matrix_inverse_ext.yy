@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"string_split",
+  "%Name":"matrix_inverse_ext",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"string_split",
+  "name":"matrix_inverse_ext",
   "parent":{
-    "name":"String",
-    "path":"folders/Scripts/Utility/String.yy",
+    "name":"Matrix",
+    "path":"folders/Scripts/Utility/Math/Matrix.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -64,7 +64,7 @@ function render_generate_dof_samples(blades, rotation, ratio)
 			// Every two corners is a corner in a triangle, third being the middle of polygon
 			for (var j = 0; j < blades; j++)
 			{
-				var anglestep = ((pi*2)/blades) * j;
+				anglestep = ((pi*2)/blades) * j;
 				cornerpos = point2D(cos(anglestep + rotoff) * scale, sin(anglestep + rotoff) * scale)
 				
 				if (point_in_triangle(samplepos[X], samplepos[Y], 0, 0, prevcornerpos[X], prevcornerpos[Y], cornerpos[X], cornerpos[Y]))

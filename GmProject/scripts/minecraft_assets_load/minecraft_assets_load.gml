@@ -75,7 +75,7 @@ function minecraft_assets_load()
 			{
 				// Model textures
 				var modeltextureslist = load_assets_map[?"model_textures"];
-				if (is_undefined(modeltextureslist))
+				if (!ds_list_valid(modeltextureslist))
 				{
 					log("No model textures found")
 					return false
@@ -307,7 +307,7 @@ function minecraft_assets_load()
 					s.color_names = []
 					s.map = ds_map_create()
 					
-					var colors = swatch[?"colors"];
+					colors = swatch[?"colors"];
 					
 					for (var j = 0; j < ds_list_size(colors); j++)
 					{

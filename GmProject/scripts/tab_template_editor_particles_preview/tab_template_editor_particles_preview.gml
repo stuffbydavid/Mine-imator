@@ -51,7 +51,7 @@ function tab_template_editor_particles_preview()
 		
 		frame = round(startf + (endf - startf) * ani)
 		
-		var res = ptype_edit.sprite_template_tex;
+		res = ptype_edit.sprite_template_tex;
 		if (!res_is_ready(res))
 			res = mc_res
 		

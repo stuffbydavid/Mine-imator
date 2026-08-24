@@ -83,7 +83,7 @@ function tab_template_editor_particles()
 	
 	if (temp_edit.pc_spawn_region_use)
 	{
-		var icon, name;
+		var icon;
 		switch (temp_edit.pc_spawn_region_type)
 		{
 			case "sphere":	icon = icons.BOUNDARY_CIRCLE	break

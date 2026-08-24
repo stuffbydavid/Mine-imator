@@ -62,7 +62,7 @@ function view_control_scale(view)
 			var move, scale, snapval;
 			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
 			move = point3D_mul(point3D_sub(move, view_control_plane_origin), .125)
-			move = vec3_mul_matrix(move, matrix_inverse(mat))
+			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
 			
 			for (var i = 0; i <= Z; i++)
 				move[i] *= (!view_control_move_flip_axis[i] ? 1 : -1)

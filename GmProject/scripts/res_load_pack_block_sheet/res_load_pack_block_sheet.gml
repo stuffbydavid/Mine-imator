@@ -219,7 +219,7 @@ function res_load_pack_block_sheet(type, suffix)
 			if (ds_map_valid(map))
 			{
 				var animation = map[?"animation"];
-				if (!is_undefined(animation))
+				if (ds_map_valid(animation))
 				{
 					// Interpolate
 					if (!is_undefined(animation[?"interpolate"]))

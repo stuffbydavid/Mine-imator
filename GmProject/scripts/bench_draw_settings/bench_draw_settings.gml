@@ -370,7 +370,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				if (project_render_material_maps)
 				{
 					// Image (Material map)
-					var tex = res.block_preview_texture;
+					tex = res.block_preview_texture;
 					if (tex = null)
 						tex = res.texture
 					

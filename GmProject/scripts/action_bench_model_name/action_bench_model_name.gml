@@ -23,7 +23,7 @@ function action_bench_model_name(name)
 		// Modify states for better search
 		if (s != "" && !string_contains(string_lower(minecraft_asset_get_name("model", model_name)), s))
 		{
-			var m, state, val;
+			var m, val;
 			m = mc_assets.model_name_map[?name]
 			
 			for (var i = 0; i < array_length(model_state); i += 2)

@@ -15,7 +15,7 @@ function render_generate_text_buffer(is3d, surf, xx, zz, wid, hei)
 	if (is3d)
 		vbuffer_add_pixels(surface_get_alpha_array(surf), point3D(xx, 0, zz))
 	
-	var ysize, p1, p2, p3, p4, tsize, t1, t2, t3, t4,;
+	var ysize, p1, p2, p3, p4, tsize, t1, t2, t3, t4;
 	t1 = vec2(0, 0)
 	t2 = vec2(wid, 0)
 	t3 = vec2(wid, hei)

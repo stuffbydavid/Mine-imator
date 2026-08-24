@@ -27,7 +27,8 @@ function temp_copy(to)
 	to.pattern_base_color = pattern_base_color
 	to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
 	to.pattern_color_list = array_copy_1d(pattern_color_list)
-	to.pattern_skin = sprite_duplicate(pattern_skin)
+	if (pattern_skin != null)
+		to.pattern_skin = sprite_duplicate(pattern_skin)
 	
 	to.armor_array = array_copy_1d(armor_array)
 	

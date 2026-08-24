@@ -1,11 +1,11 @@
-/// string_split(string, separator)
+/// string_split_escaped(string, separator)
 /// @arg string
 /// @arg separator
 /// @desc Splits the given string by the separator and stores the elements in a new array.
 
-function string_split(str, sep)
+function string_split_escaped(str, sep)
 {
-	var arr, arrlen, pos, escapestr;
+	var arr, arrlen, escapestr;
 	arr = array()
 	arrlen = 0
 	str += sep

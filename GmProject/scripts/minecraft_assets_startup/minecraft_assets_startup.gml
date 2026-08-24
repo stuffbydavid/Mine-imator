@@ -18,7 +18,7 @@ function minecraft_assets_startup()
 		new_assets_version = setting_minecraft_assets_new_version
 		new_assets_format = setting_minecraft_assets_new_format
 		new_assets_changes = setting_minecraft_assets_new_changes
-		new_assets_changes_lines = string_split(new_assets_changes, "\n")
+		new_assets_changes_lines = string_split_escaped(new_assets_changes, "\n")
 		new_assets_image = setting_minecraft_assets_new_image
 		new_assets_scroll = new_obj(obj_scrollbar)
 		

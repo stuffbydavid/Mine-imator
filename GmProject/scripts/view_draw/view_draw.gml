@@ -503,8 +503,8 @@ function view_draw(view)
 			if (depthval < 1)
 				view.surface_depth_value = depthval
 			var clipspace = vec4(tx * 2 - 1, ty * 2 - 1, min(0.99975, view.surface_depth_value) * 2 - 1, 1);
-			var viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse(proj_matrix)));
-			place_view_pos = point3D_mul_matrix(viewspace, matrix_inverse(view_matrix))
+			var viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse_ext(proj_matrix)));
+			place_view_pos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix))
 			place_tl_render = true
 			render_samples = -1
 		}

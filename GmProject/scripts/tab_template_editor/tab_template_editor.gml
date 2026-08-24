@@ -148,7 +148,7 @@ function tab_template_editor()
 		case e_temp_type.BLOCK:
 		{
 			// Block
-			var statelen, statesh, menus, checkboxes;
+			var statelen, statesh, menus, checkboxes, capwid;
 			statelen = array_length(temp_edit.block_state)
 			menus = 0
 			checkboxes = 0

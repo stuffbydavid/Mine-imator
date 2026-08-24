@@ -415,7 +415,7 @@ function project_load_legacy_beta(loadbackground)
 	// Parse timelines
 	for (var a = 0; a < load.tl_amount; a++)
 	{
-		var tl, lib, modelpartlist;
+		var tl, lib;
 		if (a = 0)
 		{
 			if (load.tl_keyframes[a] = 0)
@@ -472,7 +472,7 @@ function project_load_legacy_beta(loadbackground)
 			// Go through parts
 			for (var b = 0; b < load.tl_parts[a]; b++)
 			{
-				var tl = id;
+				tl = id;
 				
 				// Choose target timeline
 				if (b > 0)

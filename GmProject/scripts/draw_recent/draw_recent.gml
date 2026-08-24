@@ -27,7 +27,7 @@ function draw_recent()
 		for (var i = 0; i < recent_list_amount; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
-			var mouseon = hover;
+			mouseon = hover;
 			var item = recent_list[|i];
 			
 			// Icons
@@ -207,7 +207,7 @@ function draw_recent()
 		}
 	
 		// Draw grid cards
-		var cardx, cardy, item, areamouseon, hover, mouseon;
+		var cardx, cardy, item, areamouseon, hover;
 		cardx = dx
 		cardy = dy - liststart
 		areamouseon = app_mouse_box(xx, yy, wid, hei)

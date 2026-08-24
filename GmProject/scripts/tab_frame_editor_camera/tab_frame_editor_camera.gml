@@ -253,8 +253,7 @@ function tab_frame_editor_camera()
 			{
 				tab_collapse_start()
 				
-				var snapval, capwid;
-				snapval = (dragger_snap ? setting_snap_size_rotation : 0.1)
+				var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1)
 				
 				// Wheels
 				if (!app.panel_compact)
@@ -351,8 +350,6 @@ function tab_frame_editor_camera()
 			var texobj, tex;
 			texobj = tl_edit.value[e_value.TEXTURE_OBJ]
 			tex = null
-			
-			var text;
 			
 			if (texobj != null)
 				text = texobj.display_name

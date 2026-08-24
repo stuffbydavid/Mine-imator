@@ -1,8 +1,8 @@
-/// CppSeparate MatrixType matrix_inverse(MatrixType)
-/// matrix_inverse(matrix)
+/// CppSeparate MatrixType matrix_inverse_ext(MatrixType)
+/// matrix_inverse_ext(matrix)
 /// @arg matrix
 
-function matrix_inverse(mat)
+function matrix_inverse_ext(mat)
 {
 	var inv;
 	

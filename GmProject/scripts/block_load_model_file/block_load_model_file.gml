@@ -33,10 +33,10 @@ function block_load_model_file(fname, res = null)
 			parent = block_load_model_file(load_assets_dir + mc_models_directory + string_replace(map[?"parent"], "minecraft:", "") + ".json")
 		
 		// Textures
+		var texmap = map[?"textures"];
 		texture_map = null
-		if (is_real(map[?"textures"]))
+		if (ds_list_valid(texmap) || ds_map_valid(texmap))
 		{
-			var texmap = map[?"textures"];
 			texture_map = ds_map_create()
 			
 			// Array of models, fill map with the string IDs

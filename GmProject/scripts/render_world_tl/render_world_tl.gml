@@ -313,7 +313,7 @@ function render_world_tl()
 			{
 				if (path_vbuffer != null)
 				{
-					var tex, texmat, texnorm;
+					var texmat, texnorm;
 					
 					if (value_inherit[e_value.TEXTURE_OBJ] = null)
 						tex = spr_shape
@@ -357,7 +357,7 @@ function render_world_tl()
 			
 			default: // Shapes
 			{
-				var tex, matres, texmat, normtex;
+				var matres, texmat, normtex;
 				with (temp)
 				{
 					tex = temp_get_shape_tex(temp_get_shape_texobj(other.value_inherit[e_value.TEXTURE_OBJ]))

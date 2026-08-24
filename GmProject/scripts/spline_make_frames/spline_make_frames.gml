@@ -54,8 +54,7 @@ function spline_make_frames(points, closed, smooth)
 	// Merge last/first point frame in closed spline
 	if (closed)
 	{
-		var i, p, pn, t, n;
-		i = array_length(points) - 2
+		var i = array_length(points) - 2;
 		p = points[@ i - 1]
 		pn = points[@ 0]
 		

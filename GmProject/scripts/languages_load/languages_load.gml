@@ -17,14 +17,17 @@ function languages_load()
 	load_format = map[?"format"]
 	log("load_format", load_format)
 	
-	var list, obj;
-	list = map[?"languages"]
+	var list = map[?"languages"];
+	if (!ds_list_valid(list))
+		return 0
 	
 	for (var i = 0; i < ds_list_size(list); i++)
 	{
 		map = list[|i]
+		if (!ds_map_valid(map))
+			continue
 		
-		var name, locale, fn;
+		var name, locale;
 		name = value_get_string(map[?"name"], "")
 		locale = value_get_string(map[?"locale"], "")
 		fn = value_get_string(map[?"filename"], "")

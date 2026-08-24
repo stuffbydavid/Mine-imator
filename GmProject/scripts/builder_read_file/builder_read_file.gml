@@ -323,8 +323,7 @@ function builder_read_schematic_nbt(structuremap)
 			blocknbt = blockmap[?"nbt"];
 			if (!is_undefined(blocknbt))
 			{
-				var finalstate, script;
-				finalstate = blocknbt[?"final_state"]
+				var finalstate = blocknbt[?"final_state"];
 							
 				if (!is_undefined(finalstate))
 				{
@@ -356,7 +355,7 @@ function builder_read_schematic_nbt(structuremap)
 			// Execute tile entity script
 			if (entity != null)
 			{
-				script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""))
+				var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""))
 				if (script > -1)
 				{
 					build_pos_x = pos[|X]
