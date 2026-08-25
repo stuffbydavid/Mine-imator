@@ -102,7 +102,12 @@ function res_load_pack_misc()
 	if (!file_exists_lib(load_assets_dir + mc_clouds_image_file) && id != mc_res)
 		clouds_texture = texture_duplicate(mc_res.clouds_texture)
 	else
-		clouds_texture = texture_create(load_assets_dir + mc_clouds_image_file)
+	{
+		if (id = mc_res) // Patch texture
+			clouds_texture = texture_create_patched(load_assets_dir + mc_clouds_image_file)
+		else
+			clouds_texture = texture_create(load_assets_dir + mc_clouds_image_file)
+	}
 	
 	// Enchantment glint
 	if (!file_exists_lib(load_assets_dir + mc_glint_armor_file) && id != mc_res)

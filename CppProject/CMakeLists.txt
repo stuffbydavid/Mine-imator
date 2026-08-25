@@ -317,6 +317,8 @@ add_custom_command(
 		"$<IF:$<CONFIG:Release>,echo,copy_directory>"
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_SOURCE_DIR}>"
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_OUTPUT_DIR}>"
+	COMMAND "${CMAKE_COMMAND}" -E remove_directory
+		"${DATAFILES_OUTPUT_DIR}/Data/Minecraft/Patched"
 	VERBATIM
 )
 
@@ -335,6 +337,7 @@ install(DIRECTORY
 	"${DATAFILES_SOURCE_DIR}/Schematics"
 	DESTINATION "."
 	PATTERN "Libraries" EXCLUDE
+	PATTERN "Patched" EXCLUDE
 )
 install(DIRECTORY DESTINATION "Skins")
 

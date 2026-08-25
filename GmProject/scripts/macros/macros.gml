@@ -40,6 +40,7 @@ function macros()
 	#macro fonts_directory				data_directory + "Fonts/"
 	#macro languages_directory			data_directory + "Languages/"
 	#macro minecraft_directory			data_directory + "Minecraft/"
+	#macro patched_directory			minecraft_directory + "Patched/"
 	#macro render_directory				data_directory + "Render/"
 	#macro splash_directory				data_directory + "Splashes/"
 	

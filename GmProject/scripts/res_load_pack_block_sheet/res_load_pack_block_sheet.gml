@@ -36,7 +36,11 @@ function res_load_pack_block_sheet(type, suffix)
 		
 		if (file_exists_lib(fname))
 		{
-			var tex = texture_create(fname);
+			var tex;
+			if (id = mc_res) // Patch textures
+				tex = texture_create_patched(fname)
+			else
+				tex = texture_create(fname)
 			blocksize = max(blocksize, texture_width(tex))
 			ds_list_add(texlist, tex)
 			

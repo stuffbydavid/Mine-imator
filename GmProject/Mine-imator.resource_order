@@ -1835,6 +1835,7 @@
     {"name":"texture_create_crop","order":37,"path":"scripts/texture_create_crop/texture_create_crop.yy",},
     {"name":"texture_create_fill","order":38,"path":"scripts/texture_create_fill/texture_create_fill.yy",},
     {"name":"texture_create_missing","order":13,"path":"scripts/texture_create_missing/texture_create_missing.yy",},
+    {"name":"texture_create_patched","order":39,"path":"scripts/texture_create_patched/texture_create_patched.yy",},
     {"name":"texture_create_square","order":15,"path":"scripts/texture_create_square/texture_create_square.yy",},
     {"name":"texture_create","order":9,"path":"scripts/texture_create/texture_create.yy",},
     {"name":"texture_duplicate","order":17,"path":"scripts/texture_duplicate/texture_duplicate.yy",},

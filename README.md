@@ -16,7 +16,7 @@ The software is written using GameMaker Language and converted to a separate C++
 ## GameMaker project
 You can open `GmProject/Mine-imator.yyp` directly in GameMaker-LTS2026 for development and debugging, but with the following restrictions:
 * Windows-only due to `.dll` dependencies for file operations, window handling, audio importing and movie exporting
-* Texture issues due to limitations with `sprite_add` and grayscale/tRNS chunks in transparent PNGs, affecting clouds and certain blocks/items found in Minecraft resource packs
+* Limitations with `sprite_add` and grayscale/tRNS chunks in transparent PNGs, affecting certain blocks, item and cloud textures found in Minecraft resource packs
 * Slower overall performance
 * No Minecraft world importer
 * No cached scenery loading
