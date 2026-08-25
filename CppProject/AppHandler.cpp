@@ -108,10 +108,10 @@ namespace CppProject
 			DEBUG("Minecraft saves: " + world_import_get_saves_dir());
 
 			// Set globals
-			gmlGlobal::room_speed = 60;
 			gmlGlobal::delta_time = 1.0;
 			gmlGlobal::GM_runtime_version = "NA";
 			gmlGlobal::async_load = ds_map_create();
+			targetFps = 60;
 			fpsLastUpdate = QDateTime::currentDateTime();
 			startTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
 			randomize();
@@ -400,11 +400,11 @@ namespace CppProject
 			gmlGlobal::delta_time = fpsTimer.ElapsedMs() * 1000.0;
 
 			// Calculate fps using duration of previous step minus step timer delay
-			double elapsedMs = fpsTimer.ElapsedMs() - 1000.0 / gmlGlobal::room_speed;
+			double elapsedMs = fpsTimer.ElapsedMs() - 1000.0 / targetFps;
 			if (elapsedMs > 0.0)
 				gmlGlobal::fps_real = 1.0 / (elapsedMs / 1000.0);
 
-			gmlGlobal::fps = std::clamp(gmlGlobal::fps_real, IntType(0), gmlGlobal::room_speed);
+			gmlGlobal::fps = std::clamp(gmlGlobal::fps_real, IntType(0), targetFps);
 			fpsLastUpdate = QDateTime::currentDateTime();
 
 			// Clean unused data
@@ -422,7 +422,7 @@ namespace CppProject
 
 		// Schedule next step
 		fpsTimer.Reset();
-		stepTimer.start(1000.0 / gmlGlobal::room_speed, this);
+		stepTimer.start(1000.0 / targetFps, this);
 	}
 
 	IntType AppHandler::GetMsec() const

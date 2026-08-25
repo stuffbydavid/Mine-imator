@@ -17,7 +17,7 @@ function settings_load_legacy(fn)
 	
 	if (load_format >= e_settings.FORMAT_100)
 	{
-		room_speed = buffer_read_byte()
+		buffer_read_byte() // FPS
 		if (dev_mode)
 			buffer_read_string_int()
 		else

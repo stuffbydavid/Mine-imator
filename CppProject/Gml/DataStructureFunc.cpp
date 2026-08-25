@@ -176,8 +176,10 @@ namespace CppProject
 			});
 	}
 
-	BoolType ds_list_valid(IntType id)
+	BoolType ds_list_valid(VarType id)
 	{
+		if (!id.IsAnyReal())
+			return false;
 		return (FindList(id) != nullptr);
 	}
 
@@ -273,8 +275,10 @@ namespace CppProject
 		return 0;
 	}
 
-	BoolType ds_map_valid(IntType id)
+	BoolType ds_map_valid(VarType id)
 	{
+		if (!id.IsAnyReal())
+			return false;
 		return (FindMap(id) != nullptr);
 	}
 

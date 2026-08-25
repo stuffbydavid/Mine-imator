@@ -62,7 +62,8 @@ function settings_load()
 			setting_advanced_mode = value_get_real(programmap[?"advanced_mode"], setting_advanced_mode)
 			
 			// No interface setting, but custom fps can be loaded from file
-			room_speed = value_get_real(programmap[?"fps"], room_speed)
+			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
+			game_set_speed(gamespeed_fps, targetfps)
 			
 			if (!dev_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)

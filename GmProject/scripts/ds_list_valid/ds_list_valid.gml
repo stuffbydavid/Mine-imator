@@ -1,4 +1,4 @@
-/// CppSeparate BoolType ds_list_valid(IntType)
+/// CppSeparate BoolType ds_list_valid(VarType)
 /// ds_list_valid(id)
 /// @arg id
 

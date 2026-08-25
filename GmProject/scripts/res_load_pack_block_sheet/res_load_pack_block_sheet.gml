@@ -83,7 +83,7 @@ function res_load_pack_block_sheet(type, suffix)
 	if (fileslist != null)
 	{
 		ds_list_sort(fileslist, true)
-		if (ds_list_size(fileslist) > 0)
+		if (ds_list_size(fileslist) > 0 && !dev_mode_skip_blocks)
 		{
 			var str = "The following block textures were unused:\n";
 			for (var i = 0; i < ds_list_size(fileslist); i++)

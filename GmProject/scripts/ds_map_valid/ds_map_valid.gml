@@ -1,4 +1,4 @@
-/// CppSeparate BoolType ds_map_valid(IntType)
+/// CppSeparate BoolType ds_map_valid(VarType)
 /// ds_map_valid(id)
 /// @arg id
 
