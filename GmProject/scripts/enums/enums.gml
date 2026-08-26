@@ -42,7 +42,8 @@ function enums()
 		FORMAT_123_PRE_2	= 31,
 		FORMAT_125			= 32,
 		FORMAT_200_PRE_1	= 33,
-		FORMAT_200_PRE_5	= 34
+		FORMAT_200_PRE_5	= 34,
+		FORMAT_210			= 35
 	}
 	
 	enum e_settings

@@ -750,7 +750,7 @@
     {"name":"action_tl_path_shape_smooth_ring","order":12,"path":"scripts/action_tl_path_shape_smooth_ring/action_tl_path_shape_smooth_ring.yy",},
     {"name":"action_tl_path_shape_smooth_segments","order":11,"path":"scripts/action_tl_path_shape_smooth_segments/action_tl_path_shape_smooth_segments.yy",},
     {"name":"action_tl_path_shape_tex_length","order":9,"path":"scripts/action_tl_path_shape_tex_length/action_tl_path_shape_tex_length.yy",},
-    {"name":"action_tl_path_shape_tube","order":7,"path":"scripts/action_tl_path_shape_tube/action_tl_path_shape_tube.yy",},
+    {"name":"action_tl_path_shape","order":7,"path":"scripts/action_tl_path_shape/action_tl_path_shape.yy",},
     {"name":"action_tl_path_smooth_tree","order":14,"path":"scripts/action_tl_path_smooth_tree/action_tl_path_smooth_tree.yy",},
     {"name":"action_tl_path_smooth","order":13,"path":"scripts/action_tl_path_smooth/action_tl_path_smooth.yy",},
     {"name":"action_tl_play_beginning","order":3,"path":"scripts/action_tl_play_beginning/action_tl_play_beginning.yy",},

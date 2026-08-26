@@ -149,4 +149,6 @@ function project_load_background(map)
 	background_wind_directional_strength = value_get_real(map[?"wind_directional_strength"], background_wind_directional_strength)
 	
 	background_texture_animation_speed = value_get_real(map[?"texture_animation_speed"], background_texture_animation_speed)
+	if (load_format < e_project.FORMAT_210)
+		background_texture_animation_speed *= 3 // 75% for older projects
 }

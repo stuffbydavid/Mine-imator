@@ -3804,18 +3804,22 @@
 			"smooth": "Smooth path",
 			"detail": "Detail",
 			"detailtip": "Higher values will result in better path accuracy, but are more performance intense.",
-			"shape": "Generate shape",
+			"shape": "Shape",
 			"shape/": {
+				"none": "None",
+				"flat": "Flat",
+				"tube": "Tube",
 				"radius": "Radius",
-				"texlength": "Texture length",
-				"texlengthtip": "The length the path texture should stretch for before repeating.",
 				"invert": "Invert",
-				"tube": "Tube shape",
-				"detail": "Shape detail",
 				"smoothsegments": "Smooth segments",
 				"smoothsegmentstip": "Enable smooth lighting along the direction of the path.",
 				"smoothring": "Smooth ring",
 				"smoothringtip": "Enable smooth lighting on the ring shape around the path.",
+				"detail": "Shape detail",
+				"texmapped": "Mapped texture",
+				"texmappedtip": "Whether the faces of the shape should use parts of a texture image.",
+				"texlength": "Texture length",
+				"texlengthtip": "The length the path texture should stretch for before repeating.",
 				"savemap": "Export map"
 			}
 		}

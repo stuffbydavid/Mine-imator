@@ -512,7 +512,7 @@ function tab_properties_background()
 	if (setting_advanced_mode)
 	{
 		tab_control_dragger()
-		draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, background_texture_animation_speed, 0.01, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
+		draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, round(background_texture_animation_speed * 100), .5, -no_limit, no_limit, 100, 1, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
 		tab_next()
 	}
 }

@@ -187,14 +187,14 @@ function tl_event_create()
 	path_table_matrix = []
 	path_length = 1
 	
-	path_shape_generate = false
+	path_shape = "none"
 	path_shape_radius = 8
-	path_shape_tex_length = 16
 	path_shape_invert = false
-	path_shape_tube = false
-	path_shape_detail = 6
 	path_shape_smooth_segments = true
 	path_shape_smooth_ring = false
+	path_shape_detail = 6
+	path_shape_tex_mapped = false
+	path_shape_tex_length = 16
 	
 	path_vbuffer = null
 	path_select_vbuffer = null

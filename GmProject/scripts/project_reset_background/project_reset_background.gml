@@ -99,7 +99,7 @@ function project_reset_background()
 	background_wind_directional_speed = 0.2
 	background_wind_directional_strength = 1.5
 	
-	background_texture_animation_speed = 0.25
+	background_texture_animation_speed = 1
 	
 	background_sunlight_color_final = c_black
 	background_ambient_color_final = c_black
