@@ -3130,6 +3130,7 @@
 			"texvmirror": "Mirror vertically",
 			"closed": "Closed",
 			"invert": "Invert",
+			"smooth": "Smooth",
 			"detail": "Detail",
 			"facecamera": "Face camera"
 		},

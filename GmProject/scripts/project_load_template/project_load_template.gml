@@ -289,6 +289,7 @@ function project_load_template(map)
 				shape_tex_vmirror = value_get_real(shapemap[?"tex_vmirror"], shape_tex_vmirror)
 				shape_closed = value_get_real(shapemap[?"closed"], shape_closed)
 				shape_invert = value_get_real(shapemap[?"invert"], shape_invert)
+				shape_smooth = value_get_real(shapemap[?"smooth"], shape_smooth)
 				shape_detail = value_get_real(shapemap[?"detail"], shape_detail)
 				shape_face_camera = value_get_real(shapemap[?"face_camera"], shape_face_camera)
 				

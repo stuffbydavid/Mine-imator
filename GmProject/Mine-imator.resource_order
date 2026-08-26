@@ -345,6 +345,7 @@
     {"name":"action_lib_shape_face_camera","order":5,"path":"scripts/action_lib_shape_face_camera/action_lib_shape_face_camera.yy",},
     {"name":"action_lib_shape_invert","order":7,"path":"scripts/action_lib_shape_invert/action_lib_shape_invert.yy",},
     {"name":"action_lib_shape_save_map","order":9,"path":"scripts/action_lib_shape_save_map/action_lib_shape_save_map.yy",},
+    {"name":"action_lib_shape_smooth","order":28,"path":"scripts/action_lib_shape_smooth/action_lib_shape_smooth.yy",},
     {"name":"action_lib_shape_tex_hmirror","order":13,"path":"scripts/action_lib_shape_tex_hmirror/action_lib_shape_tex_hmirror.yy",},
     {"name":"action_lib_shape_tex_hoffset","order":15,"path":"scripts/action_lib_shape_tex_hoffset/action_lib_shape_tex_hoffset.yy",},
     {"name":"action_lib_shape_tex_hrepeat","order":17,"path":"scripts/action_lib_shape_tex_hrepeat/action_lib_shape_tex_hrepeat.yy",},

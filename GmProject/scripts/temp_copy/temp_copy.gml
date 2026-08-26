@@ -74,6 +74,7 @@ function temp_copy(to)
 	to.shape_tex_vmirror = shape_tex_vmirror
 	to.shape_closed = shape_closed
 	to.shape_invert = shape_invert
+	to.shape_smooth = shape_smooth
 	to.shape_detail = shape_detail
 	to.shape_face_camera = shape_face_camera
 	

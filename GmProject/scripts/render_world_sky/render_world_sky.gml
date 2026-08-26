@@ -26,7 +26,7 @@ function render_world_sky()
 		if (background_image_type = "sphere") // Sphere
 		{
 			if (!background_image_sphere_vbuffer)
-				background_image_sphere_vbuffer = vbuffer_create_sphere(1, point2D(1, 0), point2D(0, 1), 32, true)
+				background_image_sphere_vbuffer = vbuffer_create_sphere(1, point2D(1, 0), point2D(0, 1), 32, true, true)
 			 vbuf = background_image_sphere_vbuffer
 		}
 		else if (background_image_type = "box") // Box
@@ -54,7 +54,7 @@ function render_world_sky()
 	if (background_fog_show && background_fog_sky)
 	{
 		if (background_fog_vbuffer = null)
-			background_fog_vbuffer = vbuffer_create_sphere(1, point2D(0, 0), point2D(1, 1), 16, true)
+			background_fog_vbuffer = vbuffer_create_sphere(1, point2D(0, 0), point2D(1, 1), 16, true, true)
 		
 		gpu_set_texrepeat(false)
 		
