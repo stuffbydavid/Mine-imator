@@ -5,19 +5,30 @@ function particle_spawner_update(spawner)
 {
 	if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
 	{
-		var temp;
-		if (is_timeline)
+		var temp, realtime;
+		temp = (is_timeline ? id.temp : select)
+		realtime = (!is_timeline || (is_timeline && app.template_editor.show && temp_edit = temp)) && (app.window_state != "export_movie" && app.window_state != "export_image")
+		spawn_currentstep = (realtime ? current_step : floor(app.background_time))
+		
+		// Reset, switch to realtime
+		if (is_timeline && realtime && (spawn_laststep = floor(app.background_time)))
 		{
-			temp = id.temp
-			spawn_currentstep = floor(app.background_time)
-			
+			spawn_laststep = spawn_currentstep
+			particle_spawner_clear()
+		}
+		
+		// Clear realtime particles when editor closed
+		if (is_timeline && !realtime && (spawn_laststep > spawn_currentstep))
+			particle_spawner_clear()
+		
+		// Don't allow samples to be rendered
+		if (is_timeline && realtime)
+			render_samples = -1
+		
+		if (!realtime)
+		{
 			if (floor(app.timeline_marker_previous) > floor(app.timeline_marker))
 				particle_spawner_clear()
-		}
-		else
-		{
-			temp = select
-			spawn_currentstep = current_step
 		}
 		
 		// Iterate through missed steps

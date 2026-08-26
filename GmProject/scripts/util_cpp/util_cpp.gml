@@ -164,6 +164,12 @@ function window_main_restore(rect, maximize)
 	window_maximize()
 }
 
+/// CppSeparate StringType get_open_filenames_ext(StringType, StringType, StringType, StringType)
+function get_open_filenames_ext(filter, filename, directory, title)
+{
+	return string(get_open_filename_ext(filter, filename, directory, title))
+}
+
 /// CppSeparate void surface_clear_depth_cache(IntType)
 /// Clears the previously cached depth from surface_get_depth calls.
 function surface_clear_depth_cache(surf)

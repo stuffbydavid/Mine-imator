@@ -92,7 +92,7 @@ function draw_inputbox()
 	// Search icon
 	if (string_contains(inputname, "search"))
 	{
-		draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + (h/2), 1, 1, bordercolor, borderalpha)
+		draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + (h/2), 1, 1, tbx.text = "" ? bordercolor : c_accent, tbx.text = "" ? borderalpha : a_accent)
 		w -= 28
 	}
 	

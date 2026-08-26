@@ -47,13 +47,33 @@ function tab_get_title(tab)
 	else if (tab = frame_editor)
 	{
 		var name = "";
+		var frametab = "tabframeeditorsingle";
+		var framesel = round(timeline_marker);
 		if (tl_edit)
 		{
 			name = string_remove_newline(tl_edit.display_name)
+			
 			if (tl_edit_amount > 1)
+			{
 				name += "..."
+				
+				var framecount = 0;
+				with (obj_keyframe)
+					if (selected)
+						framecount++
+				
+				frametab = "tabframeeditormulti"
+				framesel = framecount
+			}
+			else if (tl_edit.keyframe_select_amount > 1)
+			{
+				frametab = "tabframeeditormulti"
+				framesel = round(tl_edit.keyframe_select_amount)
+			}
+			else if (tl_edit.keyframe_select_amount = 1)
+				framesel = round(tl_edit.keyframe_select.position)
 		}
-		return text_get("tabframeeditor", name, string(round(timeline_marker)))
+		return text_get("tabframeeditor", name, text_get(frametab, string(framesel)))
 	}
 	else if (tab = settings)
 		return text_get("tabsettings")

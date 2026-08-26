@@ -40,9 +40,12 @@ function app_startup_keybinds()
 		
 		// Timeline
 		PLAY,
+		PLAY_STOP,
 		PLAY_BEGINNING,
 		MARKER_RIGHT,
 		MARKER_LEFT,
+		FRAME_PREVIOUS,
+		FRAME_NEXT,
 		
 		// Viewport
 		RENDER_MODE,
@@ -101,9 +104,12 @@ function app_startup_keybinds()
 	
 	// Timeline
 	keybind_register("play", e_keybind.PLAY, keybind_new(vk_space))
+	keybind_register("playstop", e_keybind.PLAY_STOP, keybind_new(vk_space, false, true))
 	keybind_register("playbeginning", e_keybind.PLAY_BEGINNING, keybind_new(vk_enter))
 	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left))
 	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right))
+	keybind_register("frameprevious", e_keybind.FRAME_PREVIOUS, keybind_new(vk_left, false, true))
+	keybind_register("framenext", e_keybind.FRAME_NEXT, keybind_new(vk_right, false, true))
 	
 	// Viewport
 	keybind_register("rendermode", e_keybind.RENDER_MODE, keybind_new(vk_f5))

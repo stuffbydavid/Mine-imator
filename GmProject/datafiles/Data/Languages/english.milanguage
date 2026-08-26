@@ -4,8 +4,8 @@
 		"language": "English",
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
-		"forversion": "2.0.3",
-		"lastchange": "2026.08.23"
+		"forversion": "2.1.0",
+		"lastchange": "2026.08.26"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -110,7 +110,9 @@
 			"walk": "Create walk cycle",
 			"run": "Create run cycle",
 			"popout": "Open in new window",
-			"popin": "Close timeline window"
+			"popin": "Close timeline window",
+			"zoomout": "Zoom out",
+			"zoomin": "Zoom in"
 		},
 		"customaccentcolor": "Custom accent color",
 		"editkeybind": "Edit keybind",
@@ -892,7 +894,9 @@
 		"particles": "Particle editor for %1",
 		"ground": "Ground",
 		"timelineeditor": "%1 properties",
-		"frameeditor": "%1 (Frame %2)",
+		"frameeditor": "%1 (%2)",
+		"frameeditorsingle": "Frame %1",
+		"frameeditormulti": "%1 Frames",
 		"settings": "Preferences"
 	},
 	"key/": {
@@ -2064,7 +2068,8 @@
 		"selectionsmall": "Small",
 		"selectionmedium": "Medium",
 		"selectionlarge": "Large",
-		"blocks": "%1 x %2 x %3 blocks",
+		"blockstotal": "%1 blocks",
+		"blockssizes": "(%1 x %2 x %3)",
 		"filteractive": "Blocks are filtered",
 		"confirm": "Import selection",
 		"cancel": "Cancel"
@@ -2935,6 +2940,7 @@
 		"videosize": "Render size",
 		"videosizetemplate/": {
 			"avatar": "Avatar",
+			"vga": "VGA",
 			"hd_720p": "HD 720p",
 			"fhd_1080p": "FHD 1080p",
 			"qhd_1440p": "QHD 1440p",
@@ -3723,21 +3729,23 @@
 		"lockbendupper": "Upper half",
 		"inherit": "Inherit",
 		"inherit/": {
+			"transform": "TRANSFORM",
 			"position": "Position",
 			"rotation": "Rotation",
-			"rotpoint": "Rotation point",
 			"scale": "Scale",
+			"bend": "Bend",
+			"rotpoint": "Rotation point",
+			"pose": "Pose",
+			"posehelp": "Inherit the parent character or special block's pose.",
+			"material": "MATERIAL",
 			"opacity": "Opacity",
 			"color": "Color",
-			"visibility": "Visibility",
-			"bend": "Bend",
+			"glowcolor": "Glow color",
 			"texture": "Texture",
+			"visibility": "Visibility",
 			"surface": "Surface",
 			"subsurface": "Subsurface",
-			"glowcolor": "Glow color",
-			"select": "Select",
-			"pose": "Pose",
-			"posehelp": "Inherit the parent character or special block's pose."
+			"select": "Select"
 		},
 		"scalemode": "Scale mode",
 		"scalemoderesize": "Resize",
@@ -4220,10 +4228,13 @@
 			"secondaryview": "Secondary view",
 			"particlesspawn": "Spawn particles",
 			"particlesclear": "Clear particles",
-			"play": "Play animation",
+			"play": "Play / Pause animation",
+			"playstop": "Play / Stop animation",
 			"playbeginning": "Restart animation",
 			"markerleft": "Left",
 			"markerright": "Right",
+			"frameprevious": "Previous frame",
+			"framenext": "Next frame",
 			"cam/": {
 				"forward": "Forward",
 				"back": "Back",

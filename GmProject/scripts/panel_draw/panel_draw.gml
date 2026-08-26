@@ -148,12 +148,14 @@ function panel_draw(panel)
 			}
 			
 			// Adjust tab widths
-			var selnamew, unselnamew;
+			var minwid, maxwid, selnamew, unselnamew;
+			minwid = 45 // 28
+			maxwid = 192 // 144
 			selnamew = tabw[panel.tab_selected];
-			unselnamew = max(28, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Set new unactive tab save
-			selnamew = min(selnamew, 144, boxw - (unselnamew * (panel.tab_list_amount - 1))) // Update tab size based on new unactive tab save
-			unselnamew = max(28, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Update unactive tab size based on new active tab size
-			unselnamew = min(unselnamew, 144)
+			unselnamew = max(minwid, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Set new unactive tab save
+			selnamew = min(selnamew, maxwid, boxw - (unselnamew * (panel.tab_list_amount - 1))) // Update tab size based on new unactive tab save
+			unselnamew = max(minwid, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Update unactive tab size based on new active tab size
+			unselnamew = min(unselnamew, maxwid)
 			
 			for (var t = 0; t < panel.tab_list_amount; t++)
 			{
@@ -163,12 +165,12 @@ function panel_draw(panel)
 				
 				if (sel)
 				{
-					tabw[t] = min(144, tabw[t], selnamew)
+					tabw[t] = min(maxwid, tabw[t], selnamew)
 					tabsw += tabw[t]
 				}
 				else
 				{
-					tabw[t] = min(144, tabw[t], unselnamew)
+					tabw[t] = min(maxwid, tabw[t], unselnamew)
 					tabsw += tabw[t]
 				}
 			}

@@ -35,10 +35,13 @@ function tab_timeline_editor_hierarchy()
 	
 	if (par != app)
 	{
-		dy += 20
-		draw_label(text_get("timelineeditorinherit") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-		dy += 8
+		tab_control(16)
+		draw_label(text_get("timelineeditorinherit") + ":", dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label) 
+		tab_next()
 		
+		tab_control(16)
+		draw_label(text_get("timelineeditorinherittransform"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+		tab_next()
 		tab_set_collumns(true, floor(content_width/150))
 		
 		// Position
@@ -54,14 +57,6 @@ function tab_timeline_editor_hierarchy()
 			tab_next()
 		}
 		
-		// Rotation point
-		if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)
-		{
-			tab_control_checkbox()
-			draw_checkbox("timelineeditorinheritrotpoint", dx, dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
-			tab_next()
-		}
-		
 		// Scale
 		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA])
 		{
@@ -69,6 +64,48 @@ function tab_timeline_editor_hierarchy()
 			draw_checkbox("timelineeditorinheritscale", dx, dy, tl_edit.inherit_scale, action_tl_inherit_scale)
 			tab_next()
 		}
+		
+		// Bend (Advanced mode only)
+		if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_advanced_mode)
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritbend", dx, dy, tl_edit.inherit_bend, action_tl_inherit_bend)
+			tab_next()
+		}
+		
+		// Rotation point (Advanced mode only)
+		if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritrotpoint", dx, dy, tl_edit.inherit_rot_point, action_tl_inherit_rot_point)
+			tab_next()
+		}
+		
+		// Pose
+		if ((tl_edit.type = e_tl_type.CHARACTER || tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL) &&
+			(par.type = e_tl_type.CHARACTER || par.type = e_tl_type.SPECIAL_BLOCK  || par.type = e_tl_type.MODEL))
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritpose", dx, dy, tl_edit.inherit_pose, action_tl_inherit_pose, "timelineeditorinheritposehelp")
+			tab_next()
+		}
+			
+		tab_set_collumns(false)
+		
+		// Scale mode (Advanced mode only)
+		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale && setting_advanced_mode)
+		{
+			tab_control_togglebutton()
+			togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)
+			togglebutton_add("timelineeditorscalemodestretch", null, 0, tl_edit.scale_resize = 0, action_tl_scale_resize)
+			draw_togglebutton("timelineeditorscalemode", dx, dy)
+			tab_next()
+		}
+		
+		tab_control(16)
+		draw_label(text_get("timelineeditorinheritmaterial"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+		tab_next()
+		tab_set_collumns(true, floor(content_width/150))
 		
 		// Color
 		if (tl_edit.value_type[e_value_type.MATERIAL_COLOR])
@@ -82,16 +119,11 @@ function tab_timeline_editor_hierarchy()
 			tab_next()
 		}
 		
-		// Visibility
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorinheritvisibility", dx, dy, tl_edit.inherit_visibility, action_tl_inherit_visibility)
-		tab_next()
-		
-		// Bend (Advanced mode only)
-		if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_advanced_mode)
+		// Glow color (Advanced mode only)
+		if (tl_edit.value_type[e_value_type.MATERIAL] && !tl_edit.value_type[e_value_type.CAMERA] && setting_advanced_mode)
 		{
 			tab_control_checkbox()
-			draw_checkbox("timelineeditorinheritbend", dx, dy, tl_edit.inherit_bend, action_tl_inherit_bend)
+			draw_checkbox("timelineeditorinheritglowcolor", dx, dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)
 			tab_next()
 		}
 		
@@ -102,6 +134,11 @@ function tab_timeline_editor_hierarchy()
 			draw_checkbox("timelineeditorinherittexture", dx, dy, tl_edit.inherit_texture, action_tl_inherit_texture)
 			tab_next()
 		}
+		
+		// Visibility
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorinheritvisibility", dx, dy, tl_edit.inherit_visibility, action_tl_inherit_visibility)
+		tab_next()
 		
 		// Surface (Advanced mode only)
 		if (tl_edit.value_type[e_value_type.MATERIAL] && setting_advanced_mode)
@@ -119,14 +156,6 @@ function tab_timeline_editor_hierarchy()
 			tab_next()
 		}
 		
-		// Glow color (Advanced mode only)
-		if (tl_edit.value_type[e_value_type.MATERIAL] && !tl_edit.value_type[e_value_type.CAMERA] && setting_advanced_mode)
-		{
-			tab_control_checkbox()
-			draw_checkbox("timelineeditorinheritglowcolor", dx, dy, tl_edit.inherit_glow_color, action_tl_inherit_glow_color)
-			tab_next()
-		}
-		
 		// Select (Advanced mode only)
 		if (setting_advanced_mode)
 		{
@@ -134,26 +163,7 @@ function tab_timeline_editor_hierarchy()
 			draw_checkbox("timelineeditorinheritselect", dx, dy, tl_edit.inherit_select, action_tl_inherit_select)
 			tab_next()	
 		}
-		
-		// Inherit pos
-		if ((tl_edit.type = e_tl_type.CHARACTER || tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL) &&
-			(par.type = e_tl_type.CHARACTER || par.type = e_tl_type.SPECIAL_BLOCK  || par.type = e_tl_type.MODEL))
-		{
-			tab_control_checkbox()
-			draw_checkbox("timelineeditorinheritpose", dx, dy, tl_edit.inherit_pose, action_tl_inherit_pose, "timelineeditorinheritposehelp")
-			tab_next()
-		}
 			
 		tab_set_collumns(false)
-		
-		// Scale mode
-		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale && setting_advanced_mode)
-		{
-			tab_control_togglebutton()
-			togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)
-			togglebutton_add("timelineeditorscalemodestretch", null, 0, tl_edit.scale_resize = 0, action_tl_scale_resize)
-			draw_togglebutton("timelineeditorscalemode", dx, dy)
-			tab_next()
-		}
 	}
 }

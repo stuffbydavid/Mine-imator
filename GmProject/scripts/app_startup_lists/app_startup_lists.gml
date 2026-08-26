@@ -387,6 +387,7 @@ function app_startup_lists()
 	videotemplate_list = ds_list_create()
 	ds_list_add(videotemplate_list,
 		new_videotemplate("avatar", 512, 512),
+		new_videotemplate("vga", 640, 480),
 		new_videotemplate("hd_720p", 1280, 720),
 		new_videotemplate("fhd_1080p", 1920, 1080),
 		new_videotemplate("qhd_1440p", 2560, 1440),

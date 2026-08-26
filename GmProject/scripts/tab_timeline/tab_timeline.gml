@@ -134,6 +134,9 @@ function tab_timeline()
 	
 	timex += 8
 	
+	// Right click timeline timer
+	context_menu_area(headerx, headery, timex, headerh, "toolbarviewtimelineplayback", null, null, null, null)
+	
 	var buttonsxstart, buttonsx, buttonsy;
 	buttonsxstart = (timeline_settings_w = null ? 0 : floor((headerx + headerw/2) - timeline_settings_w/2))
 	buttonsx = max(timex, buttonsxstart)
@@ -144,9 +147,8 @@ function tab_timeline()
 	buttonsx += 24 + 6
 	
 	// Previous frame
-	if (draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_PREVIOUS, null, timeline_playing, "tooltiptlpreviousframe"))
-		timeline_marker = max(((floor(timeline_marker) != timeline_marker) ? floor(timeline_marker) : timeline_marker - 1), 0)
-	
+	tip_set_keybind(e_keybind.FRAME_PREVIOUS)
+	draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_PREVIOUS, action_tl_frame_previous, timeline_playing, "tooltiptlpreviousframe")
 	buttonsx += 24 + 6
 	
 	draw_divide_vertical(buttonsx, buttonsy + 2, 20)
@@ -158,7 +160,8 @@ function tab_timeline()
 	
 	// Play
 	tip_set_keybind(e_keybind.PLAY)
-	draw_button_icon("timelineplay", buttonsx, buttonsy, 24, 24, false, timeline_playing ? icons.PAUSE : icons.PLAY, action_tl_play, false, timeline_playing ? "tooltiptlpause" : "tooltiptlplay")
+	if (draw_button_icon("timelineplay", buttonsx, buttonsy, 24, 24, false, timeline_playing ? icons.PAUSE : icons.PLAY, null, false, timeline_playing ? "tooltiptlpause" : "tooltiptlplay"))
+		action_tl_play()
 	buttonsx += 24 + 6
 	
 	// Skip to region start and play
@@ -178,13 +181,30 @@ function tab_timeline()
 	buttonsx += 6
 	
 	// Next frame
-	if (draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_NEXT, null, timeline_playing, "tooltiptlnextframe"))
-		timeline_marker = ((ceil(timeline_marker) != timeline_marker) ? ceil(timeline_marker) : timeline_marker + 1)
+	tip_set_keybind(e_keybind.FRAME_NEXT)
+	draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_NEXT, action_tl_frame_next, timeline_playing, "tooltiptlnextframe")
 	buttonsx += 24 + 6
 	
 	// Next keyframe
 	draw_button_icon("timelinenextkeyframe", buttonsx, buttonsy, 24, 24, false, icons.KEYFRAME_NEXT, action_tl_keyframe_next, timeline_playing, "tooltiptlnextkeyframe")
-	buttonsx += 16 + 6
+	buttonsx += 24 + 6
+	
+	draw_divide_vertical(buttonsx, buttonsy + 2, 20)
+	buttonsx += 6
+	
+	// Loop
+	var tooltip;
+	
+	if (!timeline_repeat && !timeline_seamless_repeat)
+		tooltip = "tooltiptlenableloop"
+	else if (timeline_repeat && !timeline_seamless_repeat)
+		tooltip = "tooltiptlenableseamlessloop"
+	else
+		tooltip = "tooltiptldisableloop"
+	
+	draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
+	
+ 	buttonsx += 16 + 6
 	
 	timeline_settings_w = (buttonsx - buttonsxstart)
 	
@@ -221,19 +241,19 @@ function tab_timeline()
 	if (settings_menu_name = "timelineintervalsettings" && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	
-	buttonsx += 16 + 6
+	buttonsx += 16 + 4
+	draw_divide_vertical(buttonsx, buttonsy, 24)
+	buttonsx += 4
 	
-	// Loop
-	var tooltip;
+	var zoombutton = 0;
+	// Zoom out
+ 	if (draw_button_icon("timelinezoomout", buttonsx, buttonsy, 24, 24, false, icons.ZOOM_OUT, null, timeline_zoom_goal <= 0.25, "tooltiptlzoomout"))
+		zoombutton = 1
+	buttonsx += 24 + 6
 	
-	if (!timeline_repeat && !timeline_seamless_repeat)
-		tooltip = "tooltiptlenableloop"
-	else if (timeline_repeat && !timeline_seamless_repeat)
-		tooltip = "tooltiptlenableseamlessloop"
-	else
-		tooltip = "tooltiptldisableloop"
-	
-	draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
+	// Zoom in
+ 	if (draw_button_icon("timelinezoomin", buttonsx, buttonsy, 24, 24, false, icons.ZOOM_IN, null, timeline_zoom_goal >= 32, "tooltiptlzoomin"))
+		zoombutton = -1
 	
 	buttonsx += 24 + 4
 	draw_divide_vertical(buttonsx, buttonsy, 24)
@@ -1732,13 +1752,17 @@ function tab_timeline()
 	}
 	
 	// Zoom
-	if (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0)
+	if (zoombutton <> 0 || (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0))
 	{
-		var m = (mouse_wheel = 1 ? .5 : 2);
+		var m;
+		if (zoombutton <> 0)
+			m = (zoombutton = 1 ? .5 : 2)
+		else
+			m = (mouse_wheel = 1 ? .5 : 2)
 		timeline_zoom_goal = clamp(timeline_zoom_goal * m, 0.25, 32)
 		if (timeline_zoom_goal > 1)
 			timeline_zoom_goal = round(timeline_zoom_goal)
-		timeline_zoom_target = mouse_x
+		timeline_zoom_target = zoombutton <> 0 ? (barw * .5) + barx : mouse_x
 	}
 	var zoompoint = (timeline_zoom_target - barx + timeline.hor_scroll.value);
 	if (timeline_zoom != timeline_zoom_goal)

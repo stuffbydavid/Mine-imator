@@ -111,7 +111,7 @@ function draw_recent()
 		timex = xx + 12 + namewidth + 12
 		
 		// File name
-		draw_label(text_get("recentfilename"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		draw_label(text_get("recentname"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
 		// Last opened
 		draw_label(text_get("recentlastopened"), timex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
@@ -134,22 +134,22 @@ function draw_recent()
 			draw_label(string_limit(recent_time_string(item.last_opened), timewidth), timex, recenty + 22, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 			
 			// Icons
-			var iconx = xx + wid - 8;
+			var iconx = xx + wid - 10;
 			iconx -= 24
 			
 			// Remove
 			if (hover)
 			{
-				if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
+				if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 10, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
 					action_recent_remove(item)
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
-			iconx -= 24
+			iconx -= 28
 			
 			// Oh yeah. Pin it
 			if (hover || item.pinned)
 			{
-				if (draw_button_icon("recentpin" + string(item), iconx, recenty + 8, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
+				if (draw_button_icon("recentpin" + string(item), iconx, recenty + 10, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
 					action_recent_pin(item)
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
