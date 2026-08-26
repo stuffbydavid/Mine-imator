@@ -11,6 +11,9 @@ function popup_close()
 		popup_upgrade.custom_rendering = "default"
 	}
 	
+	if (popup = popup_importimage)
+		ds_list_clear(popup_importimage.filenames)
+	
 	window_busy = ""
 	window_focus = ""
 	popup_ani_type = "hide"

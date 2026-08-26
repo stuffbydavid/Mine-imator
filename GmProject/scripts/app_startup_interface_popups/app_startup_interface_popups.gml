@@ -51,11 +51,20 @@ function app_startup_interface_popups()
 	}
 	
 	// Import image
-	popup_importimage = new_popup("importimage", popup_importimage_draw, 236, null, true)
+	popup_importimage = new_popup("importimage", popup_importimage_draw, 477, null, true) //236
 	with (popup_importimage)
 	{
 		filename = ""
+		filenames = ds_list_create();
+		do_all = false;
+		texture = null
 		type = e_res_type.SKIN
+		value_script = null
+		is_sheet = true
+		sheet_size = vec2(16, 16)
+		sheet_size_def = sheet_size
+		tbx_sheet_width = new_textbox_integer()
+		tbx_sheet_height = new_textbox_integer()
 	}
 	
 	// Import item sheet

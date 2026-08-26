@@ -3663,7 +3663,12 @@
 		"blocksheet": "Block sheet",
 		"particlesheet": "Particle sheet",
 		"texture": "Texture",
-		"ok": "OK"
+		"issheet": "Item sheet",
+		"grid": "Grid",
+		"columns": "Columns",
+		"rows": "Rows",
+		"ok": "OK",
+		"doall": "Do this for all images"
 	},
 	"importitemsheet/": {
 		"caption": "Import item sheet",

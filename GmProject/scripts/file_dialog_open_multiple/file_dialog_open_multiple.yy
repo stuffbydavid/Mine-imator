@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"file_dialog_open_multiple",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"file_dialog_open_multiple",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/App/Dialogues/File.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
