@@ -19,6 +19,9 @@ function window_draw_load_assets()
 	}
 	else if (load_assets_stage = "exit")
 	{
+		window_taskbar_progress_state_set()
+		window_flash()
+		
 		window_state = "startup"
 		app_startup_interface()
 		
@@ -27,6 +30,8 @@ function window_draw_load_assets()
 		
 		return 0
 	}
+	else
+		window_taskbar_progress_state_set(e_window_taskbar_state.NORMAL)
 	
 	var wid, hei, panelwid;
 	wid = load_assets_width
@@ -68,6 +73,7 @@ function window_draw_load_assets()
 	if (load_assets_credits != "")
 		draw_label(text_get("startupsplashauthor", load_assets_credits), xoff + panelwid / 2, yoff + 289 + 31, fa_middle, fa_top, c_text_tertiary, a_text_tertiary, font_caption)
 	
+	// Loading bar
 	draw_box(xoff, yoff + hei - 8, wid, 8, false, c_level_top, .8)
 	draw_box(xoff, yoff + hei - 8, wid * load_assets_progress, 8, false, c_accent, 1)
 	

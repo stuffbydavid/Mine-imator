@@ -565,6 +565,7 @@ function minecraft_assets_load()
 			}
 		}
 		
+		window_taskbar_progress_value_set(load_assets_progress)
 		return true
 	}
 }

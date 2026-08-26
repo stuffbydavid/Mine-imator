@@ -14,6 +14,8 @@ function export_done_movie()
 	export_surface = null
 	window_state = ""
 	
+	window_taskbar_progress_state_set()
+	
 	render_watermark = false
 	render_background = true
 	render_hidden = false

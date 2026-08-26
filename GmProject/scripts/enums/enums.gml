@@ -1132,4 +1132,14 @@ function enums()
 		VIEW_SECOND,
 		TIMELINE
 	}
+	
+	// Taskbar progress state
+	enum e_window_taskbar_state
+	{
+		NOPROGRESS		= 0,
+		INDETERMINATE	= 1,
+		NORMAL			= 2,
+		ERROR			= 4,
+		PAUSED			= 8
+	}
 }

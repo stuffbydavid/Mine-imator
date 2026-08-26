@@ -31,6 +31,7 @@ function window_draw_export()
 	}
 	
 	perc = export_sample / totalsamples
+	window_taskbar_progress_value_set(perc)
 	
 	content_width = floor(window_width * 0.5)
 	content_height = min(500, floor(window_height * 0.5))
