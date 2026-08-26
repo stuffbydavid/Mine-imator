@@ -1112,6 +1112,7 @@
     {"name":"execute","order":11,"path":"scripts/execute/execute.yy",},
     {"name":"export_done_image","order":1,"path":"scripts/export_done_image/export_done_image.yy",},
     {"name":"export_done_movie","order":2,"path":"scripts/export_done_movie/export_done_movie.yy",},
+    {"name":"export_start","order":3,"path":"scripts/export_start/export_start.yy",},
     {"name":"file_copy_lib","order":13,"path":"scripts/file_copy_lib/file_copy_lib.yy",},
     {"name":"file_delete_lib","order":15,"path":"scripts/file_delete_lib/file_delete_lib.yy",},
     {"name":"file_dialog_open_asset","order":3,"path":"scripts/file_dialog_open_asset/file_dialog_open_asset.yy",},

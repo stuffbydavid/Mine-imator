@@ -1570,6 +1570,7 @@
     {"id":{"name":"execute","path":"scripts/execute/execute.yy",},},
     {"id":{"name":"export_done_image","path":"scripts/export_done_image/export_done_image.yy",},},
     {"id":{"name":"export_done_movie","path":"scripts/export_done_movie/export_done_movie.yy",},},
+    {"id":{"name":"export_start","path":"scripts/export_start/export_start.yy",},},
     {"id":{"name":"export_update","path":"scripts/export_update/export_update.yy",},},
     {"id":{"name":"file_copy_lib","path":"scripts/file_copy_lib/file_copy_lib.yy",},},
     {"id":{"name":"file_delete_lib","path":"scripts/file_delete_lib/file_delete_lib.yy",},},

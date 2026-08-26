@@ -1,5 +1,5 @@
 /// export_update()
-
+/// @desc Renders and encodes a number of samples and completed frames and returns whether exporting continues.
 function export_update()
 {
 	// Stop?
@@ -20,32 +20,11 @@ function export_update()
 				export_done_image()
 			}
 			
-			return 0
+			return false
 		}
 	}
 	
-	// Update movie
-	if (window_state = "export_movie")
-	{
-		if (render_samples = -1)
-		{
-			// Update marker
-			timeline_marker = exportmovie_marker_start + (exportmovie_frame / popup_exportmovie.framespersecond) * project_tempo
-			if (timeline_marker > exportmovie_marker_end)
-			{
-				export_done_movie()
-				return 0
-			}
-			
-			// Update animations
-			app_update_animate()
-		}
-	}
-	
-	if (window_state = "export_image" && render_samples = -1)
-		app_update_cameras(popup_exportimage.high_quality, false)
-	
-	// Render
+	// Render settings
 	if (window_state = "export_movie")
 	{
 		render_active = "movie"
@@ -75,7 +54,7 @@ function export_update()
 		}
 	
 		export_surface = render_done()
-	
+		
 		export_sample++
 	
 		if (render_quality = e_view_mode.RENDER && render_samples = app.project_render_samples)
@@ -114,23 +93,34 @@ function export_update()
 					export_done_movie()
 					log("Error when adding frame, error code", err)
 					error("errorexportmovie")
-					return 0
+					return false
 				}
 			}
 	
 			// Advance
 			exportmovie_frame++
 			current_step += round(60 / popup_exportmovie.framespersecond)
+			
+			// Update marker
+			timeline_marker = exportmovie_marker_start + (exportmovie_frame / popup_exportmovie.framespersecond) * project_tempo
+			if (timeline_marker >= exportmovie_marker_end)
+			{
+				export_done_movie()
+				return false
+			}
+			
+			// Update animations
+			app_update_animate()
 		}
 	
 		// Save image
-		if (window_state = "export_image")
+		else if (window_state = "export_image")
 		{
 			surface_save_lib(export_surface, export_filename)
 			export_done_image()
-			return 0
+			return false
 		}
 	}
 	
-	return 1
+	return true
 }

@@ -2,8 +2,6 @@
 
 function export_done_movie()
 {
-	var fn;
-	
 	render_free()
 	
 	if (exportmovie_format != "png")
@@ -22,6 +20,7 @@ function export_done_movie()
 	
 	timeline_marker = exportmovie_marker_previous
 	
+	var fn;
 	if (exportmovie_format = "png")
 		fn = filename_new_ext(export_filename, "") + "_1.png"
 	else
