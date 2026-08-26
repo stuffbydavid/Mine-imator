@@ -114,20 +114,20 @@ function tab_timeline()
 	
 	// Current time
 	draw_set_font(font_heading)
-	timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo)
+	timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo, false)
 	draw_label(timelabel, timex, headery + headerh - 6, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
 	timex += string_width(timelabel)
 	
 	// Time length
 	draw_set_font(font_subheading)
-	timelabel = timeline_show_frames ? " / " + string(timeline_length) : " / " + string_time_seconds(timeline_length / project_tempo)
+	timelabel = timeline_show_frames ? " / " + string(timeline_length) : " / " + string_time_seconds(timeline_length / project_tempo, false)
 	draw_label(timelabel, timex, headery + headerh - 7, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
 	timex += string_width(timelabel)
 	
 	// Time selected
 	if (timeline_region_start != null && (timeline_region_start != timeline_region_end))
 	{
-		timelabel = " (" + (timeline_show_frames ? string(timeline_region_end - timeline_region_start) : string_time_seconds((timeline_region_end - timeline_region_start) / project_tempo)) + ")"
+		timelabel = " (" + (timeline_show_frames ? string(timeline_region_end - timeline_region_start) : string_time_seconds((timeline_region_end - timeline_region_start) / project_tempo, false)) + ")"
 		draw_label(timelabel, timex, headery + headerh - 7, fa_left, fa_bottom, c_accent, a_accent)
 		timex += string_width(timelabel)
 	}

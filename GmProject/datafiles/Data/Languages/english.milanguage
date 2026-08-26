@@ -3755,7 +3755,7 @@
 		"wind": "Wind",
 		"windterrain": "Terrain wind",
 		"depth": "Render depth",
-		"depthtip": "Fixes transparency issues with \"Blended\" alpha mode. Objects with higher depths will be able to render other objects with lower depths behind them.",
+		"depthtip": "Controls the rendering order of objects to fix transparency issues.",
 		"backfaces": "Show backfaces",
 		"hqhiding": "HQ hiding",
 		"lqhiding": "LQ hiding",

@@ -190,7 +190,7 @@ function surface_get_max_size()
 function res_load_scenery_world()
 {
 	show_debug_message("Import from " + world_regions_dir)
-	return true
+	return false
 }
 
 /// CppSeparate void res_save_block_cache(Scope<obj_resource>, StringType)
