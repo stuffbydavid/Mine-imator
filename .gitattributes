@@ -1,0 +1,5 @@
+* text=auto
+*.gml text eol=lf
+*.resource_order text eol=lf
+*.yy text eol=lf
+*.yyp text eol=lf
