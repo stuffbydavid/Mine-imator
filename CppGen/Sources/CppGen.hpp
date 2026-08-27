@@ -1061,34 +1061,21 @@ class Sprite
 {
 public:
 	String name{};
+	List<String> frameNames{};
 	int numFrames = 0;
-	inline static int totalCopied = 0;
 	int originX = 0;
 	int originY = 0;
 
-	// Reads sprite metadata and optionally copies frames to the CppProject.
-	Sprite(String dir, String outputFolder, bool syncAssets);
+	Sprite(String dir);
 };
 
 class Shader
 {
 public:
-	class FileModification
-	{
-	public:
-		String source{};
-		String dest{};
-
-		FileModification(String source, String dest);
-	};
-
 	String name{};
 	bool isValid = false;
-	inline static int totalCopied = 0;
-	inline static List<FileModification*> modifications = List<FileModification*>();
 
-	// Reads shader metadata and optionally synchronizes GLSL ES shaders.
-	Shader(String dir, String outputFolder, bool syncAssets);
+	Shader(String dir);
 };
 
 class GML

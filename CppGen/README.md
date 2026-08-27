@@ -1,12 +1,12 @@
 # CppGen
-Converts the GameMaker scripts and objects of Mine-imator found in `GmProject` to C++ code into `CppProject/Generated/`. The missing GML functions, as defined in `gml.json`, are then mapped to C++ replacements found in `CppProject/Gml/`. Modified sprites and shaders are also copied to `CppProject/Asset/` and optionally synced if changes were later made to them outside of GameMaker. Note that this software is not general-purpose and won't work outside the Mine-imator project.
+Converts the GameMaker scripts and objects of Mine-imator found in `GmProject` to C++ code into `CppProject/Generated/`. The missing GML functions, as defined in `gml.json`, are then mapped to C++ replacements found in `CppProject/Gml/`. Note that this software is not general-purpose and won't work outside the Mine-imator project.
 
 ## Usage
 ```
-CppGen.exe [repo-root] [gml-spec] [--skip-asset-sync] 
+CppGen.exe [repo-root] [gml-spec]
 ```
 
-The repository root directory defaults to `../../`, while the GML specification file defaults to `../gml.json`. Use `--skip-asset-sync` to generate C++ without copying or reverse-syncing modified sprites and shaders.
+The repository root directory defaults to `../../`, while the GML specification file defaults to `../gml.json`.
 
 This program runs automatically by the Setup script to populate `CppProject/Generated/` and can be directly accessed via shortcuts in Visual Studio, XCode and as a task in Visual Studio Code (see `BUILD.md`).
 
