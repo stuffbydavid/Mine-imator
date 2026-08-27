@@ -12,6 +12,9 @@ function res_update_colors()
 		biome = find_biome(argument[0])
 	else
 		biome = find_biome(app.background_biome)
+		
+	if (biome = null)
+		return 0
 	
 	if (biome.name = "custom")
 	{
