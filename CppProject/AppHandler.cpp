@@ -62,7 +62,15 @@ namespace CppProject
 			// Set paths
 			QDir().mkpath(user_directory_get());
 			QDir().mkpath(projects_directory_get());
-			file_delete_lib(log_file);
+
+			// Cycle logs
+			StringType prevLog = log_file_get();
+			if (file_exists_lib(prevLog))
+			{
+				StringType prevLogDest = filename_change_ext(log_file_get(), ".previous.txt");
+				file_delete_lib(prevLogDest);
+				file_rename_lib(prevLog, prevLogDest);
+			}
 
 		#if RELEASE_MODE
 			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
@@ -114,7 +122,6 @@ namespace CppProject
 			targetFps = 60;
 			fpsLastUpdate = QDateTime::currentDateTime();
 			startTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
-			randomize();
 
 			// Map cursors
 			cursorMap[cr_none] = Qt::BlankCursor;

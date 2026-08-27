@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"dev_mode_benchmarks",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"dev_mode_benchmarks",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

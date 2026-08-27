@@ -1038,6 +1038,7 @@
     {"name":"debug_timer_stop","order":11,"path":"scripts/debug_timer_stop/debug_timer_stop.yy",},
     {"name":"debug","order":1,"path":"scripts/debug/debug.yy",},
     {"name":"dec_to_hex","order":11,"path":"scripts/dec_to_hex/dec_to_hex.yy",},
+    {"name":"dev_mode_benchmarks","order":48,"path":"scripts/dev_mode_benchmarks/dev_mode_benchmarks.yy",},
     {"name":"dir_get_string","order":5,"path":"scripts/dir_get_string/dir_get_string.yy",},
     {"name":"dir_get_vec3","order":3,"path":"scripts/dir_get_vec3/dir_get_vec3.yy",},
     {"name":"directory_create_lib","order":5,"path":"scripts/directory_create_lib/directory_create_lib.yy",},

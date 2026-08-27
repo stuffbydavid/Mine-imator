@@ -27,6 +27,19 @@ function export_done_movie()
 		fn = filename_new_ext(export_filename, "") + "_1.png"
 	else
 		fn = export_filename
+		
+	if (dev_mode_exportmovie_benchmarks)
+	{
+		var f = file_text_open_write(temp_file);
+		if (f > -1)
+		{
+			file_text_write_string(f, exportmovie_benchmark_csv)
+			file_text_close(f)
+			file_copy_lib(temp_file, export_filename + ".csv")
+		}
+		exportmovie_benchmark_csv = ""
+		benchmark_mode = false
+	}
 	
 	toast_new(e_toast.POSITIVE, text_get("alertexportmovie"))
 	toast_add_action("alertexportmovieview", popup_open_url, fn)

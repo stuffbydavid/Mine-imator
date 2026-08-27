@@ -13,4 +13,9 @@ function export_start(state)
 	
 	if (view_second.quality = e_view_mode.RENDER)
 		view_second.quality = e_view_mode.SHADED
+	
+	benchmark_animate_total_time = 0
+	benchmark_render_total_time = 0
+	benchmark_surface_total_time = 0
+	benchmark_encode_total_time = 0
 }

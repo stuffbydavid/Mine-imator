@@ -2,7 +2,7 @@
 
 function render_startup()
 {
-	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_time, render_surface_time,
+	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_start_time, render_start_surface_time,
 			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
 			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
@@ -88,7 +88,6 @@ function render_startup()
 	render_background = true
 	render_watermark = false
 	
-	render_time = 0
 	render_surface_time = 0
 	render_active = null
 	render_repeat = vec3(0)

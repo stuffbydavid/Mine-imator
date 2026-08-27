@@ -1500,6 +1500,7 @@
     {"id":{"name":"debug_timer_stop","path":"scripts/debug_timer_stop/debug_timer_stop.yy",},},
     {"id":{"name":"debug","path":"scripts/debug/debug.yy",},},
     {"id":{"name":"dec_to_hex","path":"scripts/dec_to_hex/dec_to_hex.yy",},},
+    {"id":{"name":"dev_mode_benchmarks","path":"scripts/dev_mode_benchmarks/dev_mode_benchmarks.yy",},},
     {"id":{"name":"dir_get_string","path":"scripts/dir_get_string/dir_get_string.yy",},},
     {"id":{"name":"dir_get_vec3","path":"scripts/dir_get_vec3/dir_get_vec3.yy",},},
     {"id":{"name":"directory_create_lib","path":"scripts/directory_create_lib/directory_create_lib.yy",},},

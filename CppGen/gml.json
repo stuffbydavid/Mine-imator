@@ -411,6 +411,7 @@
         "gc_target_frame_time": { "return": "void", "args": [ "int" ] },
         "get_open_filename_ext": { "return": "string", "args": [ "string", "string", "string", "string" ] },
         "get_save_filename_ext": { "return": "string", "args": [ "string", "string", "string", "string" ] },
+        "get_timer": { "return": "int", "args": [] },
         "gml_pragma": { "return": "void", "varArgs": true },
         "gml_release_mode": { "return": "void", "args": [ "bool" ] },
         "gpu_get_blendmode": { "return": "int", "args": [] },

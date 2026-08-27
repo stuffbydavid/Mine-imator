@@ -851,7 +851,7 @@ namespace CppProject
 		}
 
 		// Find uniforms and samplers
-		auto uniIt = QRegularExpression("^uniform (\\w*) (.*?)(\\[.*?\\])?;(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?$", QRegularExpression::MultilineOption).globalMatch(code);
+		auto uniIt = QRegularExpression("^uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
 		while (uniIt.hasNext())
 		{
 			QRegularExpressionMatch match = uniIt.next();

@@ -25,7 +25,8 @@ function particle_spawner_spawn(type)
 		base_seed = (temp.pc_spawn_constant ? ds_list_size(particle_list) : pt.creator.single_fire_count) + pt.creator.value[e_value.SEED]
 	else
 	{
-		randomize()
+		if (!dev_mode_project_benchmarks)
+			randomize()
 		base_seed = random(spawn_currentstep + ds_list_size(particle_list))
 	}
 	

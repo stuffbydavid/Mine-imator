@@ -10,6 +10,12 @@ function log_message(text)
 	show_debug_message(text)
 }
 
+/// CppSeparate StringType log_file_get()
+function log_file_get()
+{
+	return ""
+}
+
 /// CppSeparate StringType os_get()
 function os_get()
 {
@@ -20,6 +26,12 @@ function os_get()
 function platform_get()
 {
 	return e_platform.WINDOWS;
+}
+
+/// CppSeparate StringType graphics_api_get()
+function graphics_api_get()
+{
+	return "GM";
 }
 
 /// CppSeparate RealType interface_scale_default_get()

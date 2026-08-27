@@ -2,8 +2,6 @@
 
 function app_startup_interface()
 {
-	window_main_restore(setting_main_window_rect, setting_main_window_maximized)
-	
 	app_startup_shortcut_bar()
 	app_startup_interface_bench()
 	app_startup_interface_timeline()
@@ -46,6 +44,12 @@ function app_startup_interface()
 				project_create()
 			}
 			project_load(dev_mode_project)
+			
+			if (dev_mode_project_benchmarks)
+			{
+				dev_mode_benchmarks()
+				return 0
+			}
 		}
 		else
 		{
@@ -65,4 +69,6 @@ function app_startup_interface()
 		if (!file_exists_lib(settings_file))
 			popup_show(popup_welcome)
 	}
+	
+	window_main_restore(setting_main_window_rect, setting_main_window_maximized)
 }

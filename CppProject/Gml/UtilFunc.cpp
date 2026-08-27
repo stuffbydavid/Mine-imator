@@ -87,6 +87,12 @@ namespace CppProject
 		return App->GetMsec();
 	}
 
+	IntType get_timer()
+	{
+		static const auto start = std::chrono::steady_clock::now();
+		return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
+	}
+
 	BoolType code_is_compiled()
 	{
 		return true;
@@ -399,6 +405,17 @@ namespace CppProject
 	#else
 		return e_platform_LINUX;
 	#endif
+	}
+
+	StringType graphics_api_get()
+	{
+#if API_D3D11
+		return "D3D";
+#elif API_OPENGL
+		return "GL";
+#else
+		return "";
+#endif
 	}
 
 	StringType os_get()

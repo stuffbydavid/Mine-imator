@@ -6,11 +6,14 @@ function macros()
 	// Debug
 	#macro dev_mode						true
 	#macro dev_mode_skip_blocks			dev_mode && true
-	#macro dev_mode_debug_schematics	dev_mode && true
+	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_saveid		dev_mode && false
 	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
-	#macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
+	//macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
+	#macro dev_mode_project				"D:/Projects/Mine-imator/rendering/benchmark_project/benchmark_project.miproject"
+	#macro dev_mode_project_benchmarks  dev_mode && false
+	#macro dev_mode_exportmovie_benchmarks dev_mode && true
 	#macro dev_mode_full				dev_mode && true
 	#macro dev_mode_advanced			dev_mode && true
 	#macro dev_mode_show_bones			dev_mode && false
@@ -51,7 +54,6 @@ function macros()
 	#macro settings_file				user_directory_get() + "settings.midata"
 	#macro recent_file					user_directory_get() + "recent.midata"
 	#macro key_file						user_directory_get() + "key.midata"
-	#macro log_file						user_directory_get() + "log.txt"
 	#macro temp_file					file_directory + "tmp.file"
 	#macro temp_image					file_directory + "tmp.png"
 	#macro download_image_file			file_directory + "download.png"

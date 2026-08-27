@@ -3,14 +3,11 @@
 
 function render_high()
 {
-	var starttime, samplestart, sampleend;
-	
-	starttime = current_time
-	render_surface_time = 0
 	render_update_samples()
 	
 	render_alpha_hash = project_render_alpha_mode
 	
+	var samplestart, sampleend;
 	if (render_samples_done)
 	{
 		samplestart = 0
@@ -124,6 +121,4 @@ function render_high()
 	
 	render_samples_clear = false
 	render_alpha_hash = false
-	
-	render_time = current_time - starttime - render_surface_time
 }

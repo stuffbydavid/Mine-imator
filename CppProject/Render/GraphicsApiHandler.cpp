@@ -91,12 +91,12 @@ namespace CppProject
 		} 
 
 		// Create rasterizer states for each cull mode
-		D3D11_RASTERIZER_DESC rastDesc = {};
-		rastDesc.FillMode = D3D11_FILL_SOLID;
-		
 		for (D3D11_CULL_MODE mode : { D3D11_CULL_NONE, D3D11_CULL_FRONT, D3D11_CULL_BACK })
 		{
+			D3D11_RASTERIZER_DESC rastDesc = {};
+			rastDesc.FillMode = D3D11_FILL_SOLID;
 			rastDesc.CullMode = mode;
+			rastDesc.DepthClipEnable = (mode != D3D11_CULL_NONE);
 			D3DCheckError(D3DDevice->CreateRasterizerState(&rastDesc, &d3dRasterizerStateMap[mode]));
 		}
 		D3DContext->RSSetState(d3dRasterizerStateMap[D3D11_CULL_BACK]);

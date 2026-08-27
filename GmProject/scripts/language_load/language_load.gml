@@ -67,7 +67,7 @@ function language_load(fn, map, reload = false)
 			log(msg)
 			
 			window_set_caption("Error")
-			show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file)
+			show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file_get())
 			window_set_caption("Mine-imator")
 		}
 	}

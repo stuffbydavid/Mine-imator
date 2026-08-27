@@ -16,7 +16,7 @@ function app_update_keyboard()
 	}
 	
 	if (keyboard_check_pressed(vk_f11))
-		open_url(log_file)
+		open_url(log_file_get())
 	
 	if (keyboard_check_pressed(vk_f12))
 	{

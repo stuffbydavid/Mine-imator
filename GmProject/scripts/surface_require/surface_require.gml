@@ -11,7 +11,7 @@ function surface_require(surf, w, h, depth = true, hdr = false)
 	w = max(1, w)
 	h = max(1, h)
 	
-	starttime = current_time
+	starttime = get_timer()
 	
 	// First usage
 	if (surf < 0)
@@ -28,7 +28,8 @@ function surface_require(surf, w, h, depth = true, hdr = false)
 	else if (surface_get_width(surf) != w || surface_get_height(surf) != h)
 		surface_resize(surf, w, h)
 	
-	render_surface_time += current_time - starttime
+	if (benchmark_mode)
+		benchmark_surface_total_time += get_timer() - starttime
 	
 	return surf
 }

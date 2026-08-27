@@ -136,6 +136,12 @@ function action_toolbar_exportmovie_save()
 	exportmovie_frame = 0
 	export_start("export_movie")
 	
+	if (dev_mode_exportmovie_benchmarks)
+	{
+		benchmark_mode = true
+		exportmovie_benchmark_csv = "Frame,Animate_ms,Render_ms,Surface_ms,Encode_ms\n"
+	}
+	
 	timeline_marker = exportmovie_marker_start
 	
 	// Trigger/update animations
