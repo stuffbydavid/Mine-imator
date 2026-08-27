@@ -119,9 +119,21 @@ namespace CppProject
 		vsName = "/Shaders/" + name + ".vsh";
 		fsName = "/Shaders/" + name + ".fsh";
 
-	#if DEBUG_MODE // Load from Assets folder and re-load upon change
-		vsName = ASSETS_DIR + vsName;
-		fsName = ASSETS_DIR + fsName;
+	#if DEBUG_MODE
+		QString gmVsName = GM_SHADERS_DIR "/" + name + "/" + name + ".vsh";
+		QString gmFsName = GM_SHADERS_DIR "/" + name + "/" + name + ".fsh";
+		if (QFile::exists(gmVsName) && QFile::exists(gmFsName))
+		{
+			// GmProject shaders
+			vsName = gmVsName;
+			fsName = gmFsName;
+		}
+		else
+		{
+			// CppProject shaders
+			vsName = ASSETS_DIR + vsName;
+			fsName = ASSETS_DIR + fsName;
+		}
 	#else // Load from memory
 		vsName = ":" + vsName;
 		fsName = ":" + fsName;

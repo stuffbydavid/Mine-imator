@@ -36,7 +36,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 8. After GML changes
     1. Right-click and build the `CppGen` target in Visual Studio
     2. Alternatively, run `.\Setup.ps1 CppGen` or `CppGen.exe` in the `CppGen\Win64\` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\` and modified sprites/shaders are copied into `CppProject\Asset\`
+    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\`
     4. **Note**: These resulting `.cpp` files should not be manually edited!
 9. Generate Release build in `install\`
     * Run `.\Setup.ps1 Release`
@@ -67,7 +67,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     1. In Xcode, select the `CppGen` Scheme next to "My Mac"
     2. Run (⌘+R)
     3. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Mac/` folder
-    4. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/` and modified sprites/shaders are copied into `CppProject/Asset/`
+    4. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/`
     5. **Note**: These resulting `.cpp` files should not be manually edited!
 7. Generate release build in `install/`
     * Run `./Setup.sh Release`
@@ -109,7 +109,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 7. After GML changes
     1. Run command `CMake: Run Task` and choose `Run CppGen`.
     2. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Linux/` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/` and modified sprites/shaders are copied into `CppProject/Asset/`
+    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/`
     4. **Note**: These resulting `.cpp` files should not be manually edited!
 8. Generate Release build in `install/`
     * Run `./Setup.sh Release`

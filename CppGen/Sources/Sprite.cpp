@@ -2,7 +2,7 @@
 
 namespace CppGen
 {
-Sprite::Sprite(String dir, String outputFolder, bool syncAssets)
+Sprite::Sprite(String dir)
 {
 	DirectoryInfo dirInfo = DirectoryInfo(dir);
 	this->name = dirInfo.name;
@@ -15,17 +15,8 @@ Sprite::Sprite(String dir, String outputFolder, bool syncAssets)
 
 	for (Json frameObj : root["frames"])
 	{
-		if (syncAssets)
-		{
-			String frameName = frameObj["name"];
-			FileInfo srcImg = FileInfo(dir + "/" + frameName + ".png");
-			FileInfo dstImg = FileInfo(outputFolder + "/" + this->name + "_frame_" + this->numFrames + ".png");
-			if (!dstImg.exists || srcImg.lastWriteTime > dstImg.lastWriteTime)
-			{
-				srcImg.copyTo(dstImg.fullName, true);
-				Sprite::totalCopied++;
-			}
-		}
+		String frameName = frameObj["name"];
+		this->frameNames.add(frameName);
 		this->numFrames++;
 	}
 }
