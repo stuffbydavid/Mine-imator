@@ -1,8 +1,7 @@
-/// action_toolbar_importimage_sheet_size(value, add)
-/// @arg value
-/// @arg add
+/// action_toolbar_importimage_is_sheet(enable)
+/// @arg enable
 
-function action_toolbar_importimage_sheet_size(val, add)
+function action_toolbar_importimage_is_sheet(enable)
 {
-	popup_importimage.sheet_size[axis_edit] = popup_importimage.sheet_size[axis_edit] * add + val
+	popup_importimage.is_sheet = enable
 }

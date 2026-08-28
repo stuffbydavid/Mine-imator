@@ -312,7 +312,7 @@ function draw_button_menu()
 		
 		// Find index of chosen value
 		var index = 0;
-		item = null;
+		item = null
 		
 		list_value_filter(list)
 		

@@ -27,7 +27,7 @@ function draw_recent()
 		for (var i = 0; i < recent_list_amount; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
-			mouseon = hover;
+			mouseon = hover
 			var item = recent_list[|i];
 			
 			// Icons

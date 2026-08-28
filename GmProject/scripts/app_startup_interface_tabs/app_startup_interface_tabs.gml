@@ -455,8 +455,8 @@ function app_startup_interface_tabs()
 			tbx_detail = new_textbox_decimals()
 			
 			tbx_radius = new_textbox_decimals()
-			tbx_tex_length = new_textbox_decimals()
 			tbx_shape_detail = new_textbox_decimals()
+			tbx_tex_length = new_textbox_decimals()
 		}
 	}
 	

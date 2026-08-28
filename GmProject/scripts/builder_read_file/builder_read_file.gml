@@ -355,7 +355,7 @@ function builder_read_schematic_nbt(structuremap)
 			// Execute tile entity script
 			if (entity != null)
 			{
-				var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""))
+				var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""));
 				if (script > -1)
 				{
 					build_pos_x = pos[|X]

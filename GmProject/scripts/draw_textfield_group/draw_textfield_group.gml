@@ -193,7 +193,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		// Textbox
 		draw_set_font(font_digits)
 		
-		update = textbox_draw(textfield_textbox[i], fieldx + dragw, boxy + ceil(boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true);
+		update = textbox_draw(textfield_textbox[i], fieldx + dragw, boxy + ceil(boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true)
 		
 		// Textbox press
 		if (app_mouse_box(fieldx + dragw, boxy, boxwid - (8 + dragw), boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]))
