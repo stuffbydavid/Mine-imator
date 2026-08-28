@@ -3,6 +3,7 @@
 function history_copy_render_settings(obj)
 {
 	project_render_samples = obj.project_render_samples
+	project_render_distance = obj.project_render_distance
 	
 	project_render_ssao = obj.project_render_ssao
 	project_render_ssao_radius = obj.project_render_ssao_radius
@@ -17,7 +18,7 @@ function history_copy_render_settings(obj)
 	
 	project_render_subsurface_samples = obj.project_render_subsurface_samples
 	project_render_subsurface_highlight = obj.project_render_subsurface_highlight
-	project_render_subsurface_highlight_strength = obj.project_render_subsurface_highlight
+	project_render_subsurface_highlight_strength = obj.project_render_subsurface_highlight_strength
 	
 	project_render_indirect = obj.project_render_indirect
 	project_render_indirect_precision = obj.project_render_indirect_precision
@@ -38,11 +39,7 @@ function history_copy_render_settings(obj)
 	
 	project_render_aa = obj.project_render_aa
 	project_render_aa_power = obj.project_render_aa_power
-	
-	project_render_texture_filtering = obj.project_render_texture_filtering
-	project_render_transparent_block_texture_filtering = obj.project_render_transparent_block_texture_filtering
-	project_render_texture_filtering_level = obj.project_render_texture_filtering_level
-	
+
 	project_bend_style = obj.project_bend_style
 	project_render_opaque_leaves = obj.project_render_opaque_leaves
 	project_render_liquid_animation = obj.project_render_liquid_animation
@@ -53,4 +50,14 @@ function history_copy_render_settings(obj)
 	
 	project_render_glint_speed = obj.project_render_glint_speed
 	project_render_glint_strength = obj.project_render_glint_strength
+	
+	project_render_texture_filtering = obj.project_render_texture_filtering
+	project_render_transparent_block_texture_filtering = obj.project_render_transparent_block_texture_filtering
+	project_render_texture_filtering_level = obj.project_render_texture_filtering_level
+	
+	project_render_alpha_mode = obj.project_render_alpha_mode
+	project_render_tonemapper = obj.project_render_tonemapper
+	project_render_exposure = obj.project_render_exposure
+	project_render_gamma = obj.project_render_gamma
+	project_render_material_maps = obj.project_render_material_maps
 }

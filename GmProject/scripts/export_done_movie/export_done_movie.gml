@@ -30,6 +30,9 @@ function export_done_movie()
 		
 	if (dev_mode_exportmovie_benchmarks)
 	{
+		var totaltime = get_timer() - exportmovie_start;
+		exportmovie_benchmark_csv += "All_ms," + string_format(totaltime / 1000, 0, 3)
+	
 		var f = file_text_open_write(temp_file);
 		if (f > -1)
 		{

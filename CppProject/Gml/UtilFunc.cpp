@@ -48,6 +48,11 @@ namespace CppProject
 		return arrRef.Arr().Size();
 	}
 
+	VarType array_shift(VarType arrRef)
+	{
+		return arrRef.Arr().Shift();
+	}
+
 	VarType choose(VarArgs args)
 	{
 		return args[(IntType)Random::Get(args.Size())];

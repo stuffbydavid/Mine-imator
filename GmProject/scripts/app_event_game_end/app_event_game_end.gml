@@ -8,7 +8,7 @@ function app_event_game_end()
 	audio_stop_all()
 	
 	// Interface ready
-	if (window_state != "new_assets" && window_state != "load_assets")
+	if (window_state != "new_assets" && window_state != "load_assets" && !dev_mode_project_benchmarks)
 	{
 		if (project_changed)
 		{

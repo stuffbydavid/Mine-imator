@@ -56,7 +56,7 @@ function window_draw_export()
 	content_height = window_height
 	
 	// Time left
-	timeleftsecs = max(0, ceil((exportmovie_start + (current_time - exportmovie_start) / perc - current_time) / 1000))
+	timeleftsecs = max(0, ceil((exportmovie_start + (get_timer() - exportmovie_start) / perc - get_timer()) / 1000000))
 	timeleftmins = timeleftsecs div 60
 	timelefthours = timeleftmins div 60
 	timeleftsecs = timeleftsecs mod 60

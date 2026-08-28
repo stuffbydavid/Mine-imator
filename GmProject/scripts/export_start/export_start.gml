@@ -17,5 +17,5 @@ function export_start(state)
 	benchmark_animate_total_time = 0
 	benchmark_render_total_time = 0
 	benchmark_surface_total_time = 0
-	benchmark_encode_total_time = 0
+	benchmark_export_total_time = 0
 }

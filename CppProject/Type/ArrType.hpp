@@ -18,6 +18,7 @@ namespace CppProject
 		BoolType operator==(const ArrType& arr) const; // arr == otherArr
 
 		VarType Value(IntType index) const;
+		VarType Shift();
 		void Append(const VarType& value) { vec.Append(value); }
 		void Append(const ArrType& arr, IntType startIndex);
 		IntType Size() const { return vec.Size(); }
