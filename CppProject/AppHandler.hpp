@@ -65,7 +65,8 @@ namespace CppProject
 
 		PrimitiveRenderer* prRenderer = nullptr;
 		VertexBufferRenderer* vbRenderer = nullptr;
-
+		
+		QVector<QString> args;
 		AppWindow* mainWindow = nullptr;
 		AppWindow* mouseWindow = nullptr;
 		AppWindow* currentWindow = nullptr;
@@ -100,7 +101,7 @@ namespace CppProject
 
 		ALCdevice* openALDevice = nullptr;
 		ALCcontext* openALContext = nullptr;
-		BoolType audioSupported;
+		BoolType audioSupported = false;
 
 		QHash<IntType, Qt::CursorShape> cursorMap;
 		QHash<IntType, IntType> keyMap;

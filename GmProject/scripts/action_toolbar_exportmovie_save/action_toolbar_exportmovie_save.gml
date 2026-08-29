@@ -136,7 +136,7 @@ function action_toolbar_exportmovie_save()
 	exportmovie_frame = 0
 	export_start("export_movie")
 	
-	if (dev_mode_exportmovie_benchmarks)
+	if (benchmark_exportmovie)
 	{
 		benchmark_mode = true
 		exportmovie_benchmark_csv = "Frame,Animate_ms,Render_ms,Surface_ms,Export_ms\n"

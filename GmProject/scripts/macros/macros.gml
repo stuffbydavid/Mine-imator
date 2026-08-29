@@ -3,24 +3,6 @@
 
 function macros()
 {
-	// Debug
-	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && true
-	#macro dev_mode_debug_schematics	dev_mode && false
-	#macro dev_mode_debug_names			dev_mode && true
-	#macro dev_mode_debug_saveid		dev_mode && false
-	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
-	//macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
-	#macro dev_mode_project				"D:/Projects/Mine-imator/rendering/benchmark_project/benchmark_project.miproject"
-	#macro dev_mode_project_benchmarks  dev_mode && false
-	#macro dev_mode_exportmovie_benchmarks dev_mode && true
-	#macro dev_mode_full				dev_mode && true
-	#macro dev_mode_advanced			dev_mode && true
-	#macro dev_mode_show_bones			dev_mode && false
-	#macro dev_mode_skip_tangents		dev_mode && false
-	#macro dev_mode_check_assets		dev_mode && true
-	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
-	
 	// Versions
 	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
 	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
@@ -92,6 +74,7 @@ function macros()
 	#macro mc_clouds_image_file			mc_textures_directory + "environment/clouds.png"
 	#macro mc_glint_armor_file			mc_textures_directory + "misc/enchanted_glint_armor.png"
 	#macro mc_glint_item_file			mc_textures_directory + "misc/enchanted_glint_item.png"
+	#macro mc_unknown_asset_warning		" is not defined in the translation, the key will be formatted"
 	
 	// Links
 	#macro link_website					"https://www.mineimator.com"

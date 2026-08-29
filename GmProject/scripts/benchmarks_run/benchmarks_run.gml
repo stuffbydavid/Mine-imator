@@ -1,8 +1,8 @@
-/// dev_mode_benchmarks()
+/// benchmarks_run()
 /// @desc Performs a sequence of benchmarks and saves the rendered results in the project folder under runs/, along with CSV tables of timing data.
 ///		  Render settings are overwritten during playback by text keyframes. A render mode is skipped entirely if the keyframe is invisible.
 
-function dev_mode_benchmarks()
+function benchmarks_run()
 {
 	var teststart, testend, testfull, exportpasses, showdragons;
 	teststart = 0
@@ -36,8 +36,8 @@ function dev_mode_benchmarks()
 		if (parent != app && string_contains(parent.name, "Dragons"))
 			hide = !showdragons
 	
-	benchmark_mode = true
-	
+
+
 	render_view_current = view_main
 	render_particles = view_main.particles
 	render_effects = view_main.effects
@@ -51,9 +51,10 @@ function dev_mode_benchmarks()
 	curyear = date_get_year(curdatetime)
 	curmonth = date_get_month(curdatetime)
 	curday = date_get_day(curdatetime)
-	testname = string(curyear) + (curmonth < 10 ? "0" : "") + string(curmonth) + (curday < 10 ? "0" : "") + string(curday) + "_"
-	testname += string_replace_all(date_time_string(date_current_datetime()), ":", "") + "_"
-	testname += graphics_api_get()
+	testname = is_debug() ? "DEBUG_" : ""
+	testname += graphics_api_get() + "_"
+	testname += string(curyear) + (curmonth < 10 ? "0" : "") + string(curmonth) + (curday < 10 ? "0" : "") + string(curday) + "_"
+	testname += string_replace_all(date_time_string(date_current_datetime()), ":", "")
 	testdir = project_folder + "/runs/" + testname
 	directory_create_lib(project_folder + "/runs")
 	directory_create_lib(testdir)
@@ -134,7 +135,7 @@ function dev_mode_benchmarks()
 				{
 					cursetting = array_shift(settingsqueue)
 					log("Benchmark frame", timeline_marker, mode, cursetting)
-					dev_mode_benchmarks_apply_settings(cursetting)
+					benchmarks_apply_settings(cursetting)
 					
 					cursettingfn = "_" + string_replace_all(cursetting, "=", "_")
 					cursettingfn = string_replace_all(cursettingfn, ",", "_")
@@ -166,7 +167,10 @@ function dev_mode_benchmarks()
 				csv += string(timeline_marker) + ","
 				csv += mode + ","
 				csv += string_replace_all(cursetting, ",", " ") + ","
-				csv += string(quality_index = 2 ? project_render_samples : 1) + ",,"
+				if (quality_index == 2)
+					csv += string(project_render_samples) + ",,"
+				else
+					csv += "1,,"
 				csv += string_format((exporttime + benchmark_animate_total_time) / 1000, 0, 3) + ","
 				csv += string_format(benchmark_render_total_time / 1000, 0, 3) + ","
 				csv += string_format(benchmark_surface_total_time / 1000, 0, 3) + ","
@@ -178,7 +182,7 @@ function dev_mode_benchmarks()
 			
 				log("Benchmark image", export_filename, string_format(exporttime / 1000, 0, 3) + " msec")
 				if (exportpasses && quality = e_view_mode.RENDER)
-					dev_mode_benchmarks_export_passes(exportbasename)
+					benchmarks_export_passes(exportbasename)
 			}
 			until (array_length(settingsqueue) = 0)
 		}
@@ -210,7 +214,7 @@ function dev_mode_benchmarks()
 }
 
 /// Exports the high-quality render passes for the current frame and render settings.
-function dev_mode_benchmarks_export_passes(directory)
+function benchmarks_export_passes(directory)
 {
 	var previouspass = project_render_pass;
 	directory_create_lib(directory)
@@ -232,7 +236,7 @@ function dev_mode_benchmarks_export_passes(directory)
 }
 
 /// Applies a number of comma-separated settings from a text line (setting1=-1,setting2=false).
-function dev_mode_benchmarks_apply_settings(line)
+function benchmarks_apply_settings(line)
 {
 	var settings = string_split_escaped(line, ",");
 	for (var s = 0; s < array_length(settings); s++)

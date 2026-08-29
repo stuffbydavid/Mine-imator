@@ -40,7 +40,7 @@ function model_file_load_part(map, root, res, model)
 		name = map[?"name"]
 		
 		if (res = null && dev_mode_debug_names && !text_exists("modelpart" + name))
-			log("model/part/" + name + dev_mode_name_translation_message)
+			log("model/part/" + name + mc_unknown_asset_warning)
 		
 		// Depth
 		depth = value_get_real(map[?"depth"], 0)

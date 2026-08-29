@@ -12,7 +12,7 @@ namespace CppProject
 
 	VarType Map::Value(const VarType& key) const
 	{
-		if (!RELEASE_MODE && GetType() != MAP)
+		if (DEBUG_MODE && GetType() != MAP)
 			FATAL("Map: Value() const on non-map");
 
 		return map.value(key).value;

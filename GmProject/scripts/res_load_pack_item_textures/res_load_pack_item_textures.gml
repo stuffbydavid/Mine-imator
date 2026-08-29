@@ -23,7 +23,7 @@ function res_load_pack_item_textures(type, suffix)
 	debug_timer_start()
 	
 	// Used to figure out what new files have been added
-	if (dev_mode_debug_unused && type = "diffuse")
+	if (dev_mode_debug_unused && !dev_mode_skip_blocks && type = "diffuse")
 	{
 		var filesarr = file_find(load_assets_dir + mc_textures_directory + "item/", ".png");
 		fileslist = ds_list_create()

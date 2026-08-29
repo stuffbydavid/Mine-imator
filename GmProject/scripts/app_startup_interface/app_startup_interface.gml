@@ -23,12 +23,17 @@ function app_startup_interface()
 	
 	background_ground_startup()
 	background_sky_startup()
-		
-	// Start server request for new assets
-	http_assets = http_get(link_assets_versions)
 	
-	// Shortcut to a new project
-	if (dev_mode)
+	// Run benchmarks
+	if (benchmark_project != "")
+	{
+		project_load(benchmark_project)
+		benchmarks_run()
+		return 0
+	}
+	
+	// Shortcut to a debugging project
+	else if (dev_mode)
 	{
 		popup_newproject_clear()
 		
@@ -44,12 +49,6 @@ function app_startup_interface()
 				project_create()
 			}
 			project_load(dev_mode_project)
-			
-			if (dev_mode_project_benchmarks)
-			{
-				dev_mode_benchmarks()
-				return 0
-			}
 		}
 		else
 		{
@@ -61,8 +60,13 @@ function app_startup_interface()
 		
 		window_state = ""
 	}
+	
+	// Show welcome screen
 	else
 	{
+		// Start server request for new assets
+		http_assets = http_get(link_assets_versions)
+	
 		project_reset()
 		
 		// First start

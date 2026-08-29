@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"dev_mode_benchmarks",
+  "%Name":"debug_startup",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"dev_mode_benchmarks",
+  "name":"debug_startup",
   "parent":{
-    "name":"Project",
-    "path":"folders/Scripts/Project.yy",
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

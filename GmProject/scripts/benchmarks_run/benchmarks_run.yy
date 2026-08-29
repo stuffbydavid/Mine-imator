@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"benchmarks_run",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"benchmarks_run",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -28,7 +28,7 @@ function export_done_movie()
 	else
 		fn = export_filename
 		
-	if (dev_mode_exportmovie_benchmarks)
+	if (benchmark_exportmovie)
 	{
 		var totaltime = get_timer() - exportmovie_start;
 		exportmovie_benchmark_csv += "All_ms," + string_format(totaltime / 1000, 0, 3)

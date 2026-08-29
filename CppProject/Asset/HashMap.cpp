@@ -2,8 +2,6 @@
 
 #include "Generated/GmlFunc.hpp"
 
-#define KEY_EXIST_CHECK !RELEASE_MODE
-
 namespace CppProject
 {
 	template struct HashMap<IntType>;

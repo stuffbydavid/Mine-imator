@@ -19,7 +19,7 @@ function block_load(map, typemap)
 		}
 		
 		if (dev_mode_debug_names && !text_exists("block" + name))
-			log("block/" + name + dev_mode_name_translation_message)
+			log("block/" + name + mc_unknown_asset_warning)
 		
 		// Type (overridden by states)
 		if (is_string(map[?"type"]))
@@ -71,7 +71,7 @@ function block_load(map, typemap)
 			while (!is_undefined(curstate))
 			{
 				if (dev_mode_debug_names && !text_exists("blockstate" + curstate))
-					log("block/state/" + curstate + dev_mode_name_translation_message)
+					log("block/state/" + curstate + mc_unknown_asset_warning)
 				
 				with (new_obj(obj_block_state))
 				{
@@ -121,7 +121,7 @@ function block_load(map, typemap)
 						value_map[?value_name[v]] = v
 						
 						if (dev_mode_debug_names && string_length(value_name[v]) > 3 && !text_exists("blockstatevalue" + value_name[v]))
-							log("block/state/value/" + value_name[v] + dev_mode_name_translation_message)
+							log("block/state/value/" + value_name[v] + mc_unknown_asset_warning)
 					}
 					
 					other.states_map[?curstate] = id

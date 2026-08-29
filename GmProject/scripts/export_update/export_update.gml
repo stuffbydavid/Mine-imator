@@ -96,7 +96,7 @@ function export_update()
 				var err = movie_frame(temp_file);
 				benchmark_export_total_time += get_timer() - exportstart
 				
-				if (dev_mode_exportmovie_benchmarks)
+				if (benchmark_exportmovie)
 				{
 					exportmovie_benchmark_csv += string(exportmovie_frame) + ",";
 					exportmovie_benchmark_csv += string_format(benchmark_animate_total_time / 1000, 0, 3) + ","

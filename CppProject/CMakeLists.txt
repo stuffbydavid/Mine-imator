@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 
 # Toolchain-affecting settings established before project()
 if(CMAKE_HOST_WIN32)
-	set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release" CACHE STRING "Supported build configurations" FORCE)
+	set(CMAKE_CONFIGURATION_TYPES "Debug;DebugBenchmarks;RelWithDebInfo;RunBenchmarks;Release" CACHE STRING "Supported build configurations" FORCE)
 	cmake_policy(SET CMP0091 NEW)
 endif()
 
@@ -131,12 +131,30 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_CXX_FLAGS}"
 set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_LINKER_FLAGS}"
 	CACHE STRING "Executable linker flags for RelWithDebInfo" FORCE)
 
+# Benchmark configurations
+if(CMAKE_HOST_WIN32)
+	set(CMAKE_CXX_FLAGS_DEBUGBENCHMARKS "${CMAKE_CXX_FLAGS_DEBUG}"
+		CACHE STRING "C++ flags for DebugBenchmarks" FORCE)
+	set(CMAKE_EXE_LINKER_FLAGS_DEBUGBENCHMARKS "${CMAKE_EXE_LINKER_FLAGS_DEBUG}"
+		CACHE STRING "Executable linker flags for DebugBenchmarks" FORCE)
+	set(CMAKE_RC_FLAGS_DEBUGBENCHMARKS "${CMAKE_RC_FLAGS_DEBUG}"
+		CACHE STRING "Resource compiler flags for DebugBenchmarks" FORCE)
+	set(CMAKE_CXX_FLAGS_RUNBENCHMARKS "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}"
+		CACHE STRING "C++ flags for RunBenchmarks" FORCE)
+	set(CMAKE_EXE_LINKER_FLAGS_RUNBENCHMARKS "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO}"
+		CACHE STRING "Executable linker flags for RunBenchmarks" FORCE)
+	set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGBENCHMARKS Release) # Map to Qt release build
+	set(CMAKE_MAP_IMPORTED_CONFIG_RUNBENCHMARKS Release)
+endif()
+
 # Find Qt package
 find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
 	PATHS "${QT_INSTALL_DIR}"
 	NO_DEFAULT_PATH)
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "QtGenerated")
 set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets")
+set_property(TARGET Qt5::rcc PROPERTY MAP_IMPORTED_CONFIG_DEBUGBENCHMARKS "Release;") # Map to Qt release build
+set_property(TARGET Qt5::rcc PROPERTY MAP_IMPORTED_CONFIG_RUNBENCHMARKS "Release;")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC OFF)
 set(CMAKE_AUTOUIC OFF)
@@ -336,14 +354,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 if(WIN32)
 	message(STATUS "Windows platform (${WINDOWS_ARCH})")
+	set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 	# Qt and the bundled static libraries are built against the static MSVC CRT
 	set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
 	target_compile_options(${PROJECT_NAME} PRIVATE /MP /bigobj)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE OS_WINDOWS)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE
-		"DEBUG_MODE=$<IF:$<CONFIG:Debug>,1,0>"
-		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
+		"DEBUG_MODE=$<IF:$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>>,1,0>"
 	)
 
 	target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -361,16 +379,25 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<CONFIG:Debug>:d3dcompiler>"
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>>:d3dcompiler>"
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>,$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>>:/IGNORE:4099>"
 	)
+	
+	# Toggle console
+	set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<OR:$<CONFIG:RunBenchmarks>,$<CONFIG:Release>>")
 
-	set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<CONFIG:Release>")
+	# Set working directories
 	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RUNBENCHMARKS "${CMAKE_BINARY_DIR}")
 	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
-	set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+
+	# Apply benchmark arguments
+	set(BENCHMARK_ARGS "--benchmark_project \"${REPO_DIR}/rendering/benchmark_project/benchmark_project.miproject\"")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_COMMAND_ARGUMENTS
+		"$<$<OR:$<CONFIG:DebugBenchmarks>,$<CONFIG:RunBenchmarks>>:${BENCHMARK_ARGS}>")
 else()
 	target_compile_options(${PROJECT_NAME} PRIVATE
 		-Wall
@@ -385,7 +412,6 @@ else()
 	target_compile_definitions(${PROJECT_NAME} PRIVATE
 		OS_UNIX
 		"DEBUG_MODE=$<IF:$<CONFIG:Release>,0,1>"
-		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
 	)
 
 	# Static-library order matters to GNU-family linkers: dependants precede the

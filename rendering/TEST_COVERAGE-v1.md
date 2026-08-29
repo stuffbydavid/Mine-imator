@@ -1,12 +1,12 @@
 Prompt:
 
-*Make a list of all Mine-imator rendering effects (refer to interface options and rendering code in GmProject) and document what a suite of benchmarking tests should feature to have full coverage, including special, obscure situations. The suite will be an animation project file with different effects and render setting "presets" applied during runtime/playback (to implement), executed in a headless mode using dev_mode_benchmarks().*
+*Make a list of all Mine-imator rendering effects (refer to interface options and rendering code in GmProject) and document what a suite of benchmarking tests should feature to have full coverage, including special, obscure situations. The suite will be an animation project file with different effects and render setting "presets" applied during runtime/playback (to implement), executed in a headless mode using benchmarks_run().*
 
 # Rendering benchmark test coverage
 
 Date: 2026-08-27  
 Scope: standalone Windows GameMaker VM project under `GmProject`  
-Harness: headless benchmark execution through `dev_mode_benchmarks()`  
+Harness: headless benchmark execution through `benchmarks_run()`  
 Artifact: one animation project whose scene/camera/background state changes over playback; global render-setting presets are applied by the benchmark harness at runtime
 
 ## Purpose
@@ -37,7 +37,7 @@ The effect inventory is based on these interface and render entry points:
 - Lights: [`tab_frame_editor_light.gml`](../GmProject/scripts/tab_frame_editor_light/tab_frame_editor_light.gml)
 - High-quality pipeline: [`render_high.gml`](../GmProject/scripts/render_high/render_high.gml), [`render_start.gml`](../GmProject/scripts/render_start/render_start.gml), and [`render_post.gml`](../GmProject/scripts/render_post/render_post.gml)
 - Low-quality flat/shaded pipeline: [`render_low.gml`](../GmProject/scripts/render_low/render_low.gml)
-- Current harness: [`dev_mode_benchmarks.gml`](../GmProject/scripts/dev_mode_benchmarks/dev_mode_benchmarks.gml)
+- Current harness: [`benchmarks_run.gml`](../GmProject/scripts/benchmarks_run/benchmarks_run.gml)
 - Existing animation fixture: [`benchmark_project.miproject`](benchmark_project/benchmark_project.miproject)
 
 ## Complete rendering-effect inventory
@@ -196,7 +196,7 @@ Particles must use a custom seed. Include spawn/freeze/clear transitions, forwar
 
 Use one animation project with stable, named case markers. Each case should occupy either one instant keyframe or a short deterministic span when motion is essential. A dedicated camera should frame each fixture; its visibility switches must use instant transitions.
 
-Do not infer cases from numeric marker ranges. Maintain a GML manifest used by `dev_mode_benchmarks()`:
+Do not infer cases from numeric marker ranges. Maintain a GML manifest used by `benchmarks_run()`:
 
 ```gml
 benchmark_cases = [
@@ -335,7 +335,7 @@ The following combinations are easy to miss and must have explicit cases:
 
 ### Replace hard-coded ranges
 
-The current harness defines camera FX as markers 9–37 and light tests as 38–45. The current project places the main camera-FX keys at markers 30–59, so those ranges are already stale. Remove all range knowledge from `dev_mode_benchmarks()` and use the manifest described above.
+The current harness defines camera FX as markers 9–37 and light tests as 38–45. The current project places the main camera-FX keys at markers 30–59, so those ranges are already stale. Remove all range knowledge from `benchmarks_run()` and use the manifest described above.
 
 ### Apply presets explicitly
 

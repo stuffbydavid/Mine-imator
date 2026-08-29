@@ -376,9 +376,26 @@ namespace CppProject
 		return (msg.result() == QMessageBox::Yes);
 	}
 
+	BoolType is_debug()
+	{
+#if DEBUG_MODE
+		return true;
+#else
+		return false;
+#endif
+	}
+
 	BoolType is_cpp()
 	{
 		return true;
+	}
+
+	ArrType program_args_get()
+	{
+		ArrType args;
+		for (QString str : App->args)
+			args.Append(StringType(str));
+		return args;
 	}
 
 	RealType interface_scale_default_get()

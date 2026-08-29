@@ -49,7 +49,7 @@ function model_file_load(fname, res = null)
 		name = map[?"name"]
 		
 		if (res = null && dev_mode_debug_names && !text_exists("model" + name))
-			log("model/" + name + dev_mode_name_translation_message)
+			log("model/" + name + mc_unknown_asset_warning)
 		
 		// Description (optional)
 		description = value_get_string(map[?"description"], "")

@@ -1,13 +1,13 @@
 Prompt:
 
-*Make a list of Mine-imator rendering effects (refer to interface options and rendering code in GmProject) and document what a suite of benchmarking tests should feature to have reasonably good coverage of situations that animators will encounter, including some special, obscure situations. The suite will be an animation project file with different effects and render setting "presets" applied during runtime/playback (to implement), executed in a headless mode using dev_mode_benchmarks(). Focus on testing features that are affected by shader/render call optimization work, not new workflow/UI additions.*
+*Make a list of Mine-imator rendering effects (refer to interface options and rendering code in GmProject) and document what a suite of benchmarking tests should feature to have reasonably good coverage of situations that animators will encounter, including some special, obscure situations. The suite will be an animation project file with different effects and render setting "presets" applied during runtime/playback (to implement), executed in a headless mode using benchmarks_run(). Focus on testing features that are affected by shader/render call optimization work, not new workflow/UI additions.*
 
 # Rendering benchmark coverage v2
 
 ## Goal and scope
 
 This is the practical test plan for one deterministic `.miproject` driven by
-`dev_mode_benchmarks()` in a fully headless run. It targets performance and
+`benchmarks_run()` in a fully headless run. It targets performance and
 correctness regressions caused by shader, render-call, surface, batching, and
 animation-update optimisation work.
 
@@ -133,7 +133,7 @@ played editor session.
 ## Proposed single-project chapters
 
 Each chapter has a named camera and stable marker range. The runtime manifest
-maps names to markers; `dev_mode_benchmarks()` must not infer behavior from
+maps names to markers; `benchmarks_run()` must not infer behavior from
 hard-coded marker ranges.
 
 | Chapter | Contents | Principal coverage |

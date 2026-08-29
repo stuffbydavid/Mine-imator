@@ -1,7 +1,19 @@
+/// CppSeparate BoolType is_debug()
+function is_debug()
+{
+	return true;
+}
+
 /// CppSeparate BoolType is_cpp()
 function is_cpp()
 {
 	return false;
+}
+
+/// CppSeparate ArrType program_args_get()
+function program_args_get()
+{
+	return array()
 }
 
 /// CppSeparate void log_message(StringType text)

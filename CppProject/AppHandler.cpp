@@ -59,6 +59,10 @@ namespace CppProject
 			StringType::AddQThread(QThread::currentThread());
 			StringType::AddGMLStrings();
 
+			// Parse args
+			for (int a = 1; a < argc; a++)
+				args.append(argv[a]);
+
 			// Set paths
 			QDir().mkpath(user_directory_get());
 			QDir().mkpath(projects_directory_get());
@@ -72,11 +76,11 @@ namespace CppProject
 				file_rename_lib(prevLog, prevLogDest);
 			}
 
-		#if RELEASE_MODE
-			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
-		#else
+		#if DEBUG_MODE
 			gmlGlobal::working_directory = QDir::currentPath() + "/";
 			DEBUG("Debug mode enabled");
+		#else
+			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
 		#endif
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
 		#if OS_WINDOWS
@@ -292,7 +296,7 @@ namespace CppProject
 		stepTimer.stop();
 
 		// Debug
-		if (keyboard_check_pressed(vk_f6) && dev_mode)
+		if (keyboard_check_pressed(vk_f6) && global::dev_mode)
 		{
 			move_all_to_texture_page();
 			TexturePage::Debug();

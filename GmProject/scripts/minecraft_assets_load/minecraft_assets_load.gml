@@ -509,7 +509,7 @@ function minecraft_assets_load()
 					}
 					
 					// Dev mode: Look for newly added block states and model files
-					if (dev_mode_debug_unused)
+					if (dev_mode_debug_unused && !dev_mode_skip_blocks)
 					{
 						// Blockstates
 						var filesarr = file_find(load_assets_dir + mc_blockstates_directory, ".json");
