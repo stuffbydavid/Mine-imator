@@ -1061,6 +1061,7 @@ class Sprite
 {
 public:
 	String name{};
+	String gmPath{};
 	List<String> frameNames{};
 	int numFrames = 0;
 	int originX = 0;
@@ -1073,9 +1074,20 @@ class Shader
 {
 public:
 	String name{};
+	String gmPath{};
 	bool isValid = false;
 
 	Shader(String dir);
+};
+
+class Script
+{
+public:
+	String name{};
+	String filename{};
+	String gmPath{};
+
+	Script(String dir);
 };
 
 class GML
@@ -1140,6 +1152,7 @@ public:
 	inline static OrderedMap<Object*> objects = OrderedMap<Object*>();
 	inline static OrderedMap<Sprite*> sprites = OrderedMap<Sprite*>();
 	inline static OrderedMap<Shader*> shaders = OrderedMap<Shader*>();
+	inline static OrderedMap<Script*> scripts = OrderedMap<Script*>();
 	inline static OrderedMap<Function*> functions = OrderedMap<Function*>();
 	inline static OrderedMap<ExternalFunction*> externalFunctions = OrderedMap<ExternalFunction*>();
 	inline static OrderedMap<Variable*> globalVars = OrderedMap<Variable*>();

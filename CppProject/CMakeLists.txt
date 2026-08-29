@@ -69,7 +69,6 @@ set(FFMPEG_SOURCE_DIR "${DEV_DIR}/FFmpeg/ffmpeg-5.1.10")
 set(OPENAL_SOURCE_DIR "${DEV_DIR}/OpenAL/openal-soft-1.24.3")
 
 set(ASSET_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Asset")
-set(GM_SPRITES_DIR "${REPO_DIR}/GmProject/sprites")
 set(GM_SHADERS_DIR "${REPO_DIR}/GmProject/shaders")
 set(CPPGEN_DIR "${REPO_DIR}/CppGen")
 set(INSTALL_DIR "${REPO_DIR}/install")
@@ -118,13 +117,32 @@ message(STATUS "CppGen location = ${CPPGEN_EXE}")
 message(STATUS "External libraries = ${EXTERNAL_PLATFORM_DIR}")
 message(STATUS "Qt installation = ${QT_INSTALL_DIR}")
 
+# RelWithDebInfo configuration
+if(MSVC)
+	set(RELWITHDEBINFO_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
+	set(RELWITHDEBINFO_LINKER_FLAGS
+		"${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG:FULL /OPT:REF /OPT:ICF")
+else()
+	set(RELWITHDEBINFO_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE} -g")
+	set(RELWITHDEBINFO_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS_RELEASE}")
+endif()
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_CXX_FLAGS}"
+	CACHE STRING "C++ flags for RelWithDebInfo" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_LINKER_FLAGS}"
+	CACHE STRING "Executable linker flags for RelWithDebInfo" FORCE)
+
+# Find Qt package
 find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
 	PATHS "${QT_INSTALL_DIR}"
 	NO_DEFAULT_PATH)
-find_package(OpenMP REQUIRED COMPONENTS CXX)
-set(CMAKE_AUTOMOC OFF)
+set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "QtGenerated")
+set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets")
+set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC OFF)
 set(CMAKE_AUTOUIC OFF)
+
+# Find OpenMP
+find_package(OpenMP REQUIRED COMPONENTS CXX)
 
 # Refresh Assets.cmake manifest using CppGen
 set(CPPGEN_ASSET_MANIFEST "${CMAKE_CURRENT_SOURCE_DIR}/Generated/Assets.cmake")
@@ -141,28 +159,66 @@ if(NOT CPPGEN_ASSET_MANIFEST_RESULT EQUAL 0)
 		"${CPPGEN_ASSET_MANIFEST_OUTPUT}${CPPGEN_ASSET_MANIFEST_ERROR}")
 endif()
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CPPGEN_ASSET_MANIFEST}")
-
-# Parse manifest file
 include("${CPPGEN_ASSET_MANIFEST}")
-set(GM_SPRITE_FILES)
-set(GM_SHADER_FILES)
-set(GM_SHADER_ALIASES)
-set(GM_SPRITE_RESOURCE_ENTRIES)
-set(GM_SHADER_RESOURCE_ENTRIES)
-foreach(SPRITE_RESOURCE_ENTRY IN LISTS CPPGEN_SPRITE_RESOURCE_ENTRIES)
-	string(REPLACE "|" ";" SPRITE_RESOURCE_PARTS "${SPRITE_RESOURCE_ENTRY}")
-	list(GET SPRITE_RESOURCE_PARTS 0 SPRITE_RESOURCE_FILE)
-	list(APPEND GM_SPRITE_FILES "${REPO_DIR}/${SPRITE_RESOURCE_FILE}")
-	list(APPEND GM_SPRITE_RESOURCE_ENTRIES "${REPO_DIR}/${SPRITE_RESOURCE_ENTRY}")
-endforeach()
-foreach(SHADER_RESOURCE_ENTRY IN LISTS CPPGEN_SHADER_RESOURCE_ENTRIES)
-	string(REPLACE "|" ";" SHADER_RESOURCE_PARTS "${SHADER_RESOURCE_ENTRY}")
-	list(GET SHADER_RESOURCE_PARTS 0 SHADER_RESOURCE_FILE)
-	list(GET SHADER_RESOURCE_PARTS 1 SHADER_RESOURCE_ALIAS)
-	list(APPEND GM_SHADER_FILES "${REPO_DIR}/${SHADER_RESOURCE_FILE}")
-	list(APPEND GM_SHADER_ALIASES "${SHADER_RESOURCE_ALIAS}")
-	list(APPEND GM_SHADER_RESOURCE_ENTRIES "${REPO_DIR}/${SHADER_RESOURCE_ENTRY}")
-endforeach()
+
+# Reconstruct GameMaker folder hierarchy
+function(add_gm_manifest_entries CATEGORY ENTRIES_VARIABLE FILES_VARIABLE RESOURCE_ENTRIES_VARIABLE ALIASES_VARIABLE)
+	set(GM_FILES)
+	if(RESOURCE_ENTRIES_VARIABLE)
+		set(GM_RESOURCE_ENTRIES)
+	endif()
+	if(ALIASES_VARIABLE)
+		set(GM_ALIASES)
+	endif()
+
+	foreach(GM_ENTRY IN LISTS ${ENTRIES_VARIABLE})
+		string(REPLACE "|" ";" GM_ENTRY_PARTS "${GM_ENTRY}")
+		list(GET GM_ENTRY_PARTS 0 GM_ENTRY_PATH)
+		set(GM_ENTRY_FILE "${REPO_DIR}/${GM_ENTRY_PATH}")
+		list(APPEND GM_FILES "${GM_ENTRY_FILE}")
+
+		if(RESOURCE_ENTRIES_VARIABLE)
+			list(GET GM_ENTRY_PARTS 1 GM_ENTRY_ALIAS)
+			list(GET GM_ENTRY_PARTS 2 GM_ENTRY_GROUP)
+			list(APPEND GM_RESOURCE_ENTRIES "${GM_ENTRY_FILE}|${GM_ENTRY_ALIAS}")
+			if(ALIASES_VARIABLE)
+				list(APPEND GM_ALIASES "${GM_ENTRY_ALIAS}")
+			endif()
+			if(CATEGORY STREQUAL "Sprites")
+				get_filename_component(GM_ENTRY_DIRECTORY "${GM_ENTRY_FILE}" DIRECTORY)
+				get_filename_component(GM_ENTRY_NAME "${GM_ENTRY_DIRECTORY}" NAME)
+				if(GM_ENTRY_GROUP STREQUAL "")
+					set(GM_ENTRY_GROUP "${GM_ENTRY_NAME}")
+				else()
+					set(GM_ENTRY_GROUP "${GM_ENTRY_GROUP}/${GM_ENTRY_NAME}")
+				endif()
+			endif()
+		else()
+			list(GET GM_ENTRY_PARTS 1 GM_ENTRY_GROUP)
+		endif()
+
+		set(GM_SOURCE_GROUP "GmProject/${CATEGORY}")
+		if(NOT GM_ENTRY_GROUP STREQUAL "")
+			string(APPEND GM_SOURCE_GROUP "/${GM_ENTRY_GROUP}")
+		endif()
+		source_group("${GM_SOURCE_GROUP}" FILES "${GM_ENTRY_FILE}")
+	endforeach()
+
+	set(${FILES_VARIABLE} "${GM_FILES}" PARENT_SCOPE)
+	if(RESOURCE_ENTRIES_VARIABLE)
+		set(${RESOURCE_ENTRIES_VARIABLE} "${GM_RESOURCE_ENTRIES}" PARENT_SCOPE)
+	endif()
+	if(ALIASES_VARIABLE)
+		set(${ALIASES_VARIABLE} "${GM_ALIASES}" PARENT_SCOPE)
+	endif()
+endfunction()
+
+add_gm_manifest_entries("Sprites" CPPGEN_SPRITE_RESOURCE_ENTRIES
+	GM_SPRITE_FILES GM_SPRITE_RESOURCE_ENTRIES "")
+add_gm_manifest_entries("Shaders" CPPGEN_SHADER_RESOURCE_ENTRIES
+	GM_SHADER_FILES GM_SHADER_RESOURCE_ENTRIES GM_SHADER_ALIASES)
+add_gm_manifest_entries("Scripts" CPPGEN_SCRIPT_ENTRIES
+	GM_SCRIPT_FILES "" "")
 
 # Combine shaders from CppProject/Asset/Shaders and GmProject/shaders
 file(GLOB_RECURSE ASSET_SHADER_SOURCE_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
@@ -185,7 +241,7 @@ file(GLOB_RECURSE D3D_SHADER_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
 )
 list(SORT D3D_SHADER_FILES)
 
-# Add sprites to project
+# Assemble embedded
 set(ASSET_RESOURCE_ENTRIES ${GM_SPRITE_RESOURCE_ENTRIES})
 foreach(SHADER_FILE IN LISTS SHADER_FILES)
 	get_filename_component(SHADER_NAME "${SHADER_FILE}" NAME)
@@ -200,12 +256,10 @@ foreach(D3D_SHADER_FILE IN LISTS D3D_SHADER_FILES)
 		"${D3D_SHADER_FILE}|${D3D_SHADER_ALIAS}")
 endforeach()
 
-# Show GameMaker assets in project under Assets/
-set(ASSET_IDE_FILES ${GM_SPRITE_FILES} ${GM_SHADER_FILES} ${SHADER_FILES})
-set_source_files_properties(${ASSET_IDE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
-source_group(TREE "${GM_SPRITES_DIR}" PREFIX "Assets/Sprites" FILES ${GM_SPRITE_FILES})
-source_group(TREE "${GM_SHADERS_DIR}" PREFIX "Assets/Shaders" FILES ${GM_SHADER_FILES})
-source_group("Assets/Shaders" FILES ${SHADER_FILES})
+# Show GameMaker assets in the main project
+set(IDE_ONLY_FILES ${GM_SPRITE_FILES} ${GM_SHADER_FILES} ${GM_SCRIPT_FILES} ${SHADER_FILES})
+set_source_files_properties(${IDE_ONLY_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+source_group("CppProject/Asset/Shaders" FILES ${SHADER_FILES})
 
 # Generate index file
 set(QT_INDEX_FILE "${CMAKE_CURRENT_BINARY_DIR}/index.qrc")
@@ -221,30 +275,35 @@ endforeach()
 string(APPEND INDEX_XML "\n\t</qresource>\n</RCC>\n")
 file(WRITE "${QT_INDEX_FILE}" "${INDEX_XML}")
 
+qt5_add_resources(RESOURCE_SOURCES "${QT_INDEX_FILE}")
+
 # CONFIGURE_DEPENDS retains automatic source discovery while making additions
 # visible to CMake without a manual reconfigure.
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
 	"${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/*.hpp"
 )
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "${PROJECT_NAME}" FILES ${PROJECT_SOURCES})
-
-qt5_add_resources(RESOURCE_SOURCES "${QT_INDEX_FILE}")
-qt5_wrap_cpp(MOC_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/World/World.hpp")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "CppProject" FILES ${PROJECT_SOURCES})
+source_group("QtGenerated" REGULAR_EXPRESSION "[/\\\\]Qt5[^/\\\\]*_Import\\.cpp$")
+source_group("QtGenerated" FILES ${RESOURCE_SOURCES})
 
 if(WIN32)
 	set(APP_ICON_RESOURCE "${CMAKE_CURRENT_SOURCE_DIR}/Asset/Icons/appicon.rc")
+	source_group("CppProject/Asset/Icons" FILES "${APP_ICON_RESOURCE}")
 endif()
 
 add_executable(${PROJECT_NAME}
 	${PROJECT_SOURCES}
-	${ASSET_IDE_FILES}
+	${IDE_ONLY_FILES}
 	${RESOURCE_SOURCES}
-	${MOC_SOURCES}
 	${APP_ICON_RESOURCE}
 )
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE "Common.hpp")
+if(MSVC)
+	target_compile_options(${PROJECT_NAME} PRIVATE "/FI${CMAKE_CURRENT_SOURCE_DIR}/Common.hpp")
+else()
+	target_compile_options(${PROJECT_NAME} PRIVATE -include "${CMAKE_CURRENT_SOURCE_DIR}/Common.hpp")
+endif()
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_CURRENT_SOURCE_DIR}"
 	"${QT_INSTALL_DIR}/include/QtZlib"
@@ -283,7 +342,7 @@ if(WIN32)
 	target_compile_options(${PROJECT_NAME} PRIVATE /MP /bigobj)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE OS_WINDOWS)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE
-		"DEBUG_MODE=$<IF:$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>,1,0>"
+		"DEBUG_MODE=$<IF:$<CONFIG:Debug>,1,0>"
 		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
 	)
 
@@ -302,7 +361,7 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:d3dcompiler>"
+		"$<$<CONFIG:Debug>:d3dcompiler>"
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
 		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"
@@ -327,7 +386,6 @@ else()
 		OS_UNIX
 		"DEBUG_MODE=$<IF:$<CONFIG:Release>,0,1>"
 		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
-		"$<$<CONFIG:Release>:NDEBUG>"
 	)
 
 	# Static-library order matters to GNU-family linkers: dependants precede the

@@ -135,7 +135,7 @@ ensure_generated_sources() {
         return
     fi
 
-    invoke_cppgen --skip-asset-sync
+    invoke_cppgen
 }
 
 ensure_source_archive() {
