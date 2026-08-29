@@ -38,15 +38,20 @@ void Program::main(List<String> args)
 	}
 
 	// Parse shaders
-	if (Directory::exists(gmDir + "/shaders"))
+	List<String> shaderDirs = Directory::getDirectories(gmDir + "/shaders");
+	for (String dir : shaderDirs)
 	{
-		List<String> shaderDirs = Directory::getDirectories(gmDir + "/shaders");
-		for (String dir : shaderDirs)
-		{
-			Shader* shader = makeObject<Shader>(dir);
-			if (shader->isValid)
-				Program::shaders.add(shader->name, shader);
-		}
+		Shader* shader = makeObject<Shader>(dir);
+		if (shader->isValid)
+			Program::shaders.add(shader->name, shader);
+	}
+
+	// Parse scripts
+	List<String> scriptDirs = Directory::getDirectories(gmDir + "/scripts");
+	for (String dir : scriptDirs)
+	{
+		Script* script = makeObject<Script>(dir);
+		Program::scripts.add(script->name, script);
 	}
 
 	// Assets manifest file for CMake
@@ -60,7 +65,7 @@ void Program::main(List<String> args)
 			for (int frameIndex = 0; frameIndex < sprite->numFrames; frameIndex++)
 			{
 				text.appendLine("\t\"GmProject/sprites/" + sprite->name + "/" + sprite->frameNames[frameIndex]
-					+ ".png|Sprites/" + sprite->name + "_frame_" + frameIndex + ".png\"");
+					+ ".png|Sprites/" + sprite->name + "_frame_" + frameIndex + ".png|" + sprite->gmPath + "\"");
 			}
 		}
 		text.appendLine(")");
@@ -69,9 +74,17 @@ void Program::main(List<String> args)
 		for (Shader* shader : Program::shaders.values)
 		{
 			text.appendLine("\t\"GmProject/shaders/" + shader->name + "/" + shader->name
-				+ ".vsh|Shaders/" + shader->name + ".vsh\"");
+				+ ".vsh|Shaders/" + shader->name + ".vsh|" + shader->gmPath + "\"");
 			text.appendLine("\t\"GmProject/shaders/" + shader->name + "/" + shader->name
-				+ ".fsh|Shaders/" + shader->name + ".fsh\"");
+				+ ".fsh|Shaders/" + shader->name + ".fsh|" + shader->gmPath + "\"");
+		}
+		text.appendLine(")");
+		text.appendLine();
+		text.appendLine("set(CPPGEN_SCRIPT_ENTRIES");
+		for (Script* script : Program::scripts.values)
+		{
+			text.appendLine("\t\"GmProject/scripts/" + script->name + "/" + script->name
+				+ ".gml|" + script->gmPath + "\"");
 		}
 		text.appendLine(")");
 		String outputFile = outputDir + "/Assets.cmake";
@@ -95,16 +108,8 @@ void Program::main(List<String> args)
 	timer.start();
 
 	// Parse script GML
-	List<String> scriptDirs = Directory::getDirectories(gmDir + "/scripts");
-	for (String dir : scriptDirs)
-	{
-		DirectoryInfo dirInfo = DirectoryInfo(dir);
-		FileInfo gmlInfo = FileInfo(dir + "/" + dirInfo.name + ".gml");
-		if (!gmlInfo.exists)
-			continue;
-
-		GML::parseGMLScript(gmlInfo.fullName);
-	}
+	for (Script* script : Program::scripts.values)
+		GML::parseGMLScript(script->filename);
 
 	timer.stop();
 	Console::writeLine("Parsed GML ({0} lines) in {1}ms", GML::totalLines, (int)timer.elapsed.totalMilliseconds);
@@ -484,6 +489,68 @@ void Program::main(List<String> args)
 	}
 	else
 		Console::writeLine("Success!");
+}
+
+Shader::Shader(String dir)
+{
+	DirectoryInfo dirInfo = DirectoryInfo(dir);
+	this->name = dirInfo.name;
+
+	FileInfo srcVs = FileInfo(dir + "/" + this->name + ".vsh");
+	FileInfo srcFs = FileInfo(dir + "/" + this->name + ".fsh");
+	if (!srcVs.exists || !srcFs.exists)
+		return;
+
+	this->isValid = true;
+
+	String json = File::readAllText(dir + "/" + dirInfo.name + ".yy");
+	Json root = JsonConvert::deserializeObject(json);
+
+	this->gmPath = root["parent"]["path"];
+	this->gmPath = this->gmPath
+		.replace("folders/Shaders.yy", "")
+		.replace("folders/Shaders/", "")
+		.replace(".yy", "");
+}
+
+Sprite::Sprite(String dir)
+{
+	DirectoryInfo dirInfo = DirectoryInfo(dir);
+	this->name = dirInfo.name;
+
+	String json = File::readAllText(dir + "/" + dirInfo.name + ".yy");
+	Json root = JsonConvert::deserializeObject(json);
+
+	this->originX = root["sequence"]["xorigin"];
+	this->originY = root["sequence"]["yorigin"];
+	this->gmPath = root["parent"]["path"];
+	this->gmPath = this->gmPath
+		.replace("folders/Sprites.yy", "")
+		.replace("folders/Sprites/", "")
+		.replace(".yy", "");
+
+	for (Json frameObj : root["frames"])
+	{
+		String frameName = frameObj["name"];
+		this->frameNames.add(frameName);
+		this->numFrames++;
+	}
+}
+
+Script::Script(String dir)
+{
+	DirectoryInfo dirInfo = DirectoryInfo(dir);
+	this->name = dirInfo.name;
+	this->filename = dir + "/" + dirInfo.name + ".gml";
+
+	String json = File::readAllText(dir + "/" + dirInfo.name + ".yy");
+	Json root = JsonConvert::deserializeObject(json);
+
+	this->gmPath = root["parent"]["path"];
+	this->gmPath = this->gmPath
+		.replace("folders/Scripts.yy", "")
+		.replace("folders/Scripts/", "")
+		.replace(".yy", "");
 }
 
 void Program::resolveProject()

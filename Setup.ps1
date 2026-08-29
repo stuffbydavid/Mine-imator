@@ -259,14 +259,10 @@ function Copy-BuiltFile {
 }
 
 function Invoke-CppGen {
-    param([switch] $SkipAssetSync)
 
     Require-File -Path $cppGenExecutable -Description "CppGen executable"
     Write-Host "Running CppGen"
     $cppGenArguments = @($PSScriptRoot, (Join-Path $cppGenDirectory "gml.json"))
-    if ($SkipAssetSync) {
-        $cppGenArguments += "--skip-asset-sync"
-    }
     Push-Location $cppGenDirectory
     try {
         & $cppGenExecutable @cppGenArguments
@@ -288,7 +284,7 @@ function Ensure-GeneratedSources {
         return
     }
 
-    Invoke-CppGen -SkipAssetSync
+    Invoke-CppGen
 }
 
 function Ensure-Jom {
