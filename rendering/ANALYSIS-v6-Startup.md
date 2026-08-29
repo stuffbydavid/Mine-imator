@@ -1,6 +1,6 @@
 Prompt:
 
-*Find optimizations for minecraft_assets_load() which runs during startup and takes exceedingly long in Debug mode, either by employing new C++ datastructures (such as hash tables for string<->id mapping) or other redundancies. List the highest prio fixes.*
+*Find optimizations for minecraft_assets_load() which runs during startup and takes exceedingly long in Debug mode, either by employing new C++ datastructures (such as hash tables for string<->id mapping) or addressing other redundancies. List the highest prio fixes.*
 
 # `minecraft_assets_load()` startup performance
 

@@ -6,6 +6,7 @@ function app_event_create()
 	enums()
 	gml_release_mode(true)
 	random_set_seed(0)
+	objects_indexed()
 	
 	// Developent settings and arguments
 	debug_startup()

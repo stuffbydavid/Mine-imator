@@ -1852,6 +1852,7 @@
     {"id":{"name":"new_videoquality","path":"scripts/new_videoquality/new_videoquality.yy",},},
     {"id":{"name":"new_videotemplate","path":"scripts/new_videotemplate/new_videotemplate.yy",},},
     {"id":{"name":"object_save","path":"scripts/object_save/object_save.yy",},},
+    {"id":{"name":"objects_indexed","path":"scripts/objects_indexed/objects_indexed.yy",},},
     {"id":{"name":"open_url","path":"scripts/open_url/open_url.yy",},},
     {"id":{"name":"panel_area_draw","path":"scripts/panel_area_draw/panel_area_draw.yy",},},
     {"id":{"name":"panel_draw_content","path":"scripts/panel_draw_content/panel_draw_content.yy",},},

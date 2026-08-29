@@ -1388,6 +1388,7 @@
     {"name":"new_videoquality","order":27,"path":"scripts/new_videoquality/new_videoquality.yy",},
     {"name":"new_videotemplate","order":29,"path":"scripts/new_videotemplate/new_videotemplate.yy",},
     {"name":"object_save","order":3,"path":"scripts/object_save/object_save.yy",},
+    {"name":"objects_indexed","order":7,"path":"scripts/objects_indexed/objects_indexed.yy",},
     {"name":"open_url","order":35,"path":"scripts/open_url/open_url.yy",},
     {"name":"panel_area_draw","order":1,"path":"scripts/panel_area_draw/panel_area_draw.yy",},
     {"name":"panel_draw_content","order":5,"path":"scripts/panel_draw_content/panel_draw_content.yy",},

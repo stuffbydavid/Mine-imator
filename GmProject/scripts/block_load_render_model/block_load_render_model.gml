@@ -394,40 +394,24 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						else
 						{
 							// Apply UVs to block sheet/texture
-							var slot, sheetwidth, sheetheight;
-							slot = -1
-							
+							var slot, slotcode, sheetwidth, sheetheight;
+
 							face_vbuffer[nd] = null
 							
 							if (opaque)
-								slot = ds_list_find_index(mc_assets.block_texture_list, texname + " opaque")
-							if (slot < 0)
-								slot = ds_list_find_index(mc_assets.block_texture_list, texname + " noalpha")
-							if (slot < 0)
-								slot = ds_list_find_index(mc_assets.block_texture_list, texname + " nocull")
-							if (slot < 0)
-								slot = ds_list_find_index(mc_assets.block_texture_list, texname)
+								slotcode = mc_assets.block_texture_opaque_slot_map[?texname]
+							else
+								slotcode = mc_assets.block_texture_slot_map[?texname]
 							
-							if (slot < 0) // Not in static sheet, is it animated?
+							if (is_undefined(slotcode)) // Missing texture, skip face
 							{
-								if (slot < 0)
-									slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname)
-								
-								// Check for tags
-								if (slot < 0)
-									slot = ds_list_find_index(mc_assets.block_texture_list, texname + " noalpha")
-								
-								if (slot < 0)
-									slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
-								
-								if (slot < 0)
-									slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " nocull")
-								
-								if (slot < 0) // Missing texture, skip face
-								{
-									face_render[nd] = false
-									continue
-								}
+								face_render[nd] = false
+								continue
+							}
+
+							if (slotcode < 0) // Animated sheet
+							{
+								slot = -slotcode - 2
 								
 								face_depth[nd] = mc_res.block_sheet_ani_depth_list[|slot]
 								face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED
@@ -442,6 +426,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							}
 							else
 							{
+								slot = slotcode
 								face_depth[nd] = mc_res.block_sheet_depth_list[|slot]
 								face_block_vbuffer[nd] = e_block_vbuffer.NORMAL
 								sheetwidth = minecraft_block_sheet_size[0]

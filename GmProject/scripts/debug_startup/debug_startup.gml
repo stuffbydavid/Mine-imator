@@ -16,9 +16,9 @@ function debug_startup()
 		dev_mode_skip_tangents			= false
 		dev_mode_show_bones				= false
 		dev_mode_debug_schematics		= false
-		dev_mode_debug_names			= true
+		dev_mode_debug_names			= false
 		dev_mode_debug_saveid			= false
-		dev_mode_debug_unused			= true
+		dev_mode_debug_unused			= false
 	}
 	else
 	{
