@@ -369,7 +369,8 @@
 		"upgrade": "Invalid key!",
 		"upgradecaption": "Upgrade error",
 		"downloadskinuser": "The user \"%1\" does not exist.",
-		"downloadskininternet": "Could not download skin, check your internet connection."
+		"downloadskininternet": "Could not download skin, check your internet connection.",
+		"benchmark": "The supplied project could not be loaded for benchmarking."
 	},
 	"question/": {
 		"confirmexit": "Save the changes made in %1 before quitting?",

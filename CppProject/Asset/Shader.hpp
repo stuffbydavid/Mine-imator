@@ -4,18 +4,13 @@
 #include "Render/GraphicsApiHandler.hpp"
 #include "Type/VecType.hpp"
 
-#if API_OPENGL
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions_4_3_Core>
-#endif
 #include <QVector4D>
 
 // Maximum allowed size of batch buffer in bytes
-#if API_D3D11
-#define MAX_BATCH_BUFFER_SIZE (4096 * 16) // 4096 float4s (64kb)
-#else
-#define MAX_BATCH_BUFFER_SIZE (100 * 1024) // 100kb
-#endif
+#define D3D11_MAX_BATCH_BUFFER_SIZE (4096 * 16) // D3D11 constant-buffer limit (64kb)
+#define OPENGL_MAX_BATCH_BUFFER_SIZE (100 * 1024) // 100kb
 
 namespace CppProject
 {
@@ -35,7 +30,10 @@ namespace CppProject
 
 		// Loads the vertex & fragment shader from filesystem or memory.
 		void Load(BoolType useCache = true);
-		void LoadCode(QString vsCode, QString fsCode, BoolType useCache);
+	#if OS_WINDOWS
+		void LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache);
+	#endif
+		void LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache);
 		void LoadCodeCommon(QString& code);
 
 		// Returns whether the shader is successfully loaded.
@@ -127,16 +125,15 @@ namespace CppProject
 		QHash<QString, QDateTime> lastUpdate;
 		IntType attributeLocation[6], numOutputs = 0;
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		ID3D11VertexShader* d3dVertexShader = nullptr;
 		ID3D11PixelShader* d3dPixelShader = nullptr;
 		ID3D11Buffer* d3dObjectBuffer = nullptr;
 		ID3D11Buffer* d3dStaticBuffer = nullptr;
 		static ID3D11InputLayout* d3dInputLayout[4];
-	#else
+	#endif
 		QOpenGLShaderProgram* program = nullptr;
 		GLuint glSsboId = 0, glSsboBlockIndex = GL_INVALID_INDEX;
-	#endif
 
 		// Whether batching is supported for objects (requires Direct3D 11/OpenGL 4.3+)
 		BoolType useBatching = false;
@@ -161,9 +158,7 @@ namespace CppProject
 			IntType arrayMaxSize = 0;
 			BoolType isStatic = true;
 			IntType bufferOffset, bufferSize, totalBufferSize;
-		#if API_OPENGL
 			IntType glLocation = -1;
-		#endif
 		};
 		QHash<IntType, UniformState> uniforms;
 		IntType numUniforms = 0;
@@ -176,14 +171,12 @@ namespace CppProject
 			BoolType filter = false;
 			BoolType mipMap = false;
 			BoolType changed = false;
-		#if API_OPENGL
 			IntType glLocation = -1;
-		#endif
 		};
 		SamplerState samplerState[32];
 		QVector4D samplerUvRect[32];
 		int32_t samplerRepeat[32];
-	#if API_D3D11
+	#if OS_WINDOWS
 		int32_t* samplerRepeatData = nullptr;
 		IntType samplerRepeatDataSize = 0;
 	#endif
@@ -210,13 +203,12 @@ namespace CppProject
 		static QStringList matrixUniformName;
 		static QStringList gmMatrixUniformName;
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		static QMap<DataType, QString> dataTypeD3D11Map;
-	#else
+	#endif
 		static QString glslVersion;
-		static BoolType gl40Supported; // Required for textureQueryLod
+		static BoolType gl40Supported;
 		static BoolType gl43Supported; // Required for SSBO
 		static QOpenGLFunctions_4_3_Core* gl43Core;
-	#endif
 	};
 }

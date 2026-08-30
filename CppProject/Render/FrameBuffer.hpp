@@ -36,16 +36,15 @@ namespace CppProject
 		BoolType depthBuffer, hdr;
 		QSize size = { 0, 0 };
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		ID3D11Texture2D* d3dColorTex = nullptr;
 		ID3D11Texture2D* d3dDepthStencilTex = nullptr;
 		ID3D11DepthStencilView* d3dDSV = nullptr;
 		ID3D11RenderTargetView* d3dRTV = nullptr;
 		ID3D11ShaderResourceView* d3dSRV = nullptr;
 		IntType d3dSRVId = 0;
-	#else
+	#endif
 		GLuint glFboId = 0, glColorTexId = 0, glDepthStencilRboId = 0;
 		QOpenGLContext* fboContext = nullptr;
-	#endif
 	};
 }

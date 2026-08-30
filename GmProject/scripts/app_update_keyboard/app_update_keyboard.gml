@@ -9,7 +9,7 @@ function app_update_keyboard()
 			minecraft_assets_reload()
 	
 		if (keyboard_check_pressed(vk_f9))
-			open_url(file_directory)
+			open_url(file_directory_get())
 	
 		if (keyboard_check_pressed(vk_f10))
 			open_url(working_directory)

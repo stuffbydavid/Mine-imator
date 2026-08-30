@@ -12,7 +12,7 @@ function language_load(fn, map, reload = false)
 	if (filename_ext(fn) = ".milanguage")
 	{
 		// Convert unicode (external)
-		var convfn = file_directory + "conv.tmp";
+		var convfn = file_directory_get() + "conv.tmp";
 		json_file_convert_unicode(fn, convfn)
 		
 		if (!file_exists_lib(convfn))

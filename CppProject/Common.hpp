@@ -47,19 +47,15 @@ typedef double RealType;
 typedef int64_t IntType;
 typedef bool BoolType;
 
-// Pick graphics API
+// Pick default graphics API
 #ifdef OS_WINDOWS
-#define API_D3D11 1
-#define API_OPENGL 0
+#define DEFAULT_GFX_API GfxApi::D3D11
 #else
-#define API_D3D11 0
-#define API_OPENGL 1
+#define DEFAULT_GFX_API GfxApi::OpenGL
 #endif
 
-#if API_OPENGL
 #include <QOpenGLBuffer>
 #include <QOpenGLContext>
-#endif
 
 #define OPENMP_FOR omp parallel for schedule(dynamic)
 #define OPENMP_MAX_THREADS 32
@@ -70,8 +66,7 @@ typedef bool BoolType;
 namespace CppProject
 {
 	// Data type
-#define TYPE_OPTIMIZED !DEBUG_MODE
-#if TYPE_OPTIMIZED
+#if OPTIMIZED
 	typedef char Type;
 
 	#define UNDEFINED_t 0
@@ -105,6 +100,12 @@ namespace CppProject
 		VARIANT_REF_t = 12
 	};
 #endif
+
+	enum GfxApi
+	{
+		D3D11 = 0,
+		OpenGL = 1
+	};
 
 	inline void AddPerms(QFile& file)
 	{

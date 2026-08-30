@@ -20,7 +20,6 @@
 #include <QNetworkInterface>
 #include <QStyle>
 #include <QTimer>
-#include <QStandardPaths>
 
 #ifdef OS_WINDOWS
 #define USE_GPU 1
@@ -42,26 +41,47 @@ namespace CppProject
 
 	AppHandler::AppHandler(int& argc, char* argv[])
 	{
+		handler = this;
 		try
 		{
-			// Disable DPI scaling
-			QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
-
-			// Create graphics API handler
-			new GraphicsApiHandler;
-
-			// Create application
-			handler = this;
-			new QApplication(argc, argv);
-			QCoreApplication::setApplicationName(PROJECT_NAME);
-
 			// Initialize string table
 			StringType::AddQThread(QThread::currentThread());
 			StringType::AddGMLStrings();
 
 			// Parse args
 			for (int a = 1; a < argc; a++)
-				args.append(argv[a]);
+			{
+				QString arg = argv[a];
+				QString nextArg = (a + 1 < argc) ? argv[a + 1] : "";
+
+				if (arg == "--gfx")
+				{
+					nextArg = nextArg.toLower();
+				#if OS_WINDOWS
+					if (nextArg == "d3d" || nextArg == "d3d11")
+						gfxApi = GfxApi::D3D11;
+					else
+				#endif
+					if (nextArg == "gl" || nextArg == "opengl")
+						gfxApi = GfxApi::OpenGL;
+					else
+						FATAL("Unknown graphics API: " + nextArg);
+					a++;
+					continue;
+				}
+
+				args.append(arg);
+			}
+
+			// Create graphics API handler
+			new GraphicsApiHandler;
+
+			// Disable DPI scaling
+			QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+
+			// Create application
+			new QApplication(argc, argv);
+			QCoreApplication::setApplicationName(PROJECT_NAME);
 
 			// Set paths
 			QDir().mkpath(user_directory_get());
@@ -82,11 +102,14 @@ namespace CppProject
 		#else
 			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
 		#endif
+
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
+
 		#if OS_WINDOWS
 			BOOL is64Bit;
 			IsWow64Process((HANDLE)qApp->applicationPid(), &is64Bit);
 			DEBUG("Platform: Windows " + QString(is64Bit ? "x64" : "x86"));
+			DEBUG("Graphics API: " + QString(IS_D3D11 ? "D3D11" : "OpenGL"));
 		#ifdef _WIN64
 			DEBUG("Executable: 64-bit");
 		#else
@@ -97,25 +120,23 @@ namespace CppProject
 		#else
 			DEBUG("Platform: Linux");
 		#endif
+
 			DEBUG("OS: " + os_get());
 			DEBUG("working_directory: " + gmlGlobal::working_directory);
 			DEBUG("user_directory: " + user_directory_get());
 			DEBUG("DPI: " + NumStr(qApp->desktop()->logicalDpiX()));
+
 			omp_set_num_threads(std::min(omp_get_max_threads(), OPENMP_MAX_THREADS));
 			DEBUG("OpenMP max threads: " + NumStr(omp_get_max_threads()));
 
 			// Create temporary folder
-		#if OS_WINDOWS
-			gmlGlobal::game_save_id = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation)[0] + "/";
-		#else
-			gmlGlobal::game_save_id = QDir::tempPath() + "/" + StringType(PROJECT_NAME) + "_tmp/";
-		#endif
-			if (QDir(gmlGlobal::game_save_id).exists())
-				DEBUG("Found temporary folder " + gmlGlobal::game_save_id);
-			else if (QDir().mkdir(gmlGlobal::game_save_id))
-				DEBUG("Created temporary folder " + gmlGlobal::game_save_id);
+			StringType fileDir = file_directory_get();
+			if (QDir(fileDir).exists())
+				DEBUG("Using file directory " + fileDir);
+			else if (QDir().mkdir(fileDir))
+				DEBUG("Created file directory " + fileDir);
 			else
-				FATAL("Could not create temporary folder " + gmlGlobal::game_save_id);
+				FATAL("Could not create file directory " + fileDir);
 
 			DEBUG("Minecraft saves: " + world_import_get_saves_dir());
 
@@ -174,9 +195,10 @@ namespace CppProject
 			keyMap[Qt::Key_Tab] = vk_tab;
 			keyMap[Qt::Key_Up] = vk_up;
 
-		#if API_D3D11
-			// Initialize Direct3D graphics
-			GFX->Init();
+		#if OS_WINDOWS
+			// Initialize D3D11 manually, OpenGL is initialized by Qt
+			if (IS_D3D11)
+				GFX->Init();
 		#endif
 
 			// Initialize audio

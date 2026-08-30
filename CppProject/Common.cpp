@@ -28,7 +28,7 @@ namespace CppProject
 		QTextStream stream(&file);
 		stream << text << "\n";
 
-	#if DEBUG_MODE
+	#if !RELEASE_MODE
 		std::cout << text.toStdString() << std::endl;
 	#endif
 	}

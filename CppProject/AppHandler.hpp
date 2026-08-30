@@ -12,6 +12,8 @@
 #define AppWin App->currentWindow
 #define PR App->prRenderer
 #define VB App->vbRenderer
+#define IS_D3D11 (App->gfxApi == GfxApi::D3D11)
+#define IS_OPENGL (App->gfxApi == GfxApi::OpenGL)
 
 namespace CppProject
 {
@@ -63,6 +65,7 @@ namespace CppProject
 		// Runs when a HTTP response is received.
 		void HttpResponse(const HttpRequest& request);
 
+		GfxApi gfxApi = DEFAULT_GFX_API;
 		PrimitiveRenderer* prRenderer = nullptr;
 		VertexBufferRenderer* vbRenderer = nullptr;
 		

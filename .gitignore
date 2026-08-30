@@ -1,7 +1,8 @@
 build/
 build-*/
 output*/
-rendering/benchmark_project/runs/
+runs/
+thumbnail.png
 *.backup*
 /install*/
 /CppGen/Logs/

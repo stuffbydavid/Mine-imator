@@ -24,7 +24,7 @@ function project_load()
 	var fn = (argument_count > 0 ? argument[0] : file_dialog_open_project())
 	
 	if (fn = "")
-		return 0
+		return false
 	
 	var name = filename_new_ext(filename_name(fn), "");
 	
@@ -38,12 +38,12 @@ function project_load()
 		if (!file_exists_lib(fn))
 		{
 			error("erroropenprojectzip")
-			return 0
+			return false
 		}
 	}
 	
 	if (!file_exists_lib(fn))
-		return 0
+		return false
 	
 	// Post 1.1.0 (JSON)
 	var ext, rootmap, legacy, buf;
@@ -53,7 +53,7 @@ function project_load()
 		log("Opening project", fn)
 		rootmap = project_load_start(fn)
 		if (rootmap = null)
-			return 0
+			return false
 		
 		legacy = false
 	}
@@ -63,7 +63,7 @@ function project_load()
 	{
 		log("Opening legacy project", fn)
 		if (!project_load_legacy_start(fn))
-			return 0
+			return false
 		
 		buf = buffer_current
 		legacy = true

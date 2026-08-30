@@ -27,8 +27,12 @@ function app_startup_interface()
 	// Run benchmarks
 	if (benchmark_project != "")
 	{
-		project_load(benchmark_project)
-		benchmarks_run()
+		if (!project_load(benchmark_project)) {
+			error("errorbenchmark")
+			game_end()
+		}
+		else
+			benchmarks_run()
 		return 0
 	}
 	

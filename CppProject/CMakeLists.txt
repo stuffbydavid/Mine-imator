@@ -362,6 +362,8 @@ if(WIN32)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE OS_WINDOWS)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE
 		"DEBUG_MODE=$<IF:$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>>,1,0>"
+		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
+		"OPTIMIZED=$<IF:$<OR:$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>,$<CONFIG:Release>>,1,0>"
 	)
 
 	target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -386,7 +388,7 @@ if(WIN32)
 	)
 	
 	# Toggle console
-	set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<OR:$<CONFIG:RunBenchmarks>,$<CONFIG:Release>>")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<CONFIG:Release>")
 
 	# Set working directories
 	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
@@ -412,6 +414,8 @@ else()
 	target_compile_definitions(${PROJECT_NAME} PRIVATE
 		OS_UNIX
 		"DEBUG_MODE=$<IF:$<CONFIG:Release>,0,1>"
+		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
+		"OPTIMIZED=$<IF:$<CONFIG:Release>,1,0>"
 	)
 
 	# Static-library order matters to GNU-family linkers: dependants precede the

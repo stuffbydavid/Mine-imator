@@ -1,4 +1,5 @@
 /// debug_startup()
+
 function debug_startup()
 {
 	// Developer options, overwritten by program arguments
@@ -9,10 +10,10 @@ function debug_startup()
 	dev_mode = is_debug()
 	if (dev_mode)
 	{
-		dev_mode_project				= file_directory + "dev_project/dev_project.miproject"
+		dev_mode_project				= file_directory_get() + "dev_project/dev_project.miproject"
 		dev_mode_full					= true
 		dev_mode_advanced				= true
-		dev_mode_skip_blocks			= false
+		dev_mode_skip_blocks			= true
 		dev_mode_skip_tangents			= false
 		dev_mode_show_bones				= false
 		dev_mode_debug_schematics		= false
@@ -41,13 +42,17 @@ function debug_startup()
 	debug_info_corner = 2
 	
 	// Benchmark project, overwritten by program arguments
-	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode,
+	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode, benchmark_start, benchmark_end, benchmark_full, benchmark_exportpasses,
 			  benchmark_animate_total_time, benchmark_render_total_time, benchmark_surface_total_time, benchmark_export_total_time;
 			  
 	benchmark_project = ""
 	benchmark_exportmovie = false
-	
 	benchmark_mode = false
+	benchmark_start = -1
+	benchmark_end = -1
+	benchmark_full = false
+	benchmark_exportpasses = false
+	
 	benchmark_animate_total_time = 0
 	benchmark_render_total_time = 0
 	benchmark_surface_total_time = 0
@@ -68,9 +73,12 @@ function debug_startup()
 			case "--benchmark_project":	
 				benchmark_project = nextarg
 				benchmark_mode = true
-				dev_mode_skip_blocks = true
 				break
 			case "--benchmark_exportmovie": benchmark_exportmovie = true break
+			case "--benchmark_start": benchmark_start = eval(nextarg, -1) break
+			case "--benchmark_end": benchmark_end = eval(nextarg, -1) break
+			case "--benchmark_full": benchmark_full = true break
+			case "--benchmark_exportpasses": benchmark_exportpasses = true break
 		}
 		
 		if (!is_debug())

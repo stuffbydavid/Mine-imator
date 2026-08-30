@@ -1,7 +1,13 @@
 /// CppSeparate BoolType is_debug()
 function is_debug()
 {
-	return true;
+	return debug_mode;
+}
+
+/// CppSeparate BoolType is_optimized()
+function is_optimized()
+{
+	return false;
 }
 
 /// CppSeparate BoolType is_cpp()
@@ -57,6 +63,15 @@ function interface_scale_default_get()
 /// Sets the interface scaling factor.
 function interface_scale_set(factor)
 {
+}
+
+/// CppSeparate StringType file_directory_get()
+/// For developers, returns the location where build files are stored.
+/// For users in a release build, returns the Mine-imator_tmp folder in AppData on Windows, or /tmp on Unix.
+/// In GameMaker, this is the sandboxed Mine_imator folder in AppData.
+function file_directory_get()
+{
+	return game_save_id
 }
 
 /// CppSeparate StringType user_directory_get()

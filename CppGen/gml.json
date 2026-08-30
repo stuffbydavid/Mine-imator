@@ -196,6 +196,7 @@
         "argument_count": "int",
         "argument": "array<variant>",
         "current_time": "int",
+        "debug_mode": "bool",
         "delta_time": "int",
         "false": "bool",
         "fps_real": "int",

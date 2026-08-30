@@ -4,7 +4,7 @@
 
 function surface_save_lib(surf, fn)
 {
-	if (!file_copy_temp || string_contains(fn, file_directory))
+	if (!file_copy_temp || string_contains(fn, file_directory_get()))
 	{
 		surface_save(surf, fn)
 		return 0

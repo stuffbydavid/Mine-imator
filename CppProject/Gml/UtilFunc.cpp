@@ -8,6 +8,7 @@
 #include <QDesktopWidget>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QTime>
 
 namespace CppProject
@@ -378,7 +379,16 @@ namespace CppProject
 
 	BoolType is_debug()
 	{
-#if DEBUG_MODE
+#if !RELEASE_MODE
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	BoolType is_optimized()
+	{
+#if OPTIMIZED // RelWithDebInfo, RunBenchmarks, Release modes
 		return true;
 #else
 		return false;
@@ -429,20 +439,32 @@ namespace CppProject
 	#endif
 	}
 
-	StringType graphics_api_get()
-	{
-#if API_D3D11
+StringType graphics_api_get()
+{
+	if (IS_D3D11)
 		return "D3D";
-#elif API_OPENGL
+
+	if (IS_OPENGL)
 		return "GL";
-#else
-		return "";
-#endif
-	}
+	
+	return "";
+}
 
 	StringType os_get()
 	{
 		return QSysInfo::prettyProductName();
+	}
+
+	StringType file_directory_get()
+	{
+#if RELEASE_MODE
+#if OS_WINDOWS
+		return QStandardPaths::standardLocations(QStandardPaths::AppDataLocation)[0] + "_tmp/";
+#else
+		return QDir::tempPath() + "/" + StringType(PROJECT_NAME) + "_tmp/";
+#endif
+#endif
+		return BUILD_FOLDER + "/";
 	}
 
 	StringType user_directory_get()

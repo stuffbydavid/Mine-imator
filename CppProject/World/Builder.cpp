@@ -592,7 +592,7 @@ namespace CppProject
 		// Compress on a new thread
 		QThread* thread;
 		QString outName = filename.QStr();
-		QString tempName = (QString)gmlGlobal::game_save_id + QFileInfo(filename).fileName();
+		QString tempName = (QString)file_directory_get() + QFileInfo(filename).fileName();
 		thread = QThread::create([outName, tempName, data]
 		{
 			Timer tmr;

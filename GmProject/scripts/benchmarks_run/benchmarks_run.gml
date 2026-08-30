@@ -10,6 +10,16 @@ function benchmarks_run()
 	testfull = false
 	exportpasses = false
 	showdragons = true
+	
+	// Overwrite defaults by program arguments
+	if (benchmark_start > -1)
+		teststart = benchmark_start
+	if (benchmark_end > -1)
+		testend = benchmark_end
+	if (benchmark_full)
+		testfull = true
+	if (benchmark_exportpasses)
+		exportpasses = true
 		
 	log("Benchmark project API", graphics_api_get())
 	log("Benchmark project file", project_file)
@@ -26,8 +36,12 @@ function benchmarks_run()
 	log("Benchmark project resources loaded")
 	
 	// Load base render preset, to be overwritten by text keyframes
-	action_project_render_import(project_folder + "/benchmark_base.mirender")
-	var mirenderobj = new_obj(obj_history_save);
+	var mirenderfile, mirenderobj;
+	mirenderfile = project_folder + "/benchmark_base.mirender"
+	mirenderobj = new_obj(obj_history_save)
+	if (file_exists_lib(mirenderfile))
+		action_project_render_import(mirenderfile)
+	
 	with (mirenderobj)
 		history_copy_render_settings(app)
 	
@@ -36,8 +50,6 @@ function benchmarks_run()
 		if (parent != app && string_contains(parent.name, "Dragons"))
 			hide = !showdragons
 	
-
-
 	render_view_current = view_main
 	render_particles = view_main.particles
 	render_effects = view_main.effects
@@ -51,16 +63,16 @@ function benchmarks_run()
 	curyear = date_get_year(curdatetime)
 	curmonth = date_get_month(curdatetime)
 	curday = date_get_day(curdatetime)
-	testname = is_debug() ? "DEBUG_" : ""
-	testname += graphics_api_get() + "_"
-	testname += string(curyear) + (curmonth < 10 ? "0" : "") + string(curmonth) + (curday < 10 ? "0" : "") + string(curday) + "_"
+	testname = string(curyear) + (curmonth < 10 ? "0" : "") + string(curmonth) + (curday < 10 ? "0" : "") + string(curday) + "_"
 	testname += string_replace_all(date_time_string(date_current_datetime()), ":", "")
+	testname += "_" + graphics_api_get()
+	testname += is_optimized()  ? "" : "_DEBUG"
 	testdir = project_folder + "/runs/" + testname
 	directory_create_lib(project_folder + "/runs")
 	directory_create_lib(testdir)
 	
 	log("Benchmark project test folder", testdir)
-		
+	 
 	var csv, csvfilename;
 	csv = "Frame,Mode,Setting,Samples,Animate_ms,Total_ms,Render_ms,Surface_ms,Export_ms,Other_ms,render_world_calls,vertex_buffer_tris,vertex_buffer_submits\n"
 	csvfilename = testdir + "/benchmark_" + testname + ".csv"

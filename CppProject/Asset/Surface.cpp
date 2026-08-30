@@ -73,11 +73,12 @@ namespace CppProject
 		if (!cacheDepthStencilData)
 			frameBuffer->CopyData(false, (uchar*)depthStencilData.data());
 
-	#if API_D3D11
-		float depth = ((depthStencilData.value(point.y() * size.width() + point.x()) & 0xFFFFFF) / (RealType)0xFFFFFF + 1.0) / 2.0;
-	#else
-		float depth = (depthStencilData.value(point.y() * size.width() + point.x()) >> 8) / (RealType)0xFFFFFF;
-	#endif
+		uint32_t packedDepth = depthStencilData.value(point.y() * size.width() + point.x());
+		float depth = 0.f;
+		if (IS_D3D11)
+			depth = ((packedDepth & 0xFFFFFF) / (RealType)0xFFFFFF + 1.0) / 2.0;
+		if (IS_OPENGL)
+			depth = (packedDepth >> 8) / (RealType)0xFFFFFF;
 
 		cacheDepthStencilData = cache;
 		if (!cache)

@@ -18,7 +18,6 @@ function macros()
 	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_201
 	
 	// Directories
-	#macro file_directory				game_save_id
 	#macro data_directory				working_directory + "Data/"
 	#macro schematics_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
@@ -36,16 +35,16 @@ function macros()
 	#macro settings_file				user_directory_get() + "settings.midata"
 	#macro recent_file					user_directory_get() + "recent.midata"
 	#macro key_file						user_directory_get() + "key.midata"
-	#macro temp_file					file_directory + "tmp.file"
-	#macro temp_image					file_directory + "tmp.png"
-	#macro download_image_file			file_directory + "download.png"
-	#macro unzip_directory				file_directory + "unzip/"
+	#macro temp_file					file_directory_get() + "tmp.file"
+	#macro temp_image					file_directory_get() + "tmp.png"
+	#macro download_image_file			file_directory_get() + "download.png"
+	#macro unzip_directory				file_directory_get() + "unzip/"
 	#macro render_default				"performance"
 	#macro render_default_file			render_directory + render_default + ".mirender"
 	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
-	#macro mc_file_directory			file_directory + "Minecraft_unzip/"
+	#macro mc_file_directory			file_directory_get() + "Minecraft_unzip/"
 	#macro mc_assets_directory			"assets/minecraft/"
 	#macro mc_models_directory			mc_assets_directory + "models/"
 	#macro mc_blockstates_directory		mc_assets_directory + "blockstates/"

@@ -4,7 +4,7 @@
 
 function buffer_save_lib(buffer, fn)
 {
-	if (!file_copy_temp || string_contains(fn, file_directory))
+	if (!file_copy_temp || string_contains(fn, file_directory_get()))
 	{
 		buffer_save(buffer, fn)
 		return 0
