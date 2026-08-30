@@ -25,6 +25,9 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.BG_SKY_CLOUDS_COLOR:
 		case e_value.BG_SUNLIGHT_COLOR:
 		case e_value.BG_AMBIENT_COLOR:
+		case e_value.BG_NIGHT_SKY_COLOR:
+		case e_value.BG_NIGHT_SKY_CLOUDS_COLOR:
+		case e_value.BG_NIGHT_SKY_STARS_COLOR:
 		case e_value.BG_NIGHT_COLOR:
 		case e_value.BG_GRASS_COLOR:
 		case e_value.BG_FOLIAGE_COLOR:

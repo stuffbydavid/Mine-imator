@@ -11,7 +11,11 @@ function view_update_surface(view, cam)
 	render_particles = view.particles
 	render_effects = view.effects
 	render_quality = view.quality
-	render_watermark = (settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"])
+	render_watermark = (
+		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||
+		(popup && popup.name = "exportmovie" && popup_exportmovie.watermark) ||
+		(popup && popup.name = "exportimage" && popup_exportimage.watermark)
+	)
 	render_start(view.surface, cam, content_width, content_height)
 	
 	if (view.quality = e_view_mode.RENDER)

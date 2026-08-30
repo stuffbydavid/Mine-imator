@@ -179,6 +179,9 @@ function app_update_animate()
 		background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
 		background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
 		background_ambient_color				= bgobject.value[e_value.BG_AMBIENT_COLOR]
+		background_night_sky_color				= bgobject.value[e_value.BG_NIGHT_SKY_COLOR]
+		background_night_sky_clouds_color		= bgobject.value[e_value.BG_NIGHT_SKY_CLOUDS_COLOR]
+		background_night_sky_stars_color		= bgobject.value[e_value.BG_NIGHT_SKY_STARS_COLOR]
 		background_night_color					= bgobject.value[e_value.BG_NIGHT_COLOR]
 		background_grass_color					= bgobject.value[e_value.BG_GRASS_COLOR]
 		background_foliage_color				= bgobject.value[e_value.BG_FOLIAGE_COLOR]
@@ -235,7 +238,7 @@ function app_update_animate()
 	background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 	background_fog_color_final = background_fog_color
 	
-	background_sky_color_final = merge_color(background_sky_color, c_night_sky, background_sky_night_alpha())
+	background_sky_color_final = merge_color(background_sky_color, background_night_sky_color, background_sky_night_alpha())
 	
 	// Cameras
 	var isrendermode = (view_second.quality = e_view_mode.RENDER || view_main.quality = e_view_mode.RENDER);

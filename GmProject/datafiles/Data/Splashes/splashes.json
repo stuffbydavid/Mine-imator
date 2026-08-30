@@ -1,124 +1,124 @@
 {
-    "splashes": [
-        {
-            "file": "you_cant_hide.png",
-            "credits": "__Mine__"
-        },
-        {
-            "file": "peaceful_creeper.png",
-            "credits": "__Mine__"
-        },
-        {
-            "file": "deep_discovery.png",
-            "credits": "__Mine__"
-        },
-        {
-            "file": "the_peaceful_dream.png",
-            "credits": "Cade [CaZaKoJa]"
-        },
-        {
-            "file": "apple.png",
-            "credits": "David"
-        },
-        {
-            "file": "enderman.png",
-            "credits": "David"
-        },
-        {
-            "file": "hween.png",
-            "credits": "David & mbanders"
-        },
-        {
-            "file": "disco.png",
-            "credits": "David & mbanders"
-        },
-        {
-            "file": "untitled_splash.png",
-            "credits": "Hozq"
-        },
-        {
-            "file": "untitled_splash_2.png",
-            "credits": "Jnick"
-        },
-        {
-            "file": "dangerous_temple.png",
-            "credits": "Jossamations"
-        },
-        {
-            "file": "dolphins_grace.png",
-            "credits": "Jossamations"
-        },
-        {
-            "file": "duality_of_noob.png",
-            "credits": "Jossamations"
-        },
-        {
-            "file": "pillage_and_destroy.png",
-            "credits": "Jossamations"
-        },
-        {
-            "file": "stealthy_ocelot.png",
-            "credits": "Jossamations"
-        },
-        {
-            "file": "forest.png",
-            "credits": "KeepOnChucking"
-        },
-        {
-            "file": "rain.png",
-            "credits": "KeepOnChucking"
-        },
-        {
-            "file": "sunset.png",
-            "credits": "mbanders"
-        },
-        {
-            "file": "meet_the_pyro.png",
-            "credits": "mbanders"
-        },
-        {
-            "file": "the_garden_awakens.png",
-            "credits": "mbanders"
-        },
-        {
-            "file": "chase_the_skies.png",
-            "credits": "mbanders"
-        },
-        {
-            "file": "untitled_splash_3.png",
-            "credits": "mbanders"
-        },
-        {
-            "file": "cave.png",
-            "credits": "Nimi"
-        },
-        {
-            "file": "desert.png",
-            "credits": "Nimi"
-        },
-        {
-            "file": "mushrooms.png",
-            "credits": "Nimi"
-        },
-        {
-            "file": "portal.png",
-            "credits": "Nimi"
-        },
-        {
-            "file": "trails_and_tales.png",
-            "credits": "Nimi"
-        },
-        {
-            "file": "tricky_trials.png",
-            "credits": "Nimi"
-        },
-        {
-            "file": "lush_cave.png",
-            "credits": "Nimi & 9redwoods"
-        },
-        {
-            "file": "oasis.png",
-            "credits": "Swooplezz"
-        }
-    ]
+	"splashes": [
+		{
+			"file": "you_cant_hide.png",
+			"credits": "__Mine__"
+		},
+		{
+			"file": "peaceful_creeper.png",
+			"credits": "__Mine__"
+		},
+		{
+			"file": "deep_discovery.png",
+			"credits": "__Mine__"
+		},
+		{
+			"file": "the_peaceful_dream.png",
+			"credits": "Cade [CaZaKoJa]"
+		},
+		{
+			"file": "apple.png",
+			"credits": "David"
+		},
+		{
+			"file": "enderman.png",
+			"credits": "David"
+		},
+		{
+			"file": "hween.png",
+			"credits": "David & mbanders"
+		},
+		{
+			"file": "disco.png",
+			"credits": "David & mbanders"
+		},
+		{
+			"file": "untitled_splash.png",
+			"credits": "Hozq"
+		},
+		{
+			"file": "untitled_splash_2.png",
+			"credits": "Jnick"
+		},
+		{
+			"file": "dangerous_temple.png",
+			"credits": "Jossamations"
+		},
+		{
+			"file": "dolphins_grace.png",
+			"credits": "Jossamations"
+		},
+		{
+			"file": "duality_of_noob.png",
+			"credits": "Jossamations"
+		},
+		{
+			"file": "pillage_and_destroy.png",
+			"credits": "Jossamations"
+		},
+		{
+			"file": "stealthy_ocelot.png",
+			"credits": "Jossamations"
+		},
+		{
+			"file": "forest.png",
+			"credits": "KeepOnChucking"
+		},
+		{
+			"file": "rain.png",
+			"credits": "KeepOnChucking"
+		},
+		{
+			"file": "sunset.png",
+			"credits": "mbanders"
+		},
+		{
+			"file": "meet_the_pyro.png",
+			"credits": "mbanders"
+		},
+		{
+			"file": "the_garden_awakens.png",
+			"credits": "mbanders"
+		},
+		{
+			"file": "chase_the_skies.png",
+			"credits": "mbanders"
+		},
+		{
+			"file": "untitled_splash_3.png",
+			"credits": "mbanders"
+		},
+		{
+			"file": "cave.png",
+			"credits": "Nimi"
+		},
+		{
+			"file": "desert.png",
+			"credits": "Nimi"
+		},
+		{
+			"file": "mushrooms.png",
+			"credits": "Nimi"
+		},
+		{
+			"file": "portal.png",
+			"credits": "Nimi"
+		},
+		{
+			"file": "trails_and_tales.png",
+			"credits": "Nimi"
+		},
+		{
+			"file": "tricky_trials.png",
+			"credits": "Nimi"
+		},
+		{
+			"file": "lush_cave.png",
+			"credits": "Nimi & 9redwoods"
+		},
+		{
+			"file": "oasis.png",
+			"credits": "Swooplezz"
+		}
+	]
 }

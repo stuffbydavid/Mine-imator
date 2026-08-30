@@ -86,7 +86,7 @@ function render_world_sky()
 			if (background_sky_stars_vbuffer = null)
 				background_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
 			
-			render_set_uniform_color("uBlendColor", c_stars, background_night_alpha)
+			render_set_uniform_color("uBlendColor", background_night_sky_stars_color, background_night_alpha)
 			render_set_texture(background_sky_stars_texture)
 			vbuffer_render_matrix(background_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
 		}
