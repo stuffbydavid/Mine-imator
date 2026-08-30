@@ -173,6 +173,7 @@ namespace CppProject
 	#endif
 		QOpenGLContext* glContext = nullptr;
 		QOffscreenSurface* glOffScreenSurface = nullptr;
+		GLuint glHeadlessVboId = 0;
 		GLuint glCurrentVboId = 0;
 		QString glVersion = "";
 		QHash<IntType, IntType> glBlendMap;

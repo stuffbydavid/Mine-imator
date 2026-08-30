@@ -440,7 +440,8 @@ namespace CppProject
 
 	void surface_reset_target()
 	{
-		if (GFX->surface == AppWin->GetSurface())
+		Surface* defaultSurface = App->headless ? App->headlessSurface : AppWin->GetSurface();
+		if (GFX->surface == defaultSurface)
 		{
 			WARNING("Invalid surface_reset_target");
 			return;
@@ -449,7 +450,7 @@ namespace CppProject
 		GFX->SubmitBatch();
 		GFX->ResetMRT();
 		GFX->surface->EndUse();
-		GFX->surface = AppWin->GetSurface();
+		GFX->surface = defaultSurface;
 		GFX->surface->BeginUse();
 	}
 

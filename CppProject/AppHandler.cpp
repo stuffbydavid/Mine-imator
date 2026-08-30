@@ -69,6 +69,8 @@ namespace CppProject
 					a++;
 					continue;
 				}
+				else if (arg == "--benchmark_project")
+					headless = true;
 
 				args.append(arg);
 			}
@@ -195,11 +197,13 @@ namespace CppProject
 			keyMap[Qt::Key_Tab] = vk_tab;
 			keyMap[Qt::Key_Up] = vk_up;
 
+			// Initialize D3D11 manually, OpenGL manually only when headless
 		#if OS_WINDOWS
-			// Initialize D3D11 manually, OpenGL is initialized by Qt
 			if (IS_D3D11)
 				GFX->Init();
 		#endif
+			if (IS_OPENGL && headless)
+				GFX->Init();
 
 			// Initialize audio
 			try
@@ -225,13 +229,25 @@ namespace CppProject
 				audioSupported = false;
 			}
 
-			// Create main window
-			AddWindow();
+			if (headless)
+			{
+				if (!GFX->StartOffScreenRender())
+					FATAL("Could not start headless rendering");
+				headlessSurface = new Surface({ 1, 1 });
+			}
+			else
+			{
+				// Create main window
+				AddWindow();
+			}
 
 		}
 		catch (const QString& ex)
 		{
-			new ErrorDialog(ex);
+			if (headless)
+				DEBUG("[FATAL ERROR] " + ex);
+			else
+				new ErrorDialog(ex);
 			qApp->exit(1);
 		}
 	}
@@ -324,16 +340,20 @@ namespace CppProject
 			TexturePage::Debug();
 		}
 
-		// Loop through opened windows
-		for (AppWindow* win : windows)
+		QVector<AppWindow*> activeWindows = windows;
+		if (headless)
+			activeWindows = { nullptr };
+
+		// Loop through opened windows or a single headless render target
+		for (AppWindow* win : activeWindows)
 		{
-			if (win->closing)
+			if (win && win->closing)
 				continue;
 
 			currentWindow = win;
 
 			// Set mouse to widget window
-			if (mouseWindow == win)
+			if (win && mouseWindow == win)
 			{
 				if (AppWin->mouseLocked)
 				{
@@ -349,16 +369,16 @@ namespace CppProject
 			}
 			else
 				gmlGlobal::mouse_x = gmlGlobal::mouse_y = -1;
-			
+
 			if (!GFX->StartOffScreenRender())
 				continue;
-			GFX->surface = win->GetSurface();
-			GFX->surface->BeginUse(win->size());
+			GFX->surface = win ? win->GetSurface() : headlessSurface;
+			GFX->surface->BeginUse(win ? win->size() : QSize());
 
 			GFX->ClearDepth();
 			GFX->shader = PR->GetShader();
 			GFX->shader->BeginUse();
-			
+
 			// Run application
 			try
 			{
@@ -375,32 +395,49 @@ namespace CppProject
 			catch (AppEndRequest)
 			{
 				DEBUG("App end requested");
-			
+
 				GFX->shader->EndUse();
-				if (GFX->surface)
-					GFX->surface->EndUse();
-				mainWindow->closing = true;
-				mainWindow->close();
+				GFX->surface->EndUse();
+				if (win)
+				{
+					mainWindow->closing = true;
+					mainWindow->close();
+				}
+				else
+					qApp->exit();
 				return;
 			}
 			catch (const QString& ex)
 			{
-				new ErrorDialog(ex);
+				if (headless)
+				{
+					DEBUG("[FATAL ERROR] " + ex);
+
+					GFX->shader->EndUse();
+					GFX->surface->EndUse();
+					qApp->exit(1);
+					return;
+				}
+				else
+					new ErrorDialog(ex);
+
 				qApp->exit(1);
 			}
 
 			GFX->SubmitBatch();
 			GFX->shader->EndUse();
-			if (GFX->surface)
-				GFX->surface->EndUse();
+			GFX->surface->EndUse();
 
-			win->mouseWheel = 0;
-			win->mouseLastPos = win->mousePos;
-			if (win->mouseUnlock)
-				win->mouseLocked = win->mouseUnlock = false;
+			if (win)
+			{
+				win->mouseWheel = 0;
+				win->mouseLastPos = win->mousePos;
+				if (win->mouseUnlock)
+					win->mouseLocked = win->mouseUnlock = false;
 
-			win->Present();
-			win->UpdateSize();
+				win->Present();
+				win->UpdateSize();
+			}
 		}
 
 		VB->EndFrame();
@@ -415,7 +452,7 @@ namespace CppProject
 		keyStateMap[vk_nokey].pressed = keyStateMap[vk_nokey].released = true;
 
 		// Add new window(s)
-		if (global::_app->window_state == "")
+		if (!headless && global::_app->window_state == "")
 		{
 			for (const AddedWindow& addWin : addedWindows)
 			{
@@ -465,6 +502,13 @@ namespace CppProject
 
 	int AppHandler::ExecDialog(QDialog* dialog)
 	{
+		if (headless)
+		{
+			WARNING("Modal dialog requested while headless");
+			delete dialog;
+			return QDialog::Rejected;
+		}
+
 		GFX->SubmitBatch();
 
 		// Clear keys

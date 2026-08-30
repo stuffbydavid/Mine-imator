@@ -11,7 +11,9 @@
 #if OS_WINDOWS
 #include <comdef.h>
 #endif
+#include <QOpenGLContext>
 #include <QOpenGLDebugLogger>
+#include <QSurfaceFormat>
 
 namespace CppProject
 {
@@ -163,8 +165,26 @@ namespace CppProject
 			if (QAbstractOpenGLFunctions::isInitialized())
 				return;
 
+			if (App->headless)
+			{
+				// Create a context without a window or swapchain
+				glContext = new QOpenGLContext;
+				glContext->setFormat(QSurfaceFormat::defaultFormat());
+				if (!glContext->create() || !glContext->isValid())
+					FATAL("Could not create OpenGL context");
+
+				glOffScreenSurface = new QOffscreenSurface;
+				glOffScreenSurface->setFormat(glContext->format());
+				glOffScreenSurface->create();
+				if (!glOffScreenSurface->isValid())
+					FATAL("Could not create OpenGL off-screen surface");
+				if (!glContext->makeCurrent(glOffScreenSurface))
+					FATAL("Could not make OpenGL off-screen surface current");
+			}
+			else
+				glContext = App->mainWindow->glWidget->context();
+
 			// Find version
-			glContext = App->mainWindow->glWidget->context();
 			glVersion = NumStr(glContext->format().version().first) + "." + NumStr(glContext->format().version().second);
 			DEBUG("OpenGL version: " + glVersion);
 			if (!initializeOpenGLFunctions())
@@ -198,8 +218,19 @@ namespace CppProject
 		#endif
 
 			// Create off-screen surface
-			glOffScreenSurface = new QOffscreenSurface;
-			glOffScreenSurface->create();
+			if (!glOffScreenSurface)
+			{
+				glOffScreenSurface = new QOffscreenSurface;
+				glOffScreenSurface->setFormat(glContext->format());
+				glOffScreenSurface->create();
+			}
+
+			if (App->headless)
+			{
+				// Create VAO to enable OpenGL Core
+				glGenVertexArrays(1, &glHeadlessVboId);
+				GL_CHECK_ERROR();
+			}
 
 			// Map source/dest modes
 			glBlendMap[bm_zero] = GL_ZERO;
@@ -271,12 +302,12 @@ namespace CppProject
 	#endif
 		if (IS_OPENGL)
 		{
-			glCurrentVboId = AppWin->glWidget->glVboId;
 			if (!glContext->makeCurrent(glOffScreenSurface))
 			{
 				WARNING("BeginUse makeCurrent failed");
 				return false;
 			}
+			glCurrentVboId = App->headless ? glHeadlessVboId : AppWin->glWidget->glVboId;
 			GL_CHECK_ERROR();
 			return true;
 		}

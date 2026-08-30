@@ -43,7 +43,7 @@ namespace CppProject
 		// Create a new AppWindow containing an GLRenderer.
 		AppWindow* AddWindow(QRect rect = {}, IntType id = 0, AppWindow* from = nullptr);
 
-		// Runs once per frame and runs the app logic and drawing to the opened widgets.
+		// Runs once per frame and runs the app logic and drawing to the opened widgets or headless surface.
 		void timerEvent(QTimerEvent* event) override;
 
 		// Gets the amount of milliseconds since the application started.
@@ -66,6 +66,8 @@ namespace CppProject
 		void HttpResponse(const HttpRequest& request);
 
 		GfxApi gfxApi = DEFAULT_GFX_API;
+		BoolType headless = false;
+		Surface* headlessSurface = nullptr;
 		PrimitiveRenderer* prRenderer = nullptr;
 		VertexBufferRenderer* vbRenderer = nullptr;
 		
