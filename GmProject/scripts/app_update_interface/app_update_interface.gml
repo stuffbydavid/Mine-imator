@@ -8,7 +8,7 @@ function app_update_interface()
 		update_interface_wait = false
 	}
 	
-	if (window_height <= 900 || setting_interface_compact)
+	if (window_height <= 700 || setting_interface_compact)
 	{
 		ui_large_height = 24
 		ui_small_height = 20

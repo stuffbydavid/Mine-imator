@@ -166,11 +166,7 @@ namespace CppProject
 		GFX->mipMap = enabled;
 
 		for (IntType s = 0; s < GFX->shader->numSamplers; s++)
-		{
-			auto& state = GFX->shader->samplerState[s];
-			//state.mipMap = enabled; // This breaks ground mipmapping in D3D11
-			state.changed = true;
-		}
+			GFX->shader->samplerState[s].changed = true;
 	}
 
 	void gpu_set_tex_mip_filter_ext(IntType sampler, IntType filter)

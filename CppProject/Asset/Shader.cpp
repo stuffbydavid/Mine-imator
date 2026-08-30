@@ -648,6 +648,9 @@ namespace CppProject
 			texSRVs.resize(numSamplers);
 		}
 	#endif
+		IntType glConfiguredTextures[32];
+		IntType glConfiguredTextureCount = 0;
+
 		for (IntType s = 0; s < numSamplers; s++)
 		{
 			const SamplerState& state = samplerState[s];
@@ -684,11 +687,25 @@ namespace CppProject
 
 					GFX->glActiveTexture(GL_TEXTURE0 + s);
 					GFX->glBindTexture(GL_TEXTURE_2D, state.currentTexId);
-					GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-					GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-					GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-					GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-					GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
+
+					// OpenGL 3.2 stores sampling parameters on the texture object, not its texture unit
+					BoolType textureConfigured = false;
+					for (IntType i = 0; i < glConfiguredTextureCount; i++)
+						if (glConfiguredTextures[i] == state.currentTexId)
+						{
+							textureConfigured = true;
+							break;
+						}
+
+					if (!textureConfigured)
+					{
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+						GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
+						glConfiguredTextures[glConfiguredTextureCount++] = state.currentTexId;
+					}
 					GL_CHECK_ERROR();
 
 					program->setUniformValue(state.glLocation, (GLint)s);
