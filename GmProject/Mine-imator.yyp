@@ -10,6 +10,7 @@
   },
   "defaultScriptType":1,
   "Folders":[
+    {"$GMFolder":"","%Name":"Extensions","folderPath":"folders/Extensions.yy","name":"Extensions","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Objects","folderPath":"folders/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"App","folderPath":"folders/Objects/App.yy","name":"App","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Interface","folderPath":"folders/Objects/App/Interface.yy","name":"Interface","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -302,6 +303,7 @@
     {"$GMFolder":"","%Name":"Distort","folderPath":"folders/Shaders/Effects/Distort.yy","name":"Distort","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Noise","folderPath":"folders/Shaders/Effects/Noise.yy","name":"Noise","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Vignette","folderPath":"folders/Shaders/Effects/Vignette.yy","name":"Vignette","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"common","folderPath":"folders/Shaders/common.yy","name":"common","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"High quality","folderPath":"folders/Shaders/High quality.yy","name":"High quality","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Ambient occlusion","folderPath":"folders/Shaders/High quality/Ambient occlusion.yy","name":"Ambient occlusion","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Bloom","folderPath":"folders/Shaders/High quality/Bloom.yy","name":"Bloom","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -437,6 +439,7 @@
   },
   "name":"Mine-imator",
   "resources":[
+    {"id":{"name":"Shady","path":"extensions/Shady/Shady.yy",},},
     {"id":{"name":"app","path":"objects/app/app.yy",},},
     {"id":{"name":"obj_bench_settings","path":"objects/obj_bench_settings/obj_bench_settings.yy",},},
     {"id":{"name":"obj_biome","path":"objects/obj_biome/obj_biome.yy",},},
@@ -2547,6 +2550,7 @@
     {"id":{"name":"window_taskbar_progress_value_set","path":"scripts/window_taskbar_progress_value_set/window_taskbar_progress_value_set.yy",},},
     {"id":{"name":"world_import","path":"scripts/world_import/world_import.yy",},},
     {"id":{"name":"yesno","path":"scripts/yesno/yesno.yy",},},
+    {"id":{"name":"common_position","path":"shaders/common_position/common_position.yy",},},
     {"id":{"name":"shader_add","path":"shaders/shader_add/shader_add.yy",},},
     {"id":{"name":"shader_alpha_fix","path":"shaders/shader_alpha_fix/shader_alpha_fix.yy",},},
     {"id":{"name":"shader_alpha_test","path":"shaders/shader_alpha_test/shader_alpha_test.yy",},},

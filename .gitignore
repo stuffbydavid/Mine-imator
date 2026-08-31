@@ -8,3 +8,5 @@ thumbnail.png
 /CppGen/Logs/
 /CppGen/*/Logs/
 /CppProject/Generated/
+*.fsh_mod
+*.vsh_mod
