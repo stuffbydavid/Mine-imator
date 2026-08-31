@@ -114,6 +114,7 @@ namespace CppProject
 
 	void Shader::Load(BoolType useCache)
 	{
+		sourceDependencies.clear();
 		vsName = "/Shaders/" + name + ".vsh";
 		fsName = "/Shaders/" + name + ".fsh";
 
@@ -174,6 +175,12 @@ namespace CppProject
 		// Read code
 		QString vsCode = QTextStream(&vsFile).readAll();
 		QString fsCode = QTextStream(&fsFile).readAll();
+		sourceDependencies.insert(vsName);
+		sourceDependencies.insert(fsName);
+
+		// Expand Shady named macro includes before parsing and converting the shader
+		if (!ExpandShadyInline(vsCode, ".vsh") || !ExpandShadyInline(fsCode, ".fsh"))
+			return;
 
 		// Find vertex format
 		if (vertexFormat == UNKNOWN)
@@ -201,6 +208,121 @@ namespace CppProject
 			uvRectUniform = uniforms[uniformNameMap["_uUvRect"]];
 			texRepeatUniform = uniforms[uniformNameMap["_uTexRepeat"]];
 		}
+	}
+
+	BoolType Shader::ExpandShadyInline(QString& code, QString extension, QStringList includeStack)
+	{
+		// GameMaker editor regions are not standard GLSL/HLSL preprocessor directives
+		code.remove(QRegularExpression(
+			"^[ \\t]*#[ \\t]*(?:region(?:[ \\t]+[^\\r\\n]*)?|endregion)[ \\t]*(?:\\r?\\n|$)",
+			QRegularExpression::MultilineOption
+		));
+
+		QRegularExpression inlineRegex(
+			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*inline\\([ \\t]*(\\w+)\\.(\\w+)[ \\t]*\\)"
+			"[ \\t]*(?://[^\\r\\n]*)?(?:\\r?\\n|$)",
+			QRegularExpression::MultilineOption
+		);
+
+		while (true)
+		{
+			QRegularExpressionMatch match = inlineRegex.match(code);
+			if (!match.hasMatch())
+				return true;
+
+			QString expanded;
+			if (!LoadShadyMacro(match.captured(1), match.captured(2), extension, expanded, includeStack))
+				return false;
+
+			code.replace(match.capturedStart(), match.capturedLength(), expanded);
+		}
+	}
+
+	BoolType Shader::LoadShadyMacro(QString shaderName, QString macroName, QString extension,
+		QString& code, QStringList includeStack)
+	{
+		QString includeId = shaderName + extension + "." + macroName;
+		if (includeStack.contains(includeId))
+		{
+			includeStack.append(includeId);
+			WARNING("Shader: Circular Shady inline in " + name + ": " + includeStack.join(" -> "));
+			return false;
+		}
+		includeStack.append(includeId);
+
+		QString filename;
+	#if DEBUG_MODE
+		QString gmFilename = GM_SHADERS_DIR "/" + shaderName + "/" + shaderName + extension;
+		if (QFile::exists(gmFilename))
+			filename = gmFilename;
+		else
+			filename = ASSETS_DIR "/Shaders/" + shaderName + extension;
+	#else
+		filename = ":/Shaders/" + shaderName + extension;
+	#endif
+
+		QFile file(filename);
+		if (!file.open(QFile::ReadOnly | QFile::Text))
+		{
+			WARNING("Shader: Shady inline source not found: " + filename);
+			return false;
+		}
+
+		sourceDependencies.insert(filename);
+		QStringList lines = QTextStream(&file).readAll().split(QRegularExpression("\\r?\\n"));
+		QRegularExpression beginRegex(
+			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*macro_begin[ \\t]+(\\w+)[ \\t]*$"
+		);
+		QRegularExpression endRegex(
+			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*macro_end[ \\t]*$"
+		);
+
+		IntType beginLine = -1;
+		for (IntType line = 0; line < lines.size(); line++)
+		{
+			QRegularExpressionMatch beginMatch = beginRegex.match(lines[line]);
+			if (beginMatch.hasMatch() && beginMatch.captured(1) == macroName)
+			{
+				if (beginLine > -1)
+				{
+					WARNING("Shader: Duplicate Shady macro " + includeId);
+					return false;
+				}
+				beginLine = line;
+			}
+		}
+
+		if (beginLine < 0)
+		{
+			WARNING("Shader: Shady macro not found: " + includeId);
+			return false;
+		}
+
+		IntType depth = 1;
+		QStringList macroLines;
+		for (IntType line = beginLine + 1; line < lines.size(); line++)
+		{
+			if (beginRegex.match(lines[line]).hasMatch())
+			{
+				depth++;
+				continue;
+			}
+			else if (endRegex.match(lines[line]).hasMatch())
+			{
+				depth--;
+				if (depth == 0)
+				{
+					code = macroLines.join("\n") + "\n";
+					return ExpandShadyInline(code, extension, includeStack);
+				}
+				continue;
+			}
+
+			macroLines.append(lines[line]);
+		}
+
+		WARNING("Shader: Shady macro_end missing for " + includeId);
+		return false;
 	}
 
 	BoolType Shader::IsLoaded() const
@@ -1003,7 +1125,9 @@ namespace CppProject
 	#ifdef ASSETS_DIR
 		for (Shader* shader : allShaders)
 		{
-			for (const QString& filename : { shader->vsName, shader->fsName })
+			BoolType reload = false;
+			QString changedFilename;
+			for (const QString& filename : shader->sourceDependencies)
 			{
 				QFileInfo fileInfo(filename);
 				QDateTime lastModified = fileInfo.lastModified();
@@ -1012,14 +1136,19 @@ namespace CppProject
 					if (fileInfo.size() == 0 ||
 						shader->lastUpdate[filename] == lastModified)
 						continue;
-
-					GFX->StartOffScreenRender();
-					shader->Load(false);
-
-					if (shader->IsLoaded())
-						DEBUG("Reloaded " + filename);
+					reload = true;
+					changedFilename = filename;
 				}
 				shader->lastUpdate[filename] = lastModified;
+			}
+
+			if (reload)
+			{
+				GFX->StartOffScreenRender();
+				shader->Load(false);
+
+				if (shader->IsLoaded())
+					DEBUG("Reloaded " + changedFilename);
 			}
 		}
 	#endif

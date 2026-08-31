@@ -54,7 +54,7 @@ uniform mat4 uTAAMatrix; // static
 
 vec4 getClipPosition(vec3 worldPos)
 {
-	return uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
+	return uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(worldPos, 1.0));
 }
 
 #pragma shady: macro_end

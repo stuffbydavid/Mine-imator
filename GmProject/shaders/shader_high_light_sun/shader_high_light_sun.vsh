@@ -29,16 +29,6 @@ uniform vec4 uBlendColor;
 // Texture
 uniform vec2 uTextureOffset;
 
-// Wind
-uniform float uTime; // static
-uniform float uWindEnable;
-uniform float uWindTerrain;
-uniform float uWindSpeed; // static
-uniform float uWindStrength;
-uniform vec2 uWindDirection; // static
-uniform float uWindDirectionalSpeed; // static
-uniform float uWindDirectionalStrength;
-
 #pragma shady: inline(common_position.WORLD_POSITION_LIB)
 #pragma shady: inline(common_position.CLIP_POSITION_LIB)
 
