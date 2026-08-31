@@ -163,7 +163,7 @@ namespace CppProject
 
             // Pro RegEx hacker way to replace M * expr with mul(M, expr), beats writing a GLSL parser
             QStringList matrices = gmMatrixUniformName;
-            auto matIt = QRegularExpression("mat\\d ([a-zA-Z0-9]*)(\\[.*?\\])?.*;").globalMatch(code);
+            auto matIt = QRegularExpression("\\bmat\\d\\s+([a-zA-Z0-9_]+)(\\s*\\[.*?\\])?").globalMatch(code);
             while (matIt.hasNext())
             {
                 QRegularExpressionMatch match = matIt.next();

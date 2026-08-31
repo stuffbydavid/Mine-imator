@@ -178,6 +178,11 @@ namespace CppProject
 		sourceDependencies.insert(vsName);
 		sourceDependencies.insert(fsName);
 
+		// Macro library shaders are included by other shaders and have no runnable entry point
+		if (vsCode.contains("#pragma shady: skip_compilation") ||
+			fsCode.contains("#pragma shady: skip_compilation"))
+			return;
+
 		// Expand Shady named macro includes before parsing and converting the shader
 		if (!ExpandShadyInline(vsCode, ".vsh") || !ExpandShadyInline(fsCode, ".fsh"))
 			return;

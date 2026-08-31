@@ -20,14 +20,11 @@ uniform vec2 uKernel[MAX_SAMPLES]; // x = weight, y = distance
 
 varying vec2 vTexCoord;
 
-float unpackDepth(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
+#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 
 float getDepth(vec2 coord)
 {
-	return uNear + unpackDepth(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
+	return uNear + unpackValue(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
 }
 
 vec3 unpackNormalBlueNoise(vec4 c)
@@ -38,7 +35,7 @@ vec3 unpackNormalBlueNoise(vec4 c)
 void main()
 {
 	vec3 lightOrigin = texture2D(uDirect, vTexCoord).rgb;
-	float sss = (unpackDepth(texture2D(uSSSBuffer, vTexCoord)) * 256.0);
+	float sss = (unpackValue(texture2D(uSSSBuffer, vTexCoord)) * 256.0);
 	
 	// Early exit
 	if (sss < 0.001)

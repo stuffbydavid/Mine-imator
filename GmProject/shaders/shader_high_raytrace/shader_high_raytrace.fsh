@@ -19,8 +19,6 @@ uniform sampler2D uDiffuseBuffer;
 // Scene color for reflections, shadows for indirect
 uniform sampler2D uDataBuffer;
 
-uniform float uNormalBufferScale;
-
 // Scene data
 uniform vec4 uSkyColor;
 uniform vec4 uFogColor;
@@ -50,11 +48,8 @@ uniform float uIndirectStength;
 
 uniform float uSampleIndex;
 
-// Unpacks depth value from packed color
-float unpackValue(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
+#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 
 // Transforms Z depth with camera data
 float transformDepth(float depth)
@@ -67,12 +62,6 @@ vec3 posFromBuffer(vec2 coord, float depth)
 {
 	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
 	return pos.xyz / pos.w;
-}
-
-// Get Normal Value
-vec3 unpackNormal(vec4 c)
-{
-	return (c.rgb / uNormalBufferScale) * 2.0 - 1.0;
 }
 
 vec2 viewPosToPixel(vec3 viewPos)

@@ -1,5 +1,4 @@
 uniform sampler2D uTexture; // static
-uniform sampler2D uTextureMaterial; // static
 uniform vec2 uTextureSize;
 
 uniform sampler2D uGlintTexture; // static
@@ -7,9 +6,6 @@ uniform vec2 uGlintOffset;
 uniform vec2 uGlintSize;
 uniform int uGlintEnabled;
 uniform float uGlintStrength;
-
-uniform float uSampleIndex;
-uniform int uAlphaHash;
 
 uniform int uColorsExt;
 uniform vec4 uRGBAdd;
@@ -24,13 +20,6 @@ uniform vec4 uFogColor; // static
 uniform float uFogDistance; // static
 uniform float uFogSize; // static
 uniform float uFogHeight; // static
-
-uniform float uDefaultEmissive;
-uniform float uDefaultSubsurface;
-uniform int uMaterialFormat;
-uniform float uMetallic;
-uniform float uRoughness;
-uniform float uEmissive;
 
 uniform vec4 uFallbackColor;
 uniform vec4 uAmbientColor;
@@ -48,6 +37,10 @@ varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
 varying vec4 vCustom;
+
+#pragma shady: inline(common_material.MATERIAL_LIB)
+#pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
+#pragma shady: inline(common_material.FRESNEL_LIB)
 
 vec4 rgbtohsb(vec4 c)
 {
@@ -81,57 +74,6 @@ float getFog()
 		fog = 0.0;
 	
 	return fog;
-}
-
-// Fresnel Schlick approximation
-float fresnelSchlickRoughness(float cosTheta, float F0, float roughness)
-{
-	return clamp(F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0), 0.0, 1.0);
-}
-
-float hash(vec2 c)
-{
-	return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
-	(0.1 + abs(sin(13.0 * c.y + c.x))));
-}
-
-void getMaterial(out float roughness, out float metallic, out float emissive, out float F0, out float sss)
-{
-	vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
-	
-	if (uMaterialFormat == 2) // LabPBR
-	{
-		if (matColor.g > 0.898) // Metallic
-		{
-			metallic = 1.0; F0 = 1.0; sss = 0.0;
-		}
-		else // Non-metallic
-		{
-			metallic = 0.0; F0 = matColor.g;
-			sss = (matColor.b > 0.255 ? (((matColor.b - 0.255) / 0.745) * uDefaultSubsurface) : 0.0);
-		}
-		
-		roughness = pow(1.0 - matColor.r, 2.0);
-		emissive = (matColor.a < 1.0 ? matColor.a /= 0.9961 : 0.0) * uDefaultEmissive;
-		
-		return;
-	}
-	
-	if (uMaterialFormat == 1) // SEUS
-	{
-		roughness = (1.0 - matColor.r);
-		metallic = matColor.g;
-		emissive = (matColor.b * uDefaultEmissive);
-	}
-	else // No map
-	{
-		roughness = uRoughness;
-		metallic = uMetallic;
-		emissive = max(uEmissive, vCustom.z * uDefaultEmissive);
-	}
-	
-	F0 = mix(0.0, 1.0, metallic);
-	sss = vCustom.w * uDefaultSubsurface;
 }
 
 /// ACES (implementation by Stephen Hill, @self_shadow)
@@ -173,10 +115,7 @@ void main()
 	getMaterial(roughness, metallic, emissive, F0, sss);
 	
 	// Fresnel
-	vec3 N = vNormal;
-	vec3 V = normalize(uCameraPosition - vPosition);
-	vec3 H = normalize(V + -reflect(V, N));
-	float F = fresnelSchlickRoughness(max(dot(H, V), 0.0), F0, roughness);
+	float F = getFresnel(vNormal, F0, roughness, uCameraPosition, vPosition);
 	
 	// Diffuse
 	vec3 dif;
@@ -195,9 +134,6 @@ void main()
 	
 	vec4 col;
 	vec3 spec;
-	
-	if (baseColor.a == 0.0)
-		discard;
 	
 	if (uColorsExt > 0)
 	{
@@ -242,13 +178,7 @@ void main()
 	col = mix(col, uFogColor, getFog()); // Mix fog
 	col.a = mix(baseColor.a, 1.0, F); // Correct alpha
 	
-	if (uAlphaHash > 0)
-	{
-		if (col.a < hash(vec2(hash(vPosition.xy + (uSampleIndex / 255.0)), vPosition.z + (uSampleIndex / 255.0))))
-			discard;
-		else
-			col.a = 1.0;
-	}
+	handleAlphaDiscard(vPosition, col);
 	
 	gl_FragColor = col;
 }

@@ -8,8 +8,6 @@ uniform sampler2D uEmissiveBuffer;
 uniform sampler2D uNoiseBuffer;
 uniform sampler2D uMaskBuffer;
 
-uniform float uNormalBufferScale;
-
 uniform float uNear;
 uniform float uFar;
 
@@ -24,17 +22,8 @@ uniform float uRadius;
 uniform float uPower;
 uniform vec4 uColor;
 
-// Get depth
-float unpackValue(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
-
-// Get normal Value
-vec3 unpackNormal(vec4 c)
-{
-	return (c.rgb / uNormalBufferScale) * 2.0 - 1.0;
-}
+#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 
 // Transform linear depth to exponential depth
 float transformDepth(float depth)

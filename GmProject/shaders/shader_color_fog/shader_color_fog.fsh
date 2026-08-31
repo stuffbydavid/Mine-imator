@@ -1,8 +1,5 @@
 uniform sampler2D uTexture; // static
 
-uniform float uSampleIndex;
-uniform int uAlphaHash;
-
 uniform int uColorsExt;
 uniform vec4 uRGBAdd;
 uniform vec4 uRGBSub;
@@ -23,6 +20,8 @@ varying vec3 vPosition;
 varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
+
+#pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 
 vec4 rgbtohsb(vec4 c)
 {
@@ -58,12 +57,6 @@ float getFog()
 	return fog;
 }
 
-float hash(vec2 c)
-{
-	return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
-	(0.1 + abs(sin(13.0 * c.y + c.x))));
-}
-
 void main()
 {
 	vec2 tex = vTexCoord;
@@ -83,14 +76,5 @@ void main()
 		gl_FragColor.a = baseColor.a; // Correct alpha
 	}
 	
-	if (uAlphaHash > 0)
-	{
-		if (gl_FragColor.a < hash(vec2(hash(vPosition.xy + (uSampleIndex / 255.0)), vPosition.z + (uSampleIndex / 255.0))))
-			discard;
-		else
-			gl_FragColor.a = 1.0;
-	}
-	
-	if (gl_FragColor.a == 0.0)
-		discard;
+	handleAlphaDiscard(vPosition, gl_FragColor);
 }
