@@ -37,8 +37,9 @@ The project has a GameMaker/GML "front-end" which is converted to C++ code using
 If you make a change under CppProject/Generated/ and decide to keep it, you must back-port it into the correct .gml file. This directory is not versioned and will be overwritten by the next call to CppGen.
 
 General development practices:
-* CppProject is used for the final product, not GameMaker, and should be preferred for validation.
 * Do not build or run the project during development unless asked.
+* CppProject is used for the final product, not GameMaker, and should be preferred for validation.
+* When running, use the build folder as the working directory, not the repository root.
 * Do not run CppGen after GML changes unless asked.
 * Aim to follow the existing formatting/comment style in the GML/C++ codebases:
     * Single line comments do not end with `.`

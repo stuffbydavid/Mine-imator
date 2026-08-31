@@ -6,6 +6,8 @@
 
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions_4_3_Core>
+#include <QMatrix4x4>
+#include <QVector>
 #include <QVector4D>
 
 // Maximum allowed size of batch buffer in bytes
@@ -163,6 +165,8 @@ namespace CppProject
 		QHash<IntType, UniformState> uniforms;
 		IntType numUniforms = 0;
 		IntType objRectUniformIndex = -1;
+		QVector<float> floatData;
+		QVector<QMatrix4x4> matrixData;
 
 		// Sampler info
 		struct SamplerState

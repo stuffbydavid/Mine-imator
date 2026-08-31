@@ -6,9 +6,9 @@
 
 namespace CppProject
 {
-	Surface::Surface(QSize size, BoolType depthBuffer, BoolType hdr) : Asset(ID_Surface)
+	Surface::Surface(QSize size, IntType format, BoolType depthBuffer) : Asset(ID_Surface)
 	{
-		frameBuffer = new FrameBuffer(depthBuffer, hdr);
+		frameBuffer = new FrameBuffer(format, depthBuffer);
 		if (size.width() && size.height())
 			Resize(size);
 	}

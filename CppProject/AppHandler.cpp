@@ -99,10 +99,14 @@ namespace CppProject
 			}
 
 		#if DEBUG_MODE
-			gmlGlobal::working_directory = QDir::currentPath() + "/";
 			DEBUG("Debug mode enabled");
-		#else
+		#endif
+
+			// Set working directory
+		#if RELEASE_MODE
 			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
+		#else
+			gmlGlobal::working_directory = QDir::currentPath() + "/";
 		#endif
 
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");

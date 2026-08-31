@@ -9,7 +9,7 @@ namespace CppProject
 	// Wrapper for a GPU framebuffer.
 	struct FrameBuffer
 	{
-		FrameBuffer(BoolType depthBuffer = true, BoolType hdr = false) : depthBuffer(depthBuffer), hdr(hdr) {}
+		FrameBuffer(IntType format = 0, BoolType depthBuffer = true);
 		~FrameBuffer();
 
 		// Returns the color texture handle of the surface for reading.
@@ -33,10 +33,12 @@ namespace CppProject
 		// Returns the total size in bytes for a single pixel of color or depth/stencil data.
 		IntType GetPixelSize(BoolType color) const;
 
-		BoolType depthBuffer, hdr;
+		IntType format;
+		BoolType depthBuffer;
 		QSize size = { 0, 0 };
 
 	#if OS_WINDOWS
+		DXGI_FORMAT d3dFormat = DXGI_FORMAT_UNKNOWN;
 		ID3D11Texture2D* d3dColorTex = nullptr;
 		ID3D11Texture2D* d3dDepthStencilTex = nullptr;
 		ID3D11DepthStencilView* d3dDSV = nullptr;
@@ -44,6 +46,7 @@ namespace CppProject
 		ID3D11ShaderResourceView* d3dSRV = nullptr;
 		IntType d3dSRVId = 0;
 	#endif
+		GLuint glInternalFormat = 0, glFormat = 0, glType = 0;
 		GLuint glFboId = 0, glColorTexId = 0, glDepthStencilRboId = 0;
 		QOpenGLContext* fboContext = nullptr;
 	};

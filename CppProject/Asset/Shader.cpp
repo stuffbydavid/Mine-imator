@@ -10,8 +10,6 @@
 #include "Type/ArrType.hpp"
 #include "World/World.hpp"
 
-#include <QProcess>
-
 #undef __glext_h_
 #include <qopenglext.h>
 
@@ -359,7 +357,9 @@ namespace CppProject
 			floatsNum = uni.arrayMaxSize * tupleSize;
 
 		// Create float array from VarTypes to submit
-		float* floats = new float[floatsNum];
+		floatData.resize(floatsNum);
+		floatData.fill(0.0f);
+		float* floats = floatData.data();
 		IntType i = 0, arrIndex = 0;
 		while (i < floatsNum && arrIndex < arr.Size())
 		{
@@ -382,7 +382,6 @@ namespace CppProject
 			program->setUniformValueArray(uni.glLocation, floats, floatsNum / tupleSize, tupleSize);
 		else
 			WriteUniformValue(uni, floats, floatsNum * sizeof(float));
-		delete[] floats;
 	}
 
 	void Shader::SubmitVec2(IntType index, float x, float y)
@@ -472,17 +471,18 @@ namespace CppProject
 		if (IS_OPENGL && uni.isStatic)
 		{
 			float floats[16];
-			QVector<QMatrix4x4> mat(arr.Size());
+			matrixData.resize(arr.Size());
 			for (IntType m = 0; m < arr.Size(); m++)
 			{
 				arr.Value(m).Mat().matrix.Copy(floats);
-				mat[m] = QMatrix4x4(floats).transposed();
+				matrixData[m] = QMatrix4x4(floats).transposed();
 			}
-			program->setUniformValueArray(uni.glLocation, mat.data(), mat.size());
+			program->setUniformValueArray(uni.glLocation, matrixData.data(), matrixData.size());
 		}
 		else
 		{
-			float* floats = new float[arr.Size() * 16];
+			floatData.resize(arr.Size() * 16);
+			float* floats = floatData.data();
 			for (IntType m = 0; m < arr.Size(); m++)
 				arr.Value(m).Mat().matrix.Copy(&floats[m * 16]);
 			WriteUniformValue(uni, floats);
@@ -639,14 +639,8 @@ namespace CppProject
 
 		// Bind textures and submit samplers
 	#if OS_WINDOWS
-		QVector<ID3D11SamplerState*> texSamplers;
-		QVector<ID3D11ShaderResourceView*> texSRVs;
-
-		if (IS_D3D11)
-		{
-			texSamplers.resize(numSamplers);
-			texSRVs.resize(numSamplers);
-		}
+		ID3D11SamplerState* texSamplers[32] = {};
+		ID3D11ShaderResourceView* texSRVs[32] = {};
 	#endif
 		IntType glConfiguredTextures[32];
 		IntType glConfiguredTextureCount = 0;
@@ -717,8 +711,8 @@ namespace CppProject
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
-			D3DContext->PSSetSamplers(0, numSamplers, texSamplers.data());
-			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs.data());
+			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 
 			// Submit UvRects/repeat options
 			if (numSamplers > 0)
@@ -731,20 +725,21 @@ namespace CppProject
 			}
 
 			// Update and submit constant buffers
-			QVector<ID3D11Buffer*> cBuffers;
+			ID3D11Buffer* cBuffers[2];
+			IntType numConstantBuffers = 0;
 			if (d3dStaticBuffer)
 			{
 				D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
-				cBuffers.append(d3dStaticBuffer);
+				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
 			}
 			if (d3dObjectBuffer)
 			{
 				D3DContext->UpdateSubresource(d3dObjectBuffer, 0, nullptr, batchBufferData, 0, 0);
-				cBuffers.append(d3dObjectBuffer);
+				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
 				ResetObjects();
 			}
-			D3DContext->VSSetConstantBuffers(0, cBuffers.size(), cBuffers.data());
-			D3DContext->PSSetConstantBuffers(0, cBuffers.size(), cBuffers.data());
+			D3DContext->VSSetConstantBuffers(0, numConstantBuffers, cBuffers);
+			D3DContext->PSSetConstantBuffers(0, numConstantBuffers, cBuffers);
 
 			// Submit vertices
 			D3D_PRIMITIVE_TOPOLOGY topo = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
@@ -766,8 +761,8 @@ namespace CppProject
 				texSamplers[s] = nullptr;
 				texSRVs[s] = nullptr;
 			}
-			D3DContext->PSSetSamplers(0, texSamplers.size(), texSamplers.data());
-			D3DContext->PSSetShaderResources(0, texSRVs.size(), texSRVs.data());
+			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 		}
 	#endif
 		if (IS_OPENGL)
