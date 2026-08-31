@@ -42,15 +42,19 @@ function debug_startup()
 	debug_info_corner = 2
 	
 	// Benchmark project, overwritten by program arguments
-	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode, benchmark_start, benchmark_end, benchmark_full, benchmark_debug_pass, benchmark_agent,
+	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode,
+			  benchmark_start, benchmark_end, benchmark_full, benchmark_debug_pass, benchmark_render_mode, benchmark_render_settings, benchmark_agent,
 			  benchmark_animate_total_time, benchmark_render_total_time, benchmark_surface_total_time, benchmark_export_total_time;
 			  
 	benchmark_project = ""
 	benchmark_exportmovie = false
 	benchmark_mode = false
+
 	benchmark_start = -1
 	benchmark_end = -1
 	benchmark_full = false
+	benchmark_render_mode = ""
+	benchmark_render_settings = ""
 	benchmark_debug_pass = ""
 	benchmark_agent = ""
 	
@@ -80,6 +84,8 @@ function debug_startup()
 			case "--benchmark_start": benchmark_start = eval(nextarg, -1) a++ break
 			case "--benchmark_end": benchmark_end = eval(nextarg, -1) a++ break
 			case "--benchmark_full": benchmark_full = true break
+			case "--benchmark_render_mode": benchmark_render_mode = nextarg a++ break
+			case "--benchmark_render_settings": benchmark_render_settings = nextarg a++ break
 			case "--benchmark_debug_pass": benchmark_debug_pass = nextarg a++ break
 			case "--benchmark_agent": benchmark_agent = nextarg a++ break
 		}

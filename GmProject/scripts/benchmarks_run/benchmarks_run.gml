@@ -4,10 +4,11 @@
 
 function benchmarks_run()
 {
-	var teststart, testend, testfull, debugpass, debugpassall, showdragons;
+	var teststart, testend, testfull, singlemode, debugpass, debugpassall, showdragons;
 	teststart = 0
 	testend = 10
 	testfull = false
+	singlemode = ""
 	debugpass = -1
 	debugpassall = false
 	showdragons = true
@@ -19,6 +20,15 @@ function benchmarks_run()
 		testend = benchmark_end
 	if (benchmark_full)
 		testfull = true
+	if (benchmark_render_mode != "")
+	{
+		singlemode = benchmark_render_mode
+		if (singlemode != "flat" && singlemode != "shaded" && singlemode != "high")
+		{
+			log("Unknown benchmark mode", benchmark_render_mode)
+			singlemode = ""
+		}
+	}
 	if (benchmark_debug_pass = "all")
 		debugpassall = true
 	else if (benchmark_debug_pass != "")
@@ -31,12 +41,15 @@ function benchmarks_run()
 		}
 	}
 	
-	log("Benchmark project API", graphics_api_get())
 	log("Benchmark project file", project_file)
-	if (benchmark_agent != "")
-		log("Benchmark project agent", benchmark_agent)
 	log("Benchmark project start", teststart)
 	log("Benchmark project end", testfull ? timeline_length : testend)
+	if (singlemode != "")
+		log("Benchmark project render mode", singlemode)
+	if (benchmark_render_settings != "")
+		log("Benchmark project render settings", benchmark_render_settings)
+	if (benchmark_agent != "")
+		log("Benchmark project agent", benchmark_agent)
 	
 	// Run the queued resource loaders without drawing their loading popup
 	while (popup_loading.load_script != null)
@@ -56,6 +69,10 @@ function benchmarks_run()
 	
 	with (mirenderobj)
 		history_copy_render_settings(app)
+	
+	// Apply optional render settings from program arguments, these override all text objects
+	if (benchmark_render_settings != "")
+		benchmarks_apply_settings(benchmark_render_settings)
 	
 	// Optionally test a large number of (hopefully batched) models
 	with (obj_timeline)
@@ -102,75 +119,71 @@ function benchmarks_run()
 		app_update_animate()
 		csv += string(timeline_marker) + ",,,," + string_format(benchmark_animate_total_time / 1000, 0, 3) + ",,,,,,\n"
 			
-		for (var quality_index = 0; quality_index < 3; quality_index++)
+		for (var quality = e_view_mode.FLAT; quality <= e_view_mode.RENDER; quality++)
 		{
-			var quality, mode;
-			switch (quality_index)
-			{
-				case 0:
-					mode = "flat"
-					quality = e_view_mode.FLAT
-					break
-				case 1:
-					mode = "shaded"
-					quality = e_view_mode.SHADED
-					break
-				case 2:
-					mode = "high"
-					quality = e_view_mode.RENDER
-					break
-			}
-			
-			// Restore base settings
-			history_copy_render_settings(mirenderobj)
-			
-			// Apply custom render settings one-by-one from text objects on the marker with a name matching the mode
-			var settingsqueue, skipmode;
+			var mode, settingsqueue;
 			settingsqueue = array()
-			skipmode = false
-			with (obj_timeline) {
-				if (name != mode ||
-					type != e_tl_type.TEXT)
-					continue
-					
-				if (!value[e_value.VISIBLE])
-				{
-					skipmode = true
-					continue
-				}
-					
-				if (keyframe_current = null ||
-					keyframe_current.position != app.timeline_marker ||
-					keyframe_current.value[e_value.TEXT] = "")
-					continue
-				
-				settingsqueue = string_split_escaped(keyframe_current.value[e_value.TEXT], "\n")
-				break
+
+			switch (quality)
+			{
+				case e_view_mode.FLAT:   mode = "flat" break
+				case e_view_mode.SHADED: mode = "shaded" break
+				case e_view_mode.RENDER: mode = "high" break
 			}
-			
-			// Skip mode for hidden keyframes
-			if (skipmode)
+
+			// Only test a specific mode
+			if (singlemode != "" && singlemode != mode)
 				continue
+
+			if (benchmark_render_settings = "")
+			{
+				// Restore base settings
+				history_copy_render_settings(mirenderobj)
+
+				// Apply custom render settings one-by-one from text objects on the marker with a name matching the mode
+				var skipmode = false;
+				with (obj_timeline) {
+					if (name != mode ||
+						type != e_tl_type.TEXT)
+						continue
+					
+					if (!value[e_value.VISIBLE])
+					{
+						skipmode = true
+						continue
+					}
+					
+					if (keyframe_current = null ||
+						keyframe_current.position != app.timeline_marker ||
+						keyframe_current.value[e_value.TEXT] = "")
+						continue
+					
+					settingsqueue = string_split_escaped(keyframe_current.value[e_value.TEXT], "\n")
+					break
+				}
+
+				// Skip mode for hidden keyframes
+				if (skipmode)
+					continue
+			}
 			
 			do
 			{
-				// Apply next setting in queue
-				var cursetting, cursettingfn, exportbasename;
-				cursetting = ""
-				cursettingfn = ""
+				var cursetting = benchmark_render_settings;
 				if (array_length(settingsqueue) > 0)
 				{
+					// Apply next settings in the queue
 					cursetting = array_shift(settingsqueue)
 					log("Benchmark frame", timeline_marker, mode, cursetting)
 					benchmarks_apply_settings(cursetting)
-					
-					cursettingfn = "_" + string_replace_all(cursetting, "=", "_")
-					cursettingfn = string_replace_all(cursettingfn, ",", "_")
 				}
 				else
 					log("Benchmark frame", timeline_marker, mode)
 
-				exportbasename = testdir + "/" + string(timeline_marker) + "_" + mode + cursettingfn
+				// Create filename from frame, mode and current settings
+				var exportbasename = testdir + "/" + string(timeline_marker) + "_" + mode;
+				if (cursetting != "")
+					exportbasename += "_" + filename_get_valid(cursetting)
 				export_filename = exportbasename + ".png"
 			
 				render_lights = (quality != e_view_mode.FLAT)
@@ -194,7 +207,7 @@ function benchmarks_run()
 				csv += string(timeline_marker) + ","
 				csv += mode + ","
 				csv += string_replace_all(cursetting, ",", " ") + ","
-				if (quality_index == 2)
+				if (quality == e_view_mode.RENDER)
 					csv += string(project_render_samples) + ",,"
 				else
 					csv += "1,,"
