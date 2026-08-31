@@ -4,11 +4,12 @@
 
 function benchmarks_run()
 {
-	var teststart, testend, testfull, exportpasses, showdragons;
+	var teststart, testend, testfull, debugpass, debugpassall, showdragons;
 	teststart = 0
 	testend = 10
 	testfull = false
-	exportpasses = false
+	debugpass = -1
+	debugpassall = false
 	showdragons = true
 	
 	// Overwrite defaults by program arguments
@@ -18,11 +19,22 @@ function benchmarks_run()
 		testend = benchmark_end
 	if (benchmark_full)
 		testfull = true
-	if (benchmark_exportpasses)
-		exportpasses = true
-		
+	if (benchmark_debug_pass = "all")
+		debugpassall = true
+	else if (benchmark_debug_pass != "")
+	{
+		debugpass = ds_list_find_index(render_pass_list, benchmark_debug_pass)
+		if (debugpass < e_render_pass.DIFFUSE)
+		{
+			log("Unknown benchmark render pass", benchmark_debug_pass)
+			debugpass = -1
+		}
+	}
+	
 	log("Benchmark project API", graphics_api_get())
 	log("Benchmark project file", project_file)
+	if (benchmark_agent != "")
+		log("Benchmark project agent", benchmark_agent)
 	log("Benchmark project start", teststart)
 	log("Benchmark project end", testfull ? timeline_length : testend)
 	
@@ -57,7 +69,7 @@ function benchmarks_run()
 	render_background = true
 	render_watermark = false
 
-	var benchmarkstarttime, curdatetime, curyear, curmonth, curday, testname, testdir; 
+	var benchmarkstarttime, curdatetime, curyear, curmonth, curday, testname, testdir, agentname;
 	benchmarkstarttime = get_timer()
 	curdatetime = date_current_datetime()
 	curyear = date_get_year(curdatetime)
@@ -66,6 +78,9 @@ function benchmarks_run()
 	testname = string(curyear) + (curmonth < 10 ? "0" : "") + string(curmonth) + (curday < 10 ? "0" : "") + string(curday) + "_"
 	testname += string_replace_all(date_time_string(date_current_datetime()), ":", "")
 	testname += "_" + graphics_api_get()
+	agentname = filename_get_valid(benchmark_agent)
+	if (agentname != "")
+		testname += "_" + agentname
 	testname += is_optimized()  ? "" : "_DEBUG"
 	testdir = project_folder + "/runs/" + testname
 	directory_create_lib(project_folder + "/runs")
@@ -193,8 +208,16 @@ function benchmarks_run()
 				csv += string(get_vertex_buffer_render_calls()) + "\n"
 			
 				log("Benchmark image", export_filename, string_format(exporttime / 1000, 0, 3) + " msec")
-				if (exportpasses && quality = e_view_mode.RENDER)
-					benchmarks_export_passes(exportbasename)
+				if (quality = e_view_mode.RENDER)
+				{
+					if (debugpassall)
+					{
+						for (var pass = e_render_pass.DIFFUSE; pass < e_render_pass.amount; pass++)
+							benchmarks_export_pass(exportbasename, pass)
+					}
+					else if (debugpass >= e_render_pass.DIFFUSE)
+						benchmarks_export_pass(exportbasename, debugpass)
+				}
 			}
 			until (array_length(settingsqueue) = 0)
 		}
@@ -225,24 +248,20 @@ function benchmarks_run()
 	return true
 }
 
-/// Exports the high-quality render passes for the current frame and render settings.
-function benchmarks_export_passes(directory)
+/// Exports a high-quality render pass for the current frame and render settings.
+function benchmarks_export_pass(directory, pass)
 {
 	var previouspass = project_render_pass;
 	directory_create_lib(directory)
+	project_render_pass = pass
+	export_filename = directory + "/" + ds_list_find_value(render_pass_list, pass) + ".png"
 
-	for (var pass = e_render_pass.DIFFUSE; pass < e_render_pass.amount; pass++)
-	{
-		project_render_pass = pass
-		export_filename = directory + "/" + ds_list_find_value(render_pass_list, pass) + ".png"
+	var starttime;
+	starttime = get_timer()
+	export_start("export_image")
+	while (export_update()) {}
 
-		var starttime;
-		starttime = get_timer()
-		export_start("export_image")
-		while (export_update()) {}
-		
-		log("Benchmark render pass", export_filename, string_format((get_timer() - starttime) / 1000, 0, 3) + " msec")
-	}
+	log("Benchmark render pass", export_filename, string_format((get_timer() - starttime) / 1000, 0, 3) + " msec")
 
 	project_render_pass = previouspass
 }

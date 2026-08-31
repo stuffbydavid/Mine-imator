@@ -48,6 +48,8 @@ General development practices:
 ## Benchmarking/validation
 If asked for validation of changes, pass in the `--benchmark_project <.miproject>` flag into Mine-imator to start running a project, which should be assumed to be `<build_folder>/dev_project/dev_project.miproject`, where every frame in the timeline is treated as a separate "test". If asked to validate rendering effects, use `<repo_dir>/rendering/benchmark_project/benchmark_project.miproject`. The rendering output and timing data is found under a timestamped folder in the runs/ subdirectory and should be validated against the files in baselines/ for correctness, if available. Always check that the expected images are available/non-black/non-zero bytes and no runtime errors are printed/logged.
 
-If asked for a specific range of tests, use `--benchmark_start X` and `--benchmark_end Y` (Y exclusive), or `--benchmark_full` to run through all frames in the project. For troubleshooting a rendering issue in the pipeline, pass in `--benchmark_exportpasses`, which should only be used sparingly for a specific test using the start/end parameters.
+If asked for a specific range of tests, use `--benchmark_start X` and `--benchmark_end Y` (Y exclusive), or `--benchmark_full` to run through all frames in the project. For troubleshooting a rendering issue in the pipeline, use `--benchmark_debug_pass <pass>` to save a high-quality pass in a directory with the current frame/test name. Possible values are `diffuse`, `specular`, `ao`, `shadows`, `indirect`, `indirectshadows`, `reflections`, `depth`, `normal`, `material` and `all` to save every pass.
+
+Agents must include `--benchmark_agent <agent-name>` in benchmark invocations, such as `--benchmark_agent Codex` or `--benchmark_agent Gemini`, so the run directory identifies its producer.
 
 On Windows, if tests succeed in the default DirectX mode, run Mine-imator again with `--gfx OpenGL` added to test OpenGL unless asked otherwise.

@@ -85,6 +85,13 @@ namespace CppProject
 			new QApplication(argc, argv);
 			QCoreApplication::setApplicationName(PROJECT_NAME);
 
+			// Set working directory
+		#if RELEASE_MODE
+			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
+		#else
+			gmlGlobal::working_directory = QDir::currentPath() + "/";
+		#endif
+
 			// Set paths
 			QDir().mkpath(user_directory_get());
 			QDir().mkpath(projects_directory_get());
@@ -102,25 +109,17 @@ namespace CppProject
 			DEBUG("Debug mode enabled");
 		#endif
 
-			// Set working directory
-		#if RELEASE_MODE
-			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
-		#else
-			gmlGlobal::working_directory = QDir::currentPath() + "/";
-		#endif
-
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
 
 		#if OS_WINDOWS
-			BOOL is64Bit;
-			IsWow64Process((HANDLE)qApp->applicationPid(), &is64Bit);
-			DEBUG("Platform: Windows " + QString(is64Bit ? "x64" : "x86"));
-			DEBUG("Graphics API: " + QString(IS_D3D11 ? "D3D11" : "OpenGL"));
 		#ifdef _WIN64
+			DEBUG("Platform: Windows x64");
 			DEBUG("Executable: 64-bit");
 		#else
+			DEBUG("Platform: Windows x86");
 			DEBUG("Executable: 32-bit");
 		#endif
+			DEBUG("Graphics API: " + QString(IS_D3D11 ? "D3D11" : "OpenGL"));
 		#elif OS_MAC
 			DEBUG("Platform: MacOS");
 		#else

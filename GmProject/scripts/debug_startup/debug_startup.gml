@@ -42,7 +42,7 @@ function debug_startup()
 	debug_info_corner = 2
 	
 	// Benchmark project, overwritten by program arguments
-	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode, benchmark_start, benchmark_end, benchmark_full, benchmark_exportpasses,
+	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode, benchmark_start, benchmark_end, benchmark_full, benchmark_debug_pass, benchmark_agent,
 			  benchmark_animate_total_time, benchmark_render_total_time, benchmark_surface_total_time, benchmark_export_total_time;
 			  
 	benchmark_project = ""
@@ -51,7 +51,8 @@ function debug_startup()
 	benchmark_start = -1
 	benchmark_end = -1
 	benchmark_full = false
-	benchmark_exportpasses = false
+	benchmark_debug_pass = ""
+	benchmark_agent = ""
 	
 	benchmark_animate_total_time = 0
 	benchmark_render_total_time = 0
@@ -73,12 +74,14 @@ function debug_startup()
 			case "--benchmark_project":	
 				benchmark_project = nextarg
 				benchmark_mode = true
+				a++
 				break
 			case "--benchmark_exportmovie": benchmark_exportmovie = true break
-			case "--benchmark_start": benchmark_start = eval(nextarg, -1) break
-			case "--benchmark_end": benchmark_end = eval(nextarg, -1) break
+			case "--benchmark_start": benchmark_start = eval(nextarg, -1) a++ break
+			case "--benchmark_end": benchmark_end = eval(nextarg, -1) a++ break
 			case "--benchmark_full": benchmark_full = true break
-			case "--benchmark_exportpasses": benchmark_exportpasses = true break
+			case "--benchmark_debug_pass": benchmark_debug_pass = nextarg a++ break
+			case "--benchmark_agent": benchmark_agent = nextarg a++ break
 		}
 		
 		if (!is_debug())
@@ -87,7 +90,7 @@ function debug_startup()
 		// Developer flags
 		switch (arg) {
 			case "--no_dev_mode":					dev_mode = false break
-			case "--dev_mode_project":				dev_mode_project = nextarg break
+			case "--dev_mode_project":				dev_mode_project = nextarg a++ break
 			case "--dev_mode_full":					dev_mode_full = true break
 			case "--dev_mode_trial":				dev_mode_full = false break
 			case "--dev_mode_advanced":				dev_mode_advanced = true break
