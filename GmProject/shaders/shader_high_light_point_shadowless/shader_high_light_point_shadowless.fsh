@@ -17,7 +17,7 @@ varying vec2 vTexCoord;
 varying vec4 vCustom;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
-#pragma shady: inline(common_material.TBN_LIB)
+#pragma shady: inline(common_util.TBN_LIB)
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_material.SPECULAR_LIB)

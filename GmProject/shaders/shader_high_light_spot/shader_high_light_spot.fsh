@@ -30,7 +30,7 @@ varying vec4 vCustom;
 varying vec4 vColor;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
-#pragma shady: inline(common_material.TBN_LIB)
+#pragma shady: inline(common_util.TBN_LIB)
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)

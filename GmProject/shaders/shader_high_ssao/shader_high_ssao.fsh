@@ -8,11 +8,7 @@ uniform sampler2D uEmissiveBuffer;
 uniform sampler2D uNoiseBuffer;
 uniform sampler2D uMaskBuffer;
 
-uniform float uNear;
-uniform float uFar;
-
 uniform mat4 uProjMatrix;
-uniform mat4 uProjMatrixInv;
 
 uniform vec2 uScreenSize;
 uniform float uNoiseSize;
@@ -24,24 +20,8 @@ uniform vec4 uColor;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
-
-// Transform linear depth to exponential depth
-float transformDepth(float depth)
-{
-	return (uFar - (uNear * uFar) / (depth * (uFar - uNear) + uNear)) / (uFar - uNear);
-}
-
-// Reconstruct a position from a screen space coordinate and (linear) depth
-vec3 posFromBuffer(vec2 coord, float depth)
-{
-	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
-	return pos.xyz / pos.w;
-}
-
-vec3 unpackNormalBlueNoise(vec4 c)
-{
-	return normalize(vec3(c.r, c.g, c.b * 0.5));
-}
+#pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
+#pragma shady: inline(common_util.BLUE_NOISE_KERNEL_SEED_LIB)
 
 float getSSAOstrength(vec2 uv)
 {
@@ -68,7 +48,7 @@ void main()
 	
 	// Random vector from noise
 	vec2 noiseScale = uScreenSize / uNoiseSize;
-	vec3 randVec	= unpackNormalBlueNoise(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
+	vec3 randVec	= unpackBlueNoiseKernelSeed(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
 
 	// Construct kernel basis matrix
 	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));

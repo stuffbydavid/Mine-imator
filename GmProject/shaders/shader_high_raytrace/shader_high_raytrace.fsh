@@ -25,10 +25,7 @@ uniform vec4 uFogColor;
 
 // Camera data
 uniform mat4 uProjMatrix;
-uniform mat4 uProjMatrixInv;
 uniform mat4 uViewMatrixInv;
-uniform float uNear;
-uniform float uFar;
 uniform vec2 uScreenSize;
 uniform vec3 uCameraPosition;
 
@@ -50,19 +47,8 @@ uniform float uSampleIndex;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
-
-// Transforms Z depth with camera data
-float transformDepth(float depth)
-{
-	return (uFar - (uNear * uFar) / (depth * (uFar - uNear) + uNear)) / (uFar - uNear);
-}
-
-// Reconstruct a position from a screen space coordinate and (linear) depth
-vec3 posFromBuffer(vec2 coord, float depth)
-{
-	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
-	return pos.xyz / pos.w;
-}
+#pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
+#pragma shady: inline(common_util.BLUE_NOISE_DIRECTION_LIB)
 
 vec2 viewPosToPixel(vec3 viewPos)
 {
@@ -80,11 +66,6 @@ vec2 viewPosToUv(vec3 viewPos)
 	coord.xy	= (coord.xy / coord.w) * 0.5 + 0.5;
 	coord.y		= 1.0 - coord.y;
 	return coord.xy;
-}
-
-vec3 unpackNormalBlueNoise(vec4 c)
-{
-	return normalize(vec3(cos(c.r * 2.0 * PI), sin(c.r * 2.0 * PI), c.g));
 }
 
 // GGX importance sampling (https://learnopengl.com/PBR/IBL/Specular-IBL)
@@ -273,7 +254,7 @@ void main()
 			}
 		}
 		else // Diffuse
-			rayDir = normalize(mat * unpackNormalBlueNoise(noise));
+			rayDir = normalize(mat * unpackBlueNoiseDirection(noise));
 	
 		// Ray thickness (Increase based on steepness of ray)
 		float rayThickness = uThickness * max(1.0, pow(1.0 - abs(max(0.0, dot(rayDir, normal))), 6.0) * 100.0);

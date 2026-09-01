@@ -1,19 +1,6 @@
 #pragma shady: skip_compilation
 void main() {}
 
-#region TBN_LIB
-#pragma shady: macro_begin TBN_LIB
-
-mat3 getTBN(vec3 normal, vec3 tangent)
-{
-	normal = normalize(normal);
-	tangent = normalize(tangent - dot(tangent, normal) * normal);
-	return mat3(tangent, cross(tangent, normal), normal);
-}
-
-#pragma shady: macro_end
-#endregion
-
 #region NORMAL_MAP_LIB
 #pragma shady: macro_begin NORMAL_MAP_LIB
 

@@ -7,7 +7,7 @@ varying vec4 vColor;
 varying vec3 vNormal;
 varying vec3 vTangent;
 
-#pragma shady: inline(common_material.TBN_LIB)
+#pragma shady: inline(common_util.TBN_LIB)
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_util.PACK_VALUE_LIB)

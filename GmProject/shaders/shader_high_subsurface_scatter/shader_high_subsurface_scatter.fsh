@@ -27,11 +27,6 @@ float getDepth(vec2 coord)
 	return uNear + unpackValue(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
 }
 
-vec3 unpackNormalBlueNoise(vec4 c)
-{
-	return normalize(vec3(cos(c.r * 2.0 * PI), sin(c.r * 2.0 * PI), c.g));
-}
-
 void main()
 {
 	vec3 lightOrigin = texture2D(uDirect, vTexCoord).rgb;

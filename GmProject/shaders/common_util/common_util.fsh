@@ -1,6 +1,64 @@
 #pragma shady: skip_compilation
 void main() {}
 
+#region TBN_LIB
+#pragma shady: macro_begin TBN_LIB
+
+mat3 getTBN(vec3 normal, vec3 tangent)
+{
+	normal = normalize(normal);
+	tangent = normalize(tangent - dot(tangent, normal) * normal);
+	return mat3(tangent, cross(tangent, normal), normal);
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region DEPTH_RECONSTRUCT_LIB
+#pragma shady: macro_begin DEPTH_RECONSTRUCT_LIB
+
+uniform float uNear;
+uniform float uFar;
+uniform mat4 uProjMatrixInv;
+
+// Transform linear depth to exponential depth
+float transformDepth(float depth)
+{
+	return (uFar - (uNear * uFar) / (depth * (uFar - uNear) + uNear)) / (uFar - uNear);
+}
+
+// Reconstruct a position from a screen space coordinate and linear depth
+vec3 posFromBuffer(vec2 coord, float depth)
+{
+	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
+	return pos.xyz / pos.w;
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region BLUE_NOISE_DIRECTION_LIB
+#pragma shady: macro_begin BLUE_NOISE_DIRECTION_LIB
+
+vec3 unpackBlueNoiseDirection(vec4 c)
+{
+	return normalize(vec3(cos(c.r * 2.0 * 3.14159265), sin(c.r * 2.0 * 3.14159265), c.g));
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region BLUE_NOISE_KERNEL_SEED_LIB
+#pragma shady: macro_begin BLUE_NOISE_KERNEL_SEED_LIB
+
+vec3 unpackBlueNoiseKernelSeed(vec4 c)
+{
+	return normalize(vec3(c.r, c.g, c.b * 0.5));
+}
+
+#pragma shady: macro_end
+#endregion
+
 #region PACK_VALUE_LIB
 #pragma shady: macro_begin PACK_VALUE_LIB
 
