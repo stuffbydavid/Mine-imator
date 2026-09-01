@@ -24,16 +24,6 @@ namespace CppProject
 		{
 			QString header = "";
 
-			// Move preprocessor declarations to header
-			for (QString line : code.split("\n"))
-			{
-				if (line.startsWith("#"))
-				{
-					header += line + "\n";
-					code.replace(line + "\n", "");
-				}
-			}
-
 			if (!isVertex)
 			{
 				// Single rendertarget
