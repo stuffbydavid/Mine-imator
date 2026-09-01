@@ -1,6 +1,5 @@
 #define DEPTH_SENSITIVITY 120.0
 #define SAMPLES 27
-#define PI 3.14159265
 
 varying vec2 vTexCoord;
 
@@ -10,32 +9,23 @@ uniform sampler2D uNoiseBuffer;
 uniform vec2 uScreenSize;
 uniform vec2 uPixelCheck;
 
-uniform float uNormalBufferScale;
 uniform float uNoiseSize;
 uniform float uSamples;
 uniform float uBlurSize;
 
-// Get Depth Value
-float unpackDepth(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
-
-// Get Normal Value
-vec3 unpackNormal(vec4 c)
-{
-	return (c.rgb / uNormalBufferScale) * 2.0 - 1.0;
-}
+#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
+#pragma shady: inline(common_constants.MATH)
 
 void main()
 {
 	vec2 texelSize = 1.0 / uScreenSize;
-	float centerDepth = unpackDepth(texture2D(uDepthBuffer, vTexCoord));
+	float centerDepth = unpackValue(texture2D(uDepthBuffer, vTexCoord));
 	vec3 centerNormal = unpackNormal(texture2D(uNormalBuffer, vTexCoord));
 	
 	// Generate random direction
 	float theta, cosTheta, sinTheta;
-	theta = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * 2.0 * PI;
+	theta = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * TWO_PI;
 	cosTheta = cos(theta);
 	sinTheta = sin(theta);
 	
@@ -83,7 +73,7 @@ void main()
 			continue;
 		
 		vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, samplePos));
-		float sampleDepth = unpackDepth(texture2D(uDepthBuffer, samplePos));
+		float sampleDepth = unpackValue(texture2D(uDepthBuffer, samplePos));
 		
 		float sampleWeight = max(0.0, dot(centerNormal, sampleNormal) - abs(sampleDepth - centerDepth) * DEPTH_SENSITIVITY);
 		color += texture2D(gm_BaseTexture, samplePos).rgb * sampleWeight;

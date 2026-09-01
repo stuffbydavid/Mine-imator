@@ -37,6 +37,9 @@ namespace CppProject
 	#endif
 		void LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache);
 		void LoadCodeCommon(QString& code);
+		BoolType ExpandShadyInline(QString& code, QString extension, QStringList includeStack = {});
+		BoolType LoadShadyMacro(QString shaderName, QString macroName, QString extension,
+			QString& code, QStringList includeStack);
 
 		// Returns whether the shader is successfully loaded.
 		BoolType IsLoaded() const;
@@ -125,6 +128,7 @@ namespace CppProject
 		VertexFormat vertexFormat = UNKNOWN;
 		QString name, vsName, fsName;
 		QHash<QString, QDateTime> lastUpdate;
+		QSet<QString> sourceDependencies;
 		IntType attributeLocation[6], numOutputs = 0;
 
 	#if OS_WINDOWS

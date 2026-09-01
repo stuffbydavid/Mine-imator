@@ -1,4 +1,3 @@
-#define PI 3.14159265
 #define up vec3(0.0, 0.0, 1.0)
 #define RAY_SPECULAR 0
 #define RAY_DIFFUSE 1
@@ -19,20 +18,12 @@ uniform sampler2D uDiffuseBuffer;
 // Scene color for reflections, shadows for indirect
 uniform sampler2D uDataBuffer;
 
-uniform float uNormalBufferScale;
-
 // Scene data
 uniform vec4 uSkyColor;
-uniform vec4 uFogColor;
 
 // Camera data
 uniform mat4 uProjMatrix;
-uniform mat4 uProjMatrixInv;
-uniform mat4 uViewMatrixInv;
-uniform float uNear;
-uniform float uFar;
 uniform vec2 uScreenSize;
-uniform vec3 uCameraPosition;
 
 uniform float uPrecision;
 uniform float uThickness;
@@ -50,30 +41,13 @@ uniform float uIndirectStength;
 
 uniform float uSampleIndex;
 
-// Unpacks depth value from packed color
-float unpackValue(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
-
-// Transforms Z depth with camera data
-float transformDepth(float depth)
-{
-	return (uFar - (uNear * uFar) / (depth * (uFar - uNear) + uNear)) / (uFar - uNear);
-}
-
-// Reconstruct a position from a screen space coordinate and (linear) depth
-vec3 posFromBuffer(vec2 coord, float depth)
-{
-	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
-	return pos.xyz / pos.w;
-}
-
-// Get Normal Value
-vec3 unpackNormal(vec4 c)
-{
-	return (c.rgb / uNormalBufferScale) * 2.0 - 1.0;
-}
+#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
+#pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
+#pragma shady: inline(common_util.BLUE_NOISE_DIRECTION_LIB)
+#pragma shady: inline(common_util.SAMPLING_LIB)
+#pragma shady: inline(common_constants.MATH)
+#pragma shady: inline(common_material.SAMPLE_GGX_LIB)
 
 vec2 viewPosToPixel(vec3 viewPos)
 {
@@ -83,55 +57,6 @@ vec2 viewPosToPixel(vec3 viewPos)
 	coord.xy	*= uScreenSize;
 	
 	return floor(coord.xy);
-}
-
-vec2 viewPosToUv(vec3 viewPos)
-{
-	vec4 coord	= (uProjMatrix * vec4(viewPos, 1.0));
-	coord.xy	= (coord.xy / coord.w) * 0.5 + 0.5;
-	coord.y		= 1.0 - coord.y;
-	return coord.xy;
-}
-
-vec3 unpackNormalBlueNoise(vec4 c)
-{
-	return normalize(vec3(cos(c.r * 2.0 * PI), sin(c.r * 2.0 * PI), c.g));
-}
-
-// GGX importance sampling (https://learnopengl.com/PBR/IBL/Specular-IBL)
-float VanDerCorput(int n, int base)
-{
-	float invBase = 1.0 / float(base);
-	float denom   = 1.0;
-	float result  = 0.0;
-	
-	for (int i = 0; i < 16; i++)
-	{
-		if (n > 0)
-		{
-			denom = mod(float(n), 2.0);
-			result += denom * invBase;
-			invBase = invBase / 2.0;
-			n = int(float(n) / 2.0);
-		}
-	}
-	
-	return result;
-}
-
-vec2 Hammersley(int i, int N)
-{
-	return vec2(float(i)/float(N), VanDerCorput(i, 2));
-}
-
-vec3 sampleGGX(vec2 Xi, float roughness)
-{
-	float a = roughness * roughness;
-	float phi = 2.0 * PI * Xi.x;
-	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
-	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
-	
-	return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
 }
 
 float percent(float xx, float start, float end)
@@ -275,7 +200,7 @@ void main()
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				vec2 Xi = Hammersley(int(256.0 + ((noise.r - .5) * 256.0)), 512);
+				vec2 Xi = hammersley(int(256.0 + ((noise.r - .5) * 256.0)), 512);
 				vec3 H  = normalize(mat * sampleGGX(Xi, materialData.r));
 				rayDir = reflect(normalize(rayPos), H);
 			
@@ -284,7 +209,7 @@ void main()
 			}
 		}
 		else // Diffuse
-			rayDir = normalize(mat * unpackNormalBlueNoise(noise));
+			rayDir = normalize(mat * unpackBlueNoiseDirection(noise));
 	
 		// Ray thickness (Increase based on steepness of ray)
 		float rayThickness = uThickness * max(1.0, pow(1.0 - abs(max(0.0, dot(rayDir, normal))), 6.0) * 100.0);

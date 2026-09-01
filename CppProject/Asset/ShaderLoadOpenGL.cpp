@@ -29,7 +29,7 @@ namespace CppProject
 			{
 				if (line.startsWith("#"))
 				{
-					header = line + "\n" + header;
+					header += line + "\n";
 					code.replace(line + "\n", "");
 				}
 			}

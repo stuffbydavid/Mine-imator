@@ -1,5 +1,4 @@
 #define MAX_SAMPLES 65
-#define PI 3.14159265
 
 uniform sampler2D uSSSBuffer;
 uniform sampler2D uSSSRangeBuffer;
@@ -20,25 +19,18 @@ uniform vec2 uKernel[MAX_SAMPLES]; // x = weight, y = distance
 
 varying vec2 vTexCoord;
 
-float unpackDepth(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
+#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_constants.MATH)
 
 float getDepth(vec2 coord)
 {
-	return uNear + unpackDepth(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
-}
-
-vec3 unpackNormalBlueNoise(vec4 c)
-{
-	return normalize(vec3(cos(c.r * 2.0 * PI), sin(c.r * 2.0 * PI), c.g));
+	return uNear + unpackValue(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
 }
 
 void main()
 {
 	vec3 lightOrigin = texture2D(uDirect, vTexCoord).rgb;
-	float sss = (unpackDepth(texture2D(uSSSBuffer, vTexCoord)) * 256.0);
+	float sss = (unpackValue(texture2D(uSSSBuffer, vTexCoord)) * 256.0);
 	
 	// Early exit
 	if (sss < 0.001)
@@ -58,7 +50,7 @@ void main()
 		
 		// Get random direction to blur in
 		vec3 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rgb;
-		vec2 randDir = vec2(cos(noise.r * 2.0 * PI), sin(noise.r * 2.0 * PI));
+		vec2 randDir = vec2(cos(noise.r * TWO_PI), sin(noise.r * TWO_PI));
 		rad *= noise.g * randDir;
 		
 		// Sample pixels in positive and negative blur direction
