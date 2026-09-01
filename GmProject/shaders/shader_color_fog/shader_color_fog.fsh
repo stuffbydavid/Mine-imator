@@ -11,7 +11,6 @@ uniform vec4 uMixColor;
 uniform vec3 uCameraPosition; // static
 
 varying vec3 vPosition;
-varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 

@@ -10,7 +10,6 @@ attribute vec3 in_Tangent;
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vWindDirection;
 
 uniform vec4 uBlendColor;
 

@@ -8,7 +8,6 @@ attribute vec4 in_Wave;
 attribute vec3 in_Tangent;
 
 varying vec3 vPosition;
-varying vec3 vNormal;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec4 vCustom;
@@ -24,7 +23,6 @@ uniform vec2 uTextureOffset;
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
-	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	vCustom = in_Wave;

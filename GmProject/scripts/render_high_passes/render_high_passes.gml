@@ -54,7 +54,6 @@ function render_high_passes()
 	// Depth, normals
 	if (render_depth_normals)
 	{
-		// R32F depth uses 1 as the background/far sentinel
 		surface_set_target(render_surface_depth)
 		{
 			draw_clear(c_white)

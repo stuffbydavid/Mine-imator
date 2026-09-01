@@ -18,7 +18,6 @@ uniform vec4 uLightData[128]; // static
 
 varying vec3 vPosition;
 varying vec3 vNormal;
-varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
@@ -34,7 +33,6 @@ void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
 	vNormal = normalize((gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz);
-	vDepth = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	vCustom = in_Wave;
 	
 	if (uIsSky > 0)

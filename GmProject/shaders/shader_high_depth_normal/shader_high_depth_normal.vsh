@@ -16,7 +16,6 @@ varying float vDepth;
 varying vec3 vNormal;
 varying vec3 vTangent;
 varying vec4 vColor;
-varying vec4 vCustom;
 
 // Texture
 uniform vec2 uTextureOffset;
@@ -44,6 +43,4 @@ void main()
 	// Color
 	vColor = uBlendColor * in_Colour;
 	
-	// Custom
-	vCustom = in_Wave;
 }

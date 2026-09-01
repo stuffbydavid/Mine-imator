@@ -13,8 +13,6 @@ varying vec3 vTangent;
 varying vec4 vColor;
 varying vec4 vCustom;
 varying vec2 vTexCoord;
-varying float vTime;
-varying float vWindDirection;
 
 uniform vec4 uBlendColor;
 
@@ -32,7 +30,6 @@ void main()
 	
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	vTime = uTime;
 	vCustom = in_Wave;
 	
 	gl_Position = getClipPosition(vPosition);

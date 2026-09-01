@@ -15,10 +15,8 @@ uniform vec4 uGlowColor;
 uniform vec3 uCameraPosition; // static
 
 varying vec3 vPosition;
-varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vEmissive;
 
 #pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)

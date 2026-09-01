@@ -5,7 +5,6 @@ uniform vec3 uCameraPosition; // static
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vDepth;
 
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)

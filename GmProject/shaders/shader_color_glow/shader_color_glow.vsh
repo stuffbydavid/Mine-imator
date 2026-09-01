@@ -9,10 +9,8 @@ attribute vec4 in_Wave;
 attribute vec3 in_Tangent;
 
 varying vec3 vPosition;
-varying float vDepth;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying float vEmissive;
 
 uniform vec4 uBlendColor;
 uniform float uDefaultEmissive;
@@ -26,10 +24,8 @@ uniform vec2 uTextureOffset;
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
-	vDepth = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	vEmissive = clamp(in_Wave.z * uDefaultEmissive, 0.0, 1.0);
 	
 	gl_Position = getClipPosition(vPosition);
 }

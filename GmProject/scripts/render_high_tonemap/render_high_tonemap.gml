@@ -14,9 +14,6 @@ function render_high_tonemap(surf)
 	}
 	surface_reset_target()
 	
-	//render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	//surf = render_surface[0]
-	
 	// Tonemap / gamma
 	surface_set_target(surf)
 	{
