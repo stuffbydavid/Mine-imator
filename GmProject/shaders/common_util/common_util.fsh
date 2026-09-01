@@ -98,3 +98,34 @@ vec3 unpackNormal(vec4 c)
 
 #pragma shady: macro_end
 #endregion
+
+#region SAMPLING_LIB
+#pragma shady: macro_begin SAMPLING_LIB
+
+// GGX importance sampling (https://learnopengl.com/PBR/IBL/Specular-IBL)
+float radicalInverseBase2(int n)
+{
+    float invBase = 0.5;
+    float result = 0.0;
+
+    for (int i = 0; i < 16; i++)
+    {
+        if (n > 0)
+        {
+            float bit = mod(float(n), 2.0);
+            result += bit * invBase;
+            invBase *= 0.5;
+            n = int(float(n) / 2.0);
+        }
+    }
+
+    return result;
+}
+
+vec2 hammersley(int i, int sampleCount)
+{
+    return vec2(float(i) / float(sampleCount), radicalInverseBase2(i));
+}
+
+#pragma shady: macro_end
+#endregion

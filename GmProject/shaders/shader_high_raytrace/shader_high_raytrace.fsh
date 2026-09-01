@@ -20,13 +20,10 @@ uniform sampler2D uDataBuffer;
 
 // Scene data
 uniform vec4 uSkyColor;
-uniform vec4 uFogColor;
 
 // Camera data
 uniform mat4 uProjMatrix;
-uniform mat4 uViewMatrixInv;
 uniform vec2 uScreenSize;
-uniform vec3 uCameraPosition;
 
 uniform float uPrecision;
 uniform float uThickness;
@@ -48,7 +45,9 @@ uniform float uSampleIndex;
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 #pragma shady: inline(common_util.BLUE_NOISE_DIRECTION_LIB)
+#pragma shady: inline(common_util.SAMPLING_LIB)
 #pragma shady: inline(common_constants.MATH)
+#pragma shady: inline(common_material.SAMPLE_GGX_LIB)
 
 vec2 viewPosToPixel(vec3 viewPos)
 {
@@ -58,50 +57,6 @@ vec2 viewPosToPixel(vec3 viewPos)
 	coord.xy	*= uScreenSize;
 	
 	return floor(coord.xy);
-}
-
-vec2 viewPosToUv(vec3 viewPos)
-{
-	vec4 coord	= (uProjMatrix * vec4(viewPos, 1.0));
-	coord.xy	= (coord.xy / coord.w) * 0.5 + 0.5;
-	coord.y		= 1.0 - coord.y;
-	return coord.xy;
-}
-
-// GGX importance sampling (https://learnopengl.com/PBR/IBL/Specular-IBL)
-float VanDerCorput(int n, int base)
-{
-	float invBase = 1.0 / float(base);
-	float denom   = 1.0;
-	float result  = 0.0;
-	
-	for (int i = 0; i < 16; i++)
-	{
-		if (n > 0)
-		{
-			denom = mod(float(n), 2.0);
-			result += denom * invBase;
-			invBase = invBase / 2.0;
-			n = int(float(n) / 2.0);
-		}
-	}
-	
-	return result;
-}
-
-vec2 Hammersley(int i, int N)
-{
-	return vec2(float(i)/float(N), VanDerCorput(i, 2));
-}
-
-vec3 sampleGGX(vec2 Xi, float roughness)
-{
-	float a = roughness * roughness;
-	float phi = TWO_PI * Xi.x;
-	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
-	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
-	
-	return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
 }
 
 float percent(float xx, float start, float end)
@@ -245,7 +200,7 @@ void main()
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				vec2 Xi = Hammersley(int(256.0 + ((noise.r - .5) * 256.0)), 512);
+				vec2 Xi = hammersley(int(256.0 + ((noise.r - .5) * 256.0)), 512);
 				vec3 H  = normalize(mat * sampleGGX(Xi, materialData.r));
 				rayDir = reflect(normalize(rayPos), H);
 			

@@ -206,3 +206,19 @@ void handleSubsurfaceHighlight(inout vec3 light, inout vec3 subsurf, vec3 N, vec
 
 #pragma shady: macro_end
 #endregion
+
+#region SAMPLE_GGX_LIB
+#pragma shady: macro_begin SAMPLE_GGX_LIB
+
+vec3 sampleGGX(vec2 Xi, float roughness)
+{
+	float a = roughness * roughness;
+	float phi = TWO_PI * Xi.x;
+	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
+	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+	
+	return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
+}
+
+#pragma shady: macro_end
+#endregion
