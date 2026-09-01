@@ -832,7 +832,7 @@
 			"pass": "Render pass",
 			"pass/": {
 				"combined": "Combined",
-				"depth": "Depth (24bit)",
+				"depth": "Depth",
 				"normal": "Normal",
 				"material": "Material",
 				"diffuse": "Diffuse",

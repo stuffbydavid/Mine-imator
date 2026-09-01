@@ -38,16 +38,15 @@ varying vec4 vColor;
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 
-vec4 cascadeDepthBuffer(int index, vec2 coord)
+float cascadeDepthBuffer(int index, vec2 coord)
 {
 	if (index == 0)
-		return texture2D(uDepthBuffer0, coord);
+		return texture2D(uDepthBuffer0, coord).r;
 	else if (index == 1)
-		return texture2D(uDepthBuffer1, coord);
+		return texture2D(uDepthBuffer1, coord).r;
 	else
-		return texture2D(uDepthBuffer2, coord);
+		return texture2D(uDepthBuffer2, coord).r;
 }
 
 void main()
@@ -109,7 +108,7 @@ void main()
 				float bias = 1.0 + (float(i) * 2.0);
 				
 				// Find shadow
-				float sampleDepth = uSunNear[i] + unpackValue(cascadeDepthBuffer(i, fragCoord)) * (uSunFar[i] - uSunNear[i]);
+				float sampleDepth = uSunNear[i] + cascadeDepthBuffer(i, fragCoord) * (uSunFar[i] - uSunNear[i]);
 				shadow *= ((fragDepth - bias) > sampleDepth) ? vec3(0.0) : vec3(1.0);
 				
 				// Subsurface translucency

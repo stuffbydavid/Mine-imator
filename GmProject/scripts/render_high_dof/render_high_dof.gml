@@ -3,23 +3,7 @@
 
 function render_high_dof(prevsurf)
 {
-	var depthsurf, cocsurf, resultsurf;
-	
-	// Get depth
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	depthsurf = render_surface[0]
-	surface_set_target(depthsurf)
-	{
-		gpu_set_blendmode_ext(bm_one, bm_zero)
-		
-		draw_clear(c_white)
-		render_world_start()
-		render_world(e_render_mode.DEPTH)
-		render_world_done()
-		
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
+	var cocsurf, resultsurf;
 
 	// Create CoC buffer from depth
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
@@ -32,10 +16,9 @@ function render_high_dof(prevsurf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_dof_coc_set(depthsurf)
+			shader_high_dof_coc_set(render_surface_depth)
 		}
 		draw_blank(0, 0, render_width, render_height)
-		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
 			shader_clear()
 	}

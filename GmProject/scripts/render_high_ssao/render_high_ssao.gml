@@ -47,7 +47,7 @@ function render_high_ssao()
 	
 	// Apply to shadows
 	if (!render_shadows)
-		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, true)
+		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
 	
 	surface_set_target(render_surface_shadows)
 	{

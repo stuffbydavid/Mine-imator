@@ -1079,7 +1079,7 @@ function enums()
 		INDIRECT,
 		INDIRECT_SHADOWS,
 		REFLECTIONS,
-		DEPTH_U24,
+		DEPTH,
 		NORMAL,
 		MATERIAL,
 		amount

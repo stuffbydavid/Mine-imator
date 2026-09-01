@@ -4,7 +4,7 @@
 function render_high_tonemap(surf)
 {
 	var prevsurf;
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
 	prevsurf = render_surface_hdr[0]
 	
 	surface_set_target(prevsurf)

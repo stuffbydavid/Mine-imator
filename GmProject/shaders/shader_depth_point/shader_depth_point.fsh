@@ -9,7 +9,6 @@ varying vec2 vTexCoord;
 varying vec4 vColor;
 
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
-#pragma shady: inline(common_util.PACK_VALUE_LIB)
 
 void main()
 {
@@ -17,6 +16,5 @@ void main()
 	vec4 col = texture2D(uTexture, tex) * vColor;
 	handleAlphaDiscard(vPosition, col);
 	
-	gl_FragColor = vec4(packValue((distance(vPosition, uEye) - uNear) / (uFar - uNear)), 1.0);
+	gl_FragColor = vec4((distance(vPosition, uEye) - uNear) / (uFar - uNear));
 }
-

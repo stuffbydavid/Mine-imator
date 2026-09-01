@@ -14,6 +14,22 @@ mat3 getTBN(vec3 normal, vec3 tangent)
 #pragma shady: macro_end
 #endregion
 
+#region DEPTH_BUFFER_LIB
+#pragma shady: macro_begin DEPTH_BUFFER_LIB
+
+float readDepth(vec2 coord)
+{
+	return texture2D(uDepthBuffer, coord).r;
+}
+
+bool isDepthBackground(float depth)
+{
+	return depth >= 1.0;
+}
+
+#pragma shady: macro_end
+#endregion
+
 #region DEPTH_RECONSTRUCT_LIB
 #pragma shady: macro_begin DEPTH_RECONSTRUCT_LIB
 

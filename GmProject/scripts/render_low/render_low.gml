@@ -41,6 +41,22 @@ function render_low()
 	if (render_effects_done)
 		return 0
 	
+	// Camera depth for depth-aware post effects
+	if (render_camera_dof)
+	{
+		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+		surface_set_target(render_surface_depth)
+		{
+			draw_clear(c_white)
+			gpu_set_blendmode_ext(bm_one, bm_zero)
+			render_world_start(depth_far)
+			render_world(e_render_mode.DEPTH)
+			render_world_done()
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+	}
+
 	finalsurf = render_post(surf)
 	
 	render_target = surface_require(render_target, render_width, render_height)

@@ -31,10 +31,10 @@ function render_high_shadows()
 	}
 	
 	// Initialize targets
-	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, true)
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, true)
+	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba32float)
 	resultsurftemp = render_surface_hdr[0]
 	specresultsurftemp = render_surface_hdr[1]
 	
@@ -81,7 +81,7 @@ function render_high_shadows()
 		
 		for (var i = 0; i < render_cascades_count; i++)
 		{
-			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, true, e_surface_format.r32float)
 			surface_set_target(render_surface_sun_buffer[i])
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -165,8 +165,8 @@ function render_high_shadows()
 				atlasx = 0
 				atlasy = 0
 				atlassize = app.project_render_shadows_point_buffer_size
-				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2)
-				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize)
+				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, e_surface_format.r32float)
+				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, e_surface_format.r32float)
 				
 				taa_matrix = MAT_IDENTITY
 				render_alpha_hash = app.project_render_shadows_transparent
@@ -239,7 +239,7 @@ function render_high_shadows()
 				render_alpha_hash_force = true
 				
 				// Depth
-				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
+				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size, true, e_surface_format.r32float)
 				surface_set_target(render_surface_spot_buffer)
 				{
 					gpu_set_blendmode_ext(bm_one, bm_zero)

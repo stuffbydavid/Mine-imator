@@ -6,12 +6,12 @@ function render_high_passes()
 	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
 	render_surface_emissive = surface_require(render_surface_emissive, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
 	
 	if (render_depth_normals)
 	{
-		render_surface_depth = surface_require(render_surface_depth, render_width, render_height)
-		render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, true)
+		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+		render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
 	}
 	
 	// Clear specular
@@ -54,12 +54,23 @@ function render_high_passes()
 	// Depth, normals
 	if (render_depth_normals)
 	{
+		// R32F depth uses 1 as the background/far sentinel
+		surface_set_target(render_surface_depth)
+		{
+			draw_clear(c_white)
+		}
+		surface_reset_target()
+
+		surface_set_target(render_surface_normal)
+		{
+			draw_clear_alpha(c_black, 0)
+		}
+		surface_reset_target()
+
 		surface_set_target_ext(0, render_surface_depth)
 		surface_set_target_ext(1, render_surface_normal)
 		{
 			gpu_set_blendmode_ext(bm_one, bm_zero)
-		
-			draw_clear_alpha(c_black, 0)
 			render_world_start(depth_far)
 			render_world(e_render_mode.HIGH_DEPTH_NORMAL)
 			render_world_done()
@@ -89,7 +100,7 @@ function render_high_passes()
 	if (render_pass = e_render_pass.MATERIAL)
 		render_pass_surf = surface_duplicate(render_surface_material)
 	
-	if (render_pass = e_render_pass.DEPTH_U24)
+	if (render_pass = e_render_pass.DEPTH)
 		render_pass_surf = surface_duplicate(render_surface_depth)
 	
 	if (render_pass = e_render_pass.NORMAL)

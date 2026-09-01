@@ -10,7 +10,6 @@ varying vec3 vTangent;
 #pragma shady: inline(common_util.TBN_LIB)
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
-#pragma shady: inline(common_util.PACK_VALUE_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 
 void main()
@@ -21,7 +20,7 @@ void main()
 	handleAlphaDiscard(vPosition, baseColor);
 	
 	// Depth
-	gl_FragData[0] = vec4(packValue(vDepth), 1.0);
+	gl_FragData[0] = vec4(vDepth);
 	
 	// Normal
 	gl_FragData[1] = packNormal(getMappedNormal(tex, getTBN(vNormal, vTangent)));

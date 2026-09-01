@@ -20,11 +20,12 @@ uniform vec2 uKernel[MAX_SAMPLES]; // x = weight, y = distance
 varying vec2 vTexCoord;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_constants.MATH)
 
 float getDepth(vec2 coord)
 {
-	return uNear + unpackValue(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
+	return uNear + readDepth(coord) * (uFar - uNear);
 }
 
 void main()
@@ -64,7 +65,7 @@ void main()
 			
 			if (((sampleRange.r + sampleRange.g + sampleRange.b) < 0.001) ||
 				((sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0)) ||
-				(texture2D(uDepthBuffer, sampleCoord).a < 0.001))
+				isDepthBackground(readDepth(sampleCoord)))
 			{
 				lightNew += uKernel[i].x * lightOrigin;
 				continue;

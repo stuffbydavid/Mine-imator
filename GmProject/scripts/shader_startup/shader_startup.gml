@@ -183,6 +183,7 @@ function shader_startup()
 	{
 		new_shader_uniform("uNear")
 		new_shader_uniform("uFar")
+		new_shader_uniform("uCameraDepth")
 	}
 	
 	with (shader_map[?shader_depth_point])

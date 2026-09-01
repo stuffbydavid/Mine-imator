@@ -42,6 +42,7 @@ uniform float uIndirectStength;
 uniform float uSampleIndex;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 #pragma shady: inline(common_util.BLUE_NOISE_DIRECTION_LIB)
@@ -121,9 +122,9 @@ vec3 rayTrace(vec3 rayStart, vec3 rayDir, float rayThickness, vec3 noise)
 		if (rayUv.x < 0.0 || rayUv.y < 0.0 || rayUv.x > 1.0 || rayUv.y > 1.0)
 			break;
 		
-		sampleDepth = unpackValue(texture2D(uDepthBuffer, rayUv));
+		sampleDepth = readDepth(rayUv);
 		
-		if (sampleDepth < 0.001)
+		if (isDepthBackground(sampleDepth))
 			continue;
 		
 		// Get ray/scene depth
@@ -154,7 +155,7 @@ vec3 rayTrace(vec3 rayStart, vec3 rayDir, float rayThickness, vec3 noise)
 	rayHit = rayHit && (deltaPrev > 0.0);
 	
 	// Depth check
-	if (!rayHit || sampleDepth < 0.001)
+	if (!rayHit || isDepthBackground(sampleDepth))
 		return vec3(-1.0, -1.0, stepscount);
 	
 	// Refine
@@ -167,8 +168,7 @@ vec3 rayTrace(vec3 rayStart, vec3 rayDir, float rayThickness, vec3 noise)
 void main()
 {
 	// Depth quick exit
-	vec4 depthData  = texture2D(uDepthBuffer, vTexCoord);
-	float depth		= unpackValue(depthData);
+	float depth = readDepth(vTexCoord);
 	
 	// Sample material (Specular only)
 	vec3 materialData = vec3(0.0);
@@ -184,7 +184,7 @@ void main()
 	bool halfResCast = (mod(pixel, 2.0) == 0.0);
 	
 	// Don't calculate ray if depth isn't valid
-	if (!(depthData.a < 0.001 || depth > 0.999 || materialData.r > 0.95 || !halfResCast))
+	if (!(isDepthBackground(depth) || materialData.r > 0.95 || !halfResCast))
 	{
 		// Sample buffers
 		normal	= unpackNormal(texture2D(uNormalBuffer, vTexCoord));

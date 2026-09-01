@@ -7,11 +7,15 @@ uniform float uFar;
 
 varying vec2 vTexCoord;
 
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 
 float getDepth(vec2 coord)
 {
-	return uNear + unpackValue(texture2D(uDepthBuffer, coord)) * (uFar - uNear);
+	float depth = readDepth(coord);
+	if (isDepthBackground(depth))
+		return uFar;
+
+	return uNear + depth * (uFar - uNear);
 }
 
 float getFrontBlur(float d)

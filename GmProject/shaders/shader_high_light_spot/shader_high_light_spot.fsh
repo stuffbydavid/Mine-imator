@@ -34,7 +34,6 @@ varying vec4 vColor;
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 
 void main() 
 {
@@ -98,7 +97,7 @@ void main()
 					float bias = 1.0;
 					
 					// Shadow
-					float sampleDepth = uLightNear + unpackValue(texture2D(uDepthBuffer, fragCoord)) * (uLightFar - uLightNear);
+					float sampleDepth = uLightNear + texture2D(uDepthBuffer, fragCoord).r * (uLightFar - uLightNear);
 					shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 					
 					// Subsurface translucency

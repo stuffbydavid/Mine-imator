@@ -9,6 +9,6 @@ function shader_high_dof_coc_set(depthbuffer)
 	render_set_uniform("uDepth", render_camera.value[e_value.CAM_DOF_DEPTH])
 	render_set_uniform("uRange", render_camera.value[e_value.CAM_DOF_RANGE])
 	render_set_uniform("uFadeSize", render_camera.value[e_value.CAM_DOF_FADE_SIZE])
-	render_set_uniform("uNear", cam_near)
-	render_set_uniform("uFar", cam_far)
+	render_set_uniform("uNear", depth_near)
+	render_set_uniform("uFar", depth_far)
 }

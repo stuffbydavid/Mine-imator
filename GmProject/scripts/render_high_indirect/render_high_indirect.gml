@@ -4,7 +4,7 @@
 function render_high_indirect()
 {
 	// Raytrace
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
 	surface_set_target(render_surface_hdr[0])
 	{
 		gpu_set_texrepeat(false)
@@ -26,7 +26,7 @@ function render_high_indirect()
 	surface_reset_target()
 	
 	// Resolve
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, true)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba32float)
 	surface_set_target(render_surface_hdr[1])
 	{
 		draw_clear_alpha(c_black, 0)

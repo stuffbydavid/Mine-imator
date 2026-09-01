@@ -4,7 +4,7 @@
 function render_high_scene()
 {
 	var masksurf, resultsurf;
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, true)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba32float)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	masksurf = render_surface[1]
 	resultsurf = render_surface_hdr[1] // Render directly to target?

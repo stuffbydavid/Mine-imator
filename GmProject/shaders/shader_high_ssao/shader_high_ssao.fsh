@@ -19,6 +19,7 @@ uniform float uPower;
 uniform vec4 uColor;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 #pragma shady: inline(common_util.BLUE_NOISE_KERNEL_SEED_LIB)
@@ -33,11 +34,11 @@ float getSSAOstrength(vec2 uv)
 void main()
 {
 	// Perform alpha test to ignore background
-	if (texture2D(uDepthBuffer, vTexCoord).a < 1.0)
+	float originDepth = readDepth(vTexCoord);
+	if (isDepthBackground(originDepth))
 		discard;
 	
 	// Get view space origin
-	float originDepth = unpackValue(texture2D(uDepthBuffer,vTexCoord));
 	vec3 origin = posFromBuffer(vTexCoord, originDepth);
 	
 	// Get scaled radius
@@ -68,7 +69,7 @@ void main()
 		sampleCoord.y = 1.0 - sampleCoord.y;
 		
 		// Get sample depth
-		float sampleDepth = posFromBuffer(sampleCoord, unpackValue(texture2D(uDepthBuffer, sampleCoord))).z;
+		float sampleDepth = posFromBuffer(sampleCoord, readDepth(sampleCoord)).z;
 		
 		// Get sample strength
 		float sampleStrength = getSSAOstrength(sampleCoord);

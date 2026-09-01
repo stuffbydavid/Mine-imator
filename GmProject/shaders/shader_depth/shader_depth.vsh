@@ -10,6 +10,7 @@ attribute vec3 in_Tangent;
 
 uniform float uNear; // static
 uniform float uFar; // static
+uniform int uCameraDepth; // static
 
 varying vec3 vPosition;
 varying vec2 vTexCoord;
@@ -29,7 +30,13 @@ void main()
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
 	gl_Position = getClipPosition(vPosition);
-	vDepth = (gl_Position.z - uNear) / (uFar - uNear);
+	if (uCameraDepth == 1)
+	{
+		vec4 depthPos = gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0);
+		vDepth = (depthPos.z - uNear) / (uFar - uNear);
+	}
+	else
+		vDepth = (gl_Position.z - uNear) / (uFar - uNear);
 	
 	vColor = uBlendColor * in_Colour;
 }

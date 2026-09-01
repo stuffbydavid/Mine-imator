@@ -5,7 +5,7 @@ function render_high_subsurface_scatter()
 	var ssssurf, sssrangesurf, sssblursurf;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
 	ssssurf = render_surface[0]
 	sssrangesurf = render_surface[1]
 	sssblursurf = render_surface_hdr[0]

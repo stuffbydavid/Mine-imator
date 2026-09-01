@@ -35,7 +35,6 @@ varying vec4 vColor;
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 #pragma shady: inline(common_constants.MATH)
 
 vec2 getShadowMapCoord(vec3 look)
@@ -63,11 +62,11 @@ vec2 getShadowMapCoord(vec3 look)
 }
 
 // Linear filtering, done in-shader as we use a texture atlas
-vec4 getFilteredDepth(vec2 uv, vec2 uvMin)
+float getFilteredDepth(vec2 uv, vec2 uvMin)
 {
 	float samples = 0.0;
 	vec2 sampleuv, uvMax, texelOffset;
-	vec4 color = vec4(0.0);
+	float depth = 0.0;
 	texelOffset = vec2((1.0/vec2(uDepthBufferSize * 3.0, uDepthBufferSize * 2.0)) * 0.5);
 	uvMax = uvMin + vec2(1.0/3.0, 0.5);
 	
@@ -76,7 +75,7 @@ vec4 getFilteredDepth(vec2 uv, vec2 uvMin)
 	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
 		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
 	{
-		color += texture2D(uDepthBuffer, sampleuv);
+		depth += texture2D(uDepthBuffer, sampleuv).r;
 		samples += 1.0;
 	}
 	
@@ -86,7 +85,7 @@ vec4 getFilteredDepth(vec2 uv, vec2 uvMin)
 	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
 		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
 	{
-		color += texture2D(uDepthBuffer, sampleuv);
+		depth += texture2D(uDepthBuffer, sampleuv).r;
 		samples += 1.0;
 	}
 	
@@ -96,7 +95,7 @@ vec4 getFilteredDepth(vec2 uv, vec2 uvMin)
 	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
 		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
 	{
-		color += texture2D(uDepthBuffer, sampleuv);
+		depth += texture2D(uDepthBuffer, sampleuv).r;
 		samples += 1.0;
 	}
 	
@@ -105,11 +104,11 @@ vec4 getFilteredDepth(vec2 uv, vec2 uvMin)
 	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
 		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
 	{
-		color += texture2D(uDepthBuffer, sampleuv);
+		depth += texture2D(uDepthBuffer, sampleuv).r;
 		samples += 1.0;
 	}
 	
-	return color / samples;
+	return depth / samples;
 }
 
 void main()
@@ -227,7 +226,7 @@ void main()
 			
 			// Shadow
 			float fragDepth = distance(vPosition, uShadowPosition);
-			float sampleDepth = uLightNear + (uLightFar - uLightNear) * unpackValue(getFilteredDepth(fragCoord, bufferMin));//texture2D(uDepthBuffer, fragCoord));
+			float sampleDepth = uLightNear + (uLightFar - uLightNear) * getFilteredDepth(fragCoord, bufferMin);
 			shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
 			
 			// Subsurface translucency

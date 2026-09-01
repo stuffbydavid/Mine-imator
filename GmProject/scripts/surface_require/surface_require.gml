@@ -5,17 +5,26 @@
 /// @arg [depth
 /// @arg [hdr]]
 
-function surface_require(surf, w, h, depth = true, hdr = false)
+enum e_surface_format
+{
+	rgba8unorm,
+	rgba32float,
+	r32float
+}
+
+function surface_require(surf, w, h, depth = true, surfformat = e_surface_format.rgba8unorm)
 {
 	var format, starttime;
 	w = max(1, w)
 	h = max(1, h)
 	
 	// surface_rgba32float support not guaranteed in GM
-	if (is_cpp())
-		format = hdr ? surface_rgba32float : surface_rgba8unorm
-	else 
-		format = hdr ? surface_rgba16float : surface_rgba8unorm
+	if (surfformat == e_surface_format.rgba32float)
+		format = is_cpp() ? surface_rgba32float : surface_rgba16float
+	else if (surfformat == e_surface_format.r32float)
+		format = surface_r32float
+	else
+		format = surface_rgba8unorm
 	
 	starttime = get_timer()
 	
