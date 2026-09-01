@@ -369,10 +369,11 @@ namespace CppProject
             #endif
                 std::string codeStd = code.toStdString();
                 std::string target = isVertex ? "vs_4_0" : "ps_4_0";
+				DEBUG("Compiling " + name + " (" + QString(target.c_str()) + ")");
                 if (FAILED(D3DCompile(codeStd.c_str(), code.length(), nullptr, nullptr, nullptr, "main", target.c_str(), flags, 0, &data, &errMsgs)))
                 {
                     std::string errMsg((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize());
-                    WARNING("Loading " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
+                    WARNING("Compiling " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
                     DEBUG(code);
                     errMsgs->Release();
                     return false;

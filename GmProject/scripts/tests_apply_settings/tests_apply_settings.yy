@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tests_apply_settings",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tests_apply_settings",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Scripts/App/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

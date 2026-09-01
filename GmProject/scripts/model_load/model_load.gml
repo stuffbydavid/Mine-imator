@@ -15,7 +15,7 @@ function model_load(map, dir)
 			return null
 		}
 		
-		if (dev_mode_debug_names && !text_exists("model" + name))
+		if (debug_names && !text_exists("model" + name))
 			log("model/" + name + mc_unknown_asset_warning)
 		
 		// File
@@ -52,7 +52,7 @@ function model_load(map, dir)
 			var curstate = ds_map_find_first(map[?"states"]);
 			while (!is_undefined(curstate))
 			{
-				if (dev_mode_debug_names && !text_exists("modelstate" + curstate))
+				if (debug_names && !text_exists("modelstate" + curstate))
 					log("model/state/" + curstate + mc_unknown_asset_warning)
 				
 				with (new_obj(obj_model_state))
@@ -77,7 +77,7 @@ function model_load(map, dir)
 						value_color_name_map[v] = null
 						value_pattern_type[v] = other.pattern_type
 						
-						if (dev_mode_debug_names && !text_exists("modelstatevalue" + value_name[v]))
+						if (debug_names && !text_exists("modelstatevalue" + value_name[v]))
 							log("model/state/value/" + value_name[v] + mc_unknown_asset_warning)
 						
 						// File

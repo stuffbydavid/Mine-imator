@@ -9,7 +9,7 @@ function sortlist_column_get(slist, value, col)
 	switch (slist.column_name[col])
 	{
 		case "libname":
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.display_name)
 		
@@ -35,7 +35,7 @@ function sortlist_column_get(slist, value, col)
 			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
 		
 		case "particleeditortypename":
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.name)
 		
@@ -51,7 +51,7 @@ function sortlist_column_get(slist, value, col)
 			return string(floor(value.spawn_rate * 100)) + "%"
 		
 		case "resname":
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.display_name)
 		

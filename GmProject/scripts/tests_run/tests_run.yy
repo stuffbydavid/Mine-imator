@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"benchmarks_run",
+  "%Name":"tests_run",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"benchmarks_run",
+  "name":"tests_run",
   "parent":{
-    "name":"Debug",
-    "path":"folders/Scripts/App/Debug.yy",
+    "name":"Tests",
+    "path":"folders/Scripts/App/Tests.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

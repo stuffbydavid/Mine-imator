@@ -63,7 +63,7 @@ function res_load_scenery()
 				
 					debug_timer_stop("res_load_scenery, Parse NBT")
 			
-					if (dev_mode_debug_schematics)
+					if (debug_schematics)
 						nbt_debug_tag_compound("root", rootmap)
 					
 					// Parse blocks

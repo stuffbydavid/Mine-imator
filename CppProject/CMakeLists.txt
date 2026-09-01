@@ -397,14 +397,12 @@ if(WIN32)
 
 	# Set working directories
 	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
-	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}")
-	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RUNBENCHMARKS "${CMAKE_BINARY_DIR}")
 	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
 
-	# Apply benchmark arguments
-	set(BENCHMARK_ARGS "--benchmark_project \"${REPO_DIR}/rendering/benchmark_project/benchmark_project.miproject\"")
+	# Apply test arguments
+	set(TEST_ARGS "--test \"${REPO_DIR}/rendering/test_project/test_project.miproject\"")
 	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_COMMAND_ARGUMENTS
-		"$<$<OR:$<CONFIG:DebugBenchmarks>,$<CONFIG:RunBenchmarks>>:${BENCHMARK_ARGS}>")
+		"$<$<OR:$<CONFIG:DebugBenchmarks>,$<CONFIG:RunBenchmarks>>:${TEST_ARGS}>")
 else()
 	target_compile_options(${PROJECT_NAME} PRIVATE
 		-Wall

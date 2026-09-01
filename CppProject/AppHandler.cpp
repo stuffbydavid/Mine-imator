@@ -69,7 +69,7 @@ namespace CppProject
 					a++;
 					continue;
 				}
-				else if (arg == "--benchmark_project")
+				else if (arg == "--test" && !RELEASE_MODE)
 					headless = true;
 
 				args.append(arg);
@@ -85,6 +85,16 @@ namespace CppProject
 			new QApplication(argc, argv);
 			QCoreApplication::setApplicationName(PROJECT_NAME);
 
+			// Set working directory
+		#if RELEASE_MODE
+			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
+			gmlGlobal::debug_mode = false;
+		#else
+			DEBUG("Debug mode enabled");
+			gmlGlobal::working_directory = QDir::currentPath() + "/";
+			gmlGlobal::debug_mode = true;
+		#endif
+
 			// Set paths
 			QDir().mkpath(user_directory_get());
 			QDir().mkpath(projects_directory_get());
@@ -98,25 +108,17 @@ namespace CppProject
 				file_rename_lib(prevLog, prevLogDest);
 			}
 
-		#if DEBUG_MODE
-			gmlGlobal::working_directory = QDir::currentPath() + "/";
-			DEBUG("Debug mode enabled");
-		#else
-			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
-		#endif
-
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
 
 		#if OS_WINDOWS
-			BOOL is64Bit;
-			IsWow64Process((HANDLE)qApp->applicationPid(), &is64Bit);
-			DEBUG("Platform: Windows " + QString(is64Bit ? "x64" : "x86"));
-			DEBUG("Graphics API: " + QString(IS_D3D11 ? "D3D11" : "OpenGL"));
 		#ifdef _WIN64
+			DEBUG("Platform: Windows x64");
 			DEBUG("Executable: 64-bit");
 		#else
+			DEBUG("Platform: Windows x86");
 			DEBUG("Executable: 32-bit");
 		#endif
+			DEBUG("Graphics API: " + QString(IS_D3D11 ? "D3D11" : "OpenGL"));
 		#elif OS_MAC
 			DEBUG("Platform: MacOS");
 		#else
@@ -334,7 +336,7 @@ namespace CppProject
 		stepTimer.stop();
 
 		// Debug
-		if (keyboard_check_pressed(vk_f6) && global::dev_mode)
+		if (keyboard_check_pressed(vk_f6) && !RELEASE_MODE)
 		{
 			move_all_to_texture_page();
 			TexturePage::Debug();

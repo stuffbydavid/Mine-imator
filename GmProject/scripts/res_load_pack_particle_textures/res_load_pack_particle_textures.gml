@@ -65,7 +65,7 @@ function res_load_pack_particle_textures()
 			tex = texture_duplicate(mc_res.particle_texture_map[?name])
 		else
 		{
-			if (dev_mode)
+			if (debug_mode)
 				log("Particle texture not found", mc_assets.particle_texture_list[|t])
 			tex = texture_create_missing()
 		}

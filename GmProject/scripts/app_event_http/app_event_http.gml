@@ -3,7 +3,7 @@
 function app_event_http()
 {
 	// Check assets
-	if (async_load[?"id"] = http_assets && async_load[?"status"] < 1 && !dev_mode)
+	if (async_load[?"id"] = http_assets && async_load[?"status"] < 1 && !debug_mode)
 	{
 		http_assets = null
 		if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)

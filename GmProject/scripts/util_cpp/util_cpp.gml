@@ -1,17 +1,17 @@
-/// CppSeparate BoolType is_debug()
-function is_debug()
-{
-	return debug_mode;
-}
-
-/// CppSeparate BoolType is_optimized()
-function is_optimized()
+/// CppSeparate BoolType is_cpp()
+function is_cpp()
 {
 	return false;
 }
 
-/// CppSeparate BoolType is_cpp()
-function is_cpp()
+/// CppSeparate BoolType is_release()
+function is_release()
+{
+	return false;
+}
+
+/// CppSeparate BoolType is_optimized()
+function is_optimized()
 {
 	return false;
 }
@@ -307,11 +307,11 @@ function get_primitive_render_calls()
 	return -1;
 }
 
-/// CppSeparate IntType surface_create_ext2(IntType, IntType, BoolType, BoolType)
-/// Creates a new surface with additional settings to toggle the depth buffer and HDR color modes (floating points).
-function surface_create_ext2(width, height, depth = true, hdr = false)
+/// CppSeparate IntType surface_create_ext2(IntType, IntType, IntType, BoolType)
+/// Creates a new surface with additional settings to toggle the depth buffer.
+function surface_create_ext2(width, height, format, depth = true)
 {
-	return surface_create(width, height)
+	return surface_create(width, height, format)
 }
 
 /// CppSeparate void sprite_set_texture_page(IntType, BoolType)

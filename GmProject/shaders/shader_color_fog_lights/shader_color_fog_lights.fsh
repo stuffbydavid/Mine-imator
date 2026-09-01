@@ -40,6 +40,9 @@ void main()
 	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	bool isSky = vDiffuse.r < 0.0;
 	
+	if (baseColor.a == 0.0)
+		discard;
+	
 	// Get material data
 	float roughness, metallic, emissive, F0, sss;
 	getMaterial(roughness, metallic, emissive, F0, sss);

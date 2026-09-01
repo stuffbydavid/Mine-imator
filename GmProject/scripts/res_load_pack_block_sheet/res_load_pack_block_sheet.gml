@@ -9,7 +9,7 @@ function res_load_pack_block_sheet(type, suffix)
 	debug_timer_start()
 	
 	// Used to figure out what new files have been added
-	if (dev_mode_debug_unused && !dev_mode_skip_blocks)
+	if (debug_unused && !debug_skip_blocks)
 	{
 		var filesarr = file_find(load_assets_dir + mc_textures_directory + "block/", ".png");
 		fileslist = ds_list_create()
@@ -44,12 +44,12 @@ function res_load_pack_block_sheet(type, suffix)
 			blocksize = max(blocksize, texture_width(tex))
 			ds_list_add(texlist, tex)
 			
-			if (dev_mode_debug_unused && !dev_mode_skip_blocks)
+			if (debug_unused && !debug_skip_blocks)
 				ds_list_delete_value(fileslist, fname)
 		}
 		else
 		{
-			if (dev_mode)
+			if (debug_mode)
 				log("Block texture not found", mc_assets.block_texture_list[|t] + suffix)
 			ds_list_add(texlist, null)
 		}
@@ -78,7 +78,7 @@ function res_load_pack_block_sheet(type, suffix)
 		}
 		else
 		{
-			if (dev_mode)
+			if (debug_mode)
 				log("Animated block texture not found", mc_assets.block_texture_ani_list[|t] + suffix)
 			ds_list_add(texanilist, null)
 		}
@@ -87,7 +87,7 @@ function res_load_pack_block_sheet(type, suffix)
 	if (fileslist != null)
 	{
 		ds_list_sort(fileslist, true)
-		if (ds_list_size(fileslist) > 0 && !dev_mode_skip_blocks)
+		if (ds_list_size(fileslist) > 0 && !debug_skip_blocks)
 		{
 			var str = "The following block textures were unused:\n";
 			for (var i = 0; i < ds_list_size(fileslist); i++)

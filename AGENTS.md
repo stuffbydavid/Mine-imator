@@ -9,6 +9,7 @@
 * CppProject/External/ → Pre-built external libraries
 * GmProject/ → GameMaker project for non-engine development
 * BUILD.md → Build instructions
+* RENDER.md → Rendering settings for validation
 * Setup.ps1 → Build setup script (Windows PowerShell)
 * Setup.sh → Build setup script (Unix Bash)
 
@@ -37,16 +38,23 @@ The project has a GameMaker/GML "front-end" which is converted to C++ code using
 If you make a change under CppProject/Generated/ and decide to keep it, you must back-port it into the correct .gml file. This directory is not versioned and will be overwritten by the next call to CppGen.
 
 General development practices:
-* CppProject is used for the final product, not GameMaker, and should be preferred for validation.
 * Do not build or run the project during development unless asked.
+* CppProject is used for the final product, not GameMaker, and should be preferred for validation.
+* When running, use the build folder as the working directory, not the repository root.
 * Do not run CppGen after GML changes unless asked.
 * Aim to follow the existing formatting/comment style in the GML/C++ codebases:
     * Single line comments do not end with `.`
     * Local variables in GML code do not use `_`
 
-## Benchmarking/validation
-If asked for validation of changes, pass in the `--benchmark_project <.miproject>` flag into Mine-imator to start running a project, which should be assumed to be `<build_folder>/dev_project/dev_project.miproject`, where every frame in the timeline is treated as a separate "test". If asked to validate rendering effects, use `<repo_dir>/rendering/benchmark_project/benchmark_project.miproject`. The rendering output and timing data is found under a timestamped folder in the runs/ subdirectory and should be validated against the files in baselines/ for correctness, if available. Always check that the expected images are available/non-black/non-zero bytes and no runtime errors are printed/logged.
-
-If asked for a specific range of tests, use `--benchmark_start X` and `--benchmark_end Y` (Y exclusive), or `--benchmark_full` to run through all frames in the project. For troubleshooting a rendering issue in the pipeline, pass in `--benchmark_exportpasses`, which should only be used sparingly for a specific test using the start/end parameters.
+## Validation/benchmarking
+If asked for validation of changes, pass in the `--test <.miproject>` flag into Mine-imator to start running a project in headless mode, which should be assumed to be `<build_folder>/dev_project/dev_project.miproject`, where every frame in the timeline is treated as a separate "test". If asked to validate rendering effects, use `<repo_dir>/rendering/test_project/test_project.miproject`. The rendering output and timing data is saved in a timestamped folder under the runs/ subdirectory and should be validated against the files in baselines/ for correctness, if available. Always check that the expected images are available/non-black/non-zero bytes and no runtime errors are printed/logged. Report deviations in image output or unexpected performance drops.
 
 On Windows, if tests succeed in the default DirectX mode, run Mine-imator again with `--gfx OpenGL` added to test OpenGL unless asked otherwise.
+
+If asked for a specific range of tests, use `--start X` and `--end Y` (Y exclusive), or `--all` to run through all frames in the project. By default, the `flat`, `shaded` and `high` render modes will be tested, use `--mode <mode>` to limit the test to a specific mode. For typical, non-troubleshooting validation, all modes should be tested.
+
+For debugging a rendering issue in the pipeline, use `--pass <pass>` to save a high-quality pass in a new folder with the current frame/test name. Possible values are `diffuse`, `specular`, `ao`, `shadows`, `indirect`, `indirectshadows`, `reflections`, `depth`, `normal`, `material` and `all` to save every pass.
+
+To test render settings, use `--set "<settings>"` and pass in a comma-separated list of values, such as `"shadows=true,samples=64"`. You are advised to combine settings using spaces to perform multiple tests if needed, rather than multiple runs, for example `"shadows=true,samples=8 samples=16 samples=32"`. Consult RENDER.md for the full list of render and camera settings. For each frame, the settings are restored to their defaults found in `test_base.mirender`, if available.
+
+Agents must include `--agent <agent-name>` in benchmark invocations, such as `--agent Codex` or `--agent Gemini`, so the run directory identifies its producer.

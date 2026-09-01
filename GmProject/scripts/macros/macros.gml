@@ -93,7 +93,7 @@ function macros()
 	#macro link_twitter					"https://www.mineimator.com/tweets"
 	#macro link_discord					"https://www.mineimator.com/discord"
 	#macro link_donate					"https://www.mineimator.com/donate"
-	#macro show_modelbench_popup		!dev_mode && true
+	#macro show_modelbench_popup		!debug_mode && true
 	#macro http_ok						200
 	#macro http_bad_request				400
 	

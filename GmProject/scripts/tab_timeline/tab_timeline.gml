@@ -721,7 +721,7 @@ function tab_timeline()
 		{
 			marker = timeline_marker_list[|i]
 			color = setting_theme.accent_list[marker.color]
-			name = marker.name + (dev_mode_debug_names ? " [" + marker.save_id + "]" : "")
+			name = marker.name + (debug_names ? " [" + marker.save_id + "]" : "")
 			
 			markx = tlx + floor(marker.pos * timeline_zoom - timeline.hor_scroll.value)
 			markeditx = tlx + floor(marker.edit_pos * timeline_zoom - timeline.hor_scroll.value)
@@ -1135,7 +1135,7 @@ function tab_timeline()
 				backalpha = .25
 			}
 			
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				name += " [" + string(tl.save_id) + "]"
 			
 			if (name != "")

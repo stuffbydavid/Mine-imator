@@ -69,7 +69,7 @@ function res_load_pack_model_textures()
 			tex = texture_duplicate(mc_res.model_texture_map[?name])
 		else
 		{
-			if (dev_mode)
+			if (debug_mode)
 				log("Model texture not found", mc_assets.model_texture_list[|t])
 			tex = texture_create_missing()
 		}

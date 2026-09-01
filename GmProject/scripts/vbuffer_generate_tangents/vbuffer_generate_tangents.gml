@@ -4,7 +4,7 @@
 
 function vbuffer_generate_tangents(vbuffer)
 {
-	if (is_cpp() || dev_mode_skip_tangents)
+	if (is_cpp() || debug_skip_tangents)
 		return vbuffer;
 	
 	var size, p, uv, t, seekpos, seekend;

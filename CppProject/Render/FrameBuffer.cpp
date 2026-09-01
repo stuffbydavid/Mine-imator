@@ -3,10 +3,87 @@
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
+#include "Generated/GmlFunc.hpp"
 #include "GraphicsApiHandler.hpp"
+
+#include <QFloat16>
 
 namespace CppProject
 {
+	FrameBuffer::FrameBuffer(IntType format, BoolType depthBuffer) :
+		format(format),
+		depthBuffer(depthBuffer)
+	{
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			switch (this->format)
+			{
+				case surface_rgba8unorm: d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM; break;
+				case surface_r8unorm: d3dFormat = DXGI_FORMAT_R8_UNORM; break;
+				case surface_rg8unorm: d3dFormat = DXGI_FORMAT_R8G8_UNORM; break;
+				case surface_rgba4unorm: d3dFormat = DXGI_FORMAT_B4G4R4A4_UNORM; break;
+				case surface_rgba16float: d3dFormat = DXGI_FORMAT_R16G16B16A16_FLOAT; break;
+				case surface_r16float: d3dFormat = DXGI_FORMAT_R16_FLOAT; break;
+				case surface_rgba32float: d3dFormat = DXGI_FORMAT_R32G32B32A32_FLOAT; break;
+				case surface_r32float: d3dFormat = DXGI_FORMAT_R32_FLOAT; break;
+				default:
+					FATAL("Unknown surface format " + NumStr(this->format));
+					break;
+			}
+		}
+	#endif
+		if (IS_OPENGL)
+		{
+			switch (this->format)
+			{
+				case surface_rgba8unorm:
+					glInternalFormat = GL_RGBA8;
+					glFormat = GL_RGBA;
+					glType = GL_UNSIGNED_BYTE;
+					break;
+				case surface_r8unorm:
+					glInternalFormat = GL_R8;
+					glFormat = GL_RED;
+					glType = GL_UNSIGNED_BYTE;
+					break;
+				case surface_rg8unorm:
+					glInternalFormat = GL_RG8;
+					glFormat = GL_RG;
+					glType = GL_UNSIGNED_BYTE;
+					break;
+				case surface_rgba4unorm:
+					glInternalFormat = GL_RGBA4;
+					glFormat = GL_RGBA;
+					glType = GL_UNSIGNED_SHORT_4_4_4_4;
+					break;
+				case surface_rgba16float:
+					glInternalFormat = GL_RGBA16F;
+					glFormat = GL_RGBA;
+					glType = GL_HALF_FLOAT;
+					break;
+				case surface_r16float:
+					glInternalFormat = GL_R16F;
+					glFormat = GL_RED;
+					glType = GL_HALF_FLOAT;
+					break;
+				case surface_rgba32float:
+					glInternalFormat = GL_RGBA32F;
+					glFormat = GL_RGBA;
+					glType = GL_FLOAT;
+					break;
+				case surface_r32float:
+					glInternalFormat = GL_R32F;
+					glFormat = GL_RED;
+					glType = GL_FLOAT;
+					break;
+				default:
+					FATAL("Unknown surface format " + NumStr(this->format));
+					break;
+			}
+		}
+	}
+
 	FrameBuffer::~FrameBuffer()
 	{
 	#if OS_WINDOWS
@@ -67,7 +144,7 @@ namespace CppProject
 			texDesc.Height = std::clamp(size.height(), 1, (int)maxSize);
 			texDesc.MipLevels = 1;
 			texDesc.ArraySize = 1;
-			texDesc.Format = hdr ? DXGI_FORMAT_R32G32B32A32_FLOAT : DXGI_FORMAT_R8G8B8A8_UNORM;
+			texDesc.Format = d3dFormat;
 			texDesc.SampleDesc.Count = 1;
 			texDesc.Usage = D3D11_USAGE_DEFAULT;
 			texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
@@ -154,7 +231,7 @@ namespace CppProject
 
 			// Resize color and depth/stencil texture
 			GFX->glBindTexture(GL_TEXTURE_2D, glColorTexId);
-			GFX->glTexImage2D(GL_TEXTURE_2D, 0, hdr ? GL_RGBA32F : GL_RGBA, size.width(), size.height(), 0, GL_RGBA, hdr ? GL_FLOAT : GL_UNSIGNED_BYTE, 0);
+			GFX->glTexImage2D(GL_TEXTURE_2D, 0, glInternalFormat, size.width(), size.height(), 0, glFormat, glType, 0);
 			GFX->glBindTexture(GL_TEXTURE_2D, 0);
 			if (depthBuffer)
 			{
@@ -287,10 +364,13 @@ namespace CppProject
 			uchar* dataFlipped = new uchar[rowSize * size.height()];
 
 			GLint prevFboId;
+			GLint prevPackAlignment;
 			GFX->glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &prevFboId);
+			GFX->glGetIntegerv(GL_PACK_ALIGNMENT, &prevPackAlignment);
+			GFX->glPixelStorei(GL_PACK_ALIGNMENT, 1);
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, glFboId);
 			if (color)
-				GFX->glReadPixels(0, 0, size.width(), size.height(), GL_RGBA, hdr ? GL_FLOAT : GL_UNSIGNED_BYTE, dataFlipped);
+				GFX->glReadPixels(0, 0, size.width(), size.height(), glFormat, glType, dataFlipped);
 			else
 			{
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, glDepthStencilRboId);
@@ -298,6 +378,7 @@ namespace CppProject
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			}
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, prevFboId);
+			GFX->glPixelStorei(GL_PACK_ALIGNMENT, prevPackAlignment);
 			GL_CHECK_ERROR();
 
 			// Copy in correct row order
@@ -312,27 +393,125 @@ namespace CppProject
 
 	void FrameBuffer::CopyColorData(uchar* dst)
 	{
-		if (!hdr)
+		IntType pixelCount = size.width() * size.height();
+		memset(dst, 0, pixelCount * 4);
+		if (!pixelCount)
+			return;
+
+		if (format == surface_rgba8unorm)
 		{
 			CopyData(true, dst);
 			return;
 		}
 
-		// Convert from HDR
-		float* data = new float[size.width() * size.height() * 4];
-		CopyData(true, (uchar*)data);
-		for (IntType y = 0; y < size.height(); y++)
-		for (IntType x = 0; x < size.width(); x++)
-			for (IntType i = 0; i < 4; i++)
-				dst[(y * size.width() + x) * 4 + i] = std::clamp(data[(y * size.width() + x) * 4 + i], 0.f, 1.f) * 255;
+		IntType pixelSize = GetPixelSize(true);
+		uchar* data = new uchar[pixelCount * pixelSize]();
+		CopyData(true, data);
+
+		auto setPixel = [dst](IntType index, uchar red, uchar green, uchar blue, uchar alpha)
+		{
+			dst[index * 4] = red;
+			dst[index * 4 + 1] = green;
+			dst[index * 4 + 2] = blue;
+			dst[index * 4 + 3] = alpha;
+		};
+		switch (format)
+		{
+			case surface_r8unorm:
+				for (IntType i = 0; i < pixelCount; i++)
+					setPixel(i, data[i], 0, 0, 255);
+				break;
+
+			case surface_rg8unorm:
+				for (IntType i = 0; i < pixelCount; i++)
+					setPixel(i, data[i * pixelSize], data[i * pixelSize + 1], 0, 255);
+				break;
+
+			case surface_rgba4unorm:
+				for (IntType i = 0; i < pixelCount; i++)
+				{
+					uint16_t packed;
+					memcpy(&packed, data + i * pixelSize, sizeof(packed));
+					if (IS_D3D11)
+						setPixel(i,
+							((packed >> 8) & 0xf) * 17,
+							((packed >> 4) & 0xf) * 17,
+							(packed & 0xf) * 17,
+							((packed >> 12) & 0xf) * 17
+						);
+					if (IS_OPENGL)
+						setPixel(i,
+							((packed >> 12) & 0xf) * 17,
+							((packed >> 8) & 0xf) * 17,
+							((packed >> 4) & 0xf) * 17,
+							(packed & 0xf) * 17
+						);
+				}
+				break;
+
+			case surface_rgba16float:
+				for (IntType i = 0; i < pixelCount; i++)
+				for (IntType c = 0; c < 4; c++)
+				{
+					qfloat16 value;
+					memcpy(&value, data + i * pixelSize + c * sizeof(value), sizeof(value));
+					dst[i * 4 + c] = std::clamp((float)value, 0.f, 1.f) * 255;
+				}
+				break;
+
+			case surface_r16float:
+				for (IntType i = 0; i < pixelCount; i++)
+				{
+					qfloat16 value;
+					memcpy(&value, data + i * pixelSize, sizeof(value));
+					setPixel(i, std::clamp((float)value, 0.f, 1.f) * 255, 0, 0, 255);
+				}
+				break;
+
+			case surface_rgba32float:
+				for (IntType i = 0; i < pixelCount; i++)
+				for (IntType c = 0; c < 4; c++)
+				{
+					float value;
+					memcpy(&value, data + i * pixelSize + c * sizeof(value), sizeof(value));
+					dst[i * 4 + c] = std::clamp(value, 0.f, 1.f) * 255;
+				}
+				break;
+
+			case surface_r32float:
+				for (IntType i = 0; i < pixelCount; i++)
+				{
+					float value;
+					memcpy(&value, data + i * pixelSize, sizeof(value));
+					setPixel(i, std::clamp(value, 0.f, 1.f) * 255, 0, 0, 255);
+				}
+				break;
+		}
+
 		delete[] data;
 	}
 
+
 	IntType FrameBuffer::GetPixelSize(BoolType color) const
 	{
-		if (color)
-			return 4 * (hdr ? sizeof(float) : sizeof(uchar));
-		else
+		if (!color) // Depth/stencil data
 			return sizeof(uint32_t);
+
+		const IntType byteSize = sizeof(uint8_t);
+		const IntType floatSize = sizeof(float);
+		const IntType halfSize = floatSize / 2;
+		switch (format)
+		{
+			case surface_rgba8unorm:	return 4 * byteSize;
+			case surface_r8unorm:		return 1 * byteSize;
+			case surface_rg8unorm:		return 2 * byteSize;
+			case surface_rgba4unorm:	return 2 * byteSize;
+			case surface_rgba16float:	return 4 * halfSize;
+			case surface_r16float:		return 1 * halfSize;
+			case surface_rgba32float:	return 4 * floatSize;
+			case surface_r32float:		return 1 * floatSize;
+		}
+
+		return 0;
 	}
 }

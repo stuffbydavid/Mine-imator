@@ -8,7 +8,7 @@ function debug()
 {
 	var cap, valstr;
 	
-	if (!dev_mode)
+	if (!debug_mode)
 		return argument[argument_count - 1]
 	
 	cap = string_repeat("\t", debug_indent) + string(argument[0])

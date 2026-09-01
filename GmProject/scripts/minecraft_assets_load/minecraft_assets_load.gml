@@ -429,11 +429,11 @@ function minecraft_assets_load()
 				
 				load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blockslist))
 				
-				if (dev_mode_skip_blocks && load_assets_block_index >= 20)
+				if (debug_skip_blocks && load_assets_block_index >= 20)
 					load_assets_stage = "done"
 				
 				// Skip to the last 10 blocks to debug newer blocks
-				//if (dev_mode_skip_blocks && load_assets_stage != "done")
+				//if (debug_skip_blocks && load_assets_stage != "done")
 				//	load_assets_block_index = (ds_list_size(blockslist) - 10)
 				
 				if (load_assets_stage = "done")
@@ -447,7 +447,7 @@ function minecraft_assets_load()
 					block_liquid_slot_map[?"flowing_lava"] = ds_list_find_index(block_texture_ani_list, "block/lava_flow")
 					
 					// Grass paths renamed to dirt path in 1.17
-					if (!dev_mode_skip_blocks)
+					if (!debug_skip_blocks)
 						block_id_map[?"minecraft:grass_path"] = block_id_map[?"minecraft:dirt_path"]
 					
 					// Legacy block ID mapping
@@ -510,7 +510,7 @@ function minecraft_assets_load()
 					}
 					
 					// Dev mode: Look for newly added block states and model files
-					if (dev_mode_debug_unused && !dev_mode_skip_blocks)
+					if (debug_unused && !debug_skip_blocks)
 					{
 						// Blockstates
 						var filesarr = file_find(load_assets_dir + mc_blockstates_directory, ".json");

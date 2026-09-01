@@ -39,7 +39,7 @@ function model_file_load_part(map, root, res, model)
 		// Name
 		name = map[?"name"]
 		
-		if (res = null && dev_mode_debug_names && !text_exists("modelpart" + name))
+		if (res = null && debug_names && !text_exists("modelpart" + name))
 			log("model/part/" + name + mc_unknown_asset_warning)
 		
 		// Depth

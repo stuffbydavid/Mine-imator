@@ -53,7 +53,7 @@ function debug_info_draw()
 		str += "Primitive render calls: " + string(get_primitive_render_calls()) + " \n"
 		str += "\n"
 		
-		if (dev_mode)
+		if (debug_mode)
 		{
 			if (!is_cpp() && ds_list_size(window_list) > 0) // Debug windows in GM
 			{
