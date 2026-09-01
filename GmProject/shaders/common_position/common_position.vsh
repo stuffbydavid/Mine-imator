@@ -1,4 +1,5 @@
 #pragma shady: skip_compilation
+void main() {}
 
 #region WORLD_POSITION_LIB
 #pragma shady: macro_begin WORLD_POSITION_LIB
@@ -59,5 +60,3 @@ vec4 getClipPosition(vec3 worldPos)
 
 #pragma shady: macro_end
 #endregion
-
-void main() {}

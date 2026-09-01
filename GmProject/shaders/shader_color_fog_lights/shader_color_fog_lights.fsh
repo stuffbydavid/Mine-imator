@@ -1,12 +1,6 @@
 uniform sampler2D uTexture; // static
 uniform vec2 uTextureSize;
 
-uniform sampler2D uGlintTexture; // static
-uniform vec2 uGlintOffset;
-uniform vec2 uGlintSize;
-uniform int uGlintEnabled;
-uniform float uGlintStrength;
-
 uniform int uColorsExt;
 uniform vec4 uRGBAdd;
 uniform vec4 uRGBSub;
@@ -41,24 +35,8 @@ varying vec4 vCustom;
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
-
-vec4 rgbtohsb(vec4 c)
-{
-	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-	vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
-	vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
-
-	float d = q.x - min(q.w, q.y);
-	float e = 1.0e-10;
-	return vec4(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x, c.a);
-}
-
-vec4 hsbtorgb(vec4 c)
-{
-	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-	return vec4(c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y), c.a);
-}
+#pragma shady: inline(common_effect.EFFECT_GLINT_LIB)
+#pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
 
 float getFog()
 {
@@ -149,18 +127,14 @@ void main()
 	
 	// Get specular color
 	spec = (mix(vec3(1.0), col.rgb, metallic) * pow(uFallbackColor.rgb, vec3(uGamma)) * F);
-	
 	dif *= (1.0 - metallic);
 	
 	// Emissive
 	dif += emissive;
 	
 	col.rgb *= dif; // Multiply diffuse
-	
-	col.rgb += spec;
-	
-	if (uGlintEnabled > 0 && col.a > 0.0)
-		col.rgb += pow(texture2D(uGlintTexture, (tex * ((uTextureSize / uGlintSize))) + uGlintOffset).rgb * col.a * uGlintStrength, vec3(uGamma));
+	col.rgb += spec; // Add specular
+	col.rgb += getGlint(col, tex, uTextureSize, uGamma); // Add glint
 	
 	if (vDiffuse.r >= 0.0)
 	{

@@ -1,4 +1,5 @@
 #pragma shady: skip_compilation
+void main() {}
 
 #region PACK_VALUE_LIB
 #pragma shady: macro_begin PACK_VALUE_LIB
@@ -39,5 +40,3 @@ vec3 unpackNormal(vec4 c)
 
 #pragma shady: macro_end
 #endregion
-
-void main() {}

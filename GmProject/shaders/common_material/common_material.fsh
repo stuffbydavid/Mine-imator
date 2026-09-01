@@ -1,4 +1,5 @@
 #pragma shady: skip_compilation
+void main() {}
 
 #region NORMAL_MAP_LIB
 #pragma shady: macro_begin NORMAL_MAP_LIB
@@ -203,5 +204,3 @@ void handleSubsurfaceHighlight(inout vec3 light, inout vec3 subsurf, vec3 N, vec
 
 #pragma shady: macro_end
 #endregion
-
-void main() {}

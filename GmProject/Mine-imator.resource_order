@@ -2075,6 +2075,8 @@
     {"name":"window_taskbar_progress_value_set","order":4,"path":"scripts/window_taskbar_progress_value_set/window_taskbar_progress_value_set.yy",},
     {"name":"world_import","order":17,"path":"scripts/world_import/world_import.yy",},
     {"name":"yesno","order":35,"path":"scripts/yesno/yesno.yy",},
+    {"name":"common_color","order":5,"path":"shaders/common_color/common_color.yy",},
+    {"name":"common_effect","order":4,"path":"shaders/common_effect/common_effect.yy",},
     {"name":"common_material","order":2,"path":"shaders/common_material/common_material.yy",},
     {"name":"common_position","order":1,"path":"shaders/common_position/common_position.yy",},
     {"name":"common_util","order":3,"path":"shaders/common_util/common_util.yy",},
