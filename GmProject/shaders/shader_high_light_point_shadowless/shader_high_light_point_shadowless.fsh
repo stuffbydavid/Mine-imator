@@ -1,5 +1,3 @@
-#define PI 3.14159265
-
 uniform sampler2D uTexture; // static
 
 uniform int uIsSky;

@@ -129,6 +129,8 @@ void handleAlphaDiscard(vec3 pos, inout vec4 col)
 #region SPECULAR_LIB
 #pragma shady: macro_begin SPECULAR_LIB
 
+#pragma shady: inline(common_constants.MATH)
+
 // GGX specular (https://learnopengl.com/PBR/Lighting)
 float distributionGGX(vec3 N, vec3 H, float roughness)
 {

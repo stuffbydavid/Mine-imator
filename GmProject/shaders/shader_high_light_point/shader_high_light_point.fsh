@@ -1,5 +1,4 @@
 #define SQRT05 0.707106781
-#define PI 3.14159265
 
 uniform sampler2D uTexture; // static
 uniform int uIsSky;
@@ -37,6 +36,7 @@ varying vec4 vColor;
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_constants.MATH)
 
 vec2 getShadowMapCoord(vec3 look)
 {

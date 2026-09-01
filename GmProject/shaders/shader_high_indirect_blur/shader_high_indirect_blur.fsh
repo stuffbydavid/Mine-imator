@@ -1,6 +1,5 @@
 #define DEPTH_SENSITIVITY 120.0
 #define SAMPLES 27
-#define PI 3.14159265
 
 varying vec2 vTexCoord;
 
@@ -16,6 +15,7 @@ uniform float uBlurSize;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
+#pragma shady: inline(common_constants.MATH)
 
 void main()
 {
@@ -25,7 +25,7 @@ void main()
 	
 	// Generate random direction
 	float theta, cosTheta, sinTheta;
-	theta = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * 2.0 * PI;
+	theta = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * TWO_PI;
 	cosTheta = cos(theta);
 	sinTheta = sin(theta);
 	

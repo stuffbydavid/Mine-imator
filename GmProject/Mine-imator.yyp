@@ -2551,6 +2551,7 @@
     {"id":{"name":"world_import","path":"scripts/world_import/world_import.yy",},},
     {"id":{"name":"yesno","path":"scripts/yesno/yesno.yy",},},
     {"id":{"name":"common_color","path":"shaders/common_color/common_color.yy",},},
+    {"id":{"name":"common_constants","path":"shaders/common_constants/common_constants.yy",},},
     {"id":{"name":"common_effect","path":"shaders/common_effect/common_effect.yy",},},
     {"id":{"name":"common_material","path":"shaders/common_material/common_material.yy",},},
     {"id":{"name":"common_position","path":"shaders/common_position/common_position.yy",},},

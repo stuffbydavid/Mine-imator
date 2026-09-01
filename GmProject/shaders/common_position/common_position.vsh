@@ -4,6 +4,8 @@ void main() {}
 #region WORLD_POSITION_LIB
 #pragma shady: macro_begin WORLD_POSITION_LIB
 
+#pragma shady: inline(common_constants.MATH)
+
 // Wind
 uniform float uTime; // static
 uniform float uWindEnable;
@@ -15,7 +17,6 @@ uniform float uWindDirectionalSpeed; // static
 uniform float uWindDirectionalStrength;
 
 // GPU Gems 3: Chapter 6
-#define PI 3.14159265
 float getNoise(float v)
 {
 	return cos(v * PI) * cos(v * 3.0 * PI) * cos(v * 5.0 * PI) * cos(v * 7.0 * PI) + sin(v * 5.0 * PI) * 0.1;

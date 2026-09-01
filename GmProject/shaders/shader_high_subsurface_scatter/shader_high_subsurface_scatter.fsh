@@ -1,5 +1,4 @@
 #define MAX_SAMPLES 65
-#define PI 3.14159265
 
 uniform sampler2D uSSSBuffer;
 uniform sampler2D uSSSRangeBuffer;
@@ -21,6 +20,7 @@ uniform vec2 uKernel[MAX_SAMPLES]; // x = weight, y = distance
 varying vec2 vTexCoord;
 
 #pragma shady: inline(common_util.UNPACK_VALUE_LIB)
+#pragma shady: inline(common_constants.MATH)
 
 float getDepth(vec2 coord)
 {
@@ -50,7 +50,7 @@ void main()
 		
 		// Get random direction to blur in
 		vec3 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rgb;
-		vec2 randDir = vec2(cos(noise.r * 2.0 * PI), sin(noise.r * 2.0 * PI));
+		vec2 randDir = vec2(cos(noise.r * TWO_PI), sin(noise.r * TWO_PI));
 		rad *= noise.g * randDir;
 		
 		// Sample pixels in positive and negative blur direction

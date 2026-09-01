@@ -1,5 +1,3 @@
-#define PI 3.14159265359
-
 uniform int uShadowsEnabled;
 uniform int uSpecularEnabled;
 uniform sampler2D uShadows;

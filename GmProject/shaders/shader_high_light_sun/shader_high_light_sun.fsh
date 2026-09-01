@@ -1,4 +1,3 @@
-#define PI 3.14159265
 #define NUM_CASCADES 3
 
 uniform sampler2D uTexture; // static

@@ -1,4 +1,3 @@
-#define PI 3.14159265
 #define up vec3(0.0, 0.0, 1.0)
 #define RAY_SPECULAR 0
 #define RAY_DIFFUSE 1
@@ -49,6 +48,7 @@ uniform float uSampleIndex;
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 #pragma shady: inline(common_util.BLUE_NOISE_DIRECTION_LIB)
+#pragma shady: inline(common_constants.MATH)
 
 vec2 viewPosToPixel(vec3 viewPos)
 {
@@ -97,7 +97,7 @@ vec2 Hammersley(int i, int N)
 vec3 sampleGGX(vec2 Xi, float roughness)
 {
 	float a = roughness * roughness;
-	float phi = 2.0 * PI * Xi.x;
+	float phi = TWO_PI * Xi.x;
 	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
 	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
 	
