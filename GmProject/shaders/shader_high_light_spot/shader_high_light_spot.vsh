@@ -13,7 +13,6 @@ uniform mat4 uShadowMatrix; // static
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec3 vTangent;
-varying mat3 vTBN;
 varying vec2 vTexCoord;
 varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
@@ -33,8 +32,6 @@ void main()
 	vPosition = getWorldPosition(in_Position, in_Wave);
 	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
 	vTangent = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
-	vTangent = normalize(vTangent - dot(vTangent, vNormal) * vNormal);
-	vTBN = mat3(vTangent, cross(vTangent, vNormal), vNormal);
 	
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	vScreenCoord = uLightMatrix * vec4(vPosition, 1.0);

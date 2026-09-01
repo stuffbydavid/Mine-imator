@@ -4,8 +4,10 @@ varying vec3 vPosition;
 varying vec2 vTexCoord;
 varying float vDepth;
 varying vec4 vColor;
-varying mat3 vTBN;
+varying vec3 vNormal;
+varying vec3 vTangent;
 
+#pragma shady: inline(common_material.TBN_LIB)
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_util.PACK_VALUE_LIB)
@@ -22,5 +24,5 @@ void main()
 	gl_FragData[0] = vec4(packValue(vDepth), 1.0);
 	
 	// Normal
-	gl_FragData[1] = packNormal(getMappedNormal(tex, vTBN));
+	gl_FragData[1] = packNormal(getMappedNormal(tex, getTBN(vNormal, vTangent)));
 }

@@ -2079,6 +2079,7 @@
     {"name":"common_effect","order":4,"path":"shaders/common_effect/common_effect.yy",},
     {"name":"common_material","order":2,"path":"shaders/common_material/common_material.yy",},
     {"name":"common_position","order":1,"path":"shaders/common_position/common_position.yy",},
+    {"name":"common_screen","order":6,"path":"shaders/common_screen/common_screen.yy",},
     {"name":"common_util","order":3,"path":"shaders/common_util/common_util.yy",},
     {"name":"shader_add","order":1,"path":"shaders/shader_add/shader_add.yy",},
     {"name":"shader_alpha_fix","order":5,"path":"shaders/shader_alpha_fix/shader_alpha_fix.yy",},

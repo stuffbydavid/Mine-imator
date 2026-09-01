@@ -2554,6 +2554,7 @@
     {"id":{"name":"common_effect","path":"shaders/common_effect/common_effect.yy",},},
     {"id":{"name":"common_material","path":"shaders/common_material/common_material.yy",},},
     {"id":{"name":"common_position","path":"shaders/common_position/common_position.yy",},},
+    {"id":{"name":"common_screen","path":"shaders/common_screen/common_screen.yy",},},
     {"id":{"name":"common_util","path":"shaders/common_util/common_util.yy",},},
     {"id":{"name":"shader_add","path":"shaders/shader_add/shader_add.yy",},},
     {"id":{"name":"shader_alpha_fix","path":"shaders/shader_alpha_fix/shader_alpha_fix.yy",},},

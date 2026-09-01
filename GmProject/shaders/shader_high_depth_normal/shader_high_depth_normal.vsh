@@ -15,10 +15,8 @@ varying vec2 vTexCoord;
 varying float vDepth;
 varying vec3 vNormal;
 varying vec3 vTangent;
-varying mat3 vTBN;
 varying vec4 vColor;
 varying vec4 vCustom;
-varying mat3 vWorldViewInv;
 
 // Texture
 uniform vec2 uTextureOffset;
@@ -91,12 +89,9 @@ void main()
 	vDepth = ((depthPos.z - uNear) / (uFar - uNear));
 	
 	// Create vectors for TBN matrix
-	vWorldViewInv = inverse2(gm_Matrices[MATRIX_WORLD_VIEW]);
-	
-	vNormal = normalize((vWorldViewInv * in_Normal));
-	vTangent = normalize((vWorldViewInv * in_Tangent));
-	vTangent = normalize(vTangent - dot(vTangent, vNormal) * vNormal);
-	vTBN = mat3(vTangent, cross(vTangent, vNormal), vNormal);
+	mat3 worldViewInv = inverse2(gm_Matrices[MATRIX_WORLD_VIEW]);
+	vNormal = normalize(worldViewInv * in_Normal);
+	vTangent = normalize(worldViewInv * in_Tangent);
 	
 	// Color
 	vColor = uBlendColor * in_Colour;

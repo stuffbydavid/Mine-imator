@@ -9,9 +9,9 @@ varying vec3 vTangent;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec4 vCustom;
-varying mat3 vTBN;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
+#pragma shady: inline(common_material.TBN_LIB)
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
@@ -29,7 +29,7 @@ void main()
 	getMaterial(roughness, metallic, emissive, F0, sss);
 	
 	// Fresnel
-	float F = getFresnel(getMappedNormal(vTexCoord, vTBN), F0, roughness, uCameraPosition, vPosition);
+	float F = getFresnel(getMappedNormal(vTexCoord, getTBN(vNormal, vTangent)), F0, roughness, uCameraPosition, vPosition);
 	
 	if (uIsSky > 0)
 		F = 0.0;

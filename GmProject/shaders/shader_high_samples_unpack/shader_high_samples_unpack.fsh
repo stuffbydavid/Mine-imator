@@ -6,7 +6,6 @@ uniform float uSamplesStrength;
 uniform int uRenderBackground;
 
 varying vec2 vTexCoord;
-varying vec4 vColor;
 
 float unpackSamples(float expo, float dec)
 {
