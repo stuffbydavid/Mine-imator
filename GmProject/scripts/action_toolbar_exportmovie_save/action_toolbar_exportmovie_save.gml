@@ -132,9 +132,15 @@ function action_toolbar_exportmovie_save()
 	render_hidden = popup_exportmovie.include_hidden
 	render_watermark = popup_exportmovie.watermark
 	
-	exportmovie_start = current_time
+	exportmovie_start = get_timer()
 	exportmovie_frame = 0
 	export_start("export_movie")
+	
+	if (benchmark_exportmovie)
+	{
+		benchmark_mode = true
+		exportmovie_benchmark_csv = "Frame,Animate_ms,Render_ms,Surface_ms,Export_ms\n"
+	}
 	
 	timeline_marker = exportmovie_marker_start
 	

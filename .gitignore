@@ -1,4 +1,9 @@
-build*/
+build/
+build-*/
+output*/
+runs/
+thumbnail.png
+*.backup*
 /install*/
 /CppGen/Logs/
 /CppGen/*/Logs/

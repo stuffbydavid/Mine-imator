@@ -65,7 +65,7 @@ function settings_load()
 			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
 			game_set_speed(gamespeed_fps, targetfps)
 			
-			if (!dev_mode)
+			if (!debug_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()

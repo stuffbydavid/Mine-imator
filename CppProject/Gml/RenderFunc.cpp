@@ -361,14 +361,15 @@ namespace CppProject
 		surface_reset_target();
 	}
 
-	IntType surface_create(IntType width, IntType height)
+	IntType surface_create(VarArgs args)
 	{
-		return (new Surface({ (int)width, (int)height }))->id;
+		IntType format = args.Size() > 2 ? args[2].ToInt() : surface_rgba8unorm;
+		return (new Surface({ (int)args[0].ToInt(), (int)args[1].ToInt() }, format))->id;
 	}
 
-	IntType surface_create_ext2(IntType width, IntType height, BoolType depthBuffer, BoolType hdr)
+	IntType surface_create_ext2(IntType width, IntType height, IntType format, BoolType depthBuffer)
 	{
-		return (new Surface({ (int)width, (int)height }, depthBuffer, hdr))->id;
+		return (new Surface({ (int)width, (int)height }, format, depthBuffer))->id;
 	}
 
 	BoolType surface_exists(IntType id)
@@ -436,7 +437,8 @@ namespace CppProject
 
 	void surface_reset_target()
 	{
-		if (GFX->surface == AppWin->GetSurface())
+		Surface* defaultSurface = App->headless ? App->headlessSurface : AppWin->GetSurface();
+		if (GFX->surface == defaultSurface)
 		{
 			WARNING("Invalid surface_reset_target");
 			return;
@@ -445,7 +447,7 @@ namespace CppProject
 		GFX->SubmitBatch();
 		GFX->ResetMRT();
 		GFX->surface->EndUse();
-		GFX->surface = AppWin->GetSurface();
+		GFX->surface = defaultSurface;
 		GFX->surface->BeginUse();
 	}
 

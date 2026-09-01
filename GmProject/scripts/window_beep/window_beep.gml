@@ -8,7 +8,7 @@ function window_beep(sound = 0)
 	// 3: MB_ICONWARNING;
 	// 4: MB_ICONINFORMATION;
 		
-	if (!is_cpp())
+	if (!is_cpp() || benchmark_mode)
 		return 0
 	
 	return external_call(lib_window_beep, sound)

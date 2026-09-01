@@ -6,6 +6,9 @@
 
 function render_start()
 {
+	render_start_time = get_timer()
+	render_start_surface_time = benchmark_surface_total_time
+
 	render_target = argument[0]
 	render_camera = argument[1]
 	render_width = project_video_width
@@ -123,4 +126,5 @@ function render_start()
 	render_update_camera()
 	
 	camera_apply(cam_render)
+	
 }

@@ -4,10 +4,34 @@ function is_cpp()
 	return false;
 }
 
+/// CppSeparate BoolType is_release()
+function is_release()
+{
+	return false;
+}
+
+/// CppSeparate BoolType is_optimized()
+function is_optimized()
+{
+	return false;
+}
+
+/// CppSeparate ArrType program_args_get()
+function program_args_get()
+{
+	return array()
+}
+
 /// CppSeparate void log_message(StringType text)
 function log_message(text)
 {
 	show_debug_message(text)
+}
+
+/// CppSeparate StringType log_file_get()
+function log_file_get()
+{
+	return ""
 }
 
 /// CppSeparate StringType os_get()
@@ -22,6 +46,12 @@ function platform_get()
 	return e_platform.WINDOWS;
 }
 
+/// CppSeparate StringType graphics_api_get()
+function graphics_api_get()
+{
+	return "GM";
+}
+
 /// CppSeparate RealType interface_scale_default_get()
 /// Returns the default interface scaling factor.
 function interface_scale_default_get()
@@ -33,6 +63,15 @@ function interface_scale_default_get()
 /// Sets the interface scaling factor.
 function interface_scale_set(factor)
 {
+}
+
+/// CppSeparate StringType file_directory_get()
+/// For developers, returns the location where build files are stored.
+/// For users in a release build, returns the Mine-imator_tmp folder in AppData on Windows, or /tmp on Unix.
+/// In GameMaker, this is the sandboxed Mine_imator folder in AppData.
+function file_directory_get()
+{
+	return game_save_id
 }
 
 /// CppSeparate StringType user_directory_get()
@@ -268,11 +307,11 @@ function get_primitive_render_calls()
 	return -1;
 }
 
-/// CppSeparate IntType surface_create_ext2(IntType, IntType, BoolType, BoolType)
-/// Creates a new surface with additional settings to toggle the depth buffer and HDR color modes (floating points).
-function surface_create_ext2(width, height, depth = true, hdr = false)
+/// CppSeparate IntType surface_create_ext2(IntType, IntType, IntType, BoolType)
+/// Creates a new surface with additional settings to toggle the depth buffer.
+function surface_create_ext2(width, height, format, depth = true)
 {
-	return surface_create(width, height)
+	return surface_create(width, height, format)
 }
 
 /// CppSeparate void sprite_set_texture_page(IntType, BoolType)

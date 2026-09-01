@@ -4,11 +4,13 @@
 function app_update_animate()
 {
 	// Go through timelines
-	var bgobject, updatevalues, cameraarr, spawnerarr;
+	var bgobject, updatevalues, cameraarr, spawnerarr, starttime;
 	updatevalues = (timeline_marker_previous != timeline_marker)
 	bgobject = null
 	cameraarr = []
 	spawnerarr = []
+	starttime = get_timer()
+	
 	background_light_amount = 1
 	background_light_data[0] = 0
 	background_sun_direction = vec3(0)
@@ -240,21 +242,30 @@ function app_update_animate()
 	
 	background_sky_color_final = merge_color(background_sky_color, background_night_sky_color, background_sky_night_alpha())
 	
+	// Benchmark
+	if (benchmark_mode)
+		benchmark_animate_total_time += get_timer() - starttime
+	
 	// Cameras
 	var isrendermode = (view_second.quality = e_view_mode.RENDER || view_main.quality = e_view_mode.RENDER);
 	if (window_state = "export_movie")
 		app_update_cameras(exportmovie_high_quality, true)
 	else if (!isrendermode || (isrendermode && render_samples = -1))
 		app_update_cameras(isrendermode, false)
-	
+			
 	// Update current marker
 	timeline_marker_current = null
 	
+	starttime = get_timer()
 	for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
 	{
 		if (timeline_marker >= timeline_marker_list[|i].pos)
 			timeline_marker_current = timeline_marker_list[|i]
 	}
+	
+	// Benchmark
+	if (benchmark_mode)
+		benchmark_animate_total_time += get_timer() - starttime
 	
 	history_resource_update = false
 }

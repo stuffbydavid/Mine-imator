@@ -1,4 +1,4 @@
-#if API_D3D11
+#if OS_WINDOWS
 #include "Shader.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/Vertex.hpp"
@@ -16,7 +16,7 @@ namespace CppProject
         { Shader::MAT4, "float4x4" },
     };
 
-	void Shader::LoadCode(QString vsCode, QString fsCode, BoolType useCache)
+	void Shader::LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache)
 	{
         // Free resources
         releaseAndReset(d3dVertexShader);
@@ -308,7 +308,7 @@ namespace CppProject
         {
             // Get maximum objects allowed
             batchBufferObjectSize = ceil(batchBufferObjectSize / 16.0) * 16;
-            batchBufferMaxObjects = MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
+            batchBufferMaxObjects = D3D11_MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
             bufferDecl = "cbuffer ObjectBuffer : register(b" + NumStr(bufId++) + ")\n" + bufferDecl + "\t} _obj[" + NumStr(batchBufferMaxObjects) + "];\n}\n";
         }
         else
@@ -369,10 +369,11 @@ namespace CppProject
             #endif
                 std::string codeStd = code.toStdString();
                 std::string target = isVertex ? "vs_4_0" : "ps_4_0";
+				DEBUG("Compiling " + name + " (" + QString(target.c_str()) + ")");
                 if (FAILED(D3DCompile(codeStd.c_str(), code.length(), nullptr, nullptr, nullptr, "main", target.c_str(), flags, 0, &data, &errMsgs)))
                 {
                     std::string errMsg((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize());
-                    WARNING("Loading " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
+                    WARNING("Compiling " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
                     DEBUG(code);
                     errMsgs->Release();
                     return false;

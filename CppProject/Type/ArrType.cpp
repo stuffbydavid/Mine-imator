@@ -61,6 +61,22 @@ namespace CppProject
 		return vec.Value(index);
 	}
 
+	VarType ArrType::Shift()
+	{
+		if (!vec.Size())
+			return VarArgs::outOfBounds;
+
+		VarType first = vec.Value(0);
+		IntType lastPos = vec.Size() - 1;
+		for (IntType i = 0; i < lastPos; i++)
+			vec[i] = vec[i + 1];
+
+		vec[lastPos].FreeData();
+		vec.heap.Erase(lastPos);
+		vec.size--;
+		return first;
+	}
+
 	void ArrType::Append(const ArrType& arr, IntType startIndex)
 	{
 		vec.Alloc(vec.Size() + arr.Size());

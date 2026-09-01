@@ -3,21 +3,6 @@
 
 function macros()
 {
-	// Debug
-	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && true
-	#macro dev_mode_debug_schematics	dev_mode && true
-	#macro dev_mode_debug_names			dev_mode && true
-	#macro dev_mode_debug_saveid		dev_mode && false
-	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
-	#macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
-	#macro dev_mode_full				dev_mode && true
-	#macro dev_mode_advanced			dev_mode && true
-	#macro dev_mode_show_bones			dev_mode && false
-	#macro dev_mode_skip_tangents		dev_mode && false
-	#macro dev_mode_check_assets		dev_mode && true
-	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
-	
 	// Versions
 	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
 	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
@@ -33,7 +18,6 @@ function macros()
 	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_201
 	
 	// Directories
-	#macro file_directory				game_save_id
 	#macro data_directory				working_directory + "Data/"
 	#macro schematics_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
@@ -51,17 +35,16 @@ function macros()
 	#macro settings_file				user_directory_get() + "settings.midata"
 	#macro recent_file					user_directory_get() + "recent.midata"
 	#macro key_file						user_directory_get() + "key.midata"
-	#macro log_file						user_directory_get() + "log.txt"
-	#macro temp_file					file_directory + "tmp.file"
-	#macro temp_image					file_directory + "tmp.png"
-	#macro download_image_file			file_directory + "download.png"
-	#macro unzip_directory				file_directory + "unzip/"
+	#macro temp_file					file_directory_get() + "tmp.file"
+	#macro temp_image					file_directory_get() + "tmp.png"
+	#macro download_image_file			file_directory_get() + "download.png"
+	#macro unzip_directory				file_directory_get() + "unzip/"
 	#macro render_default				"performance"
 	#macro render_default_file			render_directory + render_default + ".mirender"
 	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
-	#macro mc_file_directory			file_directory + "Minecraft_unzip/"
+	#macro mc_file_directory			file_directory_get() + "Minecraft_unzip/"
 	#macro mc_assets_directory			"assets/minecraft/"
 	#macro mc_models_directory			mc_assets_directory + "models/"
 	#macro mc_blockstates_directory		mc_assets_directory + "blockstates/"
@@ -90,6 +73,7 @@ function macros()
 	#macro mc_clouds_image_file			mc_textures_directory + "environment/clouds.png"
 	#macro mc_glint_armor_file			mc_textures_directory + "misc/enchanted_glint_armor.png"
 	#macro mc_glint_item_file			mc_textures_directory + "misc/enchanted_glint_item.png"
+	#macro mc_unknown_asset_warning		" is not defined in the translation, the key will be formatted"
 	
 	// Links
 	#macro link_website					"https://www.mineimator.com"
@@ -109,7 +93,7 @@ function macros()
 	#macro link_twitter					"https://www.mineimator.com/tweets"
 	#macro link_discord					"https://www.mineimator.com/discord"
 	#macro link_donate					"https://www.mineimator.com/donate"
-	#macro show_modelbench_popup		!dev_mode && true
+	#macro show_modelbench_popup		!debug_mode && true
 	#macro http_ok						200
 	#macro http_bad_request				400
 	

@@ -1,4 +1,3 @@
-#if API_OPENGL
 #undef __glext_h_
 #include <qopenglext.h>
 
@@ -8,7 +7,7 @@
 
 namespace CppProject
 {
-	void Shader::LoadCode(QString vsCode, QString fsCode, BoolType useCache)
+	void Shader::LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache)
 	{
 		// Batching requires SSBO (GL 4.3+ only)
 		if (!gl43Supported)
@@ -63,20 +62,17 @@ namespace CppProject
 			// Texture2D function to sample using UvRect uniform
 			if (code.contains("texture2D("))
 			{
-				QString setLod = "";
-				if (gl40Supported)
-					setLod = "\tvec2 uvLod = uvRect.xy + uv * uvRect.zw;\n"
-					"\tuvLod.y = 1.0 - uvLod.y;\n"
-					"\tlod = textureQueryLod(s, uvLod).y;\n";
 				header += "\n"
 					"vec4 _sampleUvRect(sampler2D s, vec4 uvRect, bool repeat, vec2 uv)\n"
 					"{\n"
-					"\tfloat lod = 0.0;\n" +
-					setLod +
+					"\tvec2 lodUv = uvRect.xy + uv * uvRect.zw;\n"
+					"\tlodUv.y = 1.0 - lodUv.y;\n"
+					"\tvec2 derivX = dFdx(lodUv);\n"
+					"\tvec2 derivY = dFdy(lodUv);\n"
 					"\tif (repeat) uv = mod(uv, vec2(1.0, 1.0));\n"
 					"\tuv = uvRect.xy + uv * uvRect.zw;\n"
 					"\tuv.y = 1.0 - uv.y;\n"
-					"\treturn textureLod(s, uv, lod);\n"
+					"\treturn textureGrad(s, uv, derivX, derivY);\n"
 					"}\n\n";
 			}
 
@@ -132,7 +128,7 @@ namespace CppProject
 		{
 			// Get maximum objects allowed
 			batchBufferObjectSize = ceil(batchBufferObjectSize / 16.0) * 16;
-			batchBufferMaxObjects = MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
+			batchBufferMaxObjects = OPENGL_MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
 			batchBufferSize = batchBufferMaxObjects * batchBufferObjectSize;
 
 			// Add SSBO for uniform data
@@ -265,4 +261,3 @@ namespace CppProject
 		program->release();
 	}
 }
-#endif

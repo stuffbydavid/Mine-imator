@@ -1,4 +1,3 @@
-#if API_OPENGL
 #include "GLWidget.hpp"
 
 #include "AppHandler.hpp"
@@ -67,4 +66,3 @@ namespace CppProject
 			GFX->shader->EndUse();
 	}
 }
-#endif

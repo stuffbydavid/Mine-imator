@@ -7,16 +7,8 @@
 
 #define GFX GraphicsApiHandler::handler
 
-#if API_OPENGL
-#include <QOpenGLFunctions_3_1>
-#include <QOffscreenSurface>
-
-#if DEBUG_MODE
-#define GL_CHECK_ERROR() GFX->CheckGLError(__FUNCTION__, __LINE__)
-#else
-#define GL_CHECK_ERROR() false
-#endif
-#else
+// D3D11 headers
+#if OS_WINDOWS
 #include <windows.h>
 #include <d3d11.h>
 #if DEBUG_MODE
@@ -31,16 +23,22 @@
 #define D3DCheckError(hResult) GFX->CheckD3DError(hResult, __FUNCTION__, __LINE__)
 #endif
 
+// GL headers
+#include <QOpenGLFunctions_3_1>
+#include <QOffscreenSurface>
+#if DEBUG_MODE
+#define GL_CHECK_ERROR() GFX->CheckGLError(__FUNCTION__, __LINE__)
+#else
+#define GL_CHECK_ERROR() false
+#endif
+
 namespace CppProject
 {
 	struct Shader;
 	struct Surface;
 	struct FrameBuffer;
 
-	struct GraphicsApiHandler
-	#if API_OPENGL
-		: QOpenGLFunctions_3_1
-	#endif
+	struct GraphicsApiHandler : QOpenGLFunctions_3_1
 	{
 		// Runs before QApp creation.
 		GraphicsApiHandler();
@@ -63,13 +61,13 @@ namespace CppProject
 		// Returns the maximum width/height of an image or framebuffer.
 		IntType GetMaxSize();
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		// Returns whether a Direct3D error has occurred.
 		BoolType CheckD3DError(HRESULT result, QString func, IntType line);
-	#else
+	#endif
+
 		// Returns whether an OpenGL error has occurred.
 		BoolType CheckGLError(QString func, IntType line);
-	#endif
 
 		// Starts rendering off-screen, returns whether successful.
 		BoolType StartOffScreenRender();
@@ -143,7 +141,7 @@ namespace CppProject
 		IntType lodBias = 0;
 		BoolType mipMap = true;
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		ID3D11Device* d3dDevice = nullptr;
 		ID3D11DeviceContext* d3dContext = nullptr;
 		QHash<D3D11_FILTER, ID3D11SamplerState*> d3dSamplerStateMap;
@@ -172,16 +170,17 @@ namespace CppProject
 		IDXGIFactory* dxgiFactory = nullptr;
 		QVector<ID3D11RenderTargetView*> d3dMrtRTVs;
 		ID3D11DepthStencilView* d3dMrtDSV = nullptr;
-	#else
+	#endif
 		QOpenGLContext* glContext = nullptr;
 		QOffscreenSurface* glOffScreenSurface = nullptr;
+		GLuint glHeadlessVboId = 0;
 		GLuint glCurrentVboId = 0;
 		QString glVersion = "";
 		QHash<IntType, IntType> glBlendMap;
 		IntType glMrtCount = 0;
 		static bool glEnableLogger;
-	#endif
 
 		static GraphicsApiHandler* handler;
+
 	};
 }

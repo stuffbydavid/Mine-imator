@@ -7,6 +7,8 @@ function app_startup_interface_export()
 	export_filename = ""
 	export_escape_time = 0
 	
+	export_render_time = 0
+	
 	exportmovie_format = ""
 	exportmovie_marker_previous = 0
 	exportmovie_marker_start = 0
@@ -17,4 +19,5 @@ function app_startup_interface_export()
 	exportmovie_high_quality = true
 	exportmovie_start = null
 	exportmovie_buffer = null
+	exportmovie_benchmark_csv = ""
 }

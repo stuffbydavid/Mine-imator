@@ -10,14 +10,11 @@
 #include "Type/ArrType.hpp"
 #include "World/World.hpp"
 
-#include <QProcess>
-
-#if API_OPENGL
 #undef __glext_h_
 #include <qopenglext.h>
 
+#define ENABLE_OPENGL_40 1
 #define ENABLE_OPENGL_43 1
-#endif
 
 namespace CppProject
 {
@@ -58,12 +55,10 @@ namespace CppProject
 		"gm_Matrices[MATRIX_PROJECTION]"
 	};
 
-#if API_OPENGL
 	QString Shader::glslVersion = "150 core"; // 3.2
 	BoolType Shader::gl40Supported = false;
 	BoolType Shader::gl43Supported = false;
 	QOpenGLFunctions_4_3_Core* Shader::gl43Core = nullptr;
-#endif
 
 	Shader::Shader(QString name, IntType subAssetId) : Asset(ID_Shader, subAssetId, name)
 	{
@@ -83,35 +78,36 @@ namespace CppProject
 
 	void Shader::Init()
 	{
-	#if API_OPENGL
-		// Try compiling with a GLSL 4.0 feature (textureQueryLod) and GLSL 4.3 feature (SSBOs) to determine support
-		QString gl43shader = "#version 430\nlayout(std430, binding = 2) buffer _ssbo { struct { int a; } _obj[1024]; };\nvoid main() {}";
-		QString gl40shader = "#version 400\nuniform sampler2D _sampler;\nout vec2 _lod;\nvoid main() { _lod = textureQueryLod(_sampler, vec2(0.0, 0.0)); }";
-
-		QtMessageHandler oldHandler = qInstallMessageHandler(
-			[](QtMsgType type, const QMessageLogContext& ctx, const QString& msg){}
-		);
-		GraphicsApiHandler::glEnableLogger = false;
-		QOpenGLShader sh(QOpenGLShader::Vertex);
-		if (sh.compileSourceCode(gl40shader))
+		if (IS_OPENGL)
 		{
-			gl40Supported = true;
-			glslVersion = "400";
+			// Try compiling with a GLSL 4.0 feature (textureQueryLod) and GLSL 4.3 feature (SSBOs) to determine support
+			QString gl43shader = "#version 430\nlayout(std430, binding = 2) buffer _ssbo { struct { int a; } _obj[1024]; };\nvoid main() {}";
+			QString gl40shader = "#version 400\nuniform sampler2D _sampler;\nout vec2 _lod;\nvoid main() { _lod = textureQueryLod(_sampler, vec2(0.0, 0.0)); }";
 
-			if (ENABLE_OPENGL_43 && sh.compileSourceCode(gl43shader))
+			QtMessageHandler oldHandler = qInstallMessageHandler(
+				[](QtMsgType type, const QMessageLogContext& ctx, const QString& msg) {}
+			);
+			GraphicsApiHandler::glEnableLogger = false;
+			QOpenGLShader sh(QOpenGLShader::Vertex);
+			if (ENABLE_OPENGL_40 && sh.compileSourceCode(gl40shader))
 			{
-				gl43Supported = true;
-				gl43Core = new QOpenGLFunctions_4_3_Core;
-				if (!gl43Core->initializeOpenGLFunctions())
-					FATAL("Could not initialize OpenGL 4.3");
-				glslVersion = "430";
-			}
-		}
-		GraphicsApiHandler::glEnableLogger = true;
-		qInstallMessageHandler(oldHandler);
+				gl40Supported = true;
+				glslVersion = "400";
 
-		DEBUG("GLSL version " + glslVersion);
-	#endif
+				if (ENABLE_OPENGL_43 && sh.compileSourceCode(gl43shader))
+				{
+					gl43Supported = true;
+					gl43Core = new QOpenGLFunctions_4_3_Core;
+					if (!gl43Core->initializeOpenGLFunctions())
+						FATAL("Could not initialize OpenGL 4.3");
+					glslVersion = "430";
+				}
+			}
+			GraphicsApiHandler::glEnableLogger = true;
+			qInstallMessageHandler(oldHandler);
+
+			DEBUG("GLSL version " + glslVersion);
+		}
 	}
 
 	void Shader::Load(BoolType useCache)
@@ -189,8 +185,13 @@ namespace CppProject
 				vertexFormat = PRIMITIVE;
 		}
 
-		// Parse GLES code to HLSL/GLSL depending on API used
-		LoadCode(vsCode, fsCode, useCache);
+		// Parse GLES code to the selected runtime backend.
+	#ifdef OS_WINDOWS
+		if (IS_D3D11)
+			LoadCodeD3D11(vsCode, fsCode, useCache);
+	#endif
+		if (IS_OPENGL)
+			LoadCodeOpenGL(vsCode, fsCode, useCache);
 
 		// Store texture uniforms
 		if (numSamplers > 0)
@@ -202,11 +203,14 @@ namespace CppProject
 
 	BoolType Shader::IsLoaded() const
 	{
-	#if API_D3D11
-		return d3dVertexShader && d3dPixelShader;
-	#else
-		return program;
+	#if OS_WINDOWS
+		if (IS_D3D11)
+			return d3dVertexShader && d3dPixelShader;
 	#endif
+		if (IS_OPENGL)
+			return program;
+
+		return false;
 	}
 
 	bool Shader::BeginUse()
@@ -214,13 +218,18 @@ namespace CppProject
 		if (!IsLoaded())
 			return false;
 
-	#if API_D3D11
-		D3DContext->VSSetShader(d3dVertexShader, 0, 0);
-		D3DContext->PSSetShader(d3dPixelShader, 0, 0);
-	#else
-		if (!program->bind())
-			return false;
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3DContext->VSSetShader(d3dVertexShader, 0, 0);
+			D3DContext->PSSetShader(d3dPixelShader, 0, 0);
+		}
 	#endif
+		if (IS_OPENGL)
+		{
+			if (!program->bind())
+				return false;
+		}
 
 		// Reset samplers
 		for (IntType s = 0; s < numSamplers; s++)
@@ -244,20 +253,23 @@ namespace CppProject
 			memset(batchBufferData, 0, batchBufferSize);
 			batchBufferObjectIndex = 0;
 
-		#if API_OPENGL
-			// Bind SSBO
-			gl43Core->glShaderStorageBlockBinding(program->programId(), glSsboBlockIndex, 2);
-			GL_CHECK_ERROR();
-		#endif
+			if (IS_OPENGL)
+			{
+				// Bind SSBO
+				gl43Core->glShaderStorageBlockBinding(program->programId(), glSsboBlockIndex, 2);
+				GL_CHECK_ERROR();
+			}
 		}
 
-	#if API_D3D11
 		// Clear static buffer
-		memset(staticBufferData, 0, staticBufferSize);
-	#else
-		GFX->glBindVertexArray(GFX->glCurrentVboId);
-		GL_CHECK_ERROR();
-	#endif
+		if (IS_D3D11)
+			memset(staticBufferData, 0, staticBufferSize);
+		
+		if (IS_OPENGL)
+		{
+			GFX->glBindVertexArray(GFX->glCurrentVboId);
+			GL_CHECK_ERROR();
+		}
 
 		return true;
 	}
@@ -267,12 +279,12 @@ namespace CppProject
 		if (!IsLoaded())
 			return false;
 
-	#if API_D3D11
-	#else
-		program->release();
-		GFX->glBindVertexArray(0);
-		GL_CHECK_ERROR();
-	#endif
+		if (IS_OPENGL)
+		{
+			program->release();
+			GFX->glBindVertexArray(0);
+			GL_CHECK_ERROR();
+		}
 		return true;
 	}
 
@@ -290,12 +302,10 @@ namespace CppProject
 		if (uni.type != INT)
 			WARNING("Shader: Submitting int into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, in);
 		else
-	#endif
-		WriteUniformValue(uni, &in);
+			WriteUniformValue(uni, &in);
 	}
 
 	void Shader::SubmitFloat(IntType index, float fl)
@@ -312,12 +322,10 @@ namespace CppProject
 		if (uni.type != FLOAT)
 			WARNING("Shader: Submitting float into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, fl);
 		else
-	#endif
-		WriteUniformValue(uni, &fl);
+			WriteUniformValue(uni, &fl);
 	}
 
 	void Shader::SubmitFloatArray(IntType index, VarType& arrOrMatrix)
@@ -349,31 +357,31 @@ namespace CppProject
 			floatsNum = uni.arrayMaxSize * tupleSize;
 
 		// Create float array from VarTypes to submit
-		float* floats = new float[floatsNum];
+		floatData.resize(floatsNum);
+		floatData.fill(0.0f);
+		float* floats = floatData.data();
 		IntType i = 0, arrIndex = 0;
 		while (i < floatsNum && arrIndex < arr.Size())
 		{
 			floats[i++] = arr.Value(arrIndex++).Real();
 
-		#if API_D3D11
-			// Pad so each element is 4 floats
-			switch (uni.type)
+			if (IS_D3D11)
 			{
-				case INT:
-				case FLOAT: i += 3; break; // 1 float/ints written, skip 3
-				case VEC2: if (i % 4 == 2) i += 2; break; // 2 floats written, skip 2
-				case VEC3: if (i % 4 == 3) i++; break; // 3 floats written, skip 1
+				// Pad so each element is 4 floats
+				switch (uni.type)
+				{
+					case INT:
+					case FLOAT: i += 3; break; // 1 float/ints written, skip 3
+					case VEC2: if (i % 4 == 2) i += 2; break; // 2 floats written, skip 2
+					case VEC3: if (i % 4 == 3) i++; break; // 3 floats written, skip 1
+				}
 			}
-		#endif
 		}
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValueArray(uni.glLocation, floats, floatsNum / tupleSize, tupleSize);
 		else
-	#endif
-		WriteUniformValue(uni, floats, floatsNum * sizeof(float));
-		delete[] floats;
+			WriteUniformValue(uni, floats, floatsNum * sizeof(float));
 	}
 
 	void Shader::SubmitVec2(IntType index, float x, float y)
@@ -388,11 +396,9 @@ namespace CppProject
 		if (uni.name == "uTexScale") // set uTexScale to 1
 			x = y = 1.0;
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, x, y);
 		else
-	#endif
 		{
 			float dat[2] = { x, y };
 			WriteUniformValue(uni, dat);
@@ -408,11 +414,9 @@ namespace CppProject
 		if (uni.type != VEC3)
 			WARNING("Shader: Submitting vec3 into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, x, y, z);
 		else
-	#endif
 		{
 			float dat[3] = { x, y, z };
 			WriteUniformValue(uni, dat);
@@ -428,11 +432,9 @@ namespace CppProject
 		if (uni.type != VEC4)
 			WARNING("Shader: Submitting vec4 into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, x, y, z, w);
 		else
-	#endif
 		{
 			float dat[4] = { x, y, z, w };
 			WriteUniformValue(uni, dat);
@@ -451,11 +453,9 @@ namespace CppProject
 		float floats[4][4];
 		matrix.Copy(floats[0]);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, floats);
 		else
-	#endif
 			WriteUniformValue(uni, floats);
 	}
 
@@ -468,22 +468,21 @@ namespace CppProject
 		if (uni.type != MAT4)
 			WARNING("Shader: Submitting matrix into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 		{
 			float floats[16];
-			QVector<QMatrix4x4> mat(arr.Size());
+			matrixData.resize(arr.Size());
 			for (IntType m = 0; m < arr.Size(); m++)
 			{
 				arr.Value(m).Mat().matrix.Copy(floats);
-				mat[m] = QMatrix4x4(floats).transposed();
+				matrixData[m] = QMatrix4x4(floats).transposed();
 			}
-			program->setUniformValueArray(uni.glLocation, mat.data(), mat.size());
+			program->setUniformValueArray(uni.glLocation, matrixData.data(), matrixData.size());
 		}
 		else
-	#endif
 		{
-			float* floats = new float[arr.Size() * 16];
+			floatData.resize(arr.Size() * 16);
+			float* floats = floatData.data();
 			for (IntType m = 0; m < arr.Size(); m++)
 				arr.Value(m).Mat().matrix.Copy(&floats[m * 16]);
 			WriteUniformValue(uni, floats);
@@ -627,156 +626,186 @@ namespace CppProject
 			{
 				float floats[4][4];
 				state.current.Copy(floats[0]);
-			#if API_D3D11
-				WriteUniformValue(state.uniform, floats);
-			#else
-				program->setUniformValue(state.uniform.glLocation, floats);
-			#endif
+
+				if (IS_D3D11)
+					WriteUniformValue(state.uniform, floats);
+
+				if (IS_OPENGL)
+					program->setUniformValue(state.uniform.glLocation, floats);
+
 				state.changed = false;
 			}
 		}
 
 		// Bind textures and submit samplers
-	#if API_D3D11
-		QVector<ID3D11SamplerState*> texSamplers(numSamplers);
-		QVector<ID3D11ShaderResourceView*> texSRVs(numSamplers);
+	#if OS_WINDOWS
+		ID3D11SamplerState* texSamplers[32] = {};
+		ID3D11ShaderResourceView* texSRVs[32] = {};
 	#endif
+		IntType glConfiguredTextures[32];
+		IntType glConfiguredTextureCount = 0;
+
 		for (IntType s = 0; s < numSamplers; s++)
 		{
 			const SamplerState& state = samplerState[s];
 			if (state.currentTexId > -1)
 			{
-			#if API_D3D11
-				BoolType magFilter = state.filter;
-				BoolType mipFilter = false;
-				if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
-					mipFilter = true;
+			#if OS_WINDOWS
+				if (IS_D3D11)
+				{
+					BoolType magFilter = state.filter;
+					BoolType mipFilter = false;
+					if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
+						mipFilter = true;
 
-				D3D11_FILTER filter;
-				if (mipFilter && magFilter)
-					filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
-				else if (!mipFilter && magFilter)
-					filter = D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
-				else if (mipFilter && !magFilter)
-					filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
-				else
-					filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+					D3D11_FILTER filter;
+					if (mipFilter && magFilter)
+						filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
+					else if (!mipFilter && magFilter)
+						filter = D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
+					else if (mipFilter && !magFilter)
+						filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
+					else
+						filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 
-				texSamplers[s] = GFX->d3dSamplerStateMap.value(filter);
-				texSRVs[s] = Texture::d3dIdSRVMap.value(state.currentTexId);
-			#else
-				GLenum magFilter = state.filter ? GL_LINEAR : GL_NEAREST;
-				GLenum minFilter = magFilter;
-				if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
-					minFilter = GL_NEAREST_MIPMAP_LINEAR;
-
-				GFX->glActiveTexture(GL_TEXTURE0 + s);
-				GFX->glBindTexture(GL_TEXTURE_2D, state.currentTexId);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
-				GL_CHECK_ERROR();
-
-				program->setUniformValue(state.glLocation, (GLint)s);
+					texSamplers[s] = GFX->d3dSamplerStateMap.value(filter);
+					texSRVs[s] = Texture::d3dIdSRVMap.value(state.currentTexId);
+				}
 			#endif
+				if (IS_OPENGL)
+				{
+					GLenum magFilter = state.filter ? GL_LINEAR : GL_NEAREST;
+					GLenum minFilter = magFilter;
+					if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
+						minFilter = GL_NEAREST_MIPMAP_LINEAR;
+
+					GFX->glActiveTexture(GL_TEXTURE0 + s);
+					GFX->glBindTexture(GL_TEXTURE_2D, state.currentTexId);
+
+					// OpenGL 3.2 stores sampling parameters on the texture object, not its texture unit
+					BoolType textureConfigured = false;
+					for (IntType i = 0; i < glConfiguredTextureCount; i++)
+						if (glConfiguredTextures[i] == state.currentTexId)
+						{
+							textureConfigured = true;
+							break;
+						}
+
+					if (!textureConfigured)
+					{
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+						GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
+						glConfiguredTextures[glConfiguredTextureCount++] = state.currentTexId;
+					}
+					GL_CHECK_ERROR();
+
+					program->setUniformValue(state.glLocation, (GLint)s);
+				}
 				samplerState[s].changed = false;
 			}
 		}
 
-	#if API_D3D11
-		D3DContext->PSSetSamplers(0, numSamplers, texSamplers.data());
-		D3DContext->PSSetShaderResources(0, numSamplers, texSRVs.data());
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 
-		// Submit UvRects/repeat options
-		if (numSamplers > 0)
-		{
-			WriteUniformValue(uvRectUniform, samplerUvRect, numSamplers * sizeof(UvRect));
+			// Submit UvRects/repeat options
+			if (numSamplers > 0)
+			{
+				WriteUniformValue(uvRectUniform, samplerUvRect, numSamplers * sizeof(UvRect));
 
-			for (IntType i = 0; i < numSamplers; i++)
-				samplerRepeatData[i * 4] = samplerRepeat[i];
-			WriteUniformValue(texRepeatUniform, samplerRepeatData, samplerRepeatDataSize * sizeof(int32_t));
-		}
+				for (IntType i = 0; i < numSamplers; i++)
+					samplerRepeatData[i * 4] = samplerRepeat[i];
+				WriteUniformValue(texRepeatUniform, samplerRepeatData, samplerRepeatDataSize * sizeof(int32_t));
+			}
 
-		// Update and submit constant buffers
-		QVector<ID3D11Buffer*> cBuffers;
-		if (d3dStaticBuffer)
-		{
-			D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
-			cBuffers.append(d3dStaticBuffer);
-		}
-		if (d3dObjectBuffer)
-		{
-			D3DContext->UpdateSubresource(d3dObjectBuffer, 0, nullptr, batchBufferData, 0, 0);
-			cBuffers.append(d3dObjectBuffer);
-			ResetObjects();
-		}
-		D3DContext->VSSetConstantBuffers(0, cBuffers.size(), cBuffers.data());
-		D3DContext->PSSetConstantBuffers(0, cBuffers.size(), cBuffers.data());
+			// Update and submit constant buffers
+			ID3D11Buffer* cBuffers[2];
+			IntType numConstantBuffers = 0;
+			if (d3dStaticBuffer)
+			{
+				D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
+			}
+			if (d3dObjectBuffer)
+			{
+				D3DContext->UpdateSubresource(d3dObjectBuffer, 0, nullptr, batchBufferData, 0, 0);
+				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
+				ResetObjects();
+			}
+			D3DContext->VSSetConstantBuffers(0, numConstantBuffers, cBuffers);
+			D3DContext->PSSetConstantBuffers(0, numConstantBuffers, cBuffers);
 
-		// Submit vertices
-		D3D_PRIMITIVE_TOPOLOGY topo = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
-		switch (mode)
-		{
-			case TRIANGLE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
-			case TRIANGLE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP; break;
-			case LINE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
-			case LINE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP; break;
-			case POINT_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
-		}
-		D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
-		D3DContext->IASetPrimitiveTopology(topo);
-		D3DContext->DrawIndexed(numIndices, 0, 0);
+			// Submit vertices
+			D3D_PRIMITIVE_TOPOLOGY topo = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
+			switch (mode)
+			{
+				case TRIANGLE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
+				case TRIANGLE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP; break;
+				case LINE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
+				case LINE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP; break;
+				case POINT_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
+			}
+			D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
+			D3DContext->IASetPrimitiveTopology(topo);
+			D3DContext->DrawIndexed(numIndices, 0, 0);
 
-		// Reset input
-		for (IntType s = 0; s < numSamplers; s++)
-		{
-			texSamplers[s] = nullptr;
-			texSRVs[s] = nullptr;
+			// Reset input
+			for (IntType s = 0; s < numSamplers; s++)
+			{
+				texSamplers[s] = nullptr;
+				texSRVs[s] = nullptr;
+			}
+			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 		}
-		D3DContext->PSSetSamplers(0, texSamplers.size(), texSamplers.data());
-		D3DContext->PSSetShaderResources(0, texSRVs.size(), texSRVs.data());
-	#else
-		// Set up attributes
-		switch (vertexFormat)
-		{
-			case PRIMITIVE: PrimitiveVertex::SetAttributes(); break;
-			case VERTEX_BUFFER: Vertex::SetAttributes(); break;
-			case WORLD: WorldVertex::SetAttributes(); break;
-		}
-
-		// Submit UvRects/repeat options
-		if (numSamplers > 0)
-		{
-			program->setUniformValueArray(uvRectUniform.glLocation, samplerUvRect, numSamplers);
-			program->setUniformValueArray(texRepeatUniform.glLocation, (GLint*)samplerRepeat, numSamplers);
-		}
-
-		// Submit SSBO
-		if (useBatching)
-		{
-			GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
-			GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, batchBufferObjectIndex * batchBufferObjectSize, batchBufferData);
-			GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-			GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
-			GL_CHECK_ERROR();
-			ResetObjects();
-		}
-
-		// Submit vertices
-		GLenum modeEnum = 0;
-		switch (mode)
-		{
-			case TRIANGLE_LIST: modeEnum = GL_TRIANGLES; break;
-			case TRIANGLE_STRIP: modeEnum = GL_TRIANGLE_STRIP; break;
-			case LINE_LIST: modeEnum = GL_LINES; break;
-			case LINE_STRIP: modeEnum = GL_LINE_STRIP; break;
-			case POINT_LIST: modeEnum = GL_POINTS; break;
-		}
-		GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
-		GL_CHECK_ERROR();
 	#endif
+		if (IS_OPENGL)
+		{
+			// Set up attributes
+			switch (vertexFormat)
+			{
+				case PRIMITIVE: PrimitiveVertex::SetAttributes(); break;
+				case VERTEX_BUFFER: Vertex::SetAttributes(); break;
+				case WORLD: WorldVertex::SetAttributes(); break;
+			}
+
+			// Submit UvRects/repeat options
+			if (numSamplers > 0)
+			{
+				program->setUniformValueArray(uvRectUniform.glLocation, samplerUvRect, numSamplers);
+				program->setUniformValueArray(texRepeatUniform.glLocation, (GLint*)samplerRepeat, numSamplers);
+			}
+
+			// Submit SSBO
+			if (useBatching)
+			{
+				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
+				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, batchBufferObjectIndex * batchBufferObjectSize, batchBufferData);
+				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
+				GL_CHECK_ERROR();
+				ResetObjects();
+			}
+
+			// Submit vertices
+			GLenum modeEnum = 0;
+			switch (mode)
+			{
+				case TRIANGLE_LIST: modeEnum = GL_TRIANGLES; break;
+				case TRIANGLE_STRIP: modeEnum = GL_TRIANGLE_STRIP; break;
+				case LINE_LIST: modeEnum = GL_LINES; break;
+				case LINE_STRIP: modeEnum = GL_LINE_STRIP; break;
+				case POINT_LIST: modeEnum = GL_POINTS; break;
+			}
+			GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
+			GL_CHECK_ERROR();
+		}
 	}
 
 	void Shader::ResetObjects()
@@ -821,11 +850,12 @@ namespace CppProject
 		// Break apart World*View matrix
 		if (useBatching)
 		{
-		#if API_D3D11
-			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), "mul(_uMatrixV, _uMatrixM)");
-		#else
-			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), "(_uMatrixV * _uMatrixM)");
-		#endif
+			QString matrixRepl = "";
+			if (IS_D3D11)
+				matrixRepl = "mul(_uMatrixV, _uMatrixM)";
+			if (IS_OPENGL)
+				matrixRepl = "(_uMatrixV * _uMatrixM)";
+			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), matrixRepl);
 		}
 
 		// Add uniforms for required matrices
@@ -851,7 +881,7 @@ namespace CppProject
 		}
 
 		// Find uniforms and samplers
-		auto uniIt = QRegularExpression("^uniform (\\w*) (.*?)(\\[.*?\\])?;(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?$", QRegularExpression::MultilineOption).globalMatch(code);
+		auto uniIt = QRegularExpression("^uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
 		while (uniIt.hasNext())
 		{
 			QRegularExpressionMatch match = uniIt.next();
@@ -867,9 +897,8 @@ namespace CppProject
 				AddUniform(name, typeName, isStatic, isArray, arrayMaxSize);
 			}
 
-			#if API_D3D11 // Erase uniforms in HLSL, replaced by Cbuffer
+			if (IS_D3D11) // Erase uniforms in HLSL, replaced by Cbuffer
 				code.replace(match.captured(0) + "\n", "");
-			#endif
 		}
 
 		// Add uvRect to texture2D calls
@@ -880,14 +909,12 @@ namespace CppProject
 			QString name = match.captured(1);
 			if (samplerNameMap.contains(name))
 			{
-				code.replace("texture2D(" + name + ",",
-					"_sampleUvRect(" + name + ", "
-				#if API_D3D11
-					+ name + "_s, "
-				#endif
-					"_uUvRect[" + NumStr(samplerNameMap[name]) + "], "
-					"_uTexRepeat[" + NumStr(samplerNameMap[name]) + "] > 0,"
-				);
+				QString samplerArgs = "_sampleUvRect(" + name + ", ";
+				if (IS_D3D11)
+					samplerArgs += name + "_s, ";
+				samplerArgs += "_uUvRect[" + NumStr(samplerNameMap[name]) + "], "
+					+ "_uTexRepeat[" + NumStr(samplerNameMap[name]) + "] > 0,";
+				code.replace("texture2D(" + name + ",", samplerArgs);
 			}
 			else
 				WARNING("Shader: Sampler " + name + " not defined in texture2D call");
@@ -913,7 +940,7 @@ namespace CppProject
 		uni.arrayMaxSize = arrayMaxSize;
 		uni.bufferSize = dataTypeSizeMap[uni.type];
 
-		if (API_D3D11 && isArray) // Each array element takes up 16 bytes in HLSL (except last)
+		if (IS_D3D11 && isArray) // Each array element takes up 16 bytes in HLSL (except last)
 		{
 			uni.bufferSize = (uni.type == DataType::MAT4 ? dataTypeSizeMap[MAT4] : dataTypeSizeMap[VEC4]);
 			uni.totalBufferSize = uni.bufferSize * (uni.arrayMaxSize - 1) + dataTypeSizeMap[uni.type];
@@ -927,17 +954,22 @@ namespace CppProject
 			// Get size variable to increase (entire buffer or per object)
 			IntType* bufferSize = uni.isStatic ? &staticBufferSize : &batchBufferObjectSize;
 
-		#if API_D3D11
-			IntType alignment = 4;
-			IntType groupRemainingBytes = 16 - (*bufferSize % 16); // Align into groups of 16 bytes
-			if (uni.bufferSize > groupRemainingBytes)
-				alignment = 16;
-		#else
 			// Find alignment in bytes
 			IntType alignment = uni.bufferSize;
-			if (uni.type == VEC3) // vec3 alignment is same as vec4
-				alignment = 16;
-		#endif
+			if (IS_D3D11)
+			{
+				alignment = 4;
+
+				// Align into groups of 16 bytes
+				IntType groupRemainingBytes = 16 - (*bufferSize % 16);
+				if (uni.bufferSize > groupRemainingBytes)
+					alignment = 16;
+			}
+			if (IS_OPENGL)
+			{
+				if (uni.type == VEC3) // vec3 alignment is same as vec4
+					alignment = 16;
+			}
 
 			// Snap to alignment and increase buffer size (entire buffer or per object)
 			uni.bufferOffset = std::ceil((RealType)*bufferSize / alignment) * alignment;

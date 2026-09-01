@@ -2,7 +2,6 @@
 
 function project_startup()
 {
-	// Project
 	globalvar load_queue, load_format, load_folder, save_folder,
 			  temp_edit, ptype_edit, tl_edit_amount, tl_edit, res_edit, axis_edit,
 			  temp_creator, res_creator, save_id_seed, save_id_map, shape_texture;

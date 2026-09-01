@@ -20,7 +20,6 @@
 #include <QNetworkInterface>
 #include <QStyle>
 #include <QTimer>
-#include <QStandardPaths>
 
 #ifdef OS_WINDOWS
 #define USE_GPU 1
@@ -42,68 +41,106 @@ namespace CppProject
 
 	AppHandler::AppHandler(int& argc, char* argv[])
 	{
+		handler = this;
 		try
 		{
-			// Disable DPI scaling
-			QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
-
-			// Create graphics API handler
-			new GraphicsApiHandler;
-
-			// Create application
-			handler = this;
-			new QApplication(argc, argv);
-			QCoreApplication::setApplicationName(PROJECT_NAME);
-
 			// Initialize string table
 			StringType::AddQThread(QThread::currentThread());
 			StringType::AddGMLStrings();
 
+			// Parse args
+			for (int a = 1; a < argc; a++)
+			{
+				QString arg = argv[a];
+				QString nextArg = (a + 1 < argc) ? argv[a + 1] : "";
+
+				if (arg == "--gfx")
+				{
+					nextArg = nextArg.toLower();
+				#if OS_WINDOWS
+					if (nextArg == "d3d" || nextArg == "d3d11")
+						gfxApi = GfxApi::D3D11;
+					else
+				#endif
+					if (nextArg == "gl" || nextArg == "opengl")
+						gfxApi = GfxApi::OpenGL;
+					else
+						FATAL("Unknown graphics API: " + nextArg);
+					a++;
+					continue;
+				}
+				else if (arg == "--test" && !RELEASE_MODE)
+					headless = true;
+
+				args.append(arg);
+			}
+
+			// Create graphics API handler
+			new GraphicsApiHandler;
+
+			// Disable DPI scaling
+			QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+
+			// Create application
+			new QApplication(argc, argv);
+			QCoreApplication::setApplicationName(PROJECT_NAME);
+
+			// Set working directory
+		#if RELEASE_MODE
+			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
+			gmlGlobal::debug_mode = false;
+		#else
+			DEBUG("Debug mode enabled");
+			gmlGlobal::working_directory = QDir::currentPath() + "/";
+			gmlGlobal::debug_mode = true;
+		#endif
+
 			// Set paths
 			QDir().mkpath(user_directory_get());
 			QDir().mkpath(projects_directory_get());
-			file_delete_lib(log_file);
 
-		#if RELEASE_MODE
-			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
-		#else
-			gmlGlobal::working_directory = QDir::currentPath() + "/";
-			DEBUG("Debug mode enabled");
-		#endif
+			// Cycle logs
+			StringType prevLog = log_file_get();
+			if (file_exists_lib(prevLog))
+			{
+				StringType prevLogDest = filename_change_ext(log_file_get(), ".previous.txt");
+				file_delete_lib(prevLogDest);
+				file_rename_lib(prevLog, prevLogDest);
+			}
+
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
+
 		#if OS_WINDOWS
-			BOOL is64Bit;
-			IsWow64Process((HANDLE)qApp->applicationPid(), &is64Bit);
-			DEBUG("Platform: Windows " + QString(is64Bit ? "x64" : "x86"));
 		#ifdef _WIN64
+			DEBUG("Platform: Windows x64");
 			DEBUG("Executable: 64-bit");
 		#else
+			DEBUG("Platform: Windows x86");
 			DEBUG("Executable: 32-bit");
 		#endif
+			DEBUG("Graphics API: " + QString(IS_D3D11 ? "D3D11" : "OpenGL"));
 		#elif OS_MAC
 			DEBUG("Platform: MacOS");
 		#else
 			DEBUG("Platform: Linux");
 		#endif
+
 			DEBUG("OS: " + os_get());
 			DEBUG("working_directory: " + gmlGlobal::working_directory);
 			DEBUG("user_directory: " + user_directory_get());
 			DEBUG("DPI: " + NumStr(qApp->desktop()->logicalDpiX()));
+
 			omp_set_num_threads(std::min(omp_get_max_threads(), OPENMP_MAX_THREADS));
 			DEBUG("OpenMP max threads: " + NumStr(omp_get_max_threads()));
 
 			// Create temporary folder
-		#if OS_WINDOWS
-			gmlGlobal::game_save_id = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation)[0] + "/";
-		#else
-			gmlGlobal::game_save_id = QDir::tempPath() + "/" + StringType(PROJECT_NAME) + "_tmp/";
-		#endif
-			if (QDir(gmlGlobal::game_save_id).exists())
-				DEBUG("Found temporary folder " + gmlGlobal::game_save_id);
-			else if (QDir().mkdir(gmlGlobal::game_save_id))
-				DEBUG("Created temporary folder " + gmlGlobal::game_save_id);
+			StringType fileDir = file_directory_get();
+			if (QDir(fileDir).exists())
+				DEBUG("Using file directory " + fileDir);
+			else if (QDir().mkdir(fileDir))
+				DEBUG("Created file directory " + fileDir);
 			else
-				FATAL("Could not create temporary folder " + gmlGlobal::game_save_id);
+				FATAL("Could not create file directory " + fileDir);
 
 			DEBUG("Minecraft saves: " + world_import_get_saves_dir());
 
@@ -114,7 +151,6 @@ namespace CppProject
 			targetFps = 60;
 			fpsLastUpdate = QDateTime::currentDateTime();
 			startTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
-			randomize();
 
 			// Map cursors
 			cursorMap[cr_none] = Qt::BlankCursor;
@@ -163,10 +199,13 @@ namespace CppProject
 			keyMap[Qt::Key_Tab] = vk_tab;
 			keyMap[Qt::Key_Up] = vk_up;
 
-		#if API_D3D11
-			// Initialize Direct3D graphics
-			GFX->Init();
+			// Initialize D3D11 manually, OpenGL manually only when headless
+		#if OS_WINDOWS
+			if (IS_D3D11)
+				GFX->Init();
 		#endif
+			if (IS_OPENGL && headless)
+				GFX->Init();
 
 			// Initialize audio
 			try
@@ -192,13 +231,25 @@ namespace CppProject
 				audioSupported = false;
 			}
 
-			// Create main window
-			AddWindow();
+			if (headless)
+			{
+				if (!GFX->StartOffScreenRender())
+					FATAL("Could not start headless rendering");
+				headlessSurface = new Surface({ 1, 1 });
+			}
+			else
+			{
+				// Create main window
+				AddWindow();
+			}
 
 		}
 		catch (const QString& ex)
 		{
-			new ErrorDialog(ex);
+			if (headless)
+				DEBUG("[FATAL ERROR] " + ex);
+			else
+				new ErrorDialog(ex);
 			qApp->exit(1);
 		}
 	}
@@ -285,22 +336,26 @@ namespace CppProject
 		stepTimer.stop();
 
 		// Debug
-		if (keyboard_check_pressed(vk_f6) && dev_mode)
+		if (keyboard_check_pressed(vk_f6) && !RELEASE_MODE)
 		{
 			move_all_to_texture_page();
 			TexturePage::Debug();
 		}
 
-		// Loop through opened windows
-		for (AppWindow* win : windows)
+		QVector<AppWindow*> activeWindows = windows;
+		if (headless)
+			activeWindows = { nullptr };
+
+		// Loop through opened windows or a single headless render target
+		for (AppWindow* win : activeWindows)
 		{
-			if (win->closing)
+			if (win && win->closing)
 				continue;
 
 			currentWindow = win;
 
 			// Set mouse to widget window
-			if (mouseWindow == win)
+			if (win && mouseWindow == win)
 			{
 				if (AppWin->mouseLocked)
 				{
@@ -316,16 +371,16 @@ namespace CppProject
 			}
 			else
 				gmlGlobal::mouse_x = gmlGlobal::mouse_y = -1;
-			
+
 			if (!GFX->StartOffScreenRender())
 				continue;
-			GFX->surface = win->GetSurface();
-			GFX->surface->BeginUse(win->size());
+			GFX->surface = win ? win->GetSurface() : headlessSurface;
+			GFX->surface->BeginUse(win ? win->size() : QSize());
 
 			GFX->ClearDepth();
 			GFX->shader = PR->GetShader();
 			GFX->shader->BeginUse();
-			
+
 			// Run application
 			try
 			{
@@ -342,32 +397,49 @@ namespace CppProject
 			catch (AppEndRequest)
 			{
 				DEBUG("App end requested");
-			
+
 				GFX->shader->EndUse();
-				if (GFX->surface)
-					GFX->surface->EndUse();
-				mainWindow->closing = true;
-				mainWindow->close();
+				GFX->surface->EndUse();
+				if (win)
+				{
+					mainWindow->closing = true;
+					mainWindow->close();
+				}
+				else
+					qApp->exit();
 				return;
 			}
 			catch (const QString& ex)
 			{
-				new ErrorDialog(ex);
+				if (headless)
+				{
+					DEBUG("[FATAL ERROR] " + ex);
+
+					GFX->shader->EndUse();
+					GFX->surface->EndUse();
+					qApp->exit(1);
+					return;
+				}
+				else
+					new ErrorDialog(ex);
+
 				qApp->exit(1);
 			}
 
 			GFX->SubmitBatch();
 			GFX->shader->EndUse();
-			if (GFX->surface)
-				GFX->surface->EndUse();
+			GFX->surface->EndUse();
 
-			win->mouseWheel = 0;
-			win->mouseLastPos = win->mousePos;
-			if (win->mouseUnlock)
-				win->mouseLocked = win->mouseUnlock = false;
+			if (win)
+			{
+				win->mouseWheel = 0;
+				win->mouseLastPos = win->mousePos;
+				if (win->mouseUnlock)
+					win->mouseLocked = win->mouseUnlock = false;
 
-			win->Present();
-			win->UpdateSize();
+				win->Present();
+				win->UpdateSize();
+			}
 		}
 
 		VB->EndFrame();
@@ -382,7 +454,7 @@ namespace CppProject
 		keyStateMap[vk_nokey].pressed = keyStateMap[vk_nokey].released = true;
 
 		// Add new window(s)
-		if (global::_app->window_state == "")
+		if (!headless && global::_app->window_state == "")
 		{
 			for (const AddedWindow& addWin : addedWindows)
 			{
@@ -432,6 +504,13 @@ namespace CppProject
 
 	int AppHandler::ExecDialog(QDialog* dialog)
 	{
+		if (headless)
+		{
+			WARNING("Modal dialog requested while headless");
+			delete dialog;
+			return QDialog::Rejected;
+		}
+
 		GFX->SubmitBatch();
 
 		// Clear keys

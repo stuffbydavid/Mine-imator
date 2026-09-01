@@ -41,6 +41,10 @@ namespace CppProject
 		// Returns a list IDs of all objects with a given sub-asset id.
 		static const QVector<IntType>& GetAll(IntType subAssetId) { return objectIdsMap[subAssetId]; }
 
+		// Returns whether the object type can be iterated upon using with() statements and used
+		// in instance_exists() and instance_number() functions, as defined in objects_indexed().
+		static BoolType IsIndexed(IntType subAssetId);
+
 		// Store memory locations of members within the object when the first instance is created.
 		virtual void InitMembers() = 0;
 

@@ -2,8 +2,6 @@
 
 function app_startup_interface()
 {
-	window_main_restore(setting_main_window_rect, setting_main_window_maximized)
-	
 	app_startup_shortcut_bar()
 	app_startup_interface_bench()
 	app_startup_interface_timeline()
@@ -25,27 +23,36 @@ function app_startup_interface()
 	
 	background_ground_startup()
 	background_sky_startup()
-		
-	// Start server request for new assets
-	http_assets = http_get(link_assets_versions)
 	
-	// Shortcut to a new project
-	if (dev_mode)
+	// Run tests
+	if (test_project != "")
+	{
+		if (!project_load(test_project)) {
+			error("errortest")
+			game_end()
+		}
+		else
+			tests_run()
+		return 0
+	}
+	
+	// Shortcut to a debugging project
+	else if (debug_mode)
 	{
 		popup_newproject_clear()
 		
-		if (dev_mode_project != "")
+		if (debug_project != "")
 		{
 			project_reset()
 			
-			if (!file_exists_lib(dev_mode_project))
+			if (!file_exists_lib(debug_project))
 			{
-				setting_project_folder = filename_dir(filename_dir(dev_mode_project)) + "/"
-				popup_newproject.folder = filename_name(filename_dir(dev_mode_project))
-				popup_newproject.tbx_name.text = string_replace(filename_name(dev_mode_project), filename_ext(dev_mode_project), "")
+				setting_project_folder = filename_dir(filename_dir(debug_project)) + "/"
+				popup_newproject.folder = filename_name(filename_dir(debug_project))
+				popup_newproject.tbx_name.text = string_replace(filename_name(debug_project), filename_ext(debug_project), "")
 				project_create()
 			}
-			project_load(dev_mode_project)
+			project_load(debug_project)
 		}
 		else
 		{
@@ -57,12 +64,19 @@ function app_startup_interface()
 		
 		window_state = ""
 	}
+	
+	// Show welcome screen
 	else
 	{
+		// Start server request for new assets
+		http_assets = http_get(link_assets_versions)
+	
 		project_reset()
 		
 		// First start
 		if (!file_exists_lib(settings_file))
 			popup_show(popup_welcome)
 	}
+	
+	window_main_restore(setting_main_window_rect, setting_main_window_maximized)
 }

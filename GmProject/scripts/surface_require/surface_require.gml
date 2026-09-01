@@ -7,28 +7,30 @@
 
 function surface_require(surf, w, h, depth = true, hdr = false)
 {
-	var starttime;
+	var format, starttime;
 	w = max(1, w)
 	h = max(1, h)
+	format = hdr ? surface_rgba32float : surface_rgba8unorm
 	
-	starttime = current_time
+	starttime = get_timer()
 	
 	// First usage
 	if (surf < 0)
-		surf = surface_create_ext2(w, h, depth, hdr)
+		surf = surface_create_ext2(w, h, format, depth)
 	
 	// Corrupted/remake for depth
 	else if (!surface_exists(surf) || surface_get_width(surf) < 0) 
 	{
 		surface_free(surf)
-		surf = surface_create_ext2(w, h, depth, hdr)
+		surf = surface_create_ext2(w, h, format, depth)
 	}
 	
 	// Wrong size
 	else if (surface_get_width(surf) != w || surface_get_height(surf) != h)
 		surface_resize(surf, w, h)
 	
-	render_surface_time += current_time - starttime
+	if (benchmark_mode)
+		benchmark_surface_total_time += get_timer() - starttime
 	
 	return surf
 }

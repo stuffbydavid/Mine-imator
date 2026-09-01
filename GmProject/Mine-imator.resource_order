@@ -1,5 +1,7 @@
 {
-  "FolderOrderSettings":[],
+  "FolderOrderSettings":[
+    {"name":"Tests","order":52,"path":"folders/Scripts/App/Tests.yy",},
+  ],
   "ResourceOrderSettings":[
     {"name":"app","order":3,"path":"objects/app/app.yy",},
     {"name":"obj_bench_settings","order":1,"path":"objects/obj_bench_settings/obj_bench_settings.yy",},
@@ -1037,6 +1039,7 @@
     {"name":"debug_ds_list","order":3,"path":"scripts/debug_ds_list/debug_ds_list.yy",},
     {"name":"debug_ds_map","order":5,"path":"scripts/debug_ds_map/debug_ds_map.yy",},
     {"name":"debug_info_draw","order":7,"path":"scripts/debug_info_draw/debug_info_draw.yy",},
+    {"name":"debug_startup","order":14,"path":"scripts/debug_startup/debug_startup.yy",},
     {"name":"debug_timer_start","order":9,"path":"scripts/debug_timer_start/debug_timer_start.yy",},
     {"name":"debug_timer_stop","order":11,"path":"scripts/debug_timer_stop/debug_timer_stop.yy",},
     {"name":"debug","order":1,"path":"scripts/debug/debug.yy",},
@@ -1389,6 +1392,7 @@
     {"name":"new_videoquality","order":27,"path":"scripts/new_videoquality/new_videoquality.yy",},
     {"name":"new_videotemplate","order":29,"path":"scripts/new_videotemplate/new_videotemplate.yy",},
     {"name":"object_save","order":3,"path":"scripts/object_save/object_save.yy",},
+    {"name":"objects_indexed","order":7,"path":"scripts/objects_indexed/objects_indexed.yy",},
     {"name":"open_url","order":35,"path":"scripts/open_url/open_url.yy",},
     {"name":"panel_area_draw","order":1,"path":"scripts/panel_area_draw/panel_area_draw.yy",},
     {"name":"panel_draw_content","order":5,"path":"scripts/panel_draw_content/panel_draw_content.yy",},
@@ -1837,6 +1841,7 @@
     {"name":"temp_update_rot_point","order":17,"path":"scripts/temp_update_rot_point/temp_update_rot_point.yy",},
     {"name":"temp_update_shape","order":19,"path":"scripts/temp_update_shape/temp_update_shape.yy",},
     {"name":"temp_update","order":1,"path":"scripts/temp_update/temp_update.yy",},
+    {"name":"tests_apply_settings","order":1,"path":"scripts/tests_apply_settings/tests_apply_settings.yy",},
     {"name":"text_caption_width","order":15,"path":"scripts/text_caption_width/text_caption_width.yy",},
     {"name":"text_control_name","order":7,"path":"scripts/text_control_name/text_control_name.yy",},
     {"name":"text_exists","order":9,"path":"scripts/text_exists/text_exists.yy",},

@@ -8,6 +8,7 @@
 #include <QDesktopWidget>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QTime>
 
 namespace CppProject
@@ -48,6 +49,11 @@ namespace CppProject
 		return arrRef.Arr().Size();
 	}
 
+	VarType array_shift(VarType arrRef)
+	{
+		return arrRef.Arr().Shift();
+	}
+
 	VarType choose(VarArgs args)
 	{
 		return args[(IntType)Random::Get(args.Size())];
@@ -85,6 +91,12 @@ namespace CppProject
 	IntType current_time()
 	{
 		return App->GetMsec();
+	}
+
+	IntType get_timer()
+	{
+		static const auto start = std::chrono::steady_clock::now();
+		return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
 	}
 
 	BoolType code_is_compiled()
@@ -370,6 +382,64 @@ namespace CppProject
 		return true;
 	}
 
+	BoolType is_release()
+	{
+	#if RELEASE_MODE // Release target
+		return true;
+	#else
+		return false;
+	#endif
+	}
+
+	BoolType is_optimized()
+	{
+	#if OPTIMIZED // RelWithDebInfo, RunBenchmarks, Release targets
+		return true;
+	#else
+		return false;
+	#endif
+	}
+
+	ArrType program_args_get()
+	{
+		ArrType args;
+		for (QString str : App->args)
+			args.Append(StringType(str));
+		return args;
+	}
+
+	void log_message(StringType text)
+	{
+		Printer::Line(text);
+	}
+
+	StringType os_get()
+	{
+		return QSysInfo::prettyProductName();
+	}
+
+	IntType platform_get()
+	{
+	#if OS_WINDOWS
+		return e_platform_WINDOWS;
+	#elif OS_MAC
+		return e_platform_MAC_OS;
+	#else
+		return e_platform_LINUX;
+	#endif
+	}
+
+	StringType graphics_api_get()
+	{
+		if (IS_D3D11)
+			return "D3D";
+
+		if (IS_OPENGL)
+			return "GL";
+
+		return "";
+	}
+
 	RealType interface_scale_default_get()
 	{
 		RealType ratio;
@@ -390,20 +460,16 @@ namespace CppProject
 		App->scale = factor;
 	}
 
-	IntType platform_get()
+	StringType file_directory_get()
 	{
+	#if RELEASE_MODE
 	#if OS_WINDOWS
-		return e_platform_WINDOWS;
-	#elif OS_MAC
-		return e_platform_MAC_OS;
+		return QStandardPaths::standardLocations(QStandardPaths::AppDataLocation)[0] + "_tmp/";
 	#else
-		return e_platform_LINUX;
+		return QDir::tempPath() + "/" + StringType(PROJECT_NAME) + "_tmp/";
 	#endif
-	}
-
-	StringType os_get()
-	{
-		return QSysInfo::prettyProductName();
+	#endif
+		return BUILD_FOLDER + "/";
 	}
 
 	StringType user_directory_get()
@@ -462,10 +528,5 @@ namespace CppProject
 	void thread_task_end()
 	{
 		StringType::EndOmp();
-	}
-
-	void log_message(StringType text)
-	{
-		Printer::Line(text);
 	}
 }

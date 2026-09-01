@@ -130,6 +130,7 @@ function minecraft_assets_load()
 				}
 				
 				ds_list_copy(block_texture_ani_list, blocktexturesanimatedlist)
+				minecraft_assets_build_block_texture_slot_maps()
 				
 				// Block texture colors
 				var blocktexturescolorlist = load_assets_map[?"block_textures_color"];
@@ -428,11 +429,11 @@ function minecraft_assets_load()
 				
 				load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blockslist))
 				
-				if (dev_mode_skip_blocks && load_assets_block_index >= 20)
+				if (debug_skip_blocks && load_assets_block_index >= 20)
 					load_assets_stage = "done"
 				
 				// Skip to the last 10 blocks to debug newer blocks
-				//if (dev_mode_skip_blocks && load_assets_stage != "done")
+				//if (debug_skip_blocks && load_assets_stage != "done")
 				//	load_assets_block_index = (ds_list_size(blockslist) - 10)
 				
 				if (load_assets_stage = "done")
@@ -446,7 +447,7 @@ function minecraft_assets_load()
 					block_liquid_slot_map[?"flowing_lava"] = ds_list_find_index(block_texture_ani_list, "block/lava_flow")
 					
 					// Grass paths renamed to dirt path in 1.17
-					if (!dev_mode_skip_blocks)
+					if (!debug_skip_blocks)
 						block_id_map[?"minecraft:grass_path"] = block_id_map[?"minecraft:dirt_path"]
 					
 					// Legacy block ID mapping
@@ -509,7 +510,7 @@ function minecraft_assets_load()
 					}
 					
 					// Dev mode: Look for newly added block states and model files
-					if (dev_mode_debug_unused)
+					if (debug_unused && !debug_skip_blocks)
 					{
 						// Blockstates
 						var filesarr = file_find(load_assets_dir + mc_blockstates_directory, ".json");
@@ -568,4 +569,101 @@ function minecraft_assets_load()
 		window_taskbar_progress_value_set(load_assets_progress)
 		return true
 	}
+}
+
+/// minecraft_assets_build_block_texture_slot_maps()
+/// @desc Builds face texture lookups while preserving the render-model fallback order.
+function minecraft_assets_build_block_texture_slot_maps()
+{
+	ds_map_clear(mc_assets.block_texture_slot_map)
+	ds_map_clear(mc_assets.block_texture_opaque_slot_map)
+
+	var static_count = ds_list_size(mc_assets.block_texture_list)
+	var animated_count = ds_list_size(mc_assets.block_texture_ani_list)
+	var texture_name, base_name
+
+	// Store animated slots as negative values; -1 remains available as an invalid slot.
+	// Add fallbacks from lowest to highest priority. Traversing backwards preserves
+	// ds_list_find_index's first-match behavior when a list has duplicate names.
+	for (var t = animated_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_ani_list[|t]
+		base_name = minecraft_assets_block_texture_tag_base(texture_name, " nocull")
+		if (!is_undefined(base_name))
+		{
+			mc_assets.block_texture_slot_map[?base_name] = -t - 2
+			mc_assets.block_texture_opaque_slot_map[?base_name] = -t - 2
+		}
+	}
+
+	for (var t = animated_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_ani_list[|t]
+		base_name = minecraft_assets_block_texture_tag_base(texture_name, " opaque")
+		if (!is_undefined(base_name))
+		{
+			mc_assets.block_texture_slot_map[?base_name] = -t - 2
+			mc_assets.block_texture_opaque_slot_map[?base_name] = -t - 2
+		}
+	}
+
+	for (var t = animated_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_ani_list[|t]
+		mc_assets.block_texture_slot_map[?texture_name] = -t - 2
+		mc_assets.block_texture_opaque_slot_map[?texture_name] = -t - 2
+	}
+
+	for (var t = static_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_list[|t]
+		mc_assets.block_texture_slot_map[?texture_name] = t
+		mc_assets.block_texture_opaque_slot_map[?texture_name] = t
+	}
+
+	for (var t = static_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_list[|t]
+		base_name = minecraft_assets_block_texture_tag_base(texture_name, " nocull")
+		if (!is_undefined(base_name))
+		{
+			mc_assets.block_texture_slot_map[?base_name] = t
+			mc_assets.block_texture_opaque_slot_map[?base_name] = t
+		}
+	}
+
+	for (var t = static_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_list[|t]
+		base_name = minecraft_assets_block_texture_tag_base(texture_name, " noalpha")
+		if (!is_undefined(base_name))
+		{
+			mc_assets.block_texture_slot_map[?base_name] = t
+			mc_assets.block_texture_opaque_slot_map[?base_name] = t
+		}
+	}
+
+	for (var t = static_count - 1; t >= 0; t--)
+	{
+		texture_name = mc_assets.block_texture_list[|t]
+		base_name = minecraft_assets_block_texture_tag_base(texture_name, " opaque")
+		if (!is_undefined(base_name))
+			mc_assets.block_texture_opaque_slot_map[?base_name] = t
+	}
+}
+
+/// minecraft_assets_block_texture_tag_base(StringType, StringType)
+/// @desc Returns a texture name without a trailing render tag, if it has one.
+function minecraft_assets_block_texture_tag_base(texture_name, tag)
+{
+	var tag_length = string_length(tag)
+	var name_length = string_length(texture_name)
+	if (name_length <= tag_length)
+		return undefined
+
+	var tag_start = name_length - tag_length + 1
+	if (string_copy(texture_name, tag_start, tag_length) != tag)
+		return undefined
+
+	return string_delete(texture_name, tag_start, tag_length)
 }

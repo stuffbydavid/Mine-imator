@@ -92,7 +92,23 @@ function export_update()
 					buffer_save(exportmovie_buffer, temp_file)
 				}
 		
+				var exportstart = get_timer()
 				var err = movie_frame(temp_file);
+				benchmark_export_total_time += get_timer() - exportstart
+				
+				if (benchmark_exportmovie)
+				{
+					exportmovie_benchmark_csv += string(exportmovie_frame) + ",";
+					exportmovie_benchmark_csv += string_format(benchmark_animate_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_render_total_time / 1000, 0, 3) + ",";
+					exportmovie_benchmark_csv += string_format(benchmark_surface_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_export_total_time / 1000, 0, 3) + "\n"
+					benchmark_animate_total_time = 0
+					benchmark_render_total_time = 0
+					benchmark_surface_total_time = 0
+					benchmark_export_total_time = 0
+				}
+				
 				if (err < 0)
 				{
 					export_done_movie()
@@ -125,7 +141,10 @@ function export_update()
 		// Save image
 		else if (window_state = "export_image")
 		{
+			var exportstart = get_timer();
 			surface_save_lib(export_surface, export_filename)
+			if (benchmark_mode)
+				benchmark_export_total_time += get_timer() - exportstart
 			export_done_image()
 			window_flash()
 			window_beep()

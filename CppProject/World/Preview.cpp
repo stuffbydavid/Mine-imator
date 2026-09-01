@@ -556,6 +556,13 @@ namespace CppProject
 					// Lock mouse in center and get delta position, and apply movement vector to camera position+target
 					case Mode::FLY:
 					{
+						// Headless window
+						if (!AppWin)
+						{
+							mode = Mode::DEFAULT;
+							break;
+						}
+
 						// Get mouse delta from window center
 						IntType lockX, lockY;
 						if (AppWin->mouseEnableLock)

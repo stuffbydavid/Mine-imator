@@ -393,7 +393,7 @@ void GML::parseGMLScript(String file)
 				}
 
 				// Get name of function
-				else if (currentFunction->name == "")
+				else if (currentFunction && currentFunction->name == "")
 				{
 					currentFunction->name = token.value;
 					Program::functions.add(token.value, currentFunction);
@@ -424,7 +424,7 @@ void GML::parseGMLScript(String file)
 				currentFunction->tokens.removeAt(currentFunction->tokens.size() - 1);
 				isLineComment = true;
 			}
-			else
+			else if (currentFunction)
 				currentFunction->tokens.add(std::move(token));
 		}
 
