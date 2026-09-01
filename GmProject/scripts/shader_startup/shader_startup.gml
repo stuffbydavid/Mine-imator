@@ -67,7 +67,6 @@ function shader_startup()
 		new_shader("shader_ca")
 		new_shader("shader_distort")
 		new_shader("shader_high_lighting_apply")
-		new_shader("shader_high_samples_add")
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_depth_normal")
 		new_shader("shader_high_material")
@@ -423,19 +422,9 @@ function shader_startup()
 		new_shader_uniform("uGamma")
 	}
 	
-	with (shader_map[?shader_high_samples_add])
-	{
-		new_shader_sampler("uSamplesExp")
-		new_shader_sampler("uSamplesDec")
-		new_shader_sampler("uSamplesAlpha")
-		new_shader_sampler("uSample")
-	}
-	
 	with (shader_map[?shader_high_samples_unpack])
 	{
-		new_shader_sampler("uSamplesExp")
-		new_shader_sampler("uSamplesDec")
-		new_shader_sampler("uSamplesAlpha")
+		new_shader_sampler("uSamples")
 		new_shader_uniform("uSamplesStrength")
 		new_shader_uniform("uRenderBackground")
 	}

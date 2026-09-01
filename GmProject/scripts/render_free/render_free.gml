@@ -26,9 +26,7 @@ function render_free()
 	surface_free(render_surface_lens)
 	
 	// Sampling
-	surface_free(render_surface_sample_expo)
-	surface_free(render_surface_sample_dec)
-	surface_free(render_surface_sample_alpha)
+	surface_free(render_surface_samples)
 	
 	// Light depth buffers
 	for (var i = 0; i < render_cascades_count; i++)

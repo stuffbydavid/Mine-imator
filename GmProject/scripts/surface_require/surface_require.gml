@@ -10,7 +10,12 @@ function surface_require(surf, w, h, depth = true, hdr = false)
 	var format, starttime;
 	w = max(1, w)
 	h = max(1, h)
-	format = hdr ? surface_rgba32float : surface_rgba8unorm
+	
+	// surface_rgba32float support not guaranteed in GM
+	if (is_cpp())
+		format = hdr ? surface_rgba32float : surface_rgba8unorm
+	else 
+		format = hdr ? surface_rgba16float : surface_rgba8unorm
 	
 	starttime = get_timer()
 	
